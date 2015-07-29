@@ -1,0 +1,61 @@
+body {
+	font-size: 14px;
+}
+
+input {
+	vertical-align: middle;
+	margin: 0;
+	padding: 0
+}
+
+.file-box {
+	position: relative;
+	width: 420px;
+}
+.file-box-min{
+   position:relative;
+   width:340px;
+}
+
+.txt {
+	height: 22px;
+	border: 1px solid #cdcdcd;
+	width: 180px;
+}
+
+.btn1 {
+	background-color: #FFF;
+	border: 1px solid #CDCDCD;
+	height: 24px;
+	width: 70px;
+}
+.btn{
+    background-color:#FFF;
+    border:1px solid #CDCDCD;
+    height:24px;
+    width:70px;
+    margin-left:4px;
+    margin-right:8px;
+}
+
+.file {
+	position: absolute;
+	top: 0;
+	left: 0px;
+	height: 24px;
+	filter: alpha(opacity : 0);
+	opacity: 0;
+	width: 260px
+}
+
+a:link{color:#335AA4;text-decoration:none}
+a:visited{color:#800080; text-decoration:none;}
+a:hover{text-decoration:none; border-bottom:1px red solid;color:red;}
+
+img{
+
+vertical-align:bottom;
+}
+hr{
+	border:1px solid #ccc
+}

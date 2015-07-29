@@ -1,0 +1,33 @@
+<!DOCTYPE html >
+<html lang="en-US">
+<head>
+<meta http-equiv="Refresh" content="5;url=judge.jsp"> 
+<meta charset="UTF-8">
+<title>404ERROR</title>
+<link rel="stylesheet" type="text/css" href="files/cmstop-error.css"
+	media="all">
+</head>
+<script type="text/javascript">
+	var times = 6;
+	clock();
+	function clock() {
+		window.setTimeout('clock()', 1000);
+		times = times - 1;
+		if (times != 0) {
+			time.innerHTML = times;
+		}
+		/* if(times==0){
+		   window.location.href="judge.jsp";
+		} */
+	}
+</script>
+<body class="body-bg">
+	<div class="main">
+		<p class="title">
+			登陸失敗! <span id="time"
+				style="color:red;font-size:22px;font-weight: bold;">5</span>秒后自動跳回網站首頁..
+		</p>
+		<a href="judge.jsp" class="btn">返回网站首页</a>
+	</div>
+</body>
+</html>

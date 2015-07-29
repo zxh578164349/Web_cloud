@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE dwr PUBLIC
+    "-//GetAhead Limited//DTD Direct Web Remoting 2.0//EN"
+    "http://getahead.org/dwr/dwr20.dtd">
+<dwr>
+	<allow>		
+		<create creator="spring" javascript="userjs">
+			<param name="beanName" value="webUserService" />
+			<include method="findByIdDWR" />
+			<include method="findByEmailDwr"/>
+			<include method="findByUserNameDwr"/>
+			<include method="findByNameAndFactNoDwr"/>
+			<include method="findByIdDwr2"/>
+		</create>
+		<create creator="spring" javascript="webfactjs">
+		  <param name="beanName" value="webFactSer"/>
+		  <include method="findFactCodeByFactNo"/>
+		  <include method="findFactCodeByFactNo_show"/>
+		  <include method="findByFactNo"/>
+		  <include method="findAllFact"/>
+		  <include method="findAllFact2"/>
+		</create>
+		<create creator="spring" javascript="websubjs">
+		  <param name="beanName" value="subSer"/>
+		  <include method="findById"/>
+		  <include method="findById2"/>
+		</create>
+		<create creator="spring" javascript="webmajorjs">
+		  <param name="beanName" value="majorSer"/>
+		  <include method="findAll"/>
+		  <include method="findById"/>
+		</create>
+<!-- 		<create creator="spring" javascript="webfactjs">
+		  <param name="beanName" value="webFactSer"/>
+		  <include method="findByFactNo"/>		  
+		</create> -->
+		<create creator="spring" javascript="webfixjs">
+		   <param name="beanName" value="fixSer"/>
+		   <include method="makeSssetscoding"/>
+		</create>
+		<create creator="spring" javascript="kyzjs">
+		  <param name="beanName" value="kyzSer"/>
+		  <include method="makeBillNo"/>
+		  <include method="kyzSer"/>
+		</create>
+		<create javascript="kytypejs" creator="spring">
+		   <param name="beanName" value="kytypeSer"/>
+		   <include method="findByTypeNo"/>		   
+		</create>
+		<create javascript="kyzsecjs" creator="spring">
+		   <param name="beanName" value="kyzsecSer"/>
+		   <include method="makeSecNo"/>
+		   <include method="findByFactno"/>
+		</create>
+		<create javascript="kyzacctjs" creator="spring">
+		   <param name="beanName" value="kyzacctSer"/>
+		   <include method="checkAcctNo"/>
+		   <include method="findAll"/>
+		</create>
+		<create javascript="kyzpettyjs" creator="spring">
+		   <param name="beanName" value="kyzpettySer"/>
+		   <include method="makeItemNo"/>
+		   <include method="makeBillNo"/>
+		</create>
+		<create javascript="webmix1js" creator="spring">
+		   <param name="beanName" value="mix1Ser"/>
+		   <include method="check"/>
+		</create>
+		<create javascript="webmixpersonjs" creator="spring">
+		   <param name="beanName" value="mixPersonService"/>
+		   <include method="check"/>
+		</create>
+		<create javascript="webmix2js" creator="spring">
+		   <param name="beanName" value="mix2Service"/>
+		   <include method="check"/>
+		</create>
+		<create javascript="webscraptjs" creator="spring">
+		    <param name="beanName" value="scraptService"/>
+		    <include method="check"/>
+		</create>
+		<create javascript="webwlojs" creator="spring">
+		    <param name="beanName" value="wloService"/>
+		    <include method="check"/>
+		</create>
+		<create javascript="webprodutedjs" creator="spring">
+		   <param name="beanName" value="produtedService"/>
+		   <include method="check"/>
+		</create>
+		<create javascript="webcostjs" creator="spring">
+		   <param name="beanName" value="costSer"/>
+		   <include method="check"/>
+		</create>
+		<create javascript="webestprojs" creator="spring">
+		    <param name="beanName" value="estProSer"/>
+		    <include method="check"/>
+		</create>
+		<create javascript="webbackfeetjs" creator="spring">
+		    <param name="beanName" value="feedSer"/>
+		    <include method="check"/>
+		</create>
+		<create javascript="webpersonnumjs" creator="spring">
+		    <param name="beanName" value="personNumSer"/>
+		    <include method="check"/>
+		</create>
+		<create javascript="webydatejs" creator="spring">
+		    <param name="beanName" value="dataSer"/>
+		    <include method="check"/>
+		</create>
+		<create javascript="webyprejs" creator="spring">
+		    <param name="beanName" value="preSer"/>
+		    <include method="check"/>
+		</create>
+		<create javascript="kyzvisaflowjs" creator="spring">
+		    <param name="beanName" value="visaSer"/>
+		    <include method="findByType_Dwr"/>
+		    <include method="findVisaSort_dwr"/>
+		</create>
+		<create javascript="kyzscmjs" creator="spring">
+		    <param name="beanName" value="kyzscmSer"/>
+		    <include method="findBN"/>
+		    <include method="findMN"/>
+		    <include method="findSN"/>
+		</create>
+		<create javascript="kyzmatjs" creator="spring">
+		    <param name="beanName" value="kyzmatSer"/>
+		    <include method="makeMatNo"/>
+		</create>		
+		<create javascript="sumwebydatajs" creator="spring">
+		    <param name="beanName" value="sumydateSer"/>
+		    <include method="findById"/>
+		    <include method="findByFactNo"/>
+		    <include method="findByFactNo2"/>	    
+		</create>
+		<create javascript="kpifactjs" creator="spring">
+		    <param name="beanName" value="kpiSer"/>
+		    <include method="findById"/>
+		    <include method="findDateByFactNo"/>
+		</create>
+		<create javascript="kyvisabillsjs" creator="spring">
+		   <param name="beanName" value="visabillSer"/>
+		   <include method="findKyVisaBills_Int"/>
+		</create>
+		<create javascript="kyzcontactletterjs" creator="spring">
+		   <param name="beanName" value="kyzletterSer"/>
+		   <include method="makeBillNo"/>
+		</create>
+		<create javascript="webcashoutjs" creator="spring">
+		   <param name="beanName" value="cashoutSer"/>
+		   <include method="findById"/>
+		</create>
+		<convert converter="hibernate3" match="entity.*" />		
+		<!-- <convert converter="bean" match="cn.com.entity.ConfigFileFirstKind">
+			<param name="include" value="ffkId,firstKindName,configFileSecondKinds" />
+		</convert> -->
+	   
+	</allow>
+
+	<signatures>  
+<![CDATA[  
+import java.util.List;
+import java.lang.String;
+import entity.WebUser;
+import entity.WebFact;
+import entity.WebFactId;
+import entity.KyTypeId;
+]]>
+	</signatures>
+</dwr>
+
+
+    
+    
+    
+    
+    
+    

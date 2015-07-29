@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+	"
+	default-autowire="byName">
+
+	<bean id="webUserDao" class="dao.impl.WebUserDaoImpl" parent="baseDao" />
+	<bean id="menuDao" class="dao.impl.WebMenuDaoImpl" parent="baseDao" />
+	<bean id="webLogDao" class="dao.impl.WebLogDaoImpl" parent="baseDao" />
+	<bean id="backMatDao" class="dao.impl.WebBackMatDaoImpl" parent="baseDao" />
+	<bean id="backpfDao" class="dao.impl.WebBackpfDaoImpl" parent="baseDao" />
+	<bean id="storeDao" class="dao.impl.WebCpStoreDaoImpl" parent="baseDao" />
+	<bean id="gwDao" class="dao.impl.WebGwDaoImpl" parent="baseDao" />
+	<bean id="machineDao" class="dao.impl.WebMachineDaoImpl" parent="baseDao" />
+	<bean id="mats2Dao" class="dao.impl.WebMats2DaoImpl" parent="baseDao" />
+	<bean id="matDao" class="dao.impl.WebMatsDaoImpl" parent="baseDao" />
+	<bean id="marstoreDao" class="dao.impl.WebMatstoreDaoImpl" parent="baseDao" />
+	<bean id="outbackDao" class="dao.impl.WebOutbackDaoImpl" parent="baseDao" />
+	<bean id="outputInvDao" class="dao.impl.WebOutputInvImpl" parent="baseDao" />
+	<bean id="personDao" class="dao.impl.WebPersonDaoImpl" parent="baseDao" />
+	<bean id="pfaDao" class="dao.impl.WebPfavgPriceDaoImpl" parent="baseDao" />
+	<bean id="profitcountDao" class="dao.impl.WebProfitCountDaoImpl" parent="baseDao" />	
+	<bean id="profitDao" class="dao.impl.WebProfitDaoImpl" parent="baseDao" />
+	<bean id="sideDao" class="dao.impl.WebSideDaoImpl" parent="baseDao" />
+	<bean id="zwcashDao" class="dao.impl.WebZwcashDaoImpl" parent="baseDao" />
+	<bean id="jurisdictionDao" class="dao.impl.WebJurisdictionDaoImpl" parent="baseDao" />		
+	<bean id="submenuDao" class="dao.impl.WebSubmenuDaoImpl" parent="baseDao" />
+	<bean id="factDao" class="dao.impl.KyFactDaoImpl" parent="baseDao" />
+	<bean id="dataDao" class="dao.impl.WebYieldDataDaoImpl" parent="baseDao" />
+	<bean id="preDao" class="dao.impl.WebYielePredictionDaoImpl" parent="baseDao" />		
+	<bean id="webFactDao" class="dao.impl.WebFactDaoImpl" parent="baseDao" />
+	<bean id="fixDao" class="dao.impl.WebFixedDaoImpl" parent="baseDao" />
+	<bean id="costDao" class="dao.impl.WebCostDaoImpl" parent="baseDao" />
+	<bean id="mix1Dao" class="dao.impl.WebMix1DaoImpl" parent="baseDao" />
+	<bean id="estProDao" class="dao.impl.WebEstProductDaoImpl" parent="baseDao" />
+	<bean id="feedDao" class="dao.impl.WebBackFeedDaoImpl" parent="baseDao" />
+	<bean id="personNumDao" class="dao.impl.WebPersonNumDaoImpl" parent="baseDao" />		
+	<bean id="mix2Dao" class="dao.impl.WebMix2DaoImpl" parent="baseDao" />
+	<bean id="mixPersonDao" class="dao.impl.WebMixPersonDaoImpl" parent="baseDao" />		
+	<bean id="produtedDao" class="dao.impl.WebProdutedDaoImpl" parent="baseDao" />
+	<bean id="scraptDao" class="dao.impl.WebScraptDaoImpl" parent="baseDao" />
+	<bean id="wloDao" class="dao.impl.WebWloDaoImpl" parent="baseDao" />
+	<bean id="subDao" class="dao.impl.WebSubsortDaoImpl" parent="baseDao" />
+	<bean id="majorDao" class="dao.impl.WebMajorSortDaoImpl" parent="baseDao" />
+	<bean id="fixlogDao" class="dao.impl.WebFixedLogDaoImpl" parent="baseDao" />
+	<bean id="kyzDao" class="dao.impl.KyzExpcetmatmDaoImpl" parent="baseDao" />
+	<bean id="kyzsDao" class="dao.impl.KyzExpcetmatmsDaoImpl" parent="baseDao"/>
+	<bean id="emailDao" class="dao.impl.WebEmailDaoImpl" parent="baseDao" />
+	<bean id="visaDao" class="dao.impl.KyzVisaFlowDaoImpl" parent="baseDao"/>
+	<bean id="kytypeDao" class="dao.impl.KyTypeDaoImpl" parent="baseDao"></bean>
+	<bean id="visabillDao" class="dao.impl.KyVisabillsDaoImpl" parent="baseDao"></bean>
+	<bean id="visabillmDao" class="dao.impl.KyVisabillmDaoImpl" parent="baseDao"></bean>
+	<bean id="kyzsecdao" class="dao.impl.KyzSecDaoImpl" parent="baseDao"></bean>
+	<bean id="kyzacctdao" class="dao.impl.KyzacctDaoImpl" parent="baseDao"></bean>
+	<bean id="kyzpettydao" class="dao.impl.KyzPettyDaoImpl" parent="baseDao"></bean>
+	<bean id="webuploadfileDao" class="dao.impl.WebUploadfilesDaoImpl" parent="baseDao"></bean>
+	<bean id="kyzexpfileDao" class="dao.impl.KyzExpectmatmFileDaoImpl" parent="baseDao"></bean>
+	<bean id="vkpidao" class="dao.impl.VKpifactDaoImpl" parent="baseDao"></bean>
+	<bean id="vwebmachinedao" class="dao.impl.VWebmachineDaoImpl" parent="baseDao"></bean>
+	<bean id="vwlodao" class="dao.impl.VWebwloDaoImpl" parent="baseDao"></bean>
+	<bean id="vinvdao" class="dao.impl.VWebOutoutinvDaoImpl" parent="baseDao"></bean>
+	<bean id="vpersondao" class="dao.impl.VWebpersonDaoImpl" parent="baseDao"></bean>
+	<bean id="vsidedao" class="dao.impl.VWebSideDaoImpl" parent="baseDao"></bean>
+	<bean id="vstoredao" class="dao.impl.VWebStoreDaoImpl" parent="baseDao"></bean>
+	<bean id="vmix1dao" class="dao.impl.VSumWebmix1DaoImpl" parent="baseDao"></bean>
+	<bean id="vgwdao" class="dao.impl.VWebGwDaoImpl" parent="baseDao"></bean>
+	<bean id="vkpievedao" class="dao.impl.VKpifactEveDaoImpl" parent="baseDao"></bean>
+	<bean id="machineeveDao" class="dao.impl.VWebmachineEveDaoImpl" parent="baseDao"></bean>
+	<bean id="inveveDao" class="dao.impl.VWeboutputinvEveDaoImpl" parent="baseDao"></bean>
+	<bean id="personeveDao" class="dao.impl.VWebpersonEveDaoImpl" parent="baseDao"></bean>
+	<bean id="gweveDao" class="dao.impl.VWebgwEveDaoImpl" parent="baseDao"></bean>
+	<bean id="sideeveDao" class="dao.impl.VWebsideEveDaoImpl" parent="baseDao"></bean>
+	<bean id="storeeveDao" class="dao.impl.VWebstoreEveDaoImpl" parent="baseDao"></bean>
+	<bean id="wloeveDao" class="dao.impl.VWebwloEveDaoImpl" parent="baseDao"></bean>
+	<bean id="sumwlodao" class="dao.impl.VSumwloDaoImpl" parent="baseDao"></bean>
+	<bean id="suminvdao" class="dao.impl.VSuminvDaoImpl" parent="baseDao"></bean>
+	<bean id="sumlossdao" class="dao.impl.VSumlossDaoImpl" parent="baseDao"></bean>
+	<bean id="sumstoredao" class="dao.impl.VSumstoreDaoImpl" parent="baseDao"></bean>
+	<bean id="kyzmatDao" class="dao.impl.KyzMatDaoImpl" parent="baseDao"></bean>
+	<bean id="kyzscmDao" class="dao.impl.KyzScmClassmDaoImpl" parent="baseDao"></bean>
+	<bean id="subkyzmatDao" class="dao.impl.SubKyzmatDaoImpl" parent="baseDao"></bean>
+	<bean id="sumydateDao" class="dao.impl.SumWebYieldDataDaoImpl" parent="baseDao"></bean>
+	<bean id="kpidao" class="dao.impl.KpifactDaoImpl" parent="baseDao"></bean>
+	<bean id="kyzletterDao" class="dao.impl.KyzContactLetterDaoImpl" parent="baseDao"></bean>
+	<bean id="sumydatelogDao" class="dao.impl.SumWebYieldDataLogDaoImpl" parent="baseDao"></bean>
+	<bean id="cashoutDao" class="dao.impl.WebcashoutDaoImpl" parent="baseDao"></bean>
+	<bean id="vcashoutDao" class="dao.impl.VWebydataawebcashoutDaoImpl" parent="baseDao"></bean>
+	<bean id="vwebcosteveDao" class="dao.impl.VWebcostEveDaoImpl" parent="baseDao"></bean>
+	<bean id="vwebcostDao" class="dao.impl.VWebcostDaoImpl" parent="baseDao"></bean>
+</beans>
+

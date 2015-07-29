@@ -1,0 +1,425 @@
+package action;
+
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.DecimalFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.struts2.ServletActionContext;
+import org.apache.struts2.interceptor.ServletResponseAware;
+
+import services.IWebEstProductServices;
+import services.IWebFactServices;
+import util.JasperHelper;
+import util.PageBean;
+
+import com.opensymphony.xwork2.ActionContext;
+import com.opensymphony.xwork2.ActionSupport;
+
+import entity.WebFact;
+import entity.Webestproduct;
+import entity.WebestproductId;
+
+public class WebEstProductAction extends ActionSupport implements
+		ServletResponseAware {
+	private javax.servlet.http.HttpServletResponse response;
+	private IWebEstProductServices estProSer;
+	private String factNo;
+	private int page;
+	private String yymm;
+	private PageBean bean;
+	private String isnull;
+	private WebestproductId id;
+	private Webestproduct pro;
+	private IWebFactServices webFactSer;
+	private String lookordown;
+	
+	
+
+	public String getLookordown() {
+		return lookordown;
+	}
+
+	public void setLookordown(String lookordown) {
+		this.lookordown = lookordown;
+	}
+
+	public void setWebFactSer(IWebFactServices webFactSer) {
+		this.webFactSer = webFactSer;
+	}
+
+	public String getFactNo() {
+		return factNo;
+	}
+
+	public void setFactNo(String factNo) {
+		this.factNo = factNo;
+	}
+
+	public int getPage() {
+		return page;
+	}
+
+	public void setPage(int page) {
+		this.page = page;
+	}
+
+	public String getYymm() {
+		return yymm;
+	}
+
+	public void setYymm(String yymm) {
+		this.yymm = yymm;
+	}
+
+	public PageBean getBean() {
+		return bean;
+	}
+
+	public void setBean(PageBean bean) {
+		this.bean = bean;
+	}
+
+	public String getIsnull() {
+		return isnull;
+	}
+
+	public void setIsnull(String isnull) {
+		this.isnull = isnull;
+	}
+
+	public WebestproductId getId() {
+		return id;
+	}
+
+	public void setId(WebestproductId id) {
+		this.id = id;
+	}
+
+	public Webestproduct getPro() {
+		return pro;
+	}
+
+	public void setPro(Webestproduct pro) {
+		this.pro = pro;
+	}
+
+	public void setEstProSer(IWebEstProductServices estProSer) {
+		this.estProSer = estProSer;
+	}
+
+	public void setServletResponse(HttpServletResponse response) {
+		// TODO Auto-generated method stub
+		this.response = response;
+	}
+
+	public String formatDouble(double s) {
+		DecimalFormat format = new DecimalFormat(",###.##");
+		String temp = format.format(s);
+		return temp;
+		// return temp.replace(",", "");
+	}
+
+	public String formatDouble2(double s) {
+		DecimalFormat format = new DecimalFormat("#.##");
+		String temp = format.format(s);
+		return temp;
+	}
+
+	public String add() {
+		DateFormat format = new SimpleDateFormat("yyyyMM");
+		Date date = null;
+		String result = null;
+
+		try {
+			if (isnull.equals("isnull")) {
+				date = format.parse(yymm);
+				pro.getId().setYymm(date);
+				String factNo1 = pro.getId().getFactNo();
+				String factCode1 = pro.getId().getFactCode();
+				String type=pro.getId().getType();
+				String fact = (String) ActionContext.getContext().getSession()
+						.get("factNo");
+				List<Webestproduct> list = estProSer.findByFactNo(fact);
+				if (list.size() > 0) {
+					for (int i = 0; i < list.size(); i++) {
+						if (factCode1.equals(list.get(i).getId().getFactCode())
+								&& factNo1.equals(list.get(i).getId()
+										.getFactNo())
+								&& pro.getId().getYymm()
+										.equals(list.get(i).getId().getYymm())
+										&&type.equals(list.get(i).getId().getType())) {
+
+							break;
+						} else if (i == list.size() - 1) {
+							estProSer.add(pro);
+							result = "add";
+						}
+					}// end for
+				} else {
+					estProSer.add(pro);
+					result = "add";
+				}
+
+			} else {
+				date = format.parse(yymm);
+				pro.getId().setYymm(date);
+				estProSer.add(pro);
+				result = "add";
+			}
+
+			if (result == null) { // 判斷返回結果
+				response.setContentType("text/html;charset=utf-8");
+				String temp1 = pro.getId().getFactNo();
+				String temp2 = pro.getId().getFactCode();
+				String temp3 = format.format(pro.getId().getYymm());
+				String temp4=pro.getId().getType();
+				response.getWriter()
+						.print("<script>alert('數據庫已存在("
+								+ temp1
+								+ " "
+								+ temp2
+								+ " "
+								+ temp3
+								+" "
+								+temp4
+								+ ")!');history.back()</script>");
+				return result;
+			} else {
+				return result;
+			}
+
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return "fails";
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return "fails";
+		}
+	}
+
+	public String findPageBean() {
+		ActionContext.getContext().getApplication().clear();
+		factNo = (String) ActionContext.getContext().getSession().get("factNo");
+		bean = estProSer.findPageBean(25, page, factNo, yymm);
+
+		return "beanList";
+
+	}
+
+	public String findPageBean2() {
+		ActionContext.getContext().getApplication().clear();
+		if (factNo != null && !factNo.equals("") && !factNo.equals("tw")) {
+			ActionContext.getContext().getApplication()
+					.put("estpro_factNo", factNo);
+		}
+		if (yymm != null && !yymm.equals("")) {
+			ActionContext.getContext().getApplication()
+					.put("estpro_yymm", yymm);
+		}
+
+		bean = estProSer.findPageBean(25, page, factNo, yymm);
+
+		return "beanList1";
+	}
+
+	public String findPageBean3() {
+		factNo = (String) ActionContext.getContext().getApplication()
+				.get("estpro_factNo");
+		yymm = (String) ActionContext.getContext().getApplication()
+				.get("estpro_yymm");
+		if (factNo == null || factNo.equals("") || factNo.equals("tw")) {
+			factNo = (String) ActionContext.getContext().getSession()
+					.get("factNo");
+		}
+		bean = estProSer.findPageBean(25, page, factNo, yymm);
+
+		return "beanList1";
+
+	}
+
+	public String findPageBean2_print() {
+		ActionContext.getContext().getApplication().clear();
+		if (factNo != null && !factNo.equals("") && !factNo.equals("tw")) {
+			ActionContext.getContext().getApplication()
+					.put("print_estpro_factNo", factNo);
+
+		} else {
+			factNo = (String) ActionContext.getContext().getSession()
+					.get("factNo");
+		}
+		if (yymm != null && !yymm.equals("")) {
+			ActionContext.getContext().getApplication()
+					.put("print_estpro_yymm", yymm);
+		}
+		bean = estProSer.findPageBean(10, page, factNo, yymm);
+		return "list";
+	}
+
+	public String findPageBean3_print() {
+		factNo = (String) ActionContext.getContext().getApplication()
+				.get("print_estpro_factNo");
+		yymm = (String) ActionContext.getContext().getApplication()
+				.get("print_estpro_yymm");
+		if (factNo == null || factNo.equals("") || factNo.equals("tw")) {
+			factNo = (String) ActionContext.getContext().getSession()
+					.get("factNo");
+		}
+		bean = estProSer.findPageBean(10, page, factNo, yymm);
+		return "list";
+	}
+
+	public String findById() {
+		pro = estProSer.findById(id);
+		return "findById";
+
+	}
+
+	public String delete() {
+		estProSer.delete(id);
+		return "delete";
+	}
+	
+	public void print(){
+		List<Webestproduct>list_zd=new ArrayList<Webestproduct>();
+		List<Webestproduct>list_tz=new ArrayList<Webestproduct>();
+		List listfactno=webFactSer.findAllFact();
+		for(int i=0;i<listfactno.size();i++){//start for
+			Object[] temp_factnos=(Object[])listfactno.get(i);
+			String temp_factno=(String)temp_factnos[0];
+			List<WebFact>listfactcodes=webFactSer.findFactById(temp_factno);
+			for(int k=0;k<listfactcodes.size();k++){
+				String factcode=listfactcodes.get(k).getId().getFactArea();
+				Webestproduct product_zd=estProSer.findById(temp_factno, factcode, yymm, "zd");
+				Webestproduct product_tz=estProSer.findById(temp_factno, factcode, yymm, "tz");
+				if(product_zd!=null){
+					list_zd.add(product_zd);
+					
+				}else{
+					product_zd=new Webestproduct();
+					WebestproductId id=new WebestproductId();
+					id.setFactNo(temp_factno);
+					id.setFactCode(factcode);
+					product_zd.setId(id);
+					list_zd.add(product_zd);
+				}
+				if(product_tz!=null){
+					list_tz.add(product_tz);
+				}else{
+					product_tz=new Webestproduct();
+					WebestproductId id=new WebestproductId();
+					id.setFactNo(temp_factno);
+					id.setFactCode(factcode);
+					product_tz.setId(id);
+					list_tz.add(product_tz);
+				}
+				
+			}
+		}//end for
+		List factcodelist=webFactSer.findAllFactCode();//所有廠別狀態
+		List<Webestproduct>sum_list_zd=new ArrayList<Webestproduct>();
+		List<Webestproduct>sum_list_tz=new ArrayList<Webestproduct>();
+		for(int j=0;j<factcodelist.size();j++){//start for
+			String factcode=(String)factcodelist.get(j);
+			Object[] obj_zd=estProSer.findSum(factcode, yymm, "zd");
+			Object[] obj_tz=estProSer.findSum(factcode, yymm, "tz");
+			if(obj_zd[0]!=null&&obj_zd[1]!=null&&obj_zd[2]!=null&&
+			   obj_zd[3]!=null&&obj_zd[4]!=null&&obj_zd[5]!=null&&
+			   obj_zd[6]!=null&&obj_zd[7]!=null&&obj_zd[8]!=null){
+				double hole=(Double)obj_zd[0];
+				double machinepower=(Double)obj_zd[1];
+				double estdays=(Double)obj_zd[2];
+				double esteverymodel=(Double)obj_zd[3];
+				double esteverypeople=(Double)obj_zd[4];
+				double estmodel=(Double)obj_zd[5];
+				double estnum=(Double)obj_zd[6];
+				double estpay=(Double)obj_zd[7];
+				double estmoney=(Double)obj_zd[8];
+				Webestproduct product=new Webestproduct();
+				WebestproductId id=new WebestproductId();
+				id.setFactCode(factcode);
+				product.setId(id);
+				product.setHole(hole);
+				product.setMachinepower(machinepower);
+				product.setEstdays(estdays);
+				product.setEsteverymodel(esteverymodel);
+				product.setEsteverypeople(esteverypeople);
+				product.setEstmodel(estmodel);
+				product.setEstnum(estnum);
+				product.setEstpay(estpay);
+				product.setEstmoney(estmoney);
+				sum_list_zd.add(product);
+			}else{
+				Webestproduct product=new Webestproduct();
+				WebestproductId id=new WebestproductId();
+				id.setFactCode(factcode);
+				product.setId(id);
+				sum_list_zd.add(product);
+			}
+			if(obj_tz[0]!=null&&obj_tz[1]!=null&&obj_tz[2]!=null&&
+			   obj_tz[3]!=null&&obj_tz[4]!=null&&obj_tz[5]!=null&&
+			   obj_tz[6]!=null&&obj_tz[7]!=null&&obj_tz[8]!=null){
+				double hole=(Double)obj_tz[0];
+				double machinepower=(Double)obj_tz[1];
+				double estdays=(Double)obj_tz[2];
+				double esteverymodel=(Double)obj_tz[3];
+				double esteverypeople=(Double)obj_tz[4];
+				double estmodel=(Double)obj_tz[5];
+				double estnum=(Double)obj_tz[6];
+				double estpay=(Double)obj_tz[7];
+				double estmoney=(Double)obj_tz[8];
+				Webestproduct product=new Webestproduct();
+				WebestproductId id=new WebestproductId();
+				id.setFactCode(factcode);
+				product.setId(id);
+				product.setHole(hole);
+				product.setMachinepower(machinepower);
+				product.setEstdays(estdays);
+				product.setEsteverymodel(esteverymodel);
+				product.setEsteverypeople(esteverypeople);
+				product.setEstmodel(estmodel);
+				product.setEstnum(estnum);
+				product.setEstpay(estpay);
+				product.setEstmoney(estmoney);
+				sum_list_tz.add(product);
+			}else{
+				Webestproduct product=new Webestproduct();
+				WebestproductId id=new WebestproductId();
+				id.setFactCode(factcode);
+				product.setId(id);
+				sum_list_tz.add(product);
+			}
+		}//end for
+		Map<String,Object>map=new HashMap<String,Object>();
+		Map<String,Object>sub_map=new HashMap<String,Object>();
+		Map<String,Object>sub_map2=new HashMap<String,Object>();
+		Map<String,Object>sub_map3=new HashMap<String,Object>();
+		Map<String,Object>sub_map3_3=new HashMap<String,Object>();		
+		sub_map.put("list_zd", list_zd);
+		sub_map2.put("list_tz",list_tz);		
+		sub_map3.put("sum_list_zd", sum_list_zd);
+		sub_map3_3.put("sum_list_tz", sum_list_tz);
+		map.put("sub_map", sub_map);
+		map.put("sub_map2", sub_map2);
+		map.put("sub_map3", sub_map3);
+		map.put("sub_map3_3", sub_map3_3);
+		map.put("yymm", yymm);
+		map.put("SUBREPORT_DIR",ServletActionContext.getRequest().getRealPath("/jasper/audit/")+ "/");
+		if(lookordown.equals("look")){
+			JasperHelper.exportmain("html", map,"webestproduct.jasper", list_zd,yymm, "jasper/audit/");
+		}else{
+			JasperHelper.exportmain("excel", map,"webestproduct.jasper", list_zd,yymm, "jasper/audit/");
+		}
+	}
+
+}

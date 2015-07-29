@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+	"
+	>
+	
+		<!-- 定义调度工作任务 -->
+    <bean id="quantzjobBean" class="org.springframework.scheduling.quartz.JobDetailBean">
+        <property name="jobClass">
+            <!-- 实现了org.springframework.scheduling.quartz.QuartzJobBean的JobBean -->
+            <value>action.TestTimerAction</value>
+        </property>
+        <!-- 调用业务逻辑 -->
+        <!--  
+        <property name="jobDataAsMap">
+            <map>
+                <entry key="biz">
+                    <ref bean="users"/>
+                </entry>
+            </map>
+        </property>
+        -->
+    </bean>
+
+    <!-- 触发任务条件 -->
+   <!--  <bean id="simpletriggerbean" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
+        <property name="jobDetail" ref="quantzjobBean"></property>
+        延迟一分钟启动
+       <property name="startDelay">
+            <value>60000</value>
+        </property>
+        每隔2分钟调用一次
+        <property name="repeatInterval">
+            <value>60000</value>
+        </property>
+         执行10次
+        <property name="repeatCount">
+            <value>10</value>
+        </property>     
+    </bean> -->
+   
+   <!-- 触发任务条件 -->
+    <bean id="CronTriggerBean" class="org.springframework.scheduling.quartz.CronTriggerBean">  
+      <property name="jobDetail" ref="quantzjobBean"></property>  
+      <property name="cronExpression" value="0 0 14 * * ?"></property>  
+    </bean> 
+    
+    <!-- 启动调度 -->
+    <bean id="startQuartz" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="triggers">
+            <list>
+                <ref bean="CronTriggerBean"/>
+            </list>
+        </property>        
+    </bean>
+	
+	</beans>

@@ -1,0 +1,137 @@
+div.divDialogBG_msgBox{
+	background-color: Gray;
+	position:absolute;
+	left:0px;
+	top:0px;
+	width:0px;
+	height:0px;
+	opacity: 0.5; 
+	filter:Alpha(Opacity=50);/* IE */
+	z-index: 9;
+	display:none;
+}
+
+div.div_msgBox{
+	position: absolute;
+	background-color:#0080C0;
+    padding:10px;
+	z-index: 10;
+	display:none;
+	}
+
+div.divClose_msgBox{
+	text-decoration:none;
+	width:18px;
+	height:18px;
+	background-image:url(close.png) ;
+	background-repeat:no-repeat;	
+	}
+
+ul.ui_msgBox{
+    margin:0px;
+    padding:0px;
+	list-style-type:none;
+	width:100% auto;
+	}
+li.liTitle_msgBox{
+	float:left;
+	color:#ffffff;
+	font: 16px/1.8 Microsoft YaHei,Arial;
+	font-weight:bold;
+	}
+li.liClose_msgBox{
+	float:right;
+	}
+	
+div.divBorder_msgBox{
+	border: 1px solid #E0ECFF;
+    margin-top:30px;
+	background-color:#8DB2E3;
+	padding:1px;
+	}	
+div.divContent_msgBox{
+	background-color:#ffffff;
+	color:#333333;
+	font: 15px/1.8 Microsoft YaHei,Arial;
+	font-weight:bold;
+	text-align:center;
+	vertical-align:middle;
+	padding:20px 50px 20px 50px;
+	}
+a.aBtn_msgBox{
+	border: 1px solid #0080C0;
+	padding:2px 12px 2px 12px;
+	text-decoration:none;
+	font: 15px/1.8 Microsoft YaHei,Arial;
+	font-weight:bold;
+
+}
+a.aBtn_msgBox:link,a.aBtn_msgBox:visited{
+	color:#0080C0;
+	background-color:#ECF5FF;
+}
+a.aBtn_msgBox:hover{
+	color:#0080C0;
+	background-color:#D2E9FF;
+}
+
+div.divIco_msgBox_gx{
+	width:22px;
+	height:22px;
+	background-image:url(gx.gif) ;
+	background-repeat:no-repeat;	
+	}
+div.divIco_msgBox_gz{
+	width:22px;
+	height:22px;
+	background-image:url(gz.gif) ;
+	background-repeat:no-repeat;	
+	}
+div.divIco_msgBox_han{
+	width:22px;
+	height:22px;
+	background-image:url(han.gif) ;
+	background-repeat:no-repeat;	
+	}
+div.divIco_msgBox_hao{
+	width:22px;
+	height:22px;
+	background-image:url(hao.gif) ;
+	background-repeat:no-repeat;	
+	}
+div.divIco_msgBox_wx{
+	width:22px;
+	height:22px;
+	background-image:url(wx.gif) ;
+	background-repeat:no-repeat;	
+	}
+div.divIco_msgBox_yw{
+	width:22px;
+	height:22px;
+	background-image:url(yw.gif) ;
+	background-repeat:no-repeat;	
+	}
+div.divIco_msgBox_atm{
+	width:22px;
+	height:22px;
+	background-image:url(atm.gif) ;
+	background-repeat:no-repeat;	
+	}
+div.divIco_msgBox_wbs{
+	width:22px;
+	height:22px;
+	background-image:url(wbs.gif) ;
+	background-repeat:no-repeat;	
+	}
+div.divIco_msgBox_sj{
+	width:22px;
+	height:22px;
+	background-image:url(sj.gif) ;
+	background-repeat:no-repeat;	
+	}
+div.divIco_msgBox_loading{
+	width:22px;
+	height:22px;
+	background-image:url(loading.gif) ;
+	background-repeat:no-repeat;	
+	}

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+	"
+	default-autowire="byName">
+	<bean id="webUserService" class="services.impl.WebUserServiceImpl" />
+	<bean id="menuSer" class="services.impl.WebMenuServicesImpl" />
+	<bean id="webLogService" class="services.impl.WebLogServiceImpl" />
+	<bean id="webBackmatSer" class="services.impl.WebBackMatServicesImpl" />
+	<bean id="backpfSer" class="services.impl.WebBackpfServicesImpl" />
+	<bean id="storeSer" class="services.impl.WebCpStoreServicesImpl" />
+	<bean id="gwSer" class="services.impl.WebGwServicesImpl" />
+	<bean id="machineSer" class="services.impl.WebMachineServicesImpl" />
+	<bean id="mats2Ser" class="services.impl.WebMats2ServicesImpl" />
+	<bean id="matSer" class="services.impl.WebMatsServicesImpl" />
+	<bean id="mstoreSer" class="services.impl.WebMatstoreServicesImpl" />
+	<bean id="outSer" class="services.impl.WebOutbackServicesImpl" />
+	<bean id="invSer" class="services.impl.WebOutputInvServicesImpl" />
+	<bean id="personSer" class="services.impl.WebPersonServicesImpl" />
+	<bean id="favgSer" class="services.impl.WebPfavgPriceServicesImpl" />
+	<bean id="profitSer" class="services.impl.WebProfitServicesImpl" />
+	<bean id="countSer" class="services.impl.WebProfitCountServicesImpl" />
+	<bean id="sideSer" class="services.impl.WebSideServicesImpl" />
+	<bean id="jurisdictionService" class="services.impl.WebJurisdictionServiceImpl" autowire="byName" />		
+	<bean id="submenuService" class="services.impl.WebSubmenuServiceImpl" autowire="byName" />		
+	<bean id="cashSer" class="services.impl.WebZwcashServicesImpl" />
+	<bean id="factSer" class="services.impl.KyFactServicesImpl" />
+	<bean id="preSer" class="services.impl.WebYielePredictionServicesImpl" />
+	<bean id="dataSer" class="services.impl.WebYieldDataServicesImple" />
+	<bean id="webFactSer" class="services.impl.WebFactServicesImpl" />
+	<bean id="fixSer" class="services.impl.WebFixedServicesImpl" />
+	<bean id="costSer" class="services.impl.WebCostServicesImpl" />
+	<bean id="mix2Service" class="services.impl.WebMix2ServicesImpl" />
+	<bean id="mixPersonService" class="services.impl.WebMixPersonServicesImpl" />
+	<bean id="produtedService" class="services.impl.WebProdutedServicesImpl" />
+	<bean id="scraptService" class="services.impl.WebScraptServicesImpl" />
+	<bean id="wloService" class="services.impl.WebwloServicesImpl" />
+	<bean id="mix1Ser" class="services.impl.WebMix1ServicesImpl" />
+	<bean id="estProSer" class="services.impl.WebEstProductServicesImpl" />
+	<bean id="feedSer" class="services.impl.WebBackFeedServicesImpl" />
+	<bean id="personNumSer" class="services.impl.WebPersonnumServicesImpl" />
+	<bean id="subSer" class="services.impl.WebSubsortServicesImpl" />
+	<bean id="majorSer" class="services.impl.WebMajorSortServicesImpl" />
+	<bean id="fixlogSer" class="services.impl.WebFixedLogServicesImpl" />
+	<bean id="kyzSer" class="services.impl.KyzExpectmatmServicesImpl" />
+	<bean id="emailService" class="services.impl.WebEmailServiceImpl" />
+	<bean id="kyzsSer" class="services.impl.KyzExpcetmatmsServicesImpl"/>
+	<bean id="visaSer" class="services.impl.KyzVisaFlowServicesImpl"/>
+	<bean id="kytypeSer" class="services.impl.KyTypeServicesImpl"/>
+	<bean id="visabillSer" class="services.impl.KyVisaBillsServicesImpl"/>
+	<bean id="visabillmSer" class="services.impl.KyVisabillmServicesImpl"/>
+	<bean id="kyzsecSer" class="services.impl.KyzSecServicesImpl"/>
+	<bean id="kyzacctSer" class="services.impl.KyzAcctServicesImpl"/>
+	<bean id="kyzpettySer" class="services.impl.KyzPettyServicesImpl"/>
+	<bean id="webuploadSer" class="services.impl.WebUploadFileServicesImpl"/>
+	<bean id="kyzexpfileSer" class="services.impl.KyzExpectmatmFileServicesImpl"/>
+	<bean id="vkpiSer" class="services.impl.VKpifactServicesImpl"/>
+	<bean id="vwebmachineser" class="services.impl.VWebmachineServicesImpl"/>
+	<bean id="vinvser" class="services.impl.VWebOutoutinvServicesImpl"/>
+	<bean id="vmix1ser" class="services.impl.VSumWebmix1ServicesImpl"/>
+	<bean id="vpersonser" class="services.impl.VWebpersonServicesImpl"/>
+	<bean id="vgwser" class="services.impl.VWebGwServicesImpl"/>
+	<bean id="vsideser" class="services.impl.VWebSideServicesImpl"/>
+	<bean id="vstoreser" class="services.impl.VWebStoreServicesImpl"/>
+	<bean id="vwloser" class="services.impl.VWebwloServicesImpl"/>
+	<bean id="vkpieveSer" class="services.impl.VKpifactEveServicesImpl"/>
+	
+	<bean id="machineeveSer" class="services.impl.VWebmachineEveServicesImpl"/>
+	<bean id="inveveSer" class="services.impl.VWeboutputinvEveServicesImpl"/>
+	<bean id="personeveSer" class="services.impl.VWebpersonEveServicesImpl"/>
+	<bean id="gweveSer" class="services.impl.VWebgwEveServicesImpl"/>
+	<bean id="sideeveSer" class="services.impl.VWebsideEveServicesImpl"/>
+	<bean id="storeeveSer" class="services.impl.VWebstoreEveServicesImpl"/>
+	<bean id="wloeveSer" class="services.impl.VWebwloEveServicesImpl"/>
+	<bean id="sumwlodSer" class="services.impl.VSumwloServicesImpl"/>
+	<bean id="suminvSer" class="services.impl.VSuminvServicesImpl"/>
+	<bean id="sumlossSer" class="services.impl.VSumlossServicesImpl"/>
+	<bean id="sumstoreSer" class="services.impl.VSumstoreServicesImpl"/>
+	<bean id="kyzmatSer" class="services.impl.KyzMatServicesImpl"/>
+	<bean id="kyzscmSer" class="services.impl.KyzScmClassmServicesImpl"/>
+	<bean id="subkyzmatSer" class="services.impl.SubKyzmatServicesImpl"/>
+	<bean id="sumydateSer" class="services.impl.SumWebYieldDataServicesImpl"/>
+	<bean id="kpiSer" class="services.impl.KpifactServicesImpl"/>
+	<bean id="kyzletterSer" class="services.impl.KyzContactLetterServicesImpl"/>
+	<bean id="sumydatelogSer" class="services.impl.SumWebYieldDataLogServicesImpl"></bean>
+	<bean id="cashoutSer" class="services.impl.WebCashoutServicesImpl"></bean>
+	<bean id="vcashoutSer" class="services.impl.VWebydataawebcashoutServicesImpl"></bean>
+	<bean id="vwebcostSer" class="services.impl.VWebcostServicesImpl"></bean>
+	<bean id="vwebcosteveSer" class="services.impl.VWebcostEveServicesImpl"></bean>
+</beans>
+
+

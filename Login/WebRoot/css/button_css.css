@@ -1,0 +1,65 @@
+  #sub,#reset,#btn_back{
+    width:143px;
+    height:40px;
+    background:url(../images/btn_all.jpg) no-repeat left top;
+     color:#FFF;
+     border:0px;
+     font-family:"Arial", "Tahoma", "微软雅黑", "雅黑";
+     font-size:18px;
+     line-height:18px;
+     vertical-align:middle; 
+     margin:8px;
+  }
+  #btn_change,#addbtn,#delbtn,#sub2,#showbtn{
+    width:58px;
+    height:21px;
+    background:url(../images/btn_change.gif) no-repeat center;
+    border:0px;
+    font-family:"Arial", "Tahoma", "微软雅黑", "雅黑";
+     font-size:12px;
+     color:white;
+     font-weight:bold;
+     line-height:12px;
+     vertical-align:middle; 
+     margin:8px;
+  }
+  #search_forday{
+    width:90px;
+    height:21px;
+    background:url(../images/search_time.gif) no-repeat center;
+    border:0px;
+    font-family:"Arial", "Tahoma", "微软雅黑", "雅黑";
+     font-size:12px;
+     color:white;
+     font-weight:bold;
+     line-height:12px;
+     vertical-align:middle; 
+     margin:8px;
+  }
+  #btn_go,#btn_reset{
+      width:100px;
+      height:40px;
+      background:url(../images/btn_login_black.gif) no-repeat center;
+      border:0px;
+      font-family:"Arial","Tahoma","微軟雅黑","雅黑";
+      font-size:17px;
+      color:white;
+      font-weight:bold;
+      line-height:17px;
+      vertical-align:middle;
+      margin:8px;
+  
+  }
+  .addbtn{
+      width:58px;
+    height:21px;
+    background:url(../images/btn_change.gif) no-repeat center;
+    border:0px;
+    font-family:"Arial", "Tahoma", "微软雅黑", "雅黑";
+     font-size:12px;
+     color:white;
+     font-weight:bold;
+     line-height:12px;
+     vertical-align:middle; 
+     margin:8px;
+  }

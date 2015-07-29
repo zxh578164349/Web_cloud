@@ -1,0 +1,130 @@
+package services.impl;
+
+import java.util.List;
+import services.IWebUserService;
+import util.PageBean;
+import dao.IWebUserDao;
+import entity.WebUser;
+
+public class WebUserServiceImpl implements IWebUserService {
+
+	private IWebUserDao webUserDao;
+
+	public IWebUserDao getWebUserDao() {
+		return webUserDao;
+	}
+
+	public void setWebUserDao(IWebUserDao webUserDao) {
+		this.webUserDao = webUserDao;
+	}
+
+	public WebUser selbyName(String name) {
+		WebUser user = webUserDao.selByName(name);
+		return user;
+	}
+
+	public boolean updateUser(WebUser webUser) {
+		try {
+			webUserDao.updates(webUser);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+	}
+
+	public List<WebUser> getUsers(int page, int rows, String conditions,
+			String fact) {
+		return webUserDao.getUsers(page, rows, conditions, fact);
+	}
+
+	public int totlePage(String conditions) {
+		return webUserDao.totlePage(conditions);
+	}
+
+	public List findMoreUser(String uname) {
+		// TODO Auto-generated method stub
+		return webUserDao.findMoreUser(uname);
+	}
+
+	public boolean updateKy(int id, int available) {
+		try {
+			webUserDao.updateKy(id, available);
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	public WebUser selByuserId(int id) {
+		return webUserDao.selByuserId(id);
+	}
+
+	public WebUser selByuserId(String factno, String username) {
+		return webUserDao.selByuserId(factno, username);
+	}
+
+	public WebUser selByuserId(int id, String username) {
+		return webUserDao.selByuserId(id, username);
+	}
+
+	public List<WebUser> findSameUser(WebUser user) {
+		// TODO Auto-generated method stub
+		return webUserDao.findSameUser(user);
+	}
+
+	public PageBean findPageBean(int pageSize, int page, String userName,
+			String factNo) {
+		// TODO Auto-generated method stub
+		return webUserDao.findPageBean(pageSize, page, userName, factNo);
+	}
+
+	public WebUser findByIdDWR(String factNo, String username) {
+		// TODO Auto-generated method stub
+		return webUserDao.selByuserId(factNo, username);
+	}
+
+	public void add(WebUser user) {
+		// TODO Auto-generated method stub
+		webUserDao.add(user);
+	}
+
+	public List<WebUser> findByEmailDwr(String email) {
+		// TODO Auto-generated method stub
+		return webUserDao.findByEmailDwr(email);
+	}
+
+	public List<WebUser> findByUserNameDwr(String factNo,String name) {
+		// TODO Auto-generated method stub
+		List<WebUser> list=webUserDao.findByUserNameDwr(factNo,name);		
+		return list;
+	}
+
+	public WebUser findByNameAndFactNoDwr(String factNo, String name) {
+		// TODO Auto-generated method stub
+		return webUserDao.findByNameAndFactNoDwr(factNo, name);
+	}
+
+	public void delete(int id) {
+		// TODO Auto-generated method stub
+		webUserDao.delete(id);
+	}
+
+	public WebUser findByIdDwr2(String factNo, String userName) {
+		// TODO Auto-generated method stub
+		return webUserDao.findByIdDwr2(factNo, userName);
+	}
+
+	public PageBean findPageBean_init(int pageSize, int page, String userName,
+			String factNo) {
+		// TODO Auto-generated method stub
+		return webUserDao.findPageBean_init(pageSize, page, userName, factNo);
+	}
+
+	public WebUser findUser(String username, String pwd, String factNo) {
+		// TODO Auto-generated method stub
+		return webUserDao.findUser(username, pwd, factNo);
+	}
+
+
+}
