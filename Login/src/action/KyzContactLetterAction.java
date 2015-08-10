@@ -345,13 +345,15 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 		/**
 		 * 最後個不用審核的,就去掉
 		 */
-		if(list_visa.get(list_visa.size()-2).getFlowMk().equals("N")){//(費用簽核2，後面兩個都不要簽核   20150414)
+		if(list_visa.get(list_visa.size()-3).getFlowMk().equals("N")){//(>=1000的，後面三個都不要簽核   20150803)
+			list_visa.remove(list_visa.size()-1);
 			list_visa.remove(list_visa.size()-1);
 			list_visa.remove(list_visa.size()-1);
 		}else if(list_visa.get(list_visa.size()-1).getFlowMk().equals("N")){
 			list_visa.remove(list_visa.size()-1);
 		}
-		if(list_visaflow.get(list_visaflow.size()-2).getFlowMk().equals("N")){//(費用簽核2，後面兩個都不要簽核   20150414)
+		if(list_visaflow.get(list_visaflow.size()-3).getFlowMk().equals("N")){//(>=1000的，後面三個都不要簽核   20150803)
+			list_visaflow.remove(list_visaflow.size()-1);
 			list_visaflow.remove(list_visaflow.size()-1);
 			list_visaflow.remove(list_visaflow.size()-1);
 		}else if(list_visaflow.get(list_visaflow.size()-1).getFlowMk().equals("N")){
@@ -396,7 +398,9 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 			}
 			if(memo!=null){
 				visabillstemp.setMemo("(備註:"+memo+")");
-			}			
+			}
+			visabillstemp.setVisaSigner(list_visa.get(i).getVisaSigner());
+			visabillstemp.setVisaMk(list_visa.get(i).getVisaMk());
 			list_visabillstemp.add(visabillstemp);
 		}
 		

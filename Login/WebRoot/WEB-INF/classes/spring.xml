@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+	"
+	default-autowire="byName">
+	<!-- <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver">
+		</property>
+		<property name="url" value="jdbc:oracle:thin:@172.17.18.19:1521:ORCL">
+		</property>
+		<property name="username" value="kayuen"></property>
+		<property name="password" value="kayuen"></property>
+	</bean> -->
+	
+	<bean id="dataSource" class="org.logicalcobwebs.proxool.ProxoolDataSource"
+	destroy-method="close">
+	<!-- 驱动的名字，oracle -->
+	<property name="driver">
+		<value>oracle.jdbc.driver.OracleDriver</value>
+	</property>
+	<!--proxool 的 url连接串，这个必须确定用户名和密码 -->
+	<property name="driverUrl">
+		<value>jdbc:oracle:thin:kayuen/kayuen@172.17.18.19:1521:ORCL</value>
+	</property>
+	<!-- 用户名(proxool没有使用，但是不能没有) -->
+	<property name="user">
+		<value>kayuen</value>
+	</property>
+	<!-- 密码(proxool没有使用，但是不能没有) -->
+	<property name="password">
+		<value>kayuen</value>
+	</property>
+	<!-- 数据源的别名 -->
+	<property name="alias">
+		<value>kayuen</value>
+	</property>
+	<!-- proxool自动侦察各个连接状态的时间间隔(毫秒),侦察到空闲的连接就马上回收,超时的销毁 现在设置为4秒） -->
+	<property name="houseKeepingSleepTime">
+		<value>4000</value>
+	</property>
+	<!-- 自动检查连接是否断掉开关 -->
+	<property name="testBeforeUse">
+		<value>true</value>
+	</property>
+	<!-- 如果发现了空闲的数据库连接.house keeper 将会用这个语句来测试.这个语句最好非常快的被执行.如果没有定义,测试过程将会被忽略 -->
+	<property name="houseKeepingTestSql">
+		<value>select sysdate from dual</value>
+	</property>
+	<!-- 如果housekeeper 检测到某个线程的活动时间大于这个数值.它将会杀掉这个线程.所以确认一下你的服务器的带宽.然后定一个合适的值.默认是5分钟. 
+		现在设置 10 秒 -->
+	<property name="maximumActiveTime">
+		<value>10000</value>
+	</property>
+	<!-- 最少保持的空闲连接数 （现在设置20个） -->
+	<property name="prototypeCount">
+		<value>20</value>
+	</property>
+	<!-- 最大连接数 （现在设置200个） -->
+	<property name="maximumConnectionCount">
+		<value>100</value>
+	</property>
+	<!-- 最小连接数 （现在设置50个） -->
+	<property name="minimumConnectionCount">
+		<value>50</value>
+	</property>
+	<!-- 如果为true,那么每个被执行的SQL语句将会在执行期被log记录(DEBUG LEVEL).你也可以注册一个ConnectionListener 
+		(参看ProxoolFacade)得到这些信息. -->
+	<property name="trace">
+		<value>false</value>
+	</property>
+	<property name="verbose">
+		<value>true</value>
+	</property>
+    </bean>
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">
+					org.hibernate.dialect.Oracle9Dialect
+				</prop>
+				<!-- <prop key="hibernate.show_sql">true</prop> <prop key="hibernate.format_sql">true</prop> -->
+				<prop key="hibernate.autoReconnect">true</prop>
+
+			</props>
+		</property>
+		<property name="mappingResources">
+			<list>
+				<value>entity/WebSubmenu.hbm.xml</value>
+				<value>entity/WebUser.hbm.xml</value>
+				<value>entity/WebMenu.hbm.xml</value>
+				<value>entity/WebJurisdiction.hbm.xml</value>
+				<value>entity/WebLog.hbm.xml</value>
+				<value>entity/WebMats.hbm.xml</value>
+				<value>entity/WebBackmat.hbm.xml</value>
+				<value>entity/WebCpstore.hbm.xml</value>
+				<value>entity/WebOutback.hbm.xml</value>
+				<value>entity/WebPerson.hbm.xml</value>
+				<value>entity/WebZwcash.hbm.xml</value>
+				<value>entity/WebMachin.hbm.xml</value>
+				<value>entity/WebPfavgprice.hbm.xml</value>
+				<value>entity/WebProfit.hbm.xml</value>
+				<value>entity/WebOutputinv.hbm.xml</value>
+				<value>entity/WebMatstore.hbm.xml</value>
+				<value>entity/WebBackpf.hbm.xml</value>
+				<value>entity/WebGw.hbm.xml</value>
+				<value>entity/WebProfitcount.hbm.xml</value>
+				<value>entity/WebMats2.hbm.xml</value>
+				<value>entity/WebSide.hbm.xml</value>
+				<value>entity/KyFact.hbm.xml</value>
+				<value>entity/WebFixed.hbm.xml</value>
+				<value>entity/WebJurs.hbm.xml</value>
+				<value>entity/WebDistributionsub.hbm.xml</value>
+				<value>entity/WebDistribution.hbm.xml</value>
+				<value>entity/WebYielePrediction.hbm.xml</value>
+				<value>entity/WebYieldData.hbm.xml</value>
+				<value>entity/WebFact.hbm.xml</value>
+				<value>entity/Webproduted.hbm.xml</value>
+				<value>entity/Webscrapt.hbm.xml</value>
+				<value>entity/Webmixperson.hbm.xml</value>
+				<value>entity/Webestproduct.hbm.xml</value>
+				<value>entity/Webmix1.hbm.xml</value>
+				<value>entity/Webmix2.hbm.xml</value>
+				<value>entity/Webwlo.hbm.xml</value>
+				<value>entity/Webcost.hbm.xml</value>
+				<value>entity/Webbackfeed.hbm.xml</value>
+				<value>entity/Webpersonnum.hbm.xml</value>
+				<value>entity/WebSubsort.hbm.xml</value>
+				<value>entity/WebMajorsort.hbm.xml</value>
+				<value>entity/WebFixedLog.hbm.xml</value>
+				<value>entity/WebYieldDataLog.hbm.xml</value>
+				<value>entity/KyzExpectmatm.hbm.xml</value>
+				<value>entity/KyzExpectmats.hbm.xml</value>
+				<value>entity/WebCc.hbm.xml</value>
+				<value>entity/WebEmail.hbm.xml</value>
+				<value>entity/KyzVisaflow.hbm.xml</value>
+				<value>entity/KyType.hbm.xml</value>
+				<value>entity/KyVisabills.hbm.xml</value>
+				<value>entity/KyVisabillm.hbm.xml</value>
+				<value>entity/KyzSec.hbm.xml</value>
+				<value>entity/KyzAcct.hbm.xml</value>
+				<value>entity/KyzPetty.hbm.xml</value>
+				<value>entity/WebUploadfiles.hbm.xml</value>
+				<value>entity/KyzExpectmatmFile.hbm.xml</value>
+				<value>entity/VKpifact.hbm.xml</value>
+				<value>entity/VWebmachine.hbm.xml</value>
+				<value>entity/VWeboutputinv.hbm.xml</value>
+				<value>entity/VWebperson.hbm.xml</value>
+				<value>entity/VSumWebmix1.hbm.xml</value>
+				<value>entity/VWebwlo.hbm.xml</value>
+				<value>entity/VWebgw.hbm.xml</value>
+				<value>entity/VWebstore.hbm.xml</value>
+				<value>entity/VWebside.hbm.xml</value>
+				<value>entity/VKpifactEve.hbm.xml</value>
+				<value>entity/VWebstoreEve.hbm.xml</value>
+				<value>entity/VWeboutputinvEve.hbm.xml</value>
+				<value>entity/VWebsideEve.hbm.xml</value>
+				<value>entity/VWebgwEve.hbm.xml</value>
+				<value>entity/VWebmachineEve.hbm.xml</value>
+				<value>entity/VWebpersonEve.hbm.xml</value>
+				<value>entity/VWebwloEve.hbm.xml</value>
+				<value>entity/VSumloss.hbm.xml</value>
+				<value>entity/VSuminv.hbm.xml</value>
+				<value>entity/VSumstore.hbm.xml</value>
+				<value>entity/VSumwlo.hbm.xml</value>
+				<value>entity/KyzScmClassm.hbm.xml</value>
+				<value>entity/KyzMat.hbm.xml</value>
+				<value>entity/SubKyzmat.hbm.xml</value>
+				<value>entity/SumWebYieldData.hbm.xml</value>
+				<value>entity/Kpifact.hbm.xml</value>
+				<value>entity/KyzContactletter.hbm.xml</value>
+				<value>entity/SumWebYieldDataLog.hbm.xml</value>
+				<value>entity/Webcashout.hbm.xml</value>
+				<value>entity/VWebydataawebcashout.hbm.xml</value>
+				<value>entity/VWebcost.hbm.xml</value>
+				<value>entity/VWebcostEve.hbm.xml</value></list>
+		</property>
+	</bean>
+	<bean id="baseDao" class="dao.Basedao">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<!-- <bean id="hibernateTemplate"
+
+      class="org.springframework.orm.hibernate3.HibernateTemplate">
+
+      <property name="sessionFactory">
+        <ref bean="sessionFactory" />
+      </property>
+
+   </bean> 
+   
+ <bean id="hibernateInterceptor" class="org.springframework.orm.hibernate3.HibernateInterceptor">
+<property name="sessionFactory">
+<ref bean="sessionFactory"/>
+</property>
+</bean>
+<bean id="dataprovider" class="org.springframework.aop.framework.ProxyFactoryBean">
+<property name="proxyInterfaces">  
+            <value>services.IKyVisabillmServices</value>  
+        </property>
+<property name="target">  
+            <ref bean="visabillmSer"/>  
+        </property>
+<property name="interceptorNames">
+
+  <list>
+     <value>hibernateInterceptor</value>
+  </list>
+</property>
+</bean>-->
+	<!-- 基于XML的方式配置事务 -->
+	<!-- 配置Hibernate的事务管理器 -->
+	<!-- 使用HibernateTransactionManager类实现基于Hibernate的事务管理器 -->
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<!-- 定义事务通知，需要指定一个事务管理器 -->
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<!-- 定义属性，声明事务规则 -->
+		<tx:attributes>
+			<!-- 对非增删改方法要求只读事务 -->
+			<tx:method name="add*" propagation="REQUIRED" />
+			<tx:method name="save*" propagation="REQUIRED" />
+			<tx:method name="del*" propagation="REQUIRED" />
+			<tx:method name="update*" propagation="REQUIRED" />
+			<tx:method name="*" read-only="true" />
+		</tx:attributes>
+	</tx:advice>
+	<!-- 定义哪些类应用这些规则 -->
+	<aop:config>
+		<aop:pointcut id="point-cut" expression="execution(* services.*.*(..))" />
+		<!-- 将事务通知与应用规则的方法组合 -->
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="point-cut" />
+	</aop:config>
+	<!-- 分頁 -->
+	<bean id="pages" class="util.Page" />
+</beans>

@@ -16,6 +16,7 @@
 		  <param name="beanName" value="webFactSer"/>
 		  <include method="findFactCodeByFactNo"/>
 		  <include method="findFactCodeByFactNo_show"/>
+		  <include method="findFactCodeByFactNo_show_dw"/>
 		  <include method="findByFactNo"/>
 		  <include method="findAllFact"/>
 		  <include method="findAllFact2"/>

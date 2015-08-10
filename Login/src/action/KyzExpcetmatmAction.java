@@ -408,6 +408,7 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 							kyzSer.add(kyz);
 							KyVisabillm vbm=visabillmSer.findById(kyz.getId().getFactNo(), kyz.getVisaType(), kyz.getId().getBillNo());
 							result="add";
+							//print(kyz.getId(),kyz.getVisaType());
 							/**
 							 * 發送郵件
 							 */							
@@ -607,13 +608,21 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 		/**
 		 * 最後個不用審核的,就去掉
 		 */
-		if(list_visa.get(list_visa.size()-2).getFlowMk().equals("N")){//(費用簽核2，後面兩個都不要簽核   20150414)
+		if(list_visa.get(list_visa.size()-3).getFlowMk().equals("N")){//(>=1000的，後面三個都不要簽核   20150803)
+			list_visa.remove(list_visa.size()-1);
+			list_visa.remove(list_visa.size()-1);
+			list_visa.remove(list_visa.size()-1);
+		}else if(list_visa.get(list_visa.size()-2).getFlowMk().equals("N")){
 			list_visa.remove(list_visa.size()-1);
 			list_visa.remove(list_visa.size()-1);
 		}else if(list_visa.get(list_visa.size()-1).getFlowMk().equals("N")){
 			list_visa.remove(list_visa.size()-1);
 		}
-		if(list_visaflow.get(list_visaflow.size()-2).getFlowMk().equals("N")){//(費用簽核2，後面兩個都不要簽核   20150414)
+		if(list_visaflow.get(list_visaflow.size()-3).getFlowMk().equals("N")){//(>=1000的，後面三個都不要簽核   20150803)
+			list_visaflow.remove(list_visaflow.size()-1);
+			list_visaflow.remove(list_visaflow.size()-1);
+			list_visaflow.remove(list_visaflow.size()-1);
+		}else if(list_visaflow.get(list_visaflow.size()-2).getFlowMk().equals("N")){
 			list_visaflow.remove(list_visaflow.size()-1);
 			list_visaflow.remove(list_visaflow.size()-1);
 		}else if(list_visaflow.get(list_visaflow.size()-1).getFlowMk().equals("N")){
@@ -658,7 +667,9 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 			}
 			if(memo!=null){
 				visabillstemp.setMemo("(備註:"+memo+")");
-			}			
+			}
+			visabillstemp.setVisaSigner(list_visa.get(i).getVisaSigner());
+			visabillstemp.setVisaMk(list_visa.get(i).getVisaMk());
 			list_visabillstemp.add(visabillstemp);
 		}
 		
@@ -669,6 +680,10 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 		
 		map.put("sub_map", sub_map);
 		map.put("visa_map", visa_map);
+		
+		Map main_map=new HashMap<String,Object>();    /*把list（List<KyzExpectmatm> list=kyzSer.findById_Print(id)）放在一个子表,便于打印  20150804*/
+		main_map.put("list_main", list);
+		map.put("main_map", main_map);
 		
 		/*函文附檔*/
 		//String pic_file=ServletActionContext.getRequest().getRealPath("/KyzexpFile/"+id.getBillNo()+"/")+"/";//函文附檔圖片路徑(附檔在項目的路徑)

@@ -609,16 +609,19 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 		KyVisabillm vbm=visabillmSer.findById(factNo, visaSort, billNo);
 		
 		/**
-		 * 如果最後一個不要審核,則要去掉(也就是總長度-1)（現在，"費用簽核2"最後兩位都不要審核，則總長度-2      20150414）
+		 * 如果最後一個不要審核,則要去掉(也就是總長度-1)（現在，>=1000的最後三位都不要審核，則總長度-3      20150803）
 		 */
 		int vbs_size=0;		
-		if(vbm.getKyVisabillses().get(vbm.getKyVisabillses().size()-2).getFlowMk().equals("N")){
+		if(vbm.getKyVisabillses().get(vbm.getKyVisabillses().size()-3).getFlowMk().equals("N")){
+			vbs_size=vbm.getKyVisabillses().size()-3;
+		}else if(vbm.getKyVisabillses().get(vbm.getKyVisabillses().size()-2).getFlowMk().equals("N")){
 			vbs_size=vbm.getKyVisabillses().size()-2;
 		}else if(vbm.getKyVisabillses().get(vbm.getKyVisabillses().size()-1).getFlowMk().equals("N")){
 			vbs_size=vbm.getKyVisabillses().size()-1;
 		}else{
 			vbs_size=vbm.getKyVisabillses().size();
 		}
+		
 		String last_singer=vbm.getKyVisabillses().get(num).getVisaSigner();								
 		if(visa_mk.equals("Y")){//start if
 			//當最後一個審核人時
@@ -789,8 +792,10 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 		String signernext=vbm.getSignerNext();
 		
 		int vbs_size=0;
-		if(vbm.getKyVisabillses().get(vbm.getKyVisabillses().size()-2).getFlowMk().equals("N")){
-			vbs_size=vbm.getKyVisabillses().size()-2;//(費用簽核2，後面兩個都不要簽核   20150414)
+		if(vbm.getKyVisabillses().get(vbm.getKyVisabillses().size()-3).getFlowMk().equals("N")){
+			vbs_size=vbm.getKyVisabillses().size()-3;//(>=1000的最後三位都不要審核，則總長度-3  20150803)
+		}else if(vbm.getKyVisabillses().get(vbm.getKyVisabillses().size()-2).getFlowMk().equals("N")){
+			vbs_size=vbm.getKyVisabillses().size()-2;
 		}else if(vbm.getKyVisabillses().get(vbm.getKyVisabillses().size()-1).getFlowMk().equals("N")){
 			vbs_size=vbm.getKyVisabillses().size()-1;
 		}else{
@@ -976,8 +981,10 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 		 * 如果最後一個不要審核,則要去掉(也就是總長度-1)
 		 */
 		int vbs_list=0;
-		if(list.get(list.size()-2).getFlowMk().equals("N")){
-			vbs_list=list.size()-2;//(費用簽核2，後面兩個都不要簽核   20150414)
+		if(list.get(list.size()-3).getFlowMk().equals("N")){
+			vbs_list=list.size()-3;//(>=1000的最後三位都不要審核，則總長度-3  20150803)
+		}else if(list.get(list.size()-2).getFlowMk().equals("N")){
+			vbs_list=list.size()-2;
 		}else if(list.get(list.size()-1).getFlowMk().equals("N")){
 			vbs_list=list.size()-1;
 		}else{
@@ -1351,15 +1358,23 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 		/**
 		 * 如果最後不用審核,則去掉
 		 */
-		if(list_visa.get(list_visa.size()-2).getFlowMk().equals("N")){
-			list_visa.remove(list_visa.size()-1);//(費用簽核2，後面兩個都不要簽核   20150414)
+		if(list_visa.get(list_visa.size()-3).getFlowMk().equals("N")){
+			list_visa.remove(list_visa.size()-1);//(>=1000的最後三位都不要審核，則總長度-3  20150803)
+			list_visa.remove(list_visa.size()-1);
+			list_visa.remove(list_visa.size()-1);
+		}else if(list_visa.get(list_visa.size()-2).getFlowMk().equals("N")){
+			list_visa.remove(list_visa.size()-1);
 			list_visa.remove(list_visa.size()-1);
 		}else if(list_visa.get(list_visa.size()-1).getFlowMk().equals("N")){
 			list_visa.remove(list_visa.size()-1);
 		}
 		
-		if(list_visaflow.get(list_visaflow.size()-2).getFlowMk().equals("N")){
-			list_visaflow.remove(list_visaflow.size()-1);//(費用簽核2，後面兩個都不要簽核   20150414)
+		if(list_visaflow.get(list_visaflow.size()-3).getFlowMk().equals("N")){
+			list_visaflow.remove(list_visaflow.size()-1);//(>=1000的最後三位都不要審核，則總長度-3    20150803)
+			list_visaflow.remove(list_visaflow.size()-1);
+			list_visaflow.remove(list_visaflow.size()-1);
+		}else if(list_visaflow.get(list_visaflow.size()-2).getFlowMk().equals("N")){
+			list_visaflow.remove(list_visaflow.size()-1);
 			list_visaflow.remove(list_visaflow.size()-1);
 		}else if(list_visaflow.get(list_visaflow.size()-1).getFlowMk().equals("N")){
 			list_visaflow.remove(list_visaflow.size()-1);
@@ -1403,7 +1418,9 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 			
 			if(memo!=null){
 				visabillstemp.setMemo("(備註:"+memo+")");
-			}			
+			}
+			visabillstemp.setVisaSigner(list_visa.get(i).getVisaSigner());
+			visabillstemp.setVisaMk(list_visa.get(i).getVisaMk());
 			list_visabillstemp.add(visabillstemp);
 		}
 						
@@ -1412,6 +1429,9 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 		
 		map.put("sub_map", sub_map);
 		map.put("visa_map", visa_map);
+		Map main_map=new HashMap<String,Object>();    /*把list（List<KyzExpectmatm> list=kyzSer.findById_Print(id)）放在一个子表,便于打印  20150804*/
+		main_map.put("list_main", listkyz);
+		map.put("main_map", main_map);
 		
 		/*函文附檔*/
 		//String pic_file=ServletActionContext.getRequest().getRealPath("/KyzexpFile/"+kyzid.getBillNo()+"/")+"/";//函文附檔圖片路徑
@@ -1509,13 +1529,21 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 		/**
 		 * 最後個不用審核的,就去掉
 		 */
-		if(list_visa.get(list_visa.size()-2).getFlowMk().equals("N")){//(費用簽核2，後面兩個都不要簽核   20150414)
+		if(list_visa.get(list_visa.size()-3).getFlowMk().equals("N")){//(>=1000的，後面三個都不要簽核   20150803)
+			list_visa.remove(list_visa.size()-1);
+			list_visa.remove(list_visa.size()-1);
+			list_visa.remove(list_visa.size()-1);
+		}else if(list_visa.get(list_visa.size()-2).getFlowMk().equals("N")){
 			list_visa.remove(list_visa.size()-1);
 			list_visa.remove(list_visa.size()-1);
 		}else if(list_visa.get(list_visa.size()-1).getFlowMk().equals("N")){
 			list_visa.remove(list_visa.size()-1);
 		}
-		if(list_visaflow.get(list_visaflow.size()-2).getFlowMk().equals("N")){//(費用簽核2，後面兩個都不要簽核   20150414)
+		if(list_visaflow.get(list_visaflow.size()-3).getFlowMk().equals("N")){//(>=1000的，後面三個都不要簽核   20150803)
+			list_visaflow.remove(list_visaflow.size()-1);
+			list_visaflow.remove(list_visaflow.size()-1);
+			list_visaflow.remove(list_visaflow.size()-1);
+		}else if(list_visaflow.get(list_visaflow.size()-2).getFlowMk().equals("N")){
 			list_visaflow.remove(list_visaflow.size()-1);
 			list_visaflow.remove(list_visaflow.size()-1);
 		}else if(list_visaflow.get(list_visaflow.size()-1).getFlowMk().equals("N")){
@@ -1560,7 +1588,9 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 			}
 			if(memo!=null){
 				visabillstemp.setMemo("(備註:"+memo+")");
-			}			
+			}
+			visabillstemp.setVisaSigner(list_visa.get(i).getVisaSigner());
+			visabillstemp.setVisaMk(list_visa.get(i).getVisaMk());
 			list_visabillstemp.add(visabillstemp);
 		}
 		
@@ -1570,7 +1600,9 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 		visa_map.put("list_visa", list_visabillstemp);
 		
 		map.put("visa_map", visa_map);
-		
+		Map main_map=new HashMap<String,Object>();    /*把list（List<KyzExpectmatm> list=kyzSer.findById_Print(id)）放在一个子表,便于打印  20150804*/
+		main_map.put("list_main", list);
+		map.put("main_map", main_map);
 				
 		JasperHelper.exportmain("auto", map,"kyz_contactletter.jasper", list,local_billNo, "jasper/audit/");
 		

@@ -63,7 +63,7 @@ jq(document).keyup(function(event){
 				</s:else></td>
 			<td>年月</td>
 			<td><input type="text" id="year" name="yymm" 
-				onClick="WdatePicker({dataFmt:'yyyyMM'})" readonly="readonly" /></td>
+				onClick="WdatePicker({dataFmt:'yyyyMM'})" readonly="readonly" class="Wdate"/></td>
 			<td><!-- <input type="image" onclick="submis();" src="images/search002.gif" /> -->
 			 <input value="搜索" type="submit" id="addbtn" onclick="javascript:submis()" />		
 			</td>

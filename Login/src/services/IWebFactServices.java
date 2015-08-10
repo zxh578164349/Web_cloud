@@ -17,6 +17,7 @@ public interface IWebFactServices {
 
 	public List findFactCodeByFactNo(String factNo);
 	public List findFactCodeByFactNo_show(String factNo);
+	public List findFactCodeByFactNo_show_dw(String factNo);
 
 	public String findByFactNo(String factNo);
 	
@@ -38,5 +39,7 @@ public interface IWebFactServices {
 	
 	//20150708 所有廠別各個廠別狀態的習慣排序
 	public List<WebFact> findAllFact_2();
+	
+	public List<WebFact> findFactById_show(String factNo);
 
 }

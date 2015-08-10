@@ -27,10 +27,16 @@
 <link rel="stylesheet" type="text/css" href="css/select_beautiful.css">	
 <link rel="stylesheet" type="text/css" href="css/general_css.css" />
 <link href="tablecloth/tablecloth.css" rel="stylesheet" type="text/css" media="screen" />
+<!-- 新 Bootstrap 核心 CSS 文件 -->
+<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+<script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="page/jquerys/layer/layer.min.js"></script>
 </head>
 <script type="text/javascript">
 	var jq=jQuery.noConflict();
 	function pages(page) {
+	    
 		jq.ajax({
 			type : "POST",
 			dataType : "Html",
@@ -38,6 +44,8 @@
 			data : "page=" + page,
 			success : function(msg) {
 				jq("#bodyid").html(msg);
+				/* jq("li").removeClass("active");
+				jq("li").children("a").click(function(){jq(this).parent().attr("class","active")}); */
 			},
 			error : function(xhr) {
 				alert(xhr.responseText);

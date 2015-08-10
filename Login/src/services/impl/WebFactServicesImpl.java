@@ -55,6 +55,10 @@ public class WebFactServicesImpl implements IWebFactServices {
 		// TODO Auto-generated method stub
 		return webFactDao.findFactById_showA(factNo);
 	}
+	public List<WebFact> findFactById_show(String factNo) {
+		// TODO Auto-generated method stub
+		return webFactDao.findFactById_show(factNo);
+	}
 
 	/**
 	 * ªð¦^factNoªºfactSname
@@ -86,6 +90,10 @@ public class WebFactServicesImpl implements IWebFactServices {
 	}
 	public List findFactCodeByFactNo_show(String factNo){
 		List list = webFactDao.findFactCodeByFactNo_show(factNo);
+		return list;
+	}
+	public List findFactCodeByFactNo_show_dw(String factNo){
+		List list = webFactDao.findFactCodeByFactNo_show_dw(factNo);
 		return list;
 	}
 

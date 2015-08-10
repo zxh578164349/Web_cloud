@@ -70,10 +70,10 @@ jq(document).keyup(function(event){
 				</s:else></td>
 			<td>進廠日期</td>
 			<td><input type="text" id="year" name="yymm" 
-				onClick="WdatePicker()" readonly="readonly" /></td>
+				onClick="WdatePicker()" readonly="readonly" class="Wdate"/></td>
 			<td>驗收日期</td>
 			<td><input type="text" id="year_s" name="yymm_s" 
-				onClick="WdatePicker()" readonly="readonly" /></td>	
+				onClick="WdatePicker()" readonly="readonly" class="Wdate"/></td>	
 			<td>
 			<td>處分<td>
 			<td>

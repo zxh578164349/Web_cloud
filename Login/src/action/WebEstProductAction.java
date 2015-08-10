@@ -297,7 +297,7 @@ public class WebEstProductAction extends ActionSupport implements
 		for(int i=0;i<listfactno.size();i++){//start for
 			Object[] temp_factnos=(Object[])listfactno.get(i);
 			String temp_factno=(String)temp_factnos[0];
-			List<WebFact>listfactcodes=webFactSer.findFactById(temp_factno);
+			List<WebFact>listfactcodes=webFactSer.findFactById_show(temp_factno);
 			for(int k=0;k<listfactcodes.size();k++){
 				String factcode=listfactcodes.get(k).getId().getFactArea();
 				Webestproduct product_zd=estProSer.findById(temp_factno, factcode, yymm, "zd");
@@ -326,7 +326,7 @@ public class WebEstProductAction extends ActionSupport implements
 				
 			}
 		}//end for
-		List factcodelist=webFactSer.findAllFactCode();//所有廠別狀態
+		List factcodelist=webFactSer.findAllFactCode_show();//所有廠別狀態
 		List<Webestproduct>sum_list_zd=new ArrayList<Webestproduct>();
 		List<Webestproduct>sum_list_tz=new ArrayList<Webestproduct>();
 		for(int j=0;j<factcodelist.size();j++){//start for

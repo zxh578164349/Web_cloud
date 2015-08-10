@@ -70,7 +70,7 @@
 
 	function getFactArea(mid) {
 		document.getElementById("dwrFactArea").length = 1;
-		webfactjs.findFactCodeByFactNo_show(mid, function(x) {
+		webfactjs.findFactCodeByFactNo_show_dw(mid, function(x) {
 			//alert(mid);
 			dwr.util.addOptions("dwrFactArea", x);
 		});

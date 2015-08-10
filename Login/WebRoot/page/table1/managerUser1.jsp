@@ -45,6 +45,10 @@
 	    });	   
 	}
 	</script>
+ <!--[if lt IE 9]>  
+  <script src="bootstrap/html5.js"></script>
+  <script src="bootstrap/respond.min.js"></script>
+  <![endif]-->	
 </head>
 <body>
   <div id="container">
@@ -94,8 +98,8 @@
 		</tbody>
 	</table>
 	</div>
-	<hr />
-	<center id="center_page">
+
+<%-- 	<center id="center_page">
 	　　<a href="javascript:pages(0)">首頁</a>
 	    <a href="javascript:pages(<s:property value='bean.currentPage'/>-1)">上一頁</a>	    
 	        (第<s:property value="bean.currentPage" />頁 <a href="javascript:void(0)" onclick="showPage()" id="a_page">▽</a>|共<s:property value="bean.totalPage" />頁)
@@ -105,7 +109,26 @@
 	               </c:forEach>
 	           </div>	  
 	    <a href="javascript:pages(<s:property value='bean.currentPage'/>+1)">下一頁</a>
-	    <a href="javascript:pages(<s:property value='bean.totalPage'/>)">尾頁</a>		
-	</center>
+	    <a href="javascript:pages(<s:property value='bean.totalPage'/>)">尾頁</a>   		
+	</center> --%>
+	 <ul class="pagination" style="padding-left:50%">
+		    <li style="width:50px"><a href="javascript:pages(0)">首頁</a></li>
+			<li><a href="javascript:pages(<s:property value='bean.currentPage'/>-1)">&laquo;</a></li>			
+			<li><a href="javascript:pages(<s:property value='bean.currentPage'/>)"><s:property value='bean.currentPage'/></a></li>
+			<s:if test="bean.currentPage+1==bean.totalPage||bean.currentPage+1<bean.totalPage">			    
+			    <li><a href="javascript:pages(<s:property value='bean.currentPage'/>+1)"><s:property value='bean.currentPage+1'/></a></li>			   
+			</s:if>
+			<s:if test="bean.currentPage+2==bean.totalPage||bean.currentPage+2<bean.totalPage">
+			    <li><a href="javascript:pages(<s:property value='bean.currentPage'/>+2)"><s:property value='bean.currentPage+2'/></a></li>
+			</s:if>
+			<s:if test="bean.currentPage+3==bean.totalPage||bean.currentPage+3<bean.totalPage">
+			    <li><a href="javascript:pages(<s:property value='bean.currentPage'/>+3)"><s:property value='bean.currentPage+3'/></a></li>
+			</s:if>
+			<s:if test="bean.currentPage+4==bean.totalPage||bean.currentPage+4<bean.totalPage">
+			    <li><a href="javascript:pages(<s:property value='bean.currentPage'/>+4)"><s:property value='bean.currentPage+4'/></a></li>
+			</s:if>									
+			<li><a href="javascript:pages(<s:property value='bean.currentPage'/>+1)">&raquo;</a></li>
+			<li style="width:50px"><a href="javascript:pages(<s:property value='bean.totalPage'/>)">尾頁</a></li>			
+		</ul>
 </body>
 </html>

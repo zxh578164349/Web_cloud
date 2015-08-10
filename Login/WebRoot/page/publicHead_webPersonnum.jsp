@@ -64,8 +64,8 @@ jq(document).keyup(function(event){
 			<td>年月</td>
 			<td>
 			<!-- <input type="text" id="year" name="yymm"  onClick="WdatePicker()" readonly="readonly" /> -->
-			開始<input type="text" id="beginday" name="beginDay" onClick="WdatePicker()" readonly="readonly"/><br>
-			結束<input type="text" id="endday" name="endDay" onClick="WdatePicker()" readonly="readonly"/>
+			開始<input type="text" id="beginday" name="beginDay" onClick="WdatePicker()" readonly="readonly" class="Wdate"/><br>
+			結束<input type="text" id="endday" name="endDay" onClick="WdatePicker()" readonly="readonly" class="Wdate"/>
 			</td>
 			<td>
 			 <input value="搜索" type="submit" id="addbtn" onclick="javascript:submis()" />		

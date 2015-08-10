@@ -63,8 +63,8 @@ jq(document).keyup(function(event){
 				</s:else></td>
 			<td>年月</td>
 			<td>
-			開始<input type="text" id="begin_yymm" name="begin_yymm" onClick="WdatePicker({maxDate:'#F{$dp.$D(\'end_yymm\')||\'%y-{%M-1}\'}',dataFmt:'yyyyMM'})" readonly="readonly" /><br/>
-			結束<input type="text" id="end_yymm" name="end_yymm" onClick="WdatePicker({minDate:'#F{$dp.$D(\'begin_yymm\')}',maxDate:'%y-%M',dataFmt:'yyyyMM'})" readonly="readonly" />
+			開始<input type="text" id="begin_yymm" name="begin_yymm" onClick="WdatePicker({maxDate:'#F{$dp.$D(\'end_yymm\')||\'%y-{%M-1}\'}',dataFmt:'yyyyMM'})" readonly="readonly" class="Wdate"/><br/>
+			結束<input type="text" id="end_yymm" name="end_yymm" onClick="WdatePicker({minDate:'#F{$dp.$D(\'begin_yymm\')}',maxDate:'%y-%M',dataFmt:'yyyyMM'})" readonly="readonly" class="Wdate"/>
 			</td>
 			<td>
 			 <input value="搜索" type="submit" id="addbtn" onclick="javascript:submis()" />&nbsp;

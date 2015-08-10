@@ -7,6 +7,8 @@ public class VisabillsTemp {
 	private String visaRank;
 	private Date createDate;
 	private String visaNameAndMk;
+	private String visaSigner;
+	private String visaMk;
 	
 	public String getMemo() {
 		return memo;
@@ -31,6 +33,18 @@ public class VisabillsTemp {
 	}
 	public void setVisaNameAndMk(String visaNameAndMk) {
 		this.visaNameAndMk = visaNameAndMk;
+	}
+	public String getVisaSigner() {
+		return visaSigner;
+	}
+	public void setVisaSigner(String visaSigner) {
+		this.visaSigner = visaSigner;
+	}
+	public String getVisaMk() {
+		return visaMk;
+	}
+	public void setVisaMk(String visaMk) {
+		this.visaMk = visaMk;
 	}
 	
 

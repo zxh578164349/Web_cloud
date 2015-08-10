@@ -122,19 +122,23 @@
 		cellSpacing="0" width="100%">
 
 		<tr>
-			<td align="middle" vAlign="center" noWrap id="frmTitle"><iframe
+			<td align="middle" vAlign="center" noWrap >
+			<div id="frmTitle" style="height:100%">
+			<iframe
 					frameBorder="0" id="carnoc" name="carnoc" scrolling=auto
 					src="menu.jsp"
 					style="HEIGHT: 100%; VISIBILITY: inherit; WIDTH: 210px; Z-INDEX: 2;border:1px solid #ccc"></iframe>
+			</div>		
 			</td>
 			
 			<td width="46" bgcolor="#FCFCFC" style="WIDTH:18px;">
 				<table width="10px" height="100%" border="1px" cellpadding="0"
 					cellspacing="0">
 					<tr>
-						<td width="200" style="HEIGHT: 100%" onClick="switchSysBar();">
+						<td width="200" style="HEIGHT: 100%">
 							<font style="FONT-SIZE: 9pt; CURSOR: default; COLOR:#C6A300">
-								<span class="navPoint" id="switchPoint" title="关闭/打开左栏">＜＜＜</span>
+								<span class="navPoint" id="switchPoint" title="关闭/打开左栏" style="display:none">＜＜＜</span>
+								<a href="javascript:switchSysBar()"><img src="images/icon/arrow.jpg" border=0px/></a>
 						</font>
 						</td>
 					</tr>

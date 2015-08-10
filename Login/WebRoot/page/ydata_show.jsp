@@ -21,6 +21,16 @@
 <link href="tablecloth/tablecloth.css" rel="stylesheet" type="text/css" media="screen" />
 <script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script>
 <script type="text/javascript" src="page/jquerys/layer/layer.min.js"></script>
+<!-- 新 Bootstrap 核心 CSS 文件 -->
+<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+<script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="page/jquerys/layer/layer.min.js"></script>
+
+ <!--[if lt IE 9]>  
+  <script src="bootstrap/html5.js"></script>
+  <script src="bootstrap/respond.min.js"></script>
+  <![endif]-->	
 </head>
 <script>
 	var jq=jQuery.noConflict();
@@ -134,10 +144,10 @@ function showDiv(){
 				</s:else></td>
 			<td>開始日期</td>
 			<td><input type="text" id="year" name="sdate" 
-				onClick="WdatePicker({dateFmt:'yyyyMMdd'})" readonly="readonly" /></td>
+				onClick="WdatePicker({dateFmt:'yyyyMMdd'})" readonly="readonly" class="Wdate"/></td>
 			<td>結束日期</td>
 			<td><input type="text" id="year_s" name="edate" 
-				onClick="WdatePicker({dateFmt:'yyyyMMdd'})" readonly="readonly" /></td>	
+				onClick="WdatePicker({dateFmt:'yyyyMMdd'})" readonly="readonly" class="Wdate"/></td>	
 			<td>
 			 <input value="導出Excel" type="submit" id="search_forday" />			
 			</td>

@@ -9,6 +9,7 @@ public interface IWebFactDao {
 
 	public List<WebFact> findFactById(String factNo);
 	public List<WebFact> findFactById_showA(String factNo);
+	public List<WebFact> findFactById_show(String factNo);
 
 	public String selByid(String id);
 
@@ -17,6 +18,7 @@ public interface IWebFactDao {
 
 	public List findFactCodeByFactNo(String factNo);
 	public List findFactCodeByFactNo_show(String factNo);
+	public List findFactCodeByFactNo_show_dw(String factNo);
 
 	public String findByFactNo(String factNo);
 	

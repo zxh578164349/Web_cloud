@@ -32,5 +32,8 @@
         <property name="factShowA" type="java.lang.String">
             <column name="FACT_SHOW_A" length="2"/>
         </property>
+        <property name="factDisable" type="java.lang.String">
+            <column name="FACT_DISABLE" length="2"></column>
+        </property>
     </class>
 </hibernate-mapping>

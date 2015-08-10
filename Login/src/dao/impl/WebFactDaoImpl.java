@@ -28,6 +28,12 @@ public class WebFactDaoImpl extends Basedao implements IWebFactDao {
 		String[] objs = { factNo };
 		return super.findAll(hql, objs);
 	}
+	public List<WebFact> findFactById_show(String factNo) {
+		// TODO Auto-generated method stub
+		String hql = "from WebFact w where w.id. factNo=? and factShow='0'";
+		String[] objs = { factNo };
+		return super.findAll(hql, objs);
+	}
 
 	/**
 	 * 廠別代號對應人廠名
@@ -64,7 +70,13 @@ public class WebFactDaoImpl extends Basedao implements IWebFactDao {
 	
 	public List findFactCodeByFactNo_show(String factNo) {
 		// TODO Auto-generated method stub
-		String hql = "select id.factArea from WebFact where id.factNo=? and factShow='0'";
+		String hql = "select id.factArea from WebFact where id.factNo=? and factShow='0'";//                            555555555555
+		String[] objs = { factNo };
+		return super.findAll(hql, objs);
+	}
+	public List findFactCodeByFactNo_show_dw(String factNo) {
+		// TODO Auto-generated method stub
+		String hql = "select id.factArea from WebFact where id.factNo=? and factDisable='0'";//                            555555555555
 		String[] objs = { factNo };
 		return super.findAll(hql, objs);
 	}

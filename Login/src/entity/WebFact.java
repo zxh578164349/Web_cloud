@@ -15,6 +15,7 @@ public class WebFact implements java.io.Serializable {
 	private String fcodeIndex;
 	private String factShow;
 	private String factShowA;
+	private String factDisable;
 
 	// Constructors
 
@@ -29,7 +30,7 @@ public class WebFact implements java.io.Serializable {
 
 	/** full constructor */
 	public WebFact(WebFactId id, String factSname, String orderNo,
-			String factCode,String fcodeIndex,String factShow,String factShowA) {
+			String factCode,String fcodeIndex,String factShow,String factShowA,String factDisable) {
 		this.id = id;
 		this.factSname = factSname;
 		this.orderNo = orderNo;
@@ -37,6 +38,7 @@ public class WebFact implements java.io.Serializable {
 		this.fcodeIndex=fcodeIndex;
 		this.factShow=factShow;
 		this.factShowA=factShowA;
+		this.factDisable=factDisable;
 	}
 
 	// Property accessors
@@ -95,6 +97,14 @@ public class WebFact implements java.io.Serializable {
 
 	public void setFactShowA(String factShowA) {
 		this.factShowA = factShowA;
+	}
+
+	public String getFactDisable() {
+		return factDisable;
+	}
+
+	public void setFactDisable(String factDisable) {
+		this.factDisable = factDisable;
 	}
 	
 	
