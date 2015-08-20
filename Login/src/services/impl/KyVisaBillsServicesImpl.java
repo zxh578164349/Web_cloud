@@ -62,5 +62,9 @@ public class KyVisaBillsServicesImpl implements IKyVisaBillsServices{
 		}
 		return result;		
 	}
+	public int findBillsWithNo(String visaSort, String billNo) {
+		// TODO Auto-generated method stub
+		return visabillDao.findBillsWithNo(visaSort, billNo);
+	}
 
 }

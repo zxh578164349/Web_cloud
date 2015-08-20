@@ -37,7 +37,8 @@ public class WebUserDaoImpl extends Basedao implements IWebUserDao {
 		wUser.setName(webUser.getName());
 		wUser.setPwd(webUser.getPwd());
 		wUser.setUsername(webUser.getUsername());
-		wUser.setAvailable(webUser.getAvailable());
+		//wUser.setAvailable(webUser.getAvailable());
+		wUser.setUserread(webUser.getUserread());
 		getSession().update(wUser);
 	}
 
@@ -264,6 +265,13 @@ public class WebUserDaoImpl extends Basedao implements IWebUserDao {
 		String[]objs={factNo,name+"%"};
 		return super.findAll(hql, objs);
 	}
+	
+	public List<WebUser> findByEmailDwr2(String factNo,String email) {
+		// TODO Auto-generated method stub
+		String hql="from WebUser where factno=? and  email like ?";
+		String[]objs={factNo,email+"%"};
+		return super.findAll(hql, objs);
+	}
 
 	public WebUser findByNameAndFactNoDwr(String factNo, String name) {
 		// TODO Auto-generated method stub
@@ -298,6 +306,25 @@ public class WebUserDaoImpl extends Basedao implements IWebUserDao {
 		query.setString(0, username);
 		query.setString(1, pwd);
 		query.setString(2, factNo);
+		WebUser user=(WebUser)query.uniqueResult();
+		return user;
+	}
+
+	public String findEmailPWD( String email) {
+		// TODO Auto-generated method stub
+		String hql="select emailpassword from WebUser where email=? and emailpassword is not null";
+		Query query=getSession().createQuery(hql);
+		query.setString(0, email);
+		String emailPwd=(String)query.uniqueResult();
+		return emailPwd;
+	}
+
+	public WebUser findUserByFactNoAEmail(String factNo, String email) {
+		// TODO Auto-generated method stub
+		String hql="from WebUser where factno=? and email=?";
+		Query query=getSession().createQuery(hql);
+		query.setString(0, factNo);
+		query.setString(1, email);
 		WebUser user=(WebUser)query.uniqueResult();
 		return user;
 	}

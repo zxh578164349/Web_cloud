@@ -11,6 +11,9 @@
 			<include method="findByUserNameDwr"/>
 			<include method="findByNameAndFactNoDwr"/>
 			<include method="findByIdDwr2"/>
+			<include method="findByEmailDwr2"/>
+			<include method="findEmailPWD"/>
+			<include method="findUserByFactNoAEmail"/>
 		</create>
 		<create creator="spring" javascript="webfactjs">
 		  <param name="beanName" value="webFactSer"/>

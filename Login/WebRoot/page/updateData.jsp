@@ -7,7 +7,7 @@
 			+ path + "/";
 %>
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
 <base href="<%=basePath%>">
@@ -30,37 +30,51 @@
 	text-align: right;
 	background-color: #ebf2f9;
 }
+input[type=text],input[type=password]{width:250px}
 </style>
 <script type="text/javascript">
    function checkUserName(){
       var factNo=document.getElementById("factNo").value;
       var userName=document.getElementById("userName").value;
       var userName2=document.getElementById("hide_userName").value;
+      var email=document.getElementById("email").value;
+      var email2=document.getElementById("hidden_email").value;
       if(factNo!=""&&userName!=""&&userName!=userName2){
          userjs.findByIdDWR(factNo,userName,function(x){
               if(x!=null){
-                 alert("該登錄名已存在!");
-                 return false;                              
+                 alert("該登錄名已存在!");                           
               }
          });
       }
-      return true;
+      if(factNo!=""&&email!=""&&email!=email2){
+         userjs.findUserByFactNoAEmail(factNo,email,function(x){
+              if(x!=null){
+                 alert("該Email已存在!");                             
+              }else{
+                document.getElementById("form").submit();
+              }
+         });
+      }else{
+         document.getElementById("form").submit();
+      } 
    }
 
-/* 去除 輸入框所有空格*/  
-function trim(string) {
-var temp = "";
-string = '' + string;
-splitstring = string.split(" ");
-for(i = 0; i < splitstring.length; i++)
-temp += splitstring[i];
-return temp;
-}
+
+/*禁止空格輸入*/
+window.onload=function(){            
+            var inputs=document.getElementsByTagName("input"); 
+            for (var i=0;i<inputs.length; i++) {  
+                if(inputs[i].getAttribute("type")=="text") 
+                 inputs[i].onkeyup=function(){ 
+                    this.value=this.value.replace(/(^\s+)|\s+$/g,""); 
+                 }; 
+            }  
+        } 
 
 </script>
 <body>
 	
-	<form action="userupdateUesr" method="post" onSubmit="return checkUserName()" id="form">
+	<form action="userupdateUesr" method="post"  id="form">
 		<input type="hidden" name="updateU.id"
 			value="<s:property value="#attr.webU.id"/>"> <input
 			type="hidden" name="updateU.available"
@@ -72,40 +86,74 @@ return temp;
 			<tr>
 				<td class="td1">工號:</td>
 				<td ><input name="updateU.workno" style="border:0px;color:blue"
-					readonly="readonly" value="<s:property value="#attr.webU.workno"/>">
+					readonly="readonly" value="<s:property value="#attr.webU.workno"/>" type="text">
 				</td>
-			</tr>
-			<tr>
-				<td class="td1">密碼:</td>
-				<td ><input name="updateU.pwd"
-					value="<s:property value="#attr.webU.pwd"/>"></td>
-			</tr>
-			<tr>
-				<td class="td1">姓名:</td>
-				<td ><input name="updateU.name"
-					value="<s:property value="#attr.webU.name"/>"></td>
 			</tr>
 			<tr>
 				<td class="td1">登錄名:</td>
 				<td >
 				<input name="updateU.username"
-					value="<s:property value="#attr.webU.username"/>" id="userName" style="border:0px;color:blue" readonly>
+					value="<s:property value="#attr.webU.username"/>" id="userName" style="border:0px;color:blue" readonly type="text">
 				<input type="hidden" id="hide_userName" value="<s:property value="#attr.webU.username"/>"/>	
 				</td>
 			</tr>
 			<tr>
-				<td class="td1">IP:</td>
-				<td class="td_input"><input name="updateU.ip"
-					value="<s:property value="#attr.webU.ip"/>"></td>
-			</tr>
-			<tr>
 				<td class="td1">廠別:</td>
 				<td ><input name="updateU.factno"
-					value="<s:property value="#attr.webU.factno"/>" readonly id="factNo" style="color:blue;border:0px"></td>
+					value="<s:property value="#attr.webU.factno"/>" readonly id="factNo" style="color:blue;border:0px" type="text"></td>
 			</tr>
 			<tr>
+				<td class="td1">密碼:</td>
+				<td ><input name="updateU.pwd"
+					value="<s:property value="#attr.webU.pwd"/>" type="password"></td>
+			</tr>
+			<tr>
+				<td class="td1">姓名:</td>
+				<td ><input name="updateU.name"
+					value="<s:property value="#attr.webU.name"/>" type="text"></td>
+			</tr>
+			
+			<tr>
+				<td class="td1">IP:</td>
+				<td class="td_input"><input name="updateU.ip"
+					value="<s:property value="#attr.webU.ip"/>" type="text"></td>
+			</tr>
+			
+			<tr>
+			     <td class="td1">Email:</td>
+			     <td><input name="updateU.email" value="<s:property value="#attr.webU.email"/>" type="text" id="email" onblur="checkUserName()"/>
+			       <input  value="<s:property value="#attr.webU.email"/>" type="hidden" id="hidden_email"/>
+			     </td>
+			</tr>
+			<tr>
+			     <td class="td1">备签人Email:</td>
+			     <td><input name="updateU.emailpassword" value="<s:property value="#attr.webU.emailpassword"/>"   type="text"/>			     
+			     </td>			     
+			</tr>
+			<tr>
+			     <td class="td1">只讀/修改</td>
+			     <td>
+			             只讀:
+			     <s:if test='#attr.webU.userread=="1"'>
+			     <input type="radio" value="1" name="updateU.userread" checked/>
+			     </s:if>
+			     <s:else>
+			      <input type="radio" value="1" name="updateU.userread"/>
+			     </s:else>
+			     &nbsp;
+			               修改:
+			      <s:if test='#attr.webU.userread=="0"||#attr.webU.userread==null'>         
+			       <input type="radio" value="0" name="updateU.userread" checked/>
+			      </s:if>
+			      <s:else>
+			        <input type="radio" value="0" name="updateU.userread"/>
+			      </s:else>
+			     <%-- <input type="hidden" name="updateU.logdate" value="<s:property value="#attr.webU.logdate"/>"/> --%>
+			     </td>
+			</tr> 
+			<tr>
 				<td colspan="2"><span style="margin-left: 300px;"><input
-						type="submit" value="確認修改" /> <input type="button"
+						type="button" value="確認修改" onclick="checkUserName()"/> <input type="button"
 						onclick="location.href='userrecoveryData'" value="恢復默認">  </span></td>
 			</tr>
 		</table>

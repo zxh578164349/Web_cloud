@@ -300,4 +300,11 @@ public class KyVisabillsDaoImpl extends Basedao implements IKyVisaBillsDao{
 		return result;
 	}
 
+	public int findBillsWithNo(String visaSort, String billNo) {
+		// TODO Auto-generated method stub
+		String hql="from KyVisabills where id.kyVisabillm.id.visaSort=? and id.kyVisabillm.id.billNo=? and flowMk='N' order by id.itemNo";
+		String[]objs={visaSort,billNo};
+		return super.findAll(hql, objs).size();
+	}
+
 }

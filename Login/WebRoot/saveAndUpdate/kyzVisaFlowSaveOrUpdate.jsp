@@ -60,6 +60,22 @@ var j=0;
 		
 	function addRow(){
 	     j=j+1;
+	     /*刚开始时，审核人员与知会人员两个单选按钮是不可用的
+	                当第一次添加行时，才可以使用
+	                选择了知会后，就不可以返回选择审核  
+	                 把当前j的值赋给单选按钮的value ,用于后台进行判断 ，从哪位开始是知会的              
+	     **/
+	     /* alert(j);
+	     	    	     
+	     if(j>0){
+	        document.getElementById("per1").disabled=false;
+	        document.getElementById("per2").disabled=false;
+	        if(document.getElementById("per2").checked==true){
+	           document.getElementById("per2").value=j;
+	           document.getElementById("per1").disabled=true;	          
+	      }
+	     } */
+	     
 	     if(j>9){
 	      j=9;
 	     }
@@ -107,7 +123,7 @@ var j=0;
 	    newTd0.innerHTML = '<input type="hidden" name="flows['+j+'].id.factNo" value="'+factno+'"  readonly style="color:blue"/>'+
 	    '<input type="text" name="" value="'+factno2+'"  readonly/>'; 
 	    newTd1.innerHTML='<input type="hidden" name="flows['+j+'].id.visaSort" value="'+typeno+'" datatype="*"  readonly/>'+
-	    '<input type="text" name="" value="'+typeno2+'" datatype="*"  readonly style="color:blue"/>';
+	    '<input type="text" name="" value="'+typeno2+'" datatype="*"  readonly />';
         if((j+1)<10){
           newTd2.innerHTML= '<input type="text" name="flows['+j+'].id.itemNo" value="0'+(j+1)+'" datatype="*" style="color:blue"  readonly/>';
         }else{
@@ -119,7 +135,13 @@ var j=0;
         '<div style="position:relative"><div id="emaildwr'+j+'" style="z-index:100;position:absolute;background:yellow;left:0;top:0px;width:180px;display:none"></div></div>'
         newTd5.innerHTML='<input type="text" name="flows['+j+'].visaRank" value="" datatype="*"/>';             
         }
-                
+        
+        var cboxlist=document.getElementsByName("cbox");
+        if(cboxlist.length>1){
+           document.getElementById("dwrFactNo").disabled=true;
+           document.getElementById("dwr_kytype").disabled=true;
+        } 
+              
         
 	}
 	
@@ -132,8 +154,7 @@ var j=0;
 	  if(j<0){
 	   j=0;
 	  }
-	  
-	   
+	  	   
 	   var cboxlist=document.getElementsByName("cbox");
 	   //刪除選中行
 	 /* for(var k=0;k<cboxlist.length;k++){
@@ -142,12 +163,26 @@ var j=0;
 	        k=k-1;
 	     }	    
 	   } */ 
-	   //刪除最後一行	   
+	   	   
 	   if(cboxlist.length>1){
-	      kyzs_body.deleteRow(cboxlist.length);	     
+	      kyzs_body.deleteRow(cboxlist.length);
+	      
+	      /* if(document.getElementById("per2").ckecked=true){
+	         document.getElementById("per2").value=cboxlist.length-1;
+	      }	 */     
+	   }
+	   //刪除最後一行
+	   if(cboxlist.length==1){
+	      document.getElementById("dwrFactNo").disabled=false;
+	      document.getElementById("dwr_kytype").disabled=false;
+	      
+	     /*  document.getElementById("per1").disabled=false;
+	      document.getElementById("per1").ckecked=true;
+	      document.getElementById("per2").disabled=false; */
+	      
 	   }
 	  
-	   
+	   /* alert(j); */
 	   
 	  	   
 	}
@@ -230,7 +265,7 @@ var j=0;
 									for ( var i = 0; i < data.length; i++) {
 										document.getElementById("tishi"+index).innerHTML += "<div onclick="
 												+ "document.getElementById('keys"+index+"').value=this.innerText;"
-												+ "checkName(this.innerText,"+index+");"
+												+ "document.getElementById('skeys"+index+"').value='"+ data[i].email+"';"												
 												+ "document.getElementById('tishi"+index+"').innerText='';"
 												+ "this.style.display='none';"												
 												
@@ -274,9 +309,7 @@ var j=0;
 												+ " style='width:180px;background:yellow'>"
 												+ data[i].email + "</div>";	
 												temp=temp+20;											
-									}
-									//alert(temp);
-									//document.getElementById("semaildwr"+index).style.height=temp;																		
+									}																										
 								} else {
 									document.getElementById("emaildwr"+index).innerHTML = "";
 								}
@@ -291,7 +324,7 @@ var j=0;
 	}
 	
 	
-	function checkName(obj,index){
+/* 	function checkName(obj,index){
 	   var factno=document.getElementById("dwrFactNo").value;
 	   if(obj!=""&&factno!=""){
 	      userjs.findByNameAndFactNoDwr(factno,obj,function(x){
@@ -303,11 +336,19 @@ var j=0;
 	           }
 	      });
 	   }
-	}
+	} */
 
+ function getValue(str1,str2){
+    document.getElementById(str2).value=document.getElementById(str1).value;
+ }
 
-
-	
+function clickOne(){
+   if(document.getElementById("per2").checked==true){
+      document.getElementById("per1").disabled=true;
+      document.getElementById("per2").value=j;
+   }
+   alert("当前为知会人员"+document.getElementById("per2").value);
+}	
 </script>
 <script type='text/javascript' src='/Login/dwr/interface/kyzjs.js'></script>
 <script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>
@@ -379,32 +420,36 @@ input[type="text"],select{
 			     <td><input type="checkbox" name="cbox" disabled/></td>
 			     <s:if test="#session.factNo!='tw'">
 			        <td >
-							<select style="color:blue" name="flows[0].id.factNo" datatype="*" id="dwrFactNo"
+							<select  datatype="*" id="dwrFactNo"
 							onchange="getAddBtn(),checkSame()">
 							    <option value="${factNo}">${factNo}</option>
-							</select><span id="error1"></span>														
+							</select>
+							<input type="hidden" name="flows[0].id.factNo" value="${factNo}"/>
+							<span id="error1"></span>														
 					</td>			     
 			  </s:if>
 			  <s:else>
-			     <td ><select style="color:blue"
-							name="flows[0].id.factNo" datatype="*" id="dwrFactNo"
-							onchange="getAddBtn(),checkSame()">
+			     <td ><select 
+							 datatype="*" id="dwrFactNo"
+							onchange="getAddBtn(),checkSame(),getValue('dwrFactNo','dwrFactNo2')">
 								<option value="">請選擇廠別</option>
 								<s:iterator value="#session.facts" id="temp">
 									<option value="${temp[0]}">${temp[1]
 										}&nbsp;(${temp[0]})</option>
 								</s:iterator>
-						</select><span id="error1"></span></td>
+						</select>
+						<input type="hidden" name="flows[0].id.factNo" id="dwrFactNo2"/>
+						<span id="error1"></span></td>
 			  </s:else>   			     
 			     <td>
-			     <!-- <input type="text" name="flows[0].id.visaSort" value=""  style="color:blue" size="15" datatype="*1-3"/> -->
-			     <select name="flows[0].id.visaSort" id="dwr_kytype" onchange="getAddBtn(),checkSame()" datatype="*">
+			     <select  id="dwr_kytype" onchange="getAddBtn(),checkSame(),getValue('dwr_kytype','dwr_kytype2')" datatype="*">
 			       <option value="">請選擇</option>
-			     </select><span id="error2"></span>
+			     </select>
+			     <input type="hidden" name="flows[0].id.visaSort" id="dwr_kytype2"/>
+			     <span id="error2"></span>
 			     </td>
 			     <td ><input type="text" name="flows[0].id.itemNo" value="01" datatype="*"  readonly/></td>
-			     <td >
-			     			     
+			     <td >			     			     
 			     <input type="text" name="flows[0].id.purmanNo" value=""  datatype="*"  id="keys0" onkeyup="gog(0)" />
 			     <div style="position:relative">
 			     <div id="tishi0" style="z-index:100;position:absolute;background:yellow;top:0px;left:0px;width:180px;display:none"></div>
@@ -420,53 +465,8 @@ input[type="text"],select{
 			       <input type="hidden" name="isnull" value="yes"/><!-- 變量isnull -->
 			     </td>		     			     		      		      
 			  </tr>		
-			 </s:if>
-			<%--  <s:else>
-			  
-			    <s:iterator value="flows" status="x" id="temp">
-			       <tr class="bluecss">
-			         <td>
-			          <s:if test="#attr.x.index==0">
-			            <input type="checkbox" name="cbox" value="<s:property value='id.itemNo'/>" disabled/>
-			          </s:if>
-			          <s:else>
-			            <input type="checkbox" name="cbox" value="<s:property value='id.itemNo'/>"/>
-			          </s:else>			          			          			            			          
-			         </td>			     
-			     <td ><input type="text" name="flows[${x.index}].id.factNo" value="<s:property value='id.factNo'/>" size="15"/></td>			    
-			     <td><input type="text" name="flows[${x.index}].id.visaSort" value="<s:property value='id.visaSort'/>" readonly style="color:blue" size="15"/></td>			    			     			     
-			     <td ><input type="text" name="flows[${x.index}].id.purmanNo" value="<s:property value='id.purmanNo'/>" size="15"/></td>			     
-			     <td ><input type="text" name="flows[${x.index}].id.itemNo" value="<s:property value='id.itemNo'/>" datatype="my0-8" size="15"/></td>
-			     <td ><input type="text" name="flows[${x.index}].visaSigner" value="<s:property value='visaSigner'/>" datatype="my0-8" size="15"/></td>
-			     <td ><input type="text" name="flows[${x.index}].visaRank" value="<s:property value='visaRank'/>" datatype="my0-8" size="15"/></td>			    		      		      
-			  </tr>
-			    </s:iterator>			    
-			 </s:else>	 --%>
-			 <s:else>
-			   <tr>
-			   <td>廠別</td>
-			   <td><input type="text" value="<s:property value='flows[0].id.factNo'/>" readonly style="color:blue" name="flows[0].id.factNo"/></td>
-			   <td>類別</td>
-			   <td><input type="text" value="<s:property value='flows[0].id.visaSort'/>" readonly style="color:blue" name="flows[0].id.visaSort"/></td>
-			   </tr>
-			   <tr>
-			   <td>姓名</td>
-			   <td>
-			   <input type="text" value="<s:property value='flows[0].id.purmanNo'/>" readonly style="color:blue" name="flows[0].id.purmanNo" />
-			   
-			   </td>
-			   <td>項次</td>
-			   <td><input type="text" value="<s:property value='flows[0].id.itemNo'/>" readonly style="color:blue" name="flows[0].id.itemNo"/></td>
-			   </tr>
-			   <tr>
-			   <td>Email地址</td>
-			   <td><input type="text" value="<s:property value='flows[0].visaSigner'/>"  datatype="e" name="flows[0].visaSigner"/></td>
-			   <td>職務</td>
-			   <td><input type="text" value="<s:property value='flows[0].visaRank'/>"  name="flows[0].visaRank"/></td>
-			   </tr>
-			   <input type="hidden" name="isnull" value="no"/><!-- 變量isnull -->
-			 </s:else>	         			  
-			 	  			
+			 </s:if>		
+			         			  			 	  			
 			</tbody>
 			<tfoot>
 			<tr>
@@ -474,21 +474,17 @@ input[type="text"],select{
 			  <s:if test="flows==null">
 			     <input type="button" value="添加行" onclick="addRow()"  id="addbtn" disabled style="color:grey"/>
 			     <input type="button" value="刪除行" onclick="delRow()"  id="delbtn"/>
-			  </s:if>
-			 <%--  <s:else>			  　　
-		     	   <input type="hidden" value="<s:property value='maxNum'/>" id="maxNum"/> <!-- 用於添加行的maxNum變量 -->		     	 
-		     	   <s:submit value="刪除數據" onclick="javascript:alert('注意!若有選中將從數據庫中刪除所選數據')" action="kyz_deleteMore" align="left" cellspacing="0" cellpadding="0">
-		     	   　<input type="button" value="添加行" onclick="addRow_update()"/>
-		     	   </s:submit> 		     	   			      
-			  </s:else>	 --%>		    			    		    
+			    <!--  <input type="radio" value="Y" name="index" id="per1" checked disabled/>审核人员&nbsp;
+			     <input type="radio" value="N" id="per2" name="index" onclick="clickOne()" disabled/>知会人员 -->
+			  </s:if>			    			    		    
 			</td>
 			</tr>
 			</tfoot>			
 		    
 		</table >
 			<center>			    
-				<input type="submit" id="sub" value="確定" onmouseover="this.style.backgroundPosition='left -40px'" onmouseout="this.style.backgroundPosition='left top'"/>&nbsp;&nbsp;&nbsp; 
-				<input type="reset" id="reset" value="重置" onmouseover="this.style.backgroundPosition='left -40px'" onmouseout="this.style.backgroundPosition='left top'"/>
+				<input type="submit" id="sub" value="確定" onmouseover="this.style.backgroundPosition='left -40px'" onmouseout="this.style.backgroundPosition='left top'" />&nbsp;&nbsp;&nbsp; 
+				<input type="reset" id="reset" value="重置" onmouseover="this.style.backgroundPosition='left -40px'" onmouseout="this.style.backgroundPosition='left top'" disabled="false" style="color:red"/>
 			</center>
 							
 	</form>

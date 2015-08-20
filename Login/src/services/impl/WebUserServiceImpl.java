@@ -126,5 +126,20 @@ public class WebUserServiceImpl implements IWebUserService {
 		return webUserDao.findUser(username, pwd, factNo);
 	}
 
+	public List<WebUser> findByEmailDwr2(String factNo, String email) {
+		// TODO Auto-generated method stub
+		return webUserDao.findByEmailDwr2(factNo, email);
+	}
+
+	public String findEmailPWD( String email) {
+		// TODO Auto-generated method stub
+		return webUserDao.findEmailPWD(email);
+	}
+
+	public WebUser findUserByFactNoAEmail(String factNo, String email) {
+		// TODO Auto-generated method stub
+		return webUserDao.findUserByFactNoAEmail(factNo, email);
+	}
+
 
 }

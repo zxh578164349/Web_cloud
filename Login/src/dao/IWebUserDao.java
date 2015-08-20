@@ -51,6 +51,15 @@ public interface IWebUserDao {
 	
 	public WebUser findUser(String username,String pwd,String factNo);
 	
+	public List<WebUser> findByEmailDwr2(String factNo,String email);
+	
+	public String findEmailPWD(String email);
+	
+	public WebUser findUserByFactNoAEmail(String factNo,String email);
+	
+	
+	
+	
 			
 	
 }

@@ -39,11 +39,13 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 			tipSweep : true,
 			datatype : {
 				"*0-6" : /^\d{0,9}(\.[0-9]{1,3})?$/,
-				"my0-8": /^\d{0,8}(\.[0-9]{1,4})?$/
+				"my0-8": /^\d{0,8}(\.[0-9]{1,4})?$/,
+				"my0-12": /^\d{0,12}(\.[0-9]{1,4})?$/
 			}
 		});
 		demo.tipmsg.w["*0-6"] = "只能數字且不超過9位數,可保留三位以內小數";
 		demo.tipmsg.w["my0-8"]="只能數字且不超過8位數,可保留四位以內小數";
+		demo.tipmsg.w["my0-12"]="只能數字且不超過12位數,可保留四位以內小數";
 	});
 
 	function getFactArea(mid) {
@@ -565,7 +567,7 @@ table.gridtable td.tdcolor {
 			     <td ><input type="text" name="kyz.kyzExpectmatses[0].itemNm" value=""  size="15"/></td> 
 			     <td><input type="text" name="kyz.kyzExpectmatses[0].id.itemNo" value="001" readonly style="color:blue" size="15"/></td>
 			     <td ><input type="text" name="kyz.kyzExpectmatses[0].matNo" value="" size="15"/></td>			     
-			     <td ><input type="text" name="kyz.kyzExpectmatses[0].qtyExpect" value="" datatype="my0-8" size="15"/></td>
+			     <td ><input type="text" name="kyz.kyzExpectmatses[0].qtyExpect" value="" datatype="my0-12" size="15"/></td>
 			     <td ><input type="text" name="kyz.kyzExpectmatses[0].qtyOk" value="" datatype="my0-8" size="15"/></td>
 			     <td ><input type="text" name="kyz.kyzExpectmatses[0].personNo" value="" datatype="my0-8" size="15"/></td>
 			     <td ><input type="text" name="kyz.kyzExpectmatses[0].qtyPair" value="" id="qtyPair" size="15"/></td>

@@ -51,7 +51,7 @@
        if(factno!=""&&username!=""){
           userjs.findByIdDwr2(factno,username,function(x){
               if(x!=null){
-              alert("數據庫已存在("+username+")");
+              alert("该厂已存在("+username+")");
               document.getElementById("sub").disabled=true;
               document.getElementById("sub").value="已鎖定";
               document.getElementById("sub").style.color="red";
@@ -61,6 +61,26 @@
             document.getElementById("sub").value="確定";
             document.getElementById("sub").style.color="white";
             document.getElementById("error1").innerHTML="";
+          }        
+          });               
+       }                    
+   }
+ function checkEmail(){
+       var factno=document.getElementById("dwr_factno").value;
+       var email=document.getElementById("email").value;
+       if(factno!=""&&email!=""){
+          userjs.findUserByFactNoAEmail(factno,email,function(x){
+              if(x!=null){
+              alert("当前Email("+email+")已被使用");
+              document.getElementById("sub").disabled=true;
+              document.getElementById("sub").value="已鎖定";
+              document.getElementById("sub").style.color="red";
+              document.getElementById("error2").innerHTML="<font color='color'>！</font>";
+          }else{
+            document.getElementById("sub").disabled=false;
+            document.getElementById("sub").value="確定";
+            document.getElementById("sub").style.color="white";
+            document.getElementById("error2").innerHTML="";
           }        
           });               
        }                    
@@ -107,14 +127,14 @@ window.onload=function(){
 						<s:if test="#session.factNo=='tw'">	
 						<td class="td_input"><select style="color:blue"
 							name="webUsers.factno" datatype="*"
-							onchange="check()" id="dwr_factno">
+							onchange="check(),checkEmail()" id="dwr_factno">
 								<option value="">請選擇廠別</option>
 								<option value="tw">TW</option>
 								<s:iterator value="#session.facts" id="temp">
 									<option value="${temp[0]}">${temp[1]
 										}&nbsp;(${temp[0]})</option>
 								</s:iterator>
-						</select><span id="error1"></span></td>	
+						</select></td>	
 						</s:if>	
 						<td class="td_show_title">姓名</td>
 				        <td class="td_input"><input type="text" name="webUsers.name" datatype="*1-50" value="">									
@@ -124,12 +144,12 @@ window.onload=function(){
 				
 				<td class="td_show_title">Email</td>
 				<td class="td_input"><input type="text" name="webUsers.email"
-					datatype="e" value=""/>					
+					datatype="e" value="" id="email" onblur="checkEmail()"/><span id="error2"></span>					
 					</td>
 					<td class="td_show_title">工號</td>
 					<td class="td_input"><input type="text" name="webUsers.workno"
 						 datatype="*1-20"  /></td>
-			</tr>
+			</tr>			
 			<tr>
 					
 					<td class="td_show_title">IP</td>
@@ -142,8 +162,13 @@ window.onload=function(){
 					      <option value="1">是</option>
 					  </select>
 						<input type="hidden" name="webUsers.available" value="0"/>
-						</td>
-					
+						</td>					
+			</tr>
+			<tr>
+			    <td class="td_show_title">备签人Email</td>
+			    <td class="td_input"><input type="text" name="webUsers.emailpassword"
+					datatype="e" value=""  id="emailpwd"/>					
+					</td>
 			</tr>			
 		</table>
 		<center>

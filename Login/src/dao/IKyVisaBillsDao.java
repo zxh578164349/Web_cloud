@@ -18,5 +18,6 @@ public interface IKyVisaBillsDao {
 	public PageBean findPageBean_tw(int pageSize,int page,String userName,String visaMk,String factNo,String billNo,String visaSort,String createDate,String createDate2,String email);
 	public int findKyVisaBills_Int(String factNo,String userName);
 	
+	public int findBillsWithNo(String visaSort,String billNo);
 
 }

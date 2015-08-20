@@ -24,6 +24,7 @@ public class WebUser implements java.io.Serializable {
 	private String email;//Email
 	private String userread;//是否只读   1为只读
 	private String logdate;//登錄時間，如果超過3個月沒有登錄，就刪除該用戶
+	private String emailpassword;//备签邮箱
 	private List<WebJurisdiction> webJurisdictions = new ArrayList<WebJurisdiction>();
 
 	// Constructors
@@ -46,7 +47,7 @@ public class WebUser implements java.io.Serializable {
 	/** full constructor */
 	public WebUser(Integer id, String username, String pwd, String ip,
 			String workno, String factno, String name, Integer available,
-			String email,String userread, List<WebJurisdiction> webJurisdictions,String logdate) {
+			String email,String userread, List<WebJurisdiction> webJurisdictions,String logdate,String emailpassword) {
 		this.id = id;
 		this.username = username;
 		this.pwd = pwd;
@@ -59,6 +60,7 @@ public class WebUser implements java.io.Serializable {
 		this.userread=userread;
 		this.webJurisdictions = webJurisdictions;
 		this.logdate=logdate;
+		this.emailpassword=emailpassword;
 	}
 
 	// Property accessors
@@ -159,6 +161,15 @@ public class WebUser implements java.io.Serializable {
 	public void setLogdate(String logdate) {
 		this.logdate = logdate;
 	}
+
+	public String getEmailpassword() {
+		return emailpassword;
+	}
+
+	public void setEmailpassword(String emailpassword) {
+		this.emailpassword = emailpassword;
+	}
+	
 	
 
 }

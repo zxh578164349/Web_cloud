@@ -178,7 +178,7 @@
 	    <a href="javascript:pages(<s:property value='bean.currentPage'/>+1)">下一頁</a>
 	    <a href="javascript:pages(<s:property value='bean.totalPage'/>)">尾頁</a>		
 	</center> --%>
-	<ul class="pagination" style="padding-left:50%">
+	<ul class="pagination" style="padding-left:42%">
 		    <li><a href="javascript:pages(0)">首頁</a></li>
 			<li><a href="javascript:pages(<s:property value='bean.currentPage'/>-1)">&laquo;</a></li>			
 			<li><a href="javascript:pages(<s:property value='bean.currentPage'/>)"><s:property value='bean.currentPage'/></a></li>

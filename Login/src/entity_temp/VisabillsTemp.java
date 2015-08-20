@@ -9,7 +9,7 @@ public class VisabillsTemp {
 	private String visaNameAndMk;
 	private String visaSigner;
 	private String visaMk;
-	
+	private String visaName;
 	public String getMemo() {
 		return memo;
 	}
@@ -46,6 +46,13 @@ public class VisabillsTemp {
 	public void setVisaMk(String visaMk) {
 		this.visaMk = visaMk;
 	}
+	public String getVisaName() {
+		return visaName;
+	}
+	public void setVisaName(String visaName) {
+		this.visaName = visaName;
+	}
+	
 	
 
 }
