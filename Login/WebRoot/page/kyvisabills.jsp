@@ -18,8 +18,7 @@
 <meta http-equiv="expires" content="0">
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
-<!-- <LINK href="css/list.css" type="text/css" rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="css/form.css" /> -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style type="text/css">
 table.altrowstable {
 	font-family: verdana,arial,sans-serif;
@@ -55,6 +54,14 @@ table.altrowstable caption{
 </style>
 <script type="text/javascript" src="page/jquerys/jquery-1.9.1.min.js"></script>
 <script type="text/javascript" src="page/jquerys/layer/layer.min.js"></script>
+<!-- 新 Bootstrap 核心 CSS 文件 -->
+<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+<script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+ <!--[if lt IE 9]>  
+  <script src="bootstrap/html5.js"></script>
+  <script src="bootstrap/respond.min.js"></script>
+  <![endif]-->	
 	<script type="text/javascript">
     function showDiv(billNo,factNo){
     $.layer({
@@ -175,6 +182,7 @@ window.onload=function(){
 	</script>
 </head>
 <body>
+<div class="container" style="padding: 40px;">
 	<table class="altrowstable" id="alternatecolor" align="center">
 	  <caption>函文審核<!-- (<s:property value="#session.loginUser.email"/>) --></caption>
 		<thead>
@@ -243,5 +251,6 @@ window.onload=function(){
 		<a href="vbm_findPageBean">返回</a>
 		</td></tr>
 	</table>
+</div>	
 </body>
 </html>

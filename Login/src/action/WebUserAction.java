@@ -414,7 +414,7 @@ public class WebUserAction extends ActionSupport implements ServletResponseAware
 							ActionContext.getContext().getSession().put("factNo", factNo);									
 							String factName = webFactSer.selByid(factNo);
 							ActionContext.getContext().getSession().put("factName", factName);									
-							List factCodes = webFactSer.findFactCodeByFactNo_show(factNo);									
+							List factCodes = webFactSer.findFactCodeByFactNo_show_dw(factNo);									
 							ActionContext.getContext().getSession().put("factAreas_login", factCodes);	//【各廠產量統計】加載的廠別狀態								
 						}
 						

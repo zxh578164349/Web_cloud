@@ -208,11 +208,11 @@ table.gridtable td {
 					</td>
 					<td><s:property value='matNo' />
 					</td>
-					<td><s:property value='qtyExpect' />
+					<td><s:property value='%{formatDouble2(qtyExpect)}' />
 					</td>
 					<td><s:property value="%{formatDouble(qtyOk)}" />
 					</td>
-					<td><s:property value="qtyExpect*qtyOk" />
+					<td><s:property value='%{formatDouble2(qtyExpect*qtyOk)}' />
 					</td>
 					<td><s:property value="%{formatDouble(personNo)}" />
 					</td>

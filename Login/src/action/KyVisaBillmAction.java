@@ -33,6 +33,7 @@ import services.IKyzExpectmatmsServices;
 import services.IKyzVisaFlowServices;
 import services.IWebFactServices;
 import services.IWebUserService;
+import services.IWebuserEmailServices;
 import util.JasperHelper;
 import util.PageBean;
 
@@ -60,6 +61,7 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 	private IKyzVisaFlowServices visaSer;
 	private IKyzContactLetterServices kyzletterSer;
 	private IWebUserService webUserService;
+	private IWebuserEmailServices webuseremailSer;
 	private PageBean bean;
 	private String factNo;
 	private String visaSort;
@@ -258,6 +260,9 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 		return "beanList1";
 	}*/
 	
+	public void setWebuseremailSer(IWebuserEmailServices webuseremailSer) {
+		this.webuseremailSer = webuseremailSer;
+	}
 	public void setWebUserService(IWebUserService webUserService) {
 		this.webUserService = webUserService;
 	}
@@ -857,7 +862,7 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 		      /**
 		       * 发送给备签人  20150817
 		       */
-			  String emailPwd=webUserService.findEmailPWD(signernext);//备签人员
+			  String emailPwd=webuseremailSer.findEmailPWD(factno_temp,signernext);//备签人员
 		      if(emailPwd!=null){
 		    	  MailSenderInfo mailInfo2 = new MailSenderInfo();    
 			      //mailInfo.setMailServerHost("smtp.qq.com");    
@@ -930,7 +935,7 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 		       */
 			/*for(int i=0;i<vbs_size;i++){
 				String toEmail=vbm.getKyVisabillses().get(i).getVisaSigner();
-				String emailPwd=webUserService.findEmailPWD(vbm.getId().getFactNo(), toEmail);//备签人员
+				String emailPwd=webuseremailSer.findEmailPWD(vbm.getId().getFactNo(), toEmail);//备签人员
 				if(emailPwd!=null){
 			    	  MailSenderInfo mailInfo2 = new MailSenderInfo();    
 				      //mailInfo.setMailServerHost("smtp.qq.com");    
@@ -1563,7 +1568,7 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 			sms.sendHtmlMail(mailInfo);// 发送html格式
 
 			// 给备签人发送邮件
-			String emailPwd = webUserService.findEmailPWD(list_visa2.get(i).getVisaSigner());					
+			String emailPwd = webuseremailSer.findEmailPWD(local_factNo,list_visa2.get(i).getVisaSigner());					
 			if (emailPwd != null) {
 				MailSenderInfo mailInfo2 = new MailSenderInfo();
 				// 这个类主要来发送邮件
@@ -1750,7 +1755,7 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 			sms.sendHtmlMail(mailInfo);// 发送html格式
 			
 			// 给备签人发送邮件
-			String emailPwd = webUserService.findEmailPWD(list_visa2.get(i).getVisaSigner());
+			String emailPwd = webuseremailSer.findEmailPWD(local_factNo,list_visa2.get(i).getVisaSigner());
 			if(emailPwd!=null){
 				MailSenderInfo mailInfo2 = new MailSenderInfo();
 				// 这个类主要来发送邮件

@@ -305,7 +305,7 @@ public class WebcashoutAction extends ActionSupport implements ServletResponseAw
 		if(factNo.equals("all")){
 			list_fact=webFactSer.findAllFact_2();
 		}else{
-			list_fact=webFactSer.findFactById(factNo);
+			list_fact=webFactSer.findFactById_show(factNo);
 		}
 		Object[]obj_temp=new Object[4];
 		for(int i=0;i<list_fact.size();i++){
@@ -623,16 +623,16 @@ public class WebcashoutAction extends ActionSupport implements ServletResponseAw
 										
 				}else{
 					cs_temp=cs_red;
-					/*sheet.getRow(index_y+4*j).getCell(2+5*i).setCellValue("礚计沮");
+					sheet.getRow(index_y+4*j).getCell(2+5*i).setCellValue("礚计沮");
 					sheet.getRow(index_y+4*j).getCell(3+5*i).setCellValue("礚计沮");
 					sheet.getRow(index_y+4*j).getCell(4+5*i).setCellValue("礚计沮");
 					sheet.getRow(index_y+4*j).getCell(5+5*i).setCellValue("礚计沮");
-					sheet.getRow(index_y+4*j).getCell(6+5*i).setCellValue("礚计沮");*/					
-					sheet.getRow(index_y+4*j).getCell(2+5*i).setCellValue(0);
+					sheet.getRow(index_y+4*j).getCell(6+5*i).setCellValue("礚计沮");				
+					/*sheet.getRow(index_y+4*j).getCell(2+5*i).setCellValue(0);
 					sheet.getRow(index_y+4*j).getCell(3+5*i).setCellValue(0);
 					sheet.getRow(index_y+4*j).getCell(4+5*i).setCellValue(0);
 					sheet.getRow(index_y+4*j).getCell(5+5*i).setCellValue(0);
-					sheet.getRow(index_y+4*j).getCell(6+5*i).setCellValue(0);
+					sheet.getRow(index_y+4*j).getCell(6+5*i).setCellValue(0);*/
 					//sheet.getRow(8+4*j).getCell(6+5*i).setCellValue("礚计沮");
 				}				
 				sheet.getRow(index_y+4*j).getCell(2+5*i).setCellStyle(cs_temp);

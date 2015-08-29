@@ -35,8 +35,8 @@ public class AutoSendEmailAction {
 		props.setProperty("mail.transport.protocol", "smtp");
 		//props.setProperty("mail.host", "dgmail.yydg.com.cn");
 		props.setProperty("mail.host", "172.17.5.84");//因為有時候解釋不了域名,所以直接用地址代替
-		props.put("http.proxyHost", "172.17.18.14");
-		props.put("http.proxyPort", "808");
+		//props.put("http.proxyHost", "172.17.18.14");
+		//props.put("http.proxyPort", "808");
 		Session session = Session.getInstance(props, new Authenticator() {
 			protected PasswordAuthentication getPasswordAuthentication() {
 				return new PasswordAuthentication(MAIL_USER, MAIL_PASSWORD);

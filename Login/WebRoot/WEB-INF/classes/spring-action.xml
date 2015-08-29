@@ -70,6 +70,7 @@
 	<bean id="kpifactAction" class="action.KpifactAction" scope="prototype"/>
 	<bean id="kyzcontactletterAction" class="action.KyzContactLetterAction" scope="prototype"/>
 	<bean id="webcashoutAction" class="action.WebcashoutAction" scope="prototype"/>
+	<bean id="webuseremailAction" class="action.WebuseremailAction" scope="prototype"/>
 </beans> 
 
  

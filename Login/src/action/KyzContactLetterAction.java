@@ -29,6 +29,7 @@ import services.IKyzExpectmatmFileServices;
 import services.IKyzVisaFlowServices;
 import services.IWebFactServices;
 import services.IWebUserService;
+import services.IWebuserEmailServices;
 import util.JasperHelper;
 import util.PageBean;
 
@@ -70,6 +71,7 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 	private javax.servlet.http.HttpServletResponse response;
 	private IKyVisaBillsServices visabillSer;
 	private IWebUserService webUserService;
+	private IWebuserEmailServices webuseremailSer;
 	
 	public List<File> getFiles() {
 		return files;
@@ -191,6 +193,10 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 	
 	public void setWebUserService(IWebUserService webUserService) {
 		this.webUserService = webUserService;
+	}
+	
+	public void setWebuseremailSer(IWebuserEmailServices webuseremailSer) {
+		this.webuseremailSer = webuseremailSer;
 	}
 	public String add() throws IOException{
 		/*文件上傳驗證*/
@@ -314,7 +320,7 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 				      /**
 				       * 给备签人发送邮件
 				       */
-				      String emailPwd=webUserService.findEmailPWD(singernext);
+				      String emailPwd=webuseremailSer.findEmailPWD(kyzletter.getId().getFactNo(),singernext);
 				      if(emailPwd!=null){
 				    	  MailSenderInfo mailinfo3=new MailSenderInfo();
 							mailinfo3.setValidate(true);

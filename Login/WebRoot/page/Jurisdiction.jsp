@@ -419,6 +419,13 @@
 	    }else{
 	       document.getElementById("webcashout_report1").innerHTML='<input name="checkbox" value="數據管理,生產與請款達成狀況統計,page/webcashout_report.jsp" type="checkbox" />生產與請款達成狀況統計';																		
 	    }
+	    
+	    var i53=document.getElementById("backemail");
+	    if(i53!=null){
+	      document.getElementById("backemail1").innerHTML="";
+	    }else{
+	       document.getElementById("backemail1").innerHTML='<input name="checkbox" value="用戶管理,備簽人管理,webuseremail_findPageBean"  type="checkbox" />備簽人管理'									
+	    }
 	      	    	 
 }
 	/* function huoqu() {
@@ -950,6 +957,15 @@ function getSub(){
 							</s:if>
 						</s:iterator>
 					</s:iterator> <span id="glyh1"></span>
+					<s:iterator value="#session.user.webJurisdictions">
+						<s:iterator value="webSubmenus">
+							<s:if test="submenuname=='備簽人管理'">
+								<span id="backemail"><input name="checkbox"
+									value="用戶管理,備簽人管理,webuseremail_findPageBean" checked="checked" type="checkbox" />備簽人管理</span>
+							</s:if>
+						</s:iterator>
+					</s:iterator> <span id="backemail1"></span>
+					
 				</td>
 			</tr>
 			<tr>

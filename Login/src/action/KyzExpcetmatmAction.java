@@ -41,6 +41,7 @@ import services.IKyzExpectmatmsServices;
 import services.IKyzVisaFlowServices;
 import services.IWebFactServices;
 import services.IWebUserService;
+import services.IWebuserEmailServices;
 import util.JasperHelper;
 import util.PageBean;
 import entity.KyVisabillm;
@@ -58,6 +59,7 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 	private IWebFactServices webFactSer;
 	private IKyzVisaFlowServices visaSer;
 	private IWebUserService webUserService;
+	private IWebuserEmailServices webuseremailSer;
 	private KyzExpectmatmId id;
     private PageBean bean;
     private String factNo;
@@ -335,6 +337,12 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 	public void setWebUserService(IWebUserService webUserService) {
 		this.webUserService = webUserService;
 	}
+	
+	
+
+	public void setWebuseremailSer(IWebuserEmailServices webuseremailSer) {
+		this.webuseremailSer = webuseremailSer;
+	}
 
 	public String add() throws Exception  {
 		/*文件上傳驗證*/
@@ -547,7 +555,7 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 		        String emailUrl_out2="http://121.12.166.101/Login/vbm_findById_email?visaSort="+kyz.getVisaType()+"& billNo="+kyz.getId().getBillNo()
 		         +"& factNo="+kyz.getId().getFactNo()+"& email="+vbm.getSignerNext();
 				  
-			      String emailPwd=webUserService.findEmailPWD(vbm.getSignerNext());
+			      String emailPwd=webuseremailSer.findEmailPWD(kyz.getId().getFactNo(),vbm.getSignerNext());
 			      if(emailPwd!=null){
 			    	  MailSenderInfo mailInfo2 = new MailSenderInfo();    
 				      //mailInfo.setMailServerHost("smtp.qq.com");    
@@ -990,10 +998,14 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 	public String formatDouble(double s){
 		DecimalFormat format=new DecimalFormat("#");
 		String temp=format.format(s);
-		return temp;
-		
-		
+		return temp;				
 	}
+	public String formatDouble2(double s){
+		DecimalFormat format=new DecimalFormat(",###.#");
+		String temp=format.format(s);
+		return temp;				
+	}
+	
 	
 	public String download() throws UnsupportedEncodingException{
 		String result="";

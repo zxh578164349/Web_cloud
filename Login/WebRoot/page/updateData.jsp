@@ -125,11 +125,11 @@ window.onload=function(){
 			       <input  value="<s:property value="#attr.webU.email"/>" type="hidden" id="hidden_email"/>
 			     </td>
 			</tr>
-			<tr>
+			<%-- <tr>
 			     <td class="td1">备签人Email:</td>
 			     <td><input name="updateU.emailpassword" value="<s:property value="#attr.webU.emailpassword"/>"   type="text"/>			     
 			     </td>			     
-			</tr>
+			</tr> --%>
 			<tr>
 			     <td class="td1">只讀/修改</td>
 			     <td>

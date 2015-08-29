@@ -409,7 +409,7 @@ public class TestTimerAction extends QuartzJobBean {
 			} else {
 				HttpClient client = new HttpClient();
 				HttpMethod method = new GetMethod(
-						"http://172.17.18.14/Login/printerauto_print?yymm="+yymm);//(在不同的機器上注意修改IP和端口)
+						"http://172.17.18.173:8080/Login/printerauto_print?yymm="+yymm);//(在不同的機器上注意修改IP和端口)
 				client.executeMethod(method);
 				method.releaseConnection();
 				String totalResult = notInput();
@@ -420,7 +420,7 @@ public class TestTimerAction extends QuartzJobBean {
 				IWebEmailService eSer = (IWebEmailService) bean
 						.getBean("emailService");
 				List<WebEmail> email = eSer.getEmail("Y");
-				String[] mail = new String[email.size()];
+				/*String[] mail = new String[email.size()];
 				for (int i = 0; i < email.size(); i++) {
 					if (email.get(i).getName() != null
 							|| !email.get(i).getName().equals("")) {
@@ -432,9 +432,9 @@ public class TestTimerAction extends QuartzJobBean {
 					} else {
 						mail[i] = email.get(i).getEmail();
 					}
-				}
-				//String[] mail={MimeUtility.encodeText("張錫洪")+"<kyinfo.David@yyin.yydg.com.cn>"};
-				List<WebCc> Cc = eSer.getCC("Y");
+				}*/
+				String[] mail={MimeUtility.encodeText("張錫洪")+"<kyinfo.David@yyin.yydg.com.cn>"};
+				/*List<WebCc> Cc = eSer.getCC("Y");
 				String[] cc = new String[Cc.size()];
 				for (int j = 0; j < Cc.size(); j++) {
 					if (Cc.get(j).getName() != null
@@ -444,8 +444,8 @@ public class TestTimerAction extends QuartzJobBean {
 					} else {
 						cc[j] = Cc.get(j).getName() + Cc.get(j).getEmail();
 					}
-				}
-				//String[] cc = {MimeUtility.encodeText("張錫洪")+"<kyinfo.David@yyin.yydg.com.cn>"};
+				}*/
+				String[] cc = {MimeUtility.encodeText("張錫洪")+"<kyinfo.David@yyin.yydg.com.cn>"};
 				
 				AutoSendEmailAction send = new AutoSendEmailAction();
 				String tyymm=tformat.format(new Date());

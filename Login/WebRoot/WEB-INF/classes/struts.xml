@@ -592,6 +592,13 @@
            <result name="delete" type="redirectAction">webcashout_findPageBean</result>
            <result name="findById">/saveAndUpdate/webcashoutSaveOrUpdate.jsp</result>
         </action>
+        <action name="webuseremail_*" class="webuseremailAction" method="{1}">
+            <result name="add" type="redirectAction">webuseremail_findPageBean</result>
+            <result name="findById">/saveAndUpdate/webuseremailSaveOrUpdate.jsp</result>
+            <result name="delete" type="redirectAction">webuseremail_findPageBean</result>
+            <result name="beanList">/page/managerUserEmail.jsp</result>
+            <result name="beanList1">/page/table1/managerUserEmail1.jsp</result>
+        </action>
 	</package>
 
 </struts>

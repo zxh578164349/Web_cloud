@@ -91,6 +91,7 @@
 	<bean id="vcashoutSer" class="services.impl.VWebydataawebcashoutServicesImpl"></bean>
 	<bean id="vwebcostSer" class="services.impl.VWebcostServicesImpl"></bean>
 	<bean id="vwebcosteveSer" class="services.impl.VWebcostEveServicesImpl"></bean>
+	<bean id="webuseremailSer" class="services.impl.WebuserEmailServicesImpl"></bean>
 </beans>
 
 

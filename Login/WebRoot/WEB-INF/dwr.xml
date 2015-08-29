@@ -152,6 +152,10 @@
 		   <param name="beanName" value="cashoutSer"/>
 		   <include method="findById"/>
 		</create>
+		<create javascript="webuseremailjs" creator="spring">
+		    <param name="beanName" value="webuseremailSer"/>
+		    <include method="findEmailPWD"/>
+		</create>
 		<convert converter="hibernate3" match="entity.*" />		
 		<!-- <convert converter="bean" match="cn.com.entity.ConfigFileFirstKind">
 			<param name="include" value="ffkId,firstKindName,configFileSecondKinds" />
