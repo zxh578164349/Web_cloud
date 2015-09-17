@@ -71,6 +71,7 @@
 	<bean id="kyzcontactletterAction" class="action.KyzContactLetterAction" scope="prototype"/>
 	<bean id="webcashoutAction" class="action.WebcashoutAction" scope="prototype"/>
 	<bean id="webuseremailAction" class="action.WebuseremailAction" scope="prototype"/>
+	<bean id="webtypeAction" class="action.WebTypeAction" scope="prototype"/>
 </beans> 
 
  

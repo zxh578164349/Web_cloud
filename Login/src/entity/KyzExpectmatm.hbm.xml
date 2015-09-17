@@ -74,6 +74,9 @@
         <property name="firstPage" type="java.lang.String">
             <column name="FIRST_PAGE" length="2"></column>
         </property>
+        <property name="colTemp" type="java.lang.String">
+            <column name="COL_TEMP" length="2"></column>
+        </property>
         <bag name="kyzExpectmatses" inverse="true" cascade="all" lazy="false">
             <key>
                 <column name="FACT_NO" length="6" not-null="true" />

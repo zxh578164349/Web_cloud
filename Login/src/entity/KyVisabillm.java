@@ -15,15 +15,17 @@ public class KyVisabillm implements java.io.Serializable {
 
 	private KyVisabillmId id;
 	private String purmanNo;
-	private String signerNext;//¤U¤@¦ì¼f®Ö¤H(Email)
-	private String signerLast;//³Ìªñ¼f®Ö¤H(Email)
-	private String lastMk;//³Ìªñ¼f®Öª¬ºA(³Ìªñ¤@­Ó¼f®Ö¤H¨M©w  :Y:¤w¼f®Ö;T:¥´¦^)
-	private String visaMk;//¼f®Öª¬ºA(³Ì«á¤@­Ó¤H¨M©w: N:¥¼¼f®Ö;Y:¤w¼f®Ö;T:¥´¦^)
-	private String revisaMk;//­«¼fª¬ºA
-	private String itemNext;//¤U¤@­Ó¶µ¦¸
-	private String itemLast;//³Ìªñ¶µ¦¸
+	private String signerNext;//ä¸‹ä¸€ä½å¯©æ ¸äºº(Email)
+	private String signerLast;//æœ€è¿‘å¯©æ ¸äºº(Email)
+	private String lastMk;//æœ€è¿‘å¯©æ ¸ç‹€æ…‹(æœ€è¿‘ä¸€å€‹å¯©æ ¸äººæ±ºå®š  :Y:å·²å¯©æ ¸;T:æ‰“å›)
+	private String visaMk;//å¯©æ ¸ç‹€æ…‹(æœ€å¾Œä¸€å€‹äººæ±ºå®š: N:æœªå¯©æ ¸;Y:å·²å¯©æ ¸;T:æ‰“å›)
+	private String revisaMk;//é‡å¯©ç‹€æ…‹
+	private String itemNext;//ä¸‹ä¸€å€‹é …æ¬¡
+	private String itemLast;//æœ€è¿‘é …æ¬¡
 	private String memoMk;
 	private String dateCreate;
+	private String emailMk;//æ˜¯å¦å·²ç»å‘é€çŸ¥ä¼šemail
+	private String colTemp;
 	private List<KyVisabills> kyVisabillses = new ArrayList<KyVisabills>();
 
 	// Constructors
@@ -41,7 +43,7 @@ public class KyVisabillm implements java.io.Serializable {
 	public KyVisabillm(KyVisabillmId id, String purmanNo, String signerNext,
 			String signerLast, String lastMk, String visaMk, String revisaMk,
 			String itemNext, String itemLast, String memoMk, String dateCreate,
-			List<KyVisabills> kyVisabillses) {
+			String emailMk,String colTemp,List<KyVisabills> kyVisabillses) {
 		this.id = id;
 		this.purmanNo = purmanNo;
 		this.signerNext = signerNext;
@@ -53,6 +55,8 @@ public class KyVisabillm implements java.io.Serializable {
 		this.itemLast = itemLast;
 		this.memoMk = memoMk;
 		this.dateCreate = dateCreate;
+		this.emailMk=emailMk;
+		this.colTemp=colTemp;
 		this.kyVisabillses = kyVisabillses;
 	}
 
@@ -145,6 +149,25 @@ public class KyVisabillm implements java.io.Serializable {
 	public void setDateCreate(String dateCreate) {
 		this.dateCreate = dateCreate;
 	}
+	
+
+	public String getEmailMk() {
+		return emailMk;
+	}
+
+	public void setEmailMk(String emailMk) {
+		this.emailMk = emailMk;
+	}
+	
+	
+
+	public String getColTemp() {
+		return colTemp;
+	}
+
+	public void setColTemp(String colTemp) {
+		this.colTemp = colTemp;
+	}
 
 	public List<KyVisabills> getKyVisabillses() {
 		return kyVisabillses;
@@ -153,6 +176,7 @@ public class KyVisabillm implements java.io.Serializable {
 	public void setKyVisabillses(List<KyVisabills> kyVisabillses) {
 		this.kyVisabillses = kyVisabillses;
 	}
+	
 
 
 

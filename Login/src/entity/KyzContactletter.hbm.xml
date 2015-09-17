@@ -50,5 +50,8 @@
         <property name="factCode" type="java.lang.String">
             <column name="FACT_CODE" length="20" />
         </property>
+        <property name="colTemp" type="java.lang.String">
+            <column name="COL_TEMP" length="2"/>
+        </property>
     </class>
 </hibernate-mapping>

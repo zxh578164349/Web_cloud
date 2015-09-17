@@ -92,5 +92,6 @@
 	<bean id="vwebcosteveDao" class="dao.impl.VWebcostEveDaoImpl" parent="baseDao"></bean>
 	<bean id="vwebcostDao" class="dao.impl.VWebcostDaoImpl" parent="baseDao"></bean>
 	<bean id="webuseremailDao" class="dao.impl.WebuserEmailDaoImpl" parent="baseDao"></bean>
+	<bean id="webtypeDao" class="dao.impl.WebTypeDaoImpl" parent="baseDao"></bean>
 </beans>
 

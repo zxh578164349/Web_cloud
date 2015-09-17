@@ -181,7 +181,8 @@
 				<value>entity/VWebydataawebcashout.hbm.xml</value>
 				<value>entity/VWebcost.hbm.xml</value>
 				<value>entity/VWebcostEve.hbm.xml</value>
-				<value>entity/WebuserEmail.hbm.xml</value></list>
+				<value>entity/WebuserEmail.hbm.xml</value>
+				<value>entity/WebType.hbm.xml</value></list>
 		</property>
 	</bean>
 	<bean id="baseDao" class="dao.Basedao">

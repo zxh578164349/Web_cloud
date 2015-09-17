@@ -1,9 +1,9 @@
-#Fri Aug 28 08:56:21 CST 2015
+#Tue Sep 15 09:40:25 CST 2015
 eclipse.preferences.version=1
 encoding//WebRoot/500.html=UTF-8
 encoding//WebRoot/MyHtml.jsp=UTF-8
 encoding//WebRoot/Test1.jsp=UTF-8
-encoding//WebRoot/bootstrap.html=UTF-8
+encoding//WebRoot/bootstrap.jsp=UTF-8
 encoding//WebRoot/bottom.html=UTF-8
 encoding//WebRoot/css/button_css.css=UTF-8
 encoding//WebRoot/css/div_round.css=UTF-8
@@ -69,8 +69,11 @@ encoding//src/dao/impl/WebSideDaoImpl.java=UTF-8
 encoding//src/dao/impl/WebYieldDataDaoImpl.java=UTF-8
 encoding//src/dao/impl/WebYielePredictionDaoImpl.java=UTF-8
 encoding//src/dao/impl/WebZwcashDaoImpl.java=UTF-8
+encoding//src/entity/KyVisabillm.java=UTF-8
 encoding//src/entity/VKpifact.java=UTF-8
 encoding//src/entity/WebUser.java=UTF-8
+encoding//src/mail/AutoSendKyz.java=UTF-8
+encoding//src/mail/AutoSendKyzAll.java=UTF-8
 encoding//src/mail/MailSenderInfo.java=UTF-8
 encoding//src/mail/MyAuthenticator.java=UTF-8
 encoding//src/mail/SimpleMailSender.java=UTF-8
@@ -78,6 +81,7 @@ encoding//src/override/OpenSessionInViewFilter.java=UTF-8
 encoding//src/services/impl/WebBackMatServicesImpl.java=UTF-8
 encoding//src/util/Cookie.java=UTF-8
 encoding//src/util/JasperHelper.java=UTF-8
+encoding//src/util/JasperHelper2.java=UTF-8
 encoding//src/util/MakeCertPic.java=UTF-8
 encoding//src/util/PageBean.java=UTF-8
 encoding//src/util/SessionListener.java=UTF-8

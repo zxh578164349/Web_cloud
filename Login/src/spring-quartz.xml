@@ -25,6 +25,16 @@
         </property>
         -->
     </bean>
+    <bean id="quantzjobBeanA" class="org.springframework.scheduling.quartz.JobDetailBean">
+        <property name="jobClass">
+             <value>mail.AutoSendKyz</value>
+        </property>
+    </bean>
+    <bean id="quantzjobBeanB" class="org.springframework.scheduling.quartz.JobDetailBean">
+        <property name="jobClass">
+             <value>mail.AutoSendKyzAll</value>
+        </property>
+    </bean>
 
     <!-- 触发任务条件 -->
    <!--  <bean id="simpletriggerbean" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
@@ -47,6 +57,14 @@
     <bean id="CronTriggerBean" class="org.springframework.scheduling.quartz.CronTriggerBean">  
       <property name="jobDetail" ref="quantzjobBean"></property>  
       <property name="cronExpression" value="0 0 14 * * ?"></property>  
+    </bean>
+    <bean id="CronTriggerBeanA" class="org.springframework.scheduling.quartz.CronTriggerBean">
+      <property name="jobDetail" ref="quantzjobBeanA"></property>
+      <property name="cronExpression" value="0 50 14 * * ?"></property>      
+    </bean> 
+    <bean id="CronTriggerBeanB" class="org.springframework.scheduling.quartz.CronTriggerBean">
+      <property name="jobDetail" ref="quantzjobBeanB"></property>
+      <property name="cronExpression" value="0 59 9 * * ?"></property>      
     </bean> 
     
     <!-- 启动调度 -->
@@ -54,6 +72,8 @@
         <property name="triggers">
             <list>
                 <ref bean="CronTriggerBean"/>
+                <ref bean="CronTriggerBeanA"/>
+                <ref bean="CronTriggerBeanB"/>
             </list>
         </property>        
     </bean>

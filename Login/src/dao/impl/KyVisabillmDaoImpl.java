@@ -94,4 +94,25 @@ public class KyVisabillmDaoImpl extends Basedao implements IKyVisaBillmDao{
 		
 	}
 
+	public List<KyVisabillm> findByVisaMk(String visaMk) {
+		// TODO Auto-generated method stub
+		String hql="from KyVisabillm where visaMk<>? and id.factNo='631' and id.visaSort like'C%'";
+		String[]objs={visaMk};
+		return super.findAll(hql, objs);
+	}
+	
+
+	public List<KyVisabillm> findAllVbm() {
+		// TODO Auto-generated method stub
+		String hql="from KyVisabillm";
+		return super.findAll(hql, null);
+	}
+
+	public List<KyVisabillm> findByVisaMk2(String visaMk) {
+		// TODO Auto-generated method stub
+		String hql="from KyVisabillm where visaMk=? and id.factNo='631'  and id.visaSort like'C%'";
+		String[]objs={visaMk};
+		return super.findAll(hql, objs);
+	}
+
 }

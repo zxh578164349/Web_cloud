@@ -107,7 +107,7 @@ function move(obj){
 	<jsp:include page="publicHead_webuseremail.jsp" />
 	<hr />
 	<s:if test='#session.loginUser.userread!="1"'>	
-		<input value="添加新用戶" type="button" id="search_forday" onclick="javascript:location.href='saveAndUpdate/webuseremailSaveOrUpdate.jsp'"/>
+		<input value="添加備簽人" type="button" id="search_forday" onclick="javascript:location.href='saveAndUpdate/webuseremailSaveOrUpdate.jsp'"/>
 	</s:if>	
 	<div id="bodyid">
 		<jsp:include page="table1/managerUserEmail1.jsp" />

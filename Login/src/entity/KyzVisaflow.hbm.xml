@@ -29,5 +29,8 @@
         <property name="flowMk" type="java.lang.String">
             <column name="FLOW_MK" length="2"/>
         </property>
+        <property name="colTemp" type="java.lang.String">
+            <column name="COL_TEMP" length="2"/>
+        </property>
     </class>
 </hibernate-mapping>

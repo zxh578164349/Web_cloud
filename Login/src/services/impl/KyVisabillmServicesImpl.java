@@ -1,5 +1,7 @@
 package services.impl;
 
+import java.util.List;
+
 import dao.IKyVisaBillmDao;
 import entity.KyVisabillm;
 import services.IKyVisabillmServices;
@@ -32,6 +34,21 @@ public class KyVisabillmServicesImpl implements IKyVisabillmServices{
 		// TODO Auto-generated method stub
 		visabillmDao.delete(factNo, visaSort, billNo);
 		
+	}
+
+	public List<KyVisabillm> findByVisaMk(String visaMk) {
+		// TODO Auto-generated method stub
+		return visabillmDao.findByVisaMk(visaMk);
+	}
+
+	public List<KyVisabillm> findAllVbm() {
+		// TODO Auto-generated method stub
+		return visabillmDao.findAllVbm();
+	}
+
+	public List<KyVisabillm> findByVisaMk2(String visaMk) {
+		// TODO Auto-generated method stub
+		return visabillmDao.findByVisaMk2(visaMk);
 	}
 
 }

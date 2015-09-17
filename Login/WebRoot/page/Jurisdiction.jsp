@@ -426,6 +426,14 @@
 	    }else{
 	       document.getElementById("backemail1").innerHTML='<input name="checkbox" value="用戶管理,備簽人管理,webuseremail_findPageBean"  type="checkbox" />備簽人管理'									
 	    }
+	    
+	    var i54=document.getElementById("webtype");
+	    if(i54!=null){
+	       document.getElementById("webtype1").innerHTML="";
+	    }else{
+	       document.getElementById("webtype1").innerHTML='<input name="checkbox" value="KPI數據,簽核類別管理,webtype_findPageBean" type="checkbox">簽核類別管理'							                                             
+	    }
+	    
 	      	    	 
 }
 	/* function huoqu() {
@@ -774,6 +782,19 @@ function getSub(){
 							      </s:iterator>							   
 							   </s:iterator>
 							   <span id="kyzcontactletter1"></span>
+							</td>
+							 <td>
+							   <s:iterator value="#session.user.webJurisdictions">
+							      <s:iterator value="webSubmenus">
+							          <s:if test="submenuname=='簽核類別管理'">
+							             <span id="webtype">
+							                 <input name="checkbox" value="KPI數據,簽核類別管理,webtype_findPageBean" checked="checked" type="checkbox">
+							                                              簽核類別管理
+							             </span>
+							          </s:if>
+							      </s:iterator>							   
+							   </s:iterator>
+							   <span id="webtype1"></span>
 							</td>
 						</tr>
 					</table></td>

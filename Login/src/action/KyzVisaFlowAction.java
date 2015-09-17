@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.struts2.interceptor.ServletResponseAware;
 
 import services.IKyzVisaFlowServices;
+import services.IWebTypeServices;
 import util.PageBean;
 
 import com.opensymphony.xwork2.ActionContext;
@@ -19,6 +20,7 @@ import entity.KyzVisaflowId;
 
 public class KyzVisaFlowAction extends ActionSupport implements ServletResponseAware{
 	private IKyzVisaFlowServices visaSer;
+	private IWebTypeServices webtypeSer;
 	private List<KyzVisaflow> flows;
 	private String factNo;
 	private String visaSort;
@@ -135,6 +137,8 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 	public void setFlowmk(String flowmk) {
 		this.flowmk = flowmk;
 	}
+	
+	
 
 	/*public String add() throws IOException{
 		String visaSort_main=flows.get(0).getId().getVisaSort();		
@@ -173,9 +177,14 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 		return "add";
 	}*/
 	
-	public String add() throws IOException{
-		String visaSort_main=flows.get(0).getId().getVisaSort();		
+	public void setWebtypeSer(IWebTypeServices webtypeSer) {
+		this.webtypeSer = webtypeSer;
+	}
 
+	public String add() throws IOException{		
+		String visaSort_main=flows.get(0).getId().getVisaSort();
+		char first_main=visaSort_main.charAt(0);
+		if(first_main=='C'){//start if
 			String visaSort_sub=visaSort_main+"0";
 			//選中"費用簽核"所有的子類別			
 			List<String>types_str=visaSer.findVisaSort_C(flows.get(0).getId().getFactNo(),visaSort_main);
@@ -186,7 +195,7 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 					types_int.add(temp);
 				}
 				int maxNum=types_int.get(types_int.size()-1);//因為集合已按從小到大的順序排列好的，所以最後一個元素最大
-				String str_max=String.valueOf(maxNum);//这样转换String,不会省略最后是0的数字
+				String str_max=String.valueOf(maxNum);
 				if(str_max.substring(str_max.length()-1,str_max.length()).equals("9")){      										
 					visaSort_sub="C"+maxNum+"0";  //如果最后一位数是9，则在后面再添加一位数（例：C19-->C190,C29-->C290）
 					/*response.setContentType("text/html;charset=utf-8");
@@ -195,16 +204,27 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 				}else{					
 					visaSort_sub="C"+(maxNum+1);
 				}
-			}					
-		for(int i=0;i<flows.size();i++){
-			flows.get(i).getId().setVisaSort(visaSort_sub);
+			}
+			for(int i=0;i<flows.size();i++){
+				flows.get(i).getId().setVisaSort(visaSort_sub);
+				
+			    String purmanNo=flows.get(i).getId().getPurmanNo().trim();
+			    String visaSigner=flows.get(i).getVisaSigner().trim();
+			    flows.get(i).getId().setPurmanNo(purmanNo);
+			    flows.get(i).setVisaSigner(visaSigner);
+			    flows.get(i).setFlowMk("Y");
+				visaSer.add(flows.get(i));
+			}
+		}else{//end if
+			for(int i=0;i<flows.size();i++){
+				 String purmanNo=flows.get(i).getId().getPurmanNo().trim();
+				    String visaSigner=flows.get(i).getVisaSigner().trim();
+				    flows.get(i).getId().setPurmanNo(purmanNo);
+				    flows.get(i).setVisaSigner(visaSigner);
+				    flows.get(i).setFlowMk("Y");
+					visaSer.add(flows.get(i));
+			}
 			
-		    String purmanNo=flows.get(i).getId().getPurmanNo().trim();
-		    String visaSigner=flows.get(i).getVisaSigner().trim();
-		    flows.get(i).getId().setPurmanNo(purmanNo);
-		    flows.get(i).setVisaSigner(visaSigner);
-		    flows.get(i).setFlowMk("Y");
-			visaSer.add(flows.get(i));
 		}
 		return "add";
 	}
@@ -216,7 +236,8 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 	public String findPageBean() {
 		ActionContext.getContext().getApplication().clear();
 		factNo = (String) ActionContext.getContext().getSession().get("factNo");
-		bean = visaSer.findPageBean(25, page, factNo, visaSort);
+		bean = visaSer.findPageBean(25, page, factNo, visaSort);		
+		this.getTypeName(bean);//从webtype获取类别名称
 		return "beanList";
 	}
 
@@ -230,6 +251,7 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 			ActionContext.getContext().getApplication().put("kyzvisa_visaSort", visaSort);
 		}
 		bean = visaSer.findPageBean(25, page, factNo, visaSort);
+		this.getTypeName(bean);
 		return "beanList1";
 	}
 
@@ -243,6 +265,7 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 					.get("factNo");
 		}
 		bean = visaSer.findPageBean(25, page, factNo, visaSort);
+		this.getTypeName(bean);
 		return "beanList1";
 	}
 	
@@ -348,6 +371,29 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 	public void setServletResponse(HttpServletResponse response) {
 		// TODO Auto-generated method stub
 		this.response=response;
+	}
+	
+	public void getTypeName(PageBean bean){
+		List<KyzVisaflow>list=bean.getList();
+		for(int i=0;i<list.size();i++){
+			KyzVisaflow flow=list.get(i);
+			String factno=flow.getId().getFactNo();
+			String visaSort=flow.getId().getVisaSort();
+			char visaSort_char=visaSort.charAt(0);
+			String visaSort2=visaSort.substring(0, 2);
+			String typename="";
+			if(visaSort_char=='C'){
+				typename=webtypeSer.findTypeNameById(factno, visaSort2);
+			}else{
+				typename=webtypeSer.findTypeNameById(flow.getId().getFactNo(), flow.getId().getVisaSort());
+			}
+			if(typename!=null&&!typename.equals("")){
+				flow.setColTemp(typename);	
+			}else{
+				flow.setColTemp(visaSort);
+			}
+					
+		}
 	}
 
 }

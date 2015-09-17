@@ -70,10 +70,36 @@ function makeBillNo() {
 		
 	}
 							
-   function getKyType(){
+ /*   function getKyType(){
 	   kytypejs.findByTypeNo("VV",function(x){
 	         dwr.util.addOptions("dwr_kytype",x,"typeName","typeSname");
 	   });
+	} */
+	
+function getKyType(){
+	 var factno=document.getElementById("dwrFactNo").value;
+	 if(factno!=null&&factno!=""){
+	     webtypejs.findByFactNo(factno,function(x){
+       if(x.length>0){
+          dwr.util.addOptions("dwr_kytype",x,"webtypeMk","typeName");
+       }
+         
+     });
+	 }
+    
+	}
+	
+function getKyType2(factno){
+	 document.getElementById("dwr_kytype").length=1;	 
+	 if(factno!=null&&factno!=""){
+	     webtypejs.findByFactNo(factno,function(x){
+       if(x.length>0){
+          dwr.util.addOptions("dwr_kytype",x,"webtypeMk","typeName");
+       }
+         
+     });
+	 }
+    
 	}
 	 
   function checkType(type){
@@ -81,12 +107,12 @@ function makeBillNo() {
      dwremail=document.getElementById("dwr_email").value;
      if(dwrFactNo!=""&&type!=""){
          kyzvisaflowjs.findByType_Dwr(dwrFactNo,type,function(x){
-            if(x==0){
+            if(x==0){//流程不存在
                alert("該類型審核流程不存在，請重新選定!");
                document.getElementById("sub").disabled=true;
                document.getElementById("sub").style.color="red";
                document.getElementById("dwr_kytype").style.color="red";
-            }else{              
+            }else if(type.charAt(0)=='C'){//如果流程是C类（C1,C2....）  ,则要 根据申请人来选择审核流程的代号              
                 kyzvisaflowjs.findVisaSort_dwr(dwrFactNo,type,dwremail,function(y){
                   if(y==null){
                      alert("對不起，你不是該類別函文申請人，請重新選定!");
@@ -100,7 +126,12 @@ function makeBillNo() {
                      document.getElementById("hidden_kytype").value=y;                    
                   }
                   
-               }) 
+               }); 
+            }else{ //如果流程是非C类，则不需要根据申请人选择流程,直接選擇類型代號，就對應審核流程代號
+                     document.getElementById("sub").disabled=false;
+                     document.getElementById("sub").style.color="white";
+                     document.getElementById("dwr_kytype").style.color="black";
+                     document.getElementById("hidden_kytype").value=type;
             }
          });
      }
@@ -142,6 +173,7 @@ function makeBillNo() {
 <script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>
 <script type='text/javascript' src='/Login/dwr/interface/kytypejs.js'></script>
 <script type='text/javascript' src='/Login/dwr/interface/kyzvisaflowjs.js'></script>
+<script type='text/javascript' src='/Login/dwr/interface/webtypejs.js'></script>
 <script type='text/javascript' src='/Login/dwr/engine.js'></script>
 <script type='text/javascript' src='/Login/dwr/util.js'></script>
 
@@ -287,7 +319,7 @@ table.gridtable td.tdcolor {
 						<td class="tdcolor">廠別</td>
 						<td ><select style="color:blue"
 							name="kyzletter.id.factNo" datatype="*" id="dwrFactNo"
-							onchange="getFactArea(this.value),makeBillNo()">
+							onchange="getFactArea(this.value),makeBillNo(),getKyType2(this.value)">
 								<option value="">請選擇廠別</option>
 								<s:iterator value="#session.facts" id="temp">
 									<option value="${temp[0]}">${temp[1]

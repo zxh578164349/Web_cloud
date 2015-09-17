@@ -90,13 +90,13 @@ window.onload=function(){
 		　　<caption>新添備簽人</caption>			      						
 					<tr>
 						<td class="td_show_title">廠別</td>
-						<s:if test="useremail==null">
-						<s:if test="#session.factNo!='tw'">
-						<td class="td_input"><input type="text" style="color:blue"
-							name="useremail.id.factNo" value="${factNo}" readonly id="dwr_factno"/></td>
+						<s:if test="useremail==null">						
+						<td class="td_input">
+						<s:if test="#session.factNo!='tw'">						
+						<input type="text" style="color:blue" name="useremail.id.factNo" value="${factNo}" readonly id="dwr_factno"/>												
 						</s:if>	
 						<s:if test="#session.factNo=='tw'">	
-						<td class="td_input"><select style="color:blue"
+						<select style="color:blue"
 							name="useremail.id.factNo" datatype="*"
 							onchange="check()" id="dwr_factno">
 								<option value="">請選擇廠別</option>
@@ -105,9 +105,9 @@ window.onload=function(){
 										}&nbsp;(${temp[0]})</option>
 								</s:iterator>
 						</select>
+						</s:if>
 						<span id="error1"></span>
-						</td>	
-						</s:if>	
+						</td>																																					
 						</s:if>
 						<s:else>
 						   <td><input type="text" name="useremail.id.factNo" value="<s:property value='useremail.id.factNo'/>" readonly style="color:blue"/>
@@ -122,7 +122,7 @@ window.onload=function(){
 				
 				<td class="td_show_title">備簽人Email</td>
 				<td class="td_input"><input type="text" name="useremail.id.emailpassword"
-					datatype="e" value="<s:property value='useremail.id.emailpassword'/>" id="email" onblur="checkEmail()"/>					
+					datatype="e" value="<s:property value='useremail.id.emailpassword'/>" id="email" />					
 					</td>
 					<td class="td_show_title">主簽人姓名</td>
 					<td class="td_input"><input type="text" name="useremail.name" value="<s:property value='useremail.name'/>"/></td>

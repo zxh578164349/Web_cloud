@@ -120,7 +120,7 @@
 				<td>${15*(bean.currentPage-1)+x.index+1}</td>
 				<td><s:property value="id.factNo" /></td>
 				<td>
-				   <s:if test='id.visaSort=="W"'>臺灣簽核</s:if>
+				   <!-- <s:if test='id.visaSort=="W"'>臺灣簽核</s:if>
 				   <s:if test='id.visaSort=="Q"'>企劃簽核</s:if>
 				   <s:if test='id.visaSort=="Z"'>總務簽核</s:if>
 				   <s:if test='id.visaSort=="L"'>實驗室簽核</s:if>
@@ -138,7 +138,8 @@
 				   <s:if test='id.visaSort.substring(0,2)=="C3"'>電腦耗材簽核1(<1000元)</s:if>
 				   <s:if test='id.visaSort.substring(0,2)=="C4"'>電腦耗材簽核2(>=1000元)</s:if>
 				   <s:if test='id.visaSort.substring(0,2)=="C5"'>總務費用簽核1(<1000元)</s:if>
-				   <s:if test='id.visaSort.substring(0,2)=="C6"'>總務費用簽核2(>=1000元)</s:if>
+				   <s:if test='id.visaSort.substring(0,2)=="C6"'>總務費用簽核2(>=1000元)</s:if> -->
+				   <s:property value="colTemp"/>
 				</td>
 				<td><s:property value="id.purmanNo" /></td>
 				<td><s:property value="id.itemNo"/></td>

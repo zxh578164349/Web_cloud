@@ -81,25 +81,7 @@
 				<td><s:property value="id.kyVisabillm.id.factNo" />
 				</td>
 				<td>							
-				<s:if test='id.kyVisabillm.id.visaSort=="F"'> 廠務簽核</s:if>				 				
-				<s:if test='id.kyVisabillm.id.visaSort=="W"'>臺灣簽核</s:if>								
-				<s:if test='id.kyVisabillm.id.visaSort=="G"'>工程簽核</s:if>				  				
-				<s:if test='id.kyVisabillm.id.visaSort=="I"'>IKT簽核</s:if>									
-				<s:if test='id.kyVisabillm.id.visaSort=="L"'>實驗室簽核</s:if>				  				
-				<s:if test='id.kyVisabillm.id.visaSort=="P"'>品管簽核</s:if>									
-				<s:if test='id.kyVisabillm.id.visaSort=="Q"'> 企劃簽核</s:if>				 				
-				<s:if test='id.kyVisabillm.id.visaSort=="S"'>生管簽核</s:if>									
-				<s:if test='id.kyVisabillm.id.visaSort=="T"'>整理簽核</s:if>				  				
-				<s:if test='id.kyVisabillm.id.visaSort=="Y"'>油壓簽核</s:if>									
-				<s:if test='id.kyVisabillm.id.visaSort=="Z"'>總務簽核</s:if>				  					
-				<s:if test='id.kyVisabillm.id.visaSort=="B"'> 備料簽核</s:if>				 				
-				<s:if test='id.kyVisabillm.id.visaSort=="O"'>業務簽核</s:if>				  				
-				<s:if test='id.kyVisabillm.id.visaSort.substring(0,2)=="C1"'>其他費用簽核1(<1000)</s:if>				  
-				<s:if test='id.kyVisabillm.id.visaSort.substring(0,2)=="C2"'>其他費用簽核2(>=1000)</s:if>
-				<s:if test='id.kyVisabillm.id.visaSort.substring(0,2)=="C3"'>電腦耗材簽核1(<1000)</s:if>
-				<s:if test='id.kyVisabillm.id.visaSort.substring(0,2)=="C4"'>電腦耗材簽核2(>=1000)</s:if>
-				<s:if test='id.kyVisabillm.id.visaSort.substring(0,2)=="C5"'>總務費用簽核1(<1000)</s:if>
-				<s:if test='id.kyVisabillm.id.visaSort.substring(0,2)=="C6"'>總務費用簽核2(>=1000)</s:if>									  						
+				<s:property value="colTemp"/>									  						
 				</td>
 				<td><s:property value="id.kyVisabillm.id.billNo"/>
 				</td>

@@ -32,5 +32,10 @@ public class KyTypeServicesImpl implements IKyTypeServices{
 		return kytypeDao.findByTypeNo2(typeNo);
 	}
 
+	public String getTypeSname(String typNo, String typeSno) {
+		// TODO Auto-generated method stub
+		return kytypeDao.getTypeSname(typNo, typeSno);
+	}
+
 
 }

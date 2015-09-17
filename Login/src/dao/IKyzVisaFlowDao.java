@@ -16,5 +16,6 @@ public interface IKyzVisaFlowDao {
 	public String findVisaSort_dwr(String factNo,String visaSort,String email);//查找函文申請時的類別
 	
 	public List<String> findVisaSort_C(String factNo,String maiSort);
+	public List<KyzVisaflow>findByFactNoVisaSort(String factNo,String visaSort);
 	
 }

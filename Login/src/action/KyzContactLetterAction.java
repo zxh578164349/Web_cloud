@@ -28,6 +28,7 @@ import services.IKyzContactLetterServices;
 import services.IKyzExpectmatmFileServices;
 import services.IKyzVisaFlowServices;
 import services.IWebFactServices;
+import services.IWebTypeServices;
 import services.IWebUserService;
 import services.IWebuserEmailServices;
 import util.JasperHelper;
@@ -72,6 +73,7 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 	private IKyVisaBillsServices visabillSer;
 	private IWebUserService webUserService;
 	private IWebuserEmailServices webuseremailSer;
+	private IWebTypeServices webtypeSer;
 	
 	public List<File> getFiles() {
 		return files;
@@ -197,6 +199,11 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 	
 	public void setWebuseremailSer(IWebuserEmailServices webuseremailSer) {
 		this.webuseremailSer = webuseremailSer;
+	}
+	
+	
+	public void setWebtypeSer(IWebTypeServices webtypeSer) {
+		this.webtypeSer = webtypeSer;
 	}
 	public String add() throws IOException{
 		/*文件上傳驗證*/
@@ -509,6 +516,7 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 		userNm=user.getName();
 		factNo = (String) ActionContext.getContext().getSession().get("factNo");
 		bean = kyzletterSer.findPageBean(25, page, factNo, visaSort,billNo,userNm,yymmdd,yymmdd2);
+		this.getTypeName(bean);
 		return "beanList";
 	}
 
@@ -533,6 +541,7 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
 		userNm=user.getName();
 		bean = kyzletterSer.findPageBean(25, page, factNo, visaSort,billNo.trim(),userNm,yymmdd,yymmdd2);
+		this.getTypeName(bean);
 		return "beanList1";
 	}
 
@@ -551,6 +560,7 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
 		userNm=user.getName();
 		bean = kyzletterSer.findPageBean(25, page, factNo, visaSort,billNo,userNm,yymmdd,yymmdd2);
+		this.getTypeName(bean);
 		return "beanList1";
 	}
 	public void setServletResponse(HttpServletResponse response) {
@@ -643,6 +653,28 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 			file.delete();
 		}
 		
+	}
+	
+	public void getTypeName(PageBean bean){
+		List<KyzContactletter>list=bean.getList();
+		for(int i=0;i<list.size();i++){
+			KyzContactletter letter=list.get(i);
+			String factno=letter.getId().getFactNo();
+			String visaSort=letter.getVisaType();
+			char visaSort_char=visaSort.charAt(0);
+			String typename="";
+			if(visaSort_char=='C'){
+				typename=webtypeSer.findTypeNameById(factno, visaSort.substring(0, 2));
+			}else{
+				typename=webtypeSer.findTypeNameById(factno, visaSort);
+			}
+			if(typename!=null&&!typename.equals("")){
+				letter.setColTemp(typename);	
+			}else{
+				letter.setColTemp(visaSort);
+			}
+					
+		}
 	}
 	
 

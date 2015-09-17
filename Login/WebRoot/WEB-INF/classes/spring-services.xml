@@ -92,6 +92,7 @@
 	<bean id="vwebcostSer" class="services.impl.VWebcostServicesImpl"></bean>
 	<bean id="vwebcosteveSer" class="services.impl.VWebcostEveServicesImpl"></bean>
 	<bean id="webuseremailSer" class="services.impl.WebuserEmailServicesImpl"></bean>
+	<bean id="webtypeSer" class="services.impl.WebTypeServicesImpl"></bean>
 </beans>
 
 

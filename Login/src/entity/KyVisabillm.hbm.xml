@@ -47,6 +47,12 @@
         <property name="dateCreate" type="java.lang.String">
             <column name="DATE_CREATE" length="8" />
         </property>
+        <property name="emailMk" type="java.lang.String">
+            <column name="EMAIL_MK" length="2" />
+        </property>
+        <property name="colTemp" type="java.lang.String">
+            <column name="COL_TEMP" length="2" />
+        </property>
         <bag name="kyVisabillses" inverse="true" cascade="all" lazy="false">
             <key>
                 <column name="FACT_NO" length="4" not-null="true" />

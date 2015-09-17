@@ -36,6 +36,7 @@ public class KyzExpectmatm implements java.io.Serializable {
 	private String visaType;
 	private String filesYn;
 	private String firstPage;
+	private String colTemp;
 	private List<KyzExpectmats> kyzExpectmatses = new ArrayList();
 
 	// Constructors
@@ -55,7 +56,7 @@ public class KyzExpectmatm implements java.io.Serializable {
 			String dateLock, String billMk, String billOld, String telNo,
 			String urgentMk, String dateEtd, String memoMk, String memoSmk,
 			String username, String emerWhether, String factCode,String visaType,String filesYn,String firstPage,
-			List<KyzExpectmats> kyzExpectmatses) {
+			String colTemp,List<KyzExpectmats> kyzExpectmatses) {
 		this.id = id;
 		this.ymExpect = ymExpect;
 		this.secNo = secNo;
@@ -77,6 +78,7 @@ public class KyzExpectmatm implements java.io.Serializable {
 		this.visaType=visaType;
 		this.filesYn=filesYn;
 		this.firstPage=firstPage;
+		this.colTemp=colTemp;
 		this.kyzExpectmatses = kyzExpectmatses;
 	}
 
@@ -260,6 +262,15 @@ public class KyzExpectmatm implements java.io.Serializable {
 	public void setFirstPage(String firstPage) {
 		this.firstPage = firstPage;
 	}
+
+	public String getColTemp() {
+		return colTemp;
+	}
+
+	public void setColTemp(String colTemp) {
+		this.colTemp = colTemp;
+	}
+	
 	
 
 

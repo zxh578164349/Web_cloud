@@ -310,8 +310,10 @@ body {
 	float:left;
 	font-size:10px;
 	color:grey;
-	position:relative;
-	top:350px;
+	/* position:relative;
+	top:350px; */
+	position:fixed;
+	bottom:0;
 	text-align:center;
 }
 #sfact{

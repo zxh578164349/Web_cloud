@@ -599,6 +599,13 @@
             <result name="beanList">/page/managerUserEmail.jsp</result>
             <result name="beanList1">/page/table1/managerUserEmail1.jsp</result>
         </action>
+        <action name="webtype_*" class="webtypeAction" method="{1}">
+             <result name="add" type="redirectAction">webtype_findPageBean</result>
+             <result name="beanList">/page/webtype.jsp</result>
+             <result name="beanList1">/page/table1/webtype1.jsp</result>
+             <result name="findById">/saveAndUpdate/webTypeSaveOrUpdate.jsp</result>
+             <result name="delete" type="redirectAction">webtype_findPageBean</result>
+        </action>
 	</package>
 
 </struts>

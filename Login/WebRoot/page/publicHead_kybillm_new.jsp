@@ -43,7 +43,7 @@ jq(document).keyup(function(event){
 		<tr>
 			<td>廠別</td>
 			<td><s:if test="#attr.factNo=='tw'">
-					<select name="factNo" id="factNo">
+					<select name="factNo" id="factNo" onchange="getType(this.value)">
 						<option value="nothing">請選擇</option>						
 						<s:iterator value="#attr.facts" id="temp">
 							<option value="${temp[0] }">${temp[1]}(${temp[0]})</option>								
@@ -51,7 +51,8 @@ jq(document).keyup(function(event){
 					</select>
 				</s:if>
 				 <s:else>				 
-					<select name="factNo" id="factNo">
+					<select name="factNo" id="factNo" onchange="getType(this.value)">
+					    <option value="nothing">請選擇</option>
 						<option value="<s:property value="#attr.factNo"/>">
 							<s:property value="#attr.factName" />(<s:property value="#attr.factNo"/>)
 						</option>
@@ -61,9 +62,9 @@ jq(document).keyup(function(event){
 			<td>
 			     <select name="visaSort" id="dwr_kytype"   style="color:blue">
 				            <option value="nothing">請選擇</option>
-				            <s:iterator value="#attr.listkytype">
+				            <%-- <s:iterator value="#attr.listkytype">
 				              <option value="<s:property value='id.typeSno'/>"><s:property value='typeSname'/></option>
-				            </s:iterator>
+				            </s:iterator> --%>
 				         </select>
 			</td>
 							

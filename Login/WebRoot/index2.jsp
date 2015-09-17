@@ -120,6 +120,6 @@
 			<img alt="" src="images/loading006.gif" id="img_loading"><br> Loading....
 		</p>		
 	</div>	
-	   <div class="copyright" >Copyright © 2014,加久企業股份有限公司,All Rights Reserved</div>	  	
+	   <div class="copyright" >Copyright © 2014,東莞加元鞋材制品有限公司,All Rights Reserved</div>	  	
 </body>
 </html>

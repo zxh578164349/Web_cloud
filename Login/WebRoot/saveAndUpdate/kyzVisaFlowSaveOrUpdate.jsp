@@ -60,22 +60,7 @@ var j=0;
 		
 	function addRow(){
 	     j=j+1;
-	     /*刚开始时，审核人员与知会人员两个单选按钮是不可用的
-	                当第一次添加行时，才可以使用
-	                选择了知会后，就不可以返回选择审核  
-	                 把当前j的值赋给单选按钮的value ,用于后台进行判断 ，从哪位开始是知会的              
-	     **/
-	     /* alert(j);
-	     	    	     
-	     if(j>0){
-	        document.getElementById("per1").disabled=false;
-	        document.getElementById("per2").disabled=false;
-	        if(document.getElementById("per2").checked==true){
-	           document.getElementById("per2").value=j;
-	           document.getElementById("per1").disabled=true;	          
-	      }
-	     } */
-	     
+	    	     
 	     if(j>9){
 	      j=9;
 	     }
@@ -200,11 +185,34 @@ var j=0;
 	  }
 	}
 	function getKyType(){
-	   kytypejs.findByTypeNo("VV",function(x){
+	   /* kytypejs.findByTypeNo("VV",function(x){
 	         dwr.util.addOptions("dwr_kytype",x,"typeName","typeSname");
-	   });
+	   }); */
+	   
+	 var factno=document.getElementById("dwrFactNo").value;
+	 if(factno!=null&&factno!=""){
+	     webtypejs.findByFactNo(factno,function(x){
+       if(x.length>0){
+          dwr.util.addOptions("dwr_kytype",x,"webtypeMk","typeName");
+       }
+         
+     });
+	 }
+    
 	}
 	
+	function getKyType2(factno){
+	 document.getElementById("dwr_kytype").length=1;	 
+	 if(factno!=null&&factno!=""){
+	     webtypejs.findByFactNo(factno,function(x){
+       if(x.length>0){
+          dwr.util.addOptions("dwr_kytype",x,"webtypeMk","typeName");
+       }
+         
+     });
+	 }
+    
+	}
 	function getAddBtn(){
 	    var factno=document.getElementById("dwrFactNo").value;
         var typeno=document.getElementById("dwr_kytype").value;
@@ -222,18 +230,20 @@ var j=0;
      }
      
      function checkSame(){
-       /* var factno=document.getElementById("dwrFactNo").value;
+       var factno=document.getElementById("dwrFactNo").value;
        var visasort=document.getElementById("dwr_kytype").value;
-       
+       var first_visasort=visasort.charAt(0);
+       var visaSigner=document.getElementById("skeys0").value;
        var visasort_obj=document.getElementById("dwr_kytype");
        var visasort_index=visasort_obj.selectedIndex;
        var visasort_text=visasort_obj.options[visasort_index].text;
        if(factno!=""&&visasort!=""){
-          kyzvisaflowjs.findByType_Dwr(factno,visasort,function(x){
-               if(x>0){
+          if(first_visasort!='C'){
+             kyzvisaflowjs.findByFactNoVisaSort(factno,visasort,function(x){
+               if(x.length>0){
                  alert("廠別為("+factno+")類別為("+visasort_text+")的審核流程已存在!");
                  document.getElementById("error1").innerHTML='<font color="red">！</font>';
-                 document.getElementById("error2").innerHTML='<font color="red">！</font>';
+                 document.getElementById("error2").innerHTML='<font color="red">！</font>'; 
                  document.getElementById("sub").disabled=true;
                  document.getElementById("addbtn").disabled=true;
                  document.getElementById("sub").value="已鎖定";
@@ -249,7 +259,32 @@ var j=0;
                  document.getElementById("addbtn").style.color="white";
                }
           });
-       } */
+          }else{//如果是C类别,也就是C1,C2,C3....,就限定同类中，第一个申请人只能申请一个流程（因为在申请函文选择类别时，是要根据第一人，也就是申请人来选择流程的代号）             
+                 if(visaSigner!=""){                 
+                   kyzvisaflowjs.findVisaSort_dwr(factno,visasort,visaSigner,function(x){
+                        if(x!=null){
+                           alert("廠別為("+factno+")類別為("+visasort_text+")的審核流程已存在!");
+                           document.getElementById("error1").innerHTML='<font color="red">！</font>';
+                           document.getElementById("error2").innerHTML='<font color="red">！</font>';
+                           document.getElementById("sub").disabled=true;
+                           document.getElementById("addbtn").disabled=true;
+                           document.getElementById("sub").value="已鎖定";
+                           document.getElementById("sub").style.color="red";
+                           document.getElementById("addbtn").style.color="red";
+                        }else{
+                           document.getElementById("error1").innerHTML='';
+                           document.getElementById("error2").innerHTML='';
+                           document.getElementById("sub").disabled=false;
+                           document.getElementById("addbtn").disabled=false;
+                           document.getElementById("sub").value="確定";
+                           document.getElementById("sub").style.color="white";
+                           document.getElementById("addbtn").style.color="white";
+                        }
+                   });
+                 }
+                 
+          }
+       } 
      }
      
 
@@ -300,8 +335,9 @@ var j=0;
 									for ( var i = 0; i < data.length; i++) {
 										document.getElementById("emaildwr"+index).innerHTML += "<div onclick="
 												+ "document.getElementById('skeys"+index+"').value=this.innerText;"
+												+ "document.getElementById('skeys"+index+"').focus();"
 												+ "document.getElementById('emaildwr"+index+"').innerText='';"	
-												+ "this.style.display='none'"																							
+												+ "this.style.display='none';"																																			
 												+ " onmouseout="												
 												+ "this.style.backgroundColor='yellow'"																																														
 												+ " onmouseover="												
@@ -355,6 +391,7 @@ function clickOne(){
 <script type='text/javascript' src='/Login/dwr/interface/kytypejs.js'></script>
 <script type='text/javascript' src='/Login/dwr/interface/kyzvisaflowjs.js'></script>
 <script type='text/javascript' src='/Login/dwr/interface/userjs.js'></script>
+<script type='text/javascript' src='/Login/dwr/interface/webtypejs.js'></script>
 <script type='text/javascript' src='/Login/dwr/engine.js'></script>
 <script type='text/javascript' src='/Login/dwr/util.js'></script>
 
@@ -431,7 +468,7 @@ input[type="text"],select{
 			  <s:else>
 			     <td ><select 
 							 datatype="*" id="dwrFactNo"
-							onchange="getAddBtn(),checkSame(),getValue('dwrFactNo','dwrFactNo2')">
+							onchange="getAddBtn(),checkSame(),getValue('dwrFactNo','dwrFactNo2'),getKyType2(this.value)">
 								<option value="">請選擇廠別</option>
 								<s:iterator value="#session.facts" id="temp">
 									<option value="${temp[0]}">${temp[1]
@@ -456,7 +493,7 @@ input[type="text"],select{
 			     </div>
 			     </td>			     			     
 			     <td >			     
-			     <input type="text" name="flows[0].visaSigner" value=""  datatype="e" id="skeys0" onkeyup="getEmail(0)"/>
+			     <input type="text" name="flows[0].visaSigner" value=""  datatype="e" id="skeys0" onkeyup="getEmail(0);" onblur="checkSame()" />
 			     <div style="position:relative"  >			     
 			     <div id="emaildwr0" style="z-index:100;position:absolute;background:yellow;top:0px;left:0px;width:180px;display:none" ></div>			     
 			     </div>

@@ -40,6 +40,7 @@ import services.IKyzExpectmatmServices;
 import services.IKyzExpectmatmsServices;
 import services.IKyzVisaFlowServices;
 import services.IWebFactServices;
+import services.IWebTypeServices;
 import services.IWebUserService;
 import services.IWebuserEmailServices;
 import util.JasperHelper;
@@ -60,6 +61,7 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 	private IKyzVisaFlowServices visaSer;
 	private IWebUserService webUserService;
 	private IWebuserEmailServices webuseremailSer;
+	private IWebTypeServices webtypeSer;
 	private KyzExpectmatmId id;
     private PageBean bean;
     private String factNo;
@@ -342,6 +344,12 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 
 	public void setWebuseremailSer(IWebuserEmailServices webuseremailSer) {
 		this.webuseremailSer = webuseremailSer;
+	}
+	
+	
+
+	public void setWebtypeSer(IWebTypeServices webtypeSer) {
+		this.webtypeSer = webtypeSer;
 	}
 
 	public String add() throws Exception  {
@@ -881,6 +889,7 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 		userNm=user.getName();
 		factNo = (String) ActionContext.getContext().getSession().get("factNo");
 		bean = kyzSer.findPageBean(25, page, factNo, visaSort,billNo,userNm,yymmdd,yymmdd2);
+		this.getTypeName(bean);
 		return "beanList";
 	}
 
@@ -905,6 +914,7 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
 		userNm=user.getName();
 		bean = kyzSer.findPageBean(25, page, factNo, visaSort,billNo.trim(),userNm,yymmdd,yymmdd2);
+		this.getTypeName(bean);
 		return "beanList1";
 	}
 
@@ -923,6 +933,7 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
 		userNm=user.getName();
 		bean = kyzSer.findPageBean(25, page, factNo, visaSort,billNo,userNm,yymmdd,yymmdd2);
+		this.getTypeName(bean);
 		return "beanList1";
 	}
 	
@@ -1016,5 +1027,29 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 			result="download";
 		}		
 		return result;
+	}
+	
+	public void getTypeName(PageBean bean){
+		List<KyzExpectmatm>list=bean.getList();
+		for(int i=0;i<list.size();i++){
+			KyzExpectmatm kyz=list.get(i);
+			String factno=kyz.getId().getFactNo();
+			String visaSort=kyz.getVisaType();		
+				char visaSort_char=visaSort.charAt(0);
+				String typename="";
+				if(visaSort_char=='C'){
+					typename=webtypeSer.findTypeNameById(factno, visaSort.substring(0, 2));
+				}else{
+					typename=webtypeSer.findTypeNameById(factno, visaSort);
+				}
+				if(typename!=null&&!typename.equals("")){
+					kyz.setColTemp(typename);	
+				}else{
+					kyz.setColTemp(visaSort);
+				}
+			
+			
+					
+		}
 	}
 }

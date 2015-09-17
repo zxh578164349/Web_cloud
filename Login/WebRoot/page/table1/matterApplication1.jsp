@@ -123,63 +123,7 @@
 				  </s:if>				  
 				</td>
 				<td>
-				<s:if test='visaType=="F"'>
-				  廠務簽核
-				</s:if>
-				<s:if test='visaType=="W"'>
-				臺灣簽核
-				</s:if>
-				<s:if test='visaType=="G"'>
-				  工程簽核
-				</s:if>
-				<s:if test='visaType=="I"'>
-				IKT簽核
-				</s:if>	
-				<s:if test='visaType=="L"'>
-				  實驗室簽核
-				</s:if>
-				<s:if test='visaType=="P"'>
-				品管簽核
-				</s:if>	
-				<s:if test='visaType=="Q"'>
-				  企劃簽核
-				</s:if>
-				<s:if test='visaType=="S"'>
-				生管簽核
-				</s:if>	
-				<s:if test='visaType=="T"'>
-				  整理簽核
-				</s:if>
-				<s:if test='visaType=="Y"'>
-				油壓簽核
-				</s:if>	
-				<s:if test='visaType=="Z"'>
-				  總務簽核
-				</s:if>
-				<s:if test='visaType=="B"'>
-				  備料簽核
-				</s:if>
-				<s:if test='visaType=="O"'>
-				  業務簽核
-				</s:if>
-				<s:if test='visaType.substring(0,2)=="C1"'>
-				  其他費用簽核1(<1000元)
-				</s:if>
-				<s:if test='visaType.substring(0,2)=="C2"'>
-				 其他費用簽核2(>=1000元)
-				</s:if>
-				<s:if test='visaType.substring(0,2)=="C3"'>
-				  電腦耗材簽核1(<1000元)
-				</s:if>
-				<s:if test='visaType.substring(0,2)=="C4"'>
-				  電腦耗材簽核2(>=1000元)
-				</s:if>	
-				<s:if test='visaType.substring(0,2)=="C5"'>
-				  總務費用簽核1(<1000元)
-				</s:if>
-				<s:if test='visaType.substring(0,2)=="C6"'>
-				  總務費用簽核2(>=1000元)
-				</s:if>							
+				<s:property value="colTemp"/>						
 				</td>							
 				<td><s:property value="username" /></td>
 				<td>

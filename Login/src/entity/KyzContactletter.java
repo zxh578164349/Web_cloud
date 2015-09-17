@@ -21,6 +21,7 @@ public class KyzContactletter implements java.io.Serializable {
 	private String filesYn;//是否有附檔
 	private String firstPage;//是否顯示第一頁
 	private String factCode;//廠別狀態
+	private String colTemp;//臨時列
 
 	// Constructors
 
@@ -37,7 +38,7 @@ public class KyzContactletter implements java.io.Serializable {
 	public KyzContactletter(KyzContactletterId id, String secNo,
 			String chargeNo, String ymExpect, String userNm, String toUser,
 			String chargeList, String title, String memoMk, String visaType,
-			String filesYn, String firstPage,String factCode) {
+			String filesYn, String firstPage,String factCode,String colTemp) {
 		this.id = id;
 		this.secNo = secNo;
 		this.chargeNo = chargeNo;
@@ -51,6 +52,7 @@ public class KyzContactletter implements java.io.Serializable {
 		this.filesYn = filesYn;
 		this.firstPage = firstPage;
 		this.factCode=factCode;
+		this.colTemp=colTemp;
 	}
 
 	// Property accessors
@@ -158,6 +160,15 @@ public class KyzContactletter implements java.io.Serializable {
 	public void setFactCode(String factCode) {
 		this.factCode = factCode;
 	}
+
+	public String getColTemp() {
+		return colTemp;
+	}
+
+	public void setColTemp(String colTemp) {
+		this.colTemp = colTemp;
+	}
+	
 	
 
 }

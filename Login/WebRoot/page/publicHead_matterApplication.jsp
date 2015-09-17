@@ -42,8 +42,18 @@
        }
    })
    
+   function getType(factNo){
+     document.getElementById("visaSort").length=1;
+     webtypejs.findByFactNo(factNo,function(x){
+       if(x.length>0){
+          dwr.util.addOptions("visaSort",x,"webtypeMk","typeName");
+       }
+         
+     });
+   }
 </script>
 <script type='text/javascript' src='/Login/dwr/interface/kytypejs.js'></script>
+<script type='text/javascript' src='/Login/dwr/interface/webtypejs.js'></script>
 <script type='text/javascript' src='/Login/dwr/engine.js'></script>
 <script type='text/javascript' src='/Login/dwr/util.js'></script>
 </head>
@@ -53,7 +63,7 @@
 		<tr>
 			<td>廠別</td>
 			<td><s:if test="#attr.factNo=='tw'">			   
-					<select name="factNo" id="factNo">
+					<select name="factNo" id="factNo" onchange="getType(this.value)">
 						<option value="nothing">請選擇</option>
 						<s:iterator value="#attr.facts" id="temp">
 							<option value="${temp[0]}">${temp[1]}(${temp[0]})</option>								
@@ -61,7 +71,8 @@
 					</select>	
 				</s:if> 
 				<s:else>
-					<select name="factNo" id="factNo">
+					<select name="factNo" id="factNo" onchange="getType(this.value)">
+					    <option value="nothing">請選擇</option>
 						<option value="<s:property value="#attr.factNo"/>">
 							<s:property value="#attr.factName" />(<s:property value="#attr.factNo"/>)
 						</option>
@@ -70,11 +81,13 @@
 			<td>類別</td>
 			<td>
 			 <div id="uboxstyle_min">
-			 <select name="visaSort" id="visaSort" >
+			 <select name="visaSort" id="visaSort" onchange="alert(this.value)">
 				            <option value="">請選擇</option>
-				            <s:iterator value="#attr.listkytype">
+				            <%-- <s:iterator value="#attr.listkytype">
 				              <option value="<s:property value='id.typeSno'/>"><s:property value='typeSname'/></option>
-				            </s:iterator>
+				            </s:iterator> --%>
+				            
+				            
 				         </select>
 			 </div>	         
 			</td>

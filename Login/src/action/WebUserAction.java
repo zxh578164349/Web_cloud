@@ -34,6 +34,7 @@ import services.IWebJurisdictionService;
 import services.IWebLogService;
 import services.IWebMenuServices;
 import services.IWebSubmenuService;
+import services.IWebTypeServices;
 import services.IWebUserService;
 import util.Json;
 import util.PageBean;
@@ -48,6 +49,7 @@ import entity.WebJurisdiction;
 import entity.WebLog;
 import entity.WebMenu;
 import entity.WebSubmenu;
+import entity.WebType;
 import entity.WebUser;
 
 public class WebUserAction extends ActionSupport implements ServletResponseAware {
@@ -62,8 +64,13 @@ public class WebUserAction extends ActionSupport implements ServletResponseAware
 	private String userread;
 	private String remembered;
 	private IKyVisaBillsServices visabillSer;
+	private IWebTypeServices webtypeSer;
 	
 	
+	public void setWebtypeSer(IWebTypeServices webtypeSer) {
+		this.webtypeSer = webtypeSer;
+	}
+
 	public void setVisabillSer(IKyVisaBillsServices visabillSer) {
 		this.visabillSer = visabillSer;
 	}
@@ -406,7 +413,7 @@ public class WebUserAction extends ActionSupport implements ServletResponseAware
 						ServletActionContext.getResponse().addCookie(cookieuser);
 					}	  
 						
-						ActionContext.getContext().getSession().put("loginUser", wUser);																		
+						ActionContext.getContext().getSession().put("loginUser", wUser);						
 						if (factNo.equals("tw")&& wUser.getUsername().equals("admin")) {								
 							ActionContext.getContext().getSession().put("factNo", factNo);									
 						} else {

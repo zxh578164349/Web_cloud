@@ -62,4 +62,9 @@ public class KyzVisaFlowServicesImpl implements IKyzVisaFlowServices{
 		return visaDao.findVisaSort_C(factNo,mainSort);
 	}
 
+	public List<KyzVisaflow> findByFactNoVisaSort(String factNo, String visaSort) {
+		// TODO Auto-generated method stub
+		return visaDao.findByFactNoVisaSort(factNo, visaSort);
+	}
+
 }

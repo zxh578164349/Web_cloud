@@ -125,11 +125,18 @@
     }                 
 });
 	}
-function getTitle(billNo){
-   
-}
+   function getType(factNo){
+     document.getElementById("dwr_kytype").length=1;
+     webtypejs.findByFactNo(factNo,function(x){
+       if(x.length>0){
+          dwr.util.addOptions("dwr_kytype",x,"webtypeMk","typeName");
+       }
+         
+     });
+   }
 </script>
 <script type='text/javascript' src='/Login/dwr/interface/kyzjs.js'></script>
+<script type='text/javascript' src='/Login/dwr/interface/webtypejs.js'></script>
 <script type='text/javascript' src='/Login/dwr/engine.js'></script>
 <script type='text/javascript' src='/Login/dwr/util.js'></script>
 

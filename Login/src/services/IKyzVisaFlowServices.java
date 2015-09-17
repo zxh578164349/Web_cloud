@@ -17,5 +17,6 @@ public interface IKyzVisaFlowServices {
 	public String findVisaSort_dwr(String factNo, String visaSort, String email);
 	
 	public List<String> findVisaSort_C(String factNo,String mainSort);
+	public List<KyzVisaflow>findByFactNoVisaSort(String factNo,String visaSort);
 
 }

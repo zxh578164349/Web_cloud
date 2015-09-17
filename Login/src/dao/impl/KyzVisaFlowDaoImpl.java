@@ -129,6 +129,11 @@ public class KyzVisaFlowDaoImpl extends Basedao implements IKyzVisaFlowDao {
 		String[]objs={factNo,mainSort+"%"};
 		return super.findAll(hql, objs);
 	}
+	public List<KyzVisaflow>findByFactNoVisaSort(String factNo,String visaSort){
+		String hql="from KyzVisaflow where id.factNo=? and id.visaSort=? order by id.itemNo";
+		String[]objs={factNo,visaSort};
+		return super.findAll(hql, objs);
+	}
 
 
 }

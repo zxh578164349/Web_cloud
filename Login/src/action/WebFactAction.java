@@ -37,10 +37,10 @@ public class WebFactAction extends ActionSupport {
 		List list = webFactSer.findAllFact();
 		//List factCodes = webFactSer.findAllFactCode();// tw登錄時所有的廠別狀態
 		List factCodes=webFactSer.findAllFactCode_show();
-		List<KyType>listkytype=kytypeSer.findByTypeNo_action("VV");//函文類別
+		//List<KyType>listkytype=kytypeSer.findByTypeNo_action("VV");//函文類別
 		ActionContext.getContext().getSession().put("factcodes", factCodes);
 		ActionContext.getContext().getSession().put("facts", list);
-		ActionContext.getContext().getSession().put("listkytype", listkytype);
+		//ActionContext.getContext().getSession().put("listkytype", listkytype);
 		this.findAllFact_code_no();		
 		return "findAllfact";
 	}
@@ -56,10 +56,10 @@ public class WebFactAction extends ActionSupport {
 		List list = webFactSer.findAllFact();
 		//List factCodes = webFactSer.findAllFactCode();// tw登錄時所有廠別狀態
 		List factCodes=webFactSer.findAllFactCode_show();
-		List<KyType>listkytype=kytypeSer.findByTypeNo_action("VV");//函文類別
+		//List<KyType>listkytype=kytypeSer.findByTypeNo_action("VV");//函文類別
 		ActionContext.getContext().getSession().put("factcodes", factCodes);
 		ActionContext.getContext().getSession().put("facts", list);
-		ActionContext.getContext().getSession().put("listkytype", listkytype);
+		//ActionContext.getContext().getSession().put("listkytype", listkytype);
 		this.findAllFact_code_no();
 		return "findAllfact2";
 	}

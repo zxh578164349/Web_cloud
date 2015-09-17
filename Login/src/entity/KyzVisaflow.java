@@ -12,6 +12,7 @@ public class KyzVisaflow implements java.io.Serializable {
 	private String visaSigner;
 	private String visaRank;
 	private String flowMk;
+	private String colTemp;
 
 	// Constructors
 
@@ -25,11 +26,12 @@ public class KyzVisaflow implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public KyzVisaflow(KyzVisaflowId id, String visaSigner, String visaRank,String flowMk) {
+	public KyzVisaflow(KyzVisaflowId id, String visaSigner, String visaRank,String flowMk,String colTemp) {
 		this.id = id;
 		this.visaSigner = visaSigner;
 		this.visaRank = visaRank;
 		this.flowMk=flowMk;
+		this.colTemp=colTemp;
 	}
 
 	// Property accessors
@@ -65,6 +67,15 @@ public class KyzVisaflow implements java.io.Serializable {
 	public void setFlowMk(String flowMk) {
 		this.flowMk = flowMk;
 	}
+
+	public String getColTemp() {
+		return colTemp;
+	}
+
+	public void setColTemp(String colTemp) {
+		this.colTemp = colTemp;
+	}
+	
 	
 
 }

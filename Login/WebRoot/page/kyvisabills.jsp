@@ -62,7 +62,7 @@ table.altrowstable caption{
   <script src="bootstrap/html5.js"></script>
   <script src="bootstrap/respond.min.js"></script>
   <![endif]-->	
-	<script type="text/javascript">
+<script type="text/javascript">
     function showDiv(billNo,factNo){
     $.layer({
     type: 1,   //0-4的选择,
@@ -77,9 +77,12 @@ table.altrowstable caption{
     //fadeIn:300,
     shift:'top',
     offset:['10px',''],
-    area: ['800px', '560px'],
+    //area: ['800px', '560px'],
+    area:['35em','20em'],
+    scrolling:'auto' ,
     page:{
-      url:'kyz_findById_layer?billNo='+billNo+'& factNo='+factNo    
+      url:'kyz_findById_layer?billNo='+billNo+'& factNo='+factNo
+         
     }                 
 });
     }
@@ -179,10 +182,12 @@ function altRows(id){
 window.onload=function(){
 	altRows('alternatecolor');
 }
-	</script>
+</script>
 </head>
 <body>
-<div class="container" style="padding: 40px;">
+<div class="container">
+ <div class="row">
+   <div class="col-sm-12 col-md-12 col-lg-12">
 	<table class="altrowstable" id="alternatecolor" align="center">
 	  <caption>函文審核<!-- (<s:property value="#session.loginUser.email"/>) --></caption>
 		<thead>
@@ -246,11 +251,12 @@ window.onload=function(){
 	       </td>
 	      </s:iterator>
 		</tr>
-		<tr><td colspan="<s:property value='vbm.kyVisabillses.size()+1'/>">
-		<!-- <input type="button" value="返回" onclick="javascript:window.location.href='vbm_findPageBean'"/> -->		
+		<tr><td colspan="<s:property value='vbm.kyVisabillses.size()+1'/>">	
 		<a href="vbm_findPageBean">返回</a>
 		</td></tr>
 	</table>
+ </div>	
+</div>	
 </div>	
 </body>
 </html>
