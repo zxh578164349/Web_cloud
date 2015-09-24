@@ -432,12 +432,8 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 							result="add";
 							
 							KyVisabillm vbm=visabillmSer.findById(kyz.getId().getFactNo(), kyz.getVisaType(), kyz.getId().getBillNo());							
-							String emailUrl_in="http://172.17.18.14/Login/vbm_findById_email?visaSort="+kyz.getVisaType()+"& billNo="+kyz.getId().getBillNo()
+							String emailUrl_in="http://203.85.73.161/Login/vbm_findById_email?visaSort="+kyz.getVisaType()+"& billNo="+kyz.getId().getBillNo()
 							         +"& factNo="+kyz.getId().getFactNo()+"& email="+vbm.getSignerNext();
-					        String emailUrl_out1="http://120.86.190.51/Login/vbm_findById_email?visaSort="+kyz.getVisaType()+"& billNo="+kyz.getId().getBillNo()
-					         +"& factNo="+kyz.getId().getFactNo()+"& email="+vbm.getSignerNext();
-					        String emailUrl_out2="http://121.12.166.101/Login/vbm_findById_email?visaSort="+kyz.getVisaType()+"& billNo="+kyz.getId().getBillNo()
-					         +"& factNo="+kyz.getId().getFactNo()+"& email="+vbm.getSignerNext();
 							/**
 							 * 發送郵件
 							 */														
@@ -446,19 +442,15 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 							String vbm_factno=vbm.getId().getFactNo();
 							MailSenderInfo mailinfo=new MailSenderInfo();
 							mailinfo.setValidate(true);
-							mailinfo.setUserName("kyuen@yydg.com.cn");
+							/*mailinfo.setUserName("kyuen@yydg.com.cn");
 							mailinfo.setPassword("yydgmail");
-							mailinfo.setFromAddress("<kyuen@yydg.com.cn>");
+							mailinfo.setFromAddress("<kyuen@yydg.com.cn>");*/
 							mailinfo.setToAddress(singernext);
 							mailinfo.setSubject("新函文初次審核-"+vbm_billno+"("+vbm_factno+")");
 							mailinfo.setContent("單號:<span style='color:red'>"+vbm_billno+"</span>"+"&nbsp;&nbsp;廠別:"+vbm_factno+								
-									"<br/>點擊單號直接審核:<a href='"+emailUrl_in+"'>"+vbm_billno+"(內網)</a>"+
-									"<br/>點擊單號直接審核:<a href='"+emailUrl_out1+"'>"+vbm_billno+"(外網1)</a>"+
-									"<br/>點擊單號直接審核:<a href='"+emailUrl_out2+"'>"+vbm_billno+"(外網2)</a>"+
+									"<br/>點擊單號直接審核:<a href='"+emailUrl_in+"'>"+vbm_billno+"</a>"+									
 									"<hr/>"+
-									"如需查詢以往單據請登陸:(內部體系)<a href='http://172.17.18.14/Login'>http://172.17.18.14/Login</a>" +
-									"<br/>外網請登錄<a href='http://120.86.190.51/Login'>http://120.86.190.51/Login</a>" +
-									"<br/>或者<a href='http://121.12.166.101/Login'>http://121.12.166.101/Login</a>" +
+									"如需查詢以往單據請登陸:(云端)<a href='http://203.85.73.161/Login'>http://203.85.73.161/Login</a>" +									
 									"<br/>進入[KPI數據]--[函文審核]查找對應單號審核" +									
 									"<hr/>"+
 									"<br/>本郵件自動發送,請勿回復!如需回復或者問題，請回复到kyinfo.lp@yydg.com.cn劉平!<br/>"+
@@ -497,30 +489,22 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 					 * 發送郵件
 					 */	
 					KyVisabillm vbm=visabillmSer.findById(kyz.getId().getFactNo(), kyz.getVisaType(), kyz.getId().getBillNo());	
-					String emailUrl_in="http://172.17.18.14/Login/vbm_findById_email?visaSort="+kyz.getVisaType()+"& billNo="+kyz.getId().getBillNo()
+					String emailUrl_in="http://203.85.73.161/Login/vbm_findById_email?visaSort="+kyz.getVisaType()+"& billNo="+kyz.getId().getBillNo()
 					         +"& factNo="+kyz.getId().getFactNo()+"& email="+vbm.getSignerNext();
-			        String emailUrl_out1="http://120.86.190.51/Login/vbm_findById_email?visaSort="+kyz.getVisaType()+"& billNo="+kyz.getId().getBillNo()
-			         +"& factNo="+kyz.getId().getFactNo()+"& email="+vbm.getSignerNext();
-			        String emailUrl_out2="http://121.12.166.101/Login/vbm_findById_email?visaSort="+kyz.getVisaType()+"& billNo="+kyz.getId().getBillNo()
-			         +"& factNo="+kyz.getId().getFactNo()+"& email="+vbm.getSignerNext();
 					String singernext=vbm.getSignerNext();
 					String vbm_billno=vbm.getId().getBillNo();
 					String vbm_factno=vbm.getId().getFactNo();
 					MailSenderInfo mailinfo=new MailSenderInfo();
 					mailinfo.setValidate(true);
-					mailinfo.setUserName("kyuen@yydg.com.cn");
+					/*mailinfo.setUserName("kyuen@yydg.com.cn");
 					mailinfo.setPassword("yydgmail");
-					mailinfo.setFromAddress("<kyuen@yydg.com.cn>");
+					mailinfo.setFromAddress("<kyuen@yydg.com.cn>");*/
 					mailinfo.setToAddress(singernext);
 					mailinfo.setSubject("新函文初次審核"+vbm_billno+"("+vbm_factno+")");
 					mailinfo.setContent("單號:<span style='color:red'>"+vbm_billno+"</span>"+"&nbsp;&nbsp;廠別:"+vbm_factno+
-							"<br/>點擊單號直接審核:<a href='"+emailUrl_in+"'>"+vbm_billno+"(內網)</a>"+
-							"<br/>點擊單號直接審核:<a href='"+emailUrl_out1+"'>"+vbm_billno+"(外網1)</a>"+
-							"<br/>點擊單號直接審核:<a href='"+emailUrl_out2+"'>"+vbm_billno+"(外網2)</a>"+
+							"<br/>點擊單號直接審核:<a href='"+emailUrl_in+"'>"+vbm_billno+"</a>"+							
 							"<hr/>"+
-							"如需查詢以往單據請登陸:(內部體系)<a href='http://172.17.18.14/Login'>http://172.17.18.14/Login</a>" +
-							"<br/>外網請登錄<a href='http://120.86.190.51/Login'>http://120.86.190.51/Login</a>" +
-							"<br/>或者<a href='http://121.12.166.101/Login'>http://121.12.166.101/Login</a>" +
+							"如需查詢以往單據請登陸:(云端)<a href='http://203.85.73.161/Login'>http://203.85.73.161/Login</a>" +							
 							"<br/>進入[KPI數據]--[函文審核]查找對應單號審核" +							
 							"<hr/>"+
 							"<br/>本郵件自動發送,請勿回復!如需回復或者問題，請回复到kyinfo.lp@yydg.com.cn劉平!<br/>"+
@@ -556,12 +540,8 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 			       * 发送给备签人  20150817
 			       */
 				KyVisabillm vbm=visabillmSer.findById(kyz.getId().getFactNo(), kyz.getVisaType(), kyz.getId().getBillNo());	
-				String emailUrl_in="http://172.17.18.14/Login/vbm_findById_email?visaSort="+kyz.getVisaType()+"& billNo="+kyz.getId().getBillNo()
+				String emailUrl_in="http://203.85.73.161/Login/vbm_findById_email?visaSort="+kyz.getVisaType()+"& billNo="+kyz.getId().getBillNo()
 				         +"& factNo="+kyz.getId().getFactNo()+"& email="+vbm.getSignerNext();
-		        String emailUrl_out1="http://120.86.190.51/Login/vbm_findById_email?visaSort="+kyz.getVisaType()+"& billNo="+kyz.getId().getBillNo()
-		         +"& factNo="+kyz.getId().getFactNo()+"& email="+vbm.getSignerNext();
-		        String emailUrl_out2="http://121.12.166.101/Login/vbm_findById_email?visaSort="+kyz.getVisaType()+"& billNo="+kyz.getId().getBillNo()
-		         +"& factNo="+kyz.getId().getFactNo()+"& email="+vbm.getSignerNext();
 				  
 			      String emailPwd=webuseremailSer.findEmailPWD(kyz.getId().getFactNo(),vbm.getSignerNext());
 			      if(emailPwd!=null){
@@ -569,26 +549,20 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 				      //mailInfo.setMailServerHost("smtp.qq.com");    
 				      //mailInfo.setMailServerPort("25");    
 				      mailInfo2.setValidate(true);    
-				      mailInfo2.setUserName("kyuen@yydg.com.cn"); 
+				      /*mailInfo2.setUserName("kyuen@yydg.com.cn"); 
 				      mailInfo2.setPassword("yydgmail");//您的邮箱密码    
-				      mailInfo2.setFromAddress("<kyuen@yydg.com.cn>");    
+				      mailInfo2.setFromAddress("<kyuen@yydg.com.cn>"); */   
 				      mailInfo2.setToAddress(emailPwd);    
 				      mailInfo2.setSubject("新函文初次審核"+vbm.getId().getBillNo()+"("+vbm.getId().getFactNo()+")");    
 				      mailInfo2.setContent("函文單號:"+"<span style='color:red'>"+vbm.getId().getBillNo()+"</span>"+"&nbsp;&nbsp;廠別:"+vbm.getId().getFactNo()+
-				    		  "<br/>點擊單號直接審核:<a href='"+emailUrl_in+"'>"+vbm.getId().getBillNo()+"(內網)</a>"+
-						      "<br/>點擊單號直接審核:<a href='"+emailUrl_out1+"'>"+vbm.getId().getBillNo()+"(外網1)</a>"+
-							  "<br/>點擊單號直接審核:<a href='"+emailUrl_out2+"'>"+vbm.getId().getBillNo()+"(外網2)</a>"+
+				    		  "<br/>點擊單號直接審核:<a href='"+emailUrl_in+"'>"+vbm.getId().getBillNo()+"</a>"+						     
 						      "<hr/>"+
-				    		 result+"如需查詢以往單據請登錄加久網站:(內部體系)<a href='http://172.17.18.14/Login'>http://172.17.18.14/Login</a>" +
-				            "<br/>外網請登錄"+
-				      		"<a href='http://120.86.190.51/Login'>http://120.86.190.51/Login</a>" +
-				            "或者"+
-				      		"<a href='http://121.12.166.101/Login'>http://121.12.166.101/Login</a>" +
+				    		 result+"如需查詢以往單據請登錄加久網站:(云端)<a href='http://203.85.73.161/Login'>http://203.85.73.161/Login</a>" +			      		
 				      		"<br/>進入[KPI數據]--[函文審核]中查找對應單號審核,"+	      		    		
 				    		"<hr/>"+
 				      		"<br/>本郵件自動發送,請勿回復!如需回復或者問題，請回复到kyinfo.lp@yydg.com.cn劉平!<br/>"+
 				    		"<hr/>"
-				    		);    
+				    		);      
 				         //这个类主要来发送邮件   
 				      SimpleMailSender sms2 = new SimpleMailSender();   
 				         // sms.sendTextMail(mailInfo);//发送文体格式    
@@ -600,14 +574,12 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 			       */
 			      MailSenderInfo mailinfo3=new MailSenderInfo();
 			      mailinfo3.setValidate(true);
-			      mailinfo3.setUserName("kyuen@yydg.com.cn");
+			      /*mailinfo3.setUserName("kyuen@yydg.com.cn");
 			      mailinfo3.setPassword("yydgmail");
-			      mailinfo3.setFromAddress("<kyuen@yydg.com.cn>");
+			      mailinfo3.setFromAddress("<kyuen@yydg.com.cn>");*/
 			      mailinfo3.setToAddress("kyuen@yydg.com.cn");
 			      mailinfo3.setSubject("新函文初次審核(總站已收到)");
-			      mailinfo3.setContent("請登錄加久網站:內部網站(內部體系)<a href='http://172.17.18.14/Login'>http://172.17.18.14/Login</a>" +
-							"<br/>外網請登錄<a href='http://120.86.190.51/Login'>http://120.86.190.51/Login</a>" +
-							"<br/>或者<a href='http://121.12.166.101/Login'>http://121.12.166.101/Login</a>" +
+			      mailinfo3.setContent("請登錄加久網站:(云端)<a href='http://203.85.73.161/Login'>http://203.85.73.161/Login</a>" +							
 							"<br/>進入[KPI數據]--[函文審核]查找對應單號進行審核" +
 							"<br/>單號:<span style='color:red'>"+vbm.getId().getBillNo()+"<span>"+"&nbsp;&nbsp;廠別:"+vbm.getId().getFactNo());
 			      SimpleMailSender sms3=new SimpleMailSender();

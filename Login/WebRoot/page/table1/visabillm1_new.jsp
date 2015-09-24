@@ -81,7 +81,7 @@
 				<td><s:property value="id.kyVisabillm.id.factNo" />
 				</td>
 				<td>							
-				<s:property value="colTemp"/>									  						
+				<s:property value="id.kyVisabillm.colTemp"/>									  						
 				</td>
 				<td><s:property value="id.kyVisabillm.id.billNo"/>
 				</td>

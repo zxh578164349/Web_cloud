@@ -151,22 +151,21 @@ public class KyVisabillm implements java.io.Serializable {
 	}
 	
 
-	public String getEmailMk() {
-		return emailMk;
-	}
-
-	public void setEmailMk(String emailMk) {
-		this.emailMk = emailMk;
-	}
-	
-	
-
 	public String getColTemp() {
 		return colTemp;
 	}
 
 	public void setColTemp(String colTemp) {
 		this.colTemp = colTemp;
+	}
+	
+
+	public String getEmailMk() {
+		return emailMk;
+	}
+
+	public void setEmailMk(String emailMk) {
+		this.emailMk = emailMk;
 	}
 
 	public List<KyVisabills> getKyVisabillses() {
@@ -176,7 +175,6 @@ public class KyVisabillm implements java.io.Serializable {
 	public void setKyVisabillses(List<KyVisabills> kyVisabillses) {
 		this.kyVisabillses = kyVisabillses;
 	}
-	
 
 
 

@@ -83,7 +83,7 @@ window.onload=function(){
 }
 
 function goSubmit(){
-   layer.load('正在處理,並發送郵件...');
+   layer.load('正在處理,请稍等...');
    document.getElementById("sub").submit();
 }
 

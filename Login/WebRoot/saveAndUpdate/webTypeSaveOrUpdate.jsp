@@ -135,7 +135,7 @@ window.onload=function(){
 				             <!-- <select name="webtype.id.typeNo" id="typeno" datatype="*" onchange="check(),getTypeName()" >
 				                  <option value="">請選擇類別</option>
 				             </select> -->
-				             <input type="text" name="webtype.id.typeNo" datatype="s1-4" onblur="check(),checkType(this)" id="typeno"/>
+				             <input type="text" name="webtype.id.typeNo" datatype="s2-2" onblur="check(),checkType(this)" id="typeno"/>
 				             <span id="error1"></span>	
 				          </s:if>
 				          <s:else>

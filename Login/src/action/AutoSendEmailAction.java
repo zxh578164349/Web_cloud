@@ -1,5 +1,6 @@
 package action;
 
+import java.security.GeneralSecurityException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -21,6 +22,8 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import javax.mail.internet.MimeUtility;
 
+import com.sun.mail.util.MailSSLSocketFactory;
+
 public class AutoSendEmailAction {
 	private static final String MAIL_USER = "kyuen@yydg.com.cn";
 
@@ -31,12 +34,32 @@ public class AutoSendEmailAction {
 	public void sendmail(String[] mailArray, String[] cc, String subject,
 			String content,String yymm) {
 		Properties props = new Properties();
+		
+		
 		props.setProperty("mail.smtp.auth", "true");
 		props.setProperty("mail.transport.protocol", "smtp");
-		//props.setProperty("mail.host", "dgmail.yydg.com.cn");
-		props.setProperty("mail.host", "172.17.5.84");//因為有時候解釋不了域名,所以直接用地址代替
-		//props.put("http.proxyHost", "172.17.18.14");
-		//props.put("http.proxyPort", "808");
+		props.setProperty("mail.host", "dgmail.yydg.com.cn");
+		//props.setProperty("mail.host", "172.17.5.84");//因為有時候解釋不了域名,所以直接用地址代替(内网IP)
+		//props.setProperty("mail.host", "125.88.14.11");//因為有時候解釋不了域名,所以直接用地址代替(外网IP)
+		//props.setProperty("mail.host", "61.20.35.47");
+		//props.setProperty("mail.pop.port", "995");
+		props.setProperty("mail.smtp.port", "465");//改smtp端口
+		props.setProperty("mail.smtp.socketFactory.port","465");
+		//props.setProperty("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+		//props.setProperty("mail.smtp.socketFactory.fallback", "false");
+		//props.setProperty("mail.smtp.starttls.enable","true");//加密发送
+		props.setProperty("mail.smtp.ssl.enable", "true");///加密发送
+		//以下设置，邮件加密发送，不需要证书验证
+		MailSSLSocketFactory sf = null;
+		try {
+			sf = new MailSSLSocketFactory();
+		} catch (GeneralSecurityException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}  
+	    sf.setTrustAllHosts(true);
+	    props.put("mail.smtp.ssl.socketFactory", sf);
+		
 		Session session = Session.getInstance(props, new Authenticator() {
 			protected PasswordAuthentication getPasswordAuthentication() {
 				return new PasswordAuthentication(MAIL_USER, MAIL_PASSWORD);

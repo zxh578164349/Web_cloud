@@ -28,7 +28,8 @@
 			<result name="findAllMenu">test.jsp</result>
 		</action>
 		<action name="user*" class="webUserAction" method="{1}">
-			<result name="chengong" type="redirectAction">menu_findAllMenu</result> 		   			
+			<!-- <result name="chengong" type="redirectAction">menu_findAllMenu</result>  -->
+			<result name="chengong">test.jsp</result>		   			
 			<result name="initial">page/updateData.jsp</result>
 			<result name="all">page/managerUser.jsp</result>
 			<result name="qx">page/Jurisdiction.jsp</result>

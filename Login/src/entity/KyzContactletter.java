@@ -21,7 +21,7 @@ public class KyzContactletter implements java.io.Serializable {
 	private String filesYn;//是否有附檔
 	private String firstPage;//是否顯示第一頁
 	private String factCode;//廠別狀態
-	private String colTemp;//臨時列
+	private String colTemp;
 
 	// Constructors
 

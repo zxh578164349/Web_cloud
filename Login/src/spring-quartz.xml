@@ -60,20 +60,25 @@
     </bean>
     <bean id="CronTriggerBeanA" class="org.springframework.scheduling.quartz.CronTriggerBean">
       <property name="jobDetail" ref="quantzjobBeanA"></property>
-      <property name="cronExpression" value="0 50 14 * * ?"></property>      
-    </bean> 
+      <property name="cronExpression" value="0 0 10 * * ?"></property>      
+    </bean>
     <bean id="CronTriggerBeanB" class="org.springframework.scheduling.quartz.CronTriggerBean">
+      <property name="jobDetail" ref="quantzjobBeanA"></property>
+      <property name="cronExpression" value="0 0 16 * * ?"></property>      
+    </bean>  
+    <bean id="CronTriggerBeanC" class="org.springframework.scheduling.quartz.CronTriggerBean">
       <property name="jobDetail" ref="quantzjobBeanB"></property>
-      <property name="cronExpression" value="0 59 9 * * ?"></property>      
+      <property name="cronExpression" value="0 0 12 * * ?"></property>      
     </bean> 
     
     <!-- 启动调度 -->
     <bean id="startQuartz" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
         <property name="triggers">
             <list>
-                <ref bean="CronTriggerBean"/>
-                <ref bean="CronTriggerBeanA"/>
-                <ref bean="CronTriggerBeanB"/>
+                <ref bean="CronTriggerBean"/><!-- 14點 產量資料錶 -->
+                <ref bean="CronTriggerBeanA"/><!--(第一次) 10點  下一位簽核人 -->
+                <ref bean="CronTriggerBeanB"/><!--(第二次) 16點  下一位簽核人 -->
+                <ref bean="CronTriggerBeanC"/><!-- 12點  簽核完畢幷知會 -->
             </list>
         </property>        
     </bean>

@@ -65,7 +65,7 @@ table.altrowstable caption{
 <script type="text/javascript">
     function showDiv(billNo,factNo){
     $.layer({
-    type: 1,   //0-4的选择,
+    type: 2,   //0-4的选择,
     title: '函文內容',
     //border: [0],
     closeBtn: [1,true],
@@ -78,18 +78,18 @@ table.altrowstable caption{
     shift:'top',
     offset:['10px',''],
     //area: ['800px', '560px'],
-    area:['35em','20em'],
-    scrolling:'auto' ,
-    page:{
-      url:'kyz_findById_layer?billNo='+billNo+'& factNo='+factNo
-         
-    }                 
+    area:['600px','560px'],
+    //page:{url:'kyz_findById_layer?billNo='+billNo+'& factNo='+factNo}                   
+    iframe:{src:'kyz_findById_layer?billNo='+billNo+'& factNo='+factNo,scrolling:'auto'},	
+    close:function(){
+		location.reload();
+	}                 
 });
     }
     
   function showDiv2(billNo,factNo){
     $.layer({
-    type: 1,   //0-4的选择,
+    type: 2,   //0-4的选择,
     title: '函文內容',
     //border: [0],
     closeBtn: [1,true],
@@ -101,16 +101,44 @@ table.altrowstable caption{
     //fadeIn:300,
     shift:'top',
     offset:['10px',''],
-    area: ['1000px', '560px'],
-    page:{
-      url:'kyzletter_findById_layer?billNo='+billNo+'& factNo='+factNo    
-    }                 
+    area: ['800px', '560px'],
+    //page:{url:'kyzletter_findById_layer?billNo='+billNo+'& factNo='+factNo }
+    iframe:{src:'kyzletter_findById_layer?billNo='+billNo+'& factNo='+factNo,scrolling:'auto'},
+    close:function(){
+           location.reload();
+    }                             
 });
     }
     
     function check(factNo,visaSort,billNo,itemNo){
     $.layer({
-    type: 1,   //0-4的选择,
+    type: 2,   //0-4的选择,
+    title: '函文內容',
+    //border: [0],
+    border: [10, 0.3, '#000'],
+    closeBtn: [1,true],
+    shade: [0],
+    //shade: [0.5, '#000'],
+    shadeClose: false,
+     btns:2,
+     btn:['通過','不通過'],
+    //fadeIn:300,
+    shift:'top',
+    offset:['10px',''],
+    area: ['600px', '560px'],
+    //page:{url:'kyz_findById_layer?billNo='+billNo+'& factNo='+factNo},
+    iframe:{src:'kyz_findById_layer?billNo='+billNo+'& factNo='+factNo,scrolling:'auto'},
+     yes:function(){         
+      window.location.href='vbm_add?billNo='+billNo+'& visa_mk=Y'+'& factNo='+factNo+'& itemNo='+itemNo+'& visaSort='+visaSort;
+    },
+    no:function(){
+      window.location.href='vbm_add?billNo='+billNo+'& visa_mk=T'+'& factNo='+factNo+'& itemNo='+itemNo+'& visaSort='+visaSort;
+    }              
+});
+    }
+ function check2(factNo,visaSort,billNo,itemNo){
+    $.layer({
+    type: 2,   //0-4的选择,
     title: '函文內容',
     //border: [0],
     border: [10, 0.3, '#000'],
@@ -124,36 +152,8 @@ table.altrowstable caption{
     shift:'top',
     offset:['10px',''],
     area: ['800px', '560px'],
-    page:{
-      url:'kyz_findById_layer?billNo='+billNo+'& factNo='+factNo    
-    },
-     yes:function(){         
-      window.location.href='vbm_add?billNo='+billNo+'& visa_mk=Y'+'& factNo='+factNo+'& itemNo='+itemNo+'& visaSort='+visaSort;
-    },
-    no:function(){
-      window.location.href='vbm_add?billNo='+billNo+'& visa_mk=T'+'& factNo='+factNo+'& itemNo='+itemNo+'& visaSort='+visaSort;
-    }              
-});
-    }
- function check2(factNo,visaSort,billNo,itemNo){
-    $.layer({
-    type: 1,   //0-4的选择,
-    title: '函文內容',
-    //border: [0],
-    border: [10, 0.3, '#000'],
-    closeBtn: [1,true],
-    shade: [0],
-    //shade: [0.5, '#000'],
-    shadeClose: false,
-     btns:2,
-     btn:['通過','不通過'],
-    //fadeIn:300,
-    shift:'top',
-    offset:['10px',''],
-    area: ['1000px', '560px'],
-    page:{
-      url:'kyzletter_findById_layer?billNo='+billNo+'& factNo='+factNo    
-    },
+    //page:{url:'kyzletter_findById_layer?billNo='+billNo+'& factNo='+factNo},
+    iframe:{src:'kyzletter_findById_layer?billNo='+billNo+'& factNo='+factNo,scrolling:'auto'},
      yes:function(){         
       window.location.href='vbm_add?billNo='+billNo+'& visa_mk=Y'+'& factNo='+factNo+'& itemNo='+itemNo+'& visaSort='+visaSort;
     },

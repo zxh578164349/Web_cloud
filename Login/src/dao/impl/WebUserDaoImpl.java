@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.hibernate.Hibernate;
 import org.hibernate.Query;
 
 import util.PageBean;
@@ -62,7 +63,7 @@ public class WebUserDaoImpl extends Basedao implements IWebUserDao {
 		WebUser user = (WebUser) ActionContext.getContext().getSession()
 				.get("loginUser");
 		if (conditions != null && !conditions.equals("")) {
-			if (user.getName().equals("¹ÜÀí†T") && user.getFactno().equals("tw")) {
+			if (user.getName().equals("ºÞ²z­û") && user.getFactno().equals("tw")) {
 				for (int i = conditions.length(); --i >= 0;) {
 					if (Character.isDigit(conditions.charAt(i))
 							|| Character.isLetter(conditions.charAt(i))) {
@@ -141,8 +142,9 @@ public class WebUserDaoImpl extends Basedao implements IWebUserDao {
 		query.setString(1, username.toLowerCase());
 		WebUser user = (WebUser) query.uniqueResult();
 		if(user!=null){
-			user.getWebJurisdictions().size();	//Àò¨ú¤l¶°ªºªø«×,¸Ñ¨Mhibernate©µ¿ðªº°ÝÃD	
-		}			
+			//user.getWebJurisdictions().size();	//Àò¨ú¤l¶°ªºªø«×,¸Ñ¨Mhibernate©µ¿ðªº°ÝÃD
+			//Hibernate.initialize(user);
+		}	
 		return user;
 	}
 
@@ -153,8 +155,9 @@ public class WebUserDaoImpl extends Basedao implements IWebUserDao {
 		query.setString(1, fact);
 		WebUser user=(WebUser)query.uniqueResult();
 		if(user!=null){
-			user.getWebJurisdictions().size();//Àò¨ú¤l¶°ªºªø«×¡A¸Ñ¨Mhibernate©µ¿ðªº°ÝÃD
-		}		
+			//user.getWebJurisdictions().size();//Àò¨ú¤l¶°ªºªø«×¡A¸Ñ¨Mhibernate©µ¿ðªº°ÝÃD
+			//Hibernate.initialize(user);
+		}			
 		return user;
 	}
 

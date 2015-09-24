@@ -18,8 +18,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.*;
-
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperExportManager;
@@ -30,9 +28,6 @@ import net.sf.jasperreports.engine.base.JRBaseReport;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.util.JRLoader;
 
-import org.apache.struts2.ServletActionContext;
-import org.apache.struts2.interceptor.ServletRequestAware;
-import org.apache.struts2.interceptor.ServletResponseAware;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.springframework.context.ApplicationContext;
@@ -48,8 +43,6 @@ import services.IKyzExpectmatmServices;
 import services.IKyzVisaFlowServices;
 import services.IWebFactServices;
 import services.IWebuserEmailServices;
-import util.JasperHelper;
-import util.JasperHelper2;
 
 import com.opensymphony.xwork2.ActionContext;
 
@@ -63,7 +56,7 @@ import entity.KyzExpectmats;
 import entity.KyzVisaflow;
 import entity_temp.VisabillsTemp;
 
-public class AutoSendKyzAll extends QuartzJobBean implements ServletResponseAware, ServletRequestAware{
+public class AutoSendKyzAll extends QuartzJobBean{
 	private Map<String, Object> map;
 	
 
@@ -75,40 +68,50 @@ public class AutoSendKyzAll extends QuartzJobBean implements ServletResponseAwar
 		this.map = map;
 	}
 	public static final String PDF_TYPE_AUTO="auto";
-	private HttpServletRequest request;
-	private HttpServletResponse response;
-
+	
 	@Override
 	protected void executeInternal(JobExecutionContext arg0)
 			throws JobExecutionException {
 		// TODO Auto-generated method stub
 		ApplicationContext ac=new ClassPathXmlApplicationContext(new String[]{"spring.xml","spring-dao.xml","spring-services.xml","spring-action.xml"});
 		IKyVisabillmServices visabillmSer=(IKyVisabillmServices)ac.getBean("visabillmSer");
-		List<KyVisabillm>list_vbm=visabillmSer.findByVisaMk2("Y");		
-		String subject="";
-		String result="";
+		List<KyVisabillm>list_vbm=visabillmSer.findByVisaMk2("Y");//所有已經簽核完畢的函文，但未發送email知會		
+		
+		if(list_vbm.size()>0){//start if
+			MailSenderInfo mailInfo=new MailSenderInfo();
+			SimpleMailSender sms=new SimpleMailSender();
+			mailInfo.setValidate(true);
+			mailInfo.setUserName("kyuen@yydg.com.cn");
+			mailInfo.setFromAddress("<kyuen@yydg.com.cn>");
+			mailInfo.setToAddress("kyuen@yydg.com.cn");//收件人爲本機，檢測Email是否發送成功
+			mailInfo.setPassword("yydgmail");
+			mailInfo.setContent("簽核完畢");
+			for(int i=0;i<list_vbm.size();i++){//start for			
+				String factNo=list_vbm.get(i).getId().getFactNo();
+				String billNo=list_vbm.get(i).getId().getBillNo();
+				String visaSort=list_vbm.get(i).getId().getVisaSort();
+				/*String visaMk=list_vbm.get(i).getVisaMk();
+				String emailUrl="http://203.85.73.161/Login/vbm_findById_email?visaSort="+visaSort+"& billNo="+billNo
+				         +"& factNo="+factNo+"& email="+signerNext;*/
 				
-		for(int i=0;i<list_vbm.size();i++){			
-			String signerNext=list_vbm.get(i).getSignerNext();
-			String factNo=list_vbm.get(i).getId().getFactNo();
-			String billNo=list_vbm.get(i).getId().getBillNo();
-			String visaSort=list_vbm.get(i).getId().getVisaSort();
-			String visaMk=list_vbm.get(i).getVisaMk();
-			String emailUrl="http://203.85.73.161/Login/vbm_findById_email?visaSort="+visaSort+"& billNo="+billNo
-			         +"& factNo="+factNo+"& email="+signerNext;
-			try {
-				if(billNo.substring(0, 2).equals("EM")){
-					this.addVisabillsAndEmail(factNo, billNo, visaSort);
-				}else{
-					this.addVisabillsAndEmail2(factNo, billNo, visaSort);
-				}
-				
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}		       	          			
-		}
-								
+				try {
+					if(billNo.substring(0, 2).equals("EM")){
+						this.addVisabillsAndEmail(factNo, billNo, visaSort);
+					}else{
+						this.addVisabillsAndEmail2(factNo, billNo, visaSort);
+					}
+					mailInfo.setSubject("發送Email成功"+billNo);
+					sms.sendHtmlMail(mailInfo);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					//e.printStackTrace();
+					mailInfo.setSubject("發送Email失敗"+billNo);
+					sms.sendHtmlMail(mailInfo);
+				}						
+				list_vbm.get(i).setEmailMk("Y");//表示已發送郵件
+				visabillmSer.add(list_vbm.get(i));
+			}//end for
+		}//end if										
 	}
 	
 	/**
@@ -123,6 +126,133 @@ public class AutoSendKyzAll extends QuartzJobBean implements ServletResponseAwar
 		/**
 		 * 打印
 		 */
+		this.print_KyzExpectmatm(local_factNo, local_billNo, local_visaSort);
+		
+		/**
+		 * 發郵件
+		 * 由於要給所有人(包括不要審核的)發送郵件,所以要重新從數據庫中獲取,而不能使用上面已有的list_visa
+		 */
+		this.sendEmail(local_factNo, local_billNo, local_visaSort);      
+		
+		
+	}
+	
+	/**
+	 * 內部聯絡函
+	 * @param local_factNo
+	 * @param local_billNo
+	 * @param local_visaSort
+	 * @throws IOException
+	 */
+	public void addVisabillsAndEmail2(String local_factNo,String local_billNo,String local_visaSort) throws IOException{
+		/**
+		 * 打印
+		 */
+		this.print_KyzContactletter(local_factNo, local_billNo, local_visaSort);
+		
+		/**
+		 * 發郵件
+		 * 由於要給所有人(包括不要審核的)發送郵件,所以要重新從數據庫中獲取,而不能使用上面已有的list_visa
+		 */
+		 this.sendEmail(local_factNo, local_billNo, local_visaSort);     
+		
+								
+	}
+	
+	
+	
+	
+	public  void prepareReport(JasperReport jasperReport, String type) {
+		//logger.debug("The method======= prepareReport() start.......................");
+		if ("excel".equals(type))
+			try {
+				Field margin = JRBaseReport.class
+						.getDeclaredField("leftMargin");
+				margin.setAccessible(true);
+				margin.setInt(jasperReport, 0);
+				margin = JRBaseReport.class.getDeclaredField("topMargin");
+				margin.setAccessible(true);
+				margin.setInt(jasperReport, 0);
+				margin = JRBaseReport.class.getDeclaredField("bottomMargin");
+				margin.setAccessible(true);
+				margin.setInt(jasperReport, 0);
+				Field pageHeight = JRBaseReport.class
+						.getDeclaredField("pageHeight");
+				pageHeight.setAccessible(true);
+				pageHeight.setInt(jasperReport, 2147483647);
+			} catch (Exception exception) {
+			}
+	}
+	private  void exportPdf_auto(JasperPrint jasperPrint,
+			String defaultFilename) throws IOException, JRException {
+		//response.setContentType("application/pdf");
+		String defaultname = null;
+		if (defaultFilename.trim() != null && defaultFilename != null) {
+			defaultname = defaultFilename + ".pdf";
+		} else {
+			defaultname = "export.pdf";
+		}
+		String fileName = new String(defaultname.getBytes("utf-8"), "ISO8859-1");
+		/*response.setHeader("Content-disposition", "attachment; filename="
+				+ fileName);*/
+
+		//ServletOutputStream ouputStream = response.getOutputStream();
+		OutputStream ouputStream=new FileOutputStream("D:/" + defaultname);
+		JasperExportManager.exportReportToPdfStream(jasperPrint, ouputStream);
+		ouputStream.flush();
+		ouputStream.close();
+
+	}
+	private  void export(Collection datas, Map a, String type,
+			String defaultFilename, InputStream is) {
+		//logger.debug("导出判断     The method======= export() start.......................");
+		try {
+			JasperReport jasperReport = (JasperReport) JRLoader.loadObject(is);
+			prepareReport(jasperReport, type);
+			JRDataSource ds = new JRBeanCollectionDataSource(datas);
+			// parameters.put("wheresql","and status='3'");
+			/*
+			 * parameters.put("wheresql",""); String diver =
+			 * "oracle.jdbc.driver.OracleDriver"; String url =
+			 * "jdbc:oracle:thin:@192.168.1.156:1521:orcl"; String username =
+			 * "qqwcrm0625"; String password = "qqwcrm"; ReportDataSource
+			 * datasource = new ReportDataSource(); datasource.setDiver(diver);
+			 * datasource.setUrl(url); datasource.setUsername(username);
+			 * datasource.setPassword(password); Connection
+			 * con=getConnection(datasource);
+			 */
+			JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, a, ds);
+			
+			if (PDF_TYPE_AUTO.equals(type)) {
+				exportPdf_auto(jasperPrint, defaultFilename);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	public  void exportmain(String exportType, Map parameters,
+			String jaspername, List lists, String defaultFilename, String url) {
+		//logger.debug("进入导出    The method======= exportmain() start.......................");
+		ActionContext ct = ActionContext.getContext();
+		//HttpServletRequest request = (HttpServletRequest) ct.get(ServletActionContext.HTTP_REQUEST);						
+		//HttpServletResponse response = ServletActionContext.getResponse();		
+		String filenurl = null;
+		//filenurl = ServletActionContext.getRequest().getRealPath(url + jaspername);// jasper文件放在WebRoot/ireport/xx.jasper</span>	
+		filenurl=ContextLoader.getCurrentWebApplicationContext().getServletContext().getRealPath(url + jaspername);
+		
+		File file = new File(filenurl);
+		InputStream is = null;
+		try {
+			is = new FileInputStream(file);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		export(lists, parameters, exportType, defaultFilename, is);
+	}
+	
+	
+	public void print_KyzExpectmatm(String local_factNo,String local_billNo,String local_visaSort){
 		ApplicationContext ac=new ClassPathXmlApplicationContext(new String[]{"spring.xml","spring-dao.xml","spring-services.xml","spring-action.xml"});
 		IWebFactServices webFactSer=(IWebFactServices)ac.getBean("webFactSer");
 		IKyzExpectmatmServices kyzSer=(IKyzExpectmatmServices)ac.getBean("kyzSer");
@@ -273,78 +403,10 @@ public class AutoSendKyzAll extends QuartzJobBean implements ServletResponseAwar
 		
 		
 		this.exportmain("auto", map,"matterApplication.jasper", listkyz,local_billNo, "jasper/audit/");
-		
-		/**
-		 * 發郵件
-		 * 由於要給所有人(包括不要審核的)發送郵件,所以要重新從數據庫中獲取,而不能使用上面已有的list_visa
-		 */
-		      
-		KyVisabillm vbm2=visabillmSer.findById(local_factNo, local_visaSort, local_billNo);
-		List<KyVisabills>list_visa2=vbm2.getKyVisabillses();
-		//这个类主要是设置邮件   
-		
-		String[] attachFileNames = { "d:/" + local_billNo + ".pdf" };// 附件
-		SimpleMailSender sms = new SimpleMailSender();
-		MailSenderInfo mailInfo = new MailSenderInfo();
-		
-		/*MailSenderInfo mailInfo2 = new MailSenderInfo();
-		SimpleMailSender sms2 = new SimpleMailSender();*/
-		for (int i = 0; i < list_visa2.size(); i++) {			
-			// 这个类主要来发送邮件			
-			mailInfo.setValidate(true);
-			mailInfo.setUserName("kyuen@yydg.com.cn");
-			mailInfo.setPassword("yydgmail");// 您的邮箱密码
-			mailInfo.setFromAddress("<kyuen@yydg.com.cn>");
-			mailInfo.setSubject("函文知會(審核完畢)_" + local_billNo + "("
-					+ local_factNo + ")"+"(定时)");
-
-			//String[] attachFileNames = { "d:/" + local_billNo + ".pdf" };
-			mailInfo.setAttachFileNames(attachFileNames);
-			mailInfo.setContent("單號為:" + "<span style='color:red'>"
-					+ local_billNo + "</span>" + "的函文已審核完畢,請查看附件.");
-
-			String toAddress = list_visa2.get(i).getVisaSigner();
-			mailInfo.setToAddress(toAddress);
-			sms.sendHtmlMail(mailInfo);// 发送html格式
-
-			// 给备签人发送邮件
-			String emailPwd = webuseremailSer.findEmailPWD(local_factNo,list_visa2.get(i).getVisaSigner());					
-			if (emailPwd != null) {
-				
-				mailInfo.setValidate(true);
-				mailInfo.setUserName("kyuen@yydg.com.cn");
-				mailInfo.setPassword("yydgmail");// 您的邮箱密码
-				mailInfo.setFromAddress("<kyuen@yydg.com.cn>");
-				mailInfo.setSubject("函文知會(審核完畢)_" + local_billNo + "("
-						+ local_factNo + ")"+"(备签定时)");
-				mailInfo.setAttachFileNames(attachFileNames);
-				mailInfo.setContent("單號為:" + "<span style='color:red'>"
-						+ local_billNo + "</span>" + "的函文已審核完畢,請查看附件.");
-
-				mailInfo.setToAddress(emailPwd);
-				sms.sendHtmlMail(mailInfo);// 发送html格式
-
-			}
-
-		}
-	       
-	          File file = new File("d:/" + local_billNo + ".pdf");
-				if (file.exists()) {
-					if (file.isFile()) {
-						file.delete();
-					}
-				}
-		
 	}
 	
-	/**
-	 * 內部聯絡函
-	 * @param local_factNo
-	 * @param local_billNo
-	 * @param local_visaSort
-	 * @throws IOException
-	 */
-	public void addVisabillsAndEmail2(String local_factNo,String local_billNo,String local_visaSort) throws IOException{
+	
+	public void print_KyzContactletter(String local_factNo,String local_billNo,String local_visaSort){
 		ApplicationContext ac=new ClassPathXmlApplicationContext(new String[]{"spring.xml","spring-dao.xml","spring-services.xml","spring-action.xml"});
 		IWebFactServices webFactSer=(IWebFactServices)ac.getBean("webFactSer");
 		IKyzContactLetterServices kyzletterSer=(IKyzContactLetterServices)ac.getBean("kyzletterSer");
@@ -472,11 +534,76 @@ public class AutoSendKyzAll extends QuartzJobBean implements ServletResponseAwar
 				
 		this.exportmain("auto", map,"kyz_contactletter.jasper", list,local_billNo, "jasper/audit/");
 		
-		/**
-		 * 發郵件
-		 * 由於要給所有人(包括不要審核的)發送郵件,所以要重新從數據庫中獲取,而不能使用上面已有的list_visa
-		 */
-		      
+	}
+	
+	
+	public void sendEmail(String local_factNo,String local_billNo,String local_visaSort){
+		ApplicationContext ac=new ClassPathXmlApplicationContext(new String[]{"spring.xml","spring-dao.xml","spring-services.xml","spring-action.xml"});
+		IKyVisabillmServices visabillmSer=(IKyVisabillmServices)ac.getBean("visabillmSer");
+		IWebuserEmailServices webuseremailSer=(IWebuserEmailServices)ac.getBean("webuseremailSer");
+		KyVisabillm vbm2=visabillmSer.findById(local_factNo, local_visaSort, local_billNo);
+		List<KyVisabills>list_visa2=vbm2.getKyVisabillses();
+		//这个类主要是设置邮件   
+		
+		String[] attachFileNames = { "d:/" + local_billNo + ".pdf" };// 附件
+		SimpleMailSender sms = new SimpleMailSender();
+		MailSenderInfo mailInfo = new MailSenderInfo();
+		
+		/*MailSenderInfo mailInfo2 = new MailSenderInfo();
+		SimpleMailSender sms2 = new SimpleMailSender();*/
+		for (int i = 0; i < list_visa2.size(); i++) {			
+			// 这个类主要来发送邮件			
+			mailInfo.setValidate(true);
+			mailInfo.setUserName("kyuen@yydg.com.cn");
+			mailInfo.setPassword("yydgmail");// 您的邮箱密码
+			mailInfo.setFromAddress("<kyuen@yydg.com.cn>");
+			mailInfo.setSubject("函文知會定時通知(審核完畢)_" + local_billNo + "("
+					+ local_factNo + ")");
+
+			//String[] attachFileNames = { "d:/" + local_billNo + ".pdf" };
+			mailInfo.setAttachFileNames(attachFileNames);
+			mailInfo.setContent("單號為:" + "<span style='color:red'>"
+					+ local_billNo + "</span>" + "的函文已審核完畢,請查看附件"
+					+ "<br/>本郵件自動定時發送，請勿回覆");
+
+			String toAddress = list_visa2.get(i).getVisaSigner();
+			mailInfo.setToAddress(toAddress);
+			sms.sendHtmlMail(mailInfo);// 发送html格式
+
+			// 给备签人发送邮件
+			String emailPwd = webuseremailSer.findEmailPWD(local_factNo,list_visa2.get(i).getVisaSigner());					
+			if (emailPwd != null) {
+				
+				mailInfo.setValidate(true);
+				mailInfo.setUserName("kyuen@yydg.com.cn");
+				mailInfo.setPassword("yydgmail");// 您的邮箱密码
+				mailInfo.setFromAddress("<kyuen@yydg.com.cn>");
+				mailInfo.setSubject("函文知會定時通知(審核完畢)_" + local_billNo + "("
+						+ local_factNo + ")");
+				mailInfo.setAttachFileNames(attachFileNames);
+				mailInfo.setContent("單號為:" + "<span style='color:red'>"
+						+ local_billNo + "</span>" + "的函文已審核完畢,請查看附件"
+						+ "<br/>本郵件自動定時發送，請勿回覆");
+
+				mailInfo.setToAddress(emailPwd);
+				sms.sendHtmlMail(mailInfo);// 发送html格式
+
+			}
+
+		}
+	       
+	          File file = new File("d:/" + local_billNo + ".pdf");
+				if (file.exists()) {
+					if (file.isFile()) {
+						file.delete();
+					}
+				}
+	}
+	
+	/*public void sendTest(String local_factNo,String local_billNo,String local_visaSort){
+		ApplicationContext ac=new ClassPathXmlApplicationContext(new String[]{"spring.xml","spring-dao.xml","spring-services.xml","spring-action.xml"});
+		IKyVisabillmServices visabillmSer=(IKyVisabillmServices)ac.getBean("visabillmSer");
+		IWebuserEmailServices webuseremailSer=(IWebuserEmailServices)ac.getBean("webuseremailSer");
 		KyVisabillm vbm2=visabillmSer.findById(local_factNo, local_visaSort, local_billNo);
 		List<KyVisabills>list_visa2=vbm2.getKyVisabillses();
 		//这个类主要是设置邮件   
@@ -490,13 +617,14 @@ public class AutoSendKyzAll extends QuartzJobBean implements ServletResponseAwar
 			mailInfo.setUserName("kyuen@yydg.com.cn");
 			mailInfo.setPassword("yydgmail");// 您的邮箱密码
 			mailInfo.setFromAddress("<kyuen@yydg.com.cn>");
-			mailInfo.setSubject("函文知會(審核完畢)_" + local_billNo + "("
-					+ local_factNo + ")"+"(定时)");
+			mailInfo.setSubject("函文知會定時通知(審核完畢)_" + local_billNo + "("
+					+ local_factNo + ")");
 
 			// String[] attachFileNames={"d:/"+local_billNo+".pdf"};
 			mailInfo.setAttachFileNames(attachFileNames);
 			mailInfo.setContent("單號為:" + "<span style='color:red'>"
-					+ local_billNo + "</span>" + "的函文已審核完畢,請查看附件.");
+					+ local_billNo + "</span>" + "的函文已審核完畢,請查看附件"
+					+ "<br/>本郵件自動定時發送，請勿回覆");
 
 			String toAddress = list_visa2.get(i).getVisaSigner();
 			mailInfo.setToAddress(toAddress);
@@ -510,11 +638,12 @@ public class AutoSendKyzAll extends QuartzJobBean implements ServletResponseAwar
 				mailInfo.setUserName("kyuen@yydg.com.cn");
 				mailInfo.setPassword("yydgmail");// 您的邮箱密码
 				mailInfo.setFromAddress("<kyuen@yydg.com.cn>");
-				mailInfo.setSubject("函文知會(審核完畢)_" + local_billNo + "("
-						+ local_factNo + ")"+"(备签定时)");
+				mailInfo.setSubject("函文知會定時通知(審核完畢)_" + local_billNo + "("
+						+ local_factNo + ")");
 				mailInfo.setAttachFileNames(attachFileNames);
 				mailInfo.setContent("單號為:" + "<span style='color:red'>"
-						+ local_billNo + "</span>" + "的函文已審核完畢,請查看附件.");
+						+ local_billNo + "</span>" + "的函文已審核完畢,請查看附件"
+						+ "<br/>本郵件自動定時發送，請勿回覆");
 
 				mailInfo.setToAddress(emailPwd);
 				sms.sendHtmlMail(mailInfo);// 发送html格式
@@ -527,106 +656,8 @@ public class AutoSendKyzAll extends QuartzJobBean implements ServletResponseAwar
 						file.delete();
 					}
 				}
-								
-	}
+	}*/
+
 	
-	public  void prepareReport(JasperReport jasperReport, String type) {
-		//logger.debug("The method======= prepareReport() start.......................");
-		if ("excel".equals(type))
-			try {
-				Field margin = JRBaseReport.class
-						.getDeclaredField("leftMargin");
-				margin.setAccessible(true);
-				margin.setInt(jasperReport, 0);
-				margin = JRBaseReport.class.getDeclaredField("topMargin");
-				margin.setAccessible(true);
-				margin.setInt(jasperReport, 0);
-				margin = JRBaseReport.class.getDeclaredField("bottomMargin");
-				margin.setAccessible(true);
-				margin.setInt(jasperReport, 0);
-				Field pageHeight = JRBaseReport.class
-						.getDeclaredField("pageHeight");
-				pageHeight.setAccessible(true);
-				pageHeight.setInt(jasperReport, 2147483647);
-			} catch (Exception exception) {
-			}
-	}
-	private  void exportPdf_auto(JasperPrint jasperPrint,
-			String defaultFilename) throws IOException, JRException {
-		response.setContentType("application/pdf");
-		String defaultname = null;
-		if (defaultFilename.trim() != null && defaultFilename != null) {
-			defaultname = defaultFilename + ".pdf";
-		} else {
-			defaultname = "export.pdf";
-		}
-		String fileName = new String(defaultname.getBytes("utf-8"), "ISO8859-1");
-		/*response.setHeader("Content-disposition", "attachment; filename="
-				+ fileName);*/
-
-		//ServletOutputStream ouputStream = response.getOutputStream();
-		OutputStream ouputStream=new FileOutputStream("D:/" + defaultname);
-		JasperExportManager.exportReportToPdfStream(jasperPrint, ouputStream);
-		ouputStream.flush();
-		ouputStream.close();
-
-	}
-	private  void export(Collection datas, Map a, String type,
-			String defaultFilename, InputStream is) {
-		//logger.debug("导出判断     The method======= export() start.......................");
-		try {
-			JasperReport jasperReport = (JasperReport) JRLoader.loadObject(is);
-			prepareReport(jasperReport, type);
-			JRDataSource ds = new JRBeanCollectionDataSource(datas);
-			// parameters.put("wheresql","and status='3'");
-			/*
-			 * parameters.put("wheresql",""); String diver =
-			 * "oracle.jdbc.driver.OracleDriver"; String url =
-			 * "jdbc:oracle:thin:@192.168.1.156:1521:orcl"; String username =
-			 * "qqwcrm0625"; String password = "qqwcrm"; ReportDataSource
-			 * datasource = new ReportDataSource(); datasource.setDiver(diver);
-			 * datasource.setUrl(url); datasource.setUsername(username);
-			 * datasource.setPassword(password); Connection
-			 * con=getConnection(datasource);
-			 */
-			JasperPrint jasperPrint = JasperFillManager.fillReport(
-					jasperReport, a, ds);
-			if (PDF_TYPE_AUTO.equals(type)) {
-				exportPdf_auto(jasperPrint, defaultFilename);
-			}
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	public  void exportmain(String exportType, Map parameters,
-			String jaspername, List lists, String defaultFilename, String url) {
-		//logger.debug("进入导出    The method======= exportmain() start.......................");
-		ActionContext ct = ActionContext.getContext();
-		//HttpServletRequest request = (HttpServletRequest) ct.get(ServletActionContext.HTTP_REQUEST);						
-		//HttpServletResponse response = ServletActionContext.getResponse();		
-		String filenurl = null;
-		//filenurl = ServletActionContext.getRequest().getRealPath(url + jaspername);// jasper文件放在WebRoot/ireport/xx.jasper</span>	
-		filenurl=ContextLoader.getCurrentWebApplicationContext().getServletContext().getRealPath(url + jaspername);
-		
-		File file = new File(filenurl);
-		InputStream is = null;
-		try {
-			is = new FileInputStream(file);
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-		export(lists, parameters, exportType, defaultFilename, is);
-	}
-
-	public void setServletRequest(HttpServletRequest request) {
-		// TODO Auto-generated method stub
-		this.request=request;
-	}
-
-	public void setServletResponse(HttpServletResponse response) {
-		// TODO Auto-generated method stub
-		this.response=response;
-	}
 
 }
