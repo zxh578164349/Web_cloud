@@ -13,7 +13,7 @@
         <property name="menuname" type="java.lang.String">
             <column name="MENUNAME" length="50" not-null="true" />
         </property>
-        <bag name="webJurisdictions" inverse="true" lazy="false">
+        <bag name="webJurisdictions" inverse="true" lazy="true">
             <key>
                 <column name="MENUID" precision="8" scale="0" not-null="true" />
             </key>

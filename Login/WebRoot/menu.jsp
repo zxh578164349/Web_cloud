@@ -116,13 +116,13 @@ a:hover{text-decoration:none; border-bottom:1px red solid;color:red;}
 										<tr>
 											<td>
 											<a href="<s:property value="address"/>?type=<s:property value='subtype'/>" 
-											style="border-bottom:0px" target="show" onclick="window.top.showPop()">
+											style="border-bottom:0px" target="show" onclick="window.parent.showPop()">
 											  <img style="border:0px;" src="images/files.gif"> 												
 											</a>
 											<a name="alink"
 												href="<s:property value="address"/>?type=<s:property value='subtype'/>"
 												 style="font-size:12px" target="show"
-												onclick="window.top.showPop()">(${x.index+1})<s:property
+												onclick="window.parent.showPop()">(${x.index+1})<s:property
 														value="submenuname" /> </a>
 											</td>
 										</tr>

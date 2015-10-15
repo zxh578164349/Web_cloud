@@ -75,15 +75,15 @@ table.altrowstable caption{
     border: [10, 0.3, '#000'],
    // btns:1,
     //fadeIn:300,
-    shift:'top',
+    //shift:'top',
     offset:['10px',''],
     //area: ['800px', '560px'],
     area:['600px','560px'],
     //page:{url:'kyz_findById_layer?billNo='+billNo+'& factNo='+factNo}                   
-    iframe:{src:'kyz_findById_layer?billNo='+billNo+'& factNo='+factNo,scrolling:'auto'},	
-    close:function(){
+    iframe:{src:'kyz_findById_layer?billNo='+billNo+'& factNo='+factNo,scrolling:'auto'}	
+    /* close:function(){
 		location.reload();
-	}                 
+	} */                 
 });
     }
     
@@ -99,14 +99,14 @@ table.altrowstable caption{
     border: [10, 0.3, '#000'],
    // btns:1,
     //fadeIn:300,
-    shift:'top',
+    //shift:'top',
     offset:['10px',''],
     area: ['800px', '560px'],
     //page:{url:'kyzletter_findById_layer?billNo='+billNo+'& factNo='+factNo }
-    iframe:{src:'kyzletter_findById_layer?billNo='+billNo+'& factNo='+factNo,scrolling:'auto'},
-    close:function(){
+    iframe:{src:'kyzletter_findById_layer?billNo='+billNo+'& factNo='+factNo,scrolling:'auto'}
+    /* close:function(){
            location.reload();
-    }                             
+    }  */                            
 });
     }
     
@@ -123,7 +123,7 @@ table.altrowstable caption{
      btns:2,
      btn:['通過','不通過'],
     //fadeIn:300,
-    shift:'top',
+    //shift:'top',
     offset:['10px',''],
     area: ['600px', '560px'],
     //page:{url:'kyz_findById_layer?billNo='+billNo+'& factNo='+factNo},
@@ -149,7 +149,7 @@ table.altrowstable caption{
      btns:2,
      btn:['通過','不通過'],
     //fadeIn:300,
-    shift:'top',
+   // shift:'top',
     offset:['10px',''],
     area: ['800px', '560px'],
     //page:{url:'kyzletter_findById_layer?billNo='+billNo+'& factNo='+factNo},

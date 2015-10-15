@@ -32,20 +32,21 @@ public class KyVisabillsDaoImpl extends Basedao implements IKyVisaBillsDao{
 	}
 	public PageBean findPageBean(int pageSize, int page, String userName,
 			String visaMk, String factNo, String billNo, String visaSort,
-			String createDate, String createDate2) {
+			String createDate, String createDate2,String email) {
 		// TODO Auto-generated method stub
 		StringBuffer hql=new StringBuffer();
 		Map<String,Object>map=new HashMap<String,Object>();
 		int allrow=0;
 		Integer rows=(Integer)ActionContext.getContext().getSession().get("rows");
 		hql.append("from KyVisabills where 1=1");
-		if(userName!=null&&!userName.equals("")&&!userName.contains("admin")){
+		
+		/*if(userName!=null&&!userName.equals("")&&!userName.contains("admin")){
 			hql.append(" and lower(visaSigner)=:visaSigner");
-			map.put("visaSigner", userName.toLowerCase());
-		}
+			map.put("visaSigner", email.toLowerCase());
+		}*/
 		if(visaMk!=null&&!visaMk.equals("")){
-			//hql.append(" and id.kyVisabillm.visaMk=:visamk");
-			hql.append(" and visaMk=:visamk");
+			hql.append(" and id.kyVisabillm.visaMk=:visamk");
+			//hql.append(" and visaMk=:visamk");
 			map.put("visamk", visaMk);
 		}
 		if(factNo!=null&&!factNo.equals("")&&!factNo.equals("tw")&&!factNo.equals("nothing")){
@@ -88,9 +89,10 @@ public class KyVisabillsDaoImpl extends Basedao implements IKyVisaBillsDao{
 			hql.append(" and id.kyVisabillm.id.factNo=:factno");
 			map.put("factno", factNo);
 		}
-		if(userName.contains("admin")){
+		/*if(userName.contains("admin")){
 			hql.append(" and id.itemNo='01'");
-		}
+		}*/
+		hql.append(" and id.itemNo='01'");
 		/*if(factNo.equals("tw")||userName.contains("ºÞ²z­û")){
 			hql.append(" and id.itemNo='01'");
 		}*/
@@ -307,6 +309,18 @@ public class KyVisabillsDaoImpl extends Basedao implements IKyVisaBillsDao{
 		String hql="from KyVisabills where id.kyVisabillm.id.visaSort=? and id.kyVisabillm.id.billNo=? and flowMk='N' order by id.itemNo";
 		String[]objs={visaSort,billNo};
 		return super.findAll(hql, objs).size();
+	}
+
+	public void delete(KyVisabills bils) {
+		// TODO Auto-generated method stub
+		super.delete(bils);
+	}
+
+	public List<KyVisabills> findBillsWithNo2(String visaSort, String billNo) {
+		// TODO Auto-generated method stub
+		String hql="from KyVisabills where id.kyVisabillm.id.visaSort=? and id.kyVisabillm.id.billNo=? and visaMk='N' and flowMk='Y' order by id.itemNo";
+		String[]objs={visaSort,billNo};
+		return super.findAll(hql, objs);
 	}
 
 }

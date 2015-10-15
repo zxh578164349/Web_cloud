@@ -37,9 +37,9 @@ public class KyVisaBillsServicesImpl implements IKyVisaBillsServices{
 		visabillDao.delete(factNo, visaSort, billNo, itemNo);
 	}
 	public PageBean findPageBean(int pageSize, int page, String userName,
-			String visaMk, String factNo, String billNo,String visaSort,String createDate,String createDate2) {
+			String visaMk, String factNo, String billNo,String visaSort,String createDate,String createDate2,String email) {
 		// TODO Auto-generated method stub
-		return visabillDao.findPageBean(pageSize, page, userName, visaMk, factNo, billNo,visaSort,createDate,createDate2);
+		return visabillDao.findPageBean(pageSize, page, userName, visaMk, factNo, billNo,visaSort,createDate,createDate2,email);
 	}
 	public List<KyVisabills> findByFNN(String factNo, String userName) {
 		// TODO Auto-generated method stub
@@ -65,6 +65,14 @@ public class KyVisaBillsServicesImpl implements IKyVisaBillsServices{
 	public int findBillsWithNo(String visaSort, String billNo) {
 		// TODO Auto-generated method stub
 		return visabillDao.findBillsWithNo(visaSort, billNo);
+	}
+	public void delete(KyVisabills bils) {
+		// TODO Auto-generated method stub
+		visabillDao.delete(bils);
+	}
+	public int findBillsWithNo2(String visaSort, String billNo) {
+		// TODO Auto-generated method stub
+		return visabillDao.findBillsWithNo2(visaSort, billNo).size();
 	}
 
 }

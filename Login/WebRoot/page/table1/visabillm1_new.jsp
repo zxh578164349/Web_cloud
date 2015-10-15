@@ -126,6 +126,12 @@
 							value="<s:property value='id.kyVisabillm.id.billNo'/>" name="billNo" />						
 							<input type="hidden" value="<s:property value='id.kyVisabillm.id.visaSort'/>" name="visaSort"/>
 					 </form>
+					 <form action="vbm_findById5" method="post" id="3_3form${x.index}" style="float:left">
+					   <input type="hidden" value="<s:property value='id.kyVisabillm.id.factNo'/>"
+							name="factNo" /> <input type="hidden"
+							value="<s:property value='id.kyVisabillm.id.billNo'/>" name="billNo" />						
+							<input type="hidden" value="<s:property value='id.kyVisabillm.id.visaSort'/>" name="visaSort"/>
+					 </form>
 					 <form action="kyz_print2" method="post" id="4subform${x.index}" style="float:left" target="_blank">
 						<input type="hidden" value="<s:property value='id.kyVisabillm.id.factNo'/>"
 							name="id.factNo" /> <input type="hidden"
@@ -167,8 +173,10 @@
 					 <a href="javascript:document.getElementById('1form${x.index}').submit()"><img alt="加簽" src="images/icon/add24.png" title="加簽"><br>加簽</a>
 					</li>
 					<li>
-					 <a href="javascript:document.getElementById('3form${x.index}').submit()"><img alt="減簽" src="images/icon/minus24.png" title="減簽"><br>減簽</a>
-					 <%-- <a href="javascript:document.getElementById('5form${x.index}').submit()"><img alt="知會" src="images/icon/email001.png" title="知會"></a> --%>	
+					 <a href="javascript:document.getElementById('3form${x.index}').submit()"><img alt="減簽" src="images/icon/minus24.png" title="減簽"><br>減簽</a>					 
+					 </li>
+					 <li>
+					   <a href="javascript:document.getElementById('3_3form${x.index}').submit()"><img alt="減簽(带删除)" src="images/icon/remove.png" title="減簽(带删除)"><br>減簽D</a>
 					 </li>
 					 </s:if>
 					 <s:else>
@@ -177,7 +185,10 @@
 					 </li>
 					 <li>
 					   <a><img alt="減簽" src="images/icon/minus24_1.jpg" title="減簽"><br>減簽</a>
-					 </li>   
+					 </li>
+					 <li>
+					   <a><img alt="減簽(带删除)" src="images/icon/remove_1.png" title="減簽(带删除)"><br>減簽D</a>
+					 </li>    
 					 </s:else>											   					 					 						
 					 </s:if>
 					 <s:if test='id.kyVisabillm.id.billNo.substring(0,2)=="EM"'>			    					 

@@ -134,6 +134,17 @@ public class KyzVisaFlowDaoImpl extends Basedao implements IKyzVisaFlowDao {
 		String[]objs={factNo,visaSort};
 		return super.findAll(hql, objs);
 	}
+	
+	public KyzVisaflow findMaxFlow(String factNo, String visaSort) {
+		// TODO Auto-generated method stub
+		String hql="from KyzVisaflow where id.itemNo=(select max(id.itemNo) from KyzVisaflow where id.factNo=:factno and id.visaSort=:visasort) and " +
+				"id.factNo=:factno and id.visaSort=:visasort";
+		Query query=getSession().createQuery(hql);
+		query.setString("factno", factNo);
+		query.setString("visasort", visaSort);
+		KyzVisaflow flow=(KyzVisaflow)query.uniqueResult();
+		return flow;
+	}
 
 
 }

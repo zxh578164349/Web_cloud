@@ -140,7 +140,7 @@ public class KyVisaBillsAction extends ActionSupport{
 		return "findVisaBills";
 		
 	}
-	public String findPageBean(){
+	/*public String findPageBean(){
 		ActionContext.getContext().getApplication().clear();
 		factNo=(String)ActionContext.getContext().getSession().get("factNo");
 		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
@@ -187,6 +187,6 @@ public class KyVisaBillsAction extends ActionSupport{
 		}
 		bean=visabillSer.findPageBean(25, page, userName, visaMk, factNo, billNo,visaSort,yymmdd,yymmdd2);
 		return "beanList1";
-	}
+	}*/
 
 }

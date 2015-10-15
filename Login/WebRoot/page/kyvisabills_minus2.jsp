@@ -155,9 +155,10 @@ function go_subform(obj){
  
 }
 
+
 function showDiv2(obj){
-if(confirm("確定當前簽核人及前面未審核的人將全部減簽?")){
-   layer.load('正在處理,并發送郵件....');
+if(confirm("確定要執行操作嗎?")){
+   layer.load('正在處理,請稍等....');
    document.getElementById(obj).submit();
 }
 }
@@ -172,7 +173,7 @@ function hideDiv2(obj){
 </head>
 <body >
 	<table class="altrowstable" id="alternatecolor" align="center">
-	  <caption>函文減簽</caption>		
+	  <caption>函文減簽(带删除)</caption>		
 		 <tr>
 		  <td>廠別</td><td>類別</td><td>單號</td><td>項次</td><td>姓名</td><td>郵箱</td><td>審核狀態</td><td>是否需要審核</td><td>操作</td>
 		  </tr>
@@ -186,21 +187,26 @@ function hideDiv2(obj){
 		      <td><s:property value="visaMk"/></td>
 		      <td><s:property value="flowMk"/></td>
 		      <td>
-		      <form action="vbm_minusvisabills" method="post" id="subform${x.index}">
+		      <form action="vbm_minusvisabills2" method="post" id="subform${x.index}">
 		        <input type="hidden" value="<s:property value='id.kyVisabillm.id.factNo'/>" name="factNo"/><input type="hidden" value="<s:property value='id.kyVisabillm.id.visaSort'/>" name="visaSort"/>
 		        <input type="hidden" value="<s:property value='id.kyVisabillm.id.billNo'/>" name="billNo"/><input type="hidden" value="<s:property value='id.itemNo'/>" name="itemNo"/>
-		      </form>		      		        		      		      		          
-		            <s:if test='visaMk=="N"'>		               		                
-		                   <s:if test="#attr.x.index>0">
-		                      <a href="javascript:void(0)"  onclick="javascript:showDiv2('subform${x.index}')">減簽</a>
-		                   </s:if>
-		                   <s:else>
-		                      <font color="grey">減簽</font>
-		                   </s:else>		                  		                   		               	                
+		      </form>		      		        		      		      
+		          <s:if test='flowMk=="Y"'>
+		            <s:if test='visaMk=="N"'>
+		                <s:if test="vbm.kyVisabillses.size()==1">		                   
+		                   <font color="grey">删除</font>
+		                </s:if>
+		                <s:else>		                   		                  
+		                   <a href="javascript:void(0)"  onclick="javascript:showDiv2('subform${x.index}')">刪除</a>
+		                </s:else>		                
 		            </s:if>
-		            <s:else>
-		                 <font color="grey">減簽</font>
-		            </s:else> 		         		                		         	        		        		      		      		    		                 
+		            <s:else>		                 
+		                 <font color="grey">删除</font>
+		            </s:else> 
+		          </s:if>
+		          <s:else>
+		            <a href="javascript:void(0)"  onclick="javascript:showDiv2('subform${x.index}')">減知會</a> 
+		          </s:else>	       		         	        		        		      		      		    		                 
 		      </td> 
 		     </tr>
 		     </s:if>		     	   

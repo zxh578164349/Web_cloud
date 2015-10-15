@@ -18,5 +18,7 @@ public interface IKyzVisaFlowServices {
 	
 	public List<String> findVisaSort_C(String factNo,String mainSort);
 	public List<KyzVisaflow>findByFactNoVisaSort(String factNo,String visaSort);
+	
+	public KyzVisaflow findMaxFlow(String factNo,String visaSort);
 
 }

@@ -18,19 +18,19 @@ public class WebFactDaoImpl extends Basedao implements IWebFactDao {
 
 	public List<WebFact> findFactById(String factNo) {
 		// TODO Auto-generated method stub
-		String hql = "from WebFact w where w.id. factNo=?";
+		String hql = "from WebFact w where w.id. factNo=? order by fcodeIndex";
 		String[] objs = { factNo };
 		return super.findAll(hql, objs);
 	}
 	public List<WebFact> findFactById_showA(String factNo) {
 		// TODO Auto-generated method stub
-		String hql = "from WebFact w where w.id. factNo=? and factShowA='0'";
+		String hql = "from WebFact w where w.id. factNo=? and factShowA='0' order by fcodeIndex";
 		String[] objs = { factNo };
 		return super.findAll(hql, objs);
 	}
 	public List<WebFact> findFactById_show(String factNo) {
 		// TODO Auto-generated method stub
-		String hql = "from WebFact w where w.id. factNo=? and factShow='0'";
+		String hql = "from WebFact w where w.id. factNo=? and factShow='0' order by fcodeIndex";
 		String[] objs = { factNo };
 		return super.findAll(hql, objs);
 	}

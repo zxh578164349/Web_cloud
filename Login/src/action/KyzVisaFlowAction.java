@@ -33,6 +33,7 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 	private String purmanNo;//姓名
 	private KyzVisaflow flow;
 	private String flowmk;//判斷是否知會的
+	private int maxItem;//新添加的知會人員的序列號
 	private javax.servlet.http.HttpServletResponse response;
 
 	public String getVisaRank() {
@@ -139,6 +140,8 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 	}
 	
 	
+	
+	
 
 	/*public String add() throws IOException{
 		String visaSort_main=flows.get(0).getId().getVisaSort();		
@@ -177,6 +180,14 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 		return "add";
 	}*/
 	
+	public int getMaxItem() {
+		return maxItem;
+	}
+
+	public void setMaxItem(int maxItem) {
+		this.maxItem = maxItem;
+	}
+
 	public void setWebtypeSer(IWebTypeServices webtypeSer) {
 		this.webtypeSer = webtypeSer;
 	}
@@ -394,6 +405,30 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 			}
 					
 		}
+	}
+	
+	public String findMaxItem(){
+		flow=visaSer.findMaxFlow(factNo, visaSort);
+		maxItem=Integer.parseInt(flow.getId().getItemNo())+1;//新的知會人員的序列號爲原有最大序列號+1
+		if(maxItem<10){
+			flow.getId().setItemNo("0"+maxItem);
+		}else{
+			flow.getId().setItemNo(""+maxItem);
+		}
+		return "findMaxItem";
+	}
+	
+	/**
+	 * 添加知会人员
+	 * @return
+	 */
+	public String addMaxFlow(){
+		for(int i=0;i<flows.size();i++){
+			flows.get(i).setVisaRank("知會");
+			flows.get(i).setFlowMk("N");
+			visaSer.add(flows.get(i));
+		}
+		return "addMaxFlow";
 	}
 
 }

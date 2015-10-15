@@ -66,5 +66,10 @@ public class KyzVisaFlowServicesImpl implements IKyzVisaFlowServices{
 		// TODO Auto-generated method stub
 		return visaDao.findByFactNoVisaSort(factNo, visaSort);
 	}
+	
+	public KyzVisaflow findMaxFlow(String factNo, String visaSort) {
+		// TODO Auto-generated method stub
+		return visaDao.findMaxFlow(factNo, visaSort);
+	}
 
 }

@@ -43,7 +43,7 @@
         <property name="emailpassword" type="java.lang.String">
             <column name="EMAILPASSWORD" length="50"></column>
         </property>
-        <bag name="webJurisdictions" cascade="delete" inverse="true" lazy="true">
+        <bag name="webJurisdictions" cascade="delete" inverse="true" >
             <key>
                 <column name="USERID" precision="8" scale="0" not-null="true" />
             </key>

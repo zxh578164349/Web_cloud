@@ -40,6 +40,7 @@ public class WebUserDaoImpl extends Basedao implements IWebUserDao {
 		wUser.setUsername(webUser.getUsername());
 		//wUser.setAvailable(webUser.getAvailable());
 		wUser.setUserread(webUser.getUserread());
+		wUser.setEmail(webUser.getEmail());
 		getSession().update(wUser);
 	}
 
@@ -142,8 +143,7 @@ public class WebUserDaoImpl extends Basedao implements IWebUserDao {
 		query.setString(1, username.toLowerCase());
 		WebUser user = (WebUser) query.uniqueResult();
 		if(user!=null){
-			//user.getWebJurisdictions().size();	//獲取子集的長度,解決hibernate延遲的問題
-			//Hibernate.initialize(user);
+			user.getWebJurisdictions().size();	//獲取子集的長度,解決hibernate延遲的問題						
 		}	
 		return user;
 	}
@@ -155,8 +155,7 @@ public class WebUserDaoImpl extends Basedao implements IWebUserDao {
 		query.setString(1, fact);
 		WebUser user=(WebUser)query.uniqueResult();
 		if(user!=null){
-			//user.getWebJurisdictions().size();//獲取子集的長度，解決hibernate延遲的問題
-			//Hibernate.initialize(user);
+			user.getWebJurisdictions().size();//獲取子集的長度，解決hibernate延遲的問題			
 		}			
 		return user;
 	}

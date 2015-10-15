@@ -111,15 +111,15 @@
         
        <%-- <input type="hidden" value="<%=cookie.clearCookie()%>"/> --%>
       </form>
-      <div id="bgdiv"></div>
+      <!-- <div id="bgdiv"></div> -->
     </div>
     
   </section>		    
-	<div id="mydiv">      
+	<!-- <div id="mydiv">      
 		<p>		
 			<img alt="" src="images/loading006.gif" id="img_loading"><br> Loading....
 		</p>		
-	</div>	
+	</div>	 -->
 	   <div class="copyright" >Copyright © 2014,東莞加元鞋材制品有限公司,All Rights Reserved</div>	  	
 </body>
 </html>

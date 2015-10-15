@@ -154,7 +154,7 @@
 							value="<s:property value='id.visaSort'/>" name="id.visaSort" />
 							<input type="hidden" value="<s:property value='id.purmanNo'/>" name="id.purmanNo"/>
 							<input type="hidden" value="<s:property value='id.itemNo'/>" name="id.itemNo"/>							
-					</form> 
+					</form> 					
 					
 					  <a href="javascript:document.getElementById('subform${x.index}').submit()" onclick="" ><img alt="修改" src="images/icon/edit001.png" title="修改" ></a>&nbsp;														
 					<form action="visaflow_delete" method="post" id="2subform${x.index}"
@@ -165,12 +165,18 @@
 							<input type="hidden" value="<s:property value='id.purmanNo'/>" name="id.purmanNo"/>
 							<input type="hidden" value="<s:property value='id.itemNo'/>" name="id.itemNo"/>						
 					</form>
+					<form action="visaflow_findMaxItem" method="post" id="3subform${x.index}"
+						style="float:left">
+						<input type="hidden" value="<s:property value='id.factNo'/>" name="factNo" /> 
+					    <input type="hidden" value="<s:property value='id.visaSort'/>" name="visaSort" />																				
+					</form>
 					
 					 <s:if test='id.itemNo!="01"'>
-					  <a href="javascript:void(0)" onclick="isDelete('2subform${x.index}')"><img alt="刪除" src="images/icon/minus002.png" title="刪除" ></a>				 
+					  <a href="javascript:void(0)" onclick="isDelete('2subform${x.index}')"><img alt="刪除" src="images/icon/minus002.png" title="刪除" ></a>				 					  
 					 </s:if>
 					 <s:else>
 					   <a disabled style="color:grey" ><img alt="刪除" src="images/icon/minus002_1.png" title="刪除" ></a>
+					   <a href="javascript:document.getElementById('3subform${x.index}').submit()"><img alt="添加知會" src="images/icon/add001_2.png" title="添加知會"></a>
 					 </s:else>	
 					 
 					 <form action="visaflow_addflow" method="post" id="3subform${x.index}"
@@ -202,7 +208,7 @@
 					     <a href="javascript:void(0)" onclick="javascript:showDiv('div_add${x.index}')"><img alt="添加" src="images/icon/add001.png" title="添加" ></a>
 					    </s:if>					    
 					    <s:else>
-					      <a href="javascript:void(0)" onclick="javascript:showDiv('div_add${x.index}')"><img alt="添加知會" src="images/icon/add001.png" title="添加知會" ></a>
+					      <a disabled style="color:grey" ><img alt="添加" src="images/icon/add001_1.png" title="添加" ></a>
 					    </s:else> 
 					 </s:if>					 
 					 <s:else>

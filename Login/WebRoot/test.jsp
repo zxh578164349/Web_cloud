@@ -42,8 +42,8 @@
 	-moz-opacity: 0.5;
 	-khtml-opacity: 0.5;
 	display: none;
-	left: 220px;
-	top: 60px;
+	left: 0px;
+	top: 0px;
 	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#7F000000,
 		endColorstr=#7F000000 );
 	zoom: 1;
@@ -69,7 +69,7 @@
 						<span style="font-size:12px;float:right;color:#CCCC99">
 						   登录人：<s:property value="#session.loginUser.name" />(<s:if test="#attr.factNo=='tw'">所有數據</s:if>								
 								 <s:else> <s:property value="#attr.factName" /></s:else> ),欢迎您 ！								
-							     <a id="exit" href="judge.jsp" target="_parent" style="color:#FF6666">
+							     <a id="exit" href="judge2.jsp" target="_parent" style="color:#FF6666">
 							     退出登录</a>
 						</span>
 					    <span id="currentTime" style="width:300px;float:left;font-size:12px;color:#99CCCC;background:#292929"></span>	 				
@@ -103,11 +103,12 @@
 			}
 		}
 		function showPop() {
-			document.getElementById("mydiv").style.display = 'block';
-			//var loadi=layer.load(5);
+			document.getElementById("mydiv").style.display = 'block'			
 			window.setTimeout(function() {
 				document.getElementById("mydiv").style.display = 'none';
-			}, 3000); 
+			}, 6000); 
+			
+			/* var loadi=layer.load(2);  */
 		}
 		
    var currentDate = new Date(<%=new java.util.Date().getTime()%>);   

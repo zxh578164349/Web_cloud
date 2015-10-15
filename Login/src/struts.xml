@@ -435,7 +435,9 @@
 		    <result name="findById">/saveAndUpdate/kyzVisaFlowSaveOrUpdate2.jsp</result>
 		    <result name="delete" type="redirectAction">visaflow_findPageBean</result>
 		    <result name="addflow" type="redirectAction">visaflow_findPageBean</result>
-		    <result name="update" type="redirectAction">visaflow_findPageBean</result>		   
+		    <result name="update" type="redirectAction">visaflow_findPageBean</result>
+		    <result name="findMaxItem">/saveAndUpdate/kyzVisaFlowSaveOrUpdate3.jsp</result>
+		    <result name="addMaxFlow" type="redirectAction">visaflow_findPageBean</result>		   
 		</action>
 		<action name="vbm_*" class="visabillmAction" method="{1}">
 		  <result name="beanList">/page/visabillm_new.jsp</result>
@@ -444,6 +446,7 @@
 		  <result name="findById2">/page/kyvisabills_add.jsp</result><!-- 加簽 -->
 		  <result name="findById3">/page/kyvisabills_see.jsp</result>
 		  <result name="findById4">page/kyvisabills_minus.jsp</result><!-- 減簽 -->
+		  <result name="findById5">page/kyvisabills_minus2.jsp</result><!-- 減簽(帶刪除) -->
 		  <result name="findById_email">/page/kyvisabills_email.jsp</result><!-- email直接審核,不需要登錄帳號 -->
 		  <result name="add">page/checkpass/remark.jsp</result><!-- 函文是否通過 -->
 		  <result name="success">/success.html</result>
@@ -457,6 +460,12 @@
 		  </result>
 		  <result name="addVisabillsAndEmail" type="redirectAction">vbm_findPageBean</result>
 		  <result name="minusvisabills" type="redirectAction">
+		      <param name="actionName">vbm_findById4</param>
+		      <param name="factNo">${factNo}</param>
+		      <param name="visaSort">${visaSort}</param>
+		      <param name="billNo">${billNo}</param>
+		  </result>
+		  <result name="minusvisabills2" type="redirectAction">
 		      <param name="actionName">vbm_findById4</param>
 		      <param name="factNo">${factNo}</param>
 		      <param name="visaSort">${visaSort}</param>
@@ -606,6 +615,9 @@
              <result name="beanList1">/page/table1/webtype1.jsp</result>
              <result name="findById">/saveAndUpdate/webTypeSaveOrUpdate.jsp</result>
              <result name="delete" type="redirectAction">webtype_findPageBean</result>
+        </action>
+        <action name="proloss_*" class="profitlossAction" method="{1}">
+             
         </action>
 	</package>
 
