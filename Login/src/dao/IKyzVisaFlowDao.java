@@ -20,4 +20,6 @@ public interface IKyzVisaFlowDao {
 	
 	public KyzVisaflow findMaxFlow(String factNo,String visaSort);
 	
+	public void delete2(KyzVisaflow flow);
+	
 }

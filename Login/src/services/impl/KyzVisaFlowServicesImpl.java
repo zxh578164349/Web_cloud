@@ -72,4 +72,9 @@ public class KyzVisaFlowServicesImpl implements IKyzVisaFlowServices{
 		return visaDao.findMaxFlow(factNo, visaSort);
 	}
 
+	public void delete2(KyzVisaflow flow) {
+		// TODO Auto-generated method stub
+		visaDao.delete2(flow);
+	}
+
 }

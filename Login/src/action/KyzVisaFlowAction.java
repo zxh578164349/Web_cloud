@@ -251,6 +251,15 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 		this.getTypeName(bean);//从webtype获取类别名称
 		return "beanList";
 	}
+	
+	/**
+	 * 爲了ajax跳轉到kyzVisaFlow1.jsp這個頁面
+	 * @return
+	 */
+	public String findPageBean_1() {
+		this.findPageBean();
+		return "beanList1";
+	}
 
 	public String findPageBean2() {
 		ActionContext.getContext().getApplication().clear();
@@ -429,6 +438,18 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 			visaSer.add(flows.get(i));
 		}
 		return "addMaxFlow";
+	}
+	
+	/**
+	 * 如果刪除流程中第一個，那麼就刪除整個流程
+	 * @return
+	 */
+	public String deleteFirst(){
+		List<KyzVisaflow>list=visaSer.findByFactNoVisaSort(factNo, visaSort);
+		for(int i=0;i<list.size();i++){
+			visaSer.delete2(list.get(i));
+		}
+		return "deleteFirst";
 	}
 
 }

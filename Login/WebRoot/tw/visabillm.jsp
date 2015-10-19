@@ -38,13 +38,14 @@
 <script>
    var jq=jQuery.noConflict();
 	function pages(page) {
-	
+	    var loadi=layer.load();
 		jq.ajax({
 			type : "POST",
 			dataType : "Html",
 			url : "vbm_findPageBean3_1",
 			data : "page=" + page,
 			success : function(msg) {
+			    layer.close(loadi);
 				jq("#bodyid").html(msg);
 			},
 			error : function(xhr) {

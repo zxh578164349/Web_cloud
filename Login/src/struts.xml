@@ -437,7 +437,8 @@
 		    <result name="addflow" type="redirectAction">visaflow_findPageBean</result>
 		    <result name="update" type="redirectAction">visaflow_findPageBean</result>
 		    <result name="findMaxItem">/saveAndUpdate/kyzVisaFlowSaveOrUpdate3.jsp</result>
-		    <result name="addMaxFlow" type="redirectAction">visaflow_findPageBean</result>		   
+		    <result name="addMaxFlow" type="redirectAction">visaflow_findPageBean</result>
+		    <result name="deleteFirst" type="redirectAction">visaflow_findPageBean_1</result>		   
 		</action>
 		<action name="vbm_*" class="visabillmAction" method="{1}">
 		  <result name="beanList">/page/visabillm_new.jsp</result>

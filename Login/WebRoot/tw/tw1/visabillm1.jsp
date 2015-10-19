@@ -62,7 +62,7 @@
 				<th>廠別</th>
 				<th>類別</th>
 				<th>單號</th>				
-				<th>創建日期</th>				
+				<!-- <th>創建日期</th> -->				
 				<th colspan="15">審核狀況</th>				
 			</tr>
 		</thead>
@@ -73,7 +73,7 @@
 				<td><s:property value="id.kyVisabillm.id.factNo" />
 				</td>
 				<td>							
-				<s:if test='id.kyVisabillm.id.visaSort=="F"'> 廠務簽核</s:if>				 				
+				<!-- <s:if test='id.kyVisabillm.id.visaSort=="F"'> 廠務簽核</s:if>				 				
 				<s:if test='id.kyVisabillm.id.visaSort=="W"'>臺灣簽核</s:if>								
 				<s:if test='id.kyVisabillm.id.visaSort=="G"'>工程簽核</s:if>				  				
 				<s:if test='id.kyVisabillm.id.visaSort=="I"'>IKT簽核</s:if>									
@@ -91,12 +91,13 @@
 				<s:if test='id.kyVisabillm.id.visaSort.substring(0,2)=="C3"'>電腦耗材簽核1(<1000)</s:if>
 				<s:if test='id.kyVisabillm.id.visaSort.substring(0,2)=="C4"'>電腦耗材簽核2(>=1000)</s:if>
 				<s:if test='id.kyVisabillm.id.visaSort.substring(0,2)=="C5"'>總務費用簽核1(<1000)</s:if>
-				<s:if test='id.kyVisabillm.id.visaSort.substring(0,2)=="C6"'>總務費用簽核2(>=1000)</s:if>									  						
+				<s:if test='id.kyVisabillm.id.visaSort.substring(0,2)=="C6"'>總務費用簽核2(>=1000)</s:if> -->
+				<s:property value="id.kyVisabillm.colTemp"/>									  						
 				</td>
 				<td><s:property value="id.kyVisabillm.id.billNo"/>
-				</td>				
+				<!-- </td>				
 				<td><s:property value="%{formatDate(id.kyVisabillm.dateCreate)}" />
-				</td>
+				</td> -->
 				<td>											 					
 		 <s:iterator value="id.kyVisabillm.kyVisabillses">
 	       
@@ -109,21 +110,21 @@
 	              '<s:property value='id.kyVisabillm.id.billNo'/>','<s:property value='id.itemNo'/>')">       
 	                                     未審核<s:property value="id.itemNo"/>(當前審核人)
 	              </a> --%>
-	              <a style="color:red"><s:property value="visaRank"/>(當前審核人)</a>&nbsp;|&nbsp;
+	              <a style="color:red"><s:property value="visaRank"/>(當前審核人)</a>&nbsp;||&nbsp;
 	           </s:if>	
 	            <s:else>
-	             <a disabled style="color:grey"><s:property value="visaRank"/>(未審核)</a>&nbsp;|&nbsp;
+	             <a disabled style="color:grey"><s:property value="visaRank"/>(未審核)</a>&nbsp;||&nbsp;
 	           </s:else>             
 	         </s:if>
 	          <s:else>
-	             <a disabled style="color:grey"><s:property value="visaRank"/>(未審核)</a>&nbsp;|&nbsp;
+	             <a disabled style="color:grey"><s:property value="visaRank"/>(未審核)</a>&nbsp;||&nbsp;
 	           </s:else> 	        	       
 	       </s:if>
 	       <s:if test='visaMk=="Y"'>	       
-	        <a style="color:green"><s:property value="visaRank"/>(已審核)</a>&nbsp;|&nbsp;
+	        <a style="color:green"><s:property value="visaRank"/>(已審核)<s:property value="dateVisa"/></a>&nbsp;||&nbsp;
 	       </s:if>
 	       <s:if test='visaMk=="T"'>
-	         <a style="color:blue"><s:property value="visaRank"/>(未通過)</a>&nbsp;|&nbsp;
+	         <a style="color:blue"><s:property value="visaRank"/>(未通過)<s:property value="dateVisa"/></a>&nbsp;||&nbsp;
 	       </s:if>
 	       </s:if>
 	       <s:else>

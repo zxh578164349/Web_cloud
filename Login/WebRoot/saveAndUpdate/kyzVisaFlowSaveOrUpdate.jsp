@@ -27,6 +27,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 <script type="text/javascript" src="jquery/DatePicker/my_WdatePicker.js"></script>
 <script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script>
 <script type="text/javascript" src="jquery/Validform_v5.3.2_min.js"></script>
+<script type="text/javascript" src="page/jquerys/layer/layer.min.js"></script>
 <script type="text/javascript">
 	$(function() {
 		var jj = jQuery.noConflict();
@@ -38,7 +39,12 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 			datatype : {
 				"*0-6" : /^\d{0,9}(\.[0-9]{1,3})?$/,
 				"my0-8": /^\d{0,8}(\.[0-9]{1,4})?$/
-			}
+			},
+			beforeSubmit:function(form){
+		       //在验证成功后，表单提交前执行的函数，curform参数是当前表单对象。
+		       //这里明确return false的话表单将不会提交;
+		       layer.load("正在提交,請稍等...");	
+	        }
 		});
 		demo.tipmsg.w["*0-6"] = "只能數字且不超過9位數,可保留三位以內小數";
 		demo.tipmsg.w["my0-8"]="只能數字且不超過8位數,可保留四位以內小數";
@@ -259,11 +265,20 @@ var j=0;
                  document.getElementById("addbtn").style.color="white";
                }
           });
-          }else{//如果是C类别,也就是C1,C2,C3....,就限定同类中，第一个申请人只能申请一个流程（因为在申请函文选择类别时，是要根据第一人，也就是申请人来选择流程的代号）             
+          }else{//如果是C类别,也就是C1,C2,C3....,就限定同类中，第一个申请人只能申请一个流程（因为在申请函文选择类别时，是要根据第一人，也就是申请人来选择流程的代号）
+                /************************爲了避免由於上麪的操作鎖定，所以在選擇C類時，要重新解鎖***********************/
+                 document.getElementById("error1").innerHTML='';
+                 document.getElementById("error2").innerHTML='';
+                 document.getElementById("sub").disabled=false;
+                 document.getElementById("addbtn").disabled=false;
+                 document.getElementById("sub").value="確定";
+                 document.getElementById("sub").style.color="white";
+                 document.getElementById("addbtn").style.color="white";
+                 /************************爲了避免由於上麪的操作鎖定，所以在選擇C類時，要重新解鎖***********************/             
                  if(visaSigner!=""){                 
                    kyzvisaflowjs.findVisaSort_dwr(factno,visasort,visaSigner,function(x){
                         if(x!=null){
-                           alert("廠別為("+factno+")類別為("+visasort_text+")的審核流程已存在!");
+                           alert("該Email("+visaSigner+")的審核流程已存在!");
                            document.getElementById("error1").innerHTML='<font color="red">！</font>';
                            document.getElementById("error2").innerHTML='<font color="red">！</font>';
                            document.getElementById("sub").disabled=true;

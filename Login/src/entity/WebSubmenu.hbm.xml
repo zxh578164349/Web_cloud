@@ -8,7 +8,10 @@
     <class name="entity.WebSubmenu" table="WEB_SUBMENU" schema="WEB">
         <id name="submenuid" type="java.lang.Integer">
             <column name="SUBMENUID" precision="8" scale="0" />
-            <generator class="increment" />
+            <!-- <generator class="increment" /> -->
+            <generator class="sequence">
+               <param name="sequence">seq_websubmenu</param>
+            </generator>
         </id>
         <many-to-one name="webJurisdiction" class="entity.WebJurisdiction" fetch="select" lazy="false">
             <column name="JURISDICTIONID" precision="8" scale="0" not-null="true" />

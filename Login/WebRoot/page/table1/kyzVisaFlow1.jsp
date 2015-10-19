@@ -94,8 +94,7 @@
 	<table id="tb" >
 		<caption >審核流程</caption>
 		<thead>			
-			<tr class="tr_show">
-			    <th>序號</th>
+			<tr class="tr_show">			    
 				<th>廠別</th>
 				<th>類別</th>
 				<th>姓名</th>
@@ -117,7 +116,7 @@
 			<s:else>
 			<tr style="background:yellow">
 			</s:else>	 
-				<td>${15*(bean.currentPage-1)+x.index+1}</td>
+				
 				<td><s:property value="id.factNo" /></td>
 				<td>
 				   <!-- <s:if test='id.visaSort=="W"'>臺灣簽核</s:if>
@@ -170,12 +169,19 @@
 						<input type="hidden" value="<s:property value='id.factNo'/>" name="factNo" /> 
 					    <input type="hidden" value="<s:property value='id.visaSort'/>" name="visaSort" />																				
 					</form>
+					<form action="visaflow_deleteFirst" method="post" id="4subform${x.index}"
+						style="float:left">
+						<input type="hidden" value="<s:property value='id.factNo'/>"
+							name="id.factNo" /> <input type="hidden" value="<s:property value='id.visaSort'/>" name="id.visaSort" />							
+							<input type="hidden" value="<s:property value='id.purmanNo'/>" name="id.purmanNo"/>
+							<input type="hidden" value="<s:property value='id.itemNo'/>" name="id.itemNo"/>						
+					</form>
 					
 					 <s:if test='id.itemNo!="01"'>
 					  <a href="javascript:void(0)" onclick="isDelete('2subform${x.index}')"><img alt="刪除" src="images/icon/minus002.png" title="刪除" ></a>				 					  
 					 </s:if>
 					 <s:else>
-					   <a disabled style="color:grey" ><img alt="刪除" src="images/icon/minus002_1.png" title="刪除" ></a>
+					   <a href="javascript:void(0)" onclick="isDelete2(<s:property value='id.factNo'/>,'${temp.id.visaSort}')"><img alt="刪除全部" src="images/icon/delete_all.png" title="刪除全部" ></a>
 					   <a href="javascript:document.getElementById('3subform${x.index}').submit()"><img alt="添加知會" src="images/icon/add001_2.png" title="添加知會"></a>
 					 </s:else>	
 					 

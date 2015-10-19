@@ -42,12 +42,14 @@
 <script>
     var jq=jQuery.noConflict();
 	function pages(page) {
+	    var loadi=layer.load(0);
 		jq.ajax({
 			type : "POST",
 			dataType : "Html",
 			url : "visaflow_findPageBean3",
 			data : "page=" + page,
 			success : function(msg) {
+			    layer.close(loadi);
 				jq("#bodyid").html(msg);
 			},
 			error : function(xhr) {
@@ -79,6 +81,28 @@
 			if (r == true) {
 				/* window.location.href = "backmat_delete?billNo=" + mid; */
 				document.getElementById(mid).submit();
+			}
+		});
+	}
+	
+	function isDelete2(factno,visasort) {
+		
+	jConfirm('刪除申請人,就會刪除整個流程,确定要刪除吗?', '确认对话框', function(r) {
+			if (r == true) {
+				var loadi = layer.load("正在處理,請稍等...");
+				jq.ajax({
+					type : "POST",
+					dataType : "Html",
+					url : "visaflow_deleteFirst",
+					data : "factNo=" + factno + "&visaSort=" + visasort,
+					success : function(msg) {
+						layer.close(loadi);
+						jq("#bodyid").html(msg);
+					},
+					error : function(xhr) {
+						alert(xhr.responseText);
+					}
+				}); 
 			}
 		});
 	}

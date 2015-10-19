@@ -58,8 +58,7 @@
 			<tr class="tr_show">
 				<th>廠別</th>
 					<th>類型代號</th>
-					<th>類型名稱</th>
-					<th>是否可用</th>														
+					<th>類型名稱</th>																			
 				<s:if test='#session.loginUser.userread!="1"'>
 				<th>操作</th>
 				</s:if>
@@ -71,14 +70,7 @@
 					<td><s:property value="id.factNo" /></td>
 					<td><s:property value="id.typeNo" /></td>
 					<td><s:property value="typeName"/></td>
-					<td>
-					  <s:if test='webtypeMk=="0"'>
-					      可用
-					  </s:if>
-					  <s:else>
-					   不可用
-					  </s:else>
-					</td>													
+																		
 					<s:if test='#session.loginUser.userread!="1"'>					
 					<td>
 						<a href="webtype_findById?factNo=${id.factNo}&typeNo=${id.typeNo}"><img alt="修改" src="images/icon/edit001.png" title="修改"></a>&nbsp;					

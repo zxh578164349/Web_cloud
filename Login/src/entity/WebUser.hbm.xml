@@ -8,7 +8,10 @@
     <class name="entity.WebUser" table="WEB_USER" schema="WEB" >
         <id name="id" type="java.lang.Integer">
             <column name="ID" precision="8" scale="0" />
-            <generator class="increment" />
+            <!-- <generator class="increment" /> -->
+            <generator class="sequence">
+               <param name="sequence">seq_webuser</param>
+            </generator>
         </id>
         <property name="username" type="java.lang.String">
             <column name="USERNAME" length="20" not-null="true" />

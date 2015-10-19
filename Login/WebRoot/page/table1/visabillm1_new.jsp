@@ -70,8 +70,10 @@
 				<th>最近審核狀態</th>
 				<th>當前審核狀態</th>
 				<th>重審狀態</th>				
-				<th>創建日期</th>				
-				<th>操作</th>				
+				<th>創建日期</th>
+				<s:if test='#session.loginUser.userread!="1"'>			
+				<th>操作</th>
+				</s:if>											
 			</tr>
 		</thead>
 		<tbody id="tbody">
@@ -103,7 +105,7 @@
 				</td>				
 				<td><s:property value="%{formatDate(id.kyVisabillm.dateCreate)}" />
 				</td>
-								
+				<s:if test='#session.loginUser.userread!="1"'>														
 			 	<td>
 			 	<ul>
 			 	    <li>
@@ -172,9 +174,11 @@
 					<li>
 					 <a href="javascript:document.getElementById('1form${x.index}').submit()"><img alt="加簽" src="images/icon/add24.png" title="加簽"><br>加簽</a>
 					</li>
+					 <s:if test='#session.loginUser.factno=="JW"'>
 					<li>
 					 <a href="javascript:document.getElementById('3form${x.index}').submit()"><img alt="減簽" src="images/icon/minus24.png" title="減簽"><br>減簽</a>					 
 					 </li>
+					 </s:if>
 					 <li>
 					   <a href="javascript:document.getElementById('3_3form${x.index}').submit()"><img alt="減簽(带删除)" src="images/icon/remove.png" title="減簽(带删除)"><br>減簽D</a>
 					 </li>
@@ -183,9 +187,11 @@
 					 <li>
 					   <a><img alt="加簽" src="images/icon/add24_1.jpg" title="加簽"><br>加簽</a>
 					 </li>
+					 <s:if test='#session.loginUser.factno=="JW"'>
 					 <li>
 					   <a><img alt="減簽" src="images/icon/minus24_1.jpg" title="減簽"><br>減簽</a>
 					 </li>
+					 </s:if>
 					 <li>
 					   <a><img alt="減簽(带删除)" src="images/icon/remove_1.png" title="減簽(带删除)"><br>減簽D</a>
 					 </li>    
@@ -209,6 +215,7 @@
 				     </s:else>
 				</ul>
 				</td> 
+				</s:if>	
 			</tr>		 		  
 		</s:iterator>
 		</tbody>

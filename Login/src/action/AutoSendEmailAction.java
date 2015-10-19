@@ -92,8 +92,9 @@ public class AutoSendEmailAction {
 			int len = mailArray.length;
 			InternetAddress address[] = new InternetAddress[len];
 			for (int i = 0; i < mailArray.length; i++) {
-				address[i] = new InternetAddress(
-						MimeUtility.encodeText(mailArray[i]));
+				/*address[i] = new InternetAddress(
+						MimeUtility.encodeText(mailArray[i]));*/		
+				address[i]=new InternetAddress(mailArray[i]);
 			}
 			if (cc != null) {
 				int ccLen = cc.length;

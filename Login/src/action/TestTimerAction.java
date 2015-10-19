@@ -313,11 +313,9 @@ public class TestTimerAction extends QuartzJobBean {
 				for (int i = 0; i < email.size(); i++) {
 					if (email.get(i).getName() != null
 							|| !email.get(i).getName().equals("")) {
-						mail[i] = MimeUtility.encodeText(email.get(i)
-								.getName())
-								+ "<"
-								+ email.get(i).getEmail()
-								+ ">";
+						//mail[i] = MimeUtility.encodeText(email.get(i).getName())+ "<"+ email.get(i).getEmail()+ ">";
+						//解決收件人中文亂碼的問題，因爲因爲數據是utf-8編碼
+						mail[i] = MimeUtility.encodeText(email.get(i).getName(),"utf-8","Q")+ "<"+ email.get(i).getEmail()+ ">";
 					} else {
 						mail[i] = email.get(i).getEmail();
 					}
@@ -328,8 +326,9 @@ public class TestTimerAction extends QuartzJobBean {
 				for (int j = 0; j < Cc.size(); j++) {
 					if (Cc.get(j).getName() != null
 							|| !Cc.get(j).getName().equals("")) {
-						cc[j] = MimeUtility.encodeText(Cc.get(j).getName())
-								+ "<" + Cc.get(j).getEmail() + ">";
+						//cc[j] = MimeUtility.encodeText(Cc.get(j).getName())+ "<" + Cc.get(j).getEmail() + ">";
+						//解決收件人中文亂碼的問題，因爲因爲數據是utf-8編碼
+						cc[j] = MimeUtility.encodeText(Cc.get(j).getName(),"utf-8","Q")+ "<" + Cc.get(j).getEmail() + ">";		
 					} else {
 						cc[j] = Cc.get(j).getName() + Cc.get(j).getEmail();
 					}
@@ -424,11 +423,9 @@ public class TestTimerAction extends QuartzJobBean {
 				for (int i = 0; i < email.size(); i++) {
 					if (email.get(i).getName() != null
 							|| !email.get(i).getName().equals("")) {
-						mail[i] = MimeUtility.encodeText(email.get(i)
-								.getName())
-								+ "<"
-								+ email.get(i).getEmail()
-								+ ">";
+						//mail[i] = MimeUtility.encodeText(email.get(i).getName())+ "<"+ email.get(i).getEmail()+ ">";
+						//解決收件人中文亂碼的問題，數據庫是以utf-8編碼
+						mail[i] = MimeUtility.encodeText(email.get(i).getName(),"utf-8","Q")+ "<"+ email.get(i).getEmail()+ ">";
 					} else {
 						mail[i] = email.get(i).getEmail();
 					}
@@ -439,8 +436,10 @@ public class TestTimerAction extends QuartzJobBean {
 				for (int j = 0; j < Cc.size(); j++) {
 					if (Cc.get(j).getName() != null
 							|| !Cc.get(j).getName().equals("")) {
-						cc[j] = MimeUtility.encodeText(Cc.get(j).getName())
-								+ "<" + Cc.get(j).getEmail() + ">";
+						//cc[j] = MimeUtility.encodeText(Cc.get(j).getName())+ "<" + Cc.get(j).getEmail() + ">";
+						//解決收件人中文亂碼的問題，數據庫是以utf-8編碼
+						cc[j] = MimeUtility.encodeText(Cc.get(j).getName(),"utf-8","Q")+ "<" + Cc.get(j).getEmail() + ">";
+								
 					} else {
 						cc[j] = Cc.get(j).getName() + Cc.get(j).getEmail();
 					}

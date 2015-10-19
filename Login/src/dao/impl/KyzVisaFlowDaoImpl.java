@@ -146,5 +146,10 @@ public class KyzVisaFlowDaoImpl extends Basedao implements IKyzVisaFlowDao {
 		return flow;
 	}
 
+	public void delete2(KyzVisaflow flow) {
+		// TODO Auto-generated method stub
+		super.delete(flow);
+	}
+
 
 }
