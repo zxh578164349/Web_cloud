@@ -80,7 +80,7 @@ public class WebTypeAction extends ActionSupport{
 			factNo=(String)ActionContext.getContext().getSession().get("factNo");
 		}
 		bean=webtypeSer.findPageBean(page, 25, factNo);
-		return "beanList";
+		return "beanList1";
 	}
 	public String delete(){
 		webtypeSer.delete(factNo, typeNo);

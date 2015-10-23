@@ -244,7 +244,7 @@ window.onload=function(){
 	</script>
 </head>
 <body>
-	<table class="altrowstable" id="alternatecolor" align="center">
+	<table>
 		<caption>
 			<h1>函文審核</h1>
 		</caption>
@@ -350,7 +350,7 @@ window.onload=function(){
 											<!-- 1.判斷未審和已審狀態 -->
 											<s:if test='id.itemNo==vbm.itemNext'>
 												<!--2.判斷當前審核人的項次是否為下一位審核人 的項次 -->
-												<s:if test="visaSigner==email">
+												<s:if test="%{strToLow(visaSigner)==strToLow(email)}">
 													<!-- 3.判斷登錄者是否為當前審核人 -->
 													<s:if test='vbm.id.billNo.substring(0,2)=="EM"'>
 														<!--<a style="color:red"
@@ -402,7 +402,7 @@ window.onload=function(){
 											<!-- 1.判斷未審和已審狀態 -->
 											<s:if test='id.itemNo==vbm.itemNext'>
 												<!--2.判斷當前審核人的項次是否為下一位審核人 的項次 -->
-												<s:if test="visaSigner==email">
+												<s:if test="%{strToLow(visaSigner)==strToLow(email)}">
 													<!-- 3.判斷登錄者是否為當前審核人 -->
 													<s:if test='vbm.id.billNo.substring(0,2)=="EM"'>
 														<!--<a style="color:red"

@@ -277,7 +277,7 @@ function getKyType2(factno){
   
   function checkType(type){
      dwrFactNo=document.getElementById("dwrFactNo").value;
-     dwremail=document.getElementById("dwr_email").value;
+     dwremail=document.getElementById("dwr_email").value.toLowerCase(); //登錄人的email要轉化爲小寫,因爲申請人email已全部轉化爲小寫（20151022）
      dwr_username=document.getElementById("dwr_username").value;   
      if(dwrFactNo!=""&&type!=""){
          kyzvisaflowjs.findByType_Dwr(dwrFactNo,type,function(x){
@@ -404,9 +404,6 @@ table.gridtable td.tdcolor {
 	 
 }
 
-
-
-
 </style>
 
 </head>
@@ -419,8 +416,7 @@ table.gridtable td.tdcolor {
     <s:else>
        <form action="kyz_add" method="post" id="form" enctype="multipart/form-data">
     </s:else>
-    <div style="overflow-y:auto;height:700px;width:100%">
-
+    <div style="overflow:scroll;height:700px;width:100%">
 		<table class="gridtable" id="table1" style="width:850px" >
 		    <caption >函文申請</caption>		    	
 			<tbody id="tb_list_info2">

@@ -448,7 +448,8 @@
 		  <result name="findById3">/page/kyvisabills_see.jsp</result>
 		  <result name="findById4">page/kyvisabills_minus.jsp</result><!-- 減簽 -->
 		  <result name="findById5">page/kyvisabills_minus2.jsp</result><!-- 減簽(帶刪除) -->
-		  <result name="findById_email">/page/kyvisabills_email.jsp</result><!-- email直接審核,不需要登錄帳號 -->
+		  <result name="findById_email">/page/kyvisabills_email.jsp</result><!-- email直接審核,不需要登錄帳號（手機平板） -->
+		  <result name="findById_email2">/page/kyvisabills_email2.jsp</result><!-- email直接審核,不需要登錄帳號（普通電腦 ） -->
 		  <result name="add">page/checkpass/remark.jsp</result><!-- 函文是否通過 -->
 		  <result name="success">/success.html</result>
 		  <result name="remark" type="redirectAction">vbm_findPageBean</result><!-- 備註 -->

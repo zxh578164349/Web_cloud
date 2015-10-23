@@ -275,6 +275,8 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 					 */
 					String emailUrl_in="http://203.85.73.161/Login/vbm_findById_email?visaSort="+kyzletter.getVisaType()+"& billNo="+kyzletter.getId().getBillNo()
 					         +"& factNo="+kyzletter.getId().getFactNo()+"& email="+vbm.getSignerNext();	
+					String emailUrl_in2="http://203.85.73.161/Login/vbm_findById_email2?visaSort="+kyzletter.getVisaType()+"& billNo="+kyzletter.getId().getBillNo()
+					         +"& factNo="+kyzletter.getId().getFactNo()+"& email="+vbm.getSignerNext();
 					String singernext=vbm.getSignerNext();
 					String vbm_billno=vbm.getId().getBillNo();
 					String vbm_factno=vbm.getId().getFactNo();
@@ -286,7 +288,8 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 					mailinfo.setToAddress(singernext);
 					mailinfo.setSubject("新函文初次審核"+vbm_billno+"("+vbm_factno+")");
 					mailinfo.setContent("單號:<span style='color:red'>"+vbm_billno+"</span>"+"&nbsp;&nbsp;廠別:"+vbm_factno+								
-							"<br/>點擊單號直接審核:<a href='"+emailUrl_in+"'>"+vbm_billno+"</a>"+							
+							"<br/>點擊單號直接審核:<a href='"+emailUrl_in2+"'>"+vbm_billno+"</a>(電腦適用)"+
+							"<br/>點擊單號直接審核:<a href='"+emailUrl_in+"'>"+vbm_billno+"</a>(手機平板適用)"+
 							"<hr/>"+
 							"如需查詢以往單據請登陸:(云端)<a href='http://203.85.73.161/Login'>http://203.85.73.161/Login</a>" +							
 							"<br/>進入[KPI數據]--[函文審核]查找對應單號審核" +									
@@ -327,7 +330,8 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 							mailinfo3.setToAddress(emailPwd);
 							mailinfo3.setSubject("新函文初次審核"+vbm_billno+"("+vbm_factno+")");
 							mailinfo3.setContent("單號:<span style='color:red'>"+vbm_billno+"</span>"+"&nbsp;&nbsp;廠別:"+vbm_factno+								
-									"<br/>點擊單號直接審核:<a href='"+emailUrl_in+"'>"+vbm_billno+"</a>"+									
+									"<br/>點擊單號直接審核:<a href='"+emailUrl_in2+"'>"+vbm_billno+"</a>(電腦適用)"+
+									"<br/>點擊單號直接審核:<a href='"+emailUrl_in+"'>"+vbm_billno+"</a>(手機平板適用)"+
 									"<hr/>"+
 									"如需查詢以往單據請登陸:(云端)<a href='http://203.85.73.161/Login'>http://203.85.73.161/Login</a>" +									
 									"<br/>進入[KPI數據]--[函文審核]查找對應單號審核" +									

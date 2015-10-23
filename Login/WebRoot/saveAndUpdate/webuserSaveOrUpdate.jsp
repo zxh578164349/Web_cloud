@@ -164,12 +164,7 @@ window.onload=function(){
 						<input type="hidden" name="webUsers.available" value="0"/>
 						</td>					
 			</tr>
-			<tr>
-			    <td class="td_show_title">备签人Email</td>
-			    <td class="td_input"><input type="text" name="webUsers.emailpassword"
-					datatype="e" value=""  id="emailpwd"/>					
-					</td>
-			</tr>			
+						
 		</table>
 		<center>
 			<input type="submit" id="sub" value="確定" onmouseover="this.style.backgroundPosition='left -40px'" onmouseout="this.style.backgroundPosition='left top'"/>&nbsp;&nbsp;&nbsp; <input

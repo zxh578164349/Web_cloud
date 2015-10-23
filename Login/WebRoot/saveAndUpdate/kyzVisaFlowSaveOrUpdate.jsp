@@ -399,7 +399,15 @@ function clickOne(){
       document.getElementById("per2").value=j;
    }
    alert("当前为知会人员"+document.getElementById("per2").value);
-}	
+}
+
+/**申請人的Email自動轉化爲小寫***/
+function getLow(obj){
+  obj.value=obj.value.toLowerCase();
+}
+
+
+
 </script>
 <script type='text/javascript' src='/Login/dwr/interface/kyzjs.js'></script>
 <script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>
@@ -508,7 +516,7 @@ input[type="text"],select{
 			     </div>
 			     </td>			     			     
 			     <td >			     
-			     <input type="text" name="flows[0].visaSigner" value=""  datatype="e" id="skeys0" onkeyup="getEmail(0);" onblur="checkSame()" />
+			     <input type="text" name="flows[0].visaSigner" value=""  datatype="e" id="skeys0" onkeyup="getEmail(0);" onblur="getLow(this),checkSame()" />
 			     <div style="position:relative"  >			     
 			     <div id="emaildwr0" style="z-index:100;position:absolute;background:yellow;top:0px;left:0px;width:180px;display:none" ></div>			     
 			     </div>

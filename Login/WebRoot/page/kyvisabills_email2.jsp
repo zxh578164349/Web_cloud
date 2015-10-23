@@ -215,7 +215,7 @@ window.onload=function(){
 	       <s:if test='flowMk=="Y"'>
 	       <s:if test='visaMk=="N"'><!-- 1.判斷未審和已審狀態 -->
 	         <s:if test='id.itemNo==vbm.itemNext'><!--2.判斷當前審核人的項次是否為下一位審核人 的項次 -->	           
-	           <s:if test='%{strToLow(visaSigner)==strToLow(#session.loginUser.email)}'><!-- 3.判斷登錄者是否為當前審核人 -->
+	           <s:if test="%{strToLow(visaSigner)==strToLow(email)}"><!-- 3.判斷登錄者是否為當前審核人 -->
 	              <s:if test='vbm.id.billNo.substring(0,2)=="EM"'>
 	              <a style="color:red" href="javascript:check('<s:property value='id.kyVisabillm.id.factNo'/>','<s:property value='id.kyVisabillm.id.visaSort'/>',
 	              '<s:property value='id.kyVisabillm.id.billNo'/>','<s:property value='id.itemNo'/>')">       
@@ -250,10 +250,7 @@ window.onload=function(){
 	       </s:else>
 	       </td>
 	      </s:iterator>
-		</tr>
-		<tr><td colspan="<s:property value='vbm.kyVisabillses.size()+1'/>">	
-		<a href="vbm_findPageBean">返回</a>
-		</td></tr>
+		</tr>		
 	</table>
  </div>	
 </div>	

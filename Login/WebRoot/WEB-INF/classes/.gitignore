@@ -1,4 +1,8 @@
 /entity
+/spring-action.xml
+/spring-dao.xml
+/spring-quartz.xml
+/spring-services.xml
 /action
 /dao
 /email

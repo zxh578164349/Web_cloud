@@ -121,20 +121,10 @@ public class Basedao extends HibernateDaoSupport {
 		return (Basedao) ctx.getBean("WebJurisdictionDAO");
 	}
 
-	/** */
-	/**
-	 * 
-	 * @param hql
-	 *            嚙賭漸�哨蕭���蕭
-	 * @param offset
-	 *            �蕭嚙賡���蕭
-	 * @param length
-	 *            �蕭瘣鳴蕭鈭亦嚙踐�豰���蕭
-	 * @return
-	 */
+
 	public List queryForPage(final String hql, final int offset,
 			final int length, final Map<String, Object> map) {
-		List list = getHibernateTemplate().executeFind(new HibernateCallback() {
+		    List list = getHibernateTemplate().executeFind(new HibernateCallback() {
 			public Object doInHibernate(Session session)
 					throws HibernateException, SQLException {
 				Query query = session.createQuery(hql);
@@ -152,14 +142,9 @@ public class Basedao extends HibernateDaoSupport {
 		return list;
 	}
 
-	/** */
-	/**
-	 * 嚙賭漸�哨蕭嚙踝蕭�嚙踝蕭嚙� *
-	 * 
-	 * @return 嚙賡���
-	 */
+	
 	public int getAllRowCount(final String hql, final Map<String, Object> map) {
-		List list = getHibernateTemplate().executeFind(new HibernateCallback() {
+		    List list = getHibernateTemplate().executeFind(new HibernateCallback() {
 			public Object doInHibernate(Session session)
 					throws HibernateException, SQLException {
 				Query query = session.createQuery(hql);
@@ -174,9 +159,21 @@ public class Basedao extends HibernateDaoSupport {
 		});
 		return list.size();
 	}
+	public Integer getAllRowCount2(final String hql, final Map<String, Object> map) {	    		
+			Query query =getSession().createQuery(hql);
+			if (map != null && !map.isEmpty()) {
+				for (String key : map.keySet()) {
+					query.setParameter(key, map.get(key));
+				}
+			}
+			String result =(String)query.uniqueResult().toString();
+			return Integer.valueOf(result);
+}
+	
+
 
 	public List getAllWithNoPage(final String hql, final Map<String, Object> map) {
-		List list = getHibernateTemplate().executeFind(new HibernateCallback() {
+		    List list = getHibernateTemplate().executeFind(new HibernateCallback() {
 			public Object doInHibernate(Session session)
 					throws HibernateException, SQLException {
 				Query query = session.createQuery(hql);

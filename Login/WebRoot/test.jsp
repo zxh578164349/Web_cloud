@@ -34,7 +34,8 @@
 #mydiv {
 	width: 100%;
 	height: 100%;
-	position: absolute;
+	/* position: absolute; */
+	position:fixed;
 	filter: alpha(opacity = 50);
 	background: transparent;
 	background: rgba(0, 0, 0, 0.5) none repeat scroll 0 0 !important;
@@ -47,6 +48,8 @@
 	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#7F000000,
 		endColorstr=#7F000000 );
 	zoom: 1;
+	
+	
 }
 
 #mydiv p {
@@ -58,6 +61,34 @@
 }
 
 </style>
+
+
+	<!-- 低于IE10就會覆蓋上面的#mydiv樣式，而使用以下的#mydiv樣式 --> 
+	<!--[if lt IE 10]>
+	<style type="text/css">   	 			
+	#mydiv {
+	width: 120%;
+	height: 120%;
+	 position: absolute; 
+	filter: alpha(opacity = 50);
+	background: transparent;
+	background: rgba(0, 0, 0, 0.5) none repeat scroll 0 0 !important;
+	opacity: 0.5;
+	-moz-opacity: 0.5;
+	-khtml-opacity: 0.5;
+	display: none;
+	left: 0px;
+	top:-100px expression(eval(document.body.scrollTop + 50));
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#7F000000,
+		endColorstr=#7F000000 );
+	zoom: 1;		
+}
+	</style>  
+	<![endif]-->  
+
+
+
+
 <body style="MARGIN: 0px" scroll=auto
 	onResize=javascript:parent.carnoc.location.reload()>
  	<TABLE style="BORDER-COLLAPSE:collapse" id="tab" cellSpacing=0
@@ -103,12 +134,12 @@
 			}
 		}
 		function showPop() {
-			document.getElementById("mydiv").style.display = 'block'			
+			 document.getElementById("mydiv").style.display = 'block'			
 			window.setTimeout(function() {
 				document.getElementById("mydiv").style.display = 'none';
-			}, 6000); 
+			}, 10000);  
 			
-			/* var loadi=layer.load(2);  */
+			 //var loadi=layer.load(6,1);  
 		}
 		
    var currentDate = new Date(<%=new java.util.Date().getTime()%>);   

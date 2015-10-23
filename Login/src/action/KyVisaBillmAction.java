@@ -631,10 +631,15 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 		vbm=visabillmSer.findById(factNo, visaSort, billNo);
 		return "findById4_tw";
 	}
-	public String findById_email(){//email直接審核，不需要登錄帳號
+	public String findById_email(){//email直接審核，不需要登錄帳號（手機平板）
 		vbm=visabillmSer.findById(factNo, visaSort, billNo);
 		ActionContext.getContext().getSession().put("Email", email);//用於判斷審核完後頁面的跳轉（在this.remark()方法最後字符串返回）
 		return "findById_email";
+	}
+	public String findById_email2(){//email直接審核，不需要登錄帳號（普通電腦）findById_email2
+		vbm=visabillmSer.findById(factNo, visaSort, billNo);
+		ActionContext.getContext().getSession().put("Email", email);//用於判斷審核完後頁面的跳轉（在this.remark()方法最後字符串返回）
+		return "findById_email2";
 	}
 	
 	/**
@@ -2037,11 +2042,14 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
       		  //****************通知下一位签核人***************/
       		 String emailUrl_in="http://203.85.73.161/Login/vbm_findById_email?visaSort="+visaSort+"& billNo="+billNo
 			         +"& factNo="+factNo+"& email="+bills.getVisaSigner();
+      		String emailUrl_in2="http://203.85.73.161/Login/vbm_findById_email2?visaSort="+visaSort+"& billNo="+billNo
+			         +"& factNo="+factNo+"& email="+bills.getVisaSigner();
       		 mailInfo_n.setToAddress(bills.getVisaSigner());
       		 mailInfo_n.setSubject("函文減簽(下一位審核)_"+billNo+"("+factNo+")");
       		 mailInfo_n.setContent(
      	    		"函文單號:"+"<span style='color:red'>"+billNo+"</span>"+"&nbsp;&nbsp;廠別:"+factNo+
-     	    		"<br/>點擊單號直接審核:<a href='"+emailUrl_in+"'>"+billNo+"</a>"+				
+     	    		"<br/>點擊單號直接審核:<a href='"+emailUrl_in2+"'>"+billNo+"</a>(電腦適用)"+
+     	    		"<br/>點擊單號直接審核:<a href='"+emailUrl_in+"'>"+billNo+"</a>(手機平板適用)"+
      	    		"<br/>如需查詢以往單據請登錄加久網站:((云端))<a href='http://203.85.73.161/Login'>http://203.85.73.161/Login</a>" +	            
      	      		"<br/>進入[KPI數據]--[函文審核]中查找對應單號審核,"+	      	    		
      	    		"<hr/>"+	      		
@@ -2151,11 +2159,14 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
       		  //****************通知下一位签核人***************/
       		 String emailUrl_in="http://203.85.73.161/Login/vbm_findById_email?visaSort="+visaSort+"& billNo="+billNo
 			         +"& factNo="+factNo+"& email="+bills.getVisaSigner();
+      		String emailUrl_in2="http://203.85.73.161/Login/vbm_findById_email?visaSort="+visaSort+"& billNo="+billNo
+			         +"& factNo="+factNo+"& email="+bills.getVisaSigner();
       		 mailInfo_n.setToAddress(bills.getVisaSigner());
       		 mailInfo_n.setSubject("函文減簽(下一位審核)_"+billNo+"("+factNo+")");
       		 mailInfo_n.setContent(
      	    		"函文單號:"+"<span style='color:red'>"+billNo+"</span>"+"&nbsp;&nbsp;廠別:"+factNo+
-     	    		"<br/>點擊單號直接審核:<a href='"+emailUrl_in+"'>"+billNo+"</a>"+				
+     	    		"<br/>點擊單號直接審核:<a href='"+emailUrl_in2+"'>"+billNo+"</a>(電腦適用)"+
+     	    		"<br/>點擊單號直接審核:<a href='"+emailUrl_in+"'>"+billNo+"</a>(手機平板適用)"+
      	    		"<br/>如需查詢以往單據請登錄加久網站:((云端))<a href='http://203.85.73.161/Login'>http://203.85.73.161/Login</a>" +	            
      	      		"<br/>進入[KPI數據]--[函文審核]中查找對應單號審核,"+	      	    		
      	    		"<hr/>"+	      		
@@ -2222,6 +2233,11 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
   			}
 		}
 		return "minusvisabills3";
+	}
+	
+	
+	public String strToLow(String str){
+		return str.toLowerCase();
 	}
     
 

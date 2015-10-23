@@ -434,6 +434,8 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 							KyVisabillm vbm=visabillmSer.findById(kyz.getId().getFactNo(), kyz.getVisaType(), kyz.getId().getBillNo());							
 							String emailUrl_in="http://203.85.73.161/Login/vbm_findById_email?visaSort="+kyz.getVisaType()+"& billNo="+kyz.getId().getBillNo()
 							         +"& factNo="+kyz.getId().getFactNo()+"& email="+vbm.getSignerNext();
+							String emailUrl_in2="http://203.85.73.161/Login/vbm_findById_email2?visaSort="+kyz.getVisaType()+"& billNo="+kyz.getId().getBillNo()
+							         +"& factNo="+kyz.getId().getFactNo()+"& email="+vbm.getSignerNext();							
 							/**
 							 * 發送郵件
 							 */														
@@ -447,8 +449,9 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 							mailinfo.setFromAddress("<kyuen@yydg.com.cn>");*/
 							mailinfo.setToAddress(singernext);
 							mailinfo.setSubject("新函文初次審核-"+vbm_billno+"("+vbm_factno+")");
-							mailinfo.setContent("單號:<span style='color:red'>"+vbm_billno+"</span>"+"&nbsp;&nbsp;廠別:"+vbm_factno+								
-									"<br/>點擊單號直接審核:<a href='"+emailUrl_in+"'>"+vbm_billno+"</a>"+									
+							mailinfo.setContent("單號:<span style='color:red'>"+vbm_billno+"</span>"+"&nbsp;&nbsp;廠別:"+vbm_factno+																	
+									"<br/>點擊單號直接審核:<a href='"+emailUrl_in2+"'>"+vbm_billno+"</a>(電腦適用)"+
+									"<br/>點擊單號直接審核:<a href='"+emailUrl_in+"'>"+vbm_billno+"</a>(手機平板適用)"+
 									"<hr/>"+
 									"如需查詢以往單據請登陸:(云端)<a href='http://203.85.73.161/Login'>http://203.85.73.161/Login</a>" +									
 									"<br/>進入[KPI數據]--[函文審核]查找對應單號審核" +									
@@ -491,6 +494,8 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 					KyVisabillm vbm=visabillmSer.findById(kyz.getId().getFactNo(), kyz.getVisaType(), kyz.getId().getBillNo());	
 					String emailUrl_in="http://203.85.73.161/Login/vbm_findById_email?visaSort="+kyz.getVisaType()+"& billNo="+kyz.getId().getBillNo()
 					         +"& factNo="+kyz.getId().getFactNo()+"& email="+vbm.getSignerNext();
+					String emailUrl_in2="http://203.85.73.161/Login/vbm_findById_email2?visaSort="+kyz.getVisaType()+"& billNo="+kyz.getId().getBillNo()
+					         +"& factNo="+kyz.getId().getFactNo()+"& email="+vbm.getSignerNext();
 					String singernext=vbm.getSignerNext();
 					String vbm_billno=vbm.getId().getBillNo();
 					String vbm_factno=vbm.getId().getFactNo();
@@ -502,7 +507,8 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 					mailinfo.setToAddress(singernext);
 					mailinfo.setSubject("新函文初次審核"+vbm_billno+"("+vbm_factno+")");
 					mailinfo.setContent("單號:<span style='color:red'>"+vbm_billno+"</span>"+"&nbsp;&nbsp;廠別:"+vbm_factno+
-							"<br/>點擊單號直接審核:<a href='"+emailUrl_in+"'>"+vbm_billno+"</a>"+							
+							"<br/>點擊單號直接審核:<a href='"+emailUrl_in2+"'>"+vbm_billno+"</a>(電腦適用)"+
+							"<br/>點擊單號直接審核:<a href='"+emailUrl_in+"'>"+vbm_billno+"</a>(手機平板適用)"+							
 							"<hr/>"+
 							"如需查詢以往單據請登陸:(云端)<a href='http://203.85.73.161/Login'>http://203.85.73.161/Login</a>" +							
 							"<br/>進入[KPI數據]--[函文審核]查找對應單號審核" +							
@@ -542,7 +548,8 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 				KyVisabillm vbm=visabillmSer.findById(kyz.getId().getFactNo(), kyz.getVisaType(), kyz.getId().getBillNo());	
 				String emailUrl_in="http://203.85.73.161/Login/vbm_findById_email?visaSort="+kyz.getVisaType()+"& billNo="+kyz.getId().getBillNo()
 				         +"& factNo="+kyz.getId().getFactNo()+"& email="+vbm.getSignerNext();
-				  
+				String emailUrl_in2="http://203.85.73.161/Login/vbm_findById_email2?visaSort="+kyz.getVisaType()+"& billNo="+kyz.getId().getBillNo()
+				         +"& factNo="+kyz.getId().getFactNo()+"& email="+vbm.getSignerNext();
 			      String emailPwd=webuseremailSer.findEmailPWD(kyz.getId().getFactNo(),vbm.getSignerNext());
 			      if(emailPwd!=null){
 			    	  MailSenderInfo mailInfo2 = new MailSenderInfo();    
@@ -555,7 +562,8 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 				      mailInfo2.setToAddress(emailPwd);    
 				      mailInfo2.setSubject("新函文初次審核"+vbm.getId().getBillNo()+"("+vbm.getId().getFactNo()+")");    
 				      mailInfo2.setContent("函文單號:"+"<span style='color:red'>"+vbm.getId().getBillNo()+"</span>"+"&nbsp;&nbsp;廠別:"+vbm.getId().getFactNo()+
-				    		  "<br/>點擊單號直接審核:<a href='"+emailUrl_in+"'>"+vbm.getId().getBillNo()+"</a>"+						     
+				    		  "<br/>點擊單號直接審核:<a href='"+emailUrl_in2+"'>"+vbm.getId().getBillNo()+"</a>(電腦適用)"+
+				    		  "<br/>點擊單號直接審核:<a href='"+emailUrl_in+"'>"+vbm.getId().getBillNo()+"</a>(手機平板適用)"+			    		  	
 						      "<hr/>"+
 				    		 result+"如需查詢以往單據請登錄加久網站:(云端)<a href='http://203.85.73.161/Login'>http://203.85.73.161/Login</a>" +			      		
 				      		"<br/>進入[KPI數據]--[函文審核]中查找對應單號審核,"+	      		    		
