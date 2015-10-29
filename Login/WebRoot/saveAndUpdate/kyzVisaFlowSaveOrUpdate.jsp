@@ -245,7 +245,7 @@ var j=0;
        var visasort_text=visasort_obj.options[visasort_index].text;
        if(factno!=""&&visasort!=""){
           if(first_visasort!='C'){
-             kyzvisaflowjs.findByFactNoVisaSort(factno,visasort,function(x){
+             /* kyzvisaflowjs.findByFactNoVisaSort(factno,visasort,function(x){
                if(x.length>0){
                  alert("廠別為("+factno+")類別為("+visasort_text+")的審核流程已存在!");
                  document.getElementById("error1").innerHTML='<font color="red">！</font>';
@@ -264,7 +264,29 @@ var j=0;
                  document.getElementById("sub").style.color="white";
                  document.getElementById("addbtn").style.color="white";
                }
-          });
+          }); */
+           if(visaSigner!=""){                 
+                   kyzvisaflowjs.findVisaSort_dwr(factno,visasort,visaSigner,function(x){
+                        if(x!=null){
+                           alert("該Email("+visaSigner+")的審核流程已存在!");
+                           document.getElementById("error1").innerHTML='<font color="red">！</font>';
+                           document.getElementById("error2").innerHTML='<font color="red">！</font>';
+                           document.getElementById("sub").disabled=true;
+                           document.getElementById("addbtn").disabled=true;
+                           document.getElementById("sub").value="已鎖定";
+                           document.getElementById("sub").style.color="red";
+                           document.getElementById("addbtn").style.color="red";
+                        }else{
+                           document.getElementById("error1").innerHTML='';
+                           document.getElementById("error2").innerHTML='';
+                           document.getElementById("sub").disabled=false;
+                           document.getElementById("addbtn").disabled=false;
+                           document.getElementById("sub").value="確定";
+                           document.getElementById("sub").style.color="white";
+                           document.getElementById("addbtn").style.color="white";
+                        }
+                   });
+                 }
           }else{//如果是C类别,也就是C1,C2,C3....,就限定同类中，第一个申请人只能申请一个流程（因为在申请函文选择类别时，是要根据第一人，也就是申请人来选择流程的代号）
                 /************************爲了避免由於上麪的操作鎖定，所以在選擇C類時，要重新解鎖***********************/
                  document.getElementById("error1").innerHTML='';

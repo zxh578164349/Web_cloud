@@ -21,35 +21,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="IE=Edge">
 <style type="text/css">
-table.altrowstable {
-	font-family: verdana,arial,sans-serif;
-	font-size:14px;
-	color:#333333;
-	border-width: 1px;
-	border-color: #a9c6c9;
-	border-collapse: collapse;
-}
-table.altrowstable th {
-	border-width: 1px;
-	padding: 8px;
-	border-style: solid;
-	border-color: #a9c6c9;
-}
-table.altrowstable td {
-	border-width: 1px;
-	padding: 8px;
-	border-style: solid;
-	border-color: #a9c6c9;
-}
-table.altrowstable caption{
-    font-size:22px;
-}
-.oddrowcolor{
-	background-color:#d4e3e5;
-}
-.evenrowcolor{
-	background-color:#c3dde0;
-}
 
 
 </style>
@@ -64,32 +35,8 @@ table.altrowstable caption{
   <script src="http://apps.bdimg.com/libs/html5shiv/3.7/html5shiv.min.js"></script>
   <script src="http://apps.bdimg.com/libs/respond.js/1.4.2/respond.min.js"></script>
   <![endif]-->
-	<script type="text/javascript">
-    /*function showDiv(billNo,factNo){
-    $.layer({
-    type: 2,   //0-4的选择,
-    title: '函文內容',
-    //border: [0],
-    closeBtn: [1,true],
-    shade: [0],
-    //shade: [0.5, '#000'],
-    shadeClose: false,
-    border: [10, 0.3, '#000'],
-   // btns:1,
-    //fadeIn:300,
-    //shift:'top',
-    offset:['50px',''],
-    area: ['500px', '500px'],
-	zIndex:9999,
-    iframe:{
-      src:'kyz_findById_layer?billNo='+billNo+'& factNo='+factNo,
-      scrolling:'auto'	  
-    },
-    close:function(){
-		location.reload();
-	}	
-});
-    }*/
+<script type="text/javascript">
+$(function () { $("[data-toggle='popover']").popover(); });
 $(function(){
 		$("#myModal").on("hidden.bs.modal",function(){
 			$(this).removeData("bs.modal");
@@ -109,6 +56,7 @@ function showDiv2(billNo,factNo){
 /*全局變量*/
 var factNo_g,billNo_g,itemNo_g,visaSort_g;
 
+/*****************************20151027更新***********************************/
 function check(factNo,visaSort,billNo,itemNo){
 		 $("#myModalA").on("show.bs.modal",function(){
 			 $(".modal-body").load("kyz_findById_layer",{"billNo":billNo,"factNo":factNo,"visaSort":visaSort,"itemNo":itemNo});
@@ -127,101 +75,35 @@ function check2(factNo,visaSort,billNo,itemNo){
 		 itemNo_g=itemNo;
 		 visaSort_g=visaSort;
 }
-
+/*****************************20151027更新***********************************/
 
 function goYes(){
-	   window.location.href='vbm_add?billNo='+billNo_g+'& visa_mk=Y'+'& factNo='+factNo_g+'& itemNo='+itemNo_g+'& visaSort='+visaSort_g;
+	   //window.location.href='vbm_add?billNo='+billNo_g+'& visa_mk=Y'+'& factNo='+factNo_g+'& itemNo='+itemNo_g+'& visaSort='+visaSort_g;
+	 
+	  /* 修改5   20151025 */
+	  var memo_leg=document.getElementById("memo_txt").value;
+	  if(memo_leg.length>150){
+	     alert("備註不可超過150字");
+	  }else{
+	     document.getElementById("visa_mk").value="Y";
+	     document.getElementById("memo").submit();
+	  } 
+	  
+	  /* 修改5   20151025 */
 } 
 function goNo(){
-	   window.location.href='vbm_add?billNo='+billNo_g+'& visa_mk=T'+'& factNo='+factNo_g+'& itemNo='+itemNo_g+'& visaSort='+visaSort_g;
+	   //window.location.href='vbm_add?billNo='+billNo_g+'& visa_mk=T'+'& factNo='+factNo_g+'& itemNo='+itemNo_g+'& visaSort='+visaSort_g;
+	   /* 修改5   20151025 */
+	  var memo_leg=document.getElementById("memo_txt").value;
+	  if(memo_leg.length>150){
+	     alert("備註不可超過150字");
+	  }else{
+	     document.getElementById("visa_mk").value="T";
+	     document.getElementById("memo").submit();
+	  }
+	  /* 修改5   20151025 */
 }   
-  /*function showDiv2(billNo,factNo){
-    $.layer({
-    type: 2,   //0-4的选择,
-    title: '函文內容',
-    //border: [0],
-    closeBtn: [1,true],
-    shade: [0],
-    //shade: [0.5, '#000'],
-    shadeClose: false,
-    border: [10, 0.3, '#000'],
-   // btns:1,
-    //fadeIn:300,
-    //shift:'top',
-    offset:['10px',''],
-    area: ['600px', '560px'],
-    //page:{url:'kyzletter_findById_layer?billNo='+billNo+'& factNo='+factNo},
-    iframe:{src:'kyzletter_findById_layer?billNo='+billNo+'& factNo='+factNo,scrolling:'auto'},	
-    close:function(){
-		location.reload();
-	}	
-});
-    }
-
-	
-	
     
-    function check(factNo,visaSort,billNo,itemNo){
-    $.layer({
-    type: 2,   //0-4的选择,
-    title: '函文內容',
-    //border: [0],
-    border: [10, 0.3, '#000'],
-    closeBtn: [1,true],
-    shade: [0],
-    //shade: [0.5, '#000'],
-    shadeClose: false,
-     btns:2,
-     btn:['通過','不通過'],
-    //fadeIn:300,
-    //shift:'top',
-    offset:['10px',''],
-    area: ['800px', '560px'],
-    //page:{url:'kyz_findById_layer?billNo='+billNo+'& factNo='+factNo},
-	iframe:{src:'kyz_findById_layer?billNo='+billNo+'& factNo='+factNo,scrolling:'auto'},
-          
-     yes:function(){         
-      window.location.href='vbm_add?billNo='+billNo+'& visa_mk=Y'+'& factNo='+factNo+'& itemNo='+itemNo+'& visaSort='+visaSort;
-    },
-    no:function(){
-      window.location.href='vbm_add?billNo='+billNo+'& visa_mk=T'+'& factNo='+factNo+'& itemNo='+itemNo+'& visaSort='+visaSort;
-    },
-    close:function(){
-		location.reload();
-	}	
-});
-    }
- function check2(factNo,visaSort,billNo,itemNo){
-    $.layer({
-    type: 2,   //0-4的选择,
-    title: '函文內容',
-    //border: [0],
-    border: [10, 0.3, '#000'],
-    closeBtn: [1,true],
-    shade: [0],
-    //shade: [0.5, '#000'],
-    shadeClose: false,
-     btns:2,
-     btn:['通過','不通過'],
-    //fadeIn:300,
-    //shift:'top',
-    offset:['10px',''],
-    area: ['1000px', '560px'],
-    //page:{url:'kyzletter_findById_layer?billNo='+billNo+'& factNo='+factNo},
-    iframe:{src:'kyzletter_findById_layer?billNo='+billNo+'& factNo='+factNo,scrolling:'auto'},     
-    
-     yes:function(){         
-      window.location.href='vbm_add?billNo='+billNo+'& visa_mk=Y'+'& factNo='+factNo+'& itemNo='+itemNo+'& visaSort='+visaSort;
-    },
-    no:function(){
-      window.location.href='vbm_add?billNo='+billNo+'& visa_mk=T'+'& factNo='+factNo+'& itemNo='+itemNo+'& visaSort='+visaSort;
-    },
-    close:function(){
-		location.reload();
-	}	
-});
-    }
-*/    
 function altRows(id){
 	if(document.getElementsByTagName){  
 		
@@ -241,80 +123,15 @@ function altRows(id){
 window.onload=function(){
 	altRows('alternatecolor');
 }
-	</script>
+
+
+</script>
 </head>
 <body>
 	<table>
 		<caption>
 			<h1>函文審核</h1>
-		</caption>
-		<%-- <thead>
-		 <tr>
-		  <td>函文單號</td>
-		  <s:iterator value="vbm.kyVisabillses">
-		   <td><s:property value="visaRank"/></td>
-		  </s:iterator> 
-		 </tr>
-		</thead>
-		<tr>
-		  <td>
-		  <s:if test='vbm.id.billNo.substring(0,2)=="EM"'>
-		  <a href="javascript:showDiv('<s:property value='vbm.id.billNo'/>','<s:property value='vbm.id.factNo'/>')">
-		  <s:property value="vbm.id.billNo"/></a>
-		  
-		  </s:if>
-		  <s:else>
-		    <a href="javascript:showDiv2('<s:property value='vbm.id.billNo'/>','<s:property value='vbm.id.factNo'/>')">
-		  <s:property value="vbm.id.billNo"/></a>
-		  </s:else>
-		  </td> 
-		  <s:iterator value="vbm.kyVisabillses">
-	       <td>
-	       <!-- <s:property value="vbm.signerNext"/>(<s:property value="visaSigner"/>) -->
-	       <s:if test='flowMk=="Y"'>
-	       <s:if test='visaMk=="N"'><!-- 1.判斷未審和已審狀態 -->
-	         <s:if test='id.itemNo==vbm.itemNext'><!--2.判斷當前審核人的項次是否為下一位審核人 的項次 -->	           
-	           <s:if test="visaSigner==#session.loginUser.email"><!-- 3.判斷登錄者是否為當前審核人 -->
-	              <s:if test='vbm.id.billNo.substring(0,2)=="EM"'>
-	              <a style="color:red" href="javascript:check('<s:property value='id.kyVisabillm.id.factNo'/>','<s:property value='id.kyVisabillm.id.visaSort'/>',
-	              '<s:property value='id.kyVisabillm.id.billNo'/>','<s:property value='id.itemNo'/>')">       
-	                                     未審核<s:property value="id.itemNo"/>(當前審核人)
-	              </a>
-	              </s:if>
-	              <s:else>
-	                <a style="color:red" href="javascript:check2('<s:property value='id.kyVisabillm.id.factNo'/>','<s:property value='id.kyVisabillm.id.visaSort'/>',
-	              '<s:property value='id.kyVisabillm.id.billNo'/>','<s:property value='id.itemNo'/>')">       
-	                                     未審核<s:property value="id.itemNo"/>(當前審核人)
-	              </a>
-	              </s:else>
-	              
-	           </s:if>	
-	            <s:else>
-	             <a disabled style="color:grey">未審核</a>
-	           </s:else>             
-	         </s:if>
-	          <s:else>
-	             <a disabled style="color:grey">未審核</a>
-	           </s:else> 	        	       
-	       </s:if>
-	       <s:if test='visaMk=="Y"'>	       
-	        <a style="color:green">已審核</a>
-	       </s:if>
-	       <s:if test='visaMk=="T"'>
-	         <a style="color:blue">未通過</a>
-	       </s:if>
-	       </s:if>
-	       <s:else>
-	       <a style="color:#b45b3e">只知會</a>
-	       </s:else>
-	       </td>
-	      </s:iterator>
-		</tr>
-		<tr><td colspan="<s:property value='vbm.kyVisabillses.size()+1'/>">			
-		<a href="vbm_findPageBean">返回</a>
-		</td></tr> --%>
-		
-		
+		</caption>						
 		<tr>
 			<td><s:if test='vbm.id.billNo.substring(0,2)=="EM"'>
 					<!--<a
@@ -339,12 +156,13 @@ window.onload=function(){
 			<td>
 				<div class="container">
 					<div class="row">
-						<s:iterator value="vbm.kyVisabillses">
-							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-2"
+						<s:iterator value="vbm.kyVisabillses" status="x">
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4"
 								style="background-color: #dedef8; box-shadow: 
                           inset 1px -1px 1px #444, inset -1px 1px 1px #444;">
 								<p class="visible-xs visible-sm "
 									style="font-size:2em">
+									(${x.index+1}) 
 									<s:if test='flowMk=="Y"'>
 										<s:if test='visaMk=="N"'>
 											<!-- 1.判斷未審和已審狀態 -->
@@ -385,10 +203,12 @@ window.onload=function(){
 											</s:else>
 										</s:if>
 										<s:if test='visaMk=="Y"'>
-											<a style="color:green">已審核</a>
+											<a style="color:green"  data-toggle="popover" data-placement="top" title="備註" data-content="${memo}">
+											已審核<br/>(<s:property value="dateVisa"/>)</a>
 										</s:if>
 										<s:if test='visaMk=="T"'>
-											<a style="color:blue">未通過</a>
+											<a style="color:blue"  data-toggle="popover" data-placement="top" title="備註" data-content="${memo}">
+											未通過<br/>(<s:property value="dateVisa"/>)</a>
 										</s:if>
 									</s:if>
 									<s:else>
@@ -397,6 +217,7 @@ window.onload=function(){
 									(<s:property value="visaRank"/>)
 								</p>
 								<p class="visible-md visible-lg" style="font-size:1em">
+								(${x.index+1}) 
 									<s:if test='flowMk=="Y"'>
 										<s:if test='visaMk=="N"'>
 											<!-- 1.判斷未審和已審狀態 -->
@@ -413,7 +234,7 @@ window.onload=function(){
 															<a style="color:red"
 															href="#myModalA" data-toggle="modal" data-target="#myModalA" onclick="check('<s:property value='id.kyVisabillm.id.factNo'/>','<s:property value='id.kyVisabillm.id.visaSort'/>',
 	              '<s:property value='id.kyVisabillm.id.billNo'/>','<s:property value='id.itemNo'/>')">     
-															未審核<s:property value="id.itemNo" />(當前審核人) </a>
+															<s:property value="id.itemNo" />(當前審核人) </a>
 													</s:if>
 													<s:else>
 														<!--<a style="color:red"
@@ -424,7 +245,7 @@ window.onload=function(){
 															<a style="color:red"
 															href="#myModalA" data-toggle="modal" data-target="#myModalA" onclick="check2('<s:property value='id.kyVisabillm.id.factNo'/>','<s:property value='id.kyVisabillm.id.visaSort'/>',
 	              '<s:property value='id.kyVisabillm.id.billNo'/>','<s:property value='id.itemNo'/>')">     
-															未審核<s:property value="id.itemNo" />(當前審核人) </a>
+															<s:property value="id.itemNo" />(當前審核人) </a>
 													</s:else>
 
 												</s:if>
@@ -437,10 +258,12 @@ window.onload=function(){
 											</s:else>
 										</s:if>
 										<s:if test='visaMk=="Y"'>
-											<a style="color:green">已審核</a>
+											<a style="color:green"  data-toggle="popover" data-placement="top" title="備註" data-content="${memo}">
+											已審核(<s:property value="dateVisa"/>)</a>
 										</s:if>
 										<s:if test='visaMk=="T"'>
-											<a style="color:blue">未通過</a>
+											<a style="color:blue"  data-toggle="popover" data-placement="top" title="備註" data-content="${memo}">
+											未通過(<s:property value="dateVisa"/>)</a>
 										</s:if>
 									</s:if>
 									<s:else>
@@ -490,10 +313,25 @@ aria-labelledby="myModalLabelA" aria-hidden="true">
 				 <h4 class="modal-title" id="myModalLabelA">函文内容</h4>  
 			 </div>
 			 <div class="modal-body">
-			 
+			   		  			 
 			 </div>
 			 <div class="modal-footer">
-			     <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+			 
+			    <!--------------------------- 修改4 20151025 --------------------------------------->
+				<form action="vbm_add2" method="post" id="memo" role="form" />
+				<div class="form-group">
+					<label>備註</label>
+					<textarea class="form-control" rows="3" name="memo" id="memo_txt"></textarea>			             			          
+				</div>				
+				<input type="hidden" value="<s:property value='factNo'/>" name="factNo"/>
+				<input type="hidden" value="<s:property value='billNo'/>" name="billNo"/>
+				<input type="hidden" value="<s:property value='visaSort'/>" name="visaSort"/>
+				<input type="hidden" value="<s:property value='itemNo'/>" name="itemNo" />
+				<input type="hidden" name="visa_mk" id="visa_mk"/>					
+				</form> 
+				 <!--------------------------- 修改4 20151025 --------------------------------------->
+				 
+				<button type="button" class="btn btn-default" data-dismiss="modal">关闭
 				 </button>
 				 <a href="javascript:goYes()" 
 				 class="btn btn-primary">通過</a>

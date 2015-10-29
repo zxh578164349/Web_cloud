@@ -56,10 +56,8 @@ public class KyVisaBillsServicesImpl implements IKyVisaBillsServices{
 		int result=0;
 		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
 		String factNo=user.getFactno();
-		String userName=user.getName()==null?"null":user.getName();
-		if(!userName.contains("ºÞ²z­û")){
-			result=visabillDao.findKyVisaBills_Int(factNo, userName);
-		}
+		String email=user.getEmail()==null?"null":user.getEmail();		
+		result=visabillDao.findKyVisaBills_Int(factNo, email);		
 		return result;		
 	}
 	public int findBillsWithNo(String visaSort, String billNo) {

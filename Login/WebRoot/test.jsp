@@ -137,7 +137,7 @@
 			 document.getElementById("mydiv").style.display = 'block'			
 			window.setTimeout(function() {
 				document.getElementById("mydiv").style.display = 'none';
-			}, 10000);  
+			}, 5000);  
 			
 			 //var loadi=layer.load(6,1);  
 		}

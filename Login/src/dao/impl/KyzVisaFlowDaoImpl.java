@@ -28,7 +28,9 @@ public class KyzVisaFlowDaoImpl extends Basedao implements IKyzVisaFlowDao {
 		int allRow=0;
 		final Map<String, Object> map = new HashMap<String, Object>();
 		StringBuffer hql = new StringBuffer();
+		StringBuffer hql2=new StringBuffer();
 		hql.append("from KyzVisaflow where 1=1 ");
+		hql2.append("select count(id.factNo) ");
 		if (factNo != null && !factNo.equals("") && !factNo.equals("tw")&&!factNo.equals("nothing")) {
 			hql.append(" and id.factNo =:factno ");
 			map.put("factno", factNo);
@@ -42,6 +44,7 @@ public class KyzVisaFlowDaoImpl extends Basedao implements IKyzVisaFlowDao {
 			map.put("factno", factNo);
 		}
 		//hql.append(" and flowMk='Y'");
+		hql2.append(hql);
 		hql.append(" order by id.factNo, id.visaSort,id.itemNo");
 		int currentPage = PageBean.countCurrentPage(page);
 		
@@ -49,7 +52,7 @@ public class KyzVisaFlowDaoImpl extends Basedao implements IKyzVisaFlowDao {
 	    if(rows!=null&&rows!=0&&page>0){
 	     allRow=rows;	     
 	    }else{
-		 allRow= super.getAllRowCount(hql.toString(),map);
+		 allRow= super.getAllRowCount2(hql2.toString(),map);
 		 ActionContext.getContext().getSession().put("allRow", allRow);
 		}
 	    
@@ -125,7 +128,8 @@ public class KyzVisaFlowDaoImpl extends Basedao implements IKyzVisaFlowDao {
      */
 	public List<String> findVisaSort_C(String factNo,String mainSort) {
 		// TODO Auto-generated method stub
-		String hql="select distinct id.visaSort from KyzVisaflow where id.factNo=? and id.visaSort like ?  order by id.visaSort";
+		//String hql="select distinct id.visaSort from KyzVisaflow where id.factNo=? and id.visaSort like ?  order by id.visaSort";
+		String hql="select distinct id.visaSort from KyzVisaflow where id.factNo=? and id.visaSort like ?  order by length(id.visaSort),id.visaSort";
 		String[]objs={factNo,mainSort+"%"};
 		return super.findAll(hql, objs);
 	}

@@ -37,8 +37,10 @@ public class KpifactDaoImpl extends Basedao implements IKpifactDao{
 			String yyyy) {
 		// TODO Auto-generated method stub
 		StringBuffer hql=new StringBuffer();
+		StringBuffer hql2=new StringBuffer();
 		Map<String,Object>map=new HashMap<String,Object>();
 		hql.append("from Kpifact where 1=1");
+		hql2.append("select count(id.factNo) ");
 		if(factNo!=null&&!factNo.equals("")&&!factNo.equals("tw")&&!factNo.equals("nothing")){
 			hql.append(" and id.factNo=:factno");
 			map.put("factno", factNo);
@@ -51,13 +53,14 @@ public class KpifactDaoImpl extends Basedao implements IKpifactDao{
 			hql.append(" and id.factNo=:factno");
 			map.put("factno", factNo);
 		}
+		hql2.append(hql);
 		hql.append(" order by id.factNo,id.factCode,id.yyyy desc");
 		Integer rows=(Integer)ActionContext.getContext().get("allrows");
 		int allrows=0;
 		if(rows!=null&&page>1){
 			allrows=rows;
 		}else{
-			allrows=super.getAllRowCount(hql.toString(), map);
+			allrows=super.getAllRowCount2(hql2.toString(), map);
 			ActionContext.getContext().getSession().put("allrows", allrows);
 		}
 		int currentPage=PageBean.countCurrentPage(page);

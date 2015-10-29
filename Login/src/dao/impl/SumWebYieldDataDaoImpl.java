@@ -22,8 +22,10 @@ public class SumWebYieldDataDaoImpl extends Basedao implements ISumWebYieldDataD
 			String begin_yymm,String end_yymm) {
 		// TODO Auto-generated method stub
 		StringBuffer hql=new StringBuffer();
+		StringBuffer hql2=new StringBuffer();
 		Map<String,Object>map=new HashMap<String,Object>();
 		hql.append("from SumWebYieldData where 1=1");
+		hql2.append("select count(id.factNo) ");
 		if (factNo != null && !factNo.equals("") && !factNo.equals("tw")&&!factNo.equals("nothing")) {
 			hql.append(" and id.factNo =:factno ");
 			map.put("factno", factNo);
@@ -40,9 +42,10 @@ public class SumWebYieldDataDaoImpl extends Basedao implements ISumWebYieldDataD
 			hql.append(" and id.factNo=:factno");
 			map.put("factno", factNo);
 		}
+		hql2.append(hql);
 		hql.append(" order by id.factNo,id.factCode,id.yymm desc");
 		int currentPage = PageBean.countCurrentPage(page);
-		int allRow = super.getAllRowCount(hql.toString(), map);
+		int allRow = super.getAllRowCount2(hql2.toString(), map);
 		int totalPage = PageBean.countTotalPage(pageSize, allRow);
 		if (currentPage > totalPage) {
 			currentPage = totalPage;

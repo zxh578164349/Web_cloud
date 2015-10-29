@@ -181,7 +181,7 @@
 					  <a href="javascript:void(0)" onclick="isDelete('2subform${x.index}')"><img alt="刪除" src="images/icon/minus002.png" title="刪除" ></a>				 					  
 					 </s:if>
 					 <s:else>
-					   <a href="javascript:void(0)" onclick="isDelete2(<s:property value='id.factNo'/>,'${temp.id.visaSort}')"><img alt="刪除全部" src="images/icon/delete_all.png" title="刪除全部" ></a>
+					   <a href="javascript:void(0)" onclick="isDelete2('${temp.id.factNo}','${temp.id.visaSort}')"><img alt="刪除全部" src="images/icon/delete_all.png" title="刪除全部" ></a>
 					   <a href="javascript:document.getElementById('3subform${x.index}').submit()"><img alt="添加知會" src="images/icon/add001_2.png" title="添加知會"></a>
 					 </s:else>	
 					 

@@ -13,5 +13,6 @@ public interface IWebTypeServices {
 	public List<WebType>findByFactNo(String factNo);
 	
 	public String findTypeNameById(String factNo,String typeNo);
+	public List<WebType>findByFactNo2(String factNo);
 
 }

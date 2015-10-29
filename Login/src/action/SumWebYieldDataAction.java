@@ -262,7 +262,7 @@ public class SumWebYieldDataAction extends ActionSupport implements ServletRespo
 		begin_yymm=(String)ActionContext.getContext().getApplication().get("sumydate_begin_yymm");
 		end_yymm=(String)ActionContext.getContext().getApplication().get("sumydate_end_yymm");
 		if(factNo==null||factNo.equals("")){
-			factNo=(String)ActionContext.getContext().getApplication().get("factNo");
+			factNo=(String)ActionContext.getContext().getSession().get("factNo");
 		}
 		bean=sumydateSer.findPageBean(25, page, factNo, begin_yymm,end_yymm);
 		return "findPageBean1";

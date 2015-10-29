@@ -1,4 +1,4 @@
-#Tue Sep 29 14:46:22 CST 2015
+#Mon Oct 26 08:10:09 CST 2015
 eclipse.preferences.version=1
 encoding//WebRoot/500.html=UTF-8
 encoding//WebRoot/MyHtml.jsp=UTF-8
@@ -67,6 +67,7 @@ encoding//src/dao/impl/WebPfavgPriceDaoImpl.java=UTF-8
 encoding//src/dao/impl/WebProfitCountDaoImpl.java=UTF-8
 encoding//src/dao/impl/WebProfitDaoImpl.java=UTF-8
 encoding//src/dao/impl/WebSideDaoImpl.java=UTF-8
+encoding//src/dao/impl/WebUserDaoImpl.java=UTF-8
 encoding//src/dao/impl/WebYieldDataDaoImpl.java=UTF-8
 encoding//src/dao/impl/WebYielePredictionDaoImpl.java=UTF-8
 encoding//src/dao/impl/WebZwcashDaoImpl.java=UTF-8

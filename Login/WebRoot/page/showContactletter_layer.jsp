@@ -26,9 +26,6 @@
 <meta http-equiv="expires" content="0">
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
-<!-- <link href="css/validate.css" rel="stylesheet" type="text/css" />
-<link rel="stylesheet" type="text/css" href="css/form.css" /> -->
-
 
 <style type="text/css">
 table.gridtable {
@@ -39,7 +36,7 @@ table.gridtable {
 	border-style: solid;
 	border-color: #666666;
 	border-collapse: collapse;
-	width:800px;
+
 }
 
 table.gridtable th {
@@ -56,7 +53,7 @@ table.gridtable td {
 	border-style: solid;
 	border-color: #666666;
 	background-color: #ffffff;
-	width: 70px;
+	width:80px;
 }
 </style>
 <script type="text/javascript">
@@ -96,7 +93,7 @@ table.gridtable td {
 				</td>
 				<td>類別</td>
 				<td colspan="3">
-				<s:if test='kyzletter.visaType=="F"'>
+				<!-- <s:if test='kyzletter.visaType=="F"'>
 				  廠務簽核
 				</s:if>
 				<s:if test='kyzletter.visaType=="W"'>
@@ -152,7 +149,7 @@ table.gridtable td {
 				</s:if>
 				<s:if test='kyzletter.visaType.substring(0,2)=="C6"'>
 				  總務費用簽核2(>=1000元)
-				</s:if>	(<s:property value="kyzletter.visaType" />)
+				</s:if> -->	(<s:property value="kyzletter.visaType" />)
 				</td>
 			</tr>
 			<tr>
@@ -172,18 +169,33 @@ table.gridtable td {
 			<tr>
 			  <td>CC(呈)</td>
 			  <td colspan="11">
-			     <textarea rows="2" cols="115" readonly><s:property value="kyzletter.chargeList" /></textarea>			     			     			    
+			     <s:property value="kyzletter.chargeList" />		     			     			    
 			  </td>
 			</tr>
 			<tr>
 				<td>申請內容</td>
 				<td colspan="11">
-				  <textarea rows="15" cols="115" readonly><s:property value="kyzletter.memoMk" /></textarea>				     				 					
+				  <s:property value="kyzletter.memoMk" />				     				 					
 				</td>
 
 			</tr>
+			
+			<!------------------------- 修改3   20151027---------------   -->
+			<s:if test='readMk=="N"'>
+			    <tr><td colspan="15" style="color:red">備註:</td></tr>
+				<tr><td colspan="15">									
+					<form id="memo" method="post" action="vbm_add">
+						<textarea rows="6" cols="120" name="memo" id="memo_txt"></textarea>						
+						<input type="hidden" name="factNo" value="<s:property value='factNo'/>"/>
+						<input type="hidden" name="billNo" value="<s:property value='billNo'/>"/>
+						<input type="hidden" name="itemNo" value="<s:property value='itemNo'/>"/>
+						<input type="hidden" name="visaSort" value="<s:property value="visaSort"/>"/>
+						<input type="hidden" name="visa_mk"  id="visa_mk"/>
+					</form>					
+				</td></tr>
+			</s:if>
+			<!------------------------- 修改3   20151027---------------   -->	
 		</tbody>
-
 	</table>
 	 <s:if test='kyzletter.filesYn=="1"'>
 	  <hr/>

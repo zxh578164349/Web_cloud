@@ -129,19 +129,26 @@ function hideBills2(){
 }
 function findKyVisaBills_Int(){
    kyvisabillsjs.findKyVisaBills_Int(function(x){
-       if(x>0){
-          //alert("你好，目前還有"+x+"封函文沒有審核!");
-          document.getElementById("visabills_int").innerText="你好，目前有"+x+"封函文需要審核!";
+       if(x>0){        
+         if(window.navigator.userAgent.toLowerCase().indexOf("firefox")!=-1){
+            document.getElementById("visabills_int").textContent="你好，目前有"+x+"封函文需要審核!";/* 兼容firefox */
+         }else{
+             document.getElementById("visabills_int").innerText="你好，目前有"+x+"封函文需要審核!";
+         }         
           jq("#divBills2").show(300);
        }else{
-          document.getElementById("visabills_int").innerText="你好，目前暂无函文需要審核!";
+          if(window.navigator.userAgent.toLowerCase().indexOf("firefox")!=-1){
+             document.getElementById("visabills_int").textContent="你好，目前暂无函文需要審核!";
+          }else{
+             document.getElementById("visabills_int").innerText="你好，目前暂无函文需要審核!";
+          }          
           jq("#divBills2").show(300);
        }
    })
 }
 setTimeout("showBills(),findKyVisaBills_Int()",1000);
-setTimeout("hideBills()",15000);
-setTimeout("hideBills2()",18000);	
+/* setTimeout("hideBills()",15000);
+setTimeout("hideBills2()",18000); */	
 </script>
 <script type='text/javascript' src='/Login/dwr/interface/kyvisabillsjs.js'></script>
 <script type='text/javascript' src='/Login/dwr/engine.js'></script>
@@ -238,13 +245,13 @@ setTimeout("hideBills2()",18000);
 			<span style="padding-left:280px;">请根据上面条件查询你想要的数据！</span>
 		</div>--%>
 				
-		<div style="display:none;width:500px;height:400px;" id="divBills">
+		<!-- <div style="display:none;width:500px;height:400px;" id="divBills">
 		    <img src="images/lamp.jpg"/>
 		    <font color="blue" style="font-size:20px">你好,部分用戶原有的([資料輸入]-[生產出貨])已刪除,並轉移到([資料輸入]-[產量資料]),不便之處,請詳解</font>
 		    <hr>
 		    <img src="images/lamp.jpg"/>
 		    <font color="red" style="font-size:20px">你好,部分用戶原有的([資料輸入]-[產量預估])已刪除,並轉移到([資料輸入]-[預計生產]),不便之處,請詳解</font>
-		</div>
+		</div> -->
 		<div style="display:none;width:500px;height:500px;" id="divBills2" >
 		  <img src="images/lamp.jpg"/>
 		   <font color="red" style="font-size:20px" id="visabills_int"></font>

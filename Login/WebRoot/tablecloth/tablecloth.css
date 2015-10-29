@@ -4,7 +4,9 @@ table, td{font:100% Arial, Helvetica, sans-serif; }
 th, td{text-align:left;padding:1px;border:1px solid #fff;font-family:"Arial", "Tahoma";}
 th{background:#D5F3F4}
 #tb{width:100%;border-collapse:collapse;margin:5px 0px 25px 0px;;border:1px;}
-#tb caption{font:20px bold;background:#328aa4 url(tr_back.gif) repeat-x;color:blue;}
-#tb tr{background:#97CBFF;}
+#tb_vbm{width:200%;border-collapse:collapse;margin:5px 0px 25px 0px;;border:1px;}
+#tb caption,#tb_vbm caption{font:20px bold;background:#328aa4 url(tr_back.gif) repeat-x;color:blue;}
+#tb tr,#tb_vbm tr{background:#97CBFF;}
+#content{width:auto}
 
 

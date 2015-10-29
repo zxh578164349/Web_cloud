@@ -172,10 +172,12 @@ public class WebScraptDaoImpl extends Basedao implements IWebScraptDao {
 			String yymm) {
 		// TODO Auto-generated method stub
 		StringBuffer hql=new StringBuffer();
+		StringBuffer hql2=new StringBuffer();
 		Map<String,Object>map=new HashMap<String,Object>();
 		int allrow=0;
 		Integer rows=(Integer)ActionContext.getContext().getSession().get("rows");
 		hql.append("from Webscrapt where 1=1");
+		hql2.append("select count(id.factNo) ");
 		if(factNo!=null&&!factNo.equals("")&&!factNo.equals("tw")&&!factNo.equals("nothing")){
 			hql.append(" and id.factNo=:factno");
 			map.put("factno", factNo);
@@ -188,11 +190,12 @@ public class WebScraptDaoImpl extends Basedao implements IWebScraptDao {
 			hql.append(" and id.factNo=:factno");
 			map.put("factno", factNo);
 		}
+		hql2.append(hql);
 		hql.append(" order by id.factNo,id.factCode,id.yymm desc");
 		if(rows!=null&&page>0){
 			allrow=rows;
 		}else{
-			allrow=super.getAllRowCount(hql.toString(), map);
+			allrow=super.getAllRowCount2(hql2.toString(), map);
 			ActionContext.getContext().getSession().put("rows", allrow);
 		}
 		int currentPage=PageBean.countCurrentPage(page);

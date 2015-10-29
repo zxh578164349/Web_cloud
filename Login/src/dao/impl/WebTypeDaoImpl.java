@@ -87,6 +87,18 @@ public class WebTypeDaoImpl extends Basedao implements IWebTypeDao{
 		String typeName=(String)query.uniqueResult();
 		return typeName;
 	}
+
+	public List<WebType> findByFactNo2(String factNo) {
+		// TODO Auto-generated method stub
+		StringBuffer hql=new StringBuffer();
+		Map<String,Object>map=new HashMap<String,Object>();
+		hql.append("from WebType where 1=1 ");
+		if(factNo!=null&&!factNo.equals("")&&!factNo.equals("tw")){
+			hql.append("and id.factNo=:factno");
+			map.put("factno", factNo);
+		}
+		return super.getAllWithNoPage(hql.toString(), map);
+	}
 	
 
 

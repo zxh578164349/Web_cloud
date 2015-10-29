@@ -25,7 +25,9 @@ public class WebPersonNumDaoImpl extends Basedao implements IWebPersonNumDao {
 		// TODO Auto-generated method stub
 		final Map<String, Object> map = new HashMap<String, Object>();
 		StringBuffer hql = new StringBuffer();
+		StringBuffer hql2=new StringBuffer();
 		hql.append("from Webpersonnum where 1=1 ");
+		hql2.append("select count(id.factNo) ");
 		if (factNo != null && !factNo.equals("") && !factNo.equals("tw")&&!factNo.equals("nothing")) {
 			hql.append("and id.factNo=:factno ");
 			map.put("factno", factNo);
@@ -46,9 +48,10 @@ public class WebPersonNumDaoImpl extends Basedao implements IWebPersonNumDao {
 			hql.append(" and id.factNo=:factno");
 			map.put("factno", factNo);
 		}
+		hql2.append(hql);
 		hql.append(" order by id.factNo,id.factCode,id.yymmdd desc");
 		int currentPage = PageBean.countCurrentPage(page);
-		int allRow = super.getAllRowCount(hql.toString(), map);
+		int allRow = super.getAllRowCount2(hql2.toString(), map);
 		int totalPage = PageBean.countTotalPage(pageSize, allRow);
 		if (currentPage > totalPage) {
 			currentPage = totalPage;

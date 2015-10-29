@@ -51,6 +51,7 @@ import entity.KyzExpectmatmFile;
 import entity.KyzExpectmatmId;
 import entity.KyzExpectmats;
 import entity.KyzVisaflow;
+import entity.WebType;
 import entity.WebUser;
 import entity_temp.VisabillsTemp;
 
@@ -647,14 +648,18 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 	 * 審核之後就是備註修改
 	 * @return
 	 */
-	public String add(){
+		
+	public void add() throws IOException{
+		KyVisabillm vbm=visabillmSer.findById(factNo, visaSort, billNo);
+		if(itemNo==null||itemNo.equals("")){
+			itemNo=vbm.getItemNext();
+		}
 		SimpleDateFormat format=new SimpleDateFormat("yyyyMMdd");
 		int num_temp=Integer.parseInt(itemNo);//把項次轉化為數字
 		int num=Integer.parseInt(itemNo)-1;//用於識別KyVisabills集合裡的每幾個對象									
 		String next_singer="";
 		int num_next=0;		
-		KyVisabillm vbm=visabillmSer.findById(factNo, visaSort, billNo);
-		
+		KyVisabills vbs=vbm.getKyVisabillses().get(num);
 		/**
 		 * 如果最後一個不要審核,則要去掉(也就是總長度-1)（現在，>=1000的最後三位都不要審核，則總長度-3      20150803）
 		 */
@@ -662,17 +667,7 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 		int nos=visabillSer.findBillsWithNo(visaSort, billNo);
 		if(nos>0){
 			vbs_size=vbs_size-nos;
-		}
-		/*if(vbm.getKyVisabillses().get(vbm.getKyVisabillses().size()-3).getFlowMk().equals("N")){
-			vbs_size=vbm.getKyVisabillses().size()-3;
-		}else if(vbm.getKyVisabillses().get(vbm.getKyVisabillses().size()-2).getFlowMk().equals("N")){
-			vbs_size=vbm.getKyVisabillses().size()-2;
-		}else if(vbm.getKyVisabillses().get(vbm.getKyVisabillses().size()-1).getFlowMk().equals("N")){
-			vbs_size=vbm.getKyVisabillses().size()-1;
-		}else{
-			vbs_size=vbm.getKyVisabillses().size();
-		}*/
-		
+		}				
 		String last_singer=vbm.getKyVisabillses().get(num).getVisaSigner();								
 		if(visa_mk.equals("Y")){//start if
 			//當最後一個審核人時
@@ -745,8 +740,8 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 			
 			//kyzSer.add(kyzm);	先不保存,在下一步remark時同時add到數據庫					
 		}// end if2
-		vbm.getKyVisabillses().get(num).setDateVisa(format.format(new Date()));
-		vbm.getKyVisabillses().get(num).setVisaMk(visa_mk);//子表的當前狀態
+		vbs.setDateVisa(format.format(new Date()));
+		vbs.setVisaMk(visa_mk);//子表的當前狀態
 		vbm.setSignerLast(last_singer);//當前人Email
 		vbm.setSignerNext(next_singer);//下一個人Email
 		vbm.setLastMk(visa_mk);        //當前狀態  
@@ -760,14 +755,171 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 		vbm.setItemNext(item_next);	   //下一項次	
 				
 		//標記當前審核人的信息,並保存在session中,用於備註修改
-		KyVisabills vbs=vbm.getKyVisabillses().get(num);
-		ActionContext.getContext().getSession().put("vbs", vbs);
 		
+		/*ActionContext.getContext().getSession().put("vbs", vbs);		
 		ActionContext.getContext().getSession().put("vbm_num", num_temp);//項次保存到session,用於備註時,知道是第幾個審核人
-		ActionContext.getContext().getSession().put("vbm", vbm);
-
-		return "add";
+		ActionContext.getContext().getSession().put("vbm", vbm);*/
+		
+		
+		
+		
+		/******************************remark***********************************/
+		
+				String billno_temp="";//根據是否退回,返回相應單號								
+				//KyVisabillm vbm=(KyVisabillm)ActionContext.getContext().getSession().get("vbm");
+				//int num=(Integer)ActionContext.getContext().getSession().get("vbm_num");											
+				//KyVisabills vbs=vbm.getKyVisabillses().get(num_temp-1);
+				KyzExpectmatm kyzm=(KyzExpectmatm)ActionContext.getContext().getSession().get("kyzm");
+				KyzContactletter letter=(KyzContactletter)ActionContext.getContext().getSession().get("letter");				
+				String dateVisa=format.format(new Date());
+				vbs.setDateVisa(dateVisa);
+				vbs.setMemo(memo);
+				String lastmk=vbm.getLastMk();
+				
+				if(lastmk.equals("Y")){
+					billno_temp=vbm.getId().getBillNo();					
+					if(num_temp==vbm.getKyVisabillses().size()){
+						vbm.setMemoMk(memo);							
+					}
+				}
+				if(lastmk.equals("T")){
+					vbm.setMemoMk(memo);
+					billno_temp=(String)ActionContext.getContext().getSession().get("billNo_temp");					
+					//判斷是費用函文還內部聯絡函
+					if(vbm.getId().getBillNo().substring(0, 2).equals("EM")){
+						kyzSer.add(kyzm);//只有被退回時,才生成新函文
+						
+						//根據函文是否帶有附檔文件 ,判斷時否要複製附檔文件
+						String filesYn=kyzm.getFilesYn();
+						if(filesYn!=null&&filesYn.equals("1")){
+							String billNo_old=vbm.getId().getBillNo();
+							String billNo_new=billno_temp;
+							
+							List<KyzExpectmatmFile>kyzfile_list=kyzexpfileSer.findByBillNo(billNo_old);
+							for(int i=0;i<kyzfile_list.size();i++){
+								KyzExpectmatmFile kyzfile=new KyzExpectmatmFile();
+								KyzExpectmatmFile kyzfile_temp=kyzfile_list.get(i);
+								String username=kyzfile_temp.getUsername();
+								String filename=kyzfile_temp.getFilename();
+								kyzfile.setBillno(billno_temp);
+								kyzfile.setFilename(filename);
+								kyzfile.setUsername(username);
+								kyzexpfileSer.add(kyzfile);
+							}
+							//複製文件夾
+							String sourceDir="d:\\KyzexpFile_backup\\"+billNo_old;
+							String targetDir="d:\\KyzexpFile_backup\\"+billNo_new;
+							this.copyDirectiory(sourceDir, targetDir);
+						}
+					}else{
+						kyzletterSer.add(letter);//只有被退回時,才生成新函文
+					}
+														
+				}		
+				visabillmSer.add(vbm);
+				String temp="";
+				String Email=(String)ActionContext.getContext().getSession().get("Email");
+				if(Email==null||Email.equals("")){
+					temp="remark";
+				}else{
+					/*response.setContentType("text/html;charset=utf-8");
+					response.getWriter().print("<script>alert('審核成功!將返回空白頁或自動關閉');window.opener=null;window.open('','_self');window.close();</script>");*/
+					temp="success";
+				}
+				//return temp;
+		/******************************remark***********************************/
 	}
+	
+	/**
+	 * 手機平板返回
+	 * @return
+	 * @throws IOException
+	 */
+	public String add2() throws IOException{
+		this.add();
+		return "success";
+	}
+	
+	/**
+	 * 電腦返回
+	 * @throws IOException 
+	 */
+	public String add3() throws IOException{
+		this.add();
+		return "beanList";
+	}
+	public String remark() throws IOException{
+		//String result="";//根據是否退回,返回相應結果
+		String billno_temp="";//根據是否退回,返回相應單號
+		String factno_temp="";
+		KyVisabillm vbm=(KyVisabillm)ActionContext.getContext().getSession().get("vbm");
+		KyzExpectmatm kyzm=(KyzExpectmatm)ActionContext.getContext().getSession().get("kyzm");
+		KyzContactletter letter=(KyzContactletter)ActionContext.getContext().getSession().get("letter");
+		factno_temp=vbm.getId().getFactNo();
+		int num=(Integer)ActionContext.getContext().getSession().get("vbm_num");
+		KyVisabills vbs=vbm.getKyVisabillses().get(num-1);
+		SimpleDateFormat format=new SimpleDateFormat("yyyyMMdd");
+		String dateVisa=format.format(new Date());
+		vbs.setDateVisa(dateVisa);
+		vbs.setMemo(memo);
+		String lastmk=vbm.getLastMk();
+		//String subject="";
+		if(lastmk.equals("Y")){
+			billno_temp=vbm.getId().getBillNo();
+			//subject="函文審核(下一位)_"+billno_temp+"("+factno_temp+")";
+			if(num==vbm.getKyVisabillses().size()){
+				vbm.setMemoMk(memo);							
+			}
+		}
+		if(lastmk.equals("T")){
+			vbm.setMemoMk(memo);
+			billno_temp=(String)ActionContext.getContext().getSession().get("billNo_temp");
+			//result="舊函文("+vbm.getId().getBillNo()+")已退回,新函文已生成.";	
+			//subject="函文退回通知_"+billno_temp+"("+factno_temp+")";
+			//判斷是費用函文還內部聯絡函
+			if(vbm.getId().getBillNo().substring(0, 2).equals("EM")){
+				kyzSer.add(kyzm);//只有被退回時,才生成新函文
+				
+				//根據函文是否帶有附檔文件 ,判斷時否要複製附檔文件
+				String filesYn=kyzm.getFilesYn();
+				if(filesYn!=null&&filesYn.equals("1")){
+					String billNo_old=vbm.getId().getBillNo();
+					String billNo_new=billno_temp;
+					
+					List<KyzExpectmatmFile>kyzfile_list=kyzexpfileSer.findByBillNo(billNo_old);
+					for(int i=0;i<kyzfile_list.size();i++){
+						KyzExpectmatmFile kyzfile=new KyzExpectmatmFile();
+						KyzExpectmatmFile kyzfile_temp=kyzfile_list.get(i);
+						String username=kyzfile_temp.getUsername();
+						String filename=kyzfile_temp.getFilename();
+						kyzfile.setBillno(billno_temp);
+						kyzfile.setFilename(filename);
+						kyzfile.setUsername(username);
+						kyzexpfileSer.add(kyzfile);
+					}
+					//複製文件夾
+					String sourceDir="d:\\KyzexpFile_backup\\"+billNo_old;
+					String targetDir="d:\\KyzexpFile_backup\\"+billNo_new;
+					this.copyDirectiory(sourceDir, targetDir);
+				}
+			}else{
+				kyzletterSer.add(letter);//只有被退回時,才生成新函文
+			}
+												
+		}		
+		visabillmSer.add(vbm);
+		String temp="";
+		String Email=(String)ActionContext.getContext().getSession().get("Email");
+		if(Email==null||Email.equals("")){
+			temp="remark";
+		}else{
+			/*response.setContentType("text/html;charset=utf-8");
+			response.getWriter().print("<script>alert('審核成功!將返回空白頁或自動關閉');window.opener=null;window.open('','_self');window.close();</script>");*/
+			temp="success";
+		}
+		return temp;
+	}
+	
 	
 	/**
 	 * 備註修改
@@ -1004,77 +1156,7 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 		return temp;
 	}
 	
-	public String remark() throws IOException{
-		String result="";//根據是否退回,返回相應結果
-		String billno_temp="";//根據是否退回,返回相應單號
-		String factno_temp="";
-		KyVisabillm vbm=(KyVisabillm)ActionContext.getContext().getSession().get("vbm");
-		KyzExpectmatm kyzm=(KyzExpectmatm)ActionContext.getContext().getSession().get("kyzm");
-		KyzContactletter letter=(KyzContactletter)ActionContext.getContext().getSession().get("letter");
-		factno_temp=vbm.getId().getFactNo();
-		int num=(Integer)ActionContext.getContext().getSession().get("vbm_num");
-		KyVisabills vbs=vbm.getKyVisabillses().get(num-1);
-		SimpleDateFormat format=new SimpleDateFormat("yyyyMMdd");
-		String dateVisa=format.format(new Date());
-		vbs.setDateVisa(dateVisa);
-		vbs.setMemo(memo);
-		String lastmk=vbm.getLastMk();
-		String subject="";
-		if(lastmk.equals("Y")){
-			billno_temp=vbm.getId().getBillNo();
-			subject="函文審核(下一位)_"+billno_temp+"("+factno_temp+")";
-			if(num==vbm.getKyVisabillses().size()){
-				vbm.setMemoMk(memo);							
-			}
-		}
-		if(lastmk.equals("T")){
-			vbm.setMemoMk(memo);
-			billno_temp=(String)ActionContext.getContext().getSession().get("billNo_temp");
-			result="舊函文("+vbm.getId().getBillNo()+")已退回,新函文已生成.";	
-			subject="函文退回通知_"+billno_temp+"("+factno_temp+")";
-			//判斷是費用函文還內部聯絡函
-			if(vbm.getId().getBillNo().substring(0, 2).equals("EM")){
-				kyzSer.add(kyzm);//只有被退回時,才生成新函文
-				
-				//根據函文是否帶有附檔文件 ,判斷時否要複製附檔文件
-				String filesYn=kyzm.getFilesYn();
-				if(filesYn!=null&&filesYn.equals("1")){
-					String billNo_old=vbm.getId().getBillNo();
-					String billNo_new=billno_temp;
-					
-					List<KyzExpectmatmFile>kyzfile_list=kyzexpfileSer.findByBillNo(billNo_old);
-					for(int i=0;i<kyzfile_list.size();i++){
-						KyzExpectmatmFile kyzfile=new KyzExpectmatmFile();
-						KyzExpectmatmFile kyzfile_temp=kyzfile_list.get(i);
-						String username=kyzfile_temp.getUsername();
-						String filename=kyzfile_temp.getFilename();
-						kyzfile.setBillno(billno_temp);
-						kyzfile.setFilename(filename);
-						kyzfile.setUsername(username);
-						kyzexpfileSer.add(kyzfile);
-					}
-					//複製文件夾
-					String sourceDir="d:\\KyzexpFile_backup\\"+billNo_old;
-					String targetDir="d:\\KyzexpFile_backup\\"+billNo_new;
-					this.copyDirectiory(sourceDir, targetDir);
-				}
-			}else{
-				kyzletterSer.add(letter);//只有被退回時,才生成新函文
-			}
-												
-		}		
-		visabillmSer.add(vbm);
-		String temp="";
-		String Email=(String)ActionContext.getContext().getSession().get("Email");
-		if(Email==null||Email.equals("")){
-			temp="remark";
-		}else{
-			/*response.setContentType("text/html;charset=utf-8");
-			response.getWriter().print("<script>alert('審核成功!將返回空白頁或自動關閉');window.opener=null;window.open('','_self');window.close();</script>");*/
-			temp="success";
-		}
-		return temp;
-	}
+	
 	
 	/**
 	 * 加簽
@@ -1979,7 +2061,36 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 			if(visaSort_char=='C'){
 				typename=webtypeSer.findTypeNameById(factno, visaSort.substring(0, 2));
 			}else{
-				typename=webtypeSer.findTypeNameById(factno, visaSort);
+				//typename=webtypeSer.findTypeNameById(factno, visaSort);
+				typename=webtypeSer.findTypeNameById(factno, visaSort.substring(0, 2));
+			}
+			if(typename!=null&&!typename.equals("")){
+				vbs.getId().getKyVisabillm().setColTemp(typename);	
+			}else{
+				vbs.getId().getKyVisabillm().setColTemp(visaSort);
+			}
+					
+		}
+	}
+	
+	public void getTypeName2(PageBean bean){
+		List<KyVisabills>list=bean.getList();
+		List<WebType>list_type=webtypeSer.findByFactNo2(factNo);
+		for(int i=0;i<list.size();i++){
+			KyVisabills vbs=list.get(i);
+			String factno=vbs.getId().getKyVisabillm().getId().getFactNo();
+			String visaSort=vbs.getId().getKyVisabillm().getId().getVisaSort();
+			char visaSort_char=visaSort.charAt(0);
+			String typename="";	
+			for(int j=0;j<list_type.size();j++){
+				WebType type=list_type.get(j);
+				
+			}
+			if(visaSort_char=='C'){
+				typename=webtypeSer.findTypeNameById(factno, visaSort.substring(0, 2));
+			}else{
+				//typename=webtypeSer.findTypeNameById(factno, visaSort);
+				typename=webtypeSer.findTypeNameById(factno, visaSort.substring(0, 2));
 			}
 			if(typename!=null&&!typename.equals("")){
 				vbs.getId().getKyVisabillm().setColTemp(typename);	
@@ -2040,10 +2151,10 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
       		  visabillmSer.add(vbm);
       		  
       		  //****************通知下一位签核人***************/
-      		 String emailUrl_in="http://203.85.73.161/Login/vbm_findById_email?visaSort="+visaSort+"& billNo="+billNo
-			         +"& factNo="+factNo+"& email="+bills.getVisaSigner();
-      		String emailUrl_in2="http://203.85.73.161/Login/vbm_findById_email2?visaSort="+visaSort+"& billNo="+billNo
-			         +"& factNo="+factNo+"& email="+bills.getVisaSigner();
+      		 String emailUrl_in="http://203.85.73.161/Login/vbm_findById_email?visaSort="+visaSort+"&billNo="+billNo
+			         +"&factNo="+factNo+"&email="+bills.getVisaSigner();
+      		String emailUrl_in2="http://203.85.73.161/Login/vbm_findById_email2?visaSort="+visaSort+"&billNo="+billNo
+			         +"&factNo="+factNo+"&email="+bills.getVisaSigner();
       		 mailInfo_n.setToAddress(bills.getVisaSigner());
       		 mailInfo_n.setSubject("函文減簽(下一位審核)_"+billNo+"("+factNo+")");
       		 mailInfo_n.setContent(
@@ -2157,10 +2268,10 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
       		  visabillmSer.add(vbm);
       		  
       		  //****************通知下一位签核人***************/
-      		 String emailUrl_in="http://203.85.73.161/Login/vbm_findById_email?visaSort="+visaSort+"& billNo="+billNo
-			         +"& factNo="+factNo+"& email="+bills.getVisaSigner();
-      		String emailUrl_in2="http://203.85.73.161/Login/vbm_findById_email?visaSort="+visaSort+"& billNo="+billNo
-			         +"& factNo="+factNo+"& email="+bills.getVisaSigner();
+      		 String emailUrl_in="http://203.85.73.161/Login/vbm_findById_email?visaSort="+visaSort+"&billNo="+billNo
+			         +"&factNo="+factNo+"&email="+bills.getVisaSigner();
+      		String emailUrl_in2="http://203.85.73.161/Login/vbm_findById_email?visaSort="+visaSort+"&billNo="+billNo
+			         +"&factNo="+factNo+"&email="+bills.getVisaSigner();
       		 mailInfo_n.setToAddress(bills.getVisaSigner());
       		 mailInfo_n.setSubject("函文減簽(下一位審核)_"+billNo+"("+factNo+")");
       		 mailInfo_n.setContent(

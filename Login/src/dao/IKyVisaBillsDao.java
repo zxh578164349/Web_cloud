@@ -16,7 +16,7 @@ public interface IKyVisaBillsDao {
 	public PageBean findPageBean(int pageSize,int page,String userName,String visaMk,String factNo,String billNo,String visaSort,String createDate,String createDate2,String email);
 	public List<KyVisabills> findByFNN(String factNo,String userName);
 	public PageBean findPageBean_tw(int pageSize,int page,String userName,String visaMk,String factNo,String billNo,String visaSort,String createDate,String createDate2,String email);
-	public int findKyVisaBills_Int(String factNo,String userName);
+	public int findKyVisaBills_Int(String factNo,String email);
 	
 	public int findBillsWithNo(String visaSort,String billNo);
 	public List<KyVisabills> findBillsWithNo2(String visaSort,String billNo);//visaMk=N  flowMk=Y

@@ -104,7 +104,7 @@ function getKyType2(factno){
 	 
   function checkType(type){
      dwrFactNo=document.getElementById("dwrFactNo").value;
-     dwremail=document.getElementById("dwr_email").value;
+     dwremail=document.getElementById("dwr_email").value.toLowerCase(); //登錄人的email要轉化爲小寫,因爲申請人email已全部轉化爲小寫（20151022）;
      if(dwrFactNo!=""&&type!=""){
          kyzvisaflowjs.findByType_Dwr(dwrFactNo,type,function(x){
             if(x==0){//流程不存在
@@ -112,7 +112,7 @@ function getKyType2(factno){
                document.getElementById("sub").disabled=true;
                document.getElementById("sub").style.color="red";
                document.getElementById("dwr_kytype").style.color="red";
-            }else if(type.charAt(0)=='C'){//如果流程是C类（C1,C2....）  ,则要 根据申请人来选择审核流程的代号              
+            }else{             
                 kyzvisaflowjs.findVisaSort_dwr(dwrFactNo,type,dwremail,function(y){
                   if(y==null){
                      alert("對不起，你不是該類別函文申請人，請重新選定!");
@@ -127,12 +127,30 @@ function getKyType2(factno){
                   }
                   
                }); 
-            }else{ //如果流程是非C类，则不需要根据申请人选择流程,直接選擇類型代號，就對應審核流程代號
+            }
+            
+           /*   else if(type.charAt(0)=='C'){//如果流程是C类（C1,C2....）  ,则要 根据申请人来选择审核流程的代号              
+                kyzvisaflowjs.findVisaSort_dwr(dwrFactNo,type,dwremail,function(y){
+                  if(y==null){
+                     alert("對不起，你不是該類別函文申請人，請重新選定!");
+                     document.getElementById("sub").disabled=true;
+                     document.getElementById("sub").style.color="red";
+                     document.getElementById("dwr_kytype").style.color="red";                    
+                  }else{
+                     document.getElementById("sub").disabled=false;
+                     document.getElementById("sub").style.color="white";
+                     document.getElementById("dwr_kytype").style.color="black";
+                     document.getElementById("hidden_kytype").value=y;                    
+                  }
+                  
+               }); 
+            } else{ //如果流程是非C类，则不需要根据申请人选择流程,直接選擇類型代號，就對應審核流程代號
                      document.getElementById("sub").disabled=false;
                      document.getElementById("sub").style.color="white";
                      document.getElementById("dwr_kytype").style.color="black";
                      document.getElementById("hidden_kytype").value=type;
-            }
+            } */
+          
          });
      }
   }

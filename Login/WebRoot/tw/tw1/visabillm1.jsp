@@ -54,7 +54,7 @@
 <body>
   <div id="container">
     <div id="content">
-	<table id="tb" >
+	<table id="tb_vbm">
 		<caption>函文審核狀況</caption>
 		<thead>			
 			<tr class="tr_show">
@@ -99,7 +99,7 @@
 				<td><s:property value="%{formatDate(id.kyVisabillm.dateCreate)}" />
 				</td> -->
 				<td>											 					
-		 <s:iterator value="id.kyVisabillm.kyVisabillses">
+		 <s:iterator value="id.kyVisabillm.kyVisabillses"  status="y">
 	       
 	       <!-- <s:property value="vbm.signerNext"/>(<s:property value="visaSigner"/>) -->
 	       <s:if test='flowMk=="Y"'>
@@ -121,14 +121,14 @@
 	           </s:else> 	        	       
 	       </s:if>
 	       <s:if test='visaMk=="Y"'>	       
-	        <a style="color:green"><s:property value="visaRank"/>(已審核)<s:property value="dateVisa"/></a>&nbsp;||&nbsp;
+	        <a style="color:green" href="javascript:tips('${memo}','index${x.index}${y.index}')" id="index${x.index}${y.index}"><s:property value="visaRank"/>(已審核)<s:property value="dateVisa"/></a>&nbsp;||&nbsp;
 	       </s:if>
 	       <s:if test='visaMk=="T"'>
-	         <a style="color:blue"><s:property value="visaRank"/>(未通過)<s:property value="dateVisa"/></a>&nbsp;||&nbsp;
+	         <a style="color:blue" href="javascript:tips('${memo}','index${x.index}${y.index}')" id="index${x.index}${y.index}"><s:property value="visaRank"/>(未通過)<s:property value="dateVisa"/></a>&nbsp;||&nbsp;
 	       </s:if>
 	       </s:if>
 	       <s:else>
-	       <a style="color:#b45b3e"><s:property value="visaRank"/>(只知會)</a>&nbsp;|&nbsp;
+	       <a style="color:#b45b3e"><s:property value="visaRank"/>(只知會)</a>&nbsp;||&nbsp;
 	       </s:else>	       
 	      </s:iterator>
 		</td>

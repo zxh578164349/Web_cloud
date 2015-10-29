@@ -66,6 +66,13 @@ public class WebTypeServicesImpl implements IWebTypeServices{
 
 
 
+	public List<WebType> findByFactNo2(String factNo) {
+		// TODO Auto-generated method stub
+		return webtypeDao.findByFactNo2(factNo);
+	}
+
+
+
 
 
 }

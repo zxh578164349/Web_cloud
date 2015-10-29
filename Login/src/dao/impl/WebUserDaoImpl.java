@@ -64,7 +64,7 @@ public class WebUserDaoImpl extends Basedao implements IWebUserDao {
 		WebUser user = (WebUser) ActionContext.getContext().getSession()
 				.get("loginUser");
 		if (conditions != null && !conditions.equals("")) {
-			if (user.getName().equals("ºŞ²z­û") && user.getFactno().equals("tw")) {
+			if (user.getName().equals("ç®¡ç†å“¡") && user.getFactno().equals("tw")) {
 				for (int i = conditions.length(); --i >= 0;) {
 					if (Character.isDigit(conditions.charAt(i))
 							|| Character.isLetter(conditions.charAt(i))) {
@@ -143,7 +143,7 @@ public class WebUserDaoImpl extends Basedao implements IWebUserDao {
 		query.setString(1, username.toLowerCase());
 		WebUser user = (WebUser) query.uniqueResult();
 		if(user!=null){
-			user.getWebJurisdictions().size();	//Àò¨ú¤l¶°ªºªø«×,¸Ñ¨Mhibernate©µ¿ğªº°İÃD						
+			user.getWebJurisdictions().size();	//è§£æ±ºhibernateå»¶é²å•é¡Œ						
 		}	
 		return user;
 	}
@@ -155,7 +155,7 @@ public class WebUserDaoImpl extends Basedao implements IWebUserDao {
 		query.setString(1, fact);
 		WebUser user=(WebUser)query.uniqueResult();
 		if(user!=null){
-			user.getWebJurisdictions().size();//Àò¨ú¤l¶°ªºªø«×¡A¸Ñ¨Mhibernate©µ¿ğªº°İÃD			
+			user.getWebJurisdictions().size();//è§£æ±ºhibernateå»¶é²å•é¡Œ			
 		}			
 		return user;
 	}
@@ -172,10 +172,12 @@ public class WebUserDaoImpl extends Basedao implements IWebUserDao {
 			String factNo) {
 		// TODO Auto-generated method stub
 		StringBuffer hql=new StringBuffer();
+		StringBuffer hql2=new StringBuffer();
 		final Map<String,Object>map=new HashMap<String,Object>();
 		int allrow=0;
 		Integer rows=(Integer)ActionContext.getContext().getSession().get("allrow");
 		hql.append("from WebUser where 1=1");
+		hql2.append("select count(id) ");
 		if(userName!=null&&!userName.equals("")){
 			hql.append(" and (lower(username) like :username or lower(name) like :username)");			
 			map.put("username", "%"+userName.toLowerCase()+"%");
@@ -185,11 +187,12 @@ public class WebUserDaoImpl extends Basedao implements IWebUserDao {
 			map.put("factNo", factNo);
 		}
 		
+		hql2.append(hql);
 		hql.append(" order by id");
 		if(rows!=null&&page>0){
 			allrow=rows;
 		}else{
-			allrow=super.getAllRowCount(hql.toString(), map);
+			allrow=super.getAllRowCount2(hql2.toString(), map);
 			ActionContext.getContext().getSession().put("allrow", allrow);
 		}
 		int currentPage=PageBean.countCurrentPage(page);
@@ -212,10 +215,12 @@ public class WebUserDaoImpl extends Basedao implements IWebUserDao {
 			String factNo) {
 		// TODO Auto-generated method stub
 		StringBuffer hql=new StringBuffer();
+		StringBuffer hql2=new StringBuffer();
 		final Map<String,Object>map=new HashMap<String,Object>();
 		int allrow=0;
 		Integer rows=(Integer)ActionContext.getContext().getSession().get("allrow");
 		hql.append("from WebUser where 1=1 ");
+		hql2.append("select count(id) ");
 		if(userName!=null&&!userName.equals("")){
 			hql.append(" and (username like :username or name like :username)");			
 			map.put("username", "%"+userName+"%");
@@ -225,11 +230,12 @@ public class WebUserDaoImpl extends Basedao implements IWebUserDao {
 			map.put("factNo", factNo);
 		}
 		
+		hql2.append(hql);
 		hql.append(" order by id");
 		if(rows!=null&&page>0){
 			allrow=rows;
 		}else{
-			allrow=super.getAllRowCount(hql.toString(), map);
+			allrow=super.getAllRowCount2(hql2.toString(), map);
 			ActionContext.getContext().getSession().put("allrow", allrow);
 		}
 		int currentPage=PageBean.countCurrentPage(page);

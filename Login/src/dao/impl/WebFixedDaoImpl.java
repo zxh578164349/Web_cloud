@@ -28,7 +28,9 @@ public class WebFixedDaoImpl extends Basedao implements IWebFixedDao {
 		int allRow = 0;
 		final Map<String, Object> map = new HashMap<String, Object>();
 		StringBuffer hql = new StringBuffer();
+		StringBuffer hql2=new StringBuffer();
 		hql.append("from WebFixed where 1=1 ");
+		hql2.append("select count(factNo) ");
 		if (factNo != null && !factNo.equals("") && !factNo.equals("tw")&&!factNo.equals("nothing")) {
 			hql.append(" and factNo =:factno ");
 			map.put("factno", factNo);
@@ -51,7 +53,8 @@ public class WebFixedDaoImpl extends Basedao implements IWebFixedDao {
 		}
 		if(lostmk==null||lostmk.equals("")){
 			hql.append(" and (lostMk like 'N%' or lostMk='' or lostMk=null) ");
-		}		
+		}
+		hql2.append(hql);
 		hql.append(" order by factNo,fixedassetsId");
 		int currentPage = PageBean.countCurrentPage(page);
 
@@ -60,7 +63,7 @@ public class WebFixedDaoImpl extends Basedao implements IWebFixedDao {
 		if (rows != null && rows != 0 && page > 0) {
 			allRow = rows;
 		} else {
-			allRow = super.getAllRowCount(hql.toString(), map);
+			allRow = super.getAllRowCount2(hql2.toString(), map);
 			ActionContext.getContext().getSession().put("allRow", allRow);
 		}
 

@@ -61,6 +61,9 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 	private String isnull;
 	private String lookordown;
 	private String factCode;
+	private String itemNo;
+	private String readMk;//標識返回函文查看頁面(Y)，還是返回函文提交頁面(N)
+	private String visa_mk;
 	private List<File> files;
     private List<String> filesFileName;
     private List<String> filesContentType;
@@ -75,6 +78,25 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 	private IWebuserEmailServices webuseremailSer;
 	private IWebTypeServices webtypeSer;
 	
+	
+	public String getVisa_mk() {
+		return visa_mk;
+	}
+	public void setVisa_mk(String visa_mk) {
+		this.visa_mk = visa_mk;
+	}
+	public String getReadMk() {
+		return readMk;
+	}
+	public void setReadMk(String readMk) {
+		this.readMk = readMk;
+	}
+	public String getItemNo() {
+		return itemNo;
+	}
+	public void setItemNo(String itemNo) {
+		this.itemNo = itemNo;
+	}
 	public List<File> getFiles() {
 		return files;
 	}
@@ -273,10 +295,10 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 					/**
 					 * 發送郵件
 					 */
-					String emailUrl_in="http://203.85.73.161/Login/vbm_findById_email?visaSort="+kyzletter.getVisaType()+"& billNo="+kyzletter.getId().getBillNo()
-					         +"& factNo="+kyzletter.getId().getFactNo()+"& email="+vbm.getSignerNext();	
-					String emailUrl_in2="http://203.85.73.161/Login/vbm_findById_email2?visaSort="+kyzletter.getVisaType()+"& billNo="+kyzletter.getId().getBillNo()
-					         +"& factNo="+kyzletter.getId().getFactNo()+"& email="+vbm.getSignerNext();
+					String emailUrl_in="http://203.85.73.161/Login/vbm_findById_email?visaSort="+kyzletter.getVisaType()+"&billNo="+kyzletter.getId().getBillNo()
+					         +"&factNo="+kyzletter.getId().getFactNo()+"&email="+vbm.getSignerNext();	
+					String emailUrl_in2="http://203.85.73.161/Login/vbm_findById_email2?visaSort="+kyzletter.getVisaType()+"&billNo="+kyzletter.getId().getBillNo()
+					         +"&factNo="+kyzletter.getId().getFactNo()+"&email="+vbm.getSignerNext();
 					String singernext=vbm.getSignerNext();
 					String vbm_billno=vbm.getId().getBillNo();
 					String vbm_factno=vbm.getId().getFactNo();
@@ -579,6 +601,12 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 		}
 		return "findById";
 	}
+	
+	/**
+	 * 電腦的函文內容審核頁面
+	 * @return
+	 * @throws UnsupportedEncodingException
+	 */
 	public String findById_layer() throws UnsupportedEncodingException{
 		kyzletter=kyzletterSer.findById(factNo, billNo);
 		if(kyzletter!=null){
@@ -603,6 +631,17 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 		}
 		return "findById_layer";
 	}
+	
+	/**
+	 * 手機平板的函文內容審核頁面
+	 * @return
+	 * @throws UnsupportedEncodingException
+	 */
+	public String findById_layer2() throws UnsupportedEncodingException{
+		this.findById_layer();
+		return "findById_layer2";
+	}
+	
 	public String delete(){
 		kyzletterSer.delete(factNo, billNo);
 		visabillmSer.delete(factNo, visaSort, billNo);
@@ -656,7 +695,8 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 			if(visaSort_char=='C'){
 				typename=webtypeSer.findTypeNameById(factno, visaSort.substring(0, 2));
 			}else{
-				typename=webtypeSer.findTypeNameById(factno, visaSort);
+				//typename=webtypeSer.findTypeNameById(factno, visaSort);
+				typename=webtypeSer.findTypeNameById(factno, visaSort.substring(0, 2));
 			}
 			if(typename!=null&&!typename.equals("")){
 				letter.setColTemp(typename);	

@@ -126,7 +126,7 @@
 });
 	}
 	
-   function getType(factNo){
+/*    function getType(factNo){
      document.getElementById("dwr_kytype").length=1;
      webtypejs.findByFactNo(factNo,function(x){
        if(x.length>0){
@@ -134,7 +134,19 @@
        }
          
      });
-   }	
+   } */
+   
+function tips(memo,index){
+    if(memo==''){
+       memo='無';
+    }
+    layer.tips(memo, '#'+index, {
+    style: ['background-color:#78BA32; color:#fff', '#78BA32'],
+    maxWidth:240,
+    time: 10,
+    closeBtn:[0, true]
+});
+}
 </script>
 <script type='text/javascript' src='/Login/dwr/interface/kyzjs.js'></script>
 <script type='text/javascript' src='/Login/dwr/interface/webtypejs.js'></script>

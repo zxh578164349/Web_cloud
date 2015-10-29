@@ -52,10 +52,10 @@ public class AutoSendKyz extends QuartzJobBean{
 					list_email.add(emailPwd);
 				}
 				list_email.add("kyuen@yydg.com.cn");
-				String emailUrl="http://203.85.73.161/Login/vbm_findById_email?visaSort="+visaSort+"& billNo="+billNo
-				         +"& factNo="+factNo+"& email="+signerNext;
-				String emailUrl2="http://203.85.73.161/Login/vbm_findById_email2?visaSort="+visaSort+"& billNo="+billNo
-				         +"& factNo="+factNo+"& email="+signerNext;
+				String emailUrl="http://203.85.73.161/Login/vbm_findById_email?visaSort="+visaSort+"&billNo="+billNo
+				         +"&factNo="+factNo+"&email="+signerNext;
+				String emailUrl2="http://203.85.73.161/Login/vbm_findById_email2?visaSort="+visaSort+"&billNo="+billNo
+				         +"&factNo="+factNo+"&email="+signerNext;
 				if(visaMk.equals("N")){
 					subject="函文審核定時通知_"+billNo+"("+factNo+")";
 				}

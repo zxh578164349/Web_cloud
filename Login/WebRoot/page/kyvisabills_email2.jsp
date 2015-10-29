@@ -80,7 +80,7 @@ table.altrowstable caption{
     //area: ['800px', '560px'],
     area:['600px','560px'],
     //page:{url:'kyz_findById_layer?billNo='+billNo+'& factNo='+factNo}                   
-    iframe:{src:'kyz_findById_layer?billNo='+billNo+'& factNo='+factNo,scrolling:'auto'}	
+    iframe:{src:'kyz_findById_layer?billNo='+billNo+'& factNo='+factNo+'& readMk=Y',scrolling:'auto'}	
     /* close:function(){
 		location.reload();
 	} */                 
@@ -103,7 +103,7 @@ table.altrowstable caption{
     offset:['10px',''],
     area: ['800px', '560px'],
     //page:{url:'kyzletter_findById_layer?billNo='+billNo+'& factNo='+factNo }
-    iframe:{src:'kyzletter_findById_layer?billNo='+billNo+'& factNo='+factNo,scrolling:'auto'}
+    iframe:{src:'kyzletter_findById_layer?billNo='+billNo+'& factNo='+factNo+'& readMk=Y',scrolling:'auto'}
     /* close:function(){
            location.reload();
     }  */                            
@@ -127,13 +127,44 @@ table.altrowstable caption{
     offset:['10px',''],
     area: ['600px', '560px'],
     //page:{url:'kyz_findById_layer?billNo='+billNo+'& factNo='+factNo},
-    iframe:{src:'kyz_findById_layer?billNo='+billNo+'& factNo='+factNo,scrolling:'auto'},
-     yes:function(){         
-      window.location.href='vbm_add?billNo='+billNo+'& visa_mk=Y'+'& factNo='+factNo+'& itemNo='+itemNo+'& visaSort='+visaSort;
+    //iframe:{src:'kyz_findById_layer?billNo='+billNo+'& factNo='+factNo,scrolling:'auto'},
+    
+    /* 修改1   20151025 */
+    iframe:{src:'kyz_findById_layer?billNo='+billNo+'& factNo='+factNo+'& itemNo='+itemNo+'& visaSort='+visaSort+'& readMk=N',scrolling:'auto'},
+    /* 修改1   20151025 */
+    
+     yes:function(){              
+     //window.location.href='vbm_add?billNo='+billNo+'& visa_mk=Y'+'& factNo='+factNo+'& itemNo='+itemNo+'& visaSort='+visaSort; 
+     
+     /*********************** 修改2   20151025 ******************************/
+     var memo=layer.getChildFrame("#memo_txt",layer.index).val();
+     layer.getChildFrame("#visa_mk",layer.index).val('Y'); 
+     if(memo.length>150){
+        alert("備註不可超過150字");
+     }else{
+        window.location.href='success.html';             
+         layer.getChildFrame("#memo",layer.index).submit();
+         layer.load("正在處理，請稍等...");
+     }
+     
+     /*********************** 修改2   20151025 ******************************/  
+   
     },
     no:function(){
-      window.location.href='vbm_add?billNo='+billNo+'& visa_mk=T'+'& factNo='+factNo+'& itemNo='+itemNo+'& visaSort='+visaSort;
-    }              
+      //window.location.href='vbm_add?billNo='+billNo+'& visa_mk=T'+'& factNo='+factNo+'& itemNo='+itemNo+'& visaSort='+visaSort;
+      /*********************** 修改2   20151025 ******************************/
+     var memo=layer.getChildFrame("#memo_txt",layer.index).val();
+     layer.getChildFrame("#visa_mk",layer.index).val('T'); 
+     if(memo.length>150){
+        alert("備註不可超過150字");
+     }else{
+        window.location.href='success.html';             
+         layer.getChildFrame("#memo",layer.index).submit();
+         layer.load("正在處理，請稍等...");
+     }
+       
+     /*********************** 修改2   20151025 ******************************/ 
+    }       
 });
     }
  function check2(factNo,visaSort,billNo,itemNo){
@@ -153,13 +184,35 @@ table.altrowstable caption{
     offset:['10px',''],
     area: ['800px', '560px'],
     //page:{url:'kyzletter_findById_layer?billNo='+billNo+'& factNo='+factNo},
-    iframe:{src:'kyzletter_findById_layer?billNo='+billNo+'& factNo='+factNo,scrolling:'auto'},
+    iframe:{src:'kyzletter_findById_layer?billNo='+billNo+'& factNo='+factNo+'& itemNo='+itemNo+'& visaSort='+visaSort+'& readMk=N&visa_mk=Y',scrolling:'auto'},
      yes:function(){         
-      window.location.href='vbm_add?billNo='+billNo+'& visa_mk=Y'+'& factNo='+factNo+'& itemNo='+itemNo+'& visaSort='+visaSort;
+      //window.location.href='vbm_add?billNo='+billNo+'& visa_mk=Y'+'& factNo='+factNo+'& itemNo='+itemNo+'& visaSort='+visaSort;
+      /*********************** 修改2   20151025 ******************************/
+     var memo=layer.getChildFrame("#memo_txt",layer.index).val();
+     layer.getChildFrame("#visa_mk",layer.index).val('T'); 
+     if(memo.length>150){
+        alert("備註不可超過150字");
+     }else{
+         window.location.href='success.html';             
+         layer.getChildFrame("#memo",layer.index).submit();
+         layer.load("正在處理，請稍等...");  
+     }
+     /*********************** 修改2   20151025 ******************************/  
     },
     no:function(){
-      window.location.href='vbm_add?billNo='+billNo+'& visa_mk=T'+'& factNo='+factNo+'& itemNo='+itemNo+'& visaSort='+visaSort;
-    }              
+      //window.location.href='vbm_add?billNo='+billNo+'& visa_mk=T'+'& factNo='+factNo+'& itemNo='+itemNo+'& visaSort='+visaSort;
+      /*********************** 修改2   20151025 ******************************/
+     var memo=layer.getChildFrame("#memo_txt",layer.index).val();
+     layer.getChildFrame("#visa_mk",layer.index).val('T'); 
+     if(memo.length>150){
+        alert("備註不可超過150字");
+     }else{
+        window.location.href='success.html';             
+         layer.getChildFrame("#memo",layer.index).submit();
+         layer.load("正在處理，請稍等...");
+     } 
+     /*********************** 修改2   20151025 ******************************/  
+    }           
 });
     }
     
@@ -181,6 +234,17 @@ function altRows(id){
 
 window.onload=function(){
 	altRows('alternatecolor');
+}
+function tips(memo,index){
+    if(memo==''){
+       memo='無備註';
+    }
+    layer.tips(memo, '#'+index, {
+    style: ['background-color:#78BA32; color:#fff', '#78BA32'],
+    maxWidth:240,
+    time: 10,
+    closeBtn:[0, true]
+});
 }
 </script>
 </head>
@@ -209,7 +273,7 @@ window.onload=function(){
 		  <s:property value="vbm.id.billNo"/></a>
 		  </s:else>
 		  </td> 
-		  <s:iterator value="vbm.kyVisabillses">
+		  <s:iterator value="vbm.kyVisabillses" status="x">
 	       <td>
 	       <!-- <s:property value="vbm.signerNext"/>(<s:property value="visaSigner"/>) -->
 	       <s:if test='flowMk=="Y"'>
@@ -239,10 +303,10 @@ window.onload=function(){
 	           </s:else> 	        	       
 	       </s:if>
 	       <s:if test='visaMk=="Y"'>	       
-	        <a style="color:green">已審核</a>
+	        <a style="color:green" href="javascript:tips('${memo}','index${x.index}')" id="index${x.index}">已審核<br/>(<s:property value="dateVisa"/>)</a>
 	       </s:if>
 	       <s:if test='visaMk=="T"'>
-	         <a style="color:blue">未通過</a>
+	         <a style="color:blue" href="javascript:tips('${memo}','index${x.index}')" id="index${x.index}">未通過<br/>(<s:property value="dateVisa"/>)</a>
 	       </s:if>
 	       </s:if>
 	       <s:else>

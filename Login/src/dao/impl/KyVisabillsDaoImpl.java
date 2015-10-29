@@ -35,11 +35,12 @@ public class KyVisabillsDaoImpl extends Basedao implements IKyVisaBillsDao{
 			String createDate, String createDate2,String email) {
 		// TODO Auto-generated method stub
 		StringBuffer hql=new StringBuffer();
+		StringBuffer hql2=new StringBuffer();
 		Map<String,Object>map=new HashMap<String,Object>();
 		int allrow=0;
 		Integer rows=(Integer)ActionContext.getContext().getSession().get("rows");
 		hql.append("from KyVisabills where 1=1");
-		
+		hql2.append("select count(id.itemNo) ");
 		/*if(userName!=null&&!userName.equals("")&&!userName.contains("admin")){
 			hql.append(" and lower(visaSigner)=:visaSigner");
 			map.put("visaSigner", email.toLowerCase());
@@ -99,11 +100,12 @@ public class KyVisabillsDaoImpl extends Basedao implements IKyVisaBillsDao{
 		
 		//hql.append(" and flowMk='Y'");
 		hql.append(" and substr(id.kyVisabillm.id.billNo,0,2) in ('CM','EM')");
+		hql2.append(hql);
 		hql.append(" order by id.kyVisabillm.id.factNo desc,id.kyVisabillm.dateCreate desc");
 		if(rows!=null&&page>0){
 			allrow=rows;
 		}else{
-			allrow=super.getAllRowCount(hql.toString(), map);
+			allrow=super.getAllRowCount(hql2.toString(), map);
 			ActionContext.getContext().getSession().put("rows", allrow);
 		}
 		int currentPage=PageBean.countCurrentPage(page);
@@ -164,11 +166,12 @@ public class KyVisabillsDaoImpl extends Basedao implements IKyVisaBillsDao{
 			String userName, String visaMk,String factNo,String billNo,String visaSort,String createDate,String createDate2,String email) {
 		// TODO Auto-generated method stub
 		StringBuffer hql=new StringBuffer();
+		StringBuffer hql2=new StringBuffer();
 		Map<String,Object>map=new HashMap<String,Object>();
 		int allrow=0;
 		Integer rows=(Integer)ActionContext.getContext().getSession().get("rows");
 		hql.append("from KyVisabills where 1=1");
-		
+		hql2.append("select count(id.itemNo )");
 		//如果是非管理員就會有email（也就是visaSigner）限制
 		if(userName!=null&&!userName.equals("")&&!userName.contains("admin")){
 			hql.append(" and lower(visaSigner)=:visaSigner");
@@ -247,12 +250,16 @@ public class KyVisabillsDaoImpl extends Basedao implements IKyVisaBillsDao{
 				hql.append(" and id.itemNo=id.kyVisabillm.itemNext and visaMk='N'");
 			}			
 		}
+		
 		hql.append(" and substr(id.kyVisabillm.id.billNo,0,2) in ('CM','EM')");	
+		hql2.append(hql);
 		hql.append(" order by id.kyVisabillm.id.factNo desc,id.kyVisabillm.dateCreate desc");
+		
 		if(rows!=null&&page>0){
 			allrow=rows;
 		}else{
-			allrow=super.getAllRowCount(hql.toString(), map);
+			//allrow=super.getAllRowCount(hql.toString(), map);
+			allrow=super.getAllRowCount2(hql2.toString(), map);
 			ActionContext.getContext().getSession().put("rows", allrow);
 		}
 		int currentPage=PageBean.countCurrentPage(page);
@@ -280,7 +287,7 @@ public class KyVisabillsDaoImpl extends Basedao implements IKyVisaBillsDao{
 		return bean;
 	}
 
-	public int findKyVisaBills_Int(String factNo,String userName) {
+	public int findKyVisaBills_Int(String factNo,String email) {
 		// TODO Auto-generated method stub
 		StringBuffer hql=new StringBuffer();
 		Map<String,Object>map=new HashMap<String,Object>();
@@ -289,8 +296,8 @@ public class KyVisabillsDaoImpl extends Basedao implements IKyVisaBillsDao{
 			hql.append(" and id.kyVisabillm.id.factNo=:factno");
 			map.put("factno", factNo);
 		}
-		hql.append(" and visaRank=:visarank");
-		map.put("visarank", userName);
+		hql.append(" and lower(visaSigner)=:visaSigner");
+		map.put("visaSigner", email.toLowerCase());
 		hql.append(" and id.itemNo=id.kyVisabillm.itemNext and visaMk='N'") ;
 				/*" and (id.kyVisabillm.id.visaSort='F' or id.kyVisabillm.id.visaSort='W' or id.kyVisabillm.id.visaSort='G' or id.kyVisabillm.id.visaSort='I'" +
 				" or id.kyVisabillm.id.visaSort='L' or id.kyVisabillm.id.visaSort='P' or id.kyVisabillm.id.visaSort='Q'" +

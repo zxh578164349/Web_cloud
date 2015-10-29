@@ -55,7 +55,7 @@ table.gridtable td {
 	border-style: solid;
 	border-color: #666666;
 	background-color: #ffffff;
-	width: 70px;
+	width: 60px;
 }
 </style>
 <script type="text/javascript">
@@ -113,64 +113,8 @@ table.gridtable td {
 			</tr>
 			<tr>
 				<td>類別</td>
-				<td colspan="9">
-				 <s:if test='kyz.visaType=="F"'>
-				  廠務簽核
-				</s:if>
-				<s:if test='kyz.visaType=="W"'>
-				臺灣簽核
-				</s:if>
-				<s:if test='kyz.visaType=="G"'>
-				  工程簽核
-				</s:if>
-				<s:if test='kyz.visaType=="I"'>
-				IKT簽核
-				</s:if>	
-				<s:if test='kyz.visaType=="L"'>
-				  實驗室簽核
-				</s:if>
-				<s:if test='kyz.visaType=="P"'>
-				品管簽核
-				</s:if>	
-				<s:if test='kyz.visaType=="Q"'>
-				  企劃簽核
-				</s:if>
-				<s:if test='kyz.visaType=="S"'>
-				生管簽核
-				</s:if>	
-				<s:if test='kyz.visaType=="T"'>
-				  整理簽核
-				</s:if>
-				<s:if test='kyz.visaType=="Y"'>
-				油壓簽核
-				</s:if>	
-				<s:if test='kyz.visaType=="Z"'>
-				  總務簽核
-				</s:if>
-				<s:if test='kyz.visaType=="B"'>
-				  備料簽核
-				</s:if>
-				<s:if test='kyz.visaType=="O"'>
-				  業務簽核
-				</s:if>
-				<s:if test='kyz.visaType.substring(0,2)=="C1"'>
-				  其他費用簽核1(<1000元)
-				</s:if>
-				<s:if test='kyz.visaType.substring(0,2)=="C2"'>
-				 其他費用簽核2(>=1000元)
-				</s:if>
-				<s:if test='kyz.visaType.substring(0,2)=="C3"'>
-				  電腦耗材簽核1(<1000元)
-				</s:if>
-				<s:if test='kyz.visaType.substring(0,2)=="C4"'>
-				  電腦耗材簽核2(>=1000元)
-				</s:if>	
-				<s:if test='kyz.visaType.substring(0,2)=="C5"'>
-				  總務費用簽核1(<1000元)
-				</s:if>
-				<s:if test='kyz.visaType.substring(0,2)=="C6"'>
-				  總務費用簽核2(>=1000元)
-				</s:if>	(<s:property value="kyz.visaType" />)
+				<td colspan="9">				
+				<s:property value="kyz.visaType" />
 				</td>
 			</tr>
 			<tr>
@@ -201,7 +145,6 @@ table.gridtable td {
 
 			<s:iterator value="kyz.kyzExpectmatses" status="x" id="temp">
 				<tr>
-
 					<td><s:property value='itemNm' />
 					</td>
 					<td><s:property value='id.itemNo' />
@@ -224,7 +167,23 @@ table.gridtable td {
 					</td>
 				</tr>
 			</s:iterator>
-		</tbody>
+			
+			<!------------------------- 修改3   20151027---------------   -->
+			<s:if test='readMk=="N"'>
+			    <tr><td colspan="15" style="color:red">備註:</td></tr>
+				<tr><td colspan="15">									
+					<form id="memo" method="post" action="vbm_add">
+						<textarea rows="6" cols="80" name="memo" id="memo_txt"></textarea>						
+						<input type="hidden" name="factNo" value="<s:property value='factNo'/>"/>
+						<input type="hidden" name="billNo" value="<s:property value='billNo'/>"/>
+						<input type="hidden" name="itemNo" value="<s:property value='itemNo'/>"/>
+						<input type="hidden" name="visaSort" value="<s:property value="visaSort"/>"/>
+						<input type="hidden" name="visa_mk"  id="visa_mk"/>
+					</form>					
+				</td></tr>
+			</s:if>
+			<!------------------------- 修改3   20151027---------------   -->	
+			</tbody>		
 	</table>
 	 <s:if test='kyz.filesYn=="1"'>
 	  <hr/>
