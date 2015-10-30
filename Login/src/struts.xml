@@ -442,8 +442,10 @@
 		    <result name="deleteFirst" type="redirectAction">visaflow_findPageBean_1</result>		   
 		</action>
 		<action name="vbm_*" class="visabillmAction" method="{1}">
+		  <!--   函文審核 -->
 		  <result name="beanList">/page/visabillm_new.jsp</result>
 		  <result name="beanList1">/page/table1/visabillm1_new.jsp</result>
+		  <!--   函文審核 -->
 		  <result name="findById">/page/kyvisabills.jsp</result><!-- 審核 -->
 		  <result name="findById2">/page/kyvisabills_add.jsp</result><!-- 加簽 -->
 		  <result name="findById3">/page/kyvisabills_see.jsp</result>
@@ -481,8 +483,10 @@
 		  <result name="findById2_tw">/tw/kyvisabills_add_tw.jsp</result><!-- 加簽 -->
 		  <result name="findById4_tw">/tw/kyvisabills_minus_tw.jsp</result><!-- 減簽 -->
 		  <result name="remark_tw" type="redirectAction">vbm_findPageBean_tw</result><!-- 備註 -->
+		  <!-- 函文審核狀況 -->
 		  <result name="beanList_1">/tw/visabillm.jsp</result>
 		  <result name="beanList1_1">/tw/tw1/visabillm1.jsp</result>
+		  <!-- 函文審核狀況 -->
 		</action>
 		<action name="vbs_*" class="visabillAction" method="{1}">		 
 		  <result name="add" type="redirectAction">vbm_findPageBean</result>

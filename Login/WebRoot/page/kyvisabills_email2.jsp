@@ -189,7 +189,7 @@ table.altrowstable caption{
       //window.location.href='vbm_add?billNo='+billNo+'& visa_mk=Y'+'& factNo='+factNo+'& itemNo='+itemNo+'& visaSort='+visaSort;
       /*********************** 修改2   20151025 ******************************/
      var memo=layer.getChildFrame("#memo_txt",layer.index).val();
-     layer.getChildFrame("#visa_mk",layer.index).val('T'); 
+     layer.getChildFrame("#visa_mk",layer.index).val('Y'); 
      if(memo.length>150){
         alert("備註不可超過150字");
      }else{

@@ -290,22 +290,7 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 			email=user.getEmail();
 		}
 		bean=visabillSer.findPageBean_tw(25, page, userName, visaMk, factNo, billNo,visaSort,yymmdd,yymmdd2,email);
-		/*List<KyVisabills>list=bean.getList();
-		for(int i=0;i<list.size();i++){
-			String billNo=list.get(i).getId().getKyVisabillm().getId().getBillNo();
-			String title="";
-			//判斷費用函文還是內部聯絡函
-			if(billNo.substring(0, 2).equals("EM")){
-				title=kyzSer.findTitleByBillno(billNo);
-			}else{
-				title=kyzletterSer.findTitleByBillno(billNo);
-			}
-			if(title!=null){
-				list.get(i).setMemo(title);
-			}else{
-				list.get(i).setMemo("");
-			}						
-		}*/
+		
 		this.getKyzTitle(bean);
 		this.getTypeName(bean);
 		return "beanList";
@@ -2052,28 +2037,27 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 	
 	public void getTypeName(PageBean bean){
 		List<KyVisabills>list=bean.getList();
-		for(int i=0;i<list.size();i++){
+		List<WebType>list_type=(List<WebType>)ActionContext.getContext().getSession().get("list_webtype");/********20151029登錄時已經記錄**************/
+		for(int i=0;i<list.size();i++){//for1
 			KyVisabills vbs=list.get(i);
 			String factno=vbs.getId().getKyVisabillm().getId().getFactNo();
-			String visaSort=vbs.getId().getKyVisabillm().getId().getVisaSort();
-			char visaSort_char=visaSort.charAt(0);
-			String typename="";
-			if(visaSort_char=='C'){
-				typename=webtypeSer.findTypeNameById(factno, visaSort.substring(0, 2));
-			}else{
-				//typename=webtypeSer.findTypeNameById(factno, visaSort);
-				typename=webtypeSer.findTypeNameById(factno, visaSort.substring(0, 2));
-			}
-			if(typename!=null&&!typename.equals("")){
-				vbs.getId().getKyVisabillm().setColTemp(typename);	
-			}else{
-				vbs.getId().getKyVisabillm().setColTemp(visaSort);
-			}
-					
-		}
+			String visaSort=vbs.getId().getKyVisabillm().getId().getVisaSort();			
+			String typename=visaSort;			
+			//typename=webtypeSer.findTypeNameById(factno, visaSort.substring(0, 2));									
+			for(int j=0;j<list_type.size();j++){//for2
+				WebType type=list_type.get(j);
+				if(factno.equals(type.getId().getFactNo())&&visaSort.substring(0,2).equals(type.getId().getTypeNo())){
+					typename=type.getTypeName();					
+					break;
+				}
+			}//for2
+			vbs.getId().getKyVisabillm().setColTemp(typename);
+		}//for1
+		
+		
 	}
 	
-	public void getTypeName2(PageBean bean){
+/*	public void getTypeName2(PageBean bean){
 		List<KyVisabills>list=bean.getList();
 		List<WebType>list_type=webtypeSer.findByFactNo2(factNo);
 		for(int i=0;i<list.size();i++){
@@ -2099,7 +2083,7 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 			}
 					
 		}
-	}
+	}*/
 	
 	public String minusvisabills2() throws IOException{
 		KyVisabillm vbm=visabillmSer.findById(factNo, visaSort, billNo);		

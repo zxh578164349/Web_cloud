@@ -436,7 +436,10 @@ public class WebUserAction extends ActionSupport implements ServletResponseAware
 						response.setContentType("text/html;charset=utf-8");
 						response.getWriter().print("<script>alert('當前用戶已註銷!');history.back()</script>");
 						return null;
-					}						
+					}
+					
+					List<WebType>list_type=webtypeSer.findByFactNo2(factNo);
+					ActionContext.getContext().getSession().put("list_webtype", list_type);/**********20151029登錄時，保存各個廠別的函文類型************/
 					} catch (Exception e) {
 						e.printStackTrace();
 					}					

@@ -36,7 +36,7 @@ jq(document).keyup(function(event){
 </script>
 
 </head>
-<body onload="getKyType()">
+<body >
   <div style="width:1400px">
    <form>
 	<table  border=0 >

@@ -384,12 +384,12 @@
 		  document.getElementById("kpifact1").innerHTML='<input name="checkbox" value="資料輸入,KPI年度目標,kpifact_findPageBean" type="checkbox"/>KPI年度目標';																								                                             ;									 										
 	    }
 	    
-	    var i48=document.getElementById("hangwenshenhe(2)");
+	   /*  var i48=document.getElementById("hangwenshenhe(2)");
 		if(i48!=null){
 		   document.getElementById("hangwenshenhe1(2)").innerHTML="";
 		}else{
 		  document.getElementById("hangwenshenhe1(2)").innerHTML='<input name="checkbox" value="KPI數據,函文審核(2),vbm_findPageBean_tw"  type="checkbox">函文審核(2)';																								                                             ;									 										
-	    }
+	    } */
 	    
 	    var i49=document.getElementById("hangwenshenheState");
 		if(i49!=null){
@@ -742,7 +742,7 @@ function getSub(){
 							   </s:iterator>
 							   <span id="kyzmat1"></span>
 							</td>
-							<td>
+							<!-- <td>
 							   <s:iterator value="#session.user.webJurisdictions">
 							      <s:iterator value="webSubmenus">
 							          <s:if test="submenuname=='函文審核(2)'">
@@ -754,7 +754,7 @@ function getSub(){
 							      </s:iterator>							   
 							   </s:iterator>
 							   <span id="hangwenshenhe1(2)"></span>
-							</td>
+							</td> -->
 							<td>
 							   <s:iterator value="#session.user.webJurisdictions">
 							      <s:iterator value="webSubmenus">
@@ -767,10 +767,8 @@ function getSub(){
 							      </s:iterator>							   
 							   </s:iterator>
 							   <span id="hangwenshenheState1"></span>
-							</td>				
-						</tr>
-						<tr>
-						   <td>
+							</td>
+							<td>
 							   <s:iterator value="#session.user.webJurisdictions">
 							      <s:iterator value="webSubmenus">
 							          <s:if test="submenuname=='內部聯絡函申請'">
@@ -782,7 +780,9 @@ function getSub(){
 							      </s:iterator>							   
 							   </s:iterator>
 							   <span id="kyzcontactletter1"></span>
-							</td>
+							</td>				
+						</tr>
+						<tr>						   
 							 <td>
 							   <s:iterator value="#session.user.webJurisdictions">
 							      <s:iterator value="webSubmenus">
