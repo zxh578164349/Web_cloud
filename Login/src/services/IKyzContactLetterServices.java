@@ -1,5 +1,7 @@
 package services;
 
+import java.util.List;
+
 import util.PageBean;
 import entity.KyzContactletter;
 
@@ -10,5 +12,7 @@ public interface IKyzContactLetterServices {
 	public KyzContactletter findById(String factNo, String billNo);
 	public void delete(String factNo,String billNo);
 	public String findTitleByBillno(String billNo);
+	
+	public List<String[]>findTitle(String factNo);
 
 }

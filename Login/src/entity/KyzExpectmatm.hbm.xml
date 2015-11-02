@@ -77,7 +77,7 @@
         <property name="colTemp" type="java.lang.String">
             <column name="COL_TEMP" length="2"></column>
         </property>
-        <bag name="kyzExpectmatses" inverse="true" cascade="all" lazy="false">
+        <bag name="kyzExpectmatses" inverse="true" cascade="all" >
             <key>
                 <column name="FACT_NO" length="6" not-null="true" />
                 <column name="BILL_NO" length="16" not-null="true" />

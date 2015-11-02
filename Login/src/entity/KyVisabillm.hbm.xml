@@ -53,7 +53,7 @@
         <property name="colTemp" type="java.lang.String">
             <column name="COL_TEMP" length="2"></column>
         </property>
-        <bag name="kyVisabillses" inverse="true" cascade="all" lazy="false">
+        <bag name="kyVisabillses" inverse="true" cascade="all" >
             <key>
                 <column name="FACT_NO" length="4" not-null="true" />
                 <column name="VISA_SORT" length="1" not-null="true" />

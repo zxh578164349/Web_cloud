@@ -45,6 +45,7 @@ import entity.KyzExpectmatmFile;
 import entity.KyzExpectmatmId;
 import entity.KyzExpectmats;
 import entity.KyzVisaflow;
+import entity.WebType;
 import entity.WebUser;
 import entity_temp.VisabillsTemp;
 
@@ -684,7 +685,7 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 		
 	}
 	
-	public void getTypeName(PageBean bean){
+	/*public void getTypeName(PageBean bean){
 		List<KyzContactletter>list=bean.getList();
 		for(int i=0;i<list.size();i++){
 			KyzContactletter letter=list.get(i);
@@ -705,6 +706,26 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 			}
 					
 		}
+	}*/
+	
+	public void getTypeName(PageBean bean){
+		List<KyzContactletter>list=bean.getList();
+		List<WebType>list_type=(List<WebType>)ActionContext.getContext().getSession().get("list_webtype");/********20151029登錄時已經記錄**************/
+		for(int i=0;i<list.size();i++){//for1
+			KyzContactletter letter=list.get(i);
+			String factno=letter.getId().getFactNo();
+			String visaSort=letter.getVisaType();			
+			String typename=visaSort;			
+			//typename=webtypeSer.findTypeNameById(factno, visaSort.substring(0, 2));									
+			for(int j=0;j<list_type.size();j++){//for2
+				WebType type=list_type.get(j);
+				if(factno.equals(type.getId().getFactNo())&&visaSort.substring(0,2).equals(type.getId().getTypeNo())){
+					typename=type.getTypeName();					
+					break;
+				}
+			}//for2
+			letter.setColTemp(typename);
+		}//for1				
 	}
 	
 

@@ -82,4 +82,9 @@ public class KyzContactLetterServicesImpl implements IKyzContactLetterServices{
 		return kyzletterDao.findTitleByBillno(billNo);
 	}
 
+	public List<String[]> findTitle(String factNo) {
+		// TODO Auto-generated method stub
+		return kyzletterDao.findTitle(factNo);
+	}
+
 }

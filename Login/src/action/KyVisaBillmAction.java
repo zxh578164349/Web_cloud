@@ -2016,7 +2016,7 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 
     }
     
-	public void getKyzTitle(PageBean bean){
+	/*public void getKyzTitle(PageBean bean){
 		List<KyVisabills>list=bean.getList();
 		for(int i=0;i<list.size();i++){
 			String billNo=list.get(i).getId().getKyVisabillm().getId().getBillNo();
@@ -2033,6 +2033,55 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 				list.get(i).setMemo("");
 			}						
 		}
+	}*/
+	public void getKyzTitle(PageBean bean){
+		List<KyVisabills>list=bean.getList();
+		List<String[]>list_kyz=null;
+		List<String[]>list_letter=null;
+		list_kyz=(List<String[]>)ActionContext.getContext().getSession().get("list_kyz");
+		list_letter=(List<String[]>)ActionContext.getContext().getSession().get("list_letter");
+		String title="";
+		if(list.size()>0){
+			for(int i=0;i<list.size();i++){
+				String billNo=list.get(i).getId().getKyVisabillm().getId().getBillNo();
+				if(billNo.substring(0,2).equals("EM")&&list_kyz!=null){
+					list_kyz=kyzSer.findTitle(factNo);
+					ActionContext.getContext().getSession().put("list_kyz", list_kyz);
+					break;
+				}
+			}
+			for(int i=0;i<list.size();i++){
+				String billNo=list.get(i).getId().getKyVisabillm().getId().getBillNo();
+				if(billNo.substring(0,2).equals("CM")&&list_letter!=null){
+					list_letter=kyzletterSer.findTitle(factNo);
+					ActionContext.getContext().getSession().put("list_letter", list_letter);
+					break;
+				}
+			}
+			for(int i=0;i<list.size();i++){
+				String bill_No=list.get(i).getId().getKyVisabillm().getId().getBillNo();
+				if(billNo.substring(0, 2).equals("EM")){
+					for(int j=0;j<list_kyz.size();j++){
+						if(bill_No.equals(list_kyz.get(j)[1])){
+							title=list_kyz.get(j)[2];
+						}
+					}
+				}else{
+					title=kyzletterSer.findTitleByBillno(billNo);
+				}
+			}
+		}
+		/*for(int i=0;i<list.size();i++){
+			String billNo=list.get(i).getId().getKyVisabillm().getId().getBillNo();
+			String title="";
+			//判斷費用函文還是內部聯絡函
+			if(billNo.substring(0, 2).equals("EM")){
+				title=kyzSer.findTitleByBillno(billNo);
+			}else{
+				title=kyzletterSer.findTitleByBillno(billNo);
+			}
+			list.get(i).setMemo(title);						
+		}*/
 	}
 	
 	public void getTypeName(PageBean bean){
@@ -2052,38 +2101,8 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 				}
 			}//for2
 			vbs.getId().getKyVisabillm().setColTemp(typename);
-		}//for1
-		
-		
+		}//for1				
 	}
-	
-/*	public void getTypeName2(PageBean bean){
-		List<KyVisabills>list=bean.getList();
-		List<WebType>list_type=webtypeSer.findByFactNo2(factNo);
-		for(int i=0;i<list.size();i++){
-			KyVisabills vbs=list.get(i);
-			String factno=vbs.getId().getKyVisabillm().getId().getFactNo();
-			String visaSort=vbs.getId().getKyVisabillm().getId().getVisaSort();
-			char visaSort_char=visaSort.charAt(0);
-			String typename="";	
-			for(int j=0;j<list_type.size();j++){
-				WebType type=list_type.get(j);
-				
-			}
-			if(visaSort_char=='C'){
-				typename=webtypeSer.findTypeNameById(factno, visaSort.substring(0, 2));
-			}else{
-				//typename=webtypeSer.findTypeNameById(factno, visaSort);
-				typename=webtypeSer.findTypeNameById(factno, visaSort.substring(0, 2));
-			}
-			if(typename!=null&&!typename.equals("")){
-				vbs.getId().getKyVisabillm().setColTemp(typename);	
-			}else{
-				vbs.getId().getKyVisabillm().setColTemp(visaSort);
-			}
-					
-		}
-	}*/
 	
 	public String minusvisabills2() throws IOException{
 		KyVisabillm vbm=visabillmSer.findById(factNo, visaSort, billNo);		

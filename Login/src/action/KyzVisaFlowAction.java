@@ -15,8 +15,10 @@ import util.PageBean;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
+import entity.KyVisabills;
 import entity.KyzVisaflow;
 import entity.KyzVisaflowId;
+import entity.WebType;
 
 public class KyzVisaFlowAction extends ActionSupport implements ServletResponseAware{
 	private IKyzVisaFlowServices visaSer;
@@ -460,7 +462,7 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 		this.response=response;
 	}
 	
-	public void getTypeName(PageBean bean){
+	/*public void getTypeName(PageBean bean){
 		List<KyzVisaflow>list=bean.getList();
 		for(int i=0;i<list.size();i++){
 			KyzVisaflow flow=list.get(i);
@@ -482,6 +484,26 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 			}
 					
 		}
+	}*/
+	
+	public void getTypeName(PageBean bean){
+		List<KyzVisaflow>list=bean.getList();
+		List<WebType>list_type=(List<WebType>)ActionContext.getContext().getSession().get("list_webtype");/********20151029登錄時已經記錄**************/
+		for(int i=0;i<list.size();i++){//for1
+			KyzVisaflow flow=list.get(i);
+			String factno=flow.getId().getFactNo();
+			String visaSort=flow.getId().getVisaSort();			
+			String typename=visaSort;			
+			//typename=webtypeSer.findTypeNameById(factno, visaSort.substring(0, 2));									
+			for(int j=0;j<list_type.size();j++){//for2
+				WebType type=list_type.get(j);
+				if(factno.equals(type.getId().getFactNo())&&visaSort.substring(0,2).equals(type.getId().getTypeNo())){
+					typename=type.getTypeName();					
+					break;
+				}
+			}//for2
+			flow.setColTemp(typename);
+		}//for1	
 	}
 	
 	public String findMaxItem(){

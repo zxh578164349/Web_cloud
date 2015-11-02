@@ -46,7 +46,11 @@ public class KyzExpcetmatmDaoImpl extends Basedao implements IKyzExpectmatmDao {
 		Query query=getSession().createQuery(hql);
 		query.setString(0, id.getFactNo());
 		query.setString(1, id.getBillNo());
-		return (KyzExpectmatm)query.uniqueResult();
+		KyzExpectmatm kyz=(KyzExpectmatm)query.uniqueResult();
+		if(kyz!=null){
+			kyz.getKyzExpectmatses().size();
+		}
+		return kyz;
 	}
 
 	public PageBean findFixWithPage(int pageSize, int page, String factNo,
@@ -151,7 +155,11 @@ public class KyzExpcetmatmDaoImpl extends Basedao implements IKyzExpectmatmDao {
 		String hql="from KyzExpectmatm where id.billNo=?";
 		Query query=getSession().createQuery(hql);
 		query.setString(0, billNo);
-		return (KyzExpectmatm)query.uniqueResult();
+		KyzExpectmatm kyz=(KyzExpectmatm)query.uniqueResult();
+		if(kyz!=null){
+			kyz.getKyzExpectmatses().size();
+		}
+		return kyz;
 	}
 
 	public String findTitleByBillno(String billNo) {
@@ -161,5 +169,18 @@ public class KyzExpcetmatmDaoImpl extends Basedao implements IKyzExpectmatmDao {
 		query.setString(0, billNo);
 		String title=(String)query.uniqueResult();
 		return title;
+	}
+
+	public List<String[]> findTitle(String factNo) {
+		// TODO Auto-generated method stub
+		StringBuffer hql=new StringBuffer();
+		Map<String,Object>map=new HashMap<String,Object>();
+		hql.append("select id.factNo,id.billNo,memoSmk from KyzExpectmatm where 1=1 ");
+		if(factNo!=null&&!factNo.equals("")&&!factNo.equals("tw")){
+			hql.append(" and id.factNo=:factno");
+			map.put("factno", factNo);
+		}
+		List<String[]>list=super.getAllWithNoPage(hql.toString(), map);
+		return list;
 	}
 }

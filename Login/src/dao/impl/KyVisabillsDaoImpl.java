@@ -141,7 +141,11 @@ public class KyVisabillsDaoImpl extends Basedao implements IKyVisaBillsDao{
 		query.setString(1, visaSort);
 		query.setString(2, billNo);
 		query.setString(3, itemNo);
-		return (KyVisabills)query.uniqueResult();
+		KyVisabills vbs=(KyVisabills)query.uniqueResult();
+		if(vbs!=null){
+			vbs.getId().getKyVisabillm().getKyVisabillses().size();
+		}
+		return vbs;
 	}
 
 	public void delete(String factNo, String visaSort, String billNo,
