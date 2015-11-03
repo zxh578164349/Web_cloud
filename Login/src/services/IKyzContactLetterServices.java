@@ -13,6 +13,6 @@ public interface IKyzContactLetterServices {
 	public void delete(String factNo,String billNo);
 	public String findTitleByBillno(String billNo);
 	
-	public List<String[]>findTitle(String factNo);
+	public List<Object[]>findTitle(String factNo);
 
 }

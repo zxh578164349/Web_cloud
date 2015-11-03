@@ -124,6 +124,14 @@ public class WebUserDaoImpl extends Basedao implements IWebUserDao {
 		List<WebUser> list = super.findAll(hql, objs);
 		return list;
 	}
+	public int findMoreUser2(String uname) {
+		// TODO Auto-generated method stub
+		String hql = "select count(username) from WebUser where lower(username)=?";
+		Query query=getSession().createQuery(hql);
+		query.setString(0, uname.toLowerCase());
+		int result=(Integer)query.uniqueResult();
+		return result;
+	}
 
 	public void updateKy(int id, int available) {
 		WebUser user = (WebUser) findById(id, WebUser.class);

@@ -284,7 +284,12 @@ public class TestTimerAction extends QuartzJobBean {
 		SimpleDateFormat format=new SimpleDateFormat("yyyyMM");		
 		if(yymm==null||yymm.equals("")){
 			Calendar calendar=Calendar.getInstance();
-			calendar.add(Calendar.DATE, -1);
+			//當每月的2號是星期一，也就是1號是星期天，則要減2天，以發送上個月全部產量資料
+			if(calendar.get(Calendar.DAY_OF_MONTH)==2&&calendar.get(Calendar.DAY_OF_WEEK)==Calendar.MONDAY){
+				calendar.add(Calendar.DATE, -2);
+			}else{
+				calendar.add(Calendar.DATE, -1);
+			}
 			yymm=format.format(calendar.getTime());
 			
 		}
@@ -292,8 +297,8 @@ public class TestTimerAction extends QuartzJobBean {
 			Date bdate = new Date();
 			Calendar cal = Calendar.getInstance();
 			cal.setTime(bdate);
-			if (cal.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY
-					|| cal.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
+			/*if (cal.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY|| cal.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY){*/
+			if (cal.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY){	
 				System.err.print("ok");
 			} else {
 				HttpClient client = new HttpClient();
@@ -395,15 +400,20 @@ public class TestTimerAction extends QuartzJobBean {
 		SimpleDateFormat tformat=new SimpleDateFormat("yyyyMM");
 		if(yymm==null||yymm.equals("")){			
 			Calendar calendar=Calendar.getInstance();
-			calendar.add(Calendar.DATE, -1);
+			//當每月的2號是星期一，也就是1號是星期天，則要減2天，以發送上個月全部產量資料
+			if(calendar.get(Calendar.DAY_OF_MONTH)==2&&calendar.get(Calendar.DAY_OF_WEEK)==Calendar.MONDAY){
+				calendar.add(Calendar.DATE, -2);
+			}else{
+				calendar.add(Calendar.DATE, -1);
+			}
 			yymm=tformat.format(calendar.getTime());
 		}
 		try {
 			Date bdate = new Date();
 			Calendar cal = Calendar.getInstance();
 			cal.setTime(bdate);
-			if (cal.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY
-					|| cal.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
+			/*if (cal.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY|| cal.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {*/
+			if (cal.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
 				System.err.print("ok");
 			} else {
 				HttpClient client = new HttpClient();

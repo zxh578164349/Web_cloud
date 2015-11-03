@@ -20,6 +20,7 @@ public interface IWebUserService {
 	public int totlePage(String conditions);
 
 	public List findMoreUser(String uname);
+	public int findMoreUser2(String uname);
 
 	// 設置賬戶是否可用
 	public boolean updateKy(int id, int available);

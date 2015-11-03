@@ -2036,52 +2036,50 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 	}*/
 	public void getKyzTitle(PageBean bean){
 		List<KyVisabills>list=bean.getList();
-		List<String[]>list_kyz=null;
-		List<String[]>list_letter=null;
-		list_kyz=(List<String[]>)ActionContext.getContext().getSession().get("list_kyz");
-		list_letter=(List<String[]>)ActionContext.getContext().getSession().get("list_letter");
+		List<Object[]>list_kyz=null;
+		List<Object[]>list_letter=null;
+		//list_kyz=(List<Object[]>)ActionContext.getContext().getSession().get("list_kyz");
+		//list_letter=(List<Object[]>)ActionContext.getContext().getSession().get("list_letter");
 		String title="";
 		if(list.size()>0){
 			for(int i=0;i<list.size();i++){
 				String billNo=list.get(i).getId().getKyVisabillm().getId().getBillNo();
-				if(billNo.substring(0,2).equals("EM")&&list_kyz!=null){
+				if(billNo.substring(0,2).equals("EM")){
 					list_kyz=kyzSer.findTitle(factNo);
-					ActionContext.getContext().getSession().put("list_kyz", list_kyz);
+					//ActionContext.getContext().getSession().put("list_kyz", list_kyz);
 					break;
 				}
 			}
 			for(int i=0;i<list.size();i++){
 				String billNo=list.get(i).getId().getKyVisabillm().getId().getBillNo();
-				if(billNo.substring(0,2).equals("CM")&&list_letter!=null){
+				if(billNo.substring(0,2).equals("CM")){
 					list_letter=kyzletterSer.findTitle(factNo);
-					ActionContext.getContext().getSession().put("list_letter", list_letter);
+					//ActionContext.getContext().getSession().put("list_letter", list_letter);
 					break;
 				}
 			}
-			for(int i=0;i<list.size();i++){
-				String bill_No=list.get(i).getId().getKyVisabillm().getId().getBillNo();
-				if(billNo.substring(0, 2).equals("EM")){
+			for(int i=0;i<list.size();i++){//for
+				
+				String billNo=list.get(i).getId().getKyVisabillm().getId().getBillNo();
+				if(billNo.substring(0, 2).equals("EM")&&list_kyz!=null){
 					for(int j=0;j<list_kyz.size();j++){
-						if(bill_No.equals(list_kyz.get(j)[1])){
-							title=list_kyz.get(j)[2];
+						if(billNo.equals((String)list_kyz.get(j)[1])){
+							title=(String)list_kyz.get(j)[2];
+							break;
 						}
 					}
-				}else{
-					title=kyzletterSer.findTitleByBillno(billNo);
 				}
-			}
+				if(billNo.substring(0,2).equals("CM")&&list_letter!=null){
+					for(int j=0;j<list_letter.size();j++){
+						if(billNo.equals((String)list_letter.get(j)[1])){
+							title=(String)list_letter.get(j)[2];
+							break;
+						}
+					}
+				}
+				list.get(i).setMemo(title);
+			}//for
 		}
-		/*for(int i=0;i<list.size();i++){
-			String billNo=list.get(i).getId().getKyVisabillm().getId().getBillNo();
-			String title="";
-			//判斷費用函文還是內部聯絡函
-			if(billNo.substring(0, 2).equals("EM")){
-				title=kyzSer.findTitleByBillno(billNo);
-			}else{
-				title=kyzletterSer.findTitleByBillno(billNo);
-			}
-			list.get(i).setMemo(title);						
-		}*/
 	}
 	
 	public void getTypeName(PageBean bean){

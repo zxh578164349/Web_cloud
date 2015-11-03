@@ -146,7 +146,7 @@ function findKyVisaBills_Int(){
        }
    })
 }
-setTimeout("showBills(),findKyVisaBills_Int()",1000);
+setTimeout("showBills(),findKyVisaBills_Int()",2000);
 /* setTimeout("hideBills()",15000);
 setTimeout("hideBills2()",18000); */	
 </script>

@@ -23,6 +23,7 @@ public interface IWebUserDao {
 	 * 相同名字的用戶(用於獲取一個用戶擁有多少個廠別)
 	 */
 	public List findMoreUser(String uname);
+	public int findMoreUser2(String uname);
 
 	// 設置賬戶是否可用
 	public void updateKy(int id, int available);

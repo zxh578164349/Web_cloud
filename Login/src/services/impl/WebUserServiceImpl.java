@@ -45,6 +45,10 @@ public class WebUserServiceImpl implements IWebUserService {
 		// TODO Auto-generated method stub
 		return webUserDao.findMoreUser(uname);
 	}
+	public int findMoreUser2(String uname) {
+		// TODO Auto-generated method stub
+		return webUserDao.findMoreUser2(uname);
+	}
 
 	public boolean updateKy(int id, int available) {
 		try {

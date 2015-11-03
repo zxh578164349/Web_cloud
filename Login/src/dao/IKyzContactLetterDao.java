@@ -12,6 +12,6 @@ public interface IKyzContactLetterDao {
 	public KyzContactletter findById(String factNo,String billNo);
 	public void delete(String factNo,String billNo);
 	public String findTitleByBillno(String billNo);
-	public List<String[]>findTitle(String factNo);
+	public List<Object[]>findTitle(String factNo);
 
 }

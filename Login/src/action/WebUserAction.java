@@ -358,8 +358,8 @@ public class WebUserAction extends ActionSupport implements ServletResponseAware
 		WebUser wUser = webUserService.selByuserId(factNo, webUsers.getUsername().trim());
 		//factname = webFactSer.selByid(factNo);
 		/*用戶名,密碼,廠別都正確*/
-		if (wUser != null) {
-			if (wUser.getPwd().equals(webUsers.getPwd().trim())) {//start if
+		if (wUser != null) {//if
+			if (wUser.getPwd().equals(webUsers.getPwd().trim())) {//start if2
 					try {												 
 							  String ipAddress = null; ipAddress =ServletActionContext.getRequest().getHeader("x-forwarded-for");									  
 						      if(ipAddress == null || ipAddress.length() == 0 ||"unknown".equalsIgnoreCase(ipAddress)){ 									  
@@ -444,8 +444,8 @@ public class WebUserAction extends ActionSupport implements ServletResponseAware
 						e.printStackTrace();
 					}					
 					return resultIndex;
-				}//end if			
-			}
+				}//end if2			
+			}//if
 		/*用戶名正確,但廠別不正確,*/
 		if (wUser == null && userList.size() > 0) {
 			for (int i = 0; i < userList.size(); i++) {

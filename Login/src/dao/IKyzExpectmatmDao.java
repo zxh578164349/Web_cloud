@@ -23,5 +23,5 @@ public interface IKyzExpectmatmDao {
 	public KyzExpectmatm findById2(String billNo);//由於單號是唯一的,所以可以用作單一條件查找
 	public String findTitleByBillno(String billNo);
 	
-	public List<String[]>findTitle(String factNo);
+	public List<Object[]>findTitle(String factNo);
 }
