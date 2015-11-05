@@ -90,7 +90,7 @@ public class KyzContactletter implements java.io.Serializable {
 	}
 
 	public String getUserNm() {
-		return this.userNm;
+		return this.userNm==null?"":userNm;
 	}
 
 	public void setUserNm(String userNm) {
@@ -98,7 +98,7 @@ public class KyzContactletter implements java.io.Serializable {
 	}
 
 	public String getToUser() {
-		return this.toUser;
+		return this.toUser==null?"":toUser;
 	}
 
 	public void setToUser(String toUser) {
@@ -106,7 +106,7 @@ public class KyzContactletter implements java.io.Serializable {
 	}
 
 	public String getChargeList() {
-		return this.chargeList;
+		return this.chargeList==null?"":chargeList;
 	}
 
 	public void setChargeList(String chargeList) {
@@ -114,7 +114,7 @@ public class KyzContactletter implements java.io.Serializable {
 	}
 
 	public String getTitle() {
-		return this.title;
+		return this.title==null?"":title;
 	}
 
 	public void setTitle(String title) {
@@ -122,7 +122,7 @@ public class KyzContactletter implements java.io.Serializable {
 	}
 
 	public String getMemoMk() {
-		return this.memoMk;
+		return this.memoMk==null?"":memoMk;
 	}
 
 	public void setMemoMk(String memoMk) {

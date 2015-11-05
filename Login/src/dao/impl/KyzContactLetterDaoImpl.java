@@ -27,7 +27,9 @@ public class KyzContactLetterDaoImpl extends Basedao implements IKyzContactLette
 		int allRow=0;
 		final Map<String, Object> map = new HashMap<String, Object>();
 		StringBuffer hql = new StringBuffer();
+		StringBuffer hql2=new StringBuffer();
 		hql.append("from KyzContactletter where 1=1 ");
+		hql2.append("select count(id.factNo) ");
 		if (factNo != null && !factNo.equals("") && !factNo.equals("tw")&&!factNo.equals("nothing")) {
 			hql.append(" and id.factNo =:factno ");
 			map.put("factno", factNo);
@@ -64,6 +66,7 @@ public class KyzContactLetterDaoImpl extends Basedao implements IKyzContactLette
 			hql.append(" and id.factNo=:factno");
 			map.put("factno", factNo);
 		}
+		hql2.append(hql);
 		hql.append(" order by id.factNo,ymExpect desc");
 		int currentPage = PageBean.countCurrentPage(page);
 		
@@ -71,7 +74,7 @@ public class KyzContactLetterDaoImpl extends Basedao implements IKyzContactLette
 	    if(rows!=null&&rows!=0&&page>0){
 	     allRow=rows;	     
 	    }else{
-		 allRow= super.getAllRowCount(hql.toString(),map);
+		 allRow= super.getAllRowCount2(hql2.toString(),map);
 		 ActionContext.getContext().getSession().put("allRow", allRow);
 		}
 	    

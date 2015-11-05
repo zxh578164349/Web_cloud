@@ -105,7 +105,7 @@ public class KyVisabillsDaoImpl extends Basedao implements IKyVisaBillsDao{
 		if(rows!=null&&page>0){
 			allrow=rows;
 		}else{
-			allrow=super.getAllRowCount(hql2.toString(), map);
+			allrow=super.getAllRowCount2(hql2.toString(), map);
 			ActionContext.getContext().getSession().put("rows", allrow);
 		}
 		int currentPage=PageBean.countCurrentPage(page);
@@ -119,8 +119,7 @@ public class KyVisabillsDaoImpl extends Basedao implements IKyVisaBillsDao{
 		//以下為解決Hibernate延遲問題
 		if(list.size()>0){
 			for(int i=0;i<list.size();i++){
-				KyVisabillm billm=list.get(i).getId().getKyVisabillm();
-				billm.getSignerNext();
+				list.get(i).getId().getKyVisabillm().getKyVisabillses().size();				
 			}
 		}
 		

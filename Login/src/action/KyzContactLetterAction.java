@@ -36,6 +36,7 @@ import util.PageBean;
 
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
+import com.spreada.utils.chinese.ZHConverter;
 
 import entity.KyVisabillm;
 import entity.KyVisabills;
@@ -402,6 +403,12 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 			response.getWriter().print("<script>alert('單號為"+billNo+"的函文不存在!');window.close()</script>");
 			return null;
 		}else{
+			/*************************/						
+			letter.setUserNm(ZHConverter.convert(letter.getUserNm(), ZHConverter.TRADITIONAL));
+			letter.setToUser(ZHConverter.convert(letter.getToUser(), ZHConverter.TRADITIONAL));
+			letter.setChargeList(ZHConverter.convert(letter.getChargeList(), ZHConverter.TRADITIONAL));
+			letter.setTitle(ZHConverter.convert(letter.getTitle(), ZHConverter.TRADITIONAL));
+			letter.setMemoMk(ZHConverter.convert(letter.getMemoMk(), ZHConverter.TRADITIONAL));
 			list.add(letter);
 		}		
 		factCode=letter.getFactCode();

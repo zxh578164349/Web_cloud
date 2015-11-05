@@ -147,8 +147,8 @@ function findKyVisaBills_Int(){
    })
 }
 setTimeout("showBills(),findKyVisaBills_Int()",2000);
-/* setTimeout("hideBills()",15000);
-setTimeout("hideBills2()",18000); */	
+/* setTimeout("hideBills()",15000);*/
+setTimeout("hideBills2()",15000); 	
 </script>
 <script type='text/javascript' src='/Login/dwr/interface/kyvisabillsjs.js'></script>
 <script type='text/javascript' src='/Login/dwr/engine.js'></script>
