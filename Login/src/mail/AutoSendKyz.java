@@ -73,9 +73,9 @@ public class AutoSendKyz extends QuartzJobBean{
 						subject="函文退回定時通知_"+billNo+"("+factNo+")";//退回函文隻發送一次，所以也要鎖定狀態emailMk	
 						list_vbm.get(i).setEmailMk("Y");
 						visabillmSer.add(list_vbm.get(i));
-						content="函文單號:"+"<span style='color:red'>"+billNo+"</span>"+"&nbsp;&nbsp;廠別:"+factNo+"不通過，備註如下："+
+						content="函文單號:"+"<span style='color:red'>"+billNo+"</span>"+"&nbsp;&nbsp;"+"不通過，備註如下:"+
 					    		  "<br/>"+
-					    		  list_vbm.get(i).getMemoMk()==null?"無":list_vbm.get(i).getMemoMk()+				    		 
+					    		  "<span style='color:red'>"+(list_vbm.get(i).getMemoMk()==null?"無備註":list_vbm.get(i).getMemoMk())+"</span>"+				    		 
 							      "<hr/>"+
 					    		 result+"詳情請登錄加久網站:(云端)<a href='http://203.85.73.161/Login'>http://203.85.73.161/Login</a>" +		            
 					      		"<br/>進入[KPI數據]--[函文審核]中查找對應單號審核"+			    		

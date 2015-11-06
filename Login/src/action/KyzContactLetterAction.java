@@ -403,12 +403,13 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 			response.getWriter().print("<script>alert('單號為"+billNo+"的函文不存在!');window.close()</script>");
 			return null;
 		}else{
-			/*************************/						
+			/*******************簡轉繁體********************/						
 			letter.setUserNm(ZHConverter.convert(letter.getUserNm(), ZHConverter.TRADITIONAL));
 			letter.setToUser(ZHConverter.convert(letter.getToUser(), ZHConverter.TRADITIONAL));
 			letter.setChargeList(ZHConverter.convert(letter.getChargeList(), ZHConverter.TRADITIONAL));
 			letter.setTitle(ZHConverter.convert(letter.getTitle(), ZHConverter.TRADITIONAL));
 			letter.setMemoMk(ZHConverter.convert(letter.getMemoMk(), ZHConverter.TRADITIONAL));
+			/*******************簡轉繁體********************/
 			list.add(letter);
 		}		
 		factCode=letter.getFactCode();
@@ -426,8 +427,8 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 		KyVisabillm vbm=visabillmSer.findById(factNo, sort, billNo);
 		List<KyVisabills>list_visa=vbm.getKyVisabillses();
 		List<KyzVisaflow>list_visaflow=visaSer.findByType(factNo,sort);
-		int num1=list_visa.size();
-		int num2=list_visaflow.size();
+		/*int num1=list_visa.size();
+		int num2=list_visaflow.size();*/
 		/**
 		 * 最後個不用審核的,就去掉
 		 */
@@ -453,7 +454,7 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 			list_visaflow.remove(list_visaflow.size()-1);
 		}*/
 		List<VisabillsTemp>list_visabillstemp=new ArrayList();		
-		for(int i=0;i<list_visa.size();i++){
+		for(int i=0;i<list_visa.size();i++){//for
 			VisabillsTemp visabillstemp=new VisabillsTemp();
 			String visa_result="";
 			String visamk_temp="";
@@ -472,7 +473,7 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 			}
 			String name=list_visa.get(i).getVisaRank();
 			String visamk=list_visa.get(i).getVisaMk();
-			String visadate=list_visa.get(i).getDateVisa();
+			//String visadate=list_visa.get(i).getDateVisa();
 			String memo=list_visa.get(i).getMemo();
 			if(visamk.equals("Y")){
 				visamk_temp="(已審核)";
@@ -496,8 +497,15 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 			visabillstemp.setVisaMk(list_visa.get(i).getVisaMk());
 			visabillstemp.setVisaName(name);
 			list_visabillstemp.add(visabillstemp);
+		}//for
+		/*********************簡體轉繁體******************/
+		for(int i=0;i<list_visabillstemp.size();i++){
+			list_visabillstemp.get(i).setMemo(ZHConverter.convert(list_visabillstemp.get(i).getMemo(), ZHConverter.TRADITIONAL));
+			list_visabillstemp.get(i).setVisaName(ZHConverter.convert(list_visabillstemp.get(i).getVisaName(), ZHConverter.TRADITIONAL));
+			list_visabillstemp.get(i).setVisaNameAndMk(ZHConverter.convert(list_visabillstemp.get(i).getVisaNameAndMk(), ZHConverter.TRADITIONAL));
+			list_visabillstemp.get(i).setVisaRank(ZHConverter.convert(list_visabillstemp.get(i).getVisaRank(), ZHConverter.TRADITIONAL));			
 		}
-		
+		/*********************簡體轉繁體******************/
 		
 		
 		Map visa_map=new HashMap<String,Object>();

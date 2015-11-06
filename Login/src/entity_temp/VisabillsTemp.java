@@ -11,13 +11,13 @@ public class VisabillsTemp {
 	private String visaMk;
 	private String visaName;
 	public String getMemo() {
-		return memo;
+		return memo==null?"":memo;
 	}
 	public void setMemo(String memo) {
 		this.memo = memo;
 	}
 	public String getVisaRank() {
-		return visaRank;
+		return visaRank==null?"":visaRank;
 	}
 	public void setVisaRank(String visaRank) {
 		this.visaRank = visaRank;
@@ -29,7 +29,7 @@ public class VisabillsTemp {
 		this.createDate = createDate;
 	}
 	public String getVisaNameAndMk() {
-		return visaNameAndMk;
+		return visaNameAndMk==null?"":visaNameAndMk;
 	}
 	public void setVisaNameAndMk(String visaNameAndMk) {
 		this.visaNameAndMk = visaNameAndMk;
@@ -47,7 +47,7 @@ public class VisabillsTemp {
 		this.visaMk = visaMk;
 	}
 	public String getVisaName() {
-		return visaName;
+		return visaName==null?"":visaName;
 	}
 	public void setVisaName(String visaName) {
 		this.visaName = visaName;

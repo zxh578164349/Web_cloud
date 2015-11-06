@@ -64,7 +64,7 @@ public class KyzExpectmats implements java.io.Serializable {
 	}
 
 	public String getMatNo() {
-		return this.matNo;
+		return this.matNo==null?"":matNo;
 	}
 
 	public void setMatNo(String matNo) {
@@ -128,7 +128,7 @@ public class KyzExpectmats implements java.io.Serializable {
 	}
 
 	public String getQtyPair() {
-		return this.qtyPair;
+		return this.qtyPair==null?"":qtyPair;
 	}
 
 	public void setQtyPair(String qtyPair) {
@@ -136,7 +136,7 @@ public class KyzExpectmats implements java.io.Serializable {
 	}
 
 	public String getItemNm() {
-		return this.itemNm;
+		return this.itemNm==null?"":itemNm;
 	}
 
 	public void setItemNm(String itemNm) {

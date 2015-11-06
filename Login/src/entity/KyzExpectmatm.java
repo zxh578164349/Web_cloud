@@ -118,7 +118,7 @@ public class KyzExpectmatm implements java.io.Serializable {
 	}
 
 	public String getSecNo() {
-		return this.secNo;
+		return this.secNo==null?"":secNo;
 	}
 
 	public void setSecNo(String secNo) {
@@ -134,7 +134,7 @@ public class KyzExpectmatm implements java.io.Serializable {
 	}
 
 	public String getUserNm() {
-		return this.userNm;
+		return this.userNm==null?"":userNm;
 	}
 
 	public void setUserNm(String userNm) {
@@ -208,7 +208,7 @@ public class KyzExpectmatm implements java.io.Serializable {
 	}
 
 	public String getMemoMk() {
-		return this.memoMk;
+		return this.memoMk==null?"":memoMk;
 	}
 
 	public void setMemoMk(String memoMk) {
@@ -216,7 +216,7 @@ public class KyzExpectmatm implements java.io.Serializable {
 	}
 
 	public String getMemoSmk() {
-		return this.memoSmk;
+		return this.memoSmk==null?"":memoSmk;
 	}
 
 	public void setMemoSmk(String memoSmk) {

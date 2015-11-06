@@ -31,6 +31,7 @@ import org.apache.struts2.interceptor.ServletResponseAware;
 
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
+import com.spreada.utils.chinese.ZHConverter;
 import com.sun.jndi.toolkit.url.Uri;
 
 import services.IKyVisaBillsServices;
@@ -668,6 +669,11 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 			response.setContentType("text/html;charset=utf-8");
 			response.getWriter().print("<script>alert('單號為"+id.getBillNo()+"的函文不存在!');window.close()</script>");
 			return null;
+		}else{
+			list.get(0).setSecNo(ZHConverter.convert(list.get(0).getSecNo(), ZHConverter.TRADITIONAL));
+			list.get(0).setUserNm(ZHConverter.convert(list.get(0).getUserNm(), ZHConverter.TRADITIONAL));			
+			list.get(0).setMemoMk(ZHConverter.convert(list.get(0).getMemoMk(), ZHConverter.TRADITIONAL));
+			list.get(0).setMemoSmk(ZHConverter.convert(list.get(0).getMemoSmk(), ZHConverter.TRADITIONAL));
 		}
 		factCode=list.get(0).getFactCode();
 		String result=factname+"("+factCode+")"+"費用申請單";
@@ -681,6 +687,9 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 		KyzExpectmats temp=new KyzExpectmats();
 		for(int i=0;i<list.get(0).getKyzExpectmatses().size();i++){
 			KyzExpectmats kyzs=list.get(0).getKyzExpectmatses().get(i);
+			kyzs.setMatNo(ZHConverter.convert(kyzs.getMatNo(), ZHConverter.TRADITIONAL));
+			kyzs.setQtyPair(ZHConverter.convert(kyzs.getQtyPair(), ZHConverter.TRADITIONAL));
+			kyzs.setItemNm(ZHConverter.convert(kyzs.getItemNm(), ZHConverter.TRADITIONAL));
 			sub_list.add(kyzs);
 		}
 
@@ -731,7 +740,7 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 			list_visaflow.remove(list_visaflow.size()-1);
 		}*/
 		List<VisabillsTemp>list_visabillstemp=new ArrayList();		
-		for(int i=0;i<list_visa.size();i++){
+		for(int i=0;i<list_visa.size();i++){//for
 			VisabillsTemp visabillstemp=new VisabillsTemp();
 			String visa_result="";
 			String visamk_temp="";
@@ -750,7 +759,7 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 			}
 			String name=list_visa.get(i).getVisaRank();
 			String visamk=list_visa.get(i).getVisaMk();
-			String visadate=list_visa.get(i).getDateVisa();
+			//String visadate=list_visa.get(i).getDateVisa();
 			String memo=list_visa.get(i).getMemo();
 			if(visamk.equals("Y")){
 				visamk_temp="(已審核)";
@@ -774,7 +783,16 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 			visabillstemp.setVisaMk(list_visa.get(i).getVisaMk());
 			visabillstemp.setVisaName(name);
 			list_visabillstemp.add(visabillstemp);
+		}//for
+		
+		/*********************簡體轉繁體******************/
+		for(int i=0;i<list_visabillstemp.size();i++){
+			list_visabillstemp.get(i).setMemo(ZHConverter.convert(list_visabillstemp.get(i).getMemo(), ZHConverter.TRADITIONAL));
+			list_visabillstemp.get(i).setVisaName(ZHConverter.convert(list_visabillstemp.get(i).getVisaName(), ZHConverter.TRADITIONAL));
+			list_visabillstemp.get(i).setVisaNameAndMk(ZHConverter.convert(list_visabillstemp.get(i).getVisaNameAndMk(), ZHConverter.TRADITIONAL));
+			list_visabillstemp.get(i).setVisaRank(ZHConverter.convert(list_visabillstemp.get(i).getVisaRank(), ZHConverter.TRADITIONAL));			
 		}
+		/*********************簡體轉繁體******************/
 		
 		
 		

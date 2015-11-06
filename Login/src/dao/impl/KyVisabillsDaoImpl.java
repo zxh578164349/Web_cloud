@@ -94,7 +94,7 @@ public class KyVisabillsDaoImpl extends Basedao implements IKyVisaBillsDao{
 			hql.append(" and id.itemNo='01'");
 		}*/
 		hql.append(" and id.itemNo='01'");
-		/*if(factNo.equals("tw")||userName.contains("ºÞ²z­û")){
+		/*if(factNo.equals("tw")||userName.contains("ï¿½Þ²zï¿½ï¿½")){
 			hql.append(" and id.itemNo='01'");
 		}*/
 		
@@ -116,7 +116,7 @@ public class KyVisabillsDaoImpl extends Basedao implements IKyVisaBillsDao{
 		int offset=PageBean.countOffset(pageSize, currentPage);
 		List<KyVisabills>list=super.queryForPage(hql.toString(), offset, pageSize, map);
 		
-		//¥H¤U¬°¸Ñ¨MHibernate©µ¿ð°ÝÃD
+		//ï¿½Hï¿½Uï¿½ï¿½ï¿½Ñ¨MHibernateï¿½ï¿½ï¿½ï¿½ï¿½ï¿½D
 		if(list.size()>0){
 			for(int i=0;i<list.size();i++){
 				list.get(i).getId().getKyVisabillm().getKyVisabillses().size();				
@@ -175,7 +175,7 @@ public class KyVisabillsDaoImpl extends Basedao implements IKyVisaBillsDao{
 		Integer rows=(Integer)ActionContext.getContext().getSession().get("rows");
 		hql.append("from KyVisabills where 1=1");
 		hql2.append("select count(id.itemNo )");
-		//¦pªG¬O«DºÞ²z­û´N·|¦³email¡]¤]´N¬OvisaSigner¡^­­¨î
+		//ï¿½pï¿½Gï¿½Oï¿½Dï¿½Þ²zï¿½ï¿½Nï¿½|ï¿½ï¿½emailï¿½]ï¿½]ï¿½Nï¿½OvisaSignerï¿½^ï¿½ï¿½ï¿½ï¿½
 		if(userName!=null&&!userName.equals("")&&!userName.contains("admin")){
 			hql.append(" and lower(visaSigner)=:visaSigner");
 			map.put("visaSigner", email.toLowerCase());
@@ -223,33 +223,33 @@ public class KyVisabillsDaoImpl extends Basedao implements IKyVisaBillsDao{
 			map.put("factno", factNo);
 		}
 		/**
-		 * ¦pªG¬Oadmin´N¥i¥H¬Ý¨ì¥þ³¡
-		 * §_«h¡A¼f®Öª¬ºA¦Ó©w
-		 * ¡]1¡^visaMk¬°ªÅ®É,«hÅã¥Ü¤U¤@­Ì¼f®Ö¤H¬°·í«e¥Î¤áªº¨ç¤å
-		 * ¡]2¡^visaMk='T',´N¥Î¥DªíªºvisaMk¡A¨ä¾l¥Î¤lªívisaMk
+		 * ï¿½pï¿½Gï¿½Oadminï¿½Nï¿½iï¿½Hï¿½Ý¨ï¿½ï¿½ï¿½ï¿½
+		 * ï¿½_ï¿½hï¿½Aï¿½fï¿½Öªï¿½ï¿½Aï¿½Ó©w
+		 * ï¿½]1ï¿½^visaMkï¿½ï¿½ï¿½Å®ï¿½,ï¿½hï¿½ï¿½Ü¤Uï¿½@ï¿½Ì¼fï¿½Ö¤Hï¿½ï¿½ï¿½ï¿½eï¿½Î¤áªºï¿½ï¿½ï¿½
+		 * ï¿½]2ï¿½^visaMk='T',ï¿½Nï¿½Î¥Dï¿½?visaMkï¿½Aï¿½ï¿½lï¿½Î¤lï¿½ï¿½visaMk
 		 */
-		if(userName.contains("admin")){//admin´N¥i¥H¬Ý¨ì¥þ³¡
+		if(userName.contains("admin")){//adminï¿½Nï¿½iï¿½Hï¿½Ý¨ï¿½ï¿½ï¿½ï¿½
 			if(visaMk!=null&&!visaMk.equals("")){
 				hql.append(" and id.kyVisabillm.visaMk=:visamk");
 				map.put("visamk", visaMk);
 			}
 			hql.append(" and id.itemNo='01'");
-		}else{//¨ä¥L¥Î¤áµøª¬ºA¦Ó©w
+		}else{//ï¿½ï¿½Lï¿½Î¤ï¿½ï¿½Aï¿½Ó©w
 			if(visaMk!=null&&!visaMk.equals("")){				
-				if(!visaMk.equals("T")){//·í¤£¬°T®É¡]¤]´N¬°N©ÎY¡^¡A´N¥Î¤lªíªºvisaMk 
-					if(visaMk.equals("N")){//·í¬°N®É¡A¤lªíªºvisaMk¬°N,¥DªíªºvisaMk¤]­n¬°N¡A¤@¨Ç¬°T¬°Åã¥Ü¥X¨Ó¡A©Ò¥H­n±Æ°£
+				if(!visaMk.equals("T")){//ï¿½?ï¿½ï¿½Tï¿½É¡]ï¿½]ï¿½Nï¿½ï¿½Nï¿½ï¿½Yï¿½^ï¿½Aï¿½Nï¿½Î¤lï¿½?visaMk 
+					if(visaMk.equals("N")){//ï¿½?Nï¿½É¡Aï¿½lï¿½?visaMkï¿½ï¿½N,ï¿½Dï¿½?visaMkï¿½]ï¿½nï¿½ï¿½Nï¿½Aï¿½@ï¿½Ç¬ï¿½Tï¿½ï¿½ï¿½ï¿½Ü¥Xï¿½Ó¡Aï¿½Ò¥Hï¿½nï¿½Æ°ï¿½
 						//hql.append(" and visaMk=:visamk and id.kyVisabillm.visaMk='N'");
 						hql.append(" and id.itemNo=id.kyVisabillm.itemNext and visaMk=:visamk");
 						map.put("visamk", visaMk);
-					}else{//·í¬°Y®É¡A¥Î¤lªíªºvisaMk
+					}else{//ï¿½?Yï¿½É¡Aï¿½Î¤lï¿½?visaMk
 						hql.append(" and visaMk=:visamk");
 						map.put("visamk", visaMk);
 					}					
-				}else{//·í¬°T, ´N¥Î¥DªíkyVisabillmªºvisaMk                                               
+				}else{//ï¿½?T, ï¿½Nï¿½Î¥Dï¿½ï¿½kyVisabillmï¿½ï¿½visaMk                                               
 					hql.append(" and id.kyVisabillm.visaMk=:visamk");
 					map.put("visamk", visaMk);
 				}
-			}else{//visaMk¬°ªÅ®É,«hÅã¥Ü¤U¤@­Ì¼f®Ö¤H¬°·í«e¥Î¤áªº¨ç¤å(¥uÅã¥ÜvisaMk='N',¦]¬°visMk='T'¤]¦³¥i¯àÅã¥Ü)
+			}else{//visaMkï¿½ï¿½ï¿½Å®ï¿½,ï¿½hï¿½ï¿½Ü¤Uï¿½@ï¿½Ì¼fï¿½Ö¤Hï¿½ï¿½ï¿½ï¿½eï¿½Î¤áªºï¿½ï¿½ï¿½(ï¿½uï¿½ï¿½ï¿½visaMk='N',ï¿½]ï¿½ï¿½visMk='T'ï¿½]ï¿½ï¿½ï¿½iï¿½ï¿½ï¿½ï¿½ï¿½)
 				hql.append(" and id.itemNo=id.kyVisabillm.itemNext and visaMk='N'");
 			}			
 		}
@@ -273,7 +273,7 @@ public class KyVisabillsDaoImpl extends Basedao implements IKyVisaBillsDao{
 		int offset=PageBean.countOffset(pageSize, currentPage);
 		List<KyVisabills>list=super.queryForPage(hql.toString(), offset, pageSize, map);
 		
-		//¥H¤U¬°¸Ñ¨MHibernate©µ¿ð°ÝÃD
+		//ï¿½Hï¿½Uï¿½ï¿½ï¿½Ñ¨MHibernateï¿½ï¿½ï¿½ï¿½ï¿½ï¿½D
 		if(list.size()>0){
 			for(int i=0;i<list.size();i++){
 				KyVisabillm billm=list.get(i).getId().getKyVisabillm();
