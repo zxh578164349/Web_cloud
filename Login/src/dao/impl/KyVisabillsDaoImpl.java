@@ -150,7 +150,14 @@ public class KyVisabillsDaoImpl extends Basedao implements IKyVisaBillsDao{
 	public void delete(String factNo, String visaSort, String billNo,
 			String itemNo) {
 		// TODO Auto-generated method stub
-	   KyVisabills bills=this.findById(factNo, visaSort, billNo, itemNo);
+	   //KyVisabills bills=this.findById(factNo, visaSort, billNo, itemNo);
+		String hql="from KyVisabills where id.kyVisabillm.id.factNo=? and id.kyVisabillm.id.visaSort=? and id.kyVisabillm.id.billNo=? and id.itemNo=?";
+		Query query=getSession().createQuery(hql);
+		query.setString(0, factNo);
+		query.setString(1, visaSort);
+		query.setString(2, billNo);
+		query.setString(3, itemNo);
+		KyVisabills bills=(KyVisabills)query.uniqueResult();
 	   super.delete(bills);
 		
 	}

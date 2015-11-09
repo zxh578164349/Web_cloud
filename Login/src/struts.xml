@@ -471,7 +471,7 @@
 		      <param name="billNo">${billNo}</param>
 		  </result>
 		  <result name="minusvisabills2" type="redirectAction">
-		      <param name="actionName">vbm_findById4</param>
+		      <param name="actionName">vbm_findById5</param>
 		      <param name="factNo">${factNo}</param>
 		      <param name="visaSort">${visaSort}</param>
 		      <param name="billNo">${billNo}</param>

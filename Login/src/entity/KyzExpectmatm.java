@@ -37,6 +37,7 @@ public class KyzExpectmatm implements java.io.Serializable {
 	private String filesYn;
 	private String firstPage;
 	private String colTemp;
+	private String kyzsMk;
 	private List<KyzExpectmats> kyzExpectmatses = new ArrayList();
 
 	// Constructors
@@ -56,7 +57,7 @@ public class KyzExpectmatm implements java.io.Serializable {
 			String dateLock, String billMk, String billOld, String telNo,
 			String urgentMk, String dateEtd, String memoMk, String memoSmk,
 			String username, String emerWhether, String factCode,String visaType,String filesYn,String firstPage,
-			String colTemp,List<KyzExpectmats> kyzExpectmatses) {
+			String colTemp,String kyzsMk,List<KyzExpectmats> kyzExpectmatses) {
 		this.id = id;
 		this.ymExpect = ymExpect;
 		this.secNo = secNo;
@@ -79,14 +80,24 @@ public class KyzExpectmatm implements java.io.Serializable {
 		this.filesYn=filesYn;
 		this.firstPage=firstPage;
 		this.colTemp=colTemp;
+		this.kyzsMk=kyzsMk;
 		this.kyzExpectmatses = kyzExpectmatses;
 	}
 
 	// Property accessors
 	
 
+	
 	public String getVisaType() {
 		return visaType;
+	}
+
+	public String getKyzsMk() {
+		return kyzsMk;
+	}
+
+	public void setKyzsMk(String kyzsMk) {
+		this.kyzsMk = kyzsMk;
 	}
 
 	public String getFilesYn() {

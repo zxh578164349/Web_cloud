@@ -177,7 +177,7 @@ table.gridtable td {
 			<tr>
 				<td>申請內容</td>
 				<td colspan="11">
-					<div style="height:85px">
+					<div style="height:85px;overflow:auto">
 						<s:property value="kyz.memoMk" />
 					</div></td>
 

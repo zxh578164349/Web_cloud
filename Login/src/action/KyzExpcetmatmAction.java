@@ -682,20 +682,41 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 		map.put("pic", ServletActionContext.getRequest().getRealPath("/jasper/audit/images/")+ "/");//圖片路徑		
 		map.put("pfactno", id.getFactNo());
 		map.put("pbillno",id.getBillNo());
-		map.put("title",result);
+		map.put("title",result);		
+		
 		List<KyzExpectmats> sub_list = new ArrayList<KyzExpectmats>();		
 		KyzExpectmats temp=new KyzExpectmats();
-		for(int i=0;i<list.get(0).getKyzExpectmatses().size();i++){
-			KyzExpectmats kyzs=list.get(0).getKyzExpectmatses().get(i);
-			kyzs.setMatNo(ZHConverter.convert(kyzs.getMatNo(), ZHConverter.TRADITIONAL));
-			kyzs.setQtyPair(ZHConverter.convert(kyzs.getQtyPair(), ZHConverter.TRADITIONAL));
-			kyzs.setItemNm(ZHConverter.convert(kyzs.getItemNm(), ZHConverter.TRADITIONAL));
-			sub_list.add(kyzs);
+		
+		if(list.get(0).getKyzExpectmatses().size()==1){
+			KyzExpectmats kyzss=list.get(0).getKyzExpectmatses().get(0);
+			if(kyzss.getMatNo()==null&&kyzss.getItemNm()==null){
+				list.get(0).setKyzsMk("1");
+			}else{
+				for(int i=0;i<list.get(0).getKyzExpectmatses().size();i++){
+					KyzExpectmats kyzs=list.get(0).getKyzExpectmatses().get(i);
+					kyzs.setMatNo(ZHConverter.convert(kyzs.getMatNo(), ZHConverter.TRADITIONAL));
+					kyzs.setQtyPair(ZHConverter.convert(kyzs.getQtyPair(), ZHConverter.TRADITIONAL));
+					kyzs.setItemNm(ZHConverter.convert(kyzs.getItemNm(), ZHConverter.TRADITIONAL));
+					sub_list.add(kyzs);
+				}
+				while(sub_list.size()<10){
+					sub_list.add(temp);
+				}
+			}
+		}else{
+			for(int i=0;i<list.get(0).getKyzExpectmatses().size();i++){
+				KyzExpectmats kyzs=list.get(0).getKyzExpectmatses().get(i);
+				kyzs.setMatNo(ZHConverter.convert(kyzs.getMatNo(), ZHConverter.TRADITIONAL));
+				kyzs.setQtyPair(ZHConverter.convert(kyzs.getQtyPair(), ZHConverter.TRADITIONAL));
+				kyzs.setItemNm(ZHConverter.convert(kyzs.getItemNm(), ZHConverter.TRADITIONAL));
+				sub_list.add(kyzs);
+			}
+			while(sub_list.size()<10){
+				sub_list.add(temp);
+			}
 		}
-
-		while(sub_list.size()<10){
-			sub_list.add(temp);
-		}
+		
+		
 		Map sub_map=new HashMap<String,Object>();
 		sub_map.put("sub_list", sub_list);
 		
