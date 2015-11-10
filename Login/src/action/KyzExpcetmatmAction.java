@@ -25,9 +25,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import mail.MailSenderInfo;
 import mail.SimpleMailSender;
+import net.sf.json.JSONArray;
 
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.ServletResponseAware;
+
 
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
@@ -880,7 +882,12 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 				String utfname=URLEncoder.encode(tempname,"utf-8");				
 				listfiles.get(i).setFilename(utfname);
 			}
-			ActionContext.getContext().getSession().put("list_filesexp", listfiles);			
+			ActionContext.getContext().getSession().put("list_filesexp", listfiles);
+			
+			
+			/******************list轉json*************************/
+			JSONArray dfdfd=JSONArray.fromObject(listfiles);
+			/******************list轉json*************************/
 		}
 		return "findById";
 	}
@@ -1136,4 +1143,6 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 			kyz.setColTemp(typename);
 		}//for1				
 	}
+	
+	
 }

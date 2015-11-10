@@ -682,9 +682,19 @@ table.gridtable td.tdcolor {
 		</s:if>
 		<s:if test='kyz.filesYn=="1"'>
 	       <hr/>
-	       <span style="color:blue;">附檔:</span>
+	       <div style="color:blue;">附檔:</div><br/>
 	      <s:iterator value="#session.list_filesexp">
-	        <a href="/upload/<s:property value='billno'/>/<s:property value='filename'/>" target="_blank"><s:property value="%{toUrl(filename)}"/></a>&nbsp;
+	        <div style="float:left;border:1px solid;padding-top:10px" >
+	           &nbsp;<a href="/upload/<s:property value='billno'/>/<s:property value='filename'/>" target="_blank" style="font-size:16px">
+	                 <s:property value="%{toUrl(filename)}"/>
+	           </a>
+	           <div style="position:relative;top:-28px;left:7px">
+	           <a >
+	              <img src="images/icon/del_file.png" alt="刪除"/>
+	           </a>
+	        </div>
+	        </div>&nbsp;
+	        
 	     </s:iterator>	  
 	   </s:if>	  
 			  <center style="width:850px;margin-left:50px">			    
