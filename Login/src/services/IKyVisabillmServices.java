@@ -14,5 +14,7 @@ public interface IKyVisabillmServices {
 	public List<KyVisabillm>findByVisaMk(String visaMk);
 	public List<KyVisabillm> findAllVbm();
 	public List<KyVisabillm> findByVisaMk2(String visaMk);
+	
+	public KyVisabillm findByBillNo(String billNo);
 
 }

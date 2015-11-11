@@ -2355,6 +2355,67 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 	public String strToLow(String str){
 		return str.toLowerCase();
 	}
+	
+	
+	/**
+	 * 手動發送email
+	 */
+	public void sendEmail(){
+		String subject="";
+		String content="";
+		MailSenderInfo mailInfo = new MailSenderInfo();
+		SimpleMailSender sms = new SimpleMailSender();
+		mailInfo.setValidate(true);
+		vbm=visabillmSer.findByBillNo(billNo);
+		List<String>list_email=new ArrayList<String>();
+		String signerNext=vbm.getSignerNext();
+		String factNo=vbm.getId().getFactNo();
+		String billNo=vbm.getId().getBillNo();
+		String visaSort=vbm.getId().getVisaSort();
+		String visaMk=vbm.getVisaMk();
+		String emailPwd = webuseremailSer.findEmailPWD(factNo,signerNext);//備簽人Email
+		list_email.add(signerNext);
+		if(emailPwd!=null){
+			list_email.add(emailPwd);
+		}
+		list_email.add("kyuen@yydg.com.cn");
+		String emailUrl="http://203.85.73.161/Login/vbm_findById_email?visaSort="+visaSort+"&billNo="+billNo
+		         +"&factNo="+factNo+"&email="+signerNext;
+		String emailUrl2="http://203.85.73.161/Login/vbm_findById_email2?visaSort="+visaSort+"&billNo="+billNo
+		         +"&factNo="+factNo+"&email="+signerNext;
+		if(visaMk.equals("N")){
+			subject="函文審核定時通知_"+billNo+"("+factNo+")";
+			content="函文單號:"+"<span style='color:red'>"+billNo+"</span>"+"&nbsp;&nbsp;廠別:"+factNo+
+		    		  "<br/>點擊單號直接審核:<a href='"+emailUrl2+"'>"+billNo+"</a>(電腦適用)"+
+		    		  "<br/>點擊單號直接審核:<a href='"+emailUrl+"'>"+billNo+"</a>(手機平板適用)"+				    		 
+				      "<hr/>"+
+		    		 "如需查詢以往單據請登錄加久網站:(云端)<a href='http://203.85.73.161/Login'>http://203.85.73.161/Login</a>" +		            
+		      		"<br/>進入[KPI數據]--[函文審核]中查找對應單號審核"+			    		
+		    		"<hr/>"+
+		      		"<br/>本郵件定時自動發送,請勿回復!如需回復或者問題，請回复到kyinfo.lp@yydg.com.cn劉平!<br/>"+
+		    		"<hr/>";
+		}
+		if(visaMk.equals("T")){				
+				subject="函文退回定時通知_"+billNo+"("+factNo+")";//退回函文隻發送一次，所以也要鎖定狀態emailMk	
+				vbm.setEmailMk("Y");
+				visabillmSer.add(vbm);
+				content="函文單號:"+"<span style='color:red'>"+billNo+"</span>"+"&nbsp;&nbsp;"+"不通過，備註如下:"+
+			    		  "<br/>"+
+			    		  "<span style='color:red'>"+(vbm.getMemoMk()==null?"無備註":vbm.getMemoMk())+"</span>"+				    		 
+					      "<hr/>"+
+			    		 "詳情請登錄加久網站:(云端)<a href='http://203.85.73.161/Login'>http://203.85.73.161/Login</a>" +		            
+			      		"<br/>進入[KPI數據]--[函文審核]中查找對應單號審核"+			    		
+			    		"<hr/>"+
+			      		"<br/>本郵件定時自動發送,請勿回復!如需回復或者問題，請回复到kyinfo.lp@yydg.com.cn劉平!<br/>"+
+			    		"<hr/>";
+		}
+		for(int j=0;j<list_email.size();j++){//start for2
+			  mailInfo.setToAddress(list_email.get(j));    
+		      mailInfo.setSubject(subject);    			      
+		      mailInfo.setContent(content); 				    		  			           
+		      sms.sendHtmlMail(mailInfo);//发送html格式
+		}//end for2	
+	}
     
 
 

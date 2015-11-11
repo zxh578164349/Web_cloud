@@ -25,4 +25,15 @@ public class KyzExpectmatmFileDaoImpl extends Basedao implements IKyzExpectmatmF
 		super.delete(file);
 	}
 
+	public KyzExpectmatmFile findById(Integer id) {
+		// TODO Auto-generated method stub
+		return (KyzExpectmatmFile)super.findById(id,KyzExpectmatmFile.class);
+	}
+
+	public void delete(Integer id) {
+		// TODO Auto-generated method stub
+		KyzExpectmatmFile file=findById(id);
+		super.delete(file);
+	}
+
 }

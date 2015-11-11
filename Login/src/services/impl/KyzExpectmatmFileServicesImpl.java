@@ -32,4 +32,16 @@ public class KyzExpectmatmFileServicesImpl implements IKyzExpectmatmFileServices
 		kyzexpfileDao.delete(file);
 	}
 
+
+	public KyzExpectmatmFile findById(Integer id) {
+		// TODO Auto-generated method stub
+		return kyzexpfileDao.findById(id);
+	}
+
+
+	public void delete(Integer id) {
+		// TODO Auto-generated method stub
+		kyzexpfileDao.delete(id);
+	}
+
 }

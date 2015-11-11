@@ -15,6 +15,8 @@ public interface IKyVisaBillmDao {
 	public List<KyVisabillm> findByVisaMk2(String visaMk);
 	public List<KyVisabillm>findAllVbm();
 	
+	public KyVisabillm findByBillNo(String billNo);
+	
 	
 	
 

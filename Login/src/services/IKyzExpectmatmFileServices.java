@@ -8,5 +8,8 @@ public interface IKyzExpectmatmFileServices {
 	public void add(KyzExpectmatmFile file);
 	public List<KyzExpectmatmFile> findByBillNo(String billNo);
 	public void delete(KyzExpectmatmFile file);
+	
+	public KyzExpectmatmFile findById(Integer id);
+	public void delete(Integer id);
 
 }

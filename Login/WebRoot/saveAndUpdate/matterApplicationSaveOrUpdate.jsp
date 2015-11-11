@@ -336,6 +336,22 @@ function getKyType2(factno){
      }
   }
 
+function lookJson(billNo){
+var jQ = jQuery.noConflict();
+   jQ.ajax({
+      type:"get",
+      dataType:"json",
+      url:"kyzfile_findKyzFileJson",
+      data:"billNo="+billNo,
+      success:function(files){
+          //alert(files);
+         jQ("#fileJson").html(files);
+         jQ.each(files,function)
+      }
+   })
+}
+
+
 
 </script>
 <script type='text/javascript' src='/Login/dwr/interface/kyzjs.js'></script>
@@ -426,7 +442,7 @@ table.gridtable td.tdcolor {
 
 </head>
 <%@ include file="../saveAndUpdate/publicHead2.jsp"%>
-<body onload="getKyType()">  
+<body >  
  
 　     <s:if test="kyz==null">
       <form action="kyz_add" method="post" id="form" target="_blank" enctype="multipart/form-data">
@@ -695,7 +711,12 @@ table.gridtable td.tdcolor {
 	        </div>
 	        </div>&nbsp;
 	        
-	     </s:iterator>	  
+	     </s:iterator>
+	     <button onclick="lookJson('${kyz.id.billNo}')">點擊</button>
+	     <a href="javascript:lookJson('${kyz.id.billNo}')">dfdfdfd</a>
+	     <div id="fileJson">
+	        
+	     </div>	  
 	   </s:if>	  
 			  <center style="width:850px;margin-left:50px">			    
 				<input type="submit" id="sub" value="確定" onmouseover="this.style.backgroundPosition='left -40px'" onmouseout="this.style.backgroundPosition='left top'"/>&nbsp;&nbsp;&nbsp; <input

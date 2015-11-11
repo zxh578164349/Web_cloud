@@ -28,7 +28,7 @@ public class AutoSendKyz extends QuartzJobBean{
 		ApplicationContext ac=new ClassPathXmlApplicationContext(new String[]{"spring.xml","spring-dao.xml","spring-services.xml","spring-action.xml"});
 		IKyVisabillmServices visabillmSer=(IKyVisabillmServices)ac.getBean("visabillmSer");
 		IWebuserEmailServices webuseremailSer=(IWebuserEmailServices)ac.getBean("webuseremailSer");
-		List<KyVisabillm>list_vbm=visabillmSer.findByVisaMk("Y");//所有未簽核心完畢的函文		
+		List<KyVisabillm>list_vbm=visabillmSer.findByVisaMk("Y");//所有未簽核完畢的函文		
 		String subject="";
 		String result="";
 		String content="";
@@ -37,9 +37,9 @@ public class AutoSendKyz extends QuartzJobBean{
 		MailSenderInfo mailInfo = new MailSenderInfo();
 		SimpleMailSender sms = new SimpleMailSender();
 		mailInfo.setValidate(true);    
-	    mailInfo.setUserName("kyuen@yydg.com.cn"); 
+	    /*mailInfo.setUserName("kyuen@yydg.com.cn"); 
 	    mailInfo.setPassword("yydgmail");//您的邮箱密码    
-	    mailInfo.setFromAddress("<kyuen@yydg.com.cn>");
+	    mailInfo.setFromAddress("<kyuen@yydg.com.cn>");*/
 			for(int i=0;i<list_vbm.size();i++){// start for1	
 				List<String>list_email=new ArrayList<String>();
 				String signerNext=list_vbm.get(i).getSignerNext();

@@ -163,6 +163,12 @@
 							<input type="hidden" value="<s:property value='id.kyVisabillm.id.visaSort'/>" name="visaSort"/>
 							<input type="hidden" value="down" name="lookordown"/>						
 					</form>
+					<form action="vbm_sendEmail" method="post" id="8subform${x.index}" style="float:left" target="_blank">
+						<input type="hidden" value="<s:property value='id.kyVisabillm.id.factNo'/>"
+							name="factNo" /> <input type="hidden"
+							value="<s:property value='id.kyVisabillm.id.billNo'/>" name="billNo" />
+							<input type="hidden" value="<s:property value='id.kyVisabillm.id.visaSort'/>" name="visaSort"/>													
+					</form>
 				    </li>	 
 					<s:if test='#session.loginUser.userread!="1"'>
 					<li>					
@@ -213,6 +219,16 @@
 					 <a href="javascript:document.getElementById('7subform${x.index}').submit()"><img alt="打印" src="images/icon/print24.png" title="打印"><br>打印</a>
 				     </li>
 				     </s:else>
+				     <s:if test='#session.loginUser.username=="admin"'>
+				     <s:if test='id.kyVisabillm.visaMk=="N"&&id.kyVisabillm.emailMk==null'>
+				        <li>
+				            <a href="javascript:document.getElementById('8subform${x.index}').submit()">Email</a>
+				        </li> 
+				     </s:if>
+				     <s:else>
+				          <font color="grey">Email</font>
+				     </s:else>
+				     </s:if>
 				</ul>
 				</td> 
 				</s:if>	

@@ -82,10 +82,10 @@ public class AutoSendKyzAll extends QuartzJobBean{
 			MailSenderInfo mailInfo=new MailSenderInfo();
 			SimpleMailSender sms=new SimpleMailSender();
 			mailInfo.setValidate(true);
-			mailInfo.setUserName("kyuen@yydg.com.cn");
-			mailInfo.setFromAddress("<kyuen@yydg.com.cn>");
+			/*mailInfo.setUserName("kyuen@yydg.com.cn");
+			mailInfo.setFromAddress("<kyuen@yydg.com.cn>");			
+			mailInfo.setPassword("yydgmail");*/
 			mailInfo.setToAddress("kyuen@yydg.com.cn");//收件人爲本機，檢測Email是否發送成功
-			mailInfo.setPassword("yydgmail");
 			mailInfo.setContent("簽核完畢");
 			for(int i=0;i<list_vbm.size();i++){//start for			
 				String factNo=list_vbm.get(i).getId().getFactNo();
@@ -292,15 +292,45 @@ public class AutoSendKyzAll extends QuartzJobBean{
 		map.put("pbillno",kyzid.getBillNo());
 		map.put("title",result);
 		List<KyzExpectmats> sub_list = new ArrayList<KyzExpectmats>();
-		
 		KyzExpectmats temp=new KyzExpectmats();
-		for(int i=0;i<listkyz.get(0).getKyzExpectmatses().size();i++){
+						
+		/*for(int i=0;i<listkyz.get(0).getKyzExpectmatses().size();i++){
 			KyzExpectmats kyzs=listkyz.get(0).getKyzExpectmatses().get(i);
 			sub_list.add(kyzs);
 		}
 		while(sub_list.size()<10){
 			sub_list.add(temp);
+		}*/
+		if(listkyz.get(0).getKyzExpectmatses().size()==1){
+			KyzExpectmats kyzss=listkyz.get(0).getKyzExpectmatses().get(0);
+			if(kyzss.getMatNo()==null&&kyzss.getItemNm()==null){
+				listkyz.get(0).setKyzsMk("1");
+			}else{
+				for(int i=0;i<listkyz.get(0).getKyzExpectmatses().size();i++){
+					KyzExpectmats kyzs=listkyz.get(0).getKyzExpectmatses().get(i);
+					kyzs.setMatNo(ZHConverter.convert(kyzs.getMatNo(), ZHConverter.TRADITIONAL));
+					kyzs.setQtyPair(ZHConverter.convert(kyzs.getQtyPair(), ZHConverter.TRADITIONAL));
+					kyzs.setItemNm(ZHConverter.convert(kyzs.getItemNm(), ZHConverter.TRADITIONAL));
+					sub_list.add(kyzs);
+				}
+				while(sub_list.size()<10){
+					sub_list.add(temp);
+				}
+			}
+		}else{
+			for(int i=0;i<listkyz.get(0).getKyzExpectmatses().size();i++){
+				KyzExpectmats kyzs=listkyz.get(0).getKyzExpectmatses().get(i);
+				kyzs.setMatNo(ZHConverter.convert(kyzs.getMatNo(), ZHConverter.TRADITIONAL));
+				kyzs.setQtyPair(ZHConverter.convert(kyzs.getQtyPair(), ZHConverter.TRADITIONAL));
+				kyzs.setItemNm(ZHConverter.convert(kyzs.getItemNm(), ZHConverter.TRADITIONAL));
+				sub_list.add(kyzs);
+			}
+			while(sub_list.size()<10){
+				sub_list.add(temp);
+			}
 		}
+		
+		
 		Map sub_map=new HashMap<String,Object>();
 		sub_map.put("sub_list", sub_list);
 					

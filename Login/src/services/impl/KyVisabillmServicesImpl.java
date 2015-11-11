@@ -51,4 +51,9 @@ public class KyVisabillmServicesImpl implements IKyVisabillmServices{
 		return visabillmDao.findByVisaMk2(visaMk);
 	}
 
+	public KyVisabillm findByBillNo(String billNo) {
+		// TODO Auto-generated method stub
+		return visabillmDao.findByBillNo(billNo);
+	}
+
 }

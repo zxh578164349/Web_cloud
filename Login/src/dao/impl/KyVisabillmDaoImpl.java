@@ -119,4 +119,12 @@ public class KyVisabillmDaoImpl extends Basedao implements IKyVisaBillmDao{
 		return super.findAll(hql, objs);
 	}
 
+	public KyVisabillm findByBillNo(String billNo) {
+		// TODO Auto-generated method stub
+		String hql="from KyVisabillm where id.billNo=?";
+		Query query=getSession().createQuery(hql);
+		query.setString(0, billNo);
+		return (KyVisabillm)query.uniqueResult();
+	}
+
 }

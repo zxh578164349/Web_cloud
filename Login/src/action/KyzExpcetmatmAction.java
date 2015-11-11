@@ -882,12 +882,7 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 				String utfname=URLEncoder.encode(tempname,"utf-8");				
 				listfiles.get(i).setFilename(utfname);
 			}
-			ActionContext.getContext().getSession().put("list_filesexp", listfiles);
-			
-			
-			/******************list轉json*************************/
-			JSONArray dfdfd=JSONArray.fromObject(listfiles);
-			/******************list轉json*************************/
+			ActionContext.getContext().getSession().put("list_filesexp", listfiles);									
 		}
 		return "findById";
 	}
@@ -1143,6 +1138,14 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 			kyz.setColTemp(typename);
 		}//for1				
 	}
+	
+/*	public JSONArray fileJson(){
+		List<KyzExpectmatmFile> listfiles=kyzexpfileSer.findByBillNo(billNo);
+		*//******************list轉json*************************//*
+		JSONArray jsonList=JSONArray.fromObject(listfiles);
+		*//******************list轉json*************************//*
+		return jsonList;
+	}*/
 	
 	
 }

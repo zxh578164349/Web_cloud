@@ -624,9 +624,13 @@
              <result name="findById">/saveAndUpdate/webTypeSaveOrUpdate.jsp</result>
              <result name="delete" type="redirectAction">webtype_findPageBean</result>
         </action>
-        <action name="proloss_*" class="profitlossAction" method="{1}">
-             
-        </action>
+        <action name="proloss_*" class="profitlossAction" method="{1}"></action>
+        <action name="kyzfile_*" class="filekyzAction" method="{1}">
+           <result type="json">
+             <param name="root">list_json</param>
+           </result>
+        </action>     
+        
 	</package>
 
 </struts>
