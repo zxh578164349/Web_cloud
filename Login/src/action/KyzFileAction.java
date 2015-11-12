@@ -1,6 +1,8 @@
 package action;
 
+import java.io.File;
 import java.io.IOException;
+import java.net.URLDecoder;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -22,9 +24,26 @@ public class KyzFileAction extends ActionSupport{
 	private Integer id;
 	private List<KyzExpectmatmFile>listfiles;
 	private String list_json;
-	
+	private JSONArray jsons;
+	private String filename;
 
 	
+    
+	public String getFilename() {
+		return filename;
+	}
+
+	public void setFilename(String filename) {
+		this.filename = filename;
+	}
+
+	public JSONArray getJsons() {
+		return jsons;
+	}
+
+	public void setJsons(JSONArray jsons) {
+		this.jsons = jsons;
+	}
 
 	public String getList_json() {
 		return list_json;
@@ -65,22 +84,29 @@ public class KyzFileAction extends ActionSupport{
 	
 	
 	public String findKyzFileJson() throws IOException{
-		
-		   
-        
-		//kyzexpfileSer.delete(id);
-		List<KyzExpectmatmFile> listfiles=kyzexpfileSer.findByBillNo(billNo);
-		/*JSONArray fileJson = new JSONArray();
-		JSONObject jo = new JSONObject();
-		for(int i=0;i<listfiles.size();i++){
-			
+		filename=URLDecoder.decode(filename,"utf-8");
+		File file=new File("");
+		if(billNo.substring(0,2).equals("EM")){
+			file=new File("d:\\KyzexpFile_backup\\"+billNo+"\\"+filename);
+		}else{
+			file=new File("d:\\KyzletterexpFile_backup\\"+billNo+"\\"+filename);
+		}          
+		/*boolean flag=kyzexpfileSer.delete(id);
+		if(flag){
+			if(file.exists()){
+				file.delete();
+			}
 		}*/
+		if(file.exists()){
+			file.delete();
+			kyzexpfileSer.delete(id);
+		}
+		List<KyzExpectmatmFile> listfiles=kyzexpfileSer.findByBillNo(billNo);				
 		/******************list轉json*************************/
-		JSONArray fileJson=JSONArray.fromObject(listfiles);
-		
+		jsons=JSONArray.fromObject(listfiles);		
 		/******************list轉json*************************/
-		list_json=fileJson.toString();
-		System.out.println(list_json);
+		//list_json=jsons.toString();
+		//System.out.println(jsons);
 		return SUCCESS;
 
 	}

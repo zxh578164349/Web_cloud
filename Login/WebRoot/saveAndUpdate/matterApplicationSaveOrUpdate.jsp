@@ -29,6 +29,8 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 <script type="text/javascript" src="jquery/DatePicker/my_WdatePicker.js"></script>
 <script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script>
 <script type="text/javascript" src="jquery/Validform_v5.3.2_min.js"></script>
+<script type="text/javascript" src="jquery/layer/layer.min.js"></script>
+
 <script type="text/javascript">
 	$(function() {
 		var jj = jQuery.noConflict();
@@ -336,17 +338,29 @@ function getKyType2(factno){
      }
   }
 
-function lookJson(billNo){
+function lookJson(billNo,id,filename){
 var jQ = jQuery.noConflict();
+var loadi=layer.load(0);
+filename=encodeURI(encodeURI(filename));
    jQ.ajax({
       type:"get",
+      //contentType: "application/x-www-form-urlencoded; charset=utf-8", 
       dataType:"json",
       url:"kyzfile_findKyzFileJson",
-      data:"billNo="+billNo,
+      data:"billNo="+billNo+"&id="+id+"&filename="+filename,
       success:function(files){
-          //alert(files);
-         jQ("#fileJson").html(files);
-         jQ.each(files,function)
+          layer.close(loadi);
+          alert(files.length);
+         jQ("#fileJson").html("");
+          var item;
+          var item_url;
+         jQ.each(files,function(i,file){
+            item_url="javascript:lookJson('"+file.billno+"',"+file.id+",'"+file.filename+"')";
+            item="<a href='/upload/"+file.billno+"/"+file.filename+"' target='_blank' title='點擊查看'>"+file.filename+            
+            "</a>"+
+            "<a href="+item_url+"><img src='images/icon/del_file.png' alt='刪除' title='刪除' style='border:0px'/></a>&nbsp;";
+            jQ("#fileJson").append(item);
+         }) 
       }
    })
 }
@@ -699,24 +713,16 @@ table.gridtable td.tdcolor {
 		<s:if test='kyz.filesYn=="1"'>
 	       <hr/>
 	       <div style="color:blue;">附檔:</div><br/>
-	      <s:iterator value="#session.list_filesexp">
-	        <div style="float:left;border:1px solid;padding-top:10px" >
-	           &nbsp;<a href="/upload/<s:property value='billno'/>/<s:property value='filename'/>" target="_blank" style="font-size:16px">
+	       <div id="fileJson">
+	      <s:iterator value="#session.list_filesexp">	        
+	           <a href="/upload/<s:property value='billno'/>/<s:property value='filename'/>" target="_blank" title="點擊查看">
 	                 <s:property value="%{toUrl(filename)}"/>
-	           </a>
-	           <div style="position:relative;top:-28px;left:7px">
-	           <a >
-	              <img src="images/icon/del_file.png" alt="刪除"/>
-	           </a>
-	        </div>
-	        </div>&nbsp;
-	        
+	           </a>	           
+	           <a href="javascript:lookJson('${billno}',${id},'<s:property value="%{toUrl(filename)}"/>')">
+	              <img src="images/icon/del_file.png" alt="刪除" title="刪除" style="border:0px"/>
+	           </a>&nbsp;	        	        	        
 	     </s:iterator>
-	     <button onclick="lookJson('${kyz.id.billNo}')">點擊</button>
-	     <a href="javascript:lookJson('${kyz.id.billNo}')">dfdfdfd</a>
-	     <div id="fileJson">
-	        
-	     </div>	  
+	     </div>		     	     	        	       
 	   </s:if>	  
 			  <center style="width:850px;margin-left:50px">			    
 				<input type="submit" id="sub" value="確定" onmouseover="this.style.backgroundPosition='left -40px'" onmouseout="this.style.backgroundPosition='left top'"/>&nbsp;&nbsp;&nbsp; <input

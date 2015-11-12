@@ -627,7 +627,7 @@
         <action name="proloss_*" class="profitlossAction" method="{1}"></action>
         <action name="kyzfile_*" class="filekyzAction" method="{1}">
            <result type="json">
-             <param name="root">list_json</param>
+             <param name="root">jsons</param>
            </result>
         </action>     
         

@@ -10,6 +10,6 @@ public interface IKyzExpectmatmFileServices {
 	public void delete(KyzExpectmatmFile file);
 	
 	public KyzExpectmatmFile findById(Integer id);
-	public void delete(Integer id);
+	public boolean delete(Integer id);
 
 }

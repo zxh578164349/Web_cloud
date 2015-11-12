@@ -39,9 +39,16 @@ public class KyzExpectmatmFileServicesImpl implements IKyzExpectmatmFileServices
 	}
 
 
-	public void delete(Integer id) {
+	public boolean delete(Integer id) {
 		// TODO Auto-generated method stub
-		kyzexpfileDao.delete(id);
+		boolean flag=false;
+		try{
+			kyzexpfileDao.delete(id);
+			flag=true;
+		}catch(RuntimeException e){
+			flag=false;
+		}
+		return flag;
 	}
 
 }
