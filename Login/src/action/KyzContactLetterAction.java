@@ -344,13 +344,14 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 				      /**
 				       * 给备签人发送邮件
 				       */
-				      String emailPwd=webuseremailSer.findEmailPWD(kyzletter.getId().getFactNo(),singernext);
+				      /******************20151113备签人请使用方法findByFactNoAEmailPwd2(String factNo,String email)**********************/
+				      /*String emailPwd=webuseremailSer.findEmailPWD(kyzletter.getId().getFactNo(),singernext);
 				      if(emailPwd!=null){
 				    	  MailSenderInfo mailinfo3=new MailSenderInfo();
 							mailinfo3.setValidate(true);
-							/*mailinfo3.setUserName("kyuen@yydg.com.cn");
+							mailinfo3.setUserName("kyuen@yydg.com.cn");
 							mailinfo3.setPassword("yydgmail");
-							mailinfo3.setFromAddress("<kyuen@yydg.com.cn>");*/
+							mailinfo3.setFromAddress("<kyuen@yydg.com.cn>");
 							mailinfo3.setToAddress(emailPwd);
 							mailinfo3.setSubject("新函文初次審核"+vbm_billno+"("+vbm_factno+")");
 							mailinfo3.setContent("單號:<span style='color:red'>"+vbm_billno+"</span>"+"&nbsp;&nbsp;廠別:"+vbm_factno+								
@@ -364,10 +365,29 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 									"<hr/>");
 						    //这个类主要来发送邮件   
 						      SimpleMailSender sms3 = new SimpleMailSender();   
-						         // sms.sendTextMail(mailInfo);//发送文体格式    
 						      sms3.sendHtmlMail(mailinfo3);//发送html格式  
-				      }
-				      
+				      }*/
+				      List<String>list_emailPwd=webuseremailSer.findByFactNoAEmailPwd2(kyzletter.getId().getFactNo(),singernext);
+				      if(list_emailPwd.size()>0){//if
+				    	  for(int i=0;i<list_emailPwd.size();i++){
+				    		  MailSenderInfo mailinfo3=new MailSenderInfo();
+								mailinfo3.setValidate(true);							
+								mailinfo3.setToAddress(list_emailPwd.get(i));
+								mailinfo3.setSubject("新函文初次審核"+vbm_billno+"("+vbm_factno+")");
+								mailinfo3.setContent("單號:<span style='color:red'>"+vbm_billno+"</span>"+"&nbsp;&nbsp;廠別:"+vbm_factno+								
+										"<br/>點擊單號直接審核:<a href='"+emailUrl_in2+"'>"+vbm_billno+"</a>(電腦適用)"+
+										"<br/>點擊單號直接審核:<a href='"+emailUrl_in+"'>"+vbm_billno+"</a>(手機平板適用)"+
+										"<hr/>"+
+										"如需查詢以往單據請登陸:(云端)<a href='http://203.85.73.161/Login'>http://203.85.73.161/Login</a>" +									
+										"<br/>進入[KPI數據]--[函文審核]查找對應單號審核" +									
+										"<hr/>"+
+										"<br/>本郵件自動發送,請勿回復!如需回復或者問題，請回复到kyinfo.lp@yydg.com.cn劉平!<br/>"+
+										"<hr/>");
+							    //这个类主要来发送邮件   
+							      SimpleMailSender sms3 = new SimpleMailSender();   
+							      sms3.sendHtmlMail(mailinfo3);//发送html格式  
+				    	  }				    	    
+				      }//if				      
 					  print(kyzletter.getId().getFactNo(),kyzletter.getId().getBillNo(),kyzletter.getVisaType());
 					  return null;
 					}

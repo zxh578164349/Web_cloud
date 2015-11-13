@@ -240,8 +240,7 @@ function getKyType2(factno){
        }
          
      });
-	 }
-    
+	 }    
 	}
 	
 	
@@ -456,7 +455,7 @@ table.gridtable td.tdcolor {
 
 </head>
 <%@ include file="../saveAndUpdate/publicHead2.jsp"%>
-<body >  
+<body onload="getKyType()">  
  
 　     <s:if test="kyz==null">
       <form action="kyz_add" method="post" id="form" target="_blank" enctype="multipart/form-data">

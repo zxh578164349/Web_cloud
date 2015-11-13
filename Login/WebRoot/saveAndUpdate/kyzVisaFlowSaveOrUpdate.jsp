@@ -67,8 +67,8 @@ var j=0;
 	function addRow(){
 	     j=j+1;
 	    	     
-	     if(j>9){
-	      j=9;
+	     if(j>14){
+	      j=14;
 	     }
 	    //添加一行
 	    /*insertRow()是IE專用的,通用寫法是insertRow(-1)
@@ -86,7 +86,7 @@ var j=0;
    
         //设置列内容和属性
         var cboxlist=document.getElementsByName("cbox");
-        if(cboxlist.length>9){
+        if(cboxlist.length>14){
            alert("對不起,不能超過10條記錄!");
         }else{
          var newTr = kyzs_body.insertRow(-1);

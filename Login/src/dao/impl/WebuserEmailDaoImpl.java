@@ -16,15 +16,7 @@ import entity.WebuserEmail;
 
 public class WebuserEmailDaoImpl extends Basedao implements IWebuserEmailDao{
 
-	public String findEmailPWD(String factNo, String email) {
-		// TODO Auto-generated method stub
-		String hql="select id.emailpassword from WebuserEmail where id.factNo=? and id.email=?";
-		Query query=getSession().createQuery(hql);
-		query.setString(0, factNo);
-		query.setString(1, email);
-		String emailpwd=(String)query.uniqueResult();
-		return emailpwd;
-	}
+	
 
 	public void add(WebuserEmail email) {
 		// TODO Auto-generated method stub
@@ -32,12 +24,12 @@ public class WebuserEmailDaoImpl extends Basedao implements IWebuserEmailDao{
 	}
 
 	public WebuserEmail findById(String factNo, String email, String emailpwd) {
-		// TODO Auto-generated method stub
-		String hql="from WebuserEmail where id.factNo=? and id.email=? and id.emailpassword=? ";
+		// TODO Auto-generated method stub		
+		String hql="from WebuserEmail where id.factNo=? and lower(id.email)=? and lower(id.emailpassword)=? ";
 		Query query=getSession().createQuery(hql);
 		query.setString(0, factNo);
-		query.setString(1, email);
-		query.setString(2, emailpwd);
+		query.setString(1, email.toLowerCase());
+		query.setString(2, emailpwd.toLowerCase());
 		WebuserEmail obj=(WebuserEmail)query.uniqueResult();
 		return obj;
 	}
@@ -63,8 +55,8 @@ public class WebuserEmailDaoImpl extends Basedao implements IWebuserEmailDao{
 			map.put("factno", factNo);
 		}
 		if(email!=null&&!email.equals("")){
-			hql.append(" and id.email=:email");
-			map.put("email", email);
+			hql.append(" and lower(id.email)=:email");
+			map.put("email", email.toLowerCase());
 		}
 		hql2.append(hql);
 		if(rows!=null&&page>0){
@@ -87,6 +79,20 @@ public class WebuserEmailDaoImpl extends Basedao implements IWebuserEmailDao{
 		bean.setPageSize(pageSize);
 		bean.setTotalPage(totalPage);
 		return bean;
+	}
+
+	public List<WebuserEmail> findByFactNoAEmailPwd(String factNo, String email) {
+		// TODO Auto-generated method stub
+		String hql="from WebuserEmail where id.factNo=? and lower(id.email)=?";
+		String[]objs={factNo,email.toLowerCase()};
+		return super.findAll(hql, objs);
+	}
+
+	public List<String> findByFactNoAEmailPwd2(String factNo, String email) {
+		// TODO Auto-generated method stub
+		String hql="select id.emailpassword from WebuserEmail where id.factNo=? and lower(id.email)=?";
+		String[]objs={factNo,email.toLowerCase()};
+		return super.findAll(hql, objs);
 	}
 
 }

@@ -46,11 +46,18 @@ public class AutoSendKyz extends QuartzJobBean{
 				String factNo=list_vbm.get(i).getId().getFactNo();
 				String billNo=list_vbm.get(i).getId().getBillNo();
 				String visaSort=list_vbm.get(i).getId().getVisaSort();
-				String visaMk=list_vbm.get(i).getVisaMk();
-				String emailPwd = webuseremailSer.findEmailPWD(factNo,signerNext);//備簽人Email
+				String visaMk=list_vbm.get(i).getVisaMk();								
 				list_email.add(signerNext);
+				 /******************20151113备签人请使用方法findByFactNoAEmailPwd2(String factNo,String email)**********************/
+				/*String emailPwd = webuseremailSer.findEmailPWD(factNo,signerNext);//備簽人Email
 				if(emailPwd!=null){
 					list_email.add(emailPwd);
+				}*/
+				List<String>list_emailPwd=webuseremailSer.findByFactNoAEmailPwd2(factNo, signerNext);
+				if(list_emailPwd.size()>0){
+					for(int j=0;j<list_emailPwd.size();j++){
+						list_email.add(list_emailPwd.get(j));
+					}
 				}
 				list_email.add("kyuen@yydg.com.cn");
 				String emailUrl="http://203.85.73.161/Login/vbm_findById_email?visaSort="+visaSort+"&billNo="+billNo

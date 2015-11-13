@@ -156,7 +156,7 @@
 		</create>
 		<create javascript="webuseremailjs" creator="spring">
 		    <param name="beanName" value="webuseremailSer"/>
-		    <include method="findEmailPWD"/>
+		    <include method="findById"/>
 		</create>
 		<create javascript="webtypejs" creator="spring">
 		    <param name="beanName" value="webtypeSer"/>

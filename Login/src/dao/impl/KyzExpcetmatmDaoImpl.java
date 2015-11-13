@@ -74,7 +74,7 @@ public class KyzExpcetmatmDaoImpl extends Basedao implements IKyzExpectmatmDao {
 			hql.append(" and id.billNo=:billNo ");
 			map.put("billNo", billNo);
 		}
-		if(userNm!=null&&!userNm.equals("")&&!userNm.contains("ºÞ²z­û")){
+		if(userNm!=null&&!userNm.equals("")&&!userNm.contains("ï¿½Þ²zï¿½ï¿½")){
 			hql.append(" and userNm=:usernm");
 			map.put("usernm", userNm);
 		}
@@ -151,7 +151,7 @@ public class KyzExpcetmatmDaoImpl extends Basedao implements IKyzExpectmatmDao {
 		String hql="from KyzExpectmatm where id.factNo=? and id.billNo=?";
 		String[]objs={id.getFactNo(),id.getBillNo()};
 		List<KyzExpectmatm>list=super.findAll(hql, objs);
-		//¸Ñ¨M©µ¿ð°ÝÃD
+		//ï¿½Ñ¨Mï¿½ï¿½ï¿½ï¿½ï¿½ï¿½D
 		for(int i=0;i<list.size();i++){
 			list.get(i).getKyzExpectmatses().size();
 		}
@@ -190,5 +190,15 @@ public class KyzExpcetmatmDaoImpl extends Basedao implements IKyzExpectmatmDao {
 		}
 		List<Object[]>list=super.getAllWithNoPage(hql.toString(), map);
 		return list;
+	}
+
+	public KyzExpectmatm findById(String factNo, String billNo) {
+		// TODO Auto-generated method stub
+		String hql="from KyzExpectmatm where id.factNo=? and id.billNo=?";
+		Query query=getSession().createQuery(hql);
+		query.setString(0, factNo);
+		query.setString(1, billNo);
+		KyzExpectmatm kyz=(KyzExpectmatm)query.uniqueResult();
+		return kyz;
 	}
 }

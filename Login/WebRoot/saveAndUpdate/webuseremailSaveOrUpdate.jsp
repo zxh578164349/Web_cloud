@@ -48,10 +48,11 @@
 	 function check(){
        var factno=document.getElementById("dwr_factno").value;
        var email=document.getElementById("email").value;
-       if(factno!=""&&email!=""){
-          webuseremailjs.findEmailPWD(factno,email,function(x){
+       var emailPwd=document.getElementById("emailPwd").value;
+       if(factno!=""&&email!=""&&emailPwd!=""){
+          webuseremailjs.findById(factno,email,emailPwd,function(x){
               if(x!=null){
-              alert("你在该厂已有备签人");
+              alert("該備簽人已存在，請重新添加");
               document.getElementById("sub").disabled=true;
               document.getElementById("sub").value="已鎖定";
               document.getElementById("sub").style.color="red";
@@ -122,7 +123,7 @@ window.onload=function(){
 				
 				<td class="td_show_title">備簽人Email</td>
 				<td class="td_input"><input type="text" name="useremail.id.emailpassword"
-					datatype="e" value="<s:property value='useremail.id.emailpassword'/>" id="email" />					
+					datatype="e" value="<s:property value='useremail.id.emailpassword'/>" id="emailPwd" onblur="check()"/>					
 					</td>
 					<td class="td_show_title">主簽人姓名</td>
 					<td class="td_input"><input type="text" name="useremail.name" value="<s:property value='useremail.name'/>"/></td>

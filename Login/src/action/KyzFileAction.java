@@ -91,12 +91,6 @@ public class KyzFileAction extends ActionSupport{
 		}else{
 			file=new File("d:\\KyzletterexpFile_backup\\"+billNo+"\\"+filename);
 		}          
-		/*boolean flag=kyzexpfileSer.delete(id);
-		if(flag){
-			if(file.exists()){
-				file.delete();
-			}
-		}*/
 		if(file.exists()){
 			file.delete();
 			kyzexpfileSer.delete(id);

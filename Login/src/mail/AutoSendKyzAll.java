@@ -614,19 +614,16 @@ public class AutoSendKyzAll extends QuartzJobBean{
 		String[] attachFileNames = { "d:/" + local_billNo + ".pdf" };// 附件
 		SimpleMailSender sms = new SimpleMailSender();
 		MailSenderInfo mailInfo = new MailSenderInfo();
-		
-		/*MailSenderInfo mailInfo2 = new MailSenderInfo();
-		SimpleMailSender sms2 = new SimpleMailSender();*/
-		for (int i = 0; i < list_visa2.size(); i++) {			
+				
+		for (int i = 0; i < list_visa2.size(); i++) {//for			
 			// 这个类主要来发送邮件			
 			mailInfo.setValidate(true);
-			mailInfo.setUserName("kyuen@yydg.com.cn");
+			/*mailInfo.setUserName("kyuen@yydg.com.cn");
 			mailInfo.setPassword("yydgmail");// 您的邮箱密码
-			mailInfo.setFromAddress("<kyuen@yydg.com.cn>");
+			mailInfo.setFromAddress("<kyuen@yydg.com.cn>");*/
 			mailInfo.setSubject("函文知會定時通知(審核完畢)_" + local_billNo + "("
 					+ local_factNo + ")");
 
-			//String[] attachFileNames = { "d:/" + local_billNo + ".pdf" };
 			mailInfo.setAttachFileNames(attachFileNames);
 			mailInfo.setContent("單號為:" + "<span style='color:red'>"
 					+ local_billNo + "</span>" + "的函文已審核完畢,請查看附件"
@@ -637,9 +634,9 @@ public class AutoSendKyzAll extends QuartzJobBean{
 			sms.sendHtmlMail(mailInfo);// 发送html格式
 
 			// 给备签人发送邮件
-			String emailPwd = webuseremailSer.findEmailPWD(local_factNo,list_visa2.get(i).getVisaSigner());					
-			if (emailPwd != null) {
-				
+			/******************20151113备签人请使用方法findByFactNoAEmailPwd2(String factNo,String email)**********************/
+			/*String emailPwd = webuseremailSer.findEmailPWD(local_factNo,list_visa2.get(i).getVisaSigner());			
+			if (emailPwd != null) {				
 				mailInfo.setValidate(true);
 				mailInfo.setUserName("kyuen@yydg.com.cn");
 				mailInfo.setPassword("yydgmail");// 您的邮箱密码
@@ -650,13 +647,24 @@ public class AutoSendKyzAll extends QuartzJobBean{
 				mailInfo.setContent("單號為:" + "<span style='color:red'>"
 						+ local_billNo + "</span>" + "的函文已審核完畢,請查看附件"
 						+ "<br/>本郵件自動定時發送，請勿回覆");
-
 				mailInfo.setToAddress(emailPwd);
 				sms.sendHtmlMail(mailInfo);// 发送html格式
-
-			}
-
-		}
+			}*/
+			List<String>list_emailPwd=webuseremailSer.findByFactNoAEmailPwd2(local_factNo,list_visa2.get(i).getVisaSigner());
+			if(list_emailPwd.size()>0){//if
+				for(int j=0;j<list_emailPwd.size();j++){
+					mailInfo.setValidate(true);					
+					mailInfo.setSubject("函文知會定時通知(審核完畢)_" + local_billNo + "("
+							+ local_factNo + ")");
+					mailInfo.setAttachFileNames(attachFileNames);
+					mailInfo.setContent("單號為:" + "<span style='color:red'>"
+							+ local_billNo + "</span>" + "的函文已審核完畢,請查看附件"
+							+ "<br/>本郵件自動定時發送，請勿回覆");
+					mailInfo.setToAddress(list_emailPwd.get(j));
+					sms.sendHtmlMail(mailInfo);// 发送html格式
+				}
+			}//if
+		}//for
 	       
 	          File file = new File("d:/" + local_billNo + ".pdf");
 				if (file.exists()) {

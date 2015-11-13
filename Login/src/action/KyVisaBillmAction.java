@@ -1031,8 +1031,11 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 		      /**
 		       * 发送给备签人  20150817
 		       */
-			  String emailPwd=webuseremailSer.findEmailPWD(factno_temp,signernext);//备签人员
-		      if(emailPwd!=null){
+		      
+		      /******************20151113备签人请使用方法findByFactNoAEmailPwd2(String factNo,String email)**********************/
+			  //String emailPwd=webuseremailSer.findEmailPWD(factno_temp,signernext);//备签人员  
+		      String emailPwd="";
+		      if(emailPwd!=null&&!emailPwd.equals("")){
 		    	  MailSenderInfo mailInfo2 = new MailSenderInfo();    
 			      //mailInfo.setMailServerHost("smtp.qq.com");    
 			      //mailInfo.setMailServerPort("25");    
@@ -1719,8 +1722,10 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 			sms.sendHtmlMail(mailInfo);// 发送html格式
 
 			// 给备签人发送邮件
-			String emailPwd = webuseremailSer.findEmailPWD(local_factNo,list_visa2.get(i).getVisaSigner());					
-			if (emailPwd != null) {
+			 /******************20151113备签人请使用方法findByFactNoAEmailPwd2(String factNo,String email)**********************/
+			//String emailPwd = webuseremailSer.findEmailPWD(local_factNo,list_visa2.get(i).getVisaSigner());
+			String emailPwd="";
+			if (emailPwd != null&&!emailPwd.equals("")) {
 				MailSenderInfo mailInfo2 = new MailSenderInfo();
 				// 这个类主要来发送邮件
 				SimpleMailSender sms2 = new SimpleMailSender();
@@ -1906,8 +1911,10 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 			sms.sendHtmlMail(mailInfo);// 发送html格式
 			
 			// 给备签人发送邮件
-			String emailPwd = webuseremailSer.findEmailPWD(local_factNo,list_visa2.get(i).getVisaSigner());
-			if(emailPwd!=null){
+			 /******************20151113备签人请使用方法findByFactNoAEmailPwd2(String factNo,String email)**********************/
+			//String emailPwd = webuseremailSer.findEmailPWD(local_factNo,list_visa2.get(i).getVisaSigner());
+			String emailPwd="";
+			if(emailPwd!=null&&!emailPwd.equals("")){
 				MailSenderInfo mailInfo2 = new MailSenderInfo();
 				// 这个类主要来发送邮件
 				SimpleMailSender sms2 = new SimpleMailSender();
@@ -2142,7 +2149,8 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
   		  sms_n.sendHtmlMail(mailInfo_n);
   		  
   		//*********更新下一位签核人***********//
-  		  //如果是最后一个签核人，或者最后一个知会人（不是最后一个签核人，并且不是最后一个知会人）则不需要更新
+  		  //如果是最后一个签核人，或者最后一个知会人（不是最后一个签核人，并且不是最后一个知会人）则不需要更新(*************************20151113可能有問題******************************)
+  		  //如果是最后一箇簽核人，則需要更新
   		  int num001=vbm.getKyVisabillses().size()-visabillSer.findBillsWithNo(visaSort, billNo);
   		  if(Integer.parseInt(itemNo)!=num001&&Integer.parseInt(itemNo)!=vbm.getKyVisabillses().size()){ 			
   			  String new_nextItemno="";
@@ -2373,9 +2381,11 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 		String billNo=vbm.getId().getBillNo();
 		String visaSort=vbm.getId().getVisaSort();
 		String visaMk=vbm.getVisaMk();
-		String emailPwd = webuseremailSer.findEmailPWD(factNo,signerNext);//備簽人Email
+		 /******************20151113备签人请使用方法findByFactNoAEmailPwd2(String factNo,String email)**********************/
+		//String emailPwd = webuseremailSer.findEmailPWD(factNo,signerNext);//備簽人Email
+		String emailPwd="";
 		list_email.add(signerNext);
-		if(emailPwd!=null){
+		if(emailPwd!=null&&!emailPwd.equals("")){
 			list_email.add(emailPwd);
 		}
 		list_email.add("kyuen@yydg.com.cn");

@@ -76,7 +76,7 @@
 					<div id="username_inputleft"></div>
 					<div id="username_inputmiddle">
 						<input type="text" name="webUsers.username" id="url_username_input" value="<%=cookie.getCookName() %>" onclick="this.value = ''" />
-						<img id="url_user" src="./images/login2/username_icon.jpg" alt="" />							
+						<img id="url_user" src="./images/login2/username_icon.jpg" alt="user" title="賬號" />							
 					</div>
 					<div id="username_inputright"></div>
 				</div>
@@ -84,7 +84,7 @@
 					<div id="password_inputleft"></div>
 					<div id="password_inputmiddle">
 						<input type="password" name="webUsers.pwd" id="url_pwd_input" value="" onclick="this.value = ''" />
-						<img id="url_password" src="./images/login2/pwd_icon.jpg" alt="" />							
+						<img id="url_password" src="./images/login2/pwd_icon.jpg" alt="pwd" title="密碼"/>							
 					</div>
 					<div id="password_inputright"></div>
 				</div>
@@ -104,7 +104,8 @@
 								<option value="${temp[0]}">
 									${temp[1]}&nbsp;(${temp[0]})</option>
 							</s:iterator>
-						</select>																			
+						</select>
+						<img id="url_password" src="./images/login2/factno1.png" alt="fa" title="廠別" />																			
 					</div>
 					<div id="factno_selectright"></div>
 					<br/>

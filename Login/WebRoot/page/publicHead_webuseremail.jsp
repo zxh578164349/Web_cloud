@@ -62,7 +62,7 @@ jq(document).keyup(function(event){
 					</select>
 					</div>
 				</s:else></td>
-			<td>Email</td>
+			<td>主签人Email</td>
 			<td><input id="email"></td>
 			<td>
 			 <input value="搜索" type="submit" id="addbtn" onclick="javascript:submis()" />		

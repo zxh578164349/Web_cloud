@@ -20,8 +20,9 @@ public interface IKyzExpectmatmDao {
 	public List<KyzExpectmatm> findByFactNo(String factno);
 	public List<KyzExpectmatm> findById_Print(KyzExpectmatmId id);
 	
-	public KyzExpectmatm findById2(String billNo);//由於單號是唯一的,所以可以用作單一條件查找
+	public KyzExpectmatm findById2(String billNo);//嚙諸抬蕭皜對蕭O嚙賠一嚙踝蕭,嚙課以嚙箠嚙瘡嚙諄作嚙踝蕭@嚙踝蕭嚙範嚙踝蕭
 	public String findTitleByBillno(String billNo);
 	
 	public List<Object[]>findTitle(String factNo);
+	public KyzExpectmatm findById(String factNo,String billNo);
 }

@@ -1,5 +1,7 @@
 package services.impl;
 
+import java.util.List;
+
 import dao.IWebuserEmailDao;
 import entity.WebuserEmail;
 import services.IWebuserEmailServices;
@@ -13,10 +15,7 @@ public class WebuserEmailServicesImpl implements IWebuserEmailServices{
 		this.webuseremailDao = webuseremailDao;
 	}
 
-	public String findEmailPWD(String factNo, String email) {
-		// TODO Auto-generated method stub
-		return webuseremailDao.findEmailPWD(factNo, email);
-	}
+
 
 	public void add(WebuserEmail email) {
 		// TODO Auto-generated method stub
@@ -37,6 +36,18 @@ public class WebuserEmailServicesImpl implements IWebuserEmailServices{
 			String email) {
 		// TODO Auto-generated method stub
 		return webuseremailDao.findPageBean(pageSize, page, factNo, email);
+	}
+
+	public List<WebuserEmail> findByFactNoAEmailPwd(String factNo, String email) {
+		// TODO Auto-generated method stub
+		return webuseremailDao.findByFactNoAEmailPwd(factNo, email);
+	}
+
+
+
+	public List<String> findByFactNoAEmailPwd2(String factNo, String email) {
+		// TODO Auto-generated method stub
+		return webuseremailDao.findByFactNoAEmailPwd2(factNo, email);
 	}
 
 }

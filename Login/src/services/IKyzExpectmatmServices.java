@@ -23,5 +23,6 @@ public interface IKyzExpectmatmServices {
 	public String findTitleByBillno(String billNo);
 	
 	public List<Object[]>findTitle(String factNo);
+	public KyzExpectmatm findById(String factNo,String billNo);
 			
 }

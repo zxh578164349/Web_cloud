@@ -1,5 +1,7 @@
 package action;
 
+import java.util.List;
+
 import services.IWebuserEmailServices;
 import util.PageBean;
 
@@ -89,6 +91,15 @@ public class WebuseremailAction extends ActionSupport{
 		}
 		bean=webuseremailSer.findPageBean(25, page, factNo, email);
 		return "beanList1";
+	}
+	
+	public void testEamil(){
+		factNo="631";
+		email="liujung@mail.gj.com.tw";
+		List<String>list=webuseremailSer.findByFactNoAEmailPwd2(factNo, email);
+		for(int i=0;i<list.size();i++){
+			System.out.println(list.get(i));
+		}
 	}
 
 }

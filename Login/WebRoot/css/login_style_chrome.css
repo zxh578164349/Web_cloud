@@ -99,20 +99,20 @@ body {
 }
 #url_factno{
 	display:block;
-	width:275px;
+	width:299px;
 	height:41px;
 	background:transparent;
 	border:0;
 	color:black;
 	font-family:helvetica, sans-serif;
 	font-size:14px;
-	padding-left:3px;
+	padding-left:20px;
 	margin-top:2px;
 	
 }
 
 #url_user {
-	position:absolute;
+	position:relative;
 	display:block;
 	margin-top:-28px;
 	float:left;
@@ -152,10 +152,10 @@ body {
 
 #url_password {
 	display:block;
-	position:absolute;
-	margin-top:-32px;
+	position:relative;
+	margin-top:-28px;
 	float:left;
-	margin-left:4px;		
+		
 }
 
 #factno_select {
@@ -178,6 +178,7 @@ body {
 	background:url(../images/login2/input_middle.png) repeat-x;
 	width:276px;
 	height:50px;
+	overflow:hidden;
 }
 
 #factno_selectright {
