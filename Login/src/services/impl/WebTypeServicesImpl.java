@@ -53,7 +53,7 @@ public class WebTypeServicesImpl implements IWebTypeServices{
 			for(int i=0;i<list.size();i++){
 				list.get(i).setWebtypeMk(list.get(i).getId().getTypeNo());				
 			}
-		}		
+		}	
 		return list;
 	}
 

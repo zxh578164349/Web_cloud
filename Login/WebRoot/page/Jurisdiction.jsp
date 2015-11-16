@@ -434,6 +434,13 @@
 	       document.getElementById("webtype1").innerHTML='<input name="checkbox" value="KPI數據,簽核類別管理,webtype_findPageBean" type="checkbox">簽核類別管理'							                                             
 	    }
 	    
+	    var i55=document.getElementById("webemaila");
+	    if(i55!=null){
+	       document.getElementById("webemaila1").innerHTML="";
+	    }else{
+	       document.getElementById("webemaila1").innerHTML='<input name="checkbox" value="用戶管理,知會人管理,webuseremaila_findPageBean" type="checkbox" />知會人管理'																                                             
+	    }
+	    
 	      	    	 
 }
 	/* function huoqu() {
@@ -986,7 +993,14 @@ function getSub(){
 							</s:if>
 						</s:iterator>
 					</s:iterator> <span id="backemail1"></span>
-					
+					<s:iterator value="#session.user.webJurisdictions">
+						<s:iterator value="webSubmenus">
+							<s:if test="submenuname=='知會人管理'">
+								<span id="webemaila"><input name="checkbox"
+									value="用戶管理,知會人管理,webuseremaila_findPageBean" checked="checked" type="checkbox" />知會人管理</span>
+							</s:if>
+						</s:iterator>
+					</s:iterator> <span id="webemaila1"></span>
 				</td>
 			</tr>
 			<tr>

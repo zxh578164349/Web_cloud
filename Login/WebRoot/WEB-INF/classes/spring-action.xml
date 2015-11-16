@@ -74,6 +74,7 @@
 	<bean id="webtypeAction" class="action.WebTypeAction" scope="prototype"/>
 	<bean id="profitlossAction" class="action.ProfitAndLoss_Ireport" scope="prototype"/>
 	<bean id="filekyzAction" class="action.KyzFileAction" scope="prototype"/>
+	<bean id="webuseremailaAction" class="action.WebuserEmailaAction" scope="prototype"/>
 </beans> 
 
  

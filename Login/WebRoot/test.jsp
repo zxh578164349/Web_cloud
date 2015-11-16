@@ -89,8 +89,8 @@
 
 
 
-<body style="MARGIN: 0px" scroll=auto
-	onResize=javascript:parent.carnoc.location.reload()>
+<body >
+	
  	<TABLE style="BORDER-COLLAPSE:collapse" id="tab" cellSpacing=0
 		cellPadding=0 width=100% border=0>		
 		<TR>

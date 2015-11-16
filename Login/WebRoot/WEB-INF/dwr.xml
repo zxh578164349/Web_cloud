@@ -163,6 +163,10 @@
 		    <include method="findById"/>
 		    <include method="findByFactNo"/>
 		</create>
+		<create javascript="webuseremailajs" creator="spring">
+		    <param name="beanName" value="webuseremailaSer"/>
+		    <include method="findById"/>
+		</create>
 		<convert converter="hibernate3" match="entity.*" />		
 		<!-- <convert converter="bean" match="cn.com.entity.ConfigFileFirstKind">
 			<param name="include" value="ffkId,firstKindName,configFileSecondKinds" />
