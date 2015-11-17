@@ -26,10 +26,20 @@ public class WebuserEmailAServicesImpl implements IWebuserEmailAServices{
 		return webuseremailaDao.findById(factNo, email, emailPwd, visaSort);
 	}
 
-	public void delete(String factNo, String email, String emailPwd,
+	public boolean deleteObj(String factNo, String email, String emailPwd,
 			String visaSort) {
 		// TODO Auto-generated method stub
-		webuseremailaDao.delete(factNo, email, emailPwd, visaSort);
+		boolean flag=false;
+		try{
+			webuseremailaDao.delete(factNo, email, emailPwd, visaSort);
+			flag=true;
+			
+		}catch(RuntimeException e){
+			flag=false;
+			System.out.println(e);
+		}
+		return flag;
+		
 	}
 
 	public PageBean findPageBean(int pageSize, int page, String factNo,

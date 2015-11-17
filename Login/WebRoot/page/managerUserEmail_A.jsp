@@ -58,12 +58,11 @@
 	    var loadi=layer.load(0);		
 		var email = document.getElementById("email");
 		var factno=document.getElementById("factNo");
-		var visasort=document.getElementById("visasort");
 		jq.ajax({
 			type : "POST",
 			dataType : "Html",
 			url : "webuseremaila_findPageBean2",
-			data : "email=" + email.value+"&factNo="+factno.value+"&visaSort="+visasort.value,
+			data : "email=" + email.value+"&factNo="+factno.value,
 			success : function(msg) {
 			    layer.close(loadi);
 				jq("#bodyid").html(msg);
@@ -98,13 +97,20 @@ function move(obj){
  function mydelete(factNo,email,emailpwd,visaSort){
     var flag=confirm("確定要刪除嗎?");
     if(flag==true){
-       window.location.href="webuseremaila_delete?factNo="+factNo+"&email="+email+"&emailpwd="+emailpwd+"&visaSort="+visaSort;
+       window.location.href="webuseremaila_delete?factNo="+factNo+"&email="+email+"&emailPwd="+emailpwd+"&visaSort="+visaSort;
+       /* webuseremailajs.deleteObj(factNo,email,emailpwd,visaSort,function(x){deleteObj
+           if(x==false){
+              alert("刪除失敗");
+           }
+       }); */
        layer.load("正在處理,請稍後....");
     }
 }
 
 </script>
-
+<script type='text/javascript' src='/Login/dwr/interface/webuseremailajs.js'></script>
+<script type='text/javascript' src='/Login/dwr/engine.js'></script>
+<script type='text/javascript' src='/Login/dwr/util.js'></script>
 <body>
 	<jsp:include page="publicHead_webuseremail_A.jsp" />
 	<hr />

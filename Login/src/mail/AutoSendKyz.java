@@ -153,16 +153,20 @@ public class AutoSendKyz extends QuartzJobBean{
 				List<String>list_emailPwd_a=webuseremailaSer.findByEmail(factNo, signerNext, visaSort);
 				
 				String[] attachFileNames = { "d:/" + billNo + ".pdf" };// 附件
-				if(list_emailPwd_a.size()>0){
-					if(billNo.substring(0,2).equals("CM")){
+				if(list_emailPwd_a.size()>0){//if
+					if(billNo.substring(0,2).equals("EM")){
 						this.print_KyzExpectmatm(factNo, billNo, visaSort);
 					}else{
 						this.print_KyzContactletter(factNo, billNo, visaSort);
 					}
 					for(int k=0;k<list_emailPwd_a.size();k++){
-						mailInfo2.setSubject("函文定時中途知會"+billNo);
+						mailInfo2.setToAddress(list_emailPwd_a.get(k));
+						mailInfo2.setSubject("函文定時中途知會_"+billNo+"("+factNo+")");
+						mailInfo2.setContent("請查看函文附件");
+						mailInfo2.setAttachFileNames(attachFileNames);
+						sms.sendHtmlMail(mailInfo2);
 					}
-				}
+				}//if
 				/***************************************中途知會人的email********************************************/
 			}//end for1
 		}//end if

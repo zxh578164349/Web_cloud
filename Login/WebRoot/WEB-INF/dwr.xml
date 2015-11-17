@@ -166,6 +166,7 @@
 		<create javascript="webuseremailajs" creator="spring">
 		    <param name="beanName" value="webuseremailaSer"/>
 		    <include method="findById"/>
+		    <include mehtod="deleteObj"/>
 		</create>
 		<convert converter="hibernate3" match="entity.*" />		
 		<!-- <convert converter="bean" match="cn.com.entity.ConfigFileFirstKind">

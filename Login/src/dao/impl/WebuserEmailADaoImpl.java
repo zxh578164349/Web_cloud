@@ -56,7 +56,7 @@ public class WebuserEmailADaoImpl extends Basedao implements IWebuserEmailADao{
 		}
 		if(email!=null&&!email.equals("")){
 			hql.append(" and id.email=:email");
-			map.put("email", email);
+			map.put("email", email.toLowerCase());
 		}
 		if(visaSort!=null&&!visaSort.equals("")){
 			hql.append(" and id.visaSort=:visasort");
@@ -88,7 +88,7 @@ public class WebuserEmailADaoImpl extends Basedao implements IWebuserEmailADao{
 	public List<String> findByEmail(String factNo, String email, String visaSort) {
 		// TODO Auto-generated method stub
 		String hql="select id.emailpassword from WebuserEmailA where id.factNo=? and id.email=? and id.visaSort=?";
-		String[]objs={factNo,email,visaSort};
+		String[]objs={factNo,email.toLowerCase(),visaSort.substring(0,2)};
 		return super.findAll(hql, objs);
 	}
 

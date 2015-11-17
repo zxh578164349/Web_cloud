@@ -1,6 +1,13 @@
 package action;
 
+import java.io.IOException;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.struts2.interceptor.ServletRequestAware;
+import org.apache.struts2.interceptor.ServletResponseAware;
 
 import services.IWebTypeServices;
 import services.IWebuserEmailAServices;
@@ -13,7 +20,7 @@ import entity.KyzVisaflow;
 import entity.WebType;
 import entity.WebuserEmailA;
 
-public class WebuserEmailaAction extends ActionSupport{
+public class WebuserEmailaAction extends ActionSupport implements ServletResponseAware, ServletRequestAware{
 	private String factNo;
 	private String email;
 	private String visaSort;
@@ -24,7 +31,8 @@ public class WebuserEmailaAction extends ActionSupport{
 	
 	private IWebuserEmailAServices webuseremailaSer;
 	private IWebTypeServices webtypeSer;
-	
+	private javax.servlet.http.HttpServletResponse response;
+	private javax.servlet.http.HttpServletRequest request;
     
 	public String getEmailPwd() {
 		return emailPwd;
@@ -97,9 +105,16 @@ public class WebuserEmailaAction extends ActionSupport{
 		webuseremailaSer.add(emailobj);
 		return "add";
 	}
-	public String delete(){
-		webuseremailaSer.delete(factNo, email, emailPwd, visaSort);
-		return "delete";
+	public String delete() throws IOException{
+		boolean flag=webuseremailaSer.deleteObj(factNo, email, emailPwd, visaSort);
+		if(flag==false){
+			response.setContentType("text/html;charset=utf-8");
+			response.getWriter().print("<script>alert('刪除失敗!');history.back()</script>");
+			return null;
+		}else{			
+			return "delete";
+		}
+		
 	}
 	public String findPageBean(){
 		ActionContext.getContext().getApplication().clear();
@@ -153,6 +168,20 @@ public class WebuserEmailaAction extends ActionSupport{
 			}//for2
 			eml.setColTemp(typename);
 		}//for1	
+	}
+	public String findById(){
+		emailobj=webuseremailaSer.findById(factNo, email, emailPwd, visaSort);
+		return "findById";
+	}
+
+	public void setServletRequest(HttpServletRequest request) {
+		// TODO Auto-generated method stub
+		this.request=request;
+	}
+
+	public void setServletResponse(HttpServletResponse response) {
+		// TODO Auto-generated method stub
+		this.response=response;
 	}
 	
 

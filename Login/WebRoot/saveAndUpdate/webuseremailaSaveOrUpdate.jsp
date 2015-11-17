@@ -155,13 +155,7 @@ window.onload=function(){
 						</select>
 						</s:if>
 						<span id="error1"></span>
-						</td>																																					
-						</s:if>
-						<s:else>
-						   <td><input type="text" name="emailobj.id.factNo" value="<s:property value='emailobj.id.factNo'/>" readonly style="color:blue"/>
-						   <span id="error1"></span>
-						   </td>
-						</s:else>
+						</td>																																																	
 						<td class="td_show_title">函文類別</td>
 				        <td class="td_input">
 				          <select name="emailobj.id.visaSort" id="visaSort" datatype="*" onchange="check()">
@@ -171,19 +165,32 @@ window.onload=function(){
 				</tr>													
 			<tr>
 				<td class="td_show_title">主簽人Email</td>
-				        <td class="td_input"><input type="text" name="emailobj.id.email" datatype="e" value="<s:property value='emailobj.id.email'/>" id="email" onblur="getLow(this),check()">									
+				<td class="td_input"><input type="text" name="emailobj.id.email" datatype="e" value="<s:property value='emailobj.id.email'/>" id="email" onblur="getLow(this),check()">									
 				</td>
-				<td class="td_show_title">備簽人Email</td>
+				<td class="td_show_title">知會人Email</td>
 				<td class="td_input"><input type="text" name="emailobj.id.emailpassword"
 					datatype="e" value="<s:property value='emailobj.id.emailpassword'/>" id="emailPwd" onblur="getLow(this),check()"/>					
-					</td>
-					
-						   
-			</tr>						
+					</td>											   
+			</tr>
+			</s:if>
+			<s:else>
+			  <tr>
+			   <td class="td_show_title">廠別</td>
+			   <td class="td_input"><input type="text" name="emailobj.id.factNo" value="<s:property value='emailobj.id.factNo'/>" readonly style="color:blue"/></td>			
+			   <td class="td_show_title">函文類別</td>
+			   <td class="td_input"><input type="text" name="emailobj.id.visaSort" value="<s:property value='emailobj.id.visaSort'/>" readonly style="color:blue"/></td>
+			  </tr>
+			  <tr> 
+			   <td class="td_show_title">主簽人Email</td>
+			   <td class="td_input"><input type="text" name="emailobj.id.email" value="<s:property value='emailobj.id.email'/>" readonly style="color:blue"/></td>
+			   <td class="td_show_title">知會人Email</td>
+			   <td class="td_input"><input type="text" name="emailobj.id.emailpassword" value="<s:property value='emailobj.id.emailpassword'/>" readonly style="color:blue"/></td>	
+			  </tr>
+			</s:else>						
 			<tr>
 			<td class="td_show_title">主簽人姓名</td>
 					<td class="td_input"><input type="text" name="emailobj.name" value="<s:property value='emailobj.name'/>"/></td>
-			    <td class="td_show_title">备签人姓名</td>
+			    <td class="td_show_title">知會人姓名</td>
 			    <td class="td_input"><input type="text" name="emailobj.namePwd" value="<s:property value='emailobj.namePwd'/>"  id="emailpwd"/></td>				 					
 					
 			</tr>			
