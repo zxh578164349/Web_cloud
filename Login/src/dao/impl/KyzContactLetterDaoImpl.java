@@ -42,7 +42,7 @@ public class KyzContactLetterDaoImpl extends Basedao implements IKyzContactLette
 			hql.append(" and id.billNo=:billNo ");
 			map.put("billNo", billNo);
 		}
-		if(userNm!=null&&!userNm.equals("")&&!userNm.contains("ºŞ²z­û")){
+		if(userNm!=null&&!userNm.equals("")&&!userNm.contains("ç®¡ç†å“¡")){
 			hql.append(" and userNm=:usernm");
 			map.put("usernm", userNm);
 		}

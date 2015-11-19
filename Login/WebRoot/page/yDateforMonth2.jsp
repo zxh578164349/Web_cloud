@@ -165,12 +165,12 @@ function showDiv_update(factNo,factCode,yymm){
 		href="javascript:location.href='ydata_findPageBean'" 
 		style="color:blue;text-decoration:underline;float:right;padding-right:30px">按日詳細查看</a>
 	</span>
-	<s:if test="#session.loginUser.username=='admin'">
+	<!-- <s:if test="#session.loginUser.username=='admin'">
 	<span style="float:right"> <img alt="" src="images/136.gif"><a
 		href="javascript:updateAll()" 
 		style="color:blue;text-decoration:underline;float:right;padding-right:30px">更新所有</a>
 	</span>
-    </s:if>
+    </s:if> -->
 	<div id="bodyid">
 		<jsp:include page="table1/yDateforMonth1_1.jsp" />
 	</div>

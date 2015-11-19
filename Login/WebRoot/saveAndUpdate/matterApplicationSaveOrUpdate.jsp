@@ -40,12 +40,10 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 			showAllError : true,
 			tipSweep : true,
 			datatype : {
-				"*0-6" : /^\d{0,9}(\.[0-9]{1,3})?$/,
 				"my0-8": /^\d{0,8}(\.[0-9]{1,4})?$/,
 				"my0-12": /^\d{0,12}(\.[0-9]{1,4})?$/
 			}
 		});
-		demo.tipmsg.w["*0-6"] = "只能數字且不超過9位數,可保留三位以內小數";
 		demo.tipmsg.w["my0-8"]="只能數字且不超過8位數,可保留四位以內小數";
 		demo.tipmsg.w["my0-12"]="只能數字且不超過12位數,可保留四位以內小數";
 	});
@@ -73,7 +71,7 @@ function makeBillNo() {
 		var factcode=document.getElementById("dwrFactArea").value;
 		var billnos = document.getElementById("kyz_billno");
 		var cbox_length=document.getElementsByName("cbox").length;
-		if (factno != "" && timecreat != "" && factcode!="" ) {
+		if (factno != "" && timecreat != "") {
 			kyzjs.makeBillNo(factno, timecreat, function(x) {
 				dwr.util.setValue("kyz_billno", x);				
 				  dwr.util.setValue("kyzs_billno", x);				  								
@@ -455,7 +453,7 @@ table.gridtable td.tdcolor {
 
 </head>
 <%@ include file="../saveAndUpdate/publicHead2.jsp"%>
-<body onload="getKyType()">  
+<body onload="getKyType(),makeBillNo()">  
  
 　     <s:if test="kyz==null">
       <form action="kyz_add" method="post" id="form" target="_blank" enctype="multipart/form-data">
@@ -474,7 +472,7 @@ table.gridtable td.tdcolor {
 				        <td class="tdcolor">電話</td>
 				        <td><input type="text" name="kyz.telNo" datatype="n0-11"  value="<s:property value='kyz.telNo'/>"/></td> 				        
 				        <td class="tdcolor">申請單位</td>
-				        <td><input type="text" name="kyz.secNo"  value="<s:property value='kyz.secNo'/>"/></td>
+				        <td><input type="text" name="kyz.secNo"  value="<s:property value='kyz.secNo'/>" datatype="*1-10"/></td>
 				        
 				    </tr>
 				    <s:if test="kyz==null">
@@ -488,7 +486,7 @@ table.gridtable td.tdcolor {
 						
 						<td class="tdcolor">廠別狀態</td>
 						<td><select name="kyz.factCode"
-							datatype="*" id="dwrFactArea" onchange="makeBillNo()" style="color:blue">
+							 id="dwrFactArea" onchange="makeBillNo()" style="color:blue">
 								<option value="">請選擇廠別狀態</option>
 								<s:iterator value="#session.factAreas_login" id="temp">
 									<option value="${temp}">${temp}</option>
@@ -514,7 +512,7 @@ table.gridtable td.tdcolor {
 						
 						<td class="tdcolor">廠別狀態</td>
 						<td><select name="kyz.factCode"
-							datatype="*" id="dwrFactArea" onchange="makeBillNo()">
+							 id="dwrFactArea" onchange="makeBillNo()">
 								<option value="">請選擇廠別狀態</option>
 						</select></td>
 						
@@ -541,7 +539,7 @@ table.gridtable td.tdcolor {
 				      <td class="tdcolor">申請單號</td>				        
 				      <td>
 				        <s:if test="kyz==null">	
-				          		<input type="text" name="kyz.id.billNo" value="自動生成" readonly style="color:blue" id="kyz_billno"/>	        
+				          		<input type="text" name="kyz.id.billNo" value="自動生成" readonly style="color:blue" id="kyz_billno" datatype="*"/>	        
 				        </s:if>
 				        <s:else>
 				               <input type="text" name="kyz.id.billNo" value="<s:property value='kyz.id.billNo'/>" readonly style="color:blue" />

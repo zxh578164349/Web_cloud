@@ -74,7 +74,7 @@ public class KyzExpcetmatmDaoImpl extends Basedao implements IKyzExpectmatmDao {
 			hql.append(" and id.billNo=:billNo ");
 			map.put("billNo", billNo);
 		}
-		if(userNm!=null&&!userNm.equals("")&&!userNm.contains("�޲z��")){
+		if(userNm!=null&&!userNm.equals("")&&!userNm.contains("管理員")){
 			hql.append(" and userNm=:usernm");
 			map.put("usernm", userNm);
 		}

@@ -63,6 +63,7 @@ public class WebuserEmailADaoImpl extends Basedao implements IWebuserEmailADao{
 			map.put("visasort", visaSort);
 		}
 		hql2.append(hql);
+		hql.append(" order by id.factNo,id.visaSort");
 		if(rows!=null&&page>0){
 			allrow=rows;
 		}else{

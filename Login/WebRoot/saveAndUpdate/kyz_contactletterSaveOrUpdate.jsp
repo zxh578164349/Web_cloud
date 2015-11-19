@@ -62,7 +62,7 @@ function makeBillNo() {
 		var factcode=document.getElementById("dwrFactArea").value;
 		var billnos = document.getElementById("kyzletter_billno");
 		var cbox_length=document.getElementsByName("cbox").length;
-		if (factno != "" && timecreat != "" && factcode!="" ) {
+		if (factno != "" && timecreat != "") {
 			kyzcontactletterjs.makeBillNo(factno, timecreat, function(x) {
 				dwr.util.setValue("kyzletter_billno", x);								  			  								
 			});				 		
@@ -275,7 +275,7 @@ table.gridtable td.tdcolor {
 </style>
 
 </head>
-<body onload="getKyType()">  
+<body onload="getKyType(),makeBillNo()">  
  
 　     <s:if test="kyzletter==null">
       <form action="kyzletter_add" method="post" id="form" target="_blank" enctype="multipart/form-data">
@@ -315,7 +315,7 @@ table.gridtable td.tdcolor {
 						
 						<td class="tdcolor">廠別狀態</td>
 						<td><select name="kyzletter.factCode"
-							datatype="*" id="dwrFactArea" onchange="makeBillNo()" style="color:blue">
+							 id="dwrFactArea"  style="color:blue">
 								<option value="">請選擇廠別狀態</option>
 								<s:iterator value="#session.factAreas_login" id="temp">
 									<option value="${temp}">${temp}</option>
@@ -347,7 +347,7 @@ table.gridtable td.tdcolor {
 						
 						<td class="tdcolor">廠別狀態</td>
 						<td><select name="kyzletter.factCode"
-							datatype="*" id="dwrFactArea" onchange="makeBillNo()">
+							 id="dwrFactArea" >
 								<option value="">請選擇廠別狀態</option>
 						</select></td>
 						
@@ -377,7 +377,7 @@ table.gridtable td.tdcolor {
 				   </s:else>				   				    				  			
 					<tr>
 				        <td class="tdcolor">承辦單位</td>
-				        <td><input type="text" name="kyzletter.secNo" datatype="*0-20"  value="<s:property value='kyzletter.secNo'/>" /></td>
+				        <td><input type="text" name="kyzletter.secNo" datatype="*1-20"  value="<s:property value='kyzletter.secNo'/>" /></td>
 				        
 				        <td class="tdcolor">承辦主管</td>
 				        <td><input type="text" name="kyzletter.chargeNo" datatype="*0-50"  value="<s:property value='kyzletter.chargeNo'/>"/></td>
@@ -395,7 +395,7 @@ table.gridtable td.tdcolor {
 				      <td class="tdcolor">申請單號</td>				        
 				      <td>
 				        <s:if test="kyzletter==null">	
-				          		<input type="text" name="kyzletter.id.billNo" value="自動生成" readonly style="color:blue" id="kyzletter_billno"/>	        
+				          		<input type="text" name="kyzletter.id.billNo" value="自動生成" readonly style="color:blue" id="kyzletter_billno" datatype="*"/>	        
 				        </s:if>
 				        <s:else>
 				               <input type="text" name="kyzletter.id.billNo" value="<s:property value='kyzletter.id.billNo'/>" readonly style="color:blue" />

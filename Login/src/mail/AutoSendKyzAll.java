@@ -266,7 +266,7 @@ public class AutoSendKyzAll extends QuartzJobBean{
 		kyzid.setBillNo(local_billNo);
 		kyzid.setFactNo(local_factNo);
 		String factname=webFactSer.selByid(kyzid.getFactNo());
-		String factCode="";
+		String secNo="";
 		List<KyzExpectmatm> listkyz=kyzSer.findById_Print(kyzid);
 		/*if(listkyz.size()==0){
 			response.setContentType("text/html;charset=utf-8");
@@ -279,8 +279,10 @@ public class AutoSendKyzAll extends QuartzJobBean{
 		listkyz.get(0).setMemoMk(ZHConverter.convert(listkyz.get(0).getMemoMk(), ZHConverter.TRADITIONAL));
 		listkyz.get(0).setMemoSmk(ZHConverter.convert(listkyz.get(0).getMemoSmk(), ZHConverter.TRADITIONAL));
 		/**************************簡轉繁體***************************/
-		factCode=listkyz.get(0).getFactCode();
-		String result=factname+"("+factCode+")"+"費用申請單";
+		if(listkyz.get(0).getSecNo()!=null&&!listkyz.get(0).getSecNo().equals("")){
+			secNo="("+listkyz.get(0).getSecNo()+")";
+		}
+		String result=factname+secNo+"費用申請單";
 		map = new HashMap<String, Object>();
 		//map.put("SUBREPORT_DIR",ServletActionContext.getRequest().getRealPath("/jasper/audit/")+ "/");		
 		//map.put("pic", ServletActionContext.getRequest().getRealPath("/jasper/audit/images/")+ "/");//圖片路徑
@@ -303,7 +305,7 @@ public class AutoSendKyzAll extends QuartzJobBean{
 		}*/
 		if(listkyz.get(0).getKyzExpectmatses().size()==1){
 			KyzExpectmats kyzss=listkyz.get(0).getKyzExpectmatses().get(0);
-			if(kyzss.getMatNo()==null&&kyzss.getItemNm()==null){
+			if(kyzss.getMatNo()==null&&kyzss.getItemNm()==null||(kyzss.getMatNo().trim().equals("")&&kyzss.getItemNm().trim().equals(""))){
 				listkyz.get(0).setKyzsMk("1");
 			}else{
 				for(int i=0;i<listkyz.get(0).getKyzExpectmatses().size();i++){
@@ -459,7 +461,7 @@ public class AutoSendKyzAll extends QuartzJobBean{
 		List<KyzContactletter>list=new ArrayList<KyzContactletter>();
 		Map<String,Object>map=new HashMap<String,Object>();
 		String factname=webFactSer.selByid(local_factNo);
-		String factCode="";
+		String secNo="";
 		KyzContactletter letter=kyzletterSer.findById(local_factNo,local_billNo);
 		/*if(letter==null){
 			response.setContentType("text/html;charset=utf-8");
@@ -476,8 +478,10 @@ public class AutoSendKyzAll extends QuartzJobBean{
 		letter.setMemoMk(ZHConverter.convert(letter.getMemoMk(), ZHConverter.TRADITIONAL));
 		/*******************簡轉繁體********************/
 		list.add(letter);
-		factCode=letter.getFactCode();
-		String result=factname+"("+factCode+")"+"內部聯絡函";
+		if(letter.getSecNo()!=null&&!letter.getSecNo().equals("")){
+			secNo="("+letter.getSecNo()+")";
+		}
+		String result=factname+secNo+"內部聯絡函";
 		//map = new HashMap<String, Object>();
 		//map.put("SUBREPORT_DIR",ServletActionContext.getRequest().getRealPath("/jasper/audit/")+ "/");
 		//map.put("pic", ServletActionContext.getRequest().getRealPath("/jasper/audit/images/")+ "/");//圖片路徑	

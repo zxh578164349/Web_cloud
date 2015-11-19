@@ -680,7 +680,7 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 	
 	public String print(KyzExpectmatmId id,String sort) throws IOException{
 		String factname=webFactSer.selByid(id.getFactNo());
-		String factCode="";
+		String secNo="";//申請單位
 		List<KyzExpectmatm> list=kyzSer.findById_Print(id);
 		if(list.size()==0){
 			response.setContentType("text/html;charset=utf-8");
@@ -692,8 +692,10 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 			list.get(0).setMemoMk(ZHConverter.convert(list.get(0).getMemoMk(), ZHConverter.TRADITIONAL));
 			list.get(0).setMemoSmk(ZHConverter.convert(list.get(0).getMemoSmk(), ZHConverter.TRADITIONAL));
 		}
-		factCode=list.get(0).getFactCode();
-		String result=factname+"("+factCode+")"+"費用申請單";
+		if(list.get(0).getSecNo()!=null&&!list.get(0).getSecNo().equals("")){
+			secNo="("+list.get(0).getSecNo()+")";
+		}
+		String result=factname+secNo+"費用申請單";
 		map = new HashMap<String, Object>();
 		map.put("SUBREPORT_DIR",ServletActionContext.getRequest().getRealPath("/jasper/audit/")+ "/");
 		map.put("pic", ServletActionContext.getRequest().getRealPath("/jasper/audit/images/")+ "/");//圖片路徑		
@@ -706,7 +708,9 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 		
 		if(list.get(0).getKyzExpectmatses().size()==1){
 			KyzExpectmats kyzss=list.get(0).getKyzExpectmatses().get(0);
-			if(kyzss.getMatNo()==null&&kyzss.getItemNm()==null){
+			String aa=kyzss.getMatNo();
+			String bb=kyzss.getItemNm();
+			if(kyzss.getMatNo()==null&&kyzss.getItemNm()==null||(kyzss.getMatNo().trim().equals("")&&kyzss.getItemNm().trim().equals(""))){
 				list.get(0).setKyzsMk("1");
 			}else{
 				for(int i=0;i<list.get(0).getKyzExpectmatses().size();i++){

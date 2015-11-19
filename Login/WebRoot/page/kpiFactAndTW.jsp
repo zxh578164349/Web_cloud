@@ -170,7 +170,7 @@ table{width:700px}
           <td>(分段)</td>
            <td>
                                 開始&nbsp;<input type="text" id="begin" name="yymm_begin" datatype="*" onclick="WdatePicker({minDate:'{%y-1}-%m',maxDate:'#F{$dp.$D(\'end\',{M:-1})||\'%y-{%M-1}\'}'})" class="Wdate" ><br>
-                                結束&nbsp;<input type="text" id="end" name="yymm_end" datatype="*" onclick="WdatePicker({minDate:'#F{$dp.$D(\'begin\',{M:1})}',maxDate:'%y-%M'})" class="Wdate">
+                                結束&nbsp;<input type="text" id="end" name="yymm_end" datatype="*" onclick="WdatePicker({minDate:'#F{$dp.$D(\'begin\',{M:0})}',maxDate:'%y-%M'})" class="Wdate">
           </td>
           <td>工廠</td>
           <td class="td_input">

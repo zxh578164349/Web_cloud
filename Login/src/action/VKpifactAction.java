@@ -2503,6 +2503,9 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 			Double actlost, Double avgbuttomweight2,Double otherweight,
 			Double productnum,Double noglueweight,Double repairmoney,Double sumWorkhours,
 			Double instorenum) {
+		if(index==0){
+			index=1;
+		}
 		DecimalFormat format=new DecimalFormat("####0");
 		DecimalFormat format1=new DecimalFormat("####0.0");
 		DecimalFormat format2=new DecimalFormat("####0.00");

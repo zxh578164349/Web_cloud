@@ -111,7 +111,7 @@
 				</td>
 				<td><s:property value="startDate"/></td>
 				<td><s:property value="endDate"/></td>
-				<td><s:property value="%{formatDouble(100*sumActualdemo/sumStandarddemo)}" />%</td>				
+				<td><s:property value="%{formatPer(sumActualdemo,sumStandarddemo)}"/></td>				
 				<td>
 				   <form action="sumwebydata_delete" method="post" id="subform${x.index}" style="float:left">						
 						<input type="hidden" value="<s:property value='id.factNo'/>" name="factNo" />							

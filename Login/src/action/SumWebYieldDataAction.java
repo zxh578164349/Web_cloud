@@ -132,12 +132,12 @@ public class SumWebYieldDataAction extends ActionSupport implements ServletRespo
 		this.sumydatelogSer = sumydatelogSer;
 	}
 	/**
-	 * ²K¥[
-	 * µL °Ñ¼Æ
-	 * (0)onModulus:(everyDemo)·í¤é¤W¼Ò¼Æ;(1)personnum:(everyPeople)·í¤é¤W¼Ò¤H¼Æ;(2)standardOutput:(standardDemo)¼Ð­ã¥Í²£¼Ò¼Æ;
-	 * (3)actualYield:(actualDemo)¹ê»Ú¥Í²£¼Ò¼Æ;(4)daycount:(workDay)¤W¯Z¤Ñ¼Æ
-	 * (5)actualpairs:¹ê»Ú¥Í²£Âù¼Æ;(6)hostpairs:«È¸É¥Í²£Âù¼Æ;(7)factpairs:¼t¸É¥Í²£Âù¼Æ;(8)samplepairs:¼Ë«~¥Í²£Âù¼Æ
-	 * (9)outnum:¥X³f¼Æ;(10)backnum:°h³f¼Æ
+	 * ï¿½Kï¿½[
+	 * ï¿½L ï¿½Ñ¼ï¿½
+	 * (0)onModulus:(everyDemo)ï¿½ï¿½ï¿½Wï¿½Ò¼ï¿½;(1)personnum:(everyPeople)ï¿½ï¿½ï¿½Wï¿½Ò¤Hï¿½ï¿½;(2)standardOutput:(standardDemo)ï¿½Ð­ï¿½Í²ï¿½ï¿½Ò¼ï¿½;
+	 * (3)actualYield:(actualDemo)ï¿½ï¿½Ú¥Í²ï¿½ï¿½Ò¼ï¿½;(4)daycount:(workDay)ï¿½Wï¿½Zï¿½Ñ¼ï¿½
+	 * (5)actualpairs:ï¿½ï¿½Ú¥Í²ï¿½ï¿½ï¿½ï¿½;(6)hostpairs:ï¿½È¸É¥Í²ï¿½ï¿½ï¿½ï¿½;(7)factpairs:ï¿½tï¿½É¥Í²ï¿½ï¿½ï¿½ï¿½;(8)samplepairs:ï¿½Ë«~ï¿½Í²ï¿½ï¿½ï¿½ï¿½
+	 * (9)outnum:ï¿½Xï¿½fï¿½ï¿½;(10)backnum:ï¿½hï¿½fï¿½ï¿½
 	 * @return
 	 */
 	public String add(){
@@ -152,7 +152,7 @@ public class SumWebYieldDataAction extends ActionSupport implements ServletRespo
 			id.setFactCode(factcode);
 			id.setYymm(yymm);
 			ydate.setId(id);
-			//objs¤£¦n§PÂ_¡A©Ò¥H§PÂ_list_ydata.size()(¨âªÌªº¬d¸ß±ø¥ó¤@¼Ë¡Aµ²ªG¤]¬O¤@­P)
+			//objsï¿½ï¿½ï¿½nï¿½Pï¿½_ï¿½Aï¿½Ò¥Hï¿½Pï¿½_list_ydata.size()(ï¿½ï¿½Ìªï¿½ï¿½dï¿½ß±ï¿½ï¿½@ï¿½Ë¡Aï¿½ï¿½ï¿½Gï¿½]ï¿½Oï¿½@ï¿½P)
 			if(list_ydata.size()!=0){
 				BigDecimal onModulus=new BigDecimal(objs[0].toString());
 				BigDecimal personnum=new BigDecimal(objs[1].toString());
@@ -187,7 +187,7 @@ public class SumWebYieldDataAction extends ActionSupport implements ServletRespo
 		return "add";
 	}
 	/**
-	 * ¦³°Ñ¼Æ
+	 * ï¿½ï¿½ï¿½Ñ¼ï¿½
 	 * @param factNo
 	 * @param yymm
 	 * @param startDate
@@ -273,9 +273,17 @@ public class SumWebYieldDataAction extends ActionSupport implements ServletRespo
 		return temp;
 		// return temp.replace(",", "");
 	}
+	public String formatPer(double m1,double m2){
+		DecimalFormat format=new DecimalFormat(",###.0%");
+		if(m1==0||m2==0){
+			return "";
+		}else{
+			return format.format(m1/m2);
+		}		
+	}
 	
 	/**
-	 * µL°Ñ¼Æ
+	 * ï¿½Lï¿½Ñ¼ï¿½
 	 * @return
 	 */
 	public String delete(){
@@ -286,7 +294,7 @@ public class SumWebYieldDataAction extends ActionSupport implements ServletRespo
 			SumWebYieldData ydata=list.get(i);
 			sumydateSer.delete(ydata);
 		}
-		//§R°£°O¿ý
+		//ï¿½Rï¿½ï¿½ï¿½Oï¿½ï¿½
 		if(list.size()>0){
 			id.setFactNo(factNo);
 			id.setYymm(yymm);
@@ -304,7 +312,7 @@ public class SumWebYieldDataAction extends ActionSupport implements ServletRespo
 		return "delete";
 	}
 	/**
-     * ¦³°Ñ¼Æ
+     * ï¿½ï¿½ï¿½Ñ¼ï¿½
      * @param factNo
      * @param yymm
      */
@@ -382,7 +390,7 @@ public class SumWebYieldDataAction extends ActionSupport implements ServletRespo
 	public void print() throws IOException{				
 		if(factNo==null||(begin_yymm==null&&end_yymm==null)||(begin_yymm.equals("")&&end_yymm.equals(""))||factNo.equals("nothing")){
 			response.setContentType("text/html;charset=utf-8");
-			response.getWriter().print("<script>alert('¼t§O©M¤é´Á¤£¯à¬°ªÅ!');history.back()</script>");
+			response.getWriter().print("<script>alert('ï¿½tï¿½Oï¿½Mï¿½ï¿½ï¿½ï¿½ï¿½ï¿½à¬°ï¿½ï¿½!');history.back()</script>");
 		}else{
 			String yymm=begin_yymm+"-"+end_yymm;			
 			Map<String,Object>map=new HashMap<String,Object>();

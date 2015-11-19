@@ -416,7 +416,7 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 		List<KyzContactletter>list=new ArrayList<KyzContactletter>();
 		Map<String,Object>map=new HashMap<String,Object>();
 		String factname=webFactSer.selByid(factNo);
-		String factCode="";
+		String secNo="";//承辦單位
 		KyzContactletter letter=kyzletterSer.findById(factNo,billNo);
 		if(letter==null){
 			response.setContentType("text/html;charset=utf-8");
@@ -431,9 +431,11 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 			letter.setMemoMk(ZHConverter.convert(letter.getMemoMk(), ZHConverter.TRADITIONAL));
 			/*******************簡轉繁體********************/
 			list.add(letter);
-		}		
-		factCode=letter.getFactCode();
-		String result=factname+"("+factCode+")"+"內部聯絡函";
+		}
+		if(letter.getSecNo()!=null&&!letter.getSecNo().equals("")){
+			secNo="("+letter.getSecNo()+")";
+		}
+		String result=factname+secNo+"內部聯絡函";
 		//map = new HashMap<String, Object>();
 		map.put("SUBREPORT_DIR",ServletActionContext.getRequest().getRealPath("/jasper/audit/")+ "/");
 		map.put("pic", ServletActionContext.getRequest().getRealPath("/jasper/audit/images/")+ "/");//圖片路徑		
