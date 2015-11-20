@@ -110,6 +110,7 @@
 		<create javascript="webydatejs" creator="spring">
 		    <param name="beanName" value="dataSer"/>
 		    <include method="check"/>
+		    <include method="findNums"/>
 		</create>
 		<create javascript="webyprejs" creator="spring">
 		    <param name="beanName" value="preSer"/>

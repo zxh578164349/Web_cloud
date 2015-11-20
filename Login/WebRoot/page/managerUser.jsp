@@ -18,8 +18,7 @@
 <meta http-equiv="description" content="This is my page">
 
  <LINK href="css/list.css" type="text/css" rel="stylesheet"> 
-<script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script> 
-<script type="text/javascript" src="page/jquerys/layer/layer.min.js"></script>	
+<script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script> 	
 <script type="text/javascript" src="jquery/DatePicker/WdatePicker.js"></script>
 <link rel="stylesheet" type="text/css" href="jquery/loding/ui.loading.css" />	
 <script type="text/javascript" src="jquery/loding/ui.loading.js"></script>
@@ -44,9 +43,7 @@
 			data : "page=" + page,
 			success : function(msg) {
 			    layer.close(loadi);
-				jq("#bodyid").html(msg);
-				/* jq("li").removeClass("active");
-				jq("li").children("a").click(function(){jq(this).parent().attr("class","active")}); */
+				jq("#bodyid").html(msg);				
 			},
 			error : function(xhr) {
 				alert(xhr.responseText);
@@ -97,8 +94,28 @@ function move(obj){
  function mydelete(id){
     var flag=confirm("確定要刪除嗎?");
     if(flag==true){
-       window.location.href="userdelete?id="+id;
-       layer.load("正在處理,請稍後....");
+       /* window.location.href="userdelete?id="+id;
+       var loadi=layer.load("正在處理,請稍後...."); */
+       var loadi;
+       jq(document).ajaxStart(function(){
+           loadi=layer.load("正在處理,請稍後....");
+       });
+       jq(document).ajaxStop(function(){
+           layer.close(loadi);
+       });
+       jq.ajax({
+          type:"POST",
+          dataType:"html",
+          data:"id="+id,
+          url:"userdelete",
+          success:function(msg){
+              //layer.close(loadi);
+              jq("#bodyid").html(msg);
+          },
+          error:function(xhr){
+              alert(xhr.reponseText);
+          }
+       });
     }
 }
 

@@ -906,4 +906,13 @@ public class WebUserAction extends ActionSupport implements ServletResponseAware
 		return "judge";
 	};
 	
+	/*
+	 *修改用戶資料或權限返回
+	 *與findPageBean3方法相同，隻是返回值不一樣，達到返回不同的頁面
+	 */
+	public String findPageBean3_1(){
+		this.findPageBean3();
+		return "beanList";
+	}
+	
 }

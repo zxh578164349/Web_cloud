@@ -1036,7 +1036,7 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 		File file=new File("d:\\KyzexpFile_backup\\"+id.getBillNo());
 		if(file.exists()){
 			this.deletefile(file);//引用下面刪除文件夾方法
-		}				
+		}		
 		return "delete";
 	}
 	

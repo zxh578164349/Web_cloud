@@ -58,7 +58,7 @@ $(document).ready(function(){
 /*通用样式--容器宽度值*/
 .bigfont{font-size:16px;font-weight:bold;color:green}
 .sharp{width:100%;float:left;text-align:center}
-.sharp .content div{padding-left:15px;text-indent:2em;}
+.sharp .content div{padding-left:0px;text-indent:2em;}
 content{height:auto;}
 a:link{color:#335AA4;text-decoration:none}
 a:visited{color:#335AA4; text-decoration:none;} 
@@ -89,10 +89,10 @@ a:hover{text-decoration:none; border-bottom:1px red solid;color:red;}
               　　　　　　　<table width="155px" style="margin-left:0px; line-height:28px">
 			         <thead style="font-weight:bolder;font-size:14px">
 				       <tr>
-					     <td colspan="2">
+					     <td>
 					        <a href="right.jsp" style="border-bottom:0px"
 						      title="返回首頁" target="show">
-					        <img alt="返回首頁" src="images/files.gif" style="border:0px"></a>&nbsp;&nbsp;					
+					        <img alt="返回首頁" src="images/files.gif" style="border:0px"></a>				
 					        <a href="right.jsp" style="color:black;"
 						      title="返回首頁" target="show">網站首頁</a>				
 					</td>
@@ -102,14 +102,11 @@ a:hover{text-decoration:none; border-bottom:1px red solid;color:red;}
 			<s:iterator value="#session.loginUser.webJurisdictions" status="x"
 				id="menu">
 				<tr>
-					<td colspan="2" style="padding-left:2px;">
+					<td>
 					<img style="border: 0px;" id="img${x.index}" src="image/folder.gif">							
-					<a
-						href="javascript:showDiv(${x.index})" style="color:#335AA4;">
-							<span id="a${x.index}"><s:property
-									value="webMenu.menuname" /> </span> </a>
-						<div id="${x.index}"
-							style="display:none;width:150px;height:auto; padding-left:2px; ">
+					<a href="javascript:showDiv(${x.index})" style="color:#335AA4;">						
+						<span id="a${x.index}"><s:property value="webMenu.menuname" /></span></a>									
+						<div id="${x.index}" style="display:none;width:150px;height:auto; padding-left:2px; ">							
 							<table style="line-height: 20px;">
 								<s:iterator value="webSubmenus" status="x">
 									<s:if test='address=="fix_findPageBean"'>
@@ -141,7 +138,6 @@ a:hover{text-decoration:none; border-bottom:1px red solid;color:red;}
 											</td>
 										</tr>
 									</s:else>
-
 								</s:iterator>
 							</table>
 						</div></td>

@@ -79,10 +79,23 @@
 	//你确定要删除吗？
 	function isDelete(mid) {
 		jConfirm('你确定这么做吗?', '确认对话框', function(r) {
-			if (r == true) {
-				/* window.location.href = "backmat_delete?billNo=" + mid; */
-				document.getElementById(mid).submit();
-			}
+			if (r == true) {//if
+			   var loadi=layer.load(0);
+				jq.ajax({
+				  type:"POST",
+				  dataType:"Html", 
+				  url:"kyz_delete",
+				  data:jq('#'+mid).serialize(),
+				  success : function(msg) {
+			      layer.close(loadi);
+				  jq("#bodyid").html(msg);
+			      },
+			      error : function(xhr) {
+				     alert(xhr.responseText);
+			      }
+				 });
+				//document.getElementById(mid).submit();
+			}//if
 		});
 	}
 </script>

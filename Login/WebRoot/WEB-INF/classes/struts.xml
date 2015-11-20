@@ -38,8 +38,8 @@
 			<result name="findMoreusers2">login2.jsp</result>
 			<result name="beanList">page/managerUser.jsp</result>
 			<result name="beanList1">page/table1/managerUser1.jsp</result>
-			<result name="delete" type="redirectAction">userfindPageBean</result>
-			<result name="updateJurisdiction" type="redirectAction">userfindPageBean</result>
+			<result name="delete" type="redirectAction">userfindPageBean3</result>
+			<result name="updateJurisdiction" type="redirectAction">userfindPageBean3_1</result>
 			<result name="add" type="redirectAction">userfindPageBean</result>
 		</action>
 		<action name="show*" class="showAction" method="{1}">
@@ -418,7 +418,7 @@
 		  <result name="findById">saveAndUpdate/matterApplicationSaveOrUpdate.jsp</result>
 		  <result name="beanList">page/matterApplication.jsp</result>
 		  <result name="beanList1">page/table1/matterApplication1.jsp</result>
-		  <result name="delete" type="redirectAction">kyz_findPageBean</result>
+		  <result name="delete" type="redirectAction">kyz_findPageBean3</result>
 		  <result name="findById_layer">page/showMatterApplication_layer.jsp</result>
 		  <result name="findById_layer2">page/showMatterApplication_layer2.jsp</result>
 		  <result name="findVisaBills">/page/kyvisabills.jsp</result>
@@ -601,7 +601,7 @@
           <result name="findById_layer">/page/showContactletter_layer.jsp</result>
           <result name="findById_layer2">/page/showContactletter_layer2.jsp</result>
           <result name="update" type="redirectAction">kyzletter_findPageBean</result>
-          <result name="delete" type="redirectAction">kyzletter_findPageBean</result>
+          <result name="delete" type="redirectAction">kyzletter_findPageBean3</result>
         </action>
         <action name="webcashout_*" class="webcashoutAction" method="{1}">
            <result name="add" type="redirectAction">webcashout_findPageBean</result>
@@ -613,7 +613,7 @@
         <action name="webuseremail_*" class="webuseremailAction" method="{1}">
             <result name="add" type="redirectAction">webuseremail_findPageBean</result>
             <result name="findById">/saveAndUpdate/webuseremailSaveOrUpdate.jsp</result>
-            <result name="delete" type="redirectAction">webuseremail_findPageBean</result>
+            <result name="delete" type="redirectAction">webuseremail_findPageBean3</result>
             <result name="beanList">/page/managerUserEmail.jsp</result>
             <result name="beanList1">/page/table1/managerUserEmail1.jsp</result>
         </action>

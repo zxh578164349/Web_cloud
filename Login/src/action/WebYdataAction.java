@@ -245,39 +245,48 @@ public class WebYdataAction extends ActionSupport implements
 			/**
 			 * 添加
 			 */
-			if (isnull.equals("isnull")) {// start "if 1"								
-				WebYieldDataId ID=ydata.getId();
-				WebYieldData ydata_find=dataSer.findById(ID);
+			if (isnull.equals("isnull")) {// start "if 1"
 				
-				//判斷選定的日期前一天數據是否輸入
-				Calendar cal=Calendar.getInstance();
-				cal.setTime(date);
-				cal.add(Calendar.DATE, -1);
-				lastday=format.format(cal.getTime());
-				Date lastday2=format.parse(lastday);
-				WebYieldDataId y_id=new WebYieldDataId();
-				y_id.setFactNo(ydata.getId().getFactNo());
-				y_id.setFactCode(ydata.getId().getFactCode());
-				y_id.setYymmdd(lastday2);							
-				WebYieldData ydata_last=dataSer.findById(y_id);
-				if(ydata_last==null){
-					result="noData";
-					//如果大於前21天的就不提示輸入
-					if(betweenDay>21){
-						//如果跳過提示，有可能出現當天數據不為空的，所以也要判斷
-						if(ydata_find!=null){
-							result=null;
-						}else{
+				/****************************隻限制已輸入數據的廠別，沒有數據就不限制***********************************/
+				double nums=dataSer.findNums(ydata.getId().getFactNo(), ydata.getId().getFactCode());
+				if(nums>0){
+					WebYieldDataId ID=ydata.getId();
+					WebYieldData ydata_find=dataSer.findById(ID);
+					
+					//判斷選定的日期前一天數據是否輸入
+					Calendar cal=Calendar.getInstance();
+					cal.setTime(date);
+					cal.add(Calendar.DATE, -1);
+					lastday=format.format(cal.getTime());
+					Date lastday2=format.parse(lastday);
+					WebYieldDataId y_id=new WebYieldDataId();
+					y_id.setFactNo(ydata.getId().getFactNo());
+					y_id.setFactCode(ydata.getId().getFactCode());
+					y_id.setYymmdd(lastday2);							
+					WebYieldData ydata_last=dataSer.findById(y_id);
+					if(ydata_last==null){
+						result="noData";
+						//如果大於前21天的就不提示輸入
+						if(betweenDay>21){
+							//如果跳過提示，有可能出現當天數據不為空的，所以也要判斷
+							if(ydata_find!=null){
+								result=null;
+							}else{
+								dataSer.addYdata(ydata);
+								result="addData";
+							}												
+						}
+					}else{
+						if(ydata_find==null){
 							dataSer.addYdata(ydata);
-							result="addData";
-						}												
+							result = "addData";
+						}
 					}
 				}else{
-					if(ydata_find==null){
-						dataSer.addYdata(ydata);
-						result = "addData";
-					}
+					dataSer.addYdata(ydata);
+					result = "addData";
 				}
+				/****************************隻限制已輸入數據的廠別，沒有數據就不限制***********************************/
 																												
 			}// end "if 1"
 			/**

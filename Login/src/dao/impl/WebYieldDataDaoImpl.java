@@ -331,6 +331,22 @@ public class WebYieldDataDaoImpl extends Basedao implements IWebYieldDataDao {
 		hql.append(" order by id.factNo,id.factCode,id.yymmdd desc");		
 		return super.getAllWithNoPage(hql.toString(), map);
 	}
+
+	public double findNums(String factNo, String factCode) {
+		// TODO Auto-generated method stub
+		String hql="select count(id.factNo) from WebYieldData where id.factNo=? and id.factCode=?";
+		Query query=getSession().createQuery(hql);
+		query.setString(0, factNo);
+		query.setString(1, factCode);
+		double result=0;
+		try{
+			result=(Long)query.uniqueResult();
+		}catch(RuntimeException e){
+			System.out.println(e);
+		}
+		
+		return result;
+	}
 	
 	
 

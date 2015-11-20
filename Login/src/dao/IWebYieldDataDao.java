@@ -14,7 +14,7 @@ public interface IWebYieldDataDao {
 	public List<WebYieldData> selectYDate(String factNo, String yymm, int page,
 			int rows);
 
-	// ¬d¸ß¥þ³¡¼Æ¾ÚªºÁ`­¶¼Æ
+	// ï¿½dï¿½ß¥ï¿½ï¿½ï¿½ï¿½Æ¾Úªï¿½ï¿½`ï¿½ï¿½ï¿½ï¿½
 	public int totlePage(String factNo, String yymm);
 
 	public WebYieldData findById(WebYieldDataId id);
@@ -53,6 +53,8 @@ public interface IWebYieldDataDao {
 	public List<WebYieldData>findYdate(String factNo,String startDate,String endDate);
 	
 	public List<String[]> getFactPrint_show(String date);
+	
+	public double findNums(String factNo,String factCode);
 			
 
 }

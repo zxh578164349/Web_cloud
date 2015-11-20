@@ -25,7 +25,7 @@
 <link rel="stylesheet" type="text/css" href="css/general_css.css" />
 <link href="tablecloth/tablecloth.css" rel="stylesheet" type="text/css" media="screen" />
 <script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script>
-<script type="text/javascript" src="page/jquerys/layer/layer.min.js"></script>
+
 <!-- 新 Bootstrap 核心 CSS 文件 -->
 <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
@@ -78,10 +78,29 @@
 	}
 	//你确定要删除吗？
 	function isDelete(mid) {
+	    //var jq=jQuery.noConflict();	  
 		jConfirm('你确定这么做吗?', '确认对话框', function(r) {
-			if (r == true) {
-				/* window.location.href = "backmat_delete?billNo=" + mid; */
-				document.getElementById(mid).submit();
+			if (r == true) {			
+				//document.getElementById(mid).submit();				
+				 var loadi;
+				jq(document).ajaxStart(function(){
+				   loadi=layer.load(0);
+				});
+				jq(document).ajaxStop(function(){
+				    layer.close(loadi);
+				}); 
+				jq.ajax({
+				   type:"POST",
+				   dataType:"html",
+				   data:jq('#'+mid).serialize(),
+				   url:"kyzletter_delete",
+				   success:function(msg){
+				      jq("#bodyid").html(msg);
+				   },
+				   error:function(xhr){
+				      jq("#bodyid").html(xhr.responseText);
+				   }
+				});
 			}
 		});
 	}

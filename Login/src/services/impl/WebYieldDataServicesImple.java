@@ -106,7 +106,7 @@ public class WebYieldDataServicesImple implements IWebYieldDataServices {
 	}
 	
 	/**
-	 * ¥uÅã¥Ü­nÅã¥Üªº¼t§Oª¬ºA
+	 * ï¿½uï¿½ï¿½Ü­nï¿½ï¿½Üªï¿½ï¿½tï¿½Oï¿½ï¿½ï¿½A
 	 */
 	public List<String[]> getFactPrint_show(String date) {
 		// TODO Auto-generated method stub
@@ -155,52 +155,57 @@ public class WebYieldDataServicesImple implements IWebYieldDataServices {
 	public String check(String factNo, String factCode, String yymm) {
 		// TODO Auto-generated method stub
 		String result="0";
-		Date today=new Date();
-		DateFormat format=new SimpleDateFormat("yyyyMMdd");
-		try {
-			long from=format.parse(yymm).getTime();//¿ï¾Ü®É¶¡
-			long to=today.getTime();//¤µ¤Ñ®É¶¡
-			long betweenDay=(to-from)/(1000*3600*24);//¬Û®t®É¶¡
-			
-			Date date=format.parse(yymm);
-			Calendar cal=Calendar.getInstance();
-			cal.setTime(date);
-			cal.add(Calendar.DATE, -1);
-			String lastdate=format.format(cal.getTime());
-			Date lastdate2=format.parse(lastdate);
-			WebYieldDataId id_last=new WebYieldDataId();
-			WebYieldDataId id=new WebYieldDataId();
-			id.setFactNo(factNo);
-			id.setFactCode(factCode);
-			id.setYymmdd(date);
-			
-			id_last.setFactNo(factNo);
-			id_last.setFactCode(factCode);
-			id_last.setYymmdd(lastdate2);
-			WebYieldData ydata_last=this.findById(id_last);
-			WebYieldData ydata=this.findById(id);
-			if(ydata_last==null){
-				//1¬°´£¥Ü¿é¤J«e¤Ñ¼Æ¾Ú¡A2¬°´£¥Ü¦s¦b·í«e¼Æ¾Ú¡A0¬°¸õ¹L¤£¥Î´£¥Ü
-				result="1";
-				//¦pªG¤j©ó«e21¤Ñªº´N¤£´£¥Ü¿é¤J
-				if(betweenDay>21){
-					//¦pªG¸õ¹L´£¥Ü«á¡A¦³¥i¥H¥X²{·í«e¼Æ¾Ú¤£¬°ªÅ¡A©Ò¥H¤]­n§PÂ_
-					if(ydata!=null){
-						result="2";
-					}else{
-						result="0";
-					}					
+		double nums=dataDao.findNums(factNo, factCode);		
+		/****************************éš»é™åˆ¶å·²è¼¸å…¥æ•¸æ“šçš„å» åˆ¥ï¼Œæ²’æœ‰æ•¸æ“šå°±ä¸é™åˆ¶***********************************/
+		if(nums>0){//if 
+			Date today=new Date();
+			DateFormat format=new SimpleDateFormat("yyyyMMdd");
+			try {
+				long from=format.parse(yymm).getTime();//ï¿½ï¿½Ü®É¶ï¿½
+				long to=today.getTime();//ï¿½ï¿½ï¿½Ñ®É¶ï¿½
+				long betweenDay=(to-from)/(1000*3600*24);//ï¿½Û®tï¿½É¶ï¿½
+				
+				Date date=format.parse(yymm);
+				Calendar cal=Calendar.getInstance();
+				cal.setTime(date);
+				cal.add(Calendar.DATE, -1);
+				String lastdate=format.format(cal.getTime());
+				Date lastdate2=format.parse(lastdate);
+				WebYieldDataId id_last=new WebYieldDataId();
+				WebYieldDataId id=new WebYieldDataId();
+				id.setFactNo(factNo);
+				id.setFactCode(factCode);
+				id.setYymmdd(date);
+				
+				id_last.setFactNo(factNo);
+				id_last.setFactCode(factCode);
+				id_last.setYymmdd(lastdate2);
+				WebYieldData ydata_last=this.findById(id_last);
+				WebYieldData ydata=this.findById(id);
+				if(ydata_last==null){
+					//å‰å¤©æ•¸æ“šæ²’æœ‰æ·»åŠ è¿”å›1
+					result="1";
+					//å¦‚æœ21å¤©ä¹‹å‰çš„æ•¸æ“šæ²’æœ‰è¼¸å…¥ï¼Œå‰‡ä¸é™åˆ¶è¼¸å…¥æ‰€é¸æ—¥æœŸçš„å‰å¤©æ•¸æ“š
+					if(betweenDay>21){
+						//æ•¸æ“šå­˜åœ¨è¿”å›2
+						if(ydata!=null){
+							result="2";
+						}else{//å¦å‰‡è¿”å›0
+							result="0";
+						}					
+					}
+				}else{
+					if(ydata!=null){					
+						result = "2";
+					}
 				}
-			}else{
-				if(ydata!=null){					
-					result = "2";
-				}
+				
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-			
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		}//if
+		/****************************éš»é™åˆ¶å·²è¼¸å…¥æ•¸æ“šçš„å» åˆ¥ï¼Œæ²’æœ‰æ•¸æ“šå°±ä¸é™åˆ¶***********************************/
 		return result;
 	}
 	
@@ -221,6 +226,11 @@ public class WebYieldDataServicesImple implements IWebYieldDataServices {
 			String endDate) {
 		// TODO Auto-generated method stub
 		return dataDao.findYdate(factNo, startDate, endDate);
+	}
+
+	public double findNums(String factNo, String factCode) {
+		// TODO Auto-generated method stub
+		return dataDao.findNums(factNo, factCode);
 	}
 
 
