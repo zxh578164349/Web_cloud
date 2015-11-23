@@ -9,19 +9,20 @@ public class KyzContactletter implements java.io.Serializable {
 	// Fields
 
 	private KyzContactletterId id;
-	private String secNo;//©Ó¿ì³æ¦ì
-	private String chargeNo;//©Ó¿ì¥DºÞ
-	private String ymExpect;//«Ø¥ß¤é´Á
-	private String userNm;//¥Ó½Ð¤H
-	private String toUser;//¨ü¤åªÌ
-	private String chargeList;//CC¡]§e¡^
-	private String title;//¼ÐÃD
-	private String memoMk;//¤º®e
-	private String visaType;//Ãþ«¬
-	private String filesYn;//¬O§_¦³ªþÀÉ
-	private String firstPage;//¬O§_Åã¥Ü²Ä¤@­¶
-	private String factCode;//¼t§Oª¬ºA
+	private String secNo;//ï¿½Ó¿ï¿½ï¿½ï¿½
+	private String chargeNo;//ï¿½Ó¿ï¿½Dï¿½ï¿½
+	private String ymExpect;//ï¿½Ø¥ß¤ï¿½ï¿½
+	private String userNm;//ï¿½Ó½Ð¤H
+	private String toUser;//ï¿½ï¿½ï¿½ï¿½
+	private String chargeList;//CCï¿½]ï¿½eï¿½^
+	private String title;//ï¿½ï¿½ï¿½D
+	private String memoMk;//ï¿½ï¿½ï¿½e
+	private String visaType;//ï¿½ï¿½ï¿½ï¿½
+	private String filesYn;//ï¿½Oï¿½_ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	private String firstPage;//ï¿½Oï¿½_ï¿½ï¿½Ü²Ä¤@ï¿½ï¿½
+	private String factCode;//ï¿½tï¿½Oï¿½ï¿½ï¿½A
 	private String colTemp;
+	private String delMk;//åˆªé™¤æ¨™è¨˜    0åˆªé™¤    1æœªåˆªé™¤
 
 	// Constructors
 
@@ -38,7 +39,8 @@ public class KyzContactletter implements java.io.Serializable {
 	public KyzContactletter(KyzContactletterId id, String secNo,
 			String chargeNo, String ymExpect, String userNm, String toUser,
 			String chargeList, String title, String memoMk, String visaType,
-			String filesYn, String firstPage,String factCode,String colTemp) {
+			String filesYn, String firstPage,String factCode,String colTemp
+			,String delMk) {
 		this.id = id;
 		this.secNo = secNo;
 		this.chargeNo = chargeNo;
@@ -53,6 +55,7 @@ public class KyzContactletter implements java.io.Serializable {
 		this.firstPage = firstPage;
 		this.factCode=factCode;
 		this.colTemp=colTemp;
+		this.delMk=delMk;
 	}
 
 	// Property accessors
@@ -168,6 +171,15 @@ public class KyzContactletter implements java.io.Serializable {
 	public void setColTemp(String colTemp) {
 		this.colTemp = colTemp;
 	}
+
+	public String getDelMk() {
+		return delMk;
+	}
+
+	public void setDelMk(String delMk) {
+		this.delMk = delMk;
+	}
+	
 	
 	
 

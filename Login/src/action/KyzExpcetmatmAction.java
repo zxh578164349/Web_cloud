@@ -10,6 +10,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.sql.Timestamp;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -39,6 +40,7 @@ import com.sun.jndi.toolkit.url.Uri;
 import services.IKyVisaBillsServices;
 import services.IKyVisabillmServices;
 import services.IKyzExpectmatmFileServices;
+import services.IKyzExpectmatmLogServices;
 import services.IKyzExpectmatmServices;
 import services.IKyzExpectmatmsServices;
 import services.IKyzVisaFlowServices;
@@ -54,6 +56,7 @@ import entity.KyzContactletter;
 import entity.KyzExpectmatm;
 import entity.KyzExpectmatmFile;
 import entity.KyzExpectmatmId;
+import entity.KyzExpectmatmLog;
 import entity.KyzExpectmats;
 import entity.KyzVisaflow;
 import entity.WebType;
@@ -88,6 +91,7 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
     private String itemNo;
     private String readMk;//標識返回函文查看頁面(Y)，還是返回函文提交頁面(N)
     private String visa_mk;
+    private IKyzExpectmatmLogServices kyzExpLogSer;
     
     
     public String getVisa_mk() {
@@ -382,6 +386,12 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 
 	public void setWebtypeSer(IWebTypeServices webtypeSer) {
 		this.webtypeSer = webtypeSer;
+	}
+	
+	
+
+	public void setKyzExpLogSer(IKyzExpectmatmLogServices kyzExpLogSer) {
+		this.kyzExpLogSer = kyzExpLogSer;
 	}
 
 	public String add() throws Exception  {
@@ -1024,6 +1034,10 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 		return "beanList1";
 	}
 	
+	/**
+	 * 徹底刪除函文
+	 * @return
+	 */
 	public String delete(){
 		kyzSer.delete(id);
 		visabillmSer.delete(id.getFactNo(), visaSort, id.getBillNo());
@@ -1036,7 +1050,26 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 		File file=new File("d:\\KyzexpFile_backup\\"+id.getBillNo());
 		if(file.exists()){
 			this.deletefile(file);//引用下面刪除文件夾方法
-		}		
+		}
+		
+		/*********************刪除記錄**************************/
+		KyzExpectmatmLog log=new KyzExpectmatmLog();
+		log.setBillNo(id.getBillNo());
+		log.setDeldate(new Date());
+		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
+		log.setUsername(user.getUsername());
+		kyzExpLogSer.add(log);
+		return "delete";
+	}
+	
+	/**
+	 * 不刪除，隻標記爲"刪除"狀態
+	 * @return
+	 */
+	public String delete2(){
+		kyz=kyzSer.findById(id);
+		kyz.setDelMk("0");
+		kyzSer.add(kyz);
 		return "delete";
 	}
 	

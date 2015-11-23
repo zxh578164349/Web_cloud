@@ -581,7 +581,7 @@ table.gridtable td.tdcolor {
 				            <option value="">請選擇</option>
 				         </select>
 				         <input type="hidden" id="dwr_email" value="<s:property value='#session.loginUser.email'/>"/>
-				         <input type="hidden" name="kyz.visaType" id="hidden_kytype"/>
+				         <input type="hidden" name="kyz.visaType" id="hidden_kytype" datatype="*"/>
 				         <input type="hidden" id="dwr_username" value="<s:property value='#session.loginUser.username'/>"/>					         
 				         </s:if>
 				         <s:else>

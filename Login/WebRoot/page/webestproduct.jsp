@@ -35,14 +35,13 @@
 <script>
 	var jq=jQuery.noConflict();
 	function pages(page) {
-	var loadi=layer.load(0);
+	var loadi;
 		jq.ajax({
 			type : "POST",
 			dataType : "Html",
 			url : "webestpro_findPageBean3",
 			data : "page=" + page,
 			success : function(msg) {
-			    layer.close(loadi);
 				jq("#bodyid").html(msg);
 			},
 			error : function(xhr) {

@@ -94,6 +94,7 @@
 	<bean id="webuseremailSer" class="services.impl.WebuserEmailServicesImpl"></bean>
 	<bean id="webtypeSer" class="services.impl.WebTypeServicesImpl"></bean>
 	<bean id="webuseremailaSer" class="services.impl.WebuserEmailAServicesImpl"></bean>
+	<bean id="kyzExpLogSer" class="services.impl.KyzExpectmatmLogServicesImpl"></bean>
 </beans>
 
 

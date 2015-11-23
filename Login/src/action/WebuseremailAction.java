@@ -67,7 +67,7 @@ public class WebuseremailAction extends ActionSupport{
 		return "findById";
 	}
 	public String delete(){
-		webuseremailSer.delete(factNo, email, emailpwd);
+		webuseremailSer.delete(factNo, email, emailpwd);                               
 		return "delete";
 	}
 	public String findPageBean(){
@@ -87,7 +87,7 @@ public class WebuseremailAction extends ActionSupport{
 		factNo=(String)ActionContext.getContext().getApplication().get("webuseremail_factno");
 		email=(String)ActionContext.getContext().getApplication().get("webuseremail_email");
 		if(factNo==null||factNo.equals("")){
-			factNo=(String)ActionContext.getContext().getApplication().get("factNo");
+			factNo=(String)ActionContext.getContext().getSession().get("factNo");
 		}
 		bean=webuseremailSer.findPageBean(25, page, factNo, email);
 		return "beanList1";

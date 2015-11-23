@@ -26,6 +26,7 @@ import services.IKyVisaBillsServices;
 import services.IKyVisabillmServices;
 import services.IKyzContactLetterServices;
 import services.IKyzExpectmatmFileServices;
+import services.IKyzExpectmatmLogServices;
 import services.IKyzVisaFlowServices;
 import services.IWebFactServices;
 import services.IWebTypeServices;
@@ -44,6 +45,7 @@ import entity.KyzContactletter;
 import entity.KyzExpectmatm;
 import entity.KyzExpectmatmFile;
 import entity.KyzExpectmatmId;
+import entity.KyzExpectmatmLog;
 import entity.KyzExpectmats;
 import entity.KyzVisaflow;
 import entity.WebType;
@@ -79,6 +81,7 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 	private IWebUserService webUserService;
 	private IWebuserEmailServices webuseremailSer;
 	private IWebTypeServices webtypeSer;
+	private IKyzExpectmatmLogServices kyzExpLogSer;
 	
 	
 	public String getVisa_mk() {
@@ -228,6 +231,10 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 	
 	public void setWebtypeSer(IWebTypeServices webtypeSer) {
 		this.webtypeSer = webtypeSer;
+	}
+	
+	public void setKyzExpLogSer(IKyzExpectmatmLogServices kyzExpLogSer) {
+		this.kyzExpLogSer = kyzExpLogSer;
 	}
 	public String add() throws IOException{
 		/*文件上傳驗證*/
@@ -693,6 +700,13 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 		if(file.exists()){
 			this.deletefile(file);//引用下面刪除文件夾方法
 		}
+		/*********************刪除記錄**************************/
+		KyzExpectmatmLog log=new KyzExpectmatmLog();
+		log.setBillNo(billNo);
+		log.setDeldate(new Date());
+		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
+		log.setUsername(user.getUsername());
+		kyzExpLogSer.add(log);
 		return "delete";
 	}
 	public void print2() throws IOException{

@@ -55,20 +55,25 @@
 		});
 	}
 	function submis() {
-		var loadi=layer.load(0);
 		var fact = document.getElementById("factNo");
 		var visasort = document.getElementById("visaSort");
 		var billno=document.getElementById("billNo");
 		var yymmdd=document.getElementById("yymmdd");
 		var yymmdd2=document.getElementById("yymmdd2");
 		
+		var loadi;
+		jq(document).ajaxStart(function(){
+			loadi=layer.load(0);
+		});
+		jq(document).ajaxStop(function(){
+			layer.close(loadi);
+		});
 		jq.ajax({
 			type : "POST",
 			dataType : "Html",
 			url : "kyzletter_findPageBean2",
 			data : "factNo=" + fact.value + "& visaSort=" + visasort.value+"& billNo="+billno.value+"& yymmdd="+yymmdd.value+"& yymmdd2="+yymmdd2.value,
 			success : function(msg) {
-			    layer.close(loadi);
 				jq("#bodyid").html(msg);
 			},
 			error : function(xhr) {

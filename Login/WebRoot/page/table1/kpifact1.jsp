@@ -23,15 +23,15 @@
 
 <link rel="stylesheet" type="text/css" href="css/mystyle.css" />
 <script type="text/javascript">
-	$(function() {
+	
+<%--$(function() {
 		var j = jQuery.noConflict();
 		var demo = j("#form").Validform({
 			tiptype : 1,
 		//showAllError : true,
 		});
-
 	});
-	
+	--%>
 	 var defaultColor="#97CBFF";
 	 var clickColor="#CCFFFF";
 	 function click_color(obj){
@@ -42,9 +42,10 @@
         }
         obj.style.backgroundColor=clickColor;        
     }
-      function move(obj){
+	 
+  function move(obj){
      obj.style.backgroundColor=defaultColor;
-    }
+  }
    function showPage(){
 	    var j=jQuery.noConflict();
 	    j("#divpage").toggle(200,function(){

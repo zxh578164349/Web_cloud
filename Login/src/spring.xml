@@ -188,7 +188,8 @@
 				<value>entity/VWebcostEve.hbm.xml</value>
 				<value>entity/WebuserEmail.hbm.xml</value>
 				<value>entity/WebType.hbm.xml</value>
-				<value>entity/WebuserEmailA.hbm.xml</value></list>
+				<value>entity/WebuserEmailA.hbm.xml</value>
+				<value>entity/KyzExpectmatmLog.hbm.xml</value></list>
 		</property>
 	</bean>
 		

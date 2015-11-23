@@ -35,7 +35,13 @@
 <script>
 	var jq=jQuery.noConflict();
 	function pages(page) {
-	var loadi=layer.load(0);
+	var loadi;
+	jq(document).ajaxStart(function(){
+		loadi=layer.load(0);
+	});
+	jq(document).ajaxStop(function(){
+		layer.close(loadi);
+	});
 		jq.ajax({
 			type : "POST",
 			dataType : "Html",
@@ -51,16 +57,21 @@
 		});
 	}
 	function submis() {
-		var loadi=layer.load(0);
 		var fact = document.getElementById("factNo");
 		var ym = document.getElementById("year");
+		var loadi;
+		jq(document).ajaxStart(function(){
+			loadi=layer.load(0);
+		});
+		jq(document).ajaxStop(function(){
+			layer.close(loadi);
+		});
 		jq.ajax({
 			type : "POST",
 			dataType : "Html",
 			url : "kpifact_findPageBean2",
 			data : "factNo=" + fact.value + "&yyyy=" + ym.value,
 			success : function(msg) {
-			    layer.close(loadi);
 				jq("#bodyid").html(msg);
 			},
 			error : function(xhr) {

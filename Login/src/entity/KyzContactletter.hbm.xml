@@ -53,5 +53,8 @@
         <property name="colTemp" type="java.lang.String">
             <column name="COL_TEMP" length="2"></column>
         </property>
+        <property name="delMk" type="java.lang.String">
+            <column name="DEL_MK" length="2"></column>
+        </property>
     </class>
 </hibernate-mapping>

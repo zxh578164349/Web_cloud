@@ -96,12 +96,10 @@ function move(obj){
  
  function mydelete(factNo,email,emailpwd){
     var flag=confirm("確定要刪除嗎?");
-    if(flag==true){
-       /* window.location.href="webuseremail_delete?factNo="+factNo+"&email="+email+"&emailpwd="+emailpwd;
-       layer.load("正在處理,請稍後...."); */
+    if(flag==true){     
        var loadi;
        jq(document).ajaxStart(function(){
-           layer.load("正在處理,請稍後....");
+           loadi=layer.load("正在處理,請稍後....");
        });
        jq(document).ajaxStop(function(){
            layer.close(loadi);
