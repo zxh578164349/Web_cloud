@@ -87,7 +87,7 @@ public class KpifactAction extends ActionSupport implements ServletResponseAware
 			Kpifact kpi_temp=kpiSer.findById(factNo, factCode, yyyy);
 			if(kpi_temp!=null){
 				response.setContentType("text/html;charset=utf-8");
-				response.getWriter().print("<script>alert('數據庫已存在("+factNo+factCode+yyyy+")');history.back()</script>");
+				response.getWriter().print("<script>alert('嚙複據庫嚙緩嚙編嚙箭("+factNo+factCode+yyyy+")');history.back()</script>");
 			}else{
 				kpiSer.add(kpi);
 				result="add";
@@ -105,21 +105,25 @@ public class KpifactAction extends ActionSupport implements ServletResponseAware
 		return "findById_copy";
 	}
 	public String findPageBean(){
-		ActionContext.getContext().getApplication().clear();
+		//ActionContext.getContext().getApplication().clear();
+		ActionContext.getContext().getSession().remove("public_factno");
+		ActionContext.getContext().getSession().remove("public_yyyy");
 		factNo=(String)ActionContext.getContext().getSession().get("factNo");
 		bean=kpiSer.findPageBean(25, page, factNo, yyyy);
 		return "findPageBean";		
 	}
 	public String findPageBean2(){
-		ActionContext.getContext().getApplication().clear();
+		//ActionContext.getContext().getApplication().clear();
+		ActionContext.getContext().getSession().remove("public_factno");
+		ActionContext.getContext().getSession().remove("public_yyyy");
 		bean=kpiSer.findPageBean(25, page, factNo, yyyy);
-		ActionContext.getContext().getApplication().put("kpifact_factno", factNo);
-		ActionContext.getContext().getApplication().put("kpifact_yyyy", yyyy);
+		ActionContext.getContext().getSession().put("public_factno", factNo);
+		ActionContext.getContext().getSession().put("public_yyyy", yyyy);
 		return "findPageBean1";
 	}
 	public String findPageBean3(){
-		factNo=(String)ActionContext.getContext().getApplication().get("kpifact_factno");
-		yyyy=(String)ActionContext.getContext().getApplication().get("kpifact_yyyy");
+		factNo=(String)ActionContext.getContext().getSession().get("public_factno");
+		yyyy=(String)ActionContext.getContext().getSession().get("public_yyyy");
 		if(factNo==null||factNo.equals("")){
 			factNo=(String)ActionContext.getContext().getSession().get("factNo");
 		}

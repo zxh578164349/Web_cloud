@@ -35,27 +35,30 @@
 </head>
 <script type="text/javascript">
 	var jq=jQuery.noConflict();
+	var loadi;
+    jq(document).ajaxStart(function(){
+    	loadi=layer.load("正在處理,請稍後....");
+    });
+    jq(document).ajaxStop(function(){
+    	layer.close(loadi);
+    });
 	function pages(page) {
-	    var loadi=layer.load(0);
 		jq.ajax({
 			type : "POST",
 			dataType : "Html",
 			url : "webuseremail_findPageBean3",
 			data : "page=" + page,
 			success : function(msg) {
-			    layer.close(loadi);
-				jq("#bodyid").html(msg);
-				/* jq("li").removeClass("active");
-				jq("li").children("a").click(function(){jq(this).parent().attr("class","active")}); */
+				jq("#bodyid").html(msg);				
 			},
 			error : function(xhr) {
-				alert(xhr.responseText);
+				//alert(xhr.responseText);
+				jq("#bodyid").html(xhr.responseText);
 			}
 		});
 	}
 
-	function submis() {
-	    var loadi=layer.load(0);		
+	function submis() {		
 		var email = document.getElementById("email");
 		var factno=document.getElementById("factNo")
 		jq.ajax({
@@ -64,11 +67,11 @@
 			url : "webuseremail_findPageBean2",
 			data : "email=" + email.value+"&factNo="+factno.value,
 			success : function(msg) {
-			    layer.close(loadi);
 				jq("#bodyid").html(msg);
 			},
 			error : function(xhr) {
-				alert(xhr.responseText);
+				//alert(xhr.responseText);
+				jq("#bodyid").html(xhr.responseText);
 			}
 		});
 	}
@@ -96,14 +99,7 @@ function move(obj){
  
  function mydelete(factNo,email,emailpwd){
     var flag=confirm("確定要刪除嗎?");
-    if(flag==true){     
-       var loadi;
-       jq(document).ajaxStart(function(){
-           loadi=layer.load("正在處理,請稍後....");
-       });
-       jq(document).ajaxStop(function(){
-           layer.close(loadi);
-       });
+    if(flag==true){           
        jq.ajax({
           type:"POST",
           dataType:"html",

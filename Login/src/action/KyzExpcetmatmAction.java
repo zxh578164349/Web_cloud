@@ -980,8 +980,14 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 		return urlname2;
 	}
 	
+	
 	public String findPageBean() {
-		ActionContext.getContext().getApplication().clear();
+		//ActionContext.getContext().getApplication().clear();
+		ActionContext.getContext().getSession().remove("public_factno");
+		ActionContext.getContext().getSession().remove("public_visaSort");
+		ActionContext.getContext().getSession().remove("public_billNo");
+		ActionContext.getContext().getSession().remove("public_timeCreate");
+		ActionContext.getContext().getSession().remove("public_timeCreate2");
 		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
 		userNm=user.getName();
 		factNo = (String) ActionContext.getContext().getSession().get("factNo");
@@ -991,22 +997,26 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 	}
 
 	public String findPageBean2() {
-		ActionContext.getContext().getApplication().clear();
+		//ActionContext.getContext().getApplication().clear();
+		ActionContext.getContext().getSession().remove("public_factno");
+		ActionContext.getContext().getSession().remove("public_visaSort");
+		ActionContext.getContext().getSession().remove("public_billNo");
+		ActionContext.getContext().getSession().remove("public_timeCreate");
+		ActionContext.getContext().getSession().remove("public_timeCreate2");
 		if (factNo != null && !factNo.equals("") && !factNo.equals("tw")) {
-			ActionContext.getContext().getApplication()
-					.put("kyz_factNo", factNo);
+			ActionContext.getContext().getSession().put("public_factno", factNo);					
 		}
 		if (visaSort != null && !visaSort.equals("")) {
-			ActionContext.getContext().getApplication().put("kyz_visaSort", visaSort);
+			ActionContext.getContext().getSession().put("public_visaSort", visaSort);
 		}
 		if(billNo!=null&&!billNo.equals("")){
-			ActionContext.getContext().getApplication().put("kyz_billNo", billNo.trim());
+			ActionContext.getContext().getSession().put("public_billNo", billNo.trim());
 		}
 		if(yymmdd!=null&&!yymmdd.equals("")){
-			ActionContext.getContext().getApplication().put("kyz_timeCreate", yymmdd);
+			ActionContext.getContext().getSession().put("public_timeCreate", yymmdd);
 		}
 		if(yymmdd2!=null&&!yymmdd2.equals("")){
-			ActionContext.getContext().getApplication().put("kyz_timeCreate2", yymmdd2);
+			ActionContext.getContext().getSession().put("public_timeCreate2", yymmdd2);
 		}
 		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
 		userNm=user.getName();
@@ -1016,16 +1026,13 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 	}
 
 	public String findPageBean3() {
-		factNo = (String) ActionContext.getContext().getApplication()
-				.get("kyz_factNo");
-		visaSort = (String) ActionContext.getContext().getApplication()
-				.get("kyz_visaSort");
-		billNo=(String)ActionContext.getContext().getApplication().get("kyz_billNo");
-		yymmdd=(String)ActionContext.getContext().getApplication().get("kyz_timeCreate");
-		yymmdd2=(String)ActionContext.getContext().getApplication().get("kyz_timeCreate2");
+		factNo = (String) ActionContext.getContext().getSession().get("public_factno");				
+		visaSort = (String) ActionContext.getContext().getSession().get("public_visaSort");				
+		billNo=(String)ActionContext.getContext().getSession().get("public_billNo");
+		yymmdd=(String)ActionContext.getContext().getSession().get("public_timeCreate");
+		yymmdd2=(String)ActionContext.getContext().getSession().get("public_timeCreate2");
 		if (factNo == null || factNo.equals("") || factNo.equals("tw")){
-			factNo = (String) ActionContext.getContext().getSession()
-					.get("factNo");
+			factNo = (String) ActionContext.getContext().getSession().get("factNo");					
 		}
 		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
 		userNm=user.getName();
@@ -1199,5 +1206,11 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 		return jsonList;
 	}*/
 	
+	/**
+	 * 解決url中空格轉換成 +號的問題
+	 */
+	public String toUrl2(String filename){
+		return filename.replace("+", "%20");
+	}
 	
 }

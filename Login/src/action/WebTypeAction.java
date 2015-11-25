@@ -63,19 +63,21 @@ public class WebTypeAction extends ActionSupport{
 		return "add";
 	}
 	public String findPageBean(){
-		ActionContext.getContext().getApplication().clear();
+		//ActionContext.getContext().getApplication().clear();
+		ActionContext.getContext().getSession().remove("public_factNo");
 		factNo=(String)ActionContext.getContext().getSession().get("factNo");
 		bean=webtypeSer.findPageBean(page, 25, factNo);
 		return "beanList";
 	}
 	public String findPageBean2(){
-		ActionContext.getContext().getApplication().clear();
+		//ActionContext.getContext().getApplication().clear();
+		ActionContext.getContext().getSession().remove("public_factNo");
 		bean=webtypeSer.findPageBean(page, 25, factNo);
-		ActionContext.getContext().getApplication().put("webtypeFactno", factNo);
+		ActionContext.getContext().getSession().put("public_factNo", factNo);
 		return "beanList1";
 	}
 	public String findPageBean3(){
-		factNo=(String)ActionContext.getContext().getApplication().get("webtypeFactno");
+		factNo=(String)ActionContext.getContext().getSession().get("public_factNo");
 		if(factNo==null||factNo.equals("")){
 			factNo=(String)ActionContext.getContext().getSession().get("factNo");
 		}

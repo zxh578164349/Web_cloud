@@ -71,21 +71,25 @@ public class WebuseremailAction extends ActionSupport{
 		return "delete";
 	}
 	public String findPageBean(){
-		ActionContext.getContext().getApplication().clear();
+		//ActionContext.getContext().getApplication().clear();
+		ActionContext.getContext().getSession().remove("public_factno");
+		ActionContext.getContext().getSession().remove("public_email");
 		factNo=(String)ActionContext.getContext().getSession().get("factNo");
 		bean=webuseremailSer.findPageBean(25, page, factNo, email);
 		return "beanList";
 	}
 	public String findPageBean2(){
-		ActionContext.getContext().getApplication().clear();
+		//ActionContext.getContext().getApplication().clear();
+		ActionContext.getContext().getSession().remove("public_factno");
+		ActionContext.getContext().getSession().remove("public_email");
 		bean=webuseremailSer.findPageBean(25, page, factNo, email);
-		ActionContext.getContext().getApplication().put("webuseremail_factno", factNo);
-		ActionContext.getContext().getApplication().put("webuseremail_email", email);
+		ActionContext.getContext().getSession().put("public_factno", factNo);
+		ActionContext.getContext().getSession().put("public_email", email);
 		return "beanList1";
 	}
 	public String findPageBean3(){
-		factNo=(String)ActionContext.getContext().getApplication().get("webuseremail_factno");
-		email=(String)ActionContext.getContext().getApplication().get("webuseremail_email");
+		factNo=(String)ActionContext.getContext().getSession().get("public_factno");
+		email=(String)ActionContext.getContext().getSession().get("public_email");
 		if(factNo==null||factNo.equals("")){
 			factNo=(String)ActionContext.getContext().getSession().get("factNo");
 		}

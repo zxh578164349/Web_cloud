@@ -314,7 +314,9 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 	}
 	
 	public String findPageBean() {
-		ActionContext.getContext().getApplication().clear();
+		//ActionContext.getContext().getApplication().clear();
+		ActionContext.getContext().getSession().remove("public_factNo");
+		ActionContext.getContext().getSession().remove("public_visaSort");
 		factNo = (String) ActionContext.getContext().getSession().get("factNo");
 		bean = visaSer.findPageBean(25, page, factNo, visaSort);		
 		this.getTypeName(bean);//从webtype获取类别名称
@@ -331,13 +333,14 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 	}
 
 	public String findPageBean2() {
-		ActionContext.getContext().getApplication().clear();
+		//ActionContext.getContext().getApplication().clear();
+		ActionContext.getContext().getSession().remove("public_factNo");
+		ActionContext.getContext().getSession().remove("public_visaSort");
 		if (factNo != null && !factNo.equals("") && !factNo.equals("tw")) {
-			ActionContext.getContext().getApplication()
-					.put("kyzvisa_factNo", factNo);
+			ActionContext.getContext().getSession().put("public_factNo", factNo);					
 		}
 		if (visaSort != null && !visaSort.equals("")) {
-			ActionContext.getContext().getApplication().put("kyzvisa_visaSort", visaSort);
+			ActionContext.getContext().getSession().put("public_visaSort", visaSort);
 		}
 		bean = visaSer.findPageBean(25, page, factNo, visaSort);
 		this.getTypeName(bean);
@@ -345,13 +348,10 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 	}
 
 	public String findPageBean3() {
-		factNo = (String) ActionContext.getContext().getApplication()
-				.get("kyzvisa_factNo");
-		visaSort = (String) ActionContext.getContext().getApplication()
-				.get("kyzvisa_visaSort");
+		factNo = (String) ActionContext.getContext().getSession().get("public_factNo");				
+		visaSort = (String) ActionContext.getContext().getSession().get("public_visaSort");				
 		if (factNo == null || factNo.equals("") || factNo.equals("tw")){
-			factNo = (String) ActionContext.getContext().getSession()
-					.get("factNo");
+			factNo = (String) ActionContext.getContext().getSession().get("factNo");					
 		}
 		bean = visaSer.findPageBean(25, page, factNo, visaSort);
 		this.getTypeName(bean);

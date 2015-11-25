@@ -41,24 +41,29 @@
 
 <script>
     var jq=jQuery.noConflict();
-	function pages(page) {
-	    var loadi=layer.load(0);
+    var loadi;
+    jq(document).ajaxStart(function(){
+    	loadi=layer.load(0);
+    });
+    jq(document).ajaxStop(function(){
+    	layer.close(loadi);
+    });
+	function pages(page) {	    
 		jq.ajax({
 			type : "POST",
 			dataType : "Html",
 			url : "visaflow_findPageBean3",
 			data : "page=" + page,
 			success : function(msg) {
-			    layer.close(loadi);
 				jq("#bodyid").html(msg);
 			},
 			error : function(xhr) {
-				alert(xhr.responseText);
+				//alert(xhr.responseText);
+				jq("#bodyid").html(xhr.responseText);
 			}
 		});
 	}
 	function submis() {
-		var loadi=layer.load(0);
 		var fact = document.getElementById("factNo");
 		var ym = document.getElementById("visaSort");
 		jq.ajax({
@@ -67,11 +72,11 @@
 			url : "visaflow_findPageBean2",
 			data : "factNo=" + fact.value + "&visaSort=" + ym.value,
 			success : function(msg) {
-			    layer.close(loadi);
 				jq("#bodyid").html(msg);
 			},
 			error : function(xhr) {
-				alert(xhr.responseText);
+				//alert(xhr.responseText);
+				jq("#bodyid").html(xhr.responseText);
 			}
 		});
 	}
@@ -88,19 +93,18 @@
 	function isDelete2(factno,visasort) {
 		
 	jConfirm('刪除申請人,就會刪除整個流程,确定要刪除吗?', '确认对话框', function(r) {
-			if (r == true) {
-				var loadi = layer.load("正在處理,請稍等...");
+			if (r == true) {								
 				jq.ajax({
 					type : "POST",
 					dataType : "Html",
 					url : "visaflow_deleteFirst",
 					data : "factNo=" + factno + "&visaSort=" + visasort,
 					success : function(msg) {
-						layer.close(loadi);
 						jq("#bodyid").html(msg);
 					},
 					error : function(xhr) {
-						alert(xhr.responseText);
+						//alert(xhr.responseText);
+						jq("#bodyid").html(xhr.responseText);
 					}
 				}); 
 			}

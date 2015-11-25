@@ -37,19 +37,25 @@
 
 <script>
    var jq=jQuery.noConflict();
+   var loadi;
+   jq(document).ajaxStart(function(){
+	   loadi=layer.load(0);
+   });
+   jq(document).ajaxStop(function(){
+	   layer.close(loadi);
+   });
 	function pages(page) {
-	    var loadi=layer.load();
 		jq.ajax({
 			type : "POST",
 			dataType : "Html",
 			url : "vbm_findPageBean3_1",
 			data : "page=" + page,
 			success : function(msg) {
-			    layer.close(loadi);
 				jq("#bodyid").html(msg);
 			},
 			error : function(xhr) {
-				alert(xhr.responseText);
+				//alert(xhr.responseText);
+				jq("#bodyid").html(xhr.responseText);
 			}
 		});
 	}
@@ -63,7 +69,6 @@
 				message : '請稍後!正在查詢中..'
 			});			
 		}); */
-		var loadi=layer.load(0);
 		var fact = document.getElementById("factNo");
 		var billno=document.getElementById("billNo");
 		var visaMks=document.getElementsByName("visaMk");
@@ -83,12 +88,12 @@
 			dataType : "Html",
 			url : "vbm_findPageBean2_1",
 			data : "factNo=" + fact.value +"& billNo="+billno.value+"& visaMk="+visaMk.value+"& visaSort="+visaSort.value+"& yymmdd="+yymmdd.value+"& yymmdd2="+yymmdd2.value,
-			 success : function(msg) {
-			    layer.close(loadi);			    
+			 success : function(msg) {		    
 				jq("#bodyid").html(msg);
 			},
 			error : function(xhr) {
-				alert(xhr.responseText);
+				//alert(xhr.responseText);
+				jq("#bodyid").html(xhr.responseText);
 			} 			
 		}); 
 		//jq.post("vbm_findPageBean2",{"factNo":fact.value,"billNo":billno.value,"visaMk":visaMk.value},function(data){jq("#bodyid").html(data)});
@@ -126,7 +131,17 @@
 });
 	}
 	
-/*    function getType(factNo){
+	 function getKyType(){	 	 
+			 var factno=document.getElementById("factNo").value;
+			 if(factno!=null&&factno!=""){
+			     webtypejs.findByFactNo(factno,function(x){
+		       if(x.length>0){
+		          dwr.util.addOptions("dwr_kytype",x,"webtypeMk","typeName");
+		       }        
+		     });
+			 }   
+			}
+   function getType2(factNo){
      document.getElementById("dwr_kytype").length=1;
      webtypejs.findByFactNo(factNo,function(x){
        if(x.length>0){
@@ -134,7 +149,7 @@
        }
          
      });
-   } */
+   } 
    
 function tips(memo,index){
     if(memo==''){

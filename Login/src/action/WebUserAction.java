@@ -747,26 +747,30 @@ public class WebUserAction extends ActionSupport implements ServletResponseAware
 	}
 	
 	public String findPageBean(){
-		ActionContext.getContext().getApplication().clear();
+		//ActionContext.getContext().getApplication().clear();
+		ActionContext.getContext().getSession().remove("public_conditions");
+		ActionContext.getContext().getSession().remove("public_factno");
 		factNo=(String)ActionContext.getContext().getSession().get("factNo");
 		bean=webUserService.findPageBean_init(25, page, conditions, factNo);
 		return "beanList";
 	}
 	public String findPageBean2(){
-		ActionContext.getContext().getApplication().clear();
-		//factNo=(String)ActionContext.getContext().getSession().get("factNo");
+		//ActionContext.getContext().getApplication().clear();
+		ActionContext.getContext().getSession().remove("public_conditions");
+		ActionContext.getContext().getSession().remove("public_factno");
+
 		if(conditions!=null&&!conditions.equals("")){
-			ActionContext.getContext().getApplication().put("webuser_conditions", conditions);
+			ActionContext.getContext().getSession().put("public_conditions", conditions);
 		}
 		if(factNo!=null&&!factNo.equals("")){
-			ActionContext.getContext().getApplication().put("webuser_factno", factNo);
+			ActionContext.getContext().getSession().put("public_factno", factNo);
 		}
 		bean=webUserService.findPageBean(25, page, conditions, factNo);
 		return "beanList1";
 	}
 	public String findPageBean3(){
-		conditions=(String)ActionContext.getContext().getApplication().get("webuser_conditions");
-		factNo=(String)ActionContext.getContext().getApplication().get("webuser_factno");
+		conditions=(String)ActionContext.getContext().getSession().get("public_conditions");
+		factNo=(String)ActionContext.getContext().getSession().get("public_factno");
 		if(factNo==null||factNo.equals("")){
 			factNo=(String)ActionContext.getContext().getSession().get("factNo");
 			bean=webUserService.findPageBean_init(25, page, conditions, factNo);

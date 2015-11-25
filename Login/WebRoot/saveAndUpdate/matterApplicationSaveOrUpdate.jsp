@@ -337,17 +337,20 @@ function getKyType2(factno){
 
 function lookJson(billNo,id,filename){
 var jQ = jQuery.noConflict();
-var loadi=layer.load(0);
+var loadi;
 filename=encodeURI(encodeURI(filename));
+jQ(document).ajaxStart(function(){
+	loadi=layer.load(0);
+});
+jQ(document).ajaxStop(function(){
+	layer.close(loadi);
+});
    jQ.ajax({
       type:"get",
-      //contentType: "application/x-www-form-urlencoded; charset=utf-8", 
       dataType:"json",
       url:"kyzfile_findKyzFileJson",
       data:"billNo="+billNo+"&id="+id+"&filename="+filename,
       success:function(files){
-          layer.close(loadi);
-          alert(files.length);
          jQ("#fileJson").html("");
           var item;
           var item_url;
@@ -710,17 +713,18 @@ table.gridtable td.tdcolor {
 		<s:if test='kyz.filesYn=="1"'>
 	       <hr/>
 	       <div style="color:blue;">附檔:</div><br/>
-	       <div id="fileJson">
+	       <div id="fileJson" style="width:850px">
 	      <s:iterator value="#session.list_filesexp">	        
-	           <a href="/upload/<s:property value='billno'/>/<s:property value='filename'/>" target="_blank" title="點擊查看">
+	           <a href="/upload/<s:property value='billno'/>/<s:property value="%{toUrl2(filename)}"/>" target="_blank" title="點擊查看">
 	                 <s:property value="%{toUrl(filename)}"/>
-	           </a>	           
+	           </a>           
 	           <a href="javascript:lookJson('${billno}',${id},'<s:property value="%{toUrl(filename)}"/>')">
 	              <img src="images/icon/del_file.png" alt="刪除" title="刪除" style="border:0px"/>
-	           </a>&nbsp;	        	        	        
+	           </a>&nbsp;&nbsp;	        	        	        
 	     </s:iterator>
 	     </div>		     	     	        	       
-	   </s:if>	  
+	   </s:if>
+	   <hr/>	  
 			  <center style="width:850px;margin-left:50px">			    
 				<input type="submit" id="sub" value="確定" onmouseover="this.style.backgroundPosition='left -40px'" onmouseout="this.style.backgroundPosition='left top'"/>&nbsp;&nbsp;&nbsp; <input
 					type="reset" id="reset" value="重置" onmouseover="this.style.backgroundPosition='left -40px'" onmouseout="this.style.backgroundPosition='left top'"/>

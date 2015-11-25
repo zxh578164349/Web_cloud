@@ -166,23 +166,27 @@ public class WebcashoutAction extends ActionSupport implements ServletResponseAw
 		return "delete";
 	}
 	public String findPageBean(){
-		ActionContext.getContext().getApplication().clear();
+		//ActionContext.getContext().getApplication().clear();
+		ActionContext.getContext().getSession().remove("public_factno");
+		ActionContext.getContext().getSession().remove("public_yymm");
 		factNo=(String)ActionContext.getContext().getSession().get("factNo");
 		bean=cashoutSer.findPageBean(25, page, factNo, factCode, yymm);
 		return "findPageBean";
 	}
 	public String findPageBean2(){
-		ActionContext.getContext().getApplication().clear();
+		//ActionContext.getContext().getApplication().clear();
+		ActionContext.getContext().getSession().remove("public_factno");
+		ActionContext.getContext().getSession().remove("public_yymm");
 		bean=cashoutSer.findPageBean(25, page, factNo, factCode, yymm);
-		ActionContext.getContext().getApplication().put("cashout_factNo", factNo);
-		ActionContext.getContext().getApplication().put("cashout_yymm", yymm);
-		//ActionContext.getContext().getApplication().put("cashout_factCode", factCode);
+		ActionContext.getContext().getSession().put("public_factno", factNo);
+		ActionContext.getContext().getSession().put("public_yymm", yymm);
+		//ActionContext.getContext().getApplication().put("public_factCode", factCode);
 		return "findPageBean1";
 	}
 	public String findPageBean3(){
-		factNo=(String)ActionContext.getContext().getApplication().get("cashout_factNo");
-		yymm=(String)ActionContext.getContext().getApplication().get("cashout_yymm");
-		//factCode=(String)ActionContext.getContext().getApplication().get("cashout_factCode");
+		factNo=(String)ActionContext.getContext().getSession().get("public_factno");
+		yymm=(String)ActionContext.getContext().getSession().get("public_yymm");
+		//factCode=(String)ActionContext.getContext().getApplication().get("public_factCode");
 		if(factNo==null||factNo.equals("")){
 			factNo=(String)ActionContext.getContext().getSession().get("factNo");
 		}
@@ -196,7 +200,7 @@ public class WebcashoutAction extends ActionSupport implements ServletResponseAw
 	
 	
 	/**
-	 * ¦X¨Ö³æ¤¸®æ
+	 * ï¿½Xï¿½Ö³æ¤¸ï¿½ï¿½
 	 * CellRangeAddress reg = new CellRangeAddress(y1,(short)y2,x1,(short)x2)
 	 * @throws IOException 
 	 * @throws ParseException 
@@ -205,31 +209,31 @@ public class WebcashoutAction extends ActionSupport implements ServletResponseAw
 		XSSFWorkbook book=new XSSFWorkbook();
 		XSSFSheet sheet=book.createSheet("report");
 		
-		/*¼Ë¦¡*/
+		/*ï¿½Ë¦ï¿½*/
 		
-		//¼ÐÃD¦rÅé
+		//ï¿½ï¿½ï¿½Dï¿½rï¿½ï¿½
 		XSSFFont font_title=book.createFont();
 		font_title.setFontHeightInPoints((short)20);
 		font_title.setBoldweight(XSSFFont.BOLDWEIGHT_BOLD);
-		//¬õ¦â¦rÅé
+		//ï¿½ï¿½ï¿½ï¿½rï¿½ï¿½
 		XSSFFont font_red=book.createFont();
 		font_red.setColor(IndexedColors.RED.getIndex());
 		font_red.setBoldweight(XSSFFont.BOLDWEIGHT_BOLD);
-		//ºñ¦â¦rÅé
+		//ï¿½ï¿½ï¿½rï¿½ï¿½
 		XSSFFont font_green=book.createFont();
 		font_green.setColor(IndexedColors.GREEN.getIndex());
 		font_green.setBoldweight(XSSFFont.BOLDWEIGHT_BOLD);
-		//ÂÅ¦â¦rÅé
+		//ï¿½Å¦ï¿½rï¿½ï¿½
 		XSSFFont font_blue=book.createFont();
 		font_blue.setColor(IndexedColors.BLUE.getIndex());
 		font_blue.setBoldweight(XSSFFont.BOLDWEIGHT_BOLD);
-		//ªì©l¤Æ¼Ë¦¡
+		//ï¿½ï¿½lï¿½Æ¼Ë¦ï¿½
 		XSSFCellStyle cs_init=book.createCellStyle();
 		cs_init.setBorderTop(XSSFCellStyle.BORDER_THIN);
 		cs_init.setBorderRight(XSSFCellStyle.BORDER_THIN);
 		cs_init.setBorderBottom(XSSFCellStyle.BORDER_THIN);
 		cs_init.setBorderLeft(XSSFCellStyle.BORDER_THIN);
-		//¼Ð·Ç¼Ë¦¡
+		//ï¿½Ð·Ç¼Ë¦ï¿½
 		XSSFCellStyle cs=book.createCellStyle();
 		cs.setAlignment(XSSFCellStyle.ALIGN_CENTER);
 		cs.setVerticalAlignment(XSSFCellStyle.VERTICAL_CENTER);
@@ -237,12 +241,12 @@ public class WebcashoutAction extends ActionSupport implements ServletResponseAw
 		cs.setBorderRight(XSSFCellStyle.BORDER_THIN);
 		cs.setBorderBottom(XSSFCellStyle.BORDER_THIN);
 		cs.setBorderLeft(XSSFCellStyle.BORDER_THIN);
-		//¼ÐÃD¼Ë¦¡		
+		//ï¿½ï¿½ï¿½Dï¿½Ë¦ï¿½		
 		XSSFCellStyle cs_title=book.createCellStyle();
 		cs_title.setFont(font_title);
 		cs_title.setAlignment(XSSFCellStyle.ALIGN_CENTER);
 		cs_title.setVerticalAlignment(XSSFCellStyle.VERTICAL_CENTER);
-		//¬õ¦â¼Ë¦¡
+		//ï¿½ï¿½ï¿½ï¿½Ë¦ï¿½
 		XSSFCellStyle cs_red=book.createCellStyle();
 		cs_red.setFont(font_red);
 		cs_red.setBorderTop(XSSFCellStyle.BORDER_THIN);
@@ -251,7 +255,7 @@ public class WebcashoutAction extends ActionSupport implements ServletResponseAw
 		cs_red.setBorderLeft(XSSFCellStyle.BORDER_THIN);
 		cs_red.setAlignment(XSSFCellStyle.ALIGN_CENTER);
 		cs_red.setVerticalAlignment(XSSFCellStyle.VERTICAL_CENTER);
-		//ºñ¦â¼Ë¦¡
+		//ï¿½ï¿½ï¿½Ë¦ï¿½
 		XSSFCellStyle cs_green=book.createCellStyle();
 		cs_green.setFont(font_green);
 		cs_green.setBorderTop(XSSFCellStyle.BORDER_THIN);
@@ -260,7 +264,7 @@ public class WebcashoutAction extends ActionSupport implements ServletResponseAw
 		cs_green.setBorderLeft(XSSFCellStyle.BORDER_THIN);
 		cs_green.setAlignment(XSSFCellStyle.ALIGN_CENTER);
 		cs_green.setVerticalAlignment(XSSFCellStyle.VERTICAL_CENTER);
-		//ÂÅ¦â¦rÅé
+		//ï¿½Å¦ï¿½rï¿½ï¿½
 		XSSFCellStyle cs_blue=book.createCellStyle();
 		cs_blue.setFont(font_blue);
 		cs_blue.setBorderTop(XSSFCellStyle.BORDER_THIN);
@@ -271,7 +275,7 @@ public class WebcashoutAction extends ActionSupport implements ServletResponseAw
 		cs_blue.setVerticalAlignment(XSSFCellStyle.VERTICAL_CENTER);
 
 				
-		//¼Æ¦r®æ¦¡
+		//ï¿½Æ¦rï¿½æ¦¡
 		XSSFDataFormat format=book.createDataFormat();
 		XSSFCellStyle cs_percent=book.createCellStyle();
 		cs_percent.setDataFormat(format.getFormat("0.00%"));
@@ -285,18 +289,18 @@ public class WebcashoutAction extends ActionSupport implements ServletResponseAw
 		cs_percent.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
 
 		
-		/**(¤W³¡)¼Æ¾Ú·½**/
-		//(1)¥ª¦C¦W
+		/**(ï¿½Wï¿½ï¿½)ï¿½Æ¾Ú·ï¿½**/
+		//(1)ï¿½ï¿½ï¿½Cï¿½W
 		List<String>list_col_top=new ArrayList<String>();
-		list_col_top.add("¼t§O«¬ºA");
-		list_col_top.add("¹w­p¥Í²£Âù¼Æ(Âù)");
-		list_col_top.add("¹w­p½Ð´ÚÂù¼Æ(Âù)");
-		list_col_top.add("¹w­p½Ð´Úª÷ÃB(USD)");
-		//(2)¼Æ¾Ú
+		list_col_top.add("ï¿½tï¿½Oï¿½ï¿½ï¿½A");
+		list_col_top.add("ï¿½wï¿½pï¿½Í²ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½)");
+		list_col_top.add("ï¿½wï¿½pï¿½Ð´ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½)");
+		list_col_top.add("ï¿½wï¿½pï¿½Ð´Úªï¿½ï¿½B(USD)");
+		//(2)ï¿½Æ¾ï¿½
 		/*yymm="201507";
 		factNo="all";*/
 		
-		//¦X­p¼Æ¾Ú
+		//ï¿½Xï¿½pï¿½Æ¾ï¿½
 		Double total_A=0.0;
 		Double total_B=0.0;
 		Double total_C=0.0;
@@ -311,7 +315,7 @@ public class WebcashoutAction extends ActionSupport implements ServletResponseAw
 		for(int i=0;i<list_fact.size();i++){
 			String factno=list_fact.get(i).getId().getFactNo();
 			String factcode=list_fact.get(i).getId().getFactArea();
-			//¦Û°Ê§PÂ_¡i¹w­p¥Í²£¡jªºÃþ«¬
+			//ï¿½Û°Ê§Pï¿½_ï¿½iï¿½wï¿½pï¿½Í²ï¿½ï¿½jï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 			List<String>list_type=estProSer.findtypeById(factno, factcode, yymm);
 			if(list_type.size()==1){
 				type=list_type.get(0);
@@ -340,42 +344,42 @@ public class WebcashoutAction extends ActionSupport implements ServletResponseAw
 		}
 		
 						
-		/***¼ÐÃD***/
+		/***ï¿½ï¿½ï¿½D***/
 		String title="";
 		if(factNo.equals("all")){			
-			title="©Ò¦³¤u¼t"+yymm+"¥Í²£»P½Ð´Ú¹F¦¨ª¬ªp²Î­p¤ÀªRªí";
+			title="ï¿½Ò¦ï¿½ï¿½uï¿½t"+yymm+"ï¿½Í²ï¿½ï¿½Pï¿½Ð´Ú¹Fï¿½ï¿½ï¿½ï¿½ï¿½pï¿½Î­pï¿½ï¿½ï¿½Rï¿½ï¿½";
 		}else{
-			title="("+list_fact.get(0).getFactSname()+")"+yymm+"¥Í²£»P½Ð´Ú¹F¦¨ª¬ªp²Î­p¤ÀªRªí";
+			title="("+list_fact.get(0).getFactSname()+")"+yymm+"ï¿½Í²ï¿½ï¿½Pï¿½Ð´Ú¹Fï¿½ï¿½ï¿½ï¿½ï¿½pï¿½Î­pï¿½ï¿½ï¿½Rï¿½ï¿½";
 		}		
-		/**(¤U³¡)¼Æ¾Ú·½**/
-		//(1)¤é´Á(yyyy/MM)®æ¦¡
+		/**(ï¿½Uï¿½ï¿½)ï¿½Æ¾Ú·ï¿½**/
+		//(1)ï¿½ï¿½ï¿½(yyyy/MM)ï¿½æ¦¡
 		List<String>list_days=this.getDates(yymm).get(0);
-		//(2)¥ª¦C¦W
+		//(2)ï¿½ï¿½ï¿½Cï¿½W
 		List<String>list_col_buttom=new ArrayList<String>();
 		for(int i=0;i<list_days.size();i++){
-			list_col_buttom.add("·í¤é¹ê»Ú¼Æ");
-			list_col_buttom.add("²Ö¿n¼Æ");
-			list_col_buttom.add("²Ö¿n¹F¦¨%");
-			list_col_buttom.add("²Ö¿n¤í¼Æ");
+			list_col_buttom.add("ï¿½ï¿½ï¿½ï¿½Ú¼ï¿½");
+			list_col_buttom.add("ï¿½Ö¿nï¿½ï¿½");
+			list_col_buttom.add("ï¿½Ö¿nï¿½Fï¿½ï¿½%");
+			list_col_buttom.add("ï¿½Ö¿nï¿½ï¿½ï¿½");
 		}		
-		//(3)ªíÀY
+		//(3)ï¿½ï¿½ï¿½Y
 		List<String>list_col_buttom2=new ArrayList<String>();
-		List<String>list_unit=new ArrayList<String>();//³æ¦ì	
+		List<String>list_unit=new ArrayList<String>();//ï¿½ï¿½ï¿½	
 		for(int i=0;i<list_fact.size();i++){
-			list_col_buttom2.add("¥Í²£ÀË®Ö");
-			list_col_buttom2.add("¥æ³æÂù¼Æ");
-			list_col_buttom2.add("§éºâª÷ÃB");
-			list_col_buttom2.add("½Ð´ÚÂù¼Æ");
-			list_col_buttom2.add("½Ð´Úª÷ÃB");
+			list_col_buttom2.add("ï¿½Í²ï¿½ï¿½Ë®ï¿½");
+			list_col_buttom2.add("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
+			list_col_buttom2.add("ï¿½ï¿½ï¿½ï¿½ï¿½B");
+			list_col_buttom2.add("ï¿½Ð´ï¿½ï¿½ï¿½ï¿½");
+			list_col_buttom2.add("ï¿½Ð´Úªï¿½ï¿½B");
 			
-			list_unit.add("Âù");
-			list_unit.add("Âù");
+			list_unit.add("ï¿½ï¿½");
+			list_unit.add("ï¿½ï¿½");
 			list_unit.add("USD");
-			list_unit.add("Âù");
+			list_unit.add("ï¿½ï¿½");
 			list_unit.add("USD");
 		}
-		//(4)¼Æ¾Ú
-		List<String>list_days2=this.getDates(yymm).get(1);//¤é´Á(yyyyMMdd)®æ¦¡
+		//(4)ï¿½Æ¾ï¿½
+		List<String>list_days2=this.getDates(yymm).get(1);//ï¿½ï¿½ï¿½(yyyyMMdd)ï¿½æ¦¡
 		List<List<VWebydataawebcashout>>list_vcashout_all=new ArrayList<List<VWebydataawebcashout>>();
 		DateFormat fmt=new SimpleDateFormat("yyyyMMdd");
 		for(int i=0;i<list_fact.size();i++){//start for1
@@ -395,12 +399,12 @@ public class WebcashoutAction extends ActionSupport implements ServletResponseAw
 			}//end for2
 			list_vcashout_all.add(list_vcashout);
 		}//end for1
-		//(5)¦X­p¼Æ¾Ú
+		//(5)ï¿½Xï¿½pï¿½Æ¾ï¿½
 		
-		//¤º¥~¼h´`Àô­n¤Ï¹L¨Ó¡A¥~¼h´`Àô¤Ñ¼Æ¡A¤º´`Àô¼t§O
-			int a_length=list_vcashout_all.get(0).size();//¥~¼h´`Àô¦¸¼Æ,¦]¬°¦U­Ó¤¸¯Àªºªø«×³£¤@¿Ë¡A¬G¨ú²Ä¤@­Ó
+		//ï¿½ï¿½ï¿½~ï¿½hï¿½`ï¿½ï¿½ï¿½nï¿½Ï¹Lï¿½Ó¡Aï¿½~ï¿½hï¿½`ï¿½ï¿½ï¿½Ñ¼Æ¡Aï¿½ï¿½ï¿½`ï¿½ï¿½ï¿½tï¿½O
+			int a_length=list_vcashout_all.get(0).size();//ï¿½~ï¿½hï¿½`ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½,ï¿½]ï¿½ï¿½ï¿½Uï¿½Ó¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×³ï¿½ï¿½@ï¿½Ë¡Aï¿½Gï¿½ï¿½Ä¤@ï¿½ï¿½
 			List<Double[]>list_total_top=new ArrayList<Double[]>();
-			for(int i=0;i<a_length;i++){//¥~´`Àô¤Ñ¼Æ
+			for(int i=0;i<a_length;i++){//ï¿½~ï¿½`ï¿½ï¿½ï¿½Ñ¼ï¿½
 				Double total_onModulus=0.0;
 				Double total_realpairs=0.0;
 				Double total_convertmoney=0.0;
@@ -408,9 +412,9 @@ public class WebcashoutAction extends ActionSupport implements ServletResponseAw
 				Double total_realcashoutmoney=0.0;
 				String yymmdd="null";
 				if(list_vcashout_all.get(0).get(i)!=null){
-					yymmdd=new SimpleDateFormat("yyyyMMdd").format(list_vcashout_all.get(0).get(i).getId().getYymmdd());//¨ú¥X¦U­Óyymmdd
+					yymmdd=new SimpleDateFormat("yyyyMMdd").format(list_vcashout_all.get(0).get(i).getId().getYymmdd());//ï¿½ï¿½Xï¿½Uï¿½ï¿½yymmdd
 				}				
-				for(int j=0;j<list_fact.size();j++){//¤º´`Àô¼t§O
+				for(int j=0;j<list_fact.size();j++){//ï¿½ï¿½ï¿½`ï¿½ï¿½ï¿½tï¿½O
 					String factno=list_fact.get(j).getId().getFactNo();
 					String factcode=list_fact.get(j).getId().getFactArea();
 					VWebydataawebcashout vcashout=vcashoutSer.findByIdOne(factno, factcode, yymmdd);
@@ -431,8 +435,8 @@ public class WebcashoutAction extends ActionSupport implements ServletResponseAw
 
 
 							
-		/******¶}©l¥´¦L*****/
-		//ªì©l¤Æ³æ¤¸®æ
+		/******ï¿½}ï¿½lï¿½ï¿½ï¿½L*****/
+		//ï¿½ï¿½lï¿½Æ³æ¤¸ï¿½ï¿½
 		int height_top=list_col_top.size()+1;
 		int height_buttom=list_days.size()*4+2;
 		int width=list_top_all.size()*5+2;
@@ -443,9 +447,9 @@ public class WebcashoutAction extends ActionSupport implements ServletResponseAw
 		int width_all=width+width_total;
 		this.init(sheet,cs_init,height_top+height_buttom,width_all);
 		
-		XSSFCellStyle cs_temp=null;//Á{®É¼Ë¦¡
+		XSSFCellStyle cs_temp=null;//ï¿½{ï¿½É¼Ë¦ï¿½
 		
-		//¼ÐÃD		
+		//ï¿½ï¿½ï¿½D		
 		CellRangeAddress reg_title = new CellRangeAddress(0 ,(short)0, 0, (short) width_all-1);//(y1,y2,x1,x2)
 		sheet.addMergedRegion(reg_title);
 		sheet.getRow(0).getCell(0).setCellValue(title);
@@ -454,10 +458,10 @@ public class WebcashoutAction extends ActionSupport implements ServletResponseAw
 		for(int i=1;i<list_top_all.size()+2;i++){
 			sheet.getRow(0).getCell(i).setCellStyle(cs_title);
 		}
-		/*************y¶b´å¼Ð=1****************/	
+		/*************yï¿½bï¿½ï¿½ï¿½=1****************/	
 		int index_y=1;							
-		/**¤W³¡¤º®e**/		
-		//(1)¥ª¦C¦W
+		/**ï¿½Wï¿½ï¿½ï¿½ï¿½ï¿½e**/		
+		//(1)ï¿½ï¿½ï¿½Cï¿½W
 		for(int x=0;x<list_col_top.size();x++){//start for1
 			String col=list_col_top.get(x);
 			CellRangeAddress reg= new CellRangeAddress(x+index_y,(short)x+index_y, 0, (short)1);
@@ -467,8 +471,8 @@ public class WebcashoutAction extends ActionSupport implements ServletResponseAw
 			sheet.getRow(x+index_y).getCell(1).setCellStyle(cs);			
 		}//end for1
 		
-		/*************y¶b´å¼Ð=1,x=2****************/
-		//(2)¼Æ¾Ú
+		/*************yï¿½bï¿½ï¿½ï¿½=1,x=2****************/
+		//(2)ï¿½Æ¾ï¿½
 				
 		for(int x=0;x<list_top_all.size();x++){//start for1
 			Object[]obj=list_top_all.get(x);
@@ -478,15 +482,15 @@ public class WebcashoutAction extends ActionSupport implements ServletResponseAw
 			String type=(String)obj[3];			
 			if(type!=null){
 				if(type.equals("zd")){
-					type="(¼È©w)";
+					type="(ï¿½È©w)";
 					cs_temp=cs_green;
 				}
 				if(type.equals("tz")){
-					type="(½Õ¾ã)";
+					type="(ï¿½Õ¾ï¿½)";
 					cs_temp=cs_blue;
 				}
 			}else{
-				type="(µL¼Æ¾Ú)";
+				type="(ï¿½Lï¿½Æ¾ï¿½)";
 				cs_temp=cs_red;
 			}
 			
@@ -498,15 +502,15 @@ public class WebcashoutAction extends ActionSupport implements ServletResponseAw
 				sheet.getRow(index_y).getCell(2+5*x+i).setCellStyle(cs_temp);
 			}
 			
-			/*************y¶b´å¼Ð=2,x=2****************/						
-			for(int y=0;y<obj.length-1;y++){//start for2  ª`·N,obj.length-1,¦]¬°obj¤¤·s¼W¤F¤@­Ótype
+			/*************yï¿½bï¿½ï¿½ï¿½=2,x=2****************/						
+			for(int y=0;y<obj.length-1;y++){//start for2  ï¿½`ï¿½N,obj.length-1,ï¿½]ï¿½ï¿½objï¿½ï¿½ï¿½sï¿½Wï¿½Fï¿½@ï¿½ï¿½type
 				CellRangeAddress reg2= new CellRangeAddress(index_y+1+y ,(short)index_y+1+y, 2+5*x, (short)2+5*x+4);
 				sheet.addMergedRegion(reg2);
 				Double temp=(Double)obj[y];
 				if(temp==null){
 					//temp=0.0;
 					cs_temp=cs_red;
-					sheet.getRow(index_y+1+y).getCell(2+5*x).setCellValue("µL¼Æ¾Ú");
+					sheet.getRow(index_y+1+y).getCell(2+5*x).setCellValue("ï¿½Lï¿½Æ¾ï¿½");
 				}else{
 					cs_temp=cs;
 					sheet.getRow(index_y+1+y).getCell(2+5*x).setCellValue(temp);										
@@ -517,10 +521,10 @@ public class WebcashoutAction extends ActionSupport implements ServletResponseAw
 				}				
 			}//end for2						
 		}//end for1
-		/*************y¶b´å¼Ð=1,x=width****************/	
-		//(3)¦X­p		
+		/*************yï¿½bï¿½ï¿½ï¿½=1,x=width****************/	
+		//(3)ï¿½Xï¿½p		
 		//if(factNo.equals("all")){
-			Object[]obj_total={"¦X­p",total_A,total_B,total_C};
+			Object[]obj_total={"ï¿½Xï¿½p",total_A,total_B,total_C};
 			for(int i=0;i<obj_total.length;i++){
 				CellRangeAddress reg=new CellRangeAddress(1+i,(short)1+i,width,(short)width+4);
 				sheet.addMergedRegion(reg);
@@ -537,24 +541,24 @@ public class WebcashoutAction extends ActionSupport implements ServletResponseAw
 			}
 		//}
 				
-		/**¤U³¡¤º®e**/
-		/*************y¶b´å¼Ð=6****************/
-		//(1)¡i¤é´Á¡j¡A¡i¶µ¥Ø¡j¦C¦W
+		/**ï¿½Uï¿½ï¿½ï¿½ï¿½ï¿½e**/
+		/*************yï¿½bï¿½ï¿½ï¿½=6****************/
+		//(1)ï¿½iï¿½ï¿½ï¿½ï¿½jï¿½Aï¿½iï¿½ï¿½ï¿½Ø¡jï¿½Cï¿½W
 		index_y=5;
 		CellRangeAddress reg_date=new CellRangeAddress(index_y,(short)index_y+1,0,(short)0);
 		sheet.addMergedRegion(reg_date);
-		sheet.getRow(index_y).getCell(0).setCellValue("¤é´Á");
+		sheet.getRow(index_y).getCell(0).setCellValue("ï¿½ï¿½ï¿½");
 		sheet.getRow(index_y).getCell(0).setCellStyle(cs);
 		sheet.getRow(index_y+1).getCell(0).setCellStyle(cs);
 		
 		CellRangeAddress reg_item=new CellRangeAddress(index_y,(short)index_y+1,1,(short)1);
 		sheet.addMergedRegion(reg_item);
-		sheet.getRow(index_y).getCell(1).setCellValue("¶µ¥Ø");
+		sheet.getRow(index_y).getCell(1).setCellValue("ï¿½ï¿½ï¿½ï¿½");
 		sheet.getRow(index_y).getCell(1).setCellStyle(cs);
 		sheet.getRow(index_y+1).getCell(1).setCellStyle(cs);
 		
-		/*************y¶b´å¼Ð=7****************/
-		//(2)¤é´Á
+		/*************yï¿½bï¿½ï¿½ï¿½=7****************/
+		//(2)ï¿½ï¿½ï¿½
 		index_y=7;
 		for(int i=0;i<list_days.size();i++){
 			String date=list_days.get(i);
@@ -565,7 +569,7 @@ public class WebcashoutAction extends ActionSupport implements ServletResponseAw
 				sheet.getRow(index_y+4*i+j).getCell(0).setCellStyle(cs);
 			}				
 		}
-		//(3)¥ª¦C¦W
+		//(3)ï¿½ï¿½ï¿½Cï¿½W
 		for(int i=0;i<list_col_buttom.size();i++){
 			sheet.setColumnWidth(1,4000);
 			String col=list_col_buttom.get(i);
@@ -573,8 +577,8 @@ public class WebcashoutAction extends ActionSupport implements ServletResponseAw
 			sheet.getRow(index_y+i).getCell(1).setCellStyle(cs);
 		}
 		
-		/*************y¶b´å¼Ð=5,x=2****************/
-		//(4)ªíÀY
+		/*************yï¿½bï¿½ï¿½ï¿½=5,x=2****************/
+		//(4)ï¿½ï¿½ï¿½Y
 		index_y=5;
 		for(int i=0;i<list_col_buttom2.size();i++){
 			sheet.setColumnWidth(i+2, 3500);
@@ -586,8 +590,8 @@ public class WebcashoutAction extends ActionSupport implements ServletResponseAw
 			sheet.getRow(index_y+1).getCell(i+2).setCellStyle(cs);
 			
 		}
-		/*************y¶b´å¼Ð=7,x=2****************/
-		//(5)¼Æ¾Ú
+		/*************yï¿½bï¿½ï¿½ï¿½=7,x=2****************/
+		//(5)ï¿½Æ¾ï¿½
 		index_y=7;		
 		for(int i=0;i<list_vcashout_all.size();i++){//start for1
 			List<VWebydataawebcashout>list_vcashout=list_vcashout_all.get(i);
@@ -623,17 +627,17 @@ public class WebcashoutAction extends ActionSupport implements ServletResponseAw
 										
 				}else{
 					cs_temp=cs_red;
-					sheet.getRow(index_y+4*j).getCell(2+5*i).setCellValue("µL¼Æ¾Ú");
-					sheet.getRow(index_y+4*j).getCell(3+5*i).setCellValue("µL¼Æ¾Ú");
-					sheet.getRow(index_y+4*j).getCell(4+5*i).setCellValue("µL¼Æ¾Ú");
-					sheet.getRow(index_y+4*j).getCell(5+5*i).setCellValue("µL¼Æ¾Ú");
-					sheet.getRow(index_y+4*j).getCell(6+5*i).setCellValue("µL¼Æ¾Ú");				
+					sheet.getRow(index_y+4*j).getCell(2+5*i).setCellValue("ï¿½Lï¿½Æ¾ï¿½");
+					sheet.getRow(index_y+4*j).getCell(3+5*i).setCellValue("ï¿½Lï¿½Æ¾ï¿½");
+					sheet.getRow(index_y+4*j).getCell(4+5*i).setCellValue("ï¿½Lï¿½Æ¾ï¿½");
+					sheet.getRow(index_y+4*j).getCell(5+5*i).setCellValue("ï¿½Lï¿½Æ¾ï¿½");
+					sheet.getRow(index_y+4*j).getCell(6+5*i).setCellValue("ï¿½Lï¿½Æ¾ï¿½");				
 					/*sheet.getRow(index_y+4*j).getCell(2+5*i).setCellValue(0);
 					sheet.getRow(index_y+4*j).getCell(3+5*i).setCellValue(0);
 					sheet.getRow(index_y+4*j).getCell(4+5*i).setCellValue(0);
 					sheet.getRow(index_y+4*j).getCell(5+5*i).setCellValue(0);
 					sheet.getRow(index_y+4*j).getCell(6+5*i).setCellValue(0);*/
-					//sheet.getRow(8+4*j).getCell(6+5*i).setCellValue("µL¼Æ¾Ú");
+					//sheet.getRow(8+4*j).getCell(6+5*i).setCellValue("ï¿½Lï¿½Æ¾ï¿½");
 				}				
 				sheet.getRow(index_y+4*j).getCell(2+5*i).setCellStyle(cs_temp);
 				sheet.getRow(index_y+4*j).getCell(3+5*i).setCellStyle(cs_temp);
@@ -692,8 +696,8 @@ public class WebcashoutAction extends ActionSupport implements ServletResponseAw
 			
 		}//end for1
 		
-		/*************y¶b´å¼Ð=height_top,x=width****************/
-		//(5)¦X­p¼Æ¾Ú
+		/*************yï¿½bï¿½ï¿½ï¿½=height_top,x=width****************/
+		//(5)ï¿½Xï¿½pï¿½Æ¾ï¿½
 		index_y=height_top;
 		//if(factNo.equals("all")){
 			for(int i=0;i<list_col_buttom2.size()/list_fact.size();i++){
@@ -762,11 +766,11 @@ public class WebcashoutAction extends ActionSupport implements ServletResponseAw
 		ServletOutputStream os=response.getOutputStream();		
 		response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
 		String fileName=yymm+".xlsx";;
-		int msie=ServletActionContext.getRequest().getHeader("USER-AGENT").toLowerCase().indexOf("msie");//§PÂ_ÂsÄý¾¹ªºÃþ«¬,¤j©ó0«h¬°IEÂsÄý¾¹
+		int msie=ServletActionContext.getRequest().getHeader("USER-AGENT").toLowerCase().indexOf("msie");//ï¿½Pï¿½_ï¿½sï¿½ï¿½ï¿½ï¿½ï¿½ï¿½,ï¿½jï¿½ï¿½0ï¿½hï¿½ï¿½IEï¿½sï¿½ï¿½
 		if(msie>0){
-			fileName=java.net.URLEncoder.encode(fileName,"utf-8");//¸Ñ¨MIE¤¤¤å¤å¥ó¤£¯à¤U¸üªº°ÝÃD
+			fileName=java.net.URLEncoder.encode(fileName,"utf-8");//ï¿½Ñ¨MIEï¿½ï¿½ï¿½ï¿½ï¿½ó¤£¯ï¿½Uï¿½ï¿½ï¿½ï¿½D
 		}else{
-			fileName=new String(fileName.getBytes("utf-8"),"iso8859-1");//¸Ñ¨M«DIE¤¤¤å¦W¶Ã½X°ÝÃD
+			fileName=new String(fileName.getBytes("utf-8"),"iso8859-1");//ï¿½Ñ¨Mï¿½DIEï¿½ï¿½ï¿½ï¿½Wï¿½Ã½Xï¿½ï¿½ï¿½D
 		}
 		response.setHeader("Content-disposition","attachment;filename="+fileName);
 		book.write(os);
@@ -786,10 +790,10 @@ public class WebcashoutAction extends ActionSupport implements ServletResponseAw
 	}
 	
 	/**
-	 * ªì©l¤Æ³æ¤¸®æ   
+	 * ï¿½ï¿½lï¿½Æ³æ¤¸ï¿½ï¿½   
 	 * @param sheet
-	 * @param row_num(°ª)
-	 * @param col_num(¼e)
+	 * @param row_num(ï¿½ï¿½)
+	 * @param col_num(ï¿½e)
 	 */
 	public void init(XSSFSheet sheet,XSSFCellStyle cs,int row_num,int col_num){
 		for(int i=0;i<row_num;i++){

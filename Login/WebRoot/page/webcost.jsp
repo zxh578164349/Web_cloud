@@ -29,14 +29,14 @@
 </head>
 <script>
 	var jq=jQuery.noConflict();
-	function pages(page) {
 	var loadi;
 	jq(document).ajaxStart(function(){
 		loadi=layer.load(0);
 	});
-	jq(document).jaxStop(function(){
+	jq(document).ajaxStop(function(){
 		layer.close(loadi);
 	});
+	function pages(page) {	
 		jq.ajax({
 			type : "POST",
 			dataType : "Html",
@@ -53,14 +53,7 @@
 	}
 	function submis() {
 		var fact = document.getElementById("factNo");
-		var ym = document.getElementById("year");
-		var loadi;
-		jq(document).ajaxStart(function(){
-			loadi=layer.load(0);
-		});
-		jq(document).ajaxStop(function(){
-			layer.close(loadi);
-		});
+		var ym = document.getElementById("year");		
 		jq.ajax({
 			type : "POST",
 			dataType : "Html",

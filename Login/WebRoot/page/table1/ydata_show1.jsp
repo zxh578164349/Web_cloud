@@ -23,13 +23,13 @@
 
 <link rel="stylesheet" type="text/css" href="css/mystyle.css" />
 <script type="text/javascript">
-	$(function() {
+<%--$(function() {
 		var j = jQuery.noConflict();
 		var demo = j("#form").Validform({
 			tiptype : 1,
 		//showAllError : true,
 		});
-	});
+	});--%>
 	
 	 var defaultColor="#97CBFF";
 	 var clickColor="#CCFFFF";

@@ -187,9 +187,9 @@ table.gridtable td {
 	</table>
 	 <s:if test='kyz.filesYn=="1"'>
 	  <hr/>
-	  <span style="color:blue;">附檔</span>
+	  <span style="color:blue;">附檔:</span><br/>
 	  <s:iterator value="#session.list_filesexp">
-	     <a href="/upload/<s:property value='billno'/>/<s:property value='filename'/>" target="_blank"><s:property value="%{toUrl(filename)}"/></a>&nbsp;
+	     <a href="/upload/<s:property value='billno'/>/<s:property value='%{toUrl2(filename)}'/>" target="_blank"><s:property value="%{toUrl(filename)}"/></a>&nbsp;
 	  </s:iterator>	  
 	</s:if> 
 	

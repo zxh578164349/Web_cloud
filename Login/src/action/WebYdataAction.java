@@ -452,7 +452,9 @@ public class WebYdataAction extends ActionSupport implements
 	}
 
 	public String findPageBean() {
-		ActionContext.getContext().getApplication().clear();
+		//ActionContext.getContext().getApplication().clear();
+		ActionContext.getContext().getSession().remove("public_factno");
+		ActionContext.getContext().getSession().remove("public_yymm");
 		factNo = (String) ActionContext.getContext().getSession().get("factNo");
 		bean = dataSer.findPageBean(25, page, factNo, yymm);
 
@@ -461,13 +463,15 @@ public class WebYdataAction extends ActionSupport implements
 	}
 
 	public String findPageBean2() {
-		ActionContext.getContext().getApplication().clear();
+		//ActionContext.getContext().getApplication().clear();
+		ActionContext.getContext().getSession().remove("public_factno");
+		ActionContext.getContext().getSession().remove("public_yymm");
 		if (factNo != null && !factNo.equals("") && !factNo.equals("tw")) {
-			ActionContext.getContext().getApplication()
-					.put("ydata_factNo", factNo);
+			ActionContext.getContext().getSession().put("public_factno", factNo);
+					
 		}
 		if (yymm != null && !yymm.equals("")) {
-			ActionContext.getContext().getApplication().put("ydata_yymm", yymm);
+			ActionContext.getContext().getSession().put("public_yymm", yymm);
 		}
 
 		bean = dataSer.findPageBean(25, page, factNo, yymm);
@@ -476,13 +480,10 @@ public class WebYdataAction extends ActionSupport implements
 	}
 
 	public String findPageBean3() {
-		factNo = (String) ActionContext.getContext().getApplication()
-				.get("ydata_factNo");
-		yymm = (String) ActionContext.getContext().getApplication()
-				.get("ydata_yymm");
+		factNo = (String) ActionContext.getContext().getSession().get("public_factno");				
+		yymm = (String) ActionContext.getContext().getSession().get("public_yymm");				
 		if (factNo == null || factNo.equals("") || factNo.equals("tw")) {
-			factNo = (String) ActionContext.getContext().getSession()
-					.get("factNo");
+			factNo = (String) ActionContext.getContext().getSession().get("factNo");					
 		}
 		bean = dataSer.findPageBean(25, page, factNo, yymm);
 

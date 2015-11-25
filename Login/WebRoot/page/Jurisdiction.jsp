@@ -39,7 +39,7 @@
 </style>
 <script type="text/javascript">
 	window.onload = function() {
-		var i1 = document.getElementById("kws");
+		/*var i1 = document.getElementById("kws");
 		if (i1 != null) {
 			document.getElementById("kws1").innerHTML = "";
 		} else {
@@ -149,7 +149,7 @@
 		} else {
 			document.getElementById("cpkc1").innerHTML = '<input value="KPI數據,成品庫存,store_getList" name="checkbox" type="checkbox" />成品庫存';
 		}
-
+       */
 		var i17 = document.getElementById("glyh");
 		if (i17 != null) {
 			document.getElementById("glyh1").innerHTML = "";
@@ -157,12 +157,12 @@
 			document.getElementById("glyh1").innerHTML = '<input value="用戶管理,管理用戶,usergetuser"  name="checkbox" type="checkbox" />管理用戶';
 		}
 
-		/* var i18 = document.getElementById("clyg");
+		/*var i18 = document.getElementById("clyg");
 		if (i18 != null) {
 			document.getElementById("clyg1").innerHTML = "";
 		} else {
 			document.getElementById("clyg1").innerHTML = '<input value="資料輸入,產量預估,ypre_findPageBean" name="checkbox" type="checkbox" />產量預估';
-		} */
+		}*/ 
 
 		var i19 = document.getElementById("clzl");
 		if (i19 != null) {
@@ -213,12 +213,12 @@
 		}
 		
 		
-		/* var i25 = document.getElementById("zlscchqk");
+		 /*var i25 = document.getElementById("zlscchqk");
 		if (i25 != null) {
 			document.getElementById("zlscchqk1").innerHTML = "";
 		} else {
 			document.getElementById("zlscchqk1").innerHTML = '<input name="checkbox" value="資料輸入,生產出貨,webmix1_findPageBean" type="checkbox" />生產出貨';																								
-		} */
+		}*/ 
 		
 		var i26 = document.getElementById("renshugonsh");
 		if (i26 != null) {
@@ -495,7 +495,7 @@ function getSub(){
 				<td class="td1">KPI數據:</td>
 				<td>
 					<table>					
-						<tr>
+						<%--<tr>
 							<td><s:iterator value="#session.user.webJurisdictions">
 									<s:iterator value="webSubmenus">
 										<s:if test="submenuname=='孔位數回轉數'">
@@ -646,8 +646,9 @@ function getSub(){
 								</s:iterator> <span id="lxjhy1"></span>
 							</td>
 						</tr>
+						--%>
 						<tr>
-							<td><s:iterator value="#session.user.webJurisdictions">
+							<%--<td><s:iterator value="#session.user.webJurisdictions">
 									<s:iterator value="webSubmenus">
 										<s:if test="submenuname=='成品庫存'">
 											<span id="cpkc"><input name="checkbox"
@@ -657,7 +658,7 @@ function getSub(){
 									</s:iterator>
 								</s:iterator><span id="cpkc1"></span>
 							</td>						
-							<td>
+							--%><td>
 							  <s:iterator value="#session.user.webJurisdictions">
 									<s:iterator value="webSubmenus">
 										<s:if test="submenuname=='函文申請'">

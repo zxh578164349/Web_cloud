@@ -173,27 +173,34 @@ public class WebFixedAction extends ActionSupport implements
 	}
 
 	public String findPageBean() {
-		ActionContext.getContext().getApplication().clear();
+		//ActionContext.getContext().getApplication().clear();
+		ActionContext.getContext().getSession().remove("public_factNo");
+		ActionContext.getContext().getSession().remove("public_yymm");
+		ActionContext.getContext().getSession().remove("public_yymms");
+		ActionContext.getContext().getSession().remove("public_lostmk");
 		factNo = (String) ActionContext.getContext().getSession().get("factNo");
 		bean = fixSer.findPageBean(25, page, factNo, yymm,yymm_s,lostmk);
 		return "beanList";
 	}
 
 	public String findPageBean2() {
-		ActionContext.getContext().getApplication().clear();
+		//ActionContext.getContext().getApplication().clear();
+		ActionContext.getContext().getSession().remove("public_factNo");
+		ActionContext.getContext().getSession().remove("public_yymm");
+		ActionContext.getContext().getSession().remove("public_yymms");
+		ActionContext.getContext().getSession().remove("public_lostmk");
 		if (factNo != null && !factNo.equals("") && !factNo.equals("tw")) {
-			ActionContext.getContext().getApplication()
-					.put("fix_factNo", factNo);
+			ActionContext.getContext().getSession().put("public_factNo", factNo);					
 		}
 
 		if (yymm != null && !yymm.equals("")) {
-			ActionContext.getContext().getApplication().put("fix_yymm", yymm);
+			ActionContext.getContext().getSession().put("public_yymm", yymm);
 		}
 		if(yymm_s!=null&&!yymm_s.equals("")){
-			ActionContext.getContext().getApplication().put("fix_yymms", yymm_s);
+			ActionContext.getContext().getSession().put("public_yymms", yymm_s);
 		}
 		if(lostmk!=null&&!lostmk.equals("")){
-			ActionContext.getContext().getApplication().put("fix_lostmk", lostmk);
+			ActionContext.getContext().getSession().put("public_lostmk", lostmk);
 		}
 
 		bean = fixSer.findPageBean(25, page, factNo, yymm,yymm_s,lostmk);
@@ -201,16 +208,13 @@ public class WebFixedAction extends ActionSupport implements
 	}
 
 	public String findPageBean3() {
-		factNo = (String) ActionContext.getContext().getApplication()
-				.get("fix_factNo");
-		yymm = (String) ActionContext.getContext().getApplication()
-				.get("fix_yymm");
-		yymm_s=(String)ActionContext.getContext().getApplication().get("fix_yymms");
-		lostmk=(String)ActionContext.getContext().getApplication().get("fix_lostmk");
+		factNo = (String) ActionContext.getContext().getSession().get("public_factNo");				
+		yymm = (String) ActionContext.getContext().getSession().get("public_yymm");				
+		yymm_s=(String)ActionContext.getContext().getSession().get("public_yymms");
+		lostmk=(String)ActionContext.getContext().getSession().get("public_lostmk");
 
 		if (factNo == null || factNo.equals("") || factNo.equals("tw")) {
-			factNo = (String) ActionContext.getContext().getSession()
-					.get("factNo");
+			factNo = (String) ActionContext.getContext().getSession().get("factNo");					
 		}
 		bean = fixSer.findPageBean(25, page, factNo, yymm,yymm_s,lostmk);
 

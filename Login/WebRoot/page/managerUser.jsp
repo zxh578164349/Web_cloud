@@ -34,25 +34,30 @@
 </head>
 <script type="text/javascript">
 	var jq=jQuery.noConflict();
+    var loadi;
+    jq(document).ajaxStart(function(){
+    	loadi=layer.load("正在處理,請稍後....");
+    });
+    jq(document).ajaxStop(function(){
+    	layer.close(loadi);
+    });
 	function pages(page) {
-	    var loadi=layer.load(0);
 		jq.ajax({
 			type : "POST",
 			dataType : "Html",
 			url : "userfindPageBean3",
 			data : "page=" + page,
 			success : function(msg) {
-			    layer.close(loadi);
 				jq("#bodyid").html(msg);				
 			},
 			error : function(xhr) {
-				alert(xhr.responseText);
+				//alert(xhr.responseText);
+				jq("#bodyid").html(xhr.responseText);
 			}
 		});
 	}
 
-	function submis() {
-	    var loadi=layer.load(0);		
+	function submis() {		
 		var username = document.getElementById("conditions");
 		var factno=document.getElementById("factNo")
 		jq.ajax({
@@ -61,11 +66,11 @@
 			url : "userfindPageBean2",
 			data : "conditions=" + username.value+"&factNo="+factno.value,
 			success : function(msg) {
-			    layer.close(loadi);
 				jq("#bodyid").html(msg);
 			},
 			error : function(xhr) {
-				alert(xhr.responseText);
+				//alert(xhr.responseText);
+				jq("#bodyid").html(xhr.responseText);
 			}
 		});
 	}
@@ -95,14 +100,7 @@ function move(obj){
     var flag=confirm("確定要刪除嗎?");
     if(flag==true){
        /* window.location.href="userdelete?id="+id;
-       var loadi=layer.load("正在處理,請稍後...."); */
-       var loadi;
-       jq(document).ajaxStart(function(){
-           loadi=layer.load("正在處理,請稍後....");
-       });
-       jq(document).ajaxStop(function(){
-           layer.close(loadi);
-       });
+       var loadi=layer.load("正在處理,請稍後...."); */    
        jq.ajax({
           type:"POST",
           dataType:"html",

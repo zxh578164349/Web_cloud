@@ -37,32 +37,29 @@
 </head>
 <script>
 	var jq=jQuery.noConflict();
-	function pages(page) {
-	    var loadi=layer.load(0);		
+	var loadi;
+	jq(document).ajaxStart(function(){
+		loadi=layer.load(0);
+	});
+	jq(document).ajaxStop(function(){
+		layer.close(loadi);
+	});
+	function pages(page) {	    		
 		jq.ajax({
 			type : "POST",
 			dataType : "Html",
 			url : "fix_findPageBean3",
 			data : "page=" + page,
 			success : function(msg) {
-			    layer.close(loadi);
 				jq("#bodyid").html(msg);
 			},
 			error : function(xhr) {
-				alert(xhr.responseText);
+				//alert(xhr.responseText);
+				jq("bodyid").html(xhr.responseText);
 			}
 		});
 	}
-	function submis() {
-		/* jQuery(function(jq) {
-			jq(document).ui_loading({
-				overlay : true,
-				opacity : 0.2,
-				supportIframe : true,
-				message : '請稍後!正在查詢中..'
-			});
-		}); */
-		var loadi=layer.load(0);
+	function submis() {		
 		var fact = document.getElementById("factNo");
 		var ym = document.getElementById("year");
 		var ym_s=document.getElementById("year_s");
@@ -73,11 +70,11 @@
 			url : "fix_findPageBean2",
 			data : "factNo=" + fact.value + "&yymm=" + ym.value+"&yymm_s="+ym_s.value+"&lostmk="+lostmk.value,
 			success : function(msg) {
-			    layer.close(loadi);
 				jq("#bodyid").html(msg);
 			},
 			error : function(xhr) {
-				alert(xhr.responseText);
+				//alert(xhr.responseText);
+				jq("#bodyid").html(xhr.responseText);
 			}
 		});
 	}

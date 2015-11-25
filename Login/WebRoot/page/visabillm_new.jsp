@@ -37,33 +37,30 @@
 
 <script>
    var jq=jQuery.noConflict();
+   var loadi;
+   jq(document).ajaxStart(function(){
+	   loadi=layer.load(0);
+   });
+   jq(document).ajaxStop(function(){
+	   layer.close(loadi);
+   });
 	function pages(page) {
-	    var ly=layer.load(0);
 		jq.ajax({
 			type : "POST",
 			dataType : "Html",
 			url : "vbm_findPageBean3",
 			data : "page=" + page,
 			success : function(msg) {
-			     layer.close(ly);
 				jq("#bodyid").html(msg);
 			},
 			error : function(xhr) {
-				alert(xhr.responseText);
+				//alert(xhr.responseText);
+				jq("#bodyid").html(responseText);
 			}
 		});
 	}
 	
-		function submis() {
-		/* jQuery(function(jq) {
-			 jq(document).ui_loading({
-				overlay : true,
-				opacity : 0.2,
-				supportIframe : true,
-				message : '請稍後!正在查詢中..'
-			});			
-		}); */
-		var loadi=layer.load(0);
+		function submis() {		
 		var fact = document.getElementById("factNo");
 		var billno=document.getElementById("billNo");
 		var visaMks=document.getElementsByName("visaMk");
@@ -83,12 +80,12 @@
 			dataType : "Html",
 			url : "vbm_findPageBean2",
 			data : "factNo=" + fact.value +"& billNo="+billno.value+"& visaMk="+visaMk.value+"& visaSort="+visaSort.value+"& yymmdd="+yymmdd.value+"& yymmdd2="+yymmdd2.value,
-			 success : function(msg) {
-			    layer.close(loadi);			    
+			 success : function(msg) {			    
 				jq("#bodyid").html(msg);
 			},
 			error : function(xhr) {
-				alert(xhr.responseText);
+				//alert(xhr.responseText);
+				jq("#bodyid").html(xhr.responseText);
 			} 			
 		}); 
 		//jq.post("vbm_findPageBean2",{"factNo":fact.value,"billNo":billno.value,"visaMk":visaMk.value},function(data){jq("#bodyid").html(data)});

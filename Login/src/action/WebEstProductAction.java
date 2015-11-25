@@ -176,14 +176,14 @@ public class WebEstProductAction extends ActionSupport implements
 				result = "add";
 			}
 
-			if (result == null) { // §PÂ_ªð¦^µ²ªG
+			if (result == null) { // ï¿½Pï¿½_ï¿½ï¿½^ï¿½ï¿½ï¿½G
 				response.setContentType("text/html;charset=utf-8");
 				String temp1 = pro.getId().getFactNo();
 				String temp2 = pro.getId().getFactCode();
 				String temp3 = format.format(pro.getId().getYymm());
 				String temp4=pro.getId().getType();
 				response.getWriter()
-						.print("<script>alert('¼Æ¾Ú®w¤w¦s¦b("
+						.print("<script>alert('ï¿½Æ¾Ú®wï¿½wï¿½sï¿½b("
 								+ temp1
 								+ " "
 								+ temp2
@@ -209,7 +209,9 @@ public class WebEstProductAction extends ActionSupport implements
 	}
 
 	public String findPageBean() {
-		ActionContext.getContext().getApplication().clear();
+		//ActionContext.getContext().getApplication().clear();
+		ActionContext.getContext().getSession().remove("public_factno");
+		ActionContext.getContext().getSession().remove("public_yymm");
 		factNo = (String) ActionContext.getContext().getSession().get("factNo");
 		bean = estProSer.findPageBean(25, page, factNo, yymm);
 
@@ -218,14 +220,14 @@ public class WebEstProductAction extends ActionSupport implements
 	}
 
 	public String findPageBean2() {
-		ActionContext.getContext().getApplication().clear();
+		//ActionContext.getContext().getApplication().clear();
+		ActionContext.getContext().getSession().remove("public_factno");
+		ActionContext.getContext().getSession().remove("public_yymm");
 		if (factNo != null && !factNo.equals("") && !factNo.equals("tw")) {
-			ActionContext.getContext().getApplication()
-					.put("estpro_factNo", factNo);
+			ActionContext.getContext().getSession().put("public_factno", factNo);					
 		}
 		if (yymm != null && !yymm.equals("")) {
-			ActionContext.getContext().getApplication()
-					.put("estpro_yymm", yymm);
+			ActionContext.getContext().getSession().put("public_yymm", yymm);					
 		}
 
 		bean = estProSer.findPageBean(25, page, factNo, yymm);
@@ -234,13 +236,12 @@ public class WebEstProductAction extends ActionSupport implements
 	}
 
 	public String findPageBean3() {
-		factNo = (String) ActionContext.getContext().getApplication()
-				.get("estpro_factNo");
-		yymm = (String) ActionContext.getContext().getApplication()
-				.get("estpro_yymm");
+		factNo = (String) ActionContext.getContext().getSession().get("public_factno");				
+		yymm = (String) ActionContext.getContext().getSession().get("public_yymm");
+				
 		if (factNo == null || factNo.equals("") || factNo.equals("tw")) {
-			factNo = (String) ActionContext.getContext().getSession()
-					.get("factNo");
+			factNo = (String) ActionContext.getContext().getSession().get("factNo");
+					
 		}
 		bean = estProSer.findPageBean(25, page, factNo, yymm);
 
@@ -251,12 +252,10 @@ public class WebEstProductAction extends ActionSupport implements
 	public String findPageBean2_print() {
 		ActionContext.getContext().getApplication().clear();
 		if (factNo != null && !factNo.equals("") && !factNo.equals("tw")) {
-			ActionContext.getContext().getApplication()
-					.put("print_estpro_factNo", factNo);
+			ActionContext.getContext().getApplication().put("print_estpro_factNo", factNo);					
 
 		} else {
-			factNo = (String) ActionContext.getContext().getSession()
-					.get("factNo");
+			factNo = (String) ActionContext.getContext().getSession().get("factNo");					
 		}
 		if (yymm != null && !yymm.equals("")) {
 			ActionContext.getContext().getApplication()
@@ -326,7 +325,7 @@ public class WebEstProductAction extends ActionSupport implements
 				
 			}
 		}//end for
-		List factcodelist=webFactSer.findAllFactCode_show();//©Ò¦³¼t§Oª¬ºA
+		List factcodelist=webFactSer.findAllFactCode_show();//ï¿½Ò¦ï¿½ï¿½tï¿½Oï¿½ï¿½ï¿½A
 		List<Webestproduct>sum_list_zd=new ArrayList<Webestproduct>();
 		List<Webestproduct>sum_list_tz=new ArrayList<Webestproduct>();
 		for(int j=0;j<factcodelist.size();j++){//start for

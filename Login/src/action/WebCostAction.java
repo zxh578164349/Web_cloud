@@ -159,13 +159,13 @@ public class WebCostAction extends ActionSupport implements
 				result = "add";
 			}
 
-			if (result == null) { // §PÂ_ªð¦^µ²ªG
+			if (result == null) { // ï¿½Pï¿½_ï¿½ï¿½^ï¿½ï¿½ï¿½G
 				respone.setContentType("text/html;charset=utf-8");
 				String temp1 = cost.getId().getFactNo();
 				String temp2 = cost.getId().getFactCode();
 				String temp3 = format.format(cost.getId().getYymm());
 				respone.getWriter()
-						.print("<script>alert('¼Æ¾Ú®w¤w¦s¦b("
+						.print("<script>alert('ï¿½Æ¾Ú®wï¿½wï¿½sï¿½b("
 								+ temp1
 								+ " "
 								+ temp2
@@ -189,7 +189,9 @@ public class WebCostAction extends ActionSupport implements
 	}
 
 	public String findPageBean() {
-		ActionContext.getContext().getApplication().clear();
+		//ActionContext.getContext().getApplication().clear();
+		ActionContext.getContext().getSession().remove("pubic_factno");
+		ActionContext.getContext().getSession().remove("pubic_yymm");
 		factNo = (String) ActionContext.getContext().getSession().get("factNo");
 		bean = costSer.findPageBean(25, page, factNo, yymm);
 
@@ -200,11 +202,10 @@ public class WebCostAction extends ActionSupport implements
 	public String findPageBean2() {
 		ActionContext.getContext().getApplication().clear();
 		if (factNo != null && !factNo.equals("") && !factNo.equals("tw")) {
-			ActionContext.getContext().getApplication()
-					.put("cost_factNo", factNo);
+			ActionContext.getContext().getSession().put("pubic_factno", factNo);					
 		}
 		if (yymm != null && !yymm.equals("")) {
-			ActionContext.getContext().getApplication().put("cost_yymm", yymm);
+			ActionContext.getContext().getSession().put("pubic_yymm", yymm);
 		}
 
 		bean = costSer.findPageBean(25, page, factNo, yymm);
@@ -213,13 +214,11 @@ public class WebCostAction extends ActionSupport implements
 	}
 
 	public String findPageBean3() {
-		factNo = (String) ActionContext.getContext().getApplication()
-				.get("cost_factNo");
-		yymm = (String) ActionContext.getContext().getApplication()
-				.get("cost_yymm");
+		factNo = (String) ActionContext.getContext().getSession().get("pubic_factno");				
+		yymm = (String) ActionContext.getContext().getSession().get("pubic_yymm");
+				
 		if (factNo == null || factNo.equals("") || factNo.equals("tw")) {
-			factNo = (String) ActionContext.getContext().getSession()
-					.get("factNo");
+			factNo = (String) ActionContext.getContext().getSession().get("factNo");					
 		}
 		bean = costSer.findPageBean(25, page, factNo, yymm);
 

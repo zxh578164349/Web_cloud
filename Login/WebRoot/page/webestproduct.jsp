@@ -34,8 +34,15 @@
 </head>
 <script>
 	var jq=jQuery.noConflict();
-	function pages(page) {
 	var loadi;
+	jq(document).ajaxStart(function(){
+		loadi=layer.load(0);
+	});
+	jq(document).ajaxStop(function(){
+		layer.close(loadi);
+	});
+	function pages(page) {
+	
 		jq.ajax({
 			type : "POST",
 			dataType : "Html",
@@ -45,26 +52,27 @@
 				jq("#bodyid").html(msg);
 			},
 			error : function(xhr) {
-				alert(xhr.responseText);
+				//alert(xhr.responseText);
+				jq("#bodyid").html(xhr.responseText);
 			}
 		});
 	}
 	function submis() {
-		var loadi=layer.load(0);
 		var fact = document.getElementById("factNo");
 		var ym = document.getElementById("year");
+		
 		jq.ajax({
 			type : "POST",
 			dataType : "Html",
 			url : "webestpro_findPageBean2",
 			data : "factNo=" + fact.value + "&yymm=" + ym.value,
 			success : function(msg) {
-			    layer.close(loadi);
 				jq("#bodyid").html(msg);
 				
 			},
 			error : function(xhr) {
-				alert(xhr.responseText);
+				//alert(xhr.responseText);
+				jq("#bodyid").html(xhr.responseText);
 			}
 		});
 	}

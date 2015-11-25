@@ -40,6 +40,13 @@
 
 <script>
 	var jq=jQuery.noConflict();
+	var loadi;
+	jq(document).ajaxStart(function(){
+		loadi=layer.load(0);
+	});
+	jq(document).ajaxStop(function(){
+		layer.close(loadi);
+	});
 	function pages(page) {	
 		jq.ajax({
 			type : "POST",
@@ -50,7 +57,8 @@
 				jq("#bodyid").html(msg);
 			},
 			error : function(xhr) {
-				alert(xhr.responseText);
+				//alert(xhr.responseText);
+				jq("#bodyid").html(xhr.responseText);
 			}
 		});
 	}
@@ -60,13 +68,7 @@
 		var billno=document.getElementById("billNo");
 		var yymmdd=document.getElementById("yymmdd");
 		var yymmdd2=document.getElementById("yymmdd2");
-		var loadi;
-		jq(document).ajaxStart(function(){
-			loadi=layer.load(0);
-		});
-		jq(document).ajaxStop(function(){
-			layer.close(loadi);
-		});
+		
 		jq.ajax({
 			type : "POST",
 			dataType : "Html",
@@ -76,21 +78,15 @@
 				jq("#bodyid").html(msg);
 			},
 			error : function(xhr) {
-				alert(xhr.responseText);
+				//alert(xhr.responseText);
+				jq("#bodyid").html(xhr.responseText);
 			}
 		});
 	}
 	//你确定要删除吗？
 	function isDelete(mid) {
 		jConfirm('你确定这么做吗?', '确认对话框', function(r) {
-			if (r == true) {//if
-			   var loadi;
-			    jq(document).ajaxStart(function(){
-			    	loadi=layer.load(0);
-			    });
-			    jq(document).ajaxStop(function(){
-			    	layer.close(loadi);
-			    });
+			if (r == true) {//if			   
 				jq.ajax({
 				  type:"POST",
 				  dataType:"Html", 

@@ -240,7 +240,11 @@ public class WebPersonnumAction extends ActionSupport implements
 	}
 
 	public String findPageBean() {
-		ActionContext.getContext().getApplication().clear();
+		//ActionContext.getContext().getApplication().clear();
+		ActionContext.getContext().getSession().remove("public_factNo");
+		ActionContext.getContext().getSession().remove("public_yymm");
+		ActionContext.getContext().getSession().remove("public_begin");
+		ActionContext.getContext().getSession().remove("public_end");
 		factNo = (String) ActionContext.getContext().getSession().get("factNo");
 		bean = personNumSer.findPageBean(25, page, factNo, null,beginDay,endDay);
 
@@ -249,20 +253,24 @@ public class WebPersonnumAction extends ActionSupport implements
 	}
 
 	public String findPageBean2() {
-		ActionContext.getContext().getApplication().clear();
+		//ActionContext.getContext().getApplication().clear();
+		ActionContext.getContext().getSession().remove("public_factNo");
+		ActionContext.getContext().getSession().remove("public_yymm");
+		ActionContext.getContext().getSession().remove("public_begin");
+		ActionContext.getContext().getSession().remove("public_end");
 		if (factNo != null && !factNo.equals("") && !factNo.equals("tw")) {
-			ActionContext.getContext().getApplication()
-					.put("personnum_factNo", factNo);
+			ActionContext.getContext().getSession().put("public_factNo", factNo);
+					
 		}
 		if (yymm != null && !yymm.equals("")) {
-			ActionContext.getContext().getApplication()
-					.put("personnum_yymm", yymm);
+			ActionContext.getContext().getSession().put("public_yymm", yymm);
+					
 		}
 		if(beginDay!=null&&!beginDay.equals("")){
-			ActionContext.getContext().getApplication().put("personnum_begin", beginDay);
+			ActionContext.getContext().getSession().put("public_begin", beginDay);
 		}
 		if(endDay!=null&&!endDay.equals("")){
-			ActionContext.getContext().getApplication().put("personnum_end", endDay);
+			ActionContext.getContext().getSession().put("public_end", endDay);
 		}
 
 		bean = personNumSer.findPageBean(25, page, factNo, null,beginDay,endDay);
@@ -271,15 +279,15 @@ public class WebPersonnumAction extends ActionSupport implements
 	}
 
 	public String findPageBean3() {
-		factNo = (String) ActionContext.getContext().getApplication()
-				.get("personnum_factNo");
-		yymm = (String) ActionContext.getContext().getApplication()
-				.get("personnum_yymm");
-		beginDay=(String)ActionContext.getContext().getApplication().get("personnum_begin");
-		endDay=(String)ActionContext.getContext().getApplication().get("personnum_end");
+		factNo = (String) ActionContext.getContext().getSession().get("public_factNo");
+				
+		yymm = (String) ActionContext.getContext().getSession().get("public_yymm");
+				
+		beginDay=(String)ActionContext.getContext().getSession().get("public_begin");
+		endDay=(String)ActionContext.getContext().getSession().get("public_end");
 		if (factNo == null || factNo.equals("") || factNo.equals("tw")) {
-			factNo = (String) ActionContext.getContext().getSession()
-					.get("factNo");
+			factNo = (String) ActionContext.getContext().getSession().get("factNo");
+					
 		}
 		bean = personNumSer.findPageBean(25, page, factNo, null,beginDay,endDay);
 

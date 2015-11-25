@@ -634,7 +634,7 @@
            <result name="beanList" >page/managerUserEmail_A.jsp</result>
            <result name="beanList1">page/table1/managerUserEmail1_A.jsp</result>
            <result name="add" type="redirectAction">webuseremaila_findPageBean</result> 
-           <result name="delete" type="redirectAction">webuseremaila_findPageBean</result>
+           <result name="delete" type="redirectAction">webuseremaila_findPageBean3</result>
            <result name="findById">/saveAndUpdate/webuseremailaSaveOrUpdate.jsp</result> 
         </action>
 	</package>

@@ -170,14 +170,14 @@ public class WebMix2Action extends ActionSupport implements
 	}
 
 	/**
-	 * ²K¥[¼Æ¾Ú
+	 * ï¿½Kï¿½[ï¿½Æ¾ï¿½
 	 * 
 	 * @return
 	 * @throws ParseException
 	 * @throws IOException
 	 */
 	public String addMix2() throws ParseException, IOException {
-		SimpleDateFormat format = new SimpleDateFormat("yyyyMM");// ¥Í¦¨¦~¤ë®æ¦¡
+		SimpleDateFormat format = new SimpleDateFormat("yyyyMM");// ï¿½Í¦ï¿½ï¿½~ï¿½ï¿½æ¦¡
 		Date d = null;
 		StringBuffer ym = new StringBuffer();
 		ym.append(year);
@@ -193,7 +193,7 @@ public class WebMix2Action extends ActionSupport implements
 			String temp2 = mix2.getId().getFactCode();
 			String temp3 = format.format(mix2.getId().getYymm());
 			response.getWriter()
-					.print("<script>alert('¼Æ¾Ú®w¤w¦s¦b("
+					.print("<script>alert('ï¿½Æ¾Ú®wï¿½wï¿½sï¿½b("
 							+ temp1
 							+ " "
 							+ temp2
@@ -209,7 +209,7 @@ public class WebMix2Action extends ActionSupport implements
 	}
 
 	/**
-	 * ¨ú±o¼Æ¾Ú
+	 * ï¿½ï¿½oï¿½Æ¾ï¿½
 	 * 
 	 * @return
 	 */
@@ -246,7 +246,7 @@ public class WebMix2Action extends ActionSupport implements
 	}
 
 	/**
-	 * ­¶­±Åã¥Ü¼Æ¾Ú
+	 * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü¼Æ¾ï¿½
 	 * 
 	 * @return
 	 */
@@ -260,7 +260,7 @@ public class WebMix2Action extends ActionSupport implements
 	}*/
 
 	/**
-	 * ­º­¶Åã¥Ü¼Æ¾Ú
+	 * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü¼Æ¾ï¿½
 	 */
 	public String getList1() {
 		list();
@@ -268,7 +268,7 @@ public class WebMix2Action extends ActionSupport implements
 	}
 
 	/**
-	 * ®Ú¾ÚID¬d§ä
+	 * ï¿½Ú¾ï¿½IDï¿½dï¿½ï¿½
 	 */
 	public String findMix2ById() {
 		List factCodes = webFactSer.findFactCodeByFactNo(id.getFactNo());
@@ -289,25 +289,29 @@ public class WebMix2Action extends ActionSupport implements
 		return temp;
 	}
 	public String getList(){
-		ActionContext.getContext().getApplication().clear();
+		//ActionContext.getContext().getApplication().clear();
+		ActionContext.getContext().getSession().remove("public_factno");
+		ActionContext.getContext().getSession().remove("public_yymm");
 		factNo=(String)ActionContext.getContext().getSession().get("factNo");
 		bean=mix2Service.findPageBean(25, page, factNo, yymm);
 		return "showList";
 	}
 	public String getList2(){
-		ActionContext.getContext().getApplication().clear();
+		//ActionContext.getContext().getApplication().clear();
+		ActionContext.getContext().getSession().remove("public_factno");
+		ActionContext.getContext().getSession().remove("public_yymm");
 		if(factNo!=null&&!factNo.equals("")){
-			ActionContext.getContext().getApplication().put("webmix2-factno", factNo);
+			ActionContext.getContext().getSession().put("public_factno", factNo);
 		}
 		if(yymm!=null&&!yymm.equals("")){
-			ActionContext.getContext().getApplication().put("webmix2-yymm", yymm);
+			ActionContext.getContext().getSession().put("public_yymm", yymm);
 		}
 		bean=mix2Service.findPageBean(25, page, factNo, yymm);
 		return "showList1";
 	}
 	public String getList3(){
-		factNo=(String)ActionContext.getContext().getApplication().get("webmix2-factno");
-		yymm=(String)ActionContext.getContext().getApplication().get("webmix2-yymm");
+		factNo=(String)ActionContext.getContext().getSession().get("public_factno");
+		yymm=(String)ActionContext.getContext().getSession().get("public_yymm");
 		if(factNo==null||factNo.equals("")){
 			factNo=(String)ActionContext.getContext().getSession().get("factNo");
 		}

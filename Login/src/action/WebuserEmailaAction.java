@@ -117,32 +117,38 @@ public class WebuserEmailaAction extends ActionSupport implements ServletRespons
 		
 	}
 	public String findPageBean(){
-		ActionContext.getContext().getApplication().clear();
+		//ActionContext.getContext().getApplication().clear();
+		ActionContext.getContext().getSession().remove("public_factno");
+		ActionContext.getContext().getSession().remove("public_email");
+		ActionContext.getContext().getSession().remove("public_visaSort");
 		factNo=(String)ActionContext.getContext().getSession().get("factNo");
 		bean=webuseremailaSer.findPageBean(25, page, factNo, email, visaSort);
 		this.getTypeName(bean);
 		return "beanList";
 	}
 	public String findPageBean2(){
-		ActionContext.getContext().getApplication().clear();
+		//ActionContext.getContext().getApplication().clear();
+		ActionContext.getContext().getSession().remove("public_factno");
+		ActionContext.getContext().getSession().remove("public_email");
+		ActionContext.getContext().getSession().remove("public_visaSort");
 		bean=webuseremailaSer.findPageBean(25, page, factNo, email, visaSort);
 		if(factNo!=null&&!factNo.equals("")){
-			ActionContext.getContext().getApplication().put("webemaila_factno", factNo);
+			ActionContext.getContext().getSession().put("public_factno", factNo);
 		}
 		if(email!=null&&!email.equals("")){
-			ActionContext.getContext().getApplication().put("webemaila_email", email);
+			ActionContext.getContext().getSession().put("public_email", email);
 		}
 		if(visaSort!=null&&!visaSort.equals("")){
-			ActionContext.getContext().getApplication().put("webemaila_visaSort", visaSort);
+			ActionContext.getContext().getSession().put("public_visaSort", visaSort);
 		}
 		this.getTypeName(bean);
 		return "beanList1";
 	}
 	
 	public String findPageBean3(){
-		factNo=(String)ActionContext.getContext().getApplication().get("webemaila_factno");
-		email=(String)ActionContext.getContext().getApplication().get("webemaila_email");
-		visaSort=(String)ActionContext.getContext().getApplication().get("webemaila_visaSort");
+		factNo=(String)ActionContext.getContext().getSession().get("public_factno");
+		email=(String)ActionContext.getContext().getSession().get("public_email");
+		visaSort=(String)ActionContext.getContext().getSession().get("public_visaSort");
 		if(factNo==null||factNo.equals("")){
 			factNo=(String)ActionContext.getContext().getSession().get("factNo");
 		}
