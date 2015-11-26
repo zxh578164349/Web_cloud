@@ -41,6 +41,9 @@
 			<result name="delete" type="redirectAction">userfindPageBean3</result>
 			<result name="updateJurisdiction" type="redirectAction">userfindPageBean3_1</result>
 			<result name="add" type="redirectAction">userfindPageBean</result>
+			<result name="json_login" type="json">
+			    <param name="root">ajax_result</param>
+			</result>
 		</action>
 		<action name="show*" class="showAction" method="{1}">
 			<result name="titleSuccess">page/show.jsp</result>

@@ -48,9 +48,39 @@
 		if (factNO.value == 0 || names.value == "" || pwd.value == "") {
 			alert("請輸入完整的信息", '提示信息');
 		} else {
-		     //layer.load("正在登錄中.....");
-			document.getElementById("mydiv").style.display = "block";
-			document.getElementById("loginform").submit();
+			/*document.getElementById("mydiv").style.display = "block";
+			document.getElementById("loginform").submit();*/
+			$(document).ajaxStart(function(){
+				//document.getElementById("mydiv").style.display = "block";
+				$("#mydiv").show();
+			});
+			$(document).ajaxStop(function(){
+				//document.getElementById("mydiv").style.display = "none";
+				$("#mydiv").hide();
+			});
+			$.ajax({
+				type:"POST",
+				dataType:"json",
+				data:$("#loginform").serialize(),
+				url:"userlogin",
+				success:function(data){
+					 if(data=='0'){
+						 location.href="test.jsp"; 
+					  }
+					  if(data=='1'){
+						  alert("當前賬號已註銷!");
+					  }
+					  if(data=='2'){
+						  alert("廠別不正確!");
+					  }
+					  if(data=='3'){
+						  alert("賬號或密碼不正確!");
+					  }
+				},
+				error:function(err){
+					alert(err.responseText);
+				}
+			});
 		}
 	}
 
@@ -70,7 +100,7 @@
 		<div id="wrappertop"></div>
 
 		<div id="wrappermiddle">
-			<form action="userlogin" method="post" id="loginform">
+			<form  method="post" id="loginform">
 				<h2>Web系統登錄  <s:property value='userName'/></h2>
 				<div id="username_input">
 					<div id="username_inputleft"></div>

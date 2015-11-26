@@ -34,8 +34,8 @@
 #mydiv {
 	width: 100%;
 	height: 100%;
-	/* position: absolute; */
-	position:fixed;
+	/* position: fixed; */
+	position:absolute;
 	filter: alpha(opacity = 50);
 	background: transparent;
 	background: rgba(0, 0, 0, 0.5) none repeat scroll 0 0 !important;
@@ -43,8 +43,9 @@
 	-moz-opacity: 0.5;
 	-khtml-opacity: 0.5;
 	display: none;
-	left: 0px;
-	top: 0px;
+	left: 217px;
+	top: 106px;
+	
 	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#7F000000,
 		endColorstr=#7F000000 );
 	zoom: 1;
@@ -63,6 +64,9 @@
 </style>
 
 
+
+
+
 	<!-- 低于IE10就會覆蓋上面的#mydiv樣式，而使用以下的#mydiv樣式 --> 
 	<!--[if lt IE 10]>
 	<style type="text/css">   	 			
@@ -77,7 +81,7 @@
 	-moz-opacity: 0.5;
 	-khtml-opacity: 0.5;
 	display: none;
-	left: 0px;
+	left: 220px;
 	top:-100px expression(eval(document.body.scrollTop + 50));
 	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#7F000000,
 		endColorstr=#7F000000 );
@@ -88,33 +92,7 @@
 
 
 
-
-<body >
-	
- 	<TABLE style="BORDER-COLLAPSE:collapse" id="tab" cellSpacing=0
-		cellPadding=0 width=100% border=0>		
-		<TR>
-			<TD align=center width="100%" height=80 bgcolor="#292929">	<!--  #48525E-->		
-				<div id="top">
-					<h1 style="color:white;">東莞加元鞋材制品有限公司</h1>						    							
-						<span style="font-size:12px;float:right;color:#CCCC99">
-						   登录人：<s:property value="#session.loginUser.name" />(<s:if test="#attr.factNo=='tw'">所有數據</s:if>								
-								 <s:else> <s:property value="#attr.factName" /></s:else> ),欢迎您 ！								
-							     <a id="exit" href="judge2.jsp" target="_parent" style="color:#FF6666">
-							     退出登录</a>
-						</span>
-					    <span id="currentTime" style="width:300px;float:left;font-size:12px;color:#99CCCC;background:#292929"></span>	 				
-					</div> 
-					&nbsp;													
-					</TD>
-		</TR>
-		<tr><td align="center" width="100" height="5px" bgcolor="#1E1E1E"></td></tr>
-	</TABLE>
-
-	
-	<script>
-	
-		
+<script>			
 		if (self != top) {
 			top.location = self.location;
 		}
@@ -134,12 +112,20 @@
 			}
 		}
 		function showPop() {
-			 document.getElementById("mydiv").style.display = 'block'			
-			window.setTimeout(function() {
-				document.getElementById("mydiv").style.display = 'none';
-			}, 5000);  
-			
-			 //var loadi=layer.load(6,1);  
+			$("#mydiv").show();						
+			//var loadi=layer.load("正在加載....");
+			var ifr=document.getElementById("show");
+			if (ifr.attachEvent){
+			    ifr.attachEvent("onload", function(){
+			        //layer.close(loadi);
+			        $("#mydiv").hide();
+			    });
+			} else {
+			    ifr.onload = function(){
+			        //layer.close(loadi);
+			        $("#mydiv").hide();
+			    };
+			}
 		}
 		
    var currentDate = new Date(<%=new java.util.Date().getTime()%>);   
@@ -149,17 +135,40 @@
    }     
     window.setInterval("run();", 1000); 
     
-	</script>
-	<table id="tab2" border="0" height="100%" cellPadding="0"
-		cellSpacing="0" width="100%">
+</script>
+<body >
+	
+ 	<table style="BORDER-COLLAPSE:collapse" id="tab" cellSpacing=0
+		cellPadding=0 width=100% border=0>		
+		<TR>
+			<TD align=center width="100%" height=80 bgcolor="#292929">	<!--  #48525E-->		
+				<div id="top">
+					<h1 style="color:white;">東莞加元鞋材制品有限公司</h1>						    							
+						<span style="font-size:12px;float:right;color:#CCCC99">
+						   登录人：<s:property value="#session.loginUser.name" />(<s:if test="#attr.factNo=='tw'">所有數據</s:if>								
+								 <s:else> <s:property value="#attr.factName" /></s:else> ),欢迎您 ！								
+							     <a id="exit" href="judge2.jsp" target="_parent" style="color:#FF6666">
+							     退出登录</a>
+						</span>
+					    <span id="currentTime" style="width:300px;float:left;font-size:12px;color:#99CCCC;background:#292929"></span>	 				
+					</div> 
+					&nbsp;													
+					</TD>
+		</TR>
+		<tr><td align="center" width="100" height="5px" bgcolor="#1E1E1E"></td></tr>
+	</table>
 
+	
+
+	<table id="tab2" border="0" height="100%" cellPadding="0" cellSpacing="0" width="100%">		
 		<tr>
 			<td align="middle" vAlign="center" noWrap >
 			<div id="frmTitle" style="height:100%">
-			<iframe
+			  <iframe
 					frameBorder="0" id="carnoc" name="carnoc" scrolling=auto
 					src="menu.jsp"
-					style="HEIGHT: 100%; VISIBILITY: inherit; WIDTH: 210px; Z-INDEX: 2;border:1px solid #ccc"></iframe>
+					style="HEIGHT: 100%; VISIBILITY: inherit; WIDTH: 210px; Z-INDEX: 2;border:1px solid #ccc">
+			  </iframe>
 			</div>		
 			</td>
 			
@@ -177,7 +186,7 @@
 				</table>
 			</td>
 			 
-			<td width="100%"><iframe frameBorder="0" name="show"
+			<td width="100%"><iframe frameBorder="0" name="show" id="show"
 					scrolling=auto src="right.jsp"
 					style="HEIGHT:100%; VISIBILITY:inherit; WIDTH:100%; Z-INDEX: 2;border:1px solid #ccc">
 				</iframe>
@@ -190,6 +199,7 @@
 		  </td>
 		</tr>
 	</table>
+	
 	   <br>		
 	   <div style="width:100%;position:fixed;bottom:0" align="center" id="tab3">
 	   <font color="grey" style="font-size:10px;font-family: Arial, Helvetica, sans-serif;">

@@ -20,6 +20,7 @@
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
 <script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="page/jquerys/layer/layer.min.js"></script>
 <!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
@@ -49,7 +50,12 @@ $(document).ready(function(){
 });
 })	
 
-	
+function test(){
+	/*$(document).ajaxStart(function(){
+		layer.laod(0);
+	});*/
+	layer.load(0);
+}	
 </script>
 </head>
 <style>
@@ -108,8 +114,7 @@ a:hover{text-decoration:none; border-bottom:1px red solid;color:red;}
 						<span id="a${x.index}"><s:property value="webMenu.menuname" /></span></a>									
 						<div id="${x.index}" style="display:none;width:150px;height:auto; padding-left:2px; ">							
 							<table style="line-height: 20px;">
-								<s:iterator value="webSubmenus" status="x">
-									<s:if test='address=="fix_findPageBean"'>
+								<s:iterator value="webSubmenus" status="x">									
 										<tr>
 											<td>
 											<a href="<s:property value="address"/>?type=<s:property value='subtype'/>" 
@@ -120,11 +125,11 @@ a:hover{text-decoration:none; border-bottom:1px red solid;color:red;}
 												href="<s:property value="address"/>?type=<s:property value='subtype'/>"
 												 style="font-size:12px" target="show"
 												onclick="window.parent.showPop()">(${x.index+1})<s:property
-														value="submenuname" /> </a>
+														value="submenuname" /> </a>											
 											</td>
 										</tr>
-									</s:if>
-									<s:else>
+									
+									<%--<s:else>
 										<tr>
 											<td>
 											<a href="<s:property value="address"/>?type=<s:property value='subtype'/>" 
@@ -138,7 +143,7 @@ a:hover{text-decoration:none; border-bottom:1px red solid;color:red;}
 											</td>
 										</tr>
 									</s:else>
-								</s:iterator>
+								--%></s:iterator>
 							</table>
 						</div></td>
 				</tr>

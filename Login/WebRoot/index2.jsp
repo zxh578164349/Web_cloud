@@ -21,41 +21,44 @@
 		var factNO = document.getElementById("factNo");
 		var names = document.getElementById("user");
 		var password = document.getElementById("pwd");
+		var loadi;
 		if (factNO.value == 0 || names.value == "" || password.value == "") {		
 			alert("請輸入完整的信息");
-		} else {
-		    //var img=new Image();
-		    //new Image().src="images/loading006.gif";
-		    //document.getElementById("mydiv").style.background="url(/images/loading006.gif)";
-		    
-		    /*注意：要先提交，再顯示加載層，否則gif圖片不會動  */
-		    
-		    document.getElementById('form').submit();
-		    layer.load("正在登錄中,請稍等.....");								
-			//document.getElementById('mydiv').style.display='block';	
-											
-			//img.src="images/loading006.gif";       
-						
-			 
-			/*  $.ajax({
+		} else {		  		    
+		    /*注意：要先提交，再顯示加載層，否則gif圖片不會動  */		    
+		    //document.getElementById('subform').submit();
+		    //layer.load("正在登錄中,請稍等.....");
+		    $(document).ajaxStart(function(){
+		    	loadi=layer.load("正在登錄,請稍等.....");
+		    });
+		    $(document).ajaxStop(function(){
+		    	layer.close(loadi);
+		    });
+			$.ajax({
 			  type:"POST",
 			  url:"userlogin",
-			  dataType:"html",
-			  data:"webUsers.username="+names.value+"&webUsers.pwd="+password.value+"&factNo="+factNO.value,
-			  beforeSend:function(){
-			     document.getElementById("mydiv").style.display="block";
-			  },
+			  dataType:"json",
+			  //data:"webUsers.username="+names.value+"&webUsers.pwd="+password.value+"&factNo="+factNO.value,
+			  data:$("#subform").serialize(),
 			  success:function(data){
-			      $("body").html(data);
-			  },
-			  complete:function(){
-			    document.getElementById("mydiv").style.display="none";
-			  },
+				  if(data=='0'){
+					 location.href="test.jsp"; 
+				  }
+				  if(data=='1'){
+					  alert("當前賬號已註銷!");
+				  }
+				  if(data=='2'){
+					  alert("廠別不正確!");
+				  }
+				  if(data=='3'){
+					  alert("賬號或密碼不正確!");
+				  }
+			  },			  
 			  error:function(err){
-			     alert(err);
-			  }
-			
-			}); */	 									      	
+			     alert(err.responseText);
+			     //document.write(err.responseText);
+			  }			
+			});	 									      	
 		}						
 	}
 	
@@ -72,7 +75,7 @@
   <section class="container">
     <div class="login" >
       <h1>WEB系統登錄</h1>
-      <form action="userlogin" method="post" id="form">
+      <form  method="post" id="subform">
         <p>
         <label id="label_name">用戶名</label>
         <input type="text" name="webUsers.username" value="<%=cookie.getCookName()%>"  id="user"  >                 
@@ -96,15 +99,14 @@
 								<s:iterator value="#session.facts" id="temp">
 									<option value="${temp[0]}">${temp[1]}(${temp[0]})</option>
 								</s:iterator>
-						</select><br>
-						<span id="sfact"><s:property value='factError' />&nbsp;</span>									
+						</select><br>									
 		</p>
 		<p class="remember_me">
           <label>
             <input type="checkbox" name="remembered" id="remember_me" value="remembered"> 記住賬號與廠別           　　　　　
           </label>
         </p>     
-        <p class="submit"><input type="button" name="commit" value="登錄" onclick="checkFact()"></p>
+        <p class="submit"><input type="button"  value="登錄" onclick="checkFact()"></p>
         
        <%-- <input type="hidden" value="<%=cookie.clearCookie()%>"/> --%>
       </form>

@@ -17,6 +17,8 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sf.json.JSONObject;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.util.CellRangeAddress;
@@ -63,6 +65,7 @@ public class WebUserAction extends ActionSupport implements ServletResponseAware
 	private javax.servlet.http.HttpServletResponse response;
 	private String userread;
 	private String remembered;
+	private String ajax_result;//返回頁面的ajax結果   (0:登錄成功    1:當前用戶已註銷   2:廠別不對    3:賬號或密碼錯誤)
 	private IKyVisaBillsServices visabillSer;
 	private IWebTypeServices webtypeSer;
 	
@@ -338,6 +341,16 @@ public class WebUserAction extends ActionSupport implements ServletResponseAware
 	public void setMenuSer(IWebMenuServices menuSer) {
 		this.menuSer = menuSer;
 	}
+	
+	
+
+	public String getAjax_result() {
+		return ajax_result;
+	}
+
+	public void setAjax_result(String ajax_result) {
+		this.ajax_result = ajax_result;
+	}
 
 	/**
 	 * 用户登录
@@ -353,14 +366,14 @@ public class WebUserAction extends ActionSupport implements ServletResponseAware
 	public String login() throws InterruptedException, IOException {
 		ActionContext.getContext().getSession().remove("Email");//清除函文郵件中Email(在KyVisaBillmAction中的findById_email方法)
 		DateFormat format=new SimpleDateFormat("yyyyMMdd");
-		String resultIndex = "chengong";
+		String resultIndex = "chengong";		
 		List userList = webUserService.findMoreUser(webUsers.getUsername().trim());					
 		WebUser wUser = webUserService.selByuserId(factNo, webUsers.getUsername().trim());
-		//factname = webFactSer.selByid(factNo);
 		/*用戶名,密碼,廠別都正確*/
 		if (wUser != null) {//if
 			if (wUser.getPwd().equals(webUsers.getPwd().trim())) {//start if2
-					try {												 
+					try {
+						ajax_result="0";
 							  String ipAddress = null; ipAddress =ServletActionContext.getRequest().getHeader("x-forwarded-for");									  
 						      if(ipAddress == null || ipAddress.length() == 0 ||"unknown".equalsIgnoreCase(ipAddress)){ 									  
 						          ipAddress =ServletActionContext.getRequest().getHeader("Proxy-Client-IP");									  
@@ -424,18 +437,14 @@ public class WebUserAction extends ActionSupport implements ServletResponseAware
 							List factCodes = webFactSer.findFactCodeByFactNo_show_dw(factNo);									
 							ActionContext.getContext().getSession().put("factAreas_login", factCodes);	//【各廠產量統計】加載的廠別狀態								
 						}
-						
-						/*ActionContext.getContext().getApplication().clear();
-						List<KyVisabills>bills=visabillSer.findByFNN(factNo,wUser.getName());
-						if(bills.size()>0){
-							ActionContext.getContext().getApplication().put("bills_temp", bills);
-						}*/
-																								
+																																				
 					//如果用戶不可用，也就是available的值為1
-					if(wUser.getAvailable()==1){
-						response.setContentType("text/html;charset=utf-8");
+					if(wUser.getAvailable()==1){						
+						/*response.setContentType("text/html;charset=utf-8");
 						response.getWriter().print("<script>alert('當前用戶已註銷!');history.back()</script>");
-						return null;
+						return null;*/
+						ajax_result="1";
+						return "json_login";
 					}
 					
 					List<WebType>list_type=webtypeSer.findByFactNo2(factNo);
@@ -443,27 +452,32 @@ public class WebUserAction extends ActionSupport implements ServletResponseAware
 					} catch (Exception e) {
 						e.printStackTrace();
 					}					
-					return resultIndex;
+					//return resultIndex;
+					return "json_login";
 				}//end if2			
 			}//if
 		/*用戶名正確,但廠別不正確,*/
 		if (wUser == null && userList.size() > 0) {
-			for (int i = 0; i < userList.size(); i++) {
+			/*for (int i = 0; i < userList.size(); i++) {
 				WebUser u = (WebUser) userList.get(i);
-				if (!factNo.equals(u.getFactno())) {
+				if (!factNo.equals(u.getFactno())) {					
 					factError = "(當前用戶不屬於該廠別)";
 					response.setContentType("text/html;charset=utf-8");
 					response.getWriter().print("<script>alert('對不起,廠別不正確!');history.back()</script>");
-					break;									
+					break;					
 				}
-			}
-			return null;
-		}
-				
-		/*用戶名或者密碼錯誤*/		
-		response.setContentType("text/html;charset=utf-8");
+			}*/
+			ajax_result="2";
+			return "json_login";
+			//return null;
+			
+		}				
+		/*用戶名或者密碼錯誤*/
+		/*response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print("<script>alert('用戶或密碼錯誤!');history.back()</script>");				
-		return null;
+		return null;*/
+		ajax_result="3";
+		return "json_login";
 	}
 		
 	/**
