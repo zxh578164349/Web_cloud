@@ -33,6 +33,16 @@ public class WebCostAction extends ActionSupport implements
 	private HttpServletResponse respone;
 	private String isnull;
 	private WebcostId id;
+	private String ajaxResult;//申請函文時返回的ajax結果,   0:提交成功       1:提交失敗
+	
+
+	public String getAjaxResult() {
+		return ajaxResult;
+	}
+
+	public void setAjaxResult(String ajaxResult) {
+		this.ajaxResult = ajaxResult;
+	}
 
 	public HttpServletResponse getRespone() {
 		return respone;
@@ -125,67 +135,38 @@ public class WebCostAction extends ActionSupport implements
 		String result = null;
 
 		try {
-			if (isnull.equals("isnull")) {
-				date = format.parse(yymm);
-				cost.getId().setYymm(date);
-				String factNo1 = cost.getId().getFactNo();
-				String factCode1 = cost.getId().getFactCode();
-				String fact = (String) ActionContext.getContext().getSession()
-						.get("factNo");
-				List<Webcost> list = costSer.findByFactNo(fact);
-				if (list.size() > 0) {
-					for (int i = 0; i < list.size(); i++) {
-						if (factCode1.equals(list.get(i).getId().getFactCode())
-								&& factNo1.equals(list.get(i).getId()
-										.getFactNo())
-								&& cost.getId().getYymm()
-										.equals(list.get(i).getId().getYymm())) {
-
-							break;
-						} else if (i == list.size() - 1) {
-							costSer.add(cost);
-							result = "add";
-						}
-					}// end for
-				} else {
+			date = format.parse(yymm);
+			cost.getId().setYymm(date);	
+			if (isnull.equals("isnull")) {											
+				Webcost temp=costSer.findById(cost.getId().getFactNo(), cost.getId().getFactCode(), yymm);
+				if (temp==null) {
 					costSer.add(cost);
 					result = "add";
-				}
-
-			} else {
-				date = format.parse(yymm);
-				cost.getId().setYymm(date);
+					ajaxResult="0";
+				} 
+			}else {				
 				costSer.add(cost);
 				result = "add";
+				ajaxResult="0";
 			}
-
-			if (result == null) { // �P�_��^���G
-				respone.setContentType("text/html;charset=utf-8");
-				String temp1 = cost.getId().getFactNo();
-				String temp2 = cost.getId().getFactCode();
-				String temp3 = format.format(cost.getId().getYymm());
+			if (result == null) {
+				respone.setContentType("text/html;charset=utf-8");				
 				respone.getWriter()
-						.print("<script>alert('�ƾڮw�w�s�b("
-								+ temp1
+						.print("<script>alert('數據庫已存在("
+								+cost.getId().getFactNo()
 								+ " "
-								+ temp2
+								+ cost.getId().getFactCode()
 								+ " "
-								+ temp3
+								+ format.format(cost.getId().getYymm())
 								+ ")!');history.back()</script>");
-				return result;
-			} else {
-				return result;
-			}
-
-		} catch (ParseException e) {
+			} 
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
+			ajaxResult="1";
 			e.printStackTrace();
-			return "fails";
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return "fails";
-		}
+			//return "fails";
+		} 
+		return result;
 	}
 
 	public String findPageBean() {

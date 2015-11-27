@@ -32,9 +32,17 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 <script type="text/javascript" src="jquery/layer/layer.min.js"></script>
 
 <script type="text/javascript">
-	$(function() {
-		var jj = jQuery.noConflict();
-		var demo = jj("#form").Validform({
+var jq = jQuery.noConflict();
+var loadi;
+jq(document).ajaxStart(function(){
+	loadi=layer.load("正在處理,請稍等...(系統爲了節省開銷,已取消自動下載函文!)");
+});
+jq(document).ajaxStop(function(){
+	layer.close(loadi);
+});
+	jq(function() {
+		var loadi;
+		var demo = jq("#form").Validform({
 			btnSubmit : "#sub",
 			tiptype : 4,
 			showAllError : true,
@@ -42,7 +50,18 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 			datatype : {
 				"my0-8": /^\d{0,8}(\.[0-9]{1,4})?$/,
 				"my0-12": /^\d{0,12}(\.[0-9]{1,4})?$/
+			},
+			ajaxPost:true,
+			callback:function(data){
+				if(data=="0"){
+					//alert("函文申請成功!");
+					layer.msg("函文申請成功!",3,1);
+				}
+				if(data=="1"){
+					alert(data.responseText);
+				}
 			}
+			
 		});
 		demo.tipmsg.w["my0-8"]="只能數字且不超過8位數,可保留四位以內小數";
 		demo.tipmsg.w["my0-12"]="只能數字且不超過12位數,可保留四位以內小數";
@@ -336,30 +355,30 @@ function getKyType2(factno){
   }
 
 function lookJson(billNo,id,filename){
-var jQ = jQuery.noConflict();
+//var jQ = jQuery.noConflict();
 var loadi;
 filename=encodeURI(encodeURI(filename));
-jQ(document).ajaxStart(function(){
+jq(document).ajaxStart(function(){
 	loadi=layer.load(0);
 });
-jQ(document).ajaxStop(function(){
+jq(document).ajaxStop(function(){
 	layer.close(loadi);
 });
-   jQ.ajax({
+   jq.ajax({
       type:"get",
       dataType:"json",
       url:"kyzfile_findKyzFileJson",
       data:"billNo="+billNo+"&id="+id+"&filename="+filename,
       success:function(files){
-         jQ("#fileJson").html("");
+         jq("#fileJson").html("");
           var item;
           var item_url;
-         jQ.each(files,function(i,file){
+         jq.each(files,function(i,file){
             item_url="javascript:lookJson('"+file.billno+"',"+file.id+",'"+file.filename+"')";
             item="<a href='/upload/"+file.billno+"/"+file.filename+"' target='_blank' title='點擊查看'>"+file.filename+            
             "</a>"+
             "<a href="+item_url+"><img src='images/icon/del_file.png' alt='刪除' title='刪除' style='border:0px'/></a>&nbsp;";
-            jQ("#fileJson").append(item);
+            jq("#fileJson").append(item);
          }) 
       }
    })

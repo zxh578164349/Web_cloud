@@ -68,6 +68,7 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 	private String itemNo;
 	private String readMk;//標識返回函文查看頁面(Y)，還是返回函文提交頁面(N)
 	private String visa_mk;
+	private String ajaxResult;//申請函文時返回的ajax結果,   0:提交成功       1:提交失敗
 	private List<File> files;
     private List<String> filesFileName;
     private List<String> filesContentType;
@@ -84,6 +85,12 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 	private IKyzExpectmatmLogServices kyzExpLogSer;
 	
 	
+	public String getAjaxResult() {
+		return ajaxResult;
+	}
+	public void setAjaxResult(String ajaxResult) {
+		this.ajaxResult = ajaxResult;
+	}
 	public String getVisa_mk() {
 		return visa_mk;
 	}
@@ -292,7 +299,8 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 			}
 		}
 		
-		String result=null;								
+		String result=null;	
+		try{
 			if(isnull.equals("isNull")){//start if
 				String factno=kyzletter.getId().getFactNo();
 				String billno=kyzletter.getId().getBillNo();
@@ -301,6 +309,7 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 					kyzletterSer.add(kyzletter);
 					KyVisabillm vbm=visabillmSer.findById(kyzletter.getId().getFactNo(), kyzletter.getVisaType(), kyzletter.getId().getBillNo());
 					result="add";
+					ajaxResult="0";
 					/**
 					 * 發送郵件
 					 */
@@ -394,9 +403,11 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 							      SimpleMailSender sms3 = new SimpleMailSender();   
 							      sms3.sendHtmlMail(mailinfo3);//发送html格式  
 				    	  }				    	    
-				      }//if				      
-					  print(kyzletter.getId().getFactNo(),kyzletter.getId().getBillNo(),kyzletter.getVisaType());
-					  return null;
+				      }//if		
+				      /****************************函文打印************************************/
+					  //print(kyzletter.getId().getFactNo(),kyzletter.getId().getBillNo(),kyzletter.getVisaType());
+				      /****************************函文打印************************************/
+					 // return null;
 					}
 				
 				
@@ -404,7 +415,13 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 			else{
 				kyzletterSer.add(kyzletter);
 				result="update";
+				ajaxResult="0";
 			}
+		}catch(Exception e){
+			// TODO Auto-generated catch block
+			ajaxResult="1";
+			e.printStackTrace();
+		}			
 			if(result==null){
 				response.setContentType("text/html;charset=utf-8");
 				response.getWriter()
@@ -414,9 +431,7 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 						+ kyzletter.getId().getBillNo()
 						+ ")!');histore.back()</script>");
 			}
-											
-			
-			
+																	
 			return result;
 }
 	public String print(String factNo,String billNo,String sort) throws IOException{

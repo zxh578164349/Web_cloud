@@ -32,13 +32,13 @@
 }
 
 #mydiv {
-	width: 100%;
+	width: 85%;
 	height: 100%;
 	/* position: fixed; */
 	position:absolute;
 	filter: alpha(opacity = 50);
 	background: transparent;
-	background: rgba(0, 0, 0, 0.5) none repeat scroll 0 0 !important;
+	background: rgba(0, 0, 0, 1) none repeat scroll 0 0 !important;
 	opacity: 0.5;
 	-moz-opacity: 0.5;
 	-khtml-opacity: 0.5;
@@ -55,9 +55,9 @@
 
 #mydiv p {
 	position: relative;
-	color: grey;
+	color: white;
 	font-size: 14px;
-	top: 50%;
+	top: 40%;
 	text-align: center;
 }
 
@@ -71,8 +71,8 @@
 	<!--[if lt IE 10]>
 	<style type="text/css">   	 			
 	#mydiv {
-	width: 120%;
-	height: 120%;
+	width: 102%;
+	height: 100%;
 	 position: absolute; 
 	filter: alpha(opacity = 50);
 	background: transparent;

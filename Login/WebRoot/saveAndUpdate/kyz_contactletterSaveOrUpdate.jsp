@@ -29,10 +29,18 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 <script type="text/javascript" src="jquery/DatePicker/my_WdatePicker.js"></script>
 <script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script>
 <script type="text/javascript" src="jquery/Validform_v5.3.2_min.js"></script>
+<script type="text/javascript" src="jquery/layer/layer.min.js"></script>
 <script type="text/javascript">
-	$(function() {
-		var jj = jQuery.noConflict();
-		var demo = jj("#form").Validform({
+	var jq=jQuery.noConflict();
+	var loadi;
+	jq(document).ajaxStart(function(){
+		loadi=layer.load("正在處理,請稍等...(系統爲了節省開銷,已取消自動下載函文!)");
+	});
+	jq(document).ajaxStop(function(){
+		layer.close(loadi);
+	});
+	jq(function() {
+		var demo = jq("#form").Validform({
 			btnSubmit : "#sub",
 			tiptype : 4,
 			showAllError : true,
@@ -40,6 +48,15 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 			datatype : {
 				"*0-6" : /^\d{0,9}(\.[0-9]{1,3})?$/,
 				"my0-8": /^\d{0,8}(\.[0-9]{1,4})?$/
+			},
+			ajaxPost:true,
+			callback:function(data){
+				if(data=="0"){
+					layer.msg("函文申請成功!",3,1);
+				}
+				if(data=="1"){
+					alert(data.responseText);
+				}
 			}
 		});
 		demo.tipmsg.w["*0-6"] = "只能數字且不超過9位數,可保留三位以內小數";

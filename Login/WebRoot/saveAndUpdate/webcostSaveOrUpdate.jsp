@@ -28,18 +28,35 @@
 <script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script>
 <script type="text/javascript" src="jquery/Validform_v5.3.2_min.js"></script>
 <script type="text/javascript" src="jquery/DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="jquery/layer/layer.min.js"></script>
 </head>
 <script type="text/javascript">
-	$(function() {
-		var j = jQuery.noConflict();
-		var demo = j("#form").Validform({
+	var jq=jQuery.noConflict();
+	var loadi;
+	jq(document).ajaxStart(function(){
+		loadi=layer.load("正在提交...");
+	});
+	jq(document).ajaxStop(function(){
+		layer.close(loadi);
+	});
+	jq(function() {
+		var demo = jq("#form").Validform({
 			btnSubmit : "#sub",
-			tiptype : 3,
+			tiptype : 4,
 			showAllError : true,
 			datatype : {
 				"*0-9" : /^-?\d{1,9}(\.[0-9]{1,3})?$/,
 				"*0-7" : /^-?\d{1,7}(\.[0-9])?$/
-
+			},
+			ajaxPost:true,
+			callback:function(data){
+				if(data=="0"){
+					layer.msg("提交成功!",3,1);
+					location.href="webcost_findPageBean";
+				}
+				if(data=="1"){
+					alert(data.responseText);
+				}
 			}
 		});
 		demo.tipmsg.w["*0-9"] = "只能數字且不超過9位數,可保留三位以內小數";

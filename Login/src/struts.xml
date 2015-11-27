@@ -324,7 +324,9 @@
 		<action name="webcost_*" class="webcostAction" method="{1}">
 			<result name="beanList">page/webcost.jsp</result>
 			<result name="beanList1">page/table1/webcost1.jsp</result>
-			<result name="add" type="redirectAction">webcost_findPageBean</result>
+			<result name="add" type="json">
+			   <param name="root">ajaxResult</param>
+			</result>
 			<result name="findById">saveAndUpdate/webcostSaveOrUpdate.jsp</result>
 			<result name="delete" type="redirectAction">webcost_findPageBean</result>
 			<result name="list">page/table/webcostShow.jsp</result>
@@ -415,9 +417,13 @@
                 <param name="allowedExtensions">jpg,bmp</param>             
            </interceptor-ref>
            <interceptor-ref name="defaultStack"></interceptor-ref>  -->
-			<result name="add">success.jsp</result>
+			<result name="add" type="json">
+			   <param name="root">ajaxResult</param>
+			</result>
 			<result name="input">none.jsp</result>
-			<result name="update" type="redirectAction">kyz_findPageBean</result>
+			<result name="update" type="json">
+			   <param name="root">ajaxResult</param>
+			</result>
 		  <result name="findById">saveAndUpdate/matterApplicationSaveOrUpdate.jsp</result>
 		  <result name="beanList">page/matterApplication.jsp</result>
 		  <result name="beanList1">page/table1/matterApplication1.jsp</result>
@@ -603,7 +609,12 @@
           <result name="findById">/saveAndUpdate/kyz_contactletterSaveOrUpdate.jsp</result>
           <result name="findById_layer">/page/showContactletter_layer.jsp</result>
           <result name="findById_layer2">/page/showContactletter_layer2.jsp</result>
-          <result name="update" type="redirectAction">kyzletter_findPageBean</result>
+          <result name="add" type="json">
+             <param name="root">ajaxResult</param>
+          </result>
+          <result name="update" type="json">
+             <param name="root">ajaxResult</param>
+          </result>
           <result name="delete" type="redirectAction">kyzletter_findPageBean3</result>
         </action>
         <action name="webcashout_*" class="webcashoutAction" method="{1}">
