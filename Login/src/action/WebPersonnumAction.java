@@ -43,7 +43,18 @@ public class WebPersonnumAction extends ActionSupport implements
 	private String beginDay;
 	private String endDay;
 	private IWebFactServices webFactSer;
+	private String ajaxResult;//申請函文時返回的ajax結果,   0:提交成功       1:提交失敗
 	
+
+	public String getAjaxResult() {
+		return ajaxResult;
+	}
+
+
+	public void setAjaxResult(String ajaxResult) {
+		this.ajaxResult = ajaxResult;
+	}
+
 
 	public void setWebFactSer(IWebFactServices webFactSer) {
 		this.webFactSer = webFactSer;
@@ -174,69 +185,40 @@ public class WebPersonnumAction extends ActionSupport implements
 		String result = null;
 
 		try {
-			if (isnull.equals("isnull")) {
-				date = format.parse(yymm);
-				person.getId().setYymmdd(date);
-				String factNo1 = person.getId().getFactNo();
-				String factCode1 = person.getId().getFactCode();
-				String fact = (String) ActionContext.getContext().getSession()
-						.get("factNo");
-				List<Webpersonnum> list = personNumSer.findByFactNo(fact);
-				if (list.size() > 0) {
-					for (int i = 0; i < list.size(); i++) {
-						if (factCode1.equals(list.get(i).getId().getFactCode())
-								&& factNo1.equals(list.get(i).getId()
-										.getFactNo())
-								&& person
-										.getId()
-										.getYymmdd()
-										.equals(list.get(i).getId().getYymmdd())) {
-
-							break;
-						} else if (i == list.size() - 1) {
-							personNumSer.add(person);
-							result = "add";
-						}
-					}// end for
-				} else {
+			date = format.parse(yymm);
+			person.getId().setYymmdd(date);	
+			if (isnull.equals("isnull")) {							
+				Webpersonnum temp=personNumSer.findById2(person.getId().getFactNo(), person.getId().getFactCode(), yymm);
+				if (temp==null) {
 					personNumSer.add(person);
 					result = "add";
-				}
+					ajaxResult="0";
+				} 
 
-			} else {
-				date = format.parse(yymm);
-				person.getId().setYymmdd(date);
+			} else {				
 				personNumSer.add(person);
 				result = "add";
+				ajaxResult="0";
 			}
 
 			if (result == null) { // 判斷返回結果
-				response.setContentType("text/html;charset=utf-8");
-				String temp1 = person.getId().getFactNo();
-				String temp2 = person.getId().getFactCode();
-				String temp3 = format.format(person.getId().getYymmdd());
+				response.setContentType("text/html;charset=utf-8");				
 				response.getWriter()
 						.print("<script>alert('數據庫已存在("
-								+ temp1
+								+ person.getId().getFactNo()
 								+ " "
-								+ temp2
+								+ person.getId().getFactCode()
 								+ " "
-								+ temp3
-								+ ")!');history.back()</script>");
-				return result;
-			} else {
-				return result;
-			}
-
-		} catch (ParseException e) {
+								+ format.format(person.getId().getYymmdd())
+								+ ")!');history.back()</script>");				
+			} 
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			return "fails";
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return "fails";
-		}
+			result="add";
+			ajaxResult="1";
+		} 
+		return result;
 	}
 
 	public String findPageBean() {

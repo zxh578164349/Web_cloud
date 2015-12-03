@@ -170,7 +170,7 @@ table.gridtable td {
 			
 			<!------------------------- 修改3   20151027---------------   -->
 			<s:if test='readMk=="N"'>
-			    <tr><td colspan="15" style="color:red">備註:</td></tr>
+			    <tr><td colspan="15" style="color:red">備註↓↓↓</td></tr>
 				<tr><td colspan="15">									
 					<form id="memo" method="post" action="vbm_add">
 						<textarea rows="6" cols="80" name="memo" id="memo_txt"></textarea>						

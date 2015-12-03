@@ -15,7 +15,16 @@ public class WebTypeAction extends ActionSupport{
 	private PageBean bean;
 	private WebType webtype;
 	private String typeNo;
+	private String ajaxResult;//申請函文時返回的ajax結果,   0:提交成功       1:提交失敗
 	private IWebTypeServices webtypeSer;
+	
+	
+	public String getAjaxResult() {
+		return ajaxResult;
+	}
+	public void setAjaxResult(String ajaxResult) {
+		this.ajaxResult = ajaxResult;
+	}
 	public int getPage() {
 		return page;
 	}
@@ -59,7 +68,13 @@ public class WebTypeAction extends ActionSupport{
 	}
 	
 	public String add(){
-		webtypeSer.add(webtype);
+		try{
+			webtypeSer.add(webtype);
+			ajaxResult="0";
+		}catch(Exception e){
+			e.printStackTrace();
+			ajaxResult="1";
+		}		
 		return "add";
 	}
 	public String findPageBean(){

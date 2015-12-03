@@ -32,6 +32,16 @@ public class WebBackFeedAction extends ActionSupport implements
 	private javax.servlet.http.HttpServletResponse response;
 	private String isnull;
 	private WebbackfeedId id;
+	private String ajaxResult;//申請函文時返回的ajax結果,   0:提交成功       1:提交失敗
+	
+
+	public String getAjaxResult() {
+		return ajaxResult;
+	}
+
+	public void setAjaxResult(String ajaxResult) {
+		this.ajaxResult = ajaxResult;
+	}
 
 	public String getFactNo() {
 		return factNo;
@@ -117,67 +127,38 @@ public class WebBackFeedAction extends ActionSupport implements
 		String result = null;
 
 		try {
-			if (isnull.equals("isnull")) {
-				date = format.parse(yymm);
-				feed.getId().setYymm(date);
-				String factNo1 = feed.getId().getFactNo();
-				String factCode1 = feed.getId().getFactCode();
-				String fact = (String) ActionContext.getContext().getSession()
-						.get("factNo");
-				List<Webbackfeed> list = feedSer.findByFactNo(fact);
-				if (list.size() > 0) {
-					for (int i = 0; i < list.size(); i++) {
-						if (factCode1.equals(list.get(i).getId().getFactCode())
-								&& factNo1.equals(list.get(i).getId()
-										.getFactNo())
-								&& feed.getId().getYymm()
-										.equals(list.get(i).getId().getYymm())) {
-
-							break;
-						} else if (i == list.size() - 1) {
-							feedSer.add(feed);
-							result = "add";
-						}
-					}// end for
-				} else {
+			date = format.parse(yymm);
+			feed.getId().setYymm(date);
+			if (isnull.equals("isnull")) {								
+				Webbackfeed temp=feedSer.findById(feed.getId().getFactNo(), feed.getId().getFactCode(), date);
+				if (temp==null) {					
 					feedSer.add(feed);
 					result = "add";
-				}
-
-			} else {
-				date = format.parse(yymm);
-				feed.getId().setYymm(date);
+					ajaxResult="0";
+				} 
+			} else {				
 				feedSer.add(feed);
 				result = "add";
+				ajaxResult="0";
 			}
-
-			if (result == null) { // �P�_��^���G
-				response.setContentType("text/html;charset=utf-8");
-				String temp1 = feed.getId().getFactNo();
-				String temp2 = feed.getId().getFactCode();
-				String temp3 = format.format(feed.getId().getYymm());
+			if (result == null) { 
+				response.setContentType("text/html;charset=utf-8");				
 				response.getWriter()
-						.print("<script>alert('�ƾڮw�w�s�b("
-								+ temp1
+						.print("<script>alert('數據庫已存在("
+								+ feed.getId().getFactNo()
 								+ " "
-								+ temp2
+								+ feed.getId().getFactCode()
 								+ " "
-								+ temp3
+								+  format.format(feed.getId().getYymm())
 								+ ")!');history.back()</script>");
-				return result;
-			} else {
-				return result;
 			}
-
-		} catch (ParseException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
+			result="add";
+			ajaxResult="1";
 			e.printStackTrace();
-			return "fails";
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return "fails";
 		}
+		return result;
 	}
 
 	public String findPageBean() {

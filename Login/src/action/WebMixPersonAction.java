@@ -41,7 +41,16 @@ public class WebMixPersonAction extends ActionSupport implements
 	private IWebFactServices webFactSer;
 	private String bs;
 	private PageBean bean;
+	private String ajaxResult;//申請函文時返回的ajax結果,   0:提交成功       1:提交失敗
 	
+
+	public String getAjaxResult() {
+		return ajaxResult;
+	}
+
+	public void setAjaxResult(String ajaxResult) {
+		this.ajaxResult = ajaxResult;
+	}
 
 	public PageBean getBean() {
 		return bean;
@@ -180,35 +189,37 @@ public class WebMixPersonAction extends ActionSupport implements
 	 */
 	public String addMixPerson() throws ParseException, IOException {
 		SimpleDateFormat format = new SimpleDateFormat("yyyyMM");// �ͦ��~��榡
-		Date d = null;
 		StringBuffer ym = new StringBuffer();
+		String result=null;
 		ym.append(year);
 		ym.append(month);
-		if (year == null && month == null) {
-			mixperson.getId().setYymm(format.parse(yymm));
+		
+		try{
+			if (year == null && month == null) {
+				mixperson.getId().setYymm(format.parse(yymm));
+			}
+			Webmixperson person = mixPersonService.selBycan(mixperson.getId().getFactNo(), mixperson.getId().getYymm(), mixperson.getId().getFactCode());							
+			if (person != null && bs == null) {
+				response.setContentType("text/html;charset=utf-8");			
+				response.getWriter()
+						.print("<script>alert('數據庫已經存在("
+								+ mixperson.getId().getFactNo()
+								+ " "
+								+ mixperson.getId().getFactCode()
+								+ " "
+								+ format.format(mixperson.getId().getYymm())
+								+ ")!');history.back()</script>");			
+			} else {
+				mixPersonService.addWebMixPerson(mixperson);
+				result="addMixPerson";
+				ajaxResult="0";
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+			result="addMixPerson";
+			ajaxResult="1";
 		}
-		Webmixperson person = mixPersonService.selBycan(mixperson.getId()
-				.getFactNo(), mixperson.getId().getYymm(), mixperson.getId()
-				.getFactCode());
-		if (person != null && bs == null) {
-			response.setContentType("text/html;charset=utf-8");
-			String temp1 = mixperson.getId().getFactNo();
-			String temp2 = mixperson.getId().getFactCode();
-			String temp3 = format.format(mixperson.getId().getYymm());
-			response.getWriter()
-					.print("<script>alert('�ƾڮw�w�s�b("
-							+ temp1
-							+ " "
-							+ temp2
-							+ " "
-							+ temp3
-							+ ")!');history.back()</script>");
-			mixperson = null;
-			return null;
-		} else {
-			mixPersonService.addWebMixPerson(mixperson);
-			return "addMixPerson";
-		}
+		return result;
 	}
 
 	/**
@@ -283,7 +294,7 @@ public class WebMixPersonAction extends ActionSupport implements
 
 	public String delete2() {
 		mixPersonService.delete(id);
-		return getList();
+		return "delete";
 	}
 	
 	public String formatDouble(double d){

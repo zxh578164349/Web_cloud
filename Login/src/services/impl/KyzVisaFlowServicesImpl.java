@@ -77,4 +77,9 @@ public class KyzVisaFlowServicesImpl implements IKyzVisaFlowServices{
 		visaDao.delete2(flow);
 	}
 
+	public String findVisaSigner(String factNo, String visaSort) {
+		// TODO Auto-generated method stub
+		return visaDao.findVisaSigner(factNo, visaSort);
+	}
+
 }

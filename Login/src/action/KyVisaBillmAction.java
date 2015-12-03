@@ -663,7 +663,7 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 		if(itemNo==null||itemNo.equals("")){
 			itemNo=vbm.getItemNext();
 		}
-		SimpleDateFormat format=new SimpleDateFormat("yyyyMMdd");
+		SimpleDateFormat format=new SimpleDateFormat("yyyyMMdd_hh");
 		int num_temp=Integer.parseInt(itemNo);//把項次轉化為數字
 		int num=Integer.parseInt(itemNo)-1;//用於識別KyVisabills集合裡的每幾個對象									
 		String next_singer="";

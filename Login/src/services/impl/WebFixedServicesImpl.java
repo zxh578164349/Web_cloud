@@ -55,7 +55,7 @@ public class WebFixedServicesImpl implements IWebFixedServices {
 
 	public String makeSssetscoding(String factNo, String majorid, String yymm) {
 		// TODO Auto-generated method stub
-		StringBuffer assetscoding = new StringBuffer();// °]½s§Ç¸¹=¼t§O¥N¸¹+¦~¤ë+¤j¤ÀÃş¥N¸¹+§Ç¸¹
+		StringBuffer assetscoding = new StringBuffer();// è²¡ç·¨åºè™Ÿ=å» åˆ¥ä»£è™Ÿ+å¹´æœˆ+å¤§åˆ†é¡ä»£è™Ÿ+åºè™Ÿ
 		String factCode = webFactDao.findByFactNo(factNo);
 		assetscoding.append(factCode);
 		assetscoding.append(yymm.substring(2, 6));
@@ -65,8 +65,8 @@ public class WebFixedServicesImpl implements IWebFixedServices {
 		List numlist = new ArrayList();
 		for (int i = 0; i < assetscoding_list.size(); i++) {
 			String temp = (String) assetscoding_list.get(i);
-			//¦³¨Ç°]²£½s¸¹¬O"¦Û°Ê¥Í¦¨"ªº¡A­n±Æ°£¡F§_«h¦b¥Í¦¨°]²£½s¸¹·|³ø¿ù
-			if(!temp.equals("¦Û°Ê¥Í¦¨")){
+			//æœ‰äº›è²¡ç”¢ç·¨è™Ÿæ˜¯"è‡ªå‹•ç”Ÿæˆ"çš„ï¼Œè¦æ’é™¤ï¼›å¦å‰‡åœ¨ç”Ÿæˆè²¡ç”¢ç·¨è™Ÿæœƒå ±éŒ¯
+			if(!temp.equals("è‡ªå‹•ç”Ÿæˆ")){
 				String num = temp.substring(temp.length() - 4, temp.length());
 				int num2 = Integer.parseInt(num);
 				numlist.add(num2);
@@ -97,6 +97,11 @@ public class WebFixedServicesImpl implements IWebFixedServices {
 	public List<WebFixed> findByFactNo(String factNo, String yymm,String yymm_s,String lostmk) {
 		// TODO Auto-generated method stub
 		return fixDao.findByFactNo(factNo, yymm,yymm_s,lostmk);
+	}
+
+	public String findByFixId(String fixedId) {
+		// TODO Auto-generated method stub
+		return fixDao.findByFixId(fixedId);
 	}
 
 }

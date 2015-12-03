@@ -135,7 +135,7 @@ function showPage(){
 				</td>
 				<s:if test='#session.loginUser.userread!="1"'>			
 			    <td>
-			     <a href="fix_findById?id=<s:property value='fixedassetsId'/>" ><img alt="修改" src="images/icon/edit001.png" title="修改" ></a>	
+			     <a href="javascript:findById('${fixedassetsId}')" ><img alt="修改" src="images/icon/edit001.png" title="修改" ></a>	
 			       <s:if test='delMk=="Y"||delMk==null'>
 			          <a href="javascript:void(0)" onclick="isDelete(<s:property value='fixedassetsId'/>)"><img alt="刪除" src="images/icon/delete001.png" title="刪除" ></a>
 			       </s:if>

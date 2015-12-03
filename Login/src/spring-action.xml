@@ -27,54 +27,59 @@
 	<bean id="webZwcashAction" class="action.WebZwcashAction" scope="prototype" />
 	<bean id="factAction" class="action.KyFactAction" scope="prototype" />
 	<bean id="preAndDataAction" class="action.PreAndDataAction" scope="prototype" />
-	<bean id="ypreAction" class="action.WebYPreAction" scope="prototype" />
-	<bean id="ydataAction" class="action.WebYdataAction" scope="prototype" />
+	<bean id="ypreAction" class="action.WebYPreAction" scope="prototype" />	
 	<bean id="data" class="action.DataAction" scope="prototype" />
 	<bean id="webFactAction" class="action.WebFactAction" scope="prototype" />
 	<bean id="preAndDataActionireport" class="action.PreAndDataAction_ireport" scope="prototype" />	
 	<bean id="preAndDataActionipoi" class="action.PreAndDataAction_Poi" scope="prototype" />		
-	<!-- <bean id="sessionLoad" class="util.SessionListener" scope="prototype"></bean> -->
-	<bean id="webFixedAction" class="action.WebFixedAction" scope="prototype" />
-	<bean id="mixAction_machine" class="action.MchObackOInvAction" scope="prototype" />		
-	<bean id="webcostAction" class="action.WebCostAction" scope="prototype" />
-	<bean id="mixPersonAction" class="action.WebMixPersonAction" scope="prototype" />		
-	<bean id="mix2Action" class="action.WebMix2Action" scope="prototype" />
-	<bean id="scraptAction" class="action.WebScraptAction" scope="prototype" />
-	<bean id="produtedAction" class="action.WebProdutedAction" scope="prototype" />
-	<bean id="wloAction" class="action.WebWloAction" scope="prototype" />
-	<bean id="webmix1Action" class="action.WebMix1Action" scope="prototype" />
-	<bean id="webestproAction" class="action.WebEstProductAction" scope="prototype" />		
-	<bean id="webbackfeedAction" class="action.WebBackFeedAction" scope="prototype" />		
-	<bean id="webpersonnumAction" class="action.WebPersonnumAction" scope="prototype" />		
+	<bean id="mixAction_machine" class="action.MchObackOInvAction" scope="prototype" />									
+	<bean id="webmix1Action" class="action.WebMix1Action" scope="prototype" />									
 	<bean id="poiAction" class="action.poiAction" scope="prototype" />
 	<bean id="printerauto" class="action.Printer_Auto" scope="prototype" />
 	<bean id="auto" class="action.Printer_Auto" scope="prototype" />
-	<bean id="time" class="action.TestTimerAction" scope="prototype" />
-	<bean id="kyzAction" class="action.KyzExpcetmatmAction" scope="prototype" />
-	<bean id="kyzVisaFlowAction" class="action.KyzVisaFlowAction" scope="prototype"/>
-	<bean id="visabillAction" class="action.KyVisaBillsAction" scope="prototype"/>
-	<bean id="visabillmAction" class="action.KyVisaBillmAction" scope="prototype"/>
+	<bean id="time" class="action.TestTimerAction" scope="prototype" />		
+	<bean id="visabillAction" class="action.KyVisaBillsAction" scope="prototype"/>	
 	<bean id="kyzsecAction" class="action.KyzSecAction" scope="prototype"/>
 	<bean id="kyzacctAction" class="action.KyzAcctAction" scope="prototype"/>
 	<bean id="kyzpettyAction" class="action.KyzPettyAction" scope="prototype"/>
 	<bean id="fileUploadAction" class="action.FilesUploadAction" scope="prototype"/>
 	<bean id="downLoadAction" class="action.FilesDownLoadAction" scope="prototype"/>
-	<bean id="webuploadfileAtion" class="action.WebUploadFileAction" scope="prototype"/>
-	<bean id="vkpifactAction" class="action.VKpifactAction" scope="prototype"/>
+	<bean id="webuploadfileAtion" class="action.WebUploadFileAction" scope="prototype"/>	
 	<bean id="vwebmachineAction" class="action.VWebmachineAction" scope="prototype"/>
 	<bean id="vsumallAction" class="action.VSumAllAction" scope="prototype"/>
 	<bean id="kyzmatAction" class="action.KyzMatAction" scope="prototype"/>
 	<bean id="subkyzmatAction" class="action.SubKyzmatAction" scope="prototype"/>
 	<bean id="sumwebyieldDateAction" class="action.SumWebYieldDataAction" scope="prototype"/>
 	<bean id="checkallinputAction" class="action.CheckAllInputAction" scope="prototype"/>
-	<bean id="kpifactAction" class="action.KpifactAction" scope="prototype"/>
-	<bean id="kyzcontactletterAction" class="action.KyzContactLetterAction" scope="prototype"/>
-	<bean id="webcashoutAction" class="action.WebcashoutAction" scope="prototype"/>
+	<bean id="vkpifactAction" class="action.VKpifactAction" scope="prototype"/>	
 	<bean id="webuseremailAction" class="action.WebuseremailAction" scope="prototype"/>
 	<bean id="webtypeAction" class="action.WebTypeAction" scope="prototype"/>
 	<bean id="profitlossAction" class="action.ProfitAndLoss_Ireport" scope="prototype"/>
 	<bean id="filekyzAction" class="action.KyzFileAction" scope="prototype"/>
 	<bean id="webuseremailaAction" class="action.WebuserEmailaAction" scope="prototype"/>
+	
+		
+	<bean id="kpifactAction" class="action.KpifactAction" scope="prototype"/>
+	<bean id="webbackfeedAction" class="action.WebBackFeedAction" scope="prototype" />
+	<bean id="webcashoutAction" class="action.WebcashoutAction" scope="prototype"/>
+	<bean id="webcostAction" class="action.WebCostAction" scope="prototype" />
+	<bean id="webestproAction" class="action.WebEstProductAction" scope="prototype" />
+	<bean id="webFixedAction" class="action.WebFixedAction" scope="prototype" />
+	<bean id="mix2Action" class="action.WebMix2Action" scope="prototype" />
+	<bean id="mixPersonAction" class="action.WebMixPersonAction" scope="prototype" />
+	<bean id="webpersonnumAction" class="action.WebPersonnumAction" scope="prototype" />
+	<bean id="produtedAction" class="action.WebProdutedAction" scope="prototype" />
+	<bean id="scraptAction" class="action.WebScraptAction" scope="prototype" />
+	<bean id="wloAction" class="action.WebWloAction" scope="prototype" />
+	<bean id="ydataAction" class="action.WebYdataAction" scope="prototype" />
+	
+	
+	
+	<bean id="kyzcontactletterAction" class="action.KyzContactLetterAction" scope="prototype"/>
+	<bean id="kyzAction" class="action.KyzExpcetmatmAction" scope="prototype" />
+	<bean id="visabillmAction" class="action.KyVisaBillmAction" scope="prototype"/>
+	<bean id="kyzVisaFlowAction" class="action.KyzVisaFlowAction" scope="prototype"/>	
+	
 </beans> 
 
  

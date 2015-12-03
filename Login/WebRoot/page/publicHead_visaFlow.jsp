@@ -19,11 +19,10 @@
 <meta http-equiv="description" content="This is my page">
 <link rel="stylesheet" type="text/css" href="css/select_beautiful.css">	
 <LINK href="css/list.css" type="text/css" rel="stylesheet">
-<script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script> 
-<script type="text/javascript" src="page/jquerys/Validform_v5.3.2_min.js"></script> 
+
 <script type="text/javascript">
-  
-   jq(document).keyup(function(event){
+  var jb=jQuery.noConflict();
+   jb(document).keyup(function(event){
       if(event.keyCode==13){
           submis();
       }

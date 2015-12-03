@@ -26,29 +26,38 @@
 <script type="text/javascript" src="jquery/DatePicker/my_WdatePicker.js"></script>
 <script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script>
 <script type="text/javascript" src="jquery/Validform_v5.3.2_min.js"></script>
-
-
+<script type="text/javascript" src="jquery/layer/layer.min.js"></script>
 <script type="text/javascript">
-	$(function() {
-		var j = jQuery.noConflict();
-		var demo = j("#form").Validform({
+var jq=jQuery.noConflict();
+var loadi;
+jq(document).ajaxStart(function(){
+	loadi=layer.load("正在提交,請稍等...");
+});
+jq(document).ajaxStop(function(){
+	layer.close(loadi);
+});
+	jq(function() {
+		var demo = jq("#form").Validform({
 			btnSubmit : "#sub",
-			tiptype : 3,
+			tiptype : 4,
 			showAllError : true,
 			ignoreHidden : true,
 			tipSweep : true,
-			//ajaxPost:false,
-			callback : function(form) {
-				document.getElementById("mydiv").style.display = "block";
-				form[0].submit();
-				return false;
+			ajaxPost:true,
+			callback : function(data) {
+				if(data=="0"){
+					layer.msg("提交成功!",3,1);
+					location.href="/Login/fix_findPageBean";
+				}
+				if(data=="1"){
+					alert(data.responseText);
+				}
 			},
 			datatype : {
 				"*0-8" : /^\d{0,8}(\.[0-9]{1,2})?$/,
 				"*1-6" : /^[1-9]{1}\d{0,8}(\.[0-9]{1,3})?$/,
 				"*0-7" : /^\d{0,7}(\.[0-9]{1})?$/,
 				"test" : /^\w{0,10}$/
-
 			}
 		});
 		demo.tipmsg.w["*0-8"] = "只能數字且不超過8位數,可保留兩位以內小數";
@@ -58,14 +67,9 @@
 
 	});
 
-	function back() {
-		if (navigator.userAgent.indexOf("MSIE") > 0) {
-			document.getElementById("mydiv").style.display = "block";
-			window.location.href = "../fix_findPageBean";
-		} else {
-			document.getElementById("mydiv").style.display = "block";
-			window.location.href = "fix_findPageBean";
-		}
+	function back() {		
+			layer.load("正在返回,請稍等...");
+			window.location.href = "/Login/fix_findPageBean";							
 	}
 
 	function getFactArea(mid) {
@@ -487,16 +491,8 @@
 
 				<tr>
 					<td colspan="6"><center>
-							<input type="button" id="sub" value="確定" onclick="goFix()" onmouseover="this.style.backgroundPosition='left -40px'" onmouseout="this.style.backgroundPosition='left top'"/>&nbsp;&nbsp;&nbsp;
-
-							<s:if test="fix!=null">
-								<input type="button" value="返回" onclick="javascript:document.getElementById('mydiv').style.display='block';location.href='fix_findPageBean'" id="btn_back"
-								 onmouseover="this.style.backgroundPosition='left -40px'" onmouseout="this.style.backgroundPosition='left top'"/>
-									
-							</s:if>
-							<s:else>
+							<input type="button" id="sub" value="確定" onclick="goFix()" onmouseover="this.style.backgroundPosition='left -40px'" onmouseout="this.style.backgroundPosition='left top'"/>&nbsp;&nbsp;&nbsp;							
 								<input type="button" value="返回" onclick="back()" id="btn_back" onmouseover="this.style.backgroundPosition='left -40px'" onmouseout="this.style.backgroundPosition='left top'"/>
-							</s:else>
 
 						</center>
 					</td>
@@ -509,10 +505,10 @@
 	</div>
 
 
-	<div id="mydiv">
+	<%--<div id="mydiv">
 		<p>
 			<img alt="" src="images/loading004.gif"><br> Loading....
 		</p>
-	</div>
+	</div>--%>
 </body>
 </html>

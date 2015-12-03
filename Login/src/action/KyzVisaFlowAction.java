@@ -36,7 +36,17 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 	private KyzVisaflow flow;
 	private String flowmk;//判斷是否知會的
 	private int maxItem;//新添加的知會人員的序列號
+	private String ajaxResult;//申請函文時返回的ajax結果,   0:提交成功       1:提交失敗
 	private javax.servlet.http.HttpServletResponse response;
+	
+
+	public String getAjaxResult() {
+		return ajaxResult;
+	}
+
+	public void setAjaxResult(String ajaxResult) {
+		this.ajaxResult = ajaxResult;
+	}
 
 	public String getVisaRank() {
 		return visaRank;
@@ -244,72 +254,50 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 	
 	public String add() throws IOException{		
 		String visaSort_main=flows.get(0).getId().getVisaSort();
-		char first_main=visaSort_main.charAt(0);
-		//if(first_main=='C'){//start if
-			String visaSort_sub=visaSort_main+"0";
-			//選中"費用簽核"所有的子類別			
-			List<String>types_str=visaSer.findVisaSort_C(flows.get(0).getId().getFactNo(),visaSort_main);
-			List<Integer>types_int=new ArrayList<Integer>();
-			if(types_str.size()>0){
-				for(int j=0;j<types_str.size();j++){
-					//int temp=Integer.parseInt(types_str.get(j).substring(1));
-					int temp=Integer.parseInt(types_str.get(j).substring(2));
-					types_int.add(temp);
+		
+			
+			try{
+				String visaSort_sub=visaSort_main+"0";
+				//選中"費用簽核"所有的子類別			
+				List<String>types_str=visaSer.findVisaSort_C(flows.get(0).getId().getFactNo(),visaSort_main);
+				List<Integer>types_int=new ArrayList<Integer>();
+				if(types_str.size()>0){
+					for(int j=0;j<types_str.size();j++){
+						int temp=Integer.parseInt(types_str.get(j).substring(2));
+						types_int.add(temp);
+					}
+					int maxNum=types_int.get(types_int.size()-1);//因為集合已按從小到大的順序排列好的，所以最後一個元素最大
+					String str_max=String.valueOf(maxNum);
+					if(str_max.substring(str_max.length()-1,str_max.length()).equals("9")){      											
+						visaSort_sub=visaSort_main+maxNum+"0";
+					}else{					
+						visaSort_sub=visaSort_main+(maxNum+1);
+					}				
 				}
-				int maxNum=types_int.get(types_int.size()-1);//因為集合已按從小到大的順序排列好的，所以最後一個元素最大
-				String str_max=String.valueOf(maxNum);
-				if(str_max.substring(str_max.length()-1,str_max.length()).equals("9")){      										
-					//visaSort_sub="C"+maxNum+"0";  //如果最后一位数是9，则在后面再添加一位数（例：C19-->C190,C29-->C290）	
-					visaSort_sub=visaSort_main+maxNum+"0";
-				}else{					
-					//visaSort_sub="C"+(maxNum+1);
-					visaSort_sub=visaSort_main+(maxNum+1);
-				}
-				
-			}
-			for(int i=0;i<flows.size();i++){
-				flows.get(i).getId().setVisaSort(visaSort_sub);
-				
-			    String purmanNo=flows.get(i).getId().getPurmanNo().trim();
-			    String visaSigner=flows.get(i).getVisaSigner().trim();
-			    flows.get(i).getId().setPurmanNo(purmanNo);
-			    flows.get(i).setVisaSigner(visaSigner);
-			    flows.get(i).setFlowMk("Y");
-				visaSer.add(flows.get(i));
-			}
-		//}
-		/*else{//end if
-			String visaSort_sub=visaSort_main+"0";
-			//選中"費用簽核"所有的子類別			
-			List<String>types_str=visaSer.findVisaSort_C(flows.get(0).getId().getFactNo(),visaSort_main);
-			List<Integer>types_int=new ArrayList<Integer>();
-			if(types_str.size()>0){
-				for(int j=0;j<types_str.size();j++){
-					int temp=Integer.parseInt(types_str.get(j).substring(2));
-					types_int.add(temp);
-				}
-				int maxNum=types_int.get(types_int.size()-1);//因為集合已按從小到大的順序排列好的，所以最後一個元素最大
-				String str_max=String.valueOf(maxNum);
-				if(str_max.substring(str_max.length()-1,str_max.length()).equals("9")){      										
-					visaSort_sub=visaSort_main+maxNum+"0";  //如果最后一位数是9，则在后面再添加一位数（例：C19-->C190,C29-->C290）										
-				}else{					
-					visaSort_sub=visaSort_main+(maxNum+1);
-				}
-			}
-			for(int i=0;i<flows.size();i++){
-				 String purmanNo=flows.get(i).getId().getPurmanNo().trim();
+				for(int i=0;i<flows.size();i++){
+					flows.get(i).getId().setVisaSort(visaSort_sub);				
+				    String purmanNo=flows.get(i).getId().getPurmanNo().trim();
 				    String visaSigner=flows.get(i).getVisaSigner().trim();
 				    flows.get(i).getId().setPurmanNo(purmanNo);
 				    flows.get(i).setVisaSigner(visaSigner);
 				    flows.get(i).setFlowMk("Y");
 					visaSer.add(flows.get(i));
+				}
+				ajaxResult="0";
+			}catch(Exception e){
+				e.printStackTrace();
+				ajaxResult="1";
 			}
-			
-		}*/
 		return "add";
 	}
-	public String update(){
-		visaSer.add(flow);
+	public String update(){		
+		try{
+			visaSer.add(flow);
+			ajaxResult="0";
+		}catch(Exception e){
+			e.printStackTrace();
+			ajaxResult="1";
+		}
 		return "update";
 	}
 	
@@ -323,14 +311,6 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 		return "beanList";
 	}
 	
-	/**
-	 * 爲了ajax跳轉到kyzVisaFlow1.jsp這個頁面
-	 * @return
-	 */
-	public String findPageBean_1() {
-		this.findPageBean();
-		return "beanList1";
-	}
 
 	public String findPageBean2() {
 		//ActionContext.getContext().getApplication().clear();
@@ -414,45 +394,52 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 		 * (5)循环2:在第(1)步查询的全部对象，从点击的对象开始，循环改变下一个对象的itemNo,然后添加该对象
 		 * (6)添加第(2)步的新对象
 		 */
-		List<KyzVisaflow>list=visaSer.findByType(id.getFactNo(),id.getVisaSort());//(1)查詢	
-		KyzVisaflowId flowid=new KyzVisaflowId();
-		KyzVisaflow flow=new KyzVisaflow();//(2)定義新對象
-		flowid.setFactNo(id.getFactNo());
-		flowid.setVisaSort(id.getVisaSort());
-		int item_num=Integer.parseInt(id.getItemNo());//傳過來的當前項次
-		String item_new="";//定義新項次
-		if((item_num+1)<10){
-			item_new="0"+(item_num+1);
-		}else{
-			item_new=(item_num+1)+"";
-		}
-		flowid.setItemNo(item_new);
-		flowid.setPurmanNo(purmanNo.trim());
-		flow.setId(flowid);
-		flow.setVisaRank(visaRank.trim());
-		flow.setVisaSigner(visaSigner.trim());
-		if(flowmk.equals("N")){
-			flow.setFlowMk("N");
-		}else{
-			flow.setFlowMk("Y");
-		}		
-		    //(3)循环刪除點擊對象的下一個對象（舊itemNo）	
-			for(int i=item_num;i<list.size();i++){
-				visaSer.delete(list.get(i).getId());			
+		
+		try{
+			List<KyzVisaflow>list=visaSer.findByType(id.getFactNo(),id.getVisaSort());//(1)查詢	
+			KyzVisaflowId flowid=new KyzVisaflowId();
+			KyzVisaflow flow=new KyzVisaflow();//(2)定義新對象
+			flowid.setFactNo(id.getFactNo());
+			flowid.setVisaSort(id.getVisaSort());
+			int item_num=Integer.parseInt(id.getItemNo());//傳過來的當前項次
+			String item_new="";//定義新項次
+			if((item_num+1)<10){
+				item_new="0"+(item_num+1);
+			}else{
+				item_new=(item_num+1)+"";
 			}
-			//(4)循环添加點擊對象的下一個對象（新itemNo）
-			for(int k=item_num;k<list.size();k++){
-				String item_new2="";
-				int item_temp=Integer.parseInt(list.get(k).getId().getItemNo());
-				if((item_temp+1)<10){
-					item_new2="0"+(item_temp+1);
-				}else{
-					item_new2=(item_temp+1)+"";
+			flowid.setItemNo(item_new);
+			flowid.setPurmanNo(purmanNo.trim());
+			flow.setId(flowid);
+			flow.setVisaRank(visaRank.trim());
+			flow.setVisaSigner(visaSigner.trim());
+			if(flowmk.equals("N")){
+				flow.setFlowMk("N");
+			}else{
+				flow.setFlowMk("Y");
+			}		
+			    //(3)循环刪除點擊對象的下一個對象（舊itemNo）	
+				for(int i=item_num;i<list.size();i++){
+					visaSer.delete(list.get(i).getId());			
 				}
-				list.get(k).getId().setItemNo(item_new2);
-				visaSer.add(list.get(k));
-			}
-		visaSer.add(flow);//(5)添加新對象
+				//(4)循环添加點擊對象的下一個對象（新itemNo）
+				for(int k=item_num;k<list.size();k++){
+					String item_new2="";
+					int item_temp=Integer.parseInt(list.get(k).getId().getItemNo());
+					if((item_temp+1)<10){
+						item_new2="0"+(item_temp+1);
+					}else{
+						item_new2=(item_temp+1)+"";
+					}
+					list.get(k).getId().setItemNo(item_new2);
+					visaSer.add(list.get(k));
+				}
+			visaSer.add(flow);//(5)添加新對象
+			ajaxResult="0";
+		}catch(Exception e){
+			e.printStackTrace();
+			ajaxResult="1";
+		}
 		return "addflow";
 		
 	}
@@ -522,11 +509,17 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 	 * @return
 	 */
 	public String addMaxFlow(){
-		for(int i=0;i<flows.size();i++){
-			flows.get(i).setVisaRank("知會");
-			flows.get(i).setFlowMk("N");
-			visaSer.add(flows.get(i));
-		}
+		try{
+			for(int i=0;i<flows.size();i++){
+				flows.get(i).setVisaRank("知會");
+				flows.get(i).setFlowMk("N");
+				visaSer.add(flows.get(i));
+			}
+			ajaxResult="0";
+		}catch(Exception e){
+			e.printStackTrace();
+			ajaxResult="1";
+		}		
 		return "addMaxFlow";
 	}
 	

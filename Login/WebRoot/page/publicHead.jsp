@@ -27,7 +27,7 @@
 <script type="text/javascript" src="jquery/loding/ui.loading.js"></script>
 <script type="text/javascript">
  
-
+//var jq=jQuery.noConflict();
 jq(document).keyup(function(event){
    if(event.keyCode==13){
       submis();

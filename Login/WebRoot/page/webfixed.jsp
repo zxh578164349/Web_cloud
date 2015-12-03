@@ -82,70 +82,42 @@
 	function isDelete(mid) {
 		jConfirm('你确定这么做吗?', '确认对话框', function(r) {
 			if (r == true) {
-				document.getElementById("mydiv").style.display = "block";
-				location.href = "fix_delete?id=" + mid;
+				//document.getElementById("mydiv").style.display = "block";
+				//location.href = "fix_delete?id=" + mid;
+				jq.ajax({
+					type:"POST",
+					dataType:"html",
+					data:"id="+mid,
+					url:"fix_delete",
+					success:function(data){
+						jq("#bodyid").html(data);
+					},
+					error:function(data){
+						jq("#bodyid").html(data.responseText);
+					}
+				});
 			}
 		});
 	}
 
-
+function findById(sid){
+	layer.load(0);
+	location.href="/Login/fix_findById?id="+sid;
+}
 </script>
 
 <body>
 	<jsp:include page="publicHead_webfix.jsp" />
 	<hr/>
-	<input type="button" id="addbtn" value="添加" onclick="javascript:location.href='saveAndUpdate/fixedSaveOrUpdate.jsp'"/>
-	<%-- <s:if test='#session.loginUser.userread!="1"'>
-		<form action="fix_toExcel" method="post" id="form" target="_blank">
-		<table style="width:1050px">
-		<tr>
-	      <td> 廠別</td>
-	      <td>
-	         <s:if test="#session.factNo!='tw'">
-	           <div id="uboxstyle_webfixToexcel">	                                    	                                      
-                  <select name="factNo_print">
-						<option value="<s:property value="#attr.factNo"/>">全部</option>
-						<option value="<s:property value="#attr.factNo"/>">
-							<s:property value="#attr.factName" />
-						</option>
-					</select>&nbsp;&nbsp;
-					</div>	
-	         </s:if>
-	         <s:if test="#session.factNo=='tw'">
-	            <div id="uboxstyle_webfixToexcel">	                                    
-	             <select name="factNo_print" >							 							
-								<option value="">全部</option>
-								<s:iterator value="#session.facts" id="temp">
-									<option value="${temp[0]}">${temp[1]}(${temp[0]})</option>										
-								</s:iterator>
-						</select>
-				</div>		                       
-	         </s:if>
-	                        
-	        <td>進廠日期</td>
-	        <td>
-	        <input type="text" name="yymm"  onClick="WdatePicker()"  readonly="readonly" class="Wdate" />			
-	      </td>
-	       <td>驗收日期</td>
-	        <td>
-	        <input type="text" name="yymm_s"  onClick="WdatePicker()"  readonly="readonly" class="Wdate" />			
-	      </td>
-	      <td colspan="20"><input type="submit" value="轉換" id="btn_change"/>&nbsp;<span style="color:blue">(轉換Excel格式)</span>
-	      &nbsp;<input type="button" id="addbtn" value="添加" onclick="javascript:location.href='saveAndUpdate/fixedSaveOrUpdate.jsp'"/>	      
-	      </td>
-	    </tr>
-	    </table>
-	   </form>  
-	   </s:if> --%>
-		
+	<input type="button" id="addbtn" value="添加" onclick="javascript:location.href='saveAndUpdate/fixedSaveOrUpdate.jsp'"/>		
 	<div id="bodyid">
 		<jsp:include page="table1/webfixed1.jsp" />
 	</div>	
-	<div id="mydiv">
+	<%--<div id="mydiv">
 		<p>
 			<img alt="" src="images/loading004.gif"><br> Loading....
 		</p>
 	</div>
 
-</body>
+--%></body>
 </html>

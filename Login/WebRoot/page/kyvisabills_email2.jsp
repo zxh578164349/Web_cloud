@@ -101,7 +101,7 @@ table.altrowstable caption{
     //fadeIn:300,
     //shift:'top',
     offset:['10px',''],
-    area: ['800px', '560px'],
+    area: ['560px', '450px'],
     //page:{url:'kyzletter_findById_layer?billNo='+billNo+'& factNo='+factNo }
     iframe:{src:'kyzletter_findById_layer?billNo='+billNo+'& factNo='+factNo+'& readMk=Y',scrolling:'auto'}
     /* close:function(){
@@ -182,7 +182,7 @@ table.altrowstable caption{
     //fadeIn:300,
    // shift:'top',
     offset:['10px',''],
-    area: ['800px', '560px'],
+    area: ['600px', '500px'],
     //page:{url:'kyzletter_findById_layer?billNo='+billNo+'& factNo='+factNo},
     iframe:{src:'kyzletter_findById_layer?billNo='+billNo+'& factNo='+factNo+'& itemNo='+itemNo+'& visaSort='+visaSort+'& readMk=N&visa_mk=Y',scrolling:'auto'},
      yes:function(){         

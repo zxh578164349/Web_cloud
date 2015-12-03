@@ -42,7 +42,16 @@ public class WebMix2Action extends ActionSupport implements
 	private IWebFactServices webFactSer;
 	private String bs;
 	private PageBean bean;
+	private String ajaxResult;//申請函文時返回的ajax結果,   0:提交成功       1:提交失敗
 	
+
+	public String getAjaxResult() {
+		return ajaxResult;
+	}
+
+	public void setAjaxResult(String ajaxResult) {
+		this.ajaxResult = ajaxResult;
+	}
 
 	public PageBean getBean() {
 		return bean;
@@ -178,34 +187,38 @@ public class WebMix2Action extends ActionSupport implements
 	 */
 	public String addMix2() throws ParseException, IOException {
 		SimpleDateFormat format = new SimpleDateFormat("yyyyMM");// �ͦ��~��榡
-		Date d = null;
 		StringBuffer ym = new StringBuffer();
+		String result=null;
 		ym.append(year);
 		ym.append(month);
 		if (year == null && month == null) {
 			mix2.getId().setYymm(format.parse(yymm));
 		}
-		Webmix2 mix2s = mix2Service.selBycan(mix2.getId().getFactNo(), mix2
-				.getId().getYymm(), mix2.getId().getFactCode());
-		if (mix2s != null && bs == null) {
-			response.setContentType("text/html;charset=utf-8");
-			String temp1 = mix2.getId().getFactNo();
-			String temp2 = mix2.getId().getFactCode();
-			String temp3 = format.format(mix2.getId().getYymm());
-			response.getWriter()
-					.print("<script>alert('�ƾڮw�w�s�b("
-							+ temp1
-							+ " "
-							+ temp2
-							+ " "
-							+ temp3
-							+ ")!');history.back()</script>");
-			mix2 = null;
-			return null;
-		} else {
-			mix2Service.addWebMix2(mix2);
-			return "addMix2";
+		
+		try{
+			Webmix2 mix2s = mix2Service.selBycan(mix2.getId().getFactNo(), mix2
+					.getId().getYymm(), mix2.getId().getFactCode());
+			if (mix2s != null && bs == null) {
+				response.setContentType("text/html;charset=utf-8");
+				response.getWriter()
+						.print("<script>alert('�ƾڮw�w�s�b("
+								+ mix2.getId().getFactNo()
+								+ " "
+								+ mix2.getId().getFactCode()
+								+ " "
+								+format.format(mix2.getId().getYymm()) 
+								+ ")!');history.back()</script>");			
+			} else {
+				mix2Service.addWebMix2(mix2);
+				result="addMix2";
+				ajaxResult="0";
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+			result="addMix2";
+			ajaxResult="1";
 		}
+		return result;
 	}
 
 	/**
@@ -280,7 +293,7 @@ public class WebMix2Action extends ActionSupport implements
 
 	public String delete2() {
 		mix2Service.delete(id);
-		return getList();
+		return "delete";
 	}
 	
 	public String formatDouble(Double s){

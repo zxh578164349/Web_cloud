@@ -24,6 +24,14 @@ public class KpifactAction extends ActionSupport implements ServletResponseAware
 	private String isnull;
 	private IKpifactServices kpiSer;
 	private javax.servlet.http.HttpServletResponse response;
+	private String ajaxResult;//申請函文時返回的ajax結果,   0:提交成功       1:提交失敗
+	
+	public String getAjaxResult() {
+		return ajaxResult;
+	}
+	public void setAjaxResult(String ajaxResult) {
+		this.ajaxResult = ajaxResult;
+	}
 	public Kpifact getKpi() {
 		return kpi;
 	}
@@ -77,23 +85,30 @@ public class KpifactAction extends ActionSupport implements ServletResponseAware
 	}
 	public String add() throws IOException{
 		String result=null;
-		if(isnull!=null){
-			kpiSer.add(kpi);
-			result="add";
-		}else{
-			factNo=kpi.getId().getFactNo();
-			factCode=kpi.getId().getFactCode();
-			yyyy=kpi.getId().getYyyy();
-			Kpifact kpi_temp=kpiSer.findById(factNo, factCode, yyyy);
-			if(kpi_temp!=null){
-				response.setContentType("text/html;charset=utf-8");
-				response.getWriter().print("<script>alert('�ƾڮw�w�s�b("+factNo+factCode+yyyy+")');history.back()</script>");
-			}else{
+		try{
+			if(isnull!=null){
 				kpiSer.add(kpi);
 				result="add";
+				ajaxResult="0";
+			}else{
+				factNo=kpi.getId().getFactNo();
+				factCode=kpi.getId().getFactCode();
+				yyyy=kpi.getId().getYyyy();
+				Kpifact kpi_temp=kpiSer.findById(factNo, factCode, yyyy);
+				if(kpi_temp!=null){
+					response.setContentType("text/html;charset=utf-8");
+					response.getWriter().print("<script>alert('數據庫已存在("+factNo+factCode+yyyy+")');history.back()</script>");
+				}else{
+					kpiSer.add(kpi);
+					result="add";
+					ajaxResult="0";
+				}
 			}
-		}
-		
+		}catch(Exception e){
+			result="add";
+			e.printStackTrace();
+			ajaxResult="1";
+		}				
 		return result;
 	}
 	public String findById(){

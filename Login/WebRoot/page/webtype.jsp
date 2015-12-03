@@ -100,7 +100,10 @@ function move(obj){
        layer.load("正在處理,請稍後....");
     }
 }
-
+function findById(factno,typeno){
+	layer.load(0);
+	location.href="/Login/webtype_findById?factNo="+factno+"&typeNo="+typeno;
+}
 </script>
 
 <body>

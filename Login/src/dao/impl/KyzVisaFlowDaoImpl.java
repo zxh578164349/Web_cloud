@@ -121,10 +121,10 @@ public class KyzVisaFlowDaoImpl extends Basedao implements IKyzVisaFlowDao {
 	}
 	
     /**
-     * ¦¹¤èªk¥Î©ó²K¥[¼f®Ö¬yµ{®É¡A·í¿ï¾Üªº¨ç¤åªº¦UÃþ¬°"¶O¥ÎÃ±®Ö1"»P"¶O¥ÎÃ±®Ö2"®É¨Ï¥Î
-     * ¦]¬°¨â­Ó"¶O¥ÎÃ±®Ö"¤¤¤À§O³£¦³¦h­Ó¨ã¦³±Æ§Çªº¤lÃþ§O
-     * ¨Ò¦p"¶O¥ÎÃ±®Ö1"¡GC10,C11,C12....... ;"¶O¥ÎÃ±®Ö2":C20,C21,C22....
-     * ©Ò¥H¡A®Ú¾Ú±Æ§Ç¥Í¦¨¤@­Ó·sªº¤lÃþ§O
+     * ï¿½ï¿½ï¿½ï¿½kï¿½Î©ï¿½Kï¿½[ï¿½fï¿½Ö¬yï¿½{ï¿½É¡Aï¿½ï¿½ï¿½Üªï¿½ï¿½ï¿½åªºï¿½Uï¿½ï¿½ï¿½ï¿½"ï¿½Oï¿½ï¿½Ã±ï¿½ï¿½1"ï¿½P"ï¿½Oï¿½ï¿½Ã±ï¿½ï¿½2"ï¿½É¨Ï¥ï¿½
+     * ï¿½]ï¿½ï¿½ï¿½ï¿½ï¿½"ï¿½Oï¿½ï¿½Ã±ï¿½ï¿½"ï¿½ï¿½ï¿½ï¿½ï¿½Oï¿½ï¿½ï¿½ï¿½ï¿½hï¿½Ó¨ã¦³ï¿½Æ§Çªï¿½ï¿½lï¿½ï¿½ï¿½O
+     * ï¿½Ò¦p"ï¿½Oï¿½ï¿½Ã±ï¿½ï¿½1"ï¿½GC10,C11,C12....... ;"ï¿½Oï¿½ï¿½Ã±ï¿½ï¿½2":C20,C21,C22....
+     * ï¿½Ò¥Hï¿½Aï¿½Ú¾Ú±Æ§Ç¥Í¦ï¿½ï¿½@ï¿½Ó·sï¿½ï¿½ï¿½lï¿½ï¿½ï¿½O
      */
 	public List<String> findVisaSort_C(String factNo,String mainSort) {
 		// TODO Auto-generated method stub
@@ -154,6 +154,19 @@ public class KyzVisaFlowDaoImpl extends Basedao implements IKyzVisaFlowDao {
 		// TODO Auto-generated method stub
 		super.delete(flow);
 	}
+
+	/**
+	 * æ ¹æ“šå» åˆ¥ï¼Œé¡žåˆ¥æ‰¾å‡ºç”³è«‹äºº
+	 */
+	public String findVisaSigner(String factNo, String visaSort) {
+		// TODO Auto-generated method stub
+		String hql="select visaSigner from KyzVisaflow where id.factNo=? and id.visaSort=? and id.itemNo='01'";
+		Query query=getSession().createQuery(hql);
+		query.setString(0, factNo);
+		query.setString(1, visaSort);
+		return (String)query.uniqueResult();
+	}
+
 
 
 }

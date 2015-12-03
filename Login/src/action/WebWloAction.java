@@ -38,7 +38,16 @@ public class WebWloAction extends ActionSupport implements ServletResponseAware 
 	private Page pages;
 	private String bs;
 	private PageBean bean;
+	private String ajaxResult;//申請函文時返回的ajax結果,   0:提交成功       1:提交失敗
 	
+
+	public String getAjaxResult() {
+		return ajaxResult;
+	}
+
+	public void setAjaxResult(String ajaxResult) {
+		this.ajaxResult = ajaxResult;
+	}
 
 	public PageBean getBean() {
 		return bean;
@@ -176,35 +185,37 @@ public class WebWloAction extends ActionSupport implements ServletResponseAware 
 	 * @throws IOException
 	 */
 	public String addwlo() throws ParseException, IOException {
-		SimpleDateFormat format = new SimpleDateFormat("yyyyMM");// �ͦ��~��榡
-		Date d = null;
+		SimpleDateFormat format = new SimpleDateFormat("yyyyMM");
 		StringBuffer ym = new StringBuffer();
+		String result=null;
 		ym.append(year);
-		ym.append(month);
-		if (year == null && month == null) {
-			wlo.getId().setYymm(format.parse(yymm));
+		ym.append(month);		
+		try{
+			if (year == null && month == null) {
+				wlo.getId().setYymm(format.parse(yymm));
+			}
+			Webwlo wo = wloService.selBycan(wlo.getId().getFactNo(), wlo.getId().getYymm(), wlo.getId().getFactCode());			
+			if (wo != null && bs == null) {
+				response.setContentType("text/html;charset=utf-8");			
+				response.getWriter()
+						.print("<script>alert('數據庫已存在("
+								+ wlo.getId().getFactNo()
+								+ " "
+								+ wlo.getId().getFactNo()
+								+ " "
+								+ format.format(wlo.getId().getYymm())
+								+ ")!');history.back()</script>");			
+			} else {
+				wloService.addWebWloDao(wlo);
+				result="addwlo";
+				ajaxResult="0";
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+			result="addwlo";
+			ajaxResult="1";
 		}
-		Webwlo wo = wloService.selBycan(wlo.getId().getFactNo(), wlo.getId()
-				.getYymm(), wlo.getId().getFactCode());
-		if (wo != null && bs == null) {
-			response.setContentType("text/html;charset=utf-8");
-			String temp1 = wlo.getId().getFactNo();
-			String temp2 = wlo.getId().getFactCode();
-			String temp3 = format.format(wlo.getId().getYymm());
-			response.getWriter()
-					.print("<script>alert('�ƾڮw�w�s�b("
-							+ temp1
-							+ " "
-							+ temp2
-							+ " "
-							+ temp3
-							+ ")!');history.back()</script>");
-			wlo = null;
-			return null;
-		} else {
-			wloService.addWebWloDao(wlo);
-			return "addwlo";
-		}
+		return result;
 	}
 
 	/**
@@ -279,7 +290,7 @@ public class WebWloAction extends ActionSupport implements ServletResponseAware 
 
 	public String delete2() {
 		wloService.delete(id);
-		return getList();
+		return "delete";
 	}
 	
 	public String formatDouble(double d){

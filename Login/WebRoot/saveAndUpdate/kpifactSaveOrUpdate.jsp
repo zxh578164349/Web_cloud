@@ -28,20 +28,37 @@
 <script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script>
 <script type="text/javascript" src="jquery/Validform_v5.3.2_min.js"></script>
 <script type="text/javascript" src="jquery/DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="jquery/layer/layer.min.js"></script>
 </head>
 <script type="text/javascript">
-	$(function() {
-		var j = jQuery.noConflict();
-		var demo = j("#form").Validform({
+	var jq=jQuery.noConflict();
+	var loadi;
+	jq(document).ajaxStart(function(){
+		loadi=layer.load("正在提交,請稍等...");
+	});
+	jq(document).ajaxStop(function(){
+		layer.close(loadi);
+	});
+	jq(function() {
+		var demo = jq("#form").Validform({
 			btnSubmit : "#sub",
-			tiptype : 3,
+			tiptype : 4,
 			showAllError : true,
 			tipSweep:true,
 			datatype : {
 				"9_1" : /^-?\d{1,9}(\.[0-9]{1})?$/,
 				"9_2" : /^-?\d{1,9}(\.[0-9]{1,2})?$/,
 				"9_4" : /^-?\d{1,9}(\.[0-9]{1,4})?$/
-
+			},
+			ajaxPost:true,
+			callback:function(data){
+				if(data=="0"){
+					layer.msg("提交成功!",3,1);
+					location.href="/Login/kpifact_findPageBean";
+				}
+				if(data=="1"){
+					alert(data.responseText);
+				}
 			}
 		});
 		demo.tipmsg.w["9_1"] = "只能數字且不超過9位數,可保留一位以內小數";
@@ -57,11 +74,8 @@
 
 	}
 	function back() {
-		if (navigator.userAgent.indexOf("MSIE") > 0) {
-			location.href = "../kpifact_findPageBean";
-		} else {
-			location.href = "kpifact_findPageBean";
-		}
+		    layer.load("正在返回,請稍等...");
+			location.href = "/Login/kpifact_findPageBean";							
 	}
 	 function check(){
        var factno=document.getElementById("dwr_factno").value;
@@ -359,14 +373,8 @@ window.onload=function(){
 		</table>
 		<center>
 			<input type="submit" id="sub" value="確定" onmouseover="this.style.backgroundPosition='left -40px'" onmouseout="this.style.backgroundPosition='left top'"/>&nbsp;&nbsp;&nbsp; <input
-				type="reset" id="reset" value="重置" onmouseover="this.style.backgroundPosition='left -40px'" onmouseout="this.style.backgroundPosition='left top'"/>&nbsp;&nbsp;&nbsp;
-			<s:if test="kpi!=null">
-				<input type="button" value="返回" id="btn_back"
-					onclick="javascript:location.href='kpifact_findPageBean'" onmouseover="this.style.backgroundPosition='left -40px'" onmouseout="this.style.backgroundPosition='left top'"/>
-			</s:if>
-			<s:else>
+				type="reset" id="reset" value="重置" onmouseover="this.style.backgroundPosition='left -40px'" onmouseout="this.style.backgroundPosition='left top'"/>&nbsp;&nbsp;&nbsp;			
 				<input type="button" value="返回" onclick="back()" id="btn_back" onmouseover="this.style.backgroundPosition='left -40px'" onmouseout="this.style.backgroundPosition='left top'"/>
-			</s:else>
 
 		</center>
 	</form>

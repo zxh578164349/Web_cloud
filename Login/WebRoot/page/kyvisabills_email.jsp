@@ -320,7 +320,7 @@ aria-labelledby="myModalLabelA" aria-hidden="true">
 			    <!--------------------------- 修改4 20151025 --------------------------------------->
 				<form action="vbm_add2" method="post" id="memo" role="form" />
 				<div class="form-group">
-					<label>備註</label>
+					<label>備註↓↓↓</label>
 					<textarea class="form-control" rows="3" name="memo" id="memo_txt"></textarea>			             			          
 				</div>				
 				<input type="hidden" value="<s:property value='factNo'/>" name="factNo"/>

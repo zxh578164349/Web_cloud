@@ -114,6 +114,10 @@ function move(obj){
        });
     }
 }
+function findById(factno,email,emailpwd){
+	layer.load("正在跳轉,請稍等...");
+	location.href="webuseremail_findById?factNo="+factno+"&email="+email+"&emailpwd="+emailpwd;
+}
 
 </script>
 

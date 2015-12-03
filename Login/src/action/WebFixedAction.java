@@ -49,7 +49,16 @@ public class WebFixedAction extends ActionSupport implements
 	private String factNo_print;
 	private String yymm_s;
 	private String lostmk;
+	private String ajaxResult;//申請函文時返回的ajax結果,   0:提交成功       1:提交失敗
 	
+
+	public String getAjaxResult() {
+		return ajaxResult;
+	}
+
+	public void setAjaxResult(String ajaxResult) {
+		this.ajaxResult = ajaxResult;
+	}
 
 	public String getLostmk() {
 		return lostmk;
@@ -272,67 +281,61 @@ public class WebFixedAction extends ActionSupport implements
 		return "delete";
 	}
 
-	public String addFix() {
+	public String addFix() throws IOException {
 		factNo = (String) ActionContext.getContext().getSession().get("factNo");
 		String result = null;
-		if (isnull.equals("isnull")) {// start if1
-			List fixedassetsidlist = fixSer.findAllFixedassetsId();
-			int maxNum2 = 0;
-			for (int j = 0; j < fixedassetsidlist.size(); j++) {
-				int temp = Integer.parseInt((String) fixedassetsidlist.get(j));
-				if (temp > maxNum2) {
-					maxNum2 = temp;
-				}
-			}
-			String temp = (maxNum2 + 1) + "";
-			fix.setFixedassetsId(temp);
-
-			List<WebFixed> list = fixSer.findByFactNo(factNo, yymm,null,null);
-			if (list.size() > 0) {
-				for (int i = 0; i < list.size(); i++) {
-					if (fix.getFixedId().equals(list.get(i).getFixedId())) {
-						break;
-					} else if (i == list.size() - 1) {
-						fixSer.addWebFixed(fix);
-						result = "addFix";
+		
+		
+		try{
+			if (isnull.equals("isnull")) {// start if1
+				List fixedassetsidlist = fixSer.findAllFixedassetsId();
+				int maxNum2 = 0;
+				for (int j = 0; j < fixedassetsidlist.size(); j++) {
+					int temp = Integer.parseInt((String) fixedassetsidlist.get(j));
+					if (temp > maxNum2) {
+						maxNum2 = temp;
 					}
 				}
-			} else {
-				fixSer.addWebFixed(fix);
-				result = "addFix";
-			}
-		}// end if1
-
-		if (goclear != null && goclear.equals("yclear")) {// start if2
-			List<WebFixed> list2 = fixSer.findByFactNo(factNo, yymm,null,null);
-			for (int y = 0; y < list2.size(); y++) {
-				if (fix.getFixedId().equals(list2.get(y).getFixedId())) {
-					break;
-				} else if (y == list2.size() - 1) {
+				String temp = (maxNum2 + 1) + "";
+				fix.setFixedassetsId(temp);
+				
+				String fixedId=fixSer.findByFixId(fix.getFixedId());
+				if (fixedId==null||fixedId.equals("")) {
 					fixSer.addWebFixed(fix);
 					result = "addFix";
-				}
-			}
-		}// end if2
+					ajaxResult="0";
+				} 
+			}// end if1
 
-		if (goclear != null && goclear.equals("nclear")) {// start if3
-			fixSer.addWebFixed(fix);
-			result = "addFix";
-		}// end if3
+			if (goclear != null && goclear.equals("yclear")) {// start if2
+				String fixedId2=fixSer.findByFixId(fix.getFixedId());
+				if(fixedId2==null||fixedId2.equals("")){
+					fixSer.addWebFixed(fix);
+					result = "addFix";
+					ajaxResult="0";
+				}		
+			}// end if2
+
+			if (goclear != null && goclear.equals("nclear")) {// start if3
+				fixSer.addWebFixed(fix);
+				result = "addFix";
+				ajaxResult="0";
+			}// end if3
+		}catch(Exception e){
+			e.printStackTrace();
+			result="addFix";
+			ajaxResult="1";
+		}
 
 		if (result == null) {
-			response.setContentType("text/html;charset=utf-8");
-			String temp = fix.getFixedId();
-			try {
-				response.getWriter()
+			response.setContentType("text/html;charset=utf-8");		
+			response.getWriter()
 						.print("<script>alert('數據庫已存在("
-								+ temp
+								+ fix.getFixedId()
 								+ ")!請重新添加');window.location.href='saveAndUpdate/fixedSaveOrUpdate.jsp'</script>");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			
 		}
+		
 		return result;
 	}
 

@@ -40,6 +40,7 @@ import services.IKyVisabillmServices;
 import services.IKyzContactLetterServices;
 import services.IKyzExpectmatmFileServices;
 import services.IKyzExpectmatmServices;
+import services.IKyzExpectmatmsServices;
 import services.IKyzVisaFlowServices;
 import services.IWebFactServices;
 import services.IWebuserEmailAServices;
@@ -78,6 +79,7 @@ public class AutoSendKyz extends QuartzJobBean{
 		IKyVisabillmServices visabillmSer=(IKyVisabillmServices)ac.getBean("visabillmSer");
 		IWebuserEmailServices webuseremailSer=(IWebuserEmailServices)ac.getBean("webuseremailSer");
 		IWebuserEmailAServices webuseremailaSer=(IWebuserEmailAServices)ac.getBean("webuseremailaSer");
+		IKyzVisaFlowServices visaSer=(IKyzVisaFlowServices)ac.getBean("visaSer");
 		List<KyVisabillm>list_vbm=visabillmSer.findByVisaMk("Y");//所有未簽核完畢的函文		
 		String subject="";
 		String result="";
@@ -98,26 +100,32 @@ public class AutoSendKyz extends QuartzJobBean{
 				String factNo=list_vbm.get(i).getId().getFactNo();
 				String billNo=list_vbm.get(i).getId().getBillNo();
 				String visaSort=list_vbm.get(i).getId().getVisaSort();
-				String visaMk=list_vbm.get(i).getVisaMk();								
+				String visaMk=list_vbm.get(i).getVisaMk();				
 				list_email.add(signerNext);
 				 /******************20151113备签人请使用方法findByFactNoAEmailPwd2(String factNo,String email)**********************/
 				/*String emailPwd = webuseremailSer.findEmailPWD(factNo,signerNext);//備簽人Email
 				if(emailPwd!=null){
 					list_email.add(emailPwd);
 				}*/
-				List<String>list_emailPwd=webuseremailSer.findByFactNoAEmailPwd2(factNo, signerNext);
-				if(list_emailPwd.size()>0){
-					for(int j=0;j<list_emailPwd.size();j++){
-						list_email.add(list_emailPwd.get(j));
+				/***************如果是臺灣加久，備簽人同時也是申請人，那麼根據流程代號找到申請人（也就是備簽人）*******************/
+				if(factNo.equals("GJ")){
+					String visaSinger=visaSer.findVisaSigner(factNo, visaSort);
+					list_email.add(visaSinger);
+				}else{
+					List<String>list_emailPwd=webuseremailSer.findByFactNoAEmailPwd2(factNo, signerNext);
+					if(list_emailPwd.size()>0){
+						for(int j=0;j<list_emailPwd.size();j++){
+							list_email.add(list_emailPwd.get(j));
+						}
 					}
-				}				
+				}								
 				list_email.add("kyuen@yydg.com.cn");
 				String emailUrl="http://203.85.73.161/Login/vbm_findById_email?visaSort="+visaSort+"&billNo="+billNo
 				         +"&factNo="+factNo+"&email="+signerNext;
 				String emailUrl2="http://203.85.73.161/Login/vbm_findById_email2?visaSort="+visaSort+"&billNo="+billNo
 				         +"&factNo="+factNo+"&email="+signerNext;
 				if(visaMk.equals("N")){
-					subject="函文審核定時通知_"+billNo+"("+factNo+")";
+					subject="函文審核定時通知_"+billNo+"("+factNo+")_"+signerNext;
 					content="函文單號:"+"<span style='color:red'>"+billNo+"</span>"+"&nbsp;&nbsp;廠別:"+factNo+
 				    		  "<br/>點擊單號直接審核:<a href='"+emailUrl2+"'>"+billNo+"</a>(電腦適用)"+
 				    		  "<br/>點擊單號直接審核:<a href='"+emailUrl+"'>"+billNo+"</a>(手機平板適用)"+				    		 
@@ -129,7 +137,7 @@ public class AutoSendKyz extends QuartzJobBean{
 				    		"<hr/>";
 				}
 				if(visaMk.equals("T")){				
-						subject="函文退回定時通知_"+billNo+"("+factNo+")";//退回函文隻發送一次，所以也要鎖定狀態emailMk	
+						subject="函文退回定時通知_"+billNo+"("+factNo+")_"+signerNext;//退回函文隻發送一次，所以也要鎖定狀態emailMk	
 						list_vbm.get(i).setEmailMk("Y");
 						visabillmSer.add(list_vbm.get(i));
 						content="函文單號:"+"<span style='color:red'>"+billNo+"</span>"+"&nbsp;&nbsp;"+"不通過，備註如下:"+

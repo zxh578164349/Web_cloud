@@ -28,12 +28,22 @@ public class WebuserEmailaAction extends ActionSupport implements ServletRespons
 	private  int page;
 	private PageBean bean;
 	private WebuserEmailA emailobj;
+	private String ajaxResult;//申請函文時返回的ajax結果,   0:提交成功       1:提交失敗
 	
 	private IWebuserEmailAServices webuseremailaSer;
 	private IWebTypeServices webtypeSer;
 	private javax.servlet.http.HttpServletResponse response;
 	private javax.servlet.http.HttpServletRequest request;
     
+	
+	public String getAjaxResult() {
+		return ajaxResult;
+	}
+
+	public void setAjaxResult(String ajaxResult) {
+		this.ajaxResult = ajaxResult;
+	}
+
 	public String getEmailPwd() {
 		return emailPwd;
 	}
@@ -102,7 +112,13 @@ public class WebuserEmailaAction extends ActionSupport implements ServletRespons
 	}
 
 	public String add(){
-		webuseremailaSer.add(emailobj);
+		try{
+			webuseremailaSer.add(emailobj);
+			ajaxResult="0";
+		}catch(Exception e){
+			e.printStackTrace();
+			ajaxResult="1";
+		}		
 		return "add";
 	}
 	public String delete() throws IOException{

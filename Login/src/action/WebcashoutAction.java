@@ -51,8 +51,19 @@ public class WebcashoutAction extends ActionSupport implements ServletResponseAw
 	private PageBean bean;
 	private Webcashout cashout;
 	private HttpServletResponse response;
+	private String ajaxResult;//申請函文時返回的ajax結果,   0:提交成功       1:提交失敗
 	
 	
+	public String getAjaxResult() {
+		return ajaxResult;
+	}
+
+
+	public void setAjaxResult(String ajaxResult) {
+		this.ajaxResult = ajaxResult;
+	}
+
+
 	public String getType() {
 		return type;
 	}
@@ -157,9 +168,18 @@ public class WebcashoutAction extends ActionSupport implements ServletResponseAw
 	public String add() throws ParseException{
 		DateFormat fm=new SimpleDateFormat("yyyyMMdd");
 		Date dt=fm.parse(date);
+		String result=null;
 		cashout.getId().setYymmdd(dt);
-		cashoutSer.add(cashout);
-		return "add";
+		try{
+			cashoutSer.add(cashout);
+			result="add";
+			ajaxResult="0";
+		}catch(Exception e){
+			result="add";
+			e.printStackTrace();
+			ajaxResult="1";
+		}		
+		return result;
 	}
 	public String delete(){
 		cashoutSer.delete(factNo, factCode, yymm);

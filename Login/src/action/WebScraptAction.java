@@ -39,7 +39,16 @@ public class WebScraptAction extends ActionSupport implements
 	private IWebFactServices webFactSer;
 	private String bs;
 	private PageBean bean;
+	private String ajaxResult;//申請函文時返回的ajax結果,   0:提交成功       1:提交失敗
 	
+
+	public String getAjaxResult() {
+		return ajaxResult;
+	}
+
+	public void setAjaxResult(String ajaxResult) {
+		this.ajaxResult = ajaxResult;
+	}
 
 	public PageBean getBean() {
 		return bean;
@@ -176,34 +185,36 @@ public class WebScraptAction extends ActionSupport implements
 	 */
 	public String addscrapt() throws ParseException, IOException {
 		SimpleDateFormat format = new SimpleDateFormat("yyyyMM");// �ͦ��~��榡
-		Date d = null;
 		StringBuffer ym = new StringBuffer();
+		String result=null;
 		ym.append(year);
 		ym.append(month);
-		if (year == null && month == null) {
-			scrapt.getId().setYymm(format.parse(yymm));
-		}
-		Webscrapt scr = scraptService.selBycan(scrapt.getId().getFactNo(),
-				scrapt.getId().getYymm(), scrapt.getId().getFactCode());
-		if (scr != null && bs == null) {
-			response.setContentType("text/html;charset=utf-8");
-			String temp1 = scrapt.getId().getFactNo();
-			String temp2 = scrapt.getId().getFactCode();
-			String temp3 = format.format(scrapt.getId().getYymm());
-			response.getWriter()
-					.print("<script>alert('�ƾڮw�w�s�b("
-							+ temp1
-							+ " "
-							+ temp2
-							+ " "
-							+ temp3
-							+ ")!');history.back()</script>");
-			scrapt = null;
-			return null;
-		} else {
-			scraptService.addWebScraptDao(scrapt);
-			return "addscrapt";
-		}
+		try{
+			if (year == null && month == null) {
+				scrapt.getId().setYymm(format.parse(yymm));
+			}
+			Webscrapt scr = scraptService.selBycan(scrapt.getId().getFactNo(),scrapt.getId().getYymm(), scrapt.getId().getFactCode());				
+			if (scr != null && bs == null) {
+				response.setContentType("text/html;charset=utf-8");		
+				response.getWriter()
+						.print("<script>alert('數據庫已經存在("
+								+ scrapt.getId().getFactNo()
+								+ " "
+								+ scrapt.getId().getFactCode()
+								+ " "
+								+ format.format(scrapt.getId().getYymm())
+								+ ")!');history.back()</script>");
+			} else {
+				scraptService.addWebScraptDao(scrapt);
+				result="addscrapt";
+				ajaxResult="0";
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+			result="addscrapt";
+			ajaxResult="1";
+		}		
+		return result;
 	}
 
 	/**
@@ -278,7 +289,7 @@ public class WebScraptAction extends ActionSupport implements
 
 	public String delete2() {
 		scraptService.delete(id);
-		return getList();
+		return "delete";
 	}
 	
 	public String formatDouble(double d){

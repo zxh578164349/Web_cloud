@@ -108,8 +108,11 @@ function hideDiv2(obj){
    j("#"+obj).hide(300);
 }
 
-
-	</script>
+function back(){
+	layer.load("正在返回,請稍等...");
+	location.href="/Login/vbm_findPageBean";
+}
+</script>
 </head>
 <body >
 	<table class="altrowstable" id="alternatecolor" align="center">
@@ -157,7 +160,7 @@ function hideDiv2(obj){
 		     </s:if>		   
 	      </s:iterator>
 		
-		<tr><td colspan="10"><input type="button" value="返回" onclick="javascript:window.location.href='vbm_findPageBean'"/></td></tr>
+		<tr><td colspan="10"><input type="button" value="返回" onclick="back()"/></td></tr>
 	</table>
 	<div id="mydiv">
 		<p>

@@ -417,9 +417,9 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 						response.getWriter().print("<script>alert('文件不可超過5M!');window.opener=null;window.open('','_self');window.close()</script>");
 						return null;
 					}
-					if(!filetype.equals(".bmp")&&!filetype.equals(".jpg")){
+					if(!filetype.equals(".bmp")&&!filetype.equals(".jpg")&&!filetype.equals(".jpeg")&&!filetype.equals(".gif")&&!filetype.equals(".tif")){
 						response.setContentType("text/html;charset=utf-8");
-						response.getWriter().print("<script>alert('只允許jpg和bmp圖片!');window.opener=null;window.open('','_self');window.close()</script>");
+						response.getWriter().print("<script>alert('只允許jpg,bmp,jpeg,gif,tif圖片!');window.opener=null;window.open('','_self');window.close()</script>");
 						return null;
 					}
 					
@@ -563,7 +563,7 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 			      sms3.sendHtmlMail(mailinfo3);
 			      
 			      /****************************函文打印************************************/
-				 // print(kyz.getId(),kyz.getVisaType());
+				 //print(kyz.getId(),kyz.getVisaType());
 				  /****************************函文打印************************************/
 				  //return null;
 				
@@ -572,6 +572,7 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 				kyzSer.add(kyz);
 				result="update";
 				ajaxResult="0";
+				
 			}
 														
 		} catch (Exception e) {
@@ -1095,15 +1096,21 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 		for(int i=0;i<list.size();i++){//for1
 			KyzExpectmatm kyz=list.get(i);
 			String factno=kyz.getId().getFactNo();
-			String visaSort=kyz.getVisaType();			
+			String visaSort=kyz.getVisaType();
+			if(visaSort==null){
+				visaSort="";
+			}
 			String typename=visaSort;			
 			//typename=webtypeSer.findTypeNameById(factno, visaSort.substring(0, 2));									
 			for(int j=0;j<list_type.size();j++){//for2
 				WebType type=list_type.get(j);
-				if(factno.equals(type.getId().getFactNo())&&visaSort.substring(0,2).equals(type.getId().getTypeNo())){
-					typename=type.getTypeName();					
-					break;
+				if(visaSort.length()>0){
+					if(factno.equals(type.getId().getFactNo())&&visaSort.substring(0,2).equals(type.getId().getTypeNo())){
+						typename=type.getTypeName();					
+						break;
+					}
 				}
+				
 			}//for2
 			kyz.setColTemp(typename);
 		}//for1				

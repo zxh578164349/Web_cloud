@@ -58,11 +58,20 @@ public class WebYdataAction extends ActionSupport implements
 	private String goadd;
 	private String sdate;
 	private String edate;
+	private String ajaxResult;//申請函文時返回的ajax結果,   0:提交成功       1:提交失敗
 	
 	
 
 	public String getSdate() {
 		return sdate;
+	}
+
+	public String getAjaxResult() {
+		return ajaxResult;
+	}
+
+	public void setAjaxResult(String ajaxResult) {
+		this.ajaxResult = ajaxResult;
 	}
 
 	public void setSdate(String sdate) {
@@ -234,14 +243,15 @@ public class WebYdataAction extends ActionSupport implements
 		long from=format.parse(yymmdd).getTime();//選擇的時間
 		long betweenDay=(to-from)/(1000*3600*24);//相差的時間
 		
-		//主鍵的日期和達成率，添加與修改都作同樣處理，所以放在try外面
-		date = format.parse(yymmdd);
-		ydata.getId().setYymmdd(date);		
-		if (ydata.getActualYield() != null&& ydata.getStandardOutput() != null) {				
-			achievingRate = ydata.getActualYield()/ ydata.getStandardOutput();					
-			ydata.setAchievingRate(achievingRate);
-		}
 		
+		try{
+			//主鍵的日期和達成率，添加與修改都作同樣處理
+			date = format.parse(yymmdd);
+			ydata.getId().setYymmdd(date);		
+			if (ydata.getActualYield() != null&& ydata.getStandardOutput() != null&&ydata.getStandardOutput()!=0) {				
+				achievingRate = ydata.getActualYield()/ ydata.getStandardOutput();					
+				ydata.setAchievingRate(achievingRate);
+			}
 			/**
 			 * 添加
 			 */
@@ -274,17 +284,20 @@ public class WebYdataAction extends ActionSupport implements
 							}else{
 								dataSer.addYdata(ydata);
 								result="addData";
+								ajaxResult="0";
 							}												
 						}
 					}else{
 						if(ydata_find==null){
 							dataSer.addYdata(ydata);
 							result = "addData";
+							ajaxResult="0";
 						}
 					}
 				}else{
 					dataSer.addYdata(ydata);
 					result = "addData";
+					ajaxResult="0";
 				}
 				/****************************隻限制已輸入數據的廠別，沒有數據就不限制***********************************/
 																												
@@ -360,7 +373,14 @@ public class WebYdataAction extends ActionSupport implements
 					}							
 				}							
 				result = "upData";
+				ajaxResult="0";
 			}// end "else 1"
+		}catch(Exception e){
+			// TODO Auto-generated catch block
+			ajaxResult="1";
+			e.printStackTrace();
+		}
+			
 			if (result == null) {
 				response.setContentType("text/html;charset=utf-8");
 				String temp1 = ydata.getId().getFactNo();

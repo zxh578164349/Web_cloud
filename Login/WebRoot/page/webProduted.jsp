@@ -77,7 +77,19 @@
 	function isDelete(mid) {
 		jConfirm('你确定这么做吗?', '确认对话框', function(r) {
 			if (r == true) {
-				document.getElementById(mid).submit();
+				//document.getElementById(mid).submit();
+				jq.ajax({
+					type:"POST",
+					dataType:"html",
+					data:jq("#"+mid).serialize(),
+					url:"webProduted_delete2",
+					success:function(data){
+						jq("#bodyid").html(data);
+					},
+					error:function(data){
+						jq("#bodyid").html(data.responseText);
+					}
+				});
 			}
 		});
 	}

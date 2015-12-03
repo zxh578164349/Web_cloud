@@ -141,7 +141,7 @@
 						<input type="hidden" value="<s:property value='id.factCode'/>" name="factCode" />							
 						<input type="hidden" value="<s:property value='id.yyyy'/>" name="yyyy" />							
 					</form> 
-					<a href="javascript:document.getElementById('subform${x.index}').submit()"					
+					<a href="javascript:layer.load(0);document.getElementById('subform${x.index}').submit()"					
 					onclick=""><img alt="修改" src="images/icon/edit001.png" title="修改" ></a>
 
 					<form action="kpifact_delete" method="post" id="2subform${x.index}" style="float:left">						

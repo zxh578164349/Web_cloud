@@ -25,7 +25,6 @@
 <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
 <script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="page/jquerys/layer/layer.min.js"></script>
 
  <!--[if lt IE 9]>  
   <script src="bootstrap/html5.js"></script>
@@ -34,24 +33,29 @@
 </head>
 <script>
 	var jq=jQuery.noConflict();
+	var loadi;
+	jq(document).ajaxStart(function(){
+		loadi=layer.load(0);
+	});
+	jq(document).ajaxStop(function(){
+		layer.close(loadi);
+	});
 	function pages(page) {
-	var loadi=layer.load(0);
 		jq.ajax({
 			type : "POST",
 			dataType : "Html",
 			url : "ydata_findPageBean3ForMonth",
 			data : "page=" + page,
 			success : function(msg) {
-			    layer.close(loadi);
 				jq("#bodyid").html(msg);
 			},
 			error : function(xhr) {
-				alert(xhr.responseText);
+				//alert(xhr.responseText);
+				jq("#bodyid").html(xhr.responseText);
 			}
 		});
 	}
 	function submis() {
-		var loadi=layer.load(0);
 		var fact = document.getElementById("factNo");
 		var ym = document.getElementById("year");
 		jq.ajax({
@@ -60,24 +64,15 @@
 			url : "ydata_findPageBean2ForMonth",
 			data : "factNo=" + fact.value + "&yymm=" + ym.value,
 			success : function(msg) {
-			    layer.close(loadi);
 				jq("#bodyid").html(msg);
 			},
 			error : function(xhr) {
-				alert(xhr.responseText);
+				//alert(xhr.responseText);
+				jq("#bodyid").html(xhr.responseText);
 			}
 		});
 	}
 
-	//你确定要删除吗？
-	/* 	function isDelete(mid) {
-	 jConfirm('你确定这么做吗?', '确认对话框', function(r) {
-	 if (r == true) {
-	
-	 document.getElementById(mid).submit();
-	 }
-	 });
-	 } */
 </script>
 
 <body>
@@ -89,7 +84,7 @@
 	</s:if>	
 	<br>
 		<span style="float:right"> <img alt="" src="images/136.gif"><a
-		href="javascript:location.href='ydata_findPageBean'" 
+		href="javascript:layer.load(0);location.href='ydata_findPageBean'" 
 		style="color:blue;text-decoration:underline;float:right;padding-right:30px">按日詳細查看</a>
 	</span>
 

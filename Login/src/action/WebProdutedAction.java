@@ -41,7 +41,16 @@ public class WebProdutedAction extends ActionSupport implements
 	private IWebFactServices webFactSer;
 	private String bs;
 	private PageBean bean;
+	private String ajaxResult;//申請函文時返回的ajax結果,   0:提交成功       1:提交失敗
 	
+
+	public String getAjaxResult() {
+		return ajaxResult;
+	}
+
+	public void setAjaxResult(String ajaxResult) {
+		this.ajaxResult = ajaxResult;
+	}
 
 	public PageBean getBean() {
 		return bean;
@@ -177,36 +186,37 @@ public class WebProdutedAction extends ActionSupport implements
 	 * @throws IOException
 	 */
 	public String addProduted() throws ParseException, IOException {
-		SimpleDateFormat format = new SimpleDateFormat("yyyyMM");// �ͦ��~��榡
-		Date d = null;
+		SimpleDateFormat format = new SimpleDateFormat("yyyyMM");
 		StringBuffer ym = new StringBuffer();
+		String result=null;
 		ym.append(year);
 		ym.append(month);
-		if (year == null && month == null) {
-			produted.getId().setYymm(format.parse(yymm));
+		try{
+			if (year == null && month == null) {
+				produted.getId().setYymm(format.parse(yymm));
+			}
+			Webproduted pro = produtedService.selBycan(produted.getId().getFactNo(), produted.getId().getYymm(),produted.getId().getFactCode());								
+			if (pro != null && bs == null) {
+				response.setContentType("text/html;charset=utf-8");			
+				response.getWriter()
+						.print("<script>alert('數據庫已經存在("
+								+ produted.getId().getFactNo()
+								+ " "
+								+ produted.getId().getFactCode()
+								+ " "
+								+ format.format(produted.getId().getYymm())
+								+ ")!');history.back()</script>");			
+			} else {
+				produtedService.addWebProdutedDao(produted);
+				result="addproduted";
+				ajaxResult="0";
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+			result="addproduted";
+			ajaxResult="1";
 		}
-		Webproduted pro = produtedService.selBycan(
-				produted.getId().getFactNo(), produted.getId().getYymm(),
-				produted.getId().getFactCode());
-		if (pro != null && bs == null) {
-			response.setContentType("text/html;charset=utf-8");
-			String temp1 = produted.getId().getFactNo();
-			String temp2 = produted.getId().getFactCode();
-			String temp3 = format.format(produted.getId().getYymm());
-			response.getWriter()
-					.print("<script>alert('�ƾڮw�w�s�b("
-							+ temp1
-							+ " "
-							+ temp2
-							+ " "
-							+ temp3
-							+ ")!');history.back()</script>");
-			produted = null;
-			return null;
-		} else {
-			produtedService.addWebProdutedDao(produted);
-			return "addproduted";
-		}
+		return result;
 	}
 
 	/**
@@ -281,7 +291,7 @@ public class WebProdutedAction extends ActionSupport implements
 
 	public String delete2() {
 		produtedService.delete(id);
-		return getList();
+		return "delete";
 	}
 	
 	public String formatDouble(Double s){

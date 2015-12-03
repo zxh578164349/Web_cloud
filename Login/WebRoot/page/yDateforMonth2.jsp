@@ -34,24 +34,29 @@
 </head>
 <script>
 	var jq=jQuery.noConflict();
+	var loadi; 
+	jq(document).ajaxStart(function(){
+		loadi=layer.load(0);
+	});
+	jq(document).ajaxStop(function(){
+		layer.close(loadi);
+	});
 	function pages(page) {
-	   var loadi=layer.load(0);
 		jq.ajax({
 			type : "POST",
 			dataType : "Html",
 			url : "sumwebydata_findPageBean3",
 			data : "page=" + page,
 			success : function(msg) {
-			    layer.close(loadi);
 				jq("#bodyid").html(msg);
 			},
 			error : function(xhr) {
-				alert(xhr.responseText);
+				//alert(xhr.responseText);
+				jq("#bodyid").html(xhr.responseText);
 			}
 		});
 	}
 	function submis() {
-		var loadi=layer.load(0);
 		var fact = document.getElementById("factNo");
 		var begin_yymm = document.getElementById("begin_yymm");
 		var end_yymm=document.getElementById("end_yymm");
@@ -61,11 +66,11 @@
 			url : "sumwebydata_findPageBean2",
 			data : "factNo=" + fact.value + "&begin_yymm=" + begin_yymm.value+"&end_yymm="+end_yymm.value,
 			success : function(msg) {
-			    layer.close(loadi);
 				jq("#bodyid").html(msg);
 			},
 			error : function(xhr) {
-				alert(xhr.responseText);
+				//alert(xhr.responseText);
+				jq("#bodyid").html(xhr.responseText);
 			}
 		});
 	}
@@ -73,8 +78,20 @@
 	//你确定要删除吗？
  	function isDelete(mid) {
 	 jConfirm('你确定这么做吗?', '确认对话框', function(r) {
-	 if (r == true) {	
-	 document.getElementById(mid).submit();
+	 if (r == true) {		 
+	   //document.getElementById(mid).submit();
+	   jq.ajax({
+		   type:"POST",
+		   dataType:"html",
+		   data:jq("#"+mid).serialize(),
+		   url:"sumwebydata_delete",
+		   success:function(data){
+			 jq("#bodyid").html(data);  
+		   },
+		   error:function(err){
+			   jq("#bodyid").html(err.responseText);
+		   }
+	   });
 	 }
 	 });
 	 }
@@ -157,12 +174,12 @@ function showDiv_update(factNo,factCode,yymm){
 	<s:if test='#session.loginUser.userread!="1"'>
 	<span style="float:right">
 	  <img alt="" src="images/136.gif">
-	  <a href="javascript:showDiv()" style="color:blue;text-decoration:underline;padding-right:30px">
+	  <a href="javascript:layer.load(0);showDiv()" style="color:blue;text-decoration:underline;padding-right:30px">
 	         添加每月盤點數據</a>
 	</span>
 	</s:if>
 	<span style="float:right"> <img alt="" src="images/136.gif"><a
-		href="javascript:location.href='ydata_findPageBean'" 
+		href="javascript:layer.load(0);location.href='ydata_findPageBean'" 
 		style="color:blue;text-decoration:underline;float:right;padding-right:30px">按日詳細查看</a>
 	</span>
 	<!-- <s:if test="#session.loginUser.username=='admin'">

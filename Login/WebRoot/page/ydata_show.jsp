@@ -33,7 +33,7 @@
   <![endif]-->	
 </head>
 <script>
-	var jq=jQuery.noConflict();
+    var jq=jQuery.noConflict();
 	var loadi; 
 	jq(document).ajaxStart(function(){
 		loadi=layer.load(0);
@@ -77,11 +77,31 @@
 	function isDelete(mid) {
 		jConfirm('你确定这么做吗?', '确认对话框', function(r) {
 			if (r == true) {
-				/* window.location.href = "backmat_delete?billNo=" + mid; */
 				document.getElementById(mid).submit();
 			}
 		});
 	}
+	//無提示刪除
+	function delete_ydata(subform){
+	   var flag=confirm("確定要刪除嗎?");
+	   
+	   if(flag==true){	   
+	      //document.getElementById(subform).submit();
+	      jq.ajax({
+	    	  type:"POST",
+	    	  dataType:"html",
+	    	  data:jq("#"+subform).serialize(),
+	    	  url:"ydata_delete",
+	    	  success:function(data){
+	    		  jq("#bodyid").html(data);
+	    	  },
+	    	  error:function(err){
+	    		  jq("#bodyid").html(err.responseText);
+	    	  }
+	      })
+	   }
+	}
+	
 	function gosubmit(){
 	  document.getElementById('mydiv').style.display = 'block';
 	  document.getElementById("emailform").submit();
@@ -116,7 +136,8 @@ function showDiv(){
        if(flag==true){
           this.showDiv();
        }
-    }    	
+    }
+  
 </script>
 
 <body>
@@ -170,15 +191,15 @@ function showDiv(){
 	</span>
 	</s:if>
 	<span style="float:right"> <img alt="" src="images/136.gif"><a
-		href="javascript:window.location.href='sumwebydata_findPageBean'" 
+		href="javascript:layer.load(0);window.location.href='sumwebydata_findPageBean'" 
 		style="color:blue;text-decoration:underline;padding-right:30px">查看盤點數據</a>
 	</span>			
 	<span style="float:right"> <img alt="" src="images/136.gif"><a
-		href="javascript:window.location.href='ydata_findPageBeanForMonth'" 
+		href="javascript:layer.load(0);window.location.href='ydata_findPageBeanForMonth'" 
 		style="color:blue;text-decoration:underline;padding-right:30px">按月合計查看</a>
 	</span>	
 	<span style="float:right"> <img alt="" src="images/136.gif"><a
-		href="ydata_go_temp"
+		href="javascript:layer.load(0);location.href='ydata_go_temp'"
 		style="color:blue;text-decoration:underline;padding-right:30px">點擊查找每天漏輸數據廠別</a>
 	</span>
 	<s:if test='#attr.loginUser.username=="admin"'>
@@ -192,10 +213,10 @@ function showDiv(){
 	<div id="bodyid">
 		<jsp:include page="table1/ydata_show1.jsp" />
 	</div>
-	<div id="mydiv">
+	<%--<div id="mydiv">
 		<p>
 			<img alt="" src="images/loading004.gif"><br> Loading....
 		</p>
 	</div>
-</body>
+--%></body>
 </html>

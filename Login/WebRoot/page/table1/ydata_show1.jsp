@@ -114,14 +114,8 @@ function delete_admin(factNo,yymmdd,subform){
        }
    })
 }
-//無提示刪除
-function delete_ydata(subform){
-   var flag=confirm("確定要刪除嗎?");
-   if(flag==true){
-      document.getElementById(subform).submit();
-   }
-}	
 
+	
 </script>
 <script type='text/javascript' src='/Login/dwr/engine.js'></script>
 <script type='text/javascript' src='/Login/dwr/util.js'></script>
@@ -196,14 +190,8 @@ function delete_ydata(subform){
 						<input type="hidden" value="<s:property value='id.yymmdd'/>"
 							name="id.yymmdd" />
 					</form> 
-					<s:if test='username==#attr.loginUser.username||#attr.loginUser.username=="admin"'>
-					  <%-- <s:if test='username==#attr.loginUser.username'>
-					      <a href="javascript:checkResult('${temp.id.factNo}',<s:date name='id.yymmdd' format='yyyyMM'/>,'subform${x.index}');" ><img alt="修改" src="images/icon/edit001.png" title="修改" ></a>
-					  </s:if>
-					  <s:if test='#attr.loginUser.username=="admin"'>
-					      <a href="javascript:checkResult_admin('${temp.id.factNo}',<s:date name='id.yymmdd' format='yyyyMM'/>,'subform${x.index}');" ><img alt="修改" src="images/icon/edit001.png" title="修改" ></a>
-					  </s:if> --%>	
-					  <a href="javascript:update_ydata('subform${x.index}');" ><img alt="修改" src="images/icon/edit001.png" title="修改" ></a> 				  	
+					<s:if test='username==#attr.loginUser.username||#attr.loginUser.username=="admin"'>					  
+					  <a href="javascript:layer.load(0);update_ydata('subform${x.index}');" ><img alt="修改" src="images/icon/edit001.png" title="修改" ></a> 				  	
 					</s:if>
 					<s:else>
 					  <a disabled style="color:grey"><img alt="修改" src="images/icon/edit001_1.png" title="修改" ></a>

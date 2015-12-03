@@ -73,7 +73,7 @@
 																		
 					<s:if test='#session.loginUser.userread!="1"'>					
 					<td>
-						<a href="webtype_findById?factNo=${id.factNo}&typeNo=${id.typeNo}"><img alt="修改" src="images/icon/edit001.png" title="修改"></a>&nbsp;					
+						<a href="javascript:findById('${id.factNo}','${id.typeNo}')"><img alt="修改" src="images/icon/edit001.png" title="修改"></a>&nbsp;					
 						<a href="javascript:mydelete('${id.factNo}','${id.typeNo}')"><img alt="刪除" src="images/icon/delete001.png" title="刪除"></a>						
 					</td>
 					</s:if>

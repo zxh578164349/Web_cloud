@@ -25,13 +25,14 @@
 <link rel="stylesheet" type="text/css" href="css/general_css.css" />
 <link href="tablecloth/tablecloth.css" rel="stylesheet" type="text/css" media="screen" />
 <script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script> 
-<script type="text/javascript" src="page/jquerys/layer/layer.min.js"></script> 
+<script type="text/javascript" src="page/jquerys/layer/layer.min.js"></script>
+
 
 <!-- 新 Bootstrap 核心 CSS 文件 -->
 <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
 <script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="page/jquerys/layer/layer.min.js"></script>
+
 
  <!--[if lt IE 9]>  
   <script src="bootstrap/html5.js"></script>
@@ -84,8 +85,19 @@
 	function isDelete(mid) {
 		jConfirm('你确定这么做吗?', '确认对话框', function(r) {
 			if (r == true) {
-				/* window.location.href = "backmat_delete?billNo=" + mid; */
-				document.getElementById(mid).submit();
+				//document.getElementById(mid).submit();
+				jq.ajax({
+					type:"POST",
+					dataType:"html",
+					url:"visaflow_delete",
+					data:jq("#"+mid).serialize(),
+					success:function(data){
+						jq("#bodyid").html(data);						
+					},
+					error:function(data){
+						jq("#bodyid").html(data.responseText);
+					}
+				});
 			}
 		});
 	}
@@ -110,6 +122,7 @@
 			}
 		});
 	}
+ 
 </script>
 
 

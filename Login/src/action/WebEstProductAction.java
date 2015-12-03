@@ -41,8 +41,17 @@ public class WebEstProductAction extends ActionSupport implements
 	private Webestproduct pro;
 	private IWebFactServices webFactSer;
 	private String lookordown;
+	private String ajaxResult;//申請函文時返回的ajax結果,   0:提交成功       1:提交失敗
 	
 	
+
+	public String getAjaxResult() {
+		return ajaxResult;
+	}
+
+	public void setAjaxResult(String ajaxResult) {
+		this.ajaxResult = ajaxResult;
+	}
 
 	public String getLookordown() {
 		return lookordown;
@@ -138,74 +147,41 @@ public class WebEstProductAction extends ActionSupport implements
 		DateFormat format = new SimpleDateFormat("yyyyMM");
 		Date date = null;
 		String result = null;
-
 		try {
-			if (isnull.equals("isnull")) {
-				date = format.parse(yymm);
-				pro.getId().setYymm(date);
-				String factNo1 = pro.getId().getFactNo();
-				String factCode1 = pro.getId().getFactCode();
-				String type=pro.getId().getType();
-				String fact = (String) ActionContext.getContext().getSession()
-						.get("factNo");
-				List<Webestproduct> list = estProSer.findByFactNo(fact);
-				if (list.size() > 0) {
-					for (int i = 0; i < list.size(); i++) {
-						if (factCode1.equals(list.get(i).getId().getFactCode())
-								&& factNo1.equals(list.get(i).getId()
-										.getFactNo())
-								&& pro.getId().getYymm()
-										.equals(list.get(i).getId().getYymm())
-										&&type.equals(list.get(i).getId().getType())) {
-
-							break;
-						} else if (i == list.size() - 1) {
-							estProSer.add(pro);
-							result = "add";
-						}
-					}// end for
-				} else {
+			date = format.parse(yymm);
+			pro.getId().setYymm(date);
+			if (isnull.equals("isnull")) {												
+				Webestproduct temp=estProSer.findById(pro.getId().getFactNo(), pro.getId().getFactCode(), yymm, pro.getId().getType());
+				if (temp==null) {
 					estProSer.add(pro);
 					result = "add";
-				}
-
+					ajaxResult="0";
+				} 
 			} else {
-				date = format.parse(yymm);
-				pro.getId().setYymm(date);
 				estProSer.add(pro);
 				result = "add";
+				ajaxResult="0";
 			}
-
-			if (result == null) { // �P�_��^���G
-				response.setContentType("text/html;charset=utf-8");
-				String temp1 = pro.getId().getFactNo();
-				String temp2 = pro.getId().getFactCode();
-				String temp3 = format.format(pro.getId().getYymm());
-				String temp4=pro.getId().getType();
+			if (result == null) {
+				response.setContentType("text/html;charset=utf-8");				
 				response.getWriter()
-						.print("<script>alert('�ƾڮw�w�s�b("
-								+ temp1
+						.print("<script>alert('數據庫已經存在("
+								+ pro.getId().getFactNo()
 								+ " "
-								+ temp2
+								+ pro.getId().getFactCode()
 								+ " "
-								+ temp3
+								+ format.format(pro.getId().getYymm())
 								+" "
-								+temp4
+								+pro.getId().getType()
 								+ ")!');history.back()</script>");
-				return result;
-			} else {
-				return result;
-			}
-
-		} catch (ParseException e) {
+			} 
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			return "fails";
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return "fails";
-		}
+			result="add";
+			ajaxResult="1";
+		} 
+		return result;
 	}
 
 	public String findPageBean() {

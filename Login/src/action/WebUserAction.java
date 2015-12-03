@@ -715,12 +715,6 @@ public class WebUserAction extends ActionSupport implements ServletResponseAware
 			jurisdictionService.delJur(list.get(i));
 		}
 		
-		/*Json json = new Json();
-		try {
-			json.writeJson("修改權限成功");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}*/
 		return "updateJurisdiction";
 	}
 
@@ -808,7 +802,13 @@ public class WebUserAction extends ActionSupport implements ServletResponseAware
 		return "delete";
 	}
 	public String add(){
-		webUserService.add(webUsers);
+		try{
+			webUserService.add(webUsers);
+			ajax_result="0";
+		}catch(Exception e){
+			e.printStackTrace();
+			ajax_result="1";
+		}		
 		return "add";
 	}
 	

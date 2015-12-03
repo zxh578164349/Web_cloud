@@ -49,15 +49,10 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 				"*0-6" : /^\d{0,9}(\.[0-9]{1,3})?$/,
 				"my0-8": /^\d{0,8}(\.[0-9]{1,4})?$/
 			},
-			ajaxPost:true,
-			callback:function(data){
-				if(data=="0"){
-					layer.msg("函文申請成功!",3,1);
-				}
-				if(data=="1"){
-					alert(data.responseText);
-				}
+			beforeSubmit:function(curform){
+				loadi=layer.load("正在處理,請稍等...(系統爲了節省開銷,已取消自動下載函文!)")
 			}
+			
 		});
 		demo.tipmsg.w["*0-6"] = "只能數字且不超過9位數,可保留三位以內小數";
 		demo.tipmsg.w["my0-8"]="只能數字且不超過8位數,可保留四位以內小數";
@@ -202,7 +197,10 @@ function getKyType2(factno){
       }               
   }
 
-
+  function back(){
+		layer.load("正在返回,請稍等...");
+		location.href="/Login/kyzletter_findPageBean";
+	}
 </script>
 <script type='text/javascript' src='/Login/dwr/interface/kyzcontactletterjs.js'></script>
 <script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>
@@ -295,7 +293,7 @@ table.gridtable td.tdcolor {
 <body onload="getKyType(),makeBillNo()">  
  
 　     <s:if test="kyzletter==null">
-      <form action="kyzletter_add" method="post" id="form" target="_blank" enctype="multipart/form-data">
+      <form action="kyzletter_add" method="post" id="form"  enctype="multipart/form-data">
     </s:if>
     <s:else>
        <form action="kyzletter_add" method="post" id="form" enctype="multipart/form-data">
@@ -454,7 +452,7 @@ table.gridtable td.tdcolor {
 			  <center style="width:850px;margin-left:50px">			    
 				<input type="submit" id="sub" value="確定" onmouseover="this.style.backgroundPosition='left -40px'" onmouseout="this.style.backgroundPosition='left top'"/>&nbsp;&nbsp;&nbsp; <input
 					type="reset" id="reset" value="重置" onmouseover="this.style.backgroundPosition='left -40px'" onmouseout="this.style.backgroundPosition='left top'"/>
-										
+					<input type="button" value="返回" onclick="back()" id="btn_back" onmouseover="this.style.backgroundPosition='left -40px'" onmouseout="this.style.backgroundPosition='left top'"/>					
 			</center>
 				
 	</div>		

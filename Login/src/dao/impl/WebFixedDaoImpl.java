@@ -146,4 +146,13 @@ public class WebFixedDaoImpl extends Basedao implements IWebFixedDao {
 		return super.getAllWithNoPage(hql.toString(), map);
 	}
 
+	public String findByFixId(String fixedId) {
+		// TODO Auto-generated method stub
+		String hql="select fixedId from WebFixed where fixedId=?";
+		Query query=getSession().createQuery(hql);
+		query.setString(0, fixedId);
+		String id=(String)query.uniqueResult();
+		return id;
+	}
+
 }

@@ -100,14 +100,25 @@ function move(obj){
  function mydelete(factNo,email,emailpwd,visaSort){
     var flag=confirm("確定要刪除嗎?");
     if(flag==true){
-       window.location.href="webuseremaila_delete?factNo="+factNo+"&email="+email+"&emailPwd="+emailpwd+"&visaSort="+visaSort;
-       /* webuseremailajs.deleteObj(factNo,email,emailpwd,visaSort,function(x){deleteObj
-           if(x==false){
-              alert("刪除失敗");
-           }
-       }); */
-       layer.load("正在處理,請稍後....");
+       //window.location.href="webuseremaila_delete?factNo="+factNo+"&email="+email+"&emailPwd="+emailpwd+"&visaSort="+visaSort;     
+       //layer.load("正在處理,請稍後....");
+       jq.ajax({
+    	   type:"POST",
+    	   dataType:"html",
+    	   data:"factNo="+factNo+"&email="+email+"&emailPwd="+emailpwd+"&visaSort="+visaSort,
+    	   url:"webuseremaila_delete",
+    	   success:function(data){
+    		   jq("#bodyid").html(data);
+    	   },
+    	   error:function(data){
+    		   jq("#bodyid").html(data.responseText);
+    	   }
+       });
     }
+}
+function findById(factno,email,emailpwd,visasort){
+	location.href="webuseremaila_findById?factNo="+factno+"&email="+email+"&emailPwd="+emailpwd+"&visaSort="+visasort;
+	layer.load("正在跳轉,請稍等...");
 }
 
 </script>

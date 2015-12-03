@@ -13,7 +13,7 @@ public interface IKyzVisaFlowDao {
 	public void delete(KyzVisaflowId id);
 	public List<KyzVisaflow> findByFactNo(String factno);
 	public List<KyzVisaflow> findByType(String factNo,String visaSort);
-	public String findVisaSort_dwr(String factNo,String visaSort,String email);//¬d§ä¨ç¤å¥Ó½Ð®ÉªºÃþ§O
+	public String findVisaSort_dwr(String factNo,String visaSort,String email);
 	
 	public List<String> findVisaSort_C(String factNo,String maiSort);
 	public List<KyzVisaflow>findByFactNoVisaSort(String factNo,String visaSort);
@@ -21,5 +21,7 @@ public interface IKyzVisaFlowDao {
 	public KyzVisaflow findMaxFlow(String factNo,String visaSort);
 	
 	public void delete2(KyzVisaflow flow);
+	
+	public String findVisaSigner(String factNo,String visaSort);//æ ¹æ“šå» åˆ¥ï¼Œé¡žåˆ¥æ‰¾å‡ºç”³è«‹äºº
 	
 }

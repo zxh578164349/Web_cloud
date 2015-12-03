@@ -15,10 +15,12 @@ public interface IWebFixedDao {
 
 	public WebFixed findById(String id);
 
-	public List findById2(String majorid);// ¦P¤@¤j¤ÀÃþ©Ò¦³ªºASSETSCODING
+	public List findById2(String majorid);// ï¿½Pï¿½@ï¿½jï¿½ï¿½ï¿½ï¿½ï¿½Ò¦ï¿½ï¿½ï¿½ASSETSCODING
 
-	public List findAllFixedassetsId();// ªí¤¤©Ò¦³fixedassets_id
+	public List findAllFixedassetsId();// ï¿½?ï¿½Ò¦ï¿½fixedassets_id
 
 	public List<WebFixed> findByFactNo(String factNo, String yymm,String yymm_s,String lostmk);
+	
+	public String findByFixId(String fixedId);
 
 }

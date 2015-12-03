@@ -101,7 +101,7 @@ table.altrowstable caption{
     //fadeIn:300,
     //shift:'top',
     offset:['10px',''],
-    area: ['800px', '560px'],
+    area: ['560px', '450px'],
     //page:{url:'kyzletter_findById_layer?billNo='+billNo+'& factNo='+factNo }
     iframe:{src:'kyzletter_findById_layer?billNo='+billNo+'& factNo='+factNo+'& readMk=Y',scrolling:'auto'}
     /* close:function(){
@@ -182,7 +182,7 @@ table.altrowstable caption{
     //fadeIn:300,
    // shift:'top',
     offset:['10px',''],
-    area: ['800px', '560px'],
+    area: ['600px', '500px'],
     //page:{url:'kyzletter_findById_layer?billNo='+billNo+'& factNo='+factNo},
     //iframe:{src:'kyzletter_findById_layer?billNo='+billNo+'& factNo='+factNo,scrolling:'auto'},    
     iframe:{src:'kyzletter_findById_layer?billNo='+billNo+'& factNo='+factNo+'& itemNo='+itemNo+'& visaSort='+visaSort+'& readMk=N',scrolling:'auto'},
@@ -251,6 +251,10 @@ function tips(memo,index){
     time: 10,
     closeBtn:[0, true]
 });
+}
+function back(){
+	layer.load("正在返回,請稍等...");
+	location.href="/Login/vbm_findPageBean";
 }
 </script>
 </head>
@@ -322,7 +326,7 @@ function tips(memo,index){
 	      </s:iterator>
 		</tr>
 		<tr><td colspan="<s:property value='vbm.kyVisabillses.size()+1'/>">	
-		<a href="vbm_findPageBean">返回</a>
+		<a href="javascript:back()">返回</a>
 		</td></tr>
 	</table>
  </div>	

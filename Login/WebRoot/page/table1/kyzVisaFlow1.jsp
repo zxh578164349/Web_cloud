@@ -21,33 +21,39 @@
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
 <link rel="stylesheet" type="text/css" href="css/mystyle.css" />
+<script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script> 
+<script type="text/javascript" src="page/jquerys/Validform_v5.3.2_min.js"></script>
 <script type="text/javascript">
-	  function check(obj){
-	   var j = jQuery.noConflict();
-	  j(function(){ 	
-		var demo=j("#"+obj).Validform({
-		//btnSubmit : "#"+obj2,
-		tiptype : 3,
-		showAllError : true,
-		tipSweep : true,
-		datatype : {
-				"*0-6" : /^\d{0,9}(\.[0-9]{1,3})?$/,
-				"*1-6" : /^[1-9]{1}\d{0,8}(\.[0-9]{1,3})?$/,
-				"*0-7" : /^\d{0,7}(\.[0-9]{1})?$/
 
-			}
-		/* callback:function(){
-		  document.getElementById("mydiv").style.display="block";
-		   j("#"+obj).submit();
-		   return false;
-		} */	
-		});
-		demo.tipmsg.w["*0-6"] = "只能數字且不超過9位數,可保留三位以內小數";
-		demo.tipmsg.w["*1-6"] = "不為0的數字且不超過9位數,可保留三位以內小數";
-		demo.tipmsg.w["*0-7"] = "只能數字且不超過7位數,可保留一位以內小數";
-	  })		
-	}
-	
+	   
+	   	function addflow(subform,btn){
+	   		var jq = jQuery.noConflict();
+	   		var loadi;
+	   		jq(document).ajaxStart(function(){
+	   			loadi=layer.load(0);
+	   		});
+	   		jq(document).ajaxStop(function(){
+	   			layer.close(loadi);
+	   		});
+	   		jq(subform).Validform({
+	   			btnSubmit : btn,
+	   			tiptype : 4,
+	   			showAllError : true,
+	   			tipSweep : true,
+	   			ajaxPost:true,
+	   			callback:function(data){	   				
+	   					if(data=="0"){
+	   						layer.msg("提交成功!",3,1);
+	   						location.href="/Login/visaflow_findPageBean";
+	   					}
+	   					if(data=="1"){
+	   						alert(data.responseText);
+	   					}
+	   			}	   			
+	   			});
+	   			
+	   	}
+						 	
 	function showDiv(obj){
 	  var j=jQuery.noConflict();
 	  j("#"+obj).show(300);
@@ -118,26 +124,7 @@
 			</s:else>	 
 				
 				<td><s:property value="id.factNo" /></td>
-				<td>
-				   <!-- <s:if test='id.visaSort=="W"'>臺灣簽核</s:if>
-				   <s:if test='id.visaSort=="Q"'>企劃簽核</s:if>
-				   <s:if test='id.visaSort=="Z"'>總務簽核</s:if>
-				   <s:if test='id.visaSort=="L"'>實驗室簽核</s:if>
-				   <s:if test='id.visaSort=="G"'>工程簽核</s:if>
-				   <s:if test='id.visaSort=="I"'>IKT簽核</s:if>
-				   <s:if test='id.visaSort=="Y"'>油壓簽核</s:if>
-				   <s:if test='id.visaSort=="P"'>品管簽核</s:if>
-				   <s:if test='id.visaSort=="S"'>生管簽核</s:if>
-				   <s:if test='id.visaSort=="T"'>整理簽核</s:if>
-				   <s:if test='id.visaSort=="B"'>備料簽核</s:if>
-				   <s:if test='id.visaSort=="F"'>廠務簽核</s:if>
-				   <s:if test='id.visaSort=="O"'>業務簽核</s:if>
-				   <s:if test='id.visaSort.substring(0,2)=="C1"'>其他費用簽核1(<1000元)</s:if>
-				   <s:if test='id.visaSort.substring(0,2)=="C2"'>其他費用簽核2(>=1000元)</s:if>
-				   <s:if test='id.visaSort.substring(0,2)=="C3"'>電腦耗材簽核1(<1000元)</s:if>
-				   <s:if test='id.visaSort.substring(0,2)=="C4"'>電腦耗材簽核2(>=1000元)</s:if>
-				   <s:if test='id.visaSort.substring(0,2)=="C5"'>總務費用簽核1(<1000元)</s:if>
-				   <s:if test='id.visaSort.substring(0,2)=="C6"'>總務費用簽核2(>=1000元)</s:if> -->
+				<td>				  
 				   <s:property value="colTemp"/>
 				</td>
 				<td><s:property value="id.purmanNo" /></td>
@@ -155,7 +142,7 @@
 							<input type="hidden" value="<s:property value='id.itemNo'/>" name="id.itemNo"/>							
 					</form> 					
 					
-					  <a href="javascript:document.getElementById('subform${x.index}').submit()" onclick="" ><img alt="修改" src="images/icon/edit001.png" title="修改" ></a>&nbsp;														
+					  <a href="javascript:layer.load(0);document.getElementById('subform${x.index}').submit()"><img alt="修改" src="images/icon/edit001.png" title="修改" ></a>&nbsp;														
 					<form action="visaflow_delete" method="post" id="2subform${x.index}"
 						style="float:left">
 						<input type="hidden" value="<s:property value='id.factNo'/>"
@@ -185,7 +172,7 @@
 					   <a href="javascript:document.getElementById('3subform${x.index}').submit()"><img alt="添加知會" src="images/icon/add001_2.png" title="添加知會"></a>
 					 </s:else>	
 					 
-					 <form action="visaflow_addflow" method="post" id="3subform${x.index}"
+					 <form action="visaflow_addflow" method="post" id="5subform${x.index}"
 						style="float:left">
 						<input type="hidden" value="<s:property value='id.factNo'/>" name="id.factNo" />
 						<input type="hidden" value="<s:property value='id.visaSort'/>" name="id.visaSort" />							
@@ -200,13 +187,13 @@
 					  <div id="div_add${x.index}" style="display:none">
 					  <table>
 					  <tr>
-					 <td>姓名:<input type="text" name="purmanNo" id="purmanNo${x.index}" datatype="*" value=""/><span id="spurmanNo${x.index}"></span></td> 
-					  <td>Email:<input type="text" name="visaSigner" id="visaSigner${x.index}" datatype="e" value=""/><span id="svisaSigner${x.index}"></span></td>
-					    <td>職位:<input type="text" name="visaRank" id="visaRank${x.index}" datatype="*" value=""/><span id="svisaRank${x.index}"></span></td> 
+					 <td>姓名:<input type="text" name="purmanNo" id="purmanNo${x.index}" datatype="*" /></td> 
+					  <td>Email:<input type="text" name="visaSigner" id="visaSigner${x.index}" datatype="e" /></td>
+					    <td>職位:<input type="text" name="visaRank" id="visaRank${x.index}" datatype="*" /></td> 
 					 </tr>
 					  </table>
-					  <br/><input type="submit" value="確定" onclick="javascript:check('3subform${x.index}')" id="btn${x.index}"/>
-					  <input type="button" value="取消" onclick="javascript:hideDiv('div_add${x.index}')"/>
+					  <br/><input type="submit" value="確定"  id="btn${x.index}" onclick="addflow('#5subform${x.index}','#btn${x.index}')"/>
+					  <input type="button" value="取消" onclick="hideDiv('div_add${x.index}')"/>
 					  </div>
 					  </form>	
 					  <s:if test='id.factNo==#attr.loginUser.factno||#attr.loginUser.username=="admin"'>

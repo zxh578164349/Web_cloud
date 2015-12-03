@@ -28,19 +28,37 @@
 <script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script>
 <script type="text/javascript" src="jquery/Validform_v5.3.2_min.js"></script>
 <script type="text/javascript" src="jquery/DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="jquery/layer/layer.min.js"></script>
 </head>
 <script type="text/javascript">
-	$(function() {
-		var j = jQuery.noConflict();
-		var demo = j("#form").Validform({
+var jq=jQuery.noConflict();
+var loadi;
+jq(document).ajaxStart(function(){
+	loadi=layer.load("正在提交,請稍等...");
+});
+jq(document).ajaxStop(function(){
+	layer.close(loadi);
+});
+	jq(function() {
+		var demo = jq("#form").Validform({
 			btnSubmit : "#sub",
-			tiptype : 3,
+			tiptype : 4,
 			tipSweep:true,
 			showAllError : true,
 			datatype : {
 				"*0-9" : /^-?\d{1,9}(\.[0-9]{1,3})?$/,
 				"*0-7" : /^-?\d{1,7}(\.[0-9])?$/
-
+			},
+			ajaxPost:true,
+			callback:function(data){
+				if(data=="0"){
+					layer.msg("提交成功!",3,1);
+					location.href="/Login/webbackfeed_findPageBean"; 
+					alert(location.href);
+				}
+				if(data=="1"){
+					alert(data.responseText);
+				}
 			}
 		});
 		demo.tipmsg.w["*0-9"] = "只能數字且不超過9位數,可保留三位以內小數";
@@ -55,11 +73,8 @@
 
 	}
 	function back() {
-		if (navigator.userAgent.indexOf("MSIE") > 0) {
-			location.href = "../webbackfeed_findPageBean";
-		} else {
-			location.href = "webbackfeed_findPageBean";
-		}
+		    layer.load("正在返回,請稍等...");
+			location.href = "/Login/webbackfeed_findPageBean";		
 	}
 	 function check(){
        var factno=document.getElementById("dwr_factno").value;
@@ -95,7 +110,8 @@ window.onload=function(){
                  inputs[i].onkeyup=function(){ 
                     this.value=this.value.replace(/(^\s+)|\s+$/g,""); 
                  }; 
-            }  
+            }
+            window.status="Finished";
         } 
 </script>
 <script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>
@@ -216,13 +232,7 @@ window.onload=function(){
 		<center>
 			<input type="submit" id="sub" value="確定" onmouseover="this.style.backgroundPosition='left -40px'" onmouseout="this.style.backgroundPosition='left top'"/>&nbsp;&nbsp;&nbsp; <input
 				type="reset" id="reset" value="重置" onmouseover="this.style.backgroundPosition='left -40px'" onmouseout="this.style.backgroundPosition='left top'"/>&nbsp;&nbsp;&nbsp;
-			<s:if test="feed!=null">
-				<input type="button" value="返回" id="btn_back"
-					onclick="javascript:location.href='webbackfeed_findPageBean'" onmouseover="this.style.backgroundPosition='left -40px'" onmouseout="this.style.backgroundPosition='left top'"/>
-			</s:if>
-			<s:else>
 				<input type="button" value="返回" onclick="back()" id="btn_back" onmouseover="this.style.backgroundPosition='left -40px'" onmouseout="this.style.backgroundPosition='left top'"/>
-			</s:else>
 
 		</center>
 	</form>

@@ -109,7 +109,12 @@
 			 	<td>
 			 	<ul>
 			 	    <li>
-					<%-- <a href="javascript:check('${temp.id.kyVisabillm.id.visaSort }','${temp.id.kyVisabillm.id.billNo}','${temp.id.kyVisabillm.id.factNo}')">審核</a> --%>
+					 <form action="vbm_findById" method="post" id="0form${x.index}" style="float:left">
+					   <input type="hidden" value="<s:property value='id.kyVisabillm.id.factNo'/>"
+							name="factNo" /> <input type="hidden"
+							value="<s:property value='id.kyVisabillm.id.billNo'/>" name="billNo" />						
+							<input type="hidden" value="<s:property value='id.kyVisabillm.id.visaSort'/>" name="visaSort"/>
+					 </form>
 					 <form action="vbm_findById2" method="post" id="1form${x.index}" style="float:left">
 					   <input type="hidden" value="<s:property value='id.kyVisabillm.id.factNo'/>"
 							name="factNo" /> <input type="hidden"
@@ -172,21 +177,21 @@
 				    </li>	 
 					<s:if test='#session.loginUser.userread!="1"'>
 					<li>					
-					<a href="vbm_findById?visaSort=<s:property value='id.kyVisabillm.id.visaSort'/>& billNo=<s:property value='id.kyVisabillm.id.billNo'/>& factNo=<s:property value='id.kyVisabillm.id.factNo'/>" >
+					<a href="javascript:layer.load(0);document.getElementById('0form${x.index}').submit()" >
 					<img alt="審核" src="images/icon/check24.png" title="審核"><br>審核
 					</a>
 					</li>
 					<s:if test='id.kyVisabillm.visaMk=="N"'>
 					<li>
-					 <a href="javascript:document.getElementById('1form${x.index}').submit()"><img alt="加簽" src="images/icon/add24.png" title="加簽"><br>加簽</a>
+					 <a href="javascript:layer.load(0);document.getElementById('1form${x.index}').submit()"><img alt="加簽" src="images/icon/add24.png" title="加簽"><br>加簽</a>
 					</li>
 					 <s:if test='#session.loginUser.factno=="JW"'>
 					<li>
-					 <a href="javascript:document.getElementById('3form${x.index}').submit()"><img alt="減簽" src="images/icon/minus24.png" title="減簽"><br>減簽</a>					 
+					 <a href="javascript:layer.load(0);document.getElementById('3form${x.index}').submit()"><img alt="減簽" src="images/icon/minus24.png" title="減簽"><br>減簽</a>					 
 					 </li>
 					 </s:if>
 					 <li>
-					   <a href="javascript:document.getElementById('3_3form${x.index}').submit()"><img alt="減簽(带删除)" src="images/icon/remove.png" title="減簽(带删除)"><br>減簽D</a>
+					   <a href="javascript:layer.load(0);document.getElementById('3_3form${x.index}').submit()"><img alt="減簽(带删除)" src="images/icon/remove.png" title="減簽(带删除)"><br>減簽D</a>
 					 </li>
 					 </s:if>
 					 <s:else>

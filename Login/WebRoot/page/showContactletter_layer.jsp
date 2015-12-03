@@ -93,63 +93,7 @@ table.gridtable td {
 				</td>
 				<td>類別</td>
 				<td colspan="3">
-				<!-- <s:if test='kyzletter.visaType=="F"'>
-				  廠務簽核
-				</s:if>
-				<s:if test='kyzletter.visaType=="W"'>
-				臺灣簽核
-				</s:if>
-				<s:if test='kyzletter.visaType=="G"'>
-				  工程簽核
-				</s:if>
-				<s:if test='kyzletter.visaType=="I"'>
-				IKT簽核
-				</s:if>	
-				<s:if test='kyzletter.visaType=="L"'>
-				  實驗室簽核
-				</s:if>
-				<s:if test='kyzletter.visaType=="P"'>
-				品管簽核
-				</s:if>	
-				<s:if test='kyzletter.visaType=="Q"'>
-				  企劃簽核
-				</s:if>
-				<s:if test='kyzletter.visaType=="S"'>
-				生管簽核
-				</s:if>	
-				<s:if test='kyzletter.visaType=="T"'>
-				  整理簽核
-				</s:if>
-				<s:if test='kyzletter.visaType=="Y"'>
-				油壓簽核
-				</s:if>	
-				<s:if test='kyzletter.visaType=="Z"'>
-				  總務簽核
-				</s:if>
-				<s:if test='kyzletter.visaType=="B"'>
-				  備料簽核
-				</s:if>
-				<s:if test='kyzletter.visaType=="O"'>
-				  業務簽核
-				</s:if>
-				<s:if test='kyzletter.visaType.substring(0,2)=="C1"'>
-				  其他費用簽核1(<1000元)
-				</s:if>
-				<s:if test='kyzletter.visaType.substring(0,2)=="C2"'>
-				 其他費用簽核2(>=1000元)
-				</s:if>
-				<s:if test='kyzletter.visaType.substring(0,2)=="C3"'>
-				  電腦耗材簽核1(<1000元)
-				</s:if>
-				<s:if test='kyzletter.visaType.substring(0,2)=="C4"'>
-				  電腦耗材簽核2(>=1000元)
-				</s:if>	
-				<s:if test='kyzletter.visaType.substring(0,2)=="C5"'>
-				  總務費用簽核1(<1000元)
-				</s:if>
-				<s:if test='kyzletter.visaType.substring(0,2)=="C6"'>
-				  總務費用簽核2(>=1000元)
-				</s:if> -->	(<s:property value="kyzletter.visaType" />)
+					(<s:property value="kyzletter.visaType" />)
 				</td>
 			</tr>
 			<tr>
@@ -182,10 +126,10 @@ table.gridtable td {
 			
 			<!------------------------- 修改3   20151027---------------   -->
 			<s:if test='readMk=="N"'>
-			    <tr><td colspan="15" style="color:red">備註:</td></tr>
-				<tr><td colspan="15">									
+			    <tr><td colspan="12" style="color:red">備註↓↓↓</td></tr>
+				<tr><td colspan="12">									
 					<form id="memo" method="post" action="vbm_add">
-						<textarea rows="6" cols="120" name="memo" id="memo_txt"></textarea>						
+						<textarea rows="6" cols="80" name="memo" id="memo_txt"></textarea>						
 						<input type="hidden" name="factNo" value="<s:property value='factNo'/>"/>
 						<input type="hidden" name="billNo" value="<s:property value='billNo'/>"/>
 						<input type="hidden" name="itemNo" value="<s:property value='itemNo'/>"/>
@@ -199,7 +143,7 @@ table.gridtable td {
 	</table>
 	 <s:if test='kyzletter.filesYn=="1"'>
 	  <hr/>
-	  <span style="color:blue;">附檔</span><br/>
+	  <span style="color:blue;">附檔:</span><br/>
 	  <s:iterator value="#session.list_filesexp">
 	     <a href="/upload_letter/<s:property value='billno'/>/<s:property value='%{toUrl2(filename)}'/>" target="_blank"><s:property value="%{toUrl(filename)}"/></a>&nbsp;
 	  </s:iterator>	  

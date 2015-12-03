@@ -29,9 +29,16 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 <script type="text/javascript" src="jquery/Validform_v5.3.2_min.js"></script>
 <script type="text/javascript" src="page/jquerys/layer/layer.min.js"></script>
 <script type="text/javascript">
-	$(function() {
-		var jj = jQuery.noConflict();
-		var demo = jj("#form").Validform({
+	var jq=jQuery.noConflict();
+	var loadi;
+	jq(document).ajaxStart(function(){
+		loadi=layer.load("正在提交,請稍等...");
+	});
+	jq(document).ajaxStop(function(){
+		layer.close(loadi);
+	});
+	jq(function() {
+		var demo = jq("#form").Validform({
 			btnSubmit : "#sub",
 			tiptype : 4,
 			showAllError : true,
@@ -40,11 +47,16 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 				"*0-6" : /^\d{0,9}(\.[0-9]{1,3})?$/,
 				"my0-8": /^\d{0,8}(\.[0-9]{1,4})?$/
 			},
-			beforeSubmit:function(form){
-		       //在验证成功后，表单提交前执行的函数，curform参数是当前表单对象。
-		       //这里明确return false的话表单将不会提交;
-		       layer.load("正在提交,請稍等...");	
-	        }
+			ajaxPost:true,
+			callback:function(data){
+				if(data=="0"){
+					layer.msg("提交成功!",3,1);
+					location.href="/Login/visaflow_findPageBean";
+				}
+				if(data=="1"){
+					alert(data.responseText);
+				}
+			}
 		});
 		demo.tipmsg.w["*0-6"] = "只能數字且不超過9位數,可保留三位以內小數";
 		demo.tipmsg.w["my0-8"]="只能數字且不超過8位數,可保留四位以內小數";
@@ -429,7 +441,10 @@ function getLow(obj){
 }
 
 
-
+function(){
+	layer.load("正在返回,請稍等...");
+	location.href="/Login/visaflow_findPageBean";
+}
 </script>
 <script type='text/javascript' src='/Login/dwr/interface/kyzjs.js'></script>
 <script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>
@@ -567,6 +582,7 @@ input[type="text"],select{
 			<center>			    
 				<input type="submit" id="sub" value="確定" onmouseover="this.style.backgroundPosition='left -40px'" onmouseout="this.style.backgroundPosition='left top'" />&nbsp;&nbsp;&nbsp; 
 				<input type="reset" id="reset" value="重置" onmouseover="this.style.backgroundPosition='left -40px'" onmouseout="this.style.backgroundPosition='left top'" disabled="false" style="color:red"/>
+			    <input type="button" value="返回" onclick="back()" id="btn_back" onmouseover="this.style.backgroundPosition='left -40px'" onmouseout="this.style.backgroundPosition='left top'"/>
 			</center>
 							
 	</form>

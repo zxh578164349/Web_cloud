@@ -40,7 +40,9 @@
 			<result name="beanList1">page/table1/managerUser1.jsp</result>
 			<result name="delete" type="redirectAction">userfindPageBean3</result>
 			<result name="updateJurisdiction" type="redirectAction">userfindPageBean3_1</result>
-			<result name="add" type="redirectAction">userfindPageBean</result>
+			<result name="add" type="json">
+			   <param name="root">ajax_result</param>
+			</result>
 			<result name="json_login" type="json">
 			    <param name="root">ajax_result</param>
 			</result>
@@ -49,10 +51,8 @@
 			<result name="titleSuccess">page/show.jsp</result>
 		</action>
 		<action name="backmat_*" class="webBackmatAction" method="{1}">
-
 			<result name="addWebbackMat" type="redirectAction">backmat_findPageBean
 			</result>     <!-- 增加與更新 -->
-
 			<result name="showList1">page/table1/backmat1.jsp</result>
 			<result name="showList">page/backmat.jsp</result>
 			<result name="list">page/table/backmatShow.jsp</result>
@@ -61,11 +61,9 @@
 			<result name="findBackmatById2" type="redirectAction">backmat_getList</result>  <!-- 刪除 -->
 			<result>none.jsp</result>
 			<result name="excel">ok.jsp</result>
-
 			<result name="beanList">page/backmat.jsp</result>
 			<result name="beanList1">page/table1/backmat1.jsp</result>
 			<result name="delete" type="redirectAction">backmat_findPageBean</result>
-
 		</action>
 		<action name="backcp_*" class="webBackpfAction" method="{1}">
 			<result name="addBackpf" type="redirectAction">backcp_findPageBean</result>
@@ -99,11 +97,9 @@
 			<result name="findById">saveAndUpdate/gwSaveOrUpdate.jsp</result>
 			<result>none.jsp</result>
 			<result name="excel">ok.jsp</result>
-
 			<result name="beanList">page/gw.jsp</result>
 			<result name="beanList1">page/table1/gw1.jsp</result>
 			<result name="delete" type="redirectAction">gw_findPageBean</result>
-
 		</action>
 		<action name="machine_*" class="webMachineAction" method="{1}">
 			<result name="addMachine" type="redirectAction">machine_findPageBean</result>
@@ -250,16 +246,9 @@
 			<result name="beanList">page/zwcash.jsp</result>
 			<result name="beanList1">page/table1/zwcash1.jsp</result>
 			<result name="delete" type="redirectAction">cash_findPageBean</result>
-		</action>
-		<!-- <action name="fact_*" class="factAction" method="{1}">
-			<result name="findAllfact">index.jsp</result>
-			<result name="findAllfact2">login.jsp</result>
-		</action> -->
-
+		</action>		
 		<action name="print2Y_*" class="preAndDataAction" method="{1}">
 		</action>
-
-
 		<action name="ypre_*" class="ypreAction" method="{1}">
 			<result name="addYPre" type="redirectAction">ypre_findPageBean</result>
 			<result name="fails">none.jsp</result>
@@ -269,35 +258,12 @@
 			<result name="delete" type="redirectAction">ypre_findPageBean</result>
 			<result name="list">page/table/ypreShow.jsp</result>
 			<result name="findNulFact">page/nullData/ypre_null.jsp</result>
-
-
 		</action>
-		<action name="ydata_*" class="ydataAction" method="{1}">
-			<result name="addData" type="redirectAction">ydata_transit</result>
-			<result name="fails">none.jsp</result>
-			<result name="findById">saveAndUpdate/Yield_data.jsp</result>
-			<result name="findById2">saveAndUpdate/Yield_data2.jsp</result>
-			<result name="beanList">page/ydata_show.jsp</result>
-			<result name="beanList1">page/table1/ydata_show1.jsp</result>
-			<result name="delete" type="redirectAction">ydata_findPageBean</result>
-			<result name="transit">saveAndUpdate/Yield_data.jsp</result>
-			<result name="upData" type="redirectAction">ydata_findPageBean</result>
-			<result name="list">page/table/ydataShow.jsp</result>
-			<result name="beanListForMonth">page/yDateforMonth.jsp</result>
-			<result name="beanListForMonth1">page/table1/yDateforMonth1.jsp</result>
-			<result name="list_formonth">page/table/yDateforMonthShow.jsp</result>
-			<result name="findNulFact">page/nullData/ydata_null.jsp</result>
-			<result name="go_temp">page/nullData/ydata_null.jsp</result>
-
-
-		</action>
-
 		<action name="webfact_*" class="webFactAction" method="{1}">
 			<result name="findAllfact">index2.jsp</result>
 			<result name="findAllfact2">login2.jsp</result>
 			<result name="findAllFact_code_no">page/VWebmachine.jsp</result>
 		</action>
-
 		<action name="print2Yireport_*" class="preAndDataActionireport"
 			method="{1}">
 			<result name="print2Yirepoter">ok.jsp</result>
@@ -305,71 +271,10 @@
 		</action>
 		<action name="print2Ypoi_*" class="preAndDataActionipoi"
 			method="{1}">
-		</action>
-
-		<action name="fix_*" class="webFixedAction" method="{1}">
-			<result name="beanList">page/webfixed.jsp</result>
-			<result name="beanList1">page/table1/webfixed1.jsp</result>
-			<result name="list">page/table/webfixedShow.jsp</result>
-			<result name="findById">saveAndUpdate/fixedSaveOrUpdate.jsp</result>
-			<result name="findById2">saveAndUpdate/webfixedlogSaveOrUpdate.jsp
-			</result>
-			<result name="delete" type="redirectAction">fix_findPageBean</result>
-			<result name="addFix" type="redirectAction">fix_findPageBean</result>
-			<result name="addlog" type="redirectAction">fix_findPageBean</result>
-		</action>
+		</action>		
 		<action name="mix_machine_*" class="mixAction_machine" method="{1}">
 			<result name="add_machineOutbackOutInv">ok.jsp</result>
-		</action>
-		<action name="webcost_*" class="webcostAction" method="{1}">
-			<result name="beanList">page/webcost.jsp</result>
-			<result name="beanList1">page/table1/webcost1.jsp</result>
-			<result name="add" type="json">
-			   <param name="root">ajaxResult</param>
-			</result>
-			<result name="findById">saveAndUpdate/webcostSaveOrUpdate.jsp</result>
-			<result name="delete" type="redirectAction">webcost_findPageBean</result>
-			<result name="list">page/table/webcostShow.jsp</result>
-		</action>
-		<action name="webmixPerson_*" class="mixPersonAction" method="{1}">
-			<result name="showList1">page/table1/webMixPerson1.jsp</result>
-			<result name="showList">page/webMixPerson.jsp</result>
-			<result name="list">page/table/webMixPersonShow.jsp</result>
-			<result name="addMixPerson" type="redirectAction">webmixPerson_getList</result>
-			<result name="findmixPersonById">saveAndUpdate/WebMixPersonSaveOrUpdate.jsp
-			</result>
-		</action>
-
-		<action name="webmix2_*" class="mix2Action" method="{1}">
-			<result name="showList1">page/table1/webMix21.jsp</result>
-			<result name="showList">page/webMix2.jsp</result>
-			<result name="list">page/table/webMix2Show.jsp</result>
-			<result name="addMix2" type="redirectAction">webmix2_getList</result>
-			<result name="findmix2ById">saveAndUpdate/WebMix2SaveOrUpdate.jsp</result>
-			<result name="test">MyJsp.jsp</result>
-		</action>
-		<action name="webScrapt_*" class="scraptAction" method="{1}">
-			<result name="showList1">page/table1/webScrapt1.jsp</result>
-			<result name="showList">page/webScrapt.jsp</result>
-			<result name="list">page/table/webScraptShow.jsp</result>
-			<result name="addscrapt" type="redirectAction">webScrapt_getList</result>
-			<result name="findScraptById">saveAndUpdate/WebScraptSaveOrUpdate.jsp</result>
-		</action>
-		<action name="webProduted_*" class="produtedAction" method="{1}">
-			<result name="showList1">page/table1/webProduted1.jsp</result>
-			<result name="showList">page/webProduted.jsp</result>
-			<result name="list">page/table/webProdutedShow.jsp</result>
-			<result name="addproduted" type="redirectAction">webProduted_getList</result>
-			<result name="findProdutedById">saveAndUpdate/WebProdutedSaveOrUpdate.jsp
-			</result>
-		</action>
-		<action name="webwlo_*" class="wloAction" method="{1}">
-			<result name="showList1">page/table1/webWlo1.jsp</result>
-			<result name="showList">page/webWlo.jsp</result>
-			<result name="list">page/table/webWloShow.jsp</result>
-			<result name="addwlo" type="redirectAction">webwlo_getList</result>
-			<result name="finWloById">saveAndUpdate/WebWLOSaveOrUpdate.jsp</result>
-		</action>
+		</action>				
 		<action name="webmix1_*" class="webmix1Action" method="{1}">
 			<result name="beanList">page/webmix1.jsp</result>
 			<result name="beanList1">page/table1/webmix1_1.jsp</result>
@@ -377,52 +282,320 @@
 			<result name="findById">saveAndUpdate/webmix1SaveOrUpdate.jsp</result>
 			<result name="delete" type="redirectAction">webmix1_findPageBean</result>
 			<result name="list">page/table/webmix1Show.jsp</result>
+		</action>						
+		<action name="view_*" class="viewcostandestproAction" method="{1}">
+			<result name="findAll">page/table1/viewcost.jsp</result>
+		</action>
+		<action name="printerauto_*" class="printerauto" method="{1}"></action>
+		
+		
+		
+		<action name="vbs_*" class="visabillAction" method="{1}">		 
+		  <result name="add" type="redirectAction">vbm_findPageBean</result>
+		</action>
+		<action name="timer_*" class="time" method="{1}">
+		  <result name="print_manual" type="redirectAction">ydata_findPageBean</result>
+		</action>
+		<action name="kyzsec_*" class="kyzsecAction" method="{1}">
+		   <result name="add" type="redirectAction">kyzsec_findPageBean</result>
+		   <result name="beanList">page/kyzsec.jsp</result>
+		   <result name="beanList1">page/table1/kyzsec1.jsp</result>
+		   <result name="findById">saveAndUpdate/kyzsecSaveOrUpdate.jsp</result>
+		   <result name="delete" type="redirectAction">kyzsec_findPageBean</result>
+		</action>
+		<action name="kyzacct_*" class="kyzacctAction" method="{1}">
+		   <result name="add" type="redirectAction">kyzacct_findPageBean</result>
+		   <result name="beanList">page/kyzacct.jsp</result>
+		   <result name="beanList1">page/table1/kyzacct1.jsp</result>
+		   <result name="delete" type="redirectAction">kyzacct_findPageBean</result>
+		   <result name="findById">saveAndUpdate/kyzacctSaveOrUpdate.jsp</result>
+		</action>
+		<action name="kyzpetty_*" class="kyzpettyAction" method="{1}">
+		   <result name="beanList">page/kyzpetty.jsp</result>
+		   <result name="beanList1">page/table1/kyzpetty1.jsp</result>
+		   <result name="add" type="redirectAction">kyzpetty_findPageBean</result>
+		   <result name="findById">saveAndUpdate/kyzpettySaveOrUpdate.jsp</result>
+		   <result name="delete" type="redirectAction">kyzpetty_findPageBean</result>
+		   <result name="findAllSecNoAndAcctNo">saveAndUpdate/kyzpettySaveOrUpdate.jsp</result>
+		</action>				
+		<action name="filesUpload_*" class="fileUploadAction" method="{1}">	
+		   <interceptor-ref name="fileUpload">
+		    <!-- 配置允许上传的文件大小，单位字节,本例为：1MB --> 
+		   <param name="maximumSize">5120000</param>  
+              <!-- 配置允许上传的文件类型，多个用","分隔 -->	                   
+                <!-- <param name="allowedTypes">
+                    image/pjpeg,image/bmp,image/jpg,image/png,image/gif,image/jpeg,
+                    application/vnd.ms-excel,application/excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
+                                                               
+                </param> -->
+                <!--配置允许上传文件的扩展名,如果有多个用","隔开  -->  
+                <param name="allowedExtensions">jpg,bmp,xls,xlsx,txt,pdf</param>             
+           </interceptor-ref>
+           <interceptor-ref name="defaultStack"></interceptor-ref>        
+		    <result name="success" type="redirectAction">
+               filesUpload_findByName
+            </result>
+            <result name="input">none.jsp</result>
+            <result name="findByName">page/filesUploadAndDownload.jsp</result>
+		</action>		
+		<action name="download_*" class="downLoadAction" method="{1}">  
+        <result name="download" type="stream">
+         <param name="contentType">application/octet-stream;charset=utf-8</param>
+        <param name="inputName">fileInput</param>  
+        <param name="contentDisposition">attachment;filename="${fileName}"</param>   
+        <param name="bufferSize">4096</param>
+        </result>
+        <result name="input">none.jsp</result>
+        <result name="delete" type="redirectAction">filesUpload_findByName</result>     
+        </action>       
+        <action name="vwebmachine_*" class="vwebmachineAction" method="{1}">            
+        </action>        
+        <action name="vsumall_*" class="vsumallAction" method="{1}">       
+        </action>       
+        <action name="kyzmat_*" class="kyzmatAction" method="{1}">
+           <result name="add" type="redirectAction">kyzmat_findPageBean</result>          
+           <result name="findById">saveAndUpdate/kyzmatSaveOrUpdate.jsp</result>
+           <result name="delete" type="redirectAction">kyzmat_findPageBean</result>
+           <result name="findPageBean">page/sub_kyzmat.jsp</result>
+           <result name="findPageBean1">page/table1/sub_kyzmat1.jsp</result>
+        </action>
+        <action name="subkyzmat_*" class="subkyzmatAction" method="{1}">
+           <result name="findfactnoByMatno">/page/subkyzmat_factno.jsp</result>
+           <result name="findPageBean">page/kyzmat.jsp</result>
+           <result name="findPageBean1">page/table1/kyzmat1.jsp</result>
+           <result name="addSubKyzmat" type="redirectAction">subkyzmat_findPageBean</result>
+           <result name="delete" type="redirectAction">subkyzmat_findPageBean</result>
+        </action> 
+        <action name="sumwebydata_*" class="sumwebyieldDateAction" method="{1}">
+           <result name="findPageBean">page/yDateforMonth2.jsp</result>
+           <result name="findPageBean1">page/table1/yDateforMonth1_1.jsp</result>
+           <result name="add" type="redirectAction">sumwebydata_findPageBean</result>
+           <result name="delete" type="redirectAction">sumwebydata_findPageBean3</result>
+           <result name="update" type="redirectAction">sumwebydata_findPageBean</result>
+           <result name="updateAll" type="redirectAction">sumwebydata_findPageBean</result>
+           <result name="findById">/page/sum_yiele_data.jsp</result>
+        </action>
+        <action name="checkinput_*" class="checkallinputAction" method="{1}"></action>                     
+        <action name="webuseremail_*" class="webuseremailAction" method="{1}">
+            <result name="add" type="json">
+               <param name="root">ajaxResult</param>
+            </result>
+            <result name="findById">/saveAndUpdate/webuseremailSaveOrUpdate.jsp</result>
+            <result name="delete" type="redirectAction">webuseremail_findPageBean3</result>
+            <result name="beanList">/page/managerUserEmail.jsp</result>
+            <result name="beanList1">/page/table1/managerUserEmail1.jsp</result>
+        </action>
+        <action name="webtype_*" class="webtypeAction" method="{1}">
+             <result name="add" type="json">
+                <param name="root">ajaxResult</param>
+             </result>
+             <result name="beanList">/page/webtype.jsp</result>
+             <result name="beanList1">/page/table1/webtype1.jsp</result>
+             <result name="findById">/saveAndUpdate/webTypeSaveOrUpdate.jsp</result>
+             <result name="delete" type="redirectAction">webtype_findPageBean</result>
+        </action>
+        <action name="proloss_*" class="profitlossAction" method="{1}"></action>
+        <action name="kyzfile_*" class="filekyzAction" method="{1}">
+           <result type="json">
+             <param name="root">jsons</param>
+           </result>
+        </action>     
+        <action name="webuseremaila_*" class="webuseremailaAction" method="{1}">
+           <result name="beanList" >page/managerUserEmail_A.jsp</result>
+           <result name="beanList1">page/table1/managerUserEmail1_A.jsp</result>
+           <result name="add" type="json">
+              <param name="root">ajaxResult</param>
+           </result> 
+           <result name="delete" type="redirectAction">webuseremaila_findPageBean3</result>
+           <result name="findById">/saveAndUpdate/webuseremailaSaveOrUpdate.jsp</result> 
+        </action>
+        <action name="vkpifact_*" class="vkpifactAction" method="{1}">
+           <result name="findAll">page/vkpifact.jsp</result>
+        </action>
+        
+        
+        
+
+        
+         <action name="kpifact_*" class="kpifactAction" method="{1}">
+            <result name="add" type="json">
+               <param name="root">ajaxResult</param>
+            </result>
+            <result name="delete" type="redirectAction">kpifact_findPageBean3</result>
+            <result name="findPageBean">/page/kpifact.jsp</result>
+            <result name="findPageBean1">/page/table1/kpifact1.jsp</result>
+            <result name="findById">/saveAndUpdate/kpifactSaveOrUpdate.jsp</result>
+            <result name="findById_copy">/saveAndUpdate/kpifactSaveOrUpdate_copy.jsp</result>           
+        </action>
+        <action name="webbackfeed_*" class="webbackfeedAction" method="{1}">
+			<result name="beanList">page/webbackfeed.jsp</result>
+			<result name="beanList1">page/table1/webbackfeed1.jsp</result>
+			<result name="add" type="json">
+			   <param name="root">ajaxResult</param>
+			</result>
+			<result name="findById">saveAndUpdate/webbackfeedSaveOrUpdate.jsp
+			</result>
+			<result name="delete" type="redirectAction">webbackfeed_findPageBean3</result>
+			<result name="list">page/table/webbackfeedShow.jsp</result>
+		</action>
+		<action name="webcashout_*" class="webcashoutAction" method="{1}">
+           <result name="add" type="json">
+              <param name="root">ajaxResult</param>
+           </result>
+           <result name="findPageBean">/page/webcashout.jsp</result>
+           <result name="findPageBean1">/page/table1/webcashout1.jsp</result>
+           <result name="delete" type="redirectAction">webcashout_findPageBean3</result>
+           <result name="findById">/saveAndUpdate/webcashoutSaveOrUpdate.jsp</result>
+        </action>
+        <action name="webcost_*" class="webcostAction" method="{1}">
+			<result name="beanList">page/webcost.jsp</result>
+			<result name="beanList1">page/table1/webcost1.jsp</result>
+			<result name="add" type="json">
+			   <param name="root">ajaxResult</param>
+			</result>
+			<result name="findById">saveAndUpdate/webcostSaveOrUpdate.jsp</result>
+			<result name="delete" type="redirectAction">webcost_findPageBean3</result>
+			<result name="list">page/table/webcostShow.jsp</result>
 		</action>
 		<action name="webestpro_*" class="webestproAction" method="{1}">
 			<result name="beanList">page/webestproduct.jsp</result>
 			<result name="beanList1">page/table1/webestproduct1.jsp</result>
-			<result name="add" type="redirectAction">webestpro_findPageBean</result>
+			<result name="add" type="json">
+			   <param name="root">ajaxResult</param>
+			</result>
 			<result name="findById">saveAndUpdate/webestproSaveOrUpdate.jsp</result>
-			<result name="delete" type="redirectAction">webestpro_findPageBean</result>
+			<result name="delete" type="redirectAction">webestpro_findPageBean3</result>
 			<result name="list">page/table/webestProShow.jsp</result>
 		</action>
-		<action name="webbackfeed_*" class="webbackfeedAction" method="{1}">
-			<result name="beanList">page/webbackfeed.jsp</result>
-			<result name="beanList1">page/table1/webbackfeed1.jsp</result>
-			<result name="add" type="redirectAction">webbackfeed_findPageBean</result>
-			<result name="findById">saveAndUpdate/webbackfeedSaveOrUpdate.jsp
+		<action name="fix_*" class="webFixedAction" method="{1}">
+			<result name="beanList">page/webfixed.jsp</result>
+			<result name="beanList1">page/table1/webfixed1.jsp</result>
+			<result name="list">page/table/webfixedShow.jsp</result>
+			<result name="findById">saveAndUpdate/fixedSaveOrUpdate.jsp</result>
+			<result name="findById2">saveAndUpdate/webfixedlogSaveOrUpdate.jsp
 			</result>
-			<result name="delete" type="redirectAction">webbackfeed_findPageBean</result>
-			<result name="list">page/table/webbackfeedShow.jsp</result>
+			<result name="delete" type="redirectAction">fix_findPageBean3</result>
+			<result name="addFix" type="json">
+			   <param name="root">ajaxResult</param>
+			</result>
+			<result name="addlog" type="redirectAction">fix_findPageBean</result>
+		</action>
+		<action name="webmix2_*" class="mix2Action" method="{1}">
+			<result name="showList1">page/table1/webMix21.jsp</result>
+			<result name="showList">page/webMix2.jsp</result>
+			<result name="list">page/table/webMix2Show.jsp</result>
+			<result name="addMix2" type="json">
+			   <param name="root">ajaxResult</param>
+			</result>
+			<result name="findmix2ById">saveAndUpdate/WebMix2SaveOrUpdate.jsp</result>
+			<result name="test">MyJsp.jsp</result>
+			<result name="delete" type="redirectAction">webmix2_getList3</result>
+		</action>
+		<action name="webmixPerson_*" class="mixPersonAction" method="{1}">
+			<result name="showList1">page/table1/webMixPerson1.jsp</result>
+			<result name="showList">page/webMixPerson.jsp</result>
+			<result name="list">page/table/webMixPersonShow.jsp</result>
+			<result name="addMixPerson" type="json">
+			   <param name="root">ajaxResult</param>
+			</result>
+			<result name="findmixPersonById">saveAndUpdate/WebMixPersonSaveOrUpdate.jsp</result>
+			<result name="delete" type="redirectAction">webmixPerson_getList3</result>			
 		</action>
 		<action name="webpersonnum_*" class="webpersonnumAction"
 			method="{1}">
 			<result name="beanList">page/webpersonnum.jsp</result>
 			<result name="beanList1">page/table1/webpersonnum1.jsp</result>
-			<result name="add" type="redirectAction">webpersonnum_transit</result>
+			<result name="add" type="json">
+			   <param name="root">ajaxResult</param>
+			</result>
 			<result name="transit">saveAndUpdate/webpersonnumSaveOrUpdate.jsp</result>
 			<result name="findById">saveAndUpdate/webpersonnumSaveOrUpdate.jsp
 			</result>
-			<result name="delete" type="redirectAction">webpersonnum_findPageBean</result>
+			<result name="delete" type="redirectAction">webpersonnum_findPageBean3</result>
 			<result name="list">page/table/webpersonnumShow.jsp</result>
 		</action>
-		<action name="view_*" class="viewcostandestproAction" method="{1}">
-			<result name="findAll">page/table1/viewcost.jsp</result>
+        <action name="webProduted_*" class="produtedAction" method="{1}">
+			<result name="showList1">page/table1/webProduted1.jsp</result>
+			<result name="showList">page/webProduted.jsp</result>
+			<result name="list">page/table/webProdutedShow.jsp</result>
+			<result name="addproduted" type="json">
+			   <param name="root">ajaxResult</param>
+			</result>
+			<result name="findProdutedById">saveAndUpdate/WebProdutedSaveOrUpdate.jsp</result>
+			<result name="delete" type="redirectAction">webProduted_getList3</result>
 		</action>
-		<action name="printerauto_*" class="printerauto" method="{1}"></action>
-		<action name="kyz_*" class="kyzAction" method="{1}">
+		<action name="webScrapt_*" class="scraptAction" method="{1}">
+			<result name="showList1">page/table1/webScrapt1.jsp</result>
+			<result name="showList">page/webScrapt.jsp</result>
+			<result name="list">page/table/webScraptShow.jsp</result>
+			<result name="addscrapt" type="json">
+			   <param name="root">ajaxResult</param>
+			</result>
+			<result name="findScraptById">saveAndUpdate/WebScraptSaveOrUpdate.jsp</result>
+			<result name="delete" type="redirectAction">webScrapt_getList3</result>
+		</action>
+		<action name="webwlo_*" class="wloAction" method="{1}">
+			<result name="showList1">page/table1/webWlo1.jsp</result>
+			<result name="showList">page/webWlo.jsp</result>
+			<result name="list">page/table/webWloShow.jsp</result>
+			<result name="addwlo" type="json">
+			   <param name="root">ajaxResult</param>
+			</result>
+			<result name="finWloById">saveAndUpdate/WebWLOSaveOrUpdate.jsp</result>
+			<result name="delete" type="redirectAction">webwlo_getList3</result>
+		</action>
+		<action name="ydata_*" class="ydataAction" method="{1}">
+			<result name="addData" type="json">
+			   <param name="root">ajaxResult</param>
+			</result>
+			<result name="upData" type="json">
+			   <param name="root">ajaxResult</param>
+			</result>
+			<result name="fails">none.jsp</result>
+			<result name="findById">saveAndUpdate/Yield_data.jsp</result>
+			<result name="findById2">saveAndUpdate/Yield_data2.jsp</result>
+			<result name="beanList">page/ydata_show.jsp</result>
+			<result name="beanList1">page/table1/ydata_show1.jsp</result>
+			<result name="delete" type="redirectAction">ydata_findPageBean3</result>
+			<result name="transit">saveAndUpdate/Yield_data.jsp</result>			
+			<result name="list">page/table/ydataShow.jsp</result>
+			<result name="beanListForMonth">page/yDateforMonth.jsp</result>
+			<result name="beanListForMonth1">page/table1/yDateforMonth1.jsp</result>
+			<result name="list_formonth">page/table/yDateforMonthShow.jsp</result>
+			<result name="findNulFact">page/nullData/ydata_null.jsp</result>
+			<result name="go_temp">page/nullData/ydata_null.jsp</result>
+		</action>
+		
+		
+		
+		
+		<action name="kyzletter_*" class="kyzcontactletterAction" method="{1}">
+          <result name="beanList">/page/kyzContactletter.jsp</result>
+          <result name="beanList1">/page/table1/kyzContactletter1.jsp</result>
+          <result name="findById">/saveAndUpdate/kyz_contactletterSaveOrUpdate.jsp</result>
+          <result name="findById_layer">/page/showContactletter_layer.jsp</result>
+          <result name="findById_layer2">/page/showContactletter_layer2.jsp</result>
+          <result name="add" type="redirectAction">
+            kyzletter_findPageBean
+          </result>
+          <result name="update" type="redirectAction">
+             kyzletter_findPageBean
+          </result>
+          <result name="delete" type="redirectAction">kyzletter_findPageBean3</result>
+        </action>
+        <action name="kyz_*" class="kyzAction" method="{1}">
 		   <!--   <interceptor-ref name="fileUpload">
 		    配置允许上传的文件大小，单位字节,本例为：5MB 
 		   <param name="maximumSize">5120000</param>                
                 <param name="allowedExtensions">jpg,bmp</param>             
            </interceptor-ref>
            <interceptor-ref name="defaultStack"></interceptor-ref>  -->
-			<result name="add" type="json">
-			   <param name="root">ajaxResult</param>
+			<result name="add" type="redirectAction">
+			   kyz_findPageBean
 			</result>
 			<result name="input">none.jsp</result>
-			<result name="update" type="json">
-			   <param name="root">ajaxResult</param>
+			<result name="update" type="redirectAction">
+			   kyz_findPageBean
 			</result>
 		  <result name="findById">saveAndUpdate/matterApplicationSaveOrUpdate.jsp</result>
 		  <result name="beanList">page/matterApplication.jsp</result>
@@ -438,18 +611,6 @@
         <param name="bufferSize">4096</param>
         </result>
 		</action>
-		<action name="visaflow_*" class="kyzVisaFlowAction" method="{1}">
-		    <result name="add" type="redirectAction">visaflow_findPageBean</result>
-		    <result name="beanList">page/kyzVisaFlow.jsp</result>
-		    <result name="beanList1">/page/table1/kyzVisaFlow1.jsp</result>		    
-		    <result name="findById">/saveAndUpdate/kyzVisaFlowSaveOrUpdate2.jsp</result>
-		    <result name="delete" type="redirectAction">visaflow_findPageBean</result>
-		    <result name="addflow" type="redirectAction">visaflow_findPageBean</result>
-		    <result name="update" type="redirectAction">visaflow_findPageBean</result>
-		    <result name="findMaxItem">/saveAndUpdate/kyzVisaFlowSaveOrUpdate3.jsp</result>
-		    <result name="addMaxFlow" type="redirectAction">visaflow_findPageBean</result>
-		    <result name="deleteFirst" type="redirectAction">visaflow_findPageBean_1</result>		   
-		</action>
 		<action name="vbm_*" class="visabillmAction" method="{1}">
 		  <!--   函文審核 -->
 		  <result name="beanList">/page/visabillm_new.jsp</result>
@@ -464,8 +625,7 @@
 		  <result name="findById_email2">/page/kyvisabills_email2.jsp</result><!-- email直接審核,不需要登錄帳號（普通電腦 ） -->
 		  <result name="add">page/checkpass/remark.jsp</result><!-- 函文是否通過 -->
 		  <result name="success">/success.html</result>
-		  <result name="remark" type="redirectAction">vbm_findPageBean</result><!-- 備註 -->
-		  
+		  <result name="remark" type="redirectAction">vbm_findPageBean</result><!-- 備註 -->		  
 		  <result name="addvisabills" type="redirectAction">
 		      <param name="actionName">vbm_findById2</param>
 		      <param name="factNo">${factNo}</param>
@@ -497,160 +657,26 @@
 		  <result name="beanList1_1">/tw/tw1/visabillm1.jsp</result>
 		  <!-- 函文審核狀況 -->
 		</action>
-		<action name="vbs_*" class="visabillAction" method="{1}">		 
-		  <result name="add" type="redirectAction">vbm_findPageBean</result>
+		<action name="visaflow_*" class="kyzVisaFlowAction" method="{1}">
+		    <result name="add" type="json">
+		       <param name="root">ajaxResult</param>
+		    </result>
+		    <result name="beanList">page/kyzVisaFlow.jsp</result>
+		    <result name="beanList1">/page/table1/kyzVisaFlow1.jsp</result>		    
+		    <result name="findById">/saveAndUpdate/kyzVisaFlowSaveOrUpdate2.jsp</result>
+		    <result name="delete" type="redirectAction">visaflow_findPageBean3</result>
+		    <result name="addflow" type="json">
+		       <param name="root">ajaxResult</param>
+		    </result>
+		    <result name="update" type="json">
+		        <param name="root">ajaxResult</param>
+		    </result>
+		    <result name="findMaxItem">/saveAndUpdate/kyzVisaFlowSaveOrUpdate3.jsp</result>
+		    <result name="addMaxFlow" type="json">
+		       <param name="root">ajaxResult</param>
+		    </result>
+		    <result name="deleteFirst" type="redirectAction">visaflow_findPageBean3</result>		   
 		</action>
-		<action name="timer_*" class="time" method="{1}">
-		  <result name="print_manual" type="redirectAction">ydata_findPageBean</result>
-		</action>
-		<action name="kyzsec_*" class="kyzsecAction" method="{1}">
-		   <result name="add" type="redirectAction">kyzsec_findPageBean</result>
-		   <result name="beanList">page/kyzsec.jsp</result>
-		   <result name="beanList1">page/table1/kyzsec1.jsp</result>
-		   <result name="findById">saveAndUpdate/kyzsecSaveOrUpdate.jsp</result>
-		   <result name="delete" type="redirectAction">kyzsec_findPageBean</result>
-		</action>
-		<action name="kyzacct_*" class="kyzacctAction" method="{1}">
-		   <result name="add" type="redirectAction">kyzacct_findPageBean</result>
-		   <result name="beanList">page/kyzacct.jsp</result>
-		   <result name="beanList1">page/table1/kyzacct1.jsp</result>
-		   <result name="delete" type="redirectAction">kyzacct_findPageBean</result>
-		   <result name="findById">saveAndUpdate/kyzacctSaveOrUpdate.jsp</result>
-		</action>
-		<action name="kyzpetty_*" class="kyzpettyAction" method="{1}">
-		   <result name="beanList">page/kyzpetty.jsp</result>
-		   <result name="beanList1">page/table1/kyzpetty1.jsp</result>
-		   <result name="add" type="redirectAction">kyzpetty_findPageBean</result>
-		   <result name="findById">saveAndUpdate/kyzpettySaveOrUpdate.jsp</result>
-		   <result name="delete" type="redirectAction">kyzpetty_findPageBean</result>
-		   <result name="findAllSecNoAndAcctNo">saveAndUpdate/kyzpettySaveOrUpdate.jsp</result>
-		</action>
-		
-		
-		<action name="filesUpload_*" class="fileUploadAction" method="{1}">	
-		   <interceptor-ref name="fileUpload">
-		    <!-- 配置允许上传的文件大小，单位字节,本例为：1MB --> 
-		   <param name="maximumSize">5120000</param>  
-              <!-- 配置允许上传的文件类型，多个用","分隔 -->	                   
-                <!-- <param name="allowedTypes">
-                    image/pjpeg,image/bmp,image/jpg,image/png,image/gif,image/jpeg,
-                    application/vnd.ms-excel,application/excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
-                                                               
-                </param> -->
-                <!--配置允许上传文件的扩展名,如果有多个用","隔开  -->  
-                <param name="allowedExtensions">jpg,bmp,xls,xlsx,txt,pdf</param>             
-           </interceptor-ref>
-           <interceptor-ref name="defaultStack"></interceptor-ref>        
-		    <result name="success" type="redirectAction">
-               filesUpload_findByName
-            </result>
-            <result name="input">none.jsp</result>
-            <result name="findByName">page/filesUploadAndDownload.jsp</result>
-		</action>
-		
-		<action name="download_*" class="downLoadAction" method="{1}">  
-        <result name="download" type="stream">
-         <param name="contentType">application/octet-stream;charset=utf-8</param>
-        <param name="inputName">fileInput</param>  
-        <param name="contentDisposition">attachment;filename="${fileName}"</param>   
-        <param name="bufferSize">4096</param>
-        </result>
-        <result name="input">none.jsp</result>
-        <result name="delete" type="redirectAction">filesUpload_findByName</result>     
-        </action>
-        
-        <action name="vkpifact_*" class="vkpifactAction" method="{1}">
-           <result name="findAll">page/vkpifact.jsp</result>
-        </action>
-        <action name="vwebmachine_*" class="vwebmachineAction" method="{1}">
-            
-        </action>
-        
-        <action name="vsumall_*" class="vsumallAction" method="{1}">
-        
-        </action>
-        
-        <action name="kyzmat_*" class="kyzmatAction" method="{1}">
-           <result name="add" type="redirectAction">kyzmat_findPageBean</result>          
-           <result name="findById">saveAndUpdate/kyzmatSaveOrUpdate.jsp</result>
-           <result name="delete" type="redirectAction">kyzmat_findPageBean</result>
-           <result name="findPageBean">page/sub_kyzmat.jsp</result>
-           <result name="findPageBean1">page/table1/sub_kyzmat1.jsp</result>
-        </action>
-        <action name="subkyzmat_*" class="subkyzmatAction" method="{1}">
-           <result name="findfactnoByMatno">/page/subkyzmat_factno.jsp</result>
-           <result name="findPageBean">page/kyzmat.jsp</result>
-           <result name="findPageBean1">page/table1/kyzmat1.jsp</result>
-           <result name="addSubKyzmat" type="redirectAction">subkyzmat_findPageBean</result>
-           <result name="delete" type="redirectAction">subkyzmat_findPageBean</result>
-        </action> 
-        <action name="sumwebydata_*" class="sumwebyieldDateAction" method="{1}">
-           <result name="findPageBean">page/yDateforMonth2.jsp</result>
-           <result name="findPageBean1">page/table1/yDateforMonth1_1.jsp</result>
-           <result name="add" type="redirectAction">sumwebydata_findPageBean</result>
-           <result name="delete" type="redirectAction">sumwebydata_findPageBean</result>
-           <result name="update" type="redirectAction">sumwebydata_findPageBean</result>
-           <result name="updateAll" type="redirectAction">sumwebydata_findPageBean</result>
-           <result name="findById">/page/sum_yiele_data.jsp</result>
-        </action>
-        <action name="checkinput_*" class="checkallinputAction" method="{1}"></action>
-        <action name="kpifact_*" class="kpifactAction" method="{1}">
-            <result name="add" type="redirectAction">kpifact_findPageBean</result>
-            <result name="delete" type="redirectAction">kpifact_findPageBean</result>
-            <result name="findPageBean">/page/kpifact.jsp</result>
-            <result name="findPageBean1">/page/table1/kpifact1.jsp</result>
-            <result name="findById">/saveAndUpdate/kpifactSaveOrUpdate.jsp</result>
-            <result name="findById_copy">/saveAndUpdate/kpifactSaveOrUpdate_copy.jsp</result>
-            
-        </action>
-        <action name="kyzletter_*" class="kyzcontactletterAction" method="{1}">
-          <result name="beanList">/page/kyzContactletter.jsp</result>
-          <result name="beanList1">/page/table1/kyzContactletter1.jsp</result>
-          <result name="findById">/saveAndUpdate/kyz_contactletterSaveOrUpdate.jsp</result>
-          <result name="findById_layer">/page/showContactletter_layer.jsp</result>
-          <result name="findById_layer2">/page/showContactletter_layer2.jsp</result>
-          <result name="add" type="json">
-             <param name="root">ajaxResult</param>
-          </result>
-          <result name="update" type="json">
-             <param name="root">ajaxResult</param>
-          </result>
-          <result name="delete" type="redirectAction">kyzletter_findPageBean3</result>
-        </action>
-        <action name="webcashout_*" class="webcashoutAction" method="{1}">
-           <result name="add" type="redirectAction">webcashout_findPageBean</result>
-           <result name="findPageBean">/page/webcashout.jsp</result>
-           <result name="findPageBean1">/page/table1/webcashout1.jsp</result>
-           <result name="delete" type="redirectAction">webcashout_findPageBean</result>
-           <result name="findById">/saveAndUpdate/webcashoutSaveOrUpdate.jsp</result>
-        </action>
-        <action name="webuseremail_*" class="webuseremailAction" method="{1}">
-            <result name="add" type="redirectAction">webuseremail_findPageBean</result>
-            <result name="findById">/saveAndUpdate/webuseremailSaveOrUpdate.jsp</result>
-            <result name="delete" type="redirectAction">webuseremail_findPageBean3</result>
-            <result name="beanList">/page/managerUserEmail.jsp</result>
-            <result name="beanList1">/page/table1/managerUserEmail1.jsp</result>
-        </action>
-        <action name="webtype_*" class="webtypeAction" method="{1}">
-             <result name="add" type="redirectAction">webtype_findPageBean</result>
-             <result name="beanList">/page/webtype.jsp</result>
-             <result name="beanList1">/page/table1/webtype1.jsp</result>
-             <result name="findById">/saveAndUpdate/webTypeSaveOrUpdate.jsp</result>
-             <result name="delete" type="redirectAction">webtype_findPageBean</result>
-        </action>
-        <action name="proloss_*" class="profitlossAction" method="{1}"></action>
-        <action name="kyzfile_*" class="filekyzAction" method="{1}">
-           <result type="json">
-             <param name="root">jsons</param>
-           </result>
-        </action>     
-        <action name="webuseremaila_*" class="webuseremailaAction" method="{1}">
-           <result name="beanList" >page/managerUserEmail_A.jsp</result>
-           <result name="beanList1">page/table1/managerUserEmail1_A.jsp</result>
-           <result name="add" type="redirectAction">webuseremaila_findPageBean</result> 
-           <result name="delete" type="redirectAction">webuseremaila_findPageBean3</result>
-           <result name="findById">/saveAndUpdate/webuseremailaSaveOrUpdate.jsp</result> 
-        </action>
 	</package>
 
 </struts>

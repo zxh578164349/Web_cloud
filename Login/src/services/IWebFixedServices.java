@@ -22,4 +22,5 @@ public interface IWebFixedServices {
 	public String makeSssetscoding(String factNo, String majorid, String yymm);
 
 	public List<WebFixed> findByFactNo(String factNo, String yymm,String yymm_s,String lostmk);
+	public String findByFixId(String fixedId);
 }

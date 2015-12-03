@@ -162,6 +162,7 @@ public class WebCostAction extends ActionSupport implements
 			} 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
+			result="add";
 			ajaxResult="1";
 			e.printStackTrace();
 			//return "fails";

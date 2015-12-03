@@ -255,9 +255,9 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 						response.getWriter().print("<script>alert('文件不可超過5M!');window.opener=null;window.open('','_self');window.close()</script>");
 						return null;
 					}
-					if(!filetype.equals(".bmp")&&!filetype.equals(".jpg")){
+					if(!filetype.equals(".bmp")&&!filetype.equals(".jpg")&&!filetype.equals(".jpeg")&&!filetype.equals(".gif")&&!filetype.equals(".tif")){
 						response.setContentType("text/html;charset=utf-8");
-						response.getWriter().print("<script>alert('只允許jpg和bmp圖片!');window.opener=null;window.open('','_self');window.close()</script>");
+						response.getWriter().print("<script>alert('只允許jpg,bmp,jpeg,gif,tif圖片');window.opener=null;window.open('','_self');window.close()</script>");
 						return null;
 					}
 					
@@ -407,7 +407,7 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 				      /****************************函文打印************************************/
 					  //print(kyzletter.getId().getFactNo(),kyzletter.getId().getBillNo(),kyzletter.getVisaType());
 				      /****************************函文打印************************************/
-					 // return null;
+					  //return null;
 					}
 				
 				
@@ -786,16 +786,21 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 		for(int i=0;i<list.size();i++){//for1
 			KyzContactletter letter=list.get(i);
 			String factno=letter.getId().getFactNo();
-			String visaSort=letter.getVisaType();			
+			String visaSort=letter.getVisaType();
+			if(visaSort==null){
+				visaSort="";
+			}
 			String typename=visaSort;			
-			//typename=webtypeSer.findTypeNameById(factno, visaSort.substring(0, 2));									
-			for(int j=0;j<list_type.size();j++){//for2
-				WebType type=list_type.get(j);
-				if(factno.equals(type.getId().getFactNo())&&visaSort.substring(0,2).equals(type.getId().getTypeNo())){
-					typename=type.getTypeName();					
-					break;
-				}
-			}//for2
+			//typename=webtypeSer.findTypeNameById(factno, visaSort.substring(0, 2));
+			if(visaSort.length()>0){
+				for(int j=0;j<list_type.size();j++){//for2
+					WebType type=list_type.get(j);
+					if(factno.equals(type.getId().getFactNo())&&visaSort.substring(0,2).equals(type.getId().getTypeNo())){
+						typename=type.getTypeName();					
+						break;
+					}
+				}//for2
+			}			
 			letter.setColTemp(typename);
 		}//for1				
 	}
