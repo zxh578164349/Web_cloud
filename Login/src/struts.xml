@@ -546,7 +546,7 @@
 		</action>
 		<action name="ydata_*" class="ydataAction" method="{1}">
 			<result name="addData" type="json">
-			   <param name="root">ajaxResult</param>
+			   <param name="root">ajaxResult</param>			   
 			</result>
 			<result name="upData" type="json">
 			   <param name="root">ajaxResult</param>
@@ -590,8 +590,9 @@
                 <param name="allowedExtensions">jpg,bmp</param>             
            </interceptor-ref>
            <interceptor-ref name="defaultStack"></interceptor-ref>  -->
-			<result name="add" type="redirectAction">
-			   kyz_findPageBean
+			<result name="add" type="json">
+			   <param name="root">ajaxResult</param>
+			   <param name="content-type">text/html</param>
 			</result>
 			<result name="input">none.jsp</result>
 			<result name="update" type="redirectAction">
@@ -660,6 +661,7 @@
 		<action name="visaflow_*" class="kyzVisaFlowAction" method="{1}">
 		    <result name="add" type="json">
 		       <param name="root">ajaxResult</param>
+		       
 		    </result>
 		    <result name="beanList">page/kyzVisaFlow.jsp</result>
 		    <result name="beanList1">/page/table1/kyzVisaFlow1.jsp</result>		    

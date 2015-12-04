@@ -47,6 +47,7 @@ import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import entity.KyFact;
 import entity.KyVisabills;
+import entity.WebFact;
 import entity.WebJurisdiction;
 import entity.WebLog;
 import entity.WebMenu;
@@ -760,6 +761,7 @@ public class WebUserAction extends ActionSupport implements ServletResponseAware
 		ActionContext.getContext().getSession().remove("public_factno");
 		factNo=(String)ActionContext.getContext().getSession().get("factNo");
 		bean=webUserService.findPageBean_init(25, page, conditions, factNo);
+		this.findFactName(bean);
 		return "beanList";
 	}
 	public String findPageBean2(){
@@ -774,6 +776,7 @@ public class WebUserAction extends ActionSupport implements ServletResponseAware
 			ActionContext.getContext().getSession().put("public_factno", factNo);
 		}
 		bean=webUserService.findPageBean(25, page, conditions, factNo);
+		this.findFactName(bean);
 		return "beanList1";
 	}
 	public String findPageBean3(){
@@ -784,7 +787,8 @@ public class WebUserAction extends ActionSupport implements ServletResponseAware
 			bean=webUserService.findPageBean_init(25, page, conditions, factNo);
 		}else{
 			bean=webUserService.findPageBean(25, page, conditions, factNo);
-		}		
+		}
+		this.findFactName(bean);
 		return "beanList1";
 	}
 
@@ -931,6 +935,32 @@ public class WebUserAction extends ActionSupport implements ServletResponseAware
 	public String findPageBean3_1(){
 		this.findPageBean3();
 		return "beanList";
+	}
+	
+	
+	/**
+	 * 獲取廠別中文名
+	 * @param bean
+	 */
+	public void findFactName(PageBean bean){
+		List list_fact=(List)ActionContext.getContext().getSession().get("facts");
+		List<WebUser>list_user=bean.getList();
+		if(list_user.size()>0){//if
+			String result="";
+			for(int j=0;j<list_user.size();j++){
+				String factno=list_user.get(j).getFactno();
+				list_user.get(j).setEmailpassword(factno);
+				for(int k=0;k<list_fact.size();k++){
+					Object[]obj=(Object[])list_fact.get(k);
+					if(factno.equals(obj[0].toString())){
+						result=obj[1].toString()+"("+factno+")";
+						list_user.get(j).setEmailpassword(result);//借用emailpass當作廠別中文名
+						break;
+					}
+				}
+			}
+		}//if
+		
 	}
 	
 }

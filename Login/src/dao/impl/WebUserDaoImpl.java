@@ -230,8 +230,8 @@ public class WebUserDaoImpl extends Basedao implements IWebUserDao {
 		hql.append("from WebUser where 1=1 ");
 		hql2.append("select count(id) ");
 		if(userName!=null&&!userName.equals("")){
-			hql.append(" and (username like :username or name like :username)");			
-			map.put("username", "%"+userName+"%");
+			hql.append(" and (lower(username) like :username or lower(name) like :username)");			
+			map.put("username", "%"+userName.toLowerCase()+"%");
 		}
 		if(factNo!=null&&!factNo.equals("")&&!factNo.equals("tw")){
 			hql.append(" and factno=:factNo");

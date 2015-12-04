@@ -79,7 +79,7 @@
 					<td><s:property value="pwd" /></td>
 					<td><s:property value="ip" /></td>
 					<td><s:property value="workno" /></td>
-					<td><s:property value="factno" /></td>
+					<td><s:property value="emailpassword" /></td>
 					<td>
 					<s:if test="available==0"><img alt="可用" src="images/icon/available001.png" title="可用"></s:if> <s:if
 							test="available==1"><img alt="禁用" src="images/icon/not_available001.png" title="禁用"></s:if>

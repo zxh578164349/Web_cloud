@@ -41,8 +41,7 @@ jq(document).ajaxStart(function(){
 jq(document).ajaxStop(function(){
 	layer.close(loadi);
 });
-	jq(function() {
-		
+/*jq(function() {		
 		var demo = jq("#form").Validform({
 			btnSubmit : "#sub",
 			tiptype : 4,
@@ -54,51 +53,59 @@ jq(document).ajaxStop(function(){
 			},
 			beforeSubmit:function(curform){
 				loadi=layer.load("正在處理,請稍等...(系統爲了節省開銷,已取消自動下載函文!)");
-			}
-						
+			}									
 		});
 		demo.tipmsg.w["my0-8"]="只能數字且不超過8位數,可保留四位以內小數";
 		demo.tipmsg.w["my0-12"]="只能數字且不超過12位數,可保留四位以內小數";
-	});
+		demo.ajaxPost(true);
+	});*/
 	
-	/*function check(){
-		var demo=jq("#form").Validform({
-			btnSubmit : "#sub",
-			tiptype : 4,
-			showAllError : true,
-			tipSweep : true,
-			datatype : {
-				"my0-8": /^\d{0,8}(\.[0-9]{1,4})?$/,
-				"my0-12": /^\d{0,12}(\.[0-9]{1,4})?$/
-			},
-			ajaxPost:false,
-			callback:function(data){
-				return false;
-			}
-		});
-		demo.tipmsg.w["my0-8"]="只能數字且不超過8位數,可保留四位以內小數";
-		demo.tipmsg.w["my0-12"]="只能數字且不超過12位數,可保留四位以內小數";
+	function checkForm(){
+		var memoSmk=jq("#memoSmk").val();//標題 
+		var secNo=jq("#secNo").val();//申請單位
+		var factNo=jq("#dwrFactNo").val();//廠別
+		var visaSort=jq("#dwr_kytype").val();//函文類別
+		if(memoSmk==""){
+			layer.alert("標題不能爲空!");
+			return false;
+		}
+		if(secNo==""){
+			layer.alert("申請單位不能爲空");
+			return false;
+		}
+		if(factNo==""){
+			layer.alert("廠別不能爲空");
+			return false;
+		}
+		if(visaSort==""){
+			layer.alert("類別不能空");
+			return false;
+		}
+		return true;
 	}
+	
 	jq(function(){
 		var options={
-				beforeSubmit:check,  		       		       
+				beforeSubmit:checkForm,  		       		       
 		        //resetForm: true, 
 		        url:"kyz_add",
 		        dataType:'json' ,
 		        success:function(data){
-					if(data=="0"){
-						//alert("函文申請成功!");
-						layer.msg("函文申請成功!",3,1);
-					}
-					if(data=="1"){
-						alert(data.responseText);
-					}
+		        	if(data=="0"){
+		        		//alert(data);
+		        		layer.msg("函文申請成功!",3,1);
+		        	}
+		        	if(data=="1"){
+		        		alert(data.responseText);
+		        	}		        	    									
 		         }
-		}
+		         
+		};
 		jq("#form").submit(function(){
 			jq(this).ajaxSubmit(options);
-		})
-	})*/
+			return false;
+		})										
+	})
 
 	function getFactArea(mid) {
 		document.getElementById("dwrFactArea").length = 1;
@@ -512,9 +519,9 @@ table.gridtable td.tdcolor {
 </head>
 <%@ include file="../saveAndUpdate/publicHead2.jsp"%>
 <body onload="getKyType(),makeBillNo()">  
- <%--<iframe id="ifm" style="display:none" name="ifm"></iframe>--%>
+ <!-- <iframe id="ifm" style="display:none" name="ifm"></iframe> -->
 <s:if test="kyz==null">
-      <form action="kyz_add"  method="post" id="form"  enctype="multipart/form-data">
+      <form action="kyz_add"  method="post" id="form"  enctype="multipart/form-data" >
     </s:if>
     <s:else>
        <form action="kyz_add"  method="post" id="form" enctype="multipart/form-data" >
@@ -525,12 +532,12 @@ table.gridtable td.tdcolor {
 			<tbody id="tb_list_info2">
 				    <tr>
 				        <td class="tdcolor">標題</td>
-				        <td><input type="text" name="kyz.memoSmk" datatype="*"  value="<s:property value='kyz.memoSmk'/>" /></td>
+				        <td><input type="text" name="kyz.memoSmk" datatype="*"  value="<s:property value='kyz.memoSmk'/>" id="memoSmk"/></td>
 				        
 				        <td class="tdcolor">電話</td>
 				        <td><input type="text" name="kyz.telNo" datatype="n0-11"  value="<s:property value='kyz.telNo'/>"/></td> 				        
 				        <td class="tdcolor">申請單位</td>
-				        <td><input type="text" name="kyz.secNo"  value="<s:property value='kyz.secNo'/>" datatype="*1-10"/></td>
+				        <td><input type="text" name="kyz.secNo"  value="<s:property value='kyz.secNo'/>" datatype="*1-10" id="secNo"/></td>
 				        
 				    </tr>
 				    <s:if test="kyz==null">
@@ -700,9 +707,9 @@ table.gridtable td.tdcolor {
 			     <td ><input type="text" name="kyz.kyzExpectmatses[0].itemNm" value=""  size="15"/></td> 
 			     <td><input type="text" name="kyz.kyzExpectmatses[0].id.itemNo" value="001" readonly style="color:blue" size="15"/></td>
 			     <td ><input type="text" name="kyz.kyzExpectmatses[0].matNo" value="" size="15"/></td>			     
-			     <td ><input type="text" name="kyz.kyzExpectmatses[0].qtyExpect" value="" datatype="my0-12" size="15"/></td>
-			     <td ><input type="text" name="kyz.kyzExpectmatses[0].qtyOk" value="" datatype="my0-8" size="15"/></td>
-			     <td ><input type="text" name="kyz.kyzExpectmatses[0].personNo" value="" datatype="my0-8" size="15"/></td>
+			     <td ><input type="text" name="kyz.kyzExpectmatses[0].qtyExpect" value="" datatype="my0-12" size="15" id="qtyExpect_0"/></td>
+			     <td ><input type="text" name="kyz.kyzExpectmatses[0].qtyOk" value="" datatype="my0-8" size="15" id="qtyOk_0"/></td>
+			     <td ><input type="text" name="kyz.kyzExpectmatses[0].personNo" value="" datatype="my0-8" size="15" id="personNo_0"/></td>
 			     <td ><input type="text" name="kyz.kyzExpectmatses[0].qtyPair" value="" id="qtyPair" size="15"/></td>
 			     <td ><input type="text" name="kyz.kyzExpectmatses[0].moneyType" value="" id="moneyType" size="15"/></td>
 			      <td >

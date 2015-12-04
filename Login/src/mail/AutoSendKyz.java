@@ -125,7 +125,7 @@ public class AutoSendKyz extends QuartzJobBean{
 				String emailUrl2="http://203.85.73.161/Login/vbm_findById_email2?visaSort="+visaSort+"&billNo="+billNo
 				         +"&factNo="+factNo+"&email="+signerNext;
 				if(visaMk.equals("N")){
-					subject="函文審核定時通知_"+billNo+"("+factNo+")_"+signerNext;
+					subject="函文審核定時通知_"+billNo+"("+factNo+")";
 					content="函文單號:"+"<span style='color:red'>"+billNo+"</span>"+"&nbsp;&nbsp;廠別:"+factNo+
 				    		  "<br/>點擊單號直接審核:<a href='"+emailUrl2+"'>"+billNo+"</a>(電腦適用)"+
 				    		  "<br/>點擊單號直接審核:<a href='"+emailUrl+"'>"+billNo+"</a>(手機平板適用)"+				    		 
@@ -137,7 +137,7 @@ public class AutoSendKyz extends QuartzJobBean{
 				    		"<hr/>";
 				}
 				if(visaMk.equals("T")){				
-						subject="函文退回定時通知_"+billNo+"("+factNo+")_"+signerNext;//退回函文隻發送一次，所以也要鎖定狀態emailMk	
+						subject="函文退回定時通知_"+billNo+"("+factNo+")";//退回函文隻發送一次，所以也要鎖定狀態emailMk	
 						list_vbm.get(i).setEmailMk("Y");
 						visabillmSer.add(list_vbm.get(i));
 						content="函文單號:"+"<span style='color:red'>"+billNo+"</span>"+"&nbsp;&nbsp;"+"不通過，備註如下:"+

@@ -441,7 +441,7 @@ function getLow(obj){
 }
 
 
-function(){
+function back(){
 	layer.load("正在返回,請稍等...");
 	location.href="/Login/visaflow_findPageBean";
 }
