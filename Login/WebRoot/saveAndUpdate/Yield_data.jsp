@@ -49,10 +49,9 @@
 				//form[0].submit();
 				if(data=="0"){
 					layer.msg("提交成功!",3,1);
-				}
-				if(data=="1"){
+				}else{
 					alert(data.responseText);
-				}
+				}				
 			},
 			datatype : {
 				"*0-6" : /^-?\d{1,9}(\.[0-9]{1,3})?$/,

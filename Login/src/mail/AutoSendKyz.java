@@ -151,9 +151,14 @@ public class AutoSendKyz extends QuartzJobBean{
 					    		"<hr/>";
 				}
 				for(int j=0;j<list_email.size();j++){//start for2
-					  mailInfo.setToAddress(list_email.get(j));    
-				      mailInfo.setSubject(subject);    			      
-				      mailInfo.setContent(content); 				    		  			           
+					  mailInfo.setToAddress(list_email.get(j));
+					  if(list_email.get(j).equals("kyuen@yydg.com.cn")){						  
+						  String content_msg=content+"下一箇簽核:<span style='color:blue'>"+signerNext+"</span>";
+						  mailInfo.setContent(content_msg);					      
+					  }else{
+						  mailInfo.setContent(content);
+					  }
+				      mailInfo.setSubject(subject);    			       				    		  			           
 				      sms.sendHtmlMail(mailInfo);//发送html格式
 				}//end for2
 				

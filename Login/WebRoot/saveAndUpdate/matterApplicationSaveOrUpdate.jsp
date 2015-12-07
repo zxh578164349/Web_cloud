@@ -41,7 +41,7 @@ jq(document).ajaxStart(function(){
 jq(document).ajaxStop(function(){
 	layer.close(loadi);
 });
-/*jq(function() {		
+jq(function() {		
 		var demo = jq("#form").Validform({
 			btnSubmit : "#sub",
 			tiptype : 4,
@@ -57,14 +57,15 @@ jq(document).ajaxStop(function(){
 		});
 		demo.tipmsg.w["my0-8"]="只能數字且不超過8位數,可保留四位以內小數";
 		demo.tipmsg.w["my0-12"]="只能數字且不超過12位數,可保留四位以內小數";
-		demo.ajaxPost(true);
-	});*/
-	
-	function checkForm(){
+	});
+		
+	/*function checkForm(index){
 		var memoSmk=jq("#memoSmk").val();//標題 
 		var secNo=jq("#secNo").val();//申請單位
 		var factNo=jq("#dwrFactNo").val();//廠別
 		var visaSort=jq("#dwr_kytype").val();//函文類別
+		var telNo=jq("#telNo").val();
+		var reg_telNo=/^\d*$/;//電話驗證正則表達式
 		if(memoSmk==""){
 			layer.alert("標題不能爲空!");
 			return false;
@@ -81,9 +82,12 @@ jq(document).ajaxStop(function(){
 			layer.alert("類別不能空");
 			return false;
 		}
+		if(!reg_telNo.test(telNo)){
+			layer.alert("電話要填寫數字");
+			return false;
+		}
 		return true;
 	}
-	
 	jq(function(){
 		var options={
 				beforeSubmit:checkForm,  		       		       
@@ -92,20 +96,18 @@ jq(document).ajaxStop(function(){
 		        dataType:'json' ,
 		        success:function(data){
 		        	if(data=="0"){
-		        		//alert(data);
 		        		layer.msg("函文申請成功!",3,1);
-		        	}
-		        	if(data=="1"){
+		        		location.href="/Login/kyz_findPageBean";
+		        	}else{
 		        		alert(data.responseText);
-		        	}		        	    									
-		         }
-		         
+		        	}		        	       	    									
+		         }		         
 		};
 		jq("#form").submit(function(){
 			jq(this).ajaxSubmit(options);
 			return false;
 		})										
-	})
+	})*/
 
 	function getFactArea(mid) {
 		document.getElementById("dwrFactArea").length = 1;
@@ -535,7 +537,7 @@ table.gridtable td.tdcolor {
 				        <td><input type="text" name="kyz.memoSmk" datatype="*"  value="<s:property value='kyz.memoSmk'/>" id="memoSmk"/></td>
 				        
 				        <td class="tdcolor">電話</td>
-				        <td><input type="text" name="kyz.telNo" datatype="n0-11"  value="<s:property value='kyz.telNo'/>"/></td> 				        
+				        <td><input type="text" name="kyz.telNo" datatype="n0-11"  value="<s:property value='kyz.telNo'/>" id="telNo"/></td> 				        
 				        <td class="tdcolor">申請單位</td>
 				        <td><input type="text" name="kyz.secNo"  value="<s:property value='kyz.secNo'/>" datatype="*1-10" id="secNo"/></td>
 				        
@@ -720,8 +722,7 @@ table.gridtable td.tdcolor {
 			      </td>			      		      
 			  </tr>		
 			 </s:if>
-			 <s:else>
-			  
+			 <s:else>			  
 			    <s:iterator value="kyz.kyzExpectmatses" status="x" id="temp">
 			       <tr class="bluecss">
 			         <td>
@@ -735,9 +736,9 @@ table.gridtable td.tdcolor {
 			     <td ><input type="text" name="kyz.kyzExpectmatses[${x.index}].itemNm" value="<s:property value='itemNm'/>" size="15"/></td>			    
 			     <td><input type="text" name="kyz.kyzExpectmatses[${x.index}].id.itemNo" value="<s:property value='id.itemNo'/>" readonly style="color:blue" size="15"/></td>			    			     			     
 			     <td ><input type="text" name="kyz.kyzExpectmatses[${x.index}].matNo" value="<s:property value='matNo'/>" size="15"/></td>			     
-			     <td ><input type="text" name="kyz.kyzExpectmatses[${x.index}].qtyExpect" value="<s:property value='qtyExpect'/>" datatype="my0-8" size="15"/></td>
-			     <td ><input type="text" name="kyz.kyzExpectmatses[${x.index}].qtyOk" value="<s:property value='%{formatDouble(qtyOk)}'/>" datatype="my0-8" size="15"/></td>
-			     <td ><input type="text" name="kyz.kyzExpectmatses[${x.index}].personNo" value="<s:property value='%{formatDouble(personNo)}'/>" datatype="my0-8" size="15"/></td>
+			     <td ><input type="text" name="kyz.kyzExpectmatses[${x.index}].qtyExpect" value="<s:property value='qtyExpect'/>" datatype="my0-8" size="15" id="qtyExpect_${x.index}"/></td>
+			     <td ><input type="text" name="kyz.kyzExpectmatses[${x.index}].qtyOk" value="<s:property value='%{formatDouble(qtyOk)}'/>" datatype="my0-8" size="15" id="qtyOk_${x.index}"/></td>
+			     <td ><input type="text" name="kyz.kyzExpectmatses[${x.index}].personNo" value="<s:property value='%{formatDouble(personNo)}'/>" datatype="my0-8" size="15" id="personNo_${x.index}"/></td>
 			     <td ><input type="text" name="kyz.kyzExpectmatses[${x.index}].qtyPair" value="<s:property value='qtyPair'/>"  id="qtyPair" size="15"/></td>
 			     <td ><input type="text" name="kyz.kyzExpectmatses[${x.index}].moneyType" value="<s:property value='moneyType'/>" id="moneyType" size="15"/></td>
 			      <td >

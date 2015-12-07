@@ -70,8 +70,7 @@ public class AutoSendEmailAction {
 		Transport transport = null;
 		try {
 			// 15,6
-			msg.setFrom(new InternetAddress(MimeUtility.encodeText("加久公共信息")
-					+ MAIL_FROM_SMTP));
+			msg.setFrom(new InternetAddress(MimeUtility.encodeText("加久公共信息")+ MAIL_FROM_SMTP));					
 			sun.misc.BASE64Encoder enc = new sun.misc.BASE64Encoder();
 			msg.setSubject("=?BIG5?B?" + enc.encode(subject.getBytes()) + "?=");
 			Multipart multipart = new MimeMultipart();

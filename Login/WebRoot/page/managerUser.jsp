@@ -119,8 +119,12 @@ function move(obj){
 
 function loadjur(id,factNo){
     layer.load("請稍等...");
-    window.location.href="userjurisdiction?id="+id+"&fact="+factNo;
-} 
+    window.location.href="/Login/userjurisdiction?id="+id+"&fact="+factNo;
+}
+function loaduser(id){
+	layer.load("请稍等...");
+	location.href="/Login/userinitialUpdate?id="+id;
+}
 </script>
 
 <body>

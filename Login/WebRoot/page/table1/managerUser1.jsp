@@ -44,7 +44,7 @@
 	        }
 	    });	   
 	}
-	</script>
+</script>
  <!--[if lt IE 9]>  
   <script src="bootstrap/html5.js"></script>
   <script src="bootstrap/respond.min.js"></script>
@@ -88,7 +88,7 @@
 					<td>
 					    <%-- <a href="userjurisdiction?id=${id}&fact=${factno}"><img alt="權限" src="images/icon/keys001.png" title="權限"></a>&nbsp;  --%>
 					    <a href="javascript:loadjur(${id },'${factno}')"><img alt="權限" src="images/icon/keys001.png" title="權限"></a>&nbsp;
-						<a href="userinitialUpdate?id=${id}"><img alt="修改" src="images/icon/edit001.png" title="修改"></a>&nbsp;
+						<a href="javascript:loaduser(${id})"><img alt="修改" src="images/icon/edit001.png" title="修改"></a>&nbsp;
 						<a href="userupdateKy?id=${id}&available=0"><img alt="可用" src="images/icon/available001.png" title="可用"></a>&nbsp;
 						<a href="userupdateKy?id=${id}&available=1"><img alt="禁用" src="images/icon/not_available001.png" title="禁用"></a>&nbsp;
 						<a href="javascript:mydelete(${id})"><img alt="刪除" src="images/icon/delete001.png" title="刪除"></a>						

@@ -17,12 +17,8 @@
 <meta http-equiv="expires" content="0">
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
-<!--
-	<link rel="stylesheet" type="text/css" href="styles.css">
-	-->
-<script type='text/javascript' src='/Login/dwr/interface/userjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/engine.js'></script>
-<script type='text/javascript' src='/Login/dwr/util.js'></script>
+<script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="page/jquerys/layer/layer.min.js"></script>
 </head>
 <style>
 .td1 {
@@ -70,8 +66,14 @@ window.onload=function(){
                  }; 
             }  
         } 
-
+function back(){
+	layer.load("正在返回,请稍等...");
+	location.href="/Login/userfindPageBean"
+}
 </script>
+<script type='text/javascript' src='/Login/dwr/interface/userjs.js'></script>
+<script type='text/javascript' src='/Login/dwr/engine.js'></script>
+<script type='text/javascript' src='/Login/dwr/util.js'></script>
 <body>
 	
 	<form action="userupdateUesr" method="post"  id="form">
@@ -124,12 +126,7 @@ window.onload=function(){
 			     <td><input name="updateU.email" value="<s:property value="#attr.webU.email"/>" type="text" id="email" onblur="checkUserName()"/>
 			       <input  value="<s:property value="#attr.webU.email"/>" type="hidden" id="hidden_email"/>
 			     </td>
-			</tr>
-			<%-- <tr>
-			     <td class="td1">备签人Email:</td>
-			     <td><input name="updateU.emailpassword" value="<s:property value="#attr.webU.emailpassword"/>"   type="text"/>			     
-			     </td>			     
-			</tr> --%>
+			</tr>			
 			<tr>
 			     <td class="td1">只讀/修改</td>
 			     <td>
@@ -152,9 +149,12 @@ window.onload=function(){
 			     </td>
 			</tr> 
 			<tr>
-				<td colspan="2"><span style="margin-left: 300px;"><input
-						type="button" value="確認修改" onclick="checkUserName()"/> <input type="button"
-						onclick="location.href='userrecoveryData'" value="恢復默認">  </span></td>
+				<td colspan="2"><span style="margin-left: 300px;">
+				  <input type="button" value="確認修改" onclick="checkUserName()"/>&nbsp;
+				  <input type="button" onclick="location.href='userrecoveryData'" value="恢復默認">&nbsp;
+				  <input type="button" onclick="back()" value="返回"/>			
+				  </span></td>
+						
 			</tr>
 		</table>
 	</form>

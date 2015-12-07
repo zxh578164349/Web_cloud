@@ -12,7 +12,7 @@
 	+ path + "/";
 %>
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE HTML>
 <html>
 <head>
 <base href="<%=basePath%>">
@@ -27,7 +27,9 @@
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
 </head>
-<script type="text/javascript" src="jquery/jquery-1.7.2.js"></script>
+<!--  <script type="text/javascript" src="jquery/jquery-1.7.2.js"></script>-->
+<script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script> 
+<script type="text/javascript" src="jquery/layer/layer.min.js"></script>
 <script>
 	var agent = navigator.userAgent.toLowerCase();
 	var regStr_ie = /msie [\d.]+;/gi;
@@ -35,15 +37,11 @@
 	var regStr_chrome = /chrome\/[\d.]+/gi;
 	var regStr_saf = /safari\/[\d.]+/gi;
 	$(function() {
-		if (agent.indexOf("msie") > 0) {
-			window.location.href = "webfact_findAllfact";
-		}/* else if(agent.indexOf("firefox") > 0){ 
-										  window.location.href="webfact_findAllfact2";
-										}else if(agent.indexOf("safari") > 0 && agent.indexOf("chrome") < 0){
-										 window.location.href="webfact_findAllfact2";
-										}*/else {
-			//window.location.href="MyJsp.jsp";
-			window.location.href = "webfact_findAllfact2";
+		layer.load("正在加载,请稍等...");
+		if (agent.indexOf("msie") > 0) {			
+			window.location.href = "/Login/webfact_findAllfact";
+		}else {			
+			window.location.href = "/Login/webfact_findAllfact2";
 		}
 	});
 </script>

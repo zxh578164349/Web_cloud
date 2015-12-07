@@ -38,132 +38,13 @@
 }
 </style>
 <script type="text/javascript">
-	window.onload = function() {
-		/*var i1 = document.getElementById("kws");
-		if (i1 != null) {
-			document.getElementById("kws1").innerHTML = "";
-		} else {
-			document.getElementById("kws1").innerHTML = '<input value="KPI數據,孔位數回轉數,machine_getList" name="checkbox" type="checkbox" />孔位數回轉數';
-		}
-		var i2 = document.getElementById("syhz");
-		if (i2 != null) {
-			document.getElementById("syhz1").innerHTML = "";
-		} else {
-			document.getElementById("syhz1").innerHTML = '<input value="KPI數據,損益匯總,count_getList" name="checkbox" type="checkbox" />損益匯總';
-		}
-
-		var i3 = document.getElementById("syb");
-		if (i3 != null) {
-			document.getElementById("syb1").innerHTML = "";
-		} else {
-			document.getElementById("syb1").innerHTML = '<input value="KPI數據,損益表,profit_getList" name="checkbox" type="checkbox" />損益表';
-		}
-
-		var i4 = document.getElementById("scyqk");
-		if (i4 != null) {
-			document.getElementById("scyqk1").innerHTML = "";
-		} else {
-			document.getElementById("scyqk1").innerHTML = '<input value="KPI數據,生產與請款,inv_getList" name="checkbox" type="checkbox" />生產與請款';
-		}
-
-		var i5 = document.getElementById("pjcpdj");
-		if (i5 != null) {
-			document.getElementById("pjcpdj1").innerHTML = "";
-		} else {
-			document.getElementById("pjcpdj1").innerHTML = '<input value="KPI數據,平均粗胚單價,avprice_getList" name="checkbox" type="checkbox" />平均粗胚單價';
-		}
-
-		var i6 = document.getElementById("chyth");
-		if (i6 != null) {
-			document.getElementById("chyth1").innerHTML = "";
-		} else {
-			document.getElementById("chyth1").innerHTML = '<input value="KPI數據,出貨與退貨,outback_getList" name="checkbox" type="checkbox" />出貨與退貨';
-		}
-
-		var i7 = document.getElementById("qcylkc");
-		if (i7 != null) {
-			document.getElementById("qcylkc1").innerHTML = "";
-		} else {
-			document.getElementById("qcylkc1").innerHTML = '<input value="KPI數據,全廠原料庫存,mastore_getList" name="checkbox"  type="checkbox" />全廠原料庫存';
-		}
-
-		var i8 = document.getElementById("htl");
-		if (i8 != null) {
-			document.getElementById("htl1").innerHTML = "";
-		} else {
-			document.getElementById("htl1").innerHTML = '<input value="KPI數據,回頭料,backcp_getList" name="checkbox" type="checkbox" />回頭料';
-		}
-
-		var i9 = document.getElementById("ryxn");
-		if (i9 != null) {
-			document.getElementById("ryxn1").innerHTML = "";
-		} else {
-			document.getElementById("ryxn1").innerHTML = '<input value="KPI數據,人員效能,person_getList" name="checkbox" type="checkbox" />人員效能';
-		}
-
-		var i10 = document.getElementById("gwshfx");
-		if (i10 != null) {
-			document.getElementById("gwshfx1").innerHTML = "";
-		} else {
-			document.getElementById("gwshfx1").innerHTML = '<input value="KPI數據,關務損耗分析說明,gw_getList" name="checkbox" type="checkbox" />關務損耗分析說明';
-		}
-
-		var i11 = document.getElementById("sdy");
-		if (i11 != null) {
-			document.getElementById("sdy1").innerHTML = "";
-		} else {
-			document.getElementById("sdy1").innerHTML = '<input value="KPI數據,水電油,cash_getList" name="checkbox" type="checkbox" />水電油';
-		}
-
-		var i12 = document.getElementById("hsfsytj");
-		if (i12 != null) {
-			document.getElementById("hsfsytj1").innerHTML = "";
-		} else {
-			document.getElementById("hsfsytj1").innerHTML = '<input value="KPI數據,回收粉使用統計,backmat_getList" name="checkbox" type="checkbox" />回收粉使用統計';
-		}
-
-		var i13 = document.getElementById("blblzlfx");
-		if (i13 != null) {
-			document.getElementById("blblzlfx1").innerHTML = "";
-		} else {
-			document.getElementById("blblzlfx1").innerHTML = '<input  value="KPI數據,邊料不良重量分析,side_getList" name="checkbox" type="checkbox" />邊料不良重量分析';
-		}
-
-		var i14 = document.getElementById("slyphy");
-		if (i14 != null) {
-			document.getElementById("slyphy1").innerHTML = "";
-		} else {
-			document.getElementById("slyphy1").innerHTML = '<input value="KPI數據,色料藥品耗用,mat_getList" name="checkbox" type="checkbox" />色料藥品耗用';
-		}
-
-		var i15 = document.getElementById("lxjhy");
-		if (i15 != null) {
-			document.getElementById("lxjhy1").innerHTML = "";
-		} else {
-			document.getElementById("lxjhy1").innerHTML = '<input value="KPI數據,離型濟耗用,mat2_getList" name="checkbox" type="checkbox" />離型劑耗用';
-		}
-
-		var i16 = document.getElementById("cpkc");
-		if (i16 != null) {
-			document.getElementById("cpkc1").innerHTML = "";
-		} else {
-			document.getElementById("cpkc1").innerHTML = '<input value="KPI數據,成品庫存,store_getList" name="checkbox" type="checkbox" />成品庫存';
-		}
-       */
+	window.onload = function() {		
 		var i17 = document.getElementById("glyh");
 		if (i17 != null) {
 			document.getElementById("glyh1").innerHTML = "";
 		} else {
 			document.getElementById("glyh1").innerHTML = '<input value="用戶管理,管理用戶,usergetuser"  name="checkbox" type="checkbox" />管理用戶';
 		}
-
-		/*var i18 = document.getElementById("clyg");
-		if (i18 != null) {
-			document.getElementById("clyg1").innerHTML = "";
-		} else {
-			document.getElementById("clyg1").innerHTML = '<input value="資料輸入,產量預估,ypre_findPageBean" name="checkbox" type="checkbox" />產量預估';
-		}*/ 
-
 		var i19 = document.getElementById("clzl");
 		if (i19 != null) {
 			document.getElementById("clzl1").innerHTML = "";
@@ -211,15 +92,7 @@
 		} else {
 			document.getElementById("gdzc1").innerHTML = '<input value="資料輸入,固定資產,fix_findPageBean" name="checkbox" type="checkbox" />固定資產';
 		}
-		
-		
-		 /*var i25 = document.getElementById("zlscchqk");
-		if (i25 != null) {
-			document.getElementById("zlscchqk1").innerHTML = "";
-		} else {
-			document.getElementById("zlscchqk1").innerHTML = '<input name="checkbox" value="資料輸入,生產出貨,webmix1_findPageBean" type="checkbox" />生產出貨';																								
-		}*/ 
-		
+						
 		var i26 = document.getElementById("renshugonsh");
 		if (i26 != null) {
 			document.getElementById("renshugonsh1").innerHTML = "";
@@ -383,14 +256,7 @@
 		}else{
 		  document.getElementById("kpifact1").innerHTML='<input name="checkbox" value="資料輸入,KPI年度目標,kpifact_findPageBean" type="checkbox"/>KPI年度目標';																								                                             ;									 										
 	    }
-	    
-	   /*  var i48=document.getElementById("hangwenshenhe(2)");
-		if(i48!=null){
-		   document.getElementById("hangwenshenhe1(2)").innerHTML="";
-		}else{
-		  document.getElementById("hangwenshenhe1(2)").innerHTML='<input name="checkbox" value="KPI數據,函文審核(2),vbm_findPageBean_tw"  type="checkbox">函文審核(2)';																								                                             ;									 										
-	    } */
-	    
+	    	 	    
 	    var i49=document.getElementById("hangwenshenheState");
 		if(i49!=null){
 		   document.getElementById("hangwenshenheState1").innerHTML="";
@@ -443,40 +309,15 @@
 	    
 	      	    	 
 }
-	/* function huoqu() {
-		jQuery(function($) {
-			$(document).ui_loading({
-				overlay : true,
-				opacity : 0.2,
-				supportIframe : true,
-				message : '請稍後!正在修改權限中..'
-			});
-		});
-		$.post("userupdateJurisdiction",
-				$("input[@name='checkbox',@name='userread']:checked").serialize(),
-				function(result) {
-					jQuery(function($) {
-						$(document).ui_loading({
-							overlay : true,
-							opacity : 0.2,
-							supportIframe : true,
-							message : ''
-						});
-					});
-					if ($.browser.msie) {
-						alert(result.success);
-					} else {
-						jAlert(result.success, '提示信息');
-					}
-				}, "json").error(function(xhr) {
-		});
-
-	} */
-	
+		
 function getSub(){
    document.getElementById("subform").submit();
    layer.load("正在處理,請稍等....");
-}	
+}
+function back(){
+	layer.load("正在返回...");
+	location.href="/Login/userfindPageBean";
+}
 </script>
 <body>
 	<form action="userupdateJurisdiction" method="post" id="subform">
@@ -495,170 +336,7 @@ function getSub(){
 				<td class="td1">KPI數據:</td>
 				<td>
 					<table>					
-						<%--<tr>
-							<td><s:iterator value="#session.user.webJurisdictions">
-									<s:iterator value="webSubmenus">
-										<s:if test="submenuname=='孔位數回轉數'">
-											<span id="kws"><input
-												value="KPI數據,孔位數回轉數,machine_getList" name="checkbox"
-												checked="checked" type="checkbox" />孔位數回轉數</span>
-										</s:if>
-									</s:iterator>
-								</s:iterator> <span id="kws1"></span></td>
-							<td><s:iterator value="#session.user.webJurisdictions">
-									<s:iterator value="webSubmenus">
-										<s:if test="submenuname=='損益匯總'">
-											<span id="syhz"><input name="checkbox"
-												value="KPI數據,損益匯總,count_getList" checked="checked"
-												type="checkbox" />損益匯總</span>
-										</s:if>
-									</s:iterator>
-								</s:iterator> <span id="syhz1"></span></td>
-							<td><s:iterator value="#session.user.webJurisdictions">
-									<s:iterator value="webSubmenus">
-										<s:if test="submenuname=='損益表'">
-											<span id="syb"><input name="checkbox"
-												value="KPI數據,損益表,profit_getList" checked="checked"
-												type="checkbox" />損益表</span>
-										</s:if>
-									</s:iterator>
-								</s:iterator> <span id="syb1"></span></td>
-							<td><s:iterator value="#session.user.webJurisdictions">
-									<s:iterator value="webSubmenus">
-										<s:if test="submenuname=='生產與請款'">
-											<span id="scyqk"><input name="checkbox"
-												value="KPI數據,生產與請款,inv_getList" checked="checked"
-												type="checkbox" />生產與請款</span>
-										</s:if>
-									</s:iterator>
-								</s:iterator> <span id="scyqk1"></span></td>
-							<td><s:iterator value="#session.user.webJurisdictions">
-									<s:iterator value="webSubmenus">
-										<s:if test="submenuname=='平均粗胚單價'">
-											<span id="pjcpdj"><input name="checkbox"
-												value="KPI數據,平均粗胚單價,avprice_getList" checked="checked"
-												type="checkbox" />平均粗胚單價</span>
-										</s:if>
-									</s:iterator>
-								</s:iterator> <span id="pjcpdj1"></span></td>
-						</tr>
-						<tr>
-							<td><s:iterator value="#session.user.webJurisdictions">
-									<s:iterator value="webSubmenus">
-										<s:if test="submenuname=='出貨與退貨'">
-											<span id="chyth"><input name="checkbox"
-												value="KPI數據,出貨與退貨,outback_getList" checked="checked"
-												type="checkbox" />出貨與退貨</span>
-										</s:if>
-									</s:iterator>
-								</s:iterator> <span id="chyth1"></span></td>
-							<td><s:iterator value="#session.user.webJurisdictions">
-									<s:iterator value="webSubmenus">
-										<s:if test="submenuname=='全廠原料庫存'">
-											<span id="qcylkc"><input
-												value="KPI數據,全廠原料庫存,mastore_getList" name="checkbox"
-												checked="checked" type="checkbox" />全廠原料庫存</span>
-										</s:if>
-									</s:iterator>
-								</s:iterator> <span id="qcylkc1"></span>
-							</td>
-
-							<td><s:iterator value="#session.user.webJurisdictions">
-									<s:iterator value="webSubmenus">
-										<s:if test="submenuname=='回頭料'">
-											<span id="htl"><input value="KPI數據,回頭料,backcp_getList"
-												name="checkbox" checked="checked" type="checkbox" />回頭料</span>
-										</s:if>
-									</s:iterator>
-								</s:iterator> <span id="htl1"></span>
-							</td>
-
-							<td><s:iterator value="#session.user.webJurisdictions">
-									<s:iterator value="webSubmenus">
-										<s:if test="submenuname=='人員效能'">
-											<span id="ryxn"><input
-												value="KPI數據,人員效能,person_getList" name="checkbox"
-												checked="checked" type="checkbox" />人員效能</span>
-										</s:if>
-									</s:iterator>
-								</s:iterator> <span id="ryxn1"></span>
-							</td>
-							<td><s:iterator value="#session.user.webJurisdictions">
-									<s:iterator value="webSubmenus">
-										<s:if test="submenuname=='關務損耗分析說明'">
-											<span id="gwshfx"><input name="checkbox"
-												value="KPI數據,關務損耗分析說明,gw_getList" checked="checked"
-												type="checkbox" />關務損耗分析說明</span>
-										</s:if>
-									</s:iterator>
-								</s:iterator> <span id="gwshfx1"></span>
-							</td>
-						</tr>
-						<tr>
-							<td><s:iterator value="#session.user.webJurisdictions">
-									<s:iterator value="webSubmenus">
-										<s:if test="submenuname=='水電油'">
-											<span id="sdy"><input name="checkbox"
-												value="KPI數據,水電油,cash_getList" checked="checked"
-												type="checkbox" />水電油</span>
-										</s:if>
-									</s:iterator>
-								</s:iterator> <span id="sdy1"></span>
-							</td>
-							<td><s:iterator value="#session.user.webJurisdictions">
-									<s:iterator value="webSubmenus">
-										<s:if test="submenuname=='回收粉使用統計'">
-											<span id="hsfsytj"><input name="checkbox"
-												value="KPI數據,回收粉使用統計,backmat_getList" checked="checked"
-												type="checkbox" />回收粉使用統計</span>
-										</s:if>
-									</s:iterator>
-								</s:iterator> <span id="hsfsytj1"></span>
-							</td>
-							<td><s:iterator value="#session.user.webJurisdictions">
-									<s:iterator value="webSubmenus">
-										<s:if test="submenuname=='邊料不良重量分析'">
-											<span id="blblzlfx"><input name="checkbox"
-												value="KPI數據,邊料不良重量分析,side_getList" checked="checked"
-												type="checkbox" />邊料不良重量分析</span>
-										</s:if>
-									</s:iterator>
-								</s:iterator> <span id="blblzlfx1"></span>
-							</td>
-							<td><s:iterator value="#session.user.webJurisdictions">
-									<s:iterator value="webSubmenus">
-										<s:if test="submenuname=='色料藥品耗用'">
-											<span id="slyphy"><input
-												value="KPI數據,色料藥品耗用,mat_getList" name="checkbox"
-												checked="checked" type="checkbox" />色料藥品耗用</span>
-										</s:if>
-									</s:iterator>
-								</s:iterator> <span id="slyphy1"></span>
-							</td>
-							<td><s:iterator value="#session.user.webJurisdictions">
-									<s:iterator value="webSubmenus">
-										<s:if test="submenuname=='離型濟耗用'">
-											<span id="lxjhy"><input name="checkbox"
-												value="KPI數據,離型濟耗用,mat2_getList" checked="checked"
-												type="checkbox" />離型劑耗用</span>
-										</s:if>
-									</s:iterator>
-								</s:iterator> <span id="lxjhy1"></span>
-							</td>
-						</tr>
-						--%>
-						<tr>
-							<%--<td><s:iterator value="#session.user.webJurisdictions">
-									<s:iterator value="webSubmenus">
-										<s:if test="submenuname=='成品庫存'">
-											<span id="cpkc"><input name="checkbox"
-												value="KPI數據,成品庫存,store_getList" checked="checked"
-												type="checkbox" />成品庫存</span>
-										</s:if>
-									</s:iterator>
-								</s:iterator><span id="cpkc1"></span>
-							</td>						
-							--%><td>
+						<td>
 							  <s:iterator value="#session.user.webJurisdictions">
 									<s:iterator value="webSubmenus">
 										<s:if test="submenuname=='函文申請'">
@@ -749,20 +427,7 @@ function getSub(){
 							      </s:iterator>							   
 							   </s:iterator>
 							   <span id="kyzmat1"></span>
-							</td>
-							<!-- <td>
-							   <s:iterator value="#session.user.webJurisdictions">
-							      <s:iterator value="webSubmenus">
-							          <s:if test="submenuname=='函文審核(2)'">
-							             <span id="hangwenshenhe(2)">
-							                 <input name="checkbox" value="KPI數據,函文審核(2),vbm_findPageBean_tw" checked="checked" type="checkbox">
-							                                              函文審核(2)
-							             </span>
-							          </s:if>
-							      </s:iterator>							   
-							   </s:iterator>
-							   <span id="hangwenshenhe1(2)"></span>
-							</td> -->
+							</td>							
 							<td>
 							   <s:iterator value="#session.user.webJurisdictions">
 							      <s:iterator value="webSubmenus">
@@ -812,17 +477,7 @@ function getSub(){
 			  <td class="td1">資料輸入</td>
 			  <td>
 			      <table>
-			      <tr>
-			         			<!-- <td><s:iterator value="#session.user.webJurisdictions">
-									<s:iterator value="webSubmenus">
-										<s:if test="submenuname=='生產出貨'">
-											<span id="zlscchqk"><input name="checkbox"
-												value="資料輸入,生產出貨,webmix1_findPageBean" checked="checked"
-												type="checkbox" />生產出貨</span>
-										</s:if>
-									</s:iterator>
-								</s:iterator> <span id="zlscchqk1"></span>
-							</td> -->
+			      <tr>			         			
 							<td><s:iterator value="#session.user.webJurisdictions">
 									<s:iterator value="webSubmenus">
 										<s:if test="submenuname=='人數工時離職資料'">
@@ -917,17 +572,7 @@ function getSub(){
 								</s:iterator> <span id="renyuankaoqin1"></span>
 							</td>							
 			      </tr>
-			      <tr>
-			        <!-- <td><s:iterator value="#session.user.webJurisdictions">
-									<s:iterator value="webSubmenus">
-										<s:if test="submenuname=='產量預估'">
-											<span id="clyg"><input name="checkbox"
-												value="資料輸入,產量預估,ypre_findPageBean" checked="checked"
-												type="checkbox" />產量預估</span>
-										</s:if>
-									</s:iterator>
-								</s:iterator> <span id="clyg1"></span>
-							</td> -->
+			      <tr>			        
 							<td><s:iterator value="#session.user.webJurisdictions">
 									<s:iterator value="webSubmenus">
 										<s:if test="submenuname=='產量資料'">
@@ -1122,7 +767,7 @@ function getSub(){
 			<tr>
 				<td colspan="2"><input style="margin-left:300px;" value="確認修改"
 					onclick="getSub()" type="button"><input type="button"
-					onclick="location.href='userfindPageBean'" value="返回查看">
+					onclick="back()" value="返回查看">
 				</td>
 			</tr>
 			<tr>

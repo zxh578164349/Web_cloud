@@ -48,10 +48,9 @@ jq(document).ajaxStop(function(){
 				if(data=="0"){
 					layer.msg("提交成功!",3,1);
 					location.href="/Login/webuseremaila_findPageBean";
-				}
-				if(data=="1"){
+				}else{
 					alert(data.responseText);
-				}
+				}				
 			}
 		});	
 	}); 

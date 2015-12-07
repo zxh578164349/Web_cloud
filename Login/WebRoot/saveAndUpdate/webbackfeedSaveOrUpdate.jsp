@@ -55,10 +55,9 @@ jq(document).ajaxStop(function(){
 					layer.msg("提交成功!",3,1);
 					location.href="/Login/webbackfeed_findPageBean"; 
 					alert(location.href);
-				}
-				if(data=="1"){
+				}else{
 					alert(data.responseText);
-				}
+				}				
 			}
 		});
 		demo.tipmsg.w["*0-9"] = "只能數字且不超過9位數,可保留三位以內小數";

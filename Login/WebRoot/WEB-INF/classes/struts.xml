@@ -590,9 +590,10 @@
                 <param name="allowedExtensions">jpg,bmp</param>             
            </interceptor-ref>
            <interceptor-ref name="defaultStack"></interceptor-ref>  -->
-			<result name="add" type="json">
-			   <param name="root">ajaxResult</param>
-			   <param name="content-type">text/html</param>
+			<result name="add" type="redirectAction">
+			   <!--<param name="root">ajaxResult</param>
+			   <param name="contentType">text/html</param>-->
+			   kyz_findPageBean
 			</result>
 			<result name="input">none.jsp</result>
 			<result name="update" type="redirectAction">

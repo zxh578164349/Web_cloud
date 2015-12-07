@@ -21,24 +21,21 @@
 <meta http-equiv="description" content="This is my page">
 <script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script>
 <script type="text/javascript" src="page/jquerys/layer/layer.min.js"></script>
-<!--
-	<link rel="stylesheet" type="text/css" href="styles.css">
-	-->
+
 
 <script type="text/javascript">
 	function showDiv(index) {
 		var sts = document.getElementById("a" + index).innerHTML;
 		if (sts.indexOf("退出管理") == 0) {
+			//layer.load("正在退出,请稍等...");
 			parent.location.href = "judge.jsp?bj=1";
 		}
 		var divName = document.getElementById(index);
 		var img = document.getElementById("img" + index);
 		if (divName.style.display == "none") {
-			//divName.style.display = "block";
 			$("#"+index).show(300);
 			img.src = "image/folderopen.gif";
 		} else {
-			//divName.style.display = "none";
 			$("#"+index).hide(300);
 			img.src = "image/folder.gif";
 		}

@@ -134,7 +134,11 @@
    document.getElementById("currentTime").innerHTML = currentDate.toLocaleString(); 
    }     
     window.setInterval("run();", 1000); 
+  
     
+    function back(){   	
+    	location.href="/Login/judge.jsp";   	
+    }
 </script>
 <body >
 	
@@ -147,7 +151,7 @@
 						<span style="font-size:12px;float:right;color:#CCCC99">
 						   登录人：<s:property value="#session.loginUser.name" />(<s:if test="#attr.factNo=='tw'">所有數據</s:if>								
 								 <s:else> <s:property value="#attr.factName" /></s:else> ),欢迎您 ！								
-							     <a id="exit" href="judge2.jsp" target="_parent" style="color:#FF6666">
+							     <a id="exit" href="javascript:back()" target="_parent" style="color:#FF6666">
 							     退出登录</a>
 						</span>
 					    <span id="currentTime" style="width:300px;float:left;font-size:12px;color:#99CCCC;background:#292929"></span>	 				
