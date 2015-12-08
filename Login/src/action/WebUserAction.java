@@ -8,6 +8,8 @@ import java.net.UnknownHostException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -425,7 +427,13 @@ public class WebUserAction extends ActionSupport implements ServletResponseAware
 						cookieuser.setMaxAge(60*60*24*7);//一周限期					 
 						//cookieuser.setPath("/");
 						ServletActionContext.getResponse().addCookie(cookieuser);
-					}	  
+					}
+					/*菜单名统一按名字进行排序*/
+					Collections.sort(wUser.getWebJurisdictions(), new Comparator<WebJurisdiction>() {
+			            public int compare(WebJurisdiction arg0, WebJurisdiction arg1) {
+			                return arg0.getWebMenu().getMenuname().compareTo(arg1.getWebMenu().getMenuname());
+			            }
+			        });
 						
 						ActionContext.getContext().getSession().put("loginUser", wUser);						
 						if (factNo.equals("tw")&& wUser.getUsername().equals("admin")) {								

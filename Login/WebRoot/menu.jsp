@@ -46,13 +46,7 @@ $(document).ready(function(){
    $(this).attr("class", "bigfont");
 });
 })	
-
-function test(){
-	/*$(document).ajaxStart(function(){
-		layer.laod(0);
-	});*/
-	layer.load(0);
-}	
+	
 </script>
 </head>
 <style>
@@ -73,7 +67,7 @@ a:hover{text-decoration:none; border-bottom:1px red solid;color:red;}
 .b1,.b8{margin:0 5px;}
 .b2,.b7{margin:0 3px;border-right:2px solid; border-left:2px solid;}
 .b3,.b6{margin:0 2px;border-right:1px solid; border-left:1px solid;}
-.b4,.b5{margin:0 1px;border-right:1px solid; border-left:1px solid; height:2px;}
+.b4,.b5{margin:0 1px;border-right:1px solid; border-left:1px solid; }
 .content {border-right:1px solid;border-left:1px solid;overflow:hidden;}
 /*颜色方案一,蓝色边框----------------------------------------*/
 /*下面第一、二句决定边框颜色，第三句决定背景颜色*/
@@ -93,11 +87,10 @@ a:hover{text-decoration:none; border-bottom:1px red solid;color:red;}
 			         <thead style="font-weight:bolder;font-size:14px">
 				       <tr>
 					     <td>
-					        <a href="right.jsp" style="border-bottom:0px"
-						      title="返回首頁" target="show">
+					        <a href="right.jsp" style="border-bottom:0px" title="返回首頁" target="show" onclick="window.parent.showPop()">					      
 					        <img alt="返回首頁" src="images/files.gif" style="border:0px"></a>				
-					        <a href="right.jsp" style="color:black;"
-						      title="返回首頁" target="show">網站首頁</a>				
+					        <a href="right.jsp" style="color:black;" title="返回首頁" target="show" onclick="window.parent.showPop()">
+						              網站首頁</a>				
 					</td>
 				</tr>
 			</thead>
@@ -124,25 +117,10 @@ a:hover{text-decoration:none; border-bottom:1px red solid;color:red;}
 												onclick="window.parent.showPop()">(${x.index+1})<s:property
 														value="submenuname" /> </a>											
 											</td>
-										</tr>
-									
-									<%--<s:else>
-										<tr>
-											<td>
-											<a href="<s:property value="address"/>?type=<s:property value='subtype'/>" 
-											style="border-bottom:0px" target="show">
-											<img style="border: 0px;" src="images/files.gif"></a>													
-											<a name="alink"
-												href="<s:property value="address"/>?type=<s:property value='subtype'/>"
-												style="font-size:12px" target="show"
-												>(${x.index+1}) <s:property
-														value="submenuname" /> </a>
-											</td>
-										</tr>
-									</s:else>
-								--%></s:iterator>
+										</tr>								
+								</s:iterator>
 							</table>
-						</div></td>
+						</div></td> 
 				</tr>
 			</s:iterator>
 			</tbody>
