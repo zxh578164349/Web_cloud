@@ -611,6 +611,7 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 	
 	public String findById(){//審核
 		vbm=visabillmSer.findById(factNo, visaSort, billNo);
+		ActionContext.getContext().getSession().put("vbm", vbm);//爲了在函文簽核的彈出窗口顯示已簽人的備註信息
 		return "findById";
 	}
 	public String findById2(){//加簽
@@ -644,11 +645,13 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 	public String findById_email(){//email直接審核，不需要登錄帳號（手機平板）
 		vbm=visabillmSer.findById(factNo, visaSort, billNo);
 		ActionContext.getContext().getSession().put("Email", email);//用於判斷審核完後頁面的跳轉（在this.remark()方法最後字符串返回）
+		ActionContext.getContext().getSession().put("vbm", vbm);//爲了在函文簽核的彈出窗口顯示已簽人的備註信息
 		return "findById_email";
 	}
 	public String findById_email2(){//email直接審核，不需要登錄帳號（普通電腦）findById_email2
 		vbm=visabillmSer.findById(factNo, visaSort, billNo);
 		ActionContext.getContext().getSession().put("Email", email);//用於判斷審核完後頁面的跳轉（在this.remark()方法最後字符串返回）
+		ActionContext.getContext().getSession().put("vbm", vbm);//爲了在函文簽核的彈出窗口顯示已簽人的備註信息
 		return "findById_email2";
 	}
 	

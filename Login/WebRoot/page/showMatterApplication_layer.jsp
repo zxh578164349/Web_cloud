@@ -57,6 +57,7 @@ table.gridtable td {
 	background-color: #ffffff;
 	width: 60px;
 }
+
 </style>
 <script type="text/javascript">
 
@@ -119,7 +120,7 @@ table.gridtable td {
 			</tr>
 			<tr>
 				<td>申請內容</td>
-				<td colspan="11">
+				<td colspan="9">
 					<div style="height:85px;overflow:auto" >
 						<s:property value="kyz.memoMk" />
 					</div></td>
@@ -167,11 +168,24 @@ table.gridtable td {
 					</td>
 				</tr>
 			</s:iterator>
-			
+			<!-- ---------------------顯示所有人的備註信息20151211----------------------------- -->
+			<s:iterator value="#session.vbm.kyVisabillses">
+			   <s:if test='memo!=null&&visaRank!=""'>			      
+			      <tr>
+			         <td>
+			            <s:property value="visaRank"/>:
+			         </td>
+			         <td colspan="9" style="color:blue">
+			            <b><s:property value="memo"/></b>
+			         </td>
+			      </tr>
+			   </s:if>
+			</s:iterator>
+			<!-- ---------------------顯示所有人的備註信息20151211----------------------------- -->
 			<!------------------------- 修改3   20151027---------------   -->
 			<s:if test='readMk=="N"'>
-			    <tr><td colspan="15" style="color:red">備註↓↓↓</td></tr>
-				<tr><td colspan="15">									
+			    <tr><td colspan="10" style="color:red">備註↓↓↓</td></tr>
+				<tr><td colspan="10">									
 					<form id="memo" method="post" action="vbm_add">
 						<textarea rows="6" cols="80" name="memo" id="memo_txt"></textarea>						
 						<input type="hidden" name="factNo" value="<s:property value='factNo'/>"/>

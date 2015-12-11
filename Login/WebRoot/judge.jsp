@@ -21,9 +21,7 @@
 </head>
 <script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script> 
 <script type="text/javascript" src="jquery/layer/layer.min.js"></script>
-<style type="text/css">
-body{background:#2B2B2B;}
-</style>
+
 
 <body onload="loadpage()">
 	<script type="text/javascript">
@@ -39,5 +37,6 @@ body{background:#2B2B2B;}
 	
 
 </script>
+<jsp:include page="copyright.jsp"/>
 </body >
 </html>

@@ -123,7 +123,18 @@ table.gridtable td {
 				</td>
 
 			</tr>
-			
+			<s:iterator value="#session.vbm.kyVisabillses">
+			   <s:if test='memo!=null&&memo!=""'>
+			     <tr>
+			       <td>
+			          <s:property value="visaRank"/>:
+			       </td>
+			       <td colspan="11" style="color:blue">
+			          <b><s:property value="memo"/></b>
+			       </td>
+			     </tr>
+			   </s:if>
+			</s:iterator>
 			<!------------------------- 修改3   20151027---------------   -->
 			<s:if test='readMk=="N"'>
 			    <tr><td colspan="12" style="color:red">備註↓↓↓</td></tr>

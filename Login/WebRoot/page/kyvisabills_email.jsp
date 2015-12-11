@@ -342,11 +342,11 @@ aria-labelledby="myModalLabelA" aria-hidden="true">
 	 </div>
 
 </div>
-	
-<div style="width:100%;position:fixed;bottom:0" align="center" id="tab3">
+<jsp:include page="../copyright.jsp"/>	
+<%--<div style="width:100%;position:fixed;bottom:0" align="center" id="tab3">
 <font color="grey" style="font-size:10px;font-family: Arial, Helvetica, sans-serif;">
 Copyright © 2014,東莞加元鞋材制品有限公司,All Rights Reserved
 </font></div>	
-
+--%>
 
 </html>

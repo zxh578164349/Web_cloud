@@ -247,6 +247,7 @@ public class VWebmachineAction extends ActionSupport implements ServletResponseA
 
 
 	public void print_fact() throws IOException, ParseException{
+		int index=118;//廠別狀態循環的迭代量
 		//創建模板
 		HSSFWorkbook wb=new HSSFWorkbook();
 		HSSFSheet sheet=wb.createSheet();
@@ -2556,11 +2557,11 @@ public class VWebmachineAction extends ActionSupport implements ServletResponseA
 		for(int c=0;c<list_fact.size();c++){//start for1
 		WebFact fact=list_fact.get(c);
 		String factCode=fact.getId().getFactArea();//廠別狀態
-		HSSFRow row_factCode=sheet.createRow(2+114*c);
+		HSSFRow row_factCode=sheet.createRow(2+index*c);
 		HSSFCell cell_factCode=row_factCode.createCell(0);
 		cell_factCode.setCellValue(factCode);
 		cell_factCode.setCellStyle(cs_noborder);
-		HSSFRow row_column=sheet.createRow(3+114*c);
+		HSSFRow row_column=sheet.createRow(3+index*c);
 		for(int b=0;b<list_column.size();b++){
 			HSSFCell cell=row_column.createCell(b);
 			cell.setCellValue(list_column.get(b));
@@ -2581,130 +2582,130 @@ public class VWebmachineAction extends ActionSupport implements ServletResponseA
 			case 0:
 				sheet.setColumnWidth(d, 3500);
 				//機台回轉數
-				HSSFRow row_a=sheet.createRow(4+114*c);
+				HSSFRow row_a=sheet.createRow(4+index*c);
 				HSSFCell cell_a=row_a.createCell(d);
 				cell_a.setCellValue("機台回轉數");
 				cell_a.setCellStyle(cs);
-				CellRangeAddress cra_row_a=new CellRangeAddress((4+114*c),(short)(4+114*c+(length1-1)),d,(short)d);
+				CellRangeAddress cra_row_a=new CellRangeAddress((4+index*c),(short)(4+index*c+(length1-1)),d,(short)d);
 				sheet.addMergedRegion(cra_row_a);
 				for(int e=1;e<length1;e++){
-					HSSFRow row_a_2=sheet.createRow(4+e+114*c);
+					HSSFRow row_a_2=sheet.createRow(4+e+index*c);
 					HSSFCell cell_a_2=row_a_2.createCell(d);
 					cell_a_2.setCellStyle(cs);
 				}
 				//生產與請款狀況
-				HSSFRow row_a2=sheet.createRow(4+114*c+length1);
+				HSSFRow row_a2=sheet.createRow(4+index*c+length1);
 				HSSFCell cell_a2=row_a2.createCell(d);
 				cell_a2.setCellValue("生產與請款狀況");
 				cell_a2.setCellStyle(cs);
-				CellRangeAddress cra_row_a2=new CellRangeAddress(4+114*c+length1,(short)(4+114*c+length1+length2-1),d,(short)d);
+				CellRangeAddress cra_row_a2=new CellRangeAddress(4+index*c+length1,(short)(4+index*c+length1+length2-1),d,(short)d);
 				sheet.addMergedRegion(cra_row_a2);
 				for(int e2=1;e2<length2;e2++){
-					HSSFRow row_a2_2=sheet.createRow(4+114*c+length1+e2);
+					HSSFRow row_a2_2=sheet.createRow(4+index*c+length1+e2);
 					HSSFCell cell_a2_2=row_a2_2.createCell(d);
 					cell_a2_2.setCellStyle(cs);
 				}
 				//出貨與退貨
-				HSSFRow row_a3=sheet.createRow(4+114*c+length1+length2);
+				HSSFRow row_a3=sheet.createRow(4+index*c+length1+length2);
 				HSSFCell cell_a3=row_a3.createCell(d);
 				cell_a3.setCellValue("出貨與退貨");
 				cell_a3.setCellStyle(cs);
-				CellRangeAddress cra_row_a3=new CellRangeAddress(4+114*c+length1+length2,
-						(short)(4+114*c+length1+length2+length3-1),d,(short)d);
+				CellRangeAddress cra_row_a3=new CellRangeAddress(4+index*c+length1+length2,
+						(short)(4+index*c+length1+length2+length3-1),d,(short)d);
 				sheet.addMergedRegion(cra_row_a3);
 				for(int e2=1;e2<length3;e2++){
-					HSSFRow row_a3_2=sheet.createRow(4+114*c+length1+length2+e2);
+					HSSFRow row_a3_2=sheet.createRow(4+index*c+length1+length2+e2);
 					HSSFCell cell_a3_2=row_a3_2.createCell(d);
 					cell_a3_2.setCellStyle(cs);
 				}
 				//人員效能
-				HSSFRow row_a4=sheet.createRow(4+114*c+length1+length2+length3);
+				HSSFRow row_a4=sheet.createRow(4+index*c+length1+length2+length3);
 				HSSFCell cell_a4=row_a4.createCell(d);
 				cell_a4.setCellValue("人員效能");
 				cell_a4.setCellStyle(cs);
-				CellRangeAddress cra_row_a4=new CellRangeAddress(4+114*c+length1+length2+length3,
-						(short)(4+114*c+length1+length2+length3+length4-1),d,(short)d);
+				CellRangeAddress cra_row_a4=new CellRangeAddress(4+index*c+length1+length2+length3,
+						(short)(4+index*c+length1+length2+length3+length4-1),d,(short)d);
 				sheet.addMergedRegion(cra_row_a4);
 				for(int e2=1;e2<length4;e2++){
-					HSSFRow row_a3_2=sheet.createRow(4+114*c+length1+length2+length3+e2);
+					HSSFRow row_a3_2=sheet.createRow(4+index*c+length1+length2+length3+e2);
 					HSSFCell cell_a3_2=row_a3_2.createCell(d);
 					cell_a3_2.setCellStyle(cs);
 				}
 				//關務損耗
-				HSSFRow row_a5=sheet.createRow(4+114*c+length1+length2+length3+length4);
+				HSSFRow row_a5=sheet.createRow(4+index*c+length1+length2+length3+length4);
 				HSSFCell cell_a5=row_a5.createCell(d);
 				cell_a5.setCellValue("關務損耗");
 				cell_a5.setCellStyle(cs);
-				CellRangeAddress cra_row_a5=new CellRangeAddress(4+114*c+length1+length2+length3+length4,
-						(short)(4+114*c+length1+length2+length3+length4+length5-1),d,(short)d);
+				CellRangeAddress cra_row_a5=new CellRangeAddress(4+index*c+length1+length2+length3+length4,
+						(short)(4+index*c+length1+length2+length3+length4+length5-1),d,(short)d);
 				sheet.addMergedRegion(cra_row_a5);
 				for(int e2=1;e2<length5;e2++){
-					HSSFRow row_a3_2=sheet.createRow(4+114*c+length1+length2+length3+length4+e2);
+					HSSFRow row_a3_2=sheet.createRow(4+index*c+length1+length2+length3+length4+e2);
 					HSSFCell cell_a3_2=row_a3_2.createCell(d);
 					cell_a3_2.setCellStyle(cs);
 				}
 				//邊料不良重量分析
-				HSSFRow row_a6=sheet.createRow(4+114*c+length1+length2+length3+length4+length5);
+				HSSFRow row_a6=sheet.createRow(4+index*c+length1+length2+length3+length4+length5);
 				HSSFCell cell_a6=row_a6.createCell(d);
 				cell_a6.setCellValue("邊料不良重量分析");
 				cell_a6.setCellStyle(cs);
-				CellRangeAddress cra_row_a6=new CellRangeAddress(4+114*c+length1+length2+length3+length4+length5,
-						(short)(4+114*c+length1+length2+length3+length4+length5+length6-1),d,(short)d);
+				CellRangeAddress cra_row_a6=new CellRangeAddress(4+index*c+length1+length2+length3+length4+length5,
+						(short)(4+index*c+length1+length2+length3+length4+length5+length6-1),d,(short)d);
 				sheet.addMergedRegion(cra_row_a6);
 				for(int e2=1;e2<length6;e2++){
-					HSSFRow row_a3_2=sheet.createRow(4+114*c+length1+length2+length3+length4+length5+e2);
+					HSSFRow row_a3_2=sheet.createRow(4+index*c+length1+length2+length3+length4+length5+e2);
 					HSSFCell cell_a3_2=row_a3_2.createCell(d);
 					cell_a3_2.setCellStyle(cs);
 				}
 				//庫存
-				HSSFRow row_a7=sheet.createRow(4+114*c+length1+length2+length3+length4+length5+length6);
+				HSSFRow row_a7=sheet.createRow(4+index*c+length1+length2+length3+length4+length5+length6);
 				HSSFCell cell_a7=row_a7.createCell(d);
 				cell_a7.setCellValue("庫存");
 				cell_a7.setCellStyle(cs);
-				CellRangeAddress cra_row_a7=new CellRangeAddress(4+114*c+length1+length2+length3+length4+length5+length6,
-						(short)(4+114*c+length1+length2+length3+length4+length5+length6+length7-1),d,(short)d);
+				CellRangeAddress cra_row_a7=new CellRangeAddress(4+index*c+length1+length2+length3+length4+length5+length6,
+						(short)(4+index*c+length1+length2+length3+length4+length5+length6+length7-1),d,(short)d);
 				sheet.addMergedRegion(cra_row_a7);
 				for(int e2=1;e2<length7;e2++){
-					HSSFRow row_a3_2=sheet.createRow(4+114*c+length1+length2+length3+length4+length5+length6+e2);
+					HSSFRow row_a3_2=sheet.createRow(4+index*c+length1+length2+length3+length4+length5+length6+e2);
 					HSSFCell cell_a3_2=row_a3_2.createCell(d);
 					cell_a3_2.setCellStyle(cs);
 				}
 				//水電油
-				HSSFRow row_a8=sheet.createRow(4+114*c+length1+length2+length3+length4+length5+length6+length7);
+				HSSFRow row_a8=sheet.createRow(4+index*c+length1+length2+length3+length4+length5+length6+length7);
 				HSSFCell cell_a8=row_a8.createCell(d);
 				cell_a8.setCellValue("水電油");
 				cell_a8.setCellStyle(cs);
-				CellRangeAddress cra_row_a8=new CellRangeAddress(4+114*c+length1+length2+length3+length4+length5+length6+length7,
-						(short)(4+114*c+length1+length2+length3+length4+length5+length6+length7+length8-1),d,(short)d);
+				CellRangeAddress cra_row_a8=new CellRangeAddress(4+index*c+length1+length2+length3+length4+length5+length6+length7,
+						(short)(4+index*c+length1+length2+length3+length4+length5+length6+length7+length8-1),d,(short)d);
 				sheet.addMergedRegion(cra_row_a8);
 				for(int e2=1;e2<length8;e2++){
-					HSSFRow row_a3_2=sheet.createRow(4+114*c+length1+length2+length3+length4+length5+length6+length7+e2);
+					HSSFRow row_a3_2=sheet.createRow(4+index*c+length1+length2+length3+length4+length5+length6+length7+e2);
 					HSSFCell cell_a3_2=row_a3_2.createCell(d);
 					cell_a3_2.setCellStyle(cs);
 				}
 				//回頭料
-				HSSFRow row_a9=sheet.createRow(4+114*c+length1+length2+length3+length4+length5+length6+length7+length8);
+				HSSFRow row_a9=sheet.createRow(4+index*c+length1+length2+length3+length4+length5+length6+length7+length8);
 				HSSFCell cell_a9=row_a9.createCell(d);
 				cell_a9.setCellValue("回頭料");
 				cell_a9.setCellStyle(cs);
-				CellRangeAddress cra_row_a9=new CellRangeAddress(4+114*c+length1+length2+length3+length4+length5+length6+length7+length8,
-						(short)(4+114*c+length1+length2+length3+length4+length5+length6+length7+length8+length9-1),d,(short)d);
+				CellRangeAddress cra_row_a9=new CellRangeAddress(4+index*c+length1+length2+length3+length4+length5+length6+length7+length8,
+						(short)(4+index*c+length1+length2+length3+length4+length5+length6+length7+length8+length9-1),d,(short)d);
 				sheet.addMergedRegion(cra_row_a9);
 				for(int e2=1;e2<length9;e2++){
-					HSSFRow row_a3_2=sheet.createRow(4+114*c+length1+length2+length3+length4+length5+length6+length7+length8+e2);
+					HSSFRow row_a3_2=sheet.createRow(4+index*c+length1+length2+length3+length4+length5+length6+length7+length8+e2);
 					HSSFCell cell_a3_2=row_a3_2.createCell(d);
 					cell_a3_2.setCellStyle(cs);
 				}
 				//色料回收粉
-				HSSFRow row_a10=sheet.createRow(4+114*c+length1+length2+length3+length4+length5+length6+length7+length8+length9);
+				HSSFRow row_a10=sheet.createRow(4+index*c+length1+length2+length3+length4+length5+length6+length7+length8+length9);
 				HSSFCell cell_a10=row_a10.createCell(d);
 				cell_a10.setCellValue("色料藥品/離型劑/回收粉");
 				cell_a10.setCellStyle(cs);
-				CellRangeAddress cra_row_a10=new CellRangeAddress(4+114*c+length1+length2+length3+length4+length5+length6+length7+length8+length9,
-						(short)(4+114*c+length1+length2+length3+length4+length5+length6+length7+length8+length9+length10-1),d,(short)d);
+				CellRangeAddress cra_row_a10=new CellRangeAddress(4+index*c+length1+length2+length3+length4+length5+length6+length7+length8+length9,
+						(short)(4+index*c+length1+length2+length3+length4+length5+length6+length7+length8+length9+length10-1),d,(short)d);
 				sheet.addMergedRegion(cra_row_a10);
 				for(int e2=1;e2<length10;e2++){
-					HSSFRow row_a3_2=sheet.createRow(4+114*c+length1+length2+length3+length4+length5+length6+length7+length8+length9+e2);
+					HSSFRow row_a3_2=sheet.createRow(4+index*c+length1+length2+length3+length4+length5+length6+length7+length8+length9+e2);
 					HSSFCell cell_a3_2=row_a3_2.createCell(d);
 					cell_a3_2.setCellStyle(cs);
 				}
@@ -2713,70 +2714,70 @@ public class VWebmachineAction extends ActionSupport implements ServletResponseA
 				sheet.setColumnWidth(d, 4000);
 				//機台回轉數
 				for(int f=0;f<length1;f++){
-					HSSFRow row_b=sheet.getRow(4+f+114*c);
+					HSSFRow row_b=sheet.getRow(4+f+index*c);
 					HSSFCell cell_b=row_b.createCell(d);
 					cell_b.setCellValue(list_contentName_machine.get(f));
 					cell_b.setCellStyle(cs);
 				}
 				//生產與請款狀況
 				for(int f2=0;f2<length2;f2++){
-					HSSFRow row_b=sheet.getRow(4+114*c+length1+f2);
+					HSSFRow row_b=sheet.getRow(4+index*c+length1+f2);
 					HSSFCell cell_b=row_b.createCell(d);
 					cell_b.setCellValue(list_contentName_inv.get(f2));
 					cell_b.setCellStyle(cs);
 				}
 				//出貨與退貨
 				for(int f2=0;f2<length3;f2++){
-					HSSFRow row_b=sheet.getRow(4+114*c+length1+length2+f2);
+					HSSFRow row_b=sheet.getRow(4+index*c+length1+length2+f2);
 					HSSFCell cell_b=row_b.createCell(d);
 					cell_b.setCellValue(list_contentName_mix1.get(f2));
 					cell_b.setCellStyle(cs);
 				}
 				//人員效能
 				for(int f2=0;f2<length4;f2++){
-					HSSFRow row_b=sheet.getRow(4+114*c+length1+length2+length3+f2);
+					HSSFRow row_b=sheet.getRow(4+index*c+length1+length2+length3+f2);
 					HSSFCell cell_b=row_b.createCell(d);
 					cell_b.setCellValue(list_contentName_person.get(f2));
 					cell_b.setCellStyle(cs);
 				}
 				//關務損耗
 				for(int f2=0;f2<length5;f2++){
-					HSSFRow row_b=sheet.getRow(4+114*c+length1+length2+length3+length4+f2);
+					HSSFRow row_b=sheet.getRow(4+index*c+length1+length2+length3+length4+f2);
 					HSSFCell cell_b=row_b.createCell(d);
 					cell_b.setCellValue(list_contentName_gw.get(f2));
 					cell_b.setCellStyle(cs);
 				}
 				//邊料不良重量分析
 				for(int f2=0;f2<length6;f2++){
-					HSSFRow row_b=sheet.getRow(4+114*c+length1+length2+length3+length4+length5+f2);
+					HSSFRow row_b=sheet.getRow(4+index*c+length1+length2+length3+length4+length5+f2);
 					HSSFCell cell_b=row_b.createCell(d);
 					cell_b.setCellValue(list_contentName_side.get(f2));
 					cell_b.setCellStyle(cs);
 				}
 				//庫存
 				for(int f2=0;f2<length7;f2++){
-					HSSFRow row_b=sheet.getRow(4+114*c+length1+length2+length3+length4+length5+length6+f2);
+					HSSFRow row_b=sheet.getRow(4+index*c+length1+length2+length3+length4+length5+length6+f2);
 					HSSFCell cell_b=row_b.createCell(d);
 					cell_b.setCellValue(list_contentName_store.get(f2));
 					cell_b.setCellStyle(cs);
 				}
 				//水電油
 				for(int f2=0;f2<length8;f2++){
-					HSSFRow row_b=sheet.getRow(4+114*c+length1+length2+length3+length4+length5+length6+length7+f2);
+					HSSFRow row_b=sheet.getRow(4+index*c+length1+length2+length3+length4+length5+length6+length7+f2);
 					HSSFCell cell_b=row_b.createCell(d);
 					cell_b.setCellValue(list_contentName_wlo.get(f2));
 					cell_b.setCellStyle(cs);
 				}
 				//回頭料
 				for(int f2=0;f2<length9;f2++){
-					HSSFRow row_b=sheet.getRow(4+114*c+length1+length2+length3+length4+length5+length6+length7+length8+f2);
+					HSSFRow row_b=sheet.getRow(4+index*c+length1+length2+length3+length4+length5+length6+length7+length8+f2);
 					HSSFCell cell_b=row_b.createCell(d);
 					cell_b.setCellValue(list_contentName_back.get(f2));
 					cell_b.setCellStyle(cs);
 				}
 				//色料回收粉
 				for(int f2=0;f2<length10;f2++){
-					HSSFRow row_b=sheet.getRow(4+114*c+length1+length2+length3+length4+length5+length6+length7+length8+length9+f2);
+					HSSFRow row_b=sheet.getRow(4+index*c+length1+length2+length3+length4+length5+length6+length7+length8+length9+f2);
 					HSSFCell cell_b=row_b.createCell(d);
 					cell_b.setCellValue(list_contentName_webcost.get(f2));
 					cell_b.setCellStyle(cs);
@@ -2785,70 +2786,70 @@ public class VWebmachineAction extends ActionSupport implements ServletResponseA
 			case 2:
 				//機台回轉數
 				for(int g=0;g<length1;g++){
-					HSSFRow row_c=sheet.getRow(4+g+114*c);
+					HSSFRow row_c=sheet.getRow(4+g+index*c);
 					HSSFCell cell_c=row_c.createCell(d);
 					cell_c.setCellValue(list_unit_machine.get(g));
 					cell_c.setCellStyle(cs);
 				}
 				//生產與請款狀況
 				for(int g2=0;g2<length2;g2++){
-					HSSFRow row_c=sheet.getRow(4+114*c+length1+g2);
+					HSSFRow row_c=sheet.getRow(4+index*c+length1+g2);
 					HSSFCell cell_c=row_c.createCell(d);
 					cell_c.setCellValue(list_unit_inv.get(g2));
 					cell_c.setCellStyle(cs);
 				}
 				//出貨與退貨
 				for(int g2=0;g2<length3;g2++){
-					HSSFRow row_c=sheet.getRow(4+114*c+length1+length2+g2);
+					HSSFRow row_c=sheet.getRow(4+index*c+length1+length2+g2);
 					HSSFCell cell_c=row_c.createCell(d);
 					cell_c.setCellValue(list_unit_mix1.get(g2));
 					cell_c.setCellStyle(cs);
 				}
 				//人員效能
 				for(int g2=0;g2<length4;g2++){
-					HSSFRow row_c=sheet.getRow(4+114*c+length1+length2+length3+g2);
+					HSSFRow row_c=sheet.getRow(4+index*c+length1+length2+length3+g2);
 					HSSFCell cell_c=row_c.createCell(d);
 					cell_c.setCellValue(list_unit_person.get(g2));
 					cell_c.setCellStyle(cs);
 				}
 				//關務損耗
 				for(int g2=0;g2<length5;g2++){
-					HSSFRow row_c=sheet.getRow(4+114*c+length1+length2+length3+length4+g2);
+					HSSFRow row_c=sheet.getRow(4+index*c+length1+length2+length3+length4+g2);
 					HSSFCell cell_c=row_c.createCell(d);
 					cell_c.setCellValue(list_unit_gw.get(g2));
 					cell_c.setCellStyle(cs);
 				}
 				//邊料不良重量分析
 				for(int g2=0;g2<length6;g2++){
-					HSSFRow row_c=sheet.getRow(4+114*c+length1+length2+length3+length4+length5+g2);
+					HSSFRow row_c=sheet.getRow(4+index*c+length1+length2+length3+length4+length5+g2);
 					HSSFCell cell_c=row_c.createCell(d);
 					cell_c.setCellValue(list_unit_side.get(g2));
 					cell_c.setCellStyle(cs);
 				}
 				//庫存
 				for(int g2=0;g2<length7;g2++){
-					HSSFRow row_c=sheet.getRow(4+114*c+length1+length2+length3+length4+length5+length6+g2);
+					HSSFRow row_c=sheet.getRow(4+index*c+length1+length2+length3+length4+length5+length6+g2);
 					HSSFCell cell_c=row_c.createCell(d);
 					cell_c.setCellValue(list_unit_store.get(g2));
 					cell_c.setCellStyle(cs);
 				}
 				//水電油
 				for(int g2=0;g2<length8;g2++){
-					HSSFRow row_c=sheet.getRow(4+114*c+length1+length2+length3+length4+length5+length6+length7+g2);
+					HSSFRow row_c=sheet.getRow(4+index*c+length1+length2+length3+length4+length5+length6+length7+g2);
 					HSSFCell cell_c=row_c.createCell(d);
 					cell_c.setCellValue(list_unit_wlo.get(g2));
 					cell_c.setCellStyle(cs);
 				}
 				//回頭料
 				for(int g2=0;g2<length9;g2++){
-					HSSFRow row_c=sheet.getRow(4+114*c+length1+length2+length3+length4+length5+length6+length7+length8+g2);
+					HSSFRow row_c=sheet.getRow(4+index*c+length1+length2+length3+length4+length5+length6+length7+length8+g2);
 					HSSFCell cell_c=row_c.createCell(d);
 					cell_c.setCellValue(list_unit_back.get(g2));
 					cell_c.setCellStyle(cs);
 				}
 				//色料回收粉
 				for(int g2=0;g2<length10;g2++){
-					HSSFRow row_c=sheet.getRow(4+114*c+length1+length2+length3+length4+length5+length6+length7+length8+length9+g2);
+					HSSFRow row_c=sheet.getRow(4+index*c+length1+length2+length3+length4+length5+length6+length7+length8+length9+g2);
 					HSSFCell cell_c=row_c.createCell(d);
 					cell_c.setCellValue(list_unit_webcost.get(g2));
 					cell_c.setCellStyle(cs);
@@ -2900,14 +2901,14 @@ public class VWebmachineAction extends ActionSupport implements ServletResponseA
 							cs_temp=cs_percent2;
 						}
 						
-						HSSFRow row=sheet.getRow(4+h+114*c);						
+						HSSFRow row=sheet.getRow(4+h+index*c);						
 						HSSFCell cell=row.createCell(d);
 						cell.setCellValue(list3_machine.get(h));
 						cell.setCellStyle(cs_temp);						
 					}
 				}else{
 					for(int h=0;h<list_contentName_machine.size();h++){
-						HSSFRow row=sheet.getRow(4+h+114*c);						
+						HSSFRow row=sheet.getRow(4+h+index*c);						
 						HSSFCell cell=row.createCell(d);
 						cell.setCellValue("無數據");
 						cell.setCellStyle(cs);
@@ -2921,14 +2922,14 @@ public class VWebmachineAction extends ActionSupport implements ServletResponseA
 						}else{
 							cs_temp=cs_poi2;
 						}
-						HSSFRow row=sheet.getRow(4+h+114*c+length1);
+						HSSFRow row=sheet.getRow(4+h+index*c+length1);
 						HSSFCell cell=row.createCell(d);
 						cell.setCellValue(list3_inv.get(h));
 						cell.setCellStyle(cs_temp);
 					}					
 				}else{
 					for(int h=0;h<list_contentName_inv.size();h++){
-						HSSFRow row=sheet.getRow(4+h+114*c+length1);						
+						HSSFRow row=sheet.getRow(4+h+index*c+length1);						
 						HSSFCell cell=row.createCell(d);
 						cell.setCellValue("無數據");
 						cell.setCellStyle(cs);
@@ -2942,7 +2943,7 @@ public class VWebmachineAction extends ActionSupport implements ServletResponseA
 						}else{
 							cs_temp=cs_poi1;
 						}
-						HSSFRow row=sheet.getRow(4+h+114*c+length1+length2);
+						HSSFRow row=sheet.getRow(4+h+index*c+length1+length2);
 						HSSFCell cell=row.createCell(d);
 						cell.setCellValue(list3_mix1.get(h));
 						cell.setCellStyle(cs_temp);
@@ -2950,7 +2951,7 @@ public class VWebmachineAction extends ActionSupport implements ServletResponseA
 					
 				}else{
 					for(int h=0;h<list_contentName_mix1.size();h++){
-						HSSFRow row=sheet.getRow(4+h+114*c+length1+length2);						
+						HSSFRow row=sheet.getRow(4+h+index*c+length1+length2);						
 						HSSFCell cell=row.createCell(d);
 						cell.setCellValue("無數據");
 						cell.setCellStyle(cs);
@@ -2968,7 +2969,7 @@ public class VWebmachineAction extends ActionSupport implements ServletResponseA
 						}else{
 							cs_temp=cs_poi2;
 						}
-						HSSFRow row=sheet.getRow(4+h+114*c+length1+length2+length3);
+						HSSFRow row=sheet.getRow(4+h+index*c+length1+length2+length3);
 						HSSFCell cell=row.createCell(d);
 						cell.setCellValue(list3_person.get(h));
 						cell.setCellStyle(cs_temp);
@@ -2976,7 +2977,7 @@ public class VWebmachineAction extends ActionSupport implements ServletResponseA
 					
 				}else{
 					for(int h=0;h<list_contentName_person.size();h++){
-						HSSFRow row=sheet.getRow(4+h+114*c+length1+length2+length3);						
+						HSSFRow row=sheet.getRow(4+h+index*c+length1+length2+length3);						
 						HSSFCell cell=row.createCell(d);
 						cell.setCellValue("無數據");
 						cell.setCellStyle(cs);
@@ -2990,7 +2991,7 @@ public class VWebmachineAction extends ActionSupport implements ServletResponseA
 						}else{
 							cs_temp=cs_poi2;
 						}
-						HSSFRow row=sheet.getRow(4+h+114*c+length1+length2+length3+length4);
+						HSSFRow row=sheet.getRow(4+h+index*c+length1+length2+length3+length4);
 						HSSFCell cell=row.createCell(d);
 						cell.setCellValue(list3_gw.get(h));
 						cell.setCellStyle(cs_temp);
@@ -2998,7 +2999,7 @@ public class VWebmachineAction extends ActionSupport implements ServletResponseA
 					
 				}else{
 					for(int h=0;h<list_contentName_gw.size();h++){
-						HSSFRow row=sheet.getRow(4+h+114*c+length1+length2+length3+length4);						
+						HSSFRow row=sheet.getRow(4+h+index*c+length1+length2+length3+length4);						
 						HSSFCell cell=row.createCell(d);
 						cell.setCellValue("無數據");
 						cell.setCellStyle(cs);
@@ -3012,7 +3013,7 @@ public class VWebmachineAction extends ActionSupport implements ServletResponseA
 						}else{
 							cs_temp=cs_poi2;
 						}
-						HSSFRow row=sheet.getRow(4+h+114*c+length1+length2+length3+length4+length5);
+						HSSFRow row=sheet.getRow(4+h+index*c+length1+length2+length3+length4+length5);
 						HSSFCell cell=row.createCell(d);
 						cell.setCellValue(list3_side.get(h));
 						cell.setCellStyle(cs_temp);
@@ -3020,7 +3021,7 @@ public class VWebmachineAction extends ActionSupport implements ServletResponseA
 					
 				}else{
 					for(int h=0;h<list_contentName_side.size();h++){
-						HSSFRow row=sheet.getRow(4+h+114*c+length1+length2+length3+length4+length5);						
+						HSSFRow row=sheet.getRow(4+h+index*c+length1+length2+length3+length4+length5);						
 						HSSFCell cell=row.createCell(d);
 						cell.setCellValue("無數據");
 						cell.setCellStyle(cs);
@@ -3029,7 +3030,7 @@ public class VWebmachineAction extends ActionSupport implements ServletResponseA
 				//庫存--store
 				if(list3_store!=null){
 					for(int h=0;h<list3_store.size();h++){
-						HSSFRow row=sheet.getRow(4+h+114*c+length1+length2+length3+length4+length5+length6);
+						HSSFRow row=sheet.getRow(4+h+index*c+length1+length2+length3+length4+length5+length6);
 						HSSFCell cell=row.createCell(d);
 						cell.setCellValue(list3_store.get(h));
 						cell.setCellStyle(cs_poi1);
@@ -3037,7 +3038,7 @@ public class VWebmachineAction extends ActionSupport implements ServletResponseA
 					
 				}else{
 					for(int h=0;h<list_contentName_store.size();h++){
-						HSSFRow row=sheet.getRow(4+h+114*c+length1+length2+length3+length4+length5+length6);						
+						HSSFRow row=sheet.getRow(4+h+index*c+length1+length2+length3+length4+length5+length6);						
 						HSSFCell cell=row.createCell(d);
 						cell.setCellValue("無數據");
 						cell.setCellStyle(cs);
@@ -3055,7 +3056,7 @@ public class VWebmachineAction extends ActionSupport implements ServletResponseA
 						}else{
 							cs_temp=cs_poi2;
 						}
-						HSSFRow row=sheet.getRow(4+h+114*c+length1+length2+length3+length4+length5+length6+length7);
+						HSSFRow row=sheet.getRow(4+h+index*c+length1+length2+length3+length4+length5+length6+length7);
 						HSSFCell cell=row.createCell(d);
 						cell.setCellValue(list3_wlo.get(h));
 						cell.setCellStyle(cs_temp);
@@ -3063,7 +3064,7 @@ public class VWebmachineAction extends ActionSupport implements ServletResponseA
 					
 				}else{
 					for(int h=0;h<list_contentName_wlo.size();h++){
-						HSSFRow row=sheet.getRow(4+h+114*c+length1+length2+length3+length4+length5+length6+length7);						
+						HSSFRow row=sheet.getRow(4+h+index*c+length1+length2+length3+length4+length5+length6+length7);						
 						HSSFCell cell=row.createCell(d);
 						cell.setCellValue("無數據");
 						cell.setCellStyle(cs);
@@ -3077,7 +3078,7 @@ public class VWebmachineAction extends ActionSupport implements ServletResponseA
 						}else{
 							cs_temp=cs_poi2;
 						}
-						HSSFRow row=sheet.getRow(4+h+114*c+length1+length2+length3+length4+length5+length6+length7+length8);
+						HSSFRow row=sheet.getRow(4+h+index*c+length1+length2+length3+length4+length5+length6+length7+length8);
 						HSSFCell cell=row.createCell(d);
 						cell.setCellValue(list3_back.get(h));
 						cell.setCellStyle(cs_temp);
@@ -3085,7 +3086,7 @@ public class VWebmachineAction extends ActionSupport implements ServletResponseA
 					
 				}else{
 					for(int h=0;h<list_contentName_back.size();h++){
-						HSSFRow row=sheet.getRow(4+h+114*c+length1+length2+length3+length4+length5+length6+length7+length8);						
+						HSSFRow row=sheet.getRow(4+h+index*c+length1+length2+length3+length4+length5+length6+length7+length8);						
 						HSSFCell cell=row.createCell(d);
 						cell.setCellValue("無數據");
 						cell.setCellStyle(cs);
@@ -3099,7 +3100,7 @@ public class VWebmachineAction extends ActionSupport implements ServletResponseA
 						}else{
 							cs_temp=cs_poi2;
 						}
-						HSSFRow row=sheet.getRow(4+h+114*c+length1+length2+length3+length4+length5+length6+length7+length8+length9);
+						HSSFRow row=sheet.getRow(4+h+index*c+length1+length2+length3+length4+length5+length6+length7+length8+length9);
 						HSSFCell cell=row.createCell(d);
 						cell.setCellValue(list3_webcost.get(h));
 						cell.setCellStyle(cs_temp);
@@ -3107,7 +3108,7 @@ public class VWebmachineAction extends ActionSupport implements ServletResponseA
 					
 				}else{
 					for(int h=0;h<list_contentName_webcost.size();h++){
-						HSSFRow row=sheet.getRow(4+h+114*c+length1+length2+length3+length4+length5+length6+length7+length8+length9);						
+						HSSFRow row=sheet.getRow(4+h+index*c+length1+length2+length3+length4+length5+length6+length7+length8+length9);						
 						HSSFCell cell=row.createCell(d);
 						cell.setCellValue("無數據");
 						cell.setCellStyle(cs);
@@ -3139,6 +3140,7 @@ public class VWebmachineAction extends ActionSupport implements ServletResponseA
 	 * @throws IOException
 	 */
 	public void print_month() throws ParseException, IOException{
+		int index=118;//廠別狀態循環的迭代量
 		//創建模板
 				HSSFWorkbook wb=new HSSFWorkbook();
 				HSSFSheet sheet=wb.createSheet();
@@ -4096,11 +4098,11 @@ public class VWebmachineAction extends ActionSupport implements ServletResponseA
 				for(int c=0;c<list_factCode.size();c++){//start for1
 				WebFact fact=list_factCode.get(c);
 				String factCode=fact.getId().getFactArea();//廠別狀態
-				HSSFRow row_factCode=sheet.createRow(2+114*c);
+				HSSFRow row_factCode=sheet.createRow(2+index*c);
 				HSSFCell cell_factCode=row_factCode.createCell(0);
 				cell_factCode.setCellValue(factCode);
 				cell_factCode.setCellStyle(cs_noborder);
-				HSSFRow row_column=sheet.createRow(3+114*c);
+				HSSFRow row_column=sheet.createRow(3+index*c);
 				for(int b=0;b<list_column.size();b++){
 					HSSFCell cell=row_column.createCell(b);
 					cell.setCellValue(list_column.get(b));
@@ -4121,130 +4123,130 @@ public class VWebmachineAction extends ActionSupport implements ServletResponseA
 					case 0:
 						sheet.setColumnWidth(d, 3500);
 						//機台回轉數
-						HSSFRow row_a=sheet.createRow(4+114*c);
+						HSSFRow row_a=sheet.createRow(4+index*c);
 						HSSFCell cell_a=row_a.createCell(d);
 						cell_a.setCellValue("機台回轉數");
 						cell_a.setCellStyle(cs);
-						CellRangeAddress cra_row_a=new CellRangeAddress((4+114*c),(short)(4+114*c+(length1-1)),d,(short)d);
+						CellRangeAddress cra_row_a=new CellRangeAddress((4+index*c),(short)(4+index*c+(length1-1)),d,(short)d);
 						sheet.addMergedRegion(cra_row_a);
 						for(int e=1;e<length1;e++){
-							HSSFRow row_a_2=sheet.createRow(4+e+114*c);
+							HSSFRow row_a_2=sheet.createRow(4+e+index*c);
 							HSSFCell cell_a_2=row_a_2.createCell(d);
 							cell_a_2.setCellStyle(cs);
 						}
 						//生產與請款狀況
-						HSSFRow row_a2=sheet.createRow(4+114*c+length1);
+						HSSFRow row_a2=sheet.createRow(4+index*c+length1);
 						HSSFCell cell_a2=row_a2.createCell(d);
 						cell_a2.setCellValue("生產與請款狀況");
 						cell_a2.setCellStyle(cs);
-						CellRangeAddress cra_row_a2=new CellRangeAddress(4+114*c+length1,(short)(4+114*c+length1+length2-1),d,(short)d);
+						CellRangeAddress cra_row_a2=new CellRangeAddress(4+index*c+length1,(short)(4+index*c+length1+length2-1),d,(short)d);
 						sheet.addMergedRegion(cra_row_a2);
 						for(int e2=1;e2<length2;e2++){
-							HSSFRow row_a2_2=sheet.createRow(4+114*c+length1+e2);
+							HSSFRow row_a2_2=sheet.createRow(4+index*c+length1+e2);
 							HSSFCell cell_a2_2=row_a2_2.createCell(d);
 							cell_a2_2.setCellStyle(cs);
 						}
 						//出貨與退貨
-						HSSFRow row_a3=sheet.createRow(4+114*c+length1+length2);
+						HSSFRow row_a3=sheet.createRow(4+index*c+length1+length2);
 						HSSFCell cell_a3=row_a3.createCell(d);
 						cell_a3.setCellValue("出貨與退貨");
 						cell_a3.setCellStyle(cs);
-						CellRangeAddress cra_row_a3=new CellRangeAddress(4+114*c+length1+length2,
-								(short)(4+114*c+length1+length2+length3-1),d,(short)d);
+						CellRangeAddress cra_row_a3=new CellRangeAddress(4+index*c+length1+length2,
+								(short)(4+index*c+length1+length2+length3-1),d,(short)d);
 						sheet.addMergedRegion(cra_row_a3);
 						for(int e2=1;e2<length3;e2++){
-							HSSFRow row_a3_2=sheet.createRow(4+114*c+length1+length2+e2);
+							HSSFRow row_a3_2=sheet.createRow(4+index*c+length1+length2+e2);
 							HSSFCell cell_a3_2=row_a3_2.createCell(d);
 							cell_a3_2.setCellStyle(cs);
 						}
 						//人員效能
-						HSSFRow row_a4=sheet.createRow(4+114*c+length1+length2+length3);
+						HSSFRow row_a4=sheet.createRow(4+index*c+length1+length2+length3);
 						HSSFCell cell_a4=row_a4.createCell(d);
 						cell_a4.setCellValue("人員效能");
 						cell_a4.setCellStyle(cs);
-						CellRangeAddress cra_row_a4=new CellRangeAddress(4+114*c+length1+length2+length3,
-								(short)(4+114*c+length1+length2+length3+length4-1),d,(short)d);
+						CellRangeAddress cra_row_a4=new CellRangeAddress(4+index*c+length1+length2+length3,
+								(short)(4+index*c+length1+length2+length3+length4-1),d,(short)d);
 						sheet.addMergedRegion(cra_row_a4);
 						for(int e2=1;e2<length4;e2++){
-							HSSFRow row_a3_2=sheet.createRow(4+114*c+length1+length2+length3+e2);
+							HSSFRow row_a3_2=sheet.createRow(4+index*c+length1+length2+length3+e2);
 							HSSFCell cell_a3_2=row_a3_2.createCell(d);
 							cell_a3_2.setCellStyle(cs);
 						}
 						//關務損耗
-						HSSFRow row_a5=sheet.createRow(4+114*c+length1+length2+length3+length4);
+						HSSFRow row_a5=sheet.createRow(4+index*c+length1+length2+length3+length4);
 						HSSFCell cell_a5=row_a5.createCell(d);
 						cell_a5.setCellValue("關務損耗");
 						cell_a5.setCellStyle(cs);
-						CellRangeAddress cra_row_a5=new CellRangeAddress(4+114*c+length1+length2+length3+length4,
-								(short)(4+114*c+length1+length2+length3+length4+length5-1),d,(short)d);
+						CellRangeAddress cra_row_a5=new CellRangeAddress(4+index*c+length1+length2+length3+length4,
+								(short)(4+index*c+length1+length2+length3+length4+length5-1),d,(short)d);
 						sheet.addMergedRegion(cra_row_a5);
 						for(int e2=1;e2<length5;e2++){
-							HSSFRow row_a3_2=sheet.createRow(4+114*c+length1+length2+length3+length4+e2);
+							HSSFRow row_a3_2=sheet.createRow(4+index*c+length1+length2+length3+length4+e2);
 							HSSFCell cell_a3_2=row_a3_2.createCell(d);
 							cell_a3_2.setCellStyle(cs);
 						}
 						//邊料不良重量分析
-						HSSFRow row_a6=sheet.createRow(4+114*c+length1+length2+length3+length4+length5);
+						HSSFRow row_a6=sheet.createRow(4+index*c+length1+length2+length3+length4+length5);
 						HSSFCell cell_a6=row_a6.createCell(d);
 						cell_a6.setCellValue("邊料不良重量分析");
 						cell_a6.setCellStyle(cs);
-						CellRangeAddress cra_row_a6=new CellRangeAddress(4+114*c+length1+length2+length3+length4+length5,
-								(short)(4+114*c+length1+length2+length3+length4+length5+length6-1),d,(short)d);
+						CellRangeAddress cra_row_a6=new CellRangeAddress(4+index*c+length1+length2+length3+length4+length5,
+								(short)(4+index*c+length1+length2+length3+length4+length5+length6-1),d,(short)d);
 						sheet.addMergedRegion(cra_row_a6);
 						for(int e2=1;e2<length6;e2++){
-							HSSFRow row_a3_2=sheet.createRow(4+114*c+length1+length2+length3+length4+length5+e2);
+							HSSFRow row_a3_2=sheet.createRow(4+index*c+length1+length2+length3+length4+length5+e2);
 							HSSFCell cell_a3_2=row_a3_2.createCell(d);
 							cell_a3_2.setCellStyle(cs);
 						}
 						//庫存
-						HSSFRow row_a7=sheet.createRow(4+114*c+length1+length2+length3+length4+length5+length6);
+						HSSFRow row_a7=sheet.createRow(4+index*c+length1+length2+length3+length4+length5+length6);
 						HSSFCell cell_a7=row_a7.createCell(d);
 						cell_a7.setCellValue("庫存");
 						cell_a7.setCellStyle(cs);
-						CellRangeAddress cra_row_a7=new CellRangeAddress(4+114*c+length1+length2+length3+length4+length5+length6,
-								(short)(4+114*c+length1+length2+length3+length4+length5+length6+length7-1),d,(short)d);
+						CellRangeAddress cra_row_a7=new CellRangeAddress(4+index*c+length1+length2+length3+length4+length5+length6,
+								(short)(4+index*c+length1+length2+length3+length4+length5+length6+length7-1),d,(short)d);
 						sheet.addMergedRegion(cra_row_a7);
 						for(int e2=1;e2<length7;e2++){
-							HSSFRow row_a3_2=sheet.createRow(4+114*c+length1+length2+length3+length4+length5+length6+e2);
+							HSSFRow row_a3_2=sheet.createRow(4+index*c+length1+length2+length3+length4+length5+length6+e2);
 							HSSFCell cell_a3_2=row_a3_2.createCell(d);
 							cell_a3_2.setCellStyle(cs);
 						}
 						//水電油
-						HSSFRow row_a8=sheet.createRow(4+114*c+length1+length2+length3+length4+length5+length6+length7);
+						HSSFRow row_a8=sheet.createRow(4+index*c+length1+length2+length3+length4+length5+length6+length7);
 						HSSFCell cell_a8=row_a8.createCell(d);
 						cell_a8.setCellValue("水電油");
 						cell_a8.setCellStyle(cs);
-						CellRangeAddress cra_row_a8=new CellRangeAddress(4+114*c+length1+length2+length3+length4+length5+length6+length7,
-								(short)(4+114*c+length1+length2+length3+length4+length5+length6+length7+length8-1),d,(short)d);
+						CellRangeAddress cra_row_a8=new CellRangeAddress(4+index*c+length1+length2+length3+length4+length5+length6+length7,
+								(short)(4+index*c+length1+length2+length3+length4+length5+length6+length7+length8-1),d,(short)d);
 						sheet.addMergedRegion(cra_row_a8);
 						for(int e2=1;e2<length8;e2++){
-							HSSFRow row_a3_2=sheet.createRow(4+114*c+length1+length2+length3+length4+length5+length6+length7+e2);
+							HSSFRow row_a3_2=sheet.createRow(4+index*c+length1+length2+length3+length4+length5+length6+length7+e2);
 							HSSFCell cell_a3_2=row_a3_2.createCell(d);
 							cell_a3_2.setCellStyle(cs);
 						}
 						//回頭料
-						HSSFRow row_a9=sheet.createRow(4+114*c+length1+length2+length3+length4+length5+length6+length7+length8);
+						HSSFRow row_a9=sheet.createRow(4+index*c+length1+length2+length3+length4+length5+length6+length7+length8);
 						HSSFCell cell_a9=row_a9.createCell(d);
 						cell_a9.setCellValue("回頭料");
 						cell_a9.setCellStyle(cs);
-						CellRangeAddress cra_row_a9=new CellRangeAddress(4+114*c+length1+length2+length3+length4+length5+length6+length7+length8,
-								(short)(4+114*c+length1+length2+length3+length4+length5+length6+length7+length8+length9-1),d,(short)d);
+						CellRangeAddress cra_row_a9=new CellRangeAddress(4+index*c+length1+length2+length3+length4+length5+length6+length7+length8,
+								(short)(4+index*c+length1+length2+length3+length4+length5+length6+length7+length8+length9-1),d,(short)d);
 						sheet.addMergedRegion(cra_row_a9);
 						for(int e2=1;e2<length9;e2++){
-							HSSFRow row_a3_2=sheet.createRow(4+114*c+length1+length2+length3+length4+length5+length6+length7+length8+e2);
+							HSSFRow row_a3_2=sheet.createRow(4+index*c+length1+length2+length3+length4+length5+length6+length7+length8+e2);
 							HSSFCell cell_a3_2=row_a3_2.createCell(d);
 							cell_a3_2.setCellStyle(cs);
 						}
 						//色料回收粉
-						HSSFRow row_a10=sheet.createRow(4+114*c+length1+length2+length3+length4+length5+length6+length7+length8+length9);
+						HSSFRow row_a10=sheet.createRow(4+index*c+length1+length2+length3+length4+length5+length6+length7+length8+length9);
 						HSSFCell cell_a10=row_a10.createCell(d);
 						cell_a10.setCellValue("色料藥品\n離型劑\n回收粉");
 						cell_a10.setCellStyle(cs);
-						CellRangeAddress cra_row_a10=new CellRangeAddress(4+114*c+length1+length2+length3+length4+length5+length6+length7+length8+length9,
-								(short)(4+114*c+length1+length2+length3+length4+length5+length6+length7+length8+length9+length10-1),d,(short)d);
+						CellRangeAddress cra_row_a10=new CellRangeAddress(4+index*c+length1+length2+length3+length4+length5+length6+length7+length8+length9,
+								(short)(4+index*c+length1+length2+length3+length4+length5+length6+length7+length8+length9+length10-1),d,(short)d);
 						sheet.addMergedRegion(cra_row_a10);
 						for(int e2=1;e2<length10;e2++){
-							HSSFRow row_a3_2=sheet.createRow(4+114*c+length1+length2+length3+length4+length5+length6+length7+length8+length9+e2);
+							HSSFRow row_a3_2=sheet.createRow(4+index*c+length1+length2+length3+length4+length5+length6+length7+length8+length9+e2);
 							HSSFCell cell_a3_2=row_a3_2.createCell(d);
 							cell_a3_2.setCellStyle(cs);
 						}
@@ -4253,70 +4255,70 @@ public class VWebmachineAction extends ActionSupport implements ServletResponseA
 						sheet.setColumnWidth(d, 4000);
 						//機台回轉數
 						for(int f=0;f<length1;f++){
-							HSSFRow row_b=sheet.getRow(4+f+114*c);
+							HSSFRow row_b=sheet.getRow(4+f+index*c);
 							HSSFCell cell_b=row_b.createCell(d);
 							cell_b.setCellValue(list_contentName_machine.get(f));
 							cell_b.setCellStyle(cs);
 						}
 						//生產與請款狀況
 						for(int f2=0;f2<length2;f2++){
-							HSSFRow row_b=sheet.getRow(4+114*c+length1+f2);
+							HSSFRow row_b=sheet.getRow(4+index*c+length1+f2);
 							HSSFCell cell_b=row_b.createCell(d);
 							cell_b.setCellValue(list_contentName_inv.get(f2));
 							cell_b.setCellStyle(cs);
 						}
 						//出貨與退貨
 						for(int f2=0;f2<length3;f2++){
-							HSSFRow row_b=sheet.getRow(4+114*c+length1+length2+f2);
+							HSSFRow row_b=sheet.getRow(4+index*c+length1+length2+f2);
 							HSSFCell cell_b=row_b.createCell(d);
 							cell_b.setCellValue(list_contentName_mix1.get(f2));
 							cell_b.setCellStyle(cs);
 						}
 						//人員效能
 						for(int f2=0;f2<length4;f2++){
-							HSSFRow row_b=sheet.getRow(4+114*c+length1+length2+length3+f2);
+							HSSFRow row_b=sheet.getRow(4+index*c+length1+length2+length3+f2);
 							HSSFCell cell_b=row_b.createCell(d);
 							cell_b.setCellValue(list_contentName_person.get(f2));
 							cell_b.setCellStyle(cs);
 						}
 						//關務損耗
 						for(int f2=0;f2<length5;f2++){
-							HSSFRow row_b=sheet.getRow(4+114*c+length1+length2+length3+length4+f2);
+							HSSFRow row_b=sheet.getRow(4+index*c+length1+length2+length3+length4+f2);
 							HSSFCell cell_b=row_b.createCell(d);
 							cell_b.setCellValue(list_contentName_gw.get(f2));
 							cell_b.setCellStyle(cs);
 						}
 						//邊料不良重量分析
 						for(int f2=0;f2<length6;f2++){
-							HSSFRow row_b=sheet.getRow(4+114*c+length1+length2+length3+length4+length5+f2);
+							HSSFRow row_b=sheet.getRow(4+index*c+length1+length2+length3+length4+length5+f2);
 							HSSFCell cell_b=row_b.createCell(d);
 							cell_b.setCellValue(list_contentName_side.get(f2));
 							cell_b.setCellStyle(cs);
 						}
 						//庫存
 						for(int f2=0;f2<length7;f2++){
-							HSSFRow row_b=sheet.getRow(4+114*c+length1+length2+length3+length4+length5+length6+f2);
+							HSSFRow row_b=sheet.getRow(4+index*c+length1+length2+length3+length4+length5+length6+f2);
 							HSSFCell cell_b=row_b.createCell(d);
 							cell_b.setCellValue(list_contentName_store.get(f2));
 							cell_b.setCellStyle(cs);
 						}
 						//水電油
 						for(int f2=0;f2<length8;f2++){
-							HSSFRow row_b=sheet.getRow(4+114*c+length1+length2+length3+length4+length5+length6+length7+f2);
+							HSSFRow row_b=sheet.getRow(4+index*c+length1+length2+length3+length4+length5+length6+length7+f2);
 							HSSFCell cell_b=row_b.createCell(d);
 							cell_b.setCellValue(list_contentName_wlo.get(f2));
 							cell_b.setCellStyle(cs);
 						}
 						//回頭料
 						for(int f2=0;f2<length9;f2++){
-							HSSFRow row_b=sheet.getRow(4+114*c+length1+length2+length3+length4+length5+length6+length7+length8+f2);
+							HSSFRow row_b=sheet.getRow(4+index*c+length1+length2+length3+length4+length5+length6+length7+length8+f2);
 							HSSFCell cell_b=row_b.createCell(d);
 							cell_b.setCellValue(list_contentName_back.get(f2));
 							cell_b.setCellStyle(cs);
 						}
 						//色料回收粉
 						for(int f2=0;f2<length10;f2++){
-							HSSFRow row_b=sheet.getRow(4+114*c+length1+length2+length3+length4+length5+length6+length7+length8+length9+f2);
+							HSSFRow row_b=sheet.getRow(4+index*c+length1+length2+length3+length4+length5+length6+length7+length8+length9+f2);
 							HSSFCell cell_b=row_b.createCell(d);
 							cell_b.setCellValue(list_contentName_webcost.get(f2));
 							cell_b.setCellStyle(cs);
@@ -4325,70 +4327,70 @@ public class VWebmachineAction extends ActionSupport implements ServletResponseA
 					case 2:
 						//機台回轉數
 						for(int g=0;g<length1;g++){
-							HSSFRow row_c=sheet.getRow(4+g+114*c);
+							HSSFRow row_c=sheet.getRow(4+g+index*c);
 							HSSFCell cell_c=row_c.createCell(d);
 							cell_c.setCellValue(list_unit_machine.get(g));
 							cell_c.setCellStyle(cs);
 						}
 						//生產與請款狀況
 						for(int g2=0;g2<length2;g2++){
-							HSSFRow row_c=sheet.getRow(4+114*c+length1+g2);
+							HSSFRow row_c=sheet.getRow(4+index*c+length1+g2);
 							HSSFCell cell_c=row_c.createCell(d);
 							cell_c.setCellValue(list_unit_inv.get(g2));
 							cell_c.setCellStyle(cs);
 						}
 						//出貨與退貨
 						for(int g2=0;g2<length3;g2++){
-							HSSFRow row_c=sheet.getRow(4+114*c+length1+length2+g2);
+							HSSFRow row_c=sheet.getRow(4+index*c+length1+length2+g2);
 							HSSFCell cell_c=row_c.createCell(d);
 							cell_c.setCellValue(list_unit_mix1.get(g2));
 							cell_c.setCellStyle(cs);
 						}
 						//人員效能
 						for(int g2=0;g2<length4;g2++){
-							HSSFRow row_c=sheet.getRow(4+114*c+length1+length2+length3+g2);
+							HSSFRow row_c=sheet.getRow(4+index*c+length1+length2+length3+g2);
 							HSSFCell cell_c=row_c.createCell(d);
 							cell_c.setCellValue(list_unit_person.get(g2));
 							cell_c.setCellStyle(cs);
 						}
 						//關務損耗
 						for(int g2=0;g2<length5;g2++){
-							HSSFRow row_c=sheet.getRow(4+114*c+length1+length2+length3+length4+g2);
+							HSSFRow row_c=sheet.getRow(4+index*c+length1+length2+length3+length4+g2);
 							HSSFCell cell_c=row_c.createCell(d);
 							cell_c.setCellValue(list_unit_gw.get(g2));
 							cell_c.setCellStyle(cs);
 						}
 						//邊料不良重量分析
 						for(int g2=0;g2<length6;g2++){
-							HSSFRow row_c=sheet.getRow(4+114*c+length1+length2+length3+length4+length5+g2);
+							HSSFRow row_c=sheet.getRow(4+index*c+length1+length2+length3+length4+length5+g2);
 							HSSFCell cell_c=row_c.createCell(d);
 							cell_c.setCellValue(list_unit_side.get(g2));
 							cell_c.setCellStyle(cs);
 						}
 						//庫存
 						for(int g2=0;g2<length7;g2++){
-							HSSFRow row_c=sheet.getRow(4+114*c+length1+length2+length3+length4+length5+length6+g2);
+							HSSFRow row_c=sheet.getRow(4+index*c+length1+length2+length3+length4+length5+length6+g2);
 							HSSFCell cell_c=row_c.createCell(d);
 							cell_c.setCellValue(list_unit_store.get(g2));
 							cell_c.setCellStyle(cs);
 						}
 						//水電油
 						for(int g2=0;g2<length8;g2++){
-							HSSFRow row_c=sheet.getRow(4+114*c+length1+length2+length3+length4+length5+length6+length7+g2);
+							HSSFRow row_c=sheet.getRow(4+index*c+length1+length2+length3+length4+length5+length6+length7+g2);
 							HSSFCell cell_c=row_c.createCell(d);
 							cell_c.setCellValue(list_unit_wlo.get(g2));
 							cell_c.setCellStyle(cs);
 						}
 						//回頭料
 						for(int g2=0;g2<length9;g2++){
-							HSSFRow row_c=sheet.getRow(4+114*c+length1+length2+length3+length4+length5+length6+length7+length8+g2);
+							HSSFRow row_c=sheet.getRow(4+index*c+length1+length2+length3+length4+length5+length6+length7+length8+g2);
 							HSSFCell cell_c=row_c.createCell(d);
 							cell_c.setCellValue(list_unit_back.get(g2));
 							cell_c.setCellStyle(cs);
 						}
 						//色料回收粉
 						for(int g2=0;g2<length10;g2++){
-							HSSFRow row_c=sheet.getRow(4+114*c+length1+length2+length3+length4+length5+length6+length7+length8+length9+g2);
+							HSSFRow row_c=sheet.getRow(4+index*c+length1+length2+length3+length4+length5+length6+length7+length8+length9+g2);
 							HSSFCell cell_c=row_c.createCell(d);
 							cell_c.setCellValue(list_unit_webcost.get(g2));
 							cell_c.setCellStyle(cs);
@@ -4440,14 +4442,14 @@ public class VWebmachineAction extends ActionSupport implements ServletResponseA
 									cs_temp=cs_percent2;
 								}
 								
-								HSSFRow row=sheet.getRow(4+h+114*c);						
+								HSSFRow row=sheet.getRow(4+h+index*c);						
 								HSSFCell cell=row.createCell(d);
 								cell.setCellValue(list3_machine.get(h));
 								cell.setCellStyle(cs_temp);						
 							}
 						}else{
 							for(int h=0;h<list_contentName_machine.size();h++){
-								HSSFRow row=sheet.getRow(4+h+114*c);						
+								HSSFRow row=sheet.getRow(4+h+index*c);						
 								HSSFCell cell=row.createCell(d);
 								cell.setCellValue("無數據");
 								cell.setCellStyle(cs);
@@ -4461,14 +4463,14 @@ public class VWebmachineAction extends ActionSupport implements ServletResponseA
 								}else{
 									cs_temp=cs_poi2;
 								}
-								HSSFRow row=sheet.getRow(4+h+114*c+length1);
+								HSSFRow row=sheet.getRow(4+h+index*c+length1);
 								HSSFCell cell=row.createCell(d);
 								cell.setCellValue(list3_inv.get(h));
 								cell.setCellStyle(cs_temp);
 							}					
 						}else{
 							for(int h=0;h<list_contentName_inv.size();h++){
-								HSSFRow row=sheet.getRow(4+h+114*c+length1);						
+								HSSFRow row=sheet.getRow(4+h+index*c+length1);						
 								HSSFCell cell=row.createCell(d);
 								cell.setCellValue("無數據");
 								cell.setCellStyle(cs);
@@ -4482,7 +4484,7 @@ public class VWebmachineAction extends ActionSupport implements ServletResponseA
 								}else{
 									cs_temp=cs_poi1;
 								}
-								HSSFRow row=sheet.getRow(4+h+114*c+length1+length2);
+								HSSFRow row=sheet.getRow(4+h+index*c+length1+length2);
 								HSSFCell cell=row.createCell(d);
 								cell.setCellValue(list3_mix1.get(h));
 								cell.setCellStyle(cs_temp);
@@ -4490,7 +4492,7 @@ public class VWebmachineAction extends ActionSupport implements ServletResponseA
 							
 						}else{
 							for(int h=0;h<list_contentName_mix1.size();h++){
-								HSSFRow row=sheet.getRow(4+h+114*c+length1+length2);						
+								HSSFRow row=sheet.getRow(4+h+index*c+length1+length2);						
 								HSSFCell cell=row.createCell(d);
 								cell.setCellValue("無數據");
 								cell.setCellStyle(cs);
@@ -4508,7 +4510,7 @@ public class VWebmachineAction extends ActionSupport implements ServletResponseA
 								}else{
 									cs_temp=cs_poi2;
 								}
-								HSSFRow row=sheet.getRow(4+h+114*c+length1+length2+length3);
+								HSSFRow row=sheet.getRow(4+h+index*c+length1+length2+length3);
 								HSSFCell cell=row.createCell(d);
 								cell.setCellValue(list3_person.get(h));
 								cell.setCellStyle(cs_temp);
@@ -4516,7 +4518,7 @@ public class VWebmachineAction extends ActionSupport implements ServletResponseA
 							
 						}else{
 							for(int h=0;h<list_contentName_person.size();h++){
-								HSSFRow row=sheet.getRow(4+h+114*c+length1+length2+length3);						
+								HSSFRow row=sheet.getRow(4+h+index*c+length1+length2+length3);						
 								HSSFCell cell=row.createCell(d);
 								cell.setCellValue("無數據");
 								cell.setCellStyle(cs);
@@ -4530,7 +4532,7 @@ public class VWebmachineAction extends ActionSupport implements ServletResponseA
 								}else{
 									cs_temp=cs_poi2;
 								}
-								HSSFRow row=sheet.getRow(4+h+114*c+length1+length2+length3+length4);
+								HSSFRow row=sheet.getRow(4+h+index*c+length1+length2+length3+length4);
 								HSSFCell cell=row.createCell(d);
 								cell.setCellValue(list3_gw.get(h));
 								cell.setCellStyle(cs_temp);
@@ -4538,7 +4540,7 @@ public class VWebmachineAction extends ActionSupport implements ServletResponseA
 							
 						}else{
 							for(int h=0;h<list_contentName_gw.size();h++){
-								HSSFRow row=sheet.getRow(4+h+114*c+length1+length2+length3+length4);						
+								HSSFRow row=sheet.getRow(4+h+index*c+length1+length2+length3+length4);						
 								HSSFCell cell=row.createCell(d);
 								cell.setCellValue("無數據");
 								cell.setCellStyle(cs);
@@ -4552,7 +4554,7 @@ public class VWebmachineAction extends ActionSupport implements ServletResponseA
 								}else{
 									cs_temp=cs_poi2;
 								}
-								HSSFRow row=sheet.getRow(4+h+114*c+length1+length2+length3+length4+length5);
+								HSSFRow row=sheet.getRow(4+h+index*c+length1+length2+length3+length4+length5);
 								HSSFCell cell=row.createCell(d);
 								cell.setCellValue(list3_side.get(h));
 								cell.setCellStyle(cs_temp);
@@ -4560,7 +4562,7 @@ public class VWebmachineAction extends ActionSupport implements ServletResponseA
 							
 						}else{
 							for(int h=0;h<list_contentName_side.size();h++){
-								HSSFRow row=sheet.getRow(4+h+114*c+length1+length2+length3+length4+length5);						
+								HSSFRow row=sheet.getRow(4+h+index*c+length1+length2+length3+length4+length5);						
 								HSSFCell cell=row.createCell(d);
 								cell.setCellValue("無數據");
 								cell.setCellStyle(cs);
@@ -4569,7 +4571,7 @@ public class VWebmachineAction extends ActionSupport implements ServletResponseA
 						//庫存--store
 						if(list3_store!=null){
 							for(int h=0;h<list3_store.size();h++){
-								HSSFRow row=sheet.getRow(4+h+114*c+length1+length2+length3+length4+length5+length6);
+								HSSFRow row=sheet.getRow(4+h+index*c+length1+length2+length3+length4+length5+length6);
 								HSSFCell cell=row.createCell(d);
 								cell.setCellValue(list3_store.get(h));
 								cell.setCellStyle(cs_poi1);
@@ -4577,7 +4579,7 @@ public class VWebmachineAction extends ActionSupport implements ServletResponseA
 							
 						}else{
 							for(int h=0;h<list_contentName_store.size();h++){
-								HSSFRow row=sheet.getRow(4+h+114*c+length1+length2+length3+length4+length5+length6);						
+								HSSFRow row=sheet.getRow(4+h+index*c+length1+length2+length3+length4+length5+length6);						
 								HSSFCell cell=row.createCell(d);
 								cell.setCellValue("無數據");
 								cell.setCellStyle(cs);
@@ -4595,7 +4597,7 @@ public class VWebmachineAction extends ActionSupport implements ServletResponseA
 								}else{
 									cs_temp=cs_poi2;
 								}
-								HSSFRow row=sheet.getRow(4+h+114*c+length1+length2+length3+length4+length5+length6+length7);
+								HSSFRow row=sheet.getRow(4+h+index*c+length1+length2+length3+length4+length5+length6+length7);
 								HSSFCell cell=row.createCell(d);
 								cell.setCellValue(list3_wlo.get(h));
 								cell.setCellStyle(cs_temp);
@@ -4603,7 +4605,7 @@ public class VWebmachineAction extends ActionSupport implements ServletResponseA
 							
 						}else{
 							for(int h=0;h<list_contentName_wlo.size();h++){
-								HSSFRow row=sheet.getRow(4+h+114*c+length1+length2+length3+length4+length5+length6+length7);						
+								HSSFRow row=sheet.getRow(4+h+index*c+length1+length2+length3+length4+length5+length6+length7);						
 								HSSFCell cell=row.createCell(d);
 								cell.setCellValue("無數據");
 								cell.setCellStyle(cs);
@@ -4617,7 +4619,7 @@ public class VWebmachineAction extends ActionSupport implements ServletResponseA
 								}else{
 									cs_temp=cs_poi2;
 								}
-								HSSFRow row=sheet.getRow(4+h+114*c+length1+length2+length3+length4+length5+length6+length7+length8);
+								HSSFRow row=sheet.getRow(4+h+index*c+length1+length2+length3+length4+length5+length6+length7+length8);
 								HSSFCell cell=row.createCell(d);
 								cell.setCellValue(list3_back.get(h));
 								cell.setCellStyle(cs_temp);
@@ -4625,7 +4627,7 @@ public class VWebmachineAction extends ActionSupport implements ServletResponseA
 							
 						}else{
 							for(int h=0;h<list_contentName_back.size();h++){
-								HSSFRow row=sheet.getRow(4+h+114*c+length1+length2+length3+length4+length5+length6+length7+length8);						
+								HSSFRow row=sheet.getRow(4+h+index*c+length1+length2+length3+length4+length5+length6+length7+length8);						
 								HSSFCell cell=row.createCell(d);
 								cell.setCellValue("無數據");
 								cell.setCellStyle(cs);
@@ -4639,7 +4641,7 @@ public class VWebmachineAction extends ActionSupport implements ServletResponseA
 								}else{
 									cs_temp=cs_poi2;
 								}
-								HSSFRow row=sheet.getRow(4+h+114*c+length1+length2+length3+length4+length5+length6+length7+length8+length9);
+								HSSFRow row=sheet.getRow(4+h+index*c+length1+length2+length3+length4+length5+length6+length7+length8+length9);
 								HSSFCell cell=row.createCell(d);
 								cell.setCellValue(list3_webcost.get(h));
 								cell.setCellStyle(cs_temp);
@@ -4647,7 +4649,7 @@ public class VWebmachineAction extends ActionSupport implements ServletResponseA
 							
 						}else{
 							for(int h=0;h<list_contentName_webcost.size();h++){
-								HSSFRow row=sheet.getRow(4+h+114*c+length1+length2+length3+length4+length5+length6+length7+length8+length9);						
+								HSSFRow row=sheet.getRow(4+h+index*c+length1+length2+length3+length4+length5+length6+length7+length8+length9);						
 								HSSFCell cell=row.createCell(d);
 								cell.setCellValue("無數據");
 								cell.setCellStyle(cs);
@@ -4676,6 +4678,7 @@ public class VWebmachineAction extends ActionSupport implements ServletResponseA
 	
 	
 	public void print_tw() throws ParseException, IOException{
+		int index=118;//廠別狀態循環的迭代量
 		//建立模板
 		HSSFWorkbook wb=new HSSFWorkbook();
 		HSSFSheet sheet=wb.createSheet();
@@ -5829,7 +5832,7 @@ public class VWebmachineAction extends ActionSupport implements ServletResponseA
 				List<List<Double>>list_webcost2=list_webcost.get(b);
 				//廠別狀態
 				String factCode=list_factCode.get(b);
-				HSSFRow row_factcode=sheet.createRow(2+114*b);
+				HSSFRow row_factcode=sheet.createRow(2+index*b);
 				HSSFCell cell_factcode=row_factcode.createCell(0);
 				cell_factcode.setCellValue(factCode);
 				cell_factcode.setCellStyle(cs_noborder);
@@ -5846,7 +5849,7 @@ public class VWebmachineAction extends ActionSupport implements ServletResponseA
 				list_factName.add(1,"細項");
 				list_factName.add(2,"單位");
 				list_factName.add("合计");
-				HSSFRow row_column=sheet.createRow(3+114*b);
+				HSSFRow row_column=sheet.createRow(3+index*b);
 				for(int c=0;c<list_factName.size();c++){//start for2
 					/**
 					 * 獲取單元數集
@@ -5868,130 +5871,130 @@ public class VWebmachineAction extends ActionSupport implements ServletResponseA
 					case 0:
 						sheet.setColumnWidth(c, 3500);
 						//孔位數機台回轉數
-						HSSFRow row_machine=sheet.createRow(4+114*b);
+						HSSFRow row_machine=sheet.createRow(4+index*b);
 						HSSFCell cell_machine=row_machine.createCell(c);
 						cell_machine.setCellValue("孔位數機台回轉數");
 						cell_machine.setCellStyle(cs);
-						CellRangeAddress cra_machine=new CellRangeAddress(4+114*b,(short)(4+114*b+length1-1),c,(short)c);
+						CellRangeAddress cra_machine=new CellRangeAddress(4+index*b,(short)(4+index*b+length1-1),c,(short)c);
 						sheet.addMergedRegion(cra_machine);
 						for(int d=1;d<length1;d++){
-							HSSFRow row=sheet.createRow(4+114*b+d);
+							HSSFRow row=sheet.createRow(4+index*b+d);
 							HSSFCell cell=row.createCell(c);
 							cell.setCellStyle(cs);
 						}
 						//生產與請款狀況
-						HSSFRow row_inv=sheet.createRow(4+114*b+length1);
+						HSSFRow row_inv=sheet.createRow(4+index*b+length1);
 						HSSFCell cell_inv=row_inv.createCell(c);
 						cell_inv.setCellValue("生產與請款狀況");
 						cell_inv.setCellStyle(cs);
-						CellRangeAddress cra_inv=new CellRangeAddress(4+114*b+length1,(short)(4+114*b+length1+length2-1),c,(short)c);
+						CellRangeAddress cra_inv=new CellRangeAddress(4+index*b+length1,(short)(4+index*b+length1+length2-1),c,(short)c);
 						sheet.addMergedRegion(cra_inv);
 						for(int d=1;d<length2;d++){
-							HSSFRow row=sheet.createRow(4+114*b+d+length1);
+							HSSFRow row=sheet.createRow(4+index*b+d+length1);
 							HSSFCell cell=row.createCell(c);
 							cell.setCellStyle(cs);
 						}
 						//出貨與退貨
-						HSSFRow row_mix1=sheet.createRow(4+114*b+length1+length2);
+						HSSFRow row_mix1=sheet.createRow(4+index*b+length1+length2);
 						HSSFCell cell_mix1=row_mix1.createCell(c);
 						cell_mix1.setCellValue("出貨與退貨");
 						cell_mix1.setCellStyle(cs);
-						CellRangeAddress cra_mix1=new CellRangeAddress(4+114*b+length1+length2,
-								(short)(4+114*b+length1+length2+length3-1),c,(short)c);
+						CellRangeAddress cra_mix1=new CellRangeAddress(4+index*b+length1+length2,
+								(short)(4+index*b+length1+length2+length3-1),c,(short)c);
 						sheet.addMergedRegion(cra_mix1);
 						for(int d=1;d<length3;d++){
-							HSSFRow row=sheet.createRow(4+114*b+d+length1+length2);
+							HSSFRow row=sheet.createRow(4+index*b+d+length1+length2);
 							HSSFCell cell=row.createCell(c);
 							cell.setCellStyle(cs);
 						}
 						//人員效能
-						HSSFRow row_person=sheet.createRow(4+114*b+length1+length2+length3);
+						HSSFRow row_person=sheet.createRow(4+index*b+length1+length2+length3);
 						HSSFCell cell_person=row_person.createCell(c);
 						cell_person.setCellValue("人員效能");
 						cell_person.setCellStyle(cs);
-						CellRangeAddress cra_person=new CellRangeAddress(4+114*b+length1+length2+length3,
-								(short)(4+114*b+length1+length2+length3+length4-1),c,(short)c);
+						CellRangeAddress cra_person=new CellRangeAddress(4+index*b+length1+length2+length3,
+								(short)(4+index*b+length1+length2+length3+length4-1),c,(short)c);
 						sheet.addMergedRegion(cra_person);
 						for(int d=1;d<length4;d++){
-							HSSFRow row=sheet.createRow(4+114*b+d+length1+length2+length3);
+							HSSFRow row=sheet.createRow(4+index*b+d+length1+length2+length3);
 							HSSFCell cell=row.createCell(c);
 							cell.setCellStyle(cs);
 						}
 						//關務損耗
-						HSSFRow row_gw=sheet.createRow(4+114*b+length1+length2+length3+length4);
+						HSSFRow row_gw=sheet.createRow(4+index*b+length1+length2+length3+length4);
 						HSSFCell cell_gw=row_gw.createCell(c);
 						cell_gw.setCellValue("關務損耗");
 						cell_gw.setCellStyle(cs);
-						CellRangeAddress cra_gw=new CellRangeAddress(4+114*b+length1+length2+length3+length4,
-								(short)(4+114*b+length1+length2+length3+length4+length5-1),c,(short)c);
+						CellRangeAddress cra_gw=new CellRangeAddress(4+index*b+length1+length2+length3+length4,
+								(short)(4+index*b+length1+length2+length3+length4+length5-1),c,(short)c);
 						sheet.addMergedRegion(cra_gw);
 						for(int d=1;d<length5;d++){
-							HSSFRow row=sheet.createRow(4+114*b+d+length1+length2+length3+length4);
+							HSSFRow row=sheet.createRow(4+index*b+d+length1+length2+length3+length4);
 							HSSFCell cell=row.createCell(c);
 							cell.setCellStyle(cs);
 						}
 						//邊料不良重量分析
-						HSSFRow row_side=sheet.createRow(4+114*b+length1+length2+length3+length4+length5);
+						HSSFRow row_side=sheet.createRow(4+index*b+length1+length2+length3+length4+length5);
 						HSSFCell cell_side=row_side.createCell(c);
 						cell_side.setCellValue("邊料不良重量分析");
 						cell_side.setCellStyle(cs);
-						CellRangeAddress cra_side=new CellRangeAddress(4+114*b+length1+length2+length3+length4+length5,
-								(short)(4+114*b+length1+length2+length3+length4+length5+length6-1),c,(short)c);
+						CellRangeAddress cra_side=new CellRangeAddress(4+index*b+length1+length2+length3+length4+length5,
+								(short)(4+index*b+length1+length2+length3+length4+length5+length6-1),c,(short)c);
 						sheet.addMergedRegion(cra_side);
 						for(int d=1;d<length6;d++){
-							HSSFRow row=sheet.createRow(4+114*b+d+length1+length2+length3+length4+length5);
+							HSSFRow row=sheet.createRow(4+index*b+d+length1+length2+length3+length4+length5);
 							HSSFCell cell=row.createCell(c);
 							cell.setCellStyle(cs);
 						}
 						//庫存
-						HSSFRow row_store=sheet.createRow(4+114*b+length1+length2+length3+length4+length5+length6);
+						HSSFRow row_store=sheet.createRow(4+index*b+length1+length2+length3+length4+length5+length6);
 						HSSFCell cell_store=row_store.createCell(c);
 						cell_store.setCellValue("庫存");
 						cell_store.setCellStyle(cs);
-						CellRangeAddress cra_store=new CellRangeAddress(4+114*b+length1+length2+length3+length4+length5+length6,
-								(short)(4+114*b+length1+length2+length3+length4+length5+length6+length7-1),c,(short)c);
+						CellRangeAddress cra_store=new CellRangeAddress(4+index*b+length1+length2+length3+length4+length5+length6,
+								(short)(4+index*b+length1+length2+length3+length4+length5+length6+length7-1),c,(short)c);
 						sheet.addMergedRegion(cra_store);
 						for(int d=1;d<length7;d++){
-							HSSFRow row=sheet.createRow(4+114*b+d+length1+length2+length3+length4+length5+length6);
+							HSSFRow row=sheet.createRow(4+index*b+d+length1+length2+length3+length4+length5+length6);
 							HSSFCell cell=row.createCell(c);
 							cell.setCellStyle(cs);
 						}
 						//水電油
-						HSSFRow row_wlo=sheet.createRow(4+114*b+length1+length2+length3+length4+length5+length6+length7);
+						HSSFRow row_wlo=sheet.createRow(4+index*b+length1+length2+length3+length4+length5+length6+length7);
 						HSSFCell cell_wlo=row_wlo.createCell(c);
 						cell_wlo.setCellValue("水電油");
 						cell_wlo.setCellStyle(cs);
-						CellRangeAddress cra_wlo=new CellRangeAddress(4+114*b+length1+length2+length3+length4+length5+length6+length7,
-								(short)(4+114*b+length1+length2+length3+length4+length5+length6+length7+length8-1),c,(short)c);
+						CellRangeAddress cra_wlo=new CellRangeAddress(4+index*b+length1+length2+length3+length4+length5+length6+length7,
+								(short)(4+index*b+length1+length2+length3+length4+length5+length6+length7+length8-1),c,(short)c);
 						sheet.addMergedRegion(cra_wlo);
 						for(int d=1;d<length8;d++){
-							HSSFRow row=sheet.createRow(4+114*b+d+length1+length2+length3+length4+length5+length6+length7);
+							HSSFRow row=sheet.createRow(4+index*b+d+length1+length2+length3+length4+length5+length6+length7);
 							HSSFCell cell=row.createCell(c);
 							cell.setCellStyle(cs);
 						}
 						//回頭料
-						HSSFRow row_back=sheet.createRow(4+114*b+length1+length2+length3+length4+length5+length6+length7+length8);
+						HSSFRow row_back=sheet.createRow(4+index*b+length1+length2+length3+length4+length5+length6+length7+length8);
 						HSSFCell cell_back=row_back.createCell(c);
 						cell_back.setCellValue("回頭料");
 						cell_back.setCellStyle(cs);
-						CellRangeAddress cra_back=new CellRangeAddress(4+114*b+length1+length2+length3+length4+length5+length6+length7+length8,
-								(short)(4+114*b+length1+length2+length3+length4+length5+length6+length7+length8+length9-1),c,(short)c);
+						CellRangeAddress cra_back=new CellRangeAddress(4+index*b+length1+length2+length3+length4+length5+length6+length7+length8,
+								(short)(4+index*b+length1+length2+length3+length4+length5+length6+length7+length8+length9-1),c,(short)c);
 						sheet.addMergedRegion(cra_back);
 						for(int d=1;d<length9;d++){
-							HSSFRow row=sheet.createRow(4+114*b+d+length1+length2+length3+length4+length5+length6+length7+length8);
+							HSSFRow row=sheet.createRow(4+index*b+d+length1+length2+length3+length4+length5+length6+length7+length8);
 							HSSFCell cell=row.createCell(c);
 							cell.setCellStyle(cs);
 						}
 						//色料回收粉
-						HSSFRow row_webcost=sheet.createRow(4+114*b+length1+length2+length3+length4+length5+length6+length7+length8+length9);
+						HSSFRow row_webcost=sheet.createRow(4+index*b+length1+length2+length3+length4+length5+length6+length7+length8+length9);
 						HSSFCell cell_webcost=row_webcost.createCell(c);
 						cell_webcost.setCellValue("色料藥品/離型劑/回收粉");
 						cell_webcost.setCellStyle(cs);
-						CellRangeAddress cra_webcost=new CellRangeAddress(4+114*b+length1+length2+length3+length4+length5+length6+length7+length8+length9,
-								(short)(4+114*b+length1+length2+length3+length4+length5+length6+length7+length8+length9+length10-1),c,(short)c);
+						CellRangeAddress cra_webcost=new CellRangeAddress(4+index*b+length1+length2+length3+length4+length5+length6+length7+length8+length9,
+								(short)(4+index*b+length1+length2+length3+length4+length5+length6+length7+length8+length9+length10-1),c,(short)c);
 						sheet.addMergedRegion(cra_webcost);
 						for(int d=1;d<length10;d++){
-							HSSFRow row=sheet.createRow(4+114*b+d+length1+length2+length3+length4+length5+length6+length7+length8+length9);
+							HSSFRow row=sheet.createRow(4+index*b+d+length1+length2+length3+length4+length5+length6+length7+length8+length9);
 							HSSFCell cell=row.createCell(c);
 							cell.setCellStyle(cs);
 						}
@@ -6000,70 +6003,70 @@ public class VWebmachineAction extends ActionSupport implements ServletResponseA
 						sheet.setColumnWidth(c, 4000);
 						//孔位數機台回轉數
 						for(int d=0;d<length1;d++){
-							HSSFRow row_machine2=sheet.getRow(4+114*b+d);
+							HSSFRow row_machine2=sheet.getRow(4+index*b+d);
 							HSSFCell cell_machine2=row_machine2.createCell(c);
 							cell_machine2.setCellValue(list_contentName_machine.get(d));
 							cell_machine2.setCellStyle(cs);
 						}						
                         //生產與請款狀況
 						for(int d=0;d<length2;d++){
-							HSSFRow row_inv2=sheet.getRow(4+114*b+d+length1);
+							HSSFRow row_inv2=sheet.getRow(4+index*b+d+length1);
 							HSSFCell cell_inv2=row_inv2.createCell(c);
 							cell_inv2.setCellValue(list_contentName_inv.get(d));
 							cell_inv2.setCellStyle(cs);
 						}
 						//出貨與退貨
 						for(int d=0;d<length3;d++){
-							HSSFRow row_mix1_2=sheet.getRow(4+114*b+d+length1+length2);
+							HSSFRow row_mix1_2=sheet.getRow(4+index*b+d+length1+length2);
 							HSSFCell cell_mix1_2=row_mix1_2.createCell(c);
 							cell_mix1_2.setCellValue(list_contentName_mix1.get(d));
 							cell_mix1_2.setCellStyle(cs);
 						}
 						//人員效能
 						for(int d=0;d<length4;d++){
-							HSSFRow row_person2=sheet.getRow(4+114*b+d+length1+length2+length3);
+							HSSFRow row_person2=sheet.getRow(4+index*b+d+length1+length2+length3);
 							HSSFCell cell_person2=row_person2.createCell(c);
 							cell_person2.setCellValue(list_contentName_person.get(d));
 							cell_person2.setCellStyle(cs);
 						}
 						//關務損耗
 						for(int d=0;d<length5;d++){
-							HSSFRow row_gw2=sheet.getRow(4+114*b+d+length1+length2+length3+length4);
+							HSSFRow row_gw2=sheet.getRow(4+index*b+d+length1+length2+length3+length4);
 							HSSFCell cell_gw2=row_gw2.createCell(c);
 							cell_gw2.setCellValue(list_contentName_gw.get(d));
 							cell_gw2.setCellStyle(cs);
 						}
 						//邊料不良重量分析
 						for(int d=0;d<length6;d++){
-							HSSFRow row_side2=sheet.getRow(4+114*b+d+length1+length2+length3+length4+length5);
+							HSSFRow row_side2=sheet.getRow(4+index*b+d+length1+length2+length3+length4+length5);
 							HSSFCell cell_side2=row_side2.createCell(c);
 							cell_side2.setCellValue(list_contentName_side.get(d));
 							cell_side2.setCellStyle(cs);
 						}
 						//庫存
 						for(int d=0;d<length7;d++){
-							HSSFRow row_store2=sheet.getRow(4+114*b+d+length1+length2+length3+length4+length5+length6);
+							HSSFRow row_store2=sheet.getRow(4+index*b+d+length1+length2+length3+length4+length5+length6);
 							HSSFCell cell_store2=row_store2.createCell(c);
 							cell_store2.setCellValue(list_contentName_store.get(d));
 							cell_store2.setCellStyle(cs);
 						}
 						//水電油
 						for(int d=0;d<length8;d++){
-							HSSFRow row_wlo2=sheet.getRow(4+114*b+d+length1+length2+length3+length4+length5+length6+length7);
+							HSSFRow row_wlo2=sheet.getRow(4+index*b+d+length1+length2+length3+length4+length5+length6+length7);
 							HSSFCell cell_wlo2=row_wlo2.createCell(c);
 							cell_wlo2.setCellValue(list_contentName_wlo.get(d));
 							cell_wlo2.setCellStyle(cs);
 						}
 						//回頭料
 						for(int d=0;d<length9;d++){
-							HSSFRow row_back2=sheet.getRow(4+114*b+d+length1+length2+length3+length4+length5+length6+length7+length8);
+							HSSFRow row_back2=sheet.getRow(4+index*b+d+length1+length2+length3+length4+length5+length6+length7+length8);
 							HSSFCell cell_back2=row_back2.createCell(c);
 							cell_back2.setCellValue(list_contentName_back.get(d));
 							cell_back2.setCellStyle(cs);
 						}
 						//色料回收粉
 						for(int d=0;d<length10;d++){
-							HSSFRow row_webcost2=sheet.getRow(4+114*b+d+length1+length2+length3+length4+length5+length6+length7+length8+length9);
+							HSSFRow row_webcost2=sheet.getRow(4+index*b+d+length1+length2+length3+length4+length5+length6+length7+length8+length9);
 							HSSFCell cell_webcost2=row_webcost2.createCell(c);
 							cell_webcost2.setCellValue(list_contentName_webcost.get(d));
 							cell_webcost2.setCellStyle(cs);
@@ -6072,70 +6075,70 @@ public class VWebmachineAction extends ActionSupport implements ServletResponseA
 					case 2:
                         //孔位數機台回轉數
 						for(int d=0;d<length1;d++){
-							HSSFRow row_machine2=sheet.getRow(4+114*b+d);
+							HSSFRow row_machine2=sheet.getRow(4+index*b+d);
 							HSSFCell cell_machine2=row_machine2.createCell(c);
 							cell_machine2.setCellValue(list_unit_machine.get(d));
 							cell_machine2.setCellStyle(cs);
 						}
                         //生產與請款狀況
 						for(int d=0;d<length2;d++){
-							HSSFRow row_inv2=sheet.getRow(4+114*b+d+length1);
+							HSSFRow row_inv2=sheet.getRow(4+index*b+d+length1);
 							HSSFCell cell_inv2=row_inv2.createCell(c);
 							cell_inv2.setCellValue(list_unit_inv.get(d));
 							cell_inv2.setCellStyle(cs);
 						}
 						//出貨與退貨
 						for(int d=0;d<length3;d++){
-							HSSFRow row_mix1_2=sheet.getRow(4+114*b+d+length1+length2);
+							HSSFRow row_mix1_2=sheet.getRow(4+index*b+d+length1+length2);
 							HSSFCell cell_mix1_2=row_mix1_2.createCell(c);
 							cell_mix1_2.setCellValue(list_unit_mix1.get(d));
 							cell_mix1_2.setCellStyle(cs);
 						}
 						//人員效能
 						for(int d=0;d<length4;d++){
-							HSSFRow row_person2=sheet.getRow(4+114*b+d+length1+length2+length3);
+							HSSFRow row_person2=sheet.getRow(4+index*b+d+length1+length2+length3);
 							HSSFCell cell_person2=row_person2.createCell(c);
 							cell_person2.setCellValue(list_unit_person.get(d));
 							cell_person2.setCellStyle(cs);
 						}
 						//關務損耗
 						for(int d=0;d<length5;d++){
-							HSSFRow row_gw2=sheet.getRow(4+114*b+d+length1+length2+length3+length4);
+							HSSFRow row_gw2=sheet.getRow(4+index*b+d+length1+length2+length3+length4);
 							HSSFCell cell_gw2=row_gw2.createCell(c);
 							cell_gw2.setCellValue(list_unit_gw.get(d));
 							cell_gw2.setCellStyle(cs);
 						}
 						//邊料不良重量分析
 						for(int d=0;d<length6;d++){
-							HSSFRow row_side2=sheet.getRow(4+114*b+d+length1+length2+length3+length4+length5);
+							HSSFRow row_side2=sheet.getRow(4+index*b+d+length1+length2+length3+length4+length5);
 							HSSFCell cell_side2=row_side2.createCell(c);
 							cell_side2.setCellValue(list_unit_side.get(d));
 							cell_side2.setCellStyle(cs);
 						}
 						//庫存
 						for(int d=0;d<length7;d++){
-							HSSFRow row_store2=sheet.getRow(4+114*b+d+length1+length2+length3+length4+length5+length6);
+							HSSFRow row_store2=sheet.getRow(4+index*b+d+length1+length2+length3+length4+length5+length6);
 							HSSFCell cell_store2=row_store2.createCell(c);
 							cell_store2.setCellValue(list_unit_store.get(d));
 							cell_store2.setCellStyle(cs);
 						}
 						//水電油
 						for(int d=0;d<length8;d++){
-							HSSFRow row_wlo2=sheet.getRow(4+114*b+d+length1+length2+length3+length4+length5+length6+length7);
+							HSSFRow row_wlo2=sheet.getRow(4+index*b+d+length1+length2+length3+length4+length5+length6+length7);
 							HSSFCell cell_wlo2=row_wlo2.createCell(c);
 							cell_wlo2.setCellValue(list_unit_wlo.get(d));
 							cell_wlo2.setCellStyle(cs);
 						}
 						//回頭料
 						for(int d=0;d<length9;d++){
-							HSSFRow row_back2=sheet.getRow(4+114*b+d+length1+length2+length3+length4+length5+length6+length7+length8);
+							HSSFRow row_back2=sheet.getRow(4+index*b+d+length1+length2+length3+length4+length5+length6+length7+length8);
 							HSSFCell cell_back2=row_back2.createCell(c);
 							cell_back2.setCellValue(list_unit_back.get(d));
 							cell_back2.setCellStyle(cs);
 						}
 						//色料回收粉
 						for(int d=0;d<length10;d++){
-							HSSFRow row_webcost2=sheet.getRow(4+114*b+d+length1+length2+length3+length4+length5+length6+length7+length8+length9);
+							HSSFRow row_webcost2=sheet.getRow(4+index*b+d+length1+length2+length3+length4+length5+length6+length7+length8+length9);
 							HSSFCell cell_webcost2=row_webcost2.createCell(c);
 							cell_webcost2.setCellValue(list_unit_webcost.get(d));
 							cell_webcost2.setCellStyle(cs);
@@ -6155,7 +6158,7 @@ public class VWebmachineAction extends ActionSupport implements ServletResponseA
 							}else{
 								cs_temp=cs_percent2;
 							}
-							HSSFRow row_machine_3=sheet.getRow(4+114*b+d);
+							HSSFRow row_machine_3=sheet.getRow(4+index*b+d);
 							HSSFCell cell_machine_3=row_machine_3.createCell(c);
 							if(list_machine3!=null){
 								cell_machine_3.setCellValue(list_machine3.get(d));
@@ -6171,7 +6174,7 @@ public class VWebmachineAction extends ActionSupport implements ServletResponseA
 							}else{
 								cs_temp=cs_poi2;
 							}
-							HSSFRow row_inv_3=sheet.getRow(4+114*b+d+length1);
+							HSSFRow row_inv_3=sheet.getRow(4+index*b+d+length1);
 							HSSFCell cell_inv_3=row_inv_3.createCell(c);
 							if(list_inv3!=null){
 								cell_inv_3.setCellValue(list_inv3.get(d));
@@ -6187,7 +6190,7 @@ public class VWebmachineAction extends ActionSupport implements ServletResponseA
 							}else{
 								cs_temp=cs_poi1;
 							}
-							HSSFRow row_mix1_3=sheet.getRow(4+114*b+d+length1+length2);
+							HSSFRow row_mix1_3=sheet.getRow(4+index*b+d+length1+length2);
 							HSSFCell cell_mix1_3=row_mix1_3.createCell(c);
 							if(list_mix1_3!=null){
 								cell_mix1_3.setCellValue(list_mix1_3.get(d));
@@ -6207,7 +6210,7 @@ public class VWebmachineAction extends ActionSupport implements ServletResponseA
 							}else{
 								cs_temp=cs_poi2;
 							}
-							HSSFRow row_person_3=sheet.getRow(4+114*b+d+length1+length2+length3);
+							HSSFRow row_person_3=sheet.getRow(4+index*b+d+length1+length2+length3);
 							HSSFCell cell_person_3=row_person_3.createCell(c);
 							if(list_person3!=null){
 								cell_person_3.setCellValue(list_person3.get(d));
@@ -6223,7 +6226,7 @@ public class VWebmachineAction extends ActionSupport implements ServletResponseA
 							}else{
 								cs_temp=cs_poi2;
 							}
-							HSSFRow row_gw_3=sheet.getRow(4+114*b+d+length1+length2+length3+length4);
+							HSSFRow row_gw_3=sheet.getRow(4+index*b+d+length1+length2+length3+length4);
 							HSSFCell cell_gw_3=row_gw_3.createCell(c);
 							if(list_gw3!=null){
 								cell_gw_3.setCellValue(list_gw3.get(d));
@@ -6239,7 +6242,7 @@ public class VWebmachineAction extends ActionSupport implements ServletResponseA
 							}else{
 								cs_temp=cs_poi2;
 							}
-							HSSFRow row_side_3=sheet.getRow(4+114*b+d+length1+length2+length3+length4+length5);
+							HSSFRow row_side_3=sheet.getRow(4+index*b+d+length1+length2+length3+length4+length5);
 							HSSFCell cell_side_3=row_side_3.createCell(c);
 							if(list_side3!=null){
 								cell_side_3.setCellValue(list_side3.get(d));
@@ -6250,7 +6253,7 @@ public class VWebmachineAction extends ActionSupport implements ServletResponseA
 						}
 						//庫存
 						for(int d=0;d<length7;d++){
-							HSSFRow row_store_3=sheet.getRow(4+114*b+d+length1+length2+length3+length4+length5+length6);
+							HSSFRow row_store_3=sheet.getRow(4+index*b+d+length1+length2+length3+length4+length5+length6);
 							HSSFCell cell_store_3=row_store_3.createCell(c);
 							if(list_store3!=null){
 								cell_store_3.setCellValue(list_store3.get(d));
@@ -6270,7 +6273,7 @@ public class VWebmachineAction extends ActionSupport implements ServletResponseA
 							}else{
 								cs_temp=cs_poi2;
 							}
-							HSSFRow row_store_3=sheet.getRow(4+114*b+d+length1+length2+length3+length4+length5+length6+length7);
+							HSSFRow row_store_3=sheet.getRow(4+index*b+d+length1+length2+length3+length4+length5+length6+length7);
 							HSSFCell cell_store_3=row_store_3.createCell(c);
 							if(list_store3!=null){
 								cell_store_3.setCellValue(list_wlo3.get(d));
@@ -6286,7 +6289,7 @@ public class VWebmachineAction extends ActionSupport implements ServletResponseA
 							}else{
 								cs_temp=cs_poi2;
 							}
-							HSSFRow row_back_3=sheet.getRow(4+114*b+d+length1+length2+length3+length4+length5+length6+length7+length8);
+							HSSFRow row_back_3=sheet.getRow(4+index*b+d+length1+length2+length3+length4+length5+length6+length7+length8);
 							HSSFCell cell_back_3=row_back_3.createCell(c);
 							if(list_back3!=null){
 								cell_back_3.setCellValue(list_back3.get(d));
@@ -6302,7 +6305,7 @@ public class VWebmachineAction extends ActionSupport implements ServletResponseA
 							}else{
 								cs_temp=cs_poi2;
 							}
-							HSSFRow row_webcost_3=sheet.getRow(4+114*b+d+length1+length2+length3+length4+length5+length6+length7+length8+length9);
+							HSSFRow row_webcost_3=sheet.getRow(4+index*b+d+length1+length2+length3+length4+length5+length6+length7+length8+length9);
 							HSSFCell cell_webcost_3=row_webcost_3.createCell(c);
 							if(list_webcost3!=null){
 								cell_webcost_3.setCellValue(list_webcost3.get(d));
@@ -6341,6 +6344,7 @@ public class VWebmachineAction extends ActionSupport implements ServletResponseA
 	 * @throws IOException
 	 */
 	public void print_tw_xlsx() throws ParseException, IOException{
+		int index=120;//廠別狀態循環的迭代量
 		//建立模板
 		XSSFWorkbook wb=new XSSFWorkbook();
 		XSSFSheet sheet=wb.createSheet();
@@ -7495,7 +7499,7 @@ public class VWebmachineAction extends ActionSupport implements ServletResponseA
 				List<List<Double>>list_webcost2=list_webcost.get(b);
 				//廠別狀態
 				String factCode=list_factCode.get(b);
-				XSSFRow row_factcode=sheet.createRow(2+120*b);
+				XSSFRow row_factcode=sheet.createRow(2+index*b);
 				XSSFCell cell_factcode=row_factcode.createCell(0);
 				cell_factcode.setCellValue(factCode);
 				cell_factcode.setCellStyle(cs_noborder);
@@ -7512,7 +7516,7 @@ public class VWebmachineAction extends ActionSupport implements ServletResponseA
 				list_factName.add(1,"細項");
 				list_factName.add(2,"單位");
 				list_factName.add("合计");
-				XSSFRow row_column=sheet.createRow(3+120*b);
+				XSSFRow row_column=sheet.createRow(3+index*b);
 				for(int c=0;c<list_factName.size();c++){//start for2
 					/**
 					 * 獲取單元數集
@@ -7535,130 +7539,130 @@ public class VWebmachineAction extends ActionSupport implements ServletResponseA
 					case 0:
 						sheet.setColumnWidth(c, 3500);
 						//孔位數機台回轉數
-						XSSFRow row_machine=sheet.createRow(4+120*b);
+						XSSFRow row_machine=sheet.createRow(4+index*b);
 						XSSFCell cell_machine=row_machine.createCell(c);
 						cell_machine.setCellValue("孔位數機台回轉數");
 						cell_machine.setCellStyle(cs);
-						CellRangeAddress cra_machine=new CellRangeAddress(4+120*b,(short)(4+120*b+length1-1),c,(short)c);
+						CellRangeAddress cra_machine=new CellRangeAddress(4+index*b,(short)(4+index*b+length1-1),c,(short)c);
 						sheet.addMergedRegion(cra_machine);
 						for(int d=1;d<length1;d++){
-							XSSFRow row=sheet.createRow(4+120*b+d);
+							XSSFRow row=sheet.createRow(4+index*b+d);
 							XSSFCell cell=row.createCell(c);
 							cell.setCellStyle(cs);
 						}
 						//生產與請款狀況
-						XSSFRow row_inv=sheet.createRow(4+120*b+length1);
+						XSSFRow row_inv=sheet.createRow(4+index*b+length1);
 						XSSFCell cell_inv=row_inv.createCell(c);
 						cell_inv.setCellValue("生產與請款狀況");
 						cell_inv.setCellStyle(cs);
-						CellRangeAddress cra_inv=new CellRangeAddress(4+120*b+length1,(short)(4+120*b+length1+length2-1),c,(short)c);
+						CellRangeAddress cra_inv=new CellRangeAddress(4+index*b+length1,(short)(4+index*b+length1+length2-1),c,(short)c);
 						sheet.addMergedRegion(cra_inv);
 						for(int d=1;d<length2;d++){
-							XSSFRow row=sheet.createRow(4+120*b+d+length1);
+							XSSFRow row=sheet.createRow(4+index*b+d+length1);
 							XSSFCell cell=row.createCell(c);
 							cell.setCellStyle(cs);
 						}
 						//出貨與退貨
-						XSSFRow row_mix1=sheet.createRow(4+120*b+length1+length2);
+						XSSFRow row_mix1=sheet.createRow(4+index*b+length1+length2);
 						XSSFCell cell_mix1=row_mix1.createCell(c);
 						cell_mix1.setCellValue("出貨與退貨");
 						cell_mix1.setCellStyle(cs);
-						CellRangeAddress cra_mix1=new CellRangeAddress(4+120*b+length1+length2,
-								(short)(4+120*b+length1+length2+length3-1),c,(short)c);
+						CellRangeAddress cra_mix1=new CellRangeAddress(4+index*b+length1+length2,
+								(short)(4+index*b+length1+length2+length3-1),c,(short)c);
 						sheet.addMergedRegion(cra_mix1);
 						for(int d=1;d<length3;d++){
-							XSSFRow row=sheet.createRow(4+120*b+d+length1+length2);
+							XSSFRow row=sheet.createRow(4+index*b+d+length1+length2);
 							XSSFCell cell=row.createCell(c);
 							cell.setCellStyle(cs);
 						}
 						//人員效能
-						XSSFRow row_person=sheet.createRow(4+120*b+length1+length2+length3);
+						XSSFRow row_person=sheet.createRow(4+index*b+length1+length2+length3);
 						XSSFCell cell_person=row_person.createCell(c);
 						cell_person.setCellValue("人員效能");
 						cell_person.setCellStyle(cs);
-						CellRangeAddress cra_person=new CellRangeAddress(4+120*b+length1+length2+length3,
-								(short)(4+120*b+length1+length2+length3+length4-1),c,(short)c);
+						CellRangeAddress cra_person=new CellRangeAddress(4+index*b+length1+length2+length3,
+								(short)(4+index*b+length1+length2+length3+length4-1),c,(short)c);
 						sheet.addMergedRegion(cra_person);
 						for(int d=1;d<length4;d++){
-							XSSFRow row=sheet.createRow(4+120*b+d+length1+length2+length3);
+							XSSFRow row=sheet.createRow(4+index*b+d+length1+length2+length3);
 							XSSFCell cell=row.createCell(c);
 							cell.setCellStyle(cs);
 						}
 						//關務損耗
-						XSSFRow row_gw=sheet.createRow(4+120*b+length1+length2+length3+length4);
+						XSSFRow row_gw=sheet.createRow(4+index*b+length1+length2+length3+length4);
 						XSSFCell cell_gw=row_gw.createCell(c);
 						cell_gw.setCellValue("關務損耗");
 						cell_gw.setCellStyle(cs);
-						CellRangeAddress cra_gw=new CellRangeAddress(4+120*b+length1+length2+length3+length4,
-								(short)(4+120*b+length1+length2+length3+length4+length5-1),c,(short)c);
+						CellRangeAddress cra_gw=new CellRangeAddress(4+index*b+length1+length2+length3+length4,
+								(short)(4+index*b+length1+length2+length3+length4+length5-1),c,(short)c);
 						sheet.addMergedRegion(cra_gw);
 						for(int d=1;d<length5;d++){
-							XSSFRow row=sheet.createRow(4+120*b+d+length1+length2+length3+length4);
+							XSSFRow row=sheet.createRow(4+index*b+d+length1+length2+length3+length4);
 							XSSFCell cell=row.createCell(c);
 							cell.setCellStyle(cs);
 						}
 						//邊料不良重量分析
-						XSSFRow row_side=sheet.createRow(4+120*b+length1+length2+length3+length4+length5);
+						XSSFRow row_side=sheet.createRow(4+index*b+length1+length2+length3+length4+length5);
 						XSSFCell cell_side=row_side.createCell(c);
 						cell_side.setCellValue("邊料不良重量分析");
 						cell_side.setCellStyle(cs);
-						CellRangeAddress cra_side=new CellRangeAddress(4+120*b+length1+length2+length3+length4+length5,
-								(short)(4+120*b+length1+length2+length3+length4+length5+length6-1),c,(short)c);
+						CellRangeAddress cra_side=new CellRangeAddress(4+index*b+length1+length2+length3+length4+length5,
+								(short)(4+index*b+length1+length2+length3+length4+length5+length6-1),c,(short)c);
 						sheet.addMergedRegion(cra_side);
 						for(int d=1;d<length6;d++){
-							XSSFRow row=sheet.createRow(4+120*b+d+length1+length2+length3+length4+length5);
+							XSSFRow row=sheet.createRow(4+index*b+d+length1+length2+length3+length4+length5);
 							XSSFCell cell=row.createCell(c);
 							cell.setCellStyle(cs);
 						}
 						//庫存
-						XSSFRow row_store=sheet.createRow(4+120*b+length1+length2+length3+length4+length5+length6);
+						XSSFRow row_store=sheet.createRow(4+index*b+length1+length2+length3+length4+length5+length6);
 						XSSFCell cell_store=row_store.createCell(c);
 						cell_store.setCellValue("庫存");
 						cell_store.setCellStyle(cs);
-						CellRangeAddress cra_store=new CellRangeAddress(4+120*b+length1+length2+length3+length4+length5+length6,
-								(short)(4+120*b+length1+length2+length3+length4+length5+length6+length7-1),c,(short)c);
+						CellRangeAddress cra_store=new CellRangeAddress(4+index*b+length1+length2+length3+length4+length5+length6,
+								(short)(4+index*b+length1+length2+length3+length4+length5+length6+length7-1),c,(short)c);
 						sheet.addMergedRegion(cra_store);
 						for(int d=1;d<length7;d++){
-							XSSFRow row=sheet.createRow(4+120*b+d+length1+length2+length3+length4+length5+length6);
+							XSSFRow row=sheet.createRow(4+index*b+d+length1+length2+length3+length4+length5+length6);
 							XSSFCell cell=row.createCell(c);
 							cell.setCellStyle(cs);
 						}
 						//水電油
-						XSSFRow row_wlo=sheet.createRow(4+120*b+length1+length2+length3+length4+length5+length6+length7);
+						XSSFRow row_wlo=sheet.createRow(4+index*b+length1+length2+length3+length4+length5+length6+length7);
 						XSSFCell cell_wlo=row_wlo.createCell(c);
 						cell_wlo.setCellValue("水電油");
 						cell_wlo.setCellStyle(cs);
-						CellRangeAddress cra_wlo=new CellRangeAddress(4+120*b+length1+length2+length3+length4+length5+length6+length7,
-								(short)(4+120*b+length1+length2+length3+length4+length5+length6+length7+length8-1),c,(short)c);
+						CellRangeAddress cra_wlo=new CellRangeAddress(4+index*b+length1+length2+length3+length4+length5+length6+length7,
+								(short)(4+index*b+length1+length2+length3+length4+length5+length6+length7+length8-1),c,(short)c);
 						sheet.addMergedRegion(cra_wlo);
 						for(int d=1;d<length8;d++){
-							XSSFRow row=sheet.createRow(4+120*b+d+length1+length2+length3+length4+length5+length6+length7);
+							XSSFRow row=sheet.createRow(4+index*b+d+length1+length2+length3+length4+length5+length6+length7);
 							XSSFCell cell=row.createCell(c);
 							cell.setCellStyle(cs);
 						}
 						//回頭料
-						XSSFRow row_back=sheet.createRow(4+120*b+length1+length2+length3+length4+length5+length6+length7+length8);
+						XSSFRow row_back=sheet.createRow(4+index*b+length1+length2+length3+length4+length5+length6+length7+length8);
 						XSSFCell cell_back=row_back.createCell(c);
 						cell_back.setCellValue("回頭料");
 						cell_back.setCellStyle(cs);
-						CellRangeAddress cra_back=new CellRangeAddress(4+120*b+length1+length2+length3+length4+length5+length6+length7+length8,
-								(short)(4+120*b+length1+length2+length3+length4+length5+length6+length7+length8+length9-1),c,(short)c);
+						CellRangeAddress cra_back=new CellRangeAddress(4+index*b+length1+length2+length3+length4+length5+length6+length7+length8,
+								(short)(4+index*b+length1+length2+length3+length4+length5+length6+length7+length8+length9-1),c,(short)c);
 						sheet.addMergedRegion(cra_back);
 						for(int d=1;d<length9;d++){
-							XSSFRow row=sheet.createRow(4+120*b+d+length1+length2+length3+length4+length5+length6+length7+length8);
+							XSSFRow row=sheet.createRow(4+index*b+d+length1+length2+length3+length4+length5+length6+length7+length8);
 							XSSFCell cell=row.createCell(c);
 							cell.setCellStyle(cs);
 						}
 						//色料回收粉
-						XSSFRow row_webcost=sheet.createRow(4+120*b+length1+length2+length3+length4+length5+length6+length7+length8+length9);
+						XSSFRow row_webcost=sheet.createRow(4+index*b+length1+length2+length3+length4+length5+length6+length7+length8+length9);
 						XSSFCell cell_webcost=row_webcost.createCell(c);
 						cell_webcost.setCellValue("色料藥品/離型劑/回收粉");
 						cell_webcost.setCellStyle(cs);
-						CellRangeAddress cra_webcost=new CellRangeAddress(4+120*b+length1+length2+length3+length4+length5+length6+length7+length8+length9,
-								(short)(4+120*b+length1+length2+length3+length4+length5+length6+length7+length8+length9+length10-1),c,(short)c);
+						CellRangeAddress cra_webcost=new CellRangeAddress(4+index*b+length1+length2+length3+length4+length5+length6+length7+length8+length9,
+								(short)(4+index*b+length1+length2+length3+length4+length5+length6+length7+length8+length9+length10-1),c,(short)c);
 						sheet.addMergedRegion(cra_webcost);
 						for(int d=1;d<length10;d++){
-							XSSFRow row=sheet.createRow(4+120*b+d+length1+length2+length3+length4+length5+length6+length7+length8+length9);
+							XSSFRow row=sheet.createRow(4+index*b+d+length1+length2+length3+length4+length5+length6+length7+length8+length9);
 							XSSFCell cell=row.createCell(c);
 							cell.setCellStyle(cs);
 						}
@@ -7667,70 +7671,70 @@ public class VWebmachineAction extends ActionSupport implements ServletResponseA
 						sheet.setColumnWidth(c, 4000);
 						//孔位數機台回轉數
 						for(int d=0;d<length1;d++){
-							XSSFRow row_machine2=sheet.getRow(4+120*b+d);
+							XSSFRow row_machine2=sheet.getRow(4+index*b+d);
 							XSSFCell cell_machine2=row_machine2.createCell(c);
 							cell_machine2.setCellValue(list_contentName_machine.get(d));
 							cell_machine2.setCellStyle(cs);
 						}						
                         //生產與請款狀況
 						for(int d=0;d<length2;d++){
-							XSSFRow row_inv2=sheet.getRow(4+120*b+d+length1);
+							XSSFRow row_inv2=sheet.getRow(4+index*b+d+length1);
 							XSSFCell cell_inv2=row_inv2.createCell(c);
 							cell_inv2.setCellValue(list_contentName_inv.get(d));
 							cell_inv2.setCellStyle(cs);
 						}
 						//出貨與退貨
 						for(int d=0;d<length3;d++){
-							XSSFRow row_mix1_2=sheet.getRow(4+120*b+d+length1+length2);
+							XSSFRow row_mix1_2=sheet.getRow(4+index*b+d+length1+length2);
 							XSSFCell cell_mix1_2=row_mix1_2.createCell(c);
 							cell_mix1_2.setCellValue(list_contentName_mix1.get(d));
 							cell_mix1_2.setCellStyle(cs);
 						}
 						//人員效能
 						for(int d=0;d<length4;d++){
-							XSSFRow row_person2=sheet.getRow(4+120*b+d+length1+length2+length3);
+							XSSFRow row_person2=sheet.getRow(4+index*b+d+length1+length2+length3);
 							XSSFCell cell_person2=row_person2.createCell(c);
 							cell_person2.setCellValue(list_contentName_person.get(d));
 							cell_person2.setCellStyle(cs);
 						}
 						//關務損耗
 						for(int d=0;d<length5;d++){
-							XSSFRow row_gw2=sheet.getRow(4+120*b+d+length1+length2+length3+length4);
+							XSSFRow row_gw2=sheet.getRow(4+index*b+d+length1+length2+length3+length4);
 							XSSFCell cell_gw2=row_gw2.createCell(c);
 							cell_gw2.setCellValue(list_contentName_gw.get(d));
 							cell_gw2.setCellStyle(cs);
 						}
 						//邊料不良重量分析
 						for(int d=0;d<length6;d++){
-							XSSFRow row_side2=sheet.getRow(4+120*b+d+length1+length2+length3+length4+length5);
+							XSSFRow row_side2=sheet.getRow(4+index*b+d+length1+length2+length3+length4+length5);
 							XSSFCell cell_side2=row_side2.createCell(c);
 							cell_side2.setCellValue(list_contentName_side.get(d));
 							cell_side2.setCellStyle(cs);
 						}
 						//庫存
 						for(int d=0;d<length7;d++){
-							XSSFRow row_store2=sheet.getRow(4+120*b+d+length1+length2+length3+length4+length5+length6);
+							XSSFRow row_store2=sheet.getRow(4+index*b+d+length1+length2+length3+length4+length5+length6);
 							XSSFCell cell_store2=row_store2.createCell(c);
 							cell_store2.setCellValue(list_contentName_store.get(d));
 							cell_store2.setCellStyle(cs);
 						}
 						//水電油
 						for(int d=0;d<length8;d++){
-							XSSFRow row_wlo2=sheet.getRow(4+120*b+d+length1+length2+length3+length4+length5+length6+length7);
+							XSSFRow row_wlo2=sheet.getRow(4+index*b+d+length1+length2+length3+length4+length5+length6+length7);
 							XSSFCell cell_wlo2=row_wlo2.createCell(c);
 							cell_wlo2.setCellValue(list_contentName_wlo.get(d));
 							cell_wlo2.setCellStyle(cs);
 						}
 						//回頭料
 						for(int d=0;d<length9;d++){
-							XSSFRow row_back2=sheet.getRow(4+120*b+d+length1+length2+length3+length4+length5+length6+length7+length8);
+							XSSFRow row_back2=sheet.getRow(4+index*b+d+length1+length2+length3+length4+length5+length6+length7+length8);
 							XSSFCell cell_back2=row_back2.createCell(c);
 							cell_back2.setCellValue(list_contentName_back.get(d));
 							cell_back2.setCellStyle(cs);
 						}
 						//色料回收粉
 						for(int d=0;d<length10;d++){
-							XSSFRow row_webcost2=sheet.getRow(4+120*b+d+length1+length2+length3+length4+length5+length6+length7+length8+length9);
+							XSSFRow row_webcost2=sheet.getRow(4+index*b+d+length1+length2+length3+length4+length5+length6+length7+length8+length9);
 							XSSFCell cell_webcost2=row_webcost2.createCell(c);
 							cell_webcost2.setCellValue(list_contentName_webcost.get(d));
 							cell_webcost2.setCellStyle(cs);
@@ -7739,70 +7743,70 @@ public class VWebmachineAction extends ActionSupport implements ServletResponseA
 					case 2:
                         //孔位數機台回轉數
 						for(int d=0;d<length1;d++){
-							XSSFRow row_machine2=sheet.getRow(4+120*b+d);
+							XSSFRow row_machine2=sheet.getRow(4+index*b+d);
 							XSSFCell cell_machine2=row_machine2.createCell(c);
 							cell_machine2.setCellValue(list_unit_machine.get(d));
 							cell_machine2.setCellStyle(cs);
 						}
                         //生產與請款狀況
 						for(int d=0;d<length2;d++){
-							XSSFRow row_inv2=sheet.getRow(4+120*b+d+length1);
+							XSSFRow row_inv2=sheet.getRow(4+index*b+d+length1);
 							XSSFCell cell_inv2=row_inv2.createCell(c);
 							cell_inv2.setCellValue(list_unit_inv.get(d));
 							cell_inv2.setCellStyle(cs);
 						}
 						//出貨與退貨
 						for(int d=0;d<length3;d++){
-							XSSFRow row_mix1_2=sheet.getRow(4+120*b+d+length1+length2);
+							XSSFRow row_mix1_2=sheet.getRow(4+index*b+d+length1+length2);
 							XSSFCell cell_mix1_2=row_mix1_2.createCell(c);
 							cell_mix1_2.setCellValue(list_unit_mix1.get(d));
 							cell_mix1_2.setCellStyle(cs);
 						}
 						//人員效能
 						for(int d=0;d<length4;d++){
-							XSSFRow row_person2=sheet.getRow(4+120*b+d+length1+length2+length3);
+							XSSFRow row_person2=sheet.getRow(4+index*b+d+length1+length2+length3);
 							XSSFCell cell_person2=row_person2.createCell(c);
 							cell_person2.setCellValue(list_unit_person.get(d));
 							cell_person2.setCellStyle(cs);
 						}
 						//關務損耗
 						for(int d=0;d<length5;d++){
-							XSSFRow row_gw2=sheet.getRow(4+120*b+d+length1+length2+length3+length4);
+							XSSFRow row_gw2=sheet.getRow(4+index*b+d+length1+length2+length3+length4);
 							XSSFCell cell_gw2=row_gw2.createCell(c);
 							cell_gw2.setCellValue(list_unit_gw.get(d));
 							cell_gw2.setCellStyle(cs);
 						}
 						//邊料不良重量分析
 						for(int d=0;d<length6;d++){
-							XSSFRow row_side2=sheet.getRow(4+120*b+d+length1+length2+length3+length4+length5);
+							XSSFRow row_side2=sheet.getRow(4+index*b+d+length1+length2+length3+length4+length5);
 							XSSFCell cell_side2=row_side2.createCell(c);
 							cell_side2.setCellValue(list_unit_side.get(d));
 							cell_side2.setCellStyle(cs);
 						}
 						//庫存
 						for(int d=0;d<length7;d++){
-							XSSFRow row_store2=sheet.getRow(4+120*b+d+length1+length2+length3+length4+length5+length6);
+							XSSFRow row_store2=sheet.getRow(4+index*b+d+length1+length2+length3+length4+length5+length6);
 							XSSFCell cell_store2=row_store2.createCell(c);
 							cell_store2.setCellValue(list_unit_store.get(d));
 							cell_store2.setCellStyle(cs);
 						}
 						//水電油
 						for(int d=0;d<length8;d++){
-							XSSFRow row_wlo2=sheet.getRow(4+120*b+d+length1+length2+length3+length4+length5+length6+length7);
+							XSSFRow row_wlo2=sheet.getRow(4+index*b+d+length1+length2+length3+length4+length5+length6+length7);
 							XSSFCell cell_wlo2=row_wlo2.createCell(c);
 							cell_wlo2.setCellValue(list_unit_wlo.get(d));
 							cell_wlo2.setCellStyle(cs);
 						}
 						//回頭料
 						for(int d=0;d<length9;d++){
-							XSSFRow row_back2=sheet.getRow(4+120*b+d+length1+length2+length3+length4+length5+length6+length7+length8);
+							XSSFRow row_back2=sheet.getRow(4+index*b+d+length1+length2+length3+length4+length5+length6+length7+length8);
 							XSSFCell cell_back2=row_back2.createCell(c);
 							cell_back2.setCellValue(list_unit_back.get(d));
 							cell_back2.setCellStyle(cs);
 						}
 						//色料回收粉
 						for(int d=0;d<length10;d++){
-							XSSFRow row_webcost2=sheet.getRow(4+120*b+d+length1+length2+length3+length4+length5+length6+length7+length8+length9);
+							XSSFRow row_webcost2=sheet.getRow(4+index*b+d+length1+length2+length3+length4+length5+length6+length7+length8+length9);
 							XSSFCell cell_webcost2=row_webcost2.createCell(c);
 							cell_webcost2.setCellValue(list_unit_webcost.get(d));
 							cell_webcost2.setCellStyle(cs);
@@ -7822,7 +7826,7 @@ public class VWebmachineAction extends ActionSupport implements ServletResponseA
 							}else{
 								cs_temp=cs_percent2;
 							}
-							XSSFRow row_machine_3=sheet.getRow(4+120*b+d);
+							XSSFRow row_machine_3=sheet.getRow(4+index*b+d);
 							XSSFCell cell_machine_3=row_machine_3.createCell(c);
 							if(list_machine3!=null){
 								cell_machine_3.setCellValue(list_machine3.get(d));
@@ -7838,7 +7842,7 @@ public class VWebmachineAction extends ActionSupport implements ServletResponseA
 							}else{
 								cs_temp=cs_poi2;
 							}
-							XSSFRow row_inv_3=sheet.getRow(4+120*b+d+length1);
+							XSSFRow row_inv_3=sheet.getRow(4+index*b+d+length1);
 							XSSFCell cell_inv_3=row_inv_3.createCell(c);
 							if(list_inv3!=null){
 								cell_inv_3.setCellValue(list_inv3.get(d));
@@ -7854,7 +7858,7 @@ public class VWebmachineAction extends ActionSupport implements ServletResponseA
 							}else{
 								cs_temp=cs_poi1;
 							}
-							XSSFRow row_mix1_3=sheet.getRow(4+120*b+d+length1+length2);
+							XSSFRow row_mix1_3=sheet.getRow(4+index*b+d+length1+length2);
 							XSSFCell cell_mix1_3=row_mix1_3.createCell(c);
 							if(list_mix1_3!=null){
 								cell_mix1_3.setCellValue(list_mix1_3.get(d));
@@ -7874,7 +7878,7 @@ public class VWebmachineAction extends ActionSupport implements ServletResponseA
 							}else{
 								cs_temp=cs_poi2;
 							}
-							XSSFRow row_person_3=sheet.getRow(4+120*b+d+length1+length2+length3);
+							XSSFRow row_person_3=sheet.getRow(4+index*b+d+length1+length2+length3);
 							XSSFCell cell_person_3=row_person_3.createCell(c);
 							if(list_person3!=null){
 								cell_person_3.setCellValue(list_person3.get(d));
@@ -7890,7 +7894,7 @@ public class VWebmachineAction extends ActionSupport implements ServletResponseA
 							}else{
 								cs_temp=cs_poi2;
 							}
-							XSSFRow row_gw_3=sheet.getRow(4+120*b+d+length1+length2+length3+length4);
+							XSSFRow row_gw_3=sheet.getRow(4+index*b+d+length1+length2+length3+length4);
 							XSSFCell cell_gw_3=row_gw_3.createCell(c);
 							if(list_gw3!=null){
 								cell_gw_3.setCellValue(list_gw3.get(d));
@@ -7906,7 +7910,7 @@ public class VWebmachineAction extends ActionSupport implements ServletResponseA
 							}else{
 								cs_temp=cs_poi2;
 							}
-							XSSFRow row_side_3=sheet.getRow(4+120*b+d+length1+length2+length3+length4+length5);
+							XSSFRow row_side_3=sheet.getRow(4+index*b+d+length1+length2+length3+length4+length5);
 							XSSFCell cell_side_3=row_side_3.createCell(c);
 							if(list_side3!=null){
 								cell_side_3.setCellValue(list_side3.get(d));
@@ -7917,7 +7921,7 @@ public class VWebmachineAction extends ActionSupport implements ServletResponseA
 						}
 						//庫存
 						for(int d=0;d<length7;d++){
-							XSSFRow row_store_3=sheet.getRow(4+120*b+d+length1+length2+length3+length4+length5+length6);
+							XSSFRow row_store_3=sheet.getRow(4+index*b+d+length1+length2+length3+length4+length5+length6);
 							XSSFCell cell_store_3=row_store_3.createCell(c);
 							if(list_store3!=null){
 								cell_store_3.setCellValue(list_store3.get(d));
@@ -7937,7 +7941,7 @@ public class VWebmachineAction extends ActionSupport implements ServletResponseA
 							}else{
 								cs_temp=cs_poi2;
 							}
-							XSSFRow row_store_3=sheet.getRow(4+120*b+d+length1+length2+length3+length4+length5+length6+length7);
+							XSSFRow row_store_3=sheet.getRow(4+index*b+d+length1+length2+length3+length4+length5+length6+length7);
 							XSSFCell cell_store_3=row_store_3.createCell(c);
 							if(list_store3!=null){
 								cell_store_3.setCellValue(list_wlo3.get(d));
@@ -7953,7 +7957,7 @@ public class VWebmachineAction extends ActionSupport implements ServletResponseA
 							}else{
 								cs_temp=cs_poi2;
 							}
-							XSSFRow row_back_3=sheet.getRow(4+120*b+d+length1+length2+length3+length4+length5+length6+length7+length8);
+							XSSFRow row_back_3=sheet.getRow(4+index*b+d+length1+length2+length3+length4+length5+length6+length7+length8);
 							XSSFCell cell_back_3=row_back_3.createCell(c);
 							if(list_back3!=null){
 								cell_back_3.setCellValue(list_back3.get(d));
@@ -7969,7 +7973,7 @@ public class VWebmachineAction extends ActionSupport implements ServletResponseA
 							}else{
 								cs_temp=cs_poi2;
 							}
-							XSSFRow row_webcost_3=sheet.getRow(4+120*b+d+length1+length2+length3+length4+length5+length6+length7+length8+length9);
+							XSSFRow row_webcost_3=sheet.getRow(4+index*b+d+length1+length2+length3+length4+length5+length6+length7+length8+length9);
 							XSSFCell cell_webcost_3=row_webcost_3.createCell(c);
 							if(list_webcost3!=null){
 								cell_webcost_3.setCellValue(list_webcost3.get(d));

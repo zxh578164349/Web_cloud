@@ -318,6 +318,7 @@ function tips(memo,index){
 	</table>
  </div>	
 </div>	
-</div>	
+</div>
+<jsp:include page="../copyright.jsp"/>	
 </body>
 </html>

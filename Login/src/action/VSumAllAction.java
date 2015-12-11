@@ -44,7 +44,7 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 	private String yymm;
 	private String yymm_begin;
 	private String yymm_end;
-	private List<String>list_factno;//©Ò¿ïªºfactNo
+	private List<String>list_factno;//ï¿½Ò¿ïªºfactNo
 	private javax.servlet.http.HttpServletResponse response;
 	
 	public String getFactNo() {
@@ -105,14 +105,14 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 	public void print_fact() throws IOException, ParseException{
 		
 		/**
-		 * «Ø¥ß¼ÒªO
+		 * å»ºç«‹æ¨¡æ¿
 		 */
 		HSSFWorkbook wb=new HSSFWorkbook();
 		HSSFSheet sheet=wb.createSheet();
 		/**
-		 * ¦UºØ¼Ë¦¡
+		 * å„ç¨®æ¨£å¼
 		 */
-		//°ò¥»¼Ë¦¡
+		//åŸºæœ¬æ¨£å¼
 		HSSFCellStyle cs=wb.createCellStyle();
 		cs.setAlignment(HSSFCellStyle.ALIGN_CENTER);
 		cs.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
@@ -120,7 +120,7 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 		cs.setBorderRight(HSSFCellStyle.BORDER_THIN);
 		cs.setBorderBottom(HSSFCellStyle.BORDER_THIN);
 		cs.setBorderLeft(HSSFCellStyle.BORDER_THIN);
-		//¼ĞÃD¼Ë¦¡
+		//æ¨™é¡Œæ¨£å¼
 		HSSFCellStyle cs_title=wb.createCellStyle();
 		HSSFFont font_title=wb.createFont();
 		font_title.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
@@ -128,7 +128,7 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 		cs_title.setFont(font_title);
 		cs_title.setAlignment(HSSFCellStyle.ALIGN_CENTER);
 		cs_title.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
-		//ªíÀY¼Ë¦¡
+		//è¡¨é ­æ¨£å¼
 		HSSFCellStyle cs_column=wb.createCellStyle();
 		HSSFFont font_column=wb.createFont();
 		font_column.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
@@ -142,11 +142,11 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 		cs_column.setBorderLeft(HSSFCellStyle.BORDER_THIN);
 		cs_column.setFillForegroundColor(IndexedColors.YELLOW.getIndex());
 		cs_column.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
-		//µLÃä®Ø·s¦¡
+		//ç„¡é‚Šæ¡†æ–°å¼
 		HSSFCellStyle cs_noborder=wb.createCellStyle();
 		cs_noborder.setAlignment(HSSFCellStyle.ALIGN_CENTER);
 		cs_noborder.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
-		//¬õ¦â
+		//ç´…è‰²
 		HSSFCellStyle cs_red=wb.createCellStyle();
 		HSSFFont font_red=wb.createFont();
 		font_red.setColor(IndexedColors.RED.getIndex());
@@ -157,7 +157,7 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 		cs_red.setBorderRight(HSSFCellStyle.BORDER_THIN);
 		cs_red.setBorderBottom(HSSFCellStyle.BORDER_THIN);
 		cs_red.setBorderLeft(HSSFCellStyle.BORDER_THIN);
-		//¼Æ¦r®æ¦¡
+		//æ•¸å­—æ ¼å¼
 		HSSFDataFormat fm=wb.createDataFormat();
 		HSSFCellStyle cs_percent=wb.createCellStyle();
 		cs_percent.setDataFormat(fm.getFormat("0.00%"));
@@ -188,94 +188,94 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 						
 		
 		/**
-		 * ¼Æ¾Ú·½
-		 */		
-		//big¥Î©ó¶ñ¥Rnull
+		 * æ•¸æ“šæº
+		 */			
+		//bigç”¨æ–¼å¡«å……null
 		BigDecimal big=new BigDecimal(0.0);
-		//·l¯q¶×Á`
+		//æç›ŠåŒ¯ç¸½
 		List<String>list_contentName_loss=new ArrayList<String>();
 		List<String>list_unit_loss=new ArrayList<String>();
-		list_contentName_loss.add("Á`¾P³f¦¬¤J");list_unit_loss.add("USD");
-		list_contentName_loss.add("¡Ğ) ¦¨¥»¦X­p ");list_unit_loss.add("USD");
-		list_contentName_loss.add("¡Ğ) ¤u¸ê¦X­p ");list_unit_loss.add("USD");
-		list_contentName_loss.add("¡Ğ) ¶O¥Î¦X­p ");list_unit_loss.add("USD");
-		list_contentName_loss.add("¡Ï) ¨ä¥L  ");list_unit_loss.add("USD");
-		list_contentName_loss.add("¥»´Á·l¯q");list_unit_loss.add("USD");
-		//¥ş¼t­ì®Æ®w¦s
+		list_contentName_loss.add("ç¸½éŠ·è²¨æ”¶å…¥");list_unit_loss.add("USD");
+		list_contentName_loss.add("ï¼) æˆæœ¬åˆè¨ˆ");list_unit_loss.add("USD");
+		list_contentName_loss.add("ï¼) å·¥è³‡åˆè¨ˆ");list_unit_loss.add("USD");
+		list_contentName_loss.add("ï¼) è²»ç”¨åˆè¨ˆ");list_unit_loss.add("USD");
+		list_contentName_loss.add("ï¼‹) å…¶ä»–");list_unit_loss.add("USD");
+		list_contentName_loss.add("æœ¬æœŸæç›Š");list_unit_loss.add("USD");
+		//å…¨å» åŸæ–™åº«å­˜
 		List<String>list_contentName_store=new ArrayList<String>();
 		List<String>list_unit_store=new ArrayList<String>();
-		list_contentName_store.add("Á`­ì®Æ®w¦s¶q");list_unit_store.add("KG");
-		list_contentName_store.add("Á`­ì®Æ®w¦sª÷ÃB");list_unit_store.add("USD");
-		list_contentName_store.add("¥­§¡³æ»ù");list_unit_store.add("USD");
-		list_contentName_store.add("º¦´T");list_unit_store.add("%");//3
-		list_contentName_store.add("½¦Ãş®w¦s¶q");list_unit_store.add("KG");
-		list_contentName_store.add("½¦Ãş®w¦s¶q");list_unit_store.add("¾·");
-		list_contentName_store.add("½¦Ãşª÷ÃB");list_unit_store.add("USD");
-		list_contentName_store.add("¥­§¡³æ»ù");list_unit_store.add("USD");
-		list_contentName_store.add("º¦´T");list_unit_store.add("%");//8
+		list_contentName_store.add("ç¸½åŸæ–™åº«å­˜é‡");list_unit_store.add("KG");
+		list_contentName_store.add("ç¸½åŸæ–™åº«å­˜é‡‘é¡");list_unit_store.add("USD");
+		list_contentName_store.add("å¹³å‡å–®åƒ¹");list_unit_store.add("USD");
+		list_contentName_store.add("æ¼²å¹…");list_unit_store.add("%");//3
+		list_contentName_store.add("è† é¡åº«å­˜é‡");list_unit_store.add("KG");
+		list_contentName_store.add("è† é¡åº«å­˜é‡");list_unit_store.add("å™¸");
+		list_contentName_store.add("è† é¡é‡‘é¡");list_unit_store.add("USD");
+		list_contentName_store.add("å¹³å‡å–®åƒ¹");list_unit_store.add("USD");
+		list_contentName_store.add("æ¼²å¹…");list_unit_store.add("%");//8
 		
-		//¤ô¹qªo
+		//æ°´é›»æ²¹
 		List<String>list_contentName_wlo=new ArrayList<String>();
 		List<String>list_unit_wlo=new ArrayList<String>();
-		list_contentName_wlo.add("¥Í²£¼Ò¼Æ");list_unit_wlo.add("¼Ò");
-		list_contentName_wlo.add("¤ô¥Î¶q");list_unit_wlo.add("¾·");
-		list_contentName_wlo.add("¥Î¤ô³æÏû");list_unit_wlo.add("¾·/¼Ò");//2
-		list_contentName_wlo.add("¥Î¤ôª÷ÃB");list_unit_wlo.add("USD");
-		list_contentName_wlo.add("¥Î¤ôª÷ÃB³æÏû(¼Ò)");list_unit_wlo.add("USD/¼Ò");//4
-		list_contentName_wlo.add("¥Î¹q¶q");list_unit_wlo.add("«×");
-		list_contentName_wlo.add("¥Î¹q³æÏû");list_unit_wlo.add("«×/¼Ò");//6
-		list_contentName_wlo.add("¥Î¹qª÷ÃB");list_unit_wlo.add("USD");
-		list_contentName_wlo.add("¥Î¹qª÷ÃB³æÏû");list_unit_wlo.add("USD/¼Ò");//8
-		list_contentName_wlo.add("»]®ğ¥Î¶q");list_unit_wlo.add("¾·");
-		list_contentName_wlo.add("¥Î»]®ğ³æÏû");list_unit_wlo.add("¾·/¼Ò");//10
-		list_contentName_wlo.add("¥Î»]®ğª÷ÃB(USD)");list_unit_wlo.add("USD");
-		list_contentName_wlo.add("¥Î»]®ğª÷ÃB³æÏû");list_unit_wlo.add("USD/¼Ò");//12
-		list_contentName_wlo.add("®ãªo¥Î¶q");list_unit_wlo.add("¤½¤É");
-		list_contentName_wlo.add("¥Îªo³æÏû");list_unit_wlo.add("¤½¤É/¼Ò");//14
-		list_contentName_wlo.add("®ãªoª÷ÃB(USD)");list_unit_wlo.add("USD");
-		list_contentName_wlo.add("¥Îªoª÷ÃB³æÏû(¼Ò)");list_unit_wlo.add("USD/¼Ò");//16
-		//¤U¤ë½Ğ´Úª¬ªp,¤U¤ë¥Í²£ª¬ªp
+		list_contentName_wlo.add("ç”Ÿç”¢æ¨¡æ•¸");list_unit_wlo.add("æ¨¡");
+		list_contentName_wlo.add("æ°´ç”¨é‡");list_unit_wlo.add("å™¸");
+		list_contentName_wlo.add("ç”¨æ°´å–®ç§");list_unit_wlo.add("å™¸/æ¨¡");//2
+		list_contentName_wlo.add("ç”¨æ°´é‡‘é¡");list_unit_wlo.add("USD");
+		list_contentName_wlo.add("ç”¨æ°´é‡‘é¡å–®ç§(æ¨¡)");list_unit_wlo.add("USD/æ¨¡");//4
+		list_contentName_wlo.add("ç”¨é›»é‡");list_unit_wlo.add("åº¦");
+		list_contentName_wlo.add("ç”¨é›»å–®ç§");list_unit_wlo.add("åº¦/æ¨¡");//6
+		list_contentName_wlo.add("ç”¨é›»é‡‘é¡");list_unit_wlo.add("USD");
+		list_contentName_wlo.add("ç”¨é›»é‡‘é¡å–®ç§");list_unit_wlo.add("USD/æ¨¡");//8
+		list_contentName_wlo.add("è’¸æ°£ç”¨é‡");list_unit_wlo.add("å™¸");
+		list_contentName_wlo.add("ç”¨è’¸æ°£å–®ç§");list_unit_wlo.add("å™¸/æ¨¡");//10
+		list_contentName_wlo.add("ç”¨è’¸æ°£é‡‘é¡(USD)");list_unit_wlo.add("USD");
+		list_contentName_wlo.add("ç”¨è’¸æ°£é‡‘é¡å–®ç§");list_unit_wlo.add("USD/æ¨¡");//12
+		list_contentName_wlo.add("æŸ´æ²¹ç”¨é‡");list_unit_wlo.add("å…¬å‡");
+		list_contentName_wlo.add("ç”¨æ²¹å–®ç§");list_unit_wlo.add("å…¬å‡/æ¨¡");//14
+		list_contentName_wlo.add("æŸ´æ²¹é‡‘é¡(USD)");list_unit_wlo.add("USD");
+		list_contentName_wlo.add("ç”¨æ²¹é‡‘é¡å–®ç§(æ¨¡)");list_unit_wlo.add("USD/æ¨¡");//16
+		//ä¸‹æœˆè«‹æ¬¾ç‹€æ³,ä¸‹æœˆç”Ÿç”¢ç‹€æ³
 		List<String>list_contentName_inv=new ArrayList<String>();
 		List<String>list_unit_inv=new ArrayList<String>();
-		list_contentName_inv.add("¹w­p½Ğ´Ú");list_unit_inv.add("Âù");
-		list_contentName_inv.add("½Ğ´Úª÷ÃB");list_unit_inv.add("USD");
-		list_contentName_inv.add("¥­§¡³æ»ù");list_unit_inv.add("USD/Âù");
-		list_contentName_inv.add("¹w­p¥Í²£");list_unit_inv.add("¼Ò");
-		list_contentName_inv.add("¾÷»O¼Ğ­ã¾Ô¤O");list_unit_inv.add("¼Ò");
-		list_contentName_inv.add("¾÷¤Õ¹F¦¨²v");list_unit_inv.add("%");//5
+		list_contentName_inv.add("é è¨ˆè«‹æ¬¾");list_unit_inv.add("é›™");
+		list_contentName_inv.add("è«‹æ¬¾é‡‘é¡");list_unit_inv.add("USD");
+		list_contentName_inv.add("å¹³å‡å–®åƒ¹");list_unit_inv.add("USD/é›™");
+		list_contentName_inv.add("é è¨ˆç”Ÿç”¢");list_unit_inv.add("æ¨¡");
+		list_contentName_inv.add("æ©Ÿè‡ºæ¨™å‡†æˆ°åŠ›");list_unit_inv.add("æ¨¡");
+		list_contentName_inv.add("æ©Ÿå­”é”æˆç‡");list_unit_inv.add("%");//5
 		
 		
-		//ªíÀY¤º®e
+		//è¡¨é ­å…§å®¹
 		List<String>list_column=new ArrayList<String>();
-		list_column.add("¶µ¥Ø");
-		list_column.add("²Ó¶µ");
-		list_column.add("³æ¦ì");
-		list_column.add("1¤ë");
-		list_column.add("2¤ë");
-		list_column.add("3¤ë");
+		list_column.add("é …ç›®");
+		list_column.add("ç´°é …");
+		list_column.add("å–®ä½");
+		list_column.add("1æœˆ");
+		list_column.add("2æœˆ");
+		list_column.add("3æœˆ");
 		list_column.add("Q1");//6
-		list_column.add("4¤ë");
-		list_column.add("5¤ë");
-		list_column.add("6¤ë");
+		list_column.add("4æœˆ");
+		list_column.add("5æœˆ");
+		list_column.add("6æœˆ");
 		list_column.add("Q2");//10
-		list_column.add("¤W¥b¦~");//11
-		list_column.add("7¤ë");
-		list_column.add("8¤ë");
-		list_column.add("9¤ë");
+		list_column.add("ä¸ŠåŠå¹´");//11
+		list_column.add("7æœˆ");
+		list_column.add("8æœˆ");
+		list_column.add("9æœˆ");
 		list_column.add("Q3");//15
-		list_column.add("10¤ë");
-		list_column.add("11¤ë");
-		list_column.add("12¤ë");
+		list_column.add("10æœˆ");
+		list_column.add("11æœˆ");
+		list_column.add("12æœˆ");
 		list_column.add("Q4");//19
-		list_column.add("¤U¥b¦~");//20
-		list_column.add("¥ş¦~");//21
-		//¥D­n¼Æ¾Ú
-		//³Ì¥~¼h¶°¦X
+		list_column.add("ä¸‹åŠå¹´");//20
+		list_column.add("å…¨å¹´");//21
+		//ä¸»è¦æ•¸æ“š
+		//æœ€å¤–å±¤é›†åˆ
 		List<List<Double>>list_loss_all=new ArrayList<List<Double>>();
 		List<List<Double>>list_store_all=new ArrayList<List<Double>>();
 		List<List<Double>>list_wlo_all=new ArrayList<List<Double>>();
 		List<List<Double>>list_inv_all=new ArrayList<List<Double>>();
-		//ª`·N,¦]¬°¦³"¶µ¥Ø""²Ó¶µ""³æ¦ì",©Ò¥H­n²K¥[¬°ªÅ
+		//æ³¨æ„,å› ç‚ºæœ‰"é …ç›®""ç´°é …""å–®ä½",æ‰€ä»¥è¦æ·»åŠ ç‚ºç©º
 		list_loss_all.add(null);
 		list_loss_all.add(null);
 		list_loss_all.add(null);
@@ -292,142 +292,142 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 		list_inv_all.add(null);
 		list_inv_all.add(null);
 		
-		////·l¯q·JÁ`(v_sumloss)
-		//²Ä¤@©u«×
+	    ////æç›Šå½™ç¸½(v_sumloss)
+		//ç¬¬ä¸€å­£åº¦
 		Double q1_a001=0.0;Double q1_a002=0.0;
 		Double q1_a003=0.0;Double q1_a004=0.0;
 		Double q1_a005=0.0;
-		//²Ä¤G©u«×
+		//ç¬¬äºŒå­£åº¦
 		Double q2_a001=0.0;Double q2_a002=0.0;
 		Double q2_a003=0.0;Double q2_a004=0.0;
 		Double q2_a005=0.0;
-		//²Ä¤T©u«×
+		//ç¬¬ä¸‰å­£åº¦
 		Double q3_a001=0.0;Double q3_a002=0.0;
 		Double q3_a003=0.0;Double q3_a004=0.0;
 		Double q3_a005=0.0;
-		//²Ä¥|©u«×
+		//ç¬¬å››å­£åº¦
 		Double q4_a001=0.0;Double q4_a002=0.0;
 		Double q4_a003=0.0;Double q4_a004=0.0;
 		Double q4_a005=0.0;
-		//¤W¥b¦~
+		//ä¸ŠåŠå¹´
 		Double half1_a001=0.0;Double half1_a002=0.0;
 		Double half1_a003=0.0;Double half1_a004=0.0;
 		Double half1_a005=0.0;
-		//¤U¥b¦~
+		//ä¸‹åŠå¹´
 		Double half2_a001=0.0;Double half2_a002=0.0;
 		Double half2_a003=0.0;Double half2_a004=0.0;
 		Double half2_a005=0.0;
-		//¥ş¦~
+		//å…¨å¹´
 		Double year_a001=0.0;Double year_a002=0.0;
 		Double year_a003=0.0;Double year_a004=0.0;
 		Double year_a005=0.0;
 		
-		//¥ş¼t­ì®Æ®w¦s(v_sumstore)
+		//å…¨å» åŸæ–™åº«å­˜(v_sumstore)
 		Double q1_b001=0.0;Double q1_b002=0.0;
 		Double q1_b005=0.0;Double q1_b006=0.0;
 		Double q1_b007=0.0;
-		//²Ä¤G©u«×
+		//ç¬¬äºŒå­£åº¦
 		Double q2_b001=0.0;Double q2_b002=0.0;
 		Double q2_b005=0.0;Double q2_b006=0.0;
 		Double q2_b007=0.0;
-		//²Ä¤T©u«×
+		//ç¬¬ä¸‰å­£åº¦
 		Double q3_b001=0.0;Double q3_b002=0.0;
 		Double q3_b005=0.0;Double q3_b006=0.0;
 		Double q3_b007=0.0;
-		//²Ä¥|©u«×
+		//ç¬¬å››å­£åº¦
 		Double q4_b001=0.0;Double q4_b002=0.0;
 		Double q4_b005=0.0;Double q4_b006=0.0;
 		Double q4_b007=0.0;
-		//¤W¥b¦~
+		//ä¸ŠåŠå¹´
 		Double half1_b001=0.0;Double half1_b002=0.0;
 		Double half1_b005=0.0;Double half1_b006=0.0;
 		Double half1_b007=0.0;
-		//¤U¥b¦~
+		//ä¸‹åŠå¹´
 		Double half2_b001=0.0;Double half2_b002=0.0;
 		Double half2_b005=0.0;Double half2_b006=0.0;
 		Double half2_b007=0.0;
-		//¥ş¦~
+		//å…¨å¹´
 		Double year_b001=0.0;Double year_b002=0.0;
 		Double year_b005=0.0;Double year_b006=0.0;
 		Double year_b007=0.0;
 		
-		//¤W¤ë¥­§¡³æ»ù
+		//ä¸Šæœˆå¹³å‡å–®åƒ¹
 		Double lag_b003=0.0;
-		//¤W¤ë¥­§¡³æ»ù(½¦)
+		//ä¸Šæœˆå¹³å‡å–®åƒ¹(è† )
 		Double lag_b008=0.0;
-		//·í¤ë¥­§¡³æ»ù
+		//ç•¶æœˆå¹³å‡å–®åƒ¹
 		Double b003=0.0;
-		//·í¤ë¥­§¡³æ»ù(½¦)
+		//ç•¶æœˆå¹³å‡å–®åƒ¹(è† )
 		Double b008=0.0;
-		//º¦ºÖ1
+		//æ¼²ç¦1
 		Double store_b004=0.0;		
-		//º¦ºÖ2
+		//æ¼²ç¦2
 		Double store_b009=0.0;
 		
-		//¤ô¹qªo(v_sumwlo)
-		//²Ä¤@©u«×
+		//æ°´é›»æ²¹(v_sumwlo)
+		//ç¬¬ä¸€å­£åº¦
 		Double q1_c001=0.0;Double q1_c002=0.0;
 		Double q1_c004=0.0;Double q1_c006=0.0;
 		Double q1_c008=0.0;Double q1_c010=0.0;
 		Double q1_c012=0.0;Double q1_c014=0.0;
 		Double q1_c016=0.0;
-		//²Ä¤G©u«×
+		//ç¬¬äºŒå­£åº¦
 		Double q2_c001=0.0;Double q2_c002=0.0;
 		Double q2_c004=0.0;Double q2_c006=0.0;
 		Double q2_c008=0.0;Double q2_c010=0.0;
 		Double q2_c012=0.0;Double q2_c014=0.0;
 		Double q2_c016=0.0;
-		//²Ä¤T©u«×
+		//ç¬¬ä¸‰å­£åº¦
 		Double q3_c001=0.0;Double q3_c002=0.0;
 		Double q3_c004=0.0;Double q3_c006=0.0;
 		Double q3_c008=0.0;Double q3_c010=0.0;
 		Double q3_c012=0.0;Double q3_c014=0.0;
 		Double q3_c016=0.0;
 		
-		//²Ä¥|©u«×
+		//ç¬¬å››å­£åº¦
 		Double q4_c001=0.0;Double q4_c002=0.0;
 		Double q4_c004=0.0;Double q4_c006=0.0;
 		Double q4_c008=0.0;Double q4_c010=0.0;
 		Double q4_c012=0.0;Double q4_c014=0.0;
 		Double q4_c016=0.0;
-		//¤W¥b¦~
+		//ä¸ŠåŠå¹´
 		Double half1_c001=0.0;Double half1_c002=0.0;
 		Double half1_c004=0.0;Double half1_c006=0.0;
 		Double half1_c008=0.0;Double half1_c010=0.0;
 		Double half1_c012=0.0;Double half1_c014=0.0;
 		Double half1_c016=0.0;
-		//¤U¥b¦~
+		//ä¸‹åŠå¹´
 		Double half2_c001=0.0;Double half2_c002=0.0;
 		Double half2_c004=0.0;Double half2_c006=0.0;
 		Double half2_c008=0.0;Double half2_c010=0.0;
 		Double half2_c012=0.0;Double half2_c014=0.0;
 		Double half2_c016=0.0;
-		//¥ş¦~
+		//å…¨å¹´
 		Double year_c001=0.0;Double year_c002=0.0;
 		Double year_c004=0.0;Double year_c006=0.0;
 		Double year_c008=0.0;Double year_c010=0.0;
 		Double year_c012=0.0;Double year_c014=0.0;
 		Double year_c016=0.0;
-		//¤U¤ë½Ğ´Úª¬ªp,¤U¤ë¥Í²£ª¬ªp
-		//²Ä¤@©u«×
+		//ä¸‹æœˆè«‹æ¬¾ç‹€æ³,ä¸‹æœˆç”Ÿç”¢ç‹€æ³
+		//ç¬¬ä¸€å­£åº¦
 		Double q1_d001=0.0;Double q1_d002=0.0;
 		Double q1_d004=0.0;Double q1_d005=0.0;
-		//²Ä¤G©u«×
+		//ç¬¬äºŒå­£åº¦
 		Double q2_d001=0.0;Double q2_d002=0.0;
 		Double q2_d004=0.0;Double q2_d005=0.0;
-		//²Ä¤T©u«×
+		//ç¬¬ä¸‰å­£åº¦
 		Double q3_d001=0.0;Double q3_d002=0.0;
 		Double q3_d004=0.0;Double q3_d005=0.0;
-		//²Ä¥|©u«×
+		//ç¬¬å››å­£åº¦
 		Double q4_d001=0.0;Double q4_d002=0.0;
 		Double q4_d004=0.0;Double q4_d005=0.0;
-		//¤W¥b¦~
+		//ä¸ŠåŠå¹´
 		Double half1_d001=0.0;Double half1_d002=0.0;
 		Double half1_d004=0.0;Double half1_d005=0.0;
-		//¤U¥b¦~
+		//ä¸‹åŠå¹´
 		Double half2_d001=0.0;Double half2_d002=0.0;
 		Double half2_d004=0.0;Double half2_d005=0.0;
-		//¥ş¦~
+		//å…¨å¹´
 		Double year_d001=0.0;Double year_d002=0.0;
 		Double year_d004=0.0;Double year_d005=0.0;
 		
@@ -441,7 +441,7 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 			}
 			
 			/**
-			 * Àò¨ú¤W­Ó¤ë¤é´Á
+			 * ç²å–ä¸Šå€‹æœˆæ—¥æœŸ
 			 */
 			SimpleDateFormat format=new SimpleDateFormat("yyyyMM");
 			Date date=format.parse(year+month);
@@ -450,22 +450,22 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 			calendar.add(Calendar.MONTH, -1);
 			String lastdate=format.format(calendar.getTime());
 			//System.out.print(lastdate);
-			//¤ë
+			//æœˆ
 			List<Double>list_loss=new ArrayList<Double>();
 			List<Double>list_store=new ArrayList<Double>();
 			List<Double>list_wlo=new ArrayList<Double>();
 			List<Double>list_inv=new ArrayList<Double>();
-			//©u«×
+			//å­£åº¦
 			List<Double>list_loss_q=new ArrayList<Double>();
 			List<Double>list_store_q=new ArrayList<Double>();
 			List<Double>list_wlo_q=new ArrayList<Double>();
 			List<Double>list_inv_q=new ArrayList<Double>();
-			//¥b¦~
+			//åŠå¹´
 			List<Double>list_loss_h=new ArrayList<Double>();
 			List<Double>list_store_h=new ArrayList<Double>();
 			List<Double>list_wlo_h=new ArrayList<Double>();
 			List<Double>list_inv_h=new ArrayList<Double>();
-			//¥ş¦~
+			//å…¨å¹´
 			List<Double>list_loss_y=new ArrayList<Double>();
 			List<Double>list_store_y=new ArrayList<Double>();
 			List<Double>list_wlo_y=new ArrayList<Double>();
@@ -476,9 +476,9 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 			VSuminv inv=suminvSer.findById(factNo, year+month);
 			
 			//
-			//¤W­Ó¤ëstore
+			//ä¸Šå€‹æœˆstore
 			VSumstore store_last=sumstoreSer.findById(factNo, lastdate);
-			//·l¯q·JÁ`(v_sumloss)
+			//æç›Šå½™ç¸½(v_sumloss)
 			if(loss!=null){
 				list_loss.add(loss.getLossA001().doubleValue());
 				list_loss.add(loss.getLossA002().doubleValue());
@@ -487,7 +487,7 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 				list_loss.add(loss.getLossA005().doubleValue());
 				list_loss.add(loss.getLossA006().doubleValue());
 				list_loss_all.add(list_loss);
-				//²Ä¤@©u«×
+				//ç¬¬ä¸€å­£åº¦
 				if(a<4){
 					q1_a001=q1_a001+loss.getLossA001().doubleValue();
 					q1_a002=q1_a002+loss.getLossA002().doubleValue();
@@ -495,7 +495,7 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 					q1_a004=q1_a004+loss.getLossA004().doubleValue();
 					q1_a005=q1_a005+loss.getLossA005().doubleValue();
 				}
-				//²Ä¤G©u«×,¤W¥b¦~
+				//ç¬¬äºŒå­£åº¦,ä¸ŠåŠå¹´
 				if(a>3&&a<7){
 					q2_a001=q2_a001+loss.getLossA001().doubleValue();
 					q2_a002=q2_a002+loss.getLossA002().doubleValue();
@@ -503,7 +503,7 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 					q2_a004=q2_a004+loss.getLossA004().doubleValue();
 					q2_a005=q2_a005+loss.getLossA005().doubleValue();					
 				}
-				//²Ä¤T©u«×
+				//ç¬¬ä¸‰å­£åº¦
 				if(a>6&&a<10){
 					q3_a001=q3_a001+loss.getLossA001().doubleValue();
 					q3_a002=q3_a002+loss.getLossA002().doubleValue();
@@ -511,7 +511,7 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 					q3_a004=q3_a004+loss.getLossA004().doubleValue();
 					q3_a005=q3_a005+loss.getLossA005().doubleValue();
 				}
-				//²Ä¥|©u«×,¤U¥b¦~,¥ş¦~
+				//ç¬¬å››å­£åº¦,ä¸‹åŠå¹´,å…¨å¹´
 				if(a>9){
 					q4_a001=q4_a001+loss.getLossA001().doubleValue();
 					q4_a002=q4_a002+loss.getLossA002().doubleValue();
@@ -522,20 +522,20 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 			}else{
 				list_loss_all.add(null);
 			}
-			//¥ş¼t­ì®Æ®w¦s(v_sumstore)
-			//§ä¨ì¤W¤ë¥­§¡³æ»ù
+			//å…¨å» åŸæ–™åº«å­˜(v_sumstore)
+			//æ‰¾åˆ°ä¸Šæœˆå¹³å‡å–®åƒ¹
 			if(store_last!=null){
 				lag_b003=store_last.getStoreB003().doubleValue();
 				lag_b008=store_last.getStoreB008().doubleValue();
 			}
-			//§ä¨ì·í¤ë¥­§¡³æ»ù
+			//æ‰¾åˆ°ç•¶æœˆå¹³å‡å–®åƒ¹
 			if(store!=null){
 				b003=store.getStoreB003().doubleValue();
 				b008=store.getStoreB008().doubleValue();
 			}
-			//º¦ºÖ1
+			//æ¼²ç¦1
 			store_b004=this.division((b003-lag_b003), lag_b003);			
-			//º¦ºÖ2
+			//æ¼²ç¦2
 			store_b009=this.division((b008-lag_b008), lag_b008);
 			if(store!=null){								
 				list_store.add(store.getStoreB001().doubleValue());
@@ -548,7 +548,7 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 				list_store.add(store.getStoreB008().doubleValue());
 				list_store.add(store_b009);				
 				list_store_all.add(list_store);
-				//²Ä¤@©u«×
+				//ç¬¬ä¸€å­£åº¦
 				if(a<4){
 					q1_b001=q1_b001+store.getStoreB001().doubleValue();
 					q1_b002=q1_b002+store.getStoreB002().doubleValue();
@@ -556,7 +556,7 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 					q1_b006=q1_b006+store.getStoreB006().doubleValue();
 					q1_b007=q1_b007+store.getStoreB007().doubleValue();
 				}
-				//²Ä¤G©u«×,¤W¥b¦~
+				//ç¬¬äºŒå­£åº¦,ä¸ŠåŠå¹´
 				if(a>3&&a<7){
 					q2_b001=q2_b001+store.getStoreB001().doubleValue();
 					q2_b002=q2_b002+store.getStoreB002().doubleValue();
@@ -564,7 +564,7 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 					q2_b006=q2_b006+store.getStoreB006().doubleValue();
 					q2_b007=q2_b007+store.getStoreB007().doubleValue();					
 				}
-				//²Ä¤T©u«×
+				//ç¬¬ä¸‰å­£åº¦
 				if(a>6&&a<10){
 					q3_b001=q3_b001+store.getStoreB001().doubleValue();
 					q3_b002=q3_b002+store.getStoreB002().doubleValue();
@@ -572,7 +572,7 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 					q3_b006=q3_b006+store.getStoreB006().doubleValue();
 					q3_b007=q3_b007+store.getStoreB007().doubleValue();
 				}
-				//²Ä¥|©u«×,¤U¥b¦~,¥ş¦~
+				//ç¬¬å››å­£åº¦,ä¸‹åŠå¹´,å…¨å¹´
 				if(a>9){
 					q4_b001=q4_b001+store.getStoreB001().doubleValue();
 					q4_b002=q4_b002+store.getStoreB002().doubleValue();
@@ -584,7 +584,7 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 				list_store_all.add(null);
 			}
 			
-			//¤ô¹qªo(v_sumwlo)
+			//æ°´é›»æ²¹(v_sumwlo)
 			if(wlo!=null){
 				if(wlo.getWloC002()==null){
 					wlo.setWloC002(big);
@@ -652,7 +652,7 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 				list_wlo.add(wlo.getWloC016().doubleValue());
 				list_wlo.add(wlo.getWloC017().doubleValue());
 				list_wlo_all.add(list_wlo);
-				//²Ä¤@©u«×
+				//ç¬¬ä¸€å­£åº¦
 				if(a<4){
 					q1_c001=q1_c001+wlo.getWloC001().doubleValue();
 					q1_c002=q1_c002+wlo.getWloC002().doubleValue();
@@ -664,7 +664,7 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 					q1_c014=q1_c014+wlo.getWloC014().doubleValue();
 					q1_c016=q1_c016+wlo.getWloC016().doubleValue();
 				}
-				//²Ä¤G©u«×,¤W¥b¦~
+				//ç¬¬äºŒå­£åº¦,ä¸ŠåŠå¹´
 				if(a>3&&a<7){
 					q2_c001=q2_c001+wlo.getWloC001().doubleValue();
 					q2_c002=q2_c002+wlo.getWloC002().doubleValue();
@@ -676,7 +676,7 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 					q2_c014=q2_c014+wlo.getWloC014().doubleValue();
 					q2_c016=q2_c016+wlo.getWloC016().doubleValue();										
 				}
-				//²Ä¤T©u«×
+				//ç¬¬ä¸‰å­£åº¦
 				if(a>6&&a<10){
 					q3_c001=q3_c001+wlo.getWloC001().doubleValue();
 					q3_c002=q3_c002+wlo.getWloC002().doubleValue();
@@ -688,7 +688,7 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 					q3_c014=q3_c014+wlo.getWloC014().doubleValue();
 					q3_c016=q3_c016+wlo.getWloC016().doubleValue();
 				}
-				//²Ä¥|©u«×,¤U¥b¦~,¥ş¦~
+				//ç¬¬å››å­£åº¦,ä¸‹åŠå¹´,å…¨å¹´
 				if(a>9){
 					q4_c001=q4_c001+wlo.getWloC001().doubleValue();
 					q4_c002=q4_c002+wlo.getWloC002().doubleValue();
@@ -703,7 +703,7 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 			}else{
 				list_wlo_all.add(null);
 			}
-			//¤U¤ë½Ğ´Úª¬ªp,¤U¤ë¥Í²£ª¬ªp
+			//ä¸‹æœˆè«‹æ¬¾ç‹€æ³,ä¸‹æœˆç”Ÿç”¢ç‹€æ³
 			if(inv!=null){
 				if(inv.getInvD001()==null){
 					inv.setInvD001(big);
@@ -730,28 +730,28 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 				list_inv.add(inv.getInvD005().doubleValue());
 				list_inv.add(inv.getInvD006().doubleValue());
 				list_inv_all.add(list_inv);
-				//²Ä¤@©u«×
+				//ç¬¬ä¸€å­£åº¦
 				if(a<4){
 					q1_d001=q1_d001+inv.getInvD001().doubleValue();
 					q1_d002=q1_d002+inv.getInvD002().doubleValue();
 					q1_d004=q1_d004+inv.getInvD004().doubleValue();
 					q1_d005=q1_d005+inv.getInvD005().doubleValue();
 				}
-				//²Ä¤G©u«×,¤W¥b¦~
+				//ç¬¬äºŒå­£åº¦,ä¸ŠåŠå¹´
 				if(a>3&&a<7){
 					q2_d001=q2_d001+inv.getInvD001().doubleValue();
 					q2_d002=q2_d002+inv.getInvD002().doubleValue();
 					q2_d004=q2_d004+inv.getInvD004().doubleValue();
 					q2_d005=q2_d005+inv.getInvD005().doubleValue();					
 				}
-				//²Ä¤T©u«×
+				//ç¬¬ä¸‰å­£åº¦
 				if(a>6&&a<10){
 					q3_d001=q3_d001+inv.getInvD001().doubleValue();
 					q3_d002=q3_d002+inv.getInvD002().doubleValue();
 					q3_d004=q3_d004+inv.getInvD004().doubleValue();
 					q3_d005=q3_d005+inv.getInvD005().doubleValue();
 				}
-				//²Ä¥|©u«×,¤U¥b¦~,¥ş¦~
+				//ç¬¬å››å­£åº¦,ä¸‹åŠå¹´,å…¨å¹´
 				if(a>9){
 					q4_d001=q4_d001+inv.getInvD001().doubleValue();
 					q4_d002=q4_d002+inv.getInvD002().doubleValue();
@@ -761,15 +761,15 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 			}else{
 				list_inv_all.add(null);				
 			}			
-			//²Ä¤@©u«×						
+			//ç¬¬ä¸€å­£åº¦					
 			if(a==3){
-				//·l¯q·JÁ`(v_sumloss)				
+				//æç›Šå½™ç¸½(v_sumloss)				
 				list_loss_q=this.findResult_loss(3, q1_a001, q1_a002, q1_a003, q1_a004, q1_a005);
-				//¥ş¼t­ì®Æ®w¦s(v_sumstore)
+				//å…¨å» åŸæ–™åº«å­˜(v_sumstore)
 				list_store_q=this.findResult_store(3, q1_b001, q1_b002, q1_b005,q1_b006, q1_b007);
-				//¤ô¹qªo(v_sumwlo)
+				//æ°´é›»æ²¹(v_sumwlo)
 				list_wlo_q=this.findResult_wlo(3, q1_c001, q1_c002, q1_c004, q1_c006, q1_c008, q1_c010, q1_c012, q1_c014, q1_c016);
-				//¤U¤ë½Ğ´Úª¬ªp,¤U¤ë¥Í²£ª¬ªp
+				//ä¸‹æœˆè«‹æ¬¾ç‹€æ³,ä¸‹æœˆç”Ÿç”¢ç‹€æ³
 				list_inv_q=this.findResult_inv(3, q1_d001, q1_d002, q3_d004, q3_d005);
 				
 				list_loss_all.add(list_loss_q);
@@ -777,9 +777,9 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 				list_wlo_all.add(list_wlo_q);
 				list_inv_all.add(list_inv_q);
 			}
-			//²Ä¤G©u«×,¤W¥b¦~
+			//ç¬¬äºŒå­£åº¦,ä¸ŠåŠå¹´
 			if(a==6){
-				//·l¯q·JÁ`(v_sumloss)
+				//æç›Šå½™ç¸½(v_sumloss)
 				half1_a001=q1_a001+q2_a001;
 				half1_a002=q1_a002+q2_a002;
 				half1_a003=q1_a003+q2_a003;
@@ -787,7 +787,7 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 				half1_a005=q1_a005+q2_a005;
 				list_loss_q=this.findResult_loss(3, q2_a001, q2_a002, q2_a003, q2_a004, q2_a005);
 				list_loss_h=this.findResult_loss(6, half1_a001, half1_a002, half1_a003, half1_a004, half1_a005);
-				//¥ş¼t­ì®Æ®w¦s(v_sumstore)
+				//å…¨å» åŸæ–™åº«å­˜(v_sumstore)
 				half1_b001=q1_b001+q2_b001;
 				half1_b002=q1_b002+q2_b002;
 				half1_b005=q1_b005+q2_b005;
@@ -795,7 +795,7 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 				half1_b007=q1_b007+q2_b007;
 				list_store_q=this.findResult_store(3, q2_b001, q2_b002, q2_b005,q2_b006, q2_b007);
 				list_store_h=this.findResult_store(6, half1_b001, half1_b002, half1_b005,half1_b006, half1_b007);
-				//¤ô¹qªo(v_sumwlo)
+				//æ°´é›»æ²¹(v_sumwlo)
 				half1_c001=q1_c001+q2_c001;
 				half1_c002=q1_c002+q2_c002;
 				half1_c004=q1_c004+q2_c004;
@@ -807,7 +807,7 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 				half1_c016=q1_c016+q2_c016;
 				list_wlo_q=this.findResult_wlo(3, q2_c001, q2_c002, q2_c004, q2_c006, q2_c008, q2_c010, q2_c012, q2_c014, q2_c016);
 				list_wlo_h=this.findResult_wlo(6, half1_c001, half1_c002, half1_c004, half1_c006, half1_c008, half1_c010, half1_c012, half1_c014, half1_c016);
-				//¤U¤ë½Ğ´Úª¬ªp,¤U¤ë¥Í²£ª¬ªp
+				//ä¸‹æœˆè«‹æ¬¾ç‹€æ³,ä¸‹æœˆç”Ÿç”¢ç‹€æ³
 				half1_d001=q1_d001+q2_d001;
 				half1_d002=q1_d002+q2_d002;
 				half1_d004=q1_d004+q2_d004;
@@ -827,15 +827,15 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 				list_inv_all.add(list_inv_q);
 				list_inv_all.add(list_inv_h);
 			}
-			//²Ä¤T©u«×
+			//ç¬¬ä¸‰å­£åº¦
 			if(a==9){
-				//·l¯q·JÁ`(v_sumloss)				
+				//æç›Šå½™ç¸½(v_sumloss)				
 				list_loss_q=this.findResult_loss(3, q3_a001, q3_a002, q3_a003, q3_a004, q3_a005);
-				//¥ş¼t­ì®Æ®w¦s(v_sumstore)
+				//å…¨å» åŸæ–™åº«å­˜(v_sumstore)
 				list_store_q=this.findResult_store(3, q3_b001, q3_b002, q3_b005,q3_b006, q3_b007);
-				//¤ô¹qªo(v_sumwlo)
+				//æ°´é›»æ²¹(v_sumwlo)
 				list_wlo_q=this.findResult_wlo(3, q3_c001, q3_c002, q3_c004, q3_c006, q3_c008, q3_c010, q3_c012, q3_c014, q3_c016);
-				//¤U¤ë½Ğ´Úª¬ªp,¤U¤ë¥Í²£ª¬ªp
+				//ä¸‹æœˆè«‹æ¬¾ç‹€æ³,ä¸‹æœˆç”Ÿç”¢ç‹€æ³
 				list_inv_q=this.findResult_inv(3, q3_d001, q3_d002, q3_d004, q3_d005);
 				list_loss_all.add(list_loss_q);
 				list_store_all.add(list_store_q);
@@ -843,9 +843,9 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 				list_inv_all.add(list_inv_q);
 				
 			}
-			//²Ä¥|©u«×,¤U¥b¦~,¥ş¦~
+			//ç¬¬å››å­£åº¦,ä¸‹åŠå¹´,å…¨å¹´
 			if(a==12){
-				//·l¯q·JÁ`(v_sumloss)
+				//æç›Šå½™ç¸½(v_sumloss)
 				half2_a001=q3_a001+q4_a001;
 				half2_a002=q3_a002+q4_a002;
 				half2_a003=q3_a003+q4_a003;
@@ -860,7 +860,7 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 				list_loss_q=this.findResult_loss(3, q4_a001, q4_a002, q4_a003, q4_a004, q4_a005);
 				list_loss_h=this.findResult_loss(6, half2_a001, half2_a002, half2_a003, half2_a004, half2_a005);
 				list_loss_y=this.findResult_loss(12, year_a001, year_a002, year_a003, year_a004, year_a005);
-				//¥ş¼t­ì®Æ®w¦s(v_sumstore)
+				//å…¨å» åŸæ–™åº«å­˜(v_sumstore)
 				half2_b001=q3_b001+q4_b001;
 				half2_b002=q3_b002+q4_b002;
 				half2_b005=q3_b005+q4_b005;
@@ -875,7 +875,7 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 				list_store_q=this.findResult_store(3, q4_b001, q4_b002, q4_b005,q4_b006, q4_b007);
 				list_store_h=this.findResult_store(6, half2_b001, half2_b002, half2_b005,half2_b006, half2_b007);
 				list_store_y=this.findResult_store(12, year_b001, year_b002, year_b005,year_b006, year_b007);
-				//¤ô¹qªo(v_sumwlo)
+				//æ°´é›»æ²¹(v_sumwlo)
 				half2_c001=q3_c001+q4_c001;
 				half2_c002=q3_c002+q4_c002;
 				half2_c004=q3_c004+q4_c004;
@@ -898,7 +898,7 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 				list_wlo_q=this.findResult_wlo(3, q4_c001, q4_c002, q4_c004, q4_c006, q4_c008, q4_c010, q4_c012, q4_c014, q4_c016);
 				list_wlo_h=this.findResult_wlo(6, half2_c001, half2_c002, half2_c004, half2_c006, half2_c008, half2_c010, half2_c012, half2_c014, half2_c016);
 				list_wlo_y=this.findResult_wlo(12, year_c001, year_c002, year_c004, year_c006, year_c008, year_c010, year_c012, year_c014, year_c016);
-				//¤U¤ë½Ğ´Úª¬ªp,¤U¤ë¥Í²£ª¬ªp
+				//ä¸‹æœˆè«‹æ¬¾ç‹€æ³,ä¸‹æœˆç”Ÿç”¢ç‹€æ³
 				half2_d001=q3_d001+q4_d001;
 				half2_d002=q3_d002+q4_d002;
 				half2_d004=q3_d004+q4_d004;
@@ -929,20 +929,20 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 				list_inv_all.add(list_inv_y);
 				
 			}
-			//¥ş¼t­ì®Æ®w¦s(v_sumstore)
+			//å…¨å» åŸæ–™åº«å­˜(v_sumstore)
 			
 			
 		}//end for1
 		
-		//¼ĞÃD
+		//æ¨™é¡Œ
 		String factName=webFactSer.selByid(factNo);
-		String title=factName+"("+factNo+")"+year+"¨C¤ëÀË°Q¶µ¥Ø²Î­pªí---¥ş¼t(¦U«¬ºA¤§¦X­p)";
+		String title=factName+"("+factNo+")"+year+"æ¯æœˆæª¢è¨é …ç›®çµ±è¨ˆè¡¨---å…¨å» (å„å‹æ…‹ä¹‹åˆè¨ˆ)";
 		
 		
 		/**
-		 * ¤º®e¶ñ¥R
+		 * å…§å®¹å¡«å……
 		 */
-		//¶ñ¥R¼ĞÃD
+		//å¡«å……æ¨™é¡Œ
 		HSSFRow row_title=sheet.createRow(0);
 		HSSFCell cell_title=row_title.createCell(0);
 		cell_title.setCellValue(title);
@@ -953,7 +953,7 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 			HSSFCell cell=row_title.createCell(a);
 			cell.setCellStyle(cs_title);
 		}
-		//¶ñ¥RªíÀY
+		//å¡«å……è¡¨é ­
 		HSSFRow row_column=sheet.createRow(2);
 		for(int b=0;b<list_column.size();b++){
 			String column=list_column.get(b);
@@ -961,7 +961,7 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 			cell.setCellValue(column);
 			cell.setCellStyle(cs_column);
 		}
-		//¶ñ¥R¶µ¥Ø,²Ó¶µ,³æ¦ì
+		//å¡«å……é …ç›®,ç´°é …,å–®ä½
 		int length1=list_contentName_loss.size();
 		int length2=list_contentName_store.size();
 		int length3=list_contentName_wlo.size();
@@ -970,10 +970,10 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 			sheet.setColumnWidth(b, 3500);
 			switch(b){
 			case 0:
-				//·l¯q·JÁ`(v_sumloss)				
+				//æç›Šå½™ç¸½(v_sumloss)				
 				HSSFRow row_loss=sheet.createRow(3);
 				HSSFCell cell_loss=row_loss.createCell(b);
-				cell_loss.setCellValue("·l¯q·JÁ`");
+				cell_loss.setCellValue("æç›Šå½™ç¸½");
 				cell_loss.setCellStyle(cs);
 				CellRangeAddress cra_loss=new CellRangeAddress(3,(short)(3+length1-1),0,(short)0);
 				sheet.addMergedRegion(cra_loss);
@@ -982,10 +982,10 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 					HSSFCell cell=row.createCell(b);
 					cell.setCellStyle(cs);					
 				}
-				//¥ş¼t­ì®Æ®w¦s(v_sumstore)
+				//å…¨å» åŸæ–™åº«å­˜(v_sumstore)
 				HSSFRow row_store=sheet.createRow(3+length1);
 				HSSFCell cell_store=row_store.createCell(b);
-				cell_store.setCellValue("¥ş¼t­ì®Æ®w¦s");
+				cell_store.setCellValue("å…¨å» åŸæ–™åº«å­˜");
 				cell_store.setCellStyle(cs);
 				CellRangeAddress cra_store=new CellRangeAddress((3+length1),(short)(3+length1+length2-1),0,(short)0);
 				sheet.addMergedRegion(cra_store);
@@ -994,10 +994,10 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 					HSSFCell cell=row.createCell(b);
 					cell.setCellStyle(cs);					
 				}
-				//¤ô¹qªo(v_sumwlo)
+				//æ°´é›»æ²¹(v_sumwlo)
 				HSSFRow row_wlo=sheet.createRow(3+length1+length2);
 				HSSFCell cell_wlo=row_wlo.createCell(b);
-				cell_wlo.setCellValue("¤ô¹qªo");
+				cell_wlo.setCellValue("æ°´é›»æ²¹");
 				cell_wlo.setCellStyle(cs);
 				CellRangeAddress cra_wlo=new CellRangeAddress((3+length1+length2),(short)(3+length1+length2+length3-1),0,(short)0);
 				sheet.addMergedRegion(cra_wlo);
@@ -1006,10 +1006,10 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 					HSSFCell cell=row.createCell(b);
 					cell.setCellStyle(cs);					
 				}
-				//¤U¤ë½Ğ´Úª¬ªp
+				//ä¸‹æœˆè«‹æ¬¾ç‹€æ³
 				HSSFRow row_inv1=sheet.createRow(3+length1+length2+length3);
 				HSSFCell cell_inv1=row_inv1.createCell(b);
-				cell_inv1.setCellValue("¤U¤ë½Ğ´Úª¬ªp");
+				cell_inv1.setCellValue("ä¸‹æœˆè«‹æ¬¾ç‹€æ³");
 				cell_inv1.setCellStyle(cs);
 				CellRangeAddress cra_inv1=new CellRangeAddress((3+length1+length2+length3),(short)(3+length1+length2+length3+length4/2-1),0,(short)0);
 				sheet.addMergedRegion(cra_inv1);
@@ -1018,10 +1018,10 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 					HSSFCell cell=row.createCell(b);
 					cell.setCellStyle(cs);					
 				}
-				//¤U¤ë¥Í²£ª¬ªp
+				//ä¸‹æœˆç”Ÿç”¢ç‹€æ³
 				HSSFRow row_inv2=sheet.createRow(3+length1+length2+length3+length4/2);
 				HSSFCell cell_inv2=row_inv2.createCell(b);
-				cell_inv2.setCellValue("¤U¤ë¥Í²£ª¬ªp");
+				cell_inv2.setCellValue("ä¸‹æœˆç”Ÿç”¢ç‹€æ³");
 				cell_inv2.setCellStyle(cs);
 				CellRangeAddress cra_inv2=new CellRangeAddress((3+length1+length2+length3+length4/2),(short)(3+length1+length2+length3+length4-1),0,(short)0);
 				sheet.addMergedRegion(cra_inv2);
@@ -1032,7 +1032,7 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 				}
 				break;
 			case 1:
-				//·l¯q·JÁ`(v_sumloss)				
+				//æç›Šå½™ç¸½(v_sumloss)					
 				for(int c=0;c<length1;c++){
 					String content=list_contentName_loss.get(c);
 					HSSFRow row=sheet.getRow(3+c);
@@ -1040,7 +1040,7 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 					cell.setCellValue(content);
 					cell.setCellStyle(cs);
 				}
-				//¥ş¼t­ì®Æ®w¦s(v_sumstore)
+				//å…¨å» åŸæ–™åº«å­˜(v_sumstore)
 				for(int c=0;c<length2;c++){
 					String content=list_contentName_store.get(c);
 					HSSFRow row=sheet.getRow(3+length1+c);
@@ -1048,7 +1048,7 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 					cell.setCellValue(content);
 					cell.setCellStyle(cs);
 				}
-				//¤ô¹qªo(v_sumwlo)
+				//æ°´é›»æ²¹(v_sumwlo)
 				for(int c=0;c<length3;c++){
 					String content=list_contentName_wlo.get(c);
 					HSSFRow row=sheet.getRow(3+length1+length2+c);
@@ -1056,7 +1056,7 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 					cell.setCellValue(content);
 					cell.setCellStyle(cs);
 				}
-				//¤U¤ë½Ğ´Úª¬ªp
+				//ä¸‹æœˆè«‹æ¬¾ç‹€æ³
 				for(int c=0;c<length4/2;c++){
 					String content=list_contentName_inv.get(c);
 					HSSFRow row=sheet.getRow(3+length1+length2+length3+c);
@@ -1064,7 +1064,7 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 					cell.setCellValue(content);
 					cell.setCellStyle(cs);
 				}
-				//¤U¤ë¥Í²£ª¬ªp
+				//ä¸‹æœˆç”Ÿç”¢ç‹€æ³
 				for(int c=0;c<length4/2;c++){
 					String content=list_contentName_inv.get(c+3);
 					HSSFRow row=sheet.getRow(3+length1+length2+length3+length4/2+c);
@@ -1074,7 +1074,7 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 				}
 				break;
 			case 2:
-				//·l¯q·JÁ`(v_sumloss)				
+				//æç›Šå½™ç¸½(v_sumloss)			
 				for(int c=0;c<length1;c++){
 					String content=list_unit_loss.get(c);
 					HSSFRow row=sheet.getRow(3+c);
@@ -1082,7 +1082,7 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 					cell.setCellValue(content);
 					cell.setCellStyle(cs);
 				}
-				//¥ş¼t­ì®Æ®w¦s(v_sumstore)
+				//å…¨å» åŸæ–™åº«å­˜(v_sumstore)
 				for(int c=0;c<length2;c++){
 					String content=list_unit_store.get(c);
 					HSSFRow row=sheet.getRow(3+length1+c);
@@ -1090,7 +1090,7 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 					cell.setCellValue(content);
 					cell.setCellStyle(cs);
 				}
-				//¤ô¹qªo(v_sumwlo)
+				//æ°´é›»æ²¹(v_sumwlo)
 				for(int c=0;c<length3;c++){
 					String content=list_unit_wlo.get(c);
 					HSSFRow row=sheet.getRow(3+length1+length2+c);
@@ -1098,7 +1098,7 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 					cell.setCellValue(content);
 					cell.setCellStyle(cs);
 				}
-				//¤U¤ë½Ğ´Úª¬ªp
+				//ä¸‹æœˆè«‹æ¬¾ç‹€æ³
 				for(int c=0;c<length4/2;c++){
 					String content=list_unit_inv.get(c);
 					HSSFRow row=sheet.getRow(3+length1+length2+length3+c);
@@ -1106,7 +1106,7 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 					cell.setCellValue(content);
 					cell.setCellStyle(cs);
 				}
-				//¤U¤ë¥Í²£ª¬ªp
+				//ä¸‹æœˆç”Ÿç”¢ç‹€æ³
 				for(int c=0;c<length4/2;c++){
 					String content=list_unit_inv.get(c+3);
 					HSSFRow row=sheet.getRow(3+length1+length2+length3+length4/2+c);
@@ -1116,9 +1116,9 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 				}
 				break;
 				default:
-					//Á{®É¼Ë¦¡
+					//è‡¨æ™‚æ¨£å¼
 					HSSFCellStyle cs_temp=wb.createCellStyle();
-					//·l¯q·JÁ`(v_sumloss)
+					//æç›Šå½™ç¸½(v_sumloss)
 					List<Double>list_loss=list_loss_all.get(b);
 					if(list_loss!=null){						
 						for(int c=0;c<list_loss.size();c++){
@@ -1132,11 +1132,11 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 						for(int c=0;c<length1;c++){
 							HSSFRow row=sheet.getRow(3+c);
 							HSSFCell cell=row.createCell(b);
-							cell.setCellValue("µL¼Æ¾Ú");
+							cell.setCellValue("ç„¡æ•¸æ“šï¿½");
 							cell.setCellStyle(cs);
 						}
 					}
-					//¥ş¼t­ì®Æ®w¦s(v_sumstore)
+					//å…¨å» åŸæ–™åº«å­˜(v_sumstore)
 					List<Double>list_store=list_store_all.get(b);
 					if(list_store!=null){						
 						for(int c=0;c<list_store.size();c++){
@@ -1148,7 +1148,7 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 							Double db=list_store.get(c);
 							HSSFRow row=sheet.getRow(3+length1+c);
 							HSSFCell cell=row.createCell(b);
-							//©u«×,¥b¦~©M¥ş¦~º¦ºÖ¨S¦³ºâ¥X¨Ó
+							//å­£åº¦,åŠå¹´å’Œå…¨å¹´æ¼²ç¦æ²’æœ‰ç®—å‡ºä¾†
 							if((b==6||b==10||b==11||b==15||b==19||b==20||b==21)&&(c==3||c==8)){
 								cell.setCellValue("----");
 								cell.setCellStyle(cs_red);
@@ -1161,11 +1161,11 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 						for(int c=0;c<length2;c++){
 							HSSFRow row=sheet.getRow(3+length1+c);
 							HSSFCell cell=row.createCell(b);
-							cell.setCellValue("µL¼Æ¾Ú");
+							cell.setCellValue("ï¿½Lï¿½Æ¾ï¿½");
 							cell.setCellStyle(cs);
 						}
 					}
-					//¤ô¹qªo(v_sumwlo)
+					//æ°´é›»æ²¹(v_sumwlo)
 					List<Double>list_wlo=list_wlo_all.get(b);
 					if(list_wlo!=null){						
 						for(int c=0;c<list_wlo.size();c++){							
@@ -1184,11 +1184,11 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 						for(int c=0;c<length3;c++){
 							HSSFRow row=sheet.getRow(3+length1+length2+c);
 							HSSFCell cell=row.createCell(b);
-							cell.setCellValue("µL¼Æ¾Ú");
+							cell.setCellValue("ç„¡æ•¸æ“š");
 							cell.setCellStyle(cs);
 						}
 					}
-					//¤U¤ë½Ğ´Úª¬ªp,¥Í²£ª¬ªp
+					//ä¸‹æœˆè«‹æ¬¾ç‹€æ³,ç”Ÿç”¢ç‹€æ³
 					List<Double>list_inv=list_inv_all.get(b);
 					if(list_inv!=null){						
 						for(int c=0;c<list_inv.size();c++){
@@ -1207,7 +1207,7 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 						for(int c=0;c<length4;c++){
 							HSSFRow row=sheet.getRow(3+length1+length2+length3+c);
 							HSSFCell cell=row.createCell(b);
-							cell.setCellValue("µL¼Æ¾Ú");
+							cell.setCellValue("ç„¡æ•¸æ“š");
 							cell.setCellStyle(cs);
 						}
 					}									
@@ -1230,10 +1230,10 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 	}
 	
 	public void print_tw() throws IOException, ParseException{
-		//«Ø¥ß¼ÒªO
+		//å»ºç«‹æ¨¡æ¿
 		HSSFWorkbook wb=new HSSFWorkbook();
 		HSSFSheet sheet=wb.createSheet();
-		//°ò¥»¼Ë¦¡
+		//åŸºæœ¬æ¨£å¼
 		HSSFCellStyle cs=wb.createCellStyle();
 		cs.setAlignment(HSSFCellStyle.ALIGN_CENTER);
 		cs.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
@@ -1241,7 +1241,7 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 		cs.setBorderRight(HSSFCellStyle.BORDER_THIN);
 		cs.setBorderBottom(HSSFCellStyle.BORDER_THIN);
 		cs.setBorderLeft(HSSFCellStyle.BORDER_THIN);
-		//¼ĞÃD¼Ë¦¡
+		//æ¨™é¡Œæ¨£å¼
 		HSSFCellStyle cs_title=wb.createCellStyle();
 		HSSFFont font_title=wb.createFont();
 		font_title.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
@@ -1249,7 +1249,7 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 		cs_title.setFont(font_title);
 		cs_title.setAlignment(HSSFCellStyle.ALIGN_CENTER);
 		cs_title.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
-		//ªíÀY·s¦¡
+		//è¡¨é ­æ–°å¼
 		HSSFCellStyle cs_column=wb.createCellStyle();
 		HSSFFont font_column=wb.createFont();
 		font_column.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
@@ -1264,7 +1264,7 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 		cs_column.setFillForegroundColor(IndexedColors.YELLOW.getIndex());
 		cs_column.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
 		cs_column.setWrapText(true);
-		//¼Æ¦r®æ¦¡
+		//æ•¸å­—æ ¼å¼
 		HSSFDataFormat format=wb.createDataFormat();
 		HSSFCellStyle cs_percent=wb.createCellStyle();
 		cs_percent.setDataFormat(format.getFormat("0.00%"));
@@ -1294,77 +1294,77 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 		cs_poi4.setBorderLeft(HSSFCellStyle.BORDER_THIN);
 		
 		/**
-		 * ¼Æ¾Ú·½
+		 * æ•¸æ“šæº
 		 */		
-		//big¥Î©ó¶ñ¥Rnull
+		//bigç”¨æ–¼å¡«å……null
 		BigDecimal big=new BigDecimal(0.0);
-		//·l¯q¶×Á`
+		//æç›ŠåŒ¯ç¸½
 		List<String>list_contentName_loss=new ArrayList<String>();
 		List<String>list_unit_loss=new ArrayList<String>();
-		list_contentName_loss.add("Á`¾P³f¦¬¤J");list_unit_loss.add("USD");
-		list_contentName_loss.add("¡Ğ) ¦¨¥»¦X­p ");list_unit_loss.add("USD");
-		list_contentName_loss.add("¡Ğ) ¤u¸ê¦X­p ");list_unit_loss.add("USD");
-		list_contentName_loss.add("¡Ğ) ¶O¥Î¦X­p ");list_unit_loss.add("USD");
-		list_contentName_loss.add("¡Ï) ¨ä¥L  ");list_unit_loss.add("USD");
-		list_contentName_loss.add("¥»´Á·l¯q");list_unit_loss.add("USD");
-		//¥ş¼t­ì®Æ®w¦s
+		list_contentName_loss.add("ç¸½éŠ·è²¨æ”¶å…¥");list_unit_loss.add("USD");
+		list_contentName_loss.add("ï¼) æˆæœ¬åˆè¨ˆ ");list_unit_loss.add("USD");
+		list_contentName_loss.add("ï¼) å·¥è³‡åˆè¨ˆ ");list_unit_loss.add("USD");
+		list_contentName_loss.add("ï¼) è²»ç”¨åˆè¨ˆ ");list_unit_loss.add("USD");
+		list_contentName_loss.add("ï¼‹) å…¶ä»–  ");list_unit_loss.add("USD");
+		list_contentName_loss.add("æœ¬æœŸæç›Š");list_unit_loss.add("USD");
+		//å…¨å» åŸæ–™åº«å­˜
 		List<String>list_contentName_store=new ArrayList<String>();
 		List<String>list_unit_store=new ArrayList<String>();
-		list_contentName_store.add("Á`­ì®Æ®w¦s¶q");list_unit_store.add("KG");
-		list_contentName_store.add("Á`­ì®Æ®w¦sª÷ÃB");list_unit_store.add("USD");
-		list_contentName_store.add("¥­§¡³æ»ù");list_unit_store.add("USD");
-		list_contentName_store.add("º¦´T");list_unit_store.add("%");//3
-		list_contentName_store.add("½¦Ãş®w¦s¶q");list_unit_store.add("KG");
-		list_contentName_store.add("½¦Ãş®w¦s¶q");list_unit_store.add("¾·");
-		list_contentName_store.add("½¦Ãşª÷ÃB");list_unit_store.add("USD");
-		list_contentName_store.add("¥­§¡³æ»ù");list_unit_store.add("USD");
-		list_contentName_store.add("º¦´T");list_unit_store.add("%");//8
+		list_contentName_store.add("ç¸½åŸæ–™åº«å­˜é‡");list_unit_store.add("KG");
+		list_contentName_store.add("ç¸½åŸæ–™åº«å­˜é‡‘é¡");list_unit_store.add("USD");
+		list_contentName_store.add("å¹³å‡å–®åƒ¹");list_unit_store.add("USD");
+		list_contentName_store.add("æ¼²å¹…");list_unit_store.add("%");//3
+		list_contentName_store.add("è† é¡åº«å­˜é‡");list_unit_store.add("KG");
+		list_contentName_store.add("è† é¡åº«å­˜é‡");list_unit_store.add("å™¸");
+		list_contentName_store.add("è† é¡é‡‘é¡");list_unit_store.add("USD");
+		list_contentName_store.add("å¹³å‡å–®åƒ¹");list_unit_store.add("USD");
+		list_contentName_store.add("æ¼²å¹…");list_unit_store.add("%");//8
 		
-		//¤ô¹qªo
+		//æ°´é›»æ²¹
 		List<String>list_contentName_wlo=new ArrayList<String>();
 		List<String>list_unit_wlo=new ArrayList<String>();
-		list_contentName_wlo.add("¥Í²£¼Ò¼Æ");list_unit_wlo.add("¼Ò");
-		list_contentName_wlo.add("¤ô¥Î¶q");list_unit_wlo.add("¾·");
-		list_contentName_wlo.add("¥Î¤ô³æÏû");list_unit_wlo.add("¾·/¼Ò");
-		list_contentName_wlo.add("¥Î¤ôª÷ÃB");list_unit_wlo.add("USD");
-		list_contentName_wlo.add("¥Î¤ôª÷ÃB³æÏû(¼Ò)");list_unit_wlo.add("USD/¼Ò");
-		list_contentName_wlo.add("¥Î¹q¶q");list_unit_wlo.add("«×");
-		list_contentName_wlo.add("¥Î¹q³æÏû");list_unit_wlo.add("«×/¼Ò");
-		list_contentName_wlo.add("¥Î¹qª÷ÃB");list_unit_wlo.add("USD");
-		list_contentName_wlo.add("¥Î¹qª÷ÃB³æÏû");list_unit_wlo.add("USD/¼Ò");
-		list_contentName_wlo.add("»]®ğ¥Î¶q");list_unit_wlo.add("¾·");
-		list_contentName_wlo.add("¥Î»]®ğ³æÏû");list_unit_wlo.add("¾·/¼Ò");
-		list_contentName_wlo.add("¥Î»]®ğª÷ÃB(USD)");list_unit_wlo.add("USD");
-		list_contentName_wlo.add("¥Î»]®ğª÷ÃB³æÏû");list_unit_wlo.add("USD/¼Ò");
-		list_contentName_wlo.add("®ãªo¥Î¶q");list_unit_wlo.add("¤½¤É");
-		list_contentName_wlo.add("¥Îªo³æÏû");list_unit_wlo.add("¤½¤É/¼Ò");
-		list_contentName_wlo.add("®ãªoª÷ÃB(USD)");list_unit_wlo.add("USD");
-		list_contentName_wlo.add("¥Îªoª÷ÃB³æÏû(¼Ò)");list_unit_wlo.add("USD/¼Ò");
-		//¤U¤ë½Ğ´Úª¬ªp,¤U¤ë¥Í²£ª¬ªp
+		list_contentName_wlo.add("ç”Ÿç”¢æ¨¡æ•¸");list_unit_wlo.add("æ¨¡");
+		list_contentName_wlo.add("æ°´ç”¨é‡");list_unit_wlo.add("å™¸");
+		list_contentName_wlo.add("ç”¨æ°´å–®ç§");list_unit_wlo.add("å™¸/æ¨¡");
+		list_contentName_wlo.add("ç”¨æ°´é‡‘é¡");list_unit_wlo.add("USD");
+		list_contentName_wlo.add("ç”¨æ°´é‡‘é¡å–®ç§(æ¨¡)");list_unit_wlo.add("USD/æ¨¡");
+		list_contentName_wlo.add("ç”¨é›»é‡");list_unit_wlo.add("åº¦");
+		list_contentName_wlo.add("ç”¨é›»å–®ç§");list_unit_wlo.add("åº¦/æ¨¡");
+		list_contentName_wlo.add("ç”¨é›»é‡‘é¡");list_unit_wlo.add("USD");
+		list_contentName_wlo.add("ç”¨é›»é‡‘é¡å–®ç§");list_unit_wlo.add("USD/æ¨¡");
+		list_contentName_wlo.add("è’¸æ°£ç”¨é‡");list_unit_wlo.add("å™¸");
+		list_contentName_wlo.add("ç”¨è’¸æ°£å–®ç§");list_unit_wlo.add("å™¸/æ¨¡");
+		list_contentName_wlo.add("ç”¨è’¸æ°£é‡‘é¡(USD)");list_unit_wlo.add("USD");
+		list_contentName_wlo.add("ç”¨è’¸æ°£é‡‘é¡å–®ç§");list_unit_wlo.add("USD/æ¨¡");
+		list_contentName_wlo.add("æŸ´æ²¹ç”¨é‡");list_unit_wlo.add("å…¬å‡");
+		list_contentName_wlo.add("ç”¨æ²¹å–®ç§");list_unit_wlo.add("å…¬å‡/æ¨¡");
+		list_contentName_wlo.add("æŸ´æ²¹é‡‘é¡(USD)");list_unit_wlo.add("USD");
+		list_contentName_wlo.add("ç”¨æ²¹é‡‘é¡å–®ç§(æ¨¡)");list_unit_wlo.add("USD/æ¨¡");
+		//ä¸‹æœˆè«‹æ¬¾ç‹€æ³,ä¸‹æœˆç”Ÿç”¢ç‹€æ³
 		List<String>list_contentName_inv=new ArrayList<String>();
 		List<String>list_unit_inv=new ArrayList<String>();
-		list_contentName_inv.add("¹w­p½Ğ´Ú");list_unit_inv.add("Âù");
-		list_contentName_inv.add("½Ğ´Úª÷ÃB");list_unit_inv.add("USD");
-		list_contentName_inv.add("¥­§¡³æ»ù");list_unit_inv.add("USD/Âù");
-		list_contentName_inv.add("¹w­p¥Í²£");list_unit_inv.add("¼Ò");
-		list_contentName_inv.add("¾÷»O¼Ğ­ã¾Ô¤O");list_unit_inv.add("¼Ò");
-		list_contentName_inv.add("¾÷¤Õ¹F¦¨²v");list_unit_inv.add("%");//5
-		//¼ĞÃD
-		String title=yymm+"¥xÆW·l¯q·|Ä³¦U¼tÀË°Q¶µ¥Ø¦U¼t¹ï¤ñªí----¥ş¼tÁ`­p";		
+		list_contentName_inv.add("é è¨ˆè«‹æ¬¾");list_unit_inv.add("é›™");
+		list_contentName_inv.add("è«‹æ¬¾é‡‘é¡");list_unit_inv.add("USD");
+		list_contentName_inv.add("å¹³å‡å–®åƒ¹");list_unit_inv.add("USD/é›™");
+		list_contentName_inv.add("é è¨ˆç”Ÿç”¢");list_unit_inv.add("æ¨¡");
+		list_contentName_inv.add("æ©Ÿè‡ºæ¨™å‡†æˆ°åŠ›");list_unit_inv.add("æ¨¡");
+		list_contentName_inv.add("æ©Ÿå­”é”æˆç‡");list_unit_inv.add("%");//5
+		//æ¨™é¡Œ
+		String title=yymm+"å°ç£æç›Šæœƒè­°å„å» æª¢è¨é …ç›®å„å» å°æ¯”è¡¨----å…¨å» ç¸½è¨ˆ";			
 		/**
-		 * ªíÀY¤º®e
+		 * è¡¨é ­å…§å®¹
 		 */
-		List<String>list_column=new ArrayList<String>();//¥Î©ó¥´¦LªíÀY¤º®e
-		List<String>list_column_factno=new ArrayList<String>();//¥Î©ó´`Àô¼Æ¾Ú
-		list_column.add("¶µ¥Ø");
-		list_column.add("²Ó¶µ");
-		list_column.add("³æ¦ì");
+		List<String>list_column=new ArrayList<String>();//ç”¨æ–¼æ‰“å°è¡¨é ­å…§å®¹
+		List<String>list_column_factno=new ArrayList<String>();//ç”¨æ–¼å¾ªç’°æ•¸æ“š
+		list_column.add("é …ç›®");
+		list_column.add("ç´°é …");
+		list_column.add("å–®ä½");
 		
 		list_column_factno.add(null);
 		list_column_factno.add(null);
 		list_column_factno.add(null);
-		//©Ò¦³¤u¼t(0:¼t¸¹  1:¼t¦W)
-		//¦pªG­¶­±¤W¦³¿ï¾Ü¼t§O
+		//æ‰€æœ‰å·¥å» (0:å» è™Ÿ  1:å» å)
+		//å¦‚æœé é¢ä¸Šæœ‰é¸æ“‡å» åˆ¥
 		if(list_factno!=null&&list_factno.size()>0){
 			for(int a=0;a<list_factno.size();a++){
 				String factNo=list_factno.get(a);
@@ -1373,10 +1373,10 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 				list_column.add(webfact);
 				list_column_factno.add(factNo);
 				if(a==list_factno.size()-1){
-					list_column.add("¦X­p");
+					list_column.add("ï¿½Xï¿½p");
 				}
 			}
-		//¦pªG¨S¦³¿ï¾Ü,«hÀq»{¥ş³¡¼t§O	
+		//å¦‚æœæ²’æœ‰é¸æ“‡,å‰‡é»˜èªå…¨éƒ¨å» åˆ¥
 		}else{
 			List<Object[]>list_webfact=webFactSer.findAllWebFact_showA();
 			for(int a=0;a<list_webfact.size();a++){
@@ -1386,45 +1386,45 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 				String webfact=factName+"("+factNo+")";
 				list_column.add(webfact);
 				list_column_factno.add(factNo);
-				//³Ì«á¤@¦C²K¥[¤@Äæ"¦X­p"
+				//æœ€å¾Œä¸€åˆ—æ·»åŠ ä¸€æ¬„"åˆè¨ˆ"
 				if(a==list_webfact.size()-1){
-					list_column.add("¦X­p");					
+					list_column.add("åˆè¨ˆ");					
 				}
 			}
 		}
 		
-		//¥D­n¼Æ¾Ú¤º®e		
-		//³Ì¥~¼h¶°¦X
+		//ä¸»è¦æ•¸æ“šå…§å®¹		
+		//æœ€å¤–å±¤é›†åˆ
 		List<List<Double>>list_loss_all=new ArrayList<List<Double>>();
 		List<List<Double>>list_store_all=new ArrayList<List<Double>>();
 		List<List<Double>>list_wlo_all=new ArrayList<List<Double>>();
 		List<List<Double>>list_inv_all=new ArrayList<List<Double>>();
 		
-		//"¦X­p"Äæ¶°¦X
+		//"åˆè¨ˆ"æ¬„é›†åˆ
 		List<Double>list_loss_total=new ArrayList<Double>();
 		List<Double>list_store_total=new ArrayList<Double>();
 		List<Double>list_wlo_total=new ArrayList<Double>();
 		List<Double>list_inv_total=new ArrayList<Double>();
-		//"¦X­p"Äæ¦U¤¸¯À
-		//·l¯q·JÁ`(v_sumloss)
+		//"åˆè¨ˆ"æ¬„å„å…ƒç´ 
+		//æç›Šå½™ç¸½(v_sumloss)
 		Double total_a001=0.0;
 		Double total_a002=0.0;
 		Double total_a003=0.0;
 		Double total_a004=0.0;
 		Double total_a005=0.0;
-		//¥ş¼t­ì®Æ®w¦s(v_sumstore)
-		//¥»¤ë
+		//å…¨å» åŸæ–™åº«å­˜(v_sumstore)
+		//æœ¬æœˆ
 		Double total_b001=0.0;
 		Double total_b002=0.0;
 		Double total_b005=0.0;
 		Double total_b006=0.0;
 		Double total_b007=0.0;
-		//¤W¤ë
+		//ä¸Šæœˆ
 		Double lag_total_b001=0.0;
 		Double lag_total_b002=0.0;
 		Double lag_total_b005=0.0;
 		Double lag_total_b007=0.0;
-		//¤ô¹qªo(v_sumwlo)
+		//æ°´é›»æ²¹(v_sumwlo)
 		Double total_c001=0.0;
 		Double total_c002=0.0;
 		Double total_c004=0.0;
@@ -1434,13 +1434,13 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 		Double total_c012=0.0;
 		Double total_c014=0.0;
 		Double total_c016=0.0;
-		//¤U¤ë½Ğ´Ú»P¥Í²£ª¬ªp
+		//ä¸‹æœˆè«‹æ¬¾èˆ‡ç”Ÿç”¢ç‹€æ³
 		Double total_d001=0.0;
 		Double total_d002=0.0;
 		Double total_d004=0.0;
 		Double total_d005=0.0;
 		
-		//¦U­Ó³Ì¥~¼h¶°¦X¥ı²K¥[¤T­ÓªÅnull
+		//å„å€‹æœ€å¤–å±¤é›†åˆå…ˆæ·»åŠ ä¸‰å€‹ç©ºnull
 		for(int a=0;a<3;a++){
 			list_loss_all.add(null);
 			list_store_all.add(null);
@@ -1448,25 +1448,25 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 			list_inv_all.add(null);
 		}
 		for(int b=3;b<list_column_factno.size();b++){//start for
-			//ª`·N,b±q3¶}©l
-			//¦U³æ¤¸¶°¦X
+			//æ³¨æ„,bå¾3é–‹å§‹
+			//å„å–®å…ƒé›†åˆ
 			List<Double>list_loss=new ArrayList<Double>();
 			List<Double>list_store=new ArrayList<Double>();
 			List<Double>list_wlo=new ArrayList<Double>();
 			List<Double>list_inv=new ArrayList<Double>();
-			//¤W¤ë¥­§¡³æ»ù
+			//ä¸Šæœˆå¹³å‡å–®åƒ¹
 			Double lag_b003=0.0;
-			//¤W¤ë¥­§¡³æ»ù(½¦)
+			//ä¸Šæœˆå¹³å‡å–®åƒ¹(è† )
 			Double lag_b008=0.0;
-			//·í¤ë¥­§¡³æ»ù
+			//ç•¶æœˆå¹³å‡å–®åƒ¹
 			Double b003=0.0;
-			//·í¤ë¥­§¡³æ»ù(½¦)
+			//ç•¶æœˆå¹³å‡å–®åƒ¹(è† )
 			Double b008=0.0;
-			//º¦ºÖ1
+			//æ¼²ç¦1
 			Double store_b004=0.0;
-			//½¦Ãş®w¦s¶q(¾·)
+			//è† é¡åº«å­˜é‡(å™¸)
 			Double store_b006=0.0;
-			//º¦ºÖ2
+			//æ¼²ç¦2
 			Double store_b009=0.0;
 												
 			String factNo=list_column_factno.get(b);
@@ -1475,7 +1475,7 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 			VSumwlo wlo=sumwlodSer.findById(factNo, yymm);
 			VSuminv inv=suminvSer.findById(factNo, yymm);
 			
-			//·l¯q·JÁ`(v_sumloss)
+			//æç›Šå½™ç¸½(v_sumloss)
 			if(loss!=null){				
 				list_loss.add(loss.getLossA001().doubleValue());
 				list_loss.add(loss.getLossA002().doubleValue());
@@ -1484,7 +1484,7 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 				list_loss.add(loss.getLossA005().doubleValue());
 				list_loss.add(loss.getLossA006().doubleValue());
 				list_loss_all.add(list_loss);
-				//¦X­p
+				//åˆè¨ˆ
 				total_a001=total_a001+loss.getLossA001().doubleValue();
 				total_a002=total_a002+loss.getLossA002().doubleValue();
 				total_a003=total_a003+loss.getLossA003().doubleValue();
@@ -1493,34 +1493,34 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 			}else{
 				list_loss_all.add(null);
 			}
-			//¤W¤@­Ó¤ë¥ş¼t­ì®Æ®w¦s¥­§¡³æ»ù
+			//ä¸Šä¸€å€‹æœˆå…¨å» åŸæ–™åº«å­˜å¹³å‡å–®åƒ¹
 			String lastdate=this.findLastMonth(yymm);
 			VSumstore store_last=sumstoreSer.findById(factNo,lastdate);
 			if(store_last!=null){
 				lag_b003=store_last.getStoreB003().doubleValue();
 				lag_b008=store_last.getStoreB008().doubleValue();
-				//¤W¤ë¦X­p
+				//ä¸Šæœˆåˆè¨ˆ
 				lag_total_b001=store_last.getStoreB001().doubleValue();
 				lag_total_b002=store_last.getStoreB002().doubleValue();
 				lag_total_b005=store_last.getStoreB005().doubleValue();
 				lag_total_b007=store_last.getStoreB007().doubleValue();
 			}
-			//·í¤ë¥ş¼t­ì®Æ®w¦s¥­§¡³æ»ù
+			//ç•¶æœˆå…¨å» åŸæ–™åº«å­˜å¹³å‡å–®åƒ¹
 			if(store!=null){
 				b003=store.getStoreB003().doubleValue();
 				b008=store.getStoreB008().doubleValue();
-				//·í¤ë¦X­p
+				//ç•¶æœˆåˆè¨ˆ
 				total_b001=store.getStoreB001().doubleValue();
 				total_b002=store.getStoreB002().doubleValue();
 				total_b005=store.getStoreB005().doubleValue();
 				total_b007=store.getStoreB007().doubleValue();
 			}
-			//®Ú¾Ú¤W¤ë»P¥»¤ëªº¥­§¡³æ»ù,ºâ¥Xº¦ºÖ1,½¦Ãş®w¦s¶q(¾·),º¦ºÖ2
-			//º¦ºÖ1
+			//æ ¹æ“šä¸Šæœˆèˆ‡æœ¬æœˆçš„å¹³å‡å–®åƒ¹,ç®—å‡ºæ¼²ç¦1,è† é¡åº«å­˜é‡(å™¸),æ¼²ç¦2
+			//æ¼²ç¦1
 			store_b004=this.division((b003-lag_b003), lag_b003);			
-			//º¦ºÖ2
+			//æ¼²ç¦2
 			store_b009=this.division((b008-lag_b008), lag_b008);
-			//¥ş¼t­ì®Æ®w¦s(v_sumstore)
+			//å…¨å» åŸæ–™åº«å­˜(v_sumstore)
 			if(store!=null){
 				list_store.add(store.getStoreB001().doubleValue());
 				list_store.add(store.getStoreB002().doubleValue());
@@ -1535,7 +1535,7 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 			}else{
 				list_store_all.add(null);
 			}
-			//¤ô¹qªo(v_sumwlo)
+			//æ°´é›»æ²¹(v_sumwlo)
 			if(wlo!=null){
 				if(wlo.getWloC002()==null){
 					wlo.setWloC002(big);
@@ -1603,7 +1603,7 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 				list_wlo.add(wlo.getWloC016().doubleValue());
 				list_wlo.add(wlo.getWloC017().doubleValue());
 				list_wlo_all.add(list_wlo);
-				//¦X­p
+				//åˆè¨ˆ
 				total_c001=total_c001+wlo.getWloC001().doubleValue();
 				total_c002=total_c002+wlo.getWloC002().doubleValue();
 				total_c004=total_c004+wlo.getWloC004().doubleValue();
@@ -1617,7 +1617,7 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 			}else{
 				list_wlo_all.add(null);
 			}
-			//¤U¤ë½Ğ´Úª¬ªp,¤U¤ë¥Í²£ª¬ªp
+			//ä¸‹æœˆè«‹æ¬¾ç‹€æ³,ä¸‹æœˆç”Ÿç”¢ç‹€æ³
 			if(inv!=null){
 				if(inv.getInvD001()==null){
 					inv.setInvD001(big);
@@ -1644,7 +1644,7 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 				list_inv.add(inv.getInvD005().doubleValue());
 				list_inv.add(inv.getInvD006().doubleValue());
 				list_inv_all.add(list_inv);
-				//¦X­p
+				//åˆè¨ˆ
 				total_d001=total_d001+inv.getInvD001().doubleValue();
 				total_d002=total_d002+inv.getInvD002().doubleValue();
 				total_d004=total_d004+inv.getInvD004().doubleValue();
@@ -1653,7 +1653,7 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 				list_inv_all.add(null);
 			}									
 		}//end for
-		//³Ì¥~¼h¶°¦X²K¥["¦X­p"¼Æ¾Ú
+		//æœ€å¤–å±¤é›†åˆæ·»åŠ "åˆè¨ˆ"æ•¸æ“š
 		list_loss_total=this.findResult_loss(1, total_a001, total_a002, total_a003, total_a004, total_a005);
 		list_store_total=this.findResult_store_tw(1, total_b001, total_b002, total_b005,total_b006, total_b007, lag_total_b001, lag_total_b002, lag_total_b005, lag_total_b007);
 		list_wlo_total=this.findResult_wlo(1, total_c001, total_c002, total_c004, total_c006, total_c008, total_c010, total_c012, total_c014, total_c016);
@@ -1664,9 +1664,9 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 		list_wlo_all.add(list_wlo_total);
 		list_inv_all.add(list_inv_total);
 		/**
-		 * ¶ñ¥R¤º®e
+		 * å¡«å……å…§å®¹
 		 */
-		//¶ñ¥R¼ĞÃD
+		//å¡«å……æ¨™é¡Œ
 		HSSFRow row_title=sheet.createRow(0);
 		HSSFCell cell_title=row_title.createCell(0);
 		cell_title.setCellValue(title);
@@ -1677,7 +1677,7 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 			HSSFCell cell=row_title.createCell(b);
 			cell.setCellStyle(cs_title);
 		}
-		//¶ñ¥RªíÀY
+		//å¡«å……è¡¨é ­
 		HSSFRow row_column=sheet.createRow(2);
 		for(int b=0;b<list_column.size();b++){
 			sheet.setColumnWidth(b, 4000);
@@ -1686,7 +1686,7 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 			cell.setCellValue(columnName);
 			cell.setCellStyle(cs_column);
 		}
-		//¶ñ¥R"¶µ¥Ø","²Ó¶µ","³æ¦ì"©M¼Æ¾Ú¤º®e
+		//å¡«å……"é …ç›®","ç´°é …","å–®ä½"å’Œæ•¸æ“šå…§å®¹
 		int length1=list_contentName_loss.size();
 		int length2=list_contentName_store.size();
 		int length3=list_contentName_wlo.size();
@@ -1694,10 +1694,10 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 		for(int b=0;b<list_column.size();b++){//start for1
 			switch(b){
 			case 0:
-				//·l¯q·JÁ`(v_sumloss)				
+				//æç›Šå½™ç¸½(v_sumloss)			
 				HSSFRow row_loss=sheet.createRow(3);
 				HSSFCell cell_loss=row_loss.createCell(b);
-				cell_loss.setCellValue("·l¯q·JÁ`");
+				cell_loss.setCellValue("æç›Šå½™ç¸½");
 				cell_loss.setCellStyle(cs);
 				CellRangeAddress cra_loss=new CellRangeAddress(3,(short)(3+length1-1),0,(short)0);
 				sheet.addMergedRegion(cra_loss);
@@ -1706,10 +1706,10 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 					HSSFCell cell=row.createCell(b);
 					cell.setCellStyle(cs);					
 				}
-				//¥ş¼t­ì®Æ®w¦s(v_sumstore)
+				//å…¨å» åŸæ–™åº«å­˜(v_sumstore)
 				HSSFRow row_store=sheet.createRow(3+length1);
 				HSSFCell cell_store=row_store.createCell(b);
-				cell_store.setCellValue("¥ş¼t­ì®Æ®w¦s");
+				cell_store.setCellValue("å…¨å» åŸæ–™åº«å­˜");
 				cell_store.setCellStyle(cs);
 				CellRangeAddress cra_store=new CellRangeAddress((3+length1),(short)(3+length1+length2-1),0,(short)0);
 				sheet.addMergedRegion(cra_store);
@@ -1718,10 +1718,10 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 					HSSFCell cell=row.createCell(b);
 					cell.setCellStyle(cs);					
 				}
-				//¤ô¹qªo(v_sumwlo)
+				//æ°´é›»æ²¹(v_sumwlo)
 				HSSFRow row_wlo=sheet.createRow(3+length1+length2);
 				HSSFCell cell_wlo=row_wlo.createCell(b);
-				cell_wlo.setCellValue("¤ô¹qªo");
+				cell_wlo.setCellValue("æ°´é›»æ²¹");
 				cell_wlo.setCellStyle(cs);
 				CellRangeAddress cra_wlo=new CellRangeAddress((3+length1+length2),(short)(3+length1+length2+length3-1),0,(short)0);
 				sheet.addMergedRegion(cra_wlo);
@@ -1730,10 +1730,10 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 					HSSFCell cell=row.createCell(b);
 					cell.setCellStyle(cs);					
 				}
-				//¤U¤ë½Ğ´Úª¬ªp
+				//ä¸‹æœˆè«‹æ¬¾ç‹€æ³
 				HSSFRow row_inv1=sheet.createRow(3+length1+length2+length3);
 				HSSFCell cell_inv1=row_inv1.createCell(b);
-				cell_inv1.setCellValue("¤U¤ë½Ğ´Úª¬ªp");
+				cell_inv1.setCellValue("ä¸‹æœˆè«‹æ¬¾ç‹€æ³");
 				cell_inv1.setCellStyle(cs);
 				CellRangeAddress cra_inv1=new CellRangeAddress((3+length1+length2+length3),(short)(3+length1+length2+length3+length4/2-1),0,(short)0);
 				sheet.addMergedRegion(cra_inv1);
@@ -1742,10 +1742,10 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 					HSSFCell cell=row.createCell(b);
 					cell.setCellStyle(cs);					
 				}
-				//¤U¤ë¥Í²£ª¬ªp
+				//ä¸‹æœˆç”Ÿç”¢ç‹€æ³
 				HSSFRow row_inv2=sheet.createRow(3+length1+length2+length3+length4/2);
 				HSSFCell cell_inv2=row_inv2.createCell(b);
-				cell_inv2.setCellValue("¤U¤ë¥Í²£ª¬ªp");
+				cell_inv2.setCellValue("ä¸‹æœˆç”Ÿç”¢ç‹€æ³");
 				cell_inv2.setCellStyle(cs);
 				CellRangeAddress cra_inv2=new CellRangeAddress((3+length1+length2+length3+length4/2),(short)(3+length1+length2+length3+length4-1),0,(short)0);
 				sheet.addMergedRegion(cra_inv2);
@@ -1756,7 +1756,7 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 				}
 				break;
 			case 1:
-				//·l¯q·JÁ`(v_sumloss)				
+				//æç›Šå½™ç¸½(v_sumloss)				
 				for(int c=0;c<length1;c++){
 					String content=list_contentName_loss.get(c);
 					HSSFRow row=sheet.getRow(3+c);
@@ -1764,7 +1764,7 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 					cell.setCellValue(content);
 					cell.setCellStyle(cs);
 				}
-				//¥ş¼t­ì®Æ®w¦s(v_sumstore)
+				//å…¨å» åŸæ–™åº«å­˜(v_sumstore)
 				for(int c=0;c<length2;c++){
 					String content=list_contentName_store.get(c);
 					HSSFRow row=sheet.getRow(3+length1+c);
@@ -1772,7 +1772,7 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 					cell.setCellValue(content);
 					cell.setCellStyle(cs);
 				}
-				//¤ô¹qªo(v_sumwlo)
+				//æ°´é›»æ²¹(v_sumwlo)
 				for(int c=0;c<length3;c++){
 					String content=list_contentName_wlo.get(c);
 					HSSFRow row=sheet.getRow(3+length1+length2+c);
@@ -1780,7 +1780,7 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 					cell.setCellValue(content);
 					cell.setCellStyle(cs);
 				}
-				//¤U¤ë½Ğ´Úª¬ªp»P¥Í²£ª¬ªp
+				//ä¸‹æœˆè«‹æ¬¾ç‹€æ³èˆ‡ç”Ÿç”¢ç‹€æ³
 				for(int c=0;c<length4;c++){
 					String content=list_contentName_inv.get(c);
 					HSSFRow row=sheet.getRow(3+length1+length2+length3+c);
@@ -1791,7 +1791,7 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 				
 				break;
 			case 2:
-				//·l¯q·JÁ`(v_sumloss)				
+				//æç›Šå½™ç¸½(v_sumloss)				
 				for(int c=0;c<length1;c++){
 					String content=list_unit_loss.get(c);
 					HSSFRow row=sheet.getRow(3+c);
@@ -1799,7 +1799,7 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 					cell.setCellValue(content);
 					cell.setCellStyle(cs);
 				}
-				//¥ş¼t­ì®Æ®w¦s(v_sumstore)
+				//å…¨å» åŸæ–™åº«å­˜(v_sumstore)
 				for(int c=0;c<length2;c++){
 					String content=list_unit_store.get(c);
 					HSSFRow row=sheet.getRow(3+length1+c);
@@ -1807,7 +1807,7 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 					cell.setCellValue(content);
 					cell.setCellStyle(cs);
 				}
-				//¤ô¹qªo(v_sumwlo)
+				//æ°´é›»æ²¹(v_sumwlo)
 				for(int c=0;c<length3;c++){
 					String content=list_unit_wlo.get(c);
 					HSSFRow row=sheet.getRow(3+length1+length2+c);
@@ -1815,7 +1815,7 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 					cell.setCellValue(content);
 					cell.setCellStyle(cs);
 				}
-				//¤U¤ë½Ğ´Úª¬ªp»P¥Í²£ª¬ªp
+				//ä¸‹æœˆè«‹æ¬¾ç‹€æ³èˆ‡ç”Ÿç”¢ç‹€æ³
 				for(int c=0;c<length4;c++){
 					String content=list_unit_inv.get(c);
 					HSSFRow row=sheet.getRow(3+length1+length2+length3+c);
@@ -1825,13 +1825,13 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 				}				
 				break;
 				default:
-				//Àò¨ú¦U­Ó³æ¤¸¶°¦X
+					//ç²å–å„å€‹å–®å…ƒé›†åˆ
 					List<Double>list_loss=list_loss_all.get(b);
 					List<Double>list_store=list_store_all.get(b);
 					List<Double>list_wlo=list_wlo_all.get(b);
 					List<Double>list_inv=list_inv_all.get(b);
-					HSSFCellStyle cs_temp=wb.createCellStyle();//Á{®É¼Ë¦¡
-					//·l¯q·JÁ`(v_sumloss)
+					HSSFCellStyle cs_temp=wb.createCellStyle();//è‡¨æ™‚æ¨£å¼
+					//æç›Šå½™ç¸½(v_sumloss)
 					if(list_loss!=null){
 						for(int c=0;c<list_loss.size();c++){							
 							Double db=list_loss.get(c);
@@ -1844,11 +1844,11 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 						for(int c=0;c<length1;c++){
 							HSSFRow row=sheet.getRow(3+c);
 							HSSFCell cell=row.createCell(b);
-							cell.setCellValue("µL¼Æ¾Ú");
+							cell.setCellValue("ç„¡æ•¸æ“š");
 							cell.setCellStyle(cs);
 						}
 					}					
-					//¥ş¼t­ì®Æ®w¦s(v_sumstore)
+					//å…¨å» åŸæ–™åº«å­˜(v_sumstore)
 					if(list_store!=null){
 						for(int c=0;c<list_store.size();c++){
 							if(c==3||c==8){
@@ -1866,11 +1866,11 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 						for(int c=0;c<length2;c++){
 							HSSFRow row=sheet.getRow(3+length1+c);
 							HSSFCell cell=row.createCell(b);
-							cell.setCellValue("µL¼Æ¾Ú");
+							cell.setCellValue("ç„¡æ•¸æ“š");
 							cell.setCellStyle(cs);
 						}
 					}					
-					//¤ô¹qªo(v_sumwlo)
+					//æ°´é›»æ²¹(v_sumwlo)
 					if(list_wlo!=null){
 						for(int c=0;c<list_wlo.size();c++){
 							Double db=list_wlo.get(c);
@@ -1888,11 +1888,11 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 						for(int c=0;c<length3;c++){
 							HSSFRow row=sheet.getRow(3+length1+length2+c);
 							HSSFCell cell=row.createCell(b);
-							cell.setCellValue("µL¼Æ¾Ú");
+							cell.setCellValue("ç„¡æ•¸æ“š");
 							cell.setCellStyle(cs);
 						}
 					}					
-					//¤UªB½Ğ´Ú»P¥Í²£ª¬ªp
+					//ä¸‹æœ‹è«‹æ¬¾èˆ‡ç”Ÿç”¢ç‹€æ³
 					if(list_inv!=null){
 						for(int c=0;c<list_inv.size();c++){
 							if(c==5){
@@ -1910,7 +1910,7 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 						for(int c=0;c<length4;c++){
 							HSSFRow row=sheet.getRow(3+length1+length2+length3+c);
 							HSSFCell cell=row.createCell(b);
-							cell.setCellValue("µL¼Æ¾Ú");
+							cell.setCellValue("ç„¡æ•¸æ“š");
 							cell.setCellStyle(cs);
 						}
 					}					
@@ -1937,7 +1937,7 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 	}
 	
 	/**
-	 * Á×§K°£¼Æ¬°0ªº¤èªk
+	 * é¿å…é™¤æ•¸ç‚º0çš„æ–¹æ³•
 	 * @param d1
 	 * @param d2
 	 * @return
@@ -1951,7 +1951,7 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 	}
 	
 	/**
-	 * ·l¯q·JÁ`(v_sumloss)©u«×,¥b¦~,¥ş¦~²Î­p
+	 * æç›Šå½™ç¸½(v_sumloss)å­£åº¦,åŠå¹´,å…¨å¹´çµ±è¨ˆ
 	 */
 	public List<Double>findResult_loss(int index,
 			Double a001,Double a002,Double a003,Double a004,Double a005
@@ -1973,7 +1973,7 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 	}
 	
 	/**
-	 * ¥ş¼t­ì®Æ®w¦s(v_sumstore)©u«×,¥b¦~,¥ş¦~²Î­p(¤u¼t)
+	 * å…¨å» åŸæ–™åº«å­˜(v_sumstore)å­£åº¦,åŠå¹´,å…¨å¹´çµ±è¨ˆ(å·¥å» )
 	 */
 	public List<Double>findResult_store(int index,
 			Double b001,Double b002,Double b005,Double b006,Double b007
@@ -2000,7 +2000,7 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 		return list;
 	}
 	/**
-	 * ¥ş¼t­ì®Æ®w¦s(v_sumstore)©u«×,¥b¦~,¥ş¦~²Î­p(¥xÆW)
+	 * å…¨å» åŸæ–™åº«å­˜(v_sumstore)å­£åº¦,åŠå¹´,å…¨å¹´çµ±è¨ˆ(å°ç£)
 	 */
 	public List<Double>findResult_store_tw(int index,
 			Double b001,Double b002,Double b005,Double b006,Double b007,
@@ -2009,14 +2009,14 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 		List<Double>list=new ArrayList<Double>();
 		Double b01=b001/index;
 		Double b02=b002/index;
-		Double b03=this.division(b02, b01);//¥»¤ë¥­§¡³æ»ù1
-		Double lag_b03=this.division(lag_b002, lag_b001);//¤W¤ë¥­§¡³æ»ù1
+		Double b03=this.division(b02, b01);//æœ¬æœˆå¹³å‡å–®åƒ¹1
+		Double lag_b03=this.division(lag_b002, lag_b001);//ä¸Šæœˆå¹³å‡å–®åƒ¹1
 		Double b04=this.division((b03-lag_b03), lag_b03);
 		Double b05=b005/index;
 		Double b06=b006/index;
 		Double b07=b007;
-		Double b08=this.division(b07, b05);//¥»¤ë¥­§¡³æ»ù2
-		Double lag_b08=this.division(lag_b007, lag_b005);//¤W¤ë¥­§¡³æ»ù2
+		Double b08=this.division(b07, b05);//æœ¬æœˆå¹³å‡å–®åƒ¹2
+		Double lag_b08=this.division(lag_b007, lag_b005);//ä¸Šæœˆå¹³å‡å–®åƒ¹2
 		Double b09=this.division((b08-lag_b08), lag_b08);
 		list.add(b01);
 		list.add(b02);
@@ -2032,7 +2032,7 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 	
 	
 	/**
-	 * ¤ô¹qªo(v_sumwlo)©u«×,¥b¦~,¥ş¦~²Î­p
+	 * æ°´é›»æ²¹(v_sumwlo)å­£åº¦,åŠå¹´,å…¨å¹´çµ±è¨ˆ
 	 */
 	public List<Double>findResult_wlo(int index,
 			Double c001,Double c002,Double c004,Double c006,
@@ -2077,7 +2077,7 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 		return list;
 	}
 	/**
-	 * ¤U¤ë½Ğ´Úª¬ªp(v_suminv)©u«×,¥b¦~,¥ş¦~²Î­p
+	 * ä¸‹æœˆè«‹æ¬¾ç‹€æ³(v_suminv)å­£åº¦,åŠå¹´,å…¨å¹´çµ±è¨ˆ
 	 */
 	public List<Double>findResult_inv(int index,
 			Double d001,Double d002,Double d004,Double d005
@@ -2102,7 +2102,7 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 		this.response=response;
 	}
 	/**
-	 * Àò¨ú¤W­Ó¤ë¤é´Á
+	 * ç²å–ä¸Šå€‹æœˆæ—¥æœŸ
 	 * @throws ParseException 
 	 */
 	public String findLastMonth(String yymm) throws ParseException{
@@ -2135,14 +2135,14 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 
 	public void print_month() throws ParseException, IOException{
 		/**
-		 * «Ø¥ß¼ÒªO
+		 * å»ºç«‹æ¨¡æ¿
 		 */
 		HSSFWorkbook wb=new HSSFWorkbook();
 		HSSFSheet sheet=wb.createSheet();
 		/**
-		 * ¦UºØ¼Ë¦¡
+		 * å„ç¨®æ¨£å¼
 		 */
-		//°ò¥»¼Ë¦¡
+		//åŸºæœ¬æ¨£å¼
 		HSSFCellStyle cs=wb.createCellStyle();
 		cs.setAlignment(HSSFCellStyle.ALIGN_CENTER);
 		cs.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
@@ -2150,7 +2150,7 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 		cs.setBorderRight(HSSFCellStyle.BORDER_THIN);
 		cs.setBorderBottom(HSSFCellStyle.BORDER_THIN);
 		cs.setBorderLeft(HSSFCellStyle.BORDER_THIN);
-		//¼ĞÃD¼Ë¦¡
+		//æ¨™é¡Œæ¨£å¼
 		HSSFCellStyle cs_title=wb.createCellStyle();
 		HSSFFont font_title=wb.createFont();
 		font_title.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
@@ -2158,7 +2158,7 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 		cs_title.setFont(font_title);
 		cs_title.setAlignment(HSSFCellStyle.ALIGN_CENTER);
 		cs_title.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
-		//ªíÀY¼Ë¦¡
+		//è¡¨é ­æ¨£å¼
 		HSSFCellStyle cs_column=wb.createCellStyle();
 		HSSFFont font_column=wb.createFont();
 		font_column.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
@@ -2172,11 +2172,11 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 		cs_column.setBorderLeft(HSSFCellStyle.BORDER_THIN);
 		cs_column.setFillForegroundColor(IndexedColors.YELLOW.getIndex());
 		cs_column.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
-		//µLÃä®Ø·s¦¡
+		//ç„¡é‚Šæ¡†æ–°å¼
 		HSSFCellStyle cs_noborder=wb.createCellStyle();
 		cs_noborder.setAlignment(HSSFCellStyle.ALIGN_CENTER);
 		cs_noborder.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
-		//¼Æ¦r®æ¦¡
+		//æ•¸å­—æ ¼å¼
 		HSSFDataFormat fm=wb.createDataFormat();
 		HSSFCellStyle cs_percent=wb.createCellStyle();
 		cs_percent.setDataFormat(fm.getFormat("0.00%"));
@@ -2218,84 +2218,84 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 		cs_red.setBorderLeft(HSSFCellStyle.BORDER_THIN);
 		
 		/**
-		 * ¼Æ¾Ú·½
+		 * æ•¸æ“šæº
 		 */	
 		
-		//big¥Î©ó¶ñ¥Rnull
+		//bigç”¨æ–¼å¡«å……null
 		BigDecimal big=new BigDecimal(0.0);
-		//·l¯q¶×Á`
+		//æç›ŠåŒ¯ç¸½
 		List<String>list_contentName_loss=new ArrayList<String>();
 		List<String>list_unit_loss=new ArrayList<String>();
-		list_contentName_loss.add("Á`¾P³f¦¬¤J");list_unit_loss.add("USD");
-		list_contentName_loss.add("¡Ğ) ¦¨¥»¦X­p ");list_unit_loss.add("USD");
-		list_contentName_loss.add("¡Ğ) ¤u¸ê¦X­p ");list_unit_loss.add("USD");
-		list_contentName_loss.add("¡Ğ) ¶O¥Î¦X­p ");list_unit_loss.add("USD");
-		list_contentName_loss.add("¡Ï) ¨ä¥L  ");list_unit_loss.add("USD");
-		list_contentName_loss.add("¥»´Á·l¯q");list_unit_loss.add("USD");
-		//¥ş¼t­ì®Æ®w¦s
+		list_contentName_loss.add("ç¸½éŠ·è²¨æ”¶å…¥");list_unit_loss.add("USD");
+		list_contentName_loss.add("ï¼) æˆæœ¬åˆè¨ˆ ");list_unit_loss.add("USD");
+		list_contentName_loss.add("ï¼) å·¥è³‡åˆè¨ˆ ");list_unit_loss.add("USD");
+		list_contentName_loss.add("ï¼) è²»ç”¨åˆè¨ˆ ");list_unit_loss.add("USD");
+		list_contentName_loss.add("ï¼‹) å…¶ä»–  ");list_unit_loss.add("USD");
+		list_contentName_loss.add("æœ¬æœŸæç›Š");list_unit_loss.add("USD");
+		//å…¨å» åŸæ–™åº«å­˜
 		List<String>list_contentName_store=new ArrayList<String>();
 		List<String>list_unit_store=new ArrayList<String>();
-		list_contentName_store.add("Á`­ì®Æ®w¦s¶q");list_unit_store.add("KG");
-		list_contentName_store.add("Á`­ì®Æ®w¦sª÷ÃB");list_unit_store.add("USD");
-		list_contentName_store.add("¥­§¡³æ»ù");list_unit_store.add("USD");
-		list_contentName_store.add("º¦´T");list_unit_store.add("%");//3
-		list_contentName_store.add("½¦Ãş®w¦s¶q");list_unit_store.add("KG");
-		list_contentName_store.add("½¦Ãş®w¦s¶q");list_unit_store.add("¾·");
-		list_contentName_store.add("½¦Ãşª÷ÃB");list_unit_store.add("USD");
-		list_contentName_store.add("¥­§¡³æ»ù");list_unit_store.add("USD");
-		list_contentName_store.add("º¦´T");list_unit_store.add("%");//8
+		list_contentName_store.add("ç¸½åŸæ–™åº«å­˜é‡");list_unit_store.add("KG");
+		list_contentName_store.add("ç¸½åŸæ–™åº«å­˜é‡‘é¡");list_unit_store.add("USD");
+		list_contentName_store.add("å¹³å‡å–®åƒ¹");list_unit_store.add("USD");
+		list_contentName_store.add("æ¼²å¹…");list_unit_store.add("%");//3
+		list_contentName_store.add("è† é¡åº«å­˜é‡");list_unit_store.add("KG");
+		list_contentName_store.add("è† é¡åº«å­˜é‡");list_unit_store.add("å™¸");
+		list_contentName_store.add("è† é¡é‡‘é¡");list_unit_store.add("USD");
+		list_contentName_store.add("å¹³å‡å–®åƒ¹");list_unit_store.add("USD");
+		list_contentName_store.add("æ¼²å¹…");list_unit_store.add("%");//8
 		
-		//¤ô¹qªo
+		//æ°´é›»æ²¹
 		List<String>list_contentName_wlo=new ArrayList<String>();
 		List<String>list_unit_wlo=new ArrayList<String>();
-		list_contentName_wlo.add("¥Í²£¼Ò¼Æ");list_unit_wlo.add("¼Ò");
-		list_contentName_wlo.add("¤ô¥Î¶q");list_unit_wlo.add("¾·");
-		list_contentName_wlo.add("¥Î¤ô³æÏû");list_unit_wlo.add("¾·/¼Ò");
-		list_contentName_wlo.add("¥Î¤ôª÷ÃB");list_unit_wlo.add("USD");
-		list_contentName_wlo.add("¥Î¤ôª÷ÃB³æÏû(¼Ò)");list_unit_wlo.add("USD/¼Ò");
-		list_contentName_wlo.add("¥Î¹q¶q");list_unit_wlo.add("«×");
-		list_contentName_wlo.add("¥Î¹q³æÏû");list_unit_wlo.add("«×/¼Ò");
-		list_contentName_wlo.add("¥Î¹qª÷ÃB");list_unit_wlo.add("USD");
-		list_contentName_wlo.add("¥Î¹qª÷ÃB³æÏû");list_unit_wlo.add("USD/¼Ò");
-		list_contentName_wlo.add("»]®ğ¥Î¶q");list_unit_wlo.add("¾·");
-		list_contentName_wlo.add("¥Î»]®ğ³æÏû");list_unit_wlo.add("¾·/¼Ò");
-		list_contentName_wlo.add("¥Î»]®ğª÷ÃB(USD)");list_unit_wlo.add("USD");
-		list_contentName_wlo.add("¥Î»]®ğª÷ÃB³æÏû");list_unit_wlo.add("USD/¼Ò");
-		list_contentName_wlo.add("®ãªo¥Î¶q");list_unit_wlo.add("¤½¤É");
-		list_contentName_wlo.add("¥Îªo³æÏû");list_unit_wlo.add("¤½¤É/¼Ò");
-		list_contentName_wlo.add("®ãªoª÷ÃB(USD)");list_unit_wlo.add("USD");
-		list_contentName_wlo.add("¥Îªoª÷ÃB³æÏû(¼Ò)");list_unit_wlo.add("USD/¼Ò");
-		//¤U¤ë½Ğ´Úª¬ªp,¤U¤ë¥Í²£ª¬ªp
+		list_contentName_wlo.add("ç”Ÿç”¢æ¨¡æ•¸");list_unit_wlo.add("æ¨¡");
+		list_contentName_wlo.add("æ°´ç”¨é‡");list_unit_wlo.add("å™¸");
+		list_contentName_wlo.add("ç”¨æ°´å–®ç§");list_unit_wlo.add("å™¸/æ¨¡");
+		list_contentName_wlo.add("ç”¨æ°´é‡‘é¡");list_unit_wlo.add("USD");
+		list_contentName_wlo.add("ç”¨æ°´é‡‘é¡å–®ç§(æ¨¡)");list_unit_wlo.add("USD/æ¨¡");
+		list_contentName_wlo.add("ç”¨é›»é‡");list_unit_wlo.add("åº¦");
+		list_contentName_wlo.add("ç”¨é›»å–®ç§");list_unit_wlo.add("åº¦/æ¨¡");
+		list_contentName_wlo.add("ç”¨é›»é‡‘é¡");list_unit_wlo.add("USD");
+		list_contentName_wlo.add("ç”¨é›»é‡‘é¡å–®ç§");list_unit_wlo.add("USD/æ¨¡");
+		list_contentName_wlo.add("è’¸æ°£ç”¨é‡");list_unit_wlo.add("å™¸");
+		list_contentName_wlo.add("ç”¨è’¸æ°£å–®ç§");list_unit_wlo.add("å™¸/æ¨¡");
+		list_contentName_wlo.add("ç”¨è’¸æ°£é‡‘é¡(USD)");list_unit_wlo.add("USD");
+		list_contentName_wlo.add("ç”¨è’¸æ°£é‡‘é¡å–®ç§");list_unit_wlo.add("USD/æ¨¡");
+		list_contentName_wlo.add("æŸ´æ²¹ç”¨é‡");list_unit_wlo.add("å…¬å‡");
+		list_contentName_wlo.add("ç”¨æ²¹å–®ç§");list_unit_wlo.add("å…¬å‡/æ¨¡");
+		list_contentName_wlo.add("æŸ´æ²¹é‡‘é¡(USD)");list_unit_wlo.add("USD");
+		list_contentName_wlo.add("ç”¨æ²¹é‡‘é¡å–®ç§(æ¨¡)");list_unit_wlo.add("USD/æ¨¡");
+		//ä¸‹æœˆè«‹æ¬¾ç‹€æ³,ä¸‹æœˆç”Ÿç”¢ç‹€æ³
 		List<String>list_contentName_inv=new ArrayList<String>();
 		List<String>list_unit_inv=new ArrayList<String>();
-		list_contentName_inv.add("¹w­p½Ğ´Ú");list_unit_inv.add("Âù");
-		list_contentName_inv.add("½Ğ´Úª÷ÃB");list_unit_inv.add("USD");
-		list_contentName_inv.add("¥­§¡³æ»ù");list_unit_inv.add("USD/Âù");
-		list_contentName_inv.add("¹w­p¥Í²£");list_unit_inv.add("¼Ò");
-		list_contentName_inv.add("¾÷»O¼Ğ­ã¾Ô¤O");list_unit_inv.add("¼Ò");
-		list_contentName_inv.add("¾÷¤Õ¹F¦¨²v");list_unit_inv.add("%");//5
+		list_contentName_inv.add("é è¨ˆè«‹æ¬¾");list_unit_inv.add("é›™");
+		list_contentName_inv.add("è«‹æ¬¾é‡‘é¡");list_unit_inv.add("USD");
+		list_contentName_inv.add("å¹³å‡å–®åƒ¹");list_unit_inv.add("USD/é›™");
+		list_contentName_inv.add("é è¨ˆç”Ÿç”¢");list_unit_inv.add("æ¨¡");
+		list_contentName_inv.add("æ©Ÿè‡ºæ¨™å‡†æˆ°åŠ›");list_unit_inv.add("æ¨¡");
+		list_contentName_inv.add("æ©Ÿå­”é”æˆç‡");list_unit_inv.add("%");//5
 		
 		
-		//ªíÀY¤º®e
-		//Àò¨ú©Ò¦³¤ë¼Æ
+		//è¡¨é ­å…§å®¹
+		//ç²å–æ‰€æœ‰æœˆæ•¸
 		List<String>list_months=this.getMonths(yymm_begin, yymm_end);
 		List<String>list_column=new ArrayList<String>();
-		list_column.add("¶µ¥Ø");
-		list_column.add("²Ó¶µ");
-		list_column.add("³æ¦ì");	
+		list_column.add("é …ç›®");
+		list_column.add("ç´°é …");
+		list_column.add("å–®ä½");	
 		for(int a=0;a<list_months.size();a++){
 			String ym=list_months.get(a);
 			list_column.add(ym);
 		}
-		list_column.add("¦X­p");//ª`·N,¤£±a§Ç¸¹
+		list_column.add("åˆè¨ˆ");//æ³¨æ„,ä¸å¸¶åºè™Ÿ
 		
-		//¥D­n¼Æ¾Ú
-		//³Ì¥~¼h¶°¦X
+		//ä¸»è¦æ•¸æ“š
+		//æœ€å¤–å±¤é›†åˆ
 		List<List<Double>>list_loss_all=new ArrayList<List<Double>>();
 		List<List<Double>>list_store_all=new ArrayList<List<Double>>();
 		List<List<Double>>list_wlo_all=new ArrayList<List<Double>>();
 		List<List<Double>>list_inv_all=new ArrayList<List<Double>>();
-		//ª`·N,¦]¬°¦³"¶µ¥Ø""²Ó¶µ""³æ¦ì",©Ò¥H­n²K¥[¬°ªÅ
+		//æ³¨æ„,å› ç‚ºæœ‰"é …ç›®""ç´°é …""å–®ä½",æ‰€ä»¥è¦æ·»åŠ ç‚ºç©º
 		list_loss_all.add(null);
 		list_loss_all.add(null);
 		list_loss_all.add(null);
@@ -2312,44 +2312,44 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 		list_inv_all.add(null);
 		list_inv_all.add(null);
 		
-		////·l¯q·JÁ`(v_sumloss)
+		////æç›Šå½™ç¸½(v_sumloss)
 		
-		//¦X­p
+		//åˆè¨ˆ
 		Double total_a001=0.0;Double total_a002=0.0;
 		Double total_a003=0.0;Double total_a004=0.0;
 		Double total_a005=0.0;
 		
-		//¥ş¼t­ì®Æ®w¦s(v_sumstore)
+		//å…¨å» åŸæ–™åº«å­˜(v_sumstore)
 		
-		//¦X­p
+		//åˆè¨ˆ
 		Double total_b001=0.0;Double total_b002=0.0;
 		Double total_b005=0.0;Double total_b006=0.0;
 		Double total_b007=0.0;
 		
-		//¤W¤ë¥­§¡³æ»ù
+		//ä¸Šæœˆå¹³å‡å–®åƒ¹
 		Double lag_b003=0.0;
-		//¤W¤ë¥­§¡³æ»ù(½¦)
+		//ä¸Šæœˆå¹³å‡å–®åƒ¹(è† )
 		Double lag_b008=0.0;
-		//·í¤ë¥­§¡³æ»ù
+		//ç•¶æœˆå¹³å‡å–®åƒ¹
 		Double b003=0.0;
-		//·í¤ë¥­§¡³æ»ù(½¦)
+		//ç•¶æœˆå¹³å‡å–®åƒ¹(è† )
 		Double b008=0.0;
-		//º¦ºÖ1
+		//æ¼²ç¦1
 		Double store_b004=0.0;		
-		//º¦ºÖ2
+		//æ¼²ç¦2
 		Double store_b009=0.0;
 		
-		//¤ô¹qªo(v_sumwlo)
+		//æ°´é›»æ²¹(v_sumwlo)
 		
-		//¦X­p
+		//åˆè¨ˆ
 		Double total_c001=0.0;Double total_c002=0.0;
 		Double total_c004=0.0;Double total_c006=0.0;
 		Double total_c008=0.0;Double total_c010=0.0;
 		Double total_c012=0.0;Double total_c014=0.0;
 		Double total_c016=0.0;
-		//¤U¤ë½Ğ´Úª¬ªp,¤U¤ë¥Í²£ª¬ªp
+		//ä¸‹æœˆè«‹æ¬¾ç‹€æ³,ä¸‹æœˆç”Ÿç”¢ç‹€æ³
 		
-		//¦X­p
+		//åˆè¨ˆ
 		Double total_d001=0.0;Double total_d002=0.0;
 		Double total_d004=0.0;Double total_d005=0.0;
 		
@@ -2357,7 +2357,7 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 		for(int a=0;a<list_months.size();a++){//start for1
 			String yymm=list_months.get(a);			
 			/**
-			 * Àò¨ú¤W­Ó¤ë¤é´Á
+			 * ç²å–ä¸Šå€‹æœˆæ—¥æœŸ
 			 */
 			SimpleDateFormat format=new SimpleDateFormat("yyyyMM");
 			Date date=format.parse(yymm);
@@ -2365,7 +2365,7 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 			calendar.setTime(date);
 			calendar.add(Calendar.MONTH, -1);
 			String lastdate=format.format(calendar.getTime());
-			//¤ë
+			//æœˆ
 			List<Double>list_loss=new ArrayList<Double>();
 			List<Double>list_store=new ArrayList<Double>();
 			List<Double>list_wlo=new ArrayList<Double>();
@@ -2378,9 +2378,9 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 			VSuminv inv=suminvSer.findById(factNo, yymm);
 			
 			//
-			//¤W­Ó¤ëstore
+			//ä¸Šå€‹æœˆstore
 			VSumstore store_last=sumstoreSer.findById(factNo, lastdate);
-			//·l¯q·JÁ`(v_sumloss)
+			//æç›Šå½™ç¸½(v_sumloss)
 			if(loss!=null){
 				list_loss.add(loss.getLossA001().doubleValue());
 				list_loss.add(loss.getLossA002().doubleValue());
@@ -2390,7 +2390,7 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 				list_loss.add(loss.getLossA006().doubleValue());
 				list_loss_all.add(list_loss);
 				
-				//¦X­p
+				//åˆè¨ˆ
 				total_a001=total_a001+loss.getLossA001().doubleValue();
 				total_a002=total_a002+loss.getLossA002().doubleValue();
 				total_a003=total_a003+loss.getLossA003().doubleValue();
@@ -2400,20 +2400,20 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 			}else{
 				list_loss_all.add(null);
 			}
-			//¥ş¼t­ì®Æ®w¦s(v_sumstore)
-			//§ä¨ì¤W¤ë¥­§¡³æ»ù
+			//å…¨å» åŸæ–™åº«å­˜(v_sumstore)
+			//æ‰¾åˆ°ä¸Šæœˆå¹³å‡å–®åƒ¹
 			if(store_last!=null){
 				lag_b003=store_last.getStoreB003().doubleValue();
 				lag_b008=store_last.getStoreB008().doubleValue();
 			}
-			//§ä¨ì·í¤ë¥­§¡³æ»ù
+			//æ‰¾åˆ°ç•¶æœˆå¹³å‡å–®åƒ¹
 			if(store!=null){
 				b003=store.getStoreB003().doubleValue();
 				b008=store.getStoreB008().doubleValue();
 			}
-			//º¦ºÖ1
+			//æ¼²ç¦1
 			store_b004=this.division((b003-lag_b003), lag_b003);			
-			//º¦ºÖ2
+			//æ¼²ç¦2
 			store_b009=this.division((b008-lag_b008), lag_b008);
 			if(store!=null){								
 				list_store.add(store.getStoreB001().doubleValue());
@@ -2427,7 +2427,7 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 				list_store.add(store_b009);				
 				list_store_all.add(list_store);
 				
-				//¦X­p
+				//åˆè¨ˆ
 				total_b001=total_b001+store.getStoreB001().doubleValue();
 				total_b002=total_b002+store.getStoreB002().doubleValue();
 				total_b005=total_b005+store.getStoreB005().doubleValue();
@@ -2438,7 +2438,7 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 				list_store_all.add(null);
 			}
 			
-			//¤ô¹qªo(v_sumwlo)
+			//æ°´é›»æ²¹(v_sumwlo)
 			if(wlo!=null){
 				if(wlo.getWloC002()==null){
 					wlo.setWloC002(big);
@@ -2507,7 +2507,7 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 				list_wlo.add(wlo.getWloC017().doubleValue());
 				list_wlo_all.add(list_wlo);
 				
-				//¦X­p
+				//åˆè¨ˆ
 				total_c001=total_c001+wlo.getWloC002().doubleValue();
 				total_c002=total_c002+wlo.getWloC002().doubleValue();
 				total_c004=total_c004+wlo.getWloC004().doubleValue();
@@ -2521,7 +2521,7 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 			}else{
 				list_wlo_all.add(null);
 			}
-			//¤U¤ë½Ğ´Úª¬ªp,¤U¤ë¥Í²£ª¬ªp
+			//ä¸‹æœˆè«‹æ¬¾ç‹€æ³,ä¸‹æœˆç”Ÿç”¢ç‹€æ³
 			if(inv!=null){
 				if(inv.getInvD001()==null){
 					inv.setInvD001(big);
@@ -2549,7 +2549,7 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 				list_inv.add(inv.getInvD006().doubleValue());
 				list_inv_all.add(list_inv);
 				
-				//¦X­p
+				//åˆè¨ˆ
 				total_d001=total_d001+inv.getInvD001().doubleValue();
 				total_d002=total_d002+inv.getInvD002().doubleValue();
 				total_d004=total_d004+inv.getInvD004().doubleValue();
@@ -2558,7 +2558,7 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 			}else{
 				list_inv_all.add(null);				
 			}
-			//¦X­p
+			//åˆè¨ˆ
 			if(a==list_months.size()-1){				
 				List<Double>list_loss_total=new ArrayList<Double>();
 				List<Double>list_store_total=new ArrayList<Double>();
@@ -2578,15 +2578,15 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 																					
 		}//end for1
 		
-		//¼ĞÃD
+		//æ¨™é¡Œ
 		String factName=webFactSer.selByid(factNo);
-		String title=factName+"("+factNo+")"+yymm_begin+"--"+yymm_end+"¨C¤ëÀË°Q¶µ¥Ø²Î­pªí---¥ş¼t(¦U«¬ºA¤§¦X­p)";
+		String title=factName+"("+factNo+")"+yymm_begin+"--"+yymm_end+"æ¯æœˆæª¢è¨é …ç›®çµ±è¨ˆè¡¨---å…¨å» (å„å‹æ…‹ä¹‹åˆè¨ˆ)";
 		
 		
 		/**
-		 * ¤º®e¶ñ¥R
+		 * å…§å®¹å¡«å……
 		 */
-		//¶ñ¥R¼ĞÃD
+		//å¡«å……æ¨™é¡Œ
 		HSSFRow row_title=sheet.createRow(0);
 		HSSFCell cell_title=row_title.createCell(0);
 		cell_title.setCellValue(title);
@@ -2597,7 +2597,7 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 			HSSFCell cell=row_title.createCell(a);
 			cell.setCellStyle(cs_title);
 		}
-		//¶ñ¥RªíÀY
+		//å¡«å……è¡¨é ­
 		HSSFRow row_column=sheet.createRow(2);
 		for(int b=0;b<list_column.size();b++){
 			String column=list_column.get(b);
@@ -2605,7 +2605,7 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 			cell.setCellValue(column);
 			cell.setCellStyle(cs_column);
 		}
-		//¶ñ¥R¶µ¥Ø,²Ó¶µ,³æ¦ì
+		//å¡«å……é …ç›®,ç´°é …,å–®ä½
 		int length1=list_contentName_loss.size();
 		int length2=list_contentName_store.size();
 		int length3=list_contentName_wlo.size();
@@ -2614,10 +2614,10 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 			sheet.setColumnWidth(b, 3500);
 			switch(b){
 			case 0:
-				//·l¯q·JÁ`(v_sumloss)				
+				//æç›Šå½™ç¸½(v_sumloss)			
 				HSSFRow row_loss=sheet.createRow(3);
 				HSSFCell cell_loss=row_loss.createCell(b);
-				cell_loss.setCellValue("·l¯q·JÁ`");
+				cell_loss.setCellValue("æç›Šå½™ç¸½");
 				cell_loss.setCellStyle(cs);
 				CellRangeAddress cra_loss=new CellRangeAddress(3,(short)(3+length1-1),0,(short)0);
 				sheet.addMergedRegion(cra_loss);
@@ -2626,10 +2626,10 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 					HSSFCell cell=row.createCell(b);
 					cell.setCellStyle(cs);					
 				}
-				//¥ş¼t­ì®Æ®w¦s(v_sumstore)
+				//å…¨å» åŸæ–™åº«å­˜(v_sumstore)
 				HSSFRow row_store=sheet.createRow(3+length1);
 				HSSFCell cell_store=row_store.createCell(b);
-				cell_store.setCellValue("¥ş¼t­ì®Æ®w¦s");
+				cell_store.setCellValue("å…¨å» åŸæ–™åº«å­˜");
 				cell_store.setCellStyle(cs);
 				CellRangeAddress cra_store=new CellRangeAddress((3+length1),(short)(3+length1+length2-1),0,(short)0);
 				sheet.addMergedRegion(cra_store);
@@ -2638,10 +2638,10 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 					HSSFCell cell=row.createCell(b);
 					cell.setCellStyle(cs);					
 				}
-				//¤ô¹qªo(v_sumwlo)
+				//æ°´é›»æ²¹(v_sumwlo)
 				HSSFRow row_wlo=sheet.createRow(3+length1+length2);
 				HSSFCell cell_wlo=row_wlo.createCell(b);
-				cell_wlo.setCellValue("¤ô¹qªo");
+				cell_wlo.setCellValue("æ°´é›»æ²¹");
 				cell_wlo.setCellStyle(cs);
 				CellRangeAddress cra_wlo=new CellRangeAddress((3+length1+length2),(short)(3+length1+length2+length3-1),0,(short)0);
 				sheet.addMergedRegion(cra_wlo);
@@ -2650,10 +2650,10 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 					HSSFCell cell=row.createCell(b);
 					cell.setCellStyle(cs);					
 				}
-				//¤U¤ë½Ğ´Úª¬ªp
+				//ä¸‹æœˆè«‹æ¬¾ç‹€æ³
 				HSSFRow row_inv1=sheet.createRow(3+length1+length2+length3);
 				HSSFCell cell_inv1=row_inv1.createCell(b);
-				cell_inv1.setCellValue("¤U¤ë½Ğ´Úª¬ªp");
+				cell_inv1.setCellValue("ä¸‹æœˆè«‹æ¬¾ç‹€æ³");
 				cell_inv1.setCellStyle(cs);
 				CellRangeAddress cra_inv1=new CellRangeAddress((3+length1+length2+length3),(short)(3+length1+length2+length3+length4/2-1),0,(short)0);
 				sheet.addMergedRegion(cra_inv1);
@@ -2662,10 +2662,10 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 					HSSFCell cell=row.createCell(b);
 					cell.setCellStyle(cs);					
 				}
-				//¤U¤ë¥Í²£ª¬ªp
+				//ä¸‹æœˆç”Ÿç”¢ç‹€æ³
 				HSSFRow row_inv2=sheet.createRow(3+length1+length2+length3+length4/2);
 				HSSFCell cell_inv2=row_inv2.createCell(b);
-				cell_inv2.setCellValue("¤U¤ë¥Í²£ª¬ªp");
+				cell_inv2.setCellValue("ä¸‹æœˆç”Ÿç”¢ç‹€æ³");
 				cell_inv2.setCellStyle(cs);
 				CellRangeAddress cra_inv2=new CellRangeAddress((3+length1+length2+length3+length4/2),(short)(3+length1+length2+length3+length4-1),0,(short)0);
 				sheet.addMergedRegion(cra_inv2);
@@ -2676,7 +2676,7 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 				}
 				break;
 			case 1:
-				//·l¯q·JÁ`(v_sumloss)				
+				//æç›Šå½™ç¸½(v_sumloss)			
 				for(int c=0;c<length1;c++){
 					String content=list_contentName_loss.get(c);
 					HSSFRow row=sheet.getRow(3+c);
@@ -2684,7 +2684,7 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 					cell.setCellValue(content);
 					cell.setCellStyle(cs);
 				}
-				//¥ş¼t­ì®Æ®w¦s(v_sumstore)
+				//å…¨å» åŸæ–™åº«å­˜(v_sumstore)
 				for(int c=0;c<length2;c++){
 					String content=list_contentName_store.get(c);
 					HSSFRow row=sheet.getRow(3+length1+c);
@@ -2692,7 +2692,7 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 					cell.setCellValue(content);
 					cell.setCellStyle(cs);
 				}
-				//¤ô¹qªo(v_sumwlo)
+				//æ°´é›»æ²¹(v_sumwlo)
 				for(int c=0;c<length3;c++){
 					String content=list_contentName_wlo.get(c);
 					HSSFRow row=sheet.getRow(3+length1+length2+c);
@@ -2700,7 +2700,7 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 					cell.setCellValue(content);
 					cell.setCellStyle(cs);
 				}
-				//¤U¤ë½Ğ´Úª¬ªp
+				//ä¸‹æœˆè«‹æ¬¾ç‹€æ³
 				for(int c=0;c<length4/2;c++){
 					String content=list_contentName_inv.get(c);
 					HSSFRow row=sheet.getRow(3+length1+length2+length3+c);
@@ -2708,7 +2708,7 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 					cell.setCellValue(content);
 					cell.setCellStyle(cs);
 				}
-				//¤U¤ë¥Í²£ª¬ªp
+				//ä¸‹æœˆç”Ÿç”¢ç‹€æ³
 				for(int c=0;c<length4/2;c++){
 					String content=list_contentName_inv.get(c+3);
 					HSSFRow row=sheet.getRow(3+length1+length2+length3+length4/2+c);
@@ -2718,7 +2718,7 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 				}
 				break;
 			case 2:
-				//·l¯q·JÁ`(v_sumloss)				
+				//æç›Šå½™ç¸½(v_sumloss)				
 				for(int c=0;c<length1;c++){
 					String content=list_unit_loss.get(c);
 					HSSFRow row=sheet.getRow(3+c);
@@ -2726,7 +2726,7 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 					cell.setCellValue(content);
 					cell.setCellStyle(cs);
 				}
-				//¥ş¼t­ì®Æ®w¦s(v_sumstore)
+				//å…¨å» åŸæ–™åº«å­˜(v_sumstore)
 				for(int c=0;c<length2;c++){
 					String content=list_unit_store.get(c);
 					HSSFRow row=sheet.getRow(3+length1+c);
@@ -2734,7 +2734,7 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 					cell.setCellValue(content);
 					cell.setCellStyle(cs);
 				}
-				//¤ô¹qªo(v_sumwlo)
+				//æ°´é›»æ²¹(v_sumwlo)
 				for(int c=0;c<length3;c++){
 					String content=list_unit_wlo.get(c);
 					HSSFRow row=sheet.getRow(3+length1+length2+c);
@@ -2742,7 +2742,7 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 					cell.setCellValue(content);
 					cell.setCellStyle(cs);
 				}
-				//¤U¤ë½Ğ´Úª¬ªp
+				//ä¸‹æœˆè«‹æ¬¾ç‹€æ³
 				for(int c=0;c<length4/2;c++){
 					String content=list_unit_inv.get(c);
 					HSSFRow row=sheet.getRow(3+length1+length2+length3+c);
@@ -2750,7 +2750,7 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 					cell.setCellValue(content);
 					cell.setCellStyle(cs);
 				}
-				//¤U¤ë¥Í²£ª¬ªp
+				//ä¸‹æœˆç”Ÿç”¢ç‹€æ³
 				for(int c=0;c<length4/2;c++){
 					String content=list_unit_inv.get(c+3);
 					HSSFRow row=sheet.getRow(3+length1+length2+length3+length4/2+c);
@@ -2760,9 +2760,9 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 				}
 				break;
 				default:
-					//Á{®É¼Ë¦¡
+					//è‡¨æ™‚æ¨£å¼
 					HSSFCellStyle cs_temp=wb.createCellStyle();
-					//·l¯q·JÁ`(v_sumloss)
+					//æç›Šå½™ç¸½(v_sumloss)
 					List<Double>list_loss=list_loss_all.get(b);
 					if(list_loss!=null){						
 						for(int c=0;c<list_loss.size();c++){
@@ -2776,11 +2776,11 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 						for(int c=0;c<length1;c++){
 							HSSFRow row=sheet.getRow(3+c);
 							HSSFCell cell=row.createCell(b);
-							cell.setCellValue("µL¼Æ¾Ú");
+							cell.setCellValue("ç„¡æ•¸æ“š");
 							cell.setCellStyle(cs);
 						}
 					}
-					//¥ş¼t­ì®Æ®w¦s(v_sumstore)
+					//å…¨å» åŸæ–™åº«å­˜(v_sumstore)
 					List<Double>list_store=list_store_all.get(b);
 					if(list_store!=null){						
 						for(int c=0;c<list_store.size();c++){
@@ -2792,7 +2792,7 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 							Double db=list_store.get(c);
 							HSSFRow row=sheet.getRow(3+length1+c);
 							HSSFCell cell=row.createCell(b);
-							//¦X­pªºº¦ºÖ¨S¦³ºâ¥X¨Ó
+							//åˆè¨ˆçš„æ¼²ç¦æ²’æœ‰ç®—å‡ºä¾†
 							if(b==list_column.size()-1&&(c==3||c==8)){
 								cell.setCellValue("----");
 								cell.setCellStyle(cs_red);
@@ -2806,11 +2806,11 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 						for(int c=0;c<length2;c++){
 							HSSFRow row=sheet.getRow(3+length1+c);
 							HSSFCell cell=row.createCell(b);
-							cell.setCellValue("µL¼Æ¾Ú");
+							cell.setCellValue("ç„¡æ•¸æ“š");
 							cell.setCellStyle(cs);
 						}
 					}
-					//¤ô¹qªo(v_sumwlo)
+					//æ°´é›»æ²¹(v_sumwlo)
 					List<Double>list_wlo=list_wlo_all.get(b);
 					if(list_wlo!=null){						
 						for(int c=0;c<list_wlo.size();c++){							
@@ -2829,11 +2829,11 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 						for(int c=0;c<length3;c++){
 							HSSFRow row=sheet.getRow(3+length1+length2+c);
 							HSSFCell cell=row.createCell(b);
-							cell.setCellValue("µL¼Æ¾Ú");
+							cell.setCellValue("ç„¡æ•¸æ“š");
 							cell.setCellStyle(cs);
 						}
 					}
-					//¤U¤ë½Ğ´Úª¬ªp,¥Í²£ª¬ªp
+					//ä¸‹æœˆè«‹æ¬¾ç‹€æ³,ç”Ÿç”¢ç‹€æ³
 					List<Double>list_inv=list_inv_all.get(b);
 					if(list_inv!=null){						
 						for(int c=0;c<list_inv.size();c++){
@@ -2852,7 +2852,7 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 						for(int c=0;c<length4;c++){
 							HSSFRow row=sheet.getRow(3+length1+length2+length3+c);
 							HSSFCell cell=row.createCell(b);
-							cell.setCellValue("µL¼Æ¾Ú");
+							cell.setCellValue("ç„¡æ•¸æ“š");
 							cell.setCellStyle(cs);
 						}
 					}									
