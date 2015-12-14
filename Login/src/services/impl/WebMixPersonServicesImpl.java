@@ -73,9 +73,9 @@ public class WebMixPersonServicesImpl implements IWebMixPersonServices {
 	}
 
 	public PageBean findPageBean(int pageSize, int page, String factNo,
-			String yymm) {
+			String yymm,String yymm2) {
 		// TODO Auto-generated method stub
-		return mixPersonDao.findPageBean(pageSize, page, factNo, yymm);
+		return mixPersonDao.findPageBean(pageSize, page, factNo, yymm,yymm2);
 	}
 
 	public List<Webmixperson> findByAny(String factNo, String beginDate,
@@ -87,6 +87,11 @@ public class WebMixPersonServicesImpl implements IWebMixPersonServices {
 	public Webmixperson findById(String factNo, String factCode, String yymm) {
 		// TODO Auto-generated method stub
 		return mixPersonDao.findById(factNo, factCode, yymm);
+	}
+
+	public List<Webmixperson> findByFactNoYm(String factNo, String yymm) {
+		// TODO Auto-generated method stub
+		return mixPersonDao.findByFactNoYm(factNo, yymm);
 	}
 
 }

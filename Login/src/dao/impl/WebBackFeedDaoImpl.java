@@ -23,7 +23,7 @@ public class WebBackFeedDaoImpl extends Basedao implements IWebBackFeedDao {
 	}
 
 	public PageBean findPageBean(int pageSize, int page, String factNo,
-			String yymm) {
+			String yymm,String yymm2) {
 		// TODO Auto-generated method stub
 		final Map<String, Object> map = new HashMap<String, Object>();
 		StringBuffer hql = new StringBuffer();
@@ -35,10 +35,14 @@ public class WebBackFeedDaoImpl extends Basedao implements IWebBackFeedDao {
 			map.put("factno", factNo);
 		}
 		if (yymm != null && !yymm.equals("")) {
-			hql.append("and to_char(id.yymm,'yyyymm')=:yymm ");
+			hql.append("and to_char(id.yymm,'yyyymm')>=:yymm ");
 			map.put("yymm", yymm);
 		}
-		if(factNo.equals("nothing")&&(yymm==null||yymm.equals(""))){
+		if (yymm2 != null && !yymm2.equals("")) {
+			hql.append("and to_char(id.yymm,'yyyymm')<=:yymm2 ");
+			map.put("yymm2", yymm2);
+		}
+		if(factNo.equals("nothing")&&(yymm==null||yymm.equals(""))&&(yymm2==null||yymm2.equals(""))){
 			hql.append(" and id.factNo=:factno");
 			map.put("factno", factNo);
 		}

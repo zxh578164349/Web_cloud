@@ -14,6 +14,7 @@ import org.apache.struts2.interceptor.ServletResponseAware;
 
 import services.IWebBackFeedServices;
 import services.IWebCostServices;
+import util.GlobalMethod;
 import util.PageBean;
 
 import com.opensymphony.xwork2.ActionContext;
@@ -33,7 +34,16 @@ public class WebBackFeedAction extends ActionSupport implements
 	private String isnull;
 	private WebbackfeedId id;
 	private String ajaxResult;//申請函文時返回的ajax結果,   0:提交成功       1:提交失敗
+	private String yymm2;
 	
+
+	public String getYymm2() {
+		return yymm2;
+	}
+
+	public void setYymm2(String yymm2) {
+		this.yymm2 = yymm2;
+	}
 
 	public String getAjaxResult() {
 		return ajaxResult;
@@ -165,8 +175,9 @@ public class WebBackFeedAction extends ActionSupport implements
 		//ActionContext.getContext().getApplication().clear();
 		ActionContext.getContext().getSession().remove("public_factno");
 		ActionContext.getContext().getSession().remove("public_yymm");
+		ActionContext.getContext().getSession().remove("public_yymm2");
 		factNo = (String) ActionContext.getContext().getSession().get("factNo");
-		bean = feedSer.findPageBean(25, page, factNo, yymm);
+		bean = feedSer.findPageBean(25, page, factNo, yymm,yymm2);
 
 		return "beanList";
 
@@ -176,6 +187,7 @@ public class WebBackFeedAction extends ActionSupport implements
 		//ActionContext.getContext().getApplication().clear();
 		ActionContext.getContext().getSession().remove("public_factno");
 		ActionContext.getContext().getSession().remove("public_yymm");
+		ActionContext.getContext().getSession().remove("public_yymm2");
 		if (factNo != null && !factNo.equals("") && !factNo.equals("tw")) {
 			ActionContext.getContext().getSession().put("public_factno", factNo);
 					
@@ -183,8 +195,11 @@ public class WebBackFeedAction extends ActionSupport implements
 		if (yymm != null && !yymm.equals("")) {
 			ActionContext.getContext().getSession().put("public_yymm", yymm);
 		}
+		if (yymm2 != null && !yymm2.equals("")) {
+			ActionContext.getContext().getSession().put("public_yymm2", yymm2);
+		}
 
-		bean = feedSer.findPageBean(25, page, factNo, yymm);
+		bean = feedSer.findPageBean(25, page, factNo, yymm,yymm2);
 
 		return "beanList1";
 	}
@@ -192,17 +207,18 @@ public class WebBackFeedAction extends ActionSupport implements
 	public String findPageBean3() {
 		factNo = (String) ActionContext.getContext().getSession().get("public_factno");				
 		yymm = (String) ActionContext.getContext().getSession().get("public_yymm");
+		yymm2 = (String) ActionContext.getContext().getSession().get("public_yymm2");
 				
 		if (factNo == null || factNo.equals("") || factNo.equals("tw")) {
 			factNo = (String) ActionContext.getContext().getSession().get("factNo");					
 		}
-		bean = feedSer.findPageBean(25, page, factNo, yymm);
+		bean = feedSer.findPageBean(25, page, factNo, yymm,yymm2);
 
 		return "beanList1";
 
 	}
 
-	public String findPageBean2_print() {
+	/*public String findPageBean2_print() {
 		ActionContext.getContext().getApplication().clear();
 		if (factNo != null && !factNo.equals("") && !factNo.equals("tw")) {
 			ActionContext.getContext().getApplication()
@@ -231,7 +247,7 @@ public class WebBackFeedAction extends ActionSupport implements
 		}
 		bean = feedSer.findPageBean(10, page, factNo, yymm);
 		return "list";
-	}
+	}*/
 
 	public String findById() {
 		feed = feedSer.findById(id);
@@ -242,6 +258,15 @@ public class WebBackFeedAction extends ActionSupport implements
 	public String delete() {
 		feedSer.delete(id);
 		return "delete";
+	}
+	
+	/**
+	 * 打印文檔
+	 * @throws IOException 
+	 */
+	public void print() throws IOException{
+		List<Webbackfeed>list=feedSer.findByAny(factNo, yymm, yymm2);
+		GlobalMethod.print(list, factNo, yymm, yymm2, "webbackfeed.jasper", response);
 	}
 
 }

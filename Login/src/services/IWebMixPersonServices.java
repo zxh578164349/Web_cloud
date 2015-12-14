@@ -10,14 +10,14 @@ import entity.Webmixperson;
 import entity.WebmixpersonId;
 
 public interface IWebMixPersonServices {
-	// ·s¼W
+	// ï¿½sï¿½W
 	public void addWebMixPerson(Webmixperson mixperson);
 
-	// ®Ú¾Ú±ø¥ó¬d¸ß¼Æ¾Ú
+	// ï¿½Ú¾Ú±ï¿½ï¿½dï¿½ß¼Æ¾ï¿½
 	public List<Webmixperson> selectMixperson(String factNo, String yymm,
 			int page, int rows);
 
-	// ¬d¸ß¥þ³¡¼Æ¾ÚªºÁ`­¶¼Æ
+	// ï¿½dï¿½ß¥ï¿½ï¿½ï¿½ï¿½Æ¾Úªï¿½ï¿½`ï¿½ï¿½ï¿½ï¿½
 	public int totlePage(String factNo, String yymm);
 
 	public Webmixperson findById(WebmixpersonId id);
@@ -29,7 +29,9 @@ public interface IWebMixPersonServices {
 	public Webmixperson selBycan(String factNo, Date date, String factCode);
 	
 	public boolean check(String factNo,String factCode,String yymm);
-	public PageBean findPageBean(int pageSize,int page,String factNo,String yymm);
+	public PageBean findPageBean(int pageSize,int page,String factNo,String yymm,String yymm2);
 	public List<Webmixperson> findByAny(String factNo,String beginDate,String endDate);
 	public Webmixperson findById(String factNo,String factCode,String yymm);
+	
+	public List<Webmixperson> findByFactNoYm(String factNo,String yymm);
 }

@@ -10,7 +10,7 @@ public interface IWebEstProductServices {
 	public void add(Webestproduct product);
 
 	public PageBean findPageBean(int pageSize, int page, String factNo,
-			String yymm);
+			String yymm,String yymm2);
 
 	public List<Webestproduct> findByFactNo(String factNo);
 
@@ -29,7 +29,7 @@ public interface IWebEstProductServices {
 	public List<Webestproduct>findNullYpre(String factNo,String factCode,String yymm);
 	public List<Webestproduct>findByAny(String factNo,String beginDate,String endDate);
 	
-	//檢查當月沒有輸入數據的廠別
+	//嚙誼查嚙踝蕭嚙磅嚙踝蕭嚙踝蕭J嚙複據迎蕭嚙緣嚙瞌
 	public List<String[]> getFactPrint_show(String date);
 	public Object[] reportWebCashout(String factNo,String factCode,String yymm,String type);
 	public List<String> findtypeById(String factNo,String factCode,String yymm);

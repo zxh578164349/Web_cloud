@@ -74,9 +74,9 @@ public class WebScraptServicesImpl implements IWebScraptServices {
 	}
 
 	public PageBean findPageBean(int pageSize, int page, String factNo,
-			String yymm) {
+			String yymm,String yymm2) {
 		// TODO Auto-generated method stub
-		return scraptDao.findPageBean(pageSize, page, factNo, yymm);
+		return scraptDao.findPageBean(pageSize, page, factNo, yymm,yymm2);
 	}
 
 	public List<Webscrapt> findByAny(String factNo, String beginDate,

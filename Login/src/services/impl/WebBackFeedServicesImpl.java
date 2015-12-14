@@ -27,9 +27,9 @@ public class WebBackFeedServicesImpl implements IWebBackFeedServices {
 	}
 
 	public PageBean findPageBean(int pageSize, int page, String factNo,
-			String yymm) {
+			String yymm,String yymm2) {
 		// TODO Auto-generated method stub
-		return feedDao.findPageBean(pageSize, page, factNo, yymm);
+		return feedDao.findPageBean(pageSize, page, factNo, yymm,yymm2);
 	}
 
 	public List<Webbackfeed> findByFactNo(String factNo) {

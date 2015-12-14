@@ -72,9 +72,9 @@ public class WebMix2ServicesImpl implements IWebMix2Services {
 	}
 
 	public PageBean findPageBean(int pageSize, int page, String factNo,
-			String yymm) {
+			String yymm,String yymm2) {
 		// TODO Auto-generated method stub
-		return mix2Dao.findPageBean(pageSize, page, factNo, yymm);
+		return mix2Dao.findPageBean(pageSize, page, factNo, yymm,yymm2);
 	}
 
 	public List<Webmix2> findByAny(String factNo, String beginDate,

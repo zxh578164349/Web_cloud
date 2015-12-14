@@ -14,6 +14,7 @@ import org.apache.struts2.interceptor.ServletResponseAware;
 
 import services.IWebFactServices;
 import services.IWebScraptServices;
+import util.GlobalMethod;
 import util.Page;
 import util.PageBean;
 
@@ -40,7 +41,16 @@ public class WebScraptAction extends ActionSupport implements
 	private String bs;
 	private PageBean bean;
 	private String ajaxResult;//申請函文時返回的ajax結果,   0:提交成功       1:提交失敗
+	private String yymm2;
 	
+
+	public String getYymm2() {
+		return yymm2;
+	}
+
+	public void setYymm2(String yymm2) {
+		this.yymm2 = yymm2;
+	}
 
 	public String getAjaxResult() {
 		return ajaxResult;
@@ -301,31 +311,45 @@ public class WebScraptAction extends ActionSupport implements
 		//ActionContext.getContext().getApplication().clear();
 		ActionContext.getContext().getSession().remove("public_factno");
 		ActionContext.getContext().getSession().remove("public_yymm");
+		ActionContext.getContext().getSession().remove("public_yymm2");
 		factNo=(String)ActionContext.getContext().getSession().get("factNo");
-		bean=scraptService.findPageBean(25, page, factNo, yymm);
+		bean=scraptService.findPageBean(25, page, factNo, yymm,yymm2);
 		return "showList";
 	}
 	public String getList2(){
 		//ActionContext.getContext().getApplication().clear();
 		ActionContext.getContext().getSession().remove("public_factno");
 		ActionContext.getContext().getSession().remove("public_yymm");
+		ActionContext.getContext().getSession().remove("public_yymm2");
 		if(factNo!=null&&!factNo.equals("")){
 			ActionContext.getContext().getSession().put("public_factno", factNo);
 		}
 		if(yymm!=null&&!yymm.equals("")){
 			ActionContext.getContext().getSession().put("public_yymm", yymm);
 		}
-		bean=scraptService.findPageBean(25, page, factNo, yymm);
+		if(yymm2!=null&&!yymm2.equals("")){
+			ActionContext.getContext().getSession().put("public_yymm2", yymm2);
+		}
+		bean=scraptService.findPageBean(25, page, factNo, yymm,yymm2);
 		return "showList1";
 	}
 	public String getList3(){
 		factNo=(String)ActionContext.getContext().getSession().get("public_factno");
 		yymm=(String)ActionContext.getContext().getSession().get("public_yymm");
+		yymm2=(String)ActionContext.getContext().getSession().get("public_yymm2");
 		if(factNo==null||factNo.equals("")){
 			factNo=(String)ActionContext.getContext().getSession().get("factNo");
 		}
-		bean=scraptService.findPageBean(25, page, factNo, yymm);
+		bean=scraptService.findPageBean(25, page, factNo, yymm,yymm2);
 		return "showList1";
+	}
+	/**
+	 * 打印文檔
+	 * @throws IOException 
+	 */
+	public void print() throws IOException{
+		List<Webscrapt>list=scraptService.findByAny(factNo, yymm, yymm2);
+		GlobalMethod.print(list, factNo, yymm, yymm2, "webscrapt .jasper", response);
 	}
 
 }

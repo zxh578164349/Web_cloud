@@ -75,9 +75,9 @@ public class WebwloServicesImpl implements IWebwloServices {
 	}
 
 	public PageBean findPageBean(int pageSize, int page, String factNo,
-			String yymm) {
+			String yymm,String yymm2) {
 		// TODO Auto-generated method stub
-		return wloDao.findPageBean(pageSize, page, factNo, yymm);
+		return wloDao.findPageBean(pageSize, page, factNo, yymm,yymm2);
 	}
 
 	public List<Webwlo> findByAny(String factNo, String beginDate,String endDate){

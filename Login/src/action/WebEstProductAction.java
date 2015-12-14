@@ -18,6 +18,7 @@ import org.apache.struts2.interceptor.ServletResponseAware;
 
 import services.IWebEstProductServices;
 import services.IWebFactServices;
+import util.GlobalMethod;
 import util.JasperHelper;
 import util.PageBean;
 
@@ -42,8 +43,17 @@ public class WebEstProductAction extends ActionSupport implements
 	private IWebFactServices webFactSer;
 	private String lookordown;
 	private String ajaxResult;//申請函文時返回的ajax結果,   0:提交成功       1:提交失敗
+	private String yymm2;
 	
 	
+
+	public String getYymm2() {
+		return yymm2;
+	}
+
+	public void setYymm2(String yymm2) {
+		this.yymm2 = yymm2;
+	}
 
 	public String getAjaxResult() {
 		return ajaxResult;
@@ -188,8 +198,9 @@ public class WebEstProductAction extends ActionSupport implements
 		//ActionContext.getContext().getApplication().clear();
 		ActionContext.getContext().getSession().remove("public_factno");
 		ActionContext.getContext().getSession().remove("public_yymm");
+		ActionContext.getContext().getSession().remove("public_yymm2");
 		factNo = (String) ActionContext.getContext().getSession().get("factNo");
-		bean = estProSer.findPageBean(25, page, factNo, yymm);
+		bean = estProSer.findPageBean(25, page, factNo, yymm,yymm2);
 
 		return "beanList";
 
@@ -199,14 +210,18 @@ public class WebEstProductAction extends ActionSupport implements
 		//ActionContext.getContext().getApplication().clear();
 		ActionContext.getContext().getSession().remove("public_factno");
 		ActionContext.getContext().getSession().remove("public_yymm");
+		ActionContext.getContext().getSession().remove("public_yymm2");
 		if (factNo != null && !factNo.equals("") && !factNo.equals("tw")) {
 			ActionContext.getContext().getSession().put("public_factno", factNo);					
 		}
 		if (yymm != null && !yymm.equals("")) {
 			ActionContext.getContext().getSession().put("public_yymm", yymm);					
 		}
+		if (yymm2 != null && !yymm2.equals("")) {
+			ActionContext.getContext().getSession().put("public_yymm2", yymm2);					
+		}
 
-		bean = estProSer.findPageBean(25, page, factNo, yymm);
+		bean = estProSer.findPageBean(25, page, factNo, yymm,yymm2);
 
 		return "beanList1";
 	}
@@ -214,18 +229,18 @@ public class WebEstProductAction extends ActionSupport implements
 	public String findPageBean3() {
 		factNo = (String) ActionContext.getContext().getSession().get("public_factno");				
 		yymm = (String) ActionContext.getContext().getSession().get("public_yymm");
-				
+		yymm2 = (String) ActionContext.getContext().getSession().get("public_yymm2");		
 		if (factNo == null || factNo.equals("") || factNo.equals("tw")) {
 			factNo = (String) ActionContext.getContext().getSession().get("factNo");
 					
 		}
-		bean = estProSer.findPageBean(25, page, factNo, yymm);
+		bean = estProSer.findPageBean(25, page, factNo, yymm,yymm2);
 
 		return "beanList1";
 
 	}
 
-	public String findPageBean2_print() {
+	/*public String findPageBean2_print() {
 		ActionContext.getContext().getApplication().clear();
 		if (factNo != null && !factNo.equals("") && !factNo.equals("tw")) {
 			ActionContext.getContext().getApplication().put("print_estpro_factNo", factNo);					
@@ -252,7 +267,7 @@ public class WebEstProductAction extends ActionSupport implements
 		}
 		bean = estProSer.findPageBean(10, page, factNo, yymm);
 		return "list";
-	}
+	}*/
 
 	public String findById() {
 		pro = estProSer.findById(id);
@@ -395,6 +410,11 @@ public class WebEstProductAction extends ActionSupport implements
 		}else{
 			JasperHelper.exportmain("excel", map,"webestproduct.jasper", list_zd,yymm, "jasper/audit/");
 		}
+	}
+	
+	public void print2() throws IOException{
+		List<Webestproduct>list=estProSer.findByAny(factNo, yymm, yymm2);
+		GlobalMethod.print(list, factNo, yymm, yymm2, "webestproduct.jasper", response);
 	}
 
 }

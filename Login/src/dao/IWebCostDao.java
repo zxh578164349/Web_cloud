@@ -10,7 +10,7 @@ public interface IWebCostDao {
 	public void add(Webcost cost);
 
 	public PageBean findPageBean(int pageSize, int page, String factNo,
-			String yymm);
+			String yymm,String yymm2);
 
 	public List<Webcost> findByFactNo(String factNo);
 
@@ -20,5 +20,7 @@ public interface IWebCostDao {
 	
 	public List<Webcost>findByAny(String factNo,String beginDate,String endDate);
 	public Webcost findById(String factNo,String factCode,String yymm);
+	
+	public List<Webcost> findByFactNoYm(String factNo,String yymm);
 
 }

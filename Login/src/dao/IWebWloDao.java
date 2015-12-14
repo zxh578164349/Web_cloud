@@ -9,14 +9,14 @@ import entity.Webwlo;
 import entity.WebwloId;
 
 public interface IWebWloDao {
-	// ·s¼W
+	// ï¿½sï¿½W
 	public void addWebWloDao(Webwlo wlo);
 
-	// ®Ú¾Ú±ø¥ó¬d¸ß¼Æ¾Ú
+	// ï¿½Ú¾Ú±ï¿½ï¿½dï¿½ß¼Æ¾ï¿½
 	public List<Webwlo> selectWloDao(String factNo, String yymm, int page,
 			int rows);
 
-	// ¬d¸ß¥þ³¡¼Æ¾ÚªºÁ`­¶¼Æ
+	// ï¿½dï¿½ß¥ï¿½ï¿½ï¿½ï¿½Æ¾Úªï¿½ï¿½`ï¿½ï¿½ï¿½ï¿½
 	public int totlePage(String factNo, String yymm);
 
 	public Webwlo findById(WebwloId id);
@@ -26,7 +26,8 @@ public interface IWebWloDao {
 	public void delete(WebwloId id);
 
 	public Webwlo selBycan(String factNo, java.util.Date date, String factCode);
-	public PageBean findPageBean(int pageSize,int page,String factNo,String yymm);
+	public PageBean findPageBean(int pageSize,int page,String factNo,String yymm,String yymm2);
 	public List<Webwlo> findByAny(String factNo, String beginDate,String endDate);
 	public Webwlo findById(String factNo,String factCode,String yymm);
+	
 }

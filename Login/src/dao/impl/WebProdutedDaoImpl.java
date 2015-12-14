@@ -167,7 +167,7 @@ public class WebProdutedDaoImpl extends Basedao implements IWebProdutedDao {
 	}
 
 	public PageBean findPageBean(int pageSize, int page, String factNo,
-			String yymm) {
+			String yymm,String yymm2) {
 		// TODO Auto-generated method stub
 		StringBuffer hql=new StringBuffer();
 		StringBuffer hql2=new StringBuffer();
@@ -181,10 +181,14 @@ public class WebProdutedDaoImpl extends Basedao implements IWebProdutedDao {
 			map.put("factno", factNo);
 		}
 		if(yymm!=null&&!yymm.equals("")){
-			hql.append(" and to_char(id.yymm,'yyyymm')=:yymm");
+			hql.append(" and to_char(id.yymm,'yyyymm')>=:yymm");
 			map.put("yymm", yymm);
 		}
-		if(factNo.equals("nothing")&&(yymm==null||yymm.equals(""))){
+		if(yymm2!=null&&!yymm2.equals("")){
+			hql.append(" and to_char(id.yymm,'yyyymm')<=:yymm2");
+			map.put("yymm2", yymm2);
+		}
+		if(factNo.equals("nothing")&&(yymm==null||yymm.equals(""))&&(yymm2==null||yymm2.equals(""))){
 			hql.append(" and id.factNo=:factno");
 			map.put("factno", factNo);
 		}
@@ -248,6 +252,23 @@ public class WebProdutedDaoImpl extends Basedao implements IWebProdutedDao {
 		query.setString(2, yymm);
 		Webproduted pro=(Webproduted)query.uniqueResult();
 		return pro;
+	}
+
+	public List<Webproduted> findByFactNoYm(String factNo, String yymm) {
+		// TODO Auto-generated method stub
+		StringBuffer hql=new StringBuffer();
+		Map<String,Object>map=new HashMap<String,Object>();
+		hql.append("from Webproduted where 1=1 ");
+		if(factNo!=null&&!factNo.equals("")&&!factNo.equals("tw")){
+			hql.append(" and id.factNo=:factno");
+			map.put("factno", factNo);
+		}
+		if(yymm!=null&&!yymm.equals("")){
+			hql.append(" and to_char(id.yymm,'yyyymm')=:yymm");
+			map.put("yymm", yymm);
+		}
+		hql.append(" order by id.factNo,id.yymm desc");
+		return super.getAllWithNoPage(hql.toString(), map);
 	}
 
 }

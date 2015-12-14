@@ -10,7 +10,7 @@ public interface IWebBackFeedDao {
 	public void add(Webbackfeed feed);
 
 	public PageBean findPageBean(int pageSize, int page, String factNo,
-			String yymm);
+			String yymm,String yymm2);
 
 	public List<Webbackfeed> findByFactNo(String factNo);
 

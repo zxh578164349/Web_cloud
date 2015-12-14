@@ -5,7 +5,9 @@ import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -17,6 +19,8 @@ import com.opensymphony.xwork2.ActionSupport;
 
 import services.IWebFactServices;
 import services.IWebwloServices;
+import util.GlobalMethod;
+import util.JasperHelper;
 import util.Page;
 import util.PageBean;
 import entity.Webscrapt;
@@ -39,7 +43,17 @@ public class WebWloAction extends ActionSupport implements ServletResponseAware 
 	private String bs;
 	private PageBean bean;
 	private String ajaxResult;//申請函文時返回的ajax結果,   0:提交成功       1:提交失敗
+	private String yymm2;
 	
+	
+
+	public String getYymm2() {
+		return yymm2;
+	}
+
+	public void setYymm2(String yymm2) {
+		this.yymm2 = yymm2;
+	}
 
 	public String getAjaxResult() {
 		return ajaxResult;
@@ -302,31 +316,45 @@ public class WebWloAction extends ActionSupport implements ServletResponseAware 
 		//ActionContext.getContext().getApplication().clear();
 		ActionContext.getContext().getSession().remove("public_factno");
 		ActionContext.getContext().getSession().remove("public_yymm");
+		ActionContext.getContext().getSession().remove("public_yymm2");
 		factNo=(String)ActionContext.getContext().getSession().get("factNo");
-		bean=wloService.findPageBean(25, page, factNo, yymm);
+		bean=wloService.findPageBean(25, page, factNo, yymm,yymm2);
 		return "showList";
 	}
 	public String getList2(){
 		//ActionContext.getContext().getApplication().clear();
 		ActionContext.getContext().getSession().remove("public_factno");
 		ActionContext.getContext().getSession().remove("public_yymm");
+		ActionContext.getContext().getSession().remove("public_yymm2");
 		if(factNo!=null&&!factNo.equals("")){
 			ActionContext.getContext().getSession().put("public_factno", factNo);
 		}
 		if(yymm!=null&&!yymm.equals("")){
 			ActionContext.getContext().getSession().put("public_yymm", yymm);
 		}
-		bean=wloService.findPageBean(25, page, factNo, yymm);
+		if(yymm2!=null&&!yymm2.equals("")){
+			ActionContext.getContext().getSession().put("public_yymm2", yymm2);
+		}
+		bean=wloService.findPageBean(25, page, factNo, yymm,yymm2);
 		return "showList1";
 	}
 	public String getList3(){
 		factNo=(String)ActionContext.getContext().getSession().get("public_factno");
 		yymm=(String)ActionContext.getContext().getSession().get("public_yymm");
+		yymm2=(String)ActionContext.getContext().getSession().get("public_yymm2");
 		if(factNo==null||factNo.equals("")){
 			factNo=(String)ActionContext.getContext().getSession().get("factNo");
 		}
-		bean=wloService.findPageBean(25, page, factNo, yymm);
+		bean=wloService.findPageBean(25, page, factNo, yymm,yymm2);
 		return "showList1";
+	}
+	/**
+	 * 打印文檔
+	 * @throws IOException 
+	 */
+	public void print() throws IOException{
+		List<Webwlo>list=wloService.findByAny(factNo, yymm, yymm2);
+		GlobalMethod.print(list, factNo, yymm, yymm2, "webwlo.jasper",response);
 	}
 
 }

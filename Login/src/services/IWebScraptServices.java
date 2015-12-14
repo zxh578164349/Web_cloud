@@ -10,14 +10,14 @@ import entity.Webscrapt;
 import entity.WebscraptId;
 
 public interface IWebScraptServices {
-	// ·s¼W
+	// ï¿½sï¿½W
 	public void addWebScraptDao(Webscrapt scrapt);
 
-	// ®Ú¾Ú±ø¥ó¬d¸ß¼Æ¾Ú
+	// ï¿½Ú¾Ú±ï¿½ï¿½dï¿½ß¼Æ¾ï¿½
 	public List<Webscrapt> selectScrapt(String factNo, String yymm, int page,
 			int rows);
 
-	// ¬d¸ß¥þ³¡¼Æ¾ÚªºÁ`­¶¼Æ
+	// ï¿½dï¿½ß¥ï¿½ï¿½ï¿½ï¿½Æ¾Úªï¿½ï¿½`ï¿½ï¿½ï¿½ï¿½
 	public int totlePage(String factNo, String yymm);
 
 	public Webscrapt findById(WebscraptId id);
@@ -28,7 +28,7 @@ public interface IWebScraptServices {
 
 	public Webscrapt selBycan(String factNo, Date date, String factCode);
 	public boolean check(String factNo,String factCode,String yymm);
-	public PageBean findPageBean(int pageSize,int page,String factNo,String yymm);
+	public PageBean findPageBean(int pageSize,int page,String factNo,String yymm,String yymm2);
 	public List<Webscrapt> findByAny(String factNo,String beginDate,String endDate);
 	public Webscrapt findById(String factNo,String factCode,String yymm);
 }

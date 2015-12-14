@@ -165,6 +165,13 @@ public class KpifactAction extends ActionSupport implements ServletResponseAware
 		String temp=format.format(s);
 		return temp;
 	}
+	
+	/**
+	 * 打印文檔
+	 */
+	public void print(){
+		
+	}
 
 	
 

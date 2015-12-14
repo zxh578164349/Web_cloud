@@ -73,9 +73,9 @@ public class WebProdutedServicesImpl implements IWebProdutedServices {
 	}
 
 	public PageBean findPageBean(int pageSize, int page, String factNo,
-			String yymm) {
+			String yymm,String yymm2) {
 		// TODO Auto-generated method stub
-		return produtedDao.findPageBean(pageSize, page, factNo, yymm);
+		return produtedDao.findPageBean(pageSize, page, factNo, yymm,yymm2);
 	}
 
 	public List<Webproduted> findByAny(String factNo, String beginDate,
@@ -87,6 +87,11 @@ public class WebProdutedServicesImpl implements IWebProdutedServices {
 	public Webproduted findById(String factNo, String factCode, String yymm) {
 		// TODO Auto-generated method stub
 		return produtedDao.findById(factNo, factCode, yymm);
+	}
+
+	public List<Webproduted> findByFactNoYm(String factNo, String yymm) {
+		// TODO Auto-generated method stub
+		return produtedDao.findByFactNoYm(factNo, yymm);
 	}
 
 }

@@ -9,14 +9,14 @@ import entity.Webmix2;
 import entity.Webmix2Id;
 
 public interface IWebMix2Services {
-	// ·s¼W
+	// ï¿½sï¿½W
 	public void addWebMix2(Webmix2 mix2);
 
-	// ®Ú¾Ú±ø¥ó¬d¸ß¼Æ¾Ú
+	// ï¿½Ú¾Ú±ï¿½ï¿½dï¿½ß¼Æ¾ï¿½
 	public List<Webmix2> selectMix2(String factNo, String yymm, int page,
 			int rows);
 
-	// ¬d¸ß¥þ³¡¼Æ¾ÚªºÁ`­¶¼Æ
+	// ï¿½dï¿½ß¥ï¿½ï¿½ï¿½ï¿½Æ¾Úªï¿½ï¿½`ï¿½ï¿½ï¿½ï¿½
 	public int totlePage(String factNo, String yymm);
 
 	public Webmix2 findById(Webmix2Id id);
@@ -27,7 +27,7 @@ public interface IWebMix2Services {
 
 	public Webmix2 selBycan(String factNo, Date date, String factCode);
 	public boolean check(String factNo,String factCode,String yymm);
-	public PageBean findPageBean(int pageSize,int page,String factNo,String yymm);
+	public PageBean findPageBean(int pageSize,int page,String factNo,String yymm,String yymm2);
 	
 	public List<Webmix2> findByAny(String factNo,String beginDate,String endDate);
 	public Webmix2 findById(String factNo,String factCode,String yymm);

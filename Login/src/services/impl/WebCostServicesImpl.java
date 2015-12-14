@@ -25,9 +25,9 @@ public class WebCostServicesImpl implements IWebCostServices {
 	}
 
 	public PageBean findPageBean(int pageSize, int page, String factNo,
-			String yymm) {
+			String yymm,String yymm2) {
 		// TODO Auto-generated method stub
-		return costDao.findPageBean(pageSize, page, factNo, yymm);
+		return costDao.findPageBean(pageSize, page, factNo, yymm,yymm2);
 	}
 
 	public List<Webcost> findByFactNo(String factNo) {
@@ -79,5 +79,10 @@ public class WebCostServicesImpl implements IWebCostServices {
 	public Webcost findById(String factNo, String factCode, String yymm) {
 		// TODO Auto-generated method stub
 		return costDao.findById(factNo, factCode, yymm);
+	}
+
+	public List<Webcost> findByFactNoYm(String factNo, String yymm) {
+		// TODO Auto-generated method stub
+		return costDao.findByFactNoYm(factNo, yymm);
 	}
 }	

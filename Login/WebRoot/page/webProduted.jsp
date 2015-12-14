@@ -56,14 +56,16 @@
 			}
 		});
 	}
-	function submis() {
+	function submis(public_form) {
 		var fact = document.getElementById("factNo");
 		var ym = document.getElementById("year");
+		var subform=jq("#"+public_form);
 		jq.ajax({
 			type : "POST",
 			dataType : "Html",
 			url : "webProduted_getList2",
-			data : "factNo=" + fact.value + "&yymm=" + ym.value,
+			//data : "factNo=" + fact.value + "&yymm=" + ym.value,
+			data:subform.serialize(),
 			success : function(msg) {	
 				jq("#bodyid").html(msg);
 			},
@@ -93,10 +95,18 @@
 			}
 		});
 	}
+	function print(public_form){
+		var subform=jq("#"+public_form);
+		subform.attr("action","webProduted_print");
+		subform.attr("target","_blank");
+		subform.submit();
+		//jq("#"+subform).removeAttr("action");
+		//jq("#"+subform).removeAttr("target");
+	}
 </script>
 
 <body>
-	<jsp:include page="publicHead.jsp" />
+	<jsp:include page="publicHead_print.jsp" />
 	<hr />
 	<s:if test='#session.loginUser.userread!="1"'>
 	<input value="添加" type="button" id="addbtn"

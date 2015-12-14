@@ -10,14 +10,14 @@ import entity.Webproduted;
 import entity.WebprodutedId;
 
 public interface IWebProdutedServices {
-	// ·s¼W
+	// ï¿½sï¿½W
 	public void addWebProdutedDao(Webproduted produte);
 
-	// ®Ú¾Ú±ø¥ó¬d¸ß¼Æ¾Ú
+	// ï¿½Ú¾Ú±ï¿½ï¿½dï¿½ß¼Æ¾ï¿½
 	public List<Webproduted> selectProduted(String factNo, String yymm,
 			int page, int rows);
 
-	// ¬d¸ß¥þ³¡¼Æ¾ÚªºÁ`­¶¼Æ
+	// ï¿½dï¿½ß¥ï¿½ï¿½ï¿½ï¿½Æ¾Úªï¿½ï¿½`ï¿½ï¿½ï¿½ï¿½
 	public int totlePage(String factNo, String yymm);
 
 	public Webproduted findById(WebprodutedId id);
@@ -28,7 +28,8 @@ public interface IWebProdutedServices {
 
 	public Webproduted selBycan(String factNo, Date date, String factCode);
 	public boolean check(String factNo,String factCode,String yymm);
-	public PageBean findPageBean(int pageSize,int page,String factNo,String yymm);
+	public PageBean findPageBean(int pageSize,int page,String factNo,String yymm,String yymm2);
 	public List<Webproduted> findByAny(String factNo,String beginDate,String endDate);
 	public Webproduted findById(String factNo,String factCode,String yymm);
+	public List<Webproduted>findByFactNoYm(String factNo,String yymm);
 }
