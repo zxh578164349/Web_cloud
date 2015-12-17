@@ -178,9 +178,7 @@ public class WebBackFeedAction extends ActionSupport implements
 		ActionContext.getContext().getSession().remove("public_yymm2");
 		factNo = (String) ActionContext.getContext().getSession().get("factNo");
 		bean = feedSer.findPageBean(25, page, factNo, yymm,yymm2);
-
 		return "beanList";
-
 	}
 
 	public String findPageBean2() {
@@ -189,8 +187,7 @@ public class WebBackFeedAction extends ActionSupport implements
 		ActionContext.getContext().getSession().remove("public_yymm");
 		ActionContext.getContext().getSession().remove("public_yymm2");
 		if (factNo != null && !factNo.equals("") && !factNo.equals("tw")) {
-			ActionContext.getContext().getSession().put("public_factno", factNo);
-					
+			ActionContext.getContext().getSession().put("public_factno", factNo);					
 		}
 		if (yymm != null && !yymm.equals("")) {
 			ActionContext.getContext().getSession().put("public_yymm", yymm);
@@ -198,22 +195,18 @@ public class WebBackFeedAction extends ActionSupport implements
 		if (yymm2 != null && !yymm2.equals("")) {
 			ActionContext.getContext().getSession().put("public_yymm2", yymm2);
 		}
-
 		bean = feedSer.findPageBean(25, page, factNo, yymm,yymm2);
-
 		return "beanList1";
 	}
 
 	public String findPageBean3() {
 		factNo = (String) ActionContext.getContext().getSession().get("public_factno");				
 		yymm = (String) ActionContext.getContext().getSession().get("public_yymm");
-		yymm2 = (String) ActionContext.getContext().getSession().get("public_yymm2");
-				
+		yymm2 = (String) ActionContext.getContext().getSession().get("public_yymm2");		
 		if (factNo == null || factNo.equals("") || factNo.equals("tw")) {
 			factNo = (String) ActionContext.getContext().getSession().get("factNo");					
 		}
 		bean = feedSer.findPageBean(25, page, factNo, yymm,yymm2);
-
 		return "beanList1";
 
 	}

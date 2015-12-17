@@ -367,8 +367,10 @@ public class WebYdataAction extends ActionSupport implements
 					if(list_sumYdata.size()>0){
 						for(int k=0;k<list_sumYdata.size();k++){
 							SumWebYieldData sumYdata=list_sumYdata.get(k);
-							sumydateSer.delete(sumYdata);
-							this.add_sumYdata(ydata.getId().getFactNo(), list_yymm.get(i), sumYdata.getStartDate(), sumYdata.getEndDate());
+							if(sumYdata!=null){
+								sumydateSer.delete(sumYdata);
+								this.add_sumYdata(ydata.getId().getFactNo(), list_yymm.get(i), sumYdata.getStartDate(), sumYdata.getEndDate());
+							}							
 						}
 					}							
 				}							

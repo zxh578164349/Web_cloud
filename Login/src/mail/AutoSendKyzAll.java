@@ -43,6 +43,7 @@ import services.IKyzExpectmatmServices;
 import services.IKyzVisaFlowServices;
 import services.IWebFactServices;
 import services.IWebuserEmailServices;
+import util.Log4j;
 
 import com.opensymphony.xwork2.ActionContext;
 import com.spreada.utils.chinese.ZHConverter;
@@ -95,7 +96,7 @@ public class AutoSendKyzAll extends QuartzJobBean{
 				String emailUrl="http://203.85.73.161/Login/vbm_findById_email?visaSort="+visaSort+"& billNo="+billNo
 				         +"& factNo="+factNo+"& email="+signerNext;*/
 				
-				try {
+				try {					
 					if(billNo.substring(0, 2).equals("EM")){
 						this.addVisabillsAndEmail(factNo, billNo, visaSort);
 					}else{
@@ -103,14 +104,22 @@ public class AutoSendKyzAll extends QuartzJobBean{
 					}
 					mailInfo.setSubject("發送Email成功"+billNo);
 					sms.sendHtmlMail(mailInfo);
-				} catch (IOException e) {
+					
+					
+					System.out.println(i+"_"+billNo+"OK");
+				} catch (Exception e) {
 					// TODO Auto-generated catch block
-					//e.printStackTrace();
+					
+					e.printStackTrace();
 					mailInfo.setSubject("發送Email失敗"+billNo);
-					sms.sendHtmlMail(mailInfo);
-				}						
+					sms.sendHtmlMail(mailInfo);					
+					System.out.println(i+"_"+billNo+"Faile");
+					Log4j.getError(e);//log4j日記
+				}
+				
 				list_vbm.get(i).setEmailMk("Y");//表示已發送郵件
 				visabillmSer.add(list_vbm.get(i));
+				
 			}//end for
 		}//end if										
 	}

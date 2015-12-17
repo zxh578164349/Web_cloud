@@ -22,14 +22,14 @@ import services.IWebEmailService;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration (locations={"classpath:spring.xml", "classpath:spring-dao.xml" ,    "classpath:spring-services.xml"})
 public class AutoEmail {
-	@Resource(name= "emailService") //ª`¤Jbean¬x
+	@Resource(name= "emailService") //ï¿½`ï¿½Jbeanï¿½x
     private IWebEmailService emailService;
 	@Test	
 	public void test() throws UnsupportedEncodingException {
 		AutoSendEmailAction send = new AutoSendEmailAction();
-		String[]to={MimeUtility.encodeText("¬x","utf-8","Q")+"<kyinfo.David@yyin.yydg.com.cn>"};
-		String[]cc={MimeUtility.encodeText("¬x")+"<zxh578164349@qq.com>"};
-		send.sendmail(to, cc, "¥DÃD´ú¸Õ", "¤º®e´ú¸Õ", "¤é´Á´ú¸Õ");				
+		String[]to={MimeUtility.encodeText("æ´ª","utf-8","Q")+"<kyinfo.David@yyin.yydg.com.cn>"};
+		String[]cc={MimeUtility.encodeText("æ´ª")+"<zxh578164349@qq.com>"};
+		send.sendmail(to, cc, "ä¸»é¡Œæ¸¬è©¦", "å…§å®¹æ¸¬è©¦", "æ—¥æœŸæ¸¬è©¦");				
 	}
 
 }

@@ -30,7 +30,7 @@
 	<bean id="ypreAction" class="action.WebYPreAction" scope="prototype" />	
 	<bean id="data" class="action.DataAction" scope="prototype" />
 	<bean id="webFactAction" class="action.WebFactAction" scope="prototype" />
-	<bean id="preAndDataActionireport" class="action.PreAndDataAction_ireport" scope="prototype" />	
+	<!-- <bean id="preAndDataActionireport" class="action.PreAndDataAction_ireport" scope="prototype" /> -->	
 	<bean id="preAndDataActionipoi" class="action.PreAndDataAction_Poi" scope="prototype" />		
 	<bean id="mixAction_machine" class="action.MchObackOInvAction" scope="prototype" />									
 	<bean id="webmix1Action" class="action.WebMix1Action" scope="prototype" />									
