@@ -54,9 +54,10 @@ $(document).ready(function(){
 
 /*通用样式--容器宽度值*/
 .bigfont{font-size:16px;font-weight:bold;color:green}
-.sharp{width:100%;float:left;text-align:center}
-.sharp .content div{padding-left:0px;text-indent:2em;}
+.sharp{width:100%;float:left;text-align:left;padding-left:0}
+.sharp .content div{padding-left:2px;}
 content{height:auto;}
+a{vertical-align:bottom}
 a:link{color:#335AA4;text-decoration:none}
 a:visited{color:#335AA4; text-decoration:none;} 
 a:hover{text-decoration:none; border-bottom:1px red solid;color:red;}
@@ -100,27 +101,27 @@ a:hover{text-decoration:none; border-bottom:1px red solid;color:red;}
 				<tr>
 					<td>
 					<img style="border: 0px;" id="img${x.index}" src="image/folder.gif">							
-					<a href="javascript:showDiv(${x.index})" style="color:#335AA4;">						
-						<span id="a${x.index}"><s:property value="webMenu.menuname" /></span></a>									
-						<div id="${x.index}" style="display:none;width:150px;height:auto; padding-left:2px; ">							
-							<table style="line-height: 20px;">
-								<s:iterator value="webSubmenus" status="x">									
-										<tr>
-											<td>
+					<a href="javascript:showDiv(${x.index})" style="color:#335AA4">						
+						<span id="a${x.index}"><s:property value="webMenu.menuname" /></span>
+					</a>									
+						<div id="${x.index}" style="display:none;width:150px;height:auto; padding-left:2px; ">														
+								<s:iterator value="webSubmenus" status="x">																		
+										  <div style="width:150px;height:24px;overflow:hidden">
 											<a href="<s:property value="address"/>?type=<s:property value='subtype'/>" 
 											style="border-bottom:0px" target="show" onclick="window.parent.showPop()">
 											  <img style="border:0px;" src="images/files.gif"> 												
 											</a>
 											<a name="alink"
 												href="<s:property value="address"/>?type=<s:property value='subtype'/>"
-												 style="font-size:12px" target="show"
-												onclick="window.parent.showPop()">(${x.index+1})<s:property
-														value="submenuname" /> </a>											
-											</td>
-										</tr>								
+												 style="font-size:12px" target="show" 
+												onclick="window.parent.showPop()" title="<s:property value='submenuname'/>">												
+												(${x.index+1})<s:property value="submenuname"/>																																			
+											</a>
+										  </div>																												
 								</s:iterator>
-							</table>
-						</div></td> 
+							
+						</div>
+					</td> 
 				</tr>
 			</s:iterator>
 			</tbody>
