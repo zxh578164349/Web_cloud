@@ -41,5 +41,12 @@
         <property name="closeDate" type="java.lang.String">
             <column name="CLOSE_DATE" length="10"></column>
         </property>
+        <bag name="list_webtabpom" table="WEB_TABPOM_FACT" cascade="all">
+           <key>
+              <column name="webfact_id"/>
+              <column name="webfactarea_id"/>
+           </key>
+           <many-to-many column="webtabpom_id" class="entity.WebTabpom"/>
+        </bag>
     </class>
 </hibernate-mapping>

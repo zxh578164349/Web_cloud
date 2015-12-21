@@ -95,5 +95,6 @@
 	<bean id="webtypeDao" class="dao.impl.WebTypeDaoImpl" parent="baseDao"></bean>
 	<bean id="webuseremailaDao" class="dao.impl.WebuserEmailADaoImpl" parent="baseDao"></bean>
 	<bean id="kyzExpLogDao" class="dao.impl.KyzExpectmatmLogDaoImpl" parent="baseDao"></bean>
+	<bean id="tabpomDao" class="dao.impl.WebTabpomDaoImpl" parent="baseDao"></bean>
 </beans>
 

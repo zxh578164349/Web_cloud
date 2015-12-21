@@ -680,6 +680,14 @@
 		    </result>
 		    <result name="deleteFirst" type="redirectAction">visaflow_findPageBean3</result>		   
 		</action>
+		<action name="webtabpom_*" class="webtabpomAction" method="{1}">
+		    <result name="add" type="json">
+		        <param name="root">ajaxResult</param>
+		    </result>
+		    <result name="beanList">page/webTabpom.jsp</result>
+		    <result name="beanList1">page/table1/webTabpom1.jsp</result>
+		    <result name="findById">/saveAndUpdate/WebTabpomSaveOrUpdate2.jsp</result>		    
+		</action>
 	</package>
 
 </struts>

@@ -307,7 +307,12 @@
 	       document.getElementById("webemaila1").innerHTML='<input name="checkbox" value="用戶管理,知會人管理,webuseremaila_findPageBean" type="checkbox" />知會人管理'																                                             
 	    }
 	    
-	      	    	 
+	    var i56=document.getElementById("webtabpom");
+	    if(i56!=null){
+	       document.getElementById("webtabpom1").innerHTML="";
+	    }else{
+	       document.getElementById("webtabpom1").innerHTML='<input name="checkbox" value="KPI數據,實驗室形體物性,webtabpom_findPageBean" type="checkbox" />實驗室形體物性'															                                             
+	    }	         	    	 
 }
 		
 function getSub(){
@@ -468,6 +473,19 @@ function back(){
 							      </s:iterator>							   
 							   </s:iterator>
 							   <span id="webtype1"></span>
+							</td>
+							 <td>
+							   <s:iterator value="#session.user.webJurisdictions">
+							      <s:iterator value="webSubmenus">
+							          <s:if test="submenuname=='實驗室形體物性'">
+							             <span id="webtabpom">
+							                 <input name="checkbox" value="KPI數據,實驗室形體物性,webtabpom_findPageBean" checked="checked" type="checkbox">
+							                                              實驗室形體物性
+							             </span>
+							          </s:if>
+							      </s:iterator>							   
+							   </s:iterator>
+							   <span id="webtabpom1"></span>
 							</td>
 						</tr>
 					</table></td>

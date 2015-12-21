@@ -1,5 +1,8 @@
 package entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * WebFact entity. @author MyEclipse Persistence Tools
  */
@@ -18,6 +21,8 @@ public class WebFact implements java.io.Serializable {
 	private String factDisable;
 	private String openDate;
 	private String closeDate;
+	
+	private List<WebTabpom>list_webtabpom=new ArrayList<WebTabpom>();
 
 	// Constructors
 
@@ -127,6 +132,16 @@ public class WebFact implements java.io.Serializable {
 	public void setCloseDate(String closeDate) {
 		this.closeDate = closeDate;
 	}
+
+	public List<WebTabpom> getList_webtabpom() {
+		return list_webtabpom;
+	}
+
+	public void setList_webtabpom(List<WebTabpom> list_webtabpom) {
+		this.list_webtabpom = list_webtabpom;
+	}
+	
+	
 	
 	
 	

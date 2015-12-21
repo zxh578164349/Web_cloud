@@ -78,7 +78,9 @@
 	<bean id="kyzcontactletterAction" class="action.KyzContactLetterAction" scope="prototype"/>
 	<bean id="kyzAction" class="action.KyzExpcetmatmAction" scope="prototype" />
 	<bean id="visabillmAction" class="action.KyVisaBillmAction" scope="prototype"/>
-	<bean id="kyzVisaFlowAction" class="action.KyzVisaFlowAction" scope="prototype"/>	
+	<bean id="kyzVisaFlowAction" class="action.KyzVisaFlowAction" scope="prototype"/>
+	
+	<bean id="webtabpomAction" class="action.WebTabpomAction" scope="prototype"/>	
 	
 </beans> 
 
