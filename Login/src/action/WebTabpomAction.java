@@ -10,6 +10,7 @@ import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
 import entity.WebFact;
+import entity.WebFactId;
 import entity.WebTabpom;
 
 public class WebTabpomAction extends ActionSupport{
@@ -104,9 +105,15 @@ public class WebTabpomAction extends ActionSupport{
 			try{
 				if(list_fact.size()>0){
 					List<WebFact>list_factobj=new ArrayList<WebFact>();
+					WebFact fact=new WebFact();
+					WebFactId factid=new WebFactId();
 					for(int i=0;i<list_fact.size();i++){
-						
+						factid.setFactNo(list_fact.get(i));
+						factid.setFactArea(tabpom.getComponent());
+						fact.setId(factid);
+						list_factobj.add(fact);
 					}
+					tabpom.setList_fact(list_factobj);
 				}
 				tabpomSer.add(tabpom);
 				ajaxResult="0";

@@ -368,7 +368,7 @@ public class WebYdataAction extends ActionSupport implements
 						for(int k=0;k<list_sumYdata.size();k++){
 							SumWebYieldData sumYdata=list_sumYdata.get(k);
 							if(sumYdata!=null){
-								sumydateSer.delete(sumYdata);
+								//sumydateSer.delete(sumYdata);
 								this.add_sumYdata(ydata.getId().getFactNo(), list_yymm.get(i), sumYdata.getStartDate(), sumYdata.getEndDate());
 							}							
 						}
@@ -743,36 +743,39 @@ public class WebYdataAction extends ActionSupport implements
 		for(int i=0;i<list.size();i++){
 			String factcode=(String)list.get(i);
 			Object[]objs=dataSer.getSumWebYieldDate(factNo, factcode, startDate, endDate);
+			List<WebYieldData>list_ydata=dataSer.findYdateSdateToEnddate(factNo, factcode, startDate, endDate);
 			SumWebYieldData ydate=new SumWebYieldData();
 			SumWebYieldDataId id=new SumWebYieldDataId();
 			id.setFactNo(factNo);
 			id.setFactCode(factcode);
 			id.setYymm(yymm);
 			ydate.setId(id);
-			BigDecimal onModulus=new BigDecimal(objs[0].toString());
-			BigDecimal personnum=new BigDecimal(objs[1].toString());
-			BigDecimal standardOutput=new BigDecimal(objs[2].toString());
-			BigDecimal actualYield=new BigDecimal(objs[3].toString());
-			BigDecimal daycount=new BigDecimal(objs[4].toString());
-			BigDecimal actualpairs=new BigDecimal(objs[5].toString());
-			BigDecimal hostpairs=new BigDecimal(objs[6].toString());
-			BigDecimal factpairs=new BigDecimal(objs[7].toString());
-			BigDecimal samplepairs=new BigDecimal(objs[8].toString());
-			BigDecimal outnum=new BigDecimal(objs[9].toString());
-			BigDecimal backnum=new BigDecimal(objs[10].toString());
-			Double workhours=(Double)objs[11];
-			ydate.setSumEverydemo(onModulus);
-			ydate.setSumEverypeople(personnum);
-			ydate.setSumStandarddemo(standardOutput);
-			ydate.setSumActualdemo(actualYield);
-			ydate.setSumWorkdays(daycount);
-			ydate.setSumActualpairs(actualpairs);
-			ydate.setSumHostpairs(hostpairs);
-			ydate.setSumFactpairs(factpairs);
-			ydate.setSumSamplepairs(samplepairs);
-			ydate.setSumOutnum(outnum);
-			ydate.setSumBacknum(backnum);
-			ydate.setSumWorkhours(workhours);
+			if(list_ydata.size()!=0){
+				BigDecimal onModulus=new BigDecimal(objs[0].toString());
+				BigDecimal personnum=new BigDecimal(objs[1].toString());
+				BigDecimal standardOutput=new BigDecimal(objs[2].toString());
+				BigDecimal actualYield=new BigDecimal(objs[3].toString());
+				BigDecimal daycount=new BigDecimal(objs[4].toString());
+				BigDecimal actualpairs=new BigDecimal(objs[5].toString());
+				BigDecimal hostpairs=new BigDecimal(objs[6].toString());
+				BigDecimal factpairs=new BigDecimal(objs[7].toString());
+				BigDecimal samplepairs=new BigDecimal(objs[8].toString());
+				BigDecimal outnum=new BigDecimal(objs[9].toString());
+				BigDecimal backnum=new BigDecimal(objs[10].toString());
+				Double workhours=(Double)objs[11];
+				ydate.setSumEverydemo(onModulus);
+				ydate.setSumEverypeople(personnum);
+				ydate.setSumStandarddemo(standardOutput);
+				ydate.setSumActualdemo(actualYield);
+				ydate.setSumWorkdays(daycount);
+				ydate.setSumActualpairs(actualpairs);
+				ydate.setSumHostpairs(hostpairs);
+				ydate.setSumFactpairs(factpairs);
+				ydate.setSumSamplepairs(samplepairs);
+				ydate.setSumOutnum(outnum);
+				ydate.setSumBacknum(backnum);
+				ydate.setSumWorkhours(workhours);
+			}		
 			ydate.setStartDate(startDate);
 			ydate.setEndDate(endDate);
 			sumydateSer.add(ydate);

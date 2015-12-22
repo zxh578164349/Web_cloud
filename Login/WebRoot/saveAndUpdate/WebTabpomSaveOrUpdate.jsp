@@ -153,7 +153,7 @@ function back(){
 					<td class="td_show_title">生產工廠</td>
 					<td class="td_input">
 					    <input type="checkbox" name="list_fact" value="631">加元一廠&nbsp;
-					    <input type="checkbox" name="list_fact" value="687">加元三廠
+					    <input type="checkbox" name="list_fact" value="632">加元二廠
 					</td>
 					<%--<td class="td_show_title">用電量(度)</td>
 					<td class="td_input"><input type="text" name="tabpom.electricdu"

@@ -91,14 +91,12 @@
         <property name="fileMk" type="java.lang.String">
             <column name="FILE_MK" length="2" />
         </property>
-        <bag name="list_fact" table="WEB_TABPOM_FACT" cascade="">
+        <bag name="list_fact" table="WEB_FACT" cascade="all" inverse="true">
            <key>
-             <column name="webtabpom_id"/>
+             <column name="FACT_NO"/>
            </key>
-           <many-to-many class="entity.WebFact">
-              <column name="webfact_id"/>
-              <column name="webfactarea_id"/>
-           </many-to-many>
+           <one-to-many class="entity.WebFact"/>
+              
         </bag>
     </class>
 </hibernate-mapping>

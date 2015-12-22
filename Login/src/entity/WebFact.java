@@ -21,8 +21,8 @@ public class WebFact implements java.io.Serializable {
 	private String factDisable;
 	private String openDate;
 	private String closeDate;
-	
-	private List<WebTabpom>list_webtabpom=new ArrayList<WebTabpom>();
+	//private WebTabpom webTabpom;
+	//private List<WebTabpom>list_webtabpom=new ArrayList<WebTabpom>();
 
 	// Constructors
 
@@ -133,13 +133,12 @@ public class WebFact implements java.io.Serializable {
 		this.closeDate = closeDate;
 	}
 
-	public List<WebTabpom> getList_webtabpom() {
-		return list_webtabpom;
-	}
+	
+	
+	
+	
 
-	public void setList_webtabpom(List<WebTabpom> list_webtabpom) {
-		this.list_webtabpom = list_webtabpom;
-	}
+	
 	
 	
 	
