@@ -686,7 +686,8 @@
 		    </result>
 		    <result name="beanList">page/webTabpom.jsp</result>
 		    <result name="beanList1">page/table1/webTabpom1.jsp</result>
-		    <result name="findById">/saveAndUpdate/WebTabpomSaveOrUpdate2.jsp</result>		    
+		    <result name="findById">/saveAndUpdate/WebTabpomSaveOrUpdate.jsp</result>
+		    <result name="delete" type="redirectAction">webtabpom_findPageBean3</result>		    
 		</action>
 	</package>
 

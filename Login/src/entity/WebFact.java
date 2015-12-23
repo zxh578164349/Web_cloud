@@ -21,9 +21,7 @@ public class WebFact implements java.io.Serializable {
 	private String factDisable;
 	private String openDate;
 	private String closeDate;
-	//private WebTabpom webTabpom;
-	//private List<WebTabpom>list_webtabpom=new ArrayList<WebTabpom>();
-
+	
 	// Constructors
 
 	/** default constructor */

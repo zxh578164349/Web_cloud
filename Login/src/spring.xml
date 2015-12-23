@@ -91,7 +91,7 @@
 				<prop key="hibernate.dialect">
 					org.hibernate.dialect.Oracle9Dialect
 				</prop>
-				<!-- <prop key="hibernate.show_sql">true</prop> <prop key="hibernate.format_sql">true</prop> -->
+				<prop key="hibernate.show_sql">true</prop> <prop key="hibernate.format_sql">true</prop> 
 				<prop key="hibernate.autoReconnect">true</prop>
 
 			</props>
@@ -191,7 +191,8 @@
 				<value>entity/WebuserEmailA.hbm.xml</value>
 				<value>entity/KyzExpectmatmLog.hbm.xml</value>
 				<value>entity/WebTabpom.hbm.xml</value>
-				<value>entity/WebBrank.hbm.xml</value></list>
+				<value>entity/WebBrank.hbm.xml</value>
+				<value>entity/VWebFact.hbm.xml</value></list>
 		</property>
 	</bean>
 		

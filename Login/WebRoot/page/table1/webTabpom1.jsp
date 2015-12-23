@@ -75,12 +75,23 @@
 		<tbody id="tbody">
 		<s:iterator value="bean.list" status="x" id="temp">
 			<tr onmousemove="click_color(this)" onmouseout="move(this)">
-				<td>${25*(pages.currentPage-1)+x.index+1}</td>
+				<td>${25*(bean.currentPage-1)+x.index+1}</td>
 				<td><s:property value="pomNo" /></td>
 				<td><s:property value="pomName"/></td>
-				<td><s:property value="spematerial" /></td>
+				<td>
+				  <s:if test='spematerial=="0"'>
+				     是
+				  </s:if>
+				  <s:else>
+				  否
+				  </s:else>
+				</td>
 				<td><s:property value="component" /></td>
-				<td><s:property value="list_fact" /></td>
+				<td>
+				   <s:iterator value="webfacts">
+				       <s:property value="factSname"/>&nbsp;
+				   </s:iterator>
+				</td>
 				<td><s:property value="hardness" /></td>
 				<td><s:property value="forces" /></td>
 				<td><s:property value="extends_" /></td>
@@ -89,26 +100,20 @@
 				<td><s:property value="proportion" /></td>
 				<td><s:property value="wresistingAkron"/></td>
 				<td><s:property value="wresistingDin"/></td>	
-				<td><s:property value="username" /></td>
+				<td><s:property value="userName" /></td>
 				<s:if test='#session.loginUser.userread!="1"'>
 				<td>
-					<form action="webwlo_findWloById" method="post"
+					<form action="webtabpom_findById" method="post"
 						id="subform${x.index}">
-						<input type="hidden" value="<s:property value='id.factNo'/>"
-							name="id.factNo" /> <input type="hidden"
-							value="<s:property value='id.factCode'/>" name="id.factCode" />
-						<input type="hidden" value="<s:property value='id.yymm'/>"
-							name="id.yymm" />
+						<input type="hidden" value="<s:property value='pomNo'/>"
+							name="pomNo" /> 
 					</form> <a
 					href="javascript:layer.load(0);document.getElementById('subform${x.index}').submit()"
 					onclick=""><img alt="修改" src="images/icon/edit001.png" title="修改" ></a>
 					<form action="webwlo_delete2" method="post" id="subform2${x.index}"
 						style="float:left">
-						<input type="hidden" value="<s:property value='id.factNo'/>"
-							name="id.factNo" /> <input type="hidden"
-							value="<s:property value='id.factCode'/>" name="id.factCode" />
-						<input type="hidden" value="<s:property value='id.yymm'/>"
-							name="id.yymm" />
+						<input type="hidden" value="<s:property value='pomNo'/>"
+							name="pomNo" />
 					</form> <a href="javascript:void(0)"
 					onclick="isDelete('subform2${x.index}')"><img alt="刪除" src="images/icon/delete001.png" title="刪除"></a>
 				</td>

@@ -6,7 +6,11 @@
 			+ request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 %>
-
+<%
+java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("yyyyMMdd");
+java.util.Date currentTime = new java.util.Date();//得到当前系统时间
+String str_date = formatter.format(currentTime); //将日期时间格式化
+%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
@@ -43,7 +47,7 @@ jq(document).ajaxStop(function(){
 			tipSweep:true,
 			showAllError : true,
 			datatype : {
-				"*0-6" : /^-?\d{1,12}(\.[0-9]{1,3})?$/
+				"0-6" : /^-?\d{0,12}(\.[0-9]{1,3})?$/
 			},
 			ajaxPost:true,
 			callback:function(data){
@@ -51,47 +55,23 @@ jq(document).ajaxStop(function(){
 					layer.msg("提交成功!",3,1);
 					//location.href="/Login/webwlo_getList";
 				}if(data=="1"){
-					alert(data.responseText);
+					alert("提交失敗");
 				}
 				if(data=="2"){
 					layer.msg("數據已經存在",3,1);
 				}
 			}
 		});
-		demo.tipmsg.w["*0-6"] = "只能數字且不超過12位數,可保留三位以內小數";
+		demo.tipmsg.w["0-6"] = "只能數字且不超過12位數,可保留三位以內小數";
 	});
-	function getFactArea(mid) {
-		document.getElementById("dwrFactArea").length = 1;
-		webfactjs.findFactCodeByFactNo_show_dw(mid, function(x) {
-			dwr.util.addOptions("dwrFactArea", x);
-		});
+	
+	function getAllWebbrank(){
+		webbrankjs.findAll(function(x){
+			dwr.util.addOptions("dwrWebbrank",x,"BNo","BName");
+		})
 	}
-	function check(){
-       var factno=document.getElementById("dwr_factno").value;
-       var factcode=document.getElementById("dwrFactArea").value;
-       var yymmdd=document.getElementById("dwr_yymmdd").value;
-       if(factno!=""&&factcode!=""&&yymmdd!=""){
-          webwlojs.check(factno,factcode,yymmdd,function(x){
-              if(x==true){
-              alert("數據庫已存在("+factno+factcode+yymmdd+")");
-              document.getElementById("sub").disabled=true;
-              document.getElementById("sub").value="已鎖定";
-              document.getElementById("sub").style.color="red";
-              document.getElementById("error1").innerHTML="<font color='color'>！</font>";
-              document.getElementById("error2").innerHTML="<font color='color'>！</font>";
-              document.getElementById("error3").innerHTML="<font color='color'>！</font>";
-          }else{
-            document.getElementById("sub").disabled=false;
-            document.getElementById("sub").value="確定";
-            document.getElementById("sub").style.color="white";
-            document.getElementById("error1").innerHTML="";
-            document.getElementById("error2").innerHTML="";
-            document.getElementById("error3").innerHTML="";
-          }        
-          });               
-       }                    
-   }
-             /*禁止空格輸入*/
+
+/*禁止空格輸入*/
 window.onload=function(){            
             var inputs=document.getElementsByTagName("input"); 
             for (var i=0;i<inputs.length; i++) {  
@@ -103,11 +83,12 @@ window.onload=function(){
         }
 function back(){
 	layer.load("正在返回,請稍等...");
-	location.href="/Login/webwlo_getList";
-}             
+	location.href="/Login/webtabpom_findPageBean";
+}
+window.onload=getAllWebbrank;
 </script>
 <script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/webwlojs.js'></script>
+<script type='text/javascript' src='/Login/dwr/interface/webbrankjs.js'></script>
 <script type='text/javascript' src='/Login/dwr/engine.js'></script>
 <script type='text/javascript' src='/Login/dwr/util.js'></script>
 </head>
@@ -127,80 +108,208 @@ function back(){
 						<s:if test="tabpom==null">
 						<td class="td_input">
 						   <input type="text" name="tabpom.pomNo"/>
+						   <input type="hidden" name="nullmk" value="0"/>
 						</td>
 						</s:if>
 						<s:else>
-						   <input type="text" name="tabpom.pomNo" style="color:blue" readonly/>
+						<td class="td_input">
+						   <input type="text" name="tabpom.pomNo" value="<s:property value='tabpom.pomNo'/>" style="color:blue" readonly/>
+						   <input type="hidden" name="nullmk" value="1"/>
+						</td>   
 						</s:else>
 						<td class="td_show_title">物料名稱</td>
-						<td class="td_input"><input type="text" name="tabpom.pomName" value="<s:property value='tabpom.pomName'/>"/></td><s:property value=''/>
+						<td class="td_input"><input type="text" name="tabpom.pomName" value="<s:property value='tabpom.pomName'/>"/></td>
 					</tr>
 					<tr>
 						<td class="td_show_title">指定料</td>
 						<td class="td_input">
-						  是<input type="radio" name="tabpom.spematerial" value="0"/>&nbsp;
-						  否<input type="radio" name="tabpom.spematerial" value="1"/>
+						<s:if test='tabpom.spematerial=="0"'>
+						   是<input type="radio" name="tabpom.spematerial" value="0" checked="checked"/>&nbsp;
+						</s:if>
+						<s:else>
+						 是<input type="radio" name="tabpom.spematerial" value="0"/>&nbsp;
+						</s:else>
+						<s:if test='tabpom.spematerial=="1"'>
+						  否<input type="radio" name="tabpom.spematerial" value="1" checked="checked"/>&nbsp;
+						</s:if>
+						<s:else>
+						  否<input type="radio" name="tabpom.spematerial" value="1"/>&nbsp;
+						</s:else>						  
 						</td>
-						<td class="td_show_title">部件</td>
+						<td class="td_show_title">品牌</td>
 						<td class="td_input">
-						     <select name="tabpom.component">
-						        <option value="RB">RB</option>
-						        <option value="MD">MD</option>
+						     <select name="tabpom.webBrank.BNo" id="dwrWebbrank">
+						        					        
 						     </select>
 						</td>
 					</tr>				
 				<tr>
+				<td class="td_show_title">部件</td>
+						<td class="td_input">
+						     <select name="tabpom.component">
+						        <option value="RB">RB</option>
+						        <option value="MD">MD</option>					        
+						     </select>
+						</td>
 					<td class="td_show_title">生產工廠</td>
+					<s:if test="tabpom==null">
 					<td class="td_input">
-					    <input type="checkbox" name="list_fact" value="631">加元一廠&nbsp;
-					    <input type="checkbox" name="list_fact" value="632">加元二廠
+					  <input type="checkbox" name="list_fact" value="631">加元一廠&nbsp;
+					  <input type="checkbox" name="list_fact" value="632">加元二廠&nbsp;	
+					</td>  				  
+					</s:if>
+					<s:else>
+					<td class="td_input">
+					  <s:iterator value="tabpom.webfacts">
+					     <s:if test='factNo=="631"'>
+					        <input type="checkbox" name="list_fact" value="631" checked="checked">加元一廠&nbsp;
+					    </s:if>
+					    <s:else>
+					       <input type="checkbox" name="list_fact" value="631">加元一廠&nbsp;
+					    </s:else>
+					    <s:if test='factNo=="632"'>
+					        <input type="checkbox" name="list_fact" value="632" checked="checked">加元二廠&nbsp;
+					    </s:if>
+					    <s:else>
+					       <input type="checkbox" name="list_fact" value="632">加元二廠&nbsp;
+					    </s:else>
+					  </s:iterator>					   
 					</td>
-					<%--<td class="td_show_title">用電量(度)</td>
-					<td class="td_input"><input type="text" name="tabpom.electricdu"
-						value="<s:property value='tabpom.electricdu' />" datatype="*0-6">
-					</td>
-					<td class="td_info"><div id="questionTip" style="width:100%;"></div>
-					</td>
-				--%></tr>
+					</s:else>
+					
+					</tr>
 				
 				
-				<%--<tr>
-					<td class="td_show_title">用電金額(USD)</td>
-					<td class="td_input"><input type="text" name="tabpom.electricusd"
-						value="<s:property value='tabpom.electricusd' />" datatype="*0-6">
-					</td>
-					<td class="td_show_title">用蒸汽量(噸)</td>
-					<td class="td_input"><input type="text" name="tabpom.gaston"
-						value="<s:property value='tabpom.gaston' />" datatype="*0-6">
-					</td>
-					<td class="td_info"><div id="questionTip" style="width:100%;"></div>
-					</td>
-				</tr>
 				<tr>
-					<td class="td_show_title">用蒸汽金額(USD)</td>
-					<td class="td_input"><input type="text" name="tabpom.gasusd"
-						value="<s:property value='tabpom.gasusd' />" datatype="*0-6">
+					<td class="td_show_title">硬度</td>
+					<td class="td_input"><input type="text" name="tabpom.hardness"
+						value="<s:property value='tabpom.hardness' />" datatype="0-6">
 					</td>
-					<td class="td_show_title">用柴油量(噸)</td>
-					<td class="td_input"><input type="text" name="tabpom.oilton"
-						value="<s:property value='tabpom.oilton' />" datatype="*0-6">
-					</td>
-					<td class="td_info"><div id="questionTip" style="width:100%;"></div>
-					</td>
-				</tr>
-				<tr>
-					<td class="td_show_title">用柴油金額(USD)</td>
-					<td class="td_input"><input type="text" name="tabpom.oilusd"
-						value="<s:property value='tabpom.oilusd' />" datatype="*0-6" />						
-					</td>
-					<td class="td_show_title">修繕金額(USD)</td>
-					<td class="td_input"><input type="text" name="tabpom.repiarMoney"
-						value="<s:property value='tabpom.repiarMoney' />" datatype="*0-6" />
-						<input type="hidden" value="<s:property value='#session.loginUser.username'/>" name="tabpom.username" />
+					<td class="td_show_title">拉力</td>
+					<td class="td_input"><input type="text" name="tabpom.forces"
+						value="<s:property value='tabpom.forces' />" datatype="0-6">
 					</td>
 					
 				</tr>
-			--%></tbody>
+				<tr>
+					<td class="td_show_title">延伸</td>
+					<td class="td_input"><input type="text" name="tabpom.extends_"
+						value="<s:property value='tabpom.extends_' />" datatype="0-6">
+					</td>
+					<td class="td_show_title">C型撕裂</td>
+					<td class="td_input"><input type="text" name="tabpom.tearingC"
+						value="<s:property value='tabpom.tearingC' />" datatype="0-6">
+					</td>
+					
+				</tr>
+				<tr>
+					<td class="td_show_title">褲型撕裂</td>
+					<td class="td_input"><input type="text" name="tabpom.tearingK"
+						value="<s:property value='tabpom.tearingK' />" datatype="0-6" />						
+					</td>
+					<td class="td_show_title">比重</td>
+					<td class="td_input"><input type="text" name="tabpom.proportion"
+						value="<s:property value='tabpom.proportion' />" datatype="0-6" />
+						
+					</td>					
+				</tr>
+				<tr>
+					<td class="td_show_title">AKRON耐磨</td>
+					<td class="td_input"><input type="text" name="tabpom.wresistingAkron"
+						value="<s:property value='tabpom.wresistingAkron' />" datatype="0-6" />						
+					</td>
+					<td class="td_show_title">DIN耐磨</td>
+					<td class="td_input"><input type="text" name="tabpom.wresistingDin"
+						value="<s:property value='tabpom.wresistingDin' />" datatype="0-6" />
+						
+					</td>					
+				</tr>
+				<tr>
+					<td class="td_show_title">止滑係數</td>
+					<td class="td_input"><input type="text" name="tabpom.ratioA"
+						value="<s:property value='tabpom.ratioA' />" datatype="0-6" />						
+					</td>
+					<td class="td_show_title">耐油係數</td>
+					<td class="td_input"><input type="text" name="tabpom.ratioB"
+						value="<s:property value='tabpom.ratioB' />" datatype="0-6" />
+						
+					</td>					
+				</tr>
+				<tr>
+					<td class="td_show_title">抗彎曲</td>
+					<td class="td_input"><input type="text" name="tabpom.ableBend"
+						value="<s:property value='tabpom.ableBend' />" datatype="0-6" />						
+					</td>
+					<td class="td_show_title">抗黃變</td>
+					<td class="td_input"><input type="text" name="tabpom.ableYellow"
+						value="<s:property value='tabpom.ableYellow' />" datatype="0-6" />
+						
+					</td>					
+				</tr>
+				<tr>
+					<td class="td_show_title">抗高壓</td>
+					<td class="td_input"><input type="text" name="tabpom.defyPress"
+						value="<s:property value='tabpom.defyPress' />" datatype="0-6" />						
+					</td>
+					<td class="td_show_title">抗靜電</td>
+					<td class="td_input"><input type="text" name="tabpom.defyEle"
+						value="<s:property value='tabpom.defyEle' />" datatype="0-6" />
+						
+					</td>					
+				</tr>
+				<tr>
+					<td class="td_show_title">老化水解</td>
+					<td class="td_input"><input type="text" name="tabpom.ageing"
+						value="<s:property value='tabpom.ageing' />" datatype="0-6" />						
+					</td>
+					<td class="td_show_title">收縮</td>
+					<td class="td_input"><input type="text" name="tabpom.contract"
+						value="<s:property value='tabpom.contract' />" datatype="0-6" />
+						
+					</td>					
+				</tr>
+				<tr>
+					<td class="td_show_title">彈性</td>
+					<td class="td_input"><input type="text" name="tabpom.elasticity"
+						value="<s:property value='tabpom.elasticity' />" datatype="0-6" />						
+					</td>
+					<td class="td_show_title">壓縮</td>
+					<td class="td_input"><input type="text" name="tabpom.compression"
+						value="<s:property value='tabpom.compression' />" datatype="0-6" />
+						
+					</td>					
+				</tr>
+				<tr>
+					<td class="td_show_title">分裂</td>
+					<td class="td_input"><input type="text" name="tabpom.division"
+						value="<s:property value='tabpom.division' />" datatype="0-6" />						
+					</td>
+					<td class="td_show_title">認證</td>
+					<td class="td_input"><input type="text" name="tabpom.authentications"
+						value="<s:property value='tabpom.authentications' />" datatype="0-6" />
+						
+					</td>					
+				</tr>
+				<tr>
+					<td class="td_show_title">特性說明</td>
+					<td class="td_input"><input type="text" name="tabpom.instruction"
+						value="<s:property value='tabpom.instruction' />" datatype="0-6" />						
+					</td>
+					<td class="td_show_title">附檔</td>
+					<td class="td_input"><input type="text" name="tabpom.fileMk"
+						value="<s:property value='tabpom.fileMk' />" datatype="0-6" />
+						<input type="hidden" value="<s:property value='#session.loginUser.username'/>" name="tabpom.userName" />
+						<s:if test="tabpom==null">
+						   <input type="hidden" value="<%=str_date%>" name="tabpom.tabpomDate" />
+						</s:if>
+						<s:else>
+						   <input type="hidden" value="<s:property value='tabpom.tabpomDate'/>" name="tabpom.tabpomDate" />
+						</s:else>
+						
+						
+					</td>					
+				</tr>
+			</tbody>
 		</table>
 		<center>
 			<input type="button" id="sub" value="確定" onmouseover="this.style.backgroundPosition='left -40px'" onmouseout="this.style.backgroundPosition='left top'"/>&nbsp;&nbsp;&nbsp;			 

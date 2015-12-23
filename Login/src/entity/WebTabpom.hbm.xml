@@ -13,6 +13,9 @@
         <many-to-one name="webBrank" class="entity.WebBrank" fetch="select">
             <column name="BRANK" length="20" />
         </many-to-one>
+        <!-- <many-to-one name="webfact" class="entity.VWebFact" fetch="select">
+            <column name="FACT_NO" length="20" />
+        </many-to-one> -->
         <property name="pomName" type="java.lang.String">
             <column name="POM_NAME" length="30" />
         </property>
@@ -22,9 +25,7 @@
         <property name="component" type="java.lang.String">
             <column name="COMPONENT" length="8" />
         </property>
-        <property name="factNo" type="java.lang.String">
-            <column name="FACT_NO" length="50" />
-        </property>
+       
         <property name="hardness" type="java.lang.Double">
             <column name="HARDNESS" precision="10" />
         </property>
@@ -91,12 +92,17 @@
         <property name="fileMk" type="java.lang.String">
             <column name="FILE_MK" length="2" />
         </property>
-        <bag name="list_fact" table="WEB_FACT" cascade="all" inverse="true">
-           <key>
-             <column name="FACT_NO"/>
-           </key>
-           <one-to-many class="entity.WebFact"/>
-              
-        </bag>
+        <property name="userName" type="java.lang.String">
+            <column name="USERNAME" length="30"/>
+        </property> 
+        <property name="tabpomDate" type="java.lang.String">
+           <column name="TABPOM_DATE" length="8"/>
+        </property>
+        <bag name="webfacts"  table="web_tabpom_fact">
+            <key>
+                <column name="WEBTABPOM_ID" length="20" />
+            </key>
+            <many-to-many class="entity.VWebFact" column="WEBFACT_ID" fetch="select"/>
+        </bag>     
     </class>
 </hibernate-mapping>

@@ -26,7 +26,9 @@ public class WebTabpomDaoImpl extends Basedao implements IWebTabpomDao{
 		String hql="from WebTabpom where pomNo=?";
 		Query query=getSession().createQuery(hql);
 		query.setString(0, pomNo);
-		return (WebTabpom)query.uniqueResult();
+		WebTabpom obj=(WebTabpom)query.uniqueResult();
+		obj.getWebfacts().size();
+		return obj;
 	}
 
 	public void delete(WebTabpom tabpom) {
@@ -48,8 +50,8 @@ public class WebTabpomDaoImpl extends Basedao implements IWebTabpomDao{
 		hql.append("from WebTabpom where 1=1 ");
 		hql2.append("select count(pomNo) ");
 		if(pomName!=null&&!pomName.equals("")){
-			hql.append(" and pomName=:pomname");
-			map.put("pomname", pomName);
+			hql.append(" and pomName like:pomname");
+			map.put("pomname", "%"+pomName+"%");
 		}
 		if(brank!=null&&!brank.equals("")){
 			hql.append(" and brank=:brank");
@@ -74,7 +76,10 @@ public class WebTabpomDaoImpl extends Basedao implements IWebTabpomDao{
 		List<WebTabpom>list=super.queryForPage(hql.toString(), offset, pageSize, map);
 		if(list.size()>0){
 			for(int i=0;i<list.size();i++){
-				list.get(i).getList_fact().size();
+				for(int j=0;j<list.get(i).getWebfacts().size();j++){
+					list.get(i).getWebfacts().get(j).getFactSname();//解決延遲加載問題
+				}
+				
 			}
 		}
 		PageBean bean=new PageBean();

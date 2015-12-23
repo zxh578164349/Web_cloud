@@ -45,7 +45,7 @@
 		jq.ajax({
 			type : "POST",
 			dataType : "Html",
-			url : "webwlo_getList3",
+			url : "webtabpom_findPageBean3",
 			data : "page=" + page ,
 			success : function(msg) {
 				jq("#bodyid").html(msg);
@@ -56,14 +56,12 @@
 			}
 		});
 	}
-	function submis(public_form) {
-		var fact = document.getElementById("factNo");
-		var ym = document.getElementById("year");
+	function submis(public_form) {		
 		var subform=jq("#"+public_form);
 		jq.ajax({
 			type : "POST",
 			dataType : "Html",
-			url : "webwlo_getList2",
+			url : "webtabpom_findPageBean2",
 			//data : "factNo=" + fact.value + "&yymm=" + ym.value,
 			data:subform.serialize(),
 			success : function(msg) {
@@ -84,7 +82,7 @@
 					type:"POST",
 					dataType:"html",
 					data:jq("#"+mid).serialize(),
-					url:"webwlo_delete2",
+					url:"webtabpom_delete",
 					success:function(data){
 						jq("#bodyid").html(data);
 					},
@@ -104,7 +102,7 @@
 </script>
 
 <body>
-	<jsp:include page="publicHead_print.jsp" />
+	<jsp:include page="publicHead_webtabpom.jsp" />
 	<hr />
 	<s:if test='#session.loginUser.userread!="1"'>
 	<input value="添加" type="button" id="addbtn"

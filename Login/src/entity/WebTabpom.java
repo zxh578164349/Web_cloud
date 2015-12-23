@@ -15,7 +15,6 @@ public class WebTabpom implements java.io.Serializable {
 	private String pomName;//物料名稱
 	private String spematerial;//指定料
 	private String component;//部件
-	private String factNo;//生產工廠
 	private Double hardness;//硬度
 	private Double forces;//拉力
 	private Double extends_;//延伸
@@ -41,7 +40,8 @@ public class WebTabpom implements java.io.Serializable {
 	private String userName;
 	private String tabpomDate;
 	private WebBrank webBrank;
-	private List<WebFact>list_fact=new ArrayList<WebFact>();
+	//private VWebFact webfact;
+	private List<VWebFact>webfacts=new ArrayList<VWebFact>();
 
 	// Constructors
 
@@ -56,20 +56,21 @@ public class WebTabpom implements java.io.Serializable {
 
 	/** full constructor */
 	public WebTabpom(String pomNo, WebBrank webBrank, String pomName,
-			String spematerial, String component, String factNo,
+			String spematerial, String component, /*VWebFact webfact,*/
 			Double hardness, Double forces, Double extends_, Double tearingC,
 			Double tearingK, Double proportion, Double wresistingAkron,
 			Double wresistingDin, Double ratioA, Double ratioB,
 			Double ableBend, Double ableYellow, Double defyPress,
 			Double defyEle, Double ageing, Double contract, Double elasticity,
 			Double compression, Double division, String authentications,
-			String instruction, String fileMk) {
+			String instruction, String fileMk,List<VWebFact> webfacts) {
 		this.pomNo = pomNo;
 		this.webBrank = webBrank;
 		this.pomName = pomName;
 		this.spematerial = spematerial;
 		this.component = component;
-		this.factNo = factNo;
+		//this.webfact = webfact;
+		this.webfacts=webfacts;
 		this.hardness = hardness;
 		this.forces = forces;
 		this.extends_ = extends_;
@@ -136,13 +137,7 @@ public class WebTabpom implements java.io.Serializable {
 		this.component = component;
 	}
 
-	public String getFactNo() {
-		return this.factNo;
-	}
 
-	public void setFactNo(String factNo) {
-		this.factNo = factNo;
-	}
 
 	public Double getHardness() {
 		return this.hardness;
@@ -320,13 +315,6 @@ public class WebTabpom implements java.io.Serializable {
 		this.fileMk = fileMk;
 	}
 
-	public List<WebFact> getList_fact() {
-		return list_fact;
-	}
-
-	public void setList_fact(List<WebFact> list_fact) {
-		this.list_fact = list_fact;
-	}
 
 	public String getUserName() {
 		return userName;
@@ -343,6 +331,19 @@ public class WebTabpom implements java.io.Serializable {
 	public void setTabpomDate(String tabpomDate) {
 		this.tabpomDate = tabpomDate;
 	}
+
+	public List<VWebFact> getWebfacts() {
+		return webfacts;
+	}
+
+	public void setWebfacts(List<VWebFact> webfacts) {
+		this.webfacts = webfacts;
+	}
+
+	
+	
+	
+	
 	
 	
 	

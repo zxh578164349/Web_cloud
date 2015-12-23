@@ -169,6 +169,10 @@
 		    <include method="findById"/>
 		    <include mehtod="deleteObj"/>
 		</create>
+		<create javascript="webbrankjs" creator="spring">
+		    <param name="beanName" value="webbrankSer"/>
+		    <include method="findAll"/>
+		</create>
 		<convert converter="hibernate3" match="entity.*" />		
 		<!-- <convert converter="bean" match="cn.com.entity.ConfigFileFirstKind">
 			<param name="include" value="ffkId,firstKindName,configFileSecondKinds" />
