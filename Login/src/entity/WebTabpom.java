@@ -37,11 +37,12 @@ public class WebTabpom implements java.io.Serializable {
 	private String authentications;//認證
 	private String instruction;//特性說明
 	private String fileMk;//附檔
-	private String userName;
-	private String tabpomDate;
-	private WebBrank webBrank;
+	private String userName;//創建人
+	private String tabpomDate;//創建日期
+	private WebBrank webBrank;//品牌
 	//private VWebFact webfact;
 	private List<VWebFact>webfacts=new ArrayList<VWebFact>();
+	private List<WebTabpomfile>webtabfiles=new ArrayList<WebTabpomfile>();//記錄附檔文件
 
 	// Constructors
 
@@ -339,6 +340,15 @@ public class WebTabpom implements java.io.Serializable {
 	public void setWebfacts(List<VWebFact> webfacts) {
 		this.webfacts = webfacts;
 	}
+
+	public List<WebTabpomfile> getWebtabfiles() {
+		return webtabfiles;
+	}
+
+	public void setWebtabfiles(List<WebTabpomfile> webtabfiles) {
+		this.webtabfiles = webtabfiles;
+	}
+	
 
 	
 	

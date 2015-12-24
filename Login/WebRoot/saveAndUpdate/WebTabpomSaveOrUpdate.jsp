@@ -31,6 +31,8 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 <script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script>
 <script type="text/javascript" src="jquery/Validform_v5.3.2_min.js"></script>
 <script type="text/javascript" src="jquery/layer/layer.min.js"></script>
+<script type="text/javascript" src="jquery/swfupload/swfuploadv2.2-min.js"></script>
+<script type="text/javascript" src="jquery/swfupload/Validform.swfupload.handler-min.js"></script>
 <script type="text/javascript">
 var jq=jQuery.noConflict();
 var loadi;
@@ -48,6 +50,23 @@ jq(document).ajaxStop(function(){
 			showAllError : true,
 			datatype : {
 				"0-6" : /^-?\d{0,12}(\.[0-9]{1,3})?$/
+			},
+			usePlugin:{
+				swfupload:{
+					file_post_name: "files",
+					upload_url: "webtabpom_swfuploadfile",
+					button_image_url: "swfupload/images/XPButtonUploadText_61x22.png",
+					flash_url: "swfupload/swfupload.swf",
+					
+					//覆盖默认绑定好的事件;
+					file_dialog_complete_handler:function(){
+						//reset the default event;
+					},
+					upload_complete_handler:function(){
+						//文件上传完成后触发表单提交事件，通过this.customSettings.form可取得当前表单对象;
+						this.customSettings.form.get(0).submit();
+					}
+				}
 			},
 			ajaxPost:true,
 			callback:function(data){
@@ -81,6 +100,47 @@ window.onload=function(){
                  }; 
             }  
         }
+        
+function makePomNo(){
+	var tabpomDate=jq("#tabpomDate").val();
+	var component=jq("#component").val();	
+	if(tabpomDate!=""&&component!=""){
+		webtabpomjs.makePomNo(component,tabpomDate,function(x){			
+			jq("#pomNo").val(x);
+		})
+	}
+	
+}
+var i=0;	
+function addFile(){
+    i++;
+    if(i<5){
+    var divfile=document.getElementById("divfile");
+    var inputfile=document.createElement("input");
+    var aEle=document.createElement("a");
+    inputfile.type="file";
+    inputfile.name="files";
+    inputfile.style.width="150px";
+    aEle.innerHTML="刪除";
+    aEle.style.color="red";
+    aEle.href="javascript:void(0)";
+    aEle.onclick=function(){
+       var parentnode=aEle.parentNode;
+       if(parentnode){
+          parentnode.removeChild(aEle);
+          parentnode.removeChild(inputfile);
+          if(i>4){
+             i=4;
+          }
+          i--;
+       }
+    };
+    divfile.appendChild(inputfile);
+    divfile.appendChild(aEle);  
+    }else{
+       alert("附檔不能超過5個!");
+    }               
+}
 function back(){
 	layer.load("正在返回,請稍等...");
 	location.href="/Login/webtabpom_findPageBean";
@@ -89,12 +149,13 @@ window.onload=getAllWebbrank;
 </script>
 <script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>
 <script type='text/javascript' src='/Login/dwr/interface/webbrankjs.js'></script>
+<script type='text/javascript' src='/Login/dwr/interface/webtabpomjs.js'></script>
 <script type='text/javascript' src='/Login/dwr/engine.js'></script>
 <script type='text/javascript' src='/Login/dwr/util.js'></script>
 </head>
 
 <body>
-	<form action="webtabpom_add" method="post" id="form">
+	<form action="webtabpom_add" method="post" id="form" enctype="multipart/form-data">
 		<table width="100%" align="center" cellspacing="0" cellpadding="0"
 			id="msg1">
 			  <caption>實驗室形體物性</caption>
@@ -107,7 +168,7 @@ window.onload=getAllWebbrank;
 						<td class="td_show_title">物性編號</td>
 						<s:if test="tabpom==null">
 						<td class="td_input">
-						   <input type="text" name="tabpom.pomNo"/>
+						   <input type="text" name="tabpom.pomNo" id="pomNo" style="color:blue" readonly/>
 						   <input type="hidden" name="nullmk" value="0"/>
 						</td>
 						</s:if>
@@ -146,7 +207,8 @@ window.onload=getAllWebbrank;
 				<tr>
 				<td class="td_show_title">部件</td>
 						<td class="td_input">
-						     <select name="tabpom.component">
+						     <select name="tabpom.component" id="component" onchange="makePomNo()">
+						        <option value="">請選擇</option>
 						        <option value="RB">RB</option>
 						        <option value="MD">MD</option>					        
 						     </select>
@@ -296,11 +358,22 @@ window.onload=getAllWebbrank;
 						value="<s:property value='tabpom.instruction' />" datatype="0-6" />						
 					</td>
 					<td class="td_show_title">附檔</td>
-					<td class="td_input"><input type="text" name="tabpom.fileMk"
-						value="<s:property value='tabpom.fileMk' />" datatype="0-6" />
+					<td class="td_input">
+					  <%--<div style="width:300px" id="divfile">
+				      <input type="file" name="files" style="width:150px"/><a href="javascript:addFile()">添加多個</a>
+				      </div>--%>
+				      <input type="text" value="" id="txtFileName2" disabled="disabled" autocomplete="off" class="inputxt" plugin="swfupload" /> 
+				      <span id="spanButtonPlaceholder"></span> (10 MB max)
+                      <input type="hidden" pluginhidden="swfupload" name="hidFileID" id="hidFileID" value="" />
+				      
+				      <input type="text" value="" id="txtFileName2" disabled="disabled" autocomplete="off" class="inputxt" plugin="swfupload" /> 
+				      <span id="spanButtonPlaceholder"></span> (10 MB max)
+                      <input type="hidden" pluginhidden="swfupload" name="hidFileID" id="hidFileID" value="" />
+				      
+				      										
 						<input type="hidden" value="<s:property value='#session.loginUser.username'/>" name="tabpom.userName" />
 						<s:if test="tabpom==null">
-						   <input type="hidden" value="<%=str_date%>" name="tabpom.tabpomDate" />
+						   <input type="hidden" value="<%=str_date%>" name="tabpom.tabpomDate" id="tabpomDate"/>
 						</s:if>
 						<s:else>
 						   <input type="hidden" value="<s:property value='tabpom.tabpomDate'/>" name="tabpom.tabpomDate" />

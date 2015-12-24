@@ -1,5 +1,10 @@
 package action;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,10 +14,13 @@ import util.PageBean;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
+import entity.KyzExpectmatmFile;
 import entity.VWebFact;
 import entity.WebFact;
 import entity.WebFactId;
 import entity.WebTabpom;
+import entity.WebTabpomfile;
+import entity.WebUser;
 
 public class WebTabpomAction extends ActionSupport{
 	private PageBean bean;
@@ -20,14 +28,35 @@ public class WebTabpomAction extends ActionSupport{
 	private int page;
 	private String pomName;
 	private String brank;
-	private String ajaxResult;//申請函文時返回的ajax結果,   0:提交成功       1:提交失敗      2:提示數據庫已經存在
+	private String ajaxResult;//申請函文時返回的ajax結果,   0:提交成功       1:提交失敗      2:提示數據庫已經存在  3:圖片大小限制    4:圖片格式限制
 	private String pomNo;
 	private int nullmk;//判斷是親增或修改（0：新增      1：修改）
 	private List<String>list_fact;
+	private List<File> files;
+    private List<String> filesFileName;
+    private List<String> filesContentType;
 	private IWebTabpomServices tabpomSer;
 	
 	
 	
+	public List<File> getFiles() {
+		return files;
+	}
+	public void setFiles(List<File> files) {
+		this.files = files;
+	}
+	public List<String> getFilesFileName() {
+		return filesFileName;
+	}
+	public void setFilesFileName(List<String> filesFileName) {
+		this.filesFileName = filesFileName;
+	}
+	public List<String> getFilesContentType() {
+		return filesContentType;
+	}
+	public void setFilesContentType(List<String> filesContentType) {
+		this.filesContentType = filesContentType;
+	}
 	public int getNullmk() {
 		return nullmk;
 	}
@@ -108,7 +137,59 @@ public class WebTabpomAction extends ActionSupport{
 		bean=tabpomSer.findPageBean(25, page, pomName, brank);
 		return "beanList1";
 	}
-	public String add(){
+	public String add() throws IOException{
+		/*文件上傳驗證*/
+		if(files!=null){
+			for(int i=0;i<files.size();i++){
+				if(files.get(i)!=null){
+					long filesize=files.get(i).length();
+					String filetype=filesFileName.get(i).substring(filesFileName.get(i).lastIndexOf(".")).toLowerCase();
+					if(filesize>5120000){
+						//response.setContentType("text/html;charset=utf-8");
+						//response.getWriter().print("<script>alert('文件不可超過5M!');window.opener=null;window.open('','_self');window.close()</script>");
+						ajaxResult="3";
+						return "add";
+					}
+					if(!filetype.equals(".bmp")&&!filetype.equals(".jpg")&&!filetype.equals(".jpeg")&&!filetype.equals(".gif")&&!filetype.equals(".tif")){
+						//response.setContentType("text/html;charset=utf-8");
+						//response.getWriter().print("<script>alert('只允許jpg,bmp,jpeg,gif,tif圖片!');window.opener=null;window.open('','_self');window.close()</script>");
+						ajaxResult="4";
+						return "add";
+					}
+					
+				}
+			}
+		}
+		
+		/*文件上傳*/
+		/*if(files!=null){//不為空代表有上傳附檔,不能寫成files.size()>0,否則報空指針
+			tabpom.setFileMk("1");//標示是否帶有附檔
+			//File uploadFile=new File(ServletActionContext.getServletContext().getRealPath("KyzexpFile\\"+kyz.getId().getBillNo()));//附檔上傳到項目
+			File uploadFile_backup=new File("d:\\WebtabpomFile_backup\\"+tabpom.getPomNo());//附檔上傳到D盤(為了避免更新項目時丟失附檔,所在上傳到D盤)
+			if(!uploadFile.exists()){
+				uploadFile.mkdirs();
+			}
+			if(!uploadFile_backup.exists()){
+				uploadFile_backup.mkdirs();
+			}
+			for(int i=0;i<files.size();i++){							
+				if(files.get(i)!=null){									
+					FileInputStream in=new FileInputStream(files.get(i));
+					//FileOutputStream out=new FileOutputStream(uploadFile+"\\"+filesFileName.get(i));
+					FileOutputStream out_backup=new FileOutputStream(uploadFile_backup+"\\"+filesFileName.get(i));//備份
+					byte[]b=new byte[1024];
+					int length=0;
+					while((length=in.read(b))>0){
+						//out.write(b,0,length);
+						out_backup.write(b,0,length);//備份
+					}																									
+					WebTabpomfile webtabFile=new WebTabpomfile();//函文附檔
+					webtabFile.getId().setFilename(filesFileName.get(i));
+					webtabFile.getId().setWebTabpom(tabpom);																			
+				}
+			}
+		}*/
+		
 		switch(nullmk){
 		case 0:
 			pomNo=tabpomSer.findPomNoById(tabpom.getPomNo());
@@ -161,6 +242,35 @@ public class WebTabpomAction extends ActionSupport{
 	public String delete(){
 		tabpomSer.delete(pomNo);
 		return "delete";
+	}
+	
+	/*
+	 * 文件上傳
+	 */
+	public void swfuploadfile() throws IOException{
+		File uploadFile_backup=new File("d:\\WebtabpomFile_backup\\"+tabpom.getPomNo());//附檔上傳到D盤(為了避免更新項目時丟失附檔,所在上傳到D盤)
+		/*if(!uploadFile.exists()){
+			uploadFile.mkdirs();
+		}*/
+		if(!uploadFile_backup.exists()){
+			uploadFile_backup.mkdirs();
+		}
+		for(int i=0;i<files.size();i++){							
+			if(files.get(i)!=null){									
+				FileInputStream in=new FileInputStream(files.get(i));
+				//FileOutputStream out=new FileOutputStream(uploadFile+"\\"+filesFileName.get(i));
+				FileOutputStream out_backup=new FileOutputStream(uploadFile_backup+"\\"+filesFileName.get(i));//備份
+				byte[]b=new byte[1024];
+				int length=0;
+				while((length=in.read(b))>0){
+					//out.write(b,0,length);
+					out_backup.write(b,0,length);//備份
+				}																									
+				/*WebTabpomfile webtabFile=new WebTabpomfile();//函文附檔
+				webtabFile.getId().setFilename(filesFileName.get(i));
+				webtabFile.getId().setWebTabpom(tabpom);*/																			
+			}
+		}
 	}
 
 }

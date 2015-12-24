@@ -103,6 +103,12 @@
                 <column name="WEBTABPOM_ID" length="20" />
             </key>
             <many-to-many class="entity.VWebFact" column="WEBFACT_ID" fetch="select"/>
+        </bag>
+        <bag name="webtabfiles" cascade="all" inverse="true">
+          <key>
+             <column name="POMNO" length="14"/> 
+          </key>
+          <one-to-many class="entity.WebTabpomfile"/>
         </bag>     
     </class>
 </hibernate-mapping>

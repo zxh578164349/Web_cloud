@@ -104,5 +104,12 @@ public class WebTabpomDaoImpl extends Basedao implements IWebTabpomDao{
 		query.setString(0, pomNo);
 		return (String)query.uniqueResult();
 	}
+
+	public List<String> findPomNos(String component,String tabpomDate ) {
+		// TODO Auto-generated method stub
+		String hql="select pomNo from WebTabpom where component=? and tabpomDate=? order by pomNo desc";
+		String[]objs={component,tabpomDate};
+		return super.findAll(hql, objs);
+	}
 	
 }

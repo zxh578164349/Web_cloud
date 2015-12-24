@@ -192,7 +192,8 @@
 				<value>entity/KyzExpectmatmLog.hbm.xml</value>
 				<value>entity/WebTabpom.hbm.xml</value>
 				<value>entity/WebBrank.hbm.xml</value>
-				<value>entity/VWebFact.hbm.xml</value></list>
+				<value>entity/VWebFact.hbm.xml</value>
+				<value>entity/WebTabpomfile.hbm.xml</value></list>
 		</property>
 	</bean>
 		

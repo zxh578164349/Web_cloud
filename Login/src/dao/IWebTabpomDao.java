@@ -1,5 +1,7 @@
 package dao;
 
+import java.util.List;
+
 import util.PageBean;
 import entity.WebTabpom;
 
@@ -11,5 +13,6 @@ public interface IWebTabpomDao {
 	public PageBean findPageBean(int pageSize,int page,String pomName,String brank);
 	
 	public String findPomNoById(String pomNo);
+	public List<String> findPomNos(String component,String tabpomDate);
 
 }

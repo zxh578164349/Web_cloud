@@ -173,6 +173,10 @@
 		    <param name="beanName" value="webbrankSer"/>
 		    <include method="findAll"/>
 		</create>
+		<create javascript="webtabpomjs" creator="spring">
+		   <param name="beanName" value="tabpomSer"/>
+		   <include method="makePomNo"/>
+		</create>
 		<convert converter="hibernate3" match="entity.*" />		
 		<!-- <convert converter="bean" match="cn.com.entity.ConfigFileFirstKind">
 			<param name="include" value="ffkId,firstKindName,configFileSecondKinds" />
