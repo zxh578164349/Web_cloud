@@ -5,10 +5,21 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URLDecoder;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.struts2.interceptor.ServletResponseAware;
 
 import services.IWebTabpomServices;
+import util.GlobalMethod;
+import util.JasperHelper;
 import util.PageBean;
 
 import com.opensymphony.xwork2.ActionContext;
@@ -22,7 +33,7 @@ import entity.WebTabpom;
 import entity.WebTabpomfile;
 import entity.WebUser;
 
-public class WebTabpomAction extends ActionSupport{
+public class WebTabpomAction extends ActionSupport implements ServletResponseAware{
 	private PageBean bean;
 	private WebTabpom tabpom;
 	private int page;
@@ -35,10 +46,47 @@ public class WebTabpomAction extends ActionSupport{
 	private List<File> files;
     private List<String> filesFileName;
     private List<String> filesContentType;
+    private String yymm;
+    private String yymm2;
+    
+    private File file;
+	private String fileFileName;
+	private String fileContentType;
 	private IWebTabpomServices tabpomSer;
+	private javax.servlet.http.HttpServletResponse response;
 	
 	
 	
+	public String getYymm() {
+		return yymm;
+	}
+	public void setYymm(String yymm) {
+		this.yymm = yymm;
+	}
+	public String getYymm2() {
+		return yymm2;
+	}
+	public void setYymm2(String yymm2) {
+		this.yymm2 = yymm2;
+	}
+	public File getFile() {
+		return file;
+	}
+	public void setFile(File file) {
+		this.file = file;
+	}
+	public String getFileFileName() {
+		return fileFileName;
+	}
+	public void setFileFileName(String fileFileName) {
+		this.fileFileName = fileFileName;
+	}
+	public String getFileContentType() {
+		return fileContentType;
+	}
+	public void setFileContentType(String fileContentType) {
+		this.fileContentType = fileContentType;
+	}
 	public List<File> getFiles() {
 		return files;
 	}
@@ -116,30 +164,39 @@ public class WebTabpomAction extends ActionSupport{
 	public void setTabpomSer(IWebTabpomServices tabpomSer) {
 		this.tabpomSer = tabpomSer;
 	}
-	
+	public void setServletResponse(HttpServletResponse response) {
+		// TODO Auto-generated method stub
+		this.response=response;
+	}
 	
 	public String findPageBean(){
 		ActionContext.getContext().getSession().remove("tabpom_name");
 		ActionContext.getContext().getSession().remove("tabpom_brank");
-		bean=tabpomSer.findPageBean(25, page, pomName, brank);
+		ActionContext.getContext().getSession().remove("tabpom_yymm");
+		ActionContext.getContext().getSession().remove("tabpom_yymm2");
+		bean=tabpomSer.findPageBean(25, page, pomName, brank,yymm,yymm2);
 		return "beanList";
 	}
 	
 	public String findPageBean2(){
 		ActionContext.getContext().getSession().put("tabpom_name", pomName);			
-		ActionContext.getContext().getSession().put("tabpom_brank", brank);		
-		bean=tabpomSer.findPageBean(25, page, pomName, brank);
+		ActionContext.getContext().getSession().put("tabpom_brank", brank);
+		ActionContext.getContext().getSession().put("tabpom_yymm", yymm);			
+		ActionContext.getContext().getSession().put("tabpom_yymm2", yymm2);	
+		bean=tabpomSer.findPageBean(25, page, pomName, brank,yymm,yymm2);
 		return "beanList1";
 	}
 	public String findPageBean3(){
 		pomName=(String)ActionContext.getContext().getSession().get("tabpom_name");
 		brank=(String)ActionContext.getContext().getSession().get("tabpom_brank");
-		bean=tabpomSer.findPageBean(25, page, pomName, brank);
+		pomName=(String)ActionContext.getContext().getSession().get("tabpom_yymm");
+		brank=(String)ActionContext.getContext().getSession().get("tabpom_yymm2");
+		bean=tabpomSer.findPageBean(25, page, pomName, brank,yymm,yymm2);
 		return "beanList1";
 	}
 	public String add() throws IOException{
 		/*文件上傳驗證*/
-		if(files!=null){
+		/*if(files!=null){
 			for(int i=0;i<files.size();i++){
 				if(files.get(i)!=null){
 					long filesize=files.get(i).length();
@@ -159,7 +216,7 @@ public class WebTabpomAction extends ActionSupport{
 					
 				}
 			}
-		}
+		}*/
 		
 		/*文件上傳*/
 		/*if(files!=null){//不為空代表有上傳附檔,不能寫成files.size()>0,否則報空指針
@@ -248,14 +305,15 @@ public class WebTabpomAction extends ActionSupport{
 	 * 文件上傳
 	 */
 	public void swfuploadfile() throws IOException{
-		File uploadFile_backup=new File("d:\\WebtabpomFile_backup\\"+tabpom.getPomNo());//附檔上傳到D盤(為了避免更新項目時丟失附檔,所在上傳到D盤)
+		//File uploadFile_backup=new File("d:\\WebtabpomFile_backup\\"+tabpom.getPomNo());//附檔上傳到D盤(為了避免更新項目時丟失附檔,所在上傳到D盤)
+		File uploadFile_backup=new File("d:\\WebtabpomFile_backup\\"+"test");
 		/*if(!uploadFile.exists()){
 			uploadFile.mkdirs();
 		}*/
 		if(!uploadFile_backup.exists()){
 			uploadFile_backup.mkdirs();
 		}
-		for(int i=0;i<files.size();i++){							
+		/*for(int i=0;i<files.size();i++){							
 			if(files.get(i)!=null){									
 				FileInputStream in=new FileInputStream(files.get(i));
 				//FileOutputStream out=new FileOutputStream(uploadFile+"\\"+filesFileName.get(i));
@@ -266,11 +324,36 @@ public class WebTabpomAction extends ActionSupport{
 					//out.write(b,0,length);
 					out_backup.write(b,0,length);//備份
 				}																									
-				/*WebTabpomfile webtabFile=new WebTabpomfile();//函文附檔
+				WebTabpomfile webtabFile=new WebTabpomfile();//函文附檔
 				webtabFile.getId().setFilename(filesFileName.get(i));
-				webtabFile.getId().setWebTabpom(tabpom);*/																			
+				webtabFile.getId().setWebTabpom(tabpom);																			
 			}
+		}*/
+		fileFileName = URLDecoder.decode(fileFileName, "UTF-8");  
+		
+		InputStream is = new FileInputStream(file);
+	
+		File deskFile = new File(uploadFile_backup, this.getFileFileName());
+		OutputStream os = new FileOutputStream(deskFile);
+		byte[] bytefer = new byte[1024];
+		int length = 0;
+		while ((length = is.read(bytefer)) != -1) {
+			os.write(bytefer, 0, length);
 		}
+		os.close();
+		is.close();
 	}
+	
+	/**
+	 * 搜索打印
+	 * @throws IOException 
+	 */
+	public void printSerch() throws IOException{
+		List<WebTabpom>list=tabpomSer.findByAny(pomName, brank, yymm, yymm2);
+		GlobalMethod.print_webtabpom(list, pomName, brank, yymm, yymm2, "webtabpom.jasper", response);
+	}
+	
+	
+
 
 }

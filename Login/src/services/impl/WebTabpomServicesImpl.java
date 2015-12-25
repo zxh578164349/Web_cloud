@@ -36,9 +36,9 @@ public class WebTabpomServicesImpl implements IWebTabpomServices{
 	}
 
 	public PageBean findPageBean(int pageSize, int page, String pomName,
-			String brank) {
+			String brank,String yymm,String yymm2) {
 		// TODO Auto-generated method stub
-		return tabpomDao.findPageBean(pageSize, page, pomName, brank);
+		return tabpomDao.findPageBean(pageSize, page, pomName, brank,yymm,yymm2);
 	}
 
 	public String findPomNoById(String pomNo) {
@@ -66,6 +66,11 @@ public class WebTabpomServicesImpl implements IWebTabpomServices{
 			pomNo.append("001");
 		}		
 		return pomNo.toString();
+	}
+
+	public List<WebTabpom> findByAny(String pomName, String brank,String yymm,String yymm2) {
+		// TODO Auto-generated method stub
+		return tabpomDao.findByAny(pomName, brank,yymm,yymm2);
 	}
 
 }

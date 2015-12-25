@@ -43,20 +43,32 @@ jq(document).ajaxStop(function(){
 	layer.close(loadi);
 });
 	jq(function() {
-		var demo = jq("#form").Validform({
+		var demo = jq("#subform").Validform({
 			btnSubmit : "#sub",
 			tiptype : 4,
 			tipSweep:true,
 			showAllError : true,
 			datatype : {
-				"0-6" : /^-?\d{0,12}(\.[0-9]{1,3})?$/
+				"0-8" : /^-?\d{0,8}(\.[0-9]{1,2})?$/
 			},
-			usePlugin:{
+			
+			<%--usePlugin:{
 				swfupload:{
-					file_post_name: "files",
-					upload_url: "webtabpom_swfuploadfile",
-					button_image_url: "swfupload/images/XPButtonUploadText_61x22.png",
-					flash_url: "swfupload/swfupload.swf",
+					file_post_name: "file",
+					upload_url: "/Login/webtabpom_swfuploadfile?pomNo='test'",
+					button_image_url: "/Login/jquery/swfupload/images/XPButtonUploadText_61x22.png",
+					flash_url: "/Login/jquery/swfupload/swfupload.swf",
+					
+					// 下面自己按照字面意思理解
+					file_size_limit : "102400",	// 100MB
+					file_types : "*.zip;*.rar;*.jpg;*.jpeg;*.gif;*.png;*.txt;*.doc;*.docx;*.ppt;*.pptx;*.xls;*.xlsx;*.pdf",
+					file_types_description : "压缩包 图片 常用文档格式",
+					file_upload_limit : "10",
+					file_queue_limit : "10",
+					
+					post_programs:{
+						"pomNo":"test"
+					},
 					
 					//覆盖默认绑定好的事件;
 					file_dialog_complete_handler:function(){
@@ -67,7 +79,12 @@ jq(document).ajaxStop(function(){
 						this.customSettings.form.get(0).submit();
 					}
 				}
-			},
+			},			
+			beforeSubmit:function(cuform){
+				swfuploadhandler.SWFUPLOAD_subform_0.startUpload();				
+				return false;
+			},--%>
+			
 			ajaxPost:true,
 			callback:function(data){
 				if(data=="0"){
@@ -81,7 +98,8 @@ jq(document).ajaxStop(function(){
 				}
 			}
 		});
-		demo.tipmsg.w["0-6"] = "只能數字且不超過12位數,可保留三位以內小數";
+		demo.tipmsg.w["0-8"] = "只能數字且不超過8位數,可保留2位以內小數";
+		demo.addRule([{ele:":checkbox:first",datatype:"*"},{ele:":radio:first",datatype:"*"}]); <%--注意:checkbox:first和:radio:first前面要加":"--%>
 	});
 	
 	function getAllWebbrank(){
@@ -155,8 +173,8 @@ window.onload=getAllWebbrank;
 </head>
 
 <body>
-	<form action="webtabpom_add" method="post" id="form" enctype="multipart/form-data">
-		<table width="100%" align="center" cellspacing="0" cellpadding="0"
+	<form action="webtabpom_add" method="post" id="subform" enctype="multipart/form-data">
+		<table width="100%"  cellspacing="0" cellpadding="0"
 			id="msg1">
 			  <caption>實驗室形體物性</caption>
 			<tbody id="tb_list_info">
@@ -168,7 +186,7 @@ window.onload=getAllWebbrank;
 						<td class="td_show_title">物性編號</td>
 						<s:if test="tabpom==null">
 						<td class="td_input">
-						   <input type="text" name="tabpom.pomNo" id="pomNo" style="color:blue" readonly/>
+						   <input type="text" name="tabpom.pomNo" value="自動生成" id="pomNo" style="color:blue" readonly/>
 						   <input type="hidden" name="nullmk" value="0"/>
 						</td>
 						</s:if>
@@ -179,7 +197,7 @@ window.onload=getAllWebbrank;
 						</td>   
 						</s:else>
 						<td class="td_show_title">物料名稱</td>
-						<td class="td_input"><input type="text" name="tabpom.pomName" value="<s:property value='tabpom.pomName'/>"/></td>
+						<td class="td_input"><input type="text" name="tabpom.pomName" value="<s:property value='tabpom.pomName'/>" datatype="*1-30"/></td>
 					</tr>
 					<tr>
 						<td class="td_show_title">指定料</td>
@@ -188,26 +206,26 @@ window.onload=getAllWebbrank;
 						   是<input type="radio" name="tabpom.spematerial" value="0" checked="checked"/>&nbsp;
 						</s:if>
 						<s:else>
-						 是<input type="radio" name="tabpom.spematerial" value="0"/>&nbsp;
+						 是<input type="radio" name="tabpom.spematerial" value="0" datatype="*"/>&nbsp;   <%--隻要在第一箇radio標明datatype="*" --%>
 						</s:else>
 						<s:if test='tabpom.spematerial=="1"'>
 						  否<input type="radio" name="tabpom.spematerial" value="1" checked="checked"/>&nbsp;
 						</s:if>
 						<s:else>
-						  否<input type="radio" name="tabpom.spematerial" value="1"/>&nbsp;
+						  否<input type="radio" name="tabpom.spematerial" value="1" />&nbsp;
 						</s:else>						  
 						</td>
 						<td class="td_show_title">品牌</td>
 						<td class="td_input">
-						     <select name="tabpom.webBrank.BNo" id="dwrWebbrank">
-						        					        
+						     <select name="tabpom.webBrank.BNo" id="dwrWebbrank" datatype="*">
+						       <option value="">請選擇</option>						        					        
 						     </select>
 						</td>
 					</tr>				
 				<tr>
 				<td class="td_show_title">部件</td>
 						<td class="td_input">
-						     <select name="tabpom.component" id="component" onchange="makePomNo()">
+						     <select name="tabpom.component" id="component" onchange="makePomNo()" datatype="*">
 						        <option value="">請選擇</option>
 						        <option value="RB">RB</option>
 						        <option value="MD">MD</option>					        
@@ -216,7 +234,7 @@ window.onload=getAllWebbrank;
 					<td class="td_show_title">生產工廠</td>
 					<s:if test="tabpom==null">
 					<td class="td_input">
-					  <input type="checkbox" name="list_fact" value="631">加元一廠&nbsp;
+					  <input type="checkbox" name="list_fact" value="631" >加元一廠&nbsp;
 					  <input type="checkbox" name="list_fact" value="632">加元二廠&nbsp;	
 					</td>  				  
 					</s:if>
@@ -245,141 +263,148 @@ window.onload=getAllWebbrank;
 				<tr>
 					<td class="td_show_title">硬度</td>
 					<td class="td_input"><input type="text" name="tabpom.hardness"
-						value="<s:property value='tabpom.hardness' />" datatype="0-6">
+						value="<s:property value='tabpom.hardness' />" datatype="0-8">
 					</td>
 					<td class="td_show_title">拉力</td>
 					<td class="td_input"><input type="text" name="tabpom.forces"
-						value="<s:property value='tabpom.forces' />" datatype="0-6">
+						value="<s:property value='tabpom.forces' />" datatype="0-8">
 					</td>
 					
 				</tr>
 				<tr>
 					<td class="td_show_title">延伸</td>
 					<td class="td_input"><input type="text" name="tabpom.extends_"
-						value="<s:property value='tabpom.extends_' />" datatype="0-6">
+						value="<s:property value='tabpom.extends_' />" datatype="0-8">
 					</td>
-					<td class="td_show_title">C型撕裂</td>
+					<td class="td_show_title">C型撕裂 <font color="red">↑</font></td>
 					<td class="td_input"><input type="text" name="tabpom.tearingC"
-						value="<s:property value='tabpom.tearingC' />" datatype="0-6">
+						value="<s:property value='tabpom.tearingC' />" datatype="0-8">
 					</td>
 					
 				</tr>
 				<tr>
-					<td class="td_show_title">褲型撕裂</td>
+					<td class="td_show_title">褲型撕裂 <font color="red">↑</font></td>
 					<td class="td_input"><input type="text" name="tabpom.tearingK"
-						value="<s:property value='tabpom.tearingK' />" datatype="0-6" />						
+						value="<s:property value='tabpom.tearingK' />" datatype="0-8" />						
 					</td>
-					<td class="td_show_title">比重</td>
-					<td class="td_input"><input type="text" name="tabpom.proportion"
-						value="<s:property value='tabpom.proportion' />" datatype="0-6" />
+					<td class="td_show_title">比重<br/><br/>誤差範圍(±)</td>
+					<td class="td_input">
+					   <input type="text" name="tabpom.proportion"
+						value="<s:property value='tabpom.proportion' />" datatype="0-8" /><br/>
+						<input type="text" name="tabpom.proportionA" value="<s:property value='tabpom.proportionA' />"/>
 						
 					</td>					
 				</tr>
 				<tr>
-					<td class="td_show_title">AKRON耐磨</td>
+					<td class="td_show_title">AKRON耐磨 <font color="green">↓</font></td>
 					<td class="td_input"><input type="text" name="tabpom.wresistingAkron"
-						value="<s:property value='tabpom.wresistingAkron' />" datatype="0-6" />						
+						value="<s:property value='tabpom.wresistingAkron' />" datatype="0-8" />						
 					</td>
-					<td class="td_show_title">DIN耐磨</td>
+					<td class="td_show_title">DIN耐磨 <font color="green">↓</font></td>
 					<td class="td_input"><input type="text" name="tabpom.wresistingDin"
-						value="<s:property value='tabpom.wresistingDin' />" datatype="0-6" />
+						value="<s:property value='tabpom.wresistingDin' />" datatype="0-8" />
 						
 					</td>					
 				</tr>
 				<tr>
-					<td class="td_show_title">止滑係數</td>
+					<td class="td_show_title">止滑係數 <font color="red">↑</font></td>
 					<td class="td_input"><input type="text" name="tabpom.ratioA"
-						value="<s:property value='tabpom.ratioA' />" datatype="0-6" />						
+						value="<s:property value='tabpom.ratioA' />" datatype="0-8" />						
 					</td>
-					<td class="td_show_title">耐油係數</td>
+					<td class="td_show_title">耐油係數 <font color="green">↓</font></td>
 					<td class="td_input"><input type="text" name="tabpom.ratioB"
-						value="<s:property value='tabpom.ratioB' />" datatype="0-6" />
+						value="<s:property value='tabpom.ratioB' />" datatype="0-8" />
 						
 					</td>					
 				</tr>
 				<tr>
 					<td class="td_show_title">抗彎曲</td>
 					<td class="td_input"><input type="text" name="tabpom.ableBend"
-						value="<s:property value='tabpom.ableBend' />" datatype="0-6" />						
+						value="<s:property value='tabpom.ableBend' />" datatype="0-8" />						
 					</td>
 					<td class="td_show_title">抗黃變</td>
 					<td class="td_input"><input type="text" name="tabpom.ableYellow"
-						value="<s:property value='tabpom.ableYellow' />" datatype="0-6" />
+						value="<s:property value='tabpom.ableYellow' />" datatype="*0-20" />
 						
 					</td>					
 				</tr>
 				<tr>
 					<td class="td_show_title">抗高壓</td>
 					<td class="td_input"><input type="text" name="tabpom.defyPress"
-						value="<s:property value='tabpom.defyPress' />" datatype="0-6" />						
+						value="<s:property value='tabpom.defyPress' />" datatype="*0-20" />						
 					</td>
 					<td class="td_show_title">抗靜電</td>
 					<td class="td_input"><input type="text" name="tabpom.defyEle"
-						value="<s:property value='tabpom.defyEle' />" datatype="0-6" />
+						value="<s:property value='tabpom.defyEle' />" datatype="0-8" />
 						
 					</td>					
 				</tr>
 				<tr>
 					<td class="td_show_title">老化水解</td>
 					<td class="td_input"><input type="text" name="tabpom.ageing"
-						value="<s:property value='tabpom.ageing' />" datatype="0-6" />						
+						value="<s:property value='tabpom.ageing' />" datatype="*0-20" />						
 					</td>
 					<td class="td_show_title">收縮</td>
 					<td class="td_input"><input type="text" name="tabpom.contract"
-						value="<s:property value='tabpom.contract' />" datatype="0-6" />
+						value="<s:property value='tabpom.contract' />" datatype="*0-20" />
 						
 					</td>					
 				</tr>
 				<tr>
-					<td class="td_show_title">彈性</td>
+					<td class="td_show_title">彈性 <font color="red">↑</font></td>
 					<td class="td_input"><input type="text" name="tabpom.elasticity"
-						value="<s:property value='tabpom.elasticity' />" datatype="0-6" />						
+						value="<s:property value='tabpom.elasticity' />" datatype="0-8" />						
 					</td>
-					<td class="td_show_title">壓縮</td>
+					<td class="td_show_title">壓縮 <font color="green">↓</font></td>
 					<td class="td_input"><input type="text" name="tabpom.compression"
-						value="<s:property value='tabpom.compression' />" datatype="0-6" />
+						value="<s:property value='tabpom.compression' />" datatype="*0-20" />
 						
 					</td>					
 				</tr>
 				<tr>
-					<td class="td_show_title">分裂</td>
+					<td class="td_show_title">分裂 <font color="red">↑</font></td>
 					<td class="td_input"><input type="text" name="tabpom.division"
-						value="<s:property value='tabpom.division' />" datatype="0-6" />						
+						value="<s:property value='tabpom.division' />" datatype="0-8" />						
 					</td>
 					<td class="td_show_title">認證</td>
-					<td class="td_input"><input type="text" name="tabpom.authentications"
-						value="<s:property value='tabpom.authentications' />" datatype="0-6" />
-						
+					<td class="td_input">
+					<s:if test='tabpom.authentications=="0"'>
+					   是<input type="radio" name="tabpom.authentications" value="0" checked="checked"/>
+					</s:if>
+					<s:else>
+					   是<input type="radio" name="tabpom.authentications" value="0"/>
+					</s:else>
+					<s:if test='tabpom.authentications=="1"'>
+					   否<input type="radio" name="tabpom.authentications" value="1" checked="checked"/>
+					</s:if>
+					<s:else>
+					   否<input type="radio" name="tabpom.authentications" value="1"/>
+					</s:else>											
 					</td>					
 				</tr>
 				<tr>
 					<td class="td_show_title">特性說明</td>
-					<td class="td_input"><input type="text" name="tabpom.instruction"
-						value="<s:property value='tabpom.instruction' />" datatype="0-6" />						
-					</td>
-					<td class="td_show_title">附檔</td>
-					<td class="td_input">
-					  <%--<div style="width:300px" id="divfile">
-				      <input type="file" name="files" style="width:150px"/><a href="javascript:addFile()">添加多個</a>
-				      </div>--%>
-				      <input type="text" value="" id="txtFileName2" disabled="disabled" autocomplete="off" class="inputxt" plugin="swfupload" /> 
-				      <span id="spanButtonPlaceholder"></span> (10 MB max)
-                      <input type="hidden" pluginhidden="swfupload" name="hidFileID" id="hidFileID" value="" />
-				      
-				      <input type="text" value="" id="txtFileName2" disabled="disabled" autocomplete="off" class="inputxt" plugin="swfupload" /> 
-				      <span id="spanButtonPlaceholder"></span> (10 MB max)
-                      <input type="hidden" pluginhidden="swfupload" name="hidFileID" id="hidFileID" value="" />
-				      
-				      										
-						<input type="hidden" value="<s:property value='#session.loginUser.username'/>" name="tabpom.userName" />
+					<td class="td_input" colspan="3">
+					<textarea rows="10" cols="150" name="tabpom.instruction"><s:property value='tabpom.instruction' /></textarea>
+					<input type="hidden" value="<s:property value='#session.loginUser.username'/>" name="tabpom.userName" />
 						<s:if test="tabpom==null">
 						   <input type="hidden" value="<%=str_date%>" name="tabpom.tabpomDate" id="tabpomDate"/>
 						</s:if>
 						<s:else>
 						   <input type="hidden" value="<s:property value='tabpom.tabpomDate'/>" name="tabpom.tabpomDate" />
 						</s:else>
-						
-						
+																					
+					<%--<td class="td_show_title">附檔</td>
+					<td class="td_input">
+					  <div style="width:300px" id="divfile">
+				      <input type="file" name="files" style="width:150px"/><a href="javascript:addFile()">添加多個</a>
+				      </div>
+				      
+				      <input type="text" value="" id="txtFileName2" disabled="disabled" autocomplete="off" class="inputxt" plugin="swfupload" /> 
+				      <span id="spanButtonPlaceholder"></span> (10 MB max)
+                      <input type="hidden" pluginhidden="swfupload" name="hidFileID" id="hidFileID" value="" />
+				      --%>
+				      				     				      																									
 					</td>					
 				</tr>
 			</tbody>

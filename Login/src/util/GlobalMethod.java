@@ -36,6 +36,39 @@ public class GlobalMethod {
 		}
 	}
 	
+	/**
+	 * 實驗室物性搜索打印
+	 * @param list
+	 * @param factNo
+	 * @param yymm
+	 * @param yymm2
+	 * @param file
+	 * @param response
+	 * @throws IOException
+	 */
+	public static void print_webtabpom(List list,String pomName,String brank,String yymm,String yymm2,String file,HttpServletResponse response) throws IOException{
+		//List<Webwlo>list=wloService.findByAny(factNo, yymm, yymm2);
+		if(list.size()>0){
+			StringBuffer fileName=new StringBuffer();
+			Map<String,Object>map=new HashMap<String,Object>();
+			map.put("brank", brank);
+			fileName.append("report");
+			if(brank!=null&&!brank.equals("")){
+				fileName.append("_"+brank);
+			}
+			if(yymm!=null&&!yymm.equals("")){
+				fileName.append("_"+yymm);
+			}
+			if(yymm2!=null&&!yymm2.equals("")){
+				fileName.append("_"+yymm2);
+			}
+			JasperHelper.exportmain("excel", map,file, list,fileName.toString(), "jasper/input/");
+		}else{
+			response.setContentType("text/html;charset=utf-8");
+			response.getWriter().print("<script>alert('無數據');</script>");
+		}
+	}
+	
 	public static String findPageBean(String public_factno,String yymm,String yymm2){
 		ActionContext.getContext().getSession().remove("public_factno");
 		ActionContext.getContext().getSession().remove("public_yymm");

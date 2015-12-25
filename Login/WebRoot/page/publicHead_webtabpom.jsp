@@ -60,8 +60,14 @@ window.onload=getAllWebbrank;
 			<td>
 			   <select name="brank" id="dwrWebbrank"></select>
 			</td>
+			<td>年月</td>
 			<td>
-			 <input value="搜索" type="button" id="addbtn" onclick="javascript:submis()" />	
+			  開始日期:<input type="text" id="year" name="yymm" onClick="WdatePicker({dataFmt:'yyyyMM'})" readonly="readonly" class="Wdate"/></br>
+			  結束日期:<input type="text" id="year" name="yymm2" onClick="WdatePicker({dataFmt:'yyyyMM'})" readonly="readonly" class="Wdate"/>			
+			</td>
+			<td>
+			 <input value="搜索" type="button" id="addbtn" onclick="javascript:submis()" />
+			 <input value="導出Excel" type="button" id="search_forday" onclick="print('public_form')"/>	
 			</td>
 		</tr>
 	</table>

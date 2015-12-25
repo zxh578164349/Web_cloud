@@ -59,26 +59,26 @@
         <property name="ableBend" type="java.lang.Double">
             <column name="ABLE_BEND" precision="10" />
         </property>
-        <property name="ableYellow" type="java.lang.Double">
-            <column name="ABLE_YELLOW" precision="10" />
+        <property name="ableYellow" type="java.lang.String">
+            <column name="ABLE_YELLOW" length="20" />
         </property>
-        <property name="defyPress" type="java.lang.Double">
-            <column name="DEFY_PRESS" precision="10" />
+        <property name="defyPress" type="java.lang.String">
+            <column name="DEFY_PRESS" length="20" />
         </property>
         <property name="defyEle" type="java.lang.Double">
             <column name="DEFY_ELE" precision="10" />
         </property>
-        <property name="ageing" type="java.lang.Double">
-            <column name="AGEING" precision="10" />
+        <property name="ageing" type="java.lang.String">
+            <column name="AGEING" length="20" />
         </property>
-        <property name="contract" type="java.lang.Double">
-            <column name="CONTRACT" precision="10" />
+        <property name="contract" type="java.lang.String">
+            <column name="CONTRACT" length="20" />
         </property>
         <property name="elasticity" type="java.lang.Double">
             <column name="ELASTICITY" precision="10" />
         </property>
-        <property name="compression" type="java.lang.Double">
-            <column name="COMPRESSION" precision="10" />
+        <property name="compression" type="java.lang.String">
+            <column name="COMPRESSION" length="20" />
         </property>
         <property name="division" type="java.lang.Double">
             <column name="DIVISION" precision="10" />
@@ -97,6 +97,9 @@
         </property> 
         <property name="tabpomDate" type="java.lang.String">
            <column name="TABPOM_DATE" length="8"/>
+        </property>
+        <property name="proportionA" type="java.lang.Double">
+           <column name="PROPORTION_A" precision="10"/>
         </property>
         <bag name="webfacts"  table="web_tabpom_fact">
             <key>

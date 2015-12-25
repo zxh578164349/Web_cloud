@@ -16,30 +16,31 @@ public class WebTabpom implements java.io.Serializable {
 	private String spematerial;//指定料
 	private String component;//部件
 	private Double hardness;//硬度
-	private Double forces;//拉力
-	private Double extends_;//延伸
-	private Double tearingC;//C型撕裂
-	private Double tearingK;//褲型撕裂
-	private Double proportion;//比重
-	private Double wresistingAkron;//AKRON耐磨
-	private Double wresistingDin;//DIN耐磨
-	private Double ratioA;//止滑係數
-	private Double ratioB;//耐油係數
+	private Double forces;//拉力↑
+	private Double extends_;//延伸↑
+	private Double tearingC;//C型撕裂↑
+	private Double tearingK;//褲型撕裂↑
+	private Double proportion;//比重(1.13±0.25)
+	private Double wresistingAkron;//AKRON耐磨↓
+	private Double wresistingDin;//DIN耐磨↓
+	private Double ratioA;//止滑係數↑
+	private Double ratioB;//耐油係數↓
 	private Double ableBend;//抗彎曲
-	private Double ableYellow;//抗黃變
-	private Double defyPress;//抗高壓
+	private String ableYellow;//抗黃變(String)
+	private String defyPress;//抗高壓(String)
 	private Double defyEle;//抗靜電
-	private Double ageing;//老化水解
-	private Double contract;//收縮
-	private Double elasticity;//彈性
-	private Double compression;//壓縮
-	private Double division;//分裂
+	private String ageing;//老化水解(String)
+	private String contract;//收縮(String)
+	private Double elasticity;//彈性↑
+	private String compression;//壓縮↓(String)
+	private Double division;//分裂↑
 	private String authentications;//認證
 	private String instruction;//特性說明
 	private String fileMk;//附檔
 	private String userName;//創建人
 	private String tabpomDate;//創建日期
 	private WebBrank webBrank;//品牌
+	private Double proportionA;//比重誤差（與比重連起來用）
 	//private VWebFact webfact;
 	private List<VWebFact>webfacts=new ArrayList<VWebFact>();
 	private List<WebTabpomfile>webtabfiles=new ArrayList<WebTabpomfile>();//記錄附檔文件
@@ -61,9 +62,9 @@ public class WebTabpom implements java.io.Serializable {
 			Double hardness, Double forces, Double extends_, Double tearingC,
 			Double tearingK, Double proportion, Double wresistingAkron,
 			Double wresistingDin, Double ratioA, Double ratioB,
-			Double ableBend, Double ableYellow, Double defyPress,
-			Double defyEle, Double ageing, Double contract, Double elasticity,
-			Double compression, Double division, String authentications,
+			Double ableBend, String ableYellow, String defyPress,
+			Double defyEle, String ageing, String contract, Double elasticity,
+			String compression, Double division, String authentications,Double proportionA,
 			String instruction, String fileMk,List<VWebFact> webfacts) {
 		this.pomNo = pomNo;
 		this.webBrank = webBrank;
@@ -228,21 +229,9 @@ public class WebTabpom implements java.io.Serializable {
 		this.ableBend = ableBend;
 	}
 
-	public Double getAbleYellow() {
-		return this.ableYellow;
-	}
+	
 
-	public void setAbleYellow(Double ableYellow) {
-		this.ableYellow = ableYellow;
-	}
-
-	public Double getDefyPress() {
-		return this.defyPress;
-	}
-
-	public void setDefyPress(Double defyPress) {
-		this.defyPress = defyPress;
-	}
+	
 
 	public Double getDefyEle() {
 		return this.defyEle;
@@ -252,21 +241,9 @@ public class WebTabpom implements java.io.Serializable {
 		this.defyEle = defyEle;
 	}
 
-	public Double getAgeing() {
-		return this.ageing;
-	}
+	
 
-	public void setAgeing(Double ageing) {
-		this.ageing = ageing;
-	}
-
-	public Double getContract() {
-		return this.contract;
-	}
-
-	public void setContract(Double contract) {
-		this.contract = contract;
-	}
+	
 
 	public Double getElasticity() {
 		return this.elasticity;
@@ -276,13 +253,7 @@ public class WebTabpom implements java.io.Serializable {
 		this.elasticity = elasticity;
 	}
 
-	public Double getCompression() {
-		return this.compression;
-	}
-
-	public void setCompression(Double compression) {
-		this.compression = compression;
-	}
+	
 
 	public Double getDivision() {
 		return this.division;
@@ -347,6 +318,54 @@ public class WebTabpom implements java.io.Serializable {
 
 	public void setWebtabfiles(List<WebTabpomfile> webtabfiles) {
 		this.webtabfiles = webtabfiles;
+	}
+
+	public String getAbleYellow() {
+		return ableYellow;
+	}
+
+	public void setAbleYellow(String ableYellow) {
+		this.ableYellow = ableYellow;
+	}
+
+	public String getDefyPress() {
+		return defyPress;
+	}
+
+	public void setDefyPress(String defyPress) {
+		this.defyPress = defyPress;
+	}
+
+	public String getAgeing() {
+		return ageing;
+	}
+
+	public void setAgeing(String ageing) {
+		this.ageing = ageing;
+	}
+
+	public String getContract() {
+		return contract;
+	}
+
+	public void setContract(String contract) {
+		this.contract = contract;
+	}
+
+	public String getCompression() {
+		return compression;
+	}
+
+	public void setCompression(String compression) {
+		this.compression = compression;
+	}
+
+	public Double getProportionA() {
+		return proportionA;
+	}
+
+	public void setProportionA(Double proportionA) {
+		this.proportionA = proportionA;
 	}
 	
 

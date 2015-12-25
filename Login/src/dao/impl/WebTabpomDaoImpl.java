@@ -42,7 +42,7 @@ public class WebTabpomDaoImpl extends Basedao implements IWebTabpomDao{
 	}
 
 	public PageBean findPageBean(int pageSize, int page, String pomName,
-			String brank) {
+			String brank,String yymm,String yymm2) {
 		// TODO Auto-generated method stub
 		StringBuffer hql=new StringBuffer();
 		StringBuffer hql2=new StringBuffer();
@@ -57,8 +57,16 @@ public class WebTabpomDaoImpl extends Basedao implements IWebTabpomDao{
 			hql.append(" and brank=:brank");
 			map.put("brank", brank);
 		}
+		if(yymm!=null&&!yymm.equals("")){
+			hql.append(" and tabpomDate>=:yymm ");
+			map.put("yymm", yymm);
+		}
+		if(yymm2!=null&&!yymm2.equals("")){
+			hql.append(" and tabpomDate<=:yymm2 ");
+			map.put("yymm2", yymm2);
+		}
 		hql2.append(hql);
-		hql.append(" order by pomNo");
+		hql.append(" order by tabpomDate");
 		int allrows=0;
 		Integer rows=(Integer)ActionContext.getContext().getSession().get("rows");
 		if(rows!=null&&page>0){
@@ -110,6 +118,31 @@ public class WebTabpomDaoImpl extends Basedao implements IWebTabpomDao{
 		String hql="select pomNo from WebTabpom where component=? and tabpomDate=? order by pomNo desc";
 		String[]objs={component,tabpomDate};
 		return super.findAll(hql, objs);
+	}
+
+	public List<WebTabpom> findByAny(String pomName, String brank,String yymm,String yymm2) {
+		// TODO Auto-generated method stub
+		StringBuffer hql=new StringBuffer();
+		Map<String,Object>map=new HashMap<String,Object>();
+		hql.append("from WebTabpom where 1=1 ");
+		if(pomName!=null&&!pomName.equals("")){
+			hql.append(" and pomName=:pomname");
+			map.put("pomname", pomName);
+		}
+		if(brank!=null&&!brank.equals("")){
+			hql.append(" and webBrank.BNo=:brank ");
+			map.put("brank", brank);
+		}
+		if(yymm!=null&&!yymm.equals("")){
+			hql.append(" and tabpomDate>=:yymm ");
+			map.put("yymm", yymm);
+		}
+		if(yymm2!=null&&!yymm2.equals("")){
+			hql.append(" and tabpomDate<=:yymm2 ");
+			map.put("yymm2", yymm2);
+		}
+		hql.append(" order by tabpomDate desc");
+		return super.getAllWithNoPage(hql.toString(), map);
 	}
 	
 }

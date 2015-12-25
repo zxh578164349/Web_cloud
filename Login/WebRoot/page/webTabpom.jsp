@@ -95,7 +95,7 @@
 	}
 	function print(subform){
 		var subform=jq("#"+subform);
-		subform.attr("action","webwlo_print");
+		subform.attr("action","webtabpom_printSerch");
 		subform.attr("target","_blank");
 		subform.submit();
 	}
