@@ -350,6 +350,13 @@ public class WebTabpomAction extends ActionSupport implements ServletResponseAwa
 	 */
 	public void printSerch() throws IOException{
 		List<WebTabpom>list=tabpomSer.findByAny(pomName, brank, yymm, yymm2);
+		for(WebTabpom tabpom:list){
+			StringBuffer factSnames=new StringBuffer();
+			for(VWebFact vwebfact:tabpom.getWebfacts()){
+				factSnames.append(vwebfact.getFactSname()+" ");
+			}
+			tabpom.setVwebfacts(factSnames.toString());
+		}
 		GlobalMethod.print_webtabpom(list, pomName, brank, yymm, yymm2, "webtabpom.jasper", response);
 	}
 	

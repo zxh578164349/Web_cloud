@@ -48,7 +48,7 @@ window.onload=getAllWebbrank;
 
 </head>
 <body>
-  <div style="width:680px">
+  <div style="width:1200px">
   <form id="public_form" method="post">
 	<table  border="0px">
 		<tr>

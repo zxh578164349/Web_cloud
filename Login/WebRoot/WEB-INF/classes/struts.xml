@@ -689,6 +689,9 @@
 		    <result name="findById">/saveAndUpdate/WebTabpomSaveOrUpdate.jsp</result>
 		    <result name="delete" type="redirectAction">webtabpom_findPageBean3</result>		    
 		</action>
+		<action name="webfactOrder_*" class="webfactorderAction" method="{1}">
+		   
+		</action>
 	</package>
 
 </struts>

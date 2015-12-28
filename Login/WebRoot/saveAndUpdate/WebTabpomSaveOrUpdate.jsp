@@ -217,43 +217,47 @@ window.onload=getAllWebbrank;
 						</td>
 						<td class="td_show_title">品牌</td>
 						<td class="td_input">
+						  <s:if test="tabpom==null">
 						     <select name="tabpom.webBrank.BNo" id="dwrWebbrank" datatype="*">
 						       <option value="">請選擇</option>						        					        
 						     </select>
+						  </s:if>
+						  <s:else>
+						     <input type="text" name="tabpom.webBrank.BNo" value="<s:property value='tabpom.webBrank.BNo'/>" readonly style="color:blue"/>
+						  </s:else>   
 						</td>
 					</tr>				
 				<tr>
 				<td class="td_show_title">部件</td>
 						<td class="td_input">
+						  <s:if test="tabpom==null">
 						     <select name="tabpom.component" id="component" onchange="makePomNo()" datatype="*">
 						        <option value="">請選擇</option>
 						        <option value="RB">RB</option>
 						        <option value="MD">MD</option>					        
 						     </select>
+						  </s:if>
+						  <s:else>
+						      <input type="text" name="tabpom.component" value="<s:property value='tabpom.component'/>" readonly style="color:blue" />
+						  </s:else>   
 						</td>
 					<td class="td_show_title">生產工廠</td>
 					<s:if test="tabpom==null">
 					<td class="td_input">
-					  <input type="checkbox" name="list_fact" value="631" >加元一廠&nbsp;
-					  <input type="checkbox" name="list_fact" value="632">加元二廠&nbsp;	
+					  <s:iterator value="#session.facts" id="temp">
+					     <input type="checkbox" name="list_fact" value="${temp[0]}">${temp[1] }&nbsp;
+					  </s:iterator>					 
 					</td>  				  
 					</s:if>
 					<s:else>
 					<td class="td_input">
-					  <s:iterator value="tabpom.webfacts">
-					     <s:if test='factNo=="631"'>
-					        <input type="checkbox" name="list_fact" value="631" checked="checked">加元一廠&nbsp;
+					 <s:iterator value="#session.facts" id="temp">
+					  <s:iterator value="tabpom.webfacts" id="temp2">
+					     <s:if test='#attr.temp[0]==factNo'>
+					        <input type="checkbox" name="list_fact" value="<s:property value='factNo'/>" checked="checked"><s:property value='factSname'/>&nbsp;
 					    </s:if>
-					    <s:else>
-					       <input type="checkbox" name="list_fact" value="631">加元一廠&nbsp;
-					    </s:else>
-					    <s:if test='factNo=="632"'>
-					        <input type="checkbox" name="list_fact" value="632" checked="checked">加元二廠&nbsp;
-					    </s:if>
-					    <s:else>
-					       <input type="checkbox" name="list_fact" value="632">加元二廠&nbsp;
-					    </s:else>
-					  </s:iterator>					   
+					  </s:iterator>
+					 </s:iterator> 					   
 					</td>
 					</s:else>
 					

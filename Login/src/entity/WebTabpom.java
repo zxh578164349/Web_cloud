@@ -44,6 +44,8 @@ public class WebTabpom implements java.io.Serializable {
 	//private VWebFact webfact;
 	private List<VWebFact>webfacts=new ArrayList<VWebFact>();
 	private List<WebTabpomfile>webtabfiles=new ArrayList<WebTabpomfile>();//記錄附檔文件
+	
+	private String vwebfacts;//便於jasperreport模板打印，此列不需要映射到數據庫物理表中
 
 	// Constructors
 
@@ -367,6 +369,16 @@ public class WebTabpom implements java.io.Serializable {
 	public void setProportionA(Double proportionA) {
 		this.proportionA = proportionA;
 	}
+
+	public String getVwebfacts() {
+		return vwebfacts;
+	}
+
+	public void setVwebfacts(String vwebfacts) {
+		this.vwebfacts = vwebfacts;
+	}
+	
+	
 	
 
 	

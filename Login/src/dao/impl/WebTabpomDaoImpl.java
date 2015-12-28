@@ -12,6 +12,7 @@ import util.PageBean;
 
 import dao.Basedao;
 import dao.IWebTabpomDao;
+import entity.VWebFact;
 import entity.WebTabpom;
 
 public class WebTabpomDaoImpl extends Basedao implements IWebTabpomDao{
@@ -27,7 +28,11 @@ public class WebTabpomDaoImpl extends Basedao implements IWebTabpomDao{
 		Query query=getSession().createQuery(hql);
 		query.setString(0, pomNo);
 		WebTabpom obj=(WebTabpom)query.uniqueResult();
-		obj.getWebfacts().size();
+		for(VWebFact fact:obj.getWebfacts()){
+			fact.getFactNo();
+			fact.getFactSname();
+		}		
+		//obj.getWebfacts().size();
 		return obj;
 	}
 
@@ -82,14 +87,17 @@ public class WebTabpomDaoImpl extends Basedao implements IWebTabpomDao{
 		}
 		int offset=PageBean.countOffset(pageSize, currentPage);
 		List<WebTabpom>list=super.queryForPage(hql.toString(), offset, pageSize, map);
+		/***解決延遲加載問題****/
 		if(list.size()>0){
 			for(int i=0;i<list.size();i++){
+				list.get(i).getWebBrank().getBName();
 				for(int j=0;j<list.get(i).getWebfacts().size();j++){
-					list.get(i).getWebfacts().get(j).getFactSname();//解決延遲加載問題
+					list.get(i).getWebfacts().get(j).getFactSname();
 				}
 				
 			}
 		}
+		/***解決延遲加載問題****/
 		PageBean bean=new PageBean();
 		bean.setAllRow(allrows);
 		bean.setCurrentPage(currentPage);
@@ -142,7 +150,19 @@ public class WebTabpomDaoImpl extends Basedao implements IWebTabpomDao{
 			map.put("yymm2", yymm2);
 		}
 		hql.append(" order by tabpomDate desc");
-		return super.getAllWithNoPage(hql.toString(), map);
+		List<WebTabpom>list=super.getAllWithNoPage(hql.toString(), map);
+		/***解決延遲加載問題****/
+		if(list.size()>0){
+			for(int i=0;i<list.size();i++){
+				list.get(i).getWebBrank().getBName();
+				for(int j=0;j<list.get(i).getWebfacts().size();j++){
+					list.get(i).getWebfacts().get(j).getFactSname();
+				}
+				
+			}
+		}
+		/***解決延遲加載問題****/
+		return list;
 	}
 	
 }
