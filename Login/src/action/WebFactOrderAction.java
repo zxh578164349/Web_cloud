@@ -26,16 +26,7 @@ public class WebFactOrderAction extends ActionSupport{
 	public String add() throws IOException{
 		String path="d:\\北越&鞋塑2015接單匯總-1201.xls";
 		List<String>list_all=ImportExcel.exportListFromExcel(new File(path), 1);
-		for(String str:list_all){
-			String[]objs=str.split("__");
-			/*factorder.setFactNo(objs[1]);
-			factorder.setBrank(objs[2]);
-			factorder.setCustomer(objs[3]);
-			factorder.setModelNo(objs[4]);
-			factorder.setFactArea(objs[5]);
-			factorder.setOrderData(Double.valueOf(objs[6]));
-			webfactorderSer.add(factorder);*/
-		}
+		webfactorderSer.addLarge(list_all);
 		return null;
 	}
 

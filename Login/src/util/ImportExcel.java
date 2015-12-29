@@ -51,7 +51,7 @@ public class ImportExcel {
 		List<String> list = new ArrayList<String>();
 
 		//int minRowIx = sheet.getFirstRowNum();
-		int minRowIx=2;
+		int minRowIx=1;
 		int maxRowIx = sheet.getLastRowNum();
 		for (int rowIx = minRowIx; rowIx <= maxRowIx; rowIx++) {
 			Row row = sheet.getRow(rowIx);
@@ -94,6 +94,7 @@ public class ImportExcel {
 			}
 			list.add(sb.toString());
 		}
+		
 		return list;
 	}
 	
@@ -116,7 +117,7 @@ public class ImportExcel {
 		} else if (extensionName.toLowerCase().equals(XLSX)) {
 			workbook = new XSSFWorkbook(is);
 		}
-
+        is.close();
 		return exportListFromExcel(workbook, sheetNum);
 	}
 	/**
@@ -138,17 +139,20 @@ public class ImportExcel {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		String path="d:\\北越&鞋塑2015接單匯總-1201.xls";
-		//List<String>list=null;
+		List<String>list=null;
 		try{
-			/*list=exportListFromExcel(new File(path),1);
-			for(String str:list){
+			list=exportListFromExcel(new File(path),1);
+			/*for(String str:list){
 				System.out.println(str);
 			}*/
-			String[]list="__a__b__c".split("__");
+			for(int i=0;i<list.size()-700;i++){
+				System.out.println(i+list.get(i));
+			}
+			/*String[]list="__a__b__c".split("__");
 			for(int i=0;i<list.length;i++){
 				System.out.println(list[i]);				
 			}
-			System.out.println(list.length);
+			System.out.println(list.length);*/
 		}catch(Exception e){
 			
 		}

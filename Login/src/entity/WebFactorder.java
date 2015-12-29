@@ -9,12 +9,15 @@ public class WebFactorder implements java.io.Serializable {
 	// Fields
 
 	private Long orderId;
-	private String factNo;
-	private String factArea;
+	private String factSname;
+	private String component;
 	private String brank;
 	private String customer;
 	private String modelNo;
 	private Double orderData;
+	private String yymm;
+	private String factNo;
+	private String factArea;
 
 	// Constructors
 
@@ -28,15 +31,19 @@ public class WebFactorder implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public WebFactorder(Long orderId, String factNo, String factArea,
-			String brank, String customer, String modelNo, Double orderData) {
+	public WebFactorder(Long orderId, String factSname, String component,
+			String brank, String customer, String modelNo, Double orderData,
+			String yymm, String factNo, String factArea) {
 		this.orderId = orderId;
-		this.factNo = factNo;
-		this.factArea = factArea;
+		this.factSname = factSname;
+		this.component = component;
 		this.brank = brank;
 		this.customer = customer;
 		this.modelNo = modelNo;
 		this.orderData = orderData;
+		this.yymm = yymm;
+		this.factNo = factNo;
+		this.factArea = factArea;
 	}
 
 	// Property accessors
@@ -49,20 +56,20 @@ public class WebFactorder implements java.io.Serializable {
 		this.orderId = orderId;
 	}
 
-	public String getFactNo() {
-		return this.factNo;
+	public String getFactSname() {
+		return this.factSname;
 	}
 
-	public void setFactNo(String factNo) {
-		this.factNo = factNo;
+	public void setFactSname(String factSname) {
+		this.factSname = factSname;
 	}
 
-	public String getFactArea() {
-		return this.factArea;
+	public String getComponent() {
+		return this.component;
 	}
 
-	public void setFactArea(String factArea) {
-		this.factArea = factArea;
+	public void setComponent(String component) {
+		this.component = component;
 	}
 
 	public String getBrank() {
@@ -95,6 +102,30 @@ public class WebFactorder implements java.io.Serializable {
 
 	public void setOrderData(Double orderData) {
 		this.orderData = orderData;
+	}
+
+	public String getYymm() {
+		return this.yymm;
+	}
+
+	public void setYymm(String yymm) {
+		this.yymm = yymm;
+	}
+
+	public String getFactNo() {
+		return this.factNo;
+	}
+
+	public void setFactNo(String factNo) {
+		this.factNo = factNo;
+	}
+
+	public String getFactArea() {
+		return this.factArea;
+	}
+
+	public void setFactArea(String factArea) {
+		this.factArea = factArea;
 	}
 
 }

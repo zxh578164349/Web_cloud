@@ -51,9 +51,9 @@
 		<value>select sysdate from dual</value>
 	</property>
 	<!-- 如果housekeeper 检测到某个线程的活动时间大于这个数值.它将会杀掉这个线程.所以确认一下你的服务器的带宽.然后定一个合适的值.默认是5分钟. 
-		现在设置 10 秒 -->
+		现在设置 45分 -->
 	<property name="maximumActiveTime">
-		<value>300000</value>
+		<value>2700000</value>
 	</property>
 	<!-- 最少保持的空闲连接数 （现在设置20个） -->
 	<property name="prototypeCount">
@@ -91,7 +91,9 @@
 				<prop key="hibernate.dialect">
 					org.hibernate.dialect.Oracle9Dialect
 				</prop>
-				<prop key="hibernate.show_sql">true</prop> <prop key="hibernate.format_sql">true</prop> 
+				<prop key="hibernate.show_sql">true</prop> <prop key="hibernate.format_sql">true</prop>
+				<prop key="hibernate.jdbc.batch_size">25</prop><!-- 每25条语句提交一次  -->
+				<prop key="hibernate.jdbc.fetch_size">50</prop><!-- 每次讀取50條數據  -->
 				<prop key="hibernate.autoReconnect">true</prop>
 
 			</props>
@@ -250,7 +252,7 @@
 			<tx:method name="save*" propagation="REQUIRED" />
 			<tx:method name="del*" propagation="REQUIRED" />
 			<tx:method name="update*" propagation="REQUIRED" />
-			<tx:method name="*" propagation="REQUIRED" read-only="true" />
+			<tx:method name="*" propagation="NOT_SUPPORTED"  read-only="true" />
 		</tx:attributes>
 	</tx:advice>
 	<!-- 定义哪些类应用这些规则 -->
