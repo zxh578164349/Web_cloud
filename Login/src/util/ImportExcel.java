@@ -141,18 +141,25 @@ public class ImportExcel {
 		String path="d:\\北越&鞋塑2015接單匯總-1201.xls";
 		List<String>list=null;
 		try{
-			list=exportListFromExcel(new File(path),1);
+			//list=exportListFromExcel(new File(path),1);
 			/*for(String str:list){
 				System.out.println(str);
 			}*/
-			for(int i=0;i<list.size()-700;i++){
+			/*for(int i=0;i<list.size()-700;i++){
 				System.out.println(i+list.get(i));
-			}
+			}*/
 			/*String[]list="__a__b__c".split("__");
 			for(int i=0;i<list.length;i++){
 				System.out.println(list[i]);				
 			}
 			System.out.println(list.length);*/
+			List<String>lists=new ArrayList<String>();
+			lists.add("abc");
+			System.out.println(lists.getClass().getName());
+			System.out.println("abc".getClass().getName());
+			if(lists.getClass().getName().equals("java.lang.String")){
+				System.out.println("字符串類型");
+			}
 		}catch(Exception e){
 			
 		}

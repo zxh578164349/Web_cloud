@@ -6,6 +6,8 @@ import java.util.Map;
 
 import org.hibernate.Transaction;
 
+import com.opensymphony.xwork2.ActionContext;
+
 import util.PageBean;
 
 import dao.Basedao;
@@ -64,18 +66,42 @@ public class WebFactorderDaoImpl extends Basedao implements IWebFactorderDao{
 	}
 
 
-	public PageBean findPageBean(int pageSize, int page, String factNo,
+	public PageBean findPageBean(int pageSize, int page, List<String> factNos,
 			String brank, String customer, String model, String component) {
 		// TODO Auto-generated method stub
+		//System.out.println(factNos.getClass().getName());
 		StringBuffer hql=new StringBuffer();
 		StringBuffer hql2=new StringBuffer();
 		Map<String,Object>map=new HashMap<String,Object>();
 		hql.append("from WebFactorder where 1=1 ");
 		hql2.append("select count(*) ");
-		if(factNo!=null&&!factNo.equals("")&&!factNo.equals("tw")){
-			hql.append("and factNo");
+		if(factNos!=null&&factNos.size()>0){
+			hql.append("and factNo in (:factnos)");
+			map.put("factnos", factNos);
 		}
-		return null;
+		hql2.append(hql);
+		hql.append(" order by factNo");
+		int allrow=0;
+		Integer rows=(Integer)ActionContext.getContext().getSession().get("allrow");
+		if(rows!=null){
+			allrow=rows;
+		}else{
+			allrow=super.getAllRowCount2(hql2.toString(), map);
+			ActionContext.getContext().getSession().put("allrow", allrow);
+		}
+		int totalPage=PageBean.countTotalPage(pageSize, allrow);
+		int currentPage=0;
+		currentPage=currentPage>totalPage?totalPage:PageBean.countCurrentPage(page);
+		int offset=PageBean.countOffset(pageSize, currentPage);
+		List list=super.queryForPage(hql.toString(), offset, pageSize, map);
+		PageBean bean=new PageBean();
+		bean.setAllRow(allrow);
+		bean.setCurrentPage(currentPage);
+		bean.setList(list);
+		bean.setPageSize(pageSize);
+		bean.setTotalPage(totalPage);
+		
+		return bean;
 	}
 
 }

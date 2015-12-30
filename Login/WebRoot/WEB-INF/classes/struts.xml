@@ -294,7 +294,9 @@
 		  <result name="add" type="redirectAction">vbm_findPageBean</result>
 		</action>
 		<action name="timer_*" class="time" method="{1}">
-		  <result name="print_manual" type="redirectAction">ydata_findPageBean</result>
+		  <result name="print_manual" type="json">
+		     <param name="root">ajaxResult</param>
+		  </result>
 		</action>
 		<action name="kyzsec_*" class="kyzsecAction" method="{1}">
 		   <result name="add" type="redirectAction">kyzsec_findPageBean</result>
@@ -690,7 +692,8 @@
 		    <result name="delete" type="redirectAction">webtabpom_findPageBean3</result>		    
 		</action>
 		<action name="webfactOrder_*" class="webfactorderAction" method="{1}">
-		   
+		   <result name="beanList">page/webfactOrder.jsp</result>
+		   <result name="beanList1">page/table1/webfactOrder1.jsp</result>
 		</action>
 	</package>
 

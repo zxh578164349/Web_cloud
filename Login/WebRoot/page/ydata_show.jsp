@@ -20,7 +20,7 @@
 <link rel="stylesheet" type="text/css" href="css/general_css.css" />
 <link href="tablecloth/tablecloth.css" rel="stylesheet" type="text/css" media="screen" />
 <script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script>
-<script type="text/javascript" src="page/jquerys/layer/layer.min.js"></script>
+<!-- <script type="text/javascript" src="page/jquerys/layer/layer.min.js"></script> -->
 <!-- 新 Bootstrap 核心 CSS 文件 -->
 <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
@@ -73,6 +73,26 @@
 			}
 		});
 	}
+	function gosubmit(){
+		jq.ajax({
+			type:"POST",
+			dataType:"json",
+			data:jq("#emailform").serialize(),
+			url:"timer_print_manual",
+			success:function(data){
+				if(data=="0"){
+					layer.msg("發送成功!",3,1);
+				}
+				if(data=="1"){
+					layer.msg("發送失敗!",3,1);
+				}				
+			},
+			error:function(error){
+				alert(error.responseText);
+			}		
+		});
+	  //document.getElementById("emailform").submit();
+	}
 	//你确定要删除吗？
 	function isDelete(mid) {
 		jConfirm('你确定这么做吗?', '确认对话框', function(r) {
@@ -102,10 +122,7 @@
 	   }
 	}
 	
-	function gosubmit(){
-	  document.getElementById('mydiv').style.display = 'block';
-	  document.getElementById("emailform").submit();
-	}
+
 	
 function showDiv(){
     jq.layer({
@@ -137,6 +154,8 @@ function showDiv(){
           this.showDiv();
        }
     }
+  
+	
   
 </script>
 

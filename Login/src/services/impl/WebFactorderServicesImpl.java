@@ -4,6 +4,7 @@ import java.util.List;
 
 import dao.IWebFactorderDao;
 import services.IWebFactorderServices;
+import util.PageBean;
 import entity.WebFactorder;
 
 public class WebFactorderServicesImpl implements IWebFactorderServices{
@@ -24,6 +25,13 @@ public class WebFactorderServicesImpl implements IWebFactorderServices{
 	public void addLarge(List<String> list) {
 		// TODO Auto-generated method stub
 		factorderdao.addLarge(list);
+	}
+
+
+	public PageBean findPageBean(int pageSize, int page, List<String> factNos,
+			String brank, String customer, String model, String component) {
+		// TODO Auto-generated method stub
+		return factorderdao.findPageBean(pageSize, page, factNos, brank, customer, model, component);
 	}
 	
 }

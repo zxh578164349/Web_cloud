@@ -312,7 +312,13 @@
 	       document.getElementById("webtabpom1").innerHTML="";
 	    }else{
 	       document.getElementById("webtabpom1").innerHTML='<input name="checkbox" value="KPI數據,實驗室形體物性,webtabpom_findPageBean" type="checkbox" />實驗室形體物性'															                                             
-	    }	         	    	 
+	    }
+	    var i57=document.getElementById("webfactorder");
+	    if(i57!=null){
+	       document.getElementById("webfactorder1").innerHTML="";
+	    }else{
+	       document.getElementById("webfactorder1").innerHTML='<input name="checkbox" value="KPI數據,工廠客戶訂單,webfactOrder_findPageBean" type="checkbox" />工廠客戶訂單'															                                             
+	    }
 }
 		
 function getSub(){
@@ -487,6 +493,17 @@ function back(){
 							   </s:iterator>
 							   <span id="webtabpom1"></span>
 							</td>
+							<td>
+							  <s:iterator value="#session.user.webJurisdictions">
+									<s:iterator value="webSubmenus">
+										<s:if test="submenuname=='工廠客戶訂單'">
+											<span id="webfactorder"><input name="checkbox"
+												value="KPI數據,工廠客戶訂單,webfactOrder_findPageBean" checked="checked"
+												type="checkbox" />工廠客戶訂單</span>
+										</s:if>
+									</s:iterator>
+								</s:iterator> <span id="webfactorder1"></span>
+							</td>
 						</tr>
 					</table></td>
 			</tr>
@@ -634,6 +651,7 @@ function back(){
 									</s:iterator>
 								</s:iterator> <span id="webcashout1"></span>
 							</td>
+							
 			      </tr>
 			    </table>
 			  </td>

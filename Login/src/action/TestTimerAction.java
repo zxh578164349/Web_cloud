@@ -38,11 +38,17 @@ import services.IWebYieldDataServices;
  * 
  */
 public class TestTimerAction extends QuartzJobBean {
-	
-	
-
-
 	private String yymm;
+	private String ajaxResult;//申請函文時返回的ajax結果,   0:提交成功       1:提交失敗
+	
+	public String getAjaxResult() {
+		return ajaxResult;
+	}
+
+	public void setAjaxResult(String ajaxResult) {
+		this.ajaxResult = ajaxResult;
+	}
+
 	public String getYymm() {
 		return yymm;
 	}
@@ -337,6 +343,7 @@ public class TestTimerAction extends QuartzJobBean {
 								"spring-services.xml" });
 				IWebEmailService eSer = (IWebEmailService) bean
 						.getBean("emailService");
+				
 				List<WebEmail> email = eSer.getEmail("Y");
 				String[] mail = new String[email.size()];
 				for (int i = 0; i < email.size(); i++) {
@@ -349,7 +356,6 @@ public class TestTimerAction extends QuartzJobBean {
 						mail[i] = email.get(i).getEmail();
 					}
 				}
-				//String[] mail={MimeUtility.encodeText("張錫洪")+"<kyinfo.David@yyin.yydg.com.cn>"};
 				List<WebCc> Cc = eSer.getCC("Y");
 				String[] cc = new String[Cc.size()];
 				for (int j = 0; j < Cc.size(); j++) {
@@ -363,7 +369,8 @@ public class TestTimerAction extends QuartzJobBean {
 						cc[j] = Cc.get(j).getName() + Cc.get(j).getEmail();
 					}
 				}
-				//String[] cc = {MimeUtility.encodeText("張錫洪")+"<kyinfo.David@yyin.yydg.com.cn>"};
+				/*String[] mail={MimeUtility.encodeText("張錫洪")+"<kyinfo.David@yyin.yydg.com.cn>"};				
+				String[] cc = {MimeUtility.encodeText("張錫洪")+"<kyinfo.David@yyin.yydg.com.cn>"};*/
 				
 				AutoSendEmailAction send = new AutoSendEmailAction();
 				String tyymm=tformat.format(new Date());
@@ -438,9 +445,11 @@ public class TestTimerAction extends QuartzJobBean {
 					}
 				}
 			}
+			ajaxResult="0";
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			ajaxResult="1";
 		}
 		return "print_manual";
 	}
