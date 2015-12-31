@@ -70,7 +70,7 @@
 		<tbody id="tbody">
 		<s:iterator value="bean.list" status="x" id="temp">
 			<tr onmousemove="click_color(this)" onmouseout="move(this)">
-				<td>${25*(pages.page-1)+x.index+1}</td>
+				<td>${25*(bean.currentPage-1)+x.index+1}</td>
 				<td><s:property value="factNo" /></td>
 				
 				<td><s:property value="yymm"/></td>

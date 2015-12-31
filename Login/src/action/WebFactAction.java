@@ -4,6 +4,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import net.sf.json.JSONArray;
+
 import services.IKyTypeServices;
 import services.IWebFactServices;
 
@@ -15,6 +17,18 @@ import entity.*;
 public class WebFactAction extends ActionSupport {
 	private IWebFactServices webFactSer;
 	private IKyTypeServices kytypeSer;
+	private JSONArray jsons;
+	
+
+	public JSONArray getJsons() {
+		return jsons;
+	}
+
+
+	public void setJsons(JSONArray jsons) {
+		this.jsons = jsons;
+	}
+
 
 	public void setWebFactSer(IWebFactServices webFactSer) {
 		this.webFactSer = webFactSer;
@@ -27,17 +41,17 @@ public class WebFactAction extends ActionSupport {
 
 
 	/**
-	 * ¦bindex­¶­±¤WÅã¥Ü©Ò¦³¼t§O
+	 * åœ¨indexé é¢ä¸Šé¡¯ç¤ºæ‰€æœ‰å» åˆ¥
 	 * 
 	 * @return
 	 */
 	public String findAllfact() {
-		//°h¥X®É¡A²M°£sessionªº©Ò¦³¤º®e¡]¼t§O¡A¥Î¤á¦W¡^¡A¦]¬°°h¥X®É«ü¦V¤Fjedge.jsp¡A¦Ó³o­Ó­¶­±¤S«ü¦V¦¹¤èªk
+		//é€€å‡ºæ™‚ï¼Œæ¸…é™¤sessionçš„æ‰€æœ‰å…§å®¹ï¼ˆå» åˆ¥ï¼Œç”¨æˆ¶åï¼‰ï¼Œå› ç‚ºé€€å‡ºæ™‚æŒ‡å‘äº†jedge.jspï¼Œè€Œé€™å€‹é é¢åˆæŒ‡å‘æ­¤æ–¹æ³•
 		ActionContext.getContext().getSession().clear();
 		List list = webFactSer.findAllFact();
-		//List factCodes = webFactSer.findAllFactCode();// twµn¿ı®É©Ò¦³ªº¼t§Oª¬ºA
+		//List factCodes = webFactSer.findAllFactCode();// twç™»éŒ„æ™‚æ‰€æœ‰çš„å» åˆ¥ç‹€æ…‹
 		List factCodes=webFactSer.findAllFactCode_show();
-		//List<KyType>listkytype=kytypeSer.findByTypeNo_action("VV");//¨ç¤åÃş§O
+		//List<KyType>listkytype=kytypeSer.findByTypeNo_action("VV");//å‡½æ–‡é¡åˆ¥
 		ActionContext.getContext().getSession().put("factcodes", factCodes);
 		ActionContext.getContext().getSession().put("facts", list);
 		//ActionContext.getContext().getSession().put("listkytype", listkytype);
@@ -46,17 +60,17 @@ public class WebFactAction extends ActionSupport {
 	}
 
 	/**
-	 * ¦blogin­¶­±¤WÅã¥Ü©Ò¦³¼t§O
+	 * åœ¨indexé é¢ä¸Šé¡¯ç¤ºæ‰€æœ‰å» åˆ¥
 	 * 
 	 * @return
 	 */
 	public String findAllfact2() {
-		//°h¥X®É¡A²M°£sessionªº©Ò¦³¤º®e¡]¼t§O¡A¥Î¤á¦W¡^¡A¦]¬°°h¥X®É«ü¦V¤Fjedge.jsp¡A¦Ó³o­Ó­¶­±¤S«ü¦V¦¹¤èªk
+		//é€€å‡ºæ™‚ï¼Œæ¸…é™¤sessionçš„æ‰€æœ‰å…§å®¹ï¼ˆå» åˆ¥ï¼Œç”¨æˆ¶åï¼‰ï¼Œå› ç‚ºé€€å‡ºæ™‚æŒ‡å‘äº†jedge.jspï¼Œè€Œé€™å€‹é é¢åˆæŒ‡å‘æ­¤æ–¹æ³•
 		ActionContext.getContext().getSession().clear();
 		List list = webFactSer.findAllFact();
-		//List factCodes = webFactSer.findAllFactCode();// twµn¿ı®É©Ò¦³¼t§Oª¬ºA
+		//List factCodes = webFactSer.findAllFactCode();// twç™»éŒ„æ™‚æ‰€æœ‰çš„å» åˆ¥ç‹€æ…‹
 		List factCodes=webFactSer.findAllFactCode_show();
-		//List<KyType>listkytype=kytypeSer.findByTypeNo_action("VV");//¨ç¤åÃş§O
+		//List<KyType>listkytype=kytypeSer.findByTypeNo_action("VV");//å‡½æ–‡é¡åˆ¥
 		ActionContext.getContext().getSession().put("factcodes", factCodes);
 		ActionContext.getContext().getSession().put("facts", list);
 		//ActionContext.getContext().getSession().put("listkytype", listkytype);
@@ -64,7 +78,7 @@ public class WebFactAction extends ActionSupport {
 		return "findAllfact2";
 	}
 	/**
-	 * ¥Î¤_"¤À§ÎºA·l¯qªí"ªº¼t§O»P¼t§Oª¬ºAªº¿ï¾Ü
+	 * ç”¨äº"åˆ†å½¢æ…‹æç›Šè¡¨"çš„å» åˆ¥èˆ‡å» åˆ¥ç‹€æ…‹çš„é¸æ“‡
 	 */
 	public void findAllFact_code_no(){
 		Map<String,List<WebFact>>map=new LinkedHashMap<String,List<WebFact>>();
@@ -79,6 +93,26 @@ public class WebFactAction extends ActionSupport {
 		ActionContext.getContext().getSession().put("map", map);
 		//System.out.println(map);
 	}
+	
+	/**
+	 * è¿”å›æ‰€æœ‰çš„å» åˆ¥ï¼Œå¹·å°è£æˆjson
+	 */
+	public String findAllFact_obj(){
+		List<Object[]>list=webFactSer.findAllFact_obj();
+		jsons=JSONArray.fromObject(list);
+		return "findAllFact_obj";		
+	}
+	
+	/**
+	 * è¿”å›æ‰€æœ‰çš„å» åˆ¥ç‹€æ…‹ï¼Œå¹·å°è£æˆjson
+	 */
+	public String findAllFactarea_obj(){
+		List<Object[]>list=webFactSer.findAllFactarea_obj();
+		jsons=JSONArray.fromObject(list);
+		return "findAllFactarea_obj";
+	}
+	
+	
 	
 	
 

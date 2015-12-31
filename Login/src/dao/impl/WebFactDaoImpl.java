@@ -36,7 +36,7 @@ public class WebFactDaoImpl extends Basedao implements IWebFactDao {
 	}
 
 	/**
-	 * ¼t§O¥N¸¹¹ïÀ³¤H¼t¦W
+	 * ï¿½tï¿½Oï¿½Nï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Hï¿½tï¿½W
 	 */
 	public String selByid(String id) {
 		// TODO Auto-generated method stub
@@ -48,7 +48,7 @@ public class WebFactDaoImpl extends Basedao implements IWebFactDao {
 	}
 
 	/**
-	 * ©Ò¦³¼t§Oª¬ºA
+	 * ï¿½Ò¦ï¿½ï¿½tï¿½Oï¿½ï¿½ï¿½A
 	 */
 	public List findAllFactCode() {
 		// TODO Auto-generated method stub
@@ -143,10 +143,30 @@ public class WebFactDaoImpl extends Basedao implements IWebFactDao {
 		
 	}
 	
-    //©Ò¦³¼t§O¦U­Ó¼t§Oª¬ºAªº²ßºD±Æ§Ç
+    //ï¿½Ò¦ï¿½ï¿½tï¿½Oï¿½Uï¿½Ó¼tï¿½Oï¿½ï¿½ï¿½Aï¿½ï¿½ï¿½ßºDï¿½Æ§ï¿½
 	public List<WebFact> findAllFact_2() {
 		// TODO Auto-generated method stub
 		String hql="from WebFact where factShow='0' order by orderNo,fcodeIndex";
+		return super.findAll(hql, null);
+	}
+
+	/**
+	 * æ‰€æœ‰çš„å·¥å»   20151231
+	 * @return
+	 */
+	public List<Object[]> findAllFact_obj() {
+		// TODO Auto-generated method stub
+		String hql="select distinct id.factNo,factSname from WebFact";		
+		return super.findAll(hql, null);
+	}
+
+	/**
+	 * æ‰€æœ‰çš„å·¥å»   20151231
+	 * @return
+	 */
+	public List<Object[]> findAllFactarea_obj() {
+		// TODO Auto-generated method stub
+		String hql="select distinct id.factArea from WebFact";
 		return super.findAll(hql, null);
 	}
 

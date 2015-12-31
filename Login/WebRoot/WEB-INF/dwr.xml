@@ -23,6 +23,8 @@
 		  <include method="findByFactNo"/>
 		  <include method="findAllFact"/>
 		  <include method="findAllFact2"/>
+		  <include method="findAllFact_obj"/>
+		  <include method="findAllFactarea_obj"/>
 		</create>
 		<create creator="spring" javascript="websubjs">
 		  <param name="beanName" value="subSer"/>

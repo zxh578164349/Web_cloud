@@ -90,8 +90,10 @@ public class WebFactorderDaoImpl extends Basedao implements IWebFactorderDao{
 			ActionContext.getContext().getSession().put("allrow", allrow);
 		}
 		int totalPage=PageBean.countTotalPage(pageSize, allrow);
-		int currentPage=0;
-		currentPage=currentPage>totalPage?totalPage:PageBean.countCurrentPage(page);
+		int currentPage=PageBean.countCurrentPage(page);
+		if(currentPage>totalPage){
+			currentPage=totalPage;
+		}
 		int offset=PageBean.countOffset(pageSize, currentPage);
 		List list=super.queryForPage(hql.toString(), offset, pageSize, map);
 		PageBean bean=new PageBean();

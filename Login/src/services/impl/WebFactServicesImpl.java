@@ -31,11 +31,11 @@ public class WebFactServicesImpl implements IWebFactServices {
 				Object[]obj=(Object[])list.get(i);
 				String factno=obj[0].toString();
 				String factsname=obj[1].toString();
-				StringBuffer temp=new StringBuffer();//²Õ¦X(factSname+factNo)
+				StringBuffer temp=new StringBuffer();//ï¿½Õ¦X(factSname+factNo)
 				temp.append(factsname+"(");
 				temp.append(factno+")");
-				fact.setFactCode(factno);//¥HWebFacttªºfactCode¥R·ífactNo,¦]¬°dwr¨ì­¶­±®ÉÀò¨ú¤£¨ìid.factNoªº­È
-				fact.setFactSname(temp.toString());//¥H²Õ¦X(factSname+factNo)¥R·ífactSname,«K©ó¦b­¶­±¤WÅã¥Ü(factSname+factNo)
+				fact.setFactCode(factno);//ï¿½HWebFacttï¿½ï¿½factCodeï¿½Rï¿½ï¿½factNo,ï¿½]ï¿½ï¿½dwrï¿½ì­¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½id.factNoï¿½ï¿½ï¿½ï¿½
+				fact.setFactSname(temp.toString());//ï¿½Hï¿½Õ¦X(factSname+factNo)ï¿½Rï¿½ï¿½factSname,ï¿½Kï¿½ï¿½bï¿½ï¿½ï¿½ï¿½ï¿½Wï¿½ï¿½ï¿½(factSname+factNo)
 				list2.add(fact);
 			}
 		} catch (Exception e) {
@@ -61,7 +61,7 @@ public class WebFactServicesImpl implements IWebFactServices {
 	}
 
 	/**
-	 * ªð¦^factNoªºfactSname
+	 * ï¿½ï¿½^factNoï¿½ï¿½factSname
 	 */
 	public String selByid(String id) {
 		// TODO Auto-generated method stub
@@ -69,7 +69,7 @@ public class WebFactServicesImpl implements IWebFactServices {
 	}
 
 	/**
-	 * twªº©Ò¦³factArea
+	 * twï¿½ï¿½ï¿½Ò¦ï¿½factArea
 	 */
 	public List findAllFactCode() {
 		// TODO Auto-generated method stub
@@ -81,7 +81,7 @@ public class WebFactServicesImpl implements IWebFactServices {
 	}
 
 	/**
-	 * ¤£¦PfactNo(°£¤Ftw)ªºfactArea
+	 * ï¿½ï¿½ï¿½PfactNo(ï¿½ï¿½ï¿½Ftw)ï¿½ï¿½factArea
 	 */
 	public List findFactCodeByFactNo(String factNo) {
 		// TODO Auto-generated method stub
@@ -147,6 +147,18 @@ public class WebFactServicesImpl implements IWebFactServices {
 	public List<WebFact> findAllFact_2() {
 		// TODO Auto-generated method stub
 		return webFactDao.findAllFact_2();
+	}
+
+	
+	
+	public List<Object[]> findAllFact_obj() {
+		// TODO Auto-generated method stub
+		return webFactDao.findAllFact_obj();
+	}
+
+	public List<Object[]> findAllFactarea_obj() {
+		// TODO Auto-generated method stub
+		return webFactDao.findAllFactarea_obj();
 	}
 
 }

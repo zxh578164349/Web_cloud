@@ -37,9 +37,22 @@ public interface IWebFactServices {
 	public List<Object[]> findAllFactCode2_showA();
 	public List<String> findAllFactNo();
 	
-	//20150708 ©Ò¦³¼t§O¦U­Ó¼t§Oª¬ºAªº²ßºD±Æ§Ç
+	//20150708 ï¿½Ò¦ï¿½ï¿½tï¿½Oï¿½Uï¿½Ó¼tï¿½Oï¿½ï¿½ï¿½Aï¿½ï¿½ï¿½ßºDï¿½Æ§ï¿½
 	public List<WebFact> findAllFact_2();
 	
 	public List<WebFact> findFactById_show(String factNo);
+	
+	/**
+	 * æ‰€æœ‰çš„å·¥å»   20151231
+	 * @return
+	 */
+	public List<Object[]> findAllFact_obj();
+	
+	/**
+	 * æ‰€æœ‰çš„çš„å» åˆ¥ç‹€æ…‹   20151231
+	 * @return
+	 */
+	public List<Object[]> findAllFactarea_obj();
+	
 
 }

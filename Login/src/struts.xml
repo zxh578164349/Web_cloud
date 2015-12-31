@@ -263,6 +263,12 @@
 			<result name="findAllfact">index2.jsp</result>
 			<result name="findAllfact2">login2.jsp</result>
 			<result name="findAllFact_code_no">page/VWebmachine.jsp</result>
+			<result name="findAllFact_obj" type="json">
+			    <param name="root">jsons</param>
+			</result>
+			<result name="findAllFactarea_obj" type="json">
+			   <param name="root">jsons</param>
+			</result>
 		</action>
 		<action name="print2Yireport_*" class="preAndDataActionireport"
 			method="{1}">

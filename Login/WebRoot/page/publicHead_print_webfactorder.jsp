@@ -34,11 +34,27 @@ jq(document).keyup(function(event){
    }
 });
 
+function getAllFact_json(){	
+	jq.ajax({
+		type:"POST",
+		url:"webfact_findAllFact_obj",
+		dataType:"json",
+		success:function(data){
+			var item;
+			jq.each(data,function(i,obj){
+				item="<input type='checkbox' name='factNos' value='"+obj[0]+"'/>"+obj[1]+"&nbsp;"
+				jq("#div_factNos").append(item);
+			})
+		}	
+	});
+}
+window.onload=getAllFact_json
 </script>
+
 
 </head>
 <body>
-  <div style="width:680px">
+  <div style="width:2000px">
   <form id="public_form" method="post">
 	<table  border="0px">
 		<tr>
@@ -64,14 +80,23 @@ jq(document).keyup(function(event){
 					</div>
 				</s:else>
 				-->
-				<input type="checkbox" name="factNos" value="GH">GH&nbsp;
-				<input type="checkbox" name="factNos" value="XS">XS
+				
+				<div id="div_factNos" style="width:400px;border:1px dashed green">				   
+				</div>
+				<div id="div_brank" style="width:400px;border:1px dashed green">
+				</div>
+				<div id="div_component" style="width:400px;border:1px dashed green">
+				</div>
+				<div id=div_customer style="width:400px;border:1px dashed green">
+				</div>
+				<div id="div_model" style="width:400px;border:1px dashed green">
+				</div>
 			</td>
-			<td>年月</td>
+			<%--<td>年月</td>
 			<td>
 			  開始日期:<input type="text" id="year" name="yymm" onClick="WdatePicker({dataFmt:'yyyyMM'})" readonly="readonly" class="Wdate"/></br>
 			  結束日期:<input type="text" id="year" name="yymm2" onClick="WdatePicker({dataFmt:'yyyyMM'})" readonly="readonly" class="Wdate"/>			
-			</td>
+			</td>--%>
 			<td>
 			   <input value="搜索" type="button" id="addbtn" onclick="javascript:submis('public_form')" />
 			   <input value="導出Excel" type="button" id="search_forday" onclick="print('public_form')"/>	

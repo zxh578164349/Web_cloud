@@ -103,12 +103,13 @@ public class WebFactOrderAction extends ActionSupport{
 		ActionContext.getContext().getSession().remove("public_customer");
 		ActionContext.getContext().getSession().remove("public_model");
 		ActionContext.getContext().getSession().remove("public_component");
-		webfactorderSer.findPageBean(25, page, factNos, brank, customer, model, component);
+		bean=webfactorderSer.findPageBean(25, page, factNos, brank, customer, model, component);
 		return "beanList";
 		
 	}
 	public String findPageBean2(){
-		System.out.println(factNos.getClass().getName());//com.opensymphony.xwork2.util.XWorkList
+		//System.out.println(factNos.getClass().getName());//com.opensymphony.xwork2.util.XWorkList
+		ActionContext.getContext().getSession().remove("allrow");//條件查詢，清除分頁的總條數（dao層中的allrow）
 		ActionContext.getContext().getSession().remove("public_factnos");
 		ActionContext.getContext().getSession().remove("public_factno");
 		ActionContext.getContext().getSession().remove("public_brank");
@@ -122,7 +123,17 @@ public class WebFactOrderAction extends ActionSupport{
 		ActionContext.getContext().getSession().put("public_customer",customer);
 		ActionContext.getContext().getSession().put("public_model",model);
 		ActionContext.getContext().getSession().put("public_component",component);
-		webfactorderSer.findPageBean(25, page, factNos, brank, customer, model, component);
+		bean=webfactorderSer.findPageBean(25, page, factNos, brank, customer, model, component);
+		return "beanList1";
+	}
+	public String findPageBean3(){
+		factNos=(List<String>)ActionContext.getContext().getSession().get("public_factnos");
+		factNo=(String)ActionContext.getContext().getSession().get("public_factno");
+		brank=(String)ActionContext.getContext().getSession().get("public_brank");
+		customer=(String)ActionContext.getContext().getSession().get("public_customer");
+		model=(String)ActionContext.getContext().getSession().get("public_model");
+		component=(String)ActionContext.getContext().getSession().get("public_component");
+		bean=webfactorderSer.findPageBean(25, page, factNos, brank, customer, model, component);
 		return "beanList1";
 	}
 

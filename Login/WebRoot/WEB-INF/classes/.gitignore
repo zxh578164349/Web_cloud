@@ -3,7 +3,12 @@
 /email
 /entity
 /entity_temp
+/log4j.properties
 /mail
 /override
 /services
+/spring-action.xml
+/spring-dao.xml
+/spring-quartz.xml
+/spring-services.xml
 /util
