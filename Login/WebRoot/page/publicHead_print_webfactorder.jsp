@@ -42,66 +42,140 @@ function getAllFact_json(){
 		success:function(data){
 			var item;
 			jq.each(data,function(i,obj){
-				item="<input type='checkbox' name='factNos' value='"+obj[0]+"'/>"+obj[1]+"&nbsp;"
+				item="<div><input type='checkbox' name='factNos' value='"+obj[0]+"'/>"+obj[1]+"</div>";
 				jq("#div_factNos").append(item);
-			})
+			});
 		}	
 	});
 }
-window.onload=getAllFact_json
+function findComponent(){
+   jq.ajax({
+      type:"POST",
+      url:"webfactOrder_findComponent",
+      dataType:"json",
+      success:function(data){
+        var item;
+        jq.each(data,function(i,obj){
+          item="<div><input type='checkbox' name='components' value='"+obj+"'/>"+obj+"</div>";
+          jq("#div_component").append(item);
+        });
+      }
+   });
+}
+function findBrank(){
+   jq.ajax({
+       type:"POST",
+       url:"webfactOrder_findBrank",
+       dataType:"json",
+       success:function(data){
+           var item;
+           jq.each(data,function(i,obj){
+              item="<div><input type='checkbox' name='branks' value='"+obj+"'/>"+obj+"</div>";
+              jq("#div_brank").append(item);
+           });
+       }
+   });
+}
+function findCustomer(){
+   jq.ajax({
+      type:"POST",
+      url:"webfactOrder_findCustomer",
+      dataType:"json",
+      success:function(data){
+         var item;
+         jq.each(data,function(i,obj){
+            item="<div><input type='checkbox' name='customers' value='"+obj+"'/>"+obj+"</div>";
+            jq("#div_customer").append(item);
+         });
+      }
+   });
+}
+function findModel(){
+   jq.ajax({
+      type:"POST",
+      url:"webfactOrder_findModel",
+      dataTyep:"json",
+      success:function(data){
+         var item;
+         jq.each(data,function(i,obj){
+           item="<div><input type='checkbox' name='models' value='"+obj+"'/>"+obj+"</div>";
+           jq("#div_model").append(item);
+         });
+      }
+   });
+}
+
+function selectAll(str,str2){
+    var allobj=jq("#"+str); 
+        /* if(allobj.is(":checked")){
+          jq("input[name='"+str2+"']").attr("checked",true);
+          jq("input[name='factNos']").attr("checked",true);
+        }else{
+          jq("input[name='factNos']").removeAttr("checked");
+        } */
+        allobj.toggle(function(){
+           jq("input[name='factNos']").attr("checked",true);
+        },function(){
+           jq("input[name='factNos']").removeAttr("checked");
+        });
+
+} 
+window.onload=getAllFact_json(),findComponent(),findBrank(),findCustomer(),findModel();
 </script>
 
 
 </head>
 <body>
-  <div style="width:2000px">
+  <div style="width:1000px">
   <form id="public_form" method="post">
 	<table  border="0px">
 		<tr>
 			<td>廠別</td>
 			<td>
-			  <!--<s:if test="#attr.factNo=='tw'">
-			    <div id="uboxstyle">
-					<select name="factNo" id="factNo">
-						<option value="nothing">請選擇</option>						
-						<s:iterator value="#attr.facts" id="temp">
-							<option value="${temp[0]}">${temp[1]}(${temp[0]})</option>								
-						</s:iterator>
-					</select>
-					</div>
-				</s:if> 
-				<s:else>
-				  <div id="uboxstyle">
-					<select name="factNo" id="factNo">						
-						<option value="<s:property value="#attr.factNo"/>">
-							<s:property value="#attr.factName" />(<s:property value="#attr.factNo"/>)
-						</option>
-					</select>
-					</div>
-				</s:else>
-				-->
-				
-				<div id="div_factNos" style="width:400px;border:1px dashed green">				   
-				</div>
-				<div id="div_brank" style="width:400px;border:1px dashed green">
-				</div>
-				<div id="div_component" style="width:400px;border:1px dashed green">
-				</div>
-				<div id=div_customer style="width:400px;border:1px dashed green">
-				</div>
-				<div id="div_model" style="width:400px;border:1px dashed green">
-				</div>
+				<div id="div_factNos" style="width:400px;height:250px;overflow:auto;border:1px dashed green">
+				<div><input type="button" id="all_factno" onclick="selectAll('all_factno','factNos')" value="全选/反选"/></div>				   
+				</div>				
 			</td>
+			<td>部件</td>
+		    <td>		       
+				<div id="div_component" style="width:400px;height:250px;overflow:auto;border:1px dashed green">
+				</div>				
+		    </td>
+			</tr>			
+		    <tr>
+		    <td>品牌</td>
+		    <td>
+		       <div id="div_brank" style="width:400px;height:250px;overflow:auto;border:1px dashed green">
+				</div>				
+		    </td>
+		    <td>客户</td>
+		    <td>
+		       <div id="div_customer" style="width:400px;height:250px;overflow:auto;border:1px dashed green">
+				</div>				
+		    </td>
+		    </tr>
+		    <tr>
+		    
+		    </tr>
+		    <tr>
+		    <td>模型</td>
+		    <td>
+		       <div id="div_model" style="width:400px;height:250px;overflow:auto;border:1px dashed green">
+				</div>
+		    </td>
+		    </tr>
 			<%--<td>年月</td>
 			<td>
 			  開始日期:<input type="text" id="year" name="yymm" onClick="WdatePicker({dataFmt:'yyyyMM'})" readonly="readonly" class="Wdate"/></br>
 			  結束日期:<input type="text" id="year" name="yymm2" onClick="WdatePicker({dataFmt:'yyyyMM'})" readonly="readonly" class="Wdate"/>			
 			</td>--%>
-			<td>
+			<tr>
+			<td colspan="6">
 			   <input value="搜索" type="button" id="addbtn" onclick="javascript:submis('public_form')" />
 			   <input value="導出Excel" type="button" id="search_forday" onclick="print('public_form')"/>	
 		    </td>
-		</tr>
+		    </tr>
+		
 	</table>
 	</form>
 	</div>
