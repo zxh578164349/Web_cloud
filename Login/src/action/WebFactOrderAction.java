@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sf.json.JSONArray;
+
 import services.IWebFactorderServices;
 import util.ImportExcel;
 import util.PageBean;
@@ -25,8 +27,43 @@ public class WebFactOrderAction extends ActionSupport{
 	private String customer;
 	private String model;
 	private String component;
+	private JSONArray jsons;
+	private List<String>components=new ArrayList<String>();
+	private List<String>branks=new ArrayList<String>();
+	private List<String>customers=new ArrayList<String>();
+	private List<String>models=new ArrayList<String>();
 	
 	
+	public List<String> getComponents() {
+		return components;
+	}
+	public void setComponents(List<String> components) {
+		this.components = components;
+	}
+	public List<String> getBranks() {
+		return branks;
+	}
+	public void setBranks(List<String> branks) {
+		this.branks = branks;
+	}
+	public List<String> getCustomers() {
+		return customers;
+	}
+	public void setCustomers(List<String> customers) {
+		this.customers = customers;
+	}
+	public List<String> getModels() {
+		return models;
+	}
+	public void setModels(List<String> models) {
+		this.models = models;
+	}
+	public JSONArray getJsons() {
+		return jsons;
+	}
+	public void setJsons(JSONArray jsons) {
+		this.jsons = jsons;
+	}
 	public PageBean getBean() {
 		return bean;
 	}
@@ -136,5 +173,45 @@ public class WebFactOrderAction extends ActionSupport{
 		bean=webfactorderSer.findPageBean(25, page, factNos, brank, customer, model, component);
 		return "beanList1";
 	}
+	
+	/**
+	 * 从WebFactorder中获取所有的部件
+	 * @return
+	 */
+	public String findComponent(){
+		List<String>list=webfactorderSer.findComponent();
+		jsons=JSONArray.fromObject(list);
+		return "findComponent";
+	}
+	
+	/**
+	 * 从WebFactorder中获取所有的品牌
+	 * @return
+	 */
+	public String findBrank(){
+		List<String>list=webfactorderSer.findBrank();
+		jsons=JSONArray.fromObject(list);
+		return "findBrank";
+	}
+	
+	/**
+	 * 从WebFactorder中获取所有的客户
+	 */
+	public String findCustomer(){
+		List<String>list=webfactorderSer.findCustomer();
+		jsons=JSONArray.fromObject(list);
+		return "findCustomer";
+	}
+	
+	/**
+	 *从WebFactorder中获取所有的model
+	 * @return
+	 */
+	public String findModel(){
+		List<String>list=webfactorderSer.findModel();
+		jsons=JSONArray.fromObject(list);
+		return "findModel";
+	}
+	
 
 }

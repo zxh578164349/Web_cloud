@@ -106,4 +106,32 @@ public class WebFactorderDaoImpl extends Basedao implements IWebFactorderDao{
 		return bean;
 	}
 
+
+	public List<String> findComponent() {
+		// TODO Auto-generated method stub
+		String hql="select distinct component from WebFactorder order by component";
+		return super.findAll(hql, null);
+	}
+
+
+	public List<String> findBrank() {
+		// TODO Auto-generated method stub
+		String hql="select distinct brank from WebFactorder order by brank";
+		return super.findAll(hql, null);
+	}
+
+
+	public List<String> findCustomer() {
+		// TODO Auto-generated method stub
+		String hql="select distinct customer from WebFactorder order by customer";
+		return super.findAll(hql, null);
+	}
+
+
+	public List<String> findModel() {
+		// TODO Auto-generated method stub
+		String hql="select distinct modelNo from WebFactorder order by modelNo";
+		return super.findAll(hql, null);
+	}
+
 }

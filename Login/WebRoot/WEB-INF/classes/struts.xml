@@ -700,6 +700,18 @@
 		<action name="webfactOrder_*" class="webfactorderAction" method="{1}">
 		   <result name="beanList">page/webfactOrder.jsp</result>
 		   <result name="beanList1">page/table1/webfactOrder1.jsp</result>
+		   <result name="findComponent" type="json">
+		      <param name="root">jsons</param>
+		   </result>
+		   <result name="findBrank" type="json">
+		      <param name="root">jsons</param>
+		   </result>
+		   <result name="findCustomer" type="json">
+		      <param name="root">jsons</param>
+		   </result>
+		   <result name="findModel" type="json">
+		      <param name="root">jsons</param>
+		   </result>
 		</action>
 	</package>
 

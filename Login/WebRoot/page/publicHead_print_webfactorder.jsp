@@ -42,13 +42,69 @@ function getAllFact_json(){
 		success:function(data){
 			var item;
 			jq.each(data,function(i,obj){
-				item="<input type='checkbox' name='factNos' value='"+obj[0]+"'/>"+obj[1]+"&nbsp;"
+				item="<input type='checkbox' name='factNos' value='"+obj[0]+"'/>"+obj[1]+"&nbsp;";
 				jq("#div_factNos").append(item);
-			})
+			});
 		}	
 	});
 }
-window.onload=getAllFact_json
+function findComponent(){
+   jq.ajax({
+      type:"POST",
+      url:"webfactOrder_findComponent",
+      dataType:"json",
+      success:function(data){
+        var item;
+        jq.each(data,function(i,obj){
+          item="<input type='checkbox' name='components' value='"+obj+"'/>"+obj+"&nbsp;";
+          jq("#div_component").append(item);
+        });
+      }
+   });
+}
+function findBrank(){
+   jq.ajax({
+       type:"POST",
+       url:"webfactOrder_findBrank",
+       dataType:"json",
+       success:function(data){
+           var item;
+           jq.each(data,function(i,obj){
+              item="<input type='checkbox' name='branks' value='"+obj+"'/>"+obj+"&nbsp;";
+              jq("#div_brank").append(item);
+           });
+       }
+   });
+}
+function findCustomer(){
+   jq.ajax({
+      type:"POST",
+      url:"webfactOrder_findCustomer",
+      dataType:"json",
+      success:function(data){
+         var item;
+         jq.each(data,function(i,obj){
+            item="<input type='checkbox' name='customers' value='"+obj+"'/>"+obj+"&nbsp;";
+            jq("#div_customer").append(item);
+         });
+      }
+   });
+}
+function findModel(){
+   jq.ajax({
+      type:"POST",
+      url:"webfactOrder_findModel",
+      dataTyep:"json",
+      success:function(data){
+         var item;
+         jq.each(data,function(i,obj){
+           item="<option  value='"+obj+"'>"+obj+"<option/>";
+           jq("#sel_models").append(item);
+         });
+      }
+   });
+}
+window.onload=getAllFact_json(),findComponent(),findBrank(),findCustomer(),findModel();
 </script>
 
 
@@ -82,26 +138,50 @@ window.onload=getAllFact_json
 				-->
 				
 				<div id="div_factNos" style="width:400px;border:1px dashed green">				   
-				</div>
-				<div id="div_brank" style="width:400px;border:1px dashed green">
-				</div>
-				<div id="div_component" style="width:400px;border:1px dashed green">
-				</div>
-				<div id=div_customer style="width:400px;border:1px dashed green">
-				</div>
-				<div id="div_model" style="width:400px;border:1px dashed green">
-				</div>
+				</div>				
 			</td>
+			</tr>
+			<tr>
+			<td>部件</td>
+		    <td>		       
+				<div id="div_component" style="width:400px;border:1px dashed green">
+				</div>				
+		    </td>
+		    </tr>
+		    <tr>
+		    <td>品牌</td>
+		    <td>
+		       <div id="div_brank" style="width:400px;border:1px dashed green">
+				</div>				
+		    </td>
+		    </tr>
+		    <tr>
+		    <td>客户</td>
+		    <td>
+		       <div id="div_customer" style="width:400px;border:1px dashed green">
+				</div>				
+		    </td>
+		    </tr>
+		    <tr>
+		    <td>模型</td>
+		    <td>
+		       <div id="div_model" style="width:400px;border:1px dashed green">
+		          <select name="models" id="sel_models"></select> 
+				</div>
+		    </td>
+		    </tr>
 			<%--<td>年月</td>
 			<td>
 			  開始日期:<input type="text" id="year" name="yymm" onClick="WdatePicker({dataFmt:'yyyyMM'})" readonly="readonly" class="Wdate"/></br>
 			  結束日期:<input type="text" id="year" name="yymm2" onClick="WdatePicker({dataFmt:'yyyyMM'})" readonly="readonly" class="Wdate"/>			
 			</td>--%>
+			<tr>
 			<td>
 			   <input value="搜索" type="button" id="addbtn" onclick="javascript:submis('public_form')" />
 			   <input value="導出Excel" type="button" id="search_forday" onclick="print('public_form')"/>	
 		    </td>
-		</tr>
+		    </tr>
+		
 	</table>
 	</form>
 	</div>
