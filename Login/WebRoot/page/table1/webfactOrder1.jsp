@@ -81,7 +81,7 @@
 				
 				<td><s:property value="modelNo" /></td>
 				
-				<td><s:property value="%customer" /></td>
+				<td><s:property value="customer" /></td>
 				
 				<td><s:property value="component" /></td>
 				

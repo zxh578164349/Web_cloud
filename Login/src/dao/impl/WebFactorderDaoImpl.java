@@ -67,7 +67,7 @@ public class WebFactorderDaoImpl extends Basedao implements IWebFactorderDao{
 
 
 	public PageBean findPageBean(int pageSize, int page, List<String> factNos,
-			String brank, String customer, String model, String component) {
+			List<String>brank, List<String>customer, List<String>model, List<String>component) {
 		// TODO Auto-generated method stub
 		//System.out.println(factNos.getClass().getName());
 		StringBuffer hql=new StringBuffer();
@@ -76,11 +76,27 @@ public class WebFactorderDaoImpl extends Basedao implements IWebFactorderDao{
 		hql.append("from WebFactorder where 1=1 ");
 		hql2.append("select count(*) ");
 		if(factNos!=null&&factNos.size()>0){
-			hql.append("and factNo in (:factnos)");
+			hql.append(" and factNo in (:factnos)");
 			map.put("factnos", factNos);
 		}
+		if(brank!=null&&brank.size()>0){
+			hql.append(" and brank in(:brank) ");
+			map.put("brank", brank);
+		}
+		if(customer!=null&&customer.size()>0){
+			hql.append(" and customer in(:customer) ");
+			map.put("customer", customer);
+		}
+		if(model!=null&&model.size()>0){
+			hql.append(" and modelNo in(:model)");
+			map.put("model", model);
+		}
+		if(component!=null&&component.size()>0){
+			hql.append(" and component in(:component)");
+			map.put("component", component);
+		}
 		hql2.append(hql);
-		hql.append(" order by factNo");
+		hql.append(" order by factSname,brank,customer,modelNo,component");
 		int allrow=0;
 		Integer rows=(Integer)ActionContext.getContext().getSession().get("allrow");
 		if(rows!=null){
@@ -133,5 +149,43 @@ public class WebFactorderDaoImpl extends Basedao implements IWebFactorderDao{
 		String hql="select distinct modelNo from WebFactorder order by modelNo";
 		return super.findAll(hql, null);
 	}
+
+
+	public List<WebFactorder> findWithNoPage(List<String> factNos,
+			List<String> brank, List<String> customer, List<String> model,
+			List<String> component,String yymm) {
+		// TODO Auto-generated method stub
+		StringBuffer hql=new StringBuffer();
+		Map<String,Object>map=new HashMap<String,Object>();
+		hql.append("from WebFactorder where 1=1 ");
+		if(factNos!=null&&factNos.size()>0){
+			hql.append(" and factNo in (:factnos)");
+			map.put("factnos", factNos);
+		}
+		if(brank!=null&&brank.size()>0){
+			hql.append(" and brank in(:brank) ");
+			map.put("brank", brank);
+		}
+		if(customer!=null&&customer.size()>0){
+			hql.append(" and customer in(:customer) ");
+			map.put("customer", customer);
+		}
+		if(model!=null&&model.size()>0){
+			hql.append(" and modelNo in(:model)");
+			map.put("model", model);
+		}
+		if(component!=null&&component.size()>0){
+			hql.append(" and component in(:component)");
+			map.put("component", component);
+		}
+		if(yymm!=null&&!yymm.equals("")){
+			hql.append(" and yymm like:yymm");
+			map.put("yymm", yymm+"%");
+		}
+		hql.append(" order by factSname,brank,customer,modelNo,component");
+		return super.getAllWithNoPage(hql.toString(), map);
+	}
+	
+	
 
 }

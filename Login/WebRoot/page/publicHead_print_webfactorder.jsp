@@ -107,20 +107,16 @@ function findModel(){
 
 function selectAll(str,str2){
     var allobj=jq("#"+str); 
-        /* if(allobj.is(":checked")){
-          jq("input[name='"+str2+"']").attr("checked",true);
-          jq("input[name='factNos']").attr("checked",true);
+        if(allobj.is(":checked")){
+          jq("input[name='"+str2+"']").prop("checked",true);
         }else{
-          jq("input[name='factNos']").removeAttr("checked");
-        } */
-        allobj.toggle(function(){
-           jq("input[name='factNos']").attr("checked",true);
-        },function(){
-           jq("input[name='factNos']").removeAttr("checked");
-        });
+        	jq("input[name='"+str2+"']").prop("checked",false);
+        }     
+}
 
-} 
-window.onload=getAllFact_json(),findComponent(),findBrank(),findCustomer(),findModel();
+window.onload=function(){
+	getAllFact_json();findComponent();findBrank();findCustomer();findModel();
+}
 </script>
 
 
@@ -133,12 +129,13 @@ window.onload=getAllFact_json(),findComponent(),findBrank(),findCustomer(),findM
 			<td>廠別</td>
 			<td>
 				<div id="div_factNos" style="width:400px;height:250px;overflow:auto;border:1px dashed green">
-				<div><input type="button" id="all_factno" onclick="selectAll('all_factno','factNos')" value="全选/反选"/></div>				   
+				  <div><input type="checkbox" id="all_factno" onclick="selectAll('all_factno','factNos')"/>全选</div><hr/>				   
 				</div>				
 			</td>
 			<td>部件</td>
 		    <td>		       
 				<div id="div_component" style="width:400px;height:250px;overflow:auto;border:1px dashed green">
+				  <div><input type="checkbox" id="all_component" onclick="selectAll('all_component','components')"/>全选</div><hr/>	
 				</div>				
 		    </td>
 			</tr>			
@@ -146,12 +143,14 @@ window.onload=getAllFact_json(),findComponent(),findBrank(),findCustomer(),findM
 		    <td>品牌</td>
 		    <td>
 		       <div id="div_brank" style="width:400px;height:250px;overflow:auto;border:1px dashed green">
-				</div>				
+		         <div><input type="checkbox" id="all_brank" onclick="selectAll('all_brank','branks')"/>全选</div><hr/>
+			   </div>				
 		    </td>
 		    <td>客户</td>
 		    <td>
 		       <div id="div_customer" style="width:400px;height:250px;overflow:auto;border:1px dashed green">
-				</div>				
+		         <div><input type="checkbox" id="all_customer" onclick="selectAll('all_customer','customers')"/>全选</div><hr/>
+			   </div>				
 		    </td>
 		    </tr>
 		    <tr>
@@ -161,8 +160,16 @@ window.onload=getAllFact_json(),findComponent(),findBrank(),findCustomer(),findM
 		    <td>模型</td>
 		    <td>
 		       <div id="div_model" style="width:400px;height:250px;overflow:auto;border:1px dashed green">
-				</div>
+		         <div><input type="checkbox" id="all_model" onclick="selectAll('all_model','models')"/>全选</div><hr/>
+			   </div>
 		    </td>
+		    <td>年份</td>
+			<td>
+			  <select name="yymm" >
+			     <option value="2015">2015</option>
+			     <option value="2014">2014</option>
+			  </select>			  			
+			</td>
 		    </tr>
 			<%--<td>年月</td>
 			<td>

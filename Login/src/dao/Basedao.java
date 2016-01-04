@@ -195,7 +195,11 @@ public class Basedao extends HibernateDaoSupport {
 				Query query = session.createQuery(hql);
 				if (map != null && !map.isEmpty()) {
 					for (String key : map.keySet()) {
-						query.setParameter(key, map.get(key));
+						if(map.get(key).getClass().getName().equals("com.opensymphony.xwork2.util.XWorkList")){
+							query.setParameterList(key, (List<String>)map.get(key));
+						}else{
+							query.setParameter(key, map.get(key));
+						}						
 					}
 				}
 				List list = query.list();
