@@ -7,6 +7,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.struts2.ServletActionContext;
+
 import com.opensymphony.xwork2.ActionContext;
 
 import entity.Webwlo;
@@ -62,6 +64,32 @@ public class GlobalMethod {
 			if(yymm2!=null&&!yymm2.equals("")){
 				fileName.append("_"+yymm2);
 			}
+			JasperHelper.exportmain("excel", map,file, list,fileName.toString(), "jasper/input/");
+		}else{
+			response.setContentType("text/html;charset=utf-8");
+			response.getWriter().print("<script>alert('無數據');</script>");
+		}
+	}
+	/**
+	 * 工厂订单搜索打印
+	 * @param list
+	 * @param factNo
+	 * @param yymm
+	 * @param yymm2
+	 * @param file
+	 * @param response
+	 * @throws IOException
+	 */
+	public static void print_webfactorder(List list,String file,String yymm,HttpServletResponse response) throws IOException{
+		if(list.size()>0){
+			StringBuffer fileName=new StringBuffer();
+			Map<String,Object>map=new HashMap<String,Object>();
+			Map<String,Object>sub_map=new HashMap<String,Object>();
+			sub_map.put("sub_list", list);
+			map.put("sub_map",sub_map );
+			map.put("yymm", yymm);
+			fileName.append("report");
+			map.put("SUBREPORT_DIR",ServletActionContext.getRequest().getRealPath("/jasper/input/")+ "/");
 			JasperHelper.exportmain("excel", map,file, list,fileName.toString(), "jasper/input/");
 		}else{
 			response.setContentType("text/html;charset=utf-8");

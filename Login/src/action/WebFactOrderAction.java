@@ -5,9 +5,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.struts2.interceptor.ServletResponseAware;
+
 import net.sf.json.JSONArray;
 
 import services.IWebFactorderServices;
+import util.GlobalMethod;
 import util.ImportExcel;
 import util.PageBean;
 
@@ -16,7 +21,7 @@ import com.opensymphony.xwork2.ActionSupport;
 
 import entity.WebFactorder;
 
-public class WebFactOrderAction extends ActionSupport{
+public class WebFactOrderAction extends ActionSupport implements ServletResponseAware{
 	private IWebFactorderServices webfactorderSer;
 	private WebFactorder factorder;
 	private PageBean bean;
@@ -32,8 +37,17 @@ public class WebFactOrderAction extends ActionSupport{
 	private List<String>branks=new ArrayList<String>();
 	private List<String>customers=new ArrayList<String>();
 	private List<String>models=new ArrayList<String>();
+	private javax.servlet.http.HttpServletResponse response;
+	private String yymm;
 	
 	
+	
+	public String getYymm() {
+		return yymm;
+	}
+	public void setYymm(String yymm) {
+		this.yymm = yymm;
+	}
 	public List<String> getComponents() {
 		return components;
 	}
@@ -124,6 +138,10 @@ public class WebFactOrderAction extends ActionSupport{
 	public void setWebfactorderSer(IWebFactorderServices webfactorderSer) {
 		this.webfactorderSer = webfactorderSer;
 	}
+	public void setServletResponse(HttpServletResponse response) {
+		// TODO Auto-generated method stub
+		this.response=response;
+	}
 	public String add() throws IOException{
 		String path="d:\\北越&鞋塑2015接單匯總-1201.xls";
 		List<String>list_all=ImportExcel.exportListFromExcel(new File(path), 1);
@@ -140,7 +158,7 @@ public class WebFactOrderAction extends ActionSupport{
 		ActionContext.getContext().getSession().remove("public_customer");
 		ActionContext.getContext().getSession().remove("public_model");
 		ActionContext.getContext().getSession().remove("public_component");
-		bean=webfactorderSer.findPageBean(25, page, factNos, brank, customer, model, component);
+		bean=webfactorderSer.findPageBean(25, page, factNos, branks, customers, models, components);
 		return "beanList";
 		
 	}
@@ -148,29 +166,26 @@ public class WebFactOrderAction extends ActionSupport{
 		//System.out.println(factNos.getClass().getName());//com.opensymphony.xwork2.util.XWorkList
 		ActionContext.getContext().getSession().remove("allrow");//條件查詢，清除分頁的總條數（dao層中的allrow）
 		ActionContext.getContext().getSession().remove("public_factnos");
-		ActionContext.getContext().getSession().remove("public_factno");
 		ActionContext.getContext().getSession().remove("public_brank");
 		ActionContext.getContext().getSession().remove("public_customer");
 		ActionContext.getContext().getSession().remove("public_model");
 		ActionContext.getContext().getSession().remove("public_component");
 		
 		ActionContext.getContext().getSession().put("public_factnos",factNos);
-		ActionContext.getContext().getSession().put("public_factno",factNo);
-		ActionContext.getContext().getSession().put("public_brank",brank);
-		ActionContext.getContext().getSession().put("public_customer",customer);
-		ActionContext.getContext().getSession().put("public_model",model);
-		ActionContext.getContext().getSession().put("public_component",component);
-		bean=webfactorderSer.findPageBean(25, page, factNos, brank, customer, model, component);
+		ActionContext.getContext().getSession().put("public_brank",branks);
+		ActionContext.getContext().getSession().put("public_customer",customers);
+		ActionContext.getContext().getSession().put("public_model",models);
+		ActionContext.getContext().getSession().put("public_component",components);
+		bean=webfactorderSer.findPageBean(25, page, factNos, branks, customers, models, components);
 		return "beanList1";
 	}
 	public String findPageBean3(){
 		factNos=(List<String>)ActionContext.getContext().getSession().get("public_factnos");
-		factNo=(String)ActionContext.getContext().getSession().get("public_factno");
-		brank=(String)ActionContext.getContext().getSession().get("public_brank");
-		customer=(String)ActionContext.getContext().getSession().get("public_customer");
-		model=(String)ActionContext.getContext().getSession().get("public_model");
-		component=(String)ActionContext.getContext().getSession().get("public_component");
-		bean=webfactorderSer.findPageBean(25, page, factNos, brank, customer, model, component);
+		branks=(List<String>)ActionContext.getContext().getSession().get("public_brank");
+		customers=(List<String>)ActionContext.getContext().getSession().get("public_customer");
+		models=(List<String>)ActionContext.getContext().getSession().get("public_model");
+		components=(List<String>)ActionContext.getContext().getSession().get("public_component");
+		bean=webfactorderSer.findPageBean(25, page, factNos, branks, customers, models, components);
 		return "beanList1";
 	}
 	
@@ -212,6 +227,15 @@ public class WebFactOrderAction extends ActionSupport{
 		jsons=JSONArray.fromObject(list);
 		return "findModel";
 	}
+	/**
+	 * 打印搜索
+	 * @throws IOException 
+	 */
+	public void print() throws IOException{
+		List<WebFactorder>list=webfactorderSer.findWithNoPage(factNos, branks, customers, models, components,yymm);
+		GlobalMethod.print_webfactorder(list, "webfactorder.jasper",yymm, response);
+	}
+	
 	
 
 }

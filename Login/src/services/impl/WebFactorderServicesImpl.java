@@ -28,13 +28,10 @@ public class WebFactorderServicesImpl implements IWebFactorderServices{
 	}
 
 
-	public PageBean findPageBean(int pageSize, int page, List<String> factNos,
-			String brank, String customer, String model, String component) {
+	public PageBean findPageBean(int pageSize,int page,List<String>factNos,List<String>brank,List<String>customer,List<String>model,List<String>component){
 		// TODO Auto-generated method stub
 		return factorderdao.findPageBean(pageSize, page, factNos, brank, customer, model, component);
 	}
-
-
 	public List<String> findComponent() {
 		// TODO Auto-generated method stub
 		return factorderdao.findComponent();
@@ -56,6 +53,14 @@ public class WebFactorderServicesImpl implements IWebFactorderServices{
 	public List<String> findModel() {
 		// TODO Auto-generated method stub
 		return factorderdao.findModel();
+	}
+
+
+	public List<WebFactorder> findWithNoPage(List<String> factNos,
+			List<String> brank, List<String> customer, List<String> model,
+			List<String> component,String yymm) {
+		// TODO Auto-generated method stub
+		return factorderdao.findWithNoPage(factNos, brank, customer, model, component,yymm);
 	}
 	
 }
