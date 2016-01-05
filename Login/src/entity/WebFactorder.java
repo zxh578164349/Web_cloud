@@ -29,6 +29,17 @@ public class WebFactorder implements java.io.Serializable {
 	public WebFactorder(Long orderId) {
 		this.orderId = orderId;
 	}
+	public WebFactorder( String factSname, String component,
+			String brank, String customer, String modelNo, 
+			String yymm) {
+		this.factSname = factSname;
+		this.component = component;
+		this.brank = brank;
+		this.customer = customer;
+		this.modelNo = modelNo;
+		this.yymm = yymm;
+	}
+	
 
 	/** full constructor */
 	public WebFactorder(Long orderId, String factSname, String component,

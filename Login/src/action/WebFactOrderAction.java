@@ -1,12 +1,19 @@
 package action;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.poi.hssf.usermodel.HSSFCellStyle;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.struts2.interceptor.ServletResponseAware;
 
 import net.sf.json.JSONArray;
@@ -39,9 +46,22 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 	private List<String>models=new ArrayList<String>();
 	private javax.servlet.http.HttpServletResponse response;
 	private String yymm;
+	private String year;
+	private List<String>factSnames;
 	
 	
-	
+	public String getYear() {
+		return year;
+	}
+	public void setYear(String year) {
+		this.year = year;
+	}
+	public List<String> getFactSnames() {
+		return factSnames;
+	}
+	public void setFactSnames(List<String> factSnames) {
+		this.factSnames = factSnames;
+	}
 	public String getYymm() {
 		return yymm;
 	}
@@ -228,12 +248,111 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 		return "findModel";
 	}
 	/**
+	 *从WebFactorder中获取所有的model
+	 * @return
+	 */
+	public String findFactSname(){
+		List<String>list=webfactorderSer.findFactSname();
+		jsons=JSONArray.fromObject(list);
+		return "findFactSname";
+	}
+	
+	/**
 	 * 打印搜索
 	 * @throws IOException 
 	 */
 	public void print() throws IOException{
-		List<WebFactorder>list=webfactorderSer.findWithNoPage(factNos, branks, customers, models, components,yymm);
-		GlobalMethod.print_webfactorder(list, "webfactorder.jasper",yymm, response);
+		/*List<WebFactorder>list=webfactorderSer.findWithNoPage(factNos, branks, customers, models, components,yymm);
+		GlobalMethod.print_webfactorder(list, "webfactorder.jasper",year, response);*/
+		
+		/****************1數據處理*****************/
+		List<String>list_column=new ArrayList<String>();
+		list_column.add("廠名");
+		list_column.add("品牌");
+		list_column.add("客戶");
+		list_column.add("模件");
+		list_column.add("部件");
+		int index=0;
+		List<Object[]>list=webfactorderSer.findWebFactorder(factSnames, branks, customers, models, components, year);
+		Map<String,List<Double>>map=new HashMap<String,List<Double>>();
+		for(int i=0;i<list.size();i++){//for1
+			List<Double>list_dbl=new ArrayList<Double>();
+			String yymm="";
+			for(int j=1;j<13;j++){
+				
+				if(i==0){
+					list_column.add(yymm);
+					if(j<10){
+						yymm=year+"0"+j;
+					}else{
+						yymm=year+j;
+					}
+				}				
+				/**
+				 * 0:orderid
+				 * 1:factSname
+				 * 2:brank
+				 * 3:customer
+				 * 4:modelNo
+				 * 5:component
+				 */
+				List<Double>factorders=webfactorderSer.findOrderdata(list.get(i)[1].toString(), list.get(i)[2].toString(), 
+						list.get(i)[3].toString(), list.get(i)[4].toString(), list.get(i)[5].toString(), yymm);
+				if(factorders.size()>1){
+					list_dbl.add(-1.0);
+					index++;//數據出現重複，自加1，作標記用
+				}
+				if(factorders.size()==1){
+					list_dbl.add(factorders.get(0));
+				}
+				if(factorders.size()==0){
+					list_dbl.add(0.0);
+				}
+						
+			}
+			map.put(list.get(i)[0].toString(), list_dbl);
+		}//for1
+		
+		
+		
+		/****************1數據處理*****************/
+		
+		/****************2報表打印*****************/
+		HSSFWorkbook wb=new HSSFWorkbook();
+		HSSFSheet sheet=wb.createSheet("sheet1");
+		
+		HSSFCellStyle cs=wb.createCellStyle();
+		cs.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+		cs.setBorderTop(HSSFCellStyle.BORDER_THIN);
+		cs.setBorderRight(HSSFCellStyle.BORDER_THIN);
+		cs.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+		cs.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		cs.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		
+		for(int i=1;i<list.size()+2;i++){
+			sheet.createRow(i);
+			for(int j=0;j<25;j++){
+				sheet.getRow(i).createCell(j).setCellStyle(cs);
+			}
+		}
+		
+		for(int i=0;i<list_column.size();i++){
+			sheet.getRow(1).getCell(i).setCellValue(list_column.get(i));
+		}
+		for(int i=0;i<list.size();i++){//for
+			sheet.getRow(2+i).getCell(0).setCellValue(list.get(i)[1].toString());
+			sheet.getRow(2+i).getCell(1).setCellValue(list.get(i)[2].toString());
+			sheet.getRow(2+i).getCell(2).setCellValue(list.get(i)[3].toString());
+			sheet.getRow(2+i).getCell(3).setCellValue(list.get(i)[4].toString());
+			sheet.getRow(2+i).getCell(4).setCellValue(list.get(i)[5].toString());
+			List<Double>list_1=map.get(list.get(i)[0].toString());
+			for(int j=0;j<list_1.size();j++){
+				sheet.getRow(2+i).getCell(5+j).setCellValue(list_1.get(j));
+			}
+		}//for
+		OutputStream os=new FileOutputStream("d:\tttttt.xls");
+		wb.write(os);
+		os.close();
 	}
 	
 	

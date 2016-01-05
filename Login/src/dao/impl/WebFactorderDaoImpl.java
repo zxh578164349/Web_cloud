@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.hibernate.Query;
 import org.hibernate.Transaction;
 
 import com.opensymphony.xwork2.ActionContext;
@@ -149,6 +150,12 @@ public class WebFactorderDaoImpl extends Basedao implements IWebFactorderDao{
 		String hql="select distinct modelNo from WebFactorder order by modelNo";
 		return super.findAll(hql, null);
 	}
+	
+	public List<String> findFactSname() {
+		// TODO Auto-generated method stub
+		String hql="select distinct factSname from WebFactorder order by factSname";
+		return super.findAll(hql, null);
+	}
 
 
 	public List<WebFactorder> findWithNoPage(List<String> factNos,
@@ -182,9 +189,84 @@ public class WebFactorderDaoImpl extends Basedao implements IWebFactorderDao{
 			hql.append(" and yymm like:yymm");
 			map.put("yymm", yymm+"%");
 		}
+		hql.append(" order by factSname,brank,customer,modelNo,component,yymm");
+		return super.getAllWithNoPage(hql.toString(), map);
+	}
+
+
+	/**
+	 * 如果大於12，證明數據有重複
+	 * 如果小於12，需要補全
+	 */
+	public int findMonthData(String factNo, String brank, String customer,
+			String model, String component, String year) {
+		// TODO Auto-generated method stub
+		String hql="select count(orderId) from WebFactorder where factNo=? and brank=? and customer=? and modelNo=? and component=? and yymm like ?";
+		Query query=getSession().createQuery(hql);
+		query.setString(0, factNo);
+		query.setString(1, brank);
+		query.setString(2, customer);
+		query.setString(2, model);
+		query.setString(3, component);
+		query.setString(4, year+"%");
+		return (Integer)query.uniqueResult();
+	}
+
+
+	/**
+	 * 在搜索條件下，找出所有不重複的（factNo，brank,customer,modelNo,compnent）
+	 */
+	public List<Object[]> findWebFactorder(List<String> factNos,
+			List<String> brank, List<String> customer, List<String> model,
+			List<String> component, String yymm) {
+		// TODO Auto-generated method stub
+		StringBuffer hql=new StringBuffer();
+		Map<String,Object>map=new HashMap<String,Object>();
+		hql.append("select max(orderId),factSname,brank,customer,modelNo,component from WebFactorder where 1=1 ");
+		if(factNos!=null&&factNos.size()>0){
+			hql.append(" and factSname in (:factnos)");
+			map.put("factnos", factNos);
+		}
+		if(brank!=null&&brank.size()>0){
+			hql.append(" and brank in(:brank) ");
+			map.put("brank", brank);
+		}
+		if(customer!=null&&customer.size()>0){
+			hql.append(" and customer in(:customer) ");
+			map.put("customer", customer);
+		}
+		if(model!=null&&model.size()>0){
+			hql.append(" and modelNo in(:model)");
+			map.put("model", model);
+		}
+		if(component!=null&&component.size()>0){
+			hql.append(" and component in(:component)");
+			map.put("component", component);
+		}
+		if(yymm!=null&&!yymm.equals("")){
+			hql.append(" and yymm like:yymm");
+			map.put("yymm", yymm+"%");
+		}
+		hql.append(" group by factSname,brank,customer,modelNo,component ");
 		hql.append(" order by factSname,brank,customer,modelNo,component");
 		return super.getAllWithNoPage(hql.toString(), map);
 	}
+
+
+	/**
+	 * 根據廠名，品牌，客戶，model,部件，年月找到一箇訂單（由於導入的excel文件存在重複的數據，所以要返回List
+	 * 如果長度爲1，則不重複）
+	 */
+	public List<Double> findOrderdata(String factSname, String brank,
+			String customer, String model, String component, String yymm) {
+		// TODO Auto-generated method stub
+		String hql="select orderData from WebFactorder where factSname=? and brank=? and customer=? and modelNo=? and component=? and yymm=?";
+		String[]objs={factSname,brank,customer,model,component,yymm};
+		return super.findAll(hql, objs);
+	}
+
+
+	
 	
 	
 
