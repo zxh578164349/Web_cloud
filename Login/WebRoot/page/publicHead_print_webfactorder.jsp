@@ -104,6 +104,20 @@ function findModel(){
       }
    });
 }
+function findFactSname(){
+	jq.ajax({
+		type:"POST",
+		url:"webfactOrder_findFactSname",
+		dataType:"json",
+		success:function(data){
+			var item;
+			jq.each(data,function(i,obj){
+				item="<div><input type='checkbox' name='factSnames' value='"+obj+"'/>"+obj+"</div>";
+				jq("#div_factSname").append(item);
+			});
+		}
+	});
+}
 
 function selectAll(str,str2){
     var allobj=jq("#"+str); 
@@ -115,7 +129,7 @@ function selectAll(str,str2){
 }
 
 window.onload=function(){
-	getAllFact_json();findComponent();findBrank();findCustomer();findModel();
+	findFactSname();findComponent();findBrank();findCustomer();findModel();
 }
 </script>
 
@@ -127,9 +141,14 @@ window.onload=function(){
 	<table  border="0px">
 		<tr>
 			<td>廠別</td>
-			<td>
+			<%--<td>
 				<div id="div_factNos" style="width:400px;height:250px;overflow:auto;border:1px dashed green">
 				  <div><input type="checkbox" id="all_factno" onclick="selectAll('all_factno','factNos')"/>全选</div><hr/>				   
+				</div>				
+			</td>--%>
+			<td>
+				<div id="div_factSname" style="width:400px;height:250px;overflow:auto;border:1px dashed green">
+				  <div><input type="checkbox" id="all_factSname" onclick="selectAll('all_factSname','factNos')"/>全选</div><hr/>				   
 				</div>				
 			</td>
 			<td>部件</td>
@@ -165,7 +184,7 @@ window.onload=function(){
 		    </td>
 		    <td>年份</td>
 			<td>
-			  <select name="yymm" >
+			  <select name="year" >
 			     <option value="2015">2015</option>
 			     <option value="2014">2014</option>
 			  </select>			  			
