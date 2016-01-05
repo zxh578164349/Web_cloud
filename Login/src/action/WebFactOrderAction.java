@@ -267,27 +267,28 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 		
 		/****************1數據處理*****************/
 		List<String>list_column=new ArrayList<String>();
+		List<String>list_month=new ArrayList<String>();
 		list_column.add("廠名");
 		list_column.add("品牌");
 		list_column.add("客戶");
 		list_column.add("模件");
 		list_column.add("部件");
+		String yymm="";
+		for(int i=1;i<13;i++){
+			if(i<10){
+				yymm=year+"0"+i;
+			}else{
+				yymm=year+i;
+			}
+			list_month.add(yymm);
+			list_column.add(yymm);
+		}
 		int index=0;
 		List<Object[]>list=webfactorderSer.findWebFactorder(factSnames, branks, customers, models, components, year);
 		Map<String,List<Double>>map=new HashMap<String,List<Double>>();
 		for(int i=0;i<list.size();i++){//for1
 			List<Double>list_dbl=new ArrayList<Double>();
-			String yymm="";
-			for(int j=1;j<13;j++){
-				
-				if(i==0){
-					list_column.add(yymm);
-					if(j<10){
-						yymm=year+"0"+j;
-					}else{
-						yymm=year+j;
-					}
-				}				
+			for(int j=0;j<12;j++){				
 				/**
 				 * 0:orderid
 				 * 1:factSname
@@ -297,7 +298,7 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 				 * 5:component
 				 */
 				List<Double>factorders=webfactorderSer.findOrderdata(list.get(i)[1].toString(), list.get(i)[2].toString(), 
-						list.get(i)[3].toString(), list.get(i)[4].toString(), list.get(i)[5].toString(), yymm);
+						list.get(i)[3].toString(), list.get(i)[4].toString(), list.get(i)[5].toString(), list_month.get(j));
 				if(factorders.size()>1){
 					list_dbl.add(-1.0);
 					index++;//數據出現重複，自加1，作標記用
@@ -350,7 +351,7 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 				sheet.getRow(2+i).getCell(5+j).setCellValue(list_1.get(j));
 			}
 		}//for
-		OutputStream os=new FileOutputStream("d:\tttttt.xls");
+		OutputStream os=new FileOutputStream("d:\\tttttt.xls");
 		wb.write(os);
 		os.close();
 	}
