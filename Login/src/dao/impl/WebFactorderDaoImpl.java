@@ -97,7 +97,7 @@ public class WebFactorderDaoImpl extends Basedao implements IWebFactorderDao{
 			map.put("component", component);
 		}
 		hql2.append(hql);
-		hql.append(" order by factSname,brank,customer,modelNo,component");
+		hql.append(" order by factSname,brank,customer,modelNo,component,yymm");
 		int allrow=0;
 		Integer rows=(Integer)ActionContext.getContext().getSession().get("allrow");
 		if(rows!=null){

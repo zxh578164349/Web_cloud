@@ -148,7 +148,7 @@ window.onload=function(){
 			</td>--%>
 			<td>
 				<div id="div_factSname" style="width:400px;height:250px;overflow:auto;border:1px dashed green">
-				  <div><input type="checkbox" id="all_factSname" onclick="selectAll('all_factSname','factNos')"/>全选</div><hr/>				   
+				  <div><input type="checkbox" id="all_factSname" onclick="selectAll('all_factSname','factSnames')"/>全选</div><hr/>				   
 				</div>				
 			</td>
 			<td>部件</td>
