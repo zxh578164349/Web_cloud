@@ -153,13 +153,14 @@ public class ImportExcel {
 				System.out.println(list[i]);				
 			}
 			System.out.println(list.length);*/
-			List<String>lists=new ArrayList<String>();
+			/*List<String>lists=new ArrayList<String>();
 			lists.add("abc");
 			System.out.println(lists.getClass().getName());
 			System.out.println("abc".getClass().getName());
 			if(lists.getClass().getName().equals("java.lang.String")){
 				System.out.println("字符串類型");
-			}
+			}*/
+			System.out.println(Double.valueOf("-1"));
 		}catch(Exception e){
 			
 		}

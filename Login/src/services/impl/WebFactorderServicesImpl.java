@@ -54,6 +54,11 @@ public class WebFactorderServicesImpl implements IWebFactorderServices{
 		// TODO Auto-generated method stub
 		return factorderdao.findModel();
 	}
+	
+	public List<String> findFactSname() {
+		// TODO Auto-generated method stub
+		return factorderdao.findFactSname();
+	}
 
 
 	public List<WebFactorder> findWithNoPage(List<String> factNos,
@@ -62,5 +67,30 @@ public class WebFactorderServicesImpl implements IWebFactorderServices{
 		// TODO Auto-generated method stub
 		return factorderdao.findWithNoPage(factNos, brank, customer, model, component,yymm);
 	}
+
+
+	public int findMonthData(String factNo, String brank, String customer,
+			String model, String component, String year) {
+		// TODO Auto-generated method stub
+		return factorderdao.findMonthData(factNo, brank, customer, model, component, year);
+	}
+
+
+	public List<Object[]> findWebFactorder(List<String> factNos,
+			List<String> brank, List<String> customer, List<String> model,
+			List<String> component, String yymm) {
+		// TODO Auto-generated method stub
+		return factorderdao.findWebFactorder(factNos, brank, customer, model, component, yymm);
+	}
+
+
+	public List<Double> findOrderdata(String factSname, String brank,
+			String customer, String model, String component, String yymm) {
+		// TODO Auto-generated method stub
+		return factorderdao.findOrderdata(factSname, brank, customer, model, component, yymm);
+	}
+
+
+	
 	
 }
