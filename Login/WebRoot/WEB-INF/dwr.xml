@@ -179,6 +179,10 @@
 		   <param name="beanName" value="tabpomSer"/>
 		   <include method="makePomNo"/>
 		</create>
+		<create javascript="webbussletterjs" creator="spring">
+		   <param name="beanName" value="webbussletterSer"/>
+		   <include method="makeBillNo"/>
+		</create>
 		<convert converter="hibernate3" match="entity.*" />		
 		<!-- <convert converter="bean" match="cn.com.entity.ConfigFileFirstKind">
 			<param name="include" value="ffkId,firstKindName,configFileSecondKinds" />

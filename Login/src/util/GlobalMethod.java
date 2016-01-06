@@ -1,6 +1,8 @@
 package util;
 
 import java.io.IOException;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -127,6 +129,21 @@ public class GlobalMethod {
 		}
 		String[]objs={public_factno,yymm,yymm2};
 		return objs;
+	}
+	
+	/**
+	 * 計算兩箇Date之間相差的天數
+	 * @param d1
+	 * @param d2
+	 * @return
+	 */
+	public static long sumDate(Date d1,Date d2){
+		Calendar c1=Calendar.getInstance();
+		Calendar c2=Calendar.getInstance();
+		c1.setTime(d1);
+		c2.setTime(d2);
+		long result=(c2.getTimeInMillis()-c1.getTimeInMillis())/(24*60*60*1000);
+		return result;
 	}
 
 }
