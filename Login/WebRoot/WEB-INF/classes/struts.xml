@@ -716,6 +716,10 @@
 		      <param name="root">jsons</param>
 		   </result>
 		</action>
+		<action name="bussletter_*" class="webbussletterAction" method="{1}">
+		   <result name="beanList">page/webbussletter.jsp</result>
+		   <result name="beanList1">page/table1/webbussletter1.jsp</result>
+		</action>
 	</package>
 
 </struts>

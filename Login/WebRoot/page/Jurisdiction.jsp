@@ -319,6 +319,12 @@
 	    }else{
 	       document.getElementById("webfactorder1").innerHTML='<input name="checkbox" value="KPI數據,工廠客戶訂單,webfactOrder_findPageBean" type="checkbox" />工廠客戶訂單'															                                             
 	    }
+	    var i58=document.getElementById("webbussletter");
+	    if(i58!=null){
+	       document.getElementById("webbussletter1").innerHTML="";
+	    }else{
+	       document.getElementById("webbussletter1").innerHTML='<input name="checkbox" value="KPI數據,人員出差申請書,bussletter_findPageBean" type="checkbox" />人員出差申請書'															                                             
+	    }
 }
 		
 function getSub(){
@@ -503,6 +509,17 @@ function back(){
 										</s:if>
 									</s:iterator>
 								</s:iterator> <span id="webfactorder1"></span>
+							</td>
+							<td>
+							  <s:iterator value="#session.user.webJurisdictions">
+									<s:iterator value="webSubmenus">
+										<s:if test="submenuname=='人員出差申請書'">
+											<span id="webbussletter"><input name="checkbox"
+												value="KPI數據,人員出差申請書,bussletter_findPageBean" checked="checked"
+												type="checkbox" />人員出差申請書</span>
+										</s:if>
+									</s:iterator>
+								</s:iterator> <span id="webbussletter1"></span>
 							</td>
 						</tr>
 					</table></td>

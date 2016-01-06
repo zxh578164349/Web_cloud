@@ -98,6 +98,7 @@
 	<bean id="tabpomSer" class="services.impl.WebTabpomServicesImpl"></bean>
 	<bean id="webbrankSer" class="services.impl.WebBrankServicesImpl"></bean>
 	<bean id="webfactorderSer" class="services.impl.WebFactorderServicesImpl"></bean>
+	<bean id="webbussletterSer" class="services.impl.WebBussinessletterServicesImpl"></bean>
 </beans>
 
 
