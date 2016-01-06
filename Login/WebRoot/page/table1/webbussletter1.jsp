@@ -111,8 +111,12 @@
 				<td><s:property value="GAgent"/></td>
 				<td><s:property value="factNo"/></td>				
 				<td><s:property value="address" /></td>
-				<td><s:property value="timeFrom" /></td>
-				<td><s:property value="timeEnd"/></td>		
+				<td>
+				<s:date name="dateFrom" format="yyyyMMdd"/>至<s:date name="dateEnd" format="yyyyMMdd"/>
+				(<s:property value="%{sumDate(dateFrom,dateEnd)}"/>天)
+				</td>
+				<td><s:date name="timeFrom" format="yyyyMMdd-HH:mm" /></td>
+				<td><s:date name="timeEnd" format="yyyyMMdd-HH:mm"/></td>		
 														
 				<td>
 				

@@ -1,6 +1,7 @@
 package action;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -354,6 +355,69 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 		OutputStream os=new FileOutputStream("d:\\tttttt.xls");
 		wb.write(os);
 		os.close();
+	}
+	
+	
+	public void print2() throws IOException{
+		List<Object[]>list=webfactorderSer.findWebFactorder(factSnames, branks, customers, models, components, "2015");
+		List<WebFactorder>list2=webfactorderSer.findWithNoPage(factNos, branks, customers, models, components,"2015");
+		List<List<WebFactorder>>list_all=new ArrayList<List<WebFactorder>>();
+		for(int i=0;i<list.size();i++){//for1
+			List<WebFactorder>list_one=new ArrayList<WebFactorder>();
+			for(int j=0;j<list2.size();j++){//for2
+				if(list.get(i)[1].toString().equals(list2.get(j).getFactSname())&&
+						list.get(i)[2].toString().equals(list2.get(j).getBrank())&&
+						list.get(i)[3].toString().equals(list2.get(j).getCustomer())&&
+						list.get(i)[4].toString().equals(list2.get(j).getModelNo())&&
+						list.get(i)[5].toString().equals(list2.get(j).getComponent())){
+					list_one.add(list2.get(j));
+					//list2.remove(0);
+				}
+			}//for2
+			list_all.add(list_one);
+		}//for1
+		
+		HSSFWorkbook wb=new HSSFWorkbook();
+		HSSFSheet sheet=wb.createSheet("sheet1");
+		
+		HSSFCellStyle cs=wb.createCellStyle();
+		cs.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+		cs.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+		cs.setBorderRight(HSSFCellStyle.BORDER_THIN);
+		cs.setBorderTop(HSSFCellStyle.BORDER_THIN);
+		
+		for(int i=1;i<list.size()+2;i++){
+			sheet.createRow(i);
+			for(int j=0;j<30;j++){
+				sheet.getRow(i).createCell(j);
+				sheet.getRow(i).getCell(j).setCellStyle(cs);
+			}
+			if(i==1){
+				sheet.getRow(i).getCell(0).setCellValue("厂名");
+				sheet.getRow(i).getCell(1).setCellValue("品牌");
+				sheet.getRow(i).getCell(2).setCellValue("客户");
+				sheet.getRow(i).getCell(3).setCellValue("模具");
+				sheet.getRow(i).getCell(4).setCellValue("部件");
+				for(int k=0;k<12;k++){
+					sheet.getRow(i).getCell(5+k).setCellValue(year+(k+1));
+				}
+			}										
+		}
+		for(int i=0;i<list.size();i++){
+			sheet.getRow(i+2).getCell(0).setCellValue(list.get(i)[1].toString());
+			sheet.getRow(i+2).getCell(1).setCellValue(list.get(i)[2].toString());
+			sheet.getRow(i+2).getCell(2).setCellValue(list.get(i)[3].toString());
+			sheet.getRow(i+2).getCell(3).setCellValue(list.get(i)[4].toString());
+			sheet.getRow(i+2).getCell(4).setCellValue(list.get(i)[5].toString());
+			for(int j=0;j<list_all.get(i).size();j++){
+				sheet.getRow(i+2).getCell(5+j).setCellValue(list_all.get(i).get(j).getOrderData());
+			}
+		}
+		OutputStream os=new FileOutputStream("d:\\tttttt.xls");
+		wb.write(os);
+		os.close();
+		
+		
 	}
 	
 	

@@ -389,10 +389,10 @@ table.gridtable td.tdcolor {
 				    <tr>
 				      <td class="tdcolor">去程班機時間</td>				      
 				      <td>
-				      <input type="text"  value="<s:date name='bussletter.timeFrom' format='yyyyMMdd-hh:mm'/>" name="timeFrom" onclick="WdatePicker({dateFmt:'yyyyMMdd-HH:mm'})" class="Wdate"/>
+				      <input type="text"  value="<s:date name='bussletter.timeFrom' format='yyyyMMdd-hh:mm'/>" name="timeFrom" onclick="WdatePicker({dateFmt:'yyyyMMddHHmm'})" class="Wdate"/>
 				      </td>				     				      				     
 				      <td class="tdcolor">回程班機時間</td>
-				      <td><input type="text" value="<s:date name='bussletter.timeEnd' format='yyyyMMdd-hh:mm'/>" name="timeEnd" onclick="WdatePicker({dateFmt:'yyyyMMdd-HH:mm'})" class="Wdate"/></td>
+				      <td><input type="text" value="<s:date name='bussletter.timeEnd' format='yyyyMMdd-hh:mm'/>" name="timeEnd" onclick="WdatePicker({dateFmt:'yyyyMMddHHmm'})" class="Wdate"/></td>
 				    </tr>  
 				   				   
 					<tr>
@@ -406,14 +406,14 @@ table.gridtable td.tdcolor {
 				      <td>
 				        <s:if test="bussletter==null">	
 				          		<input type="text" name="bussletter.blNo" value="自動生成" readonly style="color:blue" id="bussletter_billno" datatype="*"/>
-				          		<input type="hidden" name="bussletter.ymExpect" datatype="*"  value="<%=str_date%>" style="color:blue" id="ymExpect" readonly/>	        
+				          		<input type="hidden" name="bussletter.createDate" datatype="*"  value="<%=str_date%>" style="color:blue" id="ymExpect" readonly/>	        
 				        </s:if>
 				        <s:else>
 				               <input type="text" name="bussletter.blNo" value="<s:property value='bussletter.blNo'/>" readonly style="color:blue" />
-				               <input type="hidden" name="bussletter.ymExpect" datatype="*"  value="<s:property value='bussletter.ymExpect'/>" style="color:blue" readonly/>
+				               <input type="hidden" name="bussletter.createDate" datatype="*"  value="<s:property value='bussletter.createDate'/>" style="color:blue" readonly/>
 				        </s:else>
-				        <input type="hidden" value="<s:property value='bussletter.filesYn'/>" name="bussletter.filesYn"/>
-				        <input type="hidden" value="<s:property value='bussletter.firstPage'/>" name="bussletter.firstPage"/>				       				      
+				        <input type="hidden" value="<s:property value='bussletter.filesYn'/>" name=""/>
+				        <input type="hidden" value="<s:property value='bussletter.firstPage'/>" name=""/>				       				      
 				      </td>
 				      <%--<td class="tdcolor">附档</td>
 				      <td colspan="3">

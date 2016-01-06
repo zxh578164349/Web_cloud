@@ -142,7 +142,7 @@ public class GlobalMethod {
 		Calendar c2=Calendar.getInstance();
 		c1.setTime(d1);
 		c2.setTime(d2);
-		long result=(c2.getTimeInMillis()-c1.getTimeInMillis())/24*60*60*1000;
+		long result=(c2.getTimeInMillis()-c1.getTimeInMillis())/(24*60*60*1000);
 		return result;
 	}
 

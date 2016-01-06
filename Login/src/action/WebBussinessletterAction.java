@@ -3,8 +3,10 @@ package action;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import services.IWebBussinessletterServices;
+import util.GlobalMethod;
 import util.PageBean;
 
 import com.opensymphony.xwork2.ActionContext;
@@ -129,6 +131,9 @@ public class WebBussinessletterAction extends ActionSupport{
 		factNo=(String)ActionContext.getContext().getSession().get("public_factNo");
 		bean=webbussletterSer.findPageBean(25, page, billNo, factNo);
 		return "beanList1";
+	}
+	public long sumDate(Date d1,Date d2){
+		return GlobalMethod.sumDate(d1, d2)+1;//注意，出差所用的天数为相差天数+1天
 	}
 	
 	
