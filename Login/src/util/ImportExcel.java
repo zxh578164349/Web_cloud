@@ -152,7 +152,7 @@ public class ImportExcel {
 		String path="d:\\北越&鞋塑2015接單匯總-1201.xls";
 		//String path="e:\\qqq.xlsx";
 		List<String>list=null;
-		try{
+		/*try{
 			list=exportListFromExcel(new File(path),1);
 			if(list.size()==0){
 				System.out.println("数据結構錯誤");
@@ -165,7 +165,13 @@ public class ImportExcel {
 			
 		}catch(Exception e){
 			System.out.println(e);
+		}*/
+		try{
+			System.out.println(2/0);
+		}catch(Exception e){
+			System.out.println("除数不能为0");
 		}
+		System.out.println("OK");
 
 	}
 
