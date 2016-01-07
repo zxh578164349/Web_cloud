@@ -11,4 +11,7 @@
 /spring-dao.xml
 /spring-quartz.xml
 /spring-services.xml
+/spring.xml
+/struts.xml
+/uploadError.properties
 /util

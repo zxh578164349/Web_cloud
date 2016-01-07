@@ -1,11 +1,14 @@
 package action;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,8 +16,11 @@ import java.util.Map;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
+import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.struts2.interceptor.ServletResponseAware;
 
 import net.sf.json.JSONArray;
@@ -27,7 +33,9 @@ import util.PageBean;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
+import entity.KyzExpectmatmFile;
 import entity.WebFactorder;
+import entity.WebUser;
 
 public class WebFactOrderAction extends ActionSupport implements ServletResponseAware{
 	private IWebFactorderServices webfactorderSer;
@@ -49,8 +57,36 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 	private String yymm;
 	private String year;
 	private List<String>factSnames;
-	
-	
+	private File file;
+    private String fileFileName;
+    private String fileContentType;
+    private String ajaxResult;//申請函文時返回的ajax結果,   0:提交成功       1:提交失敗
+    
+    
+	public String getAjaxResult() {
+		return ajaxResult;
+	}
+	public void setAjaxResult(String ajaxResult) {
+		this.ajaxResult = ajaxResult;
+	}
+	public File getFile() {
+		return file;
+	}
+	public void setFile(File file) {
+		this.file = file;
+	}
+	public String getFileFileName() {
+		return fileFileName;
+	}
+	public void setFileFileName(String fileFileName) {
+		this.fileFileName = fileFileName;
+	}
+	public String getFileContentType() {
+		return fileContentType;
+	}
+	public void setFileContentType(String fileContentType) {
+		this.fileContentType = fileContentType;
+	}
 	public String getYear() {
 		return year;
 	}
@@ -163,11 +199,54 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 		// TODO Auto-generated method stub
 		this.response=response;
 	}
-	public String add() throws IOException{
-		String path="d:\\北越&鞋塑2015接單匯總-1201.xls";
+	public String importExcel() throws IOException{
+		String result="importExcel";
+		/*String path="d:\\北越&鞋塑2015接單匯總-1201.xls";
 		List<String>list_all=ImportExcel.exportListFromExcel(new File(path), 1);
-		webfactorderSer.addLarge(list_all);
-		return null;
+		webfactorderSer.addLarge(list_all);*/
+		
+		/*文件上傳驗證*/
+		if(file!=null){							
+					
+					String filetype=fileFileName.substring(fileFileName.lastIndexOf(".")).toLowerCase();
+					/*long filesize=file.length();
+					if(filesize>5120000){
+						response.setContentType("text/html;charset=utf-8");
+						response.getWriter().print("<script>alert('文件不可超過5M!');window.opener=null;window.open('','_self');window.close()</script>");
+						return null;
+					}*/
+					if(!filetype.equals(".xls")&&!filetype.equals(".xlsx")){
+						response.setContentType("text/html;charset=utf-8");
+						//response.getWriter().print("<script>alert('只允許上傳Excel文檔!');window.opener=null;window.open('','_self');window.close()</script>");
+						//return null;
+						ajaxResult="1";//只允許上傳Excel文檔
+						return result;
+						
+					}												
+		}
+		/*文件上傳*/
+		if(file!=null){//不為空代表有上傳附檔,不能寫成files.size()>0,否則報空指針
+			//File uploadFile=new File(ServletActionContext.getServletContext().getRealPath("KyzexpFile\\"+kyz.getId().getBillNo()));//附檔上傳到項目
+			File uploadFile_backup=new File("d:\\Webfactorder_backup\\"+new SimpleDateFormat("yyyyMMdd").format(new Date()));//附檔上傳到D盤(為了避免更新項目時丟失附檔,所在上傳到D盤)
+			/*if(!uploadFile.exists()){
+				uploadFile.mkdirs();
+			}*/
+			if(!uploadFile_backup.exists()){
+				uploadFile_backup.mkdirs();
+			}																						
+					FileInputStream in=new FileInputStream(file);
+					//FileOutputStream out=new FileOutputStream(uploadFile+"\\"+filesFileName.get(i));
+					FileOutputStream out_backup=new FileOutputStream(uploadFile_backup+"\\"+fileFileName);//備份
+					byte[]b=new byte[1024];
+					int length=0;
+					while((length=in.read(b))>0){
+						out_backup.write(b,0,length);//備份
+					}																																				
+		}
+		ajaxResult="0";
+		String path=uploadFile_backup+"\\"+fileFileName;
+		List<String>list_all=ImportExcel.exportListFromExcel(new File(path), 1);
+		return result;
 	}
 	public String findPageBean(){
 		
@@ -186,11 +265,11 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 	public String findPageBean2(){
 		//System.out.println(factNos.getClass().getName());//com.opensymphony.xwork2.util.XWorkList
 		ActionContext.getContext().getSession().remove("allrow");//條件查詢，清除分頁的總條數（dao層中的allrow）
-		ActionContext.getContext().getSession().remove("public_factnos");
+		/*ActionContext.getContext().getSession().remove("public_factnos");
 		ActionContext.getContext().getSession().remove("public_brank");
 		ActionContext.getContext().getSession().remove("public_customer");
 		ActionContext.getContext().getSession().remove("public_model");
-		ActionContext.getContext().getSession().remove("public_component");
+		ActionContext.getContext().getSession().remove("public_component");*/
 		
 		ActionContext.getContext().getSession().put("public_factnos",factNos);
 		ActionContext.getContext().getSession().put("public_brank",branks);
@@ -260,12 +339,19 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 	
 	/**
 	 * 打印搜索
+	 * 快速ireport版
 	 * @throws IOException 
 	 */
 	public void print() throws IOException{
-		/*List<WebFactorder>list=webfactorderSer.findWithNoPage(factNos, branks, customers, models, components,yymm);
-		GlobalMethod.print_webfactorder(list, "webfactorder.jasper",year, response);*/
-		
+		List<WebFactorder>list=webfactorderSer.findWithNoPage(factNos, branks, customers, models, components,yymm);
+		GlobalMethod.print_webfactorder(list, "webfactorder.jasper",year, response);
+	}
+	/**
+	 * 打印搜索
+	 * 慢速準確版
+	 * @throws IOException 
+	 */
+	public void print2() throws IOException{		
 		/****************1數據處理*****************/
 		List<String>list_column=new ArrayList<String>();
 		List<String>list_month=new ArrayList<String>();
@@ -357,10 +443,14 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 		os.close();
 	}
 	
-	
-	public void print2() throws IOException{
-		List<Object[]>list=webfactorderSer.findWebFactorder(factSnames, branks, customers, models, components, "2015");
-		List<WebFactorder>list2=webfactorderSer.findWithNoPage(factNos, branks, customers, models, components,"2015");
+	/**
+	 * 打印搜索
+	 * 快速準確修改版
+	 * @throws IOException 
+	 */
+	public void print3() throws IOException{
+		List<Object[]>list=webfactorderSer.findWebFactorder(factSnames, branks, customers, models, components, year);
+		List<WebFactorder>list2=webfactorderSer.findWithNoPage(factNos, branks, customers, models, components,year);
 		List<List<WebFactorder>>list_all=new ArrayList<List<WebFactorder>>();
 		for(int i=0;i<list.size();i++){//for1
 			List<WebFactorder>list_one=new ArrayList<WebFactorder>();
@@ -386,6 +476,53 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 		cs.setBorderRight(HSSFCellStyle.BORDER_THIN);
 		cs.setBorderTop(HSSFCellStyle.BORDER_THIN);
 		
+		//標題樣式
+		HSSFCellStyle cs_title=wb.createCellStyle();
+		HSSFFont font_title=wb.createFont();
+		font_title.setFontHeightInPoints((short)14);
+		font_title.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+		cs_title.setFont(font_title);
+		
+		// 紅字體
+		HSSFCellStyle cs_font_red = wb.createCellStyle();
+		HSSFFont font = wb.createFont();
+		font.setFontHeightInPoints((short) 10);
+		font.setBoldweight(HSSFFont.BOLDWEIGHT_NORMAL);
+		font.setColor(HSSFFont.COLOR_RED);
+		cs_font_red.setFont(font);
+		cs_font_red.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		cs_font_red.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		cs_font_red.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+		cs_font_red.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+		cs_font_red.setBorderRight(HSSFCellStyle.BORDER_THIN);
+		cs_font_red.setBorderTop(HSSFCellStyle.BORDER_THIN);
+		
+		//表頭樣式
+		HSSFCellStyle cs_head = wb.createCellStyle();
+		HSSFFont font_head=wb.createFont();
+		font_head.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+		cs_head.setFont(font_head);
+		cs_head.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+		cs_head.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+		cs_head.setBorderRight(HSSFCellStyle.BORDER_THIN);
+		cs_head.setBorderTop(HSSFCellStyle.BORDER_THIN);
+		cs_head.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		cs_head.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		cs_head.setFillForegroundColor(IndexedColors.YELLOW.getIndex());				
+		cs_head.setFillPattern(XSSFCellStyle.SOLID_FOREGROUND);
+		
+		/***************************初始化表格************************************/
+		for(int i=0;i<5;i++){
+			if(i==0){
+				sheet.setColumnWidth(i, 6000);	
+			}else{
+				sheet.setColumnWidth(i, 4500);
+			}			
+		}
+		
+		sheet.createRow(0).createCell(0);
+		sheet.getRow(0).getCell(0).setCellValue(year+"訂單月份匯總表");
+		sheet.getRow(0).getCell(0).setCellStyle(cs_title);
 		for(int i=1;i<list.size()+2;i++){
 			sheet.createRow(i);
 			for(int j=0;j<30;j++){
@@ -393,25 +530,44 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 				sheet.getRow(i).getCell(j).setCellStyle(cs);
 			}
 			if(i==1){
-				sheet.getRow(i).getCell(0).setCellValue("厂名");
+				sheet.getRow(i).getCell(0).setCellValue("廠別");
 				sheet.getRow(i).getCell(1).setCellValue("品牌");
-				sheet.getRow(i).getCell(2).setCellValue("客户");
+				sheet.getRow(i).getCell(2).setCellValue("客戶");
 				sheet.getRow(i).getCell(3).setCellValue("模具");
-				sheet.getRow(i).getCell(4).setCellValue("部件");
+				sheet.getRow(i).getCell(4).setCellValue("部件");				
 				for(int k=0;k<12;k++){
 					sheet.getRow(i).getCell(5+k).setCellValue(year+(k+1));
 				}
+				for(int l=0;l<17;l++){
+					sheet.getRow(i).getCell(l).setCellStyle(cs_head);
+				}
 			}										
 		}
+		/***************************初始化表格************************************/
+		
 		for(int i=0;i<list.size();i++){
 			sheet.getRow(i+2).getCell(0).setCellValue(list.get(i)[1].toString());
 			sheet.getRow(i+2).getCell(1).setCellValue(list.get(i)[2].toString());
 			sheet.getRow(i+2).getCell(2).setCellValue(list.get(i)[3].toString());
 			sheet.getRow(i+2).getCell(3).setCellValue(list.get(i)[4].toString());
 			sheet.getRow(i+2).getCell(4).setCellValue(list.get(i)[5].toString());
-			for(int j=0;j<list_all.get(i).size();j++){
-				sheet.getRow(i+2).getCell(5+j).setCellValue(list_all.get(i).get(j).getOrderData());
+			if(list_all.get(i).size()==12){
+				for(int j=0;j<list_all.get(i).size();j++){
+					sheet.getRow(i+2).getCell(5+j).setCellValue(list_all.get(i).get(j).getOrderData());					
+				}
 			}
+			if(list_all.get(i).size()<12){
+				for(int j=0;j<list_all.get(i).size();j++){
+					sheet.getRow(i+2).getCell(5+j).setCellValue(list_all.get(i).get(j).getOrderData());					
+				}
+			}
+			if(list_all.get(i).size()>12){
+				for(int j=0;j<list_all.get(i).size();j++){
+					sheet.getRow(i+2).getCell(5+j).setCellValue(list_all.get(i).get(j).getOrderData());	
+					sheet.getRow(i+2).getCell(5+j).setCellStyle(cs_font_red);
+				}
+			}
+			
 		}
 		OutputStream os=new FileOutputStream("d:\\tttttt.xls");
 		wb.write(os);

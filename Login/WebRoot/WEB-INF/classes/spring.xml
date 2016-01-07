@@ -196,7 +196,8 @@
 				<value>entity/WebBrank.hbm.xml</value>
 				<value>entity/VWebFact.hbm.xml</value>
 				<value>entity/WebTabpomfile.hbm.xml</value>
-				<value>entity/WebFactorder.hbm.xml</value></list>
+				<value>entity/WebFactorder.hbm.xml</value>
+				<value>entity/WebBussinessletter.hbm.xml</value></list>
 		</property>
 	</bean>
 		

@@ -41,7 +41,6 @@ public class ImportExcel {
 	 */
 	private static List<String> exportListFromExcel(Workbook workbook,
 			int sheetNum) {
-
 		Sheet sheet = workbook.getSheetAt(sheetNum);
 
 		// 解析公式结果
@@ -50,20 +49,32 @@ public class ImportExcel {
 
 		List<String> list = new ArrayList<String>();
 
-		//int minRowIx = sheet.getFirstRowNum();
-		int minRowIx=1;
-		int maxRowIx = sheet.getLastRowNum();
-		for (int rowIx = minRowIx; rowIx <= maxRowIx; rowIx++) {
+		int minRowIx = sheet.getFirstRowNum()+1;
+		int maxRowIx = sheet.getLastRowNum();//getLastRowNum獲取的行數比實際行數少1
+		for (int rowIx = minRowIx; rowIx <= maxRowIx; rowIx++) {//注意：rowIx <= maxRowIx
 			Row row = sheet.getRow(rowIx);
 			StringBuilder sb = new StringBuilder();
-
 			short minColIx = row.getFirstCellNum();
-			short maxColIx = row.getLastCellNum();
-			for (short colIx = minColIx; colIx <= maxColIx; colIx++) {
+			short maxColIx = row.getLastCellNum();//getLastCellNum獲取到實際列數
+			if(maxColIx-minColIx!=18){
+				list.clear();
+				break;
+			}
+			if(!sheet.getRow(minRowIx).getCell(minColIx).toString().equals("廠別")&&!sheet.getRow(minRowIx).getCell(minColIx).toString().equals("厂别")){
+				list.clear();
+				break;
+			}
+			for (short colIx = minColIx; colIx < maxColIx; colIx++) {//注意：colIx < maxColIx,與外循環的rowIx <= maxRowIx不同
 				Cell cell = row.getCell(new Integer(colIx));
 				CellValue cellValue = evaluator.evaluate(cell);
 				if (cellValue == null) {
-					continue;
+					//continue;(原先爲空的話，忽略掉)
+					
+					/*************現在，改爲如果爲空，創建新單元格，幷給值-2，標記這這裏爲空****************/
+					cell=row.createCell(colIx);
+					cell.setCellValue(-2);
+					cellValue=evaluator.evaluate(cell);
+					/*************現在，改爲如果爲空，創建新單元格，幷給值-2，標記這這裏爲空****************/
 				}
 				// 经过公式解析，最后只存在Boolean、Numeric和String三种数据类型，此外就是Error了
 				// 其余数据类型，根据官方文档，完全可以忽略http://poi.apache.org/spreadsheet/eval.html
@@ -139,30 +150,21 @@ public class ImportExcel {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		String path="d:\\北越&鞋塑2015接單匯總-1201.xls";
+		//String path="e:\\qqq.xlsx";
 		List<String>list=null;
 		try{
-			//list=exportListFromExcel(new File(path),1);
-			/*for(String str:list){
-				System.out.println(str);
-			}*/
-			/*for(int i=0;i<list.size()-700;i++){
-				System.out.println(i+list.get(i));
-			}*/
-			/*String[]list="__a__b__c".split("__");
-			for(int i=0;i<list.length;i++){
-				System.out.println(list[i]);				
+			list=exportListFromExcel(new File(path),1);
+			if(list.size()==0){
+				System.out.println("数据結構錯誤");
+			}else{
+				for(int i=0;i<list.size();i++){
+					System.out.println(i+1+":"+list.get(i));
+				}
 			}
-			System.out.println(list.length);*/
-			/*List<String>lists=new ArrayList<String>();
-			lists.add("abc");
-			System.out.println(lists.getClass().getName());
-			System.out.println("abc".getClass().getName());
-			if(lists.getClass().getName().equals("java.lang.String")){
-				System.out.println("字符串類型");
-			}*/
-			System.out.println(Double.valueOf("-1"));
-		}catch(Exception e){
 			
+			
+		}catch(Exception e){
+			System.out.println(e);
 		}
 
 	}

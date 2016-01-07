@@ -55,13 +55,11 @@
 				<th>序號</th>
 				<th>廠別</th>
 				<th>年月</th>
-				<th>廠別狀態</th>
 				<th>品牌</th>
 				<th>模型</th>
 				<th>客戶</th>
 				<th>部件</th>
-				<th>數據</th>
-				<th>輸入者</th>				
+				<th>數據</th>			
 				<s:if test='#session.loginUser.userread!="1"'>
 				<th>操作</th>
 				</s:if>
@@ -71,11 +69,9 @@
 		<s:iterator value="bean.list" status="x" id="temp">
 			<tr onmousemove="click_color(this)" onmouseout="move(this)">
 				<td>${25*(bean.currentPage-1)+x.index+1}</td>
-				<td><s:property value="factNo" /></td>
+				<td><s:property value="factSname" /></td>
 				
-				<td><s:property value="yymm"/></td>
-				
-				<td><s:property value="factArea" /></td>
+				<td><s:property value="yymm"/></td>			
 				
 				<td><s:property value="brank" /></td>
 				
@@ -87,7 +83,6 @@
 				
 				<%--<td><s:property value="%{formatDouble(innum)}" /></td>--%>					
 				<td><s:property value="orderData"/></td>
-				<td><s:property value="username" /></td>
 				
 				<s:if test='#session.loginUser.userread!="1"'>
 				<td>

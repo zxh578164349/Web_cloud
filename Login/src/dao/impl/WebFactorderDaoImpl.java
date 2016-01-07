@@ -36,7 +36,7 @@ public class WebFactorderDaoImpl extends Basedao implements IWebFactorderDao{
 				String[]objs=null;
 				if(i==0){
 					objs_head=list.get(0).split("__");//該表頭包含了日期（日期從第5列開始）
-				}else if(i>1816){
+				}else{
 					objs=list.get(i).split("__");//注意：分解的數組比總列數要多齣1箇，所以開始要j=5+1
 					
 					for(int j=5+1;j<objs_head.length-1;j++){//objs_head-1:表示排除最後一箇"汇总"列
@@ -46,7 +46,11 @@ public class WebFactorderDaoImpl extends Basedao implements IWebFactorderDao{
 						order.setCustomer(objs[3]);
 						order.setModelNo(objs[4]);
 						order.setComponent(objs[5]);
-						order.setOrderData(Double.valueOf(objs[j]));//循環獲取各箇日期的數據
+						try{
+							order.setOrderData(Double.valueOf(objs[j]));//循環獲取各箇日期的數據
+						}catch(Exception e){
+							order.setOrderData(-1.0);//報錯時，給值-1,標記數據格式不對
+						}						
 						order.setYymm(objs_head[j]);//循環獲取日期
 						getSession().save(order);
 						if((i*j)%25==0){

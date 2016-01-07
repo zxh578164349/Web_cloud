@@ -21,6 +21,7 @@
 <link href="tablecloth/tablecloth.css" rel="stylesheet" type="text/css" media="screen" />
 <script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script>
 <script type="text/javascript" src="page/jquerys/layer/layer.min.js"></script>
+<script type="text/javascript" src="jquery/jquery-form.js"></script>
 <!-- 新 Bootstrap 核心 CSS 文件 -->
 <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
@@ -97,20 +98,59 @@
 	}
 	function print(public_form){
 		var subform=jq("#"+public_form);
-		subform.attr("action","webfactOrder_print");
+		subform.attr("action","webfactOrder_print3");
 		subform.attr("target","_blank");
 		subform.submit();
 		//jq("#"+subform).removeAttr("action");
 		//jq("#"+subform).removeAttr("target");
 	}
+	
+function checkForm(){
+	var id_file=jq("#id_file").val();
+	if(id_file==""){
+		layer.alert("請選擇Excel文檔");
+		return false;
+	}
+	return true;
+}
+
+jq(function(){
+	var options={
+			beforeSubmit:checkForm,  		       		       
+	        //resetForm: true, 
+	        url:"webfactOrder_importExcel",
+	        dataType:'json' ,
+	        success:function(data){
+	        	if(data=="0"){
+	        		layer.msg("導入成功!",3,1);
+	        		//location.href="/Login/kyz_findPageBean";
+	        	}else if(data=="1"){
+	        		layer.msg("僅允許導入Excel文檔",3,3);
+	        	}else{
+	        		alert(data);
+	        	}		        	       	    									
+	         }		         
+	};
+
+	jq("#upload_form").submit(function(){
+		jq(this).ajaxSubmit(options);
+		return false;
+	})
+})
+
+	
 </script>
 
 <body>
 	<jsp:include page="publicHead_print_webfactorder.jsp" />
 	<hr />
 	<s:if test='#session.loginUser.userread!="1"'>
-	<input value="添加" type="button" id="addbtn"
-		onclick="javascript:location.href='saveAndUpdate/WebProdutedSaveOrUpdate.jsp'" />
+	<form  method="post" enctype="multipart/form-data" id="upload_form">
+	  <input type="file" name="file" style="width:150px" id="id_file"/>
+	  <input value="導入Excel" type="submit" id="search_forday"  />	
+	</form>
+	<input value="添加" type="button" id="addbtn" onclick="javascript:location.href='saveAndUpdate/WebProdutedSaveOrUpdate.jsp'" />
+	
 	</s:if>	
 	<div id="bodyid">
 		<jsp:include page="table1/webfactOrder1.jsp" />

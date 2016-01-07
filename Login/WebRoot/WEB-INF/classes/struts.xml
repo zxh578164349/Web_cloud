@@ -715,6 +715,9 @@
 		   <result name="findFactSname" type="json">
 		      <param name="root">jsons</param>
 		   </result>
+		   <result name="importExcel" type="json">
+		       <param name="root">ajaxResult</param>
+		   </result>
 		</action>
 		<action name="bussletter_*" class="webbussletterAction" method="{1}">
 		   <result name="beanList">page/webbussletter.jsp</result>

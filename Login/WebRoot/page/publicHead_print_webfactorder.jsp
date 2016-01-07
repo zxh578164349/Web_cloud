@@ -19,12 +19,6 @@
 <script type="text/javascript" src="jquery/DatePicker/WdatePicker.js"></script>
 <script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script>
 
-<script type="text/javascript" src="jquery_alert_dialogs/jquery.js"></script>
-<script type="text/javascript" src="jquery_alert_dialogs/jquery.alerts.js"></script>	
-<link rel="stylesheet" type="text/css" href="jquery_alert_dialogs/jquery.alerts.css" />	
-<script type="text/javascript" src="jquery_alert_dialogs/jquery.ui.draggable.js"></script>	
-<link rel="stylesheet" type="text/css" href="jquery/loding/ui.loading.css" />	
-<script type="text/javascript" src="jquery/loding/ui.loading.js"></script>
 <script type="text/javascript">
  
 //var jq=jQuery.noConflict();
@@ -133,12 +127,15 @@ window.onload=function(){
 }
 </script>
 
-
+<style type="text/css">
+.td_right{text-align:right}
+</style>
 </head>
 <body>
-  <div style="width:1000px">
+  <div style="width:850px;border:1px solid grey;text-align:center">
+  <font><b>綜合搜索</b></font>
   <form id="public_form" method="post">
-	<table  border="0px">
+	<table  >
 		<tr>
 			<td>廠別</td>
 			<%--<td>
@@ -151,7 +148,7 @@ window.onload=function(){
 				  <div><input type="checkbox" id="all_factSname" onclick="selectAll('all_factSname','factSnames')"/>全选</div><hr/>				   
 				</div>				
 			</td>
-			<td>部件</td>
+			<td class="td_right">部件</td>
 		    <td>		       
 				<div id="div_component" style="width:400px;height:250px;overflow:auto;border:1px dashed green">
 				  <div><input type="checkbox" id="all_component" onclick="selectAll('all_component','components')"/>全选</div><hr/>	
@@ -165,7 +162,7 @@ window.onload=function(){
 		         <div><input type="checkbox" id="all_brank" onclick="selectAll('all_brank','branks')"/>全选</div><hr/>
 			   </div>				
 		    </td>
-		    <td>客户</td>
+		    <td class="td_right">客户</td>
 		    <td>
 		       <div id="div_customer" style="width:400px;height:250px;overflow:auto;border:1px dashed green">
 		         <div><input type="checkbox" id="all_customer" onclick="selectAll('all_customer','customers')"/>全选</div><hr/>
@@ -182,25 +179,34 @@ window.onload=function(){
 		         <div><input type="checkbox" id="all_model" onclick="selectAll('all_model','models')"/>全选</div><hr/>
 			   </div>
 		    </td>
-		    <td>年份</td>
+		    <td class="td_right">年份</td>
 			<td>
-			  <select name="year" >
-			     <option value="2015">2015</option>
-			     <option value="2014">2014</option>
-			  </select>			  			
+			   <div id="div_year" style="width:400px;height:250px;overflow:auto;border:1px dashed green;vertical-align:middle">
+			    <select name="year" >
+			       <option value="2015">2018</option>
+			       <option value="2014">2017</option>
+			       <option value="2014">2016</option>
+			       <option value="2015" selected>2015</option>
+			       <option value="2015">2014</option>
+			       <option value="2015">2013</option>
+			     </select>
+			     <input value="搜索" type="button" id="addbtn" onclick="javascript:submis('public_form')" />
+			     <input value="導出Excel" type="button" id="search_forday" onclick="print('public_form')"/>	
+			   </div>
+		  			
 			</td>
 		    </tr>
 			<%--<td>年月</td>
 			<td>
 			  開始日期:<input type="text" id="year" name="yymm" onClick="WdatePicker({dataFmt:'yyyyMM'})" readonly="readonly" class="Wdate"/></br>
 			  結束日期:<input type="text" id="year" name="yymm2" onClick="WdatePicker({dataFmt:'yyyyMM'})" readonly="readonly" class="Wdate"/>			
-			</td>--%>
+			</td>
 			<tr>
 			<td colspan="6">
 			   <input value="搜索" type="button" id="addbtn" onclick="javascript:submis('public_form')" />
 			   <input value="導出Excel" type="button" id="search_forday" onclick="print('public_form')"/>	
 		    </td>
-		    </tr>
+		    </tr>--%>
 		
 	</table>
 	</form>
