@@ -126,8 +126,12 @@ jq(function(){
 	        		//location.href="/Login/kyz_findPageBean";
 	        	}else if(data=="1"){
 	        		layer.msg("僅允許導入Excel文檔",3,3);
+	        	}else if(data=="2"){
+	        		layer.msg("導入失敗",3,3);
+	        	}else if(data=="3"){
+	        	    layer.msg("Excel文檔結構不符合要求，禁止導入",3,3);
 	        	}else{
-	        		alert(data);
+	        	     alert(data);
 	        	}		        	       	    									
 	         }		         
 	};

@@ -71,7 +71,7 @@ public class WebFactorderDaoImpl extends Basedao implements IWebFactorderDao{
 	}
 
 
-	public PageBean findPageBean(int pageSize, int page, List<String> factNos,
+	public PageBean findPageBean(int pageSize, int page, List<String> factSnames,
 			List<String>brank, List<String>customer, List<String>model, List<String>component) {
 		// TODO Auto-generated method stub
 		//System.out.println(factNos.getClass().getName());
@@ -80,9 +80,9 @@ public class WebFactorderDaoImpl extends Basedao implements IWebFactorderDao{
 		Map<String,Object>map=new HashMap<String,Object>();
 		hql.append("from WebFactorder where 1=1 ");
 		hql2.append("select count(*) ");
-		if(factNos!=null&&factNos.size()>0){
-			hql.append(" and factNo in (:factnos)");
-			map.put("factnos", factNos);
+		if(factSnames!=null&&factSnames.size()>0){
+			hql.append(" and factSname in (:factsnames)");
+			map.put("factsnames", factSnames);
 		}
 		if(brank!=null&&brank.size()>0){
 			hql.append(" and brank in(:brank) ");
@@ -162,16 +162,16 @@ public class WebFactorderDaoImpl extends Basedao implements IWebFactorderDao{
 	}
 
 
-	public List<WebFactorder> findWithNoPage(List<String> factNos,
+	public List<WebFactorder> findWithNoPage(List<String> factSnames,
 			List<String> brank, List<String> customer, List<String> model,
 			List<String> component,String yymm) {
 		// TODO Auto-generated method stub
 		StringBuffer hql=new StringBuffer();
 		Map<String,Object>map=new HashMap<String,Object>();
 		hql.append("from WebFactorder where 1=1 ");
-		if(factNos!=null&&factNos.size()>0){
-			hql.append(" and factNo in (:factnos)");
-			map.put("factnos", factNos);
+		if(factSnames!=null&&factSnames.size()>0){
+			hql.append(" and factSname in (:factsnames)");
+			map.put("factsnames", factSnames);
 		}
 		if(brank!=null&&brank.size()>0){
 			hql.append(" and brank in(:brank) ");
@@ -202,12 +202,12 @@ public class WebFactorderDaoImpl extends Basedao implements IWebFactorderDao{
 	 * 如果大於12，證明數據有重複
 	 * 如果小於12，需要補全
 	 */
-	public int findMonthData(String factNo, String brank, String customer,
+	public int findMonthData(String factSname, String brank, String customer,
 			String model, String component, String year) {
 		// TODO Auto-generated method stub
-		String hql="select count(orderId) from WebFactorder where factNo=? and brank=? and customer=? and modelNo=? and component=? and yymm like ?";
+		String hql="select count(orderId) from WebFactorder where factSname=? and brank=? and customer=? and modelNo=? and component=? and yymm like ?";
 		Query query=getSession().createQuery(hql);
-		query.setString(0, factNo);
+		query.setString(0, factSname);
 		query.setString(1, brank);
 		query.setString(2, customer);
 		query.setString(2, model);

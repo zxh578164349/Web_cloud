@@ -60,8 +60,8 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 	private File file;
     private String fileFileName;
     private String fileContentType;
-    private String ajaxResult;//申請函文時返回的ajax結果,   0:提交成功       1:提交失敗
-    
+    private String ajaxResult;//申請函文時返回的ajax結果,   0:提交成功       1：上传的文档格式不符合要求   2：excel导入失败     3：excel数据格式不符合要求
+     
     
 	public String getAjaxResult() {
 		return ajaxResult;
@@ -200,7 +200,9 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 		this.response=response;
 	}
 	public String importExcel() throws IOException{
+		String path="d:\\Webfactorder_backup\\"+new SimpleDateFormat("yyyyMMdd").format(new Date());//Excel文檔存放目錄
 		String result="importExcel";
+		ajaxResult="0";
 		/*String path="d:\\北越&鞋塑2015接單匯總-1201.xls";
 		List<String>list_all=ImportExcel.exportListFromExcel(new File(path), 1);
 		webfactorderSer.addLarge(list_all);*/
@@ -227,7 +229,7 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 		/*文件上傳*/
 		if(file!=null){//不為空代表有上傳附檔,不能寫成files.size()>0,否則報空指針
 			//File uploadFile=new File(ServletActionContext.getServletContext().getRealPath("KyzexpFile\\"+kyz.getId().getBillNo()));//附檔上傳到項目
-			File uploadFile_backup=new File("d:\\Webfactorder_backup\\"+new SimpleDateFormat("yyyyMMdd").format(new Date()));//附檔上傳到D盤(為了避免更新項目時丟失附檔,所在上傳到D盤)
+			File uploadFile_backup=new File(path);//附檔上傳到D盤(為了避免更新項目時丟失附檔,所在上傳到D盤)
 			/*if(!uploadFile.exists()){
 				uploadFile.mkdirs();
 			}*/
@@ -243,49 +245,57 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 						out_backup.write(b,0,length);//備份
 					}																																				
 		}
-		ajaxResult="0";
-		String path=uploadFile_backup+"\\"+fileFileName;
-		List<String>list_all=ImportExcel.exportListFromExcel(new File(path), 1);
+		
+		List<String>list_all=ImportExcel.exportListFromExcel(new File(path+"\\"+fileFileName), 1);
+		if(list_all.size()>0){
+			try{
+				webfactorderSer.addLarge(list_all);
+			}catch(Exception e){
+				ajaxResult="2";//导入Excel失败
+			}
+		}else{
+			ajaxResult="3";//Excel数据结构不符合要求,不允许导入
+		}
 		return result;
 	}
 	public String findPageBean(){
 		
 		//System.out.println(factNos.getClass().getName());
 		ActionContext.getContext().getSession().remove("allrow");//首次進入，清除分頁的總條數（dao層中的allrow）
-		ActionContext.getContext().getSession().remove("public_factnos");
+		ActionContext.getContext().getSession().remove("public_factnames");
 		ActionContext.getContext().getSession().remove("public_factno");
 		ActionContext.getContext().getSession().remove("public_brank");
 		ActionContext.getContext().getSession().remove("public_customer");
 		ActionContext.getContext().getSession().remove("public_model");
 		ActionContext.getContext().getSession().remove("public_component");
-		bean=webfactorderSer.findPageBean(25, page, factNos, branks, customers, models, components);
+		bean=webfactorderSer.findPageBean(25, page, factSnames, branks, customers, models, components);
 		return "beanList";
 		
 	}
 	public String findPageBean2(){
 		//System.out.println(factNos.getClass().getName());//com.opensymphony.xwork2.util.XWorkList
 		ActionContext.getContext().getSession().remove("allrow");//條件查詢，清除分頁的總條數（dao層中的allrow）
-		/*ActionContext.getContext().getSession().remove("public_factnos");
+		/*ActionContext.getContext().getSession().remove("public_factnames");
 		ActionContext.getContext().getSession().remove("public_brank");
 		ActionContext.getContext().getSession().remove("public_customer");
 		ActionContext.getContext().getSession().remove("public_model");
 		ActionContext.getContext().getSession().remove("public_component");*/
 		
-		ActionContext.getContext().getSession().put("public_factnos",factNos);
+		ActionContext.getContext().getSession().put("public_factnames",factSnames);
 		ActionContext.getContext().getSession().put("public_brank",branks);
 		ActionContext.getContext().getSession().put("public_customer",customers);
 		ActionContext.getContext().getSession().put("public_model",models);
 		ActionContext.getContext().getSession().put("public_component",components);
-		bean=webfactorderSer.findPageBean(25, page, factNos, branks, customers, models, components);
+		bean=webfactorderSer.findPageBean(25, page, factSnames, branks, customers, models, components);
 		return "beanList1";
 	}
 	public String findPageBean3(){
-		factNos=(List<String>)ActionContext.getContext().getSession().get("public_factnos");
+		factNos=(List<String>)ActionContext.getContext().getSession().get("public_factnames");
 		branks=(List<String>)ActionContext.getContext().getSession().get("public_brank");
 		customers=(List<String>)ActionContext.getContext().getSession().get("public_customer");
 		models=(List<String>)ActionContext.getContext().getSession().get("public_model");
 		components=(List<String>)ActionContext.getContext().getSession().get("public_component");
-		bean=webfactorderSer.findPageBean(25, page, factNos, branks, customers, models, components);
+		bean=webfactorderSer.findPageBean(25, page, factSnames, branks, customers, models, components);
 		return "beanList1";
 	}
 	
@@ -450,7 +460,7 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 	 */
 	public void print3() throws IOException{
 		List<Object[]>list=webfactorderSer.findWebFactorder(factSnames, branks, customers, models, components, year);
-		List<WebFactorder>list2=webfactorderSer.findWithNoPage(factNos, branks, customers, models, components,year);
+		List<WebFactorder>list2=webfactorderSer.findWithNoPage(factSnames, branks, customers, models, components,year);
 		List<List<WebFactorder>>list_all=new ArrayList<List<WebFactorder>>();
 		for(int i=0;i<list.size();i++){//for1
 			List<WebFactorder>list_one=new ArrayList<WebFactorder>();
