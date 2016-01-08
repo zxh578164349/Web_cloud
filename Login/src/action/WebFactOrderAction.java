@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
@@ -21,6 +22,7 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
+import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.ServletResponseAware;
 
 import net.sf.json.JSONArray;
@@ -208,15 +210,15 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 		webfactorderSer.addLarge(list_all);*/
 		
 		/*文件上傳驗證*/
-		if(file!=null){							
+		/*if(file!=null){							
 					
 					String filetype=fileFileName.substring(fileFileName.lastIndexOf(".")).toLowerCase();
-					/*long filesize=file.length();
+					long filesize=file.length();
 					if(filesize>5120000){
 						response.setContentType("text/html;charset=utf-8");
 						response.getWriter().print("<script>alert('文件不可超過5M!');window.opener=null;window.open('','_self');window.close()</script>");
 						return null;
-					}*/
+					}
 					if(!filetype.equals(".xls")&&!filetype.equals(".xlsx")){
 						response.setContentType("text/html;charset=utf-8");
 						//response.getWriter().print("<script>alert('只允許上傳Excel文檔!');window.opener=null;window.open('','_self');window.close()</script>");
@@ -225,7 +227,8 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 						return result;
 						
 					}												
-		}
+		}*/
+		
 		/*文件上傳*/
 		if(file!=null){//不為空代表有上傳附檔,不能寫成files.size()>0,否則報空指針
 			//File uploadFile=new File(ServletActionContext.getServletContext().getRealPath("KyzexpFile\\"+kyz.getId().getBillNo()));//附檔上傳到項目
@@ -246,16 +249,23 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 					}																																				
 		}
 		
-		List<String>list_all=ImportExcel.exportListFromExcel(new File(path+"\\"+fileFileName), 1);
-		if(list_all.size()>0){
-			try{
-				webfactorderSer.addLarge(list_all);
-			}catch(Exception e){
-				ajaxResult="2";//导入Excel失败
+		
+		/*******************數據導入到數據庫********************/
+		try{
+			List<String>list_all=ImportExcel.exportListFromExcel(new File(path+"\\"+fileFileName), 0);
+			if(list_all.size()>0){
+				try{
+					webfactorderSer.addLarge(list_all);
+				}catch(Exception e){
+					ajaxResult="2";//导入Excel失败
+				}
+			}else{
+				ajaxResult="3";//Excel数据结构不符合要求,不允许导入
 			}
-		}else{
-			ajaxResult="3";//Excel数据结构不符合要求,不允许导入
+		}catch(Exception e){
+			ajaxResult="2";//导入Excel失败
 		}
+		/*******************數據導入到數據庫********************/
 		return result;
 	}
 	public String findPageBean(){
@@ -495,17 +505,31 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 		
 		// 紅字體
 		HSSFCellStyle cs_font_red = wb.createCellStyle();
-		HSSFFont font = wb.createFont();
-		font.setFontHeightInPoints((short) 10);
-		font.setBoldweight(HSSFFont.BOLDWEIGHT_NORMAL);
-		font.setColor(HSSFFont.COLOR_RED);
-		cs_font_red.setFont(font);
+		HSSFFont font_red = wb.createFont();
+		font_red.setFontHeightInPoints((short) 10);
+		font_red.setBoldweight(HSSFFont.BOLDWEIGHT_NORMAL);
+		font_red.setColor(HSSFFont.COLOR_RED);
+		cs_font_red.setFont(font_red);
 		cs_font_red.setAlignment(HSSFCellStyle.ALIGN_CENTER);
 		cs_font_red.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
 		cs_font_red.setBorderBottom(HSSFCellStyle.BORDER_THIN);
 		cs_font_red.setBorderLeft(HSSFCellStyle.BORDER_THIN);
 		cs_font_red.setBorderRight(HSSFCellStyle.BORDER_THIN);
 		cs_font_red.setBorderTop(HSSFCellStyle.BORDER_THIN);
+		
+		// 藍字體
+		HSSFCellStyle cs_font_blue = wb.createCellStyle();
+		HSSFFont font_blue = wb.createFont();
+		font_blue.setFontHeightInPoints((short) 10);
+		font_blue.setBoldweight(HSSFFont.BOLDWEIGHT_NORMAL);
+		font_blue.setColor(IndexedColors.BLUE.getIndex());
+		cs_font_blue.setFont(font_blue);
+		cs_font_blue.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		cs_font_blue.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		cs_font_blue.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+		cs_font_blue.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+		cs_font_blue.setBorderRight(HSSFCellStyle.BORDER_THIN);
+		cs_font_blue.setBorderTop(HSSFCellStyle.BORDER_THIN);
 		
 		//表頭樣式
 		HSSFCellStyle cs_head = wb.createCellStyle();
@@ -546,9 +570,14 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 				sheet.getRow(i).getCell(3).setCellValue("模具");
 				sheet.getRow(i).getCell(4).setCellValue("部件");				
 				for(int k=0;k<12;k++){
-					sheet.getRow(i).getCell(5+k).setCellValue(year+(k+1));
+					if(k+1<10){
+						sheet.getRow(i).getCell(5+k).setCellValue(year+"0"+(k+1));
+					}else{
+						sheet.getRow(i).getCell(5+k).setCellValue(year+(k+1));
+					}					
 				}
-				for(int l=0;l<17;l++){
+				sheet.getRow(i).getCell(17).setCellValue("匯總");
+				for(int l=0;l<18;l++){
 					sheet.getRow(i).getCell(l).setCellStyle(cs_head);
 				}
 			}										
@@ -561,25 +590,47 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 			sheet.getRow(i+2).getCell(2).setCellValue(list.get(i)[3].toString());
 			sheet.getRow(i+2).getCell(3).setCellValue(list.get(i)[4].toString());
 			sheet.getRow(i+2).getCell(4).setCellValue(list.get(i)[5].toString());
+			double row_total=0.0;
 			if(list_all.get(i).size()==12){
 				for(int j=0;j<list_all.get(i).size();j++){
-					sheet.getRow(i+2).getCell(5+j).setCellValue(list_all.get(i).get(j).getOrderData());					
+					sheet.getRow(i+2).getCell(5+j).setCellValue(list_all.get(i).get(j).getOrderData());
+					row_total=row_total+list_all.get(i).get(j).getOrderData();															
 				}
 			}
 			if(list_all.get(i).size()<12){
-				for(int j=0;j<list_all.get(i).size();j++){
-					sheet.getRow(i+2).getCell(5+j).setCellValue(list_all.get(i).get(j).getOrderData());					
+				for(int j=0;j<12;j++){
+					try{
+						sheet.getRow(i+2).getCell(5+j).setCellValue(list_all.get(i).get(j).getOrderData());
+					}catch(Exception e){
+						sheet.getRow(i+2).getCell(5+j).setCellValue("無數據");
+						sheet.getRow(i+2).getCell(5+j).setCellStyle(cs_font_red);
+					}					
+					row_total=row_total+list_all.get(i).get(j).getOrderData();					
 				}
 			}
 			if(list_all.get(i).size()>12){
-				for(int j=0;j<list_all.get(i).size();j++){
+				for(int j=0;j<12;j++){
 					sheet.getRow(i+2).getCell(5+j).setCellValue(list_all.get(i).get(j).getOrderData());	
-					sheet.getRow(i+2).getCell(5+j).setCellStyle(cs_font_red);
+					sheet.getRow(i+2).getCell(5+j).setCellStyle(cs_font_blue);
+					row_total=row_total+list_all.get(i).get(j).getOrderData();
 				}
+				sheet.getRow(i+2).getCell(18).setCellValue("(數據存在重複)");
+				sheet.getRow(i+2).getCell(18).setCellStyle(cs_font_blue);
 			}
+			sheet.getRow(i+2).getCell(17).setCellValue(row_total);			
 			
 		}
-		OutputStream os=new FileOutputStream("d:\\tttttt.xls");
+		//OutputStream os=new FileOutputStream("d:\\tttttt.xls");
+		ServletOutputStream os=response.getOutputStream();
+		response.setContentType("application/vnd.ms-excel");
+		String fileName="fact_report_2015.xls";
+		int msi=ServletActionContext.getRequest().getHeader("USER-AGENT").toLowerCase().indexOf("msie");
+		if(msi>0){
+			fileName=java.net.URLEncoder.encode(fileName,"utf-8");
+		}else{
+			fileName=new String(fileName.getBytes("utf-8"),"iso-8859-1");
+		}
+		response.setHeader("Content-disposition", "attachment;filename="+fileName);
 		wb.write(os);
 		os.close();
 		

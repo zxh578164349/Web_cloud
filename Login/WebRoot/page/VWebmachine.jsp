@@ -158,7 +158,7 @@ function test(factcode_obj){  //jquery获取复选框值
        </table>
     </form>
      <hr>
-    <form action="vwebmachine_print_month" method="post" id="subform2">
+    <form action="vwebmachine_print_month" method="post" id="subform2" target="_blank">
       <table>
          <tr>
           <td>(分段)</td>
@@ -192,7 +192,7 @@ function test(factcode_obj){  //jquery获取复选框值
     
     <s:if test="#session.factNo=='tw'">
     <hr>
-    <form action="vwebmachine_print_tw_xlsx" method="post" id="subform3">
+    <form action="vwebmachine_print_tw_xlsx" method="post" id="subform3" target="_blank">
         <table>
           <caption>分形態損益表-台灣</caption>
           <tr>

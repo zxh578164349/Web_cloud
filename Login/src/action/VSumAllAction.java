@@ -1373,7 +1373,7 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 				list_column.add(webfact);
 				list_column_factno.add(factNo);
 				if(a==list_factno.size()-1){
-					list_column.add("�X�p");
+					list_column.add("合計");
 				}
 			}
 		//如果沒有選擇,則默認全部廠別

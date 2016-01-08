@@ -60,9 +60,10 @@
 				<th>客戶</th>
 				<th>部件</th>
 				<th>數據</th>			
-				<s:if test='#session.loginUser.userread!="1"'>
+				<%-- <s:if test='#session.loginUser.userread!="1"'>
 				<th>操作</th>
 				</s:if>
+				--%>
 			</tr>
 		</thead>
 		<tbody id="tbody">
@@ -84,7 +85,7 @@
 				<%--<td><s:property value="%{formatDouble(innum)}" /></td>--%>					
 				<td><s:property value="orderData"/></td>
 				
-				<s:if test='#session.loginUser.userread!="1"'>
+				<%-- <s:if test='#session.loginUser.userread!="1"'>
 				<td>
 					<form action="webProduted_findProdutedById" method="post"
 						id="subform${x.index}">
@@ -106,7 +107,7 @@
 					</form> <a href="javascript:void(0)"
 					onclick="isDelete('2subform${x.index}')"><img alt="刪除" src="images/icon/delete001.png" title="刪除"></a>
 					</td>
-					</s:if>
+				</s:if>--%>
 			</tr>
 		</s:iterator>
 		</tbody>

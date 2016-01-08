@@ -99,7 +99,7 @@ public class KyVisabillsDaoImpl extends Basedao implements IKyVisaBillsDao{
 		}*/
 		
 		//hql.append(" and flowMk='Y'");
-		hql.append(" and substr(id.kyVisabillm.id.billNo,0,2) in ('CM','EM')");
+		hql.append(" and substr(id.kyVisabillm.id.billNo,0,2) in ('CM','EM','BM')");
 		hql2.append(hql);
 		hql.append(" order by id.kyVisabillm.id.factNo desc,id.kyVisabillm.dateCreate desc");
 		if(rows!=null&&page>0){
@@ -261,7 +261,7 @@ public class KyVisabillsDaoImpl extends Basedao implements IKyVisaBillsDao{
 			}			
 		}
 		
-		hql.append(" and substr(id.kyVisabillm.id.billNo,0,2) in ('CM','EM')");	
+		hql.append(" and substr(id.kyVisabillm.id.billNo,0,2) in ('CM','EM','BM')");	
 		hql2.append(hql);
 		hql.append(" order by id.kyVisabillm.id.factNo desc,id.kyVisabillm.dateCreate desc");
 		
@@ -316,7 +316,7 @@ public class KyVisabillsDaoImpl extends Basedao implements IKyVisaBillsDao{
 				" or id.kyVisabillm.id.visaSort like 'C1%' or id.kyVisabillm.id.visaSort like 'C2%'" +
 				" or id.kyVisabillm.id.visaSort like 'C3%' or id.kyVisabillm.id.visaSort like 'C4%')");*/	
 		//hql.append(" and substr(id.kyVisabillm.id.visaSort,0,2) in('F','W','G','I','L','P','Q','B','O','S','T','Y','Z','C1','C2','C3','C4','C5','C6')");
-		hql.append(" and substr(id.kyVisabillm.id.billNo,0,2) in ('CM','EM')");
+		hql.append(" and substr(id.kyVisabillm.id.billNo,0,2) in ('CM','EM','BM')");
 		int result=super.getAllRowCount(hql.toString(), map);
 		return result;
 	}

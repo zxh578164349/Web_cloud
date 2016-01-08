@@ -107,10 +107,16 @@
 	
 function checkForm(){
 	var id_file=jq("#id_file").val();
+	var extendName=id_file.substr(id_file.lastIndexOf(".")).toLowerCase();
+	alert(extendName);
 	if(id_file==""){
 		layer.alert("請選擇Excel文檔");
 		return false;
+	}else if(extendName!=".xls"&&extendName!=".xlsx"){
+		layer.alert("請選擇Excel文檔");
+		return false;
 	}
+	
 	return true;
 }
 
@@ -149,11 +155,12 @@ jq(function(){
 	<jsp:include page="publicHead_print_webfactorder.jsp" />
 	<hr />
 	<s:if test='#session.loginUser.userread!="1"'>
-	<form  method="post" enctype="multipart/form-data" id="upload_form">
-	  <input type="file" name="file" style="width:150px" id="id_file"/>
-	  <input value="導入Excel" type="submit" id="search_forday"  />	
+	<form  method="post" enctype="multipart/form-data" id="upload_form">	  
+	       <input type="file" name="file" style="width:150px" id="id_file"/>
+	       <input value="導入Excel" type="submit" id="search_forday"  />	     	
 	</form>
-	<input value="添加" type="button" id="addbtn" onclick="javascript:location.href='saveAndUpdate/WebProdutedSaveOrUpdate.jsp'" />
+	<hr/>
+	<%-- <input value="添加" type="button" id="addbtn" onclick="javascript:location.href='saveAndUpdate/WebProdutedSaveOrUpdate.jsp'" />--%>
 	
 	</s:if>	
 	<div id="bodyid">
