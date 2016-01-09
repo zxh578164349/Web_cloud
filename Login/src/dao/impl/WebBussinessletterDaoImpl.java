@@ -69,4 +69,24 @@ public class WebBussinessletterDaoImpl extends Basedao implements IWebBussinessl
 		return (String)query.uniqueResult();
 	}
 
+	public WebBussinessletter findById(String billNo) {
+		// TODO Auto-generated method stub
+		String hql="from WebBussinessletter where blNo=?";
+		Query query=getSession().createQuery(hql);
+		query.setString(0, billNo);
+		return (WebBussinessletter)query.uniqueResult();
+	}
+
+	public void delete(WebBussinessletter letter) {
+		// TODO Auto-generated method stub
+		super.delete(letter);
+		
+	}
+
+	public void delete(String billNo) {
+		// TODO Auto-generated method stub
+		WebBussinessletter letter=this.findById(billNo);
+		super.delete(letter);
+	}
+
 }

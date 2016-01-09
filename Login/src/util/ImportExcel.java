@@ -49,18 +49,30 @@ public class ImportExcel {
 
 		List<String> list = new ArrayList<String>();
 
-		int minRowIx = sheet.getFirstRowNum()+1;
+		//int minRowIx = sheet.getFirstRowNum()+1;
+		int row_head = sheet.getFirstRowNum()+1;
 		int maxRowIx = sheet.getLastRowNum();//getLastRowNum獲取的行數比實際行數少1
-		for (int rowIx = minRowIx; rowIx <= maxRowIx; rowIx++) {//注意：rowIx <= maxRowIx
+		for (int rowIx = row_head; rowIx <= maxRowIx; rowIx++) {//注意：rowIx <= maxRowIx
 			Row row = sheet.getRow(rowIx);
 			StringBuilder sb = new StringBuilder();
+			//不允許表頭爲空行null
+			if(row==null){
+				list.clear();
+				break;
+			}
 			short minColIx = row.getFirstCellNum();
 			short maxColIx = row.getLastCellNum();//getLastCellNum獲取到實際列數
 			if(maxColIx-minColIx!=18){
 				list.clear();
 				break;
 			}
-			if(!sheet.getRow(minRowIx).getCell(minColIx).toString().equals("廠別")&&!sheet.getRow(minRowIx).getCell(minColIx).toString().equals("厂别")){
+			
+			if(!sheet.getRow(row_head).getCell(minColIx).toString().equals("廠別")&&
+					!sheet.getRow(row_head).getCell(minColIx).toString().equals("厂别")&&
+					!sheet.getRow(row_head+1).getCell(minColIx).toString().equals("品牌")&&
+					!sheet.getRow(row_head+2).getCell(minColIx).toString().equals("客戶")&&
+					!sheet.getRow(row_head+3).getCell(minColIx).toString().equals("模具")&&
+					!sheet.getRow(row_head+4).getCell(minColIx).toString().equals("部件")){
 				list.clear();
 				break;
 			}

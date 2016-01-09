@@ -151,7 +151,7 @@ table{width:700px
        </table>
     </form>
     <hr>
-    <form action="vsumall_print_month" method="post" id="subform2">
+    <form action="vsumall_print_month" method="post" id="subform2" target="_blank">
       <table>
          <tr>
           <td>(分段)</td>
@@ -185,7 +185,7 @@ table{width:700px
     
     <s:if test='#session.factNo=="tw"'>
     <hr>
-    <form action="vsumall_print_tw" method="post" id="subform3">
+    <form action="vsumall_print_tw" method="post" id="subform3" target="_blank">
         <table>
           <caption>全廠損益表-台灣</caption>
           <tr>

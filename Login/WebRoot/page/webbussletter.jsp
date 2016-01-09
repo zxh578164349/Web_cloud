@@ -51,7 +51,7 @@
 		jq.ajax({
 			type : "POST",
 			dataType : "Html",
-			url : "kyzletter_findPageBean3",
+			url : "bussletter_findPageBean3",
 			data : "page=" + page,
 			success : function(msg) {
 				jq("#bodyid").html(msg);
@@ -72,7 +72,7 @@
 		jq.ajax({
 			type : "POST",
 			dataType : "Html",
-			url : "kyzletter_findPageBean2",
+			url : "bussletter_findPageBean2",
 			data : "factNo=" + fact.value + "& visaSort=" + visasort.value+"& billNo="+billno.value+"& yymmdd="+yymmdd.value+"& yymmdd2="+yymmdd2.value,
 			success : function(msg) {
 				jq("#bodyid").html(msg);
@@ -92,7 +92,7 @@
 				   type:"POST",
 				   dataType:"html",
 				   data:jq('#'+mid).serialize(),
-				   url:"kyzletter_delete",
+				   url:"bussletter_delete",
 				   success:function(msg){
 				      jq("#bodyid").html(msg);
 				   },

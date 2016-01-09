@@ -18,6 +18,7 @@ public class WebFactorder implements java.io.Serializable {
 	private String yymm;
 	private String factNo;
 	private String factArea;
+	private String colTemp;
 
 	// Constructors
 
@@ -138,5 +139,14 @@ public class WebFactorder implements java.io.Serializable {
 	public void setFactArea(String factArea) {
 		this.factArea = factArea;
 	}
+
+	public String getColTemp() {
+		return colTemp;
+	}
+
+	public void setColTemp(String colTemp) {
+		this.colTemp = colTemp;
+	}
+	
 
 }

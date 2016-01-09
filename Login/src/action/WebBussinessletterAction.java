@@ -135,6 +135,15 @@ public class WebBussinessletterAction extends ActionSupport{
 	public long sumDate(Date d1,Date d2){
 		return GlobalMethod.sumDate(d1, d2)+1;//注意，出差所用的天数为相差天数+1天
 	}
+	public String findById(){
+		webbussletterSer.findById(billNo);
+		return "findById";
+	}
+	public String delete(){
+		webbussletterSer.delete(billNo);
+		return "delete";
+	}
+	
 	
 	
 	

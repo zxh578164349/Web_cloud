@@ -59,7 +59,7 @@
     offset:['10px',''],
     area: ['820px', '560px'],
     page:{
-      url:'kyzletter_findById_layer?billNo='+billNo+'& factNo='+factNo    
+      url:'bussletter_findById_layer?billNo='+billNo+'& factNo='+factNo    
     }
     
            
@@ -121,30 +121,27 @@
 				<td>
 				
 				<s:if test='#session.loginUser.userread!="1"'>
-					<form action="kyzletter_findById" method="post" id="subform${x.index}">
+					<form action="bussletter_findById" method="post" id="subform${x.index}">
 						<input type="hidden" value="<s:property value='id.factNo'/>"
-							name="factNo" /> <input type="hidden"
-							value="<s:property value='id.billNo'/>" name="billNo" />						
+							name="factNo" /> 						
 					</form> 
-					<form action="kyzletter_delete" method="post" id="2subform${x.index}"
+					<form action="bussletter_delete" method="post" id="2subform${x.index}"
 						style="float:left">
 						<input type="hidden" value="<s:property value='id.factNo'/>"
-							name="factNo" /> <input type="hidden"
-							value="<s:property value='id.billNo'/>" name="billNo" />
-							<input type="hidden" value="<s:property value='visaType'/>" name="visaSort"/>						
+							name="factNo" /> 						
 					</form>
 					  <a href="javascript:layer.load(0);document.getElementById('subform${x.index}').submit()" onclick=""><img alt="修改" src="images/icon/edit001.png" title="修改" ></a>						  																									
 					  <a href="javascript:void(0)" onclick="isDelete('2subform${x.index}')"><img alt="刪除" src="images/icon/delete001.png" title="刪除" ></a>										
 					 </s:if>
 					 
-					  <form action="kyzletter_print2" method="post" id="3subform${x.index}" style="float:left" target="_blank">
+					  <form action="bussletter_print2" method="post" id="3subform${x.index}" style="float:left" target="_blank">
 						<input type="hidden" value="<s:property value='id.factNo'/>" name="factNo" />
 						<input type="hidden" value="<s:property value='id.billNo'/>" name="billNo" />							
 						<input type="hidden" value="<s:property value='factCode'/>" name="factCode"/>
 						<input type="hidden" value="<s:property value='visaType'/>" name="visaSort"/>
 						<input type="hidden" value="look" name="lookordown"/>											
 					  </form>
-					   <form action="kyzletter_print2" method="post" id="4subform${x.index}" style="float:left" target="_blank">
+					   <form action="bussletter_print2" method="post" id="4subform${x.index}" style="float:left" target="_blank">
 						<input type="hidden" value="<s:property value='id.factNo'/>" name="factNo" />
 						<input type="hidden" value="<s:property value='id.billNo'/>" name="billNo" />							
 						<input type="hidden" value="<s:property value='factCode'/>" name="factCode"/>

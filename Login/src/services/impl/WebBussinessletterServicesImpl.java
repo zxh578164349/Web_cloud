@@ -45,4 +45,19 @@ public class WebBussinessletterServicesImpl implements IWebBussinessletterServic
 		return maxbillno.toString();
 	}
 
+	public WebBussinessletter findById(String billNo) {
+		// TODO Auto-generated method stub
+		return webbussletterdao.findById(billNo);
+	}
+
+	public void delete(WebBussinessletter letter) {
+		// TODO Auto-generated method stub
+		webbussletterdao.delete(letter);
+	}
+
+	public void delete(String billNo) {
+		// TODO Auto-generated method stub
+		webbussletterdao.delete(billNo);
+	}
+
 }
