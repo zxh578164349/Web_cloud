@@ -50,8 +50,16 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 				"*0-6" : /^\d{0,9}(\.[0-9]{1,3})?$/,
 				"my0-8": /^\d{0,8}(\.[0-9]{1,4})?$/
 			},
-			beforeSubmit:function(curform){
+			/* beforeSubmit:function(curform){
 				loadi=layer.load("正在處理,請稍等...(系統爲了節省開銷,已取消自動下載函文!)")
+			} */
+			ajaxPost:true,
+			callback:function(data){
+			   if(data=="0"){
+			      layer.msg("提交成功",3,1);
+			   }else{
+			      alert(data.responseText);
+			   }
 			}
 			
 		});
@@ -68,8 +76,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 	}
 	
 
-function makeBillNo() {
-        
+function makeBillNo() {      
 		var factno = document.getElementById("dwrFactNo").value;
 		var timecreat = document.getElementById("ymExpect").value;
 		var billnos = document.getElementById("bussletter_billno");
@@ -96,7 +103,7 @@ function getKyType(){
        }
          
      });
-	 }
+	 }else{alert();}
     
 	}
 	
@@ -200,6 +207,12 @@ function getKyType2(factno){
 		layer.load("正在返回,請稍等...");
 		location.href="/Login/bussletter_findPageBean";
 	}
+	
+jq(function(){
+   if(jq("#isNull").val()=="isNull"){
+     window.onload=getKyType(),makeBillNo();
+   }
+});	
 </script>
 <script type='text/javascript' src='/Login/dwr/interface/webbussletterjs.js'></script>
 <script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>
@@ -209,101 +222,24 @@ function getKyType2(factno){
 <script type='text/javascript' src='/Login/dwr/engine.js'></script>
 <script type='text/javascript' src='/Login/dwr/util.js'></script>
 
-<style type="text/css">
-<%--table.gridtable {
-	 font-family: verdana,arial,sans-serif;
-	 font-size:12px;
-	 border-collapse: collapse;
-     border:1px solid #d5f3f4;  
-}
-table.gridtable th {
-	border-width: 1px;
-	padding: 8px;
-	border-style: solid;
-	border-color: #666666;
-	background-color: #dedede;
-}
 
-table.gridtable td {	
-	background-color: #ffffff;	
-	font-size:12px;
-	letter-spacing:2px;	
-	color:#678197;
-    border:1px solid #d5f3f4;
-    padding:.3em 1em;
-}
-
-table caption{
-   font-size:30px;
-   margin:20px;
-}
-.bluecss{
-   font-color:blue;
-   border-color:blue;
-   background-color:blue;
-}
-#table1 input[type="text"],select{
-  width:100%;
-  background:transparent;
-  border-width:1px ;
-  border-style:solid;
-  border-color:#ffffff;
-  margin:0px;
-}
-#table2 input[type="text"],select{
-  width:100%;
-  background:transparent;
-  border-width:1px ;
-  border-style:solid;
-  border-color:#ffffff;
-  margin:0px;
-}
-textarea{
-  badkground:transparent;
-  border-width:1px;
-  border-style:solid;
-  border-color:#ffffff;
-  margin:0px;
-}
-table.gridtable td.tdcolor {
- background:#f7fbff;
-}
-
-#mydiv{
-    padding:4px;
-	top: -8px;
-	left:-8px;
-	position: absolute;
-	/* background-color:rgb(100,200,300);  */
-	filter: alpha(opacity=50);
-	/* background-color:rgba(100,200,300,0.5); */
-	background-color: black;
-	opacity: 0.5;
-	-moz-opacity:0.5;   
-    -khtml-opacity: 0.5; 
-	 display: block; 
-	 
-}
---%>
-
-</style>
 
 </head>
-<body onload="getKyType(),makeBillNo()">  
+<body >  
  
 　     
     
     <form action="bussletter_add" method="post" id="form"  enctype="multipart/form-data">   
-    <div style="overflow-y:auto;height:700px;width:100%">
+    <div style="overflow-y:auto;height:750px;width:100%">
 
-		<table class="gridtable" id="table1" style="width:900px" >
+		<table  style="width:800px;border:1px solid grey" >
 		    <caption >人員出差申請書</caption>		    	
-			<tbody id="tb_list_info2">
+			<tbody >
 				    <tr>
-				        <td class="tdcolor">所屬單位</td>
+				        <td >所屬單位</td>
 				        <td><input type="text" name="bussletter.unit" datatype="*"  value="<s:property value='bussletter.unit'/>" /></td>
 				        
-				        <td class="tdcolor">姓名</td>
+				        <td >姓名</td>
 				        <td>
 				        <s:if test="bussletter==null">
 						   <input type="text" name="bussletter.username"   value="<s:property value='#session.loginUser.name'/>" style="color:blue" readonly/>
@@ -314,14 +250,14 @@ table.gridtable td.tdcolor {
 						</td>										        				        				        				        
 				    </tr>
 				    <s:if test="bussletter==null">
-				   	<input type="hidden" name="isnull" value="isNull"/><!--判斷變量 -->					
+				   	<input type="hidden" name="isnull" value="isNull" id="isNull"/><!--判斷變量 -->					
 					<s:if test="#session.factNo!='tw'">
 					<tr>
-						<td class="tdcolor">廠別</td>
+						<td >廠別</td>
 						<td ><input type="text" style="color:blue"
 							name="bussletter.factNo" value="${factNo}" readonly id="dwrFactNo" />							
 						</td>																	
-						<td class="tdcolor">類別</td>
+						<td >類別</td>
 				        <td >
 				         <select  id="dwr_kytype" onchange="checkType(this.value)" datatype="*" style="color:blue">
 				            <option value="">請選擇</option>
@@ -333,7 +269,7 @@ table.gridtable td.tdcolor {
 				</s:if>
 				<s:if test="#session.factNo=='tw'">
 					<tr>
-						<td class="tdcolor">廠別</td>
+						<td >廠別</td>
 						<td ><select style="color:blue"
 							name="bussletter.factNo" datatype="*" id="dwrFactNo"
 							onchange="makeBillNo(),getKyType2(this.value)">
@@ -343,7 +279,7 @@ table.gridtable td.tdcolor {
 										}&nbsp;(${temp[0]})</option>
 								</s:iterator>
 						</select></td>																		
-						<td class="tdcolor">類別</td>
+						<td >類別</td>
 				        <td >
 				         <select  id="dwr_kytype" onchange="checkType(this.value)" datatype="*" style="color:blue">
 				            <option value="">請選擇</option>
@@ -356,53 +292,53 @@ table.gridtable td.tdcolor {
 				   </s:if>
 				   <s:else>
 				    <tr>
-				      <td class="tdcolor">廠別</td>				      
+				      <td >廠別</td>				      
 				      <td>
 				      <input type="text" name="bussletter.factNo" value="<s:property value='bussletter.factNo'/>" readonly style="color:blue" />
 				      <input type="hidden" name="isnull" value="notNull"/><!--判斷變量 -->
 				      </td>				     				      				     
-				      <td class="tdcolor">類別</td>
+				      <td >類別</td>
 				      <td><input type="text" value="<s:property value='bussletter.visaSort'/>" name="bussletter.visaSort" style="color:blue"  readonly/></td>
 				    </tr> 				     				     
 				   </s:else>
 				   				   				    				  			
 					<tr>
-				        <td class="tdcolor">職務</td>
+				        <td >職務</td>
 				        <td><input type="text" name="bussletter.position" datatype="*1-20"  value="<s:property value='bussletter.position'/>" /></td>
 				        
-				        <td class="tdcolor">職務代理人</td>
+				        <td >職務代理人</td>
 				        <td><input type="text" name="bussletter.GAgent" datatype="*0-50"  value="<s:property value='bussletter.GAgent'/>"/>
 				        				        
 				        </td>				        				         				        				        				        
 				    </tr>
 				    <tr>
-				      <td class="tdcolor">出差地點</td>				      
+				      <td >出差地點</td>				      
 				      <td>
 				      <input type="text" name="bussletter.address" value="<s:property value='bussletter.address'/>" />
 				      </td>				     				      				     
-				      <td class="tdcolor">出差時間</td>
+				      <td >出差開始日期<br/>出差結束日期</td>
 				      <td>
-				                      開始:<input type="text" value="<s:date name='bussletter.dateFrom' format='yyyyMMdd'/>" name="dateFrom" onclick="WdatePicker({dateFmt:'yyyyMMdd'})" class="Wdate"/>
-				                      結束:<input type="text" value="<s:date name='bussletter.dateEnd' format='yyyyMMdd'/>" name="dateEnd" onclick="WdatePicker({dateFmt:'yyyyMMdd'})" class="Wdate"/>
+				         <input type="text" value="<s:date name='bussletter.dateFrom' format='yyyyMMdd'/>" name="dateFrom" onclick="WdatePicker({dateFmt:'yyyyMMdd'})" class="Wdate"/><br/>
+				         <input type="text" value="<s:date name='bussletter.dateEnd' format='yyyyMMdd'/>" name="dateEnd" onclick="WdatePicker({dateFmt:'yyyyMMdd'})" class="Wdate"/>
 				      </td>
 				    </tr>
 				    <tr>
-				      <td class="tdcolor">去程班機時間</td>				      
+				      <td >去程班機時間</td>				      
 				      <td>
-				      <input type="text"  value="<s:date name='bussletter.timeFrom' format='yyyyMMdd-hh:mm'/>" name="timeFrom" onclick="WdatePicker({dateFmt:'yyyyMMddHHmm'})" class="Wdate"/>
+				      <input type="text"  value="<s:date name='bussletter.timeFrom' format='yyyyMMddhhmm'/>" name="timeFrom" onclick="WdatePicker({dateFmt:'yyyyMMddHHmm'})" class="Wdate"/>
 				      </td>				     				      				     
-				      <td class="tdcolor">回程班機時間</td>
-				      <td><input type="text" value="<s:date name='bussletter.timeEnd' format='yyyyMMdd-hh:mm'/>" name="timeEnd" onclick="WdatePicker({dateFmt:'yyyyMMddHHmm'})" class="Wdate"/></td>
+				      <td >回程班機時間</td>
+				      <td><input type="text" value="<s:date name='bussletter.timeEnd' format='yyyyMMddhhmm'/>" name="timeEnd" onclick="WdatePicker({dateFmt:'yyyyMMddHHmm'})" class="Wdate"/></td>
 				    </tr>  
 				   				   
 					<tr>
-					    <td class="tdcolor">出差計劃</td>	
+					    <td >出差計劃</td>	
 						<td  colspan="10">
-				           <textarea rows="15" cols="115" name="bussletter.memoMk" autofocus="autofocus" wrap="hard" wrap="physical"  tip="申請內容" altercss="gray" class="gray"><s:property value="bussletter.memoMk"/></textarea>				                                           				         				           				           				           
+				           <textarea rows="15" cols="100%" name="bussletter.planList" autofocus="autofocus" wrap="hard" wrap="physical"  tip="申請內容" altercss="gray" class="gray"><s:property value="bussletter.planList"/></textarea>				                                           				         				           				           				           
 				        </td>						
 					</tr>
 					 <tr>			    				    
-				      <td class="tdcolor">申請單號</td>				        
+				      <td >申請單號</td>				        
 				      <td>
 				        <s:if test="bussletter==null">	
 				          		<input type="text" name="bussletter.blNo" value="自動生成" readonly style="color:blue" id="bussletter_billno" datatype="*"/>
@@ -415,7 +351,7 @@ table.gridtable td.tdcolor {
 				        <input type="hidden" value="<s:property value='bussletter.filesYn'/>" name=""/>
 				        <input type="hidden" value="<s:property value='bussletter.firstPage'/>" name=""/>				       				      
 				      </td>
-				      <%--<td class="tdcolor">附档</td>
+				      <%--<td >附档</td>
 				      <td colspan="3">
 				      <div style="width:300px" id="divfile">
 				      <input type="file" name="files" style="width:150px"/><a href="javascript:addFile()">添加多個</a>
@@ -432,7 +368,7 @@ table.gridtable td.tdcolor {
 	         </s:iterator>	  
 	         </s:if>--%>
 	         <hr/> 						 
-			  <center style="width:850px;margin-left:50px">			    
+			  <center style="width:750px;margin-left:50px">			    
 				<input type="submit" id="sub" value="確定" onmouseover="this.style.backgroundPosition='left -40px'" onmouseout="this.style.backgroundPosition='left top'"/>&nbsp;&nbsp;&nbsp; <input
 					type="reset" id="reset" value="重置" onmouseover="this.style.backgroundPosition='left -40px'" onmouseout="this.style.backgroundPosition='left top'"/>
 					<input type="button" value="返回" onclick="back()" id="btn_back" onmouseover="this.style.backgroundPosition='left -40px'" onmouseout="this.style.backgroundPosition='left top'"/>					
