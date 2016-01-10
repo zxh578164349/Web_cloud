@@ -39,6 +39,7 @@ jq(document).keyup(function(event){
 </head>
 <body>
   <div style="width:680px">
+   <form id="search_form">
 	<table  border="0px">
 		<tr>
 			<td>廠別</td>
@@ -61,14 +62,18 @@ jq(document).keyup(function(event){
 					</select>
 					</div>
 				</s:else></td>
-			<td>年月</td>
-			<td><input type="text" id="year" name="yymm" 
-				onClick="WdatePicker({dataFmt:'yyyyMM'})" readonly="readonly" class="Wdate"/></td>
-			<td><!-- <input type="image" onclick="submis();" src="images/search002.gif" /> -->
-			 <input value="搜索" type="submit" id="addbtn" onclick="javascript:submis()" />	
+			<td>單號</td>
+			<td>
+			<!-- <input type="text" id="year" name="yymm" 
+				onClick="WdatePicker({dataFmt:'yyyyMM'})" readonly="readonly" class="Wdate"/> -->
+				<input type="text" name="billNo"/>
+			</td>
+			<td>
+			 <input value="搜索" type="button" id="addbtn" onclick="javascript:submis()" />	
 			</td>
 		</tr>
 	</table>
+	</form>
 	</div>
 </body>
 </html>

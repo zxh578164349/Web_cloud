@@ -464,8 +464,8 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 		map.put("pfactno", factNo);
 		map.put("pbillno",billNo);
 		map.put("title",result);
-		List<KyzExpectmats> sub_list = new ArrayList<KyzExpectmats>();		
-		KyzExpectmats temp=new KyzExpectmats();		
+		/*List<KyzExpectmats> sub_list = new ArrayList<KyzExpectmats>();		
+		KyzExpectmats temp=new KyzExpectmats();	*/	
 				
 		SimpleDateFormat format=new SimpleDateFormat("yyyyMMdd");
 		KyVisabillm vbm=visabillmSer.findById(factNo, sort, billNo);

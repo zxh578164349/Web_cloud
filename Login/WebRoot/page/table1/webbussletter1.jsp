@@ -122,33 +122,31 @@
 				
 				<s:if test='#session.loginUser.userread!="1"'>
 					<form action="bussletter_findById" method="post" id="subform${x.index}">
-						<input type="hidden" value="<s:property value='id.factNo'/>"
-							name="factNo" /> 						
+						<input type="hidden" value="<s:property value='blNo'/>"
+							name="billNo" /> 						
 					</form> 
 					<form action="bussletter_delete" method="post" id="2subform${x.index}"
 						style="float:left">
-						<input type="hidden" value="<s:property value='id.factNo'/>"
-							name="factNo" /> 						
+						<input type="hidden" value="<s:property value='blNo'/>"
+							name="billNo" /> 						
 					</form>
 					  <a href="javascript:layer.load(0);document.getElementById('subform${x.index}').submit()" onclick=""><img alt="修改" src="images/icon/edit001.png" title="修改" ></a>						  																									
 					  <a href="javascript:void(0)" onclick="isDelete('2subform${x.index}')"><img alt="刪除" src="images/icon/delete001.png" title="刪除" ></a>										
 					 </s:if>
 					 
 					  <form action="bussletter_print2" method="post" id="3subform${x.index}" style="float:left" target="_blank">
-						<input type="hidden" value="<s:property value='id.factNo'/>" name="factNo" />
-						<input type="hidden" value="<s:property value='id.billNo'/>" name="billNo" />							
-						<input type="hidden" value="<s:property value='factCode'/>" name="factCode"/>
-						<input type="hidden" value="<s:property value='visaType'/>" name="visaSort"/>
+						<input type="hidden" value="<s:property value='factNo'/>" name="factNo" />
+						<input type="hidden" value="<s:property value='blNo'/>" name="billNo" />										
+						<input type="hidden" value="<s:property value='visaSort'/>" name="visaSort"/>
 						<input type="hidden" value="look" name="lookordown"/>											
 					  </form>
 					   <form action="bussletter_print2" method="post" id="4subform${x.index}" style="float:left" target="_blank">
-						<input type="hidden" value="<s:property value='id.factNo'/>" name="factNo" />
-						<input type="hidden" value="<s:property value='id.billNo'/>" name="billNo" />							
-						<input type="hidden" value="<s:property value='factCode'/>" name="factCode"/>
-						<input type="hidden" value="<s:property value='visaType'/>" name="visaSort"/>
+						<input type="hidden" value="<s:property value='factNo'/>" name="factNo" />
+						<input type="hidden" value="<s:property value='blNo'/>" name="billNo" />							
+						<input type="hidden" value="<s:property value='visaSort'/>" name="visaSort"/>
 						<input type="hidden" value="down" name="lookordown"/>											
 					  </form>					  
-					  <a href="javascript:showDiv('<s:property value='id.billNo'/>','<s:property value='id.factNo'/>')" onclick=""><img alt="查看" src="images/icon/view002.png" title="查看" ></a>					  					  
+					  <a href="javascript:showDiv('<s:property value='visaSort'/>','<s:property value='factNo'/>')" onclick=""><img alt="查看" src="images/icon/view002.png" title="查看" ></a>					  					  
 					 <a href="javascript:document.getElementById('3subform${x.index}').submit()"><img alt="預覽" src="images/icon/view001.png" title="預覽" ></a>
 					 <a href="javascript:document.getElementById('4subform${x.index}').submit()" ><img alt="打印" src="images/icon/print001.png" title="打印" ></a>						 
 				</td>
