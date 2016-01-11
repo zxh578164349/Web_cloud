@@ -726,7 +726,8 @@
 		   <result name="delete" type="redirectAction">bussletter_findPageBean3</result>
 		   <result name="add" type="json">
 		      <param name="root">ajaxResult</param>
-		   </result>		       		
+		   </result>
+		   <result name="findById_layer">page/showwebbussletter_layer.jsp</result>		       		
 		</action>
 	</package>
 

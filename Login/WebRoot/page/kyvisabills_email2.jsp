@@ -109,6 +109,20 @@ table.altrowstable caption{
     }  */                            
 });
     }
+  function showDiv3(billNo){
+	    $.layer({
+	    type: 2,   //0-4的选择,
+	    title: '函文內容',
+	    closeBtn: [1,true],
+	    shade: [0],
+	    shadeClose: false,
+	    border: [10, 0.3, '#000'],
+	    offset:['10px',''],
+	    area: ['560px', '450px'],
+	    iframe:{src:'bussletter_findById_layer?billNo='+billNo+'& readMk=Y',scrolling:'auto'}	                                
+	});
+	    }
+  
     
     function check(factNo,visaSort,billNo,itemNo){
     $.layer({
@@ -215,7 +229,52 @@ table.altrowstable caption{
     }           
 });
     }
-    
+ function check3(factNo,visaSort,billNo,itemNo){
+	    $.layer({
+	    type: 2,   //0-4的选择,
+	    title: '函文內容',
+	    border: [10, 0.3, '#000'],
+	    closeBtn: [1,true],
+	    shade: [0],
+	    shadeClose: false,
+	     btns:2,
+	     btn:['通過','不通過'],
+	    offset:['10px',''],
+	    area: ['600px', '500px'],    
+	    iframe:{src:'bussletter_findById_layer?billNo='+billNo+'& factNo='+factNo+'& itemNo='+itemNo+'& visaSort='+visaSort+'& readMk=N',scrolling:'auto'},
+	     yes:function(){         	      
+	      /*********************** 修改2   20151025 ******************************/
+	      
+	     var memo=layer.getChildFrame("#memo_txt",layer.index).val();
+	     layer.getChildFrame("#visa_mk",layer.index).val('Y');      
+	     if(memo.length>150){
+	         alert("備註不超過150字");
+	     }else{ 
+	          window.location.href='vbm_findPageBean';             
+	         layer.getChildFrame("#memo",layer.index).submit();
+	         layer.load("正在處理，請稍等...");  
+	          
+	     } 
+	     
+	     /*********************** 修改2   20151025 ******************************/  
+	    },
+	    no:function(){
+	      //window.location.href='vbm_add?billNo='+billNo+'& visa_mk=T'+'& factNo='+factNo+'& itemNo='+itemNo+'& visaSort='+visaSort;
+	      /*********************** 修改2   20151025 ******************************/
+	     var memo=layer.getChildFrame("#memo_txt",layer.index).val();
+	     layer.getChildFrame("#visa_mk",layer.index).val('T'); 
+	     if(memo.length>150){
+	        alert("備註不可超過150字");
+	     }else{
+	         window.location.href='vbm_findPageBean';             
+	         layer.getChildFrame("#memo",layer.index).submit();
+	         layer.load("正在處理，請稍等...");   
+	     }
+
+	     /*********************** 修改2   20151025 ******************************/  
+	    }              
+	});
+	    }   
 function altRows(id){
 	if(document.getElementsByTagName){  
 		
@@ -265,13 +324,16 @@ function tips(memo,index){
 		<tr>
 		  <td>
 		  <s:if test='vbm.id.billNo.substring(0,2)=="EM"'>
-		  <a href="javascript:showDiv('<s:property value='vbm.id.billNo'/>','<s:property value='vbm.id.factNo'/>')">
+		  <a id="a_show" href="javascript:showDiv('<s:property value='vbm.id.billNo'/>','<s:property value='vbm.id.factNo'/>')">
 		  <s:property value="vbm.id.billNo"/></a>
 		  </s:if>
-		  <s:else>
+		  <s:if test='vbm.id.billNo.substring(0,2)=="CM"'>
 		    <a href="javascript:showDiv2('<s:property value='vbm.id.billNo'/>','<s:property value='vbm.id.factNo'/>')">
 		  <s:property value="vbm.id.billNo"/></a>
-		  </s:else>
+		  </s:if>
+		  <s:if test='vbm.id.billNo.substring(0,2)=="BM"'>
+		     <a href="javascript:showDiv3('<s:property value='vbm.id.billNo'/>')"><s:property value="vbm.id.billNo"/></a>
+		  </s:if>
 		  </td> 
 		  <s:iterator value="vbm.kyVisabillses" status="x">
 	       <td>
@@ -286,12 +348,18 @@ function tips(memo,index){
 	                                     未審核<s:property value="id.itemNo"/>(當前審核人)
 	              </a>
 	              </s:if>
-	              <s:else>
+	              <s:if test='vbm.id.billNo.substring(0,2)=="CM"'>
 	                <a style="color:red" href="javascript:check2('<s:property value='id.kyVisabillm.id.factNo'/>','<s:property value='id.kyVisabillm.id.visaSort'/>',
 	              '<s:property value='id.kyVisabillm.id.billNo'/>','<s:property value='id.itemNo'/>')">       
 	                                     未審核<s:property value="id.itemNo"/>(當前審核人)
 	              </a>
-	              </s:else>
+	              </s:if>
+	              <s:if test='vbm.id.billNo.substring(0,2)=="BM"'>
+	                <a style="color:red" href="javascript:check3('<s:property value='id.kyVisabillm.id.factNo'/>','<s:property value='id.kyVisabillm.id.visaSort'/>',
+	              '<s:property value='id.kyVisabillm.id.billNo'/>','<s:property value='id.itemNo'/>')">       
+	                                     未審核<s:property value="id.itemNo"/>(當前審核人)
+	              </a>
+	              </s:if>
 	              
 	           </s:if>	
 	            <s:else>

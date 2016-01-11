@@ -23,9 +23,11 @@ public class WebBussinessletter implements java.io.Serializable {
 	private Date timeEnd;
 	private String createDate;
 	private String factNo;
-	private String planList;
+	private String planList="";
 	private String visaSort;
 	private Integer sumDate;
+	private String userAccount;
+	private KyVisabillm vbm;
 
 	// Constructors
 
@@ -158,8 +160,10 @@ public class WebBussinessletter implements java.io.Serializable {
 		this.factNo = factNo;
 	}
 
+	
+
 	public String getPlanList() {
-		return this.planList;
+		return planList;
 	}
 
 	public void setPlanList(String planList) {
@@ -181,6 +185,23 @@ public class WebBussinessletter implements java.io.Serializable {
 	public void setSumDate(Integer sumDate) {
 		this.sumDate = sumDate;
 	}
+
+	public String getUserAccount() {
+		return userAccount;
+	}
+
+	public void setUserAccount(String userAccount) {
+		this.userAccount = userAccount;
+	}
+
+	public KyVisabillm getVbm() {
+		return vbm;
+	}
+
+	public void setVbm(KyVisabillm vbm) {
+		this.vbm = vbm;
+	}
+	
 	
 	
 

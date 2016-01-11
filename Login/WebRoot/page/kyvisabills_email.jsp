@@ -53,6 +53,12 @@ function showDiv2(billNo,factNo){
 			 $(".modal-body").load("kyzletter_findById_layer",{"billNo":billNo,"factNo":factNo});
 		 })
 }
+
+function showDiv3(billNo){
+    $("#myModal").on("show.bs.modal",function(){
+		 $(".modal-body").load("bussletter_findById_layer",{"billNo":billNo});
+	 })
+}
 /*全局變量*/
 var factNo_g,billNo_g,itemNo_g,visaSort_g;
 
@@ -76,6 +82,15 @@ function check2(factNo,visaSort,billNo,itemNo){
 		 visaSort_g=visaSort;
 }
 /*****************************20151027更新***********************************/
+function check3(factNo,visaSort,billNo,itemNo){
+	     $("#myModalA").on("show.bs.modal",function(){
+			 $(".modal-body").load("bussletter_findById_layer",{"billNo":billNo,"factNo":factNo,"visaSort":visaSort,"itemNo":itemNo})
+		 });
+		 factNo_g=factNo;
+		 billNo_g=billNo;
+		 itemNo_g=itemNo;
+		 visaSort_g=visaSort;
+}
 
 function goYes(){
 	   //window.location.href='vbm_add?billNo='+billNo_g+'& visa_mk=Y'+'& factNo='+factNo_g+'& itemNo='+itemNo_g+'& visaSort='+visaSort_g;
@@ -141,7 +156,8 @@ window.onload=function(){
 					<a href="#myModal" data-toggle="modal" data-target="#myModal" onclick="showDiv('<s:property value='vbm.id.billNo'/>','<s:property value='vbm.id.factNo'/>')">
 		                <s:property value="vbm.id.billNo"/>
 		            </a>	
-				</s:if> <s:else>
+				</s:if> 
+				<s:if test='vbm.id.billNo.substring(0,2)=="CM"'>
 					<!--<a
 						href="javascript:showDiv2('<s:property value='vbm.id.billNo'/>','<s:property value='vbm.id.factNo'/>')">
 						<s:property value="vbm.id.billNo" /> </a>
@@ -149,7 +165,16 @@ window.onload=function(){
 					<a href="#myModal" data-toggle="modal" data-target="#myModal" onclick="showDiv2('<s:property value='vbm.id.billNo'/>','<s:property value='vbm.id.factNo'/>')">
 					    <s:property value="vbm.id.billNo" />
 					</a>	
-				</s:else>
+				</s:if>
+				<s:if test='vbm.id.billNo.substring(0,2)=="BM"'>
+					<!--<a
+						href="javascript:showDiv2('<s:property value='vbm.id.billNo'/>','<s:property value='vbm.id.factNo'/>')">
+						<s:property value="vbm.id.billNo" /> </a>
+					-->	
+					<a href="#myModal" data-toggle="modal" data-target="#myModal" onclick="showDiv3('<s:property value='vbm.id.billNo'/>')">
+					    <s:property value="vbm.id.billNo" />
+					</a>	
+				</s:if>
 			</td>
 		</tr>
 		<tr>
@@ -181,7 +206,7 @@ window.onload=function(){
 	              '<s:property value='id.kyVisabillm.id.billNo'/>','<s:property value='id.itemNo'/>')">     
 															未審核<s:property value="id.itemNo" />(當前審核人) </a>	
 													</s:if>
-													<s:else>
+													<s:if test='vbm.id.billNo.substring(0,2)=="CM"'>
 														<!--<a style="color:red"
 															href="javascript:check2('<s:property value='id.kyVisabillm.id.factNo'/>','<s:property value='id.kyVisabillm.id.visaSort'/>',
 	              '<s:property value='id.kyVisabillm.id.billNo'/>','<s:property value='id.itemNo'/>')">
@@ -191,7 +216,18 @@ window.onload=function(){
 															href="#myModalA" data-toggle="modal" data-target="#myModalA" onclick="check2('<s:property value='id.kyVisabillm.id.factNo'/>','<s:property value='id.kyVisabillm.id.visaSort'/>',
 	              '<s:property value='id.kyVisabillm.id.billNo'/>','<s:property value='id.itemNo'/>')">     
 															未審核<s:property value="id.itemNo" />(當前審核人) </a>	
-													</s:else>
+													</s:if>
+													<s:if test='vbm.id.billNo.substring(0,2)=="BM"'>
+														<!--<a style="color:red"
+															href="javascript:check2('<s:property value='id.kyVisabillm.id.factNo'/>','<s:property value='id.kyVisabillm.id.visaSort'/>',
+	              '<s:property value='id.kyVisabillm.id.billNo'/>','<s:property value='id.itemNo'/>')">
+															未審核<s:property value="id.itemNo" />(當前審核人) </a>
+														-->	
+														<a style="color:red"
+															href="#myModalA" data-toggle="modal" data-target="#myModalA" onclick="check3('<s:property value='id.kyVisabillm.id.factNo'/>','<s:property value='id.kyVisabillm.id.visaSort'/>',
+	              '<s:property value='id.kyVisabillm.id.billNo'/>','<s:property value='id.itemNo'/>')">     
+															未審核<s:property value="id.itemNo" />(當前審核人) </a>	
+													</s:if>
 
 												</s:if>
 												<s:else>
@@ -236,7 +272,7 @@ window.onload=function(){
 	              '<s:property value='id.kyVisabillm.id.billNo'/>','<s:property value='id.itemNo'/>')">     
 															<s:property value="id.itemNo" />(當前審核人) </a>
 													</s:if>
-													<s:else>
+													<s:if test='vbm.id.billNo.substring(0,2)=="CM"'>
 														<!--<a style="color:red"
 															href="javascript:check2('<s:property value='id.kyVisabillm.id.factNo'/>','<s:property value='id.kyVisabillm.id.visaSort'/>',
 	              '<s:property value='id.kyVisabillm.id.billNo'/>','<s:property value='id.itemNo'/>')">
@@ -246,7 +282,18 @@ window.onload=function(){
 															href="#myModalA" data-toggle="modal" data-target="#myModalA" onclick="check2('<s:property value='id.kyVisabillm.id.factNo'/>','<s:property value='id.kyVisabillm.id.visaSort'/>',
 	              '<s:property value='id.kyVisabillm.id.billNo'/>','<s:property value='id.itemNo'/>')">     
 															<s:property value="id.itemNo" />(當前審核人) </a>
-													</s:else>
+													</s:if>
+													<s:if test='vbm.id.billNo.substring(0,2)=="BM"'>
+														<!--<a style="color:red"
+															href="javascript:check2('<s:property value='id.kyVisabillm.id.factNo'/>','<s:property value='id.kyVisabillm.id.visaSort'/>',
+	              '<s:property value='id.kyVisabillm.id.billNo'/>','<s:property value='id.itemNo'/>')">
+															未審核<s:property value="id.itemNo" />(當前審核人) </a>
+														-->	
+															<a style="color:red"
+															href="#myModalA" data-toggle="modal" data-target="#myModalA" onclick="check3('<s:property value='id.kyVisabillm.id.factNo'/>','<s:property value='id.kyVisabillm.id.visaSort'/>',
+	              '<s:property value='id.kyVisabillm.id.billNo'/>','<s:property value='id.itemNo'/>')">     
+															<s:property value="id.itemNo" />(當前審核人) </a>
+													</s:if>
 
 												</s:if>
 												<s:else>

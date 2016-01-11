@@ -27,6 +27,7 @@ public class KyVisabillm implements java.io.Serializable {
 	private String emailMk;//是否已经发送知会email
 	private String colTemp;
 	private List<KyVisabills> kyVisabillses = new ArrayList<KyVisabills>();
+	private WebBussinessletter webbussletter;
 
 	// Constructors
 
@@ -175,6 +176,16 @@ public class KyVisabillm implements java.io.Serializable {
 	public void setKyVisabillses(List<KyVisabills> kyVisabillses) {
 		this.kyVisabillses = kyVisabillses;
 	}
+
+	public WebBussinessletter getWebbussletter() {
+		return webbussletter;
+	}
+
+	public void setWebbussletter(WebBussinessletter webbussletter) {
+		this.webbussletter = webbussletter;
+	}
+	
+	
 
 
 
