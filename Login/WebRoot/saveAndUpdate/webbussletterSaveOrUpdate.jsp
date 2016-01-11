@@ -243,9 +243,11 @@ jq(function(){
 				        <td>
 				        <s:if test="bussletter==null">
 						   <input type="text" name="bussletter.username"   value="<s:property value='#session.loginUser.name'/>" style="color:blue" readonly/>
+						   <input type="hidden" name="bussletter.userAccount" value="<s:property value='#session.loginUser.username'/>"/>
 						</s:if>
 						<s:else>
 						   <input type="text" name="bussletter.username"   value="<s:property value='bussletter.username'/>" style="color:blue" readonly/>
+						   <input type="hidden" name="bussletter.userAccount" value="<s:property value='bussletter.userAccount'/>"/>
 						</s:else>
 						</td>										        				        				        				        
 				    </tr>
@@ -304,22 +306,22 @@ jq(function(){
 				   				   				    				  			
 					<tr>
 				        <td >職務</td>
-				        <td><input type="text" name="bussletter.position" datatype="*1-20"  value="<s:property value='bussletter.position'/>" /></td>
+				        <td><input type="text" name="bussletter.position" datatype="*"  value="<s:property value='bussletter.position'/>" /></td>
 				        
 				        <td >職務代理人</td>
-				        <td><input type="text" name="bussletter.GAgent" datatype="*0-50"  value="<s:property value='bussletter.GAgent'/>"/>
+				        <td><input type="text" name="bussletter.GAgent" datatype="*"  value="<s:property value='bussletter.GAgent'/>"/>
 				        				        
 				        </td>				        				         				        				        				        
 				    </tr>
 				    <tr>
 				      <td >出差地點</td>				      
 				      <td>
-				      <input type="text" name="bussletter.address" value="<s:property value='bussletter.address'/>" />
+				      <input type="text" name="bussletter.address" value="<s:property value='bussletter.address'/>" datatype="*"/>
 				      </td>				     				      				     
 				      <td >出差開始日期<br/>出差結束日期</td>
 				      <td>
-				         <input type="text" value="<s:date name='bussletter.dateFrom' format='yyyyMMdd'/>" name="dateFrom" onclick="WdatePicker({dateFmt:'yyyyMMdd'})" class="Wdate"/><br/>
-				         <input type="text" value="<s:date name='bussletter.dateEnd' format='yyyyMMdd'/>" name="dateEnd" onclick="WdatePicker({dateFmt:'yyyyMMdd'})" class="Wdate"/>
+				         <input type="text" value="<s:date name='bussletter.dateFrom' format='yyyyMMdd'/>" name="dateFrom" onclick="WdatePicker({dateFmt:'yyyyMMdd'})" class="Wdate" datatype="*"/><br/>
+				         <input type="text" value="<s:date name='bussletter.dateEnd' format='yyyyMMdd'/>" name="dateEnd" onclick="WdatePicker({dateFmt:'yyyyMMdd'})" class="Wdate" datatype="*"/>
 				      </td>
 				    </tr>
 				    <tr>
@@ -334,7 +336,7 @@ jq(function(){
 					<tr>
 					    <td >出差計劃</td>	
 						<td  colspan="10">
-				           <textarea rows="15" cols="100%" name="bussletter.planList" autofocus="autofocus" wrap="hard" wrap="physical"  tip="申請內容" altercss="gray" class="gray"><s:property value="bussletter.planList"/></textarea>				                                           				         				           				           				           
+				           <textarea rows="15" cols="100%" name="bussletter.planList" autofocus="autofocus" wrap="hard" wrap="physical"  tip="申請內容" altercss="gray" class="gray" datatype="*"><s:property value="bussletter.planList"/></textarea>				                                           				         				           				           				           
 				        </td>						
 					</tr>
 					 <tr>			    				    

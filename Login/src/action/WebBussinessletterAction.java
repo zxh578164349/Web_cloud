@@ -55,6 +55,8 @@ public class WebBussinessletterAction extends ActionSupport implements ServletRe
 	private String ajaxResult;//申請函文時返回的ajax結果,   0:提交成功       1:提交失敗
 	private String lookordown;
 	private String visaSort;
+	private String readMk;//備註標記
+	private String itemNo;
 	private IWebBussinessletterServices webbussletterSer;
 	private IKyVisabillmServices visabillmSer;
 	private IWebFactServices webFactSer;
@@ -63,6 +65,18 @@ public class WebBussinessletterAction extends ActionSupport implements ServletRe
 	private IKyVisaBillsServices visabillSer;
 	
 	
+	public String getItemNo() {
+		return itemNo;
+	}
+	public void setItemNo(String itemNo) {
+		this.itemNo = itemNo;
+	}
+	public String getReadMk() {
+		return readMk;
+	}
+	public void setReadMk(String readMk) {
+		this.readMk = readMk;
+	}
 	public String getVisaSort() {
 		return visaSort;
 	}
@@ -285,6 +299,7 @@ public class WebBussinessletterAction extends ActionSupport implements ServletRe
 			letter.setUnit(ZHConverter.convert(letter.getUnit(), ZHConverter.TRADITIONAL));
 			letter.setUsername(ZHConverter.convert(letter.getUsername(), ZHConverter.TRADITIONAL));
 			/*******************簡轉繁體********************/
+			letter.setSumDate((int)GlobalMethod.sumDate(letter.getDateFrom(), letter.getDateEnd())+1);//出差天數
 			list.add(letter);
 		}
 		if(letter.getUnit()!=null&&!letter.getUnit().equals("")){
@@ -399,6 +414,11 @@ public class WebBussinessletterAction extends ActionSupport implements ServletRe
 	}
 	public void print2() throws IOException{
 		this.print(factNo, billNo, visaSort);
+	}
+	
+	public String findById_layer(){
+		this.findById();
+		return "findById_layer";
 	}
 	
 

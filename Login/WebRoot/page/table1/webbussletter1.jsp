@@ -83,7 +83,7 @@
   <div id="container">
   <div id="content">
 	<table id="tb" >
-		<caption>內部聯絡函</caption>
+		<caption>人員出差申請書</caption>
 		<thead>			
 			<tr class="tr_show">
 				<th>序號</th>
