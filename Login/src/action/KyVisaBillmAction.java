@@ -858,12 +858,19 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 	
 	/**
 	 * 電腦返回
+	 * (好像暫無使用20160112)
 	 * @throws IOException 
 	 */
 	public String add3() throws IOException{
 		this.add();
 		return "beanList";
 	}
+	
+	/**
+	 * (好像暫無使用20160112)
+	 * @return
+	 * @throws IOException
+	 */
 	public String remark() throws IOException{
 		//String result="";//根據是否退回,返回相應結果
 		String billno_temp="";//根據是否退回,返回相應單號

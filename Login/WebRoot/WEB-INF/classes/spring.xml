@@ -51,9 +51,9 @@
 		<value>select sysdate from dual</value>
 	</property>
 	<!-- 如果housekeeper 检测到某个线程的活动时间大于这个数值.它将会杀掉这个线程.所以确认一下你的服务器的带宽.然后定一个合适的值.默认是5分钟. 
-		现在设置 45分 -->
+		现在设置 30分 -->
 	<property name="maximumActiveTime">
-		<value>2700000</value>
+		<value>1800000</value>
 	</property>
 	<!-- 最少保持的空闲连接数 （现在设置20个） -->
 	<property name="prototypeCount">

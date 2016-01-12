@@ -51,7 +51,7 @@ public class WebFactorderDaoImpl extends Basedao implements IWebFactorderDao{
 						}catch(Exception e){
 							order.setOrderData(-1.0);//報錯時，給值-1,標記數據格式不對
 						}						
-						order.setYymm(objs_head[j]);//循環獲取日期
+						order.setYymm(objs_head[j].replace("/", ""));//循環獲取日期
 						order.setColTemp("1");//臨時標記列
 						getSession().save(order);
 						if((i*j)%25==0){

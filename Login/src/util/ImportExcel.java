@@ -178,12 +178,13 @@ public class ImportExcel {
 		}catch(Exception e){
 			System.out.println(e);
 		}*/
-		try{
+		/*try{
 			System.out.println(2/0);
 		}catch(Exception e){
 			System.out.println("除数不能为0");
 		}
-		System.out.println("OK");
+		System.out.println("OK");*/
+		System.out.println("2015-01".replace("/", ""));
 
 	}
 

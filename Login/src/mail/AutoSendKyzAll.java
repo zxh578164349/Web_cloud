@@ -103,18 +103,19 @@ public class AutoSendKyzAll extends QuartzJobBean{
 				
 				try {					
 					if(billNo.substring(0, 2).equals("EM")){
-						this.addVisabillsAndEmail(factNo, billNo, visaSort);
+						this.addVisabillsAndEmail(factNo, billNo, visaSort,list_vbm.get(i));
 					}
 					if(billNo.substring(0,2).equals("CM")){
-						this.addVisabillsAndEmail2(factNo, billNo, visaSort);
+						this.addVisabillsAndEmail2(factNo, billNo, visaSort,list_vbm.get(i));
 					}
 					if(billNo.substring(0,2).equals("BM")){
-						this.addVisabillsAndEmail3(factNo, billNo, visaSort);
+						this.addVisabillsAndEmail3(factNo, billNo, visaSort,list_vbm.get(i));
 					}
 					mailInfo.setSubject("發送Email成功"+billNo);
 					sms.sendHtmlMail(mailInfo);
 										
-					System.out.println(i+"_"+billNo+"OK");
+					list_vbm.get(i).setEmailMk("Y");//表示已發送郵件
+					visabillmSer.add(list_vbm.get(i));
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					
@@ -125,8 +126,8 @@ public class AutoSendKyzAll extends QuartzJobBean{
 					Log4j.getError(e);//log4j日記
 				}
 				
-				list_vbm.get(i).setEmailMk("Y");//表示已發送郵件
-				visabillmSer.add(list_vbm.get(i));
+				//list_vbm.get(i).setEmailMk("Y");//表示已發送郵件
+				//visabillmSer.add(list_vbm.get(i));
 				
 			}//end for
 		}//end if										
@@ -139,18 +140,18 @@ public class AutoSendKyzAll extends QuartzJobBean{
 	 * @param local_visaSort
 	 * @throws IOException
 	 */
-	public void addVisabillsAndEmail(String local_factNo,String local_billNo,String local_visaSort) throws IOException{
+	public void addVisabillsAndEmail(String local_factNo,String local_billNo,String local_visaSort,KyVisabillm vbm) throws IOException{
 		
 		/**
 		 * 打印
 		 */
-		this.print_KyzExpectmatm(local_factNo, local_billNo, local_visaSort);
+		this.print_KyzExpectmatm(local_factNo, local_billNo, local_visaSort,vbm);
 		
 		/**
 		 * 發郵件
 		 * 由於要給所有人(包括不要審核的)發送郵件,所以要重新從數據庫中獲取,而不能使用上面已有的list_visa
 		 */
-		this.sendEmail(local_factNo, local_billNo, local_visaSort);      
+		this.sendEmail(local_factNo, local_billNo, local_visaSort,vbm);      
 		
 		
 	}
@@ -162,17 +163,17 @@ public class AutoSendKyzAll extends QuartzJobBean{
 	 * @param local_visaSort
 	 * @throws IOException
 	 */
-	public void addVisabillsAndEmail2(String local_factNo,String local_billNo,String local_visaSort) throws IOException{
+	public void addVisabillsAndEmail2(String local_factNo,String local_billNo,String local_visaSort,KyVisabillm vbm) throws IOException{
 		/**
 		 * 打印
 		 */
-		this.print_KyzContactletter(local_factNo, local_billNo, local_visaSort);
+		this.print_KyzContactletter(local_factNo, local_billNo, local_visaSort,vbm);
 		
 		/**
 		 * 發郵件
 		 * 由於要給所有人(包括不要審核的)發送郵件,所以要重新從數據庫中獲取,而不能使用上面已有的list_visa
 		 */
-		 this.sendEmail(local_factNo, local_billNo, local_visaSort);     
+		 this.sendEmail(local_factNo, local_billNo, local_visaSort,vbm);     
 		
 								
 	}
@@ -184,17 +185,17 @@ public class AutoSendKyzAll extends QuartzJobBean{
 	 * @param local_visaSort
 	 * @throws IOException
 	 */
-	public void addVisabillsAndEmail3(String local_factNo,String local_billNo,String local_visaSort) throws IOException{
+	public void addVisabillsAndEmail3(String local_factNo,String local_billNo,String local_visaSort,KyVisabillm vbm) throws IOException{
 		/**
 		 * 打印
 		 */
-		this.print_KyzContactletter(local_factNo, local_billNo, local_visaSort);
+		this.print_webbussletter(local_factNo, local_billNo, local_visaSort,vbm);
 		
 		/**
 		 * 發郵件
 		 * 由於要給所有人(包括不要審核的)發送郵件,所以要重新從數據庫中獲取,而不能使用上面已有的list_visa
 		 */
-		 this.sendEmail(local_factNo, local_billNo, local_visaSort);     
+		 this.sendEmail(local_factNo, local_billNo, local_visaSort,vbm);     
 		
 								
 	}
@@ -291,7 +292,7 @@ public class AutoSendKyzAll extends QuartzJobBean{
 	}
 	
 	
-	public void print_KyzExpectmatm(String local_factNo,String local_billNo,String local_visaSort){
+	public void print_KyzExpectmatm(String local_factNo,String local_billNo,String local_visaSort,KyVisabillm vbm){
 		ApplicationContext ac=new ClassPathXmlApplicationContext(new String[]{"spring.xml","spring-dao.xml","spring-services.xml","spring-action.xml"});
 		IWebFactServices webFactSer=(IWebFactServices)ac.getBean("webFactSer");
 		IKyzExpectmatmServices kyzSer=(IKyzExpectmatmServices)ac.getBean("kyzSer");
@@ -375,7 +376,7 @@ public class AutoSendKyzAll extends QuartzJobBean{
 		sub_map.put("sub_list", sub_list);
 					
 		SimpleDateFormat format=new SimpleDateFormat("yyyyMMdd");
-		KyVisabillm vbm=visabillmSer.findById(local_factNo, local_visaSort, local_billNo);
+		//KyVisabillm vbm=visabillmSer.findById(local_factNo, local_visaSort, local_billNo);//用參數傳遞vbm,減少連接數據庫  20160112
 		List<KyVisabills>list_visa=vbm.getKyVisabillses();		
 		List<KyzVisaflow>list_visaflow=visaSer.findByType(local_factNo,local_visaSort);
 		
@@ -487,7 +488,7 @@ public class AutoSendKyzAll extends QuartzJobBean{
 	}
 	
 	
-	public void print_KyzContactletter(String local_factNo,String local_billNo,String local_visaSort){
+	public void print_KyzContactletter(String local_factNo,String local_billNo,String local_visaSort,KyVisabillm vbm){
 		ApplicationContext ac=new ClassPathXmlApplicationContext(new String[]{"spring.xml","spring-dao.xml","spring-services.xml","spring-action.xml"});
 		IWebFactServices webFactSer=(IWebFactServices)ac.getBean("webFactSer");
 		IKyzContactLetterServices kyzletterSer=(IKyzContactLetterServices)ac.getBean("kyzletterSer");
@@ -532,7 +533,7 @@ public class AutoSendKyzAll extends QuartzJobBean{
 		KyzExpectmats temp=new KyzExpectmats();		
 				
 		SimpleDateFormat format=new SimpleDateFormat("yyyyMMdd");
-		KyVisabillm vbm=visabillmSer.findById(local_factNo, local_visaSort, local_billNo);
+		//KyVisabillm vbm=visabillmSer.findById(local_factNo, local_visaSort, local_billNo);//用參數傳遞vbm,減少連接數據庫 20160112
 		List<KyVisabills>list_visa=vbm.getKyVisabillses();
 		List<KyzVisaflow>list_visaflow=visaSer.findByType(local_factNo,local_visaSort);
 		int num1=list_visa.size();
@@ -644,7 +645,7 @@ public class AutoSendKyzAll extends QuartzJobBean{
 		
 	}
 	
-	public void print_webbussletter(String factNo,String billNo,String visaSort){
+	public void print_webbussletter(String factNo,String billNo,String visaSort,KyVisabillm vbm){
 		ApplicationContext ac=new ClassPathXmlApplicationContext(new String[]{"spring.xml","spring-dao.xml","spring-services.xml","spring-action.xml"});
 		IWebFactServices webFactSer=(IWebFactServices)ac.getBean("webFactSer");
 		IWebBussinessletterServices webbussletterSer=(IWebBussinessletterServices)ac.getBean("webbussletterSer");
@@ -677,16 +678,18 @@ public class AutoSendKyzAll extends QuartzJobBean{
 		if(letter.getUnit()!=null&&!letter.getUnit().equals("")){
 			unit="("+letter.getUnit()+")";
 		}
-		String result=factname+unit+"內部聯絡函";
+		String result=factname+unit+"人員出差申請書";
 		//map = new HashMap<String, Object>();
-		map.put("SUBREPORT_DIR",ServletActionContext.getRequest().getRealPath("/jasper/audit/")+ "/");
-		map.put("pic", ServletActionContext.getRequest().getRealPath("/jasper/audit/images/")+ "/");//圖片路徑		
+		//map.put("SUBREPORT_DIR",ServletActionContext.getRequest().getRealPath("/jasper/audit/")+ "/");
+		//map.put("pic", ServletActionContext.getRequest().getRealPath("/jasper/audit/images/")+ "/");//圖片路徑	
+		map.put("SUBREPORT_DIR",ContextLoader.getCurrentWebApplicationContext().getServletContext().getRealPath("/jasper/audit/")+"/");
+		map.put("pic", ContextLoader.getCurrentWebApplicationContext().getServletContext().getRealPath("/jasper/audit/images/")+ "/");//圖片路徑			
 		map.put("pfactno", factNo);
 		map.put("pbillno",billNo);
 		map.put("title",result);
 								
 		SimpleDateFormat format=new SimpleDateFormat("yyyyMMdd");
-		KyVisabillm vbm=visabillmSer.findById(factNo, visaSort, billNo);
+		//KyVisabillm vbm=visabillmSer.findById(factNo, visaSort, billNo);//用參數傳遞vbm,減少連接數據庫  20160112
 		List<KyVisabills>list_visa=vbm.getKyVisabillses();
 		List<KyzVisaflow>list_visaflow=visaSer.findByType(factNo,visaSort);
 		
@@ -770,16 +773,16 @@ public class AutoSendKyzAll extends QuartzJobBean{
 			file_map.put("list_kyzexpfile", list_kyzexpfile);
 			map.put("file_map", file_map);
 		}*/									
-				JasperHelper.exportmain("auto", map,"webbussletter.jasper", list,billNo, "jasper/audit/");
+				this.exportmain("auto", map,"webbussletter.jasper", list,billNo, "jasper/audit/");
 			
 	}
 	
 	
-	public void sendEmail(String local_factNo,String local_billNo,String local_visaSort){
+	public void sendEmail(String local_factNo,String local_billNo,String local_visaSort,KyVisabillm vbm2){
 		ApplicationContext ac=new ClassPathXmlApplicationContext(new String[]{"spring.xml","spring-dao.xml","spring-services.xml","spring-action.xml"});
 		IKyVisabillmServices visabillmSer=(IKyVisabillmServices)ac.getBean("visabillmSer");
 		IWebuserEmailServices webuseremailSer=(IWebuserEmailServices)ac.getBean("webuseremailSer");
-		KyVisabillm vbm2=visabillmSer.findById(local_factNo, local_visaSort, local_billNo);
+		//KyVisabillm vbm2=visabillmSer.findById(local_factNo, local_visaSort, local_billNo);//用參數傳遞vbm,減少連接數據庫
 		List<KyVisabills>list_visa2=vbm2.getKyVisabillses();
 		//这个类主要是设置邮件   
 		
