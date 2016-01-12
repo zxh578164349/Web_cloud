@@ -64,11 +64,11 @@
     </bean>
     <bean id="CronTriggerBeanB" class="org.springframework.scheduling.quartz.CronTriggerBean">
       <property name="jobDetail" ref="quantzjobBeanA"></property>
-      <property name="cronExpression" value="0 43 14 * * ?"></property>      
+      <property name="cronExpression" value="0 0 16 * * ?"></property>      
     </bean>  
     <bean id="CronTriggerBeanC" class="org.springframework.scheduling.quartz.CronTriggerBean">
       <property name="jobDetail" ref="quantzjobBeanB"></property>
-      <property name="cronExpression" value="0 45 14 * * ?"></property>      
+      <property name="cronExpression" value="0 0 12 * * ?"></property>      
     </bean> 
     
     <!-- 启动调度 -->

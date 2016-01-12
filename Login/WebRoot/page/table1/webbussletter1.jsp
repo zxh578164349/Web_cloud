@@ -86,7 +86,7 @@
 		<caption>人員出差申請書</caption>
 		<thead>			
 			<tr class="tr_show">
-				<th>序號</th>
+				<th>單號</th>
 				<th>所屬單位</th>
 				<th>姓名</th>
 				<th>職務</th>
@@ -104,7 +104,7 @@
 		<tbody id="tbody">
 		<s:iterator value="bean.list" status="x" id="temp">		  
 		     <tr onmousemove="click_color(this)" onmouseout="move(this)"> 
-				<td>${25*(bean.currentPage-1)+x.index+1}</td>
+				<td><s:property value="blNo"/></td>
 				<td><s:property value="unit" /></td>
 				<td><s:property value="username" /></td>
 				<td><s:property value="position" /></td>

@@ -66,7 +66,7 @@ table.gridtable td {
     <s:if test="bussletter!=null">
 	<table class="gridtable" align="center">
 		<caption style="font-size:30;font-weight:bold">
-		     內部聯絡函申請 
+		     人員出差申請書 
 		</caption>
 		<tbody id="tb_list_info2">
 			<tr>

@@ -61,6 +61,6 @@
             </key>
             <one-to-many class="entity.KyVisabills" />
         </bag>
-        <many-to-one name="webbussletter" column="BL_NO" unique="true"/>
+        <many-to-one name="webbussletter" column="BILL_NO" unique="true" insert="false" update="false"/>
     </class>
 </hibernate-mapping>
