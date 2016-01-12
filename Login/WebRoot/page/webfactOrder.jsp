@@ -108,12 +108,11 @@
 function checkForm(){
 	var id_file=jq("#id_file").val();
 	var extendName=id_file.substr(id_file.lastIndexOf(".")).toLowerCase();
-	alert(extendName);
 	if(id_file==""){
 		layer.alert("請選擇Excel文檔");
 		return false;
 	}else if(extendName!=".xls"&&extendName!=".xlsx"){
-		layer.alert("請選擇Excel文檔");
+		layer.alert("僅允許Excel文檔");
 		return false;
 	}
 	

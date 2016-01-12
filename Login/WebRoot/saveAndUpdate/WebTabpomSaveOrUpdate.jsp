@@ -52,7 +52,7 @@ jq(document).ajaxStop(function(){
 				"0-8" : /^-?\d{0,8}(\.[0-9]{1,2})?$/
 			},
 			
-			<%--usePlugin:{
+			/* usePlugin:{
 				swfupload:{
 					file_post_name: "file",
 					upload_url: "/Login/webtabpom_swfuploadfile?pomNo='test'",
@@ -83,14 +83,15 @@ jq(document).ajaxStop(function(){
 			beforeSubmit:function(cuform){
 				swfuploadhandler.SWFUPLOAD_subform_0.startUpload();				
 				return false;
-			},--%>
+			}, */
 			
 			ajaxPost:true,
 			callback:function(data){
 				if(data=="0"){
 					layer.msg("提交成功!",3,1);
 					//location.href="/Login/webwlo_getList";
-				}if(data=="1"){
+				}
+				if(data=="1"){
 					alert("提交失敗");
 				}
 				if(data=="2"){
@@ -105,7 +106,7 @@ jq(document).ajaxStop(function(){
 	function getAllWebbrank(){
 		webbrankjs.findAll(function(x){
 			dwr.util.addOptions("dwrWebbrank",x,"BNo","BName");
-		})
+		});
 	}
 
 /*禁止空格輸入*/
@@ -173,6 +174,7 @@ window.onload=getAllWebbrank;
 </head>
 
 <body>
+<div style="height:600px;overflow:auto">
 	<form action="webtabpom_add" method="post" id="subform" enctype="multipart/form-data">
 		<table width="100%"  cellspacing="0" cellpadding="0"
 			id="msg1">
@@ -242,25 +244,27 @@ window.onload=getAllWebbrank;
 						  </s:else>   
 						</td>
 					<td class="td_show_title">生產工廠</td>
-					<s:if test="tabpom==null">
+					
 					<td class="td_input">
+					 <s:if test="tabpom==null">
+					  <div style="height:80px;overflow:auto">
 					  <s:iterator value="#session.facts" id="temp">
-					     <input type="checkbox" name="list_fact" value="${temp[0]}">${temp[1] }&nbsp;
-					  </s:iterator>					 
-					</td>  				  
-					</s:if>
-					<s:else>
-					<td class="td_input">
-					 <s:iterator value="#session.facts" id="temp">
-					  <s:iterator value="tabpom.webfacts" id="temp2">
+					     <div><input type="checkbox" name="list_fact" value="${temp[0]}">${temp[1] }</div>
+					  </s:iterator>
+					  </div>	
+					  </s:if>
+					  <s:else>
+					    <div style="heigth:80px;overflow:auto">
+					    <s:iterator value="#session.facts" id="temp">
+					    <s:iterator value="tabpom.webfacts" id="temp2">
 					     <s:if test='#attr.temp[0]==factNo'>
-					        <input type="checkbox" name="list_fact" value="<s:property value='factNo'/>" checked="checked"><s:property value='factSname'/>&nbsp;
+					        <div><input type="checkbox" name="list_fact" value="<s:property value='factNo'/>" checked="checked"><s:property value='factSname'/></div>
 					    </s:if>
 					  </s:iterator>
-					 </s:iterator> 					   
-					</td>
-					</s:else>
-					
+					 </s:iterator>
+					 </div>
+					 </s:else> 					 
+					</td>  				  					
 					</tr>
 				
 				
@@ -420,5 +424,6 @@ window.onload=getAllWebbrank;
 				onclick="javascript:back()" onmouseover="this.style.backgroundPosition='left -40px'" onmouseout="this.style.backgroundPosition='left top'"/>
 		</center>
 	</form>
+	</div>
 </body>
 </html>
