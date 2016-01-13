@@ -170,9 +170,10 @@ function checkForm(){
 					var img=new Image();
 					jq.each(eles,function(i,ele){
 						path=ele.value;
+						if(path!=""){//if
 						img.src=path;
 						var extname=path.substr(path.lastIndexOf(".")).toLowerCase()
-						if(extname!=".jpg"&&extname!=".jpeg"&&extname!=".gif"&&extname!=".bmp"&&extname!=".tif"){
+						if(extname!=".jpg"&&extname!=".jpeg"&&extname!=".gif"&&extname!=".bmp"&&extname!=".tif"&&extname!=""){
 							layer.msg("僅允許上傳圖片文件",2,3);
 							flag=false;
 							return false;
@@ -184,12 +185,15 @@ function checkForm(){
 							flag=false;
 							return false;
 						}
+						}//if
+						
 					})
 				}else{
 					jq.each(eles,function(i,ele){
 						path=ele.value;
 						var extname=path.substr(path.lastIndexOf(".")).toLowerCase()
-						if(extname!=".jpg"&&extname!=".jpeg"&&extname!=".gif"&&extname!=".bmp"&&extname!=".tif"){
+						if(path!=""){//if
+						   if(extname!=".jpg"&&extname!=".jpeg"&&extname!=".gif"&&extname!=".bmp"&&extname!=".tif"){
 							layer.msg("僅允許上傳圖片文件",2,3);
 							flag=false;
 							return false;
@@ -200,6 +204,8 @@ function checkForm(){
 							flag=false;
 							return false;
 						}
+						}//if
+						
 					})
 				}
 				
