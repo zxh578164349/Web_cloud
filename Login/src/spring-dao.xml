@@ -99,5 +99,6 @@
 	<bean id="webbrankdao" class="dao.impl.WebBrankDaoImpl" parent="baseDao"></bean>
 	<bean id="factorderdao" class="dao.impl.WebFactorderDaoImpl" parent="baseDao"></bean>
 	<bean id="webbussletterdao" class="dao.impl.WebBussinessletterDaoImpl" parent="baseDao"></bean>
+	<bean id="webtabfiledao" class="dao.impl.WebTabpomfileDaoImpl" parent="baseDao"></bean>
 </beans>
 

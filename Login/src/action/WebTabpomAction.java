@@ -7,6 +7,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,6 +16,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.ServletResponseAware;
 
 import services.IWebTabpomServices;
@@ -31,6 +33,7 @@ import entity.WebFact;
 import entity.WebFactId;
 import entity.WebTabpom;
 import entity.WebTabpomfile;
+import entity.WebTabpomfileId;
 import entity.WebUser;
 
 public class WebTabpomAction extends ActionSupport implements ServletResponseAware{
@@ -196,7 +199,7 @@ public class WebTabpomAction extends ActionSupport implements ServletResponseAwa
 	}
 	public String add() throws IOException{
 		/*文件上傳驗證*/
-		/*if(files!=null){
+		if(files!=null){
 			for(int i=0;i<files.size();i++){
 				if(files.get(i)!=null){
 					long filesize=files.get(i).length();
@@ -216,19 +219,20 @@ public class WebTabpomAction extends ActionSupport implements ServletResponseAwa
 					
 				}
 			}
-		}*/
+		}
 		
 		/*文件上傳*/
-		/*if(files!=null){//不為空代表有上傳附檔,不能寫成files.size()>0,否則報空指針
+		if(files!=null){//不為空代表有上傳附檔,不能寫成files.size()>0,否則報空指針
 			tabpom.setFileMk("1");//標示是否帶有附檔
-			//File uploadFile=new File(ServletActionContext.getServletContext().getRealPath("KyzexpFile\\"+kyz.getId().getBillNo()));//附檔上傳到項目
+			//File uploadFile=new File(ServletActionContext.getServletContext().getRealPath("KyzexpFile\\"+tabpom.getPomNo()));//附檔上傳到項目
 			File uploadFile_backup=new File("d:\\WebtabpomFile_backup\\"+tabpom.getPomNo());//附檔上傳到D盤(為了避免更新項目時丟失附檔,所在上傳到D盤)
-			if(!uploadFile.exists()){
+			/*if(!uploadFile.exists()){
 				uploadFile.mkdirs();
-			}
+			}*/
 			if(!uploadFile_backup.exists()){
 				uploadFile_backup.mkdirs();
 			}
+			List<WebTabpomfile>list_file=new ArrayList<WebTabpomfile>();
 			for(int i=0;i<files.size();i++){							
 				if(files.get(i)!=null){									
 					FileInputStream in=new FileInputStream(files.get(i));
@@ -241,11 +245,15 @@ public class WebTabpomAction extends ActionSupport implements ServletResponseAwa
 						out_backup.write(b,0,length);//備份
 					}																									
 					WebTabpomfile webtabFile=new WebTabpomfile();//函文附檔
-					webtabFile.getId().setFilename(filesFileName.get(i));
-					webtabFile.getId().setWebTabpom(tabpom);																			
+					WebTabpomfileId fileId=new WebTabpomfileId();					
+					fileId.setFilename(filesFileName.get(i));
+					fileId.setWebTabpom(tabpom);
+					webtabFile.setId(fileId);
+					list_file.add(webtabFile);
 				}
 			}
-		}*/
+			tabpom.setWebtabfiles(list_file);
+		}
 		
 		switch(nullmk){
 		case 0:
@@ -358,6 +366,18 @@ public class WebTabpomAction extends ActionSupport implements ServletResponseAwa
 			tabpom.setVwebfacts(factSnames.toString());
 		}
 		GlobalMethod.print_webtabpom(list, pomName, brank, yymm, yymm2, "webtabpom.jasper", response);
+	}
+	
+	public String toUrl(String filename) throws UnsupportedEncodingException{
+		//String filename2=filename.replace("/u", "%");
+		String urlname2=URLDecoder.decode(filename,"utf-8");
+		return urlname2;
+	}
+	/**
+	 * 解決url中空格轉換成 +號的問題
+	 */
+	public String toUrl2(String filename){
+		return filename.replace("+", "%20");
 	}
 	
 	

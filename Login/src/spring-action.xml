@@ -83,7 +83,7 @@
 	<bean id="webtabpomAction" class="action.WebTabpomAction" scope="prototype"/>	
 	<bean id="webfactorderAction" class="action.WebFactOrderAction" scope="prototype"/>
 	<bean id="webbussletterAction" class="action.WebBussinessletterAction" scope="prototype"/>
-	
+	<bean id="webtabpomfileAction" class="action.WebTabpomfileAction" scope="prototype"/>
 </beans> 
 
  
