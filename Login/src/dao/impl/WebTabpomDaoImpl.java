@@ -31,7 +31,8 @@ public class WebTabpomDaoImpl extends Basedao implements IWebTabpomDao{
 		for(VWebFact fact:obj.getWebfacts()){
 			fact.getFactNo();
 			fact.getFactSname();
-		}		
+		}
+		obj.getWebtabfiles().size();
 		//obj.getWebfacts().size();
 		return obj;
 	}

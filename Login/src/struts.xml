@@ -729,6 +729,11 @@
 		   </result>
 		   <result name="findById_layer">page/showwebbussletter_layer.jsp</result>		       		
 		</action>
+		<action name="webtabpomfile_*" class="webtabpomfileAction" method="{1}">
+		   <result name="findwebtabpomFileJson" type="json">
+		      <param name="root">jsons</param>
+		   </result>
+		</action>
 	</package>
 
 </struts>

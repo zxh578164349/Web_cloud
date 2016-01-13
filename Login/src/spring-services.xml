@@ -99,6 +99,7 @@
 	<bean id="webbrankSer" class="services.impl.WebBrankServicesImpl"></bean>
 	<bean id="webfactorderSer" class="services.impl.WebFactorderServicesImpl"></bean>
 	<bean id="webbussletterSer" class="services.impl.WebBussinessletterServicesImpl"></bean>
+	<bean id="tabpomfileSer" class="services.impl.WebTabpomfileServicesImpl"></bean>
 </beans>
 
 
