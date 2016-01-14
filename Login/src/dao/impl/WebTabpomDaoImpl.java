@@ -28,12 +28,16 @@ public class WebTabpomDaoImpl extends Basedao implements IWebTabpomDao{
 		Query query=getSession().createQuery(hql);
 		query.setString(0, pomNo);
 		WebTabpom obj=(WebTabpom)query.uniqueResult();
+		/**hibernate延遲問題解決**/
 		for(VWebFact fact:obj.getWebfacts()){
 			fact.getFactNo();
 			fact.getFactSname();
 		}
-		obj.getWebtabfiles().size();
 		//obj.getWebfacts().size();
+		obj.getWebtabfiles().size();
+		obj.getWebBrank().getBName();
+		/**hibernate延遲問題解決**/
+		
 		return obj;
 	}
 

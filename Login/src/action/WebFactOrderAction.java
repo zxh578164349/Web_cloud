@@ -314,7 +314,7 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 	 * @return
 	 */
 	public String findComponent(){
-		List<String>list=webfactorderSer.findComponent();
+		List<String>list=webfactorderSer.findComponent(factSnames);
 		jsons=JSONArray.fromObject(list);
 		return "findComponent";
 	}
@@ -324,7 +324,7 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 	 * @return
 	 */
 	public String findBrank(){
-		List<String>list=webfactorderSer.findBrank();
+		List<String>list=webfactorderSer.findBrank(factSnames);
 		jsons=JSONArray.fromObject(list);
 		return "findBrank";
 	}
@@ -333,7 +333,7 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 	 * 从WebFactorder中获取所有的客户
 	 */
 	public String findCustomer(){
-		List<String>list=webfactorderSer.findCustomer();
+		List<String>list=webfactorderSer.findCustomer(factSnames);
 		jsons=JSONArray.fromObject(list);
 		return "findCustomer";
 	}
@@ -343,7 +343,7 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 	 * @return
 	 */
 	public String findModel(){
-		List<String>list=webfactorderSer.findModel();
+		List<String>list=webfactorderSer.findModel(factSnames);
 		jsons=JSONArray.fromObject(list);
 		return "findModel";
 	}

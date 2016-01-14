@@ -100,7 +100,7 @@
 					</form> <a
 					href="javascript:layer.load(0);document.getElementById('subform${x.index}').submit()"
 					onclick=""><img alt="修改" src="images/icon/edit001.png" title="修改" ></a>
-					<form action="webwlo_delete2" method="post" id="subform2${x.index}"
+					<form action="webwlo_delete2" method="post" id="2subform${x.index}"
 						style="float:left">
 						<input type="hidden" value="<s:property value='id.factNo'/>"
 							name="id.factNo" /> <input type="hidden"
@@ -108,7 +108,7 @@
 						<input type="hidden" value="<s:property value='id.yymm'/>"
 							name="id.yymm" />
 					</form> <a href="javascript:void(0)"
-					onclick="isDelete('subform2${x.index}')"><img alt="刪除" src="images/icon/delete001.png" title="刪除"></a>
+					onclick="isDelete('2subform${x.index}')"><img alt="刪除" src="images/icon/delete001.png" title="刪除"></a>
 				</td>
 				</s:if>
 			</tr>

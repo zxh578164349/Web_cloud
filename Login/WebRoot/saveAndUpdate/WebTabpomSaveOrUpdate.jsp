@@ -256,6 +256,7 @@ function lookJson(pomNo,filename){
 	      }
 	   })
 	}
+	
 window.onload=getAllWebbrank;
 </script>
 <script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>
@@ -277,7 +278,7 @@ window.onload=getAllWebbrank;
 			<tbody id="tb_list_info2">
 				
 					<tr>
-						<td class="td_show_title">物性編號</td>
+						<td class="td_show_title">物性編號 </td>
 						<s:if test="tabpom==null">
 						<td class="td_input">
 						   <input type="text" name="tabpom.pomNo" value="自動生成" id="pomNo" style="color:blue" readonly/>

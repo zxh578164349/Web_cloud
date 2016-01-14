@@ -129,31 +129,39 @@ public class WebFactorderDaoImpl extends Basedao implements IWebFactorderDao{
 	}
 
 
-	public List<String> findComponent() {
+	public List<String> findComponent(List<String> factSname) {
 		// TODO Auto-generated method stub
-		String hql="select distinct component from WebFactorder order by component";
-		return super.findAll(hql, null);
+		String hql="select distinct component from WebFactorder where factSname  in (:factsname) order by component";
+		Query query=getSession().createQuery(hql);
+		query.setParameterList("factsname",factSname);
+		return (List<String>)query.uniqueResult();
 	}
 
 
-	public List<String> findBrank() {
+	public List<String> findBrank(List<String> factSname) {
 		// TODO Auto-generated method stub
-		String hql="select distinct brank from WebFactorder order by brank";
-		return super.findAll(hql, null);
+		String hql="select distinct brank from WebFactorder where factSname in (:factsname) order by brank";
+		Query query=getSession().createQuery(hql);
+		query.setParameterList("factsname",factSname);
+		return (List<String>)query.uniqueResult();
 	}
 
 
-	public List<String> findCustomer() {
+	public List<String> findCustomer(List<String> factSname) {
 		// TODO Auto-generated method stub
-		String hql="select distinct customer from WebFactorder order by customer";
-		return super.findAll(hql, null);
+		String hql="select distinct customer from WebFactorder where factSname in (:factsname) order by customer";
+		Query query=getSession().createQuery(hql);
+		query.setParameterList("factsname",factSname);
+		return (List<String>)query.uniqueResult();
 	}
 
 
-	public List<String> findModel() {
+	public List<String> findModel(List<String> factSname) {
 		// TODO Auto-generated method stub
-		String hql="select distinct modelNo from WebFactorder order by modelNo";
-		return super.findAll(hql, null);
+		String hql="select distinct modelNo from WebFactorder where factSname  in (:factsname) order by modelNo";
+		Query query=getSession().createQuery(hql);
+		query.setParameterList("factsname",factSname);
+		return (List<String>)query.uniqueResult();
 	}
 	
 	public List<String> findFactSname() {
