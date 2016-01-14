@@ -130,7 +130,9 @@ public class Basedao extends HibernateDaoSupport {
 				Query query = session.createQuery(hql);
 				if (map != null && !map.isEmpty()) {
 					for (String key : map.keySet()) {
-						if(map.get(key).getClass().getName().equals("com.opensymphony.xwork2.util.XWorkList")){
+						if(map.get(key).getClass().getName().equals("com.opensymphony.xwork2.util.XWorkList")||
+								map.get(key).getClass().getName().equals("java.util.ArrayList")){
+							//System.out.println(map.get(key).getClass().getName());
 							query.setParameterList(key,(List<String>)map.get(key));
 							
 						}else{
@@ -156,7 +158,8 @@ public class Basedao extends HibernateDaoSupport {
 				Query query = session.createQuery(hql);
 				if (map != null && !map.isEmpty()) {
 					for (String key : map.keySet()) {
-						if(map.get(key).getClass().getName().equals("com.opensymphony.xwork2.util.XWorkList")){
+						if(map.get(key).getClass().getName().equals("com.opensymphony.xwork2.util.XWorkList")||
+								map.get(key).getClass().getName().equals("java.util.ArrayList")){
 							query.setParameterList(key, (List<String>)map.get(key));
 						}else{
 							query.setParameter(key, map.get(key));
@@ -173,7 +176,8 @@ public class Basedao extends HibernateDaoSupport {
 			Query query =getSession().createQuery(hql);
 			if (map != null && !map.isEmpty()) {
 				for (String key : map.keySet()) {
-					if(map.get(key).getClass().getName().equals("com.opensymphony.xwork2.util.XWorkList")){
+					if(map.get(key).getClass().getName().equals("com.opensymphony.xwork2.util.XWorkList")||
+							map.get(key).getClass().getName().equals("java.util.ArrayList")){
 						query.setParameterList(key, (List<String>)map.get(key));
 					}else{
 						query.setParameter(key, map.get(key));
@@ -195,7 +199,9 @@ public class Basedao extends HibernateDaoSupport {
 				Query query = session.createQuery(hql);
 				if (map != null && !map.isEmpty()) {
 					for (String key : map.keySet()) {
-						if(map.get(key).getClass().getName().equals("com.opensymphony.xwork2.util.XWorkList")){
+						if(map.get(key).getClass().getName().equals("com.opensymphony.xwork2.util.XWorkList")||
+								map.get(key).getClass().getName().equals("java.util.ArrayList")	){
+							//System.out.println(map.get(key).getClass().getName());
 							query.setParameterList(key, (List<String>)map.get(key));
 						}else{
 							query.setParameter(key, map.get(key));

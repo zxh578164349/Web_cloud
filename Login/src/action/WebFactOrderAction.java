@@ -58,7 +58,7 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 	private javax.servlet.http.HttpServletResponse response;
 	private String yymm;
 	private String year;
-	private List<String>factSnames;
+	private List<String>factSnames=new ArrayList<String>();
 	private File file;
     private String fileFileName;
     private String fileContentType;
@@ -95,6 +95,7 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 	public void setYear(String year) {
 		this.year = year;
 	}
+	
 	public List<String> getFactSnames() {
 		return factSnames;
 	}
@@ -309,13 +310,21 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 		return "beanList1";
 	}
 	
+	public void init(){
+		System.out.println(factSnames);
+		ActionContext.getContext().getSession().put("factSnames", factSnames);
+	}
 	/**
 	 * 从WebFactorder中获取所有的部件
 	 * @return
 	 */
 	public String findComponent(){
-		List<String>list=webfactorderSer.findComponent(factSnames);
-		jsons=JSONArray.fromObject(list);
+		factSnames=(List<String>)ActionContext.getContext().getSession().get("factSnames");
+		if(factSnames.size()>0){
+			List<String>list=webfactorderSer.findComponent(factSnames);
+			jsons=JSONArray.fromObject(list);
+		}
+		
 		return "findComponent";
 	}
 	
@@ -324,8 +333,12 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 	 * @return
 	 */
 	public String findBrank(){
-		List<String>list=webfactorderSer.findBrank(factSnames);
-		jsons=JSONArray.fromObject(list);
+		factSnames=(List<String>)ActionContext.getContext().getSession().get("factSnames");
+		if(factSnames.size()>0){
+			List<String>list=webfactorderSer.findBrank(factSnames);
+			jsons=JSONArray.fromObject(list);
+		}
+		
 		return "findBrank";
 	}
 	
@@ -333,8 +346,12 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 	 * 从WebFactorder中获取所有的客户
 	 */
 	public String findCustomer(){
-		List<String>list=webfactorderSer.findCustomer(factSnames);
-		jsons=JSONArray.fromObject(list);
+		factSnames=(List<String>)ActionContext.getContext().getSession().get("factSnames");
+		if(factSnames.size()>0){
+			List<String>list=webfactorderSer.findCustomer(factSnames);
+			jsons=JSONArray.fromObject(list);
+		}
+		
 		return "findCustomer";
 	}
 	
@@ -343,8 +360,12 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 	 * @return
 	 */
 	public String findModel(){
-		List<String>list=webfactorderSer.findModel(factSnames);
-		jsons=JSONArray.fromObject(list);
+		factSnames=(List<String>)ActionContext.getContext().getSession().get("factSnames");
+		if(factSnames.size()>0){
+			List<String>list=webfactorderSer.findModel(factSnames);
+			jsons=JSONArray.fromObject(list);
+		}
+		
 		return "findModel";
 	}
 	/**

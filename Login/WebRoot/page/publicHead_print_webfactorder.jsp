@@ -43,58 +43,74 @@ function getAllFact_json(){
 	});
 }
 function findComponent(){
+jq("#div_component").html("");
    jq.ajax({
       type:"POST",
       url:"webfactOrder_findComponent",
       dataType:"json",
       success:function(data){
         var item;
-        jq.each(data,function(i,obj){
+        if(data!=null){
+           jq.each(data,function(i,obj){
           item="<div><input type='checkbox' name='components' value='"+obj+"'/>"+obj+"</div>";
           jq("#div_component").append(item);
         });
+        }
+        
       }
    });
 }
 function findBrank(){
+jq("#div_brank").html("");
    jq.ajax({
        type:"POST",
        url:"webfactOrder_findBrank",
        dataType:"json",
        success:function(data){
            var item;
-           jq.each(data,function(i,obj){
+           if(data!=null){
+             jq.each(data,function(i,obj){
               item="<div><input type='checkbox' name='branks' value='"+obj+"'/>"+obj+"</div>";
               jq("#div_brank").append(item);
-           });
+           }); 
+           }
+           
        }
    });
 }
 function findCustomer(){
+jq("#div_customer").html("");
    jq.ajax({
       type:"POST",
       url:"webfactOrder_findCustomer",
       dataType:"json",
       success:function(data){
          var item;
-         jq.each(data,function(i,obj){
+         if(data!=null){
+           jq.each(data,function(i,obj){
             item="<div><input type='checkbox' name='customers' value='"+obj+"'/>"+obj+"</div>";
             jq("#div_customer").append(item);
          });
+         }
+         
       }
    });
 }
 function findModel(){
+jq("#div_model").html("");
    jq.ajax({
       type:"POST",
       url:"webfactOrder_findModel",
       dataTyep:"json",
       success:function(data){
          var item;
-         jq.each(data,function(i,obj){
+         if(data!=null){
+            jq.each(data,function(i,obj){
            item="<div><input type='checkbox' name='models' value='"+obj+"'/>"+obj+"</div>";
            jq("#div_model").append(item);
          });
+         }
+         
       }
    });
 }
@@ -123,7 +139,26 @@ function selectAll(str,str2){
 }
 
 window.onload=function(){
-	findFactSname();findComponent();findBrank();findCustomer();findModel();
+	findFactSname();
+	/* findComponent();findBrank();findCustomer();findModel(); */
+};
+
+function init(){
+var factSnames=new Array();
+var checkbox_fact=jq("input[name='factSnames']:checked");
+checkbox_fact.each(function(i,checkbox){
+    factSnames.push(checkbox.value);
+});
+   jq.ajax({
+      type:"POST",
+      traditional:true,
+      url:"webfactOrder_init",
+      data:{'factSnames':factSnames},
+      success:function(){
+        findComponent();
+        findBrank();findCustomer();findModel(); 
+      }
+   });
 }
 </script>
 
@@ -144,9 +179,12 @@ window.onload=function(){
 				</div>				
 			</td>--%>
 			<td>
+			  <form id="form_factsname">
 				<div id="div_factSname" style="width:400px;height:250px;overflow:auto;border:1px dashed green">
-				  <div><input type="checkbox" id="all_factSname" onclick="selectAll('all_factSname','factSnames')"/>全选</div><hr/>				   
-				</div>				
+				  <div><input type="checkbox" id="all_factSname" onclick="selectAll('all_factSname','factSnames')"/>
+				  全选&nbsp;<input type="button" onclick="init()" value="確定"/></div><hr/>				   
+				</div>
+			</form>					
 			</td>
 			<td class="td_right">部件</td>
 		    <td>		       
