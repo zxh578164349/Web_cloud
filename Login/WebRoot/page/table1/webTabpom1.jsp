@@ -58,6 +58,7 @@
 				<th>指定料</th>
 				<th>部件</th>
 				<th>生產工廠</th>
+				<th>品牌</th>
 				<th>硬度</th>
 				<th>拉力</th>
 				<th>延伸</th>
@@ -92,6 +93,7 @@
 				       <s:property value="factSname"/>&nbsp;
 				   </s:iterator>
 				</td>
+				<td><s:property value="webBrank.BName"/></td>
 				<td><s:property value="hardness" /></td>
 				<td><s:property value="forces" /></td>
 				<td><s:property value="extends_" /></td>
@@ -103,19 +105,28 @@
 				<td><s:property value="userName" /></td>
 				<s:if test='#session.loginUser.userread!="1"'>
 				<td>
-					<form action="webtabpom_findById" method="post"
-						id="subform${x.index}">
-						<input type="hidden" value="<s:property value='pomNo'/>"
-							name="pomNo" /> 
-					</form> <a
-					href="javascript:layer.load(0);document.getElementById('subform${x.index}').submit()"
-					onclick=""><img alt="修改" src="images/icon/edit001.png" title="修改" ></a>
-					<form action="webwlo_delete2" method="post" id="subform2${x.index}"
-						style="float:left">
-						<input type="hidden" value="<s:property value='pomNo'/>"
-							name="pomNo" />
-					</form> <a href="javascript:void(0)"
-					onclick="isDelete('subform2${x.index}')"><img alt="刪除" src="images/icon/delete001.png" title="刪除"></a>
+					<form action="webtabpom_findById" method="post" id="subform${x.index}">						
+						<input type="hidden" value="<s:property value='pomNo'/>" name="pomNo" />							 
+					</form> 
+					<form action="webtabpom_delete" method="post" id="2subform${x.index}" style="float:left">						
+						<input type="hidden" value="<s:property value='pomNo'/>" name="pomNo" />							
+					</form>
+					<form action="webtabpom_printOne" method="post" id="3subform${x.index}" style="float:left" target="_blank">						
+						<input type="hidden" value="<s:property value='pomNo'/>" name="pomNo" />							
+						<input type="hidden" value="look" name="lookordown"/>
+					</form>
+					<form action="webtabpom_printOne" method="post" id="4subform${x.index}" style="float:left" target="_blank">						
+						<input type="hidden" value="<s:property value='pomNo'/>" name="pomNo" />							
+						<input type="hidden" value="down" name="lookordown"/>
+					</form> 
+					<a href="javascript:layer.load(0);document.getElementById('subform${x.index}').submit()" >					
+					<img alt="修改" src="images/icon/edit001.png" title="修改" ></a>
+					<a href="javascript:document.getElementById('3subform${x.index}').submit()" >
+					<img alt="預覽" src="images/icon/view24.png" title="預覽"></a>
+					<a href="javascript:document.getElementById('4subform${x.index}').submit()" >
+					<img alt="下載" src="images/icon/print24.png" title="下載"></a>
+					<a href="javascript:void(0)" onclick="isDelete('2subform${x.index}')">					
+					<img alt="刪除" src="images/icon/delete001.png" title="刪除"></a>
 				</td>
 				</s:if>
 			</tr>

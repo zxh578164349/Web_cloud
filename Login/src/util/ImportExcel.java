@@ -185,6 +185,8 @@ public class ImportExcel {
 		}
 		System.out.println("OK");*/
 		System.out.println("2015-01".replace("/", ""));
+		System.out.println(new File("d:\\abc"));
+		System.out.println("d:\\abc");
 
 	}
 

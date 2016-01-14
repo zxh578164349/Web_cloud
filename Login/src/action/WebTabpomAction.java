@@ -20,6 +20,7 @@ import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.ServletResponseAware;
 
 import services.IWebTabpomServices;
+import services.IWebTabpomfileServices;
 import util.GlobalMethod;
 import util.JasperHelper;
 import util.PageBean;
@@ -51,15 +52,22 @@ public class WebTabpomAction extends ActionSupport implements ServletResponseAwa
     private List<String> filesContentType;
     private String yymm;
     private String yymm2;
-    
+    private String lookordown;
     private File file;
 	private String fileFileName;
 	private String fileContentType;
 	private IWebTabpomServices tabpomSer;
+	private IWebTabpomfileServices tabpomfileSer;
 	private javax.servlet.http.HttpServletResponse response;
 	
 	
 	
+	public String getLookordown() {
+		return lookordown;
+	}
+	public void setLookordown(String lookordown) {
+		this.lookordown = lookordown;
+	}
 	public String getYymm() {
 		return yymm;
 	}
@@ -167,10 +175,15 @@ public class WebTabpomAction extends ActionSupport implements ServletResponseAwa
 	public void setTabpomSer(IWebTabpomServices tabpomSer) {
 		this.tabpomSer = tabpomSer;
 	}
+	
+	public void setTabpomfileSer(IWebTabpomfileServices tabpomfileSer) {
+		this.tabpomfileSer = tabpomfileSer;
+	}
 	public void setServletResponse(HttpServletResponse response) {
 		// TODO Auto-generated method stub
 		this.response=response;
 	}
+	
 	
 	public String findPageBean(){
 		ActionContext.getContext().getSession().remove("tabpom_name");
@@ -378,6 +391,26 @@ public class WebTabpomAction extends ActionSupport implements ServletResponseAwa
 	 */
 	public String toUrl2(String filename){
 		return filename.replace("+", "%20");
+	}
+	
+	/**
+	 * 單個資料打印
+	 */
+	public void printOne(){
+		List<WebTabpom>list=new ArrayList<WebTabpom>();
+		Map<String,Object>map=new HashMap<String,Object>();
+		tabpom=tabpomSer.findById(pomNo);
+		list.add(tabpom);
+		map.put("SUBREPORT_DIR",ServletActionContext.getRequest().getRealPath("/jasper/webtabpom/")+ "/");
+	    String pic_file="d:\\WebtabpomFile_backup\\"+pomNo;
+	    map.put("pic_file", pic_file+"\\");
+	    map.put("list_file", tabpom.getWebtabfiles());
+	    map.put("list_fact", tabpom.getWebfacts());
+	    if(lookordown.equals("look")){
+	    	JasperHelper.exportmain("line", map, "webtabpom_one.jasper", list, pomNo, "jasper/webtabpom/");
+	    }else{
+	    	JasperHelper.exportmain("pdf", map, "webtabpom_one.jasper", list, pomNo, "jasper/webtabpom/");
+	    }		
 	}
 	
 	

@@ -66,7 +66,7 @@ public class GlobalMethod {
 			if(yymm2!=null&&!yymm2.equals("")){
 				fileName.append("_"+yymm2);
 			}
-			JasperHelper.exportmain("excel", map,file, list,fileName.toString(), "jasper/input/");
+			JasperHelper.exportmain("excel", map,file, list,fileName.toString(), "jasper/webtabpom/");
 		}else{
 			response.setContentType("text/html;charset=utf-8");
 			response.getWriter().print("<script>alert('無數據');</script>");

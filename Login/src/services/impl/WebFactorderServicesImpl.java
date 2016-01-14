@@ -32,27 +32,27 @@ public class WebFactorderServicesImpl implements IWebFactorderServices{
 		// TODO Auto-generated method stub
 		return factorderdao.findPageBean(pageSize, page, factSnames, brank, customer, model, component);
 	}
-	public List<String> findComponent() {
+	public List<String> findComponent(List<String> factSname) {
 		// TODO Auto-generated method stub
-		return factorderdao.findComponent();
+		return factorderdao.findComponent(factSname);
 	}
 
 
-	public List<String> findBrank() {
+	public List<String> findBrank(List<String> factSname) {
 		// TODO Auto-generated method stub
-		return factorderdao.findBrank();
+		return factorderdao.findBrank(factSname);
 	}
 
 
-	public List<String> findCustomer() {
+	public List<String> findCustomer(List<String> factSname) {
 		// TODO Auto-generated method stub
-		return factorderdao.findCustomer();
+		return factorderdao.findCustomer(factSname);
 	}
 
 
-	public List<String> findModel() {
+	public List<String> findModel(List<String> factSname) {
 		// TODO Auto-generated method stub
-		return factorderdao.findModel();
+		return factorderdao.findModel(factSname);
 	}
 	
 	public List<String> findFactSname() {
