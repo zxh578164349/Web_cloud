@@ -132,36 +132,37 @@ public class WebFactorderDaoImpl extends Basedao implements IWebFactorderDao{
 	public List<String> findComponent(List<String> factSname) {
 		// TODO Auto-generated method stub
 		String hql="select distinct component from WebFactorder where factSname  in (:factsname) order by component";
-		Query query=getSession().createQuery(hql);
-		query.setParameterList("factsname",factSname);
-		return (List<String>)query.uniqueResult();
+		Map<String,Object>map=new HashMap<String,Object>();
+		System.out.println(factSname.getClass().getName());
+		map.put("factsname", factSname);
+		return super.getAllWithNoPage(hql, map);
 	}
 
 
 	public List<String> findBrank(List<String> factSname) {
 		// TODO Auto-generated method stub
 		String hql="select distinct brank from WebFactorder where factSname in (:factsname) order by brank";
-		Query query=getSession().createQuery(hql);
-		query.setParameterList("factsname",factSname);
-		return (List<String>)query.uniqueResult();
+		Map<String,Object>map=new HashMap<String,Object>();
+		map.put("factsname", factSname);
+		return super.getAllWithNoPage(hql, map);
 	}
 
 
 	public List<String> findCustomer(List<String> factSname) {
 		// TODO Auto-generated method stub
 		String hql="select distinct customer from WebFactorder where factSname in (:factsname) order by customer";
-		Query query=getSession().createQuery(hql);
-		query.setParameterList("factsname",factSname);
-		return (List<String>)query.uniqueResult();
+		Map<String,Object>map=new HashMap<String,Object>();
+		map.put("factsname", factSname);
+		return super.getAllWithNoPage(hql, map);
 	}
 
 
 	public List<String> findModel(List<String> factSname) {
 		// TODO Auto-generated method stub
 		String hql="select distinct modelNo from WebFactorder where factSname  in (:factsname) order by modelNo";
-		Query query=getSession().createQuery(hql);
-		query.setParameterList("factsname",factSname);
-		return (List<String>)query.uniqueResult();
+		Map<String,Object>map=new HashMap<String,Object>();
+		map.put("factsname", factSname);
+		return super.getAllWithNoPage(hql, map);
 	}
 	
 	public List<String> findFactSname() {
