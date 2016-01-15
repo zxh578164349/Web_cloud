@@ -1,6 +1,8 @@
 package dao.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.hibernate.Query;
 
@@ -168,6 +170,27 @@ public class WebFactDaoImpl extends Basedao implements IWebFactDao {
 		// TODO Auto-generated method stub
 		String hql="select distinct id.factArea from WebFact";
 		return super.findAll(hql, null);
+	}
+
+	/**
+	 * 根據用戶所屬的廠別，來加載廠別列錶
+	 * 如果是臺灣（tw）用戶，加載所有的的廠別
+	 * 如果是工廠用戶，加載所屬工廠
+	 * 20160115
+	 * @param factNo
+	 * @return
+	 */
+	public List<Object[]> findFactByFactNo(String factNo) {
+		// TODO Auto-generated method stub
+		StringBuffer hql=new StringBuffer();
+		Map<String,Object>map=new HashMap<String,Object>();
+		hql.append("select distinct id.factNo,factSname,orderNo from WebFact where 1=1 ");
+		if(factNo!=null&&!factNo.equals("")&&!factNo.equals("tw")){
+			hql.append(" and id.factNo=:factno ");
+			map.put("factno", factNo);
+		}
+		hql.append(" order by orderNo");
+		return super.getAllWithNoPage(hql.toString(), map);
 	}
 
 }

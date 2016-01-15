@@ -41,6 +41,7 @@ public class WebUserDaoImpl extends Basedao implements IWebUserDao {
 		//wUser.setAvailable(webUser.getAvailable());
 		wUser.setUserread(webUser.getUserread());
 		wUser.setEmail(webUser.getEmail());
+		wUser.setDepartment(webUser.getDepartment());
 		getSession().update(wUser);
 	}
 

@@ -301,7 +301,7 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 		return "beanList1";
 	}
 	public String findPageBean3(){
-		factNos=(List<String>)ActionContext.getContext().getSession().get("public_factnames");
+		factSnames=(List<String>)ActionContext.getContext().getSession().get("public_factnames");
 		branks=(List<String>)ActionContext.getContext().getSession().get("public_brank");
 		customers=(List<String>)ActionContext.getContext().getSession().get("public_customer");
 		models=(List<String>)ActionContext.getContext().getSession().get("public_model");
@@ -311,17 +311,17 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 	}
 	
 	public void init(){
-		System.out.println(factSnames);
-		ActionContext.getContext().getSession().put("factSnames", factSnames);
+		System.out.println(factNos);
+		ActionContext.getContext().getSession().put("factNos", factNos);
 	}
 	/**
 	 * 从WebFactorder中获取所有的部件
 	 * @return
 	 */
 	public String findComponent(){
-		factSnames=(List<String>)ActionContext.getContext().getSession().get("factSnames");
-		if(factSnames.size()>0){
-			List<String>list=webfactorderSer.findComponent(factSnames);
+		factNos=(List<String>)ActionContext.getContext().getSession().get("factNos");
+		if(factNos.size()>0){
+			List<String>list=webfactorderSer.findComponent(factNos);
 			jsons=JSONArray.fromObject(list);
 		}
 		
@@ -333,9 +333,9 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 	 * @return
 	 */
 	public String findBrank(){
-		factSnames=(List<String>)ActionContext.getContext().getSession().get("factSnames");
-		if(factSnames.size()>0){
-			List<String>list=webfactorderSer.findBrank(factSnames);
+		factNos=(List<String>)ActionContext.getContext().getSession().get("factNos");
+		if(factNos.size()>0){
+			List<String>list=webfactorderSer.findBrank(factNos);
 			jsons=JSONArray.fromObject(list);
 		}
 		
@@ -346,12 +346,11 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 	 * 从WebFactorder中获取所有的客户
 	 */
 	public String findCustomer(){
-		factSnames=(List<String>)ActionContext.getContext().getSession().get("factSnames");
-		if(factSnames.size()>0){
-			List<String>list=webfactorderSer.findCustomer(factSnames);
+		factNos=(List<String>)ActionContext.getContext().getSession().get("factNos");
+		if(factNos.size()>0){
+			List<String>list=webfactorderSer.findCustomer(factNos);
 			jsons=JSONArray.fromObject(list);
-		}
-		
+		}		
 		return "findCustomer";
 	}
 	
@@ -360,21 +359,24 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 	 * @return
 	 */
 	public String findModel(){
-		factSnames=(List<String>)ActionContext.getContext().getSession().get("factSnames");
-		if(factSnames.size()>0){
-			List<String>list=webfactorderSer.findModel(factSnames);
+		factNos=(List<String>)ActionContext.getContext().getSession().get("factNos");
+		if(factNos.size()>0){
+			List<String>list=webfactorderSer.findModel(factNos);
 			jsons=JSONArray.fromObject(list);
 		}
 		
 		return "findModel";
 	}
 	/**
-	 *从WebFactorder中获取所有的model
+	 *从WebFactorder中获取所有的工廠名稱
 	 * @return
 	 */
 	public String findFactSname(){
-		List<String>list=webfactorderSer.findFactSname();
-		jsons=JSONArray.fromObject(list);
+		factNos=(List<String>)ActionContext.getContext().getSession().get("factNos");
+		if(factNos.size()>0){
+			List<String>list=webfactorderSer.findFactSname(factNos);
+			jsons=JSONArray.fromObject(list);
+		}		
 		return "findFactSname";
 	}
 	
@@ -639,6 +641,132 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 				sheet.getRow(i+2).getCell(18).setCellStyle(cs_font_blue);
 			}
 			sheet.getRow(i+2).getCell(17).setCellValue(row_total);			
+			
+		}
+		//OutputStream os=new FileOutputStream("d:\\tttttt.xls");
+		ServletOutputStream os=response.getOutputStream();
+		response.setContentType("application/vnd.ms-excel");
+		String fileName="fact_report_2015.xls";
+		int msi=ServletActionContext.getRequest().getHeader("USER-AGENT").toLowerCase().indexOf("msie");
+		if(msi>0){
+			fileName=java.net.URLEncoder.encode(fileName,"utf-8");
+		}else{
+			fileName=new String(fileName.getBytes("utf-8"),"iso-8859-1");
+		}
+		response.setHeader("Content-disposition", "attachment;filename="+fileName);
+		wb.write(os);
+		os.close();
+		
+		
+	}
+	
+	/**
+	 * 打印搜索分組數據
+	 * 快速準確修改版
+	 * @throws IOException 
+	 */
+	public void print4() throws IOException{
+		List<Object[]>list=webfactorderSer.findByGroup(factSnames, branks, customers, models, components,year);
+		
+		HSSFWorkbook wb=new HSSFWorkbook();
+		HSSFSheet sheet=wb.createSheet("sheet1");
+		
+		HSSFCellStyle cs=wb.createCellStyle();
+		cs.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+		cs.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+		cs.setBorderRight(HSSFCellStyle.BORDER_THIN);
+		cs.setBorderTop(HSSFCellStyle.BORDER_THIN);
+		
+		//標題樣式
+		HSSFCellStyle cs_title=wb.createCellStyle();
+		HSSFFont font_title=wb.createFont();
+		font_title.setFontHeightInPoints((short)14);
+		font_title.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+		cs_title.setFont(font_title);
+		
+		// 紅字體
+		HSSFCellStyle cs_font_red = wb.createCellStyle();
+		HSSFFont font_red = wb.createFont();
+		font_red.setFontHeightInPoints((short) 10);
+		font_red.setBoldweight(HSSFFont.BOLDWEIGHT_NORMAL);
+		font_red.setColor(HSSFFont.COLOR_RED);
+		cs_font_red.setFont(font_red);
+		cs_font_red.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		cs_font_red.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		cs_font_red.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+		cs_font_red.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+		cs_font_red.setBorderRight(HSSFCellStyle.BORDER_THIN);
+		cs_font_red.setBorderTop(HSSFCellStyle.BORDER_THIN);
+		
+		// 藍字體
+		HSSFCellStyle cs_font_blue = wb.createCellStyle();
+		HSSFFont font_blue = wb.createFont();
+		font_blue.setFontHeightInPoints((short) 10);
+		font_blue.setBoldweight(HSSFFont.BOLDWEIGHT_NORMAL);
+		font_blue.setColor(IndexedColors.BLUE.getIndex());
+		cs_font_blue.setFont(font_blue);
+		cs_font_blue.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		cs_font_blue.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		cs_font_blue.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+		cs_font_blue.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+		cs_font_blue.setBorderRight(HSSFCellStyle.BORDER_THIN);
+		cs_font_blue.setBorderTop(HSSFCellStyle.BORDER_THIN);
+		
+		//表頭樣式
+		HSSFCellStyle cs_head = wb.createCellStyle();
+		HSSFFont font_head=wb.createFont();
+		font_head.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+		cs_head.setFont(font_head);
+		cs_head.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+		cs_head.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+		cs_head.setBorderRight(HSSFCellStyle.BORDER_THIN);
+		cs_head.setBorderTop(HSSFCellStyle.BORDER_THIN);
+		cs_head.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		cs_head.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		cs_head.setFillForegroundColor(IndexedColors.YELLOW.getIndex());				
+		cs_head.setFillPattern(XSSFCellStyle.SOLID_FOREGROUND);
+		
+		/***************************初始化表格************************************/
+		for(int i=0;i<5;i++){
+			if(i==0){
+				sheet.setColumnWidth(i, 6000);	
+			}else{
+				sheet.setColumnWidth(i, 4500);
+			}			
+		}
+		
+		sheet.createRow(0).createCell(0);
+		sheet.getRow(0).getCell(0).setCellValue(year+"訂單月份匯總表");
+		sheet.getRow(0).getCell(0).setCellStyle(cs_title);
+		for(int i=1;i<list.size()+2;i++){
+			sheet.createRow(i);
+			for(int j=0;j<30;j++){
+				sheet.getRow(i).createCell(j);
+				sheet.getRow(i).getCell(j).setCellStyle(cs);
+			}
+			if(i==1){
+				sheet.getRow(i).getCell(0).setCellValue("廠別");
+				sheet.getRow(i).getCell(1).setCellValue("品牌");
+				sheet.getRow(i).getCell(2).setCellValue("客戶");
+				sheet.getRow(i).getCell(3).setCellValue("模具");
+				sheet.getRow(i).getCell(4).setCellValue("部件");				
+				for(int k=0;k<12;k++){
+					if(k+1<10){
+						sheet.getRow(i).getCell(5+k).setCellValue(year+"0"+(k+1));
+					}else{
+						sheet.getRow(i).getCell(5+k).setCellValue(year+(k+1));
+					}					
+				}
+				sheet.getRow(i).getCell(17).setCellValue("匯總");
+				for(int l=0;l<18;l++){
+					sheet.getRow(i).getCell(l).setCellStyle(cs_head);
+				}
+			}										
+		}
+		/***************************初始化表格************************************/
+		
+		for(int i=0;i<list.size();i++){
+					
 			
 		}
 		//OutputStream os=new FileOutputStream("d:\\tttttt.xls");

@@ -269,6 +269,9 @@
 			<result name="findAllFactarea_obj" type="json">
 			   <param name="root">jsons</param>
 			</result>
+			<result name="findFactByFactNo" type="json">
+			   <param name="root">jsons</param>
+			</result>
 		</action>
 		<action name="print2Yireport_*" class="preAndDataActionireport"
 			method="{1}">

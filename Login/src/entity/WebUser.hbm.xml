@@ -46,6 +46,9 @@
         <property name="emailpassword" type="java.lang.String">
             <column name="EMAILPASSWORD" length="50"></column>
         </property>
+        <property name="department" type="java.lang.String">
+            <column name="DEPARTMENT" length="30"></column>
+        </property>
         <bag name="webJurisdictions" cascade="delete" inverse="true" >
             <key>
                 <column name="USERID" precision="8" scale="0" not-null="true" />

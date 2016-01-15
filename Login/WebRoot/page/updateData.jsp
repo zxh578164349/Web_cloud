@@ -147,6 +147,12 @@ function back(){
 			      </s:else>
 			     <%-- <input type="hidden" name="updateU.logdate" value="<s:property value="#attr.webU.logdate"/>"/> --%>
 			     </td>
+			</tr>
+			<tr>
+			  <td class="td1">部門</td>
+			  <td>
+			       <input type="text" value="<s:property value='#attr.webU.department'/>" name="updateU.department"/>
+			  </td>
 			</tr> 
 			<tr>
 				<td colspan="2"><span style="margin-left: 300px;">
