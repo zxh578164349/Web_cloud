@@ -161,4 +161,9 @@ public class WebFactServicesImpl implements IWebFactServices {
 		return webFactDao.findAllFactarea_obj();
 	}
 
+	public List<Object[]> findFactByFactNo(String factNo) {
+		// TODO Auto-generated method stub
+		return webFactDao.findFactByFactNo(factNo);
+	}
+
 }

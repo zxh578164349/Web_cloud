@@ -13,9 +13,9 @@ public class WebFact implements java.io.Serializable {
 
 	private WebFactId id;
 	private String factSname;
-	private String orderNo;
+	private String orderNo;//工廠排位序號
 	private String factCode;
-	private String fcodeIndex;
+	private String fcodeIndex;//廠別狀態排位序號
 	private String factShow;
 	private String factShowA;
 	private String factDisable;

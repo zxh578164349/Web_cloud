@@ -32,32 +32,32 @@ public class WebFactorderServicesImpl implements IWebFactorderServices{
 		// TODO Auto-generated method stub
 		return factorderdao.findPageBean(pageSize, page, factSnames, brank, customer, model, component);
 	}
-	public List<String> findComponent(List<String> factSname) {
+	public List<String> findComponent(List<String> factNos) {
 		// TODO Auto-generated method stub
-		return factorderdao.findComponent(factSname);
+		return factorderdao.findComponent(factNos);
 	}
 
 
-	public List<String> findBrank(List<String> factSname) {
+	public List<String> findBrank(List<String> factNos) {
 		// TODO Auto-generated method stub
-		return factorderdao.findBrank(factSname);
+		return factorderdao.findBrank(factNos);
 	}
 
 
-	public List<String> findCustomer(List<String> factSname) {
+	public List<String> findCustomer(List<String> factNos) {
 		// TODO Auto-generated method stub
-		return factorderdao.findCustomer(factSname);
+		return factorderdao.findCustomer(factNos);
 	}
 
 
-	public List<String> findModel(List<String> factSname) {
+	public List<String> findModel(List<String> factNos) {
 		// TODO Auto-generated method stub
-		return factorderdao.findModel(factSname);
+		return factorderdao.findModel(factNos);
 	}
 	
-	public List<String> findFactSname() {
+	public List<String> findFactSname(List<String> factNos) {
 		// TODO Auto-generated method stub
-		return factorderdao.findFactSname();
+		return factorderdao.findFactSname(factNos);
 	}
 
 
@@ -88,6 +88,14 @@ public class WebFactorderServicesImpl implements IWebFactorderServices{
 			String customer, String model, String component, String yymm) {
 		// TODO Auto-generated method stub
 		return factorderdao.findOrderdata(factSname, brank, customer, model, component, yymm);
+	}
+
+
+	public List<Object[]> findByGroup(List<String> factSnames,
+			List<String> brank, List<String> customer, List<String> model,
+			List<String> component, String yymm) {
+		// TODO Auto-generated method stub
+		return factorderdao.findByGroup(factSnames, brank, customer, model, component, yymm);
 	}
 
 

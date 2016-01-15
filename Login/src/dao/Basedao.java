@@ -214,5 +214,28 @@ public class Basedao extends HibernateDaoSupport {
 		});
 		return list;
 	}
+	
+	public List getAllWithNoPage_sql(final String hql, final Map<String, Object> map) {
+	    List list = getHibernateTemplate().executeFind(new HibernateCallback() {
+		public Object doInHibernate(Session session)
+				throws HibernateException, SQLException {
+			Query query = session.createSQLQuery(hql);
+			if (map != null && !map.isEmpty()) {
+				for (String key : map.keySet()) {
+					if(map.get(key).getClass().getName().equals("com.opensymphony.xwork2.util.XWorkList")||
+							map.get(key).getClass().getName().equals("java.util.ArrayList")	){
+						//System.out.println(map.get(key).getClass().getName());
+						query.setParameterList(key, (List<String>)map.get(key));
+					}else{
+						query.setParameter(key, map.get(key));
+					}						
+				}
+			}
+			List list = query.list();
+			return list;
+		}
+	});
+	return list;
+}
 
 }

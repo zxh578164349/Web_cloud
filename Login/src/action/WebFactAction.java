@@ -18,7 +18,18 @@ public class WebFactAction extends ActionSupport {
 	private IWebFactServices webFactSer;
 	private IKyTypeServices kytypeSer;
 	private JSONArray jsons;
+	private String factNo;
 	
+
+	public String getFactNo() {
+		return factNo;
+	}
+
+
+	public void setFactNo(String factNo) {
+		this.factNo = factNo;
+	}
+
 
 	public JSONArray getJsons() {
 		return jsons;
@@ -110,6 +121,21 @@ public class WebFactAction extends ActionSupport {
 		List<Object[]>list=webFactSer.findAllFactarea_obj();
 		jsons=JSONArray.fromObject(list);
 		return "findAllFactarea_obj";
+	}
+	
+	/**
+	 * 根據用戶所屬的廠別，來加載廠別列錶
+	 * 如果是臺灣（tw）用戶，加載所有的的廠別
+	 * 如果是工廠用戶，加載所屬工廠
+	 * 20160115
+	 * @param factNo
+	 * @return
+	 */
+	public String findFactByFactNo(){		
+		factNo=(String)ActionContext.getContext().getSession().get("factNo");
+		List<Object[]>list=webFactSer.findFactByFactNo(factNo);
+		jsons=JSONArray.fromObject(list);
+		return "findFactByFactNo";
 	}
 	
 	

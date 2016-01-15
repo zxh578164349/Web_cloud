@@ -98,7 +98,7 @@
 	}
 	function print(public_form){
 		var subform=jq("#"+public_form);
-		subform.attr("action","webfactOrder_print3");
+		subform.attr("action","webfactOrder_print4");
 		subform.attr("target","_blank");
 		subform.submit();
 		//jq("#"+subform).removeAttr("action");

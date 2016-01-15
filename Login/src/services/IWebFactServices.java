@@ -54,5 +54,15 @@ public interface IWebFactServices {
 	 */
 	public List<Object[]> findAllFactarea_obj();
 	
+	/**
+	 * 根據用戶所屬的廠別，來加載廠別列錶
+	 * 如果是臺灣（tw）用戶，加載所有的的廠別
+	 * 如果是工廠用戶，加載所屬工廠
+	 * 20160115
+	 * @param factNo
+	 * @return
+	 */
+	public List<Object[]>findFactByFactNo(String factNo);
+	
 
 }
