@@ -31,7 +31,7 @@ public class WebFactorderDaoImpl extends Basedao implements IWebFactorderDao{
 		String[]objs_head=null;	
 		Transaction tx=null;
 		try{
-			//tx=getSession().beginTransaction();
+			tx=getSession().beginTransaction();
 			for(int i=0;i<list.size();i++){
 				String[]objs=null;
 				if(i==0){
@@ -57,15 +57,65 @@ public class WebFactorderDaoImpl extends Basedao implements IWebFactorderDao{
 						if((i*j)%25==0){
 							getSession().flush();
 							getSession().clear();
-						}									
+						}						
 					}
 				}			
 							
 			}
 			//tx.commit();
-			//getSession().close();
+		    //getSession().close();
 		}catch(Exception e){
-			//tx.rollback();
+			System.out.println(e);
+			tx.rollback();
+		}		
+		
+		
+	}
+	/**
+	 * 大批量導入數據20160117(修改版)
+	 */
+	public void addLarge2(List<List<String>>list) {
+		// TODO Auto-generated method stub
+		List<String>objs_head=null;	
+		Transaction tx=null;
+		try{
+			tx=getSession().beginTransaction();
+			for(int i=0;i<list.size();i++){
+				List<String>objs=null;
+				if(i==0){
+					objs_head=list.get(0);//該表頭包含了日期（日期從第5列開始）
+				}else{
+					objs=list.get(i);//注意：分解的數組比總列數要多齣1箇，所以開始要j=5+1
+					
+					for(int j=5+1;j<objs_head.size()-1;j++){//objs_head-1:表示排除最後一箇"汇总"列
+						WebFactorder order=new WebFactorder();
+						order.setFactSname(objs.get(1));
+						order.setBrank(objs.get(2));
+						order.setCustomer(objs.get(3));
+						order.setModelNo(objs.get(4));
+						order.setComponent(objs.get(5));
+						try{
+							order.setOrderData(Double.valueOf(objs.get(j)));//循環獲取各箇日期的數據
+						}catch(Exception e){
+							order.setOrderData(-1.0);//報錯時，給值-1,標記數據格式不對
+						}						
+						order.setYymm(objs_head.get(j).replace("/", ""));//循環獲取日期
+						order.setFactNo(objs.get(objs.size()-1));
+						order.setColTemp("1");//臨時標記列
+						getSession().save(order);
+						if((i*j)%25==0){
+							getSession().flush();
+							getSession().clear();
+						}						
+					}
+				}			
+							
+			}
+			//tx.commit();
+		    //getSession().close();
+		}catch(Exception e){
+			System.out.println(e);
+			tx.rollback();
 		}		
 		
 		
@@ -73,9 +123,8 @@ public class WebFactorderDaoImpl extends Basedao implements IWebFactorderDao{
 
 
 	public PageBean findPageBean(int pageSize, int page, List<String> factSnames,
-			List<String>brank, List<String>customer, List<String>model, List<String>component) {
+			List<String>brank, List<String>customer, List<String>model, List<String>component,String year,String factNo) {
 		// TODO Auto-generated method stub
-		//System.out.println(factNos.getClass().getName());
 		StringBuffer hql=new StringBuffer();
 		StringBuffer hql2=new StringBuffer();
 		Map<String,Object>map=new HashMap<String,Object>();
@@ -100,6 +149,14 @@ public class WebFactorderDaoImpl extends Basedao implements IWebFactorderDao{
 		if(component!=null&&component.size()>0){
 			hql.append(" and component in(:component)");
 			map.put("component", component);
+		}
+		if(year!=null&&!year.equals("")){
+			hql.append(" and yymm like :year");
+			map.put("year", year+"%");
+		}
+		if(factNo!=null&&!factNo.equals("")&&!factNo.equals("tw")){
+			hql.append(" and factNo=:factno");
+			map.put("factno", factNo);
 		}
 		hql2.append(hql);
 		hql.append(" order by factSname,brank,customer,modelNo,component,yymm");
@@ -175,7 +232,7 @@ public class WebFactorderDaoImpl extends Basedao implements IWebFactorderDao{
 	
 	public List<WebFactorder> findWithNoPage(List<String> factSnames,
 			List<String> brank, List<String> customer, List<String> model,
-			List<String> component,String yymm) {
+			List<String> component,String year) {
 		// TODO Auto-generated method stub
 		StringBuffer hql=new StringBuffer();
 		Map<String,Object>map=new HashMap<String,Object>();
@@ -200,9 +257,9 @@ public class WebFactorderDaoImpl extends Basedao implements IWebFactorderDao{
 			hql.append(" and component in(:component)");
 			map.put("component", component);
 		}
-		if(yymm!=null&&!yymm.equals("")){
-			hql.append(" and yymm like:yymm");
-			map.put("yymm", yymm+"%");
+		if(year!=null&&!year.equals("")){
+			hql.append(" and yymm like:year");
+			map.put("year", year+"%");
 		}
 		hql.append(" order by factSname,brank,customer,modelNo,component,yymm");
 		return super.getAllWithNoPage(hql.toString(), map);
@@ -233,7 +290,7 @@ public class WebFactorderDaoImpl extends Basedao implements IWebFactorderDao{
 	 */
 	public List<Object[]> findWebFactorder(List<String> factNos,
 			List<String> brank, List<String> customer, List<String> model,
-			List<String> component, String yymm) {
+			List<String> component, String year) {
 		// TODO Auto-generated method stub
 		StringBuffer hql=new StringBuffer();
 		Map<String,Object>map=new HashMap<String,Object>();
@@ -258,9 +315,9 @@ public class WebFactorderDaoImpl extends Basedao implements IWebFactorderDao{
 			hql.append(" and component in(:component)");
 			map.put("component", component);
 		}
-		if(yymm!=null&&!yymm.equals("")){
-			hql.append(" and yymm like:yymm");
-			map.put("yymm", yymm+"%");
+		if(year!=null&&!year.equals("")){
+			hql.append(" and yymm like:year");
+			map.put("year", year+"%");
 		}
 		hql.append(" group by factSname,brank,customer,modelNo,component ");
 		hql.append(" order by factSname,brank,customer,modelNo,component");
@@ -281,76 +338,163 @@ public class WebFactorderDaoImpl extends Basedao implements IWebFactorderDao{
 	}
 
 
+	/**
+	 * 不定向分组统计
+	 * @param factSnames
+	 * @param brank
+	 * @param customer
+	 * @param model
+	 * @param component
+	 * @param year
+	 * @return
+	 */
 	public List<Object[]> findByGroup(List<String> factSnames,
 			List<String> brank, List<String> customer, List<String> model,
-			List<String> component, String yymm) {
+			List<String> component, String year,String factNo) {
 		// TODO Auto-generated method stub
-		String decode_fact="decode('y',:factsname_mk,FACT_SNAME,''),";
-		String decode_brank="decode('y',:brank_mk,brank,''),";
-		String decode_customer="decode('y',:customer_mk,customer,''),";
-		String decode_model="decode('y',:modelno_mk,MODEL_NO,''),";
-		String decode_component="decode('y',:component_mk,component,''),";
+		String decode_fact="decode('y','n',FACT_SNAME,''),";
+		String decode_brank="decode('y','n',brank,''),";
+		String decode_customer="decode('y','n',customer,''),";
+		String decode_model="decode('y','n',MODEL_NO,''),";
+		String decode_component="decode('y','n',component,''),";
+		if(factSnames!=null&&factSnames.size()>0){
+			decode_fact="decode('y','y',FACT_SNAME,''),";
+		}
+		if(brank!=null&&brank.size()>0){
+			decode_brank="decode('y','y',brank,''),";
+		}
+		if(customer!=null&&customer.size()>0){
+			decode_customer="decode('y','y',customer,''),";
+		}
+		if(model!=null&&model.size()>0){
+			decode_model="decode('y','y',MODEL_NO,''),";
+		}
+		if(component!=null&&component.size()>0){
+			decode_component="decode('y','y',component,''),";
+		}
+				
 		StringBuffer hql=new StringBuffer();
 		hql.append("select "+decode_fact);
 		hql.append(decode_brank);
 		hql.append(decode_customer);
 		hql.append(decode_model);
 		hql.append(decode_component);
-		hql.append("yymm,sum(ORDER_DATA) from WEB_FACTORDER where 1=1 ");
+		hql.append("yymm,sum(ORDER_DATA) from WEB_FACTORDER  where 1=1 ");
 		Map<String,Object>map=new HashMap<String,Object>();
 		if(factSnames!=null&&factSnames.size()>0){
 			hql.append(" and FACT_SNAME in(:factsnames) ");
 			map.put("factsnames", factSnames);
-			map.put("factsname_mk", "y");
-		}else{
-			map.put("factsname_mk", "n");
 		}
 		if(brank!=null&&brank.size()>0){
 			hql.append(" and brank in(:branks) ");
 			map.put("branks", brank);
-			map.put("brank_mk", "y");
-		}else{
-			map.put("brank_mk", "n");
 		}
 		if(customer!=null&&customer.size()>0){
 			hql.append(" and customer in(:customers) ");
 			map.put("customers", customer);
-			map.put("customer_mk", "y");
-		}else{
-			map.put("customer_mk", "n");
 		}
 		if(model!=null&&model.size()>0){
 			hql.append(" and MODEL_NO in(:modelNos) ");
 			map.put("modelNos", model);
-			map.put("modelno_mk", "y");
-		}else{
-			map.put("modelno_mk", "n");
 		}
 		if(component!=null&&component.size()>0){
 			hql.append(" and component in(:components) ");
 			map.put("components", component);
-			map.put("component_mk", "y");
-		}else{
-			map.put("component_mk", "n");
 		}
-		hql.append("group by "+decode_fact+decode_brank+decode_customer+decode_model+decode_component+"yymm ");		
-		//hql.append("order by "+decode_fact+decode_brank+decode_customer+decode_model+decode_component+"yymm ");
-		//List<Object[]>list=super.getAllWithNoPage_sql(hql.toString(), map);
-		//String hql2="select decode('y','y',FACT_SNAME,''),decode('y','n',brank,''),decode('y','n', customer,''),decode('y','n',MODEL_NO,''), decode('y','n',component,''),yymm, sum(ORDER_DATA) from WEB_FACTORDER where 1=1  and FACT_SNAME in('北越加九(順益)有限公司RB廠')  group by decode('y', 'y',FACT_SNAME,''),decode('y','n',brank,''),decode('y','n',customer, ''),decode('y','n',MODEL_NO,''),decode('y','n',component,''),yymm ";
-		Query query=getSession().createSQLQuery(hql.toString());
-		if (map != null && !map.isEmpty()) {
-			for (String key : map.keySet()) {
-				if(map.get(key).getClass().getName().equals("com.opensymphony.xwork2.util.XWorkList")||
-						map.get(key).getClass().getName().equals("java.util.ArrayList")	){					
-					query.setParameterList(key, (List<String>)map.get(key));
-				}else{
-					query.setParameter(key, map.get(key));
-				}
-				System.out.println(map.get(key));
-			}
+		if(year!=null&&!year.equals("")){
+			hql.append(" and yymm like :year ");
+			map.put("year",year+"%");
 		}
-		return query.list();
+		if(factNo!=null&&!factNo.equals("")&&!factNo.equals("tw")){
+			hql.append(" and factNo=:factno");
+			map.put("factno", factNo);
+		}
+		hql.append("group by "+decode_fact+decode_brank+decode_customer+decode_model+decode_component+"yymm ");
+		hql.append("order by "+decode_fact+decode_brank+decode_customer+decode_model+decode_component+"yymm ");
+		List<Object[]>list=super.getAllWithNoPage_sql(hql.toString(), map);
+		return list;
+		
 	}
+
+
+	/**
+	 * 在不定向分组统计的基础上，找出一年中不重复的（厂名+品牌+客户+模具+部件）
+	 * @param factSnames
+	 * @param brank
+	 * @param customer
+	 * @param model
+	 * @param component
+	 * @param year
+	 * @return
+	 */
+	public List<Object[]> findByGroup2(List<String> factSnames,
+			List<String> brank, List<String> customer, List<String> model,
+			List<String> component, String year,String factNo) {
+		// TODO Auto-generated method stub
+		String decode_fact="decode('y','n',FACT_SNAME,''),";
+		String decode_brank="decode('y','n',brank,''),";
+		String decode_customer="decode('y','n',customer,''),";
+		String decode_model="decode('y','n',MODEL_NO,''),";
+		String decode_component="decode('y','n',component,''),";
+		if(factSnames!=null&&factSnames.size()>0){
+			decode_fact="decode('y','y',FACT_SNAME,''),";
+		}
+		if(brank!=null&&brank.size()>0){
+			decode_brank="decode('y','y',brank,''),";
+		}
+		if(customer!=null&&customer.size()>0){
+			decode_customer="decode('y','y',customer,''),";
+		}
+		if(model!=null&&model.size()>0){
+			decode_model="decode('y','y',MODEL_NO,''),";
+		}
+		if(component!=null&&component.size()>0){
+			decode_component="decode('y','y',component,''),";
+		}
+				
+		StringBuffer hql=new StringBuffer();
+		hql.append("select "+decode_fact);
+		hql.append(decode_brank);
+		hql.append(decode_customer);
+		hql.append(decode_model);
+		hql.append(decode_component);
+		hql.append("substr(yymm,0,4) from WEB_FACTORDER  where 1=1 ");
+		Map<String,Object>map=new HashMap<String,Object>();
+		if(factSnames!=null&&factSnames.size()>0){
+			hql.append(" and FACT_SNAME in(:factsnames) ");
+			map.put("factsnames", factSnames);
+		}
+		if(brank!=null&&brank.size()>0){
+			hql.append(" and brank in(:branks) ");
+			map.put("branks", brank);
+		}
+		if(customer!=null&&customer.size()>0){
+			hql.append(" and customer in(:customers) ");
+			map.put("customers", customer);
+		}
+		if(model!=null&&model.size()>0){
+			hql.append(" and MODEL_NO in(:modelNos) ");
+			map.put("modelNos", model);
+		}
+		if(component!=null&&component.size()>0){
+			hql.append(" and component in(:components) ");
+			map.put("components", component);
+		}
+		if(year!=null&&!year.equals("")){
+			hql.append(" and yymm like :year ");
+			map.put("year",year+"%");
+		}
+		if(factNo!=null&&!factNo.equals("")&&!factNo.equals("tw")){
+			hql.append(" and factNo=:factno");
+			map.put("factno", factNo);
+		}
+		hql.append("group by "+decode_fact+decode_brank+decode_customer+decode_model+decode_component+"substr(yymm,0,4) ");
+		hql.append("order by "+decode_fact+decode_brank+decode_customer+decode_model+decode_component+"substr(yymm,0,4) ");
+		List<Object[]>list=super.getAllWithNoPage_sql(hql.toString(), map);
+		return list;
+	}
+
+
 
 
 	

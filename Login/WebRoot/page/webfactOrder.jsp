@@ -98,9 +98,17 @@
 	}
 	function print(public_form){
 		var subform=jq("#"+public_form);
+		var checkboxs=jq("input[name='factNos']:checked");
 		subform.attr("action","webfactOrder_print4");
 		subform.attr("target","_blank");
-		subform.submit();
+		if(checkboxs.length==0){
+		   layer.msg("請選擇工廠類別",3,3);
+		   jq("#div_factNos").css("border-color","red");
+		}else{
+		   jq("#div_factNos").css("border-color","");
+		   subform.submit();
+		}
+		
 		//jq("#"+subform).removeAttr("action");
 		//jq("#"+subform).removeAttr("target");
 	}

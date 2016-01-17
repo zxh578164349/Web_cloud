@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -24,9 +25,11 @@ import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.ServletResponseAware;
+import org.hibernate.Transaction;
 
 import net.sf.json.JSONArray;
 
+import services.IWebFactServices;
 import services.IWebFactorderServices;
 import util.GlobalMethod;
 import util.ImportExcel;
@@ -41,6 +44,7 @@ import entity.WebUser;
 
 public class WebFactOrderAction extends ActionSupport implements ServletResponseAware{
 	private IWebFactorderServices webfactorderSer;
+	private IWebFactServices webFactSer;
 	private WebFactorder factorder;
 	private PageBean bean;
 	private int page;
@@ -198,6 +202,10 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 	public void setWebfactorderSer(IWebFactorderServices webfactorderSer) {
 		this.webfactorderSer = webfactorderSer;
 	}
+	
+	public void setWebFactSer(IWebFactServices webFactSer) {
+		this.webFactSer = webFactSer;
+	}
 	public void setServletResponse(HttpServletResponse response) {
 		// TODO Auto-generated method stub
 		this.response=response;
@@ -252,26 +260,66 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 		
 		
 		/*******************數據導入到數據庫********************/
-		try{
-			List<String>list_all=ImportExcel.exportListFromExcel(new File(path+"\\"+fileFileName), 0);
+		/*try{			
+			List<String>list_all=ImportExcel.exportListFromExcel(new File(path+"\\"+fileFileName), 0);////////////////////
 			if(list_all.size()>0){
 				try{
 					webfactorderSer.addLarge(list_all);
 				}catch(Exception e){
 					ajaxResult="2";//导入Excel失败
+					System.out.println(e);
 				}
 			}else{
 				ajaxResult="3";//Excel数据结构不符合要求,不允许导入
 			}
 		}catch(Exception e){
 			ajaxResult="2";//导入Excel失败
-		}
+			System.out.println(e);
+		}*/
 		/*******************數據導入到數據庫********************/
+		
+		/*******************數據導入到數據庫20160117********************/
+		try{
+			List<String>list_imp=ImportExcel.exportListFromExcel(new File(path+"\\"+fileFileName), 1);
+			List<List<String>>list_all=new ArrayList<List<String>>();
+			if(list_imp.size()>0){
+				List<Object[]>list_fact=webFactSer.findAllFact_obj();
+				for(int i=0;i<10;i++){//for
+					if(i==0){
+						list_all.add(Arrays.asList(list_imp.get(i).split("__")));
+					}else{
+						List<String>list_data=new ArrayList<String>(Arrays.asList(list_imp.get(i).split("__")));
+						for(int x=0;x<list_fact.size();x++){
+							if(list_data.get(1).replace("(", "").replace(")", "").contains(list_fact.get(x)[1].toString())){
+								list_data.add(list_fact.get(x)[0].toString());
+								break;
+							}
+						}
+						list_all.add(list_data);
+					}
+				}//for
+				try{
+					webfactorderSer.addLarge2(list_all);
+				}catch(Exception e){
+					ajaxResult="2";//导入Excel失败
+					System.out.println(e);
+				}
+				
+			}else{
+				ajaxResult="3";//Excel数据结构不符合要求,不允许导入
+			}
+		}catch(Exception e){
+			ajaxResult="2";//导入Excel失败
+			System.out.println(e);
+		}
+		/*******************數據導入到數據庫20160117********************/
+		
 		return result;
 	}
 	public String findPageBean(){
 		
 		//System.out.println(factNos.getClass().getName());
+		factNo=(String)ActionContext.getContext().getSession().get("factNo");
 		ActionContext.getContext().getSession().remove("allrow");//首次進入，清除分頁的總條數（dao層中的allrow）
 		ActionContext.getContext().getSession().remove("public_factnames");
 		ActionContext.getContext().getSession().remove("public_factno");
@@ -279,11 +327,15 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 		ActionContext.getContext().getSession().remove("public_customer");
 		ActionContext.getContext().getSession().remove("public_model");
 		ActionContext.getContext().getSession().remove("public_component");
-		bean=webfactorderSer.findPageBean(25, page, factSnames, branks, customers, models, components);
+		ActionContext.getContext().getSession().remove("public_year");
+		bean=webfactorderSer.findPageBean(25, page, factSnames, branks, customers, models, components,year,factNo);
 		return "beanList";
 		
 	}
 	public String findPageBean2(){
+		if(factNo==null||factNo.equals("")){
+			factNo=(String)ActionContext.getContext().getSession().get("factNo");
+		}
 		//System.out.println(factNos.getClass().getName());//com.opensymphony.xwork2.util.XWorkList
 		ActionContext.getContext().getSession().remove("allrow");//條件查詢，清除分頁的總條數（dao層中的allrow）
 		/*ActionContext.getContext().getSession().remove("public_factnames");
@@ -291,27 +343,32 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 		ActionContext.getContext().getSession().remove("public_customer");
 		ActionContext.getContext().getSession().remove("public_model");
 		ActionContext.getContext().getSession().remove("public_component");*/
-		
+		ActionContext.getContext().getSession().put("public_factno", factNo);
 		ActionContext.getContext().getSession().put("public_factnames",factSnames);
 		ActionContext.getContext().getSession().put("public_brank",branks);
 		ActionContext.getContext().getSession().put("public_customer",customers);
 		ActionContext.getContext().getSession().put("public_model",models);
 		ActionContext.getContext().getSession().put("public_component",components);
-		bean=webfactorderSer.findPageBean(25, page, factSnames, branks, customers, models, components);
+		ActionContext.getContext().getSession().put("public_year", year);
+		bean=webfactorderSer.findPageBean(25, page, factSnames, branks, customers, models, components,year,factNo);
 		return "beanList1";
 	}
 	public String findPageBean3(){
+		factNo=(String)ActionContext.getContext().getSession().get("public_factno");
+		if(factNo==null||factNo.equals("")){
+			factNo=(String)ActionContext.getContext().getSession().get("factNo");
+		}
 		factSnames=(List<String>)ActionContext.getContext().getSession().get("public_factnames");
 		branks=(List<String>)ActionContext.getContext().getSession().get("public_brank");
 		customers=(List<String>)ActionContext.getContext().getSession().get("public_customer");
 		models=(List<String>)ActionContext.getContext().getSession().get("public_model");
 		components=(List<String>)ActionContext.getContext().getSession().get("public_component");
-		bean=webfactorderSer.findPageBean(25, page, factSnames, branks, customers, models, components);
+		year=(String)ActionContext.getContext().getSession().get("public_year");
+		bean=webfactorderSer.findPageBean(25, page, factSnames, branks, customers, models, components,year,factNo);
 		return "beanList1";
 	}
 	
 	public void init(){
-		System.out.println(factNos);
 		ActionContext.getContext().getSession().put("factNos", factNos);
 	}
 	/**
@@ -622,23 +679,28 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 			}
 			if(list_all.get(i).size()<12){
 				for(int j=0;j<12;j++){
-					try{
+					/*try{
 						sheet.getRow(i+2).getCell(5+j).setCellValue(list_all.get(i).get(j).getOrderData());
 					}catch(Exception e){
 						sheet.getRow(i+2).getCell(5+j).setCellValue("無數據");
 						sheet.getRow(i+2).getCell(5+j).setCellStyle(cs_font_red);
-					}					
+					}*/	
+					sheet.getRow(i+2).getCell(5+j).setCellValue("數據不足");
+					sheet.getRow(i+2).getCell(5+j).setCellStyle(cs_font_red);
 					row_total=row_total+list_all.get(i).get(j).getOrderData();					
 				}
 			}
 			if(list_all.get(i).size()>12){
-				for(int j=0;j<12;j++){
+				/*for(int j=0;j<12;j++){
 					sheet.getRow(i+2).getCell(5+j).setCellValue(list_all.get(i).get(j).getOrderData());	
 					sheet.getRow(i+2).getCell(5+j).setCellStyle(cs_font_blue);
 					row_total=row_total+list_all.get(i).get(j).getOrderData();
+				}*/
+				for(int j=0;j<12;j++){
+					sheet.getRow(i+2).getCell(18).setCellValue("(數據冗餘)");
+					sheet.getRow(i+2).getCell(18).setCellStyle(cs_font_blue);
+					row_total=row_total+list_all.get(i).get(j).getOrderData();
 				}
-				sheet.getRow(i+2).getCell(18).setCellValue("(數據存在重複)");
-				sheet.getRow(i+2).getCell(18).setCellStyle(cs_font_blue);
 			}
 			sheet.getRow(i+2).getCell(17).setCellValue(row_total);			
 			
@@ -646,7 +708,7 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 		//OutputStream os=new FileOutputStream("d:\\tttttt.xls");
 		ServletOutputStream os=response.getOutputStream();
 		response.setContentType("application/vnd.ms-excel");
-		String fileName="fact_report_2015.xls";
+		String fileName="fact_report_"+year+".xls";
 		int msi=ServletActionContext.getRequest().getHeader("USER-AGENT").toLowerCase().indexOf("msie");
 		if(msi>0){
 			fileName=java.net.URLEncoder.encode(fileName,"utf-8");
@@ -661,13 +723,38 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 	}
 	
 	/**
-	 * 打印搜索分組數據
+	 * 打印搜索分組統計數據
 	 * 快速準確修改版
 	 * @throws IOException 
 	 */
 	public void print4() throws IOException{
-		List<Object[]>list=webfactorderSer.findByGroup(factSnames, branks, customers, models, components,year);
-		
+		factNo=(String)ActionContext.getContext().getSession().get("factNo");
+		List<Object[]>list=webfactorderSer.findByGroup2(factSnames, branks, customers, models, components, year,factNo);
+		List<Object[]>list2=webfactorderSer.findByGroup(factSnames, branks, customers, models, components,year,factNo);		
+		List<List<Double>>list_all=new ArrayList<List<Double>>();
+		for(int i=0;i<list.size();i++){//for1
+			for(int x=0;x<5;x++){
+				if(list.get(i)[x]==null){
+					list.get(i)[x]="";
+				}
+			}
+			List<Double>list_one=new ArrayList<Double>();
+			for(int j=0;j<list2.size();j++){//for2
+				for(int y=0;y<5;y++){
+					if(list2.get(j)[y]==null){
+						list2.get(j)[y]="";
+					}
+				}
+				if(list.get(i)[0].toString().equals(list2.get(j)[0].toString())&&
+						list.get(i)[1].toString().equals(list2.get(j)[1].toString())&&
+						list.get(i)[2].toString().equals(list2.get(j)[2].toString())&&
+						list.get(i)[3].toString().equals(list2.get(j)[3].toString())&&
+						list.get(i)[4].toString().equals(list2.get(j)[4].toString())){
+					list_one.add(Double.parseDouble(list2.get(j)[6].toString()));
+				}
+			}//for2
+			list_all.add(list_one);
+		}//for1
 		HSSFWorkbook wb=new HSSFWorkbook();
 		HSSFSheet sheet=wb.createSheet("sheet1");
 		
@@ -766,13 +853,32 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 		/***************************初始化表格************************************/
 		
 		for(int i=0;i<list.size();i++){
-					
-			
+			sheet.getRow(i+2).getCell(0).setCellValue(list.get(i)[0].toString());
+			sheet.getRow(i+2).getCell(1).setCellValue(list.get(i)[1].toString());
+			sheet.getRow(i+2).getCell(2).setCellValue(list.get(i)[2].toString());
+			sheet.getRow(i+2).getCell(3).setCellValue(list.get(i)[3].toString());
+			sheet.getRow(i+2).getCell(4).setCellValue(list.get(i)[4].toString());
+			double row_total=0.0;
+			for(int j=0;j<list_all.get(i).size();j++){
+				if(list_all.get(i).size()==12){
+					sheet.getRow(i+2).getCell(5+j).setCellValue(list_all.get(i).get(j));
+					row_total=row_total+list_all.get(i).get(j);
+				}
+				if(list_all.get(i).size()<12){
+					sheet.getRow(i+2).getCell(5+j).setCellValue("數據不足");
+					sheet.getRow(i+2).getCell(5+j).setCellStyle(cs_font_red);
+				}
+				if(list_all.get(i).size()>12){
+					sheet.getRow(i+2).getCell(5+j).setCellValue("數據冗餘");
+					sheet.getRow(i+2).getCell(5+j).setCellStyle(cs_font_blue);
+				}				
+			}
+			sheet.getRow(i+2).getCell(17).setCellValue(row_total);
 		}
 		//OutputStream os=new FileOutputStream("d:\\tttttt.xls");
 		ServletOutputStream os=response.getOutputStream();
 		response.setContentType("application/vnd.ms-excel");
-		String fileName="fact_report_2015.xls";
+		String fileName="fact_reportTotal_"+year+".xls";
 		int msi=ServletActionContext.getRequest().getHeader("USER-AGENT").toLowerCase().indexOf("msie");
 		if(msi>0){
 			fileName=java.net.URLEncoder.encode(fileName,"utf-8");

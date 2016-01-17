@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.apache.commons.io.FilenameUtils;
@@ -184,9 +185,24 @@ public class ImportExcel {
 			System.out.println("除数不能为0");
 		}
 		System.out.println("OK");*/
-		System.out.println("2015-01".replace("/", ""));
+		/*System.out.println("2015-01".replace("/", ""));
 		System.out.println(new File("d:\\abc"));
-		System.out.println("d:\\abc");
+		System.out.println("d:\\abc");*/
+		List<String>list1=new ArrayList<String>();
+		list1.add("1");
+		list1.add("2");
+		list1.add("3");
+		List<String>list2=list1;
+		jj:for(int i=0;i<list1.size();i++){
+			System.out.println(list1.get(i));
+			for(int j=0;j<list2.size();j++){
+				if(list2.get(j).equals(list1.get(i))){
+					break jj;
+				}
+			}
+		}
+		
+		
 
 	}
 
