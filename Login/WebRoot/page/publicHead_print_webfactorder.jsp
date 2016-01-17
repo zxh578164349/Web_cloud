@@ -115,6 +115,7 @@ jq("#div_model").html("");
    });
 }
 function findFactSname(){
+   jq("#div_factSname").html("");
 	jq.ajax({
 		type:"POST",
 		url:"webfactOrder_findFactSname",
@@ -159,7 +160,7 @@ checkbox_fact.each(function(i,checkbox){
       data:{'factNos':factNos},
       success:function(){
         findFactSname();
-        //findComponent();findBrank();findCustomer();findModel(); 
+        findComponent();findBrank();findCustomer();findModel(); 
       }
    });
 }
@@ -173,45 +174,12 @@ checkbox_fact.each(function(i,checkbox){
   <form id="public_form" method="post">
 	<table >
 		<tr>
-			<td>廠別</td>
+		     <td class="td_right">年份與工廠類別</td>
 			<td>
-				<div id="div_factNos" style="width:400px;height:250px;overflow:auto;border:1px dashed green">
-				  <div><input type="checkbox" id="all_factno" onclick="selectAll('all_factno','factNos')"/>全选</div><hr/>				   
-				</div>				
-			</td>									
-			<td class="td_right">部件</td>
-		    <td>		       
-				<div id="div_component" style="width:400px;height:250px;overflow:auto;border:1px dashed green">
-				  <div><input type="checkbox" id="all_component" onclick="selectAll('all_component','components')"/>全选</div><hr/>	
-				</div>				
-		    </td>
-			</tr>
-						
-		    <tr>
-		    <td>品牌</td>
-		    <td>
-		       <div id="div_brank" style="width:400px;height:250px;overflow:auto;border:1px dashed green">
-		         <div><input type="checkbox" id="all_brank" onclick="selectAll('all_brank','branks')"/>全选</div><hr/>
-			   </div>				
-		    </td>
-		    <td class="td_right">客户</td>
-		    <td>
-		       <div id="div_customer" style="width:400px;height:250px;overflow:auto;border:1px dashed green">
-		         <div><input type="checkbox" id="all_customer" onclick="selectAll('all_customer','customers')"/>全选</div><hr/>
-			   </div>				
-		    </td>
-		    </tr>
-		    
-		    <tr>
-		    <td>模型</td>
-		    <td>
-		       <div id="div_model" style="width:400px;height:250px;overflow:auto;border:1px dashed green">
-		         <div><input type="checkbox" id="all_model" onclick="selectAll('all_model','models')"/>全选</div><hr/>
-			   </div>
-		    </td>
-		    <td class="td_right">年份</td>
-			<td>
-			   <div id="div_year" style="width:400px;height:250px;overflow:auto;border:1px dashed green;vertical-align:middle">
+			   <div id="div_year" style="width:400px;height:180px;overflow:auto;border:1px dashed blue;vertical-align:middle">
+			     <div id="div_factNos" style="width:380px;height:140px;overflow:auto">
+				  <div><input type="checkbox" id="all_factno" onclick="selectAll('all_factno','factNos'),init()"/>全选</div><hr/>				   
+				</div>
 			    <select name="year" >
 			       <option value="2015">2018</option>
 			       <option value="2014">2017</option>
@@ -220,19 +188,66 @@ checkbox_fact.each(function(i,checkbox){
 			       <option value="2015">2014</option>
 			       <option value="2015">2013</option>
 			     </select>
+			    	
 			     <input value="搜索" type="button" id="addbtn" onclick="javascript:submis('public_form')" />
 			     <input value="導出Excel" type="button" id="search_forday" onclick="print('public_form')"/>	
-			   </div>		  			
+			   </div>			   	  			
 			</td>
-		    </tr>
+			<td>廠名</td>
+		      <td>
+		      <div style="width:400px;height:180px;overflow:auto;border:1px dashed green">
+		      <div><input type="checkbox" id="all_factSname" onclick="selectAll('all_factSname','factSnames')"/> 全选</div><hr/>				  
+				<div id="div_factSname">
+				  			 			   
+				</div>
+			  </div>							
+			</td>
+												
+			
+			</tr>
+						
 		    <tr>
-		      <td>廠名</td>
-		      <td colspan="4">			  
-				<div id="div_factSname" style="width:400px;height:250px;overflow:auto;border:1px dashed green">
-				  <div><input type="checkbox" id="all_factSname" onclick="selectAll('all_factSname','factSnames')"/> 全选</div><hr/>				 			   
-				</div>							
-			</td>
+		    <td>品牌</td>
+		    <td>
+		       <div style="width:400px;height:180px;overflow:auto;border:1px dashed green">
+		       <div><input type="checkbox" id="all_brank" onclick="selectAll('all_brank','branks')"/>全选</div><hr/>
+		       <div id="div_brank">
+		         
+			   </div>
+			   </div>				
+		    </td>
+		    <td class="td_right">客户</td>
+		    <td>
+		      <div style="width:400px;height:180px;overflow:auto;border:1px dashed green">
+		      <div><input type="checkbox" id="all_customer" onclick="selectAll('all_customer','customers')"/>全选</div><hr/>
+		       <div id="div_customer">
+		         
+			   </div>
+			  </div> 				
+		    </td>
 		    </tr>
+		    
+		    <tr>
+		    <td>模型</td>
+		    <td>
+		       <div style="width:400px;height:180px;overflow:auto;border:1px dashed green">
+		       <div><input type="checkbox" id="all_model" onclick="selectAll('all_model','models')"/>全选</div><hr/>
+		       <div id="div_model">
+		         
+			   </div>
+			   </div>
+		    </td>
+		    <td class="td_right">部件</td>
+		    <td>	
+		       <div style="width:400px;height:180px;overflow:auto;border:1px dashed green">
+		         <div><input type="checkbox" id="all_component" onclick="selectAll('all_component','components')"/>全选</div><hr/>	       
+				<div id="div_component">
+				  	
+				</div>
+			   </div>					
+		    </td>
+		    </tr>
+		    
 			
 		
 	</table>

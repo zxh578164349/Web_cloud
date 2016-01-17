@@ -2,6 +2,8 @@ package services.impl;
 
 import java.util.List;
 
+import org.hibernate.Transaction;
+
 import dao.IWebFactorderDao;
 import services.IWebFactorderServices;
 import util.PageBean;
@@ -24,13 +26,13 @@ public class WebFactorderServicesImpl implements IWebFactorderServices{
 
 	public void addLarge(List<String> list) {
 		// TODO Auto-generated method stub
-		factorderdao.addLarge(list);
+			factorderdao.addLarge(list);		
 	}
 
 
-	public PageBean findPageBean(int pageSize,int page,List<String>factSnames,List<String>brank,List<String>customer,List<String>model,List<String>component){
+	public PageBean findPageBean(int pageSize,int page,List<String>factSnames,List<String>brank,List<String>customer,List<String>model,List<String>component,String year,String factNo){
 		// TODO Auto-generated method stub
-		return factorderdao.findPageBean(pageSize, page, factSnames, brank, customer, model, component);
+		return factorderdao.findPageBean(pageSize, page, factSnames, brank, customer, model, component,year,factNo);
 	}
 	public List<String> findComponent(List<String> factNos) {
 		// TODO Auto-generated method stub
@@ -63,9 +65,9 @@ public class WebFactorderServicesImpl implements IWebFactorderServices{
 
 	public List<WebFactorder> findWithNoPage(List<String> factNos,
 			List<String> brank, List<String> customer, List<String> model,
-			List<String> component,String yymm) {
+			List<String> component,String year) {
 		// TODO Auto-generated method stub
-		return factorderdao.findWithNoPage(factNos, brank, customer, model, component,yymm);
+		return factorderdao.findWithNoPage(factNos, brank, customer, model, component,year);
 	}
 
 
@@ -78,9 +80,9 @@ public class WebFactorderServicesImpl implements IWebFactorderServices{
 
 	public List<Object[]> findWebFactorder(List<String> factNos,
 			List<String> brank, List<String> customer, List<String> model,
-			List<String> component, String yymm) {
+			List<String> component, String year) {
 		// TODO Auto-generated method stub
-		return factorderdao.findWebFactorder(factNos, brank, customer, model, component, yymm);
+		return factorderdao.findWebFactorder(factNos, brank, customer, model, component, year);
 	}
 
 
@@ -93,9 +95,23 @@ public class WebFactorderServicesImpl implements IWebFactorderServices{
 
 	public List<Object[]> findByGroup(List<String> factSnames,
 			List<String> brank, List<String> customer, List<String> model,
-			List<String> component, String yymm) {
+			List<String> component, String year,String factNo) {
 		// TODO Auto-generated method stub
-		return factorderdao.findByGroup(factSnames, brank, customer, model, component, yymm);
+		return factorderdao.findByGroup(factSnames, brank, customer, model, component, year,factNo);
+	}
+
+
+	public List<Object[]> findByGroup2(List<String> factSnames,
+			List<String> brank, List<String> customer, List<String> model,
+			List<String> component, String year,String factNo) {
+		// TODO Auto-generated method stub
+		return factorderdao.findByGroup2(factSnames, brank, customer, model, component, year,factNo);
+	}
+
+
+	public void addLarge2(List<List<String>> list) {
+		// TODO Auto-generated method stub
+		factorderdao.addLarge2(list);
 	}
 
 
