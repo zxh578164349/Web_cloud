@@ -406,11 +406,11 @@ public class WebFactorderDaoImpl extends Basedao implements IWebFactorderDao{
 			map.put("year",year+"%");
 		}
 		if(factNo!=null&&!factNo.equals("")&&!factNo.equals("tw")){
-			hql.append(" and factNo=:factno");
+			hql.append(" and FACT_NO=:factno ");
 			map.put("factno", factNo);
 		}
-		hql.append("group by "+decode_fact+decode_brank+decode_customer+decode_model+decode_component+"yymm ");
-		hql.append("order by "+decode_fact+decode_brank+decode_customer+decode_model+decode_component+"yymm ");
+		hql.append(" group by "+decode_fact+decode_brank+decode_customer+decode_model+decode_component+"yymm ");
+		hql.append(" order by "+decode_fact+decode_brank+decode_customer+decode_model+decode_component+"yymm ");
 		List<Object[]>list=super.getAllWithNoPage_sql(hql.toString(), map);
 		return list;
 		
@@ -485,11 +485,11 @@ public class WebFactorderDaoImpl extends Basedao implements IWebFactorderDao{
 			map.put("year",year+"%");
 		}
 		if(factNo!=null&&!factNo.equals("")&&!factNo.equals("tw")){
-			hql.append(" and factNo=:factno");
+			hql.append(" and FACT_NO=:factno ");
 			map.put("factno", factNo);
 		}
-		hql.append("group by "+decode_fact+decode_brank+decode_customer+decode_model+decode_component+"substr(yymm,0,4) ");
-		hql.append("order by "+decode_fact+decode_brank+decode_customer+decode_model+decode_component+"substr(yymm,0,4) ");
+		hql.append(" group by "+decode_fact+decode_brank+decode_customer+decode_model+decode_component+"substr(yymm,0,4) ");
+		hql.append(" order by "+decode_fact+decode_brank+decode_customer+decode_model+decode_component+"substr(yymm,0,4) ");
 		List<Object[]>list=super.getAllWithNoPage_sql(hql.toString(), map);
 		return list;
 	}

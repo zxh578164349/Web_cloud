@@ -80,6 +80,7 @@
                 <ref bean="CronTriggerBeanB"/> <!--(第二次) 16點  下一位簽核人  -->
                 <ref bean="CronTriggerBeanC"/>  <!-- 12點  簽核完畢幷知會 -->
             </list>
+            
         </property>        
     </bean> 
 	

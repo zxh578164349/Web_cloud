@@ -174,28 +174,28 @@ checkbox_fact.each(function(i,checkbox){
   <form id="public_form" method="post">
 	<table >
 		<tr>
-		     <td class="td_right">年份與工廠類別</td>
+		     <td class="td_right">工廠與年份</td>
 			<td>
-			   <div id="div_year" style="width:400px;height:180px;overflow:auto;border:1px dashed blue;vertical-align:middle">
-			     <div id="div_factNos" style="width:380px;height:140px;overflow:auto">
+			   <div id="div_year" style="width:400px;height:160px;overflow:auto;border:1px dashed blue;vertical-align:middle">
+			     <div id="div_factNos" style="width:380px;height:120px;overflow:auto">
 				  <div><input type="checkbox" id="all_factno" onclick="selectAll('all_factno','factNos'),init()"/>全选</div><hr/>				   
 				</div>
 			    <select name="year" >
-			       <option value="2015">2018</option>
-			       <option value="2014">2017</option>
-			       <option value="2014">2016</option>
+			       <option value="2018">2018</option>
+			       <option value="2017">2017</option>
+			       <option value="2016">2016</option>
 			       <option value="2015" selected>2015</option>
-			       <option value="2015">2014</option>
-			       <option value="2015">2013</option>
+			       <option value="2014">2014</option>
+			       <option value="2013">2013</option>
 			     </select>
 			    	
 			     <input value="搜索" type="button" id="addbtn" onclick="javascript:submis('public_form')" />
 			     <input value="導出Excel" type="button" id="search_forday" onclick="print('public_form')"/>	
 			   </div>			   	  			
 			</td>
-			<td>廠名</td>
+			<td>工廠細分</td>
 		      <td>
-		      <div style="width:400px;height:180px;overflow:auto;border:1px dashed green">
+		      <div style="width:400px;height:160px;overflow:auto;border:1px dashed green">
 		      <div><input type="checkbox" id="all_factSname" onclick="selectAll('all_factSname','factSnames')"/> 全选</div><hr/>				  
 				<div id="div_factSname">
 				  			 			   
@@ -209,7 +209,7 @@ checkbox_fact.each(function(i,checkbox){
 		    <tr>
 		    <td>品牌</td>
 		    <td>
-		       <div style="width:400px;height:180px;overflow:auto;border:1px dashed green">
+		       <div style="width:400px;height:160px;overflow:auto;border:1px dashed green">
 		       <div><input type="checkbox" id="all_brank" onclick="selectAll('all_brank','branks')"/>全选</div><hr/>
 		       <div id="div_brank">
 		         
@@ -218,7 +218,7 @@ checkbox_fact.each(function(i,checkbox){
 		    </td>
 		    <td class="td_right">客户</td>
 		    <td>
-		      <div style="width:400px;height:180px;overflow:auto;border:1px dashed green">
+		      <div style="width:400px;height:160px;overflow:auto;border:1px dashed green">
 		      <div><input type="checkbox" id="all_customer" onclick="selectAll('all_customer','customers')"/>全选</div><hr/>
 		       <div id="div_customer">
 		         
@@ -230,7 +230,7 @@ checkbox_fact.each(function(i,checkbox){
 		    <tr>
 		    <td>模型</td>
 		    <td>
-		       <div style="width:400px;height:180px;overflow:auto;border:1px dashed green">
+		       <div style="width:400px;height:160px;overflow:auto;border:1px dashed #A0522D">
 		       <div><input type="checkbox" id="all_model" onclick="selectAll('all_model','models')"/>全选</div><hr/>
 		       <div id="div_model">
 		         
@@ -239,7 +239,7 @@ checkbox_fact.each(function(i,checkbox){
 		    </td>
 		    <td class="td_right">部件</td>
 		    <td>	
-		       <div style="width:400px;height:180px;overflow:auto;border:1px dashed green">
+		       <div style="width:400px;height:160px;overflow:auto;border:1px dashed #A0522D">
 		         <div><input type="checkbox" id="all_component" onclick="selectAll('all_component','components')"/>全选</div><hr/>	       
 				<div id="div_component">
 				  	
