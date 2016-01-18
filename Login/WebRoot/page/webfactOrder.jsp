@@ -49,7 +49,8 @@
 			url : "webfactOrder_findPageBean3",
 			data : "page=" + page ,
 			success : function(msg) {
-				jq("#bodyid").html(msg);
+				jq("#bodyid").html(msg);				
+				
 			},
 			error : function(xhr) {
 				//alert(xhr.responseText);
@@ -58,6 +59,7 @@
 		});
 	}
 	function submis(public_form) {
+		var topindex=document.getElementById('bodyid').offsetTop;
 		var fact = document.getElementById("factNo");
 		var ym = document.getElementById("year");
 		var subform=jq("#"+public_form);
@@ -65,10 +67,11 @@
 			type : "POST",
 			dataType : "Html",
 			url : "webfactOrder_findPageBean2",
-			//data : "factNo=" + fact.value + "&yymm=" + ym.value,
 			data:subform.serialize(),
 			success : function(msg) {	
 				jq("#bodyid").html(msg);
+				//jq("html,body").scrollTop(500);
+				jq("html,body").animate({scrollTop:$("#bodyid").offset().top}, 500);
 			},
 			error : function(xhr) {
 				//alert(xhr.responseText);
@@ -99,15 +102,37 @@
 	function print(public_form){
 		var subform=jq("#"+public_form);
 		var checkboxs=jq("input[name='factNos']:checked");
+		var checkboxs_factSnames=jq("input[name='factSnames']");
+		var checkboxs_branks=jq("input[name='branks']");
+		var checkboxs_customers=jq("input[name='customers']");
+		
+		var checkboxs_factSnames_checked=jq("input[name='factSnames']:checked");
+		var checkboxs_branks_checked=jq("input[name='branks']:checked");
+		var checkboxs_customers_checked=jq("input[name='customers']:checked");
 		subform.attr("action","webfactOrder_print4");
 		subform.attr("target","_blank");
 		if(checkboxs.length==0){
-		   layer.msg("請選擇工廠類別",3,3);
-		   jq("#div_factNos").css("border-color","red");
-		}else{
-		   jq("#div_factNos").css("border-color","");
-		   subform.submit();
-		}
+		   layer.msg("請選擇工廠",3,3);
+		   jq("#div_factNos").css("border","2px solid red");
+		}else{//else
+			jq("#div_factNos").css("border","");
+			if(checkboxs_factSnames.length==0&&checkboxs_branks.length==0&&checkboxs_customers.length==0){
+				layer.msg("暫無數據可選擇,建議先導入Excel",3,3);
+			}else{//else2
+				if(checkboxs_factSnames_checked.length==0&&checkboxs_branks_checked.length==0&&checkboxs_customers_checked.length==0){
+					layer.msg("請選擇工廠細分或品牌或客戶",3,3);
+					jq("#div_factSname").css("border","2px solid red");
+					jq("#div_brank").css("border","2px solid red");
+					jq("#div_customer").css("border","2px solid red");					
+				}else{
+					jq("#div_factSname").css("border","");
+					jq("#div_brank").css("border","");
+					jq("#div_customer").css("border","");
+					subform.submit();
+				}				
+			}//else2
+								   		   
+		}//else
 		
 		//jq("#"+subform).removeAttr("action");
 		//jq("#"+subform).removeAttr("target");
@@ -140,7 +165,7 @@ jq(function(){
 	        	}else if(data=="1"){
 	        		layer.msg("僅允許導入Excel文檔",3,3);
 	        	}else if(data=="2"){
-	        		layer.msg("導入失敗",3,3);
+	        		layer.msg("數據重複，導入失敗",3,3);
 	        	}else if(data=="3"){
 	        	    layer.msg("Excel文檔結構不符合要求，禁止導入",3,3);
 	        	}else{
@@ -155,16 +180,26 @@ jq(function(){
 	})
 })
 
+
+function setWindowScrollTop(win, topHeight){
+    if(win.document.documentElement){ 
+        win.document.documentElement.scrollTop = topHeight;
+    }
+    if(win.document.body){
+        win.document.body.scrollTop = topHeight;
+    }
+}
 	
 </script>
 
 <body>
+<div>
 	<jsp:include page="publicHead_print_webfactorder.jsp" />
 	<hr />
 	<s:if test='#session.loginUser.userread!="1"'>
 	<form  method="post" enctype="multipart/form-data" id="upload_form">	  
 	       <input type="file" name="file" style="width:150px" id="id_file"/>
-	       <input value="導入Excel" type="submit" id="search_forday"  />	     	
+	       <input value="導入Excel" type="submit" id="search_forday" />	     	
 	</form>
 	<hr/>
 	<%-- <input value="添加" type="button" id="addbtn" onclick="javascript:location.href='saveAndUpdate/WebProdutedSaveOrUpdate.jsp'" />--%>
@@ -173,5 +208,6 @@ jq(function(){
 	<div id="bodyid">
 		<jsp:include page="table1/webfactOrder1.jsp" />
 	</div>
+</div>	
 </body>
 </html>
