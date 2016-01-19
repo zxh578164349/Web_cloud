@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -61,6 +62,7 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 	private List<String>models=new ArrayList<String>();
 	private javax.servlet.http.HttpServletResponse response;
 	private String yymm;
+	private String yymm2;
 	private String year;
 	private List<String>factSnames=new ArrayList<String>();
 	private File file;
@@ -69,6 +71,13 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
     private String ajaxResult;//申請函文時返回的ajax結果,   0:提交成功       1：上传的文档格式不符合要求   2：excel导入失败     3：excel数据格式不符合要求
      
     
+    
+	public String getYymm2() {
+		return yymm2;
+	}
+	public void setYymm2(String yymm2) {
+		this.yymm2 = yymm2;
+	}
 	public String getAjaxResult() {
 		return ajaxResult;
 	}
@@ -371,14 +380,17 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 	public void init(){
 		ActionContext.getContext().getSession().put("factNos", factNos);
 	}
+	public void init2(){
+		ActionContext.getContext().getSession().put("factSnames", factSnames);
+	}
 	/**
 	 * 从WebFactorder中获取所有的部件
 	 * @return
 	 */
 	public String findComponent(){
-		factNos=(List<String>)ActionContext.getContext().getSession().get("factNos");
-		if(factNos.size()>0){
-			List<String>list=webfactorderSer.findComponent(factNos);
+		factSnames=(List<String>)ActionContext.getContext().getSession().get("factSnames");
+		if(factSnames.size()>0){
+			List<String>list=webfactorderSer.findComponent(factSnames);
 			jsons=JSONArray.fromObject(list);
 		}
 		
@@ -390,9 +402,9 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 	 * @return
 	 */
 	public String findBrank(){
-		factNos=(List<String>)ActionContext.getContext().getSession().get("factNos");
-		if(factNos.size()>0){
-			List<String>list=webfactorderSer.findBrank(factNos);
+		factSnames=(List<String>)ActionContext.getContext().getSession().get("factSnames");
+		if(factSnames.size()>0){
+			List<String>list=webfactorderSer.findBrank(factSnames);
 			jsons=JSONArray.fromObject(list);
 		}
 		
@@ -403,9 +415,9 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 	 * 从WebFactorder中获取所有的客户
 	 */
 	public String findCustomer(){
-		factNos=(List<String>)ActionContext.getContext().getSession().get("factNos");
-		if(factNos.size()>0){
-			List<String>list=webfactorderSer.findCustomer(factNos);
+		factSnames=(List<String>)ActionContext.getContext().getSession().get("factSnames");
+		if(factSnames.size()>0){
+			List<String>list=webfactorderSer.findCustomer(factSnames);
 			jsons=JSONArray.fromObject(list);
 		}		
 		return "findCustomer";
@@ -416,9 +428,9 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 	 * @return
 	 */
 	public String findModel(){
-		factNos=(List<String>)ActionContext.getContext().getSession().get("factNos");
-		if(factNos.size()>0){
-			List<String>list=webfactorderSer.findModel(factNos);
+		factSnames=(List<String>)ActionContext.getContext().getSession().get("factSnames");
+		if(factSnames.size()>0){
+			List<String>list=webfactorderSer.findModel(factSnames);
 			jsons=JSONArray.fromObject(list);
 		}
 		
@@ -729,16 +741,20 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 	 */
 	public void print4() throws IOException{
 		factNo=(String)ActionContext.getContext().getSession().get("factNo");
-		List<Object[]>list=webfactorderSer.findByGroup2(factSnames, branks, customers, models, components, year,factNo);
-		List<Object[]>list2=webfactorderSer.findByGroup(factSnames, branks, customers, models, components,year,factNo);		
-		List<List<Double>>list_all=new ArrayList<List<Double>>();
+		List<Object[]>list=webfactorderSer.findByGroup2(factSnames, branks, customers, models, components,factNo,yymm,yymm2);
+		List<Object[]>list2=webfactorderSer.findByGroup(factSnames, branks, customers, models, components,factNo,yymm,yymm2);
+		List<String>list_date=GlobalMethod.getDateNum(yymm, yymm2);
+		//List<List<Double>>list_all=new ArrayList<List<Double>>();
+		List<Map<String,Double>>list_all=new ArrayList<Map<String,Double>>();
+		
 		for(int i=0;i<list.size();i++){//for1
 			for(int x=0;x<5;x++){
 				if(list.get(i)[x]==null){
 					list.get(i)[x]="";
 				}
 			}
-			List<Double>list_one=new ArrayList<Double>();
+			//List<Double>list_one=new ArrayList<Double>();
+			Map<String,Double>map=new LinkedHashMap<String,Double>();
 			for(int j=0;j<list2.size();j++){//for2
 				for(int y=0;y<5;y++){
 					if(list2.get(j)[y]==null){
@@ -750,10 +766,11 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 						list.get(i)[2].toString().equals(list2.get(j)[2].toString())&&
 						list.get(i)[3].toString().equals(list2.get(j)[3].toString())&&
 						list.get(i)[4].toString().equals(list2.get(j)[4].toString())){
-					list_one.add(Double.parseDouble(list2.get(j)[6].toString()));
+					//list_one.add(Double.parseDouble(list2.get(j)[6].toString()));
+					map.put((String)list2.get(j)[5], Double.parseDouble(list2.get(j)[6].toString()));
 				}
 			}//for2
-			list_all.add(list_one);
+			list_all.add(map);
 		}//for1
 		HSSFWorkbook wb=new HSSFWorkbook();
 		HSSFSheet sheet=wb.createSheet("sheet1");
@@ -837,15 +854,11 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 				sheet.getRow(i).getCell(2).setCellValue("客戶");
 				sheet.getRow(i).getCell(3).setCellValue("模具");
 				sheet.getRow(i).getCell(4).setCellValue("部件");				
-				for(int k=0;k<12;k++){
-					if(k+1<10){
-						sheet.getRow(i).getCell(5+k).setCellValue(year+"0"+(k+1));
-					}else{
-						sheet.getRow(i).getCell(5+k).setCellValue(year+(k+1));
-					}					
+				for(int k=0;k<list_date.size();k++){					
+					sheet.getRow(i).getCell(5+k).setCellValue(list_date.get(k));										
 				}
-				sheet.getRow(i).getCell(17).setCellValue("匯總");
-				for(int l=0;l<18;l++){
+				sheet.getRow(i).getCell(5+list_date.size()).setCellValue("匯總");
+				for(int l=0;l<=5+list_date.size();l++){
 					sheet.getRow(i).getCell(l).setCellStyle(cs_head);
 				}
 			}										
@@ -859,7 +872,7 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 			sheet.getRow(i+2).getCell(3).setCellValue(list.get(i)[3].toString());
 			sheet.getRow(i+2).getCell(4).setCellValue(list.get(i)[4].toString());
 			double row_total=0.0;
-			for(int j=0;j<list_all.get(i).size();j++){
+			/*for(int j=0;j<list_all.get(i).size();j++){
 				if(list_all.get(i).size()==12){
 					sheet.getRow(i+2).getCell(5+j).setCellValue(list_all.get(i).get(j));
 					row_total=row_total+list_all.get(i).get(j);
@@ -871,9 +884,27 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 				if(list_all.get(i).size()>12){
 					sheet.getRow(i+2).getCell(5+j).setCellValue("數據冗餘");
 					sheet.getRow(i+2).getCell(5+j).setCellStyle(cs_font_blue);
-				}				
-			}
-			sheet.getRow(i+2).getCell(17).setCellValue(row_total);
+				}								
+			}*/
+			for(int j=0;j<list_date.size();j++){//for
+				if(list_all.get(i).size()==0){
+					sheet.getRow(i+2).getCell(5+j).setCellValue(list_all.get(i).get("無數據"));
+					sheet.getRow(i+2).getCell(5+j).setCellStyle(cs_font_red);
+				}
+				for(String key:list_all.get(i).keySet()){
+					if(list_date.get(j).equals(key)){
+						sheet.getRow(i+2).getCell(5+j).setCellValue(list_all.get(i).get(key));
+						row_total=row_total+list_all.get(i).get(key);
+						list_all.get(i).remove(key);
+						
+					}else{
+						sheet.getRow(i+2).getCell(5+j).setCellValue(list_all.get(i).get("無數據"));
+						sheet.getRow(i+2).getCell(5+j).setCellStyle(cs_font_red);
+					}
+					break;
+				}
+			}//for
+			sheet.getRow(i+2).getCell(5+list_date.size()).setCellValue(row_total);
 		}
 		//OutputStream os=new FileOutputStream("d:\\tttttt.xls");
 		ServletOutputStream os=response.getOutputStream();

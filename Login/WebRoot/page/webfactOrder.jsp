@@ -50,7 +50,7 @@
 			data : "page=" + page ,
 			success : function(msg) {
 				jq("#bodyid").html(msg);				
-				
+				jq("html,body").animate({scrollTop:$("#bodyid").offset().top}, 500);
 			},
 			error : function(xhr) {
 				//alert(xhr.responseText);
@@ -111,28 +111,48 @@
 		var checkboxs_customers_checked=jq("input[name='customers']:checked");
 		subform.attr("action","webfactOrder_print4");
 		subform.attr("target","_blank");
-		if(checkboxs.length==0){
+		if(checkboxs.length==0){//if1
 		   layer.msg("請選擇工廠",3,3);
 		   jq("#div_factNos").css("border","2px solid red");
-		}else{//else
-			jq("#div_factNos").css("border","");
+		   return false;
+		}//if1
+		if(jq("#yymm").val()==""||jq("#yymm2").val()==""){
+			layer.msg("請選擇日期",3,3);
+			jq("#div_yymm").css("border","2px solid red");
+			return false;
+		}else{
+			jq("#div_yymm").css("border","");
+		}
+		if(checkboxs.length!=0){//if2
+			jq("#div_factNos").css("border","1px dashed blue");
 			if(checkboxs_factSnames.length==0&&checkboxs_branks.length==0&&checkboxs_customers.length==0){
 				layer.msg("暫無數據可選擇,建議先導入Excel",3,3);
-			}else{//else2
+			}else if(checkboxs_factSnames.length!=0&&checkboxs_branks.length!=0&&checkboxs_customers.length!=0){//else 
 				if(checkboxs_factSnames_checked.length==0&&checkboxs_branks_checked.length==0&&checkboxs_customers_checked.length==0){
 					layer.msg("請選擇工廠細分或品牌或客戶",3,3);
 					jq("#div_factSname").css("border","2px solid red");
 					jq("#div_brank").css("border","2px solid red");
-					jq("#div_customer").css("border","2px solid red");					
+					jq("#div_customer").css("border","2px solid red");
+					return false;
 				}else{
 					jq("#div_factSname").css("border","");
 					jq("#div_brank").css("border","");
 					jq("#div_customer").css("border","");
 					subform.submit();
 				}				
-			}//else2
+			}else if(checkboxs_factSnames.length!=0&&checkboxs_branks.length==0&&checkboxs_customers.length==0){
+				if(checkboxs_factSnames_checked.length==0){
+					layer.msg("請選擇工廠細分",3,3);
+					jq("#div_factSname").css("border","2px solid red");
+					return  false;
+										
+				}else{
+					jq("#div_factSname").css("border","");					
+					subform.submit();
+				}
+			}//else 
 								   		   
-		}//else
+		}//if2
 		
 		//jq("#"+subform).removeAttr("action");
 		//jq("#"+subform).removeAttr("target");
