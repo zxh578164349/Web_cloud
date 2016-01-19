@@ -133,7 +133,7 @@ public class WebFactorderDaoImpl extends Basedao implements IWebFactorderDao{
 
 
 	public PageBean findPageBean(int pageSize, int page, List<String> factSnames,
-			List<String>brank, List<String>customer, List<String>model, List<String>component,String year,String factNo) {
+			List<String>brank, List<String>customer, List<String>model, List<String>component,String year,String factNo,List<String>factNos) {
 		// TODO Auto-generated method stub
 		StringBuffer hql=new StringBuffer();
 		StringBuffer hql2=new StringBuffer();
@@ -168,6 +168,11 @@ public class WebFactorderDaoImpl extends Basedao implements IWebFactorderDao{
 			hql.append(" and factNo=:factno");
 			map.put("factno", factNo);
 		}
+		if(factNo.equals("tw")&&factNos!=null&&factNos.size()>0){
+			hql.append(" and factNo in(:factnos)");
+			map.put("factnos", factNos);
+		}
+		
 		hql2.append(hql);
 		hql.append(" order by factSname,brank,customer,modelNo,component,yymm");
 		int allrow=0;

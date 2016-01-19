@@ -188,7 +188,7 @@ function clearAll(){
 	jq("#div_customer").html("");
 	jq("#div_model").html("");
 	
-	jq("#div_factNos").css("border","");
+	jq("#div_factNos").css("border","1px,dashed,blue");
 	jq("#div_factSname").css("border","");
 	jq("#div_brank").css("border","");
 	jq("#div_customer").css("border","");
