@@ -21,6 +21,16 @@ public class WebFactorderDaoImpl extends Basedao implements IWebFactorderDao{
 		// TODO Auto-generated method stub
 		super.merge(order);
 	}
+	public WebFactorder findByOrderId(int orderid) {
+		// TODO Auto-generated method stub
+		return (WebFactorder)super.findById(orderid, WebFactorder.class);
+	}
+	public void delete(int orderid) {
+		// TODO Auto-generated method stub
+		WebFactorder order=findByOrderId(orderid);
+		super.delete(order);
+	}
+	
 
 
 	/**
@@ -186,39 +196,39 @@ public class WebFactorderDaoImpl extends Basedao implements IWebFactorderDao{
 	}
 
 
-	public List<String> findComponent(List<String> factNos) {
+	public List<String> findComponent(List<String> FactSnames) {
 		// TODO Auto-generated method stub
-		String hql="select distinct component from WebFactorder where factNo  in (:factnos) order by component";
+		String hql="select distinct component from WebFactorder where factSname  in (:factsnames) order by component";
 		Map<String,Object>map=new HashMap<String,Object>();
 		//System.out.println(factSname.getClass().getName());
-		map.put("factnos", factNos);
+		map.put("factsnames", FactSnames);
 		return super.getAllWithNoPage(hql, map);
 	}
 
 
-	public List<String> findBrank(List<String> factNos) {
+	public List<String> findBrank(List<String> FactSnames) {
 		// TODO Auto-generated method stub
-		String hql="select distinct brank from WebFactorder where factNo in (:factnos) order by brank";
+		String hql="select distinct brank from WebFactorder where factSname in (:factsnames) order by brank";
 		Map<String,Object>map=new HashMap<String,Object>();
-		map.put("factnos", factNos);
+		map.put("factsnames", FactSnames);
 		return super.getAllWithNoPage(hql, map);
 	}
 
 
-	public List<String> findCustomer(List<String> factNos) {
+	public List<String> findCustomer(List<String> FactSnames) {
 		// TODO Auto-generated method stub
-		String hql="select distinct customer from WebFactorder where factNo in (:factnos) order by customer";
+		String hql="select distinct customer from WebFactorder where factSname in (:factsnames) order by customer";
 		Map<String,Object>map=new HashMap<String,Object>();
-		map.put("factnos", factNos);
+		map.put("factsnames", FactSnames);
 		return super.getAllWithNoPage(hql, map);
 	}
 
 
-	public List<String> findModel(List<String> factNos) {
+	public List<String> findModel(List<String> FactSnames) {
 		// TODO Auto-generated method stub
-		String hql="select distinct modelNo from WebFactorder where factNo  in (:factnos) order by modelNo";
+		String hql="select distinct modelNo from WebFactorder where factSname  in (:factsnames) order by modelNo";
 		Map<String,Object>map=new HashMap<String,Object>();
-		map.put("factnos", factNos);
+		map.put("factsnames", FactSnames);
 		return super.getAllWithNoPage(hql, map);
 	}
 	
@@ -350,7 +360,7 @@ public class WebFactorderDaoImpl extends Basedao implements IWebFactorderDao{
 	 */
 	public List<Object[]> findByGroup(List<String> factSnames,
 			List<String> brank, List<String> customer, List<String> model,
-			List<String> component, String year,String factNo) {
+			List<String> component,String factNo,String yymm,String yymm2) {
 		// TODO Auto-generated method stub
 		String decode_fact="decode('y','n',FACT_SNAME,''),";
 		String decode_brank="decode('y','n',brank,''),";
@@ -400,14 +410,18 @@ public class WebFactorderDaoImpl extends Basedao implements IWebFactorderDao{
 		if(component!=null&&component.size()>0){
 			hql.append(" and component in(:components) ");
 			map.put("components", component);
-		}
-		if(year!=null&&!year.equals("")){
-			hql.append(" and yymm like :year ");
-			map.put("year",year+"%");
-		}
+		}		
 		if(factNo!=null&&!factNo.equals("")&&!factNo.equals("tw")){
 			hql.append(" and FACT_NO=:factno ");
 			map.put("factno", factNo);
+		}
+		if(yymm!=null&&!yymm.equals("")){
+			hql.append(" and yymm >=:yymm ");
+			map.put("yymm", yymm);
+		}
+		if(yymm2!=null&&!yymm2.equals("")){
+			hql.append(" and yymm <=:yymm2 ");
+			map.put("yymm2", yymm2);
 		}
 		hql.append(" group by "+decode_fact+decode_brank+decode_customer+decode_model+decode_component+"yymm ");
 		hql.append(" order by "+decode_fact+decode_brank+decode_customer+decode_model+decode_component+"yymm ");
@@ -429,7 +443,7 @@ public class WebFactorderDaoImpl extends Basedao implements IWebFactorderDao{
 	 */
 	public List<Object[]> findByGroup2(List<String> factSnames,
 			List<String> brank, List<String> customer, List<String> model,
-			List<String> component, String year,String factNo) {
+			List<String> component,String factNo,String yymm,String yymm2) {
 		// TODO Auto-generated method stub
 		String decode_fact="decode('y','n',FACT_SNAME,''),";
 		String decode_brank="decode('y','n',brank,''),";
@@ -480,19 +494,28 @@ public class WebFactorderDaoImpl extends Basedao implements IWebFactorderDao{
 			hql.append(" and component in(:components) ");
 			map.put("components", component);
 		}
-		if(year!=null&&!year.equals("")){
-			hql.append(" and yymm like :year ");
-			map.put("year",year+"%");
-		}
+		
 		if(factNo!=null&&!factNo.equals("")&&!factNo.equals("tw")){
 			hql.append(" and FACT_NO=:factno ");
 			map.put("factno", factNo);
+		}
+		if(yymm!=null&&!yymm.equals("")){
+			hql.append(" and yymm>=:yymm");
+			map.put("yymm", yymm);
+		}
+		if(yymm2!=null&&!yymm2.equals("")){
+			hql.append(" and yymm<=:yymm2");
+			map.put("yymm2", yymm2);
 		}
 		hql.append(" group by "+decode_fact+decode_brank+decode_customer+decode_model+decode_component+"substr(yymm,0,4) ");
 		hql.append(" order by "+decode_fact+decode_brank+decode_customer+decode_model+decode_component+"substr(yymm,0,4) ");
 		List<Object[]>list=super.getAllWithNoPage_sql(hql.toString(), map);
 		return list;
 	}
+	
+
+
+	
 
 
 

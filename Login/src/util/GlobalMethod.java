@@ -1,9 +1,14 @@
 package util;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -13,7 +18,6 @@ import org.apache.struts2.ServletActionContext;
 
 import com.opensymphony.xwork2.ActionContext;
 
-import entity.Webwlo;
 
 public class GlobalMethod {
 	
@@ -144,6 +148,75 @@ public class GlobalMethod {
 		c2.setTime(d2);
 		long result=(c2.getTimeInMillis()-c1.getTimeInMillis())/(24*60*60*1000);
 		return result;
+	}
+	
+	/**
+	 * 計算兩箇日期之間的所有日期
+	 * @param yymm
+	 * @param yymm2
+	 * @return
+	 */
+	public static List<String>getDateNum(String yymm,String yymm2){
+		List<String>list=new ArrayList<String>();
+		DateFormat fmt=new SimpleDateFormat("yyyyMM");
+		try {
+			Date date1 = fmt.parse(yymm);
+			Date date2=fmt.parse(yymm2);
+			Calendar cal=Calendar.getInstance();
+			while(date1.before(date2)||date1.equals(date2)){
+				cal.setTime(date1);
+				list.add(fmt.format(cal.getTime()));
+				cal.add(Calendar.MONTH, 1);
+				date1=cal.getTime();
+			}
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return list;
+	}
+	
+	public static void main(String[] args) {
+		/*List<String>list=GlobalMethod.getDateNum("201506","201601");
+		for(String date:list){
+			System.out.println(date);
+		}*/
+		Map<String,Object>map=new LinkedHashMap<String,Object>();
+		map.put("a", 1);
+		map.put("b", 2);
+		map.put("c", 3);
+		map.put("d", 4);
+		map.put("e", 5);
+		map.put("f", 6);
+		List<String>list=new ArrayList<String>();
+		list.add("a");
+		list.add("b");
+		list.add("c");
+		list.add("d");
+		list.add("e");
+		list.add("f");
+		List<Integer>list_all=new ArrayList<Integer>();
+		for(int i=0;i<list.size();i++){
+			if(map.size()==0){
+				list_all.add(0);
+			}
+			for(String key:map.keySet()){
+				if(list.get(i).equals(key)){
+					list_all.add((Integer)map.get(key));
+					map.remove(key);
+				}else{
+					list_all.add(0);
+				}
+				break;
+			}
+			
+		}
+		for(Integer iii:list_all){
+			System.out.println(iii);
+		}
+		
+		
 	}
 
 }

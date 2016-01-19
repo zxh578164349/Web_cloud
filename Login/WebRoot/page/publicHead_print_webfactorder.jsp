@@ -28,6 +28,7 @@ jq(document).keyup(function(event){
    }
 });
 
+
 function getAllFact_json(){	
 	jq.ajax({
 		type:"POST",
@@ -43,7 +44,6 @@ function getAllFact_json(){
 	});
 }
 function findComponent(){
-jq("#div_component").html("");
    jq.ajax({
       type:"POST",
       url:"webfactOrder_findComponent",
@@ -61,7 +61,6 @@ jq("#div_component").html("");
    });
 }
 function findBrank(){
-jq("#div_brank").html("");
    jq.ajax({
        type:"POST",
        url:"webfactOrder_findBrank",
@@ -79,7 +78,6 @@ jq("#div_brank").html("");
    });
 }
 function findCustomer(){
-jq("#div_customer").html("");
    jq.ajax({
       type:"POST",
       url:"webfactOrder_findCustomer",
@@ -97,7 +95,6 @@ jq("#div_customer").html("");
    });
 }
 function findModel(){
-jq("#div_model").html("");
    jq.ajax({
       type:"POST",
       url:"webfactOrder_findModel",
@@ -114,7 +111,7 @@ jq("#div_model").html("");
       }
    });
 }
-function findFactSname(){
+function findFactSname(){	
    jq("#div_factSname").html("");
 	jq.ajax({
 		type:"POST",
@@ -124,7 +121,7 @@ function findFactSname(){
 			var item;
 			if(data!=null){
 				jq.each(data,function(i,obj){
-					item="<div><input type='checkbox' name='factSnames' value='"+obj+"'/>"+obj+"</div>";
+					item="<div><input type='checkbox' name='factSnames' value='"+obj+"' onclick='init2()'/>"+obj+"</div>";
 					jq("#div_factSname").append(item);
 				});
 			}			
@@ -148,6 +145,7 @@ window.onload=function(){
 };
 
 function init(){
+	clearAll();
 var factNos=new Array();
 var checkbox_fact=jq("input[name='factNos']:checked");
 checkbox_fact.each(function(i,checkbox){
@@ -160,9 +158,40 @@ checkbox_fact.each(function(i,checkbox){
       data:{'factNos':factNos},
       success:function(){
         findFactSname();
-        findComponent();findBrank();findCustomer();findModel(); 
+        //findComponent();findBrank();findCustomer();findModel(); 
       }
    });
+}
+
+function init2(){
+    var checkbox_factsname=jq("input[name='factSnames']:checked");
+    if(checkbox_factsname.length>0){
+    	clearAll();
+    }
+	var factSnames=new Array();
+	checkbox_factsname.each(function(i,checkbox){
+		factSnames.push(checkbox.value);
+	});
+	   jq.ajax({
+	      type:"POST",
+	      traditional:true,
+	      url:"webfactOrder_init2",
+		  data:{'factSnames':factSnames},
+	      success:function(){
+	        findComponent();findBrank();findCustomer();findModel(); 
+	      }
+	   });
+	}
+function clearAll(){
+	jq("#div_component").html("");
+	jq("#div_brank").html("");
+	jq("#div_customer").html("");
+	jq("#div_model").html("");
+	
+	jq("#div_factNos").css("border","");
+	jq("#div_factSname").css("border","");
+	jq("#div_brank").css("border","");
+	jq("#div_customer").css("border","");
 }
 </script>
 
@@ -174,36 +203,21 @@ checkbox_fact.each(function(i,checkbox){
   <form id="public_form" method="post">
 	<table >
 		<tr>
-		     <td class="td_right">工廠與年份</td>
+		    <td class="td_right">工廠與年份</td>
 			<td>
-			   <div id="div_year" style="width:400px;height:160px;overflow:auto;border:1px dashed blue;vertical-align:middle">
-			     <div id="div_factNos" style="width:380px;height:120px;overflow:auto">
-				  <div><input type="checkbox" id="all_factno" onclick="selectAll('all_factno','factNos'),init()"/>全选</div><hr/>				   
-				</div>
-			    <select name="year" >
-			       <option value="2018">2018</option>
-			       <option value="2017">2017</option>
-			       <option value="2016">2016</option>
-			       <option value="2015" selected>2015</option>
-			       <option value="2014">2014</option>
-			       <option value="2013">2013</option>
-			     </select>
-			    	
-			     <input value="搜索" type="button" id="addbtn" onclick="javascript:submis('public_form')" />
-			     <input value="導出Excel" type="button" id="search_forday" onclick="print('public_form')"/>	
+			   <div id="div_factNos" style="width:400px;height:160px;overflow:auto;border:1px dashed blue;vertical-align:middle">			    
+				  <div><input type="checkbox" id="all_factno" onclick="selectAll('all_factno','factNos'),init()"/>全选</div><hr/>				   						    			    				              
 			   </div>			   	  			
 			</td>
 			<td>工廠細分</td>
 		      <td>
 		      <div style="width:400px;height:160px;overflow:auto;border:1px dashed green">
-		      <div><input type="checkbox" id="all_factSname" onclick="selectAll('all_factSname','factSnames')"/> 全选</div><hr/>				  
+		      <div><input type="checkbox" id="all_factSname" onclick="selectAll('all_factSname','factSnames'),init2()"/> 全选</div><hr/>				  
 				<div id="div_factSname">
 				  			 			   
 				</div>
 			  </div>							
-			</td>
-												
-			
+			</td>															
 			</tr>
 						
 		    <tr>
@@ -247,7 +261,17 @@ checkbox_fact.each(function(i,checkbox){
 			   </div>					
 		    </td>
 		    </tr>
-		    
+		    <tr>
+		       <td colspan="4" >
+		        <div id="div_yymm" style="width:440px">
+		                        開始<input type="text" id="yymm" name="yymm" onClick="WdatePicker({maxDate:'#F{$dp.$D(\'yymm2\')||\'%y-{%M-1}\'}',dataFmt:'yyyyMM'})" readonly="readonly" class="Wdate"/>
+			             結束<input type="text" id="yymm2" name="yymm2" onClick="WdatePicker({minDate:'#F{$dp.$D(\'yymm\')}',maxDate:'%y-%M',dataFmt:'yyyyMM'})" readonly="readonly" class="Wdate"/>
+			    
+			     </div>
+			     <input value="搜索" type="button" id="addbtn" onclick="javascript:submis('public_form')" />
+			     <input value="導出Excel" type="button" id="search_forday" onclick="print('public_form')"/>	 
+		       </td>
+		    </tr>
 			
 		
 	</table>
