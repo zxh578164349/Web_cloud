@@ -337,7 +337,8 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 		ActionContext.getContext().getSession().remove("public_model");
 		ActionContext.getContext().getSession().remove("public_component");
 		ActionContext.getContext().getSession().remove("public_year");
-		bean=webfactorderSer.findPageBean(25, page, factSnames, branks, customers, models, components,year,factNo);
+		ActionContext.getContext().getSession().remove("public_factnos");
+		bean=webfactorderSer.findPageBean(25, page, factSnames, branks, customers, models, components,year,factNo,factNos);
 		return "beanList";
 		
 	}
@@ -359,7 +360,8 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 		ActionContext.getContext().getSession().put("public_model",models);
 		ActionContext.getContext().getSession().put("public_component",components);
 		ActionContext.getContext().getSession().put("public_year", year);
-		bean=webfactorderSer.findPageBean(25, page, factSnames, branks, customers, models, components,year,factNo);
+		ActionContext.getContext().getSession().put("public_factnos", factNos);
+		bean=webfactorderSer.findPageBean(25, page, factSnames, branks, customers, models, components,year,factNo,factNos);
 		return "beanList1";
 	}
 	public String findPageBean3(){
@@ -373,7 +375,8 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 		models=(List<String>)ActionContext.getContext().getSession().get("public_model");
 		components=(List<String>)ActionContext.getContext().getSession().get("public_component");
 		year=(String)ActionContext.getContext().getSession().get("public_year");
-		bean=webfactorderSer.findPageBean(25, page, factSnames, branks, customers, models, components,year,factNo);
+		factNos=(List<String>)ActionContext.getContext().getSession().get("public_factnos");
+		bean=webfactorderSer.findPageBean(25, page, factSnames, branks, customers, models, components,year,factNo,factNos);
 		return "beanList1";
 	}
 	
@@ -888,7 +891,7 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 			}*/
 			for(int j=0;j<list_date.size();j++){//for
 				if(list_all.get(i).size()==0){
-					sheet.getRow(i+2).getCell(5+j).setCellValue(list_all.get(i).get("無數據"));
+					sheet.getRow(i+2).getCell(5+j).setCellValue("無數據");
 					sheet.getRow(i+2).getCell(5+j).setCellStyle(cs_font_red);
 				}
 				for(String key:list_all.get(i).keySet()){
@@ -898,7 +901,7 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 						list_all.get(i).remove(key);
 						
 					}else{
-						sheet.getRow(i+2).getCell(5+j).setCellValue(list_all.get(i).get("無數據"));
+						sheet.getRow(i+2).getCell(5+j).setCellValue("無數據");
 						sheet.getRow(i+2).getCell(5+j).setCellStyle(cs_font_red);
 					}
 					break;

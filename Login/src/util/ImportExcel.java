@@ -63,10 +63,10 @@ public class ImportExcel {
 			}
 			short minColIx = row.getFirstCellNum();
 			short maxColIx = row.getLastCellNum();//getLastCellNum獲取到實際列數
-			if(maxColIx-minColIx!=18){
+			/*if(maxColIx-minColIx!=18){
 				list.clear();
 				break;
-			}
+			}*/
 			
 			if(!sheet.getRow(row_head).getCell(minColIx).toString().equals("廠別")&&
 					!sheet.getRow(row_head).getCell(minColIx).toString().equals("厂别")&&
