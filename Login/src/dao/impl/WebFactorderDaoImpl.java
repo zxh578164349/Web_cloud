@@ -21,11 +21,11 @@ public class WebFactorderDaoImpl extends Basedao implements IWebFactorderDao{
 		// TODO Auto-generated method stub
 		super.merge(order);
 	}
-	public WebFactorder findByOrderId(int orderid) {
+	public WebFactorder findByOrderId(long orderid) {
 		// TODO Auto-generated method stub
-		return (WebFactorder)super.findById(orderid, WebFactorder.class);
+		return (WebFactorder)super.findById_long(orderid, WebFactorder.class);
 	}
-	public void delete(int orderid) {
+	public void delete(long orderid) {
 		// TODO Auto-generated method stub
 		WebFactorder order=findByOrderId(orderid);
 		super.delete(order);
@@ -97,7 +97,7 @@ public class WebFactorderDaoImpl extends Basedao implements IWebFactorderDao{
 				}else{
 					objs=list.get(i);//注意：分解的數組比總列數要多齣1箇，所以開始要j=5+1
 					
-					for(int j=5+1;j<objs_head.size()-1;j++){//objs_head-1:表示排除最後一箇"汇总"列
+					for(int j=5+1;j<objs_head.size();j++){
 						WebFactorder order=new WebFactorder();
 						order.setFactSname(objs.get(1));
 						order.setBrank(objs.get(2));
@@ -477,7 +477,7 @@ public class WebFactorderDaoImpl extends Basedao implements IWebFactorderDao{
 		hql.append(decode_customer);
 		hql.append(decode_model);
 		hql.append(decode_component);
-		hql.append("substr(yymm,0,4) from WEB_FACTORDER  where 1=1 ");
+		hql.append("substr(yymm,0,2) from WEB_FACTORDER  where 1=1 ");
 		Map<String,Object>map=new HashMap<String,Object>();
 		if(factSnames!=null&&factSnames.size()>0){
 			hql.append(" and FACT_SNAME in(:factsnames) ");
@@ -512,8 +512,8 @@ public class WebFactorderDaoImpl extends Basedao implements IWebFactorderDao{
 			hql.append(" and yymm<=:yymm2");
 			map.put("yymm2", yymm2);
 		}
-		hql.append(" group by "+decode_fact+decode_brank+decode_customer+decode_model+decode_component+"substr(yymm,0,4) ");
-		hql.append(" order by "+decode_fact+decode_brank+decode_customer+decode_model+decode_component+"substr(yymm,0,4) ");
+		hql.append(" group by "+decode_fact+decode_brank+decode_customer+decode_model+decode_component+"substr(yymm,0,2) ");
+		hql.append(" order by "+decode_fact+decode_brank+decode_customer+decode_model+decode_component+"substr(yymm,0,2) ");
 		List<Object[]>list=super.getAllWithNoPage_sql(hql.toString(), map);
 		return list;
 	}

@@ -26,6 +26,7 @@ public class WebUser implements java.io.Serializable {
 	private String logdate;//登錄時間，如果超過3個月沒有登錄，就刪除該用戶
 	private String emailpassword;//备签邮箱
 	private String department;//部門
+	private String post;//職務
 	private List<WebJurisdiction> webJurisdictions = new ArrayList<WebJurisdiction>();
 
 	// Constructors
@@ -178,7 +179,16 @@ public class WebUser implements java.io.Serializable {
 	public void setDepartment(String department) {
 		this.department = department;
 	}
-	
+
+	public String getPost() {
+		return post;
+	}
+
+	public void setPost(String post) {
+		this.post = post;
+	}
+
+			
 	
 	
 

@@ -45,6 +45,30 @@ public class GlobalMethod {
 	}
 	
 	/**
+	 * kpi目標搜索打印
+	 * @param list
+	 * @param factNo
+	 * @param yymm
+	 * @param yymm2
+	 * @param file
+	 * @param response
+	 * @throws IOException
+	 */
+	public static void print_kpifact(List list,String factNo,String yyyy,String file,HttpServletResponse response) throws IOException{
+		if(list.size()>0){
+			StringBuffer fileName=new StringBuffer();
+			Map<String,Object>map=new HashMap<String,Object>();
+			fileName.append("KPI_pur_report");
+			map.put("factNO", factNo);
+			map.put("yyyy", yyyy);
+			JasperHelper.exportmain("excel", map, file, list, fileName.toString(), "jasper/input/");
+		}else{
+			response.setContentType("text/html;charset=utf-8");
+			response.getWriter().print("<script>alert('無數據');</script>");
+		}
+	}
+	
+	/**
 	 * 實驗室物性搜索打印
 	 * @param list
 	 * @param factNo

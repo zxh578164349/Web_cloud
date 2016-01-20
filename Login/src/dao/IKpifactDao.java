@@ -11,5 +11,6 @@ public interface IKpifactDao {
 	public PageBean findPageBean(int pageSize,int page,String factNo,String yyyy);
 	public void delete(String factNo,String factCode,String yyyy);
 	public List<String> findDateByFactNo(String factNo,String yyyy);
+	public List<Kpifact>findToPrint(String factNo,String yyyy);
 
 }

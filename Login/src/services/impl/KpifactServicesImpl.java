@@ -42,4 +42,9 @@ public class KpifactServicesImpl implements IKpifactServices{
 		return kpidao.findDateByFactNo(factNo,yyyy);
 	}
 
+	public List<Kpifact> findToPrint(String factNo, String yyyy) {
+		// TODO Auto-generated method stub
+		return kpidao.findToPrint(factNo, yyyy);
+	}
+
 }

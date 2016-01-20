@@ -10,8 +10,8 @@ import entity.WebFactorder;
 
 public interface IWebFactorderDao {
 	public void add(WebFactorder order);
-	public WebFactorder findByOrderId(int orderid);
-	public void delete(int orderid);
+	public WebFactorder findByOrderId(long orderid);
+	public void delete(long orderid);
 	public void addLarge(List<String>list);//大批量添加
 	public void addLarge2(List<List<String>>list);//大批量導入數據20160117(修改版)
 	public PageBean findPageBean(int pageSize,int page,List<String>factSnames,List<String>brank,List<String>customer,List<String>model,List<String>component,String year,String factNo,List<String>factNos);

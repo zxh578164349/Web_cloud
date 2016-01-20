@@ -18,7 +18,10 @@
 <LINK href="css/list.css" type="text/css" rel="stylesheet">
 <script type="text/javascript" src="jquery/DatePicker/WdatePicker.js"></script>
 <script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script>
-
+<script type="text/javascript" src="jquery_alert_dialogs/jquery.js"></script>
+<script type="text/javascript" src="jquery_alert_dialogs/jquery.alerts.js"></script>	
+<link rel="stylesheet" type="text/css" href="jquery_alert_dialogs/jquery.alerts.css" />	
+<script type="text/javascript" src="jquery_alert_dialogs/jquery.ui.draggable.js"></script>
 <script type="text/javascript">
  
 //var jq=jQuery.noConflict();
@@ -264,7 +267,7 @@ function clearAll(){
 		    <tr>
 		       <td colspan="4" >
 		        <div id="div_yymm" style="width:440px">
-		                        開始<input type="text" id="yymm" name="yymm" onClick="WdatePicker({maxDate:'#F{$dp.$D(\'yymm2\')||\'%y-{%M-1}\'}',dataFmt:'yyyyMM'})" readonly="readonly" class="Wdate"/>
+		                        開始<input type="text" id="yymm" name="yymm" onClick="WdatePicker({minDate:'2008',maxDate:'#F{$dp.$D(\'yymm2\')||\'%y-{%M-1}\'}',dataFmt:'yyyyMM'})" readonly="readonly" class="Wdate"/>
 			             結束<input type="text" id="yymm2" name="yymm2" onClick="WdatePicker({minDate:'#F{$dp.$D(\'yymm\')}',maxDate:'%y-%M',dataFmt:'yyyyMM'})" readonly="readonly" class="Wdate"/>
 			    
 			     </div>
