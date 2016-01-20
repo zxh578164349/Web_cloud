@@ -39,6 +39,7 @@ jq(document).keyup(function(event){
 </head>
 <body>
   <div style="width:680px">
+  <form id="public_form" method="post">
 	<table  border="0px">
 		<tr>
 			<td>廠別</td>
@@ -62,13 +63,15 @@ jq(document).keyup(function(event){
 					</div>
 				</s:else></td>
 			<td>年份</td>
-			<td><input type="text" id="year" name="yymm" 
+			<td><input type="text" id="year" name="yyyy" 
 				onClick="WdatePicker({dateFmt:'yyyy'})" readonly="readonly" class="Wdate"/></td>
 			<td>
-			 <input value="搜索" type="submit" id="addbtn" onclick="javascript:submis()" />		
+			 <input value="搜索" type="button" id="addbtn" onclick="javascript:submis()" />
+			 <input value="導出Excel" type="button" id="search_forday" onclick="print('public_form')"/>		
 			</td>
 		</tr>
 	</table>
+	</form>
 	</div>
 </body>
 </html>

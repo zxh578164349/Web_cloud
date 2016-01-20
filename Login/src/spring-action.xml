@@ -84,6 +84,7 @@
 	<bean id="webfactorderAction" class="action.WebFactOrderAction" scope="prototype"/>
 	<bean id="webbussletterAction" class="action.WebBussinessletterAction" scope="prototype"/>
 	<bean id="webtabpomfileAction" class="action.WebTabpomfileAction" scope="prototype"/>
+	<bean id="webphonebookAction" class="action.WebPhonebookAction" scope="prototype"/>
 </beans> 
 
  

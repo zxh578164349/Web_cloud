@@ -36,8 +36,9 @@
 <script>
 	var jq=jQuery.noConflict();
 	var loadi;
-	jq(document).ajaxStart(function(){
-		loadi=layer.load(0);
+	//var global_temp=jq("#global_temp").val();
+	jq(document).ajaxStart(function(){		
+			loadi=layer.load(0);					
 	});
 	jq(document).ajaxStop(function(){
 		layer.close(loadi);
@@ -59,6 +60,7 @@
 		});
 	}
 	function submis(public_form) {
+		jq("#global_temp").val("search");
 		var topindex=document.getElementById('bodyid').offsetTop;
 		var fact = document.getElementById("factNo");
 		var ym = document.getElementById("year");
@@ -81,6 +83,7 @@
 	}
 	//你确定要删除吗？
 	function isDelete(mid) {
+		jq("#global_temp").val("delete");
 		jConfirm('你确定这么做吗?', '确认对话框', function(r) {
 			if (r == true) {
 				//document.getElementById(mid).submit();
@@ -88,7 +91,7 @@
 					type:"POST",
 					dataType:"html",
 					data:jq("#"+mid).serialize(),
-					url:"webfactOrder_delete2",
+					url:"webfactOrder_delete",
 					success:function(data){
 						jq("#bodyid").html(data);
 					},
@@ -187,11 +190,14 @@ jq(function(){
 	        	}else if(data=="2"){
 	        		layer.msg("數據重複，導入失敗",3,3);
 	        	}else if(data=="3"){
-	        	    layer.msg("Excel文檔結構不符合要求，禁止導入",3,3);
+	        	    //layer.msg("Excel文檔結構不符合要求或數據量過大，禁止導入",3,3);
+	        	    showDiv();
+	        	    layer.msg("Excel文檔結構不符合要求,或數據量超出預估，禁止導入",3,3);
 	        	}else{
 	        	     alert(data);
 	        	}		        	       	    									
-	         }		         
+	         }
+	         
 	};
 
 	jq("#upload_form").submit(function(){
@@ -209,11 +215,33 @@ function setWindowScrollTop(win, topHeight){
         win.document.body.scrollTop = topHeight;
     }
 }
+function showDiv(){
+	
+    jq.layer({
+    type: 2,   //0-4的选择,
+    title: '樣本格式說明',
+    //border: [0],
+    closeBtn: [1,true],
+    shade: [0],
+    //shade: [0.5, '#000'],
+    shadeClose: false,
+    border: [10, 0.3, '#000'],
+   // btns:1,
+    //fadeIn:300,
+    //shift:'top',
+    offset:['10px',''],
+    //area: ['800px', '560px'],
+    area:['650px','560px'],
+    //page:{url:'kyz_findById_layer?billNo='+billNo+'& factNo='+factNo}                   
+    iframe:{src:'sample.jsp',scrolling:'auto'}	                    
+});
+    }
 	
 </script>
 
 <body>
 <div>
+    <input type="hidden" id="global_temp"
 	<jsp:include page="publicHead_print_webfactorder.jsp" />
 	<hr />
 	<s:if test='#session.loginUser.userread!="1"'>

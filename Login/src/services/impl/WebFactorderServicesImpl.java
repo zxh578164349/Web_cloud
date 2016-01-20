@@ -22,13 +22,13 @@ public class WebFactorderServicesImpl implements IWebFactorderServices{
 		// TODO Auto-generated method stub
 		factorderdao.add(order);
 	}
-	public WebFactorder findByOrderId(int orderid) {
+	public WebFactorder findByOrderId(long orderid) {
 		// TODO Auto-generated method stub
 		return factorderdao.findByOrderId(orderid);
 	}
 
 
-	public void delete(int orderid) {
+	public void delete(long orderid) {
 		// TODO Auto-generated method stub
 		factorderdao.delete(orderid);
 	}

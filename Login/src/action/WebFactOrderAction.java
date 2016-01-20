@@ -69,9 +69,19 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
     private String fileFileName;
     private String fileContentType;
     private String ajaxResult;//申請函文時返回的ajax結果,   0:提交成功       1：上传的文档格式不符合要求   2：excel导入失败     3：excel数据格式不符合要求
-     
+    private long orderid; 
     
     
+    
+	
+	
+	
+	public long getOrderid() {
+		return orderid;
+	}
+	public void setOrderid(long orderid) {
+		this.orderid = orderid;
+	}
 	public String getYymm2() {
 		return yymm2;
 	}
@@ -289,11 +299,11 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 		
 		/*******************數據導入到數據庫20160117********************/
 		try{
-			List<String>list_imp=ImportExcel.exportListFromExcel(new File(path+"\\"+fileFileName), 1);
+			List<String>list_imp=ImportExcel.exportListFromExcel(new File(path+"\\"+fileFileName), 0);
 			List<List<String>>list_all=new ArrayList<List<String>>();
 			if(list_imp.size()>0){
 				List<Object[]>list_fact=webFactSer.findAllFact_obj();
-				for(int i=0;i<10;i++){//for
+				for(int i=0;i<list_imp.size();i++){//for
 					if(i==0){
 						list_all.add(Arrays.asList(list_imp.get(i).split("__")));
 					}else{
@@ -843,7 +853,7 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 		}
 		
 		sheet.createRow(0).createCell(0);
-		sheet.getRow(0).getCell(0).setCellValue(year+"訂單月份匯總表");
+		sheet.getRow(0).getCell(0).setCellValue("訂單月份匯總表");
 		sheet.getRow(0).getCell(0).setCellStyle(cs_title);
 		for(int i=1;i<list.size()+2;i++){
 			sheet.createRow(i);
@@ -912,7 +922,7 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 		//OutputStream os=new FileOutputStream("d:\\tttttt.xls");
 		ServletOutputStream os=response.getOutputStream();
 		response.setContentType("application/vnd.ms-excel");
-		String fileName="fact_reportTotal_"+year+".xls";
+		String fileName="fact_reportTotal_"+".xls";
 		int msi=ServletActionContext.getRequest().getHeader("USER-AGENT").toLowerCase().indexOf("msie");
 		if(msi>0){
 			fileName=java.net.URLEncoder.encode(fileName,"utf-8");
@@ -924,6 +934,15 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 		os.close();
 		
 		
+	}
+	
+	public String findById(){
+		factorder=webfactorderSer.findByOrderId(orderid);
+		return "findById";
+	}
+	public String delete(){
+		webfactorderSer.delete(orderid);
+		return "delete";
 	}
 	
 	

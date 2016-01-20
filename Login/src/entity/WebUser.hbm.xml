@@ -49,6 +49,9 @@
         <property name="department" type="java.lang.String">
             <column name="DEPARTMENT" length="30"></column>
         </property>
+        <property name="post" type="java.lang.String">
+            <column name="POST" length="30"></column>
+        </property>
         <bag name="webJurisdictions" cascade="delete" inverse="true" >
             <key>
                 <column name="USERID" precision="8" scale="0" not-null="true" />

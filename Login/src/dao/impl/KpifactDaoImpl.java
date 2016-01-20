@@ -54,7 +54,7 @@ public class KpifactDaoImpl extends Basedao implements IKpifactDao{
 			map.put("factno", factNo);
 		}
 		hql2.append(hql);
-		hql.append(" order by id.factNo,id.factCode,id.yyyy desc");
+		hql.append(" order by id.factNo,id.yyyy desc,id.factCode");
 		Integer rows=(Integer)ActionContext.getContext().get("allrows");
 		int allrows=0;
 		if(rows!=null&&page>1){
@@ -90,6 +90,24 @@ public class KpifactDaoImpl extends Basedao implements IKpifactDao{
 		String hql="select distinct id.yyyy from Kpifact where id.factNo=? and id.yyyy like ? order by id.yyyy";
 		String[]objs={factNo,yyyy+"%"};
 		return super.findAll(hql, objs);
+	}
+
+	public List<Kpifact> findToPrint(String factNo, String yyyy) {
+		// TODO Auto-generated method stub
+		StringBuffer hql=new StringBuffer();
+		Map<String,Object>map=new HashMap<String,Object>();
+		hql.append("from Kpifact where 1=1 ");
+		if(factNo!=null&&!factNo.equals("")&&!factNo.equals("tw")){
+			hql.append(" and id.factNo=:factno");
+			map.put("factno", factNo);
+		}
+		if(yyyy!=null&&!yyyy.equals("")){
+			hql.append(" and id.yyyy like:yyyy");
+			map.put("yyyy", yyyy+"%");
+		}
+		hql.append(" order by id.factNo,id.yyyy desc,id.factCode");
+		List<Kpifact>list=super.getAllWithNoPage(hql.toString(), map);
+		return list;
 	}
 
 }

@@ -71,6 +71,16 @@ public class Basedao extends HibernateDaoSupport {
 			throw re;
 		}
 	}
+	public Object findById_long(java.lang.Long id, Class clas) {
+		log.debug("getting WebJurisdiction instance with id: " + id);
+		try {
+			Object instance = (Object) getHibernateTemplate().get(clas, id);
+			return instance;
+		} catch (RuntimeException re) {
+			log.error("get failed", re);
+			throw re;
+		}
+	}
 
 	public List findAll(String hql, Object[] object) {
 		log.debug("finding all WebJurisdiction instances");

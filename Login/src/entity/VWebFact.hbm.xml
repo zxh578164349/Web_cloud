@@ -28,5 +28,11 @@
             </key>
             <many-to-many class="entity.WebTabpom" column="WEBTABPOM_ID"/>
         </bag>
+        <bag name="phones" inverse="true" cascade="all" >
+           <key>
+              <column name="FACTNO" length="50"/>
+           </key>
+           <one-to-many class="entity.WebPhonebook"/>
+        </bag>
     </class>
 </hibernate-mapping>

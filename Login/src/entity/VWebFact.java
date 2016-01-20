@@ -15,6 +15,7 @@ public class VWebFact implements java.io.Serializable {
 	private String factSname;
 	private String orderNo;
 	private List<WebTabpom>webtabpoms=new ArrayList<WebTabpom>();
+	private List<WebPhonebook>phones;
 
 	// Constructors
 
@@ -67,6 +68,15 @@ public class VWebFact implements java.io.Serializable {
 	public void setWebtabpoms(List<WebTabpom> webtabpoms) {
 		this.webtabpoms = webtabpoms;
 	}
+
+	public List<WebPhonebook> getPhones() {
+		return phones;
+	}
+
+	public void setPhones(List<WebPhonebook> phones) {
+		this.phones = phones;
+	}
+	
 
 
 	

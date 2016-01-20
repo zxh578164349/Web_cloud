@@ -2,6 +2,7 @@ package action;
 
 import java.io.IOException;
 import java.text.DecimalFormat;
+import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -11,6 +12,7 @@ import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
 import services.IKpifactServices;
+import util.GlobalMethod;
 import util.PageBean;
 import entity.Kpifact;
 
@@ -168,9 +170,11 @@ public class KpifactAction extends ActionSupport implements ServletResponseAware
 	
 	/**
 	 * 打印文檔
+	 * @throws IOException 
 	 */
-	public void print(){
-		
+	public void print() throws IOException{
+		List<Kpifact>list=kpiSer.findToPrint(factNo, yyyy);
+		GlobalMethod.print_kpifact(list, factNo, yyyy, "kpifact.jasper", response);
 	}
 
 	
