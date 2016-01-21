@@ -19,6 +19,7 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
+import org.apache.poi.hssf.usermodel.HSSFDataFormat;
 import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -346,9 +347,10 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 		ActionContext.getContext().getSession().remove("public_customer");
 		ActionContext.getContext().getSession().remove("public_model");
 		ActionContext.getContext().getSession().remove("public_component");
-		ActionContext.getContext().getSession().remove("public_year");
 		ActionContext.getContext().getSession().remove("public_factnos");
-		bean=webfactorderSer.findPageBean(25, page, factSnames, branks, customers, models, components,year,factNo,factNos);
+		ActionContext.getContext().getSession().remove("public_yymm");
+		ActionContext.getContext().getSession().remove("public_yymm2");
+		bean=webfactorderSer.findPageBean(25, page, factSnames, branks, customers, models, components,factNo,factNos,yymm,yymm2);
 		return "beanList";
 		
 	}
@@ -369,9 +371,10 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 		ActionContext.getContext().getSession().put("public_customer",customers);
 		ActionContext.getContext().getSession().put("public_model",models);
 		ActionContext.getContext().getSession().put("public_component",components);
-		ActionContext.getContext().getSession().put("public_year", year);
 		ActionContext.getContext().getSession().put("public_factnos", factNos);
-		bean=webfactorderSer.findPageBean(25, page, factSnames, branks, customers, models, components,year,factNo,factNos);
+		ActionContext.getContext().getSession().put("public_yymm", yymm);
+		ActionContext.getContext().getSession().put("public_yymm2", yymm2);
+		bean=webfactorderSer.findPageBean(25, page, factSnames, branks, customers, models, components,factNo,factNos,yymm,yymm2);
 		return "beanList1";
 	}
 	public String findPageBean3(){
@@ -386,7 +389,9 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 		components=(List<String>)ActionContext.getContext().getSession().get("public_component");
 		year=(String)ActionContext.getContext().getSession().get("public_year");
 		factNos=(List<String>)ActionContext.getContext().getSession().get("public_factnos");
-		bean=webfactorderSer.findPageBean(25, page, factSnames, branks, customers, models, components,year,factNo,factNos);
+		yymm=(String)ActionContext.getContext().getSession().get("public_yymm");
+		yymm2=(String)ActionContext.getContext().getSession().get("public_yymm2");
+		bean=webfactorderSer.findPageBean(25, page, factSnames, branks, customers, models, components,factNo,factNos,yymm,yymm2);
 		return "beanList1";
 	}
 	
@@ -794,6 +799,17 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 		cs.setBorderRight(HSSFCellStyle.BORDER_THIN);
 		cs.setBorderTop(HSSFCellStyle.BORDER_THIN);
 		
+		HSSFDataFormat frm=wb.createDataFormat();
+		
+		//數字格式
+		HSSFCellStyle cs_data=wb.createCellStyle();
+		cs_data.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+		cs_data.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+		cs_data.setBorderRight(HSSFCellStyle.BORDER_THIN);
+		cs_data.setBorderTop(HSSFCellStyle.BORDER_THIN);
+		cs_data.setDataFormat(frm.getFormat("#,##0.0"));
+		
+		
 		//標題樣式
 		HSSFCellStyle cs_title=wb.createCellStyle();
 		HSSFFont font_title=wb.createFont();
@@ -843,6 +859,9 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 		cs_head.setFillForegroundColor(IndexedColors.YELLOW.getIndex());				
 		cs_head.setFillPattern(XSSFCellStyle.SOLID_FOREGROUND);
 		
+		
+		
+		
 		/***************************初始化表格************************************/
 		for(int i=0;i<5;i++){
 			if(i==0){
@@ -859,7 +878,8 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 			sheet.createRow(i);
 			for(int j=0;j<30;j++){
 				sheet.getRow(i).createCell(j);
-				sheet.getRow(i).getCell(j).setCellStyle(cs);
+				//sheet.getRow(i).getCell(j).setCellStyle(cs);
+				sheet.getRow(i).getCell(j).setCellStyle(cs_data);//20160121
 			}
 			if(i==1){
 				sheet.getRow(i).getCell(0).setCellValue("廠別");

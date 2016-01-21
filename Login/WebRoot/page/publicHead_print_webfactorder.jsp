@@ -38,11 +38,11 @@ function getAllFact_json(){
 		url:"webfact_findFactByFactNo",
 		dataType:"json",
 		success:function(data){
-			var item;
+			var item="";
 			jq.each(data,function(i,obj){
-				item="<div><input type='checkbox' name='factNos' value='"+obj[0]+"' onclick='init()'/>"+obj[1]+"</div>";
-				jq("#div_factNos").append(item);
+				item+="<div><input type='checkbox' name='factNos' value='"+obj[0]+"' onclick='init()'/>"+obj[1]+"</div>";				
 			});
+			jq("#div_factNos").append(item);
 		}	
 	});
 }
@@ -52,12 +52,12 @@ function findComponent(){
       url:"webfactOrder_findComponent",
       dataType:"json",
       success:function(data){
-        var item;
+        var item="";
         if(data!=null){
            jq.each(data,function(i,obj){
-          item="<div><input type='checkbox' name='components' value='"+obj+"'/>"+obj+"</div>";
-          jq("#div_component").append(item);
+          item+="<div><input type='checkbox' name='components' value='"+obj+"'/>"+obj+"</div>";        
         });
+           jq("#div_component").append(item);
         }
         
       }
@@ -69,12 +69,12 @@ function findBrank(){
        url:"webfactOrder_findBrank",
        dataType:"json",
        success:function(data){
-           var item;
+           var item="";
            if(data!=null){
              jq.each(data,function(i,obj){
-              item="<div><input type='checkbox' name='branks' value='"+obj+"'/>"+obj+"</div>";
-              jq("#div_brank").append(item);
-           }); 
+              item+="<div><input type='checkbox' name='branks' value='"+obj+"'/>"+obj+"</div>";             
+           });
+             jq("#div_brank").append(item);
            }
            
        }
@@ -86,12 +86,12 @@ function findCustomer(){
       url:"webfactOrder_findCustomer",
       dataType:"json",
       success:function(data){
-         var item;
+         var item="";
          if(data!=null){
            jq.each(data,function(i,obj){
-            item="<div><input type='checkbox' name='customers' value='"+obj+"'/>"+obj+"</div>";
-            jq("#div_customer").append(item);
+            item+="<div><input type='checkbox' name='customers' value='"+obj+"'/>"+obj+"</div>";           
          });
+           jq("#div_customer").append(item);
          }
          
       }
@@ -103,12 +103,12 @@ function findModel(){
       url:"webfactOrder_findModel",
       dataTyep:"json",
       success:function(data){
-         var item;
+         var item="";
          if(data!=null){
             jq.each(data,function(i,obj){
-           item="<div><input type='checkbox' name='models' value='"+obj+"'/>"+obj+"</div>";
-           jq("#div_model").append(item);
+           item+="<div><input type='checkbox' name='models' value='"+obj+"'/>"+obj+"</div>";           
          });
+            jq("#div_model").append(item);
          }
          
       }
@@ -121,12 +121,12 @@ function findFactSname(){
 		url:"webfactOrder_findFactSname",
 		dataType:"json",
 		success:function(data){
-			var item;
+			var item="";
 			if(data!=null){
 				jq.each(data,function(i,obj){
-					item="<div><input type='checkbox' name='factSnames' value='"+obj+"' onclick='init2()'/>"+obj+"</div>";
-					jq("#div_factSname").append(item);
+					item+="<div><input type='checkbox' name='factSnames' value='"+obj+"' onclick='init2()'/>"+obj+"</div>";					
 				});
+				jq("#div_factSname").append(item);
 			}			
 		}
 	});
@@ -191,7 +191,7 @@ function clearAll(){
 	jq("#div_customer").html("");
 	jq("#div_model").html("");
 	
-	jq("#div_factNos").css("border","1px,dashed,blue");
+	jq("#div_factNos").css("border","1px dashed blue");
 	jq("#div_factSname").css("border","");
 	jq("#div_brank").css("border","");
 	jq("#div_customer").css("border","");
@@ -206,7 +206,7 @@ function clearAll(){
   <form id="public_form" method="post">
 	<table >
 		<tr>
-		    <td class="td_right">工廠與年份</td>
+		    <td class="td_right">工廠</td>
 			<td>
 			   <div id="div_factNos" style="width:400px;height:160px;overflow:auto;border:1px dashed blue;vertical-align:middle">			    
 				  <div><input type="checkbox" id="all_factno" onclick="selectAll('all_factno','factNos'),init()"/>全选</div><hr/>				   						    			    				              

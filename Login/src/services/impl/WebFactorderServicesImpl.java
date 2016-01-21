@@ -40,9 +40,9 @@ public class WebFactorderServicesImpl implements IWebFactorderServices{
 	}
 
 
-	public PageBean findPageBean(int pageSize,int page,List<String>factSnames,List<String>brank,List<String>customer,List<String>model,List<String>component,String year,String factNo,List<String>factNos){
+	public PageBean findPageBean(int pageSize,int page,List<String>factSnames,List<String>brank,List<String>customer,List<String>model,List<String>component,String factNo,List<String>factNos,String yymm,String yymm2){
 		// TODO Auto-generated method stub
-		return factorderdao.findPageBean(pageSize, page, factSnames, brank, customer, model, component,year,factNo,factNos);
+		return factorderdao.findPageBean(pageSize, page, factSnames, brank, customer, model, component,factNo,factNos,yymm,yymm2);
 	}
 	public List<String> findComponent(List<String> FactSnames) {
 		// TODO Auto-generated method stub

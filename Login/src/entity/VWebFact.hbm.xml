@@ -30,6 +30,7 @@
         </bag>
         <bag name="phones" inverse="true" cascade="all" >
            <key>
+              <!-- 20160121奇怪:這裏廠別的列名,不管是V_WEB_FACT中的FACT_NO，還是WEB_PHONEBOOK的FACTNO， 都可以-->
               <column name="FACTNO" length="50"/>
            </key>
            <one-to-many class="entity.WebPhonebook"/>
