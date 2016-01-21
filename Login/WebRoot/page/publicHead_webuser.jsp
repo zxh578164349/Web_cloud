@@ -42,7 +42,7 @@ jq(document).keyup(function(event){
 	<table  border="0px">
 		<tr>
 			<td>廠別</td>
-			<td><s:if test="#attr.factNo=='tw'">
+			<td><s:if test="#session.factNo=='tw'">
 			    <div id="uboxstyle">
 					<select name="factNo" id="factNo">						
 						<option value="">全部</option>		
@@ -56,7 +56,7 @@ jq(document).keyup(function(event){
 				<s:else>
 				  <div id="uboxstyle">
 					<select name="factNo" id="factNo">						
-						<option value="<s:property value="#attr.factNo"/>">
+						<option value="<s:property value="#session.factNo"/>">
 							<s:property value="#attr.factName" />(<s:property value="#attr.factNo"/>)
 						</option>
 					</select>

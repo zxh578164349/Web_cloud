@@ -97,13 +97,17 @@ public class KpifactDaoImpl extends Basedao implements IKpifactDao{
 		StringBuffer hql=new StringBuffer();
 		Map<String,Object>map=new HashMap<String,Object>();
 		hql.append("from Kpifact where 1=1 ");
-		if(factNo!=null&&!factNo.equals("")&&!factNo.equals("tw")){
+		if(factNo!=null&&!factNo.equals("")&&!factNo.equals("tw")&&!factNo.equals("nothing")){
 			hql.append(" and id.factNo=:factno");
 			map.put("factno", factNo);
 		}
 		if(yyyy!=null&&!yyyy.equals("")){
 			hql.append(" and id.yyyy like:yyyy");
 			map.put("yyyy", yyyy+"%");
+		}
+		if(factNo.equals("nothing")&&(yyyy==null||yyyy.equals(""))){
+			hql.append(" and id.factNo=:factno");
+			map.put("factno", factNo);
 		}
 		hql.append(" order by id.factNo,id.yyyy desc,id.factCode");
 		List<Kpifact>list=super.getAllWithNoPage(hql.toString(), map);

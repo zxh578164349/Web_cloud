@@ -325,6 +325,12 @@
 	    }else{
 	       document.getElementById("webbussletter1").innerHTML='<input name="checkbox" value="KPI數據,人員出差申請書,bussletter_findPageBean" type="checkbox" />人員出差申請書'															                                             
 	    }
+	    var i59=document.getElementById("webphonebook");
+	    if(i59!=null){
+	       document.getElementById("webphonebook1").innerHTML="";
+	    }else{
+	       document.getElementById("webphonebook1").innerHTML='<input name="checkbox" value="用戶管理,聯系資料,webphonebook_findPageBean"  type="checkbox" />聯系資料'															                                             
+	    }
 }
 		
 function getSub(){
@@ -333,7 +339,7 @@ function getSub(){
 }
 function back(){
 	layer.load("正在返回...");
-	location.href="/Login/userfindPageBean";
+	location.href="/Login/userfindPageBean3?backIndex=1";
 }
 </script>
 <body>
@@ -700,6 +706,15 @@ function back(){
 							</s:if>
 						</s:iterator>
 					</s:iterator> <span id="webemaila1"></span>
+					<s:iterator value="#session.user.webJurisdictions">
+						<s:iterator value="webSubmenus">
+							<s:if test="submenuname=='聯系資料'">
+								<span id="webphonebook"><input name="checkbox"
+									value="用戶管理,聯系資料,webphonebook_findPageBean" checked="checked" type="checkbox" />聯系資料</span>
+							</s:if>
+						</s:iterator>
+					</s:iterator> <span id="webphonebook1"></span>
+					
 				</td>
 			</tr>
 			<tr>

@@ -133,7 +133,7 @@ public class WebFactorderDaoImpl extends Basedao implements IWebFactorderDao{
 
 
 	public PageBean findPageBean(int pageSize, int page, List<String> factSnames,
-			List<String>brank, List<String>customer, List<String>model, List<String>component,String year,String factNo,List<String>factNos) {
+			List<String>brank, List<String>customer, List<String>model, List<String>component,String factNo,List<String>factNos,String yymm,String yymm2) {
 		// TODO Auto-generated method stub
 		StringBuffer hql=new StringBuffer();
 		StringBuffer hql2=new StringBuffer();
@@ -159,11 +159,7 @@ public class WebFactorderDaoImpl extends Basedao implements IWebFactorderDao{
 		if(component!=null&&component.size()>0){
 			hql.append(" and component in(:component)");
 			map.put("component", component);
-		}
-		if(year!=null&&!year.equals("")){
-			hql.append(" and yymm like :year");
-			map.put("year", year+"%");
-		}
+		}		
 		if(factNo!=null&&!factNo.equals("")&&!factNo.equals("tw")){
 			hql.append(" and factNo=:factno");
 			map.put("factno", factNo);
@@ -171,6 +167,14 @@ public class WebFactorderDaoImpl extends Basedao implements IWebFactorderDao{
 		if(factNo.equals("tw")&&factNos!=null&&factNos.size()>0){
 			hql.append(" and factNo in(:factnos)");
 			map.put("factnos", factNos);
+		}
+		if(yymm!=null&&!yymm.equals("")){
+			hql.append(" and yymm >=:yymm");
+			map.put("yymm", yymm);
+		}
+		if(yymm!=null&&!yymm.equals("")){
+			hql.append(" and yymm<=:yymm2");
+			map.put("yymm2", yymm2);
 		}
 		
 		hql2.append(hql);

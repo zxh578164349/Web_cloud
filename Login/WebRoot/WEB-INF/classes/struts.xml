@@ -741,7 +741,13 @@
 		   </result>
 		</action>
 		<action name="webphonebook_*" class="webphonebookAction" method="{1}">
-		   
+		   <result name="add" type="json">
+		       <param name="root">ajaxResult</param>
+		   </result>
+		   <result name="beanList">page/webphonebook.jsp</result>
+		   <result name="beanList1">page/table1/webphonebook1.jsp</result>
+		   <result name="findById">saveAndUpdate/webphonebookSaveOrUpdate.jsp</result>
+		   <result name="delete" type="redirectAction">webphonebook_findPageBean3</result>
 		</action>
 	</package>
 

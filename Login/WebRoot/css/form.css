@@ -217,7 +217,7 @@ A:hover {
 	
 }
 
-.td_input ,select,input[type=text]{	
+select,input[type=text]{	
 	border: 2px solid #7A6F6F;
 	border: 2px solid #7A6F6F \9; /*IE*/
 	width: 200px;

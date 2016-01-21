@@ -71,8 +71,19 @@ public class WebUserAction extends ActionSupport implements ServletResponseAware
 	private String ajax_result;//返回頁面的ajax結果   (0:登錄成功    1:當前用戶已註銷   2:廠別不對    3:賬號或密碼錯誤)
 	private IKyVisaBillsServices visabillSer;
 	private IWebTypeServices webtypeSer;
+	private int backIndex;//返回標識      0或null:不走返回路徑         1:走返回路徑
 	
 	
+	
+
+	public int getBackIndex() {
+		return backIndex;
+	}
+
+	public void setBackIndex(int backIndex) {
+		this.backIndex = backIndex;
+	}
+
 	public void setWebtypeSer(IWebTypeServices webtypeSer) {
 		this.webtypeSer = webtypeSer;
 	}
@@ -788,6 +799,10 @@ public class WebUserAction extends ActionSupport implements ServletResponseAware
 		return "beanList1";
 	}
 	public String findPageBean3(){
+		String result="beanList1";
+		if(backIndex==1){
+			result="beanList";
+		}
 		conditions=(String)ActionContext.getContext().getSession().get("public_conditions");
 		factNo=(String)ActionContext.getContext().getSession().get("public_factno");
 		if(factNo==null||factNo.equals("")){
@@ -797,7 +812,7 @@ public class WebUserAction extends ActionSupport implements ServletResponseAware
 			bean=webUserService.findPageBean(25, page, conditions, factNo);
 		}
 		this.findFactName(bean);
-		return "beanList1";
+		return result;
 	}
 
 	public void setServletResponse(HttpServletResponse response) {

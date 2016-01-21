@@ -119,7 +119,9 @@ table.gridtable td {
 			<tr>
 				<td>申請內容</td>
 				<td colspan="11">
-				  <div style="height:85px;overflow:auto"><s:property value="kyzletter.memoMk" /></div>				     				 					
+				  <div style="height:85px;width:100%;overflow:auto">
+				  <s:property value="kyzletter.memoMk" />				  
+				  </div>				     				 					
 				</td>
 
 			</tr>
@@ -140,7 +142,7 @@ table.gridtable td {
 			    <tr><td colspan="12" style="color:red">備註↓↓↓</td></tr>
 				<tr><td colspan="12">									
 					<form id="memo" method="post" action="vbm_add">
-						<textarea rows="8" cols="75" name="memo" id="memo_txt"></textarea>						
+						<textarea  name="memo" id="memo_txt" style="width:540px;height:180px;overflow:auto"></textarea>						
 						<input type="hidden" name="factNo" value="<s:property value='factNo'/>"/>
 						<input type="hidden" name="billNo" value="<s:property value='billNo'/>"/>
 						<input type="hidden" name="itemNo" value="<s:property value='itemNo'/>"/>

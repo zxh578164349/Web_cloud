@@ -8,7 +8,9 @@
     <class name="entity.WebPhonebook" table="WEB_PHONEBOOK" schema="WEB">
         <id name="pbId" type="java.lang.Long">
             <column name="PB_ID" precision="12" scale="0" />
-            <generator class="assigned" />
+            <generator class="sequence">
+                <param name="sequence">seq_webphonebook</param>
+            </generator>
         </id>
         <property name="username" type="java.lang.String">
             <column name="USERNAME" length="50" />
@@ -32,7 +34,8 @@
             <column name="EMAIL" length="50"/>
         </property>
         <many-to-one name="fact" class="entity.VWebFact">
-           <column name="FACT_NO" length="50"/>
+        <!-- 20160121表WEB_PHONEBOOK的廠別字段名 -->
+           <column name="FACTNO" length="50"/>
         </many-to-one>
     </class>
 </hibernate-mapping>
