@@ -119,9 +119,9 @@ public class WebFactorderServicesImpl implements IWebFactorderServices{
 	}
 
 
-	public void addLarge2(List<List<String>> list) {
+	public void addLarge2(List<List<String>> list,String username) {
 		// TODO Auto-generated method stub
-		factorderdao.addLarge2(list);
+		factorderdao.addLarge2(list,username);
 	}
 
 

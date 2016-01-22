@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -231,6 +232,7 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 		this.response=response;
 	}
 	public String importExcel() throws IOException{
+		String username=((WebUser)ActionContext.getContext().getSession().get("loginUser")).getUsername();
 		String path="d:\\Webfactorder_backup\\"+new SimpleDateFormat("yyyyMMdd").format(new Date());//Excel文檔存放目錄
 		String result="importExcel";
 		ajaxResult="0";
@@ -310,7 +312,8 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 					}else{
 						List<String>list_data=new ArrayList<String>(Arrays.asList(list_imp.get(i).split("__")));
 						for(int x=0;x<list_fact.size();x++){
-							if(list_data.get(1).replace("(", "").replace(")", "").contains(list_fact.get(x)[1].toString())){
+							if(list_data.get(1).replace("(", "").replace(")", "").contains(list_fact.get(x)[1].toString())||
+									list_data.get(1).replace("(", "").replace(")", "").contains(list_fact.get(x)[0].toString())){
 								list_data.add(list_fact.get(x)[0].toString());
 								break;
 							}
@@ -319,18 +322,26 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 					}
 				}//for
 				try{
-					webfactorderSer.addLarge2(list_all);
+					webfactorderSer.addLarge2(list_all,username);
 				}catch(Exception e){
-					ajaxResult="2";//导入Excel失败
-					System.out.println(e);
+					if(e.toString().contains("org.springframework")){
+						ajaxResult="2";//數據重複，导入Excel失败
+					}else{
+						ajaxResult="4";//Excel文檔格式不兼容，导入Excel失败
+					}
+					System.out.println("*********"+e+"********");
 				}
 				
 			}else{
 				ajaxResult="3";//Excel数据结构不符合要求,不允许导入
 			}
 		}catch(Exception e){
-			ajaxResult="2";//导入Excel失败
-			System.out.println(e);
+			if(e.toString().contains("org.springframework")){
+				ajaxResult="2";//數據重複，导入Excel失败
+			}else{
+				ajaxResult="4";//Excel文檔格式不兼容，导入Excel失败
+			}
+			System.out.println("*********"+e+"********");
 		}
 		/*******************數據導入到數據庫20160117********************/
 		
@@ -965,6 +976,15 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 		return "delete";
 	}
 	
+	/**
+	 * 數字轉換千分位格式
+	 * @param dbl
+	 * @return
+	 */
+	public String toThou(Double dbl){
+		DecimalFormat cml=new DecimalFormat();
+		cml.applyPattern(",###.#");		
+		return cml.format(dbl);
+	}
 	
-
 }

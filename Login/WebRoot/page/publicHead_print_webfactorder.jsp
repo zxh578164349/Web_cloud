@@ -116,6 +116,7 @@ function findModel(){
 }
 function findFactSname(){	
    jq("#div_factSname").html("");
+   jq("#all_factSname").prop("checked",false);
 	jq.ajax({
 		type:"POST",
 		url:"webfactOrder_findFactSname",
@@ -190,6 +191,8 @@ function clearAll(){
 	jq("#div_brank").html("");
 	jq("#div_customer").html("");
 	jq("#div_model").html("");
+	
+	jq("#all_brank,#all_customer,#all_model,#all_component").prop("checked",false);
 	
 	jq("#div_factNos").css("border","1px dashed blue");
 	jq("#div_factSname").css("border","");

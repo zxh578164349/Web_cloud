@@ -13,7 +13,7 @@ public interface IWebFactorderServices {
 	public WebFactorder findByOrderId(long orderid);
 	public void delete(long orderid);
 	public void addLarge(List<String>list);//大批量添加
-	public void addLarge2(List<List<String>>list);//2大批量添加20160117
+	public void addLarge2(List<List<String>>list,String username);//2大批量添加20160117
 	public PageBean findPageBean(int pageSize,int page,List<String>factSnames,List<String>brank,List<String>customer,List<String>model,List<String>component,String factNo,List<String>factNos,String yymm,String yymm2);
 	public List<String> findComponent(List<String> FactSnames);//目前所有的部件
 	public List<String> findBrank(List<String> FactSnames);//目前所有的品牌

@@ -44,23 +44,19 @@ jq(document).keyup(function(event){
 		<tr>
 			<td>廠別</td>
 			<td><s:if test="#attr.factNo=='tw'">
-			    <div id="uboxstyle">
 					<select name="factNo" id="factNo">
 						<option value="nothing">請選擇</option>						
 						<s:iterator value="#attr.facts" id="temp">
 							<option value="${temp[0]}">${temp[1]}(${temp[0]})</option>								
 						</s:iterator>
 					</select>
-					</div>
 				</s:if> 
 				<s:else>
-				  <div id="uboxstyle">
 					<select name="factNo" id="factNo">						
 						<option value="<s:property value="#attr.factNo"/>">
 							<s:property value="#attr.factName" />(<s:property value="#attr.factNo"/>)
 						</option>
 					</select>
-					</div>
 				</s:else></td>
 			<td>年月</td>
 			<td>

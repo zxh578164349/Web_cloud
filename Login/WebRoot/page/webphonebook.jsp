@@ -124,7 +124,7 @@ function loaduser(pbId){
 </script>
 
 <body>
-	<jsp:include page="publicHead_webuser.jsp" />
+	<jsp:include page="publicHead_webphonebook.jsp" />
 	<hr />
 	<s:if test='#session.loginUser.userread!="1"'>	
 		<input value="添加新用戶" type="button" id="search_forday" onclick="javascript:location.href='saveAndUpdate/webphonebookSaveOrUpdate.jsp'"/>

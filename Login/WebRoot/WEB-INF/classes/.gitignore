@@ -1,9 +1,10 @@
+/entity
+/log4j.properties
 /action
 /dao
-/entity
+/email
 /entity_temp
 /mail
 /override
 /services
 /util
-/email

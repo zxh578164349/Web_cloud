@@ -27,7 +27,7 @@
 <script type="text/javascript" src="jquery/loding/ui.loading.js"></script>
 <script type="text/javascript">
  
-//var jq=jQuery.noConflict();
+
 jq(document).keyup(function(event){
    if(event.keyCode==13){
       submis();
@@ -42,31 +42,34 @@ jq(document).keyup(function(event){
 	<table  border="0px">
 		<tr>
 			<td>廠別</td>
-			<td><s:if test="#attr.factNo=='tw'">
-			    <div id="uboxstyle">
-					<select name="factNo" id="factNo">
-						<option value="nothing">請選擇</option>						
+			<td><s:if test="#session.factNo=='tw'">			    
+					<select name="factNo" id="factNo">						
+						<option value="">全部</option>		
+						<option value="tw">TW</option>					
 						<s:iterator value="#attr.facts" id="temp">
 							<option value="${temp[0]}">${temp[1]}(${temp[0]})</option>								
 						</s:iterator>
 					</select>
-					</div>
 				</s:if> 
 				<s:else>
-				  <div id="uboxstyle">
 					<select name="factNo" id="factNo">						
-						<option value="<s:property value="#attr.factNo"/>">
+						<option value="<s:property value="#session.factNo"/>">
 							<s:property value="#attr.factName" />(<s:property value="#attr.factNo"/>)
 						</option>
 					</select>
-					</div>
-				</s:else></td>
-			<td>年月</td>
-			<td><input type="text" id="year" name="yymm" 
-				onClick="WdatePicker({dataFmt:'yyyyMM'})" readonly="readonly" class="Wdate"/></td>
-			<td><!-- <input type="image" onclick="submis();" src="images/search002.gif" /> -->
-			 <input value="搜索" type="submit" id="addbtn" onclick="javascript:submis()" />	
+				</s:else>
+				</td>
+			<td>姓名</td>
+			<td><input type="text" id="conditions"></td>
+			<td rowspan="2">
+			 <input value="搜索" type="submit" id="addbtn" onclick="javascript:submis()" />		
 			</td>
+		</tr>
+		<tr>
+		   <td>部門</td>		             		   
+		   <td><input type="text" name="department" id="department"/></td>
+		   <td>職位</td>
+		   <td><input type="text" name="post" id="post"/></td>
 		</tr>
 	</table>
 	</div>

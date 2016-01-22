@@ -59,7 +59,7 @@ public class WebFactorderDaoImpl extends Basedao implements IWebFactorderDao{
 						try{
 							order.setOrderData(Double.valueOf(objs[j]));//循環獲取各箇日期的數據
 						}catch(Exception e){
-							order.setOrderData(-1.0);//報錯時，給值-1,標記數據格式不對
+							order.setOrderData(0.0);//報錯時，給值-1,標記數據格式不對
 						}						
 						order.setYymm(objs_head[j].replace("/", ""));//循環獲取日期
 						order.setColTemp("1");//臨時標記列
@@ -84,7 +84,7 @@ public class WebFactorderDaoImpl extends Basedao implements IWebFactorderDao{
 	/**
 	 * 大批量導入數據20160117(修改版)
 	 */
-	public void addLarge2(List<List<String>>list) {
+	public void addLarge2(List<List<String>>list,String username) {
 		// TODO Auto-generated method stub
 		List<String>objs_head=null;	
 		Transaction tx=null;
@@ -111,7 +111,7 @@ public class WebFactorderDaoImpl extends Basedao implements IWebFactorderDao{
 						}						
 						order.setYymm(objs_head.get(j).replace("/", ""));//循環獲取日期
 						order.setFactNo(objs.get(objs.size()-1));
-						order.setColTemp("1");//臨時標記列
+						order.setColTemp(username);//臨時標記列
 						getSession().save(order);
 						if((i*j)%25==0){
 							getSession().flush();

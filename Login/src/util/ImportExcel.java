@@ -52,8 +52,9 @@ public class ImportExcel {
 
 		//int minRowIx = sheet.getFirstRowNum()+1;
 		int row_head = sheet.getFirstRowNum()+1;
-		int maxRowIx = sheet.getLastRowNum();//getLastRowNum獲取的行數比實際行數少1
-		for (int rowIx = row_head; rowIx <= maxRowIx; rowIx++) {//注意：rowIx <= maxRowIx
+		int maxRowIx = sheet.getLastRowNum();//（getLastRowNum獲取的行數可能比實際行數少1或不少,視測試情況而定）
+
+		for (int rowIx = row_head; rowIx < maxRowIx-1; rowIx++) {//注意：rowIx <= maxRowIx//注意：rowIx <= maxRowIx（減去最后一行匯總20160122）
 			Row row = sheet.getRow(rowIx);
 			StringBuilder sb = new StringBuilder();
 			//不允許表頭爲空行null
@@ -62,33 +63,38 @@ public class ImportExcel {
 				break;
 			}
 			short minColIx = row.getFirstCellNum();
-			short maxColIx = row.getLastCellNum();//getLastCellNum獲取到實際列數
+			int maxColIx = row.getLastCellNum()-1;//getLastCellNum獲取到實際列數(減去最後一列匯總20160122)
 			if(maxColIx-minColIx>12&&maxRowIx-row_head>2000){
 				list.clear();
 				break;
 			}
 			
-			if(!sheet.getRow(row_head).getCell(minColIx).toString().equals("廠別")&&
-					!sheet.getRow(row_head).getCell(minColIx).toString().equals("厂别")&&
-					!sheet.getRow(row_head+1).getCell(minColIx).toString().equals("品牌")&&
-					!sheet.getRow(row_head+2).getCell(minColIx).toString().equals("客戶")&&
-					!sheet.getRow(row_head+3).getCell(minColIx).toString().equals("模具")&&
-					!sheet.getRow(row_head+4).getCell(minColIx).toString().equals("部件")){
+			if(rowIx==row_head&&
+					!sheet.getRow(row_head).getCell(minColIx).toString().equals("廠別")&&
+					!sheet.getRow(row_head).getCell(minColIx+1).toString().equals("品牌")&&
+					!sheet.getRow(row_head).getCell(minColIx+2).toString().equals("客戶")&&
+					!sheet.getRow(row_head).getCell(minColIx+3).toString().equals("模具")&&
+					!sheet.getRow(row_head).getCell(minColIx+4).toString().equals("部件")){
 				list.clear();
 				break;
 			}
 			for (short colIx = minColIx; colIx < maxColIx; colIx++) {//注意：colIx < maxColIx,與外循環的rowIx <= maxRowIx不同
 				Cell cell = row.getCell(new Integer(colIx));
 				CellValue cellValue = evaluator.evaluate(cell);
-				if (cellValue == null) {
+				if (cellValue == null) {//if1
 					//continue;(原先爲空的話，忽略掉)
 					
-					/*************現在，改爲如果爲空，創建新單元格，幷給值-2，標記這這裏爲空****************/
-					cell=row.createCell(colIx);
-					cell.setCellValue(-2);
-					cellValue=evaluator.evaluate(cell);
-					/*************現在，改爲如果爲空，創建新單元格，幷給值-2，標記這這裏爲空****************/
-				}
+					/*************現在，改爲如果爲空，創建新單元格，幷給新值;如果是非數據列，則取上一行的的值；否則給值0，標記這這裏爲空****************/
+					cell=row.createCell(colIx);																			
+						if(colIx<5){
+							cell.setCellValue(sheet.getRow(rowIx-1).getCell(colIx).getStringCellValue());
+						}else{
+							cell.setCellValue(0);
+						}
+						cellValue=evaluator.evaluate(cell);
+						/*************現在，改爲如果爲空，創建新單元格，幷給新值;如果是非數據列，則取上一行的的值；否則給值0，標記這這裏爲空****************/
+							
+				}//if1
 				// 经过公式解析，最后只存在Boolean、Numeric和String三种数据类型，此外就是Error了
 				// 其余数据类型，根据官方文档，完全可以忽略http://poi.apache.org/spreadsheet/eval.html
 				switch (cellValue.getCellType()) {
@@ -162,11 +168,11 @@ public class ImportExcel {
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		String path="d:\\北越&鞋塑2015接單匯總-1201.xls";
+		String path="d:\\123\\631.xls";
 		//String path="e:\\qqq.xlsx";
 		List<String>list=null;
-		/*try{
-			list=exportListFromExcel(new File(path),1);
+		try{
+			list=exportListFromExcel(new File(path),0);
 			if(list.size()==0){
 				System.out.println("数据結構錯誤");
 			}else{
@@ -178,7 +184,7 @@ public class ImportExcel {
 			
 		}catch(Exception e){
 			System.out.println(e);
-		}*/
+		}
 		/*try{
 			System.out.println(2/0);
 		}catch(Exception e){
@@ -188,19 +194,7 @@ public class ImportExcel {
 		/*System.out.println("2015-01".replace("/", ""));
 		System.out.println(new File("d:\\abc"));
 		System.out.println("d:\\abc");*/
-		List<String>list1=new ArrayList<String>();
-		list1.add("1");
-		list1.add("2");
-		list1.add("3");
-		List<String>list2=list1;
-		jj:for(int i=0;i<list1.size();i++){
-			System.out.println(list1.get(i));
-			for(int j=0;j<list2.size();j++){
-				if(list2.get(j).equals(list1.get(i))){
-					break jj;
-				}
-			}
-		}
+		
 		
 		
 
