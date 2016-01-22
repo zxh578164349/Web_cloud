@@ -82,7 +82,7 @@
 				<td><s:property value="component" /></td>
 				
 				<%--<td><s:property value="%{formatDouble(innum)}" /></td>--%>					
-				<td><s:property value="orderData"/></td>
+				<td><s:property value="%{toThou(orderData)}"/></td>
 				
 				<s:if test='#session.loginUser.userread!="1"'>
 				<td>

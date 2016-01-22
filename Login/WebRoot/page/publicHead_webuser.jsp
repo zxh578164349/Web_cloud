@@ -42,8 +42,7 @@ jq(document).keyup(function(event){
 	<table  border="0px">
 		<tr>
 			<td>廠別</td>
-			<td><s:if test="#session.factNo=='tw'">
-			    <div id="uboxstyle">
+			<td><s:if test="#session.factNo=='tw'">			    
 					<select name="factNo" id="factNo">						
 						<option value="">全部</option>		
 						<option value="tw">TW</option>					
@@ -51,19 +50,17 @@ jq(document).keyup(function(event){
 							<option value="${temp[0]}">${temp[1]}(${temp[0]})</option>								
 						</s:iterator>
 					</select>
-					</div>
 				</s:if> 
 				<s:else>
-				  <div id="uboxstyle">
 					<select name="factNo" id="factNo">						
 						<option value="<s:property value="#session.factNo"/>">
 							<s:property value="#attr.factName" />(<s:property value="#attr.factNo"/>)
 						</option>
 					</select>
-					</div>
-				</s:else></td>
+				</s:else>
+				</td>
 			<td>帳號</td>
-			<td><input id="conditions">&nbsp;&nbsp;(請輸入姓名或登錄名查詢)</td>
+			<td><input type="text" id="conditions">&nbsp;&nbsp;(請輸入姓名或登錄名查詢)</td>
 			<td>
 			 <input value="搜索" type="submit" id="addbtn" onclick="javascript:submis()" />		
 			</td>

@@ -38,7 +38,7 @@
 	var loadi;
 	//var global_temp=jq("#global_temp").val();
 	jq(document).ajaxStart(function(){		
-			loadi=layer.load(0);					
+			loadi=layer.load("正在處理...");					
 	});
 	jq(document).ajaxStop(function(){
 		layer.close(loadi);
@@ -188,13 +188,15 @@ jq(function(){
 	        	}else if(data=="1"){
 	        		layer.msg("僅允許導入Excel文檔",3,3);
 	        	}else if(data=="2"){
-	        		layer.msg("數據重複，導入失敗",3,3);
+	        		layer.msg("數據重複或其它因素,導入失敗",3,3);
 	        	}else if(data=="3"){
 	        	    //layer.msg("Excel文檔結構不符合要求或數據量過大，禁止導入",3,3);
 	        	    showDiv();
 	        	    layer.msg("Excel文檔結構不符合要求,或數據量超出預估，禁止導入",3,3);
+	        	}else if(data=="4"){
+	        		layer.msg("Excel文檔不兼容(建議先打開文檔幷且保存,再重新嘗試導入)",4,3);	        	     
 	        	}else{
-	        	     alert(data);
+	        		alert(data);
 	        	}		        	       	    									
 	         }
 	         
