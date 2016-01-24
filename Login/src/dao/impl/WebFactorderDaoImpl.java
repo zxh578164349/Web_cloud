@@ -81,7 +81,9 @@ public class WebFactorderDaoImpl extends Basedao implements IWebFactorderDao{
 		
 		
 	}
+	
 	/**
+	 * 经过事务声明配置
 	 * 大批量導入數據20160117(修改版)
 	 */
 	public void addLarge2(List<List<String>>list,String username) {
@@ -90,39 +92,90 @@ public class WebFactorderDaoImpl extends Basedao implements IWebFactorderDao{
 		Transaction tx=null;
 		try{
 			tx=getSession().beginTransaction();
-			for(int i=0;i<list.size();i++){
+			for(int i=0;i<list.size();i++){//for1
 				List<String>objs=null;
 				if(i==0){
 					objs_head=list.get(0);//該表頭包含了日期（日期從第5列開始）
 				}else{
 					objs=list.get(i);//注意：分解的數組比總列數要多齣1箇，所以開始要j=5+1
-					
-					for(int j=5+1;j<objs_head.size();j++){
-						WebFactorder order=new WebFactorder();
-						order.setFactSname(objs.get(1));
-						order.setBrank(objs.get(2));
-						order.setCustomer(objs.get(3));
-						order.setModelNo(objs.get(4));
-						order.setComponent(objs.get(5));
-						try{
-							order.setOrderData(Double.valueOf(objs.get(j)));//循環獲取各箇日期的數據
-						}catch(Exception e){
-							order.setOrderData(-1.0);//報錯時，給值-1,標記數據格式不對
-						}						
-						order.setYymm(objs_head.get(j).replace("/", ""));//循環獲取日期
-						order.setFactNo(objs.get(objs.size()-1));
-						order.setColTemp(username);//臨時標記列
-						getSession().save(order);
-						if((i*j)%25==0){
-							getSession().flush();
-							getSession().clear();
-						}						
-					}
-				}			
+					try{
+						for(int j=5+1;j<objs_head.size();j++){//for2
 							
-			}
-			//tx.commit();
-		    //getSession().close();
+							WebFactorder order=new WebFactorder();
+							order.setFactSname(objs.get(1));
+							order.setBrank(objs.get(2));
+							order.setCustomer(objs.get(3));
+							order.setModelNo(objs.get(4));
+							order.setComponent(objs.get(5));							
+							order.setOrderData(Double.valueOf(objs.get(j)));//循環獲取各箇日期的數據													
+							order.setYymm(objs_head.get(j).replace("/", ""));//循環獲取日期
+							order.setFactNo(objs.get(objs.size()-1));
+							order.setColTemp(username);//臨時標記列
+							getSession().save(order);																																																																					
+					}//for2
+						getSession().flush();
+						getSession().clear();
+						
+					}catch(Exception e){
+						System.out.println("******dao******"+e.toString()+"******dao******");
+						//continue;
+					}					
+				}										
+			}//for1
+			/*tx.commit();
+		    getSession().close();*/
+		}catch(Exception e){
+			System.out.println(e);
+			tx.rollback();
+		}		
+		
+		
+	}
+	
+	
+	
+	/**
+	 * 不经过事务声明配置
+	 * 大批量導入數據20160124(修改版)
+	 */
+	public void addLarge3(List<List<String>>list,String username) {
+		// TODO Auto-generated method stub
+		List<String>objs_head=null;	
+		Transaction tx=null;
+		try{
+			tx=getSession().beginTransaction();
+			for(int i=0;i<list.size();i++){//for1
+				List<String>objs=null;
+				if(i==0){
+					objs_head=list.get(0);//該表頭包含了日期（日期從第5列開始）
+				}else{
+					objs=list.get(i);//注意：分解的數組比總列數要多齣1箇，所以開始要j=5+1
+					try{
+						for(int j=5+1;j<objs_head.size();j++){//for2
+							
+							WebFactorder order=new WebFactorder();
+							order.setFactSname(objs.get(1));
+							order.setBrank(objs.get(2));
+							order.setCustomer(objs.get(3));
+							order.setModelNo(objs.get(4));
+							order.setComponent(objs.get(5));							
+							order.setOrderData(Double.valueOf(objs.get(j)));//循環獲取各箇日期的數據													
+							order.setYymm(objs_head.get(j).replace("/", ""));//循環獲取日期
+							order.setFactNo(objs.get(objs.size()-1));
+							order.setColTemp(username);//臨時標記列
+							getSession().save(order);																																																																					
+					}//for2
+						getSession().flush();
+						getSession().clear();
+						
+					}catch(Exception e){
+						System.out.println("******dao******"+e.toString()+"******dao******");
+						//continue;
+					}					
+				}										
+			}//for1
+			tx.commit();
+		    getSession().close();
 		}catch(Exception e){
 			System.out.println(e);
 			tx.rollback();

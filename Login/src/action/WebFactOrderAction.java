@@ -280,26 +280,7 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 					}																																				
 		}
 		
-		
-		/*******************數據導入到數據庫********************/
-		/*try{			
-			List<String>list_all=ImportExcel.exportListFromExcel(new File(path+"\\"+fileFileName), 0);////////////////////
-			if(list_all.size()>0){
-				try{
-					webfactorderSer.addLarge(list_all);
-				}catch(Exception e){
-					ajaxResult="2";//导入Excel失败
-					System.out.println(e);
-				}
-			}else{
-				ajaxResult="3";//Excel数据结构不符合要求,不允许导入
-			}
-		}catch(Exception e){
-			ajaxResult="2";//导入Excel失败
-			System.out.println(e);
-		}*/
-		/*******************數據導入到數據庫********************/
-		
+						
 		/*******************數據導入到數據庫20160117********************/
 		try{
 			List<String>list_imp=ImportExcel.exportListFromExcel(new File(path+"\\"+fileFileName), 0);
@@ -321,15 +302,17 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 						list_all.add(list_data);
 					}
 				}//for
+				
 				try{
-					webfactorderSer.addLarge2(list_all,username);
+					//webfactorderSer.large2(list_all,username);
+					webfactorderSer.addLarge2(list_all, username);
 				}catch(Exception e){
 					if(e.toString().contains("org.springframework")){
 						ajaxResult="2";//數據重複，导入Excel失败
 					}else{
 						ajaxResult="4";//Excel文檔格式不兼容，导入Excel失败
 					}
-					System.out.println("*********"+e+"********");
+					System.out.println("*********action*********"+e.toString()+"*********action*********");
 				}
 				
 			}else{
@@ -341,7 +324,7 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 			}else{
 				ajaxResult="4";//Excel文檔格式不兼容，导入Excel失败
 			}
-			System.out.println("*********"+e+"********");
+			System.out.println("*********action*********"+e.toString()+"*********action*********");
 		}
 		/*******************數據導入到數據庫20160117********************/
 		

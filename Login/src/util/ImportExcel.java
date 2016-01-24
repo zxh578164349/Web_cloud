@@ -64,7 +64,7 @@ public class ImportExcel {
 			}
 			short minColIx = row.getFirstCellNum();
 			int maxColIx = row.getLastCellNum()-1;//getLastCellNum獲取到實際列數(減去最後一列匯總20160122)
-			if(maxColIx-minColIx>12&&maxRowIx-row_head>2000){
+			if(maxColIx-minColIx>18&&(maxRowIx-row_head>2000||maxRowIx-row_head<3)){
 				list.clear();
 				break;
 			}
