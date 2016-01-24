@@ -119,9 +119,19 @@ public class WebFactorderServicesImpl implements IWebFactorderServices{
 	}
 
 
+	/**
+	 * 经过事务声明配置（方法要以add开头）
+	 */
 	public void addLarge2(List<List<String>> list,String username) {
 		// TODO Auto-generated method stub
 		factorderdao.addLarge2(list,username);
+	}
+	/**
+	 * 不经过事务声明配置（方法不能以add开头）
+	 */
+	public void large2(List<List<String>> list,String username) {
+		// TODO Auto-generated method stub
+		factorderdao.addLarge3(list,username);
 	}
 
 

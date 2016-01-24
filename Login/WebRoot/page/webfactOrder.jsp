@@ -192,9 +192,9 @@ jq(function(){
 	        	}else if(data=="3"){
 	        	    //layer.msg("Excel文檔結構不符合要求或數據量過大，禁止導入",3,3);
 	        	    showDiv();
-	        	    layer.msg("Excel文檔結構不符合要求,或數據量超出預估，禁止導入",3,3);
+	        	    layer.msg("Excel文檔結構不符合要求,或數據量超出預估,或其它因素，禁止導入",3,3);
 	        	}else if(data=="4"){
-	        		layer.msg("Excel文檔不兼容(建議先打開文檔幷且保存,再重新嘗試導入)",4,3);	        	     
+	        		layer.msg("Excel文檔不兼容，或其它因素(建議先打開文檔幷且保存,再重新嘗試導入)",4,3);	        	     
 	        	}else{
 	        		alert(data);
 	        	}		        	       	    									
