@@ -457,6 +457,9 @@ public class WebUserAction extends ActionSupport implements ServletResponseAware
 							List factCodes = webFactSer.findFactCodeByFactNo_show_dw(factNo);									
 							ActionContext.getContext().getSession().put("factAreas_login", factCodes);	//【各廠產量統計】加載的廠別狀態								
 						}
+						/******************緩存用戶所屬的廠別信息20160125******************/
+						List<Object[]>list_fact=webFactSer.findFactByFactNo(factNo);
+						ActionContext.getContext().getSession().put("login_facts", list_fact);
 																																				
 					//如果用戶不可用，也就是available的值為1
 					if(wUser.getAvailable()==1){						
