@@ -133,12 +133,31 @@ function findFactSname(){
 	});
 }
 
+function findFactArea(){
+	jq("#div_factArea").html("");
+	jq("#all_factArea").prop("checked",false);
+	jq.ajax({
+		type:"POST",
+		url:"webfactOrder_findFactArea",
+		dataType:"json",
+		success:function(data){
+			var item="";
+			if(data!=null){
+				jq.each(data,function(i,obj){
+					item+="<div><input type='checkbox' name='factAreas' value='"+obj+"' onclick='init2()'/>"+obj+"</div>";					
+				});
+				jq("#div_factArea").append(item);
+			}			
+		}
+	});
+}
+
 function selectAll(str,str2){
     var allobj=jq("#"+str); 
         if(allobj.is(":checked")){
           jq("input[name='"+str2+"']").prop("checked",true);
         }else{
-        	jq("input[name='"+str2+"']").prop("checked",false);
+          jq("input[name='"+str2+"']").prop("checked",false);
         }     
 }
 
@@ -161,26 +180,26 @@ checkbox_fact.each(function(i,checkbox){
       url:"webfactOrder_init",
       data:{'factNos':factNos},
       success:function(){
-        findFactSname();
+        findFactArea();
         //findComponent();findBrank();findCustomer();findModel(); 
       }
    });
 }
 
 function init2(){
-    var checkbox_factsname=jq("input[name='factSnames']:checked");
-    if(checkbox_factsname.length>0){
+    var checkbox_factarea=jq("input[name='factAreas']:checked");
+    if(checkbox_factarea.length>0){
     	clearAll();
     }
-	var factSnames=new Array();
-	checkbox_factsname.each(function(i,checkbox){
-		factSnames.push(checkbox.value);
+	var factAreas=new Array();
+	checkbox_factarea.each(function(i,checkbox){
+		factAreas.push(checkbox.value);
 	});
 	   jq.ajax({
 	      type:"POST",
 	      traditional:true,
 	      url:"webfactOrder_init2",
-		  data:{'factSnames':factSnames},
+		  data:{'factAreas':factAreas},
 	      success:function(){
 	        findComponent();findBrank();findCustomer();findModel(); 
 	      }
@@ -215,11 +234,18 @@ function clearAll(){
 				  <div><input type="checkbox" id="all_factno" onclick="selectAll('all_factno','factNos'),init()"/>全选</div><hr/>				   						    			    				              
 			   </div>			   	  			
 			</td>
-			<td>工廠細分</td>
+			<td>廠別狀態</td>
 		      <td>
-		      <div style="width:400px;height:160px;overflow:auto;border:1px dashed green">
+		      <!--  <div style="width:400px;height:160px;overflow:auto;border:1px dashed green">
 		      <div><input type="checkbox" id="all_factSname" onclick="selectAll('all_factSname','factSnames'),init2()"/> 全选</div><hr/>				  
 				<div id="div_factSname">
+				  			 			   
+				</div>
+			  </div>-->
+			  
+			  <div style="width:400px;height:160px;overflow:auto;border:1px dashed green">
+		      <div><input type="checkbox" id="all_factArea" onclick="selectAll('all_factArea','factAreas'),init2()"/> 全选</div><hr/>				  
+				<div id="div_factArea">
 				  			 			   
 				</div>
 			  </div>							

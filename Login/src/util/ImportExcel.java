@@ -5,7 +5,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.io.FilenameUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -32,6 +34,13 @@ public class ImportExcel {
 	 * 分隔符
 	 */
 	private final static String SEPARATOR = "__";
+	
+	
+	
+	
+	
+	
+	/***********************************************************導入工廠訂單****************************************************************************/
 	/**
 	 * 由指定的Sheet导出至List
 	 * 
@@ -51,10 +60,10 @@ public class ImportExcel {
 		List<String> list = new ArrayList<String>();
 
 		//int minRowIx = sheet.getFirstRowNum()+1;
-		int row_head = sheet.getFirstRowNum()+1;
+		int row_head = sheet.getFirstRowNum()+1;	    
 		int maxRowIx = sheet.getLastRowNum();//（getLastRowNum獲取的行數可能比實際行數少1或不少,視測試情況而定）
 
-		for (int rowIx = row_head; rowIx < maxRowIx-1; rowIx++) {//注意：rowIx <= maxRowIx//注意：rowIx <= maxRowIx（減去最后一行匯總20160122）
+		for (int rowIx = row_head; rowIx <= maxRowIx-1; rowIx++) {//注意：rowIx <= maxRowIx//注意：rowIx <= maxRowIx（減去最后一行匯總20160122）
 			Row row = sheet.getRow(rowIx);
 			StringBuilder sb = new StringBuilder();
 			//不允許表頭爲空行null
@@ -64,17 +73,17 @@ public class ImportExcel {
 			}
 			short minColIx = row.getFirstCellNum();
 			int maxColIx = row.getLastCellNum()-1;//getLastCellNum獲取到實際列數(減去最後一列匯總20160122)
-			if(maxColIx-minColIx>18&&(maxRowIx-row_head>2000||maxRowIx-row_head<3)){
+			if(maxColIx-minColIx>19&&(maxRowIx-row_head>2000||maxRowIx-row_head<3)){
 				list.clear();
 				break;
 			}
-			
 			if(rowIx==row_head&&
-					!sheet.getRow(row_head).getCell(minColIx).toString().equals("廠別")&&
-					!sheet.getRow(row_head).getCell(minColIx+1).toString().equals("品牌")&&
-					!sheet.getRow(row_head).getCell(minColIx+2).toString().equals("客戶")&&
-					!sheet.getRow(row_head).getCell(minColIx+3).toString().equals("模具")&&
-					!sheet.getRow(row_head).getCell(minColIx+4).toString().equals("部件")){
+					!sheet.getRow(row_head).getCell(minColIx).getStringCellValue().equals("廠別")||
+					!sheet.getRow(row_head).getCell(minColIx+1).getStringCellValue().equals("廠別狀態")||
+					!sheet.getRow(row_head).getCell(minColIx+2).getStringCellValue().equals("品牌")||
+					!sheet.getRow(row_head).getCell(minColIx+3).getStringCellValue().contains("客")||
+					!sheet.getRow(row_head).getCell(minColIx+4).getStringCellValue().equals("模具")||
+					!sheet.getRow(row_head).getCell(minColIx+5).getStringCellValue().equals("部件")){
 				list.clear();
 				break;
 			}
@@ -86,7 +95,7 @@ public class ImportExcel {
 					
 					/*************現在，改爲如果爲空，創建新單元格，幷給新值;如果是非數據列，則取上一行的的值；否則給值0，標記這這裏爲空****************/
 					cell=row.createCell(colIx);																			
-						if(colIx<5){
+						if(colIx<6){
 							cell.setCellValue(sheet.getRow(rowIx-1).getCell(colIx).getStringCellValue());
 						}else{
 							cell.setCellValue(0);
@@ -162,7 +171,151 @@ public class ImportExcel {
 		return exportListFromExcel(new FileInputStream(file),
 				FilenameUtils.getExtension(file.getName()), sheetNum);
 	}
+	
+	/***********************************************************導入工廠訂單****************************************************************************/
+	
+	
+	
+	
+	/***********************************************************導入聯系資料****************************************************************************/
+	/**
+	 * 由指定的Sheet导出至List
+	 * 
+	 * @param workbook
+	 * @param sheetNum
+	 * @return
+	 * @throws IOException
+	 */
+	private static Map<String,Object> exportListFromExcel(Workbook workbook) {			
+		
+		Map<String,Object>map=new HashMap<String,Object>();
+		for(int a=0;a<workbook.getNumberOfSheets();a++){//for a
+			Sheet sheet = workbook.getSheetAt(a);
+			// 解析公式结果
+			FormulaEvaluator evaluator = workbook.getCreationHelper()
+					.createFormulaEvaluator();
 
+			List<String> list = new ArrayList<String>();
+
+			//int minRowIx = sheet.getFirstRowNum()+1;
+			int row_head = sheet.getFirstRowNum()+1;
+			int maxRowIx = sheet.getLastRowNum();//（getLastRowNum獲取的行數可能比實際行數少1或不少,視測試情況而定）
+
+			for (int rowIx = row_head; rowIx < maxRowIx-1; rowIx++) {//注意：rowIx <= maxRowIx//注意：rowIx <= maxRowIx（減去最后一行匯總20160122）
+				Row row = sheet.getRow(rowIx);
+				StringBuilder sb = new StringBuilder();
+				//不允許表頭爲空行null
+				if(row==null){
+					list.clear();
+					break;
+				}
+				short minColIx = row.getFirstCellNum();
+				int maxColIx = row.getLastCellNum()-1;//getLastCellNum獲取到實際列數(減去最後一列匯總20160122)
+				if(maxColIx-minColIx>18&&(maxRowIx-row_head>2000||maxRowIx-row_head<3)){
+					list.clear();
+					break;
+				}
+				
+				if(rowIx==row_head&&
+						!sheet.getRow(row_head).getCell(minColIx).toString().equals("序號")&&
+						!sheet.getRow(row_head).getCell(minColIx+1).toString().equals("單位")&&
+						!sheet.getRow(row_head).getCell(minColIx+2).toString().equals("姓名")&&
+						!sheet.getRow(row_head).getCell(minColIx+3).toString().equals("職務")&&
+						!sheet.getRow(row_head).getCell(minColIx+4).toString().equals("內線")&&
+						!sheet.getRow(row_head).getCell(minColIx+4).toString().equals("手機")&&
+						!sheet.getRow(row_head).getCell(minColIx+4).toString().equals("郵箱")&&
+						!sheet.getRow(row_head).getCell(minColIx+4).toString().equals("短號")){
+					list.clear();
+					break;
+				}
+				for (short colIx = minColIx; colIx < maxColIx-1; colIx++) {//注意：減去備註這一列
+					Cell cell = row.getCell(new Integer(colIx));
+					CellValue cellValue = evaluator.evaluate(cell);
+					if (cellValue == null) {//if1
+						//continue;(原先爲空的話，忽略掉)
+						
+						/*************現在，改爲如果爲空，創建新單元格，幷給新值;如果是非數據列，則取上一行的的值；否則給值0，標記這這裏爲空****************/
+						cell=row.createCell(colIx);																			
+							if(colIx<5){
+								cell.setCellValue(sheet.getRow(rowIx-1).getCell(colIx).getStringCellValue());
+							}else{
+								cell.setCellValue(0);
+							}
+							cellValue=evaluator.evaluate(cell);
+							/*************現在，改爲如果爲空，創建新單元格，幷給新值;如果是非數據列，則取上一行的的值；否則給值0，標記這這裏爲空****************/
+								
+					}//if1
+					// 经过公式解析，最后只存在Boolean、Numeric和String三种数据类型，此外就是Error了
+					// 其余数据类型，根据官方文档，完全可以忽略http://poi.apache.org/spreadsheet/eval.html
+					switch (cellValue.getCellType()) {
+					case Cell.CELL_TYPE_BOOLEAN:
+						sb.append(SEPARATOR + cellValue.getBooleanValue());
+						break;
+					case Cell.CELL_TYPE_NUMERIC:
+						// 这里的日期类型会被转换为数字类型，需要判别后区分处理
+						if (DateUtil.isCellDateFormatted(cell)) {
+							sb.append(SEPARATOR + cell.getDateCellValue());
+						} else {
+							sb.append(SEPARATOR + cellValue.getNumberValue());
+						}
+						break;
+					case Cell.CELL_TYPE_STRING:
+						sb.append(SEPARATOR + cellValue.getStringValue());
+						break;
+					case Cell.CELL_TYPE_FORMULA:
+						break;
+					case Cell.CELL_TYPE_BLANK:
+						break;
+					case Cell.CELL_TYPE_ERROR:
+						break;
+					default:
+						break;
+					}
+				}
+				list.add(sb.toString());
+			}
+		}//end for a
+		
+		
+		return map;
+	}
+	
+	/**
+	 * 由Excel流的Sheet导出至List
+	 * 
+	 * @param is
+	 * @param extensionName
+	 * @param sheetNum
+	 * @return
+	 * @throws IOException
+	 */
+	public static Map<String,Object> exportListFromExcel(InputStream is,
+			String extensionName) throws IOException {
+
+		Workbook workbook = null;
+
+		if (extensionName.toLowerCase().equals(XLS)) {
+			workbook = new HSSFWorkbook(is);
+		} else if (extensionName.toLowerCase().equals(XLSX)) {
+			workbook = new XSSFWorkbook(is);
+		}
+        is.close();
+		return exportListFromExcel(workbook);
+	}
+	/**
+	 * 由Excel文件的Sheet导出至List
+	 * 
+	 * @param file
+	 * @param sheetNum
+	 * @return
+	 */
+	public static Map<String,Object> exportListFromExcel(File file)
+			throws IOException {
+		return exportListFromExcel(new FileInputStream(file),
+				FilenameUtils.getExtension(file.getName()));
+	}
+
+	/***********************************************************導入聯系資料****************************************************************************/	
 	/**
 	 * @param args
 	 */
