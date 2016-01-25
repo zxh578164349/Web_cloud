@@ -293,7 +293,8 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 			List<String>list_imp=ImportExcel.exportListFromExcel(new File(path+"\\"+fileFileName), 0);
 			List<List<String>>list_all=new ArrayList<List<String>>();
 			if(list_imp.size()>0){
-				List<Object[]>list_fact=webFactSer.findAllFact_obj();
+				//List<Object[]>list_fact=webFactSer.findAllFact_obj();
+				List<Object[]>list_fact=(List<Object[]>)ActionContext.getContext().getSession().get("login_facts");//用戶登錄時緩存的廠別信息
 				for(int i=0;i<list_imp.size();i++){//for
 					if(i==0){
 						list_all.add(Arrays.asList(list_imp.get(i).split("__")));
@@ -810,6 +811,17 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 			}//for2
 			list_all.add(map);
 		}//for1
+		/*********************廠別代號轉換成廠名*****************************/
+		List<Object[]>list_facts=(List<Object[]>)ActionContext.getContext().getSession().get("login_facts");
+		for(int i=0;i<list.size();i++){
+			for(int j=0;j<list_facts.size();j++){
+				if(list.get(i)[0].toString().equals(list_facts.get(j)[0].toString())){
+					list.get(i)[0]=list_facts.get(j)[1];
+					break;
+				}
+			}
+		}
+		
 		HSSFWorkbook wb=new HSSFWorkbook();
 		HSSFSheet sheet=wb.createSheet("sheet1");
 		

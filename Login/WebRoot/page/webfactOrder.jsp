@@ -132,7 +132,7 @@
 				layer.msg("暫無數據可選擇,建議先導入Excel",3,3);
 			}else if(checkboxs_factAreas.length!=0&&checkboxs_branks.length!=0&&checkboxs_customers.length!=0){//else 
 				if(checkboxs_factAreas_checked.length==0&&checkboxs_branks_checked.length==0&&checkboxs_customers_checked.length==0){
-					layer.msg("請選擇工廠細分或品牌或客戶",3,3);
+					layer.msg("請選擇廠別狀態或品牌或客戶",3,3);
 					jq("#div_factArea").css("border","2px solid red");
 					jq("#div_brank").css("border","2px solid red");
 					jq("#div_customer").css("border","2px solid red");
@@ -145,7 +145,7 @@
 				}				
 			}else if(checkboxs_factAreas.length!=0&&checkboxs_branks.length==0&&checkboxs_customers.length==0){
 				if(checkboxs_factAreas_checked.length==0){
-					layer.msg("請選擇工廠細分",3,3);
+					layer.msg("請選擇廠別狀態",3,3);
 					jq("#div_factArea").css("border","2px solid red");
 					return  false;
 										
