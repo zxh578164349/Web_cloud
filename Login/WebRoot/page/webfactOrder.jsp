@@ -105,11 +105,11 @@
 	function print(public_form){
 		var subform=jq("#"+public_form);
 		var checkboxs=jq("input[name='factNos']:checked");
-		var checkboxs_factSnames=jq("input[name='factSnames']");
+		var checkboxs_factAreas=jq("input[name='factAreas']");
 		var checkboxs_branks=jq("input[name='branks']");
 		var checkboxs_customers=jq("input[name='customers']");
 		
-		var checkboxs_factSnames_checked=jq("input[name='factSnames']:checked");
+		var checkboxs_factAreas_checked=jq("input[name='factAreas']:checked");
 		var checkboxs_branks_checked=jq("input[name='branks']:checked");
 		var checkboxs_customers_checked=jq("input[name='customers']:checked");
 		subform.attr("action","webfactOrder_print4");
@@ -128,29 +128,29 @@
 		}
 		if(checkboxs.length!=0){//if2
 			jq("#div_factNos").css("border","1px dashed blue");
-			if(checkboxs_factSnames.length==0&&checkboxs_branks.length==0&&checkboxs_customers.length==0){
+			if(checkboxs_factAreas.length==0&&checkboxs_branks.length==0&&checkboxs_customers.length==0){
 				layer.msg("暫無數據可選擇,建議先導入Excel",3,3);
-			}else if(checkboxs_factSnames.length!=0&&checkboxs_branks.length!=0&&checkboxs_customers.length!=0){//else 
-				if(checkboxs_factSnames_checked.length==0&&checkboxs_branks_checked.length==0&&checkboxs_customers_checked.length==0){
+			}else if(checkboxs_factAreas.length!=0&&checkboxs_branks.length!=0&&checkboxs_customers.length!=0){//else 
+				if(checkboxs_factAreas_checked.length==0&&checkboxs_branks_checked.length==0&&checkboxs_customers_checked.length==0){
 					layer.msg("請選擇工廠細分或品牌或客戶",3,3);
-					jq("#div_factSname").css("border","2px solid red");
+					jq("#div_factArea").css("border","2px solid red");
 					jq("#div_brank").css("border","2px solid red");
 					jq("#div_customer").css("border","2px solid red");
 					return false;
 				}else{
-					jq("#div_factSname").css("border","");
+					jq("#div_factArea").css("border","");
 					jq("#div_brank").css("border","");
 					jq("#div_customer").css("border","");
 					subform.submit();
 				}				
-			}else if(checkboxs_factSnames.length!=0&&checkboxs_branks.length==0&&checkboxs_customers.length==0){
-				if(checkboxs_factSnames_checked.length==0){
+			}else if(checkboxs_factAreas.length!=0&&checkboxs_branks.length==0&&checkboxs_customers.length==0){
+				if(checkboxs_factAreas_checked.length==0){
 					layer.msg("請選擇工廠細分",3,3);
-					jq("#div_factSname").css("border","2px solid red");
+					jq("#div_factArea").css("border","2px solid red");
 					return  false;
 										
 				}else{
-					jq("#div_factSname").css("border","");					
+					jq("#div_factArea").css("border","");					
 					subform.submit();
 				}
 			}//else 
@@ -246,7 +246,7 @@ function showDiv(){
     <input type="hidden" id="global_temp"
 	<jsp:include page="publicHead_print_webfactorder.jsp" />
 	<hr />
-	<s:if test='#session.loginUser.userread!="1"'>
+	
 	<form  method="post" enctype="multipart/form-data" id="upload_form">	  
 	       <input type="file" name="file" style="width:150px" id="id_file"/>
 	       <input value="導入Excel" type="submit" id="search_forday" />	     	
@@ -254,7 +254,7 @@ function showDiv(){
 	<hr/>
 	<%-- <input value="添加" type="button" id="addbtn" onclick="javascript:location.href='saveAndUpdate/WebProdutedSaveOrUpdate.jsp'" />--%>
 	
-	</s:if>	
+	
 	<div id="bodyid">
 		<jsp:include page="table1/webfactOrder1.jsp" />
 	</div>

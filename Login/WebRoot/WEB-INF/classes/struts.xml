@@ -718,6 +718,9 @@
 		   <result name="findFactSname" type="json">
 		      <param name="root">jsons</param>
 		   </result>
+		   <result name="findFactArea" type="json">
+		      <param name="root">jsons</param>
+		   </result>
 		   <result name="importExcel" type="json">
 		       <param name="root">ajaxResult</param>
 		       <param name="contentType">text/html</param>

@@ -40,37 +40,43 @@ public class WebFactorderServicesImpl implements IWebFactorderServices{
 	}
 
 
-	public PageBean findPageBean(int pageSize,int page,List<String>factSnames,List<String>brank,List<String>customer,List<String>model,List<String>component,String factNo,List<String>factNos,String yymm,String yymm2){
+	public PageBean findPageBean(int pageSize,int page,List<String>factAreas,List<String>brank,List<String>customer,List<String>model,List<String>component,String factNo,List<String>factNos,String yymm,String yymm2){
 		// TODO Auto-generated method stub
-		return factorderdao.findPageBean(pageSize, page, factSnames, brank, customer, model, component,factNo,factNos,yymm,yymm2);
+		return factorderdao.findPageBean(pageSize, page, factAreas, brank, customer, model, component,factNo,factNos,yymm,yymm2);
 	}
-	public List<String> findComponent(List<String> FactSnames) {
+	public List<String> findComponent(List<String> factNos,List<String> factAreas) {
 		// TODO Auto-generated method stub
-		return factorderdao.findComponent(FactSnames);
-	}
-
-
-	public List<String> findBrank(List<String> FactSnames) {
-		// TODO Auto-generated method stub
-		return factorderdao.findBrank(FactSnames);
+		return factorderdao.findComponent(factNos,factAreas);
 	}
 
 
-	public List<String> findCustomer(List<String> FactSnames) {
+	public List<String> findBrank(List<String> factNos,List<String> factAreas) {
 		// TODO Auto-generated method stub
-		return factorderdao.findCustomer(FactSnames);
+		return factorderdao.findBrank(factNos,factAreas);
 	}
 
 
-	public List<String> findModel(List<String> FactSnames) {
+	public List<String> findCustomer(List<String> factNos,List<String> factAreas) {
 		// TODO Auto-generated method stub
-		return factorderdao.findModel(FactSnames);
+		return factorderdao.findCustomer(factNos,factAreas);
+	}
+
+
+	public List<String> findModel(List<String> factNos,List<String> factAreas) {
+		// TODO Auto-generated method stub
+		return factorderdao.findModel(factNos,factAreas);
 	}
 	
-	public List<String> findFactSname(List<String> factNos) {
+	/*public List<String> findFactSname(List<String> factNos) {
 		// TODO Auto-generated method stub
 		return factorderdao.findFactSname(factNos);
+	}*/
+	
+	public List<String> findFactArea(List<String> factNos) {
+		// TODO Auto-generated method stub
+		return factorderdao.findFactArea(factNos);
 	}
+
 
 
 	public List<WebFactorder> findWithNoPage(List<String> factNos,
@@ -103,19 +109,19 @@ public class WebFactorderServicesImpl implements IWebFactorderServices{
 	}
 
 
-	public List<Object[]> findByGroup(List<String> factSnames,
+	public List<Object[]> findByGroup(List<String>factNos,List<String>factAreas,
 			List<String> brank, List<String> customer, List<String> model,
 			List<String> component,String factNo,String yymm,String yymm2) {
 		// TODO Auto-generated method stub
-		return factorderdao.findByGroup(factSnames, brank, customer, model, component,factNo, yymm, yymm2);
+		return factorderdao.findByGroup(factNos,factAreas, brank, customer, model, component,factNo, yymm, yymm2);
 	}
 
 
-	public List<Object[]> findByGroup2(List<String> factSnames,
+	public List<Object[]> findByGroup2(List<String>factNos,List<String>factAreas,
 			List<String> brank, List<String> customer, List<String> model,
 			List<String> component,String factNo,String yymm,String yymm2) {
 		// TODO Auto-generated method stub
-		return factorderdao.findByGroup2(factSnames, brank, customer, model, component,factNo, yymm,yymm2);
+		return factorderdao.findByGroup2(factNos,factAreas, brank, customer, model, component,factNo, yymm,yymm2);
 	}
 
 
@@ -134,6 +140,8 @@ public class WebFactorderServicesImpl implements IWebFactorderServices{
 		factorderdao.addLarge3(list,username);
 	}
 
+
+	
 
 	
 
