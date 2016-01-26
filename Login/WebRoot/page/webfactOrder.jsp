@@ -233,7 +233,7 @@ function showDiv(){
     //shift:'top',
     offset:['10px',''],
     //area: ['800px', '560px'],
-    area:['650px','560px'],
+    area:['660px','510px'],
     //page:{url:'kyz_findById_layer?billNo='+billNo+'& factNo='+factNo}                   
     iframe:{src:'sample.jsp',scrolling:'auto'}	                    
 });

@@ -121,10 +121,10 @@
 				<td><s:property value="%{formatDouble(avgPerpro)}" /></td>				
 				<td><s:property value="%{formatDouble(avgPermoney)}" /></td>				
 				<td><s:property value="%{formatDouble(permoney)}" /></td>				
-				<td><s:property value="%{formatDouble(waterTon)}" /></td>				
-				<td><s:property value="%{formatDouble(lightDu)}" /></td>				
-				<td><s:property value="%{formatDouble(gasUsd)}" /></td>				
-				<td><s:property value="%{formatDouble(wasteUsd)}" /></td>				
+				<td><s:property value="%{formatDouble_4(waterTon)}" /></td>				
+				<td><s:property value="%{formatDouble_4(lightDu)}" /></td>				
+				<td><s:property value="%{formatDouble_4(gasUsd)}" /></td>				
+				<td><s:property value="%{formatDouble_4(wasteUsd)}" /></td>				
 				<td><s:property value="%{formatPercent(mainRate)}" /></td>				
 				<td><s:property value="%{formatPercent(sideRate)}" /></td>
 				<td><s:property value="%{formatPercent(wasteRate)}" /></td>				

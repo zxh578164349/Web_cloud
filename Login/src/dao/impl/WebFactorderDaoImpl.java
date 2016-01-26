@@ -95,9 +95,9 @@ public class WebFactorderDaoImpl extends Basedao implements IWebFactorderDao{
 			for(int i=0;i<list.size();i++){//for1
 				List<String>objs=null;
 				if(i==0){
-					objs_head=list.get(0);//該表頭包含了日期（日期從第5列開始）
+					objs_head=list.get(0);//該表頭包含了日期（日期從第6列開始）
 				}else{
-					objs=list.get(i);//注意：分解的數組比總列數要多齣1箇，所以開始要j=5+1
+					objs=list.get(i);//注意：分解的數組比總列數要多齣1箇，所以開始要j=6+1
 					try{
 						for(int j=6+1;j<objs_head.size();j++){//for2
 							
@@ -233,7 +233,7 @@ public class WebFactorderDaoImpl extends Basedao implements IWebFactorderDao{
 		}
 		
 		hql2.append(hql);
-		hql.append(" order by factSname,brank,customer,modelNo,component,yymm");
+		hql.append(" order by factNo,factArea,brank,customer,modelNo,component,yymm");
 		int allrow=0;
 		Integer rows=(Integer)ActionContext.getContext().getSession().get("allrow");
 		if(rows!=null){

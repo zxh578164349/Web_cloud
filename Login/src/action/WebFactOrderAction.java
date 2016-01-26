@@ -355,6 +355,10 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 		ActionContext.getContext().getSession().remove("public_yymm");
 		ActionContext.getContext().getSession().remove("public_yymm2");
 		bean=webfactorderSer.findPageBean(25, page, factAreas, branks, customers, models, components,factNo,factNos,yymm,yymm2);
+		for(WebFactorder order:(List<WebFactorder>)bean.getList()){
+			this.factNoToFactSname(order);
+		}
+		
 		return "beanList";
 		
 	}
@@ -379,6 +383,9 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 		ActionContext.getContext().getSession().put("public_yymm", yymm);
 		ActionContext.getContext().getSession().put("public_yymm2", yymm2);
 		bean=webfactorderSer.findPageBean(25, page, factAreas, branks, customers, models, components,factNo,factNos,yymm,yymm2);
+		for(WebFactorder order:(List<WebFactorder>)bean.getList()){
+			this.factNoToFactSname(order);
+		}
 		return "beanList1";
 	}
 	public String findPageBean3(){
@@ -396,6 +403,9 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 		yymm=(String)ActionContext.getContext().getSession().get("public_yymm");
 		yymm2=(String)ActionContext.getContext().getSession().get("public_yymm2");
 		bean=webfactorderSer.findPageBean(25, page, factAreas, branks, customers, models, components,factNo,factNos,yymm,yymm2);
+		for(WebFactorder order:(List<WebFactorder>)bean.getList()){
+			this.factNoToFactSname(order);
+		}
 		return "beanList1";
 	}
 	
@@ -812,7 +822,7 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 			list_all.add(map);
 		}//for1
 		/*********************廠別代號轉換成廠名*****************************/
-		List<Object[]>list_facts=(List<Object[]>)ActionContext.getContext().getSession().get("login_facts");
+		List<Object[]>list_facts=(List<Object[]>)ActionContext.getContext().getSession().get("login_facts");//用戶登錄時已經緩存
 		for(int i=0;i<list.size();i++){
 			for(int j=0;j<list_facts.size();j++){
 				if(list.get(i)[0].toString().equals(list_facts.get(j)[0].toString())){
@@ -1008,6 +1018,23 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 		DecimalFormat cml=new DecimalFormat();
 		cml.applyPattern(",###.#");		
 		return cml.format(dbl);
+	}
+	
+	/**
+	 *根據廠別代號找到相對應的廠名
+	 * @param order
+	 * 
+	 */
+	public void factNoToFactSname(WebFactorder order){
+		List<Object[]>list_facts=(List<Object[]>)ActionContext.getContext().getSession().get("login_facts");//用戶登錄時已經緩存
+		
+			for(int j=0;j<list_facts.size();j++){
+				if(order.getFactNo().equals(list_facts.get(j)[0].toString())){
+					order.setFactSname(list_facts.get(j)[1].toString());
+					break;
+				}
+			}
+		
 	}
 	
 }

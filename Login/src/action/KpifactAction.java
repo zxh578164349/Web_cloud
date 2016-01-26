@@ -157,6 +157,12 @@ public class KpifactAction extends ActionSupport implements ServletResponseAware
 		return temp;
 		// return temp.replace(",", "");
 	}
+	public String formatDouble_4(double s) {
+		DecimalFormat format = new DecimalFormat(",###.0000");
+		String temp = format.format(s);
+		return temp;
+		// return temp.replace(",", "");
+	}
 	public String formatPercent(double s){
 		DecimalFormat format=new DecimalFormat("0.00%");
 		String temp=format.format(s);

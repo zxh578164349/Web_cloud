@@ -117,10 +117,59 @@ function move(obj){
     }
 }
 
+
+
 function loaduser(pbId){
 	layer.load("请稍等...");
 	location.href="/Login/webphonebook_findById?pbId="+pbId;
 }
+
+function checkForm(){
+	var id_file=jq("#id_file").val();
+	var extendName=id_file.substr(id_file.lastIndexOf(".")).toLowerCase();
+	if(id_file==""){
+		layer.alert("請選擇Excel文檔");
+		return false;
+	}else if(extendName!=".xls"&&extendName!=".xlsx"){
+		layer.alert("僅允許Excel文檔");
+		return false;
+	}
+	
+	return true;
+}
+
+jq(function(){
+	var options={
+			beforeSubmit:checkForm,  		       		       
+	        //resetForm: true, 
+	        url:"webfactOrder_importExcel",
+	        dataType:'json' ,
+	        success:function(data){
+	        	if(data=="0"){
+	        		layer.msg("導入成功!",3,1);
+	        		//location.href="/Login/kyz_findPageBean";
+	        	}else if(data=="1"){
+	        		layer.msg("僅允許導入Excel文檔",3,3);
+	        	}else if(data=="2"){
+	        		layer.msg("數據重複或其它因素,導入失敗",3,3);
+	        	}else if(data=="3"){
+	        	    //layer.msg("Excel文檔結構不符合要求或數據量過大，禁止導入",3,3);
+	        	    showDiv();
+	        	    layer.msg("Excel文檔結構不符合要求,或數據量超出預估,或其它因素，禁止導入",3,3);
+	        	}else if(data=="4"){
+	        		layer.msg("Excel文檔不兼容，或其它因素(建議先打開文檔幷且保存,再重新嘗試導入)",4,3);	        	     
+	        	}else{
+	        		alert(data);
+	        	}		        	       	    									
+	         }
+	         
+	};
+
+	jq("#upload_form").submit(function(){
+		jq(this).ajaxSubmit(options);
+		return false;
+	})
+})
 </script>
 
 <body>
@@ -129,6 +178,10 @@ function loaduser(pbId){
 	<s:if test='#session.loginUser.userread!="1"'>	
 		<input value="添加新用戶" type="button" id="search_forday" onclick="javascript:location.href='saveAndUpdate/webphonebookSaveOrUpdate.jsp'"/>
 	</s:if>	
+	<form  method="post" enctype="multipart/form-data" id="upload_form">	  
+	       <input type="file" name="file" style="width:150px" id="id_file"/>
+	       <input value="導入Excel" type="submit" id="search_forday" />	     	
+	</form>
 	<div id="bodyid">
 		<jsp:include page="table1/webphonebook1.jsp" />
 	</div>
