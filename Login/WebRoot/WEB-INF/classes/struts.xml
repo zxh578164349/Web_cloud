@@ -747,6 +747,9 @@
 		   <result name="add" type="json">
 		       <param name="root">ajaxResult</param>
 		   </result>
+		   <result name="importExcel" type="json">
+		       <param name="root">ajaxResult</param>
+		   </result>
 		   <result name="beanList">page/webphonebook.jsp</result>
 		   <result name="beanList1">page/table1/webphonebook1.jsp</result>
 		   <result name="findById">saveAndUpdate/webphonebookSaveOrUpdate.jsp</result>

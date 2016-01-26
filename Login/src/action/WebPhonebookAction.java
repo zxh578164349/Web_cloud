@@ -185,7 +185,6 @@ public class WebPhonebookAction extends ActionSupport{
 	public String importExcel() throws Exception{
 		String username=((WebUser)ActionContext.getContext().getSession().get("loginUser")).getUsername();
 		String path="d:\\Webphonebook_backup\\"+new SimpleDateFormat("yyyyMMdd").format(new Date());//Excel文檔存放目錄
-		String result="importExcel";
 		ajaxResult="0";				
 		/*文件上傳*/
 		if(file!=null){//不為空代表有上傳附檔,不能寫成files.size()>0,否則報空指針
@@ -209,7 +208,7 @@ public class WebPhonebookAction extends ActionSupport{
 		List<Object[]>list_fact=webFactSer.findAllFact_obj();
 		//List<Object[]>list_fact=(List<Object[]>)ActionContext.getContext().getSession().get("login_facts");//用戶登錄時緩存的廠別信息
 		try{
-			Map<String,Object>map=ImportExcel.exportListFromExcel(file);
+			Map<String,Object>map=ImportExcel.exportListFromExcel(new File(path+"\\"+fileFileName));
 			Map<String,Object>map_new=new HashMap<String,Object>();
 			for(String key:map.keySet()){//for
 				List<Object[]>list_oneFact=new ArrayList<Object[]>();
@@ -227,14 +226,7 @@ public class WebPhonebookAction extends ActionSupport{
 				}
 				
 			}//for
-			for(String key:map_new.keySet()){
-				webphone.getFact().setFactNo(key);
-				for(Object[] objs:(List<Object[]>)map.get(key)){
-					webphone.setDepartment(objs[2].toString());
-					webphone.setPost(objs[3].toString());
-					//webphone.set
-				}
-			}
+			webphonebookSer.addLarge(map_new, username);
 			ajaxResult="0";
 		}catch(Exception e){
 			ajaxResult="1";

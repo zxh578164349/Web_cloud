@@ -310,7 +310,7 @@ public class ImportExcel {
 			System.out.println(e);
 		}*/
 		
-		String path="e:\\各廠聯絡資料.xls";
+		String path="i:\\各廠聯絡資料.xls";
 		Map<String, Object> map;
 		try {
 			map = exportListFromExcel(new File(path));

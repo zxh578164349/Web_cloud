@@ -4,11 +4,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.hibernate.Transaction;
+
 import com.opensymphony.xwork2.ActionContext;
 
 import util.PageBean;
 import dao.Basedao;
 import dao.IWebPhonebookDao;
+import entity.VWebFact;
 import entity.WebPhonebook;
 
 public class WebPhonebookDaoImpl extends Basedao implements IWebPhonebookDao{
@@ -81,6 +84,34 @@ public class WebPhonebookDaoImpl extends Basedao implements IWebPhonebookDao{
 
 	public void addLarge(Map<String, Object> map, String username) {
 		// TODO Auto-generated method stub
+		System.out.println("dfdfd");
+		Transaction tx=null;
+	      try{	    	  
+	    	  //tx=getSession().beginTransaction();
+	    	  for(String key:map.keySet()){
+	    	  for(Object[] objs:(List<Object[]>)map.get(key)){
+					WebPhonebook webphone=new WebPhonebook();
+					VWebFact fact=new VWebFact();
+					fact.setFactNo(key);
+					webphone.setFact(fact);
+					webphone.setDepartment(objs[2].toString());
+					webphone.setUsername(objs[3].toString());
+					webphone.setPost(objs[4].toString());
+					webphone.setPhoneA(objs[5].toString());
+					webphone.setPhoneB(objs[6].toString());
+					webphone.setEmail(objs[7].toString());
+					webphone.setPhoneC(objs[8].toString());
+					getSession().save(webphone);
+					
+				}
+				getSession().flush();
+				getSession().close();
+	    	  }
+	      }catch(Exception e){
+	    	  System.out.println("dao***********************"+e+"*************************dao");
+	    	  //tx.rollback();
+	      }
+			
 		
 	}
 
