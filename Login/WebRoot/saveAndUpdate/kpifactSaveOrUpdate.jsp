@@ -48,7 +48,8 @@
 			datatype : {
 				"9_1" : /^-?\d{1,9}(\.[0-9]{1})?$/,
 				"9_2" : /^-?\d{1,9}(\.[0-9]{1,2})?$/,
-				"9_4" : /^-?\d{1,9}(\.[0-9]{1,4})?$/
+				"9_4" : /^-?\d{1,9}(\.[0-9]{1,4})?$/,
+				"my9_4" : /^-?\d{1,9}(\.[0-9]{4})$/		
 			},
 			ajaxPost:true,
 			callback:function(data){
@@ -64,6 +65,7 @@
 		demo.tipmsg.w["9_1"] = "只能數字且不超過9位數,可保留一位以內小數";
 		demo.tipmsg.w["9_2"] = "只能數字且不超過9位數,可保留兩位小數";
 		demo.tipmsg.w["9_4"] = "只能數字且不超過9位數,可保留四位小數";
+		demo.tipmsg.w["my9_4"]="只能數字且不超過9位數,和精確到四位小數";
 	});
 
 	function getFactArea(mid) {
@@ -287,12 +289,12 @@ window.onload=function(){
 			<tr>
 				<td class="td_show_title">水用量单耗(噸/模)</td>
 				<td class="td_input"><input type="text" name="kpi.waterTon"
-					datatype="9_4"
+					datatype="my9_4"
 					value="<s:property value='kpi.waterTon' />">
 				</td>
 				<td class="td_show_title">电度数单耗(度/模)</td>
 				<td class="td_input"><input type="text" name="kpi.lightDu"
-					datatype="9_4"
+					datatype="my9_4"
 					value="<s:property value='kpi.lightDu' />">
 				</td>
 
@@ -300,12 +302,12 @@ window.onload=function(){
 			<tr>
 				<td class="td_show_title">蒸汽单耗(噸/模)</td>
 				<td class="td_input"><input type="text" name="kpi.gasUsd"
-					datatype="9_4"
+					datatype="my9_4"
 					value="<s:property value='kpi.gasUsd' />">
 				</td>
 				<td class="td_show_title">修繕單耗(USD/模)</td>
 				<td class="td_input"><input type="text" name="kpi.wasteUsd"
-					datatype="9_4"
+					datatype="my9_4"
 					value="<s:property value='kpi.wasteUsd' />">
 				</td>
 			</tr>

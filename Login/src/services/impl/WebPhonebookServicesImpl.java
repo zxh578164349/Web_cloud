@@ -1,5 +1,7 @@
 package services.impl;
 
+import java.util.Map;
+
 import dao.IWebPhonebookDao;
 import entity.WebPhonebook;
 import services.IWebPhonebookServices;
@@ -41,6 +43,13 @@ public class WebPhonebookServicesImpl implements IWebPhonebookServices{
 	public void delete(long pbId) {
 		// TODO Auto-generated method stub
 		webphonedao.delete(pbId);
+	}
+
+
+
+	public void addLarge(Map<String, Object> map, String username) {
+		// TODO Auto-generated method stub
+		webphonedao.addLarge(map, username);
 	}
 
 }

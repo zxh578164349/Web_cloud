@@ -1,15 +1,31 @@
 package action;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import services.IWebFactServices;
 import services.IWebPhonebookServices;
+import util.ImportExcel;
 import util.PageBean;
 
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
 import entity.WebPhonebook;
+import entity.WebUser;
 
 public class WebPhonebookAction extends ActionSupport{
 	private IWebPhonebookServices webphonebookSer;
+	private IWebFactServices webFactSer;
 	private WebPhonebook webphone;
 	private String factNo;
 	private String department;
@@ -20,8 +36,30 @@ public class WebPhonebookAction extends ActionSupport{
 	private long pbId;
 	private String ajaxResult;//0:提交成功      1:提交失敗
 	private int backIndex;//返回標識      0或null:不走返回路徑         1:走返回路徑
+	private File file;
+    private String fileFileName;
+    private String fileContentType;
+    
+    
 	
-	
+	public File getFile() {
+		return file;
+	}
+	public void setFile(File file) {
+		this.file = file;
+	}
+	public String getFileFileName() {
+		return fileFileName;
+	}
+	public void setFileFileName(String fileFileName) {
+		this.fileFileName = fileFileName;
+	}
+	public String getFileContentType() {
+		return fileContentType;
+	}
+	public void setFileContentType(String fileContentType) {
+		this.fileContentType = fileContentType;
+	}
 	public int getBackIndex() {
 		return backIndex;
 	}
@@ -85,6 +123,10 @@ public class WebPhonebookAction extends ActionSupport{
 	public void setWebphonebookSer(IWebPhonebookServices webphonebookSer) {
 		this.webphonebookSer = webphonebookSer;
 	}
+	
+	public void setWebFactSer(IWebFactServices webFactSer) {
+		this.webFactSer = webFactSer;
+	}
 	public String add(){
 		try{
 			webphonebookSer.add(webphone);
@@ -138,6 +180,67 @@ public class WebPhonebookAction extends ActionSupport{
 	public String delete(){
 		webphonebookSer.delete(pbId);
 		return "delete";
+	}
+	
+	public String importExcel() throws Exception{
+		String username=((WebUser)ActionContext.getContext().getSession().get("loginUser")).getUsername();
+		String path="d:\\Webphonebook_backup\\"+new SimpleDateFormat("yyyyMMdd").format(new Date());//Excel文檔存放目錄
+		String result="importExcel";
+		ajaxResult="0";				
+		/*文件上傳*/
+		if(file!=null){//不為空代表有上傳附檔,不能寫成files.size()>0,否則報空指針
+			//File uploadFile=new File(ServletActionContext.getServletContext().getRealPath("KyzexpFile\\"+kyz.getId().getBillNo()));//附檔上傳到項目
+			File uploadFile_backup=new File(path);//附檔上傳到D盤(為了避免更新項目時丟失附檔,所在上傳到D盤)
+			/*if(!uploadFile.exists()){
+				uploadFile.mkdirs();
+			}*/
+			if(!uploadFile_backup.exists()){
+				uploadFile_backup.mkdirs();
+			}																						
+					FileInputStream in=new FileInputStream(file);
+					//FileOutputStream out=new FileOutputStream(uploadFile+"\\"+filesFileName.get(i));
+					FileOutputStream out_backup=new FileOutputStream(uploadFile_backup+"\\"+fileFileName);//備份
+					byte[]b=new byte[1024];
+					int length=0;
+					while((length=in.read(b))>0){
+						out_backup.write(b,0,length);//備份
+					}																																				
+		}
+		List<Object[]>list_fact=webFactSer.findAllFact_obj();
+		//List<Object[]>list_fact=(List<Object[]>)ActionContext.getContext().getSession().get("login_facts");//用戶登錄時緩存的廠別信息
+		try{
+			Map<String,Object>map=ImportExcel.exportListFromExcel(file);
+			Map<String,Object>map_new=new HashMap<String,Object>();
+			for(String key:map.keySet()){//for
+				List<Object[]>list_oneFact=new ArrayList<Object[]>();
+				List<String>list=(List<String>)map.get(key);
+				for(int i=1;i<list.size();i++){//表頭不需要,所以從1開始					
+						list_oneFact.add(list.get(i).split("__"));					
+				}
+				for(int j=0;j<list_fact.size();j++){
+					if(key.replace("(", "").replace(")", "").contains(list_fact.get(j)[0].toString())){
+						map_new.put(list_fact.get(j)[0].toString(), list_oneFact);
+						break;
+					}else if(j==list_fact.size()-1){
+						map_new.put(key, list_oneFact);
+					}
+				}
+				
+			}//for
+			for(String key:map_new.keySet()){
+				webphone.getFact().setFactNo(key);
+				for(Object[] objs:(List<Object[]>)map.get(key)){
+					webphone.setDepartment(objs[2].toString());
+					webphone.setPost(objs[3].toString());
+					//webphone.set
+				}
+			}
+			ajaxResult="0";
+		}catch(Exception e){
+			ajaxResult="1";
+		}
+		
+		return "importExcel";
 	}
 
 }

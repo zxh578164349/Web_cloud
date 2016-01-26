@@ -79,4 +79,9 @@ public class WebPhonebookDaoImpl extends Basedao implements IWebPhonebookDao{
 		super.delete(book);
 	}
 
+	public void addLarge(Map<String, Object> map, String username) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

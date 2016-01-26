@@ -103,8 +103,7 @@ function getKyType(){
        }
          
      });
-	 }else{alert();}
-    
+	 }   
 	}
 	
 function getKyType2(factno){

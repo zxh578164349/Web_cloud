@@ -54,6 +54,7 @@
 			<tr class="tr_show">
 				<th>序號</th>
 				<th>廠別</th>
+				<th>廠別狀態</th>
 				<th>年月</th>
 				<th>品牌</th>
 				<th>模型</th>
@@ -70,6 +71,7 @@
 			<tr onmousemove="click_color(this)" onmouseout="move(this)">
 				<td>${25*(bean.currentPage-1)+x.index+1}</td>
 				<td><s:property value="factSname" /></td>
+				<td><s:property value="factArea"/></td>
 				
 				<td><s:property value="yymm"/></td>			
 				
