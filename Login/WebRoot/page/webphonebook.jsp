@@ -31,6 +31,7 @@
 <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
 <script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="page/jquerys/layer/layer.min.js"></script>
+<script type="text/javascript" src="jquery/jquery-form.js"></script>
 </head>
 <script type="text/javascript">
 	var jq=jQuery.noConflict();
@@ -142,7 +143,7 @@ jq(function(){
 	var options={
 			beforeSubmit:checkForm,  		       		       
 	        //resetForm: true, 
-	        url:"webfactOrder_importExcel",
+	        url:"webphonebook_importExcel",
 	        dataType:'json' ,
 	        success:function(data){
 	        	if(data=="0"){
@@ -154,7 +155,7 @@ jq(function(){
 	        		layer.msg("數據重複或其它因素,導入失敗",3,3);
 	        	}else if(data=="3"){
 	        	    //layer.msg("Excel文檔結構不符合要求或數據量過大，禁止導入",3,3);
-	        	    showDiv();
+	        	    //showDiv();
 	        	    layer.msg("Excel文檔結構不符合要求,或數據量超出預估,或其它因素，禁止導入",3,3);
 	        	}else if(data=="4"){
 	        		layer.msg("Excel文檔不兼容，或其它因素(建議先打開文檔幷且保存,再重新嘗試導入)",4,3);	        	     
