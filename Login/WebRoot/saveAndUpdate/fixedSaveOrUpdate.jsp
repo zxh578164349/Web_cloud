@@ -69,7 +69,7 @@ jq(document).ajaxStop(function(){
 
 	function back() {		
 			layer.load("正在返回,請稍等...");
-			window.location.href = "/Login/fix_findPageBean";							
+			window.location.href = "/Login/fix_findPageBean3?backIndex=1";							
 	}
 
 	function getFactArea(mid) {

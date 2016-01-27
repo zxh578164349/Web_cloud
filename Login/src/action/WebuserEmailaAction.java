@@ -29,13 +29,21 @@ public class WebuserEmailaAction extends ActionSupport implements ServletRespons
 	private PageBean bean;
 	private WebuserEmailA emailobj;
 	private String ajaxResult;//申請函文時返回的ajax結果,   0:提交成功       1:提交失敗
-	
+	private int backIndex;//返回標識      0或null:不走返回路徑         1:走返回路徑
 	private IWebuserEmailAServices webuseremailaSer;
 	private IWebTypeServices webtypeSer;
 	private javax.servlet.http.HttpServletResponse response;
 	private javax.servlet.http.HttpServletRequest request;
     
 	
+	public int getBackIndex() {
+		return backIndex;
+	}
+
+	public void setBackIndex(int backIndex) {
+		this.backIndex = backIndex;
+	}
+
 	public String getAjaxResult() {
 		return ajaxResult;
 	}
@@ -162,6 +170,10 @@ public class WebuserEmailaAction extends ActionSupport implements ServletRespons
 	}
 	
 	public String findPageBean3(){
+		String result="beanList1";
+		if(backIndex==1){
+			result="beanList";
+		}
 		factNo=(String)ActionContext.getContext().getSession().get("public_factno");
 		email=(String)ActionContext.getContext().getSession().get("public_email");
 		visaSort=(String)ActionContext.getContext().getSession().get("public_visaSort");
@@ -170,7 +182,7 @@ public class WebuserEmailaAction extends ActionSupport implements ServletRespons
 		}
 		bean=webuseremailaSer.findPageBean(25, page, factNo, email, visaSort);
 		this.getTypeName(bean);
-		return "beanList1";
+		return result;
 	}
 	public void getTypeName(PageBean bean){
 		List<WebuserEmailA>list=bean.getList();

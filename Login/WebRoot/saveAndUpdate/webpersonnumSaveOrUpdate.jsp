@@ -71,7 +71,7 @@
 	}
 	function back() {
 		    layer.load("正在返回,請稍等...");
-			location.href = "/Login/webpersonnum_findPageBean";
+			location.href = "/Login/webpersonnum_findPageBean3?backIndex=1";
 		
 	}
 	 function check(){

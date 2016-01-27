@@ -50,7 +50,16 @@ public class WebFixedAction extends ActionSupport implements
 	private String yymm_s;
 	private String lostmk;
 	private String ajaxResult;//申請函文時返回的ajax結果,   0:提交成功       1:提交失敗
+	private int backIndex;//返回標識      0或null:不走返回路徑         1:走返回路徑
+
 	
+	public int getBackIndex() {
+		return backIndex;
+	}
+
+	public void setBackIndex(int backIndex) {
+		this.backIndex = backIndex;
+	}
 
 	public String getAjaxResult() {
 		return ajaxResult;
@@ -217,6 +226,10 @@ public class WebFixedAction extends ActionSupport implements
 	}
 
 	public String findPageBean3() {
+		String result="beanList1";
+		if(backIndex==1){
+			result="beanList";
+		}
 		factNo = (String) ActionContext.getContext().getSession().get("public_factNo");				
 		yymm = (String) ActionContext.getContext().getSession().get("public_yymm");				
 		yymm_s=(String)ActionContext.getContext().getSession().get("public_yymms");
@@ -227,7 +240,7 @@ public class WebFixedAction extends ActionSupport implements
 		}
 		bean = fixSer.findPageBean(25, page, factNo, yymm,yymm_s,lostmk);
 
-		return "beanList1";
+		return result;
 
 	}
 

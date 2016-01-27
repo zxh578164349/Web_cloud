@@ -204,7 +204,7 @@ public class ImportExcel {
 			int row_head = sheet.getFirstRowNum()+1;
 			int maxRowIx = sheet.getLastRowNum();//（getLastRowNum獲取的行數可能比實際行數少1或不少,視測試情況而定）
 
-			for (int rowIx = row_head; rowIx < maxRowIx-1; rowIx++) {//注意：rowIx <= maxRowIx//注意：rowIx <= maxRowIx（減去最后一行匯總20160122）
+			for (int rowIx = row_head; rowIx <= maxRowIx; rowIx++) {
 				Row row = sheet.getRow(rowIx);
 				StringBuilder sb = new StringBuilder();
 				//不允許表頭爲空行null
@@ -235,11 +235,14 @@ public class ImportExcel {
 					Cell cell = row.getCell(new Integer(colIx));
 					if(cell!=null){
 						cell.setCellType(Cell.CELL_TYPE_STRING);
+						if(cell.getStringCellValue().trim().equals("")||cell.getStringCellValue()==null){
+							cell.setCellValue("空");
+						}
 					}else{
 						cell=row.createCell(colIx);
 						cell.setCellValue("空");
 					}
-					sb.append(SEPARATOR+(cell.getStringCellValue()==""?"空":cell.getStringCellValue()));										
+					sb.append(SEPARATOR+(cell.getStringCellValue()));										
 				}
 				list.add(sb.toString());
 			}
@@ -248,9 +251,7 @@ public class ImportExcel {
 				map.put(sheet.getSheetName(), list);
 			}
 			
-		}//end for a
-		
-		
+		}//end for a				
 		return map;
 	}
 	

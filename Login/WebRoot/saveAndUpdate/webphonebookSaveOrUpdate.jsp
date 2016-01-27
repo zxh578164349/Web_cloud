@@ -140,7 +140,7 @@
 						</s:if>
 						<s:else>
 							<select style="color:blue" name="webphone.fact.factNo"
-								datatype="*" onchange="check(),checkEmail()" id="dwr_factno">
+								datatype="*"  id="dwr_factno">
 								<option value="">請選擇廠別</option>
 								<option value="tw">TW</option>
 								<s:iterator value="#session.facts" id="temp">
@@ -154,6 +154,7 @@
 						<input type="text" name="webphone.fact.factNo"
 							value="<s:property value='webphone.fact.factNo'/>" readonly
 							style="color:blue" />
+						<input type="hidden" name="pbId" value="<s:property value='webphone.pbId'/>"/>
 					</s:else>
 				</td>
 				<td class="td_show_title">姓名</td>
@@ -188,6 +189,22 @@
 				<td class="td_show_title">Email</td>
 				<td class="td_input"><input type="text" name="webphone.email"
 					value="<s:property value='webphone.email'/>" datatype="e"></td>
+			</tr>
+			<tr>
+				<td class="td_show_title">QQ</td>
+				<td class="td_input"><input type="text" name="webphone.qq"
+					value="<s:property value='webphone.qq'/>" /></td>
+				<td class="td_show_title">微信</td>
+				<td class="td_input"><input type="text" name="webphone.weixin"
+					value="<s:property value='webphone.weixin'/>" ></td>
+			</tr>
+			<tr>
+				<td class="td_show_title">LINK</td>
+				<td class="td_input"><input type="text" name="webphone.link"
+					value="<s:property value='webphone.link'/>" />
+					<input type="hidden" value="<s:property value='#session.loginUser.username'/>" name="webphone.creater"/>
+					</td>
+				
 			</tr>
 
 		</table>

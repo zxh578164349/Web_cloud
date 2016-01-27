@@ -56,6 +56,7 @@
 		<caption>用戶聯系資料</caption>
 		<thead>
 			<tr class="tr_show">
+			        <th>序號</th>
 					<th>姓名</th>
 					<th>廠別</th>
 					<th>部門</th>
@@ -72,6 +73,7 @@
 		<tbody id="tbody">
 		<s:iterator value="bean.list" status="x" id="temp">
 				<tr onmousemove="click_color(this)" onmouseout="move(this)">
+				    <td>${25*(bean.currentPage-1)+x.index+1}</td>
 					<td><s:property value="username" /></td>
 					<td><s:property value="fact.factSname" /></td>
 					<td><s:property value="department" /></td>

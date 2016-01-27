@@ -204,7 +204,7 @@ function getKyType2(factno){
 
   function back(){
 		layer.load("正在返回,請稍等...");
-		location.href="/Login/bussletter_findPageBean";
+		location.href="/Login/bussletter_findPageBean?backIndex=1";
 	}
 	
 jq(function(){

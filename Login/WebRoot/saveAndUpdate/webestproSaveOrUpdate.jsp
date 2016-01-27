@@ -74,7 +74,7 @@ jq(document).ajaxStop(function(){
 	}
 	function back() {
 		    layer.load("正在返回,請稍等...");
-			location.href = "/Login/webestpro_findPageBean";		
+			location.href = "/Login/webestpro_findPageBean3?backIndex=1";		
 	}
 	 function check(){
        var factno=document.getElementById("dwr_factno").value;

@@ -37,6 +37,17 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 	private String flowmk;//判斷是否知會的
 	private int maxItem;//新添加的知會人員的序列號
 	private String ajaxResult;//申請函文時返回的ajax結果,   0:提交成功       1:提交失敗
+	private int backIndex;//返回標識      0或null:不走返回路徑         1:走返回路徑
+	
+	
+	public int getBackIndex() {
+		return backIndex;
+	}
+
+	public void setBackIndex(int backIndex) {
+		this.backIndex = backIndex;
+	}
+
 	private javax.servlet.http.HttpServletResponse response;
 	
 
@@ -328,6 +339,10 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 	}
 
 	public String findPageBean3() {
+		String result="beanList1";
+		if(backIndex==1){
+			result="beanList";
+		}
 		factNo = (String) ActionContext.getContext().getSession().get("public_factNo");				
 		visaSort = (String) ActionContext.getContext().getSession().get("public_visaSort");				
 		if (factNo == null || factNo.equals("") || factNo.equals("tw")){
@@ -335,7 +350,7 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 		}
 		bean = visaSer.findPageBean(25, page, factNo, visaSort);
 		this.getTypeName(bean);
-		return "beanList1";
+		return result;
 	}
 	
 	

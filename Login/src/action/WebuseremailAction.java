@@ -18,6 +18,15 @@ public class WebuseremailAction extends ActionSupport{
 	private String emailpwd;
 	private int page;
 	private PageBean bean;
+	private int backIndex;//返回標識      0或null:不走返回路徑         1:走返回路徑
+	
+	
+	public int getBackIndex() {
+		return backIndex;
+	}
+	public void setBackIndex(int backIndex) {
+		this.backIndex = backIndex;
+	}
 	public WebuserEmail getUseremail() {
 		return useremail;
 	}
@@ -88,13 +97,17 @@ public class WebuseremailAction extends ActionSupport{
 		return "beanList1";
 	}
 	public String findPageBean3(){
+		String result="beanList1";
+		if(backIndex==1){
+			result="beanList";
+		}
 		factNo=(String)ActionContext.getContext().getSession().get("public_factno");
 		email=(String)ActionContext.getContext().getSession().get("public_email");
 		if(factNo==null||factNo.equals("")){
 			factNo=(String)ActionContext.getContext().getSession().get("factNo");
 		}
 		bean=webuseremailSer.findPageBean(25, page, factNo, email);
-		return "beanList1";
+		return result;
 	}
 	
 	public void testEamil(){

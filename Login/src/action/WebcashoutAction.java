@@ -53,8 +53,19 @@ public class WebcashoutAction extends ActionSupport implements ServletResponseAw
 	private HttpServletResponse response;
 	private String ajaxResult;//申請函文時返回的ajax結果,   0:提交成功       1:提交失敗
 	private String yymm2;
+	private int backIndex;//返回標識      0或null:不走返回路徑         1:走返回路徑
 	
 	
+	public int getBackIndex() {
+		return backIndex;
+	}
+
+
+	public void setBackIndex(int backIndex) {
+		this.backIndex = backIndex;
+	}
+
+
 	public String getYymm2() {
 		return yymm2;
 	}
@@ -215,6 +226,10 @@ public class WebcashoutAction extends ActionSupport implements ServletResponseAw
 		return "findPageBean1";
 	}
 	public String findPageBean3(){
+		String result="findPageBean1";
+		if(backIndex==1){
+			result="findPageBean";
+		}
 		factNo=(String)ActionContext.getContext().getSession().get("public_factno");
 		yymm=(String)ActionContext.getContext().getSession().get("public_yymm");
 		//factCode=(String)ActionContext.getContext().getApplication().get("public_factCode");
@@ -222,7 +237,7 @@ public class WebcashoutAction extends ActionSupport implements ServletResponseAw
 			factNo=(String)ActionContext.getContext().getSession().get("factNo");
 		}
 		bean=cashoutSer.findPageBean(25, page, factNo, factCode, yymm);
-		return "findPageBean1";
+		return result;
 	}
 	public String findById(){
 		cashout=cashoutSer.findById(factNo, factCode, yymm);

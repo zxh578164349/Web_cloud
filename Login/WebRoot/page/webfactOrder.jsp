@@ -235,7 +235,7 @@ function showDiv(){
     //area: ['800px', '560px'],
     area:['660px','510px'],
     //page:{url:'kyz_findById_layer?billNo='+billNo+'& factNo='+factNo}                   
-    iframe:{src:'sample.jsp',scrolling:'auto'}	                    
+    iframe:{src:'page/sample/sample.jsp',scrolling:'auto'}	                    
 });
     }
 	
@@ -247,9 +247,15 @@ function showDiv(){
 	<jsp:include page="publicHead_print_webfactorder.jsp" />
 	<hr />
 	
-	<form  method="post" enctype="multipart/form-data" id="upload_form">	  
-	       <input type="file" name="file" style="width:150px" id="id_file"/>
-	       <input value="導入Excel" type="submit" id="search_forday" />	     	
+	<form  method="post" enctype="multipart/form-data" id="upload_form">
+	  <table>
+	      <td>	 
+	         <input type="file" name="file" style="width:150px" id="id_file"/> 	        	       
+	       </td>
+	       <td>
+	       	    <input value="導入Excel" type="submit" id="search_forday" />
+	       </td>
+	  </table>          	
 	</form>
 	<hr/>
 	<%-- <input value="添加" type="button" id="addbtn" onclick="javascript:location.href='saveAndUpdate/WebProdutedSaveOrUpdate.jsp'" />--%>

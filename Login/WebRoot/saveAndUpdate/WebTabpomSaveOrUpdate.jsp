@@ -157,7 +157,7 @@ function addFile(){
 }
 function back(){
 	layer.load("正在返回,請稍等...");
-	location.href="/Login/webtabpom_findPageBean";
+	location.href="/Login/webtabpom_findPageBean3?backIndex=1";
 }
 
 

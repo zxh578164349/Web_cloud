@@ -16,9 +16,14 @@ import entity.WebPhonebook;
 
 public class WebPhonebookDaoImpl extends Basedao implements IWebPhonebookDao{
 
-	public void add(WebPhonebook phone) {
+	public void add(WebPhonebook phone,long pbId) {
 		// TODO Auto-generated method stub
-		super.merge(phone);
+		if(pbId==0){
+			super.merge(phone);	
+		}else{
+			getSession().update(phone);
+		}
+			
 	}
 
 	public PageBean findPageBean(int pageSize, int page, String factNo,
@@ -35,15 +40,15 @@ public class WebPhonebookDaoImpl extends Basedao implements IWebPhonebookDao{
 		}
 		if(department!=null&&!department.equals("")){
 			hql.append(" and department=:department");
-			map.put("department", department);
+			map.put("department", department.trim());
 		}
 		if(post!=null&&!post.equals("")){
 			hql.append(" and post=:post");
-			map.put("post", post);
+			map.put("post", post.trim());
 		}
 		if(userName!=null&&!userName.equals("")){
-			hql.append(" and username:username");
-			map.put("username", userName);
+			hql.append(" and username like:username");
+			map.put("username", "%"+userName.trim()+"%");
 		}
 		hql2.append(hql);
 		hql.append(" order by fact.factNo,department,post,userName");
@@ -84,7 +89,6 @@ public class WebPhonebookDaoImpl extends Basedao implements IWebPhonebookDao{
 
 	public void addLarge(Map<String, Object> map, String username) {
 		// TODO Auto-generated method stub
-		System.out.println("dfdfd");
 		Transaction tx=null;
 	      try{	    	  
 	    	  //tx=getSession().beginTransaction();
@@ -101,18 +105,47 @@ public class WebPhonebookDaoImpl extends Basedao implements IWebPhonebookDao{
 					webphone.setPhoneB(objs[6].toString());
 					webphone.setEmail(objs[7].toString());
 					webphone.setPhoneC(objs[8].toString());
+					webphone.setCreater(username);
 					getSession().save(webphone);
 					
 				}
 				getSession().flush();
-				getSession().close();
+				getSession().clear();
 	    	  }
 	      }catch(Exception e){
 	    	  System.out.println("dao***********************"+e+"*************************dao");
 	    	  //tx.rollback();
 	      }
+	      /*tx.commit();
+	      getSession().close();*/
 			
 		
+	}
+
+	public List<WebPhonebook> findToPrint(String factNo, String department,
+			String post, String userName) {
+		// TODO Auto-generated method stub
+		StringBuffer hql=new StringBuffer();
+		Map<String,Object>map=new HashMap<String,Object>();
+		hql.append("from WebPhonebook where 1=1 ");
+		if(factNo!=null&&!factNo.equals("")&&!factNo.equals("tw")){
+			hql.append(" and fact.factNo=:factno ");
+			map.put("factno", factNo);
+		}
+		if(department!=null&&!department.equals("")){
+			hql.append(" and department=:department ");
+			map.put("department", department);
+		}
+		if(post!=null&&!post.equals("")){
+			hql.append(" and post=:post ");
+			map.put("post", post);
+		}
+		if(userName!=null&&!userName.equals("")){
+			hql.append(" and username like:username ");
+			map.put("username", userName);
+		}
+		List<WebPhonebook>list=super.getAllWithNoPage(hql.toString(), map);
+		return list;
 	}
 
 }

@@ -104,9 +104,18 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
     private KyVisabillm vbm;
     
     private String ajaxResult;//申請函文時返回的ajax結果,   0:提交成功       1:提交失敗
+    private int backIndex;//返回標識      0或null:不走返回路徑         1:走返回路徑
     
     
-    public String getAjaxResult() {
+    public int getBackIndex() {
+		return backIndex;
+	}
+
+	public void setBackIndex(int backIndex) {
+		this.backIndex = backIndex;
+	}
+
+	public String getAjaxResult() {
 		return ajaxResult;
 	}
 
@@ -938,6 +947,10 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 	}
 
 	public String findPageBean3() {
+		String result="beanList1";
+		if(backIndex==1){
+			result="beanList";
+		}
 		factNo = (String) ActionContext.getContext().getSession().get("public_factno");				
 		visaSort = (String) ActionContext.getContext().getSession().get("public_visaSort");				
 		billNo=(String)ActionContext.getContext().getSession().get("public_billNo");
@@ -950,7 +963,7 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 		userNm=user.getName();
 		bean = kyzSer.findPageBean(25, page, factNo, visaSort,billNo,userNm,yymmdd,yymmdd2);
 		this.getTypeName(bean);
-		return "beanList1";
+		return result;
 	}
 	
 	/**

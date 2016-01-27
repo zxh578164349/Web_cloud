@@ -293,8 +293,8 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 			List<String>list_imp=ImportExcel.exportListFromExcel(new File(path+"\\"+fileFileName), 0);
 			List<List<String>>list_all=new ArrayList<List<String>>();
 			if(list_imp.size()>0){
-				//List<Object[]>list_fact=webFactSer.findAllFact_obj();
-				List<Object[]>list_fact=(List<Object[]>)ActionContext.getContext().getSession().get("login_facts");//用戶登錄時緩存的廠別信息
+				List<Object[]>list_fact=webFactSer.findAllFact_obj();
+				//List<Object[]>list_fact=(List<Object[]>)ActionContext.getContext().getSession().get("login_facts");//用戶登錄時緩存的廠別信息
 				for(int i=0;i<list_imp.size();i++){//for
 					if(i==0){
 						list_all.add(Arrays.asList(list_imp.get(i).split("__")));
@@ -315,7 +315,9 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 				
 				try{
 					//webfactorderSer.large2(list_all,username);
-					webfactorderSer.addLarge2(list_all, username);
+					if(list_all!=null&&list_all.size()>0){
+						webfactorderSer.addLarge2(list_all, username);
+					}				
 				}catch(Exception e){
 					if(e.toString().contains("org.springframework")){
 						ajaxResult="2";//數據重複，导入Excel失败

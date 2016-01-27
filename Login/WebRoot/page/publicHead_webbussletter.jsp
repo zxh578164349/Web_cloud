@@ -46,7 +46,7 @@ jq(document).keyup(function(event){
 			<td><s:if test="#attr.factNo=='tw'">
 			    <div id="uboxstyle">
 					<select name="factNo" id="factNo">
-						<option value="nothing">請選擇</option>						
+						<option value="">請選擇</option>						
 						<s:iterator value="#attr.facts" id="temp">
 							<option value="${temp[0]}">${temp[1]}(${temp[0]})</option>								
 						</s:iterator>

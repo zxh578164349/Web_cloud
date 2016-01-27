@@ -17,6 +17,10 @@ public class WebPhonebook implements java.io.Serializable {
 	private String post;
 	private String email;
 	private VWebFact fact;
+	private String qq;
+	private String weixin;
+	private String link;
+	private String creater;
 
 	// Constructors
 
@@ -113,6 +117,39 @@ public class WebPhonebook implements java.io.Serializable {
 	public void setFact(VWebFact fact) {
 		this.fact = fact;
 	}
+
+	public String getQq() {
+		return qq;
+	}
+
+	public void setQq(String qq) {
+		this.qq = qq;
+	}
+
+	public String getWeixin() {
+		return weixin;
+	}
+
+	public void setWeixin(String weixin) {
+		this.weixin = weixin;
+	}
+
+	public String getLink() {
+		return link;
+	}
+
+	public void setLink(String link) {
+		this.link = link;
+	}
+
+	public String getCreater() {
+		return creater;
+	}
+
+	public void setCreater(String creater) {
+		this.creater = creater;
+	}
+	
 
 	
 	
