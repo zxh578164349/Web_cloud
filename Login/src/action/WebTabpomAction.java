@@ -59,9 +59,15 @@ public class WebTabpomAction extends ActionSupport implements ServletResponseAwa
 	private IWebTabpomServices tabpomSer;
 	private IWebTabpomfileServices tabpomfileSer;
 	private javax.servlet.http.HttpServletResponse response;
+	private int backIndex;//返回標識      0或null:不走返回路徑         1:走返回路徑
 	
 	
-	
+	public int getBackIndex() {
+		return backIndex;
+	}
+	public void setBackIndex(int backIndex) {
+		this.backIndex = backIndex;
+	}
 	public String getLookordown() {
 		return lookordown;
 	}
@@ -203,12 +209,16 @@ public class WebTabpomAction extends ActionSupport implements ServletResponseAwa
 		return "beanList1";
 	}
 	public String findPageBean3(){
+		String result="beanList1";
+		if(backIndex==1){
+			result="beanList";
+		}
 		pomName=(String)ActionContext.getContext().getSession().get("tabpom_name");
 		brank=(String)ActionContext.getContext().getSession().get("tabpom_brank");
 		pomName=(String)ActionContext.getContext().getSession().get("tabpom_yymm");
 		brank=(String)ActionContext.getContext().getSession().get("tabpom_yymm2");
 		bean=tabpomSer.findPageBean(25, page, pomName, brank,yymm,yymm2);
-		return "beanList1";
+		return result;
 	}
 	public String add() throws IOException{
 		/*文件上傳驗證*/

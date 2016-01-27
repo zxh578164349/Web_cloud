@@ -36,6 +36,7 @@ public class WebBussinessletterDaoImpl extends Basedao implements IWebBussinessl
 			hql.append(" and factNo=:factno");
 			map.put("factno", factNo);
 		}
+		
 		hql2.append(hql);
 		hql.append(" order by factNo,blNo");
 		//int rows=0;

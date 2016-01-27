@@ -69,6 +69,7 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 	private String readMk;//標識返回函文查看頁面(Y)，還是返回函文提交頁面(N)
 	private String visa_mk;
 	private String ajaxResult;//申請函文時返回的ajax結果,   0:提交成功       1:提交失敗
+	private int backIndex;//返回標識      0或null:不走返回路徑         1:走返回路徑
 	private List<File> files;
     private List<String> filesFileName;
     private List<String> filesContentType;
@@ -85,6 +86,13 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 	private IKyzExpectmatmLogServices kyzExpLogSer;
 	
 	
+	
+	public int getBackIndex() {
+		return backIndex;
+	}
+	public void setBackIndex(int backIndex) {
+		this.backIndex = backIndex;
+	}
 	public String getAjaxResult() {
 		return ajaxResult;
 	}
@@ -627,6 +635,10 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 	}
 
 	public String findPageBean3() {
+		String result="beanList1";
+		if(backIndex==1){
+			result="beanList";
+		}
 		factNo = (String) ActionContext.getContext().getSession().get("public_factno");				
 		visaSort = (String) ActionContext.getContext().getSession().get("public_visaSort");				
 		billNo=(String)ActionContext.getContext().getSession().get("public_billNo");
@@ -639,7 +651,7 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 		userNm=user.getName();
 		bean = kyzletterSer.findPageBean(25, page, factNo, visaSort,billNo,userNm,yymmdd,yymmdd2);
 		this.getTypeName(bean);
-		return "beanList1";
+		return result;
 	}
 	public void setServletResponse(HttpServletResponse response) {
 		// TODO Auto-generated method stub

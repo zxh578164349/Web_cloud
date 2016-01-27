@@ -199,7 +199,7 @@ function getKyType2(factno){
 
   function back(){
 		layer.load("正在返回,請稍等...");
-		location.href="/Login/kyzletter_findPageBean";
+		location.href="/Login/kyzletter_findPageBean3?backIndex=1";
 	}
 </script>
 <script type='text/javascript' src='/Login/dwr/interface/kyzcontactletterjs.js'></script>

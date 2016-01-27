@@ -57,6 +57,7 @@ public class WebBussinessletterAction extends ActionSupport implements ServletRe
 	private String visaSort;
 	private String readMk;//備註標記
 	private String itemNo;
+	private int backIndex;//返回標識      0或null:不走返回路徑         1:走返回路徑
 	private IWebBussinessletterServices webbussletterSer;
 	private IKyVisabillmServices visabillmSer;
 	private IWebFactServices webFactSer;
@@ -65,6 +66,13 @@ public class WebBussinessletterAction extends ActionSupport implements ServletRe
 	private IKyVisaBillsServices visabillSer;
 	
 	
+	
+	public int getBackIndex() {
+		return backIndex;
+	}
+	public void setBackIndex(int backIndex) {
+		this.backIndex = backIndex;
+	}
 	public String getItemNo() {
 		return itemNo;
 	}
@@ -256,6 +264,9 @@ public class WebBussinessletterAction extends ActionSupport implements ServletRe
 		ActionContext.getContext().getSession().remove("allrow");//首次進入，清除分頁的總條數（dao層中的allrow）
 		if(factNo==null||factNo.equals("")){
 			factNo=(String)ActionContext.getContext().getSession().get("factNo");
+			if(billNo==null||billNo.equals("")){
+				factNo="nothing";
+			}
 		}
 		ActionContext.getContext().getSession().put("public_billNo", billNo);
 		ActionContext.getContext().getSession().put("public_factNo", factNo);
@@ -263,10 +274,14 @@ public class WebBussinessletterAction extends ActionSupport implements ServletRe
 		return "beanList1";
 	}
 	public String findPageBean3(){
+		String result="beanList1";
+		if(backIndex==1){
+			result="beanList";
+		}
 		billNo=(String)ActionContext.getContext().getSession().get("public_billNo");
 		factNo=(String)ActionContext.getContext().getSession().get("public_factNo");
 		bean=webbussletterSer.findPageBean(25, page, billNo, factNo);
-		return "beanList1";
+		return result;
 	}
 	public long sumDate(Date d1,Date d2){
 		return GlobalMethod.sumDate(d1, d2)+1;//注意，出差所用的天数为相差天数+1天

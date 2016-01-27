@@ -429,7 +429,7 @@ jq(document).ajaxStop(function(){
 
 function back(){
 	layer.load("正在返回,請稍等...");
-	location.href="/Login/kyz_findPageBean";
+	location.href="/Login/kyz_findPageBean3?backIndex=1";
 }
 </script>
 <script type='text/javascript' src='/Login/dwr/interface/kyzjs.js'></script>

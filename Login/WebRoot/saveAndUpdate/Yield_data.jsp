@@ -87,7 +87,7 @@
 	function back() {
 		
 			layer.load("正在返回,請稍等...");
-			window.location.href = "/Login/ydata_findPageBean";
+			window.location.href = "/Login/ydata_findPageBean3?backIndex=1";
 		
 
 	}

@@ -58,14 +58,13 @@
 		});
 	}
 
-	function submis() {		
-		var username = document.getElementById("conditions");
-		var factno=document.getElementById("factNo")
+	function submis(public_form) {		
+		var public_form=jq("#"+public_form);
 		jq.ajax({
 			type : "POST",
 			dataType : "Html",
 			url : "webphonebook_findPageBean2",
-			data : "conditions=" + username.value+"&factNo="+factno.value,
+			data :public_form.serialize(),
 			success : function(msg) {
 				jq("#bodyid").html(msg);
 			},
@@ -150,12 +149,13 @@ jq(function(){
 	        		layer.msg("導入成功!",3,1);
 	        		//location.href="/Login/kyz_findPageBean";
 	        	}else if(data=="1"){
-	        		layer.msg("僅允許導入Excel文檔",3,3);
+	        		layer.msg("導入失敗",3,3);
+	        		showDiv();
 	        	}else if(data=="2"){
 	        		layer.msg("數據重複或其它因素,導入失敗",3,3);
 	        	}else if(data=="3"){
 	        	    //layer.msg("Excel文檔結構不符合要求或數據量過大，禁止導入",3,3);
-	        	    //showDiv();
+	        	    
 	        	    layer.msg("Excel文檔結構不符合要求,或數據量超出預估,或其它因素，禁止導入",3,3);
 	        	}else if(data=="4"){
 	        		layer.msg("Excel文檔不兼容，或其它因素(建議先打開文檔幷且保存,再重新嘗試導入)",4,3);	        	     
@@ -171,17 +171,49 @@ jq(function(){
 		return false;
 	})
 })
+function showDiv(){
+	
+    jq.layer({
+    type: 2,   //0-4的选择,
+    title: '樣本格式說明',
+    //border: [0],
+    closeBtn: [1,true],
+    shade: [0],
+    //shade: [0.5, '#000'],
+    shadeClose: false,
+    border: [10, 0.3, '#000'],
+   // btns:1,
+    //fadeIn:300,
+    //shift:'top',
+    offset:['10px',''],
+    //area: ['800px', '560px'],
+    area:['650px','450px'],
+    //page:{url:'kyz_findById_layer?billNo='+billNo+'& factNo='+factNo}                   
+    iframe:{src:'page/sample/sample2.jsp',scrolling:'auto'}	                    
+});
+    }
 </script>
 
 <body>
 	<jsp:include page="publicHead_webphonebook.jsp" />
-	<hr />
-	<s:if test='#session.loginUser.userread!="1"'>	
-		<input value="添加新用戶" type="button" id="search_forday" onclick="javascript:location.href='saveAndUpdate/webphonebookSaveOrUpdate.jsp'"/>
-	</s:if>	
-	<form  method="post" enctype="multipart/form-data" id="upload_form">	  
-	       <input type="file" name="file" style="width:150px" id="id_file"/>
-	       <input value="導入Excel" type="submit" id="search_forday" />	     	
+	<hr />								  	       	       	     		
+	<form  method="post" enctype="multipart/form-data" id="upload_form">
+	<table>
+	  <tr>
+	   <s:if test='#session.loginUser.userread!="1"'>
+	   <td>
+	      <input value="添加新用戶" type="button" id="search_forday" onclick="javascript:location.href='saveAndUpdate/webphonebookSaveOrUpdate.jsp'"/> 
+	      &nbsp;&nbsp;
+	   </td>
+	   </s:if>
+	   <td>
+	    <input value="導入Excel" type="submit" id="search_forday" />	      
+	   </td>
+	   <td>
+	     <input type="file" name="file" style="width:150px" id="id_file"/>
+	   </td>
+	  </tr>
+	</table>
 	</form>
 	<div id="bodyid">
 		<jsp:include page="table1/webphonebook1.jsp" />

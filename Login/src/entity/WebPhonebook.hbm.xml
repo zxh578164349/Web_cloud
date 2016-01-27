@@ -12,10 +12,10 @@
                 <param name="sequence">seq_webphonebook</param>
             </generator>
         </id>
-        <property name="username" type="java.lang.String">
+        <property name="username" type="java.lang.String" unique-key="UKEY_WEBPHONE">
             <column name="USERNAME" length="50" />
         </property>       
-        <property name="phoneA" type="java.lang.String">
+        <property name="phoneA" type="java.lang.String" unique-key="UKEY_WEBPHONE">
             <column name="PHONE_A" length="13" />
         </property>
         <property name="phoneB" type="java.lang.String">
@@ -24,16 +24,28 @@
         <property name="phoneC" type="java.lang.String">
             <column name="PHONE_C" length="13" />
         </property>
-        <property name="department" type="java.lang.String">
+        <property name="department" type="java.lang.String" unique-key="UKEY_WEBPHONE">
             <column name="DEPARTMENT" length="30"/>
         </property>
-        <property name="post" type="java.lang.String">
+        <property name="post" type="java.lang.String" unique-key="UKEY_WEBPHONE">
             <column name="POST" length="30"/>
         </property>
         <property name="email" type="java.lang.String">
             <column name="EMAIL" length="50"/>
         </property>
-        <many-to-one name="fact" class="entity.VWebFact">
+        <property name="qq" type="java.lang.String">
+            <column name="QQ" length="30"/>
+        </property>
+        <property name="weixin" type="java.lang.String">
+            <column name="WEIXIN" length="50"/>
+        </property>
+        <property name="link" type="java.lang.String">
+            <column name="LINK" length="50"/>
+        </property>
+        <property name="creater" type="java.lang.String">
+            <column name="CREATER" length="50"/>
+        </property>
+        <many-to-one name="fact" class="entity.VWebFact" unique-key="UKEY_WEBPHONE">
         <!-- 20160121表WEB_PHONEBOOK的廠別字段名 -->
            <column name="FACTNO" length="50"/>
         </many-to-one>

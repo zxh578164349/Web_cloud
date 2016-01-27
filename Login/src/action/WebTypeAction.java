@@ -16,9 +16,16 @@ public class WebTypeAction extends ActionSupport{
 	private WebType webtype;
 	private String typeNo;
 	private String ajaxResult;//申請函文時返回的ajax結果,   0:提交成功       1:提交失敗
+	private int backIndex;//返回標識      0或null:不走返回路徑         1:走返回路徑
 	private IWebTypeServices webtypeSer;
 	
 	
+	public int getBackIndex() {
+		return backIndex;
+	}
+	public void setBackIndex(int backIndex) {
+		this.backIndex = backIndex;
+	}
 	public String getAjaxResult() {
 		return ajaxResult;
 	}
@@ -92,12 +99,16 @@ public class WebTypeAction extends ActionSupport{
 		return "beanList1";
 	}
 	public String findPageBean3(){
+		String result="beanList1";
+		if(backIndex==1){
+			result="beanList";
+		}
 		factNo=(String)ActionContext.getContext().getSession().get("public_factNo");
 		if(factNo==null||factNo.equals("")){
 			factNo=(String)ActionContext.getContext().getSession().get("factNo");
 		}
 		bean=webtypeSer.findPageBean(page, 25, factNo);
-		return "beanList1";
+		return result;
 	}
 	public String delete(){
 		webtypeSer.delete(factNo, typeNo);

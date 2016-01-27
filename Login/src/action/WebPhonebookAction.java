@@ -11,6 +11,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import services.IWebFactServices;
 import services.IWebPhonebookServices;
@@ -39,8 +40,6 @@ public class WebPhonebookAction extends ActionSupport{
 	private File file;
     private String fileFileName;
     private String fileContentType;
-    
-    
 	
 	public File getFile() {
 		return file;
@@ -128,10 +127,19 @@ public class WebPhonebookAction extends ActionSupport{
 		this.webFactSer = webFactSer;
 	}
 	public String add(){
+		/*由於表中有唯一約束，所以要傳箇參數識別添加與更新採用不同的方法
+		 * 添加：dao層使用super.merge()
+		 * 更新：dao層使用getSession().update()
+		 * pbId爲空時，pbId值爲0
+		 * 20160127*/
 		try{
-			webphonebookSer.add(webphone);
+			if(pbId!=0){
+				webphone.setPbId(pbId);
+			}
+			webphonebookSer.add(webphone,pbId);
 			ajaxResult="0";
 		}catch(Exception e){
+			System.out.println("action**********************"+e+"**********************action");
 			ajaxResult="1";
 		}		
 		return "add";
@@ -208,7 +216,7 @@ public class WebPhonebookAction extends ActionSupport{
 		List<Object[]>list_fact=webFactSer.findAllFact_obj();
 		//List<Object[]>list_fact=(List<Object[]>)ActionContext.getContext().getSession().get("login_facts");//用戶登錄時緩存的廠別信息
 		try{
-			Map<String,Object>map=ImportExcel.exportListFromExcel(new File(path+"\\"+fileFileName));
+			Map<String,Object>map=new ConcurrentHashMap(ImportExcel.exportListFromExcel(new File(path+"\\"+fileFileName)));
 			Map<String,Object>map_new=new HashMap<String,Object>();
 			for(String key:map.keySet()){//for
 				List<Object[]>list_oneFact=new ArrayList<Object[]>();
@@ -221,15 +229,20 @@ public class WebPhonebookAction extends ActionSupport{
 						map_new.put(list_fact.get(j)[0].toString(), list_oneFact);
 						break;
 					}else if(j==list_fact.size()-1){
-						map_new.put(key, list_oneFact);
+						//map_new.put(key, list_oneFact);
+						map.remove(key);//把不存在的廠別清除
 					}
-				}
-				
-			}//for
-			webphonebookSer.addLarge(map_new, username);
-			ajaxResult="0";
+				}								
+			}//for	
+			if(map_new!=null&&map_new.size()!=0){
+				webphonebookSer.addLarge(map_new, username);
+				ajaxResult="0";
+			}else{
+				ajaxResult="1";
+			}			
 		}catch(Exception e){
 			ajaxResult="1";
+			System.out.println("action**************************************"+e+"*******************************************action");
 		}
 		
 		return "importExcel";

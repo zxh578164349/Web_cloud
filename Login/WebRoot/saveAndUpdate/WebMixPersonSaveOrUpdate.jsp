@@ -103,7 +103,7 @@ window.onload=function(){
         } 
 function back(){
 	layer.load("正在返回,請稍等...");
-	location.href="/Login/webmixPerson_getList";
+	location.href="/Login/webmixPerson_getList3?backIndex=1";
 }
 </script>
 <script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>

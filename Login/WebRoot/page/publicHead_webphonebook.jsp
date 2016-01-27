@@ -39,12 +39,12 @@ jq(document).keyup(function(event){
 </head>
 <body>
   <div style="width:680px">
+   <form id="public_form" method="post">
 	<table  border="0px">
 		<tr>
 			<td>廠別</td>
 			<td><s:if test="#session.factNo=='tw'">			    
-					<select name="factNo" id="factNo">						
-						<option value="">全部</option>		
+					<select name="factNo" id="factNo">													
 						<option value="tw">TW</option>					
 						<s:iterator value="#attr.facts" id="temp">
 							<option value="${temp[0]}">${temp[1]}(${temp[0]})</option>								
@@ -60,9 +60,9 @@ jq(document).keyup(function(event){
 				</s:else>
 				</td>
 			<td>姓名</td>
-			<td><input type="text" id="conditions"></td>
+			<td><input type="text" name="userName"></td>
 			<td rowspan="2">
-			 <input value="搜索" type="submit" id="addbtn" onclick="javascript:submis()" />		
+			 <input value="搜索" type="button" id="addbtn" onclick="javascript:submis('public_form')" />		
 			</td>
 		</tr>
 		<tr>
@@ -72,6 +72,7 @@ jq(document).keyup(function(event){
 		   <td><input type="text" name="post" id="post"/></td>
 		</tr>
 	</table>
+	</form>
 	</div>
 </body>
 </html>

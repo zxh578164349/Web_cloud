@@ -42,7 +42,16 @@ public class WebScraptAction extends ActionSupport implements
 	private PageBean bean;
 	private String ajaxResult;//申請函文時返回的ajax結果,   0:提交成功       1:提交失敗
 	private String yymm2;
+	private int backIndex;//返回標識      0或null:不走返回路徑         1:走返回路徑
+
 	
+	public int getBackIndex() {
+		return backIndex;
+	}
+
+	public void setBackIndex(int backIndex) {
+		this.backIndex = backIndex;
+	}
 
 	public String getYymm2() {
 		return yymm2;
@@ -334,6 +343,10 @@ public class WebScraptAction extends ActionSupport implements
 		return "showList1";
 	}
 	public String getList3(){
+		String result="showList1";
+		if(backIndex==1){
+			result="showList";
+		}
 		factNo=(String)ActionContext.getContext().getSession().get("public_factno");
 		yymm=(String)ActionContext.getContext().getSession().get("public_yymm");
 		yymm2=(String)ActionContext.getContext().getSession().get("public_yymm2");
@@ -341,7 +354,7 @@ public class WebScraptAction extends ActionSupport implements
 			factNo=(String)ActionContext.getContext().getSession().get("factNo");
 		}
 		bean=scraptService.findPageBean(25, page, factNo, yymm,yymm2);
-		return "showList1";
+		return result;
 	}
 	/**
 	 * 打印文檔

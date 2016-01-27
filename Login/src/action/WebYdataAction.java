@@ -59,8 +59,17 @@ public class WebYdataAction extends ActionSupport implements
 	private String sdate;
 	private String edate;
 	private String ajaxResult;//申請函文時返回的ajax結果,   0:提交成功       1:提交失敗
+	private int backIndex;//返回標識      0或null:不走返回路徑         1:走返回路徑
 	
+
 	
+	public int getBackIndex() {
+		return backIndex;
+	}
+
+	public void setBackIndex(int backIndex) {
+		this.backIndex = backIndex;
+	}
 
 	public String getSdate() {
 		return sdate;
@@ -502,6 +511,10 @@ public class WebYdataAction extends ActionSupport implements
 	}
 
 	public String findPageBean3() {
+		String result="beanList1";
+		if(backIndex==1){
+			result="beanList";
+		}
 		factNo = (String) ActionContext.getContext().getSession().get("public_factno");				
 		yymm = (String) ActionContext.getContext().getSession().get("public_yymm");				
 		if (factNo == null || factNo.equals("") || factNo.equals("tw")) {
@@ -509,7 +522,7 @@ public class WebYdataAction extends ActionSupport implements
 		}
 		bean = dataSer.findPageBean(25, page, factNo, yymm);
 
-		return "beanList1";
+		return result;
 
 	}
 

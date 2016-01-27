@@ -18,9 +18,9 @@ public class WebPhonebookServicesImpl implements IWebPhonebookServices{
 
 
 
-	public void add(WebPhonebook phone) {
+	public void add(WebPhonebook phone,long pbId) {
 		// TODO Auto-generated method stub
-		webphonedao.add(phone);
+		webphonedao.add(phone,pbId);
 	}
 
 
