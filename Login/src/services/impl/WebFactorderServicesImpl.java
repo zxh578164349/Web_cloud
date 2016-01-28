@@ -22,22 +22,21 @@ public class WebFactorderServicesImpl implements IWebFactorderServices{
 		// TODO Auto-generated method stub
 		factorderdao.add(order);
 	}
-	public WebFactorder findByOrderId(long orderid) {
+	public WebFactorder findByOrderId(String factNo, String factArea,
+			String yymm, String modelNo, String customer, String brank,
+			String component) {
 		// TODO Auto-generated method stub
-		return factorderdao.findByOrderId(orderid);
+		return factorderdao.findByOrderId(factNo, factArea, yymm, modelNo, customer, brank, component);
 	}
 
 
-	public void delete(long orderid) {
+	public void delete(String factNo, String factArea, String yymm,
+			String modelNo, String customer, String brank, String component) {
 		// TODO Auto-generated method stub
-		factorderdao.delete(orderid);
+		factorderdao.delete(factNo, factArea, yymm, modelNo, customer, brank, component);
 	}
+	
 
-
-	public void addLarge(List<String> list) {
-		// TODO Auto-generated method stub
-			factorderdao.addLarge(list);		
-	}
 
 
 	public PageBean findPageBean(int pageSize,int page,List<String>factAreas,List<String>brank,List<String>customer,List<String>model,List<String>component,String factNo,List<String>factNos,String yymm,String yymm2){
@@ -79,34 +78,7 @@ public class WebFactorderServicesImpl implements IWebFactorderServices{
 
 
 
-	public List<WebFactorder> findWithNoPage(List<String> factNos,
-			List<String> brank, List<String> customer, List<String> model,
-			List<String> component,String year) {
-		// TODO Auto-generated method stub
-		return factorderdao.findWithNoPage(factNos, brank, customer, model, component,year);
-	}
-
-
-	public int findMonthData(String factNo, String brank, String customer,
-			String model, String component, String year) {
-		// TODO Auto-generated method stub
-		return factorderdao.findMonthData(factNo, brank, customer, model, component, year);
-	}
-
-
-	public List<Object[]> findWebFactorder(List<String> factNos,
-			List<String> brank, List<String> customer, List<String> model,
-			List<String> component, String year) {
-		// TODO Auto-generated method stub
-		return factorderdao.findWebFactorder(factNos, brank, customer, model, component, year);
-	}
-
-
-	public List<Double> findOrderdata(String factSname, String brank,
-			String customer, String model, String component, String yymm) {
-		// TODO Auto-generated method stub
-		return factorderdao.findOrderdata(factSname, brank, customer, model, component, yymm);
-	}
+	
 
 
 	public List<Object[]> findByGroup(List<String>factNos,List<String>factAreas,
@@ -139,6 +111,9 @@ public class WebFactorderServicesImpl implements IWebFactorderServices{
 		// TODO Auto-generated method stub
 		factorderdao.addLarge3(list,username);
 	}
+
+
+	
 
 
 	

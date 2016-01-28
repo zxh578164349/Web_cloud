@@ -10,9 +10,8 @@ import entity.WebFactorder;
 
 public interface IWebFactorderDao {
 	public void add(WebFactorder order);
-	public WebFactorder findByOrderId(long orderid);
-	public void delete(long orderid);
-	public void addLarge(List<String>list);//大批量添加
+	public WebFactorder findByOrderId(String factNo,String factArea,String yymm,String modelNo,String customer,String brank,String component);
+	public void delete(String factNo,String factArea,String yymm,String modelNo,String customer,String brank,String component);
 	public void addLarge2(List<List<String>>list,String username);//经过事务声明配置，大批量導入數據20160117(修改版)
 	public void addLarge3(List<List<String>>list,String username);//不经过事务声明配置，大批量導入數據20160124(修改版)
 	public PageBean findPageBean(int pageSize,int page,List<String>factAreas,List<String>brank,List<String>customer,List<String>model,List<String>component,String factNo,List<String>factNos,String yymm,String yymm2);
@@ -23,10 +22,7 @@ public interface IWebFactorderDao {
 	//public List<String> findFactSname(List<String> FactSnames);//目前所有的廠名
 	public List<String> findFactArea(List<String> factNos);//所有的廠別狀態
 	
-	public List<WebFactorder>findWithNoPage(List<String>factSnames,List<String>brank,List<String>customer,List<String>model,List<String>component,String yymm);
-	public int findMonthData(String factSname,String brank,String customer,String model,String component,String year);
-	public List<Object[]>findWebFactorder(List<String>factNos,List<String>brank,List<String>customer,List<String>model,List<String>component,String yymm);
-	public List<Double> findOrderdata(String factSname,String brank,String customer,String model,String component,String yymm);
+	
 	
 	/**
 	 * 不定向分组统计

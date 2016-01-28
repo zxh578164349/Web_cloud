@@ -14,6 +14,7 @@ import util.PageBean;
 import dao.Basedao;
 import dao.IWebFactorderDao;
 import entity.WebFactorder;
+import entity.WebFactorderId;
 
 public class WebFactorderDaoImpl extends Basedao implements IWebFactorderDao{
 
@@ -21,66 +22,28 @@ public class WebFactorderDaoImpl extends Basedao implements IWebFactorderDao{
 		// TODO Auto-generated method stub
 		super.merge(order);
 	}
-	public WebFactorder findByOrderId(long orderid) {
+	public WebFactorder findByOrderId(String factNo,String factArea,String yymm,String modelNo,String customer,String brank,String component) {
 		// TODO Auto-generated method stub
-		return (WebFactorder)super.findById_long(orderid, WebFactorder.class);
+		String hql="from WebFactorder where id.factNo=? and id.factArea=? and id.yymm=? and id.modelNo=? and id.customer=? and id.brank=? and id.component=?";
+		Query query=getSession().createQuery(hql);
+		query.setString(0, factNo);
+		query.setString(1, factArea);
+		query.setString(2, yymm);
+		query.setString(3, modelNo);
+		query.setString(4, customer);
+		query.setString(5, brank);
+		query.setString(6, component);
+		return (WebFactorder)query.uniqueResult();
 	}
-	public void delete(long orderid) {
+	public void delete(String factNo,String factArea,String yymm,String modelNo,String customer,String brank,String component) {
 		// TODO Auto-generated method stub
-		WebFactorder order=findByOrderId(orderid);
+		WebFactorder order=findByOrderId(factNo,factArea,yymm,modelNo,customer,brank,component);
 		super.delete(order);
 	}
 	
 
 
-	/**
-	 * 大批量導入數據
-	 */
-	public void addLarge(List<String>list) {
-		// TODO Auto-generated method stub
-		String[]objs_head=null;	
-		Transaction tx=null;
-		try{
-			tx=getSession().beginTransaction();
-			for(int i=0;i<list.size();i++){
-				String[]objs=null;
-				if(i==0){
-					objs_head=list.get(0).split("__");//該表頭包含了日期（日期從第5列開始）
-				}else{
-					objs=list.get(i).split("__");//注意：分解的數組比總列數要多齣1箇，所以開始要j=5+1
-					
-					for(int j=5+1;j<objs_head.length-1;j++){//objs_head-1:表示排除最後一箇"汇总"列
-						WebFactorder order=new WebFactorder();
-						order.setFactSname(objs[1]);
-						order.setBrank(objs[2]);
-						order.setCustomer(objs[3]);
-						order.setModelNo(objs[4]);
-						order.setComponent(objs[5]);
-						try{
-							order.setOrderData(Double.valueOf(objs[j]));//循環獲取各箇日期的數據
-						}catch(Exception e){
-							order.setOrderData(0.0);//報錯時，給值-1,標記數據格式不對
-						}						
-						order.setYymm(objs_head[j].replace("/", ""));//循環獲取日期
-						order.setColTemp("1");//臨時標記列
-						getSession().save(order);
-						if((i*j)%25==0){
-							getSession().flush();
-							getSession().clear();
-						}						
-					}
-				}			
-							
-			}
-			//tx.commit();
-		    //getSession().close();
-		}catch(Exception e){
-			System.out.println(e);
-			tx.rollback();
-		}		
-		
-		
-	}
+	
 	
 	/**
 	 * 经过事务声明配置
@@ -102,17 +65,19 @@ public class WebFactorderDaoImpl extends Basedao implements IWebFactorderDao{
 						for(int j=6+1;j<objs_head.size();j++){//for2
 							
 							WebFactorder order=new WebFactorder();
+							WebFactorderId id=new WebFactorderId();
 							order.setFactSname(objs.get(1));
-							order.setFactArea(objs.get(2));
-							order.setBrank(objs.get(3));
-							order.setCustomer(objs.get(4));
-							order.setModelNo(objs.get(5));
-							order.setComponent(objs.get(6));							
-							order.setOrderData(Double.valueOf(objs.get(j)));//循環獲取各箇日期的數據													
-							order.setYymm(objs_head.get(j).replace("/", ""));//循環獲取日期
-							order.setFactNo(objs.get(objs.size()-1));
+							id.setFactArea(objs.get(2));
+							id.setBrank(objs.get(3));
+							id.setCustomer(objs.get(4));
+							id.setModelNo(objs.get(5));
+							id.setComponent(objs.get(6));																											
+							id.setYymm(objs_head.get(j).replace("/", ""));//循環獲取日期
+							id.setFactNo(objs.get(objs.size()-1));
+							order.setOrderData(Double.valueOf(objs.get(j)));//循環獲取各箇日期的數據
 							order.setColTemp(username);//臨時標記列
-							getSession().save(order);																																																																					
+							order.setId(id);
+							getSession().merge(order);																																																																					
 					}//for2
 						getSession().flush();
 						getSession().clear();
@@ -155,17 +120,19 @@ public class WebFactorderDaoImpl extends Basedao implements IWebFactorderDao{
                        for(int j=6+1;j<objs_head.size();j++){//for2
 							
 							WebFactorder order=new WebFactorder();
+							WebFactorderId id=new WebFactorderId();
 							order.setFactSname(objs.get(1));
-							order.setFactArea(objs.get(2));
-							order.setBrank(objs.get(3));
-							order.setCustomer(objs.get(4));
-							order.setModelNo(objs.get(5));
-							order.setComponent(objs.get(6));							
-							order.setOrderData(Double.valueOf(objs.get(j)));//循環獲取各箇日期的數據													
-							order.setYymm(objs_head.get(j).replace("/", ""));//循環獲取日期
-							order.setFactNo(objs.get(objs.size()-1));
+							id.setFactArea(objs.get(2));
+							id.setBrank(objs.get(3));
+							id.setCustomer(objs.get(4));
+							id.setModelNo(objs.get(5));
+							id.setComponent(objs.get(6));																											
+							id.setYymm(objs_head.get(j).replace("/", ""));//循環獲取日期
+							id.setFactNo(objs.get(objs.size()-1));
 							order.setColTemp(username);//臨時標記列
-							getSession().save(order);																																																																					
+							order.setOrderData(Double.valueOf(objs.get(j)));//循環獲取各箇日期的數據
+							order.setId(id);
+							getSession().merge(order);																																																																					
 					    }//for2
 						getSession().flush();
 						getSession().clear();
@@ -197,44 +164,44 @@ public class WebFactorderDaoImpl extends Basedao implements IWebFactorderDao{
 		hql.append("from WebFactorder where 1=1 ");
 		hql2.append("select count(*) ");
 		if(factAreas!=null&&factAreas.size()>0){
-			hql.append(" and factArea in (:factareas)");
+			hql.append(" and id.factArea in (:factareas)");
 			map.put("factareas", factAreas);
 		}
 		if(brank!=null&&brank.size()>0){
-			hql.append(" and brank in(:brank) ");
+			hql.append(" and id.brank in(:brank) ");
 			map.put("brank", brank);
 		}
 		if(customer!=null&&customer.size()>0){
-			hql.append(" and customer in(:customer) ");
+			hql.append(" and id.customer in(:customer) ");
 			map.put("customer", customer);
 		}
 		if(model!=null&&model.size()>0){
-			hql.append(" and modelNo in(:model)");
+			hql.append(" and id.modelNo in(:model)");
 			map.put("model", model);
 		}
 		if(component!=null&&component.size()>0){
-			hql.append(" and component in(:component)");
+			hql.append(" and id.component in(:component)");
 			map.put("component", component);
 		}		
 		if(factNo!=null&&!factNo.equals("")&&!factNo.equals("tw")){
-			hql.append(" and factNo=:factno");
+			hql.append(" and id.factNo=:factno");
 			map.put("factno", factNo);
 		}
 		if(factNo.equals("tw")&&factNos!=null&&factNos.size()>0){
-			hql.append(" and factNo in(:factnos)");
+			hql.append(" and id.factNo in(:factnos)");
 			map.put("factnos", factNos);
 		}
 		if(yymm!=null&&!yymm.equals("")){
-			hql.append(" and yymm >=:yymm");
+			hql.append(" and id.yymm >=:yymm");
 			map.put("yymm", yymm);
 		}
 		if(yymm!=null&&!yymm.equals("")){
-			hql.append(" and yymm<=:yymm2");
+			hql.append(" and id.yymm<=:yymm2");
 			map.put("yymm2", yymm2);
 		}
 		
 		hql2.append(hql);
-		hql.append(" order by factNo,factArea,brank,customer,modelNo,component,yymm");
+		hql.append(" order by id.factNo,id.factArea,id.brank,id.customer,id.modelNo,id.component,id.yymm");
 		int allrow=0;
 		Integer rows=(Integer)ActionContext.getContext().getSession().get("allrow");
 		if(rows!=null){
@@ -265,19 +232,19 @@ public class WebFactorderDaoImpl extends Basedao implements IWebFactorderDao{
 		// TODO Auto-generated method stub
 		StringBuffer hql=new StringBuffer();		
 		Map<String,Object>map=new HashMap<String,Object>();
-		hql.append("select distinct component from WebFactorder where 1=1 ");
+		hql.append("select distinct id.component from WebFactorder where 1=1 ");
 		if(factNos!=null&&factNos.size()>0){
-			hql.append(" and factNo in (:factnos)");
+			hql.append(" and id.factNo in (:factnos)");
 			map.put("factnos", factNos);
 		}
 		if(factAreas!=null&&factAreas.size()>0){
-			hql.append(" and factArea in(:factareas)");
+			hql.append(" and id.factArea in(:factareas)");
 			map.put("factareas", factAreas);
 		}
 		if(factNos==null&&factNos.size()==0&&factAreas==null&&factAreas.size()==0){
-			hql.append(" and factNo='nothing' ");
+			hql.append(" and id.factNo='nothing' ");
 		}
-		hql.append(" order by component");
+		hql.append(" order by id.component");
 		return super.getAllWithNoPage(hql.toString(), map);
 	}
 
@@ -287,19 +254,19 @@ public class WebFactorderDaoImpl extends Basedao implements IWebFactorderDao{
 		//String hql="select distinct brank from WebFactorder where factArea in (:factsnames) order by brank";
 		StringBuffer hql=new StringBuffer();
 		Map<String,Object>map=new HashMap<String,Object>();
-		hql.append("select distinct brank from WebFactorder where 1=1 ");
+		hql.append("select distinct id.brank from WebFactorder where 1=1 ");
 		if(factNos!=null&&factNos.size()>0){
-			hql.append(" and factNo in (:factnos)");
+			hql.append(" and id.factNo in (:factnos)");
 			map.put("factnos", factNos);
 		}
 		if(factAreas!=null&&factAreas.size()>0){
-			hql.append(" and factArea in(:factareas)");
+			hql.append(" and id.factArea in(:factareas)");
 			map.put("factareas", factAreas);
 		}
 		if(factNos==null&&factNos.size()==0&&factAreas==null&&factAreas.size()==0){
-			hql.append(" and factNo='nothing' ");
+			hql.append(" and id.factNo='nothing' ");
 		}
-		hql.append(" order by brank");
+		hql.append(" order by id.brank");
 		return super.getAllWithNoPage(hql.toString(), map);
 	}
 
@@ -309,19 +276,19 @@ public class WebFactorderDaoImpl extends Basedao implements IWebFactorderDao{
 		//String hql="select distinct customer from WebFactorder where factArea in (:factsnames) order by customer";
 		StringBuffer hql=new StringBuffer();
 		Map<String,Object>map=new HashMap<String,Object>();
-		hql.append("select distinct customer from WebFactorder where 1=1 ");
+		hql.append("select distinct id.customer from WebFactorder where 1=1 ");
 		if(factNos!=null&&factNos.size()>0){
-			hql.append(" and factNo in (:factnos)");
+			hql.append(" and id.factNo in (:factnos)");
 			map.put("factnos", factNos);
 		}
 		if(factAreas!=null&&factAreas.size()>0){
-			hql.append(" and factArea in(:factareas)");
+			hql.append(" and id.factArea in(:factareas)");
 			map.put("factareas", factAreas);
 		}
 		if(factNos==null&&factNos.size()==0&&factAreas==null&&factAreas.size()==0){
-			hql.append(" and factNo='nothing' ");
+			hql.append(" and id.factNo='nothing' ");
 		}
-		hql.append(" order by customer ");
+		hql.append(" order by id.customer ");
 		return super.getAllWithNoPage(hql.toString(), map);
 	}
 
@@ -331,19 +298,19 @@ public class WebFactorderDaoImpl extends Basedao implements IWebFactorderDao{
 		//String hql="select distinct modelNo from WebFactorder where factArea  in (:factsnames) order by modelNo";
 		StringBuffer hql=new StringBuffer();
 		Map<String,Object>map=new HashMap<String,Object>();
-		hql.append("select distinct modelNo from WebFactorder where 1=1 ");
+		hql.append("select distinct id.modelNo from WebFactorder where 1=1 ");
 		if(factNos!=null&&factNos.size()>0){
-			hql.append(" and factNo in (:factnos)");
+			hql.append(" and id.factNo in (:factnos)");
 			map.put("factnos", factNos);
 		}
 		if(factAreas!=null&&factAreas.size()>0){
-			hql.append(" and factArea in(:factareas)");
+			hql.append(" and id.factArea in(:factareas)");
 			map.put("factareas", factAreas);
 		}
 		if(factNos==null&&factNos.size()==0&&factAreas==null&&factAreas.size()==0){
-			hql.append(" and factNo='nothing' ");
+			hql.append(" and id.factNo='nothing' ");
 		}
-		hql.append(" order by modelNo ");
+		hql.append(" order by id.modelNo ");
 		return super.getAllWithNoPage(hql.toString(), map);
 	}
 	
@@ -356,118 +323,16 @@ public class WebFactorderDaoImpl extends Basedao implements IWebFactorderDao{
 	}*/
 	public List<String> findFactArea(List<String> factNos) {
 		// TODO Auto-generated method stub
-		String hql="select distinct factArea from WebFactorder where factNo in(:factnos) order by factArea";
+		String hql="select distinct id.factArea from WebFactorder where id.factNo in(:factnos) order by id.factArea";
 		Map<String,Object>map=new HashMap<String,Object>();
 		map.put("factnos", factNos);
 		return super.getAllWithNoPage(hql, map);
 	}
 	
-	public List<WebFactorder> findWithNoPage(List<String> factSnames,
-			List<String> brank, List<String> customer, List<String> model,
-			List<String> component,String year) {
-		// TODO Auto-generated method stub
-		StringBuffer hql=new StringBuffer();
-		Map<String,Object>map=new HashMap<String,Object>();
-		hql.append("from WebFactorder where 1=1 ");
-		if(factSnames!=null&&factSnames.size()>0){
-			hql.append(" and factSname in (:factsnames)");
-			map.put("factsnames", factSnames);
-		}
-		if(brank!=null&&brank.size()>0){
-			hql.append(" and brank in(:brank) ");
-			map.put("brank", brank);
-		}
-		if(customer!=null&&customer.size()>0){
-			hql.append(" and customer in(:customer) ");
-			map.put("customer", customer);
-		}
-		if(model!=null&&model.size()>0){
-			hql.append(" and modelNo in(:model)");
-			map.put("model", model);
-		}
-		if(component!=null&&component.size()>0){
-			hql.append(" and component in(:component)");
-			map.put("component", component);
-		}
-		if(year!=null&&!year.equals("")){
-			hql.append(" and yymm like:year");
-			map.put("year", year+"%");
-		}
-		hql.append(" order by factSname,brank,customer,modelNo,component,yymm");
-		return super.getAllWithNoPage(hql.toString(), map);
-	}
+	
 
 
-	/**
-	 * 如果大於12，證明數據有重複
-	 * 如果小於12，需要補全
-	 */
-	public int findMonthData(String factSname, String brank, String customer,
-			String model, String component, String year) {
-		// TODO Auto-generated method stub
-		String hql="select count(orderId) from WebFactorder where factSname=? and brank=? and customer=? and modelNo=? and component=? and yymm like ?";
-		Query query=getSession().createQuery(hql);
-		query.setString(0, factSname);
-		query.setString(1, brank);
-		query.setString(2, customer);
-		query.setString(2, model);
-		query.setString(3, component);
-		query.setString(4, year+"%");
-		return (Integer)query.uniqueResult();
-	}
-
-
-	/**
-	 * 在搜索條件下，找出所有不重複的（factNo，brank,customer,modelNo,compnent）
-	 */
-	public List<Object[]> findWebFactorder(List<String> factNos,
-			List<String> brank, List<String> customer, List<String> model,
-			List<String> component, String year) {
-		// TODO Auto-generated method stub
-		StringBuffer hql=new StringBuffer();
-		Map<String,Object>map=new HashMap<String,Object>();
-		hql.append("select max(orderId),factSname,brank,customer,modelNo,component from WebFactorder where 1=1 ");
-		if(factNos!=null&&factNos.size()>0){
-			hql.append(" and factSname in (:factnos)");
-			map.put("factnos", factNos);
-		}
-		if(brank!=null&&brank.size()>0){
-			hql.append(" and brank in(:brank) ");
-			map.put("brank", brank);
-		}
-		if(customer!=null&&customer.size()>0){
-			hql.append(" and customer in(:customer) ");
-			map.put("customer", customer);
-		}
-		if(model!=null&&model.size()>0){
-			hql.append(" and modelNo in(:model)");
-			map.put("model", model);
-		}
-		if(component!=null&&component.size()>0){
-			hql.append(" and component in(:component)");
-			map.put("component", component);
-		}
-		if(year!=null&&!year.equals("")){
-			hql.append(" and yymm like:year");
-			map.put("year", year+"%");
-		}
-		hql.append(" group by factSname,brank,customer,modelNo,component ");
-		hql.append(" order by factSname,brank,customer,modelNo,component");
-		return super.getAllWithNoPage(hql.toString(), map);
-	}
-
-
-	/**
-	 * 根據廠名，品牌，客戶，model,部件，年月找到一箇訂單（由於導入的excel文件存在重複的數據，所以要返回List
-	 * 如果長度爲1，則不重複）
-	 */
-	public List<Double> findOrderdata(String factSname, String brank,
-			String customer, String model, String component, String yymm) {
-		// TODO Auto-generated method stub
-		String hql="select orderData from WebFactorder where factSname=? and brank=? and customer=? and modelNo=? and component=? and yymm=?";
-		String[]objs={factSname,brank,customer,model,component,yymm};
-		return super.findAll(hql, objs);
-	}
+	
 
 
 	/**
