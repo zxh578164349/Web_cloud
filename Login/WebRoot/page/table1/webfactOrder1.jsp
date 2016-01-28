@@ -71,17 +71,17 @@
 			<tr onmousemove="click_color(this)" onmouseout="move(this)">
 				<td>${25*(bean.currentPage-1)+x.index+1}</td>
 				<td><s:property value="factSname" /></td>
-				<td><s:property value="factArea"/></td>
+				<td><s:property value="id.factArea"/></td>
 				
-				<td><s:property value="yymm"/></td>			
+				<td><s:property value="id.yymm"/></td>			
 				
-				<td><s:property value="brank" /></td>
+				<td><s:property value="id.brank" /></td>
 				
-				<td><s:property value="modelNo" /></td>
+				<td><s:property value="id.modelNo" /></td>
 				
-				<td><s:property value="customer" /></td>
+				<td><s:property value="id.customer" /></td>
 				
-				<td><s:property value="component" /></td>
+				<td><s:property value="id.component" /></td>
 				
 				<%--<td><s:property value="%{formatDouble(innum)}" /></td>--%>					
 				<td><s:property value="%{toThou(orderData)}"/></td>
@@ -97,11 +97,17 @@
 					onclick=""><img alt="修改" src="images/icon/edit001.png" title="修改" ></a>
 					--%>
 					<form action="webfactOrder_delete" method="post"
-						id="2subform${x.index}" style="float:left">
-						<input type="hidden" value="<s:property value='orderId'/>"
-							name="orderid" />						
-					</form> <a href="javascript:void(0)"
-					onclick="isDelete('2subform${x.index}')"><img alt="刪除" src="images/icon/delete001.png" title="刪除"></a>
+						id="2subform${x.index}" style="float:left">						
+						<input type="hidden" value="<s:property value='id.factNo'/>" name="factNo" />
+						<input type="hidden" value="<s:property value='id.factArea'/>" name="factArea"/>
+						<input type="hidden" value="<s:property value='id.yymm'/>" name="yymm"/>
+						<input type="hidden" value="<s:property value='id.modelNo'/>" name="model"/>
+						<input type="hidden" value="<s:property value='id.customer'/>" name="customer"/>
+						<input type="hidden" value="<s:property value='id.brank'/>" name="brank"/>
+						<input type="hidden" value="<s:property value='id.component'/>" name="component"/>
+													
+					</form> 
+					<a href="javascript:void(0)" onclick="isDelete('2subform${x.index}')"><img alt="刪除" src="images/icon/delete001.png" title="刪除"></a>
 					</td>
 				</s:if>
 			</tr>

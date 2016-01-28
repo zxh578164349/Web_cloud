@@ -8,16 +8,10 @@ public class WebFactorder implements java.io.Serializable {
 
 	// Fields
 
+	private WebFactorderId id;
 	private Long orderId;
 	private String factSname;
-	private String component;
-	private String brank;
-	private String customer;
-	private String modelNo;
 	private Double orderData;
-	private String yymm;
-	private String factNo;
-	private String factArea;
 	private String colTemp;
 
 	// Constructors
@@ -27,38 +21,30 @@ public class WebFactorder implements java.io.Serializable {
 	}
 
 	/** minimal constructor */
-	public WebFactorder(Long orderId) {
+	public WebFactorder(WebFactorderId id, Long orderId) {
+		this.id = id;
 		this.orderId = orderId;
 	}
-	public WebFactorder( String factSname, String component,
-			String brank, String customer, String modelNo, 
-			String yymm) {
-		this.factSname = factSname;
-		this.component = component;
-		this.brank = brank;
-		this.customer = customer;
-		this.modelNo = modelNo;
-		this.yymm = yymm;
-	}
-	
 
 	/** full constructor */
-	public WebFactorder(Long orderId, String factSname, String component,
-			String brank, String customer, String modelNo, Double orderData,
-			String yymm, String factNo, String factArea) {
+	public WebFactorder(WebFactorderId id, Long orderId, String factSname,
+			Double orderData, String colTemp) {
+		this.id = id;
 		this.orderId = orderId;
 		this.factSname = factSname;
-		this.component = component;
-		this.brank = brank;
-		this.customer = customer;
-		this.modelNo = modelNo;
 		this.orderData = orderData;
-		this.yymm = yymm;
-		this.factNo = factNo;
-		this.factArea = factArea;
+		this.colTemp = colTemp;
 	}
 
 	// Property accessors
+
+	public WebFactorderId getId() {
+		return this.id;
+	}
+
+	public void setId(WebFactorderId id) {
+		this.id = id;
+	}
 
 	public Long getOrderId() {
 		return this.orderId;
@@ -76,38 +62,6 @@ public class WebFactorder implements java.io.Serializable {
 		this.factSname = factSname;
 	}
 
-	public String getComponent() {
-		return this.component;
-	}
-
-	public void setComponent(String component) {
-		this.component = component;
-	}
-
-	public String getBrank() {
-		return this.brank;
-	}
-
-	public void setBrank(String brank) {
-		this.brank = brank;
-	}
-
-	public String getCustomer() {
-		return this.customer;
-	}
-
-	public void setCustomer(String customer) {
-		this.customer = customer;
-	}
-
-	public String getModelNo() {
-		return this.modelNo;
-	}
-
-	public void setModelNo(String modelNo) {
-		this.modelNo = modelNo;
-	}
-
 	public Double getOrderData() {
 		return this.orderData;
 	}
@@ -116,37 +70,12 @@ public class WebFactorder implements java.io.Serializable {
 		this.orderData = orderData;
 	}
 
-	public String getYymm() {
-		return this.yymm;
-	}
-
-	public void setYymm(String yymm) {
-		this.yymm = yymm;
-	}
-
-	public String getFactNo() {
-		return this.factNo;
-	}
-
-	public void setFactNo(String factNo) {
-		this.factNo = factNo;
-	}
-
-	public String getFactArea() {
-		return this.factArea;
-	}
-
-	public void setFactArea(String factArea) {
-		this.factArea = factArea;
-	}
-
 	public String getColTemp() {
-		return colTemp;
+		return this.colTemp;
 	}
 
 	public void setColTemp(String colTemp) {
 		this.colTemp = colTemp;
 	}
-	
 
 }
