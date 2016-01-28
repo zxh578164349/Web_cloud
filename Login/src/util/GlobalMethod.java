@@ -126,6 +126,36 @@ public class GlobalMethod {
 			response.getWriter().print("<script>alert('無數據');</script>");
 		}
 	}
+	/**
+	 * 實驗室物性搜索打印
+	 * @param list
+	 * @param factNo
+	 * @param yymm
+	 * @param yymm2
+	 * @param file
+	 * @param response
+	 * @throws IOException
+	 */
+	public static void print_webphonebook(List list,String factNo,String department,String file,HttpServletResponse response) throws IOException{
+		//List<Webwlo>list=wloService.findByAny(factNo, yymm, yymm2);
+		if(list.size()>0){
+			StringBuffer fileName=new StringBuffer();
+			Map<String,Object>map=new HashMap<String,Object>();
+			map.put("factNo", factNo);
+			fileName.append("report");
+			if(factNo!=null&&!factNo.equals("")){
+				fileName.append("_"+factNo);
+			}
+			if(department!=null&&!department.equals("")){
+				fileName.append("_"+department);
+			}
+			JasperHelper.exportmain("excel", map,file, list,fileName.toString(), "jasper/input/");
+		}else{
+			response.setContentType("text/html;charset=utf-8");
+			response.getWriter().print("<script>alert('無數據');</script>");
+		}
+	}
+	
 	
 	public static String findPageBean(String public_factno,String yymm,String yymm2){
 		ActionContext.getContext().getSession().remove("public_factno");

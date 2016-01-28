@@ -192,6 +192,13 @@ function showDiv(){
     iframe:{src:'page/sample/sample2.jsp',scrolling:'auto'}	                    
 });
     }
+    
+function print(subform){
+	var subform=jq("#"+subform);
+	subform.attr("action","webphonebook_print");
+	subform.attr("target","_blank");
+	subform.submit();
+}
 </script>
 
 <body>

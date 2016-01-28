@@ -1,5 +1,6 @@
 package services;
 
+import java.util.List;
 import java.util.Map;
 
 import util.PageBean;
@@ -11,5 +12,6 @@ public interface IWebPhonebookServices {
 	public WebPhonebook findById(long pbId);
 	public void delete(long pbId);
 	public void addLarge(Map<String,Object>map,String username);
+	public List<WebPhonebook> findToPrint(String factNo,String department,String post,String userName);
 
 }

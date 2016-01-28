@@ -40,7 +40,7 @@ function getAllFact_json(){
 		success:function(data){
 			var item="";
 			jq.each(data,function(i,obj){
-				item+="<div><input type='checkbox' name='factNos' value='"+obj[0]+"' onclick='init()'/>"+obj[1]+"</div>";				
+				item+="<div><input type='checkbox' name='factNos' value='"+obj[0]+"' onclick='init()'/>"+obj[1]+"("+obj[0]+")</div>";				
 			});
 			jq("#div_factNos").append(item);
 		}	
