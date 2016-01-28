@@ -1,8 +1,10 @@
 package util;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -10,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.io.FilenameUtils;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
@@ -91,13 +94,15 @@ public class ImportExcel {
 				}
 				for (short colIx = minColIx; colIx < maxColIx; colIx++) {//注意：colIx < maxColIx,與外循環的rowIx <= maxRowIx不同
 					Cell cell = row.getCell(new Integer(colIx));
-					CellValue cellValue = evaluator.evaluate(cell);
+										
+					CellValue cellValue = evaluator.evaluate(cell);					
 					if (cellValue == null) {//if1
 						//continue;(原先爲空的話，忽略掉)
 						
 						/*************現在，改爲如果爲空，創建新單元格，幷給新值;如果是非數據列，則取上一行的的值；否則給值0，標記這這裏爲空****************/
 						cell=row.createCell(colIx);																			
 							if(colIx<minColIx+6){
+								sheet.getRow(rowIx-1).getCell(colIx).setCellType(Cell.CELL_TYPE_STRING);//先轉換成CELL_TYPE_STRING，否則可能報數據類型不對的情況20160128
 								cell.setCellValue(sheet.getRow(rowIx-1).getCell(colIx).getStringCellValue());
 							}else{
 								cell.setCellValue(0);
@@ -294,9 +299,128 @@ public class ImportExcel {
 	/**
 	 * @param args
 	 */
+	
+	
+	
+	
+	
+	
+	/***********************************************************測試20160128****************************************************************************/
+	/**
+	 * 由指定的Sheet导出至List
+	 * 
+	 * @param workbook
+	 * @param sheetNum
+	 * @return
+	 * @throws IOException
+	 */
+	private static Map<String,Object> exportListFromExcel2(Workbook workbook) {			
+		
+		Map<String,Object>map=new HashMap<String,Object>();
+		for(int a=0;a<workbook.getNumberOfSheets();a++){//for a
+			Sheet sheet = workbook.getSheetAt(a);
+			
+			// 解析公式结果
+			FormulaEvaluator evaluator = workbook.getCreationHelper()
+					.createFormulaEvaluator();
+
+			List<String> list = new ArrayList<String>();
+
+			//int minRowIx = sheet.getFirstRowNum()+1;
+			int row_head = sheet.getFirstRowNum();
+			int maxRowIx = sheet.getLastRowNum();//（getLastRowNum獲取的行數可能比實際行數少1或不少,視測試情況而定）
+
+			for (int rowIx = row_head; rowIx <= maxRowIx; rowIx++) {
+				Row row = sheet.getRow(rowIx);
+				StringBuilder sb = new StringBuilder();
+				//不允許表頭爲空行null
+				if(row==null){
+					//list.clear();
+					break;
+				}
+				short minColIx = row.getFirstCellNum();
+				int maxColIx = row.getLastCellNum();
+				if(maxColIx-minColIx>18&&(maxRowIx-row_head>2000||maxRowIx-row_head<3)){
+					list.clear();
+					break;
+				}
+				
+				/*if(rowIx==row_head&&
+						(!sheet.getRow(row_head).getCell(minColIx).getStringCellValue().equals("序號")||
+						!sheet.getRow(row_head).getCell(minColIx+1).getStringCellValue().equals("單位")||
+						!sheet.getRow(row_head).getCell(minColIx+2).getStringCellValue().equals("姓名")||
+						!sheet.getRow(row_head).getCell(minColIx+3).getStringCellValue().equals("職務")||
+						!sheet.getRow(row_head).getCell(minColIx+4).getStringCellValue().equals("內線")||
+						!sheet.getRow(row_head).getCell(minColIx+5).getStringCellValue().equals("手機")||
+						!sheet.getRow(row_head).getCell(minColIx+6).getStringCellValue().equals("郵箱")||
+						!sheet.getRow(row_head).getCell(minColIx+7).getStringCellValue().equals("短號"))){
+					list.clear();
+					break;
+				}*/
+				for (short colIx = minColIx; colIx < maxColIx; colIx++) {//注意：減去備註這一列
+					Cell cell = row.getCell(new Integer(colIx));
+					if(cell!=null){
+						cell.setCellType(Cell.CELL_TYPE_STRING);
+						if(cell.getStringCellValue().trim().equals("")||cell.getStringCellValue()==null){
+							cell.setCellValue("空");
+						}
+					}else{
+						cell=row.createCell(colIx);
+						cell.setCellValue("空");
+					}
+					sb.append((cell.getStringCellValue()));										
+				}
+				list.add(sb.toString());
+			}
+			
+			if(list!=null&&list.size()>1){
+				map.put(sheet.getSheetName(), list);
+			}
+			
+		}//end for a				
+		return map;
+	}
+	
+	/**
+	 * 由Excel流的Sheet导出至List
+	 * 
+	 * @param is
+	 * @param extensionName
+	 * @param sheetNum
+	 * @return
+	 * @throws IOException
+	 */
+	public static Map<String,Object> exportListFromExcel2(InputStream is,
+			String extensionName) throws IOException {
+
+		Workbook workbook = null;
+
+		if (extensionName.toLowerCase().equals(XLS)) {
+			workbook = new HSSFWorkbook(is);
+		} else if (extensionName.toLowerCase().equals(XLSX)) {
+			workbook = new XSSFWorkbook(is);
+		}
+        is.close();
+		return exportListFromExcel2(workbook);
+	}
+	/**
+	 * 由Excel文件的Sheet导出至List
+	 * 
+	 * @param file
+	 * @param sheetNum
+	 * @return
+	 */
+	public static Map<String,Object> exportListFromExcel2(File file)
+			throws IOException {
+		return exportListFromExcel2(new FileInputStream(file),
+				FilenameUtils.getExtension(file.getName()));
+	}
+
+	/***********************************************************測試20160128****************************************************************************/	
+	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		/*String path="d:\\123\\631.xls";
+		String path="e:\\FVAS.xls";
 		List<String>list=null;
 		try{
 			list=exportListFromExcel(new File(path),0);
@@ -309,22 +433,46 @@ public class ImportExcel {
 			}						
 		}catch(Exception e){
 			System.out.println(e);
-		}*/
+		}
 		
-		String path="i:\\各廠聯絡資料.xls";
+		/*String path="e:\\jy-2.xls";
 		Map<String, Object> map;
 		try {
-			map = exportListFromExcel(new File(path));
+			HSSFWorkbook wb=new HSSFWorkbook();
+			HSSFSheet sheet=wb.createSheet("sheet1");
+			for(int i=0;i<10;i++){
+				sheet.setColumnWidth(i, 7000);
+			}
+			map = exportListFromExcel2(new File(path));
 			for(String key:map.keySet()){
 				System.out.println(key);
 				for(String str:(List<String>)map.get(key)){
 					System.out.println(str);
 				}
+				
+					
+				
+				List<String>list=(List<String>)map.get(key);
+				for(int j=0;j<list.size();j++){
+					sheet.createRow(j);
+					String[]objs=list.get(j).split(",");
+					for(int i=0;i<objs.length;i++){
+						String str=objs[i];
+						sheet.getRow(j).createCell(i).setCellValue(str);
+					}
+				}
+				
+				
+				
+				
+				OutputStream os=new FileOutputStream("e:\\tttttt2.xls");
+				wb.write(os);
+				os.close();
 			}
-		} catch (IOException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
 		
 		
 

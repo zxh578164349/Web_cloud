@@ -144,7 +144,11 @@ public class WebPhonebookDaoImpl extends Basedao implements IWebPhonebookDao{
 			hql.append(" and username like:username ");
 			map.put("username", userName);
 		}
+		hql.append(" order by fact.factNo,department,username");
 		List<WebPhonebook>list=super.getAllWithNoPage(hql.toString(), map);
+		for(WebPhonebook book:list){
+			book.getFact().getFactSname();
+		}
 		return list;
 	}
 

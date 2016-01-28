@@ -967,7 +967,7 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 			}*/
 			for(int j=0;j<list_date.size();j++){//for
 				if(list_all.get(i).size()==0){
-					sheet.getRow(i+2).getCell(6+j).setCellValue("無數據");
+					sheet.getRow(i+2).getCell(6+j).setCellValue("0");
 					sheet.getRow(i+2).getCell(6+j).setCellStyle(cs_font_red);
 				}
 				for(String key:list_all.get(i).keySet()){
@@ -977,7 +977,7 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 						list_all.get(i).remove(key);
 						
 					}else{
-						sheet.getRow(i+2).getCell(6+j).setCellValue("無數據");
+						sheet.getRow(i+2).getCell(6+j).setCellValue("0");
 						sheet.getRow(i+2).getCell(6+j).setCellStyle(cs_font_red);
 					}
 					break;

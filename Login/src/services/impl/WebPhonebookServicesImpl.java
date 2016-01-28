@@ -1,5 +1,6 @@
 package services.impl;
 
+import java.util.List;
 import java.util.Map;
 
 import dao.IWebPhonebookDao;
@@ -50,6 +51,14 @@ public class WebPhonebookServicesImpl implements IWebPhonebookServices{
 	public void addLarge(Map<String, Object> map, String username) {
 		// TODO Auto-generated method stub
 		webphonedao.addLarge(map, username);
+	}
+
+
+
+	public List<WebPhonebook> findToPrint(String factNo, String department,
+			String post, String userName) {
+		// TODO Auto-generated method stub
+		return webphonedao.findToPrint(factNo, department, post, userName);
 	}
 
 }

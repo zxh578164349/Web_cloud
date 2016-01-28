@@ -62,7 +62,8 @@ jq(document).keyup(function(event){
 			<td>姓名</td>
 			<td><input type="text" name="userName"></td>
 			<td rowspan="2">
-			 <input value="搜索" type="button" id="addbtn" onclick="javascript:submis('public_form')" />		
+			 <input value="搜索" type="button" id="addbtn" onclick="javascript:submis('public_form')" />	
+			 <input value="導出Excel" type="button" id="search_forday" onclick="print('public_form')"/>	
 			</td>
 		</tr>
 		<tr>

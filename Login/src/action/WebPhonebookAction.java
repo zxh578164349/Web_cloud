@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -13,8 +14,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.struts2.interceptor.ServletResponseAware;
+
 import services.IWebFactServices;
 import services.IWebPhonebookServices;
+import util.GlobalMethod;
 import util.ImportExcel;
 import util.PageBean;
 
@@ -24,7 +30,7 @@ import com.opensymphony.xwork2.ActionSupport;
 import entity.WebPhonebook;
 import entity.WebUser;
 
-public class WebPhonebookAction extends ActionSupport{
+public class WebPhonebookAction extends ActionSupport implements ServletResponseAware{
 	private IWebPhonebookServices webphonebookSer;
 	private IWebFactServices webFactSer;
 	private WebPhonebook webphone;
@@ -40,7 +46,7 @@ public class WebPhonebookAction extends ActionSupport{
 	private File file;
     private String fileFileName;
     private String fileContentType;
-	
+    private javax.servlet.http.HttpServletResponse response;
 	public File getFile() {
 		return file;
 	}
@@ -125,6 +131,10 @@ public class WebPhonebookAction extends ActionSupport{
 	
 	public void setWebFactSer(IWebFactServices webFactSer) {
 		this.webFactSer = webFactSer;
+	}
+	public void setServletResponse(HttpServletResponse response) {
+		// TODO Auto-generated method stub
+		this.response=response;
 	}
 	public String add(){
 		/*由於表中有唯一約束，所以要傳箇參數識別添加與更新採用不同的方法
@@ -247,5 +257,11 @@ public class WebPhonebookAction extends ActionSupport{
 		
 		return "importExcel";
 	}
+	
+	public void print() throws IOException{
+		List<WebPhonebook>list=webphonebookSer.findToPrint(factNo, department, post, userName);
+		GlobalMethod.print_webphonebook(list, factNo, department, "webphonebook.jasper", response);
+	}
+	
 
 }
