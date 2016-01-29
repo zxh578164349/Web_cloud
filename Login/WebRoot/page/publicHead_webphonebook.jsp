@@ -34,6 +34,48 @@ jq(document).keyup(function(event){
    }
 });
 
+function getDepartments(factno){
+	jq("#se_department").html("");
+	jq.ajax({
+		type:"POST",
+		dataType:"json",
+		data:"factNo="+factno,
+		url:"webphonebook_findDepartments",
+		success:function(data){
+			var items="<option value=''>請選擇</option>";
+			if(data!=null){
+				jq.each(data,function(i,obj){
+					items+="<option value='"+obj+"'>"+obj+"<option/>";
+				});
+				jq("#se_department").append(items);
+			}
+			
+		}
+	});
+}
+
+function getPosts(factno){
+	jq("#se_post").html("");
+	jq.ajax({
+		type:"POST",
+		dataType:"json",
+		data:"factNo="+factno,
+		url:"webphonebook_findPosts",
+		success:function(data){
+			var items="<option value=''>請選擇</option>";
+			if(data!=null){
+				jq.each(data,function(i,obj){
+					items+="<option value='"+obj+"'>"+obj+"<option/>";
+				});
+				jq("#se_post").append(items);
+			}
+			
+		}
+	});
+}
+window.onload=function(){
+	getDepartments("nothing");getPosts("nothing");
+}
 </script>
 
 </head>
@@ -44,7 +86,7 @@ jq(document).keyup(function(event){
 		<tr>
 			<td>廠別</td>
 			<td><s:if test="#session.factNo=='tw'">			    
-					<select name="factNo" id="factNo">													
+					<select name="factNo" id="factNo" onchange="getDepartments(this.value);getPosts(this.value)">													
 						<option value="tw">TW</option>					
 						<s:iterator value="#attr.facts" id="temp">
 							<option value="${temp[0]}">${temp[1]}(${temp[0]})</option>								
@@ -68,9 +110,15 @@ jq(document).keyup(function(event){
 		</tr>
 		<tr>
 		   <td>部門</td>		             		   
-		   <td><input type="text" name="department" id="department"/></td>
+		   <td>
+		       <!-- <input type="text" name="department" id="department"/> -->
+		       <select name="department" id="se_department"></select>		            		       
+		   </td>
 		   <td>職位</td>
-		   <td><input type="text" name="post" id="post"/></td>
+		   <td>		   
+		       <!--  <input type="text" name="post" id="post"/>	-->	  
+		       <select name="post" id="se_post" ></select>
+		   </td>
 		</tr>
 	</table>
 	</form>

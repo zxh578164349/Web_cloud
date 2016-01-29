@@ -61,4 +61,18 @@ public class WebPhonebookServicesImpl implements IWebPhonebookServices{
 		return webphonedao.findToPrint(factNo, department, post, userName);
 	}
 
+
+
+	public List<String> findDepartments(String factNo) {
+		// TODO Auto-generated method stub
+		return webphonedao.findDepartments(factNo);
+	}
+
+
+
+	public List<String> findPosts(String factNo) {
+		// TODO Auto-generated method stub
+		return webphonedao.findPosts(factNo);
+	}
+
 }

@@ -135,11 +135,11 @@
 				<td class="td_show_title">廠別</td>
 				<td class="td_input"><s:if test="webphone==null">
 						<s:if test="#session.factNo!='tw'">
-							<input type="text" style="color:blue" name="webphone.fact.factNo"
+							<input type="text" style="color:blue" name="webphone.id.fact.factNo"
 								value="${factNo}" readonly id="dwr_factno" />
 						</s:if>
 						<s:else>
-							<select style="color:blue" name="webphone.fact.factNo"
+							<select style="color:blue" name="webphone.id.fact.factNo"
 								datatype="*"  id="dwr_factno">
 								<option value="">請選擇廠別</option>
 								<option value="tw">TW</option>
@@ -151,44 +151,43 @@
 						</s:else>
 					</s:if> 
 					<s:else>
-						<input type="text" name="webphone.fact.factNo"
-							value="<s:property value='webphone.fact.factNo'/>" readonly
+						<input type="text" name="webphone.id.fact.factNo"
+							value="<s:property value='webphone.id.fact.factNo'/>" readonly
 							style="color:blue" />
-						<input type="hidden" name="pbId" value="<s:property value='webphone.pbId'/>"/>
 					</s:else>
 				</td>
 				<td class="td_show_title">姓名</td>
 				<td class="td_input"><input type="text"
-					name="webphone.username" datatype="*1-50"
-					value="<s:property value='webphone.username'/>"></td>
+					name="webphone.id.username" datatype="*1-50"
+					value="<s:property value='webphone.id.username'/>"></td>
 			</tr>
 			<tr>
 				<td class="td_show_title">部門</td>
 				<td class="td_input"><input type="text"
-					name="webphone.department" datatype="*1-50"
-					value="<s:property value='webphone.department'/>" /></td>
+					name="webphone.id.department" datatype="*1-50"
+					value="<s:property value='webphone.id.department'/>" /></td>
 				<td class="td_show_title">職務</td>
-				<td class="td_input"><input type="text" name="webphone.post"
-					value="<s:property value='webphone.post'/>" datatype="*1-30">
+				<td class="td_input"><input type="text" name="webphone.id.post"
+					value="<s:property value='webphone.id.post'/>" datatype="*1-30">
 				</td>
 			</tr>
 			<tr>
 				<td class="td_show_title">內線</td>
-				<td class="td_input"><input type="text" name="webphone.phoneA"
-					value="<s:property value='webphone.phoneA'/>" 
+				<td class="td_input"><input type="text" name="webphone.id.phoneA"
+					value="<s:property value='webphone.id.phoneA'/>" 
 					onblur="checkEmail()" /></td>
 				<td class="td_show_title">手機</td>
-				<td class="td_input"><input type="text" name="webphone.phoneB"
-					datatype="*1-20" value="<s:property value='webphone.phoneB'/>" />
+				<td class="td_input"><input type="text" name="webphone.id.phoneB"
+					datatype="*1-20" value="<s:property value='webphone.id.phoneB'/>" />
 				</td>
 			</tr>
 			<tr>
 				<td class="td_show_title">短號</td>
-				<td class="td_input"><input type="text" name="webphone.phoneC"
-					value="<s:property value='webphone.phoneC'/>" /></td>
+				<td class="td_input"><input type="text" name="webphone.id.phoneC"
+					value="<s:property value='webphone.id.phoneC'/>" /></td>
 				<td class="td_show_title">Email</td>
-				<td class="td_input"><input type="text" name="webphone.email"
-					value="<s:property value='webphone.email'/>" datatype="e"></td>
+				<td class="td_input"><input type="text" name="webphone.id.email"
+					value="<s:property value='webphone.id.email'/>" datatype="e"></td>
 			</tr>
 			<tr>
 				<td class="td_show_title">QQ</td>

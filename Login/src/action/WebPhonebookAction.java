@@ -16,6 +16,8 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import javax.servlet.http.HttpServletResponse;
 
+import net.sf.json.JSONArray;
+
 import org.apache.struts2.interceptor.ServletResponseAware;
 
 import services.IWebFactServices;
@@ -47,6 +49,15 @@ public class WebPhonebookAction extends ActionSupport implements ServletResponse
     private String fileFileName;
     private String fileContentType;
     private javax.servlet.http.HttpServletResponse response;
+    private JSONArray jsons;
+    
+    
+	public JSONArray getJsons() {
+		return jsons;
+	}
+	public void setJsons(JSONArray jsons) {
+		this.jsons = jsons;
+	}
 	public File getFile() {
 		return file;
 	}
@@ -261,6 +272,27 @@ public class WebPhonebookAction extends ActionSupport implements ServletResponse
 	public void print() throws IOException{
 		List<WebPhonebook>list=webphonebookSer.findToPrint(factNo, department, post, userName);
 		GlobalMethod.print_webphonebook(list, factNo, department, "webphonebook.jasper", response);
+	}
+	
+	public String findDepartments(){
+		if(factNo==null||factNo.equals("")){
+			factNo=(String)ActionContext.getContext().getSession().get("factNo");
+		}		
+		List<String>list=webphonebookSer.findDepartments(factNo);
+		if(list.size()>0){
+			jsons=JSONArray.fromObject(list);
+		}
+		return "findDepartments";
+	}
+	public String findPosts(){
+		if(factNo==null||factNo.equals("")){
+			factNo=(String)ActionContext.getContext().getSession().get("factNo");
+		}		
+		List<String>list=webphonebookSer.findPosts(factNo);
+		if(list.size()>0){
+			jsons=JSONArray.fromObject(list);
+		}
+		return "findPosts";
 	}
 	
 

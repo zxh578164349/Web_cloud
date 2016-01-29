@@ -96,7 +96,7 @@ function move(obj){
     }
 })  */
  
- function mydelete(pbId){
+ function mydelete(subform){
     var flag=confirm("確定要刪除嗎?");
     if(flag==true){
        /* window.location.href="userdelete?id="+id;
@@ -104,7 +104,7 @@ function move(obj){
        jq.ajax({
           type:"POST",
           dataType:"html",
-          data:"pbId="+pbId,
+          data:jq("#"+subform).serialize(),
           url:"webphonebook_delete",
           success:function(msg){
               //layer.close(loadi);
@@ -119,9 +119,10 @@ function move(obj){
 
 
 
-function loaduser(pbId){
+function loaduser(subform){
 	layer.load("请稍等...");
-	location.href="/Login/webphonebook_findById?pbId="+pbId;
+	jq("#"+subform).submit();
+	//location.href="/Login/webphonebook_findById?pbId="+pbId;
 }
 
 function checkForm(){
