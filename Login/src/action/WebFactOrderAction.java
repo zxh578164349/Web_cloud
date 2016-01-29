@@ -634,18 +634,15 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 		
 		
 		/***************************初始化表格************************************/
-		for(int i=0;i<5;i++){
-			if(i==0){
-				sheet.setColumnWidth(i, 6000);	
-			}else{
-				sheet.setColumnWidth(i, 4500);
-			}			
+		int index=0;//不顯示列名標識，沒有選擇的條件就不顯示，則index-1     20160129
+		for(int i=0;i<20;i++){			
+				sheet.setColumnWidth(i, 5000);														
 		}
 		
 		sheet.createRow(0).createCell(0);
 		sheet.getRow(0).getCell(0).setCellValue("訂單月份匯總表");
 		sheet.getRow(0).getCell(0).setCellStyle(cs_title);
-		for(int i=1;i<list.size()+2;i++){
+		for(int i=1;i<list.size()+2+1;i++){//數據行+標題行+表頭行+匯總行20160129
 			sheet.createRow(i);
 			for(int j=0;j<30;j++){
 				sheet.getRow(i).createCell(j);
@@ -654,64 +651,119 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 			}
 			if(i==1){
 				sheet.getRow(i).getCell(0).setCellValue("廠別");
-				sheet.getRow(i).getCell(1).setCellValue("廠別狀態");
-				sheet.getRow(i).getCell(2).setCellValue("品牌");
-				sheet.getRow(i).getCell(3).setCellValue("客戶");
-				sheet.getRow(i).getCell(4).setCellValue("模具");
-				sheet.getRow(i).getCell(5).setCellValue("部件");				
-				for(int k=0;k<list_date.size();k++){					
-					sheet.getRow(i).getCell(6+k).setCellValue(list_date.get(k));										
+				if(factAreas.size()>0){
+					sheet.getRow(i).getCell(1).setCellValue("廠別狀態");
+				}else{
+					index--;
 				}
-				sheet.getRow(i).getCell(6+list_date.size()).setCellValue("匯總");
-				for(int l=0;l<=6+list_date.size();l++){
+				
+				if(branks.size()>0){
+					sheet.getRow(i).getCell(2+index).setCellValue("品牌");
+				}else{
+					index--;
+				}
+				if(customers.size()>0){
+					sheet.getRow(i).getCell(3+index).setCellValue("客戶");
+				}else{
+					index--;
+				}
+				if(models.size()>0){
+					sheet.getRow(i).getCell(4+index).setCellValue("模具");
+				}else{
+					index--;
+				}
+				if(components.size()>0){
+					sheet.getRow(i).getCell(5+index).setCellValue("部件");	
+				}else{
+					index--;
+				}
+				
+				
+							
+				for(int k=0;k<list_date.size();k++){					
+					sheet.getRow(i).getCell(6+k+index).setCellValue(list_date.get(k));										
+				}
+				sheet.getRow(i).getCell(6+list_date.size()+index).setCellValue("匯總");
+				for(int l=0;l<=6+list_date.size()+index;l++){
 					sheet.getRow(i).getCell(l).setCellStyle(cs_head);
 				}
 			}										
 		}
 		/***************************初始化表格************************************/
 		
+		
+		/***************************填充數據************************************/
+		int index2=0;//不顯示列名標識，沒有選擇的條件就不顯示，則index2-1     20160129
 		for(int i=0;i<list.size();i++){
 			sheet.getRow(i+2).getCell(0).setCellValue(list.get(i)[0].toString());
-			sheet.getRow(i+2).getCell(1).setCellValue(list.get(i)[1].toString());
-			sheet.getRow(i+2).getCell(2).setCellValue(list.get(i)[2].toString());
-			sheet.getRow(i+2).getCell(3).setCellValue(list.get(i)[3].toString());
-			sheet.getRow(i+2).getCell(4).setCellValue(list.get(i)[4].toString());
-			sheet.getRow(i+2).getCell(5).setCellValue(list.get(i)[5].toString());
-			double row_total=0.0;
-			/*for(int j=0;j<list_all.get(i).size();j++){
-				if(list_all.get(i).size()==12){
-					sheet.getRow(i+2).getCell(5+j).setCellValue(list_all.get(i).get(j));
-					row_total=row_total+list_all.get(i).get(j);
-				}
-				if(list_all.get(i).size()<12){
-					sheet.getRow(i+2).getCell(5+j).setCellValue("數據不足");
-					sheet.getRow(i+2).getCell(5+j).setCellStyle(cs_font_red);
-				}
-				if(list_all.get(i).size()>12){
-					sheet.getRow(i+2).getCell(5+j).setCellValue("數據冗餘");
-					sheet.getRow(i+2).getCell(5+j).setCellStyle(cs_font_blue);
-				}								
-			}*/
+			if(factAreas.size()>0){
+				sheet.getRow(i+2).getCell(1).setCellValue(list.get(i)[1].toString());
+			}else{
+				index2--;
+			}
+			
+			if(branks.size()>0){
+				sheet.getRow(i+2).getCell(2+index2).setCellValue(list.get(i)[2].toString());
+			}else{
+				index2--;
+			}
+			if(customers.size()>0){
+				sheet.getRow(i+2).getCell(3+index2).setCellValue(list.get(i)[3].toString());
+			}else{
+				index2--;
+			}
+			if(models.size()>0){
+				sheet.getRow(i+2).getCell(4+index2).setCellValue(list.get(i)[4].toString());
+			}else{
+				index2--;
+			}
+			if(components.size()>0){
+				sheet.getRow(i+2).getCell(5+index2).setCellValue(list.get(i)[5].toString());
+			}else{
+				index2--;
+			}
+			
+			
+			double row_total=0.0;						
 			for(int j=0;j<list_date.size();j++){//for
 				if(list_all.get(i).size()==0){
-					sheet.getRow(i+2).getCell(6+j).setCellValue("0");
-					sheet.getRow(i+2).getCell(6+j).setCellStyle(cs_font_red);
+					sheet.getRow(i+2).getCell(6+j+index2).setCellValue(0);
+					sheet.getRow(i+2).getCell(6+j+index2).setCellStyle(cs_font_red);
 				}
 				for(String key:list_all.get(i).keySet()){
 					if(list_date.get(j).equals(key)){
-						sheet.getRow(i+2).getCell(6+j).setCellValue(list_all.get(i).get(key));
+						sheet.getRow(i+2).getCell(6+j+index2).setCellValue(list_all.get(i).get(key));
 						row_total=row_total+list_all.get(i).get(key);
 						list_all.get(i).remove(key);
 						
 					}else{
-						sheet.getRow(i+2).getCell(6+j).setCellValue("0");
-						sheet.getRow(i+2).getCell(6+j).setCellStyle(cs_font_red);
+						sheet.getRow(i+2).getCell(6+j+index2).setCellValue(0);
+						sheet.getRow(i+2).getCell(6+j+index2).setCellStyle(cs_font_red);
 					}
 					break;
 				}
 			}//for
-			sheet.getRow(i+2).getCell(6+list_date.size()).setCellValue(row_total);
+			sheet.getRow(i+2).getCell(6+list_date.size()+index2).setCellValue(row_total);
+			/*************************最後一行是各箇月份的匯總****************************/
+            if(i==list.size()-1){
+				for(int x=0;x<=list_date.size();x++){
+					double col_total=0;
+					for(int y=0;y<list.size();y++){
+						col_total=col_total+sheet.getRow(y+2).getCell(6+x+index2).getNumericCellValue();
+					}
+					if(x==0){
+						sheet.getRow(i+3).getCell(5+x+index2).setCellValue("合計");
+						sheet.getRow(i+3).getCell(5+x+index2).setCellStyle(cs_head);
+					}
+					sheet.getRow(i+3).getCell(6+x+index2).setCellValue(col_total);
+				}
+			}
+            /*************************最後一行是各箇月份的匯總****************************/
+			index2=0;//一次循環，就回滾到0    20160129
+			
+			
 		}
+		/***************************填充數據************************************/
 		//OutputStream os=new FileOutputStream("d:\\tttttt.xls");
 		ServletOutputStream os=response.getOutputStream();
 		response.setContentType("application/vnd.ms-excel");

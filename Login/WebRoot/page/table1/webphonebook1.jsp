@@ -74,17 +74,37 @@
 		<s:iterator value="bean.list" status="x" id="temp">
 				<tr onmousemove="click_color(this)" onmouseout="move(this)">
 				    <td>${25*(bean.currentPage-1)+x.index+1}</td>
-					<td><s:property value="username" /></td>
-					<td><s:property value="fact.factSname" /></td>
-					<td><s:property value="department" /></td>
-					<td><s:property value="post" /></td>
-					<td><s:property value="phoneA" /></td>
-					<td><s:property value="phoneB" /></td>
-					<td><s:property value="phoneC"/></td>
-					<td><s:property value="email"/></td>					
-					<td>					  
-						<a href="javascript:loaduser(${pbId})"><img alt="修改" src="images/icon/edit001.png" title="修改"></a>&nbsp;						
-						<a href="javascript:mydelete(${pbId})"><img alt="刪除" src="images/icon/delete001.png" title="刪除"></a>						
+					<td><s:property value="id.username" /></td>
+					<td><s:property value="id.fact.factSname" /></td>
+					<td><s:property value="id.department" /></td>
+					<td><s:property value="id.post" /></td>
+					<td><s:property value="id.phoneA" /></td>
+					<td><s:property value="id.phoneB" /></td>
+					<td><s:property value="id.phoneC"/></td>
+					<td><s:property value="id.email"/></td>					
+					<td>
+					<form action="webphonebook_findById" method="post" id="subform${x.index}">
+					    <input type="hidden" value="<s:property value='id.username'/>" name="factNo"/>
+					    <input type="hidden" value="<s:property value='id.username'/>" name="department"/>
+					    <input type="hidden" value="<s:property value='id.username'/>" name="post"/>
+					    <input type="hidden" value="<s:property value='id.username'/>" name="userName"/>
+					    <input type="hidden" value="<s:property value='id.username'/>" name="pnoneA"/>
+					    <input type="hidden" value="<s:property value='id.username'/>" name="pnoneB"/>
+					    <input type="hidden" value="<s:property value='id.username'/>" name="pnoneC"/>
+					    <input type="hidden" value="<s:property value='id.username'/>" name="email"/>
+					</form>
+					<form  method="post" id="2subform${x.index}" style="float:left">
+					    <input type="hidden" value="<s:property value='id.username'/>" name="factNo"/>
+					    <input type="hidden" value="<s:property value='id.username'/>" name="department"/>
+					    <input type="hidden" value="<s:property value='id.username'/>" name="post"/>
+					    <input type="hidden" value="<s:property value='id.username'/>" name="userName"/>
+					    <input type="hidden" value="<s:property value='id.username'/>" name="pnoneA"/>
+					    <input type="hidden" value="<s:property value='id.username'/>" name="pnoneB"/>
+					    <input type="hidden" value="<s:property value='id.username'/>" name="pnoneC"/>
+					    <input type="hidden" value="<s:property value='id.username'/>" name="email"/>
+					</form>					  
+						<a href="javascript:loaduser('subform${x.index}')" ><img alt="修改" src="images/icon/edit001.png" title="修改"></a>&nbsp;						
+						<a href="javascript:mydelete('2subform${x.index}')" ><img alt="刪除" src="images/icon/delete001.png" title="刪除"></a>						
 					</td>
 				</tr>
 			</s:iterator>

@@ -754,6 +754,12 @@
 		   <result name="beanList1">page/table1/webphonebook1.jsp</result>
 		   <result name="findById">saveAndUpdate/webphonebookSaveOrUpdate.jsp</result>
 		   <result name="delete" type="redirectAction">webphonebook_findPageBean3</result>
+		   <result name="findDepartments" type="json">
+		      <param name="root">jsons</param>
+		   </result>
+		   <result name="findPosts" type="json">
+		      <param name="root">jsons</param>
+		   </result>
 		</action>
 	</package>
 

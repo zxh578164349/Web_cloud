@@ -8,15 +8,8 @@ public class WebPhonebook implements java.io.Serializable {
 
 	// Fields
 
+	private WebPhonebookId id;
 	private Long pbId;
-	private String username;
-	private String phoneA;
-	private String phoneB;
-	private String phoneC;
-	private String department;
-	private String post;
-	private String email;
-	private VWebFact fact;
 	private String qq;
 	private String weixin;
 	private String link;
@@ -29,21 +22,31 @@ public class WebPhonebook implements java.io.Serializable {
 	}
 
 	/** minimal constructor */
-	public WebPhonebook(Long pbId) {
+	public WebPhonebook(WebPhonebookId id, Long pbId) {
+		this.id = id;
 		this.pbId = pbId;
 	}
 
 	/** full constructor */
-	public WebPhonebook(Long pbId, String username,
-			String phoneA, String phoneB, String phoneC) {
+	public WebPhonebook(WebPhonebookId id, Long pbId, String qq, String weixin,
+			String link, String creater) {
+		this.id = id;
 		this.pbId = pbId;
-		this.username = username;
-		this.phoneA = phoneA;
-		this.phoneB = phoneB;
-		this.phoneC = phoneC;
+		this.qq = qq;
+		this.weixin = weixin;
+		this.link = link;
+		this.creater = creater;
 	}
 
 	// Property accessors
+
+	public WebPhonebookId getId() {
+		return this.id;
+	}
+
+	public void setId(WebPhonebookId id) {
+		this.id = id;
+	}
 
 	public Long getPbId() {
 		return this.pbId;
@@ -53,73 +56,8 @@ public class WebPhonebook implements java.io.Serializable {
 		this.pbId = pbId;
 	}
 
-	public String getUsername() {
-		return this.username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-
-	public String getPhoneA() {
-		return this.phoneA;
-	}
-
-	public void setPhoneA(String phoneA) {
-		this.phoneA = phoneA;
-	}
-
-	public String getPhoneB() {
-		return this.phoneB;
-	}
-
-	public void setPhoneB(String phoneB) {
-		this.phoneB = phoneB;
-	}
-
-	public String getPhoneC() {
-		return this.phoneC;
-	}
-
-	public void setPhoneC(String phoneC) {
-		this.phoneC = phoneC;
-	}
-
-	public String getDepartment() {
-		return department;
-	}
-
-	public void setDepartment(String department) {
-		this.department = department;
-	}
-
-	public String getPost() {
-		return post;
-	}
-
-	public void setPost(String post) {
-		this.post = post;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public VWebFact getFact() {
-		return fact;
-	}
-
-	public void setFact(VWebFact fact) {
-		this.fact = fact;
-	}
-
 	public String getQq() {
-		return qq;
+		return this.qq;
 	}
 
 	public void setQq(String qq) {
@@ -127,7 +65,7 @@ public class WebPhonebook implements java.io.Serializable {
 	}
 
 	public String getWeixin() {
-		return weixin;
+		return this.weixin;
 	}
 
 	public void setWeixin(String weixin) {
@@ -135,7 +73,7 @@ public class WebPhonebook implements java.io.Serializable {
 	}
 
 	public String getLink() {
-		return link;
+		return this.link;
 	}
 
 	public void setLink(String link) {
@@ -143,19 +81,11 @@ public class WebPhonebook implements java.io.Serializable {
 	}
 
 	public String getCreater() {
-		return creater;
+		return this.creater;
 	}
 
 	public void setCreater(String creater) {
 		this.creater = creater;
 	}
-	
-
-	
-	
-	
-
-
-	
 
 }

@@ -13,5 +13,7 @@ public interface IWebPhonebookServices {
 	public void delete(long pbId);
 	public void addLarge(Map<String,Object>map,String username);
 	public List<WebPhonebook> findToPrint(String factNo,String department,String post,String userName);
+	public List<String>findDepartments(String factNo);
+	public List<String>findPosts(String factNo);
 
 }
