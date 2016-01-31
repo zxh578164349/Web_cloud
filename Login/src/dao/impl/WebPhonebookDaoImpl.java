@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.hibernate.Query;
 import org.hibernate.Transaction;
 
 import com.opensymphony.xwork2.ActionContext;
@@ -17,9 +18,15 @@ import entity.WebPhonebookId;
 
 public class WebPhonebookDaoImpl extends Basedao implements IWebPhonebookDao{
 
-	public void add(WebPhonebook phone) {
-		// TODO Auto-generated method stub		
-			super.merge(phone);						
+	public void add(WebPhonebook oldPhone,WebPhonebook newPhone,String isnull) {
+		// TODO Auto-generated method stub	
+		if(isnull!=null&&isnull.equals("isnull")){
+			getSession().merge(newPhone);
+		}else{
+			getSession().delete(oldPhone);
+			getSession().merge(newPhone);
+		}
+			
 	}
 
 	public PageBean findPageBean(int pageSize, int page, String factNo,
@@ -29,7 +36,7 @@ public class WebPhonebookDaoImpl extends Basedao implements IWebPhonebookDao{
 		StringBuffer hql2=new StringBuffer();
 		Map<String,Object>map=new HashMap<String,Object>();
 		hql.append(" from WebPhonebook where 1=1 ");
-		hql2.append("select count(pbId) ");
+		hql2.append("select count(id.username) ");
 		if(factNo!=null&&!factNo.equals("")&&!factNo.equals("tw")){
 			hql.append(" and id.fact.factNo=:factno");
 			map.put("factno", factNo);
@@ -72,14 +79,25 @@ public class WebPhonebookDaoImpl extends Basedao implements IWebPhonebookDao{
 		return bean;
 	}
 
-	public WebPhonebook findById(long pbId) {
+	public WebPhonebook findById(String factNo,String department,String post,String userName,String phoneA,String phoneB,String phoneC,String email) {
 		// TODO Auto-generated method stub
-		return (WebPhonebook)super.findById_long(pbId, WebPhonebook.class);
+		String hql="from WebPhonebook where id.fact.factNo=? and id.department=? and id.post=? and id.username=? and id.phoneA=? and id.phoneB=? and id.phoneC=? and id.email=?";
+		Query query=getSession().createQuery(hql);
+		query.setString(0, factNo);
+		query.setString(1,department);
+		query.setString(2, post);
+		query.setString(3, userName);
+		query.setString(4, phoneA);
+		query.setString(5, phoneB);
+		query.setString(6, phoneC);
+		query.setString(7, email);
+		WebPhonebook book=(WebPhonebook)query.uniqueResult();
+		return book;
 	}
 
-	public void delete(long pbId) {
+	public void delete(String factNo,String department,String post,String userName,String phoneA,String phoneB,String phoneC,String email) {
 		// TODO Auto-generated method stub
-		WebPhonebook book=this.findById(pbId);
+		WebPhonebook book=this.findById(factNo,department,post,userName,phoneA,phoneB,phoneC,email);
 		super.delete(book);
 	}
 

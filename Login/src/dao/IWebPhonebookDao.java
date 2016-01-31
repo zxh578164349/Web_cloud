@@ -7,10 +7,10 @@ import util.PageBean;
 import entity.WebPhonebook;
 
 public interface IWebPhonebookDao {
-	public void add(WebPhonebook phone);
+	public void add(WebPhonebook oldPhone,WebPhonebook newPhone,String isnull);
 	public PageBean findPageBean(int pageSize,int page,String factNo,String department,String post,String userName);
-	public WebPhonebook findById(long pbId);
-	public void delete(long pbId);
+	public WebPhonebook findById(String factNo,String department,String post,String userName,String phoneA,String phoneB,String phoneC,String email );
+	public void delete(String factNo,String department,String post,String userName,String phoneA,String phoneB,String phoneC,String email);
 	public void addLarge(Map<String,Object>map,String username);
 	public List<WebPhonebook> findToPrint(String factNo,String department,String post,String userName);
 	
