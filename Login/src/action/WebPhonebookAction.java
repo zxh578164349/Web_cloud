@@ -40,6 +40,10 @@ public class WebPhonebookAction extends ActionSupport implements ServletResponse
 	private String department;
 	private String post;
 	private String userName;
+	private String phoneA;
+	private String phoneB;
+	private String phoneC;
+	private String email;
 	private PageBean bean;
 	private int page;
 	private long pbId;
@@ -50,8 +54,40 @@ public class WebPhonebookAction extends ActionSupport implements ServletResponse
     private String fileContentType;
     private javax.servlet.http.HttpServletResponse response;
     private JSONArray jsons;
+    private String isnull;
     
     
+    
+	public String getIsnull() {
+		return isnull;
+	}
+	public void setIsnull(String isnull) {
+		this.isnull = isnull;
+	}
+	public String getPhoneA() {
+		return phoneA;
+	}
+	public void setPhoneA(String phoneA) {
+		this.phoneA = phoneA;
+	}
+	public String getPhoneB() {
+		return phoneB;
+	}
+	public void setPhoneB(String phoneB) {
+		this.phoneB = phoneB;
+	}
+	public String getPhoneC() {
+		return phoneC;
+	}
+	public void setPhoneC(String phoneC) {
+		this.phoneC = phoneC;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
 	public JSONArray getJsons() {
 		return jsons;
 	}
@@ -148,16 +184,9 @@ public class WebPhonebookAction extends ActionSupport implements ServletResponse
 		this.response=response;
 	}
 	public String add(){
-		/*由於表中有唯一約束，所以要傳箇參數識別添加與更新採用不同的方法
-		 * 添加：dao層使用super.merge()
-		 * 更新：dao層使用getSession().update()
-		 * pbId爲空時，pbId值爲0
-		 * 20160127*/
-		try{
-			if(pbId!=0){
-				webphone.setPbId(pbId);
-			}
-			webphonebookSer.add(webphone,pbId);
+		WebPhonebook oldbook=(WebPhonebook)ActionContext.getContext().getSession().get("findById_webphone");//进入修改页面时缓存的
+		try{			
+			webphonebookSer.add(oldbook,webphone,isnull);
 			ajaxResult="0";
 		}catch(Exception e){
 			System.out.println("action**********************"+e+"**********************action");
@@ -203,11 +232,13 @@ public class WebPhonebookAction extends ActionSupport implements ServletResponse
 		return result;
 	}
 	public String findById(){
-		webphone=webphonebookSer.findById(pbId);
+		ActionContext.getContext().getSession().remove("findById_webphone");
+		webphone=webphonebookSer.findById(factNo, department, post, userName, phoneA, phoneB, phoneC, email);
+		ActionContext.getContext().getSession().put("findById_webphone", webphone);
 		return "findById";
 	}
 	public String delete(){
-		webphonebookSer.delete(pbId);
+		webphonebookSer.delete(factNo, department, post, userName, phoneA, phoneB, phoneC, email);
 		return "delete";
 	}
 	

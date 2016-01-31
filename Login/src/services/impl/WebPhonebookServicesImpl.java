@@ -19,9 +19,9 @@ public class WebPhonebookServicesImpl implements IWebPhonebookServices{
 
 
 
-	public void add(WebPhonebook phone,long pbId) {
+	public void add(WebPhonebook oldPhone,WebPhonebook newPhone,String isnull) {
 		// TODO Auto-generated method stub
-		webphonedao.add(phone,pbId);
+		webphonedao.add(oldPhone, newPhone, isnull);
 	}
 
 
@@ -34,17 +34,7 @@ public class WebPhonebookServicesImpl implements IWebPhonebookServices{
 
 
 
-	public WebPhonebook findById(long pbId) {
-		// TODO Auto-generated method stub
-		return webphonedao.findById(pbId);
-	}
-
-
-
-	public void delete(long pbId) {
-		// TODO Auto-generated method stub
-		webphonedao.delete(pbId);
-	}
+	
 
 
 
@@ -73,6 +63,24 @@ public class WebPhonebookServicesImpl implements IWebPhonebookServices{
 	public List<String> findPosts(String factNo) {
 		// TODO Auto-generated method stub
 		return webphonedao.findPosts(factNo);
+	}
+
+
+
+	public WebPhonebook findById(String factNo, String department, String post,
+			String userName, String phoneA, String phoneB, String phoneC,
+			String email) {
+		// TODO Auto-generated method stub
+		return webphonedao.findById(factNo, department, post, userName, phoneA, phoneB, phoneC, email);
+	}
+
+
+
+	public void delete(String factNo, String department, String post,
+			String userName, String phoneA, String phoneB, String phoneC,
+			String email) {
+		// TODO Auto-generated method stub
+		webphonedao.delete(factNo, department, post, userName, phoneA, phoneB, phoneC, email);
 	}
 
 }

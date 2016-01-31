@@ -49,7 +49,7 @@
 					layer.msg("提交成功!", 3, 1);
 					//location.href="/Login/userfindPageBean";
 				} else {
-					alert(data.responseText);
+					layer.msg("提交失敗",3,3);
 				}
 			}
 		});
@@ -134,6 +134,7 @@
 			<tr>
 				<td class="td_show_title">廠別</td>
 				<td class="td_input"><s:if test="webphone==null">
+				        <input type="hidden" value="" name=""/>
 						<s:if test="#session.factNo!='tw'">
 							<input type="text" style="color:blue" name="webphone.id.fact.factNo"
 								value="${factNo}" readonly id="dwr_factno" />

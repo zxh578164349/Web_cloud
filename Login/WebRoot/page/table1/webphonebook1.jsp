@@ -84,24 +84,24 @@
 					<td><s:property value="id.email"/></td>					
 					<td>
 					<form action="webphonebook_findById" method="post" id="subform${x.index}">
-					    <input type="hidden" value="<s:property value='id.username'/>" name="factNo"/>
-					    <input type="hidden" value="<s:property value='id.username'/>" name="department"/>
-					    <input type="hidden" value="<s:property value='id.username'/>" name="post"/>
+					    <input type="hidden" value="<s:property value='id.fact.factNo'/>" name="factNo"/>
+					    <input type="hidden" value="<s:property value='id.department'/>" name="department"/>
+					    <input type="hidden" value="<s:property value='id.post'/>" name="post"/>
 					    <input type="hidden" value="<s:property value='id.username'/>" name="userName"/>
-					    <input type="hidden" value="<s:property value='id.username'/>" name="pnoneA"/>
-					    <input type="hidden" value="<s:property value='id.username'/>" name="pnoneB"/>
-					    <input type="hidden" value="<s:property value='id.username'/>" name="pnoneC"/>
-					    <input type="hidden" value="<s:property value='id.username'/>" name="email"/>
+					    <input type="hidden" value="<s:property value='id.phoneA'/>" name="phoneA"/>
+					    <input type="hidden" value="<s:property value='id.phoneB'/>" name="phoneB"/>
+					    <input type="hidden" value="<s:property value='id.phoneC'/>" name="phoneC"/>
+					    <input type="hidden" value="<s:property value='id.email'/>" name="email"/>
 					</form>
 					<form  method="post" id="2subform${x.index}" style="float:left">
-					    <input type="hidden" value="<s:property value='id.username'/>" name="factNo"/>
-					    <input type="hidden" value="<s:property value='id.username'/>" name="department"/>
-					    <input type="hidden" value="<s:property value='id.username'/>" name="post"/>
+					    <input type="hidden" value="<s:property value='id.fact.factNo'/>" name="factNo"/>
+					    <input type="hidden" value="<s:property value='id.department'/>" name="department"/>
+					    <input type="hidden" value="<s:property value='id.post'/>" name="post"/>
 					    <input type="hidden" value="<s:property value='id.username'/>" name="userName"/>
-					    <input type="hidden" value="<s:property value='id.username'/>" name="pnoneA"/>
-					    <input type="hidden" value="<s:property value='id.username'/>" name="pnoneB"/>
-					    <input type="hidden" value="<s:property value='id.username'/>" name="pnoneC"/>
-					    <input type="hidden" value="<s:property value='id.username'/>" name="email"/>
+					    <input type="hidden" value="<s:property value='id.phoneA'/>" name="phoneA"/>
+					    <input type="hidden" value="<s:property value='id.phoneB'/>" name="phoneB"/>
+					    <input type="hidden" value="<s:property value='id.phoneC'/>" name="phoneC"/>
+					    <input type="hidden" value="<s:property value='id.email'/>" name="email"/>
 					</form>					  
 						<a href="javascript:loaduser('subform${x.index}')" ><img alt="修改" src="images/icon/edit001.png" title="修改"></a>&nbsp;						
 						<a href="javascript:mydelete('2subform${x.index}')" ><img alt="刪除" src="images/icon/delete001.png" title="刪除"></a>						
