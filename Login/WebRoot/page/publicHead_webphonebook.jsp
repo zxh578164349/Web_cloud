@@ -74,7 +74,7 @@ function getPosts(factno){
 	});
 }
 window.onload=function(){
-	getDepartments("nothing");getPosts("nothing");
+	getDepartments("");getPosts("");
 }
 </script>
 

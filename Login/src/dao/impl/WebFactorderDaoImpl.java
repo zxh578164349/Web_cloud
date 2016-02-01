@@ -9,6 +9,7 @@ import org.hibernate.Transaction;
 
 import com.opensymphony.xwork2.ActionContext;
 
+import util.GlobalMethod;
 import util.PageBean;
 
 import dao.Basedao;
@@ -162,26 +163,80 @@ public class WebFactorderDaoImpl extends Basedao implements IWebFactorderDao{
 		StringBuffer hql2=new StringBuffer();
 		Map<String,Object>map=new HashMap<String,Object>();
 		hql.append("from WebFactorder where 1=1 ");
-		hql2.append("select count(*) ");
+		hql2.append("select count(id.factNo) ");
 		if(factAreas!=null&&factAreas.size()>0){
 			hql.append(" and id.factArea in (:factareas)");
 			map.put("factareas", factAreas);
 		}
 		if(brank!=null&&brank.size()>0){
-			hql.append(" and id.brank in(:brank) ");
-			map.put("brank", brank);
+			if(brank.size()<1000){
+				hql.append(" and id.brank in(:brank) ");
+				map.put("brank", brank);
+			}else{
+				List<List<String>>list=GlobalMethod.subList(brank, 1000);
+				hql.append(" and (");
+				for(int i=0;i<list.size();i++){
+					if(i==list.size()-1){
+						hql.append(" id.brank in(:brank"+i+")) ");
+					}else{
+						hql.append(" id.brank in(:brank"+i+") or ");
+					}
+					map.put("brank"+i, list.get(i));
+				}
+			}			
 		}
 		if(customer!=null&&customer.size()>0){
-			hql.append(" and id.customer in(:customer) ");
-			map.put("customer", customer);
+			if(customer.size()<1000){
+				hql.append(" and id.customer in(:customer) ");
+				map.put("customer", customer);
+			}else{
+				List<List<String>>list=GlobalMethod.subList(customer, 1000);
+				hql.append(" and (");
+				for(int i=0;i<list.size();i++){
+					if(i==list.size()-1){
+						hql.append(" id.customer in(:customer"+i+")) ");
+					}else{
+						hql.append(" id.customer in(:customer"+i+") or ");
+					}
+					map.put("customer"+i, list.get(i));
+				}
+			}
+			
 		}
 		if(model!=null&&model.size()>0){
-			hql.append(" and id.modelNo in(:model)");
-			map.put("model", model);
-		}
+			if(model.size()<1000){
+				hql.append(" and id.modelNo in(:model)");
+				map.put("model", model);
+			}else{
+				List<List<String>>list=GlobalMethod.subList(model, 1000);
+				hql.append(" and (");
+				for(int i=0;i<list.size();i++){
+					if(i==list.size()-1){
+						hql.append(" id.modelNo in(:model"+i+")) ");
+					}else{
+						hql.append(" id.modelNo in(:model"+i+") or ");
+					}
+					map.put("model"+i, list.get(i));
+				}
+			}
+			
+		}		
 		if(component!=null&&component.size()>0){
-			hql.append(" and id.component in(:component)");
-			map.put("component", component);
+			if(component.size()<1000){
+				hql.append(" and id.component in(:component)");
+				map.put("component", component);
+			}else{
+				List<List<String>>list=GlobalMethod.subList(component, 1000);
+				hql.append(" and (");
+				for(int i=0;i<list.size();i++){
+					if(i==list.size()-1){
+						hql.append(" id.component in(:component"+i+")) ");
+					}else{
+						hql.append(" id.component in(:component"+i+") or ");
+					}
+					map.put("component"+i, list.get(i));
+				}
+			}			
 		}		
 		if(factNo!=null&&!factNo.equals("")&&!factNo.equals("tw")){
 			hql.append(" and id.factNo=:factno");
@@ -392,20 +447,77 @@ public class WebFactorderDaoImpl extends Basedao implements IWebFactorderDao{
 			map.put("factareas", factAreas);
 		}
 		if(brank!=null&&brank.size()>0){
-			hql.append(" and brank in(:branks) ");
-			map.put("branks", brank);
+			if(brank.size()<0){
+				hql.append(" and brank in(:branks) ");
+				map.put("branks", brank);
+			}else{
+				List<List<String>>list=GlobalMethod.subList(brank, 1000);
+				hql.append(" and (");
+				for(int i=0;i<list.size();i++){
+					if(i==list.size()-1){
+						hql.append(" brank in(:branks"+i+")) ");
+					}else{
+						hql.append(" brank in(:branks"+i+") or ");						
+					}
+					map.put("branks"+i, list.get(i));
+				}
+			}
+			
 		}
 		if(customer!=null&&customer.size()>0){
-			hql.append(" and customer in(:customers) ");
-			map.put("customers", customer);
+			if(customer.size()<1000){
+				hql.append(" and customer in(:customers) ");
+				map.put("customers", customer);
+			}else{
+				List<List<String>>list=GlobalMethod.subList(customer, 1000);
+				hql.append(" and (");
+				for(int i=0;i<list.size();i++){
+					if(i==list.size()-1){
+						hql.append(" customer in(:customer"+i+")) ");
+					}else{
+						hql.append(" customer in(:customer"+i+") or ");						
+					}
+					map.put("customer"+i, list.get(i));
+					
+				}
+			}
+			
 		}
 		if(model!=null&&model.size()>0){
-			hql.append(" and MODEL_NO in(:modelNos) ");
-			map.put("modelNos", model);
+			if(model.size()<1000){
+				hql.append(" and MODEL_NO in(:modelNos) ");
+				map.put("modelNos", model);
+			}else{
+				List<List<String>>list=GlobalMethod.subList(model, 1000);
+				hql.append(" and (");
+				for(int i=0;i<list.size();i++){
+					if(i==list.size()-1){
+						hql.append(" MODEL_NO in(:modelNos"+i+")) ");						
+					}else{
+						hql.append(" MODEL_NO in(:modelNos"+i+") or ");
+					}
+					map.put("modelNos"+i, list.get(i));
+				}
+			}
+			
 		}
 		if(component!=null&&component.size()>0){
-			hql.append(" and component in(:components) ");
-			map.put("components", component);
+			if(component.size()<1000){
+				hql.append(" and component in(:components) ");
+				map.put("components", component);
+			}else{
+				List<List<String>>list=GlobalMethod.subList(component, 1000);
+				hql.append(" and (");
+				for(int i=0;i<list.size();i++){
+					if(i==list.size()-1){
+						hql.append(" component in(:components"+i+")) ");
+					}else{
+						hql.append(" component in(:components"+i+") or ");
+					}
+					map.put("components"+i, list.get(i));
+				}
+			}
+			
 		}		
 		if(factNo!=null&&!factNo.equals("")&&!factNo.equals("tw")){
 			hql.append(" and FACT_NO=:factno ");
@@ -483,7 +595,7 @@ public class WebFactorderDaoImpl extends Basedao implements IWebFactorderDao{
 			hql.append(" and FACT_AREA in(:factareas) ");
 			map.put("factareas", factAreas);
 		}
-		if(brank!=null&&brank.size()>0){
+		/*if(brank!=null&&brank.size()>0){
 			hql.append(" and brank in(:branks) ");
 			map.put("branks", brank);
 		}
@@ -498,6 +610,79 @@ public class WebFactorderDaoImpl extends Basedao implements IWebFactorderDao{
 		if(component!=null&&component.size()>0){
 			hql.append(" and component in(:components) ");
 			map.put("components", component);
+		}*/
+		if(brank!=null&&brank.size()>0){
+			if(brank.size()<0){
+				hql.append(" and brank in(:branks) ");
+				map.put("branks", brank);
+			}else{
+				List<List<String>>list=GlobalMethod.subList(brank, 1000);
+				hql.append(" and (");
+				for(int i=0;i<list.size();i++){
+					if(i==list.size()-1){
+						hql.append(" brank in(:branks"+i+")) ");
+					}else{
+						hql.append(" brank in(:branks"+i+") or ");						
+					}
+					map.put("branks"+i, list.get(i));
+				}
+			}
+			
+		}
+		if(customer!=null&&customer.size()>0){
+			if(customer.size()<1000){
+				hql.append(" and customer in(:customers) ");
+				map.put("customers", customer);
+			}else{
+				List<List<String>>list=GlobalMethod.subList(customer, 1000);
+				hql.append(" and (");
+				for(int i=0;i<list.size();i++){
+					if(i==list.size()-1){
+						hql.append(" customer in(:customer"+i+")) ");
+					}else{
+						hql.append(" customer in(:customer"+i+") or ");						
+					}
+					map.put("customer"+i, list.get(i));
+					
+				}
+			}
+			
+		}
+		if(model!=null&&model.size()>0){
+			if(model.size()<1000){
+				hql.append(" and MODEL_NO in(:modelNos) ");
+				map.put("modelNos", model);
+			}else{
+				List<List<String>>list=GlobalMethod.subList(model, 1000);
+				hql.append(" and (");
+				for(int i=0;i<list.size();i++){
+					if(i==list.size()-1){
+						hql.append(" MODEL_NO in(:modelNos"+i+")) ");						
+					}else{
+						hql.append(" MODEL_NO in(:modelNos"+i+") or ");
+					}
+					map.put("modelNos"+i, list.get(i));
+				}
+			}
+			
+		}
+		if(component!=null&&component.size()>0){
+			if(component.size()<1000){
+				hql.append(" and component in(:components) ");
+				map.put("components", component);
+			}else{
+				List<List<String>>list=GlobalMethod.subList(component, 1000);
+				hql.append(" and (");
+				for(int i=0;i<list.size();i++){
+					if(i==list.size()-1){
+						hql.append(" component in(:components"+i+")) ");
+					}else{
+						hql.append(" component in(:components"+i+") or ");
+					}
+					map.put("components"+i, list.get(i));
+				}
+			}
+			
 		}
 		
 		if(factNo!=null&&!factNo.equals("")&&!factNo.equals("tw")){
