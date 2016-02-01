@@ -56,11 +56,11 @@
 		<caption>用戶聯系資料</caption>
 		<thead>
 			<tr class="tr_show">
-			        <th>序號</th>
-					<th>姓名</th>
+			        <th>序號</th>					
 					<th>廠別</th>
-					<th>部門</th>
-					<th>職位</th>
+					<th>單位</th>
+					<th>姓名</th>					
+					<th>職務</th>
 					<th>內線</th>
 					<th>手機</th>
 					<th>短號</th>
@@ -74,9 +74,9 @@
 		<s:iterator value="bean.list" status="x" id="temp">
 				<tr onmousemove="click_color(this)" onmouseout="move(this)">
 				    <td>${25*(bean.currentPage-1)+x.index+1}</td>
-					<td><s:property value="id.username" /></td>
-					<td><s:property value="id.fact.factSname" /></td>
-					<td><s:property value="id.department" /></td>
+				    <td><s:property value="id.fact.factSname" /></td>					
+					<td><s:property value="id.department" /></td>					
+					<td><s:property value="id.username" /></td>					
 					<td><s:property value="id.post" /></td>
 					<td><s:property value="id.phoneA" /></td>
 					<td><s:property value="id.phoneB" /></td>

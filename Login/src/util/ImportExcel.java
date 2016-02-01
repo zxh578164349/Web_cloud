@@ -431,7 +431,7 @@ public class ImportExcel {
 			System.out.println(e);
 		}*/
 		
-		String path="i:\\二廠.xls";
+		/*String path="i:\\二廠.xls";
 		Map<String, Object>list=null;
 		try{
 			list=exportListFromExcel(new File(path));
@@ -442,6 +442,37 @@ public class ImportExcel {
 			}						
 		}catch(Exception e){
 			System.out.println(e);
+		}*/
+		List<Integer>list=new ArrayList<Integer>();
+		for(int i=1;i<888;i++){
+			list.add(i);
+		}
+		List<List<Integer>>list_all=new ArrayList<List<Integer>>();
+		int a=list.size()/100;
+		int b=list.size()%100;
+		int c=b==0?a:(a+1);
+		System.out.println((list.size()/100)*100);
+		System.out.println(list.size()%100);
+		for(int i=0;i<=list.size();i++){
+			if(list.size()%100==0){
+				if(i%100==0&&i>0){
+					List<Integer>list_one=list.subList(i-100, i);
+					list_all.add(list_one);
+				}
+				
+			}else{
+				if(i%100==0&&i>0){
+					List<Integer>list_one=list.subList(i-100, i);
+					list_all.add(list_one);
+				}else if(i==(list.size()/100)*100+1){
+					List<Integer>list_one=list.subList(i-1, list.size());	
+					list_all.add(list_one);
+				}				
+			}
+			
+		}
+		for(int i=0;i<list_all.size();i++){
+			System.out.println(list_all.get(i));
 		}
 		
 		/*String path="e:\\jy-2.xls";

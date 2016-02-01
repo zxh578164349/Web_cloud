@@ -195,10 +195,11 @@ public class Basedao extends HibernateDaoSupport {
 					
 				}
 			}
-			String result =(String)query.uniqueResult().toString();
-			
+			String result =(String)query.uniqueResult().toString();			
 			return Integer.valueOf(result);
+			
 }
+
 	
 
 

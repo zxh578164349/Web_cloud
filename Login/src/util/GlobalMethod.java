@@ -231,6 +231,34 @@ public class GlobalMethod {
 		return list;
 	}
 	
+	/**
+	 * 分解數據subList
+	 * 20160201
+	 * @param list
+	 * @param size
+	 * @return
+	 */
+	public static List<List<String>>subList(List<String>list,int size){
+		List<List<String>>list_all=new ArrayList<List<String>>();
+		for(int i=0;i<=list.size();i++){
+			if(list.size()%size==0){
+				if(i%size==0&&i>0){
+					List<String>list_one=new ArrayList<String>(list.subList(i-size, i));
+					list_all.add(list_one);
+				}				
+			}else{
+				if(i%size==0&&i>0){
+					List<String>list_one=new ArrayList<String>(list.subList(i-size, i));
+					list_all.add(list_one);
+				}else if(i==(list.size()/size)*size+1){
+					List<String>list_one=new ArrayList<String>(list.subList(i-1, list.size()));	
+					list_all.add(list_one);
+				}				
+			}			
+		}
+		return list_all;
+	}
+	
 	public static void main(String[] args) {
 		/*List<String>list=GlobalMethod.getDateNum("201506","201601");
 		for(String date:list){
@@ -269,8 +297,7 @@ public class GlobalMethod {
 		for(Integer iii:list_all){
 			System.out.println(iii);
 		}
-		
-		
+						
 	}
 
 }
