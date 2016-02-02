@@ -95,8 +95,8 @@ jq(document).ajaxStop(function(){
 	}
   
   	function checkType(type){
-	   if(type.value.charAt(0)=='C'||type.value.charAt(0)=='c'){
-	      alert("不可以使用C字母开头");
+	   if(type.value.charAt(0).toUpperCase=='C'||type.value.charAt(0).toUpperCase=='TR'){
+	      alert("不可以使用C字母开头或TR");
 	      type.value='';
 	   }
 	}
@@ -105,7 +105,7 @@ window.onload=function(){
             var inputs=document.getElementsByTagName("input"); 
             for (var i=0;i<inputs.length; i++) {  
                 if(inputs[i].getAttribute("type")=="text") 
-                 inputs[i].onkeyup=function(){ 
+                 inputs[i].onblur=function(){ 
                     this.value=this.value.replace(/(^\s+)|\s+$/g,""); 
                  }; 
             }  
@@ -113,6 +113,15 @@ window.onload=function(){
 function back(){
 	layer.load("正在返回,請稍等...");
 	location.href="/Login/webtype_findPageBean3?backIndex=1";
+}
+function checkRadio(){
+	var item=jq("input[type='radio']:checked").val();
+	var item2=""
+	if(item=="0"){
+		item2="<input type='text' name='webtype.id.typeNo' datatype='s2-2' onblur='check(),checkType(this)' id='typeno'";
+	}else{
+		
+	}
 }
 </script>
 <script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>
@@ -150,27 +159,27 @@ function back(){
 						   <td><input type="text" name="webtype.id.factNo" value="<s:property value='webtype.id.factNo'/>" readonly style="color:blue"/>
 						   </td>
 						</s:else>
-						<td class="td_show_title">函文類別</td>
+										
+				          <td class="td_show_title">類別名称  </td>
+				          <td class="td_input"><input type="text" name="webtype.typeName"
+					           value="<s:property value='webtype.typeName'/>" id="typeName"  datatype="*1-60"/>
+					         <input type="hidden" name="webtype.webtypeMk" value="Y"/> 					
+				          </td>								
+				</tr>													
+			    <tr>
+                      <td class="td_show_title">函文類別</td>
 				        <td class="td_input">
 				          <s:if test="webtype==null">
-				             <!-- <select name="webtype.id.typeNo" id="typeno" datatype="*" onchange="check(),getTypeName()" >
-				                  <option value="">請選擇類別</option>
-				             </select> -->
+				             <div id="div_typeno">
+				              <input type="radio" value="TR" name="webtype.id.typeNo"/>出差類&bnsp;
+				              <input type="radio" value="0" />非出差類				             
 				             <input type="text" name="webtype.id.typeNo" datatype="s2-2" onblur="check(),checkType(this)" id="typeno"/>
-				             <span id="error1"></span>	
+				             </div>
 				          </s:if>
 				          <s:else>
 				              <input type="text" name="webtype.id.typeNo" value="<s:property value='webtype.id.typeNo'/>" readonly style="color:blue"/>
 				          </s:else>			             				            								
-				         </td>			
-				</tr>													
-			<tr>
-				
-				<td class="td_show_title">類別名称  </td>
-				<td class="td_input"><input type="text" name="webtype.typeName"
-					 value="<s:property value='webtype.typeName'/>" id="typeName"  datatype="*1-60"/>
-					<input type="hidden" name="webtype.webtypeMk" value="Y"/> 					
-				</td>
+				         </td>
 				<!-- <td class="td_show_title">是否可用</td>
 				<td class="td_input">				
 				          可用<input type="radio" name="webtype.webtypeMk"

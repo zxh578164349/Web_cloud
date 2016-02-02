@@ -20,5 +20,8 @@
         <property name="webtypeMk" type="java.lang.String">
             <column name="WEBTYPE_MK" length="2"/>
         </property>
+        <property name="trMk" type="java.lang.String">
+            <column name="TR_MK" length="2"/>
+        </property>
     </class>
 </hibernate-mapping>

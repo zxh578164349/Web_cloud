@@ -122,7 +122,11 @@ public class ImportExcel {
 							}
 							break;
 						case Cell.CELL_TYPE_STRING:
-							sb.append(SEPARATOR + cellValue.getStringValue().trim());
+							if(cellValue.getStringValue().contains("'")){
+								sb.append(SEPARATOR + cellValue.getStringValue().replace("'", " ").trim());//如果含有單引號，要去掉，否則會搜不到數據20160202
+							}else{
+								sb.append(SEPARATOR + cellValue.getStringValue().trim());
+							}							
 							break;
 						case Cell.CELL_TYPE_FORMULA:
 							break;
@@ -472,8 +476,11 @@ public class ImportExcel {
 			
 		}
 		for(int i=0;i<list_all.size();i++){
-			System.out.println(list_all.get(i));
+			//System.out.println(list_all.get(i));
 		}
+		
+		String temp="dfdf'dfdfdf";
+		System.out.println(temp.replace("\'", " "));
 		
 		/*String path="e:\\jy-2.xls";
 		Map<String, Object> map;
