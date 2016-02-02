@@ -11,7 +11,6 @@ public class WebType implements java.io.Serializable {
 	private WebTypeId id;
 	private String typeName;
 	private String webtypeMk;
-	private String trMk;//0或null:非出差函文     1:出差函文   20160202
 
 	// Constructors
 
@@ -57,13 +56,7 @@ public class WebType implements java.io.Serializable {
 		this.webtypeMk = webtypeMk;
 	}
 
-	public String getTrMk() {
-		return trMk;
-	}
-
-	public void setTrMk(String trMk) {
-		this.trMk = trMk;
-	}
+	
 	
 	
 	

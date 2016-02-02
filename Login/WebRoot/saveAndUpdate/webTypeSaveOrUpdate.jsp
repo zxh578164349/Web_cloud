@@ -41,7 +41,7 @@ jq(document).ajaxStop(function(){
 		var demo = jq("#form").Validform({
 			btnSubmit : "#sub",
 			tiptype : 4,
-			tipSweep:false,
+			tipSweep:true,
 			showAllError : true	,
 			ajaxPost:true,
 			callback:function(data){
@@ -90,12 +90,13 @@ jq(document).ajaxStop(function(){
 	         }else{
 	              document.getElementById("typeName").value="";
 	         }
-	    })
+	    });
 	    }	    	   
 	}
   
   	function checkType(type){
-	   if(type.value.charAt(0).toUpperCase=='C'||type.value.charAt(0).toUpperCase=='TR'){
+  	alert(type.value.toUpperCase());
+	   if(type.value.charAt(0).toUpperCase()=='C'||type.value.toUpperCase()=='TR'){
 	      alert("不可以使用C字母开头或TR");
 	      type.value='';
 	   }
@@ -104,23 +105,26 @@ jq(document).ajaxStop(function(){
 window.onload=function(){            
             var inputs=document.getElementsByTagName("input"); 
             for (var i=0;i<inputs.length; i++) {  
-                if(inputs[i].getAttribute("type")=="text") 
-                 inputs[i].onblur=function(){ 
+                if(inputs[i].getAttribute("type")=="text"){ 
+                if(inputs[i].value!=""){
+                 inputs[i].onkeyup=function(){ 
                     this.value=this.value.replace(/(^\s+)|\s+$/g,""); 
-                 }; 
+                 };
+                 }
+                }  
             }  
-        }
+        };
 function back(){
 	layer.load("正在返回,請稍等...");
 	location.href="/Login/webtype_findPageBean3?backIndex=1";
 }
 function checkRadio(){
 	var item=jq("input[type='radio']:checked").val();
-	var item2=""
+	alert(item);
 	if(item=="0"){
-		item2="<input type='text' name='webtype.id.typeNo' datatype='s2-2' onblur='check(),checkType(this)' id='typeno'";
+		jq("#typeno").removeAttr("readonly");
 	}else{
-		
+		jq("#typeno").attr("readonly","readonly");
 	}
 }
 </script>
@@ -162,7 +166,7 @@ function checkRadio(){
 										
 				          <td class="td_show_title">類別名称  </td>
 				          <td class="td_input"><input type="text" name="webtype.typeName"
-					           value="<s:property value='webtype.typeName'/>" id="typeName"  datatype="*1-60"/>
+					           value="<s:property value='webtype.typeName'/>" id="typeName"  datatype="*1-60" />
 					         <input type="hidden" name="webtype.webtypeMk" value="Y"/> 					
 				          </td>								
 				</tr>													
@@ -171,8 +175,8 @@ function checkRadio(){
 				        <td class="td_input">
 				          <s:if test="webtype==null">
 				             <div id="div_typeno">
-				              <input type="radio" value="TR" name="webtype.id.typeNo"/>出差類&bnsp;
-				              <input type="radio" value="0" />非出差類				             
+				              <input type="radio" value="TR" name="typeNo" onclick="checkRadio()"/>出差類&nbsp;
+				              <input type="radio" value="0" name="typeNo" checked onclick="checkRadio()"/>非出差類				             
 				             <input type="text" name="webtype.id.typeNo" datatype="s2-2" onblur="check(),checkType(this)" id="typeno"/>
 				             </div>
 				          </s:if>
