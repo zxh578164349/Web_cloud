@@ -13,6 +13,7 @@ public class KyzVisaflow implements java.io.Serializable {
 	private String visaRank;
 	private String flowMk;
 	private String colTemp;
+	private String trMk;//0或null:非出差流程    1:出差流程   20160202
 
 	// Constructors
 
@@ -74,6 +75,14 @@ public class KyzVisaflow implements java.io.Serializable {
 
 	public void setColTemp(String colTemp) {
 		this.colTemp = colTemp;
+	}
+
+	public String getTrMk() {
+		return trMk;
+	}
+
+	public void setTrMk(String trMk) {
+		this.trMk = trMk;
 	}
 	
 	

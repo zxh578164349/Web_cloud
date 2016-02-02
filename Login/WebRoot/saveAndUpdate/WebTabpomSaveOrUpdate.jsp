@@ -496,7 +496,6 @@ window.onload=getAllWebbrank;
 					<td class="td_input" colspan="3">
 					  <div style="width:300px" id="divfile">
 				      <input type="file" name="files" style="width:150px" id="files"/><a href="javascript:addFile()">添加多個</a>
-				      <input type="button" value="test" onclick="test()"/>
 				      </div>				      				      
                     </td>
 				      

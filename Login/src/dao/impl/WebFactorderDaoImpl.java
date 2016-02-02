@@ -447,10 +447,10 @@ public class WebFactorderDaoImpl extends Basedao implements IWebFactorderDao{
 			map.put("factareas", factAreas);
 		}
 		if(brank!=null&&brank.size()>0){
-			if(brank.size()<0){
+			if(brank.size()<1000){
 				hql.append(" and brank in(:branks) ");
 				map.put("branks", brank);
-			}else{
+			}else {
 				List<List<String>>list=GlobalMethod.subList(brank, 1000);
 				hql.append(" and (");
 				for(int i=0;i<list.size();i++){
@@ -612,7 +612,7 @@ public class WebFactorderDaoImpl extends Basedao implements IWebFactorderDao{
 			map.put("components", component);
 		}*/
 		if(brank!=null&&brank.size()>0){
-			if(brank.size()<0){
+			if(brank.size()<1000){
 				hql.append(" and brank in(:branks) ");
 				map.put("branks", brank);
 			}else{
