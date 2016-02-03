@@ -105,7 +105,7 @@ window.onload=function(){
             var inputs=document.getElementsByTagName("input"); 
             for (var i=0;i<inputs.length; i++) {  
                 if(inputs[i].getAttribute("type")=="text"){                
-                 inputs[i].onkeydown=function(){
+                 inputs[i].onkeyup=function(){
                 	 if(this.value.indexOf(" "!=-1)){
                 		this.value=this.value.trim();
                 	 }
