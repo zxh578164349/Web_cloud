@@ -86,14 +86,7 @@ function makeBillNo() {
 			});				 		
 		}
 		
-	}
-							
- /*   function getKyType(){
-	   kytypejs.findByTypeNo("VV",function(x){
-	         dwr.util.addOptions("dwr_kytype",x,"typeName","typeSname");
-	   });
-	} */
-	
+	}								
 function getKyType(){
 	 var factno=document.getElementById("dwrFactNo").value;
 	 if(factno!=null&&factno!=""){
@@ -144,30 +137,7 @@ function getKyType2(factno){
                   }
                   
                }); 
-            }
-            
-           /*   else if(type.charAt(0)=='C'){//如果流程是C类（C1,C2....）  ,则要 根据申请人来选择审核流程的代号              
-                kyzvisaflowjs.findVisaSort_dwr(dwrFactNo,type,dwremail,function(y){
-                  if(y==null){
-                     alert("對不起，你不是該類別函文申請人，請重新選定!");
-                     document.getElementById("sub").disabled=true;
-                     document.getElementById("sub").style.color="red";
-                     document.getElementById("dwr_kytype").style.color="red";                    
-                  }else{
-                     document.getElementById("sub").disabled=false;
-                     document.getElementById("sub").style.color="white";
-                     document.getElementById("dwr_kytype").style.color="black";
-                     document.getElementById("hidden_kytype").value=y;                    
-                  }
-                  
-               }); 
-            } else{ //如果流程是非C类，则不需要根据申请人选择流程,直接選擇類型代號，就對應審核流程代號
-                     document.getElementById("sub").disabled=false;
-                     document.getElementById("sub").style.color="white";
-                     document.getElementById("dwr_kytype").style.color="black";
-                     document.getElementById("hidden_kytype").value=type;
-            } */
-          
+            }                               
          });
      }
   }
@@ -207,11 +177,43 @@ function getKyType2(factno){
 		location.href="/Login/bussletter_findPageBean?backIndex=1";
 	}
 	
-jq(function(){
+/*jq(function(){
    if(jq("#isNull").val()=="isNull"){
-     window.onload=getKyType(),makeBillNo();
+     window.onload=makeBillNo();
+     if(jq("#dwrFactNo").val()!="tw"){
+    	 checkWebbussType(jq("#dwrFactNo").val());
+     }
    }
-});	
+});	*/
+window.onload=function(){
+	if(jq("#isNull").val()=="isNull"){
+	    makeBillNo();
+	     if(jq("#dwrFactNo").val()!="tw"&&jq("#dwrFactNo").val()!=""){
+	    	 checkWebbussType(jq("#dwrFactNo").val());
+	     }
+	   }
+}
+
+function checkWebbussType(fact){
+	jq.ajax({
+		type:"POST",
+		dataType:"json",
+		data:"factNo="+fact,
+		url:"visaflow_findWebbuss",
+		success:function(data){
+			if(data=='0'){
+				jq("#sub").removeAttr("disabled");
+				jq("#sub").val("確定");
+				jq("#sub").css("color","white");
+			}else{
+				jq("#sub").attr("disabled",true);
+				jq("#sub").val("鎖定");
+				jq("#sub").css("color","red");
+				layer.msg("對不起，該廠還沒有創建出差流程，不能申請",3,3);
+			}
+		}
+	});
+}
 </script>
 <script type='text/javascript' src='/Login/dwr/interface/webbussletterjs.js'></script>
 <script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>
@@ -255,16 +257,19 @@ jq(function(){
 					<s:if test="#session.factNo!='tw'">
 					<tr>
 						<td >廠別</td>
-						<td ><input type="text" style="color:blue"
+						<td >
+						  
+						<input type="text" style="color:blue"
 							name="bussletter.factNo" value="${factNo}" readonly id="dwrFactNo" />							
 						</td>																	
-						<td >類別</td>
+						<td ><font color="grey">類別</font></td>
 				        <td >
-				         <select  id="dwr_kytype" onchange="checkType(this.value)" datatype="*" style="color:blue">
+				        <input type="hidden" name="bussletter.visaSort" value="TR" id="hidden_kytype"/><!-- 類型寫死爲：TR   20160203 -->
+				         <select  id="dwr_kytype" onchange="checkType(this.value)" style="color:grey;background-color:#f5f5f5;border-color:grey" disabled>
 				            <option value="">請選擇</option>
 				         </select>
-				         <input type="hidden" id="dwr_email" value="<s:property value='#session.loginUser.email'/>"/>
-				         <input type="hidden" name="bussletter.visaSort" id="hidden_kytype"/>	
+				         <!--  <input type="hidden" id="dwr_email" value="<s:property value='#session.loginUser.email'/>"/>
+				         <input type="hidden" name="bussletter.visaSort" id="hidden_kytype"/>-->	
 				        </td>
 					</tr>
 				</s:if>
@@ -273,20 +278,22 @@ jq(function(){
 						<td >廠別</td>
 						<td ><select style="color:blue"
 							name="bussletter.factNo" datatype="*" id="dwrFactNo"
-							onchange="makeBillNo(),getKyType2(this.value)">
+							onchange="checkWebbussType(this.value),makeBillNo()">
 								<option value="">請選擇廠別</option>
 								<s:iterator value="#session.facts" id="temp">
 									<option value="${temp[0]}">${temp[1]
 										}&nbsp;(${temp[0]})</option>
 								</s:iterator>
 						</select></td>																		
-						<td >類別</td>
+						<td ><font color="grey">類別</font></td>
 				        <td >
-				         <select  id="dwr_kytype" onchange="checkType(this.value)" datatype="*" style="color:blue">
-				            <option value="">請選擇</option>
+				         <select  id="dwr_kytype" onchange="checkType(this.value)"  style="color:grey;background-color:#f5f5f5;border-color:grey" disabled>
+				            <option value="">不可用</option>
 				         </select>
-				         <input type="hidden" id="dwr_email" value="<s:property value='#session.loginUser.email'/>"/>
-				         <input type="hidden" name="bussletter.visaSort" id="hidden_kytype"/>	
+				         <input type="hidden" name="bussletter.visaSort" value="TR" id="hidden_kytype"/><!-- 類型寫死爲：TR   20160203 -->
+				         <!--  <input type="hidden" id="dwr_email" value="<s:property value='#session.loginUser.email'/>"/>
+				         <input type="hidden" name="bussletter.visaSort" id="hidden_kytype"/>
+				         -->	
 				        </td>
 					</tr>
 					</s:if>																							    

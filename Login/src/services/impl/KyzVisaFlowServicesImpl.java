@@ -82,4 +82,9 @@ public class KyzVisaFlowServicesImpl implements IKyzVisaFlowServices{
 		return visaDao.findVisaSigner(factNo, visaSort);
 	}
 
+	public long findWebbuss(String factNo) {
+		// TODO Auto-generated method stub
+		return visaDao.findWebbuss(factNo);
+	}
+
 }

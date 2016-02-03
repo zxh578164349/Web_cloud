@@ -167,6 +167,23 @@ public class KyzVisaFlowDaoImpl extends Basedao implements IKyzVisaFlowDao {
 		return (String)query.uniqueResult();
 	}
 
+	/**
+	 * 找出是否存在出差函文流程（返回的結果>0,則存在）20160203
+	 */
+	public long findWebbuss(String factNo) {
+		// TODO Auto-generated method stub
+		long result=0;
+		try{
+			String hql="select count(id.factNo) from KyzVisaflow where id.factNo=? and id.visaSort='TR'";
+			Query query=getSession().createQuery(hql);
+			query.setString(0, factNo);
+			 result=(Long)query.uniqueResult();
+		}catch(Exception e){
+			System.out.println(e);
+		}		
+		return result;
+	}
+
 
 
 }

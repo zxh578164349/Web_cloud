@@ -95,7 +95,6 @@ jq(document).ajaxStop(function(){
 	}
   
   	function checkType(type){
-  	alert(type.value.toUpperCase());
 	   if(type.value.charAt(0).toUpperCase()=='C'||type.value.toUpperCase()=='TR'){
 	      alert("不可以使用C字母开头或TR");
 	      type.value='';
@@ -105,12 +104,13 @@ jq(document).ajaxStop(function(){
 window.onload=function(){            
             var inputs=document.getElementsByTagName("input"); 
             for (var i=0;i<inputs.length; i++) {  
-                if(inputs[i].getAttribute("type")=="text"){ 
-                if(inputs[i].value!=""){
-                 inputs[i].onkeyup=function(){ 
-                    this.value=this.value.replace(/(^\s+)|\s+$/g,""); 
-                 };
-                 }
+                if(inputs[i].getAttribute("type")=="text"){                
+                 inputs[i].onkeydown=function(){
+                	 if(this.value.indexOf(" "!=-1)){
+                		this.value=this.value.trim();
+                	 }
+                    //this.value=this.value.replace(/(^\s+)|\s+$/g,""); 
+                 };                
                 }  
             }  
         };
@@ -120,11 +120,15 @@ function back(){
 }
 function checkRadio(){
 	var item=jq("input[type='radio']:checked").val();
-	alert(item);
 	if(item=="0"){
 		jq("#typeno").removeAttr("readonly");
+		jq("#typeno").attr("datatype","s2-2");
+		jq("#typeno").css({"border":"2px solid #B6CDDC","background-color":"white"});
+		jq("#typeno").focus();
 	}else{
 		jq("#typeno").attr("readonly","readonly");
+		jq("#typeno").removeAttr("datatype");
+		jq("#typeno").css({"border":"2px solid #DDD","background-color":"#f5f5f5"});
 	}
 }
 </script>
@@ -164,26 +168,29 @@ function checkRadio(){
 						   </td>
 						</s:else>
 										
-				          <td class="td_show_title">類別名称  </td>
-				          <td class="td_input"><input type="text" name="webtype.typeName"
-					           value="<s:property value='webtype.typeName'/>" id="typeName"  datatype="*1-60" />
-					         <input type="hidden" name="webtype.webtypeMk" value="Y"/> 					
-				          </td>								
-				</tr>													
-			    <tr>
-                      <td class="td_show_title">函文類別</td>
+
+				        <td class="td_show_title">類別代號</td>
 				        <td class="td_input">
 				          <s:if test="webtype==null">
 				             <div id="div_typeno">
 				              <input type="radio" value="TR" name="typeNo" onclick="checkRadio()"/>出差類&nbsp;
 				              <input type="radio" value="0" name="typeNo" checked onclick="checkRadio()"/>非出差類				             
 				             <input type="text" name="webtype.id.typeNo" datatype="s2-2" onblur="check(),checkType(this)" id="typeno"/>
+				            <span id="error1"></span>
 				             </div>
+				              
 				          </s:if>
 				          <s:else>
 				              <input type="text" name="webtype.id.typeNo" value="<s:property value='webtype.id.typeNo'/>" readonly style="color:blue"/>
 				          </s:else>			             				            								
-				         </td>
+				         </td>							
+				</tr>													
+			    <tr>
+ 				          <td class="td_show_title">類別名称  </td>
+				          <td class="td_input"><input type="text" name="webtype.typeName"
+					           value="<s:property value='webtype.typeName'/>" id="typeName"  datatype="*1-60" />
+					         <input type="hidden" name="webtype.webtypeMk" value="Y"/> 					
+				          </td>	                   
 				<!-- <td class="td_show_title">是否可用</td>
 				<td class="td_input">				
 				          可用<input type="radio" name="webtype.webtypeMk"

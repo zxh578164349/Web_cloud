@@ -56,6 +56,16 @@ public class WebTypeServicesImpl implements IWebTypeServices{
 		}	
 		return list;
 	}
+	public List<WebType> findByFactNo3(String factNo) {
+		// TODO Auto-generated method stub
+		List<WebType>list=webtypeDao.findByFactNo3(factNo);
+		if(list.size()>0){
+			for(int i=0;i<list.size();i++){
+				list.get(i).setWebtypeMk(list.get(i).getId().getTypeNo());				
+			}
+		}	
+		return list;
+	}
 
 
 

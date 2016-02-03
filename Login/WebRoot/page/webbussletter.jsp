@@ -108,7 +108,7 @@
 	<hr />
 	<s:if test='#session.loginUser.userread!="1"'>
 	<input value="添加" type="button" id="addbtn"
-		onclick="javascript:location.href='saveAndUpdate/webbussletterSaveOrUpdate.jsp'" /></s:if>
+		onclick="javascript:layer.load('請稍等');location.href='saveAndUpdate/webbussletterSaveOrUpdate.jsp'" /></s:if>
 		<!-- <input type="image" src="images/add001.gif" onclick="javascript:location.href='saveAndUpdate/matterApplicationSaveOrUpdate.jsp'"> -->
 	<div id="bodyid">
 		<jsp:include page="table1/webbussletter1.jsp" />

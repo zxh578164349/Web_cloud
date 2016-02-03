@@ -24,4 +24,6 @@ public interface IKyzVisaFlowDao {
 	
 	public String findVisaSigner(String factNo,String visaSort);//根據廠別，類別找出申請人
 	
+	public long findWebbuss(String factNo);//找出是否存在出差函文流程（返回的結果>0,則存在）20160203
+	
 }

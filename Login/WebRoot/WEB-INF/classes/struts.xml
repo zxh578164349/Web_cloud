@@ -403,7 +403,7 @@
              <result name="beanList">/page/webtype.jsp</result>
              <result name="beanList1">/page/table1/webtype1.jsp</result>
              <result name="findById">/saveAndUpdate/webTypeSaveOrUpdate.jsp</result>
-             <result name="delete" type="redirectAction">webtype_findPageBean</result>
+             <result name="delete" type="redirectAction">webtype_findPageBean3</result>
         </action>
         <action name="proloss_*" class="profitlossAction" method="{1}"></action>
         <action name="kyzfile_*" class="filekyzAction" method="{1}">
@@ -689,7 +689,10 @@
 		    <result name="addMaxFlow" type="json">
 		       <param name="root">ajaxResult</param>
 		    </result>
-		    <result name="deleteFirst" type="redirectAction">visaflow_findPageBean3</result>		   
+		    <result name="deleteFirst" type="redirectAction">visaflow_findPageBean3</result>
+		    <result name="findWebbuss" type="json">
+		        <param name="root">ajaxResult</param>
+		    </result>		   
 		</action>
 		<action name="webtabpom_*" class="webtabpomAction" method="{1}">
 		    <result name="add" type="json">

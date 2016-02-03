@@ -104,7 +104,7 @@ table.gridtable td {
 				<td colspan="2">
 				<s:date name='bussletter.dateFrom' format='yyyy/MM/dd'/>至
 				<s:date name='bussletter.dateEnd' format='yyyy/MM/dd'/>共計
-				<s:property value="%{sumDate(bussletter.dateFrom,bussletter.dateEnd)}"/>
+				<s:property value="%{sumDate(bussletter.dateFrom,bussletter.dateEnd)}"/>日
 				</td>
 				<td>去程班機時間<br/>回程班機時間</td>
 				<td colspan="3">
