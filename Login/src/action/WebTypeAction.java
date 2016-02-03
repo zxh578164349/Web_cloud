@@ -76,6 +76,10 @@ public class WebTypeAction extends ActionSupport{
 	
 	public String add(){
 		try{
+			//如果頁面上選擇了"出差類"，則要給值爲TR，標明爲"出差類"20160203
+			if(typeNo.equals("TR")){
+				webtype.getId().setTypeNo(typeNo);
+			}
 			webtypeSer.add(webtype);
 			ajaxResult="0";
 		}catch(Exception e){

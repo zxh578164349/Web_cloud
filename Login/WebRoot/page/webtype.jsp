@@ -35,18 +35,21 @@
 </head>
 <script type="text/javascript">
 	var jq=jQuery.noConflict();
+	var loadi;
+	jq(document).ajaxStart(function(){
+		loadi=layer.load(0);
+	});
+	jq(document).ajaxStop(function(){
+		layer.close(loadi);
+	});
 	function pages(page) {
-	    var loadi=layer.load(0);
 		jq.ajax({
 			type : "POST",
 			dataType : "Html",
 			url : "webtype_findPageBean3",
 			data : "page=" + page,
 			success : function(msg) {
-			    layer.close(loadi);
-				jq("#bodyid").html(msg);
-				/* jq("li").removeClass("active");
-				jq("li").children("a").click(function(){jq(this).parent().attr("class","active")}); */
+				jq("#bodyid").html(msg);				
 			},
 			error : function(xhr) {
 				alert(xhr.responseText);
@@ -54,8 +57,7 @@
 		});
 	}
 
-	function submis() {
-	    var loadi=layer.load(0);		
+	function submis() {		
 		var factno=document.getElementById("factNo")
 		jq.ajax({
 			type : "POST",
@@ -63,7 +65,6 @@
 			url : "webtype_findPageBean2",
 			data : "factNo="+factno.value,
 			success : function(msg) {
-			    layer.close(loadi);
 				jq("#bodyid").html(msg);
 			},
 			error : function(xhr) {
@@ -95,9 +96,19 @@ function move(obj){
  
  function mydelete(factNo,typeNo){
     var flag=confirm("確定要刪除嗎?");
-    if(flag==true){
-       window.location.href="webtype_delete?factNo="+factNo+"&typeNo="+typeNo;
-       layer.load("正在處理,請稍後....");
+    if(flag==true){   	
+       jq.ajax({
+    	   type:"POST",
+    	   dataType:"html",
+    	   data:"factNo="+factNo+"&typeNo="+typeNo,
+    	   url:"webtype_delete",
+    	   success:function(data){
+    		   jq("#bodyid").html(data);
+    	   },
+    	   error:function(err){
+    		   jq("#bodyid").html(err.responseText);
+    	   }
+       });
     }
 }
 function findById(factno,typeno){

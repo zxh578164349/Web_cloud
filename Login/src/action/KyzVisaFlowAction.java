@@ -265,35 +265,44 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 	
 	public String add() throws IOException{		
 		String visaSort_main=flows.get(0).getId().getVisaSort();
-		
-			
+					
 			try{
-				String visaSort_sub=visaSort_main+"0";
-				//選中"費用簽核"所有的子類別			
-				List<String>types_str=visaSer.findVisaSort_C(flows.get(0).getId().getFactNo(),visaSort_main);
-				List<Integer>types_int=new ArrayList<Integer>();
-				if(types_str.size()>0){
-					for(int j=0;j<types_str.size();j++){
-						int temp=Integer.parseInt(types_str.get(j).substring(2));
-						types_int.add(temp);
+				/****************************如果是出差類函文，類別代號就不用自增處理20160203*********************************/
+				if(visaSort_main.equals("TR")){
+					for(int i=0;i<flows.size();i++){
+						flows.get(i).getId().setPurmanNo(flows.get(i).getId().getPurmanNo().trim());
+					    flows.get(i).setVisaSigner(flows.get(i).getVisaSigner().trim());
+						flows.get(i).setFlowMk("Y");
+						visaSer.add(flows.get(i));
 					}
-					int maxNum=types_int.get(types_int.size()-1);//因為集合已按從小到大的順序排列好的，所以最後一個元素最大
-					String str_max=String.valueOf(maxNum);
-					if(str_max.substring(str_max.length()-1,str_max.length()).equals("9")){      											
-						visaSort_sub=visaSort_main+maxNum+"0";
-					}else{					
-						visaSort_sub=visaSort_main+(maxNum+1);
-					}				
-				}
-				for(int i=0;i<flows.size();i++){
-					flows.get(i).getId().setVisaSort(visaSort_sub);				
-				    String purmanNo=flows.get(i).getId().getPurmanNo().trim();
-				    String visaSigner=flows.get(i).getVisaSigner().trim();
-				    flows.get(i).getId().setPurmanNo(purmanNo);
-				    flows.get(i).setVisaSigner(visaSigner);
-				    flows.get(i).setFlowMk("Y");
-					visaSer.add(flows.get(i));
-				}
+				}else{/****************************否則，類別代號就要自增處理20160203*********************************/
+					String visaSort_sub=visaSort_main+"0";
+					//選中"費用簽核"所有的子類別			
+					List<String>types_str=visaSer.findVisaSort_C(flows.get(0).getId().getFactNo(),visaSort_main);
+					List<Integer>types_int=new ArrayList<Integer>();
+					if(types_str.size()>0){
+						for(int j=0;j<types_str.size();j++){
+							int temp=Integer.parseInt(types_str.get(j).substring(2));
+							types_int.add(temp);
+						}
+						int maxNum=types_int.get(types_int.size()-1);//因為集合已按從小到大的順序排列好的，所以最後一個元素最大
+						String str_max=String.valueOf(maxNum);
+						if(str_max.substring(str_max.length()-1,str_max.length()).equals("9")){      											
+							visaSort_sub=visaSort_main+maxNum+"0";
+						}else{					
+							visaSort_sub=visaSort_main+(maxNum+1);
+						}				
+					}
+					for(int i=0;i<flows.size();i++){
+						flows.get(i).getId().setVisaSort(visaSort_sub);				
+					    String purmanNo=flows.get(i).getId().getPurmanNo().trim();
+					    String visaSigner=flows.get(i).getVisaSigner().trim();
+					    flows.get(i).getId().setPurmanNo(purmanNo);
+					    flows.get(i).setVisaSigner(visaSigner);
+					    flows.get(i).setFlowMk("Y");
+						visaSer.add(flows.get(i));
+					}
+				}				
 				ajaxResult="0";
 			}catch(Exception e){
 				e.printStackTrace();
@@ -548,6 +557,19 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 			visaSer.delete2(list.get(i));
 		}
 		return "deleteFirst";
+	}
+	/**
+	 * 找出是否存在出差函文流程（返回的結果>0,則存在）20160203
+	 * @return
+	 */
+	public String findWebbuss(){
+		long result=visaSer.findWebbuss(factNo);
+		if(result>0){
+			ajaxResult="0";
+		}else{			
+				ajaxResult="1";						
+		}
+		return "findWebbuss";
 	}
 
 }

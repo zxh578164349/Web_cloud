@@ -24,5 +24,6 @@ public interface IKyzVisaFlowServices {
 	public void delete2(KyzVisaflow flow);
 	
 	public String findVisaSigner(String factNo,String visaSort);
+	public long findWebbuss(String factNo);//找出是否存在出差函文流程（返回的結果>0,則存在）20160203
 
 }

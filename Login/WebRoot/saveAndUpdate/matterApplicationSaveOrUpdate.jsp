@@ -280,7 +280,7 @@ function makeBillNo() {
 	 
 	 var factno=document.getElementById("dwrFactNo").value;
 	 if(factno!=null&&factno!=""){
-	     webtypejs.findByFactNo(factno,function(x){
+	     webtypejs.findByFactNo3(factno,function(x){//過濾出差類"TR"20160203
        if(x.length>0){
           dwr.util.addOptions("dwr_kytype",x,"webtypeMk","typeName");
        }
@@ -293,7 +293,7 @@ function makeBillNo() {
 function getKyType2(factno){
 	 document.getElementById("dwr_kytype").length=1;	 
 	 if(factno!=null&&factno!=""){
-	     webtypejs.findByFactNo(factno,function(x){
+	     webtypejs.findByFactNo3(factno,function(x){//過濾出差類"TR"20160203
        if(x.length>0){
           dwr.util.addOptions("dwr_kytype",x,"webtypeMk","typeName");
        }
