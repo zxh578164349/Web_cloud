@@ -38,7 +38,7 @@ public class KyzExpectmatm implements java.io.Serializable {
 	private String firstPage;
 	private String colTemp;
 	private String kyzsMk;
-	private String delMk;
+	private String delMk;//刪除標記        0或空 未刪除     1刪除
 	private List<KyzExpectmats> kyzExpectmatses = new ArrayList();
 
 	// Constructors

@@ -61,15 +61,7 @@ public class KyVisabillsDaoImpl extends Basedao implements IKyVisaBillsDao{
 		if(visaSort!=null&&!visaSort.equals("")&&!visaSort.equals("nothing")){
 			hql.append(" and id.kyVisabillm.id.visaSort like:visasort");
 			map.put("visasort", visaSort+"%");
-		}/*else{
-			hql.append(" and (id.kyVisabillm.id.visaSort='F' or id.kyVisabillm.id.visaSort='W' or id.kyVisabillm.id.visaSort='G' or id.kyVisabillm.id.visaSort='I'"+
-					" or id.kyVisabillm.id.visaSort='L' or id.kyVisabillm.id.visaSort='P' or id.kyVisabillm.id.visaSort='Q'" +
-					" or id.kyVisabillm.id.visaSort='B' or id.kyVisabillm.id.visaSort='O'"+		
-					" or id.kyVisabillm.id.visaSort='S' or id.kyVisabillm.id.visaSort='T' or id.kyVisabillm.id.visaSort='Y' or id.kyVisabillm.id.visaSort='Z'" +
-					" or id.kyVisabillm.id.visaSort like 'C1%' or id.kyVisabillm.id.visaSort like 'C2%'" +
-					" or id.kyVisabillm.id.visaSort like 'C3%' or id.kyVisabillm.id.visaSort like 'C4%')");
-			hql.append(" and substr(id.kyVisabillm.id.visaSort,0,2) in('F','W','G','I','L','P','Q','B','O','S','T','Y','Z','C1','C2','C3','C4','C5','C6')");
-		}*/
+		}
 		if(createDate!=null&&!createDate.equals("")){
 			hql.append(" and id.kyVisabillm.dateCreate>=:createdate");
 			map.put("createdate", createDate);
@@ -100,6 +92,7 @@ public class KyVisabillsDaoImpl extends Basedao implements IKyVisaBillsDao{
 		
 		//hql.append(" and flowMk='Y'");
 		hql.append(" and substr(id.kyVisabillm.id.billNo,0,2) in ('CM','EM','BM')");
+		hql.append(" and id.kyVisabillm.delMk is null ");
 		hql2.append(hql);
 		hql.append(" order by id.kyVisabillm.id.factNo desc,id.kyVisabillm.dateCreate desc");
 		if(rows!=null&&page>0){
@@ -200,15 +193,7 @@ public class KyVisabillsDaoImpl extends Basedao implements IKyVisaBillsDao{
 		if(visaSort!=null&&!visaSort.equals("")&&!visaSort.equals("nothing")){
 			hql.append(" and id.kyVisabillm.id.visaSort like:visasort");
 			map.put("visasort", visaSort+"%");
-		}/*else{
-			hql.append(" and (id.kyVisabillm.id.visaSort='F' or id.kyVisabillm.id.visaSort='W' or id.kyVisabillm.id.visaSort='G' or id.kyVisabillm.id.visaSort='I'"+
-					" or id.kyVisabillm.id.visaSort='L' or id.kyVisabillm.id.visaSort='P' or id.kyVisabillm.id.visaSort='Q'" +
-					" or id.kyVisabillm.id.visaSort='B' or id.kyVisabillm.id.visaSort='O'"+		
-					" or id.kyVisabillm.id.visaSort='S' or id.kyVisabillm.id.visaSort='T' or id.kyVisabillm.id.visaSort='Y' or id.kyVisabillm.id.visaSort='Z'" +
-					" or id.kyVisabillm.id.visaSort like 'C1%' or id.kyVisabillm.id.visaSort like 'C2%'" +
-					" or id.kyVisabillm.id.visaSort like 'C3%' or id.kyVisabillm.id.visaSort like 'C4%')");
-			hql.append(" and substr(id.kyVisabillm.id.visaSort,0,2) in('F','W','G','I','L','P','Q','B','O','S','T','Y','Z','C1','C2','C3','C4','C5','C6')");
-		}*/
+		}
 		if(createDate!=null&&!createDate.equals("")){
 			hql.append(" and id.kyVisabillm.dateCreate>=:createdate");
 			map.put("createdate", createDate);
@@ -261,7 +246,8 @@ public class KyVisabillsDaoImpl extends Basedao implements IKyVisaBillsDao{
 			}			
 		}
 		
-		hql.append(" and substr(id.kyVisabillm.id.billNo,0,2) in ('CM','EM','BM')");	
+		hql.append(" and substr(id.kyVisabillm.id.billNo,0,2) in ('CM','EM','BM')");
+		hql.append(" and id.kyVisabillm.delMk is null ");
 		hql2.append(hql);
 		hql.append(" order by id.kyVisabillm.id.factNo desc,id.kyVisabillm.dateCreate desc");
 		
@@ -309,21 +295,15 @@ public class KyVisabillsDaoImpl extends Basedao implements IKyVisaBillsDao{
 		hql.append(" and lower(visaSigner)=:visaSigner");
 		map.put("visaSigner", email.toLowerCase());
 		hql.append(" and id.itemNo=id.kyVisabillm.itemNext and visaMk='N'") ;
-				/*" and (id.kyVisabillm.id.visaSort='F' or id.kyVisabillm.id.visaSort='W' or id.kyVisabillm.id.visaSort='G' or id.kyVisabillm.id.visaSort='I'" +
-				" or id.kyVisabillm.id.visaSort='L' or id.kyVisabillm.id.visaSort='P' or id.kyVisabillm.id.visaSort='Q'" +
-				" or id.kyVisabillm.id.visaSort='B' or id.kyVisabillm.id.visaSort='O'" +
-				" or id.kyVisabillm.id.visaSort='S' or id.kyVisabillm.id.visaSort='T' or id.kyVisabillm.id.visaSort='Y' or id.kyVisabillm.id.visaSort='Z'" +
-				" or id.kyVisabillm.id.visaSort like 'C1%' or id.kyVisabillm.id.visaSort like 'C2%'" +
-				" or id.kyVisabillm.id.visaSort like 'C3%' or id.kyVisabillm.id.visaSort like 'C4%')");*/	
-		//hql.append(" and substr(id.kyVisabillm.id.visaSort,0,2) in('F','W','G','I','L','P','Q','B','O','S','T','Y','Z','C1','C2','C3','C4','C5','C6')");
 		hql.append(" and substr(id.kyVisabillm.id.billNo,0,2) in ('CM','EM','BM')");
+		hql.append(" and id.kyVisabillm.delMk is null ");
 		int result=super.getAllRowCount(hql.toString(), map);
 		return result;
 	}
 
 	public int findBillsWithNo(String visaSort, String billNo) {
 		// TODO Auto-generated method stub
-		String hql="from KyVisabills where id.kyVisabillm.id.visaSort=? and id.kyVisabillm.id.billNo=? and flowMk='N' order by id.itemNo";
+		String hql="select id.kyVisabillm.id.billNo from KyVisabills where id.kyVisabillm.id.visaSort=? and id.kyVisabillm.id.billNo=? and flowMk='N' order by id.itemNo";		
 		String[]objs={visaSort,billNo};
 		return super.findAll(hql, objs).size();
 	}

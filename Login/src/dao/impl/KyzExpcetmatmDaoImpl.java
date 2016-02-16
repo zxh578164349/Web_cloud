@@ -5,6 +5,10 @@ import java.util.List;
 import java.util.Map;
 
 import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.springframework.orm.hibernate3.SessionFactoryUtils;
 
 import util.PageBean;
 
@@ -98,6 +102,7 @@ public class KyzExpcetmatmDaoImpl extends Basedao implements IKyzExpectmatmDao {
 			hql.append(" and id.factNo=:factno");
 			map.put("factno", factNo);
 		}
+		hql.append(" and delMk is null ");
 		hql2.append(hql);
 		hql.append(" order by id.factNo,timeCreate desc");
 		int currentPage = PageBean.countCurrentPage(page);
@@ -200,5 +205,39 @@ public class KyzExpcetmatmDaoImpl extends Basedao implements IKyzExpectmatmDao {
 		query.setString(1, billNo);
 		KyzExpectmatm kyz=(KyzExpectmatm)query.uniqueResult();
 		return kyz;
+	}
+
+	/**
+	 * 兩箇月之前沒有添加刪除標記的函文20160216
+	 */
+	public List<KyzExpectmatm> findBefor2Month() {
+		// TODO Auto-generated method stub
+		String hql="from KyzExpectmatm where timeCreate<add_months(sysdate,-1) and delMk is null order by timeCreate";		
+		return super.findAll(hql, null);
+	}
+
+
+	/*
+	 * //大批量添加20160216
+	 * @see dao.IKyzExpectmatmDao#addLarge(java.util.List)
+	 */
+	public void addLarge(List<KyzExpectmatm> list) {
+		// TODO Auto-generated method stub
+		//Transaction tx=null;
+		try{
+			//tx=getSession().beginTransaction();
+			for(int i=0;i<list.size();i++){
+				list.get(i).setDelMk("no");
+				getSession().merge(list.get(i));
+				if(i%10==0){
+					getSession().flush();
+					getSession().clear();
+				}
+			}
+		}catch(Exception e){
+			System.out.println("dao****************************"+e+"*****************************dao");
+			//tx.rollback();
+		}
+		//getSession().close();
 	}
 }

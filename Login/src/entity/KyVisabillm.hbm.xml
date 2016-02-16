@@ -48,10 +48,13 @@
             <column name="DATE_CREATE" length="8" />
         </property>
         <property name="emailMk" type="java.lang.String">
-            <column name="EMAIL_MK" length="2"></column>
+            <column name="EMAIL_MK" length="2"/>
         </property>
         <property name="colTemp" type="java.lang.String">
-            <column name="COL_TEMP" length="2"></column>
+            <column name="COL_TEMP" length="2"/>
+        </property>
+        <property name="delMk" type="java.lang.String">
+            <column name="DEL_MK" length="2"/>
         </property>
         <bag name="kyVisabillses" inverse="true" cascade="all" >
             <key>

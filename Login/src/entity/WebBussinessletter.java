@@ -28,6 +28,7 @@ public class WebBussinessletter implements java.io.Serializable {
 	private Integer sumDate;
 	private String userAccount;
 	private KyVisabillm vbm;
+	private String delMk;//刪除標記     0或空 未刪除     1刪除
 
 	// Constructors
 
@@ -201,6 +202,16 @@ public class WebBussinessletter implements java.io.Serializable {
 	public void setVbm(KyVisabillm vbm) {
 		this.vbm = vbm;
 	}
+
+	public String getDelMk() {
+		return delMk;
+	}
+
+	public void setDelMk(String delMk) {
+		this.delMk = delMk;
+	}
+	
+	
 	
 	
 	

@@ -22,7 +22,7 @@ public class KyzContactletter implements java.io.Serializable {
 	private String firstPage;//�O�_��ܲĤ@��
 	private String factCode;//�t�O���A
 	private String colTemp;
-	private String delMk;//刪除標記    0刪除    1未刪除
+	private String delMk;//刪除標記       0或空 未刪除     1刪除
 
 	// Constructors
 
