@@ -144,12 +144,11 @@ public class WebFactorderDaoImpl extends Basedao implements IWebFactorderDao{
 					}					
 				}										
 			}//for1
-			
+			tx.commit();
 		}catch(Exception e){
 			System.out.println(e);
 			tx.rollback();
-		}
-		tx.commit();
+		}		
 	    getSession().close();
 		
 		

@@ -2,6 +2,8 @@ package services;
 
 import java.util.List;
 
+import org.hibernate.SessionFactory;
+
 import util.PageBean;
 
 import dao.IKyzExpectmatmDao;
@@ -24,5 +26,8 @@ public interface IKyzExpectmatmServices {
 	
 	public List<Object[]>findTitle(String factNo);
 	public KyzExpectmatm findById(String factNo,String billNo);
+	
+	public List<KyzExpectmatm>findBefor2Month();//兩箇月之前沒有添加刪除標記的函文20160216
+	public void addLarge(List<KyzExpectmatm>list);//大批量添加20160216
 			
 }

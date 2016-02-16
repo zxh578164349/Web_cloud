@@ -26,6 +26,7 @@ public class KyVisabillm implements java.io.Serializable {
 	private String dateCreate;
 	private String emailMk;//是否已经发送知会email
 	private String colTemp;
+	private String delMk;//刪除標記    0或空 未刪除     1刪除
 	private List<KyVisabills> kyVisabillses = new ArrayList<KyVisabills>();
 	private WebBussinessletter webbussletter;
 
@@ -184,6 +185,16 @@ public class KyVisabillm implements java.io.Serializable {
 	public void setWebbussletter(WebBussinessletter webbussletter) {
 		this.webbussletter = webbussletter;
 	}
+
+	public String getDelMk() {
+		return delMk;
+	}
+
+	public void setDelMk(String delMk) {
+		this.delMk = delMk;
+	}
+	
+	
 	
 	
 

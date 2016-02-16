@@ -1,6 +1,9 @@
 package services.impl;
 
+import java.util.List;
+
 import dao.IWebBussinessletterDao;
+import entity.KyzContactletter;
 import entity.WebBussinessletter;
 import services.IWebBussinessletterServices;
 import util.PageBean;
@@ -58,6 +61,16 @@ public class WebBussinessletterServicesImpl implements IWebBussinessletterServic
 	public void delete(String billNo) {
 		// TODO Auto-generated method stub
 		webbussletterdao.delete(billNo);
+	}
+
+	public List<WebBussinessletter> findBefor2Month() {
+		// TODO Auto-generated method stub
+		return webbussletterdao.findBefor2Month();
+	}
+
+	public void addLarge(List<WebBussinessletter> list) {
+		// TODO Auto-generated method stub
+		webbussletterdao.addLarge(list);
 	}
 
 }

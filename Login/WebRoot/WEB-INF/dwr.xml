@@ -170,7 +170,7 @@
 		<create javascript="webuseremailajs" creator="spring">
 		    <param name="beanName" value="webuseremailaSer"/>
 		    <include method="findById"/>
-		    <include mehtod="deleteObj"/>
+		    <include method="deleteObj"/>
 		</create>
 		<create javascript="webbrankjs" creator="spring">
 		    <param name="beanName" value="webbrankSer"/>

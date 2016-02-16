@@ -36,7 +36,7 @@ public class WebBussinessletterDaoImpl extends Basedao implements IWebBussinessl
 			hql.append(" and factNo=:factno");
 			map.put("factno", factNo);
 		}
-		
+		hql.append(" and delMk is null ");
 		hql2.append(hql);
 		hql.append(" order by factNo,blNo");
 		//int rows=0;
@@ -88,6 +88,29 @@ public class WebBussinessletterDaoImpl extends Basedao implements IWebBussinessl
 		// TODO Auto-generated method stub
 		WebBussinessletter letter=this.findById(billNo);
 		super.delete(letter);
+	}
+
+	public List<WebBussinessletter> findBefor2Month() {
+		// TODO Auto-generated method stub
+		String hql="from WebBussinessletter where createDate<to_char(add_months(sysdate,-1),'yyyymmdd') and delMk is null order by createDate";
+		return super.findAll(hql, null);
+	}
+
+	public void addLarge(List<WebBussinessletter> list) {
+		// TODO Auto-generated method stub
+		try{
+			for(int i=0;i<list.size();i++){
+				list.get(i).setDelMk("no");
+				getSession().merge(list.get(i));
+				if(i%10==0){
+					getSession().flush();
+					getSession().clear();
+				}
+			}
+		
+		}catch(Exception e){
+			System.out.println("dao*******************************"+e+"******************************dao");
+		}
 	}
 
 }

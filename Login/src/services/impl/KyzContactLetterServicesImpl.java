@@ -87,4 +87,14 @@ public class KyzContactLetterServicesImpl implements IKyzContactLetterServices{
 		return kyzletterDao.findTitle(factNo);
 	}
 
+	public List<KyzContactletter> findBefor2Month() {
+		// TODO Auto-generated method stub
+		return kyzletterDao.findBefor2Month();
+	}
+
+	public void addLarge(List<KyzContactletter> list) {
+		// TODO Auto-generated method stub
+		kyzletterDao.addLarge(list);
+	}
+
 }

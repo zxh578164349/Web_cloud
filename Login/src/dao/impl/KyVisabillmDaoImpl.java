@@ -100,7 +100,7 @@ public class KyVisabillmDaoImpl extends Basedao implements IKyVisaBillmDao{
 
 	public List<KyVisabillm> findByVisaMk(String visaMk) {
 		// TODO Auto-generated method stub
-		String hql="from KyVisabillm where visaMk<>? and dateCreate>'20150901' and substr(id.billNo,0,2) in ('CM','EM','BM') and emailMk is null ";
+		String hql="from KyVisabillm where visaMk<>? and dateCreate>'20150901' and substr(id.billNo,0,2) in ('CM','EM','BM') and emailMk is null and delMk is null ";
 		String[]objs={visaMk};
 		return super.findAll(hql, objs);
 	}
@@ -114,7 +114,7 @@ public class KyVisabillmDaoImpl extends Basedao implements IKyVisaBillmDao{
 
 	public List<KyVisabillm> findByVisaMk2(String visaMk) {
 		// TODO Auto-generated method stub
-		String hql="from KyVisabillm where visaMk=? and dateCreate>'20150901'  and substr(id.billNo,0,2) in ('CM','EM','BM') and emailMk is null  order by dateCreate"; 
+		String hql="from KyVisabillm where visaMk=? and dateCreate>'20150901'  and substr(id.billNo,0,2) in ('CM','EM','BM') and emailMk is null and delMk is null  order by dateCreate"; 
 		String[]objs={visaMk};
 		List<KyVisabillm>list=super.findAll(hql, objs);//解決hibernate延遲問題
 		for(int i=0;i<list.size();i++){
@@ -129,6 +129,29 @@ public class KyVisabillmDaoImpl extends Basedao implements IKyVisaBillmDao{
 		Query query=getSession().createQuery(hql);
 		query.setString(0, billNo);
 		return (KyVisabillm)query.uniqueResult();
+	}
+
+	public List<KyVisabillm> findBefor2Month() {
+		// TODO Auto-generated method stub
+		String hql="from KyVisabillm where dateCreate<to_char(add_months(sysdate,-1),'yyyymmdd') and delMk is null order by dateCreate ";
+		return super.findAll(hql, null);
+	}
+
+	public void addLarge(List<KyVisabillm> list) {
+		// TODO Auto-generated method stub
+		try{
+			for(int i=0;i<list.size();i++){
+				list.get(i).setDelMk("no");
+				getSession().merge(list.get(i));
+				if(i%10==0){
+					getSession().flush();
+					getSession().clear();
+					
+				}
+			}
+		}catch(Exception e){
+			System.out.println("dao********************************"+e+"*************************************dao");
+		}
 	}
 
 }

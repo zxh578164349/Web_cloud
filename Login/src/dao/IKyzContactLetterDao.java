@@ -13,5 +13,8 @@ public interface IKyzContactLetterDao {
 	public void delete(String factNo,String billNo);
 	public String findTitleByBillno(String billNo);
 	public List<Object[]>findTitle(String factNo);
+	
+	public List<KyzContactletter>findBefor2Month();//兩箇月之前沒有添加刪除標記的函文20160216
+	public void addLarge(List<KyzContactletter>list);//大批量添加 20160216
 
 }

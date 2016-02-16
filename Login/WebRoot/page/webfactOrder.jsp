@@ -243,7 +243,7 @@ function showDiv(){
 
 <body>
 <div>
-    <input type="hidden" id="global_temp"
+    <input type="hidden" id="global_temp"/>
 	<jsp:include page="publicHead_print_webfactorder.jsp" />
 	<hr />
 	

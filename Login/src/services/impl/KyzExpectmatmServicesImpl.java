@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.hibernate.SessionFactory;
+
 import dao.IKyzExpectmatmDao;
 import entity.KyzExpectmatm;
 import entity.KyzExpectmatmId;
@@ -118,6 +120,16 @@ public class KyzExpectmatmServicesImpl implements IKyzExpectmatmServices {
 	public KyzExpectmatm findById(String factNo, String billNo) {
 		// TODO Auto-generated method stub
 		return kyzDao.findById(factNo, billNo);
+	}
+
+	public List<KyzExpectmatm> findBefor2Month() {
+		// TODO Auto-generated method stub
+		return kyzDao.findBefor2Month();
+	}
+
+	public void addLarge(List<KyzExpectmatm> list) {
+		// TODO Auto-generated method stub
+		kyzDao.addLarge(list);
 	}
 	
 

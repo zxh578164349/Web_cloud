@@ -66,6 +66,7 @@ public class KyzContactLetterDaoImpl extends Basedao implements IKyzContactLette
 			hql.append(" and id.factNo=:factno");
 			map.put("factno", factNo);
 		}
+		hql.append(" and delMk is null ");
 		hql2.append(hql);
 		hql.append(" order by id.factNo,ymExpect desc");
 		int currentPage = PageBean.countCurrentPage(page);
@@ -140,6 +141,32 @@ public class KyzContactLetterDaoImpl extends Basedao implements IKyzContactLette
 		}
 		List<Object[]>list=super.getAllWithNoPage(hql.toString(), map);
 		return list;
+	}
+
+	/*
+	 * 兩箇月之前沒有添加刪除標記的函文20160216
+	 * @see dao.IKyzContactLetterDao#findBefor2Month()
+	 */
+	public List<KyzContactletter> findBefor2Month() {
+		// TODO Auto-generated method stub
+		String hql="from KyzContactletter where ymExpect<to_char(add_months(sysdate,-1),'yyyymmdd') and delMk is null order by ymExpect";
+		return super.findAll(hql, null);
+	}
+
+	public void addLarge(List<KyzContactletter> list) {
+		// TODO Auto-generated method stub
+		try{
+			for(int i=0;i<list.size();i++){
+				list.get(i).setDelMk("no");
+				getSession().merge(list.get(i));
+				if(i%10==0){
+					getSession().flush();
+					getSession().clear();
+				}
+			}
+		}catch(Exception e){
+			System.out.println("dao********************************"+e+"******************************dao");
+		}
 	}
 
 }
