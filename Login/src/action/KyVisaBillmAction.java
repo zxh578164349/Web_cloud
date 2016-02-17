@@ -2422,7 +2422,7 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 		String visaMk=vbm.getVisaMk();
 		 /******************20151113备签人请使用方法findByFactNoAEmailPwd2(String factNo,String email)**********************/
 		//String emailPwd = webuseremailSer.findEmailPWD(factNo,signerNext);//備簽人Email
-		
+		list_email.add(signerNext);
 		if(factNo.equals("GJ")){
 			String visaSinger=visaSer.findVisaSigner(factNo, visaSort);
 			list_email.add(visaSinger);
