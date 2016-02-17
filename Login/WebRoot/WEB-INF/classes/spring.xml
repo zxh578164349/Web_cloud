@@ -91,7 +91,7 @@
 				<prop key="hibernate.dialect">
 					org.hibernate.dialect.Oracle9Dialect
 				</prop>
-				<!--  <prop key="hibernate.show_sql">true</prop> <prop key="hibernate.format_sql">true</prop>-->
+				<prop key="hibernate.show_sql">true</prop> <prop key="hibernate.format_sql">true</prop>
 				<prop key="hibernate.jdbc.batch_size">25</prop><!-- 每25条语句提交一次  -->
 				<prop key="hibernate.jdbc.fetch_size">50</prop><!-- 每次讀取50條數據  -->
 				<prop key="hibernate.autoReconnect">true</prop>

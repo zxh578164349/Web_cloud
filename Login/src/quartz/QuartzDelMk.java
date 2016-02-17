@@ -29,7 +29,7 @@ import services.IWebBussinessletterServices;
  */
 public class QuartzDelMk extends QuartzJobBean{
 
-
+	
 	@Override
 	protected void executeInternal(JobExecutionContext arg0)
 			throws JobExecutionException {
@@ -42,20 +42,20 @@ public class QuartzDelMk extends QuartzJobBean{
 		
 		try{
 			List<KyzExpectmatm>list_kyz=kyzSer.findBefor2Month();			
-			//kyzSer.addLarge(list_kyz);
-			System.out.println(list_kyz.size());
+			kyzSer.addLarge(list_kyz);
+			//System.out.println(list_kyz.size());
 			
 			List<KyzContactletter>list_cletter=kyzletterSer.findBefor2Month();
-			//kyzletterSer.addLarge(list_cletter);
-			System.out.println(list_cletter.size());
+			kyzletterSer.addLarge(list_cletter);
+			//System.out.println(list_cletter.size());
 			
 			List<WebBussinessletter>list_bussletter=webbussletterSer.findBefor2Month();
-			//webbussletterSer.addLarge(list_bussletter);
-			System.out.println(list_bussletter.size());
+			webbussletterSer.addLarge(list_bussletter);
+			//System.out.println(list_bussletter.size());
 			
 			List<KyVisabillm>list_vbm=visabillmSer.findBefor2Month();
-			//visabillmSer.addLarge(list_vbm);
-			System.out.println(list_vbm.size());
+			visabillmSer.addLarge(list_vbm);
+			//System.out.println(list_vbm.size());
 		}catch(Exception e){
 			System.out.println("action*********************************"+e+"**********************************action");
 		}				

@@ -390,7 +390,7 @@ public class SumWebYieldDataAction extends ActionSupport implements ServletRespo
 	public void print() throws IOException{				
 		if(factNo==null||(begin_yymm==null&&end_yymm==null)||(begin_yymm.equals("")&&end_yymm.equals(""))||factNo.equals("nothing")){
 			response.setContentType("text/html;charset=utf-8");
-			response.getWriter().print("<script>alert('�t�O�M������ର��!');history.back()</script>");
+			response.getWriter().print("<script>alert('廠別和日期不能爲空!');history.back()</script>");
 		}else{
 			String yymm=begin_yymm+"-"+end_yymm;			
 			Map<String,Object>map=new HashMap<String,Object>();
