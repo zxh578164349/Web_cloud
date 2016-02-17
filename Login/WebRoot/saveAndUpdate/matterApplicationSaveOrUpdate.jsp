@@ -553,7 +553,7 @@ table.gridtable td.tdcolor {
 						
 						<td class="tdcolor">廠別狀態</td>
 						<td><select name="kyz.factCode"
-							 id="dwrFactArea" onchange="makeBillNo()" style="color:blue">
+							 id="dwrFactArea"  style="color:blue">
 								<option value="">請選擇廠別狀態</option>
 								<s:iterator value="#session.factAreas_login" id="temp">
 									<option value="${temp}">${temp}</option>

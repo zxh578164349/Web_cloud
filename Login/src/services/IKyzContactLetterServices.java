@@ -15,7 +15,28 @@ public interface IKyzContactLetterServices {
 	
 	public List<Object[]>findTitle(String factNo);
 	
-	public List<KyzContactletter>findBefor2Month();//兩箇月之前沒有添加刪除標記的函文20160216
-	public void addLarge(List<KyzContactletter>list);//大批量添加 20160216
+	/**
+	 * 
+	 * @Title: findBefor2Month
+	 * @Description: 兩箇月之前沒有添加刪除標記的函文20160216
+	 * @param @return
+	 * @return List<KyzContactletter>
+	 * @throws
+	 * @author web
+	 * @date 2016/2/17
+	 */
+	public List<KyzContactletter>findBefor2Month();
+
+	/**
+	 * 
+	 * @Title: addLarge
+	 * @Description: 大批量添加 20160216
+	 * @param @param list
+	 * @return void
+	 * @throws
+	 * @author web
+	 * @date 2016/2/17
+	 */
+	public void addLarge(List<KyzContactletter>list);
 
 }

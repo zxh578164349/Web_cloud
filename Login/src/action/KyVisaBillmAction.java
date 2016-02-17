@@ -34,6 +34,7 @@ import services.IKyzVisaFlowServices;
 import services.IWebFactServices;
 import services.IWebTypeServices;
 import services.IWebUserService;
+import services.IWebuserEmailAServices;
 import services.IWebuserEmailServices;
 import util.JasperHelper;
 import util.PageBean;
@@ -64,6 +65,7 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 	private IKyzContactLetterServices kyzletterSer;
 	private IWebUserService webUserService;
 	private IWebuserEmailServices webuseremailSer;
+	private IWebuserEmailAServices webuseremailaSer;
 	private IWebTypeServices webtypeSer;
 	private PageBean bean;
 	private String factNo;
@@ -211,7 +213,21 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 		this.visaSer = visaSer;
 	}
 	
-	
+	public void setWebuseremailaSer(IWebuserEmailAServices webuseremailaSer) {
+		this.webuseremailaSer = webuseremailaSer;
+	}
+	public void setWebtypeSer(IWebTypeServices webtypeSer) {
+		this.webtypeSer = webtypeSer;
+	}
+	public void setWebuseremailSer(IWebuserEmailServices webuseremailSer) {
+		this.webuseremailSer = webuseremailSer;
+	}
+	public void setWebUserService(IWebUserService webUserService) {
+		this.webUserService = webUserService;
+	}
+	public void setKyzletterSer(IKyzContactLetterServices kyzletterSer) {
+		this.kyzletterSer = kyzletterSer;
+	}
 	
 	
 		
@@ -265,18 +281,7 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 		return "beanList1";
 	}*/
 	
-	public void setWebtypeSer(IWebTypeServices webtypeSer) {
-		this.webtypeSer = webtypeSer;
-	}
-	public void setWebuseremailSer(IWebuserEmailServices webuseremailSer) {
-		this.webuseremailSer = webuseremailSer;
-	}
-	public void setWebUserService(IWebUserService webUserService) {
-		this.webUserService = webUserService;
-	}
-	public void setKyzletterSer(IKyzContactLetterServices kyzletterSer) {
-		this.kyzletterSer = kyzletterSer;
-	}
+	
 	
 	/********************************函文审核******************************************/
 	public String findPageBean(){
@@ -2417,11 +2422,26 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 		String visaMk=vbm.getVisaMk();
 		 /******************20151113备签人请使用方法findByFactNoAEmailPwd2(String factNo,String email)**********************/
 		//String emailPwd = webuseremailSer.findEmailPWD(factNo,signerNext);//備簽人Email
-		String emailPwd="";
-		list_email.add(signerNext);
-		if(emailPwd!=null&&!emailPwd.equals("")){
-			list_email.add(emailPwd);
+		
+		if(factNo.equals("GJ")){
+			String visaSinger=visaSer.findVisaSigner(factNo, visaSort);
+			list_email.add(visaSinger);
 		}
+		List<String>list_emailPwd=webuseremailSer.findByFactNoAEmailPwd2(factNo, signerNext);
+			if(list_emailPwd.size()>0){
+				for(int j=0;j<list_emailPwd.size();j++){
+					list_email.add(list_emailPwd.get(j));
+				}
+			}
+		/******************20151113备签人请使用方法findByFactNoAEmailPwd2(String factNo,String email)**********************/
+			
+		/***************************************中途知會人的email20160217********************************************/
+			List<String>list_emailPwd_a=webuseremailaSer.findByEmail(factNo, signerNext, visaSort);
+			for(int k=0;k<list_emailPwd_a.size();k++){
+				list_email.add(list_emailPwd_a.get(k));
+			}
+		/***************************************中途知會人的email20160217********************************************/
+			
 		list_email.add("kyuen@yydg.com.cn");
 		String emailUrl="http://203.85.73.161/Login/vbm_findById_email?visaSort="+visaSort+"&billNo="+billNo
 		         +"&factNo="+factNo+"&email="+signerNext;

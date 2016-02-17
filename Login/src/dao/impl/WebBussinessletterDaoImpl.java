@@ -90,17 +90,27 @@ public class WebBussinessletterDaoImpl extends Basedao implements IWebBussinessl
 		super.delete(letter);
 	}
 
+	/**
+	 * 
+	 * 日期:2016/2/17
+	 * 描述:兩箇月之前沒有添加刪除標記的函文
+	 */
 	public List<WebBussinessletter> findBefor2Month() {
 		// TODO Auto-generated method stub
-		String hql="from WebBussinessletter where createDate<to_char(add_months(sysdate,-1),'yyyymmdd') and delMk is null order by createDate";
+		String hql="from WebBussinessletter where createDate<to_char(add_months(sysdate,-2),'yyyymmdd') and delMk is null order by createDate";
 		return super.findAll(hql, null);
 	}
 
+	/**
+	 * 
+	 * 日期:2016/2/17
+	 * 描述:大批量添加
+	 */
 	public void addLarge(List<WebBussinessletter> list) {
 		// TODO Auto-generated method stub
 		try{
 			for(int i=0;i<list.size();i++){
-				list.get(i).setDelMk("no");
+				list.get(i).setDelMk("1");
 				getSession().merge(list.get(i));
 				if(i%10==0){
 					getSession().flush();
