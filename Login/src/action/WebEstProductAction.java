@@ -299,34 +299,31 @@ public class WebEstProductAction extends ActionSupport implements
 		List listfactno=webFactSer.findAllFact();
 		for(int i=0;i<listfactno.size();i++){//start for
 			Object[] temp_factnos=(Object[])listfactno.get(i);
-			String temp_factno=(String)temp_factnos[0];
+			String temp_factno=(String)temp_factnos[0];//廠別代號
+			String temp_factno2=(String)temp_factnos[1];//廠名
 			List<WebFact>listfactcodes=webFactSer.findFactById_show(temp_factno);
 			for(int k=0;k<listfactcodes.size();k++){
 				String factcode=listfactcodes.get(k).getId().getFactArea();
 				Webestproduct product_zd=estProSer.findById(temp_factno, factcode, yymm, "zd");
 				Webestproduct product_tz=estProSer.findById(temp_factno, factcode, yymm, "tz");
-				if(product_zd!=null){
-					list_zd.add(product_zd);
-					
-				}else{
+				if(product_zd==null){
 					product_zd=new Webestproduct();
 					WebestproductId id=new WebestproductId();
 					id.setFactNo(temp_factno);
 					id.setFactCode(factcode);
-					product_zd.setId(id);
-					list_zd.add(product_zd);
+					product_zd.setId(id);					
 				}
-				if(product_tz!=null){
-					list_tz.add(product_tz);
-				}else{
+				if(product_tz==null){
 					product_tz=new Webestproduct();
 					WebestproductId id=new WebestproductId();
 					id.setFactNo(temp_factno);
 					id.setFactCode(factcode);
 					product_tz.setId(id);
-					list_tz.add(product_tz);
 				}
-				
+				product_zd.setColTemp(temp_factno2);
+				product_tz.setColTemp(temp_factno2);
+				list_zd.add(product_zd);
+				list_tz.add(product_tz);
 			}
 		}//end for
 		List factcodelist=webFactSer.findAllFactCode_show();//�Ҧ��t�O���A

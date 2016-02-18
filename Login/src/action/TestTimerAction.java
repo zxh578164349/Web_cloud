@@ -97,7 +97,7 @@ public class TestTimerAction extends QuartzJobBean {
 		ApplicationContext ac = new ClassPathXmlApplicationContext(
 				new String[] { "spring-action.xml", "spring-dao.xml",
 						"spring.xml", "spring-services.xml" });
-		SimpleDateFormat formatDate = new SimpleDateFormat("yyyy/MM/dd");
+		//SimpleDateFormat formatDate = new SimpleDateFormat("yyyy/MM/dd");
 		IWebYieldDataServices dataSer = (IWebYieldDataServices) ac
 				.getBean("dataSer");
 		Calendar cal = Calendar.getInstance();

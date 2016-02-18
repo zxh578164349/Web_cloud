@@ -414,7 +414,7 @@ public class VWebmachineAction extends ActionSupport implements ServletResponseA
 			list_contentName_person.add("直工離職率(%)");list_unit_person.add("%");
 			list_contentName_person.add("全廠離職率(%)");list_unit_person.add("%");
 			list_contentName_person.add("直接薪資(含加班費+獎金)");list_unit_person.add("USD");
-			list_contentName_person.add("間接薪資(含加班費+獎金)");list_unit_person.add("USd");
+			list_contentName_person.add("間接薪資(含加班費+獎金)");list_unit_person.add("USD");
 			list_contentName_person.add("總薪資(含加班費+獎金)");list_unit_person.add("USD");
 			list_contentName_person.add("總工時");list_unit_person.add("H");
 			list_contentName_person.add("每雙薪資單耗");list_unit_person.add("USD/雙");
@@ -434,11 +434,11 @@ public class VWebmachineAction extends ActionSupport implements ServletResponseA
 			//數據內容名稱和單位
 			List<String>list_contentName_gw=new ArrayList<String>();
 			List<String>list_unit_gw=new ArrayList<String>();
-			list_contentName_gw.add("當月總耗用原料");list_unit_gw.add("kg");
-			list_contentName_gw.add("當月標准用量");list_unit_gw.add("kg");
-			list_contentName_gw.add("總損耗量");list_unit_gw.add("kg");
+			list_contentName_gw.add("當月總耗用原料");list_unit_gw.add("KG");
+			list_contentName_gw.add("當月標准用量");list_unit_gw.add("KG");
+			list_contentName_gw.add("總損耗量");list_unit_gw.add("KG");
 			list_contentName_gw.add("總損耗率");list_unit_gw.add("%");
-			list_contentName_gw.add("無形損耗");list_unit_gw.add("kg");
+			list_contentName_gw.add("無形損耗");list_unit_gw.add("KG");
 			list_contentName_gw.add("無形損耗率");list_unit_gw.add("%");
 			
 			/**
@@ -520,12 +520,12 @@ public class VWebmachineAction extends ActionSupport implements ServletResponseA
 			//數據內容名稱和單位
 			List<String>list_contentName_back=new ArrayList<String>();
 			List<String>list_unit_back=new ArrayList<String>();
-			list_contentName_back.add("粗坯用量");list_unit_back.add("kg");
-			list_contentName_back.add("回頭料重量");list_unit_back.add("kg");
+			list_contentName_back.add("粗坯用量");list_unit_back.add("KG");
+			list_contentName_back.add("回頭料重量");list_unit_back.add("KG");
 			list_contentName_back.add("回頭料%");list_unit_back.add("%");
-			list_contentName_back.add("油壓退料重量");list_unit_back.add("kg");
+			list_contentName_back.add("油壓退料重量");list_unit_back.add("KG");
 			list_contentName_back.add("油壓退料%");list_unit_back.add("%");
-			list_contentName_back.add("合計重量");list_unit_back.add("kg");
+			list_contentName_back.add("合計重量");list_unit_back.add("KG");
 			list_contentName_back.add("回頭率%");list_unit_back.add("%");
 			
 			/**
@@ -3327,11 +3327,11 @@ public class VWebmachineAction extends ActionSupport implements ServletResponseA
 					//數據內容名稱和單位
 					List<String>list_contentName_gw=new ArrayList<String>();
 					List<String>list_unit_gw=new ArrayList<String>();
-					list_contentName_gw.add("當月總耗用原料");list_unit_gw.add("kg");
-					list_contentName_gw.add("當月標准用量");list_unit_gw.add("kg");
-					list_contentName_gw.add("總損耗量");list_unit_gw.add("kg");
+					list_contentName_gw.add("當月總耗用原料");list_unit_gw.add("KG");
+					list_contentName_gw.add("當月標准用量");list_unit_gw.add("KG");
+					list_contentName_gw.add("總損耗量");list_unit_gw.add("KG");
 					list_contentName_gw.add("總損耗率");list_unit_gw.add("%");
-					list_contentName_gw.add("無形損耗");list_unit_gw.add("kg");
+					list_contentName_gw.add("無形損耗");list_unit_gw.add("KG");
 					list_contentName_gw.add("無形損耗率");list_unit_gw.add("%");
 					
 					/**
@@ -3413,12 +3413,12 @@ public class VWebmachineAction extends ActionSupport implements ServletResponseA
 					//數據內容名稱和單位
 					List<String>list_contentName_back=new ArrayList<String>();
 					List<String>list_unit_back=new ArrayList<String>();
-					list_contentName_back.add("粗坯用量");list_unit_back.add("kg");
-					list_contentName_back.add("回頭料重量");list_unit_back.add("kg");
+					list_contentName_back.add("粗坯用量");list_unit_back.add("KG");
+					list_contentName_back.add("回頭料重量");list_unit_back.add("KG");
 					list_contentName_back.add("回頭料%");list_unit_back.add("%");
-					list_contentName_back.add("油壓退料重量");list_unit_back.add("kg");
+					list_contentName_back.add("油壓退料重量");list_unit_back.add("KG");
 					list_contentName_back.add("油壓退料%");list_unit_back.add("%");
-					list_contentName_back.add("合計重量");list_unit_back.add("kg");
+					list_contentName_back.add("合計重量");list_unit_back.add("KG");
 					list_contentName_back.add("回頭率%");list_unit_back.add("%");
 					/**
 					 * 數據源
@@ -4870,11 +4870,11 @@ public class VWebmachineAction extends ActionSupport implements ServletResponseA
 			//數據內容名稱和單位
 			List<String>list_contentName_gw=new ArrayList<String>();
 			List<String>list_unit_gw=new ArrayList<String>();
-			list_contentName_gw.add("當月總耗用原料");list_unit_gw.add("kg");
-			list_contentName_gw.add("當月標准用量");list_unit_gw.add("kg");
-			list_contentName_gw.add("總損耗量");list_unit_gw.add("kg");
+			list_contentName_gw.add("當月總耗用原料");list_unit_gw.add("KG");
+			list_contentName_gw.add("當月標准用量");list_unit_gw.add("KG");
+			list_contentName_gw.add("總損耗量");list_unit_gw.add("KG");
 			list_contentName_gw.add("總損耗率");list_unit_gw.add("%");
-			list_contentName_gw.add("無形損耗");list_unit_gw.add("kg");
+			list_contentName_gw.add("無形損耗");list_unit_gw.add("KG");
 			list_contentName_gw.add("無形損耗率");list_unit_gw.add("%");
 			
 			/**
@@ -4956,12 +4956,12 @@ public class VWebmachineAction extends ActionSupport implements ServletResponseA
 			//數據內容名稱和單位
 			List<String>list_contentName_back=new ArrayList<String>();
 			List<String>list_unit_back=new ArrayList<String>();
-			list_contentName_back.add("粗坯用量");list_unit_back.add("kg");
-			list_contentName_back.add("回頭料重量");list_unit_back.add("kg");
+			list_contentName_back.add("粗坯用量");list_unit_back.add("KG");
+			list_contentName_back.add("回頭料重量");list_unit_back.add("KG");
 			list_contentName_back.add("回頭料%");list_unit_back.add("%");
-			list_contentName_back.add("油壓退料重量");list_unit_back.add("kg");
+			list_contentName_back.add("油壓退料重量");list_unit_back.add("KG");
 			list_contentName_back.add("油壓退料%");list_unit_back.add("%");
-			list_contentName_back.add("合計重量");list_unit_back.add("kg");
+			list_contentName_back.add("合計重量");list_unit_back.add("KG");
 			list_contentName_back.add("回頭率%");list_unit_back.add("%");  
 			
 			/**
@@ -6536,11 +6536,11 @@ public class VWebmachineAction extends ActionSupport implements ServletResponseA
 			//數據內容名稱和單位
 			List<String>list_contentName_gw=new ArrayList<String>();
 			List<String>list_unit_gw=new ArrayList<String>();
-			list_contentName_gw.add("當月總耗用原料");list_unit_gw.add("kg");
-			list_contentName_gw.add("當月標准用量");list_unit_gw.add("kg");
-			list_contentName_gw.add("總損耗量");list_unit_gw.add("kg");
+			list_contentName_gw.add("當月總耗用原料");list_unit_gw.add("KG");
+			list_contentName_gw.add("當月標准用量");list_unit_gw.add("KG");
+			list_contentName_gw.add("總損耗量");list_unit_gw.add("KG");
 			list_contentName_gw.add("總損耗率");list_unit_gw.add("%");
-			list_contentName_gw.add("無形損耗");list_unit_gw.add("kg");
+			list_contentName_gw.add("無形損耗");list_unit_gw.add("KG");
 			list_contentName_gw.add("無形損耗率");list_unit_gw.add("%");
 			
 			/**
@@ -6622,12 +6622,12 @@ public class VWebmachineAction extends ActionSupport implements ServletResponseA
 			//數據內容名稱和單位
 			List<String>list_contentName_back=new ArrayList<String>();
 			List<String>list_unit_back=new ArrayList<String>();
-			list_contentName_back.add("粗坯用量");list_unit_back.add("kg");
-			list_contentName_back.add("回頭料重量");list_unit_back.add("kg");
+			list_contentName_back.add("粗坯用量");list_unit_back.add("KG");
+			list_contentName_back.add("回頭料重量");list_unit_back.add("KG");
 			list_contentName_back.add("回頭料%");list_unit_back.add("%");
-			list_contentName_back.add("油壓退料重量");list_unit_back.add("kg");
+			list_contentName_back.add("油壓退料重量");list_unit_back.add("KG");
 			list_contentName_back.add("油壓退料%");list_unit_back.add("%");
-			list_contentName_back.add("合計重量");list_unit_back.add("kg");
+			list_contentName_back.add("合計重量");list_unit_back.add("KG");
 			list_contentName_back.add("回頭率%");list_unit_back.add("%");
 			
 			/**

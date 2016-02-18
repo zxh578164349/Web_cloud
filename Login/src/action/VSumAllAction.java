@@ -1132,7 +1132,7 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 						for(int c=0;c<length1;c++){
 							HSSFRow row=sheet.getRow(3+c);
 							HSSFCell cell=row.createCell(b);
-							cell.setCellValue("無數據�");
+							cell.setCellValue("無數據");
 							cell.setCellStyle(cs);
 						}
 					}
@@ -1161,7 +1161,7 @@ public class VSumAllAction extends ActionSupport implements ServletResponseAware
 						for(int c=0;c<length2;c++){
 							HSSFRow row=sheet.getRow(3+length1+c);
 							HSSFCell cell=row.createCell(b);
-							cell.setCellValue("�L�ƾ�");
+							cell.setCellValue("無數據");
 							cell.setCellStyle(cs);
 						}
 					}
