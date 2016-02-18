@@ -9,20 +9,21 @@ public class Webestproduct implements java.io.Serializable {
 	// Fields
 
 	private WebestproductId id;
-	private Double hole;//¦³®Ä¤Õ¦ì¼Æ(positiveNumber)
-	private Double machinepower;//¾÷¥x¾Ô¤O(forceAnalysis)
+	private Double hole;//ï¿½ï¿½ï¿½Ä¤Õ¦ï¿½ï¿½(positiveNumber)
+	private Double machinepower;//ï¿½ï¿½ï¿½xï¿½Ô¤O(forceAnalysis)
 	private Double estdays;
-	private Double esteverymodel;//¹w­p¨C¤é¤W¼Ò¼Æ(expectedProduction)
+	private Double esteverymodel;//ï¿½wï¿½pï¿½Cï¿½ï¿½Wï¿½Ò¼ï¿½(expectedProduction)
 	private Double esteverypeople;
 	private Double estmodel;
 	private Double estnum;
-	private Double estpay;//¹w­p½Ð´ÚÂù¼Æ(expectedPayment)
+	private Double estpay;//ï¿½wï¿½pï¿½Ð´ï¿½ï¿½ï¿½ï¿½(expectedPayment)
 	private Double estmoney;
-	private Double totalhole;//Á`¾÷¤Õ(hole)
-	private Double sample;//¤uµ{¼Ë«~(sample)
-	private Double accessories;//»²®Æ(accessories)
-	private Double other;//¨ä¥¦(other)
+	private Double totalhole;//ï¿½`ï¿½ï¿½ï¿½ï¿½(hole)
+	private Double sample;//ï¿½uï¿½{ï¿½Ë«~(sample)
+	private Double accessories;//ï¿½ï¿½ï¿½ï¿½(accessories)
+	private Double other;//ï¿½ä¥¦(other)
 	private String username;
+	private String colTemp;//è‡¨æ™‚åˆ—
 
 	// Constructors
 
@@ -178,6 +179,15 @@ public class Webestproduct implements java.io.Serializable {
 	public void setOther(Double other) {
 		this.other = other;
 	}
+	public String getColTemp() {
+		return colTemp;
+	}
+	public void setColTemp(String colTemp) {
+		this.colTemp = colTemp;
+	}
+	
+	
+	
 	
 
 }
