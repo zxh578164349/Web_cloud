@@ -302,12 +302,12 @@ public class WebYieldDataDaoImpl extends Basedao implements IWebYieldDataDao {
 		return objs;
 	}
 
-	public List<WebYieldData> findYdateSdateToEnddate(String factNo,
+	public long findYdateSdateToEnddate(String factNo,
 			String factCode, String startDate, String endDate) {
 		// TODO Auto-generated method stub
-		String hql="from WebYieldData where id.factNo=? and id.factCode=? and to_char(id.yymmdd,'yyyymmdd') between ? and ?";
+		String hql="select count(id.factNo) from WebYieldData where id.factNo=? and id.factCode=? and to_char(id.yymmdd,'yyyymmdd') between ? and ?";		
 		String[]objs={factNo,factCode,startDate,endDate};
-		return super.findAll(hql, objs);
+		return super.getRowNums(hql, objs);
 	}
 
 	public List<WebYieldData> findYdate(String factNo, String startDate,

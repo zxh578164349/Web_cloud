@@ -77,7 +77,7 @@ jq(document).ajaxStop(function(){
 	} */
 
 	function back() {		
-			window.location.href = "/Login/ydata_findPageBean";		
+			window.location.href = "/Login/ydata_findPageBean3?backIndex=1";		
 	}
 
 	function holiday() {

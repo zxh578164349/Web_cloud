@@ -58,7 +58,8 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 			   if(data=="0"){
 			      layer.msg("提交成功",3,1);
 			   }else{
-			      alert(data.responseText);
+			      //alert(data.responseText);
+			      layer.mag("提交失敗",3,3);
 			   }
 			}
 			

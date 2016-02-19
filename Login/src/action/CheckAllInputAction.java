@@ -18,16 +18,16 @@ import entity.*;
 
 
 public class CheckAllInputAction {
-	private IWebMixPersonServices mixPersonService;//¤H¼Æ¤u®ÉÂ÷Â¾¸ê®Æ
-	private IWebScraptServices scraptService;//¼o«~ºÞ¼Æ¾Ú
-	private IWebProdutedServices produtedService;//¦¨«~½LÂI¸ê®Æ
-	private IWebEstProductServices estProSer;//¹w­p¥Í²£
-	private IWebMix2Services mix2Service;//Àç¦¬¶O¥Î¸ê®Æ
-	private IWebwloServices wloService;//¤ô¹qªo
-	private IWebCostServices costSer;//¸ê§÷¸ê®Æ
-	private IWebBackFeedServices feedSer;//¦^ÀY®Æ
-	private IVSumWebmix1Services vmix1ser;//²£¶q¸ê®Æ
-	private ISumWebYieldDataServices sumydateSer;//²£¶q¸ê®Æ(½LÂI)
+	private IWebMixPersonServices mixPersonService;//ï¿½Hï¿½Æ¤uï¿½ï¿½ï¿½ï¿½Â¾ï¿½ï¿½ï¿½
+	private IWebScraptServices scraptService;//ï¿½oï¿½~ï¿½Þ¼Æ¾ï¿½
+	private IWebProdutedServices produtedService;//ï¿½ï¿½ï¿½~ï¿½Lï¿½Iï¿½ï¿½ï¿½
+	private IWebEstProductServices estProSer;//ï¿½wï¿½pï¿½Í²ï¿½
+	private IWebMix2Services mix2Service;//ï¿½ç¦¬ï¿½Oï¿½Î¸ï¿½ï¿½
+	private IWebwloServices wloService;//ï¿½ï¿½ï¿½qï¿½o
+	private IWebCostServices costSer;//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	private IWebBackFeedServices feedSer;//ï¿½^ï¿½Yï¿½ï¿½
+	private IVSumWebmix1Services vmix1ser;//ï¿½ï¿½ï¿½qï¿½ï¿½ï¿½
+	private ISumWebYieldDataServices sumydateSer;//ï¿½ï¿½ï¿½qï¿½ï¿½ï¿½(ï¿½Lï¿½I)
 	private IWebFactServices webFactSer;
 	private String factNo;
 	private String yymm;
@@ -101,7 +101,7 @@ public class CheckAllInputAction {
 		this.webFactSer = webFactSer;
 	}
 	public void print() throws ParseException{
-		List<Webwlo>list=new ArrayList<Webwlo>();//¥Dªí¶°¦X¡A¥D­n¬O¥Î©ó´`Àô¥´¦L¤lªí¡A¦@­n´`Àô¥´¦L9±i¤lªí¡A¬G¤U­±i¤£¥i¤Ö©ó9¦¸¡A¥i¤j©ó9
+		List<Webwlo>list=new ArrayList<Webwlo>();//ï¿½Dï¿½?ï¿½Xï¿½Aï¿½Dï¿½nï¿½Oï¿½Î©ï¿½`ï¿½ï¿½ï¿½ï¿½ï¿½Lï¿½lï¿½ï¿½Aï¿½@ï¿½nï¿½`ï¿½ï¿½ï¿½ï¿½ï¿½L9ï¿½iï¿½lï¿½ï¿½Aï¿½Gï¿½Uï¿½ï¿½iï¿½ï¿½ï¿½iï¿½Ö©ï¿½9ï¿½ï¿½ï¿½Aï¿½iï¿½jï¿½ï¿½9
 		for(int i=0;i<10;i++){
 			list.add(new Webwlo());
 		}
@@ -268,7 +268,8 @@ public class CheckAllInputAction {
 	public SumWebYieldData getsumydate(String factNo,String factCode,String yymm){
 		SumWebYieldData ydata=sumydateSer.findById(factNo, factCode, yymm);
 		if(ydata==null){
-			ydata=new SumWebYieldData(new SumWebYieldDataId(factNo,factCode,yymm));
+			
+			ydata=new SumWebYieldData(new SumWebYieldDataId(new VWebFact(factNo),factCode,yymm));
 		}
 		return ydata;
 	}

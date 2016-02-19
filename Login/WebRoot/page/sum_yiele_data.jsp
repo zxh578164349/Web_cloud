@@ -120,7 +120,7 @@
 		             </s:if>
 		          　　　　　<s:else>
 		               <td class="td_input">
-		                <input type="text" name="factNo" value="<s:property value='sumydata.id.factNo'/>" style="color:blue" readonly/>
+		                <input type="text" name="factNo" value="<s:property value='sumydata.id.factNo.factNo'/>" style="color:blue" readonly/>
 		               </td> 
 		             </s:else>         		          		          
 		        </tr>
