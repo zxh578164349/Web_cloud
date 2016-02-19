@@ -8,7 +8,7 @@ public class SumWebYieldDataId implements java.io.Serializable {
 
 	// Fields
 
-	private String factNo;
+	private VWebFact factNo;
 	private String factCode;
 	private String yymm;
 
@@ -19,7 +19,7 @@ public class SumWebYieldDataId implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public SumWebYieldDataId(String factNo, String factCode, String yymm) {
+	public SumWebYieldDataId(VWebFact factNo, String factCode, String yymm) {
 		this.factNo = factNo;
 		this.factCode = factCode;
 		this.yymm = yymm;
@@ -27,16 +27,18 @@ public class SumWebYieldDataId implements java.io.Serializable {
 
 	// Property accessors
 
-	public String getFactNo() {
-		return this.factNo;
-	}
-
-	public void setFactNo(String factNo) {
-		this.factNo = factNo;
-	}
+	
 
 	public String getFactCode() {
 		return this.factCode;
+	}
+
+	public VWebFact getFactNo() {
+		return factNo;
+	}
+
+	public void setFactNo(VWebFact factNo) {
+		this.factNo = factNo;
 	}
 
 	public void setFactCode(String factCode) {

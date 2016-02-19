@@ -216,7 +216,7 @@ public class WebYieldDataServicesImple implements IWebYieldDataServices {
 		return dataDao.getSumWebYieldDate(factNo, factCode, startDate, endDate);
 	}
 
-	public List<WebYieldData> findYdateSdateToEnddate(String factNo,
+	public long findYdateSdateToEnddate(String factNo,
 			String factCode, String startDate, String endDate) {
 		// TODO Auto-generated method stub
 		return dataDao.findYdateSdateToEnddate(factNo, factCode, startDate, endDate);

@@ -244,7 +244,7 @@ table.altrowstable caption{
 	     btns:2,
 	     btn:['通過','不通過'],
 	    offset:['10px',''],
-	    area: ['600px', '500px'],    
+	    area: ['620px', '500px'],    
 	    iframe:{src:'bussletter_findById_layer?billNo='+billNo+'& factNo='+factNo+'& itemNo='+itemNo+'& visaSort='+visaSort+'& readMk=N',scrolling:'auto'},
 	     yes:function(){         	      
 	      /*********************** 修改2   20151025 ******************************/

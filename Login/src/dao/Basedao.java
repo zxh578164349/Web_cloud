@@ -199,6 +199,15 @@ public class Basedao extends HibernateDaoSupport {
 			return Integer.valueOf(result);
 			
 }
+	public long getRowNums(String hql,Object[]objs){
+		Query query=getSession().createQuery(hql);
+		if(objs!=null){
+			for(int i=0;i<objs.length;i++){
+				query.setParameter(i, objs[i]);
+			}
+		}
+		return (Long)query.uniqueResult();
+	}
 
 	
 

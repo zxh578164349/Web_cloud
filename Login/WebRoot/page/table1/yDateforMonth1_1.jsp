@@ -81,7 +81,7 @@
 		<s:iterator value="bean.list" status="x" id="temp">
 			<tr onmousemove="click_color(this)" onmouseout="move(this)">
 				<td>${25*(bean.currentPage-1)+x.index+1}</td>
-				<td><s:property value="id.factNo"/></td>
+				<td><s:property value="id.factNo.factNo"/></td>
 				<td><s:property value="id.factCode"/></td>
 				<td><s:property value="id.yymm"/></td>
 				<td><s:property value="%{formatDouble(sumEverydemo)}" />
@@ -114,20 +114,20 @@
 				<td><s:property value="%{formatPer(sumActualdemo,sumStandarddemo)}"/></td>				
 				<td>
 				   <form action="sumwebydata_delete" method="post" id="subform${x.index}" style="float:left">						
-						<input type="hidden" value="<s:property value='id.factNo'/>" name="factNo" />							
+						<input type="hidden" value="<s:property value='id.factNo.factNo'/>" name="factNo" />							
 						<input type="hidden" value="<s:property value='id.yymm'/>" name="yymm" />
 						<input type="hidden" value="<s:property value='startDate'/>" name="startDate"/>
 						<input type="hidden" value="<s:property value='endDate'/>" name="endDate"/>							
 					</form>
 					<form action="sumwebydata_update" method="post" id="2subform${x.index}" style="float:left">						
-						<input type="hidden" value="<s:property value='id.factNo'/>" name="factNo" />							
+						<input type="hidden" value="<s:property value='id.factNo.factNo'/>" name="factNo" />							
 						<input type="hidden" value="<s:property value='id.yymm'/>" name="yymm" />
 						<input type="hidden" value="<s:property value='startDate'/>" name="startDate"/>
 						<input type="hidden" value="<s:property value='endDate'/>" name="endDate"/>													
 					</form>									   			    
 				   <s:if test='#session.loginUser.userread!="1"'>
 				   <s:if test='#session.loginUser.username=="admin"'>
-				   <a href="javascript:showDiv_update('<s:property value='id.factNo'/>','<s:property value='id.factCode'/>','<s:property value='id.yymm'/>')">
+				   <a href="javascript:showDiv_update('<s:property value='id.factNo.factNo'/>','<s:property value='id.factCode'/>','<s:property value='id.yymm'/>')">
 				   <img alt="修改" src="images/icon/edit001.png" title="修改" ></a>
 				   </s:if>
 				   <a href="javascript:void(0)" onclick="isDelete('subform${x.index}')"><img alt="刪除" src="images/icon/delete001.png" title="刪除"></a>	

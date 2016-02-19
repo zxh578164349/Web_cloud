@@ -7,9 +7,13 @@
 <hibernate-mapping>
     <class name="entity.SumWebYieldData" table="SUM_WEB_YIELD_DATA" schema="WEB">
         <composite-id name="id" class="entity.SumWebYieldDataId">
-            <key-property name="factNo" type="java.lang.String">
+            <!-- <key-property name="factNo" type="java.lang.String">
                 <column name="FACT_NO" length="10" />
-            </key-property>
+            </key-property>-->
+            <!-- 20160219表SUM_WEB_YIELD_DATA的廠別字段名 -->
+            <key-many-to-one name="factNo" class="entity.VWebFact">
+                <column name="FACT_NO" length="50" />
+            </key-many-to-one>
             <key-property name="factCode" type="java.lang.String">
                 <column name="FACT_CODE" length="20" />
             </key-property>

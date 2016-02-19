@@ -115,7 +115,7 @@ table.gridtable td {
 			<tr>
 				<td>出差計劃</td>
 				<td colspan="11">
-				  <div style="height:85px;overflow:auto"><s:property value="bussletter.planList" /></div>				     				 					
+				  <textarea style="width:500px;height:240px"><s:property value="bussletter.planList" /></textarea>				     				 					
 				</td>
 
 			</tr>
@@ -136,7 +136,7 @@ table.gridtable td {
 			    <tr><td colspan="12" style="color:red">備註↓↓↓</td></tr>
 				<tr><td colspan="12">									
 					<form id="memo" method="post" action="vbm_add">
-						<textarea rows="8" cols="75" name="memo" id="memo_txt"></textarea>						
+						<textarea style="width:566px;height:150px" name="memo" id="memo_txt"></textarea>						
 						<input type="hidden" name="factNo" value="<s:property value='factNo'/>"/>
 						<input type="hidden" name="billNo" value="<s:property value='billNo'/>"/>
 						<input type="hidden" name="itemNo" value="<s:property value='itemNo'/>"/>

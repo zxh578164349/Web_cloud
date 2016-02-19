@@ -28,6 +28,7 @@ import entity.SumWebYieldData;
 import entity.SumWebYieldDataId;
 import entity.SumWebYieldDataLog;
 import entity.SumWebYieldDataLogId;
+import entity.VWebFact;
 import entity.WebUser;
 import entity.WebYieldData;
 
@@ -142,18 +143,21 @@ public class SumWebYieldDataAction extends ActionSupport implements ServletRespo
 	 */
 	public String add(){
 		List list=webFactSer.findFactCodeByFactNo(factNo);
+		
 		for(int i=0;i<list.size();i++){
 			String factcode=(String)list.get(i);
 			Object[]objs=dataSer.getSumWebYieldDate(factNo, factcode, startDate, endDate);
-			List<WebYieldData>list_ydata=dataSer.findYdateSdateToEnddate(factNo, factcode, startDate, endDate);
+			long list_ydata=dataSer.findYdateSdateToEnddate(factNo, factcode, startDate, endDate);
 			SumWebYieldData ydate=new SumWebYieldData();
 			SumWebYieldDataId id=new SumWebYieldDataId();
-			id.setFactNo(factNo);
+			VWebFact fact=new VWebFact();
+			fact.setFactNo(factNo);
+			id.setFactNo(fact);
 			id.setFactCode(factcode);
 			id.setYymm(yymm);
-			ydate.setId(id);
+			ydate.setId(id);			
 			//objs���n�P�_�A�ҥH�P�_list_ydata.size()(��̪��d�߱��@�ˡA���G�]�O�@�P)
-			if(list_ydata.size()!=0){
+			if(list_ydata!=0){
 				BigDecimal onModulus=new BigDecimal(objs[0]==null?"0":objs[0].toString().toString());
 				BigDecimal personnum=new BigDecimal(objs[1]==null?"0":objs[1].toString().toString());
 				BigDecimal standardOutput=new BigDecimal(objs[2]==null?"0":objs[2].toString());
@@ -183,6 +187,10 @@ public class SumWebYieldDataAction extends ActionSupport implements ServletRespo
 			ydate.setEndDate(endDate);
 			ydate.setUsername(username);
 			sumydateSer.add(ydate);
+			//內存回收20160219
+			ydate=null;
+			id=null;
+			fact=null;
 		}	
 		return "add";
 	}
@@ -200,7 +208,9 @@ public class SumWebYieldDataAction extends ActionSupport implements ServletRespo
 			Object[]objs=dataSer.getSumWebYieldDate(factNo, factcode, startDate, endDate);
 			SumWebYieldData ydate=new SumWebYieldData();
 			SumWebYieldDataId id=new SumWebYieldDataId();
-			id.setFactNo(factNo);
+			VWebFact fact=new VWebFact();
+			fact.setFactNo(factNo);
+			id.setFactNo(fact);
 			id.setFactCode(factcode);
 			id.setYymm(yymm);
 			ydate.setId(id);
@@ -235,6 +245,11 @@ public class SumWebYieldDataAction extends ActionSupport implements ServletRespo
 				ydate.setUsername(username);
 			}
 			sumydateSer.add(ydate);
+			
+			//內存回收20160219
+			ydate=null;
+			id=null;
+			fact=null;
 		}
 	}
 	public String findPageBean(){
@@ -334,7 +349,7 @@ public class SumWebYieldDataAction extends ActionSupport implements ServletRespo
 		List<SumWebYieldData>list=sumydateSer.findAll();
 		for(int i=0;i<list.size();i++){
 			SumWebYieldData sumYdata=list.get(i);
-			String factno=sumYdata.getId().getFactNo();
+			String factno=sumYdata.getId().getFactNo().getFactNo();
 			String factcode=sumYdata.getId().getFactCode();
 			String yymm=sumYdata.getId().getYymm();
 			String startdate=sumYdata.getStartDate();
@@ -343,7 +358,9 @@ public class SumWebYieldDataAction extends ActionSupport implements ServletRespo
 			Object[]objs=dataSer.getSumWebYieldDate(factno, factcode, startdate, enddate);
 			SumWebYieldData ydate=new SumWebYieldData();
 			SumWebYieldDataId id=new SumWebYieldDataId();
-			id.setFactNo(factno);
+			VWebFact fact=new VWebFact();
+			fact.setFactNo(factno);
+			id.setFactNo(fact);
 			id.setFactCode(factcode);
 			id.setYymm(yymm);
 			ydate.setId(id);		
@@ -378,7 +395,12 @@ public class SumWebYieldDataAction extends ActionSupport implements ServletRespo
 				ydate.setUsername(username);
 			}
 			//sumydateSer.delete(sumYdata);                                              20150421
-			sumydateSer.add(ydate);						
+			sumydateSer.add(ydate);
+			
+			//內存回收20160219
+			ydate=null;
+			id=null;
+			fact=null;
 		}
 		return "updateAll";
 	}

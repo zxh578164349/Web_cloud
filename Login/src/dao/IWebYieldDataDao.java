@@ -48,7 +48,7 @@ public interface IWebYieldDataDao {
 			String factcode, String firstyymmdd, String lastyymmdd);
 	public Object[] getSumWebYieldDate(String factNo,String factCode,String startDate,String endDate); 
 	
-	public List<WebYieldData>findYdateSdateToEnddate(String factNo,String factCode,String startDate,String endDate);
+	public long findYdateSdateToEnddate(String factNo,String factCode,String startDate,String endDate);
 	
 	public List<WebYieldData>findYdate(String factNo,String startDate,String endDate);
 	

@@ -31,6 +31,7 @@ import com.opensymphony.xwork2.ActionSupport;
 
 import entity.SumWebYieldData;
 import entity.SumWebYieldDataId;
+import entity.VWebFact;
 import entity.WebUser;
 import entity.WebYieldData;
 import entity.WebYieldDataId;
@@ -596,7 +597,7 @@ public class WebYdataAction extends ActionSupport implements
 			if(list_sumYdata.size()>0){
 				for(int k=0;k<list_sumYdata.size();k++){
 					SumWebYieldData sumYdata=list_sumYdata.get(k);
-					sumydateSer.delete(sumYdata);
+					//sumydateSer.delete(sumYdata);
 					this.add_sumYdata(id.getFactNo(), list_yymm.get(i), sumYdata.getStartDate(), sumYdata.getEndDate());
 				}
 			}							
@@ -756,14 +757,16 @@ public class WebYdataAction extends ActionSupport implements
 		for(int i=0;i<list.size();i++){
 			String factcode=(String)list.get(i);
 			Object[]objs=dataSer.getSumWebYieldDate(factNo, factcode, startDate, endDate);
-			List<WebYieldData>list_ydata=dataSer.findYdateSdateToEnddate(factNo, factcode, startDate, endDate);
+			long list_ydata=dataSer.findYdateSdateToEnddate(factNo, factcode, startDate, endDate);
 			SumWebYieldData ydate=new SumWebYieldData();
 			SumWebYieldDataId id=new SumWebYieldDataId();
-			id.setFactNo(factNo);
+			VWebFact fact=new VWebFact();
+			fact.setFactNo(factNo);
+			id.setFactNo(fact);
 			id.setFactCode(factcode);
 			id.setYymm(yymm);
 			ydate.setId(id);
-			if(list_ydata.size()!=0){
+			if(list_ydata!=0){
 				BigDecimal onModulus=new BigDecimal(objs[0].toString());
 				BigDecimal personnum=new BigDecimal(objs[1].toString());
 				BigDecimal standardOutput=new BigDecimal(objs[2].toString());
@@ -792,6 +795,11 @@ public class WebYdataAction extends ActionSupport implements
 			ydate.setStartDate(startDate);
 			ydate.setEndDate(endDate);
 			sumydateSer.add(ydate);
+			
+			//內存回收20160219
+			ydate=null;
+			id=null;
+			fact=null;
 		}
 	}
 	

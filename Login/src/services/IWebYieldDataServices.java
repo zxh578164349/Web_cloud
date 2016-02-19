@@ -52,7 +52,7 @@ public interface IWebYieldDataServices {
 	public Object[] getSumWebYieldDate(String factNo,String factCode,String startDate,String endDate);
 	
 	public String check(String factNo, String factCode, String yymm);
-	public List<WebYieldData>findYdateSdateToEnddate(String factNo,String factCode,String startDate,String endDate);
+	public long findYdateSdateToEnddate(String factNo,String factCode,String startDate,String endDate);
 	public List<WebYieldData> findYdate(String factNo, String startDate,String endDate);
 	public List<String[]> getFactPrint_show(String date);
 	
