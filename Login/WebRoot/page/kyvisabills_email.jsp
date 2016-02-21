@@ -26,7 +26,7 @@
 </style>
 
 
-<link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
+<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <link href="http://libs.baidu.com/bootstrap/3.0.3/css/style.css" rel="stylesheet">	
 <script src="http://libs.baidu.com/jquery/1.9.1/jquery.min.js"></script>
 <script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
@@ -41,7 +41,7 @@ $(function(){
 		$("#myModal").on("hidden.bs.modal",function(){
 			$(this).removeData("bs.modal");
 		});
-})
+});
 function showDiv(billNo,factNo){
 		$("#myModal").on("show.bs.modal",function(){
 			$(".modal-body").load("kyz_findById_layer",{"billNo":billNo,"factNo":factNo});			
@@ -51,13 +51,13 @@ function showDiv(billNo,factNo){
 function showDiv2(billNo,factNo){
 	     $("#myModal").on("show.bs.modal",function(){
 			 $(".modal-body").load("kyzletter_findById_layer",{"billNo":billNo,"factNo":factNo});
-		 })
+		 });
 }
 
 function showDiv3(billNo){
     $("#myModal").on("show.bs.modal",function(){
 		 $(".modal-body").load("bussletter_findById_layer",{"billNo":billNo});
-	 })
+	 });
 }
 /*全局變量*/
 var factNo_g,billNo_g,itemNo_g,visaSort_g;
@@ -119,7 +119,7 @@ function goNo(){
 	  /* 修改5   20151025 */
 }   
     
-function altRows(id){
+/*function altRows(id){
 	if(document.getElementsByTagName){  
 		
 		var table = document.getElementById(id);  
@@ -137,7 +137,7 @@ function altRows(id){
 
 window.onload=function(){
 	altRows('alternatecolor');
-}
+}*/
 
 
 </script>
