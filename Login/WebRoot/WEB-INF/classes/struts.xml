@@ -739,7 +739,8 @@
 		   <result name="add" type="json">
 		      <param name="root">ajaxResult</param>
 		   </result>
-		   <result name="findById_layer">page/showwebbussletter_layer.jsp</result>		       		
+		   <result name="findById_layer">page/showwebbussletter_layer.jsp</result>
+		   <result name="findById_layer_bootstrap">page/showwebbussletter_layer_bootstrap.jsp</result>		       		
 		</action>
 		<action name="webtabpomfile_*" class="webtabpomfileAction" method="{1}">
 		   <result name="findwebtabpomFileJson" type="json">

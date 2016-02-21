@@ -436,6 +436,11 @@ public class WebBussinessletterAction extends ActionSupport implements ServletRe
 		return "findById_layer";
 	}
 	
+	public String findById_layer_bootstrap(){
+		this.findById();
+		return "findById_layer_bootstrap";
+	}
+	
 
 		
 	
