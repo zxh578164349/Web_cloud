@@ -43,28 +43,7 @@
      obj.style.backgroundColor=defaultColor;
     }
     
-    var jqr=jQuery.noConflict();
-    function showDiv(billNo,factNo){
-    jqr.layer({
-    type: 1,   //0-4的选择,
-    title: '函文內容',
-    //border: [0],
-    closeBtn: [1,true],
-    shade: [0],
-    shadeClose: false,
-     border: [10, 0.3, '#000'],
-   // btns:1,
-    //fadeIn:300,
-    shift:'top',
-    offset:['10px',''],
-    area: ['750px', '560px'],
-    page:{
-      url:'kyz_findById_layer?billNo='+billNo+'& factNo='+factNo    
-    }
-    
-           
-});
-    }
+
     
   function showPage(){
 	    var j=jQuery.noConflict();
@@ -126,8 +105,7 @@
 				<s:property value="colTemp"/>						
 				</td>							
 				<td><s:property value="username" /></td>
-				<td>
-				
+				<td>				
 				<s:if test='#session.loginUser.userread!="1"'>
 					<form action="kyz_findById" method="post" id="subform${x.index}">
 						<input type="hidden" value="<s:property value='id.factNo'/>"
@@ -147,21 +125,21 @@
 					 
 					  <form action="kyz_print2" method="post" id="3subform${x.index}" style="float:left" target="_blank">
 						<input type="hidden" value="<s:property value='id.factNo'/>"
-							name="id.factNo" /> <input type="hidden"
-							value="<s:property value='id.billNo'/>" name="id.billNo" />
+							name="factNo" /> <input type="hidden"
+							value="<s:property value='id.billNo'/>" name="billNo" />
 							<input type="hidden" value="<s:property value='factCode'/>" name="factCode"/>
 							<input type="hidden" value="<s:property value='visaType'/>" name="visaSort"/>
 							<input type="hidden" value="look" name="lookordown"/>											
 					  </form>
 					   <form action="kyz_print2" method="post" id="4subform${x.index}" style="float:left" target="_blank">
 						<input type="hidden" value="<s:property value='id.factNo'/>"
-							name="id.factNo" /> <input type="hidden"
-							value="<s:property value='id.billNo'/>" name="id.billNo" />
+							name="factNo" /> <input type="hidden"
+							value="<s:property value='id.billNo'/>" name="billNo" />
 							<input type="hidden" value="<s:property value='factCode'/>" name="factCode"/>
 							<input type="hidden" value="<s:property value='visaType'/>" name="visaSort"/>
 							<input type="hidden" value="down" name="lookordown"/>											
 					  </form>
-					  <a href="javascript:showDiv('<s:property value='id.billNo'/>','<s:property value='id.factNo'/>')" onclick=""><img alt="查看" src="images/icon/view002.png" title="查看" ></a>
+					  <!-- <a href="javascript:showDiv('<s:property value='id.billNo'/>','<s:property value='id.factNo'/>')" onclick=""><img alt="查看" src="images/icon/view002.png" title="查看" ></a> -->
 					 <a href="javascript:document.getElementById('3subform${x.index}').submit()"><img alt="預覽" src="images/icon/view001.png" title="預覽" ></a>
 					 <a href="javascript:document.getElementById('4subform${x.index}').submit()" ><img alt="打印" src="images/icon/print001.png" title="打印" ></a>						 
 				</td>

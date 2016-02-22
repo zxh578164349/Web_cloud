@@ -280,6 +280,9 @@ public class WebBussinessletterAction extends ActionSupport implements ServletRe
 		}
 		billNo=(String)ActionContext.getContext().getSession().get("public_billNo");
 		factNo=(String)ActionContext.getContext().getSession().get("public_factNo");
+		if(factNo==null||factNo.equals("")){
+			factNo=(String)ActionContext.getContext().getSession().get("factNo");			
+		}
 		bean=webbussletterSer.findPageBean(25, page, billNo, factNo);
 		return result;
 	}

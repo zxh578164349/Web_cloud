@@ -176,7 +176,7 @@ public class AutoSendKyz extends QuartzJobBean{
 				}//end for2
 				
 				/***************************************中途知會人的email********************************************/
-				/*List<String>list_emailPwd_a=webuseremailaSer.findByEmail(factNo, signerNext, visaSort);
+				//List<String>list_emailPwd_a=webuseremailaSer.findByEmail(factNo, signerNext, visaSort);
 				
 				String[] attachFileNames = { "d:/" + billNo + ".pdf" };// 附件
 				if(list_emailPwd_a.size()>0){//if
@@ -197,7 +197,7 @@ public class AutoSendKyz extends QuartzJobBean{
 						sms.sendHtmlMail(mailInfo2);
 					}
 				}//if
-*/				/***************************************中途知會人的email********************************************/
+				/***************************************中途知會人的email********************************************/
 			}//end for1
 		}//end if
 		
@@ -307,8 +307,8 @@ public class AutoSendKyz extends QuartzJobBean{
 	
 	public void print_KyzExpectmatm(String local_factNo,String local_billNo,String local_visaSort,ApplicationContext ac){
 		//ApplicationContext ac=new ClassPathXmlApplicationContext(new String[]{"spring.xml","spring-dao.xml","spring-services.xml"});
-		IWebFactServices webFactSer=(IWebFactServices)ac.getBean("webFactSer");
 		IKyzExpectmatmServices kyzSer=(IKyzExpectmatmServices)ac.getBean("kyzSer");
+		/*IWebFactServices webFactSer=(IWebFactServices)ac.getBean("webFactSer");		
 		IKyVisabillmServices visabillmSer=(IKyVisabillmServices)ac.getBean("visabillmSer");
 		IKyzVisaFlowServices visaSer=(IKyzVisaFlowServices)ac.getBean("visaSer");
 		IKyVisaBillsServices visabillSer=(IKyVisaBillsServices)ac.getBean("visabillSer");
@@ -320,17 +320,17 @@ public class AutoSendKyz extends QuartzJobBean{
 		String factname=webFactSer.selByid(kyzid.getFactNo());
 		String secNo="";//申請單位
 		List<KyzExpectmatm> listkyz=kyzSer.findById_Print(kyzid);
-		/*if(listkyz.size()==0){
+		if(listkyz.size()==0){
 			response.setContentType("text/html;charset=utf-8");
 			response.getWriter().print("<script>alert('單號為"+billNo+"的函文不存在!');window.close()</script>");
 			return null;
-		}*/
-		/**************************簡轉繁體***************************/
+		}
+		*//**************************簡轉繁體***************************//*
 		listkyz.get(0).setSecNo(ZHConverter.convert(listkyz.get(0).getSecNo(), ZHConverter.TRADITIONAL));
 		listkyz.get(0).setUserNm(ZHConverter.convert(listkyz.get(0).getUserNm(), ZHConverter.TRADITIONAL));			
 		listkyz.get(0).setMemoMk(ZHConverter.convert(listkyz.get(0).getMemoMk(), ZHConverter.TRADITIONAL));
 		listkyz.get(0).setMemoSmk(ZHConverter.convert(listkyz.get(0).getMemoSmk(), ZHConverter.TRADITIONAL));
-		/**************************簡轉繁體***************************/
+		*//**************************簡轉繁體***************************//*
 		if(listkyz.get(0).getSecNo()!=null&&!listkyz.get(0).getSecNo().equals("")){
 			secNo="("+listkyz.get(0).getSecNo()+")";
 		}
@@ -348,13 +348,13 @@ public class AutoSendKyz extends QuartzJobBean{
 		List<KyzExpectmats> sub_list = new ArrayList<KyzExpectmats>();
 		KyzExpectmats temp=new KyzExpectmats();
 						
-		/*for(int i=0;i<listkyz.get(0).getKyzExpectmatses().size();i++){
+		for(int i=0;i<listkyz.get(0).getKyzExpectmatses().size();i++){
 			KyzExpectmats kyzs=listkyz.get(0).getKyzExpectmatses().get(i);
 			sub_list.add(kyzs);
 		}
 		while(sub_list.size()<10){
 			sub_list.add(temp);
-		}*/
+		}
 		if(listkyz.get(0).getKyzExpectmatses().size()==1){
 			KyzExpectmats kyzss=listkyz.get(0).getKyzExpectmatses().get(0);
 			if(kyzss.getMatNo()==null&&kyzss.getItemNm()==null||(kyzss.getMatNo().trim().equals("")&&kyzss.getItemNm().trim().equals(""))){
@@ -393,9 +393,9 @@ public class AutoSendKyz extends QuartzJobBean{
 		List<KyVisabills>list_visa=vbm.getKyVisabillses();		
 		List<KyzVisaflow>list_visaflow=visaSer.findByType(local_factNo,local_visaSort);
 		
-		/**
+		*//**
 		 * 如果最後不用審核,則去掉
-		 */
+		 *//*
 		int nos=visabillSer.findBillsWithNo(local_visaSort, local_billNo);
 		if(nos>0){
 			for(int i=0;i<nos;i++){
@@ -448,25 +448,25 @@ public class AutoSendKyz extends QuartzJobBean{
 			visabillstemp.setVisaName(name);
 			list_visabillstemp.add(visabillstemp);
 		}//for
-		/*********************簡體轉繁體******************/
+		*//*********************簡體轉繁體******************//*
 		for(int i=0;i<list_visabillstemp.size();i++){
 			list_visabillstemp.get(i).setMemo(ZHConverter.convert(list_visabillstemp.get(i).getMemo(), ZHConverter.TRADITIONAL));
 			list_visabillstemp.get(i).setVisaName(ZHConverter.convert(list_visabillstemp.get(i).getVisaName(), ZHConverter.TRADITIONAL));
 			list_visabillstemp.get(i).setVisaNameAndMk(ZHConverter.convert(list_visabillstemp.get(i).getVisaNameAndMk(), ZHConverter.TRADITIONAL));
 			list_visabillstemp.get(i).setVisaRank(ZHConverter.convert(list_visabillstemp.get(i).getVisaRank(), ZHConverter.TRADITIONAL));			
 		}
-		/*********************簡體轉繁體******************/
+		*//*********************簡體轉繁體******************//*
 						
 		Map<String,Object> visa_map=new HashMap<String,Object>();
 		visa_map.put("list_visa", list_visabillstemp);
 		
 		map.put("sub_map", sub_map);
 		map.put("visa_map", visa_map);
-		Map<String,Object> main_map=new HashMap<String,Object>();    /*把list（List<KyzExpectmatm> list=kyzSer.findById_Print(id)）放在一个子表,便于打印  20150804*/
+		Map<String,Object> main_map=new HashMap<String,Object>();    把list（List<KyzExpectmatm> list=kyzSer.findById_Print(id)）放在一个子表,便于打印  20150804
 		main_map.put("list_main", listkyz);
 		map.put("main_map", main_map);
 		
-		/*函文附檔*/
+		函文附檔
 		//String pic_file=ServletActionContext.getRequest().getRealPath("/KyzexpFile/"+kyzid.getBillNo()+"/")+"/";//函文附檔圖片路徑
 		String pic_file=new File("d:\\KyzexpFile_backup\\"+kyzid.getBillNo()).toString();//函文附檔圖片路徑(附檔在D盤的路徑)
 		List<KyzExpectmatmFile>list_kyzexpfile=kyzexpfileSer.findByBillNo(kyzid.getBillNo());
@@ -475,8 +475,13 @@ public class AutoSendKyz extends QuartzJobBean{
 			Map<String,Object> file_map=new HashMap<String,Object>();
 			file_map.put("list_kyzexpfile", list_kyzexpfile);
 			map.put("file_map", file_map);
+		}*/
+		Map<String,Object>map_result=kyzSer.print(local_factNo, local_billNo,local_visaSort);
+		if(map_result!=null&&map_result.size()>0){
+			map=(Map<String,Object>)map_result.get("map");
+			List<KyzExpectmatm>listkyz=(List<KyzExpectmatm>)map_result.get("list");
+			this.exportmain("auto", map,"matterApplication.jasper", listkyz,local_billNo, "jasper/audit/");
 		}		
-		this.exportmain("auto", map,"matterApplication.jasper", listkyz,local_billNo, "jasper/audit/");
 	}
 	
 	

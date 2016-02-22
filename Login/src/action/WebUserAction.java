@@ -380,7 +380,7 @@ public class WebUserAction extends ActionSupport implements ServletResponseAware
 	public String login() throws InterruptedException, IOException {
 		ActionContext.getContext().getSession().remove("Email");//清除函文郵件中Email(在KyVisaBillmAction中的findById_email方法)
 		DateFormat format=new SimpleDateFormat("yyyyMMdd");
-		String resultIndex = "chengong";		
+		//String resultIndex = "chengong";		
 		List userList = webUserService.findMoreUser(webUsers.getUsername().trim());					
 		WebUser wUser = webUserService.selByuserId(factNo, webUsers.getUsername().trim());
 		/*用戶名,密碼,廠別都正確*/
