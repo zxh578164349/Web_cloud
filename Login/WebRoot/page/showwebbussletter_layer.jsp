@@ -53,7 +53,7 @@ table.gridtable td {
 	border-style: solid;
 	border-color: #666666;
 	background-color: #ffffff;
-	width:80px;
+	width:60px;
 }
 </style>
 <script type="text/javascript">
@@ -63,11 +63,9 @@ table.gridtable td {
 </head>
 
 <body>
+    <h3>人員出差申請書 </h3>
     <s:if test="bussletter!=null">
-	<table class="gridtable" align="center">
-		<caption style="font-size:30;font-weight:bold">
-		     人員出差申請書 
-		</caption>
+	<table class="gridtable" align="center">		
 		<tbody id="tb_list_info2">
 			<tr>
 				<td>申請單號</td>

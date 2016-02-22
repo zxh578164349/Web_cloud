@@ -30,11 +30,11 @@ public class KyzPettyAction extends ActionSupport{
 	private int page;
 	private PageBean bean;
 	private String yymm;
-	private String dateTime;//¤ä¥I¤é´Á(¶}©l)
-	private String dateTime2;//¤ä¥I¤é´Á(µ²§ô)
-	private String expenseMk;//¶O¥Î©Ê½è(²{ª÷©Î»È¦æ)
-	private String taxmMk;//ºŞµ|ª`°O(µ|±b»P«Dµ|±b)
-	private String lookordown;//¼Ğ°O¬d¬İ©Î¤U¸ü
+	private String dateTime;//æ”¯ä»˜æ—¥æœŸ(é–‹å§‹)
+	private String dateTime2;//æ”¯ä»˜æ—¥æœŸ(çµæŸ)
+	private String expenseMk;//è²»ç”¨æ€§è³ª(ç¾é‡‘æˆ–éŠ€è¡Œ)
+	private String taxmMk;//ç®¡ç¨…æ³¨è¨˜(ç¨…å¸³èˆ‡éç¨…å¸³)
+	private String lookordown;//æ¨™è¨˜æŸ¥çœ‹æˆ–ä¸‹è¼‰
 	private IKyzPettyServices kyzpettySer;
 	private IKyzAcctServices kyzacctSer;
 	private IKyzSecServices kyzsecSer;
@@ -190,14 +190,23 @@ public class KyzPettyAction extends ActionSupport{
 	
 	public void print() throws UnsupportedEncodingException{
 		List<KyzPetty>list=kyzpettySer.findByAnyThing(factNo, dateTime,dateTime2, expenseMk, taxmMk);
+		List<Object[]>login_facts=(List<Object[]>)ActionContext.getContext().getSession().get("login_facts");
+		for(KyzPetty petty:list){
+			for(Object[] objs:login_facts){
+				if(petty.getId().getFactNo().equals(objs[0].toString())){
+					petty.getId().setFactNo(objs[1].toString());
+					break;
+				}
+			}
+		}
 		Map<String,Object>map=new HashMap<String,Object>();
 		String factName="";
 		String title="";
 		if(factNo!=null&&!factNo.equals("")){
 			factName=webFactSer.selByid(factNo);
-			title=factName+"¹s¥Îª÷¤ä¥X©ú²Óªí";
+			title=factName+"é›¶ç”¨é‡‘æ”¯å‡ºæ˜ç´°è¡¨";
 		}else{
-			title="¥[¤[¦³­­¤½¥q¦U¼t¹s¥Îª÷¤ä¥X©ú²Óªí";
+			title="åŠ ä¹…æœ‰é™å…¬å¸å„å» é›¶ç”¨é‡‘æ”¯å‡ºæ˜ç´°è¡¨";
 		}
 		map.put("title", title);
 		map.put("factname", factName);

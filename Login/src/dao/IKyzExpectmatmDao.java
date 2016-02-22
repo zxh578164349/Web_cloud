@@ -21,6 +21,7 @@ public interface IKyzExpectmatmDao {
 	public void delete(KyzExpectmatmId id);
 	public List<KyzExpectmatm> findByFactNo(String factno);
 	public List<KyzExpectmatm> findById_Print(KyzExpectmatmId id);
+	public List<KyzExpectmatm> findById_Print(String factNo,String billNo);
 	
 	public KyzExpectmatm findById2(String billNo);//�ѩ�渹�O�ߤ@��,�ҥH�i�H�Χ@��@���d��
 	public String findTitleByBillno(String billNo);

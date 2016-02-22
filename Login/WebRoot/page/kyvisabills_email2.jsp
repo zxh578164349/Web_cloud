@@ -64,6 +64,24 @@ table.altrowstable caption{
   <![endif]-->	
 <script type="text/javascript">
     function showDiv(billNo,factNo){
+    	var area_w;
+    	var area_h;
+    	var src;    	
+    	if(billNo.substring(0,2)=='EM'){
+    		area_w='650px';
+    		area_h='560px';
+    		src='kyz_findById_layer?billNo='+billNo+'& factNo='+factNo+'& readMk=Y';
+    	}
+    	if(billNo.substring(0,2)=='CM'){
+    		area_w='620px';
+    		area_h='450px';
+    		src='kyzletter_findById_layer?billNo='+billNo+'& factNo='+factNo+'& readMk=Y';
+    	}
+    	if(billNo.substring(0,2)=='BM'){
+    		area_w='620px';
+    		area_h='450px';
+    		src='bussletter_findById_layer?billNo='+billNo+'& readMk=Y';
+    	}
     $.layer({
     type: 2,   //0-4的选择,
     title: '函文內容',
@@ -78,53 +96,34 @@ table.altrowstable caption{
     //shift:'top',
     offset:['10px',''],
     //area: ['800px', '560px'],
-    area:['600px','560px'],
+    area:[area_w,area_h],
     //page:{url:'kyz_findById_layer?billNo='+billNo+'& factNo='+factNo}                   
-    iframe:{src:'kyz_findById_layer?billNo='+billNo+'& factNo='+factNo+'& readMk=Y',scrolling:'auto'}	
+    iframe:{src:src,scrolling:'auto'}	
     /* close:function(){
 		location.reload();
 	} */                 
 });
-    }
-    
-  function showDiv2(billNo,factNo){
-    $.layer({
-    type: 2,   //0-4的选择,
-    title: '函文內容',
-    //border: [0],
-    closeBtn: [1,true],
-    shade: [0],
-    //shade: [0.5, '#000'],
-    shadeClose: false,
-    border: [10, 0.3, '#000'],
-   // btns:1,
-    //fadeIn:300,
-    //shift:'top',
-    offset:['10px',''],
-    area: ['560px', '450px'],
-    //page:{url:'kyzletter_findById_layer?billNo='+billNo+'& factNo='+factNo }
-    iframe:{src:'kyzletter_findById_layer?billNo='+billNo+'& factNo='+factNo+'& readMk=Y',scrolling:'auto'}
-    /* close:function(){
-           location.reload();
-    }  */                            
-});
-    }
-  function showDiv3(billNo){
-	    $.layer({
-	    type: 2,   //0-4的选择,
-	    title: '函文內容',
-	    closeBtn: [1,true],
-	    shade: [0],
-	    shadeClose: false,
-	    border: [10, 0.3, '#000'],
-	    offset:['10px',''],
-	    area: ['560px', '450px'],
-	    iframe:{src:'bussletter_findById_layer?billNo='+billNo+'& readMk=Y',scrolling:'auto'}	                                
-	});
-	    }
-  
-    
+}
+      
     function check(factNo,visaSort,billNo,itemNo){
+    	var area_w;
+    	var area_h;
+    	var src;    	
+    	if(billNo.substring(0,2)=='EM'){
+    		area_w='650px';
+    		area_h='560px';
+    		src='kyz_findById_layer?billNo='+billNo+'& factNo='+factNo+'& itemNo='+itemNo+'& visaSort='+visaSort+'& readMk=N';
+    	}
+    	if(billNo.substring(0,2)=='CM'){
+    		area_w='620px';
+    		area_h='500px';
+    		src='kyzletter_findById_layer?billNo='+billNo+'& factNo='+factNo+'& itemNo='+itemNo+'& visaSort='+visaSort+'& readMk=N';
+    	}
+    	if(billNo.substring(0,2)=='BM'){
+    		area_w='620px';
+    		area_h='500px';
+    		src='bussletter_findById_layer?billNo='+billNo+'& factNo='+factNo+'& itemNo='+itemNo+'& visaSort='+visaSort+'& readMk=N';
+    	}
     $.layer({
     type: 2,   //0-4的选择,
     title: '函文內容',
@@ -139,12 +138,12 @@ table.altrowstable caption{
     //fadeIn:300,
     //shift:'top',
     offset:['10px',''],
-    area: ['600px', '560px'],
+    area: [area_w, area_h],
     //page:{url:'kyz_findById_layer?billNo='+billNo+'& factNo='+factNo},
     //iframe:{src:'kyz_findById_layer?billNo='+billNo+'& factNo='+factNo,scrolling:'auto'},
     
     /* 修改1   20151025 */
-    iframe:{src:'kyz_findById_layer?billNo='+billNo+'& factNo='+factNo+'& itemNo='+itemNo+'& visaSort='+visaSort+'& readMk=N',scrolling:'auto'},
+    iframe:{src:src,scrolling:'auto'},
     /* 修改1   20151025 */
     
      yes:function(){              
@@ -180,101 +179,8 @@ table.altrowstable caption{
      /*********************** 修改2   20151025 ******************************/ 
     }       
 });
-    }
- function check2(factNo,visaSort,billNo,itemNo){
-    $.layer({
-    type: 2,   //0-4的选择,
-    title: '函文內容',
-    //border: [0],
-    border: [10, 0.3, '#000'],
-    closeBtn: [1,true],
-    shade: [0],
-    //shade: [0.5, '#000'],
-    shadeClose: false,
-     btns:2,
-     btn:['通過','不通過'],
-    //fadeIn:300,
-   // shift:'top',
-    offset:['10px',''],
-    area: ['600px', '500px'],
-    //page:{url:'kyzletter_findById_layer?billNo='+billNo+'& factNo='+factNo},
-    iframe:{src:'kyzletter_findById_layer?billNo='+billNo+'& factNo='+factNo+'& itemNo='+itemNo+'& visaSort='+visaSort+'& readMk=N&visa_mk=Y',scrolling:'auto'},
-     yes:function(){         
-      //window.location.href='vbm_add?billNo='+billNo+'& visa_mk=Y'+'& factNo='+factNo+'& itemNo='+itemNo+'& visaSort='+visaSort;
-      /*********************** 修改2   20151025 ******************************/
-     var memo=layer.getChildFrame("#memo_txt",layer.index).val();
-     layer.getChildFrame("#visa_mk",layer.index).val('Y'); 
-     if(memo.length>150){
-        alert("備註不可超過150字");
-     }else{
-         window.location.href='success.html';             
-         layer.getChildFrame("#memo",layer.index).submit();
-         layer.load("正在處理，請稍等...");  
-     }
-     /*********************** 修改2   20151025 ******************************/  
-    },
-    no:function(){
-      //window.location.href='vbm_add?billNo='+billNo+'& visa_mk=T'+'& factNo='+factNo+'& itemNo='+itemNo+'& visaSort='+visaSort;
-      /*********************** 修改2   20151025 ******************************/
-     var memo=layer.getChildFrame("#memo_txt",layer.index).val();
-     layer.getChildFrame("#visa_mk",layer.index).val('T'); 
-     if(memo.length>150){
-        alert("備註不可超過150字");
-     }else{
-        window.location.href='success.html';             
-         layer.getChildFrame("#memo",layer.index).submit();
-         layer.load("正在處理，請稍等...");
-     } 
-     /*********************** 修改2   20151025 ******************************/  
-    }           
-});
-    }
- function check3(factNo,visaSort,billNo,itemNo){
-	    $.layer({
-	    type: 2,   //0-4的选择,
-	    title: '函文內容',
-	    border: [10, 0.3, '#000'],
-	    closeBtn: [1,true],
-	    shade: [0],
-	    shadeClose: false,
-	     btns:2,
-	     btn:['通過','不通過'],
-	    offset:['10px',''],
-	    area: ['620px', '500px'],    
-	    iframe:{src:'bussletter_findById_layer?billNo='+billNo+'& factNo='+factNo+'& itemNo='+itemNo+'& visaSort='+visaSort+'& readMk=N',scrolling:'auto'},
-	     yes:function(){         	      
-	      /*********************** 修改2   20151025 ******************************/
-	      
-	     var memo=layer.getChildFrame("#memo_txt",layer.index).val();
-	     layer.getChildFrame("#visa_mk",layer.index).val('Y');      
-	     if(memo.length>150){
-	         alert("備註不超過150字");
-	     }else{ 
-	          window.location.href='success.html';             
-	         layer.getChildFrame("#memo",layer.index).submit();
-	         layer.load("正在處理，請稍等...");  
-	          
-	     } 
-	     
-	     /*********************** 修改2   20151025 ******************************/  
-	    },
-	    no:function(){
-	      //window.location.href='vbm_add?billNo='+billNo+'& visa_mk=T'+'& factNo='+factNo+'& itemNo='+itemNo+'& visaSort='+visaSort;
-	      /*********************** 修改2   20151025 ******************************/
-	     var memo=layer.getChildFrame("#memo_txt",layer.index).val();
-	     layer.getChildFrame("#visa_mk",layer.index).val('T'); 
-	     if(memo.length>150){
-	        alert("備註不可超過150字");
-	     }else{
-	         window.location.href='success.html';             
-	         layer.getChildFrame("#memo",layer.index).submit();
-	         layer.load("正在處理，請稍等...");   
-	     }
-
-	     /*********************** 修改2   20151025 ******************************/  
-	    }              
-	});
-	    }   
+}
+    
 function altRows(id){
 	if(document.getElementsByTagName){  
 		
@@ -323,17 +229,8 @@ function tips(memo,index){
 		</thead>
 		<tr>
 		  <td>
-		  <s:if test='vbm.id.billNo.substring(0,2)=="EM"'>
 		  <a id="a_show" href="javascript:showDiv('<s:property value='vbm.id.billNo'/>','<s:property value='vbm.id.factNo'/>')">
-		  <s:property value="vbm.id.billNo"/></a>
-		  </s:if>
-		  <s:if test='vbm.id.billNo.substring(0,2)=="CM"'>
-		    <a href="javascript:showDiv2('<s:property value='vbm.id.billNo'/>','<s:property value='vbm.id.factNo'/>')">
-		  <s:property value="vbm.id.billNo"/></a>
-		  </s:if>
-		  <s:if test='vbm.id.billNo.substring(0,2)=="BM"'>
-		     <a href="javascript:showDiv3('<s:property value='vbm.id.billNo'/>')"><s:property value="vbm.id.billNo"/></a>
-		  </s:if>
+		  <s:property value="vbm.id.billNo"/></a>		 
 		  </td> 
 		  <s:iterator value="vbm.kyVisabillses" status="x">
 	       <td>
@@ -342,25 +239,10 @@ function tips(memo,index){
 	       <s:if test='visaMk=="N"'><!-- 1.判斷未審和已審狀態 -->
 	         <s:if test='id.itemNo==vbm.itemNext'><!--2.判斷當前審核人的項次是否為下一位審核人 的項次 -->	           
 	           <s:if test="%{strToLow(visaSigner)==strToLow(email)}"><!-- 3.判斷登錄者是否為當前審核人 -->
-	              <s:if test='vbm.id.billNo.substring(0,2)=="EM"'>
 	              <a style="color:red" href="javascript:check('<s:property value='id.kyVisabillm.id.factNo'/>','<s:property value='id.kyVisabillm.id.visaSort'/>',
 	              '<s:property value='id.kyVisabillm.id.billNo'/>','<s:property value='id.itemNo'/>')">       
 	                                     未審核<s:property value="id.itemNo"/>(當前審核人)
-	              </a>
-	              </s:if>
-	              <s:if test='vbm.id.billNo.substring(0,2)=="CM"'>
-	                <a style="color:red" href="javascript:check2('<s:property value='id.kyVisabillm.id.factNo'/>','<s:property value='id.kyVisabillm.id.visaSort'/>',
-	              '<s:property value='id.kyVisabillm.id.billNo'/>','<s:property value='id.itemNo'/>')">       
-	                                     未審核<s:property value="id.itemNo"/>(當前審核人)
-	              </a>
-	              </s:if>
-	              <s:if test='vbm.id.billNo.substring(0,2)=="BM"'>
-	                <a style="color:red" href="javascript:check3('<s:property value='id.kyVisabillm.id.factNo'/>','<s:property value='id.kyVisabillm.id.visaSort'/>',
-	              '<s:property value='id.kyVisabillm.id.billNo'/>','<s:property value='id.itemNo'/>')">       
-	                                     未審核<s:property value="id.itemNo"/>(當前審核人)
-	              </a>
-	              </s:if>
-	              
+	              </a>	              	              
 	           </s:if>	
 	            <s:else>
 	             <a disabled style="color:grey">未審核</a>

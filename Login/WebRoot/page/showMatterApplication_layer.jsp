@@ -26,9 +26,6 @@
 <meta http-equiv="expires" content="0">
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
-<!-- <link href="css/validate.css" rel="stylesheet" type="text/css" />
-<link rel="stylesheet" type="text/css" href="css/form.css" /> -->
-
 
 <style type="text/css">
 table.gridtable {
@@ -66,12 +63,9 @@ table.gridtable td {
 </head>
 
 <body>
+    <h3>函文申請</h3>
     <s:if test="kyz!=null">
-	<table class="gridtable" align="center">
-		<caption style="font-size:30;font-weight:bold">
-			函文申請<br>
-			<br>
-		</caption>
+	<table class="gridtable" align="center">		
 		<tbody id="tb_list_info2">
 			<tr>
 				<td>標題</td>
@@ -120,11 +114,9 @@ table.gridtable td {
 			</tr>
 			<tr>
 				<td>申請內容</td>
-				<td colspan="9">
-					<div style="height:85px;width:100%;overflow:auto"  >
-						<s:property value="kyz.memoMk" />
-					</div></td>
-
+				<td colspan="9">					
+					<textarea style="width:560px;height:180px"><s:property value="kyz.memoMk" /></textarea>
+					</td>
 			</tr>
 		</tbody>
 
@@ -187,7 +179,7 @@ table.gridtable td {
 			    <tr><td colspan="10" style="color:red">備註↓↓↓</td></tr>
 				<tr><td colspan="10">									
 					<form id="memo" method="post" action="vbm_add">
-						<textarea  name="memo" id="memo_txt" style="width:550px;height:180px;overflow:auto"></textarea>						
+						<textarea  name="memo" id="memo_txt" style="width:620px;height:120px;overflow:auto"></textarea>						
 						<input type="hidden" name="factNo" value="<s:property value='factNo'/>"/>
 						<input type="hidden" name="billNo" value="<s:property value='billNo'/>"/>
 						<input type="hidden" name="itemNo" value="<s:property value='itemNo'/>"/>

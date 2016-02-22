@@ -67,7 +67,7 @@ public class KyzPettyServicesImpl implements IKyzPettyServices{
 		String itemNo="000";
 		int itemNoMax=0;
 		String datetime=payDate.substring(2, payDate.length());
-		String result="BM"+factNo+datetime;
+		String result="PT"+factNo+datetime;
 		List<KyzPetty>list=kyzpettydao.findByFactNoAndPayDate(factNo, payDate);
 		if(list.size()>0){//start if
 			for(int i=0;i<list.size();i++){

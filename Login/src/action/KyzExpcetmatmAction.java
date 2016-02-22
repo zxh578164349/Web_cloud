@@ -603,16 +603,17 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 	}
 	
 	public void print2() throws IOException{
-		print(id,visaSort);
+		print(factNo,billNo,visaSort);
 	}
 
 
 
 	
-	public String print(KyzExpectmatmId id,String sort) throws IOException{
-		String factname=webFactSer.selByid(id.getFactNo());
+	public void print(String factNo,String billNo,String sort) throws IOException{
+		/*String factname=webFactSer.selByid(id.getFactNo());
 		String secNo="";//申請單位
 		List<KyzExpectmatm> list=kyzSer.findById_Print(id);
+		
 		if(list.size()==0){
 			response.setContentType("text/html;charset=utf-8");
 			response.getWriter().print("<script>alert('單號為"+id.getBillNo()+"的函文不存在!');window.close()</script>");
@@ -638,9 +639,7 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 		KyzExpectmats temp=new KyzExpectmats();
 		
 		if(list.get(0).getKyzExpectmatses().size()==1){
-			KyzExpectmats kyzss=list.get(0).getKyzExpectmatses().get(0);
-			String aa=kyzss.getMatNo();
-			String bb=kyzss.getItemNm();
+			KyzExpectmats kyzss=list.get(0).getKyzExpectmatses().get(0);			
 			if(kyzss.getMatNo()==null&&kyzss.getItemNm()==null||(kyzss.getMatNo().trim().equals("")&&kyzss.getItemNm().trim().equals(""))){
 				list.get(0).setKyzsMk("1");
 			}else{
@@ -669,22 +668,16 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 		}
 		
 		
-		Map sub_map=new HashMap<String,Object>();
+		Map<String,Object> sub_map=new HashMap<String,Object>();
 		sub_map.put("sub_list", sub_list);
-		
-		
-		/*String type=list.get(0).getVisaType();
-		List<KyzVisaflow> list_visa=visaSer.findByType(type);*/
-		
+				
 		SimpleDateFormat format=new SimpleDateFormat("yyyyMMdd");
 		KyVisabillm vbm=visabillmSer.findById(id.getFactNo(), sort, id.getBillNo());
 		List<KyVisabills>list_visa=vbm.getKyVisabillses();
-		List<KyzVisaflow>list_visaflow=visaSer.findByType(id.getFactNo(),sort);
-		int num1=list_visa.size();
-		int num2=list_visaflow.size();
-		/**
+		List<KyzVisaflow>list_visaflow=visaSer.findByType(id.getFactNo(),sort);		
+		*//**
 		 * 最後個不用審核的,就去掉
-		 */
+		 *//*
 		int nos=visabillSer.findBillsWithNo(sort, id.getBillNo());
 		if(nos>0){
 			for(int i=0;i<nos;i++){
@@ -692,28 +685,9 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 				list_visaflow.remove(list_visaflow.size()-1);
 			}
 		}
-		/*if(list_visa.get(list_visa.size()-3).getFlowMk().equals("N")){//(>=1000的，後面三個都不要簽核   20150803)
-			list_visa.remove(list_visa.size()-1);
-			list_visa.remove(list_visa.size()-1);
-			list_visa.remove(list_visa.size()-1);
-		}else if(list_visa.get(list_visa.size()-2).getFlowMk().equals("N")){
-			list_visa.remove(list_visa.size()-1);
-			list_visa.remove(list_visa.size()-1);
-		}else if(list_visa.get(list_visa.size()-1).getFlowMk().equals("N")){
-			list_visa.remove(list_visa.size()-1);
-		}
-		if(list_visaflow.get(list_visaflow.size()-3).getFlowMk().equals("N")){//(>=1000的，後面三個都不要簽核   20150803)
-			list_visaflow.remove(list_visaflow.size()-1);
-			list_visaflow.remove(list_visaflow.size()-1);
-			list_visaflow.remove(list_visaflow.size()-1);
-		}else if(list_visaflow.get(list_visaflow.size()-2).getFlowMk().equals("N")){
-			list_visaflow.remove(list_visaflow.size()-1);
-			list_visaflow.remove(list_visaflow.size()-1);
-		}else if(list_visaflow.get(list_visaflow.size()-1).getFlowMk().equals("N")){
-			list_visaflow.remove(list_visaflow.size()-1);
-		}*/
-		List<VisabillsTemp>list_visabillstemp=new ArrayList();		
-		for(int i=0;i<list_visa.size();i++){//for
+		
+		List<VisabillsTemp>list_visabillstemp=new ArrayList<VisabillsTemp>();		
+		for(int i=0;i<list_visa.size()-nos;i++){//for
 			VisabillsTemp visabillstemp=new VisabillsTemp();
 			String visa_result="";
 			String visamk_temp="";
@@ -732,7 +706,6 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 			}
 			String name=list_visa.get(i).getVisaRank();
 			String visamk=list_visa.get(i).getVisaMk();
-			//String visadate=list_visa.get(i).getDateVisa();
 			String memo=list_visa.get(i).getMemo();
 			if(visamk.equals("Y")){
 				visamk_temp="(已審核)";
@@ -758,50 +731,55 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 			list_visabillstemp.add(visabillstemp);
 		}//for
 		
-		/*********************簡體轉繁體******************/
+		*//*********************簡體轉繁體******************//*
 		for(int i=0;i<list_visabillstemp.size();i++){
 			list_visabillstemp.get(i).setMemo(ZHConverter.convert(list_visabillstemp.get(i).getMemo(), ZHConverter.TRADITIONAL));
 			list_visabillstemp.get(i).setVisaName(ZHConverter.convert(list_visabillstemp.get(i).getVisaName(), ZHConverter.TRADITIONAL));
 			list_visabillstemp.get(i).setVisaNameAndMk(ZHConverter.convert(list_visabillstemp.get(i).getVisaNameAndMk(), ZHConverter.TRADITIONAL));
 			list_visabillstemp.get(i).setVisaRank(ZHConverter.convert(list_visabillstemp.get(i).getVisaRank(), ZHConverter.TRADITIONAL));			
 		}
-		/*********************簡體轉繁體******************/
+		*//*********************簡體轉繁體******************//*
 		
 		
 		
-		Map visa_map=new HashMap<String,Object>();
+		Map<String,Object> visa_map=new HashMap<String,Object>();
 		visa_map.put("list_visa", list_visabillstemp);
 		
 		map.put("sub_map", sub_map);
 		map.put("visa_map", visa_map);
 		
-		Map main_map=new HashMap<String,Object>();    /*把list（List<KyzExpectmatm> list=kyzSer.findById_Print(id)）放在一个子表,便于打印  20150804*/
+		Map<String,Object> main_map=new HashMap<String,Object>();    把list（List<KyzExpectmatm> list=kyzSer.findById_Print(id)）放在一个子表,便于打印  20150804
 		main_map.put("list_main", list);
 		map.put("main_map", main_map);
 		
-		/*函文附檔*/
+		函文附檔
 		//String pic_file=ServletActionContext.getRequest().getRealPath("/KyzexpFile/"+id.getBillNo()+"/")+"/";//函文附檔圖片路徑(附檔在項目的路徑)
 		String pic_file=new File("d:\\KyzexpFile_backup\\"+id.getBillNo()).toString();//函文附檔圖片路徑(附檔在D盤的路徑)
 		List<KyzExpectmatmFile>list_kyzexpfile=kyzexpfileSer.findByBillNo(id.getBillNo());
 		if(pic_file!=null&&list_kyzexpfile.size()>0){
 			map.put("pic_file", pic_file+"\\");
-			Map file_map=new HashMap<String,Object>();
+			Map<String,Object> file_map=new HashMap<String,Object>();
 			file_map.put("list_kyzexpfile", list_kyzexpfile);
 			map.put("file_map", file_map);
-		}	
-		
-		if(lookordown!=null){
-			if(lookordown.equals("look")){
-				JasperHelper.exportmain("line", map,"matterApplication.jasper", list,id.getBillNo(), "jasper/audit/");
+		}*/	
+		Map<String,Object>map_result=kyzSer.print(factNo,billNo, sort);		
+		map_result=kyzSer.print(factNo,billNo, sort);
+		if(map_result!=null&&map_result.size()>0){
+			map=(Map<String,Object>)map_result.get("map");
+			List<KyzExpectmatm>list=(List<KyzExpectmatm>)map_result.get("list");
+			if(lookordown!=null){
+				if(lookordown.equals("look")){
+					JasperHelper.exportmain("line", map,"matterApplication.jasper", list,billNo, "jasper/audit/");
+				}else{
+					JasperHelper.exportmain("pdf", map,"matterApplication.jasper", list,billNo, "jasper/audit/");
+				}
 			}else{
-				JasperHelper.exportmain("pdf", map,"matterApplication.jasper", list,id.getBillNo(), "jasper/audit/");
+				JasperHelper.exportmain("pdf", map,"matterApplication.jasper", list,billNo, "jasper/audit/");
 			}
 		}else{
-			JasperHelper.exportmain("pdf", map,"matterApplication.jasper", list,id.getBillNo(), "jasper/audit/");
-		}
-		
-		
-		return null;
+			response.setContentType("text/html;charset=utf-8");
+			response.getWriter().print("<script>alert('單號為"+billNo+"的函文不存在!');window.close()</script>");
+		}						
 				
 	}
 	

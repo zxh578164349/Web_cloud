@@ -36,7 +36,6 @@ table.gridtable {
 	border-style: solid;
 	border-color: #666666;
 	border-collapse: collapse;
-
 }
 
 table.gridtable th {
@@ -53,7 +52,7 @@ table.gridtable td {
 	border-style: solid;
 	border-color: #666666;
 	background-color: #ffffff;
-	width:80px;
+	width:60px;
 }
 </style>
 <script type="text/javascript">
@@ -63,11 +62,9 @@ table.gridtable td {
 </head>
 
 <body>
+    <h3>內部聯絡函申請 </h3>
     <s:if test="kyzletter!=null">
-	<table class="gridtable" align="center">
-		<caption style="font-size:30;font-weight:bold">
-		     內部聯絡函申請 
-		</caption>
+	<table class="gridtable" align="center">		
 		<tbody id="tb_list_info2">
 			<tr>
 				<td>標題</td>
@@ -118,10 +115,8 @@ table.gridtable td {
 			</tr>
 			<tr>
 				<td>申請內容</td>
-				<td colspan="11">
-				  <div style="height:85px;width:100%;overflow:auto">
-				  <s:property value="kyzletter.memoMk" />				  
-				  </div>				     				 					
+				<td colspan="11">				 
+				  <textarea style="width:500px;height:240px"><s:property value="kyzletter.memoMk" /></textarea>				     				 					
 				</td>
 
 			</tr>
@@ -142,7 +137,7 @@ table.gridtable td {
 			    <tr><td colspan="12" style="color:red">備註↓↓↓</td></tr>
 				<tr><td colspan="12">									
 					<form id="memo" method="post" action="vbm_add">
-						<textarea  name="memo" id="memo_txt" style="width:540px;height:180px;overflow:auto"></textarea>						
+						<textarea  name="memo" id="memo_txt" style="width:566px;height:120px;overflow:auto"></textarea>						
 						<input type="hidden" name="factNo" value="<s:property value='factNo'/>"/>
 						<input type="hidden" name="billNo" value="<s:property value='billNo'/>"/>
 						<input type="hidden" name="itemNo" value="<s:property value='itemNo'/>"/>

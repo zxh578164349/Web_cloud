@@ -162,6 +162,17 @@ public class KyzExpcetmatmDaoImpl extends Basedao implements IKyzExpectmatmDao {
 		}
 		return super.findAll(hql, objs);
 	}
+	public List<KyzExpectmatm> findById_Print(String factNo,String billNo) {
+		// TODO Auto-generated method stub
+		String hql="from KyzExpectmatm where id.factNo=? and id.billNo=?";
+		String[]objs={factNo,billNo};
+		List<KyzExpectmatm>list=super.findAll(hql, objs);
+		//�ѨM������D
+		for(int i=0;i<list.size();i++){
+			list.get(i).getKyzExpectmatses().size();
+		}
+		return super.findAll(hql, objs);
+	}
 
 	public KyzExpectmatm findById2(String billNo) {
 		// TODO Auto-generated method stub

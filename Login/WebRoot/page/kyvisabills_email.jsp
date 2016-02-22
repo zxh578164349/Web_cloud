@@ -42,55 +42,41 @@ $(function(){
 			$(this).removeData("bs.modal");
 		});
 });
+function getSrc(billNo){
+	var src;
+	if(billNo.substring(0,2)=="EM"){
+		src="kyz_findById_layer";
+	}
+	if(billNo.substring(0,2)=="CM"){
+		src="kyzletter_findById_layer";
+	}
+	if(billNo.substring(0,2)=="BM"){
+		src="bussletter_findById_layer";
+	}
+	return src;
+}
 function showDiv(billNo,factNo){
+	var src=getSrc(billNo);
+	
 		$("#myModal").on("show.bs.modal",function(){
-			$(".modal-body").load("kyz_findById_layer",{"billNo":billNo,"factNo":factNo});			
+			$(".modal-body").load(src,{"billNo":billNo,"factNo":factNo});			
 		});				
 }
 
-function showDiv2(billNo,factNo){
-	     $("#myModal").on("show.bs.modal",function(){
-			 $(".modal-body").load("kyzletter_findById_layer",{"billNo":billNo,"factNo":factNo});
-		 });
-}
-
-function showDiv3(billNo){
-    $("#myModal").on("show.bs.modal",function(){
-		 $(".modal-body").load("bussletter_findById_layer",{"billNo":billNo});
-	 });
-}
 /*全局變量*/
 var factNo_g,billNo_g,itemNo_g,visaSort_g;
 
 /*****************************20151027更新***********************************/
 function check(factNo,visaSort,billNo,itemNo){
+	var src=getSrc(billNo);
 		 $("#myModalA").on("show.bs.modal",function(){
-			 $(".modal-body").load("kyz_findById_layer",{"billNo":billNo,"factNo":factNo,"visaSort":visaSort,"itemNo":itemNo});
+			 $(".modal-body").load(src,{"billNo":billNo,"factNo":factNo,"visaSort":visaSort,"itemNo":itemNo});
 		 });
 		 factNo_g=factNo;
 		 billNo_g=billNo;
 		 itemNo_g=itemNo;
 		 visaSort_g=visaSort;
 	}
-function check2(factNo,visaSort,billNo,itemNo){
-	     $("#myModalA").on("show.bs.modal",function(){
-			 $(".modal-body").load("kyzletter_findById_layer",{"billNo":billNo,"factNo":factNo,"visaSort":visaSort,"itemNo":itemNo})
-		 });
-		 factNo_g=factNo;
-		 billNo_g=billNo;
-		 itemNo_g=itemNo;
-		 visaSort_g=visaSort;
-}
-/*****************************20151027更新***********************************/
-function check3(factNo,visaSort,billNo,itemNo){
-	     $("#myModalA").on("show.bs.modal",function(){
-			 $(".modal-body").load("bussletter_findById_layer",{"billNo":billNo,"factNo":factNo,"visaSort":visaSort,"itemNo":itemNo})
-		 });
-		 factNo_g=factNo;
-		 billNo_g=billNo;
-		 itemNo_g=itemNo;
-		 visaSort_g=visaSort;
-}
 
 function goYes(){
 	   //window.location.href='vbm_add?billNo='+billNo_g+'& visa_mk=Y'+'& factNo='+factNo_g+'& itemNo='+itemNo_g+'& visaSort='+visaSort_g;
@@ -102,6 +88,7 @@ function goYes(){
 	  }else{
 	     document.getElementById("visa_mk").value="Y";
 	     document.getElementById("memo").submit();
+	     layer.load("正在處理，請稍等...");
 	  } 
 	  
 	  /* 修改5   20151025 */
@@ -115,31 +102,11 @@ function goNo(){
 	  }else{
 	     document.getElementById("visa_mk").value="T";
 	     document.getElementById("memo").submit();
+	     layer.load("正在處理，請稍等...");
 	  }
 	  /* 修改5   20151025 */
 }   
     
-/*function altRows(id){
-	if(document.getElementsByTagName){  
-		
-		var table = document.getElementById(id);  
-		var rows = table.getElementsByTagName("tr"); 
-		 
-		for(i = 0; i < rows.length; i++){          
-			if(i % 2 == 0){
-				rows[i].className = "evenrowcolor";
-			}else{
-				rows[i].className = "oddrowcolor";
-			}      
-		}
-	}
-}
-
-window.onload=function(){
-	altRows('alternatecolor');
-}*/
-
-
 </script>
 </head>
 <body>
@@ -148,33 +115,10 @@ window.onload=function(){
 			<h1>函文審核</h1>
 		</caption>						
 		<tr>
-			<td><s:if test='vbm.id.billNo.substring(0,2)=="EM"'>
-					<!--<a
-						href="javascript:showDiv('<s:property value='vbm.id.billNo'/>','<s:property value='vbm.id.factNo'/>')">
-						<s:property value="vbm.id.billNo" /> </a>
-					-->	
+			<td>					
 					<a href="#myModal" data-toggle="modal" data-target="#myModal" onclick="showDiv('<s:property value='vbm.id.billNo'/>','<s:property value='vbm.id.factNo'/>')">
 		                <s:property value="vbm.id.billNo"/>
-		            </a>	
-				</s:if> 
-				<s:if test='vbm.id.billNo.substring(0,2)=="CM"'>
-					<!--<a
-						href="javascript:showDiv2('<s:property value='vbm.id.billNo'/>','<s:property value='vbm.id.factNo'/>')">
-						<s:property value="vbm.id.billNo" /> </a>
-					-->	
-					<a href="#myModal" data-toggle="modal" data-target="#myModal" onclick="showDiv2('<s:property value='vbm.id.billNo'/>','<s:property value='vbm.id.factNo'/>')">
-					    <s:property value="vbm.id.billNo" />
-					</a>	
-				</s:if>
-				<s:if test='vbm.id.billNo.substring(0,2)=="BM"'>
-					<!--<a
-						href="javascript:showDiv2('<s:property value='vbm.id.billNo'/>','<s:property value='vbm.id.factNo'/>')">
-						<s:property value="vbm.id.billNo" /> </a>
-					-->	
-					<a href="#myModal" data-toggle="modal" data-target="#myModal" onclick="showDiv3('<s:property value='vbm.id.billNo'/>')">
-					    <s:property value="vbm.id.billNo" />
-					</a>	
-				</s:if>
+		            </a>					
 			</td>
 		</tr>
 		<tr>
@@ -194,41 +138,11 @@ window.onload=function(){
 											<s:if test='id.itemNo==vbm.itemNext'>
 												<!--2.判斷當前審核人的項次是否為下一位審核人 的項次 -->
 												<s:if test="%{strToLow(visaSigner)==strToLow(email)}">
-													<!-- 3.判斷登錄者是否為當前審核人 -->
-													<s:if test='vbm.id.billNo.substring(0,2)=="EM"'>
-														<!--<a style="color:red"
-															href="javascript:check('<s:property value='id.kyVisabillm.id.factNo'/>','<s:property value='id.kyVisabillm.id.visaSort'/>',
-	              '<s:property value='id.kyVisabillm.id.billNo'/>','<s:property value='id.itemNo'/>')">
-															未審核<s:property value="id.itemNo" />(當前審核人) </a>
-														-->	
+													<!-- 3.判斷登錄者是否為當前審核人 -->																											
 														<a style="color:red"
 															href="#myModalA" data-toggle="modal" data-target="#myModalA" onclick="check('<s:property value='id.kyVisabillm.id.factNo'/>','<s:property value='id.kyVisabillm.id.visaSort'/>',
 	              '<s:property value='id.kyVisabillm.id.billNo'/>','<s:property value='id.itemNo'/>')">     
-															未審核<s:property value="id.itemNo" />(當前審核人) </a>	
-													</s:if>
-													<s:if test='vbm.id.billNo.substring(0,2)=="CM"'>
-														<!--<a style="color:red"
-															href="javascript:check2('<s:property value='id.kyVisabillm.id.factNo'/>','<s:property value='id.kyVisabillm.id.visaSort'/>',
-	              '<s:property value='id.kyVisabillm.id.billNo'/>','<s:property value='id.itemNo'/>')">
-															未審核<s:property value="id.itemNo" />(當前審核人) </a>
-														-->	
-														<a style="color:red"
-															href="#myModalA" data-toggle="modal" data-target="#myModalA" onclick="check2('<s:property value='id.kyVisabillm.id.factNo'/>','<s:property value='id.kyVisabillm.id.visaSort'/>',
-	              '<s:property value='id.kyVisabillm.id.billNo'/>','<s:property value='id.itemNo'/>')">     
-															未審核<s:property value="id.itemNo" />(當前審核人) </a>	
-													</s:if>
-													<s:if test='vbm.id.billNo.substring(0,2)=="BM"'>
-														<!--<a style="color:red"
-															href="javascript:check2('<s:property value='id.kyVisabillm.id.factNo'/>','<s:property value='id.kyVisabillm.id.visaSort'/>',
-	              '<s:property value='id.kyVisabillm.id.billNo'/>','<s:property value='id.itemNo'/>')">
-															未審核<s:property value="id.itemNo" />(當前審核人) </a>
-														-->	
-														<a style="color:red"
-															href="#myModalA" data-toggle="modal" data-target="#myModalA" onclick="check3('<s:property value='id.kyVisabillm.id.factNo'/>','<s:property value='id.kyVisabillm.id.visaSort'/>',
-	              '<s:property value='id.kyVisabillm.id.billNo'/>','<s:property value='id.itemNo'/>')">     
-															未審核<s:property value="id.itemNo" />(當前審核人) </a>	
-													</s:if>
-
+															未審核<s:property value="id.itemNo" />(當前審核人) </a>													
 												</s:if>
 												<s:else>
 													<a disabled style="color:grey">未審核</a>
@@ -260,41 +174,11 @@ window.onload=function(){
 											<s:if test='id.itemNo==vbm.itemNext'>
 												<!--2.判斷當前審核人的項次是否為下一位審核人 的項次 -->
 												<s:if test="%{strToLow(visaSigner)==strToLow(email)}">
-													<!-- 3.判斷登錄者是否為當前審核人 -->
-													<s:if test='vbm.id.billNo.substring(0,2)=="EM"'>
-														<!--<a style="color:red"
-															href="javascript:check('<s:property value='id.kyVisabillm.id.factNo'/>','<s:property value='id.kyVisabillm.id.visaSort'/>',
-	              '<s:property value='id.kyVisabillm.id.billNo'/>','<s:property value='id.itemNo'/>')">
-															未審核<s:property value="id.itemNo" />(當前審核人) </a>
-														-->	
+													<!-- 3.判斷登錄者是否為當前審核人 -->																												
 															<a style="color:red"
 															href="#myModalA" data-toggle="modal" data-target="#myModalA" onclick="check('<s:property value='id.kyVisabillm.id.factNo'/>','<s:property value='id.kyVisabillm.id.visaSort'/>',
 	              '<s:property value='id.kyVisabillm.id.billNo'/>','<s:property value='id.itemNo'/>')">     
-															<s:property value="id.itemNo" />(當前審核人) </a>
-													</s:if>
-													<s:if test='vbm.id.billNo.substring(0,2)=="CM"'>
-														<!--<a style="color:red"
-															href="javascript:check2('<s:property value='id.kyVisabillm.id.factNo'/>','<s:property value='id.kyVisabillm.id.visaSort'/>',
-	              '<s:property value='id.kyVisabillm.id.billNo'/>','<s:property value='id.itemNo'/>')">
-															未審核<s:property value="id.itemNo" />(當前審核人) </a>
-														-->	
-															<a style="color:red"
-															href="#myModalA" data-toggle="modal" data-target="#myModalA" onclick="check2('<s:property value='id.kyVisabillm.id.factNo'/>','<s:property value='id.kyVisabillm.id.visaSort'/>',
-	              '<s:property value='id.kyVisabillm.id.billNo'/>','<s:property value='id.itemNo'/>')">     
-															<s:property value="id.itemNo" />(當前審核人) </a>
-													</s:if>
-													<s:if test='vbm.id.billNo.substring(0,2)=="BM"'>
-														<!--<a style="color:red"
-															href="javascript:check2('<s:property value='id.kyVisabillm.id.factNo'/>','<s:property value='id.kyVisabillm.id.visaSort'/>',
-	              '<s:property value='id.kyVisabillm.id.billNo'/>','<s:property value='id.itemNo'/>')">
-															未審核<s:property value="id.itemNo" />(當前審核人) </a>
-														-->	
-															<a style="color:red"
-															href="#myModalA" data-toggle="modal" data-target="#myModalA" onclick="check3('<s:property value='id.kyVisabillm.id.factNo'/>','<s:property value='id.kyVisabillm.id.visaSort'/>',
-	              '<s:property value='id.kyVisabillm.id.billNo'/>','<s:property value='id.itemNo'/>')">     
-															<s:property value="id.itemNo" />(當前審核人) </a>
-													</s:if>
-
+															<s:property value="id.itemNo" />(當前審核人) </a>													
 												</s:if>
 												<s:else>
 													<a disabled style="color:grey">未審核</a>
