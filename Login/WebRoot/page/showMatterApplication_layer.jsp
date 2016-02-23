@@ -115,7 +115,7 @@ table.gridtable td {
 			<tr>
 				<td>申請內容</td>
 				<td colspan="9">					
-					<textarea style="width:560px;height:180px"><s:property value="kyz.memoMk" /></textarea>
+					<textarea style="width:560px;height:180px" readonly><s:property value="kyz.memoMk" /></textarea>
 					</td>
 			</tr>
 		</tbody>

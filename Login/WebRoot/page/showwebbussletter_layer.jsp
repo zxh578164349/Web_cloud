@@ -113,7 +113,7 @@ table.gridtable td {
 			<tr>
 				<td>出差計劃</td>
 				<td colspan="11">
-				  <textarea style="width:500px;height:240px"><s:property value="bussletter.planList" /></textarea>				     				 					
+				  <textarea style="width:500px;height:240px" readonly><s:property value="bussletter.planList" /></textarea>				     				 					
 				</td>
 
 			</tr>

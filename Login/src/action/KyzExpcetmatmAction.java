@@ -603,13 +603,13 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 	}
 	
 	public void print2() throws IOException{
-		print(factNo,billNo,visaSort);
+		print(factNo,billNo,visaSort,null);
 	}
 
 
 
 	
-	public void print(String factNo,String billNo,String sort) throws IOException{
+	public void print(String factNo,String billNo,String sort,KyVisabillm vbm) throws IOException{
 		/*String factname=webFactSer.selByid(id.getFactNo());
 		String secNo="";//申請單位
 		List<KyzExpectmatm> list=kyzSer.findById_Print(id);
@@ -762,8 +762,7 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 			file_map.put("list_kyzexpfile", list_kyzexpfile);
 			map.put("file_map", file_map);
 		}*/	
-		Map<String,Object>map_result=kyzSer.print(factNo,billNo, sort);		
-		map_result=kyzSer.print(factNo,billNo, sort);
+		Map<String,Object>map_result=kyzSer.print(factNo,billNo, sort,null);		
 		if(map_result!=null&&map_result.size()>0){
 			map=(Map<String,Object>)map_result.get("map");
 			List<KyzExpectmatm>list=(List<KyzExpectmatm>)map_result.get("list");

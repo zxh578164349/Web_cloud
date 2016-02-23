@@ -80,9 +80,9 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 	private IKyzExpectmatmFileServices kyzexpfileSer;
 	private javax.servlet.http.HttpServletResponse response;
 	private IKyVisaBillsServices visabillSer;
-	private IWebUserService webUserService;
+
 	private IWebuserEmailServices webuseremailSer;
-	private IWebTypeServices webtypeSer;
+
 	private IKyzExpectmatmLogServices kyzExpLogSer;
 	
 	
@@ -235,17 +235,8 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 		this.visabillSer = visabillSer;
 	}
 	
-	public void setWebUserService(IWebUserService webUserService) {
-		this.webUserService = webUserService;
-	}
-	
 	public void setWebuseremailSer(IWebuserEmailServices webuseremailSer) {
 		this.webuseremailSer = webuseremailSer;
-	}
-	
-	
-	public void setWebtypeSer(IWebTypeServices webtypeSer) {
-		this.webtypeSer = webtypeSer;
 	}
 	
 	public void setKyzExpLogSer(IKyzExpectmatmLogServices kyzExpLogSer) {
@@ -442,8 +433,8 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 																	
 			return result;
 }
-	public String print(String factNo,String billNo,String sort) throws IOException{
-		List<KyzContactletter>list=new ArrayList<KyzContactletter>();
+	public void print(String factNo,String billNo,String sort) throws IOException{
+		/*List<KyzContactletter>list=new ArrayList<KyzContactletter>();
 		Map<String,Object>map=new HashMap<String,Object>();
 		String factname=webFactSer.selByid(factNo);
 		String secNo="";//承辦單位
@@ -451,62 +442,41 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 		if(letter==null){
 			response.setContentType("text/html;charset=utf-8");
 			response.getWriter().print("<script>alert('單號為"+billNo+"的函文不存在!');window.close()</script>");
-			return null;
 		}else{
-			/*******************簡轉繁體********************/						
+			*//*******************簡轉繁體********************//*						
 			letter.setUserNm(ZHConverter.convert(letter.getUserNm(), ZHConverter.TRADITIONAL));
 			letter.setToUser(ZHConverter.convert(letter.getToUser(), ZHConverter.TRADITIONAL));
 			letter.setChargeList(ZHConverter.convert(letter.getChargeList(), ZHConverter.TRADITIONAL));
 			letter.setTitle(ZHConverter.convert(letter.getTitle(), ZHConverter.TRADITIONAL));
 			letter.setMemoMk(ZHConverter.convert(letter.getMemoMk(), ZHConverter.TRADITIONAL));
-			/*******************簡轉繁體********************/
+			*//*******************簡轉繁體********************//*
 			list.add(letter);
 		}
 		if(letter.getSecNo()!=null&&!letter.getSecNo().equals("")){
 			secNo="("+letter.getSecNo()+")";
 		}
 		String result=factname+secNo+"內部聯絡函";
-		//map = new HashMap<String, Object>();
 		map.put("SUBREPORT_DIR",ServletActionContext.getRequest().getRealPath("/jasper/audit/")+ "/");
 		map.put("pic", ServletActionContext.getRequest().getRealPath("/jasper/audit/images/")+ "/");//圖片路徑		
 		map.put("pfactno", factNo);
 		map.put("pbillno",billNo);
-		map.put("title",result);
-		/*List<KyzExpectmats> sub_list = new ArrayList<KyzExpectmats>();		
-		KyzExpectmats temp=new KyzExpectmats();	*/	
-				
+		map.put("title",result);				
 		SimpleDateFormat format=new SimpleDateFormat("yyyyMMdd");
 		KyVisabillm vbm=visabillmSer.findById(factNo, sort, billNo);
 		List<KyVisabills>list_visa=vbm.getKyVisabillses();
-		List<KyzVisaflow>list_visaflow=visaSer.findByType(factNo,sort);
-		/*int num1=list_visa.size();
-		int num2=list_visaflow.size();*/
-		/**
+		List<KyzVisaflow>list_visaflow=visaSer.findByType(factNo,sort);		
+		*//**
 		 * 最後個不用審核的,就去掉
-		 */
+		 *//*
 		int nos=visabillSer.findBillsWithNo(sort, billNo);
 		if(nos>0){
 			for(int i=0;i<nos;i++){
 				list_visa.remove(list_visa.size()-1);
 				list_visaflow.remove(list_visaflow.size()-1);
 			}
-		}
-		/*if(list_visa.get(list_visa.size()-3).getFlowMk().equals("N")){//(>=1000的，後面三個都不要簽核   20150803)
-			list_visa.remove(list_visa.size()-1);
-			list_visa.remove(list_visa.size()-1);
-			list_visa.remove(list_visa.size()-1);
-		}else if(list_visa.get(list_visa.size()-1).getFlowMk().equals("N")){
-			list_visa.remove(list_visa.size()-1);
-		}
-		if(list_visaflow.get(list_visaflow.size()-3).getFlowMk().equals("N")){//(>=1000的，後面三個都不要簽核   20150803)
-			list_visaflow.remove(list_visaflow.size()-1);
-			list_visaflow.remove(list_visaflow.size()-1);
-			list_visaflow.remove(list_visaflow.size()-1);
-		}else if(list_visaflow.get(list_visaflow.size()-1).getFlowMk().equals("N")){
-			list_visaflow.remove(list_visaflow.size()-1);
-		}*/
-		List<VisabillsTemp>list_visabillstemp=new ArrayList();		
-		for(int i=0;i<list_visa.size();i++){//for
+		}		
+		List<VisabillsTemp>list_visabillstemp=new ArrayList<VisabillsTemp>();		
+		for(int i=0;i<list_visa.size()-nos;i++){//for
 			VisabillsTemp visabillstemp=new VisabillsTemp();
 			String visa_result="";
 			String visamk_temp="";
@@ -525,7 +495,6 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 			}
 			String name=list_visa.get(i).getVisaRank();
 			String visamk=list_visa.get(i).getVisaMk();
-			//String visadate=list_visa.get(i).getDateVisa();
 			String memo=list_visa.get(i).getMemo();
 			if(visamk.equals("Y")){
 				visamk_temp="(已審核)";
@@ -550,44 +519,46 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 			visabillstemp.setVisaName(name);
 			list_visabillstemp.add(visabillstemp);
 		}//for
-		/*********************簡體轉繁體******************/
+		*//*********************簡體轉繁體******************//*
 		for(int i=0;i<list_visabillstemp.size();i++){
 			list_visabillstemp.get(i).setMemo(ZHConverter.convert(list_visabillstemp.get(i).getMemo(), ZHConverter.TRADITIONAL));
 			list_visabillstemp.get(i).setVisaName(ZHConverter.convert(list_visabillstemp.get(i).getVisaName(), ZHConverter.TRADITIONAL));
 			list_visabillstemp.get(i).setVisaNameAndMk(ZHConverter.convert(list_visabillstemp.get(i).getVisaNameAndMk(), ZHConverter.TRADITIONAL));
 			list_visabillstemp.get(i).setVisaRank(ZHConverter.convert(list_visabillstemp.get(i).getVisaRank(), ZHConverter.TRADITIONAL));			
 		}
-		/*********************簡體轉繁體******************/
+		*//*********************簡體轉繁體******************//*
 		
 		
-		Map visa_map=new HashMap<String,Object>();
+		Map<String,Object> visa_map=new HashMap<String,Object>();
 		visa_map.put("list_visa", list_visabillstemp);
 		
 		map.put("visa_map", visa_map);
-		/*函文附檔*/
+		函文附檔
 		//String pic_file=ServletActionContext.getRequest().getRealPath("/KyzexpFile/"+id.getBillNo()+"/")+"/";//函文附檔圖片路徑(附檔在項目的路徑)
 		String pic_file=new File("d:\\KyzletterexpFile_backup\\"+billNo).toString();//函文附檔圖片路徑(附檔在D盤的路徑)
 		List<KyzExpectmatmFile>list_kyzexpfile=kyzexpfileSer.findByBillNo(billNo);
 		if(pic_file!=null&&list_kyzexpfile.size()>0){
 			map.put("pic_file", pic_file+"\\");
-			Map file_map=new HashMap<String,Object>();
+			Map<String,Object> file_map=new HashMap<String,Object>();
 			file_map.put("list_kyzexpfile", list_kyzexpfile);
 			map.put("file_map", file_map);
-		}	
-				
-		if(lookordown!=null){
-			if(lookordown.equals("look")){
-				JasperHelper.exportmain("line", map,"kyz_contactletter.jasper", list,billNo, "jasper/audit/");
+		}*/	
+		
+		Map<String,Object>map_result=kyzletterSer.print(factNo, billNo, sort,null);
+		if(map_result!=null&&map_result.size()>0){
+			Map<String,Object>map=(Map<String,Object>)map_result.get("map");
+			List<KyzContactletter>list=(List<KyzContactletter>)map_result.get("list");
+			if(lookordown!=null){
+				if(lookordown.equals("look")){
+					JasperHelper.exportmain("line", map,"kyz_contactletter.jasper", list,billNo, "jasper/audit/");
+				}else{
+					JasperHelper.exportmain("pdf", map,"kyz_contactletter.jasper", list,billNo, "jasper/audit/");
+				}
 			}else{
 				JasperHelper.exportmain("pdf", map,"kyz_contactletter.jasper", list,billNo, "jasper/audit/");
 			}
-		}else{
-			JasperHelper.exportmain("pdf", map,"kyz_contactletter.jasper", list,billNo, "jasper/audit/");
 		}
-		
-		
-		return null;
-				
+								
 	}
 	
 	public String findPageBean() {

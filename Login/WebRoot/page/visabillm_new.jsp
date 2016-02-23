@@ -102,18 +102,14 @@
 		});
 	}
 	
-	function check(visaSort,billNo,factNo){
+	/*function check(visaSort,billNo,factNo){
 	     jq.layer({
     type: 1,   //0-4的选择,
     title: '函文內容',
-    //border: [0],
     closeBtn: [1,true],
     shade: [0],
-    //shade: [0.5, '#000'],
     shadeClose: false,
     border: [10, 0.3, '#000'],
-   // btns:1,
-    //fadeIn:300,
     shift:'top',
     offset:['40px',''],
     area: ['800px', '560px'],
@@ -121,7 +117,7 @@
       url:'vbm_findById?visaSort='+visaSort+'&billNo='+billNo+'&factNo='+factNo    
     }                 
 });
-	}
+}*/
    function getType(factNo){
      document.getElementById("dwr_kytype").length=1;
      webtypejs.findByFactNo(factNo,function(x){
@@ -130,6 +126,19 @@
        }
          
      });
+   }
+   
+   function goPreviewOrPrint(subform,billNo){
+	   if(billNo.substring(0,2)=="EM"){
+		   jq("#"+subform).attr("action","kyz_print2");
+	   }
+	   if(billNo.substring(0,2)=="CM"){
+		   jq("#"+subform).attr("action","kyzletter_print2");
+	   }
+	   if(billNo.substring(0,2)=="BM"){
+		   jq("#"+subform).attr("action","bussletter_print2");
+	   }
+	   jq("#"+subform).submit();
    }
 </script>
 <script type='text/javascript' src='/Login/dwr/interface/kyzjs.js'></script>
