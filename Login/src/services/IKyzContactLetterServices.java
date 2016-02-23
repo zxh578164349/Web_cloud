@@ -1,8 +1,10 @@
 package services;
 
 import java.util.List;
+import java.util.Map;
 
 import util.PageBean;
+import entity.KyVisabillm;
 import entity.KyzContactletter;
 
 public interface IKyzContactLetterServices {
@@ -38,5 +40,20 @@ public interface IKyzContactLetterServices {
 	 * @date 2016/2/17
 	 */
 	public void addLarge(List<KyzContactletter>list);
+	
+	/**
+	 * 函文報表實現放在Services層
+	 * @Title: print
+	 * @Description: TODO
+	 * @param @param factNo
+	 * @param @param billNo
+	 * @param @param sort
+	 * @param @return
+	 * @return Map<String,Object>
+	 * @throws
+	 * @author web
+	 * @date 2016/2/23
+	 */
+	public Map<String,Object> print(String factNo,String billNo,String sort,KyVisabillm vbm);
 
 }

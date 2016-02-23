@@ -20,35 +20,7 @@
 <meta http-equiv="description" content="This is my page">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style type="text/css">
-table.altrowstable {
-	font-family: verdana,arial,sans-serif;
-	font-size:14px;
-	color:#333333;
-	border-width: 1px;
-	border-color: #a9c6c9;
-	border-collapse: collapse;
-}
-table.altrowstable th {
-	border-width: 1px;
-	padding: 8px;
-	border-style: solid;
-	border-color: #a9c6c9;
-}
-table.altrowstable td {
-	border-width: 1px;
-	padding: 8px;
-	border-style: solid;
-	border-color: #a9c6c9;
-}
-table.altrowstable caption{
-    font-size:22px;
-}
-.oddrowcolor{
-	background-color:#d4e3e5;
-}
-.evenrowcolor{
-	background-color:#c3dde0;
-}
+
 
 
 </style>
@@ -178,25 +150,7 @@ table.altrowstable caption{
 });
 }
    
-function altRows(id){
-	if(document.getElementsByTagName){  
-		
-		var table = document.getElementById(id);  
-		var rows = table.getElementsByTagName("tr"); 
-		 
-		for(i = 0; i < rows.length; i++){          
-			if(i % 2 == 0){
-				rows[i].className = "evenrowcolor";
-			}else{
-				rows[i].className = "oddrowcolor";
-			}      
-		}
-	}
-}
 
-window.onload=function(){
-	altRows('alternatecolor');
-}
 
 function tips(memo,index){
     if(memo==''){
@@ -217,20 +171,20 @@ function back(){
 </script>
 </head>
 <body>
-<div class="container">
- <div class="row">
-   <div class="col-sm-12 col-md-12 col-lg-12">
-	<table class="altrowstable" id="alternatecolor" align="center">
-	  <caption>函文審核<!-- (<s:property value="#session.loginUser.email"/>) --></caption>
+<div class="container-fluid">
+	<div class="row-fluid">
+		<div class="span12">
+		<h3>函文審核</h3>
+	    <table class="table table-bordered table-condensed">	 
 		<thead>
-		 <tr>
+		 <tr class="info">
 		  <td>函文單號</td>
 		  <s:iterator value="vbm.kyVisabillses">
 		   <td><s:property value="visaRank"/></td>
 		  </s:iterator> 
 		 </tr>
 		</thead>
-		<tr>
+		<tr class="warning">
 		  <td>		  
 		  <a id="a_show" href="javascript:showDiv('<s:property value='vbm.id.billNo'/>','<s:property value='vbm.id.factNo'/>')">
 		  <s:property value="vbm.id.billNo"/></a>		 
@@ -268,7 +222,7 @@ function back(){
 	       </td>
 	      </s:iterator>
 		</tr>
-		<tr><td colspan="<s:property value='vbm.kyVisabillses.size()+1'/>">	
+		<tr class="success"><td colspan="<s:property value='vbm.kyVisabillses.size()+1'/>">	
 		<a href="javascript:back()">返回</a>
 		</td></tr>
 	</table>

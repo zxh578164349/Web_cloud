@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.struts2.ServletActionContext;
 import org.hibernate.SessionFactory;
+import org.springframework.web.context.ContextLoader;
 
 import com.spreada.utils.chinese.ZHConverter;
 
@@ -180,7 +181,7 @@ public class KyzExpectmatmServicesImpl implements IKyzExpectmatmServices {
 	 */
 	
 	
-	public Map<String,Object> print(String factNo,String billNo,String sort) {
+	public Map<String,Object> print(String factNo,String billNo,String sort,KyVisabillm vbm) {
 		// TODO Auto-generated method stub
 		Map<String,Object>map_result=new HashMap<String,Object>();
 		Map<String,Object>map=new HashMap<String,Object>();
@@ -208,8 +209,10 @@ public class KyzExpectmatmServicesImpl implements IKyzExpectmatmServices {
 		}
 		String result=factname+secNo+"費用申請單";
 		map = new HashMap<String, Object>();
-		map.put("SUBREPORT_DIR",ServletActionContext.getRequest().getRealPath("/jasper/audit/")+ "/");
-		map.put("pic", ServletActionContext.getRequest().getRealPath("/jasper/audit/images/")+ "/");//圖片路徑		
+		//map.put("SUBREPORT_DIR",ServletActionContext.getRequest().getRealPath("/jasper/audit/")+ "/");
+		//map.put("pic", ServletActionContext.getRequest().getRealPath("/jasper/audit/images/")+ "/");//圖片路徑
+		map.put("SUBREPORT_DIR",ContextLoader.getCurrentWebApplicationContext().getServletContext().getRealPath("/jasper/audit/")+ "/");
+		map.put("pic", ContextLoader.getCurrentWebApplicationContext().getServletContext().getRealPath("/jasper/audit/images/")+ "/");//圖片路徑
 		map.put("pfactno", factNo);
 		map.put("pbillno",billNo);
 		map.put("title",result);		
@@ -257,7 +260,9 @@ public class KyzExpectmatmServicesImpl implements IKyzExpectmatmServices {
 		List<KyzVisaflow> list_visa=visaSer.findByType(type);*/
 		
 		SimpleDateFormat format=new SimpleDateFormat("yyyyMMdd");
-		KyVisabillm vbm=visabillmDao.findById(factNo, sort, billNo);
+		if(vbm==null){
+			vbm=visabillmDao.findById(factNo, sort, billNo);//用參數傳遞vbm,減少連接數據庫  20160112
+		}		
 		List<KyVisabills>list_visa=vbm.getKyVisabillses();
 		List<KyzVisaflow>list_visaflow=visaDao.findByType(factNo,sort);
 		//int num1=list_visa.size();

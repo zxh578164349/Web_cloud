@@ -298,8 +298,8 @@ public class WebBussinessletterAction extends ActionSupport implements ServletRe
 		return "delete";
 	}
 	
-	public String print(String factNo,String billNo,String visaSort) throws IOException{
-		List<WebBussinessletter>list=new ArrayList<WebBussinessletter>();
+	public void print(String factNo,String billNo,String visaSort) throws IOException{
+		/*List<WebBussinessletter>list=new ArrayList<WebBussinessletter>();
 		Map<String,Object>map=new HashMap<String,Object>();
 		String factname=webFactSer.selByid(factNo);
 		String unit="";//承辦單位
@@ -309,38 +309,34 @@ public class WebBussinessletterAction extends ActionSupport implements ServletRe
 			response.getWriter().print("<script>alert('單號為"+billNo+"的函文不存在!');window.close()</script>");
 			return null;
 		}else{
-			/*******************簡轉繁體********************/						
+			*//*******************簡轉繁體********************//*						
 			letter.setAddress(ZHConverter.convert(letter.getAddress(), ZHConverter.TRADITIONAL));
 			letter.setGAgent(ZHConverter.convert(letter.getGAgent(), ZHConverter.TRADITIONAL));
 			letter.setPlanList(ZHConverter.convert(letter.getPlanList(), ZHConverter.TRADITIONAL));
 			letter.setPosition(ZHConverter.convert(letter.getPosition(), ZHConverter.TRADITIONAL));
 			letter.setUnit(ZHConverter.convert(letter.getUnit(), ZHConverter.TRADITIONAL));
 			letter.setUsername(ZHConverter.convert(letter.getUsername(), ZHConverter.TRADITIONAL));
-			/*******************簡轉繁體********************/
+			*//*******************簡轉繁體********************//*
 			letter.setSumDate((int)GlobalMethod.sumDate(letter.getDateFrom(), letter.getDateEnd())+1);//出差天數
 			list.add(letter);
 		}
 		if(letter.getUnit()!=null&&!letter.getUnit().equals("")){
 			unit="("+letter.getUnit()+")";
 		}
-		String result=factname+unit+"內部聯絡函";
-		//map = new HashMap<String, Object>();
+		String result=factname+unit+"人員出差申請書";
 		map.put("SUBREPORT_DIR",ServletActionContext.getRequest().getRealPath("/jasper/audit/")+ "/");
 		map.put("pic", ServletActionContext.getRequest().getRealPath("/jasper/audit/images/")+ "/");//圖片路徑		
 		map.put("pfactno", factNo);
 		map.put("pbillno",billNo);
-		map.put("title",result);
-		/*List<KyzExpectmats> sub_list = new ArrayList<KyzExpectmats>();		
-		KyzExpectmats temp=new KyzExpectmats();*/		
-				
+		map.put("title",result);						
 		SimpleDateFormat format=new SimpleDateFormat("yyyyMMdd");
 		KyVisabillm vbm=visabillmSer.findById(factNo, visaSort, billNo);
 		List<KyVisabills>list_visa=vbm.getKyVisabillses();
 		List<KyzVisaflow>list_visaflow=visaSer.findByType(factNo,visaSort);
 		
-		/**
+		*//**
 		 * 最後個不用審核的,就去掉
-		 */
+		 *//*
 		int nos=visabillSer.findBillsWithNo(visaSort, billNo);
 		if(nos>0){
 			for(int i=0;i<nos;i++){
@@ -369,7 +365,6 @@ public class WebBussinessletterAction extends ActionSupport implements ServletRe
 			}
 			String name=list_visa.get(i).getVisaRank();
 			String visamk=list_visa.get(i).getVisaMk();
-			//String visadate=list_visa.get(i).getDateVisa();
 			String memo=list_visa.get(i).getMemo();
 			if(visamk.equals("Y")){
 				visamk_temp="(已審核)";
@@ -394,23 +389,23 @@ public class WebBussinessletterAction extends ActionSupport implements ServletRe
 			visabillstemp.setVisaName(name);
 			list_visabillstemp.add(visabillstemp);
 		}//for
-		/*********************簡體轉繁體******************/
+		*//*********************簡體轉繁體******************//*
 		for(int i=0;i<list_visabillstemp.size();i++){
 			list_visabillstemp.get(i).setMemo(ZHConverter.convert(list_visabillstemp.get(i).getMemo(), ZHConverter.TRADITIONAL));
 			list_visabillstemp.get(i).setVisaName(ZHConverter.convert(list_visabillstemp.get(i).getVisaName(), ZHConverter.TRADITIONAL));
 			list_visabillstemp.get(i).setVisaNameAndMk(ZHConverter.convert(list_visabillstemp.get(i).getVisaNameAndMk(), ZHConverter.TRADITIONAL));
 			list_visabillstemp.get(i).setVisaRank(ZHConverter.convert(list_visabillstemp.get(i).getVisaRank(), ZHConverter.TRADITIONAL));			
 		}
-		/*********************簡體轉繁體******************/
+		*//*********************簡體轉繁體******************//*
 		
 		
-		Map visa_map=new HashMap<String,Object>();
+		Map<String,Object> visa_map=new HashMap<String,Object>();
 		visa_map.put("list_visa", list_visabillstemp);
 		
 		map.put("visa_map", visa_map);
-		/*函文附檔*/
+		函文附檔
 		//String pic_file=ServletActionContext.getRequest().getRealPath("/KyzexpFile/"+id.getBillNo()+"/")+"/";//函文附檔圖片路徑(附檔在項目的路徑)
-		/*String pic_file=new File("d:\\KyzletterexpFile_backup\\"+billNo).toString();//函文附檔圖片路徑(附檔在D盤的路徑)		
+		String pic_file=new File("d:\\KyzletterexpFile_backup\\"+billNo).toString();//函文附檔圖片路徑(附檔在D盤的路徑)		
 		List<KyzExpectmatmFile>list_kyzexpfile=kyzexpfileSer.findByBillNo(billNo);
 		if(pic_file!=null&&list_kyzexpfile.size()>0){
 			map.put("pic_file", pic_file+"\\");
@@ -418,17 +413,21 @@ public class WebBussinessletterAction extends ActionSupport implements ServletRe
 			file_map.put("list_kyzexpfile", list_kyzexpfile);
 			map.put("file_map", file_map);
 		}*/	
-				
-		if(lookordown!=null){
-			if(lookordown.equals("look")){
-				JasperHelper.exportmain("line", map,"webbussletter.jasper", list,billNo, "jasper/audit/");
+		
+		Map<String,Object>map_result=webbussletterSer.print(factNo, billNo, visaSort,null);
+		if(map_result!=null&&map_result.size()>0){
+			Map<String,Object>map=(Map<String,Object>)map_result.get("map");
+			List<WebBussinessletter>list=(List<WebBussinessletter>)map_result.get("list");
+			if(lookordown!=null){
+				if(lookordown.equals("look")){
+					JasperHelper.exportmain("line", map,"webbussletter.jasper", list,billNo, "jasper/audit/");
+				}else{
+					JasperHelper.exportmain("pdf", map,"webbussletter.jasper", list,billNo, "jasper/audit/");
+				}
 			}else{
 				JasperHelper.exportmain("pdf", map,"webbussletter.jasper", list,billNo, "jasper/audit/");
 			}
-		}else{
-			JasperHelper.exportmain("pdf", map,"webbussletter.jasper", list,billNo, "jasper/audit/");
-		}				
-		return null;				
+		}										
 	}
 	public void print2() throws IOException{
 		this.print(factNo, billNo, visaSort);

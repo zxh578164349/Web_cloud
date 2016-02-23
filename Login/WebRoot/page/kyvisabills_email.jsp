@@ -110,10 +110,8 @@ function goNo(){
 </script>
 </head>
 <body>
-	<table>
-		<caption>
-			<h1>函文審核</h1>
-		</caption>						
+    <h3 class="single_h3">函文審核</h3>
+	<table>							
 		<tr>
 			<td>					
 					<a href="#myModal" data-toggle="modal" data-target="#myModal" onclick="showDiv('<s:property value='vbm.id.billNo'/>','<s:property value='vbm.id.factNo'/>')">

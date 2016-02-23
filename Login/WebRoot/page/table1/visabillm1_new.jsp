@@ -141,33 +141,19 @@
 					 </form>
 					 <form action="kyz_print2" method="post" id="4subform${x.index}" style="float:left" target="_blank">
 						<input type="hidden" value="<s:property value='id.kyVisabillm.id.factNo'/>"
-							name="id.factNo" /> <input type="hidden"
-							value="<s:property value='id.kyVisabillm.id.billNo'/>" name="id.billNo" />
+							name="factNo" /> <input type="hidden"
+							value="<s:property value='id.kyVisabillm.id.billNo'/>" name="billNo" />
 							<input type="hidden" value="<s:property value='id.kyVisabillm.id.visaSort'/>" name="visaSort"/>
 							<input type="hidden" value="look" name="lookordown"/>						
 					</form>
 					<form action="kyz_print2" method="post" id="5subform${x.index}" style="float:left" target="_blank">
 						<input type="hidden" value="<s:property value='id.kyVisabillm.id.factNo'/>"
-							name="id.factNo" /> <input type="hidden"
-							value="<s:property value='id.kyVisabillm.id.billNo'/>" name="id.billNo" />
-							<input type="hidden" value="<s:property value='id.kyVisabillm.id.visaSort'/>" name="visaSort"/>
-							<input type="hidden" value="down" name="lookordown"/>						
-					</form>
-					
-					<form action="kyzletter_print2" method="post" id="6subform${x.index}" style="float:left" target="_blank">
-						<input type="hidden" value="<s:property value='id.kyVisabillm.id.factNo'/>"
-							name="factNo" /> <input type="hidden"
-							value="<s:property value='id.kyVisabillm.id.billNo'/>" name="billNo" />
-							<input type="hidden" value="<s:property value='id.kyVisabillm.id.visaSort'/>" name="visaSort"/>
-							<input type="hidden" value="look" name="lookordown"/>						
-					</form>
-					<form action="kyzletter_print2" method="post" id="7subform${x.index}" style="float:left" target="_blank">
-						<input type="hidden" value="<s:property value='id.kyVisabillm.id.factNo'/>"
 							name="factNo" /> <input type="hidden"
 							value="<s:property value='id.kyVisabillm.id.billNo'/>" name="billNo" />
 							<input type="hidden" value="<s:property value='id.kyVisabillm.id.visaSort'/>" name="visaSort"/>
 							<input type="hidden" value="down" name="lookordown"/>						
 					</form>
+										
 					<form action="vbm_sendEmail" method="post" id="8subform${x.index}" style="float:left" target="_blank">
 						<input type="hidden" value="<s:property value='id.kyVisabillm.id.factNo'/>"
 							name="factNo" /> <input type="hidden"
@@ -208,22 +194,15 @@
 					 </li>    
 					 </s:else>											   					 					 						
 					 </s:if>
-					 <s:if test='id.kyVisabillm.id.billNo.substring(0,2)=="EM"'>			    					 
+								    					 
 					 <li>
-					 <a href="javascript:document.getElementById('4subform${x.index}').submit()" ><img alt="預覽" src="images/icon/view24.png" title="預覽"><br>預覽</a>
+					 <a href="javascript:goPreviewOrPrint('4subform${x.index}','${temp.id.kyVisabillm.id.billNo}')" ><img alt="預覽" src="images/icon/view24.png" title="預覽"><br>預覽</a>
 					 </li>
 					 <li>
-					 <a href="javascript:document.getElementById('5subform${x.index}').submit()"><img alt="打印" src="images/icon/print24.png" title="打印"><br>打印</a>
+					 <a href="javascript:goPreviewOrPrint('5subform${x.index}','${temp.id.kyVisabillm.id.billNo}')"><img alt="打印" src="images/icon/print24.png" title="打印"><br>打印</a>
 				     </li>
-				     </s:if>	
-				     <s:else>
-				      <li>
-					 <a href="javascript:document.getElementById('6subform${x.index}').submit()" ><img alt="預覽" src="images/icon/view24.png" title="預覽"><br>預覽</a>
-					 </li>
-					 <li>
-					 <a href="javascript:document.getElementById('7subform${x.index}').submit()"><img alt="打印" src="images/icon/print24.png" title="打印"><br>打印</a>
-				     </li>
-				     </s:else>
+				    	
+				     
 				     <s:if test='#session.loginUser.username=="admin"'>
 				     <s:if test='id.kyVisabillm.visaMk=="N"&&id.kyVisabillm.emailMk==null'>
 				        <li>

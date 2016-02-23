@@ -46,6 +46,6 @@ public interface IKyzExpectmatmServices {
 	 * @author web
 	 * @date 2016/2/22
 	 */
-	public Map<String,Object> print(String factNo,String billNo,String sort);
+	public Map<String,Object> print(String factNo,String billNo,String sort,KyVisabillm vbm);
 			
 }
