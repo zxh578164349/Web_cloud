@@ -29,6 +29,8 @@ public class KyVisabillm implements java.io.Serializable {
 	private String delMk;//刪除標記    0或空 未刪除     1刪除
 	private List<KyVisabills> kyVisabillses = new ArrayList<KyVisabills>();
 	private WebBussinessletter webbussletter;
+	private KyzExpectmatm kyzexp;
+	private KyzContactletter kyzletter;
 
 	// Constructors
 
@@ -192,6 +194,22 @@ public class KyVisabillm implements java.io.Serializable {
 
 	public void setDelMk(String delMk) {
 		this.delMk = delMk;
+	}
+
+	public KyzExpectmatm getKyzexp() {
+		return kyzexp;
+	}
+
+	public void setKyzexp(KyzExpectmatm kyzexp) {
+		this.kyzexp = kyzexp;
+	}
+
+	public KyzContactletter getKyzletter() {
+		return kyzletter;
+	}
+
+	public void setKyzletter(KyzContactletter kyzletter) {
+		this.kyzletter = kyzletter;
 	}
 	
 	

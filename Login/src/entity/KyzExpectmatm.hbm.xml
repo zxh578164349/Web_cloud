@@ -10,7 +10,7 @@
             <key-property name="factNo" type="java.lang.String">
                 <column name="FACT_NO" length="6" />
             </key-property>
-            <key-property name="billNo" type="java.lang.String">
+            <key-property name="billNo" type="java.lang.String">          
                 <column name="BILL_NO" length="16" />
             </key-property>
         </composite-id>
@@ -87,5 +87,13 @@
             </key>
             <one-to-many class="entity.KyzExpectmats" />
         </bag>
+        <bag name="list_file" inverse="true" cascade="all">
+            <key>
+               <column name="FACT_NO"/>
+               <column name="BILLNO"/>            
+            </key>
+            <one-to-many class="entity.KyzExpectmatmFile"/>
+        </bag>
+        <one-to-one name="vbm" class="entity.KyVisabillm"  property-ref="kyzexp" cascade="all"/>
     </class>
 </hibernate-mapping>

@@ -24,20 +24,23 @@ public class WebTypeDaoImpl extends Basedao implements IWebTypeDao{
 	public PageBean findPageBean(int page, int pageSize, String factNo) {
 		// TODO Auto-generated method stub
 		StringBuffer hql=new StringBuffer();
+		StringBuffer hql2=new StringBuffer();
 		Map<String,Object>map=new HashMap<String,Object>();
 		int allrow=0;
 		Integer rows=(Integer)ActionContext.getContext().getSession().get("allrow");
 		hql.append("from WebType where 1=1");
+		hql2.append("select count(id.factNo) ");
 		if(factNo!=null&&!factNo.equals("")&&!factNo.equals("tw")){
 			hql.append(" and id.factNo=:factno");
 			map.put("factno", factNo);
 		}
+		hql2.append(hql);
 		hql.append(" order by id.factNo,id.typeNo");
 		int currentPage=PageBean.countCurrentPage(page);		
 		if(rows!=null&&page>0){
 			allrow=rows;
 		}else{
-			allrow=super.getAllRowCount(hql.toString(), map);
+			allrow=super.getAllRowCount2(hql2.toString(), map);
 			ActionContext.getContext().getSession().put("allrow", allrow);
 		}
 		int totalPage=PageBean.countTotalPage(pageSize, allrow);
@@ -45,7 +48,7 @@ public class WebTypeDaoImpl extends Basedao implements IWebTypeDao{
 			currentPage=totalPage;
 		}
 		int offset=PageBean.countOffset(pageSize, currentPage);
-		List<WebType>list=super.queryForPage(hql.toString(), offset, pageSize, map);
+		List<WebType>list=super.queryForPage(hql.toString(), offset, pageSize, map);		
 		PageBean bean=new PageBean();
 		bean.setAllRow(allrow);
 		bean.setCurrentPage(currentPage);
@@ -61,7 +64,10 @@ public class WebTypeDaoImpl extends Basedao implements IWebTypeDao{
 		Query query=getSession().createQuery(hql);
 		query.setString(0, factNo);
 		query.setString(1, typeNo);
-		WebType type=(WebType)query.uniqueResult();
+		WebType type=(WebType)query.uniqueResult();		
+		if(type!=null){
+			type.getList_kyzexp().size();
+		}		
 		return type;
 	}
 

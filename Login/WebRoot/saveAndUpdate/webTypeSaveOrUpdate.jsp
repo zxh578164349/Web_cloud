@@ -60,6 +60,7 @@ jq(document).ajaxStop(function(){
        var typeno=document.getElementById("typeno").value;
        if(factno!=""&&typeno!=""){
           webtypejs.findById(factno,typeno,function(x){
+        	  alert(x);
               if(x!=null){
               alert("該類別已存在");
               document.getElementById("sub").disabled=true;

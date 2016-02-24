@@ -12,6 +12,7 @@ public class KyzExpectmatmFile implements java.io.Serializable {
 	private String billno;
 	private String filename;
 	private String username;
+	private String factNo;
 
 	// Constructors
 
@@ -65,6 +66,16 @@ public class KyzExpectmatmFile implements java.io.Serializable {
 	public void setUsername(String username) {
 		this.username = username;
 	}
+
+	public String getFactNo() {
+		return factNo;
+	}
+
+	public void setFactNo(String factNo) {
+		this.factNo = factNo;
+	}
+
+	
 	
 
 }

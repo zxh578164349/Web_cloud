@@ -39,7 +39,10 @@ public class KyzExpectmatm implements java.io.Serializable {
 	private String colTemp;
 	private String kyzsMk;
 	private String delMk;//刪除標記        0或空 未刪除     1刪除
+	private String visaTypeM;//類別大類
 	private List<KyzExpectmats> kyzExpectmatses = new ArrayList();
+	private KyVisabillm vbm;
+	private List<KyzExpectmatmFile>list_file;
 
 	// Constructors
 
@@ -290,6 +293,30 @@ public class KyzExpectmatm implements java.io.Serializable {
 
 	public void setDelMk(String delMk) {
 		this.delMk = delMk;
+	}
+
+	public String getVisaTypeM() {
+		return visaTypeM;
+	}
+
+	public void setVisaTypeM(String visaTypeM) {
+		this.visaTypeM = visaTypeM;
+	}
+
+	public KyVisabillm getVbm() {
+		return vbm;
+	}
+
+	public void setVbm(KyVisabillm vbm) {
+		this.vbm = vbm;
+	}
+
+	public List<KyzExpectmatmFile> getList_file() {
+		return list_file;
+	}
+
+	public void setList_file(List<KyzExpectmatmFile> list_file) {
+		this.list_file = list_file;
 	}
 	
 	

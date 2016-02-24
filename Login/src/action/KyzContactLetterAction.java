@@ -251,12 +251,12 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 					String filetype=filesFileName.get(i).substring(filesFileName.get(i).lastIndexOf(".")).toLowerCase();
 					if(filesize>5120000){
 						response.setContentType("text/html;charset=utf-8");
-						response.getWriter().print("<script>alert('文件不可超過5M!');window.opener=null;window.open('','_self');window.close()</script>");
+						response.getWriter().print("<script>alert('文件不可超過5M!');history.back()</script>");
 						return null;
 					}
 					if(!filetype.equals(".bmp")&&!filetype.equals(".jpg")&&!filetype.equals(".jpeg")&&!filetype.equals(".gif")&&!filetype.equals(".tif")){
 						response.setContentType("text/html;charset=utf-8");
-						response.getWriter().print("<script>alert('只允許jpg,bmp,jpeg,gif,tif圖片');window.opener=null;window.open('','_self');window.close()</script>");
+						response.getWriter().print("<script>alert('只允許jpg,bmp,jpeg,gif,tif圖片');history.back()</script>");
 						return null;
 					}
 					
@@ -293,6 +293,7 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 					WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
 					String username=user.getName();
 					kyzexpFile.setUsername(username);
+					kyzexpFile.setFactNo(kyzletter.getId().getFactNo());
 					kyzexpfileSer.add(kyzexpFile);
 				}
 			}
@@ -305,6 +306,7 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 				String billno=kyzletter.getId().getBillNo();
 				KyzContactletter letter=kyzletterSer.findById(factno, billno);
 				if(letter==null){
+					kyzletter.setVisaTypeM(kyzletter.getVisaType().substring(0,2));
 					kyzletterSer.add(kyzletter);
 					KyVisabillm vbm=visabillmSer.findById(kyzletter.getId().getFactNo(), kyzletter.getVisaType(), kyzletter.getId().getBillNo());
 					result="add";
@@ -412,6 +414,7 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 				
 			}//end if
 			else{
+				kyzletter.setVisaTypeM(kyzletter.getVisaType().substring(0,2));
 				kyzletterSer.add(kyzletter);
 				result="update";
 				ajaxResult="0";
@@ -692,25 +695,29 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 	}
 	
 	public String delete(){
-		kyzletterSer.delete(factNo, billNo);
-		visabillmSer.delete(factNo, visaSort, billNo);
-		List<KyzExpectmatmFile>list=kyzexpfileSer.findByBillNo(billNo);
-		if(list.size()>0){
-			for(int i=0;i<list.size();i++){
-				kyzexpfileSer.delete(list.get(i));				
-			}			
-		}
-		File file=new File("d:\\KyzletterexpFile_backup\\"+billNo);
-		if(file.exists()){
-			this.deletefile(file);//引用下面刪除文件夾方法
-		}
-		/*********************刪除記錄**************************/
-		KyzExpectmatmLog log=new KyzExpectmatmLog();
-		log.setBillNo(billNo);
-		log.setDeldate(new Date());
-		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
-		log.setUsername(user.getUsername());
-		kyzExpLogSer.add(log);
+		try{
+			kyzletterSer.delete(factNo, billNo);
+			/*visabillmSer.delete(factNo, visaSort, billNo);
+			List<KyzExpectmatmFile>list=kyzexpfileSer.findByBillNo(billNo);
+			if(list.size()>0){
+				for(int i=0;i<list.size();i++){
+					kyzexpfileSer.delete(list.get(i));				
+				}			
+			}*/
+			File file=new File("d:\\KyzletterexpFile_backup\\"+billNo);
+			if(file.exists()){
+				this.deletefile(file);//引用下面刪除文件夾方法
+			}
+			/*********************刪除記錄**************************/
+			KyzExpectmatmLog log=new KyzExpectmatmLog();
+			log.setBillNo(billNo);
+			log.setDeldate(new Date());
+			WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
+			log.setUsername(user.getUsername());
+			kyzExpLogSer.add(log);
+		}catch(Exception e){
+			System.out.println(e);
+		}		
 		return "delete";
 	}
 	public void print2() throws IOException{

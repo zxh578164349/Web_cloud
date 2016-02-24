@@ -13,6 +13,7 @@ public class KyzVisaflow implements java.io.Serializable {
 	private String visaRank;
 	private String flowMk;
 	private String colTemp;
+	private String visaSortM;//類別大類
 
 	// Constructors
 
@@ -75,6 +76,17 @@ public class KyzVisaflow implements java.io.Serializable {
 	public void setColTemp(String colTemp) {
 		this.colTemp = colTemp;
 	}
+
+	public String getVisaSortM() {
+		return visaSortM;
+	}
+
+	public void setVisaSortM(String visaSortM) {
+		this.visaSortM = visaSortM;
+	}
+
+	
+	
 
 
 	

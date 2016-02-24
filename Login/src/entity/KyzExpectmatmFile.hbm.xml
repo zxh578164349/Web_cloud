@@ -21,5 +21,8 @@
         <property name="username" type="java.lang.String">
             <column name="USERNAME" length="30"/>
         </property>
+        <property name="factNo" type="java.lang.String">
+            <column name="FACT_NO" length="10"/>
+        </property>       
     </class>
 </hibernate-mapping>

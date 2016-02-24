@@ -56,5 +56,13 @@
         <property name="delMk" type="java.lang.String">
             <column name="DEL_MK" length="2"></column>
         </property>
+        <bag name="list_file" inverse="true" cascade="all">
+            <key>
+               <column name="FACT_NO"/>
+               <column name="BILLNO"/>             
+            </key>
+            <one-to-many class="entity.KyzExpectmatmFile"/>
+        </bag>
+        <one-to-one name="vbm" class="entity.KyVisabillm" property-ref="kyzletter" cascade="all" />
     </class>
 </hibernate-mapping>
