@@ -20,5 +20,33 @@
         <property name="webtypeMk" type="java.lang.String">
             <column name="WEBTYPE_MK" length="2"/>
         </property>
+        <bag name="list_kyzexp" inverse="true" cascade="all" >
+           <key>
+              <column name="FACT_NO" length="6" />
+              <column name="VISA_TYPE_M" length="2"/>
+           </key>
+           <one-to-many class="entity.KyzExpectmatm"/>
+        </bag>
+        <bag name="list_letter" inverse="true" cascade="all">
+           <key>
+              <column name="FACT_NO" length="6"/>
+              <column name="VISA_TYPE_M" length="2"/>
+           </key>
+           <one-to-many class="entity.KyzContactletter"/>
+        </bag>
+        <bag name="list_buss" inverse="true" cascade="all">
+           <key>
+             <column name="FACT_NO" length="6"/>
+             <column name="VISA_SORT_M" length="2"/>
+           </key>
+           <one-to-many class="entity.WebBussinessletter"/>
+        </bag>
+        <bag name="list_visaflow" inverse="true" cascade="all">
+           <key>
+              <column name="FACT_NO" length="6"/>
+              <column name="VISA_SORT_M"></column>
+           </key>
+           <one-to-many class="entity.KyzVisaflow"/>
+        </bag>
     </class>
 </hibernate-mapping>

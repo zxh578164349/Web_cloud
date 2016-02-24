@@ -119,6 +119,8 @@ public class WebTypeAction extends ActionSupport{
 		return "delete";
 	}
 	public String findById(){
+		factNo="631";
+		typeNo="C1";
 		webtype=webtypeSer.findById(factNo, typeNo);
 		return "findById";
 	}

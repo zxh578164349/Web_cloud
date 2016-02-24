@@ -64,6 +64,14 @@
             </key>
             <one-to-many class="entity.KyVisabills" />
         </bag>
-        <many-to-one name="webbussletter" column="BILL_NO" unique="true" insert="false" update="false"/>
+        <many-to-one name="webbussletter" column="BILL_NO" unique="true" insert="false" update="false"/>       
+        <many-to-one name="kyzexp"  insert="false" update="false">
+           <column name="FACT_NO"/>
+           <column name="BILL_NO"/>
+        </many-to-one>
+        <many-to-one name="kyzletter"  insert="false" update="false"> 
+           <column name="FACT_NO"/>
+           <column name="BILL_NO"/>
+        </many-to-one>     
     </class>
 </hibernate-mapping>

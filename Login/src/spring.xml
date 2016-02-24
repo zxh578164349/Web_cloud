@@ -199,7 +199,8 @@
 				<value>entity/WebFactorder.hbm.xml</value>
 				<value>entity/WebBussinessletter.hbm.xml</value>
 				<value>entity/WebPhonebook.hbm.xml</value>
-				</list>
+				<value>entity/HongTemp.hbm.xml</value>
+				<value>entity/HongTemps.hbm.xml</value></list>
 		</property>
 	</bean>
 		

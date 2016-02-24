@@ -273,6 +273,7 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 						flows.get(i).getId().setPurmanNo(flows.get(i).getId().getPurmanNo().trim());
 					    flows.get(i).setVisaSigner(flows.get(i).getVisaSigner().trim());
 						flows.get(i).setFlowMk("Y");
+						flows.get(i).setVisaSortM(visaSort_main);
 						visaSer.add(flows.get(i));
 					}
 				}else{/****************************否則，類別代號就要自增處理20160203*********************************/
@@ -300,6 +301,7 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 					    flows.get(i).getId().setPurmanNo(purmanNo);
 					    flows.get(i).setVisaSigner(visaSigner);
 					    flows.get(i).setFlowMk("Y");
+					    flows.get(i).setVisaSortM(visaSort_main);
 						visaSer.add(flows.get(i));
 					}
 				}				
@@ -312,6 +314,7 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 	}
 	public String update(){		
 		try{
+			flow.setVisaSortM(flow.getId().getVisaSort().substring(0,2));
 			visaSer.add(flow);
 			ajaxResult="0";
 		}catch(Exception e){
@@ -458,6 +461,7 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 					list.get(k).getId().setItemNo(item_new2);
 					visaSer.add(list.get(k));
 				}
+			flow.setVisaSortM(id.getVisaSort().substring(0,2));	
 			visaSer.add(flow);//(5)添加新對象
 			ajaxResult="0";
 		}catch(Exception e){
@@ -537,6 +541,7 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 			for(int i=0;i<flows.size();i++){
 				flows.get(i).setVisaRank("知會");
 				flows.get(i).setFlowMk("N");
+				flows.get(i).setVisaSortM(flows.get(i).getId().getVisaSort().substring(0,2));
 				visaSer.add(flows.get(i));
 			}
 			ajaxResult="0";

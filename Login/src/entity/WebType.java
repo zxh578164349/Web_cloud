@@ -1,5 +1,7 @@
 package entity;
 
+import java.util.List;
+
 /**
  * WebType entity. @author MyEclipse Persistence Tools
  */
@@ -11,6 +13,10 @@ public class WebType implements java.io.Serializable {
 	private WebTypeId id;
 	private String typeName;
 	private String webtypeMk;
+	private List<KyzExpectmatm>list_kyzexp;
+	private List<KyzContactletter>list_letter;
+	private List<WebBussinessletter>list_buss;
+	private List<KyzVisaflow>list_visaflow;
 
 	// Constructors
 
@@ -55,6 +61,42 @@ public class WebType implements java.io.Serializable {
 	public void setWebtypeMk(String webtypeMk) {
 		this.webtypeMk = webtypeMk;
 	}
+
+	public List<KyzExpectmatm> getList_kyzexp() {
+		return list_kyzexp;
+	}
+
+	public void setList_kyzexp(List<KyzExpectmatm> list_kyzexp) {		
+		this.list_kyzexp = list_kyzexp;
+	}
+
+	public List<KyzContactletter> getList_letter() {
+		return list_letter;
+	}
+
+	public void setList_letter(List<KyzContactletter> list_letter) {
+		this.list_letter = list_letter;
+	}
+
+	public List<WebBussinessletter> getList_buss() {
+		return list_buss;
+	}
+
+	public void setList_buss(List<WebBussinessletter> list_buss) {
+		this.list_buss = list_buss;
+	}
+
+	public List<KyzVisaflow> getList_visaflow() {
+		return list_visaflow;
+	}
+
+	public void setList_visaflow(List<KyzVisaflow> list_visaflow) {
+		this.list_visaflow = list_visaflow;
+	}
+
+	
+	
+	
 
 	
 	

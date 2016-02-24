@@ -426,14 +426,14 @@ table.gridtable td.tdcolor {
 				    <tr>
 					    <td class="tdcolor">CC(呈)</td>	
 						<td  colspan="10">
-				           <textarea rows="2" cols="115" name="kyzletter.chargeList" autofocus="autofocus" wrap="hard" wrap="physical"  tip="CC(呈)" altercss="gray" class="gray"><s:property value="kyzletter.chargeList"/></textarea>				                                           				         			          
+				           <textarea style="width:810px;height:40px" name="kyzletter.chargeList" autofocus="autofocus" wrap="hard" wrap="physical"  tip="CC(呈)" altercss="gray" class="gray"><s:property value="kyzletter.chargeList"/></textarea>				                                           				         			          
 				        </td>
 						
 					</tr>
 					<tr>
 					    <td class="tdcolor">申請內容</td>	
 						<td  colspan="10">
-				           <textarea rows="15" cols="115" name="kyzletter.memoMk" autofocus="autofocus" wrap="hard" wrap="physical"  tip="申請內容" altercss="gray" class="gray"><s:property value="kyzletter.memoMk"/></textarea>				                                           				         				           				           
+				           <textarea style="width:810px;height:240px" name="kyzletter.memoMk" autofocus="autofocus" wrap="hard" wrap="physical"  tip="申請內容" altercss="gray" class="gray"><s:property value="kyzletter.memoMk"/></textarea>				                                           				         				           				           
 				           <input type="hidden" value="<s:property value='kyzletter.filesYn'/>" name="kyzletter.filesYn"/>
 				           <input type="hidden" value="<s:property value='kyzletter.firstPage'/>" name="kyzletter.firstPage"/>
 				        </td>

@@ -198,6 +198,7 @@ public class WebBussinessletterAction extends ActionSupport implements ServletRe
 		
 			try{
 				if(isnull.equals("isNull")){
+				bussletter.setVisaSortM(bussletter.getVisaSort().substring(0,2));
 				webbussletterSer.add(bussletter);
 				KyVisabillm vbm=visabillmSer.findById(bussletter.getFactNo(),bussletter.getVisaSort(), bussletter.getBlNo());
 				/**
@@ -243,6 +244,7 @@ public class WebBussinessletterAction extends ActionSupport implements ServletRe
 			      sms2.sendHtmlMail(mailinfo2);
 			      ajaxResult="0";
 				}else{
+					bussletter.setVisaSortM(bussletter.getVisaSort().substring(0,2));
 					webbussletterSer.add(bussletter);
 					ajaxResult="0";
 				}
