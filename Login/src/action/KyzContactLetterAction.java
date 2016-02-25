@@ -294,6 +294,7 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 					String username=user.getName();
 					kyzexpFile.setUsername(username);
 					kyzexpFile.setFactNo(kyzletter.getId().getFactNo());
+					kyzexpFile.setVisaTypeM(kyzletter.getVisaType().substring(0,2));
 					kyzexpfileSer.add(kyzexpFile);
 				}
 			}

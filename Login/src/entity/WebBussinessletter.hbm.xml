@@ -58,6 +58,9 @@
         <property name="delMk" type="java.lang.String">
             <column name="DEL_MK" length="2"/>
         </property>
+        <property name="visaSortM" type="java.lang.String">
+           <column name="VISA_SORT_M" length="2"></column>
+        </property>
         <one-to-one name="vbm" class="entity.KyVisabillm"  property-ref="webbussletter" cascade="all"/>        
     </class>
 </hibernate-mapping>

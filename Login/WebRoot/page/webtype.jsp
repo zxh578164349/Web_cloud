@@ -95,7 +95,7 @@ function move(obj){
 })  */
  
  function mydelete(factNo,typeNo){
-    var flag=confirm("確定要刪除嗎?");
+    var flag=confirm("警告,刪除類別,將同時刪除該類別的所有函文及流程,確定要刪除嗎?");
     if(flag==true){   	
        jq.ajax({
     	   type:"POST",

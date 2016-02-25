@@ -23,6 +23,9 @@
         </property>
         <property name="factNo" type="java.lang.String">
             <column name="FACT_NO" length="10"/>
-        </property>       
+        </property> 
+        <property name="visaTypeM" type="java.lang.String">
+           <column name="VISA_TYPE_M" length="2"/>
+        </property>      
     </class>
 </hibernate-mapping>

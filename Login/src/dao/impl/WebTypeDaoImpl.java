@@ -48,7 +48,8 @@ public class WebTypeDaoImpl extends Basedao implements IWebTypeDao{
 			currentPage=totalPage;
 		}
 		int offset=PageBean.countOffset(pageSize, currentPage);
-		List<WebType>list=super.queryForPage(hql.toString(), offset, pageSize, map);		
+		List<WebType>list=super.queryForPage(hql.toString(), offset, pageSize, map);
+		
 		PageBean bean=new PageBean();
 		bean.setAllRow(allrow);
 		bean.setCurrentPage(currentPage);
@@ -113,6 +114,14 @@ public class WebTypeDaoImpl extends Basedao implements IWebTypeDao{
 		}
 		return super.getAllWithNoPage(hql.toString(), map);
 	}
+
+	/**
+	 * 日期:2016/2/25
+	 * 描述:
+	 */
+	
+	
+	
 	
 
 

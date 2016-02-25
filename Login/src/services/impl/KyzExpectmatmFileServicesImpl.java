@@ -51,4 +51,16 @@ public class KyzExpectmatmFileServicesImpl implements IKyzExpectmatmFileServices
 		return flag;
 	}
 
+
+	/**
+	 * 日期:2016/2/25
+	 * 描述:
+	 */
+	
+	
+	public List<String> findBillNo(String factNo, String visaTypeM) {
+		// TODO Auto-generated method stub
+		return kyzexpfileDao.findBillNo(factNo, visaTypeM);
+	}
+
 }

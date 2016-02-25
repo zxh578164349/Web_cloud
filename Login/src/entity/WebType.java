@@ -17,6 +17,7 @@ public class WebType implements java.io.Serializable {
 	private List<KyzContactletter>list_letter;
 	private List<WebBussinessletter>list_buss;
 	private List<KyzVisaflow>list_visaflow;
+	private String delMk;//刪除標記        0或空 未刪除     1刪除
 
 	// Constructors
 
@@ -92,6 +93,14 @@ public class WebType implements java.io.Serializable {
 
 	public void setList_visaflow(List<KyzVisaflow> list_visaflow) {
 		this.list_visaflow = list_visaflow;
+	}
+
+	public String getDelMk() {
+		return delMk;
+	}
+
+	public void setDelMk(String delMk) {
+		this.delMk = delMk;
 	}
 
 	

@@ -1,12 +1,21 @@
 package action;
 
+import java.io.File;
+import java.util.Date;
+import java.util.List;
+
+import services.IKyzExpectmatmFileServices;
+import services.IKyzExpectmatmLogServices;
 import services.IWebTypeServices;
+import util.GlobalMethod;
 import util.PageBean;
 
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
+import entity.KyzExpectmatmLog;
 import entity.WebType;
+import entity.WebUser;
 
 public class WebTypeAction extends ActionSupport{
 	private int page;
@@ -18,7 +27,8 @@ public class WebTypeAction extends ActionSupport{
 	private String ajaxResult;//申請函文時返回的ajax結果,   0:提交成功       1:提交失敗
 	private int backIndex;//返回標識      0或null:不走返回路徑         1:走返回路徑
 	private IWebTypeServices webtypeSer;
-	
+	private IKyzExpectmatmFileServices kyzexpfileSer;
+	private IKyzExpectmatmLogServices kyzExpLogSer;
 	
 	public int getBackIndex() {
 		return backIndex;
@@ -74,6 +84,14 @@ public class WebTypeAction extends ActionSupport{
 		this.webtypeSer = webtypeSer;
 	}
 	
+	
+	public void setKyzexpfileSer(IKyzExpectmatmFileServices kyzexpfileSer) {
+		this.kyzexpfileSer = kyzexpfileSer;
+	}
+	
+	public void setKyzExpLogSer(IKyzExpectmatmLogServices kyzExpLogSer) {
+		this.kyzExpLogSer = kyzExpLogSer;
+	}
 	public String add(){
 		try{
 			//如果頁面上選擇了"出差類"，則要給值爲TR，標明爲"出差類"20160203
@@ -115,12 +133,33 @@ public class WebTypeAction extends ActionSupport{
 		return result;
 	}
 	public String delete(){
-		webtypeSer.delete(factNo, typeNo);
+		try{
+			webtypeSer.delete(factNo, typeNo);
+			List<String>list=kyzexpfileSer.findBillNo(factNo, typeNo);
+			for(String billNo:list){
+				File file=new File("d:\\KyzexpFile_backup\\"+billNo);
+				File file2=new File("d:\\KyzletterexpFile_backup\\"+billNo);
+				if(file.exists()){
+					GlobalMethod.deletefile(file);//引用下面刪除文件夾方法					
+				}
+				if(file2.exists()){
+					GlobalMethod.deletefile(file2);
+				}				
+			}
+			/*********************刪除記錄**************************/
+			KyzExpectmatmLog log=new KyzExpectmatmLog();
+			log.setBillNo("WebType_"+factNo+"_"+typeNo);
+			log.setDeldate(new Date());
+			WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
+			log.setUsername(user.getUsername());
+			kyzExpLogSer.add(log);
+		}catch(Exception e){
+			System.out.println(e);
+		}
+						
 		return "delete";
 	}
 	public String findById(){
-		factNo="631";
-		typeNo="C1";
 		webtype=webtypeSer.findById(factNo, typeNo);
 		return "findById";
 	}

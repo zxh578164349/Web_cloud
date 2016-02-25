@@ -18,7 +18,7 @@
         <property name="username" type="java.lang.String">
             <column name="USERNAME" length="20" />
         </property>
-        <property name="deldate" type="java.sql.Date">
+        <property name="deldate" type="java.util.Date">
             <column name="DELDATE" length="7" />
         </property>
     </class>
