@@ -21,6 +21,7 @@ import mail.SimpleMailSender;
 
 import services.IKyVisaBillsServices;
 import services.IKyVisabillmServices;
+import services.IKyzExpectmatmLogServices;
 import services.IKyzVisaFlowServices;
 import services.IWebBussinessletterServices;
 import services.IWebFactServices;
@@ -36,9 +37,11 @@ import entity.KyVisabillm;
 import entity.KyVisabills;
 import entity.KyzContactletter;
 import entity.KyzExpectmatmFile;
+import entity.KyzExpectmatmLog;
 import entity.KyzExpectmats;
 import entity.KyzVisaflow;
 import entity.WebBussinessletter;
+import entity.WebUser;
 import entity_temp.VisabillsTemp;
 
 public class WebBussinessletterAction extends ActionSupport implements ServletResponseAware{
@@ -64,7 +67,7 @@ public class WebBussinessletterAction extends ActionSupport implements ServletRe
 	private javax.servlet.http.HttpServletResponse response;
 	private IKyzVisaFlowServices visaSer;
 	private IKyVisaBillsServices visabillSer;
-	
+	private IKyzExpectmatmLogServices kyzExpLogSer;
 	
 	
 	public int getBackIndex() {
@@ -187,6 +190,10 @@ public class WebBussinessletterAction extends ActionSupport implements ServletRe
 	public void setVisabillSer(IKyVisaBillsServices visabillSer) {
 		this.visabillSer = visabillSer;
 	}
+	
+	public void setKyzExpLogSer(IKyzExpectmatmLogServices kyzExpLogSer) {
+		this.kyzExpLogSer = kyzExpLogSer;
+	}
 	public String add() throws ParseException{				
 		String result="add";
 		DateFormat fmt1=new SimpleDateFormat("yyyyMMdd");
@@ -296,7 +303,18 @@ public class WebBussinessletterAction extends ActionSupport implements ServletRe
 		return "findById";
 	}
 	public String delete(){
-		webbussletterSer.delete(billNo);
+		try{
+			webbussletterSer.delete(billNo);
+			/*********************刪除記錄**************************/
+			KyzExpectmatmLog log=new KyzExpectmatmLog();
+			log.setBillNo(billNo);
+			log.setDeldate(new Date());
+			WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
+			log.setUsername(user.getUsername());
+			kyzExpLogSer.add(log);
+		}catch(Exception e){
+			System.out.println(e);
+		}		
 		return "delete";
 	}
 	

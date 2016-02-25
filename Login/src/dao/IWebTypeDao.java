@@ -16,4 +16,5 @@ public interface IWebTypeDao {
 	public String findTypeNameById(String factNo,String typeNo);
 	
 	public List<WebType>findByFactNo2(String factNo);
+	
 }

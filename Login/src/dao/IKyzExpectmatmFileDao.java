@@ -10,6 +10,7 @@ public interface IKyzExpectmatmFileDao {
 	public void delete(KyzExpectmatmFile file);
 	public KyzExpectmatmFile findById(Integer id);
 	public void delete(Integer id);
+	public List<String>findBillNo(String factNo,String visaTypeM);
 
 
 }

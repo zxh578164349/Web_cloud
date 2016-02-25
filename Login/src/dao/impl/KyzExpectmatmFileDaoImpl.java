@@ -36,4 +36,17 @@ public class KyzExpectmatmFileDaoImpl extends Basedao implements IKyzExpectmatmF
 		super.delete(file);
 	}
 
+	/**
+	 * 日期:2016/2/25
+	 * 描述:
+	 */
+	
+	
+	public List<String> findBillNo(String factNo, String visaTypeM) {
+		// TODO Auto-generated method stub
+		String hql="select billno from KyzExpectmatmFile where factNo=? and visaTypeM=?";
+		String[]objs={factNo,visaTypeM};
+		return super.findAll(hql, objs);
+	}
+
 }

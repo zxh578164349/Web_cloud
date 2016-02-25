@@ -466,6 +466,7 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 					String username=user.getName();
 					kyzexpFile.setUsername(username);
 					kyzexpFile.setFactNo(kyz.getId().getFactNo());
+					kyzexpFile.setVisaTypeM(kyz.getVisaType().substring(0,2));
 					kyzexpfileSer.add(kyzexpFile);
 				}
 			}

@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.struts2.interceptor.ServletResponseAware;
 
+import services.IKyzExpectmatmLogServices;
 import services.IKyzVisaFlowServices;
 import services.IWebTypeServices;
 import util.PageBean;
@@ -38,7 +39,7 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 	private int maxItem;//新添加的知會人員的序列號
 	private String ajaxResult;//申請函文時返回的ajax結果,   0:提交成功       1:提交失敗
 	private int backIndex;//返回標識      0或null:不走返回路徑         1:走返回路徑
-	
+	private IKyzExpectmatmLogServices kyzExpLogSer;//刪除記錄
 	
 	public int getBackIndex() {
 		return backIndex;
@@ -203,6 +204,10 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 		return "add";
 	}*/
 	
+	public void setKyzExpLogSer(IKyzExpectmatmLogServices kyzExpLogSer) {
+		this.kyzExpLogSer = kyzExpLogSer;
+	}
+
 	public int getMaxItem() {
 		return maxItem;
 	}

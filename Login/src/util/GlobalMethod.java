@@ -1,5 +1,6 @@
 package util;
 
+import java.io.File;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -15,12 +16,19 @@ import java.util.Map;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.struts2.ServletActionContext;
+import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+
+import services.IKyzExpectmatmLogServices;
 
 import com.opensymphony.xwork2.ActionContext;
 
+import entity.KyzExpectmatmLog;
+import entity.WebUser;
 
-public class GlobalMethod {
+
+public class GlobalMethod extends HibernateDaoSupport{
 	
+
 	public static void print(List list,String factNo,String yymm,String yymm2,String file,HttpServletResponse response) throws IOException{
 		//List<Webwlo>list=wloService.findByAny(factNo, yymm, yymm2);
 		if(list.size()>0){
@@ -298,6 +306,44 @@ public class GlobalMethod {
 			System.out.println(iii);
 		}
 						
+	}
+	
+	/**
+	 * 刪除文件夾
+	 * @param file
+	 */
+	public static void deletefile(File file){
+		if(file.isFile()){
+			file.delete();
+		}
+		if(file.isDirectory()){
+			File[]files=file.listFiles();
+			for(int i=0;i<files.length;i++){
+				deletefile(files[i]);
+			}
+			file.delete();
+		}
+		
+	}
+	
+	/**
+	 * 數據刪除記錄(失敗)
+	 * @Title: deleteLog
+	 * @Description: TODO
+	 * @param 
+	 * @return void
+	 * @throws
+	 * @author web
+	 * @date 2016/2/25
+	 */
+	public static void deleteLog (String title){
+		/*********************刪除記錄**************************/
+		KyzExpectmatmLog log=new KyzExpectmatmLog();
+		log.setBillNo(title);
+		log.setDeldate(new Date());
+		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
+		log.setUsername(user.getUsername());
+		//kyzExpLogSer.add(log);
 	}
 
 }

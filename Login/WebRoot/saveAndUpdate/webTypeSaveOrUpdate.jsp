@@ -55,14 +55,17 @@ jq(document).ajaxStop(function(){
 		});	
 	}); 
 
-	 function check(){
+	 function check(typeno){
        var factno=document.getElementById("dwr_factno").value;
-       var typeno=document.getElementById("typeno").value;
-       if(factno!=""&&typeno!=""){
-          webtypejs.findById(factno,typeno,function(x){
-        	  alert(x);
+      // var typeno=document.getElementById("typeno").value;           
+       if(factno!=""&&typeno.value!=""){
+          webtypejs.findById(factno,typeno.value,function(x){
               if(x!=null){
-              alert("該類別已存在");
+            	  if(typeno.value=="TR"){
+            		alert("出差類已存在");  
+            	  }else{
+            		  alert("該類別已存在");
+            	  }              
               document.getElementById("sub").disabled=true;
               document.getElementById("sub").value="已鎖定";
               document.getElementById("sub").style.color="red";
@@ -127,6 +130,7 @@ function checkRadio(){
 		jq("#typeno").css({"border":"2px solid #B6CDDC","background-color":"white"});
 		jq("#typeno").focus();
 	}else{
+		jq("#typeno").val("");
 		jq("#typeno").attr("readonly","readonly");
 		jq("#typeno").removeAttr("datatype");
 		jq("#typeno").css({"border":"2px solid #DDD","background-color":"#f5f5f5"});
@@ -174,9 +178,9 @@ function checkRadio(){
 				        <td class="td_input">
 				          <s:if test="webtype==null">
 				             <div id="div_typeno">
-				              <input type="radio" value="TR" name="typeNo" onclick="checkRadio()"/>出差類&nbsp;
+				              <input type="radio" value="TR" name="typeNo" onclick="checkRadio(),check(this)" id="typeno_tr"/>出差類&nbsp;
 				              <input type="radio" value="0" name="typeNo" checked onclick="checkRadio()"/>非出差類				             
-				             <input type="text" name="webtype.id.typeNo" datatype="s2-2" onblur="check(),checkType(this)" id="typeno"/>
+				             <input type="text" name="webtype.id.typeNo" datatype="s2-2" onblur="check(this),checkType(this)" id="typeno"/>
 				            <span id="error1"></span>
 				             </div>
 				              
