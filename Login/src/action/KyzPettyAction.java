@@ -19,8 +19,10 @@ import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
 import entity.KyzAcct;
+import entity.KyzExpectmatmLog;
 import entity.KyzPetty;
 import entity.KyzSec;
+import entity.WebUser;
 
 public class KyzPettyAction extends ActionSupport{
 	private KyzPetty kyzpetty;
@@ -175,7 +177,12 @@ public class KyzPettyAction extends ActionSupport{
 	}
 	
 	public String delete(){
-		kyzpettySer.delete(factNo, billNo);
+		KyzExpectmatmLog log=new KyzExpectmatmLog();
+		log.setFactNo(factNo);
+		log.setBillNo(billNo);
+		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
+		log.setUsername(user.getUsername());
+		kyzpettySer.delete(factNo, billNo,log);
 		return "delete";
 	}
 	

@@ -13,6 +13,8 @@ import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
 import entity.KyzAcct;
+import entity.KyzExpectmatmLog;
+import entity.WebUser;
 
 public class KyzAcctAction extends ActionSupport implements ServletResponseAware{
 	private KyzAcct kyzacct;
@@ -76,7 +78,7 @@ public class KyzAcctAction extends ActionSupport implements ServletResponseAware
 		if(result==false&&isnull.equals("isNull")){
 			result_str=null;
 			response.setContentType("text/html;charset=utf-8");
-			response.getWriter().print("<script>alert('科目代號("+acctno+"),請重新輸入!');history.back()</script>");	
+			response.getWriter().print("<script>alert('嚙踝蕭堨N嚙踝蕭("+acctno+"),嚙請哨蕭嚙編嚙踝蕭J!');history.back()</script>");	
 			
 		}else{
 			kyzacctSer.add(kyzacct);
@@ -111,7 +113,11 @@ public class KyzAcctAction extends ActionSupport implements ServletResponseAware
 		return "findById";
 	}
 	public String delete(){
-		kyzacctSer.delete(acctNo);
+		KyzExpectmatmLog log=new KyzExpectmatmLog();
+		log.setContent(acctNo);
+		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
+		log.setUsername(user.getUsername());
+		kyzacctSer.delete(acctNo,log);
 		return "delete";
 	}
 

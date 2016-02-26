@@ -4,6 +4,7 @@ import java.util.List;
 
 import dao.IKyzExpectmatmFileDao;
 import entity.KyzExpectmatmFile;
+import entity.KyzExpectmatmLog;
 import services.IKyzExpectmatmFileServices;
 
 public class KyzExpectmatmFileServicesImpl implements IKyzExpectmatmFileServices{
@@ -27,9 +28,9 @@ public class KyzExpectmatmFileServicesImpl implements IKyzExpectmatmFileServices
 	}
 
 
-	public void delete(KyzExpectmatmFile file) {
+	public void delete(KyzExpectmatmFile file,KyzExpectmatmLog delLog) {
 		// TODO Auto-generated method stub
-		kyzexpfileDao.delete(file);
+		kyzexpfileDao.delete(file,delLog);
 	}
 
 

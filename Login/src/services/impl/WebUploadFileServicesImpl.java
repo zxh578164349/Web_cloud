@@ -3,6 +3,7 @@ package services.impl;
 import java.util.List;
 
 import dao.IWebUploadFileDao;
+import entity.KyzExpectmatmLog;
 import entity.WebUploadfiles;
 import services.IWebUploadFileServices;
 
@@ -23,9 +24,9 @@ public class WebUploadFileServicesImpl implements IWebUploadFileServices{
 		return webuploadfileDao.findByName(userName, factNo);
 	}
 
-	public boolean delete(int id) {
+	public boolean delete(int id,KyzExpectmatmLog delLog) {
 		// TODO Auto-generated method stub
-		return webuploadfileDao.delete(id);
+		return webuploadfileDao.delete(id,delLog);
 	}
 
 	public WebUploadfiles findById(int id) {

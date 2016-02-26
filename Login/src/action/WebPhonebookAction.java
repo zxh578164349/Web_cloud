@@ -29,6 +29,7 @@ import util.PageBean;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
+import entity.KyzExpectmatmLog;
 import entity.WebPhonebook;
 import entity.WebUser;
 
@@ -238,7 +239,12 @@ public class WebPhonebookAction extends ActionSupport implements ServletResponse
 		return "findById";
 	}
 	public String delete(){
-		webphonebookSer.delete(factNo, department, post, userName, phoneA, phoneB, phoneC, email);
+		KyzExpectmatmLog log=new KyzExpectmatmLog();
+		log.setFactNo(factNo);
+		log.setContent(department+post+userName);
+		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
+		log.setUsername(user.getUsername());
+		webphonebookSer.delete(factNo, department, post, userName, phoneA, phoneB, phoneC, email,log);
 		return "delete";
 	}
 	

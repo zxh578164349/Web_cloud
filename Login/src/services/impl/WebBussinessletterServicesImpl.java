@@ -22,6 +22,7 @@ import dao.IWebFactDao;
 import entity.KyVisabillm;
 import entity.KyVisabills;
 import entity.KyzContactletter;
+import entity.KyzExpectmatmLog;
 import entity.KyzVisaflow;
 import entity.WebBussinessletter;
 import entity_temp.VisabillsTemp;
@@ -110,14 +111,14 @@ public class WebBussinessletterServicesImpl implements IWebBussinessletterServic
 		return webbussletterdao.findById(billNo);
 	}
 
-	public void delete(WebBussinessletter letter) {
+	public void delete(WebBussinessletter letter,KyzExpectmatmLog delLog) {
 		// TODO Auto-generated method stub
-		webbussletterdao.delete(letter);
+		webbussletterdao.delete(letter,delLog);
 	}
 
-	public void delete(String billNo) {
+	public void delete(String billNo,KyzExpectmatmLog delLog) {
 		// TODO Auto-generated method stub
-		webbussletterdao.delete(billNo);
+		webbussletterdao.delete(billNo,delLog);
 	}
 
 	public List<WebBussinessletter> findBefor2Month() {

@@ -63,11 +63,9 @@ public class WebBussinessletterAction extends ActionSupport implements ServletRe
 	private int backIndex;//返回標識      0或null:不走返回路徑         1:走返回路徑
 	private IWebBussinessletterServices webbussletterSer;
 	private IKyVisabillmServices visabillmSer;
-	private IWebFactServices webFactSer;
 	private javax.servlet.http.HttpServletResponse response;
-	private IKyzVisaFlowServices visaSer;
-	private IKyVisaBillsServices visabillSer;
 	private IKyzExpectmatmLogServices kyzExpLogSer;
+	
 	
 	
 	public int getBackIndex() {
@@ -175,21 +173,14 @@ public class WebBussinessletterAction extends ActionSupport implements ServletRe
 		this.visabillmSer = visabillmSer;
 	}
 	
-	public void setWebFactSer(IWebFactServices webFactSer) {
-		this.webFactSer = webFactSer;
-	}
+	
 	public void setServletResponse(HttpServletResponse response) {
 		// TODO Auto-generated method stub
 		this.response=response;
 	}
 	
 	
-	public void setVisaSer(IKyzVisaFlowServices visaSer) {
-		this.visaSer = visaSer;
-	}
-	public void setVisabillSer(IKyVisaBillsServices visabillSer) {
-		this.visabillSer = visabillSer;
-	}
+	
 	
 	public void setKyzExpLogSer(IKyzExpectmatmLogServices kyzExpLogSer) {
 		this.kyzExpLogSer = kyzExpLogSer;
@@ -304,14 +295,13 @@ public class WebBussinessletterAction extends ActionSupport implements ServletRe
 	}
 	public String delete(){
 		try{
-			webbussletterSer.delete(billNo);
 			/*********************刪除記錄**************************/
 			KyzExpectmatmLog log=new KyzExpectmatmLog();
 			log.setBillNo(billNo);
-			log.setDeldate(new Date());
 			WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
 			log.setUsername(user.getUsername());
-			kyzExpLogSer.add(log);
+			webbussletterSer.delete(billNo,log);
+			
 		}catch(Exception e){
 			System.out.println(e);
 		}		

@@ -10,6 +10,7 @@ public class WebTypeId implements java.io.Serializable {
 
 	private String factNo;
 	private String typeNo;
+	
 
 	// Constructors
 
@@ -40,6 +41,9 @@ public class WebTypeId implements java.io.Serializable {
 	public void setTypeNo(String typeNo) {
 		this.typeNo = typeNo;
 	}
+	
+
+	
 
 	public boolean equals(Object other) {
 		if ((this == other))
@@ -56,6 +60,7 @@ public class WebTypeId implements java.io.Serializable {
 				&& ((this.getTypeNo() == castOther.getTypeNo()) || (this
 						.getTypeNo() != null && castOther.getTypeNo() != null && this
 						.getTypeNo().equals(castOther.getTypeNo())));
+				
 	}
 
 	public int hashCode() {
@@ -64,7 +69,7 @@ public class WebTypeId implements java.io.Serializable {
 		result = 37 * result
 				+ (getFactNo() == null ? 0 : this.getFactNo().hashCode());
 		result = 37 * result
-				+ (getTypeNo() == null ? 0 : this.getTypeNo().hashCode());
+				+ (getTypeNo() == null ? 0 : this.getTypeNo().hashCode());		
 		return result;
 	}
 

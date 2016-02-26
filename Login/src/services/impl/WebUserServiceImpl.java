@@ -4,6 +4,7 @@ import java.util.List;
 import services.IWebUserService;
 import util.PageBean;
 import dao.IWebUserDao;
+import entity.KyzExpectmatmLog;
 import entity.WebUser;
 
 public class WebUserServiceImpl implements IWebUserService {
@@ -109,9 +110,9 @@ public class WebUserServiceImpl implements IWebUserService {
 		return webUserDao.findByNameAndFactNoDwr(factNo, name);
 	}
 
-	public void delete(int id) {
+	public void delete(int id,KyzExpectmatmLog delLog) {
 		// TODO Auto-generated method stub
-		webUserDao.delete(id);
+		webUserDao.delete(id,delLog);
 	}
 
 	public WebUser findByIdDwr2(String factNo, String userName) {

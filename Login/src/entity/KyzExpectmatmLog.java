@@ -14,7 +14,12 @@ public class KyzExpectmatmLog implements java.io.Serializable {
 	private Integer id;
 	private String billNo;
 	private String username;
-	private Date deldate;
+	private Date deldate=new Date();
+	private String factNo;
+	private String factCode;
+	private String obj;
+	private String content;
+	private String yymm;
 
 	// Constructors
 
@@ -59,6 +64,7 @@ public class KyzExpectmatmLog implements java.io.Serializable {
 	}
 
 	public void setUsername(String username) {
+		
 		this.username = username;
 	}
 
@@ -69,6 +75,48 @@ public class KyzExpectmatmLog implements java.io.Serializable {
 	public void setDeldate(Date deldate) {
 		this.deldate = deldate;
 	}
+
+	public String getFactNo() {
+		return factNo;
+	}
+
+	public void setFactNo(String factNo) {
+		this.factNo = factNo;
+	}
+
+	public String getFactCode() {
+		return factCode;
+	}
+
+	public void setFactCode(String factCode) {
+		this.factCode = factCode;
+	}
+
+	public String getObj() {
+		return obj;
+	}
+
+	public void setObj(String obj) {
+		this.obj = obj;
+	}
+
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
+
+	public String getYymm() {
+		return yymm;
+	}
+
+	public void setYymm(String yymm) {
+		this.yymm = yymm;
+	}
+	
+	
 
 
 

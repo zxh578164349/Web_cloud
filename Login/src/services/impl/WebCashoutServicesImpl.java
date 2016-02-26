@@ -1,6 +1,7 @@
 package services.impl;
 
 import dao.IWebcashoutDao;
+import entity.KyzExpectmatmLog;
 import entity.Webcashout;
 import services.IWebCashoutServices;
 import util.PageBean;
@@ -28,9 +29,9 @@ public class WebCashoutServicesImpl implements IWebCashoutServices{
 		return cashoutDao.findById(factNo, factCode, date);
 	}
 
-	public void delete(String factNo, String factCode, String date) {
+	public void delete(String factNo, String factCode, String date,KyzExpectmatmLog delLog) {
 		// TODO Auto-generated method stub
-		cashoutDao.delete(factNo, factCode, date);
+		cashoutDao.delete(factNo, factCode, date,delLog);
 	}
 	
 

@@ -7,6 +7,7 @@ import org.hibernate.Transaction;
 import dao.IWebFactorderDao;
 import services.IWebFactorderServices;
 import util.PageBean;
+import entity.KyzExpectmatmLog;
 import entity.WebFactorder;
 
 public class WebFactorderServicesImpl implements IWebFactorderServices{
@@ -31,9 +32,9 @@ public class WebFactorderServicesImpl implements IWebFactorderServices{
 
 
 	public void delete(String factNo, String factArea, String yymm,
-			String modelNo, String customer, String brank, String component) {
+			String modelNo, String customer, String brank, String component,KyzExpectmatmLog delLog) {
 		// TODO Auto-generated method stub
-		factorderdao.delete(factNo, factArea, yymm, modelNo, customer, brank, component);
+		factorderdao.delete(factNo, factArea, yymm, modelNo, customer, brank, component,delLog);
 	}
 	
 

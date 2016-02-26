@@ -4,8 +4,13 @@ import java.io.File;
 import java.util.Date;
 import java.util.List;
 
+import services.IKyVisabillmServices;
+import services.IKyzContactLetterServices;
 import services.IKyzExpectmatmFileServices;
 import services.IKyzExpectmatmLogServices;
+import services.IKyzExpectmatmServices;
+import services.IKyzVisaFlowServices;
+import services.IWebBussinessletterServices;
 import services.IWebTypeServices;
 import util.GlobalMethod;
 import util.PageBean;
@@ -29,7 +34,11 @@ public class WebTypeAction extends ActionSupport{
 	private IWebTypeServices webtypeSer;
 	private IKyzExpectmatmFileServices kyzexpfileSer;
 	private IKyzExpectmatmLogServices kyzExpLogSer;
-	
+	private IKyzExpectmatmServices kyzSer;
+	private IKyzContactLetterServices kyzletterSer;
+	private IKyzVisaFlowServices visaSer;
+	private IWebBussinessletterServices webbussletterSer;
+	private IKyVisabillmServices visabillmSer;
 	public int getBackIndex() {
 		return backIndex;
 	}
@@ -92,10 +101,27 @@ public class WebTypeAction extends ActionSupport{
 	public void setKyzExpLogSer(IKyzExpectmatmLogServices kyzExpLogSer) {
 		this.kyzExpLogSer = kyzExpLogSer;
 	}
+	
+	
+	public void setKyzSer(IKyzExpectmatmServices kyzSer) {
+		this.kyzSer = kyzSer;
+	}
+	public void setKyzletterSer(IKyzContactLetterServices kyzletterSer) {
+		this.kyzletterSer = kyzletterSer;
+	}
+	public void setVisaSer(IKyzVisaFlowServices visaSer) {
+		this.visaSer = visaSer;
+	}
+	public void setWebbussletterSer(IWebBussinessletterServices webbussletterSer) {
+		this.webbussletterSer = webbussletterSer;
+	}
+	public void setVisabillmSer(IKyVisabillmServices visabillmSer) {
+		this.visabillmSer = visabillmSer;
+	}
 	public String add(){
 		try{
 			//如果頁面上選擇了"出差類"，則要給值爲TR，標明爲"出差類"20160203
-			if(typeNo.equals("TR")){
+			if(typeNo!=null&&typeNo.equals("TR")){
 				webtype.getId().setTypeNo(typeNo);
 			}
 			webtypeSer.add(webtype);
@@ -134,7 +160,14 @@ public class WebTypeAction extends ActionSupport{
 	}
 	public String delete(){
 		try{
-			webtypeSer.delete(factNo, typeNo);
+			/*********************刪除記錄**************************/
+			KyzExpectmatmLog log=new KyzExpectmatmLog();
+			log.setFactNo(factNo);
+			log.setContent(typeNo);
+			log.setObj("WebType");
+			WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
+			log.setUsername(user.getUsername());
+			webtypeSer.delete(factNo, typeNo,log);
 			List<String>list=kyzexpfileSer.findBillNo(factNo, typeNo);
 			for(String billNo:list){
 				File file=new File("d:\\KyzexpFile_backup\\"+billNo);
@@ -146,13 +179,7 @@ public class WebTypeAction extends ActionSupport{
 					GlobalMethod.deletefile(file2);
 				}				
 			}
-			/*********************刪除記錄**************************/
-			KyzExpectmatmLog log=new KyzExpectmatmLog();
-			log.setBillNo("WebType_"+factNo+"_"+typeNo);
-			log.setDeldate(new Date());
-			WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
-			log.setUsername(user.getUsername());
-			kyzExpLogSer.add(log);
+			
 		}catch(Exception e){
 			System.out.println(e);
 		}
@@ -162,6 +189,19 @@ public class WebTypeAction extends ActionSupport{
 	public String findById(){
 		webtype=webtypeSer.findById(factNo, typeNo);
 		return "findById";
+	}
+	
+	public String recovery(){
+		try{
+			webtype=webtypeSer.findById(factNo, typeNo);
+			webtype.setDelMk("1");//標記刪除
+			webtypeSer.add(webtype);
+			ajaxResult="0";
+		}catch(Exception e){
+			System.out.println(e);
+			ajaxResult="1";
+		}
+		return "recovery";
 	}
 	
 	

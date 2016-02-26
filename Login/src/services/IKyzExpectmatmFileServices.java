@@ -3,11 +3,12 @@ package services;
 import java.util.List;
 
 import entity.KyzExpectmatmFile;
+import entity.KyzExpectmatmLog;
 
 public interface IKyzExpectmatmFileServices {
 	public void add(KyzExpectmatmFile file);
 	public List<KyzExpectmatmFile> findByBillNo(String billNo);
-	public void delete(KyzExpectmatmFile file);
+	public void delete(KyzExpectmatmFile file,KyzExpectmatmLog delLog);
 	
 	public KyzExpectmatmFile findById(Integer id);
 	public boolean delete(Integer id);

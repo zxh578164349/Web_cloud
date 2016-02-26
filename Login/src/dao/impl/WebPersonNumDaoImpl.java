@@ -9,6 +9,7 @@ import org.hibernate.Query;
 import util.PageBean;
 import dao.Basedao;
 import dao.IWebPersonNumDao;
+import entity.KyzExpectmatmLog;
 import entity.Webbackfeed;
 import entity.Webpersonnum;
 import entity.WebpersonnumId;
@@ -90,10 +91,10 @@ public class WebPersonNumDaoImpl extends Basedao implements IWebPersonNumDao {
 		return (Webpersonnum) query.uniqueResult();
 	}
 
-	public void delete(WebpersonnumId id) {
+	public void delete(WebpersonnumId id,KyzExpectmatmLog delLog) {
 		// TODO Auto-generated method stub
 		Webpersonnum person = this.findById(id);
-		super.delete(person);
+		super.delete(person,delLog);
 
 	}
 

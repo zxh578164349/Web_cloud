@@ -14,6 +14,7 @@ import util.PageBean;
 
 import dao.Basedao;
 import dao.IWebFactorderDao;
+import entity.KyzExpectmatmLog;
 import entity.WebFactorder;
 import entity.WebFactorderId;
 
@@ -36,10 +37,10 @@ public class WebFactorderDaoImpl extends Basedao implements IWebFactorderDao{
 		query.setString(6, component);
 		return (WebFactorder)query.uniqueResult();
 	}
-	public void delete(String factNo,String factArea,String yymm,String modelNo,String customer,String brank,String component) {
+	public void delete(String factNo,String factArea,String yymm,String modelNo,String customer,String brank,String component,KyzExpectmatmLog delLog) {
 		// TODO Auto-generated method stub
 		WebFactorder order=findByOrderId(factNo,factArea,yymm,modelNo,customer,brank,component);
-		super.delete(order);
+		super.delete(order,delLog);
 	}
 	
 

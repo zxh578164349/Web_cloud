@@ -13,6 +13,7 @@ import util.PageBean;
 import dao.Basedao;
 import dao.IKpifactDao;
 import entity.Kpifact;
+import entity.KyzExpectmatmLog;
 
 public class KpifactDaoImpl extends Basedao implements IKpifactDao{
 
@@ -79,10 +80,10 @@ public class KpifactDaoImpl extends Basedao implements IKpifactDao{
 		return bean;
 	}
 
-	public void delete(String factNo, String factCode, String yyyy) {
+	public void delete(String factNo, String factCode, String yyyy,KyzExpectmatmLog delLog) {
 		// TODO Auto-generated method stub
 		Kpifact kpi=this.findById(factNo, factCode, yyyy);
-		super.delete(kpi);
+		super.delete(kpi,delLog);
 	}
 
 	public List<String> findDateByFactNo(String factNo,String yyyy) {

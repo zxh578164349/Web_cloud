@@ -63,10 +63,8 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 	private IWebFactServices webFactSer;
 	private IKyzVisaFlowServices visaSer;
 	private IKyzContactLetterServices kyzletterSer;
-	private IWebUserService webUserService;
 	private IWebuserEmailServices webuseremailSer;
 	private IWebuserEmailAServices webuseremailaSer;
-	private IWebTypeServices webtypeSer;
 	private PageBean bean;
 	private String factNo;
 	private String visaSort;
@@ -215,16 +213,11 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 	
 	public void setWebuseremailaSer(IWebuserEmailAServices webuseremailaSer) {
 		this.webuseremailaSer = webuseremailaSer;
-	}
-	public void setWebtypeSer(IWebTypeServices webtypeSer) {
-		this.webtypeSer = webtypeSer;
-	}
+	}	
 	public void setWebuseremailSer(IWebuserEmailServices webuseremailSer) {
 		this.webuseremailSer = webuseremailSer;
 	}
-	public void setWebUserService(IWebUserService webUserService) {
-		this.webUserService = webUserService;
-	}
+	
 	public void setKyzletterSer(IKyzContactLetterServices kyzletterSer) {
 		this.kyzletterSer = kyzletterSer;
 	}
@@ -2010,14 +2003,16 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 			String factno=vbs.getId().getKyVisabillm().getId().getFactNo();
 			String visaSort=vbs.getId().getKyVisabillm().getId().getVisaSort();			
 			String typename=visaSort;			
-			//typename=webtypeSer.findTypeNameById(factno, visaSort.substring(0, 2));									
-			for(int j=0;j<list_type.size();j++){//for2
-				WebType type=list_type.get(j);
-				if(factno.equals(type.getId().getFactNo())&&visaSort.substring(0,2).equals(type.getId().getTypeNo())){
-					typename=type.getTypeName();					
-					break;
-				}
-			}//for2
+			//typename=webtypeSer.findTypeNameById(factno, visaSort.substring(0, 2));
+			if(list_type!=null&&list_type.size()>0){
+				for(int j=0;j<list_type.size();j++){//for2
+					WebType type=list_type.get(j);
+					if(factno.equals(type.getId().getFactNo())&&visaSort.substring(0,2).equals(type.getId().getTypeNo())){
+						typename=type.getTypeName();					
+						break;
+					}
+				}//for2
+			}			
 			vbs.getId().getKyVisabillm().setColTemp(typename);
 		}//for1				
 	}

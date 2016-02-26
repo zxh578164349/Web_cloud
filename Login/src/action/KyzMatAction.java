@@ -25,13 +25,14 @@ import util.PageBean;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
+import entity.KyzExpectmatmLog;
 import entity.KyzMat;
 import entity.SubKyzmat;
 import entity.SubKyzmatId;
 import entity.WebUser;
 
 /**
- * ª«®Æ¸ê®ÆºÞ²z
+ * ï¿½ï¿½ï¿½Æ¸ï¿½ÆºÞ²z
  * @author ky2-qhtj
  *
  */
@@ -195,18 +196,22 @@ public class KyzMatAction extends ActionSupport implements ServletResponseAware{
 		return "findById";
 	}
 	public String delete(){
-		kyzmatSer.delete(matNo);
+		KyzExpectmatmLog log=new KyzExpectmatmLog();
+		log.setContent(matNo);
+		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
+		log.setUsername(user.getUsername());
+		kyzmatSer.delete(matNo,log);
 		return "delete";
 	}
 	
 	/**
-	 * KyzMat¥´¦L¦@¥Î¤èªk
+	 * KyzMatï¿½ï¿½ï¿½Lï¿½@ï¿½Î¤ï¿½k
 	 * @param list_mat
 	 * @throws IOException
 	 */
 	public void print_all(List<KyzMat> list_mat) throws IOException{
 		HSSFWorkbook wb=new HSSFWorkbook();
-		HSSFSheet sheet=wb.createSheet("ª«®Æ¸ê®Æ");
+		HSSFSheet sheet=wb.createSheet("ï¿½ï¿½ï¿½Æ¸ï¿½ï¿½");
 		
 		HSSFCellStyle cs=wb.createCellStyle();
 		cs.setAlignment(HSSFCellStyle.ALIGN_CENTER);
@@ -238,46 +243,46 @@ public class KyzMatAction extends ActionSupport implements ServletResponseAware{
 		cs_column.setFillForegroundColor(IndexedColors.YELLOW.getIndex());
 		cs_column.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
 		
-		String title="ª«®Æ¸ê®Æ³øªí";
+		String title="ï¿½ï¿½ï¿½Æ¸ï¿½Æ³ï¿½ï¿½";
 		List<String>list_column=new ArrayList<String>();
-		/*list_column.add("§Ç¸¹");
-		list_column.add("ª«®Æ½s¸¹");
-		list_column.add("ª«®Æ¤¤¤å¦WºÙ");
-		list_column.add("¸ê§÷¤ÀÃþ");
-		list_column.add("ª«®Æ³W®æ");
-		list_column.add("ª«®ÆÃC¦â");
-		list_column.add("·|­p¬ì¥Ø");
-		list_column.add("ªöÁÊ¬Fµ¦");
-		list_column.add("ªöÁÊ³æ»ù");
-		list_column.add("¤¤¤å³æ¦ì");
-		list_column.add("¹ô§O");
-		list_column.add("°Ó«~¦WºÙ");
-		list_column.add("°Ó«~³æ­«");
-		list_column.add("¤j¤ÀÃþ");
-		list_column.add("¤¤¤ÀÃþ");
-		list_column.add("¤p¤ÀÃþ");
-		list_column.add("³Ð«Ø¤H");
-		list_column.add("³Ð«Ø¤é´Á");*/
+		/*list_column.add("ï¿½Ç¸ï¿½");
+		list_column.add("ï¿½ï¿½ï¿½Æ½sï¿½ï¿½");
+		list_column.add("ï¿½ï¿½ï¿½Æ¤ï¿½ï¿½ï¿½Wï¿½ï¿½");
+		list_column.add("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
+		list_column.add("ï¿½ï¿½ï¿½Æ³Wï¿½ï¿½");
+		list_column.add("ï¿½ï¿½ï¿½ï¿½ï¿½Cï¿½ï¿½");
+		list_column.add("ï¿½|ï¿½pï¿½ï¿½ï¿½");
+		list_column.add("ï¿½ï¿½ï¿½Ê¬Fï¿½ï¿½");
+		list_column.add("ï¿½ï¿½ï¿½Ê³ï¿½ï¿½");
+		list_column.add("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
+		list_column.add("ï¿½ï¿½ï¿½O");
+		list_column.add("ï¿½Ó«~ï¿½Wï¿½ï¿½");
+		list_column.add("ï¿½Ó«~ï¿½æ­«");
+		list_column.add("ï¿½jï¿½ï¿½ï¿½ï¿½");
+		list_column.add("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
+		list_column.add("ï¿½pï¿½ï¿½ï¿½ï¿½");
+		list_column.add("ï¿½Ð«Ø¤H");
+		list_column.add("ï¿½Ð«Ø¤ï¿½ï¿½");*/
 		
-		list_column.add("§Ç¸¹");
-		list_column.add("ª«®Æ½s¸¹");
-		list_column.add("ª«®Æ¤¤¤å¦WºÙ");
-		list_column.add("ª«®Æ­^¤å¦WºÙ");
-		list_column.add("·|­p¬ì¥Ø");
-		list_column.add("¤¤¤å³æ¦ì");
-		list_column.add("­^¤å³æ¦ì");
-		list_column.add("°Ó«~¥N¸¹");
-		list_column.add("°Ó«~¦WºÙ");
-		list_column.add("»â¥Î³æ¦ì");
-		list_column.add("»â¥Î´«ºâ²v");
-		list_column.add("­«¶q³æ¦ì");
-		list_column.add("¤½¥q§O");
+		list_column.add("ï¿½Ç¸ï¿½");
+		list_column.add("ï¿½ï¿½ï¿½Æ½sï¿½ï¿½");
+		list_column.add("ï¿½ï¿½ï¿½Æ¤ï¿½ï¿½ï¿½Wï¿½ï¿½");
+		list_column.add("ï¿½ï¿½ï¿½Æ­^ï¿½ï¿½Wï¿½ï¿½");
+		list_column.add("ï¿½|ï¿½pï¿½ï¿½ï¿½");
+		list_column.add("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
+		list_column.add("ï¿½^ï¿½ï¿½ï¿½ï¿½");
+		list_column.add("ï¿½Ó«~ï¿½Nï¿½ï¿½");
+		list_column.add("ï¿½Ó«~ï¿½Wï¿½ï¿½");
+		list_column.add("ï¿½ï¿½Î³ï¿½ï¿½");
+		list_column.add("ï¿½ï¿½Î´ï¿½ï¿½ï¿½v");
+		list_column.add("ï¿½ï¿½ï¿½qï¿½ï¿½ï¿½");
+		list_column.add("ï¿½ï¿½ï¿½qï¿½O");
 			
 				
 		/**
-		 * ¶}©l¥´¦L
+		 * ï¿½}ï¿½lï¿½ï¿½ï¿½L
 		 */
-		//¥´¦L¼ÐÃD
+		//ï¿½ï¿½ï¿½Lï¿½ï¿½ï¿½D
 		HSSFRow row_title=sheet.createRow(0);
 		HSSFCell cell_title=row_title.createCell(0);
 		cell_title.setCellValue(title);
@@ -288,7 +293,7 @@ public class KyzMatAction extends ActionSupport implements ServletResponseAware{
 			HSSFCell cell=row_title.createCell(i);
 			cell.setCellStyle(cs_title);
 		}
-		//¥´¦LªíÀY
+		//ï¿½ï¿½ï¿½Lï¿½ï¿½ï¿½Y
 		HSSFRow row_column=sheet.createRow(2);
 		for(int i=0;i<list_column.size();i++){
 			sheet.setColumnWidth(i, 4000);
@@ -300,7 +305,7 @@ public class KyzMatAction extends ActionSupport implements ServletResponseAware{
 			cell.setCellValue(column);
 			cell.setCellStyle(cs_column);
 		}
-		//¥´¦L¼Æ¾Ú
+		//ï¿½ï¿½ï¿½Lï¿½Æ¾ï¿½
 		for(int i=0;i<list_mat.size();i++){//start for1
 			KyzMat mat=list_mat.get(i);
 			int index=i+1;
@@ -378,7 +383,7 @@ public class KyzMatAction extends ActionSupport implements ServletResponseAware{
 		os.close();
 	}
 	/**
-	 * ¥´¦L·j¯Áªº¤º®e(KyzMat)
+	 * ï¿½ï¿½ï¿½Lï¿½jï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½e(KyzMat)
 	 * @throws IOException
 	 */
 	public void print() throws IOException{
@@ -386,7 +391,7 @@ public class KyzMatAction extends ActionSupport implements ServletResponseAware{
 		this.print_all(list_mat);
 	}
 	/**
-	 * ¥´¦L³æ­ÓKyzMat
+	 * ï¿½ï¿½ï¿½Lï¿½ï¿½ï¿½KyzMat
 	 * @throws IOException
 	 */
 	public void print_one() throws IOException{
@@ -397,7 +402,7 @@ public class KyzMatAction extends ActionSupport implements ServletResponseAware{
 		
 	}
 	/**
-	 * ¥´¦L¦h­Ó¿ï¤¤ªºKyzMat
+	 * ï¿½ï¿½ï¿½Lï¿½hï¿½Ó¿ï¤¤ï¿½ï¿½KyzMat
 	 * @throws IOException
 	 */
 	public void print_select() throws IOException{
@@ -413,12 +418,12 @@ public class KyzMatAction extends ActionSupport implements ServletResponseAware{
 	}
 	
 	/**
-	 * SubKyzmat¥´¦L¦@¥Î¤èªk
+	 * SubKyzmatï¿½ï¿½ï¿½Lï¿½@ï¿½Î¤ï¿½k
 	 * @throws IOException
 	 */
 	public void print_all_sub(List<SubKyzmat>list_mat) throws IOException{
 		HSSFWorkbook wb=new HSSFWorkbook();
-		HSSFSheet sheet=wb.createSheet("ª«®Æ¸ê®Æ");
+		HSSFSheet sheet=wb.createSheet("ï¿½ï¿½ï¿½Æ¸ï¿½ï¿½");
 		
 		HSSFCellStyle cs=wb.createCellStyle();
 		cs.setAlignment(HSSFCellStyle.ALIGN_CENTER);
@@ -450,26 +455,26 @@ public class KyzMatAction extends ActionSupport implements ServletResponseAware{
 		cs_column.setFillForegroundColor(IndexedColors.YELLOW.getIndex());
 		cs_column.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
 		
-		String title="ª«®Æ¸ê®Æ³øªí2";
+		String title="ï¿½ï¿½ï¿½Æ¸ï¿½Æ³ï¿½ï¿½2";
 		List<String>list_column=new ArrayList<String>();				
-		list_column.add("§Ç¸¹");
-		list_column.add("ª«®Æ½s¸¹");
-		list_column.add("ª«®Æ¤¤¤å¦WºÙ");
-		list_column.add("ª«®Æ­^¤å¦WºÙ");
-		list_column.add("·|­p¬ì¥Ø");
-		list_column.add("¤¤¤å³æ¦ì");
-		list_column.add("­^¤å³æ¦ì");
-		list_column.add("°Ó«~¥N¸¹");
-		list_column.add("°Ó«~¦WºÙ");
-		list_column.add("»â¥Î³æ¦ì");
-		list_column.add("»â¥Î´«ºâ²v");
-		list_column.add("­«¶q³æ¦ì");
-		list_column.add("¤½¥q§O");					
+		list_column.add("ï¿½Ç¸ï¿½");
+		list_column.add("ï¿½ï¿½ï¿½Æ½sï¿½ï¿½");
+		list_column.add("ï¿½ï¿½ï¿½Æ¤ï¿½ï¿½ï¿½Wï¿½ï¿½");
+		list_column.add("ï¿½ï¿½ï¿½Æ­^ï¿½ï¿½Wï¿½ï¿½");
+		list_column.add("ï¿½|ï¿½pï¿½ï¿½ï¿½");
+		list_column.add("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
+		list_column.add("ï¿½^ï¿½ï¿½ï¿½ï¿½");
+		list_column.add("ï¿½Ó«~ï¿½Nï¿½ï¿½");
+		list_column.add("ï¿½Ó«~ï¿½Wï¿½ï¿½");
+		list_column.add("ï¿½ï¿½Î³ï¿½ï¿½");
+		list_column.add("ï¿½ï¿½Î´ï¿½ï¿½ï¿½v");
+		list_column.add("ï¿½ï¿½ï¿½qï¿½ï¿½ï¿½");
+		list_column.add("ï¿½ï¿½ï¿½qï¿½O");					
 						
 		/**
-		 * ¶}©l¥´¦L
+		 * ï¿½}ï¿½lï¿½ï¿½ï¿½L
 		 */
-		//¥´¦L¼ÐÃD
+		//ï¿½ï¿½ï¿½Lï¿½ï¿½ï¿½D
 		HSSFRow row_title=sheet.createRow(0);
 		HSSFCell cell_title=row_title.createCell(0);
 		cell_title.setCellValue(title);
@@ -480,7 +485,7 @@ public class KyzMatAction extends ActionSupport implements ServletResponseAware{
 			HSSFCell cell=row_title.createCell(i);
 			cell.setCellStyle(cs_title);
 		}
-		//¥´¦LªíÀY
+		//ï¿½ï¿½ï¿½Lï¿½ï¿½ï¿½Y
 		HSSFRow row_column=sheet.createRow(2);
 		for(int i=0;i<list_column.size();i++){
 			sheet.setColumnWidth(i, 4000);
@@ -492,7 +497,7 @@ public class KyzMatAction extends ActionSupport implements ServletResponseAware{
 			cell.setCellValue(column);
 			cell.setCellStyle(cs_column);
 		}
-		//¥´¦L¼Æ¾Ú
+		//ï¿½ï¿½ï¿½Lï¿½Æ¾ï¿½
 		for(int i=0;i<list_mat.size();i++){//start for1
 			SubKyzmat mat=list_mat.get(i);
 			int index=i+1;
@@ -573,7 +578,7 @@ public class KyzMatAction extends ActionSupport implements ServletResponseAware{
 		os.close();
 	}
 	/**
-	 * ¥´¦L·j¯ÁªºSubKyzmat
+	 * ï¿½ï¿½ï¿½Lï¿½jï¿½ï¿½ï¿½ï¿½SubKyzmat
 	 * @throws IOException
 	 */
 	public void print_sub() throws IOException{
@@ -581,16 +586,16 @@ public class KyzMatAction extends ActionSupport implements ServletResponseAware{
 		this.print_all_sub(list_mat);
 	}
 	/**
-	 * ¥´¦L³æ­ÓSubKyzmat
-	 * ¤Þ¥Îprint_one(),¦]¬°³£¬O¦P¤@­ÓmatNoªºª«®Æ¸ê®Æ
+	 * ï¿½ï¿½ï¿½Lï¿½ï¿½ï¿½SubKyzmat
+	 * ï¿½Þ¥ï¿½print_one(),ï¿½]ï¿½ï¿½ï¿½ï¿½ï¿½Oï¿½Pï¿½@ï¿½ï¿½matNoï¿½ï¿½ï¿½ï¿½ï¿½Æ¸ï¿½ï¿½
 	 * @throws IOException 
 	 */
 	public void print_one_sub() throws IOException{
 		this.print_one();
 	}
 	/**
-	 * ¥´¦L¿ï¤¤ªºSubKyzmat
-	 * ¤Þ¥Îprint_select(),¦]¬°³£¬O¬Û¦Pªº¦h­ÓmatNoªºª«®Æ¸ê®Æ
+	 * ï¿½ï¿½ï¿½Lï¿½ï¤¤ï¿½ï¿½SubKyzmat
+	 * ï¿½Þ¥ï¿½print_select(),ï¿½]ï¿½ï¿½ï¿½ï¿½ï¿½Oï¿½Û¦Pï¿½ï¿½ï¿½hï¿½ï¿½matNoï¿½ï¿½ï¿½ï¿½ï¿½Æ¸ï¿½ï¿½
 	 * @throws IOException 
 	 */
 	public void print_select_sub() throws IOException{
@@ -600,8 +605,8 @@ public class KyzMatAction extends ActionSupport implements ServletResponseAware{
 
 	
 	/**
-	 * ¦pªG¬°null,«hªð¥["----"
-	 * §PÂ_String
+	 * ï¿½pï¿½Gï¿½ï¿½null,ï¿½hï¿½ï¿½["----"
+	 * ï¿½Pï¿½_String
 	 */
 	public String getNull_str(String str){
 		String result_str="";
@@ -613,8 +618,8 @@ public class KyzMatAction extends ActionSupport implements ServletResponseAware{
 		return result_str;		
 	}
 	/**
-	 * ¦pªG¬°null,«hªð¦^0
-	 * §PÂ_Double
+	 * ï¿½pï¿½Gï¿½ï¿½null,ï¿½hï¿½ï¿½^0
+	 * ï¿½Pï¿½_Double
 	 */
 	public Double getNull_db(Double db){
 		Double result_db=0.0;

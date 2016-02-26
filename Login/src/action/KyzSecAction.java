@@ -8,7 +8,9 @@ import util.PageBean;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
+import entity.KyzExpectmatmLog;
 import entity.KyzSec;
+import entity.WebUser;
 
 public class KyzSecAction extends ActionSupport{
 	private KyzSec kyzsec;
@@ -86,7 +88,12 @@ public class KyzSecAction extends ActionSupport{
     	return "findById";
     }
     public String delete(){
-    	kyzsecSer.delete(factNo, secNo);
+    	KyzExpectmatmLog log=new KyzExpectmatmLog();
+    	log.setFactNo(factNo);
+		log.setContent(secNo);
+		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
+		log.setUsername(user.getUsername());
+    	kyzsecSer.delete(factNo, secNo,log);
     	return "delete";
     }
     

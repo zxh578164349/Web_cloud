@@ -11,6 +11,7 @@ import com.opensymphony.xwork2.ActionContext;
 import util.PageBean;
 import dao.Basedao;
 import dao.IKyzPettyDao;
+import entity.KyzExpectmatmLog;
 import entity.KyzPetty;
 
 public class KyzPettyDaoImpl extends Basedao implements IKyzPettyDao{
@@ -83,10 +84,10 @@ public class KyzPettyDaoImpl extends Basedao implements IKyzPettyDao{
 		return (KyzPetty)query.uniqueResult();
 	}
 
-	public void delete(String factNo, String billNo) {
+	public void delete(String factNo, String billNo,KyzExpectmatmLog delLog) {
 		// TODO Auto-generated method stub
 		KyzPetty kyzpetty=this.findById(factNo, billNo);
-		super.delete(kyzpetty);
+		super.delete(kyzpetty,delLog);
 	}
 
 	public List<KyzPetty> findByAnyThing(String factNo,String dateTime,String dateTime2, String expenseMk,

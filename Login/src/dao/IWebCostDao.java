@@ -3,6 +3,7 @@ package dao;
 import java.util.List;
 
 import util.PageBean;
+import entity.KyzExpectmatmLog;
 import entity.Webcost;
 import entity.WebcostId;
 
@@ -16,7 +17,7 @@ public interface IWebCostDao {
 
 	public Webcost findById(WebcostId id);
 
-	public void delete(WebcostId id);
+	public void delete(WebcostId id,KyzExpectmatmLog delLog);
 	
 	public List<Webcost>findByAny(String factNo,String beginDate,String endDate);
 	public Webcost findById(String factNo,String factCode,String yymm);

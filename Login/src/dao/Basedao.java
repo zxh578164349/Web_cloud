@@ -17,6 +17,7 @@ import com.opensymphony.xwork2.ActionContext;
 import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
+import entity.KyzExpectmatmLog;
 import entity.WebJurisdiction;
 
 /**
@@ -50,6 +51,17 @@ public class Basedao extends HibernateDaoSupport {
 		}
 	}
 
+	public void delete(Object persistentInstance,KyzExpectmatmLog delLog) {
+		log.debug("deleting WebJurisdiction instance");
+		try {
+			getHibernateTemplate().delete(persistentInstance);
+			getHibernateTemplate().merge(delLog);//數據刪除記錄
+			log.debug("delete successful");
+		} catch (RuntimeException re) {
+			log.error("delete failed", re);
+			throw re;
+		}
+	}
 	public void delete(Object persistentInstance) {
 		log.debug("deleting WebJurisdiction instance");
 		try {
@@ -101,6 +113,14 @@ public class Basedao extends HibernateDaoSupport {
 			return result;
 		} catch (RuntimeException re) {
 			log.error("merge failed", re);
+			throw re;
+		}
+	}
+	public void update(Object obj){
+		try{
+			getHibernateTemplate().update(obj);
+		}catch(RuntimeException re){
+			log.error("update failed", re);
 			throw re;
 		}
 	}

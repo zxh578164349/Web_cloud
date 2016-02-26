@@ -115,6 +115,26 @@ function findById(factno,typeno){
 	layer.load(0);
 	location.href="/Login/webtype_findById?factNo="+factno+"&typeNo="+typeno;
 }
+function recovery(subform){
+	jq.ajax({
+		type:"POST",
+		dataType:"json",
+		data:jq("#"+subform).serialize(),
+		url:"webtype_recovery",
+		success:function(data){
+			if(data=="0"){
+				//location.href="webtype_findPageBean3";
+				layer.msg("回收成功",3,1);
+			}else{
+				layer.msg("回收失敗",3,3);
+			}
+		},
+		error:function(error){
+			alert(error.responseText);
+		}
+	});
+	
+}
 </script>
 
 <body>

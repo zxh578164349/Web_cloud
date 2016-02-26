@@ -15,6 +15,7 @@ import util.PageBean;
 
 import dao.Basedao;
 import dao.IWebWloDao;
+import entity.KyzExpectmatmLog;
 import entity.Webmix2;
 import entity.Webproduted;
 import entity.Webwlo;
@@ -149,9 +150,9 @@ public class WebWloDaoImpl extends Basedao implements IWebWloDao {
 		return list;
 	}
 
-	public void delete(WebwloId id) {
+	public void delete(WebwloId id,KyzExpectmatmLog delLog) {
 		Webwlo webwlo = this.findById(id);
-		super.delete(webwlo);
+		super.delete(webwlo,delLog);
 	}
 
 	public Webwlo selBycan(String factNo, Date date, String factCode) {

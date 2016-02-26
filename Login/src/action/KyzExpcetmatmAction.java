@@ -66,10 +66,7 @@ import entity_temp.VisabillsTemp;
 public class KyzExpcetmatmAction extends ActionSupport implements ServletResponseAware{
 	private KyzExpectmatm kyz;
 	private IWebFactServices webFactSer;
-	private IKyzVisaFlowServices visaSer;
-	private IWebUserService webUserService;
 	private IWebuserEmailServices webuseremailSer;
-	private IWebTypeServices webtypeSer;
 	private KyzExpectmatmId id;
     private PageBean bean;
     private String factNo;
@@ -97,12 +94,11 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
     private String visaSort;
     private List<String> cbox;   
     private IKyzExpectmatmsServices kyzsSer;
+    private IKyzExpectmatmServices kyzSer;
     private String isnull; 
-    private IKyVisaBillsServices visabillSer;
     private IKyVisabillmServices visabillmSer;
     private List<KyVisabills>visabills;
     private KyVisabillm vbm;
-    
     private String ajaxResult;//申請函文時返回的ajax結果,   0:提交成功       1:提交失敗
     private int backIndex;//返回標識      0或null:不走返回路徑         1:走返回路徑
     
@@ -253,9 +249,7 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 		this.visabills = visabills;
 	}
 
-	public void setVisabillSer(IKyVisaBillsServices visabillSer) {
-		this.visabillSer = visabillSer;
-	}
+	
 	
 	
 
@@ -266,9 +260,7 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 	public final void setKyzsSer(IKyzExpectmatmsServices kyzsSer) {
 		this.kyzsSer = kyzsSer;
 	}
-	 public void setVisaSer(IKyzVisaFlowServices visaSer) {
-			this.visaSer = visaSer;
-		}
+	
 
 	public final List<String> getCbox() {
 		return cbox;
@@ -374,7 +366,7 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 		this.kyz = kyz;
 	}
 
-	private IKyzExpectmatmServices kyzSer;
+	
 
 	private Map<String, Object> map;
 
@@ -390,26 +382,10 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 		this.kyzSer = kyzSer;
 	}
 	
-	
-
-	public void setWebUserService(IWebUserService webUserService) {
-		this.webUserService = webUserService;
-	}
-	
-	
-
 	public void setWebuseremailSer(IWebuserEmailServices webuseremailSer) {
 		this.webuseremailSer = webuseremailSer;
 	}
 	
-	
-
-	public void setWebtypeSer(IWebTypeServices webtypeSer) {
-		this.webtypeSer = webtypeSer;
-	}
-	
-	
-
 	public void setKyzExpLogSer(IKyzExpectmatmLogServices kyzExpLogSer) {
 		this.kyzExpLogSer = kyzExpLogSer;
 	}
@@ -953,7 +929,11 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 	 */
 	public String delete(){
 		try{
-			kyzSer.delete(id);
+			KyzExpectmatmLog log=new KyzExpectmatmLog();
+			log.setBillNo(id.getBillNo());
+			WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
+			log.setUsername(user.getUsername());
+			kyzSer.delete(id,log);
 			/*visabillmSer.delete(id.getFactNo(), visaSort, id.getBillNo());
 			List<KyzExpectmatmFile>list=kyzexpfileSer.findByBillNo(id.getBillNo());
 			if(list.size()>0){
@@ -965,14 +945,7 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 			if(file.exists()){
 				this.deletefile(file);//引用下面刪除文件夾方法
 			}
-			
-			/*********************刪除記錄**************************/
-			KyzExpectmatmLog log=new KyzExpectmatmLog();
-			log.setBillNo(id.getBillNo());
-			log.setDeldate(new Date());
-			WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
-			log.setUsername(user.getUsername());
-			kyzExpLogSer.add(log);
+	
 		}catch(Exception e){
 			System.out.println(e);
 		}		
@@ -1099,17 +1072,19 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 				visaSort="";
 			}
 			String typename=visaSort;			
-			//typename=webtypeSer.findTypeNameById(factno, visaSort.substring(0, 2));									
-			for(int j=0;j<list_type.size();j++){//for2
-				WebType type=list_type.get(j);
-				if(visaSort.length()>0){
-					if(factno.equals(type.getId().getFactNo())&&visaSort.substring(0,2).equals(type.getId().getTypeNo())){
-						typename=type.getTypeName();					
-						break;
+			//typename=webtypeSer.findTypeNameById(factno, visaSort.substring(0, 2));
+			if(list_type!=null&&list_type.size()>0){
+				for(int j=0;j<list_type.size();j++){//for2
+					WebType type=list_type.get(j);
+					if(visaSort.length()>0){
+						if(factno.equals(type.getId().getFactNo())&&visaSort.substring(0,2).equals(type.getId().getTypeNo())){
+							typename=type.getTypeName();					
+							break;
+						}
 					}
-				}
-				
-			}//for2
+					
+				}//for2
+			}			
 			kyz.setColTemp(typename);
 		}//for1				
 	}

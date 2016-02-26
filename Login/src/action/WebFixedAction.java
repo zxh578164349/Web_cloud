@@ -3,6 +3,7 @@ package action;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -27,8 +28,10 @@ import util.PageBean;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
+import entity.KyzExpectmatmLog;
 import entity.WebFixed;
 import entity.WebFixedLog;
+import entity.WebUser;
 
 public class WebFixedAction extends ActionSupport implements
 		ServletResponseAware {
@@ -290,7 +293,11 @@ public class WebFixedAction extends ActionSupport implements
 	}
 
 	public String delete() {
-		fixSer.deleteWebFixed(id);
+		KyzExpectmatmLog log=new KyzExpectmatmLog();
+		log.setContent(id);
+		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
+		log.setUsername(user.getUsername());
+		fixSer.deleteWebFixed(id,log);
 		return "delete";
 	}
 

@@ -8,6 +8,7 @@ import java.util.List;
 
 import dao.IWebProdutedDao;
 
+import entity.KyzExpectmatmLog;
 import entity.Webproduted;
 import entity.WebprodutedId;
 import services.IWebProdutedServices;
@@ -45,8 +46,8 @@ public class WebProdutedServicesImpl implements IWebProdutedServices {
 		return produtedDao.selByYymm(yymm, factNo);
 	}
 
-	public void delete(WebprodutedId id) {
-		produtedDao.delete(id);
+	public void delete(WebprodutedId id,KyzExpectmatmLog delLog) {
+		produtedDao.delete(id,delLog);
 	}
 
 	public Webproduted selBycan(String factNo, Date date, String factCode) {

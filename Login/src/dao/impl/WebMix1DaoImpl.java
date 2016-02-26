@@ -9,6 +9,7 @@ import org.hibernate.Query;
 import util.PageBean;
 import dao.Basedao;
 import dao.IWebMix1Dao;
+import entity.KyzExpectmatmLog;
 import entity.WebYieldData;
 import entity.WebYieldDataId;
 
@@ -81,10 +82,10 @@ public class WebMix1DaoImpl extends Basedao implements IWebMix1Dao {
 		return (WebYieldData) query.uniqueResult();
 	}
 
-	public void delete(WebYieldDataId id) {
+	public void delete(WebYieldDataId id,KyzExpectmatmLog delLog) {
 		// TODO Auto-generated method stub
 		WebYieldData mix1 = this.findById(id);
-		super.delete(mix1);
+		super.delete(mix1,delLog);
 
 	}
 

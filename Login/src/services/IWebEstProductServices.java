@@ -3,6 +3,7 @@ package services;
 import java.util.List;
 
 import util.PageBean;
+import entity.KyzExpectmatmLog;
 import entity.Webestproduct;
 import entity.WebestproductId;
 
@@ -16,7 +17,7 @@ public interface IWebEstProductServices {
 
 	public Webestproduct findById(WebestproductId id);
 
-	public void delete(WebestproductId id);
+	public void delete(WebestproductId id,KyzExpectmatmLog delLog);
 
 	public List<Webestproduct> selByFactNoAndYymm(String factNo, String yymm,
 			String type);

@@ -3,6 +3,7 @@ package services;
 import java.util.List;
 
 import util.PageBean;
+import entity.KyzExpectmatmLog;
 import entity.SumWebYieldData;
 
 public interface ISumWebYieldDataServices {

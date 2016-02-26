@@ -9,6 +9,7 @@ import org.hibernate.Query;
 import util.PageBean;
 import dao.Basedao;
 import dao.IWebEstProductDao;
+import entity.KyzExpectmatmLog;
 import entity.Webcost;
 import entity.Webestproduct;
 import entity.WebestproductId;
@@ -88,10 +89,10 @@ public class WebEstProductDaoImpl extends Basedao implements IWebEstProductDao {
 		return (Webestproduct) query.uniqueResult();
 	}
 
-	public void delete(WebestproductId id) {
+	public void delete(WebestproductId id,KyzExpectmatmLog delLog) {
 		// TODO Auto-generated method stub
 		Webestproduct pro = this.findById(id);
-		super.delete(pro);
+		super.delete(pro,delLog);
 
 	}
 

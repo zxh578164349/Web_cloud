@@ -12,6 +12,7 @@ import util.PageBean;
 
 import dao.Basedao;
 import dao.IWebTabpomDao;
+import entity.KyzExpectmatmLog;
 import entity.VWebFact;
 import entity.WebTabpom;
 
@@ -41,14 +42,14 @@ public class WebTabpomDaoImpl extends Basedao implements IWebTabpomDao{
 		return obj;
 	}
 
-	public void delete(WebTabpom tabpom) {
+	public void delete(WebTabpom tabpom,KyzExpectmatmLog delLog) {
 		// TODO Auto-generated method stub
-		super.delete(tabpom);
+		super.delete(tabpom,delLog);
 	}
 
-	public void delete(String pomNo) {
+	public void delete(String pomNo,KyzExpectmatmLog delLog) {
 		// TODO Auto-generated method stub
-		super.delete(findById(pomNo));
+		super.delete(findById(pomNo),delLog);
 	}
 
 	public PageBean findPageBean(int pageSize, int page, String pomName,

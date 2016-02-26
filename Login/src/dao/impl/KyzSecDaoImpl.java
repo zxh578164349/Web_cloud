@@ -11,6 +11,7 @@ import com.opensymphony.xwork2.ActionContext;
 import util.PageBean;
 import dao.Basedao;
 import dao.IKyzSecDao;
+import entity.KyzExpectmatmLog;
 import entity.KyzSec;
 
 public class KyzSecDaoImpl extends Basedao implements IKyzSecDao{
@@ -89,9 +90,9 @@ public class KyzSecDaoImpl extends Basedao implements IKyzSecDao{
 		return (KyzSec)query.uniqueResult();
 	}
 
-	public void delete(String factNo, String secNo) {
+	public void delete(String factNo, String secNo,KyzExpectmatmLog delLog) {
 		// TODO Auto-generated method stub
 		KyzSec kyzsec=this.findById(factNo, secNo);
-		super.delete(kyzsec);
+		super.delete(kyzsec,delLog);
 	}
 }

@@ -3,12 +3,13 @@ package services;
 import java.util.List;
 
 import util.PageBean;
+import entity.KyzExpectmatmLog;
 import entity.WebFixed;
 
 public interface IWebFixedServices {
 	public void addWebFixed(WebFixed fix);
 
-	public void deleteWebFixed(String id);
+	public void deleteWebFixed(String id,KyzExpectmatmLog delLog);
 
 	public PageBean findPageBean(int pageSize, int page, String factNo,
 			String yymm,String yymm_s,String lostmk);

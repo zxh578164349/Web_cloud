@@ -11,6 +11,7 @@ import com.opensymphony.xwork2.ActionContext;
 import util.PageBean;
 import dao.Basedao;
 import dao.IWebBussinessletterDao;
+import entity.KyzExpectmatmLog;
 import entity.WebBussinessletter;
 
 public class WebBussinessletterDaoImpl extends Basedao implements IWebBussinessletterDao{
@@ -78,16 +79,16 @@ public class WebBussinessletterDaoImpl extends Basedao implements IWebBussinessl
 		return (WebBussinessletter)query.uniqueResult();
 	}
 
-	public void delete(WebBussinessletter letter) {
+	public void delete(WebBussinessletter letter,KyzExpectmatmLog delLog) {
 		// TODO Auto-generated method stub
-		super.delete(letter);
+		super.delete(letter,delLog);
 		
 	}
 
-	public void delete(String billNo) {
+	public void delete(String billNo,KyzExpectmatmLog delLog) {
 		// TODO Auto-generated method stub
 		WebBussinessletter letter=this.findById(billNo);
-		super.delete(letter);
+		super.delete(letter,delLog);
 	}
 
 	/**

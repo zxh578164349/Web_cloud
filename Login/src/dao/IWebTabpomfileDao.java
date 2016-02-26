@@ -2,6 +2,7 @@ package dao;
 
 import java.util.List;
 
+import entity.KyzExpectmatmLog;
 import entity.WebTabpomfile;
 
 public interface IWebTabpomfileDao {

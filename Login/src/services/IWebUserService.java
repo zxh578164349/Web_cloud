@@ -3,32 +3,33 @@ package services;
 import java.util.List;
 
 import util.PageBean;
+import entity.KyzExpectmatmLog;
 import entity.WebUser;
 
 public interface IWebUserService {
-	// ®Ú¾Ú¥Î¤á¦W§ä¥Î¤á¹ï¶H
+	// ï¿½Ú¾Ú¥Î¤ï¿½Wï¿½ï¿½Î¤ï¿½ï¿½H
 	public WebUser selbyName(String name);
 
-	// ­×§ï¥Î¤á«H®§
+	// ï¿½×§ï¿½Î¤ï¿½Hï¿½ï¿½
 	public boolean updateUser(WebUser webUser);
 
-	// Àò¨ú©Ò¦³¥Î¤á«H®§
+	// ï¿½ï¿½ï¿½Ò¦ï¿½ï¿½Î¤ï¿½Hï¿½ï¿½
 	public List<WebUser> getUsers(int page, int rows, String conditions,
 			String factNo);
 
-	// ­pºâ¥Î¤á¦³¦h¤Ö­Ó
+	// ï¿½pï¿½ï¿½Î¤á¦³ï¿½hï¿½Ö­ï¿½
 	public int totlePage(String conditions);
 
 	public List findMoreUser(String uname);
 	public int findMoreUser2(String uname);
 
-	// ³]¸m½ã¤á¬O§_¥i¥Î
+	// ï¿½]ï¿½mï¿½ï¿½ï¿½Oï¿½_ï¿½iï¿½ï¿½
 	public boolean updateKy(int id, int available);
 
-	// ®Ú¾Úid§ä¨ì¥Î¤á
+	// ï¿½Ú¾ï¿½idï¿½ï¿½ï¿½Î¤ï¿½
 	public WebUser selByuserId(int id);
 
-	// ®Ú¾Úid©M¼t§O§ä¥Î¤á
+	// ï¿½Ú¾ï¿½idï¿½Mï¿½tï¿½Oï¿½ï¿½Î¤ï¿½
 	public WebUser selByuserId(String factno, String username);
 
 	public WebUser selByuserId(int id, String username);
@@ -44,7 +45,7 @@ public interface IWebUserService {
 	public List<WebUser> findByEmailDwr(String email);
 	public List<WebUser> findByUserNameDwr(String factNo,String name);
 	public WebUser findByNameAndFactNoDwr(String factNo,String name);
-	public void delete(int id);
+	public void delete(int id,KyzExpectmatmLog delLog);
 	public WebUser findByIdDwr2(String factNo, String userName);
 	public PageBean findPageBean_init(int pageSize, int page, String userName,String factNo);
 	public WebUser findUser(String username,String pwd,String factNo);

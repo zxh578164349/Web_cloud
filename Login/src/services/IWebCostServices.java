@@ -3,6 +3,7 @@ package services;
 import java.util.List;
 
 import util.PageBean;
+import entity.KyzExpectmatmLog;
 import entity.Webcost;
 import entity.WebcostId;
 
@@ -16,7 +17,7 @@ public interface IWebCostServices {
 
 	public Webcost findById(WebcostId id);
 
-	public void delete(WebcostId id);
+	public void delete(WebcostId id,KyzExpectmatmLog delLog);
 	public boolean check(String factNo,String factCode,String yymm);
 	
 	public List<Webcost> findByAny(String factNo, String beginDate,String endDate);

@@ -15,6 +15,7 @@ import util.PageBean;
 
 import dao.Basedao;
 import dao.IWebProdutedDao;
+import entity.KyzExpectmatmLog;
 import entity.Webmix2;
 import entity.Webmixperson;
 import entity.Webproduted;
@@ -151,9 +152,9 @@ public class WebProdutedDaoImpl extends Basedao implements IWebProdutedDao {
 
 	}
 
-	public void delete(WebprodutedId id) {
+	public void delete(WebprodutedId id,KyzExpectmatmLog delLog) {
 		Webproduted produted = this.findById(id);
-		super.delete(produted);
+		super.delete(produted,delLog);
 	}
 
 	public Webproduted selBycan(String factNo, Date date, String factCode) {

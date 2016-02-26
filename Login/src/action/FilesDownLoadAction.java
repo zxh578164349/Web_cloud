@@ -17,6 +17,7 @@ import services.IWebUploadFileServices;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
+import entity.KyzExpectmatmLog;
 import entity.WebUser;
 
 
@@ -56,11 +57,11 @@ public class FilesDownLoadAction extends ActionSupport{
 		  String factNo=user.getFactno();
 		  String username=user.getUsername();
 		  /**
-		   * ªA°È¾¹¸ô®|
+		   * ï¿½Aï¿½È¾ï¿½ï¿½ï¿½ï¿½|
 		   */
 		  //return ServletActionContext.getServletContext().getResourceAsStream("upload\\"+factNo+"_"+username+"\\"+fileName);
 		  /**
-		   * ¥»¦a¸ô®|
+		   * ï¿½ï¿½ï¿½aï¿½ï¿½ï¿½|
 		   */
 		  //return ServletActionContext.getServletContext().getResourceAsStream("\\uploadfile\\"+factNo+"_"+username+"\\"+fileName);
 		  FileInputStream input=new FileInputStream("d:\\webupload\\"+factNo+"_"+username+"\\"+fileName);
@@ -107,14 +108,19 @@ public class FilesDownLoadAction extends ActionSupport{
 		String factNo=user.getFactno();
 		String userName=user.getUsername();
 		/**
-		 * ªA°È¾¹¸ô®|
+		 * ï¿½Aï¿½È¾ï¿½ï¿½ï¿½ï¿½|
 		 */
 		//File file=new File(ServletActionContext.getServletContext().getRealPath("upload\\"+factNo+"_"+userName+"\\"+fileName));
 		/**
-		 * ¥»¦a¸ô®|
+		 * ï¿½ï¿½ï¿½aï¿½ï¿½ï¿½|
 		 */
+		KyzExpectmatmLog log=new KyzExpectmatmLog();
+		log.setUsername(user.getUsername());
+		log.setFactNo(factNo);
+		log.setObj("WebUploadfiles");
+		log.setContent(fileName);
 		File file=new File("d:\\webupload\\"+factNo+"_"+userName+"\\"+fileName);
-		Boolean flag=webuploadSer.delete(id);
+		Boolean flag=webuploadSer.delete(id,log);
 		if(flag==true){
 			if(file.isFile()&&file.exists()){
 				file.delete();

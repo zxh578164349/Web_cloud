@@ -2,6 +2,7 @@ package services;
 
 import java.util.List;
 
+import entity.KyzExpectmatmLog;
 import entity.WebTabpomfile;
 
 public interface IWebTabpomfileServices {

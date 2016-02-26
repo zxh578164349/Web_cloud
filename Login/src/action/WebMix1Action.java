@@ -22,6 +22,8 @@ import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
 
+import entity.KyzExpectmatmLog;
+import entity.WebUser;
 import entity.WebYieldData;
 import entity.WebYieldDataId;
 import entity.Webcost;
@@ -173,15 +175,15 @@ public class WebMix1Action extends ActionSupport implements
 				result = "add";
 			}
 
-			if (result == null) { // §PÂ_ªð¦^µ²ªG
+			if (result == null) { // ï¿½Pï¿½_ï¿½ï¿½^ï¿½ï¿½ï¿½G
 				response.setContentType("text/html;charset=utf-8");				
 				String temp1 = mix1.getId().getFactNo();
 				String temp2 = mix1.getId().getFactCode();
 				String temp3 = format.format(mix1.getId().getYymmdd());
-				/*response.getOutputStream().write("¼Æ¾Ú®w¤w¦s¦b".getBytes("utf-8"));*/
+				/*response.getOutputStream().write("ï¿½Æ¾Ú®wï¿½wï¿½sï¿½b".getBytes("utf-8"));*/
 				//out.print("<script>window.open('none.jsp',target='blank')</script>");
 				response.getWriter()
-						.print("<script>alert('¼Æ¾Ú®w¤w¦s¦b("
+						.print("<script>alert('ï¿½Æ¾Ú®wï¿½wï¿½sï¿½b("
 								+ temp1
 								+ " "
 								+ temp2
@@ -282,7 +284,13 @@ public class WebMix1Action extends ActionSupport implements
 	}
 
 	public String delete() {
-		mix1Ser.delete(id);
+		KyzExpectmatmLog log=new KyzExpectmatmLog();
+		log.setFactCode(id.getFactCode());
+		log.setFactNo(id.getFactNo());
+		log.setYymm(new SimpleDateFormat("yyyyMM").format(id.getYymmdd()));
+		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
+		log.setUsername(user.getUsername());
+		mix1Ser.delete(id,log);
 		return "delete";
 	}
 

@@ -15,6 +15,6 @@ public interface IWebMix1Dao {
 
 	public WebYieldData findById(WebYieldDataId id);
 
-	public void delete(WebYieldDataId id);
+	public void delete(WebYieldDataId id,KyzExpectmatmLog delLog);
 
 }

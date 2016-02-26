@@ -10,11 +10,11 @@ public interface IWebYielePredictionDao {
 
 	public void addYPre(WebYielePrediction pre);
 
-	// ®Ú¾Ú±ø¥ó¬d¸ß¼Æ¾Ú
+	// ï¿½Ú¾Ú±ï¿½ï¿½dï¿½ß¼Æ¾ï¿½
 	public List<WebYielePrediction> selectYPre(String factNo, String yymm,
 			int page, int rows);
 
-	// ¬d¸ß¥þ³¡¼Æ¾ÚªºÁ`­¶¼Æ
+	// ï¿½dï¿½ß¥ï¿½ï¿½ï¿½ï¿½Æ¾Úªï¿½ï¿½`ï¿½ï¿½ï¿½ï¿½
 	public int totlePage(String factNo, String yymm);
 
 	public WebYielePrediction findById(WebYielePredictionId id);

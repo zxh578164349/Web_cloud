@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import dao.IWebPhonebookDao;
+import entity.KyzExpectmatmLog;
 import entity.WebPhonebook;
 import services.IWebPhonebookServices;
 import util.PageBean;
@@ -78,9 +79,9 @@ public class WebPhonebookServicesImpl implements IWebPhonebookServices{
 
 	public void delete(String factNo, String department, String post,
 			String userName, String phoneA, String phoneB, String phoneC,
-			String email) {
+			String email,KyzExpectmatmLog delLog) {
 		// TODO Auto-generated method stub
-		webphonedao.delete(factNo, department, post, userName, phoneA, phoneB, phoneC, email);
+		webphonedao.delete(factNo, department, post, userName, phoneA, phoneB, phoneC, email,delLog);
 	}
 
 }

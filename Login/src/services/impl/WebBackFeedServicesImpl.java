@@ -8,6 +8,7 @@ import java.util.List;
 
 import dao.IWebBackFeedDao;
 
+import entity.KyzExpectmatmLog;
 import entity.Webbackfeed;
 import entity.WebbackfeedId;
 import services.IWebBackFeedServices;
@@ -42,9 +43,9 @@ public class WebBackFeedServicesImpl implements IWebBackFeedServices {
 		return feedDao.findById(id);
 	}
 
-	public void delete(WebbackfeedId id) {
+	public void delete(WebbackfeedId id,KyzExpectmatmLog delLog) {
 		// TODO Auto-generated method stub
-		feedDao.delete(id);
+		feedDao.delete(id,delLog);
 	}
 
 	public boolean check(String factNo, String factCode, String yymm) {

@@ -29,6 +29,7 @@ import entity.KyVisabills;
 import entity.KyzExpectmatm;
 import entity.KyzExpectmatmFile;
 import entity.KyzExpectmatmId;
+import entity.KyzExpectmatmLog;
 import entity.KyzExpectmats;
 import entity.KyzVisaflow;
 import entity_temp.VisabillsTemp;
@@ -130,9 +131,9 @@ public class KyzExpectmatmServicesImpl implements IKyzExpectmatmServices {
 		return kyzDao.findFixWithPage(pageSize, page, factNo, visaSort,billNo,userNm,timeCreate,timeCreate2);
 	}
 
-	public void delete(KyzExpectmatmId id) {
+	public void delete(KyzExpectmatmId id,KyzExpectmatmLog delLog) {
 		// TODO Auto-generated method stub
-		kyzDao.delete(id);
+		kyzDao.delete(id,delLog);
 	}
 
 	public List<KyzExpectmatm> findByFactNo(String factno) {

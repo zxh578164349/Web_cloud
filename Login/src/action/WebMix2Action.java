@@ -22,6 +22,8 @@ import services.IWebMix2Services;
 import util.GlobalMethod;
 import util.Page;
 import util.PageBean;
+import entity.KyzExpectmatmLog;
+import entity.WebUser;
 import entity.Webmix2;
 import entity.Webmix2Id;
 import entity.Webmixperson;
@@ -311,7 +313,13 @@ public class WebMix2Action extends ActionSupport implements
 	}
 
 	public String delete2() {
-		mix2Service.delete(id);
+		KyzExpectmatmLog log=new KyzExpectmatmLog();
+		log.setFactCode(id.getFactCode());
+		log.setFactNo(id.getFactNo());
+		log.setYymm(new SimpleDateFormat("yyyyMM").format(id.getYymm()));
+		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
+		log.setUsername(user.getUsername());
+		mix2Service.delete(id,log);
 		return "delete";
 	}
 	

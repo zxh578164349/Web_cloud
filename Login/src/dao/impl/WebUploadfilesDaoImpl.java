@@ -6,6 +6,7 @@ import org.hibernate.Query;
 
 import dao.Basedao;
 import dao.IWebUploadFileDao;
+import entity.KyzExpectmatmLog;
 import entity.WebUploadfiles;
 
 public class WebUploadfilesDaoImpl extends Basedao implements IWebUploadFileDao{
@@ -22,13 +23,13 @@ public class WebUploadfilesDaoImpl extends Basedao implements IWebUploadFileDao{
 		return super.findAll(hql, objs);
 	}
 
-	public boolean delete(int id) {
+	public boolean delete(int id,KyzExpectmatmLog delLog) {
 		// TODO Auto-generated method stub
 		Boolean flag=false;
 		WebUploadfiles file=this.findById(id);
 		if(file!=null){
 			flag=true;
-			super.delete(file);
+			super.delete(file,delLog);
 		}
 		return flag;
 	}

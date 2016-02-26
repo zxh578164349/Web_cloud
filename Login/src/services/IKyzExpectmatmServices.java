@@ -20,7 +20,7 @@ public interface IKyzExpectmatmServices {
 	public String makeBillNo(String factNo, String timeCreate);
 	public KyzExpectmatm findById(KyzExpectmatmId id);
 	public PageBean findPageBean(int pageSize, int page, String factNo,String visaSort,String billNo,String userNm,String timeCreate,String timeCreate2);
-	public void delete(KyzExpectmatmId id);
+	public void delete(KyzExpectmatmId id,KyzExpectmatmLog delLog);
 	public List<KyzExpectmatm> findByFactNo(String factno);
 	public List<KyzExpectmatm> findById_Print(KyzExpectmatmId id);
 	

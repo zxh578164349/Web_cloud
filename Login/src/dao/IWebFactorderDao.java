@@ -6,12 +6,13 @@ import org.hibernate.Transaction;
 
 import util.PageBean;
 
+import entity.KyzExpectmatmLog;
 import entity.WebFactorder;
 
 public interface IWebFactorderDao {
 	public void add(WebFactorder order);
 	public WebFactorder findByOrderId(String factNo,String factArea,String yymm,String modelNo,String customer,String brank,String component);
-	public void delete(String factNo,String factArea,String yymm,String modelNo,String customer,String brank,String component);
+	public void delete(String factNo,String factArea,String yymm,String modelNo,String customer,String brank,String component,KyzExpectmatmLog delLog);
 	public void addLarge2(List<List<String>>list,String username);//经过事务声明配置，大批量導入數據20160117(修改版)
 	public void addLarge3(List<List<String>>list,String username);//不经过事务声明配置，大批量導入數據20160124(修改版)
 	public PageBean findPageBean(int pageSize,int page,List<String>factAreas,List<String>brank,List<String>customer,List<String>model,List<String>component,String factNo,List<String>factNos,String yymm,String yymm2);

@@ -5,6 +5,7 @@ import java.util.List;
 
 import util.PageBean;
 
+import entity.KyzExpectmatmLog;
 import entity.Webmix2;
 import entity.Webmix2Id;
 
@@ -23,7 +24,7 @@ public interface IWebMix2Services {
 
 	public List<Webmix2> selByYymm(String yymm, String factNo);
 
-	public void delete(Webmix2Id id);
+	public void delete(Webmix2Id id,KyzExpectmatmLog delLog);
 
 	public Webmix2 selBycan(String factNo, Date date, String factCode);
 	public boolean check(String factNo,String factCode,String yymm);

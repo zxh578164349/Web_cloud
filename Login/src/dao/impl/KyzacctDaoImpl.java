@@ -12,6 +12,7 @@ import util.PageBean;
 import dao.Basedao;
 import dao.IKyzacctDao;
 import entity.KyzAcct;
+import entity.KyzExpectmatmLog;
 
 public class KyzacctDaoImpl extends Basedao implements IKyzacctDao{
 
@@ -67,10 +68,10 @@ public class KyzacctDaoImpl extends Basedao implements IKyzacctDao{
 		return (KyzAcct)query.uniqueResult();
 	}
 
-	public void delete(String acctNo) {
+	public void delete(String acctNo,KyzExpectmatmLog delLog) {
 		// TODO Auto-generated method stub
 		KyzAcct kyzacct=this.findById(acctNo);
-		super.delete(kyzacct);
+		super.delete(kyzacct,delLog);
 	}
 
 	public List<KyzAcct> findAll() {

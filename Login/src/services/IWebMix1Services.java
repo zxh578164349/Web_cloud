@@ -3,6 +3,7 @@ package services;
 import java.util.List;
 
 import util.PageBean;
+import entity.KyzExpectmatmLog;
 import entity.WebYieldData;
 import entity.WebYieldDataId;
 
@@ -17,7 +18,7 @@ public interface IWebMix1Services {
 
 	public WebYieldData findById(WebYieldDataId id);
 
-	public void delete(WebYieldDataId id);
+	public void delete(WebYieldDataId id,KyzExpectmatmLog delLog);
 	
 	public boolean check(String factNo,String factCode,String yymm);
 

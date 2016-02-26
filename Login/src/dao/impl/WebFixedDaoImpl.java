@@ -11,6 +11,7 @@ import com.opensymphony.xwork2.ActionContext;
 import util.PageBean;
 import dao.Basedao;
 import dao.IWebFixedDao;
+import entity.KyzExpectmatmLog;
 import entity.WebFixed;
 import entity.WebYieldData;
 
@@ -95,10 +96,10 @@ public class WebFixedDaoImpl extends Basedao implements IWebFixedDao {
 		return (WebFixed) query.uniqueResult();
 	}
 
-	public void deleteWebFixed(String id) {
+	public void deleteWebFixed(String id,KyzExpectmatmLog delLog) {
 		// TODO Auto-generated method stub
 		WebFixed fix = this.findById(id);
-		super.delete(fix);
+		super.delete(fix,delLog);
 
 	}
 

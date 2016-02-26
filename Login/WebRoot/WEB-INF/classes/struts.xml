@@ -404,6 +404,9 @@
              <result name="beanList1">/page/table1/webtype1.jsp</result>
              <result name="findById">/saveAndUpdate/webTypeSaveOrUpdate.jsp</result>
              <result name="delete" type="redirectAction">webtype_findPageBean3</result>
+             <result name="recovery" type="json">
+                  <param name="root">ajaxResult</param>
+             </result>
         </action>
         <action name="proloss_*" class="profitlossAction" method="{1}"></action>
         <action name="kyzfile_*" class="filekyzAction" method="{1}">

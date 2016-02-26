@@ -25,7 +25,9 @@ import util.PageBean;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
+import entity.KyzExpectmatmLog;
 import entity.WebFact;
+import entity.WebUser;
 import entity.Webestproduct;
 import entity.WebestproductId;
 
@@ -289,7 +291,13 @@ public class WebEstProductAction extends ActionSupport implements
 	}
 
 	public String delete() {
-		estProSer.delete(id);
+		KyzExpectmatmLog log=new KyzExpectmatmLog();
+		log.setFactCode(id.getFactCode());
+		log.setFactNo(id.getFactNo());
+		log.setYymm(new SimpleDateFormat("yyyyMM").format(id.getYymm()));
+		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
+		log.setUsername(user.getUsername());
+		estProSer.delete(id,log);
 		return "delete";
 	}
 	

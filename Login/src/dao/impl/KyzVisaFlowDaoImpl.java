@@ -12,6 +12,7 @@ import util.PageBean;
 import dao.Basedao;
 import dao.IKyzVisaFlowDao;
 import entity.KyzExpectmatm;
+import entity.KyzExpectmatmLog;
 import entity.KyzVisaflow;
 import entity.KyzVisaflowId;
 

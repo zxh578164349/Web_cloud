@@ -9,6 +9,7 @@ import org.hibernate.Query;
 import util.PageBean;
 import dao.Basedao;
 import dao.IWebCostDao;
+import entity.KyzExpectmatmLog;
 import entity.WebYieldData;
 import entity.Webcost;
 import entity.WebcostId;
@@ -88,10 +89,10 @@ public class WebCostDaoImpl extends Basedao implements IWebCostDao {
 		return (Webcost) query.uniqueResult();
 	}
 
-	public void delete(WebcostId id) {
+	public void delete(WebcostId id,KyzExpectmatmLog delLog) {
 		// TODO Auto-generated method stub
 		Webcost cost = this.findById(id);
-		super.delete(cost);
+		super.delete(cost,delLog);
 
 	}
 

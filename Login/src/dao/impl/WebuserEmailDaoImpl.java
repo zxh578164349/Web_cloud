@@ -12,6 +12,7 @@ import util.PageBean;
 
 import dao.Basedao;
 import dao.IWebuserEmailDao;
+import entity.KyzExpectmatmLog;
 import entity.WebuserEmail;
 
 public class WebuserEmailDaoImpl extends Basedao implements IWebuserEmailDao{
@@ -34,10 +35,10 @@ public class WebuserEmailDaoImpl extends Basedao implements IWebuserEmailDao{
 		return obj;
 	}
 
-	public void delete(String factNo,String email,String emailpwd) {
+	public void delete(String factNo,String email,String emailpwd,KyzExpectmatmLog delLog) {
 		// TODO Auto-generated method stub
 		WebuserEmail obj=this.findById(factNo, email, emailpwd);
-		super.delete(obj);
+		super.delete(obj,delLog);
 	}
 
 	public PageBean findPageBean(int pageSize, int page, String factNo,

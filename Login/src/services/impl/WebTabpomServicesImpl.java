@@ -3,6 +3,7 @@ package services.impl;
 import java.util.List;
 
 import dao.IWebTabpomDao;
+import entity.KyzExpectmatmLog;
 import entity.WebTabpom;
 import services.IWebTabpomServices;
 import util.PageBean;
@@ -25,14 +26,14 @@ public class WebTabpomServicesImpl implements IWebTabpomServices{
 		return tabpomDao.findById(pomNo);
 	}
 
-	public void delete(WebTabpom tabpom) {
+	public void delete(WebTabpom tabpom,KyzExpectmatmLog delLog) {
 		// TODO Auto-generated method stub
-		tabpomDao.delete(tabpom);
+		tabpomDao.delete(tabpom,delLog);
 	}
 
-	public void delete(String pomNo) {
+	public void delete(String pomNo,KyzExpectmatmLog delLog) {
 		// TODO Auto-generated method stub
-		tabpomDao.delete(pomNo);
+		tabpomDao.delete(pomNo,delLog);
 	}
 
 	public PageBean findPageBean(int pageSize, int page, String pomName,

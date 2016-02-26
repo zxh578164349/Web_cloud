@@ -4,6 +4,7 @@ import java.util.List;
 
 import dao.IKpifactDao;
 import entity.Kpifact;
+import entity.KyzExpectmatmLog;
 import services.IKpifactServices;
 import util.PageBean;
 
@@ -32,9 +33,9 @@ public class KpifactServicesImpl implements IKpifactServices{
 		return kpidao.findPageBean(pageSize, page, factNo, yyyy);
 	}
 
-	public void delete(String factNo, String factCode, String yyyy) {
+	public void delete(String factNo, String factCode, String yyyy,KyzExpectmatmLog delLog) {
 		// TODO Auto-generated method stub
-		kpidao.delete(factNo, factCode, yyyy);
+		kpidao.delete(factNo, factCode, yyyy,delLog);
 	}
 
 	public List<String> findDateByFactNo(String factNo,String yyyy) {

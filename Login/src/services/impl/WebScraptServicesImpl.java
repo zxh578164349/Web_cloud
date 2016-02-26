@@ -8,6 +8,7 @@ import java.util.List;
 
 import dao.IWebScraptDao;
 
+import entity.KyzExpectmatmLog;
 import entity.Webscrapt;
 import entity.WebscraptId;
 import services.IWebScraptServices;
@@ -46,8 +47,8 @@ public class WebScraptServicesImpl implements IWebScraptServices {
 		return scraptDao.selByYymm(yymm, factNo);
 	}
 
-	public void delete(WebscraptId id) {
-		scraptDao.delete(id);
+	public void delete(WebscraptId id,KyzExpectmatmLog delLog) {
+		scraptDao.delete(id,delLog);
 	}
 
 	public Webscrapt selBycan(String factNo, Date date, String factCode) {

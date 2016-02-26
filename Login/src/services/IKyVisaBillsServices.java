@@ -7,6 +7,7 @@ import util.PageBean;
 import entity.KyVisabillm;
 import entity.KyVisabills;
 import entity.KyVisabillsId;
+import entity.KyzExpectmatmLog;
 
 public interface IKyVisaBillsServices {
 	public List<KyVisabills> findVisaBills(String visaSort,String billNo);

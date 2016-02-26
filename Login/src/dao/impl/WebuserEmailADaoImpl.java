@@ -11,6 +11,7 @@ import com.opensymphony.xwork2.ActionContext;
 import util.PageBean;
 import dao.Basedao;
 import dao.IWebuserEmailADao;
+import entity.KyzExpectmatmLog;
 import entity.WebuserEmailA;
 
 public class WebuserEmailADaoImpl extends Basedao implements IWebuserEmailADao{
@@ -33,10 +34,10 @@ public class WebuserEmailADaoImpl extends Basedao implements IWebuserEmailADao{
 	}
 
 	public void delete(String factNo, String email, String emailPwd,
-			String visaSort) {
+			String visaSort,KyzExpectmatmLog delLog) {
 		// TODO Auto-generated method stub
 		WebuserEmailA emaila=findById(factNo,email,emailPwd,visaSort);
-		super.delete(emaila);
+		super.delete(emaila,delLog);
 		
 	}
 
