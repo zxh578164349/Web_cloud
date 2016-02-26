@@ -8,6 +8,7 @@ import java.util.List;
 
 import dao.IWebEstProductDao;
 
+import entity.KyzExpectmatmLog;
 import entity.Webestproduct;
 import entity.WebestproductId;
 import services.IWebEstProductServices;
@@ -41,9 +42,9 @@ public class WebEstProductServicesImpl implements IWebEstProductServices {
 		return estProDao.findById(id);
 	}
 
-	public void delete(WebestproductId id) {
+	public void delete(WebestproductId id,KyzExpectmatmLog delLog) {
 		// TODO Auto-generated method stub
-		estProDao.delete(id);
+		estProDao.delete(id,delLog);
 	}
 
 	public List<Webestproduct> selByFactNoAndYymm(String factNo, String yymm,

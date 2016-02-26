@@ -12,6 +12,7 @@ import com.opensymphony.xwork2.ActionContext;
 import util.PageBean;
 import dao.Basedao;
 import dao.IWebcashoutDao;
+import entity.KyzExpectmatmLog;
 import entity.Webcashout;
 
 public class WebcashoutDaoImpl extends Basedao implements IWebcashoutDao{
@@ -81,10 +82,10 @@ public class WebcashoutDaoImpl extends Basedao implements IWebcashoutDao{
 		return cashout;
 	}
 
-	public void delete(String factNo, String factCode, String date) {
+	public void delete(String factNo, String factCode, String date,KyzExpectmatmLog delLog) {
 		// TODO Auto-generated method stub
 		Webcashout cashout=this.findById(factNo, factCode, date);
-		super.delete(cashout);
+		super.delete(cashout,delLog);
 		
 	}
 

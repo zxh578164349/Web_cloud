@@ -1,5 +1,6 @@
 package action;
 
+import java.util.Date;
 import java.util.List;
 
 import services.IWebuserEmailServices;
@@ -8,6 +9,8 @@ import util.PageBean;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
+import entity.KyzExpectmatmLog;
+import entity.WebUser;
 import entity.WebuserEmail;
 
 public class WebuseremailAction extends ActionSupport{
@@ -76,7 +79,12 @@ public class WebuseremailAction extends ActionSupport{
 		return "findById";
 	}
 	public String delete(){
-		webuseremailSer.delete(factNo, email, emailpwd);                               
+		KyzExpectmatmLog log=new KyzExpectmatmLog();
+		log.setFactNo(factNo);
+		log.setContent(email+emailpwd);
+		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
+		log.setUsername(user.getUsername());
+		webuseremailSer.delete(factNo, email, emailpwd,log);                               
 		return "delete";
 	}
 	public String findPageBean(){

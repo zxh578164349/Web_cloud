@@ -97,6 +97,6 @@
             </key>
             <one-to-many class="entity.KyzExpectmatmFile"/>
         </bag>
-        <one-to-one name="vbm" class="entity.KyVisabillm"  property-ref="kyzexp" cascade="all"/>
+        <one-to-one name="vbm" class="entity.KyVisabillm"  property-ref="kyzexp" cascade="all"/>      
     </class>
 </hibernate-mapping>

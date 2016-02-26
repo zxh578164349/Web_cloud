@@ -5,6 +5,7 @@ import java.util.List;
 
 import util.PageBean;
 
+import entity.KyzExpectmatmLog;
 import entity.Webmix2;
 import entity.Webproduted;
 import entity.WebprodutedId;
@@ -24,7 +25,7 @@ public interface IWebProdutedServices {
 
 	public List<Webproduted> selByYymm(String yymm, String factNo);
 
-	public void delete(WebprodutedId id);
+	public void delete(WebprodutedId id,KyzExpectmatmLog delLog);
 
 	public Webproduted selBycan(String factNo, Date date, String factCode);
 	public boolean check(String factNo,String factCode,String yymm);

@@ -9,6 +9,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -29,6 +30,7 @@ import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
 import entity.KyzExpectmatmFile;
+import entity.KyzExpectmatmLog;
 import entity.VWebFact;
 import entity.WebFact;
 import entity.WebFactId;
@@ -328,7 +330,11 @@ public class WebTabpomAction extends ActionSupport implements ServletResponseAwa
 	}
 	
 	public String delete(){
-		tabpomSer.delete(pomNo);
+		KyzExpectmatmLog log=new KyzExpectmatmLog();
+		log.setContent(pomNo);
+		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
+		log.setUsername(user.getUsername());
+		tabpomSer.delete(pomNo,log);
 		return "delete";
 	}
 	

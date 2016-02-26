@@ -15,6 +15,7 @@ import util.PageBean;
 
 import dao.Basedao;
 import dao.IWebScraptDao;
+import entity.KyzExpectmatmLog;
 import entity.Webmix2;
 import entity.Webmixperson;
 import entity.Webscrapt;
@@ -152,9 +153,9 @@ public class WebScraptDaoImpl extends Basedao implements IWebScraptDao {
 		return list;
 	}
 
-	public void delete(WebscraptId id) {
+	public void delete(WebscraptId id,KyzExpectmatmLog delLog) {
 		Webscrapt scrapt = this.findById(id);
-		super.delete(scrapt);
+		super.delete(scrapt,delLog);
 
 	}
 

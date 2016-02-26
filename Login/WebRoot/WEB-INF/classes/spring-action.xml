@@ -9,22 +9,9 @@
 	default-autowire="byName">
 	<bean id="webUserAction" class="action.WebUserAction" scope="prototype" />
 	<bean id="webMenuAction" class="action.WebMenuAction" scope="prototype" />
-	<bean id="webBackmatAction" class="action.WebBackMatAction" scope="prototype" />
-	<bean id="webBackpfAction" class="action.WebBackpfAction" scope="prototype" />
-	<bean id="webStoreAction" class="action.WebCpStoreAction" scope="prototype" />
-	<bean id="webGwAction" class="action.WebGwAction" scope="prototype" />
-	<bean id="webMachineAction" class="action.WebMachineAction" scope="prototype" />
-	<bean id="webMats2Action" class="action.WebMats2Action" scope="prototype" />
 	<bean id="webMatsAction" class="action.WebMatsAction" scope="prototype" />
-	<bean id="webMatstoreAction" class="action.WebMatstoreAction" scope="prototype" />		
-	<bean id="webOutbackAction" class="action.WebOutbackAction" scope="prototype" />
-	<bean id="webOutputInvAction" class="action.WebOutputInvAction" scope="prototype" />		
-	<bean id="webPersonAction" class="action.WebPersonAction" scope="prototype" />
-	<bean id="webPfavgPriceAction" class="action.WebPfavgPriceAction" scope="prototype" />		
-	<bean id="webProfitAction" class="action.WebProfitAction" scope="prototype" />
-	<bean id="webProfitCountAction" class="action.WebProfitCountAction" scope="prototype" />		
+	<bean id="webMatstoreAction" class="action.WebMatstoreAction" scope="prototype" />			
 	<bean id="webSideAction" class="action.WebSideAction" scope="prototype" />
-	<bean id="webZwcashAction" class="action.WebZwcashAction" scope="prototype" />
 	<bean id="factAction" class="action.KyFactAction" scope="prototype" />
 	<bean id="preAndDataAction" class="action.PreAndDataAction" scope="prototype" />
 	<bean id="ypreAction" class="action.WebYPreAction" scope="prototype" />	

@@ -15,6 +15,8 @@ import services.IKpifactServices;
 import util.GlobalMethod;
 import util.PageBean;
 import entity.Kpifact;
+import entity.KyzExpectmatmLog;
+import entity.WebUser;
 
 public class KpifactAction extends ActionSupport implements ServletResponseAware{
 	private Kpifact kpi;
@@ -160,7 +162,15 @@ public class KpifactAction extends ActionSupport implements ServletResponseAware
 		return result;
 	}
 	public String delete(){
-		kpiSer.delete(factNo, factCode, yyyy);
+		KyzExpectmatmLog log=new KyzExpectmatmLog();
+		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
+		log.setUsername(user.getUsername());
+		log.setFactNo(factNo);
+		log.setFactCode(factCode);
+		log.setObj("Kpifact");
+		log.setYymm(yyyy);
+
+		kpiSer.delete(factNo, factCode, yyyy,log);
 		return "delete";
 	}
 	public String formatDouble(double s) {

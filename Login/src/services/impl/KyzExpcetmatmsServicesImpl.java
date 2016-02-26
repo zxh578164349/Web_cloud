@@ -1,6 +1,7 @@
 package services.impl;
 
 import dao.IKyzExpectmatmsDao;
+import entity.KyzExpectmatmLog;
 import entity.KyzExpectmats;
 import entity.KyzExpectmatsId;
 import services.IKyzExpectmatmsServices;

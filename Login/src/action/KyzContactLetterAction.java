@@ -75,14 +75,9 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
     private List<String> filesContentType;
 	private IKyzContactLetterServices kyzletterSer;
 	private IKyVisabillmServices visabillmSer;
-	private IKyzVisaFlowServices visaSer;
-	private IWebFactServices webFactSer;
 	private IKyzExpectmatmFileServices kyzexpfileSer;
 	private javax.servlet.http.HttpServletResponse response;
-	private IKyVisaBillsServices visabillSer;
-
 	private IWebuserEmailServices webuseremailSer;
-
 	private IKyzExpectmatmLogServices kyzExpLogSer;
 	
 	
@@ -218,23 +213,11 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 	public void setVisabillmSer(IKyVisabillmServices visabillmSer) {
 		this.visabillmSer = visabillmSer;
 	}
-	
-	public void setVisaSer(IKyzVisaFlowServices visaSer) {
-		this.visaSer = visaSer;
-	}
-	
-	public void setWebFactSer(IWebFactServices webFactSer) {
-		this.webFactSer = webFactSer;
-	}
-	
+		
 	public void setKyzexpfileSer(IKyzExpectmatmFileServices kyzexpfileSer) {
 		this.kyzexpfileSer = kyzexpfileSer;
 	}
-	
-	public void setVisabillSer(IKyVisaBillsServices visabillSer) {
-		this.visabillSer = visabillSer;
-	}
-	
+		
 	public void setWebuseremailSer(IWebuserEmailServices webuseremailSer) {
 		this.webuseremailSer = webuseremailSer;
 	}
@@ -697,7 +680,12 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 	
 	public String delete(){
 		try{
-			kyzletterSer.delete(factNo, billNo);
+			/*********************刪除記錄**************************/
+			KyzExpectmatmLog log=new KyzExpectmatmLog();
+			log.setBillNo(billNo);
+			WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
+			log.setUsername(user.getUsername());
+			kyzletterSer.delete(factNo, billNo,log);
 			/*visabillmSer.delete(factNo, visaSort, billNo);
 			List<KyzExpectmatmFile>list=kyzexpfileSer.findByBillNo(billNo);
 			if(list.size()>0){
@@ -709,13 +697,7 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 			if(file.exists()){
 				this.deletefile(file);//引用下面刪除文件夾方法
 			}
-			/*********************刪除記錄**************************/
-			KyzExpectmatmLog log=new KyzExpectmatmLog();
-			log.setBillNo(billNo);
-			log.setDeldate(new Date());
-			WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
-			log.setUsername(user.getUsername());
-			kyzExpLogSer.add(log);
+			
 		}catch(Exception e){
 			System.out.println(e);
 		}		
@@ -782,15 +764,17 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 				visaSort="";
 			}
 			String typename=visaSort;			
-			//typename=webtypeSer.findTypeNameById(factno, visaSort.substring(0, 2));
+			//typename=webtypeSer.findTypeNameById(factno, visaSort.substring(0, 2));			
 			if(visaSort.length()>0){
-				for(int j=0;j<list_type.size();j++){//for2
-					WebType type=list_type.get(j);
-					if(factno.equals(type.getId().getFactNo())&&visaSort.substring(0,2).equals(type.getId().getTypeNo())){
-						typename=type.getTypeName();					
-						break;
-					}
-				}//for2
+				if(list_type!=null&&list_type.size()>0){
+					for(int j=0;j<list_type.size();j++){//for2
+						WebType type=list_type.get(j);
+						if(factno.equals(type.getId().getFactNo())&&visaSort.substring(0,2).equals(type.getId().getTypeNo())){
+							typename=type.getTypeName();					
+							break;
+						}
+					}//for2
+				}				
 			}			
 			letter.setColTemp(typename);
 		}//for1				

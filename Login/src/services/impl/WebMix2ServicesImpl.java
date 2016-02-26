@@ -9,6 +9,7 @@ import java.util.List;
 import services.IWebMix2Services;
 import util.PageBean;
 import dao.IWebMix2Dao;
+import entity.KyzExpectmatmLog;
 import entity.Webmix2;
 import entity.Webmix2Id;
 
@@ -45,8 +46,8 @@ public class WebMix2ServicesImpl implements IWebMix2Services {
 		return mix2Dao.selByYymm(yymm, factNo);
 	}
 
-	public void delete(Webmix2Id id) {
-		mix2Dao.delete(id);
+	public void delete(Webmix2Id id,KyzExpectmatmLog delLog) {
+		mix2Dao.delete(id,delLog);
 	}
 
 	public Webmix2 selBycan(String factNo, Date date, String factCode) {

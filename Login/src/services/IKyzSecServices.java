@@ -3,6 +3,7 @@ package services;
 import java.util.List;
 
 import util.PageBean;
+import entity.KyzExpectmatmLog;
 import entity.KyzSec;
 
 public interface IKyzSecServices {
@@ -11,6 +12,6 @@ public interface IKyzSecServices {
 	public List<KyzSec> findByFactno(String factNo);
 	public String makeSecNo(String factNo);
 	public KyzSec findById(String factNo,String secNo);
-	public void delete(String factNo,String secNo);
+	public void delete(String factNo,String secNo,KyzExpectmatmLog delLog);
 
 }

@@ -4,6 +4,7 @@ import java.util.List;
 
 import dao.IKyVisaBillmDao;
 import entity.KyVisabillm;
+import entity.KyzExpectmatmLog;
 import services.IKyVisabillmServices;
 import util.PageBean;
 
@@ -30,9 +31,9 @@ public class KyVisabillmServicesImpl implements IKyVisabillmServices{
 		return visabillmDao.findById(factNo, visaSort, billNo);
 	}
 
-	public void delete(String factNo, String visaSort, String billNo) {
+	public void delete(String factNo, String visaSort, String billNo,KyzExpectmatmLog delLog) {
 		// TODO Auto-generated method stub
-		visabillmDao.delete(factNo, visaSort, billNo);
+		visabillmDao.delete(factNo, visaSort, billNo,delLog);
 		
 	}
 

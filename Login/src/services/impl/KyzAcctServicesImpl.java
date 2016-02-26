@@ -4,6 +4,7 @@ import java.util.List;
 
 import dao.IKyzacctDao;
 import entity.KyzAcct;
+import entity.KyzExpectmatmLog;
 import services.IKyzAcctServices;
 import util.PageBean;
 
@@ -29,9 +30,9 @@ public class KyzAcctServicesImpl implements IKyzAcctServices{
 		return kyzacctdao.findById(acctNo);
 	}
 
-	public void delete(String acctNo) {
+	public void delete(String acctNo,KyzExpectmatmLog delLog) {
 		// TODO Auto-generated method stub
-		kyzacctdao.delete(acctNo);
+		kyzacctdao.delete(acctNo,delLog);
 	}
 
 	public List<KyzAcct> findAll() {

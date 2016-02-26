@@ -5,6 +5,7 @@ import java.util.List;
 
 import dao.IWebFactDao;
 import dao.IWebFixedDao;
+import entity.KyzExpectmatmLog;
 import entity.WebFixed;
 import services.IWebFixedServices;
 import util.PageBean;
@@ -38,9 +39,9 @@ public class WebFixedServicesImpl implements IWebFixedServices {
 		return fixDao.findById(id);
 	}
 
-	public void deleteWebFixed(String id) {
+	public void deleteWebFixed(String id,KyzExpectmatmLog delLog) {
 		// TODO Auto-generated method stub
-		fixDao.deleteWebFixed(id);
+		fixDao.deleteWebFixed(id,delLog);
 	}
 
 	public List findById2(String id) {

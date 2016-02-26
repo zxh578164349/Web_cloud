@@ -12,6 +12,7 @@ import util.PageBean;
 import com.opensymphony.xwork2.ActionContext;
 import dao.Basedao;
 import dao.IWebUserDao;
+import entity.KyzExpectmatmLog;
 import entity.WebBackmat;
 import entity.WebUser;
 
@@ -299,10 +300,10 @@ public class WebUserDaoImpl extends Basedao implements IWebUserDao {
 		return (WebUser)query.uniqueResult();
 	}
 
-	public void delete(int id) {
+	public void delete(int id,KyzExpectmatmLog delLog) {
 		// TODO Auto-generated method stub
 		WebUser user=this.selByuserId(id);
-		super.delete(user);
+		super.delete(user,delLog);
 		
 	}
 

@@ -5,6 +5,7 @@ import java.util.List;
 import services.IWebuserEmailAServices;
 import util.PageBean;
 import dao.IWebuserEmailADao;
+import entity.KyzExpectmatmLog;
 import entity.WebuserEmailA;
 
 public class WebuserEmailAServicesImpl implements IWebuserEmailAServices{
@@ -27,11 +28,11 @@ public class WebuserEmailAServicesImpl implements IWebuserEmailAServices{
 	}
 
 	public boolean deleteObj(String factNo, String email, String emailPwd,
-			String visaSort) {
+			String visaSort,KyzExpectmatmLog delLog) {
 		// TODO Auto-generated method stub
 		boolean flag=false;
 		try{
-			webuseremailaDao.delete(factNo, email, emailPwd, visaSort);
+			webuseremailaDao.delete(factNo, email, emailPwd, visaSort,delLog);
 			flag=true;
 			
 		}catch(RuntimeException e){

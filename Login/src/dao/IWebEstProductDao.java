@@ -15,7 +15,7 @@ public interface IWebEstProductDao {
 
 	public Webestproduct findById(WebestproductId id);
 
-	public void delete(WebestproductId id);
+	public void delete(WebestproductId id,KyzExpectmatmLog delLog);
 
 	public List<Webestproduct> selByFactNoAndYymm(String factNo, String yymm,
 			String type);

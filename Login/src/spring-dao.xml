@@ -10,23 +10,7 @@
 
 	<bean id="webUserDao" class="dao.impl.WebUserDaoImpl" parent="baseDao" />
 	<bean id="menuDao" class="dao.impl.WebMenuDaoImpl" parent="baseDao" />
-	<bean id="webLogDao" class="dao.impl.WebLogDaoImpl" parent="baseDao" />
-	<bean id="backMatDao" class="dao.impl.WebBackMatDaoImpl" parent="baseDao" />
-	<bean id="backpfDao" class="dao.impl.WebBackpfDaoImpl" parent="baseDao" />
-	<bean id="storeDao" class="dao.impl.WebCpStoreDaoImpl" parent="baseDao" />
-	<bean id="gwDao" class="dao.impl.WebGwDaoImpl" parent="baseDao" />
-	<bean id="machineDao" class="dao.impl.WebMachineDaoImpl" parent="baseDao" />
-	<bean id="mats2Dao" class="dao.impl.WebMats2DaoImpl" parent="baseDao" />
-	<bean id="matDao" class="dao.impl.WebMatsDaoImpl" parent="baseDao" />
-	<bean id="marstoreDao" class="dao.impl.WebMatstoreDaoImpl" parent="baseDao" />
-	<bean id="outbackDao" class="dao.impl.WebOutbackDaoImpl" parent="baseDao" />
-	<bean id="outputInvDao" class="dao.impl.WebOutputInvImpl" parent="baseDao" />
-	<bean id="personDao" class="dao.impl.WebPersonDaoImpl" parent="baseDao" />
-	<bean id="pfaDao" class="dao.impl.WebPfavgPriceDaoImpl" parent="baseDao" />
-	<bean id="profitcountDao" class="dao.impl.WebProfitCountDaoImpl" parent="baseDao" />	
-	<bean id="profitDao" class="dao.impl.WebProfitDaoImpl" parent="baseDao" />
-	<bean id="sideDao" class="dao.impl.WebSideDaoImpl" parent="baseDao" />
-	<bean id="zwcashDao" class="dao.impl.WebZwcashDaoImpl" parent="baseDao" />
+	<bean id="webLogDao" class="dao.impl.WebLogDaoImpl" parent="baseDao" />	
 	<bean id="jurisdictionDao" class="dao.impl.WebJurisdictionDaoImpl" parent="baseDao" />		
 	<bean id="submenuDao" class="dao.impl.WebSubmenuDaoImpl" parent="baseDao" />
 	<bean id="factDao" class="dao.impl.KyFactDaoImpl" parent="baseDao" />

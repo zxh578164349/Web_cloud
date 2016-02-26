@@ -5,6 +5,7 @@ import java.util.List;
 import dao.Basedao;
 import dao.IKyzExpectmatmFileDao;
 import entity.KyzExpectmatmFile;
+import entity.KyzExpectmatmLog;
 
 public class KyzExpectmatmFileDaoImpl extends Basedao implements IKyzExpectmatmFileDao{
 
@@ -20,9 +21,9 @@ public class KyzExpectmatmFileDaoImpl extends Basedao implements IKyzExpectmatmF
 		return super.findAll(hql, objs);
 	}
 
-	public void delete(KyzExpectmatmFile file) {
+	public void delete(KyzExpectmatmFile file,KyzExpectmatmLog delLog) {
 		// TODO Auto-generated method stub
-		super.delete(file);
+		super.delete(file,delLog);
 	}
 
 	public KyzExpectmatmFile findById(Integer id) {

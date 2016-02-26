@@ -3,6 +3,7 @@ package services.impl;
 import java.util.List;
 
 import dao.IKyzPettyDao;
+import entity.KyzExpectmatmLog;
 import entity.KyzPetty;
 import services.IKyzPettyServices;
 import util.PageBean;
@@ -57,9 +58,9 @@ public class KyzPettyServicesImpl implements IKyzPettyServices{
 		return kyzpettydao.findById(factNo, billNo);
 	}
 
-	public void delete(String factNo, String billNo) {
+	public void delete(String factNo, String billNo,KyzExpectmatmLog delLog) {
 		// TODO Auto-generated method stub
-		kyzpettydao.delete(factNo, billNo);
+		kyzpettydao.delete(factNo, billNo,delLog);
 	}
 
 	public String makeBillNo(String factNo, String payDate) {

@@ -13,6 +13,7 @@ import dao.Basedao;
 import dao.IKyVisaBillmDao;
 import entity.KyVisabillm;
 import entity.KyzExpectmatm;
+import entity.KyzExpectmatmLog;
 
 public class KyVisabillmDaoImpl extends Basedao implements IKyVisaBillmDao{
 
@@ -91,36 +92,36 @@ public class KyVisabillmDaoImpl extends Basedao implements IKyVisaBillmDao{
 		return vbm;
 	}
 
-	public void delete(String factNo, String visaSort, String billNo) {
+	public void delete(String factNo, String visaSort, String billNo,KyzExpectmatmLog delLog) {
 		// TODO Auto-generated method stub
 		KyVisabillm billm=this.findById(factNo, visaSort, billNo);
-		super.delete(billm);
+		super.delete(billm,delLog);
 		
 	}
 
 	public List<KyVisabillm> findByVisaMk(String visaMk) {
 		// TODO Auto-generated method stub
-		String hql="from KyVisabillm where visaMk<>? and dateCreate>'20150901' and substr(id.billNo,0,2) in ('CM','EM','BM') and emailMk is null and delMk is null ";
+		//String hql="from KyVisabillm where visaMk<>? and dateCreate>'20150901' and substr(id.billNo,0,2) in ('CM','EM','BM') and emailMk is null and delMk is null ";
+		String hql="from KyVisabillm where visaMk<>? and dateCreate>'20150901'  and emailMk is null and delMk is null ";
 		String[]objs={visaMk};
 		return super.findAll(hql, objs);
 	}
-	
-
-	public List<KyVisabillm> findAllVbm() {
-		// TODO Auto-generated method stub
-		String hql="from KyVisabillm";
-		return super.findAll(hql, null);
-	}
-
+		
 	public List<KyVisabillm> findByVisaMk2(String visaMk) {
 		// TODO Auto-generated method stub
-		String hql="from KyVisabillm where visaMk=? and dateCreate>'20150901'  and substr(id.billNo,0,2) in ('CM','EM','BM') and emailMk is null and delMk is null  order by dateCreate"; 
+		//String hql="from KyVisabillm where visaMk=? and dateCreate>'20150901'  and substr(id.billNo,0,2) in ('CM','EM','BM') and emailMk is null and delMk is null  order by dateCreate"; 
+		String hql="from KyVisabillm where visaMk=? and dateCreate>'20150901'  and emailMk is null and delMk is null  order by dateCreate"; 
 		String[]objs={visaMk};
 		List<KyVisabillm>list=super.findAll(hql, objs);//解決hibernate延遲問題
 		for(int i=0;i<list.size();i++){
 			list.get(i).getKyVisabillses().size();
 		}
 		return list;
+	}
+	public List<KyVisabillm> findAllVbm() {
+		// TODO Auto-generated method stub
+		String hql="from KyVisabillm";
+		return super.findAll(hql, null);
 	}
 
 	public KyVisabillm findByBillNo(String billNo) {

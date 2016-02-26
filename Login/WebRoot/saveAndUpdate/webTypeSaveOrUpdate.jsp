@@ -173,7 +173,6 @@ function checkRadio(){
 						   </td>
 						</s:else>
 										
-
 				        <td class="td_show_title">類別代號</td>
 				        <td class="td_input">
 				          <s:if test="webtype==null">
@@ -182,8 +181,7 @@ function checkRadio(){
 				              <input type="radio" value="0" name="typeNo" checked onclick="checkRadio()"/>非出差類				             
 				             <input type="text" name="webtype.id.typeNo" datatype="s2-2" onblur="check(this),checkType(this)" id="typeno"/>
 				            <span id="error1"></span>
-				             </div>
-				              
+				             </div>				              
 				          </s:if>
 				          <s:else>
 				              <input type="text" name="webtype.id.typeNo" value="<s:property value='webtype.id.typeNo'/>" readonly style="color:blue"/>
@@ -194,8 +192,10 @@ function checkRadio(){
  				          <td class="td_show_title">類別名称  </td>
 				          <td class="td_input"><input type="text" name="webtype.typeName"
 					           value="<s:property value='webtype.typeName'/>" id="typeName"  datatype="*1-60" />
-					         <input type="hidden" name="webtype.webtypeMk" value="Y"/> 					
-				          </td>	                   
+					         <input type="hidden" name="webtype.webtypeMk" value="Y"/>
+					         <input type="hidden" name="webtype.delMk" value="0"/><!-- 默認未刪除 -->					
+				          </td>	
+				                             
 				<!-- <td class="td_show_title">是否可用</td>
 				<td class="td_input">				
 				          可用<input type="radio" name="webtype.webtypeMk"

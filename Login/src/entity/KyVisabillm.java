@@ -31,6 +31,7 @@ public class KyVisabillm implements java.io.Serializable {
 	private WebBussinessletter webbussletter;
 	private KyzExpectmatm kyzexp;
 	private KyzContactletter kyzletter;
+	
 
 	// Constructors
 
@@ -211,6 +212,8 @@ public class KyVisabillm implements java.io.Serializable {
 	public void setKyzletter(KyzContactletter kyzletter) {
 		this.kyzletter = kyzletter;
 	}
+
+	
 	
 	
 	

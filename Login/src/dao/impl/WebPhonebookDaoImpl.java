@@ -12,6 +12,7 @@ import com.opensymphony.xwork2.ActionContext;
 import util.PageBean;
 import dao.Basedao;
 import dao.IWebPhonebookDao;
+import entity.KyzExpectmatmLog;
 import entity.VWebFact;
 import entity.WebPhonebook;
 import entity.WebPhonebookId;
@@ -95,10 +96,10 @@ public class WebPhonebookDaoImpl extends Basedao implements IWebPhonebookDao{
 		return book;
 	}
 
-	public void delete(String factNo,String department,String post,String userName,String phoneA,String phoneB,String phoneC,String email) {
+	public void delete(String factNo,String department,String post,String userName,String phoneA,String phoneB,String phoneC,String email,KyzExpectmatmLog delLog) {
 		// TODO Auto-generated method stub
 		WebPhonebook book=this.findById(factNo,department,post,userName,phoneA,phoneB,phoneC,email);
-		super.delete(book);
+		super.delete(book,delLog);
 	}
 
 	public void addLarge(Map<String, Object> map, String username) {

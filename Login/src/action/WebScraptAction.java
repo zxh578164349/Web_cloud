@@ -20,6 +20,9 @@ import util.PageBean;
 
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
+
+import entity.KyzExpectmatmLog;
+import entity.WebUser;
 import entity.Webscrapt;
 import entity.WebscraptId;
 
@@ -307,7 +310,13 @@ public class WebScraptAction extends ActionSupport implements
 	}
 
 	public String delete2() {
-		scraptService.delete(id);
+		KyzExpectmatmLog log=new KyzExpectmatmLog();
+		log.setFactCode(id.getFactCode());
+		log.setFactNo(id.getFactNo());
+		log.setYymm(new SimpleDateFormat("yyyyMM").format(id.getYymm()));
+		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
+		log.setUsername(user.getUsername());
+		scraptService.delete(id,log);
 		return "delete";
 	}
 	

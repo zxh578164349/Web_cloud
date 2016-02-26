@@ -14,6 +14,7 @@ public class KyzVisaflow implements java.io.Serializable {
 	private String flowMk;
 	private String colTemp;
 	private String visaSortM;//類別大類
+	private String delMk;//刪除標記        0或空 未刪除     1刪除
 
 	// Constructors
 
@@ -83,6 +84,14 @@ public class KyzVisaflow implements java.io.Serializable {
 
 	public void setVisaSortM(String visaSortM) {
 		this.visaSortM = visaSortM;
+	}
+
+	public String getDelMk() {
+		return delMk;
+	}
+
+	public void setDelMk(String delMk) {
+		this.delMk = delMk;
 	}
 
 	

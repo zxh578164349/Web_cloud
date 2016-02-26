@@ -21,5 +21,20 @@
         <property name="deldate" type="java.util.Date">
             <column name="DELDATE" length="7" />
         </property>
+        <property name="factNo" type="java.lang.String">
+            <column name="FACT_NO" length="10"/>
+        </property>
+        <property name="factCode" type="java.lang.String">
+            <column name="FACT_CODE" length="30"/>
+        </property>
+        <property name="obj" type="java.lang.String">
+            <column name="OBJ" length="30"/>
+        </property>
+        <property name="content" type="java.lang.String">
+            <column name="CONTENT" length="50"/>
+        </property>
+        <property name="yymm" type="java.lang.String">
+           <column name="YYMM" length="10"/>
+        </property>
     </class>
 </hibernate-mapping>

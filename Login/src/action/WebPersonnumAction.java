@@ -330,7 +330,13 @@ public class WebPersonnumAction extends ActionSupport implements
 	}
 
 	public String delete() {
-		personNumSer.delete(id);
+		KyzExpectmatmLog log=new KyzExpectmatmLog();
+		log.setFactCode(id.getFactCode());
+		log.setFactNo(id.getFactNo());
+		log.setYymm(new SimpleDateFormat("yyyyMM").format(id.getYymmdd()));
+		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
+		log.setUsername(user.getUsername());
+		personNumSer.delete(id,log);
 		return "delete";
 	}
 	

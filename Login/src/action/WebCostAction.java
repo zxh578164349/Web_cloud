@@ -22,6 +22,8 @@ import util.PageBean;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
+import entity.KyzExpectmatmLog;
+import entity.WebUser;
 import entity.WebYielePrediction;
 import entity.Webcost;
 import entity.WebcostId;
@@ -277,7 +279,14 @@ public class WebCostAction extends ActionSupport implements
 	}
 
 	public String delete() {
-		costSer.delete(id);
+		/*********************刪除記錄**************************/
+		KyzExpectmatmLog log=new KyzExpectmatmLog();
+		log.setFactCode(id.getFactCode());
+		log.setFactNo(id.getFactNo());
+		log.setYymm(new SimpleDateFormat("yyyyMM").format(id.getYymm()));
+		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
+		log.setUsername(user.getUsername());
+		costSer.delete(id,log);
 		return "delete";
 	}
 	/**

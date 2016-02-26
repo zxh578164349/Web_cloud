@@ -4,6 +4,7 @@ import org.hibernate.Query;
 
 import dao.Basedao;
 import dao.IKyzExpectmatmsDao;
+import entity.KyzExpectmatmLog;
 import entity.KyzExpectmats;
 import entity.KyzExpectmatsId;
 

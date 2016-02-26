@@ -3,6 +3,7 @@ package dao;
 import java.util.List;
 
 import util.PageBean;
+import entity.KyzExpectmatmLog;
 import entity.KyzSec;
 
 public interface IKyzSecDao {
@@ -10,5 +11,5 @@ public interface IKyzSecDao {
 	public PageBean findPageBean(int pageSize,int page,String factNo,String secNo);
 	public List<KyzSec> findByFactno(String factNo);
 	public KyzSec findById(String factNo,String secNo);
-	public void delete(String factNo,String secNo);
+	public void delete(String factNo,String secNo,KyzExpectmatmLog delLog);
 }

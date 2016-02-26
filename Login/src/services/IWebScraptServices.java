@@ -5,6 +5,7 @@ import java.util.List;
 
 import util.PageBean;
 
+import entity.KyzExpectmatmLog;
 import entity.Webmix2;
 import entity.Webscrapt;
 import entity.WebscraptId;
@@ -24,7 +25,7 @@ public interface IWebScraptServices {
 
 	public List<Webscrapt> selByYymm(String yymm, String factNo);
 
-	public void delete(WebscraptId id);
+	public void delete(WebscraptId id,KyzExpectmatmLog delLog);
 
 	public Webscrapt selBycan(String factNo, Date date, String factCode);
 	public boolean check(String factNo,String factCode,String yymm);

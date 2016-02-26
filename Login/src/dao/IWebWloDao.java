@@ -4,6 +4,7 @@ import java.util.List;
 
 import util.PageBean;
 
+import entity.KyzExpectmatmLog;
 import entity.Webmix2;
 import entity.Webwlo;
 import entity.WebwloId;
@@ -23,7 +24,7 @@ public interface IWebWloDao {
 
 	public List<Webwlo> selByYymm(String yymm, String factNo);
 
-	public void delete(WebwloId id);
+	public void delete(WebwloId id,KyzExpectmatmLog delLog);
 
 	public Webwlo selBycan(String factNo, java.util.Date date, String factCode);
 	public PageBean findPageBean(int pageSize,int page,String factNo,String yymm,String yymm2);

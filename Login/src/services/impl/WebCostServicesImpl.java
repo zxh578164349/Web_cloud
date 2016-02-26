@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.List;
 
 import dao.IWebCostDao;
+import entity.KyzExpectmatmLog;
 import entity.Webcost;
 import entity.WebcostId;
 import services.IWebCostServices;
@@ -40,9 +41,9 @@ public class WebCostServicesImpl implements IWebCostServices {
 		return costDao.findById(id);
 	}
 
-	public void delete(WebcostId id) {
+	public void delete(WebcostId id,KyzExpectmatmLog delLog) {
 		// TODO Auto-generated method stub
-		costDao.delete(id);
+		costDao.delete(id,delLog);
 
 	}
 

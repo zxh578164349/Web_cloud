@@ -49,6 +49,7 @@ import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import entity.KyFact;
 import entity.KyVisabills;
+import entity.KyzExpectmatmLog;
 import entity.WebFact;
 import entity.WebJurisdiction;
 import entity.WebLog;
@@ -828,7 +829,12 @@ public class WebUserAction extends ActionSupport implements ServletResponseAware
 	 * @return
 	 */
 	public String delete(){
-		webUserService.delete(id);
+		/*********************刪除記錄**************************/
+		KyzExpectmatmLog log=new KyzExpectmatmLog();
+		log.setContent(id+"");
+		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
+		log.setUsername(user.getUsername());
+		webUserService.delete(id,log);
 		return "delete";
 	}
 	public String add(){

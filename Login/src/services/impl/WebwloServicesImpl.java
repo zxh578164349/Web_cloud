@@ -8,6 +8,7 @@ import java.util.List;
 
 import dao.IWebWloDao;
 
+import entity.KyzExpectmatmLog;
 import entity.Webcost;
 import entity.Webwlo;
 import entity.WebwloId;
@@ -47,8 +48,8 @@ public class WebwloServicesImpl implements IWebwloServices {
 		return wloDao.selByYymm(yymm, factNo);
 	}
 
-	public void delete(WebwloId id) {
-		wloDao.delete(id);
+	public void delete(WebwloId id,KyzExpectmatmLog delLog) {
+		wloDao.delete(id,delLog);
 	}
 
 	public Webwlo selBycan(String factNo, Date date, String factCode) {

@@ -15,6 +15,7 @@ import util.PageBean;
 
 import dao.Basedao;
 import dao.IWebMix2Dao;
+import entity.KyzExpectmatmLog;
 import entity.Webmix2;
 import entity.Webmix2Id;
 import entity.Webmixperson;
@@ -150,9 +151,9 @@ public class WebMix2DaoImpl extends Basedao implements IWebMix2Dao {
 		return list;
 	}
 
-	public void delete(Webmix2Id id) {
+	public void delete(Webmix2Id id,KyzExpectmatmLog delLog) {
 		Webmix2 mix2 = this.findById(id);
-		super.delete(mix2);
+		super.delete(mix2,delLog);
 
 	}
 

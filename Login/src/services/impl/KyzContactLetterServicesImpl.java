@@ -24,6 +24,7 @@ import entity.KyVisabillm;
 import entity.KyVisabills;
 import entity.KyzContactletter;
 import entity.KyzExpectmatmFile;
+import entity.KyzExpectmatmLog;
 import entity.KyzVisaflow;
 import entity_temp.VisabillsTemp;
 import services.IKyzContactLetterServices;
@@ -118,9 +119,9 @@ public class KyzContactLetterServicesImpl implements IKyzContactLetterServices{
 		return kyzletterDao.findById(factNo, billNo);
 	}
 
-	public void delete(String factNo, String billNo) {
+	public void delete(String factNo, String billNo,KyzExpectmatmLog delLog) {
 		// TODO Auto-generated method stub
-		kyzletterDao.delete(factNo, billNo);
+		kyzletterDao.delete(factNo, billNo,delLog);
 	}
 
 	public String findTitleByBillno(String billNo) {

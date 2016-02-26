@@ -3,6 +3,7 @@ package services.impl;
 import java.util.List;
 
 import dao.IWebuserEmailDao;
+import entity.KyzExpectmatmLog;
 import entity.WebuserEmail;
 import services.IWebuserEmailServices;
 import util.PageBean;
@@ -27,9 +28,9 @@ public class WebuserEmailServicesImpl implements IWebuserEmailServices{
 		return webuseremailDao.findById(factNo, email, emailpwd);
 	}
 
-	public void delete(String factNo,String email,String emailpwd) {
+	public void delete(String factNo,String email,String emailpwd,KyzExpectmatmLog delLog) {
 		// TODO Auto-generated method stub
-		webuseremailDao.delete(factNo,email,emailpwd);
+		webuseremailDao.delete(factNo,email,emailpwd,delLog);
 	}
 
 	public PageBean findPageBean(int pageSize, int page, String factNo,

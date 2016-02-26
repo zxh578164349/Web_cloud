@@ -1,5 +1,6 @@
 package dao;
 
+import entity.KyzExpectmatmLog;
 import entity.KyzExpectmats;
 import entity.KyzExpectmatsId;
 

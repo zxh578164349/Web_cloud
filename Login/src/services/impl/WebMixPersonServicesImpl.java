@@ -8,6 +8,7 @@ import java.util.List;
 
 import dao.IWebMixPersonDao;
 
+import entity.KyzExpectmatmLog;
 import entity.Webmixperson;
 import entity.WebmixpersonId;
 import services.IWebMixPersonServices;
@@ -46,8 +47,8 @@ public class WebMixPersonServicesImpl implements IWebMixPersonServices {
 		return mixPersonDao.selByYymm(yymm, factNo);
 	}
 
-	public void delete(WebmixpersonId id) {
-		mixPersonDao.delete(id);
+	public void delete(WebmixpersonId id,KyzExpectmatmLog delLog) {
+		mixPersonDao.delete(id,delLog);
 	}
 
 	public Webmixperson selBycan(String factNo, Date date, String factCode) {

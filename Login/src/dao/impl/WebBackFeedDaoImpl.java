@@ -10,6 +10,7 @@ import org.hibernate.Query;
 import util.PageBean;
 import dao.Basedao;
 import dao.IWebBackFeedDao;
+import entity.KyzExpectmatmLog;
 import entity.Webbackfeed;
 import entity.WebbackfeedId;
 import entity.Webcost;
@@ -88,10 +89,10 @@ public class WebBackFeedDaoImpl extends Basedao implements IWebBackFeedDao {
 		return (Webbackfeed) query.uniqueResult();
 	}
 
-	public void delete(WebbackfeedId id) {
+	public void delete(WebbackfeedId id,KyzExpectmatmLog delLog) {
 		// TODO Auto-generated method stub
 		Webbackfeed feed = this.findById(id);
-		super.delete(feed);
+		super.delete(feed,delLog);
 
 	}
 

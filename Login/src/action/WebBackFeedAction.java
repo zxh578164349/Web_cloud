@@ -263,7 +263,13 @@ public class WebBackFeedAction extends ActionSupport implements
 	}
 
 	public String delete() {
-		feedSer.delete(id);
+		KyzExpectmatmLog log=new KyzExpectmatmLog();
+		log.setFactCode(id.getFactCode());
+		log.setFactNo(id.getFactNo());
+		log.setYymm(new SimpleDateFormat("yyyyMM").format(id.getYymm()));
+		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
+		log.setUsername(user.getUsername());
+		feedSer.delete(id,log);
 		return "delete";
 	}
 	

@@ -6,6 +6,7 @@ import org.hibernate.Query;
 
 import dao.Basedao;
 import dao.IWebTabpomfileDao;
+import entity.KyzExpectmatmLog;
 import entity.WebTabpomfile;
 
 public class WebTabpomfileDaoImpl extends Basedao implements IWebTabpomfileDao{

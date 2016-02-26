@@ -12,6 +12,7 @@ import com.opensymphony.xwork2.ActionContext;
 
 import dao.Basedao;
 import dao.IWebTypeDao;
+import entity.KyzExpectmatmLog;
 import entity.WebType;
 
 public class WebTypeDaoImpl extends Basedao implements IWebTypeDao{
@@ -34,6 +35,7 @@ public class WebTypeDaoImpl extends Basedao implements IWebTypeDao{
 			hql.append(" and id.factNo=:factno");
 			map.put("factno", factNo);
 		}
+		hql.append(" and delMk='0'");//0爲未刪除的類別
 		hql2.append(hql);
 		hql.append(" order by id.factNo,id.typeNo");
 		int currentPage=PageBean.countCurrentPage(page);		
@@ -61,7 +63,7 @@ public class WebTypeDaoImpl extends Basedao implements IWebTypeDao{
 
 	public WebType findById(String factNo, String typeNo) {
 		// TODO Auto-generated method stub
-		String hql="from WebType where id.factNo=? and id.typeNo=?";
+		String hql="from WebType where id.factNo=? and id.typeNo=? and delMk='0'";
 		Query query=getSession().createQuery(hql);
 		query.setString(0, factNo);
 		query.setString(1, typeNo);
@@ -72,30 +74,30 @@ public class WebTypeDaoImpl extends Basedao implements IWebTypeDao{
 		return type;
 	}
 
-	public void delete(String factNo, String typeNo) {
+	public void delete(String factNo, String typeNo,KyzExpectmatmLog delLog) {
 		// TODO Auto-generated method stub
 		WebType type=this.findById(factNo, typeNo);
-		super.delete(type);
+		super.delete(type,delLog);
 	}
 
 	public List<WebType> findByFactNo(String factNo) {
 		// TODO Auto-generated method stub
 		/*********************************無過濾函文出差類（TR）20160203**************************************/
-		String hql="from WebType where id.factNo=?";
+		String hql="from WebType where id.factNo=? and delMk='0'";
 		String[]objs={factNo};
 		return super.findAll(hql, objs);
 	}
 	public List<WebType> findByFactNo3(String factNo) {
 		// TODO Auto-generated method stub
 		/*********************************有過濾函文出差類（TR）20160203**************************************/
-		String hql="from WebType where id.factNo=? and id.typeNo not in('TR')";
+		String hql="from WebType where id.factNo=? and id.typeNo not in('TR')  and delMk='0'";
 		String[]objs={factNo};
 		return super.findAll(hql, objs);
 	}
 
 	public String findTypeNameById(String factNo, String typeNo) {
 		// TODO Auto-generated method stub
-		String hql="select typeName from WebType where id.factNo=? and id.typeNo=?";
+		String hql="select typeName from WebType where id.factNo=? and id.typeNo=?  and delMk='0'";
 		Query query=getSession().createQuery(hql);
 		query.setString(0, factNo);
 		query.setString(1, typeNo);
@@ -112,13 +114,22 @@ public class WebTypeDaoImpl extends Basedao implements IWebTypeDao{
 			hql.append("and id.factNo=:factno");
 			map.put("factno", factNo);
 		}
+		hql.append(" and delMk='0'");
 		return super.getAllWithNoPage(hql.toString(), map);
 	}
 
 	/**
-	 * 日期:2016/2/25
+	 * 日期:2016/2/26
 	 * 描述:
 	 */
+	
+	
+	public void update(WebType type) {
+		// TODO Auto-generated method stub
+		super.update(type);
+	}
+
+	
 	
 	
 	

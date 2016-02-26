@@ -4,6 +4,7 @@ import java.util.List;
 
 import util.PageBean;
 
+import entity.KyzExpectmatmLog;
 import entity.Webmix2;
 import entity.Webmixperson;
 import entity.WebmixpersonId;
@@ -24,7 +25,7 @@ public interface IWebMixPersonDao {
 
 		public List<Webmixperson> selByYymm(String yymm, String factNo);
 
-		public void delete(WebmixpersonId id);
+		public void delete(WebmixpersonId id,KyzExpectmatmLog delLog);
 		
 		public Webmixperson selBycan(String factNo,java.util.Date date,String factCode);
 		public PageBean findPageBean(int pageSize,int page,String factNo,String yymm,String yymm2);

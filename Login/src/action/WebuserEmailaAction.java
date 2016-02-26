@@ -1,6 +1,7 @@
 package action;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,8 +17,10 @@ import util.PageBean;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
+import entity.KyzExpectmatmLog;
 import entity.KyzVisaflow;
 import entity.WebType;
+import entity.WebUser;
 import entity.WebuserEmailA;
 
 public class WebuserEmailaAction extends ActionSupport implements ServletResponseAware, ServletRequestAware{
@@ -130,7 +133,12 @@ public class WebuserEmailaAction extends ActionSupport implements ServletRespons
 		return "add";
 	}
 	public String delete() throws IOException{
-		boolean flag=webuseremailaSer.deleteObj(factNo, email, emailPwd, visaSort);
+		KyzExpectmatmLog log=new KyzExpectmatmLog();
+		log.setFactNo(factNo);
+		log.setContent(email+emailPwd+visaSort);
+		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
+		log.setUsername(user.getUsername());
+		boolean flag=webuseremailaSer.deleteObj(factNo, email, emailPwd, visaSort,log);
 		if(flag==false){
 			response.setContentType("text/html;charset=utf-8");
 			response.getWriter().print("<script>alert('刪除失敗!');history.back()</script>");

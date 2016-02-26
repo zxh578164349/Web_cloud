@@ -3,6 +3,7 @@ package services.impl;
 import java.util.List;
 
 import dao.IWebTypeDao;
+import entity.KyzExpectmatmLog;
 import entity.WebType;
 import services.IWebTypeServices;
 import util.PageBean;
@@ -39,9 +40,9 @@ public class WebTypeServicesImpl implements IWebTypeServices{
 
 
 
-	public void delete(String factNo, String typeNo) {
+	public void delete(String factNo, String typeNo,KyzExpectmatmLog delLog) {
 		// TODO Auto-generated method stub
-		webtypeDao.delete(factNo, typeNo);
+		webtypeDao.delete(factNo, typeNo,delLog);
 	}
 
 
@@ -79,6 +80,19 @@ public class WebTypeServicesImpl implements IWebTypeServices{
 	public List<WebType> findByFactNo2(String factNo) {
 		// TODO Auto-generated method stub
 		return webtypeDao.findByFactNo2(factNo);
+	}
+
+
+
+	/**
+	 * 日期:2016/2/26
+	 * 描述:
+	 */
+	
+	
+	public void addToUpdate(WebType type) {
+		// TODO Auto-generated method stub
+		webtypeDao.update(type);
 	}
 
 

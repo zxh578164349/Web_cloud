@@ -16,7 +16,7 @@ public interface IWebBackFeedDao {
 
 	public Webbackfeed findById(WebbackfeedId id);
 
-	public void delete(WebbackfeedId id);
+	public void delete(WebbackfeedId id,KyzExpectmatmLog delLog);
 	public Webbackfeed findById(String factNo,String factCode,Date yymm);
 	public List<Webbackfeed> findByAny(String factNo,String beginDate,String endDate);
 	public Webbackfeed findById(String factNo,String factCode,String yymm);

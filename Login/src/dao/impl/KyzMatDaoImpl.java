@@ -11,6 +11,7 @@ import com.opensymphony.xwork2.ActionContext;
 import util.PageBean;
 import dao.Basedao;
 import dao.IKyzMatDao;
+import entity.KyzExpectmatmLog;
 import entity.KyzMat;
 
 public class KyzMatDaoImpl extends Basedao implements IKyzMatDao{
@@ -143,10 +144,10 @@ public class KyzMatDaoImpl extends Basedao implements IKyzMatDao{
 		return mat;
 	}
 
-	public void delete(String matNo) {
+	public void delete(String matNo,KyzExpectmatmLog delLog) {
 		// TODO Auto-generated method stub
 		KyzMat mat=this.findById(matNo);
-		super.delete(mat);
+		super.delete(mat,delLog);
 		
 	}
 

@@ -15,6 +15,7 @@ import util.PageBean;
 
 import dao.Basedao;
 import dao.IWebMixPersonDao;
+import entity.KyzExpectmatmLog;
 import entity.WebBackmat;
 import entity.Webmix2;
 import entity.Webmixperson;
@@ -151,9 +152,9 @@ public class WebMixPersonDaoImpl extends Basedao implements IWebMixPersonDao {
 
 	}
 
-	public void delete(WebmixpersonId id) {
+	public void delete(WebmixpersonId id,KyzExpectmatmLog delLog) {
 		Webmixperson mixperson = this.findById(id);
-		super.delete(mixperson);
+		super.delete(mixperson,delLog);
 	}
 
 	public Webmixperson selBycan(String factNo, Date date, String factCode) {

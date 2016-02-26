@@ -42,6 +42,7 @@ import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
 import entity.KyzExpectmatmFile;
+import entity.KyzExpectmatmLog;
 import entity.WebFactorder;
 import entity.WebUser;
 
@@ -786,7 +787,14 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 		return "findById";
 	}
 	public String delete(){
-		webfactorderSer.delete(factNo,factArea,yymm,model,customer,brank,component);
+		KyzExpectmatmLog log=new KyzExpectmatmLog();
+		log.setFactCode(factArea);
+		log.setFactNo(factNo);
+		log.setYymm(yymm);
+		log.setContent(model+customer+brank+component);
+		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
+		log.setUsername(user.getUsername());
+		webfactorderSer.delete(factNo,factArea,yymm,model,customer,brank,component,log);
 		return "delete";
 	}
 	

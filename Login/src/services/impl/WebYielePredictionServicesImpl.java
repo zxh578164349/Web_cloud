@@ -8,6 +8,7 @@ import java.util.List;
 import dao.IWebYielePredictionDao;
 import services.IWebYielePredictionServices;
 import util.PageBean;
+import entity.KyzExpectmatmLog;
 import entity.WebYielePrediction;
 import entity.WebYielePredictionId;
 

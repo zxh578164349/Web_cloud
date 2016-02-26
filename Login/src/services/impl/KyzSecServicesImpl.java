@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dao.IKyzSecDao;
+import entity.KyzExpectmatmLog;
 import entity.KyzSec;
 import services.IKyzSecServices;
 import util.PageBean;
@@ -69,9 +70,9 @@ public class KyzSecServicesImpl implements IKyzSecServices{
 		return kyzsecdao.findById(factNo, secNo);
 	}
 
-	public void delete(String factNo, String secNo) {
+	public void delete(String factNo, String secNo,KyzExpectmatmLog delLog) {
 		// TODO Auto-generated method stub
-		kyzsecdao.delete(factNo, secNo);
+		kyzsecdao.delete(factNo, secNo,delLog);
 	}
 
 }

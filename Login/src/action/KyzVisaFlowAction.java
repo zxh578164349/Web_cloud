@@ -23,7 +23,6 @@ import entity.WebType;
 
 public class KyzVisaFlowAction extends ActionSupport implements ServletResponseAware{
 	private IKyzVisaFlowServices visaSer;
-	private IWebTypeServices webtypeSer;
 	private List<KyzVisaflow> flows;
 	private String factNo;
 	private String visaSort;
@@ -214,10 +213,6 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 
 	public void setMaxItem(int maxItem) {
 		this.maxItem = maxItem;
-	}
-
-	public void setWebtypeSer(IWebTypeServices webtypeSer) {
-		this.webtypeSer = webtypeSer;
 	}
 
 	public String add_old() throws IOException{		
@@ -482,29 +477,7 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 		this.response=response;
 	}
 	
-	/*public void getTypeName(PageBean bean){
-		List<KyzVisaflow>list=bean.getList();
-		for(int i=0;i<list.size();i++){
-			KyzVisaflow flow=list.get(i);
-			String factno=flow.getId().getFactNo();
-			String visaSort=flow.getId().getVisaSort();
-			char visaSort_char=visaSort.charAt(0);
-			String visaSort2=visaSort.substring(0, 2);
-			String typename="";
-			if(visaSort_char=='C'){
-				typename=webtypeSer.findTypeNameById(factno, visaSort2);
-			}else{
-				//typename=webtypeSer.findTypeNameById(flow.getId().getFactNo(), flow.getId().getVisaSort());
-				typename=webtypeSer.findTypeNameById(factno, visaSort2);
-			}
-			if(typename!=null&&!typename.equals("")){
-				flow.setColTemp(typename);	
-			}else{
-				flow.setColTemp(visaSort);
-			}
-					
-		}
-	}*/
+
 	
 	public void getTypeName(PageBean bean){
 		List<KyzVisaflow>list=bean.getList();
@@ -514,14 +487,16 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 			String factno=flow.getId().getFactNo();
 			String visaSort=flow.getId().getVisaSort();			
 			String typename=visaSort;			
-			//typename=webtypeSer.findTypeNameById(factno, visaSort.substring(0, 2));									
-			for(int j=0;j<list_type.size();j++){//for2
-				WebType type=list_type.get(j);
-				if(factno.equals(type.getId().getFactNo())&&visaSort.substring(0,2).equals(type.getId().getTypeNo())){
-					typename=type.getTypeName();					
-					break;
-				}
-			}//for2
+			//typename=webtypeSer.findTypeNameById(factno, visaSort.substring(0, 2));
+			if(list_type!=null&&list_type.size()>0){
+				for(int j=0;j<list_type.size();j++){//for2
+					WebType type=list_type.get(j);
+					if(factno.equals(type.getId().getFactNo())&&visaSort.substring(0,2).equals(type.getId().getTypeNo())){
+						typename=type.getTypeName();					
+						break;
+					}
+				}//for2
+			}			
 			flow.setColTemp(typename);
 		}//for1	
 	}

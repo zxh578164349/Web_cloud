@@ -19,6 +19,7 @@ import dao.Basedao;
 import dao.IKyzExpectmatmDao;
 import entity.KyzExpectmatm;
 import entity.KyzExpectmatmId;
+import entity.KyzExpectmatmLog;
 import entity.KyzExpectmats;
 import entity.WebFixed;
 
@@ -133,10 +134,10 @@ public class KyzExpcetmatmDaoImpl extends Basedao implements IKyzExpectmatmDao {
 		return pageBean;
 	}
 
-	public void delete(KyzExpectmatmId id) {
+	public void delete(KyzExpectmatmId id,KyzExpectmatmLog delLog) {
 		// TODO Auto-generated method stub
 		KyzExpectmatm kyz=this.findById(id);
-		super.delete(kyz);
+		super.delete(kyz,delLog);
 		
 	}
 

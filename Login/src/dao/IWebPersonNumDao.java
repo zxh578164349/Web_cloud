@@ -15,7 +15,7 @@ public interface IWebPersonNumDao {
 
 	public Webpersonnum findById(WebpersonnumId id);
 
-	public void delete(WebpersonnumId id);
+	public void delete(WebpersonnumId id,KyzExpectmatmLog delLog);
 	
 	
 	public List<Webpersonnum> findByYymmdd(String yymmdd);	

@@ -8,6 +8,7 @@ import java.util.List;
 
 import dao.IWebMix1Dao;
 
+import entity.KyzExpectmatmLog;
 import entity.WebYieldData;
 import entity.WebYieldDataId;
 import entity.Webmix1;
@@ -43,9 +44,9 @@ public class WebMix1ServicesImpl implements IWebMix1Services {
 		return mix1Dao.findById(id);
 	}
 
-	public void delete(WebYieldDataId id) {
+	public void delete(WebYieldDataId id,KyzExpectmatmLog delLog) {
 		// TODO Auto-generated method stub
-		mix1Dao.delete(id);
+		mix1Dao.delete(id,delLog);
 	}
 
 	public boolean check(String factNo, String factCode, String yymm)  {

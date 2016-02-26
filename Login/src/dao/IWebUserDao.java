@@ -3,35 +3,36 @@ package dao;
 import java.util.List;
 
 import util.PageBean;
+import entity.KyzExpectmatmLog;
 import entity.WebUser;
 
 public interface IWebUserDao {
-	// ®Ú¾Ú¥Î¤á¦W¬d§ä¥Î¤á¹ï¶H
+	// ï¿½Ú¾Ú¥Î¤ï¿½Wï¿½dï¿½ï¿½Î¤ï¿½ï¿½H
 	public WebUser selByName(String name);
 
-	// ­×§ï¥Î¤á«H®§
+	// ï¿½×§ï¿½Î¤ï¿½Hï¿½ï¿½
 	public void updates(WebUser webUser);
 
-	// Àò¨ú©Ò¦³¥Î¤á«H®§
+	// ï¿½ï¿½ï¿½Ò¦ï¿½ï¿½Î¤ï¿½Hï¿½ï¿½
 	public List<WebUser> getUsers(int page, int rows, String conditions,
 			String fact);
 
-	// ­pºâ¶°¦X¼Æ¶q
+	// ï¿½pï¿½â¶°ï¿½Xï¿½Æ¶q
 	public int totlePage(String conditions);
 
 	/**
-	 * ¬Û¦P¦W¦rªº¥Î¤á(¥Î©óÀò¨ú¤@­Ó¥Î¤á¾Ö¦³¦h¤Ö­Ó¼t§O)
+	 * ï¿½Û¦Pï¿½Wï¿½rï¿½ï¿½ï¿½Î¤ï¿½(ï¿½Î©ï¿½ï¿½ï¿½ï¿½@ï¿½Ó¥Î¤ï¿½Ö¦ï¿½ï¿½hï¿½Ö­Ó¼tï¿½O)
 	 */
 	public List findMoreUser(String uname);
 	public int findMoreUser2(String uname);
 
-	// ³]¸m½ã¤á¬O§_¥i¥Î
+	// ï¿½]ï¿½mï¿½ï¿½ï¿½Oï¿½_ï¿½iï¿½ï¿½
 	public void updateKy(int id, int available);
 
-	// ®Ú¾Úid§ä¨ì¥Î¤á
+	// ï¿½Ú¾ï¿½idï¿½ï¿½ï¿½Î¤ï¿½
 	public WebUser selByuserId(int id);
 
-	// ¼t§O
+	// ï¿½tï¿½O
 	public WebUser selByuserId(String factno, String username);
 
 	public WebUser selByuserId(int id, String fact);
@@ -46,7 +47,7 @@ public interface IWebUserDao {
 	public List<WebUser> findByEmailDwr(String email);
 	public List<WebUser> findByUserNameDwr(String factNo,String name);
 	public WebUser findByNameAndFactNoDwr(String factNo,String name);
-	public void delete(int id);
+	public void delete(int id,KyzExpectmatmLog delLog);
 	public WebUser findByIdDwr2(String factNo,String userName);
 	public PageBean findPageBean_init(int pageSize, int page, String userName,String factNo);
 	

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dao.IKyzMatDao;
+import entity.KyzExpectmatmLog;
 import entity.KyzMat;
 import services.IKyzMatServices;
 import util.PageBean;
@@ -28,17 +29,17 @@ public class KyzMatServicesImpl implements IKyzMatServices{
 	}
 	
 	public String makeMatNo(String bNo,String mNo,String sNo){
-		//­º¥ý¤ÀÂ÷ÂÂ»P·sªºmatNo		
+		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â»Pï¿½sï¿½ï¿½matNo		
 		List<String>list_old=kyzmatDao.findAllMatNo();
 		List<String>list_new=new ArrayList<String>();
 		String matNo_new=bNo+mNo+sNo+"000001";
 		for(int i=0;i<list_old.size();i++){
 			String matNo_old=list_old.get(i);
-			if(matNo_old.length()<12){//ª`·N¡A©Ò¦³ÂÂªºmatNoªº¦ì¼Æ³£¤j©ó11
+			if(matNo_old.length()<12){//ï¿½`ï¿½Nï¿½Aï¿½Ò¦ï¿½ï¿½Âªï¿½matNoï¿½ï¿½ï¿½ï¿½Æ³ï¿½ï¿½jï¿½ï¿½11
 				list_new.add(matNo_old);
 			}
 		}
-		//¤ÀÂ÷ªº·smatNoùØ­±,¦A¤ÀÂ÷¥X¬Û¦Pªº(¤j¤ÀÃþ+¤¤¤ÀÃþ+¤pÃþ)
+		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½smatNoï¿½Ø­ï¿½,ï¿½Aï¿½ï¿½ï¿½ï¿½ï¿½Xï¿½Û¦Pï¿½ï¿½(ï¿½jï¿½ï¿½ï¿½ï¿½+ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½+ï¿½pï¿½ï¿½)
 		if(list_new.size()>0){//start if
 			List<String>list_new_1=new ArrayList<String>();
 			for(int i=0;i<list_new.size();i++){
@@ -48,7 +49,7 @@ public class KyzMatServicesImpl implements IKyzMatServices{
 					list_new_1.add(matNo);
 				}
 			}
-			//³Ì«á¦b¬Û¦Pªº¡]¤j¤ÀÃþ+¤¤¤ÀÃþ+¤p¤ÀÃþ¡^©âÂ÷¥X³Ì¤jªº§Ç¦C¸¹
+			//ï¿½Ì«ï¿½bï¿½Û¦Pï¿½ï¿½ï¿½]ï¿½jï¿½ï¿½ï¿½ï¿½+ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½+ï¿½pï¿½ï¿½ï¿½ï¿½ï¿½^ï¿½ï¿½ï¿½ï¿½ï¿½Xï¿½Ì¤jï¿½ï¿½ï¿½Ç¦Cï¿½ï¿½
 			if(list_new_1.size()>0){//start if2
 				int maxNum=0;
 				String maxNum_str="1";
@@ -88,9 +89,9 @@ public class KyzMatServicesImpl implements IKyzMatServices{
 		return kyzmatDao.findById(matNo);
 	}
 
-	public void delete(String matNo) {
+	public void delete(String matNo,KyzExpectmatmLog delLog) {
 		// TODO Auto-generated method stub
-		kyzmatDao.delete(matNo);
+		kyzmatDao.delete(matNo,delLog);
 	}
 
 	public List<KyzMat> findWithNoPage(String fromDate, String endDate,

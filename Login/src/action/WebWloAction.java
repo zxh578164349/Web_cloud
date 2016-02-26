@@ -23,6 +23,8 @@ import util.GlobalMethod;
 import util.JasperHelper;
 import util.Page;
 import util.PageBean;
+import entity.KyzExpectmatmLog;
+import entity.WebUser;
 import entity.Webscrapt;
 import entity.Webwlo;
 import entity.WebwloId;
@@ -312,7 +314,12 @@ public class WebWloAction extends ActionSupport implements ServletResponseAware 
 	}
 
 	public String delete2() {
-		wloService.delete(id);
+		KyzExpectmatmLog log=new KyzExpectmatmLog();
+		log.setFactNo(id.getFactNo());
+		log.setFactCode(id.getFactCode());
+		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
+		log.setUsername(user.getUsername());
+		wloService.delete(id,log);
 		return "delete";
 	}
 	

@@ -9,6 +9,7 @@ import org.hibernate.Query;
 import util.PageBean;
 import dao.Basedao;
 import dao.ISumWebYieldDataDao;
+import entity.KyzExpectmatmLog;
 import entity.SumWebYieldData;
 
 public class SumWebYieldDataDaoImpl extends Basedao implements ISumWebYieldDataDao{

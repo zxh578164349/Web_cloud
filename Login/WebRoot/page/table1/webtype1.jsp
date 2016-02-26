@@ -73,8 +73,13 @@
 																		
 					<s:if test='#session.loginUser.userread!="1"'>					
 					<td>
-						<a href="javascript:findById('${id.factNo}','${id.typeNo}')"><img alt="修改" src="images/icon/edit001.png" title="修改"></a>&nbsp;										
-						<!--  <a href="javascript:mydelete('${id.factNo}','${id.typeNo}')"><img alt="刪除" src="images/icon/delete001.png" title="刪除"></a>	-->					
+					   <form id="subform${x.index}">
+					      <input type="hidden" value="<s:property value='id.factNo'/>" name="factNo"/>
+					      <input type="hidden" value="<s:property value='id.typeNo'/>" name="typeNo"/> 
+					   </form>
+						<a href="javascript:findById('${id.factNo}','${id.typeNo}')"><img alt="修改" src="images/icon/edit001.png" title="修改"></a>&nbsp;
+						<!--<a href="javascript:recovery('subform${x.index}')"><img alt="回收" src="images/icon/trash.png" title="回收"></a>										
+						  <a href="javascript:mydelete('${id.factNo}','${id.typeNo}')"><img alt="刪除" src="images/icon/delete001.png" title="刪除"></a>	-->					
 					</td>
 					</s:if>
 				</tr>

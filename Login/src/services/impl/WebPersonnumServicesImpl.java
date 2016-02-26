@@ -8,6 +8,7 @@ import java.util.List;
 
 import dao.IWebPersonNumDao;
 
+import entity.KyzExpectmatmLog;
 import entity.Webpersonnum;
 import entity.WebpersonnumId;
 import services.IWebPersonnumServices;
@@ -41,9 +42,9 @@ public class WebPersonnumServicesImpl implements IWebPersonnumServices {
 		return personNumDao.findById(id);
 	}
 
-	public void delete(WebpersonnumId id) {
+	public void delete(WebpersonnumId id,KyzExpectmatmLog delLog) {
 		// TODO Auto-generated method stub
-		personNumDao.delete(id);
+		personNumDao.delete(id,delLog);
 	}
 
 	public List<Webpersonnum> findByYymmdd(String yymmdd) {

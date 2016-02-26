@@ -13,6 +13,7 @@ import dao.Basedao;
 import dao.IKyzContactLetterDao;
 import entity.KyzContactletter;
 import entity.KyzExpectmatm;
+import entity.KyzExpectmatmLog;
 
 public class KyzContactLetterDaoImpl extends Basedao implements IKyzContactLetterDao{
 
@@ -115,10 +116,10 @@ public class KyzContactLetterDaoImpl extends Basedao implements IKyzContactLette
 		return letter;
 	}
 
-	public void delete(String factNo, String billNo) {
+	public void delete(String factNo, String billNo,KyzExpectmatmLog delLog) {
 		// TODO Auto-generated method stub
 		KyzContactletter letter=this.findById(factNo, billNo);
-		super.delete(letter);
+		super.delete(letter,delLog);
 	}
 
 	public String findTitleByBillno(String billNo) {

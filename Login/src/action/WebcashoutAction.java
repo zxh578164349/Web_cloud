@@ -33,8 +33,10 @@ import util.PageBean;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
+import entity.KyzExpectmatmLog;
 import entity.VWebydataawebcashout;
 import entity.WebFact;
+import entity.WebUser;
 import entity.Webcashout;
 
 public class WebcashoutAction extends ActionSupport implements ServletResponseAware{
@@ -204,7 +206,14 @@ public class WebcashoutAction extends ActionSupport implements ServletResponseAw
 		return result;
 	}
 	public String delete(){
-		cashoutSer.delete(factNo, factCode, yymm);
+		/*********************刪除記錄**************************/
+		KyzExpectmatmLog log=new KyzExpectmatmLog();
+		log.setFactCode(factCode);
+		log.setFactNo(factNo);
+		log.setYymm(yymm);
+		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
+		log.setUsername(user.getUsername());
+		cashoutSer.delete(factNo, factCode, yymm,log);
 		return "delete";
 	}
 	public String findPageBean(){
