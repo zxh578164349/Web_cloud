@@ -315,6 +315,7 @@ public class WebWloAction extends ActionSupport implements ServletResponseAware 
 
 	public String delete2() {
 		KyzExpectmatmLog log=new KyzExpectmatmLog();
+		log.setObj("Webwlo");
 		log.setFactNo(id.getFactNo());
 		log.setFactCode(id.getFactCode());
 		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");

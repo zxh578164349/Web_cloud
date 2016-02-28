@@ -11,7 +11,6 @@
 	<bean id="webMenuAction" class="action.WebMenuAction" scope="prototype" />
 	<bean id="webMatsAction" class="action.WebMatsAction" scope="prototype" />
 	<bean id="webMatstoreAction" class="action.WebMatstoreAction" scope="prototype" />			
-	<bean id="webSideAction" class="action.WebSideAction" scope="prototype" />
 	<bean id="factAction" class="action.KyFactAction" scope="prototype" />
 	<bean id="preAndDataAction" class="action.PreAndDataAction" scope="prototype" />
 	<bean id="ypreAction" class="action.WebYPreAction" scope="prototype" />	

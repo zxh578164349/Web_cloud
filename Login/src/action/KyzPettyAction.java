@@ -178,6 +178,7 @@ public class KyzPettyAction extends ActionSupport{
 	
 	public String delete(){
 		KyzExpectmatmLog log=new KyzExpectmatmLog();
+		log.setObj("KyzPetty");
 		log.setFactNo(factNo);
 		log.setBillNo(billNo);
 		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");

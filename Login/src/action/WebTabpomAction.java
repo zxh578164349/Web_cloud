@@ -331,10 +331,17 @@ public class WebTabpomAction extends ActionSupport implements ServletResponseAwa
 	
 	public String delete(){
 		KyzExpectmatmLog log=new KyzExpectmatmLog();
+		log.setObj("WebTabpom");
 		log.setContent(pomNo);
 		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
 		log.setUsername(user.getUsername());
 		tabpomSer.delete(pomNo,log);
+		
+		//同时删除文档20160227
+		/*File file=new File("d:\\WebtabpomFile_backup\\"+pomNo);
+		if(file.exists()){
+			GlobalMethod.deletefile(file);//引用下面刪除文件夾方法
+		}*/
 		return "delete";
 	}
 	

@@ -294,6 +294,7 @@ public class WebFixedAction extends ActionSupport implements
 
 	public String delete() {
 		KyzExpectmatmLog log=new KyzExpectmatmLog();
+		log.setObj("WebFixed");
 		log.setContent(id);
 		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
 		log.setUsername(user.getUsername());

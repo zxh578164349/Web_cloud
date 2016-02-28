@@ -439,7 +439,7 @@ jq(document).ajaxStop(function(){
 						value="<s:property value='%{formatDouble2(ydata.daycount)}'/>"
 						datatype="*,*0-7">
 				</span> <input type="hidden"
-					value="<s:property value='#session.loginUser.username'/>"
+					value="<s:property value='ydata.username'/>"
 					name="ydata.username" />
 				<!-- 添加用戶名 --></td>
 				<td class="td_show_title">上模總工時(小時)</td>

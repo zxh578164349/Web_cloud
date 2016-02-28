@@ -281,6 +281,7 @@ public class WebCostAction extends ActionSupport implements
 	public String delete() {
 		/*********************刪除記錄**************************/
 		KyzExpectmatmLog log=new KyzExpectmatmLog();
+		log.setObj("Webcost");
 		log.setFactCode(id.getFactCode());
 		log.setFactNo(id.getFactNo());
 		log.setYymm(new SimpleDateFormat("yyyyMM").format(id.getYymm()));

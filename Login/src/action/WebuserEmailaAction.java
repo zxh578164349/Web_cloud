@@ -134,6 +134,7 @@ public class WebuserEmailaAction extends ActionSupport implements ServletRespons
 	}
 	public String delete() throws IOException{
 		KyzExpectmatmLog log=new KyzExpectmatmLog();
+		log.setObj("WebuserEmailA");
 		log.setFactNo(factNo);
 		log.setContent(email+emailPwd+visaSort);
 		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");

@@ -80,6 +80,7 @@ public class WebuseremailAction extends ActionSupport{
 	}
 	public String delete(){
 		KyzExpectmatmLog log=new KyzExpectmatmLog();
+		log.setObj("WebuserEmail");
 		log.setFactNo(factNo);
 		log.setContent(email+emailpwd);
 		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");

@@ -315,6 +315,7 @@ public class WebProdutedAction extends ActionSupport implements
 
 	public String delete2() {
 		KyzExpectmatmLog log=new KyzExpectmatmLog();
+		log.setObj("Webproduted");
 		log.setFactCode(id.getFactCode());
 		log.setFactNo(id.getFactNo());
 		log.setYymm(new SimpleDateFormat("yyyyMM").format(id.getYymm()));

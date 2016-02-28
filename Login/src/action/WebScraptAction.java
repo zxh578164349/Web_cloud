@@ -311,6 +311,7 @@ public class WebScraptAction extends ActionSupport implements
 
 	public String delete2() {
 		KyzExpectmatmLog log=new KyzExpectmatmLog();
+		log.setObj("Webscrapt");
 		log.setFactCode(id.getFactCode());
 		log.setFactNo(id.getFactNo());
 		log.setYymm(new SimpleDateFormat("yyyyMM").format(id.getYymm()));

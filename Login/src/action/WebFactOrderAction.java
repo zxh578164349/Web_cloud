@@ -788,6 +788,7 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 	}
 	public String delete(){
 		KyzExpectmatmLog log=new KyzExpectmatmLog();
+		log.setObj("WebFactorder");
 		log.setFactCode(factArea);
 		log.setFactNo(factNo);
 		log.setYymm(yymm);

@@ -89,6 +89,7 @@ public class KyzSecAction extends ActionSupport{
     }
     public String delete(){
     	KyzExpectmatmLog log=new KyzExpectmatmLog();
+    	log.setObj("KyzSec");
     	log.setFactNo(factNo);
 		log.setContent(secNo);
 		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");

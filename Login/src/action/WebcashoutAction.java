@@ -208,6 +208,7 @@ public class WebcashoutAction extends ActionSupport implements ServletResponseAw
 	public String delete(){
 		/*********************刪除記錄**************************/
 		KyzExpectmatmLog log=new KyzExpectmatmLog();
+		log.setObj("Webcashout");
 		log.setFactCode(factCode);
 		log.setFactNo(factNo);
 		log.setYymm(yymm);

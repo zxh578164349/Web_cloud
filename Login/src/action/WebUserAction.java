@@ -70,7 +70,6 @@ public class WebUserAction extends ActionSupport implements ServletResponseAware
 	private String userread;
 	private String remembered;
 	private String ajax_result;//返回頁面的ajax結果   (0:登錄成功    1:當前用戶已註銷   2:廠別不對    3:賬號或密碼錯誤)
-	private IKyVisaBillsServices visabillSer;
 	private IWebTypeServices webtypeSer;
 	private int backIndex;//返回標識      0或null:不走返回路徑         1:走返回路徑
 	
@@ -89,9 +88,7 @@ public class WebUserAction extends ActionSupport implements ServletResponseAware
 		this.webtypeSer = webtypeSer;
 	}
 
-	public void setVisabillSer(IKyVisaBillsServices visabillSer) {
-		this.visabillSer = visabillSer;
-	}
+	
 
 	public String getRemembered() {
 		return remembered;

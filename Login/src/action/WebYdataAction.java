@@ -379,7 +379,8 @@ public class WebYdataAction extends ActionSupport implements
 							SumWebYieldData sumYdata=list_sumYdata.get(k);
 							if(sumYdata!=null){
 								//sumydateSer.delete(sumYdata);
-								this.add_sumYdata(ydata.getId().getFactNo(), list_yymm.get(i), sumYdata.getStartDate(), sumYdata.getEndDate());
+								String sumydata_username=sumYdata.getUsername()==null?"none":sumYdata.getUsername();
+								this.add_sumYdata(ydata.getId().getFactNo(), list_yymm.get(i), sumYdata.getStartDate(), sumYdata.getEndDate(),sumydata_username);
 							}							
 						}
 					}							
@@ -598,7 +599,8 @@ public class WebYdataAction extends ActionSupport implements
 				for(int k=0;k<list_sumYdata.size();k++){
 					SumWebYieldData sumYdata=list_sumYdata.get(k);
 					//sumydateSer.delete(sumYdata);
-					this.add_sumYdata(id.getFactNo(), list_yymm.get(i), sumYdata.getStartDate(), sumYdata.getEndDate());
+					String sumydata_username=sumYdata.getUsername()==null?"none":sumYdata.getUsername();
+					this.add_sumYdata(id.getFactNo(), list_yymm.get(i), sumYdata.getStartDate(), sumYdata.getEndDate(),sumydata_username);
 				}
 			}							
 		}		
@@ -752,7 +754,7 @@ public class WebYdataAction extends ActionSupport implements
 	 * @param startDate
 	 * @param endDate
 	 */
-	public void add_sumYdata(String factNo,String yymm,String startDate,String endDate){
+	public void add_sumYdata(String factNo,String yymm,String startDate,String endDate,String username){
 		List list=webFactSer.findFactCodeByFactNo(factNo);
 		for(int i=0;i<list.size();i++){
 			String factcode=(String)list.get(i);
@@ -794,6 +796,7 @@ public class WebYdataAction extends ActionSupport implements
 			}		
 			ydate.setStartDate(startDate);
 			ydate.setEndDate(endDate);
+			ydate.setUsername(username);
 			sumydateSer.add(ydate);
 			
 			//內存回收20160219
