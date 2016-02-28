@@ -297,6 +297,7 @@ public class WebBussinessletterAction extends ActionSupport implements ServletRe
 		try{
 			/*********************刪除記錄**************************/
 			KyzExpectmatmLog log=new KyzExpectmatmLog();
+			log.setObj("WebBussinessletter");
 			log.setBillNo(billNo);
 			WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
 			log.setUsername(user.getUsername());

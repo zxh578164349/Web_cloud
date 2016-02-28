@@ -240,6 +240,7 @@ public class WebPhonebookAction extends ActionSupport implements ServletResponse
 	}
 	public String delete(){
 		KyzExpectmatmLog log=new KyzExpectmatmLog();
+		log.setObj("WebPhonebook");
 		log.setFactNo(factNo);
 		log.setContent(department+post+userName);
 		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");

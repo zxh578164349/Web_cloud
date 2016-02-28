@@ -52,12 +52,12 @@
 			document.getElementById("clzl1").innerHTML = '<input value="資料輸入,產量資料,ydata_findPageBean" name="checkbox" type="checkbox" />產量資料';
 		}
 
-		var i20 = document.getElementById("sjgl");
+		/* var i20 = document.getElementById("sjgl");
 		if (i20 != null) {
 			document.getElementById("sjgl1").innerHTML = "";
 		} else {
 			document.getElementById("sjgl1").innerHTML = '<input value="數據管理,數據統計,page/StatisticalData.jsp" name="checkbox" type="checkbox" />數據統計';
-		}
+		} */
 
 		var i21 = document.getElementById("cltj");
 		if (i21 != null) {
@@ -719,7 +719,8 @@ function back(){
 			</tr>
 			<tr>
 				<td class="td1">數據管理:</td>
-				<td><s:iterator value="#session.user.webJurisdictions">
+				<td>
+				<!-- <s:iterator value="#session.user.webJurisdictions">
 						<s:iterator value="webSubmenus">
 							<s:if test="submenuname=='數據統計'">
 								<span id="sjgl"><input name="checkbox"
@@ -727,8 +728,8 @@ function back(){
 									type="checkbox" />數據統計</span>
 							</s:if>
 						</s:iterator>
-					</s:iterator> <span id="sjgl1"></span> <s:iterator
-						value="#session.user.webJurisdictions">
+					</s:iterator> <span id="sjgl1"></span> -->
+					 <s:iterator value="#session.user.webJurisdictions">						
 						<s:iterator value="webSubmenus">
 							<s:if test="submenuname=='各廠產量統計'">
 								<span id="cltj"><input name="checkbox"

@@ -197,6 +197,7 @@ public class KyzMatAction extends ActionSupport implements ServletResponseAware{
 	}
 	public String delete(){
 		KyzExpectmatmLog log=new KyzExpectmatmLog();
+		log.setObj("KyzMat");
 		log.setContent(matNo);
 		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
 		log.setUsername(user.getUsername());

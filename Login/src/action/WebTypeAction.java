@@ -162,6 +162,7 @@ public class WebTypeAction extends ActionSupport{
 		try{
 			/*********************刪除記錄**************************/
 			KyzExpectmatmLog log=new KyzExpectmatmLog();
+			log.setObj("WebType");
 			log.setFactNo(factNo);
 			log.setContent(typeNo);
 			log.setObj("WebType");

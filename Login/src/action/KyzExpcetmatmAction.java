@@ -48,6 +48,7 @@ import services.IWebFactServices;
 import services.IWebTypeServices;
 import services.IWebUserService;
 import services.IWebuserEmailServices;
+import util.GlobalMethod;
 import util.JasperHelper;
 import util.PageBean;
 import entity.KyVisabillm;
@@ -930,6 +931,7 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 	public String delete(){
 		try{
 			KyzExpectmatmLog log=new KyzExpectmatmLog();
+			log.setObj("KyzExpectmatm");
 			log.setBillNo(id.getBillNo());
 			WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
 			log.setUsername(user.getUsername());
@@ -943,7 +945,7 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 			}*/
 			File file=new File("d:\\KyzexpFile_backup\\"+id.getBillNo());
 			if(file.exists()){
-				this.deletefile(file);//引用下面刪除文件夾方法
+				GlobalMethod.deletefile(file);//引用下面刪除文件夾方法
 			}
 	
 		}catch(Exception e){
@@ -963,23 +965,7 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 		return "delete";
 	}
 	
-	/**
-	 * 刪除文件夾
-	 * @param file
-	 */
-	public void deletefile(File file){
-		if(file.isFile()){
-			file.delete();
-		}
-		if(file.isDirectory()){
-			File[]files=file.listFiles();
-			for(int i=0;i<files.length;i++){
-				this.deletefile(files[i]);
-			}
-			file.delete();
-		}
-		
-	}
+	
 	
 	@SuppressWarnings("finally")
 	public String deleteMore(){

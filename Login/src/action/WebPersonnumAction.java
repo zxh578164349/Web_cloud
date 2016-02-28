@@ -331,6 +331,7 @@ public class WebPersonnumAction extends ActionSupport implements
 
 	public String delete() {
 		KyzExpectmatmLog log=new KyzExpectmatmLog();
+		log.setObj("Webpersonnum");
 		log.setFactCode(id.getFactCode());
 		log.setFactNo(id.getFactNo());
 		log.setYymm(new SimpleDateFormat("yyyyMM").format(id.getYymmdd()));

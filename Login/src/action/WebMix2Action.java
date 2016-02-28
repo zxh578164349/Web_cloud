@@ -314,6 +314,7 @@ public class WebMix2Action extends ActionSupport implements
 
 	public String delete2() {
 		KyzExpectmatmLog log=new KyzExpectmatmLog();
+		log.setObj("Webmix2");
 		log.setFactCode(id.getFactCode());
 		log.setFactNo(id.getFactNo());
 		log.setYymm(new SimpleDateFormat("yyyyMM").format(id.getYymm()));
