@@ -23,7 +23,7 @@ public interface IWebYieldDataServices {
 	public WebYieldData findById(WebYieldDataId id);
 
 	public PageBean findPageBean(int pageSize, int page, String factNo,
-			String yymm);
+			String yymm,String yymm2);
 
 	public void delete(WebYieldDataId id);
 

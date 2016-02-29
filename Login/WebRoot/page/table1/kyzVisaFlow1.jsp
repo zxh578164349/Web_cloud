@@ -97,8 +97,8 @@
 <body>
   <div id="container">
    <div id="content">
-	<table id="tb" >
-		<caption >審核流程</caption>
+	<table class="table table-striped table-hover table-bordered" >
+		<caption ><h4>審核流程</h4></caption>
 		<thead>			
 			<tr class="tr_show">			    
 				<th>廠別</th>
@@ -120,7 +120,7 @@
 			<tr>
 			</s:if>
 			<s:else>
-			<tr style="background:yellow">
+			<tr class="warning">
 			</s:else>	 
 				
 				<td><s:property value="id.factNo" /></td>

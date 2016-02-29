@@ -92,7 +92,7 @@ public class WebYieldDataDaoImpl extends Basedao implements IWebYieldDataDao {
 	}
 
 	public PageBean findYdataWithPage(int pageSize, int page, String factNo,
-			String yymm) {
+			String yymm,String yymm2) {
 		// TODO Auto-generated method stub
 		final Map<String, Object> map = new HashMap<String, Object>();
 		int allRow = 0;
@@ -105,8 +105,12 @@ public class WebYieldDataDaoImpl extends Basedao implements IWebYieldDataDao {
 			map.put("factno", factNo);
 		}
 		if (yymm != null && !yymm.equals("")) {
-			hql.append(" and to_char(id.yymmdd,'yyyymm')=:yymm ");
+			hql.append(" and to_char(id.yymmdd,'yyyymmdd')>=:yymm ");
 			map.put("yymm", yymm);
+		}
+		if(yymm2!=null&&!yymm2.equals("")){
+			hql.append(" and to_char(id.yymmdd,'yyyymmdd')<=:yymm2 ");
+			map.put("yymm2", yymm2);
 		}
 		if(factNo.equals("nothing")&&(yymm==null||yymm.equals(""))){
 			hql.append(" and id.factNo=:factno");

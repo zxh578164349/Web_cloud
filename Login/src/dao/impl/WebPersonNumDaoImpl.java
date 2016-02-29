@@ -125,14 +125,31 @@ public class WebPersonNumDaoImpl extends Basedao implements IWebPersonNumDao {
 		return (Webpersonnum)query.uniqueResult();
 	}
 
-	public Object[] findByYnmmddAndFactcode(String factCode, String yymmdd) {
+	public List<Object[]> findByYnmmddAndFactcode( String yymmdd) {
 		// TODO Auto-generated method stub
 		String hql="select id.factCode,sum(standardnumzg),sum(realnumzg),sum(standardnumjg),sum(realnumjg),sum(outstandardnum)," +
-				"sum(outrealnum) from Webpersonnum where id.factCode=? and to_char(id.yymmdd,'yyyymmdd')=? group by id.factCode";
-		Query query=getSession().createQuery(hql);
-		query.setString(0, factCode);
-		query.setString(1, yymmdd);
-		return (Object[])query.uniqueResult();
+				"sum(outrealnum) from Webpersonnum where  to_char(id.yymmdd,'yyyymmdd')=? group by id.factCode";
+		String[]objs={yymmdd};
+		return super.findAll(hql, objs);
+	}
+
+	/**
+	 * 日期:2016/2/29
+	 * 描述:
+	 */
+	
+	
+	public List<Webpersonnum> print_search(String factNo, String yymm1,
+			String yymm2) {
+		// TODO Auto-generated method stub
+		StringBuffer hql=new StringBuffer();
+		Map<String,Object>map=new HashMap<String,Object>();
+		hql.append("from Webpersonnum where 1=1 ");
+		if(factNo!=null&&!factNo.equals("")&&!factNo.equals("tw")){
+			hql.append(" and id.factNo=:factno");
+			map.put("factno", factNo);
+		}
+		return null;
 	}
 
 }

@@ -20,7 +20,7 @@ public interface IWebYieldDataDao {
 	public WebYieldData findById(WebYieldDataId id);
 
 	public PageBean findYdataWithPage(int pageSize, int page, String factNo,
-			String yymm);
+			String yymm,String yymm2);
 
 	public void delete(WebYieldDataId id);
 

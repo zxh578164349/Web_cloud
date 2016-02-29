@@ -21,6 +21,8 @@ public interface IWebPersonNumDao {
 	public List<Webpersonnum> findByYymmdd(String yymmdd);	
 	public List<Object[]> getTotalByYymmdd(String yymmdd);
 	public Webpersonnum findById2(String factNo,String factCode,String yymmdd);
-	public Object[] findByYnmmddAndFactcode(String factCode,String yymmdd);
+	public List<Object[]> findByYnmmddAndFactcode(String yymmdd);
+	
+	public List<Webpersonnum>print_search(String factNo,String yymm1,String yymm2);
 
 }

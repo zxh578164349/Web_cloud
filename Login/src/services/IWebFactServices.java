@@ -64,5 +64,29 @@ public interface IWebFactServices {
 	 */
 	public List<Object[]>findFactByFactNo(String factNo);
 	
+	/**
+	 * 所有有效的廠別
+	 * @Title: findFactAble
+	 * @Description: TODO
+	 * @param @return
+	 * @return List<WebFact>
+	 * @throws
+	 * @author web
+	 * @date 2016/2/29
+	 */
+	public List<WebFact>findFactAble();
+	
+	/**
+	 * 所有有效的廠別狀態
+	 * @Title: findFactAbled
+	 * @Description: TODO
+	 * @param @return
+	 * @return Object[]
+	 * @throws
+	 * @author web
+	 * @date 2016/2/29
+	 */
+	public List<Object[]> findFactAreaAbled();
+	
 
 }

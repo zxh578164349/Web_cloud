@@ -1128,16 +1128,7 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 		if(nos>0){
 			vbs_list=vbs_list-nos;
 		}
-		/*if(list.get(list.size()-3).getFlowMk().equals("N")){
-			vbs_list=list.size()-3;//(>=1000的最後三位都不要審核，則總長度-3  20150803)
-		}else if(list.get(list.size()-2).getFlowMk().equals("N")){
-			vbs_list=list.size()-2;
-		}else if(list.get(list.size()-1).getFlowMk().equals("N")){
-			vbs_list=list.size()-1;
-		}else{
-			vbs_list=list.size();
-		}*/
-				
+						
 		for(int i=startnum;i>0;i--){
 			KyVisabills bills=list.get(i-1);
 			bills.setVisaMk("Y");

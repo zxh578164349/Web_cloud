@@ -66,7 +66,7 @@ window.onload=getAllWebbrank;
 			  結束日期:<input type="text" id="year" name="yymm2" onClick="WdatePicker({dataFmt:'yyyyMM'})" readonly="readonly" class="Wdate"/>			
 			</td>
 			<td>
-			 <input value="搜索" type="button" id="addbtn" onclick="javascript:submis()" />
+			 <input value="搜索" type="button" id="addbtn" onclick="submis('public_form')" />
 			 <input value="導出Excel" type="button" id="search_forday" onclick="print('public_form')"/>	
 			</td>
 		</tr>

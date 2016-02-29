@@ -193,7 +193,7 @@
         <property name="factNo" type="java.lang.String">
             <column name="FACT_NO" length="20" />
         </property>
-        <bag name="subKyzmats" inverse="true" cascade="delete" lazy="false">
+        <bag name="subKyzmats" inverse="true" cascade="delete" >
             <key>
                 <column name="MAT_NO" length="20" not-null="true" />               
             </key>

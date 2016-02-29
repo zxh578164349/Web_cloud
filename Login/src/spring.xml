@@ -24,7 +24,7 @@
 	</property>
 	<!-- proxool 的 url连接串，这个必须确定用户名和密码 -->
 	<property name="driverUrl">
-		<value>jdbc:oracle:thin:web/tmkyinfo@192.168.199.101:1521:web</value>
+		<value>jdbc:oracle:thin:web/tmkyinfo@192.168.199.101:1521:orcl</value>
 	</property>
 	<!-- 用户名(proxool没有使用，但是不能没有) -->
 	<property name="user">

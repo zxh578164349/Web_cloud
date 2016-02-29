@@ -344,7 +344,24 @@ public class WebPersonnumAction extends ActionSupport implements
 	public void print(){
 		List<Webpersonnum>list=new ArrayList<Webpersonnum>();
 		List<Object[]>list_obj=new ArrayList<Object[]>();
-		List listfactno=webFactSer.findAllFact();
+		
+		List<WebFact>list_fact=webFactSer.findFactAble();
+		List<Webpersonnum>list_person=personNumSer.findByYymmdd(yymmdd);
+		for(WebFact fact:list_fact){
+			for(int i=0;i<list_person.size();i++){
+				if(fact.getId().getFactNo().equals(list_person.get(i).getId().getFactNo())&&
+						fact.getId().getFactArea().equals(list_person.get(i).getId().getFactCode())){
+					list_person.get(i).getId().setFactNo(fact.getFactSname()+"_"+fact.getId().getFactNo());
+					list.add(list_person.get(i));
+					list_person.remove(i);
+					break;
+				}else if(i==list_person.size()-1){
+					list.add(new Webpersonnum(new WebpersonnumId(fact.getFactSname()+"_"+fact.getId().getFactNo(),fact.getId().getFactArea(),null)));
+				}
+			}
+		}
+		
+		/*List listfactno=webFactSer.findAllFact();
 		for(int x=0;x<listfactno.size();x++){
 			Object[] temp_factnos=(Object[])listfactno.get(x);
 			String temp_factno=(String)temp_factnos[0];
@@ -365,16 +382,23 @@ public class WebPersonnumAction extends ActionSupport implements
 				list.add(person);
 				
 			}			
-		}
-		List factcodelist=webFactSer.findAllFactCode();//所有廠別狀態
+		}*/
+				
+		List<Object[]> factcodelist=webFactSer.findFactAreaAbled();//所有廠別狀態
+		List<Object[]>personlist=personNumSer.findByYnmmddAndFactcode( yymmdd);
 		for(int j=0;j<factcodelist.size();j++){
-			String factcode=(String)factcodelist.get(j);
-			Object[]temp=personNumSer.findByYnmmddAndFactcode(factcode, yymmdd);
-			if(temp==null){
-				temp=new Object[10];
-				temp[0]=factcode;
-			}
-			list_obj.add(temp);
+			String factcode=(String)factcodelist.get(j)[0];	
+			for(int k=0;k<personlist.size();k++){
+				if(personlist.get(k)[0].toString().equals(factcode)){
+					list_obj.add(personlist.get(k));
+					personlist.remove(k);
+					break;
+				}else if(k==personlist.size()-1){
+					Object[]temp=new Object[10];
+					temp[0]=factcode;
+					list_obj.add(temp);
+				}
+			}			
 		}		
 		List<Webpersonnum>list_temp=new ArrayList<Webpersonnum>();
 		for(int i=0;i<list_obj.size();i++){
@@ -416,6 +440,10 @@ public class WebPersonnumAction extends ActionSupport implements
 	
 	public String transit() {
 		return "transit";
+	}
+	
+	public void print_search(){
+		
 	}
 
 }

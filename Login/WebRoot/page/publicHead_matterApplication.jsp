@@ -62,10 +62,10 @@
 	<table  border=0 >
 		<tr>
 			<td>廠別</td>
-			<td><s:if test="#attr.factNo=='tw'">			   
+			<td><s:if test="#session.factNo=='tw'">			   
 					<select name="factNo" id="factNo" onchange="getType(this.value)">
 						<option value="nothing">請選擇</option>
-						<s:iterator value="#attr.facts" id="temp">
+						<s:iterator value="#session.facts" id="temp">
 							<option value="${temp[0]}">${temp[1]}(${temp[0]})</option>								
 						</s:iterator>
 					</select>	
@@ -73,8 +73,8 @@
 				<s:else>
 					<select name="factNo" id="factNo" onchange="getType(this.value)">
 					    <option value="nothing">請選擇</option>
-						<option value="<s:property value="#attr.factNo"/>">
-							<s:property value="#attr.factName" />(<s:property value="#attr.factNo"/>)
+						<option value="<s:property value="#session.factNo"/>">
+							<s:property value="#session.factName" />(<s:property value="#session.factNo"/>)
 						</option>
 					</select>			
 				</s:else></td>
@@ -83,7 +83,7 @@
 			 <div id="uboxstyle_min">
 			 <select name="visaSort" id="visaSort" onchange="alert(this.value)">
 				            <option value="">請選擇</option>
-				            <%-- <s:iterator value="#attr.listkytype">
+				            <%-- <s:iterator value="#session.listkytype">
 				              <option value="<s:property value='id.typeSno'/>"><s:property value='typeSname'/></option>
 				            </s:iterator> --%>
 				            
@@ -95,7 +95,7 @@
 			<td>單號</td>
 			<td><input type="text" name="billNo" value="" id="billNo"/></td> 
 			<td>
-			<input value="搜索" type="submit" id="addbtn" onclick="javascript:submis()" />
+			<input value="搜索" type="button" id="addbtn" onclick="javascript:submis()" />
 			</td>			
 		</tr>
 		<tr>

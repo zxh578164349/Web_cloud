@@ -75,7 +75,7 @@ jq(document).keyup(function(event){
 </head>
 <body>
   <div style="width:1200px">
-   <form action="kyzmat_print" method="post" target="_blank">
+   <form  method="post" id="public_form">
 	<table  border="0px">
 		<tr>
 		    <td>
@@ -105,8 +105,8 @@ jq(document).keyup(function(event){
 		     </select>	
 			</td>			
 			<td>
-			<input value="搜索" type="button" id="addbtn" onclick="javascript:submis()" />
-			<input value="導出Excel" type="submit" id="search_forday" />			
+			<input value="搜索" type="button" id="addbtn" onclick="submis('public_form')" />
+			<input value="導出Excel" type="button" id="search_forday"  onclick="print('public_form')"/>			
 			</td>
 		</tr>
 	</table>
