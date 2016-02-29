@@ -27,7 +27,7 @@
 <script type="text/javascript" src="jquery/loding/ui.loading.js"></script>
 <script type="text/javascript">
  
-//var jq=jQuery.noConflict();
+
 jq(document).keyup(function(event){
    if(event.keyCode==13){
       submis();
@@ -39,14 +39,14 @@ jq(document).keyup(function(event){
 </head>
 <body>
   <div style="width:680px">
-   <form id="search_form">
+  <form id="public_form">
 	<table  border="0px">
 		<tr>
 			<td>廠別</td>
 			<td><s:if test="#session.factNo=='tw'">
 			    <div id="uboxstyle">
 					<select name="factNo" id="factNo">
-						<option value="">請選擇</option>						
+						<option value="nothing">請選擇</option>						
 						<s:iterator value="#session.facts" id="temp">
 							<option value="${temp[0]}">${temp[1]}(${temp[0]})</option>								
 						</s:iterator>
@@ -62,14 +62,15 @@ jq(document).keyup(function(event){
 					</select>
 					</div>
 				</s:else></td>
-			<td>單號</td>
+			<td>年月</td>
 			<td>
-			<!-- <input type="text" id="year" name="yymm" 
-				onClick="WdatePicker({dataFmt:'yyyyMM'})" readonly="readonly" class="Wdate"/> -->
-				<input type="text" name="billNo"/>
+			開始<input type="text" id="beginday" name="sdate" onClick="WdatePicker({dateFmt:'yyyyMMdd'})" readonly="readonly" class="Wdate"/><br>
+			結束<input type="text" id="endday" name="edate" onClick="WdatePicker({dateFmt:'yyyyMMdd'})" readonly="readonly" class="Wdate"/>
 			</td>
 			<td>
-			 <input value="搜索" type="button" id="addbtn" onclick="javascript:submis()" />	
+			 <input value="搜索" type="button" id="addbtn" onclick="submis('public_form')" />	
+			 <input value="導出Excel" type="button" id="search_forday" onclick="print('public_form')"/>
+			 	
 			</td>
 		</tr>
 	</table>

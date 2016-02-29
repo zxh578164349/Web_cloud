@@ -56,14 +56,14 @@
 			}
 		});
 	}
-	function submis() {
+	function submis(public_form) {
 		var fact = document.getElementById("factNo");
 		var ym = document.getElementById("year");
 		jq.ajax({
 			type : "POST",
 			dataType : "Html",
 			url : "ydata_findPageBean2",
-			data : "factNo=" + fact.value + "&yymm=" + ym.value,
+			data : jq("#"+public_form).serialize(),
 			success : function(msg) {
 				jq("#bodyid").html(msg);
 			},
@@ -155,53 +155,23 @@ function showDiv(){
        }
     }
   
+function print(public_form){
+	var public_form=jq("#"+public_form);
+	public_form.attr("action","ydata_print");
+	public_form.attr("target","_blank");
+	public_form.submit();
 	
+}	
   
 </script>
 
 <body>
-	<jsp:include page="publicHead.jsp" flush="true" />
+	<jsp:include page="publicHead_webYdate.jsp" flush="true" />
 	<hr />
 	<s:if test='#session.loginUser.userread!="1"'>
 	<input value="添加" type="button" id="addbtn" onclick="javascript:location.href='saveAndUpdate/Yield_data.jsp'" />
 	</s:if>
-	<br>
-	<form action="ydata_print" method="post" target="_blank">
-	<table  border="0px">
-		<tr>
-			<td>廠別</td>
-			<td><s:if test="#session.factNo=='tw'">
-			    <div id="uboxstyle">
-					<select name="factNo" id="factNo">
-						<option value="nothing">請選擇</option>						
-						<s:iterator value="#session.facts" id="temp">
-							<option value="${temp[0]}">${temp[1]}(${temp[0]})</option>								
-						</s:iterator>
-					</select>
-					</div>
-				</s:if> 
-				<s:else>
-				  <div id="uboxstyle">
-					<select name="factNo" id="factNo">
-						<option value="<s:property value="#session.factNo"/>">
-							<s:property value="#session.factName" />(<s:property value="#session.factNo"/>)
-						</option>
-					</select>
-					</div>
-				</s:else></td>
-			<td>開始日期</td>
-			<td><input type="text" id="year" name="sdate" 
-				onClick="WdatePicker({dateFmt:'yyyyMMdd'})" readonly="readonly" class="Wdate"/></td>
-			<td>結束日期</td>
-			<td><input type="text" id="year_s" name="edate" 
-				onClick="WdatePicker({dateFmt:'yyyyMMdd'})" readonly="readonly" class="Wdate"/></td>	
-			<td>
-			 <input value="導出Excel" type="submit" id="search_forday" />			
-			</td>
-		</tr>
-	</table>
-	</form>
-	<br>
+	
 	<s:if test='#session.loginUser.userread!="1"'>
 	<span style="float:right">
 	  <img alt="" src="images/136.gif">

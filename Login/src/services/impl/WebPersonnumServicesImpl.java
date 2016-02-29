@@ -62,9 +62,9 @@ public class WebPersonnumServicesImpl implements IWebPersonnumServices {
 		return personNumDao.findById2(factNo, factCode, yymmdd);
 	}
 
-	public Object[] findByYnmmddAndFactcode(String factCode, String yymmdd) {
+	public List<Object[]> findByYnmmddAndFactcode( String yymmdd) {
 		// TODO Auto-generated method stub
-		return personNumDao.findByYnmmddAndFactcode(factCode, yymmdd);
+		return personNumDao.findByYnmmddAndFactcode( yymmdd);
 	}
 
 	public boolean check(String factNo, String factCode, String yymm) {

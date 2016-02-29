@@ -54,7 +54,7 @@ jq(document).keyup(function(event) {
 			<td>科目名稱</td>
 			<td><input type="text" name="acctName" value="" id="acctname"/></td> 
 			<td><!-- <input type="image" onclick="javascript:submis();"  src="images/search002.gif"/> -->
-			<input value="搜索" type="submit" id="addbtn" onclick="javascript:submis()" />
+			<input value="搜索" type="button" id="addbtn" onclick="javascript:submis()" />
 			</td>			
 		</tr>
 	</table>

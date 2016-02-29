@@ -59,7 +59,7 @@
 			}
 		});
 	}
-	function submis() {		
+	function submis(public_form) {		
 		var fact = document.getElementById("factNo");
 		var ym = document.getElementById("year");
 		var ym_s=document.getElementById("year_s");
@@ -68,7 +68,8 @@
 			type : "POST",
 			dataType : "Html",
 			url : "fix_findPageBean2",
-			data : "factNo=" + fact.value + "&yymm=" + ym.value+"&yymm_s="+ym_s.value+"&lostmk="+lostmk.value,
+			//data : "factNo=" + fact.value + "&yymm=" + ym.value+"&yymm_s="+ym_s.value+"&lostmk="+lostmk.value,
+			data:jq("#"+public_form).serialize(),
 			success : function(msg) {
 				jq("#bodyid").html(msg);
 			},
@@ -103,6 +104,12 @@
 function findById(sid){
 	layer.load(0);
 	location.href="/Login/fix_findById?id="+sid;
+}
+function print(public_form){
+	var public_form=jq("#"+public_form);
+	public_form.attr("action","fix_toExcel");
+	public_form.attr("target","_blank");
+	public_form.submit();
 }
 </script>
 

@@ -38,9 +38,9 @@ public class WebYieldDataServicesImple implements IWebYieldDataServices {
 	}
 
 	public PageBean findPageBean(int pageSize, int page, String factNo,
-			String yymm) {
+			String yymm,String yymm2) {
 		// TODO Auto-generated method stub
-		return dataDao.findYdataWithPage(pageSize, page, factNo, yymm);
+		return dataDao.findYdataWithPage(pageSize, page, factNo, yymm,yymm2);
 	}
 
 	public void delete(WebYieldDataId id) {

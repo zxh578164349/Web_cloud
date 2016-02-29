@@ -11,37 +11,37 @@ public class KyzMat implements java.io.Serializable {
 
 	// Fields
 
-	private String matNo;//ª«®Æ½s¸¹
-	private String matCname;//ª«®Æ¤¤¤å¦WºÙ
-	private String matEname;//ª«®Æ­^¤å¦WºÙ
-	private String matType;//¸ê§÷¤ÀÃş
-	private String matSize;//ª«®Æ³W®æ
-	private String color;//ª«®ÆÃC¦â
-	private String acctNo;//·|­p¬ì¥Ø
-	private String policy;//ªöÁÊ¬Fµ¦
-	private Double purPrice;//ªöÁÊ³æ»ù
-	private Double dateUse;//¨Ï¥Î´Á­­
-	private Double saftQty;//¦w¥ş®w¦s
-	private String stockNo;//­ÜÀx¥N¸¹
-	private String cunit;//¤¤¤å³æ¦ì
-	private String eunit;//­^¤å³æ¦ì
-	private String punit;//¹ô§O
-	private String smatNo;//°Ó«~¥N¸¹
-	private String smatName;//°Ó«~¦WºÙ
-	private Double smatWeit;//°Ó«~³æ­«
-	private String builder;//¸ê®Æ«Øºc¤H  (ÁôÂÃ)
-	private String dateB;//¸ê®Æ«Øºc®É¶¡   (ÁôÂÃ)
-	private String updateMan;//²§°Ê¤H      (ÁôÂÃ)
-	private String dateUpdate;//²§°Ê®É¶¡    (ÁôÂÃ)
-	private String lunit;//»â¥Î³æ¦ì
-	private Double clRate;//»â¥Î´«ºâ²v
-	private String yyMk;//PCN  (ÁôÂÃ)
-	private String formalMk;//¥¿¦¡®Æ¸¹
-	private String fromMk;//®Æ¸¹¨Ó·½
-	private String gwMk;//Ãö°È±b
-	private String unitWeit;//­«¶q³æ¦ì
-	private Double rateWaste;//®üÃö·l¯Ó²v
-	//¥H¤U³£ÁôÂÃ(°£¤F¤j¡A¤¤¡A¤p¤ÀÃş)
+	private String matNo;//ç‰©æ–™ç·¨è™Ÿ
+	private String matCname;//ç‰©æ–™ä¸­æ–‡åç¨±
+	private String matEname;//ç‰©æ–™è‹±æ–‡åç¨±
+	private String matType;//è³‡æåˆ†é¡
+	private String matSize;//ç‰©æ–™è¦æ ¼
+	private String color;//ç‰©æ–™é¡è‰²
+	private String acctNo;//æœƒè¨ˆç§‘ç›®
+	private String policy;//é‡‡è³¼æ”¿ç­–
+	private Double purPrice;//é‡‡è³¼å–®åƒ¹
+	private Double dateUse;//ä½¿ç”¨æœŸé™
+	private Double saftQty;//å®‰å…¨åº«å­˜
+	private String stockNo;//å€‰å„²ä»£è™Ÿ
+	private String cunit;//ä¸­æ–‡å–®ä½
+	private String eunit;//è‹±æ–‡å–®ä½
+	private String punit;//å¹£åˆ¥
+	private String smatNo;//å•†å“ä»£è™Ÿ
+	private String smatName;//å•†å“åç¨±
+	private Double smatWeit;//å•†å“å–®é‡
+	private String builder;//è³‡æ–™å»ºæ§‹äºº  (éš±è—)
+	private String dateB;//è³‡æ–™å»ºæ§‹æ™‚é–“   (éš±è—)
+	private String updateMan;//ç•°å‹•äºº      (éš±è—)
+	private String dateUpdate;//ç•°å‹•æ™‚é–“    (éš±è—)
+	private String lunit;//é ˜ç”¨å–®ä½
+	private Double clRate;//é ˜ç”¨æ›ç®—ç‡
+	private String yyMk;//PCN  (éš±è—)
+	private String formalMk;//æ­£å¼æ–™è™Ÿ
+	private String fromMk;//æ–™è™Ÿä¾†æº
+	private String gwMk;//é—œå‹™å¸³
+	private String unitWeit;//é‡é‡å–®ä½
+	private Double rateWaste;//æµ·é—œæè€—ç‡
+	//ä»¥ä¸‹éƒ½éš±è—(é™¤äº†å¤§ï¼Œä¸­ï¼Œå°åˆ†é¡)
 	private String itemMat;
 	private String smatUnit;
 	private Double smatRate;
@@ -49,31 +49,31 @@ public class KyzMat implements java.io.Serializable {
 	private String areaMk1;
 	private String areaMk2;
 	private String areaMk3;
-	private String useMk;//¨Ï¥Îµù°O
-	private String dateStop;//¸T¥Î¤é´Á
+	private String useMk;//ä½¿ç”¨è¨»è¨˜
+	private String dateStop;//ç¦ç”¨æ—¥æœŸ
 	private String costMk;
 	private String matNew;
 	private String matMk;
-	private String typeBno;//¤j¤ÀÃş
-	private String typeMno;//¤¤¤ÀÃş
-	private String typeSno;//¤p¤ÀÃş
+	private String typeBno;//å¤§åˆ†é¡
+	private String typeMno;//ä¸­åˆ†é¡
+	private String typeSno;//å°åˆ†é¡
 	private String ASize;
 	private String BSize;
 	private String HSize;
-	private Double weit;//¥]­«¶q
-	private String bsmatNo;//°Ó«~¥N¸¹
-	private String bsmatName;//°Ó«~¦WºÙ
-	private String matType2;//WL ª«®Æ,YL­ì®Æ
-	private String compNo;//¤½¥q§O
-	private String compNo1;//¤½¥q§O
-	private String gxMk;//632»P634¦@¥Îª`°O
-	private String zbMk;//·Ç³Æ¸T¥Î
-	private String factMk;//¤À¼t§OÅã¥Üª«®Æ
-	private String dateBefroe;//«e¤@¦¸¦¬³f¤é´Á
-	private String dateMax;//³Ì·sªº¦¬³f¤é´Á
-	private String cbzbMk;//¦¨¥»ÂàÀÉª`°O
+	private Double weit;//åŒ…é‡é‡
+	private String bsmatNo;//å•†å“ä»£è™Ÿ
+	private String bsmatName;//å•†å“åç¨±
+	private String matType2;//WL ç‰©æ–™,YLåŸæ–™
+	private String compNo;//å…¬å¸åˆ¥
+	private String compNo1;//å…¬å¸åˆ¥
+	private String gxMk;//632èˆ‡634å…±ç”¨æ³¨è¨˜
+	private String zbMk;//æº–å‚™ç¦ç”¨
+	private String factMk;//åˆ†å» åˆ¥é¡¯ç¤ºç‰©æ–™
+	private String dateBefroe;//å‰ä¸€æ¬¡æ”¶è²¨æ—¥æœŸ
+	private String dateMax;//æœ€æ–°çš„æ”¶è²¨æ—¥æœŸ
+	private String cbzbMk;//æˆæœ¬è½‰æª”æ³¨è¨˜
 	private String matType3;
-	private String factNo;//¼t§O
+	private String factNo;//å» åˆ¥
 	private List<SubKyzmat>subKyzmats=new ArrayList<SubKyzmat>();
 
 	// Constructors

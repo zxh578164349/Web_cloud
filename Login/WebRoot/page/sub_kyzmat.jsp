@@ -47,7 +47,7 @@
 		});
 	}
 	
-	function submis() {
+	function submis(public_form) {
 		var loadi=layer.load(0);
 		var begindate = document.getElementById("beginDate");
 		var enddate=document.getElementById("endDate");
@@ -60,9 +60,10 @@
 			type : "POST",
 			dataType : "Html",
 			url : "kyzmat_findPageBean2",
-			data : "fromDate=" + begindate.value +"& endDate="+enddate.value+"& matNo="+matNo.value
+			/*data : "fromDate=" + begindate.value +"& endDate="+enddate.value+"& matNo="+matNo.value
 			        +"& typeBno="+bNo.value+"& typeMno="+mNo.value+"& typeSno="+sNo.value
-			        +"& matCname="+matcname.value,
+			        +"& matCname="+matcname.value,*/
+			  data:jq("#"+public_form).serialize(),      
 			success : function(msg) {
 			    layer.close(loadi);
 				jq("#bodyid").html(msg);				
@@ -111,6 +112,12 @@ function selectAll(){
   function backKyzmat(){
      layer.load("正在返回物料資料頁面....");
      window.location.href='subkyzmat_findPageBean';
+  }
+  function print(public_form){
+  	var public_form=jq("#"+public_form);
+  	public_form.attr("action","kyzmat_print");
+  	public_form.attr("target","_blank");
+  	public_form.submit();
   }
     		     
 </script>

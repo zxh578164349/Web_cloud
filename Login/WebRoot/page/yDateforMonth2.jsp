@@ -56,7 +56,7 @@
 			}
 		});
 	}
-	function submis() {
+	function submis(public_form) {
 		var fact = document.getElementById("factNo");
 		var begin_yymm = document.getElementById("begin_yymm");
 		var end_yymm=document.getElementById("end_yymm");
@@ -64,7 +64,8 @@
 			type : "POST",
 			dataType : "Html",
 			url : "sumwebydata_findPageBean2",
-			data : "factNo=" + fact.value + "&begin_yymm=" + begin_yymm.value+"&end_yymm="+end_yymm.value,
+			//data : "factNo=" + fact.value + "&begin_yymm=" + begin_yymm.value+"&end_yymm="+end_yymm.value,
+			data:jq("#"+public_form).serialize(),
 			success : function(msg) {
 				jq("#bodyid").html(msg);
 			},
@@ -155,12 +156,18 @@ function showDiv_update(factNo,factCode,yymm){
           this.showDiv();
        }
     }
-    function print(){
+   /* function print(){
        var factNo=document.getElementById("factNo").value;
        var begin_yymm=document.getElementById("begin_yymm").value;
        var end_yymm=document.getElementById("end_yymm").value;
        location.href="sumwebydata_print?factNo="+factNo+"&begin_yymm="+begin_yymm+"&end_yymm="+end_yymm;
-    } 
+    } */
+    function print(public_form){
+    	var public_form=jq("#"+public_form);
+    	public_form.attr("action","sumwebydata_print");
+    	public_form.attr("target","_blank");
+    	public_form.submit();
+    }
 </script>
 
 <body>

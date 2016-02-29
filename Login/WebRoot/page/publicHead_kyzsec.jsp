@@ -207,11 +207,11 @@ window.onload = function(e) {
 	<table  border=0 >
 		<tr>
 			<td>廠別</td>
-			<td><s:if test="#attr.factNo=='tw'">
+			<td><s:if test="#session.factNo=='tw'">
 			  <div id="uboxstyle">
 					<select name="factNo" id="factNo">
 						<option value="nothing">請選擇</option>
-						<s:iterator value="#attr.facts" id="temp">
+						<s:iterator value="#session.facts" id="temp">
 							<option value="${temp[0] }">${temp[1]}(${temp[0]})</option>								
 						</s:iterator>
 					</select>
@@ -219,8 +219,8 @@ window.onload = function(e) {
 				</s:if> <s:else>
 				 <div id="uboxstyle">
 					<select name="factNo" id="factNo">
-						<option value="<s:property value="#attr.factNo"/>">
-							<s:property value="#attr.factName" />(<s:property value="#attr.factNo"/>)
+						<option value="<s:property value="#session.factNo"/>">
+							<s:property value="#session.factName" />(<s:property value="#session.factNo"/>)
 						</option>
 					</select>
 				  </div>	
@@ -228,7 +228,7 @@ window.onload = function(e) {
 			<td>組別代號</td>
 			<td><input type="text" name="secNo" value="" id="secNo"/></td> 
 			<td><!-- <input type="image" onclick="javascript:submis();"  src="images/search002.gif"/> -->
-			<input value="搜索" type="submit" id="addbtn" onclick="javascript:submis()" />
+			<input value="搜索" type="button" id="addbtn" onclick="javascript:submis()" />
 			</td>			
 		</tr>
 	</table>

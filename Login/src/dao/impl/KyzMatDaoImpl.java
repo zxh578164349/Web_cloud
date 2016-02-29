@@ -20,8 +20,10 @@ public class KyzMatDaoImpl extends Basedao implements IKyzMatDao{
 			String endDate,String matCname,String bNo,String mNo,String sNo,String factNo,String matNo) {
 		// TODO Auto-generated method stub
 		StringBuffer hql=new StringBuffer();
+		StringBuffer hql2=new StringBuffer();
 		Map<String,Object>map=new HashMap<String,Object>();
 		hql.append("from KyzMat where 1=1");
+		hql2.append("select count(matNo) ");
 		/*if((fromDate==null||fromDate.equals(""))&&(endDate==null||endDate.equals(""))
 				&&(matCname==null||matCname.equals(""))&&(bNo==null||bNo.equals(""))
 				&&(mNo==null||mNo.equals(""))&&(sNo==null||sNo.equals(""))&&(factNo==null||factNo.equals(""))
@@ -97,7 +99,8 @@ public class KyzMatDaoImpl extends Basedao implements IKyzMatDao{
 		if(matNo!=null&&!matNo.equals("")){
 			hql.append(" and matNo like:matno");
 			map.put("matno", "%"+matNo+"%");
-		}				
+		}
+		hql2.append(hql);
 		hql.append(" order by typeBno,typeMno,typeSno");
 		int allrow=0;
 		Integer rows=(Integer)ActionContext.getContext().getSession().get("allrow");
@@ -114,6 +117,9 @@ public class KyzMatDaoImpl extends Basedao implements IKyzMatDao{
 		}
 		int offset=PageBean.countOffset(pageSize, currentPage);
 		List<KyzMat>list=super.queryForPage(hql.toString(), offset, pageSize, map);
+		for(KyzMat mat:list){
+			mat.getSubKyzmats().size();
+		}
 		PageBean bean=new PageBean();
 		bean.setAllRow(allrow);
 		bean.setCurrentPage(currentPage);

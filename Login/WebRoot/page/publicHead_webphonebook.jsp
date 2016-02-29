@@ -88,7 +88,7 @@ window.onload=function(){
 			<td><s:if test="#session.factNo=='tw'">			    
 					<select name="factNo" id="factNo" onchange="getDepartments(this.value);getPosts(this.value)">													
 						<option value="tw">TW</option>					
-						<s:iterator value="#attr.facts" id="temp">
+						<s:iterator value="#session.facts" id="temp">
 							<option value="${temp[0]}">${temp[1]}(${temp[0]})</option>								
 						</s:iterator>
 					</select>
@@ -96,7 +96,7 @@ window.onload=function(){
 				<s:else>
 					<select name="factNo" id="factNo">						
 						<option value="<s:property value="#session.factNo"/>">
-							<s:property value="#attr.factName" />(<s:property value="#attr.factNo"/>)
+							<s:property value="#session.factName" />(<s:property value="#session.factNo"/>)
 						</option>
 					</select>
 				</s:else>

@@ -488,8 +488,9 @@ public class WebYdataAction extends ActionSupport implements
 		//ActionContext.getContext().getApplication().clear();
 		ActionContext.getContext().getSession().remove("public_factno");
 		ActionContext.getContext().getSession().remove("public_yymm");
+		ActionContext.getContext().getSession().remove("public_yymm2");
 		factNo = (String) ActionContext.getContext().getSession().get("factNo");
-		bean = dataSer.findPageBean(25, page, factNo, yymm);
+		bean = dataSer.findPageBean(25, page, factNo, sdate,edate);
 
 		return "beanList";
 
@@ -499,15 +500,19 @@ public class WebYdataAction extends ActionSupport implements
 		//ActionContext.getContext().getApplication().clear();
 		ActionContext.getContext().getSession().remove("public_factno");
 		ActionContext.getContext().getSession().remove("public_yymm");
+		ActionContext.getContext().getSession().remove("public_yymm2");
 		if (factNo != null && !factNo.equals("") && !factNo.equals("tw")) {
 			ActionContext.getContext().getSession().put("public_factno", factNo);
 					
 		}
-		if (yymm != null && !yymm.equals("")) {
-			ActionContext.getContext().getSession().put("public_yymm", yymm);
+		if (sdate != null && !sdate.equals("")) {
+			ActionContext.getContext().getSession().put("public_yymm", sdate);
+		}
+		if (edate != null && !edate.equals("")) {
+			ActionContext.getContext().getSession().put("public_yymm", edate);
 		}
 
-		bean = dataSer.findPageBean(25, page, factNo, yymm);
+		bean = dataSer.findPageBean(25, page, factNo, sdate,edate);
 
 		return "beanList1";
 	}
@@ -518,11 +523,12 @@ public class WebYdataAction extends ActionSupport implements
 			result="beanList";
 		}
 		factNo = (String) ActionContext.getContext().getSession().get("public_factno");				
-		yymm = (String) ActionContext.getContext().getSession().get("public_yymm");				
+		sdate = (String) ActionContext.getContext().getSession().get("public_yymm");
+		edate = (String) ActionContext.getContext().getSession().get("public_yymm2");
 		if (factNo == null || factNo.equals("") || factNo.equals("tw")) {
 			factNo = (String) ActionContext.getContext().getSession().get("factNo");					
 		}
-		bean = dataSer.findPageBean(25, page, factNo, yymm);
+		bean = dataSer.findPageBean(25, page, factNo, sdate,edate);
 
 		return result;
 
@@ -626,7 +632,7 @@ public class WebYdataAction extends ActionSupport implements
 			ActionContext.getContext().getApplication()
 					.put("print_ydata_yymm", yymm);
 		}
-		bean = dataSer.findPageBean(25, page, factNo, yymm);
+		bean = dataSer.findPageBean(25, page, factNo, sdate,edate);
 		/*
 		 * ActionContext.getContext().getSession() .put("zwcashList",
 		 * dataSer.getAllWithNoPage(factNo, yymm));
@@ -643,7 +649,7 @@ public class WebYdataAction extends ActionSupport implements
 			factNo = (String) ActionContext.getContext().getSession()
 					.get("factNo");
 		}
-		bean = dataSer.findPageBean(25, page, factNo, yymm);
+		bean = dataSer.findPageBean(25, page, factNo, sdate,edate);
 		return "list";
 	}
 

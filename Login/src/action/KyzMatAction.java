@@ -32,7 +32,7 @@ import entity.SubKyzmatId;
 import entity.WebUser;
 
 /**
- * ���Ƹ�ƺ޲z
+ * 物料資料管理
  * @author ky2-qhtj
  *
  */
@@ -206,7 +206,7 @@ public class KyzMatAction extends ActionSupport implements ServletResponseAware{
 	}
 	
 	/**
-	 * KyzMat���L�@�Τ�k
+	 * KyzMat打印共用方法
 	 * @param list_mat
 	 * @throws IOException
 	 */
@@ -244,46 +244,46 @@ public class KyzMatAction extends ActionSupport implements ServletResponseAware{
 		cs_column.setFillForegroundColor(IndexedColors.YELLOW.getIndex());
 		cs_column.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
 		
-		String title="���Ƹ�Ƴ��";
+		String title="物料資料報表";
 		List<String>list_column=new ArrayList<String>();
-		/*list_column.add("�Ǹ�");
-		list_column.add("���ƽs��");
-		list_column.add("���Ƥ���W��");
-		list_column.add("�������");
-		list_column.add("���ƳW��");
-		list_column.add("�����C��");
-		list_column.add("�|�p���");
-		list_column.add("���ʬF��");
-		list_column.add("���ʳ��");
-		list_column.add("������");
-		list_column.add("���O");
-		list_column.add("�ӫ~�W��");
-		list_column.add("�ӫ~�歫");
-		list_column.add("�j����");
-		list_column.add("������");
-		list_column.add("�p����");
-		list_column.add("�ЫؤH");
-		list_column.add("�Ыؤ��");*/
+		/*list_column.add("序號");
+		list_column.add("物料編號");
+		list_column.add("物料中文名稱");
+		list_column.add("資材分類");
+		list_column.add("物料規格");
+		list_column.add("物料顏色");
+		list_column.add("會計科目");
+		list_column.add("采購政策");
+		list_column.add("采購單價");
+		list_column.add("中文單位");
+		list_column.add("幣別");
+		list_column.add("商品名稱");
+		list_column.add("商品單重");
+		list_column.add("大分類");
+		list_column.add("中分類");
+		list_column.add("小分類");
+		list_column.add("創建人");
+		list_column.add("創建日期");*/
 		
-		list_column.add("�Ǹ�");
-		list_column.add("���ƽs��");
-		list_column.add("���Ƥ���W��");
-		list_column.add("���ƭ^��W��");
-		list_column.add("�|�p���");
-		list_column.add("������");
-		list_column.add("�^����");
-		list_column.add("�ӫ~�N��");
-		list_column.add("�ӫ~�W��");
-		list_column.add("��γ��");
-		list_column.add("��δ���v");
-		list_column.add("���q���");
-		list_column.add("���q�O");
+		list_column.add("序號");
+		list_column.add("物料編號");
+		list_column.add("物料中文名稱");
+		list_column.add("物料英文名稱");
+		list_column.add("會計科目");
+		list_column.add("中文單位");
+		list_column.add("英文單位");
+		list_column.add("商品代號");
+		list_column.add("商品名稱");
+		list_column.add("領用單位");
+		list_column.add("領用換算率");
+		list_column.add("重量單位");
+		list_column.add("公司別");
 			
 				
 		/**
-		 * �}�l���L
+		 * 開始打印
 		 */
-		//���L���D
+		//打印標題
 		HSSFRow row_title=sheet.createRow(0);
 		HSSFCell cell_title=row_title.createCell(0);
 		cell_title.setCellValue(title);
@@ -294,7 +294,7 @@ public class KyzMatAction extends ActionSupport implements ServletResponseAware{
 			HSSFCell cell=row_title.createCell(i);
 			cell.setCellStyle(cs_title);
 		}
-		//���L���Y
+		//打印表頭
 		HSSFRow row_column=sheet.createRow(2);
 		for(int i=0;i<list_column.size();i++){
 			sheet.setColumnWidth(i, 4000);
@@ -306,7 +306,7 @@ public class KyzMatAction extends ActionSupport implements ServletResponseAware{
 			cell.setCellValue(column);
 			cell.setCellStyle(cs_column);
 		}
-		//���L�ƾ�
+		//打印數據
 		for(int i=0;i<list_mat.size();i++){//start for1
 			KyzMat mat=list_mat.get(i);
 			int index=i+1;
@@ -384,7 +384,7 @@ public class KyzMatAction extends ActionSupport implements ServletResponseAware{
 		os.close();
 	}
 	/**
-	 * ���L�j�������e(KyzMat)
+	 * 打印搜索的內容(KyzMat)
 	 * @throws IOException
 	 */
 	public void print() throws IOException{
@@ -392,7 +392,7 @@ public class KyzMatAction extends ActionSupport implements ServletResponseAware{
 		this.print_all(list_mat);
 	}
 	/**
-	 * ���L���KyzMat
+	 * 打印單個KyzMat
 	 * @throws IOException
 	 */
 	public void print_one() throws IOException{
@@ -403,7 +403,7 @@ public class KyzMatAction extends ActionSupport implements ServletResponseAware{
 		
 	}
 	/**
-	 * ���L�h�ӿ襤��KyzMat
+	 * 打印多個選中的KyzMat
 	 * @throws IOException
 	 */
 	public void print_select() throws IOException{
@@ -419,12 +419,12 @@ public class KyzMatAction extends ActionSupport implements ServletResponseAware{
 	}
 	
 	/**
-	 * SubKyzmat���L�@�Τ�k
+	 * SubKyzmat打印共用方法
 	 * @throws IOException
 	 */
 	public void print_all_sub(List<SubKyzmat>list_mat) throws IOException{
 		HSSFWorkbook wb=new HSSFWorkbook();
-		HSSFSheet sheet=wb.createSheet("���Ƹ��");
+		HSSFSheet sheet=wb.createSheet("物料資料");
 		
 		HSSFCellStyle cs=wb.createCellStyle();
 		cs.setAlignment(HSSFCellStyle.ALIGN_CENTER);
@@ -456,26 +456,26 @@ public class KyzMatAction extends ActionSupport implements ServletResponseAware{
 		cs_column.setFillForegroundColor(IndexedColors.YELLOW.getIndex());
 		cs_column.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
 		
-		String title="���Ƹ�Ƴ��2";
+		String title="物料資料報表2";
 		List<String>list_column=new ArrayList<String>();				
-		list_column.add("�Ǹ�");
-		list_column.add("���ƽs��");
-		list_column.add("���Ƥ���W��");
-		list_column.add("���ƭ^��W��");
-		list_column.add("�|�p���");
-		list_column.add("������");
-		list_column.add("�^����");
-		list_column.add("�ӫ~�N��");
-		list_column.add("�ӫ~�W��");
-		list_column.add("��γ��");
-		list_column.add("��δ���v");
-		list_column.add("���q���");
-		list_column.add("���q�O");					
+		list_column.add("序號");
+		list_column.add("物料編號");
+		list_column.add("物料中文名稱");
+		list_column.add("物料英文名稱");
+		list_column.add("會計科目");
+		list_column.add("中文單位");
+		list_column.add("英文單位");
+		list_column.add("商品代號");
+		list_column.add("商品名稱");
+		list_column.add("領用單位");
+		list_column.add("領用換算率");
+		list_column.add("重量單位");
+		list_column.add("公司別");					
 						
 		/**
-		 * �}�l���L
+		 * 開始打印
 		 */
-		//���L���D
+		//打印標題
 		HSSFRow row_title=sheet.createRow(0);
 		HSSFCell cell_title=row_title.createCell(0);
 		cell_title.setCellValue(title);
@@ -486,7 +486,7 @@ public class KyzMatAction extends ActionSupport implements ServletResponseAware{
 			HSSFCell cell=row_title.createCell(i);
 			cell.setCellStyle(cs_title);
 		}
-		//���L���Y
+		//打印表頭
 		HSSFRow row_column=sheet.createRow(2);
 		for(int i=0;i<list_column.size();i++){
 			sheet.setColumnWidth(i, 4000);
@@ -498,7 +498,7 @@ public class KyzMatAction extends ActionSupport implements ServletResponseAware{
 			cell.setCellValue(column);
 			cell.setCellStyle(cs_column);
 		}
-		//���L�ƾ�
+		//打印數據
 		for(int i=0;i<list_mat.size();i++){//start for1
 			SubKyzmat mat=list_mat.get(i);
 			int index=i+1;
@@ -579,7 +579,7 @@ public class KyzMatAction extends ActionSupport implements ServletResponseAware{
 		os.close();
 	}
 	/**
-	 * ���L�j����SubKyzmat
+	 * 打印搜索的SubKyzmat
 	 * @throws IOException
 	 */
 	public void print_sub() throws IOException{
@@ -587,16 +587,16 @@ public class KyzMatAction extends ActionSupport implements ServletResponseAware{
 		this.print_all_sub(list_mat);
 	}
 	/**
-	 * ���L���SubKyzmat
-	 * �ޥ�print_one(),�]�����O�P�@��matNo�����Ƹ��
+	 * 打印單個SubKyzmat
+	 * 引用print_one(),因為都是同一個matNo的物料資料
 	 * @throws IOException 
 	 */
 	public void print_one_sub() throws IOException{
 		this.print_one();
 	}
 	/**
-	 * ���L�襤��SubKyzmat
-	 * �ޥ�print_select(),�]�����O�ۦP���h��matNo�����Ƹ��
+	 * 打印選中的SubKyzmat
+	 * 引用print_select(),因為都是相同的多個matNo的物料資料
 	 * @throws IOException 
 	 */
 	public void print_select_sub() throws IOException{
@@ -606,8 +606,8 @@ public class KyzMatAction extends ActionSupport implements ServletResponseAware{
 
 	
 	/**
-	 * �p�G��null,�h��["----"
-	 * �P�_String
+	 * 如果為null,則返加"----"
+	 * 判斷String
 	 */
 	public String getNull_str(String str){
 		String result_str="";
@@ -619,8 +619,8 @@ public class KyzMatAction extends ActionSupport implements ServletResponseAware{
 		return result_str;		
 	}
 	/**
-	 * �p�G��null,�h��^0
-	 * �P�_Double
+	 * 如果為null,則返回0
+	 * 判斷Double
 	 */
 	public Double getNull_db(Double db){
 		Double result_db=0.0;
