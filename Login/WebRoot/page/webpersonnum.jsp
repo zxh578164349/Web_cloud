@@ -56,7 +56,7 @@
 			}
 		});
 	}
-	function submis() {
+	function submis(public_form) {
 		var fact = document.getElementById("factNo");
 		var beginday=document.getElementById("beginday");
 		var endday=document.getElementById("endday");
@@ -64,7 +64,8 @@
 			type : "POST",
 			dataType : "Html",
 			url : "webpersonnum_findPageBean2",
-			data : "factNo=" + fact.value + "&beginDay=" + beginday.value+"&endDay="+endday.value,
+			//data : "factNo=" + fact.value + "&beginDay=" + beginday.value+"&endDay="+endday.value,
+			data:jq("#"+public_form).serialize(),
 			success : function(msg) {
 				jq("#bodyid").html(msg);
 			},
@@ -119,6 +120,13 @@ function showDiv(){
     }
             
 });
+    }
+    
+    function print(public_form){
+    	var public_form=jq("#"+public_form);
+    	public_form.attr("action","webpersonnum_print_search");
+    	public_form.attr("target","_blank");
+    	public_form.submit();
     }
 </script>
 

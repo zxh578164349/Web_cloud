@@ -185,7 +185,9 @@ window.onload=function(){
 					<td class="td_input"><font color="blue"><input
 							type="text" id="billNo" style="color:blue"
 							value="<s:property value='person.id.factCode'/>"
-							name="person.id.factCode" readonly /> </font></td>
+							name="person.id.factCode" readonly /> </font>
+							<input type="hidden" value="${loginUser.username}" name="person.usernameUd"/> <!--  修改者-->
+							</td>
 				</tr>
 				<tr>
 					<td class="td_show_title">日期</td>

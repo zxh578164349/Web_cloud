@@ -380,7 +380,8 @@ public class WebYdataAction extends ActionSupport implements
 							if(sumYdata!=null){
 								//sumydateSer.delete(sumYdata);
 								String sumydata_username=sumYdata.getUsername()==null?"none":sumYdata.getUsername();
-								this.add_sumYdata(ydata.getId().getFactNo(), list_yymm.get(i), sumYdata.getStartDate(), sumYdata.getEndDate(),sumydata_username);
+								String sumydata_usernameUd=sumYdata.getUsernameUd()==null?"none":sumYdata.getUsernameUd();
+								this.add_sumYdata(ydata.getId().getFactNo(), list_yymm.get(i), sumYdata.getStartDate(), sumYdata.getEndDate(),sumydata_username,sumydata_usernameUd);
 							}							
 						}
 					}							
@@ -606,7 +607,8 @@ public class WebYdataAction extends ActionSupport implements
 					SumWebYieldData sumYdata=list_sumYdata.get(k);
 					//sumydateSer.delete(sumYdata);
 					String sumydata_username=sumYdata.getUsername()==null?"none":sumYdata.getUsername();
-					this.add_sumYdata(id.getFactNo(), list_yymm.get(i), sumYdata.getStartDate(), sumYdata.getEndDate(),sumydata_username);
+					String sumydata_username_ud=sumYdata.getUsernameUd()==null?"none":sumYdata.getUsernameUd();
+					this.add_sumYdata(id.getFactNo(), list_yymm.get(i), sumYdata.getStartDate(), sumYdata.getEndDate(),sumydata_username,sumydata_username_ud);
 				}
 			}							
 		}		
@@ -760,7 +762,7 @@ public class WebYdataAction extends ActionSupport implements
 	 * @param startDate
 	 * @param endDate
 	 */
-	public void add_sumYdata(String factNo,String yymm,String startDate,String endDate,String username){
+	public void add_sumYdata(String factNo,String yymm,String startDate,String endDate,String username,String usernameUd){
 		List list=webFactSer.findFactCodeByFactNo(factNo);
 		for(int i=0;i<list.size();i++){
 			String factcode=(String)list.get(i);
@@ -803,6 +805,7 @@ public class WebYdataAction extends ActionSupport implements
 			ydate.setStartDate(startDate);
 			ydate.setEndDate(endDate);
 			ydate.setUsername(username);
+			ydate.setUsernameUd(usernameUd);
 			sumydateSer.add(ydate);
 			
 			//內存回收20160219

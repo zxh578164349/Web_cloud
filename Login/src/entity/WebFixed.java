@@ -61,9 +61,11 @@ public class WebFixed implements java.io.Serializable {
 	private String delMk;
 	private String lostMk;
 	private Double priceIn;
-	private String currency;//¹ôºØ
-	private String keeper;//¦s©ñ¦ì¸m/«OºÞ¤H
-	private String checkdate;//Åç¦¬¤é´Á
+	private String currency;//ï¿½ï¿½ï¿½ï¿½
+	private String keeper;//ï¿½sï¿½ï¿½ï¿½m/ï¿½Oï¿½Þ¤H
+	private String checkdate;//ï¿½ç¦¬ï¿½ï¿½ï¿½
+	private String username;
+	private String usernameUd;
 
 	// Constructors
 
@@ -602,6 +604,23 @@ public class WebFixed implements java.io.Serializable {
 	public void setCheckdate(String checkdate) {
 		this.checkdate = checkdate;
 	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getUsernameUd() {
+		return usernameUd;
+	}
+
+	public void setUsernameUd(String usernameUd) {
+		this.usernameUd = usernameUd;
+	}
+	
 	
 
 }

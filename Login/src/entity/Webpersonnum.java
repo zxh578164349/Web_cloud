@@ -16,6 +16,7 @@ public class Webpersonnum implements java.io.Serializable {
 	private Double outstandardnum;
 	private Double outrealnum;
 	private String username;
+	private String usernameUd;
 
 	// Constructors
 
@@ -107,5 +108,14 @@ public class Webpersonnum implements java.io.Serializable {
 	public void setUsername(String username) {
 		this.username = username;
 	}
+
+	public String getUsernameUd() {
+		return usernameUd;
+	}
+
+	public void setUsernameUd(String usernameUd) {
+		this.usernameUd = usernameUd;
+	}
+	
 
 }

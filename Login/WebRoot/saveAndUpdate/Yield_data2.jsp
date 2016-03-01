@@ -313,7 +313,9 @@ jq(document).ajaxStop(function(){
 					<td class="td_input"><font color="blue"><input
 							type="text" id="billNo" style="color:blue"
 							value="<s:property value='ydata.id.factCode'/>"
-							name="ydata.id.factCode" readonly /> </font></td>
+							name="ydata.id.factCode" readonly /> </font>
+							<input type="hidden" value="${loginUser.username}" name="ydata.usernameUd"/> <!--  修改者-->
+							</td>
 				</tr>
 				<tr>
 

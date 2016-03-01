@@ -47,5 +47,8 @@
         <property name="repiarMoney" type="java.lang.Double">
             <column name="REPIARMONEY" precision="12" scale="3"/>
         </property>
+        <property name="usernameUd" type="java.lang.String">
+            <column name="USERNAME_UD" length="50"  />
+        </property>
     </class>
 </hibernate-mapping>

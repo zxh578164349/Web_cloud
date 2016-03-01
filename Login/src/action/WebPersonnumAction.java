@@ -19,6 +19,7 @@ import org.apache.struts2.interceptor.ServletResponseAware;
 import services.IWebCostServices;
 import services.IWebFactServices;
 import services.IWebPersonnumServices;
+import util.GlobalMethod;
 import util.JasperHelper;
 import util.PageBean;
 
@@ -442,8 +443,9 @@ public class WebPersonnumAction extends ActionSupport implements
 		return "transit";
 	}
 	
-	public void print_search(){
-		
+	public void print_search() throws IOException{
+		List<Webpersonnum>list=personNumSer.print_search(factNo, beginDay, endDay);
+		GlobalMethod.print(list, factNo, beginDay, endDay, "webpersonnum_one.jasper",response);
 	}
 
 }

@@ -14,6 +14,7 @@ public class Webcashout implements java.io.Serializable {
 	private Double realcashoutpairs;
 	private Double realcashoutmoney;
 	private String username;
+	private String usernameUd;
 
 	// Constructors
 
@@ -85,6 +86,14 @@ public class Webcashout implements java.io.Serializable {
 
 	public void setUsername(String username) {
 		this.username = username;
+	}
+
+	public String getUsernameUd() {
+		return usernameUd;
+	}
+
+	public void setUsernameUd(String usernameUd) {
+		this.usernameUd = usernameUd;
 	}
 	
 

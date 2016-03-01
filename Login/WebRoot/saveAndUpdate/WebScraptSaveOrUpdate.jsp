@@ -175,6 +175,7 @@ window.onload=function(){
 						<td class="td_input"><input type="text" style="color:blue"
 							id="yymm" value="<s:date name='scrapt.id.yymm' format='yyyyMM'/>"
 							name="yymm" readonly />
+							<input type="hidden" value="${loginUser.username}" name="scrapt.usernameUd"/> <!--  修改者-->
 						</td>
 					</tr>
 					<tr>
@@ -183,14 +184,15 @@ window.onload=function(){
 							datatype="*">
 								<option value="">請選擇廠別狀態</option>
 								<s:iterator value="#session.factAreas_other" id="temp">
-									<s:if test="#attr.temp==scrapt.id.factCode">
+									<s:if test="#session.temp==scrapt.id.factCode">
 										<option value="${temp}" selected>${temp}</option>
 									</s:if>
 									<s:else>
 										<option value="${temp}">${temp}</option>
 									</s:else>
 								</s:iterator>
-						</select></td>
+						</select>						
+						</td>
 						<td class="td_show_title">邊料重量(KG)</td>
 						<td class="td_input"><input type="text"
 							name="scrapt.sideweit"

@@ -24,24 +24,39 @@
 <link rel="stylesheet" type="text/css" href="css/button_css.css" />
 <script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script>
 <script type="text/javascript" src="jquery/Validform_v5.3.2_min.js"></script>
-<script type="text/javascript" src="jquery/DatePicker/my2_WdatePicker.js"></script>
+<script type="text/javascript" src="jquery/DatePicker/WdatePicker.js"></script>
 <script type="text/javascript" src="page/jquerys/layer/layer.min.js"></script> 
 </head>
 <script type="text/javascript">
-	var j = jQuery.noConflict();
+	var jq = jQuery.noConflict();
+	var loadi;
+	jq(document).ajaxStart(function(){
+		loadi=layer.load("正在提交,請稍等...");
+	});
+	jq(document).ajaxStop(function(){
+		layer.close(loadi);
+	});
 	function golook(){  
-		 j("#form").Validform({
-		 btnSubmit : "#btnlook",
-			tiptype : 3,
+		 jq("#form").Validform({
+		    btnSubmit : "#btnlook",
+			tiptype : 4,
 			showAllError : true,
 			ignoreHidden : true,
-			tipSweep : true
-			//ajaxPost:false
-			/* callback : function(form) {
-				document.getElementById("mydiv").style.display = "block";				
-				form[0].submit();
-			} */			
-		});		
+			tipSweep : true,			
+			ajaxPost:true,
+			callback : function(date) {
+				if(date=="0"){
+					layer.msg("提交成功",3,1);
+					window.setTimeout(function(){
+						var index = parent.layer.getFrameIndex(window.name);//關閉當前窗口
+						parent.layer.close(index);
+					},3000);					
+				}else{
+					layer.msg("提交失敗",3,3);
+				}
+			}			
+		});	
+		 
 	}
  		 
 	/* function getFactArea(mid) {
@@ -86,16 +101,18 @@
 		          <td class="td_show_title">始末日期</td>
 		          <td class="td_input">
 		                                 開始:<input type="text" name="startDate" id="sDate" onclick="WdatePicker({maxDate:'#F{$dp.$D(\'eDate\',{M:-1})||\'%y-%M-%d\'}',dateFmt:'yyyyMMdd'})"  class="Wdate" datatype="*"/><br>
-		                                 結束:<input type="text" name="endDate" id="eDate" onclick="WdatePicker({maxDate:'%y-{%M+1}-%d',minDate:'#F{$dp.$D(\'sDate\',{d:20})}',dateFmt:'yyyyMMdd'})" class="Wdate" datatype="*"/>
-		              <input type="hidden" name="username" value="${loginUser.username}"/><!-- 輸入者  -->                  
+		                                 結束:<input type="text" name="endDate" id="eDate" onclick="WdatePicker({maxDate:'%y-{%M+1}-%d',minDate:'#F{$dp.$D(\'sDate\',{d:20})}',dateFmt:'yyyyMMdd'})" class="Wdate" datatype="*"/>		                              
 		             </td>
 		          <td class="td_show_title">年月</td>
 		          <td class="td_input">
 		             <s:if test="sumydata==null">
 		             <input type="text" name="yymm" onclick="WdatePicker({minDate:'%y-{%M-6}',maxDate:'%y-%M',dateFmt:'yyyyMM'})" onchange="checkTheSame()" class="Wdate" datatype="*" id="yymm"/>
+		             <input type="hidden" name="username" value="${loginUser.username}"/><!-- 輸入者  --> 
 		             </s:if>
 		             <s:else>
 		               <input type="text" name="yymm" value="<s:property value='sumydata.id.yymm'/>" style="color:blue" readonly/>
+		               <input type="hidden" name="username" value="<s:property value='sumydata.username'/>"/><!-- 保留原有的輸入者 -->
+		               <input type="hidden" name="usernameUd" value="${loginUser.username}"/><!-- 修改者  --> 
 		             </s:else>
 		          </td>	   		          
 		        </tr>
@@ -132,11 +149,7 @@
 		      </center>
 		   </form>
 
-	<div id="mydiv">
-		<p>
-			<img alt="" src="images/loading004.gif"><br> Loading....
-		</p>
-	</div>
+	
 
 </body>
 

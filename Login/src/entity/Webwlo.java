@@ -19,6 +19,7 @@ public class Webwlo implements java.io.Serializable {
 	private Double oilusd;
 	private String username;
 	private Double repiarMoney;
+	private String usernameUd;
 
 	// Constructors
 
@@ -136,6 +137,14 @@ public class Webwlo implements java.io.Serializable {
 
 	public void setRepiarMoney(Double repiarMoney) {
 		this.repiarMoney = repiarMoney;
+	}
+
+	public String getUsernameUd() {
+		return usernameUd;
+	}
+
+	public void setUsernameUd(String usernameUd) {
+		this.usernameUd = usernameUd;
 	}
 	
 

@@ -172,6 +172,7 @@ function back(){
 						<td class="td_input"><input type="text" style="color:blue"
 							id="yymm" value="<s:date name='wlo.id.yymm' format='yyyyMM'/>"
 							name="yymm" readonly />
+							<input type="hidden" value="${loginUser.username}" name="wlo.usernameUd"/> <!--  修改者-->
 						</td>
 					</tr>
 					<tr>
@@ -180,7 +181,7 @@ function back(){
 							datatype="*">
 								<option value="">請選擇廠別狀態</option>
 								<s:iterator value="#session.factAreas_other" id="temp">
-									<s:if test="#attr.temp==wlo.id.factCode">
+									<s:if test="#session.temp==wlo.id.factCode">
 										<option value="${temp}" selected>${temp}</option>
 									</s:if>
 									<s:else>

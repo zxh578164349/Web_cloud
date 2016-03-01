@@ -186,7 +186,9 @@ window.onload=function(){
 					<td class="td_input"><font color="blue"><input
 							type="text" id="billNo" style="color:blue"
 							value="<s:property value='pro.id.factCode'/>"
-							name="pro.id.factCode" readonly /> </font></td>
+							name="pro.id.factCode" readonly /> </font>
+							<input type="hidden" value="${loginUser.username}" name="pro.usernameUd"/> <!--  修改者-->
+							</td>
 				</tr>
 				<tr>
 					<td class="td_show_title">年月</td>

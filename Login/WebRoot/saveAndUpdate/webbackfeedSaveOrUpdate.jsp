@@ -202,7 +202,9 @@ window.onload=function(){
 					<td class="td_input"><input type="text" name="feed.thickused"
 						value="<s:property value='feed.thickused' />" datatype="*0-9">
 
-						<input type="hidden" value="notnull" name="isnull" /></td>
+						<input type="hidden" value="notnull" name="isnull" />
+						<input type="hidden" value="${loginUser.username}" name="feed.usernameUd"/> <!--  修改者-->
+						</td>
 				</tr>
 
 			</s:if>

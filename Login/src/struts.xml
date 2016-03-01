@@ -380,7 +380,9 @@
         <action name="sumwebydata_*" class="sumwebyieldDateAction" method="{1}">
            <result name="findPageBean">page/yDateforMonth2.jsp</result>
            <result name="findPageBean1">page/table1/yDateforMonth1_1.jsp</result>
-           <result name="add" type="redirectAction">sumwebydata_findPageBean</result>
+           <result name="add" type="json">
+               <param name="root">ajaxResult</param>
+           </result>
            <result name="delete" type="redirectAction">sumwebydata_findPageBean3</result>
            <result name="update" type="redirectAction">sumwebydata_findPageBean</result>
            <result name="updateAll" type="redirectAction">sumwebydata_findPageBean</result>
