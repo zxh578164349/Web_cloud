@@ -11,11 +11,9 @@
 <meta http-equiv="expires" content="0">
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
-<!--
-	<link rel="stylesheet" type="text/css" href="styles.css">
-	-->
-<link rel="stylesheet" type="text/css" href="css/select_beautiful.css">	
-<LINK href="css/list.css" type="text/css" rel="stylesheet">
+
+<!-- <link rel="stylesheet" type="text/css" href="css/select_beautiful.css">	
+<LINK href="css/list.css" type="text/css" rel="stylesheet"> -->
 <script type="text/javascript" src="jquery/DatePicker/WdatePicker.js"></script>
 <script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script>
 
@@ -38,38 +36,43 @@ jq(document).keyup(function(event){
 
 </head>
 <body>
-  <div style="width:680px">
-  <form id="public_form" method="post">
-	<table  border="0px">
-		<tr>
-			<td>廠別</td>
-			<td><s:if test="#session.factNo=='tw'">
-					<select name="factNo" id="factNo">
-						<option value="nothing">請選擇</option>						
+  
+  <form id="public_form" method="post" role="form" class="form-inline">
+	
+		
+			<!-- <td><label class="control-label">廠別</label></td> -->
+			
+			<div class="form-group">
+			<s:if test="#session.factNo=='tw'">
+					<select name="factNo" id="factNo" class="form-control">
+						<option value="nothing">請選擇廠別</option>						
 						<s:iterator value="#session.facts" id="temp">
 							<option value="${temp[0]}">${temp[1]}(${temp[0]})</option>								
 						</s:iterator>
 					</select>
+					</div>
 				</s:if> 
 				<s:else>
+				<div class="form-group">
 					<select name="factNo" id="factNo">						
 						<option value="<s:property value="#session.factNo"/>">
 							<s:property value="#session.factName" />(<s:property value="#session.factNo"/>)
 						</option>
 					</select>
-				</s:else></td>
-			<td>年月</td>
-			<td>
-			  開始日期:<input type="text" id="year" name="yymm" onClick="WdatePicker({dataFmt:'yyyyMM'})" readonly="readonly" class="Wdate"/></br>
-			  結束日期:<input type="text" id="year" name="yymm2" onClick="WdatePicker({dataFmt:'yyyyMM'})" readonly="readonly" class="Wdate"/>			
-			</td>
-			<td>
-			   <input value="搜索" type="button" id="addbtn" onclick="javascript:submis('public_form')" />
-			   <input value="導出Excel" type="button" id="search_forday" onclick="print('public_form')"/>	
-		    </td>
-		</tr>
-	</table>
+					</div>
+				</s:else>
+			
+			<div class="form-group">
+			  <!-- 開始日期: --><input type="text" id="year" name="yymm" onClick="WdatePicker({dataFmt:'yyyyMM'})" readonly="readonly" class="Wdate form-control"/>至
+			  <!-- 結束日期: --><input type="text" id="year" name="yymm2" onClick="WdatePicker({dataFmt:'yyyyMM'})" readonly="readonly" class="Wdate form-control"/>			
+			</div>
+			<div class="form-group">
+			   <input value="搜索" type="button" class="btn btn-default" onclick="javascript:submis('public_form')" />
+			   <input value="導出Excel" type="button" class="btn btn-default" onclick="print('public_form')"/>	
+			   <button class="btn btn-default" type="button">button</button>
+		    </div>
+		
 	</form>
-	</div>
+
 </body>
 </html>
