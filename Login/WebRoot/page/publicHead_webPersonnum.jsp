@@ -39,6 +39,7 @@ jq(document).keyup(function(event){
 </head>
 <body>
   <div style="width:680px">
+   <form id="public_form" method="post">
 	<table  border="0px">
 		<tr>
 			<td>廠別</td>
@@ -68,10 +69,12 @@ jq(document).keyup(function(event){
 			結束<input type="text" id="endday" name="endDay" onClick="WdatePicker()" readonly="readonly" class="Wdate"/>
 			</td>
 			<td>
-			 <input value="搜索" type="button" id="addbtn" onclick="javascript:submis()" />		
+			 <input value="搜索" type="button" id="addbtn" onclick="submis('public_form')" />
+			 <input value="導出Excel" type="button" id="search_forday" onclick="print('public_form')"/>		
 			</td>
 		</tr>
 	</table>
+	</form>
 	</div>
 </body>
 </html>

@@ -13,6 +13,7 @@ public class Webbackfeed implements java.io.Serializable {
 	private Double backfeed;
 	private Double oilback;
 	private String username;
+	private String usernameUd;
 
 	// Constructors
 
@@ -76,5 +77,14 @@ public class Webbackfeed implements java.io.Serializable {
 	public void setUsername(String username) {
 		this.username = username;
 	}
+
+	public String getUsernameUd() {
+		return usernameUd;
+	}
+
+	public void setUsernameUd(String usernameUd) {
+		this.usernameUd = usernameUd;
+	}
+	
 
 }

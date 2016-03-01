@@ -23,6 +23,19 @@ public interface IWebPersonNumDao {
 	public Webpersonnum findById2(String factNo,String factCode,String yymmdd);
 	public List<Object[]> findByYnmmddAndFactcode(String yymmdd);
 	
+	/**
+	 * 搜索打印
+	 * @Title: print_search
+	 * @Description: TODO
+	 * @param @param factNo
+	 * @param @param yymm1
+	 * @param @param yymm2
+	 * @param @return
+	 * @return List<Webpersonnum>
+	 * @throws
+	 * @author web
+	 * @date 2016/3/1
+	 */
 	public List<Webpersonnum>print_search(String factNo,String yymm1,String yymm2);
 
 }

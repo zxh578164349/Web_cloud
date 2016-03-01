@@ -126,7 +126,7 @@
 	
 function showDiv(){
     jq.layer({
-    type: 1,   //0-4的选择,
+    type: 2,   //0-4的选择,
     title: '每月資料盤點',
     //title:false,
     //border: [0],
@@ -142,8 +142,8 @@ function showDiv(){
     moveType:1,
     offset:['10px','200px'],
     area: ['650px', '250px'],
-    page:{
-      url:'page/sum_yiele_data.jsp'   
+    iframe:{
+      src:'page/sum_yiele_data.jsp'   
     }
             
 });

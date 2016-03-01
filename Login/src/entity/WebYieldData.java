@@ -24,6 +24,7 @@ public class WebYieldData implements java.io.Serializable {
 	private Double outnum;
 	private Double backnum;
 	private Double workhours;
+	private String usernameUd;
 
 	// Constructors
 
@@ -188,6 +189,14 @@ public class WebYieldData implements java.io.Serializable {
 
 	public void setWorkhours(Double workhours) {
 		this.workhours = workhours;
+	}
+
+	public String getUsernameUd() {
+		return usernameUd;
+	}
+
+	public void setUsernameUd(String usernameUd) {
+		this.usernameUd = usernameUd;
 	}
 	
 	

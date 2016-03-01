@@ -162,6 +162,7 @@ jq(document).ajaxStop(function(){
 				id="msg1">
 				　<caption>固定資產</caption>
 				<s:if test="fix==null">
+				
 					<tr>
 						<s:if test="#session.factNo!='tw'">
 							<td class="td_show_title" width="10%">廠別</td>
@@ -173,14 +174,16 @@ jq(document).ajaxStop(function(){
 								datatype="*" id="factarea">
 									<option value="">請選擇廠別狀態</option>
 									<s:iterator value="#session.factAreas_login" id="temp">
-										<s:if test="%{fix.factcode==#attr.temp}">
+										<s:if test="%{fix.factcode==#session.temp}">
 											<option value="${temp}" selected>${temp}</option>
 										</s:if>
 										<s:else>
 											<option value="${temp}">${temp}</option>
 										</s:else>
 									</s:iterator>
-							</select></td>
+							</select>
+							<input type="hidden" value="${loginUser.username}" name="fix.username"/> <!--  創建者-->
+							</td>
 						</s:if>
 						<s:if test="#session.factNo=='tw'">
 							<td class="td_show_title">廠別</td>
@@ -189,7 +192,7 @@ jq(document).ajaxStop(function(){
 								onchange="getFactArea(this.value),makeSsetscoding()">
 									<option value="">請選擇廠別</option>
 									<s:iterator value="#session.facts" id="temp">
-										<s:if test="%{fix.factNo==#attr.temp[0]}">
+										<s:if test="%{fix.factNo==#session.temp[0]}">
 											<option value="${temp[0]}" selected>${temp[1]
 												}&nbsp;(${temp[0]})</option>
 										</s:if>
@@ -209,7 +212,9 @@ jq(document).ajaxStop(function(){
 										</option>
 									</s:if>
 
-							</select></td>
+							</select>
+							<input type="hidden" value="${loginUser.username}" name="fix.username"/> <!--  創建者-->
+							</td>
 						</s:if>
 
 
@@ -226,6 +231,7 @@ jq(document).ajaxStop(function(){
 						<td><input type="text"
 							value="<s:property value='fix.factcode'/>" name="fix.factcode"
 							readonly style="color:blue" />
+							<input type="hidden" value="${loginUser.username}" name="fix.usernameUd"/> <!--  修改者-->
 						</td>
 					</tr>
 				</s:else>

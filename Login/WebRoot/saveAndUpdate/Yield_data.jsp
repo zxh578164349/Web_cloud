@@ -346,8 +346,10 @@ window.onload=function(){
 					<td class="td_input"><input type="text" style="color:blue"
 						id="yymm"
 						value="<s:date name='ydata.id.yymmdd' format='yyyyMMdd'/>"
-						name="yymmdd" readonly /> <input type="hidden" value="notnull"
+						name="yymmdd" readonly /> 
+						<input type="hidden" value="notnull"
 						name="isnull" id="onModulus" />
+						<input type="hidden" value="${loginUser.username}" name="ydata.usernameUd"/> <!--  修改者-->
 					</td>
 					<td class="td_show_title">工作日/假日</td>
 					<td class="td_input"><select name="ydata.workorholiday"

@@ -46,8 +46,7 @@ public class WebPersonNumDaoImpl extends Basedao implements IWebPersonNumDao {
 			map.put("endday", endDay);
 		}
 		if(factNo.equals("nothing")&&(yymm==null||yymm.equals(""))&&(beginDay==null||beginDay.equals(""))&&(endDay==null||endDay.equals(""))){
-			hql.append(" and id.factNo=:factno");
-			map.put("factno", factNo);
+			hql.append(" and 1=2 ");
 		}
 		hql2.append(hql);
 		hql.append(" order by id.factNo,id.factCode,id.yymmdd desc");
@@ -149,7 +148,19 @@ public class WebPersonNumDaoImpl extends Basedao implements IWebPersonNumDao {
 			hql.append(" and id.factNo=:factno");
 			map.put("factno", factNo);
 		}
-		return null;
+		if(yymm1!=null&&!yymm1.equals("")){
+			hql.append(" and to_char(id.yymmdd,'yyyymmdd')>=:yymm1 ");
+			map.put("yymm1", yymm1);
+		}
+		if(yymm2!=null&&!yymm2.equals("")){
+			hql.append(" and to_char(id.yymmdd,'yyyymmdd')<=:yymm2 ");
+			map.put("yymm2", yymm2);
+		}
+		if(factNo.equals("nothing")&&(yymm1==null||yymm1.equals(""))&&(yymm2==null||yymm2.equals(""))){
+			hql.append(" and 1=2 ");
+		}
+		hql.append(" order by id.factNo,id.yymmdd desc ");
+		return super.getAllWithNoPage(hql.toString(), map);
 	}
 
 }

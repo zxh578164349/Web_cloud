@@ -123,11 +123,12 @@
 						<input type="hidden" value="<s:property value='id.factNo.factNo'/>" name="factNo" />							
 						<input type="hidden" value="<s:property value='id.yymm'/>" name="yymm" />
 						<input type="hidden" value="<s:property value='startDate'/>" name="startDate"/>
-						<input type="hidden" value="<s:property value='endDate'/>" name="endDate"/>													
+						<input type="hidden" value="<s:property value='endDate'/>" name="endDate"/>												
 					</form>									   			    
 				   <s:if test='#session.loginUser.userread!="1"'>
 				   <s:if test='#session.loginUser.username=="admin"'>
-				   <a href="javascript:showDiv_update('<s:property value='id.factNo.factNo'/>','<s:property value='id.factCode'/>','<s:property value='id.yymm'/>')">
+				   <a href="javascript:showDiv_update('<s:property value='id.factNo.factNo'/>','<s:property value='id.factCode'/>',
+				   '<s:property value='id.yymm'/>')">
 				   <img alt="修改" src="images/icon/edit001.png" title="修改" ></a>
 				   </s:if>
 				   <a href="javascript:void(0)" onclick="isDelete('subform${x.index}')"><img alt="刪除" src="images/icon/delete001.png" title="刪除"></a>	

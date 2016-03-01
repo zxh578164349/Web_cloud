@@ -25,5 +25,20 @@ public interface IWebPersonnumServices {
 	public List<Object[]> findByYnmmddAndFactcode( String yymmdd);
 	public boolean check(String factNo,String factCode,String yymm);
 	
+	/**
+	 * 搜索打印
+	 * @Title: print_search
+	 * @Description: TODO
+	 * @param @param factNo
+	 * @param @param yymm1
+	 * @param @param yymm2
+	 * @param @return
+	 * @return List<Webpersonnum>
+	 * @throws
+	 * @author web
+	 * @date 2016/3/1
+	 */
+	public List<Webpersonnum>print_search(String factNo,String yymm1,String yymm2);
+	
 
 }

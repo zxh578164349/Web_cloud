@@ -29,6 +29,7 @@ public class Webcost implements java.io.Serializable {
 	private String username;
 	private Double noGlueWeight;
 	private Double productedNum;
+	private String usernameUd;
 
 	// Constructors
 
@@ -240,6 +241,14 @@ public class Webcost implements java.io.Serializable {
 
 	public void setProductedNum(Double productedNum) {
 		this.productedNum = productedNum;
+	}
+
+	public String getUsernameUd() {
+		return usernameUd;
+	}
+
+	public void setUsernameUd(String usernameUd) {
+		this.usernameUd = usernameUd;
 	}
 	
 

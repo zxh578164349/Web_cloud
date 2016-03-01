@@ -43,14 +43,29 @@ public class SumWebYieldDataAction extends ActionSupport implements ServletRespo
 	private String begin_yymm;
 	private String end_yymm;
 	private String username;
+	private String usernameUd;
 	private SumWebYieldData sumydata;
 	private IWebYieldDataServices dataSer;
 	private ISumWebYieldDataServices sumydateSer;
 	private IWebFactServices webFactSer;
 	private ISumWebYieldDataLogServices sumydatelogSer;
 	private javax.servlet.http.HttpServletResponse response;
+	private String ajaxResult;//0提交成功       1提交失敗
 	
 	
+	
+	public String getAjaxResult() {
+		return ajaxResult;
+	}
+	public void setAjaxResult(String ajaxResult) {
+		this.ajaxResult = ajaxResult;
+	}
+	public String getUsernameUd() {
+		return usernameUd;
+	}
+	public void setUsernameUd(String usernameUd) {
+		this.usernameUd = usernameUd;
+	}
 	public String getUsername() {
 		return username;
 	}
@@ -186,7 +201,9 @@ public class SumWebYieldDataAction extends ActionSupport implements ServletRespo
 			ydate.setStartDate(startDate);
 			ydate.setEndDate(endDate);
 			ydate.setUsername(username);
+			ydate.setUsernameUd(usernameUd);
 			sumydateSer.add(ydate);
+			ajaxResult="0";
 			//內存回收20160219
 			ydate=null;
 			id=null;
@@ -195,7 +212,7 @@ public class SumWebYieldDataAction extends ActionSupport implements ServletRespo
 		return "add";
 	}
 	/**
-	 * ���Ѽ�
+	 * 更新(暫時未用)
 	 * @param factNo
 	 * @param yymm
 	 * @param startDate
@@ -240,10 +257,8 @@ public class SumWebYieldDataAction extends ActionSupport implements ServletRespo
 			ydate.setSumWorkhours(workhours);
 			ydate.setStartDate(startDate);
 			ydate.setEndDate(endDate);
-			String username=sumydateSer.findUsername(factNo, factcode, yymm);
-			if(username!=null){
-				ydate.setUsername(username);
-			}
+			ydate.setUsername(username);			
+			ydate.setUsernameUd(usernameUd);
 			sumydateSer.add(ydate);
 			
 			//內存回收20160219

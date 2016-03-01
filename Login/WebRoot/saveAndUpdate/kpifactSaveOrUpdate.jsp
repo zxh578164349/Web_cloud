@@ -189,7 +189,9 @@ window.onload=function(){
 					<td class="td_input"><font color="blue"><input
 							type="text" id="billNo" style="color:blue"
 							value="<s:property value='kpi.id.factCode'/>"
-							name="kpi.id.factCode" readonly /> </font></td>
+							name="kpi.id.factCode" readonly /> </font>
+							<input type="hidden" value="${loginUser.username}" name="kpi.usernameUd"/> <!--  修改者-->
+							</td>
 				</tr>
 				<tr>
 					<td class="td_show_title">年份</td>

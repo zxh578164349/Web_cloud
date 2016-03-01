@@ -176,7 +176,8 @@ window.onload=function(){
 						<td class="td_show_title">年月</td>
 						<td class="td_input"><input type="text" style="color:blue"
 							id="yymm" value="<s:date name='mix2.id.yymm' format='yyyyMM'/>"
-							name="yymm" readonly /></td>
+							name="yymm" readonly />
+							<input type="hidden" value="${loginUser.username}" name="mix2.usernameUd"/> <!--  修改者--></td>
 					</tr>
 					<tr>
 						<td class="td_show_title">廠別狀態</td>
@@ -184,7 +185,7 @@ window.onload=function(){
 							datatype="*">
 								<option value="">請選擇廠別狀態</option>
 								<s:iterator value="#session.factAreas_other" id="temp">
-									<s:if test="#attr.temp==mix2.id.factCode">
+									<s:if test="#session.temp==mix2.id.factCode">
 										<option value="${temp}" selected>${temp}</option>
 									</s:if>
 									<s:else>

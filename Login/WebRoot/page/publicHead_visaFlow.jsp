@@ -45,7 +45,7 @@
 <script type='text/javascript' src='/Login/dwr/util.js'></script>
 </head>
 <body >
-  <div style="width:720px">
+  <div class="form-group">
 	<table  border=0 >
 		<tr>
 			<td>廠別</td>

@@ -175,5 +175,11 @@
         <property name="checkdate" type="java.lang.String">
             <column name="CHECKDATE" precision="30"/>
         </property>
+        <property name="username" type="java.lang.String">
+            <column name="USERNAME" length="50"  />
+        </property>
+        <property name="usernameUd" type="java.lang.String">
+            <column name="USERNAME_UD" length="50"  />
+        </property>
     </class>
 </hibernate-mapping>

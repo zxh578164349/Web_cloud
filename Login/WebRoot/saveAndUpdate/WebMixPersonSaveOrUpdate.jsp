@@ -179,6 +179,7 @@ function back(){
 							id="yymm" name="yymm"
 							value="<s:date name='mixperson.id.yymm' format='yyyyMM'/>"
 							readonly />
+							<input type="hidden" value="${loginUser.username}" name="mixperson.usernameUd"/> <!--  修改者-->
 						</td>
 					</tr>
 					<tr>
@@ -187,7 +188,7 @@ function back(){
 							datatype="*">
 								<option value="">請選擇廠別狀態</option>
 								<s:iterator value="#session.factAreas_other" id="temp">
-									<s:if test="#attr.temp==mixperson.id.factCode">
+									<s:if test="#session.temp==mixperson.id.factCode">
 										<option value="${temp}" selected>${temp}</option>
 									</s:if>
 									<s:else>

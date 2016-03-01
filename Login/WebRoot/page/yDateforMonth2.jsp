@@ -107,7 +107,7 @@
 	 }
 function showDiv(){
     jq.layer({
-    type: 1,   //0-4的选择,
+    type: 2,   //0-4的选择,
     title: '每月資料盤點',
     //title:false,
     //border: [0],
@@ -123,14 +123,14 @@ function showDiv(){
     moveType:1,
     offset:['10px','200px'],
     area: ['650px', '250px'],
-    page:{
-      url:'page/sum_yiele_data.jsp'   
+    iframe:{
+      src:'page/sum_yiele_data.jsp'   
     }           
 });
 }
 function showDiv_update(factNo,factCode,yymm){
    jq.layer({
-      type:1,
+      type:2,
       title:'每月資料盤點_更新',
       closeBtn:[1,true],
       shade:[0],
@@ -141,10 +141,12 @@ function showDiv_update(factNo,factCode,yymm){
       moveType:1,
       offset:['10px','200px'],
       area:['650px','250px'],
-      page:{
-         url:'sumwebydata_findById?factNo='+factNo+'&factCode='+factCode+'&yymm='+yymm
+      iframe:{
+         src:'sumwebydata_findById?factNo='+factNo+'&factCode='+factCode+'&yymm='+yymm
       }
-   })
+   });
+   
+   //layer.closeAll();
 }
     function updateAll(){
       layer.load("正在更新，請稍等.....");
@@ -181,7 +183,7 @@ function showDiv_update(factNo,factCode,yymm){
 	<s:if test='#session.loginUser.userread!="1"'>
 	<span style="float:right">
 	  <img alt="" src="images/136.gif">
-	  <a href="javascript:layer.load(0);showDiv()" style="color:blue;text-decoration:underline;padding-right:30px">
+	  <a href="javascript:showDiv()" style="color:blue;text-decoration:underline;padding-right:30px">
 	         添加每月盤點數據</a>
 	</span>
 	</s:if>

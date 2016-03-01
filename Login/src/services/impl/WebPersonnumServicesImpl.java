@@ -92,4 +92,16 @@ public class WebPersonnumServicesImpl implements IWebPersonnumServices {
 		return flag;
 	}
 
+	/**
+	 * 日期:2016/3/1
+	 * 描述:
+	 */
+	
+	
+	public List<Webpersonnum> print_search(String factNo, String yymm1,
+			String yymm2) {
+		// TODO Auto-generated method stub
+		return personNumDao.print_search(factNo, yymm1, yymm2);
+	}
+
 }

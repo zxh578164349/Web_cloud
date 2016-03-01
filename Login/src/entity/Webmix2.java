@@ -20,6 +20,7 @@ public class Webmix2 implements java.io.Serializable {
 	private Double other;
 	private String username;
 	private Double payPairs;
+	private String usernameUd;
 
 	// Constructors
 
@@ -156,6 +157,14 @@ public class Webmix2 implements java.io.Serializable {
 
 	public void setPayPairs(Double payPairs) {
 		this.payPairs = payPairs;
+	}
+
+	public String getUsernameUd() {
+		return usernameUd;
+	}
+
+	public void setUsernameUd(String usernameUd) {
+		this.usernameUd = usernameUd;
 	}
 	
 
