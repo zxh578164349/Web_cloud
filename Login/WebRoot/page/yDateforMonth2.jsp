@@ -16,9 +16,9 @@
 <meta http-equiv="expires" content="0">
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
-<link rel="stylesheet" type="text/css" href="css/button_css.css" />
+<!--  <link rel="stylesheet" type="text/css" href="css/button_css.css" />
 <link rel="stylesheet" type="text/css" href="css/general_css.css" />
-<link href="tablecloth/tablecloth.css" rel="stylesheet" type="text/css" media="screen" />
+<link href="tablecloth/tablecloth.css" rel="stylesheet" type="text/css" media="screen" />-->
 <script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script>
 <script type="text/javascript" src="page/jquerys/layer/layer.min.js"></script>
 <!-- 新 Bootstrap 核心 CSS 文件 -->
@@ -174,22 +174,15 @@ function showDiv_update(factNo,factCode,yymm){
 
 <body>
 	<jsp:include page="publicHead_sumydata.jsp" flush="true" />
-	<hr />
-	<!-- <s:if test='#session.loginUser.userread!="1"'>
-	<input type="button" value="添加" id="addbtn"
-		onclick="javascript:location.href='saveAndUpdate/Yield_data.jsp'" />&nbsp;&nbsp;&nbsp;
-	</s:if>	 -->
-	<br>
+	<hr />	
 	<s:if test='#session.loginUser.userread!="1"'>
 	<span style="float:right">
-	  <img alt="" src="images/136.gif">
-	  <a href="javascript:showDiv()" style="color:blue;text-decoration:underline;padding-right:30px">
-	         添加每月盤點數據</a>
+	  <input type="button" onclick="javascript:showDiv()" class="btn btn-link btn-sm" value="添加每月盤點數據"/>
 	</span>
 	</s:if>
-	<span style="float:right"> <img alt="" src="images/136.gif"><a
-		href="javascript:layer.load(0);location.href='ydata_findPageBean'" 
-		style="color:blue;text-decoration:underline;float:right;padding-right:30px">按日詳細查看</a>
+	<span style="float:right"> <input type="button"
+		onclick="javascript:layer.load(0);location.href='ydata_findPageBean'" 
+		class="btn btn-link btn-sm" value="按日詳細查看"/>
 	</span>
 	<!-- <s:if test="#session.loginUser.username=='admin'">
 	<span style="float:right"> <img alt="" src="images/136.gif"><a

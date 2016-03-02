@@ -17,9 +17,7 @@
 <meta http-equiv="expires" content="0">
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
-<!--
-	<link rel="stylesheet" type="text/css" href="styles.css">
-	-->
+
 <link rel="stylesheet" type="text/css" href="css/select_beautiful.css">	
 <LINK href="css/list.css" type="text/css" rel="stylesheet">
 <script type="text/javascript" src="jquery/DatePicker/WdatePicker.js"></script>
@@ -44,9 +42,8 @@ jq(document).keyup(function(event){
 
 </head>
 <body>
-  <div style="width:1190px">
   <form  method="post" id="public_form">
-	<table  border="0px">
+	<table  id="tb_search">
 		<tr>
 			<td>廠別</td>
 			<td><s:if test="#session.factNo=='tw'">
@@ -87,12 +84,11 @@ jq(document).keyup(function(event){
                  </select>
             </td>	
 			<td>
-			 <input value="搜索" type="button" id="addbtn" onclick="submis('public_form')" />
-			 <input value="導出Excel" type="button" id="search_forday" onclick="print('public_form')"/>			
+			 <input value="搜索" type="button" class="btn btn-primary" onclick="submis('public_form')" />
+			 <input value="導出Excel" type="button" class="btn btn-primary" onclick="print('public_form')"/>			
 			</td>
 		</tr>
 	</table>
 	</form>
-	</div>
 </body>
 </html>

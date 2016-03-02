@@ -38,15 +38,13 @@ jq(document).keyup(function(event){
 
 </head>
 <body>
-  <div style="width:680px">
    <form id="public_form" method="post">
-	<table  border="0px">
+	<table  id="tb_search">
 		<tr>
-			<td>廠別</td>
 			<td><s:if test="#session.factNo=='tw'">
 			    <div id="uboxstyle">
 					<select name="factNo" id="factNo">
-						<option value="nothing">請選擇</option>						
+						<option value="nothing">請選擇廠別</option>						
 						<s:iterator value="#session.facts" id="temp">
 							<option value="${temp[0]}">${temp[1]}(${temp[0]})</option>								
 						</s:iterator>
@@ -62,19 +60,16 @@ jq(document).keyup(function(event){
 					</select>
 					</div>
 				</s:else></td>
-			<td>年月</td>
 			<td>
-			<!-- <input type="text" id="year" name="yymm"  onClick="WdatePicker()" readonly="readonly" /> -->
-			開始<input type="text" id="beginday" name="beginDay" onClick="WdatePicker()" readonly="readonly" class="Wdate"/><br>
-			結束<input type="text" id="endday" name="endDay" onClick="WdatePicker()" readonly="readonly" class="Wdate"/>
+			<input type="text" id="beginday" name="beginDay" onClick="WdatePicker()" readonly="readonly" class="Wdate"/>至
+			<input type="text" id="endday" name="endDay" onClick="WdatePicker()" readonly="readonly" class="Wdate"/>
 			</td>
 			<td>
-			 <input value="搜索" type="button" id="addbtn" onclick="submis('public_form')" />
-			 <input value="導出Excel" type="button" id="search_forday" onclick="print('public_form')"/>		
+			 <input value="搜索" type="button" class="btn btn-primary" onclick="submis('public_form')" />
+			 <input value="導出Excel" type="button" class="btn btn-primary" onclick="print('public_form')"/>		
 			</td>
 		</tr>
 	</table>
 	</form>
-	</div>
 </body>
 </html>

@@ -21,7 +21,7 @@
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
 <!-- 分頁樣式 -->
-<link rel="stylesheet" type="text/css" href="css/mystyle.css" />
+<!--  <link rel="stylesheet" type="text/css" href="css/mystyle.css" />-->
 <script type="text/javascript">
 <%--$(function() {
 		var j = jQuery.noConflict();
@@ -32,7 +32,7 @@
 
 	});--%>
 	
-	var defaultColor="#97CBFF";
+	/**var defaultColor="#97CBFF";
 	 var clickColor="#CCFFFF";
 	 function click_color(obj){
         var tbody=document.getElementById("tbody");
@@ -54,15 +54,21 @@
 	           document.getElementById("a_page").innerHTML="▽";
 	        }
 	    });	   
-	}
+	}*/
 </script>
 
 </head>
 
 <body>
   <div id="container">
-	<table id="tb" >
-		<caption>回頭料(每月輸入)</caption>
+	<table class="table table-striped table-hover table-bordered" >
+		<h2>
+		<s:if test='#session.loginUser.userread!="1"'>
+	    <input value="添加" type="button" class="btn btn-info"
+		onclick="javascript:location.href='saveAndUpdate/webbackfeedSaveOrUpdate.jsp'" />
+         </s:if>
+		回頭料(每月輸入)
+		</h2>
 		<thead>
 			<tr class="tr_show">
 				<th>序號</th>
@@ -81,7 +87,7 @@
 		</thead>
 		<tbody id="tbody">
 		<s:iterator value="bean.list" status="x" id="temp">
-			<tr onmousemove="click_color(this)" onmouseout="move(this)">
+			<tr>
 				<td>${25*(bean.currentPage-1)+x.index+1}</td>
 				<td><s:property value="id.factNo" /></td>
 				<td><s:property value="id.factCode" /></td>

@@ -21,7 +21,7 @@
 <meta http-equiv="description" content="This is my page">
 <link rel="stylesheet" type="text/css" href="css/mystyle.css" />
 	<script type="text/javascript">
-	var defaultColor="#97CBFF";
+	/**var defaultColor="#97CBFF";
 	 var clickColor="#CCFFFF";
 	 function click_color(obj){
         var tbody=document.getElementById("tbody");
@@ -43,14 +43,14 @@
 	           document.getElementById("a_page").innerHTML="▽";
 	        }
 	    });	   
-	}
+	}*/
 	</script>
 </head>
 <body>
   <div id="container">
   <div id="content">
-	<table id="tb" >
-		<caption>產量資料(盤點統計)</caption>
+	<table class="table table-striped table-hover table-bordered">
+		<h2>產量資料(盤點統計)</h2>
 		<thead>
 			<tr class="tr_show">
 				<th>序號</th>
@@ -79,7 +79,7 @@
 		</thead>
 		<tbody id="tbody">
 		<s:iterator value="bean.list" status="x" id="temp">
-			<tr onmousemove="click_color(this)" onmouseout="move(this)">
+			<tr>
 				<td>${25*(bean.currentPage-1)+x.index+1}</td>
 				<td><s:property value="id.factNo.factNo"/></td>
 				<td><s:property value="id.factCode"/></td>

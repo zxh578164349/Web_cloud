@@ -16,9 +16,9 @@
 <meta http-equiv="expires" content="0">
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
-<link rel="stylesheet" type="text/css" href="css/button_css.css" />
+<!-- <link rel="stylesheet" type="text/css" href="css/button_css.css" />
 <link rel="stylesheet" type="text/css" href="css/general_css.css" />
-<link href="tablecloth/tablecloth.css" rel="stylesheet" type="text/css" media="screen" />
+<link href="tablecloth/tablecloth.css" rel="stylesheet" type="text/css" media="screen" /> -->
 <script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script>
 <script type="text/javascript" src="page/jquerys/layer/layer.min.js"></script>
 <!-- 新 Bootstrap 核心 CSS 文件 -->
@@ -106,10 +106,7 @@
 <body>
 	<jsp:include page="publicHead_print.jsp" />
 	<hr />
-	<s:if test='#session.loginUser.userread!="1"'>
-	<input value="添加" type="button" id="addbtn"
-		onclick="javascript:location.href='saveAndUpdate/WebMixPersonSaveOrUpdate.jsp'" />
-	</s:if>	
+	
 	<div id="bodyid">
 		<jsp:include page="table1/webMixPerson1.jsp" />
 	</div>

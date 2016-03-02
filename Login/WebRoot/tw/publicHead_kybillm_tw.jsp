@@ -37,14 +37,12 @@ jq(document).keyup(function(event){
 
 </head>
 <body onload="getKyType()">
-  <div style="width:1400px">
    <form>
-	<table  border=0 >
+	<table  id="tb_search">
 		<tr>
-			<td>廠別</td>
 			<td><s:if test="#attr.factNo=='tw'">
 					<select name="factNo" id="factNo" onchange="getType2(this.value)">
-						<option value="nothing">請選擇</option>						
+						<option value="nothing">請選擇廠別</option>						
 						<s:iterator value="#attr.facts" id="temp">
 							<option value="${temp[0] }">${temp[1]}(${temp[0]})</option>								
 						</s:iterator>
@@ -56,39 +54,34 @@ jq(document).keyup(function(event){
 							<s:property value="#attr.factName" />(<s:property value="#attr.factNo"/>)
 						</option>
 					</select>				 	
-				</s:else></td>
-			<td>類別</td>
-			<td>
-			     <select name="visaSort" id="dwr_kytype"   style="color:blue">
-				            <option value="nothing">請選擇</option>
+				</s:else>
+			
+			     <select name="visaSort" id="dwr_kytype" >
+				            <option value="nothing">請選擇類別</option>
 				            <s:iterator value="#attr.listkytype">
 				              <option value="<s:property value='id.typeSno'/>"><s:property value='typeSname'/></option>
 				            </s:iterator>
 				         </select>
-			</td>
+			
 							
-			<td>單號</td>
-			<td><input type="text" name="billNo" value="" id="billNo"/>&nbsp;
-			<!-- <input type="checkbox" value="N" name="visaMk" id="visaMk" />未審核 -->
+			
 			<input type="radio" value="Y" name="visaMk" />已審核|
 			<input type="radio" value="N" name="visaMk" checked="checked"/>未審核|
 			<input type="radio" value="T" name="visaMk"  />未通過
-			</td>			
-			<td>
-			<input value="搜索" type="button" id="addbtn" onclick="javascript:submis()" />
-			</td>			
+			<input value="搜索" type="button" class="btn btn-primary" onclick="javascript:submis()" />
+			</td>								
 		</tr>
 		<tr>
-		  <td>日期始</td>
 			<td><input type="text" id="yymmdd" name="yymmdd" 
-				onClick="WdatePicker()" readonly="readonly" class="Wdate"/></td>
-				<td>日期止</td>
-			<td><input type="text" id="yymmdd2" name="yymmdd2" 
-				onClick="WdatePicker()" readonly="readonly" class="Wdate"/></td>
+				onClick="WdatePicker()" readonly="readonly" class="Wdate"/>
+				至
+			<input type="text" id="yymmdd2" name="yymmdd2" 
+				onClick="WdatePicker()" readonly="readonly" class="Wdate"/>				
+				單號:<input type="text" name="billNo" value="" id="billNo" />																
+				</td>
 		</tr>
 	</table>
 	</form>
-</div>	
 </body>
 </html>
 

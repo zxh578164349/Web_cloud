@@ -38,15 +38,13 @@ jq(document).keyup(function(event){
 
 </head>
 <body>
-  <div style="width:680px">
   <form id="public_form">
-	<table  border="0px">
+	<table id="tb_search">
 		<tr>
-			<td>廠別</td>
 			<td><s:if test="#session.factNo=='tw'">
 			    <div id="uboxstyle">
 					<select name="factNo" id="factNo">
-						<option value="nothing">請選擇</option>						
+						<option value="nothing">請選擇廠別</option>						
 						<s:iterator value="#session.facts" id="temp">
 							<option value="${temp[0]}">${temp[1]}(${temp[0]})</option>								
 						</s:iterator>
@@ -62,18 +60,16 @@ jq(document).keyup(function(event){
 					</select>
 					</div>
 				</s:else></td>
-			<td>年月</td>
 			<td>
-			開始<input type="text" id="begin_yymm" name="begin_yymm" onClick="WdatePicker({maxDate:'#F{$dp.$D(\'end_yymm\')||\'%y-{%M-1}\'}',dataFmt:'yyyyMM'})" readonly="readonly" class="Wdate"/><br/>
-			結束<input type="text" id="end_yymm" name="end_yymm" onClick="WdatePicker({minDate:'#F{$dp.$D(\'begin_yymm\')}',maxDate:'%y-%M',dataFmt:'yyyyMM'})" readonly="readonly" class="Wdate"/>
+			<input type="text" id="begin_yymm" name="begin_yymm" onClick="WdatePicker({maxDate:'#F{$dp.$D(\'end_yymm\')||\'%y-{%M-1}\'}',dataFmt:'yyyyMM'})" readonly="readonly" class="Wdate"/>至
+			<input type="text" id="end_yymm" name="end_yymm" onClick="WdatePicker({minDate:'#F{$dp.$D(\'begin_yymm\')}',maxDate:'%y-%M',dataFmt:'yyyyMM'})" readonly="readonly" class="Wdate"/>
 			</td>
 			<td>
-			 <input value="搜索" type="button" id="addbtn" onclick="submis('public_form')" />&nbsp;
-			 <input value="導出" type="button" class="addbtn" onclick="print('public_form')"/>		
+			 <input value="搜索" type="button" class="btn btn-primary" onclick="submis('public_form')" />
+			 <input value="導出" type="button" class="btn btn-primary" onclick="print('public_form')"/>		
 			</td>
 		</tr>
 	</table>
 	</form>
-	</div>
 </body>
 </html>

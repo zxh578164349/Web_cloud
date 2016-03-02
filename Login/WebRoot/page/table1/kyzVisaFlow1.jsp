@@ -98,7 +98,12 @@
   <div id="container">
    <div id="content">
 	<table class="table table-striped table-hover table-bordered" >
-		<caption ><h4>審核流程</h4></caption>
+		<h4>
+		<s:if test='#session.loginUser.userread!="1"'>
+	     <input value="添加" type="button" class="btn btn-info"
+		onclick="javascript:location.href='saveAndUpdate/kyzVisaFlowSaveOrUpdate.jsp'" /></s:if> 
+		審核流程
+		</h4>
 		<thead>			
 			<tr class="tr_show">			    
 				<th>廠別</th>

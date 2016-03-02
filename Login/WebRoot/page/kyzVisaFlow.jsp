@@ -132,10 +132,7 @@
 
 	<jsp:include page="publicHead_visaFlow.jsp" flush="true" />
 	<hr />
-	<s:if test='#session.loginUser.userread!="1"'>
-	<input value="添加" type="button" id="addbtn"
-		onclick="javascript:location.href='saveAndUpdate/kyzVisaFlowSaveOrUpdate.jsp'" /></s:if> 
-		<!-- <input type="image" src="images/add001.gif" onclick="javascript:location.href='saveAndUpdate/kyzVisaFlowSaveOrUpdate.jsp'"/> -->	
+			
 	<div id="bodyid">
 		<jsp:include page="table1/kyzVisaFlow1.jsp" />
 	</div>
