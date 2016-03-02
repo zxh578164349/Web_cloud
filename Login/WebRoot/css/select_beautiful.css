@@ -459,12 +459,12 @@ input[type=text] {
 	border: 2px solid #7A6F6F;
 	border: 2px solid #7A6F6F \9; /*IE*/
 	width: 190px;
-	height: 15px; /*«DIE°ª«×*/
-	height: 15px \9; /*IE°ª«×*/
+	height: 20px; /*ï¿½DIEï¿½ï¿½ï¿½ï¿½*/
+	height: 20px \9; /*IEï¿½ï¿½ï¿½ï¿½*/
 	padding-left: 5px; /*all*/
 	line-height: 20px \9; /*IE*/
 	-moz-border-radius: 3px; /*Firefox*/
-	-webkit-border-radius: 3px; /*Safari©MChrome*/
+	-webkit-border-radius: 3px; /*Safariï¿½MChrome*/
 	border-radius: 3px; /*IE9+*/
 	background-color: white;
 	outline: none;
@@ -474,16 +474,20 @@ select{
 	border: 2px solid #7A6F6F;
 	border: 2px solid #7A6F6F \9; /*IE*/
 	width: 190px;
-	height: 20px; /*«DIE°ª«×*/
-	height: 20px \9; /*IE°ª«×*/
+	height: 20px; /*ï¿½DIEï¿½ï¿½ï¿½ï¿½*/
+	height: 20px \9; /*IEï¿½ï¿½ï¿½ï¿½*/
 	padding-left: 5px; /*all*/
 	line-height: 20px \9; /*IE*/
 	-moz-border-radius: 3px; /*Firefox*/
-	-webkit-border-radius: 3px; /*Safari©MChrome*/
+	-webkit-border-radius: 3px; /*Safariï¿½MChrome*/
 	border-radius: 3px; /*IE9+*/
 	background-color: white;
 	outline: none;
 	border-color: #B6CDDC;
 }
+#tb_search input[type=text],#tb_search select{
+	height:30px;
+	height: 30px \9;/*IE*/
+} 
 
 

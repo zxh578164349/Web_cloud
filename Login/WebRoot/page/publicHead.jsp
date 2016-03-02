@@ -38,14 +38,12 @@ jq(document).keyup(function(event){
 
 </head>
 <body>
-  <div style="width:680px">
-	<table  border="0px">
+	<table  id="tb_search">
 		<tr>
-			<td>廠別</td>
 			<td><s:if test="#session.factNo=='tw'">
 			    <div id="uboxstyle">
 					<select name="factNo" id="factNo">
-						<option value="nothing">請選擇</option>						
+						<option value="nothing">請選擇廠別</option>						
 						<s:iterator value="#session.facts" id="temp">
 							<option value="${temp[0]}">${temp[1]}(${temp[0]})</option>								
 						</s:iterator>
@@ -61,14 +59,12 @@ jq(document).keyup(function(event){
 					</select>
 					</div>
 				</s:else></td>
-			<td>年月</td>
 			<td><input type="text" id="year" name="yymm" 
 				onClick="WdatePicker({dataFmt:'yyyyMM'})" readonly="readonly" class="Wdate"/></td>
-			<td><!-- <input type="image" onclick="submis();" src="images/search002.gif" /> -->
-			 <input value="搜索" type="submit" id="addbtn" onclick="javascript:submis()" />	
+			<td>
+			 <input value="搜索" type="submit" class="btn btn-primary" onclick="javascript:submis()" />	
 			</td>
 		</tr>
 	</table>
-	</div>
 </body>
 </html>

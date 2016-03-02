@@ -25,20 +25,8 @@
 <link rel="stylesheet" type="text/css" href="css/button_css.css" />
 <script type="text/javascript">
 	
-/*     var defaultColor="#97CBFF";
-    var overColor="yellow";
-    //var clickColor="pink";
-    var clickColor="#CCFFFF";
-    var chooseRow=9999;
-    function over_color(obj){
-        if(obj.style.backgroundColor!=clickColor)
-            obj.style.backgroundColor=overColor;
-    }
-    function remove_color(obj){
-        if(obj.style.backgroundColor!=clickColor)
-            obj.style.backgroundColor=defaultColor;
-    } */
-    function click_color(obj){
+
+    /*function click_color(obj){
         var tbody=document.getElementById("tbody");
         var length=document.getElementById("tbody").rows.length;
         for(var i=0;i<length;i++){
@@ -56,7 +44,7 @@ function showPage(){
 	           document.getElementById("a_page").innerHTML="▽";
 	        }
 	    });	   
-	}
+	}*/
 
 </script>
 </head>
@@ -64,8 +52,13 @@ function showPage(){
 <body>
    <div id="container">
    <div id="content">
-	<table id="tb" >
-	<caption>固定資產</caption>
+	<table class="table table-striped table-hover table-bordered"  >
+	<h2>
+	<s:if test='#session.loginUser.userread!="1"'>
+	<input type="button" class="btn btn-info" value="添加" onclick="javascript:location.href='saveAndUpdate/fixedSaveOrUpdate.jsp'"/>	
+	</s:if>	
+	固定資產
+	</h2>
 		<thead>			
 			<tr class="tr_show">
 			    <th>序號</th>
@@ -100,7 +93,7 @@ function showPage(){
 		</thead>
 		<tbody id="tbody" >		
 		  <s:iterator value="bean.list" status="x" id="temp">		   
-			<tr onclick="click_color(this)" >
+			<tr >
 			    <td>${ 25*(bean.currentPage-1)+x.index+1}</td>
 				<td><s:property value="factNo" /></td>
 				<td><s:property value="factcode"/></td>				

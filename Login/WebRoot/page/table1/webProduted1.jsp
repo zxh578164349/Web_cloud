@@ -21,7 +21,7 @@
 <meta http-equiv="description" content="This is my page">
 <link rel="stylesheet" type="text/css" href="css/mystyle.css" />
 	<script type="text/javascript">
-	var defaultColor="#97CBFF";
+	/*var defaultColor="#97CBFF";
 	 var clickColor="#CCFFFF";
 	 function click_color(obj){
         var tbody=document.getElementById("tbody");
@@ -43,13 +43,19 @@
 	           document.getElementById("a_page").innerHTML="▽";
 	        }
 	    });	   
-	}
+	}*/
 	</script>
 </head>
 <body>
   <div id="container">
-	<table id="tb" >
-		<caption>成品資料(每月輸入)</caption>
+	<table class="table table-striped table-hover table-bordered" >
+		<h2>
+		<s:if test='#session.loginUser.userread!="1"'>
+	    <input value="添加" type="button" class="btn btn-info"
+		onclick="javascript:location.href='saveAndUpdate/WebProdutedSaveOrUpdate.jsp'" />
+	</s:if>	
+		成品資料(每月輸入)
+		</h2>
 		<thead>
 			<tr class="tr_show">
 				<th>序號</th>
@@ -71,7 +77,7 @@
 		</thead>
 		<tbody id="tbody">
 		<s:iterator value="bean.list" status="x" id="temp">
-			<tr onmousemove="click_color(this)" onmouseout="move(this)">
+			<tr >
 				<td>${25*(pages.page-1)+x.index+1}</td>
 				<td><s:property value="id.factNo" />
 				</td>

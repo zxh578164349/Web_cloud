@@ -20,7 +20,7 @@
 <link rel="stylesheet" type="text/css" href="css/general_css.css" />
 <link href="tablecloth/tablecloth.css" rel="stylesheet" type="text/css" media="screen" />
 <script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script>
-<!-- <script type="text/javascript" src="page/jquerys/layer/layer.min.js"></script> -->
+
 <!-- 新 Bootstrap 核心 CSS 文件 -->
 <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
@@ -168,34 +168,30 @@ function print(public_form){
 <body>
 	<jsp:include page="publicHead_webYdate.jsp" flush="true" />
 	<hr />
-	<s:if test='#session.loginUser.userread!="1"'>
-	<input value="添加" type="button" id="addbtn" onclick="javascript:location.href='saveAndUpdate/Yield_data.jsp'" />
-	</s:if>
+	
 	
 	<s:if test='#session.loginUser.userread!="1"'>
-	<span style="float:right">
-	  <img alt="" src="images/136.gif">
-	  <a href="javascript:showDiv()" style="color:blue;text-decoration:underline;padding-right:30px">
-	         添加每月盤點數據</a>
+	<span style="float:right">	  
+	  <input type="button" onclick="javascript:showDiv()" class="btn btn-link btn-sm" value="添加每月盤點數據"/>
 	</span>
 	</s:if>
-	<span style="float:right"> <img alt="" src="images/136.gif"><a
-		href="javascript:layer.load(0);window.location.href='sumwebydata_findPageBean'" 
-		style="color:blue;text-decoration:underline;padding-right:30px">查看盤點數據</a>
+	<span style="float:right"> <input type="button"
+		onclick="javascript:layer.load(0);window.location.href='sumwebydata_findPageBean'" 
+		class="btn btn-link btn-sm" value="查看盤點數據"/>
 	</span>			
-	<span style="float:right"> <img alt="" src="images/136.gif"><a
-		href="javascript:layer.load(0);window.location.href='ydata_findPageBeanForMonth'" 
-		style="color:blue;text-decoration:underline;padding-right:30px">按月合計查看</a>
+	<span style="float:right"> <input type="button"
+		onclick="javascript:layer.load(0);window.location.href='ydata_findPageBeanForMonth'" 
+		class="btn btn-link btn-sm" value="按月合計查看"/>
 	</span>	
-	<span style="float:right"> <img alt="" src="images/136.gif"><a
-		href="javascript:layer.load(0);location.href='ydata_go_temp'"
-		style="color:blue;text-decoration:underline;padding-right:30px">點擊查找每天漏輸數據廠別</a>
+	<span style="float:right"> <input type="button"
+		onclick="javascript:layer.load(0);location.href='ydata_go_temp'"
+		class="btn btn-link btn-sm" value="點擊查找每天漏輸數據廠別"/>
 	</span>
 	<s:if test='#attr.loginUser.username=="admin"'>
 	<form method="post" action="timer_print_manual" id="emailform">
-	<span style="float:left"> 	
+	<span style="float:right"> 	
 	<input type="text" name="yymm" onClick="WdatePicker()" readonly="readonly" class="Wdate"/>
-		<input type="button" value="發送產量匯總郵件" onclick="gosubmit()"/>	
+	<input type="button" value="發送產量匯總郵件" onclick="gosubmit()" class="btn btn-primary btn-sm"/>	
 	</span>
 	</form>	
 	</s:if>	

@@ -28,7 +28,6 @@
 <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
 <script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="page/jquerys/layer/layer.min.js"></script>
 
  <!--[if lt IE 9]>  
   <script src="bootstrap/html5.js"></script>
@@ -116,15 +115,9 @@ function print(public_form){
 <body>
 	<jsp:include page="publicHead_webfix.jsp" />
 	<hr/>
-	<input type="button" id="addbtn" value="添加" onclick="javascript:location.href='saveAndUpdate/fixedSaveOrUpdate.jsp'"/>		
+	
 	<div id="bodyid">
 		<jsp:include page="table1/webfixed1.jsp" />
-	</div>	
-	<%--<div id="mydiv">
-		<p>
-			<img alt="" src="images/loading004.gif"><br> Loading....
-		</p>
-	</div>
-
---%></body>
+	</div>		
+</body>
 </html>

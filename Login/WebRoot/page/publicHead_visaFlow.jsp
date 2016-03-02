@@ -45,45 +45,37 @@
 <script type='text/javascript' src='/Login/dwr/util.js'></script>
 </head>
 <body >
-  <div class="form-group">
-	<table  border=0 >
+	<table  id="tb_search">
 		<tr>
-			<td>廠別</td>
-			<td><s:if test="#session.factNo=='tw'">
-			      <div id="uboxstyle">
+			<td><s:if test="#session.factNo=='tw'">			      
 					<select name="factNo" id="factNo" onchange="getType(this.value)">
-						<option value="nothing">請選擇</option>
+						<option value="nothing">請選擇廠別</option>
 						<s:iterator value="#session.facts" id="temp">
 							<option value="${temp[0] }">${temp[1]}(${temp[0]})</option>								
 						</s:iterator>
-					</select>
-				  </div>	
-				</s:if> <s:else>
-				  <div id="uboxstyle">
+					</select>				  	
+				</s:if> 
+				<s:else>				  
 					<select name="factNo" id="factNo" onchange="getType(this.value)">
-					    <option value="nothing">請選擇</option>
+					    <option value="nothing">請選擇廠別</option>
 						<option value="<s:property value="#session.factNo"/>">
 							<s:property value="#session.factName" />(<s:property value="#session.factNo"/>)
 						</option>
 					</select>
-				  </div>	
+				  	
 				</s:else></td>
-			<td>類別</td>
-			<td>
-			 <div id="uboxstyle_min">
+			<td>			 
 			 <select name="visaSort" id="visaSort" >
-				            <option value="">請選擇</option>
+				            <option value="">請選擇類別</option>
 				            <%-- <s:iterator value="#session.listkytype">
 				              <option value="<s:property value='id.typeSno'/>"><s:property value='typeSname'/></option>
 				            </s:iterator> --%>
 				            
-				         </select>
-			  </div>	         
+				         </select>			  	         
 			</td>
 			<td><!-- <input type="image" onclick="submis();" src="images/search002.gif"/> -->
-			<input value="搜索" type="button" id="addbtn" onclick="submis()" /></td>
+			<input value="搜索" type="button" class="btn btn-primary" onclick="submis()" /></td>
 		</tr>
 	</table>
-	</div>
 </body>
 </html>
