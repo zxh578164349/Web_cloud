@@ -19,12 +19,12 @@
 <script type="text/javascript" src="jquery/DatePicker/WdatePicker.js"></script>
 <script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script>
 
-<script type="text/javascript" src="jquery_alert_dialogs/jquery.js"></script>
+<!-- <script type="text/javascript" src="jquery_alert_dialogs/jquery.js"></script>
 <script type="text/javascript" src="jquery_alert_dialogs/jquery.alerts.js"></script>	
 <link rel="stylesheet" type="text/css" href="jquery_alert_dialogs/jquery.alerts.css" />	
 <script type="text/javascript" src="jquery_alert_dialogs/jquery.ui.draggable.js"></script>	
 <link rel="stylesheet" type="text/css" href="jquery/loding/ui.loading.css" />	
-<script type="text/javascript" src="jquery/loding/ui.loading.js"></script>
+<script type="text/javascript" src="jquery/loding/ui.loading.js"></script> -->
 <script type="text/javascript">
  
 //var jq=jQuery.noConflict();
@@ -38,42 +38,32 @@ jq(document).keyup(function(event){
 
 </head>
 <body>
-  <div style="width:680px">
    <form id="search_form">
-	<table  border="0px">
+	<table  id="tb_search">
 		<tr>
-			<td>廠別</td>
 			<td><s:if test="#session.factNo=='tw'">
-			    <div id="uboxstyle">
 					<select name="factNo" id="factNo">
-						<option value="">請選擇</option>						
+						<option value="">請選擇廠別</option>						
 						<s:iterator value="#session.facts" id="temp">
 							<option value="${temp[0]}">${temp[1]}(${temp[0]})</option>								
 						</s:iterator>
 					</select>
-					</div>
 				</s:if> 
 				<s:else>
-				  <div id="uboxstyle">
 					<select name="factNo" id="factNo">						
 						<option value="<s:property value="#session.factNo"/>">
 							<s:property value="#session.factName" />(<s:property value="#session.factNo"/>)
 						</option>
 					</select>
-					</div>
 				</s:else></td>
-			<td>單號</td>
-			<td>
-			<!-- <input type="text" id="year" name="yymm" 
-				onClick="WdatePicker({dataFmt:'yyyyMM'})" readonly="readonly" class="Wdate"/> -->
-				<input type="text" name="billNo"/>
+			<td>			
+				單號<input type="text" name="billNo"/>
 			</td>
 			<td>
-			 <input value="搜索" type="button" id="addbtn" onclick="javascript:submis()" />	
+			 <input value="搜索" type="button" class="btn btn-primary" onclick="javascript:submis()" />	
 			</td>
 		</tr>
 	</table>
 	</form>
-	</div>
 </body>
 </html>

@@ -74,9 +74,8 @@ jq(document).keyup(function(event){
 <script type='text/javascript' src='/Login/dwr/util.js'></script> 
 </head>
 <body>
-  <div style="width:1200px">
    <form  method="post" id="public_form">
-	<table  border="0px">
+	<table  id="tb_search">
 		<tr>
 		    <td>
 		    <br>
@@ -105,13 +104,12 @@ jq(document).keyup(function(event){
 		     </select>	
 			</td>			
 			<td>
-			<input value="搜索" type="button" id="addbtn" onclick="submis('public_form')" />
-			<input value="導出Excel" type="button" id="search_forday"  onclick="print('public_form')"/>			
+			<input value="搜索" type="button" class="btn btn-primary" onclick="submis('public_form')" />
+			<input value="導出Excel" type="button" class="btn btn-primary"  onclick="print('public_form')"/>			
 			</td>
 		</tr>
 	</table>
 	</form>
 	 	
-	</div>
 </body>
 </html>

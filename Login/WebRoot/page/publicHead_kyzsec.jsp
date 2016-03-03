@@ -45,24 +45,19 @@
 <body >
 	<table  id="tb_search" >
 		<tr>
-			<td>廠別</td>
 			<td><s:if test="#session.factNo=='tw'">
-			  <div id="uboxstyle">
 					<select name="factNo" id="factNo">
-						<option value="nothing">請選擇</option>
+						<option value="nothing">請選擇廠別</option>
 						<s:iterator value="#session.facts" id="temp">
 							<option value="${temp[0] }">${temp[1]}(${temp[0]})</option>								
 						</s:iterator>
-					</select>
-				</div>	
+					</select>	
 				</s:if> <s:else>
-				 <div id="uboxstyle">
 					<select name="factNo" id="factNo">
 						<option value="<s:property value="#session.factNo"/>">
 							<s:property value="#session.factName" />(<s:property value="#session.factNo"/>)
 						</option>
-					</select>
-				  </div>	
+					</select>	
 				</s:else></td>			
 			<td>組別代號</td>
 			<td><input type="text" name="secNo" value="" id="secNo"/></td> 

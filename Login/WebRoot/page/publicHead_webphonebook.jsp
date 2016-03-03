@@ -80,7 +80,6 @@ window.onload=function(){
 
 </head>
 <body>
-  <div style="width:680px">
    <form id="public_form" method="post">
 	<table  border="0px">
 		<tr>
@@ -104,8 +103,8 @@ window.onload=function(){
 			<td>姓名</td>
 			<td><input type="text" name="userName"></td>
 			<td rowspan="2">
-			 <input value="搜索" type="button" id="addbtn" onclick="javascript:submis('public_form')" />	
-			 <input value="導出Excel" type="button" id="search_forday" onclick="print('public_form')"/>	
+			 <input value="搜索" type="button" class="btn btn-primary" onclick="javascript:submis('public_form')" />	
+			 <input value="導出Excel" type="button" class="btn btn-primary" onclick="print('public_form')"/>	
 			</td>
 		</tr>
 		<tr>
@@ -122,6 +121,5 @@ window.onload=function(){
 		</tr>
 	</table>
 	</form>
-	</div>
 </body>
 </html>

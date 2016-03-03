@@ -21,16 +21,15 @@
 <script type="text/javascript" src="jquery_alert_dialogs/jquery.alerts.js"></script>	
 <link rel="stylesheet" type="text/css" href="jquery_alert_dialogs/jquery.alerts.css" />	
 <script type="text/javascript" src="jquery_alert_dialogs/jquery.ui.draggable.js"></script>
-<link rel="stylesheet" type="text/css" href="css/button_css.css" />
+<!-- <link rel="stylesheet" type="text/css" href="css/button_css.css" />
 <link rel="stylesheet" type="text/css" href="css/general_css.css" />
-<link href="tablecloth/tablecloth.css" rel="stylesheet" type="text/css" media="screen" />
+<link href="tablecloth/tablecloth.css" rel="stylesheet" type="text/css" media="screen" /> -->
 <script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script>
 <script type="text/javascript" src="page/jquerys/layer/layer.min.js"></script>
 <!-- 新 Bootstrap 核心 CSS 文件 -->
 <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
 <script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="page/jquerys/layer/layer.min.js"></script>
 
  <!--[if lt IE 9]>  
   <script src="bootstrap/html5.js"></script>
@@ -112,10 +111,7 @@
 
 	<jsp:include page="publicHead_matterApplication.jsp" flush="true" />
 	<hr />
-	<s:if test='#session.loginUser.userread!="1"'>
-	<input value="添加" type="button" id="addbtn"
-		onclick="javascript:location.href='saveAndUpdate/matterApplicationSaveOrUpdate.jsp'" /></s:if>
-		<!-- <input type="image" src="images/add001.gif" onclick="javascript:location.href='saveAndUpdate/matterApplicationSaveOrUpdate.jsp'"> -->
+			
 	<div id="bodyid">
 		<jsp:include page="table1/matterApplication1.jsp" />
 	</div>

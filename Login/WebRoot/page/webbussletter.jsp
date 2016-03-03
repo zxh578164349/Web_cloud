@@ -21,9 +21,9 @@
 <script type="text/javascript" src="jquery_alert_dialogs/jquery.alerts.js"></script>	
 <link rel="stylesheet" type="text/css" href="jquery_alert_dialogs/jquery.alerts.css" />	
 <script type="text/javascript" src="jquery_alert_dialogs/jquery.ui.draggable.js"></script>
-<link rel="stylesheet" type="text/css" href="css/button_css.css" />
+<!--  <link rel="stylesheet" type="text/css" href="css/button_css.css" />
 <link rel="stylesheet" type="text/css" href="css/general_css.css" />
-<link href="tablecloth/tablecloth.css" rel="stylesheet" type="text/css" media="screen" />
+<link href="tablecloth/tablecloth.css" rel="stylesheet" type="text/css" media="screen" />-->
 <script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script>
 
 <!-- 新 Bootstrap 核心 CSS 文件 -->
@@ -106,10 +106,7 @@
 
 	<jsp:include page="publicHead_webbussletter.jsp" flush="true" />
 	<hr />
-	<s:if test='#session.loginUser.userread!="1"'>
-	<input value="添加" type="button" id="addbtn"
-		onclick="javascript:layer.load('請稍等');location.href='saveAndUpdate/webbussletterSaveOrUpdate.jsp'" /></s:if>
-		<!-- <input type="image" src="images/add001.gif" onclick="javascript:location.href='saveAndUpdate/matterApplicationSaveOrUpdate.jsp'"> -->
+		
 	<div id="bodyid">
 		<jsp:include page="table1/webbussletter1.jsp" />
 	</div>

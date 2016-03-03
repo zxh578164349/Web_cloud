@@ -340,14 +340,14 @@ window.onload=getAllWebbrank;
 					
 					<td class="td_input">
 					 <s:if test="tabpom==null">
-					  <div style="height:80px;overflow:auto">
+					  <div style="height:80px;width:210px;overflow:auto">
 					  <s:iterator value="#session.facts" id="temp">
 					     <div><input type="checkbox" name="list_fact" value="${temp[0]}">${temp[1] }</div>
 					  </s:iterator>
 					  </div>	
 					  </s:if>
 					  <s:else>
-					    <div style="heigth:80px;overflow:auto">					    
+					    <div style="heigth:80px;width:210px;overflow:auto">					    
 					    <s:iterator value="tabpom.webfacts" id="temp2">					     
 					        <div><input type="checkbox" name="list_fact" value="<s:property value='factNo'/>" checked="checked"><s:property value='factSname'/></div>					    
 					  </s:iterator>					 
@@ -482,7 +482,7 @@ window.onload=getAllWebbrank;
 				<tr>
 					<td class="td_show_title">特性說明</td>
 					<td class="td_input" colspan="3">
-					<textarea rows="10" cols="150" name="tabpom.instruction"><s:property value='tabpom.instruction' /></textarea>
+					<textarea style="width:820px;height:100px" name="tabpom.instruction"><s:property value='tabpom.instruction' /></textarea>
 					<input type="hidden" value="<s:property value='#session.loginUser.username'/>" name="tabpom.userName" />
 						<s:if test="tabpom==null">
 						   <input type="hidden" value="<%=str_date%>" name="tabpom.tabpomDate" id="tabpomDate"/>

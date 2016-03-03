@@ -38,6 +38,13 @@
 
 <script>
    var jq=jQuery.noConflict();
+   var loadi;
+   jq(document).ajaxStart(function(){
+	   loadi=layer.load(0);
+   });
+   jq(document).ajaxStop(function(){
+	   layer.close(loadi);
+   });
 	function pages(page) {
 		jq.ajax({
 			type : "POST",
@@ -115,8 +122,7 @@ function showDiv(){
 
 	<jsp:include page="publicHead_kyzsec.jsp" flush="true" />
 	<hr />
-		<s:if test='#session.loginUser.userread!="1"'> 
-		<input value="添加" type="button" id="addbtn" onclick="showDiv()"/></s:if>
+		
 	<div id="bodyid">
 		<jsp:include page="table1/kyzsec1.jsp" />
 	</div>

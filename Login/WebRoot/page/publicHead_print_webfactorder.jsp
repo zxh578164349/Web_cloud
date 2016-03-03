@@ -223,91 +223,160 @@ function clearAll(){
 
 </head>
 <body>
-  <div style="width:850px;border:1px solid grey;text-align:center">
-  <font><b>綜合搜索</b></font>
+  <div>
+  <h2>綜合搜索<h2>
+   
   <form id="public_form" method="post">
-	<table >
-		<tr>
-		    <td class="td_right">工廠</td>
-			<td>
-			   <div id="div_factNos" style="width:400px;height:160px;overflow:auto;border:1px dashed blue;vertical-align:middle">			    
+    <div>
+ <ul id="myTab" class="nav nav-tabs">
+   <li class="active"><a href="#tab_factno" data-toggle="tab">工廠</a></li>         
+   <li><a href="#tab_factarea" data-toggle="tab">廠別狀態</a></li>
+   <li><a href="#tab_brank" data-toggle="tab">品牌</a></li>
+   <li><a href="#tab_customer" data-toggle="tab">客戶</a></li>
+   <li><a href="#tab_model" data-toggle="tab">模型</a></li>
+   <li><a href="#tab_component" data-toggle="tab">部件</a></li>
+   <!--  <li class="dropdown">
+      <a href="#" id="myTabDrop1" class="dropdown-toggle" 
+         data-toggle="dropdown">Java 
+         <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu" role="menu" aria-labelledby="myTabDrop1">
+         <li><a href="#jmeter" tabindex="-1" data-toggle="tab">jmeter</a></li>
+         <li><a href="#ejb" tabindex="-1" data-toggle="tab">ejb</a></li>
+      </ul>
+   </li>-->
+</ul>
+<div id="myTabContent" class="tab-content">
+   <div class="tab-pane fade in active" id="tab_factno">
+       <div id="div_factNos" style="width:400px;height:160px;overflow:auto;border:1px dashed blue;text-align:left">			    
 				  <div><input type="checkbox" id="all_factno" onclick="selectAll('all_factno','factNos'),init()"/>全选</div><hr/>				   						    			    				              
-			   </div>			   	  			
-			</td>
-			<td>廠別狀態</td>
-		      <td>
-		      <!--  <div style="width:400px;height:160px;overflow:auto;border:1px dashed green">
-		      <div><input type="checkbox" id="all_factSname" onclick="selectAll('all_factSname','factSnames'),init2()"/> 全选</div><hr/>				  
-				<div id="div_factSname">
-				  			 			   
-				</div>
-			  </div>-->
-			  
-			  <div style="width:400px;height:160px;overflow:auto;border:1px dashed green">
-		      <div><input type="checkbox" id="all_factArea" onclick="selectAll('all_factArea','factAreas'),init2()"/> 全选</div><hr/>				  
+	</div>
+   </div>
+   <div class="tab-pane fade" id="tab_factarea">
+      <div style="width:400px;height:160px;overflow:auto;border:1px dashed green;;text-align:left">
+		       <div><input type="checkbox" id="all_factArea" onclick="selectAll('all_factArea','factAreas'),init2()"/> 全选</div><hr/>				  
 				<div id="div_factArea">
 				  			 			   
 				</div>
-			  </div>							
+	  </div>	
+   </div>
+   <div class="tab-pane fade" id="tab_brank">
+      <div style="width:400px;height:160px;overflow:auto;border:1px dashed green;text-align:left">
+		       <div><input type="checkbox" id="all_brank" onclick="selectAll('all_brank','branks')"/>全选</div><hr/>
+		       <div id="div_brank">
+		         
+			   </div>
+	  </div>	
+   </div>
+   <div class="tab-pane fade" id="tab_customer">
+      <div style="width:400px;height:160px;overflow:auto;border:1px dashed green;text-align:left">
+		      <div><input type="checkbox" id="all_customer" onclick="selectAll('all_customer','customers')"/>全选</div><hr/>
+		       <div id="div_customer">
+		         
+			   </div>
+	 </div> 	
+   </div>
+   <div class="tab-pane fade" id="tab_model">
+      <div style="width:400px;height:160px;overflow:auto;border:1px dashed #A0522D;text-align:left">
+		       <div><input type="checkbox" id="all_model" onclick="selectAll('all_model','models')"/>全选</div><hr/>
+		       <div id="div_model">
+		         
+			   </div>
+	 </div>	
+   </div>
+   <div class="tab-pane fade" id="tab_component">
+      <div style="width:400px;height:160px;overflow:auto;border:1px dashed #A0522D;text-align:left">
+		         <div><input type="checkbox" id="all_component" onclick="selectAll('all_component','components')"/>全选</div><hr/>	       
+				<div id="div_component">
+				  	
+	  </div>
+	 </div>	
+   </div>
+   <!--  <div class="tab-pane fade" id="jmeter">
+      <p>jMeter 是一款开源的测试软件。它是 100% 纯 Java 应用程序，用于负载和性能测试。</p>
+   </div>
+   <div class="tab-pane fade" id="ejb">
+      <p>Enterprise Java Beans（EJB）是一个创建高度可扩展性和强大企业级应用程序的开发架构，部署在兼容应用程序服务器（比如 JBOSS、Web Logic 等）的 J2EE 上。
+      </p>
+   </div>-->
+</div>
+</div>
+  
+  
+	<table id="tb_search">
+		<%--<tr>
+		    <td class="td_right">工廠</td>
+			<td>
+			   <!--  <div id="div_factNos" style="width:400px;height:160px;overflow:auto;border:1px dashed blue;vertical-align:middle">			    
+				  <div><input type="checkbox" id="all_factno" onclick="selectAll('all_factno','factNos'),init()"/>全选</div><hr/>				   						    			    				              
+			   </div>-->			   			  			   			   	  			
+			</td>
+			<td>廠別狀態</td>
+		      <td>		      			  
+			  <!-- <div style="width:400px;height:160px;overflow:auto;border:1px dashed green">
+		       <div><input type="checkbox" id="all_factArea" onclick="selectAll('all_factArea','factAreas'),init2()"/> 全选</div><hr/>				  
+				<div id="div_factArea">
+				  			 			   
+				</div>
+			  </div>-->							
 			</td>															
 			</tr>
 						
 		    <tr>
 		    <td>品牌</td>
 		    <td>
-		       <div style="width:400px;height:160px;overflow:auto;border:1px dashed green">
+		       <!--  <div style="width:400px;height:160px;overflow:auto;border:1px dashed green">
 		       <div><input type="checkbox" id="all_brank" onclick="selectAll('all_brank','branks')"/>全选</div><hr/>
 		       <div id="div_brank">
 		         
 			   </div>
-			   </div>				
+			   </div>-->				
 		    </td>
 		    <td class="td_right">客户</td>
 		    <td>
-		      <div style="width:400px;height:160px;overflow:auto;border:1px dashed green">
+		      <!--  <div style="width:400px;height:160px;overflow:auto;border:1px dashed green">
 		      <div><input type="checkbox" id="all_customer" onclick="selectAll('all_customer','customers')"/>全选</div><hr/>
 		       <div id="div_customer">
 		         
 			   </div>
-			  </div> 				
+			  </div> -->				
 		    </td>
 		    </tr>
 		    
 		    <tr>
 		    <td>模型</td>
 		    <td>
-		       <div style="width:400px;height:160px;overflow:auto;border:1px dashed #A0522D">
+		       <!--  <div style="width:400px;height:160px;overflow:auto;border:1px dashed #A0522D">
 		       <div><input type="checkbox" id="all_model" onclick="selectAll('all_model','models')"/>全选</div><hr/>
 		       <div id="div_model">
 		         
 			   </div>
-			   </div>
+			   </div>-->
 		    </td>
 		    <td class="td_right">部件</td>
 		    <td>	
-		       <div style="width:400px;height:160px;overflow:auto;border:1px dashed #A0522D">
+		       <!--  <div style="width:400px;height:160px;overflow:auto;border:1px dashed #A0522D">
 		         <div><input type="checkbox" id="all_component" onclick="selectAll('all_component','components')"/>全选</div><hr/>	       
 				<div id="div_component">
 				  	
 				</div>
-			   </div>					
+			   </div>-->					
 		    </td>
-		    </tr>
-		    <tr>
-		       <td colspan="4" >
-		        <div id="div_yymm" style="width:440px">
-		                        開始<input type="text" id="yymm" name="yymm" onClick="WdatePicker({minDate:'2008',maxDate:'#F{$dp.$D(\'yymm2\')||\'%y-{%M-1}\'}',dataFmt:'yyyyMM'})" readonly="readonly" class="Wdate"/>
-			             結束<input type="text" id="yymm2" name="yymm2" onClick="WdatePicker({minDate:'#F{$dp.$D(\'yymm\')}',maxDate:'%y-%M',dataFmt:'yyyyMM'})" readonly="readonly" class="Wdate"/>
-			    
+</tr>--%>
+
+<tr>
+		       <td >
+		        <div id="div_yymm" style="width:440px;float:left">
+		          <input type="text" id="yymm" name="yymm" onClick="WdatePicker({minDate:'2008',maxDate:'#F{$dp.$D(\'yymm2\')||\'%y-{%M-1}\'}',dataFmt:'yyyyMM'})" readonly="readonly" class="Wdate"/>至
+			      <input type="text" id="yymm2" name="yymm2" onClick="WdatePicker({minDate:'#F{$dp.$D(\'yymm\')}',maxDate:'%y-%M',dataFmt:'yyyyMM'})" readonly="readonly" class="Wdate"/>			    
 			     </div>
-			     <input value="搜索" type="button" id="addbtn" onclick="javascript:submis('public_form')" />
-			     <input value="導出Excel" type="button" id="search_forday" onclick="print('public_form')"/>	 
+			     <input value="搜索" type="button" class="btn btn-primary" onclick="javascript:submis('public_form')" />
+			     <input value="導出Excel" type="button" class="btn btn-primary" onclick="print('public_form')"/>	 
 		       </td>
-		    </tr>
+</tr>
 			
-		
-	</table>
-	</form>
-	</div>
+</table>
+</form>
+</div>
 </body>
 </html>

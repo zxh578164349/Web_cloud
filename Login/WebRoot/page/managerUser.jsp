@@ -22,10 +22,10 @@
 <script type="text/javascript" src="jquery/DatePicker/WdatePicker.js"></script>
 <link rel="stylesheet" type="text/css" href="jquery/loding/ui.loading.css" />	
 <script type="text/javascript" src="jquery/loding/ui.loading.js"></script>
-<link rel="stylesheet" type="text/css" href="css/button_css.css" />
+<!--  <link rel="stylesheet" type="text/css" href="css/button_css.css" />
 <link rel="stylesheet" type="text/css" href="css/select_beautiful.css">	
 <link rel="stylesheet" type="text/css" href="css/general_css.css" />
-<link href="tablecloth/tablecloth.css" rel="stylesheet" type="text/css" media="screen" />
+<link href="tablecloth/tablecloth.css" rel="stylesheet" type="text/css" media="screen" />-->
 <!-- 新 Bootstrap 核心 CSS 文件 -->
 <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
@@ -130,9 +130,7 @@ function loaduser(id){
 <body>
 	<jsp:include page="publicHead_webuser.jsp" />
 	<hr />
-	<s:if test='#session.loginUser.userread!="1"'>	
-		<input value="添加新用戶" type="button" id="search_forday" onclick="javascript:location.href='saveAndUpdate/webuserSaveOrUpdate.jsp'"/>
-	</s:if>	
+	
 	<div id="bodyid">
 		<jsp:include page="table1/managerUser1.jsp" />
 	</div>

@@ -19,9 +19,9 @@
 <meta http-equiv="expires" content="0">
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
-<link rel="stylesheet" type="text/css" href="css/mystyle.css" />
+<!-- <link rel="stylesheet" type="text/css" href="css/mystyle.css" />-->
 	<script type="text/javascript">
-	 var defaultColor="#97CBFF";
+	 /*var defaultColor="#97CBFF";
 	 var clickColor="#CCFFFF";
 	 function click_color(obj){
         var tbody=document.getElementById("tbody");
@@ -43,17 +43,19 @@
 	           document.getElementById("a_page").innerHTML="▽";
 	        }
 	    });	   
-	}
+	}*/
 	</script>
- <!--[if lt IE 9]>  
-  <script src="bootstrap/html5.js"></script>
-  <script src="bootstrap/respond.min.js"></script>
-  <![endif]-->	
+
 </head>
 <body>
   <div id="container">
-	<table id="tb" >
-		<caption>簽核心類別管理</caption>
+	<table class="table table-striped table-hover table-bordered" >
+		<h2>
+		<s:if test='#session.loginUser.userread!="1"'>	
+		<input value="添加簽核類別" type="button" class="btn btn-info" onclick="javascript:location.href='saveAndUpdate/webTypeSaveOrUpdate.jsp'"/>
+	    </s:if>
+		簽核心類別管理
+		</h2>
 		<thead>
 			<tr class="tr_show">
 				<th>廠別</th>
@@ -66,7 +68,7 @@
 		</thead>
 		<tbody id="tbody">
 		<s:iterator value="bean.list" status="x" id="temp">
-				<tr onmousemove="click_color(this)" onmouseout="move(this)">
+				<tr>
 					<td><s:property value="id.factNo" /></td>
 					<td><s:property value="id.typeNo" /></td>
 					<td><s:property value="typeName"/></td>

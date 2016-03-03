@@ -46,19 +46,17 @@ jq(document).keyup(function(event) {
 <script type='text/javascript' src='/Login/dwr/util.js'></script>
 </head>
 <body >
-  <div style="width:720px">
-	<table  border=0 >
+	<table  id="tb_search">
 		<tr>
 			<td>科目代號</td>
 			<td><input type="text" name="acctNo" id="acctno"></td>			
 			<td>科目名稱</td>
 			<td><input type="text" name="acctName" value="" id="acctname"/></td> 
 			<td><!-- <input type="image" onclick="javascript:submis();"  src="images/search002.gif"/> -->
-			<input value="搜索" type="button" id="addbtn" onclick="javascript:submis()" />
+			<input value="搜索" type="button" class="btn btn-primary" onclick="javascript:submis()" />
 			</td>			
 		</tr>
 	</table>
-</div>	
 </body>
 </html>
 

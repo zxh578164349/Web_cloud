@@ -19,12 +19,12 @@
 <script type="text/javascript" src="jquery/DatePicker/WdatePicker.js"></script>
 <script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script>
 
-<script type="text/javascript" src="jquery_alert_dialogs/jquery.js"></script>
+<!--  <script type="text/javascript" src="jquery_alert_dialogs/jquery.js"></script>
 <script type="text/javascript" src="jquery_alert_dialogs/jquery.alerts.js"></script>	
 <link rel="stylesheet" type="text/css" href="jquery_alert_dialogs/jquery.alerts.css" />	
 <script type="text/javascript" src="jquery_alert_dialogs/jquery.ui.draggable.js"></script>	
 <link rel="stylesheet" type="text/css" href="jquery/loding/ui.loading.css" />	
-<script type="text/javascript" src="jquery/loding/ui.loading.js"></script>
+<script type="text/javascript" src="jquery/loding/ui.loading.js"></script>-->
 <script type="text/javascript">
  
 //var jq=jQuery.noConflict();
@@ -48,9 +48,8 @@ window.onload=getAllWebbrank;
 
 </head>
 <body>
-  <div style="width:1200px">
   <form id="public_form" method="post">
-	<table  border="0px">
+	<table id="tb_search">
 		<tr>
 			<td>物料名稱</td>
 			<td>
@@ -60,14 +59,13 @@ window.onload=getAllWebbrank;
 			<td>
 			   <select name="brank" id="dwrWebbrank"></select>
 			</td>
-			<td>年月</td>
 			<td>
-			  開始日期:<input type="text" id="year" name="yymm" onClick="WdatePicker({dataFmt:'yyyyMM'})" readonly="readonly" class="Wdate"/></br>
-			  結束日期:<input type="text" id="year" name="yymm2" onClick="WdatePicker({dataFmt:'yyyyMM'})" readonly="readonly" class="Wdate"/>			
+			  <input type="text" id="year" name="yymm" onClick="WdatePicker({dataFmt:'yyyyMM'})" readonly="readonly" class="Wdate"/>至
+			  <input type="text" id="year" name="yymm2" onClick="WdatePicker({dataFmt:'yyyyMM'})" readonly="readonly" class="Wdate"/>			
 			</td>
 			<td>
-			 <input value="搜索" type="button" id="addbtn" onclick="submis('public_form')" />
-			 <input value="導出Excel" type="button" id="search_forday" onclick="print('public_form')"/>	
+			 <input value="搜索" type="button" class="btn btn-primary" onclick="submis('public_form')" />
+			 <input value="導出Excel" type="button" class="btn btn-primary" onclick="print('public_form')"/>	
 			</td>
 		</tr>
 	</table>

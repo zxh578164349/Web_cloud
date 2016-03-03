@@ -488,6 +488,10 @@ select{
 #tb_search input[type=text],#tb_search select{
 	height:30px;
 	height: 30px \9;/*IE*/
-} 
+}
+.tb_search input[type=text],.tb_search select{
+	height:30px;
+	height: 30px \9;/*IE*/
+}
 
 
