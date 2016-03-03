@@ -23,15 +23,14 @@
 <script type="text/javascript" src="jquery/DatePicker/WdatePicker.js"></script>
 <link rel="stylesheet" type="text/css" href="jquery/loding/ui.loading.css" />	
 <script type="text/javascript" src="jquery/loding/ui.loading.js"></script>
-<link rel="stylesheet" type="text/css" href="css/button_css.css" />
+<!--<link rel="stylesheet" type="text/css" href="css/button_css.css" />
 <link rel="stylesheet" type="text/css" href="css/select_beautiful.css">	
 <link rel="stylesheet" type="text/css" href="css/general_css.css" />
-<link href="tablecloth/tablecloth.css" rel="stylesheet" type="text/css" media="screen" />
+<link href="tablecloth/tablecloth.css" rel="stylesheet" type="text/css" media="screen" />-->
 <!-- 新 Bootstrap 核心 CSS 文件 -->
 <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
 <script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="page/jquerys/layer/layer.min.js"></script>
 </head>
 <script type="text/javascript">
 	var jq=jQuery.noConflict();
@@ -128,9 +127,7 @@ function findById(factno,email,emailpwd,visasort){
 <body>
 	<jsp:include page="publicHead_webuseremail_A.jsp" />
 	<hr />
-	<s:if test='#session.loginUser.userread!="1"'>	
-		<input value="添加知會人" type="button" id="search_forday" onclick="javascript:location.href='saveAndUpdate/webuseremailaSaveOrUpdate.jsp'"/>
-	</s:if>	
+	
 	<div id="bodyid">
 		<jsp:include page="table1/managerUserEmail1_A.jsp" />
 	</div>

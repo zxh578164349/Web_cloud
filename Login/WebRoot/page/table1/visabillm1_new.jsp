@@ -19,12 +19,12 @@
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
 <!-- 分頁樣式 -->
-<link rel="stylesheet" type="text/css" href="css/mystyle.css" />
+<!--  <link rel="stylesheet" type="text/css" href="css/mystyle.css" />-->
 <script type="text/javascript" src="jquery/Validform_v5.3.2_min.js"></script>
 <script type="text/javascript">
 
 	
-	var defaultColor="#97CBFF";
+	/*var defaultColor="#97CBFF";
 	 var clickColor="#CCFFFF";
 	 function click_color(obj){
         var tbody=document.getElementById("tbody");
@@ -46,7 +46,7 @@
 	           document.getElementById("a_page").innerHTML="▽";
 	        }
 	    });	   
-	}
+	}*/
 </script>
 
 </head>
@@ -54,8 +54,8 @@
 <body>
   <div id="container">
     <div id="content">
-	<table id="tb" >
-		<caption>函文審核</caption>
+	<table class="table table-striped table-hover table-bordered" >
+		<h2>函文審核</h2>
 		<thead>			
 			<tr class="tr_show">
 				<th>序號</th>
@@ -107,8 +107,9 @@
 				</td>
 				<s:if test='#session.loginUser.userread!="1"'>														
 			 	<td>
-			 	<ul>
-			 	    <li>
+			 	<table>
+			 	  <tr>
+			 	    <td>
 					 <form action="vbm_findById" method="post" id="0form${x.index}" style="float:left">
 					   <input type="hidden" value="<s:property value='id.kyVisabillm.id.factNo'/>"
 							name="factNo" /> <input type="hidden"
@@ -160,60 +161,61 @@
 							value="<s:property value='id.kyVisabillm.id.billNo'/>" name="billNo" />
 							<input type="hidden" value="<s:property value='id.kyVisabillm.id.visaSort'/>" name="visaSort"/>													
 					</form>
-				    </li>	 
+				    </td>	 
 					<s:if test='#session.loginUser.userread!="1"'>
-					<li>					
+					<td>					
 					<a href="javascript:layer.load(0);document.getElementById('0form${x.index}').submit()" >
 					<img alt="審核" src="images/icon/check24.png" title="審核"><br>審核
 					</a>
-					</li>
+					</td>
 					<s:if test='id.kyVisabillm.visaMk=="N"'>
-					<li>
+					<td>
 					 <a href="javascript:layer.load(0);document.getElementById('1form${x.index}').submit()"><img alt="加簽" src="images/icon/add24.png" title="加簽"><br>加簽</a>
-					</li>
+					</td>
 					 <s:if test='#session.loginUser.factno=="JW"'>
-					<li>
+					<td>
 					 <a href="javascript:layer.load(0);document.getElementById('3form${x.index}').submit()"><img alt="減簽" src="images/icon/minus24.png" title="減簽"><br>減簽</a>					 
-					 </li>
+					 </td>
 					 </s:if>
-					 <li>
+					 <td>
 					   <a href="javascript:layer.load(0);document.getElementById('3_3form${x.index}').submit()"><img alt="減簽(带删除)" src="images/icon/remove.png" title="減簽(带删除)"><br>減簽D</a>
-					 </li>
+					 </td>
 					 </s:if>
 					 <s:else>
-					 <li>
+					 <td>
 					   <a><img alt="加簽" src="images/icon/add24_1.jpg" title="加簽"><br>加簽</a>
-					 </li>
+					 </td>
 					 <s:if test='#session.loginUser.factno=="JW"'>
-					 <li>
+					 <td>
 					   <a><img alt="減簽" src="images/icon/minus24_1.jpg" title="減簽"><br>減簽</a>
-					 </li>
+					 </td>
 					 </s:if>
-					 <li>
+					 <td>
 					   <a><img alt="減簽(带删除)" src="images/icon/remove_1.png" title="減簽(带删除)"><br>減簽D</a>
-					 </li>    
+					 </td>    
 					 </s:else>											   					 					 						
 					 </s:if>
 								    					 
-					 <li>
+					 <td>
 					 <a href="javascript:goPreviewOrPrint('4subform${x.index}','${temp.id.kyVisabillm.id.billNo}')" ><img alt="預覽" src="images/icon/view24.png" title="預覽"><br>預覽</a>
-					 </li>
-					 <li>
+					 </td>
+					 <td>
 					 <a href="javascript:goPreviewOrPrint('5subform${x.index}','${temp.id.kyVisabillm.id.billNo}')"><img alt="打印" src="images/icon/print24.png" title="打印"><br>打印</a>
-				     </li>
+				     </td>
 				    	
 				     
 				     <s:if test='#session.loginUser.username=="admin"'>
 				     <s:if test='id.kyVisabillm.visaMk=="N"&&id.kyVisabillm.emailMk==null'>
-				        <li>
+				        <td>
 				            <a href="javascript:document.getElementById('8subform${x.index}').submit()">Email</a>
-				        </li> 
+				        </td> 
 				     </s:if>
 				     <s:else>
 				          <font color="grey">Email</font>
 				     </s:else>
 				     </s:if>
-				</ul>
+				     </tr>
+				</table>
 				</td> 
 				</s:if>	
 			</tr>		 		  

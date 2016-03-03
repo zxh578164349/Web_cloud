@@ -16,9 +16,9 @@
 <meta http-equiv="expires" content="0">
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
-<link rel="stylesheet" type="text/css" href="css/button_css.css" />
+<!--  <link rel="stylesheet" type="text/css" href="css/button_css.css" />
 <link rel="stylesheet" type="text/css" href="css/general_css.css" />
-<link href="tablecloth/tablecloth.css" rel="stylesheet" type="text/css" media="screen" />
+<link href="tablecloth/tablecloth.css" rel="stylesheet" type="text/css" media="screen" />-->
 <script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script>
 <script type="text/javascript" src="page/jquerys/layer/layer.min.js"></script>
 <script type="text/javascript" src="jquery/jquery-form.js"></script>
@@ -250,20 +250,20 @@ function showDiv(){
 	<form  method="post" enctype="multipart/form-data" id="upload_form">
 	  <table>
 	      <td>	 
-	         <input type="file" name="file" style="width:150px" id="id_file"/> 	        	       
+	         <input type="file" name="file" style="width:150px" id="id_file" class="btn btn-info"/>	        	       
 	       </td>
 	       <td>
-	       	    <input value="導入Excel" type="submit" id="search_forday" />
+	       	    <input value="導入Excel" type="submit" id="search_forday" class="btn btn-info"/>
 	       </td>
 	  </table>          	
 	</form>
-	<hr/>
-	<%-- <input value="添加" type="button" id="addbtn" onclick="javascript:location.href='saveAndUpdate/WebProdutedSaveOrUpdate.jsp'" />--%>
-	
-	
+	<hr/>			
 	<div id="bodyid">
 		<jsp:include page="table1/webfactOrder1.jsp" />
 	</div>
+	
+	
+	
 </div>	
 </body>
 </html>

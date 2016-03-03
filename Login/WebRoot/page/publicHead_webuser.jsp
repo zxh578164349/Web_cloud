@@ -38,13 +38,11 @@ jq(document).keyup(function(event){
 
 </head>
 <body>
-  <div style="width:680px">
-	<table  border="0px">
+	<table  id="tb_search">
 		<tr>
-			<td>廠別</td>
 			<td><s:if test="#session.factNo=='tw'">			    
 					<select name="factNo" id="factNo">						
-						<option value="">全部</option>		
+						<option value="">請選擇廠別</option>		
 						<option value="tw">TW</option>					
 						<s:iterator value="#session.facts" id="temp">
 							<option value="${temp[0]}">${temp[1]}(${temp[0]})</option>								
@@ -62,10 +60,9 @@ jq(document).keyup(function(event){
 			<td>帳號</td>
 			<td><input type="text" id="conditions">&nbsp;&nbsp;(請輸入姓名或登錄名查詢)</td>
 			<td>
-			 <input value="搜索" type="button" id="addbtn" onclick="javascript:submis()" />		
+			 <input value="搜索" type="button" class="btn btn-primary" onclick="javascript:submis()" />		
 			</td>
 		</tr>
 	</table>
-	</div>
 </body>
 </html>

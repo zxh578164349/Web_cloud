@@ -16,16 +16,15 @@
 <meta http-equiv="expires" content="0">
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
-
- <LINK href="css/list.css" type="text/css" rel="stylesheet"> 
+ 
 <script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script> 	
 <script type="text/javascript" src="jquery/DatePicker/WdatePicker.js"></script>
 <link rel="stylesheet" type="text/css" href="jquery/loding/ui.loading.css" />	
 <script type="text/javascript" src="jquery/loding/ui.loading.js"></script>
-<link rel="stylesheet" type="text/css" href="css/button_css.css" />
+<!-- <link rel="stylesheet" type="text/css" href="css/button_css.css" />
 <link rel="stylesheet" type="text/css" href="css/select_beautiful.css">	
 <link rel="stylesheet" type="text/css" href="css/general_css.css" />
-<link href="tablecloth/tablecloth.css" rel="stylesheet" type="text/css" media="screen" />
+<link href="tablecloth/tablecloth.css" rel="stylesheet" type="text/css" media="screen" />-->
 <!-- 新 Bootstrap 核心 CSS 文件 -->
 <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
@@ -207,18 +206,12 @@ function print(subform){
 	<hr />								  	       	       	     		
 	<form  method="post" enctype="multipart/form-data" id="upload_form">
 	<table>
-	  <tr>
-	   <s:if test='#session.loginUser.userread!="1"'>
+	  <tr>	   
 	   <td>
-	      <input value="添加新用戶" type="button" id="search_forday" onclick="javascript:location.href='saveAndUpdate/webphonebookSaveOrUpdate.jsp'"/> 
-	      &nbsp;&nbsp;
+	        <input value="導入Excel" type="submit" class="btn btn-info" />			  
 	   </td>
-	   </s:if>
-	   <td>
-	    <input value="導入Excel" type="submit" id="search_forday" />	      
-	   </td>
-	   <td>
-	     <input type="file" name="file" style="width:150px" id="id_file"/>
+	   <td>	
+	       <input type="file" name="file" style="width:150px" id="id_file" class="btn btn-info"/>     
 	   </td>
 	  </tr>
 	</table>

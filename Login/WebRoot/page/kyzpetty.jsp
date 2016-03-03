@@ -20,16 +20,32 @@
 
 
 <link rel="stylesheet" type="text/css" href="jquery_alert_dialogs/jquery.alerts.css" />	
-<link rel="stylesheet" type="text/css" href="css/button_css.css" />
+<!--  <link rel="stylesheet" type="text/css" href="css/button_css.css" />
 <link rel="stylesheet" type="text/css" href="css/general_css.css" />
-<link href="tablecloth/tablecloth.css" rel="stylesheet" type="text/css" media="screen" />
+<link href="tablecloth/tablecloth.css" rel="stylesheet" type="text/css" media="screen" />-->
 <script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script>
 <script type="text/javascript" src="page/jquerys/layer/layer.min.js"></script>
+<!-- 新 Bootstrap 核心 CSS 文件 -->
+<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+<script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="page/jquerys/layer/layer.min.js"></script>
 
+ <!--[if lt IE 9]>  
+  <script src="bootstrap/html5.js"></script>
+  <script src="bootstrap/respond.min.js"></script>
+  <![endif]-->
 </head>
 
 <script>
    var jq=jQuery.noConflict();
+   var loadi;
+	jq(document).ajaxStart(function(){
+		loadi=layer.load(0);
+	});
+	jq(document).ajaxStop(function(){
+		layer.close(loadi);
+	});
 	function pages(page) {
 		jq.ajax({
 			type : "POST",
@@ -46,7 +62,6 @@
 	}
 	
 		function submis() {
-		var loadi=layer.load(0);
 		var factno = document.getElementById("factNo");
 		var yymm=document.getElementById("year");
 		
@@ -56,7 +71,6 @@
 			url : "kyzpetty_findPageBean2",
 			data : "factNo=" + factno.value +"& yymm="+yymm.value,
 			success : function(msg) {
-			    layer.close(loadi);
 				jq("#bodyid").html(msg);				
 			},
 			error : function(xhr) {
@@ -168,16 +182,11 @@ function showDiv(){
 
 <body>
 	<jsp:include page="publicHead.jsp"/>
-	<hr>	
-	<!-- <input value="添加" type="button" id="addbtn"
-		onclick="javascript:location.href='saveAndUpdate/kyzacctSaveOrUpdate.jsp'" /> -->
-		<s:if test='#session.loginUser.userread!="1"'>
-		<input value="添加" type="button" id="addbtn"
-		onclick="javascript:showDiv()" /></s:if>
-		<br>
-	<span style="float:right;padding-bottom:0"> <img alt="" src="images/136.gif"><a
-		href="javascript:showDiv_print()" 
-		style="color:blue;text-decoration:underline;float:right;padding-right:30px">零用金報表打印</a>
+	<hr>		
+				
+	<span style="float:right;padding-bottom:0">
+		 <input type="button" onclick="javascript:showDiv_print()" 
+		class="btn btn-link" value="零用金報表打印"/>
 	</span>	
 	<div id="bodyid">
 		<jsp:include page="table1/kyzpetty1.jsp" />

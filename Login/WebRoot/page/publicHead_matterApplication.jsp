@@ -58,13 +58,11 @@
 <script type='text/javascript' src='/Login/dwr/util.js'></script>
 </head>
 <body >
-  <div style="width:1100px">
-	<table  border=0 >
+	<table  id="tb_search" >
 		<tr>
-			<td>廠別</td>
 			<td><s:if test="#session.factNo=='tw'">			   
 					<select name="factNo" id="factNo" onchange="getType(this.value)">
-						<option value="nothing">請選擇</option>
+						<option value="nothing">請選擇廠別</option>
 						<s:iterator value="#session.facts" id="temp">
 							<option value="${temp[0]}">${temp[1]}(${temp[0]})</option>								
 						</s:iterator>
@@ -72,41 +70,29 @@
 				</s:if> 
 				<s:else>
 					<select name="factNo" id="factNo" onchange="getType(this.value)">
-					    <option value="nothing">請選擇</option>
+					    <option value="nothing">請選擇廠別</option>
 						<option value="<s:property value="#session.factNo"/>">
 							<s:property value="#session.factName" />(<s:property value="#session.factNo"/>)
 						</option>
 					</select>			
-				</s:else></td>
-			<td>類別</td>
-			<td>
-			 <div id="uboxstyle_min">
-			 <select name="visaSort" id="visaSort" onchange="alert(this.value)">
-				            <option value="">請選擇</option>
-				            <%-- <s:iterator value="#session.listkytype">
-				              <option value="<s:property value='id.typeSno'/>"><s:property value='typeSname'/></option>
-				            </s:iterator> --%>
-				            
-				            
-				         </select>
-			 </div>	         
-			</td>
+				</s:else>
 			
-			<td>單號</td>
-			<td><input type="text" name="billNo" value="" id="billNo"/></td> 
-			<td>
-			<input value="搜索" type="button" id="addbtn" onclick="javascript:submis()" />
-			</td>			
+			 <select name="visaSort" id="visaSort" onchange="alert(this.value)">
+				            <option value="">請選擇類別</option>				            				            				            
+				         </select>         
+							
+			單號<input type="text" name="billNo" value="" id="billNo"/>
+			</td> 						
 		</tr>
 		<tr>
-		  <td>日期始</td>
 			<td><input type="text" id="yymmdd" name="yymmdd" 
-				onClick="WdatePicker()" readonly="readonly" class="Wdate"/></td>
-          <td>日期止</td>
-			<td><input type="text" id="yymmdd2" name="yymmdd2" 
-				onClick="WdatePicker()" readonly="readonly" class="Wdate"/></td> 		</tr>
+				onClick="WdatePicker()" readonly="readonly" class="Wdate"/>至
+			<input type="text" id="yymmdd2" name="yymmdd2" 
+				onClick="WdatePicker()" readonly="readonly" class="Wdate"/>
+			<input value="搜索" type="button" class="btn btn-primary" onclick="javascript:submis()" />
+			</td>
+		</tr>
 	</table>
-</div>	
 </body>
 </html>
 

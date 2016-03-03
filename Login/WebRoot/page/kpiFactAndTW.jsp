@@ -18,11 +18,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 	<meta http-equiv="description" content="This is my page">
 	<meta http-equiv="X-UA-Compatible" content="IE=Edge,Chrome=1">
-<link rel="stylesheet" type="text/css" href="css/form.css" />	
+	<link rel="stylesheet" type="text/css" href="css/select_beautiful.css">		
 <script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script> 
 <script type="text/javascript" src="page/jquerys/layer/layer.min.js"></script>
 <script type="text/javascript" src="jquery/Validform_v5.3.2_min.js"></script>
 <script type="text/javascript" src="jquery/DatePicker/WdatePicker.js"></script>
+<!-- 新 Bootstrap 核心 CSS 文件 -->
+<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+<script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+
+
+ <!--[if lt IE 9]>  
+  <script src="bootstrap/html5.js"></script>
+  <script src="bootstrap/respond.min.js"></script>
+  <![endif]-->	
 <script type="text/javascript">
     var j=jQuery.noConflict();
     j(
@@ -116,29 +126,23 @@ function checkdate(){
 <script type='text/javascript' src='/Login/dwr/interface/kpifactjs.js'></script>
 <script type='text/javascript' src='/Login/dwr/engine.js'></script>
 <script type='text/javascript' src='/Login/dwr/util.js'></script>
-<style type="text/css">
-table{width:700px}
- #table_fact{width:920px}  
 
-</style>
   </head>
   
   <body>
+  <h2>KPI-工廠</h2>
     <form action="vkpifact_print_fact" method="post" id='subform1' target="_blank">
-       <table id="table_fact">
-          <caption>KPI-工廠</caption>
+       <table id="table_fact" class="tb_search"> 
+          <caption>全年報表</caption>        
           <tr>
-          <td>(全年)</td>
-          <td>年份</td>
           <td class="td_input">
-          <input type="text" name="year" onclick="WdatePicker({dateFmt:'yyyy'})" datatype="*" id="year" onchange="checkdate()"/>         
+          <input type="text" name="year" onclick="WdatePicker({dateFmt:'yyyy'})" datatype="*" id="year" onchange="checkdate()" class="Wdate"/>         
           </td>
-          <td>工廠</td>
           <td class="td_input">
-             <s:if test="#attr.factNo=='tw'">			    
+             <s:if test="#session.factNo=='tw'">			    
 					<select name="factNo" id="factNo" datatype="*" onchange="checkdate()">
-						<option value="">請選擇</option>						
-						<s:iterator value="#attr.facts" id="temp">
+						<option value="">請選擇工廠</option>						
+						<s:iterator value="#session.facts" id="temp">
 							<option value="${temp[0]}">${temp[1]}(${temp[0]})</option>								
 						</s:iterator>
 					</select>
@@ -146,9 +150,9 @@ table{width:700px}
 				</s:if> 
 				<s:else>				  
 					<select name="factNo" id="factNo" datatype="*" onchange="checkdate()">
-					    <option value="">請選擇</option>
-						<option value="<s:property value="#attr.factNo"/>">
-							<s:property value="#attr.factName" />(<s:property value="#attr.factNo"/>)
+					    <option value="">請選擇工廠</option>
+						<option value="<s:property value="#session.factNo"/>">
+							<s:property value="#session.factName" />(<s:property value="#session.factNo"/>)
 						</option>
 					</select>
 					
@@ -159,50 +163,49 @@ table{width:700px}
             <select name="yymm" id="dwr_yymm">                 
             </select>
           </td>
-          <td><input type="button" id="btn1" value="確定"/></td>
+          <td><input type="button" id="btn1" class="btn btn-primary" value="確定"/></td>
           </tr>
        </table>
     </form>
     <hr>
     <form action="vkpifact_print_month" method="post" id="subform2" target="_blank">
-      <table>
+      <table class="tb_search">
+        <caption>月份報表</caption>
          <tr>
-          <td>(分段)</td>
            <td>
-                                開始&nbsp;<input type="text" id="begin" name="yymm_begin" datatype="*" onclick="WdatePicker({minDate:'{%y-1}-%m',maxDate:'#F{$dp.$D(\'end\',{M:-1})||\'%y-{%M-1}\'}'})" class="Wdate" ><br>
-                                結束&nbsp;<input type="text" id="end" name="yymm_end" datatype="*" onclick="WdatePicker({minDate:'#F{$dp.$D(\'begin\',{M:0})}',maxDate:'%y-%M'})" class="Wdate">
+               <input type="text" id="begin" name="yymm_begin" datatype="*" onclick="WdatePicker({minDate:'{%y-1}-%m',maxDate:'#F{$dp.$D(\'end\',{M:-1})||\'%y-{%M-1}\'}'})" class="Wdate" >至
+               <input type="text" id="end" name="yymm_end" datatype="*" onclick="WdatePicker({minDate:'#F{$dp.$D(\'begin\',{M:0})}',maxDate:'%y-%M'})" class="Wdate">
           </td>
-          <td>工廠</td>
           <td class="td_input">
-             <s:if test="#attr.factNo=='tw'">			    
+             <s:if test="#session.factNo=='tw'">			    
 					<select name="factNo"  datatype="*">
-						<option value="">請選擇</option>						
-						<s:iterator value="#attr.facts" id="temp">
+						<option value="">請選擇工廠</option>						
+						<s:iterator value="#session.facts" id="temp">
 							<option value="${temp[0]}">${temp[1]}(${temp[0]})</option>								
 						</s:iterator>
 					</select>					
 				</s:if> 
 				<s:else>				  
 					<select name="factNo"  datatype="*">
-						<option value="<s:property value="#attr.factNo"/>">
-							<s:property value="#attr.factName" />(<s:property value="#attr.factNo"/>)
+						<option value="<s:property value="#session.factNo"/>">
+							<s:property value="#session.factName" />(<s:property value="#session.factNo"/>)
 						</option>
 					</select>
 					
 				</s:else>
           </td>
-          <td><input type="button" id="btn2" value="確定"/></td>
+          <td><input type="button" id="btn2" class="btn btn-primary" value="確定"/></td>
           </tr>
       </table>
     </form>
     <hr >
     <s:if test='#session.factNo=="tw"'>
     <hr>
+    <h2>KPI-台灣</h2>
     <form action="vkpifact_print_tw" method="post" id="subform3" target="_blank">
-        <table>
-          <caption>KPI-台灣</caption>
+        <table class="tb_search">
           <tr>
-          <td>日期</td><td><input type="text" name="yymm" datatype="*" onclick="WdatePicker()" class="Wdate"></td><td><input type="button" id="btn3" value="確定"/></td>
+          <td><input type="text" name="yymm" datatype="*" onclick="WdatePicker()" class="Wdate"></td><td><input type="button" class="btn btn-primary" id="btn3" value="確定"/></td>
           </tr>
         </table>
          <hr>
