@@ -65,7 +65,8 @@
 				url:"userlogin",
 				success:function(data){
 					 if(data=='0'){
-						 location.href="test.jsp"; 
+						 //location.href="test.jsp";
+						 location.href="main.jsp";
 					  }
 					  if(data=='1'){
 						  alert("當前賬號已註銷!");

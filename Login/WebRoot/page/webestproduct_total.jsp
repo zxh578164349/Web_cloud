@@ -20,12 +20,20 @@
 <meta http-equiv="expires" content="0">
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
-<link rel="stylesheet" type="text/css" href="css/form.css" />
+<link rel="stylesheet" type="text/css" href="css/select_beautiful.css">
 <script type="text/javascript" src="page/jquerys/jquery-1.9.1.min.js"></script>
-<script type="text/javascript"
-	src="page/jquerys/Validform_v5.3.2_min.js"></script>
-<script type="text/javascript"
-	src="jquerys/DatePicker/my2_WdatePicker.js"></script>
+<script type="text/javascript" src="page/jquerys/Validform_v5.3.2_min.js"></script>	
+<script type="text/javascript" src="jquerys/DatePicker/my2_WdatePicker.js"></script>
+<!-- 新 Bootstrap 核心 CSS 文件 -->
+<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+<script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+
+
+ <!--[if lt IE 9]>  
+  <script src="bootstrap/html5.js"></script>
+  <script src="bootstrap/respond.min.js"></script>
+  <![endif]-->		
 <script type="text/javascript">
 
 
@@ -58,8 +66,8 @@
 
 <body>
 	<form action="webestpro_print" method="post" id="subform" target="_blank">
-		<table>
-		  <caption>預計生產與請款匯總</caption>
+	<h2>預計生產與請款匯總</h2>
+		<table id="tb_search">
 			<tr>
 				<td><input type="text" name="yymm" onClick="WdatePicker()"
 					readonly="readonly" class="Wdate" datatype="*" id="iyymm" /><span
@@ -67,10 +75,10 @@
 					<input type="hidden" name="lookordown" id="lookordown"/>
 				</td>
 				<td>
-				    <input type="button" value="預覽" onclick="look()"/>&nbsp;&nbsp;
-				    <input type="button" value="下載" onclick="down()" />&nbsp;&nbsp;
-					<input type="button" value="返回"
-					onclick="javascript:location.href='webestpro_findPageBean'" />
+				    <input type="button" value="預覽" onclick="look()" class="btn btn-primary"/>&nbsp;&nbsp;
+				    <input type="button" value="下載" onclick="down()" class="btn btn-primary"/>&nbsp;&nbsp;
+					<input type="button" value="返回" onclick="javascript:location.href='webestpro_findPageBean'" class="btn btn-primary"/>
+					
 				</td>
 			</tr>
 		</table>

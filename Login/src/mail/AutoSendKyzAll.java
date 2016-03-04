@@ -44,6 +44,7 @@ import services.IKyzExpectmatmServices;
 import services.IKyzVisaFlowServices;
 import services.IWebBussinessletterServices;
 import services.IWebFactServices;
+import services.IWebuserEmailAServices;
 import services.IWebuserEmailServices;
 import util.GlobalMethod;
 import util.JasperHelper;
@@ -729,7 +730,8 @@ public class AutoSendKyzAll extends QuartzJobBean{
 	public void sendEmail(String local_factNo,String local_billNo,String local_visaSort,KyVisabillm vbm2,ApplicationContext ac){
 		//ApplicationContext ac=new ClassPathXmlApplicationContext(new String[]{"spring.xml","spring-dao.xml","spring-services.xml"});
 		//IKyVisabillmServices visabillmSer=(IKyVisabillmServices)ac.getBean("visabillmSer");
-		IWebuserEmailServices webuseremailSer=(IWebuserEmailServices)ac.getBean("webuseremailSer");
+		//IWebuserEmailServices webuseremailSer=(IWebuserEmailServices)ac.getBean("webuseremailSer");/****備簽人****/
+		IWebuserEmailAServices webuseremailaSer=(IWebuserEmailAServices)ac.getBean("webuseremailaSer");/******知會人********/
 		//KyVisabillm vbm2=visabillmSer.findById(local_factNo, local_visaSort, local_billNo);//用參數傳遞vbm,減少連接數據庫
 		List<KyVisabills>list_visa2=vbm2.getKyVisabillses();
 		//这个类主要是设置邮件   
@@ -773,20 +775,24 @@ public class AutoSendKyzAll extends QuartzJobBean{
 				mailInfo.setToAddress(emailPwd);
 				sms.sendHtmlMail(mailInfo);// 发送html格式
 			}*/
-			List<String>list_emailPwd=webuseremailSer.findByFactNoAEmailPwd2(local_factNo,list_visa2.get(i).getVisaSigner());
-			if(list_emailPwd.size()>0){//if
-				for(int j=0;j<list_emailPwd.size();j++){
-					mailInfo.setValidate(true);					
-					mailInfo.setSubject("函文知會定時通知(審核完畢)_" + local_billNo + "("
-							+ local_factNo + ")");
-					mailInfo.setAttachFileNames(attachFileNames);
-					mailInfo.setContent("單號為:" + "<span style='color:red'>"
-							+ local_billNo + "</span>" + "的函文已審核完畢,請查看附件"
-							+ "<br/>本郵件自動定時發送，請勿回覆");
-					mailInfo.setToAddress(list_emailPwd.get(j));
-					sms.sendHtmlMail(mailInfo);// 发送html格式
-				}
-			}//if
+			//List<String>list_emailPwd=webuseremailSer.findByFactNoAEmailPwd2(local_factNo,list_visa2.get(i).getVisaSigner());
+			
+			if(list_visa2.get(i).getFlowMk().equals("Y")){//要簽核的人才需要通知知會人20160304
+				List<String>list_emailPwd=webuseremailaSer.findByEmail(local_factNo,list_visa2.get(i).getVisaSigner(),local_visaSort);
+				if(list_emailPwd.size()>0){//if
+					for(int j=0;j<list_emailPwd.size();j++){
+						mailInfo.setValidate(true);					
+						mailInfo.setSubject("函文知會定時通知(審核完畢)_" + local_billNo + "("
+								+ local_factNo + ")");
+						mailInfo.setAttachFileNames(attachFileNames);
+						mailInfo.setContent("單號為:" + "<span style='color:red'>"
+								+ local_billNo + "</span>" + "的函文已審核完畢,請查看附件"
+								+ "<br/>本郵件自動定時發送，請勿回覆");
+						mailInfo.setToAddress(list_emailPwd.get(j));
+						sms.sendHtmlMail(mailInfo);// 发送html格式
+					}
+				}//if
+			}			
 		}//for
 	       
 	          File file = new File("d:/" + local_billNo + ".pdf");
