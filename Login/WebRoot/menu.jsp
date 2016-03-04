@@ -73,8 +73,10 @@ a:hover{text-decoration:none; border-bottom:1px red solid;color:red;}
 
 
 </style>
-<body>		
-	
+<body>	
+<div class="container-fluid">
+	<div class="row-fluid">
+		<div class="span12">		
         <div class="panel panel-info">
           <div class="panel-heading">
               <a href="right.jsp" style="border-bottom:0px" title="返回首頁" target="show" onclick="window.parent.showPop()">					      
@@ -82,18 +84,16 @@ a:hover{text-decoration:none; border-bottom:1px red solid;color:red;}
 					        <a href="right.jsp" style="color:black;" title="返回首頁" target="show" onclick="window.parent.showPop()">
 						              網站首頁</a>
           </div>              
-            <div class="panel-body">            　　　　　　　　　　
-              　　　　
-			<s:iterator value="#session.loginUser.webJurisdictions" status="x"
-				id="menu">
+          <div class="panel-body">            　　　　　　　　　　           　　　　
+			<s:iterator value="#session.loginUser.webJurisdictions" status="x" id="menu">				
 				<div>
 					<img style="border: 0px;" id="img${x.index}" src="image/folder.gif">							
 					<a href="javascript:showDiv(${x.index})" class="mmenu_font">						
 						<span id="a${x.index}"><s:property value="webMenu.menuname" /></span>
 					</a>									
-						<div id="${x.index}" style="display:none;height:auto; ">														
+						<div id="${x.index}" style="display:none">														
 								<s:iterator value="webSubmenus" status="x">																		
-										  <div style="height:24px;overflow:hidden">
+										  <div style="overflow:hidden">
 											<a href="<s:property value="address"/>?type=<s:property value='subtype'/>" 
 											style="border-bottom:0px" target="show" onclick="window.parent.showPop()">
 											  <img style="border:0px;" src="images/files.gif"> 												
@@ -105,15 +105,14 @@ a:hover{text-decoration:none; border-bottom:1px red solid;color:red;}
 												(${x.index+1})<s:property value="submenuname"/>																																			
 											</a>
 										  </div>																												
-								</s:iterator>
-							
+								</s:iterator>							
 						</div>
 				</div>
-			</s:iterator>
-		
-              
-              </div>
+			</s:iterator>		              
         </div>
-    
+      </div>
+ 		</div>
+	</div>
+</div>   
 </body>
 </html>

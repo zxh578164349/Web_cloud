@@ -166,12 +166,12 @@
 
 	<table id="tab2" border="0" height="100%" cellPadding="0" cellSpacing="0" width="100%">		
 		<tr>
-			<td align="middle" vAlign="center" noWrap >
+			<td >
 			<div id="frmTitle" style="height:100%">
 			  <iframe
 					frameBorder="0" id="carnoc" name="carnoc" scrolling=auto
 					src="menu.jsp"
-					style="HEIGHT: 100%; VISIBILITY: inherit; WIDTH: 210px; Z-INDEX: 2;border:1px solid #ccc">
+					style="HEIGHT: 100%; VISIBILITY: inherit; WIDTH: 230px; Z-INDEX: 2;border:1px solid #ccc">
 			  </iframe>
 			</div>		
 			</td>

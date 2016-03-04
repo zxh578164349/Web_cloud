@@ -79,12 +79,12 @@
 		} else {
 			document.getElementById("ckbjip1").innerHTML = '<input value="個人設置,查看本機Ip,page/selectIp.jsp" name="checkbox"  type="checkbox" />查看本機Ip';
 		}
-		var i23 = document.getElementById("excel");
+		/*var i23 = document.getElementById("excel");
 		if (i23 != null) {
 			document.getElementById("excel1").innerHTML = "";
 		} else {
 			document.getElementById("excel1").innerHTML = '<input name="checkbox" value="數據管理,EXCEL數據上傳,page/excelUpload.jsp"  type="checkbox" />EXCEL數據上傳';
-		}
+		}*/
 		
 		var i24 = document.getElementById("gdzc");
 		if (i24 != null) {
@@ -737,8 +737,9 @@ function back(){
 									type="checkbox" />各廠產量統計</span>
 							</s:if>
 						</s:iterator>
-					</s:iterator> <span id="cltj1"></span> <s:iterator
-						value="#session.user.webJurisdictions">
+					</s:iterator> <span id="cltj1"></span>
+					 
+						<!--  <s:iterator value="#session.user.webJurisdictions">
 						<s:iterator value="webSubmenus">
 							<s:if test="submenuname=='EXCEL數據上傳'">
 								<span id="excel"><input name="checkbox"
@@ -746,7 +747,8 @@ function back(){
 									type="checkbox" />EXCEL數據上傳</span>
 							</s:if>
 						</s:iterator>
-					</s:iterator><span id="excel1"></span>
+					</s:iterator><span id="excel1"></span>-->
+					
 					<s:iterator value="#session.user.webJurisdictions">						
 						<s:iterator value="webSubmenus">
 							<s:if test="submenuname=='預計生產與請款匯總'">
