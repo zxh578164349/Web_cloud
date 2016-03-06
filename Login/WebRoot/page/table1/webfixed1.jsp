@@ -21,8 +21,6 @@
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
 
-<link rel="stylesheet" type="text/css" href="css/mystyle.css" />
-<link rel="stylesheet" type="text/css" href="css/button_css.css" />
 <script type="text/javascript">
 	
 

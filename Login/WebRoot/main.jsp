@@ -12,6 +12,7 @@
 <link href="css/main.css" rel="stylesheet">
 <script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script> 
 <script type="text/javascript" src="page/jquerys/layer/layer.min.js"></script>
+<script type="text/javascript" src="jquery/DatePicker/WdatePicker.js"></script>
 <!-- 新 Bootstrap 核心 CSS 文件 -->
 <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
@@ -23,31 +24,40 @@
   <![endif]-->
 </head>
 
-<script>					
+<script>
+var jq=jQuery.noConflict();
+	var loadi;
+	jq(document).ajaxStart(function(){
+		loadi=layer.load("請稍等...");
+	});
+	jq(document).ajaxStop(function(){
+		layer.close(loadi);
+	});
+					
 		function switchSysBar() {			
-			if ($("#t_index").text()=="＜＜＜") {
-			    $("#left").hide(100);
+			if (jq("#t_index").text()=="＜＜＜") {
+			    jq("#left").hide(100);
 			    
-			    $("#t_index").text("＞＞＞");											
+			    jq("#t_index").text("＞＞＞");											
 			} else {
-			    $("#left").show(100);
-			    $("#t_index").text("＜＜＜") ;
+			    jq("#left").show(100);
+			    jq("#t_index").text("＜＜＜") ;
 			   
 			}
 		}
 		function showPop() {
-			$("#mydiv").show();						
+			jq("#mydiv").show();						
 			//var loadi=layer.load("正在加載....");
 			var ifr=document.getElementById("show");
 			if (ifr.attachEvent){
 			    ifr.attachEvent("onload", function(){
 			        //layer.close(loadi);
-			        $("#mydiv").hide();
+			        jq("#mydiv").hide();
 			    });
 			} else {
 			    ifr.onload = function(){
 			        //layer.close(loadi);
-			        $("#mydiv").hide();
+			        jq("#mydiv").hide();
 			    };
 			}
 		}
@@ -65,7 +75,7 @@
     }
     
     
-	function showDiv(index) {
+	function showDiv_main(index) {
 		var sts = document.getElementById("a" + index).innerHTML;
 		if (sts.indexOf("退出管理") == 0) {
 			parent.location.href = "judge.jsp";
@@ -73,35 +83,49 @@
 		var divName = document.getElementById(index);
 		var img = document.getElementById("img" + index);
 		if (divName.style.display == "none") {
-			$("#"+index).show();
+			jq("#"+index).show();
 			img.src = "image/folderopen.gif";
 		} else {
-			$("#"+index).hide(100);
+			jq("#"+index).hide(100);
 			img.src = "image/folder.gif";
 		}
 	}
-$(document).ready(function(){
-   $("a[name='alink']").click(function(){
-   $("a[name='alink']").removeClass("linkbg");
-   $(this).addClass("linkbg");
+jq(document).ready(function(){
+   jq("a[name='alink']").click(function(){
+   jq("a[name='alink']").removeClass("linkbg");
+   jq(this).addClass("linkbg");
 });
-})	
+});
+
+function findPageBean(url){
+   jq.ajax({
+     type:"POST",
+     dataType:"html",
+     url:url,
+     success:function(data){   
+        jq("#r_content").html(data);
+     },
+     error:function(error){
+        jq("#r_content").html(error);
+     }
+   });
+}	
 </script>
 <body >
 	<div >
 	
 		   <div id="top">
-		     <!--  <h1 >東莞加元鞋材制品有限公司</h1>						    							
+		      <h1 >東莞加元鞋材制品有限公司</h1>						    							
 						
-						   登录人：<s:property value="#session.loginUser.name" />(<s:if test="#attr.factNo=='tw'">所有數據</s:if>								
+						 <div style="float:right;color:#99CCCC">  登录人：<s:property value="#session.loginUser.name" />(<s:if test="#attr.factNo=='tw'">所有數據</s:if>								
 								 <s:else> <s:property value="#attr.factName" /></s:else> ),欢迎您 ！								
 							     <a id="exit" href="javascript:back()" target="_parent" style="color:#FF6666">
-							     退出登录</a>
+							     退出登录</a></div>
 						
-					    <p id="currentTime" style="font-size:12px;color:#99CCCC;background:#292929"></p> -->
+					    <div id="currentTime" style="font-size:12px;color:#99CCCC;background:#292929"></div> 
 		   </div>
 		   <div id="left">
-					<!--  <div class="panel panel-info">
+					<div class="panel panel-info">
 						<div class="panel-heading">
 							<a href="right.jsp" style="border-bottom:0px" title="返回首頁"
 								target="show" onclick="window.parent.showPop()"> <img
@@ -115,7 +139,7 @@ $(document).ready(function(){
 								<div>
 									<img style="border: 0px;" id="img${x.index}"
 										src="image/folder.gif"> <a
-										href="javascript:showDiv(${x.index})" class="mmenu_font">
+										href="javascript:showDiv_main(${x.index})" class="mmenu_font">
 										<span id="a${x.index}"><s:property
 												value="webMenu.menuname" />
 									</span> </a>
@@ -128,9 +152,9 @@ $(document).ready(function(){
 													onclick="window.parent.showPop()"> <img
 													style="border:0px;" src="images/files.gif"> </a> <a
 													name="alink"
-													href="<s:property value="address"/>?type=<s:property value='subtype'/>"
-													target="show" class="smenu_font"
-													onclick="window.parent.showPop()"
+													href="javascript:findPageBean('<s:property value="address"/>')"
+													 class="smenu_font"
+													
 													title="<s:property value='submenuname'/>">
 													(${x.index+1})<s:property value="submenuname" /> </a>
 											</div>
@@ -139,22 +163,23 @@ $(document).ready(function(){
 								</div>
 							</s:iterator>
 						</div>
-					</div>-->
+					</div>
 			</div>
 			
 			<div id="right">
-			  <!--   <div id="toolbar">
+			   <div id="toolbar">
 			   <span id="t_index" style="display:none">＜＜＜</span>
 			   <a href="javascript:switchSysBar()"><img src="images/icon/arrow.jpg" border="0"/></a>
 			   </div>
 			   
 			   <div id="r_content">
 			      
-			   </div>-->
+			   </div>
 			</div>
 		   
 		   <div id="bottom">
 		      
+		      <jsp:include page="copyright.jsp"/>
 		   </div>		   	
 </div>
  	

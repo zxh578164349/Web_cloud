@@ -1,9 +1,9 @@
-TD {
+ TD {
 	FONT-SIZE: 12px;
 	FONT-FAMILY: Verdana, ����, fantasy
 }
 
-DIV {
+/* DIV {
 	FONT-SIZE: 12px;
 	FONT-FAMILY: Verdana, ����, fantasy
 }
@@ -156,6 +156,10 @@ A:hover {
 
 .tdleft {
 	PADDING-LEFT: 10px
+}  */
+th{
+	font-size:12px;
+	font-weigth:bold;
 }
 
 .td_title {
@@ -167,7 +171,11 @@ A:hover {
 	TEXT-ALIGN: center
 }
 
+/* 工厂客户订单搜索栏字体大小样式 */
 .tr_show {
 	CURSOR: hand;
 	BACKGROUND-COLOR: #ebf2f9
+}
+#myTab li,#myTabContent{
+	font-size:12px
 }

@@ -21,7 +21,6 @@
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
 
-<link rel="stylesheet" type="text/css" href="css/mystyle.css" />
 <script type="text/javascript">
 <%--$(function() {
 		var j = jQuery.noConflict();

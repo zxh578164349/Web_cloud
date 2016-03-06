@@ -20,8 +20,8 @@
 <script type="text/javascript" src="jquery_alert_dialogs/jquery.alerts.js"></script>	
 <link rel="stylesheet" type="text/css" href="jquery_alert_dialogs/jquery.alerts.css" />	
 <script type="text/javascript" src="jquery_alert_dialogs/jquery.ui.draggable.js"></script>		
-<link rel="stylesheet" type="text/css" href="css/general_css.css" />
-<link href="tablecloth/tablecloth.css" rel="stylesheet" type="text/css" media="screen" />
+<!-- <link rel="stylesheet" type="text/css" href="css/general_css.css" />
+<link href="tablecloth/tablecloth.css" rel="stylesheet" type="text/css" media="screen" /> -->
 <script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script> 
 <script type="text/javascript" src="page/jquerys/layer/layer.min.js"></script>
 <!-- 新 Bootstrap 核心 CSS 文件 -->

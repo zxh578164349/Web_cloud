@@ -17,7 +17,7 @@
 <link rel="stylesheet" type="text/css" href="css/select_beautiful.css">	
 <LINK href="css/list.css" type="text/css" rel="stylesheet">
 <script type="text/javascript" src="jquery/DatePicker/WdatePicker.js"></script>
-<script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script>
+<link href="css/validate.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="jquery_alert_dialogs/jquery.js"></script>
 <script type="text/javascript" src="jquery_alert_dialogs/jquery.alerts.js"></script>	
 <link rel="stylesheet" type="text/css" href="jquery_alert_dialogs/jquery.alerts.css" />	
@@ -31,8 +31,24 @@ jq(document).keyup(function(event){
    }
 });
 
+jq(function(){
+  jq.ajax({
+		type:"POST",
+		url:"webfact_findFactByFactNo",
+		dataType:"json",
+		success:function(data){
+			var item="";
+			jq.each(data,function(i,obj){
+				item+="<div><input type='checkbox' name='factNos' value='"+obj[0]+"' onclick='init()'/>"+obj[1]+"("+obj[0]+")</div>";				
+			});
+			jq("#div_factNos").append(item);
+		}	
+	});
+});
+
 
 function getAllFact_json(){	
+alert("dfdf");
 	jq.ajax({
 		type:"POST",
 		url:"webfact_findFactByFactNo",
@@ -165,6 +181,7 @@ window.onload=function(){
 	//findFactSname();
 	/* findComponent();findBrank();findCustomer();findModel(); */
 	getAllFact_json();
+
 };
 
 function init(){
