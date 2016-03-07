@@ -1,4 +1,4 @@
-/* ¤À­¶¼Ë¦¡ */
+/* ï¿½ï¿½ï¿½ï¿½ï¿½Ë¦ï¿½ */
 #center_page{
 	position:relative;
 
@@ -18,5 +18,14 @@
 	color:blue;
 	
 }
+
+
+ 
 ul{ list-style-type:none;padding-left:0px}
-li{width:35px;display:block;float:left;text-align:center;}
+.pagination li{
+	
+	display:block;
+	float:left;
+	text-align:center;
+	}
+

@@ -21,15 +21,7 @@
 <link href="tablecloth/tablecloth.css" rel="stylesheet" type="text/css" media="screen" />
 <script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script>-->
 
-<!-- 新 Bootstrap 核心 CSS 文件 -->
-<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
-<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
-<script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-
- <!--[if lt IE 9]>  
-  <script src="bootstrap/html5.js"></script>
-  <script src="bootstrap/respond.min.js"></script>
-  <![endif]-->	
+	
 </head>
 <script>
    /*  var jq=jQuery.noConflict();
@@ -183,7 +175,7 @@ function print(public_form){
 		class="btn btn-link btn-sm" value="查看盤點數據"/>
 	</span> 	
 	<span style="float:right"> <input type="button"
-		onclick="javascript:layer.load(0);window.location.href='ydata_findPageBeanForMonth'" 
+		onclick="findPageBean('ydata_findPageBeanForMonth')" 
 		class="btn btn-link btn-sm" value="按月合計查看"/>
 	</span>	
 	<span style="float:right"> <input type="button"

@@ -15,12 +15,12 @@
 <meta http-equiv="description" content="this is my page">
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 
-<LINK href="css/list.css" type="text/css" rel="stylesheet">
+<!--<LINK href="css/list.css" type="text/css" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="css/form.css" />
 <script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script>
 <script type="text/javascript" src="page/jquerys/layer/layer.min.js"></script>
 <script type="text/javascript" src="jquery/DatePicker/WdatePicker.js"></script>
-<link rel="stylesheet" type="text/css" href="css/select_beautiful.css">
+<link rel="stylesheet" type="text/css" href="css/select_beautiful.css">-->
 <script type="text/javascript">
 var jq=jQuery.noConflict();
 	
@@ -56,7 +56,7 @@ setTimeout("hideBills2()",15000);
 <script type='text/javascript' src='/Login/dwr/engine.js'></script>
 <script type='text/javascript' src='/Login/dwr/util.js'></script>
 <style>
-#content{
+/*#content{
   width:100%;
   height:600px;
   overflow-y:auto;
@@ -74,7 +74,7 @@ a:link{
 font-size:14px;
 color:#ff0000;
 text-decoration:underline;
-}
+}*/
 </style>
 </head>
 <body>

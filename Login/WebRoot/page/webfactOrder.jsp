@@ -19,18 +19,12 @@
 <!--  <link rel="stylesheet" type="text/css" href="css/button_css.css" />
 <link rel="stylesheet" type="text/css" href="css/general_css.css" />
 <link href="tablecloth/tablecloth.css" rel="stylesheet" type="text/css" media="screen" />-->
+<script type="text/javascript" src="jquery/jquery-form.js"></script>
 
 </head>
 <script>
 	
-	var loadi;
-	//var global_temp=jq("#global_temp").val();
-	jq(document).ajaxStart(function(){		
-			loadi=layer.load("正在處理...");					
-	});
-	jq(document).ajaxStop(function(){
-		layer.close(loadi);
-	});
+	
 	function pages(page) {
 		jq.ajax({
 			type : "POST",
@@ -39,7 +33,7 @@
 			data : "page=" + page ,
 			success : function(msg) {
 				jq("#bodyid").html(msg);				
-				jq("html,body").animate({scrollTop:$("#bodyid").offset().top}, 500);
+				jq("html,body").animate({scrollTop:jq("#bodyid").offset().top}, 500);
 			},
 			error : function(xhr) {
 				//alert(xhr.responseText);
@@ -61,7 +55,7 @@
 			success : function(msg) {	
 				jq("#bodyid").html(msg);
 				//jq("html,body").scrollTop(500);
-				jq("html,body").animate({scrollTop:$("#bodyid").offset().top}, 500);
+				jq("html,body").animate({scrollTop:jq("#bodyid").offset().top}, 500);
 			},
 			error : function(xhr) {
 				//alert(xhr.responseText);
@@ -72,8 +66,8 @@
 	//你确定要删除吗？
 	function isDelete(mid) {
 		jq("#global_temp").val("delete");
-		jConfirm('你确定这么做吗?', '确认对话框', function(r) {
-			if (r == true) {
+		var flag=confirm("確定要刪除嗎?");
+			if (flag == true) {
 				//document.getElementById(mid).submit();
 				jq.ajax({
 					type:"POST",
@@ -87,8 +81,7 @@
 						jq("#bodyid").html(data.responseText);
 					}
 				});
-			}
-		});
+			}		
 	}
 	function print(public_form){
 		var subform=jq("#"+public_form);
@@ -232,7 +225,7 @@ function showDiv(){
 <body>
 <div>
     <input type="hidden" id="global_temp"/>
-	<jsp:include page="publicHead_print_webfactorder.jsp" />
+	<jsp:include page="publicHead_print_webfactorder.jsp" flush="true"/>
 	<hr />
 	
 	<form  method="post" enctype="multipart/form-data" id="upload_form">

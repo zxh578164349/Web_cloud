@@ -177,5 +177,6 @@ th{
 	BACKGROUND-COLOR: #ebf2f9
 }
 #myTab li,#myTabContent{
-	font-size:12px
+	font-size:12px;
+	font-size:12px \9
 }
