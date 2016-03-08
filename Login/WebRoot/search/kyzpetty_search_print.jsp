@@ -35,25 +35,20 @@
 			tiptype : 3,
 			showAllError : true,
 			ignoreHidden : true,
-			tipSweep : true,
-			callback : function(form) {
-				//document.getElementById("mydiv").style.display = "block";				
-				form[0].submit();
-			}			
+			tipSweep : true
+						
 		});
 		
 	}
  	function godown(){	
  	document.getElementById("lookordown").value="down"; 
 		 j("#form").Validform({
+			 btnSubmit : "#btnlook",
 			tiptype : 3,
 			showAllError : true,
 			ignoreHidden : true,
-			tipSweep : true,
-			callback : function(form) {
-				//document.getElementById("mydiv").style.display = "block";				
-				form[0].submit();
-			}			
+			tipSweep : true
+						
 		});
 	}
 	 
@@ -94,7 +89,7 @@
 		          
 		          　　　　　<s:if test="#session.factNo=='tw'">
 		               <td class="td_input">
-		                <select style="color:blue" name="factNo">														
+		                <select style="color:blue" name="factNo" datatype="*">														
 								<option value="">請選擇廠別</option>
 								<s:iterator value="#session.facts" id="temp">
 									<option value="${temp[0]}">${temp[1]
@@ -125,15 +120,11 @@
 		      </table>
 		      <br>
 		      <center>
-		         <input type="submit" value="查看" onclick="golook()" id="btnlook"/>&nbsp;<input type="submit" value="下載" onclick="godown()"/>
+		         <input type="button" value="查看" onclick="golook()" id="btnlook"/>&nbsp;<input type="submit" value="下載" onclick="godown()"/>
 		      </center>
 		   </form>
 
-	<div id="mydiv">
-		<p>
-			<img alt="" src="images/loading004.gif"><br> Loading....
-		</p>
-	</div>
+	
 
 </body>
 

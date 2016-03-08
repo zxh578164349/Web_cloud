@@ -19,32 +19,11 @@
 
 
  
- <link rel="stylesheet" type="text/css" href="jquery_alert_dialogs/jquery.alerts.css" />	
-<!-- <link rel="stylesheet" type="text/css" href="css/button_css.css" />
-<link rel="stylesheet" type="text/css" href="css/general_css.css" />
-<link href="tablecloth/tablecloth.css" rel="stylesheet" type="text/css" media="screen" />-->
-<script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script>
- <script type="text/javascript" src="page/jquerys/layer/layer.min.js"></script>
- <!-- 新 Bootstrap 核心 CSS 文件 -->
-<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
-<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
-<script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-
- <!--[if lt IE 9]>  
-  <script src="bootstrap/html5.js"></script>
-  <script src="bootstrap/respond.min.js"></script>
-  <![endif]-->	
+ 	
 </head>
 
 <script>
-   var jq=jQuery.noConflict();
-   var loadi;
-   jq(document).ajaxStart(function(){
-	   loadi=layer.load(0);
-   });
-   jq(document).ajaxStop(function(){
-	   layer.close(loadi);
-   });
+
 	function pages(page) {
 		jq.ajax({
 			type : "POST",
@@ -61,7 +40,6 @@
 	}
 	
 		function submis() {
-		var loadi=layer.load(0);
 		var fact = document.getElementById("factNo");
 		var secno=document.getElementById("secNo");
 		
@@ -71,7 +49,6 @@
 			url : "kyzsec_findPageBean2",
 			data : "factNo=" + fact.value +"& secNo="+secno.value,
 			success : function(msg) {
-			    layer.close(loadi);
 				jq("#bodyid").html(msg);				
 			},
 			error : function(xhr) {
@@ -102,18 +79,26 @@ function showDiv(){
     }	
 </script>
 
-<script type="text/javascript" src="jquery_alert_dialogs/jquery.js"></script> 
-<script type="text/javascript" src="jquery_alert_dialogs/jquery.alerts.js"></script>	
-<script type="text/javascript" src="jquery_alert_dialogs/jquery.ui.draggable.js"></script>	
 <script type="text/javascript">
 	//你确定要删除吗？
 	function isDelete(mid) {
-		jConfirm('你确定这么做吗?', '确认对话框', function(r) {
-			if (r == true) {
-				/* window.location.href = "backmat_delete?billNo=" + mid; */
+		var flag=confirm("確定要刪除嗎?");		
+			if (flag == true) {
 				document.getElementById(mid).submit();
+				jq({
+					type:"POST",
+					dataType:"html",
+					data:$("#"+mid).serialize(),
+					url:"kyzsec_delete",
+					success:function(data){
+						jq("#bodyid").html(data);
+					},
+					error:function(error){
+						jq("#bodyid").html(error.responseText);
+					}
+				});
 			}
-		});
+		
 	}
 </script>
 

@@ -21,7 +21,7 @@
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
 
-<link rel="stylesheet" type="text/css" href="css/mystyle.css" />
+<!-- <link rel="stylesheet" type="text/css" href="css/mystyle.css" />-->
 <script type="text/javascript">
 	
 
@@ -58,8 +58,8 @@
 	<table class="table table-striped table-hover table-bordered">
 		<h2>
 		<s:if test='#session.loginUser.userread!="1"'>
-	    <input value="添加" type="button" class="btn btn-primary"
-		onclick="javascript:location.href='saveAndUpdate/kpifactSaveOrUpdate.jsp'" />
+	    <input value="添加" type="button" class="btn btn-info"
+		onclick="loadUrl('saveAndUpdate/kpifactSaveOrUpdate.jsp')" />
         </s:if>
 		KPI年度目標
 		</h2>

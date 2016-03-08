@@ -20,11 +20,7 @@
 <meta http-equiv="expires" content="0">
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
-<link rel="stylesheet" type="text/css" href="css/form.css" />
-<script type="text/javascript" src="page/jquerys/jquery-1.9.1.min.js"></script>
-<script type="text/javascript"
-	src="page/jquerys/Validform_v5.3.2_min.js"></script>
-<script type="text/javascript" src="jquery/DatePicker/my_WdatePicker.js"></script>
+<link rel="stylesheet" type="text/css" href="css/select_beautiful.css">
 <script type="text/javascript">
 	/*      $(function() {
 	 var j2=jQuery.noConflict(); 
@@ -52,15 +48,15 @@
 
 <body>
 	<form action="ydata_findNulFact" method="post" id="subform">
-		<table>
+		<table id="tb_search">
 			<tr>
 				<td><input type="text" name="yymm" onClick="WdatePicker()"
 					readonly="readonly" class="Wdate" datatype="*" id="iyymm" /><span
 					id="syymm"></span>
 				</td>
-				<td><input type="button" value="查找" onclick="checkNull()" />&nbsp;&nbsp;&nbsp;
-					<input type="button" value="返回"
-					onclick="javascript:location.href='ydata_findPageBean'" />
+				<td><input type="button" class="btn btn-primary" value="查找" onclick="checkNull()" />&nbsp;&nbsp;&nbsp;
+					<input type="button" class="btn btn-primary" value="返回"
+					onclick="loadUrl('ydata_findPageBean')" />
 				</td>
 			</tr>
 		</table>

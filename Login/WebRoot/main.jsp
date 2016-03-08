@@ -11,10 +11,11 @@
 <title>Web系統</title>
 <head>
 <link href="css/main.css" rel="stylesheet">
+
 <script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script> 
 <script type="text/javascript" src="page/jquerys/layer/layer.min.js"></script>
 <script type="text/javascript" src="jquery/DatePicker/WdatePicker.js"></script>
-
+<script type="text/javascript" src="jquery/Validform_v5.3.2_min.js"></script>
 <!-- 新 Bootstrap 核心 CSS 文件 -->
 <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
@@ -47,7 +48,7 @@ var jq=jQuery.noConflict();
 			   
 			}
 		}
-		function showPop() {
+		/*function showPop() {
 			jq("#mydiv").show();						
 			//var loadi=layer.load("正在加載....");
 			var ifr=document.getElementById("show");
@@ -62,7 +63,7 @@ var jq=jQuery.noConflict();
 			        jq("#mydiv").hide();
 			    };
 			}
-		}
+		}*/
 		
    var currentDate = new Date(<%=new java.util.Date().getTime()%>);   
    function run() {       
@@ -72,7 +73,7 @@ var jq=jQuery.noConflict();
     window.setInterval("run();", 1000); 
   
     
-    function back(){   	
+    function back_judge(){   	
     	location.href="/Login/judge.jsp";   	
     }
     
@@ -118,17 +119,19 @@ function findPageBean(url){
         jq("#r_content").html(error);
      }
    });
-}	
+}
+function loadUrl(url){
+	   jq("#r_content").load(url);
+	}
 </script>
 <body >
-	<div >
-	
+	<div id="main_container">	
 		   <div id="top">
 		      <h1 >東莞加元鞋材制品有限公司</h1>						    							
 						<div id="currentTime" ></div> 
 						 <div id="lg_info" >登录人：<s:property value="#session.loginUser.name" />(<s:if test="#attr.factNo=='tw'">所有數據</s:if>								
 								 <s:else> <s:property value="#attr.factName" /></s:else> ),欢迎您 ！								
-							     <a id="exit" href="javascript:back()" target="_parent">
+							     <a id="exit" href="javascript:back_judge()" target="_parent">
 							     退出登录</a>
 						</div>
 					    
@@ -137,7 +140,7 @@ function findPageBean(url){
 					<div class="panel panel-info">
 						<div class="panel-heading">
 							<span class="glyphicon glyphicon-file">
-							   <a href="javasrcipt:findPageBean('right.jsp')"  title="返回首頁"
+							   <a href="javascript:loadUrl('right.jsp')"  title="返回首頁"
 								 > 網站首頁</a>
 							</span> 
 						</div>

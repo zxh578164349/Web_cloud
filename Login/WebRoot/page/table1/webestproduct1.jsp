@@ -21,7 +21,7 @@
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
 
-<link rel="stylesheet" type="text/css" href="css/mystyle.css" />
+<!-- <link rel="stylesheet" type="text/css" href="css/mystyle.css" />-->
 <script type="text/javascript">
 	
 
@@ -59,7 +59,7 @@
 		<h2>
 		<s:if test='#session.loginUser.userread!="1"'>
 	    <input value="添加" type="button" class="btn btn-info"
-		onclick="javascript:location.href='saveAndUpdate/webestproSaveOrUpdate.jsp'" />
+		onclick="loadUrl('saveAndUpdate/webestproSaveOrUpdate.jsp')" />
         </s:if>
 		預計生產
 		</h2>

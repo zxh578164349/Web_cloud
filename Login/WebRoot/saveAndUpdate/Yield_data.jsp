@@ -21,21 +21,9 @@
 <meta http-equiv="description" content="This is my page">
 <link href="css/validate.css" rel="stylesheet" type="text/css" />
 <link rel="stylesheet" type="text/css" href="css/form.css" />
-<link rel="stylesheet" type="text/css" href="css/button_css.css" />
-<script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script>
-<script type="text/javascript" src="jquery/Validform_v5.3.2_min.js"></script>
-<script type="text/javascript" src="jquery/DatePicker/my_WdatePicker.js"></script>
-<script type="text/javascript" src="jquery/layer/layer.min.js"></script>
+<link rel="stylesheet" type="text/css" href="css/select_beautiful.css">
 </head>
-<script type="text/javascript">
-	var jq=jQuery.noConflict();
-	var loadi;
-	jq(document).ajaxStart(function(){
-		loadi=layer.load("正在提交,請稍等...");
-	});
-	jq(document).ajaxStop(function(){
-		layer.close(loadi);
-	});
+<script type="text/javascript">	
 	jq(function() {
 		var demo = jq("#form").Validform({
 			btnSubmit : "#sub",
@@ -50,7 +38,8 @@
 				if(data=="0"){
 					layer.msg("提交成功!",3,1);
 				}else{
-					alert(data.responseText);
+					//alert(data.responseText);
+					layer.msg("提交失敗",3,3);
 				}				
 			},
 			datatype : {
@@ -85,11 +74,7 @@
 	}
 
 	function back() {
-		
-			layer.load("正在返回,請稍等...");
-			window.location.href = "/Login/ydata_findPageBean3?backIndex=1";
-		
-
+		loadUrl("/Login/ydata_findPageBean3?backIndex=1");					
 	}
 
 	function holiday() {
@@ -256,10 +241,9 @@ window.onload=function(){
 <body >
 
 	<form action="ydata_addData" method="post" id="form">
-
-		<table width="100%" align="center" cellspacing="0" cellpadding="0"
-			id="table1">
-			<caption>產量資料</caption>
+       <h2>產量資料</h2>
+		<table class="table table-condensed"
+			id="table1">			
 			<s:if test="ydata==null">
 
 				<s:if test="#session.factNo!='tw'">
@@ -491,15 +475,9 @@ window.onload=function(){
 
 
 		<center>
-			<input type="submit" id="sub" value="確定"
-				onmouseover="this.style.backgroundPosition='left -40px'"
-				onmouseout="this.style.backgroundPosition='left top'" />&nbsp;&nbsp;&nbsp;
-			<input type="reset" id="reset" value="重置"
-				onmouseover="this.style.backgroundPosition='left -40px'"
-				onmouseout="this.style.backgroundPosition='left top'" />&nbsp;&nbsp;&nbsp;						
-				<input type="button" value="返回" onclick="back()" id="btn_back"
-					onmouseover="this.style.backgroundPosition='left -40px'"
-					onmouseout="this.style.backgroundPosition='left top'" />
+			<input type="submit" id="sub" value="確定" class="btn btn-primary"/>&nbsp;&nbsp;&nbsp;				 
+			<input type="reset" id="reset" value="重置" class="btn btn-primary"/>&nbsp;&nbsp;&nbsp;				 						
+			<input type="button" value="返回" onclick="back()" id="btn_back" class="btn btn-primary"/>					 
 		</center>
 	</form>
 

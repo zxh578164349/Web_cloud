@@ -18,7 +18,16 @@ public class KyzSecAction extends ActionSupport{
 	private String factNo;
 	private String secNo;
 	private int page;
+	private String ajaxResult;//申請函文時返回的ajax結果,   0:提交成功       1:提交失敗
 	private IKyzSecServices kyzsecSer;
+	
+	
+	public String getAjaxResult() {
+		return ajaxResult;
+	}
+	public void setAjaxResult(String ajaxResult) {
+		this.ajaxResult = ajaxResult;
+	}
 	public KyzSec getKyzsec() {
 		return kyzsec;
 	}
@@ -53,8 +62,13 @@ public class KyzSecAction extends ActionSupport{
 		this.kyzsecSer = kyzsecSer;
 	}
 	
-	public String add(){		
-		kyzsecSer.add(kyzsec);
+	public String add(){
+		try{
+			kyzsecSer.add(kyzsec);
+			ajaxResult="0";
+		}catch(Exception e){
+			ajaxResult="1";
+		}		
 		return "add";
 	}
 	public String findPageBean(){

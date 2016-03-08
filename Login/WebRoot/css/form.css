@@ -1,5 +1,5 @@
 /* CSS Document BACKGROUND-COLOR: #cce0f5; */
-html {
+/* html {
 	height: 100%;
 }
 
@@ -219,15 +219,15 @@ A:hover {
 
 select,input[type=text]{	
 	border: 2px solid #7A6F6F;
-	border: 2px solid #7A6F6F \9; /*IE*/
+	border: 2px solid #7A6F6F \9; IE
 	width: 200px;
-	height: 20px; /*獶IE蔼*/
-	height: 20px \9; /*IE蔼*/
-	padding-left: 5px; /*all*/
-	line-height: 20px \9; /*IE*/
-	-moz-border-radius: 3px; /*Firefox*/
-	-webkit-border-radius: 3px; /*Safari㎝Chrome*/
-	border-radius: 3px; /*IE9+*/
+	height: 20px; 獶IE蔼
+	height: 20px \9; IE蔼
+	padding-left: 5px; all
+	line-height: 20px \9; IE
+	-moz-border-radius: 3px; Firefox
+	-webkit-border-radius: 3px; Safari㎝Chrome
+	border-radius: 3px; IE9+
 	background-color: white;
 	outline: none;
 	border-color: #B6CDDC;
@@ -556,9 +556,9 @@ select,input[type=text]{
 	height: 100%;
 	top: 1px;
 	position: absolute;
-	/* background-color:rgb(100,200,300);  */
+	background-color:rgb(100,200,300); 
 	filter: alpha(opacity=50);
-	/* background-color:rgba(100,200,300,0.5); */
+	background-color:rgba(100,200,300,0.5);
 	background-color: black;
 	opacity: 0.5;
 	-moz-opacity:0.5;   
@@ -577,24 +577,29 @@ select,input[type=text]{
 
 
 
-/*==========以下部分是div圓角===========*/
+==========以下部分是div圓角===========
 .sharp{width:100%;float:left;text-align:center}
 .sharp .content div{padding-left:15px;text-indent:2em;}
 .content{height:auto;}
-/*上圆角框通用设置样式，如果要运用多个不同颜色，以下6句不用重新变化--------------------------------*/
+上圆角框通用设置样式，如果要运用多个不同颜色，以下6句不用重新变化--------------------------------
 .b1,.b2,.b3,.b4,.b5,.b6,.b7,.b8{height:1px; font-size:1px; overflow:hidden; display:block;}
 .b1,.b8{margin:0 5px;}
 .b2,.b7{margin:0 3px;border-right:2px solid; border-left:2px solid;}
 .b3,.b6{margin:0 2px;border-right:1px solid; border-left:1px solid;}
 .b4,.b5{margin:0 1px;border-right:1px solid; border-left:1px solid; height:2px;}
 .content {border-right:1px solid;border-left:1px solid;overflow:hidden;}
-/*颜色方案一,蓝色边框----------------------------------------*/
-/*下面第一、二句决定边框颜色，第三句决定背景颜色*/
-/*边框色*/
+颜色方案一,蓝色边框----------------------------------------
+下面第一、二句决定边框颜色，第三句决定背景颜色
+边框色
 .color1 .b2,.color1 .b3,.color1 .b4,.color1 .b5,.color1 .b6,.color1 .b7,.color1 .content{border-color:#CCCCCC;}
 .color1 .b1,.color1 .b8{background:#CCCCCC;}
-/*背景色*/
-.color1 .b2,.color1 .b3,.color1 .b4,.color1 .b5,.color1 .b6,.color1 .b7,.color1 .content{background:#F8FAFD;}
+背景色
+.color1 .b2,.color1 .b3,.color1 .b4,.color1 .b5,.color1 .b6,.color1 .b7,.color1 .content{background:#F8FAFD;} */
+
+
+
+
+
 
 /*==========以下部分是Validform必须的===========*/
 .Validform_checktip {
@@ -681,8 +686,5 @@ select,input[type=text]{
 	border-top: none;
 	text-align: left;
 }
-hr{
-	border:1px solid;
-	color:grey
-}
-caption{font:20px bold;background:#328aa4;color:blue;}
+
+

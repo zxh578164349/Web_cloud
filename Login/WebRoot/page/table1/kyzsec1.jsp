@@ -21,8 +21,8 @@
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
 <!-- 分頁樣式 -->
-<link rel="stylesheet" type="text/css" href="css/mystyle.css" />
-<script type="text/javascript" src="jquery/Validform_v5.3.2_min.js"></script>
+<!-- <link rel="stylesheet" type="text/css" href="css/mystyle.css" />-->
+
 <script type="text/javascript">
 
 	
@@ -59,7 +59,7 @@
 	<table class="table table-striped table-hover table-bordered">
 		<h2>
 		<s:if test='#session.loginUser.userread!="1"'> 
-		<input value="添加" type="button" class="btn btn-info" onclick="showDiv()"/></s:if>
+		<input value="添加" type="button" class="btn btn-info" onclick="loadUrl('saveAndUpdate/kyzsecSaveOrUpdate.jsp')"/></s:if>
 		費用組別
 		</h2>
 		<thead>			

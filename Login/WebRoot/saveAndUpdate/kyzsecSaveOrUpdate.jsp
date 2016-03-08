@@ -21,24 +21,24 @@
 <meta http-equiv="description" content="This is my page">
 <link href="css/validate.css" rel="stylesheet" type="text/css" />
 <link rel="stylesheet" type="text/css" href="css/form.css" />
-<link rel="stylesheet" type="text/css" href="css/button_css.css" />
-<script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script>
-<script type="text/javascript" src="jquery/Validform_v5.3.2_min.js"></script>
-<script type="text/javascript" src="jquery/DatePicker/my_WdatePicker.js"></script>
+<link rel="stylesheet" type="text/css" href="css/select_beautiful.css">
 </head>
 <script type="text/javascript">
-	$(function() {
-		var j = jQuery.noConflict();
-		var demo = j("#form").Validform({
+	jq(function() {
+		var demo = jq("#form").Validform({
 			btnSubmit : "#sub",
-			tiptype : 3,
+			tiptype : 4,
 			showAllError : true,
 			ignoreHidden : true,
 			tipSweep : true,
-			callback : function(form) {
-				document.getElementById("mydiv").style.display = "block";
-				form[0].submit();
-				return false;
+			ajaxPost:true,
+			callback:function(data){
+				if(data=="0"){
+					layer.msg("操作成功",3,1);
+					loadUrl("kyzsec_findPageBean");
+				}else{
+					layer.msg("操作失敗",3,3);
+				}
 			},
 			datatype : {
 				"my0-6" : /^\d{0,9}(\.[0-9]{1,3})?$/,
@@ -69,16 +69,7 @@
 		});
 	}
 
-	function back() {
-		if (navigator.userAgent.indexOf("MSIE") > 0) {
-			document.getElementById("mydiv").style.display = "block";
-			window.location.href = "../kyzsec_findPageBean";
-		} else {
-			document.getElementById("mydiv").style.display = "block";
-			window.location.href = "kyzsec_findPageBean";
-		}
-
-	}
+	
 	function makeSecno(obj){
 	   var factno=document.getElementById("dwrFactNo").value;
 	   if(factno!=""){
@@ -87,7 +78,7 @@
 	      });
 	   }
 	}	
-$(document).keyup(function(event){
+jq(document).keyup(function(event){
    if(event.keyCode==13){
       submis();
    }
@@ -101,8 +92,8 @@ $(document).keyup(function(event){
 <body>
 
 	<form action="kyzsec_add" method="post" id="form">
-
-		<table width="100%" align="center" cellspacing="0" cellpadding="0"
+        <h2>費用組別</h2>
+		<table class="table table-condensed"
 			id="table1">
 
 			<s:if test="kyzsec==null">
@@ -208,27 +199,12 @@ $(document).keyup(function(event){
 
 
 		<center>
-			<input type="button" id="sub" value="確定" onmouseover="this.style.backgroundPosition='left -40px'" onmouseout="this.style.backgroundPosition='left top'"/>&nbsp;&nbsp;&nbsp; 
-			<input type="reset" id="reset" value="重置" onmouseover="this.style.backgroundPosition='left -40px'" onmouseout="this.style.backgroundPosition='left top'"/>&nbsp;&nbsp;&nbsp;
-			<!-- <s:if test="kyzsec!=null">
-				<input type="button" value="返回" onclick="javascript:location.href='kyzsec_findPageBean'" id="btn_back"
-				onmouseover="this.style.backgroundPosition='left -40px'" onmouseout="this.style.backgroundPosition='left top'"/>
-					
-			</s:if>
-		　　<s:else>
-		        <input type="button" value="返回" onclick="back()" id="btn_back"
-				onmouseover="this.style.backgroundPosition='left -40px'" onmouseout="this.style.backgroundPosition='left top'"/>
-		    </s:else> -->
-		    
-		    			
+			<input type="button" id="sub" value="確定" class="btn btn-primary"/>&nbsp;&nbsp;&nbsp; 
+			<input type="reset" id="reset" value="重置" class="btn btn-primary"/>&nbsp;&nbsp;&nbsp;					    		    			
 		</center>
 	</form>
 
-	<div id="mydiv">
-		<p>
-			<img alt="" src="images/loading004.gif"><br> Loading....
-		</p>
-	</div>
+	
 
 </body>
 

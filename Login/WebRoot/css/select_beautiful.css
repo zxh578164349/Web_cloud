@@ -1,5 +1,5 @@
 /* body{background:#CFDFEF;font:12px/150% "Lucida Grande", Arial, Verdana, Helvetica, sans-serif;} */
-#uboxstyle .select_box {
+/* #uboxstyle .select_box {
 	width: 250px;
 	height: 24px;
 }
@@ -453,7 +453,7 @@
 	background: transparent url("images/tm2008-select.gif") no-repeat 0
 		-66px;
 	color: #19555F
-}
+} */
 
 input[type=text] {
 	border: 2px solid #7A6F6F;

@@ -20,9 +20,8 @@
 <meta http-equiv="expires" content="0">
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
-<link rel="stylesheet" type="text/css" href="css/mystyle.css" />
-<script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script> 
-<script type="text/javascript" src="page/jquerys/Validform_v5.3.2_min.js"></script>
+<!-- <link rel="stylesheet" type="text/css" href="css/mystyle.css" />-->
+
 <script type="text/javascript">
 
 	   
@@ -101,7 +100,7 @@
 		<h4>
 		<s:if test='#session.loginUser.userread!="1"'>
 	     <input value="添加" type="button" class="btn btn-info"
-		onclick="javascript:location.href='saveAndUpdate/kyzVisaFlowSaveOrUpdate.jsp'" /></s:if> 
+		onclick="loadUrl('saveAndUpdate/kyzVisaFlowSaveOrUpdate.jsp')" /></s:if> 
 		審核流程
 		</h4>
 		<thead>			

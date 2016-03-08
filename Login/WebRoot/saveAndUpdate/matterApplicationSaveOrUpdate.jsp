@@ -25,22 +25,11 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 <meta http-equiv="description" content="This is my page">
 <link href="css/validate.css" rel="stylesheet" type="text/css" />
 <link rel="stylesheet" type="text/css" href="css/form.css" />
-<link rel="stylesheet" type="text/css" href="css/button_css.css" />
-<script type="text/javascript" src="jquery/DatePicker/my_WdatePicker.js"></script>
-<script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script>
-<script type="text/javascript" src="jquery/Validform_v5.3.2_min.js"></script>
-<script type="text/javascript" src="jquery/layer/layer.min.js"></script>
+<link rel="stylesheet" type="text/css" href="css/select_beautiful.css">
 <script type="text/javascript" src="jquery/jquery-form.js"></script>
 
 <script type="text/javascript">
-var jq = jQuery.noConflict();
-var loadi;
-jq(document).ajaxStart(function(){
-	loadi=layer.load("正在處理,請稍等...(系統爲了節省開銷,已取消自動下載函文!)");
-});
-jq(document).ajaxStop(function(){
-	layer.close(loadi);
-});
+
 jq(function() {		
 		var demo = jq("#form").Validform({
 			btnSubmit : "#sub",
@@ -428,8 +417,8 @@ jq(document).ajaxStop(function(){
 
 
 function back(){
-	layer.load("正在返回,請稍等...");
-	location.href="/Login/kyz_findPageBean3?backIndex=1";
+	
+	loadUrl("/Login/kyz_findPageBean3?backIndex=1");
 }
 </script>
 <script type='text/javascript' src='/Login/dwr/interface/kyzjs.js'></script>
@@ -440,94 +429,16 @@ function back(){
 <script type='text/javascript' src='/Login/dwr/engine.js'></script>
 <script type='text/javascript' src='/Login/dwr/util.js'></script>
 
-<style type="text/css">
-table.gridtable {
-	 font-family: verdana,arial,sans-serif;
-	 font-size:12px;
-	 border-collapse: collapse;
-     border:1px solid #d5f3f4;  
-}
-table.gridtable th {
-	border-width: 1px;
-	padding: 8px;
-	border-style: solid;
-	border-color: #666666;
-	background-color: #dedede;
-}
-
-table.gridtable td {	
-	background-color: #ffffff;	
-	font-size:12px;
-	letter-spacing:2px;	
-	color:#678197;
-    border:1px solid #d5f3f4;
-    padding:.3em 1em;
-}
-
-table caption{
-   font-size:30px;
-   margin:20px;
-}
-.bluecss{
-   font-color:blue;
-   border-color:blue;
-   background-color:blue;
-}
-#table1 input[type="text"],select{
-  width:100%;
-  background:transparent;
-  border-width:1px ;
-  border-style:solid;
-  border-color:#ffffff;
-  margin:0px;
-}
-#table2 input[type="text"],select{
-  width:100%;
-  background:transparent;
-  border-width:1px ;
-  border-style:solid;
-  border-color:#ffffff;
-  margin:0px;
-}
-textarea{
-  badkground:transparent;
-  border-width:1px;
-  border-style:solid;
-  border-color:#ffffff;
-  margin:0px;
-}
-table.gridtable td.tdcolor {
- background:#f7fbff;
-}
-
-#mydiv{
-    padding:4px;
-	top: -8px;
-	left:-8px;
-	position: absolute;
-	/* background-color:rgb(100,200,300);  */
-	filter: alpha(opacity=50);
-	/* background-color:rgba(100,200,300,0.5); */
-	background-color: black;
-	opacity: 0.5;
-	-moz-opacity:0.5;   
-    -khtml-opacity: 0.5; 
-	 display: block; 
-	 
-}
-
-</style>
+<script type="text/javascript">
+jq(function(){
+	getKyType();makeBillNo();
+});
+</script>
 
 </head>
 <%@ include file="../saveAndUpdate/publicHead2.jsp"%>
-<body onload="getKyType(),makeBillNo()">  
- <!-- <iframe id="ifm" style="display:none" name="ifm"></iframe> -->
-<s:if test="kyz==null">
-      <form action="kyz_add"  method="post" id="form"  enctype="multipart/form-data" >
-    </s:if>
-    <s:else>
-       <form action="kyz_add"  method="post" id="form" enctype="multipart/form-data" >
-    </s:else>
+<body >  
+    <form action="kyz_add"  method="post" id="form"  enctype="multipart/form-data" >
     <div style="overflow:scroll;height:700px;width:100%">
 		<table class="gridtable" id="table1" style="width:850px" >
 		    <caption >函文申請</caption>		    	

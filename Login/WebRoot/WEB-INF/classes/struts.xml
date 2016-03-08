@@ -308,7 +308,9 @@
 		  </result>
 		</action>
 		<action name="kyzsec_*" class="kyzsecAction" method="{1}">
-		   <result name="add" type="redirectAction">kyzsec_findPageBean</result>
+		   <result name="add" type="json">
+		      <param name="root">ajaxResult</param>
+		   </result>
 		   <result name="beanList">page/kyzsec.jsp</result>
 		   <result name="beanList1">page/table1/kyzsec1.jsp</result>
 		   <result name="findById">saveAndUpdate/kyzsecSaveOrUpdate.jsp</result>
@@ -324,7 +326,9 @@
 		<action name="kyzpetty_*" class="kyzpettyAction" method="{1}">
 		   <result name="beanList">page/kyzpetty.jsp</result>
 		   <result name="beanList1">page/table1/kyzpetty1.jsp</result>
-		   <result name="add" type="redirectAction">kyzpetty_findPageBean</result>
+		   <result name="add" type="json">
+		      <param name="root">ajaxResult</param>
+		   </result>
 		   <result name="findById">saveAndUpdate/kyzpettySaveOrUpdate.jsp</result>
 		   <result name="delete" type="redirectAction">kyzpetty_findPageBean</result>
 		   <result name="findAllSecNoAndAcctNo">saveAndUpdate/kyzpettySaveOrUpdate.jsp</result>

@@ -53,7 +53,7 @@ function showPage(){
 	<table class="table table-striped table-hover table-bordered"  >
 	<h2>
 	<s:if test='#session.loginUser.userread!="1"'>
-	<input type="button" class="btn btn-info" value="添加" onclick="javascript:location.href='saveAndUpdate/fixedSaveOrUpdate.jsp'"/>	
+	<input type="button" class="btn btn-info" value="添加" onclick="loadUrl('saveAndUpdate/fixedSaveOrUpdate.jsp')"/>	
 	</s:if>	
 	固定資產
 	</h2>

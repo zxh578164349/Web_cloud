@@ -19,7 +19,7 @@
 <meta http-equiv="expires" content="0">
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
-<link rel="stylesheet" type="text/css" href="css/mystyle.css" />
+<!--  <link rel="stylesheet" type="text/css" href="css/mystyle.css" />-->
 	<script type="text/javascript">
 	
 	</script>
@@ -32,7 +32,7 @@
 	     <h2>
 	        <s:if test='#session.loginUser.userread!="1"'>
 	      <input value="添加" type="button" class="btn btn-info"
-		  onclick="javascript:location.href='saveAndUpdate/WebWLOSaveOrUpdate.jsp'" />
+		  onclick="loadUrl('saveAndUpdate/WebWLOSaveOrUpdate.jsp')" />
 	     </s:if>
 	                  水電油(每月輸入)
 	     </h2>

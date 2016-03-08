@@ -65,7 +65,7 @@
 		<h2>
 		<s:if test='#session.loginUser.userread!="1"'>
 	    <input value="添加" type="button" class="btn btn-info"
-		onclick="javascript:location.href='saveAndUpdate/webbackfeedSaveOrUpdate.jsp'" />
+		onclick="loadUrl('saveAndUpdate/webbackfeedSaveOrUpdate.jsp')" />
          </s:if>
 		回頭料(每月輸入)
 		</h2>

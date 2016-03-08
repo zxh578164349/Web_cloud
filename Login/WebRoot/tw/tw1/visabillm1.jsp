@@ -19,8 +19,8 @@
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
 <!-- 分頁樣式 -->
-<link rel="stylesheet" type="text/css" href="css/mystyle.css" />
-<script type="text/javascript" src="jquery/Validform_v5.3.2_min.js"></script>
+<!-- <link rel="stylesheet" type="text/css" href="css/mystyle.css" />-->
+
 <script type="text/javascript">
 
 	

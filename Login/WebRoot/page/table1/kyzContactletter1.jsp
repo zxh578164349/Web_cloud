@@ -22,9 +22,8 @@
 <meta http-equiv="description" content="This is my page">
 
 <!-- 分頁樣式 -->
-<link rel="stylesheet" type="text/css" href="css/mystyle.css" />
-<script type="text/javascript" src="page/jquerys/jquery-1.9.1.min.js"></script>
-<script type="text/javascript" src="page/jquerys/layer/layer.min.js"></script>
+<!-- <link rel="stylesheet" type="text/css" href="css/mystyle.css" />-->
+
 
 <script type="text/javascript">
 
@@ -62,7 +61,7 @@
 		<h2>
 		<s:if test='#session.loginUser.userread!="1"'>
 	    <input value="添加" type="button" class="btn btn-info"
-		onclick="javascript:location.href='saveAndUpdate/kyz_contactletterSaveOrUpdate.jsp'" /></s:if>
+		onclick="loadUrl('saveAndUpdate/kyz_contactletterSaveOrUpdate.jsp')" /></s:if>
 		內部聯絡函
 		</h2>
 		<thead>			

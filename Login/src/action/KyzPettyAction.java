@@ -41,9 +41,22 @@ public class KyzPettyAction extends ActionSupport{
 	private IKyzAcctServices kyzacctSer;
 	private IKyzSecServices kyzsecSer;
 	private IWebFactServices webFactSer;
+	private int backIndex;//返回標識      0或null:不走返回路徑         1:走返回路徑
+	private String ajaxResult;//申請函文時返回的ajax結果,   0:提交成功       1:提交失敗
 	
 	
-	
+	public String getAjaxResult() {
+		return ajaxResult;
+	}
+	public void setAjaxResult(String ajaxResult) {
+		this.ajaxResult = ajaxResult;
+	}
+	public int getBackIndex() {
+		return backIndex;
+	}
+	public void setBackIndex(int backIndex) {
+		this.backIndex = backIndex;
+	}
 	public String getDateTime2() {
 		return dateTime2;
 	}
@@ -156,6 +169,10 @@ public class KyzPettyAction extends ActionSupport{
 	}
 	
 	public String findPageBean3(){
+		String result="beanList1";
+		if(backIndex==1){
+			result="beanList";
+		}
 		factNo=(String)ActionContext.getContext().getApplication().get("kyzpetty_factno");
 		billNo=(String)ActionContext.getContext().getApplication().get("kyzpetty_billno");
 		yymm=(String)ActionContext.getContext().getApplication().get("kyzpetty_yymm");
@@ -163,11 +180,16 @@ public class KyzPettyAction extends ActionSupport{
 			factNo=(String)ActionContext.getContext().getSession().get("factNo");
 		}
 		bean=kyzpettySer.findPageBean(25, page, factNo, billNo, yymm);
-		return "beanList1";
+		return result;
 	}
 	
 	public String add(){
-		kyzpettySer.add(kyzpetty);
+		try{
+			kyzpettySer.add(kyzpetty);
+			ajaxResult="0";
+		}catch(Exception e){
+			ajaxResult="1";
+		}		
 		return "add";
 	}
 	

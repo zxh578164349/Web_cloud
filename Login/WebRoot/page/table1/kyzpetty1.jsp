@@ -20,7 +20,7 @@
 <meta http-equiv="expires" content="0">
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
-<link rel="stylesheet" type="text/css" href="css/mystyle.css" />
+<!-- <link rel="stylesheet" type="text/css" href="css/mystyle.css" />-->
 <script type="text/javascript">
 
 	
@@ -58,7 +58,7 @@
 		<h2>
 		<s:if test='#session.loginUser.userread!="1"'>
 		<input value="添加" type="button" class="btn btn-info"
-		onclick="javascript:showDiv()" /></s:if>
+		onclick="loadUrl('kyzpetty_findAllSecNoAndAcctNo')" /></s:if>
 		零用金支出
 		</h2>
 		<thead>			

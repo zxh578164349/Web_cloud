@@ -52,7 +52,7 @@
 		<h2>
 		<s:if test='#session.loginUser.userread!="1"'>
 	    <input value="添加" type="button" class="btn btn-info"
-		onclick="javascript:location.href='saveAndUpdate/WebMixPersonSaveOrUpdate.jsp'" />
+		onclick="loadUrl('saveAndUpdate/WebMixPersonSaveOrUpdate.jsp')" />
 	    </s:if>	
 		人數工時(每月輸入)
 		</h2>

@@ -226,7 +226,7 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 	public void setKyzExpLogSer(IKyzExpectmatmLogServices kyzExpLogSer) {
 		this.kyzExpLogSer = kyzExpLogSer;
 	}
-	public String add() throws IOException{
+	public void add() throws IOException{
 		/*文件上傳驗證*/
 		if(files!=null){
 			for(int i=0;i<files.size();i++){
@@ -236,12 +236,12 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 					if(filesize>5120000){
 						response.setContentType("text/html;charset=utf-8");
 						response.getWriter().print("<script>alert('文件不可超過5M!');history.back()</script>");
-						return null;
+						//return null;
 					}
 					if(!filetype.equals(".bmp")&&!filetype.equals(".jpg")&&!filetype.equals(".jpeg")&&!filetype.equals(".gif")&&!filetype.equals(".tif")){
 						response.setContentType("text/html;charset=utf-8");
 						response.getWriter().print("<script>alert('只允許jpg,bmp,jpeg,gif,tif圖片');history.back()</script>");
-						return null;
+						//return null;
 					}
 					
 				}
@@ -404,6 +404,8 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 				result="update";
 				ajaxResult="0";
 			}
+			response.setContentType("text/html;charset=utf-8");
+			response.getWriter().print("<script>window.parent.gook();</script>");
 		}catch(Exception e){
 			// TODO Auto-generated catch block
 			ajaxResult="1";
@@ -416,10 +418,10 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 						+ kyzletter.getId().getFactNo()					
 						+ " "
 						+ kyzletter.getId().getBillNo()
-						+ ")!');histore.back()</script>");
+						+ ")!');history.back()</script>");
 			}
 																	
-			return result;
+			
 }
 	public void print(String factNo,String billNo,String sort) throws IOException{
 		/*List<KyzContactletter>list=new ArrayList<KyzContactletter>();

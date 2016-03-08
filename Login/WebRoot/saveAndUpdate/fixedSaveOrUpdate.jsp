@@ -21,21 +21,9 @@
 <meta http-equiv="description" content="This is my page">
 
 <link rel="stylesheet" type="text/css" href="css/form.css" />
-<link rel="stylesheet" type="text/css" href="css/button_css.css" />
-<LINK href="css/list.css" type="text/css" rel="stylesheet">
-<script type="text/javascript" src="jquery/DatePicker/my_WdatePicker.js"></script>
-<script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script>
-<script type="text/javascript" src="jquery/Validform_v5.3.2_min.js"></script>
-<script type="text/javascript" src="jquery/layer/layer.min.js"></script>
+<link rel="stylesheet" type="text/css" href="css/select_beautiful.css">
 <script type="text/javascript">
-var jq=jQuery.noConflict();
-var loadi;
-jq(document).ajaxStart(function(){
-	loadi=layer.load("正在提交,請稍等...");
-});
-jq(document).ajaxStop(function(){
-	layer.close(loadi);
-});
+
 	jq(function() {
 		var demo = jq("#form").Validform({
 			btnSubmit : "#sub",
@@ -50,7 +38,8 @@ jq(document).ajaxStop(function(){
 					location.href="/Login/fix_findPageBean";
 				}
 				if(data=="1"){
-					alert(data.responseText);
+					//alert(data.responseText);
+					layer.msg("提交失敗",3,3);
 				}
 			},
 			datatype : {
@@ -67,9 +56,8 @@ jq(document).ajaxStop(function(){
 
 	});
 
-	function back() {		
-			layer.load("正在返回,請稍等...");
-			window.location.href = "/Login/fix_findPageBean3?backIndex=1";							
+	function back() {			
+			loadUrl("/Login/fix_findPageBean3?backIndex=1");
 	}
 
 	function getFactArea(mid) {
@@ -158,9 +146,10 @@ jq(document).ajaxStop(function(){
 <body onload="getMajor()">
 	<div>
 		<form action="fix_addFix" method="post" id="form">
-			<table width="100%" align="center" cellspacing="0" cellpadding="0"
+		<h2>固定資產</h2>
+			<table class="table table-condensed"
 				id="msg1">
-				　<caption>固定資產</caption>
+				　
 				<s:if test="fix==null">
 				
 					<tr>
@@ -497,8 +486,8 @@ jq(document).ajaxStop(function(){
 
 				<tr>
 					<td colspan="6"><center>
-							<input type="button" id="sub" value="確定" onclick="goFix()" onmouseover="this.style.backgroundPosition='left -40px'" onmouseout="this.style.backgroundPosition='left top'"/>&nbsp;&nbsp;&nbsp;							
-								<input type="button" value="返回" onclick="back()" id="btn_back" onmouseover="this.style.backgroundPosition='left -40px'" onmouseout="this.style.backgroundPosition='left top'"/>
+							<input type="button" id="sub" value="確定" onclick="goFix()" class="btn btn-primary"/>&nbsp;&nbsp;&nbsp;							
+								<input type="button" value="返回" onclick="back()" id="btn_back" class="btn btn-primary"/>
 
 						</center>
 					</td>

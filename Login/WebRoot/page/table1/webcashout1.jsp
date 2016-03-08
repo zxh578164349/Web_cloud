@@ -58,7 +58,7 @@
 		<h2>
 		<s:if test='#session.loginUser.userread!="1"'>
 	    <input value="添加" type="button" class="btn btn-info"
-		onclick="javascript:location.href='saveAndUpdate/webcashoutSaveOrUpdate.jsp'" />
+		onclick="loadUrl('saveAndUpdate/webcashoutSaveOrUpdate.jsp')" />
         </s:if>
 		請款資料
 		</h2>
