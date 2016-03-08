@@ -493,5 +493,9 @@ select{
 	height:30px;
 	height: 30px \9;/*IE*/
 }
+#kyzs_body input[type=text]{
+	width:100px;
+	width:100px \9;
+}
 
 

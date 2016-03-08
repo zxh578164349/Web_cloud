@@ -1,8 +1,4 @@
-<%@ page import="dao.IKyFactDao"%>
-<%@ page
-	import="org.springframework.context.support.ClassPathXmlApplicationContext"%>
-<%@ page import="org.springframework.context.ApplicationContext"%>
-<%@ page import="org.hibernate.Session"%>
+
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 <%@ taglib uri="/struts-tags" prefix="s"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -22,7 +18,7 @@
 <script type="text/javascript" src="jquery/DatePicker/WdatePicker.js"></script>
 <link rel="stylesheet" type="text/css" href="css/select_beautiful.css">-->
 <script type="text/javascript">
-var jq=jQuery.noConflict();
+//var jq=jQuery.noConflict();
 	
 function showBills(){
    jq("#divBills").show();
@@ -55,30 +51,10 @@ setTimeout("hideBills2()",15000);
 <script type='text/javascript' src='/Login/dwr/interface/kyvisabillsjs.js'></script>
 <script type='text/javascript' src='/Login/dwr/engine.js'></script>
 <script type='text/javascript' src='/Login/dwr/util.js'></script>
-<style>
-/*#content{
-  width:100%;
-  height:600px;
-  overflow-y:auto;
-}
-#content table {
-	width: 100%;
-}
-#divBills2{
-border:1px solid #d4d4d4;
-display:none;
-top:100px;
 
-}
-a:link{
-font-size:14px;
-color:#ff0000;
-text-decoration:underline;
-}*/
-</style>
 </head>
 <body>
-	<div id="top">					
+					
 		<div  id="divBills2" >		  
 		   <table>
 		   <tr>
@@ -90,6 +66,6 @@ text-decoration:underline;
 		   </tr>
 		</table>
 		</div>				  
-	</div>
+	
 </body>
 </html>

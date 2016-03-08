@@ -133,8 +133,7 @@ function loadUrl(url){
 								 <s:else> <s:property value="#attr.factName" /></s:else> ),欢迎您 ！								
 							     <a id="exit" href="javascript:back_judge()" target="_parent">
 							     退出登录</a>
-						</div>
-					    
+						</div> 
 		   </div>
 		   <div id="left">
 					<div class="panel panel-info">

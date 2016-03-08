@@ -60,8 +60,9 @@
 	}
 	//你确定要删除吗？
 	function isDelete(mid) {
-		jConfirm('你确定这么做吗?', '确认对话框', function(r) {
-			if (r == true) {//if			   
+	    var flag=confirm("確定要刪除嗎?");
+		
+			if (flag == true) {//if			   
 				jq.ajax({
 				  type:"POST",
 				  dataType:"Html", 
@@ -76,7 +77,7 @@
 				 });
 				//document.getElementById(mid).submit();
 			}//if
-		});
+		
 	}
 </script>
 

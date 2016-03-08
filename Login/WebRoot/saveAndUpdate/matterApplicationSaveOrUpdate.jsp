@@ -127,7 +127,7 @@ function makeBillNo() {
 				  dwr.util.setValue("kyzs_billno", x);				  								
 			});
 			document.getElementById("addbtn").disabled="";
-			document.getElementById("addbtn").style.color="white";
+			document.getElementById("addbtn").style.color="black";
 			document.getElementById("kyzs_factno").value=factno;
 			 document.getElementById("kyzs_factcode").value=factcode;			
 			 if(cbox_length>1){
@@ -387,14 +387,7 @@ function getKyType2(factno){
 
 function lookJson(billNo,id,filename){
 //var jQ = jQuery.noConflict();
-var loadi;
-filename=encodeURI(encodeURI(filename));
-jq(document).ajaxStart(function(){
-	loadi=layer.load(0);
-});
-jq(document).ajaxStop(function(){
-	layer.close(loadi);
-});
+
    jq.ajax({
       type:"get",
       dataType:"json",
@@ -439,9 +432,8 @@ jq(function(){
 <%@ include file="../saveAndUpdate/publicHead2.jsp"%>
 <body >  
     <form action="kyz_add"  method="post" id="form"  enctype="multipart/form-data" >
-    <div style="overflow:scroll;height:700px;width:100%">
-		<table class="gridtable" id="table1" style="width:850px" >
-		    <caption >函文申請</caption>		    	
+        <h2>函文申請</h2>
+		<table class="table table-condensed" >		    	
 			<tbody id="tb_list_info2">
 				    <tr>
 				        <td class="tdcolor">標題</td>
@@ -591,7 +583,7 @@ jq(function(){
 					<tr>
 					    <td class="tdcolor">申請內容</td>	
 						<td  colspan="10">
-				           <textarea style="width:780px;height:120px" name="kyz.memoMk" autofocus="autofocus" wrap="hard" wrap="physical"  tip="申請內容" altercss="gray" class="gray"><s:property value="kyz.memoMk"/></textarea>				                                           				         
+				           <textarea style="width:100%;height:120px" name="kyz.memoMk" autofocus="autofocus" wrap="hard" wrap="physical"  tip="申請內容" altercss="gray" class="gray"><s:property value="kyz.memoMk"/></textarea>				                                           				         
 				           <input type="hidden" name="kyz.username" value="<s:property value='#session.loginUser.username'/>"/>
 				           
 				           <input type="hidden" value="<s:property value='kyz.filesYn'/>" name="kyz.filesYn"/>
@@ -600,7 +592,7 @@ jq(function(){
 					</tr>													
 			</tbody>
 			</table>	
-			<table class="gridtable" id="table2" style="width:850px">								 			
+			<table class="table table-condensed">								 			
 			<tbody id="kyzs_body" >
 			  <tr>
 			     <td class="tdcolor"><input type="checkbox" id="cboxall" onclick="checkAll()"/></td>
@@ -700,12 +692,11 @@ jq(function(){
 	   </s:if>
 	   <hr/>	  
 			  <center style="width:850px;margin-left:50px">			    
-				<input type="submit" id="sub" value="確定" onmouseover="this.style.backgroundPosition='left -40px'" onmouseout="this.style.backgroundPosition='left top'"/>&nbsp;&nbsp;&nbsp; <input
-					type="reset" id="reset" value="重置" onmouseover="this.style.backgroundPosition='left -40px'" onmouseout="this.style.backgroundPosition='left top'"/>
-				<input type="button" value="返回" onclick="back()" id="btn_back" onmouseover="this.style.backgroundPosition='left -40px'" onmouseout="this.style.backgroundPosition='left top'"/>						
+				<input type="submit" id="sub" value="確定" class="btn btn-primary"/>&nbsp;&nbsp;&nbsp; <input
+					type="reset" id="reset" value="重置" class="btn btn-primary"/>
+				<input type="button" value="返回" onclick="back()" id="btn_back" class="btn btn-primary"/>						
 			</center>
-				
-	</div>		
+					
 	</form>
 	
 </body>
