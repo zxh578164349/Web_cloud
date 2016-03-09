@@ -140,7 +140,7 @@
 						<input type="hidden" value="<s:property value='id.factCode'/>" name="factCode" />							
 						<input type="hidden" value="<s:property value='id.yyyy'/>" name="yyyy" />							
 					</form> 
-					<a href="javascript:layer.load(0);document.getElementById('subform${x.index}').submit()"					
+					<a href="javascript:findById('subform${x.index}','kpifact_findById')"					
 					onclick=""><img alt="修改" src="images/icon/edit001.png" title="修改" ></a>
 
 					<form action="kpifact_delete" method="post" id="2subform${x.index}" style="float:left">						
@@ -156,7 +156,7 @@
 						<input type="hidden" value="<s:property value='id.factCode'/>" name="factCode" />							
 						<input type="hidden" value="<s:property value='id.yyyy'/>" name="yyyy" />							
 					</form> 
-					<a href="javascript:document.getElementById('3subform${x.index}').submit()"					
+					<a href="javascript:findById('3subform${x.index}','kpifact_findById_copy')"					
 					onclick=""><img alt="複製" src="images/icon/copy.png" title="複製" ></a>
 				</td> 
 				</s:if>

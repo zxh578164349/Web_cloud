@@ -21,21 +21,10 @@
 <meta http-equiv="description" content="This is my page">
 <link href="css/validate.css" rel="stylesheet" type="text/css" />
 <link rel="stylesheet" type="text/css" href="css/form.css" />
-<link rel="stylesheet" type="text/css" href="css/button_css.css" />
-<script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script>
-<script type="text/javascript" src="jquery/Validform_v5.3.2_min.js"></script>
-<script type="text/javascript" src="jquery/DatePicker/WdatePicker.js"></script>
-<script type="text/javascript" src="page/jquerys/layer/layer.min.js"></script> 
+<link rel="stylesheet" type="text/css" href="css/select_beautiful.css">
 </head>
 <script type="text/javascript">
-	var jq = jQuery.noConflict();
-	var loadi;
-	jq(document).ajaxStart(function(){
-		loadi=layer.load("正在提交,請稍等...");
-	});
-	jq(document).ajaxStop(function(){
-		layer.close(loadi);
-	});
+	
 	function golook(){  
 		 jq("#form").Validform({
 		    btnSubmit : "#btnlook",
@@ -47,10 +36,11 @@
 			callback : function(date) {
 				if(date=="0"){
 					layer.msg("提交成功",3,1);
-					window.setTimeout(function(){
+					loadUrl("sumwebydata_findPageBean");
+					/*window.setTimeout(function(){
 						var index = parent.layer.getFrameIndex(window.name);//關閉當前窗口
 						parent.layer.close(index);
-					},3000);					
+					},3000);*/					
 				}else{
 					layer.msg("提交失敗",3,3);
 				}
@@ -96,7 +86,7 @@
 <body>
 
 	<form action="sumwebydata_add" method="post" id="form">
-		      <table align="center">
+		      <table class="table table-condensed">
 		        <tr>
 		          <td class="td_show_title">始末日期</td>
 		          <td class="td_input">
@@ -144,8 +134,9 @@
 		      </table>
 		      <br>
 		      <center>
-		         <input type="submit" value="確定" onclick="golook()" id="btnlook"/>&nbsp;&nbsp;
-		         <input type="reset" value="重置" />
+		         <input type="submit" value="確定" onclick="golook()" id="btnlook" class="btn btn-primary"/>&nbsp;&nbsp;
+		         <input type="reset" value="重置" class="btn btn-primary"/>
+		         
 		      </center>
 		   </form>
 

@@ -168,7 +168,7 @@ function showDiv_update(factNo,factCode,yymm){
 	<hr />	
 	<s:if test='#session.loginUser.userread!="1"'>
 	<span style="float:right">
-	  <input type="button" onclick="javascript:showDiv()" class="btn btn-link btn-sm" value="添加每月盤點數據"/>
+	  <input type="button" onclick="loadUrl('page/sum_yiele_data.jsp')" class="btn btn-link btn-sm" value="添加每月盤點數據"/>
 	</span>
 	</s:if>
 	<span style="float:right"> <input type="button"

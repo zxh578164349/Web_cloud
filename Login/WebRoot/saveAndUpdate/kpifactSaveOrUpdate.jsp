@@ -92,7 +92,7 @@
        }                    
    }
              /*禁止空格輸入*/
-window.onload=function(){            
+/* window.onload=function(){            
             var inputs=document.getElementsByTagName("input"); 
             for (var i=0;i<inputs.length; i++) {  
                 if(inputs[i].getAttribute("type")=="text") 
@@ -100,7 +100,16 @@ window.onload=function(){
                     this.value=this.value.replace(/(^\s+)|\s+$/g,""); 
                  }; 
             }  
-        } 
+        } */
+jq(function(){
+   var inputs=document.getElementsByTagName("input"); 
+            for (var i=0;i<inputs.length; i++) {  
+                if(inputs[i].getAttribute("type")=="text") 
+                 inputs[i].onkeyup=function(){ 
+                    this.value=this.value.replace(/(^\s+)|\s+$/g,""); 
+                 }; 
+            }
+});         
 </script>
 <script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>
 <script type='text/javascript' src='/Login/dwr/interface/webcostjs.js'></script>
