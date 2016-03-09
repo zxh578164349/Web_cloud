@@ -107,7 +107,7 @@ public class KyzMatDaoImpl extends Basedao implements IKyzMatDao{
 		if(rows!=null&&page>0){
 			allrow=rows;
 		}else{
-			allrow=super.getAllRowCount(hql.toString(), map);
+			allrow=super.getAllRowCount2(hql2.toString(), map);
 			ActionContext.getContext().getSession().put("allrow", allrow);
 		}
 		int currentPage=PageBean.countCurrentPage(page);

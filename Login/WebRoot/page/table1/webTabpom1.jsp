@@ -19,7 +19,7 @@
 <meta http-equiv="expires" content="0">
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
-<link rel="stylesheet" type="text/css" href="css/mystyle.css" />
+<!-- <link rel="stylesheet" type="text/css" href="css/mystyle.css" />-->
 	<script type="text/javascript">
 	 /*var defaultColor="#97CBFF";
 	 var clickColor="#CCFFFF";
@@ -52,7 +52,7 @@
 		<h2>
 		<s:if test='#session.loginUser.userread!="1"'>
 	    <input value="添加" type="button" class="btn btn-info"
-		onclick="javascript:location.href='saveAndUpdate/WebTabpomSaveOrUpdate.jsp'" />
+		onclick="loadUrl('saveAndUpdate/WebTabpomSaveOrUpdate.jsp')" />
 	</s:if>	
 		實驗室形體物性
 		</caption>

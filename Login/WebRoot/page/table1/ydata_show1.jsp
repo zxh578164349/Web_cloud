@@ -195,7 +195,7 @@ function delete_admin(factNo,yymmdd,subform){
 							name="id.yymmdd" />
 					</form> 
 					<s:if test='username==#attr.loginUser.username||#attr.loginUser.username=="admin"'>					  
-					  <a href="javascript:layer.load(0);update_ydata('subform${x.index}');" ><img alt="修改" src="images/icon/edit001.png" title="修改" ></a> 				  	
+					  <a href="javascript:findById('subform${x.index}','ydata_findById')" ><img alt="修改" src="images/icon/edit001.png" title="修改" ></a> 				  	
 					</s:if>
 					<s:else>
 					  <a disabled style="color:grey"><img alt="修改" src="images/icon/edit001_1.png" title="修改" ></a>

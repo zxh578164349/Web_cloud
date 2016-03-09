@@ -62,7 +62,7 @@
 				<th>廠別</th>
 				<th>類別</th>
 				<th>單號</th>				
-				<!-- <th>創建日期</th> -->				
+				<th>標題</th>			
 				<th colspan="15">審核狀況</th>				
 			</tr>
 		</thead>
@@ -72,32 +72,23 @@
 				<td>${ 25*(bean.currentPage-1)+x.index+1}</td>
 				<td><s:property value="id.kyVisabillm.id.factNo" />
 				</td>
-				<td>							
-				<!-- <s:if test='id.kyVisabillm.id.visaSort=="F"'> 廠務簽核</s:if>				 				
-				<s:if test='id.kyVisabillm.id.visaSort=="W"'>臺灣簽核</s:if>								
-				<s:if test='id.kyVisabillm.id.visaSort=="G"'>工程簽核</s:if>				  				
-				<s:if test='id.kyVisabillm.id.visaSort=="I"'>IKT簽核</s:if>									
-				<s:if test='id.kyVisabillm.id.visaSort=="L"'>實驗室簽核</s:if>				  				
-				<s:if test='id.kyVisabillm.id.visaSort=="P"'>品管簽核</s:if>									
-				<s:if test='id.kyVisabillm.id.visaSort=="Q"'> 企劃簽核</s:if>				 				
-				<s:if test='id.kyVisabillm.id.visaSort=="S"'>生管簽核</s:if>									
-				<s:if test='id.kyVisabillm.id.visaSort=="T"'>整理簽核</s:if>				  				
-				<s:if test='id.kyVisabillm.id.visaSort=="Y"'>油壓簽核</s:if>									
-				<s:if test='id.kyVisabillm.id.visaSort=="Z"'>總務簽核</s:if>				  					
-				<s:if test='id.kyVisabillm.id.visaSort=="B"'> 備料簽核</s:if>				 				
-				<s:if test='id.kyVisabillm.id.visaSort=="O"'>業務簽核</s:if>				  				
-				<s:if test='id.kyVisabillm.id.visaSort.substring(0,2)=="C1"'>其他費用簽核1(<1000)</s:if>				  
-				<s:if test='id.kyVisabillm.id.visaSort.substring(0,2)=="C2"'>其他費用簽核2(>=1000)</s:if>
-				<s:if test='id.kyVisabillm.id.visaSort.substring(0,2)=="C3"'>電腦耗材簽核1(<1000)</s:if>
-				<s:if test='id.kyVisabillm.id.visaSort.substring(0,2)=="C4"'>電腦耗材簽核2(>=1000)</s:if>
-				<s:if test='id.kyVisabillm.id.visaSort.substring(0,2)=="C5"'>總務費用簽核1(<1000)</s:if>
-				<s:if test='id.kyVisabillm.id.visaSort.substring(0,2)=="C6"'>總務費用簽核2(>=1000)</s:if> -->
+				<td>											
 				<s:property value="id.kyVisabillm.colTemp"/>									  						
 				</td>
-				<td><s:property value="id.kyVisabillm.id.billNo"/>
-				<!-- </td>				
-				<td><s:property value="%{formatDate(id.kyVisabillm.dateCreate)}" />
-				</td> -->
+				<td>
+				<form action="vbm_findById" method="post" id="0form${x.index}" style="float:left">
+					   <input type="hidden" value="<s:property value='id.kyVisabillm.id.factNo'/>"
+							name="factNo" /> <input type="hidden"
+							value="<s:property value='id.kyVisabillm.id.billNo'/>" name="billNo" />						
+							<input type="hidden" value="<s:property value='id.kyVisabillm.id.visaSort'/>" name="visaSort"/>
+			    </form>
+			    <a href="javascript:layer.load(0);document.getElementById('0form${x.index}').submit()">
+				<s:property value="id.kyVisabillm.id.billNo"/>
+				</a>
+				</td>				
+				<td>
+				<s:property value="memo" />
+				</td> 
 				<td>											 					
 		 <s:iterator value="id.kyVisabillm.kyVisabillses"  status="y">
 	       

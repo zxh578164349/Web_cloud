@@ -16,6 +16,7 @@
 <script type="text/javascript" src="page/jquerys/layer/layer.min.js"></script>
 <script type="text/javascript" src="jquery/DatePicker/WdatePicker.js"></script>
 <script type="text/javascript" src="jquery/Validform_v5.3.2_min.js"></script>
+<script type="text/javascript" src="jquery/jquery-form.js"></script>
 <!-- 新 Bootstrap 核心 CSS 文件 -->
 <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
@@ -83,7 +84,6 @@ var jq=jQuery.noConflict();
 		var sts=jq("#a"+index);
 		
 		if (sts.text().replace(/(^\s*)|(\s*$)/g, "")=="退出管理") {
-			alert(sts.text());
 			location.href = "judge.jsp";
 		}
 		var divName = jq("#submenu"+index).css("display");
@@ -123,6 +123,20 @@ function findPageBean(url){
 function loadUrl(url){
 	   jq("#r_content").load(url);
 	}
+function findById(subform,url){
+	jq.ajax({
+		type:"POST",
+		dataType:"html",
+		data:jq("#"+subform).serialize(),
+		url:url,
+		success:function(data){
+			jq("#r_content").html(data);
+		},
+		error:function(error){
+			jq("#r_content").html(error);
+		}
+	});
+}	
 </script>
 <body >
 	<div id="main_container">	

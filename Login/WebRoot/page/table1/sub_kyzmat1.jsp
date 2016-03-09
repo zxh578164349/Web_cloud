@@ -58,13 +58,13 @@
 <body>
   <div id="container">
     <div id="content">
-    <s:form action="" method="post" theme="simple">
+    <form action="" method="post" theme="simple"  id="subkyzmat_form">
     
 	<table class="table table-striped table-hover table-bordered">
 		<h2>
 		<s:if test='#session.loginUser.userread!="1"'>
 		<input value="添加" type="button" class="btn btn-info"
-		onclick="javascript:location.href='saveAndUpdate/kyzmatSaveOrUpdate.jsp'" /></s:if>
+		onclick="loadUrl('saveAndUpdate/kyzmatSaveOrUpdate.jsp')" /></s:if>
 		物料資料管理
 		</h2>
 		<thead>			
@@ -135,9 +135,11 @@
 		  </s:iterator>		 		
 		</tbody>
 	</table>
-	<s:submit value="導出所選物料" action="kyzmat_print_select"></s:submit>
-    <s:submit value="添加所選物料" action="subkyzmat_addSubKyzmat"></s:submit>
-	</s:form>
+	<!-- <s:submit value="導出所選物料" action="kyzmat_print_select"></s:submit>
+    <s:submit value="添加所選物料" action="subkyzmat_addSubKyzmat"></s:submit>-->
+    <input type="button" value="導出所選物料" class="btn btn-info" onclick="kyzmat_print_select()"/>&nbsp;
+    <input type="button" value="添加所選物料" class="btn btn-info" onclick="subkyzmat_addSubKyzmat()"/>
+	</form>
 	</div>
  </div>		
 	<!--<hr />

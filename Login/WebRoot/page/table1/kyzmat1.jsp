@@ -58,7 +58,7 @@
 		<h2>
 		<s:if test='#session.loginUser.userread!="1"'>
 		<input value="添加" type="button" class="btn btn-info"
-		onclick="javascript:location.href='saveAndUpdate/kyzmatSaveOrUpdate.jsp'" /></s:if>
+		onclick="loadUrl('saveAndUpdate/kyzmatSaveOrUpdate.jsp')" /></s:if>
 		物料資料
 		</h2>
 		<thead>			

@@ -142,20 +142,7 @@ function makeBillNo() {
 	
 	
 	function addRow(){
-	     j=j+1;
-	    //添加一行
-        var newTr = kyzs_body.insertRow();
-        //添加列
-        var newTd00=newTr.insertCell();
-        var newTd0 = newTr.insertCell();
-        var newTd1 = newTr.insertCell();
-        var newTd2=newTr.insertCell();
-        var newTd3=newTr.insertCell();
-        var newTd4=newTr.insertCell();
-        var newTd5=newTr.insertCell();
-        var newTd6=newTr.insertCell();
-        var newTd7=newTr.insertCell();
-        var newTd8=newTr.insertCell();
+	    
         var factno=document.getElementById("kyzs_factno").value;
         var billno=document.getElementById("kyzs_billno").value;
         var qtyPair=document.getElementById("qtyPair").value;
@@ -166,6 +153,21 @@ function makeBillNo() {
         if(cboxlist.length>9){
            alert("對不起,不能超過10條記錄!");
         }else{
+        	 j=j+1;
+     	    //添加一行
+             var newTr = kyzs_body.insertRow();
+             //添加列
+             var newTd00=newTr.insertCell();
+             var newTd0 = newTr.insertCell();
+             var newTd1 = newTr.insertCell();
+             var newTd2=newTr.insertCell();
+             var newTd3=newTr.insertCell();
+             var newTd4=newTr.insertCell();
+             var newTd5=newTr.insertCell();
+             var newTd6=newTr.insertCell();
+             var newTd7=newTr.insertCell();
+             var newTd8=newTr.insertCell();
+        	
         newTd00.innerHTML='<input type="checkbox" name="cbox"/>';
         newTd0.innerHTML = '<input type="text" name="kyz.kyzExpectmatses['+j+'].itemNm" value="" size="15"/>'; 
         if((j+1)<10){
@@ -191,19 +193,7 @@ function makeBillNo() {
 	var jj=0;
 	function addRow_update(){	  	  	     	    
 	     var maxNum=parseInt(document.getElementById("maxNum").value);
-	    //添加一行
-        var newTr = kyzs_body.insertRow();
-        //添加列
-        var newTd00=newTr.insertCell();
-        var newTd0 = newTr.insertCell();
-        var newTd1 = newTr.insertCell();
-        var newTd2=newTr.insertCell();
-        var newTd3=newTr.insertCell();
-        var newTd4=newTr.insertCell();
-        var newTd5=newTr.insertCell();
-        var newTd6=newTr.insertCell();
-        var newTd7=newTr.insertCell();
-        var newTd8=newTr.insertCell();
+	   
         var factno=document.getElementById("kyzs_factno").value;
         var billno=document.getElementById("kyzs_billno").value;
         var qtyPair=document.getElementById("qtyPair").value;
@@ -214,6 +204,20 @@ function makeBillNo() {
         if(cboxlist.length>9){
            alert("對不起,不能超過10條記錄!");
         }else{
+        	 //添加一行
+            var newTr = kyzs_body.insertRow();
+            //添加列
+            var newTd00=newTr.insertCell();
+            var newTd0 = newTr.insertCell();
+            var newTd1 = newTr.insertCell();
+            var newTd2=newTr.insertCell();
+            var newTd3=newTr.insertCell();
+            var newTd4=newTr.insertCell();
+            var newTd5=newTr.insertCell();
+            var newTd6=newTr.insertCell();
+            var newTd7=newTr.insertCell();
+            var newTd8=newTr.insertCell();
+        	
         newTd00.innerHTML='<input type="checkbox" name="cbox" disabled/><input type="image" src="images/del.gif" onclick="this.parentNode.parentNode.parentNode.removeChild(this.parentNode.parentNode)"/>';
         newTd0.innerHTML = '<input type="text" name="kyz.kyzExpectmatses['+(jj+maxNum)+'].itemNm" value="" size="15"/>'; 
         if((jj+maxNum+1)<10){
@@ -231,9 +235,10 @@ function makeBillNo() {
         newTd8.innerHTML='<input type="text" name="kyz.kyzExpectmatses['+(jj+maxNum)+'].memoMk" value="" size="15"/>'+
         '<input type="hidden" name="kyz.kyzExpectmatses['+(jj+maxNum)+'].id.kyzExpectmatm.id.factNo" value="'+factno+'"'+'id="kyzs_factno"/>'+    
         '<input type="hidden" name="kyz.kyzExpectmatses['+(jj+maxNum)+'].id.kyzExpectmatm.id.billNo" value="'+billno+'"'+'id="kyzs_billno"/>'+
-        '<input type="hidden" name="kyz.kyzExpectmatses['+(jj+maxNum)+'].factCode" value="'+factcode+'"'+'id="kyzs_factcode"/>';       
-        }
+        '<input type="hidden" name="kyz.kyzExpectmatses['+(jj+maxNum)+'].factCode" value="'+factcode+'"'+'id="kyzs_factcode"/>'; 
         jj=jj+1;
+        }
+        
 	}
 				
 	function delRow(){
@@ -413,6 +418,10 @@ function back(){
 	
 	loadUrl("/Login/kyz_findPageBean3?backIndex=1");
 }
+function gook(){
+	  layer.msg("操作成功",3,1);
+	  loadUrl("kyz_findPageBean");
+}
 </script>
 <script type='text/javascript' src='/Login/dwr/interface/kyzjs.js'></script>
 <script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>
@@ -429,9 +438,8 @@ jq(function(){
 </script>
 
 </head>
-<%@ include file="../saveAndUpdate/publicHead2.jsp"%>
 <body >  
-    <form action="kyz_add"  method="post" id="form"  enctype="multipart/form-data" >
+    <form action="kyz_add"  method="post" id="form"  enctype="multipart/form-data" target="frameFile">
         <h2>函文申請</h2>
 		<table class="table table-condensed" >		    	
 			<tbody id="tb_list_info2">
@@ -698,6 +706,6 @@ jq(function(){
 			</center>
 					
 	</form>
-	
+	<iframe id="frameFile" name="frameFile" style="display: none;"></iframe>
 </body>
 </html>

@@ -51,7 +51,22 @@ public class KyzMatAction extends ActionSupport implements ServletResponseAware{
 	private String factNo;
 	private String matCname;
 	private List<String>cb_list;
+	private int backIndex;//返回標識      0或null:不走返回路徑         1:走返回路徑
+	private String ajaxResult;//申請函文時返回的ajax結果,   0:提交成功       1:提交失敗
 	
+	
+	public int getBackIndex() {
+		return backIndex;
+	}
+	public void setBackIndex(int backIndex) {
+		this.backIndex = backIndex;
+	}
+	public String getAjaxResult() {
+		return ajaxResult;
+	}
+	public void setAjaxResult(String ajaxResult) {
+		this.ajaxResult = ajaxResult;
+	}
 	public List<String> getCb_list() {
 		return cb_list;
 	}
@@ -137,7 +152,14 @@ public class KyzMatAction extends ActionSupport implements ServletResponseAware{
 		this.subkyzmatSer = subkyzmatSer;
 	}
 	public String add(){
-		kyzmatSer.add(mat);
+		try{
+			kyzmatSer.add(mat);
+			ajaxResult="0";
+		}catch(Exception e){
+			ajaxResult="1";
+			System.out.println(e);
+		}
+		
 		return "add";
 	}		
 	public String findPageBean(){
@@ -189,7 +211,11 @@ public class KyzMatAction extends ActionSupport implements ServletResponseAware{
 			factNo=(String)ActionContext.getContext().getSession().get("factNo");
 		}*/
 		bean=kyzmatSer.findPageBean(25, page, fromDate, endDate,matCname,typeBno,typeMno,typeSno,factNo,matNo);
-		return "findPageBean1";
+		String result="findPageBean1";
+		if(backIndex==1){
+			result="findPageBean";
+		}
+		return result;
 	}
 	public String findById(){
 		mat=kyzmatSer.findById(matNo);

@@ -26,11 +26,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 <meta http-equiv="description" content="This is my page">
 <link href="css/validate.css" rel="stylesheet" type="text/css" />
 <link rel="stylesheet" type="text/css" href="css/form.css" />
-<link rel="stylesheet" type="text/css" href="css/button_css.css" />
-<link rel="stylesheet" type="text/css" href="css/select_beautiful.css">	
-<script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script>
-<script type="text/javascript" src="jquery/Validform_v5.3.2_min.js"></script>
-<script type="text/javascript" src="jquery/DatePicker/my_WdatePicker.js"></script>
+<link rel="stylesheet" type="text/css" href="css/select_beautiful.css">
 </head>
 
 <link rel="stylesheet" href="css/select/prism.css">
@@ -38,18 +34,21 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 
 
 <script type="text/javascript">
-	$(function() {
-		var j = jQuery.noConflict();
-		var demo = j("#form").Validform({
+	jq(function() {
+		var demo = jq("#form").Validform({
 			btnSubmit : "#sub",
-			tiptype : 3,
+			tiptype : 4,
 			showAllError : true,
 			ignoreHidden : true,
 			tipSweep : true,
-			callback : function(form) {
-				document.getElementById("mydiv").style.display = "block";
-				form[0].submit();
-				return false;
+			ajaxPost:true,
+			callback : function(data) {
+				if(data=="0"){
+					layer.msg("操作成功",3,1);
+					loadUrl("kyzmat_findPageBean");
+				}else{
+					layer.msg("操作失敗",3,3);
+				}
 			},
 			datatype : {
 				"my0-10" : /^-?\d{0,10}(\.[0-9]{1,2})?$/,
@@ -112,35 +111,44 @@ function noNull(){
                  }; 
             }  
         }	
-	window.onload=function(){
+	/*window.onload=function(){
 	   findAllAcct();
 	   findallBN();
 	   noNull();
-	}
+	}*/
 
   	
-$(document).keyup(function(event){
+jq(document).keyup(function(event){
    if(event.keyCode==13){
       submis();
    }
 });
+	function back(){
+		loadUrl("/Login/kyzmat_findPageBean3?backIndex=1");
+	}
 </script>
 <script type='text/javascript' src='/Login/dwr/interface/kyzscmjs.js'></script>
 <script type='text/javascript' src='/Login/dwr/interface/kyzmatjs.js'></script>
 <script type='text/javascript' src='/Login/dwr/interface/kyzacctjs.js'></script>
 <script type='text/javascript' src='/Login/dwr/engine.js'></script>
 <script type='text/javascript' src='/Login/dwr/util.js'></script> 
-
+<script type="text/javascript">
+  jq(function(){
+	  findAllAcct();
+	   findallBN();
+	   noNull(); 
+  });
+</script>
 <body >
 
-	<form action="kyzmat_add" method="post" id="form">	 
+	<form action="kyzmat_add" method="post" id="form">
+	<h2>物料資料</h2>	 
 	  <s:if test="mat!=null">
 			<input type="hidden" name="mat.updateMan" value="<s:property value='#attr.loginUser.username'/>"/>
 		    <input type="hidden" name="mat.dateUpdate" value="<%=str_date%>"/>	 
 	  </s:if>	
-		<table width="100%" align="center" cellspacing="0" cellpadding="0"
-			id="table1" > 
-			   <caption>物料資料</caption>          
+		<table class="table table-condensed"
+			id="table1" >         
 				 <tr>  						
 					<td class="td_show_title">廠別</td>
 					 <s:if test="mat==null">
@@ -361,25 +369,13 @@ $(document).keyup(function(event){
 		<input type="hidden" name="mat.cbzbMk" value="<s:property value='mat.cbzbMk'/>"/>
 		<input type="hidden" name="mat.matType3" value="<s:property value='mat.matType3'/>"/>				
 		<center>
-			<input type="button" id="sub" value="確定" onmouseover="this.style.backgroundPosition='left -40px'" onmouseout="this.style.backgroundPosition='left top'"/>&nbsp;&nbsp;&nbsp; 
-			<input type="reset" id="reset" value="重置" onmouseover="this.style.backgroundPosition='left -40px'" onmouseout="this.style.backgroundPosition='left top'"/>&nbsp;&nbsp;&nbsp;
-			<!-- <s:if test="kyzsec!=null">
-				<input type="button" value="返回" onclick="javascript:location.href='kyzpetty_findPageBean'" id="btn_back"
-				onmouseover="this.style.backgroundPosition='left -40px'" onmouseout="this.style.backgroundPosition='left top'"/>
-					
-			</s:if>
-		　　<s:else>
-		        <input type="button" value="返回" onclick="javascript:location.href ='../kyzpetty_findPageBean'" id="btn_back"
-				onmouseover="this.style.backgroundPosition='left -40px'" onmouseout="this.style.backgroundPosition='left top'"/>
-		    </s:else> -->		
+			<input type="button" id="sub" value="確定" class="btn btn-primary"/>&nbsp;&nbsp;&nbsp; 
+			<input type="reset" id="reset" value="重置" class="btn btn-primary"/>&nbsp;&nbsp;&nbsp;
+			<input type="button" value="返回" onclick="back()" id="btn_back" class="btn btn-primary"/>		
 		</center>
 	</form>
 
-	<div id="mydiv">
-		<p>
-			<img alt="" src="images/loading004.gif"><br> Loading....
-		</p>
-	</div>
+	
 
 </body>
 

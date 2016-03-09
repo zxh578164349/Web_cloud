@@ -20,10 +20,12 @@ public class KyzPettyDaoImpl extends Basedao implements IKyzPettyDao{
 			String billNo, String createTime) {
 		// TODO Auto-generated method stub
 		StringBuffer hql=new StringBuffer();
+		StringBuffer hql2=new StringBuffer();
 		Map<String,Object>map=new HashMap<String,Object>();
 		int allrow=0;
 		Integer rows=(Integer)ActionContext.getContext().getSession().get("allrow");
 		hql.append("from KyzPetty where 1=1 ");
+		hql2.append("select count(id.billNo)  ");
 		if(factNo!=null&&!factNo.equals("")&&!factNo.equals("tw")&&!factNo.equals("nothing")){
 			hql.append(" and id.factNo=:factno");
 			map.put("factno", factNo);
@@ -40,11 +42,12 @@ public class KyzPettyDaoImpl extends Basedao implements IKyzPettyDao{
 			hql.append(" and id.factNo=:factno");
 			map.put("factno", factNo);
 		}
+		hql2.append(hql);
 		hql.append(" order by id.factNo,datePaybill,itemNo");
 		if(rows!=null&&page>0){
 			allrow=rows;
 		}else{
-			allrow=super.getAllRowCount(hql.toString(), map);
+			allrow=super.getAllRowCount2(hql2.toString(), map);
 			ActionContext.getContext().getSession().put("allrow", allrow);
 		}
 		int currentPage=PageBean.countCurrentPage(page);

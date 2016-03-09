@@ -542,6 +542,7 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 		}
 		bean=visabillSer.findPageBean(25, page, userName, visaMk, factNo, billNo,visaSort,yymmdd,yymmdd2,email);
 		this.getTypeName(bean);
+		this.getKyzTitle(bean);
 		return "beanList_1";
 	}
 	public String findPageBean2_1(){
@@ -580,6 +581,7 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 		}
 		bean=visabillSer.findPageBean(25, page, userName, visaMk, factNo, billNo,visaSort,yymmdd,yymmdd2,email);
 		this.getTypeName(bean);
+		this.getKyzTitle(bean);
 		return "beanList1_1";
 	}
 	public String findPageBean3_1(){
@@ -601,6 +603,7 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 		}
 		bean=visabillSer.findPageBean(25, page, userName, visaMk, factNo, billNo,visaSort,yymmdd,yymmdd2,email);
 		this.getTypeName(bean);
+		this.getKyzTitle(bean);
 		return "beanList1_1";
 	}
 	/********************************函文审核状况******************************************/
@@ -1969,6 +1972,7 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 					for(int j=0;j<list_kyz.size();j++){
 						if(billNo.equals((String)list_kyz.get(j)[1])){
 							title=(String)list_kyz.get(j)[2];
+							list.get(i).setMemo(title);
 							break;
 						}
 					}
@@ -1977,11 +1981,12 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 					for(int j=0;j<list_letter.size();j++){
 						if(billNo.equals((String)list_letter.get(j)[1])){
 							title=(String)list_letter.get(j)[2];
+							list.get(i).setMemo(title);
 							break;
 						}
 					}
 				}
-				list.get(i).setMemo(title);
+				//list.get(i).setMemo(title);
 			}//for
 		}
 	}

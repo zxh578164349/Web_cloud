@@ -52,7 +52,7 @@
 	<table class="table table-striped table-hover table-bordered" >
 		<h2>
 		<s:if test='#session.loginUser.userread!="1"'>	
-		<input value="添加簽核類別" type="button" class="btn btn-info" onclick="javascript:location.href='saveAndUpdate/webTypeSaveOrUpdate.jsp'"/>
+		<input value="添加簽核類別" type="button" class="btn btn-info" onclick="loadUrl('saveAndUpdate/webTypeSaveOrUpdate.jsp')"/>
 	    </s:if>
 		簽核心類別管理
 		</h2>

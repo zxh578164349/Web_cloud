@@ -34,8 +34,10 @@ public class SubKyzmatDaoImpl extends Basedao implements ISubKyzmatDao{
 			String factNo,String matNo) {
 		// TODO Auto-generated method stub
 		StringBuffer hql=new StringBuffer();
+		StringBuffer hql2=new StringBuffer();
 		Map<String,Object>map=new HashMap<String,Object>();
 		hql.append("from SubKyzmat where 1=1");
+		hql2.append("select count(id.factNo) ");
 		if((fromDate==null||fromDate.equals(""))&&(endDate==null||endDate.equals(""))
 				&&(matCname==null||matCname.equals(""))&&(bNo==null||bNo.equals(""))
 				&&(mNo==null||mNo.equals(""))&&(sNo==null||sNo.equals(""))&&(factNo==null||factNo.equals(""))
@@ -78,14 +80,15 @@ public class SubKyzmatDaoImpl extends Basedao implements ISubKyzmatDao{
 				hql.append(" and id.kyzMat.matNo like:matno");
 				map.put("matno", "%"+matNo+"%");
 			}
-		}  
+		}
+		hql2.append(hql);
 		hql.append(" order by id.kyzMat.typeBno,id.kyzMat.typeMno,id.kyzMat.typeSno");
 		int allrow=0;
 		Integer rows=(Integer)ActionContext.getContext().getSession().get("allrow");
 		if(rows!=null&&page>0){
 			allrow=rows;
 		}else{
-			allrow=super.getAllRowCount(hql.toString(), map);
+			allrow=super.getAllRowCount2(hql2.toString(), map);
 			ActionContext.getContext().getSession().put("allrow", allrow);
 		}
 		int currentPage=PageBean.countCurrentPage(page);

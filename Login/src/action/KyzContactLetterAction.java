@@ -228,7 +228,7 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 	}
 	public void add() throws IOException{
 		/*文件上傳驗證*/
-		if(files!=null){
+		if(files!=null&&files.get(0)!=null){
 			for(int i=0;i<files.size();i++){
 				if(files.get(i)!=null){
 					long filesize=files.get(i).length();
@@ -249,7 +249,7 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 		}
 		
 		/*文件上傳*/
-		if(files!=null){//不為空代表有上傳附檔,不能寫成files.size()>0,否則報空指針
+		if(files!=null&&files.get(0)!=null){//不為空代表有上傳附檔,不能寫成files.size()>0,否則報空指針
 			kyzletter.setFilesYn("1");//標示是否帶有附檔
 			//File uploadFile=new File(ServletActionContext.getServletContext().getRealPath("KyzexpFile\\"+kyz.getId().getBillNo()));//附檔上傳到項目
 			File uploadFile_backup=new File("d:\\KyzletterexpFile_backup\\"+kyzletter.getId().getBillNo());//附檔上傳到D盤(為了避免更新項目時丟失附檔,所在上傳到D盤)
@@ -408,8 +408,11 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 			response.getWriter().print("<script>window.parent.gook();</script>");
 		}catch(Exception e){
 			// TODO Auto-generated catch block
+			response.setContentType("text/html;charset=urf-8");
+			response.getWriter().print("<script>window.parent.layer.msg('操作失敗',3,3)</script>");
 			ajaxResult="1";
 			e.printStackTrace();
+			
 		}			
 			if(result==null){
 				response.setContentType("text/html;charset=utf-8");

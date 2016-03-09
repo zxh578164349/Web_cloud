@@ -26,23 +26,11 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 
 <link href="css/validate.css" rel="stylesheet" type="text/css" />
 <link rel="stylesheet" type="text/css" href="css/form.css" />
-<link rel="stylesheet" type="text/css" href="css/button_css.css" />
-<script type="text/javascript" src="jquery/DatePicker/WdatePicker.js"></script>
-<script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script>
-<script type="text/javascript" src="jquery/Validform_v5.3.2_min.js"></script>
-<script type="text/javascript" src="jquery/layer/layer.min.js"></script>
-<script type="text/javascript" src="jquery/swfupload/swfuploadv2.2-min.js"></script>
-<script type="text/javascript" src="jquery/swfupload/Validform.swfupload.handler-min.js"></script>
-<script type="text/javascript" src="jquery/jquery-form.js"></script>
+<link rel="stylesheet" type="text/css" href="css/select_beautiful.css">
+
+
 <script type="text/javascript">
-var jq=jQuery.noConflict();
-var loadi;
-jq(document).ajaxStart(function(){
-	loadi=layer.load("正在處理,請稍等...");
-});
-jq(document).ajaxStop(function(){
-	layer.close(loadi);
-});
+
 	/*jq(function() {
 		var demo = jq("#subform").Validform({
 			btnSubmit : "#sub",
@@ -78,10 +66,10 @@ jq(document).ajaxStop(function(){
 		        dataType:'json' ,
 		        success:function(data){
 		        	if(data=="0"){
-		        		layer.msg("函文申請成功!",3,1);
+		        		layer.msg("操作成功!",3,1);
 		        		//location.href="/Login/kyz_findPageBean";
 		        	}else if(data=="1"){
-		        		layer.msg("函文申請失敗!",3,3);
+		        		layer.msg("操作失敗!",3,3);
 		        	}else if(data=="2"){
 		        		layer.msg("數據已存在該數據",3,3);
 		        	}else if(data=="3"){
@@ -156,8 +144,7 @@ function addFile(){
     }               
 }
 function back(){
-	layer.load("正在返回,請稍等...");
-	location.href="/Login/webtabpom_findPageBean3?backIndex=1";
+	loadUrl("/Login/webtabpom_findPageBean3?backIndex=1");
 }
 
 
@@ -257,24 +244,26 @@ function lookJson(pomNo,filename){
 	   })
 	}
 	
-window.onload=getAllWebbrank;
+//window.onload=getAllWebbrank;
+
 </script>
 <script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>
 <script type='text/javascript' src='/Login/dwr/interface/webbrankjs.js'></script>
 <script type='text/javascript' src='/Login/dwr/interface/webtabpomjs.js'></script>
 <script type='text/javascript' src='/Login/dwr/engine.js'></script>
 <script type='text/javascript' src='/Login/dwr/util.js'></script>
+<script type="text/javascript">
+jq(function(){
+	getAllWebbrank();
+})
+</script>
 </head>
 
 <body>
-<div style="height:600px;overflow:auto">
 	<form action="webtabpom_add" method="post" id="subform" enctype="multipart/form-data">
-		<table width="100%"  cellspacing="0" cellpadding="0"
-			id="msg1">
-			  <caption>實驗室形體物性</caption>
-			<tbody id="tb_list_info">
-				<tr></tr>
-			</tbody>
+	  <h2>實驗室形體物性</h2>
+		<table class="table table-condensed"
+			id="msg1">			
 			<tbody id="tb_list_info2">
 				
 					<tr>
@@ -524,12 +513,11 @@ window.onload=getAllWebbrank;
 		</s:if> 
 		
 		<center>
-			<input type="submit" id="sub" value="確定"  onmouseover="this.style.backgroundPosition='left -40px'" onmouseout="this.style.backgroundPosition='left top'"/>&nbsp;&nbsp;&nbsp;			 
-				<input type="reset" id="reset" value="重置" onmouseover="this.style.backgroundPosition='left -40px'" onmouseout="this.style.backgroundPosition='left top'"/>&nbsp;&nbsp;&nbsp; 			
+			<input type="submit" id="sub" value="確定"  class="btn btn-primary"/>&nbsp;&nbsp;&nbsp;			 
+				<input type="reset" id="reset" value="重置" class="btn btn-primary"/>&nbsp;&nbsp;&nbsp; 			
 				<input type="button" value="返回" id="btn_back"
-				onclick="javascript:back()" onmouseover="this.style.backgroundPosition='left -40px'" onmouseout="this.style.backgroundPosition='left top'"/>
+				onclick="javascript:back()" class="btn btn-primary"/>
 		</center>
 	</form>
-	</div>
 </body>
 </html>

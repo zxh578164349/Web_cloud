@@ -317,7 +317,9 @@
 		   <result name="delete" type="redirectAction">kyzsec_findPageBean</result>
 		</action>
 		<action name="kyzacct_*" class="kyzacctAction" method="{1}">
-		   <result name="add" type="redirectAction">kyzacct_findPageBean</result>
+		   <result name="add" type="json">
+		       <param name="root">ajaxResult</param>
+		   </result>
 		   <result name="beanList">page/kyzacct.jsp</result>
 		   <result name="beanList1">page/table1/kyzacct1.jsp</result>
 		   <result name="delete" type="redirectAction">kyzacct_findPageBean</result>
@@ -368,7 +370,9 @@
         <action name="vsumall_*" class="vsumallAction" method="{1}">       
         </action>       
         <action name="kyzmat_*" class="kyzmatAction" method="{1}">
-           <result name="add" type="redirectAction">kyzmat_findPageBean</result>          
+           <result name="add" type="json">
+             <param name="root">ajaxResult</param>
+           </result>          
            <result name="findById">saveAndUpdate/kyzmatSaveOrUpdate.jsp</result>
            <result name="delete" type="redirectAction">kyzmat_findPageBean</result>
            <result name="findPageBean">page/sub_kyzmat.jsp</result>

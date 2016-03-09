@@ -224,7 +224,7 @@ public class WebTabpomAction extends ActionSupport implements ServletResponseAwa
 	}
 	public String add() throws IOException{
 		/*文件上傳驗證*/
-		if(files!=null){
+		if(files!=null&&files.get(0)!=null){
 			for(int i=0;i<files.size();i++){
 				if(files.get(i)!=null){
 					long filesize=files.get(i).length();
@@ -247,7 +247,7 @@ public class WebTabpomAction extends ActionSupport implements ServletResponseAwa
 		}
 		
 		/*文件上傳*/
-		if(files!=null){//不為空代表有上傳附檔,不能寫成files.size()>0,否則報空指針
+		if(files!=null&&files.get(0)!=null){//不為空代表有上傳附檔,不能寫成files.size()>0,否則報空指針
 			tabpom.setFileMk("1");//標示是否帶有附檔
 			//File uploadFile=new File(ServletActionContext.getServletContext().getRealPath("KyzexpFile\\"+tabpom.getPomNo()));//附檔上傳到項目
 			File uploadFile_backup=new File("d:\\WebtabpomFile_backup\\"+tabpom.getPomNo());//附檔上傳到D盤(為了避免更新項目時丟失附檔,所在上傳到D盤)
@@ -287,7 +287,7 @@ public class WebTabpomAction extends ActionSupport implements ServletResponseAwa
 				ajaxResult="2";
 			}else{
 				try{
-					if(list_fact.size()>0){					
+					if(list_fact!=null&&list_fact.size()>0){					
 						List<VWebFact>list_vfact=new ArrayList<VWebFact>();
 						for(int i=0;i<list_fact.size();i++){
 							VWebFact vfact=new VWebFact();
@@ -305,7 +305,7 @@ public class WebTabpomAction extends ActionSupport implements ServletResponseAwa
 			break;
 		case 1:
 			try{
-				if(list_fact.size()>0){					
+				if(list_fact!=null&&list_fact.size()>0){					
 					List<VWebFact>list_vfact=new ArrayList<VWebFact>();
 					for(int i=0;i<list_fact.size();i++){
 						VWebFact vfact=new VWebFact();

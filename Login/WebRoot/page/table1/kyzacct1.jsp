@@ -21,7 +21,7 @@
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
 <!--  <link rel="stylesheet" type="text/css" href="css/mystyle.css" />-->
-<script type="text/javascript" src="jquery/Validform_v5.3.2_min.js"></script>
+
 <script type="text/javascript">
 
 	
@@ -59,7 +59,7 @@
 		<h2>
 		<s:if test='#session.loginUser.userread!="1"'>
 		<input value="添加" type="button" class="btn btn-info"
-		onclick="javascript:showDiv()" /></s:if> 
+		onclick="loadUrl('saveAndUpdate/kyzacctSaveOrUpdate.jsp')" /></s:if> 
 		會計科目
 		</h2>
 		<thead>			
@@ -93,7 +93,7 @@
 					   <input type="hidden" value="<s:property value='acctNo'/>"
 							name="acctNo" /> 													
 					 </form>
-					  <form action="kyzacct_delete" method="post" id="2form${x.index}" style="float:left">
+					  <form  method="post" id="2form${x.index}" style="float:left">
 					   <input type="hidden" value="<s:property value='acctNo'/>"
 							name="acctNo" />													
 					 </form>

@@ -24,10 +24,12 @@ public class KyzacctDaoImpl extends Basedao implements IKyzacctDao{
 	public PageBean findPageBean(int pageSize, int page, String acctNo,String acctName) {
 		// TODO Auto-generated method stub
 		StringBuffer hql=new StringBuffer();
+		StringBuffer hql2=new StringBuffer();
 		Map<String,Object>map=new HashMap<String,Object>();
 		int allrow=0;
 		Integer rows=(Integer)ActionContext.getContext().getSession().get("allrow");
 		hql.append("from KyzAcct where 1=1 ");
+		hql2.append("select count(acctNo)  ");
 		if(acctNo!=null&&!acctNo.equals("")){
 			hql.append(" and acctNo=:acctno");
 			map.put("acctno", acctNo);
@@ -36,11 +38,12 @@ public class KyzacctDaoImpl extends Basedao implements IKyzacctDao{
 			hql.append(" and acctName like :acctname");
 			map.put("acctname", "%"+acctName+"%");
 		}
+		hql2.append(hql);
 		hql.append(" order by acctNo");
 		if(rows!=null&&page>0){
 			allrow=rows;
 		}else{
-			allrow=super.getAllRowCount(hql.toString(), map);
+			allrow=super.getAllRowCount2(hql2.toString(), map);
 			ActionContext.getContext().getSession().put("allrow", allrow);
 		}
 		int currentPage=PageBean.countCurrentPage(page);
@@ -78,6 +81,20 @@ public class KyzacctDaoImpl extends Basedao implements IKyzacctDao{
 		// TODO Auto-generated method stub
 		String hql="from KyzAcct";
 		return super.findAll(hql, null);
+	}
+
+	/**
+	 * 日期:2016/3/9
+	 * 描述:
+	 */
+	
+	
+	public String findAcctNo(String acctNo) {
+		// TODO Auto-generated method stub
+		String hql="select acctNo from KyzAcct where acctNo=?";
+		Query query=getSession().createQuery(hql);
+		query.setString(0, acctNo);		
+		return (String)query.uniqueResult();
 	}
 
 }

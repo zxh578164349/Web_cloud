@@ -26,9 +26,11 @@ public class KyzSecDaoImpl extends Basedao implements IKyzSecDao{
 		// TODO Auto-generated method stub
 		final Map<String ,Object>map=new HashMap<String,Object>();
 		StringBuffer hql=new StringBuffer();
+		StringBuffer hql2=new StringBuffer();
 		int allRow=0;
 		Integer rows=(Integer)ActionContext.getContext().getSession().get("allRow");
 		hql.append("from KyzSec where 1=1 ");
+		hql2.append("select count(id.secNo) ");
 		if(!factNo.equals("tw")&&!factNo.equals("nothing")){
 			hql.append(" and id.factNo=:factno ");
 			map.put("factno", factNo);
@@ -41,11 +43,12 @@ public class KyzSecDaoImpl extends Basedao implements IKyzSecDao{
 			hql.append(" and id.factNo=:factno");
 			map.put("factno", factNo);
 		}
+		hql2.append(hql);
 		hql.append(" order by id.factNo,id.secNo");
 		if(rows!=null&&page>0){
 			allRow=rows;
 		}else{
-			allRow=super.getAllRowCount(hql.toString(), map);
+			allRow=super.getAllRowCount2(hql2.toString(), map);
 			ActionContext.getContext().getSession().put("allRow", allRow);
 		}
 		int currenPage=PageBean.countCurrentPage(page);
