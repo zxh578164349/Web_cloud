@@ -502,7 +502,9 @@
 			<result name="addFix" type="json">
 			   <param name="root">ajaxResult</param>
 			</result>
-			<result name="addlog" type="redirectAction">fix_findPageBean</result>
+			<result name="addlog" type="json">
+			    <param name="root">ajaxResult</param>
+			</result>
 		</action>
 		<action name="webmix2_*" class="mix2Action" method="{1}">
 			<result name="showList1">page/table1/webMix21.jsp</result>

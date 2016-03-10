@@ -103,7 +103,7 @@
 						<input type="hidden" value="<s:property value='id.yymmdd'/>"
 							name="id.yymmdd" />
 					</form> <a
-					href="javascript:layer.load(0);document.getElementById('subform${x.index}').submit()"
+					href="javascript:findById('subform${x.index}','webpersonnum_findById')"
 					onclick=""><img alt="修改" src="images/icon/edit001.png" title="修改" ></a>
 
 					<form action="webpersonnum_delete" method="post"

@@ -102,9 +102,18 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
     private KyVisabillm vbm;
     private String ajaxResult;//申請函文時返回的ajax結果,   0:提交成功       1:提交失敗
     private int backIndex;//返回標識      0或null:不走返回路徑         1:走返回路徑
+    private String addorupdate;//添加或更新標識    update表示進入更新狀態
     
     
-    public int getBackIndex() {
+    public String getAddorupdate() {
+		return addorupdate;
+	}
+
+	public void setAddorupdate(String addorupdate) {
+		this.addorupdate = addorupdate;
+	}
+
+	public int getBackIndex() {
 		return backIndex;
 	}
 
@@ -766,6 +775,7 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 	}
 	
 	public String findById() throws UnsupportedEncodingException{
+		addorupdate="update";
 		kyz=kyzSer.findById(id);
 		List<KyzExpectmats> list=kyz.getKyzExpectmatses();
 		for(int i=0;i<list.size();i++){
@@ -794,6 +804,7 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 			}
 			ActionContext.getContext().getSession().put("list_filesexp", listfiles);									
 		}
+		
 		return "findById";
 	}
 	

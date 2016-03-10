@@ -136,7 +136,7 @@
 							name="id.yymm" /><input type="hidden" value="<s:property value='id.type'/>"
 							name="id.type" />
 					</form> <a
-					href="javascript:layer.load(0);document.getElementById('subform${x.index}').submit()"
+					href="javascript:findById('subform${x.index}','webestpro_findById')"
 					><img alt="修改" src="images/icon/edit001.png" title="修改" ></a>
 
 					<form action="webestpro_delete" method="post"

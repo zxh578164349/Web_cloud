@@ -136,7 +136,8 @@ function findById(subform,url){
 			jq("#r_content").html(error);
 		}
 	});
-}	
+}
+
 </script>
 <body >
 	<div id="main_container">	

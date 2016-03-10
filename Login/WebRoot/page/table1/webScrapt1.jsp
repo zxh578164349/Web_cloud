@@ -103,7 +103,7 @@
 						<input type="hidden" value="<s:property value='id.yymm'/>"
 							name="id.yymm" />
 					</form> <a
-					href="javascript:layer.load(0);document.getElementById('subform${x.index}').submit()"
+					href="javascript:findById('subform${x.index}','webScrapt_findScraptById')"
 					onclick=""><img alt="修改" src="images/icon/edit001.png" title="修改" ></a>
 					<form action="webScrapt_delete2" method="post"
 						id="2subform${x.index}" style="float:left">

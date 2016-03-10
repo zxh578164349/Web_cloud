@@ -35,7 +35,8 @@
 			callback : function(data) {
 				if(data=="0"){
 					layer.msg("提交成功!",3,1);
-					location.href="/Login/fix_findPageBean";
+					//location.href="/Login/fix_findPageBean";
+					loadUrl("/Login/fix_findPageBean");
 				}
 				if(data=="1"){
 					//alert(data.responseText);
@@ -141,9 +142,14 @@
 <script type='text/javascript' src='/Login/dwr/interface/webfixjs.js'></script>
 <script type='text/javascript' src='/Login/dwr/engine.js'></script>
 <script type='text/javascript' src='/Login/dwr/util.js'></script>
+<script type="text/javascript">
+jq(function(){
+	getMajor();
+});
+</script>
 </head>
 
-<body onload="getMajor()">
+<body >
 	<div>
 		<form action="fix_addFix" method="post" id="form">
 		<h2>固定資產</h2>

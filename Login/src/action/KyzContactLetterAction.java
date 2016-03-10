@@ -71,6 +71,7 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 	private String visa_mk;
 	private String ajaxResult;//申請函文時返回的ajax結果,   0:提交成功       1:提交失敗
 	private int backIndex;//返回標識      0或null:不走返回路徑         1:走返回路徑
+	private String addorupdate;//添加或更新標識    update表示進入更新狀態
 	private List<File> files;
     private List<String> filesFileName;
     private List<String> filesContentType;
@@ -83,6 +84,12 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 	
 	
 	
+	public String getAddorupdate() {
+		return addorupdate;
+	}
+	public void setAddorupdate(String addorupdate) {
+		this.addorupdate = addorupdate;
+	}
 	public int getBackIndex() {
 		return backIndex;
 	}
@@ -622,6 +629,7 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 		this.response=response;
 	}
 	public String findById() throws UnsupportedEncodingException{
+		addorupdate="update";
 		kyzletter=kyzletterSer.findById(factNo, billNo);
 		String file_yn=kyzletter.getFilesYn();
 		if(file_yn==null){
@@ -641,6 +649,7 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 			}
 			ActionContext.getContext().getSession().put("list_filesexp", list);			
 		}
+		
 		return "findById";
 	}
 	

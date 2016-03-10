@@ -6273,14 +6273,14 @@ public class VWebmachineAction extends ActionSupport implements ServletResponseA
 							}else{
 								cs_temp=cs_poi2;
 							}
-							HSSFRow row_store_3=sheet.getRow(4+index*b+d+length1+length2+length3+length4+length5+length6+length7);
-							HSSFCell cell_store_3=row_store_3.createCell(c);
-							if(list_store3!=null){
-								cell_store_3.setCellValue(list_wlo3.get(d));
+							HSSFRow row_wlo_3=sheet.getRow(4+index*b+d+length1+length2+length3+length4+length5+length6+length7);
+							HSSFCell cell_wlo_3=row_wlo_3.createCell(c);
+							if(list_wlo3!=null){
+								cell_wlo_3.setCellValue(list_wlo3.get(d));
 							}else{
-								cell_store_3.setCellValue("無數據");
+								cell_wlo_3.setCellValue("無數據");
 							}
-							cell_store_3.setCellStyle(cs);
+							cell_wlo_3.setCellStyle(cs);
 						}
 						//回頭料
 						for(int d=0;d<length9;d++){
@@ -7941,14 +7941,14 @@ public class VWebmachineAction extends ActionSupport implements ServletResponseA
 							}else{
 								cs_temp=cs_poi2;
 							}
-							XSSFRow row_store_3=sheet.getRow(4+index*b+d+length1+length2+length3+length4+length5+length6+length7);
-							XSSFCell cell_store_3=row_store_3.createCell(c);
-							if(list_store3!=null){
-								cell_store_3.setCellValue(list_wlo3.get(d));
+							XSSFRow row_wlo_3=sheet.getRow(4+index*b+d+length1+length2+length3+length4+length5+length6+length7);
+							XSSFCell cell_wlo_3=row_wlo_3.createCell(c);
+							if(list_wlo3!=null){
+								cell_wlo_3.setCellValue(list_wlo3.get(d));
 							}else{
-								cell_store_3.setCellValue("無數據");
+								cell_wlo_3.setCellValue("無數據");
 							}
-							cell_store_3.setCellStyle(cs_temp);
+							cell_wlo_3.setCellStyle(cs_temp);
 						}
 						//回頭料
 						for(int d=0;d<length9;d++){

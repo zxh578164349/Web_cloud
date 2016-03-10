@@ -169,7 +169,9 @@ window.onload=function(){
 					</tr>
 					<tr>
 						<td class="td_show_title">廠別狀態</td>
-						<td class="td_input"><select name="scrapt.id.factCode"
+						<td class="td_input">
+						<input type="text" value="<s:property value='scrapt.id.factCode'/>" name="scrapt.id.factCode" style="color:blue" readonly/>
+						<!-- <select name="scrapt.id.factCode"
 							datatype="*">
 								<option value="">請選擇廠別狀態</option>
 								<s:iterator value="#session.factAreas_other" id="temp">
@@ -180,7 +182,7 @@ window.onload=function(){
 										<option value="${temp}">${temp}</option>
 									</s:else>
 								</s:iterator>
-						</select>						
+						</select>-->						
 						</td>
 						<td class="td_show_title">邊料重量(KG)</td>
 						<td class="td_input"><input type="text"

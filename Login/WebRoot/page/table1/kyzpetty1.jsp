@@ -157,7 +157,7 @@
 					    <a style="color:red" href="javascript:alert('對不起，只有管理員可以操作！')">修改</a>
 					    <a style="color:red" href="javascript:alert('對不起，只有管理員可以操作！')">刪除</a>
 					 </s:else>  --%>
-					 <a href="javascript:showDiv2('<s:property value='id.factNo'/>','<s:property value='id.billNo'/>')"><img alt="修改" src="images/icon/edit001.png" title="修改" ></a>
+					 <a href="javascript:findById('form${x.index}','kyzpetty_findById')"><img alt="修改" src="images/icon/edit001.png" title="修改" ></a>
 					 <a href="javascript:isDelete('2form${x.index}')"><img alt="刪除" src="images/icon/delete001.png" title="刪除" ></a>					
 				</td>
 				</s:if>

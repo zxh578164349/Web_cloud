@@ -166,8 +166,10 @@ function back(){
 					</tr>
 					<tr>
 						<td class="td_show_title">廠別狀態</td>
-						<td class="td_input"><select name="wlo.id.factCode"
-							datatype="*">
+						<td class="td_input">
+						<input type="text" value="<s:property value='wlo.id.factCode'/>" name="wlo.id.factCode" style="color:blue" readonly/>
+						<!-- <select name="wlo.id.factCode"
+							datatype="*">							
 								<option value="">請選擇廠別狀態</option>
 								<s:iterator value="#session.factAreas_other" id="temp">
 									<s:if test="#session.temp==wlo.id.factCode">
@@ -177,7 +179,8 @@ function back(){
 										<option value="${temp}">${temp}</option>
 									</s:else>
 								</s:iterator>
-						</select></td>
+						</select> -->
+						</td>
 						<td class="td_show_title">用水量(噸)</td>
 						<td class="td_input"><input type="text" name="wlo.waterton"
 							value="<s:property value='wlo.waterton' />" datatype="*0-6">

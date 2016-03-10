@@ -146,7 +146,7 @@
 							<input type="hidden" value="<s:property value='id.itemNo'/>" name="id.itemNo"/>							
 					</form> 					
 					
-					  <a href="javascript:layer.load(0);document.getElementById('subform${x.index}').submit()"><img alt="修改" src="images/icon/edit001.png" title="修改" ></a>&nbsp;														
+					  <a href="javascript:findById('subform${x.index}','visaflow_findById')"><img alt="修改" src="images/icon/edit001.png" title="修改" ></a>&nbsp;														
 					<form action="visaflow_delete" method="post" id="2subform${x.index}"
 						style="float:left">
 						<input type="hidden" value="<s:property value='id.factNo'/>"
@@ -173,7 +173,7 @@
 					 </s:if>
 					 <s:else>
 					   <a href="javascript:void(0)" onclick="isDelete2('${temp.id.factNo}','${temp.id.visaSort}')"><img alt="刪除全部" src="images/icon/delete_all.png" title="刪除全部" ></a>
-					   <a href="javascript:document.getElementById('3subform${x.index}').submit()"><img alt="添加知會" src="images/icon/add001_2.png" title="添加知會"></a>
+					   <a href="javascript:findById('3subform${x.index}','visaflow_findMaxItem')"><img alt="添加知會" src="images/icon/add001_2.png" title="添加知會"></a>
 					 </s:else>	
 					 
 					 <form action="visaflow_addflow" method="post" id="5subform${x.index}"

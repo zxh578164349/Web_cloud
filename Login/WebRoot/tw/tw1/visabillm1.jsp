@@ -82,7 +82,7 @@
 							value="<s:property value='id.kyVisabillm.id.billNo'/>" name="billNo" />						
 							<input type="hidden" value="<s:property value='id.kyVisabillm.id.visaSort'/>" name="visaSort"/>
 			    </form>
-			    <a href="javascript:layer.load(0);document.getElementById('0form${x.index}').submit()">
+			    <a href="javascript:findById('0form${x.index}','vbm_findById')">
 				<s:property value="id.kyVisabillm.id.billNo"/>
 				</a>
 				</td>				

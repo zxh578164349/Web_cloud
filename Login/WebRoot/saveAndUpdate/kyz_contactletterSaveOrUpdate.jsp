@@ -205,7 +205,9 @@ function getKyType2(factno){
 
 <script type="text/javascript">
 jq(function(){
-	  getKyType();makeBillNo();
+	if(jq("#addorupdate").val()!="update"){
+		getKyType();makeBillNo();
+	}  
 });
 </script>
 
@@ -368,7 +370,8 @@ jq(function(){
 					type="reset" id="reset" value="重置" class="btn btn-primary"/>
 					<input type="button" value="返回" onclick="back()" id="btn_back" class="btn btn-primary"/>					
 			</center>
-					
+			
+			<input type="hidden" name="addorupdate" value="<s:property value='addorupdate'/>" id="addorupdate"/>	<!-- 添加或更新標識     -->	
 	</form>
 	<iframe id="frameFile" name="frameFile" style="display: none;"></iframe>
 </body>

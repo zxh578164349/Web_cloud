@@ -156,4 +156,6 @@ public class WebFixedDaoImpl extends Basedao implements IWebFixedDao {
 		return id;
 	}
 
+
+
 }

@@ -99,7 +99,7 @@
 						<input type="hidden" value="<s:property value='id.factCode'/>" name="factCode" />							
 						<input type="hidden" value="<s:date name='id.yymmdd' format='yyyyMMdd'/>" name="yymm" />							
 					</form> 
-					<a href="javascript:layer.load(0);document.getElementById('subform${x.index}').submit()" >
+					<a href="javascript:findById('subform${x.index}','webcashout_findById')" >
 					<img alt="修改" src="images/icon/edit001.png" title="修改" ></a>
 
 					<form action="webcashout_delete" method="post" id="2subform${x.index}" style="float:left">						

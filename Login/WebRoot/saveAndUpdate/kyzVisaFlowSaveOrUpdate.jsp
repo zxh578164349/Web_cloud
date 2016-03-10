@@ -93,7 +93,7 @@ var j=0;
         if(cboxlist.length>14){
            alert("對不起,不能超過10條記錄!");
         }else{
-         var newTr = kyzs_body.insertRow(-1);
+         var newTr = visaflow_body.insertRow(-1);
         //添加列
         var newTd00=newTr.insertCell(0);
         var newTd0 = newTr.insertCell(1);
@@ -154,13 +154,13 @@ var j=0;
 	   //刪除選中行
 	 /* for(var k=0;k<cboxlist.length;k++){
 	     if(cboxlist[k].checked==true&&k>0){
-	        kyzs_body.deleteRow(k+1);
+	        visaflow_body.deleteRow(k+1);
 	        k=k-1;
 	     }	    
 	   } */ 
 	   	   
 	   if(cboxlist.length>1){
-	      kyzs_body.deleteRow(cboxlist.length);
+	      visaflow_body.deleteRow(cboxlist.length);
 	      
 	      /* if(document.getElementById("per2").ckecked=true){
 	         document.getElementById("per2").value=cboxlist.length-1;
@@ -455,14 +455,13 @@ jq(function(){
 </script>
 
 </head>
-<%@ include file="../saveAndUpdate/publicHead2.jsp"%>
 <body  >
    <div id="pop">
        <form action="visaflow_add" method="post" id="form">
        <h2>審核流程</h2>
 		<table class="table table-condensed" >
 		    		    																 			
-			<tbody id="kyzs_body">
+			<tbody id="visaflow_body">
 			 	
 			 <s:if test="flows==null">
 			    <tr>
@@ -531,8 +530,8 @@ jq(function(){
 			<tr>
 			<td colspan="10">
 			  <s:if test="flows==null">
-			     <input type="button" value="添加行" onclick="addRow()"  id="addbtn" disabled style="color:grey"/>
-			     <input type="button" value="刪除行" onclick="delRow()"  id="delbtn"/>
+			     <input type="button" value="添加行" onclick="addRow()"  id="addbtn" class="btn btn-info" disabled style="color:grey"/>
+			     <input type="button" value="刪除行" onclick="delRow()"  id="delbtn" class="btn btn-info"/>
 			    <!--  <input type="radio" value="Y" name="index" id="per1" checked disabled/>审核人员&nbsp;
 			     <input type="radio" value="N" id="per2" name="index" onclick="clickOne()" disabled/>知会人员 -->
 			  </s:if>			    			    		    

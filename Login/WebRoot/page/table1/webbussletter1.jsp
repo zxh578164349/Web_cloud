@@ -113,7 +113,7 @@
 						<input type="hidden" value="<s:property value='blNo'/>"
 							name="billNo" /> 						
 					</form>
-					  <a href="javascript:layer.load(0);document.getElementById('subform${x.index}').submit()" onclick=""><img alt="修改" src="images/icon/edit001.png" title="修改" ></a>						  																									
+					  <a href="javascript:findById('subform${x.index}','bussletter_findById')" onclick=""><img alt="修改" src="images/icon/edit001.png" title="修改" ></a>						  																									
 					  <a href="javascript:void(0)" onclick="isDelete('2subform${x.index}')"><img alt="刪除" src="images/icon/delete001.png" title="刪除" ></a>										
 					 </s:if>
 					 
