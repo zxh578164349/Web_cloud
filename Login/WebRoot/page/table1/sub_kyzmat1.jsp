@@ -126,8 +126,11 @@
 				      </s:else>				      
 				   </s:iterator>
 				</td>
-				<td>				
-				<a href="javascript:location.href='kyzmat_findById?matNo=${temp.matNo}'"><img alt="修改" src="images/icon/edit001.png" title="修改" ></a>
+				<td>
+				<form id="form${x.index}">
+				   <input type="hidden" value="${temp.matNo}" name="matNo"/>
+				</form>				
+				<a href="javascript:findById('form${x.index}','kyzmat_findById')"><img alt="修改" src="images/icon/edit001.png" title="修改" ></a>
 				<a href="javascript:isDelete('${temp.matNo}')"><img alt="刪除" src="images/icon/delete001.png" title="刪除" ></a>
 				<a href="javascript:window.location.href='kyzmat_print?matNo=${temp.matNo}'" ><img alt="導出" src="images/icon/print001.png" title="導出" ></a>
 				</td> 							

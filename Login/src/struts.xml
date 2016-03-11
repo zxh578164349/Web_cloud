@@ -654,25 +654,31 @@
 		  <result name="add">page/checkpass/remark.jsp</result><!-- 函文是否通過 -->
 		  <result name="success">/success.html</result>
 		  <result name="remark" type="redirectAction">vbm_findPageBean</result><!-- 備註 -->		  
-		  <result name="addvisabills" type="redirectAction">
+		  <!-- <result name="addvisabills" type="redirectAction">
 		      <param name="actionName">vbm_findById2</param>
 		      <param name="factNo">${factNo}</param>
 		      <param name="visaSort">${visaSort}</param>
 		      <param name="billNo">${billNo}</param>
-		  </result>
-		  <result name="addVisabillsAndEmail" type="redirectAction">vbm_findPageBean</result>
+		  </result>-->
+		  <result name="addvisabills" type="json">
+		     <param name="root">ajaxResult</param>
+		  </result>		  
 		  <result name="minusvisabills" type="redirectAction">
 		      <param name="actionName">vbm_findById4</param>
 		      <param name="factNo">${factNo}</param>
 		      <param name="visaSort">${visaSort}</param>
 		      <param name="billNo">${billNo}</param>
 		  </result>
-		  <result name="minusvisabills2" type="redirectAction">
+		  <!-- <result name="minusvisabills2" type="redirectAction">
 		      <param name="actionName">vbm_findById5</param>
 		      <param name="factNo">${factNo}</param>
 		      <param name="visaSort">${visaSort}</param>
 		      <param name="billNo">${billNo}</param>
+		  </result> -->
+		  <result name="minusvisabills2" type="json">
+		     <param name="root">ajaxResult</param>
 		  </result>
+		  <result name="addVisabillsAndEmail" type="redirectAction">vbm_findPageBean</result>
 		  <!-- 以下是tw胡艷敏的返回結果 -->
 		  <result name="beanList_tw">/tw/visabillm_tw.jsp</result>
 		  <result name="beanList1_tw">/tw/tw1/visabillm1_tw.jsp</result>

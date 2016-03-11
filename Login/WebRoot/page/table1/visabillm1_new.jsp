@@ -171,11 +171,13 @@
 					<td>
 					 <a href="javascript:findById('1form${x.index}','vbm_findById2')"><img alt="加簽" src="images/icon/add24.png" title="加簽"><br>加簽</a>
 					</td>
+					<!-- 20160311禁用
 					 <s:if test='#session.loginUser.factno=="JW"'>
 					<td>
 					 <a href="javascript:findById('3form${x.index}','vbm_findById4')"><img alt="減簽" src="images/icon/minus24.png" title="減簽"><br>減簽</a>					 
 					 </td>
 					 </s:if>
+					  -->
 					 <td>
 					   <a href="javascript:findById('3_3form${x.index}','vbm_findById5')"><img alt="減簽(带删除)" src="images/icon/remove.png" title="減簽(带删除)"><br>減簽D</a>
 					 </td>

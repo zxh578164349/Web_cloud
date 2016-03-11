@@ -233,7 +233,7 @@ public class KyzContactLetterServicesImpl implements IKyzContactLetterServices{
 			}			
 			visa_result=name+visamk_temp;
 			visabillstemp.setVisaNameAndMk(visa_result);			
-			if(list_visa.size()==list_visaflow.size()){
+			if(list_visa.size()==list_visaflow.size()-nos){
 				String visaRank=list_visaflow.get(i).getVisaRank();
 				visabillstemp.setVisaRank(visaRank+":");
 			}

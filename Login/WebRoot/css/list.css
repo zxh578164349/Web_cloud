@@ -1,7 +1,4 @@
- TD {
-	FONT-SIZE: 12px;
-	FONT-FAMILY: Verdana, ����, fantasy
-}
+
 
 /* DIV {
 	FONT-SIZE: 12px;
@@ -156,20 +153,27 @@ A:hover {
 
 .tdleft {
 	PADDING-LEFT: 10px
-}  */
-th{
-	font-size:12px;
-	font-weigth:bold;
-}
+}  
 
 .td_title {
-	/*FONT-WEIGHT: bold; BACKGROUND: url(../images/th_bg.gif); COLOR: #ffffff; HEIGHT: 25px; TEXT-ALIGN: center*/
+
 	FONT-WEIGHT: bold;
 	BACKGROUND: url(../images/hong/hong_bg1.png);
 	COLOR: #ffffff;
 	HEIGHT: 25px;
 	TEXT-ALIGN: center
+}*/
+
+ TD {
+	FONT-SIZE: 12px;
+	FONT-FAMILY: Verdana, ����, fantasy
 }
+th{
+	font-size:12px;
+	font-weigth:bold;
+}
+
+
 
 /* 工厂客户订单搜索栏字体大小样式 */
 .tr_show {
