@@ -56,7 +56,7 @@ public class WebuserEmailADaoImpl extends Basedao implements IWebuserEmailADao{
 			map.put("factno", factNo);
 		}
 		if(email!=null&&!email.equals("")){
-			hql.append(" and id.email=:email");
+			hql.append(" and lower(id.email)=:email");
 			map.put("email", email.toLowerCase());
 		}
 		if(visaSort!=null&&!visaSort.equals("")){

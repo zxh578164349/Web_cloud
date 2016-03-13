@@ -11,7 +11,8 @@
 <title>Web系統</title>
 <head>
 <link href="css/main.css" rel="stylesheet">
-
+<link rel="stylesheet" type="text/css" href="css/select_beautiful.css">	
+<LINK href="css/list.css" type="text/css" rel="stylesheet">
 <script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script> 
 <script type="text/javascript" src="page/jquerys/layer/layer.min.js"></script>
 <script type="text/javascript" src="jquery/DatePicker/WdatePicker.js"></script>

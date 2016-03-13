@@ -17,30 +17,11 @@
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
 
- <LINK href="css/list.css" type="text/css" rel="stylesheet"> 
-<script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script> 	
-<script type="text/javascript" src="jquery/DatePicker/WdatePicker.js"></script>
-<link rel="stylesheet" type="text/css" href="jquery/loding/ui.loading.css" />	
-<script type="text/javascript" src="jquery/loding/ui.loading.js"></script>
-<!--  <link rel="stylesheet" type="text/css" href="css/button_css.css" />
-<link rel="stylesheet" type="text/css" href="css/select_beautiful.css">	
-<link rel="stylesheet" type="text/css" href="css/general_css.css" />
-<link href="tablecloth/tablecloth.css" rel="stylesheet" type="text/css" media="screen" />-->
-<!-- 新 Bootstrap 核心 CSS 文件 -->
-<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
-<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
-<script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="page/jquerys/layer/layer.min.js"></script>
+
+
 </head>
 <script type="text/javascript">
-	var jq=jQuery.noConflict();
-    var loadi;
-    jq(document).ajaxStart(function(){
-    	loadi=layer.load("正在處理,請稍後....");
-    });
-    jq(document).ajaxStop(function(){
-    	layer.close(loadi);
-    });
+	
 	function pages(page) {
 		jq.ajax({
 			type : "POST",
@@ -75,20 +56,7 @@
 		});
 	}
 	
-var defaultColor="#97CBFF";
-var clickColor="#CCFFFF";
-function click_color(obj){
-        var tbody=document.getElementById("tbody");
-        var length=document.getElementById("tbody").rows.length;
-        for(var i=0;i<length;i++){
-            tbody.rows[i].style.backgroundColor=defaultColor;
-        }
-        obj.style.backgroundColor=clickColor;        
-    }
-    
-function move(obj){
-     obj.style.backgroundColor=defaultColor;
-    }
+
    
 /* jq(document).keyup(function(event){
     if(event.keyCode==13){
@@ -117,13 +85,11 @@ function move(obj){
     }
 }
 
-function loadjur(id,factNo){
-    layer.load("請稍等...");
-    window.location.href="/Login/userjurisdiction?id="+id+"&fact="+factNo;
+function loadjur(id,factNo){  
+    loadUrl("/Login/userjurisdiction?id="+id+"&fact="+factNo);
 }
-function loaduser(id){
-	layer.load("请稍等...");
-	location.href="/Login/userinitialUpdate?id="+id;
+function loaduser(id){	
+	loadUrl("/Login/userinitialUpdate?id="+id);
 }
 </script>
 

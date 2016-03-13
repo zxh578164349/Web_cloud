@@ -52,7 +52,7 @@
 	<table class="table table-striped table-hover table-bordered"  >
 		<h2>		
 		<s:if test='#session.loginUser.userread!="1"'>
-	      <input value="添加新用戶" type="button" class="btn btn-info" onclick="javascript:location.href='saveAndUpdate/webphonebookSaveOrUpdate.jsp'"/> 	      
+	      <input value="添加新用戶" type="button" class="btn btn-info" onclick="loadUrl('saveAndUpdate/webphonebookSaveOrUpdate.jsp')"/> 	      
 	   </s:if>
 		用戶聯系資料
 		</h2>
@@ -105,7 +105,7 @@
 					    <input type="hidden" value="<s:property value='id.phoneC'/>" name="phoneC"/>
 					    <input type="hidden" value="<s:property value='id.email'/>" name="email"/>
 					</form>					  
-						<a href="javascript:loaduser('subform${x.index}')" ><img alt="修改" src="images/icon/edit001.png" title="修改"></a>&nbsp;						
+						<a href="javascript:findById('subform${x.index}','webphonebook_findById')" ><img alt="修改" src="images/icon/edit001.png" title="修改"></a>&nbsp;						
 						<a href="javascript:mydelete('2subform${x.index}')" ><img alt="刪除" src="images/icon/delete001.png" title="刪除"></a>						
 					</td>
 				</tr>

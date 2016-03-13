@@ -30,8 +30,8 @@ function hideBills2(){
    jq("#divBills2").hide(300);
 }
 function goHere(){
-	layer.load(0);
-	location.href="/Login/vbm_findPageBean";
+	
+	loadUrl("/Login/vbm_findPageBean");
 }
 function findKyVisaBills_Int(){
    kyvisabillsjs.findKyVisaBills_Int(function(x){

@@ -14,17 +14,8 @@
 <!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
-<link rel="stylesheet" type="text/css" href="css/select_beautiful.css">	
-<LINK href="css/list.css" type="text/css" rel="stylesheet">
-<script type="text/javascript" src="jquery/DatePicker/WdatePicker.js"></script>
-<script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script>
 
-<script type="text/javascript" src="jquery_alert_dialogs/jquery.js"></script>
-<script type="text/javascript" src="jquery_alert_dialogs/jquery.alerts.js"></script>	
-<link rel="stylesheet" type="text/css" href="jquery_alert_dialogs/jquery.alerts.css" />	
-<script type="text/javascript" src="jquery_alert_dialogs/jquery.ui.draggable.js"></script>	
-<link rel="stylesheet" type="text/css" href="jquery/loding/ui.loading.css" />	
-<script type="text/javascript" src="jquery/loding/ui.loading.js"></script>
+
 <script type="text/javascript">
  
 
@@ -73,9 +64,10 @@ function getPosts(factno){
 		}
 	});
 }
-window.onload=function(){
+
+jq(function(){
 	getDepartments("");getPosts("");
-}
+});
 </script>
 
 </head>
@@ -103,7 +95,7 @@ window.onload=function(){
 			<td>姓名</td>
 			<td><input type="text" name="userName"></td>
 			<td rowspan="2">
-			 <input value="搜索" type="button" class="btn btn-primary" onclick="javascript:submis('public_form')" />	
+			 <input value="搜索" type="button" class="btn btn-primary" onclick="submis('public_form')" />	
 			 <input value="導出Excel" type="button" class="btn btn-primary" onclick="print('public_form')"/>	
 			</td>
 		</tr>

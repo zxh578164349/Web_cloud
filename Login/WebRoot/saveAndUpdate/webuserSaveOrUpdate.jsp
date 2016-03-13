@@ -22,21 +22,10 @@
 
 <link href="css/validate.css" rel="stylesheet" type="text/css" />
 <link rel="stylesheet" type="text/css" href="css/form.css" />
-<link rel="stylesheet" type="text/css" href="css/button_css.css" />
-<script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script>
-<script type="text/javascript" src="jquery/Validform_v5.3.2_min.js"></script>
-<script type="text/javascript" src="jquery/DatePicker/WdatePicker.js"></script>
-<script type="text/javascript" src="jquery/layer/layer.min.js"></script>
+<link rel="stylesheet" type="text/css" href="css/select_beautiful.css">
 </head>
 <script type="text/javascript">
-	var jq=jQuery.noConflict();
-	var loadi;
-	jq(document).ajaxStart(function(){
-		loadi=layer.load("正在提交,請稍等...");
-	});
-	jq(document).ajaxStop(function(){
-		layer.close(loadi);
-	});
+	
 	jq(function() {
 		var demo = jq("#form").Validform({
 			btnSubmit : "#sub",
@@ -47,7 +36,8 @@
 			callback:function(data){
 				if(data=="0"){
 					layer.msg("提交成功!",3,1);
-					location.href="/Login/userfindPageBean";
+					//location.href="/Login/userfindPageBean";
+					loadUrl("/Login/userfindPageBean");
 				}else{
 					alert(data.responseText);
 				}				
@@ -55,9 +45,8 @@
 		});	
 	}); 
 
-	function back() {
-		    layer.load("正在返回,請稍等...");
-			location.href = "/Login/userfindPageBean";		
+	function back() {		    
+			loadUrl("/Login/userfindPageBean");		
 	}
 	 function check(){
        var factno=document.getElementById("dwr_factno").value;
@@ -101,7 +90,7 @@
    }
   
 /*禁止空格輸入*/
-window.onload=function(){            
+/* window.onload=function(){            
             var inputs=document.getElementsByTagName("input"); 
             for (var i=0;i<inputs.length; i++) {  
                 if(inputs[i].getAttribute("type")=="text") 
@@ -109,7 +98,17 @@ window.onload=function(){
                     this.value=this.value.replace(/(^\s+)|\s+$/g,""); 
                  }; 
             }  
-        } 
+        } */
+         
+jq(function(){
+   var inputs=document.getElementsByTagName("input"); 
+            for (var i=0;i<inputs.length; i++) {  
+                if(inputs[i].getAttribute("type")=="text") 
+                 inputs[i].onkeyup=function(){ 
+                    this.value=this.value.replace(/(^\s+)|\s+$/g,""); 
+                 }; 
+            }
+});        
 </script>
 <script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>
 <script type='text/javascript' src='/Login/dwr/interface/webbackfeetjs.js'></script>
@@ -120,8 +119,8 @@ window.onload=function(){
 
 <body>
 	<form action="useradd" method="post" id="form">
-		<table width="100%" align="center" cellspacing="0" cellpadding="0">
-		　　<caption>新添帳號</caption>	
+		<table class="table table-condensed">
+		　　<h2>新添帳號</h2>	
 		        <tr>
 					<td class="td_show_title">帳號</td>
 					<td class="td_input"><input type="text" name="webUsers.username"
@@ -181,9 +180,9 @@ window.onload=function(){
 						
 		</table>
 		<center>
-			<input type="submit" id="sub" value="確定" onmouseover="this.style.backgroundPosition='left -40px'" onmouseout="this.style.backgroundPosition='left top'"/>&nbsp;&nbsp;&nbsp; <input
-				type="reset" id="reset" value="重置" onmouseover="this.style.backgroundPosition='left -40px'" onmouseout="this.style.backgroundPosition='left top'"/>&nbsp;&nbsp;&nbsp;						
-				<input type="button" value="返回" onclick="back()" id="btn_back" onmouseover="this.style.backgroundPosition='left -40px'" onmouseout="this.style.backgroundPosition='left top'"/>			
+			<input type="submit" id="sub" value="確定" class="btn btn-primary"/>&nbsp;&nbsp;&nbsp; <input
+				type="reset" id="reset" value="重置" class="btn btn-primary"/>&nbsp;&nbsp;&nbsp;						
+				<input type="button" value="返回" onclick="back()" id="btn_back" class="btn btn-primary"/>			
 
 		</center>
 	</form>
