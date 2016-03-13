@@ -45,34 +45,59 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
       }  
    )
 
+
 /**
  全選與反選
 */  	
-function checkAll(thisform,factcode_obj,index) {
-	//選中的廠別狀態
-	factcode=factcode_obj.value;
+function checkAll(factcode) {
 	//通過樣式 class獲取對應factCode的所有廠別
 	var allcheckboxs=jq("."+factcode+"_factno");
-	var allfactno = document.getElementById(factcode);
-	
+	var allfactno = jq("#"+factcode);	
 		//遍歷所選廠別狀態對應的所有checkbox
-		for ( var i = 0; i < allcheckboxs.length; i++) {
-			var checkbox = allcheckboxs[i];
-			var font = document.getElementById("font_" +factcode+"_"+ i);
-			if (checkbox.checked === false && allfactno.checked === true) {					
+		for ( var i = 0; i < allcheckboxs.length; i++) {//for
+			var checkbox = allcheckboxs[i];//dom對象
+			//var checkbox2=allcheckboxs.eq(i);//jquery對象			
+			var font = jq("#font_" +factcode+"_"+ i);
+			if (checkbox.checked === false&&allfactno.prop("checked")===true) {					
 				// 正选  
-				checkbox.checked = true;
-				font.style.color = "red";
-				jq("#"+factcode+"_div").show(300);
-
-			} else if (checkbox.checked === true && allfactno.checked == false) {
-				// 反选  
-				checkbox.checked = false;
-				font.style.color = "";
-				jq("#"+factcode+"_div").hide(300);
+				checkbox.checked=true;
+				font.css("color","red");				
 			}
-		}
+			if (checkbox.checked === true&&allfactno.prop("checked")===false) {
+				// 反选  
+				checkbox.checked=false;
+				font.css("color","") ;				
+			}						
+		}//for
+		if(allfactno.prop("checked")){
+			   jq("#"+factcode+"_div").show(300);
+			}else{
+			  jq("#"+factcode+"_div").hide(300); 
+			}
 	}
+	
+	/**
+全選全部的廠別狀態
+*/
+function selectAll(obj){
+   var allfactcodes=jq("input[name='list_factcode']");
+   if(obj.checked===true){
+     for(var i=0;i<allfactcodes.length;i++){  
+     allfactcodes[i].checked=true;  
+     checkAll(allfactcodes[i].value);
+   }  
+   }else{
+      for(var i=0;i<allfactcodes.length;i++){  
+      allfactcodes[i].checked=false;  
+      checkAll(allfactcodes[i].value);
+   }
+   }
+   
+   
+
+   
+   
+}
 	
 /**
 選擇單個,如果一個也選中,則全部退回
@@ -115,7 +140,7 @@ function test(factcode_obj){  //jquery获取复选框值
   <h2>分形態損益表-工廠</h2>
     <form action="vwebmachine_print_fact" method="post" id='subform1' target="_blank">
        <table class="tb_search">
-       <caption>全年報表</caption>
+       <h4>全年報表</h4>
           <tr>          
           <td>
           <!--<select name="year" datatype="*">
@@ -158,7 +183,7 @@ function test(factcode_obj){  //jquery获取复选框值
      <hr>
     <form action="vwebmachine_print_month" method="post" id="subform2" target="_blank">
       <table class="tb_search">
-      <caption>月份報表</caption>
+      <h4>月份報表</h4>
          <tr>         
           <td>
               <span>
@@ -205,11 +230,12 @@ function test(factcode_obj){  //jquery获取复选框值
         </table>
         <hr>
         <table>
+        <tr><td><input type="checkbox" onclick="selectAll(this)" style="width:18px;height:18px"/>全選<hr></td></tr>
           <s:iterator value="#attr.map" id="map" status="x">
           <tr>
            <td>
                  <input type="checkbox" value="<s:property value='key'/>" id="<s:property value='key'/>" name="list_factcode" 
-                 onclick="checkAll(this.form,<s:property value='key'/>,${x.index})" style="width:18px;height:18px"/>
+                 onclick="checkAll('${map.key}')" style="width:18px;height:18px"/>
                  <font style="font-size:14px;font-weight:bold" ><s:property value='key'/> </font>
                  <br> 
                  <div id="<s:property value='key'/>_div" style="display:none">               

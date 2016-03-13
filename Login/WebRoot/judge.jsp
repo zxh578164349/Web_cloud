@@ -37,6 +37,6 @@
 	
 
 </script>
-<jsp:include page="copyright.jsp"/>
+<jsp:include page="copyright_login.jsp"/>
 </body >
 </html>

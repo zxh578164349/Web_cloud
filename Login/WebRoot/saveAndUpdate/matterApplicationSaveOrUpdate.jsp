@@ -433,7 +433,6 @@ function gook(){
 
 <script type="text/javascript">
 jq(function(){
-	alert(jq("#addorupdate").val());
 	if(jq("#addorupdate").val()!="update"){
 		getKyType();makeBillNo();
 	}	
