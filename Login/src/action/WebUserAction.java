@@ -74,7 +74,6 @@ public class WebUserAction extends ActionSupport implements ServletResponseAware
 	private int backIndex;//返回標識      0或null:不走返回路徑         1:走返回路徑
 	
 	
-	
 
 	public int getBackIndex() {
 		return backIndex;
@@ -509,7 +508,7 @@ public class WebUserAction extends ActionSupport implements ServletResponseAware
 	 */
 	public String updateUesr() throws IOException {
 		boolean yz = webUserService.updateUser(updateU);
-		if (yz == true) {
+		/*if (yz == true) {
 			//return "updateSuccess";
 			response.setContentType("text/html;charset=utf-8");
 			response.getWriter().print("<script>alert('修改成功！');history.back()</script>");
@@ -519,7 +518,8 @@ public class WebUserAction extends ActionSupport implements ServletResponseAware
 			response.getWriter().print("<script>alert('修改失敗！');history.back()</script>");
 			return null;
 			//return NONE;
-		}
+		}*/
+		return "updateUesr";
 	}
 
 	/**
@@ -590,6 +590,8 @@ public class WebUserAction extends ActionSupport implements ServletResponseAware
 	 * 查看用戶權限
 	 */
 	public String jurisdiction() {
+		List<WebMenu>menus=menuSer.findAllMenu();
+		ActionContext.getContext().getSession().put("menus", menus);
 		WebUser webUser = webUserService.selByuserId(id, fact);
 		ActionContext.getContext().getSession().put("user", webUser);
 		return "qx";
@@ -603,139 +605,195 @@ public class WebUserAction extends ActionSupport implements ServletResponseAware
 	 * @throws JSONException
 	 */
 	public String updateJurisdiction() {
-		WebUser user = (WebUser) ActionContext.getContext().getSession().get("user");		
-		if(userread!=null&&!userread.equals("")){
-			user.setUserread(userread);
-		}else{
-			user.setUserread("0");
-		}
-		webUserService.add(user);
 		
-		//（1）在更新時，先查找出舊的權限
-		List<WebJurisdiction> list = jurisdictionService.selSub(user.getId());
-		//（2）開始更新權限
-		List<String> name = new ArrayList<String>();
-		List<WebSubmenu> KPIList = new ArrayList<WebSubmenu>();
-		List<WebSubmenu> yhglList = new ArrayList<WebSubmenu>();
-		List<WebSubmenu> grszist = new ArrayList<WebSubmenu>();
-		List<WebSubmenu> sjglList = new ArrayList<WebSubmenu>();
-		List<WebSubmenu> zlsr = new ArrayList<WebSubmenu>();
-		for (int j = 0; j < checkbox.length; j++) {
-			String[] info = checkbox[j].split(",");
-			if (!name.contains(info[0])) {
-				name.add(info[0]);
+		try{			
+			List<WebMenu>list_menu=(List<WebMenu>)ActionContext.getContext().getSession().get("menus");
+			
+            if(list_menu!=null&&list_menu.size()>0){
+            	List<String>menuname_checked=new ArrayList<String>();
+    			Map<String,List<WebSubmenu>>map=new HashMap<String,List<WebSubmenu>>();
+    			menuname_checked.add("退出管理");
+    			WebUser user = (WebUser) ActionContext.getContext().getSession().get("user");		
+    			if(userread!=null&&!userread.equals("")){
+    				user.setUserread(userread);
+    			}else{
+    				user.setUserread("0");
+    			}
+    			webUserService.add(user);
+    			
+    			//（1）在更新時，先查找出舊的權限
+    			List<WebJurisdiction> list = jurisdictionService.selSub(user.getId());
+    			//（2）開始更新權限
+    			for(int i=0;i<list_menu.size();i++){//for1
+    				List<WebSubmenu> list_submenu = new ArrayList<WebSubmenu>();
+    				for(int j=0;j<checkbox.length;j++){
+    					String[] info = checkbox[j].split(",");
+    					if(!menuname_checked.contains(info[0])){
+    						menuname_checked.add(info[0]);
+    					}
+    					if(list_menu.get(i).getMenuname().equals(info[0])){
+    						WebSubmenu submenu=new WebSubmenu();
+    						submenu.setSubmenuname(info[1]);
+    						submenu.setAddress(info[2]);					
+    						submenu.setSubtype("A0" + j);
+    						list_submenu.add(submenu);
+    					}					
+    				}
+    				if(list_submenu.size()>0){
+    					map.put(list_menu.get(i).getMenuname(), list_submenu);
+    				}
+    				
+    				
+    			}//for1
+    			for(String key:map.keySet()){
+    				WebJurisdiction webjur=new WebJurisdiction();
+    				WebMenu menu=new WebMenu();
+    				for(WebMenu temp:list_menu){
+    					if(key.equals(temp.getMenuname())){
+    						menu=temp;
+    						break ;
+    					}
+    				}
+    				webjur.setWebMenu(menu);
+    				webjur.setWebUser(user);    				
+    				webjur.setWebSubmenus(map.get(key));
+    				for(WebSubmenu submenu:map.get(key)){
+    					submenu.setWebJurisdiction(webjur);
+    				}
+    				jurisdictionService.add(webjur);
+    				
+    			}
+    			//（3）放在最後刪除舊的權限
+    			for (int i = 0; i < list.size(); i++) {			
+    				jurisdictionService.delJur(list.get(i));
+    			}
+    			ajax_result="0";
 			}
-			if (info[0].equals("KPI數據")) {
-				WebSubmenu submenu = new WebSubmenu();
-				submenu.setAddress(info[2]);
-				submenu.setSubmenuname(info[1]);
-				submenu.setSubtype("A0" + j);
-				KPIList.add(submenu);
-			}
-			if (info[0].equals("用戶管理")) {
-				WebSubmenu submenu = new WebSubmenu();
-				submenu.setAddress(info[2]);
-				submenu.setSubmenuname(info[1]);
-				submenu.setSubtype("A0" + j);
-				yhglList.add(submenu);
-			}
-			if (info[0].equals("數據管理")) {
-				WebSubmenu submenu = new WebSubmenu();
-				submenu.setAddress(info[2]);
-				submenu.setSubmenuname(info[1]);
-				submenu.setSubtype("A0" + j);
-				sjglList.add(submenu);
-			}
-			if (info[0].equals("個人設置")) {
-				WebSubmenu submenu = new WebSubmenu();
-				submenu.setAddress(info[2]);
-				submenu.setSubmenuname(info[1]);
-				submenu.setSubtype("A0" + j);
-				grszist.add(submenu);
-			}
-			if (info[0].equals("資料輸入")) {
-				WebSubmenu submenu = new WebSubmenu();
-				submenu.setAddress(info[2]);
-				submenu.setSubmenuname(info[1]);
-				submenu.setSubtype("A0" + j);
-				zlsr.add(submenu);
-			}
-		}
-		name.add("退出管理");
-		Map<String, List<WebSubmenu>> su = new HashMap<String, List<WebSubmenu>>();
-		su.put("KPI數據", KPIList);
-		su.put("用戶管理", yhglList);
-		su.put("數據管理", sjglList);
-		su.put("個人設置", grszist);
-		su.put("資料輸入", zlsr);
-		for (int g = 0; g < name.size(); g++) {//start for
-			WebMenu menu = menuSer.selByname(name.get(g));
-			WebJurisdiction jurisdiction = new WebJurisdiction();
-			jurisdiction.setWebMenu(menu);
-			jurisdiction.setWebUser(user);
-			jurisdiction.setWebSubmenus(su.get(name.get(g)));
-			boolean s = jurisdictionService.add(jurisdiction);
-			if (s == true) {
-				//WebJurisdiction jurisdiction2 = jurisdictionService.selBymenuName(name.get(g), user.getId());						
-				WebJurisdiction jurisdiction2=jurisdictionService.findById(jurisdiction.getJurisdictionid());
-				if (jurisdiction2.getWebMenu().getMenuname().equals("KPI數據")) {
-					for (int i = 0; i < KPIList.size(); i++) {
-						WebSubmenu submenu = new WebSubmenu();
-						submenu.setWebJurisdiction(jurisdiction2);
-						submenu.setSubmenuname(KPIList.get(i).getSubmenuname());
-						submenu.setAddress(KPIList.get(i).getAddress());
-						submenu.setSubtype(KPIList.get(i).getSubtype());
-						submenuService.addSubmenu(submenu);
-					}
+			
+			
+			
+			/*List<String> name = new ArrayList<String>();
+			List<WebSubmenu> KPIList = new ArrayList<WebSubmenu>();
+			List<WebSubmenu> yhglList = new ArrayList<WebSubmenu>();
+			List<WebSubmenu> grszist = new ArrayList<WebSubmenu>();
+			List<WebSubmenu> sjglList = new ArrayList<WebSubmenu>();
+			List<WebSubmenu> zlsr = new ArrayList<WebSubmenu>();
+			for (int j = 0; j < checkbox.length; j++) {
+				String[] info = checkbox[j].split(",");
+				if (!name.contains(info[0])) {
+					name.add(info[0]);
 				}
-				if (jurisdiction2.getWebMenu().getMenuname().equals("用戶管理")) {
-					for (int i = 0; i < yhglList.size(); i++) {
-						WebSubmenu submenu = new WebSubmenu();
-						submenu.setWebJurisdiction(jurisdiction2);
-						submenu.setSubmenuname(yhglList.get(i).getSubmenuname());
-						submenu.setAddress(yhglList.get(i).getAddress());
-						submenu.setSubtype(yhglList.get(i).getSubtype());
-						submenuService.addSubmenu(submenu);
-					}
+				if (info[0].equals("KPI數據")) {
+					WebSubmenu submenu = new WebSubmenu();
+					submenu.setAddress(info[2]);
+					submenu.setSubmenuname(info[1]);
+					submenu.setSubtype("A0" + j);
+					KPIList.add(submenu);
 				}
-				if (jurisdiction2.getWebMenu().getMenuname().equals("數據管理")) {
-					for (int i = 0; i < sjglList.size(); i++) {
-						WebSubmenu submenu = new WebSubmenu();
-						submenu.setWebJurisdiction(jurisdiction2);
-						submenu.setSubmenuname(sjglList.get(i).getSubmenuname());
-						submenu.setAddress(sjglList.get(i).getAddress());
-						submenu.setSubtype(sjglList.get(i).getSubtype());
-						submenuService.addSubmenu(submenu);
-					}
+				if (info[0].equals("用戶管理")) {
+					WebSubmenu submenu = new WebSubmenu();
+					submenu.setAddress(info[2]);
+					submenu.setSubmenuname(info[1]);
+					submenu.setSubtype("A0" + j);
+					yhglList.add(submenu);
 				}
-				if (jurisdiction2.getWebMenu().getMenuname().equals("個人設置")) {
-					for (int i = 0; i < grszist.size(); i++) {
-						WebSubmenu submenu = new WebSubmenu();
-						submenu.setWebJurisdiction(jurisdiction2);
-						submenu.setSubmenuname(grszist.get(i).getSubmenuname());
-						submenu.setAddress(grszist.get(i).getAddress());
-						submenu.setSubtype(grszist.get(i).getSubtype());
-						submenuService.addSubmenu(submenu);
-					}
+				if (info[0].equals("數據管理")) {
+					WebSubmenu submenu = new WebSubmenu();
+					submenu.setAddress(info[2]);
+					submenu.setSubmenuname(info[1]);
+					submenu.setSubtype("A0" + j);
+					sjglList.add(submenu);
 				}
-				if (jurisdiction2.getWebMenu().getMenuname().equals("資料輸入")) {
-					for (int i = 0; i < zlsr.size(); i++) {
-						WebSubmenu submenu = new WebSubmenu();
-						submenu.setWebJurisdiction(jurisdiction2);
-						submenu.setSubmenuname(zlsr.get(i).getSubmenuname());
-						submenu.setAddress(zlsr.get(i).getAddress());
-						submenu.setSubtype(zlsr.get(i).getSubtype());
-						submenuService.addSubmenu(submenu);
-					}
+				if (info[0].equals("個人設置")) {
+					WebSubmenu submenu = new WebSubmenu();
+					submenu.setAddress(info[2]);
+					submenu.setSubmenuname(info[1]);
+					submenu.setSubtype("A0" + j);
+					grszist.add(submenu);
+				}
+				if (info[0].equals("資料輸入")) {
+					WebSubmenu submenu = new WebSubmenu();
+					submenu.setAddress(info[2]);
+					submenu.setSubmenuname(info[1]);
+					submenu.setSubtype("A0" + j);
+					zlsr.add(submenu);
 				}
 			}
-		}//end for
-		
-		//（3）放在最後刪除舊的權限
-		for (int i = 0; i < list.size(); i++) {			
-			jurisdictionService.delJur(list.get(i));
-		}
-		
+			name.add("退出管理");
+			Map<String, List<WebSubmenu>> su = new HashMap<String, List<WebSubmenu>>();
+			su.put("KPI數據", KPIList);
+			su.put("用戶管理", yhglList);
+			su.put("數據管理", sjglList);
+			su.put("個人設置", grszist);
+			su.put("資料輸入", zlsr);
+			for (int g = 0; g < name.size(); g++) {//start for
+				WebMenu menu = menuSer.selByname(name.get(g));
+				WebJurisdiction jurisdiction = new WebJurisdiction();
+				jurisdiction.setWebMenu(menu);
+				jurisdiction.setWebUser(user);
+				jurisdiction.setWebSubmenus(su.get(name.get(g)));
+				boolean s = jurisdictionService.add(jurisdiction);
+				if (s == true) {
+					//WebJurisdiction jurisdiction2 = jurisdictionService.selBymenuName(name.get(g), user.getId());						
+					WebJurisdiction jurisdiction2=jurisdictionService.findById(jurisdiction.getJurisdictionid());
+					if (jurisdiction2.getWebMenu().getMenuname().equals("KPI數據")) {
+						for (int i = 0; i < KPIList.size(); i++) {
+							WebSubmenu submenu = new WebSubmenu();
+							submenu.setWebJurisdiction(jurisdiction2);
+							submenu.setSubmenuname(KPIList.get(i).getSubmenuname());
+							submenu.setAddress(KPIList.get(i).getAddress());
+							submenu.setSubtype(KPIList.get(i).getSubtype());
+							submenuService.addSubmenu(submenu);
+						}
+					}
+					if (jurisdiction2.getWebMenu().getMenuname().equals("用戶管理")) {
+						for (int i = 0; i < yhglList.size(); i++) {
+							WebSubmenu submenu = new WebSubmenu();
+							submenu.setWebJurisdiction(jurisdiction2);
+							submenu.setSubmenuname(yhglList.get(i).getSubmenuname());
+							submenu.setAddress(yhglList.get(i).getAddress());
+							submenu.setSubtype(yhglList.get(i).getSubtype());
+							submenuService.addSubmenu(submenu);
+						}
+					}
+					if (jurisdiction2.getWebMenu().getMenuname().equals("數據管理")) {
+						for (int i = 0; i < sjglList.size(); i++) {
+							WebSubmenu submenu = new WebSubmenu();
+							submenu.setWebJurisdiction(jurisdiction2);
+							submenu.setSubmenuname(sjglList.get(i).getSubmenuname());
+							submenu.setAddress(sjglList.get(i).getAddress());
+							submenu.setSubtype(sjglList.get(i).getSubtype());
+							submenuService.addSubmenu(submenu);
+						}
+					}
+					if (jurisdiction2.getWebMenu().getMenuname().equals("個人設置")) {
+						for (int i = 0; i < grszist.size(); i++) {
+							WebSubmenu submenu = new WebSubmenu();
+							submenu.setWebJurisdiction(jurisdiction2);
+							submenu.setSubmenuname(grszist.get(i).getSubmenuname());
+							submenu.setAddress(grszist.get(i).getAddress());
+							submenu.setSubtype(grszist.get(i).getSubtype());
+							submenuService.addSubmenu(submenu);
+						}
+					}
+					if (jurisdiction2.getWebMenu().getMenuname().equals("資料輸入")) {
+						for (int i = 0; i < zlsr.size(); i++) {
+							WebSubmenu submenu = new WebSubmenu();
+							submenu.setWebJurisdiction(jurisdiction2);
+							submenu.setSubmenuname(zlsr.get(i).getSubmenuname());
+							submenu.setAddress(zlsr.get(i).getAddress());
+							submenu.setSubtype(zlsr.get(i).getSubtype());
+							submenuService.addSubmenu(submenu);
+						}
+					}
+				}
+			}//end for
+*/			
+			
+		}catch(Exception e){
+			ajax_result="1";
+			System.out.println(e);
+		}				
 		return "updateJurisdiction";
 	}
 

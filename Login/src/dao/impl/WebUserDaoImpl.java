@@ -32,7 +32,7 @@ public class WebUserDaoImpl extends Basedao implements IWebUserDao {
 	}
 
 	public void updates(WebUser webUser) {
-		WebUser wUser = (WebUser) findById(webUser.getId(), WebUser.class);
+		/*WebUser wUser = (WebUser) findById(webUser.getId(), WebUser.class);
 		wUser.setAvailable(webUser.getAvailable());
 		wUser.setFactno(webUser.getFactno());
 		wUser.setIp(webUser.getIp());
@@ -43,7 +43,8 @@ public class WebUserDaoImpl extends Basedao implements IWebUserDao {
 		wUser.setUserread(webUser.getUserread());
 		wUser.setEmail(webUser.getEmail());
 		wUser.setDepartment(webUser.getDepartment());
-		getSession().update(wUser);
+		getSession().update(wUser);*/
+		super.merge(webUser);
 	}
 
 	private static final boolean isChinese(char c) {

@@ -17,17 +17,9 @@
 <meta http-equiv="expires" content="0">
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
-<script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script>
-<script type="text/javascript" src="page/jquerys/layer/layer.min.js"></script>
+
 </head>
-<style>
-.td1 {
-	width: 110px;
-	text-align: right;
-	background-color: #ebf2f9;
-}
-input[type=text],input[type=password]{width:250px}
-</style>
+
 <script type="text/javascript">
    function checkUserName(){
       var factNo=document.getElementById("factNo").value;
@@ -35,29 +27,40 @@ input[type=text],input[type=password]{width:250px}
       var userName2=document.getElementById("hide_userName").value;
       var email=document.getElementById("email").value;
       var email2=document.getElementById("hidden_email").value;
-      if(factNo!=""&&userName!=""&&userName!=userName2){
+      /*if(factNo!=""&&userName!=""&&userName!=userName2){
          userjs.findByIdDWR(factNo,userName,function(x){
               if(x!=null){
-                 alert("該登錄名已存在!");                           
+                 alert("該登錄名已存在!");
+                 return false;
               }
          });
-      }
+      }*/
       if(factNo!=""&&email!=""&&email!=email2){
          userjs.findUserByFactNoAEmail(factNo,email,function(x){
               if(x!=null){
-                 alert("該Email已存在!");                             
-              }else{
-                document.getElementById("form").submit();
+                 alert("該Email已存在!");
+                 return false;
               }
          });
-      }else{
-         document.getElementById("form").submit();
-      } 
+      }
    }
-
+function gosubmit(){
+	jq.ajax({
+		type:"POST",
+		dataType:"html",
+		data:jq("#form").serialize(),
+		url:"userupdateUesr",
+		success:function(data){
+			jq("#r_content").html(data);
+		},
+		error:function(error){
+			jq("#r_content").html(error);
+		}
+	});
+}
 
 /*禁止空格輸入*/
-window.onload=function(){            
+/*window.onload=function(){            
             var inputs=document.getElementsByTagName("input"); 
             for (var i=0;i<inputs.length; i++) {  
                 if(inputs[i].getAttribute("type")=="text") 
@@ -65,10 +68,18 @@ window.onload=function(){
                     this.value=this.value.replace(/(^\s+)|\s+$/g,""); 
                  }; 
             }  
-        } 
-function back(){
-	layer.load("正在返回,请稍等...");
-	location.href="/Login/userfindPageBean"
+        }*/
+jq(function(){
+	 var inputs=document.getElementsByTagName("input"); 
+     for (var i=0;i<inputs.length; i++) {  
+         if(inputs[i].getAttribute("type")=="text") 
+          inputs[i].onkeyup=function(){ 
+             this.value=this.value.replace(/(^\s+)|\s+$/g,""); 
+          }; 
+     }
+});
+function back(){	
+	loadUrl("/Login/userfindPageBean3?backIndex=1");
 }
 </script>
 <script type='text/javascript' src='/Login/dwr/interface/userjs.js'></script>
@@ -77,13 +88,9 @@ function back(){
 <body>
 	
 	<form action="userupdateUesr" method="post"  id="form">
-		<input type="hidden" name="updateU.id"
-			value="<s:property value="#attr.webU.id"/>"> <input
-			type="hidden" name="updateU.available"
-			value="<s:property value="#attr.webU.available"/>">
-		<%-- <s:submit value="提交" name="action:sds"></s:submit>--%>
-		<table border="1" width="70%" height="220px;"
-			style="margin-top:5px; border-collapse:collapse;">
+		<input type="hidden" name="updateU.id" value="<s:property value="#attr.webU.id"/>">
+		<input type="hidden" name="updateU.available" value="<s:property value="#attr.webU.available"/>">						
+		<table class="table table-condensed">
 			<caption style="font-size:30px">個人資料修改</caption>
 			<tr>
 				<td class="td1">工號:</td>
@@ -155,11 +162,11 @@ function back(){
 			  </td>
 			</tr> 
 			<tr>
-				<td colspan="2"><span style="margin-left: 300px;">
-				  <input type="button" value="確認修改" onclick="checkUserName()"/>&nbsp;
-				  <input type="button" onclick="location.href='userrecoveryData'" value="恢復默認">&nbsp;
-				  <input type="button" onclick="back()" value="返回"/>			
-				  </span></td>
+				<td colspan="2">
+				  <input type="button" value="確認修改" onclick="gosubmit()" class="btn btn-primary"/>&nbsp;
+				  <!-- <input type="button" onclick="location.href='userrecoveryData'" value="恢復默認" class="btn btn-primary"/>&nbsp; -->
+				  <input type="button" onclick="back()" value="返回" class="btn btn-primary"/>		
+				  </td>
 						
 			</tr>
 		</table>

@@ -46,6 +46,7 @@
 			<result name="json_login" type="json">
 			    <param name="root">ajax_result</param>
 			</result>
+			<result name="updateUesr" type="redirectAction">userfindPageBean3_1</result>			    			
 		</action>
 		<action name="show*" class="showAction" method="{1}">
 			<result name="titleSuccess">page/show.jsp</result>

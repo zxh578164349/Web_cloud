@@ -19,7 +19,7 @@
         <many-to-one name="webUser" class="entity.WebUser" fetch="select" lazy="false">
             <column name="USERID" precision="8" scale="0" not-null="true" />
         </many-to-one>
-        <bag name="webSubmenus" cascade="delete" inverse="true" lazy="false">
+        <bag name="webSubmenus" cascade="all" inverse="true" lazy="false">
             <key>
                 <column name="JURISDICTIONID" precision="8" scale="0" not-null="true" />
             </key>
