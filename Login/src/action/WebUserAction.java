@@ -593,7 +593,7 @@ public class WebUserAction extends ActionSupport implements ServletResponseAware
 		List<WebMenu>menus=menuSer.findAllMenu();
 		ActionContext.getContext().getSession().put("menus", menus);
 		WebUser webUser = webUserService.selByuserId(id, fact);
-		ActionContext.getContext().getSession().put("user", webUser);
+		ActionContext.getContext().getSession().put("jurisdiction_user", webUser);
 		return "qx";
 	}
 
@@ -613,7 +613,7 @@ public class WebUserAction extends ActionSupport implements ServletResponseAware
             	List<String>menuname_checked=new ArrayList<String>();
     			Map<String,List<WebSubmenu>>map=new HashMap<String,List<WebSubmenu>>();
     			menuname_checked.add("退出管理");
-    			WebUser user = (WebUser) ActionContext.getContext().getSession().get("user");		
+    			WebUser user = (WebUser) ActionContext.getContext().getSession().get("jurisdiction_user");		
     			if(userread!=null&&!userread.equals("")){
     				user.setUserread(userread);
     			}else{
@@ -627,10 +627,7 @@ public class WebUserAction extends ActionSupport implements ServletResponseAware
     			for(int i=0;i<list_menu.size();i++){//for1
     				List<WebSubmenu> list_submenu = new ArrayList<WebSubmenu>();
     				for(int j=0;j<checkbox.length;j++){
-    					String[] info = checkbox[j].split(",");
-    					if(!menuname_checked.contains(info[0])){
-    						menuname_checked.add(info[0]);
-    					}
+    					String[] info = checkbox[j].split(",");   					
     					if(list_menu.get(i).getMenuname().equals(info[0])){
     						WebSubmenu submenu=new WebSubmenu();
     						submenu.setSubmenuname(info[1]);
@@ -642,9 +639,9 @@ public class WebUserAction extends ActionSupport implements ServletResponseAware
     				if(list_submenu.size()>0){
     					map.put(list_menu.get(i).getMenuname(), list_submenu);
     				}
-    				
-    				
+    				   				
     			}//for1
+    			map.put("退出管理", new ArrayList<WebSubmenu>());
     			for(String key:map.keySet()){
     				WebJurisdiction webjur=new WebJurisdiction();
     				WebMenu menu=new WebMenu();

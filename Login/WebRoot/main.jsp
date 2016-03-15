@@ -41,11 +41,11 @@ var jq=jQuery.noConflict();
 					
 		function switchSysBar() {			
 			if (jq("#t_index").text()=="＜＜＜") {
-			    jq("#left").hide(100);
+			    jq("#left").hide(200);
 			    
 			    jq("#t_index").text("＞＞＞");											
 			} else {
-			    jq("#left").show(100);
+			    jq("#left").show(200);
 			    jq("#t_index").text("＜＜＜") ;
 			   
 			}
@@ -92,12 +92,12 @@ var jq=jQuery.noConflict();
 		if (divName== "none") {
 			sts.removeClass("glyphicon glyphicon-folder-close");
 			sts.addClass("glyphicon glyphicon-folder-open");
-			jq("#submenu"+index).show();
+			jq("#submenu"+index).show(200);
 			//img.attr("src","image/folderopen.gif");
 		} else {
 			sts.removeClass("glyphicon glyphicon-folder-open");
 			sts.addClass("glyphicon glyphicon-folder-close");
-			jq("#submenu"+index).hide(100);
+			jq("#submenu"+index).hide(200);
 			//img.attr("src","image/folder.gif");
 		}
 	}
@@ -145,8 +145,8 @@ function findById(subform,url){
 		   <div id="top">
 		      <h1 >東莞加元鞋材制品有限公司</h1>						    							
 						<div id="currentTime" ></div> 
-						 <div id="lg_info" >登录人：<s:property value="#session.loginUser.name" />(<s:if test="#attr.factNo=='tw'">所有數據</s:if>								
-								 <s:else> <s:property value="#attr.factName" /></s:else> ),欢迎您 ！								
+						 <div id="lg_info" >登录人：<s:property value="#session.loginUser.name" />(<s:if test="#session.factNo=='tw'">所有數據</s:if>								
+								 <s:else> <s:property value="#session.factName" /></s:else> ),欢迎您 ！								
 							     <a id="exit" href="javascript:back_judge()" target="_parent">
 							     退出登录</a>
 						</div> 
@@ -173,7 +173,7 @@ function findById(subform,url){
 												 <span class="glyphicon glyphicon-file">
 												    <a name="alink" href="javascript:findPageBean('<s:property value="address"/>')"																										
 													 class="smenu_font" title="<s:property value='submenuname'/>">																										
-													(${x.index+1})<s:property value="submenuname" /> </a>
+													<s:property value="submenuname" /> </a>
 												 </span>
 												   
 											</div>
@@ -197,8 +197,8 @@ function findById(subform,url){
 			</div>
 		   
 		   <div id="bottom">
-		      
-		      <jsp:include page="copyright.jsp"/>
+		      <p>
+		      <jsp:include page="copyright.jsp"/></p>
 		   </div>		   	
 </div>
  	

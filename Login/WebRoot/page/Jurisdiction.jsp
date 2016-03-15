@@ -63,8 +63,8 @@ jq(function(){
 <body>
 	<form action="userupdateJurisdiction" method="post" id="subform">
 		<table class="table table-striped table-hover table-bordered">
-			<h4><s:property value="#session.user.username"/>&nbsp;&nbsp;
-			<s:if test='#session.user.userread=="1"'>
+			<h4><s:property value="#session.jurisdiction_user.username"/>&nbsp;&nbsp;
+			<s:if test='#session.jurisdiction_user.userread=="1"'>
 			   <input type="checkbox" name="userread" value="1" checked/>只查看
 			</s:if>
 			<s:else>
@@ -83,7 +83,7 @@ jq(function(){
 			</s:iterator>
 			
 			
-			<s:iterator value="#session.user.webJurisdictions">
+			<s:iterator value="#session.jurisdiction_user.webJurisdictions">
 			           <s:iterator value="webSubmenus">
 			              <input type="hidden" value="<s:property value='submenuname'/>" name="checkbox_hidden"/>
 			           </s:iterator>
