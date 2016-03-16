@@ -289,37 +289,46 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 		list_str.add("當月產量");list_unit.add("模");//0 (一位小數)     (0<目標)  
 		list_str.add("月均回轉 ");list_unit.add("回");//1(整數)          (1<目標)
 		list_str.add("時迴轉");list_unit.add("模/H");//2(一位小數)       (2<目標)
-		list_str.add("廠補率");  list_unit.add("%");//                  
-		list_str.add("產能達成率");list_unit.add("%");//                 (4<目標)	          	
-		list_str.add("成倉庫存");list_unit.add("雙");//5(整數)            
-		
-		list_str.add("已出未請");list_unit.add("雙");//6(整數)          
-		list_str.add("生產與請款差異率");list_unit.add("%");           
-		list_str.add("全廠人均時產能");list_unit.add("模/H");//           (8<目標)
-		list_str.add("直工人均产能");list_unit.add("模/人");//9(整數)      (9<目標) 
+		list_str.add("機臺利用率");list_unit.add("%");
+		list_str.add("產能達成率");list_unit.add("%");//                 (4<目標)
+		list_str.add("直工人均产能");list_unit.add("模/人");//9(整數)      (9<目標)
 		list_str.add("全厂人均产能");list_unit.add("模/人");//10(整數)      (10<目標)
-		
+		list_str.add("全廠人均時產能");list_unit.add("模/H");//           (8<目標)
+		list_str.add("成倉庫存");list_unit.add("雙");//5(整數)
+		list_str.add("已出未請");list_unit.add("雙");//6(整數) 
+		list_str.add("生產與請款差異率");list_unit.add("%"); 
+		list_str.add("銷貨收入");list_unit.add("USD");
+		list_str.add("主材料成本比率");list_unit.add("%");
+		list_str.add("人工成本率");list_unit.add("%");
+		list_str.add("費用成本率");list_unit.add("%");
+		list_str.add("修繕單耗");list_unit.add("USD/模");//16
+		list_str.add("平均單價");list_unit.add("USD/雙");
+		list_str.add("全廠人均薪資");list_unit.add("USD/人");
 		list_str.add("人均產值");list_unit.add("USD/人");//                (11<目標)
 		list_str.add("人薪產值");list_unit.add("--");//                    (12<目標)
-		list_str.add("水用量单耗");list_unit.add("噸/模");//13(12至15取四位小數)  
-		list_str.add("电度数单耗");list_unit.add("度/模");
-		list_str.add("蒸汽单耗");list_unit.add("噸/模");
-		
-		list_str.add("修繕單耗");list_unit.add("USD/模");//16
-		list_str.add("主材料成本比率");list_unit.add("%");
-		list_str.add("邊料率");list_unit.add("%");
-		list_str.add("報廢率");list_unit.add("%");
 		list_str.add("全廠總損耗");list_unit.add("%");
-		
-		list_str.add("無形損耗");list_unit.add("%");                                          
+		list_str.add("無形損耗");list_unit.add("%"); 
+		list_str.add("邊料率");list_unit.add("%");
+		list_str.add("不良率");list_unit.add("%");
+		list_str.add("報廢率");list_unit.add("%");
+		list_str.add("廠補率");  list_unit.add("%");// 
+		list_str.add("水用量单耗");list_unit.add("噸/模");//13(12至15取四位小數)  
+		list_str.add("用水金額單耗");list_unit.add("USD/模");
+		list_str.add("电度数单耗");list_unit.add("度/模");
+		list_str.add("用電金額單耗");list_unit.add("USD/模");
+		list_str.add("蒸汽用量單耗");list_unit.add("噸/模");
+		list_str.add("用汽金額單耗");list_unit.add("USD/模");
+		list_str.add("回頭料%");list_unit.add("%");
+		list_str.add("油壓退料%");list_unit.add("%");
+		list_str.add("回流率%");list_unit.add("%");
+		list_str.add("藥品用量單耗");list_unit.add("g/模");
+		list_str.add("色料用量單耗");list_unit.add("g/模");
+		list_str.add("離型劑金額單耗");list_unit.add("USD/模");
 		list_str.add("直間比");list_unit.add("--");//                        (22<目標)
-		list_str.add("工傷件數");list_unit.add("件");
 		list_str.add("直工離職率");list_unit.add("%");
-		list_str.add("全廠離職率");list_unit.add("%");                    
-		
-		
-		
-		
+		list_str.add("全廠離職率");list_unit.add("%");
+		list_str.add("工傷件數");list_unit.add("件");	          	
+		          
 		//表頭內容
 		List<String>list_column=new ArrayList<String>();
 		list_column.add("項次");
@@ -610,9 +619,9 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 					if(eve.getSumFacpairs()==null){
 						eve.setSumFacpairs(big);
 					}
-					if(eve.getOtherweight()==null){
+					/*if(eve.getOtherweight()==null){
 						eve.setOtherweight(0.0);
-					}
+					}*/
 					if(eve.getProductednum()==null){
 						eve.setProductednum(0.0);
 					}
@@ -642,7 +651,7 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 						
 						q1_sideweit=q1_sideweit+eve.getSideweit();q1_badweit=q1_badweit+eve.getBadweit();
 						q1_otherbadweight=q1_otherbadweight+eve.getOtherbadweight();
-						q1_otherweight=q1_otherweight+eve.getOtherweight();
+						q1_otherweight=q1_otherweight+eve.getOtherweight().doubleValue();
 						
 						q1_waterton=q1_waterton+eve.getWaterton();q1_electricdu=q1_electricdu+eve.getElectricdu();
 						q1_gaston=q1_gaston+eve.getGaston();
@@ -673,7 +682,7 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 						
 						q2_sideweit=q2_sideweit+eve.getSideweit();q2_badweit=q2_badweit+eve.getBadweit();
 						q2_otherbadweight=q2_otherbadweight+eve.getOtherbadweight();
-						q2_otherweight=q2_otherweight+eve.getOtherweight();
+						q2_otherweight=q2_otherweight+eve.getOtherweight().doubleValue();
 						
 						q2_waterton=q2_waterton+eve.getWaterton();q2_electricdu=q2_electricdu+eve.getElectricdu();
 						q2_gaston=q2_gaston+eve.getGaston();
@@ -705,7 +714,7 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 						
 						q3_sideweit=q3_sideweit+eve.getSideweit();q3_badweit=q3_badweit+eve.getBadweit();
 						q3_otherbadweight=q3_otherbadweight+eve.getOtherbadweight();
-						q3_otherweight=q3_otherweight+eve.getOtherweight();
+						q3_otherweight=q3_otherweight+eve.getOtherweight().doubleValue();
 						
 						q3_waterton=q3_waterton+eve.getWaterton();q3_electricdu=q3_electricdu+eve.getElectricdu();
 						q3_gaston=q3_gaston+eve.getGaston();
@@ -736,7 +745,7 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 						
 						q4_sideweit=q4_sideweit+eve.getSideweit();q4_badweit=q4_badweit+eve.getBadweit();
 						q4_otherbadweight=q4_otherbadweight+eve.getOtherbadweight();
-						q4_otherweight=q4_otherweight+eve.getOtherweight();
+						q4_otherweight=q4_otherweight+eve.getOtherweight().doubleValue();
 						
 						q4_waterton=q4_waterton+eve.getWaterton();q4_electricdu=q4_electricdu+eve.getElectricdu();
 						q4_gaston=q4_gaston+eve.getGaston();
@@ -1790,9 +1799,9 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 					if(eve.getSumFacpairs()==null){
 						eve.setSumFacpairs(big);
 					}
-					if(eve.getOtherweight()==null){
+					/*if(eve.getOtherweight()==null){
 						eve.setOtherweight(0.0);
-					}
+					}*/
 					if(eve.getProductednum()==null){
 						eve.setProductednum(0.0);
 					}
@@ -1830,7 +1839,7 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 						total_minusnum=total_minusnum+eve.getMinusnum();
 						
 						total_actlost=total_actlost+eve.getActlost();total_avgbuttomweight2=total_avgbuttomweight2+eve.getAvgbuttomweight2();
-						total_otherweight=total_otherweight+eve.getOtherweight();
+						total_otherweight=total_otherweight+eve.getOtherweight().doubleValue();
 						total_productnum=total_productnum+eve.getProductednum();
 						total_noglueweight=total_noglueweight+eve.getNoglueweight();
 						total_repairmoney=total_repairmoney+eve.getRepairmoney();

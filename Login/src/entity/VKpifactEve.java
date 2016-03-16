@@ -42,12 +42,25 @@ public class VKpifactEve implements java.io.Serializable {
 	private Double minusnum;
 	private Double actlost;
 	private Double avgbuttomweight2;
-	private Double otherweight;
+	private BigDecimal otherweight;
 	private Double productednum;
 	private Double noglueweight;
 	private Double repairmoney;
 	private Double workhours;
 	private Double instorenum;
+	private Double hole;
+	private BigDecimal sumWorkday;
+	private Double waterusd;
+	private Double electricusd;
+	private Double gasusd;
+	private Double thickused;
+	private Double backfeed;
+	private Double oilback;
+	private Double drugsused;
+	private Double colorused;
+	private Double leavemoney;
+	private Double paypairs;
+	private Double badcount;
 
 	// Constructors
 
@@ -71,9 +84,13 @@ public class VKpifactEve implements java.io.Serializable {
 			Double cashcount, Double sideweit, Double badweit,
 			Double otherbadweight, Double waterton, Double electricdu,
 			Double gaston, Double storenum, Double outnum, Double minusnum,
-			Double actlost, Double avgbuttomweight2, Double otherweight,
+			Double actlost, Double avgbuttomweight2, BigDecimal otherweight,
 			Double productednum, Double noglueweight, Double repairmoney,
-			Double workhours,Double instorenum) {
+			Double workhours, Double instorenum, Double hole,
+			BigDecimal sumWorkday, Double waterusd, Double electricusd,
+			Double gasusd, Double thickused, Double backfeed, Double oilback,
+			Double drugsused, Double colorused, Double leavemoney,
+			Double paypairs, Double badcount) {
 		this.id = id;
 		this.sumEverydemo = sumEverydemo;
 		this.sumStandarddemo = sumStandarddemo;
@@ -110,8 +127,21 @@ public class VKpifactEve implements java.io.Serializable {
 		this.productednum = productednum;
 		this.noglueweight = noglueweight;
 		this.repairmoney = repairmoney;
-		this.workhours=workhours;
-		this.instorenum=instorenum;
+		this.workhours = workhours;
+		this.instorenum = instorenum;
+		this.hole = hole;
+		this.sumWorkday = sumWorkday;
+		this.waterusd = waterusd;
+		this.electricusd = electricusd;
+		this.gasusd = gasusd;
+		this.thickused = thickused;
+		this.backfeed = backfeed;
+		this.oilback = oilback;
+		this.drugsused = drugsused;
+		this.colorused = colorused;
+		this.leavemoney = leavemoney;
+		this.paypairs = paypairs;
+		this.badcount = badcount;
 	}
 
 	// Property accessors
@@ -372,11 +402,11 @@ public class VKpifactEve implements java.io.Serializable {
 		this.avgbuttomweight2 = avgbuttomweight2;
 	}
 
-	public Double getOtherweight() {
+	public BigDecimal getOtherweight() {
 		return this.otherweight;
 	}
 
-	public void setOtherweight(Double otherweight) {
+	public void setOtherweight(BigDecimal otherweight) {
 		this.otherweight = otherweight;
 	}
 
@@ -405,7 +435,7 @@ public class VKpifactEve implements java.io.Serializable {
 	}
 
 	public Double getWorkhours() {
-		return workhours;
+		return this.workhours;
 	}
 
 	public void setWorkhours(Double workhours) {
@@ -413,13 +443,115 @@ public class VKpifactEve implements java.io.Serializable {
 	}
 
 	public Double getInstorenum() {
-		return instorenum;
+		return this.instorenum;
 	}
 
 	public void setInstorenum(Double instorenum) {
 		this.instorenum = instorenum;
 	}
-	
-	
+
+	public Double getHole() {
+		return this.hole;
+	}
+
+	public void setHole(Double hole) {
+		this.hole = hole;
+	}
+
+	public BigDecimal getSumWorkday() {
+		return this.sumWorkday;
+	}
+
+	public void setSumWorkday(BigDecimal sumWorkday) {
+		this.sumWorkday = sumWorkday;
+	}
+
+	public Double getWaterusd() {
+		return this.waterusd;
+	}
+
+	public void setWaterusd(Double waterusd) {
+		this.waterusd = waterusd;
+	}
+
+	public Double getElectricusd() {
+		return this.electricusd;
+	}
+
+	public void setElectricusd(Double electricusd) {
+		this.electricusd = electricusd;
+	}
+
+	public Double getGasusd() {
+		return this.gasusd;
+	}
+
+	public void setGasusd(Double gasusd) {
+		this.gasusd = gasusd;
+	}
+
+	public Double getThickused() {
+		return this.thickused;
+	}
+
+	public void setThickused(Double thickused) {
+		this.thickused = thickused;
+	}
+
+	public Double getBackfeed() {
+		return this.backfeed;
+	}
+
+	public void setBackfeed(Double backfeed) {
+		this.backfeed = backfeed;
+	}
+
+	public Double getOilback() {
+		return this.oilback;
+	}
+
+	public void setOilback(Double oilback) {
+		this.oilback = oilback;
+	}
+
+	public Double getDrugsused() {
+		return this.drugsused;
+	}
+
+	public void setDrugsused(Double drugsused) {
+		this.drugsused = drugsused;
+	}
+
+	public Double getColorused() {
+		return this.colorused;
+	}
+
+	public void setColorused(Double colorused) {
+		this.colorused = colorused;
+	}
+
+	public Double getLeavemoney() {
+		return this.leavemoney;
+	}
+
+	public void setLeavemoney(Double leavemoney) {
+		this.leavemoney = leavemoney;
+	}
+
+	public Double getPaypairs() {
+		return this.paypairs;
+	}
+
+	public void setPaypairs(Double paypairs) {
+		this.paypairs = paypairs;
+	}
+
+	public Double getBadcount() {
+		return this.badcount;
+	}
+
+	public void setBadcount(Double badcount) {
+		this.badcount = badcount;
+	}
 
 }

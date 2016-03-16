@@ -11,32 +11,48 @@ public class VKpifact implements java.io.Serializable {
 	// Fields
 
 	private VKpifactId id;
-	private BigDecimal thisYield;//當月產量
-	private BigDecimal avgCircle;//月均回轉
-	private BigDecimal avgCirclehour;//時迴轉
-	private BigDecimal factaddRate;//廠補率
-	private BigDecimal productRate;//產能達成率
-	private Double storeNum;//成倉庫存
-	private Double outRequest;//已出未請
-	private BigDecimal outrequestRate;//生產與請款差異率
-	private BigDecimal avgFactpro;//全廠人均時產能
-	private BigDecimal avgZgpro;//直工人均产能
-	private BigDecimal avgPerpro;//全厂人均产能
-	private BigDecimal avgPermoney;//人均時產值
-	private BigDecimal permoney;//人薪產值
-	private BigDecimal waterTon;//水用量单耗
-	private BigDecimal lightDu;//电度数单耗
-	private BigDecimal gasUsd;//汽/油金额单耗
-	private BigDecimal wasteUsd;//費用單耗
-	private BigDecimal mainRate;//主材料成本比率
-	private BigDecimal sideRate;//邊料率
-	private BigDecimal wasteRate;//報廢率
-	private BigDecimal wasteFact;//全廠總損耗
-	private BigDecimal wasteNo;//無形損耗
-	private BigDecimal zjRate;//直間比
-	private Double hurtNum;//工傷件數
-	private BigDecimal zgleaveRate;//直工離職率
-	private BigDecimal factleaveRate;//全廠離職率
+	private BigDecimal thisYield;
+	private BigDecimal avgCircle;
+	private BigDecimal avgCirclehour;
+	private BigDecimal mutiRate;
+	private BigDecimal productRate;
+	private BigDecimal avgZgpro;
+	private BigDecimal avgPerpro;
+	private BigDecimal avgFactpro;
+	private Double storeNum;
+	private Double outRequest;
+	private BigDecimal outrequestRate;
+	private Double slIncome;
+	private BigDecimal mainRate;
+	private BigDecimal pcostRate;
+	private BigDecimal ccostRate;
+	private BigDecimal wasteUsd;
+	private BigDecimal perPrice;
+	private BigDecimal perSalar;
+	private BigDecimal avgPermoney;
+	private BigDecimal permoney;
+	private BigDecimal wasteFact;
+	private BigDecimal wasteNo;
+	private BigDecimal sideRate;
+	private BigDecimal uhealRate;
+	private BigDecimal wasteRate;
+	private BigDecimal factaddRate;
+	private BigDecimal waterTon;
+	private BigDecimal waterUsd;
+	private BigDecimal lightDu;
+	private BigDecimal lightUsd;
+	private BigDecimal gasTon;
+	private BigDecimal gasUsd;
+	private BigDecimal bheadRate;
+	private BigDecimal bpreRate;
+	private BigDecimal bflowRate;
+	private BigDecimal drugWast;
+	private BigDecimal clrWast;
+	private BigDecimal leaveUsd;
+	private BigDecimal zjRate;
+	private BigDecimal zgleaveRate;
+	private BigDecimal factleaveRate;
+	private Double hurtNum;
 
 	// Constructors
 
@@ -50,42 +66,64 @@ public class VKpifact implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public VKpifact(VKpifactId id, BigDecimal thisYield, BigDecimal avgCircle,BigDecimal avgCirclehour,
-			BigDecimal factaddRate, BigDecimal productRate, Double storeNum,
-			Double outRequest, BigDecimal outrequestRate,
-			BigDecimal avgFactpro, BigDecimal avgZgpro, BigDecimal avgPerpro,
-			BigDecimal avgPermoney, BigDecimal permoney, BigDecimal waterTon,
-			BigDecimal lightDu, BigDecimal gasUsd, BigDecimal wasteUsd,
-			BigDecimal mainRate, BigDecimal sideRate, BigDecimal wasteRate,
-			BigDecimal wasteFact, BigDecimal wasteNo, BigDecimal zjRate,
-			Double hurtNum, BigDecimal zgleaveRate, BigDecimal factleaveRate) {
+	public VKpifact(VKpifactId id, BigDecimal thisYield, BigDecimal avgCircle,
+			BigDecimal avgCirclehour, BigDecimal mutiRate,
+			BigDecimal productRate, BigDecimal avgZgpro, BigDecimal avgPerpro,
+			BigDecimal avgFactpro, Double storeNum, Double outRequest,
+			BigDecimal outrequestRate, Double slIncome, BigDecimal mainRate,
+			BigDecimal pcostRate, BigDecimal ccostRate, BigDecimal wasteUsd,
+			BigDecimal perPrice, BigDecimal perSalar, BigDecimal avgPermoney,
+			BigDecimal permoney, BigDecimal wasteFact, BigDecimal wasteNo,
+			BigDecimal sideRate, BigDecimal uhealRate, BigDecimal wasteRate,
+			BigDecimal factaddRate, BigDecimal waterTon, BigDecimal waterUsd,
+			BigDecimal lightDu, BigDecimal lightUsd, BigDecimal gasTon,
+			BigDecimal gasUsd, BigDecimal bheadRate, BigDecimal bpreRate,
+			BigDecimal bflowRate, BigDecimal drugWast, BigDecimal clrWast,
+			BigDecimal leaveUsd, BigDecimal zjRate, BigDecimal zgleaveRate,
+			BigDecimal factleaveRate, Double hurtNum) {
 		this.id = id;
 		this.thisYield = thisYield;
 		this.avgCircle = avgCircle;
-		this.avgCirclehour=avgCirclehour;
-		this.factaddRate = factaddRate;
+		this.avgCirclehour = avgCirclehour;
+		this.mutiRate = mutiRate;
 		this.productRate = productRate;
+		this.avgZgpro = avgZgpro;
+		this.avgPerpro = avgPerpro;
+		this.avgFactpro = avgFactpro;
 		this.storeNum = storeNum;
 		this.outRequest = outRequest;
 		this.outrequestRate = outrequestRate;
-		this.avgFactpro = avgFactpro;
-		this.avgZgpro = avgZgpro;
-		this.avgPerpro = avgPerpro;
+		this.slIncome = slIncome;
+		this.mainRate = mainRate;
+		this.pcostRate = pcostRate;
+		this.ccostRate = ccostRate;
+		this.wasteUsd = wasteUsd;
+		this.perPrice = perPrice;
+		this.perSalar = perSalar;
 		this.avgPermoney = avgPermoney;
 		this.permoney = permoney;
-		this.waterTon = waterTon;
-		this.lightDu = lightDu;
-		this.gasUsd = gasUsd;
-		this.wasteUsd = wasteUsd;
-		this.mainRate = mainRate;
-		this.sideRate = sideRate;
-		this.wasteRate = wasteRate;
 		this.wasteFact = wasteFact;
 		this.wasteNo = wasteNo;
+		this.sideRate = sideRate;
+		this.uhealRate = uhealRate;
+		this.wasteRate = wasteRate;
+		this.factaddRate = factaddRate;
+		this.waterTon = waterTon;
+		this.waterUsd = waterUsd;
+		this.lightDu = lightDu;
+		this.lightUsd = lightUsd;
+		this.gasTon = gasTon;
+		this.gasUsd = gasUsd;
+		this.bheadRate = bheadRate;
+		this.bpreRate = bpreRate;
+		this.bflowRate = bflowRate;
+		this.drugWast = drugWast;
+		this.clrWast = clrWast;
+		this.leaveUsd = leaveUsd;
 		this.zjRate = zjRate;
-		this.hurtNum = hurtNum;
 		this.zgleaveRate = zgleaveRate;
 		this.factleaveRate = factleaveRate;
+		this.hurtNum = hurtNum;
 	}
 
 	// Property accessors
@@ -114,12 +152,20 @@ public class VKpifact implements java.io.Serializable {
 		this.avgCircle = avgCircle;
 	}
 
-	public BigDecimal getFactaddRate() {
-		return this.factaddRate;
+	public BigDecimal getAvgCirclehour() {
+		return this.avgCirclehour;
 	}
 
-	public void setFactaddRate(BigDecimal factaddRate) {
-		this.factaddRate = factaddRate;
+	public void setAvgCirclehour(BigDecimal avgCirclehour) {
+		this.avgCirclehour = avgCirclehour;
+	}
+
+	public BigDecimal getMutiRate() {
+		return this.mutiRate;
+	}
+
+	public void setMutiRate(BigDecimal mutiRate) {
+		this.mutiRate = mutiRate;
 	}
 
 	public BigDecimal getProductRate() {
@@ -128,6 +174,30 @@ public class VKpifact implements java.io.Serializable {
 
 	public void setProductRate(BigDecimal productRate) {
 		this.productRate = productRate;
+	}
+
+	public BigDecimal getAvgZgpro() {
+		return this.avgZgpro;
+	}
+
+	public void setAvgZgpro(BigDecimal avgZgpro) {
+		this.avgZgpro = avgZgpro;
+	}
+
+	public BigDecimal getAvgPerpro() {
+		return this.avgPerpro;
+	}
+
+	public void setAvgPerpro(BigDecimal avgPerpro) {
+		this.avgPerpro = avgPerpro;
+	}
+
+	public BigDecimal getAvgFactpro() {
+		return this.avgFactpro;
+	}
+
+	public void setAvgFactpro(BigDecimal avgFactpro) {
+		this.avgFactpro = avgFactpro;
 	}
 
 	public Double getStoreNum() {
@@ -154,28 +224,60 @@ public class VKpifact implements java.io.Serializable {
 		this.outrequestRate = outrequestRate;
 	}
 
-	public BigDecimal getAvgFactpro() {
-		return this.avgFactpro;
+	public Double getSlIncome() {
+		return this.slIncome;
 	}
 
-	public void setAvgFactpro(BigDecimal avgFactpro) {
-		this.avgFactpro = avgFactpro;
+	public void setSlIncome(Double slIncome) {
+		this.slIncome = slIncome;
 	}
 
-	public BigDecimal getAvgZgpro() {
-		return this.avgZgpro;
+	public BigDecimal getMainRate() {
+		return this.mainRate;
 	}
 
-	public void setAvgZgpro(BigDecimal avgZgpro) {
-		this.avgZgpro = avgZgpro;
+	public void setMainRate(BigDecimal mainRate) {
+		this.mainRate = mainRate;
 	}
 
-	public BigDecimal getAvgPerpro() {
-		return this.avgPerpro;
+	public BigDecimal getPcostRate() {
+		return this.pcostRate;
 	}
 
-	public void setAvgPerpro(BigDecimal avgPerpro) {
-		this.avgPerpro = avgPerpro;
+	public void setPcostRate(BigDecimal pcostRate) {
+		this.pcostRate = pcostRate;
+	}
+
+	public BigDecimal getCcostRate() {
+		return this.ccostRate;
+	}
+
+	public void setCcostRate(BigDecimal ccostRate) {
+		this.ccostRate = ccostRate;
+	}
+
+	public BigDecimal getWasteUsd() {
+		return this.wasteUsd;
+	}
+
+	public void setWasteUsd(BigDecimal wasteUsd) {
+		this.wasteUsd = wasteUsd;
+	}
+
+	public BigDecimal getPerPrice() {
+		return this.perPrice;
+	}
+
+	public void setPerPrice(BigDecimal perPrice) {
+		this.perPrice = perPrice;
+	}
+
+	public BigDecimal getPerSalar() {
+		return this.perSalar;
+	}
+
+	public void setPerSalar(BigDecimal perSalar) {
+		this.perSalar = perSalar;
 	}
 
 	public BigDecimal getAvgPermoney() {
@@ -194,62 +296,6 @@ public class VKpifact implements java.io.Serializable {
 		this.permoney = permoney;
 	}
 
-	public BigDecimal getWaterTon() {
-		return this.waterTon;
-	}
-
-	public void setWaterTon(BigDecimal waterTon) {
-		this.waterTon = waterTon;
-	}
-
-	public BigDecimal getLightDu() {
-		return this.lightDu;
-	}
-
-	public void setLightDu(BigDecimal lightDu) {
-		this.lightDu = lightDu;
-	}
-
-	public BigDecimal getGasUsd() {
-		return this.gasUsd;
-	}
-
-	public void setGasUsd(BigDecimal gasUsd) {
-		this.gasUsd = gasUsd;
-	}
-
-	public BigDecimal getWasteUsd() {
-		return this.wasteUsd;
-	}
-
-	public void setWasteUsd(BigDecimal wasteUsd) {
-		this.wasteUsd = wasteUsd;
-	}
-
-	public BigDecimal getMainRate() {
-		return this.mainRate;
-	}
-
-	public void setMainRate(BigDecimal mainRate) {
-		this.mainRate = mainRate;
-	}
-
-	public BigDecimal getSideRate() {
-		return this.sideRate;
-	}
-
-	public void setSideRate(BigDecimal sideRate) {
-		this.sideRate = sideRate;
-	}
-
-	public BigDecimal getWasteRate() {
-		return this.wasteRate;
-	}
-
-	public void setWasteRate(BigDecimal wasteRate) {
-		this.wasteRate = wasteRate;
-	}
-
 	public BigDecimal getWasteFact() {
 		return this.wasteFact;
 	}
@@ -266,20 +312,140 @@ public class VKpifact implements java.io.Serializable {
 		this.wasteNo = wasteNo;
 	}
 
+	public BigDecimal getSideRate() {
+		return this.sideRate;
+	}
+
+	public void setSideRate(BigDecimal sideRate) {
+		this.sideRate = sideRate;
+	}
+
+	public BigDecimal getUhealRate() {
+		return this.uhealRate;
+	}
+
+	public void setUhealRate(BigDecimal uhealRate) {
+		this.uhealRate = uhealRate;
+	}
+
+	public BigDecimal getWasteRate() {
+		return this.wasteRate;
+	}
+
+	public void setWasteRate(BigDecimal wasteRate) {
+		this.wasteRate = wasteRate;
+	}
+
+	public BigDecimal getFactaddRate() {
+		return this.factaddRate;
+	}
+
+	public void setFactaddRate(BigDecimal factaddRate) {
+		this.factaddRate = factaddRate;
+	}
+
+	public BigDecimal getWaterTon() {
+		return this.waterTon;
+	}
+
+	public void setWaterTon(BigDecimal waterTon) {
+		this.waterTon = waterTon;
+	}
+
+	public BigDecimal getWaterUsd() {
+		return this.waterUsd;
+	}
+
+	public void setWaterUsd(BigDecimal waterUsd) {
+		this.waterUsd = waterUsd;
+	}
+
+	public BigDecimal getLightDu() {
+		return this.lightDu;
+	}
+
+	public void setLightDu(BigDecimal lightDu) {
+		this.lightDu = lightDu;
+	}
+
+	public BigDecimal getLightUsd() {
+		return this.lightUsd;
+	}
+
+	public void setLightUsd(BigDecimal lightUsd) {
+		this.lightUsd = lightUsd;
+	}
+
+	public BigDecimal getGasTon() {
+		return this.gasTon;
+	}
+
+	public void setGasTon(BigDecimal gasTon) {
+		this.gasTon = gasTon;
+	}
+
+	public BigDecimal getGasUsd() {
+		return this.gasUsd;
+	}
+
+	public void setGasUsd(BigDecimal gasUsd) {
+		this.gasUsd = gasUsd;
+	}
+
+	public BigDecimal getBheadRate() {
+		return this.bheadRate;
+	}
+
+	public void setBheadRate(BigDecimal bheadRate) {
+		this.bheadRate = bheadRate;
+	}
+
+	public BigDecimal getBpreRate() {
+		return this.bpreRate;
+	}
+
+	public void setBpreRate(BigDecimal bpreRate) {
+		this.bpreRate = bpreRate;
+	}
+
+	public BigDecimal getBflowRate() {
+		return this.bflowRate;
+	}
+
+	public void setBflowRate(BigDecimal bflowRate) {
+		this.bflowRate = bflowRate;
+	}
+
+	public BigDecimal getDrugWast() {
+		return this.drugWast;
+	}
+
+	public void setDrugWast(BigDecimal drugWast) {
+		this.drugWast = drugWast;
+	}
+
+	public BigDecimal getClrWast() {
+		return this.clrWast;
+	}
+
+	public void setClrWast(BigDecimal clrWast) {
+		this.clrWast = clrWast;
+	}
+
+	public BigDecimal getLeaveUsd() {
+		return this.leaveUsd;
+	}
+
+	public void setLeaveUsd(BigDecimal leaveUsd) {
+		this.leaveUsd = leaveUsd;
+	}
+
 	public BigDecimal getZjRate() {
 		return this.zjRate;
 	}
 
 	public void setZjRate(BigDecimal zjRate) {
 		this.zjRate = zjRate;
-	}
-
-	public Double getHurtNum() {
-		return this.hurtNum;
-	}
-
-	public void setHurtNum(Double hurtNum) {
-		this.hurtNum = hurtNum;
 	}
 
 	public BigDecimal getZgleaveRate() {
@@ -298,15 +464,12 @@ public class VKpifact implements java.io.Serializable {
 		this.factleaveRate = factleaveRate;
 	}
 
-	public BigDecimal getAvgCirclehour() {
-		return avgCirclehour;
+	public Double getHurtNum() {
+		return this.hurtNum;
 	}
 
-	public void setAvgCirclehour(BigDecimal avgCirclehour) {
-		this.avgCirclehour = avgCirclehour;
+	public void setHurtNum(Double hurtNum) {
+		this.hurtNum = hurtNum;
 	}
-
-
-	
 
 }

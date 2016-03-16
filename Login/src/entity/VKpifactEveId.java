@@ -18,12 +18,6 @@ public class VKpifactEveId implements java.io.Serializable {
 	public VKpifactEveId() {
 	}
 
-	/** minimal constructor */
-	public VKpifactEveId(String factNo, String factCode) {
-		this.factNo = factNo;
-		this.factCode = factCode;
-	}
-
 	/** full constructor */
 	public VKpifactEveId(String factNo, String factCode, String yymm) {
 		this.factNo = factNo;
