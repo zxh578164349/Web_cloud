@@ -37,6 +37,22 @@ public class Kpifact implements java.io.Serializable {
 	private Double factleaveRate;
 	private String username;
 	private String usernameUd;
+	private Double gasTon;
+	private Double mutiRate;
+	private Double slIncome;
+	private Double waterUsd;
+	private Double lightUsd;
+	private Double bheadRate;
+	private Double bpreRate;
+	private Double bflowRate;
+	private Double drugWast;
+	private Double clrWast;
+	private Double leaveUsd;
+	private Double pcostRate;
+	private Double ccostRate;
+	private Double perPrice;
+	private Double perSalar;
+	private Double uhealRate;
 
 	// Constructors
 
@@ -58,7 +74,12 @@ public class Kpifact implements java.io.Serializable {
 			Double lightDu, Double gasUsd, Double wasteUsd, Double mainRate,
 			Double sideRate, Double wasteRate, Double wasteFact,
 			Double wasteNo, Double zjRate, Double hurtNum, Double zgleaveRate,
-			Double factleaveRate,String username) {
+			Double factleaveRate, String username, String usernameUd,
+			Double gasTon, Double mutiRate, Double slIncome, Double waterUsd,
+			Double lightUsd, Double bheadRate, Double bpreRate,
+			Double bflowRate, Double drugWast, Double clrWast, Double leaveUsd,
+			Double pcostRate, Double ccostRate, Double perPrice,
+			Double perSalar, Double uhealRate) {
 		this.id = id;
 		this.thisYield = thisYield;
 		this.avgCircle = avgCircle;
@@ -86,7 +107,24 @@ public class Kpifact implements java.io.Serializable {
 		this.hurtNum = hurtNum;
 		this.zgleaveRate = zgleaveRate;
 		this.factleaveRate = factleaveRate;
-		this.username=username;
+		this.username = username;
+		this.usernameUd = usernameUd;
+		this.gasTon = gasTon;
+		this.mutiRate = mutiRate;
+		this.slIncome = slIncome;
+		this.waterUsd = waterUsd;
+		this.lightUsd = lightUsd;
+		this.bheadRate = bheadRate;
+		this.bpreRate = bpreRate;
+		this.bflowRate = bflowRate;
+		this.drugWast = drugWast;
+		this.clrWast = clrWast;
+		this.leaveUsd = leaveUsd;
+		this.pcostRate = pcostRate;
+		this.ccostRate = ccostRate;
+		this.perPrice = perPrice;
+		this.perSalar = perSalar;
+		this.uhealRate = uhealRate;
 	}
 
 	// Property accessors
@@ -308,7 +346,7 @@ public class Kpifact implements java.io.Serializable {
 	}
 
 	public String getUsername() {
-		return username;
+		return this.username;
 	}
 
 	public void setUsername(String username) {
@@ -316,12 +354,139 @@ public class Kpifact implements java.io.Serializable {
 	}
 
 	public String getUsernameUd() {
-		return usernameUd;
+		return this.usernameUd;
 	}
 
 	public void setUsernameUd(String usernameUd) {
 		this.usernameUd = usernameUd;
 	}
-	
+
+	public Double getGasTon() {
+		return this.gasTon;
+	}
+
+	public void setGasTon(Double gasTon) {
+		this.gasTon = gasTon;
+	}
+
+	public Double getMutiRate() {
+		return this.mutiRate;
+	}
+
+	public void setMutiRate(Double mutiRate) {
+		this.mutiRate = mutiRate;
+	}
+
+	public Double getSlIncome() {
+		return this.slIncome;
+	}
+
+	public void setSlIncome(Double slIncome) {
+		this.slIncome = slIncome;
+	}
+
+	public Double getWaterUsd() {
+		return this.waterUsd;
+	}
+
+	public void setWaterUsd(Double waterUsd) {
+		this.waterUsd = waterUsd;
+	}
+
+	public Double getLightUsd() {
+		return this.lightUsd;
+	}
+
+	public void setLightUsd(Double lightUsd) {
+		this.lightUsd = lightUsd;
+	}
+
+	public Double getBheadRate() {
+		return this.bheadRate;
+	}
+
+	public void setBheadRate(Double bheadRate) {
+		this.bheadRate = bheadRate;
+	}
+
+	public Double getBpreRate() {
+		return this.bpreRate;
+	}
+
+	public void setBpreRate(Double bpreRate) {
+		this.bpreRate = bpreRate;
+	}
+
+	public Double getBflowRate() {
+		return this.bflowRate;
+	}
+
+	public void setBflowRate(Double bflowRate) {
+		this.bflowRate = bflowRate;
+	}
+
+	public Double getDrugWast() {
+		return this.drugWast;
+	}
+
+	public void setDrugWast(Double drugWast) {
+		this.drugWast = drugWast;
+	}
+
+	public Double getClrWast() {
+		return this.clrWast;
+	}
+
+	public void setClrWast(Double clrWast) {
+		this.clrWast = clrWast;
+	}
+
+	public Double getLeaveUsd() {
+		return this.leaveUsd;
+	}
+
+	public void setLeaveUsd(Double leaveUsd) {
+		this.leaveUsd = leaveUsd;
+	}
+
+	public Double getPcostRate() {
+		return this.pcostRate;
+	}
+
+	public void setPcostRate(Double pcostRate) {
+		this.pcostRate = pcostRate;
+	}
+
+	public Double getCcostRate() {
+		return this.ccostRate;
+	}
+
+	public void setCcostRate(Double ccostRate) {
+		this.ccostRate = ccostRate;
+	}
+
+	public Double getPerPrice() {
+		return this.perPrice;
+	}
+
+	public void setPerPrice(Double perPrice) {
+		this.perPrice = perPrice;
+	}
+
+	public Double getPerSalar() {
+		return this.perSalar;
+	}
+
+	public void setPerSalar(Double perSalar) {
+		this.perSalar = perSalar;
+	}
+
+	public Double getUhealRate() {
+		return this.uhealRate;
+	}
+
+	public void setUhealRate(Double uhealRate) {
+		this.uhealRate = uhealRate;
+	}
 
 }

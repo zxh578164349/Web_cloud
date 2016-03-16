@@ -232,8 +232,8 @@
 
 			</tr>
 			<tr>
-				<td class="td_show_title">蒸汽单耗(噸/模)</td>
-				<td class="td_input"><input type="text" name="kpi.gasUsd"
+				<td class="td_show_title">蒸汽用量單耗(噸/模)</td>
+				<td class="td_input"><input type="text" name="kpi.gasTon"
 					datatype="9_4"
 					value="<s:property value='kpi.gasUsd' />">
 				</td>

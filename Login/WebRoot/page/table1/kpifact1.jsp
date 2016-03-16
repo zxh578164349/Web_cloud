@@ -84,7 +84,7 @@
 				<th>人薪產值</th>
 				<th>水用量单耗(噸/模)</th>
 				<th>电度数单耗(度/模)</th>
-				<th>蒸汽单耗(噸/模)</th>
+				<th>蒸汽用量單耗(噸/模)</th>
 				<th>修繕單耗(USD/模)</th>
 				<th>主材料成本比率(%)</th>
 				<th>邊料率(%)</th>
@@ -122,7 +122,7 @@
 				<td><s:property value="%{formatDouble(permoney)}" /></td>				
 				<td><s:property value="%{formatDouble_4(waterTon)}" /></td>				
 				<td><s:property value="%{formatDouble_4(lightDu)}" /></td>				
-				<td><s:property value="%{formatDouble_4(gasUsd)}" /></td>				
+				<td><s:property value="%{formatDouble_4(gasTon)}" /></td>				
 				<td><s:property value="%{formatDouble_4(wasteUsd)}" /></td>				
 				<td><s:property value="%{formatPercent(mainRate)}" /></td>				
 				<td><s:property value="%{formatPercent(sideRate)}" /></td>

@@ -953,32 +953,49 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 			Kpifact kpi_pur=kpiSer.findById(factNo, factCode, yymm);//每年的預計目標(20150327)
 			List<Double> list_content_pur=new ArrayList<Double>();//每年的預計目標封裝在一個list，以便於for循環(20150327)
 			if(kpi_pur!=null){//start if2(20150327)
-				list_content_pur.add(kpi_pur.getThisYield());
-				list_content_pur.add(kpi_pur.getAvgCircle());
-				list_content_pur.add(kpi_pur.getAvgCirclehour());
-				list_content_pur.add(kpi_pur.getFactaddRate());
-				list_content_pur.add(kpi_pur.getProductRate());
-				list_content_pur.add(kpi_pur.getStoreNum());
-				list_content_pur.add(kpi_pur.getOutRequest());
-				list_content_pur.add(kpi_pur.getOutrequestRate());
-				list_content_pur.add(kpi_pur.getAvgFactpro());
-				list_content_pur.add(kpi_pur.getAvgZgpro());
-				list_content_pur.add(kpi_pur.getAvgPerpro());
-				list_content_pur.add(kpi_pur.getAvgPermoney());
-				list_content_pur.add(kpi_pur.getPermoney());
-				list_content_pur.add(kpi_pur.getWaterTon());
-				list_content_pur.add(kpi_pur.getLightDu());
-				list_content_pur.add(kpi_pur.getGasUsd());
-				list_content_pur.add(kpi_pur.getWasteUsd());
-				list_content_pur.add(kpi_pur.getMainRate());
-				list_content_pur.add(kpi_pur.getSideRate());
-				list_content_pur.add(kpi_pur.getWasteRate());
-				list_content_pur.add(kpi_pur.getWasteFact());
-				list_content_pur.add(kpi_pur.getWasteNo());
-				list_content_pur.add(kpi_pur.getZjRate());
-				list_content_pur.add(kpi_pur.getHurtNum());
-				list_content_pur.add(kpi_pur.getZgleaveRate());
-				list_content_pur.add(kpi_pur.getFactleaveRate());
+				list_content_pur.add(kpi_pur.getThisYield()==null?0:kpi_pur.getThisYield());//當月產量
+				list_content_pur.add(kpi_pur.getAvgCircle()==null?0:kpi_pur.getAvgCircle());//月均回轉
+				list_content_pur.add(kpi_pur.getAvgCirclehour()==null?0:kpi_pur.getAvgCirclehour());//時回轉
+				list_content_pur.add(kpi_pur.getMutiRate()==null?0:kpi_pur.getMutiRate());//機臺利用率
+				list_content_pur.add(kpi_pur.getProductRate()==null?0:kpi_pur.getProductRate());//產能達成率
+				list_content_pur.add(kpi_pur.getAvgZgpro()==null?0:kpi_pur.getAvgZgpro());//直工人均产能
+				list_content_pur.add(kpi_pur.getAvgPerpro()==null?0:kpi_pur.getAvgPerpro());//全厂人均产能
+				list_content_pur.add(kpi_pur.getAvgFactpro()==null?0:kpi_pur.getAvgFactpro());//全廠人均時產能
+				list_content_pur.add(kpi_pur.getStoreNum()==null?0:kpi_pur.getStoreNum());//成倉庫存
+				list_content_pur.add(kpi_pur.getOutRequest()==null?0:kpi_pur.getOutRequest());//已出未請
+				list_content_pur.add(kpi_pur.getOutrequestRate()==null?0:kpi_pur.getOutrequestRate());//生產與請款差異率
+				list_content_pur.add(kpi_pur.getSlIncome()==null?0:kpi_pur.getSlIncome());//銷貨收入
+				list_content_pur.add(kpi_pur.getMainRate()==null?0:kpi_pur.getMainRate());//主材料成本比率
+				list_content_pur.add(kpi_pur.getPcostRate()==null?0:kpi_pur.getPcostRate());//人工成本率
+				list_content_pur.add(kpi_pur.getCcostRate()==null?0:kpi_pur.getCcostRate());//費用成本率
+				list_content_pur.add(kpi_pur.getWasteUsd()==null?0:kpi_pur.getWasteUsd());//修繕單耗
+				list_content_pur.add(kpi_pur.getPerPrice()==null?0:kpi_pur.getPerPrice());//平均單價
+				list_content_pur.add(kpi_pur.getPerSalar()==null?0:kpi_pur.getPerSalar());//全廠人均薪資
+				list_content_pur.add(kpi_pur.getAvgPermoney()==null?0:kpi_pur.getAvgPermoney());//人均產值
+				list_content_pur.add(kpi_pur.getPermoney()==null?0:kpi_pur.getPermoney());//人薪產值
+				list_content_pur.add(kpi_pur.getWasteFact()==null?0:kpi_pur.getWasteFact());//全廠總損耗
+				list_content_pur.add(kpi_pur.getWasteNo()==null?0:kpi_pur.getWasteNo());//無形損耗
+				list_content_pur.add(kpi_pur.getSideRate()==null?0:kpi_pur.getSideRate());//邊料率
+				list_content_pur.add(kpi_pur.getUhealRate()==null?0:kpi_pur.getUhealRate());//不良率
+				list_content_pur.add(kpi_pur.getWasteRate()==null?0:kpi_pur.getWasteRate());//報廢率
+				list_content_pur.add(kpi_pur.getFactaddRate()==null?0:kpi_pur.getFactaddRate());//廠補率
+				list_content_pur.add(kpi_pur.getWaterTon()==null?0:kpi_pur.getWaterTon());//水用量单耗
+				list_content_pur.add(kpi_pur.getWasteUsd()==null?0:kpi_pur.getWasteUsd());//用水金額單耗
+				list_content_pur.add(kpi_pur.getLightDu()==null?0:kpi_pur.getLightDu());//电度数单耗
+				list_content_pur.add(kpi_pur.getLightUsd()==null?0:kpi_pur.getLightUsd());//用電金額單耗
+				list_content_pur.add(kpi_pur.getGasTon()==null?0:kpi_pur.getGasTon());//蒸汽用量單耗
+				list_content_pur.add(kpi_pur.getGasUsd()==null?0:kpi_pur.getGasUsd());//用汽金額單耗
+				list_content_pur.add(kpi_pur.getBheadRate()==null?0:kpi_pur.getBheadRate());//回頭料%
+				list_content_pur.add(kpi_pur.getBpreRate()==null?0:kpi_pur.getBpreRate());//油壓退料%
+				list_content_pur.add(kpi_pur.getBflowRate()==null?0:kpi_pur.getBflowRate());//回流率%
+				list_content_pur.add(kpi_pur.getDrugWast()==null?0:kpi_pur.getDrugWast());//藥品用量單耗
+				list_content_pur.add(kpi_pur.getClrWast()==null?0:kpi_pur.getClrWast());//色料用量單耗
+				list_content_pur.add(kpi_pur.getLeaveUsd()==null?0:kpi_pur.getLeaveUsd());//離型劑金額單耗
+				list_content_pur.add(kpi_pur.getZjRate()==null?0:kpi_pur.getZjRate());//直間比		
+				list_content_pur.add(kpi_pur.getZgleaveRate()==null?0:kpi_pur.getZgleaveRate());//直工離職率
+				list_content_pur.add(kpi_pur.getFactleaveRate()==null?0:kpi_pur.getFactleaveRate());//全廠離職率
+				list_content_pur.add(kpi_pur.getHurtNum()==null?0:kpi_pur.getHurtNum());//工傷件數			
+				
 			}//end if2
 			
 			//填充標題
@@ -1097,32 +1114,49 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 					if(kpi.getAvgCirclehour()==null){
 						kpi.setAvgCirclehour(big);
 					}
-					list_content.add(kpi.getThisYield().doubleValue());//1
-					list_content.add(kpi.getAvgCircle().doubleValue());//2
-					list_content.add(kpi.getAvgCirclehour().doubleValue());
-					list_content.add(kpi.getFactaddRate().doubleValue());//--null
-					list_content.add(kpi.getProductRate().doubleValue());
-					list_content.add(kpi.getStoreNum().doubleValue());//6
-					list_content.add(kpi.getOutRequest().doubleValue());//7
-					list_content.add(kpi.getOutrequestRate().doubleValue());//--null
-					list_content.add(kpi.getAvgFactpro().doubleValue());
-					list_content.add(kpi.getAvgZgpro().doubleValue());
-					list_content.add(kpi.getAvgPerpro().doubleValue());
-					list_content.add(kpi.getAvgPermoney().doubleValue());//--null
-					list_content.add(kpi.getPermoney().doubleValue());//--null
-					list_content.add(kpi.getWaterTon().doubleValue());
-					list_content.add(kpi.getLightDu().doubleValue());
-					list_content.add(kpi.getGasUsd().doubleValue());
-					list_content.add(kpi.getWasteUsd().doubleValue());
-					list_content.add(kpi.getMainRate().doubleValue());
-					list_content.add(kpi.getSideRate().doubleValue());
-					list_content.add(kpi.getWasteRate().doubleValue());
-					list_content.add(kpi.getWasteFact().doubleValue());
-					list_content.add(kpi.getWasteNo().doubleValue());
-					list_content.add(kpi.getZjRate().doubleValue());
-					list_content.add(kpi.getHurtNum().doubleValue());//24
-					list_content.add(kpi.getZgleaveRate().doubleValue());
-					list_content.add(kpi.getFactleaveRate().doubleValue());
+					list_content.add(kpi.getThisYield().doubleValue());//1當月產量
+					list_content.add(kpi.getAvgCircle().doubleValue());//2月均回轉
+					list_content.add(kpi.getAvgCirclehour().doubleValue());//時迴轉
+					list_content.add(kpi.getMainRate().doubleValue());//機臺利用率
+					list_content.add(kpi.getProductRate().doubleValue());//產能達成率
+					list_content.add(kpi.getAvgZgpro().doubleValue());//直工人均产能
+					list_content.add(kpi.getAvgPerpro().doubleValue());//全厂人均产能
+					list_content.add(kpi.getAvgFactpro().doubleValue());//全廠人均時產能
+					list_content.add(kpi.getStoreNum().doubleValue());//6  成倉庫存
+					list_content.add(kpi.getOutRequest().doubleValue());//7 已出未請
+					list_content.add(kpi.getOutrequestRate().doubleValue());//--null 生產與請款差異率
+					list_content.add(kpi.getSlIncome());//銷貨收入
+					list_content.add(kpi.getMainRate().doubleValue());//主材料成本比率
+					list_content.add(kpi.getPcostRate().doubleValue());//人工成本率
+					list_content.add(kpi.getCcostRate().doubleValue());//費用成本率
+					list_content.add(kpi.getWasteUsd().doubleValue());//修繕單耗
+					list_content.add(kpi.getPerPrice().doubleValue());//平均單價
+					list_content.add(kpi.getPerSalar().doubleValue());//全廠人均薪資
+					list_content.add(kpi.getAvgPermoney().doubleValue());//--null 人均產值
+					list_content.add(kpi.getPermoney().doubleValue());//--null  人薪產值
+					list_content.add(kpi.getWasteFact().doubleValue());//全廠總損耗
+					list_content.add(kpi.getWasteNo().doubleValue());//無形損耗
+					list_content.add(kpi.getSideRate().doubleValue());//邊料率
+					list_content.add(kpi.getUhealRate().doubleValue());//不良率
+					list_content.add(kpi.getWasteRate().doubleValue());//報廢率									
+					list_content.add(kpi.getFactaddRate().doubleValue());//--null 廠補率
+					list_content.add(kpi.getWaterTon().doubleValue());//水用量单耗
+					list_content.add(kpi.getWaterUsd().doubleValue());//用水金額單耗
+					list_content.add(kpi.getLightDu().doubleValue());//电度数单耗
+					list_content.add(kpi.getLightUsd().doubleValue());//用電金額單耗
+					list_content.add(kpi.getGasTon().doubleValue());//蒸汽用量單耗
+					list_content.add(kpi.getGasUsd().doubleValue());//用汽金額單耗
+					list_content.add(kpi.getBheadRate().doubleValue());//回頭料%
+					list_content.add(kpi.getBpreRate().doubleValue());//油壓退料%
+					list_content.add(kpi.getBflowRate().doubleValue());//回流率%
+					list_content.add(kpi.getDrugWast().doubleValue());//藥品用量單耗
+					list_content.add(kpi.getClrWast().doubleValue());//色料用量單耗
+					list_content.add(kpi.getLeaveUsd().doubleValue());//離型劑金額單耗
+					list_content.add(kpi.getZjRate().doubleValue());//直間比		
+					list_content.add(kpi.getZgleaveRate().doubleValue());//直工離職率
+					list_content.add(kpi.getFactleaveRate().doubleValue());//全廠離職率
+					list_content.add(kpi.getHurtNum().doubleValue());//24  //工傷件數
+											
 				}//end if1
 																									
 				/**
