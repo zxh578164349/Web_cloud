@@ -305,8 +305,9 @@ public class GlobalMethod extends HibernateDaoSupport{
 		for(Integer iii:list_all){
 			System.out.println(iii);
 		}*/
-		int[][]array=new int[3][2];
-		System.out.println(array[1].length);
+		for(int a=1;a<13;a++){
+			System.out.println((a-1)/3+1);
+		}
 		
 						
 	}

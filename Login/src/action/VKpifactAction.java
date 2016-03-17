@@ -365,6 +365,10 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 		List<List<List<Double>>>list1_all=new ArrayList<List<List<Double>>>();
 		for(int a=0;a<list_factcode.size();a++){//start for1
 			Double[][]arrays=new Double[10][40];
+			List<VKpifactEve>list_kpieve=new ArrayList<VKpifactEve>();
+			for(int i=0;i<7;i++){
+				list_kpieve.add(new VKpifactEve());
+			}
 			//第一季度
 			Double q1_sumEverydemo=0.00;Double q1_sumStandarddemo=0.00;
 			Double q1_sumActualdemo=0.00;Double q1_sumActualpairs=0.00;
@@ -739,51 +743,85 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 						eve.setWorkhours(0.0);
 					}
 					  int b_index=(b-1)/3+1;
-					  arrays[b_index][1]=arrays[b_index][1]+eve.getSumEverydemo().doubleValue();
-				      arrays[b_index][2]=arrays[b_index][2]+eve.getSumStandarddemo().doubleValue();
-				      arrays[b_index][3]=arrays[b_index][3]+eve.getSumActualdemo().doubleValue();
-				      arrays[b_index][4]=arrays[b_index][4]+eve.getSumActualpairs().doubleValue();
-				      arrays[b_index][5]=arrays[b_index][5]+eve.getSumFacpairs().doubleValue();
-				      arrays[b_index][6]=arrays[b_index][6]+eve.getWorkhours();
-				      arrays[b_index][7]=arrays[b_index][7]+eve.getPersonzg();
-				      arrays[b_index][8]=arrays[b_index][8]+eve.getPersonjg();
-				      arrays[b_index][9]=arrays[b_index][9]+eve.getTimezg();
-				      arrays[b_index][10]=arrays[b_index][10]+eve.getTimejg();
-				      arrays[b_index][11]=arrays[b_index][11]+eve.getAddtimezg();
-				      arrays[b_index][12]=arrays[b_index][12]+eve.getAddtimejg();
-				      arrays[b_index][13]=arrays[b_index][13]+eve.getLeavenumzg();
-				      arrays[b_index][14]=arrays[b_index][14]+eve.getLeavenumjg();
-				      arrays[b_index][15]=arrays[b_index][15]+eve.getHurtnum();
-				      arrays[b_index][16]=arrays[b_index][16]+eve.getInvcount();
-				      arrays[b_index][17]=arrays[b_index][17]+eve.getSellcount();
-				      arrays[b_index][18]=arrays[b_index][18]+eve.getCostcount();
-				      arrays[b_index][19]=arrays[b_index][19]+eve.getWagezgUsd();
-				      arrays[b_index][20]=arrays[b_index][20]+eve.getWagejgUsd();
-				      arrays[b_index][21]=arrays[b_index][21]+eve.getCashcount();
-				      arrays[b_index][22]=arrays[b_index][22]+eve.getSideweit();
-				      arrays[b_index][23]=arrays[b_index][23]+eve.getBadweit();
-				      arrays[b_index][24]=arrays[b_index][24]+eve.getOtherbadweight();
-				      arrays[b_index][25]=arrays[b_index][25]+eve.getOtherweight().doubleValue();
-				      arrays[b_index][26]=arrays[b_index][26]+eve.getWaterton();
-				      arrays[b_index][27]=arrays[b_index][27]+eve.getElectricdu();
-				      arrays[b_index][28]=arrays[b_index][28]+eve.getGaston();
-				      arrays[b_index][29]=arrays[b_index][29]+eve.getStorenum();
-				      arrays[b_index][30]=arrays[b_index][30]+eve.getOutnum();
-				      arrays[b_index][31]=arrays[b_index][31]+eve.getMinusnum();
-				      arrays[b_index][32]=arrays[b_index][32]+eve.getActlost();
-				      arrays[b_index][33]=arrays[b_index][33]+eve.getAvgbuttomweight2();
-				      arrays[b_index][34]=arrays[b_index][34]+eve.getProductednum();
-				      arrays[b_index][35]=arrays[b_index][35]+eve.getNoglueweight();
-				      arrays[b_index][36]=arrays[b_index][36]+eve.getRepairmoney();
-				      arrays[b_index][37]=arrays[b_index][37]+eve.getInstorenum();
-				      for(int k=0;k<2;k++){
-				    	  for(int kk=1;kk<38;kk++){
-				    		  arrays[b_index+k+1][kk]=arrays[1+k][kk]+arrays[2+k][kk]; 
-				    	  }				    	  
+					  list_kpieve.get(b_index).setSumEverydemo(list_kpieve.get(b_index).getSumEverydemo().add(eve.getSumEverydemo()));
+				      list_kpieve.get(b_index).setSumStandarddemo(list_kpieve.get(b_index).getSumStandarddemo().add(eve.getSumStandarddemo()));
+				      list_kpieve.get(b_index).setSumActualdemo(list_kpieve.get(b_index).getSumActualdemo().add(eve.getSumActualdemo()));
+				      list_kpieve.get(b_index).setSumActualpairs(list_kpieve.get(b_index).getSumActualpairs().add(eve.getSumActualpairs()));
+				      list_kpieve.get(b_index).setSumFacpairs(list_kpieve.get(b_index).getSumFacpairs().add(eve.getSumFacpairs()));
+				      list_kpieve.get(b_index).setWorkhours(list_kpieve.get(b_index).getWorkhours()+eve.getWorkhours());
+				      list_kpieve.get(b_index).setPersonzg(list_kpieve.get(b_index).getPersonzg()+eve.getPersonzg());
+				      list_kpieve.get(b_index).setPersonjg(list_kpieve.get(b_index).getPersonjg()+eve.getPersonjg());
+				      list_kpieve.get(b_index).setTimezg(list_kpieve.get(b_index).getTimezg()+eve.getTimezg());
+				      list_kpieve.get(b_index).setTimejg(list_kpieve.get(b_index).getTimejg()+eve.getTimejg());
+				      list_kpieve.get(b_index).setAddtimezg(list_kpieve.get(b_index).getAddtimezg()+eve.getAddtimezg());
+				      list_kpieve.get(b_index).setAddtimejg(list_kpieve.get(b_index).getAddtimejg()+eve.getAddtimejg());
+				      list_kpieve.get(b_index).setLeavenumzg(list_kpieve.get(b_index).getLeavenumzg()+eve.getLeavenumzg());
+				      list_kpieve.get(b_index).setLeavenumjg(list_kpieve.get(b_index).getLeavenumjg()+eve.getLeavenumjg());
+				      list_kpieve.get(b_index).setHurtnum(list_kpieve.get(b_index).getHurtnum()+eve.getHurtnum());
+				      list_kpieve.get(b_index).setInvcount(list_kpieve.get(b_index).getInvcount()+eve.getInvcount());
+				      list_kpieve.get(b_index).setSellcount(list_kpieve.get(b_index).getSellcount()+eve.getSellcount());
+				      list_kpieve.get(b_index).setCostcount(list_kpieve.get(b_index).getCostcount()+eve.getCostcount());
+				      list_kpieve.get(b_index).setWagezgUsd(list_kpieve.get(b_index).getWagezgUsd()+eve.getWagezgUsd());
+				      list_kpieve.get(b_index).setWagejgUsd(list_kpieve.get(b_index).getWagejgUsd()+eve.getWagejgUsd());
+				      list_kpieve.get(b_index).setCashcount(list_kpieve.get(b_index).getCashcount()+eve.getCashcount());
+				      list_kpieve.get(b_index).setSideweit(list_kpieve.get(b_index).getSideweit()+eve.getSideweit());
+				      list_kpieve.get(b_index).setBadweit(list_kpieve.get(b_index).getBadweit()+eve.getBadweit());
+				      list_kpieve.get(b_index).setOtherbadweight(list_kpieve.get(b_index).getOtherbadweight()+eve.getOtherbadweight());
+				      list_kpieve.get(b_index).setOtherweight(list_kpieve.get(b_index).getOtherweight().add(eve.getOtherweight()));
+				      list_kpieve.get(b_index).setWaterton(list_kpieve.get(b_index).getWaterton()+eve.getWaterton());
+				      list_kpieve.get(b_index).setElectricdu(list_kpieve.get(b_index).getElectricdu()+eve.getElectricdu());
+				      list_kpieve.get(b_index).setGaston(list_kpieve.get(b_index).getGaston()+eve.getGaston());
+				      list_kpieve.get(b_index).setStorenum(list_kpieve.get(b_index).getStorenum()+eve.getStorenum());
+				      list_kpieve.get(b_index).setOutnum(list_kpieve.get(b_index).getOutnum()+eve.getOutnum());
+				      list_kpieve.get(b_index).setMinusnum(list_kpieve.get(b_index).getMinusnum()+eve.getMinusnum());
+				      list_kpieve.get(b_index).setActlost(list_kpieve.get(b_index).getActlost()+eve.getActlost());
+				      list_kpieve.get(b_index).setAvgbuttomweight2(list_kpieve.get(b_index).getAvgbuttomweight2()+eve.getAvgbuttomweight2());
+				      list_kpieve.get(b_index).setProductednum(list_kpieve.get(b_index).getProductednum()+eve.getProductednum());
+				      list_kpieve.get(b_index).setNoglueweight(list_kpieve.get(b_index).getNoglueweight()+eve.getNoglueweight());
+				      list_kpieve.get(b_index).setRepairmoney(list_kpieve.get(b_index).getRepairmoney()+eve.getRepairmoney());
+				      list_kpieve.get(b_index).setInstorenum(list_kpieve.get(b_index).getInstorenum()+eve.getInstorenum());
+				      if(b==12){
+				    	  for(int i=0;i<3;i++){
+				    		  list_kpieve.get(i+5).setSumEverydemo(list_kpieve.get(2*i+1).getSumEverydemo().add(list_kpieve.get(2*i+2).getSumEverydemo()));
+						      list_kpieve.get(i+5).setSumStandarddemo(list_kpieve.get(2*i+1).getSumStandarddemo().add(list_kpieve.get(2*i+2).getSumStandarddemo()));
+						      list_kpieve.get(i+5).setSumActualdemo(list_kpieve.get(2*i+1).getSumActualdemo().add(list_kpieve.get(2*i+2).getSumActualdemo()));
+						      list_kpieve.get(i+5).setSumActualpairs(list_kpieve.get(2*i+1).getSumActualpairs().add(list_kpieve.get(2*i+2).getSumActualpairs()));
+						      list_kpieve.get(i+5).setSumFacpairs(list_kpieve.get(2*i+1).getSumFacpairs().add(list_kpieve.get(2*i+2).getSumFacpairs()));
+						      list_kpieve.get(i+5).setWorkhours(list_kpieve.get(2*i+1).getWorkhours()+list_kpieve.get(2*i+2).getWorkhours());
+						      list_kpieve.get(i+5).setPersonzg(list_kpieve.get(2*i+1).getPersonzg()+list_kpieve.get(2*i+2).getPersonzg());
+						      list_kpieve.get(i+5).setPersonjg(list_kpieve.get(2*i+1).getPersonjg()+list_kpieve.get(2*i+2).getPersonjg());
+						      list_kpieve.get(i+5).setTimezg(list_kpieve.get(2*i+1).getTimezg()+list_kpieve.get(2*i+2).getTimezg());
+						      list_kpieve.get(i+5).setTimejg(list_kpieve.get(2*i+1).getTimejg()+list_kpieve.get(2*i+2).getTimejg());
+						      list_kpieve.get(i+5).setAddtimezg(list_kpieve.get(2*i+1).getAddtimezg()+list_kpieve.get(2*i+2).getAddtimezg());
+						      list_kpieve.get(i+5).setAddtimejg(list_kpieve.get(2*i+1).getAddtimejg()+list_kpieve.get(2*i+2).getAddtimejg());
+						      list_kpieve.get(i+5).setLeavenumzg(list_kpieve.get(2*i+1).getLeavenumzg()+list_kpieve.get(2*i+2).getLeavenumzg());
+						      list_kpieve.get(i+5).setLeavenumjg(list_kpieve.get(2*i+1).getLeavenumjg()+list_kpieve.get(2*i+2).getLeavenumjg());
+						      list_kpieve.get(i+5).setHurtnum(list_kpieve.get(2*i+1).getHurtnum()+list_kpieve.get(2*i+2).getHurtnum());
+						      list_kpieve.get(i+5).setInvcount(list_kpieve.get(2*i+1).getInvcount()+list_kpieve.get(2*i+2).getInvcount());
+						      list_kpieve.get(i+5).setSellcount(list_kpieve.get(2*i+1).getSellcount()+list_kpieve.get(2*i+2).getSellcount());
+						      list_kpieve.get(i+5).setCostcount(list_kpieve.get(2*i+1).getCostcount()+list_kpieve.get(2*i+2).getCostcount());
+						      list_kpieve.get(i+5).setWagezgUsd(list_kpieve.get(2*i+1).getWagezgUsd()+list_kpieve.get(2*i+2).getWagezgUsd());
+						      list_kpieve.get(i+5).setWagejgUsd(list_kpieve.get(2*i+1).getWagejgUsd()+list_kpieve.get(2*i+2).getWagejgUsd());
+						      list_kpieve.get(i+5).setCashcount(list_kpieve.get(2*i+1).getCashcount()+list_kpieve.get(2*i+2).getCashcount());
+						      list_kpieve.get(i+5).setSideweit(list_kpieve.get(2*i+1).getSideweit()+list_kpieve.get(2*i+2).getSideweit());
+						      list_kpieve.get(i+5).setBadweit(list_kpieve.get(2*i+1).getBadweit()+list_kpieve.get(2*i+2).getBadweit());
+						      list_kpieve.get(i+5).setOtherbadweight(list_kpieve.get(2*i+1).getOtherbadweight()+list_kpieve.get(2*i+2).getOtherbadweight());
+						      list_kpieve.get(i+5).setOtherweight(list_kpieve.get(2*i+1).getOtherweight().add(eve.getOtherweight()));
+						      list_kpieve.get(i+5).setWaterton(list_kpieve.get(2*i+1).getWaterton()+list_kpieve.get(2*i+2).getWaterton());
+						      list_kpieve.get(i+5).setElectricdu(list_kpieve.get(2*i+1).getElectricdu()+list_kpieve.get(2*i+2).getElectricdu());
+						      list_kpieve.get(i+5).setGaston(list_kpieve.get(2*i+1).getGaston()+list_kpieve.get(2*i+2).getGaston());
+						      list_kpieve.get(i+5).setStorenum(list_kpieve.get(2*i+1).getStorenum()+list_kpieve.get(2*i+2).getStorenum());
+						      list_kpieve.get(i+5).setOutnum(list_kpieve.get(2*i+1).getOutnum()+list_kpieve.get(2*i+2).getOutnum());
+						      list_kpieve.get(i+5).setMinusnum(list_kpieve.get(2*i+1).getMinusnum()+list_kpieve.get(2*i+2).getMinusnum());
+						      list_kpieve.get(i+5).setActlost(list_kpieve.get(2*i+1).getActlost()+list_kpieve.get(2*i+2).getActlost());
+						      list_kpieve.get(i+5).setAvgbuttomweight2(list_kpieve.get(2*i+1).getAvgbuttomweight2()+list_kpieve.get(2*i+2).getAvgbuttomweight2());
+						      list_kpieve.get(i+5).setProductednum(list_kpieve.get(2*i+1).getProductednum()+list_kpieve.get(2*i+2).getProductednum());
+						      list_kpieve.get(i+5).setNoglueweight(list_kpieve.get(2*i+1).getNoglueweight()+list_kpieve.get(2*i+2).getNoglueweight());
+						      list_kpieve.get(i+5).setRepairmoney(list_kpieve.get(2*i+1).getRepairmoney()+list_kpieve.get(2*i+2).getRepairmoney());
+						      list_kpieve.get(i+5).setInstorenum(list_kpieve.get(2*i+1).getInstorenum()+list_kpieve.get(2*i+2).getInstorenum());
+				    	  }
 				      }
-				      for(int k=1;k<38;k++){
-				    	  
-				      }
+				     
 					
 					
 					
