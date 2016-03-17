@@ -272,7 +272,7 @@ public class GlobalMethod extends HibernateDaoSupport{
 		for(String date:list){
 			System.out.println(date);
 		}*/
-		Map<String,Object>map=new LinkedHashMap<String,Object>();
+		/*Map<String,Object>map=new LinkedHashMap<String,Object>();
 		map.put("a", 1);
 		map.put("b", 2);
 		map.put("c", 3);
@@ -304,7 +304,10 @@ public class GlobalMethod extends HibernateDaoSupport{
 		}
 		for(Integer iii:list_all){
 			System.out.println(iii);
-		}
+		}*/
+		int[][]array=new int[3][2];
+		System.out.println(array[1].length);
+		
 						
 	}
 	

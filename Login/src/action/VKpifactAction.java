@@ -364,6 +364,7 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 		//最外層集合
 		List<List<List<Double>>>list1_all=new ArrayList<List<List<Double>>>();
 		for(int a=0;a<list_factcode.size();a++){//start for1
+			Double[][]arrays=new Double[10][40];
 			//第一季度
 			Double q1_sumEverydemo=0.00;Double q1_sumStandarddemo=0.00;
 			Double q1_sumActualdemo=0.00;Double q1_sumActualpairs=0.00;
@@ -394,6 +395,20 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 			Double q1_noglueweight=0.00;
 			Double q1_repairmoney=0.00;
 			Double q1_instorenum=0.00;
+			
+			Double q1_hole=0.00;
+			Double q1_sumWorkday=0.00;
+			Double q1_waterusd=0.00;
+			Double q1_electricusd=0.00;
+			Double q1_gasusd=0.00;
+			Double q1_thickused=0.00;
+			Double q1_backfeed=0.00;
+			Double q1_oilback=0.00;
+			Double q1_drugsused=0.00;
+			Double q1_colorused=0.00;
+			Double q1_leavemoney=0.00;
+			Double q1_paypairs=0.00;
+			Double q1_badcount=0.00;
 			//第二季度
 			Double q2_sumEverydemo=0.00;Double q2_sumStandarddemo=0.00;
 			Double q2_sumActualdemo=0.00;Double q2_sumActualpairs=0.00;
@@ -424,6 +439,20 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 			Double q2_noglueweight=0.00;
 			Double q2_repairmoney=0.00;
 			Double q2_instorenum=0.00;
+			
+			Double q2_hole=0.00;
+			Double q2_sumWorkday=0.00;
+			Double q2_waterusd=0.00;
+			Double q2_electricusd=0.00;
+			Double q2_gasusd=0.00;
+			Double q2_thickused=0.00;
+			Double q2_backfeed=0.00;
+			Double q2_oilback=0.00;
+			Double q2_drugsused=0.00;
+			Double q2_colorused=0.00;
+			Double q2_leavemoney=0.00;
+			Double q2_paypairs=0.00;
+			Double q2_badcount=0.00;
 			//第三季度
 			Double q3_sumEverydemo=0.00;Double q3_sumStandarddemo=0.00;
 			Double q3_sumActualdemo=0.00;Double q3_sumActualpairs=0.00;
@@ -454,6 +483,20 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 			Double q3_noglueweight=0.00;
 			Double q3_repairmoney=0.00;
 			Double q3_instorenum=0.00;
+			
+			Double q3_hole=0.00;
+			Double q3_sumWorkday=0.00;
+			Double q3_waterusd=0.00;
+			Double q3_electricusd=0.00;
+			Double q3_gasusd=0.00;
+			Double q3_thickused=0.00;
+			Double q3_backfeed=0.00;
+			Double q3_oilback=0.00;
+			Double q3_drugsused=0.00;
+			Double q3_colorused=0.00;
+			Double q3_leavemoney=0.00;
+			Double q3_paypairs=0.00;
+			Double q3_badcount=0.00;
 			//第四季度
 			Double q4_sumEverydemo=0.00;Double q4_sumStandarddemo=0.00;
 			Double q4_sumActualdemo=0.00;Double q4_sumActualpairs=0.00;
@@ -484,6 +527,20 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 			Double q4_noglueweight=0.00;
 			Double q4_repairmoney=0.00;
 			Double q4_instorenum=0.00;
+			
+			Double q4_hole=0.00;
+			Double q4_sumWorkday=0.00;
+			Double q4_waterusd=0.00;
+			Double q4_electricusd=0.00;
+			Double q4_gasusd=0.00;
+			Double q4_thickused=0.00;
+			Double q4_backfeed=0.00;
+			Double q4_oilback=0.00;
+			Double q4_drugsused=0.00;
+			Double q4_colorused=0.00;
+			Double q4_leavemoney=0.00;
+			Double q4_paypairs=0.00;
+			Double q4_badcount=0.00;
 			//上半年
 			Double half1_sumEverydemo=0.00;Double half1_sumStandarddemo=0.00;
 			Double half1_sumActualdemo=0.00;Double half1_sumActualpairs=0.00;
@@ -514,6 +571,20 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 			Double half1_noglueweight=0.00;
 			Double half1_repairmoney=0.00;
 			Double half1_instorenum=0.00;
+			
+			Double half1_hole=0.00;
+			Double half1_sumWorkday=0.00;
+			Double half1_waterusd=0.00;
+			Double half1_electricusd=0.00;
+			Double half1_gasusd=0.00;
+			Double half1_thickused=0.00;
+			Double half1_backfeed=0.00;
+			Double half1_oilback=0.00;
+			Double half1_drugsused=0.00;
+			Double half1_colorused=0.00;
+			Double half1_leavemoney=0.00;
+			Double half1_paypairs=0.00;
+			Double half1_badcount=0.00;
 			//下半年
 			Double half2_sumEverydemo=0.00;Double half2_sumStandarddemo=0.00;
 			Double half2_sumActualdemo=0.00;Double half2_sumActualpairs=0.00;
@@ -544,6 +615,20 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 			Double half2_noglueweight=0.00;
 			Double half2_repairmoney=0.00;
 			Double half2_instorenum=0.00;
+			
+			Double half2_hole=0.00;
+			Double half2_sumWorkday=0.00;
+			Double half2_waterusd=0.00;
+			Double half2_electricusd=0.00;
+			Double half2_gasusd=0.00;
+			Double half2_thickused=0.00;
+			Double half2_backfeed=0.00;
+			Double half2_oilback=0.00;
+			Double half2_drugsused=0.00;
+			Double half2_colorused=0.00;
+			Double half2_leavemoney=0.00;
+			Double half2_paypairs=0.00;
+			Double half2_badcount=0.00;
 			//全年
 			Double year_sumEverydemo=0.00;Double year_sumStandarddemo=0.00;
 			Double year_sumActualdemo=0.00;Double year_sumActualpairs=0.00;
@@ -574,6 +659,20 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 			Double year_noglueweight=0.00;
 			Double year_repairmoney=0.00;
 			Double year_instorenum=0.00;
+			
+			Double year_hole=0.00;
+			Double year_sumWorkday=0.00;
+			Double year_waterusd=0.00;
+			Double year_electricusd=0.00;
+			Double year_gasusd=0.00;
+			Double year_thickused=0.00;
+			Double year_backfeed=0.00;
+			Double year_oilback=0.00;
+			Double year_drugsused=0.00;
+			Double year_colorused=0.00;
+			Double year_leavemoney=0.00;
+			Double year_paypairs=0.00;
+			Double year_badcount=0.00;
 			/**
 			 * 中間集合
 			 * 用於裝季度與上下半年與全年的數據
@@ -600,6 +699,11 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 			WebFact fact=list_factcode.get(a);
 			String factCode=fact.getId().getFactArea();
 			for(int b=1;b<13;b++){//start for2
+				
+				  	
+						
+						
+						
 				
 				String month="";
 				if(b<10){
@@ -634,6 +738,55 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 					if(eve.getWorkhours()==null){
 						eve.setWorkhours(0.0);
 					}
+					  int b_index=(b-1)/3+1;
+					  arrays[b_index][1]=arrays[b_index][1]+eve.getSumEverydemo().doubleValue();
+				      arrays[b_index][2]=arrays[b_index][2]+eve.getSumStandarddemo().doubleValue();
+				      arrays[b_index][3]=arrays[b_index][3]+eve.getSumActualdemo().doubleValue();
+				      arrays[b_index][4]=arrays[b_index][4]+eve.getSumActualpairs().doubleValue();
+				      arrays[b_index][5]=arrays[b_index][5]+eve.getSumFacpairs().doubleValue();
+				      arrays[b_index][6]=arrays[b_index][6]+eve.getWorkhours();
+				      arrays[b_index][7]=arrays[b_index][7]+eve.getPersonzg();
+				      arrays[b_index][8]=arrays[b_index][8]+eve.getPersonjg();
+				      arrays[b_index][9]=arrays[b_index][9]+eve.getTimezg();
+				      arrays[b_index][10]=arrays[b_index][10]+eve.getTimejg();
+				      arrays[b_index][11]=arrays[b_index][11]+eve.getAddtimezg();
+				      arrays[b_index][12]=arrays[b_index][12]+eve.getAddtimejg();
+				      arrays[b_index][13]=arrays[b_index][13]+eve.getLeavenumzg();
+				      arrays[b_index][14]=arrays[b_index][14]+eve.getLeavenumjg();
+				      arrays[b_index][15]=arrays[b_index][15]+eve.getHurtnum();
+				      arrays[b_index][16]=arrays[b_index][16]+eve.getInvcount();
+				      arrays[b_index][17]=arrays[b_index][17]+eve.getSellcount();
+				      arrays[b_index][18]=arrays[b_index][18]+eve.getCostcount();
+				      arrays[b_index][19]=arrays[b_index][19]+eve.getWagezgUsd();
+				      arrays[b_index][20]=arrays[b_index][20]+eve.getWagejgUsd();
+				      arrays[b_index][21]=arrays[b_index][21]+eve.getCashcount();
+				      arrays[b_index][22]=arrays[b_index][22]+eve.getSideweit();
+				      arrays[b_index][23]=arrays[b_index][23]+eve.getBadweit();
+				      arrays[b_index][24]=arrays[b_index][24]+eve.getOtherbadweight();
+				      arrays[b_index][25]=arrays[b_index][25]+eve.getOtherweight().doubleValue();
+				      arrays[b_index][26]=arrays[b_index][26]+eve.getWaterton();
+				      arrays[b_index][27]=arrays[b_index][27]+eve.getElectricdu();
+				      arrays[b_index][28]=arrays[b_index][28]+eve.getGaston();
+				      arrays[b_index][29]=arrays[b_index][29]+eve.getStorenum();
+				      arrays[b_index][30]=arrays[b_index][30]+eve.getOutnum();
+				      arrays[b_index][31]=arrays[b_index][31]+eve.getMinusnum();
+				      arrays[b_index][32]=arrays[b_index][32]+eve.getActlost();
+				      arrays[b_index][33]=arrays[b_index][33]+eve.getAvgbuttomweight2();
+				      arrays[b_index][34]=arrays[b_index][34]+eve.getProductednum();
+				      arrays[b_index][35]=arrays[b_index][35]+eve.getNoglueweight();
+				      arrays[b_index][36]=arrays[b_index][36]+eve.getRepairmoney();
+				      arrays[b_index][37]=arrays[b_index][37]+eve.getInstorenum();
+				      for(int k=0;k<2;k++){
+				    	  for(int kk=1;kk<38;kk++){
+				    		  arrays[b_index+k+1][kk]=arrays[1+k][kk]+arrays[2+k][kk]; 
+				    	  }				    	  
+				      }
+				      for(int k=1;k<38;k++){
+				    	  
+				      }
+					
+					
+					
 					if(b<4){
 						q1_sumEverydemo=q1_sumEverydemo+eve.getSumEverydemo().doubleValue();q1_sumStandarddemo=q1_sumStandarddemo+eve.getSumStandarddemo().doubleValue();
 						q1_sumActualdemo=q1_sumActualdemo+eve.getSumActualdemo().doubleValue();q1_sumActualpairs=q1_sumActualpairs+eve.getSumActualpairs().doubleValue();
@@ -664,6 +817,22 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 						q1_noglueweight=q1_noglueweight+eve.getNoglueweight();
 						q1_repairmoney=q1_repairmoney+eve.getRepairmoney();
 						q1_instorenum=q1_instorenum+eve.getInstorenum();
+						
+						/****************************20160317******************************/
+						q1_hole=q1_hole+eve.getHole();
+						q1_sumWorkday=q1_sumWorkday+eve.getSumWorkday().doubleValue();
+						q1_waterusd=q1_waterusd+eve.getWagejgUsd();
+						q1_electricusd=q1_electricusd+eve.getElectricusd();
+						q1_gasusd=q1_gasusd+eve.getGasusd();
+						q1_thickused=q1_thickused+eve.getThickused();
+						q1_backfeed=q1_backfeed+eve.getBackfeed();
+						q1_oilback=q1_oilback+eve.getOilback();
+						q1_drugsused=q1_drugsused+eve.getDrugsused();
+						q1_colorused=q1_colorused+eve.getColorused();
+						q1_leavemoney=q1_leavemoney+eve.getLeavemoney();
+						q1_paypairs=q1_paypairs+eve.getPaypairs();
+						q1_badcount=q1_badcount+eve.getBadcount();
+						/****************************20160317******************************/
 					}
 					if(b>3&&b<7){
 						q2_sumEverydemo=q2_sumEverydemo+eve.getSumEverydemo().doubleValue();q2_sumStandarddemo=q2_sumStandarddemo+eve.getSumStandarddemo().doubleValue();
@@ -695,6 +864,22 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 						q2_noglueweight=q2_noglueweight+eve.getNoglueweight();
 						q2_repairmoney=q2_repairmoney+eve.getRepairmoney();
 						q2_instorenum=q2_instorenum+eve.getInstorenum();
+						
+						/****************************20160317******************************/
+						q2_hole=q2_hole+eve.getHole();
+						q2_sumWorkday=q2_sumWorkday+eve.getSumWorkday().doubleValue();
+						q2_waterusd=q2_waterusd+eve.getWagejgUsd();
+						q2_electricusd=q2_electricusd+eve.getElectricusd();
+						q2_gasusd=q2_gasusd+eve.getGasusd();
+						q2_thickused=q2_thickused+eve.getThickused();
+						q2_backfeed=q2_backfeed+eve.getBackfeed();
+						q2_oilback=q2_oilback+eve.getOilback();
+						q2_drugsused=q2_drugsused+eve.getDrugsused();
+						q2_colorused=q2_colorused+eve.getColorused();
+						q2_leavemoney=q2_leavemoney+eve.getLeavemoney();
+						q2_paypairs=q2_paypairs+eve.getPaypairs();
+						q2_badcount=q2_badcount+eve.getBadcount();
+						/****************************20160317******************************/
 												
 					}
 					if(b>6&&b<10){
@@ -727,6 +912,22 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 						q3_noglueweight=q3_noglueweight+eve.getNoglueweight();
 						q3_repairmoney=q3_repairmoney+eve.getRepairmoney();
 						q3_instorenum=q3_instorenum+eve.getInstorenum();
+						
+						/****************************20160317******************************/
+						q3_hole=q3_hole+eve.getHole();
+						q3_sumWorkday=q3_sumWorkday+eve.getSumWorkday().doubleValue();
+						q3_waterusd=q3_waterusd+eve.getWagejgUsd();
+						q3_electricusd=q3_electricusd+eve.getElectricusd();
+						q3_gasusd=q3_gasusd+eve.getGasusd();
+						q3_thickused=q3_thickused+eve.getThickused();
+						q3_backfeed=q3_backfeed+eve.getBackfeed();
+						q3_oilback=q3_oilback+eve.getOilback();
+						q3_drugsused=q3_drugsused+eve.getDrugsused();
+						q3_colorused=q3_colorused+eve.getColorused();
+						q3_leavemoney=q3_leavemoney+eve.getLeavemoney();
+						q3_paypairs=q3_paypairs+eve.getPaypairs();
+						q3_badcount=q3_badcount+eve.getBadcount();
+						/****************************20160317******************************/
 					}
 					if(b>9){
 						q4_sumEverydemo=q4_sumEverydemo+eve.getSumEverydemo().doubleValue();q4_sumStandarddemo=q4_sumStandarddemo+eve.getSumStandarddemo().doubleValue();
@@ -758,6 +959,22 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 						q4_noglueweight=q4_noglueweight+eve.getNoglueweight();
 						q4_repairmoney=q4_repairmoney+eve.getRepairmoney();
 						q4_instorenum=q4_instorenum+eve.getInstorenum();
+						
+						/****************************20160317******************************/
+						q4_hole=q4_hole+eve.getHole();
+						q4_sumWorkday=q4_sumWorkday+eve.getSumWorkday().doubleValue();
+						q4_waterusd=q4_waterusd+eve.getWagejgUsd();
+						q4_electricusd=q4_electricusd+eve.getElectricusd();
+						q4_gasusd=q4_gasusd+eve.getGasusd();
+						q4_thickused=q4_thickused+eve.getThickused();
+						q4_backfeed=q4_backfeed+eve.getBackfeed();
+						q4_oilback=q4_oilback+eve.getOilback();
+						q4_drugsused=q4_drugsused+eve.getDrugsused();
+						q4_colorused=q4_colorused+eve.getColorused();
+						q4_leavemoney=q4_leavemoney+eve.getLeavemoney();
+						q4_paypairs=q4_paypairs+eve.getPaypairs();
+						q4_badcount=q4_badcount+eve.getBadcount();
+						/****************************20160317******************************/
 					}															
 				}// end if
 				switch(b){
@@ -2545,7 +2762,8 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 
 			Double actlost, Double avgbuttomweight2,Double otherweight,
 			Double productnum,Double noglueweight,Double repairmoney,Double sumWorkhours,
-			Double instorenum) {
+			Double instorenum,
+			) {
 		if(index==0){
 			index=1;
 		}

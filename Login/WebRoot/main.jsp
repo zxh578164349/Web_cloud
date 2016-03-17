@@ -171,9 +171,14 @@ function findById(subform,url){
 											<div style="overflow:hidden">
 												 <!--<img src="images/files.gif">-->
 												 <span class="glyphicon glyphicon-file">
-												    <a name="alink" href="javascript:findPageBean('<s:property value="address"/>')"																										
+												   <s:if test="submenuname=='KPI工廠與KPI台灣'">												    
+												     <font style="color:red;font-size:10px"><s:property value='submenuname' />(維護中)</font>
+												   </s:if>
+												   <s:else>
+												      <a name="alink" href="javascript:findPageBean('<s:property value="address"/>')"																										
 													 class="smenu_font" title="<s:property value='submenuname'/>">																										
 													<s:property value="submenuname" /> </a>
+												   </s:else>												    
 												 </span>
 												   
 											</div>
