@@ -130,204 +130,40 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 		/**
 		 * 報表相關樣式
 		 */
-		
+		Map<String,Object>map=findStyles(wb);
 		//標題樣式
-		HSSFCellStyle cs_head=wb.createCellStyle();
-		HSSFFont font_head=wb.createFont();
-		font_head.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
-		font_head.setFontHeightInPoints((short)20);
-		cs_head.setFont(font_head);
-		cs_head.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-		cs_head.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		HSSFCellStyle cs_head=(HSSFCellStyle)map.get("cs_head");
+		
 		
 		//標準單元格樣式
-		HSSFCellStyle cs=wb.createCellStyle();
-		cs.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-		cs.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
-		cs.setBorderTop(HSSFCellStyle.BORDER_THIN);
-		cs.setBorderRight(HSSFCellStyle.BORDER_THIN);
-		cs.setBorderBottom(HSSFCellStyle.BORDER_THIN);
-		cs.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+		HSSFCellStyle cs=(HSSFCellStyle)map.get("cs");		
 		//表頭樣式
-		HSSFCellStyle cs_column=wb.createCellStyle();
-		HSSFFont font_column=wb.createFont();
-		font_column.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
-		font_column.setFontHeightInPoints((short)12);
-		cs_column.setFont(font_column);
-		cs_column.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-		cs_column.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
-		cs_column.setBorderTop(HSSFCellStyle.BORDER_THIN);
-		cs_column.setBorderRight(HSSFCellStyle.BORDER_THIN);
-		cs_column.setBorderBottom(HSSFCellStyle.BORDER_THIN);
-		cs_column.setBorderLeft(HSSFCellStyle.BORDER_THIN);
-		cs_column.setFillForegroundColor(IndexedColors.YELLOW.getIndex());
-		cs_column.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
-		
-		
-		//紅色加粗字體
-		HSSFFont font_red=wb.createFont();
-		font_red.setColor(IndexedColors.RED.getIndex());
-		font_red.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+		HSSFCellStyle cs_column=(HSSFCellStyle)map.get("cs_column");
+				
 		/**
 		 * 數字格式（有背景顏色與無背景顏色）
 		 */
 		
-		HSSFDataFormat format=wb.createDataFormat();
-		//無背景
-		HSSFCellStyle cs_percent=wb.createCellStyle();
-		cs_percent.setDataFormat(format.getFormat("0.00%"));
-		cs_percent.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-		cs_percent.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
-		cs_percent.setBorderTop(HSSFCellStyle.BORDER_THIN);
-		cs_percent.setBorderRight(HSSFCellStyle.BORDER_THIN);
-		cs_percent.setBorderBottom(HSSFCellStyle.BORDER_THIN);
-		cs_percent.setBorderLeft(HSSFCellStyle.BORDER_THIN);
-		
-		HSSFCellStyle cs_poi=wb.createCellStyle();
-		cs_poi.setDataFormat(format.getFormat("#,###,0"));
-		cs_poi.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-		cs_poi.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
-		cs_poi.setBorderTop(HSSFCellStyle.BORDER_THIN);
-		cs_poi.setBorderRight(HSSFCellStyle.BORDER_THIN);
-		cs_poi.setBorderBottom(HSSFCellStyle.BORDER_THIN);
-		cs_poi.setBorderLeft(HSSFCellStyle.BORDER_THIN);
-		
-		HSSFCellStyle cs_poi1=wb.createCellStyle();
-		cs_poi1.setDataFormat(format.getFormat("#,###,0.0"));
-		cs_poi1.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-		cs_poi1.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
-		cs_poi1.setBorderTop(HSSFCellStyle.BORDER_THIN);
-		cs_poi1.setBorderRight(HSSFCellStyle.BORDER_THIN);
-		cs_poi1.setBorderBottom(HSSFCellStyle.BORDER_THIN);
-		cs_poi1.setBorderLeft(HSSFCellStyle.BORDER_THIN);
-		
-		HSSFCellStyle cs_poi2=wb.createCellStyle();
-		cs_poi2.setDataFormat(format.getFormat("#,###,0.00"));
-		cs_poi2.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-		cs_poi2.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
-		cs_poi2.setBorderTop(HSSFCellStyle.BORDER_THIN);
-		cs_poi2.setBorderRight(HSSFCellStyle.BORDER_THIN);
-		cs_poi2.setBorderBottom(HSSFCellStyle.BORDER_THIN);
-		cs_poi2.setBorderLeft(HSSFCellStyle.BORDER_THIN);
-		
-		HSSFCellStyle cs_poi4=wb.createCellStyle();
-		cs_poi4.setDataFormat(format.getFormat("#,###,0.0000"));
-		cs_poi4.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-		cs_poi4.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
-		cs_poi4.setBorderTop(HSSFCellStyle.BORDER_THIN);
-		cs_poi4.setBorderRight(HSSFCellStyle.BORDER_THIN);
-		cs_poi4.setBorderBottom(HSSFCellStyle.BORDER_THIN);
-		cs_poi4.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+		/*//無背景
+		HSSFCellStyle cs_percent=(HSSFCellStyle)map.get("cs_percent");				
+		HSSFCellStyle cs_poi=(HSSFCellStyle)map.get("cs_poi");	
+		HSSFCellStyle cs_poi1=(HSSFCellStyle)map.get("cs_poi1");		
+		HSSFCellStyle cs_poi2=(HSSFCellStyle)map.get("cs_poi2");
+		HSSFCellStyle cs_poi4=(HSSFCellStyle)map.get("cs_poi4");		
 		//有背景
-		HSSFCellStyle cs_percent_bg=wb.createCellStyle();
-		cs_percent_bg.setDataFormat(format.getFormat("0.00%"));
-		cs_percent_bg.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-		cs_percent_bg.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
-		cs_percent_bg.setBorderTop(HSSFCellStyle.BORDER_THIN);
-		cs_percent_bg.setBorderRight(HSSFCellStyle.BORDER_THIN);
-		cs_percent_bg.setBorderBottom(HSSFCellStyle.BORDER_THIN);
-		cs_percent_bg.setBorderLeft(HSSFCellStyle.BORDER_THIN);
-		//cs_percent_bg.setFillForegroundColor(IndexedColors.BRIGHT_GREEN.getIndex());
-		//cs_percent_bg.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
-		cs_percent_bg.setFont(font_red);
-		
-		
-		HSSFCellStyle cs_poi_bg=wb.createCellStyle();
-		cs_poi_bg.setDataFormat(format.getFormat("#,###,0"));
-		cs_poi_bg.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-		cs_poi_bg.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
-		cs_poi_bg.setBorderTop(HSSFCellStyle.BORDER_THIN);
-		cs_poi_bg.setBorderRight(HSSFCellStyle.BORDER_THIN);
-		cs_poi_bg.setBorderBottom(HSSFCellStyle.BORDER_THIN);
-		cs_poi_bg.setBorderLeft(HSSFCellStyle.BORDER_THIN);
-		//cs_poi_bg.setFillForegroundColor(IndexedColors.BRIGHT_GREEN.getIndex());
-		//cs_poi_bg.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
-		cs_poi_bg.setFont(font_red);
-		
-		HSSFCellStyle cs_poi1_bg=wb.createCellStyle();
-		cs_poi1_bg.setDataFormat(format.getFormat("#,###,0.0"));
-		cs_poi1_bg.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-		cs_poi1_bg.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
-		cs_poi1_bg.setBorderTop(HSSFCellStyle.BORDER_THIN);
-		cs_poi1_bg.setBorderRight(HSSFCellStyle.BORDER_THIN);
-		cs_poi1_bg.setBorderBottom(HSSFCellStyle.BORDER_THIN);
-		cs_poi1_bg.setBorderLeft(HSSFCellStyle.BORDER_THIN);
-		//cs_poi1_bg.setFillForegroundColor(IndexedColors.BRIGHT_GREEN.getIndex());
-		//cs_poi1_bg.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
-		cs_poi1_bg.setFont(font_red);
-		
-		HSSFCellStyle cs_poi2_bg=wb.createCellStyle();
-		cs_poi2_bg.setDataFormat(format.getFormat("#,###,0.00"));
-		cs_poi2_bg.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-		cs_poi2_bg.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
-		cs_poi2_bg.setBorderTop(HSSFCellStyle.BORDER_THIN);
-		cs_poi2_bg.setBorderRight(HSSFCellStyle.BORDER_THIN);
-		cs_poi2_bg.setBorderBottom(HSSFCellStyle.BORDER_THIN);
-		cs_poi2_bg.setBorderLeft(HSSFCellStyle.BORDER_THIN);
-		//cs_poi2_bg.setFillForegroundColor(IndexedColors.BRIGHT_GREEN.getIndex());
-		//cs_poi2_bg.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
-		cs_poi2_bg.setFont(font_red);
-		
-		HSSFCellStyle cs_poi4_bg=wb.createCellStyle();
-		cs_poi4_bg.setDataFormat(format.getFormat("#,###,0.0000"));
-		cs_poi4_bg.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-		cs_poi4_bg.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
-		cs_poi4_bg.setBorderTop(HSSFCellStyle.BORDER_THIN);
-		cs_poi4_bg.setBorderRight(HSSFCellStyle.BORDER_THIN);
-		cs_poi4_bg.setBorderBottom(HSSFCellStyle.BORDER_THIN);
-		cs_poi4_bg.setBorderLeft(HSSFCellStyle.BORDER_THIN);
-		//cs_poi4_bg.setFillForegroundColor(IndexedColors.BRIGHT_GREEN.getIndex());
-		//cs_poi4_bg.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
-		cs_poi4_bg.setFont(font_red);
-								
+		HSSFCellStyle cs_percent_bg=(HSSFCellStyle)map.get("cs_percent_bg");				
+		HSSFCellStyle cs_poi_bg=(HSSFCellStyle)map.get("cs_poi_bg");		
+		HSSFCellStyle cs_poi1_bg=(HSSFCellStyle)map.get("cs_poi1_bg");	
+		HSSFCellStyle cs_poi2_bg=(HSSFCellStyle)map.get("cs_poi2_bg");		
+		HSSFCellStyle cs_poi4_bg=(HSSFCellStyle)map.get("cs_poi4_bg");*/
+										
 		/**
 		 * 獲取要循環的數據
 		 */
 		List<WebFact>list_factcode=webFactSer.findFactById_showA(factNo);				
-		List<String>list_str=new ArrayList<String>();		
-		List<String>list_unit=new ArrayList<String>();
-		list_str.add("當月產量");list_unit.add("模");//0 (一位小數)     (0<目標)  
-		list_str.add("月均回轉 ");list_unit.add("回");//1(整數)          (1<目標)
-		list_str.add("時迴轉");list_unit.add("模/H");//2(一位小數)       (2<目標)
-		list_str.add("機臺利用率");list_unit.add("%");
-		list_str.add("產能達成率");list_unit.add("%");//                 (4<目標)
-		list_str.add("直工人均产能");list_unit.add("模/人");//9(整數)      (9<目標)
-		list_str.add("全厂人均产能");list_unit.add("模/人");//10(整數)      (10<目標)
-		list_str.add("全廠人均時產能");list_unit.add("模/H");//           (8<目標)
-		list_str.add("成倉庫存");list_unit.add("雙");//5(整數)
-		list_str.add("已出未請");list_unit.add("雙");//6(整數) 
-		list_str.add("生產與請款差異率");list_unit.add("%"); 
-		list_str.add("銷貨收入");list_unit.add("USD");
-		list_str.add("主材料成本比率");list_unit.add("%");
-		list_str.add("人工成本率");list_unit.add("%");
-		list_str.add("費用成本率");list_unit.add("%");
-		list_str.add("修繕單耗");list_unit.add("USD/模");//16
-		list_str.add("平均單價");list_unit.add("USD/雙");
-		list_str.add("全廠人均薪資");list_unit.add("USD/人");
-		list_str.add("人均產值");list_unit.add("USD/人");//                (11<目標)
-		list_str.add("人薪產值");list_unit.add("--");//                    (12<目標)
-		list_str.add("全廠總損耗");list_unit.add("%");
-		list_str.add("無形損耗");list_unit.add("%"); 
-		list_str.add("邊料率");list_unit.add("%");
-		list_str.add("不良率");list_unit.add("%");
-		list_str.add("報廢率");list_unit.add("%");
-		list_str.add("廠補率");  list_unit.add("%");// 
-		list_str.add("水用量单耗");list_unit.add("噸/模");//13(12至15取四位小數)  
-		list_str.add("用水金額單耗");list_unit.add("USD/模");
-		list_str.add("电度数单耗");list_unit.add("度/模");
-		list_str.add("用電金額單耗");list_unit.add("USD/模");
-		list_str.add("蒸汽用量單耗");list_unit.add("噸/模");
-		list_str.add("用汽金額單耗");list_unit.add("USD/模");
-		list_str.add("回頭料%");list_unit.add("%");
-		list_str.add("油壓退料%");list_unit.add("%");
-		list_str.add("回流率%");list_unit.add("%");
-		list_str.add("藥品用量單耗");list_unit.add("g/模");
-		list_str.add("色料用量單耗");list_unit.add("g/模");
-		list_str.add("離型劑金額單耗");list_unit.add("USD/模");
-		list_str.add("直間比");list_unit.add("--");//                        (22<目標)
-		list_str.add("直工離職率");list_unit.add("%");
-		list_str.add("全廠離職率");list_unit.add("%");
-		list_str.add("工傷件數");list_unit.add("件");	          	
+		List<String>list_str=findListstrAndUnit().get(0);		
+		List<String>list_unit=findListstrAndUnit().get(1);
+		          	
 		          
 		//表頭內容
 		List<String>list_column=new ArrayList<String>();
@@ -364,319 +200,11 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 		//最外層集合
 		List<List<List<Double>>>list1_all=new ArrayList<List<List<Double>>>();
 		for(int a=0;a<list_factcode.size();a++){//start for1
-			Double[][]arrays=new Double[10][40];
 			List<VKpifactEve>list_kpieve=new ArrayList<VKpifactEve>();
-			for(int i=0;i<7;i++){
+			for(int i=0;i<8;i++){
 				list_kpieve.add(new VKpifactEve());
 			}
-			//第一季度
-			Double q1_sumEverydemo=0.00;Double q1_sumStandarddemo=0.00;
-			Double q1_sumActualdemo=0.00;Double q1_sumActualpairs=0.00;
-			Double q1_sumFactpairs=0.00;Double q1_sumWorkhours=0.00;
-						
-			Double q1_personzg=0.00;Double q1_personjg=0.00;
-			Double q1_timezg=0.00;Double q1_timejg=0.00;
-			Double q1_addtimezg=0.00;Double q1_addtimejg=0.00;
-			Double q1_leavenumzg=0.00;Double q1_leavenumjg=0.00;
-			Double q1_hurtnum=0.00;
 			
-			Double q1_invcount=0.00;Double q1_sellcount=0.00;
-			Double q1_costcount=0.00;Double q1_wagezgUsd=0.00;
-			Double q1_wagejgUsd=0.00;Double q1_cashcount=0.00;
-			
-			Double q1_sideweit=0.00;Double q1_badweit=0.00;
-			Double q1_otherbadweight=0.00;
-			Double q1_otherweight=0.00;
-			
-			Double q1_waterton=0.00;Double q1_electricdu=0.00;
-			Double q1_gaston=0.00;
-			
-			Double q1_storenum=0.00;Double q1_outnum=0.00;
-			Double q1_minusnum=0.00;
-			
-			Double q1_actlost=0.00;Double q1_avgbuttomweight2=0.00;
-			Double q1_productednum=0.00;
-			Double q1_noglueweight=0.00;
-			Double q1_repairmoney=0.00;
-			Double q1_instorenum=0.00;
-			
-			Double q1_hole=0.00;
-			Double q1_sumWorkday=0.00;
-			Double q1_waterusd=0.00;
-			Double q1_electricusd=0.00;
-			Double q1_gasusd=0.00;
-			Double q1_thickused=0.00;
-			Double q1_backfeed=0.00;
-			Double q1_oilback=0.00;
-			Double q1_drugsused=0.00;
-			Double q1_colorused=0.00;
-			Double q1_leavemoney=0.00;
-			Double q1_paypairs=0.00;
-			Double q1_badcount=0.00;
-			//第二季度
-			Double q2_sumEverydemo=0.00;Double q2_sumStandarddemo=0.00;
-			Double q2_sumActualdemo=0.00;Double q2_sumActualpairs=0.00;
-			Double q2_sumFactpairs=0.00;Double q2_sumWorkhours=0.00;
-			
-			Double q2_personzg=0.00;Double q2_personjg=0.00;
-			Double q2_timezg=0.00;Double q2_timejg=0.00;
-			Double q2_addtimezg=0.00;Double q2_addtimejg=0.00;
-			Double q2_leavenumzg=0.00;Double q2_leavenumjg=0.00;
-			Double q2_hurtnum=0.00;
-			
-			Double q2_invcount=0.00;Double q2_sellcount=0.00;
-			Double q2_costcount=0.00;Double q2_wagezgUsd=0.00;
-			Double q2_wagejgUsd=0.00;Double q2_cashcount=0.00;
-			
-			Double q2_sideweit=0.00;Double q2_badweit=0.00;
-			Double q2_otherbadweight=0.00;
-			Double q2_otherweight=0.00;
-			
-			Double q2_waterton=0.00;Double q2_electricdu=0.00;
-			Double q2_gaston=0.00;
-			
-			Double q2_storenum=0.00;Double q2_outnum=0.00;
-			Double q2_minusnum=0.00;
-			
-			Double q2_actlost=0.00;Double q2_avgbuttomweight2=0.00;
-			Double q2_productednum=0.00;
-			Double q2_noglueweight=0.00;
-			Double q2_repairmoney=0.00;
-			Double q2_instorenum=0.00;
-			
-			Double q2_hole=0.00;
-			Double q2_sumWorkday=0.00;
-			Double q2_waterusd=0.00;
-			Double q2_electricusd=0.00;
-			Double q2_gasusd=0.00;
-			Double q2_thickused=0.00;
-			Double q2_backfeed=0.00;
-			Double q2_oilback=0.00;
-			Double q2_drugsused=0.00;
-			Double q2_colorused=0.00;
-			Double q2_leavemoney=0.00;
-			Double q2_paypairs=0.00;
-			Double q2_badcount=0.00;
-			//第三季度
-			Double q3_sumEverydemo=0.00;Double q3_sumStandarddemo=0.00;
-			Double q3_sumActualdemo=0.00;Double q3_sumActualpairs=0.00;
-			Double q3_sumFactpairs=0.00;Double q3_sumWorkhours=0.00;
-			
-			Double q3_personzg=0.00;Double q3_personjg=0.00;
-			Double q3_timezg=0.00;Double q3_timejg=0.00;
-			Double q3_addtimezg=0.00;Double q3_addtimejg=0.00;
-			Double q3_leavenumzg=0.00;Double q3_leavenumjg=0.00;
-			Double q3_hurtnum=0.00;
-			
-			Double q3_invcount=0.00;Double q3_sellcount=0.00;
-			Double q3_costcount=0.00;Double q3_wagezgUsd=0.00;
-			Double q3_wagejgUsd=0.00;Double q3_cashcount=0.00;
-			
-			Double q3_sideweit=0.00;Double q3_badweit=0.00;
-			Double q3_otherbadweight=0.00;
-			Double q3_otherweight=0.00;
-			
-			Double q3_waterton=0.00;Double q3_electricdu=0.00;
-			Double q3_gaston=0.00;
-			
-			Double q3_storenum=0.00;Double q3_outnum=0.00;
-			Double q3_minusnum=0.00;
-			
-			Double q3_actlost=0.00;Double q3_avgbuttomweight2=0.00;
-			Double q3_productednum=0.00;
-			Double q3_noglueweight=0.00;
-			Double q3_repairmoney=0.00;
-			Double q3_instorenum=0.00;
-			
-			Double q3_hole=0.00;
-			Double q3_sumWorkday=0.00;
-			Double q3_waterusd=0.00;
-			Double q3_electricusd=0.00;
-			Double q3_gasusd=0.00;
-			Double q3_thickused=0.00;
-			Double q3_backfeed=0.00;
-			Double q3_oilback=0.00;
-			Double q3_drugsused=0.00;
-			Double q3_colorused=0.00;
-			Double q3_leavemoney=0.00;
-			Double q3_paypairs=0.00;
-			Double q3_badcount=0.00;
-			//第四季度
-			Double q4_sumEverydemo=0.00;Double q4_sumStandarddemo=0.00;
-			Double q4_sumActualdemo=0.00;Double q4_sumActualpairs=0.00;
-			Double q4_sumFactpairs=0.00;Double q4_sumWorkhours=0.00;
-			
-			Double q4_personzg=0.00;Double q4_personjg=0.00;
-			Double q4_timezg=0.00;Double q4_timejg=0.00;
-			Double q4_addtimezg=0.00;Double q4_addtimejg=0.00;
-			Double q4_leavenumzg=0.00;Double q4_leavenumjg=0.00;
-			Double q4_hurtnum=0.00;
-			
-			Double q4_invcount=0.00;Double q4_sellcount=0.00;
-			Double q4_costcount=0.00;Double q4_wagezgUsd=0.00;
-			Double q4_wagejgUsd=0.00;Double q4_cashcount=0.00;
-			
-			Double q4_sideweit=0.00;Double q4_badweit=0.00;
-			Double q4_otherbadweight=0.00;
-			Double q4_otherweight=0.00;
-			
-			Double q4_waterton=0.00;Double q4_electricdu=0.00;
-			Double q4_gaston=0.00;
-			
-			Double q4_storenum=0.00;Double q4_outnum=0.00;
-			Double q4_minusnum=0.00;
-			
-			Double q4_actlost=0.00;Double q4_avgbuttomweight2=0.00;
-			Double q4_productednum=0.00;
-			Double q4_noglueweight=0.00;
-			Double q4_repairmoney=0.00;
-			Double q4_instorenum=0.00;
-			
-			Double q4_hole=0.00;
-			Double q4_sumWorkday=0.00;
-			Double q4_waterusd=0.00;
-			Double q4_electricusd=0.00;
-			Double q4_gasusd=0.00;
-			Double q4_thickused=0.00;
-			Double q4_backfeed=0.00;
-			Double q4_oilback=0.00;
-			Double q4_drugsused=0.00;
-			Double q4_colorused=0.00;
-			Double q4_leavemoney=0.00;
-			Double q4_paypairs=0.00;
-			Double q4_badcount=0.00;
-			//上半年
-			Double half1_sumEverydemo=0.00;Double half1_sumStandarddemo=0.00;
-			Double half1_sumActualdemo=0.00;Double half1_sumActualpairs=0.00;
-			Double half1_sumFactpairs=0.00;Double half1_sumWorkhours=0.00;
-			
-			Double half1_personzg=0.00;Double half1_personjg=0.00;
-			Double half1_timezg=0.00;Double half1_timejg=0.00;
-			Double half1_addtimezg=0.00;Double half1_addtimejg=0.00;
-			Double half1_leavenumzg=0.00;Double half1_leavenumjg=0.00;
-			Double half1_hurtnum=0.00;
-			
-			Double half1_invcount=0.00;Double half1_sellcount=0.00;
-			Double half1_costcount=0.00;Double half1_wagezgUsd=0.00;
-			Double half1_wagejgUsd=0.00;Double half1_cashcount=0.00;
-			
-			Double half1_sideweit=0.00;Double half1_badweit=0.00;
-			Double half1_otherbadweight=0.00;
-			Double half1_otherweight=0.00;
-			
-			Double half1_waterton=0.00;Double half1_electricdu=0.00;
-			Double half1_gaston=0.00;
-			
-			Double half1_storenum=0.00;Double half1_outnum=0.00;
-			Double half1_minusnum=0.00;
-			
-			Double half1_actlost=0.00;Double half1_avgbuttomweight2=0.00;
-			Double half1_productednum=0.00;
-			Double half1_noglueweight=0.00;
-			Double half1_repairmoney=0.00;
-			Double half1_instorenum=0.00;
-			
-			Double half1_hole=0.00;
-			Double half1_sumWorkday=0.00;
-			Double half1_waterusd=0.00;
-			Double half1_electricusd=0.00;
-			Double half1_gasusd=0.00;
-			Double half1_thickused=0.00;
-			Double half1_backfeed=0.00;
-			Double half1_oilback=0.00;
-			Double half1_drugsused=0.00;
-			Double half1_colorused=0.00;
-			Double half1_leavemoney=0.00;
-			Double half1_paypairs=0.00;
-			Double half1_badcount=0.00;
-			//下半年
-			Double half2_sumEverydemo=0.00;Double half2_sumStandarddemo=0.00;
-			Double half2_sumActualdemo=0.00;Double half2_sumActualpairs=0.00;
-			Double half2_sumFactpairs=0.00;Double half2_sumWorkhours=0.00;
-			
-			Double half2_personzg=0.00;Double half2_personjg=0.00;
-			Double half2_timezg=0.00;Double half2_timejg=0.00;
-			Double half2_addtimezg=0.00;Double half2_addtimejg=0.00;
-			Double half2_leavenumzg=0.00;Double half2_leavenumjg=0.00;
-			Double half2_hurtnum=0.00;
-			
-			Double half2_invcount=0.00;Double half2_sellcount=0.00;
-			Double half2_costcount=0.00;Double half2_wagezgUsd=0.00;
-			Double half2_wagejgUsd=0.00;Double half2_cashcount=0.00;
-			
-			Double half2_sideweit=0.00;Double half2_badweit=0.00;
-			Double half2_otherbadweight=0.00;
-			Double half2_otherweight=0.00;
-			
-			Double half2_waterton=0.00;Double half2_electricdu=0.00;
-			Double half2_gaston=0.00;
-			
-			Double half2_storenum=0.00;Double half2_outnum=0.00;
-			Double half2_minusnum=0.00;
-			
-			Double half2_actlost=0.00;Double half2_avgbuttomweight2=0.00;
-			Double half2_productednum=0.00;
-			Double half2_noglueweight=0.00;
-			Double half2_repairmoney=0.00;
-			Double half2_instorenum=0.00;
-			
-			Double half2_hole=0.00;
-			Double half2_sumWorkday=0.00;
-			Double half2_waterusd=0.00;
-			Double half2_electricusd=0.00;
-			Double half2_gasusd=0.00;
-			Double half2_thickused=0.00;
-			Double half2_backfeed=0.00;
-			Double half2_oilback=0.00;
-			Double half2_drugsused=0.00;
-			Double half2_colorused=0.00;
-			Double half2_leavemoney=0.00;
-			Double half2_paypairs=0.00;
-			Double half2_badcount=0.00;
-			//全年
-			Double year_sumEverydemo=0.00;Double year_sumStandarddemo=0.00;
-			Double year_sumActualdemo=0.00;Double year_sumActualpairs=0.00;
-			Double year_sumFactpairs=0.00;Double year_sumWorkhours=0.00;
-			
-			Double year_personzg=0.00;Double year_personjg=0.00;
-			Double year_timezg=0.00;Double year_timejg=0.00;
-			Double year_addtimezg=0.00;Double year_addtimejg=0.00;
-			Double year_leavenumzg=0.00;Double year_leavenumjg=0.00;
-			Double year_hurtnum=0.00;
-			
-			Double year_invcount=0.00;Double year_sellcount=0.00;
-			Double year_costcount=0.00;Double year_wagezgUsd=0.00;
-			Double year_wagejgUsd=0.00;Double year_cashcount=0.00;
-			
-			Double year_sideweit=0.00;Double year_badweit=0.00;
-			Double year_otherbadweight=0.00;
-			Double year_otherweight=0.00;
-			
-			Double year_waterton=0.00;Double year_electricdu=0.00;
-			Double year_gaston=0.00;
-			
-			Double year_storenum=0.00;Double year_outnum=0.00;
-			Double year_minusnum=0.00;
-			
-			Double year_actlost=0.00;Double year_avgbuttomweight2=0.00;
-			Double year_productednum=0.00;
-			Double year_noglueweight=0.00;
-			Double year_repairmoney=0.00;
-			Double year_instorenum=0.00;
-			
-			Double year_hole=0.00;
-			Double year_sumWorkday=0.00;
-			Double year_waterusd=0.00;
-			Double year_electricusd=0.00;
-			Double year_gasusd=0.00;
-			Double year_thickused=0.00;
-			Double year_backfeed=0.00;
-			Double year_oilback=0.00;
-			Double year_drugsused=0.00;
-			Double year_colorused=0.00;
-			Double year_leavemoney=0.00;
-			Double year_paypairs=0.00;
-			Double year_badcount=0.00;
 			/**
 			 * 中間集合
 			 * 用於裝季度與上下半年與全年的數據
@@ -702,20 +230,14 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 			List<Double>list3_year=new ArrayList<Double>();
 			WebFact fact=list_factcode.get(a);
 			String factCode=fact.getId().getFactArea();
-			for(int b=1;b<13;b++){//start for2
-				
-				  	
-						
-						
-						
-				
+			for(int b=1;b<13;b++){//start for2						
 				String month="";
 				if(b<10){
 					month="0"+b;
 				}else{
 					month=""+b;
 				}
-				VKpifactEve eve=vkpieveSer.findById(factNo, factCode, year+month);
+				VKpifactEve eve=vkpieveSer.findById(factNo, factCode, year+month)==null?new VKpifactEve():vkpieveSer.findById(factNo, factCode, year+month);
 				if(eve!=null){//start if
 					/**
 					 * sumActualpairs和sumFacpairs,otherweight有可能為空
@@ -818,385 +340,24 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 						      list_kpieve.get(i+5).setProductednum(list_kpieve.get(2*i+1).getProductednum()+list_kpieve.get(2*i+2).getProductednum());
 						      list_kpieve.get(i+5).setNoglueweight(list_kpieve.get(2*i+1).getNoglueweight()+list_kpieve.get(2*i+2).getNoglueweight());
 						      list_kpieve.get(i+5).setRepairmoney(list_kpieve.get(2*i+1).getRepairmoney()+list_kpieve.get(2*i+2).getRepairmoney());
-						      list_kpieve.get(i+5).setInstorenum(list_kpieve.get(2*i+1).getInstorenum()+list_kpieve.get(2*i+2).getInstorenum());
+						      list_kpieve.get(i+5).setInstorenum(list_kpieve.get(2*i+1).getInstorenum()+list_kpieve.get(2*i+2).getInstorenum());						      						      						      
 				    	  }
-				      }
-				     
-					
-					
-					
-					if(b<4){
-						q1_sumEverydemo=q1_sumEverydemo+eve.getSumEverydemo().doubleValue();q1_sumStandarddemo=q1_sumStandarddemo+eve.getSumStandarddemo().doubleValue();
-						q1_sumActualdemo=q1_sumActualdemo+eve.getSumActualdemo().doubleValue();q1_sumActualpairs=q1_sumActualpairs+eve.getSumActualpairs().doubleValue();
-						q1_sumFactpairs=q1_sumFactpairs+eve.getSumFacpairs().doubleValue();q1_sumWorkhours=q1_sumWorkhours+eve.getWorkhours();
-						
-						q1_personzg=q1_personzg+eve.getPersonzg();q1_personjg=q1_personjg+eve.getPersonjg();
-						q1_timezg=q1_timezg+eve.getTimezg();q1_timejg=q1_timejg+eve.getTimejg();
-						q1_addtimezg=q1_addtimezg+eve.getAddtimezg();q1_addtimejg=q1_addtimejg+eve.getAddtimejg();
-						q1_leavenumzg=q1_leavenumzg+eve.getLeavenumzg();q1_leavenumjg=q1_leavenumjg+eve.getLeavenumjg();
-						q1_hurtnum=q1_hurtnum+eve.getHurtnum();
-						
-						q1_invcount=q1_invcount+eve.getInvcount();q1_sellcount=q1_sellcount+eve.getSellcount();
-						q1_costcount=q1_costcount+eve.getCostcount();q1_wagezgUsd=q1_wagezgUsd+eve.getWagezgUsd();
-						q1_wagejgUsd=q1_wagejgUsd+eve.getWagejgUsd();q1_cashcount=q1_cashcount+eve.getCashcount();
-						
-						q1_sideweit=q1_sideweit+eve.getSideweit();q1_badweit=q1_badweit+eve.getBadweit();
-						q1_otherbadweight=q1_otherbadweight+eve.getOtherbadweight();
-						q1_otherweight=q1_otherweight+eve.getOtherweight().doubleValue();
-						
-						q1_waterton=q1_waterton+eve.getWaterton();q1_electricdu=q1_electricdu+eve.getElectricdu();
-						q1_gaston=q1_gaston+eve.getGaston();
-						
-						q1_storenum=q1_storenum+eve.getStorenum();q1_outnum=q1_outnum+eve.getOutnum();
-						q1_minusnum=q1_minusnum+eve.getMinusnum();
-						
-						q1_actlost=q1_actlost+eve.getActlost();q1_avgbuttomweight2=q1_avgbuttomweight2+eve.getAvgbuttomweight2();
-						q1_productednum=q1_productednum+eve.getProductednum();
-						q1_noglueweight=q1_noglueweight+eve.getNoglueweight();
-						q1_repairmoney=q1_repairmoney+eve.getRepairmoney();
-						q1_instorenum=q1_instorenum+eve.getInstorenum();
-						
-						/****************************20160317******************************/
-						q1_hole=q1_hole+eve.getHole();
-						q1_sumWorkday=q1_sumWorkday+eve.getSumWorkday().doubleValue();
-						q1_waterusd=q1_waterusd+eve.getWagejgUsd();
-						q1_electricusd=q1_electricusd+eve.getElectricusd();
-						q1_gasusd=q1_gasusd+eve.getGasusd();
-						q1_thickused=q1_thickused+eve.getThickused();
-						q1_backfeed=q1_backfeed+eve.getBackfeed();
-						q1_oilback=q1_oilback+eve.getOilback();
-						q1_drugsused=q1_drugsused+eve.getDrugsused();
-						q1_colorused=q1_colorused+eve.getColorused();
-						q1_leavemoney=q1_leavemoney+eve.getLeavemoney();
-						q1_paypairs=q1_paypairs+eve.getPaypairs();
-						q1_badcount=q1_badcount+eve.getBadcount();
-						/****************************20160317******************************/
-					}
-					if(b>3&&b<7){
-						q2_sumEverydemo=q2_sumEverydemo+eve.getSumEverydemo().doubleValue();q2_sumStandarddemo=q2_sumStandarddemo+eve.getSumStandarddemo().doubleValue();
-						q2_sumActualdemo=q2_sumActualdemo+eve.getSumActualdemo().doubleValue();q2_sumActualpairs=q2_sumActualpairs+eve.getSumActualpairs().doubleValue();
-						q2_sumFactpairs=q2_sumFactpairs+eve.getSumFacpairs().doubleValue();q2_sumWorkhours=q2_sumWorkhours+eve.getWorkhours();
-						
-						q2_personzg=q2_personzg+eve.getPersonzg();q2_personjg=q2_personjg+eve.getPersonjg();
-						q2_timezg=q2_timezg+eve.getTimezg();q2_timejg=q2_timejg+eve.getTimejg();
-						q2_addtimezg=q2_addtimezg+eve.getAddtimezg();q2_addtimejg=q2_addtimejg+eve.getAddtimejg();
-						q2_leavenumzg=q2_leavenumzg+eve.getLeavenumzg();q2_leavenumjg=q2_leavenumjg+eve.getLeavenumjg();
-						q2_hurtnum=q2_hurtnum+eve.getHurtnum();
-						
-						q2_invcount=q2_invcount+eve.getInvcount();q2_sellcount=q2_sellcount+eve.getSellcount();
-						q2_costcount=q2_costcount+eve.getCostcount();q2_wagezgUsd=q2_wagezgUsd+eve.getWagezgUsd();
-						q2_wagejgUsd=q2_wagejgUsd+eve.getWagejgUsd();q2_cashcount=q2_cashcount+eve.getCashcount();
-						
-						q2_sideweit=q2_sideweit+eve.getSideweit();q2_badweit=q2_badweit+eve.getBadweit();
-						q2_otherbadweight=q2_otherbadweight+eve.getOtherbadweight();
-						q2_otherweight=q2_otherweight+eve.getOtherweight().doubleValue();
-						
-						q2_waterton=q2_waterton+eve.getWaterton();q2_electricdu=q2_electricdu+eve.getElectricdu();
-						q2_gaston=q2_gaston+eve.getGaston();
-						
-						q2_storenum=q2_storenum+eve.getStorenum();q2_outnum=q2_outnum+eve.getOutnum();
-						q2_minusnum=q2_minusnum+eve.getMinusnum();
-						
-						q2_actlost=q2_actlost+eve.getActlost();q2_avgbuttomweight2=q2_avgbuttomweight2+eve.getAvgbuttomweight2();
-						q2_productednum=q2_productednum+eve.getProductednum();
-						q2_noglueweight=q2_noglueweight+eve.getNoglueweight();
-						q2_repairmoney=q2_repairmoney+eve.getRepairmoney();
-						q2_instorenum=q2_instorenum+eve.getInstorenum();
-						
-						/****************************20160317******************************/
-						q2_hole=q2_hole+eve.getHole();
-						q2_sumWorkday=q2_sumWorkday+eve.getSumWorkday().doubleValue();
-						q2_waterusd=q2_waterusd+eve.getWagejgUsd();
-						q2_electricusd=q2_electricusd+eve.getElectricusd();
-						q2_gasusd=q2_gasusd+eve.getGasusd();
-						q2_thickused=q2_thickused+eve.getThickused();
-						q2_backfeed=q2_backfeed+eve.getBackfeed();
-						q2_oilback=q2_oilback+eve.getOilback();
-						q2_drugsused=q2_drugsused+eve.getDrugsused();
-						q2_colorused=q2_colorused+eve.getColorused();
-						q2_leavemoney=q2_leavemoney+eve.getLeavemoney();
-						q2_paypairs=q2_paypairs+eve.getPaypairs();
-						q2_badcount=q2_badcount+eve.getBadcount();
-						/****************************20160317******************************/
-												
-					}
-					if(b>6&&b<10){
-						q3_sumEverydemo=q3_sumEverydemo+eve.getSumEverydemo().doubleValue();q3_sumStandarddemo=q3_sumStandarddemo+eve.getSumStandarddemo().doubleValue();
-						q3_sumActualdemo=q3_sumActualdemo+eve.getSumActualdemo().doubleValue();q3_sumActualpairs=q3_sumActualpairs+eve.getSumActualpairs().doubleValue();
-						q3_sumFactpairs=q3_sumFactpairs+eve.getSumFacpairs().doubleValue();q3_sumWorkhours=q3_sumWorkhours+eve.getWorkhours();
-						
-						q3_personzg=q3_personzg+eve.getPersonzg();q3_personjg=q3_personjg+eve.getPersonjg();
-						q3_timezg=q3_timezg+eve.getTimezg();q3_timejg=q3_timejg+eve.getTimejg();
-						q3_addtimezg=q3_addtimezg+eve.getAddtimezg();q3_addtimejg=q3_addtimejg+eve.getAddtimejg();
-						q3_leavenumzg=q3_leavenumzg+eve.getLeavenumzg();q3_leavenumjg=q3_leavenumjg+eve.getLeavenumjg();
-						q3_hurtnum=q3_hurtnum+eve.getHurtnum();
-						
-						q3_invcount=q3_invcount+eve.getInvcount();q3_sellcount=q3_sellcount+eve.getSellcount();
-						q3_costcount=q3_costcount+eve.getCostcount();q3_wagezgUsd=q3_wagezgUsd+eve.getWagezgUsd();
-						q3_wagejgUsd=q3_wagejgUsd+eve.getWagejgUsd();q3_cashcount=q3_cashcount+eve.getCashcount();
-						
-						q3_sideweit=q3_sideweit+eve.getSideweit();q3_badweit=q3_badweit+eve.getBadweit();
-						q3_otherbadweight=q3_otherbadweight+eve.getOtherbadweight();
-						q3_otherweight=q3_otherweight+eve.getOtherweight().doubleValue();
-						
-						q3_waterton=q3_waterton+eve.getWaterton();q3_electricdu=q3_electricdu+eve.getElectricdu();
-						q3_gaston=q3_gaston+eve.getGaston();
-						
-						q3_storenum=q3_storenum+eve.getStorenum();q3_outnum=q3_outnum+eve.getOutnum();
-						q3_minusnum=q3_minusnum+eve.getMinusnum();
-						
-						q3_actlost=q3_actlost+eve.getActlost();q3_avgbuttomweight2=q3_avgbuttomweight2+eve.getAvgbuttomweight2();
-						q3_productednum=q3_productednum+eve.getProductednum();
-						q3_noglueweight=q3_noglueweight+eve.getNoglueweight();
-						q3_repairmoney=q3_repairmoney+eve.getRepairmoney();
-						q3_instorenum=q3_instorenum+eve.getInstorenum();
-						
-						/****************************20160317******************************/
-						q3_hole=q3_hole+eve.getHole();
-						q3_sumWorkday=q3_sumWorkday+eve.getSumWorkday().doubleValue();
-						q3_waterusd=q3_waterusd+eve.getWagejgUsd();
-						q3_electricusd=q3_electricusd+eve.getElectricusd();
-						q3_gasusd=q3_gasusd+eve.getGasusd();
-						q3_thickused=q3_thickused+eve.getThickused();
-						q3_backfeed=q3_backfeed+eve.getBackfeed();
-						q3_oilback=q3_oilback+eve.getOilback();
-						q3_drugsused=q3_drugsused+eve.getDrugsused();
-						q3_colorused=q3_colorused+eve.getColorused();
-						q3_leavemoney=q3_leavemoney+eve.getLeavemoney();
-						q3_paypairs=q3_paypairs+eve.getPaypairs();
-						q3_badcount=q3_badcount+eve.getBadcount();
-						/****************************20160317******************************/
-					}
-					if(b>9){
-						q4_sumEverydemo=q4_sumEverydemo+eve.getSumEverydemo().doubleValue();q4_sumStandarddemo=q4_sumStandarddemo+eve.getSumStandarddemo().doubleValue();
-						q4_sumActualdemo=q4_sumActualdemo+eve.getSumActualdemo().doubleValue();q4_sumActualpairs=q4_sumActualpairs+eve.getSumActualpairs().doubleValue();
-						q4_sumFactpairs=q4_sumFactpairs+eve.getSumFacpairs().doubleValue();q4_sumWorkhours=q4_sumWorkhours+eve.getWorkhours();
-						
-						q4_personzg=q4_personzg+eve.getPersonzg();q4_personjg=q4_personjg+eve.getPersonjg();
-						q4_timezg=q4_timezg+eve.getTimezg();q4_timejg=q4_timejg+eve.getTimejg();
-						q4_addtimezg=q4_addtimezg+eve.getAddtimezg();q4_addtimejg=q4_addtimejg+eve.getAddtimejg();
-						q4_leavenumzg=q4_leavenumzg+eve.getLeavenumzg();q4_leavenumjg=q4_leavenumjg+eve.getLeavenumjg();
-						q4_hurtnum=q4_hurtnum+eve.getHurtnum();
-						
-						q4_invcount=q4_invcount+eve.getInvcount();q4_sellcount=q4_sellcount+eve.getSellcount();
-						q4_costcount=q4_costcount+eve.getCostcount();q4_wagezgUsd=q4_wagezgUsd+eve.getWagezgUsd();
-						q4_wagejgUsd=q4_wagejgUsd+eve.getWagejgUsd();q4_cashcount=q4_cashcount+eve.getCashcount();
-						
-						q4_sideweit=q4_sideweit+eve.getSideweit();q4_badweit=q4_badweit+eve.getBadweit();
-						q4_otherbadweight=q4_otherbadweight+eve.getOtherbadweight();
-						q4_otherweight=q4_otherweight+eve.getOtherweight().doubleValue();
-						
-						q4_waterton=q4_waterton+eve.getWaterton();q4_electricdu=q4_electricdu+eve.getElectricdu();
-						q4_gaston=q4_gaston+eve.getGaston();
-						
-						q4_storenum=q4_storenum+eve.getStorenum();q4_outnum=q4_outnum+eve.getOutnum();
-						q4_minusnum=q4_minusnum+eve.getMinusnum();
-						
-						q4_actlost=q4_actlost+eve.getActlost();q4_avgbuttomweight2=q4_avgbuttomweight2+eve.getAvgbuttomweight2();
-						q4_productednum=q4_productednum+eve.getProductednum();
-						q4_noglueweight=q4_noglueweight+eve.getNoglueweight();
-						q4_repairmoney=q4_repairmoney+eve.getRepairmoney();
-						q4_instorenum=q4_instorenum+eve.getInstorenum();
-						
-						/****************************20160317******************************/
-						q4_hole=q4_hole+eve.getHole();
-						q4_sumWorkday=q4_sumWorkday+eve.getSumWorkday().doubleValue();
-						q4_waterusd=q4_waterusd+eve.getWagejgUsd();
-						q4_electricusd=q4_electricusd+eve.getElectricusd();
-						q4_gasusd=q4_gasusd+eve.getGasusd();
-						q4_thickused=q4_thickused+eve.getThickused();
-						q4_backfeed=q4_backfeed+eve.getBackfeed();
-						q4_oilback=q4_oilback+eve.getOilback();
-						q4_drugsused=q4_drugsused+eve.getDrugsused();
-						q4_colorused=q4_colorused+eve.getColorused();
-						q4_leavemoney=q4_leavemoney+eve.getLeavemoney();
-						q4_paypairs=q4_paypairs+eve.getPaypairs();
-						q4_badcount=q4_badcount+eve.getBadcount();
-						/****************************20160317******************************/
-					}															
-				}// end if
-				switch(b){
-				//第一季度
-				case 3:
-					list3_q1=this.findResult(b,
-							q1_sumEverydemo, q1_sumStandarddemo, q1_sumActualdemo, q1_sumActualpairs, q1_sumFactpairs,
-							q1_personzg, q1_personjg, q1_timezg, q1_timejg, q1_addtimezg, q1_addtimejg, q1_leavenumzg, q1_leavenumjg, q1_hurtnum,
-							q1_invcount, q1_sellcount, q1_costcount, q1_wagezgUsd, q1_wagejgUsd, q1_cashcount,
-							q1_sideweit, q1_badweit, q1_otherbadweight,
-							q1_waterton, q1_electricdu, q1_gaston,
-							q1_storenum, q1_outnum, q1_minusnum,
-							q1_actlost, q1_avgbuttomweight2,q1_otherweight,
-							q1_productednum,q1_noglueweight,q1_repairmoney,
-							q1_sumWorkhours,q1_instorenum);
-					list2_all.add(list3_q1);
-					break;
-				//第二季度和上半年
-				case 6:
-					//上半年
-					half1_sumEverydemo=q1_sumEverydemo+q2_sumEverydemo;half1_sumStandarddemo=q1_sumStandarddemo+q2_sumStandarddemo;
-					half1_sumActualdemo=q1_sumActualdemo+q2_sumActualdemo;half1_sumActualpairs=q1_sumActualpairs+q2_sumActualpairs;
-					half1_sumFactpairs=q1_sumFactpairs+q2_sumFactpairs;half1_sumWorkhours=q1_sumWorkhours+q2_sumWorkhours;
-					
-					half1_personzg=q1_personzg+q2_personzg;half1_personjg=q1_personjg+q2_personjg;
-					half1_timezg=q1_timezg+q2_timezg;half1_timejg=q1_timejg+q2_timejg;
-					half1_addtimezg=q1_addtimezg+q2_addtimezg;half1_addtimejg=q1_addtimejg+q2_addtimejg;
-					half1_leavenumzg=q1_leavenumzg+q2_leavenumzg;half1_leavenumjg=q1_leavenumjg+q2_leavenumjg;
-					half1_hurtnum=q1_hurtnum+q2_hurtnum;
-					
-					half1_invcount=q1_invcount+q2_invcount;half1_sellcount=q1_sellcount+q2_sellcount;
-					half1_costcount=q1_costcount+q2_costcount;half1_wagezgUsd=q1_wagezgUsd+q2_wagezgUsd;
-					half1_wagejgUsd=q1_wagejgUsd+q2_wagejgUsd;half1_cashcount=q1_cashcount+q2_cashcount;
-					
-					half1_sideweit=q1_sideweit+q2_sideweit;half1_badweit=q1_badweit+q2_badweit;
-					half1_otherbadweight=q1_otherbadweight+q2_otherbadweight;
-					half1_otherweight=q1_otherweight+q2_otherweight;
-					
-					half1_waterton=q1_waterton+q2_waterton;half1_electricdu=q1_electricdu+q2_electricdu;
-					half1_gaston=q1_gaston+q2_gaston;
-					
-					half1_storenum=q1_storenum+q2_storenum;half1_outnum=q1_outnum+q2_outnum;
-					half1_minusnum=q1_minusnum+q2_minusnum;
-					
-					half1_actlost=q1_actlost+q2_actlost;half1_avgbuttomweight2=q1_avgbuttomweight2+q2_avgbuttomweight2;
-					half1_productednum=q1_productednum+q2_productednum;
-					half1_noglueweight=q1_noglueweight+q2_noglueweight;
-					half1_repairmoney=q1_repairmoney+q2_repairmoney;
-					half1_instorenum=q1_instorenum+q2_instorenum;
-					list3_q2=this.findResult(b/2,
-							q2_sumEverydemo, q2_sumStandarddemo, q2_sumActualdemo, q2_sumActualpairs, q2_sumFactpairs,
-							q2_personzg, q2_personjg, q2_timezg, q2_timejg, q2_addtimezg, q2_addtimejg, q2_leavenumzg, q2_leavenumjg, q2_hurtnum,
-							q2_invcount, q2_sellcount, q2_costcount, q2_wagezgUsd, q2_wagejgUsd, q2_cashcount,
-							q2_sideweit, q2_badweit, q2_otherbadweight,
-							q2_waterton, q2_electricdu, q2_gaston,
-							q2_storenum, q2_outnum, q2_minusnum,
-							q2_actlost, q2_avgbuttomweight2,q2_otherweight,
-							q2_productednum,q2_noglueweight,q2_repairmoney,
-							q2_sumWorkhours,q2_instorenum);
-					list3_half1=this.findResult(b,
-							half1_sumEverydemo, half1_sumStandarddemo, half1_sumActualdemo, half1_sumActualpairs, half1_sumFactpairs,
-							half1_personzg, half1_personjg, half1_timezg, half1_timejg, half1_addtimezg, half1_addtimejg, half1_leavenumzg, half1_leavenumjg, half1_hurtnum,
-							half1_invcount, half1_sellcount, half1_costcount, half1_wagezgUsd, half1_wagejgUsd, half1_cashcount,
-							half1_sideweit, half1_badweit, half1_otherbadweight,
-							half1_waterton, half1_electricdu, half1_gaston,
-							half1_storenum, half1_outnum, half1_minusnum,
-							half1_actlost, half1_avgbuttomweight2,half1_otherweight,
-							half1_productednum,half1_noglueweight,half1_repairmoney,
-							half1_sumWorkhours,half1_instorenum);
-					list2_all.add(list3_q2);
-					list2_all.add(list3_half1);
-					break;
-				//第三季度	
-				case 9:
-					list3_q3=this.findResult(b/3,
-							q3_sumEverydemo, q3_sumStandarddemo, q3_sumActualdemo, q3_sumActualpairs, q3_sumFactpairs,
-							q3_personzg, q3_personjg, q3_timezg, q3_timejg, q3_addtimezg, q3_addtimejg, q3_leavenumzg, q3_leavenumjg, q3_hurtnum,
-							q3_invcount, q3_sellcount, q3_costcount, q3_wagezgUsd, q3_wagejgUsd, q3_cashcount,
-							q3_sideweit, q3_badweit, q3_otherbadweight,
-							q3_waterton, q3_electricdu, q3_gaston,
-							q3_storenum, q3_outnum, q3_minusnum,
-							q3_actlost, q3_avgbuttomweight2,q3_otherweight,
-							q3_productednum,q3_noglueweight,q3_repairmoney,
-							q3_sumWorkhours,q3_instorenum);
-					list2_all.add(list3_q3);
-					break;
-				//第四季度,下半年,全年	
-				case 12:
-					//下半年
-					half2_sumEverydemo=q3_sumEverydemo+q4_sumEverydemo;half2_sumStandarddemo=q3_sumStandarddemo+q4_sumStandarddemo;
-					half2_sumActualdemo=q3_sumActualdemo+q4_sumActualdemo;half2_sumActualpairs=q3_sumActualpairs+q4_sumActualpairs;
-					half2_sumFactpairs=q3_sumFactpairs+q4_sumFactpairs;half2_sumWorkhours=q3_sumWorkhours+q4_sumWorkhours;
-					
-					half2_personzg=q3_personzg+q4_personzg;half2_personjg=q3_personjg+q4_personjg;
-					half2_timezg=q3_timezg+q4_timezg;half2_timejg=q3_timejg+q4_timejg;
-					half2_addtimezg=q3_addtimezg+q4_addtimezg;half2_addtimejg=q3_addtimejg+q4_addtimejg;
-					half2_leavenumzg=q3_leavenumzg+q4_leavenumzg;half2_leavenumjg=q3_leavenumjg+q4_leavenumjg;
-					half2_hurtnum=q3_hurtnum+q4_hurtnum;
-					
-					half2_invcount=q3_invcount+q4_invcount;half2_sellcount=q3_sellcount+q4_sellcount;
-					half2_costcount=q3_costcount+q4_costcount;half2_wagezgUsd=q3_wagezgUsd+q4_wagezgUsd;
-					half2_wagejgUsd=q3_wagejgUsd+q4_wagejgUsd;half2_cashcount=q3_cashcount+q4_cashcount;
-					
-					half2_sideweit=q3_sideweit+q4_sideweit;half2_badweit=q3_badweit+q4_badweit;
-					half2_otherbadweight=q3_otherbadweight+q4_otherbadweight;
-					half2_otherweight=q3_otherweight+q4_otherweight;
-					
-					half2_waterton=q3_waterton+q4_waterton;half2_electricdu=q3_electricdu+q4_electricdu;
-					half2_gaston=q3_gaston+q4_gaston;
-					
-					half2_storenum=q3_storenum+q4_storenum;half2_outnum=q3_outnum+q4_outnum;
-					half2_minusnum=q3_minusnum+q4_minusnum;
-					
-					half2_actlost=q3_actlost+q4_actlost;half2_avgbuttomweight2=q3_avgbuttomweight2+q4_avgbuttomweight2;
-					half2_productednum=q3_productednum+q4_productednum;
-					half2_noglueweight=q3_noglueweight+q4_noglueweight;
-					half2_repairmoney=q3_repairmoney+q4_repairmoney;
-					half2_instorenum=q3_instorenum+q4_instorenum;
-					//全年
-					year_sumEverydemo=half1_sumEverydemo+half2_sumEverydemo;year_sumStandarddemo=half1_sumStandarddemo+half2_sumStandarddemo;
-					year_sumActualdemo=half1_sumActualdemo+half2_sumActualdemo;year_sumActualpairs=half1_sumActualpairs+half2_sumActualpairs;
-					year_sumFactpairs=half1_sumFactpairs+half2_sumFactpairs;year_sumWorkhours=half1_sumWorkhours+half2_sumWorkhours;
-					
-					year_personzg=half1_personzg+half2_personzg;year_personjg=half1_personjg+half2_personjg;
-					year_timezg=half1_timezg+half2_timezg;year_timejg=half1_timejg+half2_timejg;
-					year_addtimezg=half1_addtimezg+half2_addtimezg;year_addtimejg=half1_addtimejg+half2_addtimejg;
-					year_leavenumzg=half1_leavenumzg+half2_leavenumzg;year_leavenumjg=half1_leavenumjg+half2_leavenumjg;
-					year_hurtnum=half1_hurtnum+half2_hurtnum;
-					
-					year_invcount=half1_invcount+half2_invcount;year_sellcount=half1_sellcount+half2_sellcount;
-					year_costcount=half1_costcount+half2_costcount;year_wagezgUsd=half1_wagezgUsd+half2_wagezgUsd;
-					year_wagejgUsd=half1_wagejgUsd+half2_wagejgUsd;year_cashcount=half1_cashcount+half2_cashcount;
-					
-					year_sideweit=half1_sideweit+half2_sideweit;year_badweit=half1_badweit+half2_badweit;
-					year_otherbadweight=half1_otherbadweight+half2_otherbadweight;
-					year_otherweight=half1_otherweight+half2_otherweight;
-					
-					year_waterton=half1_waterton+half2_waterton;year_electricdu=half1_electricdu+half2_electricdu;
-					year_gaston=half1_gaston+half2_gaston;
-					
-					year_storenum=half1_storenum+half2_storenum;year_outnum=half1_outnum+half2_outnum;
-					year_minusnum=half1_minusnum+half2_minusnum;
-					
-					year_actlost=half1_actlost+half2_actlost;year_avgbuttomweight2=half1_avgbuttomweight2+half2_avgbuttomweight2;
-					year_productednum=half1_productednum+half2_productednum;
-					year_noglueweight=half1_noglueweight+half2_noglueweight;
-					year_repairmoney=half1_repairmoney+half2_repairmoney;
-					year_instorenum=half1_instorenum+half2_instorenum;
-					list3_q4=this.findResult(b/4,
-							q4_sumEverydemo, q4_sumStandarddemo, q4_sumActualdemo, q4_sumActualpairs, q4_sumFactpairs,
-							q4_personzg, q4_personjg, q4_timezg, q4_timejg, q4_addtimezg, q4_addtimejg, q4_leavenumzg, q4_leavenumjg, q4_hurtnum,
-							q4_invcount, q4_sellcount, q4_costcount, q4_wagezgUsd, q4_wagejgUsd, q4_cashcount,
-							q4_sideweit, q4_badweit, q4_otherbadweight,
-							q4_waterton, q4_electricdu, q4_gaston,
-							q4_storenum, q4_outnum, q4_minusnum,
-							q4_actlost, q4_avgbuttomweight2,q4_otherweight,
-							q4_productednum,q4_noglueweight,q4_repairmoney,
-							q4_sumWorkhours,q4_instorenum);
-					list3_half2=this.findResult(b/2,
-							half2_sumEverydemo, half2_sumStandarddemo, half2_sumActualdemo, half2_sumActualpairs, half2_sumFactpairs,
-							half2_personzg, half2_personjg, half2_timezg, half2_timejg, half2_addtimezg, half2_addtimejg, half2_leavenumzg, half2_leavenumjg, half2_hurtnum,
-							half2_invcount, half2_sellcount, half2_costcount, half2_wagezgUsd, half2_wagejgUsd, half2_cashcount,
-							half2_sideweit, half2_badweit, half2_otherbadweight,
-							half2_waterton, half2_electricdu, half2_gaston,
-							half2_storenum, half2_outnum, half2_minusnum,
-							half2_actlost, half2_avgbuttomweight2,half2_otherweight,
-							half2_productednum,half2_noglueweight,q4_repairmoney,
-							half2_sumWorkhours,half2_instorenum);
-					list3_year=this.findResult(b,
-							year_sumEverydemo, year_sumStandarddemo, year_sumActualdemo, year_sumActualpairs, year_sumFactpairs,
-							year_personzg, year_personjg, year_timezg, year_timejg, year_addtimezg, year_addtimejg, year_leavenumzg, year_leavenumjg, year_hurtnum,
-							year_invcount, year_sellcount, year_costcount, year_wagezgUsd, year_wagejgUsd, year_cashcount,
-							year_sideweit, year_badweit, year_otherbadweight,
-							year_waterton, year_electricdu, year_gaston,
-							year_storenum, year_outnum, year_minusnum,
-							year_actlost, year_avgbuttomweight2,year_otherweight,
-							year_productednum,year_noglueweight,year_repairmoney,
-							year_sumWorkhours,year_instorenum);
-					list2_all.add(list3_q4);
-					list2_all.add(list3_half2);
-					list2_all.add(list3_year);
-					break;
-				}
-				
+				    	  list3_q1=this.findResult(b/4,list_kpieve.get(1));//list_kpieve.get(1)第一季度							
+						  list2_all.add(list3_q1);
+						  list3_q2=this.findResult(b/4,list_kpieve.get(2));	//	list_kpieve.get(2):第二季度					
+						  list3_half1=this.findResult(b/2,list_kpieve.get(5));//list_kpieve.get(5):上半年										
+						  list2_all.add(list3_q2);
+						  list2_all.add(list3_half1);
+						  list3_q3=this.findResult(b/4,list_kpieve.get(3));//list_kpieve.get(3):第三季度							
+						  list2_all.add(list3_q3);
+						  list3_q4=this.findResult(b/4,list_kpieve.get(4));	//list_kpieve.get(3):第四季度						
+						  list3_half2=this.findResult(b/2,list_kpieve.get(6));	//list_kpieve.get(5):下半年						
+						  list3_year=this.findResult(b,list_kpieve.get(7));	//list_kpieve.get(6):全年						
+						  list2_all.add(list3_q4);
+						  list2_all.add(list3_half2);
+						  list2_all.add(list3_year);
+				      }																		
+				}// end if						
 			}//end for2
 			list1_all.add(list2_all);
 		}// end for1
@@ -1262,8 +423,8 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 				sheet.getRow(0).createCell(a).setCellStyle(cs_head);
 			}
 			//填充表頭(包括廠別狀態)
-			sheet.createRow(2+28*k).createCell(0).setCellValue("形態:"+factCode);
-			HSSFRow row_columnHead=sheet.createRow(3+28*k);			
+			sheet.createRow(2+45*k).createCell(0).setCellValue("形態:"+factCode);
+			HSSFRow row_columnHead=sheet.createRow(3+45*k);			
 			for(int h=0;h<list_column.size();h++){
 				String column=list_column.get(h);
 				HSSFCell cell_columnHead=row_columnHead.createCell(h);
@@ -1306,7 +467,7 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 						}else{
 							index=""+(j+1);
 						}
-						HSSFRow row=sheet.createRow(4+j+28*k);
+						HSSFRow row=sheet.createRow(4+j+45*k);
 						HSSFCell cell0=row.createCell(i);
 						HSSFCell cell1=row.createCell(i+1);
 						HSSFCell cell2=row.createCell(i+2);
@@ -1317,10 +478,10 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 						cell1.setCellStyle(cs);
 						cell2.setCellValue(list_unit.get(j));
 						cell2.setCellStyle(cs);
-						HSSFCellStyle cs_temp=wb.createCellStyle();
+						HSSFCellStyle cs_temp=findStyle(wb, j);
 						if(kpi_pur!=null){							
 							//數字格式的選擇
-							if(j==0||j==2){
+							/*if(j==0||j==2){
 								cs_temp=cs_poi1;
 							}else if(j==1||j==5||j==6||j==9||j==10){
 								cs_temp=cs_poi;
@@ -1330,7 +491,7 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 								cs_temp=cs_poi2;
 							}else{
 								cs_temp=cs_percent;
-							}
+							}*/
 							cell3.setCellValue(list_content_pur.get(j));
 							cell3.setCellStyle(cs_temp);
 						}else{
@@ -1426,116 +587,7 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 				List<Double>list3_half2=list2.get(5);//下半年
 				List<Double>list3_year=list2.get(6);//全年
 				
-				
-				/**
-				 * 開始
-				 */
-				/*if(kpi!=null){	
-					for(int j=0;j<list_str.size();j++){
-						HSSFRow row=sheet.getRow(4+j+28*k);
-						HSSFCell cell=row.createCell(i+3+temp_num);
-						HSSFCellStyle cs_temp=wb.createCellStyle();
-						//數字格式的選擇
-						if(j==0||j==2){
-							cs_temp=cs_poi1;
-						}else if(j==1||j==5||j==6||j==9||j==10){
-							cs_temp=cs_poi;
-						}else if(j>12&&j<17){
-							cs_temp=cs_poi4;
-						}else if(j>7&&j<13||j==22||j==23){
-							cs_temp=cs_poi2;
-						}else{
-							cs_temp=cs_percent;
-						}
-						cell.setCellValue(list_content.get(j));
-						cell.setCellStyle(cs_temp);
-																		
-						if(i==2){
-							HSSFCell cell2=row.createCell(i+4+temp_num);//第一季度
-							cell2.setCellValue(list3_q1.get(j));
-							cell2.setCellStyle(cs_temp);
-						}
-						if(i==5){
-							HSSFCell cell3_1=row.createCell(i+4+temp_num);//第二季度
-							HSSFCell cell3_2=row.createCell(i+5+temp_num);//上半年
-							cell3_1.setCellValue(list3_q2.get(j));
-							cell3_2.setCellValue(list3_half1.get(j));
-							cell3_1.setCellStyle(cs_temp);
-							cell3_2.setCellStyle(cs_temp);
-						}
-						if(i==8){
-							HSSFCell cell4=row.createCell(i+4+temp_num);//第三季度
-							cell4.setCellValue(list3_q3.get(j));
-							cell4.setCellStyle(cs_temp);
-						}
-						if(i==11){
-							HSSFCell cell5=row.createCell(i+4+temp_num);//第四季度
-							HSSFCell cell5_2=row.createCell(i+5+temp_num);//下半年
-							HSSFCell cell5_3=row.createCell(i+6+temp_num);//全年
-							cell5.setCellValue(list3_q4.get(j));
-							cell5_2.setCellValue(list3_half2.get(j));
-							cell5_3.setCellValue(list3_year.get(j));
-							cell5.setCellStyle(cs_temp);
-							cell5_2.setCellStyle(cs_temp);
-							cell5_3.setCellStyle(cs_temp);
-						}
-				    }				
-				}else{
-					for(int j=0;j<list_str.size();j++){
-						HSSFRow row=sheet.getRow(4+j+28*k);
-						HSSFCell cell=row.createCell(i+3+temp_num);
-						//數字格式的選擇
-						HSSFCellStyle cs_temp=wb.createCellStyle();                      
-						if(j==0||j==2){
-							cs_temp=cs_poi1;
-						}else if(j==1||j==5||j==6||j==9||j==10){
-							cs_temp=cs_poi;
-						}else if(j>12&&j<17){
-							cs_temp=cs_poi4;
-						}else if(j>7&&j<13||j==22||j==23){
-							cs_temp=cs_poi2;
-						}else{
-							cs_temp=cs_percent;
-						}
-						cell.setCellValue("無數據");						
-						cell.setCellStyle(cs_temp);
-						
-						
-						if(i==2){							
-							HSSFCell cell2=row.createCell(i+4+temp_num);//第一季度
-							cell2.setCellValue(list3_q1.get(j));
-							cell2.setCellStyle(cs_temp);
-						}
-						if(i==5){
-							HSSFCell cell3_1=row.createCell(i+4+temp_num);//第二季度
-							HSSFCell cell3_2=row.createCell(i+5+temp_num);//上半年							
-							cell3_1.setCellValue(list3_q2.get(j));
-							cell3_2.setCellValue(list3_half1.get(j));
-							cell3_1.setCellStyle(cs_temp);
-							cell3_2.setCellStyle(cs_temp);
-						}
-						if(i==8){
-							HSSFCell cell4=row.createCell(i+4+temp_num);//第三季度
-							cell4.setCellValue(list3_q3.get(j));
-							cell4.setCellStyle(cs_temp);
-						}
-						if(i==11){
-							HSSFCell cell5=row.createCell(i+4+temp_num);//第四季度
-							HSSFCell cell5_2=row.createCell(i+5+temp_num);//下半年
-							HSSFCell cell5_3=row.createCell(i+6+temp_num);//全年
-							cell5.setCellValue(list3_q4.get(j));
-							cell5_2.setCellValue(list3_half2.get(j));
-							cell5_3.setCellValue(list3_year.get(j));
-							cell5.setCellStyle(cs_temp);
-							cell5_2.setCellStyle(cs_temp);
-							cell5_3.setCellStyle(cs_temp);
-						}
-					}
-					
-				}*/
-				/**
-				 * 結束
-				 */
+								
 				
 				/**
 				 * 20150327
@@ -1543,12 +595,12 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 				 * 開始2
 				 */
 				for(int j=0;j<list_str.size();j++){
-					HSSFRow row=sheet.getRow(4+j+28*k);
+					HSSFRow row=sheet.getRow(4+j+45*k);
 					HSSFCell cell=row.createCell(i+4+temp_num);
-					HSSFCellStyle cs_temp=wb.createCellStyle();
+					HSSFCellStyle cs_temp=findStyle(wb,j);
 					
 					//數字格式的選擇
-					if(j==0||j==2){
+					/*if(j==0||j==2){
 						cs_temp=cs_poi1;
 					}else if(j==1||j==5||j==6||j==9||j==10){
 						cs_temp=cs_poi;
@@ -1558,18 +610,18 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 						cs_temp=cs_poi2;
 					}else{
 						cs_temp=cs_percent;
-					}
+					}*/
 					cell.setCellStyle(cs_temp);
 					/**
 					 * 20150327
 					 * 開始3
 					 * 月度的樣式判斷
 					 */
-					if(kpi!=null&&kpi_pur!=null){
-						HSSFCellStyle cs_temp2=wb.createCellStyle();
+					if(kpi!=null&&kpi_pur!=null){						
 						Double num1=list_content.get(j);//實際值
 						Double num2=list_content_pur.get(j);//預計值	
-						boolean flag=true;
+						HSSFCellStyle cs_temp2=findStyle(wb,num1,num2,j);
+						/*boolean flag=true;
 						if(j==0||j==1||j==2||j==4||j==8||j==9||j==10||j==11||j==12||j==22){
 							flag=num1<num2;
 						}else{
@@ -1589,8 +641,9 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 								cs_temp2=cs_percent_bg;
 							}
 							cell.setCellStyle(cs_temp2);
-						}//end if
-						
+						}//end if						
+*/					
+						cell.setCellStyle(cs_temp2);
 					}					
 					/**
 					 * 結束3
@@ -1612,9 +665,10 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 						cell2.setCellValue(list3_q1.get(j));
 						cell2.setCellStyle(cs_temp);
 						if(kpi_pur!=null){//start if
-							cs_temp=wb.createCellStyle();
 							Double num1=list3_q1.get(j);
 							Double num2=list_content_pur.get(j);
+							/*cs_temp=wb.createCellStyle();
+							
 							boolean flag=true;
 							if(j==0||j==1||j==2||j==4||j==8||j==9||j==10||j==11||j==12||j==22){
 								flag=num1<num2;
@@ -1636,7 +690,8 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 									cs_temp=cs_percent_bg;
 								}
 								cell2.setCellStyle(cs_temp);
-							}
+							}*/
+							cell2.setCellStyle(findStyle(wb,num1,num2,j));
 						}//end if
 						
 					}
@@ -1651,7 +706,7 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 							Double num1=list3_q2.get(j);
 							Double num2=list3_half1.get(j);
 							Double num3=list_content_pur.get(j);
-							boolean flag1=true;
+							/*boolean flag1=true;
 							boolean flag2=true;
 							if(j==0||j==1||j==2||j==4||j==8||j==9||j==10||j==11||j==12||j==22){								
 								flag1=num1<num3;
@@ -1691,7 +746,9 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 									cs_temp=cs_percent_bg;
 								}	
 								cell3_2.setCellStyle(cs_temp);
-							}
+							}*/
+							cell3_1.setCellStyle(findStyle(wb,num1,num3,j));
+							cell3_2.setCellStyle(findStyle(wb,num2,num3,j));
 						}//end if
 						
 					}
@@ -1702,7 +759,7 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 						if(kpi_pur!=null){//start if
 							Double num1=list3_q3.get(j);
 							Double num2=list_content_pur.get(j);
-							boolean flag=true;
+							/*boolean flag=true;
 							if(j==0||j==1||j==2||j==4||j==8||j==9||j==10||j==11||j==12||j==22){
 								flag=num1<num2;
 							}else{
@@ -1723,7 +780,8 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 									cs_temp=cs_percent_bg;
 								}
 								cell4.setCellStyle(cs_temp);
-							}
+							}*/
+							cell4.setCellStyle(findStyle(wb,num1,num2,j));
 						}//end if
 						
 					}
@@ -1742,7 +800,7 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 							Double num_half2=list3_half2.get(j);
 							Double num_year=list3_year.get(j);
 							Double num=list_content_pur.get(j);
-							boolean flag1=true;
+							/*boolean flag1=true;
 							boolean flag2=true;
 							boolean flag3=true;
 							if(j==0||j==1||j==2||j==4||j==8||j==9||j==10||j==11||j==12||j==22){
@@ -1799,7 +857,10 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 									cs_temp=cs_percent_bg;
 								}
 								cell5_3.setCellStyle(cs_temp);
-							}
+							}*/
+							cell5.setCellStyle(findStyle(wb,num_q4,num,j));
+							cell5_2.setCellStyle(findStyle(wb,num_half2,num,j));
+							cell5_3.setCellStyle(findStyle(wb,num_year,num,j));
 						}//end if
 					}
 			    }
@@ -1834,182 +895,37 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 		/**
 		 * 報表相關樣式
 		 */
-		
+		Map<String,Object>map=new HashMap<String,Object>();
 		//標題樣式
-		HSSFCellStyle cs_head=wb.createCellStyle();
-		HSSFFont font_head=wb.createFont();
-		font_head.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
-		font_head.setFontHeightInPoints((short)20);
-		cs_head.setFont(font_head);
-		cs_head.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-		cs_head.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
-		
+		HSSFCellStyle cs_head=(HSSFCellStyle)map.get("cs_head");		
 		//標準單元格樣式
-		HSSFCellStyle cs=wb.createCellStyle();
-		cs.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-		cs.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
-		cs.setBorderTop(HSSFCellStyle.BORDER_THIN);
-		cs.setBorderRight(HSSFCellStyle.BORDER_THIN);
-		cs.setBorderBottom(HSSFCellStyle.BORDER_THIN);
-		cs.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+		HSSFCellStyle cs=(HSSFCellStyle)map.get("cs");		
 		//表頭樣式
-		HSSFCellStyle cs_column=wb.createCellStyle();
-		HSSFFont font_column=wb.createFont();
-		font_column.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
-		font_column.setFontHeightInPoints((short)12);
-		cs_column.setFont(font_column);
-		cs_column.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-		cs_column.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
-		cs_column.setBorderTop(HSSFCellStyle.BORDER_THIN);
-		cs_column.setBorderRight(HSSFCellStyle.BORDER_THIN);
-		cs_column.setBorderBottom(HSSFCellStyle.BORDER_THIN);
-		cs_column.setBorderLeft(HSSFCellStyle.BORDER_THIN);
-		cs_column.setFillForegroundColor(IndexedColors.YELLOW.getIndex());
-		cs_column.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
-		
+		HSSFCellStyle cs_column=(HSSFCellStyle)map.get("cs_column");
 		/**
-		 * 數字格式
-		 * 有背景與無背景
+		 * 數字格式（有背景顏色與無背景顏色）
 		 */
-		HSSFDataFormat format=wb.createDataFormat();
+		
 		//無背景
-		HSSFCellStyle cs_percent=wb.createCellStyle();
-		cs_percent.setDataFormat(format.getFormat("0.00%"));
-		cs_percent.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-		cs_percent.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
-		cs_percent.setBorderTop(HSSFCellStyle.BORDER_THIN);
-		cs_percent.setBorderRight(HSSFCellStyle.BORDER_THIN);
-		cs_percent.setBorderBottom(HSSFCellStyle.BORDER_THIN);
-		cs_percent.setBorderLeft(HSSFCellStyle.BORDER_THIN);
-		
-		HSSFCellStyle cs_poi=wb.createCellStyle();
-		cs_poi.setDataFormat(format.getFormat("#,###,0"));
-		cs_poi.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-		cs_poi.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
-		cs_poi.setBorderTop(HSSFCellStyle.BORDER_THIN);
-		cs_poi.setBorderRight(HSSFCellStyle.BORDER_THIN);
-		cs_poi.setBorderBottom(HSSFCellStyle.BORDER_THIN);
-		cs_poi.setBorderLeft(HSSFCellStyle.BORDER_THIN);
-		
-		HSSFCellStyle cs_poi1=wb.createCellStyle();
-		cs_poi1.setDataFormat(format.getFormat("#,###,0.0"));
-		cs_poi1.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-		cs_poi1.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
-		cs_poi1.setBorderTop(HSSFCellStyle.BORDER_THIN);
-		cs_poi1.setBorderRight(HSSFCellStyle.BORDER_THIN);
-		cs_poi1.setBorderBottom(HSSFCellStyle.BORDER_THIN);
-		cs_poi1.setBorderLeft(HSSFCellStyle.BORDER_THIN);
-		
-		HSSFCellStyle cs_poi2=wb.createCellStyle();
-		cs_poi2.setDataFormat(format.getFormat("#,###,0.00"));
-		cs_poi2.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-		cs_poi2.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
-		cs_poi2.setBorderTop(HSSFCellStyle.BORDER_THIN);
-		cs_poi2.setBorderRight(HSSFCellStyle.BORDER_THIN);
-		cs_poi2.setBorderBottom(HSSFCellStyle.BORDER_THIN);
-		cs_poi2.setBorderLeft(HSSFCellStyle.BORDER_THIN);
-		
-		HSSFCellStyle cs_poi4=wb.createCellStyle();
-		cs_poi4.setDataFormat(format.getFormat("#,###,0.0000"));
-		cs_poi4.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-		cs_poi4.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
-		cs_poi4.setBorderTop(HSSFCellStyle.BORDER_THIN);
-		cs_poi4.setBorderRight(HSSFCellStyle.BORDER_THIN);
-		cs_poi4.setBorderBottom(HSSFCellStyle.BORDER_THIN);
-		cs_poi4.setBorderLeft(HSSFCellStyle.BORDER_THIN);
-		
+		HSSFCellStyle cs_percent=(HSSFCellStyle)map.get("cs_percent");				
+		HSSFCellStyle cs_poi=(HSSFCellStyle)map.get("cs_poi");	
+		HSSFCellStyle cs_poi1=(HSSFCellStyle)map.get("cs_poi1");		
+		HSSFCellStyle cs_poi2=(HSSFCellStyle)map.get("cs_poi2");
+		HSSFCellStyle cs_poi4=(HSSFCellStyle)map.get("cs_poi4");		
 		//有背景
-		HSSFCellStyle cs_percent_bg=wb.createCellStyle();
-		cs_percent_bg.setDataFormat(format.getFormat("0.00%"));
-		cs_percent_bg.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-		cs_percent_bg.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
-		cs_percent_bg.setBorderTop(HSSFCellStyle.BORDER_THIN);
-		cs_percent_bg.setBorderRight(HSSFCellStyle.BORDER_THIN);
-		cs_percent_bg.setBorderBottom(HSSFCellStyle.BORDER_THIN);
-		cs_percent_bg.setBorderLeft(HSSFCellStyle.BORDER_THIN);
-		cs_percent_bg.setFillForegroundColor(IndexedColors.GREEN.getIndex());
-		cs_percent_bg.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
-		
-		HSSFCellStyle cs_poi_bg=wb.createCellStyle();
-		cs_poi_bg.setDataFormat(format.getFormat("#,###,0"));
-		cs_poi_bg.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-		cs_poi_bg.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
-		cs_poi_bg.setBorderTop(HSSFCellStyle.BORDER_THIN);
-		cs_poi_bg.setBorderRight(HSSFCellStyle.BORDER_THIN);
-		cs_poi_bg.setBorderBottom(HSSFCellStyle.BORDER_THIN);
-		cs_poi_bg.setBorderLeft(HSSFCellStyle.BORDER_THIN);
-		cs_poi_bg.setFillForegroundColor(IndexedColors.GREEN.getIndex());
-		cs_poi_bg.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
-		
-		HSSFCellStyle cs_poi1_bg=wb.createCellStyle();
-		cs_poi1_bg.setDataFormat(format.getFormat("#,###,0.0"));
-		cs_poi1_bg.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-		cs_poi1_bg.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
-		cs_poi1_bg.setBorderTop(HSSFCellStyle.BORDER_THIN);
-		cs_poi1_bg.setBorderRight(HSSFCellStyle.BORDER_THIN);
-		cs_poi1_bg.setBorderBottom(HSSFCellStyle.BORDER_THIN);
-		cs_poi1_bg.setBorderLeft(HSSFCellStyle.BORDER_THIN);
-		cs_poi1_bg.setFillForegroundColor(IndexedColors.GREEN.getIndex());
-		cs_poi1_bg.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
-		
-		HSSFCellStyle cs_poi2_bg=wb.createCellStyle();
-		cs_poi2_bg.setDataFormat(format.getFormat("#,###,0.00"));
-		cs_poi2_bg.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-		cs_poi2_bg.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
-		cs_poi2_bg.setBorderTop(HSSFCellStyle.BORDER_THIN);
-		cs_poi2_bg.setBorderRight(HSSFCellStyle.BORDER_THIN);
-		cs_poi2_bg.setBorderBottom(HSSFCellStyle.BORDER_THIN);
-		cs_poi2_bg.setBorderLeft(HSSFCellStyle.BORDER_THIN);
-		cs_poi2_bg.setFillForegroundColor(IndexedColors.GREEN.getIndex());
-		cs_poi2_bg.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
-		
-		HSSFCellStyle cs_poi4_bg=wb.createCellStyle();
-		cs_poi4_bg.setDataFormat(format.getFormat("#,###,0.0000"));
-		cs_poi4_bg.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-		cs_poi4_bg.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
-		cs_poi4_bg.setBorderTop(HSSFCellStyle.BORDER_THIN);
-		cs_poi4_bg.setBorderRight(HSSFCellStyle.BORDER_THIN);
-		cs_poi4_bg.setBorderBottom(HSSFCellStyle.BORDER_THIN);
-		cs_poi4_bg.setBorderLeft(HSSFCellStyle.BORDER_THIN);
-		cs_poi4_bg.setFillForegroundColor(IndexedColors.GREEN.getIndex());
-		cs_poi4_bg.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
-							
+		HSSFCellStyle cs_percent_bg=(HSSFCellStyle)map.get("cs_percent_bg");				
+		HSSFCellStyle cs_poi_bg=(HSSFCellStyle)map.get("cs_poi_bg");		
+		HSSFCellStyle cs_poi1_bg=(HSSFCellStyle)map.get("cs_poi1_bg");	
+		HSSFCellStyle cs_poi2_bg=(HSSFCellStyle)map.get("cs_poi2_bg");		
+		HSSFCellStyle cs_poi4_bg=(HSSFCellStyle)map.get("cs_poi4_bg");
+						
 		/**
 		 * 獲取要循環的數據
 		 */
 		List<WebFact>list_factcode=webFactSer.findFactById_showA(factNo);				
-		List<String>list_str=new ArrayList<String>();		
-		List<String>list_unit=new ArrayList<String>();
-		list_str.add("當月產量");list_unit.add("模");//0 (一位小數)
-		list_str.add("月均回轉 ");list_unit.add("回");//1(整數)
-		list_str.add("時回轉 ");list_unit.add("模/H");//2(整數)
-		list_str.add("廠補率");  list_unit.add("%");
-		list_str.add("產能達成率");list_unit.add("%");		
-		list_str.add("成倉庫存");list_unit.add("雙");//5(整數)
+		List<String>list_str=findListstrAndUnit().get(0);		
+		List<String>list_unit=findListstrAndUnit().get(1);
 		
-		list_str.add("已出未請");list_unit.add("雙");//6(整數)
-		list_str.add("生產與請款差異率");list_unit.add("%");
-		list_str.add("全廠人均時產能");list_unit.add("模/H");
-		list_str.add("直工人均产能");list_unit.add("模/人");//9(整數)
-		list_str.add("全厂人均产能");list_unit.add("模/人");//10(整數)
-		
-		list_str.add("人均產值");list_unit.add("USD/人");
-		list_str.add("人薪產值");list_unit.add("--");
-		list_str.add("水用量单耗");list_unit.add("噸/模");//13(13至16取四位小數)
-		list_str.add("电度数单耗");list_unit.add("度/模");
-		list_str.add("蒸汽单耗");list_unit.add("噸/模");
-		
-		list_str.add("修繕單耗");list_unit.add("USD/模");//16
-		list_str.add("主材料成本比率");list_unit.add("%");
-		list_str.add("邊料率");list_unit.add("%");
-		list_str.add("報廢率");list_unit.add("%");
-		list_str.add("全廠總損耗");list_unit.add("%");
-		
-		list_str.add("無形損耗");list_unit.add("%");
-		list_str.add("直間比");list_unit.add("--");
-		list_str.add("工傷件數");list_unit.add("件");
-		list_str.add("直工離職率");list_unit.add("%");
-		list_str.add("全廠離職率");list_unit.add("%");
 		
 		
 		
@@ -2347,36 +1263,32 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 		/**
 		 * 模板相關樣式
 		 */
-		//基本樣式
-		HSSFCellStyle cs=wb.createCellStyle();
-		cs.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-		cs.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
-		cs.setBorderTop(HSSFCellStyle.BORDER_THIN);
-		cs.setBorderRight(HSSFCellStyle.BORDER_THIN);
-		cs.setBorderBottom(HSSFCellStyle.BORDER_THIN);
-		cs.setBorderLeft(HSSFCellStyle.BORDER_THIN);		
+		Map<String,Object>map=new HashMap<String,Object>();
 		//標題樣式
-		HSSFCellStyle cs_head=wb.createCellStyle();
-		HSSFFont font_head=wb.createFont();
-		font_head.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
-		font_head.setFontHeightInPoints((short)20);
-		cs_head.setFont(font_head);
-		cs_head.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-		cs_head.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);		
+		HSSFCellStyle cs_head=(HSSFCellStyle)map.get("cs_head");		
+		//標準單元格樣式
+		HSSFCellStyle cs=(HSSFCellStyle)map.get("cs");		
 		//表頭樣式
-		HSSFCellStyle cs_column=wb.createCellStyle();
-		HSSFFont font_column=wb.createFont();
-		font_column.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
-		font_column.setFontHeightInPoints((short)10);
-		cs_column.setFont(font_column);
-		cs_column.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-		cs_column.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
-		cs_column.setBorderTop(HSSFCellStyle.BORDER_THIN);
-		cs_column.setBorderRight(HSSFCellStyle.BORDER_THIN);
-		cs_column.setBorderBottom(HSSFCellStyle.BORDER_THIN);
-		cs_column.setFillForegroundColor(IndexedColors.YELLOW.getIndex());
-		cs_column.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
-		cs_column.setWrapText(true);
+		HSSFCellStyle cs_column=(HSSFCellStyle)map.get("cs_column");
+		/**
+		 * 數字格式（有背景顏色與無背景顏色）
+		 */
+		
+		//無背景
+		HSSFCellStyle cs_percent=(HSSFCellStyle)map.get("cs_percent");				
+		HSSFCellStyle cs_poi=(HSSFCellStyle)map.get("cs_poi");	
+		HSSFCellStyle cs_poi1=(HSSFCellStyle)map.get("cs_poi1");		
+		HSSFCellStyle cs_poi2=(HSSFCellStyle)map.get("cs_poi2");
+		HSSFCellStyle cs_poi4=(HSSFCellStyle)map.get("cs_poi4");		
+		//有背景
+		HSSFCellStyle cs_percent_bg=(HSSFCellStyle)map.get("cs_percent_bg");				
+		HSSFCellStyle cs_poi_bg=(HSSFCellStyle)map.get("cs_poi_bg");		
+		HSSFCellStyle cs_poi1_bg=(HSSFCellStyle)map.get("cs_poi1_bg");	
+		HSSFCellStyle cs_poi2_bg=(HSSFCellStyle)map.get("cs_poi2_bg");		
+		HSSFCellStyle cs_poi4_bg=(HSSFCellStyle)map.get("cs_poi4_bg");
+		
+		
+		
 		
 		//粗藍色字體		
 		HSSFFont font_blue=wb.createFont();
@@ -2384,147 +1296,15 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 		font_blue.setFontHeightInPoints((short)12);
 		font_blue.setColor(IndexedColors.BLUE.getIndex());
 		
-		/**
-		 * 數字格式有背景與無背景
-		 */
-		HSSFDataFormat format=wb.createDataFormat();
-		//無背景
-		HSSFCellStyle cs_percent=wb.createCellStyle();
-		cs_percent.setDataFormat(format.getFormat("0.00%"));
-		cs_percent.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-		cs_percent.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
-		cs_percent.setBorderTop(HSSFCellStyle.BORDER_THIN);
-		cs_percent.setBorderRight(HSSFCellStyle.BORDER_THIN);
-		cs_percent.setBorderBottom(HSSFCellStyle.BORDER_THIN);
-		cs_percent.setBorderLeft(HSSFCellStyle.BORDER_THIN);
 		
-		HSSFCellStyle cs_poi=wb.createCellStyle();
-		cs_poi.setDataFormat(format.getFormat("#,###,0"));
-		cs_poi.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-		cs_poi.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
-		cs_poi.setBorderTop(HSSFCellStyle.BORDER_THIN);
-		cs_poi.setBorderRight(HSSFCellStyle.BORDER_THIN);
-		cs_poi.setBorderBottom(HSSFCellStyle.BORDER_THIN);
-		cs_poi.setBorderLeft(HSSFCellStyle.BORDER_THIN);
-		
-		HSSFCellStyle cs_poi1=wb.createCellStyle();
-		cs_poi1.setDataFormat(format.getFormat("#,###,0.0"));
-		cs_poi1.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-		cs_poi1.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
-		cs_poi1.setBorderTop(HSSFCellStyle.BORDER_THIN);
-		cs_poi1.setBorderRight(HSSFCellStyle.BORDER_THIN);
-		cs_poi1.setBorderBottom(HSSFCellStyle.BORDER_THIN);
-		cs_poi1.setBorderLeft(HSSFCellStyle.BORDER_THIN);
-		
-		HSSFCellStyle cs_poi2=wb.createCellStyle();
-		cs_poi2.setDataFormat(format.getFormat("#,###,0.00"));
-		cs_poi2.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-		cs_poi2.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
-		cs_poi2.setBorderTop(HSSFCellStyle.BORDER_THIN);
-		cs_poi2.setBorderRight(HSSFCellStyle.BORDER_THIN);
-		cs_poi2.setBorderBottom(HSSFCellStyle.BORDER_THIN);
-		cs_poi2.setBorderLeft(HSSFCellStyle.BORDER_THIN);
-		
-		HSSFCellStyle cs_poi4=wb.createCellStyle();
-		cs_poi4.setDataFormat(format.getFormat("#,###,0.0000"));
-		cs_poi4.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-		cs_poi4.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
-		cs_poi4.setBorderTop(HSSFCellStyle.BORDER_THIN);
-		cs_poi4.setBorderRight(HSSFCellStyle.BORDER_THIN);
-		cs_poi4.setBorderBottom(HSSFCellStyle.BORDER_THIN);
-		cs_poi4.setBorderLeft(HSSFCellStyle.BORDER_THIN);
-		//有背景
-		HSSFCellStyle cs_percent_bg=wb.createCellStyle();
-		cs_percent_bg.setDataFormat(format.getFormat("0.00%"));
-		cs_percent_bg.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-		cs_percent_bg.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
-		cs_percent_bg.setBorderTop(HSSFCellStyle.BORDER_THIN);
-		cs_percent_bg.setBorderRight(HSSFCellStyle.BORDER_THIN);
-		cs_percent_bg.setBorderBottom(HSSFCellStyle.BORDER_THIN);
-		cs_percent_bg.setBorderLeft(HSSFCellStyle.BORDER_THIN);
-		cs_percent_bg.setFillForegroundColor(IndexedColors.GREEN.getIndex());
-		cs_percent_bg.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
-		
-		HSSFCellStyle cs_poi_bg=wb.createCellStyle();
-		cs_poi_bg.setDataFormat(format.getFormat("#,###,0"));
-		cs_poi_bg.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-		cs_poi_bg.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
-		cs_poi_bg.setBorderTop(HSSFCellStyle.BORDER_THIN);
-		cs_poi_bg.setBorderRight(HSSFCellStyle.BORDER_THIN);
-		cs_poi_bg.setBorderBottom(HSSFCellStyle.BORDER_THIN);
-		cs_poi_bg.setBorderLeft(HSSFCellStyle.BORDER_THIN);
-		cs_poi_bg.setFillForegroundColor(IndexedColors.GREEN.getIndex());
-		cs_poi_bg.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
-		
-		HSSFCellStyle cs_poi1_bg=wb.createCellStyle();
-		cs_poi1_bg.setDataFormat(format.getFormat("#,###,0.0"));
-		cs_poi1_bg.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-		cs_poi1_bg.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
-		cs_poi1_bg.setBorderTop(HSSFCellStyle.BORDER_THIN);
-		cs_poi1_bg.setBorderRight(HSSFCellStyle.BORDER_THIN);
-		cs_poi1_bg.setBorderBottom(HSSFCellStyle.BORDER_THIN);
-		cs_poi1_bg.setBorderLeft(HSSFCellStyle.BORDER_THIN);
-		cs_poi1_bg.setFillForegroundColor(IndexedColors.GREEN.getIndex());
-		cs_poi1_bg.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
-		
-		HSSFCellStyle cs_poi2_bg=wb.createCellStyle();
-		cs_poi2_bg.setDataFormat(format.getFormat("#,###,0.00"));
-		cs_poi2_bg.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-		cs_poi2_bg.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
-		cs_poi2_bg.setBorderTop(HSSFCellStyle.BORDER_THIN);
-		cs_poi2_bg.setBorderRight(HSSFCellStyle.BORDER_THIN);
-		cs_poi2_bg.setBorderBottom(HSSFCellStyle.BORDER_THIN);
-		cs_poi2_bg.setBorderLeft(HSSFCellStyle.BORDER_THIN);
-		cs_poi2_bg.setFillForegroundColor(IndexedColors.GREEN.getIndex());
-		cs_poi2_bg.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
-		
-		HSSFCellStyle cs_poi4_bg=wb.createCellStyle();
-		cs_poi4_bg.setDataFormat(format.getFormat("#,###,0.0000"));
-		cs_poi4_bg.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-		cs_poi4_bg.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
-		cs_poi4_bg.setBorderTop(HSSFCellStyle.BORDER_THIN);
-		cs_poi4_bg.setBorderRight(HSSFCellStyle.BORDER_THIN);
-		cs_poi4_bg.setBorderBottom(HSSFCellStyle.BORDER_THIN);
-		cs_poi4_bg.setBorderLeft(HSSFCellStyle.BORDER_THIN);
-		cs_poi4_bg.setFillForegroundColor(IndexedColors.GREEN.getIndex());
-		cs_poi4_bg.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
 							
 		/**
 		 * 數據獲取
 		 */
 		//各項數據名稱和各項單位
-		List<String>list_contentName=new ArrayList<String>();
-		List<String>list_unit=new ArrayList<String>();
-		list_contentName.add("當月產量");list_unit.add("模");
-		list_contentName.add("月均回轉");list_unit.add("回");
-		list_contentName.add("時迴轉");list_unit.add("模/H");
-		list_contentName.add("廠補率");list_unit.add("%");
-		list_contentName.add("產能達成率");list_unit.add("%");
-		list_contentName.add("成倉庫存");list_unit.add("雙");
-
-		list_contentName.add("已出未請");list_unit.add("雙");
-		list_contentName.add("生產與請款差異率");list_unit.add("%");
-		list_contentName.add("全廠人均時產能");list_unit.add("模/H");
-		list_contentName.add("直工人均产能");list_unit.add("模/人");
-		list_contentName.add("全厂人均产能");list_unit.add("模/人");
+		List<String>list_contentName=findListstrAndUnit().get(0);
+		List<String>list_unit=findListstrAndUnit().get(1);
 		
-		list_contentName.add("人均產值");list_unit.add("USD/人");
-		list_contentName.add("人薪產值");list_unit.add("--");
-		list_contentName.add("水用量单耗");list_unit.add("噸/模");
-		list_contentName.add("电度数单耗");list_unit.add("度/模");
-		list_contentName.add("蒸汽单耗");list_unit.add("噸/模");
-		
-		list_contentName.add("修繕單耗");list_unit.add("USD/模");
-		list_contentName.add("主材料成本比率");list_unit.add("%");
-		list_contentName.add("邊料率");list_unit.add("%");
-		list_contentName.add("報廢率");list_unit.add("%");
-		list_contentName.add("全廠總損耗");list_unit.add("%");
-		
-		list_contentName.add("無形損耗");list_unit.add("%");
-		list_contentName.add("直間比");list_unit.add("--");
-		list_contentName.add("工傷件數");list_unit.add("件");
-		list_contentName.add("直工離職率");list_unit.add("%");
-		list_contentName.add("全廠離職率");list_unit.add("%");
 	
 		//所有廠別狀態
 		List<String>list_factCode=new ArrayList<String>();
@@ -2782,7 +1562,7 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 	 * @param avgbuttomweight2
 	 * @return
 	 */
-	public List<Double> findResult(int index,Double sumEverydemo, Double sumStandarddemo,
+	public List<Double> findResult_old(int index,Double sumEverydemo, Double sumStandarddemo,
 			Double sumActualdemo, Double sumActualpairs, Double sumFactpairs,
 
 			Double personzg, Double personjg, Double timezg, Double timejg,
@@ -2800,7 +1580,9 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 
 			Double actlost, Double avgbuttomweight2,Double otherweight,
 			Double productnum,Double noglueweight,Double repairmoney,Double sumWorkhours,
-			Double instorenum,
+			Double instorenum,Double hole,Double sum_workday,Double waterusd,Double electricued,Double gasusd,Double thickUsed,
+			Double backFeed,Double oilBack,Double drugsUsed ,Double colorUsed ,Double leaveMoney,
+			Double payPairs,Double badcount
 			) {
 		if(index==0){
 			index=1;
@@ -2893,6 +1675,150 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 		return list;
 	}
 	
+	
+	public List<Double> findResult(int index,VKpifactEve eve
+			) {
+		if(index==0){
+			index=1;
+		}
+		DecimalFormat format=new DecimalFormat("####0");
+		DecimalFormat format1=new DecimalFormat("####0.0");
+		DecimalFormat format2=new DecimalFormat("####0.00");
+		DecimalFormat format4=new DecimalFormat("####0.0000");
+		List<Double>list=new ArrayList<Double>();
+		//當月產量
+		Double thisYield=Double.valueOf(format1.format(eve.getSumActualdemo().doubleValue()/index));//
+		//月均回轉Double avgCircle=this.division(sumActualdemo, sumEverydemo);
+		Double avgCircle=Double.valueOf(format.format(this.division(eve.getSumActualdemo().doubleValue(), eve.getSumEverydemo().doubleValue())));
+		//時回轉Double avgCirclehour=this.division(sumActualdemo, sumWorkhours);
+		Double avgCirclehour=Double.valueOf(format1.format(this.division(eve.getSumActualdemo().doubleValue(), eve.getWorkhours())));
+		//機臺利用率Double muti_rate=sumEverydemo/sum_workday/hole;
+		Double muti_rate=Double.valueOf(format4.format(this.division(eve.getSumEverydemo().doubleValue()*eve.getHole(), eve.getSumWorkday().doubleValue())));
+		//產能達成率Double productRate=this.division(sumActualdemo, sumStandarddemo);
+		Double productRate=Double.valueOf(format4.format(this.division( eve.getSumActualdemo().doubleValue(),eve.getSumStandarddemo().doubleValue())));
+		//直工人均产能Double avgZgpro=this.division(sumActualdemo, personzg);
+		Double avgZgpro=Double.valueOf(format.format(this.division( eve.getSumActualdemo().doubleValue(),eve.getPersonzg() )));
+		//全厂人均产能Double avgPerpro=this.division(sumActualdemo, (personzg+personjg));
+		Double avgPerpro=Double.valueOf(format.format(this.division( eve.getSumActualdemo().doubleValue(), (eve.getPersonzg()+eve.getPersonjg()))));
+		//全廠人均時產能Double avgFactpro=this.division(sumActualdemo, (timezg+timejg+addtimezg+addtimejg));
+		Double avgFactpro=Double.valueOf(format2.format(this.division( eve.getSumActualdemo().doubleValue(), ( eve.getTimezg()+eve.getTimejg() +eve.getAddtimezg()+eve.getAddtimejg()))));
+		//成倉庫存Double storeNum=storenum/index;
+		Double storeNum=Double.valueOf(format.format(eve.getStorenum()/index));
+		//已出未請Double outRequest=outnum/index;
+		Double outRequest=Double.valueOf(format.format( eve.getOutnum()/index));
+		//生產與請款差異率Double outrequestRate=this.division(minusnum, instorenum);
+		Double outrequestRate=Double.valueOf(format4.format(this.division( eve.getMinusnum(),eve.getInstorenum() )));
+		//銷貨收入Double sl_income=sellcount/index;
+		Double sl_income=Double.valueOf(format4.format(eve.getSellcount()/index));	
+		//主材料成本比率Double mainRate=this.division(costcount, sellcount);
+		Double mainRate=Double.valueOf(format4.format(this.division(eve.getCostcount(),eve.getSellcount())));
+		//人工成本率Double pcost_rate=(wagezgUsd+wagejgUsd)/sellcount;
+		Double pcost_rate=Double.valueOf(format4.format(this.division(eve.getWagezgUsd()+eve.getWagejgUsd(), eve.getSellcount())));
+		//費用成本率Double ccost_rate=cashcount/sellcount;
+		Double ccost_rate=Double.valueOf(format4.format(this.division(eve.getCashcount(), eve.getSellcount())));
+		//修繕單耗Double wasteUsd=this.division(repairmoney, sumActualdemo);
+		Double wasteUsd=Double.valueOf(format4.format(this.division(eve.getRepairmoney(),eve.getSumActualdemo().doubleValue())));
+		//平均單價Double per_price=payPairs/invcount;
+		Double per_price=Double.valueOf(format4.format(this.division(eve.getPaypairs(), eve.getInvcount())));
+		//全廠人均薪資Double per_salar=(wagezgUsd+wagejgUsd)/(personzg+personjg);
+		Double per_salar=Double.valueOf(format4.format(this.division(eve.getWagezgUsd()+eve.getWagejgUsd(), eve.getPersonzg()+eve.getPersonjg())));
+		//人均產值Double avgPermoney=this.division(productnum,(personzg+personjg));
+		Double avgPermoney=Double.valueOf(format2.format(this.division(eve.getProductednum(),(eve.getPersonzg()+eve.getPersonjg()))));
+		//人薪產值Double permoney=this.division(productnum, (wagezgUsd+wagejgUsd));
+		Double permoney=Double.valueOf(format2.format(this.division(eve.getProductednum(), (eve.getWagezgUsd()+eve.getWagejgUsd()))));
+		//全廠總損耗Double wasteFact=this.division((actlost-avgbuttomweight2-noglueweight), (avgbuttomweight2+noglueweight));
+		Double wasteFact=Double.valueOf(format4.format(this.division((eve.getActlost()-eve.getAvgbuttomweight2()-eve.getNoglueweight()), (eve.getAvgbuttomweight2()+eve.getNoglueweight()))));
+		//無形損耗Double wasteNo=this.division((actlost-avgbuttomweight2-noglueweight-sideweit-badweit-otherbadweight), (avgbuttomweight2+noglueweight));
+		Double wasteNo=Double.valueOf(format4.format(this.division((eve.getActlost()-eve.getAvgbuttomweight2()-eve.getNoglueweight()-eve.getSideweit()-eve.getBadweit()-eve.getOtherweight().doubleValue()), (eve.getAvgbuttomweight2()+eve.getNoglueweight()))));
+		//邊料率Double sideRate=this.division(sideweit, (avgbuttomweight2+sideweit+badweit));
+		Double sideRate=Double.valueOf(format4.format(this.division(eve.getSideweit(), ( eve.getAvgbuttomweight2()+eve.getSideweit()+eve.getBadweit()))));
+		//不良率Double uheal_rate=badcount/(sumActualpairs+badcount);
+		Double uheal_rate=Double.valueOf(format4.format(this.division(eve.getBadcount(), eve.getSumActualpairs().doubleValue()+eve.getBadcount())));
+		//報廢率Double wasteRate=this.division(badweit, (avgbuttomweight2+sideweit+badweit));
+		Double wasteRate=Double.valueOf(format4.format(this.division(eve.getBadweit(), (eve.getAvgbuttomweight2()+eve.getSideweit()+eve.getBadweit()))));		
+		//廠補率Double factaddRate=this.division(sumFactpairs, sumActualpairs);
+		Double factaddRate=Double.valueOf(format4.format(this.division(eve.getSumFacpairs().doubleValue(),eve.getSumActualpairs().doubleValue())));		
+		//水用量单耗Double waterTon=this.division(waterton, sumActualdemo);
+		Double waterTon=Double.valueOf(format4.format(this.division(eve.getWaterton(),eve.getSumActualdemo().doubleValue())));
+		//用水金額單耗Double water_usd=waterusd/sumActualdemo;
+		Double water_usd=Double.valueOf(format4.format(this.division(eve.getWaterusd(), eve.getSumActualdemo().doubleValue())));
+		//电度数单耗Double lightDu=this.division(electricdu, sumActualdemo);
+		Double lightDu=Double.valueOf(format4.format(this.division(eve.getElectricdu(),eve.getSumActualdemo().doubleValue())));
+		//用電金額單耗Double light_usd=electricued/sumActualdemo;
+		Double light_usd=Double.valueOf(format4.format(this.division(eve.getElectricusd(), eve.getSumActualdemo().doubleValue())));
+		//蒸汽用量單耗Double gasTon=this.division(gaston, sumActualdemo);
+		Double gasTon=Double.valueOf(format4.format(this.division( eve.getGaston(),eve.getSumActualdemo().doubleValue())));
+		//用汽金額單耗Double gas_usd=gasusd/sumActualdemo;
+		Double gas_usd=Double.valueOf(format4.format(this.division(eve.getGasusd(), eve.getSumActualdemo().doubleValue())));				
+		//回頭料%Double bhead_rate=backFeed/thickUsed;
+		Double bhead_rate=Double.valueOf(format4.format(this.division(eve.getBackfeed(), eve.getThickused())));
+		//油壓退料%Double bpre_rate=oilBack/thickUsed;
+		Double bpre_rate=Double.valueOf(format4.format(this.division(eve.getOilback(), eve.getThickused())));
+		//回流率%Double bflow_rate=(backFeed+oilBack)/thickUsed;
+		Double bflow_rate=Double.valueOf(format4.format(this.division(eve.getBackfeed()+eve.getOilback(), eve.getThickused())));
+		//藥品用量單耗Double drug_wast=drugsUsed/sumActualdemo;
+		Double drug_wast=Double.valueOf(format4.format(this.division(eve.getDrugsused(), eve.getSumActualdemo().doubleValue())));
+		//色料用量單耗Double clr_wast=colorUsed/sumActualdemo;
+		Double clr_wast=Double.valueOf(format4.format(this.division(eve.getColorused(), eve.getSumActualdemo().doubleValue())));
+		//離型劑金額單耗Double leave_usd=leaveMoney/sumActualdemo;
+		Double leave_usd=Double.valueOf(format4.format(this.division(eve.getLeavemoney(), eve.getSumActualdemo().doubleValue())));
+		//直間比Double zjRate=this.division(personzg, personjg);
+		Double zjRate=Double.valueOf(format2.format(this.division( eve.getPersonzg(),eve.getPersonjg())));	
+		//直工離職率Double zgleaveRate=this.division(leavenumzg, personzg);
+		Double zgleaveRate=Double.valueOf(format4.format(this.division(eve.getLeavenumzg(),eve.getPersonzg())));
+		//全廠離職率Double factleaveRate=this.division((leavenumzg+leavenumjg), (personzg+personjg));
+		Double factleaveRate=Double.valueOf(format4.format(this.division((eve.getLeavenumzg()+eve.getLeavenumjg()), (eve.getPersonzg()+eve.getPersonjg()))));
+		//工傷件數Double hurtNum=hurtnum/index;
+		Double hurtNum=Double.valueOf(format2.format(eve.getHurtnum()/index));
+		
+		
+		
+		list.add(thisYield);//當月產量
+		list.add(avgCircle);//月均回轉
+		list.add(avgCirclehour);//時迴轉
+		list.add(muti_rate);//機臺利用率
+		list.add(productRate);//產能達成率
+		list.add(avgZgpro);//直工人均产能
+		list.add(avgPerpro);//全厂人均产能
+		list.add(avgFactpro);//全廠人均時產能
+		list.add(storeNum);//成倉庫存
+		list.add(outRequest);//已出未請
+		list.add(outrequestRate);//生產與請款差異率
+		list.add(sl_income);//銷貨收入
+		list.add(mainRate);//主材料成本比率
+		list.add(pcost_rate);//人工成本率
+		list.add(ccost_rate);//費用成本率
+		list.add(wasteUsd);//修繕單耗
+		list.add(per_price);//平均單價
+		list.add(per_salar);//全廠人均薪資
+		list.add(avgPermoney);//人均產值
+		list.add(permoney);//人薪產值
+		list.add(wasteFact);//全廠總損耗
+		list.add(wasteNo);//無形損耗
+		list.add(sideRate);//邊料率
+		list.add(uheal_rate);//不良率
+		list.add(wasteRate);//報廢率					
+		list.add(factaddRate);//廠補率		
+		list.add(waterTon);//水用量单耗
+		list.add(water_usd);//用水金額單耗
+		list.add(lightDu);//电度数单耗
+		list.add(light_usd);//用電金額單耗
+		list.add(gasTon);//蒸汽用量單耗
+		list.add(gas_usd);//用汽金額單耗
+		list.add(bhead_rate);//回頭料%
+		list.add(bpre_rate);//油壓退料%
+		list.add(bflow_rate);//回流率%
+		list.add(drug_wast);//藥品用量單耗
+		list.add(clr_wast);//色料用量單耗
+		list.add(leave_usd);//離型劑金額單耗						
+		list.add(zjRate);//直間比		
+		list.add(zgleaveRate);//直工離職率
+		list.add(factleaveRate);//全廠離職率
+		list.add(hurtNum);//工傷件數			
+		return list;
+	}
+	
+	
 	/**
 	 * 避免除數為0的方法
 	 * @param d1
@@ -2929,6 +1855,359 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 		}
 		System.out.print(list);
 		return list;					
+	}
+	
+	/**
+	 * 各項的項目與單位
+	 * @Title: findListstrAndUnit
+	 * @Description: TODO
+	 * @param @return
+	 * @return List<List<String>>
+	 * @throws
+	 * @author web
+	 * @date 2016/3/18
+	 */
+	public List<List<String>>findListstrAndUnit(){
+		List<List<String>>list_all=new ArrayList<List<String>>();
+		List<String>list_str=new ArrayList<String>();
+		List<String>list_unit=new ArrayList<String>();
+		
+		list_str.add("當月產量");
+		list_unit.add("模");// 0 (0位小數) (0<目標)
+		list_str.add("月均回轉 ");
+		list_unit.add("回");// 1(1位小數) (1<目標)
+		list_str.add("時迴轉");
+		list_unit.add("模/H");// 2(1位小數) (2<目標)
+		list_str.add("機臺利用率");
+		list_unit.add("%");// (2位小數) (3>目標)
+		list_str.add("產能達成率");
+		list_unit.add("%");// (2位小數) (4<=目標)
+		list_str.add("直工人均产能");
+		list_unit.add("模/人");// (0位小數) (5<目標)
+		list_str.add("全厂人均产能");
+		list_unit.add("模/人");// (0位小數) (6<目標)
+		list_str.add("全廠人均時產能");
+		list_unit.add("模/H");// (0位小數) (7<目標)
+		list_str.add("成倉庫存");
+		list_unit.add("雙");// 5(整數)(0位小數) (8>目標)
+		list_str.add("已出未請");
+		list_unit.add("雙");// 6(整數)(0位小數) (9>目標)
+		list_str.add("生產與請款差異率");
+		list_unit.add("%"); // (2位小數) (10>目標)
+		list_str.add("銷貨收入");
+		list_unit.add("USD");// (0位小數) (11>目標)
+		list_str.add("主材料成本比率");
+		list_unit.add("%");// (2位小數) (12>目標)
+		list_str.add("人工成本率");
+		list_unit.add("%");// (2位) (13<目標)
+		list_str.add("費用成本率");
+		list_unit.add("%");// (2位) (14<目標)
+		list_str.add("修繕單耗");
+		list_unit.add("USD/模");// (2位小數) (15>目標)
+		list_str.add("平均單價");
+		list_unit.add("USD/雙");// (2位小數) (16>目標)
+		list_str.add("全廠人均薪資");
+		list_unit.add("USD/人");// (0位小數) (17<目標)
+		list_str.add("人均產值");
+		list_unit.add("USD/人");// (2位小數) (18<目標)
+		list_str.add("人薪產值");
+		list_unit.add("--");// (2位小數) (19<目標)
+		list_str.add("全廠總損耗");
+		list_unit.add("%");// (2位小數) (20>目標)
+		list_str.add("無形損耗");
+		list_unit.add("%"); // (2位小數) (21>目標)
+		list_str.add("邊料率");
+		list_unit.add("%");// (2位小數) (22>目標)
+		list_str.add("不良率");
+		list_unit.add("%");// (2位小數) (23<目標)
+		list_str.add("報廢率");
+		list_unit.add("%");// (2位小數) (24>目標)
+		list_str.add("廠補率");
+		list_unit.add("%");// (2位小數) (25>目標)
+		list_str.add("水用量单耗");
+		list_unit.add("噸/模");// (4位小數) (26>目標)
+		list_str.add("用水金額單耗");
+		list_unit.add("USD/模");// (4位小數) (27<目標)
+		list_str.add("电度数单耗");
+		list_unit.add("度/模");// (4位小數) (28>目標)
+		list_str.add("用電金額單耗");
+		list_unit.add("USD/模");// (4位小數) (29<目標)
+		list_str.add("蒸汽用量單耗");
+		list_unit.add("噸/模");// (4位小數) (30>目標)
+		list_str.add("用汽金額單耗");
+		list_unit.add("USD/模");// (4位小數) (31<目標)
+		list_str.add("回頭料%");
+		list_unit.add("%");// (2位小數) (32<目標)
+		list_str.add("油壓退料%");
+		list_unit.add("%");// (2位小數) (33<目標)
+		list_str.add("回流率%");
+		list_unit.add("%");// (2位小數) (34<目標)
+		list_str.add("藥品用量單耗");
+		list_unit.add("g/模");// (4位) (35<目標)
+		list_str.add("色料用量單耗");
+		list_unit.add("g/模");// （4位） (36<目標)
+		list_str.add("離型劑金額單耗");
+		list_unit.add("USD/模");// （4位） (37<目標)
+		list_str.add("直間比");
+		list_unit.add("--");// (4位小數) (38<目標)
+		list_str.add("直工離職率");
+		list_unit.add("%");// (2位小數) (39>目標)
+		list_str.add("全廠離職率");
+		list_unit.add("%");// (2位小數) (40>目標)
+		list_str.add("工傷件數");
+		list_unit.add("件");// (0位小數) (41>目標)
+		
+		list_all.add(list_str);
+		list_all.add(list_unit);
+		return list_all;
+		
+	}
+	
+	public Map<String,Object> findStyles(HSSFWorkbook wb){
+		/**
+		 * 報表相關樣式
+		 */
+		Map<String,Object>map=new HashMap<String,Object>();
+		//標題樣式
+		HSSFCellStyle cs_head=wb.createCellStyle();
+		HSSFFont font_head=wb.createFont();
+		font_head.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+		font_head.setFontHeightInPoints((short)20);
+		cs_head.setFont(font_head);
+		cs_head.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		cs_head.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		map.put("cs_head", cs_head);
+		
+		//標準單元格樣式
+		HSSFCellStyle cs=wb.createCellStyle();
+		cs.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		cs.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		cs.setBorderTop(HSSFCellStyle.BORDER_THIN);
+		cs.setBorderRight(HSSFCellStyle.BORDER_THIN);
+		cs.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+		cs.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+		map.put("cs", cs);
+		//表頭樣式
+		HSSFCellStyle cs_column=wb.createCellStyle();
+		HSSFFont font_column=wb.createFont();
+		font_column.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+		font_column.setFontHeightInPoints((short)12);
+		cs_column.setFont(font_column);
+		cs_column.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		cs_column.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		cs_column.setBorderTop(HSSFCellStyle.BORDER_THIN);
+		cs_column.setBorderRight(HSSFCellStyle.BORDER_THIN);
+		cs_column.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+		cs_column.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+		cs_column.setFillForegroundColor(IndexedColors.YELLOW.getIndex());
+		cs_column.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+		map.put("cs_column", cs_column);
+		
+		//紅色加粗字體
+		HSSFFont font_red=wb.createFont();
+		font_red.setColor(IndexedColors.RED.getIndex());
+		font_red.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+		/**
+		 * 數字格式（有背景顏色與無背景顏色）
+		 */
+		
+		HSSFDataFormat format=wb.createDataFormat();
+		//無背景
+		HSSFCellStyle cs_percent=wb.createCellStyle();
+		cs_percent.setDataFormat(format.getFormat("0.00%"));
+		cs_percent.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		cs_percent.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		cs_percent.setBorderTop(HSSFCellStyle.BORDER_THIN);
+		cs_percent.setBorderRight(HSSFCellStyle.BORDER_THIN);
+		cs_percent.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+		cs_percent.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+		map.put("cs_percent", cs_percent);
+		
+		HSSFCellStyle cs_poi=wb.createCellStyle();
+		cs_poi.setDataFormat(format.getFormat("#,###,0"));
+		cs_poi.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		cs_poi.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		cs_poi.setBorderTop(HSSFCellStyle.BORDER_THIN);
+		cs_poi.setBorderRight(HSSFCellStyle.BORDER_THIN);
+		cs_poi.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+		cs_poi.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+		map.put("cs_poi", cs_poi);
+		
+		HSSFCellStyle cs_poi1=wb.createCellStyle();
+		cs_poi1.setDataFormat(format.getFormat("#,###,0.0"));
+		cs_poi1.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		cs_poi1.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		cs_poi1.setBorderTop(HSSFCellStyle.BORDER_THIN);
+		cs_poi1.setBorderRight(HSSFCellStyle.BORDER_THIN);
+		cs_poi1.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+		cs_poi1.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+		map.put("cs_poi1", cs_poi1);
+		
+		HSSFCellStyle cs_poi2=wb.createCellStyle();
+		cs_poi2.setDataFormat(format.getFormat("#,###,0.00"));
+		cs_poi2.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		cs_poi2.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		cs_poi2.setBorderTop(HSSFCellStyle.BORDER_THIN);
+		cs_poi2.setBorderRight(HSSFCellStyle.BORDER_THIN);
+		cs_poi2.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+		cs_poi2.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+		map.put("cs_poi2", cs_poi2);
+		
+		HSSFCellStyle cs_poi4=wb.createCellStyle();
+		cs_poi4.setDataFormat(format.getFormat("#,###,0.0000"));
+		cs_poi4.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		cs_poi4.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		cs_poi4.setBorderTop(HSSFCellStyle.BORDER_THIN);
+		cs_poi4.setBorderRight(HSSFCellStyle.BORDER_THIN);
+		cs_poi4.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+		cs_poi4.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+		map.put("cs_poi4", cs_poi4);
+		//有背景
+		HSSFCellStyle cs_percent_bg=wb.createCellStyle();
+		cs_percent_bg.setDataFormat(format.getFormat("0.00%"));
+		cs_percent_bg.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		cs_percent_bg.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		cs_percent_bg.setBorderTop(HSSFCellStyle.BORDER_THIN);
+		cs_percent_bg.setBorderRight(HSSFCellStyle.BORDER_THIN);
+		cs_percent_bg.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+		cs_percent_bg.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+		//cs_percent_bg.setFillForegroundColor(IndexedColors.BRIGHT_GREEN.getIndex());
+		//cs_percent_bg.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+		cs_percent_bg.setFont(font_red);
+		map.put("cs_percent_bg", cs_percent_bg);
+		
+		
+		HSSFCellStyle cs_poi_bg=wb.createCellStyle();
+		cs_poi_bg.setDataFormat(format.getFormat("#,###,0"));
+		cs_poi_bg.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		cs_poi_bg.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		cs_poi_bg.setBorderTop(HSSFCellStyle.BORDER_THIN);
+		cs_poi_bg.setBorderRight(HSSFCellStyle.BORDER_THIN);
+		cs_poi_bg.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+		cs_poi_bg.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+		//cs_poi_bg.setFillForegroundColor(IndexedColors.BRIGHT_GREEN.getIndex());
+		//cs_poi_bg.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+		cs_poi_bg.setFont(font_red);
+		map.put("cs_poi_bg", cs_poi_bg);
+		
+		HSSFCellStyle cs_poi1_bg=wb.createCellStyle();
+		cs_poi1_bg.setDataFormat(format.getFormat("#,###,0.0"));
+		cs_poi1_bg.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		cs_poi1_bg.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		cs_poi1_bg.setBorderTop(HSSFCellStyle.BORDER_THIN);
+		cs_poi1_bg.setBorderRight(HSSFCellStyle.BORDER_THIN);
+		cs_poi1_bg.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+		cs_poi1_bg.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+		//cs_poi1_bg.setFillForegroundColor(IndexedColors.BRIGHT_GREEN.getIndex());
+		//cs_poi1_bg.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+		cs_poi1_bg.setFont(font_red);
+		map.put("cs_poi1_bg", cs_poi1_bg);
+		
+		HSSFCellStyle cs_poi2_bg=wb.createCellStyle();
+		cs_poi2_bg.setDataFormat(format.getFormat("#,###,0.00"));
+		cs_poi2_bg.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		cs_poi2_bg.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		cs_poi2_bg.setBorderTop(HSSFCellStyle.BORDER_THIN);
+		cs_poi2_bg.setBorderRight(HSSFCellStyle.BORDER_THIN);
+		cs_poi2_bg.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+		cs_poi2_bg.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+		//cs_poi2_bg.setFillForegroundColor(IndexedColors.BRIGHT_GREEN.getIndex());
+		//cs_poi2_bg.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+		cs_poi2_bg.setFont(font_red);
+		map.put("cs_poi2_bg", cs_poi2_bg);
+		
+		HSSFCellStyle cs_poi4_bg=wb.createCellStyle();
+		cs_poi4_bg.setDataFormat(format.getFormat("#,###,0.0000"));
+		cs_poi4_bg.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		cs_poi4_bg.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		cs_poi4_bg.setBorderTop(HSSFCellStyle.BORDER_THIN);
+		cs_poi4_bg.setBorderRight(HSSFCellStyle.BORDER_THIN);
+		cs_poi4_bg.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+		cs_poi4_bg.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+		//cs_poi4_bg.setFillForegroundColor(IndexedColors.BRIGHT_GREEN.getIndex());
+		//cs_poi4_bg.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+		cs_poi4_bg.setFont(font_red);
+		map.put("cs_poi4_bg", cs_poi4_bg);
+		return map;
+	}
+	
+	/**
+	 * 數字樣式，以及是否達標時的樣式
+	 * @Title: findStyle
+	 * @Description: TODO
+	 * @param @return
+	 * @return Map<String,Object>
+	 * @throws
+	 * @author web
+	 * @date 2016/3/18
+	 */
+	public HSSFCellStyle findStyle(HSSFWorkbook wb,Double num1,Double num2,int j){
+		HSSFCellStyle cs_temp2=findStyle(wb,j);		
+		boolean flag=true;
+		if((j>=0&&j<=7)||j==11||j==16||j==18||j==19||j==38){
+			flag=num1<num2;
+		}else{
+			flag=num1>num2;
+		}
+		if(flag){//start if
+			cs_temp2=findStyle_red(wb, j);			
+		}//end if
+		return cs_temp2;
+	}
+	
+	/**
+	 * 數字樣式選擇(紅色字體)
+	 * @Title: findStyle
+	 * @Description: TODO
+	 * @param @return
+	 * @return Map<String,Object>
+	 * @throws
+	 * @author web
+	 * @date 2016/3/18
+	 */
+	public HSSFCellStyle findStyle_red(HSSFWorkbook wb,int j){
+		Map<String,Object>map=findStyles(wb);
+		HSSFCellStyle cs_temp2=wb.createCellStyle();		
+			//數字格式的選擇
+			if(j==0||(j>=5&&j<=9)||j==11||j==17||j==41){								
+				cs_temp2= (HSSFCellStyle)map.get("cs_poi_bg");
+			}else if(j==1||j==2){
+				cs_temp2=(HSSFCellStyle)map.get("cs_poi1_bg");
+			}else if((j>=26&&j<=31)||(j>=35&&j<=38)){
+				cs_temp2=(HSSFCellStyle)map.get("cs_poi4_bg");
+			}else if(j==18||j==19){
+				cs_temp2=(HSSFCellStyle)map.get("cs_poi2_bg");				
+			}else{
+				cs_temp2=(HSSFCellStyle)map.get("cs_percent_bg");
+			}			
+		return cs_temp2;
+	}
+	/**
+	 * 數字樣式選擇(黑色字體)
+	 * @Title: findStyle
+	 * @Description: TODO
+	 * @param @return
+	 * @return Map<String,Object>
+	 * @throws
+	 * @author web
+	 * @date 2016/3/18
+	 */
+	public HSSFCellStyle findStyle(HSSFWorkbook wb,int j){
+		Map<String,Object>map=findStyles(wb);
+		HSSFCellStyle cs_temp2=wb.createCellStyle();		
+			//數字格式的選擇
+			if(j==0||(j>=5&&j<=9)||j==11||j==17||j==41){								
+				cs_temp2= (HSSFCellStyle)map.get("cs_poi");
+			}else if(j==1||j==2){
+				cs_temp2=(HSSFCellStyle)map.get("cs_poi1");
+			}else if((j>=26&&j<=31)||(j>=35&&j<=38)){
+				cs_temp2=(HSSFCellStyle)map.get("cs_poi4");
+			}else if(j==18||j==19){
+				cs_temp2=(HSSFCellStyle)map.get("cs_poi2");				
+			}else{
+				cs_temp2=(HSSFCellStyle)map.get("cs_percent");
+			}			
+		return cs_temp2;
 	}
 	
 }
