@@ -352,23 +352,22 @@ jq(function(){
 					datatype="9_4"
 					value="<s:property value='kpi.uhealRate' />">
 				</td>
-				<td class="td_show_title">報廢率(%)</td>
-				<td class="td_input"><input type="text" name="kpi.wasteRate"
+				<td class="td_show_title">報廢率(%)<br>廠補率(%)</td>
+				<td class="td_input"><span><input type="text" name="kpi.wasteRate"
 					datatype="9_4"
-					value="<s:property value='kpi.wasteRate' />">
-				</td>
-			</tr>
-			<tr>
-				<td class="td_show_title">廠補率(%)</td>
-				<td class="td_input"><input type="text" name="kpi.factaddRate"
+					value="<s:property value='kpi.wasteRate' />"></span><br>
+					<span>
+					<input type="text" name="kpi.factaddRate"
 					datatype="9_4"
 					value="<s:property value='kpi.factaddRate' />">
+					</span>
 					<input type="hidden"
 					value="<s:property value='#session.loginUser.username'/>"
 					name="kpi.username" /> <!-- 添加用戶名 -->
 				</td>
 				
 			</tr>
+			
 			
 			
 			<tr>

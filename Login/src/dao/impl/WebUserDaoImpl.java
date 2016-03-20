@@ -154,7 +154,11 @@ public class WebUserDaoImpl extends Basedao implements IWebUserDao {
 		query.setString(1, username.toLowerCase());
 		WebUser user = (WebUser) query.uniqueResult();
 		if(user!=null){
-			user.getWebJurisdictions().size();	//解決hibernate延遲問題						
+			//user.getWebJurisdictions().size();	//解決hibernate延遲問題	
+			for(int i=0;i<user.getWebJurisdictions().size();i++){
+				user.getWebJurisdictions().get(i).getWebMenu().getMenuname();
+				user.getWebJurisdictions().get(i).getWebSubmenus().size();
+			}
 		}	
 		return user;
 	}
@@ -166,7 +170,11 @@ public class WebUserDaoImpl extends Basedao implements IWebUserDao {
 		query.setString(1, fact);
 		WebUser user=(WebUser)query.uniqueResult();
 		if(user!=null){
-			user.getWebJurisdictions().size();//解決hibernate延遲問題			
+			//user.getWebJurisdictions().size();//解決hibernate延遲問題
+			for(int i=0;i<user.getWebJurisdictions().size();i++){
+				user.getWebJurisdictions().get(i).getWebMenu().getMenuname();
+				user.getWebJurisdictions().get(i).getWebSubmenus().size();
+			}
 		}			
 		return user;
 	}

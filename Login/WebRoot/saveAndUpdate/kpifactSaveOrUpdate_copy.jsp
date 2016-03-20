@@ -235,7 +235,7 @@
 				<td class="td_show_title">蒸汽用量單耗(噸/模)</td>
 				<td class="td_input"><input type="text" name="kpi.gasTon"
 					datatype="9_4"
-					value="<s:property value='kpi.gasUsd' />">
+					value="<s:property value='kpi.gasTon' />">
 				</td>
 				<td class="td_show_title">修繕單耗(USD/模)</td>
 				<td class="td_input"><input type="text" name="kpi.wasteUsd"
