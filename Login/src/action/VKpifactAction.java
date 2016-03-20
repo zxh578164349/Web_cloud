@@ -57,6 +57,7 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 	private List<String>list_factcode;
 	private List<String>list_factno;
 	private javax.servlet.http.HttpServletResponse response;
+	private final static int cursor=45;//循環廠別狀態時的迭代量
 
 	public String getYear() {
 		return year;
@@ -249,9 +250,7 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 					if(eve.getSumFacpairs()==null){
 						eve.setSumFacpairs(big);
 					}
-					/*if(eve.getOtherweight()==null){
-						eve.setOtherweight(0.0);
-					}*/
+					
 					if(eve.getProductednum()==null){
 						eve.setProductednum(0.0);
 					}
@@ -301,7 +300,21 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 				      list_kpieve.get(b_index).setProductednum(list_kpieve.get(b_index).getProductednum()+eve.getProductednum());
 				      list_kpieve.get(b_index).setNoglueweight(list_kpieve.get(b_index).getNoglueweight()+eve.getNoglueweight());
 				      list_kpieve.get(b_index).setRepairmoney(list_kpieve.get(b_index).getRepairmoney()+eve.getRepairmoney());
-				      list_kpieve.get(b_index).setInstorenum(list_kpieve.get(b_index).getInstorenum()+eve.getInstorenum());
+				      list_kpieve.get(b_index).setInstorenum(list_kpieve.get(b_index).getInstorenum()+eve.getInstorenum());			     
+				      list_kpieve.get(b_index).setHole(list_kpieve.get(b_index).getHole()+eve.getHole());
+				      list_kpieve.get(b_index).setSumWorkday(list_kpieve.get(b_index).getSumWorkday().add(eve.getSumWorkday()));
+				      list_kpieve.get(b_index).setWaterusd(list_kpieve.get(b_index).getWaterusd()+eve.getWaterusd());
+				      list_kpieve.get(b_index).setElectricusd(list_kpieve.get(b_index).getElectricusd()+eve.getElectricusd());
+				      list_kpieve.get(b_index).setGasusd(list_kpieve.get(b_index).getGasusd()+eve.getGasusd());				      
+				      list_kpieve.get(b_index).setThickused(list_kpieve.get(b_index).getThickused()+eve.getThickused());
+				      list_kpieve.get(b_index).setBackfeed(list_kpieve.get(b_index).getBackfeed()+eve.getBackfeed());			      
+				      list_kpieve.get(b_index).setOilback(list_kpieve.get(b_index).getOilback()+eve.getOilback());
+				      list_kpieve.get(b_index).setDrugsused(list_kpieve.get(b_index).getDrugsused()+eve.getDrugsused());
+				      list_kpieve.get(b_index).setColorused(list_kpieve.get(b_index).getColorused()+eve.getColorused());
+				      list_kpieve.get(b_index).setLeavemoney(list_kpieve.get(b_index).getLeavemoney()+eve.getLeavemoney());
+				      list_kpieve.get(b_index).setPaypairs(list_kpieve.get(b_index).getPaypairs()+eve.getPaypairs());
+				      list_kpieve.get(b_index).setBadcount(list_kpieve.get(b_index).getBadcount()+eve.getBadcount());
+				      
 				      if(b==12){
 				    	  for(int i=0;i<3;i++){
 				    		  list_kpieve.get(i+5).setSumEverydemo(list_kpieve.get(2*i+1).getSumEverydemo().add(list_kpieve.get(2*i+2).getSumEverydemo()));
@@ -340,7 +353,20 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 						      list_kpieve.get(i+5).setProductednum(list_kpieve.get(2*i+1).getProductednum()+list_kpieve.get(2*i+2).getProductednum());
 						      list_kpieve.get(i+5).setNoglueweight(list_kpieve.get(2*i+1).getNoglueweight()+list_kpieve.get(2*i+2).getNoglueweight());
 						      list_kpieve.get(i+5).setRepairmoney(list_kpieve.get(2*i+1).getRepairmoney()+list_kpieve.get(2*i+2).getRepairmoney());
-						      list_kpieve.get(i+5).setInstorenum(list_kpieve.get(2*i+1).getInstorenum()+list_kpieve.get(2*i+2).getInstorenum());						      						      						      
+						      list_kpieve.get(i+5).setInstorenum(list_kpieve.get(2*i+1).getInstorenum()+list_kpieve.get(2*i+2).getInstorenum());							      
+						      list_kpieve.get(i+5).setHole(list_kpieve.get(2*i+1).getHole()+list_kpieve.get(2*i+2).getHole());
+						      list_kpieve.get(i+5).setSumWorkday(list_kpieve.get(2*i+1).getSumWorkday().add(list_kpieve.get(2*i+2).getSumWorkday()));
+						      list_kpieve.get(i+5).setWaterusd(list_kpieve.get(2*i+1).getWaterusd()+list_kpieve.get(2*i+2).getWaterusd());
+						      list_kpieve.get(i+5).setElectricusd(list_kpieve.get(2*i+1).getElectricusd()+list_kpieve.get(2*i+2).getElectricusd());
+						      list_kpieve.get(i+5).setGasusd(list_kpieve.get(2*i+1).getGasusd()+list_kpieve.get(2*i+2).getGasusd());						      					     
+						      list_kpieve.get(i+5).setThickused(list_kpieve.get(2*i+1).getThickused()+list_kpieve.get(2*i+2).getThickused());
+						      list_kpieve.get(i+5).setBackfeed(list_kpieve.get(2*i+1).getBackfeed()+list_kpieve.get(2*i+2).getBackfeed());						      
+						      list_kpieve.get(i+5).setOilback(list_kpieve.get(2*i+1).getOilback()+list_kpieve.get(2*i+2).getOilback());						      
+						      list_kpieve.get(i+5).setDrugsused(list_kpieve.get(2*i+1).getDrugsused()+list_kpieve.get(2*i+2).getDrugsused());
+						      list_kpieve.get(i+5).setColorused(list_kpieve.get(2*i+1).getColorused()+list_kpieve.get(2*i+2).getColorused());
+						      list_kpieve.get(i+5).setLeavemoney(list_kpieve.get(2*i+1).getLeavemoney()+list_kpieve.get(2*i+2).getLeavemoney());
+						      list_kpieve.get(i+5).setPaypairs(list_kpieve.get(2*i+1).getPaypairs()+list_kpieve.get(2*i+2).getPaypairs());
+						      list_kpieve.get(i+5).setBadcount(list_kpieve.get(2*i+1).getBadcount()+list_kpieve.get(2*i+2).getBadcount());					      
 				    	  }
 				    	  list3_q1=this.findResult(b/4,list_kpieve.get(1));//list_kpieve.get(1)第一季度							
 						  list2_all.add(list3_q1);
@@ -369,49 +395,7 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 			Kpifact kpi_pur=kpiSer.findById(factNo, factCode, yymm);//每年的預計目標(20150327)
 			List<Double> list_content_pur=new ArrayList<Double>();//每年的預計目標封裝在一個list，以便於for循環(20150327)
 			if(kpi_pur!=null){//start if2(20150327)
-				list_content_pur.add(kpi_pur.getThisYield()==null?0:kpi_pur.getThisYield());//當月產量
-				list_content_pur.add(kpi_pur.getAvgCircle()==null?0:kpi_pur.getAvgCircle());//月均回轉
-				list_content_pur.add(kpi_pur.getAvgCirclehour()==null?0:kpi_pur.getAvgCirclehour());//時回轉
-				list_content_pur.add(kpi_pur.getMutiRate()==null?0:kpi_pur.getMutiRate());//機臺利用率
-				list_content_pur.add(kpi_pur.getProductRate()==null?0:kpi_pur.getProductRate());//產能達成率
-				list_content_pur.add(kpi_pur.getAvgZgpro()==null?0:kpi_pur.getAvgZgpro());//直工人均产能
-				list_content_pur.add(kpi_pur.getAvgPerpro()==null?0:kpi_pur.getAvgPerpro());//全厂人均产能
-				list_content_pur.add(kpi_pur.getAvgFactpro()==null?0:kpi_pur.getAvgFactpro());//全廠人均時產能
-				list_content_pur.add(kpi_pur.getStoreNum()==null?0:kpi_pur.getStoreNum());//成倉庫存
-				list_content_pur.add(kpi_pur.getOutRequest()==null?0:kpi_pur.getOutRequest());//已出未請
-				list_content_pur.add(kpi_pur.getOutrequestRate()==null?0:kpi_pur.getOutrequestRate());//生產與請款差異率
-				list_content_pur.add(kpi_pur.getSlIncome()==null?0:kpi_pur.getSlIncome());//銷貨收入
-				list_content_pur.add(kpi_pur.getMainRate()==null?0:kpi_pur.getMainRate());//主材料成本比率
-				list_content_pur.add(kpi_pur.getPcostRate()==null?0:kpi_pur.getPcostRate());//人工成本率
-				list_content_pur.add(kpi_pur.getCcostRate()==null?0:kpi_pur.getCcostRate());//費用成本率
-				list_content_pur.add(kpi_pur.getWasteUsd()==null?0:kpi_pur.getWasteUsd());//修繕單耗
-				list_content_pur.add(kpi_pur.getPerPrice()==null?0:kpi_pur.getPerPrice());//平均單價
-				list_content_pur.add(kpi_pur.getPerSalar()==null?0:kpi_pur.getPerSalar());//全廠人均薪資
-				list_content_pur.add(kpi_pur.getAvgPermoney()==null?0:kpi_pur.getAvgPermoney());//人均產值
-				list_content_pur.add(kpi_pur.getPermoney()==null?0:kpi_pur.getPermoney());//人薪產值
-				list_content_pur.add(kpi_pur.getWasteFact()==null?0:kpi_pur.getWasteFact());//全廠總損耗
-				list_content_pur.add(kpi_pur.getWasteNo()==null?0:kpi_pur.getWasteNo());//無形損耗
-				list_content_pur.add(kpi_pur.getSideRate()==null?0:kpi_pur.getSideRate());//邊料率
-				list_content_pur.add(kpi_pur.getUhealRate()==null?0:kpi_pur.getUhealRate());//不良率
-				list_content_pur.add(kpi_pur.getWasteRate()==null?0:kpi_pur.getWasteRate());//報廢率
-				list_content_pur.add(kpi_pur.getFactaddRate()==null?0:kpi_pur.getFactaddRate());//廠補率
-				list_content_pur.add(kpi_pur.getWaterTon()==null?0:kpi_pur.getWaterTon());//水用量单耗
-				list_content_pur.add(kpi_pur.getWasteUsd()==null?0:kpi_pur.getWasteUsd());//用水金額單耗
-				list_content_pur.add(kpi_pur.getLightDu()==null?0:kpi_pur.getLightDu());//电度数单耗
-				list_content_pur.add(kpi_pur.getLightUsd()==null?0:kpi_pur.getLightUsd());//用電金額單耗
-				list_content_pur.add(kpi_pur.getGasTon()==null?0:kpi_pur.getGasTon());//蒸汽用量單耗
-				list_content_pur.add(kpi_pur.getGasUsd()==null?0:kpi_pur.getGasUsd());//用汽金額單耗
-				list_content_pur.add(kpi_pur.getBheadRate()==null?0:kpi_pur.getBheadRate());//回頭料%
-				list_content_pur.add(kpi_pur.getBpreRate()==null?0:kpi_pur.getBpreRate());//油壓退料%
-				list_content_pur.add(kpi_pur.getBflowRate()==null?0:kpi_pur.getBflowRate());//回流率%
-				list_content_pur.add(kpi_pur.getDrugWast()==null?0:kpi_pur.getDrugWast());//藥品用量單耗
-				list_content_pur.add(kpi_pur.getClrWast()==null?0:kpi_pur.getClrWast());//色料用量單耗
-				list_content_pur.add(kpi_pur.getLeaveUsd()==null?0:kpi_pur.getLeaveUsd());//離型劑金額單耗
-				list_content_pur.add(kpi_pur.getZjRate()==null?0:kpi_pur.getZjRate());//直間比		
-				list_content_pur.add(kpi_pur.getZgleaveRate()==null?0:kpi_pur.getZgleaveRate());//直工離職率
-				list_content_pur.add(kpi_pur.getFactleaveRate()==null?0:kpi_pur.getFactleaveRate());//全廠離職率
-				list_content_pur.add(kpi_pur.getHurtNum()==null?0:kpi_pur.getHurtNum());//工傷件數			
-				
+				list_content_pur=kpiFactToDouble(kpi_pur);	//KpiFact目標各項封裝到List<Double>									
 			}//end if2
 			
 			//填充標題
@@ -530,48 +514,8 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 					if(kpi.getAvgCirclehour()==null){
 						kpi.setAvgCirclehour(big);
 					}
-					list_content.add(kpi.getThisYield().doubleValue());//1當月產量
-					list_content.add(kpi.getAvgCircle().doubleValue());//2月均回轉
-					list_content.add(kpi.getAvgCirclehour().doubleValue());//時迴轉
-					list_content.add(kpi.getMainRate().doubleValue());//機臺利用率
-					list_content.add(kpi.getProductRate().doubleValue());//產能達成率
-					list_content.add(kpi.getAvgZgpro().doubleValue());//直工人均产能
-					list_content.add(kpi.getAvgPerpro().doubleValue());//全厂人均产能
-					list_content.add(kpi.getAvgFactpro().doubleValue());//全廠人均時產能
-					list_content.add(kpi.getStoreNum().doubleValue());//6  成倉庫存
-					list_content.add(kpi.getOutRequest().doubleValue());//7 已出未請
-					list_content.add(kpi.getOutrequestRate().doubleValue());//--null 生產與請款差異率
-					list_content.add(kpi.getSlIncome());//銷貨收入
-					list_content.add(kpi.getMainRate().doubleValue());//主材料成本比率
-					list_content.add(kpi.getPcostRate().doubleValue());//人工成本率
-					list_content.add(kpi.getCcostRate().doubleValue());//費用成本率
-					list_content.add(kpi.getWasteUsd().doubleValue());//修繕單耗
-					list_content.add(kpi.getPerPrice().doubleValue());//平均單價
-					list_content.add(kpi.getPerSalar().doubleValue());//全廠人均薪資
-					list_content.add(kpi.getAvgPermoney().doubleValue());//--null 人均產值
-					list_content.add(kpi.getPermoney().doubleValue());//--null  人薪產值
-					list_content.add(kpi.getWasteFact().doubleValue());//全廠總損耗
-					list_content.add(kpi.getWasteNo().doubleValue());//無形損耗
-					list_content.add(kpi.getSideRate().doubleValue());//邊料率
-					list_content.add(kpi.getUhealRate().doubleValue());//不良率
-					list_content.add(kpi.getWasteRate().doubleValue());//報廢率									
-					list_content.add(kpi.getFactaddRate().doubleValue());//--null 廠補率
-					list_content.add(kpi.getWaterTon().doubleValue());//水用量单耗
-					list_content.add(kpi.getWaterUsd().doubleValue());//用水金額單耗
-					list_content.add(kpi.getLightDu().doubleValue());//电度数单耗
-					list_content.add(kpi.getLightUsd().doubleValue());//用電金額單耗
-					list_content.add(kpi.getGasTon().doubleValue());//蒸汽用量單耗
-					list_content.add(kpi.getGasUsd().doubleValue());//用汽金額單耗
-					list_content.add(kpi.getBheadRate().doubleValue());//回頭料%
-					list_content.add(kpi.getBpreRate().doubleValue());//油壓退料%
-					list_content.add(kpi.getBflowRate().doubleValue());//回流率%
-					list_content.add(kpi.getDrugWast().doubleValue());//藥品用量單耗
-					list_content.add(kpi.getClrWast().doubleValue());//色料用量單耗
-					list_content.add(kpi.getLeaveUsd().doubleValue());//離型劑金額單耗
-					list_content.add(kpi.getZjRate().doubleValue());//直間比		
-					list_content.add(kpi.getZgleaveRate().doubleValue());//直工離職率
-					list_content.add(kpi.getFactleaveRate().doubleValue());//全廠離職率
-					list_content.add(kpi.getHurtNum().doubleValue());//24  //工傷件數
+					list_content=VkpiFactToDouble(kpi);//VKpiFact對象各項封裝List<Double>集合
+					
 											
 				}//end if1
 																									
@@ -895,7 +839,7 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 		/**
 		 * 報表相關樣式
 		 */
-		Map<String,Object>map=new HashMap<String,Object>();
+		Map<String,Object>map=findStyles(wb);
 		//標題樣式
 		HSSFCellStyle cs_head=(HSSFCellStyle)map.get("cs_head");		
 		//標準單元格樣式
@@ -951,8 +895,12 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 		//最外層集合
 		List<List<List<Double>>>list1_all=new ArrayList<List<List<Double>>>();
 		for(int a=0;a<list_factcode.size();a++){//start for1
+			List<VKpifactEve>list_kpieve=new ArrayList<VKpifactEve>();
+			for(int i=0;i<1;i++){
+				list_kpieve.add(new VKpifactEve());
+			}
 			//合計
-			Double total_sumEverydemo=0.00;Double total_sumStandarddemo=0.00;
+			/*Double total_sumEverydemo=0.00;Double total_sumStandarddemo=0.00;
 			Double total_sumActualdemo=0.00;Double total_sumActualpairs=0.00;
 			Double total_sumFactpairs=0.00;Double total_sumWorkhours=0.00;
 			
@@ -980,7 +928,7 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 			Double total_minusnum=0.00;
 			
 			Double total_actlost=0.00;Double total_avgbuttomweight2=0.00;
-			Double total_instorenum=0.00;
+			Double total_instorenum=0.00;*/
 						
 			//中間集合,用於裝"合計"數據
 			List<List<Double>>list2_total=new ArrayList<List<Double>>();
@@ -992,7 +940,7 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 			String factCode=fact.getId().getFactArea();						
 			for(int b=0;b<list_months.size();b++){//start for2
 				String ym=list_months.get(b);
-				VKpifactEve eve=vkpieveSer.findById(factNo, factCode,ym);
+				VKpifactEve eve=vkpieveSer.findById(factNo, factCode,ym)==null?new VKpifactEve():vkpieveSer.findById(factNo, factCode,ym);
 				if(eve!=null){//start if
 					/**
 					 * sumActualpairs和sumFacpairs,otherweight有可能為空
@@ -1004,9 +952,9 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 					if(eve.getSumFacpairs()==null){
 						eve.setSumFacpairs(big);
 					}
-					/*if(eve.getOtherweight()==null){
-						eve.setOtherweight(0.0);
-					}*/
+					if(eve.getOtherweight()==null){
+						eve.setOtherweight(big);
+					}
 					if(eve.getProductednum()==null){
 						eve.setProductednum(0.0);
 					}
@@ -1020,7 +968,45 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 						eve.setWorkhours(0.0);
 					}
 					//合計
-						total_sumEverydemo=total_sumEverydemo+eve.getSumEverydemo().doubleValue();total_sumStandarddemo=total_sumStandarddemo+eve.getSumStandarddemo().doubleValue();
+					 list_kpieve.get(0).setSumEverydemo(list_kpieve.get(0).getSumEverydemo().add(eve.getSumEverydemo()));
+				      list_kpieve.get(0).setSumStandarddemo(list_kpieve.get(0).getSumStandarddemo().add(eve.getSumStandarddemo()));
+				      list_kpieve.get(0).setSumActualdemo(list_kpieve.get(0).getSumActualdemo().add(eve.getSumActualdemo()));
+				      list_kpieve.get(0).setSumActualpairs(list_kpieve.get(0).getSumActualpairs().add(eve.getSumActualpairs()));
+				      list_kpieve.get(0).setSumFacpairs(list_kpieve.get(0).getSumFacpairs().add(eve.getSumFacpairs()));
+				      list_kpieve.get(0).setWorkhours(list_kpieve.get(0).getWorkhours()+eve.getWorkhours());
+				      list_kpieve.get(0).setPersonzg(list_kpieve.get(0).getPersonzg()+eve.getPersonzg());
+				      list_kpieve.get(0).setPersonjg(list_kpieve.get(0).getPersonjg()+eve.getPersonjg());
+				      list_kpieve.get(0).setTimezg(list_kpieve.get(0).getTimezg()+eve.getTimezg());
+				      list_kpieve.get(0).setTimejg(list_kpieve.get(0).getTimejg()+eve.getTimejg());
+				      list_kpieve.get(0).setAddtimezg(list_kpieve.get(0).getAddtimezg()+eve.getAddtimezg());
+				      list_kpieve.get(0).setAddtimejg(list_kpieve.get(0).getAddtimejg()+eve.getAddtimejg());
+				      list_kpieve.get(0).setLeavenumzg(list_kpieve.get(0).getLeavenumzg()+eve.getLeavenumzg());
+				      list_kpieve.get(0).setLeavenumjg(list_kpieve.get(0).getLeavenumjg()+eve.getLeavenumjg());
+				      list_kpieve.get(0).setHurtnum(list_kpieve.get(0).getHurtnum()+eve.getHurtnum());
+				      list_kpieve.get(0).setInvcount(list_kpieve.get(0).getInvcount()+eve.getInvcount());
+				      list_kpieve.get(0).setSellcount(list_kpieve.get(0).getSellcount()+eve.getSellcount());
+				      list_kpieve.get(0).setCostcount(list_kpieve.get(0).getCostcount()+eve.getCostcount());
+				      list_kpieve.get(0).setWagezgUsd(list_kpieve.get(0).getWagezgUsd()+eve.getWagezgUsd());
+				      list_kpieve.get(0).setWagejgUsd(list_kpieve.get(0).getWagejgUsd()+eve.getWagejgUsd());
+				      list_kpieve.get(0).setCashcount(list_kpieve.get(0).getCashcount()+eve.getCashcount());
+				      list_kpieve.get(0).setSideweit(list_kpieve.get(0).getSideweit()+eve.getSideweit());
+				      list_kpieve.get(0).setBadweit(list_kpieve.get(0).getBadweit()+eve.getBadweit());
+				      list_kpieve.get(0).setOtherbadweight(list_kpieve.get(0).getOtherbadweight()+eve.getOtherbadweight());
+				      list_kpieve.get(0).setOtherweight(list_kpieve.get(0).getOtherweight().add(eve.getOtherweight()));
+				      list_kpieve.get(0).setWaterton(list_kpieve.get(0).getWaterton()+eve.getWaterton());
+				      list_kpieve.get(0).setElectricdu(list_kpieve.get(0).getElectricdu()+eve.getElectricdu());
+				      list_kpieve.get(0).setGaston(list_kpieve.get(0).getGaston()+eve.getGaston());
+				      list_kpieve.get(0).setStorenum(list_kpieve.get(0).getStorenum()+eve.getStorenum());
+				      list_kpieve.get(0).setOutnum(list_kpieve.get(0).getOutnum()+eve.getOutnum());
+				      list_kpieve.get(0).setMinusnum(list_kpieve.get(0).getMinusnum()+eve.getMinusnum());
+				      list_kpieve.get(0).setActlost(list_kpieve.get(0).getActlost()+eve.getActlost());
+				      list_kpieve.get(0).setAvgbuttomweight2(list_kpieve.get(0).getAvgbuttomweight2()+eve.getAvgbuttomweight2());
+				      list_kpieve.get(0).setProductednum(list_kpieve.get(0).getProductednum()+eve.getProductednum());
+				      list_kpieve.get(0).setNoglueweight(list_kpieve.get(0).getNoglueweight()+eve.getNoglueweight());
+				      list_kpieve.get(0).setRepairmoney(list_kpieve.get(0).getRepairmoney()+eve.getRepairmoney());
+				      list_kpieve.get(0).setInstorenum(list_kpieve.get(0).getInstorenum()+eve.getInstorenum());
+					
+						/*total_sumEverydemo=total_sumEverydemo+eve.getSumEverydemo().doubleValue();total_sumStandarddemo=total_sumStandarddemo+eve.getSumStandarddemo().doubleValue();
 						total_sumActualdemo=total_sumActualdemo+eve.getSumActualdemo().doubleValue();total_sumActualpairs=total_sumActualpairs+eve.getSumActualpairs().doubleValue();
 						total_sumFactpairs=total_sumFactpairs+eve.getSumFacpairs().doubleValue();total_sumWorkhours=total_sumWorkhours+eve.getWorkhours();
 						
@@ -1048,21 +1034,12 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 						total_productnum=total_productnum+eve.getProductednum();
 						total_noglueweight=total_noglueweight+eve.getNoglueweight();
 						total_repairmoney=total_repairmoney+eve.getRepairmoney();
-						total_instorenum=total_instorenum+eve.getInstorenum();
+						total_instorenum=total_instorenum+eve.getInstorenum();*/
 																																			
 				}// end if				
 				//合計				
 					if(b==list_months.size()-1){
-						list3_total=this.findResult(b,
-								total_sumEverydemo, total_sumStandarddemo, total_sumActualdemo, total_sumActualpairs, total_sumFactpairs,
-								total_personzg, total_personjg, total_timezg, total_timejg, total_addtimezg, total_addtimejg, total_leavenumzg, total_leavenumjg, total_hurtnum,
-								total_invcount, total_sellcount, total_costcount, total_wagezgUsd, total_wagejgUsd, total_cashcount,
-								total_sideweit, total_badweit, total_otherbadweight,
-								total_waterton, total_electricdu, total_gaston,
-								total_storenum, total_outnum, total_minusnum,
-								total_actlost, total_avgbuttomweight2,total_otherweight,
-								total_productnum,total_noglueweight,total_repairmoney,
-								total_sumWorkhours,total_instorenum);
+						list3_total=this.findResult(b,list_kpieve.get(0));
 						list2_total.add(list3_total);
 					}																																			
 			}//end for2
@@ -1081,8 +1058,8 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 				sheet.getRow(0).createCell(a).setCellStyle(cs_head);
 			}
 			//填充表頭(包括廠別狀態)
-			sheet.createRow(2+28*k).createCell(0).setCellValue("形態:"+factCode);
-			HSSFRow row_columnHead=sheet.createRow(3+28*k);			
+			sheet.createRow(2+cursor*k).createCell(0).setCellValue("形態:"+factCode);
+			HSSFRow row_columnHead=sheet.createRow(3+cursor*k);			
 			for(int h=0;h<list_column.size();h++){
 				String column=list_column.get(h);
 				HSSFCell cell_columnHead=row_columnHead.createCell(h);
@@ -1109,7 +1086,7 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 						}else{
 							index=""+(j+1);
 						}
-						HSSFRow row=sheet.createRow(4+j+28*k);
+						HSSFRow row=sheet.createRow(4+j+cursor*k);
 						HSSFCell cell0=row.createCell(i);
 						HSSFCell cell1=row.createCell(i+1);
 						HSSFCell cell2=row.createCell(i+2);
@@ -1150,32 +1127,8 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 					if(kpi.getAvgCirclehour()==null){
 						kpi.setAvgCirclehour(big);
 					}
-					list_content.add(kpi.getThisYield().doubleValue());//1
-					list_content.add(kpi.getAvgCircle().doubleValue());//2
-					list_content.add(kpi.getAvgCirclehour().doubleValue());
-					list_content.add(kpi.getFactaddRate().doubleValue());//--null
-					list_content.add(kpi.getProductRate().doubleValue());
-					list_content.add(kpi.getStoreNum().doubleValue());//6
-					list_content.add(kpi.getOutRequest().doubleValue());//7
-					list_content.add(kpi.getOutrequestRate().doubleValue());//--null
-					list_content.add(kpi.getAvgFactpro().doubleValue());
-					list_content.add(kpi.getAvgZgpro().doubleValue());
-					list_content.add(kpi.getAvgPerpro().doubleValue());
-					list_content.add(kpi.getAvgPermoney().doubleValue());//--null
-					list_content.add(kpi.getPermoney().doubleValue());//--null
-					list_content.add(kpi.getWaterTon().doubleValue());
-					list_content.add(kpi.getLightDu().doubleValue());
-					list_content.add(kpi.getGasUsd().doubleValue());
-					list_content.add(kpi.getWasteUsd().doubleValue());
-					list_content.add(kpi.getMainRate().doubleValue());
-					list_content.add(kpi.getSideRate().doubleValue());
-					list_content.add(kpi.getWasteRate().doubleValue());
-					list_content.add(kpi.getWasteFact().doubleValue());
-					list_content.add(kpi.getWasteNo().doubleValue());
-					list_content.add(kpi.getZjRate().doubleValue());
-					list_content.add(kpi.getHurtNum().doubleValue());//24
-					list_content.add(kpi.getZgleaveRate().doubleValue());
-					list_content.add(kpi.getFactleaveRate().doubleValue());
+					list_content=this.VkpiFactToDouble(kpi);//VKpiFact對象各項封裝List<Double>集合
+					
 				}//end if1
 													
 				/**
@@ -1185,11 +1138,11 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 				List<Double>list3_total=list2.get(0);//合計							
 				if(kpi!=null){	
 					for(int j=0;j<list_str.size();j++){
-						HSSFRow row=sheet.getRow(4+j+28*k);
+						HSSFRow row=sheet.getRow(4+j+cursor*k);
 						HSSFCell cell=row.createCell(i+3+temp_num);
 						HSSFCellStyle cs_temp=wb.createCellStyle();
 						//數字格式的選擇
-						if(j==0||j==2){
+						/*if(j==0||j==2){
 							cs_temp=cs_poi1;
 						}else if(j==1||j==5||j==6||j==9||j==10){
 							cs_temp=cs_poi;
@@ -1199,7 +1152,8 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 							cs_temp=cs_poi2;
 						}else{
 							cs_temp=cs_percent;
-						}                     
+						}*/
+						cs_temp=this.findStyle(wb, j);
 						cell.setCellValue(list_content.get(j));
 						cell.setCellStyle(cs_temp);
 																		
@@ -1212,11 +1166,11 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 				    }				
 				}else{
 					for(int j=0;j<list_str.size();j++){
-						HSSFRow row=sheet.getRow(4+j+28*k);
+						HSSFRow row=sheet.getRow(4+j+cursor*k);
 						HSSFCell cell=row.createCell(i+3+temp_num);
 						//數字格式的選擇
 						HSSFCellStyle cs_temp=wb.createCellStyle();
-						if(j==0||j==2){
+						/*if(j==0||j==2){
 							cs_temp=cs_poi1;
 						}else if(j==1||j==5||j==6||j==9||j==10){
 							cs_temp=cs_poi;
@@ -1226,7 +1180,8 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 							cs_temp=cs_poi2;
 						}else{
 							cs_temp=cs_percent;
-						}
+						}*/
+						cs_temp=this.findStyle(wb, j);
 						cell.setCellValue("無數據");						
 						cell.setCellStyle(cs_temp);												
 						if(i==list_months.size()-1){							
@@ -1263,7 +1218,7 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 		/**
 		 * 模板相關樣式
 		 */
-		Map<String,Object>map=new HashMap<String,Object>();
+		Map<String,Object>map=this.findStyles(wb);
 		//標題樣式
 		HSSFCellStyle cs_head=(HSSFCellStyle)map.get("cs_head");		
 		//標準單元格樣式
@@ -1365,8 +1320,8 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 			list_factNo.add(1,"管制指標");
 			list_factNo.add(2,"單位");
 			//填充各個表的廠別狀態和表頭
-			HSSFRow row_factCode=sheet.createRow(2+28*a);
-			HSSFRow row_column=sheet.createRow(3+28*a);
+			HSSFRow row_factCode=sheet.createRow(2+cursor*a);
+			HSSFRow row_column=sheet.createRow(3+cursor*a);
 			HSSFCell cell_factCode=row_factCode.createCell(0);
 			cell_factCode.setCellValue(factCode);
 			cell_factCode.getCellStyle().setFont(font_blue);
@@ -1409,7 +1364,8 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 					if(kpi.getAvgCirclehour()==null){
 						kpi.setAvgCirclehour(big);
 					}
-					list_kpi.add(kpi.getThisYield().doubleValue());
+					list_kpi=this.VkpiFactToDouble(kpi);
+					/*list_kpi.add(kpi.getThisYield().doubleValue());
 					list_kpi.add(kpi.getAvgCircle().doubleValue());
 					list_kpi.add(kpi.getAvgCirclehour().doubleValue());
 					list_kpi.add(kpi.getFactaddRate().doubleValue());//--null
@@ -1426,14 +1382,14 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 					list_kpi.add(kpi.getWasteRate().doubleValue());list_kpi.add(kpi.getWasteFact().doubleValue());
 					list_kpi.add(kpi.getWasteNo().doubleValue());list_kpi.add(kpi.getZjRate().doubleValue());
 					list_kpi.add(kpi.getHurtNum());list_kpi.add(kpi.getZgleaveRate().doubleValue());
-					list_kpi.add(kpi.getFactleaveRate().doubleValue());
+					list_kpi.add(kpi.getFactleaveRate().doubleValue());*/
 				}				
 				for(int c=0;c<list_contentName.size();c++){//start for3
 					HSSFRow row=null;
 					if(b==0){
-						row=sheet.createRow(4+c+28*a);
+						row=sheet.createRow(4+c+cursor*a);
 					}else{
-						row=sheet.getRow(4+c+28*a);
+						row=sheet.getRow(4+c+cursor*a);
 					}					
 					switch(b){
 					case 0:	                   
@@ -1463,12 +1419,8 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 						HSSFCell cell_3=row.createCell(b);
 						//數字格式的選擇
 						HSSFCellStyle cs_temp=wb.createCellStyle();
-						/*if(c==0||c==1||c==4||c==5||c==21||c==22||(c>6&&c<16)){
-							cs_temp=cs_poi1;
-						}else{
-							cs_temp=cs_percent;
-						}*/
-						if(c==0||c==2){
+						
+						/*if(c==0||c==2){
 							cs_temp=cs_poi1;
 						}else if(c==1||c==5||c==6||c==9||c==10){
 							cs_temp=cs_poi;
@@ -1478,13 +1430,14 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 							cs_temp=cs_poi2;
 						}else{
 							cs_temp=cs_percent;
-						}
+						}*/
 						if(kpi==null){
 							cell_3.setCellValue("無數據");
 						}else{
 							Double kpi_content=list_kpi.get(c);
 							cell_3.setCellValue(kpi_content);
 						}
+						cs_temp=this.findStyle(wb, c);
 						cell_3.setCellStyle(cs_temp);
 						break;
 					}
@@ -1693,7 +1646,7 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 		//時回轉Double avgCirclehour=this.division(sumActualdemo, sumWorkhours);
 		Double avgCirclehour=Double.valueOf(format1.format(this.division(eve.getSumActualdemo().doubleValue(), eve.getWorkhours())));
 		//機臺利用率Double muti_rate=sumEverydemo/sum_workday/hole;
-		Double muti_rate=Double.valueOf(format4.format(this.division(eve.getSumEverydemo().doubleValue()*eve.getHole(), eve.getSumWorkday().doubleValue())));
+		Double muti_rate=Double.valueOf(format4.format(this.division(eve.getSumEverydemo().doubleValue(),eve.getHole()*eve.getSumWorkday().doubleValue())));
 		//產能達成率Double productRate=this.division(sumActualdemo, sumStandarddemo);
 		Double productRate=Double.valueOf(format4.format(this.division( eve.getSumActualdemo().doubleValue(),eve.getSumStandarddemo().doubleValue())));
 		//直工人均产能Double avgZgpro=this.division(sumActualdemo, personzg);
@@ -2208,6 +2161,109 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 				cs_temp2=(HSSFCellStyle)map.get("cs_percent");
 			}			
 		return cs_temp2;
+	}
+	
+	/**
+	 * VKpiFact對象各項封裝List<Double>集合
+	 * @return
+	 */
+	public List<Double> VkpiFactToDouble(VKpifact kpi){
+		List<Double>list_content=new ArrayList<Double>();
+		list_content.add(kpi.getThisYield().doubleValue());//1當月產量
+		list_content.add(kpi.getAvgCircle().doubleValue());//2月均回轉
+		list_content.add(kpi.getAvgCirclehour().doubleValue());//時迴轉
+		list_content.add(kpi.getMainRate().doubleValue());//機臺利用率
+		list_content.add(kpi.getProductRate().doubleValue());//產能達成率
+		list_content.add(kpi.getAvgZgpro().doubleValue());//直工人均产能
+		list_content.add(kpi.getAvgPerpro().doubleValue());//全厂人均产能
+		list_content.add(kpi.getAvgFactpro().doubleValue());//全廠人均時產能
+		list_content.add(kpi.getStoreNum().doubleValue());//6  成倉庫存
+		list_content.add(kpi.getOutRequest().doubleValue());//7 已出未請
+		list_content.add(kpi.getOutrequestRate().doubleValue());//--null 生產與請款差異率
+		list_content.add(kpi.getSlIncome());//銷貨收入
+		list_content.add(kpi.getMainRate().doubleValue());//主材料成本比率
+		list_content.add(kpi.getPcostRate().doubleValue());//人工成本率
+		list_content.add(kpi.getCcostRate().doubleValue());//費用成本率
+		list_content.add(kpi.getWasteUsd().doubleValue());//修繕單耗
+		list_content.add(kpi.getPerPrice().doubleValue());//平均單價
+		list_content.add(kpi.getPerSalar().doubleValue());//全廠人均薪資
+		list_content.add(kpi.getAvgPermoney().doubleValue());//--null 人均產值
+		list_content.add(kpi.getPermoney().doubleValue());//--null  人薪產值
+		list_content.add(kpi.getWasteFact().doubleValue());//全廠總損耗
+		list_content.add(kpi.getWasteNo().doubleValue());//無形損耗
+		list_content.add(kpi.getSideRate().doubleValue());//邊料率
+		list_content.add(kpi.getUhealRate().doubleValue());//不良率
+		list_content.add(kpi.getWasteRate().doubleValue());//報廢率									
+		list_content.add(kpi.getFactaddRate().doubleValue());//--null 廠補率
+		list_content.add(kpi.getWaterTon().doubleValue());//水用量单耗
+		list_content.add(kpi.getWaterUsd().doubleValue());//用水金額單耗
+		list_content.add(kpi.getLightDu().doubleValue());//电度数单耗
+		list_content.add(kpi.getLightUsd().doubleValue());//用電金額單耗
+		list_content.add(kpi.getGasTon().doubleValue());//蒸汽用量單耗
+		list_content.add(kpi.getGasUsd().doubleValue());//用汽金額單耗
+		list_content.add(kpi.getBheadRate().doubleValue());//回頭料%
+		list_content.add(kpi.getBpreRate().doubleValue());//油壓退料%
+		list_content.add(kpi.getBflowRate().doubleValue());//回流率%
+		list_content.add(kpi.getDrugWast().doubleValue());//藥品用量單耗
+		list_content.add(kpi.getClrWast().doubleValue());//色料用量單耗
+		list_content.add(kpi.getLeaveUsd().doubleValue());//離型劑金額單耗
+		list_content.add(kpi.getZjRate().doubleValue());//直間比		
+		list_content.add(kpi.getZgleaveRate().doubleValue());//直工離職率
+		list_content.add(kpi.getFactleaveRate().doubleValue());//全廠離職率
+		list_content.add(kpi.getHurtNum().doubleValue());//24  //工傷件數
+		return list_content;
+	}
+	
+	/**
+	 * KpiFact目標各項封裝到List<Double>
+	 * @param kpi_pur
+	 * @return
+	 */
+	public List<Double> kpiFactToDouble(Kpifact kpi_pur){
+		List<Double>list_content_pur=new ArrayList<Double>();
+		list_content_pur.add(kpi_pur.getThisYield()==null?0:kpi_pur.getThisYield());//當月產量
+		list_content_pur.add(kpi_pur.getAvgCircle()==null?0:kpi_pur.getAvgCircle());//月均回轉
+		list_content_pur.add(kpi_pur.getAvgCirclehour()==null?0:kpi_pur.getAvgCirclehour());//時回轉
+		list_content_pur.add(kpi_pur.getMutiRate()==null?0:kpi_pur.getMutiRate());//機臺利用率
+		list_content_pur.add(kpi_pur.getProductRate()==null?0:kpi_pur.getProductRate());//產能達成率
+		list_content_pur.add(kpi_pur.getAvgZgpro()==null?0:kpi_pur.getAvgZgpro());//直工人均产能
+		list_content_pur.add(kpi_pur.getAvgPerpro()==null?0:kpi_pur.getAvgPerpro());//全厂人均产能
+		list_content_pur.add(kpi_pur.getAvgFactpro()==null?0:kpi_pur.getAvgFactpro());//全廠人均時產能
+		list_content_pur.add(kpi_pur.getStoreNum()==null?0:kpi_pur.getStoreNum());//成倉庫存
+		list_content_pur.add(kpi_pur.getOutRequest()==null?0:kpi_pur.getOutRequest());//已出未請
+		list_content_pur.add(kpi_pur.getOutrequestRate()==null?0:kpi_pur.getOutrequestRate());//生產與請款差異率
+		list_content_pur.add(kpi_pur.getSlIncome()==null?0:kpi_pur.getSlIncome());//銷貨收入
+		list_content_pur.add(kpi_pur.getMainRate()==null?0:kpi_pur.getMainRate());//主材料成本比率
+		list_content_pur.add(kpi_pur.getPcostRate()==null?0:kpi_pur.getPcostRate());//人工成本率
+		list_content_pur.add(kpi_pur.getCcostRate()==null?0:kpi_pur.getCcostRate());//費用成本率
+		list_content_pur.add(kpi_pur.getWasteUsd()==null?0:kpi_pur.getWasteUsd());//修繕單耗
+		list_content_pur.add(kpi_pur.getPerPrice()==null?0:kpi_pur.getPerPrice());//平均單價
+		list_content_pur.add(kpi_pur.getPerSalar()==null?0:kpi_pur.getPerSalar());//全廠人均薪資
+		list_content_pur.add(kpi_pur.getAvgPermoney()==null?0:kpi_pur.getAvgPermoney());//人均產值
+		list_content_pur.add(kpi_pur.getPermoney()==null?0:kpi_pur.getPermoney());//人薪產值
+		list_content_pur.add(kpi_pur.getWasteFact()==null?0:kpi_pur.getWasteFact());//全廠總損耗
+		list_content_pur.add(kpi_pur.getWasteNo()==null?0:kpi_pur.getWasteNo());//無形損耗
+		list_content_pur.add(kpi_pur.getSideRate()==null?0:kpi_pur.getSideRate());//邊料率
+		list_content_pur.add(kpi_pur.getUhealRate()==null?0:kpi_pur.getUhealRate());//不良率
+		list_content_pur.add(kpi_pur.getWasteRate()==null?0:kpi_pur.getWasteRate());//報廢率
+		list_content_pur.add(kpi_pur.getFactaddRate()==null?0:kpi_pur.getFactaddRate());//廠補率
+		list_content_pur.add(kpi_pur.getWaterTon()==null?0:kpi_pur.getWaterTon());//水用量单耗
+		list_content_pur.add(kpi_pur.getWasteUsd()==null?0:kpi_pur.getWasteUsd());//用水金額單耗
+		list_content_pur.add(kpi_pur.getLightDu()==null?0:kpi_pur.getLightDu());//电度数单耗
+		list_content_pur.add(kpi_pur.getLightUsd()==null?0:kpi_pur.getLightUsd());//用電金額單耗
+		list_content_pur.add(kpi_pur.getGasTon()==null?0:kpi_pur.getGasTon());//蒸汽用量單耗
+		list_content_pur.add(kpi_pur.getGasUsd()==null?0:kpi_pur.getGasUsd());//用汽金額單耗
+		list_content_pur.add(kpi_pur.getBheadRate()==null?0:kpi_pur.getBheadRate());//回頭料%
+		list_content_pur.add(kpi_pur.getBpreRate()==null?0:kpi_pur.getBpreRate());//油壓退料%
+		list_content_pur.add(kpi_pur.getBflowRate()==null?0:kpi_pur.getBflowRate());//回流率%
+		list_content_pur.add(kpi_pur.getDrugWast()==null?0:kpi_pur.getDrugWast());//藥品用量單耗
+		list_content_pur.add(kpi_pur.getClrWast()==null?0:kpi_pur.getClrWast());//色料用量單耗
+		list_content_pur.add(kpi_pur.getLeaveUsd()==null?0:kpi_pur.getLeaveUsd());//離型劑金額單耗
+		list_content_pur.add(kpi_pur.getZjRate()==null?0:kpi_pur.getZjRate());//直間比		
+		list_content_pur.add(kpi_pur.getZgleaveRate()==null?0:kpi_pur.getZgleaveRate());//直工離職率
+		list_content_pur.add(kpi_pur.getFactleaveRate()==null?0:kpi_pur.getFactleaveRate());//全廠離職率
+		list_content_pur.add(kpi_pur.getHurtNum()==null?0:kpi_pur.getHurtNum());//工傷件數	
+		return list_content_pur;
 	}
 	
 }
