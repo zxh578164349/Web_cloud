@@ -291,7 +291,7 @@ window.onload=function(){
 					<td class="td_show_title">日期</td>
 
 					<td class="td_input"><input type="text" name="yymmdd"
-						onClick="WdatePicker({maxDate:'%y-%M-{%d+2}'})" class="Wdate"
+						onClick="WdatePicker({maxDate:'%y-%M-{%d+2}',dateFmt:'yyyyMMdd'})" class="Wdate"
 						datatype="*" id="yymmdd" onchange="check()" /><span id="error3"></span>
 					</td>
 

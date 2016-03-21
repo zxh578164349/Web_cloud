@@ -401,20 +401,20 @@ public class WebYdataAction extends ActionSupport implements
 				String temp2 = ydata.getId().getFactCode();
 				String temp3 = format.format(ydata.getId().getYymmdd());
 				response.getWriter()
-						.print("<script>alert('數據已經存在("
+						.print("<script>window.parent.alert('數據已經存在("
 								+ temp1
 								+ " "
 								+ temp2
 								+ " "
 								+ temp3
-								+ ")!');window.location.href='saveAndUpdate/Yield_data.jsp'</script>");				
+								+ ")!');</script>");				
 			}
 			if(result.equals("noData")){
 				response.setContentType("text/html;charset=utf-8");
 				response.getWriter()
-				.print("<script>alert('選定日期的前天數據("
+				.print("<script>window.parent.alert('選定日期的前天數據("
 						+ lastday					
-						+ ")還沒有輸入!');history.back();</script>");							
+						+ ")還沒有輸入!');</script>");							
 				result=null;
 			}
 		 

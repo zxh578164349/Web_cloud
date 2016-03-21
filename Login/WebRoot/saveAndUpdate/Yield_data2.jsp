@@ -286,7 +286,7 @@ jq(document).ajaxStop(function(){
 
 					<td class="td_show_title">日期</td>
 					<td class="td_input"><input type="text" name="yymmdd"
-						onClick="WdatePicker({maxDate:'%y-%M-{%d+2}'})" class="Wdate" datatype="*" /> <input
+						onClick="WdatePicker({maxDate:'%y-%M-{%d+2}',dateFmt:'yyyymmdd'})" class="Wdate" datatype="*" /> <input
 						type="hidden" value="isnull" name="isnull" /></td>
 					<td class="td_show_title">工作日/假日</td>
 					<td class="td_input"><select name="ydata.workorholiday"

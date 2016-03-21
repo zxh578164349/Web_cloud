@@ -42,8 +42,10 @@
 					layer.msg("提交成功!",3,1);
 					//location.href="/Login/webmix2_getList";
 					loadUrl("/Login/webmix2_getList");
-				}else{
+				}else if(data=="2"){
 					//alert(data.responseText);
+					layer.msg("數據庫已存在",3,3);
+				}else{
 					layer.msg("提交失敗",3,3);
 				}				
 			}

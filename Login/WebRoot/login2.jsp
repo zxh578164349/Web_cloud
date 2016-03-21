@@ -16,8 +16,9 @@
 
 
 <!-- Load Javascript -->
-<script type="text/javascript" src="jquery/login/jquery.js"></script>
-<script type="text/javascript" src="jquery/login/jquery.query-2.1.7.js"></script>
+<!-- <script type="text/javascript" src="jquery/login/jquery.js"></script>
+<script type="text/javascript" src="jquery/login/jquery.query-2.1.7.js"></script>-->
+<script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
 <script type="text/javascript" src="jquery/layer/layer.min.js"></script>
 
 <!-- // Load Javascipt -->
@@ -29,14 +30,21 @@
 
 
 <script>
-	$(document).ready(function() {
-
-		$("#submit1").hover(function() {
-			$(this).animate({
+var jq=jQuery.noConflict();
+var loadi;
+jq(document).ajaxStart(function(){
+	loadi=layer.load("正在登錄,請稍等...");
+});
+jq(document).ajaxStop(function(){
+	layer.close(loadi);
+});
+	jq(document).ready(function() {
+		jq("#submit1").hover(function() {
+			jq(this).animate({
 				"opacity" : "0"
 			}, "slow");
 		}, function() {
-			$(this).animate({
+			jq(this).animate({
 				"opacity" : "1"
 			}, "slow");
 		});
@@ -47,25 +55,20 @@
 		var pwd = document.getElementById("url_pwd_input");
 		if (factNO.value == 0 || names.value == "" || pwd.value == "") {
 			alert("請輸入完整的信息", '提示信息');
-		} else {
-			/*document.getElementById("mydiv").style.display = "block";
-			document.getElementById("loginform").submit();*/
-			$(document).ajaxStart(function(){
-				//document.getElementById("mydiv").style.display = "block";
-				$("#mydiv").show();
+		} else {			
+			/*jq(document).ajaxStart(function(){
+				jq("#mydiv").show();
 			});
-			$(document).ajaxStop(function(){
-				//document.getElementById("mydiv").style.display = "none";
-				$("#mydiv").hide();
-			});
-			$.ajax({
+			jq(document).ajaxStop(function(){
+				jq("#mydiv").hide();
+			});*/
+			jq.ajax({
 				type:"POST",
 				dataType:"json",
-				data:$("#loginform").serialize(),
+				data:jq("#loginform").serialize(),
 				url:"userlogin",
 				success:function(data){
 					 if(data=='0'){
-						 //location.href="test.jsp";
 						 location.href="main.jsp";
 					  }
 					  if(data=='1'){
@@ -85,7 +88,7 @@
 		}
 	}
 
-	$(document).keyup(function(event) {
+	jq(document).keyup(function(event) {
 		if (event.keyCode == 13) {
 			checkFact();
 		}
@@ -155,12 +158,11 @@
 		
 	</div>
 	<div id="mydiv">
-	    <div class="loader"></div>
-		<!-- <p>  		    
+	    <!--  <div class="loader"></div>
+		 <p>  		    
 			<img alt="" src="images/loading005.gif"/><br/> Loading....
-		</p> -->
-	</div>
-	<!--  <div class="copyright" >Copyright © 2014,東莞加元鞋材制品有限公司,All Rights Reserved</div>-->
+		</p> 
+	</div>-->	
 	<jsp:include page="copyright_login.jsp"/>
 </body>
 </html>

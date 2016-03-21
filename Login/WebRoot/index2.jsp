@@ -14,10 +14,20 @@
   <style type="text/css">
     body{background-image:url(images/bg.jpg);}
   </style>
-  <script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script>
+  <!-- <script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script>-->
+  <script src="http://apps.bdimg.com/libs/jquery/1.9.1/jquery.min.js"></script> 
+<script>window.jQuery || document.write('<script src="/jquery/jquery-1.9.1.min.js"><\/script>');</script>
   <script type="text/javascript" src="jquery/layer/layer.min.js"></script>
   <script type="text/javascript">
-     function checkFact() {
+  var jq=jQuery.noConflict();
+	var loadi;
+	jq(document).ajaxStart(function(){
+		loadi=layer.load("正在登錄,請稍等...");
+	});
+	jq(document).ajaxStop(function(){
+		layer.close(loadi);
+	});
+  function checkFact() {
 		var factNO = document.getElementById("factNo");
 		var names = document.getElementById("user");
 		var password = document.getElementById("pwd");
@@ -28,18 +38,18 @@
 		    /*注意：要先提交，再顯示加載層，否則gif圖片不會動  */		    
 		    //document.getElementById('subform').submit();
 		    //layer.load("正在登錄中,請稍等.....");
-		    $(document).ajaxStart(function(){
+		    /*jq(document).ajaxStart(function(){
 		    	loadi=layer.load("正在登錄,請稍等.....");
 		    });
-		    $(document).ajaxStop(function(){
+		    jq(document).ajaxStop(function(){
 		    	layer.close(loadi);
-		    });
-			$.ajax({
+		    });*/
+			jq.ajax({
 			  type:"POST",
 			  url:"userlogin",
 			  dataType:"json",
 			  //data:"webUsers.username="+names.value+"&webUsers.pwd="+password.value+"&factNo="+factNO.value,
-			  data:$("#subform").serialize(),
+			  data:jq("#subform").serialize(),
 			  success:function(data){
 				  if(data=='0'){
 					 //location.href="test.jsp"; 
@@ -63,7 +73,7 @@
 		}						
 	}
 	
-	$(document).keyup(function(event) {
+	jq(document).keyup(function(event) {
 		if (event.keyCode == 13) {
 			checkFact();
 		}
@@ -119,8 +129,7 @@
 		<p>		
 			<img alt="" src="images/loading006.gif" id="img_loading"><br> Loading....
 		</p>		
-	</div>	 -->
-	   <!--  <div class="copyright" >Copyright © 2014,東莞加元鞋材制品有限公司,All Rights Reserved</div>-->
+	</div>	 -->	   
 	   <jsp:include page="copyright_login.jsp"/>	  	
 </body>
 </html>

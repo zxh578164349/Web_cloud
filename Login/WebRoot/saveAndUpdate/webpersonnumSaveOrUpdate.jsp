@@ -153,7 +153,7 @@ window.onload=function(){
 				<tr>
 					<td class="td_show_title">日期</td>
 					<td class="td_input"><input type="text" name="yymm"
-						onClick="WdatePicker()" class="Wdate" datatype="*" id="dwr_yymmdd" onchange="check()"/><span id="error3"></span></td>
+						onClick="WdatePicker({dateFmt:'yyyyMMdd'})" class="Wdate" datatype="*" id="dwr_yymmdd" onchange="check()"/><span id="error3"></span></td>
 					<td class="td_show_title">直工應到人數(人)</td>
 					<td class="td_input"><input type="text"
 						name="person.standardnumzg"

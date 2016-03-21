@@ -155,7 +155,7 @@ window.onload=function(){
 				<tr>
 					<td class="td_show_title">日期</td>
 					<td class="td_input"><input type="text" name="date"
-						onClick="WdatePicker()" class="Wdate" datatype="*" id="dwr_yymmdd" onchange="check()"/><span id="error3"></span></td>
+						onClick="WdatePicker({dateFmt:'yyyyMMdd'})" class="Wdate" datatype="*" id="dwr_yymmdd" onchange="check()"/><span id="error3"></span></td>
 					<td class="td_show_title">生管實際交單雙數(雙)</td>
 					<td class="td_input"><input type="text" name="cashout.realpairs"
 						value="<s:property value='cashout.realpairs' />" datatype="*0-9">

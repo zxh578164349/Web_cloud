@@ -268,7 +268,7 @@ jq(function(){
 					<td class="td_show_title">進廠時間</td>
 					<td class="td_input"><input type="text" id="addtime"
 						value="<s:property value='fix.addTime'/>" name="fix.addTime"
-						onClick="WdatePicker()" class="Wdate" datatype="*"
+						onClick="WdatePicker({dateFmt:'yyyyMMdd'})" class="Wdate" datatype="*"
 						onblur="makeSsetscoding()" /> <input type="hidden"
 						id="majorname_hidden" value="<s:property value='fix.majorName'/>"
 						name="fix.majorName" readonly /> <input type="hidden"
@@ -439,7 +439,7 @@ jq(function(){
 					<td class="td_input">
 						<input type="text" 
 						value="<s:property value='fix.checkdate'/>" name="fix.checkdate"
-						onClick="WdatePicker()" class="Wdate"/> 
+						onClick="WdatePicker({dateFmt:'yyyyMMdd'})" class="Wdate"/> 
 						</td>
 						
 						<td class="td_show_title">是否可刪除</td>

@@ -19,7 +19,9 @@
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
 </head>
-<script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script> 
+<!--<script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script> -->
+<script src="http://apps.bdimg.com/libs/jquery/1.9.1/jquery.min.js"></script> 
+<script>window.jQuery || document.write('<script src="/jquery/jquery-1.9.1.min.js"><\/script>');</script>
 <script type="text/javascript" src="jquery/layer/layer.min.js"></script>
 
 
