@@ -627,11 +627,11 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 	
 	/**
 	 * 審核
-	 * 審核之後就是備註修改
+	 * 
 	 * @return
 	 */
 		
-	public void add() throws IOException{
+	/*public void add() throws IOException{
 		KyVisabillm vbm=visabillmSer.findById(factNo, visaSort, billNo);
 		if(itemNo==null||itemNo.equals("")){
 			itemNo=vbm.getItemNext();
@@ -642,9 +642,9 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 		String next_singer="";
 		int num_next=0;		
 		KyVisabills vbs=vbm.getKyVisabillses().get(num);
-		/**
+		*//**
 		 * 如果最後一個不要審核,則要去掉(也就是總長度-1)（現在，>=1000的最後三位都不要審核，則總長度-3      20150803）
-		 */
+		 *//*
 		int vbs_size=vbm.getKyVisabillses().size();	
 		int nos=visabillSer.findBillsWithNo(visaSort, billNo);
 		if(nos>0){
@@ -683,7 +683,7 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 		vbm.setItemNext(item_next);	   //下一項次	
 				
 		//標記當前審核人的信息,並保存在session中,用於備註修改				
-		/******************************remark***********************************/										
+		*//******************************remark***********************************//*										
 				String dateVisa=format.format(new Date());
 				vbs.setDateVisa(dateVisa);
 				vbs.setMemo(memo);
@@ -698,11 +698,99 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 					vbm.setMemoMk(memo);																			
 				}		
 				visabillmSer.add(vbm);								
+		*//******************************remark***********************************//*
+	}*/
+	
+	
+	/**
+	 * 登錄web審核
+	 * @throws IOException
+	 */
+	public void add() throws IOException{
+		try{
+			response.setContentType("text/html;charset=utf-8");
+			response.getWriter().print("<script>window.parent.layer.load('正在處理...')</script>");
+			KyVisabillm vbm=visabillmSer.findById(factNo, visaSort, billNo);
+			if(itemNo==null||itemNo.equals("")){
+				itemNo=vbm.getItemNext();
+			}
+			SimpleDateFormat format=new SimpleDateFormat("yyyyMMdd_hh");
+			int num_temp=Integer.parseInt(itemNo);//把項次轉化為數字
+			int num=Integer.parseInt(itemNo)-1;//用於識別KyVisabills集合裡的每幾個對象									
+			String next_singer="";
+			int num_next=0;		
+			KyVisabills vbs=vbm.getKyVisabillses().get(num);
+			/**
+			 * 如果最後一個不要審核,則要去掉(也就是總長度-1)（現在，>=1000的最後三位都不要審核，則總長度-3      20150803）
+			 */
+			int vbs_size=vbm.getKyVisabillses().size();	
+			int nos=visabillSer.findBillsWithNo(visaSort, billNo);
+			if(nos>0){
+				vbs_size=vbs_size-nos;
+			}				
+			String last_singer=vbm.getKyVisabillses().get(num).getVisaSigner();								
+			if(visa_mk.equals("Y")){//start if
+				//當最後一個審核人時
+				
+				if((num+1)==vbs_size){
+					vbm.setVisaMk(visa_mk);
+					next_singer=vbm.getKyVisabillses().get(num).getVisaSigner();
+					num_next=num_temp;
+				}else{
+					next_singer=vbm.getKyVisabillses().get(num+1).getVisaSigner();
+					num_next=num_temp+1;
+				}
+			}//end if
+			if(visa_mk.equals("T")){//start if2
+				vbm.setVisaMk(visa_mk);
+				num_next=1; //退回第一項次
+				next_singer=vbm.getKyVisabillses().get(0).getVisaSigner();//退回第一個Email											
+			}// end if2
+			vbs.setDateVisa(format.format(new Date()));
+			vbs.setVisaMk(visa_mk);//子表的當前狀態
+			vbm.setSignerLast(last_singer);//當前人Email
+			vbm.setSignerNext(next_singer);//下一個人Email
+			vbm.setLastMk(visa_mk);        //當前狀態  
+			String item_next=""; 
+			if(num_next<10){
+				item_next="0"+num_next;
+			}else{
+				item_next=num_next+"";
+			}
+			vbm.setItemLast(itemNo);       //當前項次
+			vbm.setItemNext(item_next);	   //下一項次	
+					
+			//標記當前審核人的信息,並保存在session中,用於備註修改				
+			/******************************remark***********************************/										
+					String dateVisa=format.format(new Date());
+					vbs.setDateVisa(dateVisa);
+					vbs.setMemo(memo);
+					String lastmk=vbm.getLastMk();
+					
+					if(lastmk.equals("Y")){										
+						if(num_temp==vbm.getKyVisabillses().size()){
+							vbm.setMemoMk(memo);							
+						}
+					}
+					if(lastmk.equals("T")){
+						vbm.setMemoMk(memo);																			
+					}
+					visabillmSer.add(vbm);
+					
+					response.getWriter().print("<script>window.parent.location.href='success.html'</script>");						
+		}catch(Exception e){
+			System.out.println(e);
+			response.setContentType("text/html;charset=utf-8");
+			response.getWriter().print("<script>window.parent.layer.msg('審核失敗',3,3)</script>");
+			
+		}
+									
 		/******************************remark***********************************/
 	}
 	
 	/**
-	 * 手機平板返回(bootstrap)
+	 * 郵件進入審核（bootstrap）
+	 * 20160321
 	 * @return
 	 * @throws IOException
 	 */
@@ -712,8 +800,8 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 	}
 	
 	/**
-	 * 電腦返回
-	 * (好像暫無使用20160112)
+	 * 暫無使用
+	 * 20160321
 	 * @throws IOException 
 	 */
 	public String add3() throws IOException{

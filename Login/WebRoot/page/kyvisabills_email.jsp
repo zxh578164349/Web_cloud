@@ -87,6 +87,7 @@ function goYes(){
 	     alert("備註不可超過150字");
 	  }else{
 	     document.getElementById("visa_mk").value="Y";
+	     window.location.href='success.html';
 	     document.getElementById("memo").submit();
 	     layer.load("正在處理，請稍等...");
 	  } 
@@ -101,6 +102,7 @@ function goNo(){
 	     alert("備註不可超過150字");
 	  }else{
 	     document.getElementById("visa_mk").value="T";
+	     window.location.href='success.html';
 	     document.getElementById("memo").submit();
 	     layer.load("正在處理，請稍等...");
 	  }
@@ -247,7 +249,7 @@ aria-labelledby="myModalLabelA" aria-hidden="true">
 			 <div class="modal-footer">
 			 
 			    <!--------------------------- 修改4 20151025 --------------------------------------->
-				<form action="vbm_add2" method="post" id="memo" role="form" />
+				<form action="vbm_add" method="post" id="memo" role="form" />
 				<div class="form-group">
 					<label>備註↓↓↓</label>
 					<textarea class="form-control" rows="3" name="memo" id="memo_txt"></textarea>			             			          

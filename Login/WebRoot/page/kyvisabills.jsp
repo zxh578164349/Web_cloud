@@ -117,10 +117,9 @@
      layer.getChildFrame("#visa_mk",layer.index).val('Y'); 
      if(memo.length>150){
        alert("備註不可超過150字");
-     }else{
-       window.location.href='vbm_findPageBean';      
+     }else{       
        layer.getChildFrame("#memo",layer.index).submit();
-       layer.load("正在處理，請稍等...");        
+       loadUrl("vbm_findPageBean");          
      }        
     },
     no:function(){
@@ -131,9 +130,8 @@
      if(memo.length>150){
         alert("備註不可超過150字");
      }else{
-      window.location.href='vbm_findPageBean';
       layer.getChildFrame("#memo",layer.index).submit();
-     layer.load("正在處理，請稍等...");            
+      loadUrl("vbm_findPageBean");        
      } 
      
      /*********************** 修改2   20151025 ******************************/ 
