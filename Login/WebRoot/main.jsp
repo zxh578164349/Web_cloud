@@ -15,12 +15,12 @@
 <LINK href="css/list.css" type="text/css" rel="stylesheet">
 <!-- <script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script> -->
 <script src="http://apps.bdimg.com/libs/jquery/1.9.1/jquery.min.js"></script> 
-<script>window.jQuery || document.write('<script src="/jquery/jquery-1.9.1.min.js"><\/script>');</script>
+<script>window.jQuery || document.write('<script src="jquery/jquery-1.9.1.min.js"><\/script>');</script>
 <script type="text/javascript" src="page/jquerys/layer/layer.min.js"></script>
 <script type="text/javascript" src="jquery/DatePicker/WdatePicker.js"></script>
 <script type="text/javascript" src="jquery/Validform_v5.3.2_min.js"></script>
 <!-- <script type="text/javascript" src="jquery/jquery-form.js"></script>-->
-<script>window.jQuery || document.write('<script src="/jquery/jquery-form.js"><\/script>');</script>
+<script>window.jQuery || document.write('<script src="jquery/jquery-form.js"><\/script>');</script>
 <!-- 新 Bootstrap 核心 CSS 文件 -->
 <!-- <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">-->
 <link href="http://apps.bdimg.com/libs/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">

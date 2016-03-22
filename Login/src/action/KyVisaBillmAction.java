@@ -703,7 +703,8 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 	
 	
 	/**
-	 * 登錄web審核
+	 * 登錄web審核和郵件審核
+	 * 20160322
 	 * @throws IOException
 	 */
 	public void add() throws IOException{
@@ -789,7 +790,7 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 	}
 	
 	/**
-	 * 郵件進入審核（bootstrap）
+	 * (暫無使用)郵件進入審核（bootstrap）
 	 * 20160321
 	 * @return
 	 * @throws IOException

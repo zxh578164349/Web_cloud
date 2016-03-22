@@ -16,7 +16,7 @@
   </style>
   <!-- <script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script>-->
   <script src="http://apps.bdimg.com/libs/jquery/1.9.1/jquery.min.js"></script> 
-<script>window.jQuery || document.write('<script src="/jquery/jquery-1.9.1.min.js"><\/script>');</script>
+<script>window.jQuery || document.write('<script src="jquery/jquery-1.9.1.min.js"><\/script>');</script>
   <script type="text/javascript" src="jquery/layer/layer.min.js"></script>
   <script type="text/javascript">
   var jq=jQuery.noConflict();

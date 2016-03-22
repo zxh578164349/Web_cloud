@@ -44,7 +44,7 @@
 					loadUrl("/Login/webmix2_getList");
 				}else if(data=="2"){
 					//alert(data.responseText);
-					layer.msg("數據庫已存在",3,3);
+					layer.msg("數據已存在",3,3);
 				}else{
 					layer.msg("提交失敗",3,3);
 				}				

@@ -2120,7 +2120,7 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 	 */
 	public HSSFCellStyle findStyle_red(HSSFWorkbook wb,int j){
 		Map<String,Object>map=findStyles(wb);
-		HSSFCellStyle cs_temp2=wb.createCellStyle();		
+		HSSFCellStyle cs_temp2=(HSSFCellStyle)map.get("cs");		
 			//數字格式的選擇
 			if(j==0||(j>=5&&j<=9)||j==11||j==17||j==41){								
 				cs_temp2= (HSSFCellStyle)map.get("cs_poi_bg");
@@ -2147,7 +2147,7 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 	 */
 	public HSSFCellStyle findStyle(HSSFWorkbook wb,int j){
 		Map<String,Object>map=findStyles(wb);
-		HSSFCellStyle cs_temp2=wb.createCellStyle();		
+		HSSFCellStyle cs_temp2=(HSSFCellStyle)map.get("cs");		
 			//數字格式的選擇
 			if(j==0||(j>=5&&j<=9)||j==11||j==17||j==41){								
 				cs_temp2= (HSSFCellStyle)map.get("cs_poi");
