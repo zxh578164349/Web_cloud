@@ -1140,7 +1140,7 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 					for(int j=0;j<list_str.size();j++){
 						HSSFRow row=sheet.getRow(4+j+cursor*k);
 						HSSFCell cell=row.createCell(i+3+temp_num);
-						HSSFCellStyle cs_temp=wb.createCellStyle();
+						//HSSFCellStyle cs_temp=wb.createCellStyle();
 						//數字格式的選擇
 						/*if(j==0||j==2){
 							cs_temp=cs_poi1;
@@ -1153,7 +1153,7 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 						}else{
 							cs_temp=cs_percent;
 						}*/
-						cs_temp=this.findStyle(wb, j);
+						HSSFCellStyle cs_temp=this.findStyle(wb, j);
 						cell.setCellValue(list_content.get(j));
 						cell.setCellStyle(cs_temp);
 																		
@@ -1169,7 +1169,7 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 						HSSFRow row=sheet.getRow(4+j+cursor*k);
 						HSSFCell cell=row.createCell(i+3+temp_num);
 						//數字格式的選擇
-						HSSFCellStyle cs_temp=wb.createCellStyle();
+						//HSSFCellStyle cs_temp=wb.createCellStyle();
 						/*if(j==0||j==2){
 							cs_temp=cs_poi1;
 						}else if(j==1||j==5||j==6||j==9||j==10){
@@ -1181,7 +1181,7 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 						}else{
 							cs_temp=cs_percent;
 						}*/
-						cs_temp=this.findStyle(wb, j);
+						HSSFCellStyle cs_temp=this.findStyle(wb, j);
 						cell.setCellValue("無數據");						
 						cell.setCellStyle(cs_temp);												
 						if(i==list_months.size()-1){							
@@ -1418,7 +1418,7 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 					default:																		
 						HSSFCell cell_3=row.createCell(b);
 						//數字格式的選擇
-						HSSFCellStyle cs_temp=wb.createCellStyle();
+						//HSSFCellStyle cs_temp=wb.createCellStyle();
 						
 						/*if(c==0||c==2){
 							cs_temp=cs_poi1;
@@ -1437,7 +1437,7 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 							Double kpi_content=list_kpi.get(c);
 							cell_3.setCellValue(kpi_content);
 						}
-						cs_temp=this.findStyle(wb, c);
+						HSSFCellStyle cs_temp=this.findStyle(wb, c);
 						cell_3.setCellStyle(cs_temp);
 						break;
 					}
