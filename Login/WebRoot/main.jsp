@@ -108,8 +108,24 @@ var jq=jQuery.noConflict();
 jq(document).ready(function(){
    jq("a[name='alink']").click(function(){
    jq("a[name='alink']").removeClass("linkbg");
-   jq(this).addClass("linkbg");
+   jq(this).addClass("linkbg"); 
 });
+   jq("a[name='alink']").removeAttr("href");
+   jq("a[name='alink']").removeAttr("onClick");
+   
+   var alinks=jq("a[name='alink']");
+   var ahidens=jq("input[name='a_hidden']");
+   for(var i=0;i<alinks.length;i++){
+	   for(var j=0;j<ahidens.length;j++){
+		   var array=ahidens.eq(j).val().split(",");
+		   if(alinks.eq(i).html().replace(/(^\s+)|\s+$/g,"")==array[0]){			   
+			   alinks.eq(i).attr("href","javascript:findPageBean('"+array[1]+"')");
+			   alinks.eq(i).removeClass("a_disable");
+			   break;
+		   }
+	   }
+   }
+   
 });
 
 function findPageBean(url){
@@ -163,36 +179,52 @@ function findById(subform,url){
 								 > 網站首頁</a>
 							</span> 
 						</div>
-						<div class="panel-body">
+						<%--<div class="panel-body">
 							<s:iterator value="#session.loginUser.webJurisdictions" status="x" id="menu">								
-								<div>
-								      
-									    <!--<img  id="img${x.index}" src="image/folder.gif">-->										 
+								<div>								      									 
 										<a href="javascript:showDiv_main('${x.index}')" class="mmenu_font">
-										<span id="a${x.index}" class="glyphicon glyphicon-folder-close">&nbsp;<s:property value="webMenu.menuname" /></span> </a>																					
+										   <span id="a${x.index}" class="glyphicon glyphicon-folder-close">&nbsp;<s:property value="webMenu.menuname" /></span>
+									    </a>																					
 									<div id="submenu${x.index}" style="display:none">
 										<s:iterator value="webSubmenus" status="x">
-											<div style="overflow:hidden">
-												 <!--<img src="images/files.gif">-->
-												 <span class="glyphicon glyphicon-file">
-												  <!--  <s:if test="submenuname=='KPI工廠與KPI台灣'">												    
-												     <font style="color:red;font-size:10px"><s:property value='submenuname' />(維護中)</font>
-												   </s:if>
-												   <s:else>
-												      <a name="alink" href="javascript:findPageBean('<s:property value="address"/>')"																										
-													 class="smenu_font" title="<s:property value='submenuname'/>">																										
-													<s:property value="submenuname" /> </a>
-												   </s:else> -->
+											<div style="overflow:hidden">											
+												 <span class="glyphicon glyphicon-file">												  
 												   	<a name="alink" href="javascript:findPageBean('<s:property value="address"/>')"																										
 													 class="smenu_font" title="<s:property value='submenuname'/>">																										
 													<s:property value="submenuname" /> </a>											    
-												 </span>
-												   
+												 </span>												   
 											</div>
 										</s:iterator>
 									</div>
 								</div>
 							</s:iterator>
+						</div>--%>
+						<div class="panel-body">
+						    <s:iterator value="#session.login_menus" status="x" id="menu">
+						        <div>
+						           <a href="javascript:showDiv_main('${x.index}')" class="mmenu_font">
+										   <span id="a${x.index}" class="glyphicon glyphicon-folder-close">&nbsp;<s:property value="menuname"/></span>
+								   </a>
+								   <div id="submenu${x.index}" style="display:none">
+								       <s:iterator value="submenus" status="x" id="submenu">
+								          <div>
+								             <span class="glyphicon glyphicon-file">												  
+												   	<a name="alink" href="javascript:findPageBean('<s:property value="address"/>')"																										
+													 class="smenu_font a_disable" title="<s:property value='submenuname'/>" >																										
+													      <s:property value="submenuname" />
+													</a>											    
+											</span> 
+								          </div>
+								       </s:iterator>
+								   </div>
+						        </div>
+						    </s:iterator>
+						    
+						    <s:iterator value="#session.loginUser.webJurisdictions">
+			                    <s:iterator value="webSubmenus">
+			                        <input type="hidden" value="<s:property value='submenuname'/>,<s:property value='address'/>" name="a_hidden"/>
+			                    </s:iterator>
+		                   </s:iterator>
 						</div>
 					</div>
 			</div>

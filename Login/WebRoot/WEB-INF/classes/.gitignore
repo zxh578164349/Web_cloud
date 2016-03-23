@@ -1,8 +1,7 @@
-/entity
-/log4j.properties
 /action
 /dao
 /email
+/entity
 /entity_temp
 /mail
 /override

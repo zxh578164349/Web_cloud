@@ -140,24 +140,7 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 		HSSFCellStyle cs=(HSSFCellStyle)map.get("cs");		
 		//表頭樣式
 		HSSFCellStyle cs_column=(HSSFCellStyle)map.get("cs_column");
-				
-		/**
-		 * 數字格式（有背景顏色與無背景顏色）
-		 */
-		
-		/*//無背景
-		HSSFCellStyle cs_percent=(HSSFCellStyle)map.get("cs_percent");				
-		HSSFCellStyle cs_poi=(HSSFCellStyle)map.get("cs_poi");	
-		HSSFCellStyle cs_poi1=(HSSFCellStyle)map.get("cs_poi1");		
-		HSSFCellStyle cs_poi2=(HSSFCellStyle)map.get("cs_poi2");
-		HSSFCellStyle cs_poi4=(HSSFCellStyle)map.get("cs_poi4");		
-		//有背景
-		HSSFCellStyle cs_percent_bg=(HSSFCellStyle)map.get("cs_percent_bg");				
-		HSSFCellStyle cs_poi_bg=(HSSFCellStyle)map.get("cs_poi_bg");		
-		HSSFCellStyle cs_poi1_bg=(HSSFCellStyle)map.get("cs_poi1_bg");	
-		HSSFCellStyle cs_poi2_bg=(HSSFCellStyle)map.get("cs_poi2_bg");		
-		HSSFCellStyle cs_poi4_bg=(HSSFCellStyle)map.get("cs_poi4_bg");*/
-										
+													
 		/**
 		 * 獲取要循環的數據
 		 */
@@ -389,6 +372,16 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 		}// end for1
 		
 		
+		
+		//填充標題(放在循環外面)
+		CellRangeAddress addTitle=new CellRangeAddress(0,(short)0,0,(short)list_column.size()-1);
+		sheet.addMergedRegion(addTitle);
+		sheet.createRow(0).createCell(0).setCellValue(title);
+		sheet.getRow(0).getCell(0).setCellStyle(cs_head);
+		
+		for(int a=1;a<list_column.size();a++){
+			sheet.getRow(0).createCell(a).setCellStyle(cs_head);
+		}
 		for(int k=0;k<list_factcode.size();k++){//start for1			
 			WebFact fact=list_factcode.get(k);
 			String factCode=fact.getId().getFactArea();	
@@ -397,18 +390,10 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 			if(kpi_pur!=null){//start if2(20150327)
 				list_content_pur=kpiFactToDouble(kpi_pur);	//KpiFact目標各項封裝到List<Double>									
 			}//end if2
-			
-			//填充標題
-			CellRangeAddress addTitle=new CellRangeAddress(0,(short)0,0,(short)list_column.size()-1);
-			sheet.addMergedRegion(addTitle);
-			sheet.createRow(0).createCell(0).setCellValue(title);
-			sheet.getRow(0).getCell(0).setCellStyle(cs_head);
-			for(int a=1;a<list_column.size();a++){
-				sheet.getRow(0).createCell(a).setCellStyle(cs_head);
-			}
+						
 			//填充表頭(包括廠別狀態)
-			sheet.createRow(2+45*k).createCell(0).setCellValue("形態:"+factCode);
-			HSSFRow row_columnHead=sheet.createRow(3+45*k);			
+			sheet.createRow(2+cursor*k).createCell(0).setCellValue("形態:"+factCode);
+			HSSFRow row_columnHead=sheet.createRow(3+cursor*k);			
 			for(int h=0;h<list_column.size();h++){
 				String column=list_column.get(h);
 				HSSFCell cell_columnHead=row_columnHead.createCell(h);
@@ -451,7 +436,7 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 						}else{
 							index=""+(j+1);
 						}
-						HSSFRow row=sheet.createRow(4+j+45*k);
+						HSSFRow row=sheet.createRow(4+j+cursor*k);
 						HSSFCell cell0=row.createCell(i);
 						HSSFCell cell1=row.createCell(i+1);
 						HSSFCell cell2=row.createCell(i+2);
@@ -462,20 +447,8 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 						cell1.setCellStyle(cs);
 						cell2.setCellValue(list_unit.get(j));
 						cell2.setCellStyle(cs);
-						HSSFCellStyle cs_temp=findStyle(wb, j);
-						if(kpi_pur!=null){							
-							//數字格式的選擇
-							/*if(j==0||j==2){
-								cs_temp=cs_poi1;
-							}else if(j==1||j==5||j==6||j==9||j==10){
-								cs_temp=cs_poi;
-							}else if(j>12&&j<17){
-								cs_temp=cs_poi4;
-							}else if(j>7&&j<13||j==22||j==23){
-								cs_temp=cs_poi2;
-							}else{
-								cs_temp=cs_percent;
-							}*/
+						HSSFCellStyle cs_temp=findStyle(wb, j,map);//數字格式的選擇	
+						if(kpi_pur!=null){																				
 							cell3.setCellValue(list_content_pur.get(j));
 							cell3.setCellStyle(cs_temp);
 						}else{
@@ -539,23 +512,9 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 				 * 開始2
 				 */
 				for(int j=0;j<list_str.size();j++){
-					HSSFRow row=sheet.getRow(4+j+45*k);
+					HSSFRow row=sheet.getRow(4+j+cursor*k);
 					HSSFCell cell=row.createCell(i+4+temp_num);
-					HSSFCellStyle cs_temp=findStyle(wb,j);
-					
-					//數字格式的選擇
-					/*if(j==0||j==2){
-						cs_temp=cs_poi1;
-					}else if(j==1||j==5||j==6||j==9||j==10){
-						cs_temp=cs_poi;
-					}else if(j>12&&j<17){
-						cs_temp=cs_poi4;
-					}else if(j>7&&j<13||j==22||j==23){
-						cs_temp=cs_poi2;
-					}else{
-						cs_temp=cs_percent;
-					}*/
-					cell.setCellStyle(cs_temp);
+					//HSSFCellStyle cs_temp=findStyle(wb,j);//格式的選擇											
 					/**
 					 * 20150327
 					 * 開始3
@@ -564,29 +523,7 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 					if(kpi!=null&&kpi_pur!=null){						
 						Double num1=list_content.get(j);//實際值
 						Double num2=list_content_pur.get(j);//預計值	
-						HSSFCellStyle cs_temp2=findStyle(wb,num1,num2,j);
-						/*boolean flag=true;
-						if(j==0||j==1||j==2||j==4||j==8||j==9||j==10||j==11||j==12||j==22){
-							flag=num1<num2;
-						}else{
-							flag=num1>num2;
-						}
-						if(flag){//start if
-							//數字格式的選擇
-							if(j==0||j==2){								
-								cs_temp2=cs_poi1_bg;
-							}else if(j==1||j==5||j==6||j==9||j==10){
-								cs_temp2=cs_poi_bg;
-							}else if(j>12&&j<17){
-								cs_temp2=cs_poi4_bg;
-							}else if(j>7&&j<13||j==22||j==23){
-								cs_temp2=cs_poi2_bg;
-							}else{
-								cs_temp2=cs_percent_bg;
-							}
-							cell.setCellStyle(cs_temp2);
-						}//end if						
-*/					
+						HSSFCellStyle cs_temp2=findStyle(wb,num1,num2,j,map);//數字格式的選擇											
 						cell.setCellStyle(cs_temp2);
 					}					
 					/**
@@ -598,7 +535,6 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 					}else{
 						cell.setCellValue("無數據");
 					}
-					//cell.setCellStyle(cs_temp);
 					
 					/**
 					 * 開始4	
@@ -607,35 +543,10 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 					if(i==2){
 						HSSFCell cell2=row.createCell(i+5+temp_num);//第一季度
 						cell2.setCellValue(list3_q1.get(j));
-						cell2.setCellStyle(cs_temp);
 						if(kpi_pur!=null){//start if
 							Double num1=list3_q1.get(j);
-							Double num2=list_content_pur.get(j);
-							/*cs_temp=wb.createCellStyle();
-							
-							boolean flag=true;
-							if(j==0||j==1||j==2||j==4||j==8||j==9||j==10||j==11||j==12||j==22){
-								flag=num1<num2;
-							}else{
-								flag=num1>num2;
-							}
-							if(flag){
-								//HSSFCellStyle cs_temp_q1=wb.createCellStyle();
-								//數字格式的選擇
-								if(j==0||j==2){								
-									cs_temp=cs_poi1_bg;
-								}else if(j==1||j==5||j==6||j==9||j==10){
-									cs_temp=cs_poi_bg;
-								}else if(j>12&&j<17){
-									cs_temp=cs_poi4_bg;
-								}else if(j>7&&j<13||j==22||j==23){
-									cs_temp=cs_poi2_bg;
-								}else{
-									cs_temp=cs_percent_bg;
-								}
-								cell2.setCellStyle(cs_temp);
-							}*/
-							cell2.setCellStyle(findStyle(wb,num1,num2,j));
+							Double num2=list_content_pur.get(j);							
+							cell2.setCellStyle(findStyle(wb,num1,num2,j,map));
 						}//end if
 						
 					}
@@ -644,88 +555,22 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 						HSSFCell cell3_2=row.createCell(i+6+temp_num);//上半年
 						cell3_1.setCellValue(list3_q2.get(j));
 						cell3_2.setCellValue(list3_half1.get(j));
-						cell3_1.setCellStyle(cs_temp);
-						cell3_2.setCellStyle(cs_temp);
 						if(kpi_pur!=null){//start if
 							Double num1=list3_q2.get(j);
 							Double num2=list3_half1.get(j);
-							Double num3=list_content_pur.get(j);
-							/*boolean flag1=true;
-							boolean flag2=true;
-							if(j==0||j==1||j==2||j==4||j==8||j==9||j==10||j==11||j==12||j==22){								
-								flag1=num1<num3;
-								flag2=num2<num3;
-							}else{
-								flag1=num1>num3;
-								flag2=num2>num3;
-							}
-							if(flag1){
-								//HSSFCellStyle cs_temp_q2=wb.createCellStyle();
-								//數字格式的選擇
-								if(j==0||j==2){								
-									cs_temp=cs_poi1_bg;
-								}else if(j==1||j==5||j==6||j==9||j==10){
-									cs_temp=cs_poi_bg;
-								}else if(j>12&&j<17){
-									cs_temp=cs_poi4_bg;
-								}else if(j>7&&j<13||j==22||j==23){
-									cs_temp=cs_poi2_bg;
-								}else{
-									cs_temp=cs_percent_bg;
-								}
-								cell3_1.setCellStyle(cs_temp);
-							}
-							if(flag2){
-								//HSSFCellStyle cs_temp_half1=wb.createCellStyle();
-								//數字格式的選擇
-								if(j==0||j==2){								
-									cs_temp=cs_poi1_bg;
-								}else if(j==1||j==5||j==6||j==9||j==10){
-									cs_temp=cs_poi_bg;
-								}else if(j>12&&j<17){
-									cs_temp=cs_poi4_bg;
-								}else if(j>7&&j<13||j==22||j==23){
-									cs_temp=cs_poi2_bg;
-								}else{
-									cs_temp=cs_percent_bg;
-								}	
-								cell3_2.setCellStyle(cs_temp);
-							}*/
-							cell3_1.setCellStyle(findStyle(wb,num1,num3,j));
-							cell3_2.setCellStyle(findStyle(wb,num2,num3,j));
+							Double num3=list_content_pur.get(j);							
+							cell3_1.setCellStyle(findStyle(wb,num1,num3,j,map));
+							cell3_2.setCellStyle(findStyle(wb,num2,num3,j,map));
 						}//end if
 						
 					}
 					if(i==8){
 						HSSFCell cell4=row.createCell(i+5+temp_num);//第三季度
 						cell4.setCellValue(list3_q3.get(j));
-						cell4.setCellStyle(cs_temp);
 						if(kpi_pur!=null){//start if
 							Double num1=list3_q3.get(j);
-							Double num2=list_content_pur.get(j);
-							/*boolean flag=true;
-							if(j==0||j==1||j==2||j==4||j==8||j==9||j==10||j==11||j==12||j==22){
-								flag=num1<num2;
-							}else{
-								flag=num1>num2;
-							}
-							if(flag){
-								//HSSFCellStyle cs_temp_q3=wb.createCellStyle();
-								//數字格式的選擇
-								if(j==0||j==2){								
-									cs_temp=cs_poi1_bg;
-								}else if(j==1||j==5||j==6||j==9||j==10){
-									cs_temp=cs_poi_bg;
-								}else if(j>12&&j<17){
-									cs_temp=cs_poi4_bg;
-								}else if(j>7&&j<13||j==22||j==23){
-									cs_temp=cs_poi2_bg;
-								}else{
-									cs_temp=cs_percent_bg;
-								}
-								cell4.setCellStyle(cs_temp);
-							}*/
-							cell4.setCellStyle(findStyle(wb,num1,num2,j));
+							Double num2=list_content_pur.get(j);							
+							cell4.setCellStyle(findStyle(wb,num1,num2,j,map));
 						}//end if
 						
 					}
@@ -735,76 +580,15 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 						HSSFCell cell5_3=row.createCell(i+7+temp_num);//全年
 						cell5.setCellValue(list3_q4.get(j));
 						cell5_2.setCellValue(list3_half2.get(j));
-						cell5_3.setCellValue(list3_year.get(j));
-						cell5.setCellStyle(cs_temp);
-						cell5_2.setCellStyle(cs_temp);
-						cell5_3.setCellStyle(cs_temp);
+						cell5_3.setCellValue(list3_year.get(j));						
 						if(kpi_pur!=null){//start if
 							Double num_q4=list3_q4.get(j);
 							Double num_half2=list3_half2.get(j);
 							Double num_year=list3_year.get(j);
-							Double num=list_content_pur.get(j);
-							/*boolean flag1=true;
-							boolean flag2=true;
-							boolean flag3=true;
-							if(j==0||j==1||j==2||j==4||j==8||j==9||j==10||j==11||j==12||j==22){
-								flag1=num_q4<num;
-								flag2=num_half2<num;
-								flag3=num_year<num;
-							}else{
-								flag1=num_q4>num;
-								flag2=num_half2>num;
-								flag3=num_year>num;
-							}
-							if(flag1){
-								//數字格式的選擇
-								if(j==0||j==2){								
-									cs_temp=cs_poi1_bg;
-								}else if(j==1||j==5||j==6||j==9||j==10){
-									cs_temp=cs_poi_bg;
-								}else if(j>12&&j<17){
-									cs_temp=cs_poi4_bg;
-								}else if(j>7&&j<13||j==22||j==23){
-									cs_temp=cs_poi2_bg;
-								}else{
-									cs_temp=cs_percent_bg;
-								}
-								cell5.setCellStyle(cs_temp);
-							}
-							if(flag2){
-								//數字格式的選擇
-								if(j==0||j==2){								
-									cs_temp=cs_poi1_bg;
-								}else if(j==1||j==5||j==6||j==9||j==10){
-									cs_temp=cs_poi_bg;
-								}else if(j>12&&j<17){
-									cs_temp=cs_poi4_bg;
-								}else if(j>7&&j<13||j==22||j==23){
-									cs_temp=cs_poi2_bg;
-								}else{
-									cs_temp=cs_percent_bg;
-								}
-								cell5_2.setCellStyle(cs_temp);
-								
-							}
-							if(flag3){
-								//數字格式的選擇
-								if(j==0||j==2){								
-									cs_temp=cs_poi1_bg;
-								}else if(j==1||j==5||j==6||j==9||j==10){
-									cs_temp=cs_poi_bg;
-								}else if(j>12&&j<17){
-									cs_temp=cs_poi4_bg;
-								}else if(j>7&&j<13||j==22||j==23){
-									cs_temp=cs_poi2_bg;
-								}else{
-									cs_temp=cs_percent_bg;
-								}
-								cell5_3.setCellStyle(cs_temp);
-							}*/
-							cell5.setCellStyle(findStyle(wb,num_q4,num,j));
-							cell5_2.setCellStyle(findStyle(wb,num_half2,num,j));
-							cell5_3.setCellStyle(findStyle(wb,num_year,num,j));
+							Double num=list_content_pur.get(j);							
+							cell5.setCellStyle(findStyle(wb,num_q4,num,j,map));
+							cell5_2.setCellStyle(findStyle(wb,num_half2,num,j,map));
+							cell5_3.setCellStyle(findStyle(wb,num_year,num,j,map));
 						}//end if
 					}
 			    }
@@ -814,9 +598,7 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 				
 				/**
 				 * 結束2
-				 */
-				
-				
+				 */								
 			}//end for2
 		}//end for1
 		ServletOutputStream os=response.getOutputStream();
@@ -846,22 +628,6 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 		HSSFCellStyle cs=(HSSFCellStyle)map.get("cs");		
 		//表頭樣式
 		HSSFCellStyle cs_column=(HSSFCellStyle)map.get("cs_column");
-		/**
-		 * 數字格式（有背景顏色與無背景顏色）
-		 */
-		
-		//無背景
-		HSSFCellStyle cs_percent=(HSSFCellStyle)map.get("cs_percent");				
-		HSSFCellStyle cs_poi=(HSSFCellStyle)map.get("cs_poi");	
-		HSSFCellStyle cs_poi1=(HSSFCellStyle)map.get("cs_poi1");		
-		HSSFCellStyle cs_poi2=(HSSFCellStyle)map.get("cs_poi2");
-		HSSFCellStyle cs_poi4=(HSSFCellStyle)map.get("cs_poi4");		
-		//有背景
-		HSSFCellStyle cs_percent_bg=(HSSFCellStyle)map.get("cs_percent_bg");				
-		HSSFCellStyle cs_poi_bg=(HSSFCellStyle)map.get("cs_poi_bg");		
-		HSSFCellStyle cs_poi1_bg=(HSSFCellStyle)map.get("cs_poi1_bg");	
-		HSSFCellStyle cs_poi2_bg=(HSSFCellStyle)map.get("cs_poi2_bg");		
-		HSSFCellStyle cs_poi4_bg=(HSSFCellStyle)map.get("cs_poi4_bg");
 						
 		/**
 		 * 獲取要循環的數據
@@ -899,37 +665,7 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 			for(int i=0;i<1;i++){
 				list_kpieve.add(new VKpifactEve());
 			}
-			//合計
-			/*Double total_sumEverydemo=0.00;Double total_sumStandarddemo=0.00;
-			Double total_sumActualdemo=0.00;Double total_sumActualpairs=0.00;
-			Double total_sumFactpairs=0.00;Double total_sumWorkhours=0.00;
-			
-			Double total_personzg=0.00;Double total_personjg=0.00;
-			Double total_timezg=0.00;Double total_timejg=0.00;
-			Double total_addtimezg=0.00;Double total_addtimejg=0.00;
-			Double total_leavenumzg=0.00;Double total_leavenumjg=0.00;
-			Double total_hurtnum=0.00;
-			
-			Double total_invcount=0.00;Double total_sellcount=0.00;
-			Double total_costcount=0.00;Double total_wagezgUsd=0.00;
-			Double total_wagejgUsd=0.00;Double total_cashcount=0.00;
-			
-			Double total_sideweit=0.00;Double total_badweit=0.00;
-			Double total_otherbadweight=0.00;
-			Double total_otherweight=0.00;
-			Double total_productnum=0.00;
-			Double total_noglueweight=0.00;
-			Double total_repairmoney=0.00;
-			
-			Double total_waterton=0.00;Double total_electricdu=0.00;
-			Double total_gaston=0.00;
-			
-			Double total_storenum=0.00;Double total_outnum=0.00;
-			Double total_minusnum=0.00;
-			
-			Double total_actlost=0.00;Double total_avgbuttomweight2=0.00;
-			Double total_instorenum=0.00;*/
-						
+									
 			//中間集合,用於裝"合計"數據
 			List<List<Double>>list2_total=new ArrayList<List<Double>>();
 			
@@ -1005,36 +741,7 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 				      list_kpieve.get(0).setNoglueweight(list_kpieve.get(0).getNoglueweight()+eve.getNoglueweight());
 				      list_kpieve.get(0).setRepairmoney(list_kpieve.get(0).getRepairmoney()+eve.getRepairmoney());
 				      list_kpieve.get(0).setInstorenum(list_kpieve.get(0).getInstorenum()+eve.getInstorenum());
-					
-						/*total_sumEverydemo=total_sumEverydemo+eve.getSumEverydemo().doubleValue();total_sumStandarddemo=total_sumStandarddemo+eve.getSumStandarddemo().doubleValue();
-						total_sumActualdemo=total_sumActualdemo+eve.getSumActualdemo().doubleValue();total_sumActualpairs=total_sumActualpairs+eve.getSumActualpairs().doubleValue();
-						total_sumFactpairs=total_sumFactpairs+eve.getSumFacpairs().doubleValue();total_sumWorkhours=total_sumWorkhours+eve.getWorkhours();
-						
-						total_personzg=total_personzg+eve.getPersonzg();total_personjg=total_personjg+eve.getPersonjg();
-						total_timezg=total_timezg+eve.getTimezg();total_timejg=total_timejg+eve.getTimejg();
-						total_addtimezg=total_addtimezg+eve.getAddtimezg();total_addtimejg=total_addtimejg+eve.getAddtimejg();
-						total_leavenumzg=total_leavenumzg+eve.getLeavenumzg();total_leavenumjg=total_leavenumjg+eve.getLeavenumjg();
-						total_hurtnum=total_hurtnum+eve.getHurtnum();
-						
-						total_invcount=total_invcount+eve.getInvcount();total_sellcount=total_sellcount+eve.getSellcount();
-						total_costcount=total_costcount+eve.getCostcount();total_wagezgUsd=total_wagezgUsd+eve.getWagezgUsd();
-						total_wagejgUsd=total_wagejgUsd+eve.getWagejgUsd();total_cashcount=total_cashcount+eve.getCashcount();
-						
-						total_sideweit=total_sideweit+eve.getSideweit();total_badweit=total_badweit+eve.getBadweit();
-						total_otherbadweight=total_otherbadweight+eve.getOtherbadweight();
-						
-						total_waterton=total_waterton+eve.getWaterton();total_electricdu=total_electricdu+eve.getElectricdu();
-						total_gaston=total_gaston+eve.getGaston();
-						
-						total_storenum=total_storenum+eve.getStorenum();total_outnum=total_outnum+eve.getOutnum();
-						total_minusnum=total_minusnum+eve.getMinusnum();
-						
-						total_actlost=total_actlost+eve.getActlost();total_avgbuttomweight2=total_avgbuttomweight2+eve.getAvgbuttomweight2();
-						total_otherweight=total_otherweight+eve.getOtherweight().doubleValue();
-						total_productnum=total_productnum+eve.getProductednum();
-						total_noglueweight=total_noglueweight+eve.getNoglueweight();
-						total_repairmoney=total_repairmoney+eve.getRepairmoney();
-						total_instorenum=total_instorenum+eve.getInstorenum();*/
+											
 																																			
 				}// end if				
 				//合計				
@@ -1046,17 +753,19 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 			list1_all.add(list2_total);
 		}// end for1
 		
+		
+		//填充標題（放在循環外面）
+		CellRangeAddress addTitle=new CellRangeAddress(0,(short)0,0,(short)list_column.size()-1);
+		sheet.addMergedRegion(addTitle);
+		sheet.createRow(0).createCell(0).setCellValue(title);
+		sheet.getRow(0).getCell(0).setCellStyle(cs_head);
+		for(int a=1;a<list_column.size();a++){
+			sheet.getRow(0).createCell(a).setCellStyle(cs_head);
+		}
 		for(int k=0;k<list_factcode.size();k++){//start for1												
 			WebFact fact=list_factcode.get(k);
 			String factCode=fact.getId().getFactArea();
-			//填充標題
-			CellRangeAddress addTitle=new CellRangeAddress(0,(short)0,0,(short)list_column.size()-1);
-			sheet.addMergedRegion(addTitle);
-			sheet.createRow(0).createCell(0).setCellValue(title);
-			sheet.getRow(0).getCell(0).setCellStyle(cs_head);
-			for(int a=1;a<list_column.size();a++){
-				sheet.getRow(0).createCell(a).setCellStyle(cs_head);
-			}
+			
 			//填充表頭(包括廠別狀態)
 			sheet.createRow(2+cursor*k).createCell(0).setCellValue("形態:"+factCode);
 			HSSFRow row_columnHead=sheet.createRow(3+cursor*k);			
@@ -1139,24 +848,10 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 				if(kpi!=null){	
 					for(int j=0;j<list_str.size();j++){
 						HSSFRow row=sheet.getRow(4+j+cursor*k);
-						HSSFCell cell=row.createCell(i+3+temp_num);
-						//HSSFCellStyle cs_temp=wb.createCellStyle();
-						//數字格式的選擇
-						/*if(j==0||j==2){
-							cs_temp=cs_poi1;
-						}else if(j==1||j==5||j==6||j==9||j==10){
-							cs_temp=cs_poi;
-						}else if(j>12&&j<17){
-							cs_temp=cs_poi4;
-						}else if(j>7&&j<13||j==22||j==23){
-							cs_temp=cs_poi2;
-						}else{
-							cs_temp=cs_percent;
-						}*/
-						HSSFCellStyle cs_temp=this.findStyle(wb, j);
+						HSSFCell cell=row.createCell(i+3+temp_num);						
+						HSSFCellStyle cs_temp=this.findStyle(wb, j,map);
 						cell.setCellValue(list_content.get(j));
-						cell.setCellStyle(cs_temp);
-																		
+						cell.setCellStyle(cs_temp);																		
 						if(i==list_months.size()-1){
 							HSSFCell cell2=row.createCell(i+4+temp_num);//合計
 							cell2.setCellValue(list3_total.get(j));
@@ -1167,21 +862,8 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 				}else{
 					for(int j=0;j<list_str.size();j++){
 						HSSFRow row=sheet.getRow(4+j+cursor*k);
-						HSSFCell cell=row.createCell(i+3+temp_num);
-						//數字格式的選擇
-						//HSSFCellStyle cs_temp=wb.createCellStyle();
-						/*if(j==0||j==2){
-							cs_temp=cs_poi1;
-						}else if(j==1||j==5||j==6||j==9||j==10){
-							cs_temp=cs_poi;
-						}else if(j>12&&j<17){
-							cs_temp=cs_poi4;
-						}else if(j>7&&j<13||j==22||j==23){
-							cs_temp=cs_poi2;
-						}else{
-							cs_temp=cs_percent;
-						}*/
-						HSSFCellStyle cs_temp=this.findStyle(wb, j);
+						HSSFCell cell=row.createCell(i+3+temp_num);						
+						HSSFCellStyle cs_temp=this.findStyle(wb, j,map);
 						cell.setCellValue("無數據");						
 						cell.setCellStyle(cs_temp);												
 						if(i==list_months.size()-1){							
@@ -1225,26 +907,7 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 		HSSFCellStyle cs=(HSSFCellStyle)map.get("cs");		
 		//表頭樣式
 		HSSFCellStyle cs_column=(HSSFCellStyle)map.get("cs_column");
-		/**
-		 * 數字格式（有背景顏色與無背景顏色）
-		 */
-		
-		//無背景
-		HSSFCellStyle cs_percent=(HSSFCellStyle)map.get("cs_percent");				
-		HSSFCellStyle cs_poi=(HSSFCellStyle)map.get("cs_poi");	
-		HSSFCellStyle cs_poi1=(HSSFCellStyle)map.get("cs_poi1");		
-		HSSFCellStyle cs_poi2=(HSSFCellStyle)map.get("cs_poi2");
-		HSSFCellStyle cs_poi4=(HSSFCellStyle)map.get("cs_poi4");		
-		//有背景
-		HSSFCellStyle cs_percent_bg=(HSSFCellStyle)map.get("cs_percent_bg");				
-		HSSFCellStyle cs_poi_bg=(HSSFCellStyle)map.get("cs_poi_bg");		
-		HSSFCellStyle cs_poi1_bg=(HSSFCellStyle)map.get("cs_poi1_bg");	
-		HSSFCellStyle cs_poi2_bg=(HSSFCellStyle)map.get("cs_poi2_bg");		
-		HSSFCellStyle cs_poi4_bg=(HSSFCellStyle)map.get("cs_poi4_bg");
-		
-		
-		
-		
+	
 		//粗藍色字體		
 		HSSFFont font_blue=wb.createFont();
 		font_blue.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
@@ -1269,7 +932,7 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
         	list_factCode=list_factcode;
 			for(int i=0;i<list_factcode.size();i++){
 				String factCode=list_factcode.get(i);
-				List<String>list_factNo=new ArrayList();
+				List<String>list_factNo=new ArrayList<String>();
 				for(int y=0;y<list_factno.size();y++){
 					String temp=list_factno.get(y);
 					String[]objs=temp.split("_");
@@ -1364,25 +1027,7 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 					if(kpi.getAvgCirclehour()==null){
 						kpi.setAvgCirclehour(big);
 					}
-					list_kpi=this.VkpiFactToDouble(kpi);
-					/*list_kpi.add(kpi.getThisYield().doubleValue());
-					list_kpi.add(kpi.getAvgCircle().doubleValue());
-					list_kpi.add(kpi.getAvgCirclehour().doubleValue());
-					list_kpi.add(kpi.getFactaddRate().doubleValue());//--null
-					list_kpi.add(kpi.getProductRate().doubleValue());
-					list_kpi.add(kpi.getStoreNum());list_kpi.add(kpi.getOutRequest());
-					list_kpi.add(kpi.getOutrequestRate().doubleValue());//--null
-					list_kpi.add(kpi.getAvgFactpro().doubleValue());
-					list_kpi.add(kpi.getAvgZgpro().doubleValue());list_kpi.add(kpi.getAvgPerpro().doubleValue());
-					list_kpi.add(kpi.getAvgPermoney().doubleValue());//--null
-					list_kpi.add(kpi.getPermoney().doubleValue());//--null
-					list_kpi.add(kpi.getWaterTon().doubleValue());list_kpi.add(kpi.getLightDu().doubleValue());
-					list_kpi.add(kpi.getGasUsd().doubleValue());list_kpi.add(kpi.getWasteUsd().doubleValue());
-					list_kpi.add(kpi.getMainRate().doubleValue());list_kpi.add(kpi.getSideRate().doubleValue());
-					list_kpi.add(kpi.getWasteRate().doubleValue());list_kpi.add(kpi.getWasteFact().doubleValue());
-					list_kpi.add(kpi.getWasteNo().doubleValue());list_kpi.add(kpi.getZjRate().doubleValue());
-					list_kpi.add(kpi.getHurtNum());list_kpi.add(kpi.getZgleaveRate().doubleValue());
-					list_kpi.add(kpi.getFactleaveRate().doubleValue());*/
+					list_kpi=this.VkpiFactToDouble(kpi);					
 				}				
 				for(int c=0;c<list_contentName.size();c++){//start for3
 					HSSFRow row=null;
@@ -1416,28 +1061,14 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 						cell_2.setCellStyle(cs);
 						break;
 					default:																		
-						HSSFCell cell_3=row.createCell(b);
-						//數字格式的選擇
-						//HSSFCellStyle cs_temp=wb.createCellStyle();
-						
-						/*if(c==0||c==2){
-							cs_temp=cs_poi1;
-						}else if(c==1||c==5||c==6||c==9||c==10){
-							cs_temp=cs_poi;
-						}else if(c>12&&c<17){
-							cs_temp=cs_poi4;
-						}else if(c>7&&c<13||c==22||c==23){
-							cs_temp=cs_poi2;
-						}else{
-							cs_temp=cs_percent;
-						}*/
+						HSSFCell cell_3=row.createCell(b);						
 						if(kpi==null){
 							cell_3.setCellValue("無數據");
 						}else{
 							Double kpi_content=list_kpi.get(c);
 							cell_3.setCellValue(kpi_content);
 						}
-						HSSFCellStyle cs_temp=this.findStyle(wb, c);
+						HSSFCellStyle cs_temp=this.findStyle(wb, c,map);
 						cell_3.setCellStyle(cs_temp);
 						break;
 					}
@@ -2094,8 +1725,9 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 	 * @author web
 	 * @date 2016/3/18
 	 */
-	public HSSFCellStyle findStyle(HSSFWorkbook wb,Double num1,Double num2,int j){
-		HSSFCellStyle cs_temp2=findStyle(wb,j);		
+	public HSSFCellStyle findStyle(HSSFWorkbook wb,Double num1,Double num2,int j,Map<String,Object>map){
+		HSSFCellStyle cs_temp2=null;
+		cs_temp2=findStyle(wb,j,map);		
 		boolean flag=true;
 		if((j>=0&&j<=7)||j==11||j==16||j==18||j==19||j==38){
 			flag=num1<num2;
@@ -2103,7 +1735,8 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 			flag=num1>num2;
 		}
 		if(flag){//start if
-			cs_temp2=findStyle_red(wb, j);			
+			cs_temp2=null;
+			cs_temp2=findStyle_red(wb, j,map);			
 		}//end if
 		return cs_temp2;
 	}
@@ -2118,19 +1751,24 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 	 * @author web
 	 * @date 2016/3/18
 	 */
-	public HSSFCellStyle findStyle_red(HSSFWorkbook wb,int j){
-		Map<String,Object>map=findStyles(wb);
-		HSSFCellStyle cs_temp2=(HSSFCellStyle)map.get("cs");		
+	public HSSFCellStyle findStyle_red(HSSFWorkbook wb,int j,Map<String,Object>map){
+		HSSFCellStyle cs_temp2=null;
+		cs_temp2=(HSSFCellStyle)map.get("cs");		
 			//數字格式的選擇
-			if(j==0||(j>=5&&j<=9)||j==11||j==17||j==41){								
+			if(j==0||(j>=5&&j<=9)||j==11||j==17||j==41){
+				cs_temp2=null;
 				cs_temp2= (HSSFCellStyle)map.get("cs_poi_bg");
 			}else if(j==1||j==2){
+				cs_temp2=null;
 				cs_temp2=(HSSFCellStyle)map.get("cs_poi1_bg");
 			}else if((j>=26&&j<=31)||(j>=35&&j<=38)){
+				cs_temp2=null;
 				cs_temp2=(HSSFCellStyle)map.get("cs_poi4_bg");
 			}else if(j==18||j==19){
+				cs_temp2=null;
 				cs_temp2=(HSSFCellStyle)map.get("cs_poi2_bg");				
 			}else{
+				cs_temp2=null;
 				cs_temp2=(HSSFCellStyle)map.get("cs_percent_bg");
 			}			
 		return cs_temp2;
@@ -2145,19 +1783,24 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 	 * @author web
 	 * @date 2016/3/18
 	 */
-	public HSSFCellStyle findStyle(HSSFWorkbook wb,int j){
-		Map<String,Object>map=findStyles(wb);
-		HSSFCellStyle cs_temp2=(HSSFCellStyle)map.get("cs");		
+	public HSSFCellStyle findStyle(HSSFWorkbook wb,int j,Map<String,Object> map){		
+		HSSFCellStyle cs_temp2=null;
+		cs_temp2=(HSSFCellStyle)map.get("cs");		
 			//數字格式的選擇
-			if(j==0||(j>=5&&j<=9)||j==11||j==17||j==41){								
+			if(j==0||(j>=5&&j<=9)||j==11||j==17||j==41){
+				cs_temp2=null;
 				cs_temp2= (HSSFCellStyle)map.get("cs_poi");
 			}else if(j==1||j==2){
+				cs_temp2=null;
 				cs_temp2=(HSSFCellStyle)map.get("cs_poi1");
 			}else if((j>=26&&j<=31)||(j>=35&&j<=38)){
+				cs_temp2=null;
 				cs_temp2=(HSSFCellStyle)map.get("cs_poi4");
 			}else if(j==18||j==19){
+				cs_temp2=null;
 				cs_temp2=(HSSFCellStyle)map.get("cs_poi2");				
 			}else{
+				cs_temp2=null;
 				cs_temp2=(HSSFCellStyle)map.get("cs_percent");
 			}			
 		return cs_temp2;

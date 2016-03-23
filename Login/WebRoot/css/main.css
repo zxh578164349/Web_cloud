@@ -50,7 +50,10 @@ body,html,#main_container{
 	vertical-align:middle;
 	border:0px;
 }
-
+.a_disable{ 
+color: #afafaf; 
+cursor: default ;
+} 
 #right{
 	width:auto;
 	height:86%;
@@ -88,5 +91,4 @@ body,html,#main_container{
 a{vertical-align:bottom}
 a:link{color:#335AA4;text-decoration:none;}
 a:visited{color:#335AA4; text-decoration:none} 
-a:hover{text-decoration:none; border-bottom:1px red solid;color:red;}
-/*a:active {color: #0000FF} */ 
+/* a:hover{text-decoration:none; border-bottom:1px red solid;color:red;} */

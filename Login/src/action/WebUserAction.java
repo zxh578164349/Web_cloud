@@ -443,7 +443,9 @@ public class WebUserAction extends ActionSupport implements ServletResponseAware
 			            }
 			        });
 						
-						ActionContext.getContext().getSession().put("loginUser", wUser);						
+						ActionContext.getContext().getSession().put("loginUser", wUser);
+						List<WebMenu>login_menus=menuSer.findAllMenu();
+						ActionContext.getContext().getSession().put("login_menus", login_menus);//登錄時保存所有的菜單項目
 						if (factNo.equals("tw")&& wUser.getUsername().equals("admin")) {								
 							ActionContext.getContext().getSession().put("factNo", factNo);									
 						} else {
