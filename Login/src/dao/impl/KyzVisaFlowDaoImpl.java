@@ -87,6 +87,10 @@ public class KyzVisaFlowDaoImpl extends Basedao implements IKyzVisaFlowDao {
 		return (KyzVisaflow)query.uniqueResult();
 	}
 
+	public void delete(KyzVisaflowId id,KyzExpectmatmLog log) {
+		// TODO Auto-generated method stub
+		super.delete(this.findById(id),log);	
+	}
 	public void delete(KyzVisaflowId id) {
 		// TODO Auto-generated method stub
 		super.delete(this.findById(id));	

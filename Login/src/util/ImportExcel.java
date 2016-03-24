@@ -229,7 +229,7 @@ public class ImportExcel {
 				continue;
 			}
 			/**********************2：行循环***********************/
-			for (int rowIx = row_head; rowIx <= maxRowIx; rowIx++) {
+			for (int rowIx = row_head; rowIx <= maxRowIx; rowIx++) {//start for b
 				Row row = sheet.getRow(rowIx);
 				StringBuilder sb = new StringBuilder();
 				if(row==null){
@@ -250,7 +250,7 @@ public class ImportExcel {
 					sb.append(SEPARATOR+(cell.getStringCellValue().toString().trim()));										
 				}
 				list.add(sb.toString());
-			}
+			}//end for b
 			
 			if(list!=null&&list.size()>1){
 				map.put(sheet.getSheetName(), list);
@@ -259,6 +259,7 @@ public class ImportExcel {
 		}//end for a				
 		return map;
 	}
+	
 	
 	/**
 	 * 由Excel流的Sheet导出至List
@@ -296,13 +297,103 @@ public class ImportExcel {
 	}
 
 	/***********************************************************導入聯系資料****************************************************************************/	
+	
+	
+	
+	
+	
+	
+    /*************************************************************導入新的kpi數據*************************************************************************/
 	/**
-	 * @param args
+	 * 導入新的kpi數據
+	 * @Title: impWeballobjExl
+	 * @Description: TODO
+	 * @param @param book
+	 * @param @return
+	 * @return Map<String,Object>
+	 * @throws
+	 * @author web
+	 * @date 2016/3/24
 	 */
+	  public static Map<String,Object> impWeballobjExl(Workbook wb){
+		  Map<String ,Object>map=new HashMap<String,Object>();
+		  int sheets=wb.getNumberOfSheets();//獲取所有的sheet
+		  //FormulaEvaluator eval=wb.getCreationHelper().createFormulaEvaluator();
+		  for(int i=0;i<sheets;i++){//for a
+			  int headrow=wb.getSheetAt(i).getFirstRowNum()+1;//排除標題
+			  int lastrow=wb.getSheetAt(i).getLastRowNum();
+			  
+			  int firstcol=wb.getSheetAt(i).getRow(headrow).getFirstCellNum()+1;//排隊序號列
+			  int lastcol=wb.getSheetAt(i).getRow(headrow).getLastCellNum();
+			  List<String>list=new ArrayList<String>();
+			  for(int j=headrow;j<lastrow;j++){//for b
+				  if(wb.getSheetAt(i).getRow(j)==null){
+					  continue;
+				  }
+				  StringBuilder sb=new StringBuilder();
+				  for(int k=firstcol;k<lastcol;k++){//for c					  
+					  Cell cell=wb.getSheetAt(i).getRow(j).getCell(k);
+					  if(cell==null){
+						  cell=wb.getSheetAt(i).getRow(j).createCell(k);//如果新建的單元格沒有給數據類型，則默認爲空類型:Cell.CELL_TYPE_BLANK					 
+					  }
+					  switch(cell.getCellType()){
+					  case Cell.CELL_TYPE_STRING:
+						  sb.append(SEPARATOR+cell.getStringCellValue());
+						  break;
+					  case Cell.CELL_TYPE_NUMERIC:
+						  sb.append(SEPARATOR+cell.getNumericCellValue());
+						  break;
+					  case Cell.CELL_TYPE_BLANK:
+						  if(k<firstcol+3){
+							  sb.append(SEPARATOR+"null");
+						  }else{
+							  sb.append(SEPARATOR+0.0);
+						  }
+					  }					  	  
+				  }//for c
+				  list.add(sb.toString());
+			  }//for b
+			  map.put(wb.getSheetAt(i).getSheetName(), list);
+		  }//for a
+		  return map;
+		  
+	  }
+	  /**
+		 * 由流stream導入workbook
+		 * 
+		 * @param is
+		 * @param extensionName
+		 * @param sheetNum
+		 * @return
+		 * @throws IOException
+		 */
+		public static Map<String,Object> exportListFromStream(InputStream is,
+				String extensionName) throws IOException {
+
+			Workbook workbook = null;
+
+			if (extensionName.toLowerCase().equals(XLS)) {
+				workbook = new HSSFWorkbook(is);
+			} else if (extensionName.toLowerCase().equals(XLSX)) {
+				workbook = new XSSFWorkbook(is);
+			}
+	        is.close();
+			return impWeballobjExl(workbook);
+		}
+		/**
+		 * 由Excel文件導入到流stream
+		 * 
+		 * @param file
+		 * @param sheetNum
+		 * @return
+		 */
+		public static Map<String,Object> exportListFromFile(File file)
+				throws IOException {
+			return exportListFromStream(new FileInputStream(file),
+					FilenameUtils.getExtension(file.getName()));
+		}
 	
-	
-	
-	
+	/*************************************************************導入新的kpi數據*************************************************************************/
 	
 	
 	/***********************************************************測試20160128****************************************************************************/
@@ -415,7 +506,8 @@ public class ImportExcel {
 		return exportListFromExcel2(new FileInputStream(file),
 				FilenameUtils.getExtension(file.getName()));
 	}
-
+	
+	
 	/***********************************************************測試20160128****************************************************************************/	
 	
 	public static void main(String[] args) {
@@ -435,19 +527,23 @@ public class ImportExcel {
 			System.out.println(e);
 		}*/
 		
-		/*String path="i:\\二廠.xls";
-		Map<String, Object>list=null;
+		String path="e:\\導入格式.xls";
+		Map<String, Object>map=null;
 		try{
-			list=exportListFromExcel(new File(path));
-			for(String str:list.keySet()){
-				for(String str2:(List<String>)list.get(str)){
-					System.out.println(str2);
+			map=exportListFromFile(new File(path));
+			for(String str:map.keySet()){
+				for(String str2:(List<String>)map.get(str)){
+					for(int i=0;i<str2.split("__").length;i++){
+						System.out.println(str2.split("__")[i]);
+					}					
+					System.out.println(str2.split("********************************"));
 				}
 			}						
 		}catch(Exception e){
 			System.out.println(e);
-		}*/
-		List<Integer>list=new ArrayList<Integer>();
+		}
+		
+		/*List<Integer>list=new ArrayList<Integer>();
 		for(int i=1;i<888;i++){
 			list.add(i);
 		}
@@ -474,52 +570,10 @@ public class ImportExcel {
 				}				
 			}
 			
-		}
-		for(int i=0;i<list_all.size();i++){
-			//System.out.println(list_all.get(i));
-		}
-		
-		String temp="dfdf'dfdfdf";
-		System.out.println(temp.replace("\'", " "));
-		
-		/*String path="e:\\jy-2.xls";
-		Map<String, Object> map;
-		try {
-			HSSFWorkbook wb=new HSSFWorkbook();
-			HSSFSheet sheet=wb.createSheet("sheet1");
-			for(int i=0;i<10;i++){
-				sheet.setColumnWidth(i, 7000);
-			}
-			map = exportListFromExcel2(new File(path));
-			for(String key:map.keySet()){
-				System.out.println(key);
-				for(String str:(List<String>)map.get(key)){
-					System.out.println(str);
-				}
-				
-					
-				
-				List<String>list=(List<String>)map.get(key);
-				for(int j=0;j<list.size();j++){
-					sheet.createRow(j);
-					String[]objs=list.get(j).split(",");
-					for(int i=0;i<objs.length;i++){
-						String str=objs[i];
-						sheet.getRow(j).createCell(i).setCellValue(str);
-					}
-				}
-				
-				
-				
-				
-				OutputStream os=new FileOutputStream("e:\\tttttt2.xls");
-				wb.write(os);
-				os.close();
-			}
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}*/
+		
+		
+		
 		
 		
 
