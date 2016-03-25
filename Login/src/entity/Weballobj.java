@@ -110,6 +110,9 @@ public class Weballobj implements java.io.Serializable {
 	private Double objA1124;
 	private Double objA1125;
 	private Double objA1126;
+	private String createDate;
+	private String userName;
+	private String userNameUd;
 
 	// Constructors
 
@@ -1070,5 +1073,31 @@ public class Weballobj implements java.io.Serializable {
 	public void setObjA1126(Double objA1126) {
 		this.objA1126 = objA1126;
 	}
+
+	public String getCreateDate() {
+		return createDate;
+	}
+
+	public void setCreateDate(String createDate) {
+		this.createDate = createDate;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public String getUserNameUd() {
+		return userNameUd;
+	}
+
+	public void setUserNameUd(String userNameUd) {
+		this.userNameUd = userNameUd;
+	}
+	
+	
 
 }

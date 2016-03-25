@@ -787,6 +787,9 @@
 		      <param name="root">jsons</param>
 		   </result>
 		</action>
+		<action name="weballobj_*" class="weballobjAction" method="{1}">
+		   
+		</action>
 	</package>
 
 </struts>

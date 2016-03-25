@@ -85,5 +85,6 @@
 	<bean id="webbussletterdao" class="dao.impl.WebBussinessletterDaoImpl" parent="baseDao"></bean>
 	<bean id="webtabfiledao" class="dao.impl.WebTabpomfileDaoImpl" parent="baseDao"></bean>
 	<bean id="webphonedao" class="dao.impl.WebPhonebookDaoImpl" parent="baseDao"></bean>
+	<bean id="weballobjdao" class="dao.impl.WeballobjDaoImpl" parent="baseDao"></bean>
 </beans>
 
