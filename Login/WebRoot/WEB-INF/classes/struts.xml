@@ -788,7 +788,8 @@
 		   </result>
 		</action>
 		<action name="weballobj_*" class="weballobjAction" method="{1}">
-		   
+		   <result name="beanList">page/weballobj.jsp</result>
+		   <result name="beanList1">page/table1/weballobj1.jsp</result>		       		   
 		</action>
 	</package>
 

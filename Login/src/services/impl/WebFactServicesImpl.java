@@ -188,4 +188,15 @@ public class WebFactServicesImpl implements IWebFactServices {
 		return webFactDao.findFactAreaAbled();
 	}
 
+	/**
+	 * 日期:2016/3/28
+	 * 描述:
+	 */
+	
+	
+	public List<String> findfactAreaByFactNo(String factNo) {
+		// TODO Auto-generated method stub
+		return webFactDao.findfactAreaByFactNo(factNo);
+	}
+
 }

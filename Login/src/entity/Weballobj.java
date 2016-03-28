@@ -9,110 +9,112 @@ public class Weballobj implements java.io.Serializable {
 	// Fields
 
 	private WeballobjId id;
-	private Double objA301;
-	private Double objA302;
-	private Double objA303;
-	private Double objA304;
-	private Double objA305;
-	private Double objA306;
-	private Double objA307;
-	private Double objA401;
-	private Double objA402;
-	private Double objA403;
-	private Double objA404;
-	private Double objA405;
-	private Double objA406;
-	private Double objA407;
-	private Double objA408;
-	private Double objA409;
-	private Double objA410;
-	private Double objA501;
-	private Double objA502;
-	private Double objA503;
-	private Double objA504;
-	private Double objA505;
-	private Double objA506;
-	private Double objA507;
-	private Double objA508;
-	private Double objA509;
-	private Double objA601;
-	private Double objA602;
-	private Double objA603;
-	private Double objA604;
-	private Double objA605;
-	private Double objA606;
-	private Double objA701;
-	private Double objA702;
-	private Double objA703;
-	private Double objA704;
-	private Double objA705;
-	private Double objA706;
-	private Double objA707;
-	private Double objA708;
-	private Double objA709;
-	private Double objA710;
-	private Double objA711;
-	private Double objA712;
-	private Double objA713;
-	private Double objA714;
-	private Double objA715;
-	private Double objA716;
-	private Double objA717;
-	private Double objA718;
-	private Double objA719;
-	private Double objA801;
-	private Double objA802;
-	private Double objA803;
-	private Double objA804;
-	private Double objA805;
-	private Double objA806;
-	private Double objA807;
-	private Double objA808;
-	private Double objA901;
-	private Double objA902;
-	private Double objA903;
-	private Double objA904;
-	private Double objA905;
-	private Double objA906;
-	private Double objA907;
-	private Double objA908;
-	private Double objA1001;
-	private Double objA1002;
-	private Double objA1003;
-	private Double objA1004;
-	private Double objA1005;
-	private Double objA1006;
-	private Double objA1007;
-	private Double objA1008;
-	private Double objA1101;
-	private Double objA1102;
-	private Double objA1103;
-	private Double objA1104;
-	private Double objA1105;
-	private Double objA1106;
-	private Double objA1107;
-	private Double objA1108;
-	private Double objA1109;
-	private Double objA1110;
-	private Double objA1111;
-	private Double objA1112;
-	private Double objA1113;
-	private Double objA1114;
-	private Double objA1115;
-	private Double objA1116;
-	private Double objA1117;
-	private Double objA1118;
-	private Double objA1119;
-	private Double objA1120;
-	private Double objA1121;
-	private Double objA1122;
-	private Double objA1123;
-	private Double objA1124;
-	private Double objA1125;
-	private Double objA1126;
+	private Double objA100;
+	private Double objA101;
+	private Double objA102;
+	private Double objA103;
+	private Double objA104;
+	private Double objA105;
+	private Double objA106;
+	private Double objA107;
+	private Double objA108;
+	private Double objA109;
+	private Double objA110;
+	private Double objA111;
+	private Double objA112;
+	private Double objA113;
+	private Double objA114;
+	private Double objA115;
+	private Double objA116;
+	private Double objA117;
+	private Double objA118;
+	private Double objA119;
+	private Double objA120;
+	private Double objA121;
+	private Double objA122;
+	private Double objA123;
+	private Double objA124;
+	private Double objA125;
+	private Double objA126;
+	private Double objA127;
+	private Double objA128;
+	private Double objA129;
+	private Double objA130;
+	private Double objA131;
+	private Double objA132;
+	private Double objA133;
+	private Double objA134;
+	private Double objA135;
+	private Double objA136;
+	private Double objA137;
+	private Double objA138;
+	private Double objA139;
+	private Double objA140;
+	private Double objA141;
+	private Double objA142;
+	private Double objA143;
+	private Double objA144;
+	private Double objA145;
+	private Double objA146;
+	private Double objA147;
+	private Double objA148;
+	private Double objA149;
+	private Double objA150;
+	private Double objA151;
+	private Double objA152;
+	private Double objA153;
+	private Double objA154;
+	private Double objA155;
+	private Double objA156;
+	private Double objA157;
+	private Double objA158;
+	private Double objA159;
+	private Double objA160;
+	private Double objA161;
+	private Double objA162;
+	private Double objA163;
+	private Double objA164;
+	private Double objA165;
+	private Double objA166;
+	private Double objA167;
+	private Double objA168;
+	private Double objA169;
+	private Double objA170;
+	private Double objA171;
+	private Double objA172;
+	private Double objA173;
+	private Double objA174;
+	private Double objA175;
+	private Double objA176;
+	private Double objA177;
+	private Double objA178;
+	private Double objA179;
+	private Double objA180;
+	private Double objA181;
+	private Double objA182;
+	private Double objA183;
+	private Double objA184;
+	private Double objA185;
+	private Double objA186;
+	private Double objA187;
+	private Double objA188;
+	private Double objA189;
+	private Double objA190;
+	private Double objA191;
+	private Double objA192;
+	private Double objA193;
+	private Double objA194;
+	private Double objA195;
+	private Double objA196;
+	private Double objA197;
+	private Double objA198;
+	private Double objA199;
+	private Double objA200;
+	private Double objA201;
+	private Double objA202;
+	private String username;
+	private String usernameUd;
 	private String createDate;
-	private String userName;
-	private String userNameUd;
 
 	// Constructors
 
@@ -126,134 +128,137 @@ public class Weballobj implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public Weballobj(WeballobjId id, Double objA301, Double objA302,
-			Double objA303, Double objA304, Double objA305, Double objA306,
-			Double objA307, Double objA401, Double objA402, Double objA403,
-			Double objA404, Double objA405, Double objA406, Double objA407,
-			Double objA408, Double objA409, Double objA410, Double objA501,
-			Double objA502, Double objA503, Double objA504, Double objA505,
-			Double objA506, Double objA507, Double objA508, Double objA509,
-			Double objA601, Double objA602, Double objA603, Double objA604,
-			Double objA605, Double objA606, Double objA701, Double objA702,
-			Double objA703, Double objA704, Double objA705, Double objA706,
-			Double objA707, Double objA708, Double objA709, Double objA710,
-			Double objA711, Double objA712, Double objA713, Double objA714,
-			Double objA715, Double objA716, Double objA717, Double objA718,
-			Double objA719, Double objA801, Double objA802, Double objA803,
-			Double objA804, Double objA805, Double objA806, Double objA807,
-			Double objA808, Double objA901, Double objA902, Double objA903,
-			Double objA904, Double objA905, Double objA906, Double objA907,
-			Double objA908, Double objA1001, Double objA1002, Double objA1003,
-			Double objA1004, Double objA1005, Double objA1006, Double objA1007,
-			Double objA1008, Double objA1101, Double objA1102, Double objA1103,
-			Double objA1104, Double objA1105, Double objA1106, Double objA1107,
-			Double objA1108, Double objA1109, Double objA1110, Double objA1111,
-			Double objA1112, Double objA1113, Double objA1114, Double objA1115,
-			Double objA1116, Double objA1117, Double objA1118, Double objA1119,
-			Double objA1120, Double objA1121, Double objA1122, Double objA1123,
-			Double objA1124, Double objA1125, Double objA1126) {
+	public Weballobj(WeballobjId id, Double objA100, Double objA101,
+			Double objA102, Double objA103, Double objA104, Double objA105,
+			Double objA106, Double objA107, Double objA108, Double objA109,
+			Double objA110, Double objA111, Double objA112, Double objA113,
+			Double objA114, Double objA115, Double objA116, Double objA117,
+			Double objA118, Double objA119, Double objA120, Double objA121,
+			Double objA122, Double objA123, Double objA124, Double objA125,
+			Double objA126, Double objA127, Double objA128, Double objA129,
+			Double objA130, Double objA131, Double objA132, Double objA133,
+			Double objA134, Double objA135, Double objA136, Double objA137,
+			Double objA138, Double objA139, Double objA140, Double objA141,
+			Double objA142, Double objA143, Double objA144, Double objA145,
+			Double objA146, Double objA147, Double objA148, Double objA149,
+			Double objA150, Double objA151, Double objA152, Double objA153,
+			Double objA154, Double objA155, Double objA156, Double objA157,
+			Double objA158, Double objA159, Double objA160, Double objA161,
+			Double objA162, Double objA163, Double objA164, Double objA165,
+			Double objA166, Double objA167, Double objA168, Double objA169,
+			Double objA170, Double objA171, Double objA172, Double objA173,
+			Double objA174, Double objA175, Double objA176, Double objA177,
+			Double objA178, Double objA179, Double objA180, Double objA181,
+			Double objA182, Double objA183, Double objA184, Double objA185,
+			Double objA186, Double objA187, Double objA188, Double objA189,
+			Double objA190, Double objA191, Double objA192, Double objA193,
+			Double objA194, Double objA195, Double objA196, Double objA197,
+			Double objA198, Double objA199, Double objA200, Double objA201,
+			Double objA202) {
 		this.id = id;
-		this.objA301 = objA301;
-		this.objA302 = objA302;
-		this.objA303 = objA303;
-		this.objA304 = objA304;
-		this.objA305 = objA305;
-		this.objA306 = objA306;
-		this.objA307 = objA307;
-		this.objA401 = objA401;
-		this.objA402 = objA402;
-		this.objA403 = objA403;
-		this.objA404 = objA404;
-		this.objA405 = objA405;
-		this.objA406 = objA406;
-		this.objA407 = objA407;
-		this.objA408 = objA408;
-		this.objA409 = objA409;
-		this.objA410 = objA410;
-		this.objA501 = objA501;
-		this.objA502 = objA502;
-		this.objA503 = objA503;
-		this.objA504 = objA504;
-		this.objA505 = objA505;
-		this.objA506 = objA506;
-		this.objA507 = objA507;
-		this.objA508 = objA508;
-		this.objA509 = objA509;
-		this.objA601 = objA601;
-		this.objA602 = objA602;
-		this.objA603 = objA603;
-		this.objA604 = objA604;
-		this.objA605 = objA605;
-		this.objA606 = objA606;
-		this.objA701 = objA701;
-		this.objA702 = objA702;
-		this.objA703 = objA703;
-		this.objA704 = objA704;
-		this.objA705 = objA705;
-		this.objA706 = objA706;
-		this.objA707 = objA707;
-		this.objA708 = objA708;
-		this.objA709 = objA709;
-		this.objA710 = objA710;
-		this.objA711 = objA711;
-		this.objA712 = objA712;
-		this.objA713 = objA713;
-		this.objA714 = objA714;
-		this.objA715 = objA715;
-		this.objA716 = objA716;
-		this.objA717 = objA717;
-		this.objA718 = objA718;
-		this.objA719 = objA719;
-		this.objA801 = objA801;
-		this.objA802 = objA802;
-		this.objA803 = objA803;
-		this.objA804 = objA804;
-		this.objA805 = objA805;
-		this.objA806 = objA806;
-		this.objA807 = objA807;
-		this.objA808 = objA808;
-		this.objA901 = objA901;
-		this.objA902 = objA902;
-		this.objA903 = objA903;
-		this.objA904 = objA904;
-		this.objA905 = objA905;
-		this.objA906 = objA906;
-		this.objA907 = objA907;
-		this.objA908 = objA908;
-		this.objA1001 = objA1001;
-		this.objA1002 = objA1002;
-		this.objA1003 = objA1003;
-		this.objA1004 = objA1004;
-		this.objA1005 = objA1005;
-		this.objA1006 = objA1006;
-		this.objA1007 = objA1007;
-		this.objA1008 = objA1008;
-		this.objA1101 = objA1101;
-		this.objA1102 = objA1102;
-		this.objA1103 = objA1103;
-		this.objA1104 = objA1104;
-		this.objA1105 = objA1105;
-		this.objA1106 = objA1106;
-		this.objA1107 = objA1107;
-		this.objA1108 = objA1108;
-		this.objA1109 = objA1109;
-		this.objA1110 = objA1110;
-		this.objA1111 = objA1111;
-		this.objA1112 = objA1112;
-		this.objA1113 = objA1113;
-		this.objA1114 = objA1114;
-		this.objA1115 = objA1115;
-		this.objA1116 = objA1116;
-		this.objA1117 = objA1117;
-		this.objA1118 = objA1118;
-		this.objA1119 = objA1119;
-		this.objA1120 = objA1120;
-		this.objA1121 = objA1121;
-		this.objA1122 = objA1122;
-		this.objA1123 = objA1123;
-		this.objA1124 = objA1124;
-		this.objA1125 = objA1125;
-		this.objA1126 = objA1126;
+		this.objA100 = objA100;
+		this.objA101 = objA101;
+		this.objA102 = objA102;
+		this.objA103 = objA103;
+		this.objA104 = objA104;
+		this.objA105 = objA105;
+		this.objA106 = objA106;
+		this.objA107 = objA107;
+		this.objA108 = objA108;
+		this.objA109 = objA109;
+		this.objA110 = objA110;
+		this.objA111 = objA111;
+		this.objA112 = objA112;
+		this.objA113 = objA113;
+		this.objA114 = objA114;
+		this.objA115 = objA115;
+		this.objA116 = objA116;
+		this.objA117 = objA117;
+		this.objA118 = objA118;
+		this.objA119 = objA119;
+		this.objA120 = objA120;
+		this.objA121 = objA121;
+		this.objA122 = objA122;
+		this.objA123 = objA123;
+		this.objA124 = objA124;
+		this.objA125 = objA125;
+		this.objA126 = objA126;
+		this.objA127 = objA127;
+		this.objA128 = objA128;
+		this.objA129 = objA129;
+		this.objA130 = objA130;
+		this.objA131 = objA131;
+		this.objA132 = objA132;
+		this.objA133 = objA133;
+		this.objA134 = objA134;
+		this.objA135 = objA135;
+		this.objA136 = objA136;
+		this.objA137 = objA137;
+		this.objA138 = objA138;
+		this.objA139 = objA139;
+		this.objA140 = objA140;
+		this.objA141 = objA141;
+		this.objA142 = objA142;
+		this.objA143 = objA143;
+		this.objA144 = objA144;
+		this.objA145 = objA145;
+		this.objA146 = objA146;
+		this.objA147 = objA147;
+		this.objA148 = objA148;
+		this.objA149 = objA149;
+		this.objA150 = objA150;
+		this.objA151 = objA151;
+		this.objA152 = objA152;
+		this.objA153 = objA153;
+		this.objA154 = objA154;
+		this.objA155 = objA155;
+		this.objA156 = objA156;
+		this.objA157 = objA157;
+		this.objA158 = objA158;
+		this.objA159 = objA159;
+		this.objA160 = objA160;
+		this.objA161 = objA161;
+		this.objA162 = objA162;
+		this.objA163 = objA163;
+		this.objA164 = objA164;
+		this.objA165 = objA165;
+		this.objA166 = objA166;
+		this.objA167 = objA167;
+		this.objA168 = objA168;
+		this.objA169 = objA169;
+		this.objA170 = objA170;
+		this.objA171 = objA171;
+		this.objA172 = objA172;
+		this.objA173 = objA173;
+		this.objA174 = objA174;
+		this.objA175 = objA175;
+		this.objA176 = objA176;
+		this.objA177 = objA177;
+		this.objA178 = objA178;
+		this.objA179 = objA179;
+		this.objA180 = objA180;
+		this.objA181 = objA181;
+		this.objA182 = objA182;
+		this.objA183 = objA183;
+		this.objA184 = objA184;
+		this.objA185 = objA185;
+		this.objA186 = objA186;
+		this.objA187 = objA187;
+		this.objA188 = objA188;
+		this.objA189 = objA189;
+		this.objA190 = objA190;
+		this.objA191 = objA191;
+		this.objA192 = objA192;
+		this.objA193 = objA193;
+		this.objA194 = objA194;
+		this.objA195 = objA195;
+		this.objA196 = objA196;
+		this.objA197 = objA197;
+		this.objA198 = objA198;
+		this.objA199 = objA199;
+		this.objA200 = objA200;
+		this.objA201 = objA201;
+		this.objA202 = objA202;
 	}
 
 	// Property accessors
@@ -266,812 +271,844 @@ public class Weballobj implements java.io.Serializable {
 		this.id = id;
 	}
 
-	public Double getObjA301() {
-		return this.objA301;
+	public Double getObjA100() {
+		return this.objA100;
 	}
 
-	public void setObjA301(Double objA301) {
-		this.objA301 = objA301;
+	public void setObjA100(Double objA100) {
+		this.objA100 = objA100;
 	}
 
-	public Double getObjA302() {
-		return this.objA302;
+	public Double getObjA101() {
+		return this.objA101;
 	}
 
-	public void setObjA302(Double objA302) {
-		this.objA302 = objA302;
+	public void setObjA101(Double objA101) {
+		this.objA101 = objA101;
 	}
 
-	public Double getObjA303() {
-		return this.objA303;
+	public Double getObjA102() {
+		return this.objA102;
 	}
 
-	public void setObjA303(Double objA303) {
-		this.objA303 = objA303;
+	public void setObjA102(Double objA102) {
+		this.objA102 = objA102;
 	}
 
-	public Double getObjA304() {
-		return this.objA304;
+	public Double getObjA103() {
+		return this.objA103;
 	}
 
-	public void setObjA304(Double objA304) {
-		this.objA304 = objA304;
+	public void setObjA103(Double objA103) {
+		this.objA103 = objA103;
 	}
 
-	public Double getObjA305() {
-		return this.objA305;
+	public Double getObjA104() {
+		return this.objA104;
 	}
 
-	public void setObjA305(Double objA305) {
-		this.objA305 = objA305;
+	public void setObjA104(Double objA104) {
+		this.objA104 = objA104;
 	}
 
-	public Double getObjA306() {
-		return this.objA306;
+	public Double getObjA105() {
+		return this.objA105;
 	}
 
-	public void setObjA306(Double objA306) {
-		this.objA306 = objA306;
+	public void setObjA105(Double objA105) {
+		this.objA105 = objA105;
 	}
 
-	public Double getObjA307() {
-		return this.objA307;
+	public Double getObjA106() {
+		return this.objA106;
 	}
 
-	public void setObjA307(Double objA307) {
-		this.objA307 = objA307;
+	public void setObjA106(Double objA106) {
+		this.objA106 = objA106;
 	}
 
-	public Double getObjA401() {
-		return this.objA401;
+	public Double getObjA107() {
+		return this.objA107;
 	}
 
-	public void setObjA401(Double objA401) {
-		this.objA401 = objA401;
+	public void setObjA107(Double objA107) {
+		this.objA107 = objA107;
 	}
 
-	public Double getObjA402() {
-		return this.objA402;
+	public Double getObjA108() {
+		return this.objA108;
 	}
 
-	public void setObjA402(Double objA402) {
-		this.objA402 = objA402;
+	public void setObjA108(Double objA108) {
+		this.objA108 = objA108;
 	}
 
-	public Double getObjA403() {
-		return this.objA403;
+	public Double getObjA109() {
+		return this.objA109;
 	}
 
-	public void setObjA403(Double objA403) {
-		this.objA403 = objA403;
+	public void setObjA109(Double objA109) {
+		this.objA109 = objA109;
 	}
 
-	public Double getObjA404() {
-		return this.objA404;
+	public Double getObjA110() {
+		return this.objA110;
 	}
 
-	public void setObjA404(Double objA404) {
-		this.objA404 = objA404;
+	public void setObjA110(Double objA110) {
+		this.objA110 = objA110;
 	}
 
-	public Double getObjA405() {
-		return this.objA405;
+	public Double getObjA111() {
+		return this.objA111;
 	}
 
-	public void setObjA405(Double objA405) {
-		this.objA405 = objA405;
+	public void setObjA111(Double objA111) {
+		this.objA111 = objA111;
 	}
 
-	public Double getObjA406() {
-		return this.objA406;
+	public Double getObjA112() {
+		return this.objA112;
 	}
 
-	public void setObjA406(Double objA406) {
-		this.objA406 = objA406;
+	public void setObjA112(Double objA112) {
+		this.objA112 = objA112;
 	}
 
-	public Double getObjA407() {
-		return this.objA407;
+	public Double getObjA113() {
+		return this.objA113;
 	}
 
-	public void setObjA407(Double objA407) {
-		this.objA407 = objA407;
+	public void setObjA113(Double objA113) {
+		this.objA113 = objA113;
 	}
 
-	public Double getObjA408() {
-		return this.objA408;
+	public Double getObjA114() {
+		return this.objA114;
 	}
 
-	public void setObjA408(Double objA408) {
-		this.objA408 = objA408;
+	public void setObjA114(Double objA114) {
+		this.objA114 = objA114;
 	}
 
-	public Double getObjA409() {
-		return this.objA409;
+	public Double getObjA115() {
+		return this.objA115;
 	}
 
-	public void setObjA409(Double objA409) {
-		this.objA409 = objA409;
+	public void setObjA115(Double objA115) {
+		this.objA115 = objA115;
 	}
 
-	public Double getObjA410() {
-		return this.objA410;
+	public Double getObjA116() {
+		return this.objA116;
 	}
 
-	public void setObjA410(Double objA410) {
-		this.objA410 = objA410;
+	public void setObjA116(Double objA116) {
+		this.objA116 = objA116;
 	}
 
-	public Double getObjA501() {
-		return this.objA501;
+	public Double getObjA117() {
+		return this.objA117;
 	}
 
-	public void setObjA501(Double objA501) {
-		this.objA501 = objA501;
+	public void setObjA117(Double objA117) {
+		this.objA117 = objA117;
 	}
 
-	public Double getObjA502() {
-		return this.objA502;
+	public Double getObjA118() {
+		return this.objA118;
 	}
 
-	public void setObjA502(Double objA502) {
-		this.objA502 = objA502;
+	public void setObjA118(Double objA118) {
+		this.objA118 = objA118;
 	}
 
-	public Double getObjA503() {
-		return this.objA503;
+	public Double getObjA119() {
+		return this.objA119;
 	}
 
-	public void setObjA503(Double objA503) {
-		this.objA503 = objA503;
+	public void setObjA119(Double objA119) {
+		this.objA119 = objA119;
 	}
 
-	public Double getObjA504() {
-		return this.objA504;
+	public Double getObjA120() {
+		return this.objA120;
 	}
 
-	public void setObjA504(Double objA504) {
-		this.objA504 = objA504;
+	public void setObjA120(Double objA120) {
+		this.objA120 = objA120;
 	}
 
-	public Double getObjA505() {
-		return this.objA505;
+	public Double getObjA121() {
+		return this.objA121;
 	}
 
-	public void setObjA505(Double objA505) {
-		this.objA505 = objA505;
+	public void setObjA121(Double objA121) {
+		this.objA121 = objA121;
 	}
 
-	public Double getObjA506() {
-		return this.objA506;
+	public Double getObjA122() {
+		return this.objA122;
 	}
 
-	public void setObjA506(Double objA506) {
-		this.objA506 = objA506;
+	public void setObjA122(Double objA122) {
+		this.objA122 = objA122;
 	}
 
-	public Double getObjA507() {
-		return this.objA507;
+	public Double getObjA123() {
+		return this.objA123;
 	}
 
-	public void setObjA507(Double objA507) {
-		this.objA507 = objA507;
+	public void setObjA123(Double objA123) {
+		this.objA123 = objA123;
 	}
 
-	public Double getObjA508() {
-		return this.objA508;
+	public Double getObjA124() {
+		return this.objA124;
 	}
 
-	public void setObjA508(Double objA508) {
-		this.objA508 = objA508;
+	public void setObjA124(Double objA124) {
+		this.objA124 = objA124;
 	}
 
-	public Double getObjA509() {
-		return this.objA509;
+	public Double getObjA125() {
+		return this.objA125;
 	}
 
-	public void setObjA509(Double objA509) {
-		this.objA509 = objA509;
+	public void setObjA125(Double objA125) {
+		this.objA125 = objA125;
 	}
 
-	public Double getObjA601() {
-		return this.objA601;
+	public Double getObjA126() {
+		return this.objA126;
 	}
 
-	public void setObjA601(Double objA601) {
-		this.objA601 = objA601;
+	public void setObjA126(Double objA126) {
+		this.objA126 = objA126;
 	}
 
-	public Double getObjA602() {
-		return this.objA602;
+	public Double getObjA127() {
+		return this.objA127;
 	}
 
-	public void setObjA602(Double objA602) {
-		this.objA602 = objA602;
+	public void setObjA127(Double objA127) {
+		this.objA127 = objA127;
 	}
 
-	public Double getObjA603() {
-		return this.objA603;
+	public Double getObjA128() {
+		return this.objA128;
 	}
 
-	public void setObjA603(Double objA603) {
-		this.objA603 = objA603;
+	public void setObjA128(Double objA128) {
+		this.objA128 = objA128;
 	}
 
-	public Double getObjA604() {
-		return this.objA604;
+	public Double getObjA129() {
+		return this.objA129;
 	}
 
-	public void setObjA604(Double objA604) {
-		this.objA604 = objA604;
+	public void setObjA129(Double objA129) {
+		this.objA129 = objA129;
 	}
 
-	public Double getObjA605() {
-		return this.objA605;
+	public Double getObjA130() {
+		return this.objA130;
 	}
 
-	public void setObjA605(Double objA605) {
-		this.objA605 = objA605;
+	public void setObjA130(Double objA130) {
+		this.objA130 = objA130;
 	}
 
-	public Double getObjA606() {
-		return this.objA606;
+	public Double getObjA131() {
+		return this.objA131;
 	}
 
-	public void setObjA606(Double objA606) {
-		this.objA606 = objA606;
+	public void setObjA131(Double objA131) {
+		this.objA131 = objA131;
 	}
 
-	public Double getObjA701() {
-		return this.objA701;
+	public Double getObjA132() {
+		return this.objA132;
 	}
 
-	public void setObjA701(Double objA701) {
-		this.objA701 = objA701;
+	public void setObjA132(Double objA132) {
+		this.objA132 = objA132;
 	}
 
-	public Double getObjA702() {
-		return this.objA702;
+	public Double getObjA133() {
+		return this.objA133;
 	}
 
-	public void setObjA702(Double objA702) {
-		this.objA702 = objA702;
+	public void setObjA133(Double objA133) {
+		this.objA133 = objA133;
 	}
 
-	public Double getObjA703() {
-		return this.objA703;
+	public Double getObjA134() {
+		return this.objA134;
 	}
 
-	public void setObjA703(Double objA703) {
-		this.objA703 = objA703;
+	public void setObjA134(Double objA134) {
+		this.objA134 = objA134;
 	}
 
-	public Double getObjA704() {
-		return this.objA704;
+	public Double getObjA135() {
+		return this.objA135;
 	}
 
-	public void setObjA704(Double objA704) {
-		this.objA704 = objA704;
+	public void setObjA135(Double objA135) {
+		this.objA135 = objA135;
 	}
 
-	public Double getObjA705() {
-		return this.objA705;
+	public Double getObjA136() {
+		return this.objA136;
 	}
 
-	public void setObjA705(Double objA705) {
-		this.objA705 = objA705;
+	public void setObjA136(Double objA136) {
+		this.objA136 = objA136;
 	}
 
-	public Double getObjA706() {
-		return this.objA706;
+	public Double getObjA137() {
+		return this.objA137;
 	}
 
-	public void setObjA706(Double objA706) {
-		this.objA706 = objA706;
+	public void setObjA137(Double objA137) {
+		this.objA137 = objA137;
 	}
 
-	public Double getObjA707() {
-		return this.objA707;
+	public Double getObjA138() {
+		return this.objA138;
 	}
 
-	public void setObjA707(Double objA707) {
-		this.objA707 = objA707;
+	public void setObjA138(Double objA138) {
+		this.objA138 = objA138;
 	}
 
-	public Double getObjA708() {
-		return this.objA708;
+	public Double getObjA139() {
+		return this.objA139;
 	}
 
-	public void setObjA708(Double objA708) {
-		this.objA708 = objA708;
+	public void setObjA139(Double objA139) {
+		this.objA139 = objA139;
 	}
 
-	public Double getObjA709() {
-		return this.objA709;
+	public Double getObjA140() {
+		return this.objA140;
 	}
 
-	public void setObjA709(Double objA709) {
-		this.objA709 = objA709;
+	public void setObjA140(Double objA140) {
+		this.objA140 = objA140;
 	}
 
-	public Double getObjA710() {
-		return this.objA710;
+	public Double getObjA141() {
+		return this.objA141;
 	}
 
-	public void setObjA710(Double objA710) {
-		this.objA710 = objA710;
+	public void setObjA141(Double objA141) {
+		this.objA141 = objA141;
 	}
 
-	public Double getObjA711() {
-		return this.objA711;
+	public Double getObjA142() {
+		return this.objA142;
 	}
 
-	public void setObjA711(Double objA711) {
-		this.objA711 = objA711;
+	public void setObjA142(Double objA142) {
+		this.objA142 = objA142;
 	}
 
-	public Double getObjA712() {
-		return this.objA712;
+	public Double getObjA143() {
+		return this.objA143;
 	}
 
-	public void setObjA712(Double objA712) {
-		this.objA712 = objA712;
+	public void setObjA143(Double objA143) {
+		this.objA143 = objA143;
 	}
 
-	public Double getObjA713() {
-		return this.objA713;
+	public Double getObjA144() {
+		return this.objA144;
 	}
 
-	public void setObjA713(Double objA713) {
-		this.objA713 = objA713;
+	public void setObjA144(Double objA144) {
+		this.objA144 = objA144;
 	}
 
-	public Double getObjA714() {
-		return this.objA714;
+	public Double getObjA145() {
+		return this.objA145;
 	}
 
-	public void setObjA714(Double objA714) {
-		this.objA714 = objA714;
+	public void setObjA145(Double objA145) {
+		this.objA145 = objA145;
 	}
 
-	public Double getObjA715() {
-		return this.objA715;
+	public Double getObjA146() {
+		return this.objA146;
 	}
 
-	public void setObjA715(Double objA715) {
-		this.objA715 = objA715;
+	public void setObjA146(Double objA146) {
+		this.objA146 = objA146;
 	}
 
-	public Double getObjA716() {
-		return this.objA716;
+	public Double getObjA147() {
+		return this.objA147;
 	}
 
-	public void setObjA716(Double objA716) {
-		this.objA716 = objA716;
+	public void setObjA147(Double objA147) {
+		this.objA147 = objA147;
 	}
 
-	public Double getObjA717() {
-		return this.objA717;
+	public Double getObjA148() {
+		return this.objA148;
 	}
 
-	public void setObjA717(Double objA717) {
-		this.objA717 = objA717;
+	public void setObjA148(Double objA148) {
+		this.objA148 = objA148;
 	}
 
-	public Double getObjA718() {
-		return this.objA718;
+	public Double getObjA149() {
+		return this.objA149;
 	}
 
-	public void setObjA718(Double objA718) {
-		this.objA718 = objA718;
+	public void setObjA149(Double objA149) {
+		this.objA149 = objA149;
 	}
 
-	public Double getObjA719() {
-		return this.objA719;
+	public Double getObjA150() {
+		return this.objA150;
 	}
 
-	public void setObjA719(Double objA719) {
-		this.objA719 = objA719;
+	public void setObjA150(Double objA150) {
+		this.objA150 = objA150;
 	}
 
-	public Double getObjA801() {
-		return this.objA801;
+	public Double getObjA151() {
+		return this.objA151;
 	}
 
-	public void setObjA801(Double objA801) {
-		this.objA801 = objA801;
+	public void setObjA151(Double objA151) {
+		this.objA151 = objA151;
 	}
 
-	public Double getObjA802() {
-		return this.objA802;
+	public Double getObjA152() {
+		return this.objA152;
 	}
 
-	public void setObjA802(Double objA802) {
-		this.objA802 = objA802;
+	public void setObjA152(Double objA152) {
+		this.objA152 = objA152;
 	}
 
-	public Double getObjA803() {
-		return this.objA803;
+	public Double getObjA153() {
+		return this.objA153;
 	}
 
-	public void setObjA803(Double objA803) {
-		this.objA803 = objA803;
+	public void setObjA153(Double objA153) {
+		this.objA153 = objA153;
 	}
 
-	public Double getObjA804() {
-		return this.objA804;
+	public Double getObjA154() {
+		return this.objA154;
 	}
 
-	public void setObjA804(Double objA804) {
-		this.objA804 = objA804;
+	public void setObjA154(Double objA154) {
+		this.objA154 = objA154;
 	}
 
-	public Double getObjA805() {
-		return this.objA805;
+	public Double getObjA155() {
+		return this.objA155;
 	}
 
-	public void setObjA805(Double objA805) {
-		this.objA805 = objA805;
+	public void setObjA155(Double objA155) {
+		this.objA155 = objA155;
 	}
 
-	public Double getObjA806() {
-		return this.objA806;
+	public Double getObjA156() {
+		return this.objA156;
 	}
 
-	public void setObjA806(Double objA806) {
-		this.objA806 = objA806;
+	public void setObjA156(Double objA156) {
+		this.objA156 = objA156;
 	}
 
-	public Double getObjA807() {
-		return this.objA807;
+	public Double getObjA157() {
+		return this.objA157;
 	}
 
-	public void setObjA807(Double objA807) {
-		this.objA807 = objA807;
+	public void setObjA157(Double objA157) {
+		this.objA157 = objA157;
 	}
 
-	public Double getObjA808() {
-		return this.objA808;
+	public Double getObjA158() {
+		return this.objA158;
 	}
 
-	public void setObjA808(Double objA808) {
-		this.objA808 = objA808;
+	public void setObjA158(Double objA158) {
+		this.objA158 = objA158;
 	}
 
-	public Double getObjA901() {
-		return this.objA901;
+	public Double getObjA159() {
+		return this.objA159;
 	}
 
-	public void setObjA901(Double objA901) {
-		this.objA901 = objA901;
+	public void setObjA159(Double objA159) {
+		this.objA159 = objA159;
 	}
 
-	public Double getObjA902() {
-		return this.objA902;
+	public Double getObjA160() {
+		return this.objA160;
 	}
 
-	public void setObjA902(Double objA902) {
-		this.objA902 = objA902;
+	public void setObjA160(Double objA160) {
+		this.objA160 = objA160;
 	}
 
-	public Double getObjA903() {
-		return this.objA903;
+	public Double getObjA161() {
+		return this.objA161;
 	}
 
-	public void setObjA903(Double objA903) {
-		this.objA903 = objA903;
+	public void setObjA161(Double objA161) {
+		this.objA161 = objA161;
 	}
 
-	public Double getObjA904() {
-		return this.objA904;
+	public Double getObjA162() {
+		return this.objA162;
 	}
 
-	public void setObjA904(Double objA904) {
-		this.objA904 = objA904;
+	public void setObjA162(Double objA162) {
+		this.objA162 = objA162;
 	}
 
-	public Double getObjA905() {
-		return this.objA905;
+	public Double getObjA163() {
+		return this.objA163;
 	}
 
-	public void setObjA905(Double objA905) {
-		this.objA905 = objA905;
+	public void setObjA163(Double objA163) {
+		this.objA163 = objA163;
 	}
 
-	public Double getObjA906() {
-		return this.objA906;
+	public Double getObjA164() {
+		return this.objA164;
 	}
 
-	public void setObjA906(Double objA906) {
-		this.objA906 = objA906;
+	public void setObjA164(Double objA164) {
+		this.objA164 = objA164;
 	}
 
-	public Double getObjA907() {
-		return this.objA907;
+	public Double getObjA165() {
+		return this.objA165;
 	}
 
-	public void setObjA907(Double objA907) {
-		this.objA907 = objA907;
+	public void setObjA165(Double objA165) {
+		this.objA165 = objA165;
 	}
 
-	public Double getObjA908() {
-		return this.objA908;
+	public Double getObjA166() {
+		return this.objA166;
 	}
 
-	public void setObjA908(Double objA908) {
-		this.objA908 = objA908;
+	public void setObjA166(Double objA166) {
+		this.objA166 = objA166;
 	}
 
-	public Double getObjA1001() {
-		return this.objA1001;
+	public Double getObjA167() {
+		return this.objA167;
 	}
 
-	public void setObjA1001(Double objA1001) {
-		this.objA1001 = objA1001;
+	public void setObjA167(Double objA167) {
+		this.objA167 = objA167;
 	}
 
-	public Double getObjA1002() {
-		return this.objA1002;
+	public Double getObjA168() {
+		return this.objA168;
 	}
 
-	public void setObjA1002(Double objA1002) {
-		this.objA1002 = objA1002;
+	public void setObjA168(Double objA168) {
+		this.objA168 = objA168;
 	}
 
-	public Double getObjA1003() {
-		return this.objA1003;
+	public Double getObjA169() {
+		return this.objA169;
 	}
 
-	public void setObjA1003(Double objA1003) {
-		this.objA1003 = objA1003;
+	public void setObjA169(Double objA169) {
+		this.objA169 = objA169;
 	}
 
-	public Double getObjA1004() {
-		return this.objA1004;
+	public Double getObjA170() {
+		return this.objA170;
 	}
 
-	public void setObjA1004(Double objA1004) {
-		this.objA1004 = objA1004;
+	public void setObjA170(Double objA170) {
+		this.objA170 = objA170;
 	}
 
-	public Double getObjA1005() {
-		return this.objA1005;
+	public Double getObjA171() {
+		return this.objA171;
 	}
 
-	public void setObjA1005(Double objA1005) {
-		this.objA1005 = objA1005;
+	public void setObjA171(Double objA171) {
+		this.objA171 = objA171;
 	}
 
-	public Double getObjA1006() {
-		return this.objA1006;
+	public Double getObjA172() {
+		return this.objA172;
 	}
 
-	public void setObjA1006(Double objA1006) {
-		this.objA1006 = objA1006;
+	public void setObjA172(Double objA172) {
+		this.objA172 = objA172;
 	}
 
-	public Double getObjA1007() {
-		return this.objA1007;
+	public Double getObjA173() {
+		return this.objA173;
 	}
 
-	public void setObjA1007(Double objA1007) {
-		this.objA1007 = objA1007;
+	public void setObjA173(Double objA173) {
+		this.objA173 = objA173;
 	}
 
-	public Double getObjA1008() {
-		return this.objA1008;
+	public Double getObjA174() {
+		return this.objA174;
 	}
 
-	public void setObjA1008(Double objA1008) {
-		this.objA1008 = objA1008;
+	public void setObjA174(Double objA174) {
+		this.objA174 = objA174;
 	}
 
-	public Double getObjA1101() {
-		return this.objA1101;
+	public Double getObjA175() {
+		return this.objA175;
 	}
 
-	public void setObjA1101(Double objA1101) {
-		this.objA1101 = objA1101;
+	public void setObjA175(Double objA175) {
+		this.objA175 = objA175;
 	}
 
-	public Double getObjA1102() {
-		return this.objA1102;
+	public Double getObjA176() {
+		return this.objA176;
 	}
 
-	public void setObjA1102(Double objA1102) {
-		this.objA1102 = objA1102;
+	public void setObjA176(Double objA176) {
+		this.objA176 = objA176;
 	}
 
-	public Double getObjA1103() {
-		return this.objA1103;
+	public Double getObjA177() {
+		return this.objA177;
 	}
 
-	public void setObjA1103(Double objA1103) {
-		this.objA1103 = objA1103;
+	public void setObjA177(Double objA177) {
+		this.objA177 = objA177;
 	}
 
-	public Double getObjA1104() {
-		return this.objA1104;
+	public Double getObjA178() {
+		return this.objA178;
 	}
 
-	public void setObjA1104(Double objA1104) {
-		this.objA1104 = objA1104;
+	public void setObjA178(Double objA178) {
+		this.objA178 = objA178;
 	}
 
-	public Double getObjA1105() {
-		return this.objA1105;
+	public Double getObjA179() {
+		return this.objA179;
 	}
 
-	public void setObjA1105(Double objA1105) {
-		this.objA1105 = objA1105;
+	public void setObjA179(Double objA179) {
+		this.objA179 = objA179;
 	}
 
-	public Double getObjA1106() {
-		return this.objA1106;
+	public Double getObjA180() {
+		return this.objA180;
 	}
 
-	public void setObjA1106(Double objA1106) {
-		this.objA1106 = objA1106;
+	public void setObjA180(Double objA180) {
+		this.objA180 = objA180;
 	}
 
-	public Double getObjA1107() {
-		return this.objA1107;
+	public Double getObjA181() {
+		return this.objA181;
 	}
 
-	public void setObjA1107(Double objA1107) {
-		this.objA1107 = objA1107;
+	public void setObjA181(Double objA181) {
+		this.objA181 = objA181;
 	}
 
-	public Double getObjA1108() {
-		return this.objA1108;
+	public Double getObjA182() {
+		return this.objA182;
 	}
 
-	public void setObjA1108(Double objA1108) {
-		this.objA1108 = objA1108;
+	public void setObjA182(Double objA182) {
+		this.objA182 = objA182;
 	}
 
-	public Double getObjA1109() {
-		return this.objA1109;
+	public Double getObjA183() {
+		return this.objA183;
 	}
 
-	public void setObjA1109(Double objA1109) {
-		this.objA1109 = objA1109;
+	public void setObjA183(Double objA183) {
+		this.objA183 = objA183;
 	}
 
-	public Double getObjA1110() {
-		return this.objA1110;
+	public Double getObjA184() {
+		return this.objA184;
 	}
 
-	public void setObjA1110(Double objA1110) {
-		this.objA1110 = objA1110;
+	public void setObjA184(Double objA184) {
+		this.objA184 = objA184;
 	}
 
-	public Double getObjA1111() {
-		return this.objA1111;
+	public Double getObjA185() {
+		return this.objA185;
 	}
 
-	public void setObjA1111(Double objA1111) {
-		this.objA1111 = objA1111;
+	public void setObjA185(Double objA185) {
+		this.objA185 = objA185;
 	}
 
-	public Double getObjA1112() {
-		return this.objA1112;
+	public Double getObjA186() {
+		return this.objA186;
 	}
 
-	public void setObjA1112(Double objA1112) {
-		this.objA1112 = objA1112;
+	public void setObjA186(Double objA186) {
+		this.objA186 = objA186;
 	}
 
-	public Double getObjA1113() {
-		return this.objA1113;
+	public Double getObjA187() {
+		return this.objA187;
 	}
 
-	public void setObjA1113(Double objA1113) {
-		this.objA1113 = objA1113;
+	public void setObjA187(Double objA187) {
+		this.objA187 = objA187;
 	}
 
-	public Double getObjA1114() {
-		return this.objA1114;
+	public Double getObjA188() {
+		return this.objA188;
 	}
 
-	public void setObjA1114(Double objA1114) {
-		this.objA1114 = objA1114;
+	public void setObjA188(Double objA188) {
+		this.objA188 = objA188;
 	}
 
-	public Double getObjA1115() {
-		return this.objA1115;
+	public Double getObjA189() {
+		return this.objA189;
 	}
 
-	public void setObjA1115(Double objA1115) {
-		this.objA1115 = objA1115;
+	public void setObjA189(Double objA189) {
+		this.objA189 = objA189;
 	}
 
-	public Double getObjA1116() {
-		return this.objA1116;
+	public Double getObjA190() {
+		return this.objA190;
 	}
 
-	public void setObjA1116(Double objA1116) {
-		this.objA1116 = objA1116;
+	public void setObjA190(Double objA190) {
+		this.objA190 = objA190;
 	}
 
-	public Double getObjA1117() {
-		return this.objA1117;
+	public Double getObjA191() {
+		return this.objA191;
 	}
 
-	public void setObjA1117(Double objA1117) {
-		this.objA1117 = objA1117;
+	public void setObjA191(Double objA191) {
+		this.objA191 = objA191;
 	}
 
-	public Double getObjA1118() {
-		return this.objA1118;
+	public Double getObjA192() {
+		return this.objA192;
 	}
 
-	public void setObjA1118(Double objA1118) {
-		this.objA1118 = objA1118;
+	public void setObjA192(Double objA192) {
+		this.objA192 = objA192;
 	}
 
-	public Double getObjA1119() {
-		return this.objA1119;
+	public Double getObjA193() {
+		return this.objA193;
 	}
 
-	public void setObjA1119(Double objA1119) {
-		this.objA1119 = objA1119;
+	public void setObjA193(Double objA193) {
+		this.objA193 = objA193;
 	}
 
-	public Double getObjA1120() {
-		return this.objA1120;
+	public Double getObjA194() {
+		return this.objA194;
 	}
 
-	public void setObjA1120(Double objA1120) {
-		this.objA1120 = objA1120;
+	public void setObjA194(Double objA194) {
+		this.objA194 = objA194;
 	}
 
-	public Double getObjA1121() {
-		return this.objA1121;
+	public Double getObjA195() {
+		return this.objA195;
 	}
 
-	public void setObjA1121(Double objA1121) {
-		this.objA1121 = objA1121;
+	public void setObjA195(Double objA195) {
+		this.objA195 = objA195;
 	}
 
-	public Double getObjA1122() {
-		return this.objA1122;
+	public Double getObjA196() {
+		return this.objA196;
 	}
 
-	public void setObjA1122(Double objA1122) {
-		this.objA1122 = objA1122;
+	public void setObjA196(Double objA196) {
+		this.objA196 = objA196;
 	}
 
-	public Double getObjA1123() {
-		return this.objA1123;
+	public Double getObjA197() {
+		return this.objA197;
 	}
 
-	public void setObjA1123(Double objA1123) {
-		this.objA1123 = objA1123;
+	public void setObjA197(Double objA197) {
+		this.objA197 = objA197;
 	}
 
-	public Double getObjA1124() {
-		return this.objA1124;
+	public Double getObjA198() {
+		return this.objA198;
 	}
 
-	public void setObjA1124(Double objA1124) {
-		this.objA1124 = objA1124;
+	public void setObjA198(Double objA198) {
+		this.objA198 = objA198;
 	}
 
-	public Double getObjA1125() {
-		return this.objA1125;
+	public Double getObjA199() {
+		return this.objA199;
 	}
 
-	public void setObjA1125(Double objA1125) {
-		this.objA1125 = objA1125;
+	public void setObjA199(Double objA199) {
+		this.objA199 = objA199;
 	}
 
-	public Double getObjA1126() {
-		return this.objA1126;
+	public Double getObjA200() {
+		return this.objA200;
 	}
 
-	public void setObjA1126(Double objA1126) {
-		this.objA1126 = objA1126;
+	public void setObjA200(Double objA200) {
+		this.objA200 = objA200;
+	}
+
+	public Double getObjA201() {
+		return this.objA201;
+	}
+
+	public void setObjA201(Double objA201) {
+		this.objA201 = objA201;
+	}
+
+	public Double getObjA202() {
+		return this.objA202;
+	}
+
+	public void setObjA202(Double objA202) {
+		this.objA202 = objA202;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getUsernameUd() {
+		return usernameUd;
+	}
+
+	public void setUsernameUd(String usernameUd) {
+		this.usernameUd = usernameUd;
 	}
 
 	public String getCreateDate() {
@@ -1081,23 +1118,6 @@ public class Weballobj implements java.io.Serializable {
 	public void setCreateDate(String createDate) {
 		this.createDate = createDate;
 	}
-
-	public String getUserName() {
-		return userName;
-	}
-
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-
-	public String getUserNameUd() {
-		return userNameUd;
-	}
-
-	public void setUserNameUd(String userNameUd) {
-		this.userNameUd = userNameUd;
-	}
-	
 	
 
 }

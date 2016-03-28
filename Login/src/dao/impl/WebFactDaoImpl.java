@@ -217,4 +217,17 @@ public class WebFactDaoImpl extends Basedao implements IWebFactDao {
 		return super.findAll(hql, null);
 	}
 
+	/**
+	 * 日期:2016/3/28
+	 * 描述:
+	 */
+	
+	
+	public List<String> findfactAreaByFactNo(String factNo) {
+		// TODO Auto-generated method stub
+		String hql="select id.factArea from WebFact where id.factNo=?";
+		String[]objs={factNo};
+		return super.findAll(hql, objs);
+	}
+
 }

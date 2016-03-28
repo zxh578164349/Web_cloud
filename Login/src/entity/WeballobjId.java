@@ -8,7 +8,7 @@ public class WeballobjId implements java.io.Serializable {
 
 	// Fields
 
-	private WebFact fact;	
+	private WebFact fact;
 	private String yymm;
 
 	// Constructors
@@ -19,23 +19,16 @@ public class WeballobjId implements java.io.Serializable {
 
 	/** full constructor */
 	public WeballobjId(WebFact fact,String yymm) {
-		this.fact = fact;
+		this.fact=fact;
 		this.yymm = yymm;
 	}
 
 	// Property accessors
 
-	
 
 	public String getYymm() {
 		return this.yymm;
 	}
-
-	public void setYymm(String yymm) {
-		this.yymm = yymm;
-	}
-	
-	
 
 	public WebFact getFact() {
 		return fact;
@@ -43,6 +36,10 @@ public class WeballobjId implements java.io.Serializable {
 
 	public void setFact(WebFact fact) {
 		this.fact = fact;
+	}
+
+	public void setYymm(String yymm) {
+		this.yymm = yymm;
 	}
 
 	public boolean equals(Object other) {

@@ -50,9 +50,9 @@ public class WeballobjServicesImpl implements IWeballobjServices{
 	
 	
 	public PageBean findPageBean(int pageSize, int page, String factNo,
-			String yymm) {
+			String yymm,String yymm2) {
 		// TODO Auto-generated method stub
-		return null;
+		return weballobjdao.findPageBean(pageSize, page, factNo, yymm, yymm2);
 	}
 
 }

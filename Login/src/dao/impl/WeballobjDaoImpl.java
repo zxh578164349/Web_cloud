@@ -3,8 +3,11 @@
  */
 package dao.impl;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import com.opensymphony.xwork2.ActionContext;
 
 import util.PageBean;
 import dao.Basedao;
@@ -53,9 +56,48 @@ public class WeballobjDaoImpl extends Basedao implements IWeballobjDao{
 	
 	
 	public PageBean findPageBean(int pageSize, int page, String factNo,
-			String yymm) {
+			String yymm,String yymm2) {
 		// TODO Auto-generated method stub
-		return null;
+		Map<String,Object>map=new HashMap<String,Object>();
+		StringBuffer hql=new StringBuffer();
+		StringBuffer hql2=new StringBuffer();
+		hql.append("from Weballobj where 1=1 ");
+		hql2.append("select count(id.yymm) ");
+		if(factNo!=null&&!factNo.equals("")&&!factNo.equals("tw")){
+			hql.append(" and id.fact.id.factNo=:factno");
+			map.put("factno", factNo);
+		}
+		if(yymm!=null&&!yymm.equals("")){
+			hql.append(" and id.yymm>=:yymm");
+			map.put("yymm", yymm);
+		}
+		if(yymm2!=null&&!yymm2.equals("")){
+			hql.append(" and id.yymm<=:yymm2");
+			map.put("yymm2", yymm2);
+		}
+		hql2.append(hql);
+		hql.append(" order by id.fact.id.factNo,id.fact.id.factArea,id.yymm ");
+		int currentPage=PageBean.countCurrentPage(page);		
+		Integer allrow=(Integer)ActionContext.getContext().getSession().get("allrow");
+		if(allrow==null){
+			allrow=super.getAllRowCount2(hql2.toString(), map);
+		}
+		int totalPage=PageBean.countTotalPage(pageSize, allrow);
+		if(currentPage>totalPage){
+			currentPage=totalPage;
+		}
+		int offset=PageBean.countOffset(pageSize, currentPage);
+		List<Weballobj>list=super.queryForPage(hql.toString(), offset, pageSize, map);
+		for(Weballobj obj:list){
+			obj.getId().getFact().getFactSname();
+		}
+		PageBean bean=new PageBean();
+		bean.setAllRow(allrow);
+		bean.setCurrentPage(currentPage);
+		bean.setList(list);
+		bean.setPageSize(pageSize);
+		bean.setTotalPage(totalPage);
+		return bean;
 	}
 
 }

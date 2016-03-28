@@ -82,5 +82,18 @@ public interface IWebFactDao {
 	 * @date 2016/2/29
 	 */
 	public List<Object[]> findFactAreaAbled();
+	
+	/**
+	 * 根據factNo找出各箇廠的factArea
+	 * @Title: findfactAreaByFactNo
+	 * @Description: TODO
+	 * @param @param factNo
+	 * @param @return
+	 * @return List<String>
+	 * @throws
+	 * @author web
+	 * @date 2016/3/28
+	 */
+	public List<String>findfactAreaByFactNo(String factNo);
 
 }

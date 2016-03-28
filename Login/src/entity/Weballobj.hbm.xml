@@ -8,315 +8,321 @@
     <class name="entity.Weballobj" table="WEBALLOBJ" schema="WEB">
         <composite-id name="id" class="entity.WeballobjId">
             <key-many-to-one name="fact" class="entity.WebFact">
-                <column name="FACT_NO" length="10"/>
-                <column name="FACT_CODE" length="20"/>
-            </key-many-to-one>            
+                 <column name="FACT_NO" length="10"/>
+                 <column name="FACT_CODE" length="30"/>
+            </key-many-to-one>           
             <key-property name="yymm" type="java.lang.String">
                 <column name="YYMM" length="8" />
             </key-property>
         </composite-id>
-        <property name="objA301" type="java.lang.Double">
-            <column name="OBJ_A301" precision="13" scale="4" />
+        <property name="objA100" type="java.lang.Double">
+            <column name="OBJ_A100" precision="13" scale="4" />
         </property>
-        <property name="objA302" type="java.lang.Double">
-            <column name="OBJ_A302" precision="13" scale="4" />
+        <property name="objA101" type="java.lang.Double">
+            <column name="OBJ_A101" precision="13" scale="4" />
         </property>
-        <property name="objA303" type="java.lang.Double">
-            <column name="OBJ_A303" precision="13" scale="4" />
+        <property name="objA102" type="java.lang.Double">
+            <column name="OBJ_A102" precision="13" scale="4" />
         </property>
-        <property name="objA304" type="java.lang.Double">
-            <column name="OBJ_A304" precision="13" scale="4" />
+        <property name="objA103" type="java.lang.Double">
+            <column name="OBJ_A103" precision="13" scale="4" />
         </property>
-        <property name="objA305" type="java.lang.Double">
-            <column name="OBJ_A305" precision="13" scale="4" />
+        <property name="objA104" type="java.lang.Double">
+            <column name="OBJ_A104" precision="13" scale="4" />
         </property>
-        <property name="objA306" type="java.lang.Double">
-            <column name="OBJ_A306" precision="13" scale="4" />
+        <property name="objA105" type="java.lang.Double">
+            <column name="OBJ_A105" precision="13" scale="4" />
         </property>
-        <property name="objA307" type="java.lang.Double">
-            <column name="OBJ_A307" precision="13" scale="4" />
+        <property name="objA106" type="java.lang.Double">
+            <column name="OBJ_A106" precision="13" scale="4" />
         </property>
-        <property name="objA401" type="java.lang.Double">
-            <column name="OBJ_A401" precision="13" scale="4" />
+        <property name="objA107" type="java.lang.Double">
+            <column name="OBJ_A107" precision="13" scale="4" />
         </property>
-        <property name="objA402" type="java.lang.Double">
-            <column name="OBJ_A402" precision="13" scale="4" />
+        <property name="objA108" type="java.lang.Double">
+            <column name="OBJ_A108" precision="13" scale="4" />
         </property>
-        <property name="objA403" type="java.lang.Double">
-            <column name="OBJ_A403" precision="13" scale="4" />
+        <property name="objA109" type="java.lang.Double">
+            <column name="OBJ_A109" precision="13" scale="4" />
         </property>
-        <property name="objA404" type="java.lang.Double">
-            <column name="OBJ_A404" precision="13" scale="4" />
+        <property name="objA110" type="java.lang.Double">
+            <column name="OBJ_A110" precision="13" scale="4" />
         </property>
-        <property name="objA405" type="java.lang.Double">
-            <column name="OBJ_A405" precision="13" scale="4" />
+        <property name="objA111" type="java.lang.Double">
+            <column name="OBJ_A111" precision="13" scale="4" />
         </property>
-        <property name="objA406" type="java.lang.Double">
-            <column name="OBJ_A406" precision="13" scale="4" />
+        <property name="objA112" type="java.lang.Double">
+            <column name="OBJ_A112" precision="13" scale="4" />
         </property>
-        <property name="objA407" type="java.lang.Double">
-            <column name="OBJ_A407" precision="13" scale="4" />
+        <property name="objA113" type="java.lang.Double">
+            <column name="OBJ_A113" precision="13" scale="4" />
         </property>
-        <property name="objA408" type="java.lang.Double">
-            <column name="OBJ_A408" precision="13" scale="4" />
+        <property name="objA114" type="java.lang.Double">
+            <column name="OBJ_A114" precision="13" scale="4" />
         </property>
-        <property name="objA409" type="java.lang.Double">
-            <column name="OBJ_A409" precision="13" scale="4" />
+        <property name="objA115" type="java.lang.Double">
+            <column name="OBJ_A115" precision="13" scale="4" />
         </property>
-        <property name="objA410" type="java.lang.Double">
-            <column name="OBJ_A410" precision="13" scale="4" />
+        <property name="objA116" type="java.lang.Double">
+            <column name="OBJ_A116" precision="13" scale="4" />
         </property>
-        <property name="objA501" type="java.lang.Double">
-            <column name="OBJ_A501" precision="13" scale="4" />
+        <property name="objA117" type="java.lang.Double">
+            <column name="OBJ_A117" precision="13" scale="4" />
         </property>
-        <property name="objA502" type="java.lang.Double">
-            <column name="OBJ_A502" precision="13" scale="4" />
+        <property name="objA118" type="java.lang.Double">
+            <column name="OBJ_A118" precision="13" scale="4" />
         </property>
-        <property name="objA503" type="java.lang.Double">
-            <column name="OBJ_A503" precision="13" scale="4" />
+        <property name="objA119" type="java.lang.Double">
+            <column name="OBJ_A119" precision="13" scale="4" />
         </property>
-        <property name="objA504" type="java.lang.Double">
-            <column name="OBJ_A504" precision="13" scale="4" />
+        <property name="objA120" type="java.lang.Double">
+            <column name="OBJ_A120" precision="13" scale="4" />
         </property>
-        <property name="objA505" type="java.lang.Double">
-            <column name="OBJ_A505" precision="13" scale="4" />
+        <property name="objA121" type="java.lang.Double">
+            <column name="OBJ_A121" precision="13" scale="4" />
         </property>
-        <property name="objA506" type="java.lang.Double">
-            <column name="OBJ_A506" precision="13" scale="4" />
+        <property name="objA122" type="java.lang.Double">
+            <column name="OBJ_A122" precision="13" scale="4" />
         </property>
-        <property name="objA507" type="java.lang.Double">
-            <column name="OBJ_A507" precision="13" scale="4" />
+        <property name="objA123" type="java.lang.Double">
+            <column name="OBJ_A123" precision="13" scale="4" />
         </property>
-        <property name="objA508" type="java.lang.Double">
-            <column name="OBJ_A508" precision="13" scale="4" />
+        <property name="objA124" type="java.lang.Double">
+            <column name="OBJ_A124" precision="13" scale="4" />
         </property>
-        <property name="objA509" type="java.lang.Double">
-            <column name="OBJ_A509" precision="13" scale="4" />
+        <property name="objA125" type="java.lang.Double">
+            <column name="OBJ_A125" precision="13" scale="4" />
         </property>
-        <property name="objA601" type="java.lang.Double">
-            <column name="OBJ_A601" precision="13" scale="4" />
+        <property name="objA126" type="java.lang.Double">
+            <column name="OBJ_A126" precision="13" scale="4" />
         </property>
-        <property name="objA602" type="java.lang.Double">
-            <column name="OBJ_A602" precision="13" scale="4" />
+        <property name="objA127" type="java.lang.Double">
+            <column name="OBJ_A127" precision="13" scale="4" />
         </property>
-        <property name="objA603" type="java.lang.Double">
-            <column name="OBJ_A603" precision="13" scale="4" />
+        <property name="objA128" type="java.lang.Double">
+            <column name="OBJ_A128" precision="13" scale="4" />
         </property>
-        <property name="objA604" type="java.lang.Double">
-            <column name="OBJ_A604" precision="13" scale="4" />
+        <property name="objA129" type="java.lang.Double">
+            <column name="OBJ_A129" precision="13" scale="4" />
         </property>
-        <property name="objA605" type="java.lang.Double">
-            <column name="OBJ_A605" precision="13" scale="4" />
+        <property name="objA130" type="java.lang.Double">
+            <column name="OBJ_A130" precision="13" scale="4" />
         </property>
-        <property name="objA606" type="java.lang.Double">
-            <column name="OBJ_A606" precision="13" scale="4" />
+        <property name="objA131" type="java.lang.Double">
+            <column name="OBJ_A131" precision="13" scale="4" />
         </property>
-        <property name="objA701" type="java.lang.Double">
-            <column name="OBJ_A701" precision="13" scale="4" />
+        <property name="objA132" type="java.lang.Double">
+            <column name="OBJ_A132" precision="13" scale="4" />
         </property>
-        <property name="objA702" type="java.lang.Double">
-            <column name="OBJ_A702" precision="13" scale="4" />
+        <property name="objA133" type="java.lang.Double">
+            <column name="OBJ_A133" precision="13" scale="4" />
         </property>
-        <property name="objA703" type="java.lang.Double">
-            <column name="OBJ_A703" precision="13" scale="4" />
+        <property name="objA134" type="java.lang.Double">
+            <column name="OBJ_A134" precision="13" scale="4" />
         </property>
-        <property name="objA704" type="java.lang.Double">
-            <column name="OBJ_A704" precision="13" scale="4" />
+        <property name="objA135" type="java.lang.Double">
+            <column name="OBJ_A135" precision="13" scale="4" />
         </property>
-        <property name="objA705" type="java.lang.Double">
-            <column name="OBJ_A705" precision="13" scale="4" />
+        <property name="objA136" type="java.lang.Double">
+            <column name="OBJ_A136" precision="13" scale="4" />
         </property>
-        <property name="objA706" type="java.lang.Double">
-            <column name="OBJ_A706" precision="13" scale="4" />
+        <property name="objA137" type="java.lang.Double">
+            <column name="OBJ_A137" precision="13" scale="4" />
         </property>
-        <property name="objA707" type="java.lang.Double">
-            <column name="OBJ_A707" precision="13" scale="4" />
+        <property name="objA138" type="java.lang.Double">
+            <column name="OBJ_A138" precision="13" scale="4" />
         </property>
-        <property name="objA708" type="java.lang.Double">
-            <column name="OBJ_A708" precision="13" scale="4" />
+        <property name="objA139" type="java.lang.Double">
+            <column name="OBJ_A139" precision="13" scale="4" />
         </property>
-        <property name="objA709" type="java.lang.Double">
-            <column name="OBJ_A709" precision="13" scale="4" />
+        <property name="objA140" type="java.lang.Double">
+            <column name="OBJ_A140" precision="13" scale="4" />
         </property>
-        <property name="objA710" type="java.lang.Double">
-            <column name="OBJ_A710" precision="13" scale="4" />
+        <property name="objA141" type="java.lang.Double">
+            <column name="OBJ_A141" precision="13" scale="4" />
         </property>
-        <property name="objA711" type="java.lang.Double">
-            <column name="OBJ_A711" precision="13" scale="4" />
+        <property name="objA142" type="java.lang.Double">
+            <column name="OBJ_A142" precision="13" scale="4" />
         </property>
-        <property name="objA712" type="java.lang.Double">
-            <column name="OBJ_A712" precision="13" scale="4" />
+        <property name="objA143" type="java.lang.Double">
+            <column name="OBJ_A143" precision="13" scale="4" />
         </property>
-        <property name="objA713" type="java.lang.Double">
-            <column name="OBJ_A713" precision="13" scale="4" />
+        <property name="objA144" type="java.lang.Double">
+            <column name="OBJ_A144" precision="13" scale="4" />
         </property>
-        <property name="objA714" type="java.lang.Double">
-            <column name="OBJ_A714" precision="13" scale="4" />
+        <property name="objA145" type="java.lang.Double">
+            <column name="OBJ_A145" precision="13" scale="4" />
         </property>
-        <property name="objA715" type="java.lang.Double">
-            <column name="OBJ_A715" precision="13" scale="4" />
+        <property name="objA146" type="java.lang.Double">
+            <column name="OBJ_A146" precision="13" scale="4" />
         </property>
-        <property name="objA716" type="java.lang.Double">
-            <column name="OBJ_A716" precision="13" scale="4" />
+        <property name="objA147" type="java.lang.Double">
+            <column name="OBJ_A147" precision="13" scale="4" />
         </property>
-        <property name="objA717" type="java.lang.Double">
-            <column name="OBJ_A717" precision="13" scale="4" />
+        <property name="objA148" type="java.lang.Double">
+            <column name="OBJ_A148" precision="13" scale="4" />
         </property>
-        <property name="objA718" type="java.lang.Double">
-            <column name="OBJ_A718" precision="13" scale="4" />
+        <property name="objA149" type="java.lang.Double">
+            <column name="OBJ_A149" precision="13" scale="4" />
         </property>
-        <property name="objA719" type="java.lang.Double">
-            <column name="OBJ_A719" precision="13" scale="4" />
+        <property name="objA150" type="java.lang.Double">
+            <column name="OBJ_A150" precision="13" scale="4" />
         </property>
-        <property name="objA801" type="java.lang.Double">
-            <column name="OBJ_A801" precision="13" scale="4" />
+        <property name="objA151" type="java.lang.Double">
+            <column name="OBJ_A151" precision="13" scale="4" />
         </property>
-        <property name="objA802" type="java.lang.Double">
-            <column name="OBJ_A802" precision="13" scale="4" />
+        <property name="objA152" type="java.lang.Double">
+            <column name="OBJ_A152" precision="13" scale="4" />
         </property>
-        <property name="objA803" type="java.lang.Double">
-            <column name="OBJ_A803" precision="13" scale="4" />
+        <property name="objA153" type="java.lang.Double">
+            <column name="OBJ_A153" precision="13" scale="4" />
         </property>
-        <property name="objA804" type="java.lang.Double">
-            <column name="OBJ_A804" precision="13" scale="4" />
+        <property name="objA154" type="java.lang.Double">
+            <column name="OBJ_A154" precision="13" scale="4" />
         </property>
-        <property name="objA805" type="java.lang.Double">
-            <column name="OBJ_A805" precision="13" scale="4" />
+        <property name="objA155" type="java.lang.Double">
+            <column name="OBJ_A155" precision="13" scale="4" />
         </property>
-        <property name="objA806" type="java.lang.Double">
-            <column name="OBJ_A806" precision="13" scale="4" />
+        <property name="objA156" type="java.lang.Double">
+            <column name="OBJ_A156" precision="13" scale="4" />
         </property>
-        <property name="objA807" type="java.lang.Double">
-            <column name="OBJ_A807" precision="13" scale="4" />
+        <property name="objA157" type="java.lang.Double">
+            <column name="OBJ_A157" precision="13" scale="4" />
         </property>
-        <property name="objA808" type="java.lang.Double">
-            <column name="OBJ_A808" precision="13" scale="4" />
+        <property name="objA158" type="java.lang.Double">
+            <column name="OBJ_A158" precision="13" scale="4" />
         </property>
-        <property name="objA901" type="java.lang.Double">
-            <column name="OBJ_A901" precision="13" scale="4" />
+        <property name="objA159" type="java.lang.Double">
+            <column name="OBJ_A159" precision="13" scale="4" />
         </property>
-        <property name="objA902" type="java.lang.Double">
-            <column name="OBJ_A902" precision="13" scale="4" />
+        <property name="objA160" type="java.lang.Double">
+            <column name="OBJ_A160" precision="13" scale="4" />
         </property>
-        <property name="objA903" type="java.lang.Double">
-            <column name="OBJ_A903" precision="13" scale="4" />
+        <property name="objA161" type="java.lang.Double">
+            <column name="OBJ_A161" precision="13" scale="4" />
         </property>
-        <property name="objA904" type="java.lang.Double">
-            <column name="OBJ_A904" precision="13" scale="4" />
+        <property name="objA162" type="java.lang.Double">
+            <column name="OBJ_A162" precision="13" scale="4" />
         </property>
-        <property name="objA905" type="java.lang.Double">
-            <column name="OBJ_A905" precision="13" scale="4" />
+        <property name="objA163" type="java.lang.Double">
+            <column name="OBJ_A163" precision="13" scale="4" />
         </property>
-        <property name="objA906" type="java.lang.Double">
-            <column name="OBJ_A906" precision="13" scale="4" />
+        <property name="objA164" type="java.lang.Double">
+            <column name="OBJ_A164" precision="13" scale="4" />
         </property>
-        <property name="objA907" type="java.lang.Double">
-            <column name="OBJ_A907" precision="13" scale="4" />
+        <property name="objA165" type="java.lang.Double">
+            <column name="OBJ_A165" precision="13" scale="4" />
         </property>
-        <property name="objA908" type="java.lang.Double">
-            <column name="OBJ_A908" precision="13" scale="4" />
+        <property name="objA166" type="java.lang.Double">
+            <column name="OBJ_A166" precision="13" scale="4" />
         </property>
-        <property name="objA1001" type="java.lang.Double">
-            <column name="OBJ_A1001" precision="13" scale="4" />
+        <property name="objA167" type="java.lang.Double">
+            <column name="OBJ_A167" precision="13" scale="4" />
         </property>
-        <property name="objA1002" type="java.lang.Double">
-            <column name="OBJ_A1002" precision="13" scale="4" />
+        <property name="objA168" type="java.lang.Double">
+            <column name="OBJ_A168" precision="13" scale="4" />
         </property>
-        <property name="objA1003" type="java.lang.Double">
-            <column name="OBJ_A1003" precision="13" scale="4" />
+        <property name="objA169" type="java.lang.Double">
+            <column name="OBJ_A169" precision="13" scale="4" />
         </property>
-        <property name="objA1004" type="java.lang.Double">
-            <column name="OBJ_A1004" precision="13" scale="4" />
+        <property name="objA170" type="java.lang.Double">
+            <column name="OBJ_A170" precision="13" scale="4" />
         </property>
-        <property name="objA1005" type="java.lang.Double">
-            <column name="OBJ_A1005" precision="13" scale="4" />
+        <property name="objA171" type="java.lang.Double">
+            <column name="OBJ_A171" precision="13" scale="4" />
         </property>
-        <property name="objA1006" type="java.lang.Double">
-            <column name="OBJ_A1006" precision="13" scale="4" />
+        <property name="objA172" type="java.lang.Double">
+            <column name="OBJ_A172" precision="13" scale="4" />
         </property>
-        <property name="objA1007" type="java.lang.Double">
-            <column name="OBJ_A1007" precision="13" scale="4" />
+        <property name="objA173" type="java.lang.Double">
+            <column name="OBJ_A173" precision="13" scale="4" />
         </property>
-        <property name="objA1008" type="java.lang.Double">
-            <column name="OBJ_A1008" precision="13" scale="4" />
+        <property name="objA174" type="java.lang.Double">
+            <column name="OBJ_A174" precision="13" scale="4" />
         </property>
-        <property name="objA1101" type="java.lang.Double">
-            <column name="OBJ_A1101" precision="13" scale="4" />
+        <property name="objA175" type="java.lang.Double">
+            <column name="OBJ_A175" precision="13" scale="4" />
         </property>
-        <property name="objA1102" type="java.lang.Double">
-            <column name="OBJ_A1102" precision="13" scale="4" />
+        <property name="objA176" type="java.lang.Double">
+            <column name="OBJ_A176" precision="13" scale="4" />
         </property>
-        <property name="objA1103" type="java.lang.Double">
-            <column name="OBJ_A1103" precision="13" scale="4" />
+        <property name="objA177" type="java.lang.Double">
+            <column name="OBJ_A177" precision="13" scale="4" />
         </property>
-        <property name="objA1104" type="java.lang.Double">
-            <column name="OBJ_A1104" precision="13" scale="4" />
+        <property name="objA178" type="java.lang.Double">
+            <column name="OBJ_A178" precision="13" scale="4" />
         </property>
-        <property name="objA1105" type="java.lang.Double">
-            <column name="OBJ_A1105" precision="13" scale="4" />
+        <property name="objA179" type="java.lang.Double">
+            <column name="OBJ_A179" precision="13" scale="4" />
         </property>
-        <property name="objA1106" type="java.lang.Double">
-            <column name="OBJ_A1106" precision="13" scale="4" />
+        <property name="objA180" type="java.lang.Double">
+            <column name="OBJ_A180" precision="13" scale="4" />
         </property>
-        <property name="objA1107" type="java.lang.Double">
-            <column name="OBJ_A1107" precision="13" scale="4" />
+        <property name="objA181" type="java.lang.Double">
+            <column name="OBJ_A181" precision="13" scale="4" />
         </property>
-        <property name="objA1108" type="java.lang.Double">
-            <column name="OBJ_A1108" precision="13" scale="4" />
+        <property name="objA182" type="java.lang.Double">
+            <column name="OBJ_A182" precision="13" scale="4" />
         </property>
-        <property name="objA1109" type="java.lang.Double">
-            <column name="OBJ_A1109" precision="13" scale="4" />
+        <property name="objA183" type="java.lang.Double">
+            <column name="OBJ_A183" precision="13" scale="4" />
         </property>
-        <property name="objA1110" type="java.lang.Double">
-            <column name="OBJ_A1110" precision="13" scale="4" />
+        <property name="objA184" type="java.lang.Double">
+            <column name="OBJ_A184" precision="13" scale="4" />
         </property>
-        <property name="objA1111" type="java.lang.Double">
-            <column name="OBJ_A1111" precision="13" scale="4" />
+        <property name="objA185" type="java.lang.Double">
+            <column name="OBJ_A185" precision="13" scale="4" />
         </property>
-        <property name="objA1112" type="java.lang.Double">
-            <column name="OBJ_A1112" precision="13" scale="4" />
+        <property name="objA186" type="java.lang.Double">
+            <column name="OBJ_A186" precision="13" scale="4" />
         </property>
-        <property name="objA1113" type="java.lang.Double">
-            <column name="OBJ_A1113" precision="13" scale="4" />
+        <property name="objA187" type="java.lang.Double">
+            <column name="OBJ_A187" precision="13" scale="4" />
         </property>
-        <property name="objA1114" type="java.lang.Double">
-            <column name="OBJ_A1114" precision="13" scale="4" />
+        <property name="objA188" type="java.lang.Double">
+            <column name="OBJ_A188" precision="13" scale="4" />
         </property>
-        <property name="objA1115" type="java.lang.Double">
-            <column name="OBJ_A1115" precision="13" scale="4" />
+        <property name="objA189" type="java.lang.Double">
+            <column name="OBJ_A189" precision="13" scale="4" />
         </property>
-        <property name="objA1116" type="java.lang.Double">
-            <column name="OBJ_A1116" precision="13" scale="4" />
+        <property name="objA190" type="java.lang.Double">
+            <column name="OBJ_A190" precision="13" scale="4" />
         </property>
-        <property name="objA1117" type="java.lang.Double">
-            <column name="OBJ_A1117" precision="13" scale="4" />
+        <property name="objA191" type="java.lang.Double">
+            <column name="OBJ_A191" precision="13" scale="4" />
         </property>
-        <property name="objA1118" type="java.lang.Double">
-            <column name="OBJ_A1118" precision="13" scale="4" />
+        <property name="objA192" type="java.lang.Double">
+            <column name="OBJ_A192" precision="13" scale="4" />
         </property>
-        <property name="objA1119" type="java.lang.Double">
-            <column name="OBJ_A1119" precision="13" scale="4" />
+        <property name="objA193" type="java.lang.Double">
+            <column name="OBJ_A193" precision="13" scale="4" />
         </property>
-        <property name="objA1120" type="java.lang.Double">
-            <column name="OBJ_A1120" precision="13" scale="4" />
+        <property name="objA194" type="java.lang.Double">
+            <column name="OBJ_A194" precision="13" scale="4" />
         </property>
-        <property name="objA1121" type="java.lang.Double">
-            <column name="OBJ_A1121" precision="13" scale="4" />
+        <property name="objA195" type="java.lang.Double">
+            <column name="OBJ_A195" precision="13" scale="4" />
         </property>
-        <property name="objA1122" type="java.lang.Double">
-            <column name="OBJ_A1122" precision="13" scale="4" />
+        <property name="objA196" type="java.lang.Double">
+            <column name="OBJ_A196" precision="13" scale="4" />
         </property>
-        <property name="objA1123" type="java.lang.Double">
-            <column name="OBJ_A1123" precision="13" scale="4" />
+        <property name="objA197" type="java.lang.Double">
+            <column name="OBJ_A197" precision="13" scale="4" />
         </property>
-        <property name="objA1124" type="java.lang.Double">
-            <column name="OBJ_A1124" precision="13" scale="4" />
+        <property name="objA198" type="java.lang.Double">
+            <column name="OBJ_A198" precision="13" scale="4" />
         </property>
-        <property name="objA1125" type="java.lang.Double">
-            <column name="OBJ_A1125" precision="13" scale="4" />
+        <property name="objA199" type="java.lang.Double">
+            <column name="OBJ_A199" precision="13" scale="4" />
         </property>
-        <property name="objA1126" type="java.lang.Double">
-            <column name="OBJ_A1126" precision="13" scale="4" />
+        <property name="objA200" type="java.lang.Double">
+            <column name="OBJ_A200" precision="13" scale="4" />
+        </property>
+        <property name="objA201" type="java.lang.Double">
+            <column name="OBJ_A201" precision="13" scale="4" />
+        </property>
+        <property name="objA202" type="java.lang.Double">
+            <column name="OBJ_A202" precision="13" scale="4" />
         </property>
     </class>
 </hibernate-mapping>
