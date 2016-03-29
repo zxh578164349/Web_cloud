@@ -67,9 +67,7 @@
 	} */                 
 });
     }
-    
-
-
+       
     
     function check(factNo,visaSort,billNo,itemNo){
     	var area_w;
@@ -117,9 +115,11 @@
      layer.getChildFrame("#visa_mk",layer.index).val('Y'); 
      if(memo.length>150){
        alert("備註不可超過150字");
-     }else{       
+     }else{ 
        layer.getChildFrame("#memo",layer.index).submit();
-       loadUrl("vbm_findPageBean");          
+       window.setTimeout(function(){parent.layer.close(parent.layer.getFrameIndex(window.name));},1000);       
+       loadUrl("vbm_findPageBean");
+      
      }        
     },
     no:function(){
@@ -131,6 +131,7 @@
         alert("備註不可超過150字");
      }else{
       layer.getChildFrame("#memo",layer.index).submit();
+      window.setTimeout(function(){parent.layer.close(parent.layer.getFrameIndex(window.name));},1000);
       loadUrl("vbm_findPageBean");        
      } 
      

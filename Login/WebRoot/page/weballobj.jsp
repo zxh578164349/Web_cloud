@@ -20,10 +20,8 @@
 	
 </head>
 <script>
-jq(function(){
+
 	function checkForm(){
-		alert(jq("#yymm").val());
-		alert(jq("#factNo").val())
 		var id_file=jq("#id_file").val();
 		var extendName=id_file.substr(id_file.lastIndexOf(".")).toLowerCase();
 		if(id_file==""){
@@ -32,7 +30,7 @@ jq(function(){
 		}else if(extendName!=".xls"&&extendName!=".xlsx"){
 			layer.alert("僅允許Excel文檔");
 			return false;
-		}else if(jq("#factNo").val()=="nothing"){
+		}else if(jq("#factNo_a").val()=="nothing"){
 			layer.alert("請選擇廠別");
 			return false;
 		}else if(jq("#yymm").val()==""){
@@ -41,12 +39,10 @@ jq(function(){
 		}else{
 			layer.load("請稍等...");
 			jq("#upload_form").submit();
-		}
-		
-		
+		}				
 	}
 	
-})
+
 
 	
 	function pages(page) {	    		
@@ -119,8 +115,8 @@ function showDiv(){
     //fadeIn:300,
     //shift:'top',
     offset:['10px',''],
-    area:['670px','520px'],               
-    iframe:{src:'page/sample/sample.jsp',scrolling:'auto'}	                    
+    area:['570px','450px'],               
+    iframe:{src:'page/sample/sample_weballobj.jsp',scrolling:'auto'}	                    
 });
 }
 </script>
@@ -135,8 +131,8 @@ function showDiv(){
 	       </td>
 	       <td>
 	          <s:if test="#session.factNo=='tw'">
-					<select name="factNo" id="factNo" class="search">
-						<option value="nothing">請選擇廠別</option>						
+					<select name="factNo" id="factNo_a" class="search" >
+						<option value="nothing">請選擇廠別</option>							
 						<s:iterator value="#session.facts" id="temp">
 							<option value="${temp[0]}">${temp[1]}(${temp[0]})</option>								
 						</s:iterator>
@@ -145,7 +141,7 @@ function showDiv(){
 				</s:if> 
 				<s:else>
 				
-					<select name="factNo" id="factNo" class="search">						
+					<select name="factNo" id="factNo_a" class="search">						
 						<option value="<s:property value="#session.factNo"/>">
 							<s:property value="#session.factName" />(<s:property value="#session.factNo"/>)
 						</option>

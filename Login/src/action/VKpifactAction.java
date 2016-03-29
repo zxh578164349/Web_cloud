@@ -503,43 +503,24 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 				List<Double>list3_q4=list2.get(4);//第四季度
 				List<Double>list3_half2=list2.get(5);//下半年
 				List<Double>list3_year=list2.get(6);//全年
-				
-								
-				
-				/**
-				 * 20150327
-				 * 以下代碼代替以上注釋代碼
-				 * 開始2
-				 */
+																				
 				for(int j=0;j<list_str.size();j++){
 					HSSFRow row=sheet.getRow(4+j+cursor*k);
 					HSSFCell cell=row.createCell(i+4+temp_num);
-					//HSSFCellStyle cs_temp=findStyle(wb,j);//格式的選擇											
-					/**
-					 * 20150327
-					 * 開始3
-					 * 月度的樣式判斷
-					 */
+					HSSFCellStyle cs_temp=findStyle(wb,j,map);//格式的選擇											
+					
 					if(kpi!=null&&kpi_pur!=null){						
 						Double num1=list_content.get(j);//實際值
 						Double num2=list_content_pur.get(j);//預計值	
-						HSSFCellStyle cs_temp2=findStyle(wb,num1,num2,j,map);//數字格式的選擇											
-						cell.setCellStyle(cs_temp2);
-					}					
-					/**
-					 * 結束3
-					 * 
-					 */					
+						cs_temp=findStyle(wb,num1,num2,j,map);//數字格式的選擇																	
+					}													
 					if(kpi!=null){
 						cell.setCellValue(list_content.get(j));
 					}else{
 						cell.setCellValue("無數據");
 					}
+					cell.setCellStyle(cs_temp);	
 					
-					/**
-					 * 開始4	
-					 * 季度，半年，全年的樣式分開判斷											
-					 */
 					if(i==2){
 						HSSFCell cell2=row.createCell(i+5+temp_num);//第一季度
 						cell2.setCellValue(list3_q1.get(j));
@@ -1471,7 +1452,7 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 		list_str.add("全厂人均产能");
 		list_unit.add("模/人");// (0位小數) (6<目標)
 		list_str.add("全廠人均時產能");
-		list_unit.add("模/H");// (0位小數) (7<目標)
+		list_unit.add("模/H");// (2位小數) (7<目標)
 		list_str.add("成倉庫存");
 		list_unit.add("雙");// 5(整數)(0位小數) (8>目標)
 		list_str.add("已出未請");
@@ -1487,7 +1468,7 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 		list_str.add("費用成本率");
 		list_unit.add("%");// (2位) (14<目標)
 		list_str.add("修繕單耗");
-		list_unit.add("USD/模");// (2位小數) (15>目標)
+		list_unit.add("USD/模");// (4位小數) (15>目標)
 		list_str.add("平均單價");
 		list_unit.add("USD/雙");// (2位小數) (16>目標)
 		list_str.add("全廠人均薪資");
@@ -1533,7 +1514,7 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 		list_str.add("離型劑金額單耗");
 		list_unit.add("USD/模");// （4位） (37<目標)
 		list_str.add("直間比");
-		list_unit.add("--");// (4位小數) (38<目標)
+		list_unit.add("--");// (2位小數) (38<目標)
 		list_str.add("直工離職率");
 		list_unit.add("%");// (2位小數) (39>目標)
 		list_str.add("全廠離職率");
@@ -1755,16 +1736,16 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 		HSSFCellStyle cs_temp2=null;
 		cs_temp2=(HSSFCellStyle)map.get("cs");		
 			//數字格式的選擇
-			if(j==0||(j>=5&&j<=9)||j==11||j==17||j==41){
+			if(j==0||j==5||j==6||j==8||j==9||j==11||j==17||j==41){
 				cs_temp2=null;
 				cs_temp2= (HSSFCellStyle)map.get("cs_poi_bg");
 			}else if(j==1||j==2){
 				cs_temp2=null;
 				cs_temp2=(HSSFCellStyle)map.get("cs_poi1_bg");
-			}else if((j>=26&&j<=31)||(j>=35&&j<=38)){
+			}else if(j==15||(j>=26&&j<=31)||(j>=35&&j<38)){
 				cs_temp2=null;
 				cs_temp2=(HSSFCellStyle)map.get("cs_poi4_bg");
-			}else if(j==18||j==19){
+			}else if(j==7||j==16||j==18||j==19||j==38){
 				cs_temp2=null;
 				cs_temp2=(HSSFCellStyle)map.get("cs_poi2_bg");				
 			}else{
@@ -1787,16 +1768,16 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 		HSSFCellStyle cs_temp2=null;
 		cs_temp2=(HSSFCellStyle)map.get("cs");		
 			//數字格式的選擇
-			if(j==0||(j>=5&&j<=9)||j==11||j==17||j==41){
+			if(j==0||j==5||j==6||j==8||j==9||j==11||j==17||j==41){
 				cs_temp2=null;
 				cs_temp2= (HSSFCellStyle)map.get("cs_poi");
 			}else if(j==1||j==2){
 				cs_temp2=null;
 				cs_temp2=(HSSFCellStyle)map.get("cs_poi1");
-			}else if((j>=26&&j<=31)||(j>=35&&j<=38)){
+			}else if(j==15||(j>=26&&j<=31)||(j>=35&&j<38)){
 				cs_temp2=null;
 				cs_temp2=(HSSFCellStyle)map.get("cs_poi4");
-			}else if(j==18||j==19){
+			}else if(j==7||j==16||j==18||j==19||j==38){
 				cs_temp2=null;
 				cs_temp2=(HSSFCellStyle)map.get("cs_poi2");				
 			}else{

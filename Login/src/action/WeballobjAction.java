@@ -183,9 +183,11 @@ public class WeballobjAction  extends ActionSupport implements ServletResponseAw
 				}
 				if(!list_factArea.containsAll(list_factcode)){
 					StringBuilder sb=new StringBuilder();
+					sb.append("(");					
 					for(String factArea:list_factArea){
-						sb.append("*"+factArea+"*");
+						sb.append(factArea+" ");
 					}
+					sb.append(")");
 					response.getWriter().print("<script>window.parent.layer.msg('請核對正確的廠別狀態:"+sb.toString()+"',4,3)</script>");
 					break;
 				}
