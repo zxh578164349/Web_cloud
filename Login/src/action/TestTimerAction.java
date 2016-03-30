@@ -91,13 +91,12 @@ public class TestTimerAction extends QuartzJobBean {
 		return result.toString();
 	}
 
-	public static String notInput() {
+	public static String notInput(ApplicationContext ac) {
 		List<String> list_day=null;
 		// 查找當天沒輸數據廠別
-		ApplicationContext ac = new ClassPathXmlApplicationContext(
+		/*ApplicationContext ac = new ClassPathXmlApplicationContext(
 				new String[] { "spring-action.xml", "spring-dao.xml",
-						"spring.xml", "spring-services.xml" });
-		//SimpleDateFormat formatDate = new SimpleDateFormat("yyyy/MM/dd");
+						"spring.xml", "spring-services.xml" });*/
 		IWebYieldDataServices dataSer = (IWebYieldDataServices) ac
 				.getBean("dataSer");
 		Calendar cal = Calendar.getInstance();
@@ -221,12 +220,12 @@ public class TestTimerAction extends QuartzJobBean {
 						"http://203.85.73.161/Login/printerauto_print?yymm="+yymm);//(在不同的機器上注意修改IP和端口)
 				client.executeMethod(method);
 				method.releaseConnection();
-				String totalResult = notInput();
-				ApplicationContext bean = new ClassPathXmlApplicationContext(
+				ApplicationContext ac = new ClassPathXmlApplicationContext(
 						new String[] { "spring-action.xml",
 								"spring-dao.xml", "spring.xml",
 								"spring-services.xml" });
-				IWebEmailService eSer = (IWebEmailService) bean
+				String totalResult = notInput(ac);				
+				IWebEmailService eSer = (IWebEmailService) ac
 						.getBean("emailService");
 				List<WebEmail> email = eSer.getEmail("Y");
 				String[] mail = new String[email.size()];
@@ -333,18 +332,19 @@ public class TestTimerAction extends QuartzJobBean {
 			} else {
 				HttpClient client = new HttpClient();
 				HttpMethod method = new GetMethod(
-						"http://203.85.73.161/Login/printerauto_print?yymm="+yymm);//(在不同的機器上注意修改IP和端口)
+						"http://172.17.18.173:8080/Login/printerauto_print?yymm="+yymm);//(在不同的機器上注意修改IP和端口)
 				client.executeMethod(method);
 				method.releaseConnection();
-				String totalResult = notInput();
-				ApplicationContext bean = new ClassPathXmlApplicationContext(
+				ApplicationContext ac = new ClassPathXmlApplicationContext(
 						new String[] { "spring-action.xml",
 								"spring-dao.xml", "spring.xml",
 								"spring-services.xml" });
-				IWebEmailService eSer = (IWebEmailService) bean
+				String totalResult = notInput(ac);
+				
+				IWebEmailService eSer = (IWebEmailService) ac
 						.getBean("emailService");
 				
-				List<WebEmail> email = eSer.getEmail("Y");
+				/*List<WebEmail> email = eSer.getEmail("Y");
 				String[] mail = new String[email.size()];
 				for (int i = 0; i < email.size(); i++) {
 					if (email.get(i).getName() != null
@@ -368,9 +368,9 @@ public class TestTimerAction extends QuartzJobBean {
 					} else {
 						cc[j] = Cc.get(j).getName() + Cc.get(j).getEmail();
 					}
-				}
-				/*String[] mail={MimeUtility.encodeText("張錫洪")+"<kyinfo.David@yyin.yydg.com.cn>"};				
-				String[] cc = {MimeUtility.encodeText("張錫洪")+"<kyinfo.David@yyin.yydg.com.cn>"};*/
+				}*/
+				String[] mail={MimeUtility.encodeText("張錫洪")+"<kyinfo.David@yyin.yydg.com.cn>"};				
+				String[] cc = {MimeUtility.encodeText("張錫洪")+"<kyinfo.David@yyin.yydg.com.cn>"};
 				
 				AutoSendEmailAction send = new AutoSendEmailAction();
 				String tyymm=tformat.format(new Date());

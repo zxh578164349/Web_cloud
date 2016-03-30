@@ -2668,6 +2668,7 @@ public class Printer_Auto {
 			double sumPersonnum = 0;// 人數合計
 			double sumDayCount = 0;// 總天數
 
+			double sumNodate=0;//未輸入數據統計20160330
 			/**
 			 * 如果alllist2.size()+factcodelist.size()>41就分頁
 			 */
@@ -3024,6 +3025,20 @@ public class Printer_Auto {
 									.createCell(y + width).setCellValue("工作天數");
 							sheet.getRow(z + height + totalHeight + 1)
 									.getCell(y + width).setCellStyle(cs_font);
+							
+							sheet.createRow(z + height + totalHeight + 2)
+							.createCell(y + width)
+							.setCellValue("沒有輸入統計");
+					        sheet.getRow(z + height + totalHeight + 2)
+							.getCell(y + width)
+							.setCellStyle(cs_font);
+					        
+					        sheet.createRow(z + height + totalHeight + 3)
+							.createCell(y + width)
+							.setCellValue("沒有輸入統計1");
+					        sheet.getRow(z + height + totalHeight + 3)
+							.getCell(y + width)
+							.setCellStyle(cs_font);
 						}
 						if (z == z_length - 2) {
 							sheet.createRow(z + height + totalHeight + 1)
@@ -3773,6 +3788,7 @@ public class Printer_Auto {
 									sheet.getRow(z + height + totalHeight + 1)
 											.getCell(y + width)
 											.setCellStyle(cs_font_green);
+									sumNodate=sumNodate+1;
 								}
 
 								if (achievingRate == null && z != day - 1
@@ -3796,6 +3812,7 @@ public class Printer_Auto {
 									sheet.getRow(z + height + totalHeight + 1)
 											.getCell(y + width)
 											.setCellStyle(cs_font_red);
+									
 								}
 								if (achievingRate == null
 										&& z != day - 1
@@ -3809,6 +3826,7 @@ public class Printer_Auto {
 											(day - 1) + height + totalHeight
 													+ 1).getCell(y + width)
 											.setCellStyle(cs_font_red);
+									
 								}
 								sumDayCount = sumDayCount + daycount;
 							} catch (Exception e) {
@@ -3841,6 +3859,14 @@ public class Printer_Auto {
 								sheet.getRow(z + height + totalHeight + 1)
 										.getCell(y + width - 4)
 										.setCellValue(sumDayCount);
+								
+								sheet.getRow(z + height + totalHeight + 2)
+								.createCell(y + width-4 )
+								.setCellStyle(cs_head);
+						        sheet.getRow(z + height + totalHeight + 2)
+								.getCell(y + width -4)
+								.setCellValue(sumNodate);
+						        						        
 							}
 						}// end "if 5"
 
