@@ -212,7 +212,8 @@ function findById(subform,url){
 												   	<a name="alink" href="javascript:findPageBean('<s:property value="address"/>')"																										
 													 class="smenu_font a_disable" title="<s:property value='submenuname'/>" >																										
 													      <s:property value="submenuname" />
-													</a>											    
+													</a>
+													<!-- <input type="button" value="<s:property value='submenuname'/>" onclick="findPageBean('<s:property value="address"/>')" class="btn btn-link"/> -->											    
 											</span> 
 								          </div>
 								       </s:iterator>

@@ -1796,7 +1796,7 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 		list_content.add(kpi.getThisYield().doubleValue());//1當月產量
 		list_content.add(kpi.getAvgCircle().doubleValue());//2月均回轉
 		list_content.add(kpi.getAvgCirclehour().doubleValue());//時迴轉
-		list_content.add(kpi.getMainRate().doubleValue());//機臺利用率
+		list_content.add(kpi.getMutiRate().doubleValue());//機臺利用率
 		list_content.add(kpi.getProductRate().doubleValue());//產能達成率
 		list_content.add(kpi.getAvgZgpro().doubleValue());//直工人均产能
 		list_content.add(kpi.getAvgPerpro().doubleValue());//全厂人均产能

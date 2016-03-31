@@ -65,5 +65,11 @@
         <property name="usernameUd" type="java.lang.String">
             <column name="USERNAME_UD" length="50"  />
         </property>
+        <property name="timeoutRecorde" type="java.lang.String">
+            <column name="TIMEOUT_RECORDE" length="2"/>
+        </property>
+        <property name="dateCreate" type="java.lang.String">
+            <column name="DATECREATE" length="10"/>
+        </property>
     </class>
 </hibernate-mapping>

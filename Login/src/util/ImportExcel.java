@@ -5,8 +5,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -517,13 +520,20 @@ public class ImportExcel {
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		List<String>lista=new ArrayList<String>();
-		List<String>listb=new ArrayList<String>();
-		lista.add("RB");
-		lista.add("MD");
-		listb.add("MD");
-		listb.add("RB");
-		System.out.println(lista.containsAll(listb));
+		
+		
+		String a="1603300000";
+		String b="1603311400";
+		try {
+			long time1=new SimpleDateFormat("yyMMddhhmm").parse(a).getTime();
+			long time2=new Date().getTime();
+			long result=(time2-time1)/(1000*60);
+			System.out.println(result);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		
 		/*String path="e:\\導入格式2.xls";
 		Map<String, Object>map=null;

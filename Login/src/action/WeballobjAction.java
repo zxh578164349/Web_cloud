@@ -179,7 +179,7 @@ public class WeballobjAction  extends ActionSupport implements ServletResponseAw
 				}
 				String[] array_head =list.get(0).split("__");
 				for(int i=4;i<array_head.length;i++){
-					list_factcode.add(array_head[i]);
+					list_factcode.add(array_head[i].trim());
 				}
 				if(!list_factArea.containsAll(list_factcode)){
 					StringBuilder sb=new StringBuilder();
@@ -188,10 +188,10 @@ public class WeballobjAction  extends ActionSupport implements ServletResponseAw
 						sb.append(factArea+" ");
 					}
 					sb.append(")");
-					response.getWriter().print("<script>window.parent.layer.msg('請核對正確的廠別狀態:"+sb.toString()+"',4,3)</script>");
+					response.getWriter().print("<script>window.parent.layer.alert('請核對正確的廠別狀態:"+sb.toString()+"',8)</script>");
 					break;
 				}
-				for(int i=4;i<array_head.length-3;i++){//for b
+				for(int i=4;i<array_head.length;i++){//for b
 					WebFact fact=new WebFact(new WebFactId(factNo,array_head[i].trim()));
 					Weballobj obj=new Weballobj(new WeballobjId(fact,yymm));								
 					obj.setObjA100(Double.valueOf(list.get(1).split("__")[i]));

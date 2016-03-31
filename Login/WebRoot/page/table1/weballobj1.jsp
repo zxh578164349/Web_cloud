@@ -370,7 +370,7 @@
 							</td>
 							<s:if test='#session.loginUser.userread!="1"'>
 								<td>
-									<form action="weballobj_findWloById" method="post" id="subform${x.index}">										
+									<%--<form action="weballobj_findWloById" method="post" id="subform${x.index}">										
 										<input type="hidden" value="<s:property value='id.fact.id.factNo'/>" name="factNo" />
 										<input type="hidden" value="<s:property value='id.fact.id.factCode'/>" name="factCode" />											
 										<input type="hidden" value="<s:property value='id.yymm'/>" name="yymm" />											
@@ -385,9 +385,11 @@
 									</form> 
 									<a href="javascript:void(0)" onclick="isDelete('2subform${x.index}')">
 									<img alt="刪除" src="images/icon/delete001.png" title="刪除">
-								    </a>
+								    </a>--%>
+								    無操作
 								</td>
 							</s:if>
+							
 						</tr>
 
 					</s:iterator>

@@ -266,6 +266,15 @@ public class WebYdataAction extends ActionSupport implements
 			 * 添加
 			 */
 			if (isnull.equals("isnull")) {// start "if 1"
+				/**************************************超時錄入數據記錄20160331**************************************************/
+				Date createDate=new Date();//創建時間
+				ydata.setDateCreate(new SimpleDateFormat("yyMMddhhmm").format(createDate));//記錄創建時間
+				long time1=new SimpleDateFormat("yyyyMMddhhmm").parse(yymmdd+"0000").getTime();
+				long time2=createDate.getTime();
+				if((time2-time1)/(1000*60)>2280){
+					ydata.setTimeoutRecorde("1");//超過38小時，也就是2280分，記錄超時
+				}
+				/**************************************超時錄入數據記錄20160331**************************************************/
 				
 				/****************************隻限制已輸入數據的廠別，沒有數據就不限制***********************************/
 				double nums=dataSer.findNums(ydata.getId().getFactNo(), ydata.getId().getFactCode());
@@ -309,8 +318,8 @@ public class WebYdataAction extends ActionSupport implements
 					result = "addData";
 					ajaxResult="0";
 				}
-				/****************************隻限制已輸入數據的廠別，沒有數據就不限制***********************************/
-																												
+				/****************************隻限制已輸入數據的廠別，沒有數據就不限制***********************************/									
+				
 			}// end "if 1"
 			/**
 			 * 修改
