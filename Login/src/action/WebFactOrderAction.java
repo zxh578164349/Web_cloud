@@ -827,4 +827,18 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 		
 	}
 	
+	public void deleteMore() throws IOException{
+		factNo=(String)ActionContext.getContext().getSession().get("factNo");
+		response.setContentType("text/html;charset=utf-8");
+		try{
+			webfactorderSer.deleteMore(factAreas, branks, customers, models, components,factNo,factNos,yymm,yymm2);
+			ajaxResult="0";
+			response.getWriter().print("<script>window.parent.layer.msg('刪除成功',3,1)</script>");
+		}catch(Exception e){
+			System.out.println(e);
+			ajaxResult="1";
+			response.getWriter().print("<script>window.parent.layer.msg('刪除失敗',3,3)</script>");
+		}		
+	}
+	
 }

@@ -95,5 +95,17 @@ public interface IWebFactDao {
 	 * @date 2016/3/28
 	 */
 	public List<String>findfactAreaByFactNo(String factNo);
+	
+	/**
+	 * 產量報表要顯示的廠別和廠狀態
+	 * @Title: findAll
+	 * @Description: TODO
+	 * @param @return
+	 * @return List<WebFact>
+	 * @throws
+	 * @author web
+	 * @date 2016/4/1
+	 */
+	public List<WebFact>findAll();
 
 }

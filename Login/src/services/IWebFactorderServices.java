@@ -47,4 +47,23 @@ public interface IWebFactorderServices {
 	 */
 	public List<Object[]>findByGroup2(List<String>factNos,List<String>factAreas,List<String>brank,List<String>customer,List<String>model,List<String>component,String factNo,String yymm,String yymm2);
 
+	/**
+	 * 批量刪除
+	 * @Title: deleteMore
+	 * @Description: TODO
+	 * @param @param factAreas
+	 * @param @param brank
+	 * @param @param customer
+	 * @param @param model
+	 * @param @param component
+	 * @param @param factNo
+	 * @param @param factNos
+	 * @param @param yymm
+	 * @param @param yymm2
+	 * @return void
+	 * @throws
+	 * @author web
+	 * @date 2016/4/1
+	 */
+	public void deleteMore(List<String>factAreas,List<String>brank,List<String>customer,List<String>model,List<String>component,String factNo,List<String>factNos,String yymm,String yymm2);
 }

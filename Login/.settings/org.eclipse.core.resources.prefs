@@ -1,4 +1,4 @@
-#Mon Mar 21 11:21:16 CST 2016
+#Fri Apr 01 09:18:06 CST 2016
 eclipse.preferences.version=1
 encoding//WebRoot/500.html=UTF-8
 encoding//WebRoot/bootstrap.jsp=UTF-8
@@ -24,6 +24,7 @@ encoding//src/action/KyzVisaFlowAction.java=UTF-8
 encoding//src/action/PreAndDataAction.java=UTF-8
 encoding//src/action/PreAndDataAction_Poi.java=UTF-8
 encoding//src/action/Printer_Auto.java=UTF-8
+encoding//src/action/Printer_Auto2.java=UTF-8
 encoding//src/action/ProfitAndLoss_Ireport.java=UTF-8
 encoding//src/action/TestTimerAction.java=UTF-8
 encoding//src/action/VKpifactAction.java=UTF-8

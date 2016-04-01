@@ -380,11 +380,13 @@ function clearAll(){
 			     </div>
 			     <input value="搜索" type="button" class="btn btn-primary" onclick="javascript:submis('public_form')" />
 			     <input value="導出Excel" type="button" class="btn btn-primary" onclick="print('public_form')"/>	 
+			     <input value="刪除" type="button" class="btn btn-primary" onclick="deleteMore('public_form')"/>
 		       </td>
 </tr>
 			
 </table>
 </form>
+<iframe  name="frameorder" style="display: none;"></iframe>
 </div>
 </body>
 </html>

@@ -42,10 +42,7 @@
 		});
 	}
 	function submis(public_form) {
-		jq("#global_temp").val("search");
-		var topindex=document.getElementById('bodyid').offsetTop;
-		var fact = document.getElementById("factNo");
-		var ym = document.getElementById("year");
+		jq("#global_temp").val("search");	
 		var subform=jq("#"+public_form);
 		jq.ajax({
 			type : "POST",
@@ -63,6 +60,29 @@
 			}
 		});
 	}
+	
+	//刪除多個
+	function deleteMore(public_form){
+		layer.load("請稍等...");
+		var subform=jq("#"+public_form);
+		var checkboxs=jq("input[name='factNos']:checked");
+		if(checkboxs.length==0){
+			   layer.msg("請選擇工廠",3,3);
+			   jq("#div_factNos").css("border","2px solid red");
+			   return false;
+			}else if(jq("#yymm").val()==""||jq("#yymm2").val()==""){				
+					layer.msg("請選擇日期",3,3);
+					jq("#div_yymm").css("border","2px solid red");
+					return false;												
+			}else{
+				jq("#div_factNos").css("border","");
+				jq("#div_yymm").css("border","");
+				subform.attr("action","webfactOrder_deleteMore");
+				subform.attr("target","frameorder");
+				subform.submit();
+			}							
+	}
+	
 	//你确定要删除吗？
 	function isDelete(mid) {
 		jq("#global_temp").val("delete");

@@ -2062,6 +2062,16 @@ public class Printer_Auto {
 
 		List list_factNo = webFactSer.findAllFact();
 		List<String> factcodelist = webFactSer.findAllFactCode_show();
+		
+		
+		/*List<WebFact>listfacts=webFactSer.findAll();
+		List<WebYieldData>listydata=dataSer.findByYymm(yymm);
+		List<Webestproduct>listestp=estProSer.findByYymm(yymm);
+		
+		
+		for(int a=0;a<listfacts.size();a++){
+			
+		}*/
 		/*GregorianCalendar ger = new GregorianCalendar();
 		int currenMonth = (int) ger.get(Calendar.MONTH) + 1;
 		int currenYear = (int) ger.get(Calendar.YEAR);
@@ -2071,34 +2081,21 @@ public class Printer_Auto {
 		int currenMonth=Integer.parseInt(yymm.substring(4, 6));                                                                     ///////////////currenMonth///////
 		int currenYear=Integer.parseInt(yymm.substring(0, 4));
 				
-		String date=yymm;                                                                                                            //////////////date//////////////
-		List<Webestproduct> alllist = new ArrayList();
-		List<List<WebYieldData>> alllist2 = new ArrayList();
-		List<String> factnoCodelist = new ArrayList();
-		String firstdate = getFirstDate();
-		String lastdate = dateAdd(-1);
-		for (int factno = 0; factno < list_factNo.size(); factno++) {// start
-																		// "for"
-			List factAreas = webFactSer
-					.findFactCodeByFactNo_show(((Object[]) list_factNo.get(factno))[0]                                                /****只查找要顯示的廠別狀態****/
-							.toString());
-			String factSname = webFactSer.selByid(((Object[]) list_factNo
-					.get(factno))[0].toString());
+		//String date=yymm;                                                                                                            //////////////date//////////////
+		List<Webestproduct> alllist = new ArrayList<Webestproduct>();
+		List<List<WebYieldData>> alllist2 = new ArrayList<List<WebYieldData>>();
+		List<String> factnoCodelist = new ArrayList<String>();
+		//String firstdate = getFirstDate();
+		//String lastdate = dateAdd(-1);
+		for (int factno = 0; factno < list_factNo.size(); factno++) {// start "for"
+			 /****只查找要顯示的廠別狀態****/															
+			List factAreas = webFactSer.findFactCodeByFactNo_show(((Object[]) list_factNo.get(factno))[0].toString());					                                              							
+			String factSname = webFactSer.selByid(((Object[]) list_factNo.get(factno))[0].toString());					
 			for (int factcode = 0; factcode < factAreas.size(); factcode++) {
-				List<Webestproduct> list = estProSer.findByFactcode(
-						((Object[]) list_factNo.get(factno))[0].toString(),
-						(String) factAreas.get(factcode), date);
-				List<WebYieldData> list2 =
-				dataSer.findDataByFactcode(((Object[])list_factNo.get(factno))[0].toString(),(String)factAreas.get(factcode),date);
-				//List<WebYieldData> list2 = dataSer.findDataByFactcode2(
-						//((Object[]) list_factNo.get(factno))[0].toString(),
-						//(String) factAreas.get(factcode), firstdate, lastdate);
-				List<Webestproduct> listnull = estProSer.findNullYpre(
-						((Object[]) list_factNo.get(factno))[0].toString(),
-						(String) factAreas.get(factcode), date);
-				List<WebYieldData> listnull2 = dataSer.findNullYdata(
-						((Object[]) list_factNo.get(factno))[0].toString(),
-						(String) factAreas.get(factcode), date);
+				List<Webestproduct> list = estProSer.findByFactcode(((Object[]) list_factNo.get(factno))[0].toString(),(String) factAreas.get(factcode), yymm);												
+				List<WebYieldData> list2 =dataSer.findDataByFactcode(((Object[])list_factNo.get(factno))[0].toString(),(String)factAreas.get(factcode),yymm);								
+				List<Webestproduct> listnull = estProSer.findNullYpre(((Object[]) list_factNo.get(factno))[0].toString(),(String) factAreas.get(factcode), yymm);												
+				List<WebYieldData> listnull2 = dataSer.findNullYdata(((Object[]) list_factNo.get(factno))[0].toString(),(String) factAreas.get(factcode), yymm);												
 				StringBuffer factnoCode = new StringBuffer();
 				Webestproduct pre = null;
 				WebYieldData ydata = null;
@@ -2106,9 +2103,7 @@ public class Printer_Auto {
 						&& listnull2.size() == 0 || list2.size() > 0
 						&& listnull2.size() > 0) {
 					factnoCode.append(factSname);
-					factnoCode.append("("
-							+ ((Object[]) list_factNo.get(factno))[0]
-									.toString() + ")-");
+					factnoCode.append("("+ ((Object[]) list_factNo.get(factno))[0].toString() + ")-");																
 					factnoCode.append((String) factAreas.get(factcode));
 					factnoCodelist.add(factnoCode.toString());
 					if (list2.size() == 0) {
@@ -2130,9 +2125,7 @@ public class Printer_Auto {
 
 				if (list.size() == 0 && list2.size() == 0) {
 					factnoCode.append(factSname);
-					factnoCode.append("("
-							+ ((Object[]) list_factNo.get(factno))[0]
-									.toString() + ")-");
+					factnoCode.append("("+ ((Object[]) list_factNo.get(factno))[0].toString() + ")-");																
 					factnoCode.append((String) factAreas.get(factcode));
 					factnoCode.append("還沒有添加數據!!");
 					factnoCodelist.add(factnoCode.toString());
@@ -2144,9 +2137,7 @@ public class Printer_Auto {
 				}
 				if (listnull.size() > 0 && listnull2.size() > 0) {
 					factnoCode.append(factSname);
-					factnoCode.append("("
-							+ ((Object[]) list_factNo.get(factno))[0]
-									.toString() + ")_");
+					factnoCode.append("("+ ((Object[]) list_factNo.get(factno))[0].toString() + ")_");																
 					factnoCode.append((String) factAreas.get(factcode));
 					factnoCode.append("還沒有添加數據!!");
 					factnoCodelist.add(factnoCode.toString());
@@ -2156,9 +2147,7 @@ public class Printer_Auto {
 				}
 				if (list.size() > 0 && listnull.size() > 0 && list2.size() == 0) {
 					factnoCode.append(factSname);
-					factnoCode.append("("
-							+ ((Object[]) list_factNo.get(factno))[0]
-									.toString() + ")_");
+					factnoCode.append("("+ ((Object[]) list_factNo.get(factno))[0].toString() + ")_");																
 					factnoCode.append((String) factAreas.get(factcode));
 					factnoCode.append("還沒有添加數據!!");
 					factnoCodelist.add(factnoCode.toString());
@@ -2170,6 +2159,7 @@ public class Printer_Auto {
 				}
 			}
 		}// end "for"
+		
 
 		int z_length = 0;
 		if (currenMonth == 1 || currenMonth == 3 || currenMonth == 5
@@ -2204,7 +2194,7 @@ public class Printer_Auto {
 				(short) 0 + totalHeight - 1, 0, (short) alllist.size() * 5);
 		sheet.addMergedRegion(reg_head);
 		sheet.getRow(0 + totalHeight - 1).createCell(0)
-				.setCellValue(date + "加久各工廠每日產量達成狀況匯總表");
+				.setCellValue(yymm + "加久各工廠每日產量達成狀況匯總表");
 		sheet.getRow(0 + totalHeight - 1).getCell(0).setCellStyle(cs_head);
 		for (int i_head = 1; i_head < alllist.size() * 5 + 1; i_head++) {
 			sheet.getRow(0 + totalHeight - 1).createCell(i_head)
@@ -2645,7 +2635,7 @@ public class Printer_Auto {
 
 				for (int x2 = 0; x2 < z_length; x2++) {
 					StringBuffer yymmdd = new StringBuffer();
-					yymmdd.append(date);
+					yymmdd.append(yymm);
 					if ((x2 + 1) < 10) {
 						yymmdd.append("0" + (x2 + 1));
 					} else {
@@ -3063,7 +3053,7 @@ public class Printer_Auto {
 							StringBuffer olddate = new StringBuffer();
 							SimpleDateFormat dateFormat = new SimpleDateFormat(
 									"yyyyMMdd");
-							olddate.append(date);
+							olddate.append(yymm);
 							if (z == z_length - 1) {
 								olddate.append(z);
 							}
@@ -3220,7 +3210,7 @@ public class Printer_Auto {
 							StringBuffer olddate = new StringBuffer();
 							SimpleDateFormat dateFormat = new SimpleDateFormat(
 									"yyyyMMdd");
-							olddate.append(date);
+							olddate.append(yymm);
 							if (z == z_length - 1) {
 								olddate.append(z);
 							}
@@ -3376,7 +3366,7 @@ public class Printer_Auto {
 							StringBuffer olddate = new StringBuffer();
 							SimpleDateFormat dateFormat = new SimpleDateFormat(
 									"yyyyMMdd");
-							olddate.append(date);
+							olddate.append(yymm);
 							if (z == z_length - 1) {
 								olddate.append(z);
 							}
@@ -3532,7 +3522,7 @@ public class Printer_Auto {
 							StringBuffer olddate = new StringBuffer();
 							SimpleDateFormat dateFormat = new SimpleDateFormat(
 									"yyyyMMdd");
-							olddate.append(date);
+							olddate.append(yymm);
 							if (z == z_length - 1) {
 								olddate.append(z);
 							}
@@ -3688,7 +3678,7 @@ public class Printer_Auto {
 							StringBuffer olddate = new StringBuffer();
 							SimpleDateFormat dateFormat = new SimpleDateFormat(
 									"yyyyMMdd");
-							olddate.append(date);
+							olddate.append(yymm);
 							if (z == z_length - 1) {
 								olddate.append(z);
 							}
@@ -3895,7 +3885,7 @@ public class Printer_Auto {
 
 		OutputStream os;
 		try {
-			os = new FileOutputStream("D:/" + date + ".xls");
+			os = new FileOutputStream("D:/" + yymm + ".xls");
 			wb.write(os);
 			os.close();
 		} catch (FileNotFoundException e) {

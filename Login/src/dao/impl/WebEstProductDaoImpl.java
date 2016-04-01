@@ -206,5 +206,18 @@ public class WebEstProductDaoImpl extends Basedao implements IWebEstProductDao {
 		return super.findAll(hql, objs);
 	}
 
+	/**
+	 * 日期:2016/4/1
+	 * 描述:
+	 */
+	
+	
+	public List<Webestproduct> findByYymm(String yymm) {
+		// TODO Auto-generated method stub
+		String hql="from Webestproduct where to_char(id.yymm,'yyyymm')=?";
+		String[]objs={yymm};
+		return super.findAll(hql, objs);
+	}
+
 
 }

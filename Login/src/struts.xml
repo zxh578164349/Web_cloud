@@ -752,6 +752,7 @@
 		   </result>
 		   <result name="findById">/saveAndUpdate/webfactorderSaveOrUpdate.jsp</result>
 		   <result name="delete" type="redirectAction">webfactOrder_findPageBean3</result>
+		   
 		</action>
 		<action name="bussletter_*" class="webbussletterAction" method="{1}">
 		   <result name="beanList">page/webbussletter.jsp</result>

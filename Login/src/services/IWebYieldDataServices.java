@@ -58,6 +58,20 @@ public interface IWebYieldDataServices {
 	public List<String[]> getFactPrint_show(String date);
 	
 	public double findNums(String factNo, String factCode);
+	
+	/**
+	 * 月份所有廠的數據
+	 * @Title: findByYymm
+	 * @Description: TODO
+	 * @param @param yymm
+	 * @param @return
+	 * @return List<WebYieldData>
+	 * @throws
+	 * @author web
+	 * @date 2016/4/1
+	 */
+	public List<WebYieldData>findByYymm(String yymm);
+	
 			
 	
 

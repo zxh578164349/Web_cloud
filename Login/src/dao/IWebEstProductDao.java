@@ -24,6 +24,7 @@ public interface IWebEstProductDao {
 	public Object[] findSum(String factCode,String yymm,String type);
 	
 	public List<Webestproduct>findByFactcode(String factNo,String factCode,String yymm);
+	
 	public List<Webestproduct>findNullYpre(String factNo,String factCode,String yymm);
 	public List<Webestproduct>findByAny(String factNo,String beginDate,String endDate);
 	
@@ -33,6 +34,19 @@ public interface IWebEstProductDao {
 	public Object[] reportWebCashout(String factNo,String factCode,String yymm,String type);
 	
 	public List<String> findtypeById(String factNo,String factCode,String yymm);
+	
+	/**
+	 * 月份所有工廠數據
+	 * @Title: findByYymm
+	 * @Description: TODO
+	 * @param @param yymm
+	 * @param @return
+	 * @return List<Webestproduct>
+	 * @throws
+	 * @author web
+	 * @date 2016/4/1
+	 */
+	public List<Webestproduct>findByYymm(String yymm);
 
 
 }

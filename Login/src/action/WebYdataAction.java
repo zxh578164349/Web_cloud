@@ -519,7 +519,7 @@ public class WebYdataAction extends ActionSupport implements
 			ActionContext.getContext().getSession().put("public_yymm", sdate);
 		}
 		if (edate != null && !edate.equals("")) {
-			ActionContext.getContext().getSession().put("public_yymm", edate);
+			ActionContext.getContext().getSession().put("public_yymm2", edate);
 		}
 
 		bean = dataSer.findPageBean(25, page, factNo, sdate,edate);

@@ -230,4 +230,16 @@ public class WebFactDaoImpl extends Basedao implements IWebFactDao {
 		return super.findAll(hql, objs);
 	}
 
+	/**
+	 * 日期:2016/4/1
+	 * 描述:
+	 */
+	
+	
+	public List<WebFact> findAll() {
+		// TODO Auto-generated method stub
+		String hql="from WebFact where factShow='0' order by orderNo,fcodeIndex";
+		return super.findAll(hql, null);
+	}
+
 }

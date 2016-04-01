@@ -34,5 +34,18 @@ public interface IWebEstProductServices {
 	public List<String[]> getFactPrint_show(String date);
 	public Object[] reportWebCashout(String factNo,String factCode,String yymm,String type);
 	public List<String> findtypeById(String factNo,String factCode,String yymm);
+	
+	/**
+	 * 所有工廠月份數據
+	 * @Title: findByYymm
+	 * @Description: TODO
+	 * @param @param yymm
+	 * @param @return
+	 * @return List<Webestproduct>
+	 * @throws
+	 * @author web
+	 * @date 2016/4/1
+	 */
+	public List<Webestproduct>findByYymm(String yymm);
 
 }

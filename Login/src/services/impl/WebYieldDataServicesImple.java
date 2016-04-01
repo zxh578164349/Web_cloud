@@ -234,6 +234,17 @@ public class WebYieldDataServicesImple implements IWebYieldDataServices {
 		return dataDao.findNums(factNo, factCode);
 	}
 
+	/**
+	 * 日期:2016/4/1
+	 * 描述:
+	 */
+	
+	
+	public List<WebYieldData> findByYymm(String yymm) {
+		// TODO Auto-generated method stub
+		return dataDao.findByYymm(yymm);
+	}
+
 
 
 }

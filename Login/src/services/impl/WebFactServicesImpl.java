@@ -199,4 +199,15 @@ public class WebFactServicesImpl implements IWebFactServices {
 		return webFactDao.findfactAreaByFactNo(factNo);
 	}
 
+	/**
+	 * 日期:2016/4/1
+	 * 描述:
+	 */
+	
+	
+	public List<WebFact> findAll() {
+		// TODO Auto-generated method stub
+		return webFactDao.findAll();
+	}
+
 }
