@@ -352,6 +352,19 @@ public class WebYieldDataDaoImpl extends Basedao implements IWebYieldDataDao {
 		
 		return result;
 	}
+
+	/**
+	 * 日期:2016/4/1
+	 * 描述:
+	 */
+	
+	
+	public List<WebYieldData> findByYymm(String yymm) {
+		// TODO Auto-generated method stub
+		String hql="from WebYieldData where to_char(id.yymmdd,'yyyymm')=?";
+		String[]objs={yymm};
+		return super.findAll(hql, objs);
+	}
 	
 	
 

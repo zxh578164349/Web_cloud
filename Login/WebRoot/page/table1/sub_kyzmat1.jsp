@@ -58,13 +58,13 @@
 <body>
   <div id="container">
     <div id="content">
-    <s:form action="" method="post" theme="simple">
+    <form action="" method="post" theme="simple"  id="subkyzmat_form">
     
 	<table class="table table-striped table-hover table-bordered">
 		<h2>
 		<s:if test='#session.loginUser.userread!="1"'>
 		<input value="添加" type="button" class="btn btn-info"
-		onclick="javascript:location.href='saveAndUpdate/kyzmatSaveOrUpdate.jsp'" /></s:if>
+		onclick="loadUrl('saveAndUpdate/kyzmatSaveOrUpdate.jsp')" /></s:if>
 		物料資料管理
 		</h2>
 		<thead>			
@@ -126,8 +126,11 @@
 				      </s:else>				      
 				   </s:iterator>
 				</td>
-				<td>				
-				<a href="javascript:location.href='kyzmat_findById?matNo=${temp.matNo}'"><img alt="修改" src="images/icon/edit001.png" title="修改" ></a>
+				<td>
+				<form id="form${x.index}">
+				   <input type="hidden" value="${temp.matNo}" name="matNo"/>
+				</form>				
+				<a href="javascript:findById('form${x.index}','kyzmat_findById')"><img alt="修改" src="images/icon/edit001.png" title="修改" ></a>
 				<a href="javascript:isDelete('${temp.matNo}')"><img alt="刪除" src="images/icon/delete001.png" title="刪除" ></a>
 				<a href="javascript:window.location.href='kyzmat_print?matNo=${temp.matNo}'" ><img alt="導出" src="images/icon/print001.png" title="導出" ></a>
 				</td> 							
@@ -135,9 +138,11 @@
 		  </s:iterator>		 		
 		</tbody>
 	</table>
-	<s:submit value="導出所選物料" action="kyzmat_print_select"></s:submit>
-    <s:submit value="添加所選物料" action="subkyzmat_addSubKyzmat"></s:submit>
-	</s:form>
+	<!-- <s:submit value="導出所選物料" action="kyzmat_print_select"></s:submit>
+    <s:submit value="添加所選物料" action="subkyzmat_addSubKyzmat"></s:submit>-->
+    <input type="button" value="導出所選物料" class="btn btn-info" onclick="kyzmat_print_select()"/>&nbsp;
+    <input type="button" value="添加所選物料" class="btn btn-info" onclick="subkyzmat_addSubKyzmat()"/>
+	</form>
 	</div>
  </div>		
 	<!--<hr />

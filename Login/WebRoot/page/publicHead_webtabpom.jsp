@@ -16,15 +16,7 @@
 	-->
 <link rel="stylesheet" type="text/css" href="css/select_beautiful.css">	
 <LINK href="css/list.css" type="text/css" rel="stylesheet">
-<script type="text/javascript" src="jquery/DatePicker/WdatePicker.js"></script>
-<script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script>
 
-<!--  <script type="text/javascript" src="jquery_alert_dialogs/jquery.js"></script>
-<script type="text/javascript" src="jquery_alert_dialogs/jquery.alerts.js"></script>	
-<link rel="stylesheet" type="text/css" href="jquery_alert_dialogs/jquery.alerts.css" />	
-<script type="text/javascript" src="jquery_alert_dialogs/jquery.ui.draggable.js"></script>	
-<link rel="stylesheet" type="text/css" href="jquery/loding/ui.loading.css" />	
-<script type="text/javascript" src="jquery/loding/ui.loading.js"></script>-->
 <script type="text/javascript">
  
 //var jq=jQuery.noConflict();
@@ -39,13 +31,17 @@ function getAllWebbrank(){
 		dwr.util.addOptions("dwrWebbrank",x,"BNo","BName");
 	})
 }
-window.onload=getAllWebbrank;
+//window.onload=getAllWebbrank;
 </script>
 <script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>
 <script type='text/javascript' src='/Login/dwr/interface/webbrankjs.js'></script>
 <script type='text/javascript' src='/Login/dwr/engine.js'></script>
 <script type='text/javascript' src='/Login/dwr/util.js'></script>
-
+<script type="text/javascript">
+jq(function(){
+	getAllWebbrank();
+});
+</script>
 </head>
 <body>
   <form id="public_form" method="post">
@@ -70,6 +66,5 @@ window.onload=getAllWebbrank;
 		</tr>
 	</table>
 	</form>
-	</div>
 </body>
 </html>

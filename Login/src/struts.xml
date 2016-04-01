@@ -46,6 +46,7 @@
 			<result name="json_login" type="json">
 			    <param name="root">ajax_result</param>
 			</result>
+			<result name="updateUesr" type="redirectAction">userfindPageBean3_1</result>			    			
 		</action>
 		<action name="show*" class="showAction" method="{1}">
 			<result name="titleSuccess">page/show.jsp</result>
@@ -308,14 +309,18 @@
 		  </result>
 		</action>
 		<action name="kyzsec_*" class="kyzsecAction" method="{1}">
-		   <result name="add" type="redirectAction">kyzsec_findPageBean</result>
+		   <result name="add" type="json">
+		      <param name="root">ajaxResult</param>
+		   </result>
 		   <result name="beanList">page/kyzsec.jsp</result>
 		   <result name="beanList1">page/table1/kyzsec1.jsp</result>
 		   <result name="findById">saveAndUpdate/kyzsecSaveOrUpdate.jsp</result>
 		   <result name="delete" type="redirectAction">kyzsec_findPageBean</result>
 		</action>
 		<action name="kyzacct_*" class="kyzacctAction" method="{1}">
-		   <result name="add" type="redirectAction">kyzacct_findPageBean</result>
+		   <result name="add" type="json">
+		       <param name="root">ajaxResult</param>
+		   </result>
 		   <result name="beanList">page/kyzacct.jsp</result>
 		   <result name="beanList1">page/table1/kyzacct1.jsp</result>
 		   <result name="delete" type="redirectAction">kyzacct_findPageBean</result>
@@ -324,7 +329,9 @@
 		<action name="kyzpetty_*" class="kyzpettyAction" method="{1}">
 		   <result name="beanList">page/kyzpetty.jsp</result>
 		   <result name="beanList1">page/table1/kyzpetty1.jsp</result>
-		   <result name="add" type="redirectAction">kyzpetty_findPageBean</result>
+		   <result name="add" type="json">
+		      <param name="root">ajaxResult</param>
+		   </result>
 		   <result name="findById">saveAndUpdate/kyzpettySaveOrUpdate.jsp</result>
 		   <result name="delete" type="redirectAction">kyzpetty_findPageBean</result>
 		   <result name="findAllSecNoAndAcctNo">saveAndUpdate/kyzpettySaveOrUpdate.jsp</result>
@@ -364,7 +371,9 @@
         <action name="vsumall_*" class="vsumallAction" method="{1}">       
         </action>       
         <action name="kyzmat_*" class="kyzmatAction" method="{1}">
-           <result name="add" type="redirectAction">kyzmat_findPageBean</result>          
+           <result name="add" type="json">
+             <param name="root">ajaxResult</param>
+           </result>          
            <result name="findById">saveAndUpdate/kyzmatSaveOrUpdate.jsp</result>
            <result name="delete" type="redirectAction">kyzmat_findPageBean</result>
            <result name="findPageBean">page/sub_kyzmat.jsp</result>
@@ -494,7 +503,9 @@
 			<result name="addFix" type="json">
 			   <param name="root">ajaxResult</param>
 			</result>
-			<result name="addlog" type="redirectAction">fix_findPageBean</result>
+			<result name="addlog" type="json">
+			    <param name="root">ajaxResult</param>
+			</result>
 		</action>
 		<action name="webmix2_*" class="mix2Action" method="{1}">
 			<result name="showList1">page/table1/webMix21.jsp</result>
@@ -644,25 +655,31 @@
 		  <result name="add">page/checkpass/remark.jsp</result><!-- 函文是否通過 -->
 		  <result name="success">/success.html</result>
 		  <result name="remark" type="redirectAction">vbm_findPageBean</result><!-- 備註 -->		  
-		  <result name="addvisabills" type="redirectAction">
+		  <!-- <result name="addvisabills" type="redirectAction">
 		      <param name="actionName">vbm_findById2</param>
 		      <param name="factNo">${factNo}</param>
 		      <param name="visaSort">${visaSort}</param>
 		      <param name="billNo">${billNo}</param>
-		  </result>
-		  <result name="addVisabillsAndEmail" type="redirectAction">vbm_findPageBean</result>
+		  </result>-->
+		  <result name="addvisabills" type="json">
+		     <param name="root">ajaxResult</param>
+		  </result>		  
 		  <result name="minusvisabills" type="redirectAction">
 		      <param name="actionName">vbm_findById4</param>
 		      <param name="factNo">${factNo}</param>
 		      <param name="visaSort">${visaSort}</param>
 		      <param name="billNo">${billNo}</param>
 		  </result>
-		  <result name="minusvisabills2" type="redirectAction">
+		  <!-- <result name="minusvisabills2" type="redirectAction">
 		      <param name="actionName">vbm_findById5</param>
 		      <param name="factNo">${factNo}</param>
 		      <param name="visaSort">${visaSort}</param>
 		      <param name="billNo">${billNo}</param>
+		  </result> -->
+		  <result name="minusvisabills2" type="json">
+		     <param name="root">ajaxResult</param>
 		  </result>
+		  <result name="addVisabillsAndEmail" type="redirectAction">vbm_findPageBean</result>
 		  <!-- 以下是tw胡艷敏的返回結果 -->
 		  <result name="beanList_tw">/tw/visabillm_tw.jsp</result>
 		  <result name="beanList1_tw">/tw/tw1/visabillm1_tw.jsp</result>
@@ -735,6 +752,7 @@
 		   </result>
 		   <result name="findById">/saveAndUpdate/webfactorderSaveOrUpdate.jsp</result>
 		   <result name="delete" type="redirectAction">webfactOrder_findPageBean3</result>
+		   
 		</action>
 		<action name="bussletter_*" class="webbussletterAction" method="{1}">
 		   <result name="beanList">page/webbussletter.jsp</result>
@@ -769,6 +787,10 @@
 		   <result name="findPosts" type="json">
 		      <param name="root">jsons</param>
 		   </result>
+		</action>
+		<action name="weballobj_*" class="weballobjAction" method="{1}">
+		   <result name="beanList">page/weballobj.jsp</result>
+		   <result name="beanList1">page/table1/weballobj1.jsp</result>		       		   
 		</action>
 	</package>
 

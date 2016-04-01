@@ -21,45 +21,10 @@
 <!-- <LINK href="css/list.css" type="text/css" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="css/form.css" /> -->
 <link rel="stylesheet" type="text/css" href="css/form.css" />
-<style type="text/css">
-table.altrowstable {
-	font-family: verdana,arial,sans-serif;
-	font-size:14px;
-	color:#333333;
-	border-width: 1px;
-	border-color: #a9c6c9;
-	border-collapse: collapse;
-}
-table.altrowstable th {
-	border-width: 1px;
-	padding: 8px;
-	border-style: solid;
-	border-color: #a9c6c9;
-}
-table.altrowstable td {
-	border-width: 1px;
-	padding: 8px;
-	border-style: solid;
-	border-color: #a9c6c9;
-}
-table.altrowstable caption{
-    font-size:22px;
-}
-.oddrowcolor{
-	background-color:#d4e3e5;
-}
-.evenrowcolor{
-	background-color:#c3dde0;
-}
-
-
-</style>
-<script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script> 
-<script type="text/javascript" src="page/jquerys/layer/layer.min.js"></script>
-<script type="text/javascript" src="page/jquerys/Validform_v5.3.2_min.js"></script> 
+<link rel="stylesheet" type="text/css" href="css/select_beautiful.css">
 	<script type="text/javascript">
     function showDiv(billNo,factNo){
-    $.layer({
+    jq.layer({
     type: 1,   //0-4的选择,
     title: '函文內容',
     //border: [0],
@@ -80,7 +45,7 @@ table.altrowstable caption{
     }
     
     function check(factNo,visaSort,billNo,itemNo){
-    $.layer({
+    jq.layer({
     type: 1,   //0-4的选择,
     title: '函文內容',
     //border: [0],
@@ -107,25 +72,7 @@ table.altrowstable caption{
 });
     }
     
-function altRows(id){
-	if(document.getElementsByTagName){  
-		
-		var table = document.getElementById(id);  
-		var rows = table.getElementsByTagName("tr"); 
-		 
-		for(i = 0; i < rows.length; i++){          
-			if(i % 2 == 0){
-				rows[i].className = "evenrowcolor";
-			}else{
-				rows[i].className = "oddrowcolor";
-			}      
-		}
-	}
-}
 
-window.onload=function(){
-	altRows('alternatecolor');
-}
 
 function addBtn(){
    document.getElementById("addmark").style.display="block";
@@ -163,20 +110,18 @@ if(confirm("確定當前簽核人及前面未審核的人將全部減簽?")){
 }
 
 function hideDiv2(obj){
-   var j=jQuery.noConflict();
-   j("#"+obj).hide(300);
+   jq("#"+obj).hide(300);
 }
 
-function back(){
-	layer.load("正在返回,請稍等...");
-	location.href="/Login/vbm_findPageBean";
+function back(){	
+	loadUrl("/Login/vbm_findPageBean");
 }
 </script>
 </head>
 <body >
-	<table class="altrowstable" id="alternatecolor" align="center">
+	<table class="table table-striped table-hover table-bordered">
 	  <caption>函文減簽</caption>		
-		 <tr>
+		 <tr class="tr_show">
 		  <td>廠別</td><td>類別</td><td>單號</td><td>項次</td><td>姓名</td><td>郵箱</td><td>審核狀態</td><td>是否需要審核</td><td>操作</td>
 		  </tr>
 		  <s:iterator value="vbm.kyVisabillses" status="x">
@@ -208,12 +153,8 @@ function back(){
 		     </tr>
 		     </s:if>		     	   
 	      </s:iterator>		
-		<tr><td colspan="10"><input type="button" value="返回" onclick="back()"/></td></tr>
+		<tr><td colspan="10"><input type="button" value="返回" onclick="back()" class="btn btn-primary"/></td></tr>
 	</table>
-	<!-- <div id="mydiv">
-		<p>
-			<img alt="" src="images/loading004.gif"><br> Loading....
-		</p>
-	</div> -->
+	
 </body>
 </html>

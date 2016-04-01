@@ -22,9 +22,8 @@
 <meta http-equiv="description" content="This is my page">
 
 <!-- 分頁樣式 -->
-<link rel="stylesheet" type="text/css" href="css/mystyle.css" />
-<script type="text/javascript" src="page/jquerys/jquery-1.9.1.min.js"></script>
-<script type="text/javascript" src="page/jquerys/layer/layer.min.js"></script>
+<!-- <link rel="stylesheet" type="text/css" href="css/mystyle.css" />-->
+
 
 <script type="text/javascript">
 
@@ -62,7 +61,7 @@
 		<h2>
 		<s:if test='#session.loginUser.userread!="1"'>
 	    <input value="添加" type="button" class="btn btn-info"
-		onclick="javascript:location.href='saveAndUpdate/kyz_contactletterSaveOrUpdate.jsp'" /></s:if>
+		onclick="loadUrl('saveAndUpdate/kyz_contactletterSaveOrUpdate.jsp')" /></s:if>
 		內部聯絡函
 		</h2>
 		<thead>			
@@ -114,7 +113,7 @@
 							value="<s:property value='id.billNo'/>" name="billNo" />
 							<input type="hidden" value="<s:property value='visaType'/>" name="visaSort"/>						
 					</form>
-					  <a href="javascript:layer.load(0);document.getElementById('subform${x.index}').submit()" onclick=""><img alt="修改" src="images/icon/edit001.png" title="修改" ></a>						  																									
+					  <a href="javascript:findById('subform${x.index}','kyzletter_findById')" onclick=""><img alt="修改" src="images/icon/edit001.png" title="修改" ></a>						  																									
 					  <a href="javascript:void(0)" onclick="isDelete('2subform${x.index}')"><img alt="刪除" src="images/icon/delete001.png" title="刪除" ></a>										
 					 </s:if>
 					 

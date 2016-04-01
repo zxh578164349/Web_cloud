@@ -114,6 +114,20 @@ public class WebFactorderServicesImpl implements IWebFactorderServices{
 	}
 
 
+	/**
+	 * 日期:2016/4/1
+	 * 描述:
+	 */
+	
+	
+	public void deleteMore(List<String> factAreas, List<String> brank,
+			List<String> customer, List<String> model, List<String> component,
+			String factNo, List<String> factNos, String yymm, String yymm2) {
+		// TODO Auto-generated method stub
+		factorderdao.deleteMore(factAreas, brank, customer, model, component, factNo, factNos, yymm, yymm2);
+	}
+
+
 	
 
 

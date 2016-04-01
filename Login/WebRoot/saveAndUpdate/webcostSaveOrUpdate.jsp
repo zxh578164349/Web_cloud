@@ -24,21 +24,10 @@
 
 <link href="css/validate.css" rel="stylesheet" type="text/css" />
 <link rel="stylesheet" type="text/css" href="css/form.css" />
-<link rel="stylesheet" type="text/css" href="css/button_css.css" />
-<script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script>
-<script type="text/javascript" src="jquery/Validform_v5.3.2_min.js"></script>
-<script type="text/javascript" src="jquery/DatePicker/WdatePicker.js"></script>
-<script type="text/javascript" src="jquery/layer/layer.min.js"></script>
+<link rel="stylesheet" type="text/css" href="css/select_beautiful.css"></script>
 </head>
 <script type="text/javascript">
-	var jq=jQuery.noConflict();
-	var loadi;
-	jq(document).ajaxStart(function(){
-		loadi=layer.load("正在提交,請稍等...");
-	});
-	jq(document).ajaxStop(function(){
-		layer.close(loadi);
-	});
+
 	jq(function() {
 		var demo = jq("#form").Validform({
 			btnSubmit : "#sub",
@@ -52,9 +41,11 @@
 			callback:function(data){				
 				if(data=="0"){
 					layer.msg("提交成功!",3,1);
-					location.href="/Login/webcost_findPageBean";
+					//location.href="/Login/webcost_findPageBean";
+					loadUrl("/Login/webcost_findPageBean");
 				}else{
-					alert(data.responseText);
+					//alert(data.responseText);
+					layer.msg("提交失敗",3,3);
 				}
 				
 			}
@@ -71,8 +62,7 @@
 
 	}
 	function back() {
-		    layer.load("正在返回,請稍等...");
-			location.href = "/Login/webcost_findPageBean3?backIndex=1";
+			loadUrl("/Login/webcost_findPageBean3?backIndex=1");
 	}
 	 function check(){
        var factno=document.getElementById("dwr_factno").value;
@@ -118,8 +108,9 @@ window.onload=function(){
 
 <body>
 	<form action="webcost_add" method="post" id="form">
-		<table width="100%" align="center" cellspacing="0" cellpadding="0">
-		　　<caption>資材資料</caption>
+	<h2>資材資料</h2>
+		<table class="table table-condensed">
+		　　
 			<s:if test="cost==null">
 
 
@@ -330,9 +321,9 @@ window.onload=function(){
 
 		</table>
 		<center>
-			<input type="submit" id="sub" value="確定" onmouseover="this.style.backgroundPosition='left -40px'" onmouseout="this.style.backgroundPosition='left top'"/>&nbsp;&nbsp;&nbsp; <input
-				type="reset" id="reset" value="重置" onmouseover="this.style.backgroundPosition='left -40px'" onmouseout="this.style.backgroundPosition='left top'"/>&nbsp;&nbsp;&nbsp;			
-				<input type="button" value="返回" onclick="back()" id="btn_back" onmouseover="this.style.backgroundPosition='left -40px'" onmouseout="this.style.backgroundPosition='left top'"/>
+			<input type="submit" id="sub" value="確定" class="btn btn-primary"/>&nbsp;&nbsp;&nbsp; <input
+				type="reset" id="reset" value="重置" class="btn btn-primary"/>&nbsp;&nbsp;&nbsp;			
+				<input type="button" value="返回" onclick="back()" class="btn btn-primary"/>
 
 		</center>
 	</form>

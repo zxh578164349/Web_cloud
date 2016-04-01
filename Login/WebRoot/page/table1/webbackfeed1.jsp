@@ -65,7 +65,7 @@
 		<h2>
 		<s:if test='#session.loginUser.userread!="1"'>
 	    <input value="添加" type="button" class="btn btn-info"
-		onclick="javascript:location.href='saveAndUpdate/webbackfeedSaveOrUpdate.jsp'" />
+		onclick="loadUrl('saveAndUpdate/webbackfeedSaveOrUpdate.jsp')" />
          </s:if>
 		回頭料(每月輸入)
 		</h2>
@@ -106,7 +106,7 @@
 						<input type="hidden" value="<s:property value='id.yymm'/>"
 							name="id.yymm" />
 					</form> <a
-					href="javascript:layer.load(0);document.getElementById('subform${x.index}').submit();"
+					href="javascript:findById('subform${x.index}','webbackfeed_findById')"
 					onclick=""><img alt="修改" src="images/icon/edit001.png" title="修改" ></a>
 
 					<form action="webbackfeed_delete" method="post"

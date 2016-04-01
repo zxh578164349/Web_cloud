@@ -702,6 +702,112 @@ public class WebFactorderDaoImpl extends Basedao implements IWebFactorderDao{
 		List<Object[]>list=super.getAllWithNoPage_sql(hql.toString(), map);
 		return list;
 	}
+	/**
+	 * 日期:2016/4/1
+	 * 描述:
+	 */
+	
+	
+	public void deleteMore(List<String> factAreas, List<String> brank,
+			List<String> customer, List<String> model, List<String> component,
+			String factNo, List<String> factNos, String yymm, String yymm2) {
+		// TODO Auto-generated method stub
+		StringBuffer hql=new StringBuffer();
+		Map<String,Object>map=new HashMap<String,Object>();
+		hql.append("from WebFactorder where 1=1 ");
+		if(factAreas!=null&&factAreas.size()>0){
+			hql.append(" and id.factArea in (:factareas)");
+			map.put("factareas", factAreas);
+		}
+		if(brank!=null&&brank.size()>0){
+			if(brank.size()<1000){
+				hql.append(" and id.brank in(:brank) ");
+				map.put("brank", brank);
+			}else{
+				List<List<String>>list=GlobalMethod.subList(brank, 1000);
+				hql.append(" and (");
+				for(int i=0;i<list.size();i++){
+					if(i==list.size()-1){
+						hql.append(" id.brank in(:brank"+i+")) ");
+					}else{
+						hql.append(" id.brank in(:brank"+i+") or ");
+					}
+					map.put("brank"+i, list.get(i));
+				}
+			}			
+		}
+		if(customer!=null&&customer.size()>0){
+			if(customer.size()<1000){
+				hql.append(" and id.customer in(:customer) ");
+				map.put("customer", customer);
+			}else{
+				List<List<String>>list=GlobalMethod.subList(customer, 1000);
+				hql.append(" and (");
+				for(int i=0;i<list.size();i++){
+					if(i==list.size()-1){
+						hql.append(" id.customer in(:customer"+i+")) ");
+					}else{
+						hql.append(" id.customer in(:customer"+i+") or ");
+					}
+					map.put("customer"+i, list.get(i));
+				}
+			}
+			
+		}
+		if(model!=null&&model.size()>0){
+			if(model.size()<1000){
+				hql.append(" and id.modelNo in(:model)");
+				map.put("model", model);
+			}else{
+				List<List<String>>list=GlobalMethod.subList(model, 1000);
+				hql.append(" and (");
+				for(int i=0;i<list.size();i++){
+					if(i==list.size()-1){
+						hql.append(" id.modelNo in(:model"+i+")) ");
+					}else{
+						hql.append(" id.modelNo in(:model"+i+") or ");
+					}
+					map.put("model"+i, list.get(i));
+				}
+			}
+			
+		}		
+		if(component!=null&&component.size()>0){
+			if(component.size()<1000){
+				hql.append(" and id.component in(:component)");
+				map.put("component", component);
+			}else{
+				List<List<String>>list=GlobalMethod.subList(component, 1000);
+				hql.append(" and (");
+				for(int i=0;i<list.size();i++){
+					if(i==list.size()-1){
+						hql.append(" id.component in(:component"+i+")) ");
+					}else{
+						hql.append(" id.component in(:component"+i+") or ");
+					}
+					map.put("component"+i, list.get(i));
+				}
+			}			
+		}		
+		if(factNo!=null&&!factNo.equals("")&&!factNo.equals("tw")){
+			hql.append(" and id.factNo=:factno");
+			map.put("factno", factNo);
+		}
+		if(factNo.equals("tw")&&factNos!=null&&factNos.size()>0){
+			hql.append(" and id.factNo in(:factnos)");
+			map.put("factnos", factNos);
+		}
+		if(yymm!=null&&!yymm.equals("")){
+			hql.append(" and id.yymm >=:yymm");
+			map.put("yymm", yymm);
+		}
+		if(yymm!=null&&!yymm.equals("")){
+			hql.append(" and id.yymm<=:yymm2");
+			map.put("yymm2", yymm2);
+		}
+		List<WebFactorder>list=super.getAllWithNoPage(hql.toString(), map);
+		//super.deleteList(list);			
+	}
 	
 	
 

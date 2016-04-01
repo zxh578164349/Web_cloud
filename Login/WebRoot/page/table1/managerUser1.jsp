@@ -52,7 +52,7 @@
 	<table class="table table-striped table-hover table-bordered" >
 		<h2>
 		<s:if test='#session.loginUser.userread!="1"'>	
-		<input value="添加新用戶" type="button" class="btn btn-info" onclick="javascript:location.href='saveAndUpdate/webuserSaveOrUpdate.jsp'"/>
+		<input value="添加新用戶" type="button" class="btn btn-info" onclick="loadUrl('saveAndUpdate/webuserSaveOrUpdate.jsp')"/>
 	    </s:if>	
 		用戶管理
 		</h2>
@@ -91,8 +91,8 @@
 					    <%-- <a href="userjurisdiction?id=${id}&fact=${factno}"><img alt="權限" src="images/icon/keys001.png" title="權限"></a>&nbsp;  --%>
 					    <a href="javascript:loadjur(${id },'${factno}')"><img alt="權限" src="images/icon/keys001.png" title="權限"></a>&nbsp;
 						<a href="javascript:loaduser(${id})"><img alt="修改" src="images/icon/edit001.png" title="修改"></a>&nbsp;
-						<a href="userupdateKy?id=${id}&available=0"><img alt="可用" src="images/icon/available001.png" title="可用"></a>&nbsp;
-						<a href="userupdateKy?id=${id}&available=1"><img alt="禁用" src="images/icon/not_available001.png" title="禁用"></a>&nbsp;
+						<a href="javascript:loadUrl('userupdateKy?id=${id}&available=0')"><img alt="可用" src="images/icon/available001.png" title="可用"></a>&nbsp;
+						<a href="javascript:loadUrl('userupdateKy?id=${id}&available=1')"><img alt="禁用" src="images/icon/not_available001.png" title="禁用"></a>&nbsp;
 						<a href="javascript:mydelete(${id})"><img alt="刪除" src="images/icon/delete001.png" title="刪除"></a>						
 					</td>
 				</tr>

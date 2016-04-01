@@ -24,20 +24,9 @@
 	-->
 <link href="css/validate.css" rel="stylesheet" type="text/css" />
 <link rel="stylesheet" type="text/css" href="css/form.css" />
-<link rel="stylesheet" type="text/css" href="css/button_css.css" />
-<script type="text/javascript" src="jquery/DatePicker/WdatePicker.js"></script>
-<script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script>
-<script type="text/javascript" src="jquery/Validform_v5.3.2_min.js"></script>
-<script type="text/javascript" src="jquery/layer/layer.min.js"></script>
+<link rel="stylesheet" type="text/css" href="css/select_beautiful.css">
 <script type="text/javascript">
-var jq=jQuery.noConflict();
-var loadi;
-jq(document).ajaxStart(function(){
-	loadi=layer.load("正在提交,請稍等...");
-});
-jq(document).ajaxStop(function(){
-	layer.close(loadi);
-});
+
 	jq(function() {
 		var demo = jq("#form").Validform({
 			btnSubmit : "#sub",
@@ -51,9 +40,11 @@ jq(document).ajaxStop(function(){
 			callback:function(data){
 				if(data=="0"){
 					layer.msg("提交成功!",3,1);
-					location.href="/Login/webScrapt_getList";
+					//location.href="/Login/webScrapt_getList";
+					loadUrl("/Login/webScrapt_getList");
 				}else{
-					alert(data.responseText);
+					//alert(data.responseText);
+					layer.msg("提交失敗",3,3);
 				}				
 			}
 		});
@@ -102,8 +93,7 @@ window.onload=function(){
             }  
         }
  function back(){
-	 layer.load("正在返回,請稍等...");
-	 location.href="/Login/webScrapt_getList3?backIndex=1";
+	 loadUrl("/Login/webScrapt_getList3?backIndex=1");
  }  
 </script>
 <script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>
@@ -113,12 +103,11 @@ window.onload=function(){
 </head>
 <body>
 	<form action="webScrapt_addscrapt" method="post" id="form">
-		<table width="100%" align="center" cellspacing="0" cellpadding="0"
+	<h2>廢品邊料(每月輸入)</h2>
+		<table class="table table-condensed"
 			id="msg1">
-			  <caption>廢品邊料(每月輸入)</caption>
-			<tbody id="tb_list_info">
-				<tr></tr>
-			</tbody>
+			  
+			
 			<tbody id="tb_list_info2">
 				<s:if test="scrapt==null">
 					<tr>
@@ -180,7 +169,9 @@ window.onload=function(){
 					</tr>
 					<tr>
 						<td class="td_show_title">廠別狀態</td>
-						<td class="td_input"><select name="scrapt.id.factCode"
+						<td class="td_input">
+						<input type="text" value="<s:property value='scrapt.id.factCode'/>" name="scrapt.id.factCode" style="color:blue" readonly/>
+						<!-- <select name="scrapt.id.factCode"
 							datatype="*">
 								<option value="">請選擇廠別狀態</option>
 								<s:iterator value="#session.factAreas_other" id="temp">
@@ -191,7 +182,7 @@ window.onload=function(){
 										<option value="${temp}">${temp}</option>
 									</s:else>
 								</s:iterator>
-						</select>						
+						</select>-->						
 						</td>
 						<td class="td_show_title">邊料重量(KG)</td>
 						<td class="td_input"><input type="text"
@@ -225,10 +216,10 @@ window.onload=function(){
 			</tbody>
 		</table>
 		<center>
-			<input type="button" id="sub" value="確定" onmouseover="this.style.backgroundPosition='left -40px'" onmouseout="this.style.backgroundPosition='left top'"/>&nbsp;&nbsp;&nbsp; <input
-				type="reset" id="reset" value="重置" onmouseover="this.style.backgroundPosition='left -40px'" onmouseout="this.style.backgroundPosition='left top'"/>&nbsp;&nbsp;&nbsp; <input
+			<input type="button" id="sub" value="確定" class="btn btn-primary"/>&nbsp;&nbsp;&nbsp; <input
+				type="reset" id="reset" value="重置" class="btn btn-primary"/>&nbsp;&nbsp;&nbsp; <input
 				type="button" value="返回" id="btn_back"
-				onclick="javascript:back()" onmouseover="this.style.backgroundPosition='left -40px'" onmouseout="this.style.backgroundPosition='left top'"/>
+				onclick="javascript:back()" class="btn btn-primary"/>
 		</center>
 	</form>
 </body>

@@ -52,4 +52,15 @@ public class KyzAcctServicesImpl implements IKyzAcctServices{
 		return result;
 	}
 
+	/**
+	 * 日期:2016/3/9
+	 * 描述:
+	 */
+	
+	
+	public String findAcctNo(String acctNo) {
+		// TODO Auto-generated method stub
+		return kyzacctdao.findAcctNo(acctNo);
+	}
+
 }

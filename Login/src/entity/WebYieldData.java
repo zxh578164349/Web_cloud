@@ -25,6 +25,8 @@ public class WebYieldData implements java.io.Serializable {
 	private Double backnum;
 	private Double workhours;
 	private String usernameUd;
+	private String timeoutRecorde;//超時輸入數據記錄   1:超時
+	private String dateCreate;//創建時間（精確到分,年分隻保留后2位 例：1603310200）
 
 	// Constructors
 
@@ -198,6 +200,23 @@ public class WebYieldData implements java.io.Serializable {
 	public void setUsernameUd(String usernameUd) {
 		this.usernameUd = usernameUd;
 	}
+
+	public String getTimeoutRecorde() {
+		return timeoutRecorde;
+	}
+
+	public void setTimeoutRecorde(String timeoutRecorde) {
+		this.timeoutRecorde = timeoutRecorde;
+	}
+
+	public String getDateCreate() {
+		return dateCreate;
+	}
+
+	public void setDateCreate(String dateCreate) {
+		this.dateCreate = dateCreate;
+	}
+	
 	
 	
 

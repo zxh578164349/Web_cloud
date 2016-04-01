@@ -12,5 +12,6 @@ public interface IKyzacctDao {
 	public KyzAcct findById(String acctNo);
 	public void delete(String acctNo,KyzExpectmatmLog delLog);
 	public List<KyzAcct> findAll();
+	public String findAcctNo(String acctNo);
 
 }

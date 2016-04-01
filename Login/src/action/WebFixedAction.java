@@ -361,57 +361,43 @@ public class WebFixedAction extends ActionSupport implements
 	}
 
 	public String addlog() {
-		/*
-		 * fix=fixSer.findById(fixedassetsId);
-		 * if(log.getChangedate()!=null&&!log.getChangedate().equals("")){
-		 * fix.setAddTime(log.getChangedate()); }
-		 * fix.setFactNo(log.getFactnoTo());
-		 * fix.setFactcode(log.getFactcodeTo()); if(log.getFixedId()==null){
-		 * fix.setFixedId(null); }else{ fix.setFixedId(log.getFixedId()); }
-		 * log.setLogtime(new Date()); fixSer.addWebFixed(fix);
-		 * fixlogSer.add(log); return "addlog";
-		 */
-
-		factNo = (String) ActionContext.getContext().getSession().get("factNo");
-		List<WebFixed> list = fixSer.findByFactNo(factNo, yymm,null,null);
-		String result = null;
-		fix = fixSer.findById(fixedassetsId);
-		fix.setAddTime(log.getChangedate());
-		fix.setFactNo(log.getFactnoTo());
-		fix.setFactcode(log.getFactcodeTo());
-		fix.setAssetname(log.getAssetname());
-		log.setLogtime(new Date());
-		for (int i = 0; i < list.size(); i++) {
-			if (log.getFixedId().equals(list.get(i).getFixedId())) {
-				break;
-			} else if (i == list.size() - 1) {
-				fix.setFixedId(log.getFixedId());
-				fixSer.addWebFixed(fix);
-				fixlogSer.add(log);
-				result = "addlog";
+		try{
+			factNo = (String) ActionContext.getContext().getSession().get("factNo");
+			List<WebFixed> list = fixSer.findByFactNo(factNo, yymm,null,null);			
+			fix = fixSer.findById(fixedassetsId);
+			fix.setAddTime(log.getChangedate());
+			fix.setFactNo(log.getFactnoTo());
+			fix.setFactcode(log.getFactcodeTo());
+			fix.setAssetname(log.getAssetname());
+			log.setLogtime(new Date());
+			for (int i = 0; i < list.size(); i++) {
+				if (log.getFixedId().equals(list.get(i).getFixedId())) {
+					ajaxResult="2";//數據庫已存在，請重新調撥
+					break;
+				} else if (i == list.size() - 1) {
+					fix.setFixedId(log.getFixedId());
+					fixSer.addWebFixed(fix);
+					fixlogSer.add(log);
+					ajaxResult="0";
+				}
 			}
-		}
-		if (result == null) {
-			String temp = log.getFixedId();
-			response.setContentType("text/html;charset=utf-8");
-			try {
-				response.getWriter().print(
-						"<script>alert('數據庫已存在" + temp
-								+ ",請重新調撥!');history.back(-1)</script>");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		/*
-		 * if(log.getFixedId()==null){ fix.setFixedId(null); }else{
-		 * fix.setFixedId(log.getFixedId()); }
-		 */
-
-		/*
-		 * fixSer.addWebFixed(fix); fixlogSer.add(log);
-		 */
-		return result;
+			/*if (result == null) {
+				String temp = log.getFixedId();
+				response.setContentType("text/html;charset=utf-8");
+				try {
+					response.getWriter().print(
+							"<script>window.parent.alert('數據庫已存在" + temp
+									+ ",請重新調撥!')</script>");
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}		
+			}*/
+		}catch(Exception e){
+			ajaxResult="1";
+			System.out.println(e);
+		}	
+		return "addlog";
 	}
 
 	public void toExcel() {

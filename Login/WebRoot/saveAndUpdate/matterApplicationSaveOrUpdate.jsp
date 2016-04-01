@@ -25,22 +25,11 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 <meta http-equiv="description" content="This is my page">
 <link href="css/validate.css" rel="stylesheet" type="text/css" />
 <link rel="stylesheet" type="text/css" href="css/form.css" />
-<link rel="stylesheet" type="text/css" href="css/button_css.css" />
-<script type="text/javascript" src="jquery/DatePicker/my_WdatePicker.js"></script>
-<script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script>
-<script type="text/javascript" src="jquery/Validform_v5.3.2_min.js"></script>
-<script type="text/javascript" src="jquery/layer/layer.min.js"></script>
+<link rel="stylesheet" type="text/css" href="css/select_beautiful.css">
 <script type="text/javascript" src="jquery/jquery-form.js"></script>
 
 <script type="text/javascript">
-var jq = jQuery.noConflict();
-var loadi;
-jq(document).ajaxStart(function(){
-	loadi=layer.load("正在處理,請稍等...(系統爲了節省開銷,已取消自動下載函文!)");
-});
-jq(document).ajaxStop(function(){
-	layer.close(loadi);
-});
+
 jq(function() {		
 		var demo = jq("#form").Validform({
 			btnSubmit : "#sub",
@@ -138,7 +127,7 @@ function makeBillNo() {
 				  dwr.util.setValue("kyzs_billno", x);				  								
 			});
 			document.getElementById("addbtn").disabled="";
-			document.getElementById("addbtn").style.color="white";
+			document.getElementById("addbtn").style.color="black";
 			document.getElementById("kyzs_factno").value=factno;
 			 document.getElementById("kyzs_factcode").value=factcode;			
 			 if(cbox_length>1){
@@ -153,20 +142,7 @@ function makeBillNo() {
 	
 	
 	function addRow(){
-	     j=j+1;
-	    //添加一行
-        var newTr = kyzs_body.insertRow();
-        //添加列
-        var newTd00=newTr.insertCell();
-        var newTd0 = newTr.insertCell();
-        var newTd1 = newTr.insertCell();
-        var newTd2=newTr.insertCell();
-        var newTd3=newTr.insertCell();
-        var newTd4=newTr.insertCell();
-        var newTd5=newTr.insertCell();
-        var newTd6=newTr.insertCell();
-        var newTd7=newTr.insertCell();
-        var newTd8=newTr.insertCell();
+	    
         var factno=document.getElementById("kyzs_factno").value;
         var billno=document.getElementById("kyzs_billno").value;
         var qtyPair=document.getElementById("qtyPair").value;
@@ -177,6 +153,21 @@ function makeBillNo() {
         if(cboxlist.length>9){
            alert("對不起,不能超過10條記錄!");
         }else{
+        	 j=j+1;
+     	    //添加一行
+             var newTr = kyzs_body.insertRow();
+             //添加列
+             var newTd00=newTr.insertCell();
+             var newTd0 = newTr.insertCell();
+             var newTd1 = newTr.insertCell();
+             var newTd2=newTr.insertCell();
+             var newTd3=newTr.insertCell();
+             var newTd4=newTr.insertCell();
+             var newTd5=newTr.insertCell();
+             var newTd6=newTr.insertCell();
+             var newTd7=newTr.insertCell();
+             var newTd8=newTr.insertCell();
+        	
         newTd00.innerHTML='<input type="checkbox" name="cbox"/>';
         newTd0.innerHTML = '<input type="text" name="kyz.kyzExpectmatses['+j+'].itemNm" value="" size="15"/>'; 
         if((j+1)<10){
@@ -202,19 +193,7 @@ function makeBillNo() {
 	var jj=0;
 	function addRow_update(){	  	  	     	    
 	     var maxNum=parseInt(document.getElementById("maxNum").value);
-	    //添加一行
-        var newTr = kyzs_body.insertRow();
-        //添加列
-        var newTd00=newTr.insertCell();
-        var newTd0 = newTr.insertCell();
-        var newTd1 = newTr.insertCell();
-        var newTd2=newTr.insertCell();
-        var newTd3=newTr.insertCell();
-        var newTd4=newTr.insertCell();
-        var newTd5=newTr.insertCell();
-        var newTd6=newTr.insertCell();
-        var newTd7=newTr.insertCell();
-        var newTd8=newTr.insertCell();
+	   
         var factno=document.getElementById("kyzs_factno").value;
         var billno=document.getElementById("kyzs_billno").value;
         var qtyPair=document.getElementById("qtyPair").value;
@@ -225,6 +204,20 @@ function makeBillNo() {
         if(cboxlist.length>9){
            alert("對不起,不能超過10條記錄!");
         }else{
+        	 //添加一行
+            var newTr = kyzs_body.insertRow();
+            //添加列
+            var newTd00=newTr.insertCell();
+            var newTd0 = newTr.insertCell();
+            var newTd1 = newTr.insertCell();
+            var newTd2=newTr.insertCell();
+            var newTd3=newTr.insertCell();
+            var newTd4=newTr.insertCell();
+            var newTd5=newTr.insertCell();
+            var newTd6=newTr.insertCell();
+            var newTd7=newTr.insertCell();
+            var newTd8=newTr.insertCell();
+        	
         newTd00.innerHTML='<input type="checkbox" name="cbox" disabled/><input type="image" src="images/del.gif" onclick="this.parentNode.parentNode.parentNode.removeChild(this.parentNode.parentNode)"/>';
         newTd0.innerHTML = '<input type="text" name="kyz.kyzExpectmatses['+(jj+maxNum)+'].itemNm" value="" size="15"/>'; 
         if((jj+maxNum+1)<10){
@@ -242,9 +235,10 @@ function makeBillNo() {
         newTd8.innerHTML='<input type="text" name="kyz.kyzExpectmatses['+(jj+maxNum)+'].memoMk" value="" size="15"/>'+
         '<input type="hidden" name="kyz.kyzExpectmatses['+(jj+maxNum)+'].id.kyzExpectmatm.id.factNo" value="'+factno+'"'+'id="kyzs_factno"/>'+    
         '<input type="hidden" name="kyz.kyzExpectmatses['+(jj+maxNum)+'].id.kyzExpectmatm.id.billNo" value="'+billno+'"'+'id="kyzs_billno"/>'+
-        '<input type="hidden" name="kyz.kyzExpectmatses['+(jj+maxNum)+'].factCode" value="'+factcode+'"'+'id="kyzs_factcode"/>';       
-        }
+        '<input type="hidden" name="kyz.kyzExpectmatses['+(jj+maxNum)+'].factCode" value="'+factcode+'"'+'id="kyzs_factcode"/>'; 
         jj=jj+1;
+        }
+        
 	}
 				
 	function delRow(){
@@ -398,14 +392,7 @@ function getKyType2(factno){
 
 function lookJson(billNo,id,filename){
 //var jQ = jQuery.noConflict();
-var loadi;
-filename=encodeURI(encodeURI(filename));
-jq(document).ajaxStart(function(){
-	loadi=layer.load(0);
-});
-jq(document).ajaxStop(function(){
-	layer.close(loadi);
-});
+
    jq.ajax({
       type:"get",
       dataType:"json",
@@ -428,8 +415,12 @@ jq(document).ajaxStop(function(){
 
 
 function back(){
-	layer.load("正在返回,請稍等...");
-	location.href="/Login/kyz_findPageBean3?backIndex=1";
+	
+	loadUrl("/Login/kyz_findPageBean3?backIndex=1");
+}
+function gook(){
+	  layer.msg("操作成功",3,1);
+	  loadUrl("kyz_findPageBean");
 }
 </script>
 <script type='text/javascript' src='/Login/dwr/interface/kyzjs.js'></script>
@@ -440,97 +431,19 @@ function back(){
 <script type='text/javascript' src='/Login/dwr/engine.js'></script>
 <script type='text/javascript' src='/Login/dwr/util.js'></script>
 
-<style type="text/css">
-table.gridtable {
-	 font-family: verdana,arial,sans-serif;
-	 font-size:12px;
-	 border-collapse: collapse;
-     border:1px solid #d5f3f4;  
-}
-table.gridtable th {
-	border-width: 1px;
-	padding: 8px;
-	border-style: solid;
-	border-color: #666666;
-	background-color: #dedede;
-}
-
-table.gridtable td {	
-	background-color: #ffffff;	
-	font-size:12px;
-	letter-spacing:2px;	
-	color:#678197;
-    border:1px solid #d5f3f4;
-    padding:.3em 1em;
-}
-
-table caption{
-   font-size:30px;
-   margin:20px;
-}
-.bluecss{
-   font-color:blue;
-   border-color:blue;
-   background-color:blue;
-}
-#table1 input[type="text"],select{
-  width:100%;
-  background:transparent;
-  border-width:1px ;
-  border-style:solid;
-  border-color:#ffffff;
-  margin:0px;
-}
-#table2 input[type="text"],select{
-  width:100%;
-  background:transparent;
-  border-width:1px ;
-  border-style:solid;
-  border-color:#ffffff;
-  margin:0px;
-}
-textarea{
-  badkground:transparent;
-  border-width:1px;
-  border-style:solid;
-  border-color:#ffffff;
-  margin:0px;
-}
-table.gridtable td.tdcolor {
- background:#f7fbff;
-}
-
-#mydiv{
-    padding:4px;
-	top: -8px;
-	left:-8px;
-	position: absolute;
-	/* background-color:rgb(100,200,300);  */
-	filter: alpha(opacity=50);
-	/* background-color:rgba(100,200,300,0.5); */
-	background-color: black;
-	opacity: 0.5;
-	-moz-opacity:0.5;   
-    -khtml-opacity: 0.5; 
-	 display: block; 
-	 
-}
-
-</style>
+<script type="text/javascript">
+jq(function(){
+	if(jq("#addorupdate").val()!="update"){
+		getKyType();makeBillNo();
+	}	
+});
+</script>
 
 </head>
-<%@ include file="../saveAndUpdate/publicHead2.jsp"%>
-<body onload="getKyType(),makeBillNo()">  
- <!-- <iframe id="ifm" style="display:none" name="ifm"></iframe> -->
-<s:if test="kyz==null">
-      <form action="kyz_add"  method="post" id="form"  enctype="multipart/form-data" >
-    </s:if>
-    <s:else>
-       <form action="kyz_add"  method="post" id="form" enctype="multipart/form-data" >
-    </s:else>
-    <div style="overflow:scroll;height:700px;width:100%">
-		<table class="gridtable" id="table1" style="width:850px" >
-		    <caption >函文申請</caption>		    	
+<body >  
+    <form action="kyz_add"  method="post" id="form"  enctype="multipart/form-data" target="frameFile">
+        <h2>函文申請</h2>
+		<table class="table table-condensed" >		    	
 			<tbody id="tb_list_info2">
 				    <tr>
 				        <td class="tdcolor">標題</td>
@@ -680,7 +593,7 @@ table.gridtable td.tdcolor {
 					<tr>
 					    <td class="tdcolor">申請內容</td>	
 						<td  colspan="10">
-				           <textarea style="width:780px;height:120px" name="kyz.memoMk" autofocus="autofocus" wrap="hard" wrap="physical"  tip="申請內容" altercss="gray" class="gray"><s:property value="kyz.memoMk"/></textarea>				                                           				         
+				           <textarea style="width:100%;height:120px" name="kyz.memoMk" autofocus="autofocus" wrap="hard" wrap="physical"  tip="申請內容" altercss="gray" class="gray"><s:property value="kyz.memoMk"/></textarea>				                                           				         
 				           <input type="hidden" name="kyz.username" value="<s:property value='#session.loginUser.username'/>"/>
 				           
 				           <input type="hidden" value="<s:property value='kyz.filesYn'/>" name="kyz.filesYn"/>
@@ -689,7 +602,7 @@ table.gridtable td.tdcolor {
 					</tr>													
 			</tbody>
 			</table>	
-			<table class="gridtable" id="table2" style="width:850px">								 			
+			<table class="table table-condensed">								 			
 			<tbody id="kyzs_body" >
 			  <tr>
 			     <td class="tdcolor"><input type="checkbox" id="cboxall" onclick="checkAll()"/></td>
@@ -789,13 +702,12 @@ table.gridtable td.tdcolor {
 	   </s:if>
 	   <hr/>	  
 			  <center style="width:850px;margin-left:50px">			    
-				<input type="submit" id="sub" value="確定" onmouseover="this.style.backgroundPosition='left -40px'" onmouseout="this.style.backgroundPosition='left top'"/>&nbsp;&nbsp;&nbsp; <input
-					type="reset" id="reset" value="重置" onmouseover="this.style.backgroundPosition='left -40px'" onmouseout="this.style.backgroundPosition='left top'"/>
-				<input type="button" value="返回" onclick="back()" id="btn_back" onmouseover="this.style.backgroundPosition='left -40px'" onmouseout="this.style.backgroundPosition='left top'"/>						
+				<input type="submit" id="sub" value="確定" class="btn btn-primary"/>&nbsp;&nbsp;&nbsp; <input
+					type="reset" id="reset" value="重置" class="btn btn-primary"/>
+				<input type="button" value="返回" onclick="back()" id="btn_back" class="btn btn-primary"/>						
 			</center>
-				
-	</div>		
+		<input type="hidden" name="addorupdate" value="<s:property value='addorupdate'/>" id="addorupdate"/>	<!-- 添加或更新標識     -->				
 	</form>
-	
+	<iframe id="frameFile" name="frameFile" style="display: none;"></iframe>
 </body>
 </html>

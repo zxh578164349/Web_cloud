@@ -20,9 +20,8 @@
 <meta http-equiv="expires" content="0">
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
-<link rel="stylesheet" type="text/css" href="css/mystyle.css" />
-<script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script> 
-<script type="text/javascript" src="page/jquerys/Validform_v5.3.2_min.js"></script>
+<!-- <link rel="stylesheet" type="text/css" href="css/mystyle.css" />-->
+
 <script type="text/javascript">
 
 	   
@@ -101,7 +100,7 @@
 		<h4>
 		<s:if test='#session.loginUser.userread!="1"'>
 	     <input value="添加" type="button" class="btn btn-info"
-		onclick="javascript:location.href='saveAndUpdate/kyzVisaFlowSaveOrUpdate.jsp'" /></s:if> 
+		onclick="loadUrl('saveAndUpdate/kyzVisaFlowSaveOrUpdate.jsp')" /></s:if> 
 		審核流程
 		</h4>
 		<thead>			
@@ -147,7 +146,7 @@
 							<input type="hidden" value="<s:property value='id.itemNo'/>" name="id.itemNo"/>							
 					</form> 					
 					
-					  <a href="javascript:layer.load(0);document.getElementById('subform${x.index}').submit()"><img alt="修改" src="images/icon/edit001.png" title="修改" ></a>&nbsp;														
+					  <a href="javascript:findById('subform${x.index}','visaflow_findById')"><img alt="修改" src="images/icon/edit001.png" title="修改" ></a>&nbsp;														
 					<form action="visaflow_delete" method="post" id="2subform${x.index}"
 						style="float:left">
 						<input type="hidden" value="<s:property value='id.factNo'/>"
@@ -174,7 +173,7 @@
 					 </s:if>
 					 <s:else>
 					   <a href="javascript:void(0)" onclick="isDelete2('${temp.id.factNo}','${temp.id.visaSort}')"><img alt="刪除全部" src="images/icon/delete_all.png" title="刪除全部" ></a>
-					   <a href="javascript:document.getElementById('3subform${x.index}').submit()"><img alt="添加知會" src="images/icon/add001_2.png" title="添加知會"></a>
+					   <a href="javascript:findById('3subform${x.index}','visaflow_findMaxItem')"><img alt="添加知會" src="images/icon/add001_2.png" title="添加知會"></a>
 					 </s:else>	
 					 
 					 <form action="visaflow_addflow" method="post" id="5subform${x.index}"

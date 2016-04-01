@@ -71,6 +71,8 @@
 	<bean id="webbussletterAction" class="action.WebBussinessletterAction" scope="prototype"/>
 	<bean id="webtabpomfileAction" class="action.WebTabpomfileAction" scope="prototype"/>
 	<bean id="webphonebookAction" class="action.WebPhonebookAction" scope="prototype"/>
+	
+	<bean id="weballobjAction" class="action.WeballobjAction" scope="prototype"/>
 </beans> 
 
  

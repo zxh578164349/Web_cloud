@@ -21,8 +21,6 @@
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
 
-<link rel="stylesheet" type="text/css" href="css/mystyle.css" />
-<link rel="stylesheet" type="text/css" href="css/button_css.css" />
 <script type="text/javascript">
 	
 
@@ -55,7 +53,7 @@ function showPage(){
 	<table class="table table-striped table-hover table-bordered"  >
 	<h2>
 	<s:if test='#session.loginUser.userread!="1"'>
-	<input type="button" class="btn btn-info" value="添加" onclick="javascript:location.href='saveAndUpdate/fixedSaveOrUpdate.jsp'"/>	
+	<input type="button" class="btn btn-info" value="添加" onclick="loadUrl('saveAndUpdate/fixedSaveOrUpdate.jsp')"/>	
 	</s:if>	
 	固定資產
 	</h2>
@@ -128,14 +126,14 @@ function showPage(){
 				</td>
 				<s:if test='#session.loginUser.userread!="1"'>			
 			    <td>
-			     <a href="javascript:findById('${fixedassetsId}')" ><img alt="修改" src="images/icon/edit001.png" title="修改" ></a>	
+			     <a href="javascript:loadUrl('/Login/fix_findById?id=${fixedassetsId}')" ><img alt="修改" src="images/icon/edit001.png" title="修改" ></a>	
 			       <s:if test='delMk=="Y"||delMk==null'>
 			          <a href="javascript:void(0)" onclick="isDelete(<s:property value='fixedassetsId'/>)"><img alt="刪除" src="images/icon/delete001.png" title="刪除" ></a>
 			       </s:if>
 			       <s:if test='delMk=="N"'>
 			           <a disabled style="color:grey"><img alt="刪除" src="images/icon/delete001_1.jpg" title="刪除"></a>
 			       </s:if>								
-					 <a href="fix_findById2?id=<s:property value='fixedassetsId'/>"><img alt="調撥" src="images/icon/move001.png" title="調撥"></a>					   					 
+					 <a href="javascript:loadUrl('/Login/fix_findById2?id=${fixedassetsId}')"><img alt="調撥" src="images/icon/move001.png" title="調撥"></a>					   					 
                 </td>
                 </s:if>
 			</tr>

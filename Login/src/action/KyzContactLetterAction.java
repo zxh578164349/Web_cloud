@@ -71,6 +71,7 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 	private String visa_mk;
 	private String ajaxResult;//申請函文時返回的ajax結果,   0:提交成功       1:提交失敗
 	private int backIndex;//返回標識      0或null:不走返回路徑         1:走返回路徑
+	private String addorupdate;//添加或更新標識    update表示進入更新狀態
 	private List<File> files;
     private List<String> filesFileName;
     private List<String> filesContentType;
@@ -83,6 +84,12 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 	
 	
 	
+	public String getAddorupdate() {
+		return addorupdate;
+	}
+	public void setAddorupdate(String addorupdate) {
+		this.addorupdate = addorupdate;
+	}
 	public int getBackIndex() {
 		return backIndex;
 	}
@@ -226,9 +233,9 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 	public void setKyzExpLogSer(IKyzExpectmatmLogServices kyzExpLogSer) {
 		this.kyzExpLogSer = kyzExpLogSer;
 	}
-	public String add() throws IOException{
+	public void add() throws IOException{
 		/*文件上傳驗證*/
-		if(files!=null){
+		if(files!=null&&files.get(0)!=null){
 			for(int i=0;i<files.size();i++){
 				if(files.get(i)!=null){
 					long filesize=files.get(i).length();
@@ -236,12 +243,12 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 					if(filesize>5120000){
 						response.setContentType("text/html;charset=utf-8");
 						response.getWriter().print("<script>alert('文件不可超過5M!');history.back()</script>");
-						return null;
+						//return null;
 					}
 					if(!filetype.equals(".bmp")&&!filetype.equals(".jpg")&&!filetype.equals(".jpeg")&&!filetype.equals(".gif")&&!filetype.equals(".tif")){
 						response.setContentType("text/html;charset=utf-8");
 						response.getWriter().print("<script>alert('只允許jpg,bmp,jpeg,gif,tif圖片');history.back()</script>");
-						return null;
+						//return null;
 					}
 					
 				}
@@ -249,7 +256,7 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 		}
 		
 		/*文件上傳*/
-		if(files!=null){//不為空代表有上傳附檔,不能寫成files.size()>0,否則報空指針
+		if(files!=null&&files.get(0)!=null){//不為空代表有上傳附檔,不能寫成files.size()>0,否則報空指針
 			kyzletter.setFilesYn("1");//標示是否帶有附檔
 			//File uploadFile=new File(ServletActionContext.getServletContext().getRealPath("KyzexpFile\\"+kyz.getId().getBillNo()));//附檔上傳到項目
 			File uploadFile_backup=new File("d:\\KyzletterexpFile_backup\\"+kyzletter.getId().getBillNo());//附檔上傳到D盤(為了避免更新項目時丟失附檔,所在上傳到D盤)
@@ -404,10 +411,15 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 				result="update";
 				ajaxResult="0";
 			}
+			response.setContentType("text/html;charset=utf-8");
+			response.getWriter().print("<script>window.parent.gook();</script>");
 		}catch(Exception e){
 			// TODO Auto-generated catch block
+			response.setContentType("text/html;charset=urf-8");
+			response.getWriter().print("<script>window.parent.layer.msg('操作失敗',3,3)</script>");
 			ajaxResult="1";
 			e.printStackTrace();
+			
 		}			
 			if(result==null){
 				response.setContentType("text/html;charset=utf-8");
@@ -416,10 +428,10 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 						+ kyzletter.getId().getFactNo()					
 						+ " "
 						+ kyzletter.getId().getBillNo()
-						+ ")!');histore.back()</script>");
+						+ ")!');history.back()</script>");
 			}
 																	
-			return result;
+			
 }
 	public void print(String factNo,String billNo,String sort) throws IOException{
 		/*List<KyzContactletter>list=new ArrayList<KyzContactletter>();
@@ -617,6 +629,7 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 		this.response=response;
 	}
 	public String findById() throws UnsupportedEncodingException{
+		addorupdate="update";
 		kyzletter=kyzletterSer.findById(factNo, billNo);
 		String file_yn=kyzletter.getFilesYn();
 		if(file_yn==null){
@@ -636,6 +649,7 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 			}
 			ActionContext.getContext().getSession().put("list_filesexp", list);			
 		}
+		
 		return "findById";
 	}
 	

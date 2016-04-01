@@ -735,17 +735,46 @@ public class AutoSendKyzAll extends QuartzJobBean{
 		//KyVisabillm vbm2=visabillmSer.findById(local_factNo, local_visaSort, local_billNo);//用參數傳遞vbm,減少連接數據庫
 		List<KyVisabills>list_visa2=vbm2.getKyVisabillses();
 		//这个类主要是设置邮件   
+		List<String>list_emails=new ArrayList<String>();//所有發送人
+		list_emails.add("kyuen@yydg.com.cn");
+		for(KyVisabills bills:list_visa2){
+			list_emails.add(bills.getVisaSigner());
+			if(bills.getFlowMk().equals("Y")){//要簽核的人才需要通知知會人
+				List<String>list_emailPwd=webuseremailaSer.findByEmail(local_factNo,bills.getVisaSigner(),local_visaSort);
+				for(String str:list_emailPwd){
+					list_emails.add(str);
+				}
+			}
+		}
 		
 		String[] attachFileNames = { "d:/" + local_billNo + ".pdf" };// 附件
 		SimpleMailSender sms = new SimpleMailSender();
 		MailSenderInfo mailInfo = new MailSenderInfo();
+		
+		for(String email:list_emails){//for
+			mailInfo.setValidate(true);			
+			mailInfo.setSubject("函文知會定時通知(審核完畢)_" + local_billNo + "("
+					+ local_factNo + ")");
+
+			mailInfo.setAttachFileNames(attachFileNames);
+			mailInfo.setContent("單號為:" + "<span style='color:red'>"
+					+ local_billNo + "</span>" + "的函文已審核完畢,請查看附件"
+					+ "<br/>本郵件自動定時發送，請勿回覆");
+
+			String toAddress = email;
+			mailInfo.setToAddress(toAddress);
+			sms.sendHtmlMail(mailInfo);// 发送html格式
+		}//for
+		File file = new File("d:/" + local_billNo + ".pdf");
+		if (file.exists()) {
+			if (file.isFile()) {
+				file.delete();
+			}
+		}
 				
-		for (int i = 0; i < list_visa2.size(); i++) {//for			
+		/*for (int i = 0; i < list_visa2.size(); i++) {//for			
 			// 这个类主要来发送邮件			
-			mailInfo.setValidate(true);
-			/*mailInfo.setUserName("kyuen@yydg.com.cn");
-			mailInfo.setPassword("yydgmail");// 您的邮箱密码
-			mailInfo.setFromAddress("<kyuen@yydg.com.cn>");*/
+			mailInfo.setValidate(true);			
 			mailInfo.setSubject("函文知會定時通知(審核完畢)_" + local_billNo + "("
 					+ local_factNo + ")");
 
@@ -759,8 +788,9 @@ public class AutoSendKyzAll extends QuartzJobBean{
 			sms.sendHtmlMail(mailInfo);// 发送html格式
 
 			// 给备签人发送邮件
-			/******************20151113备签人请使用方法findByFactNoAEmailPwd2(String factNo,String email)**********************/
-			/*String emailPwd = webuseremailSer.findEmailPWD(local_factNo,list_visa2.get(i).getVisaSigner());			
+			*//******************20151113备签人请使用方法findByFactNoAEmailPwd2(String factNo,String email)**********************//*
+			String emailPwd = webuseremailSer.findEmailPWD(local_factNo,list_visa2.get(i).getVisaSigner());	
+			 List<String>list_emailPwd=webuseremailSer.findByFactNoAEmailPwd2(local_factNo,list_visa2.get(i).getVisaSigner());		
 			if (emailPwd != null) {				
 				mailInfo.setValidate(true);
 				mailInfo.setUserName("kyuen@yydg.com.cn");
@@ -774,8 +804,7 @@ public class AutoSendKyzAll extends QuartzJobBean{
 						+ "<br/>本郵件自動定時發送，請勿回覆");
 				mailInfo.setToAddress(emailPwd);
 				sms.sendHtmlMail(mailInfo);// 发送html格式
-			}*/
-			//List<String>list_emailPwd=webuseremailSer.findByFactNoAEmailPwd2(local_factNo,list_visa2.get(i).getVisaSigner());
+			}
 			
 			if(list_visa2.get(i).getFlowMk().equals("Y")){//要簽核的人才需要通知知會人20160304
 				List<String>list_emailPwd=webuseremailaSer.findByEmail(local_factNo,list_visa2.get(i).getVisaSigner(),local_visaSort);
@@ -794,13 +823,8 @@ public class AutoSendKyzAll extends QuartzJobBean{
 				}//if
 			}			
 		}//for
-	       
-	          File file = new File("d:/" + local_billNo + ".pdf");
-				if (file.exists()) {
-					if (file.isFile()) {
-						file.delete();
-					}
-				}
+*/	       
+	          
 	}
 	
 	

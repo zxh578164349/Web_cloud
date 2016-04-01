@@ -22,14 +22,7 @@
 	-->
 <link rel="stylesheet" type="text/css" href="css/select_beautiful.css">	
 <LINK href="css/list.css" type="text/css" rel="stylesheet">
-<script type="text/javascript" src="jquery/DatePicker/my_WdatePicker.js"></script>
-<script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script>
-<script type="text/javascript" src="jquery_alert_dialogs/jquery.js"></script>
-<script type="text/javascript" src="jquery_alert_dialogs/jquery.alerts.js"></script>	
-<link rel="stylesheet" type="text/css" href="jquery_alert_dialogs/jquery.alerts.css" />	
-<script type="text/javascript" src="jquery_alert_dialogs/jquery.ui.draggable.js"></script>	
-<link rel="stylesheet" type="text/css" href="jquery/loding/ui.loading.css" />	
-<script type="text/javascript" src="jquery/loding/ui.loading.js"></script>
+
 <script type="text/javascript">
  
 
@@ -63,15 +56,20 @@ jq(document).keyup(function(event){
 	}
 
 	
-	window.onload=function(){
+	/*window.onload=function(){
 	   findallBN();
-	}
+	}*/
 </script>
 <script type='text/javascript' src='/Login/dwr/interface/kyzscmjs.js'></script>
 <script type='text/javascript' src='/Login/dwr/interface/kyzmatjs.js'></script>
 <script type='text/javascript' src='/Login/dwr/interface/kyzacctjs.js'></script>
 <script type='text/javascript' src='/Login/dwr/engine.js'></script>
 <script type='text/javascript' src='/Login/dwr/util.js'></script> 
+<script type="text/javascript">
+  jq(function(){
+	  findallBN();
+  });
+</script>
 </head>
 <body>
    <form  method="post" id="public_form">

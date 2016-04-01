@@ -18,29 +18,20 @@
 <meta http-equiv="description" content="This is my page">
 <!--  <link rel="stylesheet" type="text/css" href="css/button_css.css" />
 <link rel="stylesheet" type="text/css" href="css/general_css.css" />
-<link href="tablecloth/tablecloth.css" rel="stylesheet" type="text/css" media="screen" />-->
+<link href="tablecloth/tablecloth.css" rel="stylesheet" type="text/css" media="screen" />
 <script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script>
-<script type="text/javascript" src="page/jquerys/layer/layer.min.js"></script>
-<!-- 新 Bootstrap 核心 CSS 文件 -->
-<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
-<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
-<script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="page/jquerys/layer/layer.min.js"></script>
-
- <!--[if lt IE 9]>  
-  <script src="bootstrap/html5.js"></script>
-  <script src="bootstrap/respond.min.js"></script>
-  <![endif]-->	 
+<script type="text/javascript" src="page/jquerys/layer/layer.min.js"></script>-->
+ 
 </head>
 <script>
-	var jq=jQuery.noConflict();
+	/* var jq=jQuery.noConflict();
 	var loadi; 
 	jq(document).ajaxStart(function(){
 		loadi=layer.load(0);
 	});
 	jq(document).ajaxStop(function(){
 		layer.close(loadi);
-	});
+	}); */
 	function pages(page) {
 		jq.ajax({
 			type : "POST",
@@ -177,11 +168,11 @@ function showDiv_update(factNo,factCode,yymm){
 	<hr />	
 	<s:if test='#session.loginUser.userread!="1"'>
 	<span style="float:right">
-	  <input type="button" onclick="javascript:showDiv()" class="btn btn-link btn-sm" value="添加每月盤點數據"/>
+	  <input type="button" onclick="loadUrl('page/sum_yiele_data.jsp')" class="btn btn-link btn-sm" value="添加每月盤點數據"/>
 	</span>
 	</s:if>
 	<span style="float:right"> <input type="button"
-		onclick="javascript:layer.load(0);location.href='ydata_findPageBean'" 
+		onclick="loadUrl('ydata_findPageBean')" 
 		class="btn btn-link btn-sm" value="按日詳細查看"/>
 	</span>
 	<!-- <s:if test="#session.loginUser.username=='admin'">

@@ -13,5 +13,6 @@ public interface IKyzAcctServices {
 	public void delete(String acctNo,KyzExpectmatmLog delLog);
 	public List<KyzAcct> findAll();
 	public boolean checkAcctNo(String acctNo);
+	public String findAcctNo(String acctNo);
 
 }

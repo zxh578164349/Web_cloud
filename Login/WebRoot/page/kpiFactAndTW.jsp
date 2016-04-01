@@ -19,37 +19,24 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<meta http-equiv="description" content="This is my page">
 	<meta http-equiv="X-UA-Compatible" content="IE=Edge,Chrome=1">
 	<link rel="stylesheet" type="text/css" href="css/select_beautiful.css">		
-<script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script> 
-<script type="text/javascript" src="page/jquerys/layer/layer.min.js"></script>
-<script type="text/javascript" src="jquery/Validform_v5.3.2_min.js"></script>
-<script type="text/javascript" src="jquery/DatePicker/WdatePicker.js"></script>
-<!-- 新 Bootstrap 核心 CSS 文件 -->
-<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
-<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
-<script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<link rel="stylesheet" type="text/css" href="css/form.css" />
 
-
- <!--[if lt IE 9]>  
-  <script src="bootstrap/html5.js"></script>
-  <script src="bootstrap/respond.min.js"></script>
-  <![endif]-->	
 <script type="text/javascript">
-    var j=jQuery.noConflict();
-    j(
+    jq(
       function(){      
-         j("#subform1").Validform({
+         jq("#subform1").Validform({
              btnSubmit : "#btn1",
              tiptype:3,
              tipSweep:true,
              showAllError:true
          });
-         j("#subform2").Validform({
+         jq("#subform2").Validform({
              btnSubmit:"#btn2",
              tiptype:3,
              tipSweep:true,
              showAllError:true
          });
-         j("#subform3").Validform({
+         jq("#subform3").Validform({
              btnSubmit:"#btn3",
              tiptype:3,
              tipSweep:true,
@@ -57,34 +44,63 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
          })
       }  
    )
-/**
- 全選與反選
-*/  	
-function checkAll(thisform,factcode_obj,index) {
-	//選中的廠別狀態
-	factcode=factcode_obj.value;
-	//通過樣式 class獲取對應factCode的所有廠別
-	var allcheckboxs=j("."+factcode+"_factno");
-	var allfactno = document.getElementById(factcode);
-	
-		//遍歷所選廠別狀態對應的所有checkbox
-		for ( var i = 0; i < allcheckboxs.length; i++) {
-			var checkbox = allcheckboxs[i];
-			var font = document.getElementById("font_" +factcode+"_"+ i);
-			if (checkbox.checked === false && allfactno.checked === true) {					
-				// 正选  
-				checkbox.checked = true;
-				font.style.color = "red";
-				j("#"+factcode+"_div").show(300);
 
-			} else if (checkbox.checked === true && allfactno.checked == false) {
-				// 反选  
-				checkbox.checked = false;
-				font.style.color = "";
-				j("#"+factcode+"_div").hide(300);
-			}
-		}
-	}
+    
+    
+	/**
+    全選與反選
+   */  	
+   function checkAll(factcode) {
+   	//通過樣式 class獲取對應factCode的所有廠別
+   	var allcheckboxs=jq("."+factcode+"_factno");
+   	var allfactno = jq("#"+factcode);	
+   		//遍歷所選廠別狀態對應的所有checkbox
+   		for ( var i = 0; i < allcheckboxs.length; i++) {//for
+   			var checkbox = allcheckboxs[i];//dom對象
+   			//var checkbox2=allcheckboxs.eq(i);//jquery對象			
+   			var font = jq("#font_" +factcode+"_"+ i);
+   			if (checkbox.checked === false&&allfactno.prop("checked")===true) {					
+   				// 正选  
+   				checkbox.checked=true;
+   				font.css("color","red");				
+   			}
+   			if (checkbox.checked === true&&allfactno.prop("checked")===false) {
+   				// 反选  
+   				checkbox.checked=false;
+   				font.css("color","") ;				
+   			}						
+   		}//for
+   		if(allfactno.prop("checked")){
+   			   jq("#"+factcode+"_div").show(300);
+   			}else{
+   			  jq("#"+factcode+"_div").hide(300); 
+   			}
+   	}
+   	
+   	/**
+   全選全部的廠別狀態
+   */
+   function selectAll(obj){
+      var allfactcodes=jq("input[name='list_factcode']");
+      if(obj.checked===true){
+        for(var i=0;i<allfactcodes.length;i++){  
+        allfactcodes[i].checked=true;  
+        checkAll(allfactcodes[i].value);
+      }  
+      }else{
+         for(var i=0;i<allfactcodes.length;i++){  
+         allfactcodes[i].checked=false;  
+         checkAll(allfactcodes[i].value);
+      }
+      }
+      
+      
+
+      
+      
+   }  
+    
+    
 	
 /**
 選擇單個,如果一個也選中,則全部退回
@@ -97,7 +113,7 @@ function checkAll(thisform,factcode_obj,index) {
 	       document.getElementById(font).style.color="";
 	       //全部退回
 	       //通過樣式 class獲取對應factCode的所有廠別
-	       allcheckboxs=j("."+factcode+"_factno");
+	       allcheckboxs=jq("."+factcode+"_factno");
 	       var index=0;
 	       for(var i=0;i<allcheckboxs.length;i++){
 	           var checkbox=allcheckboxs[i];
@@ -106,7 +122,7 @@ function checkAll(thisform,factcode_obj,index) {
 	           }
 	       }
 	       if(index==allcheckboxs.length){
-	           j("#"+factcode+"_div").hide(300);
+	           jq("#"+factcode+"_div").hide(300);
 	           cb_factcode.checked=false;
 	       }
 	   } 	  
@@ -133,12 +149,12 @@ function checkdate(){
   <h2>KPI-工廠</h2>
     <form action="vkpifact_print_fact" method="post" id='subform1' target="_blank">
        <table id="table_fact" class="tb_search"> 
-          <caption>全年報表</caption>        
+          <h4>全年報表</h4>        
           <tr>
           <td class="td_input">
-          <input type="text" name="year" onclick="WdatePicker({dateFmt:'yyyy'})" datatype="*" id="year" onchange="checkdate()" class="Wdate"/>         
-          </td>
-          <td class="td_input">
+          <span><input type="text" name="year" onclick="WdatePicker({dateFmt:'yyyy'})" datatype="*" id="year" onchange="checkdate()" class="Wdate"/></span>         
+          
+             <span>
              <s:if test="#session.factNo=='tw'">			    
 					<select name="factNo" id="factNo" datatype="*" onchange="checkdate()">
 						<option value="">請選擇工廠</option>						
@@ -154,29 +170,30 @@ function checkdate(){
 						<option value="<s:property value="#session.factNo"/>">
 							<s:property value="#session.factName" />(<s:property value="#session.factNo"/>)
 						</option>
-					</select>
-					
+					</select>					
 				</s:else>
-          </td>
-          <td>目標日期</td>
-          <td class="td_input">           
-            <select name="yymm" id="dwr_yymm">                 
+				</span>
+
+                                    
+           
+            <span>目標日期<select name="yymm" id="dwr_yymm">                 
             </select>
+            </span>
+  
+          <input type="button" id="btn1" class="btn btn-primary" value="確定"/>
           </td>
-          <td><input type="button" id="btn1" class="btn btn-primary" value="確定"/></td>
           </tr>
        </table>
     </form>
     <hr>
     <form action="vkpifact_print_month" method="post" id="subform2" target="_blank">
       <table class="tb_search">
-        <caption>月份報表</caption>
+        <h4>月份報表</h4>
          <tr>
            <td>
-               <input type="text" id="begin" name="yymm_begin" datatype="*" onclick="WdatePicker({minDate:'{%y-1}-%m',maxDate:'#F{$dp.$D(\'end\',{M:-1})||\'%y-{%M-1}\'}'})" class="Wdate" >至
-               <input type="text" id="end" name="yymm_end" datatype="*" onclick="WdatePicker({minDate:'#F{$dp.$D(\'begin\',{M:0})}',maxDate:'%y-%M'})" class="Wdate">
-          </td>
-          <td class="td_input">
+               <span><input type="text" id="begin" name="yymm_begin" datatype="*" onclick="WdatePicker({minDate:'{%y-1}-%m',maxDate:'#F{$dp.$D(\'end\',{M:-1})||\'%y-{%M-1}\'}'})" class="Wdate" ></span>至
+               <span><input type="text" id="end" name="yymm_end" datatype="*" onclick="WdatePicker({minDate:'#F{$dp.$D(\'begin\',{M:0})}',maxDate:'%y-%M'})" class="Wdate"></span>
+             <span>
              <s:if test="#session.factNo=='tw'">			    
 					<select name="factNo"  datatype="*">
 						<option value="">請選擇工廠</option>						
@@ -190,11 +207,11 @@ function checkdate(){
 						<option value="<s:property value="#session.factNo"/>">
 							<s:property value="#session.factName" />(<s:property value="#session.factNo"/>)
 						</option>
-					</select>
-					
+					</select>					
 				</s:else>
-          </td>
-          <td><input type="button" id="btn2" class="btn btn-primary" value="確定"/></td>
+				</span>
+          
+          <input type="button" id="btn2" class="btn btn-primary" value="確定"/></td>
           </tr>
       </table>
     </form>
@@ -210,11 +227,12 @@ function checkdate(){
         </table>
          <hr>
         <table>
+        <tr><td><input type="checkbox" onclick="selectAll(this)" style="width:18px;height:18px"/>全選<hr></td></tr>
           <s:iterator value="#attr.map" id="map" status="x">
           <tr>
            <td>
                  <input type="checkbox" value="<s:property value='key'/>" id="<s:property value='key'/>" name="list_factcode" 
-                 onclick="checkAll(this.form,<s:property value='key'/>,${x.index})" style="width:18px;height:18px"/>
+                 onclick="checkAll('${map.key}')" style="width:18px;height:18px"/>
                  <font style="font-size:14px;font-weight:bold" ><s:property value='key'/> </font>
                  <br> 
                  <div id="<s:property value='key'/>_div" style="display:none">               

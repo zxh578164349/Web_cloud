@@ -21,36 +21,36 @@
 <meta http-equiv="description" content="This is my page">
 
 <link rel="stylesheet" type="text/css" href="css/form.css" />
-<link rel="stylesheet" type="text/css" href="css/button_css.css" />
-<LINK href="css/list.css" type="text/css" rel="stylesheet">
-<script type="text/javascript" src="jquery/DatePicker/my_WdatePicker.js"></script>
-<script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script>
-<script type="text/javascript" src="jquery/Validform_v5.3.2_min.js"></script>
+<link rel="stylesheet" type="text/css" href="css/select_beautiful.css">
 <script type="text/javascript">
-	$(function() {
-		var j = jQuery.noConflict();
-		j("#form").Validform({
+	jq(function() {
+		jq("#form").Validform({
 			btnSubmit : "#sub",
-			tiptype : 3,
+			tiptype : 4,
 			showAllError : true,
 			ignoreHidden : true,
 			tipSweep : true,
-			callback : function(form) {
-				document.getElementById("mydiv").style.display = "block";
-				form[0].submit();
+			ajaxPost:true,
+			callback : function(data) {
+				if(data=="0"){
+					layer.msg("提交成功!",3,1);
+					//location.href="/Login/fix_findPageBean";
+					loadUrl("/Login/fix_findPageBean");
+				}
+				if(data=="1"){
+					//alert(data.responseText);
+					layer.msg("提交失敗",3,3);
+				}
+				if(data=="2"){
+					layer.msg("數據已存在,請重新調撥",3,3);
+				}
 			}
 		});
 
 	});
 
 	function back() {
-		if (navigator.userAgent.indexOf("MSIE") > 0) {
-			document.getElementById("mydiv").style.display = "block";
-			window.location.href = "../fix_findPageBean";
-		} else {
-			document.getElementById("mydiv").style.display = "block";
-			window.location.href = "fix_findPageBean";
-		}
+		loadUrl("/Login/fix_findPageBean3?backIndex=1");
 	}
 
 	function getFactArea(mid) {
@@ -69,9 +69,9 @@
 <script type='text/javascript' src='/Login/dwr/engine.js'></script>
 <script type='text/javascript' src='/Login/dwr/util.js'></script>
 </head>
-<body onload="init()">
+<body >
 	<form action="fix_addlog" method="post" id="form">
-		<table width="100%" align="center" cellspacing="0" cellpadding="0"
+		<table class="table table-condensed"
 			id="msg1">
 
 			<tr>
@@ -157,17 +157,8 @@
 
 			<tr>
 				<td colspan="4"><center>
-						<input type="button" id="sub" value="確定" onmouseover="this.style.backgroundPosition='left -40px'" onmouseout="this.style.backgroundPosition='left top'"/>&nbsp;&nbsp;&nbsp;
-
-						<s:if test="fix!=null">
-							<input type="button" value="返回"
-								onclick="javascript:document.getElementById('mydiv').style.display='block',location.href='fix_findPageBean'" id="btn_back"
-								 onmouseover="this.style.backgroundPosition='left -40px'" onmouseout="this.style.backgroundPosition='left top'"/>
-						</s:if>
-						<s:else>
-							<input type="button" value="返回" onclick="back()" id="btn_back" onmouseover="this.style.backgroundPosition='left -40px'" onmouseout="this.style.backgroundPosition='left top'"/>
-						</s:else>
-
+						<input type="button" id="sub" value="確定" class="btn btn-primary"/>&nbsp;&nbsp;&nbsp;						
+							<input type="button" value="返回" onclick="back()" id="btn_back" class="btn btn-primary"/>																												
 					</center>
 				</td>
 			</tr>
@@ -175,10 +166,6 @@
 
 		</table>
 	</form>
-	<div id="mydiv">
-		<p>
-			<img alt="" src="images/loading004.gif"><br> Loading....
-		</p>
-	</div>
+	
 </body>
 </html>

@@ -16,15 +16,7 @@
 	-->
 <link rel="stylesheet" type="text/css" href="css/select_beautiful.css">	
 <LINK href="css/list.css" type="text/css" rel="stylesheet">
-<script type="text/javascript" src="jquery/DatePicker/WdatePicker.js"></script>
-<script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script>
 
-<script type="text/javascript" src="jquery_alert_dialogs/jquery.js"></script>
-<script type="text/javascript" src="jquery_alert_dialogs/jquery.alerts.js"></script>	
-<link rel="stylesheet" type="text/css" href="jquery_alert_dialogs/jquery.alerts.css" />	
-<script type="text/javascript" src="jquery_alert_dialogs/jquery.ui.draggable.js"></script>	
-<link rel="stylesheet" type="text/css" href="jquery/loding/ui.loading.css" />	
-<script type="text/javascript" src="jquery/loding/ui.loading.js"></script>
 <script type="text/javascript">
  
 
@@ -57,7 +49,7 @@ jq(document).keyup(function(event){
 					</select>
 				</s:else></td>
 			<td>主签人Email</td>
-			<td><input id="email"></td>
+			<td><input type="text" id="email" name="email"></td>
 			<td>
 			 <input value="搜索" type="button" class="btn btn-primary" onclick="javascript:submis()" />		
 			</td>

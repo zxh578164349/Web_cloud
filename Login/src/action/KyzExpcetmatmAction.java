@@ -102,9 +102,18 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
     private KyVisabillm vbm;
     private String ajaxResult;//申請函文時返回的ajax結果,   0:提交成功       1:提交失敗
     private int backIndex;//返回標識      0或null:不走返回路徑         1:走返回路徑
+    private String addorupdate;//添加或更新標識    update表示進入更新狀態
     
     
-    public int getBackIndex() {
+    public String getAddorupdate() {
+		return addorupdate;
+	}
+
+	public void setAddorupdate(String addorupdate) {
+		this.addorupdate = addorupdate;
+	}
+
+	public int getBackIndex() {
 		return backIndex;
 	}
 
@@ -391,9 +400,9 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 		this.kyzExpLogSer = kyzExpLogSer;
 	}
 
-	public String add() throws Exception  {
+	public void add() throws Exception  {
 		/*文件上傳驗證*/
-		if(files!=null){
+		if(files!=null&&files.get(0)!=null){
 			for(int i=0;i<files.size();i++){
 				if(files.get(i)!=null){
 					long filesize=files.get(i).length();
@@ -401,12 +410,12 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 					if(filesize>5120000){
 						response.setContentType("text/html;charset=utf-8");
 						response.getWriter().print("<script>alert('文件不可超過5M!');history.back()</script>");
-						return null;
+						//return null;
 					}
 					if(!filetype.equals(".bmp")&&!filetype.equals(".jpg")&&!filetype.equals(".jpeg")&&!filetype.equals(".gif")&&!filetype.equals(".tif")){
 						response.setContentType("text/html;charset=utf-8");
 						response.getWriter().print("<script>alert('只允許jpg,bmp,jpeg,gif,tif圖片!');history.back()</script>");
-						return null;
+						//return null;
 					}
 					
 				}
@@ -414,7 +423,7 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 		}
 		
 		/*文件上傳*/
-		if(files!=null){//不為空代表有上傳附檔,不能寫成files.size()>0,否則報空指針
+		if(files!=null&&files.get(0)!=null){//不為空代表有上傳附檔,不能寫成files.size()>0,否則報空指針
 			kyz.setFilesYn("1");//標示是否帶有附檔
 			//File uploadFile=new File(ServletActionContext.getServletContext().getRealPath("KyzexpFile\\"+kyz.getId().getBillNo()));//附檔上傳到項目
 			File uploadFile_backup=new File("d:\\KyzexpFile_backup\\"+kyz.getId().getBillNo());//附檔上傳到D盤(為了避免更新項目時丟失附檔,所在上傳到D盤)
@@ -564,9 +573,12 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 				ajaxResult="0";
 				
 			}
-														
+			response.setContentType("text/html;charset=utf-8");
+			response.getWriter().print("<script>window.parent.gook();</script>");										
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
+			response.setContentType("text/html;charset=utf-8");
+			response.getWriter().print("<script>window.parent.layer.msg('操作失敗',3,3)</script>");
 			ajaxResult="1";
 			e.printStackTrace();
 		} 
@@ -579,8 +591,7 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 					+ " "
 					+ kyz.getId().getBillNo()
 					+ ")!');history.back()</script>");
-		}			
-		return result;		
+		}				
 	}
 	
 	public void print2() throws IOException{
@@ -764,6 +775,7 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 	}
 	
 	public String findById() throws UnsupportedEncodingException{
+		addorupdate="update";
 		kyz=kyzSer.findById(id);
 		List<KyzExpectmats> list=kyz.getKyzExpectmatses();
 		for(int i=0;i<list.size();i++){
@@ -792,6 +804,7 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 			}
 			ActionContext.getContext().getSession().put("list_filesexp", listfiles);									
 		}
+		
 		return "findById";
 	}
 	

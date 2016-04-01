@@ -21,7 +21,7 @@
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
 
-<link rel="stylesheet" type="text/css" href="css/mystyle.css" />
+<!-- <link rel="stylesheet" type="text/css" href="css/mystyle.css" />-->
 <script type="text/javascript">
 	
 
@@ -58,8 +58,8 @@
 	<table class="table table-striped table-hover table-bordered">
 		<h2>
 		<s:if test='#session.loginUser.userread!="1"'>
-	    <input value="添加" type="button" class="btn btn-primary"
-		onclick="javascript:location.href='saveAndUpdate/kpifactSaveOrUpdate.jsp'" />
+	    <input value="添加" type="button" class="btn btn-info"
+		onclick="loadUrl('saveAndUpdate/kpifactSaveOrUpdate.jsp')" />
         </s:if>
 		KPI年度目標
 		</h2>
@@ -72,29 +72,46 @@
 				<th>當月產量(模)</th>				
 				<th>月均回轉(回)</th>
 				<th>時迴轉(模/H)</th>
-				<th>廠補率(%)</th>
+				<th>機臺利用率(%)</th>
 				<th>產能達成率(%)</th>
+				<th>直工人均产能(模/人)</th>
+				<th>全厂人均产能(模/人)</th>
+				<th>全廠人均時產能(模/H)</th>
 				<th>成倉庫存(雙)</th>
 				<th>已出未請(雙)</th>
 				<th>生產與請款差異率(%)</th>
-				<th>全廠人均時產能(模/H)</th>
-				<th>直工人均产能(模/人)</th>
-				<th>全厂人均产能(模/人)</th>
-				<th>人均產值(USD/人)</th>
-				<th>人薪產值</th>
-				<th>水用量单耗(噸/模)</th>
-				<th>电度数单耗(度/模)</th>
-				<th>蒸汽单耗(噸/模)</th>
-				<th>修繕單耗(USD/模)</th>
+				<th>銷貨收入(USD)</th>
 				<th>主材料成本比率(%)</th>
-				<th>邊料率(%)</th>
-				<th>報廢率(%)</th>
+				<th>人工成本率(%)</th>
+				<th>費用成本率(%)</th>
+				<th>修繕單耗(USD/模)</th>
+				<th>平均單價(USD/雙)</th>
+				<th>全廠人均薪資(USD/人)</th>
+				<th>人均產值(USD/人)</th>
+				<th>人薪產值(USD/人)</th>
 				<th>全廠總損耗(%)</th>
 				<th>無形損耗(%)</th>
+				<th>邊料率(%)</th>
+				<th>不良率(%)</th>
+				<th>報廢率(%)</th>												
+				<th>廠補率(%)</th>
+				<th>水用量单耗(噸/模)</th>
+				<th>用水金額單耗(USD/模)</th>
+				<th>电度数单耗(度/模)</th>
+				<th>用電金額單耗(USD/模)</th>
+				<th>蒸汽用量單耗(噸/模)</th>
+				<th>用汽金額單耗(USD/模)</th>
+				<th>回頭料(%)</th>
+				<th>油壓退料(%)</th>
+				<th>回流率(%)</th>
+				<th>藥品用量單耗(g/模)</th>
+				<th>色料用量單耗(g/模)</th>
+				<th>離型劑金額單耗(USD/模)</th>
 				<th>直間比</th>
-				<th>工傷件數(件)</th>
 				<th>直工離職率(%)</th>
-				<th>全廠離職率(%)</th>								
+				<th>全廠離職率(%)</th>
+				<th>工傷件數(件)</th>
+												
 				<s:if test='#session.loginUser.userread!="1"'>
 				<th>操作</th>
 				</s:if>
@@ -110,29 +127,45 @@
 				<td><s:property value="%{formatDouble(thisYield)}" /></td>
 				<td><s:property value="%{formatDouble(avgCircle)}" /></td>
 				<td><s:property value="%{formatDouble(avgCirclehour)}" /></td>
-				<td><s:property value="%{formatPercent(factaddRate)}"/></td>
+				<td><s:property value="%{formatPercent(mutiRate)}"/></td>
 				<td><s:property value="%{formatPercent(productRate)}"/></td>
-				<td><s:property value="%{formatDouble(storeNum)}" /></td>
-				<td><s:property value="%{formatDouble(outRequest)}" /></td>
-				<td><s:property value="%{formatPercent(outrequestRate)}" /></td>				
-				<td><s:property value="%{formatDouble(avgFactpro)}" /></td>				
-				<td><s:property value="%{formatDouble(avgZgpro)}" /></td>				
-				<td><s:property value="%{formatDouble(avgPerpro)}" /></td>				
-				<td><s:property value="%{formatDouble(avgPermoney)}" /></td>				
-				<td><s:property value="%{formatDouble(permoney)}" /></td>				
-				<td><s:property value="%{formatDouble_4(waterTon)}" /></td>				
-				<td><s:property value="%{formatDouble_4(lightDu)}" /></td>				
-				<td><s:property value="%{formatDouble_4(gasUsd)}" /></td>				
+				<td><s:property value="%{formatDouble(avgZgpro)}" /></td>
+				<td><s:property value="%{formatDouble(avgPerpro)}" /></td>
+				<td><s:property value="%{formatPercent(avgFactpro)}" /></td>				
+				<td><s:property value="%{formatDouble(storeNum)}" /></td>				
+				<td><s:property value="%{formatDouble(outRequest)}" /></td>				
+				<td><s:property value="%{formatDouble(outrequestRate)}" /></td>				
+				<td><s:property value="%{formatDouble(slIncome)}" /></td>				
+				<td><s:property value="%{formatDouble(mainRate)}" /></td>				
+				<td><s:property value="%{formatDouble_4(pcostRate)}" /></td>				
+				<td><s:property value="%{formatDouble_4(ccostRate)}" /></td>				
 				<td><s:property value="%{formatDouble_4(wasteUsd)}" /></td>				
-				<td><s:property value="%{formatPercent(mainRate)}" /></td>				
-				<td><s:property value="%{formatPercent(sideRate)}" /></td>
-				<td><s:property value="%{formatPercent(wasteRate)}" /></td>				
+				<td><s:property value="%{formatDouble_4(perPrice)}" /></td>				
+				<td><s:property value="%{formatPercent(perSalar)}" /></td>				
+				<td><s:property value="%{formatPercent(avgPermoney)}" /></td>
+				<td><s:property value="%{formatPercent(permoney)}" /></td>				
 				<td><s:property value="%{formatPercent(wasteFact)}" /></td>				
 				<td><s:property value="%{formatPercent(wasteNo)}" /></td>				
-				<td><s:property value="%{formatDouble(zjRate)}" /></td>				
-				<td><s:property value="%{formatDouble(hurtNum)}" /></td>				
+				<td><s:property value="%{formatDouble(sideRate)}" /></td>				
+				<td><s:property value="%{formatDouble(uhealRate)}" /></td>				
+				<td><s:property value="%{formatPercent(wasteRate)}" /></td>				
+				<td><s:property value="%{formatPercent(factaddRate)}" /></td>				
+				<td><s:property value="%{formatPercent(waterTon)}"/></td>
+				<td><s:property value="%{formatDouble(waterUsd)}" /></td>
+				<td><s:property value="%{formatDouble(lightDu)}" /></td>
+				<td><s:property value="%{formatPercent(lightUsd)}" /></td>				
+				<td><s:property value="%{formatDouble(gasTon)}" /></td>				
+				<td><s:property value="%{formatDouble(gasUsd)}" /></td>				
+				<td><s:property value="%{formatDouble(bheadRate)}" /></td>				
+				<td><s:property value="%{formatDouble(bpreRate)}" /></td>				
+				<td><s:property value="%{formatDouble(bflowRate)}" /></td>				
+				<td><s:property value="%{formatDouble_4(drugWast)}" /></td>				
+				<td><s:property value="%{formatDouble_4(clrWast)}" /></td>				
+				<td><s:property value="%{formatDouble_4(leaveUsd)}" /></td>				
+				<td><s:property value="%{formatDouble_4(zjRate)}" /></td>				
 				<td><s:property value="%{formatPercent(zgleaveRate)}" /></td>				
-				<td><s:property value="%{formatPercent(factleaveRate)}" /></td>												
+				<td><s:property value="%{formatPercent(factleaveRate)}" /></td>
+				<td><s:property value="%{formatPercent(hurtNum)}" /></td>																								
 				<s:if test='#session.loginUser.userread!="1"'>
 				<td>
 					<form action="kpifact_findById" method="post" id="subform${x.index}">						
@@ -140,7 +173,7 @@
 						<input type="hidden" value="<s:property value='id.factCode'/>" name="factCode" />							
 						<input type="hidden" value="<s:property value='id.yyyy'/>" name="yyyy" />							
 					</form> 
-					<a href="javascript:layer.load(0);document.getElementById('subform${x.index}').submit()"					
+					<a href="javascript:findById('subform${x.index}','kpifact_findById')"					
 					onclick=""><img alt="修改" src="images/icon/edit001.png" title="修改" ></a>
 
 					<form action="kpifact_delete" method="post" id="2subform${x.index}" style="float:left">						
@@ -156,7 +189,7 @@
 						<input type="hidden" value="<s:property value='id.factCode'/>" name="factCode" />							
 						<input type="hidden" value="<s:property value='id.yyyy'/>" name="yyyy" />							
 					</form> 
-					<a href="javascript:document.getElementById('3subform${x.index}').submit()"					
+					<a href="javascript:findById('3subform${x.index}','kpifact_findById_copy')"					
 					onclick=""><img alt="複製" src="images/icon/copy.png" title="複製" ></a>
 				</td> 
 				</s:if>

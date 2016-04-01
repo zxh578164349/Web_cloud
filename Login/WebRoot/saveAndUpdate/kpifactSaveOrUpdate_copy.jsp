@@ -24,17 +24,13 @@
 
 <link href="css/validate.css" rel="stylesheet" type="text/css" />
 <link rel="stylesheet" type="text/css" href="css/form.css" />
-<link rel="stylesheet" type="text/css" href="css/button_css.css" />
-<script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script>
-<script type="text/javascript" src="jquery/Validform_v5.3.2_min.js"></script>
-<script type="text/javascript" src="jquery/DatePicker/WdatePicker.js"></script>
+<link rel="stylesheet" type="text/css" href="css/select_beautiful.css">
 </head>
 <script type="text/javascript">
-	$(function() {
-		var j = jQuery.noConflict();
-		var demo = j("#form").Validform({
+	jq(function() {
+		var demo = jq("#form").Validform({
 			btnSubmit : "#sub",
-			tiptype : 3,
+			tiptype : 4,
 			showAllError : true,
 			tipSweep:true,
 			datatype : {
@@ -42,6 +38,16 @@
 				"9_2" : /^-?\d{1,9}(\.[0-9]{1,2})?$/,
 				"9_4" : /^-?\d{1,9}(\.[0-9]{1,4})?$/
 
+			},
+			ajaxPost:true,
+			callback:function(data){
+				if(data=="0"){
+					layer.msg("提交成功!",3,1);
+					location.href="/Login/kpifact_findPageBean";
+				}
+				if(data=="1"){
+					alert(data.responseText);
+				}
 			}
 		});
 		demo.tipmsg.w["9_1"] = "只能數字且不超過9位數,可保留一位以內小數";
@@ -57,11 +63,7 @@
 
 	}
 	function back() {
-		if (navigator.userAgent.indexOf("MSIE") > 0) {
-			location.href = "../kpifact_findPageBean";
-		} else {
-			location.href = "kpifact_findPageBean";
-		}
+		loadUrl("/Login/kpifact_findPageBean3?backIndex=1");
 	}
 	 function check(){
        var factno=document.getElementById("dwr_factno").value;
@@ -85,7 +87,7 @@
        }                    
    }
              /*禁止空格輸入*/
-window.onload=function(){            
+/* window.onload=function(){            
             var inputs=document.getElementsByTagName("input"); 
             for (var i=0;i<inputs.length; i++) {  
                 if(inputs[i].getAttribute("type")=="text") 
@@ -93,7 +95,16 @@ window.onload=function(){
                     this.value=this.value.replace(/(^\s+)|\s+$/g,""); 
                  }; 
             }  
-        } 
+        }  */
+ jq(function(){
+    var inputs=document.getElementsByTagName("input"); 
+            for (var i=0;i<inputs.length; i++) {  
+                if(inputs[i].getAttribute("type")=="text") 
+                 inputs[i].onkeyup=function(){ 
+                    this.value=this.value.replace(/(^\s+)|\s+$/g,""); 
+                 }; 
+            } 
+ });       
 </script>
 <script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>
 <script type='text/javascript' src='/Login/dwr/interface/webcostjs.js'></script>
@@ -104,8 +115,8 @@ window.onload=function(){
 
 <body>
 	<form action="kpifact_add" method="post" id="form">
-		<table width="100%" align="center" cellspacing="0" cellpadding="0">
-		　　<caption>KPI年度目標(複製)</caption>			
+	 <h2>KPI年度目標(複製)</h2>
+		<table class="table table-condensed">		
 				<tr>
 					<td class="td_show_title">廠別</td>
 					<td class="td_input"><font color="blue"><input
@@ -122,7 +133,7 @@ window.onload=function(){
 					<td class="td_show_title">年份</td>
 					<td class="td_input"><input type="text" style="color:blue"
 						id="dwr_yymmdd" value=""
-						name="kpi.id.yyyy" onclick="WdatePicker({dateFmt:'yyyyMM'})" class="Wdate" onchange="check()"/><span id="error3"></span></td>
+						name="kpi.id.yyyy" onclick="WdatePicker({dateFmt:'yyyyMM'})" datatype="*" class="Wdate" onchange="check()"/><span id="error3"></span></td>
 					<td class="td_show_title">當月產量(模)</td>
 					<td class="td_input"><input type="text" name="kpi.thisYield"
 						value="<s:property value='kpi.thisYield' />" datatype="9_1">
@@ -221,10 +232,10 @@ window.onload=function(){
 
 			</tr>
 			<tr>
-				<td class="td_show_title">蒸汽单耗(噸/模)</td>
-				<td class="td_input"><input type="text" name="kpi.gasUsd"
+				<td class="td_show_title">蒸汽用量單耗(噸/模)</td>
+				<td class="td_input"><input type="text" name="kpi.gasTon"
 					datatype="9_4"
-					value="<s:property value='kpi.gasUsd' />">
+					value="<s:property value='kpi.gasTon' />">
 				</td>
 				<td class="td_show_title">修繕單耗(USD/模)</td>
 				<td class="td_input"><input type="text" name="kpi.wasteUsd"
@@ -295,15 +306,12 @@ window.onload=function(){
 
 		</table>
 		<center>
-			<input type="submit" id="sub" value="確定" onmouseover="this.style.backgroundPosition='left -40px'" onmouseout="this.style.backgroundPosition='left top'"/>&nbsp;&nbsp;&nbsp; <input
-				type="reset" id="reset" value="重置" onmouseover="this.style.backgroundPosition='left -40px'" onmouseout="this.style.backgroundPosition='left top'"/>&nbsp;&nbsp;&nbsp;
-			<s:if test="kpi!=null">
+			<input type="submit" id="sub" value="確定" class="btn btn-primary"/>&nbsp;&nbsp;&nbsp; <input
+				type="reset" id="reset" value="重置" class="btn btn-primary"/>&nbsp;&nbsp;&nbsp;
+			
 				<input type="button" value="返回" id="btn_back"
-					onclick="javascript:location.href='kpifact_findPageBean'" onmouseover="this.style.backgroundPosition='left -40px'" onmouseout="this.style.backgroundPosition='left top'"/>
-			</s:if>
-			<s:else>
-				<input type="button" value="返回" onclick="back()" id="btn_back" onmouseover="this.style.backgroundPosition='left -40px'" onmouseout="this.style.backgroundPosition='left top'"/>
-			</s:else>
+					onclick="back()" class="btn btn-primary"/>
+			
 
 		</center>
 	</form>

@@ -1,7 +1,12 @@
 package action;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.struts2.interceptor.ServletResponseAware;
 
 import services.IKyzMatServices;
 import services.ISubKyzmatServices;
@@ -17,11 +22,11 @@ import entity.SubKyzmatId;
 import entity.WebUser;
 
 /**
- * ���Ƹ��
+ * ���Ƹ��
  * @author ky2-qhtj
  *
  */
-public class SubKyzmatAction extends ActionSupport{
+public class SubKyzmatAction extends ActionSupport implements ServletResponseAware{
 	private ISubKyzmatServices subkyzmatSer;
 	private IWebFactServices webFactSer;
 	private IKyzMatServices kyzmatSer;
@@ -37,7 +42,26 @@ public class SubKyzmatAction extends ActionSupport{
 	private PageBean bean;
 	private String matCname;
 	private String username;
+	private int backIndex;//返回標識      0或null:不走返回路徑         1:走返回路徑
+	private String ajaxResult;//申請函文時返回的ajax結果,   0:提交成功       1:提交失敗
+	private javax.servlet.http.HttpServletResponse response;
+	public void setServletResponse(HttpServletResponse response) {
+		// TODO Auto-generated method stub
+		this.response=response;
+	}
 	
+	public int getBackIndex() {
+		return backIndex;
+	}
+	public void setBackIndex(int backIndex) {
+		this.backIndex = backIndex;
+	}
+	public String getAjaxResult() {
+		return ajaxResult;
+	}
+	public void setAjaxResult(String ajaxResult) {
+		this.ajaxResult = ajaxResult;
+	}
 	public String getUsername() {
 		return username;
 	}
@@ -124,21 +148,28 @@ public class SubKyzmatAction extends ActionSupport{
 	}
 	/**
 	 * SubKyzmat
+	 * @throws IOException 
 	 */
-	public String addSubKyzmat(){
+	public String addSubKyzmat() {
 		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");	
 		if(cb_list!=null&&cb_list.size()>0){
-			for(int i=0;i<cb_list.size();i++){
-				String matno=cb_list.get(i);
-				SubKyzmat sub=new SubKyzmat();
-				SubKyzmatId id=new SubKyzmatId();
-				KyzMat mat=kyzmatSer.findById(matno);
-				id.setKyzMat(mat);
-				id.setFactNo(user.getFactno());
-				id.setUsername(user.getUsername());
-				sub.setId(id);
-				subkyzmatSer.add(sub);			
+			try{
+				for(int i=0;i<cb_list.size();i++){
+					String matno=cb_list.get(i);
+					SubKyzmat sub=new SubKyzmat();
+					SubKyzmatId id=new SubKyzmatId();
+					KyzMat mat=kyzmatSer.findById(matno);
+					id.setKyzMat(mat);
+					id.setFactNo(user.getFactno());
+					id.setUsername(user.getUsername());
+					sub.setId(id);
+					subkyzmatSer.add(sub);
+				}
+				
+			}catch(Exception e){
+				System.out.println(e);
 			}
+			
 		}		
 		return "addSubKyzmat";
 	}
@@ -157,7 +188,7 @@ public class SubKyzmatAction extends ActionSupport{
 				}								
 			}
 		}else{
-			facts.add("�ȵL�t�O");
+			facts.add("�ȵL�t�O");
 		}
 		
 		ActionContext.getContext().getSession().put("subkyzmat_facts", facts);
@@ -211,7 +242,11 @@ public class SubKyzmatAction extends ActionSupport{
 			factNo=(String)ActionContext.getContext().getSession().get("factNo");
 		}
 		bean=subkyzmatSer.findPageBean(25, page, fromDate, endDate,matCname,typeBno,typeMno,typeSno,factNo,matNo);
-		return "findPageBean1";
+		String result="findPageBean1";
+		if(backIndex==1){
+			result="findPageBean";
+		}
+		return result;
 	}
 	public String delete(){
 		subkyzmatSer.delete(username, factNo, matNo);

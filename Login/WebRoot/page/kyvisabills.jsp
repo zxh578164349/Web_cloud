@@ -24,16 +24,7 @@
 
 
 </style>
-<script type="text/javascript" src="page/jquerys/jquery-1.9.1.min.js"></script>
-<script type="text/javascript" src="page/jquerys/layer/layer.min.js"></script>
-<!-- 新 Bootstrap 核心 CSS 文件 -->
-<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
-<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
-<script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>
- <!--[if lt IE 9]>  
-  <script src="bootstrap/html5.js"></script>
-  <script src="bootstrap/respond.min.js"></script>
-  <![endif]-->	
+
 <script type="text/javascript">
     function showDiv(billNo,factNo){
     	var area_w;
@@ -54,7 +45,7 @@
     		area_h='450px';
     		src='bussletter_findById_layer?billNo='+billNo+'& readMk=Y';
     	}
-    $.layer({
+    jq.layer({
     type: 2,   //0-4的选择,
     title: '函文內容',
     //border: [0],
@@ -76,9 +67,7 @@
 	} */                 
 });
     }
-    
-
-
+       
     
     function check(factNo,visaSort,billNo,itemNo){
     	var area_w;
@@ -99,7 +88,7 @@
     		area_h='500px';
     		src='bussletter_findById_layer?billNo='+billNo+'& factNo='+factNo+'& itemNo='+itemNo+'& visaSort='+visaSort+'& readMk=N';
     	}    	
-    $.layer({
+    jq.layer({
     type: 2,   //0-4的选择,
     title: '函文內容',
     //border: [0],
@@ -126,10 +115,11 @@
      layer.getChildFrame("#visa_mk",layer.index).val('Y'); 
      if(memo.length>150){
        alert("備註不可超過150字");
-     }else{
-       window.location.href='vbm_findPageBean';      
+     }else{ 
        layer.getChildFrame("#memo",layer.index).submit();
-       layer.load("正在處理，請稍等...");        
+       window.setTimeout(function(){parent.layer.close(parent.layer.getFrameIndex(window.name));},1000);       
+       loadUrl("vbm_findPageBean");
+      
      }        
     },
     no:function(){
@@ -140,9 +130,9 @@
      if(memo.length>150){
         alert("備註不可超過150字");
      }else{
-      window.location.href='vbm_findPageBean';
       layer.getChildFrame("#memo",layer.index).submit();
-     layer.load("正在處理，請稍等...");            
+      window.setTimeout(function(){parent.layer.close(parent.layer.getFrameIndex(window.name));},1000);
+      loadUrl("vbm_findPageBean");        
      } 
      
      /*********************** 修改2   20151025 ******************************/ 
@@ -164,8 +154,8 @@ function tips(memo,index){
 });
 }
 function back(){
-	layer.load("正在返回,請稍等...");
-	location.href="/Login/vbm_findPageBean";
+	
+	loadUrl("/Login/vbm_findPageBean");
 }
 
 </script>
@@ -223,7 +213,7 @@ function back(){
 	      </s:iterator>
 		</tr>
 		<tr class="success"><td colspan="<s:property value='vbm.kyVisabillses.size()+1'/>">	
-		<a href="javascript:back()">返回</a>
+		<a href="javascript:back()" class="btn btn-info">返回</a>
 		</td></tr>
 	</table>
  </div>	

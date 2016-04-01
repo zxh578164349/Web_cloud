@@ -96,10 +96,58 @@
             <column name="FACTLEAVE_RATE" precision="13" scale="4" />
         </property>
         <property name="username" type="java.lang.String">
-            <column name="USERNAME" length="30"/>
+            <column name="USERNAME" length="30" />
         </property>
         <property name="usernameUd" type="java.lang.String">
-            <column name="USERNAME_UD" length="50"  />
+            <column name="USERNAME_UD" length="50" />
+        </property>
+        <property name="gasTon" type="java.lang.Double">
+            <column name="GAS_ton" precision="13" scale="4" />
+        </property>
+        <property name="mutiRate" type="java.lang.Double">
+            <column name="MUTI_RATE" precision="13" scale="4" />
+        </property>
+        <property name="slIncome" type="java.lang.Double">
+            <column name="SL_INCOME" precision="13" scale="4" />
+        </property>
+        <property name="waterUsd" type="java.lang.Double">
+            <column name="WATER_USD" precision="13" scale="4" />
+        </property>
+        <property name="lightUsd" type="java.lang.Double">
+            <column name="LIGHT_USD" precision="13" scale="4" />
+        </property>
+        <property name="bheadRate" type="java.lang.Double">
+            <column name="BHEAD_RATE" precision="13" scale="4" />
+        </property>
+        <property name="bpreRate" type="java.lang.Double">
+            <column name="BPRE_RATE" precision="13" scale="4" />
+        </property>
+        <property name="bflowRate" type="java.lang.Double">
+            <column name="BFLOW_RATE" precision="13" scale="4" />
+        </property>
+        <property name="drugWast" type="java.lang.Double">
+            <column name="DRUG_WAST" precision="13" scale="4" />
+        </property>
+        <property name="clrWast" type="java.lang.Double">
+            <column name="CLR_WAST" precision="13" scale="4" />
+        </property>
+        <property name="leaveUsd" type="java.lang.Double">
+            <column name="LEAVE_USD" precision="13" scale="4" />
+        </property>
+        <property name="pcostRate" type="java.lang.Double">
+            <column name="PCOST_RATE" precision="13" scale="4" />
+        </property>
+        <property name="ccostRate" type="java.lang.Double">
+            <column name="CCOST_RATE" precision="13" scale="4" />
+        </property>
+        <property name="perPrice" type="java.lang.Double">
+            <column name="PER_PRICE" precision="13" scale="4" />
+        </property>
+        <property name="perSalar" type="java.lang.Double">
+            <column name="PER_SALAR" precision="13" scale="4" />
+        </property>
+        <property name="uhealRate" type="java.lang.Double">
+            <column name="UHEAL_RATE" precision="13" scale="4" />
         </property>
     </class>
 </hibernate-mapping>

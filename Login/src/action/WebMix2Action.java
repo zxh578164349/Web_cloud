@@ -45,7 +45,7 @@ public class WebMix2Action extends ActionSupport implements
 	private IWebFactServices webFactSer;
 	private String bs;
 	private PageBean bean;
-	private String ajaxResult;//申請函文時返回的ajax結果,   0:提交成功       1:提交失敗
+	private String ajaxResult;//申請函文時返回的ajax結果,   0:提交成功       1:提交失敗   2:數據重複
 	private String yymm2;
 	private int backIndex;//返回標識      0或null:不走返回路徑         1:走返回路徑
 
@@ -220,7 +220,7 @@ public class WebMix2Action extends ActionSupport implements
 			Webmix2 mix2s = mix2Service.selBycan(mix2.getId().getFactNo(), mix2
 					.getId().getYymm(), mix2.getId().getFactCode());
 			if (mix2s != null && bs == null) {
-				response.setContentType("text/html;charset=utf-8");
+				/*response.setContentType("text/html;charset=utf-8");
 				response.getWriter()
 						.print("<script>alert('�ƾڮw�w�s�b("
 								+ mix2.getId().getFactNo()
@@ -228,7 +228,10 @@ public class WebMix2Action extends ActionSupport implements
 								+ mix2.getId().getFactCode()
 								+ " "
 								+format.format(mix2.getId().getYymm()) 
-								+ ")!');history.back()</script>");			
+								+ ")!');history.back()</script>");*/
+				ajaxResult="2";
+				result="addMix2";
+				return result;
 			} else {
 				mix2Service.addWebMix2(mix2);
 				result="addMix2";

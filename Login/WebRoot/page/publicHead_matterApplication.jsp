@@ -22,7 +22,7 @@
 
 <link rel="stylesheet" type="text/css" href="css/select_beautiful.css">	
 <LINK href="css/list.css" type="text/css" rel="stylesheet">
-<script type="text/javascript" src="jquery/DatePicker/my_WdatePicker.js"></script>
+
 
 <style type="text/css">
 

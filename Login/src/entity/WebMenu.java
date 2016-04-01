@@ -16,6 +16,7 @@ public class WebMenu implements java.io.Serializable {
 	private Integer menuid;
 	private String menuname;
 	private List<WebJurisdiction> webJurisdictions = new ArrayList<WebJurisdiction>();
+	private List<WebSubmenu2>submenus=new ArrayList<WebSubmenu2>();
 
 	// Constructors
 
@@ -61,5 +62,14 @@ public class WebMenu implements java.io.Serializable {
 	public void setWebJurisdictions(List<WebJurisdiction> webJurisdictions) {
 		this.webJurisdictions = webJurisdictions;
 	}
+
+	public List<WebSubmenu2> getSubmenus() {
+		return submenus;
+	}
+
+	public void setSubmenus(List<WebSubmenu2> submenus) {
+		this.submenus = submenus;
+	}
+	
 
 }

@@ -18,6 +18,7 @@ import org.apache.poi.hssf.usermodel.HSSFDataFormat;
 import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
@@ -31,7 +32,6 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import dao.impl.WebFactDaoImpl;
 
 import entity.*;
-import entity.WebYielePrediction;
 
 import services.IWebEstProductServices;
 import services.IWebFactServices;
@@ -2062,6 +2062,16 @@ public class Printer_Auto {
 
 		List list_factNo = webFactSer.findAllFact();
 		List<String> factcodelist = webFactSer.findAllFactCode_show();
+		
+		
+		/*List<WebFact>listfacts=webFactSer.findAll();
+		List<WebYieldData>listydata=dataSer.findByYymm(yymm);
+		List<Webestproduct>listestp=estProSer.findByYymm(yymm);
+		
+		
+		for(int a=0;a<listfacts.size();a++){
+			
+		}*/
 		/*GregorianCalendar ger = new GregorianCalendar();
 		int currenMonth = (int) ger.get(Calendar.MONTH) + 1;
 		int currenYear = (int) ger.get(Calendar.YEAR);
@@ -2071,34 +2081,21 @@ public class Printer_Auto {
 		int currenMonth=Integer.parseInt(yymm.substring(4, 6));                                                                     ///////////////currenMonth///////
 		int currenYear=Integer.parseInt(yymm.substring(0, 4));
 				
-		String date=yymm;                                                                                                            //////////////date//////////////
-		List<Webestproduct> alllist = new ArrayList();
-		List<List<WebYieldData>> alllist2 = new ArrayList();
-		List<String> factnoCodelist = new ArrayList();
-		String firstdate = getFirstDate();
-		String lastdate = dateAdd(-1);
-		for (int factno = 0; factno < list_factNo.size(); factno++) {// start
-																		// "for"
-			List factAreas = webFactSer
-					.findFactCodeByFactNo_show(((Object[]) list_factNo.get(factno))[0]                                                /****只查找要顯示的廠別狀態****/
-							.toString());
-			String factSname = webFactSer.selByid(((Object[]) list_factNo
-					.get(factno))[0].toString());
+		//String date=yymm;                                                                                                            //////////////date//////////////
+		List<Webestproduct> alllist = new ArrayList<Webestproduct>();
+		List<List<WebYieldData>> alllist2 = new ArrayList<List<WebYieldData>>();
+		List<String> factnoCodelist = new ArrayList<String>();
+		//String firstdate = getFirstDate();
+		//String lastdate = dateAdd(-1);
+		for (int factno = 0; factno < list_factNo.size(); factno++) {// start "for"
+			 /****只查找要顯示的廠別狀態****/															
+			List factAreas = webFactSer.findFactCodeByFactNo_show(((Object[]) list_factNo.get(factno))[0].toString());					                                              							
+			String factSname = webFactSer.selByid(((Object[]) list_factNo.get(factno))[0].toString());					
 			for (int factcode = 0; factcode < factAreas.size(); factcode++) {
-				List<Webestproduct> list = estProSer.findByFactcode(
-						((Object[]) list_factNo.get(factno))[0].toString(),
-						(String) factAreas.get(factcode), date);
-				List<WebYieldData> list2 =
-				dataSer.findDataByFactcode(((Object[])list_factNo.get(factno))[0].toString(),(String)factAreas.get(factcode),date);
-				//List<WebYieldData> list2 = dataSer.findDataByFactcode2(
-						//((Object[]) list_factNo.get(factno))[0].toString(),
-						//(String) factAreas.get(factcode), firstdate, lastdate);
-				List<Webestproduct> listnull = estProSer.findNullYpre(
-						((Object[]) list_factNo.get(factno))[0].toString(),
-						(String) factAreas.get(factcode), date);
-				List<WebYieldData> listnull2 = dataSer.findNullYdata(
-						((Object[]) list_factNo.get(factno))[0].toString(),
-						(String) factAreas.get(factcode), date);
+				List<Webestproduct> list = estProSer.findByFactcode(((Object[]) list_factNo.get(factno))[0].toString(),(String) factAreas.get(factcode), yymm);												
+				List<WebYieldData> list2 =dataSer.findDataByFactcode(((Object[])list_factNo.get(factno))[0].toString(),(String)factAreas.get(factcode),yymm);								
+				List<Webestproduct> listnull = estProSer.findNullYpre(((Object[]) list_factNo.get(factno))[0].toString(),(String) factAreas.get(factcode), yymm);												
+				List<WebYieldData> listnull2 = dataSer.findNullYdata(((Object[]) list_factNo.get(factno))[0].toString(),(String) factAreas.get(factcode), yymm);												
 				StringBuffer factnoCode = new StringBuffer();
 				Webestproduct pre = null;
 				WebYieldData ydata = null;
@@ -2106,9 +2103,7 @@ public class Printer_Auto {
 						&& listnull2.size() == 0 || list2.size() > 0
 						&& listnull2.size() > 0) {
 					factnoCode.append(factSname);
-					factnoCode.append("("
-							+ ((Object[]) list_factNo.get(factno))[0]
-									.toString() + ")-");
+					factnoCode.append("("+ ((Object[]) list_factNo.get(factno))[0].toString() + ")-");																
 					factnoCode.append((String) factAreas.get(factcode));
 					factnoCodelist.add(factnoCode.toString());
 					if (list2.size() == 0) {
@@ -2130,9 +2125,7 @@ public class Printer_Auto {
 
 				if (list.size() == 0 && list2.size() == 0) {
 					factnoCode.append(factSname);
-					factnoCode.append("("
-							+ ((Object[]) list_factNo.get(factno))[0]
-									.toString() + ")-");
+					factnoCode.append("("+ ((Object[]) list_factNo.get(factno))[0].toString() + ")-");																
 					factnoCode.append((String) factAreas.get(factcode));
 					factnoCode.append("還沒有添加數據!!");
 					factnoCodelist.add(factnoCode.toString());
@@ -2144,9 +2137,7 @@ public class Printer_Auto {
 				}
 				if (listnull.size() > 0 && listnull2.size() > 0) {
 					factnoCode.append(factSname);
-					factnoCode.append("("
-							+ ((Object[]) list_factNo.get(factno))[0]
-									.toString() + ")_");
+					factnoCode.append("("+ ((Object[]) list_factNo.get(factno))[0].toString() + ")_");																
 					factnoCode.append((String) factAreas.get(factcode));
 					factnoCode.append("還沒有添加數據!!");
 					factnoCodelist.add(factnoCode.toString());
@@ -2156,9 +2147,7 @@ public class Printer_Auto {
 				}
 				if (list.size() > 0 && listnull.size() > 0 && list2.size() == 0) {
 					factnoCode.append(factSname);
-					factnoCode.append("("
-							+ ((Object[]) list_factNo.get(factno))[0]
-									.toString() + ")_");
+					factnoCode.append("("+ ((Object[]) list_factNo.get(factno))[0].toString() + ")_");																
 					factnoCode.append((String) factAreas.get(factcode));
 					factnoCode.append("還沒有添加數據!!");
 					factnoCodelist.add(factnoCode.toString());
@@ -2170,6 +2159,7 @@ public class Printer_Auto {
 				}
 			}
 		}// end "for"
+		
 
 		int z_length = 0;
 		if (currenMonth == 1 || currenMonth == 3 || currenMonth == 5
@@ -2204,7 +2194,7 @@ public class Printer_Auto {
 				(short) 0 + totalHeight - 1, 0, (short) alllist.size() * 5);
 		sheet.addMergedRegion(reg_head);
 		sheet.getRow(0 + totalHeight - 1).createCell(0)
-				.setCellValue(date + "加久各工廠每日產量達成狀況匯總表");
+				.setCellValue(yymm + "加久各工廠每日產量達成狀況匯總表");
 		sheet.getRow(0 + totalHeight - 1).getCell(0).setCellStyle(cs_head);
 		for (int i_head = 1; i_head < alllist.size() * 5 + 1; i_head++) {
 			sheet.getRow(0 + totalHeight - 1).createCell(i_head)
@@ -2645,7 +2635,7 @@ public class Printer_Auto {
 
 				for (int x2 = 0; x2 < z_length; x2++) {
 					StringBuffer yymmdd = new StringBuffer();
-					yymmdd.append(date);
+					yymmdd.append(yymm);
 					if ((x2 + 1) < 10) {
 						yymmdd.append("0" + (x2 + 1));
 					} else {
@@ -2668,6 +2658,7 @@ public class Printer_Auto {
 			double sumPersonnum = 0;// 人數合計
 			double sumDayCount = 0;// 總天數
 
+			double sumNodate=0;//未輸入數據統計20160330
 			/**
 			 * 如果alllist2.size()+factcodelist.size()>41就分頁
 			 */
@@ -3005,6 +2996,7 @@ public class Printer_Auto {
 					Double achievingRate = null;
 					Double daycount = null;
 					String holiday = null;
+					String timeoutRecorde=null;//超時錄入數據記錄20160331
 					switch (y) {
 					case 0:
 						StringBuffer date_month = new StringBuffer();
@@ -3024,6 +3016,15 @@ public class Printer_Auto {
 									.createCell(y + width).setCellValue("工作天數");
 							sheet.getRow(z + height + totalHeight + 1)
 									.getCell(y + width).setCellStyle(cs_font);
+							
+							/************************************未輸入數據統計20160331************************************/
+							sheet.createRow(z + height + totalHeight + 2)
+							.createCell(y + width)
+							.setCellValue("未輸入統計");
+					        sheet.getRow(z + height + totalHeight + 2)
+							.getCell(y + width)
+							.setCellStyle(cs_font);
+					        /************************************未輸入數據統計20160331************************************/					       
 						}
 						if (z == z_length - 2) {
 							sheet.createRow(z + height + totalHeight + 1)
@@ -3052,7 +3053,7 @@ public class Printer_Auto {
 							StringBuffer olddate = new StringBuffer();
 							SimpleDateFormat dateFormat = new SimpleDateFormat(
 									"yyyyMMdd");
-							olddate.append(date);
+							olddate.append(yymm);
 							if (z == z_length - 1) {
 								olddate.append(z);
 							}
@@ -3209,7 +3210,7 @@ public class Printer_Auto {
 							StringBuffer olddate = new StringBuffer();
 							SimpleDateFormat dateFormat = new SimpleDateFormat(
 									"yyyyMMdd");
-							olddate.append(date);
+							olddate.append(yymm);
 							if (z == z_length - 1) {
 								olddate.append(z);
 							}
@@ -3365,7 +3366,7 @@ public class Printer_Auto {
 							StringBuffer olddate = new StringBuffer();
 							SimpleDateFormat dateFormat = new SimpleDateFormat(
 									"yyyyMMdd");
-							olddate.append(date);
+							olddate.append(yymm);
 							if (z == z_length - 1) {
 								olddate.append(z);
 							}
@@ -3521,7 +3522,7 @@ public class Printer_Auto {
 							StringBuffer olddate = new StringBuffer();
 							SimpleDateFormat dateFormat = new SimpleDateFormat(
 									"yyyyMMdd");
-							olddate.append(date);
+							olddate.append(yymm);
 							if (z == z_length - 1) {
 								olddate.append(z);
 							}
@@ -3677,7 +3678,7 @@ public class Printer_Auto {
 							StringBuffer olddate = new StringBuffer();
 							SimpleDateFormat dateFormat = new SimpleDateFormat(
 									"yyyyMMdd");
-							olddate.append(date);
+							olddate.append(yymm);
 							if (z == z_length - 1) {
 								olddate.append(z);
 							}
@@ -3773,6 +3774,7 @@ public class Printer_Auto {
 									sheet.getRow(z + height + totalHeight + 1)
 											.getCell(y + width)
 											.setCellStyle(cs_font_green);
+									
 								}
 
 								if (achievingRate == null && z != day - 1
@@ -3796,6 +3798,7 @@ public class Printer_Auto {
 									sheet.getRow(z + height + totalHeight + 1)
 											.getCell(y + width)
 											.setCellStyle(cs_font_red);
+
 								}
 								if (achievingRate == null
 										&& z != day - 1
@@ -3809,6 +3812,7 @@ public class Printer_Auto {
 											(day - 1) + height + totalHeight
 													+ 1).getCell(y + width)
 											.setCellStyle(cs_font_red);
+									
 								}
 								sumDayCount = sumDayCount + daycount;
 							} catch (Exception e) {
@@ -3834,6 +3838,7 @@ public class Printer_Auto {
 								sheet.getRow(z + height + totalHeight + 1)
 										.createCell(y + width)
 										.setCellStyle(cs_thousand);
+																
 								// 由於應用了初始化時,日期超前的單元格格式,所以要轉成"cs_thousand"格式
 								sheet.getRow(z + height + totalHeight + 1)
 										.getCell(y + width - 4)
@@ -3841,96 +3846,36 @@ public class Printer_Auto {
 								sheet.getRow(z + height + totalHeight + 1)
 										.getCell(y + width - 4)
 										.setCellValue(sumDayCount);
+								
+								
+								/************************************未輸入數據統計20160331************************************/
+								CellRangeAddress region_sumnodate = new CellRangeAddress(
+										z + height + totalHeight + 2, (short) z
+												+ height + totalHeight + 2, y
+												+ width - 4, (short) y + width);
+								sheet.addMergedRegion(region_sumnodate);
+								for(int a=0;a<5;a++){
+									sheet.getRow(z + height + totalHeight + 2)
+									.createCell(a+y + width-4)
+									.setCellStyle(cs_font_red);
+								}								
+								for(int z2=0;z2<z_length;z2++){
+									int index=sheet.getRow(z2+height+totalHeight).getCell(y+width).getCellType();
+									if(index==Cell.CELL_TYPE_STRING){
+										String result=sheet.getRow(z2+height+totalHeight).getCell(y+width).getStringCellValue();
+										if(result.equals("無數據")){
+											sumNodate=sumNodate+1;
+										}
+									}
+								}								
+						        sheet.getRow(z + height + totalHeight + 2)
+								.getCell(y + width -4)
+								.setCellValue(sumNodate);						        						        
 							}
+							/************************************未輸入數據統計20160331************************************/
 						}// end "if 5"
 
-						break;
-					/*
-					 * case 6: if (sheet.getRow(z + height + totalHeight +
-					 * 1).getCell(y + width) == null) { //
-					 * sheet.getRow(z+height+
-					 * totalHeight+1).createCell(y+width).setCellStyle(cs);
-					 * StringBuffer olddate = new StringBuffer();
-					 * SimpleDateFormat dateFormat = new
-					 * SimpleDateFormat("yyyyMMdd"); olddate.append(yymm); if (z
-					 * == z_length-1) { olddate.append(z); } if (z < 9) {
-					 * olddate.append("0"); olddate.append(z + 1); } if (z >= 9)
-					 * { olddate.append(z + 1); } String temp1 =
-					 * olddate.toString(); String temp2 = dateFormat.format(new
-					 * Date()); try { Date beginDate = dateFormat.parse(temp1);
-					 * Date endDate = dateFormat.parse(temp2); long beginNum =
-					 * beginDate.getTime(); long endNum = endDate.getTime(); if
-					 * (beginNum > endNum) { sheet.getRow(z + height+
-					 * totalHeight+ 1).createCell(y +
-					 * width).setCellStyle(cs_font_blue); //
-					 * sheet.getRow(z+height
-					 * +totalHeight+1).getCell(y+width).setCellValue("日期超前"); }
-					 * else { sheet.getRow(z + height+ totalHeight+
-					 * 1).createCell(y + width).setCellStyle(cs_font_red);
-					 * sheet.getRow(z + height+ totalHeight+ 1).getCell(y +
-					 * width).setCellValue("無數據"); } } catch (ParseException e)
-					 * { // TODO Auto-generated catch block e.printStackTrace();
-					 * } } if(x<alllist2.size()){//start "if 6" try { day =
-					 * alllist2.get(x).get(z).getId().getYymmdd().getDate();
-					 * onModulus = alllist2.get(x).get(z).getOnModulus();
-					 * personnum = alllist2.get(x).get(z).getPersonnum();
-					 * achievingRate =
-					 * alllist2.get(x).get(z).getAchievingRate(); daycount =
-					 * alllist2.get(x).get(z).getDaycount(); holiday =
-					 * alllist2.get(x).get(z).getWorkorholiday(); if (daycount
-					 * != null && z == day - 1) { sheet.getRow(z + height +
-					 * totalHeight+ 1).createCell(y +
-					 * width).setCellValue(daycount); sheet.getRow(z + height +
-					 * totalHeight+ 1).getCell(y +
-					 * width).setCellStyle(cs_thousand); } if (daycount != null
-					 * && z != day - 1) { sheet.getRow((day - 1) + height+
-					 * totalHeight + 1).createCell(y +
-					 * width).setCellValue(daycount); sheet.getRow((day - 1) +
-					 * height+ totalHeight + 1).getCell(y +
-					 * width).setCellStyle(cs_thousand); } if (daycount == null
-					 * && z == day - 1&& holiday.equals("1")) { sheet.getRow(z +
-					 * height + totalHeight+ 1).createCell(y +
-					 * width).setCellValue("假日"); sheet.getRow(z + height +
-					 * totalHeight+ 1).getCell(y +
-					 * width).setCellStyle(cs_font_blue); } if (daycount == null
-					 * && z != day - 1&& holiday.equals("1")) {
-					 * sheet.getRow((day - 1) + height+ totalHeight +
-					 * 1).createCell(y + width).setCellValue("假日");
-					 * sheet.getRow((day - 1) + height+ totalHeight +
-					 * 1).getCell(y + width).setCellStyle(cs_font_blue); } if
-					 * (daycount == null && z == day - 1&& holiday.equals("2"))
-					 * { sheet.getRow(z + height + totalHeight+ 1).createCell(y
-					 * + width).setCellValue("未排產"); sheet.getRow(z + height +
-					 * totalHeight+ 1).getCell(y +
-					 * width).setCellStyle(cs_font_green); } if (daycount ==
-					 * null && z != day - 1&& holiday.equals("2")) {
-					 * sheet.getRow((day - 1) + height+ totalHeight +
-					 * 1).createCell(y + width).setCellValue("未排產");
-					 * sheet.getRow((day - 1) + height+ totalHeight +
-					 * 1).getCell(y + width).setCellStyle(cs_font_green); } if
-					 * (daycount == null&& z == day - 1&& (achievingRate !=
-					 * null|| onModulus != null || personnum != null)) {
-					 * sheet.getRow(z + height + totalHeight+ 1).createCell(y +
-					 * width).setCellValue("無數據"); sheet.getRow(z + height +
-					 * totalHeight+ 1).getCell(y +
-					 * width).setCellStyle(cs_font_red); } if (daycount ==
-					 * null&& z != day - 1&& (achievingRate != null|| onModulus
-					 * != null || personnum != null)) { sheet.getRow((day - 1) +
-					 * height+ totalHeight + 1).createCell(y +
-					 * width).setCellValue("無數據"); sheet.getRow((day - 1) +
-					 * height+ totalHeight + 1).getCell(y +
-					 * width).setCellStyle(cs_font_red); } sumDayCount =
-					 * sumDayCount + daycount;
-					 * 
-					 * } catch (Exception e) { // TODO: handle exception } if (z
-					 * == z_length-2) { sheet.getRow(z + height + totalHeight +
-					 * 1).createCell(y + width).setCellValue(sumDayCount);
-					 * sheet.getRow(z + height + totalHeight + 1).getCell(y +
-					 * width).setCellStyle(cs_thousand); } }//end "if 6"
-					 * 
-					 * break;
-					 */
-
+						break;					
 					}
 				}// end for 3
 			}// end for 2
@@ -3940,7 +3885,7 @@ public class Printer_Auto {
 
 		OutputStream os;
 		try {
-			os = new FileOutputStream("D:/" + date + ".xls");
+			os = new FileOutputStream("D:/" + yymm + ".xls");
 			wb.write(os);
 			os.close();
 		} catch (FileNotFoundException e) {

@@ -52,7 +52,7 @@
 	<table class="table table-striped table-hover table-bordered"  >
 		<h2>
 		<s:if test='#session.loginUser.userread!="1"'>	
-		<input value="添加知會人" type="button" class="btn btn-info" onclick="javascript:location.href='saveAndUpdate/webuseremailaSaveOrUpdate.jsp'"/>
+		<input value="添加知會人" type="button" class="btn btn-info" onclick="loadUrl('saveAndUpdate/webuseremailaSaveOrUpdate.jsp')"/>
 	    </s:if>	
 		知會人管理
 		</h2>

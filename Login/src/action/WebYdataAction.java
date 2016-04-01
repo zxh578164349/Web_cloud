@@ -266,6 +266,15 @@ public class WebYdataAction extends ActionSupport implements
 			 * 添加
 			 */
 			if (isnull.equals("isnull")) {// start "if 1"
+				/**************************************超時錄入數據記錄20160331**************************************************/
+				Date createDate=new Date();//創建時間
+				ydata.setDateCreate(new SimpleDateFormat("yyMMddhhmm").format(createDate));//記錄創建時間
+				long time1=new SimpleDateFormat("yyyyMMddhhmm").parse(yymmdd+"0000").getTime();
+				long time2=createDate.getTime();
+				if((time2-time1)/(1000*60)>2280){
+					ydata.setTimeoutRecorde("1");//超過38小時，也就是2280分，記錄超時
+				}
+				/**************************************超時錄入數據記錄20160331**************************************************/
 				
 				/****************************隻限制已輸入數據的廠別，沒有數據就不限制***********************************/
 				double nums=dataSer.findNums(ydata.getId().getFactNo(), ydata.getId().getFactCode());
@@ -309,8 +318,8 @@ public class WebYdataAction extends ActionSupport implements
 					result = "addData";
 					ajaxResult="0";
 				}
-				/****************************隻限制已輸入數據的廠別，沒有數據就不限制***********************************/
-																												
+				/****************************隻限制已輸入數據的廠別，沒有數據就不限制***********************************/									
+				
 			}// end "if 1"
 			/**
 			 * 修改
@@ -401,20 +410,20 @@ public class WebYdataAction extends ActionSupport implements
 				String temp2 = ydata.getId().getFactCode();
 				String temp3 = format.format(ydata.getId().getYymmdd());
 				response.getWriter()
-						.print("<script>alert('數據已經存在("
+						.print("<script>window.parent.alert('數據已經存在("
 								+ temp1
 								+ " "
 								+ temp2
 								+ " "
 								+ temp3
-								+ ")!');window.location.href='saveAndUpdate/Yield_data.jsp'</script>");				
+								+ ")!');</script>");				
 			}
 			if(result.equals("noData")){
 				response.setContentType("text/html;charset=utf-8");
 				response.getWriter()
-				.print("<script>alert('選定日期的前天數據("
+				.print("<script>window.parent.alert('選定日期的前天數據("
 						+ lastday					
-						+ ")還沒有輸入!');history.back();</script>");							
+						+ ")還沒有輸入!');</script>");							
 				result=null;
 			}
 		 
@@ -510,7 +519,7 @@ public class WebYdataAction extends ActionSupport implements
 			ActionContext.getContext().getSession().put("public_yymm", sdate);
 		}
 		if (edate != null && !edate.equals("")) {
-			ActionContext.getContext().getSession().put("public_yymm", edate);
+			ActionContext.getContext().getSession().put("public_yymm2", edate);
 		}
 
 		bean = dataSer.findPageBean(25, page, factNo, sdate,edate);

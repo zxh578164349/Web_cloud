@@ -17,37 +17,26 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<meta http-equiv="expires" content="0">    
 	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 	<meta http-equiv="description" content="This is my page">
+	
+<link rel="stylesheet" type="text/css" href="css/form.css" />
 <link rel="stylesheet" type="text/css" href="css/select_beautiful.css">
-<script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script> 
-<script type="text/javascript" src="page/jquerys/layer/layer.min.js"></script>
-<script type="text/javascript" src="jquery/Validform_v5.3.2_min.js"></script>
-<script type="text/javascript" src="jquery/DatePicker/WdatePicker.js"></script>
-<!-- 新 Bootstrap 核心 CSS 文件 -->
-<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
-<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
-<script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 
-
- <!--[if lt IE 9]>  
-  <script src="bootstrap/html5.js"></script>
-  <script src="bootstrap/respond.min.js"></script>
-  <![endif]-->	
 <script type="text/javascript">
-   $(
+   jq(
       function(){
-         $("#subform1").Validform({
+         jq("#subform1").Validform({
              btnSubmit : "#btn1",
              tiptype:3,
              tipSweep:true,
              showAllError:true
          });
-         $("#subform2").Validform({
+         jq("#subform2").Validform({
              btnSubmit:"#btn2",
              tiptype:3,
              tipSweep:true,
              showAllError:true
          });
-          $("#subform3").Validform({
+          jq("#subform3").Validform({
              btnSubmit:"#btn3",
              tiptype:3,
              tipSweep:true,
@@ -59,7 +48,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
  全選與反選
 */  	
 function checkAll() {
-	var allcheckboxs=$("input[name='list_factno']");
+	var allcheckboxs=jq("input[name='list_factno']");
 	var the_all= document.getElementById("all");	
 		//遍歷所選廠別狀態對應的所有checkbox
 		for ( var i = 0; i < allcheckboxs.length; i++) {
@@ -89,7 +78,7 @@ function checkAll() {
 	       document.getElementById(font).style.color="";
 	       //全部退回
 	       //通過樣式 class獲取對應factCode的所有廠別
-	       allcheckboxs=$("input[name='list_factno']");
+	       allcheckboxs=jq("input[name='list_factno']");
 	       var index=0;
 	       for(var i=0;i<allcheckboxs.length;i++){
 	           var checkbox=allcheckboxs[i];
@@ -105,8 +94,8 @@ function checkAll() {
 function test(factcode_obj){  //jquery获取复选框值    
   var factcode=factcode_obj.value;
   var chk_value =[];    
-  $('input[id='+factcode+'_factno]:checked').each(function(){    
-   chk_value.push($(this).val());    
+  jq('input[id='+factcode+'_factno]:checked').each(function(){    
+   chk_value.push(jq(this).val());    
   });    
   alert(chk_value.length==0 ?'你还没有选择任何内容！':chk_value);    
 }    
@@ -131,27 +120,28 @@ function test(factcode_obj){  //jquery获取复选框值
              <option value="2019">2019</option>
              <option value="2020">2020</option>
           </select>-->
-           <input type="text" name="year" class="Wdate" onclick="WdatePicker({dateFmt:'yyyy'})"/>
-          </td>
-          <td class="td_input">
-             <s:if test="#attr.factNo=='tw'">			    
+           <span><input type="text" name="year" class="Wdate" onclick="WdatePicker({dateFmt:'yyyy'})" datatype="*"/></span>
+           
+           <span>
+              <s:if test="#session.factNo=='tw'">			    
 					<select name="factNo" datatype="*">
 						<option value="">請選擇工廠</option>						
-						<s:iterator value="#attr.facts" id="temp">
+						<s:iterator value="#session.facts" id="temp">
 							<option value="${temp[0]}">${temp[1]}(${temp[0]})</option>								
 						</s:iterator>
 					</select>					
 				</s:if> 
 				<s:else>				  
 					<select name="factNo"  datatype="*">
-						<option value="<s:property value="#attr.factNo"/>">
-							<s:property value="#attr.factName" />(<s:property value="#attr.factNo"/>)
+						<option value="<s:property value="#session.factNo"/>">
+							<s:property value="#session.factName" />(<s:property value="#session.factNo"/>)
 						</option>
 					</select>
 					
 				</s:else>
-          </td>
-          <td><input type="button" id="btn1" class="btn btn-primary" value="確定"/></td>
+           </span>
+           <input type="button" id="btn1" class="btn btn-primary" value="確定"/>
+          </td>        
           </tr>                 
        </table>
     </form>
@@ -161,27 +151,31 @@ function test(factcode_obj){  //jquery获取复选框值
       <caption>月份報表</caption>
          <tr>
            <td>
-               <input type="text" id="begin" name="yymm_begin" datatype="*" onclick="WdatePicker({minDate:'{%y-1}-%m',maxDate:'#F{$dp.$D(\'end\',{M:-1})||\'%y-{%M-1}\'}'})" class="Wdate" >至
-               <input type="text" id="end" name="yymm_end" datatype="*" onclick="WdatePicker({minDate:'#F{$dp.$D(\'begin\',{M:1})}',maxDate:'%y-%M'})" class="Wdate">
-          </td>
-          <td class="td_input">
-             <s:if test="#attr.factNo=='tw'">			    
+               <span>
+                <input type="text" id="begin" name="yymm_begin" datatype="*" onclick="WdatePicker({minDate:'{%y-1}-%m',maxDate:'#F{$dp.$D(\'end\',{M:-1})||\'%y-{%M-1}\'}'})" class="Wdate" >
+               </span>至
+               <span>
+                <input type="text" id="end" name="yymm_end" datatype="*" onclick="WdatePicker({minDate:'#F{$dp.$D(\'begin\',{M:1})}',maxDate:'%y-%M'})" class="Wdate">
+               </span>
+               <span>
+                <s:if test="#session.factNo=='tw'">			    
 					<select name="factNo"  datatype="*">
 						<option value="">請選擇工廠</option>						
-						<s:iterator value="#attr.facts" id="temp">
+						<s:iterator value="#session.facts" id="temp">
 							<option value="${temp[0]}">${temp[1]}(${temp[0]})</option>								
 						</s:iterator>
 					</select>					
 				</s:if> 
 				<s:else>				  
 					<select name="factNo"  datatype="*">						
-						<option value="<s:property value="#attr.factNo"/>">
-							<s:property value="#attr.factName" />(<s:property value="#attr.factNo"/>)
+						<option value="<s:property value="#session.factNo"/>">
+							<s:property value="#session.factName" />(<s:property value="#session.factNo"/>)
 						</option>
 					</select>					
 				</s:else>
-          </td>
-          <td><input type="button" id="btn2" class="btn btn-primary" value="確定"/></td>
+               </span>
+               <input type="button" id="btn2" class="btn btn-primary" value="確定"/>
+          </td>         
           </tr>
       </table>
     </form>
@@ -193,8 +187,10 @@ function test(factcode_obj){  //jquery获取复选框值
     <form action="vsumall_print_tw" method="post" id="subform3" target="_blank">
         <table class="tb_search">
           <tr>
-          <td><input type="text" name="yymm" datatype="*" onclick="WdatePicker()" class="Wdate"></td>
-          <td><input type="button" id="btn3" class="btn btn-primary" value="確定"/></td>
+          <td>
+          <span><input type="text" name="yymm" datatype="*" onclick="WdatePicker()" class="Wdate"></span>
+          <input type="button" id="btn3" class="btn btn-primary" value="確定"/>
+          </td>
           </tr>
         </table>
          <hr>
@@ -203,7 +199,7 @@ function test(factcode_obj){  //jquery获取复选框值
           <td>全選<input type="checkbox" id="all" onclick="checkAll()"  style="width:18px;height:18px"/></td>
           
            <td>
-               <s:iterator value="#attr.facts" id="temp" status="x">
+               <s:iterator value="#session.facts" id="temp" status="x">
                  <input type="checkbox" value="${temp[0]}" id="fact_no_${x.index}" name="list_factno" 
                  onclick="clickOne(this,'font_${x.index}')"/>                
                  <font id="font_${x.index}" >${temp[1]}(${temp[0]})</font>                                 

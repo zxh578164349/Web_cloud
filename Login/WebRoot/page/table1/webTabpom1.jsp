@@ -19,7 +19,7 @@
 <meta http-equiv="expires" content="0">
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
-<link rel="stylesheet" type="text/css" href="css/mystyle.css" />
+<!-- <link rel="stylesheet" type="text/css" href="css/mystyle.css" />-->
 	<script type="text/javascript">
 	 /*var defaultColor="#97CBFF";
 	 var clickColor="#CCFFFF";
@@ -48,14 +48,15 @@
 </head>
 <body>
   <div id="container">
-	<table class="table table-striped table-hover table-bordered" >
-		<h2>
+        <h2>
 		<s:if test='#session.loginUser.userread!="1"'>
 	    <input value="添加" type="button" class="btn btn-info"
-		onclick="javascript:location.href='saveAndUpdate/WebTabpomSaveOrUpdate.jsp'" />
-	</s:if>	
+		onclick="loadUrl('saveAndUpdate/WebTabpomSaveOrUpdate.jsp')" />
+	   </s:if>	
 		實驗室形體物性
-		</caption>
+		</h2>
+	<table class="table table-striped table-hover table-bordered" >
+		
 		<thead>
 			<tr class="tr_show">
 				<th>序號</th>
@@ -125,7 +126,7 @@
 						<input type="hidden" value="<s:property value='pomNo'/>" name="pomNo" />							
 						<input type="hidden" value="down" name="lookordown"/>
 					</form> 
-					<a href="javascript:layer.load(0);document.getElementById('subform${x.index}').submit()" >					
+					<a href="javascript:findById('subform${x.index}','webtabpom_findById')" >					
 					<img alt="修改" src="images/icon/edit001.png" title="修改" ></a>
 					<a href="javascript:document.getElementById('3subform${x.index}').submit()" >
 					<img alt="預覽" src="images/icon/view24.png" title="預覽"></a>

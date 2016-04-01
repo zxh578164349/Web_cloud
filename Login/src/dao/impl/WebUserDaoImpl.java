@@ -32,7 +32,7 @@ public class WebUserDaoImpl extends Basedao implements IWebUserDao {
 	}
 
 	public void updates(WebUser webUser) {
-		WebUser wUser = (WebUser) findById(webUser.getId(), WebUser.class);
+		/*WebUser wUser = (WebUser) findById(webUser.getId(), WebUser.class);
 		wUser.setAvailable(webUser.getAvailable());
 		wUser.setFactno(webUser.getFactno());
 		wUser.setIp(webUser.getIp());
@@ -43,7 +43,8 @@ public class WebUserDaoImpl extends Basedao implements IWebUserDao {
 		wUser.setUserread(webUser.getUserread());
 		wUser.setEmail(webUser.getEmail());
 		wUser.setDepartment(webUser.getDepartment());
-		getSession().update(wUser);
+		getSession().update(wUser);*/
+		super.merge(webUser);
 	}
 
 	private static final boolean isChinese(char c) {
@@ -153,7 +154,11 @@ public class WebUserDaoImpl extends Basedao implements IWebUserDao {
 		query.setString(1, username.toLowerCase());
 		WebUser user = (WebUser) query.uniqueResult();
 		if(user!=null){
-			user.getWebJurisdictions().size();	//解決hibernate延遲問題						
+			//user.getWebJurisdictions().size();	//解決hibernate延遲問題	
+			for(int i=0;i<user.getWebJurisdictions().size();i++){
+				user.getWebJurisdictions().get(i).getWebMenu().getMenuname();
+				user.getWebJurisdictions().get(i).getWebSubmenus().size();
+			}
 		}	
 		return user;
 	}
@@ -165,7 +170,11 @@ public class WebUserDaoImpl extends Basedao implements IWebUserDao {
 		query.setString(1, fact);
 		WebUser user=(WebUser)query.uniqueResult();
 		if(user!=null){
-			user.getWebJurisdictions().size();//解決hibernate延遲問題			
+			//user.getWebJurisdictions().size();//解決hibernate延遲問題
+			for(int i=0;i<user.getWebJurisdictions().size();i++){
+				user.getWebJurisdictions().get(i).getWebMenu().getMenuname();
+				user.getWebJurisdictions().get(i).getWebSubmenus().size();
+			}
 		}			
 		return user;
 	}

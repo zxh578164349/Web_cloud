@@ -23,32 +23,19 @@
 	-->
 <link rel="stylesheet" type="text/css" href="css/select_beautiful.css">	
 <link rel="stylesheet" type="text/css" href="css/form.css" />
-<script type="text/javascript" src="page/jquerys/jquery-1.9.1.min.js"></script>
-<script type="text/javascript" src="page/jquerys/Validform_v5.3.2_min.js"></script>
-<script type="text/javascript" src="jquerys/DatePicker/my2_WdatePicker.js"></script>
-<!-- 新 Bootstrap 核心 CSS 文件 -->
-<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
-<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
-<script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 
-
- <!--[if lt IE 9]>  
-  <script src="bootstrap/html5.js"></script>
-  <script src="bootstrap/respond.min.js"></script>
-  <![endif]-->	
 <script type="text/javascript">
  
 
-$(document).keyup(function(event){
+jq(document).keyup(function(event){
    if(event.keyCode==13){
       submis();
    }
 });
 
 
-$(function() {
-		var j = jQuery.noConflict();
-		var demo1 = j("#subform").Validform({
+jq(function() {
+		var demo1 = jq("#subform").Validform({
 			tiptype : 3,
 			tipSweep : true,
 			showAllError : true						
@@ -63,7 +50,9 @@ $(function() {
 	<table  id="tb_search">
 	   <h2>資料輸入狀況</h2>
 		<tr>
-			<td><s:if test="#session.factNo=='tw'">
+			<td>
+			<span>
+			 <s:if test="#session.factNo=='tw'">
 					<select name="factNo" id="factNo" datatype="*">
 						<option value="">請選擇廠別</option>						
 						<s:iterator value="#session.facts" id="temp">
@@ -77,20 +66,23 @@ $(function() {
 							<s:property value="#session.factName" />(<s:property value="#session.factNo"/>)
 						</option>
 					</select>
-				</s:else>				
-				</td>
-			<td>			
-			<input type="text" id="beginday" name="beginDate" onClick="WdatePicker({minDate:'{%y-1}-%m',maxDate:'#F{$dp.$D(\'endday\',{M:-1})||\'%y-{%M-1}\'}'})" readonly="readonly" datatype="*" class="Wdate"/>至
-			<input type="text" id="endday" name="endDate" onClick="WdatePicker({minDate:'#F{$dp.$D(\'beginday\')}',maxDate:'%y-%M'})" readonly="readonly" datatype="*" class="Wdate"/>
-			</td>
-			<td>
-			<select name="temp" datatype="*">
+				</s:else>
+			</span>
+			<span>
+			 <input type="text" id="beginday" name="beginDate" onClick="WdatePicker({minDate:'{%y-1}-%m',maxDate:'#F{$dp.$D(\'endday\',{M:-1})||\'%y-{%M-1}\'}'})" readonly="readonly" datatype="*" class="Wdate"/>
+			</span>至
+			<span>
+			 <input type="text" id="endday" name="endDate" onClick="WdatePicker({minDate:'#F{$dp.$D(\'beginday\')}',maxDate:'%y-%M'})" readonly="readonly" datatype="*" class="Wdate"/>
+			</span>
+			<span>
+			 <select name="temp" datatype="*">
 			   <option value="">請選擇操作方式</option>
 			   <option value="look">預覽</option>
 			   <option value="down">下載</option>
-			</select></td>
-			<td>
-			 <input value="確定" type="submit" class="btn btn-primary"/>			 	
+			</select>
+			</span>
+			<input value="確定" type="submit" class="btn btn-primary"/>					
+					 		 	
 			</td>
 		</tr>
 	</table>

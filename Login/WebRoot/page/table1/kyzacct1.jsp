@@ -21,7 +21,7 @@
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
 <!--  <link rel="stylesheet" type="text/css" href="css/mystyle.css" />-->
-<script type="text/javascript" src="jquery/Validform_v5.3.2_min.js"></script>
+
 <script type="text/javascript">
 
 	
@@ -59,7 +59,7 @@
 		<h2>
 		<s:if test='#session.loginUser.userread!="1"'>
 		<input value="添加" type="button" class="btn btn-info"
-		onclick="javascript:showDiv()" /></s:if> 
+		onclick="loadUrl('saveAndUpdate/kyzacctSaveOrUpdate.jsp')" /></s:if> 
 		會計科目
 		</h2>
 		<thead>			
@@ -93,7 +93,7 @@
 					   <input type="hidden" value="<s:property value='acctNo'/>"
 							name="acctNo" /> 													
 					 </form>
-					  <form action="kyzacct_delete" method="post" id="2form${x.index}" style="float:left">
+					  <form  method="post" id="2form${x.index}" style="float:left">
 					   <input type="hidden" value="<s:property value='acctNo'/>"
 							name="acctNo" />													
 					 </form>
@@ -105,7 +105,7 @@
 					    <a style="color:red" href="javascript:alert('對不起，只有管理員可以操作！')">修改</a>
 					    <a style="color:red" href="javascript:alert('對不起，只有管理員可以操作！')">刪除</a>
 					 </s:else> --%> 
-					 <a href="javascript:document.getElementById('form${x.index}').submit()"><img alt="修改" src="images/icon/edit001.png" title="修改" ></a>
+					 <a href="javascript:findById('form${x.index}','kyzacct_findById')"><img alt="修改" src="images/icon/edit001.png" title="修改" ></a>
 					 <a href="javascript:isDelete('2form${x.index}')"><img alt="刪除" src="images/icon/delete001.png" title="刪除" ></a>					
 				</td>
 				</s:if> 

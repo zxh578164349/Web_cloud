@@ -32,6 +32,10 @@ public class KyzVisaFlowServicesImpl implements IKyzVisaFlowServices{
 		return visaDao.findById(id);
 	}
 
+	public void delete(KyzVisaflowId id,KyzExpectmatmLog log) {
+		// TODO Auto-generated method stub
+		visaDao.delete(id,log);
+	}
 	public void delete(KyzVisaflowId id) {
 		// TODO Auto-generated method stub
 		visaDao.delete(id);

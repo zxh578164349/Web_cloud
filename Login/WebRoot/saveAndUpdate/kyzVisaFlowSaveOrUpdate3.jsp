@@ -23,20 +23,9 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 <meta http-equiv="description" content="This is my page">
 <link href="css/validate.css" rel="stylesheet" type="text/css" />
 <link rel="stylesheet" type="text/css" href="css/form.css" />
-<link rel="stylesheet" type="text/css" href="css/button_css.css" />
-<script type="text/javascript" src="jquery/DatePicker/my_WdatePicker.js"></script>
-<script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script>
-<script type="text/javascript" src="jquery/Validform_v5.3.2_min.js"></script>
-<script type="text/javascript" src="page/jquerys/layer/layer.min.js"></script>
+<link rel="stylesheet" type="text/css" href="css/select_beautiful.css">
 <script type="text/javascript">
-var jq=jQuery.noConflict();
-var loadi;
-jq(document).ajaxStart(function(){
-	loadi=layer.load("正在提交,請稍等...");
-});
-jq(document).ajaxStop(function(){
-	layer.close(loadi);
-});
+
 	jq(function() {
 		var demo = jq("#form").Validform({
 			btnSubmit : "#sub",
@@ -51,7 +40,8 @@ jq(document).ajaxStop(function(){
 			callback:function(data){
 				if(data=="0"){
 					layer.msg("提交成功!",3,1);
-					location.href="/Login/visaflow_findPageBean";
+					loadUrl("/Login/visaflow_findPageBean");
+					//location.href="/Login/visaflow_findPageBean";
 				}
 				if(data=="1"){
 					alert(data.responseText);
@@ -104,7 +94,7 @@ var k2=0;
         if(cboxlist.length>9){
            alert("對不起,不能超過10條記錄!");
         }else{
-         var newTr = kyzs_body.insertRow(-1);
+         var newTr = visaflow_body.insertRow(-1);
         //添加列
         var newTd00=newTr.insertCell(0);
         var newTd0 = newTr.insertCell(1);
@@ -146,13 +136,13 @@ var k2=0;
 	   //刪除選中行
 	 /* for(var k=0;k<cboxlist.length;k++){
 	     if(cboxlist[k].checked==true&&k>0){
-	        kyzs_body.deleteRow(k+1);
+	        visaflow_body.deleteRow(k+1);
 	        k=k-1;
 	     }	    
 	   } */ 
 	   	   
 	   if(cboxlist.length>1){
-	      kyzs_body.deleteRow(cboxlist.length);
+	      visaflow_body.deleteRow(cboxlist.length);
 	      
 	      /* if(document.getElementById("per2").ckecked=true){
 	         document.getElementById("per2").value=cboxlist.length-1;
@@ -384,9 +374,8 @@ function clickOne(){
    alert("当前为知会人员"+document.getElementById("per2").value);
 }
 
-function back(){
-	layer.load("正在返回,請稍等...");
-	location.href="/Login/visaflow_findPageBean3?backIndex=1";
+function back(){	
+	loadUrl("/Login/visaflow_findPageBean3?backIndex=1");
 }
 </script>
 <script type='text/javascript' src='/Login/dwr/interface/kyzjs.js'></script>
@@ -398,52 +387,15 @@ function back(){
 <script type='text/javascript' src='/Login/dwr/engine.js'></script>
 <script type='text/javascript' src='/Login/dwr/util.js'></script>
 
-<style type="text/css">
-table.gridtable {
-	/* font-family: verdana,arial,sans-serif; */
-	font-size:11px;
-	color:#333333;
-	border-width: 1px;
-	border-style:solid;
-	border-color: #666666;
-	border-collapse: collapse;
-}
-table.gridtable th {
-	border-width: 1px;
-	padding: 8px;
-	border-style: solid;
-	border-color: #666666;
-	background-color: #dedede;
-}
-table.gridtable td {
-	 border-width: 1px; 
-	/* padding: 8px; */
-	border-style: solid;
-	border-color: #666666;
-	background-color: #ffffff;	
-	/* text-align:justify;
-    text-justify:distribute-all-lines;
-    -moz-text-align-last:justify; */
-}
-.bluecss{
-   font-color:blue;
-   border-color:blue;
-   background-color:blue;
-}
-input[type="text"],select{
-  width:180px;
-}
 
-</style>
 
 </head>
-<%@ include file="../saveAndUpdate/publicHead2.jsp"%>
 <body>
    <div id="pop">
        <form action="visaflow_addMaxFlow" method="post" id="form">
-		<table width="1080" align="center" cellspacing="0" cellpadding="0"  class="gridtable" >
-		    <caption style="font-size:30;font-weight:bold">審核流程<br><br></caption>		    																 			
-			<tbody id="kyzs_body">
+       <h2>審核流程</h2>
+		<table class="table table-condensed">	    																 			
+			<tbody id="visaflow_body">
 			 	
 			 <s:if test="flows==null">
 			    <tr>
@@ -488,8 +440,8 @@ input[type="text"],select{
 			<tr>
 			<td colspan="10">
 			  <s:if test="flows==null">
-			     <input type="button" value="添加行" onclick="addRow()"  id="addbtn" />
-			     <input type="button" value="刪除行" onclick="delRow()"  id="delbtn"/>
+			     <input type="button" value="添加行" onclick="addRow()"  id="addbtn" class="btn btn-info"/>
+			     <input type="button" value="刪除行" onclick="delRow()"  id="delbtn" class="btn btn-info"/>
 			    <!--  <input type="radio" value="Y" name="index" id="per1" checked disabled/>审核人员&nbsp;
 			     <input type="radio" value="N" id="per2" name="index" onclick="clickOne()" disabled/>知会人员 -->
 			  </s:if>			    			    		    
@@ -499,9 +451,9 @@ input[type="text"],select{
 		    
 		</table >
 			<center>			    
-				<input type="submit" id="sub" value="確定" onmouseover="this.style.backgroundPosition='left -40px'" onmouseout="this.style.backgroundPosition='left top'" />&nbsp;&nbsp;&nbsp; 
-				<input type="reset" id="reset" value="重置" onmouseover="this.style.backgroundPosition='left -40px'" onmouseout="this.style.backgroundPosition='left top'" disabled="false" style="color:red"/>
-			    <input type="button" value="返回" onclick="back()" id="btn_back" onmouseover="this.style.backgroundPosition='left -40px'" onmouseout="this.style.backgroundPosition='left top'"/>
+				<input type="submit" id="sub" value="確定" class="btn btn-primary" />&nbsp;&nbsp;&nbsp; 
+				<input type="reset" id="reset" value="重置" class="btn btn-primary" disabled="false" style="color:red"/>
+			    <input type="button" value="返回" onclick="back()" id="btn_back" class="btn btn-primary"/>
 			</center>
 							
 	</form>

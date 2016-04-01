@@ -20,7 +20,7 @@
 <meta http-equiv="expires" content="0">
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
-<link rel="stylesheet" type="text/css" href="css/mystyle.css" />
+<!-- <link rel="stylesheet" type="text/css" href="css/mystyle.css" />-->
 <script type="text/javascript">
 
 	
@@ -58,7 +58,7 @@
 		<h2>
 		<s:if test='#session.loginUser.userread!="1"'>
 		<input value="添加" type="button" class="btn btn-info"
-		onclick="javascript:showDiv()" /></s:if>
+		onclick="loadUrl('kyzpetty_findAllSecNoAndAcctNo')" /></s:if>
 		零用金支出
 		</h2>
 		<thead>			
@@ -157,7 +157,7 @@
 					    <a style="color:red" href="javascript:alert('對不起，只有管理員可以操作！')">修改</a>
 					    <a style="color:red" href="javascript:alert('對不起，只有管理員可以操作！')">刪除</a>
 					 </s:else>  --%>
-					 <a href="javascript:showDiv2('<s:property value='id.factNo'/>','<s:property value='id.billNo'/>')"><img alt="修改" src="images/icon/edit001.png" title="修改" ></a>
+					 <a href="javascript:findById('form${x.index}','kyzpetty_findById')"><img alt="修改" src="images/icon/edit001.png" title="修改" ></a>
 					 <a href="javascript:isDelete('2form${x.index}')"><img alt="刪除" src="images/icon/delete001.png" title="刪除" ></a>					
 				</td>
 				</s:if>

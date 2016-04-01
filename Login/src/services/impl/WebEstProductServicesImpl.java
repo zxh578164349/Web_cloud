@@ -124,5 +124,16 @@ public class WebEstProductServicesImpl implements IWebEstProductServices {
 		return estProDao.findtypeById(factNo, factCode, yymm);
 	}
 
+	/**
+	 * 日期:2016/4/1
+	 * 描述:
+	 */
+	
+	
+	public List<Webestproduct> findByYymm(String yymm) {
+		// TODO Auto-generated method stub
+		return estProDao.findByYymm(yymm);
+	}
+
 
 }

@@ -23,8 +23,25 @@ public class KyzAcctAction extends ActionSupport implements ServletResponseAware
 	private int page;
 	private String isnull;
 	private String acctName;
+	private String ajaxResult;//申請函文時返回的ajax結果,   0:提交成功       1:提交失敗
+	private int backIndex;//返回標識      0或null:不走返回路徑         1:走返回路徑
 	private javax.servlet.http.HttpServletResponse response;
 	private IKyzAcctServices kyzacctSer;
+	
+	
+	
+	public String getAjaxResult() {
+		return ajaxResult;
+	}
+	public void setAjaxResult(String ajaxResult) {
+		this.ajaxResult = ajaxResult;
+	}
+	public int getBackIndex() {
+		return backIndex;
+	}
+	public void setBackIndex(int backIndex) {
+		this.backIndex = backIndex;
+	}
 	public KyzAcct getKyzacct() {
 		return kyzacct;
 	}
@@ -72,18 +89,22 @@ public class KyzAcctAction extends ActionSupport implements ServletResponseAware
 	}
 	
 	public String add() throws Exception{
-		String result_str="add";
-		String acctno=kyzacct.getAcctNo();
-		Boolean result=kyzacctSer.checkAcctNo(acctno);
-		if(result==false&&isnull.equals("isNull")){
-			result_str=null;
-			response.setContentType("text/html;charset=utf-8");
-			response.getWriter().print("<script>alert('��إN��("+acctno+"),�Э��s��J!');history.back()</script>");	
+		String result=kyzacctSer.findAcctNo(kyzacct.getAcctNo());
+		if(result!=null){
+				ajaxResult="2";//表示數據庫已經存在數據
 			
 		}else{
-			kyzacctSer.add(kyzacct);
+			try{
+				kyzacctSer.add(kyzacct);
+				ajaxResult="0";
+			}catch(Exception e){
+				ajaxResult="1";
+				System.out.println(e);
+				
+			}
+			
 		}		
-		return result_str;
+		return "add";
 	}
 	
 	public String findPageBean(){

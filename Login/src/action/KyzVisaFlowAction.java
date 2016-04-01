@@ -2,6 +2,7 @@ package action;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -17,9 +18,11 @@ import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
 import entity.KyVisabills;
+import entity.KyzExpectmatmLog;
 import entity.KyzVisaflow;
 import entity.KyzVisaflowId;
 import entity.WebType;
+import entity.WebUser;
 
 public class KyzVisaFlowAction extends ActionSupport implements ServletResponseAware{
 	private IKyzVisaFlowServices visaSer;
@@ -385,8 +388,16 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
          * (3)在第(1)步查询的全部对象，从点击的对象开始，删除下一个对象，删除之后不影响第(1)步的查询结果
          * (4)在第(1)步查询的全部对象，从点击的对象开始，改变下一个对象的itemNo,然后添加该对象
 		 */
+		
+		
+		KyzExpectmatmLog log=new KyzExpectmatmLog();
+		log.setFactNo(id.getFactNo());
+		log.setObj("KyzVisaflow");
+		log.setContent(id.getVisaSort()+id.getPurmanNo()+id.getItemNo());
+		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
+		log.setUsername(user.getUsername());
 		List<KyzVisaflow>list=visaSer.findByType(id.getFactNo(),id.getVisaSort());	//(1)查詢	
-		visaSer.delete(id);//（2）刪除點擊對象
+		visaSer.delete(id,log);//（2）刪除點擊對象
 		int startnum=Integer.parseInt(id.getItemNo());		
 		for(int i=startnum;i<list.size();i++){
 			visaSer.delete(list.get(i).getId());//(3)刪除點擊對象的下一個對象（舊itemNo）
@@ -399,7 +410,8 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 			}
 			list.get(i).getId().setItemNo(itemno);	
 			visaSer.add(list.get(i));//(4)添加點擊對象的下一個對象（新itemNo）
-		}		
+		}
+		
 		return "delete";
 	}
 	
@@ -541,6 +553,13 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 		for(int i=0;i<list.size();i++){
 			visaSer.delete2(list.get(i));
 		}
+		KyzExpectmatmLog log=new KyzExpectmatmLog();
+		log.setFactNo(factNo);
+		log.setObj("KyzVisaflow");
+		log.setContent(visaSort+"_del all kyzvisaflow");
+		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
+		log.setUsername(user.getUsername());
+		kyzExpLogSer.add(log);
 		return "deleteFirst";
 	}
 	/**

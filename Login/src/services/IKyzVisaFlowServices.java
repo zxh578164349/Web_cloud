@@ -11,6 +11,7 @@ public interface IKyzVisaFlowServices {
 	public void add(KyzVisaflow flow);
 	public PageBean findPageBean(int pageSize, int page, String factNo,String visaSort);
 	public KyzVisaflow findById(KyzVisaflowId id);
+	public void delete(KyzVisaflowId id,KyzExpectmatmLog log);
 	public void delete(KyzVisaflowId id);
 	public List<KyzVisaflow> findByFactNo(String factno);
 	public List<KyzVisaflow> findByType(String factNo,String visaSort);

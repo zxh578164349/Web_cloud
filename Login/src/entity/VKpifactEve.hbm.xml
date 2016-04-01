@@ -110,8 +110,8 @@
         <property name="avgbuttomweight2" type="java.lang.Double">
             <column name="AVGBUTTOMWEIGHT2" precision="12" scale="3" />
         </property>
-        <property name="otherweight" type="java.lang.Double">
-            <column name="OTHERWEIGHT" precision="12" scale="3" />
+        <property name="otherweight" type="java.math.BigDecimal">
+            <column name="OTHERWEIGHT" precision="22" scale="0" />
         </property>
         <property name="productednum" type="java.lang.Double">
             <column name="PRODUCTEDNUM" precision="12" scale="3" />
@@ -127,6 +127,45 @@
         </property>
         <property name="instorenum" type="java.lang.Double">
             <column name="INSTORENUM" precision="12" scale="3" />
+        </property>
+        <property name="hole" type="java.lang.Double">
+            <column name="HOLE" precision="12" scale="3" />
+        </property>
+        <property name="sumWorkday" type="java.math.BigDecimal">
+            <column name="SUM_WORKDAY" precision="22" scale="0" />
+        </property>
+        <property name="waterusd" type="java.lang.Double">
+            <column name="WATERUSD" precision="12" scale="3" />
+        </property>
+        <property name="electricusd" type="java.lang.Double">
+            <column name="ELECTRICUSD" precision="12" scale="3" />
+        </property>
+        <property name="gasusd" type="java.lang.Double">
+            <column name="GASUSD" precision="12" scale="3" />
+        </property>
+        <property name="thickused" type="java.lang.Double">
+            <column name="THICKUSED" precision="12" scale="3" />
+        </property>
+        <property name="backfeed" type="java.lang.Double">
+            <column name="BACKFEED" precision="12" scale="3" />
+        </property>
+        <property name="oilback" type="java.lang.Double">
+            <column name="OILBACK" precision="12" scale="3" />
+        </property>
+        <property name="drugsused" type="java.lang.Double">
+            <column name="DRUGSUSED" precision="12" scale="3" />
+        </property>
+        <property name="colorused" type="java.lang.Double">
+            <column name="COLORUSED" precision="12" scale="3" />
+        </property>
+        <property name="leavemoney" type="java.lang.Double">
+            <column name="LEAVEMONEY" precision="12" scale="3" />
+        </property>
+        <property name="paypairs" type="java.lang.Double">
+            <column name="PAYPAIRS" precision="12" scale="3" />
+        </property>
+        <property name="badcount" type="java.lang.Double">
+            <column name="BADCOUNT" precision="12" scale="3" />
         </property>
     </class>
 </hibernate-mapping>

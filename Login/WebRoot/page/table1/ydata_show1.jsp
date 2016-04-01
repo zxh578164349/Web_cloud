@@ -21,7 +21,6 @@
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
 
-<link rel="stylesheet" type="text/css" href="css/mystyle.css" />
 <script type="text/javascript">
 <%--$(function() {
 		var j = jQuery.noConflict();
@@ -128,7 +127,7 @@ function delete_admin(factNo,yymmdd,subform){
 	<table class="table table-striped table-hover table-bordered" >
 		<h2>
 		<s:if test='#session.loginUser.userread!="1"'>
-	    <input value="添加" type="button" class="btn btn-info" onclick="javascript:location.href='saveAndUpdate/Yield_data.jsp'" />
+	    <input value="添加" type="button" class="btn btn-info" onclick="loadUrl('saveAndUpdate/Yield_data.jsp')"/>
 	    </s:if>
 		產量資料
 		</h2>
@@ -196,7 +195,7 @@ function delete_admin(factNo,yymmdd,subform){
 							name="id.yymmdd" />
 					</form> 
 					<s:if test='username==#attr.loginUser.username||#attr.loginUser.username=="admin"'>					  
-					  <a href="javascript:layer.load(0);update_ydata('subform${x.index}');" ><img alt="修改" src="images/icon/edit001.png" title="修改" ></a> 				  	
+					  <a href="javascript:findById('subform${x.index}','ydata_findById')" ><img alt="修改" src="images/icon/edit001.png" title="修改" ></a> 				  	
 					</s:if>
 					<s:else>
 					  <a disabled style="color:grey"><img alt="修改" src="images/icon/edit001_1.png" title="修改" ></a>

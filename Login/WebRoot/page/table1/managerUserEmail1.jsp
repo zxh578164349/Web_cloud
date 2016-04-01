@@ -55,7 +55,7 @@
 	<table class="table table-striped table-hover table-bordered" >
 		<h2>
 		<s:if test='#session.loginUser.userread!="1"'>	
-		<input value="添加備簽人" type="button" class="btn btn-info" onclick="javascript:location.href='saveAndUpdate/webuseremailSaveOrUpdate.jsp'"/>
+		<input value="添加備簽人" type="button" class="btn btn-info" onclick="loadUrl('saveAndUpdate/webuseremailSaveOrUpdate.jsp')"/>
 	    </s:if>	
 		備簽人管理
 		</h2>

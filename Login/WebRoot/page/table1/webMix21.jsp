@@ -19,7 +19,7 @@
 <meta http-equiv="expires" content="0">
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
-<link rel="stylesheet" type="text/css" href="css/mystyle.css" />
+<!--  <link rel="stylesheet" type="text/css" href="css/mystyle.css" />-->
 	<script type="text/javascript">
 	/* var defaultColor="#97CBFF";
 	 var clickColor="#CCFFFF";
@@ -52,7 +52,7 @@
 		<h2>
 		<s:if test='#session.loginUser.userread!="1"'>
 	    <input value="添加" type="button" class="btn btn-info"
-		onclick="javascript:location.href='saveAndUpdate/WebMix2SaveOrUpdate.jsp'" />
+		onclick="loadUrl('saveAndUpdate/WebMix2SaveOrUpdate.jsp')" />
 	</s:if>	
 		營收損益(每月輸入)
 		</h2>
@@ -122,7 +122,7 @@
 						<input type="hidden" value="<s:property value='id.yymm'/>"
 							name="id.yymm" />
 					</form> <a
-					href="javascript:layer.load(0);document.getElementById('subform${x.index}').submit()"
+					href="javascript:findById('subform${x.index}','webmix2_findMix2ById')"
 					onclick=""><img alt="修改" src="images/icon/edit001.png" title="修改" ></a>
 					<form action="webmix2_delete2" method="post"
 						id="2subform${x.index}" style="float:left">

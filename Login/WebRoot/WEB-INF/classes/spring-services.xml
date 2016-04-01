@@ -85,6 +85,7 @@
 	<bean id="webbussletterSer" class="services.impl.WebBussinessletterServicesImpl"></bean>
 	<bean id="tabpomfileSer" class="services.impl.WebTabpomfileServicesImpl"></bean>
 	<bean id="webphonebookSer" class="services.impl.WebPhonebookServicesImpl"></bean>
+	<bean id="weballobjser" class="services.impl.WeballobjServicesImpl"></bean>
 </beans>
 
 

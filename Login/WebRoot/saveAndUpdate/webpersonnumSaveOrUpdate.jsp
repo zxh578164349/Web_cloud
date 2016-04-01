@@ -24,21 +24,10 @@
 
 <link href="css/validate.css" rel="stylesheet" type="text/css" />
 <link rel="stylesheet" type="text/css" href="css/form.css" />
-<link rel="stylesheet" type="text/css" href="css/button_css.css" />
-<script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script>
-<script type="text/javascript" src="jquery/Validform_v5.3.2_min.js"></script>
-<script type="text/javascript" src="jquery/DatePicker/my_WdatePicker.js"></script>
-<script type="text/javascript" src="jquery/layer/layer.min.js"></script>
+<link rel="stylesheet" type="text/css" href="css/select_beautiful.css">
 </head>
 <script type="text/javascript">
-	var jq=jQuery.noConflict();
-	var loadi;
-	jq(document).ajaxStart(function(){
-		loadi=layer.load("正在提交,請稍等...");
-	});
-	jq(document).ajaxStop(function(){
-		layer.close(loadi);
-	});
+
 	jq(function() {
 		var demo = jq("#form").Validform({
 			btnSubmit : "#sub",
@@ -54,7 +43,8 @@
 				if(data=="0"){
 					layer.msg("提交成功!",3,1);
 				}else{
-					alert(data.responseText);
+					layer.msg("提交失敗",3,3);
+					//alert(data.responseText);
 				}				
 			}
 		});
@@ -70,8 +60,7 @@
 
 	}
 	function back() {
-		    layer.load("正在返回,請稍等...");
-			location.href = "/Login/webpersonnum_findPageBean3?backIndex=1";
+			loadUrl("/Login/webpersonnum_findPageBean3?backIndex=1");
 		
 	}
 	 function check(){
@@ -118,8 +107,9 @@ window.onload=function(){
 
 <body>
 	<form action="webpersonnum_add" method="post" id="form">
-		<table width="100%" align="center" cellspacing="0" cellpadding="0">
-		  <caption>人員考勤</caption>
+	<h2>人員考勤</h2>
+		<table class="table table-condensed">
+		  
 			<s:if test="person==null">
 				<s:if test="#session.factNo!='tw'">
 					<tr>
@@ -163,7 +153,7 @@ window.onload=function(){
 				<tr>
 					<td class="td_show_title">日期</td>
 					<td class="td_input"><input type="text" name="yymm"
-						onClick="WdatePicker()" class="Wdate" datatype="*" id="dwr_yymmdd" onchange="check()"/><span id="error3"></span></td>
+						onClick="WdatePicker({dateFmt:'yyyyMMdd'})" class="Wdate" datatype="*" id="dwr_yymmdd" onchange="check()"/><span id="error3"></span></td>
 					<td class="td_show_title">直工應到人數(人)</td>
 					<td class="td_input"><input type="text"
 						name="person.standardnumzg"
@@ -249,9 +239,9 @@ window.onload=function(){
 
 		</table>
 		<center>
-			<input type="submit" id="sub" value="確定" onmouseover="this.style.backgroundPosition='left -40px'" onmouseout="this.style.backgroundPosition='left top'"/>&nbsp;&nbsp;&nbsp; <input
-				type="reset" id="reset" value="重置" onmouseover="this.style.backgroundPosition='left -40px'" onmouseout="this.style.backgroundPosition='left top'"/>&nbsp;&nbsp;&nbsp;			
-				<input type="button" value="返回" onclick="back()" id="btn_back" onmouseover="this.style.backgroundPosition='left -40px'" onmouseout="this.style.backgroundPosition='left top'"/>
+			<input type="submit" id="sub" value="確定" class="btn btn-primary"/>&nbsp;&nbsp;&nbsp; <input
+				type="reset" id="reset" value="重置" class="btn btn-primary"/>&nbsp;&nbsp;&nbsp;			
+				<input type="button" value="返回" onclick="back()" id="btn_back" class="btn btn-primary"/>
 
 		</center>
 	</form>

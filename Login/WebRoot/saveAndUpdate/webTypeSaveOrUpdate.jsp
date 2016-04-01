@@ -22,21 +22,10 @@
 
 <link href="css/validate.css" rel="stylesheet" type="text/css" />
 <link rel="stylesheet" type="text/css" href="css/form.css" />
-<link rel="stylesheet" type="text/css" href="css/button_css.css" />
-<script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script>
-<script type="text/javascript" src="jquery/Validform_v5.3.2_min.js"></script>
-<script type="text/javascript" src="jquery/DatePicker/WdatePicker.js"></script>
-<script type="text/javascript" src="jquery/layer/layer.min.js"></script>
+<link rel="stylesheet" type="text/css" href="css/select_beautiful.css">
 </head>
 <script type="text/javascript">
-var jq=jQuery.noConflict();
-var loadi;
-jq(document).ajaxStart(function(){
-	loadi=layer.load("正在提交,請稍等...");
-});
-jq(document).ajaxStop(function(){
-	layer.close(loadi);
-});
+
 	jq(function() {
 		var demo = jq("#form").Validform({
 			btnSubmit : "#sub",
@@ -47,7 +36,8 @@ jq(document).ajaxStop(function(){
 			callback:function(data){
 				if(data=="0"){
 					layer.msg("提交成功!",3,1);
-					location.href="/Login/webtype_findPageBean";
+					//location.href="/Login/webtype_findPageBean";
+					loadUrl("/Login/webtype_findPageBean");
 				}else{
 					alert(data.responseText);
 				}				
@@ -105,7 +95,7 @@ jq(document).ajaxStop(function(){
 	   }
 	}
 /*禁止空格輸入*/
-window.onload=function(){            
+/*window.onload=function(){            
             var inputs=document.getElementsByTagName("input"); 
             for (var i=0;i<inputs.length; i++) {  
                 if(inputs[i].getAttribute("type")=="text"){                
@@ -117,10 +107,25 @@ window.onload=function(){
                  };                
                 }  
             }  
-        };
+        };*/
+  jq(function(){
+        	 var inputs=document.getElementsByTagName("input"); 
+             for (var i=0;i<inputs.length; i++) {  
+                 if(inputs[i].getAttribute("type")=="text"){                
+                  inputs[i].onkeyup=function(){
+                 	 if(this.value.indexOf(" "!=-1)){
+                 		//this.value=this.value.trim();
+                 		this.value=this.value.replace(/(^\s+)|\s+$/g,""); 
+                 	 }
+                     //this.value=this.value.replace(/(^\s+)|\s+$/g,""); 
+                  };                
+                 }  
+             } 
+   });
 function back(){
-	layer.load("正在返回,請稍等...");
-	location.href="/Login/webtype_findPageBean3?backIndex=1";
+	
+	loadUrl("/Login/webtype_findPageBean3?backIndex=1");
+	
 }
 function checkRadio(){
 	var item=jq("input[type='radio']:checked").val();
@@ -146,8 +151,8 @@ function checkRadio(){
 
 <body>
 	<form action="webtype_add" method="post" id="form">
-		<table width="100%" align="center" cellspacing="0" cellpadding="0">
-		　　<caption>各廠函文類別管理</caption>			      						
+	<h2>各廠函文類別管理</h2>
+		<table class="table table-condensed">		      						
 					<tr>
 						<td class="td_show_title">廠別</td>
 						<s:if test="webtype==null">						
@@ -212,11 +217,10 @@ function checkRadio(){
 			</tr>											
 		</table>
 		<center>
-			<input type="submit" id="sub" value="確定" onmouseover="this.style.backgroundPosition='left -40px'" onmouseout="this.style.backgroundPosition='left top'"/>&nbsp;&nbsp;&nbsp; <input
-				type="reset" id="reset" value="重置" onmouseover="this.style.backgroundPosition='left -40px'" onmouseout="this.style.backgroundPosition='left top'"/>&nbsp;&nbsp;&nbsp;			
-            <input type="button" value="返回" onclick="back()" id="btn_back"
-					onmouseover="this.style.backgroundPosition='left -40px'"
-					onmouseout="this.style.backgroundPosition='left top'" />
+			<input type="submit" id="sub" value="確定" class="btn btn-primary"/>&nbsp;&nbsp;&nbsp; <input
+				type="reset" id="reset" value="重置" class="btn btn-primary"/>&nbsp;&nbsp;&nbsp;			
+            <input type="button" value="返回" onclick="back()" id="btn_back" class="btn btn-primary"/>
+					 
 		</center>
 	</form>
 

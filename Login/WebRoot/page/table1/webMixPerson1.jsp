@@ -52,7 +52,7 @@
 		<h2>
 		<s:if test='#session.loginUser.userread!="1"'>
 	    <input value="添加" type="button" class="btn btn-info"
-		onclick="javascript:location.href='saveAndUpdate/WebMixPersonSaveOrUpdate.jsp'" />
+		onclick="loadUrl('saveAndUpdate/WebMixPersonSaveOrUpdate.jsp')" />
 	    </s:if>	
 		人數工時(每月輸入)
 		</h2>
@@ -117,7 +117,7 @@
 						<input type="hidden" value="<s:property value='id.yymm'/>"
 							name="id.yymm" />
 					</form> <a
-					href="javascript:layer.load(0);document.getElementById('subform${x.index}').submit()"
+					href="javascript:findById('subform${x.index}','webmixPerson_findMixPersonById')"
 					onclick=""><img alt="修改" src="images/icon/edit001.png" title="修改" ></a>
 					<form action="webmixPerson_delete2" method="post"
 						id="2subform${x.index}" style="float:left">

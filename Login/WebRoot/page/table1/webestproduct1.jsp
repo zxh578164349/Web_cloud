@@ -21,7 +21,7 @@
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
 
-<link rel="stylesheet" type="text/css" href="css/mystyle.css" />
+<!-- <link rel="stylesheet" type="text/css" href="css/mystyle.css" />-->
 <script type="text/javascript">
 	
 
@@ -59,7 +59,7 @@
 		<h2>
 		<s:if test='#session.loginUser.userread!="1"'>
 	    <input value="添加" type="button" class="btn btn-info"
-		onclick="javascript:location.href='saveAndUpdate/webestproSaveOrUpdate.jsp'" />
+		onclick="loadUrl('saveAndUpdate/webestproSaveOrUpdate.jsp')" />
         </s:if>
 		預計生產
 		</h2>
@@ -136,7 +136,7 @@
 							name="id.yymm" /><input type="hidden" value="<s:property value='id.type'/>"
 							name="id.type" />
 					</form> <a
-					href="javascript:layer.load(0);document.getElementById('subform${x.index}').submit()"
+					href="javascript:findById('subform${x.index}','webestpro_findById')"
 					><img alt="修改" src="images/icon/edit001.png" title="修改" ></a>
 
 					<form action="webestpro_delete" method="post"

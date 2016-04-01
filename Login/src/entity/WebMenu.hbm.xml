@@ -19,5 +19,11 @@
             </key>
             <one-to-many class="entity.WebJurisdiction" />
         </bag>
+        <bag name="submenus" inverse="true">
+            <key>
+                <column name="MENUID" precision="8" scale="0" not-null="true" />
+            </key>
+            <one-to-many class="entity.WebSubmenu2"/>
+        </bag>
     </class>
 </hibernate-mapping>

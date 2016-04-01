@@ -110,10 +110,20 @@ public class KyVisabillsDaoImpl extends Basedao implements IKyVisaBillsDao{
 		int offset=PageBean.countOffset(pageSize, currentPage);
 		List<KyVisabills>list=super.queryForPage(hql.toString(), offset, pageSize, map);
 		
-		//�H�U���ѨMHibernate������D
+		//解決hibernate延遲問題
 		if(list.size()>0){
 			for(int i=0;i<list.size();i++){
-				list.get(i).getId().getKyVisabillm().getKyVisabillses().size();				
+				list.get(i).getId().getKyVisabillm().getKyVisabillses().size();
+				/***************************要分類查找，否則報No row with the given identifier exis錯誤***************************/
+				/*if(list.get(i).getId().getKyVisabillm().getId().getBillNo().substring(0,2).equals("EM")){
+					list.get(i).getId().getKyVisabillm().getKyzexp().getMemoSmk();
+				}
+				if(list.get(i).getId().getKyVisabillm().getId().getBillNo().substring(0,2).equals("CM")){
+					list.get(i).getId().getKyVisabillm().getKyzletter().getTitle();
+				}*/
+				
+				/*******************出差函文暫不要查標題，因爲沒有標題*****************/
+				
 			}
 		}
 		

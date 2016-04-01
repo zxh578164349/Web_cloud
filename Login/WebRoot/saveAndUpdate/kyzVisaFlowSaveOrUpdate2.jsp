@@ -23,20 +23,9 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 <meta http-equiv="description" content="This is my page">
 <link href="css/validate.css" rel="stylesheet" type="text/css" />
 <link rel="stylesheet" type="text/css" href="css/form.css" />
-<link rel="stylesheet" type="text/css" href="css/button_css.css" />
-<script type="text/javascript" src="jquery/DatePicker/my_WdatePicker.js"></script>
-<script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script>
-<script type="text/javascript" src="jquery/Validform_v5.3.2_min.js"></script>
-<script type="text/javascript" src="jquery/layer/layer.min.js"></script>
+<link rel="stylesheet" type="text/css" href="css/select_beautiful.css">
 <script type="text/javascript">
-var jq=jQuery.noConflict();
-var loadi;
-jq(document).ajaxStart(function(){
-	loadi=layer.load("正在提交,請稍等...");
-});
-jq(document).ajaxStop(function(){
-	layer.close(loadi);
-});
+
 	jq(function() {
 		var demo = jq("#form").Validform({
 			btnSubmit : "#sub",
@@ -51,7 +40,9 @@ jq(document).ajaxStop(function(){
 			callback:function(data){
 				if(data=="0"){
 					layer.msg("提交成功!",3,1);
-					location.href="/Login/visaflow_findPageBean";
+					loadUrl("/Login/visaflow_findPageBean");
+					//location.href="/Login/visaflow_findPageBean";
+					
 				}
 				if(data=="1"){
 					alert(data.responseText);
@@ -98,8 +89,7 @@ jq(document).ajaxStop(function(){
 	}
 	
 	function back(){
-		layer.load("正在返回,請稍等...");
-		location.href="/Login/visaflow_findPageBean3?backIndex=1";
+		loadUrl("/Login/visaflow_findPageBean3?backIndex=1");
 	}
 </script>
 <script type='text/javascript' src='/Login/dwr/interface/kyzjs.js'></script>
@@ -110,51 +100,15 @@ jq(document).ajaxStop(function(){
 <script type='text/javascript' src='/Login/dwr/engine.js'></script>
 <script type='text/javascript' src='/Login/dwr/util.js'></script>
 
-<style type="text/css">
-table.gridtable {
-	/* font-family: verdana,arial,sans-serif; */
-	font-size:11px;
-	color:#333333;
-	border-width: 1px;
-	border-style:solid;
-	border-color: #666666;
-	border-collapse: collapse;
-}
-table.gridtable th {
-	border-width: 1px;
-	padding: 8px;
-	border-style: solid;
-	border-color: #666666;
-	background-color: #dedede;
-}
-table.gridtable td {
-	 border-width: 1px; 
-	/* padding: 8px; */
-	border-style: solid;
-	border-color: #666666;
-	background-color: #ffffff;	
-	/* text-align:justify;
-    text-justify:distribute-all-lines;
-    -moz-text-align-last:justify; */
-}
-.bluecss{
-   font-color:blue;
-   border-color:blue;
-   background-color:blue;
-}
-input[type="text"],select{
-  width:180px;
-}
 
-</style>
 
 </head>
 <body >
    <div id="pop">
        <form action="visaflow_update" method="post" id="form">
-		<table width="1080" align="center" cellspacing="0" cellpadding="0"  class="gridtable" >
-		    <caption style="font-size:30;font-weight:bold">審核流程<br><br></caption>		    																 			
-			<tbody id="kyzs_body">			 				 						
+       <h2>審核流程</h2>
+		<table class="table table-condensed" >		    	    																 			
+			<tbody >			 				 						
 			   <tr>
 			   <td>廠別</td>
 			   <td><input type="text" value="<s:property value='flow.id.factNo'/>" readonly style="color:blue" name="flow.id.factNo" id="dwrFactNo"/></td>
@@ -188,9 +142,9 @@ input[type="text"],select{
 			</tbody>							    
 		</table >
 			<center>			    
-				<input type="submit" id="sub" value="確定" onmouseover="this.style.backgroundPosition='left -40px'" onmouseout="this.style.backgroundPosition='left top'"/>&nbsp;&nbsp;&nbsp; 
-				<input type="reset" id="reset" value="重置" onmouseover="this.style.backgroundPosition='left -40px'" onmouseout="this.style.backgroundPosition='left top'"/>
-			<input type="button" value="返回" onclick="back()" id="btn_back" onmouseover="this.style.backgroundPosition='left -40px'" onmouseout="this.style.backgroundPosition='left top'"/>
+				<input type="submit" id="sub" value="確定" class="btn btn-primary"/>&nbsp;&nbsp;&nbsp; 
+				<input type="reset" id="reset" value="重置" class="btn btn-primary"/>
+			<input type="button" value="返回" onclick="back()" id="btn_back" class="btn btn-primary"/>
 			</center>
 							
 	</form>

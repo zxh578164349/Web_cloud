@@ -26,7 +26,8 @@
 <meta http-equiv="expires" content="0">
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
-
+<script type="text/javascript" src="page/jquerys/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="page/jquerys/layer/layer.min.js"></script>
 <style type="text/css">
 table.gridtable {
 	font-family: verdana, arial, sans-serif;
@@ -178,14 +179,15 @@ table.gridtable td {
 			<s:if test='readMk=="N"'>
 			    <tr><td colspan="10" style="color:red">備註↓↓↓</td></tr>
 				<tr><td colspan="10">									
-					<form id="memo" method="post" action="vbm_add">
+					<form id="memo" method="post" action="vbm_add" target="frameFile">
 						<textarea  name="memo" id="memo_txt" style="width:620px;height:120px;overflow:auto"></textarea>						
 						<input type="hidden" name="factNo" value="<s:property value='factNo'/>"/>
 						<input type="hidden" name="billNo" value="<s:property value='billNo'/>"/>
 						<input type="hidden" name="itemNo" value="<s:property value='itemNo'/>"/>
 						<input type="hidden" name="visaSort" value="<s:property value="visaSort"/>"/>
 						<input type="hidden" name="visa_mk"  id="visa_mk"/>
-					</form>					
+					</form>
+					<iframe id="frameFile" name="frameFile" style="display: none;"></iframe>					
 				</td></tr>
 			</s:if>
 			<!------------------------- 修改3   20151027---------------   -->	

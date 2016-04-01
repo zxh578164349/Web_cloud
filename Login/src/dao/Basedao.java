@@ -1,6 +1,7 @@
 package dao;
 
 import java.sql.SQLException;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -277,5 +278,15 @@ public class Basedao extends HibernateDaoSupport {
 	});
 	return list;
 }
+	
+	public void deleteList(List list){
+		try{
+			getHibernateTemplate().deleteAll(list);	
+		}catch(RuntimeException re){
+			log.error("deleteList Fail",re);
+			throw re;
+		}
+		
+	}
 
 }
