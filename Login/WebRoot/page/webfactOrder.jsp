@@ -62,11 +62,10 @@
 	}
 	
 	//刪除多個
-	function deleteMore(public_form){
-		layer.load("請稍等...");
-		var subform=jq("#"+public_form);
-		var checkboxs=jq("input[name='factNos']:checked");
-		if(checkboxs.length==0){
+	function deleteMore(public_form){	       	    	       	       
+		   var subform=jq("#"+public_form);
+		   var checkboxs=jq("input[name='factNos']:checked");
+		   if(checkboxs.length==0){
 			   layer.msg("請選擇工廠",3,3);
 			   jq("#div_factNos").css("border","2px solid red");
 			   return false;
@@ -75,12 +74,20 @@
 					jq("#div_yymm").css("border","2px solid red");
 					return false;												
 			}else{
-				jq("#div_factNos").css("border","");
-				jq("#div_yymm").css("border","");
-				subform.attr("action","webfactOrder_deleteMore");
-				subform.attr("target","frameorder");
-				subform.submit();
-			}							
+			    var flag=confirm("確定要刪除嗎?");
+			    if(flag){
+			       layer.load("請稍等...");
+			       //init();
+			       jq("#div_factNos").css("border","");
+				   jq("#div_yymm").css("border","");
+				   subform.attr("action","webfactOrder_deleteMore");
+				   subform.attr("target","frameorder");
+				   subform.submit();
+			    }
+				
+			}
+	    
+									
 	}
 	
 	//你确定要删除吗？

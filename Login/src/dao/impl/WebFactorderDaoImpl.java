@@ -250,7 +250,7 @@ public class WebFactorderDaoImpl extends Basedao implements IWebFactorderDao{
 			hql.append(" and id.yymm >=:yymm");
 			map.put("yymm", yymm);
 		}
-		if(yymm!=null&&!yymm.equals("")){
+		if(yymm2!=null&&!yymm2.equals("")){
 			hql.append(" and id.yymm<=:yymm2");
 			map.put("yymm2", yymm2);
 		}
@@ -801,12 +801,13 @@ public class WebFactorderDaoImpl extends Basedao implements IWebFactorderDao{
 			hql.append(" and id.yymm >=:yymm");
 			map.put("yymm", yymm);
 		}
-		if(yymm!=null&&!yymm.equals("")){
+		if(yymm2!=null&&!yymm2.equals("")){
 			hql.append(" and id.yymm<=:yymm2");
 			map.put("yymm2", yymm2);
 		}
 		List<WebFactorder>list=super.getAllWithNoPage(hql.toString(), map);
-		//super.deleteList(list);			
+		System.out.println(list.size());
+		super.deleteList(list);			
 	}
 	
 	

@@ -3,6 +3,8 @@ package entity;
 import java.sql.Timestamp;
 import java.util.Date;
 
+import com.opensymphony.xwork2.ActionContext;
+
 /**
  * KyzExpectmatmLog entity. @author MyEclipse Persistence Tools
  */
@@ -64,7 +66,10 @@ public class KyzExpectmatmLog implements java.io.Serializable {
 	}
 
 	public void setUsername(String username) {
-		
+		if(username==null||username.equals("")){
+			WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
+			username=user.getUsername();
+		}
 		this.username = username;
 	}
 

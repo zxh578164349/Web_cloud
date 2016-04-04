@@ -32,6 +32,8 @@ import org.hibernate.Transaction;
 
 import net.sf.json.JSONArray;
 
+import services.IKyzExpectmatmFileServices;
+import services.IKyzExpectmatmLogServices;
 import services.IWebFactServices;
 import services.IWebFactorderServices;
 import util.GlobalMethod;
@@ -41,6 +43,8 @@ import util.PageBean;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
+import dao.IKyzExpectmatmFileDao;
+
 import entity.KyzExpectmatmFile;
 import entity.KyzExpectmatmLog;
 import entity.WebFactorder;
@@ -49,6 +53,7 @@ import entity.WebUser;
 public class WebFactOrderAction extends ActionSupport implements ServletResponseAware{
 	private IWebFactorderServices webfactorderSer;
 	private IWebFactServices webFactSer;
+	private IKyzExpectmatmLogServices kyzExpLogSer;
 	private WebFactorder factorder;
 	private PageBean bean;
 	private int page;
@@ -241,6 +246,12 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 	
 	public void setWebFactSer(IWebFactServices webFactSer) {
 		this.webFactSer = webFactSer;
+	}
+	
+	
+	
+	public void setKyzExpLogSer(IKyzExpectmatmLogServices kyzExpLogSer) {
+		this.kyzExpLogSer = kyzExpLogSer;
 	}
 	public void setServletResponse(HttpServletResponse response) {
 		// TODO Auto-generated method stub
@@ -832,7 +843,31 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 		response.setContentType("text/html;charset=utf-8");
 		try{
 			webfactorderSer.deleteMore(factAreas, branks, customers, models, components,factNo,factNos,yymm,yymm2);
+			KyzExpectmatmLog log=new KyzExpectmatmLog();
+			log.setFactNo(factNo);
+			log.setObj("WebFactorder");
+			StringBuffer contents=new StringBuffer();
+			if(factNos.size()>0){
+				contents.append("["+factNos.get(0)+"-"+factNos.get(factNos.size()-1)+"]");
+			}
+			if(factAreas.size()>0){
+				contents.append("["+factAreas.get(0)+"-"+factAreas.get(factAreas.size()-1)+"]");
+			}
+			if(branks.size()>0){
+				contents.append("["+branks.get(0)+"-"+branks.get(branks.size()-1)+"]");
+			}
+			if(customers.size()>0){
+			    contents.append("["+customers.get(0)+"-"+customers.get(customers.size()-1)+"]");
+			}
+			if(models.size()>0){
+				contents.append("["+models.get(0)+"-"+models.get(models.size()-1)+"]");
+			}
+			if(components.size()>0){
+				contents.append("["+components.get(0)+"-"+components.get(components.size()-1)+"]");
+			}
+			log.setContent(contents.toString());						
 			ajaxResult="0";
+			kyzExpLogSer.add(log);
 			response.getWriter().print("<script>window.parent.layer.msg('刪除成功',3,1)</script>");
 		}catch(Exception e){
 			System.out.println(e);
