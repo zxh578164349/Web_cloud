@@ -6,6 +6,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -268,45 +269,30 @@ public class GlobalMethod extends HibernateDaoSupport{
 	}
 	
 	public static void main(String[] args) {
-		/*List<String>list=GlobalMethod.getDateNum("201506","201601");
-		for(String date:list){
-			System.out.println(date);
-		}*/
-		/*Map<String,Object>map=new LinkedHashMap<String,Object>();
-		map.put("a", 1);
-		map.put("b", 2);
-		map.put("c", 3);
-		map.put("d", 4);
-		map.put("e", 5);
-		map.put("f", 6);
-		List<String>list=new ArrayList<String>();
-		list.add("a");
-		list.add("b");
-		list.add("c");
-		list.add("d");
-		list.add("e");
-		list.add("f");
-		List<Integer>list_all=new ArrayList<Integer>();
-		for(int i=0;i<list.size();i++){
-			if(map.size()==0){
-				list_all.add(0);
-			}
-			for(String key:map.keySet()){
-				if(list.get(i).equals(key)){
-					list_all.add((Integer)map.get(key));
-					map.remove(key);
+		int[]nums={23,34,35,56,56,78};
+		List<Integer>list=new ArrayList<Integer>();
+		Arrays.sort(nums);
+		int index=0;
+		int temp=0;
+		for(int i=0;i<nums.length;i++){
+			if(i<nums.length-1){
+				if(nums[i]==nums[i+1]){
+					index=i-temp;
+					temp=temp+1;
+					list.add(index+1);
+					list.add(index+1);
+			     
 				}else{
-					list_all.add(0);
-				}
-				break;
+					index=i;
+					list.add(index+1);
+				}			
 			}
 			
+			
+			
 		}
-		for(Integer iii:list_all){
-			System.out.println(iii);
-		}*/
-		for(int a=1;a<13;a++){
-			System.out.println((a-1)/3+1);
+		for(Integer i:list){
+			System.out.println(i);
 		}
 		
 						
