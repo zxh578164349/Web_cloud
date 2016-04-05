@@ -2658,7 +2658,7 @@ public class Printer_Auto {
 			double sumPersonnum = 0;// 人數合計
 			double sumDayCount = 0;// 總天數
 
-			double sumNodate=0;//未輸入數據統計20160330
+			//double sumNodate=0;//未輸入數據統計20160330
 			/**
 			 * 如果alllist2.size()+factcodelist.size()>41就分頁
 			 */
@@ -2996,7 +2996,6 @@ public class Printer_Auto {
 					Double achievingRate = null;
 					Double daycount = null;
 					String holiday = null;
-					String timeoutRecorde=null;//超時錄入數據記錄20160331
 					switch (y) {
 					case 0:
 						StringBuffer date_month = new StringBuffer();
@@ -3798,6 +3797,7 @@ public class Printer_Auto {
 									sheet.getRow(z + height + totalHeight + 1)
 											.getCell(y + width)
 											.setCellStyle(cs_font_red);
+									//sumNodate=sumNodate+1;
 
 								}
 								if (achievingRate == null
@@ -3849,7 +3849,7 @@ public class Printer_Auto {
 								
 								
 								/************************************未輸入數據統計20160331************************************/
-								CellRangeAddress region_sumnodate = new CellRangeAddress(
+								/*CellRangeAddress region_sumnodate = new CellRangeAddress(
 										z + height + totalHeight + 2, (short) z
 												+ height + totalHeight + 2, y
 												+ width - 4, (short) y + width);
@@ -3867,12 +3867,13 @@ public class Printer_Auto {
 											sumNodate=sumNodate+1;
 										}
 									}
-								}								
+								}							
 						        sheet.getRow(z + height + totalHeight + 2)
 								.getCell(y + width -4)
-								.setCellValue(sumNodate);						        						        
+								.setCellValue(sumNodate);*/
+						        /************************************未輸入數據統計20160331************************************/
 							}
-							/************************************未輸入數據統計20160331************************************/
+							
 						}// end "if 5"
 
 						break;					

@@ -315,6 +315,7 @@ jq(document).ajaxStop(function(){
 							value="<s:property value='ydata.id.factCode'/>"
 							name="ydata.id.factCode" readonly /> </font>
 							<input type="hidden" value="${loginUser.username}" name="ydata.usernameUd"/> <!--  修改者-->
+						    <input type="hidden" value="<s:property value='ydata.dateCreate'/>" name="ydata.dateCreate"/><!-- 創建時間 -->
 							</td>
 				</tr>
 				<tr>
