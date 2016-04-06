@@ -88,7 +88,7 @@ public class VWebbussortAction extends ActionSupport implements ServletResponseA
 		List<String>list_months=GlobalMethod.findMonths(yymm, yymm2);
 		List<Object[]>list_facts=webFactSer.findFactAble2();
 		
-		Map<String,String>map_types=this.findTypes();//類型
+		Map<String,Object>map_types=this.findTypes();//類型
 		List<String>list_items=this.findItems();//項目
 		List<String>list_units=this.findUnits();//單位
 		
@@ -157,14 +157,23 @@ public class VWebbussortAction extends ActionSupport implements ServletResponseA
 	    	/*******************表頭*****************/
 	    	
 	    	/********************分類+項目+單位*******************/
-	    	for(int a=0;a<map_types.size();a++){
-	    		sheet.getRow(2+a).getCell(0).setCellValue(map_types.get(a));
-	    		sheet.getRow(2+a).getCell(0).setCellStyle(cs);
+	    	int idx1=2;
+    		int idx2=2;
+	    	for(String key:map_types.keySet()){
+	    		 idx1=idx2;
+	    		 idx2=idx1+((List<String>)map_types.get(key)).size();
+	    		CellRangeAddress cra_type=new CellRangeAddress(idx1,idx2,0,0);
+	    		sheet.addMergedRegion(cra_type);
+	    		sheet.getRow(idx1).getCell(0).setCellValue(key);
+	    		for(int x=idx1+1;x<idx2+1;x++){
+	    			sheet.getRow(x).getCell(0).setCellStyle(cs);
+	    		}
+	    		for(int y=0;y<((List<String>)map_types.get(key)).size();y++){
+	    			sheet.getRow(y+idx1).getCell(1).setCellValue(((List<String>)map_types.get(key)).get(y));
+	    			sheet.getRow(y+idx1).getCell(1).setCellStyle(cs);
+	    		}
 	    	}
-	    	for(int a=0;a<list_items.size();a++){
-	    		sheet.getRow(2+a).getCell(1).setCellValue(list_items.get(a));
-	    		sheet.getRow(2+a).getCell(1).setCellStyle(cs);
-	    	}
+	    	
 	    	for(int a=0;a<list_units.size();a++){
 	    		sheet.getRow(2+a).getCell(2).setCellValue(list_units.get(a));
 	    		sheet.getRow(2+a).getCell(2).setCellStyle(cs);
@@ -196,24 +205,8 @@ public class VWebbussortAction extends ActionSupport implements ServletResponseA
 	 * @author web
 	 * @date 2016/4/6
 	 */
-	public Map<String,String> findTypes() {
-		Map<String,String>map = new HashMap<String,String>();
-		map.put("產能","產能");
-		map.put("水","水");
-		map.put("電","電");
-		map.put("蒸汽","蒸汽");
-		map.put("總工務費用金額(USD)成倉","總工務費用金額(USD)成倉");
-		map.put("原物料","原物料");
-		map.put("防霜劑","防霜劑");
-		map.put("色料","色料");
-		map.put("促進劑","促進劑");
-		map.put("防粘劑","防粘劑");
-		map.put("油漆/處理劑","油漆/處理劑");
-		map.put("離型劑","離型劑");
-		map.put("人工費用","人工費用");
-		map.put("其他","其他");
-		map.put("廢品倉","廢品倉");
-		
+	public Map<String,Object> findTypes() {
+		Map<String,Object>map = new HashMap<String,Object>();
 		List<String>list_1=new ArrayList<String>();
 		List<String>list_2=new ArrayList<String>();
 		List<String>list_3=new ArrayList<String>();
@@ -229,28 +222,139 @@ public class VWebbussortAction extends ActionSupport implements ServletResponseA
 		List<String>list_13=new ArrayList<String>();
 		List<String>list_14=new ArrayList<String>();
 		List<String>list_15=new ArrayList<String>();
-		List<String>list_16=new ArrayList<String>();
-		List<String>list_17=new ArrayList<String>();
-		List<String>list_18=new ArrayList<String>();
-		List<String>list_19=new ArrayList<String>();
-		List<String>list_20=new ArrayList<String>();
-		List<String>list_21=new ArrayList<String>();
-		List<String>list_22=new ArrayList<String>();
-		List<String>list_23=new ArrayList<String>();
+		List<String>list_16=new ArrayList<String>();	
 		
 		//產能
 		list_1.add("產能模");
 		list_1.add("產能雙");
 		list_1.add("生產天數");
-		//水
-		
+		//水		
 		list_2.add("用水量");
 		list_2.add("用水金額");
 		list_2.add("用量單耗");
 		list_2.add("費用單耗");
 		list_2.add("用量單耗排名");
+		//電
+		list_3.add("用電量(度)");
+		list_3.add("用電費用");
+		list_3.add("用量單耗");
+		list_3.add("費用單耗");
+		list_3.add("用量單耗排名");
+		//蒸汽
+		list_4.add("蒸汽用量");
+		list_4.add("蒸汽費用");
+		list_4.add("用量單耗");
+		list_4.add("費用單耗");
+		list_4.add("用量單耗排名");
+		//總工務費用金額(USD)
+		list_5.add("雜項購置");
+		list_5.add("雜項支出-其他");
+		list_5.add("電腦耗材");
+		list_5.add("文具用品類");
+		list_5.add("修繕類-機器設備");
+		list_5.add("修繕費-其它類");
+		list_5.add("車輛維修費");
+		list_5.add("服裝費");
+		list_5.add("清潔/消毒費");
+		list_5.add("工程整改費");
+		list_5.add("工傷");
+		list_5.add("費用小計");
+		list_5.add("費用小計單耗");
+		list_5.add("金額單耗排名");
+		//成倉
+		list_6.add("成品庫存");
+		list_6.add("天數");
+		list_6.add("天數排名");
+		//原物料
+		list_7.add("原料庫存量");
+		list_7.add("原料庫存金額");
+		list_7.add("原料庫存天數");
+		list_7.add("天數排名");
+		list_7.add("呆滯料庫存");
+		list_7.add("呆滯料庫存金額(USD)");
+		list_7.add("庫存量排名");
+		//防霜劑
+		list_8.add("防霜劑用量");
+		list_8.add("防霜劑金額");
+		list_8.add("防霜劑用量單耗");
+		list_8.add("防霜劑金額單耗");
+		list_8.add("用量單耗排名");
+		//色料
+		list_9.add("色料用量");
+		list_9.add("色料金額");
+		list_9.add("色料用量單耗");
+		list_9.add("色料金額單耗");
+		list_9.add("用量單耗排名");
+		//促進劑
+		list_10.add("藥品用量");
+		list_10.add("藥品金額");
+		list_10.add("藥品用量單耗");
+		list_10.add("藥品金額單耗");
+		list_10.add("用量單耗排名");
+		//防粘劑
+		list_11.add("防粘劑用量");
+		list_11.add("防粘劑金額");
+		list_11.add("防粘劑用量單耗");
+		list_11.add("防粘劑金額單耗");
+		list_11.add("用量單耗排名");
+		//油漆/處理劑
+		list_12.add("油漆溶劑用量");
+		list_12.add("油漆溶劑金額");
+		list_12.add("油漆溶劑用量單耗");
+		list_12.add("油漆溶劑金額單耗");
+		list_12.add("用量單耗排名");
+		//離型劑
+		list_13.add("離型劑用量");
+		list_13.add("離型劑金額");
+		list_13.add("離型劑用量單耗");
+		list_13.add("離型劑金額單耗");
+		list_13.add("用量單耗排名");
+		//人工費用
+		list_14.add("直接工資");
+		list_14.add("直工工資單耗");
+		list_14.add("直工工資單耗排名");
+		list_14.add("間接工資");
+		list_14.add("間接工資單耗");
+		list_14.add("間接工資單耗排名");
+		list_14.add("加班費金額");
+		list_14.add("加班費單耗");
+		list_14.add("加班費單耗排名");
+		list_14.add("獎金金額");
+		list_14.add("獎金單耗");
+		list_14.add("獎金單耗排名");
+		list_14.add("其加金額");
+		list_14.add("其加單耗");
+		list_14.add("其加單耗排名");
+		//其他
+		list_15.add("模具修理費");
+		list_15.add("差旅費");
+		list_15.add("交際費用");
+		list_15.add("包裝費用");
+		list_15.add("其它費用小計");
+		list_15.add("費用小計單耗");
+		list_15.add("費用單耗排名");
+		//廢品倉
+		list_16.add("廢品倉報廢重量");
+		list_16.add("廢品倉報廢金額");
+		list_16.add("重量單耗");
+		list_16.add("重量單耗排名");
 		
-		
+		map.put("產能",list_1);
+		map.put("水",list_2);
+		map.put("電",list_3);
+		map.put("蒸汽",list_4);
+		map.put("總工務費用金額(USD)成倉",list_5);
+		map.put("成倉", list_6);
+		map.put("原物料",list_7);
+		map.put("防霜劑",list_8);
+		map.put("色料",list_9);
+		map.put("促進劑",list_10);
+		map.put("防粘劑",list_11);
+		map.put("油漆/處理劑",list_12);
+		map.put("離型劑",list_13);
+		map.put("人工費用",list_14);
+		map.put("其他",list_15);
+		map.put("廢品倉",list_16);
 
 		return map;
 
