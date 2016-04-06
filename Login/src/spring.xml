@@ -200,7 +200,8 @@
 				<value>entity/WebBussinessletter.hbm.xml</value>
 				<value>entity/WebPhonebook.hbm.xml</value>
 				<value>entity/WebSubmenu2.hbm.xml</value>
-				<value>entity/Weballobj.hbm.xml</value></list>
+				<value>entity/Weballobj.hbm.xml</value>
+				<value>entity/VWebbussort.hbm.xml</value></list>
 		</property>
 	</bean>
 		

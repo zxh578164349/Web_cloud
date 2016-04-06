@@ -3017,12 +3017,12 @@ public class Printer_Auto {
 									.getCell(y + width).setCellStyle(cs_font);
 							
 							/************************************未輸入數據統計20160331************************************/
-							sheet.createRow(z + height + totalHeight + 2)
+							/*sheet.createRow(z + height + totalHeight + 2)
 							.createCell(y + width)
 							.setCellValue("未輸入統計");
 					        sheet.getRow(z + height + totalHeight + 2)
 							.getCell(y + width)
-							.setCellStyle(cs_font);
+							.setCellStyle(cs_font);*/
 					        /************************************未輸入數據統計20160331************************************/					       
 						}
 						if (z == z_length - 2) {

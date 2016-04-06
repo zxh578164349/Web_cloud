@@ -269,34 +269,46 @@ public class GlobalMethod extends HibernateDaoSupport{
 	}
 	
 	public static void main(String[] args) {
-		int[]nums={23,34,35,56,56,78};
-		List<Integer>list=new ArrayList<Integer>();
-		Arrays.sort(nums);
-		int index=0;
-		int temp=0;
-		for(int i=0;i<nums.length;i++){
-			if(i<nums.length-1){
-				if(nums[i]==nums[i+1]){
-					index=i-temp;
-					temp=temp+1;
-					list.add(index+1);
-					list.add(index+1);
-			     
-				}else{
-					index=i;
-					list.add(index+1);
-				}			
-			}
-			
-			
-			
-		}
-		for(Integer i:list){
-			System.out.println(i);
-		}
+		int[] a = new int[] {25, 5, 5, 5, 5, 5, 10, 123, 12, 5, 10, 25, 7};
+        int[] b = new int[a.length];
+        int[] c = new int[a.length];
+        for(int i=0; i<a.length; i++) {
+            b[i] = a[i];
+            System.out.print(b[i] + "\t");
+        }
+        System.out.println();
+        Arrays.sort(b);
+        for(int i=0; i<a.length; i++) {
+            System.out.print(b[i] + "\t");
+        }
+        System.out.println();
+        for(int i=0; i<a.length; i++) {
+            c[i] = getIndex(a[i], b);
+            System.out.print(c[i] + "\t");
+        }
+
 		
 						
 	}
+	 public static int getIndex(int e, int[] a) {
+	        int temp = 1;
+	        if(e == a[0]) {
+	            return temp;
+	        }
+	        for(int i=temp; i<a.length; i++) {
+	            if(e == a[i]) {
+	                return ++temp;
+	            }else {
+	                if(a[i-1] == a[i]) {
+	                     
+	                }else {
+	                    temp ++;
+	                }                
+	            }
+	        }
+	        return 0;        
+	    }
+
 	
 	/**
 	 * 刪除文件夾
@@ -334,6 +346,33 @@ public class GlobalMethod extends HibernateDaoSupport{
 		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
 		log.setUsername(user.getUsername());
 		//kyzExpLogSer.add(log);
+	}
+	
+	/**
+	 * 計算兩箇日期之間的月數
+	 * @Title: findMonths
+	 * @Description: TODO
+	 * @param @param yymm
+	 * @param @param yymm2
+	 * @param @return
+	 * @return List<String>
+	 * @throws ParseException 
+	 * @throws
+	 * @author web
+	 * @date 2016/4/6
+	 */
+	public static List<String> findMonths(String yymm,String yymm2) throws ParseException{
+		List<String>list=new ArrayList<String>();
+		DateFormat frm=new SimpleDateFormat("yyyyMM");
+		Calendar cal=Calendar.getInstance();
+		Calendar cal2=Calendar.getInstance();
+		cal.setTime(frm.parse(yymm));
+		cal2.setTime(frm.parse(yymm2));
+		while(cal.getTime().getTime()<=cal2.getTime().getTime()){
+			list.add(frm.format(cal.getTime()));
+			cal.add(Calendar.MONTH, 1);
+		}
+		return list;
 	}
 
 }

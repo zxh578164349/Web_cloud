@@ -112,5 +112,17 @@ public interface IWebFactServices {
 	 * @date 2016/4/1
 	 */
 	public List<WebFact>findAll();
+	
+	/**
+	 * 所有有效的工廠（不重複的工廠）
+	 * @Title: findFactAble2
+	 * @Description: TODO
+	 * @param @return
+	 * @return List<Object[]>
+	 * @throws
+	 * @author web
+	 * @date 2016/4/6
+	 */
+	public List<Object[]>findFactAble2();
 
 }

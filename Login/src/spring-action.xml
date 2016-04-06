@@ -73,6 +73,7 @@
 	<bean id="webphonebookAction" class="action.WebPhonebookAction" scope="prototype"/>
 	
 	<bean id="weballobjAction" class="action.WeballobjAction" scope="prototype"/>
+	<bean id="vwebbussortAction" class="action.VWebbussortAction" scope="prototype"/>
 </beans> 
 
  

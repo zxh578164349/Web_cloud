@@ -792,6 +792,9 @@
 		   <result name="beanList">page/weballobj.jsp</result>
 		   <result name="beanList1">page/table1/weballobj1.jsp</result>		       		   
 		</action>
+		<action name="vwebbussort_*" class="vwebbussortAction" method="{1}">
+		    
+		</action>
 	</package>
 
 </struts>
