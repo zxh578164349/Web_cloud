@@ -35,6 +35,9 @@
         <property name="a07" type="java.math.BigDecimal">
             <column name="A07" precision="22" scale="0" />
         </property>
+        <property name="sortA06" type="java.math.BigDecimal">
+            <column name="SORT_A06" precision="22" scale="0" />
+        </property>
         <property name="a08" type="java.math.BigDecimal">
             <column name="A08" precision="22" scale="0" />
         </property>
@@ -47,6 +50,9 @@
         <property name="a11" type="java.math.BigDecimal">
             <column name="A11" precision="22" scale="0" />
         </property>
+        <property name="sortA10" type="java.math.BigDecimal">
+            <column name="SORT_A10" precision="22" scale="0" />
+        </property>
         <property name="a12" type="java.math.BigDecimal">
             <column name="A12" precision="22" scale="0" />
         </property>
@@ -58,6 +64,9 @@
         </property>
         <property name="a15" type="java.math.BigDecimal">
             <column name="A15" precision="22" scale="0" />
+        </property>
+        <property name="sortA14" type="java.math.BigDecimal">
+            <column name="SORT_A14" precision="22" scale="0" />
         </property>
         <property name="a16" type="java.math.BigDecimal">
             <column name="A16" precision="22" scale="0" />
@@ -98,11 +107,17 @@
         <property name="a28" type="java.math.BigDecimal">
             <column name="A28" precision="22" scale="0" />
         </property>
+        <property name="sortA28" type="java.math.BigDecimal">
+            <column name="SORT_A28" precision="22" scale="0" />
+        </property>
         <property name="a29" type="java.math.BigDecimal">
             <column name="A29" precision="22" scale="0" />
         </property>
         <property name="a30" type="java.math.BigDecimal">
             <column name="A30" precision="22" scale="0" />
+        </property>
+        <property name="sortA30" type="java.math.BigDecimal">
+            <column name="SORT_A30" precision="22" scale="0" />
         </property>
         <property name="a31" type="java.math.BigDecimal">
             <column name="A31" precision="22" scale="0" />
@@ -113,11 +128,17 @@
         <property name="a33" type="java.math.BigDecimal">
             <column name="A33" precision="22" scale="0" />
         </property>
+        <property name="sortA33" type="java.math.BigDecimal">
+            <column name="SORT_A33" precision="22" scale="0" />
+        </property>
         <property name="a34" type="java.math.BigDecimal">
             <column name="A34" precision="22" scale="0" />
         </property>
         <property name="a35" type="java.math.BigDecimal">
             <column name="A35" precision="22" scale="0" />
+        </property>
+        <property name="sortA31" type="java.math.BigDecimal">
+            <column name="SORT_A31" precision="22" scale="0" />
         </property>
         <property name="a36" type="java.math.BigDecimal">
             <column name="A36" precision="22" scale="0" />
@@ -131,6 +152,9 @@
         <property name="a39" type="java.math.BigDecimal">
             <column name="A39" precision="22" scale="0" />
         </property>
+        <property name="sortA38" type="java.math.BigDecimal">
+            <column name="SORT_A38" precision="22" scale="0" />
+        </property>
         <property name="a40" type="java.math.BigDecimal">
             <column name="A40" precision="22" scale="0" />
         </property>
@@ -142,6 +166,9 @@
         </property>
         <property name="a43" type="java.math.BigDecimal">
             <column name="A43" precision="22" scale="0" />
+        </property>
+        <property name="sortA42" type="java.math.BigDecimal">
+            <column name="SORT_A42" precision="22" scale="0" />
         </property>
         <property name="a44" type="java.math.BigDecimal">
             <column name="A44" precision="22" scale="0" />
@@ -155,6 +182,9 @@
         <property name="a47" type="java.math.BigDecimal">
             <column name="A47" precision="22" scale="0" />
         </property>
+        <property name="sortA46" type="java.math.BigDecimal">
+            <column name="SORT_A46" precision="22" scale="0" />
+        </property>
         <property name="a48" type="java.math.BigDecimal">
             <column name="A48" precision="22" scale="0" />
         </property>
@@ -166,6 +196,9 @@
         </property>
         <property name="a51" type="java.math.BigDecimal">
             <column name="A51" precision="22" scale="0" />
+        </property>
+        <property name="sortA50" type="java.math.BigDecimal">
+            <column name="SORT_A50" precision="22" scale="0" />
         </property>
         <property name="a52" type="java.math.BigDecimal">
             <column name="A52" precision="22" scale="0" />
@@ -179,6 +212,9 @@
         <property name="a55" type="java.math.BigDecimal">
             <column name="A55" precision="22" scale="0" />
         </property>
+        <property name="sortA54" type="java.math.BigDecimal">
+            <column name="SORT_A54" precision="22" scale="0" />
+        </property>
         <property name="a56" type="java.math.BigDecimal">
             <column name="A56" precision="22" scale="0" />
         </property>
@@ -191,11 +227,17 @@
         <property name="a59" type="java.math.BigDecimal">
             <column name="A59" precision="22" scale="0" />
         </property>
+        <property name="sortA58" type="java.math.BigDecimal">
+            <column name="SORT_A58" precision="22" scale="0" />
+        </property>
         <property name="a60" type="java.math.BigDecimal">
             <column name="A60" precision="22" scale="0" />
         </property>
         <property name="a61" type="java.math.BigDecimal">
             <column name="A61" precision="22" scale="0" />
+        </property>
+        <property name="sortA61" type="java.math.BigDecimal">
+            <column name="SORT_A61" precision="22" scale="0" />
         </property>
         <property name="a62" type="java.math.BigDecimal">
             <column name="A62" precision="22" scale="0" />
@@ -203,11 +245,17 @@
         <property name="a63" type="java.math.BigDecimal">
             <column name="A63" precision="22" scale="0" />
         </property>
+        <property name="sortA63" type="java.math.BigDecimal">
+            <column name="SORT_A63" precision="22" scale="0" />
+        </property>
         <property name="a64" type="java.math.BigDecimal">
             <column name="A64" precision="22" scale="0" />
         </property>
         <property name="a65" type="java.math.BigDecimal">
             <column name="A65" precision="22" scale="0" />
+        </property>
+        <property name="sortA65" type="java.math.BigDecimal">
+            <column name="SORT_A65" precision="22" scale="0" />
         </property>
         <property name="a66" type="java.math.BigDecimal">
             <column name="A66" precision="22" scale="0" />
@@ -215,11 +263,17 @@
         <property name="a67" type="java.math.BigDecimal">
             <column name="A67" precision="22" scale="0" />
         </property>
+        <property name="sortA67" type="java.math.BigDecimal">
+            <column name="SORT_A67" precision="22" scale="0" />
+        </property>
         <property name="a68" type="java.math.BigDecimal">
             <column name="A68" precision="22" scale="0" />
         </property>
         <property name="a69" type="java.math.BigDecimal">
             <column name="A69" precision="22" scale="0" />
+        </property>
+        <property name="sortA69" type="java.math.BigDecimal">
+            <column name="SORT_A69" precision="22" scale="0" />
         </property>
         <property name="a70" type="java.math.BigDecimal">
             <column name="A70" precision="22" scale="0" />
@@ -239,6 +293,9 @@
         <property name="a75" type="java.math.BigDecimal">
             <column name="A75" precision="22" scale="0" />
         </property>
+        <property name="sortA75" type="java.math.BigDecimal">
+            <column name="SORT_A75" precision="22" scale="0" />
+        </property>
         <property name="a76" type="java.math.BigDecimal">
             <column name="A76" precision="22" scale="0" />
         </property>
@@ -247,6 +304,9 @@
         </property>
         <property name="a78" type="java.math.BigDecimal">
             <column name="A78" precision="22" scale="0" />
+        </property>
+        <property name="sortA78" type="java.math.BigDecimal">
+            <column name="SORT_A78" precision="22" scale="0" />
         </property>
     </class>
 </hibernate-mapping>
