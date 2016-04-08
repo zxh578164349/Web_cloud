@@ -201,7 +201,8 @@
 				<value>entity/WebPhonebook.hbm.xml</value>
 				<value>entity/WebSubmenu2.hbm.xml</value>
 				<value>entity/Weballobj.hbm.xml</value>
-				<value>entity/VWebbussort.hbm.xml</value></list>
+				<value>entity/VWebbussort.hbm.xml</value>
+				<value>entity/WebydataNoinput.hbm.xml</value></list>
 		</property>
 	</bean>
 		

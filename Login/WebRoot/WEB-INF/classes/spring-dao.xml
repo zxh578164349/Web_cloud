@@ -87,5 +87,6 @@
 	<bean id="webphonedao" class="dao.impl.WebPhonebookDaoImpl" parent="baseDao"></bean>
 	<bean id="weballobjdao" class="dao.impl.WeballobjDaoImpl" parent="baseDao"></bean>
 	<bean id="vwebsortdao" class="dao.impl.VWebbussortDaoImpl" parent="baseDao"></bean>
+	<bean id="webydatenoinputdao" class="dao.impl.WebydataNoinputDaoImpl" parent="baseDao"></bean>
 </beans>
 

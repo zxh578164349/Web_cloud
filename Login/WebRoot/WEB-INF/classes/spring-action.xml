@@ -74,6 +74,7 @@
 	
 	<bean id="weballobjAction" class="action.WeballobjAction" scope="prototype"/>
 	<bean id="vwebbussortAction" class="action.VWebbussortAction" scope="prototype"/>
+	<bean id="webydatanoinputAction" class="action.WebydataNoinputAction" scope="prototype"/>
 </beans> 
 
  
