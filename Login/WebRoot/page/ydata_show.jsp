@@ -75,7 +75,7 @@
 					layer.msg("發送成功!",3,1);
 				}
 				if(data=="1"){
-					layer.msg("發送失敗!",3,1);
+					layer.msg("發送失敗!",3,3);
 				}				
 			},
 			error:function(error){

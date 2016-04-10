@@ -26,10 +26,13 @@ import org.springframework.scheduling.quartz.QuartzJobBean;
 
 import entity.WebCc;
 import entity.WebEmail;
+import entity.WebydataNoinput;
+import entity.WebydataNoinputId;
 
 import services.IWebEmailService;
 import services.IWebEstProductServices;
 import services.IWebYieldDataServices;
+import services.IWebydataNoinputServices;
 
 /**
  * 系统启动时的监听类 初始化系统数据
@@ -93,12 +96,13 @@ public class TestTimerAction extends QuartzJobBean {
 
 	public static String notInput(ApplicationContext ac) {
 		List<String> list_day=null;
+		DateFormat frm=new SimpleDateFormat("yyyyMMdd");
 		// 查找當天沒輸數據廠別
 		/*ApplicationContext ac = new ClassPathXmlApplicationContext(
 				new String[] { "spring-action.xml", "spring-dao.xml",
 						"spring.xml", "spring-services.xml" });*/
-		IWebYieldDataServices dataSer = (IWebYieldDataServices) ac
-				.getBean("dataSer");
+		IWebYieldDataServices dataSer = (IWebYieldDataServices) ac.getBean("dataSer");
+		IWebydataNoinputServices webydatenoinputSer=(IWebydataNoinputServices)ac.getBean("webydatenoinputSer");		
 		Calendar cal = Calendar.getInstance();
 		Date bdate=new Date();
 		cal.setTime(bdate);
@@ -108,8 +112,9 @@ public class TestTimerAction extends QuartzJobBean {
 	        list_day=getTenDay(-1);
 		}
 		StringBuffer totalTemp = new StringBuffer();
-		for (int i = 0; i < list_day.size(); i++) {
+		for (int i = 0; i < list_day.size(); i++) {//for
 			List<String[]> list = dataSer.getFactPrint_show(list_day.get(i));
+			List<WebydataNoinput>list_noinput=new ArrayList<WebydataNoinput>();
 			StringBuffer temp = new StringBuffer();
 			for (int j = 0; j < list.size(); j++) {
 				Object[] objs = list.get(j);
@@ -119,6 +124,13 @@ public class TestTimerAction extends QuartzJobBean {
 				temp.append(factCode + ")");
 				if (j < list.size() - 1) {
 					temp.append("<br/>");
+				}
+				try {
+					WebydataNoinput oninput=new WebydataNoinput(new WebydataNoinputId((String)objs[2],(String)objs[1],frm.format(new SimpleDateFormat("yyyy/MM/dd").parse(list_day.get(i)))),new SimpleDateFormat("yyMMdd_hh").format(new Date()));
+					list_noinput.add(oninput);
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
 			}
 			String result = temp.toString();
@@ -138,7 +150,9 @@ public class TestTimerAction extends QuartzJobBean {
 			if (i < list_day.size() - 1) {
 				totalTemp.append("<br/>");
 			}
-		}
+			webydatenoinputSer.addLarge(list_noinput);//未输入记录20160410
+			
+		}//for
 		totalTemp.append("<br/>");
 		String totalResult = totalTemp.toString();
 		return totalResult;
@@ -333,6 +347,7 @@ public class TestTimerAction extends QuartzJobBean {
 				HttpClient client = new HttpClient();
 				HttpMethod method = new GetMethod("http://203.85.73.161/Login/printerauto_print?yymm="+yymm);//(在不同的機器上注意修改IP和端口)
 				//HttpMethod method = new GetMethod("http://172.17.18.173:8080/Login/printerauto_print?yymm="+yymm);
+				//HttpMethod method = new GetMethod("http://localhost:8080/Login/printerauto_print?yymm="+yymm);
 				client.executeMethod(method);
 				method.releaseConnection();
 				ApplicationContext ac = new ClassPathXmlApplicationContext(
@@ -369,8 +384,11 @@ public class TestTimerAction extends QuartzJobBean {
 						cc[j] = Cc.get(j).getName() + Cc.get(j).getEmail();
 					}
 				}
+				
 				/*String[] mail={MimeUtility.encodeText("張錫洪")+"<kyinfo.David@yyin.yydg.com.cn>"};				
 				String[] cc = {MimeUtility.encodeText("張錫洪")+"<kyinfo.David@yyin.yydg.com.cn>"};*/
+				/*String[] mail={MimeUtility.encodeText("張錫洪")+"<zxh578164349@qq.com>"};				
+				String[] cc = {MimeUtility.encodeText("張錫洪")+"<zxh578164349@qq.com>"};*/
 				
 				AutoSendEmailAction send = new AutoSendEmailAction();
 				String tyymm=tformat.format(new Date());
@@ -378,25 +396,7 @@ public class TestTimerAction extends QuartzJobBean {
 					SimpleDateFormat formatDates = new SimpleDateFormat("yyyy/MM/dd");						
 					DateFormat formast = new SimpleDateFormat("MM");
 					SimpleDateFormat jinri = new SimpleDateFormat("M/dd");
-					//String dates = formast.format(new Date());									
-					/*send.sendmail(
-							mail,
-							cc,
-							dates
-									+"月份加久各工廠油壓產量表匯總--截止"
-									+ jinri.format(formatDates
-											.parse(dateAdd(-1))),
-							"各主管:好!"
-									+(cal.get(Calendar.DAY_OF_WEEK) == Calendar.MONDAY?formatDates.format(formatDates
-											.parse(dateAdd(-3)))+"~"+formatDates.format(formatDates
-											.parse(dateAdd(-1))):formatDates.format(formatDates
-													.parse(dateAdd(-1))))
-									+ "未輸入系統廠別如下:"
-									+ "<br/>"
-									+ "<span style='color:red;font-size:16'>"
-									+ totalResult
-									+ "</span><br/><br/><br/>"
-									+"本郵件自動發送,請勿回復!如需回复，請回复到kyinfo.lp@yydg.com.cn咨訊室或者lgx@yydg.com.cn譚香林!",yymm);*/
+					
 					
 					//郵件內容
 					StringBuffer content=new StringBuffer();

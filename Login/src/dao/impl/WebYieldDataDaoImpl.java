@@ -278,7 +278,7 @@ public class WebYieldDataDaoImpl extends Basedao implements IWebYieldDataDao {
 	 * 只顯示要顯示的廠別狀態
 	 */
 	public List<String[]> getFactPrint_show(String date) {
-		String hql = "select factSname,id.factArea from WebFact where id.factNo||id.factArea not in "
+		String hql = "select factSname,id.factArea,id.factNo from WebFact where id.factNo||id.factArea not in "
 				+ "(select id.factNo||id.factCode from WebYieldData  where to_char(id.yymmdd,'yyyy/MM/dd')= ? )"
 				+ " and factShow='0'";
 		String[] objs = { date };
@@ -361,7 +361,7 @@ public class WebYieldDataDaoImpl extends Basedao implements IWebYieldDataDao {
 	
 	public List<WebYieldData> findByYymm(String yymm) {
 		// TODO Auto-generated method stub
-		String hql="from WebYieldData where to_char(id.yymmdd,'yyyymm')=?";
+		String hql="from WebYieldData where to_char(id.yymmdd,'yyyymm')=? order by id.factNo,id.factCode, id.yymmdd";
 		String[]objs={yymm};
 		return super.findAll(hql, objs);
 	}

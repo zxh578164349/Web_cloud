@@ -2064,31 +2064,46 @@ public class Printer_Auto {
 		List<String> factcodelist = webFactSer.findAllFactCode_show();
 		
 		
-		/*List<WebFact>listfacts=webFactSer.findAll();
-		List<WebYieldData>listydata=dataSer.findByYymm(yymm);
-		List<Webestproduct>listestp=estProSer.findByYymm(yymm);
-		
-		
-		for(int a=0;a<listfacts.size();a++){
-			
-		}*/
-		/*GregorianCalendar ger = new GregorianCalendar();
-		int currenMonth = (int) ger.get(Calendar.MONTH) + 1;
-		int currenYear = (int) ger.get(Calendar.YEAR);
-		DateFormat format = new SimpleDateFormat("yyyyMM");		
-		String date = format.format(new Date());
-		*/
 		int currenMonth=Integer.parseInt(yymm.substring(4, 6));                                                                     ///////////////currenMonth///////
 		int currenYear=Integer.parseInt(yymm.substring(0, 4));
-				
-		//String date=yymm;                                                                                                            //////////////date//////////////
+				                                                                                                         //////////////date//////////////
 		List<Webestproduct> alllist = new ArrayList<Webestproduct>();
 		List<List<WebYieldData>> alllist2 = new ArrayList<List<WebYieldData>>();
 		List<String> factnoCodelist = new ArrayList<String>();
-		//String firstdate = getFirstDate();
-		//String lastdate = dateAdd(-1);
-		for (int factno = 0; factno < list_factNo.size(); factno++) {// start "for"
-			 /****只查找要顯示的廠別狀態****/															
+		
+		/*******************20160410**********************/
+		List<WebFact>listfacts=webFactSer.findAll();
+		List<WebYieldData>listydata=dataSer.findByYymm(yymm);
+		List<Webestproduct>listestp=estProSer.findByYymm(yymm);
+		
+		Webestproduct estemp=new Webestproduct();
+		for(WebFact fact:listfacts){
+			alllist.add(estemp);
+			StringBuffer factnoCode = new StringBuffer();
+			factnoCode.append(fact.getFactSname());
+			factnoCode.append("("+ fact.getId().getFactNo() + ")-");																
+			factnoCode.append(fact.getId().getFactArea());
+			factnoCodelist.add(factnoCode.toString());
+			List<WebYieldData>list_a=new ArrayList<WebYieldData>();
+			for(WebYieldData ydata:listydata){
+				if(fact.getId().getFactNo().equals(ydata.getId().getFactNo())&&fact.getId().getFactArea().equals(ydata.getId().getFactCode())){
+					list_a.add(ydata);
+				}
+			}
+			alllist2.add(list_a);
+			for(Webestproduct est:listestp){
+				if(fact.getId().getFactNo().equals(est.getId().getFactNo())&&fact.getId().getFactArea().equals(est.getId().getFactCode())){
+					alllist.remove(estemp);
+					alllist.add(est);
+					break;
+				}
+			}
+		}
+		/*******************20160410**********************/
+		
+
+		/*for (int factno = 0; factno < list_factNo.size(); factno++) {// start "for"
+			 //****只查找要顯示的廠別狀態****//*															
 			List factAreas = webFactSer.findFactCodeByFactNo_show(((Object[]) list_factNo.get(factno))[0].toString());					                                              							
 			String factSname = webFactSer.selByid(((Object[]) list_factNo.get(factno))[0].toString());					
 			for (int factcode = 0; factcode < factAreas.size(); factcode++) {
@@ -2159,7 +2174,7 @@ public class Printer_Auto {
 				}
 			}
 		}// end "for"
-		
+*/		
 
 		int z_length = 0;
 		if (currenMonth == 1 || currenMonth == 3 || currenMonth == 5
