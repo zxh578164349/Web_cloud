@@ -2,6 +2,7 @@ package util;
 
 import java.io.File;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -270,7 +271,7 @@ public class GlobalMethod extends HibernateDaoSupport{
 	}
 	
 	public static void main(String[] args) {
-		Integer[] a = {25, 5, 5, 5, 5, 5, 10, 123, 12, 5, 10, 25, 7};//原始
+		Integer[] a = {0,3,0,4,5};//原始
         int[] b = new int[a.length];//有序
         int[] c = new int[a.length];//返回結果
         for(int i=0; i<a.length; i++) {
@@ -287,13 +288,8 @@ public class GlobalMethod extends HibernateDaoSupport{
             c[i] = getIndex(a[i], b);
             System.out.print(c[i] + "\t");
         }
-        List<Integer>list=new ArrayList<Integer>(Arrays.asList(a));
-        Collections.sort(list);
-        for(Integer d:list){
-        	System.out.print(d+"_");
-        }
-
-		
+       
+       
 						
 	}
 	 public static int getIndex(int a_1, int[] b) {
@@ -306,6 +302,24 @@ public class GlobalMethod extends HibernateDaoSupport{
 	                return ++temp;
 	            }else {
 	                if(b[i-1] == b[i]) {
+	                     
+	                }else {
+	                    temp ++;
+	                }                
+	            }
+	        }
+	        return 0;        
+	    }
+	 public static int getIndex(BigDecimal a_1, List<BigDecimal>list) {
+	        int temp = 1;
+	        if(a_1.compareTo(list.get(0))==0) {
+	            return temp;
+	        }
+	        for(int i=temp; i<list.size(); i++) {
+	            if(a_1.compareTo(list.get(i))==0) {
+	                return ++temp;
+	            }else {
+	                if(list.get(i-1).compareTo(list.get(i)) ==0 ) {
 	                     
 	                }else {
 	                    temp ++;

@@ -9,6 +9,7 @@ import java.io.OutputStream;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -241,19 +242,29 @@ public class VWebbussortAction extends ActionSupport implements ServletResponseA
 		}
 		
 		 for(String month:map_all.keySet()){
-		    	List<List<BigDecimal>>list_all=new ArrayList<List<BigDecimal>>();
-		    	for(int a=0;a<findTemps().size();a++){
-		    		List<BigDecimal>list=new ArrayList<BigDecimal>();
+		    	List<BigDecimal>list=new ArrayList<BigDecimal>();
+		    	List<BigDecimal>list2=new ArrayList<BigDecimal>();
+		    	List<Integer>list3=new ArrayList<Integer>();
+		    	for(int a=0;a<findTemps().size();a++){		    		
 		    		for(int b=0;b<((List<List<BigDecimal>>)map_all2.get(month)).size();b++){
-		    			List<BigDecimal>list_a=((List<List<BigDecimal>>)map_all2.get(month)).get(b);
-			    		if(findTemps().get(a).equals("compare obj")){			    			
-			    			list.add(list_a.get(a));			    			
+		    			//List<BigDecimal>list_a=((List<List<BigDecimal>>)map_all2.get(month)).get(b);
+			    		if(findTemps().get(a).equals("compare obj")){
+			    			if(b==0){
+			    				list.clear();//清除内容，为下一次排名做准备
+			    				list2.clear();
+			    				list3.clear();
+			    			}
+			    			list.add(((List<List<BigDecimal>>)map_all2.get(month)).get(b).get(a)==null?new BigDecimal(0):((List<List<BigDecimal>>)map_all2.get(month)).get(b).get(a));	
+			    			list2.add(((List<List<BigDecimal>>)map_all2.get(month)).get(b).get(a)==null?new BigDecimal(0):((List<List<BigDecimal>>)map_all2.get(month)).get(b).get(a));
+			    		}
+			    		Collections.sort(list2);
+			    		for(int x=0;x<list.size();x++){
+			    			list3.add(GlobalMethod.getIndex(list.get(x), list2));
 			    		}
 			    		if(findTemps().get(a).equals("排名")){			    			
-				    			list_a.set(a, list.get(b));				    		
+			    			((List<List<BigDecimal>>)map_all2.get(month)).get(b).set(a, new BigDecimal(list3.get(b)));				    		
 			    		}
 			    	}
-		    		list_all.add(list);
 		    	}		    	
 		    }
 	    
