@@ -40,6 +40,7 @@ public interface IWebYieldDataServices {
 	public List findNullYdata(String yymm);
 
 	public Object[] totalWithFactCode(String factCode, String yymmdd);
+	public List<Object[]> totalWithFactCode2(String yymmdd);
 
 	public Object[] testireport(String factno, String factcode, String yymm);
 

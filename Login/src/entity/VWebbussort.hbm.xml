@@ -137,8 +137,8 @@
         <property name="a35" type="java.math.BigDecimal">
             <column name="A35" precision="22" scale="0" />
         </property>
-        <property name="sortA31" type="java.math.BigDecimal">
-            <column name="SORT_A31" precision="22" scale="0" />
+        <property name="sortA34" type="java.math.BigDecimal">
+            <column name="SORT_A34" precision="22" scale="0" />
         </property>
         <property name="a36" type="java.math.BigDecimal">
             <column name="A36" precision="22" scale="0" />

@@ -37,6 +37,19 @@ public interface IWebYieldDataDao {
 	public List findNullYdata(String yymm);
 
 	public Object[] totalWithFactCode(String factCode, String yymmdd);
+	
+	/**
+	 * 廠別狀態產量數據統計
+	 * @Title: totalWithFactCode2
+	 * @Description: TODO
+	 * @param @param yymmdd
+	 * @param @return
+	 * @return List<Object[]>
+	 * @throws
+	 * @author web
+	 * @date 2016/4/11
+	 */
+	public List<Object[]> totalWithFactCode2(String yymmdd);
 
 	public Object[] testireport(String factno, String factcode, String yymm);
 

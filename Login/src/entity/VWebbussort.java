@@ -52,7 +52,7 @@ public class VWebbussort implements java.io.Serializable {
 	private BigDecimal sortA33;
 	private BigDecimal a34;
 	private BigDecimal a35;
-	private BigDecimal sortA31;
+	private BigDecimal sortA34;
 	private BigDecimal a36;
 	private BigDecimal a37;
 	private BigDecimal a38;
@@ -133,7 +133,7 @@ public class VWebbussort implements java.io.Serializable {
 			BigDecimal a28, BigDecimal sortA28, BigDecimal a29, BigDecimal a30,
 			BigDecimal sortA30, BigDecimal a31, BigDecimal a32, BigDecimal a33,
 			BigDecimal sortA33, BigDecimal a34, BigDecimal a35,
-			BigDecimal sortA31, BigDecimal a36, BigDecimal a37, BigDecimal a38,
+			BigDecimal sortA34, BigDecimal a36, BigDecimal a37, BigDecimal a38,
 			BigDecimal a39, BigDecimal sortA38, BigDecimal a40, BigDecimal a41,
 			BigDecimal a42, BigDecimal a43, BigDecimal sortA42, BigDecimal a44,
 			BigDecimal a45, BigDecimal a46, BigDecimal a47, BigDecimal sortA46,
@@ -190,7 +190,7 @@ public class VWebbussort implements java.io.Serializable {
 		this.sortA33 = sortA33;
 		this.a34 = a34;
 		this.a35 = a35;
-		this.sortA31 = sortA31;
+		this.sortA34 = sortA34;
 		this.a36 = a36;
 		this.a37 = a37;
 		this.a38 = a38;
@@ -587,12 +587,14 @@ public class VWebbussort implements java.io.Serializable {
 		this.a35 = a35;
 	}
 
-	public BigDecimal getSortA31() {
-		return this.sortA31;
+	
+
+	public BigDecimal getSortA34() {
+		return sortA34;
 	}
 
-	public void setSortA31(BigDecimal sortA31) {
-		this.sortA31 = sortA31;
+	public void setSortA34(BigDecimal sortA34) {
+		this.sortA34 = sortA34;
 	}
 
 	public BigDecimal getA36() {

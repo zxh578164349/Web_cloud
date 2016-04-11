@@ -246,6 +246,14 @@ public class WebYieldDataDaoImpl extends Basedao implements IWebYieldDataDao {
 		query.setString(1, yymmdd);
 		return (Object[]) query.uniqueResult();
 	}
+	public List<Object[]> totalWithFactCode2(String yymmdd) {
+		// TODO Auto-generated method stub
+		String hql = "select id.factCode, sum(standardOutput),sum(actualYield)"
+				+ " from WebYieldData where to_char(id.yymmdd,'yyyymmdd')=?";
+		Query query = getSession().createQuery(hql);
+		query.setString(0, yymmdd);
+		return (List<Object[]>) query.uniqueResult();
+	}
 
 	public Object[] testireport(String factno, String factcode, String yymm) {
 		// TODO Auto-generated method stub

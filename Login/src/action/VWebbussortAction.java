@@ -104,7 +104,7 @@ public class VWebbussortAction extends ActionSupport implements ServletResponseA
 	    	}
 	    	map_all.put(month,list);
 	    }
-	    for(String month:map_all.keySet()){
+	    for(String month:map_all.keySet()){//for
 	    	/*for(VWebbussort sort2:(List<VWebbussort>)map_all.get(month)){
 	    		for(VWebbussort sort:lists){
 	    			if(sort2.getId().getFactNo().equals(sort.getId().getFactNo())&&sort2.getId().getYymm().equals(sort.getId().getYymm())){
@@ -125,8 +125,10 @@ public class VWebbussortAction extends ActionSupport implements ServletResponseA
 	    				break;
 	    			}
 	    		}
-	    	}
-	    }
+	    		
+	    	}	    			
+	    }//for
+	   
 	    //List<List<List<BigDecimal>>>list_all2=new ArrayList<List<List<BigDecimal>>>();
 	    Map<String,Object>map_all2=new LinkedHashMap<String,Object>();
 		for (String month:map_all.keySet()) {
@@ -175,7 +177,7 @@ public class VWebbussortAction extends ActionSupport implements ServletResponseA
 					list_b.add(sort.getSortA33());
 					list_b.add(sort.getA34());
 					list_b.add(sort.getA35());
-					list_b.add(sort.getSortA31());
+					list_b.add(sort.getSortA34());
 					list_b.add(sort.getA36());
 					list_b.add(sort.getA37());
 					list_b.add(sort.getA38());
@@ -237,6 +239,23 @@ public class VWebbussortAction extends ActionSupport implements ServletResponseA
 			}
 			map_all2.put(month,listtemp);
 		}
+		
+		 for(String month:map_all.keySet()){
+		    	List<List<BigDecimal>>list_all=new ArrayList<List<BigDecimal>>();
+		    	for(int a=0;a<findTemps().size();a++){
+		    		List<BigDecimal>list=new ArrayList<BigDecimal>();
+		    		for(int b=0;b<((List<List<BigDecimal>>)map_all2.get(month)).size();b++){
+		    			List<BigDecimal>list_a=((List<List<BigDecimal>>)map_all2.get(month)).get(b);
+			    		if(findTemps().get(a).equals("compare obj")){			    			
+			    			list.add(list_a.get(a));			    			
+			    		}
+			    		if(findTemps().get(a).equals("排名")){			    			
+				    			list_a.set(a, list.get(b));				    		
+			    		}
+			    	}
+		    		list_all.add(list);
+		    	}		    	
+		    }
 	    
 		/********************數據源處理*************************/
 	    
@@ -561,6 +580,121 @@ public class VWebbussortAction extends ActionSupport implements ServletResponseA
 	}
 	
 	/**
+	 * 臨時集合(注意，一定要與單位集合匹配)
+	 * @Title: findTemps
+	 * @Description: TODO
+	 * @param @return
+	 * @return List<String>
+	 * @throws
+	 * @author web
+	 * @date 2016/4/11
+	 */
+	public List<String> findTemps() {
+		List<String> list = new ArrayList<String>();
+
+		list.add("產能模");
+		list.add("產能雙");
+		list.add("生產天數");
+		list.add("用水量");
+		list.add("用水金額");
+		list.add("compare obj");
+		list.add("費用單耗");
+		list.add("排名");
+		list.add("用電量(度)");
+		list.add("用電費用");
+		list.add("compare obj");
+		list.add("費用單耗");
+		list.add("排名");
+		list.add("蒸汽用量");
+		list.add("蒸汽費用");
+		list.add("compare obj");
+		list.add("費用單耗");
+		list.add("排名");
+		list.add("雜項購置");
+		list.add("雜項支出-其他");
+		list.add("電腦耗材");
+		list.add("文具用品類");
+		list.add("修繕類-機器設備");
+		list.add("修繕費-其它類");
+		list.add("車輛維修費");
+		list.add("服裝費");
+		list.add("清潔/消毒費");
+		list.add("工程整改費");
+		list.add("工傷");
+		list.add("費用小計");
+		list.add("compare obj");
+		list.add("排名");
+		list.add("成品庫存");
+		list.add("compare obj");
+		list.add("排名");
+		list.add("原料庫存量");
+		list.add("原料庫存金額");
+		list.add("compare obj");
+		list.add("排名");
+		list.add("compare obj");
+		list.add("呆滯料庫存金額(USD)");
+		list.add("排名");
+		list.add("防霜劑用量");
+		list.add("防霜劑金額");
+		list.add("compare obj");
+		list.add("防霜劑金額單耗");
+		list.add("排名");
+		list.add("色料用量");
+		list.add("色料金額");
+		list.add("compare obj");
+		list.add("色料金額單耗");
+		list.add("排名");
+		list.add("藥品用量");
+		list.add("藥品金額");
+		list.add("compare obj");
+		list.add("藥品金額單耗");
+		list.add("排名");
+		list.add("防粘劑用量");
+		list.add("防粘劑金額");
+		list.add("compare obj");
+		list.add("防粘劑金額單耗");
+		list.add("排名");
+		list.add("油漆溶劑用量");
+		list.add("油漆溶劑金額");
+		list.add("compare obj");
+		list.add("油漆溶劑金額單耗");
+		list.add("排名");
+		list.add("離型劑用量");
+		list.add("離型劑金額");
+		list.add("compare obj");
+		list.add("離型劑金額單耗");
+		list.add("排名");
+		list.add("直接工資");
+		list.add("compare obj");
+		list.add("排名");
+		list.add("間接工資");
+		list.add("compare obj");
+		list.add("排名");
+		list.add("加班費金額");
+		list.add("compare obj");
+		list.add("排名");
+		list.add("獎金金額");
+		list.add("compare obj");
+		list.add("排名");
+		list.add("其加金額");
+		list.add("compare obj");
+		list.add("排名");
+		list.add("模具修理費");
+		list.add("差旅費");
+		list.add("交際費用");
+		list.add("包裝費用");
+		list.add("其它費用小計");
+		list.add("compare obj");
+		list.add("排名");
+		list.add("廢品倉報廢重量");
+		list.add("廢品倉報廢金額");
+		list.add("compare obj");
+		list.add("排名");
+		return list;
+
+	}
+	
+	/**
 	 * 所有樣式
 	 * @Title: findStyles
 	 * @Description: TODO
@@ -818,6 +952,14 @@ public class VWebbussortAction extends ActionSupport implements ServletResponseA
 	    	/********************分類+項目+單位*******************/
 	    	
 	    }//for1
+	}
+	
+	public List<BigDecimal> initList(){
+		List<BigDecimal>list=new ArrayList<BigDecimal>();
+		for(int a=0;a<100;a++){
+			list.add(new BigDecimal(0.0));
+		}
+		return list;
 	}
 	
 	

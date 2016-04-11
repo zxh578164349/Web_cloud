@@ -90,6 +90,9 @@ public class WebYieldDataServicesImple implements IWebYieldDataServices {
 		// TODO Auto-generated method stub
 		return dataDao.totalWithFactCode(factCode, yymmdd);
 	}
+	public List<Object[]> totalWithFactCode2(String yymmdd){
+		return dataDao.totalWithFactCode2(yymmdd);
+	}
 
 	public Object[] testireport(String factno, String factcode, String yymm) {
 		// TODO Auto-generated method stub

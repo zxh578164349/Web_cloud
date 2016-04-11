@@ -2072,7 +2072,7 @@ public class Printer_Auto {
 		List<String> factnoCodelist = new ArrayList<String>();
 		
 		/*******************20160410**********************/
-		List<WebFact>listfacts=webFactSer.findAll();
+		/*List<WebFact>listfacts=webFactSer.findAll();
 		List<WebYieldData>listydata=dataSer.findByYymm(yymm);
 		List<Webestproduct>listestp=estProSer.findByYymm(yymm);
 		
@@ -2098,11 +2098,11 @@ public class Printer_Auto {
 					break;
 				}
 			}
-		}
+		}*/
 		/*******************20160410**********************/
 		
 
-		/*for (int factno = 0; factno < list_factNo.size(); factno++) {// start "for"
+		for (int factno = 0; factno < list_factNo.size(); factno++) {// start "for"
 			 //****只查找要顯示的廠別狀態****//*															
 			List factAreas = webFactSer.findFactCodeByFactNo_show(((Object[]) list_factNo.get(factno))[0].toString());					                                              							
 			String factSname = webFactSer.selByid(((Object[]) list_factNo.get(factno))[0].toString());					
@@ -2174,7 +2174,7 @@ public class Printer_Auto {
 				}
 			}
 		}// end "for"
-*/		
+		
 
 		int z_length = 0;
 		if (currenMonth == 1 || currenMonth == 3 || currenMonth == 5
@@ -2631,8 +2631,8 @@ public class Printer_Auto {
 		for (int x = 0; x < alllist2.size() + factcodelist.size(); x++) { // for
 																			// 1
 
-			List<String> cols = new ArrayList();
-			List<Object[]> sum_list = new ArrayList();
+			List<String> cols = new ArrayList<String>();
+			List<Object[]> sum_list = new ArrayList<Object[]>();
 			cols.add("日期");
 			cols.add("上模數");
 			cols.add("人數");
@@ -2642,12 +2642,9 @@ public class Printer_Auto {
 			// cols.add("天數");
 			// cols.add("工作日/假日");
 
+			/*****************************廠別狀態數據統計（有待優化20160411）***********************************/
 			if (x >= alllist2.size()) {
-				String temp = factcodelist
-						.get(factcodelist.size()
-								- (alllist2.size() + factcodelist.size() - (x + 1))
-								- 1);
-
+				String temp = factcodelist.get(factcodelist.size()- (alllist2.size() + factcodelist.size() - (x + 1))- 1);																						
 				for (int x2 = 0; x2 < z_length; x2++) {
 					StringBuffer yymmdd = new StringBuffer();
 					yymmdd.append(yymm);
@@ -2660,7 +2657,9 @@ public class Printer_Auto {
 							yymmdd.toString());
 					sum_list.add(list_temp);
 				}
+				
 			}
+			/*****************************廠別狀態數據統計（有待優化20160411）***********************************/
 
 			double sumStandardOutput = 0;// 標準產量合計
 			double sumActualYield = 0;// 實際產量合計
