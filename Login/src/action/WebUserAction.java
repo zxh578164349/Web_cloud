@@ -592,8 +592,8 @@ public class WebUserAction extends ActionSupport implements ServletResponseAware
 	 * 查看用戶權限
 	 */
 	public String jurisdiction() {
-		List<WebMenu>menus=menuSer.findAllMenu();
-		ActionContext.getContext().getSession().put("menus", menus);
+		/*List<WebMenu>menus=menuSer.findAllMenu();
+		ActionContext.getContext().getSession().put("menus", menus);*/
 		WebUser webUser = webUserService.selByuserId(id, fact);
 		ActionContext.getContext().getSession().put("jurisdiction_user", webUser);
 		return "qx";
@@ -609,7 +609,7 @@ public class WebUserAction extends ActionSupport implements ServletResponseAware
 	public String updateJurisdiction() {
 		
 		try{			
-			List<WebMenu>list_menu=(List<WebMenu>)ActionContext.getContext().getSession().get("menus");
+			List<WebMenu>list_menu=(List<WebMenu>)ActionContext.getContext().getSession().get("login_menus");//登錄時記錄（所有的主菜單）
 			
             if(list_menu!=null&&list_menu.size()>0){
             	List<String>menuname_checked=new ArrayList<String>();

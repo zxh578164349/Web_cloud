@@ -13,6 +13,9 @@
         <property name="menuname" type="java.lang.String">
             <column name="MENUNAME" length="50" not-null="true" />
         </property>
+        <property name="enableMk" type="java.lang.String">
+            <column name="enable_mk" length="2"  not-null="true"/>
+        </property>
         <bag name="webJurisdictions" inverse="true" lazy="true">
             <key>
                 <column name="MENUID" precision="8" scale="0" not-null="true" />

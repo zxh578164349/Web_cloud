@@ -71,7 +71,7 @@ jq(function(){
 			   <input type="checkbox" name="userread" value="1"/>只查看
 			</s:else>			
 			</h4>
-			<s:iterator value="#session.menus">
+			<s:iterator value="#session.login_menus">
 			   <tr>
 			      <td><s:property value="menuname"/></td>
 			      <td>
