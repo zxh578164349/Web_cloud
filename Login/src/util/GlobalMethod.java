@@ -270,7 +270,7 @@ public class GlobalMethod extends HibernateDaoSupport{
 		return list_all;
 	}
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws ParseException {
 		Integer[] a = {0,3,0,4,5};//原始
         int[] b = new int[a.length];//有序
         int[] c = new int[a.length];//返回結果
@@ -288,6 +288,14 @@ public class GlobalMethod extends HibernateDaoSupport{
             c[i] = getIndex(a[i], b);
             System.out.print(c[i] + "\t");
         }
+        
+        
+        System.out.println("-------------------------------------------------------");
+        DateFormat frm=new SimpleDateFormat("yyyyMM");
+        Calendar cal=Calendar.getInstance();
+        cal.setTime(frm.parse("201604"));
+        cal.add(Calendar.MONTH, -1);
+        System.out.println(frm.format(cal.getTime()));
        
        
 						

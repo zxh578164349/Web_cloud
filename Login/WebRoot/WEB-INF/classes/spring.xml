@@ -202,7 +202,10 @@
 				<value>entity/WebSubmenu2.hbm.xml</value>
 				<value>entity/Weballobj.hbm.xml</value>
 				<value>entity/VWebbussort.hbm.xml</value>
-				<value>entity/WebydataNoinput.hbm.xml</value></list>
+				<value>entity/WebydataNoinput.hbm.xml</value>
+				<value>entity/VKpifactNew.hbm.xml</value>
+				<value>entity/VKpifactEveNew.hbm.xml</value>
+				<value>entity/VWebuseless.hbm.xml</value></list>
 		</property>
 	</bean>
 		

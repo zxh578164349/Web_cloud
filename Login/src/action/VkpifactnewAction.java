@@ -1,9 +1,9 @@
+/**
+ * 
+ */
 package action;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.ParseException;
@@ -25,14 +25,15 @@ import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-
 import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.ServletResponseAware;
 
 import services.IKpifactServices;
+import services.IVKpifactEveNewServices;
 import services.IVKpifactEveServices;
+import services.IVKpifactNewServices;
 import services.IVKpifactServices;
 import services.IWebFactServices;
 
@@ -42,12 +43,27 @@ import com.opensymphony.xwork2.ActionSupport;
 import entity.Kpifact;
 import entity.VKpifact;
 import entity.VKpifactEve;
+import entity.VKpifactEveNew;
+import entity.VKpifactNew;
 import entity.WebFact;
 
-public class VKpifactAction extends ActionSupport implements ServletResponseAware{
-	private IVKpifactServices vkpiSer;
-	private IWebFactServices webFactSer;
-	private IVKpifactEveServices vkpieveSer;
+/**   
+ *    
+ * 项目名称：Login   
+ * 类名称：VkpifactnewAction   
+ * 类描述：   
+ * 创建人：Administrator   
+ * 创建时间：2016/4/13 上午8:57:02   
+ * 修改人：Administrator   
+ * 修改时间：2016/4/13 上午8:57:02   
+ * 修改备注：   
+ * @version    
+ *    
+ **/
+public class VkpifactnewAction extends ActionSupport implements ServletResponseAware{
+	private IVKpifactNewServices vkpinewSer;
+	private IVKpifactEveNewServices vkpievenewSer;
+	private IWebFactServices webFactSer;	
 	private IKpifactServices kpiSer;
 	private String yymm;
 	private String factNo;
@@ -102,29 +118,29 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 	}
 	public void setList_factno(List<String> list_factno) {
 		this.list_factno = list_factno;
-	}
-	public void setVkpiSer(IVKpifactServices vkpiSer) {
-		this.vkpiSer = vkpiSer;
-	}
-	
+	}		
 	public void setWebFactSer(IWebFactServices webFactSer) {
 		this.webFactSer = webFactSer;
-	}
-	
-	public void setVkpieveSer(IVKpifactEveServices vkpieveSer) {
-		this.vkpieveSer = vkpieveSer;
-	}
-	public String findAll(){
-		List<VKpifact>list=vkpiSer.findAll(factNo,yymm);
-		ActionContext.getContext().getSession().put("vkpilist", list);
-		return "findAll";
-	}
-	
-	
+	}		
 	public void setKpiSer(IKpifactServices kpiSer) {
 		this.kpiSer = kpiSer;
+	}		
+	public void setVkpinewSer(IVKpifactNewServices vkpinewSer) {
+		this.vkpinewSer = vkpinewSer;
 	}
-	public void print_fact() throws IOException{
+	public void setVkpievenewSer(IVKpifactEveNewServices vkpievenewSer) {
+		this.vkpievenewSer = vkpievenewSer;
+	}
+	/**
+	 * 日期:2016/4/13
+	 * 描述:
+	 */
+	public void setServletResponse(HttpServletResponse response) {
+		// TODO Auto-generated method stub
+		this.response=response;
+	}
+	
+	public void print_fact() throws IOException{		
 		HSSFWorkbook wb=new HSSFWorkbook();
 		HSSFSheet sheet=wb.createSheet("KPI-工廠");
 		
@@ -184,9 +200,9 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 		//最外層集合
 		List<List<List<Double>>>list1_all=new ArrayList<List<List<Double>>>();
 		for(int a=0;a<list_factcode.size();a++){//start for1
-			List<VKpifactEve>list_kpieve=new ArrayList<VKpifactEve>();
+			List<VKpifactEveNew>list_kpieve=new ArrayList<VKpifactEveNew>();
 			for(int i=0;i<8;i++){
-				list_kpieve.add(new VKpifactEve());
+				list_kpieve.add(new VKpifactEveNew());
 			}
 			
 			/**
@@ -221,82 +237,118 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 				}else{
 					month=""+b;
 				}
-				VKpifactEve eve=vkpieveSer.findById(factNo, factCode, year+month)==null?new VKpifactEve():vkpieveSer.findById(factNo, factCode, year+month);
-				if(eve!=null){//start if
-					/**
-					 * sumActualpairs和sumFacpairs,otherweight有可能為空
-					 */
-					/*BigDecimal big=new BigDecimal(0.00);
-					if(eve.getSumActualpairs()==null){
-						eve.setSumActualpairs(big);
-					}
-					if(eve.getSumFacpairs()==null){
-						eve.setSumFacpairs(big);
-					}
-					
-					if(eve.getProductednum()==null){
-						eve.setProductednum(0.0);
-					}
-					if(eve.getNoglueweight()==null){
-						eve.setNoglueweight(0.0);
-					}
-					if(eve.getRepairmoney()==null){
-						eve.setRepairmoney(0.0);
-					}
-					if(eve.getWorkhours()==null){
-						eve.setWorkhours(0.0);
-					}*/
+				VKpifactEveNew eve=vkpievenewSer.findById(factNo, factCode, year+month)==null?new VKpifactEveNew():vkpievenewSer.findById(factNo, factCode, year+month);
+				if(eve!=null){//start if					
 					  int b_index=(b-1)/3+1;
 					  list_kpieve.get(b_index).setSumEverydemo(list_kpieve.get(b_index).getSumEverydemo().add(eve.getSumEverydemo()));
 				      list_kpieve.get(b_index).setSumStandarddemo(list_kpieve.get(b_index).getSumStandarddemo().add(eve.getSumStandarddemo()));
 				      list_kpieve.get(b_index).setSumActualdemo(list_kpieve.get(b_index).getSumActualdemo().add(eve.getSumActualdemo()));
 				      list_kpieve.get(b_index).setSumActualpairs(list_kpieve.get(b_index).getSumActualpairs().add(eve.getSumActualpairs()));
-				      list_kpieve.get(b_index).setSumFacpairs(list_kpieve.get(b_index).getSumFacpairs().add(eve.getSumFacpairs()));
-				      list_kpieve.get(b_index).setWorkhours(list_kpieve.get(b_index).getWorkhours()+eve.getWorkhours());
-				      list_kpieve.get(b_index).setPersonzg(list_kpieve.get(b_index).getPersonzg()+eve.getPersonzg());
-				      list_kpieve.get(b_index).setPersonjg(list_kpieve.get(b_index).getPersonjg()+eve.getPersonjg());
-				      list_kpieve.get(b_index).setTimezg(list_kpieve.get(b_index).getTimezg()+eve.getTimezg());
-				      list_kpieve.get(b_index).setTimejg(list_kpieve.get(b_index).getTimejg()+eve.getTimejg());
-				      list_kpieve.get(b_index).setAddtimezg(list_kpieve.get(b_index).getAddtimezg()+eve.getAddtimezg());
-				      list_kpieve.get(b_index).setAddtimejg(list_kpieve.get(b_index).getAddtimejg()+eve.getAddtimejg());
-				      list_kpieve.get(b_index).setLeavenumzg(list_kpieve.get(b_index).getLeavenumzg()+eve.getLeavenumzg());
-				      list_kpieve.get(b_index).setLeavenumjg(list_kpieve.get(b_index).getLeavenumjg()+eve.getLeavenumjg());
-				      list_kpieve.get(b_index).setHurtnum(list_kpieve.get(b_index).getHurtnum()+eve.getHurtnum());
-				      list_kpieve.get(b_index).setInvcount(list_kpieve.get(b_index).getInvcount()+eve.getInvcount());
-				      list_kpieve.get(b_index).setSellcount(list_kpieve.get(b_index).getSellcount()+eve.getSellcount());
-				      list_kpieve.get(b_index).setCostcount(list_kpieve.get(b_index).getCostcount()+eve.getCostcount());
-				      list_kpieve.get(b_index).setWagezgUsd(list_kpieve.get(b_index).getWagezgUsd()+eve.getWagezgUsd());
-				      list_kpieve.get(b_index).setWagejgUsd(list_kpieve.get(b_index).getWagejgUsd()+eve.getWagejgUsd());
-				      list_kpieve.get(b_index).setCashcount(list_kpieve.get(b_index).getCashcount()+eve.getCashcount());
-				      list_kpieve.get(b_index).setSideweit(list_kpieve.get(b_index).getSideweit()+eve.getSideweit());
-				      list_kpieve.get(b_index).setBadweit(list_kpieve.get(b_index).getBadweit()+eve.getBadweit());
-				      list_kpieve.get(b_index).setOtherbadweight(list_kpieve.get(b_index).getOtherbadweight()+eve.getOtherbadweight());
-				      list_kpieve.get(b_index).setOtherweight(list_kpieve.get(b_index).getOtherweight().add(eve.getOtherweight()));
-				      list_kpieve.get(b_index).setWaterton(list_kpieve.get(b_index).getWaterton()+eve.getWaterton());
-				      list_kpieve.get(b_index).setElectricdu(list_kpieve.get(b_index).getElectricdu()+eve.getElectricdu());
-				      list_kpieve.get(b_index).setGaston(list_kpieve.get(b_index).getGaston()+eve.getGaston());
-				      list_kpieve.get(b_index).setStorenum(list_kpieve.get(b_index).getStorenum()+eve.getStorenum());
-				      list_kpieve.get(b_index).setOutnum(list_kpieve.get(b_index).getOutnum()+eve.getOutnum());
-				      list_kpieve.get(b_index).setMinusnum(list_kpieve.get(b_index).getMinusnum()+eve.getMinusnum());
-				      list_kpieve.get(b_index).setActlost(list_kpieve.get(b_index).getActlost()+eve.getActlost());
-				      list_kpieve.get(b_index).setAvgbuttomweight2(list_kpieve.get(b_index).getAvgbuttomweight2()+eve.getAvgbuttomweight2());
-				      list_kpieve.get(b_index).setProductednum(list_kpieve.get(b_index).getProductednum()+eve.getProductednum());
-				      list_kpieve.get(b_index).setNoglueweight(list_kpieve.get(b_index).getNoglueweight()+eve.getNoglueweight());
-				      list_kpieve.get(b_index).setRepairmoney(list_kpieve.get(b_index).getRepairmoney()+eve.getRepairmoney());
-				      list_kpieve.get(b_index).setInstorenum(list_kpieve.get(b_index).getInstorenum()+eve.getInstorenum());			     
+				      list_kpieve.get(b_index).setSumFactpairs(list_kpieve.get(b_index).getSumFactpairs().add(eve.getSumFactpairs()));
 				      list_kpieve.get(b_index).setHole(list_kpieve.get(b_index).getHole()+eve.getHole());
-				      list_kpieve.get(b_index).setSumWorkday(list_kpieve.get(b_index).getSumWorkday().add(eve.getSumWorkday()));
-				      list_kpieve.get(b_index).setWaterusd(list_kpieve.get(b_index).getWaterusd()+eve.getWaterusd());
-				      list_kpieve.get(b_index).setElectricusd(list_kpieve.get(b_index).getElectricusd()+eve.getElectricusd());
-				      list_kpieve.get(b_index).setGasusd(list_kpieve.get(b_index).getGasusd()+eve.getGasusd());				      
-				      list_kpieve.get(b_index).setThickused(list_kpieve.get(b_index).getThickused()+eve.getThickused());
-				      list_kpieve.get(b_index).setBackfeed(list_kpieve.get(b_index).getBackfeed()+eve.getBackfeed());			      
-				      list_kpieve.get(b_index).setOilback(list_kpieve.get(b_index).getOilback()+eve.getOilback());
-				      list_kpieve.get(b_index).setDrugsused(list_kpieve.get(b_index).getDrugsused()+eve.getDrugsused());
-				      list_kpieve.get(b_index).setColorused(list_kpieve.get(b_index).getColorused()+eve.getColorused());
-				      list_kpieve.get(b_index).setLeavemoney(list_kpieve.get(b_index).getLeavemoney()+eve.getLeavemoney());
-				      list_kpieve.get(b_index).setPaypairs(list_kpieve.get(b_index).getPaypairs()+eve.getPaypairs());
-				      list_kpieve.get(b_index).setBadcount(list_kpieve.get(b_index).getBadcount()+eve.getBadcount());
+				      list_kpieve.get(b_index).setObja100(list_kpieve.get(b_index).getObja100()+eve.getObja100());
+				      list_kpieve.get(b_index).setObja101(list_kpieve.get(b_index).getObja101()+eve.getObja101());
+				      list_kpieve.get(b_index).setObja102(list_kpieve.get(b_index).getObja102()+eve.getObja102());
+				      list_kpieve.get(b_index).setObja103(list_kpieve.get(b_index).getObja103()+eve.getObja103());
+				      list_kpieve.get(b_index).setObja104(list_kpieve.get(b_index).getObja104()+eve.getObja104());
+				      list_kpieve.get(b_index).setObja105(list_kpieve.get(b_index).getObja105()+eve.getObja105());
+				      list_kpieve.get(b_index).setObja106(list_kpieve.get(b_index).getObja106()+eve.getObja106());
+				      list_kpieve.get(b_index).setObja107(list_kpieve.get(b_index).getObja107()+eve.getObja107());
+				      list_kpieve.get(b_index).setObja108(list_kpieve.get(b_index).getObja108()+eve.getObja108());
+				      list_kpieve.get(b_index).setObja109(list_kpieve.get(b_index).getObja109()+eve.getObja109());
+				      list_kpieve.get(b_index).setObja110(list_kpieve.get(b_index).getObja110()+eve.getObja110());
+				      list_kpieve.get(b_index).setObja111(list_kpieve.get(b_index).getObja111()+eve.getObja111());
+				      list_kpieve.get(b_index).setObja112(list_kpieve.get(b_index).getObja112()+eve.getObja112());
+				      list_kpieve.get(b_index).setObja113(list_kpieve.get(b_index).getObja113()+eve.getObja113());
+				      list_kpieve.get(b_index).setObja114(list_kpieve.get(b_index).getObja114()+eve.getObja114());
+				      list_kpieve.get(b_index).setObja115(list_kpieve.get(b_index).getObja115()+eve.getObja115());
+				      list_kpieve.get(b_index).setObja116(list_kpieve.get(b_index).getObja116()+eve.getObja116());
+				      list_kpieve.get(b_index).setObja117(list_kpieve.get(b_index).getObja117()+eve.getObja117());
+				      list_kpieve.get(b_index).setObja118(list_kpieve.get(b_index).getObja118()+eve.getObja118());
+				      list_kpieve.get(b_index).setObja119(list_kpieve.get(b_index).getObja119()+eve.getObja119());
+				      list_kpieve.get(b_index).setObja120(list_kpieve.get(b_index).getObja120()+eve.getObja120());
+				      list_kpieve.get(b_index).setObja121(list_kpieve.get(b_index).getObja121()+eve.getObja121());
+				      list_kpieve.get(b_index).setObja122(list_kpieve.get(b_index).getObja122()+eve.getObja122());
+				      list_kpieve.get(b_index).setObja123(list_kpieve.get(b_index).getObja123()+eve.getObja123());
+				      list_kpieve.get(b_index).setObja124(list_kpieve.get(b_index).getObja124()+eve.getObja124());
+				      list_kpieve.get(b_index).setObja125(list_kpieve.get(b_index).getObja125()+eve.getObja125());
+				      list_kpieve.get(b_index).setObja126(list_kpieve.get(b_index).getObja126()+eve.getObja126());
+				      list_kpieve.get(b_index).setObja127(list_kpieve.get(b_index).getObja127()+eve.getObja127());
+				      list_kpieve.get(b_index).setObja128(list_kpieve.get(b_index).getObja128()+eve.getObja128());
+				      list_kpieve.get(b_index).setObja129(list_kpieve.get(b_index).getObja129()+eve.getObja129());
+				      list_kpieve.get(b_index).setObja130(list_kpieve.get(b_index).getObja130()+eve.getObja130());
+				      list_kpieve.get(b_index).setObja131(list_kpieve.get(b_index).getObja131()+eve.getObja131());
+				      list_kpieve.get(b_index).setObja132(list_kpieve.get(b_index).getObja132()+eve.getObja132());
+				      list_kpieve.get(b_index).setObja133(list_kpieve.get(b_index).getObja133()+eve.getObja133());
+				      list_kpieve.get(b_index).setObja134(list_kpieve.get(b_index).getObja134()+eve.getObja134());
+				      list_kpieve.get(b_index).setObja135(list_kpieve.get(b_index).getObja135()+eve.getObja135());
+				      list_kpieve.get(b_index).setObja136(list_kpieve.get(b_index).getObja136()+eve.getObja136());
+				      list_kpieve.get(b_index).setObja137(list_kpieve.get(b_index).getObja137()+eve.getObja137());
+				      list_kpieve.get(b_index).setObja138(list_kpieve.get(b_index).getObja138()+eve.getObja138());
+				      list_kpieve.get(b_index).setObja139(list_kpieve.get(b_index).getObja139()+eve.getObja139());
+				      list_kpieve.get(b_index).setObja140(list_kpieve.get(b_index).getObja140()+eve.getObja140());
+				      list_kpieve.get(b_index).setObja141(list_kpieve.get(b_index).getObja141()+eve.getObja141());
+				      list_kpieve.get(b_index).setObja142(list_kpieve.get(b_index).getObja142()+eve.getObja142());
+				      list_kpieve.get(b_index).setObja143(list_kpieve.get(b_index).getObja143()+eve.getObja143());
+				      list_kpieve.get(b_index).setObja144(list_kpieve.get(b_index).getObja144()+eve.getObja144());
+				      list_kpieve.get(b_index).setObja145(list_kpieve.get(b_index).getObja145()+eve.getObja145());
+				      list_kpieve.get(b_index).setObja146(list_kpieve.get(b_index).getObja146()+eve.getObja146());
+				      list_kpieve.get(b_index).setObja147(list_kpieve.get(b_index).getObja147()+eve.getObja147());
+				      list_kpieve.get(b_index).setObja148(list_kpieve.get(b_index).getObja148()+eve.getObja148());
+				      list_kpieve.get(b_index).setObja149(list_kpieve.get(b_index).getObja149()+eve.getObja149());
+				      list_kpieve.get(b_index).setObja150(list_kpieve.get(b_index).getObja150()+eve.getObja150());
+				      list_kpieve.get(b_index).setObja151(list_kpieve.get(b_index).getObja151()+eve.getObja151());
+				      list_kpieve.get(b_index).setObja152(list_kpieve.get(b_index).getObja152()+eve.getObja152());
+				      list_kpieve.get(b_index).setObja153(list_kpieve.get(b_index).getObja153()+eve.getObja153());
+				      list_kpieve.get(b_index).setObja154(list_kpieve.get(b_index).getObja154()+eve.getObja154());
+				      list_kpieve.get(b_index).setObja155(list_kpieve.get(b_index).getObja155()+eve.getObja155());
+				      list_kpieve.get(b_index).setObja156(list_kpieve.get(b_index).getObja156()+eve.getObja156());
+				      list_kpieve.get(b_index).setObja157(list_kpieve.get(b_index).getObja157()+eve.getObja157());
+				      list_kpieve.get(b_index).setObja158(list_kpieve.get(b_index).getObja158()+eve.getObja158());
+				      list_kpieve.get(b_index).setObja159(list_kpieve.get(b_index).getObja159()+eve.getObja159());
+				      list_kpieve.get(b_index).setObja160(list_kpieve.get(b_index).getObja160()+eve.getObja160());
+				      list_kpieve.get(b_index).setObja161(list_kpieve.get(b_index).getObja161()+eve.getObja161());
+				      list_kpieve.get(b_index).setObja162(list_kpieve.get(b_index).getObja162()+eve.getObja162());
+				      list_kpieve.get(b_index).setObja163(list_kpieve.get(b_index).getObja163()+eve.getObja163());
+				      list_kpieve.get(b_index).setObja164(list_kpieve.get(b_index).getObja164()+eve.getObja164());
+				      list_kpieve.get(b_index).setObja165(list_kpieve.get(b_index).getObja165()+eve.getObja165());
+				      list_kpieve.get(b_index).setObja166(list_kpieve.get(b_index).getObja166()+eve.getObja166());
+				      list_kpieve.get(b_index).setObja167(list_kpieve.get(b_index).getObja167()+eve.getObja167());
+				      list_kpieve.get(b_index).setObja168(list_kpieve.get(b_index).getObja168()+eve.getObja168());
+				      list_kpieve.get(b_index).setObja169(list_kpieve.get(b_index).getObja169()+eve.getObja169());
+				      list_kpieve.get(b_index).setObja170(list_kpieve.get(b_index).getObja170()+eve.getObja170());
+				      list_kpieve.get(b_index).setObja171(list_kpieve.get(b_index).getObja171()+eve.getObja171());
+				      list_kpieve.get(b_index).setObja172(list_kpieve.get(b_index).getObja172()+eve.getObja172());
+				      list_kpieve.get(b_index).setObja173(list_kpieve.get(b_index).getObja173()+eve.getObja173());
+				      list_kpieve.get(b_index).setObja174(list_kpieve.get(b_index).getObja174()+eve.getObja174());
+				      list_kpieve.get(b_index).setObja175(list_kpieve.get(b_index).getObja175()+eve.getObja175());
+				      list_kpieve.get(b_index).setObja176(list_kpieve.get(b_index).getObja176()+eve.getObja176());
+				      list_kpieve.get(b_index).setObja177(list_kpieve.get(b_index).getObja177()+eve.getObja177());
+				      list_kpieve.get(b_index).setObja178(list_kpieve.get(b_index).getObja178()+eve.getObja178());
+				      list_kpieve.get(b_index).setObja179(list_kpieve.get(b_index).getObja179()+eve.getObja179());
+				      list_kpieve.get(b_index).setObja180(list_kpieve.get(b_index).getObja180()+eve.getObja180());
+				      list_kpieve.get(b_index).setObja181(list_kpieve.get(b_index).getObja181()+eve.getObja181());
+				      list_kpieve.get(b_index).setObja182(list_kpieve.get(b_index).getObja182()+eve.getObja182());
+				      list_kpieve.get(b_index).setObja183(list_kpieve.get(b_index).getObja183()+eve.getObja183());
+				      list_kpieve.get(b_index).setObja184(list_kpieve.get(b_index).getObja184()+eve.getObja184());
+				      list_kpieve.get(b_index).setObja185(list_kpieve.get(b_index).getObja185()+eve.getObja185());
+				      list_kpieve.get(b_index).setObja186(list_kpieve.get(b_index).getObja186()+eve.getObja186());
+				      list_kpieve.get(b_index).setObja187(list_kpieve.get(b_index).getObja187()+eve.getObja187());
+				      list_kpieve.get(b_index).setObja188(list_kpieve.get(b_index).getObja188()+eve.getObja188());
+				      list_kpieve.get(b_index).setObja189(list_kpieve.get(b_index).getObja189()+eve.getObja189());
+				      list_kpieve.get(b_index).setObja190(list_kpieve.get(b_index).getObja190()+eve.getObja190());
+				      list_kpieve.get(b_index).setObja191(list_kpieve.get(b_index).getObja191()+eve.getObja191());
+				      list_kpieve.get(b_index).setObja192(list_kpieve.get(b_index).getObja192()+eve.getObja192());
+				      list_kpieve.get(b_index).setObja193(list_kpieve.get(b_index).getObja193()+eve.getObja193());
+				      list_kpieve.get(b_index).setObja194(list_kpieve.get(b_index).getObja194()+eve.getObja194());
+				      list_kpieve.get(b_index).setObja195(list_kpieve.get(b_index).getObja195()+eve.getObja195());
+				      list_kpieve.get(b_index).setObja196(list_kpieve.get(b_index).getObja196()+eve.getObja196());
+				      list_kpieve.get(b_index).setObja197(list_kpieve.get(b_index).getObja197()+eve.getObja197());
+				      list_kpieve.get(b_index).setObja198(list_kpieve.get(b_index).getObja198()+eve.getObja198());
+				      list_kpieve.get(b_index).setObja199(list_kpieve.get(b_index).getObja199()+eve.getObja199());
+				      list_kpieve.get(b_index).setObja200(list_kpieve.get(b_index).getObja200()+eve.getObja200());
+				      list_kpieve.get(b_index).setObja201(list_kpieve.get(b_index).getObja201()+eve.getObja201());
+				      list_kpieve.get(b_index).setObja202(list_kpieve.get(b_index).getObja202()+eve.getObja202());
 				      
 				      if(b==12){
 				    	  for(int i=0;i<3;i++){
@@ -304,52 +356,111 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 						      list_kpieve.get(i+5).setSumStandarddemo(list_kpieve.get(2*i+1).getSumStandarddemo().add(list_kpieve.get(2*i+2).getSumStandarddemo()));
 						      list_kpieve.get(i+5).setSumActualdemo(list_kpieve.get(2*i+1).getSumActualdemo().add(list_kpieve.get(2*i+2).getSumActualdemo()));
 						      list_kpieve.get(i+5).setSumActualpairs(list_kpieve.get(2*i+1).getSumActualpairs().add(list_kpieve.get(2*i+2).getSumActualpairs()));
-						      list_kpieve.get(i+5).setSumFacpairs(list_kpieve.get(2*i+1).getSumFacpairs().add(list_kpieve.get(2*i+2).getSumFacpairs()));
-						      list_kpieve.get(i+5).setWorkhours(list_kpieve.get(2*i+1).getWorkhours()+list_kpieve.get(2*i+2).getWorkhours());
-						      list_kpieve.get(i+5).setPersonzg(list_kpieve.get(2*i+1).getPersonzg()+list_kpieve.get(2*i+2).getPersonzg());
-						      list_kpieve.get(i+5).setPersonjg(list_kpieve.get(2*i+1).getPersonjg()+list_kpieve.get(2*i+2).getPersonjg());
-						      list_kpieve.get(i+5).setTimezg(list_kpieve.get(2*i+1).getTimezg()+list_kpieve.get(2*i+2).getTimezg());
-						      list_kpieve.get(i+5).setTimejg(list_kpieve.get(2*i+1).getTimejg()+list_kpieve.get(2*i+2).getTimejg());
-						      list_kpieve.get(i+5).setAddtimezg(list_kpieve.get(2*i+1).getAddtimezg()+list_kpieve.get(2*i+2).getAddtimezg());
-						      list_kpieve.get(i+5).setAddtimejg(list_kpieve.get(2*i+1).getAddtimejg()+list_kpieve.get(2*i+2).getAddtimejg());
-						      list_kpieve.get(i+5).setLeavenumzg(list_kpieve.get(2*i+1).getLeavenumzg()+list_kpieve.get(2*i+2).getLeavenumzg());
-						      list_kpieve.get(i+5).setLeavenumjg(list_kpieve.get(2*i+1).getLeavenumjg()+list_kpieve.get(2*i+2).getLeavenumjg());
-						      list_kpieve.get(i+5).setHurtnum(list_kpieve.get(2*i+1).getHurtnum()+list_kpieve.get(2*i+2).getHurtnum());
-						      list_kpieve.get(i+5).setInvcount(list_kpieve.get(2*i+1).getInvcount()+list_kpieve.get(2*i+2).getInvcount());
-						      list_kpieve.get(i+5).setSellcount(list_kpieve.get(2*i+1).getSellcount()+list_kpieve.get(2*i+2).getSellcount());
-						      list_kpieve.get(i+5).setCostcount(list_kpieve.get(2*i+1).getCostcount()+list_kpieve.get(2*i+2).getCostcount());
-						      list_kpieve.get(i+5).setWagezgUsd(list_kpieve.get(2*i+1).getWagezgUsd()+list_kpieve.get(2*i+2).getWagezgUsd());
-						      list_kpieve.get(i+5).setWagejgUsd(list_kpieve.get(2*i+1).getWagejgUsd()+list_kpieve.get(2*i+2).getWagejgUsd());
-						      list_kpieve.get(i+5).setCashcount(list_kpieve.get(2*i+1).getCashcount()+list_kpieve.get(2*i+2).getCashcount());
-						      list_kpieve.get(i+5).setSideweit(list_kpieve.get(2*i+1).getSideweit()+list_kpieve.get(2*i+2).getSideweit());
-						      list_kpieve.get(i+5).setBadweit(list_kpieve.get(2*i+1).getBadweit()+list_kpieve.get(2*i+2).getBadweit());
-						      list_kpieve.get(i+5).setOtherbadweight(list_kpieve.get(2*i+1).getOtherbadweight()+list_kpieve.get(2*i+2).getOtherbadweight());
-						      list_kpieve.get(i+5).setOtherweight(list_kpieve.get(2*i+1).getOtherweight().add(eve.getOtherweight()));
-						      list_kpieve.get(i+5).setWaterton(list_kpieve.get(2*i+1).getWaterton()+list_kpieve.get(2*i+2).getWaterton());
-						      list_kpieve.get(i+5).setElectricdu(list_kpieve.get(2*i+1).getElectricdu()+list_kpieve.get(2*i+2).getElectricdu());
-						      list_kpieve.get(i+5).setGaston(list_kpieve.get(2*i+1).getGaston()+list_kpieve.get(2*i+2).getGaston());
-						      list_kpieve.get(i+5).setStorenum(list_kpieve.get(2*i+1).getStorenum()+list_kpieve.get(2*i+2).getStorenum());
-						      list_kpieve.get(i+5).setOutnum(list_kpieve.get(2*i+1).getOutnum()+list_kpieve.get(2*i+2).getOutnum());
-						      list_kpieve.get(i+5).setMinusnum(list_kpieve.get(2*i+1).getMinusnum()+list_kpieve.get(2*i+2).getMinusnum());
-						      list_kpieve.get(i+5).setActlost(list_kpieve.get(2*i+1).getActlost()+list_kpieve.get(2*i+2).getActlost());
-						      list_kpieve.get(i+5).setAvgbuttomweight2(list_kpieve.get(2*i+1).getAvgbuttomweight2()+list_kpieve.get(2*i+2).getAvgbuttomweight2());
-						      list_kpieve.get(i+5).setProductednum(list_kpieve.get(2*i+1).getProductednum()+list_kpieve.get(2*i+2).getProductednum());
-						      list_kpieve.get(i+5).setNoglueweight(list_kpieve.get(2*i+1).getNoglueweight()+list_kpieve.get(2*i+2).getNoglueweight());
-						      list_kpieve.get(i+5).setRepairmoney(list_kpieve.get(2*i+1).getRepairmoney()+list_kpieve.get(2*i+2).getRepairmoney());
-						      list_kpieve.get(i+5).setInstorenum(list_kpieve.get(2*i+1).getInstorenum()+list_kpieve.get(2*i+2).getInstorenum());							      
-						      list_kpieve.get(i+5).setHole(list_kpieve.get(2*i+1).getHole()+list_kpieve.get(2*i+2).getHole());
-						      list_kpieve.get(i+5).setSumWorkday(list_kpieve.get(2*i+1).getSumWorkday().add(list_kpieve.get(2*i+2).getSumWorkday()));
-						      list_kpieve.get(i+5).setWaterusd(list_kpieve.get(2*i+1).getWaterusd()+list_kpieve.get(2*i+2).getWaterusd());
-						      list_kpieve.get(i+5).setElectricusd(list_kpieve.get(2*i+1).getElectricusd()+list_kpieve.get(2*i+2).getElectricusd());
-						      list_kpieve.get(i+5).setGasusd(list_kpieve.get(2*i+1).getGasusd()+list_kpieve.get(2*i+2).getGasusd());						      					     
-						      list_kpieve.get(i+5).setThickused(list_kpieve.get(2*i+1).getThickused()+list_kpieve.get(2*i+2).getThickused());
-						      list_kpieve.get(i+5).setBackfeed(list_kpieve.get(2*i+1).getBackfeed()+list_kpieve.get(2*i+2).getBackfeed());						      
-						      list_kpieve.get(i+5).setOilback(list_kpieve.get(2*i+1).getOilback()+list_kpieve.get(2*i+2).getOilback());						      
-						      list_kpieve.get(i+5).setDrugsused(list_kpieve.get(2*i+1).getDrugsused()+list_kpieve.get(2*i+2).getDrugsused());
-						      list_kpieve.get(i+5).setColorused(list_kpieve.get(2*i+1).getColorused()+list_kpieve.get(2*i+2).getColorused());
-						      list_kpieve.get(i+5).setLeavemoney(list_kpieve.get(2*i+1).getLeavemoney()+list_kpieve.get(2*i+2).getLeavemoney());
-						      list_kpieve.get(i+5).setPaypairs(list_kpieve.get(2*i+1).getPaypairs()+list_kpieve.get(2*i+2).getPaypairs());
-						      list_kpieve.get(i+5).setBadcount(list_kpieve.get(2*i+1).getBadcount()+list_kpieve.get(2*i+2).getBadcount());					      
+						      list_kpieve.get(i+5).setSumFactpairs(list_kpieve.get(2*i+1).getSumFactpairs().add(list_kpieve.get(2*i+2).getSumFactpairs()));
+						      list_kpieve.get(i+5).setHole(list_kpieve.get(2*i+1).getHole()+list_kpieve.get(2*i+2).getHole());						      
+						      list_kpieve.get(i+5).setObja100(list_kpieve.get(2*i+1).getObja100()+list_kpieve.get(2*i+2).getObja100());
+						      list_kpieve.get(i+5).setObja101(list_kpieve.get(2*i+1).getObja101()+list_kpieve.get(2*i+2).getObja101());
+						      list_kpieve.get(i+5).setObja102(list_kpieve.get(2*i+1).getObja102()+list_kpieve.get(2*i+2).getObja102());
+						      list_kpieve.get(i+5).setObja103(list_kpieve.get(2*i+1).getObja103()+list_kpieve.get(2*i+2).getObja103());
+						      list_kpieve.get(i+5).setObja104(list_kpieve.get(2*i+1).getObja104()+list_kpieve.get(2*i+2).getObja104());
+						      list_kpieve.get(i+5).setObja105(list_kpieve.get(2*i+1).getObja105()+list_kpieve.get(2*i+2).getObja105());
+						      list_kpieve.get(i+5).setObja106(list_kpieve.get(2*i+1).getObja106()+list_kpieve.get(2*i+2).getObja106());
+						      list_kpieve.get(i+5).setObja107(list_kpieve.get(2*i+1).getObja107()+list_kpieve.get(2*i+2).getObja107());
+						      list_kpieve.get(i+5).setObja108(list_kpieve.get(2*i+1).getObja108()+list_kpieve.get(2*i+2).getObja108());
+						      list_kpieve.get(i+5).setObja109(list_kpieve.get(2*i+1).getObja109()+list_kpieve.get(2*i+2).getObja109());
+						      list_kpieve.get(i+5).setObja110(list_kpieve.get(2*i+1).getObja110()+list_kpieve.get(2*i+2).getObja110());
+						      list_kpieve.get(i+5).setObja111(list_kpieve.get(2*i+1).getObja111()+list_kpieve.get(2*i+2).getObja111());
+						      list_kpieve.get(i+5).setObja112(list_kpieve.get(2*i+1).getObja112()+list_kpieve.get(2*i+2).getObja112());
+						      list_kpieve.get(i+5).setObja113(list_kpieve.get(2*i+1).getObja113()+list_kpieve.get(2*i+2).getObja113());
+						      list_kpieve.get(i+5).setObja114(list_kpieve.get(2*i+1).getObja114()+list_kpieve.get(2*i+2).getObja114());
+						      list_kpieve.get(i+5).setObja115(list_kpieve.get(2*i+1).getObja115()+list_kpieve.get(2*i+2).getObja115());
+						      list_kpieve.get(i+5).setObja116(list_kpieve.get(2*i+1).getObja116()+list_kpieve.get(2*i+2).getObja116());
+						      list_kpieve.get(i+5).setObja117(list_kpieve.get(2*i+1).getObja117()+list_kpieve.get(2*i+2).getObja117());
+						      list_kpieve.get(i+5).setObja118(list_kpieve.get(2*i+1).getObja118()+list_kpieve.get(2*i+2).getObja118());
+						      list_kpieve.get(i+5).setObja119(list_kpieve.get(2*i+1).getObja119()+list_kpieve.get(2*i+2).getObja119());
+						      list_kpieve.get(i+5).setObja120(list_kpieve.get(2*i+1).getObja120()+list_kpieve.get(2*i+2).getObja120());
+						      list_kpieve.get(i+5).setObja121(list_kpieve.get(2*i+1).getObja121()+list_kpieve.get(2*i+2).getObja121());
+						      list_kpieve.get(i+5).setObja122(list_kpieve.get(2*i+1).getObja122()+list_kpieve.get(2*i+2).getObja122());
+						      list_kpieve.get(i+5).setObja123(list_kpieve.get(2*i+1).getObja123()+list_kpieve.get(2*i+2).getObja123());
+						      list_kpieve.get(i+5).setObja124(list_kpieve.get(2*i+1).getObja124()+list_kpieve.get(2*i+2).getObja124());
+						      list_kpieve.get(i+5).setObja125(list_kpieve.get(2*i+1).getObja125()+list_kpieve.get(2*i+2).getObja125());
+						      list_kpieve.get(i+5).setObja126(list_kpieve.get(2*i+1).getObja126()+list_kpieve.get(2*i+2).getObja126());
+						      list_kpieve.get(i+5).setObja127(list_kpieve.get(2*i+1).getObja127()+list_kpieve.get(2*i+2).getObja127());
+						      list_kpieve.get(i+5).setObja128(list_kpieve.get(2*i+1).getObja128()+list_kpieve.get(2*i+2).getObja128());
+						      list_kpieve.get(i+5).setObja129(list_kpieve.get(2*i+1).getObja129()+list_kpieve.get(2*i+2).getObja129());
+						      list_kpieve.get(i+5).setObja130(list_kpieve.get(2*i+1).getObja130()+list_kpieve.get(2*i+2).getObja130());
+						      list_kpieve.get(i+5).setObja131(list_kpieve.get(2*i+1).getObja131()+list_kpieve.get(2*i+2).getObja131());
+						      list_kpieve.get(i+5).setObja132(list_kpieve.get(2*i+1).getObja132()+list_kpieve.get(2*i+2).getObja132());
+						      list_kpieve.get(i+5).setObja133(list_kpieve.get(2*i+1).getObja133()+list_kpieve.get(2*i+2).getObja133());
+						      list_kpieve.get(i+5).setObja134(list_kpieve.get(2*i+1).getObja134()+list_kpieve.get(2*i+2).getObja134());
+						      list_kpieve.get(i+5).setObja135(list_kpieve.get(2*i+1).getObja135()+list_kpieve.get(2*i+2).getObja135());
+						      list_kpieve.get(i+5).setObja136(list_kpieve.get(2*i+1).getObja136()+list_kpieve.get(2*i+2).getObja136());
+						      list_kpieve.get(i+5).setObja137(list_kpieve.get(2*i+1).getObja137()+list_kpieve.get(2*i+2).getObja137());
+						      list_kpieve.get(i+5).setObja138(list_kpieve.get(2*i+1).getObja138()+list_kpieve.get(2*i+2).getObja138());
+						      list_kpieve.get(i+5).setObja139(list_kpieve.get(2*i+1).getObja139()+list_kpieve.get(2*i+2).getObja139());
+						      list_kpieve.get(i+5).setObja140(list_kpieve.get(2*i+1).getObja140()+list_kpieve.get(2*i+2).getObja140());
+						      list_kpieve.get(i+5).setObja141(list_kpieve.get(2*i+1).getObja141()+list_kpieve.get(2*i+2).getObja141());
+						      list_kpieve.get(i+5).setObja142(list_kpieve.get(2*i+1).getObja142()+list_kpieve.get(2*i+2).getObja142());
+						      list_kpieve.get(i+5).setObja143(list_kpieve.get(2*i+1).getObja143()+list_kpieve.get(2*i+2).getObja143());
+						      list_kpieve.get(i+5).setObja144(list_kpieve.get(2*i+1).getObja144()+list_kpieve.get(2*i+2).getObja144());
+						      list_kpieve.get(i+5).setObja145(list_kpieve.get(2*i+1).getObja145()+list_kpieve.get(2*i+2).getObja145());
+						      list_kpieve.get(i+5).setObja146(list_kpieve.get(2*i+1).getObja146()+list_kpieve.get(2*i+2).getObja146());
+						      list_kpieve.get(i+5).setObja147(list_kpieve.get(2*i+1).getObja147()+list_kpieve.get(2*i+2).getObja147());
+						      list_kpieve.get(i+5).setObja148(list_kpieve.get(2*i+1).getObja148()+list_kpieve.get(2*i+2).getObja148());
+						      list_kpieve.get(i+5).setObja149(list_kpieve.get(2*i+1).getObja149()+list_kpieve.get(2*i+2).getObja149());
+						      list_kpieve.get(i+5).setObja150(list_kpieve.get(2*i+1).getObja150()+list_kpieve.get(2*i+2).getObja150());
+						      list_kpieve.get(i+5).setObja151(list_kpieve.get(2*i+1).getObja151()+list_kpieve.get(2*i+2).getObja151());
+						      list_kpieve.get(i+5).setObja152(list_kpieve.get(2*i+1).getObja152()+list_kpieve.get(2*i+2).getObja152());
+						      list_kpieve.get(i+5).setObja153(list_kpieve.get(2*i+1).getObja153()+list_kpieve.get(2*i+2).getObja153());
+						      list_kpieve.get(i+5).setObja154(list_kpieve.get(2*i+1).getObja154()+list_kpieve.get(2*i+2).getObja154());
+						      list_kpieve.get(i+5).setObja155(list_kpieve.get(2*i+1).getObja155()+list_kpieve.get(2*i+2).getObja155());
+						      list_kpieve.get(i+5).setObja156(list_kpieve.get(2*i+1).getObja156()+list_kpieve.get(2*i+2).getObja156());
+						      list_kpieve.get(i+5).setObja157(list_kpieve.get(2*i+1).getObja157()+list_kpieve.get(2*i+2).getObja157());
+						      list_kpieve.get(i+5).setObja158(list_kpieve.get(2*i+1).getObja158()+list_kpieve.get(2*i+2).getObja158());
+						      list_kpieve.get(i+5).setObja159(list_kpieve.get(2*i+1).getObja159()+list_kpieve.get(2*i+2).getObja159());
+						      list_kpieve.get(i+5).setObja160(list_kpieve.get(2*i+1).getObja160()+list_kpieve.get(2*i+2).getObja160());
+						      list_kpieve.get(i+5).setObja161(list_kpieve.get(2*i+1).getObja161()+list_kpieve.get(2*i+2).getObja161());
+						      list_kpieve.get(i+5).setObja162(list_kpieve.get(2*i+1).getObja162()+list_kpieve.get(2*i+2).getObja162());
+						      list_kpieve.get(i+5).setObja163(list_kpieve.get(2*i+1).getObja163()+list_kpieve.get(2*i+2).getObja163());
+						      list_kpieve.get(i+5).setObja164(list_kpieve.get(2*i+1).getObja164()+list_kpieve.get(2*i+2).getObja164());
+						      list_kpieve.get(i+5).setObja165(list_kpieve.get(2*i+1).getObja165()+list_kpieve.get(2*i+2).getObja165());
+						      list_kpieve.get(i+5).setObja166(list_kpieve.get(2*i+1).getObja166()+list_kpieve.get(2*i+2).getObja166());
+						      list_kpieve.get(i+5).setObja167(list_kpieve.get(2*i+1).getObja167()+list_kpieve.get(2*i+2).getObja167());
+						      list_kpieve.get(i+5).setObja168(list_kpieve.get(2*i+1).getObja168()+list_kpieve.get(2*i+2).getObja168());
+						      list_kpieve.get(i+5).setObja169(list_kpieve.get(2*i+1).getObja169()+list_kpieve.get(2*i+2).getObja169());
+						      list_kpieve.get(i+5).setObja170(list_kpieve.get(2*i+1).getObja170()+list_kpieve.get(2*i+2).getObja170());
+						      list_kpieve.get(i+5).setObja171(list_kpieve.get(2*i+1).getObja171()+list_kpieve.get(2*i+2).getObja171());
+						      list_kpieve.get(i+5).setObja172(list_kpieve.get(2*i+1).getObja172()+list_kpieve.get(2*i+2).getObja172());
+						      list_kpieve.get(i+5).setObja173(list_kpieve.get(2*i+1).getObja173()+list_kpieve.get(2*i+2).getObja173());
+						      list_kpieve.get(i+5).setObja174(list_kpieve.get(2*i+1).getObja174()+list_kpieve.get(2*i+2).getObja174());
+						      list_kpieve.get(i+5).setObja175(list_kpieve.get(2*i+1).getObja175()+list_kpieve.get(2*i+2).getObja175());
+						      list_kpieve.get(i+5).setObja176(list_kpieve.get(2*i+1).getObja176()+list_kpieve.get(2*i+2).getObja176());
+						      list_kpieve.get(i+5).setObja177(list_kpieve.get(2*i+1).getObja177()+list_kpieve.get(2*i+2).getObja177());
+						      list_kpieve.get(i+5).setObja178(list_kpieve.get(2*i+1).getObja178()+list_kpieve.get(2*i+2).getObja178());
+						      list_kpieve.get(i+5).setObja179(list_kpieve.get(2*i+1).getObja179()+list_kpieve.get(2*i+2).getObja179());
+						      list_kpieve.get(i+5).setObja180(list_kpieve.get(2*i+1).getObja180()+list_kpieve.get(2*i+2).getObja180());
+						      list_kpieve.get(i+5).setObja181(list_kpieve.get(2*i+1).getObja181()+list_kpieve.get(2*i+2).getObja181());
+						      list_kpieve.get(i+5).setObja182(list_kpieve.get(2*i+1).getObja182()+list_kpieve.get(2*i+2).getObja182());
+						      list_kpieve.get(i+5).setObja183(list_kpieve.get(2*i+1).getObja183()+list_kpieve.get(2*i+2).getObja183());
+						      list_kpieve.get(i+5).setObja184(list_kpieve.get(2*i+1).getObja184()+list_kpieve.get(2*i+2).getObja184());
+						      list_kpieve.get(i+5).setObja185(list_kpieve.get(2*i+1).getObja185()+list_kpieve.get(2*i+2).getObja185());
+						      list_kpieve.get(i+5).setObja186(list_kpieve.get(2*i+1).getObja186()+list_kpieve.get(2*i+2).getObja186());
+						      list_kpieve.get(i+5).setObja187(list_kpieve.get(2*i+1).getObja187()+list_kpieve.get(2*i+2).getObja187());
+						      list_kpieve.get(i+5).setObja188(list_kpieve.get(2*i+1).getObja188()+list_kpieve.get(2*i+2).getObja188());
+						      list_kpieve.get(i+5).setObja189(list_kpieve.get(2*i+1).getObja189()+list_kpieve.get(2*i+2).getObja189());
+						      list_kpieve.get(i+5).setObja190(list_kpieve.get(2*i+1).getObja190()+list_kpieve.get(2*i+2).getObja190());
+						      list_kpieve.get(i+5).setObja191(list_kpieve.get(2*i+1).getObja191()+list_kpieve.get(2*i+2).getObja191());
+						      list_kpieve.get(i+5).setObja192(list_kpieve.get(2*i+1).getObja192()+list_kpieve.get(2*i+2).getObja192());
+						      list_kpieve.get(i+5).setObja193(list_kpieve.get(2*i+1).getObja193()+list_kpieve.get(2*i+2).getObja193());
+						      list_kpieve.get(i+5).setObja194(list_kpieve.get(2*i+1).getObja194()+list_kpieve.get(2*i+2).getObja194());
+						      list_kpieve.get(i+5).setObja195(list_kpieve.get(2*i+1).getObja195()+list_kpieve.get(2*i+2).getObja195());
+						      list_kpieve.get(i+5).setObja196(list_kpieve.get(2*i+1).getObja196()+list_kpieve.get(2*i+2).getObja196());
+						      list_kpieve.get(i+5).setObja197(list_kpieve.get(2*i+1).getObja197()+list_kpieve.get(2*i+2).getObja197());
+						      list_kpieve.get(i+5).setObja198(list_kpieve.get(2*i+1).getObja198()+list_kpieve.get(2*i+2).getObja198());
+						      list_kpieve.get(i+5).setObja199(list_kpieve.get(2*i+1).getObja199()+list_kpieve.get(2*i+2).getObja199());
+						      list_kpieve.get(i+5).setObja200(list_kpieve.get(2*i+1).getObja200()+list_kpieve.get(2*i+2).getObja200());
+						      list_kpieve.get(i+5).setObja201(list_kpieve.get(2*i+1).getObja201()+list_kpieve.get(2*i+2).getObja201());
+						      list_kpieve.get(i+5).setObja202(list_kpieve.get(2*i+1).getObja202()+list_kpieve.get(2*i+2).getObja202());					      
 				    	  }
 				    	  list3_q1=this.findResult(b/4,list_kpieve.get(1));//list_kpieve.get(1)第一季度							
 						  list2_all.add(list3_q1);
@@ -459,11 +570,11 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 					}//end for3
 					break;								
 				}
-				VKpifact kpi=vkpiSer.findById(factNo, factCode,year+month);								
+				VKpifactNew kpi=vkpinewSer.findById(factNo, factCode,year+month);								
 				List<Double> list_content=new ArrayList<Double>();
 				if(kpi!=null){// start if1
 					BigDecimal big=new BigDecimal(0.00);
-					if(kpi.getFactaddRate()==null){
+					/*if(kpi.getFactaddRate()==null){
 						kpi.setFactaddRate(big);
 					}
 					if(kpi.getOutrequestRate()==null){
@@ -486,7 +597,7 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 					}
 					if(kpi.getAvgCirclehour()==null){
 						kpi.setAvgCirclehour(big);
-					}
+					}*/
 					list_content=VkpiFactToDouble(kpi);//VKpiFact對象各項封裝List<Double>集合
 					
 											
@@ -596,7 +707,8 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 		wb.write(os);
 		os.close();
 	}
-	public void print_month() throws IOException, ParseException{
+	
+	public void print_month() throws IOException, ParseException{		
 		HSSFWorkbook wb=new HSSFWorkbook();
 		HSSFSheet sheet=wb.createSheet("KPI-工廠");		
 		/**
@@ -642,9 +754,9 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 		//最外層集合
 		List<List<List<Double>>>list1_all=new ArrayList<List<List<Double>>>();
 		for(int a=0;a<list_factcode.size();a++){//start for1
-			List<VKpifactEve>list_kpieve=new ArrayList<VKpifactEve>();
+			List<VKpifactEveNew>list_kpieve=new ArrayList<VKpifactEveNew>();
 			for(int i=0;i<1;i++){
-				list_kpieve.add(new VKpifactEve());
+				list_kpieve.add(new VKpifactEveNew());
 			}
 									
 			//中間集合,用於裝"合計"數據
@@ -657,12 +769,12 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 			String factCode=fact.getId().getFactArea();						
 			for(int b=0;b<list_months.size();b++){//start for2
 				String ym=list_months.get(b);
-				VKpifactEve eve=vkpieveSer.findById(factNo, factCode,ym)==null?new VKpifactEve():vkpieveSer.findById(factNo, factCode,ym);
+				VKpifactEveNew eve=vkpievenewSer.findById(factNo, factCode,ym)==null?new VKpifactEveNew():vkpievenewSer.findById(factNo, factCode,ym);
 				if(eve!=null){//start if
 					/**
 					 * sumActualpairs和sumFacpairs,otherweight有可能為空
 					 */
-					BigDecimal big=new BigDecimal(0.00);
+					/*BigDecimal big=new BigDecimal(0.00);
 					if(eve.getSumActualpairs()==null){
 						eve.setSumActualpairs(big);
 					}
@@ -683,47 +795,117 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 					}
 					if(eve.getWorkhours()==null){
 						eve.setWorkhours(0.0);
-					}
+					}*/
 					//合計
-					 list_kpieve.get(0).setSumEverydemo(list_kpieve.get(0).getSumEverydemo().add(eve.getSumEverydemo()));
+					list_kpieve.get(0).setSumEverydemo(list_kpieve.get(0).getSumEverydemo().add(eve.getSumEverydemo()));
 				      list_kpieve.get(0).setSumStandarddemo(list_kpieve.get(0).getSumStandarddemo().add(eve.getSumStandarddemo()));
 				      list_kpieve.get(0).setSumActualdemo(list_kpieve.get(0).getSumActualdemo().add(eve.getSumActualdemo()));
 				      list_kpieve.get(0).setSumActualpairs(list_kpieve.get(0).getSumActualpairs().add(eve.getSumActualpairs()));
-				      list_kpieve.get(0).setSumFacpairs(list_kpieve.get(0).getSumFacpairs().add(eve.getSumFacpairs()));
-				      list_kpieve.get(0).setWorkhours(list_kpieve.get(0).getWorkhours()+eve.getWorkhours());
-				      list_kpieve.get(0).setPersonzg(list_kpieve.get(0).getPersonzg()+eve.getPersonzg());
-				      list_kpieve.get(0).setPersonjg(list_kpieve.get(0).getPersonjg()+eve.getPersonjg());
-				      list_kpieve.get(0).setTimezg(list_kpieve.get(0).getTimezg()+eve.getTimezg());
-				      list_kpieve.get(0).setTimejg(list_kpieve.get(0).getTimejg()+eve.getTimejg());
-				      list_kpieve.get(0).setAddtimezg(list_kpieve.get(0).getAddtimezg()+eve.getAddtimezg());
-				      list_kpieve.get(0).setAddtimejg(list_kpieve.get(0).getAddtimejg()+eve.getAddtimejg());
-				      list_kpieve.get(0).setLeavenumzg(list_kpieve.get(0).getLeavenumzg()+eve.getLeavenumzg());
-				      list_kpieve.get(0).setLeavenumjg(list_kpieve.get(0).getLeavenumjg()+eve.getLeavenumjg());
-				      list_kpieve.get(0).setHurtnum(list_kpieve.get(0).getHurtnum()+eve.getHurtnum());
-				      list_kpieve.get(0).setInvcount(list_kpieve.get(0).getInvcount()+eve.getInvcount());
-				      list_kpieve.get(0).setSellcount(list_kpieve.get(0).getSellcount()+eve.getSellcount());
-				      list_kpieve.get(0).setCostcount(list_kpieve.get(0).getCostcount()+eve.getCostcount());
-				      list_kpieve.get(0).setWagezgUsd(list_kpieve.get(0).getWagezgUsd()+eve.getWagezgUsd());
-				      list_kpieve.get(0).setWagejgUsd(list_kpieve.get(0).getWagejgUsd()+eve.getWagejgUsd());
-				      list_kpieve.get(0).setCashcount(list_kpieve.get(0).getCashcount()+eve.getCashcount());
-				      list_kpieve.get(0).setSideweit(list_kpieve.get(0).getSideweit()+eve.getSideweit());
-				      list_kpieve.get(0).setBadweit(list_kpieve.get(0).getBadweit()+eve.getBadweit());
-				      list_kpieve.get(0).setOtherbadweight(list_kpieve.get(0).getOtherbadweight()+eve.getOtherbadweight());
-				      list_kpieve.get(0).setOtherweight(list_kpieve.get(0).getOtherweight().add(eve.getOtherweight()));
-				      list_kpieve.get(0).setWaterton(list_kpieve.get(0).getWaterton()+eve.getWaterton());
-				      list_kpieve.get(0).setElectricdu(list_kpieve.get(0).getElectricdu()+eve.getElectricdu());
-				      list_kpieve.get(0).setGaston(list_kpieve.get(0).getGaston()+eve.getGaston());
-				      list_kpieve.get(0).setStorenum(list_kpieve.get(0).getStorenum()+eve.getStorenum());
-				      list_kpieve.get(0).setOutnum(list_kpieve.get(0).getOutnum()+eve.getOutnum());
-				      list_kpieve.get(0).setMinusnum(list_kpieve.get(0).getMinusnum()+eve.getMinusnum());
-				      list_kpieve.get(0).setActlost(list_kpieve.get(0).getActlost()+eve.getActlost());
-				      list_kpieve.get(0).setAvgbuttomweight2(list_kpieve.get(0).getAvgbuttomweight2()+eve.getAvgbuttomweight2());
-				      list_kpieve.get(0).setProductednum(list_kpieve.get(0).getProductednum()+eve.getProductednum());
-				      list_kpieve.get(0).setNoglueweight(list_kpieve.get(0).getNoglueweight()+eve.getNoglueweight());
-				      list_kpieve.get(0).setRepairmoney(list_kpieve.get(0).getRepairmoney()+eve.getRepairmoney());
-				      list_kpieve.get(0).setInstorenum(list_kpieve.get(0).getInstorenum()+eve.getInstorenum());
-											
-																																			
+				      list_kpieve.get(0).setSumFactpairs(list_kpieve.get(0).getSumFactpairs().add(eve.getSumFactpairs()));
+				      list_kpieve.get(0).setHole(list_kpieve.get(0).getHole()+eve.getHole());
+				      list_kpieve.get(0).setObja100(list_kpieve.get(0).getObja100()+eve.getObja100());
+				      list_kpieve.get(0).setObja101(list_kpieve.get(0).getObja101()+eve.getObja101());
+				      list_kpieve.get(0).setObja102(list_kpieve.get(0).getObja102()+eve.getObja102());
+				      list_kpieve.get(0).setObja103(list_kpieve.get(0).getObja103()+eve.getObja103());
+				      list_kpieve.get(0).setObja104(list_kpieve.get(0).getObja104()+eve.getObja104());
+				      list_kpieve.get(0).setObja105(list_kpieve.get(0).getObja105()+eve.getObja105());
+				      list_kpieve.get(0).setObja106(list_kpieve.get(0).getObja106()+eve.getObja106());
+				      list_kpieve.get(0).setObja107(list_kpieve.get(0).getObja107()+eve.getObja107());
+				      list_kpieve.get(0).setObja108(list_kpieve.get(0).getObja108()+eve.getObja108());
+				      list_kpieve.get(0).setObja109(list_kpieve.get(0).getObja109()+eve.getObja109());
+				      list_kpieve.get(0).setObja110(list_kpieve.get(0).getObja110()+eve.getObja110());
+				      list_kpieve.get(0).setObja111(list_kpieve.get(0).getObja111()+eve.getObja111());
+				      list_kpieve.get(0).setObja112(list_kpieve.get(0).getObja112()+eve.getObja112());
+				      list_kpieve.get(0).setObja113(list_kpieve.get(0).getObja113()+eve.getObja113());
+				      list_kpieve.get(0).setObja114(list_kpieve.get(0).getObja114()+eve.getObja114());
+				      list_kpieve.get(0).setObja115(list_kpieve.get(0).getObja115()+eve.getObja115());
+				      list_kpieve.get(0).setObja116(list_kpieve.get(0).getObja116()+eve.getObja116());
+				      list_kpieve.get(0).setObja117(list_kpieve.get(0).getObja117()+eve.getObja117());
+				      list_kpieve.get(0).setObja118(list_kpieve.get(0).getObja118()+eve.getObja118());
+				      list_kpieve.get(0).setObja119(list_kpieve.get(0).getObja119()+eve.getObja119());
+				      list_kpieve.get(0).setObja120(list_kpieve.get(0).getObja120()+eve.getObja120());
+				      list_kpieve.get(0).setObja121(list_kpieve.get(0).getObja121()+eve.getObja121());
+				      list_kpieve.get(0).setObja122(list_kpieve.get(0).getObja122()+eve.getObja122());
+				      list_kpieve.get(0).setObja123(list_kpieve.get(0).getObja123()+eve.getObja123());
+				      list_kpieve.get(0).setObja124(list_kpieve.get(0).getObja124()+eve.getObja124());
+				      list_kpieve.get(0).setObja125(list_kpieve.get(0).getObja125()+eve.getObja125());
+				      list_kpieve.get(0).setObja126(list_kpieve.get(0).getObja126()+eve.getObja126());
+				      list_kpieve.get(0).setObja127(list_kpieve.get(0).getObja127()+eve.getObja127());
+				      list_kpieve.get(0).setObja128(list_kpieve.get(0).getObja128()+eve.getObja128());
+				      list_kpieve.get(0).setObja129(list_kpieve.get(0).getObja129()+eve.getObja129());
+				      list_kpieve.get(0).setObja130(list_kpieve.get(0).getObja130()+eve.getObja130());
+				      list_kpieve.get(0).setObja131(list_kpieve.get(0).getObja131()+eve.getObja131());
+				      list_kpieve.get(0).setObja132(list_kpieve.get(0).getObja132()+eve.getObja132());
+				      list_kpieve.get(0).setObja133(list_kpieve.get(0).getObja133()+eve.getObja133());
+				      list_kpieve.get(0).setObja134(list_kpieve.get(0).getObja134()+eve.getObja134());
+				      list_kpieve.get(0).setObja135(list_kpieve.get(0).getObja135()+eve.getObja135());
+				      list_kpieve.get(0).setObja136(list_kpieve.get(0).getObja136()+eve.getObja136());
+				      list_kpieve.get(0).setObja137(list_kpieve.get(0).getObja137()+eve.getObja137());
+				      list_kpieve.get(0).setObja138(list_kpieve.get(0).getObja138()+eve.getObja138());
+				      list_kpieve.get(0).setObja139(list_kpieve.get(0).getObja139()+eve.getObja139());
+				      list_kpieve.get(0).setObja140(list_kpieve.get(0).getObja140()+eve.getObja140());
+				      list_kpieve.get(0).setObja141(list_kpieve.get(0).getObja141()+eve.getObja141());
+				      list_kpieve.get(0).setObja142(list_kpieve.get(0).getObja142()+eve.getObja142());
+				      list_kpieve.get(0).setObja143(list_kpieve.get(0).getObja143()+eve.getObja143());
+				      list_kpieve.get(0).setObja144(list_kpieve.get(0).getObja144()+eve.getObja144());
+				      list_kpieve.get(0).setObja145(list_kpieve.get(0).getObja145()+eve.getObja145());
+				      list_kpieve.get(0).setObja146(list_kpieve.get(0).getObja146()+eve.getObja146());
+				      list_kpieve.get(0).setObja147(list_kpieve.get(0).getObja147()+eve.getObja147());
+				      list_kpieve.get(0).setObja148(list_kpieve.get(0).getObja148()+eve.getObja148());
+				      list_kpieve.get(0).setObja149(list_kpieve.get(0).getObja149()+eve.getObja149());
+				      list_kpieve.get(0).setObja150(list_kpieve.get(0).getObja150()+eve.getObja150());
+				      list_kpieve.get(0).setObja151(list_kpieve.get(0).getObja151()+eve.getObja151());
+				      list_kpieve.get(0).setObja152(list_kpieve.get(0).getObja152()+eve.getObja152());
+				      list_kpieve.get(0).setObja153(list_kpieve.get(0).getObja153()+eve.getObja153());
+				      list_kpieve.get(0).setObja154(list_kpieve.get(0).getObja154()+eve.getObja154());
+				      list_kpieve.get(0).setObja155(list_kpieve.get(0).getObja155()+eve.getObja155());
+				      list_kpieve.get(0).setObja156(list_kpieve.get(0).getObja156()+eve.getObja156());
+				      list_kpieve.get(0).setObja157(list_kpieve.get(0).getObja157()+eve.getObja157());
+				      list_kpieve.get(0).setObja158(list_kpieve.get(0).getObja158()+eve.getObja158());
+				      list_kpieve.get(0).setObja159(list_kpieve.get(0).getObja159()+eve.getObja159());
+				      list_kpieve.get(0).setObja160(list_kpieve.get(0).getObja160()+eve.getObja160());
+				      list_kpieve.get(0).setObja161(list_kpieve.get(0).getObja161()+eve.getObja161());
+				      list_kpieve.get(0).setObja162(list_kpieve.get(0).getObja162()+eve.getObja162());
+				      list_kpieve.get(0).setObja163(list_kpieve.get(0).getObja163()+eve.getObja163());
+				      list_kpieve.get(0).setObja164(list_kpieve.get(0).getObja164()+eve.getObja164());
+				      list_kpieve.get(0).setObja165(list_kpieve.get(0).getObja165()+eve.getObja165());
+				      list_kpieve.get(0).setObja166(list_kpieve.get(0).getObja166()+eve.getObja166());
+				      list_kpieve.get(0).setObja167(list_kpieve.get(0).getObja167()+eve.getObja167());
+				      list_kpieve.get(0).setObja168(list_kpieve.get(0).getObja168()+eve.getObja168());
+				      list_kpieve.get(0).setObja169(list_kpieve.get(0).getObja169()+eve.getObja169());
+				      list_kpieve.get(0).setObja170(list_kpieve.get(0).getObja170()+eve.getObja170());
+				      list_kpieve.get(0).setObja171(list_kpieve.get(0).getObja171()+eve.getObja171());
+				      list_kpieve.get(0).setObja172(list_kpieve.get(0).getObja172()+eve.getObja172());
+				      list_kpieve.get(0).setObja173(list_kpieve.get(0).getObja173()+eve.getObja173());
+				      list_kpieve.get(0).setObja174(list_kpieve.get(0).getObja174()+eve.getObja174());
+				      list_kpieve.get(0).setObja175(list_kpieve.get(0).getObja175()+eve.getObja175());
+				      list_kpieve.get(0).setObja176(list_kpieve.get(0).getObja176()+eve.getObja176());
+				      list_kpieve.get(0).setObja177(list_kpieve.get(0).getObja177()+eve.getObja177());
+				      list_kpieve.get(0).setObja178(list_kpieve.get(0).getObja178()+eve.getObja178());
+				      list_kpieve.get(0).setObja179(list_kpieve.get(0).getObja179()+eve.getObja179());
+				      list_kpieve.get(0).setObja180(list_kpieve.get(0).getObja180()+eve.getObja180());
+				      list_kpieve.get(0).setObja181(list_kpieve.get(0).getObja181()+eve.getObja181());
+				      list_kpieve.get(0).setObja182(list_kpieve.get(0).getObja182()+eve.getObja182());
+				      list_kpieve.get(0).setObja183(list_kpieve.get(0).getObja183()+eve.getObja183());
+				      list_kpieve.get(0).setObja184(list_kpieve.get(0).getObja184()+eve.getObja184());
+				      list_kpieve.get(0).setObja185(list_kpieve.get(0).getObja185()+eve.getObja185());
+				      list_kpieve.get(0).setObja186(list_kpieve.get(0).getObja186()+eve.getObja186());
+				      list_kpieve.get(0).setObja187(list_kpieve.get(0).getObja187()+eve.getObja187());
+				      list_kpieve.get(0).setObja188(list_kpieve.get(0).getObja188()+eve.getObja188());
+				      list_kpieve.get(0).setObja189(list_kpieve.get(0).getObja189()+eve.getObja189());
+				      list_kpieve.get(0).setObja190(list_kpieve.get(0).getObja190()+eve.getObja190());
+				      list_kpieve.get(0).setObja191(list_kpieve.get(0).getObja191()+eve.getObja191());
+				      list_kpieve.get(0).setObja192(list_kpieve.get(0).getObja192()+eve.getObja192());
+				      list_kpieve.get(0).setObja193(list_kpieve.get(0).getObja193()+eve.getObja193());
+				      list_kpieve.get(0).setObja194(list_kpieve.get(0).getObja194()+eve.getObja194());
+				      list_kpieve.get(0).setObja195(list_kpieve.get(0).getObja195()+eve.getObja195());
+				      list_kpieve.get(0).setObja196(list_kpieve.get(0).getObja196()+eve.getObja196());
+				      list_kpieve.get(0).setObja197(list_kpieve.get(0).getObja197()+eve.getObja197());
+				      list_kpieve.get(0).setObja198(list_kpieve.get(0).getObja198()+eve.getObja198());
+				      list_kpieve.get(0).setObja199(list_kpieve.get(0).getObja199()+eve.getObja199());
+				      list_kpieve.get(0).setObja200(list_kpieve.get(0).getObja200()+eve.getObja200());
+				      list_kpieve.get(0).setObja201(list_kpieve.get(0).getObja201()+eve.getObja201());
+				      list_kpieve.get(0).setObja202(list_kpieve.get(0).getObja202()+eve.getObja202());					  																																						
 				}// end if				
 				//合計				
 					if(b==list_months.size()-1){
@@ -789,7 +971,7 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 					}//end for3
 					break;								
 				}
-				VKpifact kpi=vkpiSer.findById(factNo, factCode,ym);
+				VKpifactNew kpi=vkpinewSer.findById(factNo, factCode,ym);
 				List<Double> list_content=new ArrayList<Double>();
 				if(kpi!=null){// start if1
 					BigDecimal big=new BigDecimal(0.00);
@@ -873,7 +1055,7 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 		os.close();
 	}
 	
-
+	
 	public void print_tw() throws IOException{
 		//創建模板
 		HSSFWorkbook wb=new HSSFWorkbook();
@@ -980,7 +1162,7 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 			//填充內容
 			for(int b=0;b<list_factNo.size();b++){//start for2			
 				String factNo=list_factNo.get(b);
-				VKpifact kpi=vkpiSer.findById(factNo, factCode, yymm);
+				VKpifactNew kpi=vkpinewSer.findById(factNo, factCode, yymm);
 				List<Double>list_kpi=new ArrayList<Double>();
 				if(kpi!=null){
 					BigDecimal big=new BigDecimal(0.00);
@@ -1086,303 +1268,6 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 		wb.write(os);
 		os.close();
 	}
-	public void setServletResponse(HttpServletResponse response) {
-		// TODO Auto-generated method stub
-		this.response=response;
-	}
-	
-	/**
-	 * 季度,上下半年,全年數據計算
-	 * @param index
-	 * @param sumEverydemo
-	 * @param sumStandarddemo
-	 * @param sumActualdemo
-	 * @param sumActualpairs
-	 * @param sumFactpairs
-	 * @param personzg
-	 * @param personjg
-	 * @param timezg
-	 * @param timejg
-	 * @param addtimezg
-	 * @param addtimejg
-	 * @param leavenumzg
-	 * @param leavenumjg
-	 * @param hurtnum
-	 * @param invcount
-	 * @param sellcount
-	 * @param costcount
-	 * @param wagezgUsd
-	 * @param wagejgUsd
-	 * @param cashcount
-	 * @param sideweit
-	 * @param badweit
-	 * @param otherbadweight
-	 * @param waterton
-	 * @param electricdu
-	 * @param gasusd
-	 * @param storenum
-	 * @param outnum
-	 * @param minusnum
-	 * @param actlost
-	 * @param avgbuttomweight2
-	 * @return
-	 */
-	public List<Double> findResult_old(int index,Double sumEverydemo, Double sumStandarddemo,
-			Double sumActualdemo, Double sumActualpairs, Double sumFactpairs,
-
-			Double personzg, Double personjg, Double timezg, Double timejg,
-			Double addtimezg, Double addtimejg, Double leavenumzg,
-			Double leavenumjg, Double hurtnum,
-
-			Double invcount, Double sellcount, Double costcount,
-			Double wagezgUsd, Double wagejgUsd, Double cashcount,
-
-			Double sideweit, Double badweit, Double otherbadweight,
-
-			Double waterton, Double electricdu, Double gaston,
-
-			Double storenum, Double outnum, Double minusnum,
-
-			Double actlost, Double avgbuttomweight2,Double otherweight,
-			Double productnum,Double noglueweight,Double repairmoney,Double sumWorkhours,
-			Double instorenum,Double hole,Double sum_workday,Double waterusd,Double electricued,Double gasusd,Double thickUsed,
-			Double backFeed,Double oilBack,Double drugsUsed ,Double colorUsed ,Double leaveMoney,
-			Double payPairs,Double badcount
-			) {
-		if(index==0){
-			index=1;
-		}
-		DecimalFormat format=new DecimalFormat("####0");
-		DecimalFormat format1=new DecimalFormat("####0.0");
-		DecimalFormat format2=new DecimalFormat("####0.00");
-		DecimalFormat format4=new DecimalFormat("####0.0000");
-		List<Double>list=new ArrayList<Double>();
-		Double thisYield=Double.valueOf(format1.format(sumActualdemo/index));
-		//Double avgCircle=this.division(sumActualdemo, sumEverydemo);
-		Double avgCircle=Double.valueOf(format.format(this.division(sumActualdemo, sumEverydemo)));
-		//Double avgCirclehour=this.division(sumActualdemo, sumWorkhours);
-		Double avgCirclehour=Double.valueOf(format1.format(this.division(sumActualdemo, sumWorkhours)));
-		//Double factaddRate=this.division(sumFactpairs, sumActualpairs);
-		Double factaddRate=Double.valueOf(format4.format(this.division(sumFactpairs, sumActualpairs)));
-		//Double productRate=this.division(sumActualdemo, sumStandarddemo);
-		Double productRate=Double.valueOf(format4.format(this.division(sumActualdemo, sumStandarddemo)));
-		//Double storeNum=storenum/index;
-		Double storeNum=Double.valueOf(format.format(storenum/index));
-		//Double outRequest=outnum/index;
-		Double outRequest=Double.valueOf(format.format(outnum/index));
-		//Double outrequestRate=this.division(minusnum, instorenum);
-		Double outrequestRate=Double.valueOf(format4.format(this.division(minusnum, instorenum)));
-		//Double avgFactpro=this.division(sumActualdemo, (timezg+timejg+addtimezg+addtimejg));
-		Double avgFactpro=Double.valueOf(format2.format(this.division(sumActualdemo, (timezg+timejg+addtimezg+addtimejg))));
-		//Double avgZgpro=this.division(sumActualdemo, personzg);
-		Double avgZgpro=Double.valueOf(format.format(this.division(sumActualdemo, personzg)));
-		//Double avgPerpro=this.division(sumActualdemo, (personzg+personjg));
-		Double avgPerpro=Double.valueOf(format.format(this.division(sumActualdemo, (personzg+personjg))));
-		//Double avgPermoney=this.division(productnum,(personzg+personjg));
-		Double avgPermoney=Double.valueOf(format2.format(this.division(productnum,(personzg+personjg))));
-		//Double permoney=this.division(productnum, (wagezgUsd+wagejgUsd));
-		Double permoney=Double.valueOf(format2.format(this.division(productnum, (wagezgUsd+wagejgUsd))));
-		//Double waterTon=this.division(waterton, sumActualdemo);
-		Double waterTon=Double.valueOf(format4.format(this.division(waterton, sumActualdemo)));
-		//Double lightDu=this.division(electricdu, sumActualdemo);
-		Double lightDu=Double.valueOf(format4.format(this.division(electricdu, sumActualdemo)));
-		//Double gasTon=this.division(gaston, sumActualdemo);
-		Double gasTon=Double.valueOf(format4.format(this.division(gaston, sumActualdemo)));
-		//Double wasteUsd=this.division(repairmoney, sumActualdemo);
-		Double wasteUsd=Double.valueOf(format4.format(this.division(repairmoney, sumActualdemo)));
-		//Double mainRate=this.division(costcount, sellcount);
-		Double mainRate=Double.valueOf(format4.format(this.division(costcount, sellcount)));
-		//Double sideRate=this.division(sideweit, (avgbuttomweight2+sideweit+badweit));
-		Double sideRate=Double.valueOf(format4.format(this.division(sideweit, (avgbuttomweight2+sideweit+badweit))));
-		//Double wasteRate=this.division(badweit, (avgbuttomweight2+sideweit+badweit));
-		Double wasteRate=Double.valueOf(format4.format(this.division(badweit, (avgbuttomweight2+sideweit+badweit))));
-		//Double wasteFact=this.division((actlost-avgbuttomweight2-noglueweight), (avgbuttomweight2+noglueweight));
-		Double wasteFact=Double.valueOf(format4.format(this.division((actlost-avgbuttomweight2-noglueweight), (avgbuttomweight2+noglueweight))));
-		//Double wasteNo=this.division((actlost-avgbuttomweight2-noglueweight-sideweit-badweit-otherbadweight), (avgbuttomweight2+noglueweight));
-		Double wasteNo=Double.valueOf(format4.format(this.division((actlost-avgbuttomweight2-noglueweight-sideweit-badweit-otherbadweight), (avgbuttomweight2+noglueweight))));
-		//Double zjRate=this.division(personzg, personjg);
-		Double zjRate=Double.valueOf(format2.format(this.division(personzg, personjg)));
-		//Double hurtNum=hurtnum/index;
-		Double hurtNum=Double.valueOf(format2.format(hurtnum/index));
-		//Double zgleaveRate=this.division(leavenumzg, personzg);
-		Double zgleaveRate=Double.valueOf(format4.format(this.division(leavenumzg, personzg)));
-		//Double factleaveRate=this.division((leavenumzg+leavenumjg), (personzg+personjg));
-		Double factleaveRate=Double.valueOf(format4.format(this.division((leavenumzg+leavenumjg), (personzg+personjg))));
-		
-		
-		
-		list.add(thisYield);
-		list.add(avgCircle);
-		list.add(avgCirclehour);
-		list.add(factaddRate);
-		list.add(productRate);
-		list.add(storeNum);
-		list.add(outRequest);
-		list.add(outrequestRate);
-		list.add(avgFactpro);
-		list.add(avgZgpro);
-		list.add(avgPerpro);
-		list.add(avgPermoney);
-		list.add(permoney);
-		list.add(waterTon);
-		list.add(lightDu);
-		list.add(gasTon);
-		list.add(wasteUsd);
-		list.add(mainRate);
-		list.add(sideRate);
-		list.add(wasteRate);
-		list.add(wasteFact);
-		list.add(wasteNo);
-		list.add(zjRate);
-		list.add(hurtNum);
-		list.add(zgleaveRate);
-		list.add(factleaveRate);		
-		return list;
-	}
-	
-	
-	public List<Double> findResult(int index,VKpifactEve eve
-			) {
-		if(index==0){
-			index=1;
-		}
-		DecimalFormat format=new DecimalFormat("####0");
-		DecimalFormat format1=new DecimalFormat("####0.0");
-		DecimalFormat format2=new DecimalFormat("####0.00");
-		DecimalFormat format4=new DecimalFormat("####0.0000");
-		List<Double>list=new ArrayList<Double>();
-		//當月產量
-		Double thisYield=Double.valueOf(format1.format(eve.getSumActualdemo().doubleValue()/index));//
-		//月均回轉Double avgCircle=this.division(sumActualdemo, sumEverydemo);
-		Double avgCircle=Double.valueOf(format.format(this.division(eve.getSumActualdemo().doubleValue(), eve.getSumEverydemo().doubleValue())));
-		//時回轉Double avgCirclehour=this.division(sumActualdemo, sumWorkhours);
-		Double avgCirclehour=Double.valueOf(format1.format(this.division(eve.getSumActualdemo().doubleValue(), eve.getWorkhours())));
-		//機臺利用率Double muti_rate=sumEverydemo/sum_workday/hole;
-		Double muti_rate=Double.valueOf(format4.format(this.division(eve.getSumEverydemo().doubleValue(),eve.getHole()*eve.getSumWorkday().doubleValue())));
-		//產能達成率Double productRate=this.division(sumActualdemo, sumStandarddemo);
-		Double productRate=Double.valueOf(format4.format(this.division( eve.getSumActualdemo().doubleValue(),eve.getSumStandarddemo().doubleValue())));
-		//直工人均产能Double avgZgpro=this.division(sumActualdemo, personzg);
-		Double avgZgpro=Double.valueOf(format.format(this.division( eve.getSumActualdemo().doubleValue(),eve.getPersonzg() )));
-		//全厂人均产能Double avgPerpro=this.division(sumActualdemo, (personzg+personjg));
-		Double avgPerpro=Double.valueOf(format.format(this.division( eve.getSumActualdemo().doubleValue(), (eve.getPersonzg()+eve.getPersonjg()))));
-		//全廠人均時產能Double avgFactpro=this.division(sumActualdemo, (timezg+timejg+addtimezg+addtimejg));
-		Double avgFactpro=Double.valueOf(format2.format(this.division( eve.getSumActualdemo().doubleValue(), ( eve.getTimezg()+eve.getTimejg() +eve.getAddtimezg()+eve.getAddtimejg()))));
-		//成倉庫存Double storeNum=storenum/index;
-		Double storeNum=Double.valueOf(format.format(eve.getStorenum()/index));
-		//已出未請Double outRequest=outnum/index;
-		Double outRequest=Double.valueOf(format.format( eve.getOutnum()/index));
-		//生產與請款差異率Double outrequestRate=this.division(minusnum, instorenum);
-		Double outrequestRate=Double.valueOf(format4.format(this.division( eve.getMinusnum(),eve.getInstorenum() )));
-		//銷貨收入Double sl_income=sellcount/index;
-		Double sl_income=Double.valueOf(format4.format(eve.getSellcount()/index));	
-		//主材料成本比率Double mainRate=this.division(costcount, sellcount);
-		Double mainRate=Double.valueOf(format4.format(this.division(eve.getCostcount(),eve.getSellcount())));
-		//人工成本率Double pcost_rate=(wagezgUsd+wagejgUsd)/sellcount;
-		Double pcost_rate=Double.valueOf(format4.format(this.division(eve.getWagezgUsd()+eve.getWagejgUsd(), eve.getSellcount())));
-		//費用成本率Double ccost_rate=cashcount/sellcount;
-		Double ccost_rate=Double.valueOf(format4.format(this.division(eve.getCashcount(), eve.getSellcount())));
-		//修繕單耗Double wasteUsd=this.division(repairmoney, sumActualdemo);
-		Double wasteUsd=Double.valueOf(format4.format(this.division(eve.getRepairmoney(),eve.getSumActualdemo().doubleValue())));
-		//平均單價Double per_price=payPairs/invcount;
-		Double per_price=Double.valueOf(format4.format(this.division(eve.getPaypairs(), eve.getInvcount())));
-		//全廠人均薪資Double per_salar=(wagezgUsd+wagejgUsd)/(personzg+personjg);
-		Double per_salar=Double.valueOf(format4.format(this.division(eve.getWagezgUsd()+eve.getWagejgUsd(), eve.getPersonzg()+eve.getPersonjg())));
-		//人均產值Double avgPermoney=this.division(productnum,(personzg+personjg));
-		Double avgPermoney=Double.valueOf(format2.format(this.division(eve.getProductednum(),(eve.getPersonzg()+eve.getPersonjg()))));
-		//人薪產值Double permoney=this.division(productnum, (wagezgUsd+wagejgUsd));
-		Double permoney=Double.valueOf(format2.format(this.division(eve.getProductednum(), (eve.getWagezgUsd()+eve.getWagejgUsd()))));
-		//全廠總損耗Double wasteFact=this.division((actlost-avgbuttomweight2-noglueweight), (avgbuttomweight2+noglueweight));
-		Double wasteFact=Double.valueOf(format4.format(this.division((eve.getActlost()-eve.getAvgbuttomweight2()-eve.getNoglueweight()), (eve.getAvgbuttomweight2()+eve.getNoglueweight()))));
-		//無形損耗Double wasteNo=this.division((actlost-avgbuttomweight2-noglueweight-sideweit-badweit-otherbadweight), (avgbuttomweight2+noglueweight));
-		Double wasteNo=Double.valueOf(format4.format(this.division((eve.getActlost()-eve.getAvgbuttomweight2()-eve.getNoglueweight()-eve.getSideweit()-eve.getBadweit()-eve.getOtherweight().doubleValue()), (eve.getAvgbuttomweight2()+eve.getNoglueweight()))));
-		//邊料率Double sideRate=this.division(sideweit, (avgbuttomweight2+sideweit+badweit));
-		Double sideRate=Double.valueOf(format4.format(this.division(eve.getSideweit(), ( eve.getAvgbuttomweight2()+eve.getSideweit()+eve.getBadweit()))));
-		//不良率Double uheal_rate=badcount/(sumActualpairs+badcount);
-		Double uheal_rate=Double.valueOf(format4.format(this.division(eve.getBadcount(), eve.getSumActualpairs().doubleValue()+eve.getBadcount())));
-		//報廢率Double wasteRate=this.division(badweit, (avgbuttomweight2+sideweit+badweit));
-		Double wasteRate=Double.valueOf(format4.format(this.division(eve.getBadweit(), (eve.getAvgbuttomweight2()+eve.getSideweit()+eve.getBadweit()))));		
-		//廠補率Double factaddRate=this.division(sumFactpairs, sumActualpairs);
-		Double factaddRate=Double.valueOf(format4.format(this.division(eve.getSumFacpairs().doubleValue(),eve.getSumActualpairs().doubleValue())));		
-		//水用量单耗Double waterTon=this.division(waterton, sumActualdemo);
-		Double waterTon=Double.valueOf(format4.format(this.division(eve.getWaterton(),eve.getSumActualdemo().doubleValue())));
-		//用水金額單耗Double water_usd=waterusd/sumActualdemo;
-		Double water_usd=Double.valueOf(format4.format(this.division(eve.getWaterusd(), eve.getSumActualdemo().doubleValue())));
-		//电度数单耗Double lightDu=this.division(electricdu, sumActualdemo);
-		Double lightDu=Double.valueOf(format4.format(this.division(eve.getElectricdu(),eve.getSumActualdemo().doubleValue())));
-		//用電金額單耗Double light_usd=electricued/sumActualdemo;
-		Double light_usd=Double.valueOf(format4.format(this.division(eve.getElectricusd(), eve.getSumActualdemo().doubleValue())));
-		//蒸汽用量單耗Double gasTon=this.division(gaston, sumActualdemo);
-		Double gasTon=Double.valueOf(format4.format(this.division( eve.getGaston(),eve.getSumActualdemo().doubleValue())));
-		//用汽金額單耗Double gas_usd=gasusd/sumActualdemo;
-		Double gas_usd=Double.valueOf(format4.format(this.division(eve.getGasusd(), eve.getSumActualdemo().doubleValue())));				
-		//回頭料%Double bhead_rate=backFeed/thickUsed;
-		Double bhead_rate=Double.valueOf(format4.format(this.division(eve.getBackfeed(), eve.getThickused())));
-		//油壓退料%Double bpre_rate=oilBack/thickUsed;
-		Double bpre_rate=Double.valueOf(format4.format(this.division(eve.getOilback(), eve.getThickused())));
-		//回流率%Double bflow_rate=(backFeed+oilBack)/thickUsed;
-		Double bflow_rate=Double.valueOf(format4.format(this.division(eve.getBackfeed()+eve.getOilback(), eve.getThickused())));
-		//藥品用量單耗Double drug_wast=drugsUsed/sumActualdemo;
-		Double drug_wast=Double.valueOf(format4.format(this.division(eve.getDrugsused(), eve.getSumActualdemo().doubleValue())));
-		//色料用量單耗Double clr_wast=colorUsed/sumActualdemo;
-		Double clr_wast=Double.valueOf(format4.format(this.division(eve.getColorused(), eve.getSumActualdemo().doubleValue())));
-		//離型劑金額單耗Double leave_usd=leaveMoney/sumActualdemo;
-		Double leave_usd=Double.valueOf(format4.format(this.division(eve.getLeavemoney(), eve.getSumActualdemo().doubleValue())));
-		//直間比Double zjRate=this.division(personzg, personjg);
-		Double zjRate=Double.valueOf(format2.format(this.division( eve.getPersonzg(),eve.getPersonjg())));	
-		//直工離職率Double zgleaveRate=this.division(leavenumzg, personzg);
-		Double zgleaveRate=Double.valueOf(format4.format(this.division(eve.getLeavenumzg(),eve.getPersonzg())));
-		//全廠離職率Double factleaveRate=this.division((leavenumzg+leavenumjg), (personzg+personjg));
-		Double factleaveRate=Double.valueOf(format4.format(this.division((eve.getLeavenumzg()+eve.getLeavenumjg()), (eve.getPersonzg()+eve.getPersonjg()))));
-		//工傷件數Double hurtNum=hurtnum/index;
-		Double hurtNum=Double.valueOf(format2.format(eve.getHurtnum()/index));
-		
-		
-		
-		list.add(thisYield);//當月產量
-		list.add(avgCircle);//月均回轉
-		list.add(avgCirclehour);//時迴轉
-		list.add(muti_rate);//機臺利用率
-		list.add(productRate);//產能達成率
-		list.add(avgZgpro);//直工人均产能
-		list.add(avgPerpro);//全厂人均产能
-		list.add(avgFactpro);//全廠人均時產能
-		list.add(storeNum);//成倉庫存
-		list.add(outRequest);//已出未請
-		list.add(outrequestRate);//生產與請款差異率
-		list.add(sl_income);//銷貨收入
-		list.add(mainRate);//主材料成本比率
-		list.add(pcost_rate);//人工成本率
-		list.add(ccost_rate);//費用成本率
-		list.add(wasteUsd);//修繕單耗
-		list.add(per_price);//平均單價
-		list.add(per_salar);//全廠人均薪資
-		list.add(avgPermoney);//人均產值
-		list.add(permoney);//人薪產值
-		list.add(wasteFact);//全廠總損耗
-		list.add(wasteNo);//無形損耗
-		list.add(sideRate);//邊料率
-		list.add(uheal_rate);//不良率
-		list.add(wasteRate);//報廢率					
-		list.add(factaddRate);//廠補率		
-		list.add(waterTon);//水用量单耗
-		list.add(water_usd);//用水金額單耗
-		list.add(lightDu);//电度数单耗
-		list.add(light_usd);//用電金額單耗
-		list.add(gasTon);//蒸汽用量單耗
-		list.add(gas_usd);//用汽金額單耗
-		list.add(bhead_rate);//回頭料%
-		list.add(bpre_rate);//油壓退料%
-		list.add(bflow_rate);//回流率%
-		list.add(drug_wast);//藥品用量單耗
-		list.add(clr_wast);//色料用量單耗
-		list.add(leave_usd);//離型劑金額單耗						
-		list.add(zjRate);//直間比		
-		list.add(zgleaveRate);//直工離職率
-		list.add(factleaveRate);//全廠離職率
-		list.add(hurtNum);//工傷件數			
-		return list;
-	}
-	
 	
 	/**
 	 * 避免除數為0的方法
@@ -1787,11 +1672,12 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 		return cs_temp2;
 	}
 	
+	
 	/**
 	 * VKpiFact對象各項封裝List<Double>集合
 	 * @return
 	 */
-	public List<Double> VkpiFactToDouble(VKpifact kpi){
+	public List<Double> VkpiFactToDouble(VKpifactNew kpi){
 		List<Double>list_content=new ArrayList<Double>();
 		list_content.add(kpi.getThisYield().doubleValue());//1當月產量
 		list_content.add(kpi.getAvgCircle().doubleValue());//2月均回轉
@@ -1889,5 +1775,147 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 		list_content_pur.add(kpi_pur.getHurtNum()==null?0:kpi_pur.getHurtNum());//工傷件數	
 		return list_content_pur;
 	}
+	public List<Double> findResult(int index,VKpifactEveNew eve
+			) {
+		if(index==0){
+			index=1;
+		}
+		DecimalFormat format=new DecimalFormat("####0");
+		DecimalFormat format1=new DecimalFormat("####0.0");
+		DecimalFormat format2=new DecimalFormat("####0.00");
+		DecimalFormat format4=new DecimalFormat("####0.0000");
+		List<Double>list=new ArrayList<Double>();
+		//當月產量
+		Double thisYield=Double.valueOf(format1.format(eve.getSumActualdemo().doubleValue()/index));//
+		//月均回轉Double avgCircle=this.division(sumActualdemo, sumEverydemo);
+		Double avgCircle=Double.valueOf(format.format(this.division(eve.getSumActualdemo().doubleValue(), eve.getSumEverydemo().doubleValue())));
+		//時回轉Double avgCirclehour=this.division(sumActualdemo, sumWorkhours);
+		Double avgCirclehour=Double.valueOf(format1.format(this.division(eve.getSumActualdemo().doubleValue(), eve.getSumWorkhours())));
+		//機臺利用率Double muti_rate=sumEverydemo/sum_workday/hole;
+		Double muti_rate=Double.valueOf(format4.format(this.division(eve.getSumEverydemo().doubleValue(),eve.getHole()*eve.getSumWorkdays().doubleValue())));
+		//產能達成率Double productRate=this.division(sumActualdemo, sumStandarddemo);
+		Double productRate=Double.valueOf(format4.format(this.division( eve.getSumActualdemo().doubleValue(),eve.getSumStandarddemo().doubleValue())));
+		//直工人均产能Double avgZgpro=this.division(sumActualdemo, personzg);
+		Double avgZgpro=Double.valueOf(format.format(this.division( eve.getSumActualdemo().doubleValue(),eve.getObja119())));
+		//全厂人均产能Double avgPerpro=this.division(sumActualdemo, (personzg+personjg));
+		Double avgPerpro=Double.valueOf(format.format(this.division( eve.getSumActualdemo().doubleValue(), (eve.getObja119()+eve.getObja120()))));
+		//全廠人均時產能Double avgFactpro=this.division(sumActualdemo, (timezg+timejg+addtimezg+addtimejg));
+		Double avgFactpro=Double.valueOf(format2.format(this.division( eve.getSumActualdemo().doubleValue(), ( eve.getObja121()+eve.getObja122() +eve.getObja123()+eve.getObja124()))));
+		//成倉庫存Double storeNum=storenum/index;
+		Double storeNum=Double.valueOf(format.format(eve.getObja169()/index));
+		//已出未請Double outRequest=outnum/index;
+		Double outRequest=Double.valueOf(format.format( eve.getObja172()/index));
+		//生產與請款差異率Double outrequestRate=this.division(minusnum, instorenum);
+		Double outrequestRate=Double.valueOf(format4.format(this.division( eve.getObja175(),eve.getObja174())));
+		//銷貨收入Double sl_income=sellcount/index;
+		Double sl_income=Double.valueOf(format4.format(eve.getObja100()/index));	
+		//主材料成本比率Double mainRate=this.division(costcount, sellcount);
+		Double mainRate=Double.valueOf(format4.format(this.division(eve.getObja109(),eve.getObja100())));
+		//人工成本率Double pcost_rate=(wagezgUsd+wagejgUsd)/sellcount;
+		Double pcost_rate=Double.valueOf(format4.format(this.division(eve.getObja128()+eve.getObja129(), eve.getObja100())));
+		//費用成本率Double ccost_rate=cashcount/sellcount;
+		Double ccost_rate=Double.valueOf(format4.format(this.division(eve.getObja134(), eve.getObja100())));
+		//修繕單耗Double wasteUsd=this.division(repairmoney, sumActualdemo);
+		Double wasteUsd=Double.valueOf(format4.format(this.division(eve.getObja142()+eve.getObja143(),eve.getSumActualdemo().doubleValue())));
+		//平均單價Double per_price=payPairs/invcount;
+		Double per_price=Double.valueOf(format4.format(this.division(eve.getObja102(), eve.getObja101())));
+		//全廠人均薪資Double per_salar=(wagezgUsd+wagejgUsd)/(personzg+personjg);
+		Double per_salar=Double.valueOf(format4.format(this.division(eve.getObja128()+eve.getObja129(), eve.getObja119()+eve.getObja120())));
+		//人均產值Double avgPermoney=this.division(productnum,(personzg+personjg));
+		Double avgPermoney=Double.valueOf(format2.format(this.division(eve.getObja111(),(eve.getObja119()+eve.getObja120()))));
+		//人薪產值Double permoney=this.division(productnum, (wagezgUsd+wagejgUsd));
+		Double permoney=Double.valueOf(format2.format(this.division(eve.getObja111(), (eve.getObja128()+eve.getObja129()))));
+		//全廠總損耗Double wasteFact=this.division((actlost-avgbuttomweight2-noglueweight), (avgbuttomweight2+noglueweight));
+		Double wasteFact=Double.valueOf(format4.format(this.division((eve.getObja115()-eve.getObja117()-eve.getObja118()), (eve.getObja117()+eve.getObja118()))));
+		//無形損耗Double wasteNo=this.division((actlost-avgbuttomweight2-noglueweight-sideweit-badweit-otherbadweight), (avgbuttomweight2+noglueweight));
+		Double wasteNo=Double.valueOf(format4.format(this.division((eve.getObja115()-eve.getObja117()-eve.getObja118()-eve.getObja161()-eve.getObja165()-eve.getObja167()), (eve.getObja117()+eve.getObja118()))));
+		//邊料率Double sideRate=this.division(sideweit, (avgbuttomweight2+sideweit+badweit));
+		Double sideRate=Double.valueOf(format4.format(this.division(eve.getObja161(), ( eve.getObja116()+eve.getObja161()+eve.getObja165()+eve.getObja167()))));
+		//不良率Double uheal_rate=badcount/(sumActualpairs+badcount);
+		Double uheal_rate=Double.valueOf(format4.format(this.division(eve.getObja163(), eve.getSumActualpairs().doubleValue()+eve.getObja163())));
+		//報廢率Double wasteRate=this.division(badweit, (avgbuttomweight2+sideweit+badweit));
+		Double wasteRate=Double.valueOf(format4.format(this.division(eve.getObja161()+eve.getObja165()+eve.getObja167(), (eve.getObja116()+eve.getObja161()+eve.getObja165()+eve.getObja167()))));		
+		//廠補率Double factaddRate=this.division(sumFactpairs, sumActualpairs);
+		Double factaddRate=Double.valueOf(format4.format(this.division(eve.getSumFactpairs().doubleValue(),eve.getSumActualpairs().doubleValue())));		
+		//水用量单耗Double waterTon=this.division(waterton, sumActualdemo);
+		Double waterTon=Double.valueOf(format4.format(this.division(eve.getObja153(),eve.getSumActualdemo().doubleValue())));
+		//用水金額單耗Double water_usd=waterusd/sumActualdemo;
+		Double water_usd=Double.valueOf(format4.format(this.division(eve.getObja154(), eve.getSumActualdemo().doubleValue())));
+		//电度数单耗Double lightDu=this.division(electricdu, sumActualdemo);
+		Double lightDu=Double.valueOf(format4.format(this.division(eve.getObja155(),eve.getSumActualdemo().doubleValue())));
+		//用電金額單耗Double light_usd=electricued/sumActualdemo;
+		Double light_usd=Double.valueOf(format4.format(this.division(eve.getObja156(), eve.getSumActualdemo().doubleValue())));
+		//蒸汽用量單耗Double gasTon=this.division(gaston, sumActualdemo);
+		Double gasTon=Double.valueOf(format4.format(this.division( eve.getObja157(),eve.getSumActualdemo().doubleValue())));
+		//用汽金額單耗Double gas_usd=gasusd/sumActualdemo;
+		Double gas_usd=Double.valueOf(format4.format(this.division(eve.getObja158(), eve.getSumActualdemo().doubleValue())));				
+		//回頭料%Double bhead_rate=backFeed/thickUsed;
+		Double bhead_rate=Double.valueOf(format4.format(this.division(eve.getObja201(), eve.getObja200())));
+		//油壓退料%Double bpre_rate=oilBack/thickUsed;
+		Double bpre_rate=Double.valueOf(format4.format(this.division(eve.getObja202(), eve.getObja200())));
+		//回流率%Double bflow_rate=(backFeed+oilBack)/thickUsed;
+		Double bflow_rate=Double.valueOf(format4.format(this.division(eve.getObja201()+eve.getObja202(), eve.getObja200())));
+		//藥品用量單耗Double drug_wast=drugsUsed/sumActualdemo;
+		Double drug_wast=Double.valueOf(format4.format(this.division(eve.getObja185(), eve.getSumActualdemo().doubleValue())));
+		//色料用量單耗Double clr_wast=colorUsed/sumActualdemo;
+		Double clr_wast=Double.valueOf(format4.format(this.division(eve.getObja183(), eve.getSumActualdemo().doubleValue())));
+		//離型劑金額單耗Double leave_usd=leaveMoney/sumActualdemo;
+		Double leave_usd=Double.valueOf(format4.format(this.division(eve.getObja188(), eve.getSumActualdemo().doubleValue())));
+		//直間比Double zjRate=this.division(personzg, personjg);
+		Double zjRate=Double.valueOf(format2.format(this.division( eve.getObja119(),eve.getObja120())));	
+		//直工離職率Double zgleaveRate=this.division(leavenumzg, personzg);
+		Double zgleaveRate=Double.valueOf(format4.format(this.division(eve.getObja125(),eve.getObja119())));
+		//全廠離職率Double factleaveRate=this.division((leavenumzg+leavenumjg), (personzg+personjg));
+		Double factleaveRate=Double.valueOf(format4.format(this.division((eve.getObja125()+eve.getObja126()), (eve.getObja119()+eve.getObja120()))));
+		//工傷件數Double hurtNum=hurtnum/index;
+		Double hurtNum=Double.valueOf(format2.format(eve.getObja127()/index));
+		
+		
+		
+		list.add(thisYield);//當月產量
+		list.add(avgCircle);//月均回轉
+		list.add(avgCirclehour);//時迴轉
+		list.add(muti_rate);//機臺利用率
+		list.add(productRate);//產能達成率
+		list.add(avgZgpro);//直工人均产能
+		list.add(avgPerpro);//全厂人均产能
+		list.add(avgFactpro);//全廠人均時產能
+		list.add(storeNum);//成倉庫存
+		list.add(outRequest);//已出未請
+		list.add(outrequestRate);//生產與請款差異率
+		list.add(sl_income);//銷貨收入
+		list.add(mainRate);//主材料成本比率
+		list.add(pcost_rate);//人工成本率
+		list.add(ccost_rate);//費用成本率
+		list.add(wasteUsd);//修繕單耗
+		list.add(per_price);//平均單價
+		list.add(per_salar);//全廠人均薪資
+		list.add(avgPermoney);//人均產值
+		list.add(permoney);//人薪產值
+		list.add(wasteFact);//全廠總損耗
+		list.add(wasteNo);//無形損耗
+		list.add(sideRate);//邊料率
+		list.add(uheal_rate);//不良率
+		list.add(wasteRate);//報廢率					
+		list.add(factaddRate);//廠補率		
+		list.add(waterTon);//水用量单耗
+		list.add(water_usd);//用水金額單耗
+		list.add(lightDu);//电度数单耗
+		list.add(light_usd);//用電金額單耗
+		list.add(gasTon);//蒸汽用量單耗
+		list.add(gas_usd);//用汽金額單耗
+		list.add(bhead_rate);//回頭料%
+		list.add(bpre_rate);//油壓退料%
+		list.add(bflow_rate);//回流率%
+		list.add(drug_wast);//藥品用量單耗
+		list.add(clr_wast);//色料用量單耗
+		list.add(leave_usd);//離型劑金額單耗						
+		list.add(zjRate);//直間比		
+		list.add(zgleaveRate);//直工離職率
+		list.add(factleaveRate);//全廠離職率
+		list.add(hurtNum);//工傷件數			
+		return list;
+	}
 	
+
 }

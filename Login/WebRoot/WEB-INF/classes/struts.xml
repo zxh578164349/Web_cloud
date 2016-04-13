@@ -798,6 +798,12 @@
 		<action name="webyadanoinput_*" class="webydatanoinputAction" method="{1}">
 		  
 		</action>
+		<action name="vkpifactnew_*" class="vkpifactnewAction" method="{1}">
+		
+		</action>
+		<action name="vwebuseless_*" class="vwebuselessAction" method="{1}">
+		   
+		</action>
 	</package>
 
 </struts>

@@ -88,5 +88,8 @@
 	<bean id="weballobjdao" class="dao.impl.WeballobjDaoImpl" parent="baseDao"></bean>
 	<bean id="vwebsortdao" class="dao.impl.VWebbussortDaoImpl" parent="baseDao"></bean>
 	<bean id="webydatenoinputdao" class="dao.impl.WebydataNoinputDaoImpl" parent="baseDao"></bean>
+	<bean id="vkpifactnewDao" class="dao.impl.VKpifactNewDaoImpl" parent="baseDao"></bean>
+	<bean id="vkpievenewDao" class="dao.impl.VKpifactEveNewDaoImple" parent="baseDao"></bean>
+	<bean id="vwebuselessdao" class="dao.impl.VWebuselessDaoImpl" parent="baseDao"></bean>
 </beans>
 

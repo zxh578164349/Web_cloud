@@ -88,6 +88,10 @@
 	<bean id="weballobjser" class="services.impl.WeballobjServicesImpl"></bean>
 	<bean id="vwebbusssorSer" class="services.impl.VWebbussortServicesImpl"></bean>
 	<bean id="webydatenoinputSer" class="services.impl.WebydataNoinputServicesImpl"></bean>
+	<bean id="vkpinewSer" class="services.impl.VKpifactNewServicesImpl"></bean>
+	<bean id="vkpievenewSer" class="services.impl.VKpifactEveNewServicesImpl"></bean>
+	<bean id="vwebuselessSer" class="services.impl.VWebuselessServicesImpl"></bean>
+	
 </beans>
 
 
