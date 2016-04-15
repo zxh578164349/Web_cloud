@@ -391,15 +391,19 @@ public class GlobalMethod extends HibernateDaoSupport{
 	 */
 	public static List<String> findMonths(String yymm,String yymm2) throws ParseException{
 		List<String>list=new ArrayList<String>();
-		DateFormat frm=new SimpleDateFormat("yyyyMM");
-		Calendar cal=Calendar.getInstance();
-		Calendar cal2=Calendar.getInstance();
-		cal.setTime(frm.parse(yymm));
-		cal2.setTime(frm.parse(yymm2));
-		while(cal.getTime().getTime()<=cal2.getTime().getTime()){
-			list.add(frm.format(cal.getTime()));
-			cal.add(Calendar.MONTH, 1);
-		}
+		if(yymm2==null||yymm2.equals("")){
+			list.add(yymm);
+		}else{
+			DateFormat frm=new SimpleDateFormat("yyyyMM");
+			Calendar cal=Calendar.getInstance();
+			Calendar cal2=Calendar.getInstance();
+			cal.setTime(frm.parse(yymm));
+			cal2.setTime(frm.parse(yymm2));
+			while(cal.getTime().getTime()<=cal2.getTime().getTime()){
+				list.add(frm.format(cal.getTime()));
+				cal.add(Calendar.MONTH, 1);
+			}
+		}		
 		return list;
 	}
 

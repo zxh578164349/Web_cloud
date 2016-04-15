@@ -11,16 +11,16 @@ public class VWebuseless implements java.io.Serializable {
 	// Fields
 
 	private VWebuselessId id;
-	private BigDecimal webA1;
-	private BigDecimal webA2;
-	private BigDecimal webA3;
-	private BigDecimal webA4;
-	private Double webA5;
-	private BigDecimal webA6;
-	private Double webA7;
-	private Double webA8;
-	private BigDecimal webA9;
-	private BigDecimal webA10;
+	private BigDecimal webA1=new BigDecimal(0.0);
+	private BigDecimal webA2=new BigDecimal(0.0);
+	private BigDecimal webA3=new BigDecimal(0.0);
+	private BigDecimal webA4=new BigDecimal(0.0);
+	private Double webA5=0.0;
+	private BigDecimal webA6=new BigDecimal(0.0);
+	private Double webA7=0.0;
+	private Double webA8=0.0;
+	private BigDecimal webA9=new BigDecimal(0.0);
+	private BigDecimal webA10=new BigDecimal(0.0);
 
 	// Constructors
 
