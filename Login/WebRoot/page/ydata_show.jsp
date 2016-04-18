@@ -165,11 +165,7 @@ function print(public_form){
 	<span style="float:right">	  
 	  <input type="button" onclick="loadUrl('page/sum_yiele_data.jsp')" class="btn btn-link btn-sm" value="添加每月盤點數據"/>
 	</span>
-	</s:if>
-	<!-- <span style="float:right"> <input type="button"
-		onclick="javascript:layer.load(0);window.location.href='sumwebydata_findPageBean'" 
-		class="btn btn-link btn-sm" value="查看盤點數據"/>
-	</span> -->	
+	</s:if>	
 	<span style="float:right"> <input type="button"
 		onclick="findPageBean('sumwebydata_findPageBean')" 
 		class="btn btn-link btn-sm" value="查看盤點數據"/>
@@ -179,8 +175,8 @@ function print(public_form){
 		class="btn btn-link btn-sm" value="按月合計查看"/>
 	</span>	
 	<span style="float:right"> <input type="button"
-		onclick="findPageBean('ydata_go_temp')"
-		class="btn btn-link btn-sm" value="點擊查找每天漏輸數據廠別"/>
+		onclick="findPageBean('webyadanoinput_findPageBean')"
+		class="btn btn-link btn-sm" value="未按時輸入記錄"/>
 	</span>
 	<s:if test='#attr.loginUser.username=="admin"'>
 	<form method="post" action="timer_print_manual" id="emailform">

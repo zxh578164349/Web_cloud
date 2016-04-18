@@ -25,5 +25,6 @@ import entity.WebydataNoinput;
 public interface IWebydataNoinputDao {
 	public void addLarge(List<WebydataNoinput>list);
 	public PageBean findPageBean(int pageSize,int page,String factNo,String yymmdd,String yymmdd2);
+	public List<WebydataNoinput>print(String factNo,String yymmdd,String yymmdd2);
 
 }

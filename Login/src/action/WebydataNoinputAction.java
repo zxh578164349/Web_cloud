@@ -3,15 +3,22 @@
  */
 package action;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.struts2.interceptor.ServletResponseAware;
 
 import services.IWebydataNoinputServices;
+import util.JasperHelper;
 import util.PageBean;
 
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
+
+import entity.WebydataNoinput;
 
 /**   
  *    
@@ -34,7 +41,29 @@ public class WebydataNoinputAction extends ActionSupport implements ServletRespo
 	private String yymmdd2;
 	private int page;
 	private PageBean bean;
+	private String sdate;
+	private String edate;
+
 	
+	public String getSdate() {
+		return sdate;
+	}
+
+
+	public void setSdate(String sdate) {
+		this.sdate = sdate;
+	}
+
+
+	public String getEdate() {
+		return edate;
+	}
+
+
+	public void setEdate(String edate) {
+		this.edate = edate;
+	}
+
 
 	public String getFactNo() {
 		return factNo;
@@ -128,6 +157,25 @@ public class WebydataNoinputAction extends ActionSupport implements ServletRespo
 		ActionContext.getContext().getSession().get("public_yymmdd2");
 		bean=webydatenoinputSer.findPageBean(25, page, factNo, yymmdd, yymmdd2);
 		return"findPageBean1";
+	}
+	public void print(){
+		List<WebydataNoinput>list=webydatenoinputSer.print(factNo, sdate, edate);
+		Map<String,Object>map=new HashMap<String,Object>();
+		StringBuffer title=new StringBuffer();
+		StringBuffer fileName=new StringBuffer();
+		if(sdate!=null&&!sdate.equals("")){
+			title.append(sdate+"-");
+			fileName.append(sdate+"-");
+		}
+		if(edate!=null&&!edate.equals("")){
+			title.append(edate);
+			fileName.append(edate);
+		}
+		title.append("未按時輸入產量資料記錄");
+		fileName.append("report");
+		map.put("title", title.toString());
+		JasperHelper.exportmain("excel", map,"webydate_noinput.jasper", list,fileName.toString(), "jasper/input/");
+		
 	}
 
 }

@@ -67,7 +67,7 @@ public class WebydataNoinputDaoImpl extends Basedao implements IWebydataNoinputD
 		hql.append("from WebydataNoinput where 1=1 ");
 		hql2.append(" select count(*) ");
 		if(factNo!=null&&!factNo.equals("")&&!factNo.equals("tw")){
-			hql.append(" and id.factNo=:factno ");
+			hql.append(" and id.fact.id.factNo=:factno ");
 			map.put("factno", factNo);
 		}
 		if(yymmdd!=null&&!yymmdd.equals("")){
@@ -79,7 +79,7 @@ public class WebydataNoinputDaoImpl extends Basedao implements IWebydataNoinputD
 			map.put("yymmdd2", yymmdd2);
 		}
 		hql2.append(hql);
-		hql.append(" order by id.factNo,id.factCode,id.yymmdd desc");
+		hql.append(" order by id.fact.id.factNo,id.fact.id.factArea,id.yymmdd desc");
 		int currentPage=PageBean.countCurrentPage(page);
 		Integer allrow=(Integer)ActionContext.getContext().getSession().get("allrow");
 		if(allrow==null){
@@ -92,6 +92,10 @@ public class WebydataNoinputDaoImpl extends Basedao implements IWebydataNoinputD
 		}
 		int offset=PageBean.countOffset(pageSize, currentPage);
 		List<WebydataNoinput>list=super.queryForPage(hql.toString(), offset, pageSize, map);
+		//解決延遲問題
+		for(WebydataNoinput obj:list){
+			obj.getId().getFact().getFactSname();
+		}
 		PageBean bean=new PageBean();
 		bean.setAllRow(allrow);
 		bean.setCurrentPage(currentPage);
@@ -99,6 +103,37 @@ public class WebydataNoinputDaoImpl extends Basedao implements IWebydataNoinputD
 		bean.setPageSize(pageSize);
 		bean.setTotalPage(totalPage);
 		return bean;
+	}
+
+	/**
+	 * 日期:2016/4/18
+	 * 描述:
+	 */
+	
+	
+	public List<WebydataNoinput> print(String factNo, String yymmdd, String yymmdd2) {
+		// TODO Auto-generated method stub
+		StringBuffer hql=new StringBuffer();
+		Map<String,Object>map=new HashMap<String,Object>();
+		hql.append("from WebydataNoinput where 1=1 ");
+		if(factNo!=null&&!factNo.equals("")&&!factNo.equals("tw")){
+			hql.append(" and id.fact.id.factNo=:factno ");
+			map.put("factno", factNo);
+		}
+		if(yymmdd!=null&&!yymmdd.equals("")){
+			hql.append(" and id.yymmdd>=:yymmdd ");
+			map.put("yymmdd", yymmdd);
+		}
+		if(yymmdd2!=null&&!yymmdd2.equals("")){
+			hql.append(" and id.yymmdd<=:yymmdd2 ");
+			map.put("yymmdd2", yymmdd2);
+		}
+		List<WebydataNoinput>list=super.getAllWithNoPage(hql.toString(), map);
+		//解決延遲問題
+		for(WebydataNoinput obj:list){
+			obj.getId().getFact().getFactSname();
+		}
+		return list;
 	}
 
 }

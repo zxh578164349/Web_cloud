@@ -26,6 +26,8 @@ import org.springframework.scheduling.quartz.QuartzJobBean;
 
 import entity.WebCc;
 import entity.WebEmail;
+import entity.WebFact;
+import entity.WebFactId;
 import entity.WebydataNoinput;
 import entity.WebydataNoinputId;
 
@@ -126,7 +128,7 @@ public class TestTimerAction extends QuartzJobBean {
 					temp.append("<br/>");
 				}
 				try {
-					WebydataNoinput oninput=new WebydataNoinput(new WebydataNoinputId((String)objs[2],(String)objs[1],frm.format(new SimpleDateFormat("yyyy/MM/dd").parse(list_day.get(i)))),new SimpleDateFormat("yyMMdd_hh").format(new Date()));
+					WebydataNoinput oninput=new WebydataNoinput(new WebydataNoinputId(new WebFact(new WebFactId((String)objs[2],(String)objs[1])),frm.format(new SimpleDateFormat("yyyy/MM/dd").parse(list_day.get(i)))),new SimpleDateFormat("yyMMdd_hh").format(new Date()));
 					list_noinput.add(oninput);
 				} catch (ParseException e) {
 					// TODO Auto-generated catch block

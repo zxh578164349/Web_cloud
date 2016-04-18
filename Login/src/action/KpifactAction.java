@@ -174,7 +174,7 @@ public class KpifactAction extends ActionSupport implements ServletResponseAware
 		return "delete";
 	}
 	public String formatDouble(double s) {
-		DecimalFormat format = new DecimalFormat(",###.##");
+		DecimalFormat format = new DecimalFormat("#,###.##");
 		String temp = format.format(s);
 		return temp;
 		// return temp.replace(",", "");

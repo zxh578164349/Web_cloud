@@ -57,4 +57,15 @@ public class WebydataNoinputServicesImpl implements IWebydataNoinputServices{
 		return webydatenoinputdao.findPageBean(pageSize, page, factNo, yymmdd, yymmdd2);
 	}
 
+	/**
+	 * 日期:2016/4/18
+	 * 描述:
+	 */
+	
+	
+	public List<WebydataNoinput> print(String factNo, String yymmdd, String yymmdd2) {
+		// TODO Auto-generated method stub
+		return webydatenoinputdao.print(factNo, yymmdd, yymmdd2);
+	}
+
 }

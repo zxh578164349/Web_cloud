@@ -8,8 +8,7 @@ public class WebydataNoinputId implements java.io.Serializable {
 
 	// Fields
 
-	private String factNo;
-	private String factCode;
+	private WebFact fact;
 	private String yymmdd;
 
 	// Constructors
@@ -19,29 +18,13 @@ public class WebydataNoinputId implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public WebydataNoinputId(String factNo, String factCode, String yymmdd) {
-		this.factNo = factNo;
-		this.factCode = factCode;
+	public WebydataNoinputId(WebFact fact ,  String yymmdd) {
+		this.fact = fact;
 		this.yymmdd = yymmdd;
 	}
 
 	// Property accessors
 
-	public String getFactNo() {
-		return this.factNo;
-	}
-
-	public void setFactNo(String factNo) {
-		this.factNo = factNo;
-	}
-
-	public String getFactCode() {
-		return this.factCode;
-	}
-
-	public void setFactCode(String factCode) {
-		this.factCode = factCode;
-	}
 
 	public String getYymmdd() {
 		return this.yymmdd;
@@ -49,6 +32,15 @@ public class WebydataNoinputId implements java.io.Serializable {
 
 	public void setYymmdd(String yymmdd) {
 		this.yymmdd = yymmdd;
+	}
+	
+
+	public WebFact getFact() {
+		return fact;
+	}
+
+	public void setFact(WebFact fact) {
+		this.fact = fact;
 	}
 
 	public boolean equals(Object other) {
@@ -60,13 +52,9 @@ public class WebydataNoinputId implements java.io.Serializable {
 			return false;
 		WebydataNoinputId castOther = (WebydataNoinputId) other;
 
-		return ((this.getFactNo() == castOther.getFactNo()) || (this
-				.getFactNo() != null && castOther.getFactNo() != null && this
-				.getFactNo().equals(castOther.getFactNo())))
-				&& ((this.getFactCode() == castOther.getFactCode()) || (this
-						.getFactCode() != null
-						&& castOther.getFactCode() != null && this
-						.getFactCode().equals(castOther.getFactCode())))
+		return ((this.getFact() == castOther.getFact()) || (this
+				.getFact() != null && castOther.getFact() != null && this
+				.getFact().equals(castOther.getFact())))				
 				&& ((this.getYymmdd() == castOther.getYymmdd()) || (this
 						.getYymmdd() != null && castOther.getYymmdd() != null && this
 						.getYymmdd().equals(castOther.getYymmdd())));
@@ -76,9 +64,7 @@ public class WebydataNoinputId implements java.io.Serializable {
 		int result = 17;
 
 		result = 37 * result
-				+ (getFactNo() == null ? 0 : this.getFactNo().hashCode());
-		result = 37 * result
-				+ (getFactCode() == null ? 0 : this.getFactCode().hashCode());
+				+ (getFact() == null ? 0 : this.getFact().hashCode());		
 		result = 37 * result
 				+ (getYymmdd() == null ? 0 : this.getYymmdd().hashCode());
 		return result;

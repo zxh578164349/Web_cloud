@@ -131,19 +131,19 @@
 				<td><s:property value="%{formatPercent(productRate)}"/></td>
 				<td><s:property value="%{formatDouble(avgZgpro)}" /></td>
 				<td><s:property value="%{formatDouble(avgPerpro)}" /></td>
-				<td><s:property value="%{formatPercent(avgFactpro)}" /></td>				
+				<td><s:property value="%{formatDouble(avgFactpro)}" /></td>				
 				<td><s:property value="%{formatDouble(storeNum)}" /></td>				
 				<td><s:property value="%{formatDouble(outRequest)}" /></td>				
-				<td><s:property value="%{formatDouble(outrequestRate)}" /></td>				
+				<td><s:property value="%{formatPercent(outrequestRate)}" /></td>				
 				<td><s:property value="%{formatDouble(slIncome)}" /></td>				
-				<td><s:property value="%{formatDouble(mainRate)}" /></td>				
+				<td><s:property value="%{formatPercent(mainRate)}" /></td>				
 				<td><s:property value="%{formatDouble_4(pcostRate)}" /></td>				
 				<td><s:property value="%{formatDouble_4(ccostRate)}" /></td>				
 				<td><s:property value="%{formatDouble_4(wasteUsd)}" /></td>				
 				<td><s:property value="%{formatDouble_4(perPrice)}" /></td>				
 				<td><s:property value="%{formatPercent(perSalar)}" /></td>				
-				<td><s:property value="%{formatPercent(avgPermoney)}" /></td>
-				<td><s:property value="%{formatPercent(permoney)}" /></td>				
+				<td><s:property value="%{formatDouble(avgPermoney)}" /></td>
+				<td><s:property value="%{formatDouble(permoney)}" /></td>				
 				<td><s:property value="%{formatPercent(wasteFact)}" /></td>				
 				<td><s:property value="%{formatPercent(wasteNo)}" /></td>				
 				<td><s:property value="%{formatDouble(sideRate)}" /></td>				
@@ -151,7 +151,7 @@
 				<td><s:property value="%{formatPercent(wasteRate)}" /></td>				
 				<td><s:property value="%{formatPercent(factaddRate)}" /></td>				
 				<td><s:property value="%{formatPercent(waterTon)}"/></td>
-				<td><s:property value="%{formatDouble(waterUsd)}" /></td>
+				<td><s:property value="%{formatDouble_4(waterUsd)}" /></td>
 				<td><s:property value="%{formatDouble(lightDu)}" /></td>
 				<td><s:property value="%{formatPercent(lightUsd)}" /></td>				
 				<td><s:property value="%{formatDouble(gasTon)}" /></td>				
@@ -165,7 +165,7 @@
 				<td><s:property value="%{formatDouble_4(zjRate)}" /></td>				
 				<td><s:property value="%{formatPercent(zgleaveRate)}" /></td>				
 				<td><s:property value="%{formatPercent(factleaveRate)}" /></td>
-				<td><s:property value="%{formatPercent(hurtNum)}" /></td>																								
+				<td><s:property value="%{formatDouble(hurtNum)}" /></td>																								
 				<s:if test='#session.loginUser.userread!="1"'>
 				<td>
 					<form action="kpifact_findById" method="post" id="subform${x.index}">						

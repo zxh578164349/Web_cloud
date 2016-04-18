@@ -17,6 +17,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFDataFormat;
 import org.apache.poi.hssf.usermodel.HSSFFont;
@@ -25,6 +28,10 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellRangeAddress;
+import org.apache.struts2.ServletActionContext;
+import org.apache.struts2.interceptor.ServletResponseAware;
+
+import com.opensymphony.xwork2.ActionSupport;
 
 import entity.VWebuseless;
 import entity.VWebuselessId;
@@ -47,12 +54,13 @@ import util.GlobalMethod;
  * @version    
  *    
  **/
-public class VWebuselessAction {
+public class VWebuselessAction extends ActionSupport implements ServletResponseAware{
 	private IVWebuselessServices vwebuselessSer;
 	private IWebFactServices webFactSer;
 	private String yymm;
 	private String yymm2;//下月日期
 	private String yymm3;//上月日期
+	private javax.servlet.http.HttpServletResponse response;
 
 	
 	public String getYymm3() {
@@ -87,8 +95,16 @@ public class VWebuselessAction {
 		this.webFactSer = webFactSer;
 	}
 	
-	public void print() throws ParseException, IOException{
-		yymm="201603";		
+	/**
+	 * 日期:2016/4/18
+	 * 描述:
+	 */	
+	public void setServletResponse(HttpServletResponse response) {
+		// TODO Auto-generated method stub
+		this.response=response;
+	}
+	
+	public void print() throws ParseException, IOException{	
 		HSSFWorkbook wb=new HSSFWorkbook();
 		Map<String,Object>map=findStyles(wb);
 		Calendar cal=Calendar.getInstance();
@@ -204,7 +220,7 @@ public class VWebuselessAction {
 				
 				//差異率統計
 				list_total3.add(total_obj.getWebA1().subtract(total_obj2.getWebA1()));
-				list_total3.add(total_obj.getWebA2().subtract(total_obj2.getWebA10()));
+				list_total3.add(total_obj.getWebA2().subtract(total_obj2.getWebA2()));
 				list_total3.add(total_obj.getWebA3().subtract(total_obj2.getWebA3()));
 				list_total3.add(total_obj.getWebA4().subtract(total_obj2.getWebA4()));
 				list_total3.add(new BigDecimal(total_obj.getWebA5()-total_obj2.getWebA5()));
@@ -235,11 +251,23 @@ public class VWebuselessAction {
 				wb.getSheet(yymm).getRow(a+2).getCell(b+1).setCellStyle(this.findStyleOne(map, b));
 			}
 		}
-				
-		OutputStream os=new FileOutputStream("e:\\webless.xls");
-		wb.write(os);
-		os.close();
+								
 		
+			/*OutputStream os = new FileOutputStream("E:/" + "webless.xls");
+			wb.write(os);
+			os.close();	*/
+			ServletOutputStream os=response.getOutputStream();
+			response.setContentType("application/vnd.ms-excel");
+			int msie=ServletActionContext.getRequest().getHeader("USER-AGENT").toLowerCase().indexOf("msie");//判斷是否為IE瀏覽器,大於0則為IE瀏覽器
+			String fileName="report"+"_"+yymm+".xls";
+			if(msie>0){
+				fileName=java.net.URLEncoder.encode(fileName,"utf-8");//解決IE中文文件不能下載的問題
+			}else{
+				fileName=new String(fileName.getBytes("utf-8"),"iso-8859-1");//解決非IE中文名亂碼問題
+			}		
+			response.setHeader("Content-disposition", "attachment;filename="+fileName);					
+			wb.write(os);
+			os.close();								
 	}
 	
 	
@@ -472,9 +500,10 @@ public class VWebuselessAction {
 		return temp;
 	}
 	public void init(HSSFWorkbook wb,List<WebFact>list_facts,Map<String,Object>map,String yymm,String yymm2) throws ParseException{
-		HSSFCellStyle cs=(HSSFCellStyle)map.get("cs");
+		//HSSFCellStyle cs=(HSSFCellStyle)map.get("cs");
 		HSSFCellStyle cs_head=(HSSFCellStyle)map.get("cs_head");
 		HSSFCellStyle cs_column=(HSSFCellStyle)map.get("cs_column");
+		HSSFCellStyle cs_bold=(HSSFCellStyle)map.get("cs_bold");
 		List<String>list_months=GlobalMethod.findMonths(yymm, yymm2);//所有的月份
 		List<String>list_facts2=new ArrayList<String>();//所有的廠別			
 		for(WebFact fact:list_facts){
@@ -508,7 +537,7 @@ public class VWebuselessAction {
 					sheet.setColumnWidth(b, 4500);
 				}
 			}
-			sheet.getRow(0).getCell(0).setCellValue("各廠無用值比較表");
+			sheet.getRow(0).getCell(0).setCellValue(yymm+"各廠無用值比較表");
 			CellRangeAddress cra=new CellRangeAddress(0,0,0,6);
 			sheet.addMergedRegion(cra);
 			for(int a=0;a<6;a++){
@@ -520,7 +549,7 @@ public class VWebuselessAction {
 			}
 			for(int a=0;a<list_facts2.size();a++){
 				sheet.getRow(a+2).getCell(0).setCellValue(list_facts2.get(a));
-				sheet.getRow(a+2).getCell(0).setCellStyle(cs);
+				sheet.getRow(a+2).getCell(0).setCellStyle(cs_bold);
 			}
 			
 		}//for
@@ -528,6 +557,8 @@ public class VWebuselessAction {
 
 		
 	}
+
+	
 	
 
 }

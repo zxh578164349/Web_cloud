@@ -88,7 +88,7 @@
                 <ref bean="CronTriggerBeanA"/>(第一次) 10點  下一位簽核人  
                 <ref bean="CronTriggerBeanB"/>(第二次) 16點  下一位簽核人    
                 <ref bean="CronTriggerBeanC"/>  12點  簽核完畢知會  
-                <ref bean="CronTriggerBeanD"/>每月最後一天24點運行   -->
+                <ref bean="CronTriggerBeanD"/>每月最後一天24點運行  -->
             </list>
             
         </property>        

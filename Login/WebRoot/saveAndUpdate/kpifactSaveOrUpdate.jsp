@@ -267,7 +267,7 @@ jq(function(){
 				</td>
 				<td class="td_show_title">生產與請款差異率(%)</td>
 				<td class="td_input"><input type="text" name="kpi.outrequestRate"
-					datatype="n1-9"
+					datatype="9_4"
 					value="<s:property value='%{formatInteger(kpi.outrequestRate)}' />">
 				</td>
 			</tr>
