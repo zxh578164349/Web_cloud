@@ -35,6 +35,7 @@ public interface IWebFactServices {
 	
 	public List<Object[]> findAllFactCode2();
 	public List<Object[]> findAllFactCode2_showA();
+	public List<WebFact>findAllFact_showA();
 	public List<String> findAllFactNo();
 	
 	//20150708 �Ҧ��t�O�U�Ӽt�O���A���ߺD�Ƨ�

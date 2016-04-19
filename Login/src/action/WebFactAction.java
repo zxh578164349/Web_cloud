@@ -1,5 +1,6 @@
 package action;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -59,13 +60,10 @@ public class WebFactAction extends ActionSupport {
 	public String findAllfact() {
 		//退出時，清除session的所有內容（廠別，用戶名），因為退出時指向了jedge.jsp，而這個頁面又指向此方法
 		ActionContext.getContext().getSession().clear();
-		List list = webFactSer.findAllFact();
-		//List factCodes = webFactSer.findAllFactCode();// tw登錄時所有的廠別狀態
-		List factCodes=webFactSer.findAllFactCode_show();
-		//List<KyType>listkytype=kytypeSer.findByTypeNo_action("VV");//函文類別
+		List list = webFactSer.findAllFact();		
+		List factCodes=webFactSer.findAllFactCode_show();		
 		ActionContext.getContext().getSession().put("factcodes", factCodes);
-		ActionContext.getContext().getSession().put("facts", list);
-		//ActionContext.getContext().getSession().put("listkytype", listkytype);
+		ActionContext.getContext().getSession().put("facts", list);		
 		this.findAllFact_code_no();		
 		return "findAllfact";
 	}
@@ -78,28 +76,40 @@ public class WebFactAction extends ActionSupport {
 	public String findAllfact2() {
 		//退出時，清除session的所有內容（廠別，用戶名），因為退出時指向了jedge.jsp，而這個頁面又指向此方法
 		ActionContext.getContext().getSession().clear();
-		List list = webFactSer.findAllFact();
-		//List factCodes = webFactSer.findAllFactCode();// tw登錄時所有的廠別狀態
-		List factCodes=webFactSer.findAllFactCode_show();
-		//List<KyType>listkytype=kytypeSer.findByTypeNo_action("VV");//函文類別
+		List list = webFactSer.findAllFact();		
+		List factCodes=webFactSer.findAllFactCode_show();		
 		ActionContext.getContext().getSession().put("factcodes", factCodes);
-		ActionContext.getContext().getSession().put("facts", list);
-		//ActionContext.getContext().getSession().put("listkytype", listkytype);
+		ActionContext.getContext().getSession().put("facts", list);		
 		this.findAllFact_code_no();
 		return "findAllfact2";
 	}
 	/**
-	 * 用于"分形態損益表"的廠別與廠別狀態的選擇
+	 * 20160419
+	 * 用于"分形態損益表"
+	 * "KPI報表"
+	 * "經營評比"
+	 * 的廠別與廠別狀態的選擇
 	 */
 	public void findAllFact_code_no(){
 		Map<String,List<WebFact>>map=new LinkedHashMap<String,List<WebFact>>();
 		List<Object[]>list_objs=webFactSer.findAllFactCode2_showA();
-		for(int i=0;i<list_objs.size();i++){			
+		List<WebFact>list_facts=webFactSer.findAllFact_showA();
+		/*for(int i=0;i<list_objs.size();i++){			
 			Object[]obj=list_objs.get(i);
 			String factCode=obj[0].toString();
 			List<WebFact>list_fact=webFactSer.findFactByFactCode(factCode);						
 			map.put(factCode, list_fact);
 			
+		}*/
+		
+		for(Object[] obj:list_objs){
+			List<WebFact>list=new ArrayList<WebFact>();
+			for(WebFact fact:list_facts){
+				if(obj[0].toString().equals(fact.getId().getFactArea())){
+					list.add(fact);
+				}
+			}
+			map.put(obj[0].toString(), list);
 		}
 		ActionContext.getContext().getSession().put("map", map);
 		//System.out.println(map);

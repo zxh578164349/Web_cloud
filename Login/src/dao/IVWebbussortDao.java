@@ -6,6 +6,7 @@ package dao;
 import java.util.List;
 
 import entity.VWebbussort;
+import entity.VWebbussortFcode;
 
 /**   
  *    
@@ -22,6 +23,20 @@ import entity.VWebbussort;
  **/
 public interface IVWebbussortDao {
 	public List<VWebbussort>findByYymm(String yymm,String yymm2);
+	
+	/**
+	 * 分廠別狀態
+	 * @Title: findByYymm2
+	 * @Description: TODO
+	 * @param @param yymm
+	 * @param @param yymm2
+	 * @param @return
+	 * @return List<VWebbussortFcode>
+	 * @throws
+	 * @author web
+	 * @date 2016/4/19
+	 */
+	public List<VWebbussortFcode>findByYymm2(String yymm,String yymm2);
 	
 
 }

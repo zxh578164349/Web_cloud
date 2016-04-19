@@ -63,7 +63,7 @@ public class WeballobjDaoImpl extends Basedao implements IWeballobjDao{
 		StringBuffer hql2=new StringBuffer();
 		hql.append("from Weballobj where 1=1 ");
 		hql2.append("select count(id.yymm) ");
-		if(factNo!=null&&!factNo.equals("")&&!factNo.equals("tw")){
+		if(factNo!=null&&!factNo.equals("")&&!factNo.equals("tw")&&!factNo.equals("nothing")){
 			hql.append(" and id.fact.id.factNo=:factno");
 			map.put("factno", factNo);
 		}
@@ -74,6 +74,10 @@ public class WeballobjDaoImpl extends Basedao implements IWeballobjDao{
 		if(yymm2!=null&&!yymm2.equals("")){
 			hql.append(" and id.yymm<=:yymm2");
 			map.put("yymm2", yymm2);
+		}
+		if(factNo.equals("nothing")&&(yymm==null||yymm.equals(""))&&(yymm2==null||yymm2.equals(""))){
+			hql.append(" and id.fact.id.factNo=:factno");
+			map.put("factno", factNo);
 		}
 		hql2.append(hql);
 		hql.append(" order by id.fact.id.factNo,id.fact.id.factArea,id.yymm ");

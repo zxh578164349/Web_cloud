@@ -8,6 +8,7 @@ import java.util.List;
 import dao.IVWebbussortDao;
 
 import entity.VWebbussort;
+import entity.VWebbussortFcode;
 import services.IVWebbussortServices;
 
 /**   
@@ -42,6 +43,19 @@ public class VWebbussortServicesImpl implements IVWebbussortServices{
 	public List<VWebbussort> findByYymm(String yymm,String yymm2) {
 		// TODO Auto-generated method stub
 		return vwebsortdao.findByYymm(yymm,yymm2);
+	}
+
+
+
+	/**
+	 * 日期:2016/4/19
+	 * 描述:
+	 */
+	
+	
+	public List<VWebbussortFcode> findByYymm2(String yymm, String yymm2) {
+		// TODO Auto-generated method stub
+		return vwebsortdao.findByYymm2(yymm, yymm2);
 	}
 
 }

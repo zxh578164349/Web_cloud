@@ -6,6 +6,7 @@ package services;
 import java.util.List;
 
 import entity.VWebbussort;
+import entity.VWebbussortFcode;
 
 /**   
  *    
@@ -22,5 +23,6 @@ import entity.VWebbussort;
  **/
 public interface IVWebbussortServices {
 	public List<VWebbussort>findByYymm(String yymm,String yymm2);
+	public List<VWebbussortFcode>findByYymm2(String yymm,String yymm2);
 
 }

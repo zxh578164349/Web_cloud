@@ -134,11 +134,31 @@ public class WebFactDaoImpl extends Basedao implements IWebFactDao {
 		String hql="select distinct id.factArea ,fcodeIndex from WebFact order by fcodeIndex";
 		return super.findAll(hql, null);
 	}
+	
+	/**
+	 * 【KPI報表】,【分形態損益】,【經營評比】
+	 * factShowA='0'
+	 * 所有廠別狀態
+	 * 日期:2016/4/19
+	 * 描述:
+	 */
 	public List<Object[]> findAllFactCode2_showA() {
 		// TODO Auto-generated method stub
 		String hql="select distinct id.factArea ,fcodeIndex from WebFact where factShowA='0' order by fcodeIndex";
 		return super.findAll(hql, null);
 	}
+	/**
+	 * 【KPI報表】,【分形態損益】,【經營評比】
+	 * factShowA='0'
+	 * 所有廠別
+	 * 日期:2016/4/19
+	 * 描述:
+	 */
+	public List<WebFact>findAllFact_showA(){
+		String hql="from WebFact where factShowA='0' order by orderNo,fcodeIndex";
+		return super.findAll(hql, null);
+	}
+	
 	public List<String> findAllFactNo(){
 		String hql="select distinct id.factNo from WebFact order by id.factNo";
 		return super.findAll(hql, null);
@@ -243,14 +263,13 @@ public class WebFactDaoImpl extends Basedao implements IWebFactDao {
 	}
 
 	/**
+	 * 【經營評比】報表
 	 * 日期:2016/4/6
 	 * 描述:
-	 */
-	
-	
+	 */	
 	public List<Object[]> findFactAble2() {
 		// TODO Auto-generated method stub
-		String hql="select distinct id.factNo,factSname,orderNo from WebFact where factDisable='0' order by orderNo";
+		String hql="select distinct id.factNo,factSname,orderNo from WebFact where factShowA='0' order by orderNo";
 		return super.findAll(hql, null);
 	}
 

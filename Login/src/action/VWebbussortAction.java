@@ -33,6 +33,8 @@ import org.apache.struts2.interceptor.ServletResponseAware;
 import com.opensymphony.xwork2.ActionSupport;
 
 import entity.VWebbussort;
+import entity.VWebbussortFcode;
+import entity.VWebbussortFcodeId;
 import entity.VWebbussortId;
 
 import services.IVWebbussortServices;
@@ -55,9 +57,25 @@ import util.GlobalMethod;
 public class VWebbussortAction extends ActionSupport implements ServletResponseAware{
 	private String yymm;
 	private String yymm2;
+	private List<String>list_factno;
+	private List<String>list_factcode;
 	private IVWebbussortServices vwebbusssorSer;
 	private IWebFactServices webFactSer;
 	private javax.servlet.http.HttpServletResponse response;
+	
+	
+	public List<String> getList_factno() {
+		return list_factno;
+	}
+	public void setList_factno(List<String> list_factno) {
+		this.list_factno = list_factno;
+	}
+	public List<String> getList_factcode() {
+		return list_factcode;
+	}
+	public void setList_factcode(List<String> list_factcode) {
+		this.list_factcode = list_factcode;
+	}
 	public String getYymm() {
 		return yymm;
 	}
@@ -325,6 +343,277 @@ public class VWebbussortAction extends ActionSupport implements ServletResponseA
 	    
 		
 	}
+	
+	/**
+	 * 分廠別狀態
+	 * @Title: print_fcode
+	 * @Description: TODO
+	 * @param 
+	 * @return void
+	 * @throws ParseException 
+	 * @throws
+	 * @author web
+	 * @date 2016/4/19
+	 */
+	public void print_fcode() throws ParseException{
+			
+		HSSFWorkbook wb=new HSSFWorkbook();
+		Map<String,Object>map=this.findStyles(wb);
+		HSSFCellStyle cs=(HSSFCellStyle)map.get("cs");				
+		List<VWebbussort>lists=vwebbusssorSer.findByYymm(yymm, yymm2);//查詢到的數據
+		List<String>list_months=GlobalMethod.findMonths(yymm, yymm2);//所有月份
+		List<Object[]>list_facts=webFactSer.findFactAble2();//所有廠別		
+		Map<String,Object>map_types=this.findTypes();//類型和項目 		
+		List<String>list_temp=findTemps();//臨時集合
+		
+		List<VWebbussortFcode>lists2=vwebbusssorSer.findByYymm2(yymm, yymm2);//查詢到的數據
+
+		// 如果頁面上有選factcode
+		if (list_factcode != null && list_factcode.size() > 0) {
+			for(String month:list_months){
+				Map<String,Object>map_fcode=new LinkedHashMap<String,Object>();
+				for (String fcode:list_factcode) {
+					List<VWebbussortFcode> list = new ArrayList<VWebbussortFcode>();
+					for (String fact:list_factno) {
+						String[] objs = fact.split("_");						
+							list.add(new VWebbussortFcode(new VWebbussortFcodeId(objs[1],fcode,month)));						
+					}
+					
+				}
+			}
+			
+			// 如果沒有沒有,則默認全部
+		} else {
+			List<Object[]> list_objs = webFactSer.findAllFactCode2_showA();
+			for (int i = 0; i < list_objs.size(); i++) {
+				Object[] obj = list_objs.get(i);
+				String fact_code = obj[0].toString();
+			}
+		}
+		
+		
+		
+		/********************數據源處理*************************/
+	    Map<String,Object>map_all=new LinkedHashMap<String,Object>();
+	    for(String month:list_months){
+	    	List<VWebbussort>list=new ArrayList<VWebbussort>();
+	    	for(Object[] obj:list_facts){
+	    		list.add(new VWebbussort(new VWebbussortId(obj[0].toString(),month)));
+	    	}
+	    	map_all.put(month,list);
+	    }
+	    for(String month:map_all.keySet()){//for	    		    	
+	    	for(int a=0;a<((List<VWebbussort>)map_all.get(month)).size();a++){
+	    		VWebbussort sort2=((List<VWebbussort>)map_all.get(month)).get(a);
+	    		for(int b=0;b<lists.size();b++){
+	    			VWebbussort sort=lists.get(b);
+	    			if(sort2.getId().getFactNo().equals(sort.getId().getFactNo())&&sort2.getId().getYymm().equals(sort.getId().getYymm())){
+	    				((List<VWebbussort>)map_all.get(month)).remove(a);
+	    				((List<VWebbussort>)map_all.get(month)).add(a, sort);
+	    				break;
+	    			}
+	    		}
+	    		
+	    	}	    			
+	    }//for
+	   
+	    Map<String,Object>map_all2=new LinkedHashMap<String,Object>();
+		for (String month:map_all.keySet()) {
+			List<List<BigDecimal>> listtemp = new ArrayList<List<BigDecimal>>();
+			for (VWebbussort sort : (List<VWebbussort>)map_all.get(month)) {
+				List<BigDecimal> list_b = new ArrayList<BigDecimal>();
+				if (sort!= null) {
+					list_b.add(sort.getA01());
+					list_b.add(sort.getA02());
+					list_b.add(sort.getA03());
+					list_b.add(sort.getA04());
+					list_b.add(sort.getA05());
+					list_b.add(sort.getA06());
+					list_b.add(sort.getA07());
+					list_b.add(sort.getSortA06());
+					list_b.add(sort.getA08());
+					list_b.add(sort.getA09());
+					list_b.add(sort.getA10());
+					list_b.add(sort.getA11());
+					list_b.add(sort.getSortA10());
+					list_b.add(sort.getA12());
+					list_b.add(sort.getA13());
+					list_b.add(sort.getA14());
+					list_b.add(sort.getA15());
+					list_b.add(sort.getSortA14());
+					list_b.add(sort.getA16());
+					list_b.add(sort.getA17());
+					list_b.add(sort.getA18());
+					list_b.add(sort.getA19());
+					list_b.add(sort.getA20());
+					list_b.add(sort.getA21());
+					list_b.add(sort.getA22());
+					list_b.add(sort.getA23());
+					list_b.add(sort.getA24());
+					list_b.add(sort.getA25());
+					list_b.add(sort.getA26());
+					list_b.add(sort.getA27());
+					list_b.add(sort.getA28());
+					list_b.add(sort.getSortA28());
+					list_b.add(sort.getA29());
+					list_b.add(sort.getA30());
+					list_b.add(sort.getSortA30());
+					list_b.add(sort.getA31());
+					list_b.add(sort.getA32());
+					list_b.add(sort.getA33());
+					list_b.add(sort.getSortA33());
+					list_b.add(sort.getA34());
+					list_b.add(sort.getA35());
+					list_b.add(sort.getSortA34());
+					list_b.add(sort.getA36());
+					list_b.add(sort.getA37());
+					list_b.add(sort.getA38());
+					list_b.add(sort.getA39());
+					list_b.add(sort.getSortA38());
+					list_b.add(sort.getA40());
+					list_b.add(sort.getA41());
+					list_b.add(sort.getA42());
+					list_b.add(sort.getA43());
+					list_b.add(sort.getSortA42());
+					list_b.add(sort.getA44());
+					list_b.add(sort.getA45());
+					list_b.add(sort.getA46());
+					list_b.add(sort.getA47());
+					list_b.add(sort.getSortA46());
+					list_b.add(sort.getA48());
+					list_b.add(sort.getA49());
+					list_b.add(sort.getA50());
+					list_b.add(sort.getA51());
+					list_b.add(sort.getSortA50());
+					list_b.add(sort.getA52());
+					list_b.add(sort.getA53());
+					list_b.add(sort.getA54());
+					list_b.add(sort.getA55());
+					list_b.add(sort.getSortA54());
+					list_b.add(sort.getA56());
+					list_b.add(sort.getA57());
+					list_b.add(sort.getA58());
+					list_b.add(sort.getA59());
+					list_b.add(sort.getSortA58());
+					list_b.add(sort.getA60());
+					list_b.add(sort.getA61());
+					list_b.add(sort.getSortA61());
+					list_b.add(sort.getA62());
+					list_b.add(sort.getA63());
+					list_b.add(sort.getSortA63());
+					list_b.add(sort.getA64());
+					list_b.add(sort.getA65());
+					list_b.add(sort.getSortA65());
+					list_b.add(sort.getA66());
+					list_b.add(sort.getA67());
+					list_b.add(sort.getSortA67());
+					list_b.add(sort.getA68());
+					list_b.add(sort.getA69());
+					list_b.add(sort.getSortA69());
+					list_b.add(sort.getA70());
+					list_b.add(sort.getA71());
+					list_b.add(sort.getA72());
+					list_b.add(sort.getA73());
+					list_b.add(sort.getA74());
+					list_b.add(sort.getA75());
+					list_b.add(sort.getSortA75());
+					list_b.add(sort.getA76());
+					list_b.add(sort.getA77());
+					list_b.add(sort.getA78());
+					list_b.add(sort.getSortA78());
+				}
+				listtemp.add(list_b);
+			}
+			map_all2.put(month,listtemp);
+		}
+		
+		/*****************************數據排名(重點)*******************************/
+		//for_a:月份循環
+		//for_b:項目循環
+		//for_c:廠別循環
+		 for(String month:map_all.keySet()){//for_a
+		    	List<BigDecimal>list=new ArrayList<BigDecimal>();
+		    	List<BigDecimal>list2=new ArrayList<BigDecimal>();
+		    	List<Integer>list3=new ArrayList<Integer>();
+		    	for(int a=0;a<findTemps().size();a++){//for_b		    		
+		    		for(int b=0;b<((List<List<BigDecimal>>)map_all2.get(month)).size();b++){//for_c
+			    		if(findTemps().get(a).equals("compare obj")){
+			    			if(b==0){
+			    				//清除内容，为下一次排名做准备
+			    				list.clear();
+			    				list2.clear();
+			    				list3.clear();
+			    			}
+			    			list.add(((List<List<BigDecimal>>)map_all2.get(month)).get(b).get(a)==null?new BigDecimal(0):((List<List<BigDecimal>>)map_all2.get(month)).get(b).get(a));	
+			    			list2.add(((List<List<BigDecimal>>)map_all2.get(month)).get(b).get(a)==null?new BigDecimal(0):((List<List<BigDecimal>>)map_all2.get(month)).get(b).get(a));
+			    		}		    		
+			    		if(findTemps().get(a).equals("排名")){
+			    			Collections.sort(list2);
+				    		for(int x=0;x<list.size();x++){
+				    			list3.add(GlobalMethod.getIndex(list.get(x), list2));
+				    		}
+			    			((List<List<BigDecimal>>)map_all2.get(month)).get(b).set(a, new BigDecimal(list3.get(b)));				    		
+			    		}
+			    	}//for_c
+		    	}//for_b		    	
+		    }//for_a
+		 /*****************************數據排名（重點）*******************************/
+		 
+		 
+	    
+		/********************數據源處理*************************/
+	    
+	    
+	   /********************表格初始化和固定內容*************************/
+	   this.printStaticContent(wb, map, list_months, list_facts,list_temp, map_types);
+	   /********************表格初始化和固定內容*************************/
+	   
+	   /********************填充數據源*************************/
+	   for(String month:map_all2.keySet()){
+		   for(int a=0;a<((List<List<BigDecimal>>)map_all2.get(month)).size();a++){
+			   int tempsize=((List<List<BigDecimal>>)map_all2.get(month)).get(a).size();
+			   if(tempsize==0){
+				   /*tempsize=list_temp.size();
+				   for(int b=0;b<tempsize;b++){				   
+					   wb.getSheet(month).getRow(2+b).getCell(3+a).setCellValue("無數據");
+					   wb.getSheet(month).getRow(2+b).getCell(3+a).setCellStyle(cs);
+				   }*/				   
+			   }else{
+				   for(int b=0;b<tempsize;b++){				   
+					   wb.getSheet(month).getRow(2+b).getCell(3+a).setCellValue(((List<List<BigDecimal>>)map_all2.get(month)).get(a).get(b)==null?0:((List<List<BigDecimal>>)map_all2.get(month)).get(a).get(b).doubleValue());
+					   wb.getSheet(month).getRow(2+b).getCell(3+a).setCellStyle(cs);
+				   }
+			   }
+			  
+		   }
+	   }	   
+	   /********************填充數據源*************************/
+	   
+	   
+		try {
+			/*OutputStream os = new FileOutputStream("E:/" + "websort.xls");
+			wb.write(os);
+			os.close();	*/
+			ServletOutputStream os=response.getOutputStream();
+			response.setContentType("application/vnd.ms-excel");
+			int msie=ServletActionContext.getRequest().getHeader("USER-AGENT").toLowerCase().indexOf("msie");//判斷是否為IE瀏覽器,大於0則為IE瀏覽器
+			String fileName="report"+yymm+"-"+yymm2+".xls";
+			if(msie>0){
+				fileName=java.net.URLEncoder.encode(fileName,"utf-8");//解決IE中文文件不能下載的問題
+			}else{
+				fileName=new String(fileName.getBytes("utf-8"),"iso-8859-1");//解決非IE中文名亂碼問題
+			}		
+			response.setHeader("Content-disposition", "attachment;filename="+fileName);					
+			wb.write(os);
+			os.close();						
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	
 	
 	/**
 	 * 所有分類  所有項目
@@ -918,6 +1207,4 @@ public class VWebbussortAction extends ActionSupport implements ServletResponseA
 		return list;
 	}
 	
-	
-
 }
