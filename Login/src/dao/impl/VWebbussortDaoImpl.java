@@ -69,7 +69,11 @@ public class VWebbussortDaoImpl extends Basedao implements IVWebbussortDao{
 			hql.append(" and id.yymm<=:yymm2 ");
 			map.put("yymm2", yymm2);
 		}
-		return super.getAllWithNoPage(hql.toString(), map);
+		List<VWebbussortFcode>list=super.getAllWithNoPage(hql.toString(), map);
+		for(VWebbussortFcode obj:list){
+			obj.getId().getFact().getFactSname();
+		}
+		return list;
 	}
 
 }

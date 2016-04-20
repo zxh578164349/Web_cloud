@@ -6,13 +6,11 @@
 -->
 <hibernate-mapping>
     <class name="entity.VWebbussortFcode" table="V_WEBBUSSORT_FCODE" schema="WEB">
-        <composite-id name="id" class="entity.VWebbussortFcodeId">
-            <key-property name="factNo" type="java.lang.String">
+        <composite-id name="id" class="entity.VWebbussortFcodeId">           
+            <key-many-to-one name="fact" class="entity.WebFact">
                 <column name="FACT_NO" length="10" />
-            </key-property>
-            <key-property name="factCode" type="java.lang.String">
                 <column name="FACT_CODE" length="30" />
-            </key-property>
+            </key-many-to-one>
             <key-property name="yymm" type="java.lang.String">
                 <column name="YYMM" length="8" />
             </key-property>
