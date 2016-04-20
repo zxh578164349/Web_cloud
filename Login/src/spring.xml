@@ -205,7 +205,8 @@
 				<value>entity/WebydataNoinput.hbm.xml</value>
 				<value>entity/VKpifactNew.hbm.xml</value>
 				<value>entity/VKpifactEveNew.hbm.xml</value>
-				<value>entity/VWebuseless.hbm.xml</value></list>
+				<value>entity/VWebuseless.hbm.xml</value>
+				<value>entity/VWebbussortFcode.hbm.xml</value></list></list>
 		</property>
 	</bean>
 		
