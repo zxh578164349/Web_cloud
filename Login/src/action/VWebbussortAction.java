@@ -378,8 +378,10 @@ public class VWebbussortAction extends ActionSupport implements ServletResponseA
 				for (String fcode:list_factcode) {
 					List<VWebbussortFcode> list = new ArrayList<VWebbussortFcode>();
 					for (String fact:list_factno) {
-						String[] objs = fact.split("_");						
-							list.add(new VWebbussortFcode(new VWebbussortFcodeId(new WebFact(new WebFactId(objs[1],fcode),objs[2]),month)));						
+						String[] objs = fact.split("_");
+						if(objs[0].equals(fcode)){
+							list.add(new VWebbussortFcode(new VWebbussortFcodeId(new WebFact(new WebFactId(objs[1],fcode),objs[2]),month)));
+						}													
 					}
 					map_fcode.put(fcode, list);
 				}
@@ -577,32 +579,34 @@ public class VWebbussortAction extends ActionSupport implements ServletResponseA
 	   /********************表格初始化和固定內容*************************/
 	   
 	   /********************填充數據源*************************/
-	  /* for(String month:map_month2.keySet()){
+	   for(String month:map_month2.keySet()){
 		   Map<String,Object>map_fcode=(Map<String,Object>)map_month2.get(month);
 		   int z_index=0;
-		   int index=0;
+		   int x=0;
 		   for(String fcode:map_fcode.keySet()){
-			   z_index=z_index+index*list_temp.size();
-			   index++;
+			   if(x>0){
+				  z_index=2*x; 
+			   }
 			   for(int a=0;a<((List<List<BigDecimal>>)map_fcode.get(fcode)).size();a++){
 				   int tempsize=((List<List<BigDecimal>>)map_fcode.get(fcode)).get(a).size();
 				   if(tempsize==0){
-					   tempsize=list_temp.size();
+					  /* tempsize=list_temp.size();
 					   for(int b=0;b<tempsize;b++){				   
 						   wb.getSheet(month).getRow(2+b).getCell(3+a).setCellValue("無數據");
 						   wb.getSheet(month).getRow(2+b).getCell(3+a).setCellStyle(cs);
-					   }				   
+					   }*/				   
 				   }else{
 					   for(int b=0;b<tempsize;b++){				   
-						   wb.getSheet(month).getRow(2+b+z_index).getCell(3+a).setCellValue(((List<List<BigDecimal>>)map_fcode.get(fcode)).get(a).get(b)==null?0:((List<List<BigDecimal>>)map_fcode.get(fcode)).get(a).get(b).doubleValue());
-						   wb.getSheet(month).getRow(2+b+z_index).getCell(3+a).setCellStyle(cs);
+						   wb.getSheet(month).getRow(2+b+x*list_temp.size()+z_index).getCell(3+a).setCellValue(((List<List<BigDecimal>>)map_fcode.get(fcode)).get(a).get(b)==null?0:((List<List<BigDecimal>>)map_fcode.get(fcode)).get(a).get(b).doubleValue());
+						   wb.getSheet(month).getRow(2+b+x*list_temp.size()+z_index).getCell(3+a).setCellStyle(cs);
 					   }
 				   }
 				  
 			   }
+			   x++;
 		   }
 		   
-	   }*/	   
+	   }	   
 	   /********************填充數據源*************************/
 	   
 	   
@@ -1237,7 +1241,7 @@ public class VWebbussortAction extends ActionSupport implements ServletResponseA
 	    	Map<String,Object>map_fcode=(Map<String,Object>)map_month.get(month);
 	    	int x=0;
 	    	for(String fcode:map_fcode.keySet()){
-	    		for(int b=0;b<list_temp.size()+10;b++){
+	    		for(int b=0;b<list_temp.size()+3*x;b++){
 			    	wb.getSheet(month).createRow(b+list_temp.size()*x);
 			    	for(int c=0;c<list_facts.size()+5;c++){
 			    		//wb.getSheet(month).getRow(b).createCell(c).setCellStyle(cs);
@@ -1266,11 +1270,11 @@ public class VWebbussortAction extends ActionSupport implements ServletResponseA
 	    	/*******************表頭*****************/
 	    	Map<String,Object>map_fcode=(Map<String,Object>)map_month.get(month);
 	    	int x2=0;
-	    	int z_index=0;
-	    	if(x2>0){
-	    		z_index=2;
-	    	}
+	    	int z_index=0;	    	
 	    	for(String fcode:map_fcode.keySet()){//for 2
+	    		if(x2>0){
+		    		z_index=2*x2;
+		    	}
 	    		List<String>list_head=new ArrayList<String>();
 		    	list_head.add("分類");
 		    	list_head.add("項目");
