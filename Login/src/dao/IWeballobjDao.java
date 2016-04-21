@@ -26,5 +26,6 @@ import util.PageBean;
 public interface IWeballobjDao {
 	public void addMore(List<Weballobj>list);
 	public PageBean findPageBean(int pageSize,int page,String factNo,String yymm,String yymm2);
+	public List<Weballobj>findAllobj(String factNo,String yymm,String yymm2);
 
 }

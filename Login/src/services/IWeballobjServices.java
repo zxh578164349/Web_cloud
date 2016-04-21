@@ -24,5 +24,6 @@ import entity.Weballobj;
 public interface IWeballobjServices {
 	public void addMore(List<Weballobj>list);
 	public PageBean findPageBean(int pageSize,int page,String factNo,String yymm,String yymm2);
+	public List<Weballobj>findAllobj(String factNo,String yymm,String yymm2);
 
 }

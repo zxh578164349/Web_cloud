@@ -579,14 +579,16 @@ public class VWebbussortAction extends ActionSupport implements ServletResponseA
 	   /********************表格初始化和固定內容*************************/
 	   
 	   /********************填充數據源*************************/
-	   for(String month:map_month2.keySet()){
-		   Map<String,Object>map_fcode=(Map<String,Object>)map_month2.get(month);
-		   int z_index=0;
-		   int x=0;
-		   for(String fcode:map_fcode.keySet()){
-			   if(x>0){
-				  z_index=2*x; 
-			   }
+	   for(String month:map_month2.keySet()){//for a
+		   int y_increment=0;//廠別狀態自增1
+	       int y_fcode=0;	//廠別狀態增長量
+	       int y_index=0;//y軸座標跟蹤
+		   Map<String,Object>map_fcode=(Map<String,Object>)map_month2.get(month);		   
+		   for(String fcode:map_fcode.keySet()){// for b			   
+			 //計算廠別狀態增長量
+	    		if(y_increment>0){
+		    		y_fcode=(list_temp.size()+3)*y_increment;
+		    	}
 			   for(int a=0;a<((List<List<BigDecimal>>)map_fcode.get(fcode)).size();a++){
 				   int tempsize=((List<List<BigDecimal>>)map_fcode.get(fcode)).get(a).size();
 				   if(tempsize==0){
@@ -596,17 +598,18 @@ public class VWebbussortAction extends ActionSupport implements ServletResponseA
 						   wb.getSheet(month).getRow(2+b).getCell(3+a).setCellStyle(cs);
 					   }*/				   
 				   }else{
-					   for(int b=0;b<tempsize;b++){				   
-						   wb.getSheet(month).getRow(2+b+x*list_temp.size()+z_index).getCell(3+a).setCellValue(((List<List<BigDecimal>>)map_fcode.get(fcode)).get(a).get(b)==null?0:((List<List<BigDecimal>>)map_fcode.get(fcode)).get(a).get(b).doubleValue());
-						   wb.getSheet(month).getRow(2+b+x*list_temp.size()+z_index).getCell(3+a).setCellStyle(cs);
+					   for(int b=0;b<tempsize;b++){	
+						   y_index=4+b+y_fcode;//y軸座標跟蹤
+						   wb.getSheet(month).getRow(y_index).getCell(3+a).setCellValue(((List<List<BigDecimal>>)map_fcode.get(fcode)).get(a).get(b)==null?0:((List<List<BigDecimal>>)map_fcode.get(fcode)).get(a).get(b).doubleValue());
+						   wb.getSheet(month).getRow(y_index).getCell(3+a).setCellStyle(cs);
 					   }
 				   }
 				  
 			   }
-			   x++;
-		   }
+			   y_increment++;
+		   }//for b
 		   
-	   }	   
+	   }//for a	   
 	   /********************填充數據源*************************/
 	   
 	   
@@ -1006,6 +1009,13 @@ public class VWebbussortAction extends ActionSupport implements ServletResponseA
 		cs_bold.setBorderLeft(HSSFCellStyle.BORDER_THIN);		
 		cs_bold.setFont(font_bold);
 		map.put("cs_bold", cs_bold);
+		
+		//紅色粗字體樣式
+		HSSFCellStyle cs_red=wb.createCellStyle();
+		cs_red.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		cs_red.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);		
+		cs_red.setFont(font_red);
+		map.put("cs_red", cs_red);
 		/**********************分類+項目+單位*****************************/
 		
 		/**
@@ -1143,7 +1153,7 @@ public class VWebbussortAction extends ActionSupport implements ServletResponseA
 	 * @date 2016/4/7
 	 */
 	public void printStaticContent(HSSFWorkbook wb,Map<String,Object>map,List<String>list_months,List<Object[]>list_facts,List<String>list_temp,Map<String,Object>map_types){
-		HSSFCellStyle cs=(HSSFCellStyle)map.get("cs");
+		//HSSFCellStyle cs=(HSSFCellStyle)map.get("cs");
 		HSSFCellStyle cs_head=(HSSFCellStyle)map.get("cs_head");
 		HSSFCellStyle cs_column=(HSSFCellStyle)map.get("cs_column");
 		HSSFCellStyle cs_blue=(HSSFCellStyle)map.get("cs_blue");
@@ -1151,7 +1161,7 @@ public class VWebbussortAction extends ActionSupport implements ServletResponseA
 		 /********************初始化表格*************************/
 	    for(String month:list_months){
 	    	wb.createSheet(month);
-	    	for(int b=0;b<list_temp.size()+5;b++){
+	    	for(int b=0;b<list_temp.size()+4;b++){
 		    	wb.getSheet(month).createRow(b);
 		    	for(int c=0;c<list_facts.size()+5;c++){
 		    		//wb.getSheet(month).getRow(b).createCell(c).setCellStyle(cs);
@@ -1220,7 +1230,7 @@ public class VWebbussortAction extends ActionSupport implements ServletResponseA
 	}
 	
 	/**
-	 * 表格固定內容
+	 * 表格固定內容(分廠別狀態)
 	 * @Title: printStaticContent
 	 * @Description: TODO
 	 * @param @param sheet
@@ -1230,33 +1240,37 @@ public class VWebbussortAction extends ActionSupport implements ServletResponseA
 	 * @date 2016/4/7
 	 */
 	public void printStaticContent2(HSSFWorkbook wb,Map<String,Object>map,List<String>list_months,List<Object[]>list_facts,List<String>list_temp,Map<String,Object>map_types,Map<String,Object>map_month){
-		HSSFCellStyle cs=(HSSFCellStyle)map.get("cs");
+		//HSSFCellStyle cs=(HSSFCellStyle)map.get("cs");
 		HSSFCellStyle cs_head=(HSSFCellStyle)map.get("cs_head");
 		HSSFCellStyle cs_column=(HSSFCellStyle)map.get("cs_column");
 		HSSFCellStyle cs_blue=(HSSFCellStyle)map.get("cs_blue");
 		HSSFCellStyle cs_bold=(HSSFCellStyle)map.get("cs_bold");
+		HSSFCellStyle cs_red=(HSSFCellStyle)map.get("cs_red");
 		 /********************初始化表格*************************/
 	    for(String month:map_month.keySet()){
 	    	wb.createSheet(month);
 	    	Map<String,Object>map_fcode=(Map<String,Object>)map_month.get(month);
-	    	int x=0;
+	    	int y_increment=0;
 	    	for(String fcode:map_fcode.keySet()){
-	    		for(int b=0;b<list_temp.size()+3*x;b++){
-			    	wb.getSheet(month).createRow(b+list_temp.size()*x);
+	    		for(int b=0;b<list_temp.size()+4*(y_increment+1);b++){
+			    	wb.getSheet(month).createRow(b+list_temp.size()*y_increment);
 			    	for(int c=0;c<list_facts.size()+5;c++){
 			    		//wb.getSheet(month).getRow(b).createCell(c).setCellStyle(cs);
-			    		wb.getSheet(month).getRow(b+list_temp.size()*x).createCell(c);
+			    		wb.getSheet(month).getRow(b+list_temp.size()*y_increment).createCell(c);
 			    		wb.getSheet(month).setColumnWidth(c, 4500);
 			    	}
 			    }
-	    		x++;
-	    	}
-	    	
+	    		y_increment++;
+	    	}	    	
 	    }	    
 	    /********************初始化表格*************************/
 	    
 	    
-	    for(String month:map_month.keySet()){//for 1	    	
+	    for(String month:map_month.keySet()){//for 1
+	    	int y_increment=0;//廠別狀態自增1
+	    	int y_fcode=0;	//廠別狀態增長量
+	    	int y_index=0;//y軸座標跟蹤
+	    	
 	    	HSSFSheet sheet=wb.getSheet(month);
 	    	/*******************標題*****************/
 	    	CellRangeAddress cra_title=new CellRangeAddress(0,(short)0,0,(short)6);
@@ -1266,15 +1280,24 @@ public class VWebbussortAction extends ActionSupport implements ServletResponseA
 	    		sheet.getRow(0).getCell(a).setCellStyle(cs_head);
 	    	}
 	    	/*******************標題*****************/
-	    	
-	    	/*******************表頭*****************/
-	    	Map<String,Object>map_fcode=(Map<String,Object>)map_month.get(month);
-	    	int x2=0;
-	    	int z_index=0;	    	
-	    	for(String fcode:map_fcode.keySet()){//for 2
-	    		if(x2>0){
-		    		z_index=2*x2;
+	    		    	
+	    	Map<String,Object>map_fcode=(Map<String,Object>)map_month.get(month);	    	    	
+	    	for(String fcode:map_fcode.keySet()){//for 2	
+	    		
+	    		//計算廠別狀態增長量
+	    		if(y_increment>0){
+		    		y_fcode=(list_temp.size()+3)*y_increment;
 		    	}
+	    		/*******************廠別狀態*****************/
+	    		y_index=2+y_fcode;//y軸座標跟蹤
+	    		
+		    	sheet.getRow(y_index).getCell(0).setCellValue(fcode);
+	    		sheet.getRow(y_index).getCell(0).setCellStyle(cs_red);
+	    		/*******************廠別狀態*****************/
+	    		
+	    		/*******************表頭*****************/
+	    		y_index=y_index+1;//y軸座標跟蹤
+	    		
 	    		List<String>list_head=new ArrayList<String>();
 		    	list_head.add("分類");
 		    	list_head.add("項目");
@@ -1283,14 +1306,18 @@ public class VWebbussortAction extends ActionSupport implements ServletResponseA
 		    		list_head.add(objs.getId().getFact().getFactSname());
 		    	}
 		    	for(int a=0;a<list_head.size();a++){		    		
-		    			sheet.getRow(1+(list_temp.size())*x2+z_index).getCell(a).setCellValue(list_head.get(a));
-			    		sheet.getRow(1+(list_temp.size())*x2+z_index).getCell(a).setCellStyle(cs_column);		    				    		
+		    			sheet.getRow(y_index).getCell(a).setCellValue(list_head.get(a));
+			    		sheet.getRow(y_index).getCell(a).setCellStyle(cs_column);		    				    		
 		    	}
 		    	/*******************表頭*****************/
 		    	
+		    	
+		    	
 		    	/********************分類+項目+單位*******************/
-		    	int idx1=2+list_temp.size()*x2+z_index;
-	    		int idx2=2+list_temp.size()*x2+z_index;
+		    	y_index=y_index+1;//y軸座標跟蹤
+		    	
+		    	int idx1=y_index;
+	    		int idx2=y_index;
 		    	for(String key:map_types.keySet()){
 		    		 idx1=idx2;
 		    		 idx2=idx1+((List<String>)map_types.get(key)).size();
@@ -1315,10 +1342,8 @@ public class VWebbussortAction extends ActionSupport implements ServletResponseA
 		    		}
 		    	}	    	
 		    	/********************分類+項目+單位*******************/
-		    	x2++;
+		    	y_increment++;
 	    	}//for 2
-	    	
-	    	
 	    }//for1
 	}
 	

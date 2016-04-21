@@ -55,4 +55,15 @@ public class WeballobjServicesImpl implements IWeballobjServices{
 		return weballobjdao.findPageBean(pageSize, page, factNo, yymm, yymm2);
 	}
 
+	/**
+	 * 日期:2016/4/21
+	 * 描述:
+	 */
+	
+	
+	public List<Weballobj> findAllobj(String factNo, String yymm, String yymm2) {
+		// TODO Auto-generated method stub
+		return weballobjdao.findAllobj(factNo, yymm, yymm2);
+	}
+
 }

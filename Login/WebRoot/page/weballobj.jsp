@@ -95,30 +95,17 @@
 	}
 
 
-function print(public_form){
+function print(public_form,factNo,yymm,yymm2){
 	var public_form=jq("#"+public_form);
-	public_form.attr("action","fix_toExcel");
-	public_form.attr("target","_blank");
-	public_form.submit();
+	public_form.attr("action","weballobj_print");
+	public_form.attr("target","_blank");	
+	if(jq("#"+factNo).val()==""||jq("#"+yymm).val()==""||jq("#"+yymm2).val()==""){
+		layer.msg("請選擇廠別和日期",3,3);
+	}else{
+		public_form.submit();
+	}	
 }
-function showDiv(){
-    jq.layer({
-    type: 2,   //0-4的选择,
-    title: '樣本格式說明',
-    //border: [0],
-    closeBtn: [1,true],
-    shade: [0],
-    //shade: [0.5, '#000'],
-    shadeClose: false,
-    border: [10, 0.3, '#000'],
-   // btns:1,
-    //fadeIn:300,
-    //shift:'top',
-    offset:['10px',''],
-    area:['570px','450px'],               
-    iframe:{src:'page/sample/sample_weballobj.jsp',scrolling:'auto'}	                    
-});
-}
+
 </script>
 
 <body>

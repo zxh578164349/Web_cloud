@@ -30,7 +30,14 @@ jq(function(){
 			showAllError : true,
 			ignoreHidden : true,
 			tipSweep : true
-    })
+    });
+    jq("#subform2").Validform({
+		tiptype : 1,
+		showAllError : true,
+		ignoreHidden : true,
+		tipSweep : true
+});
+    
 })
 
 	/**
@@ -135,9 +142,9 @@ jq(function(){
 	
 	
 	
-	
+	<hr/>
 	<h2>經營評比(分形態)</h2>
-	<form action="vwebbussort_print_fcode" method="post" id="subform" target="_blank">
+	<form action="vwebbussort_print_fcode" method="post" id="subform2" target="_blank">
 		<table id="tb_search">
 			<tr>
 				<td>
@@ -155,12 +162,12 @@ jq(function(){
 			</tr>
 		</table>
 		<table>
-        <tr><td><input type="checkbox" onclick="selectAll(this)" style="width:18px;height:18px"/>全選<hr></td></tr>
+        <tr><td><input type="checkbox" onclick="selectAll(this)" style="width:18px;height:18px" />全選<hr></td></tr>
           <s:iterator value="#attr.map" id="map" status="x">
           <tr>
            <td>
                  <input type="checkbox" value="<s:property value='key'/>" id="<s:property value='key'/>" name="list_factcode" 
-                 onclick="checkAll('${map.key}')" style="width:18px;height:18px"/>
+                 onclick="checkAll('${map.key}')" style="width:18px;height:18px" datatype="*"/>
                  <font style="font-size:14px;font-weight:bold" ><s:property value='key'/> </font>
                  <br> 
                  <div id="<s:property value='key'/>_div" style="display:none">               
