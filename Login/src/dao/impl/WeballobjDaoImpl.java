@@ -7,11 +7,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.hibernate.Query;
+
 import com.opensymphony.xwork2.ActionContext;
 
 import util.PageBean;
 import dao.Basedao;
 import dao.IWeballobjDao;
+import entity.KyzExpectmatmLog;
 import entity.Weballobj;
 
 /**   
@@ -133,6 +136,34 @@ public class WeballobjDaoImpl extends Basedao implements IWeballobjDao{
 			obj.getId().getFact().getFactSname();
 		}
 		return list;
+	}
+
+	/**
+	 * 日期:2016/4/22
+	 * 描述:
+	 */
+	
+	
+	public Weballobj findById(String factNo, String factcode, String yymm) {
+		// TODO Auto-generated method stub
+		String hql="from Weballobj where id.fact.id.factNo=? and id.fact.id.factArea=? and id.yymm=?";
+		Query query=getSession().createQuery(hql);
+		query.setString(0, factNo);
+		query.setString(1, factcode);
+		query.setString(2, yymm);
+		return (Weballobj)query.uniqueResult();
+	}
+
+	/**
+	 * 日期:2016/4/22
+	 * 描述:
+	 */
+	
+	
+	public void delete(String factNo,String factCode,String yymm,KyzExpectmatmLog log) {
+		// TODO Auto-generated method stub
+		Weballobj obj=this.findById(factNo, factCode, yymm);
+		super.delete(obj,log);
 	}
 
 }

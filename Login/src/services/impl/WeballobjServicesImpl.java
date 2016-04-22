@@ -7,6 +7,7 @@ import java.util.List;
 
 import dao.IWeballobjDao;
 
+import entity.KyzExpectmatmLog;
 import entity.Weballobj;
 import services.IWeballobjServices;
 import util.PageBean;
@@ -64,6 +65,28 @@ public class WeballobjServicesImpl implements IWeballobjServices{
 	public List<Weballobj> findAllobj(String factNo, String yymm, String yymm2) {
 		// TODO Auto-generated method stub
 		return weballobjdao.findAllobj(factNo, yymm, yymm2);
+	}
+
+	/**
+	 * 日期:2016/4/22
+	 * 描述:
+	 */
+	
+	
+	public Weballobj findById(String factNo, String factcode, String yymm) {
+		// TODO Auto-generated method stub
+		return weballobjdao.findById(factNo, factcode, yymm);
+	}
+
+	/**
+	 * 日期:2016/4/22
+	 * 描述:
+	 */
+	
+	
+	public void delete(String factNo, String factCode, String yymm,KyzExpectmatmLog log) {
+		// TODO Auto-generated method stub
+		weballobjdao.delete(factNo, factCode, yymm,log);
 	}
 
 }

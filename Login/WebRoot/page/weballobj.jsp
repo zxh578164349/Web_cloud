@@ -33,7 +33,7 @@
 		}else if(jq("#factNo_a").val()=="nothing"){
 			layer.alert("請選擇廠別");
 			return false;
-		}else if(jq("#yymm").val()==""){
+		}else if(jq("#yymm_in").val()==""){
 			layer.alert("請選擇日期");
 			return false;
 		}else{
@@ -75,14 +75,14 @@
 		});
 	}
 	//你确定要删除吗？
-	function isDelete(mid) {
+	function isDelete(form) {
 		 var flag=confirm("確定要刪除嗎?");		
 			if (flag == true) {
 				jq.ajax({
 					type:"POST",
 					dataType:"html",
-					data:"id="+mid,
-					url:"fix_delete",
+					data:jq("#"+form).serialize(),
+					url:"weballobj_delete",
 					success:function(data){
 						jq("#bodyid").html(data);
 					},
@@ -99,7 +99,7 @@ function print(public_form,factNo,yymm,yymm2){
 	var public_form=jq("#"+public_form);
 	public_form.attr("action","weballobj_print");
 	public_form.attr("target","_blank");	
-	if(jq("#"+factNo).val()==""||jq("#"+yymm).val()==""||jq("#"+yymm2).val()==""){
+	if(jq("#"+factNo).val()=="nothing"||jq("#"+yymm).val()==""||jq("#"+yymm2).val()==""){
 		layer.msg("請選擇廠別和日期",3,3);
 	}else{
 		public_form.submit();
@@ -137,7 +137,7 @@ function print(public_form,factNo,yymm,yymm2){
 				</s:else>
 	       </td>
 	       <td>
-	         <input type="text" id="yymm" name="yymm" onClick="WdatePicker({dataFmt:'yyyyMM'})" readonly="readonly" class="Wdate search"/>
+	         <input type="text" id="yymm_in" name="yymm" onClick="WdatePicker({dataFmt:'yyyyMM'})" readonly="readonly" class="Wdate search"/>
 	       </td>
 	       <td>
 	       	    &nbsp;<input value="導入Excel" type=button onclick="checkForm()" id="search_forday" class="btn btn-info"/>

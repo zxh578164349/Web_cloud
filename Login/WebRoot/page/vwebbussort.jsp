@@ -23,7 +23,6 @@
 <link rel="stylesheet" type="text/css" href="css/select_beautiful.css">
 <link rel="stylesheet" type="text/css" href="css/form.css" />
 <script type="text/javascript">
-
 jq(function(){
     jq("#subform").Validform({
 			tiptype : 3,
@@ -36,9 +35,18 @@ jq(function(){
 		showAllError : true,
 		ignoreHidden : true,
 		tipSweep : true
-});
-    
+});   
 })
+
+function print(){
+	if(jq("#yymm").val()==""||jq("#yymm2").val()==""){
+		layer.msg("請選擇日期",3,3);
+	}else{
+		
+	}
+}
+
+
 
 	/**
     全選與反選
@@ -125,11 +133,11 @@ jq(function(){
 			<tr>
 				<td>
 				<span>開始
-				 <input type="text" name="yymm" onClick="WdatePicker({dateFmt:'yyyyMM'})"
+				 <input type="text" id="yymm" name="yymm" onClick="WdatePicker({minDate:'{%y-1}-%m',maxDate:'#F{$dp.$D(\'yymm2\',{M:-1})||\'%y-{%M-1}\'}'})"
 					readonly="readonly" class="Wdate" datatype="*" />
 				</span>
 				<span>結束
-					<input type="text" name="yymm2" onClick="WdatePicker({dateFmt:'yyyyMM'})"
+					<input type="text" id="yymm2" name="yymm2" onClick="WdatePicker({minDate:'#F{$dp.$D(\'yymm\',{M:0})}',maxDate:'%y-%M'})"
 					readonly="readonly" class="Wdate" datatype="*"  />			 
 				</span>
 				 <input type="submit" value="下載"  class="btn btn-primary"/>&nbsp;&nbsp;
@@ -149,11 +157,11 @@ jq(function(){
 			<tr>
 				<td>
 				<span>開始
-				 <input type="text" name="yymm" onClick="WdatePicker({dateFmt:'yyyyMM'})"
+				 <input type="text" id="begin" name="yymm" onClick="WdatePicker({minDate:'{%y-1}-%m',maxDate:'#F{$dp.$D(\'end\',{M:-1})||\'%y-{%M-1}\'}'})"
 					readonly="readonly" class="Wdate" datatype="*" />
 				</span>
 				<span>結束
-					<input type="text" name="yymm2" onClick="WdatePicker({dateFmt:'yyyyMM'})"
+					<input type="text" id="end" name="yymm2" onClick="WdatePicker({minDate:'#F{$dp.$D(\'begin\',{M:0})}',maxDate:'%y-%M'})"
 					readonly="readonly" class="Wdate" datatype="*"  />			 
 				</span>
 				 <input type="submit" value="下載"  class="btn btn-primary"/>&nbsp;&nbsp;					

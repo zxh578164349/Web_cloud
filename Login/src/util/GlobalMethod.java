@@ -274,7 +274,7 @@ public class GlobalMethod extends HibernateDaoSupport{
 		Integer[] a = {0,3,0,4,5};//原始
         int[] b = new int[a.length];//有序
         int[] c = new int[a.length];//返回結果
-        for(int i=0; i<a.length; i++) {
+        /*for(int i=0; i<a.length; i++) {
             b[i] = a[i];
             System.out.print(b[i] + "\t");
         }
@@ -295,7 +295,14 @@ public class GlobalMethod extends HibernateDaoSupport{
         Calendar cal=Calendar.getInstance();
         cal.setTime(frm.parse("201604"));
         cal.add(Calendar.MONTH, -1);
-        System.out.println(frm.format(cal.getTime()));
+        System.out.println(frm.format(cal.getTime()));*/
+        
+        
+        List<String>list1=new ArrayList<String>();
+        list1.add("a");list1.add("b");list1.add("c");
+        List<String>list2=new ArrayList<String>();
+        list2.add("a");list2.add("b");
+        System.out.println(list1.containsAll(list2));
        
        
 						

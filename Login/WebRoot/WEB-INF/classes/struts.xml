@@ -790,7 +790,8 @@
 		</action>
 		<action name="weballobj_*" class="weballobjAction" method="{1}">
 		   <result name="beanList">page/weballobj.jsp</result>
-		   <result name="beanList1">page/table1/weballobj1.jsp</result>		       		   
+		   <result name="beanList1">page/table1/weballobj1.jsp</result>
+		   <result name="delete" type="redirectAction">weballobj_findPageBean3</result>		       		   
 		</action>
 		<action name="vwebbussort_*" class="vwebbussortAction" method="{1}">
 		    
