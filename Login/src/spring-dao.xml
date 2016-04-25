@@ -91,5 +91,6 @@
 	<bean id="vkpifactnewDao" class="dao.impl.VKpifactNewDaoImpl" parent="baseDao"></bean>
 	<bean id="vkpievenewDao" class="dao.impl.VKpifactEveNewDaoImple" parent="baseDao"></bean>
 	<bean id="vwebuselessdao" class="dao.impl.VWebuselessDaoImpl" parent="baseDao"></bean>
+	<bean id="webremitdao" class="dao.impl.WebremittancelistDaoImpl" parent="baseDao"></bean>
 </beans>
 

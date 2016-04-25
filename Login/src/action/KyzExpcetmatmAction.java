@@ -470,17 +470,18 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 			if(isnull.equals("isNull")){//start if
 				//String fact=(String)ActionContext.getContext().getSession().get("factNo");
 				KyzExpectmatm temp=kyzSer.findById(kyz.getId().getFactNo(), kyz.getId().getBillNo());
+				KyVisabillm vbm=visabillmSer.findById(kyz.getId().getFactNo(), kyz.getVisaType(), kyz.getId().getBillNo());							
+				String emailUrl_in="http://203.85.73.161/Login/vbm_findById_email?visaSort="+kyz.getVisaType()+"&billNo="+kyz.getId().getBillNo()
+				         +"&factNo="+kyz.getId().getFactNo()+"&email="+vbm.getSignerNext();
+				String emailUrl_in2="http://203.85.73.161/Login/vbm_findById_email2?visaSort="+kyz.getVisaType()+"&billNo="+kyz.getId().getBillNo()
+				         +"&factNo="+kyz.getId().getFactNo()+"&email="+vbm.getSignerNext();	
 				if(temp==null){//if
 					kyz.setVisaTypeM(kyz.getVisaType().substring(0,2));
 					kyzSer.add(kyz);							
 					result="add";
 					ajaxResult="0";
 					
-					KyVisabillm vbm=visabillmSer.findById(kyz.getId().getFactNo(), kyz.getVisaType(), kyz.getId().getBillNo());							
-					String emailUrl_in="http://203.85.73.161/Login/vbm_findById_email?visaSort="+kyz.getVisaType()+"&billNo="+kyz.getId().getBillNo()
-					         +"&factNo="+kyz.getId().getFactNo()+"&email="+vbm.getSignerNext();
-					String emailUrl_in2="http://203.85.73.161/Login/vbm_findById_email2?visaSort="+kyz.getVisaType()+"&billNo="+kyz.getId().getBillNo()
-					         +"&factNo="+kyz.getId().getFactNo()+"&email="+vbm.getSignerNext();							
+											
 					/**
 					 * 發送郵件
 					 */														
@@ -513,11 +514,12 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 				 /**
 			       * 发送给备签人  20150817
 			       */
-				KyVisabillm vbm=visabillmSer.findById(kyz.getId().getFactNo(), kyz.getVisaType(), kyz.getId().getBillNo());	
+				
+				/*KyVisabillm vbm=visabillmSer.findById(kyz.getId().getFactNo(), kyz.getVisaType(), kyz.getId().getBillNo());	
 				String emailUrl_in="http://203.85.73.161/Login/vbm_findById_email?visaSort="+kyz.getVisaType()+"& billNo="+kyz.getId().getBillNo()
 				         +"& factNo="+kyz.getId().getFactNo()+"& email="+vbm.getSignerNext();
 				String emailUrl_in2="http://203.85.73.161/Login/vbm_findById_email2?visaSort="+kyz.getVisaType()+"& billNo="+kyz.getId().getBillNo()
-				         +"& factNo="+kyz.getId().getFactNo()+"& email="+vbm.getSignerNext();
+				         +"& factNo="+kyz.getId().getFactNo()+"& email="+vbm.getSignerNext();*/
 				 /******************20151113备签人请使用方法findByFactNoAEmailPwd2(String factNo,String email)**********************/			     
 			      
 			      List<String>list_emailPwd=webuseremailSer.findByFactNoAEmailPwd2(kyz.getId().getFactNo(),vbm.getSignerNext());
@@ -531,7 +533,7 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 					    		  "<br/>點擊單號直接審核:<a href='"+emailUrl_in2+"'>"+vbm.getId().getBillNo()+"</a>(電腦適用)"+
 					    		  "<br/>點擊單號直接審核:<a href='"+emailUrl_in+"'>"+vbm.getId().getBillNo()+"</a>(手機平板適用)"+			    		  	
 							      "<hr/>"+
-					    		 result+"如需查詢以往單據請登錄加久網站:(云端)<a href='http://203.85.73.161/Login'>http://203.85.73.161/Login</a>" +			      		
+					    		 "如需查詢以往單據請登錄加久網站:(云端)<a href='http://203.85.73.161/Login'>http://203.85.73.161/Login</a>" +			      		
 					      		"<br/>進入[KPI數據]--[函文審核]中查找對應單號審核,"+	      		    		
 					    		"<hr/>"+
 					      		"<br/>本郵件自動發送,請勿回復!如需回復或者問題，請回复到kyinfo.lp@yydg.com.cn劉平!<br/>"+
@@ -586,11 +588,11 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 		if(result==null){
 			response.setContentType("text/html;charset=utf-8");
 			response.getWriter()
-			.print("<script>alert('數據庫已存在("
+			.print("<script>window.parent.alert('數據庫已存在("
 					+ kyz.getId().getFactNo()					
 					+ " "
 					+ kyz.getId().getBillNo()
-					+ ")!');history.back()</script>");
+					+ ")!')</script>");
 		}				
 	}
 	

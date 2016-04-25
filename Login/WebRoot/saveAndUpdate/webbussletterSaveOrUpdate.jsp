@@ -337,7 +337,7 @@ function checkWebbussType(fact){
 					<tr>
 					    <td >出差計劃</td>	
 						<td  colspan="10">
-				           <textarea style="width:778px;height:200px" name="bussletter.planList" autofocus="autofocus" wrap="hard" wrap="physical"  tip="申請內容" altercss="gray" class="gray" datatype="*"><s:property value="bussletter.planList"/></textarea>				                                           				         				           				           				           
+				           <textarea style="width:778px;height:200px" name="bussletter.planList"  wrap="off"  tip="申請內容" altercss="gray" class="gray" datatype="*"><s:property value="bussletter.planList"/></textarea>				                                           				         				           				           				           
 				        </td>						
 					</tr>
 					 <tr>			    				    

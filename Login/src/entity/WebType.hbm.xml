@@ -52,5 +52,12 @@
            </key>
            <one-to-many class="entity.KyzVisaflow"/>
         </bag>
+        <bag name="list_webrel" inverse="true" cascade="all">
+           <key>
+             <column name="FACT_NO" length="10"/>
+             <column name="VISA_TYPE_M" length="5"/>
+           </key>
+           <one-to-many class="entity.Webremittancelist"/>
+        </bag>
     </class>
 </hibernate-mapping>

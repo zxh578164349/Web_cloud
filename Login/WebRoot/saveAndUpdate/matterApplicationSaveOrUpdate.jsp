@@ -301,7 +301,7 @@ function getKyType2(factno){
   var i=0;	
   function addFile(){
       i++;
-      if(i<5){
+      if(i<15){
       var divfile=document.getElementById("divfile");
       var inputfile=document.createElement("input");
       var aEle=document.createElement("a");
@@ -316,8 +316,8 @@ function getKyType2(factno){
          if(parentnode){
             parentnode.removeChild(aEle);
             parentnode.removeChild(inputfile);
-            if(i>4){
-               i=4;
+            if(i>14){
+               i=14;
             }
             i--;
          }
@@ -325,7 +325,7 @@ function getKyType2(factno){
       divfile.appendChild(inputfile);
       divfile.appendChild(aEle);  
       }else{
-         alert("附檔不能超過5個!");
+         alert("附檔不能超過15個!");
       }               
   }
   
@@ -593,7 +593,7 @@ jq(function(){
 					<tr>
 					    <td class="tdcolor">申請內容</td>	
 						<td  colspan="10">
-				           <textarea style="width:100%;height:120px" name="kyz.memoMk" autofocus="autofocus" wrap="hard" wrap="physical"  tip="申請內容" altercss="gray" class="gray"><s:property value="kyz.memoMk"/></textarea>				                                           				         
+				           <textarea style="width:100%;height:120px" name="kyz.memoMk"  wrap="off"   tip="申請內容" altercss="gray" class="gray"><s:property value="kyz.memoMk"/></textarea>				                                           				         
 				           <input type="hidden" name="kyz.username" value="<s:property value='#session.loginUser.username'/>"/>
 				           
 				           <input type="hidden" value="<s:property value='kyz.filesYn'/>" name="kyz.filesYn"/>

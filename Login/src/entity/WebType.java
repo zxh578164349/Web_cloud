@@ -18,6 +18,7 @@ public class WebType implements java.io.Serializable {
 	private List<KyzContactletter>list_letter;
 	private List<WebBussinessletter>list_buss;
 	private List<KyzVisaflow>list_visaflow;
+	private List<Webremittancelist>list_webrel;
 	
 
 	// Constructors
@@ -104,6 +105,15 @@ public class WebType implements java.io.Serializable {
 		this.list_visaflow = list_visaflow;
 	}
 
+	public List<Webremittancelist> getList_webrel() {
+		return list_webrel;
+	}
+
+	public void setList_webrel(List<Webremittancelist> list_webrel) {
+		this.list_webrel = list_webrel;
+	}
+
+	
 	
 
 	

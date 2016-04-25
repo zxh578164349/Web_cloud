@@ -206,7 +206,9 @@
 				<value>entity/VKpifactNew.hbm.xml</value>
 				<value>entity/VKpifactEveNew.hbm.xml</value>
 				<value>entity/VWebuseless.hbm.xml</value>
-				<value>entity/VWebbussortFcode.hbm.xml</value></list>
+				<value>entity/VWebbussortFcode.hbm.xml</value>
+				<value>entity/Webremittancelists.hbm.xml</value>
+				<value>entity/Webremittancelist.hbm.xml</value></list>
 		</property>
 	</bean>
 		

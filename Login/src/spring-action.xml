@@ -77,6 +77,7 @@
 	<bean id="webydatanoinputAction" class="action.WebydataNoinputAction" scope="prototype"/>
 	<bean id="vkpifactnewAction" class="action.VkpifactnewAction" scope="prototype"/>
 	<bean id="vwebuselessAction" class="action.VWebuselessAction" scope="prototype"/>
+	<bean id="webremitAction" class="action.WebremittancelistAction" scope="prototype"/>
 </beans> 
 
  

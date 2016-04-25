@@ -31,7 +31,7 @@ public class KyVisabillm implements java.io.Serializable {
 	private WebBussinessletter webbussletter;
 	private KyzExpectmatm kyzexp;
 	private KyzContactletter kyzletter;
-	
+	private Webremittancelist webrel;
 
 	// Constructors
 
@@ -213,6 +213,15 @@ public class KyVisabillm implements java.io.Serializable {
 		this.kyzletter = kyzletter;
 	}
 
+	public Webremittancelist getWebrel() {
+		return webrel;
+	}
+
+	public void setWebrel(Webremittancelist webrel) {
+		this.webrel = webrel;
+	}
+
+	
 	
 	
 	
