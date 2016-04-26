@@ -61,7 +61,8 @@
 				<td>${25*(bean.currentPage-1)+x.index+1}</td>
 				<td><s:property value="factNo" /></td>
 				<td><s:property value="factCode" /></td>
-				<td><s:property value="billNo" /></td>
+				<td><s:property value="yymm"/></td>
+				<td><s:property value="billNo" /></td>				
 				<td><s:property value="webtype.typeName"/></td>
 				<td><s:property value="fromAccount"/></td>				
 				<td><s:property value="fromBank" /></td>

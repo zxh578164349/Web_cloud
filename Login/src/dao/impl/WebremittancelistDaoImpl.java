@@ -95,6 +95,9 @@ public class WebremittancelistDaoImpl extends Basedao implements IWebremittancel
 		}
 		int offset=PageBean.countOffset(pageSize, currentPage);
 		List<Webremittancelist>list=super.queryForPage(hql.toString(), offset, pageSize, map);
+		for(Webremittancelist obj :list){
+			obj.getWebtype().getTypeName();
+		}
 		PageBean bean=new PageBean();
 		bean.setAllRow(allrow);
 		bean.setCurrentPage(currentPage);

@@ -58,13 +58,12 @@ jq(function() {
 				
 function makeBillNo() {       
 		var factno = jq("#dwrFactNo").val();
-		var createdate=jq("#createdate").val();
-		var billnos = document.getElementById("webremit_billno");
-		if (factno != "" && createdate != "") {
+		var web_yymm=jq("#web_yymm").val();
+		if (factno != "" && web_yymm != "") {
 			jq.ajax({
 				type:"POST",
 				dataType:"json",
-				data:"factNo="+factno+"&yymm="+createdate,
+				data:"factNo="+factno+"&yymm="+web_yymm,
 				url:"webremit_makeBillNo",
 				success:function(data){
 					jq("#webremit_billno").val(data);
@@ -268,7 +267,7 @@ function gook(){
 <script type="text/javascript">
 jq(function(){
 	if(jq("[name='saveOrUpdate']").val()=="save"){
-		getKyType();makeBillNo();
+		getKyType();
 	}	
 });
 </script>
@@ -284,7 +283,7 @@ jq(function(){
 					    <s:if test="#session.factNo!='tw'">
 						<td class="tdcolor">廠別</td>
 						<td ><input type="text" style="color:blue"
-							name="webremit.id.factNo" value="${factNo}" readonly id="dwrFactNo" />							
+							name="webremit.webtype.id.factNo" value="${factNo}" readonly id="dwrFactNo" />							
 						</td>
 						
 						<td class="tdcolor">廠別狀態</td>
@@ -299,7 +298,7 @@ jq(function(){
 						<s:else>
 						  <td class="tdcolor">廠別</td>
 						<td ><select style="color:blue"
-							name="webremit.id.factNo" datatype="*" id="dwrFactNo"
+							name="webremit.factNo" datatype="*" id="dwrFactNo"
 							onchange="getFactArea(this.value),makeBillNo(),getKyType2(this.value)">
 								<option value="">請選擇廠別</option>
 								<s:iterator value="#session.facts" id="temp">
@@ -316,7 +315,7 @@ jq(function(){
 						</s:else>
 						<td class="tdcolor">日期</td>
 				        <td >
-				        <input type="text" name="webremit.yymm" datatype="*" onclick="WdatePicker({dateFmt:'yyyyMM'})" class="Wdate"/> 
+				        <input type="text" name="webremit.yymm" datatype="*" onclick="WdatePicker({dateFmt:'yyyyMM'})" onblur="makeBillNo()" class="Wdate" id="web_yymm"/> 
 				        <input type="hidden" name="saveOrUpdate" value="save"/><!--判斷變量 -->				        			        
 				        <input type="hidden" name="webremit.createdate"  value="<%=str_date%>" id="createdate"/>
 				        
@@ -335,7 +334,7 @@ jq(function(){
 				     
 				      <td class="tdcolor">日期</td>
 				      <td>
-				       <input type="webremit.yymm" value="<s:property value='webremit.yymm'/>"/>
+				       <input type="webremit.yymm" value="<s:property value='webremit.yymm'/>" />
 				       <input type="hidden" name="saveOrUpdate" value="update"/><!--判斷變量 -->			      
 				       <input type="hidden" name="webremit.createdate" value="<s:property value='webremit.createdate'/>"/>
 				       <input type="hidden" name="webremit.udDate" value="<%=str_date%>" id="createdate"/>				       

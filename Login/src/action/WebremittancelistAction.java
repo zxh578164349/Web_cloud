@@ -129,11 +129,11 @@ public class WebremittancelistAction extends ActionSupport implements ServletRes
 			if(saveOrUpdate.equals("save")){
 				webremiSer.add(webremit);
 					ajaxResult="0";				
-					KyVisabillm vbm=visabillmSer.findById(webremit.getFactNo(), webremit.getVisaType(), webremit.getBillNo());							
+					KyVisabillm vbm=visabillmSer.findById(webremit.getWebtype().getId().getFactNo(), webremit.getVisaType(), webremit.getBillNo());							
 					String emailUrl_in="http://203.85.73.161/Login/vbm_findById_email?visaSort="+webremit.getVisaType()+"&billNo="+webremit.getBillNo()
 					         +"&factNo="+webremit.getFactNo()+"&email="+vbm.getSignerNext();
 					String emailUrl_in2="http://203.85.73.161/Login/vbm_findById_email2?visaSort="+webremit.getVisaType()+"&billNo="+webremit.getBillNo()
-					         +"&factNo="+webremit.getFactNo()+"&email="+vbm.getSignerNext();							
+					         +"&factNo="+webremit.getWebtype().getId().getFactNo()+"&email="+vbm.getSignerNext();							
 					/**
 					 * 發送郵件
 					 */														
@@ -217,9 +217,9 @@ public class WebremittancelistAction extends ActionSupport implements ServletRes
 			result.append(maxbillno.subSequence(0, maxbillno.length()-2));
 			int number=Integer.parseInt(maxbillno.substring(maxbillno.length()-2, maxbillno.length()));	
 			if(number<9){
-				result.append("0"+number);
+				result.append("0"+(number+1));
 			}else{
-				result.append(number);
+				result.append(number+1);
 			}
 		}
 		ajaxResult=result.toString();

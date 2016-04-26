@@ -10,7 +10,7 @@
             <column name="BILL_NO" length="20" />
             <generator class="assigned" />
         </id>
-        <property name="factNo" type="java.lang.String">
+        <property name="factNo" type="java.lang.String" insert="false" update="false">
             <column name="FACT_NO" length="10" />
         </property>
         <property name="factCode" type="java.lang.String">
@@ -47,7 +47,7 @@
             <one-to-many class="entity.Webremittancelists" />
         </bag>
         <one-to-one name="vbm" class="entity.KyVisabillm" property-ref="webrel" cascade="all" />
-        <many-to-one name="webtype" class="entity.WebType" insert="false" update="false">
+        <many-to-one name="webtype" class="entity.WebType" >
              <column name="FACT_NO" length="20" />
              <column name="VISA_TYPE_M" length="5" />
         </many-to-one>

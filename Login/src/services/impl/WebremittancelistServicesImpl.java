@@ -36,6 +36,7 @@ public class WebremittancelistServicesImpl implements IWebremittancelistServices
 
 	public void add(Webremittancelist obj) {
 		// TODO Auto-generated method stub
+		webremitdao.add(obj);
 		
 	}
 
