@@ -163,6 +163,15 @@ public class Webremittancelist implements java.io.Serializable {
 	public void setVbm(KyVisabillm vbm) {
 		this.vbm = vbm;
 	}
+
+	public WebType getWebtype() {
+		return webtype;
+	}
+
+	public void setWebtype(WebType webtype) {
+		this.webtype = webtype;
+	}
+	
 	
 
 	

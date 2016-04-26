@@ -10,8 +10,8 @@ public class WebMenuDaoImpl extends Basedao implements IWebMenuDao {
 
 	public List findAllMenu() {
 		// TODO Auto-generated method stub
-		//String hql = "from WebMenu order by menuid";
-		String hql = "from WebMenu where enableMk='Y' order by menuid";
+		String hql = "from WebMenu order by menuid";
+		//String hql = "from WebMenu where enableMk='Y' order by menuid";
 		List<WebMenu>list=super.findAll(hql, null);
 		for(WebMenu menu:list){
 			menu.getSubmenus().size();

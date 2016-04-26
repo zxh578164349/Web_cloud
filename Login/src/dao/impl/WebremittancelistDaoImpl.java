@@ -68,7 +68,7 @@ public class WebremittancelistDaoImpl extends Basedao implements IWebremittancel
 		StringBuffer hql2=new StringBuffer();
 		Map<String,Object>map=new HashMap<String,Object>();
 		hql.append("from Webremittancelist where 1=1 ");
-		hql.append("select count(*) ");
+		hql2.append("select count(*) ");
 		if(visaTypem!=null&&!visaTypem.equals("")){
 			hql.append(" and webtype.id.typeNo=:typeno");
 			map.put("typeno",visaTypem);
@@ -116,6 +116,22 @@ public class WebremittancelistDaoImpl extends Basedao implements IWebremittancel
 		Query query=getSession().createQuery(hql);
 		query.setString(0, billNo);
 		return (Webremittancelist)query.uniqueResult();
+	}
+
+	/**
+	 * 日期:2016/4/26
+	 * 描述:
+	 */
+	
+	
+	public String findMaxBillNo(String factNo, String yymm) {
+		// TODO Auto-generated method stub
+		String hql="select max(billNo) from Webremittancelist where factNo=? and yymm=?";
+		Query query=getSession().createQuery(hql);
+		query.setString(0, factNo);
+		query.setString(1, yymm);
+		String result=(String)query.uniqueResult();
+		return result;
 	}
 
 }

@@ -73,4 +73,15 @@ public class WebremittancelistServicesImpl implements IWebremittancelistServices
 		return webremitdao.findPageBean(pageSize, page, visaTypem, factNo, billNo);
 	}
 
+	/**
+	 * 日期:2016/4/26
+	 * 描述:
+	 */
+	
+	
+	public String findMaxBillNo(String factNo, String yymm) {
+		// TODO Auto-generated method stub
+		return webremitdao.findMaxBillNo(factNo, yymm);
+	}
+
 }

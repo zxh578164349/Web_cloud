@@ -497,7 +497,7 @@ jq(function(){
 						</select></td>
 						
 						<td class="tdcolor">建立日期</td>
-				        <td ><input type="text" name="yymmdd" id="kyz_timecreate"  readonly  value="<%=str_date%>" style="color:blue">
+				        <td ><input type="text" name="yymmdd" id="kyz_timecreate"  readonly  value="<%=str_date%>" style="color:blue"></td>
 					</tr>
 					</s:if>																							    
 				   </s:if>

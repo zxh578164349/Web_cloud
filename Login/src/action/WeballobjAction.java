@@ -362,7 +362,7 @@ public class WeballobjAction  extends ActionSupport implements ServletResponseAw
 	public String findPageBean3(){
 		factNo=(String)ActionContext.getContext().getSession().get("public_factno");
 		yymm=(String)ActionContext.getContext().getSession().get("public_yymm");
-		yymm2=(String)ActionContext.getContext().getSession().put("public_yymm2", yymm2);
+		yymm2=(String)ActionContext.getContext().getSession().get("public_yymm2");
 		bean=weballobjser.findPageBean(25, page, factNo, yymm, yymm2);
 		return "beanList1";
 	}

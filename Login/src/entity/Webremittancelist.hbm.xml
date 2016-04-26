@@ -46,10 +46,10 @@
             </key>
             <one-to-many class="entity.Webremittancelists" />
         </bag>
-        <one-to-one name="vbm" class="entity.KyVisabillm" property-ref=webrel cascade="all" />
-        <many-to-one name="webtype" class="entity.WebType">
+        <one-to-one name="vbm" class="entity.KyVisabillm" property-ref="webrel" cascade="all" />
+        <many-to-one name="webtype" class="entity.WebType" insert="false" update="false">
              <column name="FACT_NO" length="20" />
-             <column name="TYPE_NO" length="4" />
+             <column name="VISA_TYPE_M" length="5" />
         </many-to-one>
     </class>
 </hibernate-mapping>

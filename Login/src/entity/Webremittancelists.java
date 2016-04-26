@@ -19,6 +19,7 @@ public class Webremittancelists implements java.io.Serializable {
 	private String reDate;
 	private String udUsername;
 	private String udDate;
+	private String Manufacturers;//廠商
 
 	// Constructors
 
@@ -138,5 +139,14 @@ public class Webremittancelists implements java.io.Serializable {
 	public void setUdDate(String udDate) {
 		this.udDate = udDate;
 	}
+
+	public String getManufacturers() {
+		return Manufacturers;
+	}
+
+	public void setManufacturers(String manufacturers) {
+		Manufacturers = manufacturers;
+	}
+	
 
 }

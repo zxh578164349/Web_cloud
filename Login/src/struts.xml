@@ -806,6 +806,13 @@
 		<action name="vwebuseless_*" class="vwebuselessAction" method="{1}">
 		   
 		</action>
+		<action name="webremit_*" class="webremitAction" method="{1}">
+		    <result name="beanList">page/webremittancelist.jsp</result>
+		    <result name="beanList1">page/table1/webremittancelist1.jsp</result>
+		    <result name="makeBillNo" type="json">
+		       <param name="root">ajaxResult</param>
+		    </result>
+		</action>
 	</package>
 
 </struts>

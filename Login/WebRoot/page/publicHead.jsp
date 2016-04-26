@@ -54,7 +54,7 @@ jq(document).keyup(function(event){
 					</div>
 				</s:else></td>
 			<td><input type="text" id="year" name="yymm" 
-				onClick="WdatePicker({dataFmt:'yyyyMM'})" readonly="readonly" class="Wdate"/></td>
+				onClick="WdatePicker({dateFmt:'yyyyMM'})" readonly="readonly" class="Wdate"/></td>
 			<td>
 			 <input value="搜索" type="submit" class="btn btn-primary" onclick="javascript:submis()" />	
 			</td>

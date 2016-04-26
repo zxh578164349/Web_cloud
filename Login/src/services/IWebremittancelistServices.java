@@ -24,5 +24,6 @@ public interface IWebremittancelistServices {
 	public Webremittancelist findById(String billNo);
 	public void delete(String billNo);
 	public PageBean findPageBean(int pageSize,int page,String visaTypem,String factNo,String billNo);
+	public String findMaxBillNo(String factNo,String yymm);
 
 }
