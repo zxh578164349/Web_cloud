@@ -16,7 +16,7 @@ public class KyzExpectmatmFileDaoImpl extends Basedao implements IKyzExpectmatmF
 
 	public List<KyzExpectmatmFile> findByBillNo(String billNo) {
 		// TODO Auto-generated method stub
-		String hql="from KyzExpectmatmFile where billno=?";
+		String hql="from KyzExpectmatmFile where billno=? order by id";
 		String[]objs={billNo};
 		return super.findAll(hql, objs);
 	}

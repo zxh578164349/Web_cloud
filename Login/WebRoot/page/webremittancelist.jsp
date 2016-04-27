@@ -26,7 +26,7 @@
 		jq.ajax({
 			type : "POST",
 			dataType : "Html",
-			url : "kyz_findPageBean3",
+			url : "webremit_findPageBean3",
 			data : "page=" + page,
 			success : function(msg) {
 				jq("#bodyid").html(msg);
@@ -47,7 +47,7 @@
 		jq.ajax({
 			type : "POST",
 			dataType : "Html",
-			url : "kyz_findPageBean2",
+			url : "webremit_findPageBean2",
 			data : "factNo=" + fact.value + "& visaSort=" + visasort.value+"& billNo="+billno.value+"& yymmdd="+yymmdd.value+"& yymmdd2="+yymmdd2.value,
 			success : function(msg) {
 				jq("#bodyid").html(msg);
@@ -66,7 +66,7 @@
 				jq.ajax({
 				  type:"POST",
 				  dataType:"Html", 
-				  url:"kyz_delete",
+				  url:"webremit_delete",
 				  data:jq('#'+mid).serialize(),
 				  success : function(msg) {
 				  jq("#bodyid").html(msg);

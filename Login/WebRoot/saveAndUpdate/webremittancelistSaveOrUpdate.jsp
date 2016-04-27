@@ -23,7 +23,6 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 <meta http-equiv="expires" content="0">
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
-<link href="css/validate.css" rel="stylesheet" type="text/css" />
 <link rel="stylesheet" type="text/css" href="css/form.css" />
 <link rel="stylesheet" type="text/css" href="css/select_beautiful.css">
 <script type="text/javascript" src="jquery/jquery-form.js"></script>
@@ -109,8 +108,8 @@ var j=0;
         newTd5.innerHTML='<input type="text" name="webremit.webremittancelistses['+j+'].cost" value="" size="15"/>';
         newTd6.innerHTML='<input type="text" name="webremit.webremittancelistses['+j+'].acAmount" value="" size="15"/>';    
         newTd7.innerHTML='<input type="text" name="webremit.webremittancelistses['+j+'].remark" value="" size="15"/>'+   
-        '<input type="text" name="webremit.webremittancelistses['+j+'].id.webremittancelist.billNo" value="'+billno+'"/>'+
-        '<input type="text" name="webremit.webremittancelistses['+j+'].id.itemNo" value="'+j+'"/>';     
+        '<input type="hidden" name="webremit.webremittancelistses['+j+'].id.webremittancelist.billNo" value="'+billno+'"/>'+
+        '<input type="hidden" name="webremit.webremittancelistses['+j+'].id.itemNo" value="'+j+'"/>';     
         }
         
 	}
@@ -354,14 +353,16 @@ jq(function(){
 				        </s:else>				      
 				      </td>
 				        	        
-				       <td class="tdcolor">申請者</td>
+				       <td class="tdcolor">申請人</td>
 						<td >
 						<s:if test="webremit==null">					   
-						   <input type="text" name="webremit.username" datatype="*"  value="<s:property value='#session.loginUser.name'/>" style="color:blue" readonly/>
+						   <input type="text" name="webremit.username"   value="<s:property value='#session.loginUser.name'/>" style="color:blue" readonly/>
+						   <input type="hidden" name="webremit.username2"   value="<s:property value='#session.loginUser.username'/>" />
 						</s:if>
 						<s:else>
-						   <input type="text" name="webremit.username" datatype="*"  value="<s:property value='webremit.username'/>" style="color:blue" readonly/>
-						</s:else>
+						   <input type="text" name="webremit.username"   value="<s:property value='webremit.username'/>" style="color:blue" readonly/>
+						   <input type="hidden" name="webremit.username2"   value="<s:property value='webremit.username2'/>" />
+						</s:else>						
 						</td>
 						
 						<td class="tdcolor">類別</td>
@@ -439,8 +440,8 @@ jq(function(){
 			     <td ><input type="text" name="webremit.webremittancelistses[0].acAmount"   size="15"/></td>
 			     <td>
 			     <input type="text" name="webremit.webremittancelistses[0].remark"   size="15"/>
-			     <input type="text" name="webremit.webremittancelistses[0].id.webremittancelist.billNo" value="" id="webremits_billno"/>
-			     <input type="text" name="webremit.webremittancelistses[0].id.itemNo" value="0"/>
+			     <input type="hidden" name="webremit.webremittancelistses[0].id.webremittancelist.billNo" value="" id="webremits_billno"/>
+			     <input type="hidden" name="webremit.webremittancelistses[0].id.itemNo" value="0"/>
 			     </td>			      		      		      
 			  </tr>		
 			 </s:if>

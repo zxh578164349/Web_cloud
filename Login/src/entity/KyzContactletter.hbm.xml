@@ -59,6 +59,9 @@
         <property name="visaTypeM" type="java.lang.String">
             <column name="VISA_TYPE_M" length="2"/>
         </property>
+        <property name="userAccount" type="java.lang.String">
+            <column name="USER_ACCOUNT" length="50"/>
+        </property>
         <bag name="list_file" inverse="true" cascade="all">
             <key>
                <column name="FACT_NO"/>

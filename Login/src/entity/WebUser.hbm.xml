@@ -52,6 +52,9 @@
         <property name="post" type="java.lang.String">
             <column name="POST" length="30"></column>
         </property>
+        <property name="adminMk" type="java.lang.String">
+            <column name="ADMIN_MK" length="2"></column>
+        </property>
         <bag name="webJurisdictions" cascade="delete" inverse="true" >
             <key>
                 <column name="USERID" precision="8" scale="0" not-null="true" />

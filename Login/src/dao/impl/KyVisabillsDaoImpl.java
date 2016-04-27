@@ -92,7 +92,7 @@ public class KyVisabillsDaoImpl extends Basedao implements IKyVisaBillsDao{
 		}*/
 		
 		//hql.append(" and flowMk='Y'");
-		hql.append(" and substr(id.kyVisabillm.id.billNo,0,2) in ('CM','EM','BM')");
+		//hql.append(" and substr(id.kyVisabillm.id.billNo,0,2) in ('CM','EM','BM')");
 		hql.append(" and id.kyVisabillm.delMk is null ");
 		hql2.append(hql);
 		hql.append(" order by id.kyVisabillm.id.factNo desc,id.kyVisabillm.dateCreate desc");
@@ -257,7 +257,7 @@ public class KyVisabillsDaoImpl extends Basedao implements IKyVisaBillsDao{
 			}			
 		}
 		
-		hql.append(" and substr(id.kyVisabillm.id.billNo,0,2) in ('CM','EM','BM')");
+		//hql.append(" and substr(id.kyVisabillm.id.billNo,0,2) in ('CM','EM','BM')");
 		hql.append(" and id.kyVisabillm.delMk is null ");
 		hql2.append(hql);
 		hql.append(" order by id.kyVisabillm.id.factNo desc,id.kyVisabillm.dateCreate desc");
@@ -306,7 +306,7 @@ public class KyVisabillsDaoImpl extends Basedao implements IKyVisaBillsDao{
 		hql.append(" and lower(visaSigner)=:visaSigner");
 		map.put("visaSigner", email.toLowerCase());
 		hql.append(" and id.itemNo=id.kyVisabillm.itemNext and visaMk='N'") ;
-		hql.append(" and substr(id.kyVisabillm.id.billNo,0,2) in ('CM','EM','BM')");
+		//hql.append(" and substr(id.kyVisabillm.id.billNo,0,2) in ('CM','EM','BM')");
 		hql.append(" and id.kyVisabillm.delMk is null ");
 		int result=super.getAllRowCount(hql.toString(), map);
 		return result;

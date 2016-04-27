@@ -53,6 +53,9 @@ function getSrc(billNo){
 	if(billNo.substring(0,2)=="BM"){
 		src="bussletter_findById_layer";
 	}
+	if(billNo.substring(0,2)=="RM"){
+		src="webremit_findById_layer";
+	}
 	return src;
 }
 function showDiv(billNo,factNo){

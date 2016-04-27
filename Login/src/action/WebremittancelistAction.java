@@ -5,6 +5,7 @@ package action;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -15,6 +16,7 @@ import mail.SimpleMailSender;
 import services.IKyVisabillmServices;
 import services.IWebremittancelistServices;
 import services.IWebuserEmailServices;
+import util.JasperHelper;
 import util.PageBean;
 
 import com.opensymphony.xwork2.ActionContext;
@@ -22,6 +24,8 @@ import com.opensymphony.xwork2.ActionSupport;
 
 import entity.KyVisabillm;
 import entity.KyzExpectmatm;
+import entity.WebBussinessletter;
+import entity.WebUser;
 import entity.Webremittancelist;
 
 /**   
@@ -41,18 +45,39 @@ public class WebremittancelistAction extends ActionSupport implements ServletRes
 	private Webremittancelist webremit;
 	private String factNo;
 	private String billNo;
-	private String visaTypem;
+	private String visaSort;
 	private int page;
 	private String saveOrUpdate;
 	private String ajaxResult;
 	private String yymm;
 	private PageBean bean;
+	private String readMk;//備註標記
+	private String itemNo;
+	private String lookordown;
 	private IWebremittancelistServices webremiSer;
 	private IKyVisabillmServices visabillmSer;
 	private IWebuserEmailServices webuseremailSer;
 	private javax.servlet.http.HttpServletResponse response;
 	
 	
+	public String getLookordown() {
+		return lookordown;
+	}
+	public void setLookordown(String lookordown) {
+		this.lookordown = lookordown;
+	}
+	public String getItemNo() {
+		return itemNo;
+	}
+	public void setItemNo(String itemNo) {
+		this.itemNo = itemNo;
+	}
+	public String getReadMk() {
+		return readMk;
+	}
+	public void setReadMk(String readMk) {
+		this.readMk = readMk;
+	}
 	public PageBean getBean() {
 		return bean;
 	}
@@ -83,11 +108,12 @@ public class WebremittancelistAction extends ActionSupport implements ServletRes
 	public void setBillNo(String billNo) {
 		this.billNo = billNo;
 	}
-	public String getVisaTypem() {
-		return visaTypem;
+	
+	public String getVisaSort() {
+		return visaSort;
 	}
-	public void setVisaTypem(String visaTypem) {
-		this.visaTypem = visaTypem;
+	public void setVisaSort(String visaSort) {
+		this.visaSort = visaSort;
 	}
 	public int getPage() {
 		return page;
@@ -233,7 +259,8 @@ public class WebremittancelistAction extends ActionSupport implements ServletRes
 		ActionContext.getContext().getSession().remove("public_billNo");
 		factNo=(String)ActionContext.getContext().getSession().get("factNo");
 		ActionContext.getContext().getSession().put("public_factno", factNo);
-		bean=webremiSer.findPageBean(25, page, visaTypem, factNo, billNo);
+		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
+		bean=webremiSer.findPageBean(25, page, visaSort, factNo, billNo,user);
 		return "beanList";
 	}
 	public String findPageBean2(){
@@ -241,22 +268,47 @@ public class WebremittancelistAction extends ActionSupport implements ServletRes
 		if(factNo==null||factNo.equals("")){
 			factNo=(String)ActionContext.getContext().getSession().get("factNo");
 		}
-		ActionContext.getContext().getSession().put("public_visaTypem", visaTypem);
+		ActionContext.getContext().getSession().put("public_visaTypem", visaSort);
 		ActionContext.getContext().getSession().put("public_billNo", billNo);
 		ActionContext.getContext().getSession().put("public_factno", factNo);
-		bean=webremiSer.findPageBean(25, page, visaTypem, factNo, billNo);
+		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
+		bean=webremiSer.findPageBean(25, page, visaSort, factNo, billNo,user);
 		return "beanList1";
 	}
 	public String findPageBean3(){
 		factNo=(String)ActionContext.getContext().getSession().get("public_visaTypem");
-		visaTypem=(String)ActionContext.getContext().getSession().get("public_billNo");
+		visaSort=(String)ActionContext.getContext().getSession().get("public_billNo");
 		billNo=(String)ActionContext.getContext().getSession().get("public_factno");
-		bean=webremiSer.findPageBean(25, page, visaTypem, factNo, billNo);
+		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
+		bean=webremiSer.findPageBean(25, page, visaSort, factNo, billNo,user);
 		return "beanList1";
 		
 	}
+	public String findById(){
+		webremit=webremiSer.findById(billNo);
+		return "findById";
+	}
+	public String findById_layer(){
+		this.findById();
+		return "findById_layer";
+	}
 	
-	
+	public void print(String factNo,String billNo,String visaSort) throws IOException{				
+		Map<String,Object>map_result=webremiSer.print(factNo, billNo, visaSort,null);
+		if(map_result!=null&&map_result.size()>0){
+			Map<String,Object>map=(Map<String,Object>)map_result.get("map");
+			List<Webremittancelist>list=(List<Webremittancelist>)map_result.get("list");
+			if(lookordown!=null){
+				if(lookordown.equals("look")){
+					JasperHelper.exportmain("line", map,"webremittancelist.jasper", list,billNo, "jasper/audit/");
+				}else{
+					JasperHelper.exportmain("pdf", map,"webremittancelist.jasper", list,billNo, "jasper/audit/");
+				}
+			}else{
+				JasperHelper.exportmain("pdf", map,"webremittancelist.jasper", list,billNo, "jasper/audit/");
+			}
+		}										
+	}
 	
 	
 	

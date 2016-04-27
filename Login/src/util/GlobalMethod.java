@@ -298,11 +298,7 @@ public class GlobalMethod extends HibernateDaoSupport{
         System.out.println(frm.format(cal.getTime()));*/
         
         
-        List<String>list1=new ArrayList<String>();
-        list1.add("a");list1.add("b");list1.add("c");
-        List<String>list2=new ArrayList<String>();
-        list2.add("a");list2.add("b");
-        System.out.println(list1.containsAll(list2));
+        System.out.println("1");
        
        
 						

@@ -39,6 +39,9 @@
         </property>
         <property name="visaType" type="java.lang.String">
             <column name="VISA_TYPE" length="5"/>
+        </property>
+        <property name="username2" type="java.lang.String">
+            <column name="USERNAME2" length="50"/>
         </property>        
         <bag name="webremittancelistses" inverse="true" cascade="all">
             <key>

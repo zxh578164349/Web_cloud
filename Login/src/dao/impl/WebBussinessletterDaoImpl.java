@@ -13,6 +13,7 @@ import dao.Basedao;
 import dao.IWebBussinessletterDao;
 import entity.KyzExpectmatmLog;
 import entity.WebBussinessletter;
+import entity.WebUser;
 
 public class WebBussinessletterDaoImpl extends Basedao implements IWebBussinessletterDao{
 
@@ -22,7 +23,7 @@ public class WebBussinessletterDaoImpl extends Basedao implements IWebBussinessl
 		
 	}
 
-	public PageBean findPageBean(int pageSize, int page, String billNo,String factNo) {
+	public PageBean findPageBean(int pageSize, int page, String billNo,String factNo,WebUser user) {
 		// TODO Auto-generated method stub
 		StringBuffer hql=new StringBuffer();
 		StringBuffer hql2=new StringBuffer();
@@ -36,6 +37,11 @@ public class WebBussinessletterDaoImpl extends Basedao implements IWebBussinessl
 		if(factNo!=null&&!factNo.equals("")&&!factNo.equals("tw")){
 			hql.append(" and factNo=:factno");
 			map.put("factno", factNo);
+		}
+		String adminmk=user.getAdminMk()==null?"no":user.getAdminMk();
+		if(!adminmk.equals("Y")){
+			hql.append(" and userAccount=:useraccount");
+			map.put("useraccount", user.getUsername());
 		}
 		hql.append(" and delMk is null ");
 		hql2.append(hql);

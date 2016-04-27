@@ -23,7 +23,6 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 <meta http-equiv="expires" content="0">
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
-<link href="css/validate.css" rel="stylesheet" type="text/css" />
 <link rel="stylesheet" type="text/css" href="css/form.css" />
 <link rel="stylesheet" type="text/css" href="css/select_beautiful.css">
 <script type="text/javascript" src="jquery/jquery-form.js"></script>
@@ -530,9 +529,11 @@ jq(function(){
 						<td >
 						<s:if test="kyz==null">
 						   <input type="text" name="kyz.userNm" datatype="*"  value="<s:property value='#session.loginUser.name'/>" style="color:blue" readonly/>
+						   <input type="hidden" name="kyz.username" value="<s:property value='#session.loginUser.username'/>"/>
 						</s:if>
 						<s:else>
 						   <input type="text" name="kyz.userNm" datatype="*"  value="<s:property value='kyz.userNm'/>" style="color:blue" readonly/>
+						   <input type="hidden" name="kyz.username" value="<s:property value='kyz.username'/>"/>
 						</s:else>
 						</td>
 						
@@ -594,7 +595,7 @@ jq(function(){
 					    <td class="tdcolor">申請內容</td>	
 						<td  colspan="10">
 				           <textarea style="width:100%;height:120px" name="kyz.memoMk"  wrap="off"   tip="申請內容" altercss="gray" class="gray"><s:property value="kyz.memoMk"/></textarea>				                                           				         
-				           <input type="hidden" name="kyz.username" value="<s:property value='#session.loginUser.username'/>"/>
+				           
 				           
 				           <input type="hidden" value="<s:property value='kyz.filesYn'/>" name="kyz.filesYn"/>
 				        </td>

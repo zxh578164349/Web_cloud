@@ -42,5 +42,9 @@ select{
 	width:100px;
 	width:100px \9;
 }
+#webremits_body input[type=text]{
+	width:120px;
+	width:120px \9;
+}
 
 

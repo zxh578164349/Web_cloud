@@ -32,6 +32,7 @@ import entity.KyzExpectmatmId;
 import entity.KyzExpectmatmLog;
 import entity.KyzExpectmats;
 import entity.KyzVisaflow;
+import entity.WebUser;
 import entity_temp.VisabillsTemp;
 import services.IKyzExpectmatmServices;
 import util.PageBean;
@@ -126,9 +127,9 @@ public class KyzExpectmatmServicesImpl implements IKyzExpectmatmServices {
 	}
 
 	public PageBean findPageBean(int pageSize, int page, String factNo,
-			String visaSort,String billNo,String userNm,String timeCreate,String timeCreate2) {
+			String visaSort,String billNo,WebUser user,String timeCreate,String timeCreate2) {
 		// TODO Auto-generated method stub
-		return kyzDao.findFixWithPage(pageSize, page, factNo, visaSort,billNo,userNm,timeCreate,timeCreate2);
+		return kyzDao.findFixWithPage(pageSize, page, factNo, visaSort,billNo,user,timeCreate,timeCreate2);
 	}
 
 	public void delete(KyzExpectmatmId id,KyzExpectmatmLog delLog) {

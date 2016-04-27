@@ -8,10 +8,11 @@ import entity.KyVisabillm;
 import entity.KyzContactletter;
 import entity.KyzExpectmatmLog;
 import entity.WebBussinessletter;
+import entity.WebUser;
 
 public interface IWebBussinessletterServices {
 	public void add(WebBussinessletter buss);
-	public PageBean findPageBean(int pageSize,int page,String billNo,String factNo);
+	public PageBean findPageBean(int pageSize,int page,String billNo,String factNo,WebUser user);
 	public String makeBillNo(String factNo,String createDate);
 	public WebBussinessletter findById(String billNo);
 	public void delete(WebBussinessletter letter,KyzExpectmatmLog delLog);

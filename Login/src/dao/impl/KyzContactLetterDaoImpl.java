@@ -14,6 +14,7 @@ import dao.IKyzContactLetterDao;
 import entity.KyzContactletter;
 import entity.KyzExpectmatm;
 import entity.KyzExpectmatmLog;
+import entity.WebUser;
 
 public class KyzContactLetterDaoImpl extends Basedao implements IKyzContactLetterDao{
 
@@ -23,7 +24,7 @@ public class KyzContactLetterDaoImpl extends Basedao implements IKyzContactLette
 	}
 
 	public PageBean findPageBean(int pageSize, int page, String factNo,
-			String visaSort,String billNo,String userNm,String timeCreate,String timeCreate2) {
+			String visaSort,String billNo,WebUser user,String timeCreate,String timeCreate2) {
 		// TODO Auto-generated method stub
 		int allRow=0;
 		final Map<String, Object> map = new HashMap<String, Object>();
@@ -43,9 +44,11 @@ public class KyzContactLetterDaoImpl extends Basedao implements IKyzContactLette
 			hql.append(" and id.billNo=:billNo ");
 			map.put("billNo", billNo);
 		}
-		if(userNm!=null&&!userNm.equals("")&&!userNm.contains("管理員")){
-			hql.append(" and userNm=:usernm");
-			map.put("usernm", userNm);
+		String adminmk=user.getAdminMk()==null?"no":user.getAdminMk();
+		if(!adminmk.equals("Y")){
+			hql.append(" and (userAccount=:useraccount or userNm=:usernm)");
+			map.put("useraccount", user.getUsername());
+			map.put("usernm", user.getName());
 		}
 		if(timeCreate!=null&&!timeCreate.equals("")&&(timeCreate2==null||timeCreate2.equals(""))){
 			hql.append(" and ymExpect>=:timecreate");

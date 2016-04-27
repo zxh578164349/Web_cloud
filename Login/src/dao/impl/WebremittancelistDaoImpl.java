@@ -14,6 +14,7 @@ import com.opensymphony.xwork2.ActionContext;
 import util.PageBean;
 import dao.Basedao;
 import dao.IWebremittancelistDao;
+import entity.WebUser;
 import entity.Webremittancelist;
 
 /**   
@@ -62,7 +63,7 @@ public class WebremittancelistDaoImpl extends Basedao implements IWebremittancel
 	
 	
 	public PageBean findPageBean(int pageSize, int page, String visaTypem,
-			String factNo, String billNo) {
+			String factNo, String billNo,WebUser user) {
 		// TODO Auto-generated method stub
 		StringBuffer hql=new StringBuffer();
 		StringBuffer hql2=new StringBuffer();
@@ -73,13 +74,22 @@ public class WebremittancelistDaoImpl extends Basedao implements IWebremittancel
 			hql.append(" and webtype.id.typeNo=:typeno");
 			map.put("typeno",visaTypem);
 		}
-		if(factNo!=null&&!factNo.equals("")&&!factNo.equals("tw")){
+		if(factNo!=null&&!factNo.equals("")&&!factNo.equals("tw")&&!factNo.equals("nothing")){
 			hql.append(" and factNo=:factno");
 			map.put("factno", factNo);
 		}
 		if(billNo!=null&&!billNo.equals("")){
 			hql.append(" and billNo=:billno");
 			map.put("billno", billNo);
+		}
+		String adminMk=user.getAdminMk()==null?"no":user.getAdminMk();
+		if(!adminMk.equals("Y")){
+			hql.append(" and username2=:username2");
+			map.put("username2", user.getUsername());
+		}
+		if(factNo.equals("nothing")&&(visaTypem==null||visaTypem.equals(""))&&(billNo==null||billNo.equals(""))){
+			hql.append(" and factNo=:factno");
+			map.put("factno", factNo);
 		}
 		hql2.append(hql);
 		hql.append(" order by factNo,webtype.id.typeNo,billNo");
@@ -118,7 +128,10 @@ public class WebremittancelistDaoImpl extends Basedao implements IWebremittancel
 		String hql="from Webremittancelist where billNo=?";
 		Query query=getSession().createQuery(hql);
 		query.setString(0, billNo);
-		return (Webremittancelist)query.uniqueResult();
+		Webremittancelist obj=(Webremittancelist)query.uniqueResult();
+		obj.getWebtype().getTypeName();
+		obj.getWebremittancelistses().size();
+		return obj;
 	}
 
 	/**

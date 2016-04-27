@@ -883,9 +883,8 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 		ActionContext.getContext().getSession().remove("public_timeCreate");
 		ActionContext.getContext().getSession().remove("public_timeCreate2");
 		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
-		userNm=user.getName();
 		factNo = (String) ActionContext.getContext().getSession().get("factNo");
-		bean = kyzSer.findPageBean(25, page, factNo, visaSort,billNo,userNm,yymmdd,yymmdd2);
+		bean = kyzSer.findPageBean(25, page, factNo, visaSort,billNo,user,yymmdd,yymmdd2);
 		this.getTypeName(bean);
 		return "beanList";
 	}
@@ -913,8 +912,7 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 			ActionContext.getContext().getSession().put("public_timeCreate2", yymmdd2);
 		}
 		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
-		userNm=user.getName();
-		bean = kyzSer.findPageBean(25, page, factNo, visaSort,billNo.trim(),userNm,yymmdd,yymmdd2);
+		bean = kyzSer.findPageBean(25, page, factNo, visaSort,billNo.trim(),user,yymmdd,yymmdd2);
 		this.getTypeName(bean);
 		return "beanList1";
 	}
@@ -933,8 +931,7 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 			factNo = (String) ActionContext.getContext().getSession().get("factNo");					
 		}
 		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
-		userNm=user.getName();
-		bean = kyzSer.findPageBean(25, page, factNo, visaSort,billNo,userNm,yymmdd,yymmdd2);
+		bean = kyzSer.findPageBean(25, page, factNo, visaSort,billNo,user,yymmdd,yymmdd2);
 		this.getTypeName(bean);
 		return result;
 	}

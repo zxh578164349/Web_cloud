@@ -812,6 +812,7 @@
 		    <result name="makeBillNo" type="json">
 		       <param name="root">ajaxResult</param>
 		    </result>
+		     <result name="findById_layer">page/showwebremittancelist_layer.jsp</result>
 		</action>
 	</package>
 

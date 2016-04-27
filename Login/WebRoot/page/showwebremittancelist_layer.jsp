@@ -63,78 +63,86 @@ table.gridtable td {
 </head>
 
 <body>
-    <h3>人員出差申請書 </h3>
-    <s:if test="bussletter!=null">
+    <h3>加伟鞋材对公费用汇款清单 </h3>
+    <s:if test="webremit!=null">
 	<table class="gridtable" align="center">		
 		<tbody id="tb_list_info2">
 			<tr>
-				<td>申請單號</td>
-				<td colspan="2"><s:property value='bussletter.blNo' />
-				</td>
-				<td>所屬單位</td>
-				<td colspan="2"><s:property value='bussletter.unit' />
-				</td>
-				<td>姓名</td>
-				<td colspan="3"><s:property value='bussletter.username' />
-				</td>
-			</tr>
-
-
-
-
-			<tr>
 				<td>廠別</td>
-				<td colspan="2"><s:property value='bussletter.factNo' />
+				<td colspan="2"><s:property value='webremit.webtype.id.factNo' />
 				</td>
-				<td>職務</td>
-				<td colspan="2"><s:property value='bussletter.position' />
+				<td>廠別狀態</td>
+				<td colspan="2"><s:property value='webremit.factCode' />
 				</td>
-				<td>職務代理人</td>
-				<td colspan="3">
-					<s:property value="bussletter.GAgent" />
+				<td>日期</td>
+				<td ><s:property value='webremit.yymm' />
 				</td>
 			</tr>
-			<tr>
-				<td>出差地點</td>
-				<td colspan="2" ><s:property value='bussletter.address' />
-				</td>
-				<td>出差時間</td>
-				<td colspan="2">
-				<s:date name='bussletter.dateFrom' format='yyyy/MM/dd'/>至
-				<s:date name='bussletter.dateEnd' format='yyyy/MM/dd'/>共計
-				<s:property value="%{sumDate(bussletter.dateFrom,bussletter.dateEnd)}"/>日
-				</td>
-				<td>去程班機時間<br/>回程班機時間</td>
-				<td colspan="3">
-				<s:date name='bussletter.timeFrom' format="yyyy/MM/dd HH:mm"/><br/>
-				<s:date name="bussletter.timeEnd" format="yyyy/MM/dd HH:mm"/>
-				</td>
-			</tr>						
-			<tr>
-				<td>出差計劃</td>
-				<td colspan="11">
-				  <textarea style="width:500px;height:240px" readonly><s:property value="bussletter.planList" /></textarea>				     				 					
-				</td>
 
+			<tr>
+				<td>申請單號</td>
+				<td colspan="2"><s:property value='webremit.billNo' />
+				</td>
+				<td>申請人</td>
+				<td colspan="2"><s:property value='webremit.username' />
+				</td>
+				<td>類別</td>
+				<td ><s:property value="webremit.webtype.typeName"  /></td>
 			</tr>
+			<tr>
+				<td>匯款帳號</td>
+				<td colspan="2" ><s:property value='webremit.fromAccount' />
+				</td>
+				<td>銀行名稱</td>
+				<td colspan="4"><s:property value='webremit.fromBank' />
+				</td>				
+			</tr>			
+		</tbody>
+
+		<tbody id="webremits_body">
+			<tr>
+				<td class="tdcolor">貨幣</td>
+			     <td class="tdcolor">廠商名稱</td>
+			     <td class="tdcolor">收款銀行</td>
+			     <td class="tdcolor">授權委託帳號</td>
+			     <td class="tdcolor">貨款金額</td>
+			     <td class="tdcolor">匯費</td>
+			     <td class="tdcolor">實匯金額</td>		     
+			     <td class="tdcolor">備註</td>
+			</tr>
+
+			<s:iterator value="webremit.webremittancelistses" status="x" id="temp">
+				<tr>
+				 <td ><s:property value='currency'/></td>	     
+			     <td ><s:property value='Manufacturers'/></td>
+			     <td ><s:property value='toBank'/></td>
+			     <td ><s:property value='toAccount'/></td>
+			     <td ><s:property value='payment'/></td>
+			     <td ><s:property value='cost'/></td>
+			     <td ><s:property value='acAmount'/></td>
+			     <td><s:property value='remark'/></td>				     			     			     
+				</tr>
+			</s:iterator>
+			<!-- ---------------------顯示所有人的備註信息20151211----------------------------- -->
 			<s:iterator value="#session.vbm.kyVisabillses">
-			   <s:if test='memo!=null&&memo!=""'>
-			     <tr>
-			       <td>
-			          <s:property value="visaRank"/>:
-			       </td>
-			       <td colspan="11" style="color:blue">
-			          <b><s:property value="memo"/></b>
-			       </td>
-			     </tr>
+			   <s:if test='memo!=null&&visaRank!=""'>			      
+			      <tr>
+			         <td>
+			            <s:property value="visaRank"/>:
+			         </td>
+			         <td colspan="7" style="color:blue">
+			            <b><s:property value="memo"/></b>
+			         </td>
+			      </tr>
 			   </s:if>
 			</s:iterator>
+			<!-- ---------------------顯示所有人的備註信息20151211----------------------------- -->
 			<!------------------------- 修改3   20151027---------------   -->
 			<s:if test='readMk=="N"'>
-			    <tr><td colspan="12" style="color:red">備註↓↓↓</td></tr>
-				<tr><td colspan="12">									
+			    <tr><td colspan="8" style="color:red">備註↓↓↓</td></tr>
+				<tr><td colspan="8">									
 					<form id="memo" method="post" action="vbm_add" target="frameFile">
-						<textarea style="width:566px;height:150px" name="memo" id="memo_txt"></textarea>						
+						<textarea  name="memo" id="memo_txt" style="width:620px;height:120px;overflow:auto"></textarea>						
 						<input type="hidden" name="factNo" value="<s:property value='factNo'/>"/>
 						<input type="hidden" name="billNo" value="<s:property value='billNo'/>"/>
 						<input type="hidden" name="itemNo" value="<s:property value='itemNo'/>"/>
@@ -145,16 +153,16 @@ table.gridtable td {
 				</td></tr>
 			</s:if>
 			<!------------------------- 修改3   20151027---------------   -->	
-		</tbody>
+			</tbody>		
 	</table>
-	 <%-- <s:if test='bussletter.filesYn=="1"'>
+	 <!--<s:if test='webremit.filesYn=="1"'>
 	  <hr/>
 	  <span style="color:blue;">附檔:</span><br/>
 	  <s:iterator value="#session.list_filesexp">
-	     <a href="/upload_letter/<s:property value='billno'/>/<s:property value='%{toUrl2(filename)}'/>" target="_blank"><s:property value="%{toUrl(filename)}"/></a>&nbsp;
+	     <a href="/upload/<s:property value='billno'/>/<s:property value='%{toUrl2(filename)}'/>" target="_blank"><s:property value="%{toUrl(filename)}"/></a>&nbsp;
 	  </s:iterator>	  
-	</s:if> 
-	--%>
+	</s:if> -->
+	
 </s:if>
 <s:else>
   <br><br><br>

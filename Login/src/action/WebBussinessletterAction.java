@@ -257,7 +257,8 @@ public class WebBussinessletterAction extends ActionSupport implements ServletRe
 		factNo=(String)ActionContext.getContext().getSession().get("factNo");
 		ActionContext.getContext().getSession().remove("public_billNo");
 		ActionContext.getContext().getSession().remove("public_factNo");
-		bean=webbussletterSer.findPageBean(25, page, billNo, factNo);
+		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
+		bean=webbussletterSer.findPageBean(25, page, billNo, factNo,user);
 		return "beanList";	
 	}
 	public String findPageBean2(){
@@ -270,7 +271,8 @@ public class WebBussinessletterAction extends ActionSupport implements ServletRe
 		}
 		ActionContext.getContext().getSession().put("public_billNo", billNo);
 		ActionContext.getContext().getSession().put("public_factNo", factNo);
-		bean=webbussletterSer.findPageBean(25, page, billNo, factNo);
+		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
+		bean=webbussletterSer.findPageBean(25, page, billNo, factNo,user);
 		return "beanList1";
 	}
 	public String findPageBean3(){
@@ -283,7 +285,8 @@ public class WebBussinessletterAction extends ActionSupport implements ServletRe
 		if(factNo==null||factNo.equals("")){
 			factNo=(String)ActionContext.getContext().getSession().get("factNo");			
 		}
-		bean=webbussletterSer.findPageBean(25, page, billNo, factNo);
+		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
+		bean=webbussletterSer.findPageBean(25, page, billNo, factNo,user);
 		return result;
 	}
 	public long sumDate(Date d1,Date d2){

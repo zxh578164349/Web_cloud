@@ -20,13 +20,14 @@ public class Webremittancelist implements java.io.Serializable {
 	private String fromAccount;
 	private String fromBank;
 	private String createdate;
-	private String username;
+	private String username;//申請人名字
 	private String udUsername;
 	private String udDate;	
 	private List<Webremittancelists> webremittancelistses = new ArrayList<Webremittancelists>();
 	private KyVisabillm vbm;
 	private String visaType;
 	private WebType webtype;
+	private String username2;//申請人賬號
 
 	// Constructors
 
@@ -170,6 +171,14 @@ public class Webremittancelist implements java.io.Serializable {
 
 	public void setWebtype(WebType webtype) {
 		this.webtype = webtype;
+	}
+
+	public String getUsername2() {
+		return username2;
+	}
+
+	public void setUsername2(String username2) {
+		this.username2 = username2;
 	}
 	
 	

@@ -26,6 +26,7 @@ import entity.KyzContactletter;
 import entity.KyzExpectmatmFile;
 import entity.KyzExpectmatmLog;
 import entity.KyzVisaflow;
+import entity.WebUser;
 import entity_temp.VisabillsTemp;
 import services.IKyzContactLetterServices;
 import util.PageBean;
@@ -68,9 +69,9 @@ public class KyzContactLetterServicesImpl implements IKyzContactLetterServices{
 		kyzletterDao.add(letter);
 	}
 
-	public PageBean findPageBean(int pageSize, int page, String factNo,String visaSort,String billNo,String userNm,String timeCreate,String timeCreate2) {
+	public PageBean findPageBean(int pageSize, int page, String factNo,String visaSort,String billNo,WebUser user,String timeCreate,String timeCreate2) {
 		// TODO Auto-generated method stub
-		return kyzletterDao.findPageBean(pageSize, page, factNo, visaSort, billNo, userNm, timeCreate, timeCreate2);
+		return kyzletterDao.findPageBean(pageSize, page, factNo, visaSort, billNo, user, timeCreate, timeCreate2);
 	}
 	
 	public String makeBillNo(String factNo, String timeCreate) {

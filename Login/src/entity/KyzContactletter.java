@@ -28,6 +28,7 @@ public class KyzContactletter implements java.io.Serializable {
 	private String visaTypeM;//類別大類
 	private KyVisabillm vbm;
 	private List<KyzExpectmatmFile>list_file;
+	private String userAccount;//申請人賬號
 
 	// Constructors
 
@@ -208,6 +209,15 @@ public class KyzContactletter implements java.io.Serializable {
 	public void setList_file(List<KyzExpectmatmFile> list_file) {
 		this.list_file = list_file;
 	}
+
+	public String getUserAccount() {
+		return userAccount;
+	}
+
+	public void setUserAccount(String userAccount) {
+		this.userAccount = userAccount;
+	}
+	
 	
 	
 	

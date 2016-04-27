@@ -229,10 +229,13 @@ jq(function(){
 				        <td>
 				        <s:if test="kyzletter==null">
 						   <input type="text" name="kyzletter.userNm"   value="<s:property value='#session.loginUser.name'/>" style="color:blue" readonly/>
+						   <input type="hidden" name="kyzletter.userAccount" value="<s:property value='#session.loginUser.username'/>"/>
 						</s:if>
 						<s:else>
 						   <input type="text" name="kyzletter.userNm"   value="<s:property value='kyzletter.userNm'/>" style="color:blue" readonly/>
+						   <input type="hidden" name="kyzletter.userAccount" value="<s:property value='kyzletter.userAccount'/>"/>
 						</s:else>
+						
 				        </td>  				        				        				        
 				    </tr>
 				    <s:if test="kyzletter==null">

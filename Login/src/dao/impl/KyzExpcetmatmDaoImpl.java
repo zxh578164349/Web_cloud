@@ -22,6 +22,7 @@ import entity.KyzExpectmatmId;
 import entity.KyzExpectmatmLog;
 import entity.KyzExpectmats;
 import entity.WebFixed;
+import entity.WebUser;
 
 public class KyzExpcetmatmDaoImpl extends Basedao implements IKyzExpectmatmDao {
 
@@ -59,7 +60,7 @@ public class KyzExpcetmatmDaoImpl extends Basedao implements IKyzExpectmatmDao {
 	}
 
 	public PageBean findFixWithPage(int pageSize, int page, String factNo,
-			String visaSort,String billNo,String userNm,String timeCreate,String timeCreate2) {
+			String visaSort,String billNo,WebUser user,String timeCreate,String timeCreate2) {
 		// TODO Auto-generated method stub
 		int allRow=0;
 		final Map<String, Object> map = new HashMap<String, Object>();
@@ -79,9 +80,10 @@ public class KyzExpcetmatmDaoImpl extends Basedao implements IKyzExpectmatmDao {
 			hql.append(" and id.billNo=:billNo ");
 			map.put("billNo", billNo);
 		}
-		if(userNm!=null&&!userNm.equals("")&&!userNm.contains("管理員")){
-			hql.append(" and userNm=:usernm");
-			map.put("usernm", userNm);
+		String adminmk=user.getAdminMk()==null?"no":user.getAdminMk();
+		if(!adminmk.equals("Y")){
+			hql.append(" and username=:usernm");
+			map.put("usernm", user.getUsername());
 		}
 		if(timeCreate!=null&&!timeCreate.equals("")&&(timeCreate2==null||timeCreate2.equals(""))){
 			hql.append(" and to_char(timeCreate,'yyyymmdd')>=:timecreate");

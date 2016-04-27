@@ -25,6 +25,7 @@ import entity.KyzContactletter;
 import entity.KyzExpectmatmLog;
 import entity.KyzVisaflow;
 import entity.WebBussinessletter;
+import entity.WebUser;
 import entity_temp.VisabillsTemp;
 import services.IWebBussinessletterServices;
 import util.GlobalMethod;
@@ -80,9 +81,9 @@ public class WebBussinessletterServicesImpl implements IWebBussinessletterServic
 	}
 
 	public PageBean findPageBean(int pageSize, int page, String billNo,
-			String factNo) {
+			String factNo,WebUser user) {
 		// TODO Auto-generated method stub
-		return webbussletterdao.findPageBean(pageSize, page, billNo, factNo);
+		return webbussletterdao.findPageBean(pageSize, page, billNo, factNo,user);
 	}
 
 	/**
