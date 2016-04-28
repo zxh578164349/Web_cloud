@@ -25,8 +25,8 @@ public class Webremittancelist implements java.io.Serializable {
 	private String udDate;	
 	private List<Webremittancelists> webremittancelistses = new ArrayList<Webremittancelists>();
 	private KyVisabillm vbm;
-	private String visaType;
-	private WebType webtype;
+	private String visaType;//小分類
+	private WebType webtype;//大分類
 	private String username2;//申請人賬號
 
 	// Constructors

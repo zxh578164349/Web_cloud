@@ -45,7 +45,8 @@ public class WebremittancelistAction extends ActionSupport implements ServletRes
 	private Webremittancelist webremit;
 	private String factNo;
 	private String billNo;
-	private String visaSort;
+	private String visaSort;//大分類
+	private String visaType;//小分類
 	private int page;
 	private String saveOrUpdate;
 	private String ajaxResult;
@@ -54,12 +55,34 @@ public class WebremittancelistAction extends ActionSupport implements ServletRes
 	private String readMk;//備註標記
 	private String itemNo;
 	private String lookordown;
+	private int maxItemno;//當前最大序號
+	private int backIndex;//返回標識      0或null:不走返回路徑         1:走返回路徑
 	private IWebremittancelistServices webremiSer;
 	private IKyVisabillmServices visabillmSer;
 	private IWebuserEmailServices webuseremailSer;
 	private javax.servlet.http.HttpServletResponse response;
 	
 	
+	
+	
+	public int getBackIndex() {
+		return backIndex;
+	}
+	public void setBackIndex(int backIndex) {
+		this.backIndex = backIndex;
+	}
+	public int getMaxItemno() {
+		return maxItemno;
+	}
+	public void setMaxItemno(int maxItemno) {
+		this.maxItemno = maxItemno;
+	}
+	public String getVisaType() {
+		return visaType;
+	}
+	public void setVisaType(String visaType) {
+		this.visaType = visaType;
+	}
 	public String getLookordown() {
 		return lookordown;
 	}
@@ -227,7 +250,7 @@ public class WebremittancelistAction extends ActionSupport implements ServletRes
 			}else{
 				webremiSer.add(webremit);					
 			}
-			response.getWriter().print("<script>window.parent.layer.msg('提交成功',3,1)</script>");
+			response.getWriter().print("<script>window.parent.layer.msg('提交成功',3,1);window.parent.loadUrl('webremit_findPageBean')</script>");
 		}catch(Exception e){
 			response.getWriter().print("<script>window.parent.layer.msg('提交失敗',3,3)</script>");
 		}
@@ -276,16 +299,28 @@ public class WebremittancelistAction extends ActionSupport implements ServletRes
 		return "beanList1";
 	}
 	public String findPageBean3(){
-		factNo=(String)ActionContext.getContext().getSession().get("public_visaTypem");
-		visaSort=(String)ActionContext.getContext().getSession().get("public_billNo");
-		billNo=(String)ActionContext.getContext().getSession().get("public_factno");
+		String result="";
+		if(backIndex==1){
+			result="beanList";
+		}else{
+			result="beanList1";
+		}
+		factNo=(String)ActionContext.getContext().getSession().get("public_factno");
+		visaSort=(String)ActionContext.getContext().getSession().get("public_visaTypem");
+		billNo=(String)ActionContext.getContext().getSession().get("public_billNo");
 		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
-		bean=webremiSer.findPageBean(25, page, visaSort, factNo, billNo,user);
-		return "beanList1";
+		bean=webremiSer.findPageBean(25, page, visaSort, factNo, billNo,user);		
+		return result;
 		
 	}
 	public String findById(){
 		webremit=webremiSer.findById(billNo);
+		System.out.println(webremit.getWebremittancelistses().size());
+		for(int i=0;i<webremit.getWebremittancelistses().size();i++){
+			if(Integer.parseInt(webremit.getWebremittancelistses().get(i).getId().getItemNo())>maxItemno){
+				maxItemno=Integer.parseInt(webremit.getWebremittancelistses().get(i).getId().getItemNo());//求最大序號
+			}
+		}
 		return "findById";
 	}
 	public String findById_layer(){
@@ -293,8 +328,12 @@ public class WebremittancelistAction extends ActionSupport implements ServletRes
 		return "findById_layer";
 	}
 	
-	public void print(String factNo,String billNo,String visaSort) throws IOException{				
-		Map<String,Object>map_result=webremiSer.print(factNo, billNo, visaSort,null);
+	public String delete(){
+		webremiSer.delete(billNo);
+		return "delete";
+	}
+	public void print() throws IOException{				
+		Map<String,Object>map_result=webremiSer.print(factNo, billNo, visaType,null);
 		if(map_result!=null&&map_result.size()>0){
 			Map<String,Object>map=(Map<String,Object>)map_result.get("map");
 			List<Webremittancelist>list=(List<Webremittancelist>)map_result.get("list");

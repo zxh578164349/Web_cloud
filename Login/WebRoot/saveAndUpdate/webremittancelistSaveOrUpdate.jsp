@@ -80,7 +80,8 @@ function makeBillNo() {
 	
 var j=0;
 	function addRow(){
-        var billno=document.getElementById("webremit_billno").value;      
+        var billno=document.getElementById("webremit_billno").value; 
+       
         //设置列内容和属性
         var cboxlist=document.getElementsByName("cbox");
         if(cboxlist.length>30){
@@ -88,7 +89,7 @@ var j=0;
         }else{
     		j++;
      	    //添加一行
-             var newTr = webremits_body.insertRow();
+             var newTr = webremits_body2.insertRow();
              //添加列
              var newTd00=newTr.insertCell();
              var newTd0 = newTr.insertCell();
@@ -99,9 +100,9 @@ var j=0;
              var newTd5=newTr.insertCell();
              var newTd6=newTr.insertCell();
              var newTd7=newTr.insertCell();
-        newTd00.innerHTML='<input type="checkbox" name="cbox"/>';     
+        newTd00.innerHTML='<input type="image" src="images/del.gif" onclick="this.parentNode.parentNode.parentNode.removeChild(this.parentNode.parentNode)"/>';     
         newTd0.innerHTML = '<input type="text" name="webremit.webremittancelistses['+j+'].currency" value="" size="15"/>'; 
-        newTd1.innerHTML = '<input type="text" name="webremit.webremittancelistses['+j+'].Manufacturers" value="" size="15"/>';             
+        newTd1.innerHTML = '<input type="text" name="webremit.webremittancelistses['+j+'].manufacturers" value="" size="15"/>';             
         newTd2.innerHTML='<input type="text" name="webremit.webremittancelistses['+j+'].toBank" value="" size="15"/>';
         newTd3.innerHTML='<input type="text" name="webremit.webremittancelistses['+j+'].toAccount" value="" size="15"/>';
         newTd4.innerHTML='<input type="text" name="webremit.webremittancelistses['+j+'].payment" value="" size="15"/>';
@@ -113,17 +114,7 @@ var j=0;
         }
         
 	}
-						
-	function delRow(){
-	   var cboxlist=document.getElementsByName("cbox");
-	   for(var k=0;k<cboxlist.length;k++){
-	     if(cboxlist[k].checked==true&&k>0){
-	        webremits_body.deleteRow(k+1);
-	        k=k-1;
-	     }
-	   }	   
-	}
-	
+							
 	function getFactCode(){
 	    document.getElementById("dwrFactArea").value=document.getElementById("webremits_factcode").value;
 	}
@@ -247,8 +238,7 @@ function selall(){
 	}
 }
 
-function back(){
-	
+function back(){	
 	loadUrl("/Login/webremit_findPageBean3?backIndex=1");
 }
 function gook(){
@@ -267,7 +257,16 @@ function gook(){
 jq(function(){
 	if(jq("[name='saveOrUpdate']").val()=="save"){
 		getKyType();
-	}	
+	}else{
+		jq("#addbtn").removeAttr("disabled").removeAttr("style");
+		//jq("#addbtn").removeAttr("style");
+		
+	}
+	
+	j=jq("#maxItemno").val()
+	if(isNaN(j)){
+		j=0;
+	}
 });
 </script>
 
@@ -297,7 +296,7 @@ jq(function(){
 						<s:else>
 						  <td class="tdcolor">廠別</td>
 						<td ><select style="color:blue"
-							name="webremit.factNo" datatype="*" id="dwrFactNo"
+							name="webremit.webtype.id.factNo" datatype="*" id="dwrFactNo"
 							onchange="getFactArea(this.value),makeBillNo(),getKyType2(this.value)">
 								<option value="">請選擇廠別</option>
 								<s:iterator value="#session.facts" id="temp">
@@ -325,7 +324,7 @@ jq(function(){
 				   <tr>
 				      <td class="tdcolor">廠別</td>				      
 				      <td>
-				      <input type="text" name="webremit.id.factNo" value="<s:property value='webremit.id.factNo'/>" readonly style="color:blue" />				      
+				      <input type="text" name="webremit.webtype.id.factNo" value="<s:property value='webremit.webtype.id.factNo'/>" readonly style="color:blue" />				      
 				      </td>
 				     
 				      <td class="tdcolor">廠別狀態</td>
@@ -333,7 +332,7 @@ jq(function(){
 				     
 				      <td class="tdcolor">日期</td>
 				      <td>
-				       <input type="webremit.yymm" value="<s:property value='webremit.yymm'/>" />
+				       <input type="text" name="webremit.yymm" value="<s:property value='webremit.yymm'/>" />
 				       <input type="hidden" name="saveOrUpdate" value="update"/><!--判斷變量 -->			      
 				       <input type="hidden" name="webremit.createdate" value="<s:property value='webremit.createdate'/>"/>
 				       <input type="hidden" name="webremit.udDate" value="<%=str_date%>" id="createdate"/>				       
@@ -349,7 +348,7 @@ jq(function(){
 				          		<input type="text" name="webremit.billNo" value="自動生成" readonly style="color:blue" id="webremit_billno" datatype="*"/>	        
 				        </s:if>
 				        <s:else>				               
-				               <input type="text" name="webremit.billNo" value="<s:property value='webremit.billNo'/>" readonly style="color:blue"  datatype="*"/>
+				               <input type="text" name="webremit.billNo" value="<s:property value='webremit.billNo'/>" id="webremit_billno" readonly style="color:blue"  datatype="*"/>
 				        </s:else>				      
 				      </td>
 				        	        
@@ -376,8 +375,8 @@ jq(function(){
 				         <input type="hidden" id="dwr_username" value="<s:property value='#session.loginUser.username'/>"/>					         
 				         </s:if>
 				         <s:else>
-				            <input type="text" value="<s:property value='webremit.visaType'/>" name="webremit.visaType" style="color:blue"  readonly/>\\\
-				            <input type="text" value="<s:property value='webremit.webtype.id.typeNo'/>" name="webremit.webtype.id.typeNo" style="color:blue"  readonly/>
+				            <input type="text" value="<s:property value='webremit.visaType'/>" name="webremit.visaType" style="color:blue"  readonly/>
+				            <input type="hidden" value="<s:property value='webremit.webtype.id.typeNo'/>" name="webremit.webtype.id.typeNo" style="color:blue"  readonly/>
 				         </s:else>				         				        				        
 				      </td>						
 										        
@@ -390,6 +389,8 @@ jq(function(){
 				      <td class="tdcolor">銀行名稱</td>
 				      <td colspan="2">
 				      <input type="text" value="<s:property value='webremit.fromBank'/>" name="webremit.fromBank"/>
+				      
+				      <input type="hidden" value="<s:property value='maxItemno'/>" id="maxItemno"/>
 				      </td>
 				      
 				      <!--<td >
@@ -415,10 +416,10 @@ jq(function(){
 				    </tr>																							
 			</tbody>
 			</table>	
-			<table class="table table-condensed">								 			
-			<tbody id="webremits_body" >
-			  <tr>
-			     <td><input type="checkbox" id="allbox" onclick="selall()"/></td>
+			<table class="table table-condensed">
+			<thead>
+			  <tr>	
+			     <td></td>		    
 			     <td class="tdcolor">貨幣</td>
 			     <td class="tdcolor">廠商名稱</td>
 			     <td class="tdcolor">收款銀行</td>
@@ -427,12 +428,32 @@ jq(function(){
 			     <td class="tdcolor">匯費</td>
 			     <td class="tdcolor">實匯金額</td>		     
 			     <td class="tdcolor">備註</td>
-			 </tr>	
-			 <s:if test="webremit==null">
-			    <tr>
+			 </tr>
+			</thead>								 			
+			<tbody id="webremits_body" >			  	
+			 <s:iterator value="webremit.webremittancelistses" status="x" id="temp">
+			     <tr>
+			     <td></td>		        		     			    			    			     		    			     			     
+			     <td ><input type="text" name="webremit.webremittancelistses[${x.index}].currency" value="<s:property value='currency'/>" size="15"/></td>			     
+			     <td ><input type="text" name="webremit.webremittancelistses[${x.index}].manufacturers" value="<s:property value='manufacturers'/>" datatype="my0-8" size="15" id="qtyExpect_${x.index}"/></td>
+			     <td ><input type="text" name="webremit.webremittancelistses[${x.index}].toBank" value="<s:property value='toBank'/>" datatype="my0-8" size="15" id="qtyOk_${x.index}"/></td>
+			     <td ><input type="text" name="webremit.webremittancelistses[${x.index}].toAccount" value="<s:property value='toAccount'/>" datatype="my0-8" size="15" id="personNo_${x.index}"/></td>
+			     <td ><input type="text" name="webremit.webremittancelistses[${x.index}].payment" value="<s:property value='payment'/>"  id="qtyPair" size="15"/></td>
+			     <td ><input type="text" name="webremit.webremittancelistses[${x.index}].cost" value="<s:property value='cost'/>"  size="15"/></td>
+			      <td ><input type="text" name="webremit.webremittancelistses[${x.index}].acAmount" value="<s:property value='acAmount'/>" size="15"/></td>
+			      <td>
+			      <input type="text" name="webremit.webremittancelistses[${x.index}].remark" value="<s:property value='remark'/>" size="15"/>
+			      <input type="hidden" name="webremit.webremittancelistses[${x.index}].id.webremittancelist.billNo" value="<s:property value='id.webremittancelist.billNo'/>" id="webremits_billno"/>
+			      <input type="hidden" name="webremit.webremittancelistses[${x.index}].id.itemNo" value="<s:property value='id.itemNo'/>"/>	
+			     
+			      </td>			      		      
+			     </tr>
+			    </s:iterator>
+			    
+			   <!--  <tr>
 			     <td><input type="checkbox" name="cbox"/></td>	   
 			     <td ><input type="text" name="webremit.webremittancelistses[0].currency"  size="15"/></td>			     
-			     <td ><input type="text" name="webremit.webremittancelistses[0].Manufacturers"  datatype="my0-12" size="15" /></td>
+			     <td ><input type="text" name="webremit.webremittancelistses[0].manufacturers"  datatype="my0-12" size="15" /></td>
 			     <td ><input type="text" name="webremit.webremittancelistses[0].toBank"  datatype="my0-8" size="15" /></td>
 			     <td ><input type="text" name="webremit.webremittancelistses[0].toAccount"  datatype="my0-8" size="15" /></td>
 			     <td ><input type="text" name="webremit.webremittancelistses[0].payment"   size="15"/></td>
@@ -443,39 +464,25 @@ jq(function(){
 			     <input type="hidden" name="webremit.webremittancelistses[0].id.webremittancelist.billNo" value="" id="webremits_billno"/>
 			     <input type="hidden" name="webremit.webremittancelistses[0].id.itemNo" value="0"/>
 			     </td>			      		      		      
-			  </tr>		
-			 </s:if>
-			 <s:else>			  
-			    <s:iterator value="webremit.webremittancelistses" status="x" id="temp">
-			     <tr class="bluecss">			        		     			    			    			     		    			     			     
-			     <td ><input type="text" name="webremit.webremittancelistses[${x.index}].currency" value="<s:property value='currency'/>" size="15"/></td>			     
-			     <td ><input type="text" name="webremit.webremittancelistses[${x.index}].Manufacturers" value="<s:property value='Manufacturers'/>" datatype="my0-8" size="15" id="qtyExpect_${x.index}"/></td>
-			     <td ><input type="text" name="webremit.webremittancelistses[${x.index}].toBank" value="<s:property value='toBank'/>" datatype="my0-8" size="15" id="qtyOk_${x.index}"/></td>
-			     <td ><input type="text" name="webremit.webremittancelistses[${x.index}].toAccount" value="<s:property value='toAccount'/>" datatype="my0-8" size="15" id="personNo_${x.index}"/></td>
-			     <td ><input type="text" name="webremit.webremittancelistses[${x.index}].payment" value="<s:property value='payment'/>"  id="qtyPair" size="15"/></td>
-			     <td ><input type="text" name="webremit.webremittancelistses[${x.index}].cost" value="<s:property value='cost'/>"  size="15"/></td>
-			      <td ><input type="text" name="webremit.webremittancelistses[${x.index}].acAmount" value="<s:property value='acAmount'/>" size="15"/></td>
-			      <td>
-			      <input type="text" name="webremit.webremittancelistses[${x.index}].remark" value="<s:property value='remark'/>" size="15"/>
-			      <input type="hidden" name="webremit.webremittancelistses[${x.index}].id.webremittancelist.billNo" value="<s:property value='id.webremittancelist.billNo'/>" id="webremits_billno"/>
-			      <input type="hidden" name="webremit.webremittancelistses[0].id.itemNo" value="<s:property value='id.webremittancelist.itemNo'/>"/>	
-			      <input type="hidden" name="cbox"/>
-			      </td>			      		      
-			     </tr>
-			    </s:iterator>			   			    
-			 </s:else>		         			  
-			 	  			
+			  </tr>	 -->				 			  		         			  			 	  			
 			</tbody>
-			<tfoot><tr>
-			<s:if test="webremit==null">
+			<tbody id="webremits_body2">
+			   
+			</tbody>
+			<tfoot>
+			<tr>			
 			<td colspan="10">			     			  
 			     <input type="button" value="添加行" onclick="addRow()" disabled="disabled" id="addbtn" style="color:grey"/>
 			     <input type="button" value="刪除行" onclick="delRow()"  id="delbtn"/>
-			 </td>    
-			  </s:if>					    			    		   		
+			 </td>    			  				    			    		   		
 			</tr>
 			</tfoot>					    
-		</table >		  
+		</table >
+
+		  
+			   
+		    			   			    
+	  
 		<!--  <s:if test='webremit.filesYn=="1"'>
 	       <hr/>
 	       <div style="color:blue;">附檔:</div><br/>

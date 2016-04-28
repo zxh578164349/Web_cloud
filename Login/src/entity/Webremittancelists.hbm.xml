@@ -44,7 +44,7 @@
         <property name="udDate" type="java.lang.String">
             <column name="UD_DATE" length="10" />
         </property>
-        <property name="Manufacturers" type="java.lang.String">
+        <property name="manufacturers" type="java.lang.String">
             <column name="MANUFACTURERS" length="50"/>
         </property>
     </class>

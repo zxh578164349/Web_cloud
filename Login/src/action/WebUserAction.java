@@ -629,7 +629,10 @@ public class WebUserAction extends ActionSupport implements ServletResponseAware
     			for(int i=0;i<list_menu.size();i++){//for1
     				List<WebSubmenu> list_submenu = new ArrayList<WebSubmenu>();
     				for(int j=0;j<checkbox.length;j++){
-    					String[] info = checkbox[j].split(",");   					
+    					String[] info = checkbox[j].split(","); 
+    					if(info[0].equals("測試")){
+    						System.out.println("*********************************"+j);
+    					}
     					if(list_menu.get(i).getMenuname().equals(info[0])){
     						WebSubmenu submenu=new WebSubmenu();
     						submenu.setSubmenuname(info[1]);

@@ -57,7 +57,7 @@ jq(function(){
 				break;
 			}
 		}
-	}
+	}				
 });
 </script>
 <body>

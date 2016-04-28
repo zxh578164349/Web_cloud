@@ -298,7 +298,16 @@ public class GlobalMethod extends HibernateDaoSupport{
         System.out.println(frm.format(cal.getTime()));*/
         
         
-        System.out.println("1");
+        String[]list={"1","2","5","3","4"};
+        String result="";
+        int temp=0;
+        for(int i=0;i<list.length;i++){
+        	if(Integer.parseInt(list[i])>temp){
+        		temp=Integer.parseInt(list[i]);
+        		result=list[i];
+        	}
+        }
+        System.out.println(result);
        
        
 						

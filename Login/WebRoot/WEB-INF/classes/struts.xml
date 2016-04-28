@@ -812,7 +812,9 @@
 		    <result name="makeBillNo" type="json">
 		       <param name="root">ajaxResult</param>
 		    </result>
-		     <result name="findById_layer">page/showwebremittancelist_layer.jsp</result>
+		    <result name="findById">saveAndUpdate/webremittancelistSaveOrUpdate.jsp</result>
+		    <result name="findById_layer">page/showwebremittancelist_layer.jsp</result>
+		    <result name="delete" type="redirectAction">webremit_findPageBean3</result> 
 		</action>
 	</package>
 
