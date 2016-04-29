@@ -57,8 +57,8 @@
 		</thead>
 		<tbody id="tbody">
 		<s:iterator value="bean.list" status="x" id="temp">		  
-		     <tr > 
-				<td>${25*(bean.currentPage-1)+x.index+1}</td>
+		     <tr> 
+				<td><a href="javascript:showDivList('${temp.billNo}')" alt="刪除細項"><b>${25*(bean.currentPage-1)+x.index+1}</b></a></td>
 				<td><s:property value="factNo" /></td>
 				<td><s:property value="factCode" /></td>
 				<td><s:property value="yymm"/></td>

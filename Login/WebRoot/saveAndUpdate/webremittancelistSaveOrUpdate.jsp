@@ -84,8 +84,8 @@ var j=0;
        
         //设置列内容和属性
         var cboxlist=document.getElementsByName("cbox");
-        if(cboxlist.length>30){
-           alert("對不起,不能超過10條記錄!");
+        if(cboxlist.length>29){
+           alert("對不起,不能超過30條記錄!");
         }else{
     		j++;
      	    //添加一行
@@ -100,7 +100,7 @@ var j=0;
              var newTd5=newTr.insertCell();
              var newTd6=newTr.insertCell();
              var newTd7=newTr.insertCell();
-        newTd00.innerHTML='<input type="image" src="images/del.gif" onclick="this.parentNode.parentNode.parentNode.removeChild(this.parentNode.parentNode)"/>';     
+        newTd00.innerHTML='<input type="hidden" name="cbox"/><input type="image" src="images/del.gif" onclick="this.parentNode.parentNode.parentNode.removeChild(this.parentNode.parentNode)"/>';     
         newTd0.innerHTML = '<input type="text" name="webremit.webremittancelistses['+j+'].currency" value="" size="15"/>'; 
         newTd1.innerHTML = '<input type="text" name="webremit.webremittancelistses['+j+'].manufacturers" value="" size="15"/>';             
         newTd2.innerHTML='<input type="text" name="webremit.webremittancelistses['+j+'].toBank" value="" size="15"/>';
@@ -433,7 +433,7 @@ jq(function(){
 			<tbody id="webremits_body" >			  	
 			 <s:iterator value="webremit.webremittancelistses" status="x" id="temp">
 			     <tr>
-			     <td></td>		        		     			    			    			     		    			     			     
+			     <td><input type="hidden" name="cbox"/></td>		        		     			    			    			     		    			     			     
 			     <td ><input type="text" name="webremit.webremittancelistses[${x.index}].currency" value="<s:property value='currency'/>" size="15"/></td>			     
 			     <td ><input type="text" name="webremit.webremittancelistses[${x.index}].manufacturers" value="<s:property value='manufacturers'/>" datatype="my0-8" size="15" id="qtyExpect_${x.index}"/></td>
 			     <td ><input type="text" name="webremit.webremittancelistses[${x.index}].toBank" value="<s:property value='toBank'/>" datatype="my0-8" size="15" id="qtyOk_${x.index}"/></td>
@@ -473,7 +473,7 @@ jq(function(){
 			<tr>			
 			<td colspan="10">			     			  
 			     <input type="button" value="添加行" onclick="addRow()" disabled="disabled" id="addbtn" style="color:grey"/>
-			     <input type="button" value="刪除行" onclick="delRow()"  id="delbtn"/>
+			     <!--<input type="button" value="刪除行" onclick="delRow()"  id="delbtn"/>-->
 			 </td>    			  				    			    		   		
 			</tr>
 			</tfoot>					    

@@ -7,6 +7,7 @@ import java.util.Map;
 
 import util.PageBean;
 import entity.KyVisabillm;
+import entity.KyzExpectmatmLog;
 import entity.WebUser;
 import entity.Webremittancelist;
 
@@ -26,7 +27,8 @@ import entity.Webremittancelist;
 public interface IWebremittancelistServices {
 	public void add(Webremittancelist obj);
 	public Webremittancelist findById(String billNo);
-	public void delete(String billNo);
+	public Webremittancelist findById_notype(String billNo);//不查找webtype類型名稱
+	public void delete(String billNo,KyzExpectmatmLog log);
 	public PageBean findPageBean(int pageSize,int page,String visaTypem,String factNo,String billNo,WebUser usre);
 	public String findMaxBillNo(String factNo,String yymm);
 	public Map<String, Object> print(String factNo, String billNo, String sort,KyVisabillm vbm);

@@ -15,6 +15,7 @@ import mail.MailSenderInfo;
 import mail.SimpleMailSender;
 import services.IKyVisabillmServices;
 import services.IWebremittancelistServices;
+import services.IWebremittancelistsServices;
 import services.IWebuserEmailServices;
 import util.JasperHelper;
 import util.PageBean;
@@ -24,6 +25,7 @@ import com.opensymphony.xwork2.ActionSupport;
 
 import entity.KyVisabillm;
 import entity.KyzExpectmatm;
+import entity.KyzExpectmatmLog;
 import entity.WebBussinessletter;
 import entity.WebUser;
 import entity.Webremittancelist;
@@ -60,6 +62,7 @@ public class WebremittancelistAction extends ActionSupport implements ServletRes
 	private IWebremittancelistServices webremiSer;
 	private IKyVisabillmServices visabillmSer;
 	private IWebuserEmailServices webuseremailSer;
+	private IWebremittancelistsServices webremitsSer;
 	private javax.servlet.http.HttpServletResponse response;
 	
 	
@@ -172,6 +175,10 @@ public class WebremittancelistAction extends ActionSupport implements ServletRes
 		this.response=response;
 	}
 	
+	
+	public void setWebremitsSer(IWebremittancelistsServices webremitsSer) {
+		this.webremitsSer = webremitsSer;
+	}
 	public void add() throws IOException{
 		response.setContentType("text/html;charset=utf-8");
 		try{
@@ -315,7 +322,6 @@ public class WebremittancelistAction extends ActionSupport implements ServletRes
 	}
 	public String findById(){
 		webremit=webremiSer.findById(billNo);
-		System.out.println(webremit.getWebremittancelistses().size());
 		for(int i=0;i<webremit.getWebremittancelistses().size();i++){
 			if(Integer.parseInt(webremit.getWebremittancelistses().get(i).getId().getItemNo())>maxItemno){
 				maxItemno=Integer.parseInt(webremit.getWebremittancelistses().get(i).getId().getItemNo());//求最大序號
@@ -323,15 +329,61 @@ public class WebremittancelistAction extends ActionSupport implements ServletRes
 		}
 		return "findById";
 	}
+	
+	/**
+	 * 不查找webtype類型名稱
+	 * @Title: findById_notype
+	 * @Description: TODO
+	 * @param 
+	 * @return void
+	 * @throws
+	 * @author web
+	 * @date 2016/4/29
+	 */
+	public void findById_notype(){
+		webremit=webremiSer.findById_notype(billNo);
+	}
+	/********************函文審核彈出頁面**************************/
 	public String findById_layer(){
 		this.findById();
 		return "findById_layer";
 	}
+	/********************函文審核彈出頁面**************************/
+	
+	
+	/********************刪除細項彈出頁面**************************/
+	//1 開始進入細項刪除頁面
+	public String findById_layer2(){
+		this.findById_notype();
+		return "findById_layer2";
+	}
+	
+	//2 進入細項刪除頁面后，刪除細項，ajax返回的頁面（不帶任何樣式，便于與細項刪除頁面整合）
+	public String findById_layer3(){
+		this.findById_notype();
+		return "findById_layer3";
+	}
+	/********************刪除細項彈出頁面**************************/
 	
 	public String delete(){
-		webremiSer.delete(billNo);
+		KyzExpectmatmLog log=new KyzExpectmatmLog();
+		log.setObj("Webremittancelist");
+		log.setBillNo(billNo);
+		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
+		log.setUsername(user.getUsername());
+		webremiSer.delete(billNo,log);		
 		return "delete";
 	}
+	
+	public String delete_list(){
+		KyzExpectmatmLog log=new KyzExpectmatmLog();
+		log.setObj("Webremittancelists");
+		log.setBillNo(billNo);
+		log.setContent("No."+itemNo);		
+		webremitsSer.delete(billNo,itemNo,log);		
+		return "delete_list";
+	}
+	
 	public void print() throws IOException{				
 		Map<String,Object>map_result=webremiSer.print(factNo, billNo, visaType,null);
 		if(map_result!=null&&map_result.size()>0){

@@ -814,7 +814,13 @@
 		    </result>
 		    <result name="findById">saveAndUpdate/webremittancelistSaveOrUpdate.jsp</result>
 		    <result name="findById_layer">page/showwebremittancelist_layer.jsp</result>
+		    <result name="findById_layer2">page/webremittancelists_layer_delete.jsp</result>
+		     <result name="findById_layer3">page/webremittancelists_layer_delete2.jsp</result>
 		    <result name="delete" type="redirectAction">webremit_findPageBean3</result> 
+		    <result name="delete_list" type="redirectAction">
+		      <param name="actionName">webremit_findById_layer3</param>
+		      <param name="billNo">${billNo}</param>
+		    </result>
 		</action>
 	</package>
 

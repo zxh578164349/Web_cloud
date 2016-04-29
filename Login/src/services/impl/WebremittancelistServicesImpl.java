@@ -22,6 +22,7 @@ import dao.IWebFactDao;
 import dao.IWebremittancelistDao;
 import entity.KyVisabillm;
 import entity.KyVisabills;
+import entity.KyzExpectmatmLog;
 import entity.KyzVisaflow;
 import entity.WebBussinessletter;
 import entity.WebUser;
@@ -95,6 +96,11 @@ public class WebremittancelistServicesImpl implements IWebremittancelistServices
 		// TODO Auto-generated method stub
 		return webremitdao.findById(billNo);
 	}
+	
+	public Webremittancelist findById_notype(String billNo) {
+		// TODO Auto-generated method stub
+		return webremitdao.findById_notype(billNo);
+	}
 
 	/**
 	 * 日期:2016/4/25
@@ -102,9 +108,9 @@ public class WebremittancelistServicesImpl implements IWebremittancelistServices
 	 */
 	
 	
-	public void delete(String billNo) {
+	public void delete(String billNo,KyzExpectmatmLog log) {
 		// TODO Auto-generated method stub
-		webremitdao.delete(billNo);
+		webremitdao.delete(billNo,log);
 	}
 
 	/**

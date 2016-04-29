@@ -86,8 +86,8 @@ cursor: default ;
 /*菜單樣式*/
 .bigfont{font-size:18px;font-weight:bold;}
 .linkbg{background:#F38630}
-.smenu_font{font-size:13px}
-.mmenu_font{font-size:15px}
+.smenu_font{font-size:12px}
+.mmenu_font{font-size:16px}
 a{vertical-align:bottom}
 a:link{color:#335AA4;text-decoration:none;}
 a:visited{color:#335AA4; text-decoration:none} 

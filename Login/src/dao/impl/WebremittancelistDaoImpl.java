@@ -14,6 +14,7 @@ import com.opensymphony.xwork2.ActionContext;
 import util.PageBean;
 import dao.Basedao;
 import dao.IWebremittancelistDao;
+import entity.KyzExpectmatmLog;
 import entity.WebUser;
 import entity.Webremittancelist;
 
@@ -50,10 +51,10 @@ public class WebremittancelistDaoImpl extends Basedao implements IWebremittancel
 	 */
 	
 	
-	public void delete(String billNo) {
+	public void delete(String billNo,KyzExpectmatmLog log) {
 		// TODO Auto-generated method stub
 		Webremittancelist obj=this.findById(billNo);
-		super.delete(obj);
+		super.delete(obj,log);
 	}
 
 	/**
@@ -130,6 +131,21 @@ public class WebremittancelistDaoImpl extends Basedao implements IWebremittancel
 		query.setString(0, billNo);
 		Webremittancelist obj=(Webremittancelist)query.uniqueResult();
 		obj.getWebtype().getTypeName();
+		obj.getWebremittancelistses().size();
+		return obj;
+	}
+	
+	/**
+	 * 不查找webtype類型名稱
+	 * 日期:2016/4/29
+	 * 描述:
+	 */
+	public Webremittancelist findById_notype(String billNo) {
+		// TODO Auto-generated method stub
+		String hql="from Webremittancelist where billNo=?";
+		Query query=getSession().createQuery(hql);
+		query.setString(0, billNo);
+		Webremittancelist obj=(Webremittancelist)query.uniqueResult();
 		obj.getWebremittancelistses().size();
 		return obj;
 	}

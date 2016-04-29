@@ -92,6 +92,7 @@
 	<bean id="vkpievenewSer" class="services.impl.VKpifactEveNewServicesImpl"></bean>
 	<bean id="vwebuselessSer" class="services.impl.VWebuselessServicesImpl"></bean>
 	<bean id="webremiSer" class="services.impl.WebremittancelistServicesImpl"></bean>
+	<bean id="webremitsSer" class="services.impl.WebremittancelistsServicesImpl"></bean>
 </beans>
 
 

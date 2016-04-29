@@ -4,6 +4,7 @@
 package dao;
 
 import util.PageBean;
+import entity.KyzExpectmatmLog;
 import entity.WebUser;
 import entity.Webremittancelist;
 
@@ -23,7 +24,8 @@ import entity.Webremittancelist;
 public interface IWebremittancelistDao {
 	public void add(Webremittancelist obj);
 	public Webremittancelist findById(String billNo);
-	public void delete(String billNo);
+	public Webremittancelist findById_notype(String billNo);
+	public void delete(String billNo,KyzExpectmatmLog log);
 	public PageBean findPageBean(int pageSize,int page,String visaTypem,String factNo,String billNo,WebUser user);
 	public String findMaxBillNo(String factNo,String yymm);
 	
