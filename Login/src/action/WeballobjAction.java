@@ -238,15 +238,15 @@ public class WeballobjAction  extends ActionSupport implements ServletResponseAw
 					obj.setObjA116(Double.valueOf(list.get(17).split("__")[i]));
 					obj.setObjA117(Double.valueOf(list.get(18).split("__")[i]));
 					obj.setObjA118(Double.valueOf(list.get(19).split("__")[i]));
-					obj.setObjA119(Double.valueOf(list.get(20).split("__")[i]));
-					obj.setObjA120(Double.valueOf(list.get(21).split("__")[i]));
+					obj.setObjA119((int)Double.parseDouble(list.get(20).split("__")[i]));
+					obj.setObjA120((int)Double.parseDouble(list.get(21).split("__")[i]));
 					obj.setObjA121(Double.valueOf(list.get(22).split("__")[i]));
 					obj.setObjA122(Double.valueOf(list.get(23).split("__")[i]));
 					obj.setObjA123(Double.valueOf(list.get(24).split("__")[i]));
 					obj.setObjA124(Double.valueOf(list.get(25).split("__")[i]));
-					obj.setObjA125(Double.valueOf(list.get(26).split("__")[i]));
-					obj.setObjA126(Double.valueOf(list.get(27).split("__")[i]));
-					obj.setObjA127(Double.valueOf(list.get(28).split("__")[i]));
+					obj.setObjA125((int)Double.parseDouble(list.get(26).split("__")[i]));
+					obj.setObjA126((int)Double.parseDouble(list.get(27).split("__")[i]));
+					obj.setObjA127((int)Double.parseDouble(list.get(28).split("__")[i]));
 					obj.setObjA128(Double.valueOf(list.get(29).split("__")[i]));
 					obj.setObjA129(Double.valueOf(list.get(30).split("__")[i]));
 					obj.setObjA130(Double.valueOf(list.get(31).split("__")[i]));
@@ -381,6 +381,7 @@ public class WeballobjAction  extends ActionSupport implements ServletResponseAw
 		HSSFWorkbook wb=new HSSFWorkbook();
 		Map<String,Object>map_cs=findStyles(wb);
 		HSSFCellStyle cs=(HSSFCellStyle)map_cs.get("cs");
+		//HSSFCellStyle cs_poi2=(HSSFCellStyle)map_cs.get("cs_poi2");
 				
 		List<String>list_months=GlobalMethod.findMonths(yymm, yymm2);
 		List<String>list_col=findLeftCol();
@@ -441,15 +442,15 @@ public class WeballobjAction  extends ActionSupport implements ServletResponseAw
 						list_b.add(obj.getObjA116());
 						list_b.add(obj.getObjA117());
 						list_b.add(obj.getObjA118());
-						list_b.add(obj.getObjA119());
-						list_b.add(obj.getObjA120());
+						list_b.add(obj.getObjA119().doubleValue());
+						list_b.add(obj.getObjA120().doubleValue());
 						list_b.add(obj.getObjA121());
 						list_b.add(obj.getObjA122());
 						list_b.add(obj.getObjA123());
 						list_b.add(obj.getObjA124());
-						list_b.add(obj.getObjA125());
-						list_b.add(obj.getObjA126());
-						list_b.add(obj.getObjA127());
+						list_b.add(obj.getObjA125().doubleValue());
+						list_b.add(obj.getObjA126().doubleValue());
+						list_b.add(obj.getObjA127().doubleValue());
 						list_b.add(obj.getObjA128());
 						list_b.add(obj.getObjA129());
 						list_b.add(obj.getObjA130());
@@ -539,7 +540,7 @@ public class WeballobjAction  extends ActionSupport implements ServletResponseAw
 						List<Double>list_b=list_a.get(a);
 						for(int b=0;b<list_b.size();b++){
 							sheet.getRow(3+b).getCell(3+a).setCellValue(list_b.get(b));
-							sheet.getRow(3+b).getCell(3+a).setCellStyle(cs);
+							sheet.getRow(3+b).getCell(3+a).setCellStyle(this.findStyleByIndex(map_cs, b));
 						}
 					}
 				}else{
@@ -826,7 +827,7 @@ public class WeballobjAction  extends ActionSupport implements ServletResponseAw
 		map.put("cs_percent", cs_percent);
 		
 		HSSFCellStyle cs_poi=wb.createCellStyle();
-		cs_poi.setDataFormat(format.getFormat("#,###,0"));
+		cs_poi.setDataFormat(format.getFormat("#,##0"));
 		cs_poi.setAlignment(HSSFCellStyle.ALIGN_CENTER);
 		cs_poi.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
 		cs_poi.setBorderTop(HSSFCellStyle.BORDER_THIN);
@@ -836,7 +837,7 @@ public class WeballobjAction  extends ActionSupport implements ServletResponseAw
 		map.put("cs_poi", cs_poi);
 		
 		HSSFCellStyle cs_poi1=wb.createCellStyle();
-		cs_poi1.setDataFormat(format.getFormat("#,###,0.0"));
+		cs_poi1.setDataFormat(format.getFormat("#,##0.0"));
 		cs_poi1.setAlignment(HSSFCellStyle.ALIGN_CENTER);
 		cs_poi1.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
 		cs_poi1.setBorderTop(HSSFCellStyle.BORDER_THIN);
@@ -846,7 +847,7 @@ public class WeballobjAction  extends ActionSupport implements ServletResponseAw
 		map.put("cs_poi1", cs_poi1);
 		
 		HSSFCellStyle cs_poi2=wb.createCellStyle();
-		cs_poi2.setDataFormat(format.getFormat("#,###,0.00"));
+		cs_poi2.setDataFormat(format.getFormat("#,##0.00"));
 		cs_poi2.setAlignment(HSSFCellStyle.ALIGN_CENTER);
 		cs_poi2.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
 		cs_poi2.setBorderTop(HSSFCellStyle.BORDER_THIN);
@@ -868,6 +869,18 @@ public class WeballobjAction  extends ActionSupport implements ServletResponseAw
 		return map;
 	}
 
+	
+	public HSSFCellStyle findStyleByIndex(Map<String,Object>map,int index){
+		HSSFCellStyle cs=(HSSFCellStyle)map.get("cs_poi2");
+		if(index==19||index==20||index==25||index==26||index==27){
+			cs=(HSSFCellStyle)map.get("cs_poi");
+		}
+		if(index==1||index==3||index==5||(index>=121&&index<=124)||index==163||(index>=169&&index<=176)){
+			cs=(HSSFCellStyle)map.get("cs_poi1");
+		}
+		return cs;
+		
+	}
 	
 	
 	

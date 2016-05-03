@@ -66,7 +66,7 @@
     <bean id="CronTriggerBeanA" class="org.springframework.scheduling.quartz.CronTriggerBean">
       <property name="jobDetail" ref="quantzjobBeanA"></property>
       <property name="cronExpression" value="0 0 10 * * ?"></property>      
-    </bean>
+    </bean>   
     <bean id="CronTriggerBeanB" class="org.springframework.scheduling.quartz.CronTriggerBean">
       <property name="jobDetail" ref="quantzjobBeanA"></property>
       <property name="cronExpression" value="0 0 16 * * ?"></property>      
@@ -78,17 +78,22 @@
     <bean id="CronTriggerBeanD" class="org.springframework.scheduling.quartz.CronTriggerBean">
       <property name="jobDetail" ref="quantzjobBeanC"></property>
       <property name="cronExpression" value="0 59 23 L * ?"></property>    
+    </bean>
+    <bean id="CronTriggerBeanE" class="org.springframework.scheduling.quartz.CronTriggerBean">
+      <property name="jobDetail" ref="quantzjobBeanA"></property>
+      <property name="cronExpression" value="0 0 13 * * ?"></property>      
     </bean> 
     
     <!-- 启动调度 -->
     <bean id="startQuartz" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
         <property name="triggers">
             <list>
-                <!-- <ref bean="CronTriggerBean"/>14點 產量資料錶  
-                <ref bean="CronTriggerBeanA"/>(第一次) 10點  下一位簽核人  
-                <ref bean="CronTriggerBeanB"/>(第二次) 16點  下一位簽核人    
-                <ref bean="CronTriggerBeanC"/>  12點  簽核完畢知會  
-                <ref bean="CronTriggerBeanD"/>每月最後一天24點運行  -->
+                <ref bean="CronTriggerBean"/><!-- 14點 產量資料錶  --> 
+                <ref bean="CronTriggerBeanA"/><!-- (第一次) 10點  下一位簽核人 -->  
+                <ref bean="CronTriggerBeanB"/><!-- (第二次) 16點  下一位簽核人 -->    
+                <ref bean="CronTriggerBeanC"/>  <!-- 12點  簽核完畢知會   -->
+                <ref bean="CronTriggerBeanD"/><!-- 每月最後一天24點運行 -->
+                <ref bean="CronTriggerBeanE"/><!-- (第三次) 13點  下一位簽核人 -->				
             </list>
             
         </property>        

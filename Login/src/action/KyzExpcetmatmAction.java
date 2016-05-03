@@ -838,6 +838,50 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 		return "findById_layer2";
 	}
 	
+	/**
+	 * 各細項刪除頁面
+	 * @Title: findById_layer3
+	 * @Description: TODO
+	 * @param @return
+	 * @return String
+	 * @throws
+	 * @author web
+	 * @date 2016/5/3
+	 */
+	public String findById_layer3(){
+		kyz=kyzSer.findById(new KyzExpectmatmId(factNo,billNo));
+		return "findById_layer3";
+	}
+	
+	/**
+	 * 各細項刪除
+	 * @Title: delete_lists
+	 * @Description: TODO
+	 * @param @return
+	 * @return String
+	 * @throws
+	 * @author web
+	 * @date 2016/5/3
+	 */
+	public String delete_lists(){
+		kyzsSer.delete(factNo, billNo, itemNo);
+		return "delete_lists";
+	}
+	/**
+	 * 各細項刪除後返回的頁面
+	 * @Title: findById_layer4
+	 * @Description: TODO
+	 * @param @return
+	 * @return String
+	 * @throws
+	 * @author web
+	 * @date 2016/5/3
+	 */
+	public String findById_layer4(){
+		kyz=kyzSer.findById(new KyzExpectmatmId(factNo,billNo));
+		return "findById_layer4";
+	}
+	
 	  public  String codeUtf(String str) throws UnsupportedEncodingException {
 		    Pattern p = Pattern.compile("[/u4e00-/u9fa5]+");
 		    Matcher m = p.matcher(str);
@@ -1083,5 +1127,7 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 	public String toUrl2(String filename){
 		return filename.replace("+", "%20");
 	}
+	
+	
 	
 }

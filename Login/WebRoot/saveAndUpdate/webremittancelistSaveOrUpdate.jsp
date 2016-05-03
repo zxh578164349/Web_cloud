@@ -66,7 +66,6 @@ function makeBillNo() {
 				url:"webremit_makeBillNo",
 				success:function(data){
 					jq("#webremit_billno").val(data);
-					jq("#webremits_billno").val(data);
 				},
 				error:function(error){
 					alert(error.responseText);
@@ -443,7 +442,7 @@ jq(function(){
 			      <td ><input type="text" name="webremit.webremittancelistses[${x.index}].acAmount" value="<s:property value='acAmount'/>" size="15"/></td>
 			      <td>
 			      <input type="text" name="webremit.webremittancelistses[${x.index}].remark" value="<s:property value='remark'/>" size="15"/>
-			      <input type="hidden" name="webremit.webremittancelistses[${x.index}].id.webremittancelist.billNo" value="<s:property value='id.webremittancelist.billNo'/>" id="webremits_billno"/>
+			      <input type="hidden" name="webremit.webremittancelistses[${x.index}].id.webremittancelist.billNo" value="<s:property value='id.webremittancelist.billNo'/>" />
 			      <input type="hidden" name="webremit.webremittancelistses[${x.index}].id.itemNo" value="<s:property value='id.itemNo'/>"/>	
 			     
 			      </td>			      		      

@@ -632,6 +632,14 @@
 		  <result name="delete" type="redirectAction">kyz_findPageBean3</result>
 		  <result name="findById_layer">page/showMatterApplication_layer.jsp</result>
 		  <result name="findById_layer2">page/showMatterApplication_layer2.jsp</result>
+		  <result name="findById_layer3">page/kyz_expectmats_layer_delete.jsp</result>
+		  <result name="findById_layer4">page/kyz_expectmats_layer_delete2.jsp</result>
+		  <result name="delete_lists" type="redirectAction">
+		      <param name="actionName">kyz_findById_layer4</param>
+		      <param name="factNo">${factNo}</param>
+		      <param name="billNo">${billNo}</param>
+		      <param name="itemNo">${itemNo}</param>
+		  </result>
 		  <result name="findVisaBills">/page/kyvisabills.jsp</result>
 		  <result name="download" type="stream">
          <param name="contentType">application/octet-stream;charset=utf-8</param>

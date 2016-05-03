@@ -88,7 +88,7 @@
 		<tbody id="tbody">
 		<s:iterator value="bean.list" status="x" id="temp">		  
 		     <tr > 
-				<td>${25*(bean.currentPage-1)+x.index+1}</td>
+				<td>${25*(bean.currentPage-1)+x.index+1}</td>																
 				<td><s:property value="memoSmk" /></td>
 				<td><s:property value="telNo" /></td>
 				<td><s:property value="secNo" /></td>
@@ -145,7 +145,8 @@
 					  </form>
 					  <!-- <a href="javascript:showDiv('<s:property value='id.billNo'/>','<s:property value='id.factNo'/>')" onclick=""><img alt="查看" src="images/icon/view002.png" title="查看" ></a> -->
 					 <a href="javascript:document.getElementById('3subform${x.index}').submit()"><img alt="預覽" src="images/icon/view001.png" title="預覽" ></a>
-					 <a href="javascript:document.getElementById('4subform${x.index}').submit()" ><img alt="打印" src="images/icon/print001.png" title="打印" ></a>						 
+					 <a href="javascript:document.getElementById('4subform${x.index}').submit()" ><img alt="打印" src="images/icon/print001.png" title="打印" ></a>
+					 <a href="javascript:showDivList('${temp.id.factNo}','${temp.id.billNo}')" ><img alt="函文細項" src="images/icon/list_menu.png" title="函文細項"></a>						 
 				</td>
 			</tr>
 		  

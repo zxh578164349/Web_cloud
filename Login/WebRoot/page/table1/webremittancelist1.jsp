@@ -58,7 +58,7 @@
 		<tbody id="tbody">
 		<s:iterator value="bean.list" status="x" id="temp">		  
 		     <tr> 
-				<td><a href="javascript:showDivList('${temp.billNo}')" alt="刪除細項"><b>${25*(bean.currentPage-1)+x.index+1}</b></a></td>
+				<td>${25*(bean.currentPage-1)+x.index+1}</td>							
 				<td><s:property value="factNo" /></td>
 				<td><s:property value="factCode" /></td>
 				<td><s:property value="yymm"/></td>
@@ -92,7 +92,8 @@
 						 <input type="hidden" value="down" name="lookordown"/>											
 					  </form>					  
 					 <a href="javascript:document.getElementById('3subform${x.index}').submit()"><img alt="預覽" src="images/icon/view001.png" title="預覽" ></a>
-					 <a href="javascript:document.getElementById('4subform${x.index}').submit()" ><img alt="打印" src="images/icon/print001.png" title="打印" ></a>						 
+					 <a href="javascript:document.getElementById('4subform${x.index}').submit()" ><img alt="打印" src="images/icon/print001.png" title="打印" ></a>	
+					 <a href="javascript:showDivList('${temp.billNo}')" ><img alt="清單內容" src="images/icon/list_menu.png" title="清單內容"></a>					 
 				</td>
 			</tr>
 		  
