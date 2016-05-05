@@ -125,5 +125,7 @@ public interface IWebFactServices {
 	 * @date 2016/4/6
 	 */
 	public List<Object[]>findFactAble2();
+	
+	public List<String> findByFactNo_showA(String factNo);
 
 }

@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -18,6 +19,11 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.poi.hssf.usermodel.HSSFCellStyle;
+import org.apache.poi.hssf.usermodel.HSSFDataFormat;
+import org.apache.poi.hssf.usermodel.HSSFFont;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.struts2.ServletActionContext;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
@@ -298,14 +304,13 @@ public class GlobalMethod extends HibernateDaoSupport{
         System.out.println(frm.format(cal.getTime()));*/
         
         
-        String str="452.0";
-        int aa=(int)Double.parseDouble(str);
-        int bb=Integer.parseInt(str);
-        System.out.println(aa);
+        BigDecimal bb=new BigDecimal(1234788.5633);
         System.out.println(bb);
-        
-       
-       
+        System.out.println(new DecimalFormat("0.00%").format(bb));
+        System.out.println(new DecimalFormat("#,##0.0").format(bb.doubleValue()));
+        System.out.println(new DecimalFormat("#,##0.00").format(bb));       
+        System.out.println(new DecimalFormat("###0.000").format(bb));
+        System.out.println(new DecimalFormat("#,##0.000").parse("2,222,22.3"));
        
 						
 	}
@@ -414,6 +419,237 @@ public class GlobalMethod extends HibernateDaoSupport{
 			}
 		}		
 		return list;
+	}
+	
+	/**
+	 * 所有樣式
+	 * @Title: findStyles
+	 * @Description: TODO
+	 * @param @param wb
+	 * @param @return
+	 * @return Map<String,Object>
+	 * @throws
+	 * @author web
+	 * @date 2016/4/6
+	 */
+	public static Map<String,Object> findStyles(HSSFWorkbook wb){
+		/**
+		 * 報表相關樣式
+		 */
+		Map<String,Object>map=new HashMap<String,Object>();
+		//標題樣式
+		HSSFCellStyle cs_head=wb.createCellStyle();
+		HSSFFont font_head=wb.createFont();
+		font_head.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+		font_head.setFontHeightInPoints((short)20);
+		cs_head.setFont(font_head);
+		cs_head.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		cs_head.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		map.put("cs_head", cs_head);
+		
+		//標準單元格樣式
+		HSSFCellStyle cs=wb.createCellStyle();
+		cs.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		cs.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		cs.setBorderTop(HSSFCellStyle.BORDER_THIN);
+		cs.setBorderRight(HSSFCellStyle.BORDER_THIN);
+		cs.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+		cs.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+		map.put("cs", cs);
+		//表頭樣式
+		HSSFCellStyle cs_column=wb.createCellStyle();
+		HSSFFont font_column=wb.createFont();
+		font_column.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+		font_column.setFontHeightInPoints((short)12);
+		cs_column.setFont(font_column);
+		cs_column.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		cs_column.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		cs_column.setBorderTop(HSSFCellStyle.BORDER_THIN);
+		cs_column.setBorderRight(HSSFCellStyle.BORDER_THIN);
+		cs_column.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+		cs_column.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+		cs_column.setFillForegroundColor(IndexedColors.YELLOW.getIndex());
+		cs_column.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+		map.put("cs_column", cs_column);
+		
+		
+		
+		//紅色加粗字體
+		HSSFFont font_red=wb.createFont();
+		font_red.setColor(IndexedColors.RED.getIndex());
+		font_red.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+		
+		/**********************分類+項目+單位*****************************/
+		HSSFFont font_bold = wb.createFont();
+		font_bold.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+		//font_bold.setFontHeightInPoints((short) 10);
+		// 藍色背景粗字體
+		HSSFCellStyle cs_blue = wb.createCellStyle();
+		cs_blue.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		cs_blue.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		cs_blue.setBorderTop(HSSFCellStyle.BORDER_THIN);
+		cs_blue.setBorderRight(HSSFCellStyle.BORDER_THIN);
+		cs_blue.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+		cs_blue.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+		cs_blue.setFillForegroundColor(IndexedColors.LIGHT_BLUE.getIndex());
+		cs_blue.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+		cs_blue.setFont(font_bold);
+		map.put("cs_blue", cs_blue);
+		// 標準粗字體樣式
+		HSSFCellStyle cs_bold = wb.createCellStyle();
+		cs_bold.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		cs_bold.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		cs_bold.setBorderTop(HSSFCellStyle.BORDER_THIN);
+		cs_bold.setBorderRight(HSSFCellStyle.BORDER_THIN);
+		cs_bold.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+		cs_bold.setBorderLeft(HSSFCellStyle.BORDER_THIN);		
+		cs_bold.setFont(font_bold);
+		map.put("cs_bold", cs_bold);
+		
+		//紅色粗字體樣式
+		HSSFCellStyle cs_red=wb.createCellStyle();
+		cs_red.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		cs_red.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);		
+		cs_red.setFont(font_red);
+		map.put("cs_red", cs_red);
+		/**********************分類+項目+單位*****************************/
+		
+		/**
+		 * 數字格式（有背景顏色與無背景顏色）
+		 */
+		
+		HSSFDataFormat format=wb.createDataFormat();
+		//無背景
+		HSSFCellStyle cs_percent=wb.createCellStyle();
+		cs_percent.setDataFormat(format.getFormat("0.00%"));
+		cs_percent.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		cs_percent.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		cs_percent.setBorderTop(HSSFCellStyle.BORDER_THIN);
+		cs_percent.setBorderRight(HSSFCellStyle.BORDER_THIN);
+		cs_percent.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+		cs_percent.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+		map.put("cs_percent", cs_percent);
+		
+		HSSFCellStyle cs_poi=wb.createCellStyle();
+		cs_poi.setDataFormat(format.getFormat("#,###,0"));
+		cs_poi.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		cs_poi.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		cs_poi.setBorderTop(HSSFCellStyle.BORDER_THIN);
+		cs_poi.setBorderRight(HSSFCellStyle.BORDER_THIN);
+		cs_poi.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+		cs_poi.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+		map.put("cs_poi", cs_poi);
+		
+		HSSFCellStyle cs_poi1=wb.createCellStyle();
+		cs_poi1.setDataFormat(format.getFormat("#,###,0.0"));
+		cs_poi1.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		cs_poi1.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		cs_poi1.setBorderTop(HSSFCellStyle.BORDER_THIN);
+		cs_poi1.setBorderRight(HSSFCellStyle.BORDER_THIN);
+		cs_poi1.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+		cs_poi1.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+		map.put("cs_poi1", cs_poi1);
+		
+		HSSFCellStyle cs_poi2=wb.createCellStyle();
+		cs_poi2.setDataFormat(format.getFormat("#,###,0.00"));
+		cs_poi2.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		cs_poi2.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		cs_poi2.setBorderTop(HSSFCellStyle.BORDER_THIN);
+		cs_poi2.setBorderRight(HSSFCellStyle.BORDER_THIN);
+		cs_poi2.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+		cs_poi2.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+		map.put("cs_poi2", cs_poi2);
+		
+		HSSFCellStyle cs_poi4=wb.createCellStyle();
+		cs_poi4.setDataFormat(format.getFormat("#,###,0.0000"));
+		cs_poi4.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		cs_poi4.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		cs_poi4.setBorderTop(HSSFCellStyle.BORDER_THIN);
+		cs_poi4.setBorderRight(HSSFCellStyle.BORDER_THIN);
+		cs_poi4.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+		cs_poi4.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+		map.put("cs_poi4", cs_poi4);
+		//有背景
+		HSSFCellStyle cs_percent_bg=wb.createCellStyle();
+		cs_percent_bg.setDataFormat(format.getFormat("0.00%"));
+		cs_percent_bg.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		cs_percent_bg.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		cs_percent_bg.setBorderTop(HSSFCellStyle.BORDER_THIN);
+		cs_percent_bg.setBorderRight(HSSFCellStyle.BORDER_THIN);
+		cs_percent_bg.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+		cs_percent_bg.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+		//cs_percent_bg.setFillForegroundColor(IndexedColors.BRIGHT_GREEN.getIndex());
+		//cs_percent_bg.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+		cs_percent_bg.setFont(font_red);
+		map.put("cs_percent_bg", cs_percent_bg);
+		
+		
+		HSSFCellStyle cs_poi_bg=wb.createCellStyle();
+		cs_poi_bg.setDataFormat(format.getFormat("#,###,0"));
+		cs_poi_bg.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		cs_poi_bg.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		cs_poi_bg.setBorderTop(HSSFCellStyle.BORDER_THIN);
+		cs_poi_bg.setBorderRight(HSSFCellStyle.BORDER_THIN);
+		cs_poi_bg.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+		cs_poi_bg.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+		//cs_poi_bg.setFillForegroundColor(IndexedColors.BRIGHT_GREEN.getIndex());
+		//cs_poi_bg.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+		cs_poi_bg.setFont(font_red);
+		map.put("cs_poi_bg", cs_poi_bg);
+		
+		HSSFCellStyle cs_poi1_bg=wb.createCellStyle();
+		cs_poi1_bg.setDataFormat(format.getFormat("#,###,0.0"));
+		cs_poi1_bg.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		cs_poi1_bg.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		cs_poi1_bg.setBorderTop(HSSFCellStyle.BORDER_THIN);
+		cs_poi1_bg.setBorderRight(HSSFCellStyle.BORDER_THIN);
+		cs_poi1_bg.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+		cs_poi1_bg.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+		//cs_poi1_bg.setFillForegroundColor(IndexedColors.BRIGHT_GREEN.getIndex());
+		//cs_poi1_bg.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+		cs_poi1_bg.setFont(font_red);
+		map.put("cs_poi1_bg", cs_poi1_bg);
+		
+		HSSFCellStyle cs_poi2_bg=wb.createCellStyle();
+		cs_poi2_bg.setDataFormat(format.getFormat("#,###,0.00"));
+		cs_poi2_bg.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		cs_poi2_bg.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		cs_poi2_bg.setBorderTop(HSSFCellStyle.BORDER_THIN);
+		cs_poi2_bg.setBorderRight(HSSFCellStyle.BORDER_THIN);
+		cs_poi2_bg.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+		cs_poi2_bg.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+		//cs_poi2_bg.setFillForegroundColor(IndexedColors.BRIGHT_GREEN.getIndex());
+		//cs_poi2_bg.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+		cs_poi2_bg.setFont(font_red);
+		map.put("cs_poi2_bg", cs_poi2_bg);
+		
+		HSSFCellStyle cs_poi4_bg=wb.createCellStyle();
+		cs_poi4_bg.setDataFormat(format.getFormat("#,###,0.0000"));
+		cs_poi4_bg.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		cs_poi4_bg.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		cs_poi4_bg.setBorderTop(HSSFCellStyle.BORDER_THIN);
+		cs_poi4_bg.setBorderRight(HSSFCellStyle.BORDER_THIN);
+		cs_poi4_bg.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+		cs_poi4_bg.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+		//cs_poi4_bg.setFillForegroundColor(IndexedColors.BRIGHT_GREEN.getIndex());
+		//cs_poi4_bg.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+		cs_poi4_bg.setFont(font_red);
+		map.put("cs_poi4_bg", cs_poi4_bg);
+		return map;
+	}
+	
+	/**
+	 * 避免除數為0的方法
+	 * @param d1
+	 * @param d2
+	 * @return
+	 */
+	public Double division(Double d1,Double d2){
+		Double db=0.00;
+		if(d2!=0.00){
+			db=d1/d2;
+		}
+		return db;
 	}
 
 }

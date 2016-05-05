@@ -232,4 +232,15 @@ public class WebFactServicesImpl implements IWebFactServices {
 		return webFactDao.findAllFact_showA();
 	}
 
+	/**
+	 * 日期:2016/5/5
+	 * 描述:
+	 */
+	
+	
+	public List<String> findByFactNo_showA(String factNo) {
+		// TODO Auto-generated method stub
+		return webFactDao.findByFactNo_showA(factNo);
+	}
+
 }
