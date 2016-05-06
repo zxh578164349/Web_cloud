@@ -93,5 +93,6 @@
 	<bean id="vwebuselessdao" class="dao.impl.VWebuselessDaoImpl" parent="baseDao"></bean>
 	<bean id="webremitdao" class="dao.impl.WebremittancelistDaoImpl" parent="baseDao"></bean>
 	<bean id="webremitsdao" class="dao.impl.WebremittancelistsDaoImpl" parent="baseDao"></bean>
+	<bean id="vwebprolossdao" class="dao.impl.VWebprofitlossEveDaoImpl" parent="baseDao"></bean>
 </beans>
 

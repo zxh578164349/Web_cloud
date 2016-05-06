@@ -3,8 +3,16 @@
  */
 package action;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.text.DateFormat;
 import java.text.DecimalFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -12,9 +20,11 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.struts2.interceptor.ServletResponseAware;
 
 import entity.VWebprofitlossEve;
@@ -83,10 +93,15 @@ public class VWebprofitlossEveAction implements ServletResponseAware{
 		this.response=response;
 	}
 	
-	public void print_fact(){
+	public void print_fact() throws IOException{
+		year="2016";
+		factNo="XS";
+		
 		HSSFWorkbook wb=new HSSFWorkbook();
 		Map<String,Object>map_data=new HashMap<String,Object>();
 		Map<String,Object>map_cs=GlobalMethod.findStyles(wb);
+		HSSFCellStyle cs=(HSSFCellStyle)map_cs.get("cs");
+		List<String>list_head=findHead();//表頭
 		//獲取一年所有月份+上一年的12份
 		List<String>list_month=new ArrayList<String>();
 		list_month.add(Integer.parseInt(year)-1+"12");
@@ -108,10 +123,11 @@ public class VWebprofitlossEveAction implements ServletResponseAware{
 			map_data.put(factcode, list);
 		}//for a
 		
-		List<VWebprofitlossEve>list_eve=vwebprolossSer.findByYymm(yymm, yymm2);
+		List<VWebprofitlossEve>list_eve=vwebprolossSer.findByYymm(list_month.get(0), list_month.get(12));//開始：上年12月      結束：今年12月
+		
 		for(String factcode:map_data.keySet()){//for a
 			List<VWebprofitlossEve> list=(List<VWebprofitlossEve>)map_data.get(factcode);
-			for(int b=0;b<list.size();b++){
+			for(int b=0;b<list.size();b++){//for b
 				for(VWebprofitlossEve eve:list_eve){
 					if(list.get(b).getId().getFactNo().equals(eve.getId().getFactNo())
 					   &&list.get(b).getId().getFactCode().equals(eve.getId().getFactCode())
@@ -121,8 +137,85 @@ public class VWebprofitlossEveAction implements ServletResponseAware{
 						break;
 					}					
 				}
+			}//for b
+			List<List<String>>list_a=new ArrayList<List<String>>();
+			for(int b=1;b<list.size();b++){
+				List<String>list_b=this.findResult(1, list.get(b), list.get(b-1));
+				list_a.add(list_b);
 			}
+			map_data.put(factcode, list_a);
+			
+			
+			
+			
 		}//for a
+		
+		
+		
+		
+		this.init(wb, map_data, map_cs,list_head);
+		for(String factcode:map_data.keySet()){
+			HSSFSheet sheet=wb.getSheet(factcode);
+			List<List<String>>list_a=(List<List<String>>)map_data.get(factcode);
+			for(int a=0;a<list_a.size();a++){
+				List<String>list_b=list_a.get(a);
+				for(int b=0;b<list_b.size();b++){
+					sheet.getRow(4+b).getCell(3+a).setCellValue(list_b.get(b));
+					sheet.getRow(4+b).getCell(3+a).setCellStyle(cs);
+				}
+			}
+		}
+		OutputStream os=new FileOutputStream("e:\\webprofiless.xls");
+		wb.write(os);
+		os.close();
+	}
+	
+	public void print_month() throws ParseException, IOException{
+		factNo="632";
+		HSSFWorkbook wb=new HSSFWorkbook();
+		Map<String,Object>map_data=new HashMap<String,Object>();
+		Map<String,Object>map_cs=GlobalMethod.findStyles(wb);
+		List<String>list_head=findHead2();//表頭
+		List<String>list_month=new ArrayList<String>();
+		Calendar cal=Calendar.getInstance();
+		DateFormat fmt=new SimpleDateFormat("yyyyMM");
+		cal.setTime(fmt.parse(yymm));
+		cal.add(Calendar.MONTH, -1);
+		list_month.add(fmt.format(cal.getTime()));//開始月份的上月
+		for(int a=3;a<list_head.size()-1;a++){
+			list_month.add(list_head.get(a));
+		}
+		
+		//獲取一箇廠的factCode
+				List<String>list_factcode=webFactSer.findByFactNo_showA(factNo);
+				for(String factcode:list_factcode){//for a
+					List<VWebprofitlossEve>list=new ArrayList<VWebprofitlossEve>();
+					for(String month:list_month){
+						list.add(new VWebprofitlossEve(new VWebprofitlossEveId(factNo,factcode,month)));
+					}
+					map_data.put(factcode, list);
+				}//for a
+				
+				List<VWebprofitlossEve>list_eve=vwebprolossSer.findByYymm(yymm, yymm2);
+				for(String factcode:map_data.keySet()){//for a
+					List<VWebprofitlossEve> list=(List<VWebprofitlossEve>)map_data.get(factcode);
+					for(int b=0;b<list.size();b++){
+						for(VWebprofitlossEve eve:list_eve){
+							if(list.get(b).getId().getFactNo().equals(eve.getId().getFactNo())
+							   &&list.get(b).getId().getFactCode().equals(eve.getId().getFactCode())
+							   &&list.get(b).getId().getYymm().equals(eve.getId().getYymm())){
+								list.remove(b);
+								list.add(b, eve);
+								break;
+							}					
+						}
+					}
+				}//for a
+				
+				this.init(wb, map_data, map_cs,list_head);
+				OutputStream os=new FileOutputStream("e:\\webprofiless.xls");
+				wb.write(os);
+				os.close();
 		
 		
 	}
@@ -589,29 +682,76 @@ public class VWebprofitlossEveAction implements ServletResponseAware{
 	 * @author web
 	 * @date 2016/5/5
 	 */
-	public void init(HSSFWorkbook wb,Map<String,Object>map_data,Map<String,Object>map_cs){
-		List<String>list_head=findHead();
-		Map<String,Object>map=findItems();
+	public void init(HSSFWorkbook wb,Map<String,Object>map_data,Map<String,Object>map_cs,List<String>list_head){
 		
+		Map<String,Object>map=findItems();//左三列
+		HSSFCellStyle cs_head=(HSSFCellStyle)map_cs.get("cs_head");
+		HSSFCellStyle cs_column=(HSSFCellStyle)map_cs.get("cs_column");
+		HSSFCellStyle cs_bold=(HSSFCellStyle)map_cs.get("cs_bold");
+				
 		//注意：初始行：150，初始列：30;項目有擴展時，要在這裏擴展行與列
 		for(String factcode:map_data.keySet()){//for
 			HSSFSheet sheet=wb.createSheet(factcode);
+			for(int a=0;a<2;a++){
+				sheet.setColumnWidth(a, 4800);
+			}			
 			for(int a=0;a<150;a++){
 				sheet.createRow(a);
 				for(int b=0;b<30;b++){
 					sheet.getRow(a).createCell(b);
 				}
-			}			
+			}
+			//標題
+			CellRangeAddress cra_head=new CellRangeAddress(0,0,0,10);
+			sheet.addMergedRegion(cra_head);
+			sheet.getRow(0).getCell(0).setCellValue(factNo+"每月檢討統計表");
+			for(int a=0;a<11;a++){
+				sheet.getRow(0).getCell(a).setCellStyle(cs_head);
+			}
+			//廠別狀態
+			sheet.getRow(2).getCell(0).setCellValue(factcode);
+			//表頭
+			for(int a=0;a<list_head.size();a++){
+				sheet.getRow(3).getCell(a).setCellValue(list_head.get(a));
+				sheet.getRow(3).getCell(a).setCellStyle(cs_column);
+			}
+			//項目,細項，單位
+			int idx=4;
+			int idx2=4;			
+			for(String item:map.keySet()){				
+				idx=idx2;
+				idx2=idx+((List<String>)map.get(item)).size();
+				CellRangeAddress cra_left=new CellRangeAddress(idx,idx2-1,0,0);
+				sheet.addMergedRegion(cra_left);
+				sheet.getRow(idx).getCell(0).setCellValue(item);
+				for(int a=idx;a<idx2;a++){
+					sheet.getRow(a).getCell(1).setCellValue(((List<String>)map.get(item)).get(a-idx).split("__")[0]);
+					sheet.getRow(a).getCell(2).setCellValue(((List<String>)map.get(item)).get(a-idx).split("__")[1]);
+					for(int b=0;b<3;b++){
+						sheet.getRow(a).getCell(b).setCellStyle(cs_bold);
+					}					
+				}
+			}									
 		}//for
 		
 	}
 	
+	/**
+	 * 對工廠（全年）
+	 * @Title: findHead
+	 * @Description: TODO
+	 * @param @return
+	 * @return List<String>
+	 * @throws
+	 * @author web
+	 * @date 2016/5/6
+	 */
 	public List<String>findHead(){
 		List<String>list=new ArrayList<String>();
 		list.add("項目");
 		list.add("細項");
 		list.add("單位");
-		list.add("1月");
+		/*list.add("1月");
 		list.add("2月");
 		list.add("3月");
 		list.add("Q1");
@@ -629,8 +769,326 @@ public class VWebprofitlossEveAction implements ServletResponseAware{
 		list.add("12月");
 		list.add("Q4");
 		list.add("下半年");
-		list.add("全年");
+		list.add("全年");*/
+		
+		list.add("1月");
+		list.add("2月");
+		list.add("3月");
+
+		list.add("4月");
+		list.add("5月");
+		list.add("6月");
+
+		list.add("7月");
+		list.add("8月");
+		list.add("9月");
+
+		list.add("10月");
+		list.add("11月");
+		list.add("12月");
+
 		return list;
+	}
+	
+	/**
+	 * 對工廠（多箇月）
+	 * @Title: findHead2
+	 * @Description: TODO
+	 * @param @return
+	 * @return List<String>
+	 * @throws ParseException 
+	 * @throws
+	 * @author web
+	 * @date 2016/5/6
+	 */
+	public List<String>findHead2() throws ParseException{
+		yymm="201602";
+		yymm2="201605";
+		List<String>list=new ArrayList<String>();
+		list.add("項目");
+		list.add("細項");
+		list.add("單位");		
+		List<String>list2=GlobalMethod.findMonths(yymm, yymm2);
+		for(String month:list2){
+			list.add(month);
+		}
+		list.add("合計");
+		return list;
+	}
+	
+	public List<VWebprofitlossEve> findList7(List<VWebprofitlossEve>list){
+		List<VWebprofitlossEve>list7=new ArrayList<VWebprofitlossEve>();
+		for(int a=0;a<list7.size();a++){
+			list7.add(new VWebprofitlossEve());
+		}
+		int b_index=0;
+		for(int b=1;b<list.size();b++){//for b
+			b_index=(b-1)/3+1;
+			list7.get(b_index).setHole(list7.get(b_index).getHole()+list.get(b).getHole());			
+			list7.get(b_index).setObjA100(list7.get(b_index).getObjA100()+list.get(b).getObjA100());
+			list7.get(b_index).setObjA101(list7.get(b_index).getObjA101()+list.get(b).getObjA101());
+			list7.get(b_index).setObjA102(list7.get(b_index).getObjA102()+list.get(b).getObjA102());
+			list7.get(b_index).setObjA103(list7.get(b_index).getObjA103()+list.get(b).getObjA103());
+			list7.get(b_index).setObjA104(list7.get(b_index).getObjA104()+list.get(b).getObjA104());
+			list7.get(b_index).setObjA105(list7.get(b_index).getObjA105()+list.get(b).getObjA105());
+			list7.get(b_index).setObjA106(list7.get(b_index).getObjA106()+list.get(b).getObjA106());
+			list7.get(b_index).setObjA107(list7.get(b_index).getObjA107()+list.get(b).getObjA107());
+			list7.get(b_index).setObjA108(list7.get(b_index).getObjA108()+list.get(b).getObjA108());
+			list7.get(b_index).setObjA109(list7.get(b_index).getObjA109()+list.get(b).getObjA109());
+			list7.get(b_index).setObjA110(list7.get(b_index).getObjA110()+list.get(b).getObjA110());
+			list7.get(b_index).setObjA111(list7.get(b_index).getObjA111()+list.get(b).getObjA111());
+			list7.get(b_index).setObjA112(list7.get(b_index).getObjA112()+list.get(b).getObjA112());
+			list7.get(b_index).setObjA113(list7.get(b_index).getObjA113()+list.get(b).getObjA113());
+			list7.get(b_index).setObjA114(list7.get(b_index).getObjA114()+list.get(b).getObjA114());
+			list7.get(b_index).setObjA115(list7.get(b_index).getObjA115()+list.get(b).getObjA115());
+			list7.get(b_index).setObjA116(list7.get(b_index).getObjA116()+list.get(b).getObjA116());
+			list7.get(b_index).setObjA117(list7.get(b_index).getObjA117()+list.get(b).getObjA117());
+			list7.get(b_index).setObjA118(list7.get(b_index).getObjA118()+list.get(b).getObjA118());
+			list7.get(b_index).setObjA119(list7.get(b_index).getObjA119()+list.get(b).getObjA119());
+			list7.get(b_index).setObjA120(list7.get(b_index).getObjA120()+list.get(b).getObjA120());
+			list7.get(b_index).setObjA121(list7.get(b_index).getObjA121()+list.get(b).getObjA121());
+			list7.get(b_index).setObjA122(list7.get(b_index).getObjA122()+list.get(b).getObjA122());
+			list7.get(b_index).setObjA123(list7.get(b_index).getObjA123()+list.get(b).getObjA123());
+			list7.get(b_index).setObjA124(list7.get(b_index).getObjA124()+list.get(b).getObjA124());
+			list7.get(b_index).setObjA125(list7.get(b_index).getObjA125()+list.get(b).getObjA125());
+			list7.get(b_index).setObjA126(list7.get(b_index).getObjA126()+list.get(b).getObjA126());
+			list7.get(b_index).setObjA127(list7.get(b_index).getObjA127()+list.get(b).getObjA127());
+			list7.get(b_index).setObjA128(list7.get(b_index).getObjA128()+list.get(b).getObjA128());
+			list7.get(b_index).setObjA129(list7.get(b_index).getObjA129()+list.get(b).getObjA129());
+			list7.get(b_index).setObjA130(list7.get(b_index).getObjA130()+list.get(b).getObjA130());
+			list7.get(b_index).setObjA131(list7.get(b_index).getObjA131()+list.get(b).getObjA131());
+			list7.get(b_index).setObjA132(list7.get(b_index).getObjA132()+list.get(b).getObjA132());
+			list7.get(b_index).setObjA133(list7.get(b_index).getObjA133()+list.get(b).getObjA133());
+			list7.get(b_index).setObjA134(list7.get(b_index).getObjA134()+list.get(b).getObjA134());
+			list7.get(b_index).setObjA135(list7.get(b_index).getObjA135()+list.get(b).getObjA135());
+			list7.get(b_index).setObjA136(list7.get(b_index).getObjA136()+list.get(b).getObjA136());
+			list7.get(b_index).setObjA137(list7.get(b_index).getObjA137()+list.get(b).getObjA137());
+			list7.get(b_index).setObjA138(list7.get(b_index).getObjA138()+list.get(b).getObjA138());
+			list7.get(b_index).setObjA139(list7.get(b_index).getObjA139()+list.get(b).getObjA139());
+			list7.get(b_index).setObjA140(list7.get(b_index).getObjA140()+list.get(b).getObjA140());
+			list7.get(b_index).setObjA141(list7.get(b_index).getObjA141()+list.get(b).getObjA141());
+			list7.get(b_index).setObjA142(list7.get(b_index).getObjA142()+list.get(b).getObjA142());
+			list7.get(b_index).setObjA143(list7.get(b_index).getObjA143()+list.get(b).getObjA143());
+			list7.get(b_index).setObjA144(list7.get(b_index).getObjA144()+list.get(b).getObjA144());
+			list7.get(b_index).setObjA145(list7.get(b_index).getObjA145()+list.get(b).getObjA145());
+			list7.get(b_index).setObjA146(list7.get(b_index).getObjA146()+list.get(b).getObjA146());
+			list7.get(b_index).setObjA147(list7.get(b_index).getObjA147()+list.get(b).getObjA147());
+			list7.get(b_index).setObjA148(list7.get(b_index).getObjA148()+list.get(b).getObjA148());
+			list7.get(b_index).setObjA149(list7.get(b_index).getObjA149()+list.get(b).getObjA149());
+			list7.get(b_index).setObjA150(list7.get(b_index).getObjA150()+list.get(b).getObjA150());
+			list7.get(b_index).setObjA151(list7.get(b_index).getObjA151()+list.get(b).getObjA151());
+			list7.get(b_index).setObjA152(list7.get(b_index).getObjA152()+list.get(b).getObjA152());
+			list7.get(b_index).setObjA153(list7.get(b_index).getObjA153()+list.get(b).getObjA153());
+			list7.get(b_index).setObjA154(list7.get(b_index).getObjA154()+list.get(b).getObjA154());
+			list7.get(b_index).setObjA155(list7.get(b_index).getObjA155()+list.get(b).getObjA155());
+			list7.get(b_index).setObjA156(list7.get(b_index).getObjA156()+list.get(b).getObjA156());
+			list7.get(b_index).setObjA157(list7.get(b_index).getObjA157()+list.get(b).getObjA157());
+			list7.get(b_index).setObjA158(list7.get(b_index).getObjA158()+list.get(b).getObjA158());
+			list7.get(b_index).setObjA159(list7.get(b_index).getObjA159()+list.get(b).getObjA159());
+			list7.get(b_index).setObjA160(list7.get(b_index).getObjA160()+list.get(b).getObjA160());
+			list7.get(b_index).setObjA161(list7.get(b_index).getObjA161()+list.get(b).getObjA161());
+			list7.get(b_index).setObjA162(list7.get(b_index).getObjA162()+list.get(b).getObjA162());
+			list7.get(b_index).setObjA163(list7.get(b_index).getObjA163()+list.get(b).getObjA163());
+			list7.get(b_index).setObjA164(list7.get(b_index).getObjA164()+list.get(b).getObjA164());
+			list7.get(b_index).setObjA165(list7.get(b_index).getObjA165()+list.get(b).getObjA165());
+			list7.get(b_index).setObjA166(list7.get(b_index).getObjA166()+list.get(b).getObjA166());
+			list7.get(b_index).setObjA167(list7.get(b_index).getObjA167()+list.get(b).getObjA167());
+			list7.get(b_index).setObjA168(list7.get(b_index).getObjA168()+list.get(b).getObjA168());
+			list7.get(b_index).setObjA169(list7.get(b_index).getObjA169()+list.get(b).getObjA169());
+			list7.get(b_index).setObjA170(list7.get(b_index).getObjA170()+list.get(b).getObjA170());
+			list7.get(b_index).setObjA171(list7.get(b_index).getObjA171()+list.get(b).getObjA171());
+			list7.get(b_index).setObjA172(list7.get(b_index).getObjA172()+list.get(b).getObjA172());
+			list7.get(b_index).setObjA173(list7.get(b_index).getObjA173()+list.get(b).getObjA173());
+			list7.get(b_index).setObjA174(list7.get(b_index).getObjA174()+list.get(b).getObjA174());
+			list7.get(b_index).setObjA175(list7.get(b_index).getObjA175()+list.get(b).getObjA175());
+			list7.get(b_index).setObjA176(list7.get(b_index).getObjA176()+list.get(b).getObjA176());
+			list7.get(b_index).setObjA177(list7.get(b_index).getObjA177()+list.get(b).getObjA177());
+			list7.get(b_index).setObjA178(list7.get(b_index).getObjA178()+list.get(b).getObjA178());
+			list7.get(b_index).setObjA179(list7.get(b_index).getObjA179()+list.get(b).getObjA179());
+			list7.get(b_index).setObjA180(list7.get(b_index).getObjA180()+list.get(b).getObjA180());
+			list7.get(b_index).setObjA181(list7.get(b_index).getObjA181()+list.get(b).getObjA181());
+			list7.get(b_index).setObjA182(list7.get(b_index).getObjA182()+list.get(b).getObjA182());
+			list7.get(b_index).setObjA183(list7.get(b_index).getObjA183()+list.get(b).getObjA183());
+			list7.get(b_index).setObjA184(list7.get(b_index).getObjA184()+list.get(b).getObjA184());
+			list7.get(b_index).setObjA185(list7.get(b_index).getObjA185()+list.get(b).getObjA185());
+			list7.get(b_index).setObjA186(list7.get(b_index).getObjA186()+list.get(b).getObjA186());
+			list7.get(b_index).setObjA187(list7.get(b_index).getObjA187()+list.get(b).getObjA187());
+			list7.get(b_index).setObjA188(list7.get(b_index).getObjA188()+list.get(b).getObjA188());
+			list7.get(b_index).setObjA189(list7.get(b_index).getObjA189()+list.get(b).getObjA189());
+			list7.get(b_index).setObjA190(list7.get(b_index).getObjA190()+list.get(b).getObjA190());
+			list7.get(b_index).setObjA191(list7.get(b_index).getObjA191()+list.get(b).getObjA191());
+			list7.get(b_index).setObjA192(list7.get(b_index).getObjA192()+list.get(b).getObjA192());
+			list7.get(b_index).setObjA193(list7.get(b_index).getObjA193()+list.get(b).getObjA193());
+			list7.get(b_index).setObjA194(list7.get(b_index).getObjA194()+list.get(b).getObjA194());
+			list7.get(b_index).setObjA195(list7.get(b_index).getObjA195()+list.get(b).getObjA195());
+			list7.get(b_index).setObjA196(list7.get(b_index).getObjA196()+list.get(b).getObjA196());
+			list7.get(b_index).setObjA197(list7.get(b_index).getObjA197()+list.get(b).getObjA197());
+			list7.get(b_index).setObjA198(list7.get(b_index).getObjA198()+list.get(b).getObjA198());
+			list7.get(b_index).setObjA199(list7.get(b_index).getObjA199()+list.get(b).getObjA199());
+			list7.get(b_index).setObjA200(list7.get(b_index).getObjA200()+list.get(b).getObjA200());
+			list7.get(b_index).setObjA201(list7.get(b_index).getObjA201()+list.get(b).getObjA201());
+			list7.get(b_index).setObjA202(list7.get(b_index).getObjA202()+list.get(b).getObjA202());
+			list7.get(b_index).setHole(list7.get(b_index).getHole()+list.get(b).getHole());
+			
+			list7.get(b_index).setMachinepower(list7.get(b_index).getMachinepower()+list.get(b).getMachinepower());
+			list7.get(b_index).setEstdays(list7.get(b_index).getEstdays()+list.get(b).getEstdays());
+			list7.get(b_index).setEsteverymodel(list7.get(b_index).getEsteverymodel()+list.get(b).getEsteverymodel());
+			list7.get(b_index).setEsteverypeople(list7.get(b_index).getEsteverypeople()+list.get(b).getEsteverypeople());
+			list7.get(b_index).setEstmodel(list7.get(b_index).getEstmodel()+list.get(b).getEstmodel());
+			list7.get(b_index).setEstnum(list7.get(b_index).getEstnum()+list.get(b).getEstnum());
+			list7.get(b_index).setEstpay(list7.get(b_index).getEstpay()+list.get(b).getEstpay());
+			list7.get(b_index).setEstmoney(list7.get(b_index).getEstmoney()+list.get(b).getEstmoney());
+			list7.get(b_index).setTotalhole(list7.get(b_index).getTotalhole()+list.get(b).getTotalhole());
+			list7.get(b_index).setSample(list7.get(b_index).getSample()+list.get(b).getSample());
+			list7.get(b_index).setAccessories(list7.get(b_index).getAccessories()+list.get(b).getAccessories());
+			list7.get(b_index).setOther(list7.get(b_index).getOther()+list.get(b).getOther());
+			list7.get(b_index).setSumWorkdays(list7.get(b_index).getSumWorkdays().add(list.get(b).getSumWorkdays()));
+			list7.get(b_index).setSumEverypeople(list7.get(b_index).getSumEverypeople().add(list.get(b).getSumEverypeople()));
+			list7.get(b_index).setSumEverydemo(list7.get(b_index).getSumEverydemo().add(list.get(b).getSumEverydemo()));
+			list7.get(b_index).setSumStandarddemo(list7.get(b_index).getSumStandarddemo().add(list.get(b).getSumStandarddemo()));
+			list7.get(b_index).setSumActualdemo(list7.get(b_index).getSumActualdemo().add(list.get(b).getSumActualdemo()));
+			list7.get(b_index).setSumActualpairs(list7.get(b_index).getSumActualpairs().add(list.get(b).getSumActualpairs()));
+			list7.get(b_index).setSumHostpairs(list7.get(b_index).getSumHostpairs().add(list.get(b).getSumHostpairs()));
+			list7.get(b_index).setSumFactpairs(list7.get(b_index).getSumFactpairs().add(list.get(b).getSumFactpairs()));
+			list7.get(b_index).setSumSamplepairs(list7.get(b_index).getSumSamplepairs().add(list.get(b).getSumSamplepairs()));
+			list7.get(b_index).setSumOutnum(list7.get(b_index).getSumOutnum().add(list.get(b).getSumOutnum()));
+			list7.get(b_index).setSumBacknum(list7.get(b_index).getSumBacknum().add(list.get(b).getSumBacknum()));
+			list7.get(b_index).setSumWorkhours(list7.get(b_index).getSumWorkhours()+list.get(b).getSumWorkhours());
+			if(b==12){
+				for(int c=0;c<3;c++){
+					list7.get(c+5).setObjA100(list7.get(2*c+1).getObjA100()+list7.get(2*c+2).getObjA100());
+					list7.get(c+5).setObjA101(list7.get(2*c+1).getObjA101()+list7.get(2*c+2).getObjA101());
+					list7.get(c+5).setObjA102(list7.get(2*c+1).getObjA102()+list7.get(2*c+2).getObjA102());
+					list7.get(c+5).setObjA103(list7.get(2*c+1).getObjA103()+list7.get(2*c+2).getObjA103());
+					list7.get(c+5).setObjA104(list7.get(2*c+1).getObjA104()+list7.get(2*c+2).getObjA104());
+					list7.get(c+5).setObjA105(list7.get(2*c+1).getObjA105()+list7.get(2*c+2).getObjA105());
+					list7.get(c+5).setObjA106(list7.get(2*c+1).getObjA106()+list7.get(2*c+2).getObjA106());
+					list7.get(c+5).setObjA107(list7.get(2*c+1).getObjA107()+list7.get(2*c+2).getObjA107());
+					list7.get(c+5).setObjA108(list7.get(2*c+1).getObjA108()+list7.get(2*c+2).getObjA108());
+					list7.get(c+5).setObjA109(list7.get(2*c+1).getObjA109()+list7.get(2*c+2).getObjA109());
+					list7.get(c+5).setObjA110(list7.get(2*c+1).getObjA110()+list7.get(2*c+2).getObjA110());
+					list7.get(c+5).setObjA111(list7.get(2*c+1).getObjA111()+list7.get(2*c+2).getObjA111());
+					list7.get(c+5).setObjA112(list7.get(2*c+1).getObjA112()+list7.get(2*c+2).getObjA112());
+					list7.get(c+5).setObjA113(list7.get(2*c+1).getObjA113()+list7.get(2*c+2).getObjA113());
+					list7.get(c+5).setObjA114(list7.get(2*c+1).getObjA114()+list7.get(2*c+2).getObjA114());
+					list7.get(c+5).setObjA115(list7.get(2*c+1).getObjA115()+list7.get(2*c+2).getObjA115());
+					list7.get(c+5).setObjA116(list7.get(2*c+1).getObjA116()+list7.get(2*c+2).getObjA116());
+					list7.get(c+5).setObjA117(list7.get(2*c+1).getObjA117()+list7.get(2*c+2).getObjA117());
+					list7.get(c+5).setObjA118(list7.get(2*c+1).getObjA118()+list7.get(2*c+2).getObjA118());
+					list7.get(c+5).setObjA119(list7.get(2*c+1).getObjA119()+list7.get(2*c+2).getObjA119());
+					list7.get(c+5).setObjA120(list7.get(2*c+1).getObjA120()+list7.get(2*c+2).getObjA120());
+					list7.get(c+5).setObjA121(list7.get(2*c+1).getObjA121()+list7.get(2*c+2).getObjA121());
+					list7.get(c+5).setObjA122(list7.get(2*c+1).getObjA122()+list7.get(2*c+2).getObjA122());
+					list7.get(c+5).setObjA123(list7.get(2*c+1).getObjA123()+list7.get(2*c+2).getObjA123());
+					list7.get(c+5).setObjA124(list7.get(2*c+1).getObjA124()+list7.get(2*c+2).getObjA124());
+					list7.get(c+5).setObjA125(list7.get(2*c+1).getObjA125()+list7.get(2*c+2).getObjA125());
+					list7.get(c+5).setObjA126(list7.get(2*c+1).getObjA126()+list7.get(2*c+2).getObjA126());
+					list7.get(c+5).setObjA127(list7.get(2*c+1).getObjA127()+list7.get(2*c+2).getObjA127());
+					list7.get(c+5).setObjA128(list7.get(2*c+1).getObjA128()+list7.get(2*c+2).getObjA128());
+					list7.get(c+5).setObjA129(list7.get(2*c+1).getObjA129()+list7.get(2*c+2).getObjA129());
+					list7.get(c+5).setObjA130(list7.get(2*c+1).getObjA130()+list7.get(2*c+2).getObjA130());
+					list7.get(c+5).setObjA131(list7.get(2*c+1).getObjA131()+list7.get(2*c+2).getObjA131());
+					list7.get(c+5).setObjA132(list7.get(2*c+1).getObjA132()+list7.get(2*c+2).getObjA132());
+					list7.get(c+5).setObjA133(list7.get(2*c+1).getObjA133()+list7.get(2*c+2).getObjA133());
+					list7.get(c+5).setObjA134(list7.get(2*c+1).getObjA134()+list7.get(2*c+2).getObjA134());
+					list7.get(c+5).setObjA135(list7.get(2*c+1).getObjA135()+list7.get(2*c+2).getObjA135());
+					list7.get(c+5).setObjA136(list7.get(2*c+1).getObjA136()+list7.get(2*c+2).getObjA136());
+					list7.get(c+5).setObjA137(list7.get(2*c+1).getObjA137()+list7.get(2*c+2).getObjA137());
+					list7.get(c+5).setObjA138(list7.get(2*c+1).getObjA138()+list7.get(2*c+2).getObjA138());
+					list7.get(c+5).setObjA139(list7.get(2*c+1).getObjA139()+list7.get(2*c+2).getObjA139());
+					list7.get(c+5).setObjA140(list7.get(2*c+1).getObjA140()+list7.get(2*c+2).getObjA140());
+					list7.get(c+5).setObjA141(list7.get(2*c+1).getObjA141()+list7.get(2*c+2).getObjA141());
+					list7.get(c+5).setObjA142(list7.get(2*c+1).getObjA142()+list7.get(2*c+2).getObjA142());
+					list7.get(c+5).setObjA143(list7.get(2*c+1).getObjA143()+list7.get(2*c+2).getObjA143());
+					list7.get(c+5).setObjA144(list7.get(2*c+1).getObjA144()+list7.get(2*c+2).getObjA144());
+					list7.get(c+5).setObjA145(list7.get(2*c+1).getObjA145()+list7.get(2*c+2).getObjA145());
+					list7.get(c+5).setObjA146(list7.get(2*c+1).getObjA146()+list7.get(2*c+2).getObjA146());
+					list7.get(c+5).setObjA147(list7.get(2*c+1).getObjA147()+list7.get(2*c+2).getObjA147());
+					list7.get(c+5).setObjA148(list7.get(2*c+1).getObjA148()+list7.get(2*c+2).getObjA148());
+					list7.get(c+5).setObjA149(list7.get(2*c+1).getObjA149()+list7.get(2*c+2).getObjA149());
+					list7.get(c+5).setObjA150(list7.get(2*c+1).getObjA150()+list7.get(2*c+2).getObjA150());
+					list7.get(c+5).setObjA151(list7.get(2*c+1).getObjA151()+list7.get(2*c+2).getObjA151());
+					list7.get(c+5).setObjA152(list7.get(2*c+1).getObjA152()+list7.get(2*c+2).getObjA152());
+					list7.get(c+5).setObjA153(list7.get(2*c+1).getObjA153()+list7.get(2*c+2).getObjA153());
+					list7.get(c+5).setObjA154(list7.get(2*c+1).getObjA154()+list7.get(2*c+2).getObjA154());
+					list7.get(c+5).setObjA155(list7.get(2*c+1).getObjA155()+list7.get(2*c+2).getObjA155());
+					list7.get(c+5).setObjA156(list7.get(2*c+1).getObjA156()+list7.get(2*c+2).getObjA156());
+					list7.get(c+5).setObjA157(list7.get(2*c+1).getObjA157()+list7.get(2*c+2).getObjA157());
+					list7.get(c+5).setObjA158(list7.get(2*c+1).getObjA158()+list7.get(2*c+2).getObjA158());
+					list7.get(c+5).setObjA159(list7.get(2*c+1).getObjA159()+list7.get(2*c+2).getObjA159());
+					list7.get(c+5).setObjA160(list7.get(2*c+1).getObjA160()+list7.get(2*c+2).getObjA160());
+					list7.get(c+5).setObjA161(list7.get(2*c+1).getObjA161()+list7.get(2*c+2).getObjA161());
+					list7.get(c+5).setObjA162(list7.get(2*c+1).getObjA162()+list7.get(2*c+2).getObjA162());
+					list7.get(c+5).setObjA163(list7.get(2*c+1).getObjA163()+list7.get(2*c+2).getObjA163());
+					list7.get(c+5).setObjA164(list7.get(2*c+1).getObjA164()+list7.get(2*c+2).getObjA164());
+					list7.get(c+5).setObjA165(list7.get(2*c+1).getObjA165()+list7.get(2*c+2).getObjA165());
+					list7.get(c+5).setObjA166(list7.get(2*c+1).getObjA166()+list7.get(2*c+2).getObjA166());
+					list7.get(c+5).setObjA167(list7.get(2*c+1).getObjA167()+list7.get(2*c+2).getObjA167());
+					list7.get(c+5).setObjA168(list7.get(2*c+1).getObjA168()+list7.get(2*c+2).getObjA168());
+					list7.get(c+5).setObjA169(list7.get(2*c+1).getObjA169()+list7.get(2*c+2).getObjA169());
+					list7.get(c+5).setObjA170(list7.get(2*c+1).getObjA170()+list7.get(2*c+2).getObjA170());
+					list7.get(c+5).setObjA171(list7.get(2*c+1).getObjA171()+list7.get(2*c+2).getObjA171());
+					list7.get(c+5).setObjA172(list7.get(2*c+1).getObjA172()+list7.get(2*c+2).getObjA172());
+					list7.get(c+5).setObjA173(list7.get(2*c+1).getObjA173()+list7.get(2*c+2).getObjA173());
+					list7.get(c+5).setObjA174(list7.get(2*c+1).getObjA174()+list7.get(2*c+2).getObjA174());
+					list7.get(c+5).setObjA175(list7.get(2*c+1).getObjA175()+list7.get(2*c+2).getObjA175());
+					list7.get(c+5).setObjA176(list7.get(2*c+1).getObjA176()+list7.get(2*c+2).getObjA176());
+					list7.get(c+5).setObjA177(list7.get(2*c+1).getObjA177()+list7.get(2*c+2).getObjA177());
+					list7.get(c+5).setObjA178(list7.get(2*c+1).getObjA178()+list7.get(2*c+2).getObjA178());
+					list7.get(c+5).setObjA179(list7.get(2*c+1).getObjA179()+list7.get(2*c+2).getObjA179());
+					list7.get(c+5).setObjA180(list7.get(2*c+1).getObjA180()+list7.get(2*c+2).getObjA180());
+					list7.get(c+5).setObjA181(list7.get(2*c+1).getObjA181()+list7.get(2*c+2).getObjA181());
+					list7.get(c+5).setObjA182(list7.get(2*c+1).getObjA182()+list7.get(2*c+2).getObjA182());
+					list7.get(c+5).setObjA183(list7.get(2*c+1).getObjA183()+list7.get(2*c+2).getObjA183());
+					list7.get(c+5).setObjA184(list7.get(2*c+1).getObjA184()+list7.get(2*c+2).getObjA184());
+					list7.get(c+5).setObjA185(list7.get(2*c+1).getObjA185()+list7.get(2*c+2).getObjA185());
+					list7.get(c+5).setObjA186(list7.get(2*c+1).getObjA186()+list7.get(2*c+2).getObjA186());
+					list7.get(c+5).setObjA187(list7.get(2*c+1).getObjA187()+list7.get(2*c+2).getObjA187());
+					list7.get(c+5).setObjA188(list7.get(2*c+1).getObjA188()+list7.get(2*c+2).getObjA188());
+					list7.get(c+5).setObjA189(list7.get(2*c+1).getObjA189()+list7.get(2*c+2).getObjA189());
+					list7.get(c+5).setObjA190(list7.get(2*c+1).getObjA190()+list7.get(2*c+2).getObjA190());
+					list7.get(c+5).setObjA191(list7.get(2*c+1).getObjA191()+list7.get(2*c+2).getObjA191());
+					list7.get(c+5).setObjA192(list7.get(2*c+1).getObjA192()+list7.get(2*c+2).getObjA192());
+					list7.get(c+5).setObjA193(list7.get(2*c+1).getObjA193()+list7.get(2*c+2).getObjA193());
+					list7.get(c+5).setObjA194(list7.get(2*c+1).getObjA194()+list7.get(2*c+2).getObjA194());
+					list7.get(c+5).setObjA195(list7.get(2*c+1).getObjA195()+list7.get(2*c+2).getObjA195());
+					list7.get(c+5).setObjA196(list7.get(2*c+1).getObjA196()+list7.get(2*c+2).getObjA196());
+					list7.get(c+5).setObjA197(list7.get(2*c+1).getObjA197()+list7.get(2*c+2).getObjA197());
+					list7.get(c+5).setObjA198(list7.get(2*c+1).getObjA198()+list7.get(2*c+2).getObjA198());
+					list7.get(c+5).setObjA199(list7.get(2*c+1).getObjA199()+list7.get(2*c+2).getObjA199());
+					list7.get(c+5).setObjA200(list7.get(2*c+1).getObjA200()+list7.get(2*c+2).getObjA200());
+					list7.get(c+5).setObjA201(list7.get(2*c+1).getObjA201()+list7.get(2*c+2).getObjA201());
+					list7.get(c+5).setObjA202(list7.get(2*c+1).getObjA202()+list7.get(2*c+2).getObjA202());
+					list7.get(c+5).setHole(list7.get(2*c+1).getHole()+list7.get(2*c+2).getHole());
+					
+					list7.get(c+5).setMachinepower(list7.get(2*c+1).getMachinepower()+list7.get(2*c+2).getMachinepower());
+					list7.get(c+5).setEstdays(list7.get(2*c+1).getEstdays()+list7.get(2*c+2).getEstdays());
+					list7.get(c+5).setEsteverymodel(list7.get(2*c+1).getEsteverymodel()+list7.get(2*c+2).getEsteverymodel());
+					list7.get(c+5).setEsteverypeople(list7.get(2*c+1).getEsteverypeople()+list7.get(2*c+2).getEsteverypeople());
+					list7.get(c+5).setEstmodel(list7.get(2*c+1).getEstmodel()+list7.get(2*c+2).getEstmodel());
+					list7.get(c+5).setEstnum(list7.get(2*c+1).getEstnum()+list7.get(2*c+2).getEstnum());
+					list7.get(c+5).setEstpay(list7.get(2*c+1).getEstpay()+list7.get(2*c+2).getEstpay());
+					list7.get(c+5).setEstmoney(list7.get(2*c+1).getEstmoney()+list7.get(2*c+2).getEstmoney());
+					list7.get(c+5).setTotalhole(list7.get(2*c+1).getTotalhole()+list7.get(2*c+2).getTotalhole());
+					list7.get(c+5).setSample(list7.get(2*c+1).getSample()+list7.get(2*c+2).getSample());
+					list7.get(c+5).setAccessories(list7.get(2*c+1).getAccessories()+list7.get(2*c+2).getAccessories());
+					list7.get(c+5).setOther(list7.get(2*c+1).getOther()+list7.get(2*c+2).getOther());
+					list7.get(c+5).setSumWorkdays(list7.get(2*c+1).getSumWorkdays().add(list7.get(2*c+2).getSumWorkdays()));
+					list7.get(c+5).setSumEverypeople(list7.get(2*c+1).getSumEverypeople().add(list7.get(2*c+2).getSumEverypeople()));
+					list7.get(c+5).setSumEverydemo(list7.get(2*c+1).getSumEverydemo().add(list7.get(2*c+2).getSumEverydemo()));
+					list7.get(c+5).setSumStandarddemo(list7.get(2*c+1).getSumStandarddemo().add(list7.get(2*c+2).getSumStandarddemo()));
+					list7.get(c+5).setSumActualdemo(list7.get(2*c+1).getSumActualdemo().add(list7.get(2*c+2).getSumActualdemo()));
+					list7.get(c+5).setSumActualpairs(list7.get(2*c+1).getSumActualpairs().add(list7.get(2*c+2).getSumActualpairs()));
+					list7.get(c+5).setSumHostpairs(list7.get(2*c+1).getSumHostpairs().add(list7.get(2*c+2).getSumHostpairs()));
+					list7.get(c+5).setSumFactpairs(list7.get(2*c+1).getSumFactpairs().add(list7.get(2*c+2).getSumFactpairs()));
+					list7.get(c+5).setSumSamplepairs(list7.get(2*c+1).getSumSamplepairs().add(list7.get(2*c+2).getSumSamplepairs()));
+					list7.get(c+5).setSumOutnum(list7.get(2*c+1).getSumOutnum().add(list7.get(2*c+2).getSumOutnum()));
+					list7.get(c+5).setSumBacknum(list7.get(2*c+1).getSumBacknum().add(list7.get(2*c+2).getSumBacknum()));
+					list7.get(c+5).setSumWorkhours(list7.get(2*c+1).getSumWorkhours()+list7.get(2*c+2).getSumWorkhours());
+				}
+			}
+		}//for b
+		return list7;
 	}
 		
 }

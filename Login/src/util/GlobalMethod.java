@@ -311,6 +311,8 @@ public class GlobalMethod extends HibernateDaoSupport{
         System.out.println(new DecimalFormat("#,##0.00").format(bb));       
         System.out.println(new DecimalFormat("###0.000").format(bb));
         System.out.println(new DecimalFormat("#,##0.000").parse("2,222,22.3"));
+        
+        System.out.println(2%3);
        
 						
 	}
