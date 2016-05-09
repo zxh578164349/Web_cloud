@@ -22,5 +22,6 @@ import entity.VWebprofitlossEve;
  **/
 public interface IVWebprofitlossEveServices {
 	public List<VWebprofitlossEve>findByYymm(String yymm,String yymm2);
+	public List<VWebprofitlossEve>findByYymm(String yymm);
 
 }

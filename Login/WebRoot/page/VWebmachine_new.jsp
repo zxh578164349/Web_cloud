@@ -138,24 +138,12 @@ function test(factcode_obj){  //jquery获取复选框值
   
   <body>
   <h2>分形態損益表-工廠</h2>
-    <form action="vwebmachine_print_fact" method="post" id='subform1' target="_blank">
+    <form action="vwebprolos_print_fact" method="post" id='subform1' target="_blank">
        <table class="tb_search">
        <h4>全年報表</h4>
           <tr>          
-          <td>
-          <!--<select name="year" datatype="*">
-             <option value="">請選擇</option>
-             <option value="2014">2014</option>
-             <option value="2015">2015</option>
-             <option value="2016">2016</option>
-             <option value="2017">2017</option>
-             <option value="2018">2018</option>
-             <option value="2019">2019</option>
-             <option value="2020">2020</option>
-          </select>-->
-          <span><input type="text" name="year" class="Wdate" onclick="WdatePicker({dateFmt:'yyyy'})" datatype="*"/></span>
-          
-          
+          <td>        
+          <span><input type="text" name="year" class="Wdate" onclick="WdatePicker({dateFmt:'yyyy'})" datatype="*"/></span>                    
             <span><s:if test="#session.factNo=='tw'">			    
 					<select name="factNo" id="factNo" datatype="*">
 						<option value="">請選擇工廠</option>						
@@ -181,16 +169,16 @@ function test(factcode_obj){  //jquery获取复选框值
        
     </form>
      <hr>
-    <form action="vwebmachine_print_month" method="post" id="subform2" target="_blank">
+    <form action="vwebprolos_print_month" method="post" id="subform2" target="_blank">
       <table class="tb_search">
       <h4>月份報表</h4>
          <tr>         
           <td>
               <span>
-              <input type="text" id="begin" name="yymm_begin" datatype="*" onclick="WdatePicker({minDate:'{%y-1}-%m',maxDate:'#F{$dp.$D(\'end\',{M:-1})||\'%y-{%M-1}\'}'})" class="Wdate" >
+              <input type="text" id="begin" name="yymm" datatype="*" onclick="WdatePicker({minDate:'{%y-1}-%m',maxDate:'#F{$dp.$D(\'end\',{M:-1})||\'%y-{%M-1}\'}'})" class="Wdate" >
               </span>至
               <span>
-               <input type="text" id="end" name="yymm_end" datatype="*" onclick="WdatePicker({minDate:'#F{$dp.$D(\'begin\',{M:1})}',maxDate:'%y-%M'})" class="Wdate">
+               <input type="text" id="end" name="yymm2" datatype="*" onclick="WdatePicker({minDate:'#F{$dp.$D(\'begin\',{M:1})}',maxDate:'%y-%M'})" class="Wdate">
               </span>
               <span>
                 <s:if test="#session.factNo=='tw'">			    
@@ -219,7 +207,7 @@ function test(factcode_obj){  //jquery获取复选框值
     <s:if test="#session.factNo=='tw'">
     <hr>
     <h2>分形態損益表-台灣</h2>
-    <form action="vwebmachine_print_tw_xlsx" method="post" id="subform3" target="_blank">
+    <form action="vwebprolos_print_tw" method="post" id="subform3" target="_blank">
         <table class="tb_search">        
           <tr>
           <td>

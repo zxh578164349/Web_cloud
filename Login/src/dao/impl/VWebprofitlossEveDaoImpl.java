@@ -49,4 +49,17 @@ public class VWebprofitlossEveDaoImpl extends Basedao implements IVWebprofitloss
 		return list;
 	}
 
+	/**
+	 * 日期:2016/5/9
+	 * 描述:
+	 */
+	
+	
+	public List<VWebprofitlossEve> findByYymm(String yymm) {
+		// TODO Auto-generated method stub
+		String hql="from VWebprofitlossEve where id.yymm=?";
+		String[]objs={yymm};
+		return super.findAll(hql, objs);
+	}
+
 }

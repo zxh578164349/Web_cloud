@@ -42,4 +42,16 @@ public class VWebprofitlossEveServicesImpl implements IVWebprofitlossEveServices
 		return vwebprolossdao.findByYymm(yymm, yymm2);
 	}
 
+
+	/**
+	 * 日期:2016/5/9
+	 * 描述:
+	 */
+	
+	
+	public List<VWebprofitlossEve> findByYymm(String yymm) {
+		// TODO Auto-generated method stub
+		return vwebprolossdao.findByYymm(yymm);
+	}
+
 }

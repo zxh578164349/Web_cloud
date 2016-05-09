@@ -304,15 +304,37 @@ public class GlobalMethod extends HibernateDaoSupport{
         System.out.println(frm.format(cal.getTime()));*/
         
         
-        BigDecimal bb=new BigDecimal(1234788.5633);
+        /*BigDecimal bb=new BigDecimal(1234788.5633);
         System.out.println(bb);
         System.out.println(new DecimalFormat("0.00%").format(bb));
         System.out.println(new DecimalFormat("#,##0.0").format(bb.doubleValue()));
         System.out.println(new DecimalFormat("#,##0.00").format(bb));       
         System.out.println(new DecimalFormat("###0.000").format(bb));
-        System.out.println(new DecimalFormat("#,##0.000").parse("2,222,22.3"));
+        System.out.println(new DecimalFormat("#,##0.000").parse("2,222,22.3"));*/
         
-        System.out.println(2%3);
+        List<Integer>list=new ArrayList<Integer>();
+        for(int aa=1;aa<13;aa++){
+        	list.add(aa);
+        	switch(aa){
+        	case 3:
+        		list.add(101);
+        		break;
+        	case 6:
+        		list.add(102);
+        		list.add(201);
+        		break;
+        	case 9:
+        		list.add(103);
+        		break;
+        	case 12:
+        		list.add(104);
+        		list.add(202);
+        		list.add(1000);
+            }
+        	
+        }
+        
+        System.out.println(list);
        
 						
 	}
