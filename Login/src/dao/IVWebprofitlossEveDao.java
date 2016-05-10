@@ -21,7 +21,7 @@ import entity.VWebprofitlossEve;
  *    
  **/
 public interface IVWebprofitlossEveDao {
-	public List<VWebprofitlossEve>findByYymm(String yymm,String yymm2);
+	public List<VWebprofitlossEve>findByYymm(String factNo,String yymm,String yymm2);
 	public List<VWebprofitlossEve>findByYymm(String yymm);
 
 }

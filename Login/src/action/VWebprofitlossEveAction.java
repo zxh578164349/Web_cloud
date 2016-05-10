@@ -160,9 +160,9 @@ public class VWebprofitlossEveAction implements ServletResponseAware{
 		}//for a
 		
 		//今年數據（包括上年的12份數據）
-		List<VWebprofitlossEve>list_eve=vwebprolossSer.findByYymm(list_month.get(0), list_month.get(12));//開始：上年12月      結束：今年12月
+		List<VWebprofitlossEve>list_eve=vwebprolossSer.findByYymm(factNo,list_month.get(0), list_month.get(12));//開始：上年12月      結束：今年12月
 		//上年數據
-		List<VWebprofitlossEve>list_eve2=vwebprolossSer.findByYymm(last_year+"01",last_year+"12");
+		List<VWebprofitlossEve>list_eve2=vwebprolossSer.findByYymm(factNo,last_year+"01",last_year+"12");
 		List<List<VWebprofitlossEve>>list_eve_all=new ArrayList<List<VWebprofitlossEve>>();
 		list_eve_all.add(list_eve);
 		list_eve_all.add(list_eve2);
@@ -264,7 +264,7 @@ public class VWebprofitlossEveAction implements ServletResponseAware{
 					map_data.put(factcode, list);
 				}//for a
 				
-				List<VWebprofitlossEve>list_eve=vwebprolossSer.findByYymm(list_month.get(0), yymm2);
+				List<VWebprofitlossEve>list_eve=vwebprolossSer.findByYymm(factNo,list_month.get(0), yymm2);
 				for(String factcode:map_data.keySet()){//for a
 					List<VWebprofitlossEve> list=(List<VWebprofitlossEve>)map_data.get(factcode);
 					for(int b=0;b<list.size();b++){//for b
@@ -278,19 +278,26 @@ public class VWebprofitlossEveAction implements ServletResponseAware{
 							}					
 						}						
 					}//for b
-					List<VWebprofitlossEve>list_total=new ArrayList<VWebprofitlossEve>();
-					list_total.add(new VWebprofitlossEve());
-					for(int b=1;b<list.size();b++){//for b					
+					List<VWebprofitlossEve>list_total=new ArrayList<VWebprofitlossEve>();//當月統計
+					List<VWebprofitlossEve>list_total2=new ArrayList<VWebprofitlossEve>();//上月統計
+				    list_total.add(new VWebprofitlossEve());
+					list_total2.add(new VWebprofitlossEve());
+					for(int b=1;b<list.size();b++){//for b		b=1開始			
 						list_total.add(new VWebprofitlossEve());
 						this.findTotal(list_total, list_total, list, 0, 0, b);						
 					}//for b
-					list.add(list_total.get(0));
+					for(int b=0;b<list.size()-1;b++){//for b	b=0開始		
+						list_total.add(new VWebprofitlossEve());
+						this.findTotal(list_total2, list_total2, list, 0, 0, b);						
+					}//for b
 					
 					List<List<String>>list_a=new ArrayList<List<String>>();
 					for(int b=1;b<list.size();b++){//for b
-						List<String>list_b=this.findResult(list.size()-1, list.get(b), list.get(b-1));//list.size()-1是所選取的月數
+						List<String>list_b=this.findResult(1, list.get(b), list.get(b-1));
 						list_a.add(list_b);
 					}//for b
+					List<String>list_b=this.findResult(list.size()-1, list_total.get(0), list_total2.get(0));//list.size()-1是所選取的月數
+					list_a.add(list_b);
 					map_data.put(factcode, list_a);										
 				}//for a
 				
@@ -328,6 +335,7 @@ public class VWebprofitlossEveAction implements ServletResponseAware{
 	public void print_tw() throws IOException, ParseException{
 		reportType="3";
 		HSSFWorkbook wb=new HSSFWorkbook();
+		HSSFCellStyle cs=(HSSFCellStyle)GlobalMethod.findStyles(wb).get("cs");
 		Calendar cal=Calendar.getInstance();
 		DateFormat fmt=new SimpleDateFormat("yyyyMM");
 		cal.setTime(fmt.parse(yymm));
@@ -338,40 +346,77 @@ public class VWebprofitlossEveAction implements ServletResponseAware{
 		Map<String,Object>map_head=new LinkedHashMap<String,Object>();
 		List<VWebprofitlossEve>list_eve=vwebprolossSer.findByYymm(yymm);//本月數據
 		List<VWebprofitlossEve>list_eve2=vwebprolossSer.findByYymm(last_month);//上月數據
+		List<List<VWebprofitlossEve>>list_eve_all=new ArrayList<List<VWebprofitlossEve>>();
+		list_eve_all.add(list_eve);
+		list_eve_all.add(list_eve2);
 		if(list_factcode!=null&&list_factcode.size()>0){
 			for(String factcode:list_factcode){//for a
-				List<VWebprofitlossEve>list=new ArrayList<VWebprofitlossEve>();
-				List<String>list2=new ArrayList<String>();
-				list2.add("項目");
-				list2.add("細項");
-				list2.add("單位");
+				List<VWebprofitlossEve>list=new ArrayList<VWebprofitlossEve>();//本月
+				List<VWebprofitlossEve>list2=new ArrayList<VWebprofitlossEve>();//上月
+				List<List<VWebprofitlossEve>>list_all=new ArrayList<List<VWebprofitlossEve>>();
+				List<String>list_head=new ArrayList<String>();
+				list_head.add("項目");
+				list_head.add("細項");
+				list_head.add("單位");
 				for(String fact:list_factno){
 					if(factcode.equals(fact.split("_")[0])){
 						list.add(new VWebprofitlossEve(new VWebprofitlossEveId(fact.split("_")[1],factcode,yymm)));
-						list2.add(fact.split("_")[2]);
+						list2.add(new VWebprofitlossEve(new VWebprofitlossEveId(fact.split("_")[1],factcode,last_month)));
+						list_head.add(fact.split("_")[2]);
 					}
 				}
-				list2.add("合計");
-				map_data.put(factcode, list);
-				map_head.put(factcode, list2);
+				list_all.add(list);
+				list_all.add(list2);
+				list_head.add("合計");
+				map_data.put(factcode, list_all);
+				map_head.put(factcode, list_head);
 			}//for a
 			
-			for(String factcode:map_data.keySet()){//for a
-				List<VWebprofitlossEve>list=(List<VWebprofitlossEve>)map_data.get(factcode);
-				for(int b=0;b<list.size();b++){//for b
-					for(VWebprofitlossEve eve:list_eve){
-						if(list.get(b).getId().getFactNo().equals(eve.getId().getFactNo())&&list.get(b).getId().getFactCode().equals(eve.getId().getFactCode())&&
-								list.get(b).getId().getYymm().equals(eve.getId().getYymm())){
-							list.remove(b);
-							list.add(b,eve);
-							break;
-						}
-					}
-				}//for b
-				
-			}//for a
+			for(String factcode:map_data.keySet()){//for
+				List<List<VWebprofitlossEve>>list_all=(List<List<VWebprofitlossEve>>)map_data.get(factcode);
+				for(List<VWebprofitlossEve> list:list_all){
+					for(int a=0;a<list.size();a++){//for a
+						for(int b=0;b<list_eve_all.size();b++){//for b
+							for(VWebprofitlossEve eve:list_eve_all.get(b)){
+								if(list.get(a).getId().getFactNo().equals(eve.getId().getFactNo())&&list.get(a).getId().getFactCode().equals(eve.getId().getFactCode())&&
+										list.get(a).getId().getYymm().equals(eve.getId().getYymm())){
+									list.remove(a);
+									list.add(a,eve);
+									break;
+								}
+							}
+						}//for b					
+					}//for a
+				}
+				List<List<String>>list_result_all=new ArrayList<List<String>>();
+				List<VWebprofitlossEve>list_total=new ArrayList<VWebprofitlossEve>();//本月合計
+				List<VWebprofitlossEve>list_total2=new ArrayList<VWebprofitlossEve>();//上月合計
+				list_total.add(new VWebprofitlossEve());
+				list_total2.add(new VWebprofitlossEve());
+				for(int a=0;a<list_all.get(0).size();a++){
+					List<String>list=this.findResult(1, list_all.get(0).get(a), list_all.get(1).get(a));
+					list_result_all.add(list);
+					this.findTotal(list_total, list_total, list_all.get(0), 0, 0, a);
+					this.findTotal(list_total2, list_total2, list_all.get(1), 0, 0, a);
+				}				
+				List<String> list_retusl_total=this.findResult(list_all.get(0).size(), list_total.get(0), list_total2.get(0));
+				list_result_all.add(list_retusl_total);
+				map_data.put(factcode, list_result_all);				
+			}//for
 		}
+		
 		this.init(wb, map_data, map_cs, null, map_head);
+		for(String factcode:map_data.keySet()){
+			HSSFSheet sheet=wb.getSheet(factcode);
+			List<List<String>>list_a=(List<List<String>>)map_data.get(factcode);
+			for(int a=0;a<list_a.size();a++){
+				List<String>list_b=list_a.get(a);
+				for(int b=0;b<list_b.size();b++){
+					sheet.getRow(4+b).getCell(3+a).setCellValue(list_b.get(b));
+					sheet.getRow(4+b).getCell(3+a).setCellStyle(cs);
+				}
+			}
+		}
 		//OutputStream os=new FileOutputStream("e:\\webprofiless.xls");
 		ServletOutputStream os=response.getOutputStream();
 		response.setContentType("application/vnd.ms-excel");

@@ -37,9 +37,9 @@ public class VWebprofitlossEveServicesImpl implements IVWebprofitlossEveServices
 	}
 
 
-	public List<VWebprofitlossEve> findByYymm(String yymm, String yymm2) {
+	public List<VWebprofitlossEve> findByYymm(String factNo,String yymm, String yymm2) {
 		// TODO Auto-generated method stub
-		return vwebprolossdao.findByYymm(yymm, yymm2);
+		return vwebprolossdao.findByYymm(factNo,yymm, yymm2);
 	}
 
 

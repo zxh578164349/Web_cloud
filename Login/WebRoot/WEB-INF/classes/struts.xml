@@ -833,6 +833,9 @@
 		<action name="vwebprolos_*" class="vwebprolossAction" method="{1}">
 		   
 		</action>
+		<action name="vwebprolossfact_*" class="vwebprolossfactAction" method="{1}">
+		
+		</action>
 	</package>
 
 </struts>

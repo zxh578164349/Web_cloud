@@ -276,68 +276,7 @@ public class GlobalMethod extends HibernateDaoSupport{
 		return list_all;
 	}
 	
-	public static void main(String[] args) throws ParseException {
-		Integer[] a = {0,3,0,4,5};//原始
-        int[] b = new int[a.length];//有序
-        int[] c = new int[a.length];//返回結果
-        /*for(int i=0; i<a.length; i++) {
-            b[i] = a[i];
-            System.out.print(b[i] + "\t");
-        }
-        System.out.println();
-        Arrays.sort(b);
-        for(int i=0; i<a.length; i++) {
-            System.out.print(b[i] + "\t");
-        }
-        System.out.println();
-        for(int i=0; i<a.length; i++) {
-            c[i] = getIndex(a[i], b);
-            System.out.print(c[i] + "\t");
-        }
-        
-        
-        System.out.println("-------------------------------------------------------");
-        DateFormat frm=new SimpleDateFormat("yyyyMM");
-        Calendar cal=Calendar.getInstance();
-        cal.setTime(frm.parse("201604"));
-        cal.add(Calendar.MONTH, -1);
-        System.out.println(frm.format(cal.getTime()));*/
-        
-        
-        /*BigDecimal bb=new BigDecimal(1234788.5633);
-        System.out.println(bb);
-        System.out.println(new DecimalFormat("0.00%").format(bb));
-        System.out.println(new DecimalFormat("#,##0.0").format(bb.doubleValue()));
-        System.out.println(new DecimalFormat("#,##0.00").format(bb));       
-        System.out.println(new DecimalFormat("###0.000").format(bb));
-        System.out.println(new DecimalFormat("#,##0.000").parse("2,222,22.3"));*/
-        
-        List<Integer>list=new ArrayList<Integer>();
-        for(int aa=1;aa<13;aa++){
-        	list.add(aa);
-        	switch(aa){
-        	case 3:
-        		list.add(101);
-        		break;
-        	case 6:
-        		list.add(102);
-        		list.add(201);
-        		break;
-        	case 9:
-        		list.add(103);
-        		break;
-        	case 12:
-        		list.add(104);
-        		list.add(202);
-        		list.add(1000);
-            }
-        	
-        }
-        
-        System.out.println(list);
-       
-						
-	}
+	
 	 public static int getIndex(int a_1, int[] b) {
 	        int temp = 1;
 	        if(a_1 == b[0]) {
@@ -674,6 +613,47 @@ public class GlobalMethod extends HibernateDaoSupport{
 			db=d1/d2;
 		}
 		return db;
+	}
+	
+	public static void main(String[] args) throws ParseException {
+		Integer[] a = {0,3,0,4,5};//原始
+        int[] b = new int[a.length];//有序
+        int[] c = new int[a.length];//返回結果
+        /*for(int i=0; i<a.length; i++) {
+            b[i] = a[i];
+            System.out.print(b[i] + "\t");
+        }
+        System.out.println();
+        Arrays.sort(b);
+        for(int i=0; i<a.length; i++) {
+            System.out.print(b[i] + "\t");
+        }
+        System.out.println();
+        for(int i=0; i<a.length; i++) {
+            c[i] = getIndex(a[i], b);
+            System.out.print(c[i] + "\t");
+        }
+        
+        
+        System.out.println("-------------------------------------------------------");
+        DateFormat frm=new SimpleDateFormat("yyyyMM");
+        Calendar cal=Calendar.getInstance();
+        cal.setTime(frm.parse("201604"));
+        cal.add(Calendar.MONTH, -1);
+        System.out.println(frm.format(cal.getTime()));*/
+        
+        BigDecimal aa=new BigDecimal(2);
+        BigDecimal bb=new BigDecimal(4);
+        BigDecimal cc=new BigDecimal(6);
+        BigDecimal dd=new BigDecimal(8);
+        BigDecimal ff=new BigDecimal(0);
+        System.out.println(aa.divide(bb));
+        System.out.println(cc.divide(aa).subtract(dd.divide(bb)));
+        //System.out.println(aa.divide(ff));
+        
+
+       
+						
 	}
 
 }

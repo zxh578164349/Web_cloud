@@ -36,12 +36,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
              tipSweep:true,
              showAllError:true
          });
-          jq("#subform3").Validform({
+          /*jq("#subform3").Validform({
              btnSubmit:"#btn3",
              tiptype:3,
              tipSweep:true,
              showAllError:true
-         })
+         })*/
       }  
    )
 
@@ -124,14 +124,20 @@ function selectAll(obj){
 	       }
 	   } 	  
 	}
-function test(factcode_obj){  //jquery获取复选框值    
-  var factcode=factcode_obj.value;
-  var chk_value =[];    
-  jq('input[id='+factcode+'_factno]:checked').each(function(){    
-   chk_value.push(jq(this).val());    
-  });    
-  alert(chk_value.length==0 ?'你还没有选择任何内容！':chk_value);    
-} 
+	
+function print_tw(){
+	if(jq("#yymm_tw").val()==""){
+		layer.alert("請選擇日期");
+		return false;
+	}
+	if(jq("[name='list_factno']:checked").length==0){
+		layer.alert("請選擇廠別");
+		return false;
+	}
+	jq("#subform3").submit();
+}	
+	
+
 </script>
 
   </head>
@@ -211,8 +217,8 @@ function test(factcode_obj){  //jquery获取复选框值
         <table class="tb_search">        
           <tr>
           <td>
-          <span><input type="text" name="yymm" datatype="*" onclick="WdatePicker()" class="Wdate"></span>
-          <input type="button" id="btn3" class="btn btn-primary" value="確定"/>
+          <span><input type="text" name="yymm" datatype="*" onclick="WdatePicker()" class="Wdate" id="yymm_tw"></span>
+          <input type="button" id="btn3" class="btn btn-primary" value="確定" onclick="print_tw()"/>
           </td>
           </tr>         
         </table>

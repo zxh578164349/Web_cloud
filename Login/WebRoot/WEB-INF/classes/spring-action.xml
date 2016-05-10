@@ -79,6 +79,7 @@
 	<bean id="vwebuselessAction" class="action.VWebuselessAction" scope="prototype"/>
 	<bean id="webremitAction" class="action.WebremittancelistAction" scope="prototype"/>
 	<bean id="vwebprolossAction" class="action.VWebprofitlossEveAction" scope="prototype"/>
+	<bean id="vwebprolossfactAction" class="action.VWebprofitlossFactEveAction" scope="prototype"/>
 </beans> 
 
  
