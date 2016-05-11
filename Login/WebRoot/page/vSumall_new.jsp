@@ -104,7 +104,7 @@ function print_tw(){
 		layer.alert("請選擇日期");
 		return false;
 	}
-	if(jq("[name='list_fact']:checked").length==0){
+	if(jq("[name='list_factno']:checked").length==0){
 		layer.alert("請選擇廠別");
 		return false;
 	}
@@ -117,8 +117,8 @@ function print_tw(){
   <body>
   <h2>全廠損益表-工廠</h2>
     <form action="vwebprolossfact_print_fact" method="post" id='subform1' target="_blank">
+    <h4>全年報表</h4>
        <table class="tb_search">
-          <caption>全年報表</caption>
           <tr>
           <td class="td_input">         
            <span><input type="text" name="year" class="Wdate" onclick="WdatePicker({dateFmt:'yyyy'})" datatype="*"/></span>
@@ -148,8 +148,8 @@ function print_tw(){
     </form>
     <hr>
     <form action="vwebprolossfact_print_month" method="post" id="subform2" target="_blank">
+    <h4>月份報表</h4>
       <table class="tb_search">
-      <caption>月份報表</caption>
          <tr>
            <td>
                <span>
@@ -201,8 +201,8 @@ function print_tw(){
           
            <td>
                <s:iterator value="#session.facts" id="temp" status="x">
-                 <input type="checkbox" value="${temp[0]}" id="fact_no_${x.index}" name="list_factno" 
-                 onclick="clickOne(this,'font_${x.index}')"/>                
+                  <!-- value=" _${temp[0]}_${temp[1]}" 第一位的是空格，代表factcode,不能省略-->
+                 <input type="checkbox" value=" _${temp[0]}_${temp[1]}" id="fact_no_${x.index}" name="list_factno"  onclick="clickOne(this,'font_${x.index}')"/>                                
                  <font id="font_${x.index}" >${temp[1]}(${temp[0]})</font>                                 
                </s:iterator>
            </td>

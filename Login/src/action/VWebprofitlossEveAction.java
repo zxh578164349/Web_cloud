@@ -421,7 +421,7 @@ public class VWebprofitlossEveAction implements ServletResponseAware{
 		ServletOutputStream os=response.getOutputStream();
 		response.setContentType("application/vnd.ms-excel");
 		int msie=ServletActionContext.getRequest().getHeader("USER-AGENT").toLowerCase().indexOf("msie");//判斷是否為IE瀏覽器,大於0則為IE瀏覽器
-		String fileName="report_month.xls";
+		String fileName="report_tw.xls";
 		if(msie>0){
 			fileName=java.net.URLEncoder.encode(fileName,"utf-8");//解決IE中文文件不能下載的問題
 		}else{

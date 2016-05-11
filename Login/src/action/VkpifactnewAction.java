@@ -238,9 +238,12 @@ public class VkpifactnewAction extends ActionSupport implements ServletResponseA
 					month=""+b;
 				}
 				VKpifactEveNew eve=vkpievenewSer.findById(factNo, factCode, year+month)==null?new VKpifactEveNew():vkpievenewSer.findById(factNo, factCode, year+month);
-				if(eve!=null){//start if					
+				if(eve!=null){//start if
+					List<VKpifactEveNew>list_temp=new ArrayList<VKpifactEveNew>();
+					list_temp.add(eve);
 					  int b_index=(b-1)/3+1;
-					  list_kpieve.get(b_index).setSumEverydemo(list_kpieve.get(b_index).getSumEverydemo().add(eve.getSumEverydemo()));
+					  this.findTotal(list_kpieve, list_kpieve, list_temp, b_index, b_index, 0);
+					  /*list_kpieve.get(b_index).setSumEverydemo(list_kpieve.get(b_index).getSumEverydemo().add(eve.getSumEverydemo()));
 				      list_kpieve.get(b_index).setSumStandarddemo(list_kpieve.get(b_index).getSumStandarddemo().add(eve.getSumStandarddemo()));
 				      list_kpieve.get(b_index).setSumActualdemo(list_kpieve.get(b_index).getSumActualdemo().add(eve.getSumActualdemo()));
 				      list_kpieve.get(b_index).setSumActualpairs(list_kpieve.get(b_index).getSumActualpairs().add(eve.getSumActualpairs()));
@@ -348,11 +351,12 @@ public class VkpifactnewAction extends ActionSupport implements ServletResponseA
 				      list_kpieve.get(b_index).setObja199(list_kpieve.get(b_index).getObja199()+eve.getObja199());
 				      list_kpieve.get(b_index).setObja200(list_kpieve.get(b_index).getObja200()+eve.getObja200());
 				      list_kpieve.get(b_index).setObja201(list_kpieve.get(b_index).getObja201()+eve.getObja201());
-				      list_kpieve.get(b_index).setObja202(list_kpieve.get(b_index).getObja202()+eve.getObja202());
+				      list_kpieve.get(b_index).setObja202(list_kpieve.get(b_index).getObja202()+eve.getObja202());*/
 				      
 				      if(b==12){
 				    	  for(int i=0;i<3;i++){
-				    		  list_kpieve.get(i+5).setSumEverydemo(list_kpieve.get(2*i+1).getSumEverydemo().add(list_kpieve.get(2*i+2).getSumEverydemo()));
+				    		  this.findTotal(list_kpieve, list_kpieve, list_kpieve, i+5, 2*i+1, 2*i+2);
+				    		 /* list_kpieve.get(i+5).setSumEverydemo(list_kpieve.get(2*i+1).getSumEverydemo().add(list_kpieve.get(2*i+2).getSumEverydemo()));
 						      list_kpieve.get(i+5).setSumStandarddemo(list_kpieve.get(2*i+1).getSumStandarddemo().add(list_kpieve.get(2*i+2).getSumStandarddemo()));
 						      list_kpieve.get(i+5).setSumActualdemo(list_kpieve.get(2*i+1).getSumActualdemo().add(list_kpieve.get(2*i+2).getSumActualdemo()));
 						      list_kpieve.get(i+5).setSumActualpairs(list_kpieve.get(2*i+1).getSumActualpairs().add(list_kpieve.get(2*i+2).getSumActualpairs()));
@@ -460,7 +464,7 @@ public class VkpifactnewAction extends ActionSupport implements ServletResponseA
 						      list_kpieve.get(i+5).setObja199(list_kpieve.get(2*i+1).getObja199()+list_kpieve.get(2*i+2).getObja199());
 						      list_kpieve.get(i+5).setObja200(list_kpieve.get(2*i+1).getObja200()+list_kpieve.get(2*i+2).getObja200());
 						      list_kpieve.get(i+5).setObja201(list_kpieve.get(2*i+1).getObja201()+list_kpieve.get(2*i+2).getObja201());
-						      list_kpieve.get(i+5).setObja202(list_kpieve.get(2*i+1).getObja202()+list_kpieve.get(2*i+2).getObja202());					      
+						      list_kpieve.get(i+5).setObja202(list_kpieve.get(2*i+1).getObja202()+list_kpieve.get(2*i+2).getObja202());	*/				      
 				    	  }
 				    	  list3_q1=this.findResult(b/4,list_kpieve.get(1));//list_kpieve.get(1)第一季度							
 						  list2_all.add(list3_q1);
@@ -771,33 +775,11 @@ public class VkpifactnewAction extends ActionSupport implements ServletResponseA
 				String ym=list_months.get(b);
 				VKpifactEveNew eve=vkpievenewSer.findById(factNo, factCode,ym)==null?new VKpifactEveNew():vkpievenewSer.findById(factNo, factCode,ym);
 				if(eve!=null){//start if
-					/**
-					 * sumActualpairs和sumFacpairs,otherweight有可能為空
-					 */
-					/*BigDecimal big=new BigDecimal(0.00);
-					if(eve.getSumActualpairs()==null){
-						eve.setSumActualpairs(big);
-					}
-					if(eve.getSumFacpairs()==null){
-						eve.setSumFacpairs(big);
-					}
-					if(eve.getOtherweight()==null){
-						eve.setOtherweight(big);
-					}
-					if(eve.getProductednum()==null){
-						eve.setProductednum(0.0);
-					}
-					if(eve.getNoglueweight()==null){
-						eve.setNoglueweight(0.0);
-					}
-					if(eve.getRepairmoney()==null){
-						eve.setRepairmoney(0.0);
-					}
-					if(eve.getWorkhours()==null){
-						eve.setWorkhours(0.0);
-					}*/
+					List<VKpifactEveNew>list_temp=new ArrayList<VKpifactEveNew>();
+					list_temp.add(eve);
 					//合計
-					list_kpieve.get(0).setSumEverydemo(list_kpieve.get(0).getSumEverydemo().add(eve.getSumEverydemo()));
+					this.findTotal(list_kpieve, list_kpieve, list_temp, 0, 0, 0);
+					/*list_kpieve.get(0).setSumEverydemo(list_kpieve.get(0).getSumEverydemo().add(eve.getSumEverydemo()));
 				      list_kpieve.get(0).setSumStandarddemo(list_kpieve.get(0).getSumStandarddemo().add(eve.getSumStandarddemo()));
 				      list_kpieve.get(0).setSumActualdemo(list_kpieve.get(0).getSumActualdemo().add(eve.getSumActualdemo()));
 				      list_kpieve.get(0).setSumActualpairs(list_kpieve.get(0).getSumActualpairs().add(eve.getSumActualpairs()));
@@ -905,7 +887,7 @@ public class VkpifactnewAction extends ActionSupport implements ServletResponseA
 				      list_kpieve.get(0).setObja199(list_kpieve.get(0).getObja199()+eve.getObja199());
 				      list_kpieve.get(0).setObja200(list_kpieve.get(0).getObja200()+eve.getObja200());
 				      list_kpieve.get(0).setObja201(list_kpieve.get(0).getObja201()+eve.getObja201());
-				      list_kpieve.get(0).setObja202(list_kpieve.get(0).getObja202()+eve.getObja202());					  																																						
+				      list_kpieve.get(0).setObja202(list_kpieve.get(0).getObja202()+eve.getObja202());	*/				  																																						
 				}// end if				
 				//合計				
 					if(b==list_months.size()-1){
@@ -1915,6 +1897,133 @@ public class VkpifactnewAction extends ActionSupport implements ServletResponseA
 		list.add(factleaveRate);//全廠離職率
 		list.add(hurtNum);//工傷件數			
 		return list;
+	}
+	
+	/**
+	 * 數據統計
+	 * @Title: findTotal
+	 * @Description: TODO
+	 * @param @param list_a
+	 * @param @param list_b
+	 * @param @param list_c
+	 * @param @param a
+	 * @param @param b
+	 * @param @param c
+	 * @return void
+	 * @throws
+	 * @author web
+	 * @date 2016/5/11
+	 */
+	public void findTotal(List<VKpifactEveNew>list_a,List<VKpifactEveNew>list_b,List<VKpifactEveNew>list_c,int a,int b,int c){
+		  list_a.get(a).setSumEverydemo(list_b.get(b).getSumEverydemo().add(list_c.get(c).getSumEverydemo()));
+	      list_a.get(a).setSumStandarddemo(list_b.get(b).getSumStandarddemo().add(list_c.get(c).getSumStandarddemo()));
+	      list_a.get(a).setSumActualdemo(list_b.get(b).getSumActualdemo().add(list_c.get(c).getSumActualdemo()));
+	      list_a.get(a).setSumActualpairs(list_b.get(b).getSumActualpairs().add(list_c.get(c).getSumActualpairs()));
+	      list_a.get(a).setSumFactpairs(list_b.get(b).getSumFactpairs().add(list_c.get(c).getSumFactpairs()));
+	      list_a.get(a).setHole(list_b.get(b).getHole()+list_c.get(c).getHole());						      
+	      list_a.get(a).setObja100(list_b.get(b).getObja100()+list_c.get(c).getObja100());
+	      list_a.get(a).setObja101(list_b.get(b).getObja101()+list_c.get(c).getObja101());
+	      list_a.get(a).setObja102(list_b.get(b).getObja102()+list_c.get(c).getObja102());
+	      list_a.get(a).setObja103(list_b.get(b).getObja103()+list_c.get(c).getObja103());
+	      list_a.get(a).setObja104(list_b.get(b).getObja104()+list_c.get(c).getObja104());
+	      list_a.get(a).setObja105(list_b.get(b).getObja105()+list_c.get(c).getObja105());
+	      list_a.get(a).setObja106(list_b.get(b).getObja106()+list_c.get(c).getObja106());
+	      list_a.get(a).setObja107(list_b.get(b).getObja107()+list_c.get(c).getObja107());
+	      list_a.get(a).setObja108(list_b.get(b).getObja108()+list_c.get(c).getObja108());
+	      list_a.get(a).setObja109(list_b.get(b).getObja109()+list_c.get(c).getObja109());
+	      list_a.get(a).setObja110(list_b.get(b).getObja110()+list_c.get(c).getObja110());
+	      list_a.get(a).setObja111(list_b.get(b).getObja111()+list_c.get(c).getObja111());
+	      list_a.get(a).setObja112(list_b.get(b).getObja112()+list_c.get(c).getObja112());
+	      list_a.get(a).setObja113(list_b.get(b).getObja113()+list_c.get(c).getObja113());
+	      list_a.get(a).setObja114(list_b.get(b).getObja114()+list_c.get(c).getObja114());
+	      list_a.get(a).setObja115(list_b.get(b).getObja115()+list_c.get(c).getObja115());
+	      list_a.get(a).setObja116(list_b.get(b).getObja116()+list_c.get(c).getObja116());
+	      list_a.get(a).setObja117(list_b.get(b).getObja117()+list_c.get(c).getObja117());
+	      list_a.get(a).setObja118(list_b.get(b).getObja118()+list_c.get(c).getObja118());
+	      list_a.get(a).setObja119(list_b.get(b).getObja119()+list_c.get(c).getObja119());
+	      list_a.get(a).setObja120(list_b.get(b).getObja120()+list_c.get(c).getObja120());
+	      list_a.get(a).setObja121(list_b.get(b).getObja121()+list_c.get(c).getObja121());
+	      list_a.get(a).setObja122(list_b.get(b).getObja122()+list_c.get(c).getObja122());
+	      list_a.get(a).setObja123(list_b.get(b).getObja123()+list_c.get(c).getObja123());
+	      list_a.get(a).setObja124(list_b.get(b).getObja124()+list_c.get(c).getObja124());
+	      list_a.get(a).setObja125(list_b.get(b).getObja125()+list_c.get(c).getObja125());
+	      list_a.get(a).setObja126(list_b.get(b).getObja126()+list_c.get(c).getObja126());
+	      list_a.get(a).setObja127(list_b.get(b).getObja127()+list_c.get(c).getObja127());
+	      list_a.get(a).setObja128(list_b.get(b).getObja128()+list_c.get(c).getObja128());
+	      list_a.get(a).setObja129(list_b.get(b).getObja129()+list_c.get(c).getObja129());
+	      list_a.get(a).setObja130(list_b.get(b).getObja130()+list_c.get(c).getObja130());
+	      list_a.get(a).setObja131(list_b.get(b).getObja131()+list_c.get(c).getObja131());
+	      list_a.get(a).setObja132(list_b.get(b).getObja132()+list_c.get(c).getObja132());
+	      list_a.get(a).setObja133(list_b.get(b).getObja133()+list_c.get(c).getObja133());
+	      list_a.get(a).setObja134(list_b.get(b).getObja134()+list_c.get(c).getObja134());
+	      list_a.get(a).setObja135(list_b.get(b).getObja135()+list_c.get(c).getObja135());
+	      list_a.get(a).setObja136(list_b.get(b).getObja136()+list_c.get(c).getObja136());
+	      list_a.get(a).setObja137(list_b.get(b).getObja137()+list_c.get(c).getObja137());
+	      list_a.get(a).setObja138(list_b.get(b).getObja138()+list_c.get(c).getObja138());
+	      list_a.get(a).setObja139(list_b.get(b).getObja139()+list_c.get(c).getObja139());
+	      list_a.get(a).setObja140(list_b.get(b).getObja140()+list_c.get(c).getObja140());
+	      list_a.get(a).setObja141(list_b.get(b).getObja141()+list_c.get(c).getObja141());
+	      list_a.get(a).setObja142(list_b.get(b).getObja142()+list_c.get(c).getObja142());
+	      list_a.get(a).setObja143(list_b.get(b).getObja143()+list_c.get(c).getObja143());
+	      list_a.get(a).setObja144(list_b.get(b).getObja144()+list_c.get(c).getObja144());
+	      list_a.get(a).setObja145(list_b.get(b).getObja145()+list_c.get(c).getObja145());
+	      list_a.get(a).setObja146(list_b.get(b).getObja146()+list_c.get(c).getObja146());
+	      list_a.get(a).setObja147(list_b.get(b).getObja147()+list_c.get(c).getObja147());
+	      list_a.get(a).setObja148(list_b.get(b).getObja148()+list_c.get(c).getObja148());
+	      list_a.get(a).setObja149(list_b.get(b).getObja149()+list_c.get(c).getObja149());
+	      list_a.get(a).setObja150(list_b.get(b).getObja150()+list_c.get(c).getObja150());
+	      list_a.get(a).setObja151(list_b.get(b).getObja151()+list_c.get(c).getObja151());
+	      list_a.get(a).setObja152(list_b.get(b).getObja152()+list_c.get(c).getObja152());
+	      list_a.get(a).setObja153(list_b.get(b).getObja153()+list_c.get(c).getObja153());
+	      list_a.get(a).setObja154(list_b.get(b).getObja154()+list_c.get(c).getObja154());
+	      list_a.get(a).setObja155(list_b.get(b).getObja155()+list_c.get(c).getObja155());
+	      list_a.get(a).setObja156(list_b.get(b).getObja156()+list_c.get(c).getObja156());
+	      list_a.get(a).setObja157(list_b.get(b).getObja157()+list_c.get(c).getObja157());
+	      list_a.get(a).setObja158(list_b.get(b).getObja158()+list_c.get(c).getObja158());
+	      list_a.get(a).setObja159(list_b.get(b).getObja159()+list_c.get(c).getObja159());
+	      list_a.get(a).setObja160(list_b.get(b).getObja160()+list_c.get(c).getObja160());
+	      list_a.get(a).setObja161(list_b.get(b).getObja161()+list_c.get(c).getObja161());
+	      list_a.get(a).setObja162(list_b.get(b).getObja162()+list_c.get(c).getObja162());
+	      list_a.get(a).setObja163(list_b.get(b).getObja163()+list_c.get(c).getObja163());
+	      list_a.get(a).setObja164(list_b.get(b).getObja164()+list_c.get(c).getObja164());
+	      list_a.get(a).setObja165(list_b.get(b).getObja165()+list_c.get(c).getObja165());
+	      list_a.get(a).setObja166(list_b.get(b).getObja166()+list_c.get(c).getObja166());
+	      list_a.get(a).setObja167(list_b.get(b).getObja167()+list_c.get(c).getObja167());
+	      list_a.get(a).setObja168(list_b.get(b).getObja168()+list_c.get(c).getObja168());
+	      list_a.get(a).setObja169(list_b.get(b).getObja169()+list_c.get(c).getObja169());
+	      list_a.get(a).setObja170(list_b.get(b).getObja170()+list_c.get(c).getObja170());
+	      list_a.get(a).setObja171(list_b.get(b).getObja171()+list_c.get(c).getObja171());
+	      list_a.get(a).setObja172(list_b.get(b).getObja172()+list_c.get(c).getObja172());
+	      list_a.get(a).setObja173(list_b.get(b).getObja173()+list_c.get(c).getObja173());
+	      list_a.get(a).setObja174(list_b.get(b).getObja174()+list_c.get(c).getObja174());
+	      list_a.get(a).setObja175(list_b.get(b).getObja175()+list_c.get(c).getObja175());
+	      list_a.get(a).setObja176(list_b.get(b).getObja176()+list_c.get(c).getObja176());
+	      list_a.get(a).setObja177(list_b.get(b).getObja177()+list_c.get(c).getObja177());
+	      list_a.get(a).setObja178(list_b.get(b).getObja178()+list_c.get(c).getObja178());
+	      list_a.get(a).setObja179(list_b.get(b).getObja179()+list_c.get(c).getObja179());
+	      list_a.get(a).setObja180(list_b.get(b).getObja180()+list_c.get(c).getObja180());
+	      list_a.get(a).setObja181(list_b.get(b).getObja181()+list_c.get(c).getObja181());
+	      list_a.get(a).setObja182(list_b.get(b).getObja182()+list_c.get(c).getObja182());
+	      list_a.get(a).setObja183(list_b.get(b).getObja183()+list_c.get(c).getObja183());
+	      list_a.get(a).setObja184(list_b.get(b).getObja184()+list_c.get(c).getObja184());
+	      list_a.get(a).setObja185(list_b.get(b).getObja185()+list_c.get(c).getObja185());
+	      list_a.get(a).setObja186(list_b.get(b).getObja186()+list_c.get(c).getObja186());
+	      list_a.get(a).setObja187(list_b.get(b).getObja187()+list_c.get(c).getObja187());
+	      list_a.get(a).setObja188(list_b.get(b).getObja188()+list_c.get(c).getObja188());
+	      list_a.get(a).setObja189(list_b.get(b).getObja189()+list_c.get(c).getObja189());
+	      list_a.get(a).setObja190(list_b.get(b).getObja190()+list_c.get(c).getObja190());
+	      list_a.get(a).setObja191(list_b.get(b).getObja191()+list_c.get(c).getObja191());
+	      list_a.get(a).setObja192(list_b.get(b).getObja192()+list_c.get(c).getObja192());
+	      list_a.get(a).setObja193(list_b.get(b).getObja193()+list_c.get(c).getObja193());
+	      list_a.get(a).setObja194(list_b.get(b).getObja194()+list_c.get(c).getObja194());
+	      list_a.get(a).setObja195(list_b.get(b).getObja195()+list_c.get(c).getObja195());
+	      list_a.get(a).setObja196(list_b.get(b).getObja196()+list_c.get(c).getObja196());
+	      list_a.get(a).setObja197(list_b.get(b).getObja197()+list_c.get(c).getObja197());
+	      list_a.get(a).setObja198(list_b.get(b).getObja198()+list_c.get(c).getObja198());
+	      list_a.get(a).setObja199(list_b.get(b).getObja199()+list_c.get(c).getObja199());
+	      list_a.get(a).setObja200(list_b.get(b).getObja200()+list_c.get(c).getObja200());
+	      list_a.get(a).setObja201(list_b.get(b).getObja201()+list_c.get(c).getObja201());
+	      list_a.get(a).setObja202(list_b.get(b).getObja202()+list_c.get(c).getObja202());		
 	}
 	
 

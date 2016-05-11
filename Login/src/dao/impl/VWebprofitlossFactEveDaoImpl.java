@@ -61,7 +61,9 @@ public class VWebprofitlossFactEveDaoImpl extends Basedao implements IVWebprofit
 	
 	public List<VWebprofitlossFactEve> findByYymm(String yymm) {
 		// TODO Auto-generated method stub
-		return null;
+		String hql="from VWebprofitlossFactEve where id.yymm=?";
+		String[]objs={yymm};
+		return super.findAll(hql, objs);
 	}
 
 }

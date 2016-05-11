@@ -400,7 +400,7 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 		this.kyzExpLogSer = kyzExpLogSer;
 	}
 
-	public void add() throws Exception  {
+	public String add() throws Exception  {
 		/*文件上傳驗證*/
 		if(files!=null&&files.get(0)!=null){
 			for(int i=0;i<files.size();i++){
@@ -409,13 +409,13 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 					String filetype=filesFileName.get(i).substring(filesFileName.get(i).lastIndexOf(".")).toLowerCase();
 					if(filesize>5120000){
 						response.setContentType("text/html;charset=utf-8");
-						response.getWriter().print("<script>alert('文件不可超過5M!');history.back()</script>");
-						//return null;
+						response.getWriter().print("<script>window.parent.alert('文件不可超過5M!');window.parent.layer.closeAll()</script>");
+						return null;
 					}
 					if(!filetype.equals(".bmp")&&!filetype.equals(".jpg")&&!filetype.equals(".jpeg")&&!filetype.equals(".gif")&&!filetype.equals(".tif")){
 						response.setContentType("text/html;charset=utf-8");
-						response.getWriter().print("<script>alert('只允許jpg,bmp,jpeg,gif,tif圖片!');history.back()</script>");
-						//return null;
+						response.getWriter().print("<script>window.parent.alert('只允許jpg,bmp,jpeg,gif,tif圖片!');window.parent.layer.closeAll()</script>");
+						return null;
 					}
 					
 				}
@@ -558,7 +558,7 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 					response.getWriter()
 					.print("<script>window.parent.alert('數據庫已存在("							
 							+ kyz.getId().getBillNo()
-							+ ")!')</script>");
+							+ ")!');window.parent.layer.closeAll()</script>");
 				}																							 				
 			}//end if
 			else{
@@ -572,10 +572,11 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 			response.getWriter().print("<script>window.parent.gook();</script>");										
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			response.getWriter().print("<script>window.parent.layer.msg('操作失敗',3,3)</script>");
+			response.getWriter().print("<script>window.parent.layer.msg('操作失敗',3,3);window.parent.layer.closeAll()</script>");
 			ajaxResult="1";
 			e.printStackTrace();
-		} 								
+		} 	
+		return null;
 	}
 	
 	public void print2() throws IOException{
