@@ -191,9 +191,12 @@ public class WebBussinessletterAction extends ActionSupport implements ServletRe
 		DateFormat fmt2=new SimpleDateFormat("yyyyMMddhhmm");
 		bussletter.setDateFrom(fmt1.parse(dateFrom));
 		bussletter.setDateEnd(fmt1.parse(dateEnd));
-		bussletter.setTimeFrom(fmt2.parse(timeFrom));
-		bussletter.setTimeEnd(fmt2.parse(timeEnd));
-		
+		if(timeFrom!=null&&!timeFrom.equals("")){
+			bussletter.setTimeFrom(fmt2.parse(timeFrom));
+		}
+		if(timeEnd!=null&&!timeEnd.equals("")){
+			bussletter.setTimeEnd(fmt2.parse(timeEnd));
+		}			
 			try{
 				if(isnull.equals("isNull")){
 				bussletter.setVisaSortM(bussletter.getVisaSort().substring(0,2));

@@ -91,7 +91,9 @@ public class KyzContactLetterDaoImpl extends Basedao implements IKyzContactLette
 		final int offset = PageBean.countOffset(pageSize, currentPage);
 		final int length = pageSize;
 		List<KyzContactletter> list = super.queryForPage(hql.toString(), offset,length, map);
-				
+		for(KyzContactletter letter:list){
+			letter.getVbm().getLastMk();
+		}		
 		PageBean pageBean = new PageBean();
 		pageBean.setPageSize(pageSize);
 		pageBean.setCurrentPage(currentPage);

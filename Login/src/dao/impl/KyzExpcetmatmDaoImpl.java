@@ -125,7 +125,10 @@ public class KyzExpcetmatmDaoImpl extends Basedao implements IKyzExpectmatmDao {
 		}
 		final int offset = PageBean.countOffset(pageSize, currentPage);
 		final int length = pageSize;
-		List<KyzExpectmatm> list = super.queryForPage(hql.toString(), offset,length, map);						
+		List<KyzExpectmatm> list = super.queryForPage(hql.toString(), offset,length, map);
+		for(KyzExpectmatm kyz:list){
+			kyz.getVbm().getLastMk();
+		}
 		PageBean pageBean = new PageBean();
 		pageBean.setPageSize(pageSize);
 		pageBean.setCurrentPage(currentPage);

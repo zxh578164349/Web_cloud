@@ -3,7 +3,6 @@
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <jsp:useBean id="cookie" class="util.Cookie" scope="page" />
 
-
 <!DOCTYPE html>
 
 <head>
@@ -11,14 +10,12 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <title>Web系統登錄</title>
   <link rel="stylesheet" href="css/login_style_ie.css">
-  <style type="text/css">
-    body{background-image:url(images/bg.jpg);}
-  </style>
+  
   <!-- <script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script>-->
-  <script src="http://apps.bdimg.com/libs/jquery/1.9.1/jquery.min.js"></script> 
-<script>window.jQuery || document.write('<script src="jquery/jquery-1.9.1.min.js"><\/script>');</script>
-  <script type="text/javascript" src="jquery/layer/layer.min.js"></script>
-  <script type="text/javascript">
+<script src="http://apps.bdimg.com/libs/jquery/1.9.1/jquery.min.js"></script> 
+<script>window.jQuery || document.write('<script src="loginpage/jquery/jquery-1.9.1.min.js"><\/script>');</script>
+<script type="text/javascript" src="loginpage/jquery/layer/layer.min.js"></script>
+<script type="text/javascript">
   var jq=jQuery.noConflict();
 	var loadi;
 	jq(document).ajaxStart(function(){
@@ -125,11 +122,7 @@
     </div>
     
   </section>		    
-	<!-- <div id="mydiv">      
-		<p>		
-			<img alt="" src="images/loading006.gif" id="img_loading"><br> Loading....
-		</p>		
-	</div>	 -->	   
-	   <jsp:include page="copyright_login.jsp"/>	  	
+   
+<jsp:include page="copyright_login.jsp"/>	  	
 </body>
 </html>

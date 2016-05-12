@@ -58,7 +58,10 @@ public class WebBussinessletterDaoImpl extends Basedao implements IWebBussinessl
 			currentPage=totalPage;
 		}
 		int offset=PageBean.countOffset(pageSize, currentPage);
-		List list=super.queryForPage(hql.toString(), offset, pageSize, map);
+		List<WebBussinessletter>list=super.queryForPage(hql.toString(), offset, pageSize, map);
+		for(WebBussinessletter letter:list){
+			letter.getVbm().getLastMk();
+		}
 		PageBean bean=new PageBean();
 		bean.setAllRow(allrow);
 		bean.setCurrentPage(currentPage);

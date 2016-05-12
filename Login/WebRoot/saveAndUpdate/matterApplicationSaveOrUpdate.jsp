@@ -138,8 +138,8 @@ var j_a=0;
         
         //设置列内容和属性
         var cboxlist=document.getElementsByName("cbox");
-        if(cboxlist.length>9){
-           alert("對不起,不能超過10條記錄!");
+        if(cboxlist.length>29){
+           layer.alert("對不起,不能超過30條記錄!");
         }else{
         	 j++;
         	 j_a++;

@@ -14,7 +14,7 @@
 <meta charset="utf-8" />
 
 <!-- Load stylesheets -->
-<link type="text/css" rel="stylesheet" href="css/copyright_login.css" media="screen" />		
+<link type="text/css" rel="stylesheet" href="loginpage/css/copyright_login.css" media="screen" />		
 <!-- // Load stylesheets -->
 
 </head>

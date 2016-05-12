@@ -502,6 +502,7 @@ public class WebYdataAction extends ActionSupport implements
 
 	public String findPageBean() {
 		//ActionContext.getContext().getApplication().clear();
+		System.out.println(request.getRequestURI());
 		ActionContext.getContext().getSession().remove("public_factno");
 		ActionContext.getContext().getSession().remove("public_yymm");
 		ActionContext.getContext().getSession().remove("public_yymm2");

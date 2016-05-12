@@ -56,12 +56,18 @@ public class SessionTimeOutFilter implements Filter{
 		httpresponse.setContentType("text/html;charset=utf-8");
 		String requestURL=httprequest.getRequestURI();
 		WebUser user=(WebUser)httprequest.getSession().getAttribute("loginUser");
-		System.out.println(requestURL);
-		if(requestURL!=null&&!requestURL.equals("/Login/")&&user==null){
-			httpresponse.getWriter().print("<script>window.parent.alert('會話超時,請重新登錄');window.location.href='judge.jsp'</script>");
+		//System.out.println(requestURL);		
+		if(!requestURL.contains("userlogin")&&!requestURL.contains("webfact_findAllfact")&&!requestURL.equals("/Login/")&&!requestURL.contains("loginpage")&&
+			!requestURL.contains("judge.jsp")){
+			if(user==null){
+				httpresponse.getWriter().print("<script>window.parent.alert('會話超時,請重新登錄');window.location.href='judge.jsp'</script>");
+			}else{
+				chain.doFilter(request, response);	
+			}			
 		}else{
-			chain.doFilter(request, response);
+			chain.doFilter(request, response);	
 		}
+				
 	}
 
 	/**

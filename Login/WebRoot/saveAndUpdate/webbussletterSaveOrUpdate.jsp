@@ -48,7 +48,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 			      loadUrl("bussletter_findPageBean");
 			   }else{
 			      //alert(data.responseText);
-			      layer.mag("提交失敗",3,3);
+			      layer.msg("提交失敗",3,3);
 			   }
 			}
 			
@@ -182,14 +182,7 @@ window.onload=function(){
 	     }
 	   }
 }*/
-jq(function(){
-	if(jq("#isNull").val()=="isNull"){
-	    makeBillNo();
-	     if(jq("#dwrFactNo").val()!="tw"&&jq("#dwrFactNo").val()!=""){
-	    	 checkWebbussType(jq("#dwrFactNo").val());
-	     }
-	   }
-})
+
 
 function checkWebbussType(fact){
 	jq.ajax({
@@ -219,7 +212,16 @@ function checkWebbussType(fact){
 <script type='text/javascript' src='/Login/dwr/interface/webtypejs.js'></script>
 <script type='text/javascript' src='/Login/dwr/engine.js'></script>
 <script type='text/javascript' src='/Login/dwr/util.js'></script>
-
+<script type="text/javascript">
+jq(function(){
+	if(jq("#isNull").val()=="isNull"){
+	    makeBillNo();
+	     if(jq("#dwrFactNo").val()!="tw"&&jq("#dwrFactNo").val()!=""){
+	    	 checkWebbussType(jq("#dwrFactNo").val());
+	     }
+	   }
+})
+</script>
 
 
 </head>
