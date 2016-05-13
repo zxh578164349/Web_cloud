@@ -24,14 +24,6 @@
 	
 </head>
 <script>
-   /*  var jq=jQuery.noConflict();
-	var loadi; 
-	jq(document).ajaxStart(function(){
-		loadi=layer.load(0);
-	});
-	jq(document).ajaxStop(function(){
-		layer.close(loadi);
-	}); */
 	function pages(page) {	
 		jq.ajax({
 			type : "POST",
@@ -189,10 +181,5 @@ function print(public_form){
 	<div id="bodyid">
 		<jsp:include page="table1/ydata_show1.jsp" />
 	</div>
-	<%--<div id="mydiv">
-		<p>
-			<img alt="" src="images/loading004.gif"><br> Loading....
-		</p>
-	</div>
---%></body>
+</body>
 </html>

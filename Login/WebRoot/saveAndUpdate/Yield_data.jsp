@@ -45,8 +45,7 @@
 			datatype : {
 				"*0-6" : /^-?\d{1,9}(\.[0-9]{1,3})?$/,
 				"*1-6" : /^[1-9]{1}\d{0,8}(\.[0-9]{1,3})?$/,
-				//"*1-6" : /^-?\d{1,9}(\.[0-9]{1,3})?$/,
-				"*0-7" : /^-?\d{0,7}(\.[0-9]{1})?$/
+				"*0-7" : /^-?\d{1,7}(\.[0-9]{1})?$/
 
 			}
 		});
@@ -376,7 +375,7 @@ window.onload=function(){
 				</td>
 				<td class="td_show_title">上模數(模)</td>
 				<td class="td_input"><span id="onModulus"><input
-						id="shangmoshu" type="text" name="ydata.onModulus" datatype="*0-6"
+						id="shangmoshu" type="text" name="ydata.onModulus" datatype="*,*0-6"
 						value="<s:property value='%{formatDouble2(ydata.onModulus)}'/>">
 				</span>
 				</td>
@@ -387,7 +386,7 @@ window.onload=function(){
 				<td class="td_input"><span id="standardOutput"><input
 						id="bzcl" type="text" name="ydata.standardOutput"
 						value="<s:property value='%{formatDouble2(ydata.standardOutput)}'/>"
-						datatype="*1-6"> </span>
+						datatype="*,*0-6"> </span>
 				</td>
 
 				<td class="td_show_title">實際產量(模)</td>
@@ -405,7 +404,7 @@ window.onload=function(){
 				<td class="td_input"><span id="actualpairs"><input
 						id="in_actualpairs" type="text" name="ydata.actualpairs"
 						value="<s:property value='%{formatDouble2(ydata.actualpairs)}'/>"
-						datatype="*1-6"> </span>
+						datatype="*,*0-6"> </span>
 				</td>
 
 				<td class="td_show_title">客補生產雙數(雙)</td>

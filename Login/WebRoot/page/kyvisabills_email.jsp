@@ -27,8 +27,10 @@
 
 
 <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
-<link href="http://libs.baidu.com/bootstrap/3.0.3/css/style.css" rel="stylesheet">	
-<script src="http://libs.baidu.com/jquery/1.9.1/jquery.min.js"></script>
+<link href="http://libs.baidu.com/bootstrap/3.0.3/css/style.css" rel="stylesheet">
+<script src="http://apps.bdimg.com/libs/jquery/1.9.1/jquery.min.js"></script> 
+<script>window.jQuery || document.write('<script src="jquery/jquery-1.9.1.min.js"><\/script>');</script>	
+<!--  <script src="http://libs.baidu.com/jquery/1.9.1/jquery.min.js"></script>-->
 <script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="page/jquerys/layer/layer.min.js"></script>
 <!--[if lt IE 9]>  
@@ -277,10 +279,5 @@ aria-labelledby="myModalLabelA" aria-hidden="true">
 
 </div>
 <jsp:include page="../copyright.jsp"/>	
-<%--<div style="width:100%;position:fixed;bottom:0" align="center" id="tab3">
-<font color="grey" style="font-size:10px;font-family: Arial, Helvetica, sans-serif;">
-Copyright © 2014,東莞加元鞋材制品有限公司,All Rights Reserved
-</font></div>	
---%>
 
 </html>

@@ -827,6 +827,8 @@ public class Printer_Auto {
 					double sumDayCount = 0;// 總天數
 					if (sumStandardOutput != 0) {
 						sumAchievingRate = sumActualYield / sumStandardOutput;
+					}else{
+						sumAchievingRate=0.0;
 					}
 
 					/*
@@ -2999,6 +3001,8 @@ public class Printer_Auto {
 
 				if (sumStandardOutput != 0) {
 					sumAchievingRate = sumActualYield / sumStandardOutput;
+				}else{
+					sumAchievingRate=0.0;
 				}
 				for (int z = 0; z < z_length; z++) {// for 3
 

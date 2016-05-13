@@ -14,6 +14,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import entity.KyVisabillm;
 import entity.WebUser;
 
 /**   
@@ -36,7 +37,6 @@ public class SessionTimeOutFilter implements Filter{
 	 * 描述:
 	 */
 	
-	
 	public void destroy() {
 		// TODO Auto-generated method stub
 		
@@ -56,18 +56,22 @@ public class SessionTimeOutFilter implements Filter{
 		httpresponse.setContentType("text/html;charset=utf-8");
 		String requestURL=httprequest.getRequestURI();
 		WebUser user=(WebUser)httprequest.getSession().getAttribute("loginUser");
-		//System.out.println(requestURL);		
+		KyVisabillm vbm=(KyVisabillm)httprequest.getSession().getAttribute("vbm");
+		//System.out.println(requestURL);	
 		if(!requestURL.contains("userlogin")&&!requestURL.contains("webfact_findAllfact")&&!requestURL.equals("/Login/")&&!requestURL.contains("loginpage")&&
-			!requestURL.contains("judge.jsp")){
+			!requestURL.contains("judge.jsp")&&!requestURL.contains("vbm_findById_email")){
 			if(user==null){
-				httpresponse.getWriter().print("<script>window.parent.alert('會話超時,請重新登錄');window.location.href='judge.jsp'</script>");
+				if(vbm==null){
+					httpresponse.getWriter().print("<script>window.parent.alert('會話超時,請重新登錄');window.location.href='judge.jsp'</script>");
+				}else{
+					chain.doFilter(request, response);	
+				}
 			}else{
-				chain.doFilter(request, response);	
+				chain.doFilter(request, response);				
 			}			
 		}else{
 			chain.doFilter(request, response);	
-		}
-				
+		}				
 	}
 
 	/**
@@ -78,7 +82,6 @@ public class SessionTimeOutFilter implements Filter{
 	
 	public void init(FilterConfig arg0) throws ServletException {
 		// TODO Auto-generated method stub
-		
 	}
 
 }

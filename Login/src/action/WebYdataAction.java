@@ -258,8 +258,12 @@ public class WebYdataAction extends ActionSupport implements
 			//主鍵的日期和達成率，添加與修改都作同樣處理
 			date = format.parse(yymmdd);
 			ydata.getId().setYymmdd(date);		
-			if (ydata.getActualYield() != null&& ydata.getStandardOutput() != null&&ydata.getStandardOutput()!=0) {				
-				achievingRate = ydata.getActualYield()/ ydata.getStandardOutput();					
+			if (ydata.getActualYield() != null&& ydata.getStandardOutput() != null) {
+				if(ydata.getStandardOutput()!=0){
+					achievingRate = ydata.getActualYield()/ ydata.getStandardOutput();	
+				}else{
+					achievingRate=0.0;
+				}								
 				ydata.setAchievingRate(achievingRate);
 			}
 			/**

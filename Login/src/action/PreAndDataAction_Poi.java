@@ -1043,6 +1043,8 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 								if (sumStandardOutput != 0) {
 									sumAchievingRate = sumActualYield
 											/ sumStandardOutput;
+								}else{
+									sumAchievingRate=0.0;
 								}
 
 								/*
@@ -4055,6 +4057,8 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 							if (sumStandardOutput != 0) {
 								sumAchievingRate = sumActualYield
 										/ sumStandardOutput;
+							}else{
+								sumAchievingRate=0.0;
 							}
 							for (int z = 0; z < z_length; z++) {// for 3
 

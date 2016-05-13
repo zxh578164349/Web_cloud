@@ -42,9 +42,9 @@ jq(document).ajaxStop(function(){
 			showAllError : true,
 			ignoreHidden : true,			
 			datatype : {
-				"*0-6" : /^-?\d{0,9}(\.[0-9]{1,3})?$/,
+				"*0-6" : /^-?\d{1,9}(\.[0-9]{1,3})?$/,
 				"*1-6" : /^-?[1-9]{1}\d{0,8}(\.[0-9]{1,3})?$/,
-				"*0-7" : /^-?\d{0,7}(\.[0-9]{1})?$/
+				"*0-7" : /^-?\d{1,7}(\.[0-9]{1})?$/
 			},
 			ajaxPost:true,
 			callback:function(data){
@@ -375,7 +375,7 @@ jq(document).ajaxStop(function(){
 				<td class="td_input"><span id="standardOutput"><input
 						id="bzcl" type="text" name="ydata.standardOutput"
 						value="<s:property value='%{formatDouble2(ydata.standardOutput)}'/>"
-						datatype="*1-6">
+						datatype="*,*0-6">
 				</span></td>
 
 				<td class="td_show_title">實際產量(模)</td>
@@ -392,7 +392,7 @@ jq(document).ajaxStop(function(){
 				<td class="td_input"><span id="actualpairs"><input
 						id="in_actualpairs" type="text" name="ydata.actualpairs"
 						value="<s:property value='%{formatDouble2(ydata.actualpairs)}'/>"
-						datatype="*1-6">
+						datatype="*,*0-6">
 				</span></td>
 
 				<td class="td_show_title">客補生產雙數(雙)</td>
