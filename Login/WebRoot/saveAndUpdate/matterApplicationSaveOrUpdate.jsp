@@ -32,7 +32,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 jq(function() {		
 		var demo = jq("#form").Validform({
 			btnSubmit : "#sub",
-			tiptype : 4,
+			tiptype : 3,
 			showAllError : true,
 			tipSweep : true,
 			datatype : {
@@ -166,9 +166,9 @@ var j_a=0;
         }
         
         newTd2.innerHTML='<input type="text" name="kyz.kyzExpectmatses['+j+'].matNo" value="" />';
-        newTd3.innerHTML='<input type="text" name="kyz.kyzExpectmatses['+j+'].qtyExpect" value="" />';
-        newTd4.innerHTML='<input type="text" name="kyz.kyzExpectmatses['+j+'].qtyOk" value="" />';
-        newTd5.innerHTML='<input type="text" name="kyz.kyzExpectmatses['+j+'].personNo" value="" />';
+        newTd3.innerHTML='<input type="text" name="kyz.kyzExpectmatses['+j+'].qtyExpect" value="" datatype="my0-8"/>';
+        newTd4.innerHTML='<input type="text" name="kyz.kyzExpectmatses['+j+'].qtyOk" value="" datatype="my0-8"/>';
+        newTd5.innerHTML='<input type="text" name="kyz.kyzExpectmatses['+j+'].personNo" value="" datatype="n0-8"/><span></span>';
         if(j_a==1){
         	newTd6.innerHTML='<input type="text" name="kyz.kyzExpectmatses['+j+'].qtyPair"  id="qtyPair"/>';    
             newTd7.innerHTML='<input type="text" name="kyz.kyzExpectmatses['+j+'].moneyType"  id="moneyType"/>';
@@ -562,7 +562,7 @@ jq(function(){
 			     <td ><input type="text" name="kyz.kyzExpectmatses[${x.index}].matNo" value="<s:property value='matNo'/>" /></td>			     
 			     <td ><input type="text" name="kyz.kyzExpectmatses[${x.index}].qtyExpect" value="<s:property value='qtyExpect'/>" datatype="my0-8"  id="qtyExpect_${x.index}"/></td>
 			     <td ><input type="text" name="kyz.kyzExpectmatses[${x.index}].qtyOk" value="<s:property value='%{formatDouble(qtyOk)}'/>" datatype="my0-8"  id="qtyOk_${x.index}"/></td>
-			     <td ><input type="text" name="kyz.kyzExpectmatses[${x.index}].personNo" value="<s:property value='%{formatDouble(personNo)}'/>" datatype="my0-8"  id="personNo_${x.index}"/></td>
+			     <td ><input type="text" name="kyz.kyzExpectmatses[${x.index}].personNo" value="<s:property value='%{formatDouble(personNo)}'/>" datatype="n0-8"  id="personNo_${x.index}"/></td>
 			     <td ><input type="text" name="kyz.kyzExpectmatses[${x.index}].qtyPair" value="<s:property value='qtyPair'/>"   /></td>
 			     <td ><input type="text" name="kyz.kyzExpectmatses[${x.index}].moneyType" value="<s:property value='moneyType'/>"  /></td>
 			      <td >
