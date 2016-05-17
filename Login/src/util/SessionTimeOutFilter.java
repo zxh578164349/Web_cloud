@@ -57,9 +57,9 @@ public class SessionTimeOutFilter implements Filter{
 		String requestURL=httprequest.getRequestURI();
 		WebUser user=(WebUser)httprequest.getSession().getAttribute("loginUser");
 		KyVisabillm vbm=(KyVisabillm)httprequest.getSession().getAttribute("vbm");
-		//System.out.println(requestURL);	
+		System.out.println(requestURL);	
 		if(!requestURL.contains("userlogin")&&!requestURL.contains("webfact_findAllfact")&&!requestURL.equals("/Login/")&&!requestURL.contains("loginpage")&&
-			!requestURL.contains("judge.jsp")&&!requestURL.contains("vbm_findById_email")){
+			!requestURL.contains("judge.jsp")&&!requestURL.contains("vbm_findById_email")&&!requestURL.contains("printerauto_print")){
 			if(user==null){
 				if(vbm==null){
 					httpresponse.getWriter().print("<script>window.parent.alert('會話超時,請重新登錄');window.location.href='judge.jsp'</script>");

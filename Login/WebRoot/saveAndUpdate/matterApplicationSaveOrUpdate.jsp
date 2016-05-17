@@ -32,7 +32,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 jq(function() {		
 		var demo = jq("#form").Validform({
 			btnSubmit : "#sub",
-			tiptype : 3,
+			tiptype : 4,
 			showAllError : true,
 			tipSweep : true,
 			datatype : {
@@ -128,13 +128,12 @@ function makeBillNo() {
 	}
 	
 var j=0;
-var j_a=0;
 	function addRow(){	    
         var factno=document.getElementById("dwrFactNo").value;
         var billno=document.getElementById("kyz_billno").value;
-        var factcode=document.getElementById("dwrFactArea").value;
-        var qtyPair;
-        var moneyType;
+        //var factcode=document.getElementById("dwrFactArea").value;
+        var qtyPair=document.getElementById("qtyPair");
+        var moneyType=document.getElementById("moneyType");
         
         //设置列内容和属性
         var cboxlist=document.getElementsByName("cbox");
@@ -142,7 +141,6 @@ var j_a=0;
            layer.alert("對不起,不能超過30條記錄!");
         }else{
         	 j++;
-        	 j_a++;
      	    //添加一行
              var newTr = kyzs_body.insertRow();
              //添加列
@@ -166,32 +164,25 @@ var j_a=0;
         }
         
         newTd2.innerHTML='<input type="text" name="kyz.kyzExpectmatses['+j+'].matNo" value="" />';
-        newTd3.innerHTML='<input type="text" name="kyz.kyzExpectmatses['+j+'].qtyExpect" value="" datatype="my0-8"/>';
-        newTd4.innerHTML='<input type="text" name="kyz.kyzExpectmatses['+j+'].qtyOk" value="" datatype="my0-8"/>';
-        newTd5.innerHTML='<input type="text" name="kyz.kyzExpectmatses['+j+'].personNo" value="" datatype="n0-8"/><span></span>';
-        if(j_a==1){
+        newTd3.innerHTML='<input type="text" name="kyz.kyzExpectmatses['+j+'].qtyExpect" value="" datatype="my0-8"/><span class="Validform_checktip"></span>';
+        newTd4.innerHTML='<input type="text" name="kyz.kyzExpectmatses['+j+'].qtyOk" value="" datatype="my0-8"/><span class="Validform_checktip"></span>';
+        newTd5.innerHTML='<input type="text" name="kyz.kyzExpectmatses['+j+'].personNo"  datatype="n0-8"/><span class="Validform_checktip"></span>';
+        if(qtyPair==null&&moneyType==null){
         	newTd6.innerHTML='<input type="text" name="kyz.kyzExpectmatses['+j+'].qtyPair"  id="qtyPair"/>';    
             newTd7.innerHTML='<input type="text" name="kyz.kyzExpectmatses['+j+'].moneyType"  id="moneyType"/>';
         	
         }else{
-        	 qtyPair=document.getElementById("qtyPair").value;
-             moneyType=document.getElementById("moneyType").value;
-        	newTd6.innerHTML='<input type="text" name="kyz.kyzExpectmatses['+j+'].qtyPair" value="'+qtyPair+'" />';    
-            newTd7.innerHTML='<input type="text" name="kyz.kyzExpectmatses['+j+'].moneyType" value="'+moneyType+'" />';
+        	newTd6.innerHTML='<input type="text" name="kyz.kyzExpectmatses['+j+'].qtyPair" value="'+qtyPair.value+'" />';    
+            newTd7.innerHTML='<input type="text" name="kyz.kyzExpectmatses['+j+'].moneyType" value="'+moneyType.value+'" />';
         }
-         
         newTd8.innerHTML='<input type="text" name="kyz.kyzExpectmatses['+j+'].memoMk" value="" />'+
         '<input type="hidden" name="kyz.kyzExpectmatses['+j+'].id.kyzExpectmatm.id.factNo" value="'+factno+'"'+'/>'+     
-        '<input type="hidden" name="kyz.kyzExpectmatses['+j+'].id.kyzExpectmatm.id.billNo" value="'+billno+'"'+'/>'+
-        '<input type="hidden" name="kyz.kyzExpectmatses['+j+'].factCode" value="'+factcode+'"'+'/>';       
+        '<input type="hidden" name="kyz.kyzExpectmatses['+j+'].id.kyzExpectmatm.id.billNo" value="'+billno+'"'+'/>';       
         }
         
 	}
 	
-	
-				
-	
-	
+		
 	function getFactCode(){
 	    document.getElementById("dwrFactArea").value=document.getElementById("kyzs_factcode").value;
 	}
