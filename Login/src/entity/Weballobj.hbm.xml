@@ -72,10 +72,10 @@
         <property name="objA118" type="java.lang.Double">
             <column name="OBJ_A118" precision="13" scale="4" />
         </property>
-        <property name="objA119" type="java.lang.Double">
+        <property name="objA119" type="java.lang.Integer">
             <column name="OBJ_A119" precision="13" scale="4" />
         </property>
-        <property name="objA120" type="java.lang.Double">
+        <property name="objA120" type="java.lang.Integer">
             <column name="OBJ_A120" precision="13" scale="4" />
         </property>
         <property name="objA121" type="java.lang.Double">
@@ -90,13 +90,13 @@
         <property name="objA124" type="java.lang.Double">
             <column name="OBJ_A124" precision="13" scale="4" />
         </property>
-        <property name="objA125" type="java.lang.Double">
+        <property name="objA125" type="java.lang.Integer">
             <column name="OBJ_A125" precision="13" scale="4" />
         </property>
-        <property name="objA126" type="java.lang.Double">
+        <property name="objA126" type="java.lang.Integer">
             <column name="OBJ_A126" precision="13" scale="4" />
         </property>
-        <property name="objA127" type="java.lang.Double">
+        <property name="objA127" type="java.lang.Integer">
             <column name="OBJ_A127" precision="13" scale="4" />
         </property>
         <property name="objA128" type="java.lang.Double">
@@ -323,6 +323,15 @@
         </property>
         <property name="objA202" type="java.lang.Double">
             <column name="OBJ_A202" precision="13" scale="4" />
+        </property>
+        <property name="username" type="java.lang.String">
+            <column name="USERNAME" length="50"/>
+        </property>
+        <property name="usernameUd" type="java.lang.String">
+            <column name="USERNAME_UD" length="50"/>
+        </property>
+        <property name="createDate" type="java.lang.String">
+            <column name="CREATEDATE" length="8"/>
         </property>
     </class>
 </hibernate-mapping>

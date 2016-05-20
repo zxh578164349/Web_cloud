@@ -86,5 +86,14 @@
 	<bean id="webtabfiledao" class="dao.impl.WebTabpomfileDaoImpl" parent="baseDao"></bean>
 	<bean id="webphonedao" class="dao.impl.WebPhonebookDaoImpl" parent="baseDao"></bean>
 	<bean id="weballobjdao" class="dao.impl.WeballobjDaoImpl" parent="baseDao"></bean>
+	<bean id="vwebsortdao" class="dao.impl.VWebbussortDaoImpl" parent="baseDao"></bean>
+	<bean id="webydatenoinputdao" class="dao.impl.WebydataNoinputDaoImpl" parent="baseDao"></bean>
+	<bean id="vkpifactnewDao" class="dao.impl.VKpifactNewDaoImpl" parent="baseDao"></bean>
+	<bean id="vkpievenewDao" class="dao.impl.VKpifactEveNewDaoImple" parent="baseDao"></bean>
+	<bean id="vwebuselessdao" class="dao.impl.VWebuselessDaoImpl" parent="baseDao"></bean>
+	<bean id="webremitdao" class="dao.impl.WebremittancelistDaoImpl" parent="baseDao"></bean>
+	<bean id="webremitsdao" class="dao.impl.WebremittancelistsDaoImpl" parent="baseDao"></bean>
+	<bean id="vwebprolossdao" class="dao.impl.VWebprofitlossEveDaoImpl" parent="baseDao"></bean>
+	<bean id="vwebprolossfactdao" class="dao.impl.VWebprofitlossFactEveDaoImpl" parent="baseDao"></bean>
 </beans>
 

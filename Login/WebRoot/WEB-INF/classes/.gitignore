@@ -1,3 +1,10 @@
 /dao
 /entity
+/entity_temp
+/mail
+/override
+/quartz
+/services
+/util
 /action
+/email

@@ -29,7 +29,7 @@ public class KyzExpectmatm implements java.io.Serializable {
 	private String urgentMk;
 	private String dateEtd;
 	private String memoMk;
-	private String memoSmk;
+	private String memoSmk;//標題
 	private String username;
 	private String emerWhether;
 	private String factCode;

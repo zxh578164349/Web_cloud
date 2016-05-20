@@ -61,14 +61,14 @@ jq(document).keyup(function(event){
 			</td>
 			<td>
 			
-			  <!-- 開始日期: --><input type="text" id="year" name="yymm" onClick="WdatePicker({dataFmt:'yyyyMM'})" readonly="readonly" class="Wdate search"/>至
-			  <!-- 結束日期: --><input type="text" id="year" name="yymm2" onClick="WdatePicker({dataFmt:'yyyyMM'})" readonly="readonly" class="Wdate search"/>			
+			  <!-- 開始日期: --><input type="text" id="yymm" name="yymm" onClick="WdatePicker({minDate:'{%y-1}-%m',maxDate:'#F{$dp.$D(\'yymm2\',{M:-1})||\'%y-%M\'}'})" readonly="readonly" class="Wdate search"/>至
+			  <!-- 結束日期: --><input type="text" id="yymm2" name="yymm2" onClick="WdatePicker({minDate:'#F{$dp.$D(\'yymm\',{M:0})}',maxDate:'%y-%M'})" readonly="readonly" class="Wdate search"/>			
 			
 			</td>
 			<td>
 			
 			   <input value="搜索" type="button" class="btn btn-primary" onclick="submis('public_form')" />
-			   <!-- <input value="導出Excel" type="button" class="btn btn-primary" onclick="print('public_form')"/>	 -->
+			   <input value="導出Excel" type="button" class="btn btn-primary" onclick="print('public_form','factNo','yymm','yymm2')"/>
 		    
 		    </td>
 		    </tr>

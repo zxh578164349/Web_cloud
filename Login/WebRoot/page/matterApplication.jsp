@@ -79,6 +79,21 @@
 			}//if
 		
 	}
+	
+function showDivList(factNo,billNo){	    	
+	    jq.layer({
+	    type: 2,   //0-4的选择,
+	    title: '函文申請',
+	    closeBtn: [1,true],
+	    shade: [0],
+	    shadeClose: false,
+	    border: [10, 0.3, '#000'],	   
+	    offset:['10px',''],
+	    area:['600px','560px'],
+	    //page:{url:'kyz_findById_layer?billNo='+billNo+'& factNo='+factNo}                   
+	    iframe:{src:'kyz_findById_layer3?factNo='+factNo+'&billNo='+billNo,scrolling:'auto'}		                   
+	});
+	    }		
 </script>
 
 

@@ -191,9 +191,12 @@ public class WebBussinessletterAction extends ActionSupport implements ServletRe
 		DateFormat fmt2=new SimpleDateFormat("yyyyMMddhhmm");
 		bussletter.setDateFrom(fmt1.parse(dateFrom));
 		bussletter.setDateEnd(fmt1.parse(dateEnd));
-		bussletter.setTimeFrom(fmt2.parse(timeFrom));
-		bussletter.setTimeEnd(fmt2.parse(timeEnd));
-		
+		if(timeFrom!=null&&!timeFrom.equals("")){
+			bussletter.setTimeFrom(fmt2.parse(timeFrom));
+		}
+		if(timeEnd!=null&&!timeEnd.equals("")){
+			bussletter.setTimeEnd(fmt2.parse(timeEnd));
+		}			
 			try{
 				if(isnull.equals("isNull")){
 				bussletter.setVisaSortM(bussletter.getVisaSort().substring(0,2));
@@ -257,7 +260,8 @@ public class WebBussinessletterAction extends ActionSupport implements ServletRe
 		factNo=(String)ActionContext.getContext().getSession().get("factNo");
 		ActionContext.getContext().getSession().remove("public_billNo");
 		ActionContext.getContext().getSession().remove("public_factNo");
-		bean=webbussletterSer.findPageBean(25, page, billNo, factNo);
+		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
+		bean=webbussletterSer.findPageBean(25, page, billNo, factNo,user);
 		return "beanList";	
 	}
 	public String findPageBean2(){
@@ -270,7 +274,8 @@ public class WebBussinessletterAction extends ActionSupport implements ServletRe
 		}
 		ActionContext.getContext().getSession().put("public_billNo", billNo);
 		ActionContext.getContext().getSession().put("public_factNo", factNo);
-		bean=webbussletterSer.findPageBean(25, page, billNo, factNo);
+		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
+		bean=webbussletterSer.findPageBean(25, page, billNo, factNo,user);
 		return "beanList1";
 	}
 	public String findPageBean3(){
@@ -283,7 +288,8 @@ public class WebBussinessletterAction extends ActionSupport implements ServletRe
 		if(factNo==null||factNo.equals("")){
 			factNo=(String)ActionContext.getContext().getSession().get("factNo");			
 		}
-		bean=webbussletterSer.findPageBean(25, page, billNo, factNo);
+		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
+		bean=webbussletterSer.findPageBean(25, page, billNo, factNo,user);
 		return result;
 	}
 	public long sumDate(Date d1,Date d2){

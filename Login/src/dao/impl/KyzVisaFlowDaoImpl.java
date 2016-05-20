@@ -116,7 +116,7 @@ public class KyzVisaFlowDaoImpl extends Basedao implements IKyzVisaFlowDao {
 
 	public String findVisaSort_dwr(String factNo, String visaSort, String email) {
 		// TODO Auto-generated method stub
-		String hql="select id.visaSort from KyzVisaflow where id.factNo=? and id.visaSort like ? and visaSigner=? and id.itemNo='01'";
+		String hql="select id.visaSort from KyzVisaflow where id.factNo=? and id.visaSort like ? and lower(visaSigner)=? and id.itemNo='01'";
 		Query query=getSession().createQuery(hql);
 		query.setString(0, factNo);
 		query.setString(1, visaSort+"%");

@@ -226,7 +226,7 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 					/**
 					 * sumActualpairs和sumFacpairs,otherweight有可能為空
 					 */
-					BigDecimal big=new BigDecimal(0.00);
+					/*BigDecimal big=new BigDecimal(0.00);
 					if(eve.getSumActualpairs()==null){
 						eve.setSumActualpairs(big);
 					}
@@ -245,7 +245,7 @@ public class VKpifactAction extends ActionSupport implements ServletResponseAwar
 					}
 					if(eve.getWorkhours()==null){
 						eve.setWorkhours(0.0);
-					}
+					}*/
 					  int b_index=(b-1)/3+1;
 					  list_kpieve.get(b_index).setSumEverydemo(list_kpieve.get(b_index).getSumEverydemo().add(eve.getSumEverydemo()));
 				      list_kpieve.get(b_index).setSumStandarddemo(list_kpieve.get(b_index).getSumStandarddemo().add(eve.getSumStandarddemo()));

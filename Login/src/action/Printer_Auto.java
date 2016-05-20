@@ -827,6 +827,8 @@ public class Printer_Auto {
 					double sumDayCount = 0;// 總天數
 					if (sumStandardOutput != 0) {
 						sumAchievingRate = sumActualYield / sumStandardOutput;
+					}else{
+						sumAchievingRate=0.0;
 					}
 
 					/*
@@ -2064,31 +2066,46 @@ public class Printer_Auto {
 		List<String> factcodelist = webFactSer.findAllFactCode_show();
 		
 		
+		int currenMonth=Integer.parseInt(yymm.substring(4, 6));                                                                     ///////////////currenMonth///////
+		int currenYear=Integer.parseInt(yymm.substring(0, 4));
+				                                                                                                         //////////////date//////////////
+		List<Webestproduct> alllist = new ArrayList<Webestproduct>();
+		List<List<WebYieldData>> alllist2 = new ArrayList<List<WebYieldData>>();
+		List<String> factnoCodelist = new ArrayList<String>();
+		
+		/*******************20160410**********************/
 		/*List<WebFact>listfacts=webFactSer.findAll();
 		List<WebYieldData>listydata=dataSer.findByYymm(yymm);
 		List<Webestproduct>listestp=estProSer.findByYymm(yymm);
 		
-		
-		for(int a=0;a<listfacts.size();a++){
-			
+		Webestproduct estemp=new Webestproduct();
+		for(WebFact fact:listfacts){
+			alllist.add(estemp);
+			StringBuffer factnoCode = new StringBuffer();
+			factnoCode.append(fact.getFactSname());
+			factnoCode.append("("+ fact.getId().getFactNo() + ")-");																
+			factnoCode.append(fact.getId().getFactArea());
+			factnoCodelist.add(factnoCode.toString());
+			List<WebYieldData>list_a=new ArrayList<WebYieldData>();
+			for(WebYieldData ydata:listydata){
+				if(fact.getId().getFactNo().equals(ydata.getId().getFactNo())&&fact.getId().getFactArea().equals(ydata.getId().getFactCode())){
+					list_a.add(ydata);
+				}
+			}
+			alllist2.add(list_a);
+			for(Webestproduct est:listestp){
+				if(fact.getId().getFactNo().equals(est.getId().getFactNo())&&fact.getId().getFactArea().equals(est.getId().getFactCode())){
+					alllist.remove(estemp);
+					alllist.add(est);
+					break;
+				}
+			}
 		}*/
-		/*GregorianCalendar ger = new GregorianCalendar();
-		int currenMonth = (int) ger.get(Calendar.MONTH) + 1;
-		int currenYear = (int) ger.get(Calendar.YEAR);
-		DateFormat format = new SimpleDateFormat("yyyyMM");		
-		String date = format.format(new Date());
-		*/
-		int currenMonth=Integer.parseInt(yymm.substring(4, 6));                                                                     ///////////////currenMonth///////
-		int currenYear=Integer.parseInt(yymm.substring(0, 4));
-				
-		//String date=yymm;                                                                                                            //////////////date//////////////
-		List<Webestproduct> alllist = new ArrayList<Webestproduct>();
-		List<List<WebYieldData>> alllist2 = new ArrayList<List<WebYieldData>>();
-		List<String> factnoCodelist = new ArrayList<String>();
-		//String firstdate = getFirstDate();
-		//String lastdate = dateAdd(-1);
+		/*******************20160410**********************/
+		
+
 		for (int factno = 0; factno < list_factNo.size(); factno++) {// start "for"
-			 /****只查找要顯示的廠別狀態****/															
+			 //****只查找要顯示的廠別狀態****//*															
 			List factAreas = webFactSer.findFactCodeByFactNo_show(((Object[]) list_factNo.get(factno))[0].toString());					                                              							
 			String factSname = webFactSer.selByid(((Object[]) list_factNo.get(factno))[0].toString());					
 			for (int factcode = 0; factcode < factAreas.size(); factcode++) {
@@ -2616,8 +2633,8 @@ public class Printer_Auto {
 		for (int x = 0; x < alllist2.size() + factcodelist.size(); x++) { // for
 																			// 1
 
-			List<String> cols = new ArrayList();
-			List<Object[]> sum_list = new ArrayList();
+			List<String> cols = new ArrayList<String>();
+			List<Object[]> sum_list = new ArrayList<Object[]>();
 			cols.add("日期");
 			cols.add("上模數");
 			cols.add("人數");
@@ -2627,12 +2644,9 @@ public class Printer_Auto {
 			// cols.add("天數");
 			// cols.add("工作日/假日");
 
+			/*****************************廠別狀態數據統計（有待優化20160411）***********************************/
 			if (x >= alllist2.size()) {
-				String temp = factcodelist
-						.get(factcodelist.size()
-								- (alllist2.size() + factcodelist.size() - (x + 1))
-								- 1);
-
+				String temp = factcodelist.get(factcodelist.size()- (alllist2.size() + factcodelist.size() - (x + 1))- 1);																						
 				for (int x2 = 0; x2 < z_length; x2++) {
 					StringBuffer yymmdd = new StringBuffer();
 					yymmdd.append(yymm);
@@ -2645,7 +2659,9 @@ public class Printer_Auto {
 							yymmdd.toString());
 					sum_list.add(list_temp);
 				}
+				
 			}
+			/*****************************廠別狀態數據統計（有待優化20160411）***********************************/
 
 			double sumStandardOutput = 0;// 標準產量合計
 			double sumActualYield = 0;// 實際產量合計
@@ -2658,7 +2674,7 @@ public class Printer_Auto {
 			double sumPersonnum = 0;// 人數合計
 			double sumDayCount = 0;// 總天數
 
-			double sumNodate=0;//未輸入數據統計20160330
+			//double sumNodate=0;//未輸入數據統計20160330
 			/**
 			 * 如果alllist2.size()+factcodelist.size()>41就分頁
 			 */
@@ -2985,6 +3001,8 @@ public class Printer_Auto {
 
 				if (sumStandardOutput != 0) {
 					sumAchievingRate = sumActualYield / sumStandardOutput;
+				}else{
+					sumAchievingRate=0.0;
 				}
 				for (int z = 0; z < z_length; z++) {// for 3
 
@@ -2996,7 +3014,6 @@ public class Printer_Auto {
 					Double achievingRate = null;
 					Double daycount = null;
 					String holiday = null;
-					String timeoutRecorde=null;//超時錄入數據記錄20160331
 					switch (y) {
 					case 0:
 						StringBuffer date_month = new StringBuffer();
@@ -3018,12 +3035,12 @@ public class Printer_Auto {
 									.getCell(y + width).setCellStyle(cs_font);
 							
 							/************************************未輸入數據統計20160331************************************/
-							sheet.createRow(z + height + totalHeight + 2)
+							/*sheet.createRow(z + height + totalHeight + 2)
 							.createCell(y + width)
 							.setCellValue("未輸入統計");
 					        sheet.getRow(z + height + totalHeight + 2)
 							.getCell(y + width)
-							.setCellStyle(cs_font);
+							.setCellStyle(cs_font);*/
 					        /************************************未輸入數據統計20160331************************************/					       
 						}
 						if (z == z_length - 2) {
@@ -3798,6 +3815,7 @@ public class Printer_Auto {
 									sheet.getRow(z + height + totalHeight + 1)
 											.getCell(y + width)
 											.setCellStyle(cs_font_red);
+									//sumNodate=sumNodate+1;
 
 								}
 								if (achievingRate == null
@@ -3849,7 +3867,7 @@ public class Printer_Auto {
 								
 								
 								/************************************未輸入數據統計20160331************************************/
-								CellRangeAddress region_sumnodate = new CellRangeAddress(
+								/*CellRangeAddress region_sumnodate = new CellRangeAddress(
 										z + height + totalHeight + 2, (short) z
 												+ height + totalHeight + 2, y
 												+ width - 4, (short) y + width);
@@ -3867,12 +3885,13 @@ public class Printer_Auto {
 											sumNodate=sumNodate+1;
 										}
 									}
-								}								
+								}							
 						        sheet.getRow(z + height + totalHeight + 2)
 								.getCell(y + width -4)
-								.setCellValue(sumNodate);						        						        
+								.setCellValue(sumNodate);*/
+						        /************************************未輸入數據統計20160331************************************/
 							}
-							/************************************未輸入數據統計20160331************************************/
+							
 						}// end "if 5"
 
 						break;					

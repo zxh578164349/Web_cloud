@@ -31,7 +31,34 @@ public interface IWebFactDao {
 	public List<Object[]>findAllWebFact_showA();
 	
 	public List<Object[]>findAllFactCode2();
+	
+	/**
+	 * 【KPI報表】,【分形態損益】,【經營評比】
+	 * factShowA='0'
+	 * 所有廠別狀態
+	 * @Title: findAllFactCode2_showA
+	 * @Description: TODO
+	 * @param @return
+	 * @return List<Object[]>
+	 * @throws
+	 * @author web
+	 * @date 2016/4/19
+	 */
 	public List<Object[]>findAllFactCode2_showA();
+	
+	/**
+	 * 【KPI報表】,【分形態損益】,【經營評比】
+	 * factShowA='0'
+	 * 所有廠別
+	 * @Title: findAllFact_showA
+	 * @Description: TODO
+	 * @param @return
+	 * @return List<WebFact>
+	 * @throws
+	 * @author web
+	 * @date 2016/4/19
+	 */
+	public List<WebFact>findAllFact_showA();
 	public List<String> findAllFactNo();
 	
 	//20150708 �Ҧ��t�O�U�Ӽt�O���A���ߺD�Ƨ�
@@ -107,5 +134,20 @@ public interface IWebFactDao {
 	 * @date 2016/4/1
 	 */
 	public List<WebFact>findAll();
+	
+	
+	/**
+	 * 所有有效的工廠（不重複的工廠）
+	 * @Title: findFactAble2
+	 * @Description: TODO
+	 * @param @return
+	 * @return List<Object[]>
+	 * @throws
+	 * @author web
+	 * @date 2016/4/6
+	 */
+	public List<Object[]>findFactAble2();
+	
+	public List<String> findByFactNo_showA(String factNo);
 
 }

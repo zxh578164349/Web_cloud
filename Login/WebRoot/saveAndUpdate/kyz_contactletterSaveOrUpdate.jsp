@@ -157,7 +157,7 @@ function getKyType2(factno){
   var i=0;	
   function addFile(){
       i++;
-      if(i<5){
+      if(i<15){
       var divfile=document.getElementById("divfile");
       var inputfile=document.createElement("input");
       var aEle=document.createElement("a");
@@ -172,8 +172,8 @@ function getKyType2(factno){
          if(parentnode){
             parentnode.removeChild(aEle);
             parentnode.removeChild(inputfile);
-            if(i>4){
-               i=4;
+            if(i>14){
+               i=14;
             }
             i--;
          }
@@ -181,7 +181,7 @@ function getKyType2(factno){
       divfile.appendChild(inputfile);
       divfile.appendChild(aEle);  
       }else{
-         alert("附檔不能超過5個!");
+         alert("附檔不能超過15個!");
       }               
   }
 
@@ -229,10 +229,13 @@ jq(function(){
 				        <td>
 				        <s:if test="kyzletter==null">
 						   <input type="text" name="kyzletter.userNm"   value="<s:property value='#session.loginUser.name'/>" style="color:blue" readonly/>
+						   <input type="hidden" name="kyzletter.userAccount" value="<s:property value='#session.loginUser.username'/>"/>
 						</s:if>
 						<s:else>
 						   <input type="text" name="kyzletter.userNm"   value="<s:property value='kyzletter.userNm'/>" style="color:blue" readonly/>
+						   <input type="hidden" name="kyzletter.userAccount" value="<s:property value='kyzletter.userAccount'/>"/>
 						</s:else>
+						
 				        </td>  				        				        				        
 				    </tr>
 				    <s:if test="kyzletter==null">
@@ -342,14 +345,14 @@ jq(function(){
 				    <tr>
 					    <td class="tdcolor">CC(呈)</td>	
 						<td  colspan="10">
-				           <textarea style="width:810px;height:40px" name="kyzletter.chargeList" autofocus="autofocus" wrap="hard" wrap="physical"  tip="CC(呈)" altercss="gray" class="gray"><s:property value="kyzletter.chargeList"/></textarea>				                                           				         			          
+				           <textarea style="width:810px;height:40px" name="kyzletter.chargeList"  wrap="off"   tip="CC(呈)" altercss="gray" class="gray"><s:property value="kyzletter.chargeList"/></textarea>				                                           				         			          
 				        </td>
 						
 					</tr>
 					<tr>
 					    <td class="tdcolor">申請內容</td>	
 						<td  colspan="10">
-				           <textarea style="width:810px;height:240px" name="kyzletter.memoMk" autofocus="autofocus" wrap="hard" wrap="physical"  tip="申請內容" altercss="gray" class="gray"><s:property value="kyzletter.memoMk"/></textarea>				                                           				         				           				           
+				           <textarea style="width:810px;height:240px" name="kyzletter.memoMk"  wrap="off"   tip="申請內容" altercss="gray" class="gray"><s:property value="kyzletter.memoMk"/></textarea>				                                           				         				           				           
 				           <input type="hidden" value="<s:property value='kyzletter.filesYn'/>" name="kyzletter.filesYn"/>
 				           <input type="hidden" value="<s:property value='kyzletter.firstPage'/>" name="kyzletter.firstPage"/>
 				        </td>

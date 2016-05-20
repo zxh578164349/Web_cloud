@@ -62,20 +62,6 @@
 		</table>
 	</form>
 	<hr>
-
-	<%--     <s:if test="nulllist_data!=null">
-          <table bgColor=#97CBFF border=1
-		style="margin:5px 0px 25px 0px;border-collapse:collapse;">
-      <caption><s:property value="yymm"/></caption>
-      <tr><td>序號</td><td class="tr_show">廠別</td><td class="tr_show">廠別狀態</td></tr>
-        <s:iterator value="nulllist_data" id="temp" status="x">
-         <tr><td>${x.index+1}</td><td>${temp[1]}(${temp[0]})</td><td>${temp[2]}</td></tr> 
-         </s:iterator>
-       
-    </table>
-   </s:if>  --%>
-
-
 	<s:if test="nulllist_data!=null">
 		<table bgColor=#97CBFF border=1
 			style="margin:5px 0px 25px 0px;border-collapse:collapse;float:left">

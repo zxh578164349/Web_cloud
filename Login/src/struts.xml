@@ -632,6 +632,14 @@
 		  <result name="delete" type="redirectAction">kyz_findPageBean3</result>
 		  <result name="findById_layer">page/showMatterApplication_layer.jsp</result>
 		  <result name="findById_layer2">page/showMatterApplication_layer2.jsp</result>
+		  <result name="findById_layer3">page/kyz_expectmats_layer_delete.jsp</result>
+		  <result name="findById_layer4">page/kyz_expectmats_layer_delete2.jsp</result>
+		  <result name="delete_lists" type="redirectAction">
+		      <param name="actionName">kyz_findById_layer4</param>
+		      <param name="factNo">${factNo}</param>
+		      <param name="billNo">${billNo}</param>
+		      <param name="itemNo">${itemNo}</param>
+		  </result>
 		  <result name="findVisaBills">/page/kyvisabills.jsp</result>
 		  <result name="download" type="stream">
          <param name="contentType">application/octet-stream;charset=utf-8</param>
@@ -790,7 +798,43 @@
 		</action>
 		<action name="weballobj_*" class="weballobjAction" method="{1}">
 		   <result name="beanList">page/weballobj.jsp</result>
-		   <result name="beanList1">page/table1/weballobj1.jsp</result>		       		   
+		   <result name="beanList1">page/table1/weballobj1.jsp</result>
+		   <result name="delete" type="redirectAction">weballobj_findPageBean3</result>		       		   
+		</action>
+		<action name="vwebbussort_*" class="vwebbussortAction" method="{1}">
+		    
+		</action>
+		<action name="webyadanoinput_*" class="webydatanoinputAction" method="{1}">
+		  <result name="findPageBean">page/ydatanoinput_show.jsp</result>
+		  <result name="findPageBean1">page/table1/ydatanoinput_show1.jsp</result>
+		</action>
+		<action name="vkpifactnew_*" class="vkpifactnewAction" method="{1}">
+		
+		</action>
+		<action name="vwebuseless_*" class="vwebuselessAction" method="{1}">
+		   
+		</action>
+		<action name="webremit_*" class="webremitAction" method="{1}">
+		    <result name="beanList">page/webremittancelist.jsp</result>
+		    <result name="beanList1">page/table1/webremittancelist1.jsp</result>
+		    <result name="makeBillNo" type="json">
+		       <param name="root">ajaxResult</param>
+		    </result>
+		    <result name="findById">saveAndUpdate/webremittancelistSaveOrUpdate.jsp</result>
+		    <result name="findById_layer">page/showwebremittancelist_layer.jsp</result>
+		    <result name="findById_layer2">page/webremittancelists_layer_delete.jsp</result>
+		     <result name="findById_layer3">page/webremittancelists_layer_delete2.jsp</result>
+		    <result name="delete" type="redirectAction">webremit_findPageBean3</result> 
+		    <result name="delete_list" type="redirectAction">
+		      <param name="actionName">webremit_findById_layer3</param>
+		      <param name="billNo">${billNo}</param>
+		    </result>
+		</action>
+		<action name="vwebprolos_*" class="vwebprolossAction" method="{1}">
+		   
+		</action>
+		<action name="vwebprolossfact_*" class="vwebprolossfactAction" method="{1}">
+		
 		</action>
 	</package>
 

@@ -86,6 +86,15 @@
 	<bean id="tabpomfileSer" class="services.impl.WebTabpomfileServicesImpl"></bean>
 	<bean id="webphonebookSer" class="services.impl.WebPhonebookServicesImpl"></bean>
 	<bean id="weballobjser" class="services.impl.WeballobjServicesImpl"></bean>
+	<bean id="vwebbusssorSer" class="services.impl.VWebbussortServicesImpl"></bean>
+	<bean id="webydatenoinputSer" class="services.impl.WebydataNoinputServicesImpl"></bean>
+	<bean id="vkpinewSer" class="services.impl.VKpifactNewServicesImpl"></bean>
+	<bean id="vkpievenewSer" class="services.impl.VKpifactEveNewServicesImpl"></bean>
+	<bean id="vwebuselessSer" class="services.impl.VWebuselessServicesImpl"></bean>
+	<bean id="webremiSer" class="services.impl.WebremittancelistServicesImpl"></bean>
+	<bean id="webremitsSer" class="services.impl.WebremittancelistsServicesImpl"></bean>
+	<bean id="vwebprolossSer" class="services.impl.VWebprofitlossEveServicesImpl"></bean>
+	<bean id="vwebprolossfacteveSer" class="services.impl.VWebprofitlossFactEveServicesImpl"></bean>
 </beans>
 
 

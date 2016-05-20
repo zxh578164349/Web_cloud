@@ -139,18 +139,20 @@
 							value="<s:property value='id.kyVisabillm.id.billNo'/>" name="billNo" />						
 							<input type="hidden" value="<s:property value='id.kyVisabillm.id.visaSort'/>" name="visaSort"/>
 					 </form>
-					 <form action="kyz_print2" method="post" id="4subform${x.index}" style="float:left" target="_blank">
+					 <form  method="post" id="4subform${x.index}" style="float:left" target="_blank">
 						<input type="hidden" value="<s:property value='id.kyVisabillm.id.factNo'/>"
 							name="factNo" /> <input type="hidden"
 							value="<s:property value='id.kyVisabillm.id.billNo'/>" name="billNo" />
 							<input type="hidden" value="<s:property value='id.kyVisabillm.id.visaSort'/>" name="visaSort"/>
+							<input type="hidden" value="<s:property value='id.kyVisabillm.id.visaSort'/>" name="visaType"/><!-- 湘威費用清單函文 -->
 							<input type="hidden" value="look" name="lookordown"/>						
 					</form>
-					<form action="kyz_print2" method="post" id="5subform${x.index}" style="float:left" target="_blank">
+					<form  method="post" id="5subform${x.index}" style="float:left" target="_blank">
 						<input type="hidden" value="<s:property value='id.kyVisabillm.id.factNo'/>"
 							name="factNo" /> <input type="hidden"
 							value="<s:property value='id.kyVisabillm.id.billNo'/>" name="billNo" />
 							<input type="hidden" value="<s:property value='id.kyVisabillm.id.visaSort'/>" name="visaSort"/>
+							<input type="hidden" value="<s:property value='id.kyVisabillm.id.visaSort'/>" name="visaType"/><!-- 湘威費用清單函文 -->
 							<input type="hidden" value="down" name="lookordown"/>						
 					</form>
 										
@@ -179,7 +181,7 @@
 					 </s:if>
 					  -->
 					 <td>
-					   <a href="javascript:findById('3_3form${x.index}','vbm_findById5')"><img alt="減簽(带删除)" src="images/icon/remove.png" title="減簽(带删除)"><br>減簽D</a>
+					   <a href="javascript:findById('3_3form${x.index}','vbm_findById5')"><img alt="減簽(带删除)" src="images/icon/remove.png" title="減簽(带删除)"><br>減簽</a>
 					 </td>
 					 </s:if>
 					 <s:else>

@@ -77,7 +77,7 @@
 					</select>			
 				</s:else>
 			
-			 <select name="visaSort" id="visaSort" onchange="alert(this.value)">
+			 <select name="visaSort" id="visaSort" >
 				            <option value="">請選擇類別</option>				            				            				            
 				         </select>         
 							

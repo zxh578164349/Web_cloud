@@ -5,10 +5,11 @@ import java.util.List;
 import util.PageBean;
 import entity.KyzExpectmatmLog;
 import entity.WebBussinessletter;
+import entity.WebUser;
 
 public interface IWebBussinessletterDao {
 	public void add(WebBussinessletter buss);
-	public PageBean findPageBean(int pageSize,int page,String billNo,String factNo);
+	public PageBean findPageBean(int pageSize,int page,String billNo,String factNo,WebUser user);
 	public String findMaxBillNo(String factNo,String createDate);
 	public WebBussinessletter findById(String billNo);
 	public void delete(WebBussinessletter letter,KyzExpectmatmLog delLog);

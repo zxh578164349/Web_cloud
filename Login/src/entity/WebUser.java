@@ -27,6 +27,7 @@ public class WebUser implements java.io.Serializable {
 	private String emailpassword;//备签邮箱
 	private String department;//部門
 	private String post;//職務
+    private String adminMk;//管理員標識
 	private List<WebJurisdiction> webJurisdictions = new ArrayList<WebJurisdiction>();
 
 	// Constructors
@@ -187,6 +188,15 @@ public class WebUser implements java.io.Serializable {
 	public void setPost(String post) {
 		this.post = post;
 	}
+
+	public String getAdminMk() {
+		return adminMk;
+	}
+
+	public void setAdminMk(String adminMk) {
+		this.adminMk = adminMk;
+	}
+	
 
 			
 	

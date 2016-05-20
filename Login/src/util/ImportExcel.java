@@ -326,7 +326,7 @@ public class ImportExcel {
 	  public static Map<String,Object> impWeballobjExl(Workbook wb){
 		  Map<String ,Object>map=new HashMap<String,Object>();
 		  int sheets=wb.getNumberOfSheets();//獲取所有的sheet
-		  //FormulaEvaluator eval=wb.getCreationHelper().createFormulaEvaluator();
+		  FormulaEvaluator eval=wb.getCreationHelper().createFormulaEvaluator();
 		  for(int i=0;i<sheets;i++){//for a
 			  int headrow=wb.getSheetAt(i).getFirstRowNum()+1;//排除標題
 			  int lastrow=wb.getSheetAt(i).getLastRowNum();			  			  
@@ -341,14 +341,18 @@ public class ImportExcel {
 				  for(int k=firstcol;k<lastcol;k++){//for c					  
 					  Cell cell=wb.getSheetAt(i).getRow(j).getCell(k);
 					  if(cell==null){
-						  cell=wb.getSheetAt(i).getRow(j).createCell(k);//如果新建的單元格沒有給數據類型，則默認爲空類型:Cell.CELL_TYPE_BLANK					 
+						  cell=wb.getSheetAt(i).getRow(j).createCell(k);//如果新建的單元格沒有給數據類型，則默認爲空類型:Cell.CELL_TYPE_BLANK	
 					  }
-					  switch(cell.getCellType()){
+					  CellValue cellValue = eval.evaluate(cell);//如果Cell沒有給類型，cellValue同樣爲null,所以爲null空，默認cellValue=new CellValue("0.0");
+					  if(cellValue==null){
+						  cellValue=new CellValue("0.0");
+					  }
+					  switch(cellValue.getCellType()){
 					  case Cell.CELL_TYPE_STRING:
-						  sb.append(SEPARATOR+cell.getStringCellValue());
+						  sb.append(SEPARATOR+cellValue.getStringValue());
 						  break;
 					  case Cell.CELL_TYPE_NUMERIC:
-						  sb.append(SEPARATOR+cell.getNumericCellValue());
+						  sb.append(SEPARATOR+cellValue.getNumberValue());
 						  break;
 					  case Cell.CELL_TYPE_BLANK:
 						  if(k<firstcol){

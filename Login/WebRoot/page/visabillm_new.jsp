@@ -117,6 +117,9 @@
 	   if(billNo.substring(0,2)=="BM"){
 		   jq("#"+subform).attr("action","bussletter_print2");
 	   }
+	   if(billNo.substring(0,2)=="RM"){
+		   jq("#"+subform).attr("action","webremit_print");
+	   }
 	   jq("#"+subform).submit();
    }
 </script>

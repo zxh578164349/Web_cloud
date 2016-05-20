@@ -6,6 +6,7 @@ package services;
 import java.util.List;
 
 import util.PageBean;
+import entity.KyzExpectmatmLog;
 import entity.Weballobj;
 
 /**   
@@ -24,5 +25,8 @@ import entity.Weballobj;
 public interface IWeballobjServices {
 	public void addMore(List<Weballobj>list);
 	public PageBean findPageBean(int pageSize,int page,String factNo,String yymm,String yymm2);
+	public List<Weballobj>findAllobj(String factNo,String yymm,String yymm2);
+	public Weballobj findById(String factNo,String factcode,String yymm);
+	public void delete(String factNo,String factCode,String yymm,KyzExpectmatmLog log);
 
 }

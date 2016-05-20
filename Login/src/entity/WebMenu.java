@@ -15,6 +15,7 @@ public class WebMenu implements java.io.Serializable {
 
 	private Integer menuid;
 	private String menuname;
+	private String enableMk;
 	private List<WebJurisdiction> webJurisdictions = new ArrayList<WebJurisdiction>();
 	private List<WebSubmenu2>submenus=new ArrayList<WebSubmenu2>();
 
@@ -70,6 +71,15 @@ public class WebMenu implements java.io.Serializable {
 	public void setSubmenus(List<WebSubmenu2> submenus) {
 		this.submenus = submenus;
 	}
+
+	public String getEnableMk() {
+		return enableMk;
+	}
+
+	public void setEnableMk(String enableMk) {
+		this.enableMk = enableMk;
+	}
+	
 	
 
 }

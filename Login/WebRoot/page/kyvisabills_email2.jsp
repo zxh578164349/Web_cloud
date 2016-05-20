@@ -23,7 +23,9 @@
 
 
 </style>
-<script type="text/javascript" src="page/jquerys/jquery-1.9.1.min.js"></script>
+<!-- <script type="text/javascript" src="page/jquerys/jquery-1.9.1.min.js"></script> -->
+<script src="http://apps.bdimg.com/libs/jquery/1.9.1/jquery.min.js"></script> 
+<script>window.jQuery || document.write('<script src="jquery/jquery-1.9.1.min.js"><\/script>');</script>	
 <script type="text/javascript" src="page/jquerys/layer/layer.min.js"></script>
 <!-- 新 Bootstrap 核心 CSS 文件 -->
 <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -52,6 +54,11 @@
     		area_w='620px';
     		area_h='450px';
     		src='bussletter_findById_layer?billNo='+billNo+'& readMk=Y';
+    	}
+    	if(billNo.substring(0,2)=='RM'){
+    		area_w='650px';
+    		area_h='560px';
+    		src='webremit_findById_layer?billNo='+billNo+'& factNo='+factNo+'& readMk=Y';
     	}
     $.layer({
     type: 2,   //0-4的选择,
@@ -94,6 +101,11 @@
     		area_w='620px';
     		area_h='500px';
     		src='bussletter_findById_layer?billNo='+billNo+'& factNo='+factNo+'& itemNo='+itemNo+'& visaSort='+visaSort+'& readMk=N';
+    	}
+    	if(billNo.substring(0,2)=='RM'){
+    		area_w='650px';
+    		area_h='560px';
+    		src='webremit_findById_layer?billNo='+billNo+'& factNo='+factNo+'& itemNo='+itemNo+'& visaSort='+visaSort+'& readMk=N';
     	}
     $.layer({
     type: 2,   //0-4的选择,

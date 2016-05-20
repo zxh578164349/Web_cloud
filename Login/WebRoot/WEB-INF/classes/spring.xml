@@ -200,7 +200,17 @@
 				<value>entity/WebBussinessletter.hbm.xml</value>
 				<value>entity/WebPhonebook.hbm.xml</value>
 				<value>entity/WebSubmenu2.hbm.xml</value>
-				<value>entity/Weballobj.hbm.xml</value></list>
+				<value>entity/Weballobj.hbm.xml</value>
+				<value>entity/VWebbussort.hbm.xml</value>
+				<value>entity/WebydataNoinput.hbm.xml</value>
+				<value>entity/VKpifactNew.hbm.xml</value>
+				<value>entity/VKpifactEveNew.hbm.xml</value>
+				<value>entity/VWebuseless.hbm.xml</value>
+				<value>entity/VWebbussortFcode.hbm.xml</value>
+				<value>entity/Webremittancelists.hbm.xml</value>
+				<value>entity/Webremittancelist.hbm.xml</value>
+				<value>entity/VWebprofitlossEve.hbm.xml</value>
+				<value>entity/VWebprofitlossFactEve.hbm.xml</value></list>
 		</property>
 	</bean>
 		

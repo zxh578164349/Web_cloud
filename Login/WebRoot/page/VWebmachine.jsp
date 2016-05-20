@@ -240,7 +240,7 @@ function test(factcode_obj){  //jquery获取复选框值
                  <br> 
                  <div id="<s:property value='key'/>_div" style="display:none">               
                  <s:iterator value="value" status="y">
-                    <input type="checkbox" value="${map.key}_<s:property value='id.factNo'/>" id="<s:property value='key'/>_factno" class="<s:property value='key'/>_factno"
+                    <input type="checkbox" value="${map.key}_<s:property value='id.factNo'/>_<s:property value='factSname'/>" id="<s:property value='key'/>_factno" class="<s:property value='key'/>_factno"
                     name="list_factno" onclick="clickOne(this,'font_${map.key}_${y.index}','${map.key}')"/>
                     <font id="font_<s:property value='key'/>_<s:property value='#attr.y.index'/>">
                     <s:property value="factSname"/>(<s:property value='id.factNo'/>)</font>

@@ -377,16 +377,15 @@
 									</form> 
 									<a href="javascript:findById('subform${x.index}','webwlo_findWloById')">
 									<img alt="修改" src="images/icon/edit001.png" title="修改">										
-								    </a>
+								    </a>--%>
 									<form action="weballobj_delete" method="post" id="2subform${x.index}" style="float:left">										
 										<input type="hidden" value="<s:property value='id.fact.id.factNo'/>" name="factNo" />
-										<input type="hidden" value="<s:property value='id.fact.id.factCode'/>" name="factCode" />											
+										<input type="hidden" value="<s:property value='id.fact.id.factArea'/>" name="factCode" />											
 										<input type="hidden" value="<s:property value='id.yymm'/>" name="yymm" />											
 									</form> 
 									<a href="javascript:void(0)" onclick="isDelete('2subform${x.index}')">
 									<img alt="刪除" src="images/icon/delete001.png" title="刪除">
-								    </a>--%>
-								    無操作
+								    </a>
 								</td>
 							</s:if>
 							

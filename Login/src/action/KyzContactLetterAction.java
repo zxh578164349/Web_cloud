@@ -233,7 +233,7 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 	public void setKyzExpLogSer(IKyzExpectmatmLogServices kyzExpLogSer) {
 		this.kyzExpLogSer = kyzExpLogSer;
 	}
-	public void add() throws IOException{
+	public String add() throws IOException{
 		/*文件上傳驗證*/
 		if(files!=null&&files.get(0)!=null){
 			for(int i=0;i<files.size();i++){
@@ -242,15 +242,14 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 					String filetype=filesFileName.get(i).substring(filesFileName.get(i).lastIndexOf(".")).toLowerCase();
 					if(filesize>5120000){
 						response.setContentType("text/html;charset=utf-8");
-						response.getWriter().print("<script>alert('文件不可超過5M!');history.back()</script>");
-						//return null;
+						response.getWriter().print("<script>window.parent.alert('文件不可超過5M!');window.parent.layer.closeAll()</script>");
+						return null;
 					}
 					if(!filetype.equals(".bmp")&&!filetype.equals(".jpg")&&!filetype.equals(".jpeg")&&!filetype.equals(".gif")&&!filetype.equals(".tif")){
 						response.setContentType("text/html;charset=utf-8");
-						response.getWriter().print("<script>alert('只允許jpg,bmp,jpeg,gif,tif圖片');history.back()</script>");
-						//return null;
-					}
-					
+						response.getWriter().print("<script>window.parent.alert('只允許jpg,bmp,jpeg,gif,tif圖片');window.parent.layer.closeAll()</script>");
+						return null;
+					}					
 				}
 			}
 		}
@@ -401,9 +400,15 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 					  //print(kyzletter.getId().getFactNo(),kyzletter.getId().getBillNo(),kyzletter.getVisaType());
 				      /****************************函文打印************************************/
 					  //return null;
-					}
-				
-				
+					}else{
+						response.setContentType("text/html;charset=utf-8");
+						response.getWriter()
+						.print("<script>window.parent.alert('數據庫已存在("
+								+ kyzletter.getId().getFactNo()					
+								+ " "
+								+ kyzletter.getId().getBillNo()
+								+ ")!');window.parent.layer.closeAll()</script>");
+					}								
 			}//end if
 			else{
 				kyzletter.setVisaTypeM(kyzletter.getVisaType().substring(0,2));
@@ -416,22 +421,12 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 		}catch(Exception e){
 			// TODO Auto-generated catch block
 			response.setContentType("text/html;charset=urf-8");
-			response.getWriter().print("<script>window.parent.layer.msg('操作失敗',3,3)</script>");
+			response.getWriter().print("<script>window.parent.layer.msg('操作失敗',3,3);window.parent.layer.closeAll()</script>");
 			ajaxResult="1";
 			e.printStackTrace();
 			
-		}			
-			if(result==null){
-				response.setContentType("text/html;charset=utf-8");
-				response.getWriter()
-				.print("<script>alert('數據庫已存在("
-						+ kyzletter.getId().getFactNo()					
-						+ " "
-						+ kyzletter.getId().getBillNo()
-						+ ")!');history.back()</script>");
-			}
-																	
-			
+		}
+		return null;
 }
 	public void print(String factNo,String billNo,String sort) throws IOException{
 		/*List<KyzContactletter>list=new ArrayList<KyzContactletter>();
@@ -569,9 +564,8 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 		ActionContext.getContext().getSession().remove("public_timeCreate");
 		ActionContext.getContext().getSession().remove("public_timeCreate2");
 		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
-		userNm=user.getName();
 		factNo = (String) ActionContext.getContext().getSession().get("factNo");
-		bean = kyzletterSer.findPageBean(25, page, factNo, visaSort,billNo,userNm,yymmdd,yymmdd2);
+		bean = kyzletterSer.findPageBean(25, page, factNo, visaSort,billNo,user,yymmdd,yymmdd2);
 		this.getTypeName(bean);
 		return "beanList";
 	}
@@ -599,8 +593,7 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 			ActionContext.getContext().getSession().put("public_timeCreate2", yymmdd2);
 		}
 		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
-		userNm=user.getName();
-		bean = kyzletterSer.findPageBean(25, page, factNo, visaSort,billNo.trim(),userNm,yymmdd,yymmdd2);
+		bean = kyzletterSer.findPageBean(25, page, factNo, visaSort,billNo.trim(),user,yymmdd,yymmdd2);
 		this.getTypeName(bean);
 		return "beanList1";
 	}
@@ -619,8 +612,7 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 			factNo = (String) ActionContext.getContext().getSession().get("factNo");				
 		}
 		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
-		userNm=user.getName();
-		bean = kyzletterSer.findPageBean(25, page, factNo, visaSort,billNo,userNm,yymmdd,yymmdd2);
+		bean = kyzletterSer.findPageBean(25, page, factNo, visaSort,billNo,user,yymmdd,yymmdd2);
 		this.getTypeName(bean);
 		return result;
 	}

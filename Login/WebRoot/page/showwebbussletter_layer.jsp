@@ -158,7 +158,7 @@ table.gridtable td {
 </s:if>
 <s:else>
   <br><br><br>
-   <h1 style="color:red" align="center">內部聯絡函已刪除</h1>
+   <h1 style="color:red" align="center">函文已刪除</h1>
 </s:else>
 
 </body>

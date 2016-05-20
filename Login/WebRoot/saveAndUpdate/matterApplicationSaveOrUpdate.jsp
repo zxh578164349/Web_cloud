@@ -23,7 +23,6 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 <meta http-equiv="expires" content="0">
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
-<link href="css/validate.css" rel="stylesheet" type="text/css" />
 <link rel="stylesheet" type="text/css" href="css/form.css" />
 <link rel="stylesheet" type="text/css" href="css/select_beautiful.css">
 <script type="text/javascript" src="jquery/jquery-form.js"></script>
@@ -113,47 +112,35 @@ jq(function() {
 	function getva1(){
 	   alert(document.getElementById("testfile").value);
 	}
-var j=0;	
-function makeBillNo() {
-        
+	
+function makeBillNo() {        
 		var factno = document.getElementById("dwrFactNo").value;
-		var timecreat = document.getElementById("kyz_timecreate").value;
-		var factcode=document.getElementById("dwrFactArea").value;
-		var billnos = document.getElementById("kyz_billno");
+		var timecreat = document.getElementById("kyz_timecreate").value;		
 		var cbox_length=document.getElementsByName("cbox").length;
 		if (factno != "" && timecreat != "") {
 			kyzjs.makeBillNo(factno, timecreat, function(x) {
-				dwr.util.setValue("kyz_billno", x);				
-				  dwr.util.setValue("kyzs_billno", x);				  								
+				dwr.util.setValue("kyz_billno", x);								 			  								
 			});
 			document.getElementById("addbtn").disabled="";
-			document.getElementById("addbtn").style.color="black";
-			document.getElementById("kyzs_factno").value=factno;
-			 document.getElementById("kyzs_factcode").value=factcode;			
-			 if(cbox_length>1){
-			 j=0;
-			   for(var k=cbox_length+1;k>2;k--){
-			       kyzs_body.deleteRow(k-1);
-			   }
-			 }	 		
+			document.getElementById("addbtn").style.color="black";					 	 		
 		}
 		
 	}
 	
-	
-	function addRow(){
-	    
-        var factno=document.getElementById("kyzs_factno").value;
-        var billno=document.getElementById("kyzs_billno").value;
-        var qtyPair=document.getElementById("qtyPair").value;
-        var moneyType=document.getElementById("moneyType").value;
-        var factcode=document.getElementById("dwrFactArea").value;
+var j=0;
+	function addRow(){	    
+        var factno=document.getElementById("dwrFactNo").value;
+        var billno=document.getElementById("kyz_billno").value;
+        //var factcode=document.getElementById("dwrFactArea").value;
+        var qtyPair=document.getElementById("qtyPair");
+        var moneyType=document.getElementById("moneyType");
+        
         //设置列内容和属性
         var cboxlist=document.getElementsByName("cbox");
-        if(cboxlist.length>9){
-           alert("對不起,不能超過10條記錄!");
+        if(cboxlist.length>29){
+           layer.alert("對不起,不能超過30條記錄!");
         }else{
-        	 j=j+1;
+        	 j++;
      	    //添加一行
              var newTr = kyzs_body.insertRow();
              //添加列
@@ -168,102 +155,34 @@ function makeBillNo() {
              var newTd7=newTr.insertCell();
              var newTd8=newTr.insertCell();
         	
-        newTd00.innerHTML='<input type="checkbox" name="cbox"/>';
-        newTd0.innerHTML = '<input type="text" name="kyz.kyzExpectmatses['+j+'].itemNm" value="" size="15"/>'; 
-        if((j+1)<10){
-          newTd1.innerHTML= '<input type="text" name="kyz.kyzExpectmatses['+j+'].id.itemNo" value="00'+(j+1)+'" datatype="*" style="color:blue" size="15" readonly/>';
+        newTd00.innerHTML='<input type="hidden" name="cbox"/><input type="image" src="images/del.gif" onclick="this.parentNode.parentNode.parentNode.removeChild(this.parentNode.parentNode)"/>'; 
+        newTd0.innerHTML = '<input type="text" name="kyz.kyzExpectmatses['+j+'].itemNm" value="" />'; 
+        if(j<10){
+          newTd1.innerHTML= '<input type="text" name="kyz.kyzExpectmatses['+j+'].id.itemNo" value="00'+j+'" datatype="*" style="color:blue"  readonly/>';
         }else{
-          newTd1.innerHTML= '<input type="text" name="kyz.kyzExpectmatses['+j+'].id.itemNo" value="0'+(j+1)+'"  datatype="*" style="color:blue" size="15" readonly/>';
+          newTd1.innerHTML= '<input type="text" name="kyz.kyzExpectmatses['+j+'].id.itemNo" value="0'+j+'"  datatype="*" style="color:blue"  readonly/>';
         }
         
-        newTd2.innerHTML='<input type="text" name="kyz.kyzExpectmatses['+j+'].matNo" value="" size="15"/>';
-        newTd3.innerHTML='<input type="text" name="kyz.kyzExpectmatses['+j+'].qtyExpect" value="" size="15"/>';
-        newTd4.innerHTML='<input type="text" name="kyz.kyzExpectmatses['+j+'].qtyOk" value="" size="15"/>';
-        newTd5.innerHTML='<input type="text" name="kyz.kyzExpectmatses['+j+'].personNo" value="" size="15"/>';
-        newTd6.innerHTML='<input type="text" name="kyz.kyzExpectmatses['+j+'].qtyPair" value="'+qtyPair+'" size="15"/>';    
-        newTd7.innerHTML='<input type="text" name="kyz.kyzExpectmatses['+j+'].moneyType" value="'+moneyType+'" size="15"/>';  
-        newTd8.innerHTML='<input type="text" name="kyz.kyzExpectmatses['+j+'].memoMk" value="" size="15"/>'+
-        '<input type="hidden" name="kyz.kyzExpectmatses['+j+'].id.kyzExpectmatm.id.factNo" value="'+factno+'"'+'id="kyzs_factno"/>'+     
-        '<input type="hidden" name="kyz.kyzExpectmatses['+j+'].id.kyzExpectmatm.id.billNo" value="'+billno+'"'+'id="kyzs_billno"/>'+
-        '<input type="hidden" name="kyz.kyzExpectmatses['+j+'].factCode" value="'+factcode+'"'+'id="kyzs_billno"/>';       
+        newTd2.innerHTML='<input type="text" name="kyz.kyzExpectmatses['+j+'].matNo" value="" />';
+        newTd3.innerHTML='<input type="text" name="kyz.kyzExpectmatses['+j+'].qtyExpect" value="" datatype="my0-8"/><span class="Validform_checktip"></span>';
+        newTd4.innerHTML='<input type="text" name="kyz.kyzExpectmatses['+j+'].qtyOk" value="" datatype="my0-8"/><span class="Validform_checktip"></span>';
+        newTd5.innerHTML='<input type="text" name="kyz.kyzExpectmatses['+j+'].personNo"  datatype="n0-8"/><span class="Validform_checktip"></span>';
+        if(qtyPair==null&&moneyType==null){
+        	newTd6.innerHTML='<input type="text" name="kyz.kyzExpectmatses['+j+'].qtyPair"  id="qtyPair"/>';    
+            newTd7.innerHTML='<input type="text" name="kyz.kyzExpectmatses['+j+'].moneyType"  id="moneyType"/>';
+        	
+        }else{
+        	newTd6.innerHTML='<input type="text" name="kyz.kyzExpectmatses['+j+'].qtyPair" value="'+qtyPair.value+'" />';    
+            newTd7.innerHTML='<input type="text" name="kyz.kyzExpectmatses['+j+'].moneyType" value="'+moneyType.value+'" />';
+        }
+        newTd8.innerHTML='<input type="text" name="kyz.kyzExpectmatses['+j+'].memoMk" value="" />'+
+        '<input type="hidden" name="kyz.kyzExpectmatses['+j+'].id.kyzExpectmatm.id.factNo" value="'+factno+'"'+'/>'+     
+        '<input type="hidden" name="kyz.kyzExpectmatses['+j+'].id.kyzExpectmatm.id.billNo" value="'+billno+'"'+'/>';       
         }
         
 	}
 	
-	var jj=0;
-	function addRow_update(){	  	  	     	    
-	     var maxNum=parseInt(document.getElementById("maxNum").value);
-	   
-        var factno=document.getElementById("kyzs_factno").value;
-        var billno=document.getElementById("kyzs_billno").value;
-        var qtyPair=document.getElementById("qtyPair").value;
-        var moneyType=document.getElementById("moneyType").value;
-        var factcode=document.getElementById("kyzs_factcode").value;
-        //设置列内容和属性
-        var cboxlist=document.getElementsByName("cbox");
-        if(cboxlist.length>9){
-           alert("對不起,不能超過10條記錄!");
-        }else{
-        	 //添加一行
-            var newTr = kyzs_body.insertRow();
-            //添加列
-            var newTd00=newTr.insertCell();
-            var newTd0 = newTr.insertCell();
-            var newTd1 = newTr.insertCell();
-            var newTd2=newTr.insertCell();
-            var newTd3=newTr.insertCell();
-            var newTd4=newTr.insertCell();
-            var newTd5=newTr.insertCell();
-            var newTd6=newTr.insertCell();
-            var newTd7=newTr.insertCell();
-            var newTd8=newTr.insertCell();
-        	
-        newTd00.innerHTML='<input type="checkbox" name="cbox" disabled/><input type="image" src="images/del.gif" onclick="this.parentNode.parentNode.parentNode.removeChild(this.parentNode.parentNode)"/>';
-        newTd0.innerHTML = '<input type="text" name="kyz.kyzExpectmatses['+(jj+maxNum)+'].itemNm" value="" size="15"/>'; 
-        if((jj+maxNum+1)<10){
-          newTd1.innerHTML= '<input type="text" name="kyz.kyzExpectmatses['+(jj+maxNum)+'].id.itemNo" value="00'+(jj+maxNum+1)+'" datatype="*" style="color:blue"  readonly size="15"/>';
-        }else{
-          newTd1.innerHTML= '<input type="text" name="kyz.kyzExpectmatses['+(jj+maxNum)+'].id.itemNo" value="0'+(jj+maxNum+1)+'"  datatype="*" style="color:blue" readonly size="15"/>';
-        }
-        
-        newTd2.innerHTML='<input type="text" name="kyz.kyzExpectmatses['+(jj+maxNum)+'].matNo" value="" size="15"/>';
-        newTd3.innerHTML='<input type="text" name="kyz.kyzExpectmatses['+(jj+maxNum)+'].qtyExpect" value="" size="15"/>';
-        newTd4.innerHTML='<input type="text" name="kyz.kyzExpectmatses['+(jj+maxNum)+'].qtyOk" value="" size="15"/>';
-        newTd5.innerHTML='<input type="text" name="kyz.kyzExpectmatses['+(jj+maxNum)+'].personNo" value="" size="15"/>';
-        newTd6.innerHTML='<input type="text" name="kyz.kyzExpectmatses['+(jj+maxNum)+'].qtyPair" value="'+qtyPair+'" size="15"/>';
-        newTd7.innerHTML='<input type="text" name="kyz.kyzExpectmatses['+(jj+maxNum)+'].moneyType" value="'+moneyType+'" size="15"/>';    
-        newTd8.innerHTML='<input type="text" name="kyz.kyzExpectmatses['+(jj+maxNum)+'].memoMk" value="" size="15"/>'+
-        '<input type="hidden" name="kyz.kyzExpectmatses['+(jj+maxNum)+'].id.kyzExpectmatm.id.factNo" value="'+factno+'"'+'id="kyzs_factno"/>'+    
-        '<input type="hidden" name="kyz.kyzExpectmatses['+(jj+maxNum)+'].id.kyzExpectmatm.id.billNo" value="'+billno+'"'+'id="kyzs_billno"/>'+
-        '<input type="hidden" name="kyz.kyzExpectmatses['+(jj+maxNum)+'].factCode" value="'+factcode+'"'+'id="kyzs_factcode"/>'; 
-        jj=jj+1;
-        }
-        
-	}
-				
-	function delRow(){
-	   var cboxlist=document.getElementsByName("cbox");
-	   for(var k=0;k<cboxlist.length;k++){
-	     if(cboxlist[k].checked==true&&k>0){
-	        kyzs_body.deleteRow(k+1);
-	        k=k-1;
-	     }
-	   }
-	   
-	}
-	function checkAll(){
-	  var allbox=document.getElementById("cboxall");
-	  var cboxlist=document.getElementsByName("cbox");
-	  if(allbox.checked==true){
-	       for(var kk=0;kk<cboxlist.length;kk++){
-	           cboxlist[kk].checked=true;
-	       }
-	  }else{
-	         for(var kk=0;kk<cboxlist.length;kk++){
-	           cboxlist[kk].checked=false;
-	       }
-	  }
-	}
+		
 	function getFactCode(){
 	    document.getElementById("dwrFactArea").value=document.getElementById("kyzs_factcode").value;
 	}
@@ -301,7 +220,7 @@ function getKyType2(factno){
   var i=0;	
   function addFile(){
       i++;
-      if(i<5){
+      if(i<15){
       var divfile=document.getElementById("divfile");
       var inputfile=document.createElement("input");
       var aEle=document.createElement("a");
@@ -316,8 +235,8 @@ function getKyType2(factno){
          if(parentnode){
             parentnode.removeChild(aEle);
             parentnode.removeChild(inputfile);
-            if(i>4){
-               i=4;
+            if(i>14){
+               i=14;
             }
             i--;
          }
@@ -325,7 +244,7 @@ function getKyType2(factno){
       divfile.appendChild(inputfile);
       divfile.appendChild(aEle);  
       }else{
-         alert("附檔不能超過5個!");
+         alert("附檔不能超過15個!");
       }               
   }
   
@@ -435,7 +354,13 @@ function gook(){
 jq(function(){
 	if(jq("#addorupdate").val()!="update"){
 		getKyType();makeBillNo();
-	}	
+	}else{
+		jq("#addbtn").removeAttr("style").removeAttr("disabled");
+	}
+	j=jq("#maxNum").val()
+	if(isNaN(j)){
+		j=0;
+	}
 });
 </script>
 
@@ -497,19 +422,19 @@ jq(function(){
 						</select></td>
 						
 						<td class="tdcolor">建立日期</td>
-				        <td ><input type="text" name="yymmdd" id="kyz_timecreate"  readonly  value="<%=str_date%>" style="color:blue">
+				        <td ><input type="text" name="yymmdd" id="kyz_timecreate"  readonly  value="<%=str_date%>" style="color:blue"></td>
 					</tr>
 					</s:if>																							    
 				   </s:if>
 				   <s:else>
 				      <td class="tdcolor">廠別</td>				      
 				      <td>
-				      <input type="text" name="kyz.id.factNo" value="<s:property value='kyz.id.factNo'/>" readonly style="color:blue" />
+				      <input type="text" name="kyz.id.factNo" value="<s:property value='kyz.id.factNo'/>" readonly style="color:blue" id="dwrFactNo"/>
 				      <input type="hidden" name="isnull" value="notNull"/><!--判斷變量 -->
 				      </td>
 				     
 				      <td class="tdcolor">廠別狀態</td>
-				      <td><input type="text" name="kyz.factCode" value="<s:property value='kyz.factCode'/>" readonly style="color:blue" /></td>
+				      <td><input type="text" name="kyz.factCode" value="<s:property value='kyz.factCode'/>" readonly style="color:blue" id="dwrFactArea"/></td>
 				     
 				      <td class="tdcolor">修改日期</td>
 				      <td><input type="text" name="yymmdd" value="<%=str_date%>" readonly style="color:blue" /></td>				     				     
@@ -522,7 +447,7 @@ jq(function(){
 				          		<input type="text" name="kyz.id.billNo" value="自動生成" readonly style="color:blue" id="kyz_billno" datatype="*"/>	        
 				        </s:if>
 				        <s:else>
-				               <input type="text" name="kyz.id.billNo" value="<s:property value='kyz.id.billNo'/>" readonly style="color:blue" />
+				               <input type="text" name="kyz.id.billNo" value="<s:property value='kyz.id.billNo'/>" id="kyz_billno" readonly style="color:blue" />
 				        </s:else>				      
 				      </td>
 				        	        
@@ -530,9 +455,11 @@ jq(function(){
 						<td >
 						<s:if test="kyz==null">
 						   <input type="text" name="kyz.userNm" datatype="*"  value="<s:property value='#session.loginUser.name'/>" style="color:blue" readonly/>
+						   <input type="hidden" name="kyz.username" value="<s:property value='#session.loginUser.username'/>"/>
 						</s:if>
 						<s:else>
 						   <input type="text" name="kyz.userNm" datatype="*"  value="<s:property value='kyz.userNm'/>" style="color:blue" readonly/>
+						   <input type="hidden" name="kyz.username" value="<s:property value='kyz.username'/>"/>
 						</s:else>
 						</td>
 						
@@ -593,10 +520,11 @@ jq(function(){
 					<tr>
 					    <td class="tdcolor">申請內容</td>	
 						<td  colspan="10">
-				           <textarea style="width:100%;height:120px" name="kyz.memoMk" autofocus="autofocus" wrap="hard" wrap="physical"  tip="申請內容" altercss="gray" class="gray"><s:property value="kyz.memoMk"/></textarea>				                                           				         
-				           <input type="hidden" name="kyz.username" value="<s:property value='#session.loginUser.username'/>"/>
+				           <textarea style="width:100%;height:120px" name="kyz.memoMk"  wrap="off"   tip="申請內容" altercss="gray" class="gray"><s:property value="kyz.memoMk"/></textarea>				                                           				         
+				           
 				           
 				           <input type="hidden" value="<s:property value='kyz.filesYn'/>" name="kyz.filesYn"/>
+				           <input type="hidden" value="<s:property value='maxNum'/>" id="maxNum"/>
 				        </td>
 						
 					</tr>													
@@ -605,7 +533,7 @@ jq(function(){
 			<table class="table table-condensed">								 			
 			<tbody id="kyzs_body" >
 			  <tr>
-			     <td class="tdcolor"><input type="checkbox" id="cboxall" onclick="checkAll()"/></td>
+			     <td class="tdcolor"></td>
 			     <td class="tdcolor">名稱</td>
 			     <td class="tdcolor">項次</td>
 			     <td class="tdcolor">規格</td>
@@ -615,77 +543,39 @@ jq(function(){
 			     <td class="tdcolor">單位</td>
 			     <td class="tdcolor">幣種</td>		     
 			     <td class="tdcolor">備註</td>
-			 </tr>	
-			 <s:if test="kyz==null">
-			    <tr>
-			     <td><input type="checkbox" name="cbox" disabled/></td>
-			     <td ><input type="text" name="kyz.kyzExpectmatses[0].itemNm" value=""  size="15"/></td> 
-			     <td><input type="text" name="kyz.kyzExpectmatses[0].id.itemNo" value="001" readonly style="color:blue" size="15"/></td>
-			     <td ><input type="text" name="kyz.kyzExpectmatses[0].matNo" value="" size="15"/></td>			     
-			     <td ><input type="text" name="kyz.kyzExpectmatses[0].qtyExpect" value="" datatype="my0-12" size="15" id="qtyExpect_0"/></td>
-			     <td ><input type="text" name="kyz.kyzExpectmatses[0].qtyOk" value="" datatype="my0-8" size="15" id="qtyOk_0"/></td>
-			     <td ><input type="text" name="kyz.kyzExpectmatses[0].personNo" value="" datatype="my0-8" size="15" id="personNo_0"/></td>
-			     <td ><input type="text" name="kyz.kyzExpectmatses[0].qtyPair" value="" id="qtyPair" size="15"/></td>
-			     <td ><input type="text" name="kyz.kyzExpectmatses[0].moneyType" value="" id="moneyType" size="15"/></td>
-			      <td >
-			      <input type="text" name="kyz.kyzExpectmatses[0].memoMk" value="" size="15"/>
-			      <input type="hidden" name="kyz.kyzExpectmatses[0].id.kyzExpectmatm.id.factNo" value="" id="kyzs_factno"/>
-			      <input type="hidden" name="kyz.kyzExpectmatses[0].id.kyzExpectmatm.id.billNo" value="" id="kyzs_billno"/>
-			      <input type="hidden" name="kyz.kyzExpectmatses[0].factCode" value="" id="kyzs_factcode"/>
-			      </td>			      		      
-			  </tr>		
-			 </s:if>
-			 <s:else>			  
+			 </tr>				
+			  
 			    <s:iterator value="kyz.kyzExpectmatses" status="x" id="temp">
-			       <tr class="bluecss">
-			         <td>
-			          <s:if test="#attr.x.index==0">
-			            <input type="checkbox" name="cbox" value="<s:property value='id.itemNo'/>" disabled/>
-			          </s:if>
-			          <s:else>
-			            <input type="checkbox" name="cbox" value="<s:property value='id.itemNo'/>"/>
-			          </s:else>			          			          			            			          
-			         </td>			     
-			     <td ><input type="text" name="kyz.kyzExpectmatses[${x.index}].itemNm" value="<s:property value='itemNm'/>" size="15"/></td>			    
-			     <td><input type="text" name="kyz.kyzExpectmatses[${x.index}].id.itemNo" value="<s:property value='id.itemNo'/>" readonly style="color:blue" size="15"/></td>			    			     			     
-			     <td ><input type="text" name="kyz.kyzExpectmatses[${x.index}].matNo" value="<s:property value='matNo'/>" size="15"/></td>			     
-			     <td ><input type="text" name="kyz.kyzExpectmatses[${x.index}].qtyExpect" value="<s:property value='qtyExpect'/>" datatype="my0-8" size="15" id="qtyExpect_${x.index}"/></td>
-			     <td ><input type="text" name="kyz.kyzExpectmatses[${x.index}].qtyOk" value="<s:property value='%{formatDouble(qtyOk)}'/>" datatype="my0-8" size="15" id="qtyOk_${x.index}"/></td>
-			     <td ><input type="text" name="kyz.kyzExpectmatses[${x.index}].personNo" value="<s:property value='%{formatDouble(personNo)}'/>" datatype="my0-8" size="15" id="personNo_${x.index}"/></td>
-			     <td ><input type="text" name="kyz.kyzExpectmatses[${x.index}].qtyPair" value="<s:property value='qtyPair'/>"  id="qtyPair" size="15"/></td>
-			     <td ><input type="text" name="kyz.kyzExpectmatses[${x.index}].moneyType" value="<s:property value='moneyType'/>" id="moneyType" size="15"/></td>
+			    <tr class="bluecss">
+			     <td><input type="hidden" name="cbox"/></td>			           			          			          			            			          	     
+			     <td ><input type="text" name="kyz.kyzExpectmatses[${x.index}].itemNm" value="<s:property value='itemNm'/>" /></td>			    
+			     <td><input type="text" name="kyz.kyzExpectmatses[${x.index}].id.itemNo" value="<s:property value='id.itemNo'/>" readonly style="color:blue" /></td>			    			     			     
+			     <td ><input type="text" name="kyz.kyzExpectmatses[${x.index}].matNo" value="<s:property value='matNo'/>" /></td>			     
+			     <td ><input type="text" name="kyz.kyzExpectmatses[${x.index}].qtyExpect" value="<s:property value='qtyExpect'/>" datatype="my0-8"  id="qtyExpect_${x.index}"/></td>
+			     <td ><input type="text" name="kyz.kyzExpectmatses[${x.index}].qtyOk" value="<s:property value='%{formatDouble(qtyOk)}'/>" datatype="my0-8"  id="qtyOk_${x.index}"/></td>
+			     <td ><input type="text" name="kyz.kyzExpectmatses[${x.index}].personNo" value="<s:property value='%{formatDouble(personNo)}'/>" datatype="n0-8"  id="personNo_${x.index}"/></td>
+			     <td ><input type="text" name="kyz.kyzExpectmatses[${x.index}].qtyPair" value="<s:property value='qtyPair'/>"   /></td>
+			     <td ><input type="text" name="kyz.kyzExpectmatses[${x.index}].moneyType" value="<s:property value='moneyType'/>"  /></td>
 			      <td >
-			      <input type="text" name="kyz.kyzExpectmatses[${x.index}].memoMk" value="<s:property value='memoMk'/>" size="15"/>			      
-			      <input type="hidden" name="kyz.kyzExpectmatses[${x.index}].id.kyzExpectmatm.id.factNo" value="<s:property value='id.kyzExpectmatm.id.factNo'/>" id="kyzs_factno"/>
-			      <input type="hidden" name="kyz.kyzExpectmatses[${x.index}].id.kyzExpectmatm.id.billNo" value="<s:property value='id.kyzExpectmatm.id.billNo'/>" id="kyzs_billno"/>
-			      <input type="hidden" name="kyz.kyzExpectmatses[${x.index}].factCode" value="<s:property value='factCode'/>" id="kyzs_factcode"/>
+			      <input type="text" name="kyz.kyzExpectmatses[${x.index}].memoMk" value="<s:property value='memoMk'/>" />			      
+			      <input type="hidden" name="kyz.kyzExpectmatses[${x.index}].id.kyzExpectmatm.id.factNo" value="<s:property value='id.kyzExpectmatm.id.factNo'/>" />
+			      <input type="hidden" name="kyz.kyzExpectmatses[${x.index}].id.kyzExpectmatm.id.billNo" value="<s:property value='id.kyzExpectmatm.id.billNo'/>" />
+			      <input type="hidden" name="kyz.kyzExpectmatses[${x.index}].factCode" value="<s:property value='factCode'/>" />
 			      </td>			      		      
 			  </tr>
 			    </s:iterator>
 			    <input type="hidden" value="<s:property value='kyz.id.factNo'/>" name="factNo"/>
 			    <input type="hidden" value="<s:property value='kyz.id.billNo'/>" name="billNo"/>
-			    
-			 </s:else>		         			  
-			 	  			
+			    	         			  			 	  			
 			</tbody>
-			<tfoot><tr>
-			<s:if test="kyz==null">
+			<tfoot><tr>			
 			<td colspan="10">			     			  
-			     <input type="button" value="添加行" onclick="addRow()" disabled="disabled" id="addbtn" style="color:grey"/>
-			     <input type="button" value="刪除行" onclick="delRow()"  id="delbtn"/>
-			 </td>    
-			  </s:if>					    			    		   		
+			     <input type="button" value="添加行" onclick="addRow()" disabled="disabled" id="addbtn" style="color:grey"/>			     
+			 </td>    			 					    			    		   		
 			</tr>
 			</tfoot>					    
 		</table >
-		  <s:if test="kyz!=null">			    			  　　
-		     	   <input type="hidden" value="<s:property value='maxNum'/>" id="maxNum"/> <!-- 用於添加行的maxNum變量 -->		     	 
-		     	   <s:submit value="刪除數據" onclick="javascript:alert('注意!若有選中將從數據庫中刪除所選數據')" action="kyz_deleteMore" align="left" cellspacing="0"  id="delbtn"
-		     	    style="width:60px;margin:0px">
-		     	   　<input type="button" value="添加行" onclick="addRow_update()" id="addbtn"/>
-		     	   </s:submit>
-		     	   		     	   			      
-		</s:if>
+	
 		<s:if test='kyz.filesYn=="1"'>
 	       <hr/>
 	       <div style="color:blue;">附檔:</div><br/>

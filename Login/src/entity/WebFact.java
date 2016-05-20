@@ -32,6 +32,10 @@ public class WebFact implements java.io.Serializable {
 	public WebFact(WebFactId id) {
 		this.id = id;
 	}
+	public WebFact(WebFactId id,String factSname){
+		this.id=id;
+		this.factSname=factSname;
+	}
 
 	/** full constructor */
 	public WebFact(WebFactId id, String factSname, String orderNo,
