@@ -642,14 +642,8 @@ public class GlobalMethod extends HibernateDaoSupport{
         cal.add(Calendar.MONTH, -1);
         System.out.println(frm.format(cal.getTime()));*/
         
-        BigDecimal aa=new BigDecimal(2);
-        BigDecimal bb=new BigDecimal(4);
-        BigDecimal cc=new BigDecimal(6);
-        BigDecimal dd=new BigDecimal(8);
-        BigDecimal ff=new BigDecimal(0);
-        System.out.println(aa.divide(bb));
-        System.out.println(cc.divide(aa).subtract(dd.divide(bb)));
-        //System.out.println(aa.divide(ff));
+        String aa="Y";
+        System.out.println(aa!="Y");
         
 
        

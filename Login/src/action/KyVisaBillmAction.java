@@ -255,14 +255,8 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 		ActionContext.getContext().getSession().remove("public_timeCreate");
 		ActionContext.getContext().getSession().remove("public_timeCreate2");
 		factNo=(String)ActionContext.getContext().getSession().get("factNo");
-		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
-		userName=user.getUsername();
-		if(user.getEmail()==null){
-			email="no";
-		}else{
-			email=user.getEmail();
-		}
-		bean=visabillSer.findPageBean_tw(25, page, userName, visaMk, factNo, billNo,visaSort,yymmdd,yymmdd2,email);
+		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");		
+		bean=visabillSer.findPageBean_tw(25, page, visaMk, factNo, billNo,visaSort,yymmdd,yymmdd2,user);
 		
 		this.getKyzTitle(bean);
 		this.getTypeName(bean);
@@ -295,31 +289,8 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 		if(yymmdd2!=null&&!yymmdd2.equals("")){
 			ActionContext.getContext().getSession().put("public_timeCreate2", yymmdd2);
 		}
-		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
-		userName=user.getUsername();
-		if(user.getEmail()==null){
-			email="no";
-		}else{
-			email=user.getEmail();
-		}
-		bean=visabillSer.findPageBean_tw(25, page, userName, visaMk, factNo, billNo,visaSort,yymmdd,yymmdd2,email);
-		/*List<KyVisabills>list=bean.getList();
-		for(int i=0;i<list.size();i++){
-			String billNo=list.get(i).getId().getKyVisabillm().getId().getBillNo();
-			String title="";
-			//判斷費用函文還是內部聯絡函
-			if(billNo.substring(0, 2).equals("EM")){
-				title=kyzSer.findTitleByBillno(billNo);
-			}else{
-				title=kyzletterSer.findTitleByBillno(billNo);
-			}
-			
-			if(title!=null){
-				list.get(i).setMemo(title);
-			}else{
-				list.get(i).setMemo("");
-			}						
-		}*/
+		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");		
+		bean=visabillSer.findPageBean_tw(25, page, visaMk, factNo, billNo,visaSort,yymmdd,yymmdd2,user);		
 		this.getKyzTitle(bean);
 		this.getTypeName(bean);
 		return "beanList1";		
@@ -331,17 +302,11 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 		visaSort=(String)ActionContext.getContext().getSession().get("public_visaSort");
 		yymmdd=(String)ActionContext.getContext().getSession().get("public_timeCreate");
 		yymmdd2=(String)ActionContext.getContext().getSession().get("public_timeCreate2");
-		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
-		userName=user.getUsername();
-		if(user.getEmail()==null){
-			email="no";
-		}else{
-			email=user.getEmail();
-		}
+		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");		
 		if(factNo==null||factNo.equals("")){
 			factNo=(String)ActionContext.getContext().getSession().get("factNo");
 		}
-		bean=visabillSer.findPageBean_tw(25, page, userName, visaMk, factNo, billNo,visaSort,yymmdd,yymmdd2,email);
+		bean=visabillSer.findPageBean_tw(25, page, visaMk, factNo, billNo,visaSort,yymmdd,yymmdd2,user);
 		/*List<KyVisabills>list=bean.getList();
 		for(int i=0;i<list.size();i++){
 			String billNo=list.get(i).getId().getKyVisabillm().getId().getBillNo();
@@ -374,29 +339,7 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 		ActionContext.getContext().getApplication().clear();
 		factNo=(String)ActionContext.getContext().getSession().get("factNo");
 		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
-		userName=user.getUsername();
-		if(user.getEmail()==null){
-			email="no";
-		}else{
-			email=user.getEmail();
-		}
-		bean=visabillSer.findPageBean_tw(25, page, userName, visaMk, factNo, billNo,visaSort,yymmdd,yymmdd2,email);
-		/*List<KyVisabills>list=bean.getList();
-		for(int i=0;i<list.size();i++){
-			String billNo=list.get(i).getId().getKyVisabillm().getId().getBillNo();
-			String title="";
-			//判斷費用函文還是內部聯絡函
-			if(billNo.substring(0, 2).equals("EM")){
-				title=kyzSer.findTitleByBillno(billNo);
-			}else{
-				title=kyzletterSer.findTitleByBillno(billNo);
-			}
-			if(title!=null){
-				list.get(i).setMemo(title);
-			}else{
-				list.get(i).setMemo("");
-			}						
-		}*/		
+		bean=visabillSer.findPageBean_tw(25, page, visaMk, factNo, billNo,visaSort,yymmdd,yymmdd2,user);				
 		this.getKyzTitle(bean);
 		this.getTypeName(bean);
 		return "beanList_tw";
@@ -422,30 +365,8 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 		if(yymmdd2!=null&&!yymmdd2.equals("")){
 			ActionContext.getContext().getApplication().put("visabills-yymmdd2", yymmdd2);
 		}
-		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
-		userName=user.getUsername();
-		if(user.getEmail()==null){
-			email="no";
-		}else{
-			email=user.getEmail();
-		}
-		bean=visabillSer.findPageBean_tw(25, page, userName, visaMk, factNo, billNo,visaSort,yymmdd,yymmdd2,email);
-		/*List<KyVisabills>list=bean.getList();
-		for(int i=0;i<list.size();i++){
-			String billNo=list.get(i).getId().getKyVisabillm().getId().getBillNo();
-			String title="";
-			//判斷費用函文還是內部聯絡函
-			if(billNo.substring(0, 2).equals("EM")){
-				title=kyzSer.findTitleByBillno(billNo);
-			}else{
-				title=kyzletterSer.findTitleByBillno(billNo);
-			}
-			if(title!=null){
-				list.get(i).setMemo(title);
-			}else{
-				list.get(i).setMemo("");
-			}						
-		}*/	
+		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");		
+		bean=visabillSer.findPageBean_tw(25, page, visaMk, factNo, billNo,visaSort,yymmdd,yymmdd2,user);		
 		this.getKyzTitle(bean);
 		this.getTypeName(bean);
 		return "beanList1_tw";		
@@ -457,33 +378,11 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 		visaSort=(String)ActionContext.getContext().getApplication().get("visabills-visasort");
 		yymmdd=(String)ActionContext.getContext().getApplication().get("visabills-yymmdd");
 		yymmdd2=(String)ActionContext.getContext().getApplication().get("visabills-yymmdd2");
-		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
-		userName=user.getUsername();
-		if(user.getEmail()==null){
-			email="no";
-		}else{
-			email=user.getEmail();
-		}
+		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");		
 		if(factNo==null||factNo.equals("")){
 			factNo=(String)ActionContext.getContext().getSession().get("factNo");
 		}
-		bean=visabillSer.findPageBean_tw(25, page, userName, visaMk, factNo, billNo,visaSort,yymmdd,yymmdd2,email);
-		/*List<KyVisabills>list=bean.getList();
-		for(int i=0;i<list.size();i++){
-			String billNo=list.get(i).getId().getKyVisabillm().getId().getBillNo();
-			String title="";
-			//判斷費用函文還是內部聯絡函
-			if(billNo.substring(0, 2).equals("EM")){
-				title=kyzSer.findTitleByBillno(billNo);
-			}else{
-				title=kyzletterSer.findTitleByBillno(billNo);
-			}
-			if(title!=null){
-				list.get(i).setMemo(title);
-			}else{
-				list.get(i).setMemo("");
-			}						
-		}	*/
+		bean=visabillSer.findPageBean_tw(25, page, visaMk, factNo, billNo,visaSort,yymmdd,yymmdd2,user);		
 		this.getKyzTitle(bean);
 		this.getTypeName(bean);
 		return "beanList1_tw";
@@ -502,14 +401,8 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 		ActionContext.getContext().getSession().remove("public_timeCreate");
 		ActionContext.getContext().getSession().remove("public_timeCreate2");
 		factNo=(String)ActionContext.getContext().getSession().get("factNo");
-		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
-		userName=user.getUsername();
-		if(user.getEmail()==null){
-			email="no";
-		}else{
-			email=user.getEmail();
-		}
-		bean=visabillSer.findPageBean(25, page, userName, visaMk, factNo, billNo,visaSort,yymmdd,yymmdd2,email);
+		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");		
+		bean=visabillSer.findPageBean(25, page, visaMk, factNo, billNo,visaSort,yymmdd,yymmdd2,user);
 		this.getTypeName(bean);
 		this.getKyzTitle(bean);
 		return "beanList_1";
@@ -541,14 +434,8 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 		if(yymmdd2!=null&&!yymmdd2.equals("")){
 			ActionContext.getContext().getSession().put("public_timeCreate2", yymmdd2);
 		}
-		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
-		userName=user.getUsername();
-		if(user.getEmail()==null){
-			email="no";
-		}else{
-			email=user.getEmail();
-		}
-		bean=visabillSer.findPageBean(25, page, userName, visaMk, factNo, billNo,visaSort,yymmdd,yymmdd2,email);
+		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");		
+		bean=visabillSer.findPageBean(25, page, visaMk, factNo, billNo,visaSort,yymmdd,yymmdd2,user);
 		this.getTypeName(bean);
 		this.getKyzTitle(bean);
 		return "beanList1_1";
@@ -560,17 +447,11 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 		visaSort=(String)ActionContext.getContext().getSession().get("public_visaSort");
 		yymmdd=(String)ActionContext.getContext().getSession().get("public_timeCreate");
 		yymmdd2=(String)ActionContext.getContext().getSession().get("public_timeCreate2");
-		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
-		userName=user.getUsername();
-		if(user.getEmail()==null){
-			email="no";
-		}else{
-			email=user.getEmail();
-		}
+		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");		
 		if(factNo==null||factNo.equals("")){
 			factNo=(String)ActionContext.getContext().getSession().get("factNo");
 		}
-		bean=visabillSer.findPageBean(25, page, userName, visaMk, factNo, billNo,visaSort,yymmdd,yymmdd2,email);
+		bean=visabillSer.findPageBean(25, page, visaMk, factNo, billNo,visaSort,yymmdd,yymmdd2,user);
 		this.getTypeName(bean);
 		this.getKyzTitle(bean);
 		return "beanList1_1";

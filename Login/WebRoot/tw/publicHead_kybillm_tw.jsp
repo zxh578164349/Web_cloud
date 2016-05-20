@@ -56,8 +56,8 @@ jq(document).keyup(function(event){
 			
 							
 			
-			<input type="radio" value="Y" name="visaMk" />已審核|
-			<input type="radio" value="N" name="visaMk" checked="checked"/>未審核|
+			<input type="radio" value="Y" name="visaMk" />已完成|
+			<input type="radio" value="N" name="visaMk" checked="checked"/>未完成|
 			<input type="radio" value="T" name="visaMk"  />未通過
 			<input value="搜索" type="button" class="btn btn-primary" onclick="javascript:submis()" />
 			</td>								

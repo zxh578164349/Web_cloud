@@ -37,20 +37,20 @@ public class KyVisaBillsServicesImpl implements IKyVisaBillsServices{
 		// TODO Auto-generated method stub
 		visabillDao.delete(factNo, visaSort, billNo, itemNo);
 	}
-	public PageBean findPageBean(int pageSize, int page, String userName,
-			String visaMk, String factNo, String billNo,String visaSort,String createDate,String createDate2,String email) {
+	public PageBean findPageBean(int pageSize, int page,
+			String visaMk, String factNo, String billNo,String visaSort,String createDate,String createDate2,WebUser user) {
 		// TODO Auto-generated method stub
-		return visabillDao.findPageBean(pageSize, page, userName, visaMk, factNo, billNo,visaSort,createDate,createDate2,email);
+		return visabillDao.findPageBean(pageSize, page, visaMk, factNo, billNo,visaSort,createDate,createDate2,user);
 	}
 	public List<KyVisabills> findByFNN(String factNo, String userName) {
 		// TODO Auto-generated method stub
 		return visabillDao.findByFNN(factNo, userName);
 	}
-	public PageBean findPageBean_tw(int pageSize, int page, String userName,
+	public PageBean findPageBean_tw(int pageSize, int page,
 			String visaMk, String factNo, String billNo, String visaSort,
-			String createDate, String createDate2,String email) {
+			String createDate, String createDate2,WebUser user) {
 		// TODO Auto-generated method stub
-		return visabillDao.findPageBean_tw(pageSize, page, userName, visaMk, factNo, billNo, visaSort, createDate, createDate2,email);
+		return visabillDao.findPageBean_tw(pageSize, page, visaMk, factNo, billNo, visaSort, createDate, createDate2,user);
 	}
 	public int findKyVisaBills_Int() {
 		// TODO Auto-generated method stub

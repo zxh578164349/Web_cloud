@@ -62,7 +62,8 @@
 				<th>廠別</th>
 				<th>類別</th>
 				<th>單號</th>				
-				<th>標題</th>			
+				<th>標題</th>
+				<th>操作</th>			
 				<th colspan="15">審核狀況</th>				
 			</tr>
 		</thead>
@@ -89,6 +90,27 @@
 				<td>
 				<s:property value="memo" />
 				</td> 
+				<td>
+				  <form  method="post" id="4subform${x.index}" style="float:left" target="_blank">
+						<input type="hidden" value="<s:property value='id.kyVisabillm.id.factNo'/>"
+							name="factNo" /> <input type="hidden"
+							value="<s:property value='id.kyVisabillm.id.billNo'/>" name="billNo" />
+							<input type="hidden" value="<s:property value='id.kyVisabillm.id.visaSort'/>" name="visaSort"/>
+							<input type="hidden" value="<s:property value='id.kyVisabillm.id.visaSort'/>" name="visaType"/><!-- 湘威費用清單函文 -->
+							<input type="hidden" value="look" name="lookordown"/>						
+					</form>
+					<form  method="post" id="5subform${x.index}" style="float:left" target="_blank">
+						<input type="hidden" value="<s:property value='id.kyVisabillm.id.factNo'/>"
+							name="factNo" /> <input type="hidden"
+							value="<s:property value='id.kyVisabillm.id.billNo'/>" name="billNo" />
+							<input type="hidden" value="<s:property value='id.kyVisabillm.id.visaSort'/>" name="visaSort"/>
+							<input type="hidden" value="<s:property value='id.kyVisabillm.id.visaSort'/>" name="visaType"/><!-- 湘威費用清單函文 -->
+							<input type="hidden" value="down" name="lookordown"/>						
+					</form>
+				   <a href="javascript:goPreviewOrPrint('4subform${x.index}','${temp.id.kyVisabillm.id.billNo}')"><img alt="預覽" src="images/icon/view001.png" title="預覽" ></a>
+				   <a href="javascript:goPreviewOrPrint('5subform${x.index}','${temp.id.kyVisabillm.id.billNo}')" ><img alt="打印" src="images/icon/print001.png" title="打印" ></a>
+				</td>
+				   	
 				<td>											 					
 		 <s:iterator value="id.kyVisabillm.kyVisabillses"  status="y">
 	       

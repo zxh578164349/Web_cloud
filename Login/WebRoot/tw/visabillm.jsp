@@ -145,6 +145,22 @@ function tips(memo,index){
     closeBtn:[0, true]
 });
 }
+
+function goPreviewOrPrint(subform,billNo){
+	   if(billNo.substring(0,2)=="EM"){
+		   jq("#"+subform).attr("action","kyz_print2");
+	   }
+	   if(billNo.substring(0,2)=="CM"){
+		   jq("#"+subform).attr("action","kyzletter_print2");
+	   }
+	   if(billNo.substring(0,2)=="BM"){
+		   jq("#"+subform).attr("action","bussletter_print2");
+	   }
+	   if(billNo.substring(0,2)=="RM"){
+		   jq("#"+subform).attr("action","webremit_print");
+	   }
+	   jq("#"+subform).submit();
+}
 </script>
 <script type='text/javascript' src='/Login/dwr/interface/kyzjs.js'></script>
 <script type='text/javascript' src='/Login/dwr/interface/webtypejs.js'></script>

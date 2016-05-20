@@ -100,14 +100,14 @@ var j=0;
              var newTd6=newTr.insertCell();
              var newTd7=newTr.insertCell();
         newTd00.innerHTML='<input type="hidden" name="cbox"/><input type="image" src="images/del.gif" onclick="this.parentNode.parentNode.parentNode.removeChild(this.parentNode.parentNode)"/>';     
-        newTd0.innerHTML = '<input type="text" name="webremit.webremittancelistses['+j+'].currency" value="" size="15"/>'; 
-        newTd1.innerHTML = '<input type="text" name="webremit.webremittancelistses['+j+'].manufacturers" value="" size="15"/>';             
-        newTd2.innerHTML='<input type="text" name="webremit.webremittancelistses['+j+'].toBank" value="" size="15"/>';
-        newTd3.innerHTML='<input type="text" name="webremit.webremittancelistses['+j+'].toAccount" value="" size="15"/>';
-        newTd4.innerHTML='<input type="text" name="webremit.webremittancelistses['+j+'].payment" value="" size="15"/>';
-        newTd5.innerHTML='<input type="text" name="webremit.webremittancelistses['+j+'].cost" value="" size="15"/>';
-        newTd6.innerHTML='<input type="text" name="webremit.webremittancelistses['+j+'].acAmount" value="" size="15"/>';    
-        newTd7.innerHTML='<input type="text" name="webremit.webremittancelistses['+j+'].remark" value="" size="15"/>'+   
+        newTd0.innerHTML = '<input type="text" name="webremit.webremittancelistses['+j+'].currency"  datatype="*"/><span class="Validform_checktip"></span>'; 
+        newTd1.innerHTML = '<input type="text" name="webremit.webremittancelistses['+j+'].manufacturers"  datatype="*"/><span class="Validform_checktip"></span>';             
+        newTd2.innerHTML='<input type="text" name="webremit.webremittancelistses['+j+'].toBank"  datatype="*"/><span class="Validform_checktip"></span>';
+        newTd3.innerHTML='<input type="text" name="webremit.webremittancelistses['+j+'].toAccount"  datatype="*"/><span class="Validform_checktip"></span>';
+        newTd4.innerHTML='<input type="text" name="webremit.webremittancelistses['+j+'].payment"  datatype="my0-8"/><span class="Validform_checktip"></span>';
+        newTd5.innerHTML='<input type="text" name="webremit.webremittancelistses['+j+'].cost"  datatype="my0-8"/><span class="Validform_checktip"></span>';
+        newTd6.innerHTML='<input type="text" name="webremit.webremittancelistses['+j+'].acAmount"  datatype="my0-8"/><span class="Validform_checktip"></span>';    
+        newTd7.innerHTML='<input type="text" name="webremit.webremittancelistses['+j+'].remark"  /><span class="Validform_checktip"></span>'+   
         '<input type="hidden" name="webremit.webremittancelistses['+j+'].id.webremittancelist.billNo" value="'+billno+'"/>'+
         '<input type="hidden" name="webremit.webremittancelistses['+j+'].id.itemNo" value="'+j+'"/>';     
         }
@@ -383,11 +383,11 @@ jq(function(){
 				    <tr>
 				      <td class="tdcolor">匯款帳號</td>
 				      <td>
-				      <input type="text" value="<s:property value='webremit.fromAccount'/>" name="webremit.fromAccount"/>
+				      <input type="text" value="<s:property value='webremit.fromAccount'/>" name="webremit.fromAccount" datatype="*"/>
 				      </td>				     
 				      <td class="tdcolor">銀行名稱</td>
 				      <td colspan="2">
-				      <input type="text" value="<s:property value='webremit.fromBank'/>" name="webremit.fromBank"/>
+				      <input type="text" value="<s:property value='webremit.fromBank'/>" name="webremit.fromBank" datatype="*"/>
 				      
 				      <input type="hidden" value="<s:property value='maxItemno'/>" id="maxItemno"/>
 				      </td>
@@ -433,15 +433,15 @@ jq(function(){
 			 <s:iterator value="webremit.webremittancelistses" status="x" id="temp">
 			     <tr>
 			     <td><input type="hidden" name="cbox"/></td>		        		     			    			    			     		    			     			     
-			     <td ><input type="text" name="webremit.webremittancelistses[${x.index}].currency" value="<s:property value='currency'/>" size="15"/></td>			     
-			     <td ><input type="text" name="webremit.webremittancelistses[${x.index}].manufacturers" value="<s:property value='manufacturers'/>" datatype="my0-8" size="15" id="qtyExpect_${x.index}"/></td>
-			     <td ><input type="text" name="webremit.webremittancelistses[${x.index}].toBank" value="<s:property value='toBank'/>" datatype="my0-8" size="15" id="qtyOk_${x.index}"/></td>
-			     <td ><input type="text" name="webremit.webremittancelistses[${x.index}].toAccount" value="<s:property value='toAccount'/>" datatype="my0-8" size="15" id="personNo_${x.index}"/></td>
-			     <td ><input type="text" name="webremit.webremittancelistses[${x.index}].payment" value="<s:property value='payment'/>"  id="qtyPair" size="15"/></td>
-			     <td ><input type="text" name="webremit.webremittancelistses[${x.index}].cost" value="<s:property value='cost'/>"  size="15"/></td>
-			      <td ><input type="text" name="webremit.webremittancelistses[${x.index}].acAmount" value="<s:property value='acAmount'/>" size="15"/></td>
+			     <td ><input type="text" name="webremit.webremittancelistses[${x.index}].currency" value="<s:property value='currency'/>" datatype="*"/></td>			     
+			     <td ><input type="text" name="webremit.webremittancelistses[${x.index}].manufacturers" value="<s:property value='manufacturers'/>"  datatype="*"/></td>
+			     <td ><input type="text" name="webremit.webremittancelistses[${x.index}].toBank" value="<s:property value='toBank'/>"   datatype="*"/></td>
+			     <td ><input type="text" name="webremit.webremittancelistses[${x.index}].toAccount" value="<s:property value='toAccount'/>"   datatype="*"/></td>
+			     <td ><input type="text" name="webremit.webremittancelistses[${x.index}].payment" value="<s:property value='payment'/>" datatype="my0-8"  /></td>
+			     <td ><input type="text" name="webremit.webremittancelistses[${x.index}].cost" value="<s:property value='cost'/>" datatype="my0-8" /></td>
+			      <td ><input type="text" name="webremit.webremittancelistses[${x.index}].acAmount" value="<s:property value='acAmount'/>" datatype="my0-8"/></td>
 			      <td>
-			      <input type="text" name="webremit.webremittancelistses[${x.index}].remark" value="<s:property value='remark'/>" size="15"/>
+			      <input type="text" name="webremit.webremittancelistses[${x.index}].remark" value="<s:property value='remark'/>" />
 			      <input type="hidden" name="webremit.webremittancelistses[${x.index}].id.webremittancelist.billNo" value="<s:property value='id.webremittancelist.billNo'/>" />
 			      <input type="hidden" name="webremit.webremittancelistses[${x.index}].id.itemNo" value="<s:property value='id.itemNo'/>"/>	
 			     
@@ -451,15 +451,15 @@ jq(function(){
 			    
 			   <!--  <tr>
 			     <td><input type="checkbox" name="cbox"/></td>	   
-			     <td ><input type="text" name="webremit.webremittancelistses[0].currency"  size="15"/></td>			     
-			     <td ><input type="text" name="webremit.webremittancelistses[0].manufacturers"  datatype="my0-12" size="15" /></td>
-			     <td ><input type="text" name="webremit.webremittancelistses[0].toBank"  datatype="my0-8" size="15" /></td>
-			     <td ><input type="text" name="webremit.webremittancelistses[0].toAccount"  datatype="my0-8" size="15" /></td>
-			     <td ><input type="text" name="webremit.webremittancelistses[0].payment"   size="15"/></td>
-			     <td ><input type="text" name="webremit.webremittancelistses[0].cost"   size="15"/></td>
-			     <td ><input type="text" name="webremit.webremittancelistses[0].acAmount"   size="15"/></td>
+			     <td ><input type="text" name="webremit.webremittancelistses[0].currency"  /></td>			     
+			     <td ><input type="text" name="webremit.webremittancelistses[0].manufacturers"  datatype="my0-12"  /></td>
+			     <td ><input type="text" name="webremit.webremittancelistses[0].toBank"  datatype="my0-8"  /></td>
+			     <td ><input type="text" name="webremit.webremittancelistses[0].toAccount"  datatype="my0-8"  /></td>
+			     <td ><input type="text" name="webremit.webremittancelistses[0].payment"   /></td>
+			     <td ><input type="text" name="webremit.webremittancelistses[0].cost"   /></td>
+			     <td ><input type="text" name="webremit.webremittancelistses[0].acAmount"   /></td>
 			     <td>
-			     <input type="text" name="webremit.webremittancelistses[0].remark"   size="15"/>
+			     <input type="text" name="webremit.webremittancelistses[0].remark"   />
 			     <input type="hidden" name="webremit.webremittancelistses[0].id.webremittancelist.billNo" value="" id="webremits_billno"/>
 			     <input type="hidden" name="webremit.webremittancelistses[0].id.itemNo" value="0"/>
 			     </td>			      		      		      
