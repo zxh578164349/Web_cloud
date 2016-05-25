@@ -25,5 +25,8 @@
         <property name="subtype" type="java.lang.String">
             <column name="SUBTYPE" length="20" />
         </property>
+        <many-to-one name="smenu2" class="entity.WebSubmenu2" fetch="select">
+           <column name="SUBMENUID2"/>
+        </many-to-one>
     </class>
 </hibernate-mapping>

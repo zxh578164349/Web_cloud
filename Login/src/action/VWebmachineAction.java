@@ -8355,7 +8355,7 @@ public class VWebmachineAction extends ActionSupport implements ServletResponseA
 	
 	/**
 	 * 公式方法
-	 * 水電油
+	 * 色料回收粉
 	 */
 	public List<Double>findResult_webcost(int index,
 			Double sumActualdemo,

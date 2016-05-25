@@ -19,10 +19,8 @@
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<style type="text/css">
+<link rel="shortcut icon" href="images/icon/web_ico.ico" /> 
 
-
-</style>
 <!-- <script type="text/javascript" src="page/jquerys/jquery-1.9.1.min.js"></script> -->
 <script src="http://apps.bdimg.com/libs/jquery/1.9.1/jquery.min.js"></script> 
 <script>window.jQuery || document.write('<script src="jquery/jquery-1.9.1.min.js"><\/script>');</script>	

@@ -18,6 +18,7 @@
 
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
+<link rel="shortcut icon" href="images/icon/web_ico.ico" /> 
 </head>
 <!--<script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script> -->
 <script src="http://apps.bdimg.com/libs/jquery/1.9.1/jquery.min.js"></script> 

@@ -22,5 +22,11 @@
         <many-to-one name="menu" class="entity.WebMenu">
           <column name="MENUID" precision="8" scale="0" not-null="true" />
         </many-to-one>
+        <bag name="list" inverse="true" cascade="all">
+          <key>
+            <column name="SUBMENUID"/>
+          </key>
+          <one-to-many class="entity.WebSubmenu"/>
+        </bag>
     </class>
 </hibernate-mapping>

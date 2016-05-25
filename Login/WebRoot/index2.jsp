@@ -11,7 +11,7 @@
   <title>Web系統登錄</title>
   <link rel="stylesheet" href="loginpage/css/login_style_ie.css">
   
-
+<link rel="shortcut icon" href="images/icon/web_ico.ico" /> 
   
 </head>
 <body>

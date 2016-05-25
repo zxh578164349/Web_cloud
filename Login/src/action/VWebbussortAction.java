@@ -105,7 +105,8 @@ public class VWebbussortAction extends ActionSupport implements ServletResponseA
 	public void print() throws ParseException{		
 		HSSFWorkbook wb=new HSSFWorkbook();
 		Map<String,Object>map=this.findStyles(wb);
-		HSSFCellStyle cs=(HSSFCellStyle)map.get("cs");				
+		HSSFCellStyle cs=(HSSFCellStyle)map.get("cs");
+		HSSFCellStyle cs_red2=(HSSFCellStyle)map.get("cs_red2");
 		List<VWebbussort>lists=vwebbusssorSer.findByYymm(yymm, yymm2);//查詢到的數據
 		List<String>list_months=GlobalMethod.findMonths(yymm, yymm2);//所有月份
 		List<Object[]>list_facts=webFactSer.findFactAble2();//所有廠別		
@@ -157,11 +158,15 @@ public class VWebbussortAction extends ActionSupport implements ServletResponseA
 					list_b.add(sort.getA01());
 					list_b.add(sort.getA02());
 					list_b.add(sort.getA03());
-					list_b.add(sort.getA04());
-					list_b.add(sort.getA05());
-					list_b.add(sort.getA06());
-					list_b.add(sort.getA07());
-					list_b.add(sort.getSortA06());
+					list_b.add(sort.getA04());//用水量
+					list_b.add(sort.getA05());//用水金額
+					//北越加久在水"用量單耗"不排名,就把"用量單耗"設爲最大，排名就在最後，便於去除
+					if(sort.getId().getFactNo().equals("GH")){
+						sort.setA06(new BigDecimal(999999999.00));
+					}
+					list_b.add(sort.getA06());//用量單耗
+					list_b.add(sort.getA07());//費用單耗
+					list_b.add(sort.getSortA06());//用量排名
 					list_b.add(sort.getA08());
 					list_b.add(sort.getA09());
 					list_b.add(sort.getA10());
@@ -262,7 +267,7 @@ public class VWebbussortAction extends ActionSupport implements ServletResponseA
 		//for_a:月份循環
 		//for_b:項目循環
 		//for_c:廠別循環
-		 for(String month:map_all.keySet()){//for_a
+		 for(String month:map_all2.keySet()){//for_a
 		    	List<BigDecimal>list=new ArrayList<BigDecimal>();
 		    	List<BigDecimal>list2=new ArrayList<BigDecimal>();
 		    	List<Integer>list3=new ArrayList<Integer>();
@@ -289,12 +294,12 @@ public class VWebbussortAction extends ActionSupport implements ServletResponseA
 		    	}//for_b		    	
 		    }//for_a
 		 /*****************************數據排名（重點）*******************************/
-		 
-		 
-	    
+		 		 	    
 		/********************數據源處理*************************/
 	    
-	    
+
+		 
+		 
 	   /********************表格初始化和固定內容*************************/
 	   this.printStaticContent(wb, map, list_months, list_facts,list_temp, map_types);
 	   /********************表格初始化和固定內容*************************/
@@ -310,9 +315,16 @@ public class VWebbussortAction extends ActionSupport implements ServletResponseA
 					   wb.getSheet(month).getRow(2+b).getCell(3+a).setCellStyle(cs);
 				   }*/				   
 			   }else{
-				   for(int b=0;b<tempsize;b++){				   
-					   wb.getSheet(month).getRow(2+b).getCell(3+a).setCellValue(((List<List<BigDecimal>>)map_all2.get(month)).get(a).get(b)==null?0:((List<List<BigDecimal>>)map_all2.get(month)).get(a).get(b).doubleValue());
+				   for(int b=0;b<tempsize;b++){					 
+					   wb.getSheet(month).getRow(2+b).getCell(3+a).setCellValue(((List<List<BigDecimal>>)map_all2.get(month)).get(a).get(b)==null?0:((List<List<BigDecimal>>)map_all2.get(month)).get(a).get(b).doubleValue());					  
 					   wb.getSheet(month).getRow(2+b).getCell(3+a).setCellStyle(cs);
+					   
+					   /******************************北越加九用水方面不排名處理******************************/
+					   if(wb.getSheet(month).getRow(1).getCell(3+a).getStringCellValue().equals("北越加九")&&(b+2>4&&b+2<10) ){
+						   wb.getSheet(month).getRow(2+b).getCell(3+a).setCellValue("--");
+						   wb.getSheet(month).getRow(2+b).getCell(3+a).setCellStyle(cs_red2);
+					   }
+					   /******************************北越加九用水方面不排名處理******************************/
 				   }
 			   }
 			  
@@ -361,7 +373,8 @@ public class VWebbussortAction extends ActionSupport implements ServletResponseA
 			
 		HSSFWorkbook wb=new HSSFWorkbook();
 		Map<String,Object>map=this.findStyles(wb);
-		HSSFCellStyle cs=(HSSFCellStyle)map.get("cs");				
+		HSSFCellStyle cs=(HSSFCellStyle)map.get("cs");	
+		HSSFCellStyle cs_red2=(HSSFCellStyle)map.get("cs_red2");
 		List<VWebbussort>lists=vwebbusssorSer.findByYymm(yymm, yymm2);//查詢到的數據
 		List<String>list_months=GlobalMethod.findMonths(yymm, yymm2);//所有月份
 		List<Object[]>list_facts=webFactSer.findFactAble2();//所有廠別		
@@ -433,6 +446,9 @@ public class VWebbussortAction extends ActionSupport implements ServletResponseA
 						list_b.add(sort.getA03());
 						list_b.add(sort.getA04());
 						list_b.add(sort.getA05());
+						if(sort.getId().getFact().getId().getFactNo().equals("GH")){
+							sort.setA06(new BigDecimal(999999999.00));
+						}
 						list_b.add(sort.getA06());
 						list_b.add(sort.getA07());
 						list_b.add(sort.getSortA06());
@@ -602,6 +618,13 @@ public class VWebbussortAction extends ActionSupport implements ServletResponseA
 						   y_index=4+b+y_fcode;//y軸座標跟蹤
 						   wb.getSheet(month).getRow(y_index).getCell(3+a).setCellValue(((List<List<BigDecimal>>)map_fcode.get(fcode)).get(a).get(b)==null?0:((List<List<BigDecimal>>)map_fcode.get(fcode)).get(a).get(b).doubleValue());
 						   wb.getSheet(month).getRow(y_index).getCell(3+a).setCellStyle(cs);
+						   /******************************北越加九用水方面不排名處理******************************/
+						   if(wb.getSheet(month).getRow(3+y_fcode).getCell(3+a).getStringCellValue().equals("北越加九")&&(4+b>6&&4+b<12)){
+							   wb.getSheet(month).getRow(y_index).getCell(3+a).setCellValue("--");
+							   wb.getSheet(month).getRow(y_index).getCell(3+a).setCellStyle(cs_red2);
+						   }
+						   /******************************北越加九用水方面不排名處理******************************/
+						   
 					   }
 				   }
 				  
@@ -1010,12 +1033,25 @@ public class VWebbussortAction extends ActionSupport implements ServletResponseA
 		cs_bold.setFont(font_bold);
 		map.put("cs_bold", cs_bold);
 		
-		//紅色粗字體樣式
+		//紅色粗字體樣式(有邊框)
 		HSSFCellStyle cs_red=wb.createCellStyle();
 		cs_red.setAlignment(HSSFCellStyle.ALIGN_CENTER);
 		cs_red.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);		
 		cs_red.setFont(font_red);
 		map.put("cs_red", cs_red);
+		
+		//紅色粗字體樣式(有邊框)
+		HSSFCellStyle cs_red2=wb.createCellStyle();
+		cs_red2.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		cs_red2.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		cs_red2.setBorderTop(HSSFCellStyle.BORDER_THIN);
+		cs_red2.setBorderRight(HSSFCellStyle.BORDER_THIN);
+		cs_red2.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+		cs_red2.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+		cs_red2.setFont(font_red);
+		map.put("cs_red2", cs_red2);
+		
+		
 		/**********************分類+項目+單位*****************************/
 		
 		/**
@@ -1194,7 +1230,7 @@ public class VWebbussortAction extends ActionSupport implements ServletResponseA
 	    	}
 	    	for(int a=0;a<list_head.size();a++){
 	    		sheet.getRow(1).getCell(a).setCellValue(list_head.get(a));
-	    		sheet.getRow(1).getCell(a).setCellStyle(cs_column);
+	    		sheet.getRow(1).getCell(a).setCellStyle(cs_column);	    		
 	    	}
 	    	/*******************表頭*****************/
 	    	

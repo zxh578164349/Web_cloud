@@ -5,6 +5,7 @@ import org.hibernate.Query;
 import dao.Basedao;
 import dao.IWebMenuDao;
 import entity.WebMenu;
+import entity.WebUser;
 
 public class WebMenuDaoImpl extends Basedao implements IWebMenuDao {
 
@@ -36,5 +37,7 @@ public class WebMenuDaoImpl extends Basedao implements IWebMenuDao {
 		query.setString(0, name);
 		return (WebMenu) query.uniqueResult();
 	}
+
+	
 
 }

@@ -3,14 +3,17 @@ package dao;
 import java.util.List;
 
 import entity.WebMenu;
+import entity.WebUser;
 
 public interface IWebMenuDao {
-	// ®Ú¾Ú¥Î¤á¬d§äµæ³æ
+	// ï¿½Ú¾Ú¥Î¤ï¿½dï¿½ï¿½ï¿½ï¿½
 	public List findAllMenu();
 
-	// ¬d§äµæ³æ¬ÛÀ³ªº¤lµæ³æ
+	// ï¿½dï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½lï¿½ï¿½ï¿½
 	public WebMenu findSubMenuById(Integer mid);
 
-	// ®Ú¾Úµæ³æ¦W§äµæ³æ¹ï¶H
+	// ï¿½Ú¾Úµï¿½ï¿½Wï¿½ï¿½ï¿½ï¿½ï¿½H
 	public WebMenu selByname(String name);
+	
+
 }

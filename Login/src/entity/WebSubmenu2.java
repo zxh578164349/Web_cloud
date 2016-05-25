@@ -1,5 +1,7 @@
 package entity;
 
+import java.util.List;
+
 /**
  * WebSubmenu2 entity. @author MyEclipse Persistence Tools
  */
@@ -13,11 +15,15 @@ public class WebSubmenu2 implements java.io.Serializable {
 	private String submenuname;
 	private String address;
 	private String subtype;
+	private List<WebSubmenu>list;
 
 	// Constructors
 
 	/** default constructor */
 	public WebSubmenu2() {
+	}
+	public WebSubmenu2(Integer submenuid){
+		this.submenuid=submenuid;
 	}
 
 	/** minimal constructor */
@@ -79,5 +85,12 @@ public class WebSubmenu2 implements java.io.Serializable {
 	public void setSubtype(String subtype) {
 		this.subtype = subtype;
 	}
+	public List<WebSubmenu> getList() {
+		return list;
+	}
+	public void setList(List<WebSubmenu> list) {
+		this.list = list;
+	}
+	
 
 }

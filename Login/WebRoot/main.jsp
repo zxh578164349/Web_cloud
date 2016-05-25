@@ -13,6 +13,7 @@
 <link href="css/main.css" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="css/select_beautiful.css">	
 <LINK href="css/list.css" type="text/css" rel="stylesheet">
+<link rel="shortcut icon" href="images/icon/web_ico.ico" /> 
 </head>
 
 
@@ -34,49 +35,27 @@
 							   <a href="javascript:loadUrl('right.jsp')"  title="返回首頁"
 								 > 網站首頁</a>
 							</span> 
-						</div>
-						<%--<div class="panel-body">
-							<s:iterator value="#session.loginUser.webJurisdictions" status="x" id="menu">								
-								<div>								      									 
-										<a href="javascript:showDiv_main('${x.index}')" class="mmenu_font">
-										   <span id="a${x.index}" class="glyphicon glyphicon-folder-close">&nbsp;<s:property value="webMenu.menuname" /></span>
-									    </a>																					
-									<div id="submenu${x.index}" style="display:none">
-										<s:iterator value="webSubmenus" status="x">
-											<div style="overflow:hidden">											
-												 <span class="glyphicon glyphicon-file">												  
-												   	<a name="alink" href="javascript:findPageBean('<s:property value="address"/>')"																										
-													 class="smenu_font" title="<s:property value='submenuname'/>">																										
-													<s:property value="submenuname" /> </a>											    
-												 </span>												   
-											</div>
-										</s:iterator>
-									</div>
-								</div>
-							</s:iterator>
-						</div>--%>
+						</div>						
 						<div class="panel-body">
 						    <s:iterator value="#session.login_menus" status="x" id="menu">
 						        <div>
-						           <a href="javascript:showDiv_main('${x.index}')" class="mmenu_font">
-										   <span id="a${x.index}" class="glyphicon glyphicon-folder-close">&nbsp;<s:property value="menuname"/></span>
+						           <a href="javascript:showDiv_main('${x.index}')">
+										   <span id="a${x.index}" class="glyphicon glyphicon-folder-close mmenu_font">&nbsp;<s:property value="menuname"/></span>
 								   </a>
 								   <div id="submenu${x.index}" style="display:none">
 								       <s:iterator value="submenus" status="x" id="submenu">
 								          <div>
 								             <span class="glyphicon glyphicon-file">												  
-												   	<a name="alink" href="javascript:findPageBean('<s:property value="address"/>')"																										
-													 class="smenu_font a_disable" title="<s:property value='submenuname'/>" >																										
+												   	<a name="alink"	class="smenu_font a_disable" title="<s:property value='submenuname'/>">																										
 													      <s:property value="submenuname" />
-													</a>
-													<!-- <input type="button" value="<s:property value='submenuname'/>" onclick="findPageBean('<s:property value="address"/>')" class="btn btn-link"/> -->											    
+													</a>																							    
 											</span> 
 								          </div>
 								       </s:iterator>
 								   </div>
 						        </div>
 						    </s:iterator>
-						    
+						    <div><a href="javascript:location.href='judge.jsp'"><span class="glyphicon glyphicon-folder-close mmenu_font">&nbsp;退出管理</span></a></div>
 						    <s:iterator value="#session.loginUser.webJurisdictions">
 			                    <s:iterator value="webSubmenus">
 			                        <input type="hidden" value="<s:property value='submenuname'/>,<s:property value='address'/>" name="a_hidden"/>
@@ -139,23 +118,7 @@ var jq=jQuery.noConflict();
 			    jq("#t_index").text("＜＜＜") ;
 			   
 			}
-		}
-		/*function showPop() {
-			jq("#mydiv").show();						
-			//var loadi=layer.load("正在加載....");
-			var ifr=document.getElementById("show");
-			if (ifr.attachEvent){
-			    ifr.attachEvent("onload", function(){
-			        //layer.close(loadi);
-			        jq("#mydiv").hide();
-			    });
-			} else {
-			    ifr.onload = function(){
-			        //layer.close(loadi);
-			        jq("#mydiv").hide();
-			    };
-			}
-		}*/
+		}		
 		
    var currentDate = new Date(<%=new java.util.Date().getTime()%>);   
    function run() {       
@@ -174,9 +137,9 @@ var jq=jQuery.noConflict();
 		//var sts = document.getElementById("a" + index).innerHTML;
 		var sts=jq("#a"+index);
 		
-		if (sts.text().replace(/(^\s*)|(\s*$)/g, "")=="退出管理") {
+		/*if (sts.text().replace(/(^\s*)|(\s*$)/g, "")=="退出管理") {
 			location.href = "judge.jsp";
-		}
+		}*/
 		var divName = jq("#submenu"+index).css("display");
 		//var img =jq("#img" + index);
 		if (divName== "none") {
@@ -205,7 +168,7 @@ jq(document).ready(function(){
 	   for(var j=0;j<ahidens.length;j++){
 		   var array=ahidens.eq(j).val().split(",");
 		   if(alinks.eq(i).html().replace(/(^\s+)|\s+$/g,"")==array[0]){			   
-			   alinks.eq(i).attr("href","javascript:findPageBean('"+array[1]+"')");
+			   alinks.eq(i).attr("href","javascript:changeTitle('"+array[0]+"');findPageBean('"+array[1]+"')");
 			   alinks.eq(i).removeClass("a_disable");
 			   break;
 		   }
@@ -214,7 +177,10 @@ jq(document).ready(function(){
    
 });
 
-function findPageBean(url){
+function changeTitle(title){
+	jq(document).attr("title",title);
+}
+function findPageBean(url){  
    jq.ajax({
      type:"POST",
      dataType:"html",
