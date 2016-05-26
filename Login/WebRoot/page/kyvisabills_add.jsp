@@ -42,11 +42,11 @@ function go_subform(obj,factno,visasort,billno){
 }
 
 function showDiv2(obj){
-  jq("#"+obj).show(300);
+  jq("#"+obj).show(200);
 }
 
 function hideDiv2(obj){
-   jq("#"+obj).hide(300);
+   jq("#"+obj).hide(200);
 }
 
 function back(){	
@@ -72,7 +72,7 @@ function back(){
 		      <form action="vbm_addvisabills" method="post" id="subform${x.index}" >
 		        <input type="hidden" value="<s:property value='id.kyVisabillm.id.factNo'/>" name="factNo"/><input type="hidden" value="<s:property value='id.kyVisabillm.id.visaSort'/>" name="visaSort"/>
 		        <input type="hidden" value="<s:property value='id.kyVisabillm.id.billNo'/>" name="billNo"/><input type="hidden" value="<s:property value='id.itemNo'/>" name="itemNo"/>
-		      
+		        
 		      <s:if test='visaMk=="N"'>
 		      <div id="div_button">	       
 		         <a href="javascript:void(0)"  onclick="javascript:showDiv2('addmark${x.index}')">加簽</a>        		        
@@ -87,6 +87,9 @@ function back(){
 		                <tr>
 		                <td>姓名:<input type="text" name="visaRank" datatype="*"/></td>
 		                <td>Email:<input type="text" name="visaSigner" datatype="e"/></td>
+		                </tr>
+		                <tr>
+		                <td>(加簽位置:之前<input type="radio" name="psMk" value=0 />|之後<input type="radio" name="psMk" value=1 checked/>)</td>
 		                </tr>
 		             </table>
 		            <input type="submit" value="確定"  

@@ -32,8 +32,7 @@
 					<div class="panel panel-info">
 						<div class="panel-heading">
 							<span class="glyphicon glyphicon-file">
-							   <a href="javascript:loadUrl('right.jsp')"  title="返回首頁"
-								 > 網站首頁</a>
+							   <a href="javascript:changeTitle('首頁');loadUrl('right.jsp')"  title="返回首頁"> 網站首頁</a>
 							</span> 
 						</div>						
 						<div class="panel-body">
