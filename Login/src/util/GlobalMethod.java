@@ -1,8 +1,14 @@
 package util;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.math.BigDecimal;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
+import java.net.UnknownHostException;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.ParseException;
@@ -12,6 +18,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -614,6 +621,118 @@ public class GlobalMethod extends HibernateDaoSupport{
 		}
 		return db;
 	}
+	
+	/**
+	 * 查找本機IP
+	 * @Title: findIp
+	 * @Description: TODO
+	 * @param @return
+	 * @return String
+	 * @throws
+	 * @author web
+	 * @date 2016/5/30
+	 */
+	public static String findIp(){
+		String ipAddress = null; 
+		try{			
+			ipAddress =ServletActionContext.getRequest().getHeader("x-forwarded-for");									  
+		      if(ipAddress == null || ipAddress.length() == 0 ||"unknown".equalsIgnoreCase(ipAddress)){ 									  
+		          ipAddress =ServletActionContext.getRequest().getHeader("Proxy-Client-IP");									  
+		         }
+		      if (ipAddress == null || ipAddress.length() == 0 || "unknown".equalsIgnoreCase(ipAddress)) {									 
+		          ipAddress =ServletActionContext.getRequest().getHeader("WL-Proxy-Client-IP");								  
+		         } 
+		      if (ipAddress == null || ipAddress.length() == 0 || "unknown".equalsIgnoreCase(ipAddress)) {									 
+		          ipAddress =ServletActionContext.getRequest().getRemoteAddr(); 
+		          if(ipAddress.equals("127.0.0.1")){
+		             InetAddress inet =null;
+		             try { 
+		            	 inet = InetAddress.getLocalHost(); 
+		             }catch (Exception e) { 
+		            	 e.printStackTrace(); 
+		            	 }
+		              ipAddress = inet.getHostAddress();
+		           } 
+		        } 
+		      if (ipAddress!= null && ipAddress.length() > 15) {
+		           if (ipAddress.indexOf(",") > 0) { 
+		        	   ipAddress = ipAddress.substring(0,ipAddress.indexOf(","));						 
+		                  }  
+		      }
+		}catch(Exception e){
+			e.printStackTrace();
+		}		
+	      return ipAddress;
+	}
+	
+	/**
+	 * (quartz專用)獲取本機IP2
+	 * @Title: findIp2
+	 * @Description: TODO
+	 * @param @return
+	 * @return String[]
+	 * @throws
+	 * @author web
+	 * @date 2016/5/30
+	 */
+	public static List<String> findIp2(){		
+		  List<String> res = new ArrayList<String>();  
+	        Enumeration netInterfaces;  
+	        try {  
+	            netInterfaces = NetworkInterface.getNetworkInterfaces();  
+	            InetAddress ip = null;  
+	            while (netInterfaces.hasMoreElements()) {  
+	                NetworkInterface ni = (NetworkInterface) netInterfaces.nextElement();  	                         
+	                Enumeration nii = ni.getInetAddresses();  
+	                while (nii.hasMoreElements()) {  
+	                    ip = (InetAddress) nii.nextElement();  
+	                    if (ip.getHostAddress().indexOf(":") == -1) {  
+	                        res.add(ip.getHostAddress());  
+	                        //System.out.println("本机的ip=" + ip.getHostAddress());  
+	                    }  
+	                }  
+	            }  
+	        } catch (SocketException e) {  
+	            e.printStackTrace();  
+	        }  
+	        return res;
+	        //return (String[]) res.toArray(new String[0]); 	        
+	}
+	
+	
+	
+	/**
+	 * 獲取物理地址
+	 * @Title: getMacAddress
+	 * @Description: TODO
+	 * @param @return
+	 * @return String
+	 * @throws
+	 * @author web
+	 * @date 2016/5/30
+	 */
+	  public static String getMacAddress() {  
+	        String mac = null;  
+	        String line = "";  	  
+	        String os = System.getProperty("os.name");  	  
+	        if (os != null && os.startsWith("Windows")) {  
+	            try {  
+	                String command = "cmd.exe /c ipconfig /all";  
+	                Process p = Runtime.getRuntime().exec(command);  	  
+	                BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));   	                         	  
+	                while ((line = br.readLine()) != null) {  
+	                    if (line.indexOf("Physical Address") > 0||line.indexOf("實體位址")>0) {  
+	                        int index = line.indexOf(":") + 2;  	  
+	                        mac = line.substring(index);  	  
+	                        break;  
+	                    }  
+	                }  	  
+	                br.close();  	  
+	            } catch (IOException e) {  
+	            }  
+	        }  	  
+	        return mac;  
+	    }  
 	
 	public static void main(String[] args) throws ParseException {
 		Integer[] a = {0,3,0,4,5};//原始

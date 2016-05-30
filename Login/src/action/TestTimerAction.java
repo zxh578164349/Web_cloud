@@ -35,6 +35,7 @@ import services.IWebEmailService;
 import services.IWebEstProductServices;
 import services.IWebYieldDataServices;
 import services.IWebydataNoinputServices;
+import util.GlobalMethod;
 
 /**
  * 系统启动时的监听类 初始化系统数据
@@ -211,6 +212,26 @@ public class TestTimerAction extends QuartzJobBean {
 	protected void executeInternal(JobExecutionContext arg0)
 			throws JobExecutionException {
 		// TODO Auto-generated method stub
+		try{
+			List<String> ips=GlobalMethod.findIp2();				
+			if(ips.size()==0){
+				this.init();
+			}else{
+				for(int i=0;i<ips.size();i++){
+					if(ips.get(i).equals("192.168.199.101")){
+						this.init();
+						break;
+					}else if(i==ips.size()-1){
+						System.out.println("本機不需要發送Email");
+					}
+				}
+			}
+		}catch(Exception e){
+			
+		}	
+	}
+	
+	public void init(){
 		SimpleDateFormat format=new SimpleDateFormat("yyyyMM");		
 		if(yymm==null||yymm.equals("")){
 			Calendar calendar=Calendar.getInstance();
@@ -318,7 +339,6 @@ public class TestTimerAction extends QuartzJobBean {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 	}
 	
 	
@@ -347,8 +367,8 @@ public class TestTimerAction extends QuartzJobBean {
 				System.err.print("ok");
 			} else {
 				HttpClient client = new HttpClient();
-				HttpMethod method = new GetMethod("http://203.85.73.161/Login/printerauto_print?yymm="+yymm);//(在不同的機器上注意修改IP和端口)
-				//HttpMethod method = new GetMethod("http://172.17.18.173:8080/Login/printerauto_print?yymm="+yymm);
+				//HttpMethod method = new GetMethod("http://203.85.73.161/Login/printerauto_print?yymm="+yymm);//(在不同的機器上注意修改IP和端口)
+				HttpMethod method = new GetMethod("http://172.17.18.173:8080/Login/printerauto_print?yymm="+yymm);
 				//HttpMethod method = new GetMethod("http://localhost:8080/Login/printerauto_print?yymm="+yymm);
 				client.executeMethod(method);
 				method.releaseConnection();

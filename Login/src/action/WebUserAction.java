@@ -40,6 +40,7 @@ import services.IWebMenuServices;
 import services.IWebSubmenuService;
 import services.IWebTypeServices;
 import services.IWebUserService;
+import util.GlobalMethod;
 import util.Json;
 import util.PageBean;
 import util.SessionListener;
@@ -386,7 +387,7 @@ public class WebUserAction extends ActionSupport implements ServletResponseAware
 			if (wUser.getPwd().equals(webUsers.getPwd().trim())) {//start if2
 					try {
 						ajax_result="0";
-							  String ipAddress = null; ipAddress =ServletActionContext.getRequest().getHeader("x-forwarded-for");									  
+							  /*String ipAddress = null; ipAddress =ServletActionContext.getRequest().getHeader("x-forwarded-for");									  
 						      if(ipAddress == null || ipAddress.length() == 0 ||"unknown".equalsIgnoreCase(ipAddress)){ 									  
 						          ipAddress =ServletActionContext.getRequest().getHeader("Proxy-Client-IP");									  
 						         }
@@ -409,7 +410,8 @@ public class WebUserAction extends ActionSupport implements ServletResponseAware
 						           if (ipAddress.indexOf(",") > 0) { 
 						        	   ipAddress = ipAddress.substring(0,ipAddress.indexOf(","));						 
 						                  }  
-						      }
+						      }*/
+						  String ipAddress=GlobalMethod.findIp();
 						  ActionContext.getContext().getSession() .put("ip",ipAddress);
 						  WebLog log =new WebLog();
 

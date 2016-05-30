@@ -80,6 +80,31 @@ public class AutoSendKyz extends QuartzJobBean{
 	protected void executeInternal(JobExecutionContext arg0)
 			throws JobExecutionException {
 		// TODO Auto-generated method stub
+		try{
+			List<String> ips=GlobalMethod.findIp2();
+			/*String mac=GlobalMethod.getMacAddress();			
+			if(ips[1].equals("192.168.199.101")){
+				this.init();
+			}else{
+				System.out.println("本機不需要發送Email");
+			}*/
+			if(ips.size()==0){
+				this.init();
+			}else{
+				for(int i=0;i<ips.size();i++){
+					if(ips.get(i).equals("192.168.199.101")){
+						this.init();
+						break;
+					}else if(i==ips.size()-1){
+						System.out.println("本機不需要發送Email");
+					}
+				}
+			}			
+		}catch(Exception e){
+		}														
+	}
+	
+	public void init(){
 		ApplicationContext ac=new ClassPathXmlApplicationContext(new String[]{"spring.xml","spring-dao.xml","spring-services.xml"});
 		IKyVisabillmServices visabillmSer=(IKyVisabillmServices)ac.getBean("visabillmSer");
 		IWebuserEmailServices webuseremailSer=(IWebuserEmailServices)ac.getBean("webuseremailSer");
@@ -95,10 +120,7 @@ public class AutoSendKyz extends QuartzJobBean{
 		MailSenderInfo mailInfo2 = new MailSenderInfo();
 		SimpleMailSender sms = new SimpleMailSender();
 		mailInfo.setValidate(true);
-		mailInfo2.setValidate(true);
-	    /*mailInfo.setUserName("kyuen@yydg.com.cn"); 
-	    mailInfo.setPassword("yydgmail");//您的邮箱密码    
-	    mailInfo.setFromAddress("<kyuen@yydg.com.cn>");*/
+		mailInfo2.setValidate(true);	   
 			for(int i=0;i<list_vbm.size();i++){// start for1	
 				List<String>list_email=new ArrayList<String>();
 				String signerNext=list_vbm.get(i).getSignerNext();
@@ -107,11 +129,7 @@ public class AutoSendKyz extends QuartzJobBean{
 				String visaSort=list_vbm.get(i).getId().getVisaSort();
 				String visaMk=list_vbm.get(i).getVisaMk();				
 				list_email.add(signerNext);
-				 /******************20151113备签人请使用方法findByFactNoAEmailPwd2(String factNo,String email)**********************/
-				/*String emailPwd = webuseremailSer.findEmailPWD(factNo,signerNext);//備簽人Email
-				if(emailPwd!=null){
-					list_email.add(emailPwd);
-				}*/
+				 /******************20151113备签人请使用方法findByFactNoAEmailPwd2(String factNo,String email)**********************/				
 				/***************如果是臺灣加久，備簽人同時也是申請人，那麼根據流程代號找到申請人（也就是備簽人）*******************/
 				if(factNo.equals("GJ")){
 					String visaSinger=visaSer.findVisaSigner(factNo, visaSort);
@@ -173,47 +191,12 @@ public class AutoSendKyz extends QuartzJobBean{
 					  }
 				      mailInfo.setSubject(subject);    			       				    		  			           
 				      sms.sendHtmlMail(mailInfo);//发送html格式
-				}//end for2
-				
-				/***************************************中途知會人的email********************************************/
-				/*List<String>list_emailPwd_a=webuseremailaSer.findByEmail(factNo, signerNext, visaSort);				
-				String[] attachFileNames = { "d:/" + billNo + ".pdf" };// 附件
-				if(list_emailPwd_a.size()>0){//if
-					if(billNo.substring(0,2).equals("EM")){
-						this.print_KyzExpectmatm(factNo, billNo, visaSort,null,ac);
-					}
-					if(billNo.substring(0,2).equals("CM")){
-						this.print_KyzContactletter(factNo, billNo, visaSort,null,ac);
-					}
-					if(billNo.substring(0,2).equals("BM")){
-						this.print_webbussletter(factNo, billNo, visaSort,null,ac);
-					}
-					for(int k=0;k<list_emailPwd_a.size();k++){
-						mailInfo2.setToAddress(list_emailPwd_a.get(k));
-						mailInfo2.setSubject("函文定時中途知會_"+billNo+"("+factNo+")");
-						mailInfo2.setContent("請查看函文附件");
-						mailInfo2.setAttachFileNames(attachFileNames);
-						sms.sendHtmlMail(mailInfo2);
-					}
-				}//if
-*/				/***************************************中途知會人的email********************************************/
+				}//end for2								
 			}//end for1
-		}//end if
-		
-									
+		}//end if	
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+		
 	public  void prepareReport(JasperReport jasperReport, String type) {
 		//logger.debug("The method======= prepareReport() start.......................");
 		if ("excel".equals(type))

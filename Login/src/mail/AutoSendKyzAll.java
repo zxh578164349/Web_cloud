@@ -81,6 +81,26 @@ public class AutoSendKyzAll extends QuartzJobBean{
 	protected void executeInternal(JobExecutionContext arg0)
 			throws JobExecutionException {
 		// TODO Auto-generated method stub
+			try{
+				List<String> ips=GlobalMethod.findIp2();				
+				if(ips.size()==0){
+					this.init();
+				}else{
+					for(int i=0;i<ips.size();i++){
+						if(ips.get(i).equals("192.168.199.101")){
+							this.init();
+							break;
+						}else if(i==ips.size()-1){
+							System.out.println("本機不需要發送Email");
+						}
+					}
+				}
+			}catch(Exception e){
+				
+			}								
+	}
+	
+	public void init(){
 		ApplicationContext ac=new ClassPathXmlApplicationContext(new String[]{"spring.xml","spring-dao.xml","spring-services.xml"});
 		IKyVisabillmServices visabillmSer=(IKyVisabillmServices)ac.getBean("visabillmSer");
 		List<KyVisabillm>list_vbm=visabillmSer.findByVisaMk2("Y");//所有已經簽核完畢的函文，但未發送email知會		
@@ -88,20 +108,13 @@ public class AutoSendKyzAll extends QuartzJobBean{
 		if(list_vbm.size()>0){//start if
 			MailSenderInfo mailInfo=new MailSenderInfo();
 			SimpleMailSender sms=new SimpleMailSender();
-			mailInfo.setValidate(true);
-			/*mailInfo.setUserName("kyuen@yydg.com.cn");
-			mailInfo.setFromAddress("<kyuen@yydg.com.cn>");			
-			mailInfo.setPassword("yydgmail");*/
+			mailInfo.setValidate(true);			
 			mailInfo.setToAddress("kyuen@yydg.com.cn");//收件人爲本機，檢測Email是否發送成功
 			mailInfo.setContent("簽核完畢");
 			for(int i=0;i<list_vbm.size();i++){//start for			
 				String factNo=list_vbm.get(i).getId().getFactNo();
 				String billNo=list_vbm.get(i).getId().getBillNo();
-				String visaSort=list_vbm.get(i).getId().getVisaSort();
-				/*String visaMk=list_vbm.get(i).getVisaMk();
-				String emailUrl="http://203.85.73.161/Login/vbm_findById_email?visaSort="+visaSort+"& billNo="+billNo
-				         +"& factNo="+factNo+"& email="+signerNext;*/
-				
+				String visaSort=list_vbm.get(i).getId().getVisaSort();								
 				try {					
 					if(billNo.substring(0, 2).equals("EM")){
 						this.addVisabillsAndEmail(factNo, billNo, visaSort,list_vbm.get(i),ac);
@@ -125,13 +138,9 @@ public class AutoSendKyzAll extends QuartzJobBean{
 					sms.sendHtmlMail(mailInfo);					
 					System.out.println(i+"_"+billNo+"Faile");
 					Log4j.getError(e);//log4j日記
-				}
-				
-				//list_vbm.get(i).setEmailMk("Y");//表示已發送郵件
-				//visabillmSer.add(list_vbm.get(i));
-				
+				}												
 			}//end for
-		}//end if										
+		}//end if
 	}
 	
 	/**
