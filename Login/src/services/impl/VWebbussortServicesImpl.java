@@ -9,6 +9,8 @@ import dao.IVWebbussortDao;
 
 import entity.VWebbussort;
 import entity.VWebbussortFcode;
+import entity.VWebbussortFcodeNew;
+import entity.VWebbussortNew;
 import services.IVWebbussortServices;
 
 /**   
@@ -56,6 +58,32 @@ public class VWebbussortServicesImpl implements IVWebbussortServices{
 	public List<VWebbussortFcode> findByYymm2(String yymm, String yymm2) {
 		// TODO Auto-generated method stub
 		return vwebsortdao.findByYymm2(yymm, yymm2);
+	}
+
+
+
+	/**
+	 * 日期:2016/5/31
+	 * 描述:
+	 */
+	
+	
+	public List<VWebbussortNew> findByYymm_new(String yymm, String yymm2) {
+		// TODO Auto-generated method stub
+		return vwebsortdao.findByYymm_new(yymm, yymm2);
+	}
+
+
+
+	/**
+	 * 日期:2016/5/31
+	 * 描述:
+	 */
+	
+	
+	public List<VWebbussortFcodeNew> findByYymm2_new(String yymm, String yymm2) {
+		// TODO Auto-generated method stub
+		return vwebsortdao.findByYymm2_new(yymm, yymm2);
 	}
 
 }

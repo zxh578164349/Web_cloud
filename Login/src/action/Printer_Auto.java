@@ -2241,7 +2241,7 @@ public class Printer_Auto {
 				 * 如果alllist.size()+factcodelist.size()>41就分頁
 				 */
 
-				if (i >= alllist.size() && i <= 40) {
+				if (i >= alllist.size() && i <= 44) {
 					String temp_code = factcodelist.get(factcodelist.size()
 							- (alllist.size() + factcodelist.size() - (i + 1)) - 1);
 					sheet.getRow(6 + totalHeight).createCell(width)
@@ -2261,10 +2261,10 @@ public class Printer_Auto {
 					width = width + 2;
 					continue;
 				}
-				if (i > 40) {
+				if (i > 44) {
 					String temp_code = factcodelist.get(factcodelist.size()                                                                  //20160530報錯//
 							- (alllist.size() + factcodelist.size() - (i + 1)) - 1);
-					if (i == 41) {
+					if (i == 45) {
 						width = 0;
 						sheet2.createRow(6 + totalHeight);
 						sheet2.createRow(7 + totalHeight);
@@ -2281,7 +2281,7 @@ public class Printer_Auto {
 					sheet2.getRow(7 + totalHeight).createCell(1 + width)
 							.setCellStyle(cs_font_bgyellow);
 
-					if (i == 41) {
+					if (i == 45) {
 
 						sheet2.getRow(6 + totalHeight).createCell(2 + width)
 								.setCellStyle(cs_font_bgyellow);
@@ -2685,7 +2685,7 @@ public class Printer_Auto {
 					cols.add("日期");
 					cols.add("標準產量");
 					cols.add("實際產量");
-					if (x <= 40) {// start "if x<41"
+					if (x <= 44) {// start "if x<41"
 						for (int y_code = 1; y_code < cols.size(); y_code++) {// start
 																				// "for2_2"
 							if (x == alllist2.size()) {
@@ -2805,15 +2805,15 @@ public class Printer_Auto {
 						continue;
 					}// end "if x<41"
 
-					if (x > 40) {// start "if 下部分頁"
+					if (x > 44) {// start "if 下部分頁"
 
-						if (x == 41) {
+						if (x == 45) {
 							width = 0;
 						}
 
 						for (int y_page = 0; y_page < cols.size(); y_page++) {// start
 																				// "for 下部分頁_1"
-							if (x == 41) {
+							if (x == 45) {
 								if (y_page == 0) {
 									sheet2.createRow(height + totalHeight)
 											.createCell(y_page + width)
@@ -2826,7 +2826,7 @@ public class Printer_Auto {
 								sheet2.getRow(height + totalHeight)
 										.getCell(y_page + width).setCellStyle(cs);
 							}
-							if (x > 41) {
+							if (x > 45) {
 								if (y_page == 0) {
 									continue;
 								}

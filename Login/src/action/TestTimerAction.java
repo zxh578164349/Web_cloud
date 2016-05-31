@@ -307,7 +307,7 @@ public class TestTimerAction extends QuartzJobBean {
 								+ "<span style='color:red;font-size:16'>"
 								+ totalResult
 								+ "</span><br/><br/><br/>"
-								+ "本郵件自動發送,請勿回復!如需回复，請回复到kyinfo.lp@yydg.com.cn咨訊室或者lgx@yydg.com.cn譚香林!"
+								+ "本郵件自動發送,請勿回復!如需回复，請回复到kyinfo@yydg.com.cn咨訊室或者lgx@yydg.com.cn譚香林!"
 						);
 				//每月2號告知哪些廠別未輸入當月的【預計生產】數據
 				int my_day=cal.get(Calendar.DAY_OF_MONTH);
@@ -367,8 +367,8 @@ public class TestTimerAction extends QuartzJobBean {
 				System.err.print("ok");
 			} else {
 				HttpClient client = new HttpClient();
-				//HttpMethod method = new GetMethod("http://203.85.73.161/Login/printerauto_print?yymm="+yymm);//(在不同的機器上注意修改IP和端口)
-				HttpMethod method = new GetMethod("http://172.17.18.173:8080/Login/printerauto_print?yymm="+yymm);
+				HttpMethod method = new GetMethod("http://203.85.73.161/Login/printerauto_print?yymm="+yymm);//(在不同的機器上注意修改IP和端口)
+				//HttpMethod method = new GetMethod("http://172.17.18.173:8080/Login/printerauto_print?yymm="+yymm);
 				//HttpMethod method = new GetMethod("http://localhost:8080/Login/printerauto_print?yymm="+yymm);
 				client.executeMethod(method);
 				method.releaseConnection();
@@ -432,7 +432,7 @@ public class TestTimerAction extends QuartzJobBean {
 									+ "<span style='color:red;font-size:16'>"
 									+ totalResult
 									+ "</span><br/><br/><br/>"
-									+ "本郵件自動發送,請勿回復!如需回复，請回复到kyinfo.lp@yydg.com.cn咨訊室或者lgx@yydg.com.cn譚香林!"
+									+ "本郵件自動發送,請勿回復!如需回复，請回复到kyinfo@yydg.com.cn咨訊室或者lgx@yydg.com.cn譚香林!"
 							);
 					//每月2號告知哪些廠別未輸入當月的【預計生產】數據
 					int my_day=cal.get(Calendar.DAY_OF_MONTH);
@@ -458,7 +458,7 @@ public class TestTimerAction extends QuartzJobBean {
 							mail,
 							cc,							
 						    yymm+"加久各工廠油壓產量表匯總",							
-							"本郵件自動發送,請勿回復!如需回复，請回复到kyinfo.lp@yydg.com.cn咨訊室或者lgx@yydg.com.cn譚香林!",yymm);
+							"本郵件自動發送,請勿回復!如需回复，請回复到kyinfo@yydg.com.cn咨訊室或者lgx@yydg.com.cn譚香林!",yymm);
 				}												
 				File file = new File("d://" + yymm + ".xls");
 				if (file.exists()) {
