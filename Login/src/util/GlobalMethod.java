@@ -735,37 +735,15 @@ public class GlobalMethod extends HibernateDaoSupport{
 	    }  
 	
 	public static void main(String[] args) throws ParseException {
-		Integer[] a = {0,3,0,4,5};//原始
-        int[] b = new int[a.length];//有序
-        int[] c = new int[a.length];//返回結果
-        /*for(int i=0; i<a.length; i++) {
-            b[i] = a[i];
-            System.out.print(b[i] + "\t");
-        }
-        System.out.println();
-        Arrays.sort(b);
-        for(int i=0; i<a.length; i++) {
-            System.out.print(b[i] + "\t");
-        }
-        System.out.println();
-        for(int i=0; i<a.length; i++) {
-            c[i] = getIndex(a[i], b);
-            System.out.print(c[i] + "\t");
-        }
-        
-        
-        System.out.println("-------------------------------------------------------");
-        DateFormat frm=new SimpleDateFormat("yyyyMM");
-        Calendar cal=Calendar.getInstance();
-        cal.setTime(frm.parse("201604"));
-        cal.add(Calendar.MONTH, -1);
-        System.out.println(frm.format(cal.getTime()));*/
-        
-        String aa="Y";
-        System.out.println(aa!="Y");
-        
+		List<Integer>list=new ArrayList<Integer>();
+        list.add(1);list.add(2);list.add(3);list.add(4);
 
-       
+       for(Integer a:list){
+    	   if(a>2){
+    		   continue;
+    	   }
+    	   System.out.println(a);
+       }
 						
 	}
 

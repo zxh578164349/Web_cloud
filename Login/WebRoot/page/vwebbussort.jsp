@@ -128,7 +128,7 @@ function print(){
 
 <body>
 <h2>經營評比</h2>
-	<form action="vwebbussort_print" method="post" id="subform" target="_blank">
+	<form action="vwebbussortnew_print" method="post" id="subform" target="_blank">
 		<table id="tb_search">
 			<tr>
 				<td>
@@ -152,7 +152,7 @@ function print(){
 	
 	<hr/>
 	<h2>經營評比(分形態)</h2>
-	<form action="vwebbussort_print_fcode" method="post" id="subform2" target="_blank">
+	<form action="vwebbussortnew_print_fcode" method="post" id="subform2" target="_blank">
 		<table id="tb_search">
 			<tr>
 				<td>

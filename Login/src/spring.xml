@@ -212,7 +212,9 @@
 				<value>entity/VWebprofitlossEve.hbm.xml</value>
 				<value>entity/VWebprofitlossFactEve.hbm.xml</value>
 				<value>entity/VWebbussortNew.hbm.xml</value>
-				<value>entity/VWebbussortFcodeNew.hbm.xml</value></list>
+				<value>entity/VWebbussortFcodeNew.hbm.xml</value>
+				<value>entity/WebVwebbussortItemn.hbm.xml</value>
+				<value>entity/WebVwebussortSubitem.hbm.xml</value></list>
 		</property>
 	</bean>
 		
