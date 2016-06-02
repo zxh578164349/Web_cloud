@@ -349,7 +349,7 @@ public class VWebbussortActionNew extends ActionSupport implements ServletRespon
 					   /******************************北越加九用水方面不排名處理******************************/
 					   if((wb.getSheet(month).getRow(1).getCell(3+a).getStringCellValue().equals("北越加九")||
 							   wb.getSheet(month).getRow(1).getCell(3+a).getStringCellValue().equals("越南賜佳") )
-							   &&(list_temp.get(b).getWebVwebbussortItemn().getMid()==9) ){
+							   &&(list_temp.get(b).getWebVwebbussortItemn().getMid()==900) ){
 						   wb.getSheet(month).getRow(2+b).getCell(3+a).setCellValue("--");
 						   wb.getSheet(month).getRow(2+b).getCell(3+a).setCellStyle(cs_red2);
 					   }
@@ -670,11 +670,60 @@ public class VWebbussortActionNew extends ActionSupport implements ServletRespon
 						   /******************************北越加九用水方面不排名處理******************************/
 						   if((wb.getSheet(month).getRow(3+y_fcode).getCell(3+a).getStringCellValue().equals("北越加九")||
 								   wb.getSheet(month).getRow(3+y_fcode).getCell(3+a).getStringCellValue().equals("越南賜佳") )
-								   &&(list_temp.get(b).getWebVwebbussortItemn().getMid()==9)){
+								   &&(list_temp.get(b).getWebVwebbussortItemn().getMid()==900)){
 							   wb.getSheet(month).getRow(y_index).getCell(3+a).setCellValue("--");
 							   wb.getSheet(month).getRow(y_index).getCell(3+a).setCellStyle(cs_red2);
 						   }
 						   /******************************北越加九用水方面不排名處理******************************/
+						   
+						   /********************過濾處理********************/
+						   if(fcode.equals("MD")){
+							   if(list_temp.get(b).getWebVwebbussortItemn().getMid()==300||
+								  list_temp.get(b).getWebVwebbussortItemn().getMid()==600){
+								   wb.getSheet(month).getRow(y_index).getCell(3+a).setCellValue("/");
+								   wb.getSheet(month).getRow(y_index).getCell(3+a).setCellStyle(cs_red2);
+							   }
+						   }
+						   if(fcode.equals("IP")){
+							   if(list_temp.get(b).getWebVwebbussortItemn().getMid()==300||
+								  list_temp.get(b).getWebVwebbussortItemn().getMid()==500||	   
+								  list_temp.get(b).getWebVwebbussortItemn().getMid()==600){
+								   wb.getSheet(month).getRow(y_index).getCell(3+a).setCellValue("/");
+								   wb.getSheet(month).getRow(y_index).getCell(3+a).setCellStyle(cs_red2);
+							   }
+						   }
+						   if(fcode.equals("PU")){
+							   if(list_temp.get(b).getWebVwebbussortItemn().getMid()==300||
+								  list_temp.get(b).getWebVwebbussortItemn().getMid()==500||
+								  list_temp.get(b).getWebVwebbussortItemn().getMid()==600||
+								  list_temp.get(b).getWebVwebbussortItemn().getMid()==1100){
+								   wb.getSheet(month).getRow(y_index).getCell(3+a).setCellValue("/");
+								   wb.getSheet(month).getRow(y_index).getCell(3+a).setCellStyle(cs_red2);
+							   }
+						   }
+						   if(fcode.equals("底加")){
+							   if(list_temp.get(b).getWebVwebbussortItemn().getMid()==200||
+								  list_temp.get(b).getWebVwebbussortItemn().getMid()==300||
+								  list_temp.get(b).getWebVwebbussortItemn().getMid()==400||
+								  list_temp.get(b).getWebVwebbussortItemn().getMid()==500||
+								  list_temp.get(b).getWebVwebbussortItemn().getMid()==600||
+								  list_temp.get(b).getWebVwebbussortItemn().getMid()==800){
+								   wb.getSheet(month).getRow(y_index).getCell(3+a).setCellValue("/");
+								   wb.getSheet(month).getRow(y_index).getCell(3+a).setCellStyle(cs_red2);
+							   }
+						   }
+						   if(fcode.equals("鞋墊")){
+							   if(list_temp.get(b).getWebVwebbussortItemn().getMid()==300||
+								  list_temp.get(b).getWebVwebbussortItemn().getMid()==400||
+								  list_temp.get(b).getWebVwebbussortItemn().getMid()==500||
+								  list_temp.get(b).getWebVwebbussortItemn().getMid()==600||
+							      list_temp.get(b).getWebVwebbussortItemn().getMid()==700||
+								  list_temp.get(b).getWebVwebbussortItemn().getMid()==800){
+								   wb.getSheet(month).getRow(y_index).getCell(3+a).setCellValue("/");
+								   wb.getSheet(month).getRow(y_index).getCell(3+a).setCellStyle(cs_red2);
+							   }
+						   }
+						   /********************過濾處理********************/
 						   
 					   }
 				   }
@@ -883,7 +932,7 @@ public class VWebbussortActionNew extends ActionSupport implements ServletRespon
 					list3.add(sub);
 				}
 			}
-			map.put(item.getItemname(), list3);
+			map.put(item.getItemname()+"__"+item.getMid(), list3);
 		}
 		
 		return map;
@@ -1131,6 +1180,19 @@ public class VWebbussortActionNew extends ActionSupport implements ServletRespon
 		cs_red2.setFont(font_red);
 		map.put("cs_red2", cs_red2);
 		
+		//紅色粗字體樣式(有邊框背景)
+		HSSFCellStyle cs_red3=wb.createCellStyle();
+		cs_red3.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		cs_red3.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		cs_red3.setBorderTop(HSSFCellStyle.BORDER_THIN);
+		cs_red3.setBorderRight(HSSFCellStyle.BORDER_THIN);
+		cs_red3.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+		cs_red3.setBorderLeft(HSSFCellStyle.BORDER_THIN);		
+		cs_red3.setFillForegroundColor(IndexedColors.RED.getIndex());
+		cs_red3.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+		cs_red3.setFont(font_bold);
+		map.put("cs_red3", cs_red3);
+		
 		
 		/**********************分類+項目+單位*****************************/
 		
@@ -1322,9 +1384,10 @@ public class VWebbussortActionNew extends ActionSupport implements ServletRespon
 	    		 idx2=idx1+((List<WebVwebussortSubitem>)map_types.get(key)).size();
 	    		CellRangeAddress cra_type=new CellRangeAddress(idx1,idx2-1,0,0);
 	    		sheet.addMergedRegion(cra_type);
-	    		sheet.getRow(idx1).getCell(0).setCellValue(key);
+	    		sheet.getRow(idx1).getCell(0).setCellValue(key.split("__")[0]);
 	    		for(int x=idx1;x<idx2;x++){
 	    			sheet.getRow(x).getCell(0).setCellStyle(cs_bold);
+	    			
 	    		}
 	    		//項目,單位
 	    		for(int y=0;y<((List<WebVwebussortSubitem>)map_types.get(key)).size();y++){//for b
@@ -1365,6 +1428,7 @@ public class VWebbussortActionNew extends ActionSupport implements ServletRespon
 		HSSFCellStyle cs_blue=(HSSFCellStyle)map.get("cs_blue");
 		HSSFCellStyle cs_bold=(HSSFCellStyle)map.get("cs_bold");
 		HSSFCellStyle cs_red=(HSSFCellStyle)map.get("cs_red");
+		HSSFCellStyle cs_red3=(HSSFCellStyle)map.get("cs_red3");
 		 /********************初始化表格*************************/
 	    for(String month:map_month.keySet()){
 	    	wb.createSheet(month);
@@ -1402,7 +1466,7 @@ public class VWebbussortActionNew extends ActionSupport implements ServletRespon
 	    		    	
 	    	Map<String,Object>map_fcode=(Map<String,Object>)map_month.get(month);	    	    	
 	    	for(String fcode:map_fcode.keySet()){//for 2	
-	    		
+	    		HSSFCellStyle cs_temp=cs_bold;
 	    		//計算廠別狀態增長量
 	    		if(y_increment>0){
 		    		y_fcode=(list_temp.size()+3)*y_increment;
@@ -1438,13 +1502,66 @@ public class VWebbussortActionNew extends ActionSupport implements ServletRespon
 		    	int idx1=y_index;
 	    		int idx2=y_index;
 		    	for(String key:map_types.keySet()){
-		    		 idx1=idx2;
-		    		 idx2=idx1+((List<WebVwebussortSubitem>)map_types.get(key)).size();
+		    		/********************過濾處理********************/
+		    		if(fcode.equals("MD")){
+	    				if(key.split("__")[1].equals("300")||
+	    					key.split("__")[1].equals("600")){
+	    					cs_temp=cs_red3;
+	    				}else{
+	    					cs_temp=cs_bold;
+	    				}
+	    			}
+	    			if(fcode.equals("IP")){
+	    				if(key.split("__")[1].equals("300")||
+		    				key.split("__")[1].equals("500")||
+		    				key.split("__")[1].equals("600")){
+		    					cs_temp=cs_red3;
+		    				}else{
+		    					cs_temp=cs_bold;
+		    				}
+	    			}
+	    			if(fcode.equals("PU")){
+	    				if(key.split("__")[1].equals("300")||
+			    				key.split("__")[1].equals("500")||
+			    				key.split("__")[1].equals("600")||
+			    				key.split("__")[1].equals("1100")){
+			    					cs_temp=cs_red3;
+			    				}else{
+			    					cs_temp=cs_bold;
+			    				}
+	    			}
+	    			if(fcode.equals("底加")){
+	    				if(key.split("__")[1].equals("200")||
+			    				key.split("__")[1].equals("300")||
+			    				key.split("__")[1].equals("400")||
+			    				key.split("__")[1].equals("500")||
+			    				key.split("__")[1].equals("600")||				    				
+			    				key.split("__")[1].equals("800")){
+			    					cs_temp=cs_red3;
+			    				}else{
+			    					cs_temp=cs_bold;
+			    				}
+	    			}
+	    			if(fcode.equals("鞋墊")){
+	    				if(key.split("__")[1].equals("300")||
+			    				key.split("__")[1].equals("400")||
+			    				key.split("__")[1].equals("500")||
+			    				key.split("__")[1].equals("600")||
+			    				key.split("__")[1].equals("700")||				    				
+			    				key.split("__")[1].equals("800")){
+			    					cs_temp=cs_red3;
+			    				}else{
+			    					cs_temp=cs_bold;
+			    				}
+	    			}
+	    			/********************過濾處理********************/
+		    		idx1=idx2;
+		    		idx2=idx1+((List<WebVwebussortSubitem>)map_types.get(key)).size();
 		    		CellRangeAddress cra_type=new CellRangeAddress(idx1,idx2-1,0,0);
 		    		sheet.addMergedRegion(cra_type);
-		    		sheet.getRow(idx1).getCell(0).setCellValue(key);
-		    		for(int x=idx1;x<idx2;x++){
-		    			sheet.getRow(x).getCell(0).setCellStyle(cs_bold);
+		    		sheet.getRow(idx1).getCell(0).setCellValue(key.split("__")[0]);
+		    		for(int x=idx1;x<idx2;x++){		    			
+		    			sheet.getRow(x).getCell(0).setCellStyle(cs_temp);		    			
 		    		}
 		    		//項目,單位
 		    		for(int y=0;y<((List<WebVwebussortSubitem>)map_types.get(key)).size();y++){

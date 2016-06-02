@@ -11,8 +11,6 @@ import dao.Basedao;
 import dao.IVWebbussortDao;
 import entity.VWebbussort;
 import entity.VWebbussortFcode;
-import entity.VWebbussortFcodeNew;
-import entity.VWebbussortNew;
 
 /**   
  *    
@@ -78,53 +76,6 @@ public class VWebbussortDaoImpl extends Basedao implements IVWebbussortDao{
 		return list;
 	}
 
-	/**
-	 * 日期:2016/5/31
-	 * 描述:
-	 */
 	
-	
-	public List<VWebbussortNew> findByYymm_new(String yymm, String yymm2) {
-		// TODO Auto-generated method stub
-		StringBuffer hql=new StringBuffer();
-		Map<String,Object>map=new HashMap<String,Object>();
-		hql.append("from VWebbussortNew where 1=1 ");
-		if(yymm!=null&&!yymm.equals("")){
-			hql.append(" and id.yymm>=:yymm ");
-			map.put("yymm", yymm);
-		}
-		if(yymm2!=null&&!yymm2.equals("")){
-			hql.append(" and id.yymm<=:yymm2 ");
-			map.put("yymm2", yymm2);
-		}
-		
-		return super.getAllWithNoPage(hql.toString(), map);
-	}
-
-	/**
-	 * 日期:2016/5/31
-	 * 描述:
-	 */
-	
-	
-	public List<VWebbussortFcodeNew> findByYymm2_new(String yymm, String yymm2) {
-		// TODO Auto-generated method stub
-		StringBuffer hql=new StringBuffer();
-		Map<String,Object>map=new HashMap<String,Object>();
-		hql.append("from VWebbussortFcodeNew where 1=1 ");
-		if(yymm!=null&&!yymm.equals("")){
-			hql.append(" and id.yymm>=:yymm ");
-			map.put("yymm", yymm);
-		}
-		if(yymm2!=null&&!yymm2.equals("")){
-			hql.append(" and id.yymm<=:yymm2 ");
-			map.put("yymm2", yymm2);
-		}
-		List<VWebbussortFcodeNew>list=super.getAllWithNoPage(hql.toString(), map);
-		for(VWebbussortFcodeNew obj:list){
-			obj.getId().getFact().getFactSname();
-		}
-		return list;
-	}
 
 }

@@ -7,8 +7,6 @@ import java.util.List;
 
 import entity.VWebbussort;
 import entity.VWebbussortFcode;
-import entity.VWebbussortFcodeNew;
-import entity.VWebbussortNew;
 
 /**   
  *    
@@ -26,9 +24,6 @@ import entity.VWebbussortNew;
 public interface IVWebbussortServices {
 	public List<VWebbussort>findByYymm(String yymm,String yymm2);
 	public List<VWebbussortFcode>findByYymm2(String yymm,String yymm2);
-	
-	/*****************項目重新排序后*********************/
-	public List<VWebbussortNew>findByYymm_new(String yymm,String yymm2);
-	public List<VWebbussortFcodeNew>findByYymm2_new(String yymm,String yymm2);
+
 
 }
