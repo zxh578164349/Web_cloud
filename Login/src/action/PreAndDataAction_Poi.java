@@ -399,7 +399,7 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 					List<String> factnoCodelist = new ArrayList();
 					for (int factno = 0; factno < factnolist.size(); factno++) {
 						List factAreas = webFactSer
-								.findFactCodeByFactNo_show(factnolist.get(factno));
+								.findFactCodeByFactNo(factnolist.get(factno));
 						String factSname = webFactSer.selByid(factnolist
 								.get(factno));
 						for (int factcode = 0; factcode < factAreas.size(); factcode++) {
@@ -2957,7 +2957,7 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 					List<String> factnoCodelist = new ArrayList();
 					for (int factno = 0; factno < factnolist.size(); factno++) {
 						List factAreas = webFactSer
-								.findFactCodeByFactNo_show(factnolist.get(factno));
+								.findFactCodeByFactNo(factnolist.get(factno));
 						String factSname = webFactSer.selByid(factnolist
 								.get(factno));
 						for (int factcode = 0; factcode < factAreas.size(); factcode++) {
@@ -3086,7 +3086,7 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 						 * 如果alllist.size()+factcodelist.size()>41就分頁
 						 */
 
-						if (i >= alllist.size() && i <= 40) {
+						if (i >= alllist.size() && i <= 44) {
 							String temp_code = factcodelist
 									.get(factcodelist.size()
 											- (alllist.size()
@@ -3110,13 +3110,13 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 							width = width + 2;
 							continue;
 						}
-						if (i > 40) {
+						if (i > 44) {
 							String temp_code = factcodelist
 									.get(factcodelist.size()
 											- (alllist.size()
 													+ factcodelist.size() - (i + 1))
 											- 1);
-							if (i == 41) {
+							if (i == 45) {
 								width = 0;
 								sheet2.createRow(6 + totalHeight);
 								sheet2.createRow(7 + totalHeight);
@@ -3135,7 +3135,7 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 									.createCell(1 + width)
 									.setCellStyle(cs_font_bgyellow);
 
-							if (i == 41) {
+							if (i == 45) {
 
 								sheet2.getRow(6 + totalHeight)
 										.createCell(2 + width)
@@ -3636,7 +3636,7 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 							cols.add("日期");
 							cols.add("標準產量");
 							cols.add("實際產量");
-							if (x <= 40) {// start "if x<41"
+							if (x <= 44) {// start "if x<41"
 								for (int y_code = 1; y_code < cols.size(); y_code++) {// start
 																						// "for2_2"
 									if (x == alllist2.size()) {
@@ -3800,15 +3800,15 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 								continue;
 							}// end "if x<41"
 
-							if (x > 40) {// start "if 下部分頁"
+							if (x > 44) {// start "if 下部分頁"
 
-								if (x == 41) {
+								if (x == 45) {
 									width = 0;
 								}
 
 								for (int y_page = 0; y_page < cols.size(); y_page++) {// start
 																						// "for 下部分頁_1"
-									if (x == 41) {
+									if (x == 45) {
 										if (y_page == 0) {
 											sheet2.createRow(
 													height + totalHeight)
@@ -3825,7 +3825,7 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 												.getCell(y_page + width)
 												.setCellStyle(cs);
 									}
-									if (x > 41) {
+									if (x > 45) {
 										if (y_page == 0) {
 											continue;
 										}

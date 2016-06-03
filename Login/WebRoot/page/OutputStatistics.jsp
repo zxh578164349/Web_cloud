@@ -21,21 +21,14 @@
 
 <link href="css/validate.css" rel="stylesheet" type="text/css" />
  <link rel="stylesheet" type="text/css" href="css/form.css" /> 
-<script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script>
-<script type="text/javascript" src="jquery/Validform_v5.3.2_min.js"></script>
-<script type="text/javascript" src="jquery/DatePicker/WdatePicker.js"></script>
-<link rel="stylesheet" type="text/css"
-	href="jquery/loding/ui.loading.css" />
-<script type="text/javascript" src="jquery/loding/ui.loading.js"></script>
 <link rel="stylesheet" type="text/css" href="css/button_css.css" />
-	<link rel="stylesheet" type="text/css" href="css/general_css.css" />
-	<link href="tablecloth/tablecloth.css" rel="stylesheet" type="text/css" media="screen" />
+<link rel="stylesheet" type="text/css" href="css/general_css.css" />
+<link href="tablecloth/tablecloth.css" rel="stylesheet" type="text/css" media="screen" />
 
 
 <script type="text/javascript">
-	$(function() {
-		var j = jQuery.noConflict();
-		var demo = j("#form2").Validform({
+	jq(function() {
+		var demo = jq("#form2").Validform({
 			btnSubmit : "#sub2",
 			tiptype : 3,
 			showAllError : true,
@@ -50,10 +43,11 @@
 	// 选择或者反选 checkbox  
 	function CheckSelect(thisform) {
 		var allfactno = document.getElementById("checkfactno");
+		var factcodelist=document.getElementsByName("factnolist");
 		// 遍历 form  
-		for ( var i = 0; i < thisform.elements.length; i++) {
+		for ( var i = 0; i < factcodelist.length; i++) {
 			// 提取控件  
-			var checkbox = thisform.elements[i];
+			var checkbox = factcodelist[i];
 			var span = document.getElementById("sp" + i);
 			// 检查是否是指定的控件  
 			if (checkbox.name === "factnolist" && checkbox.type === "checkbox"
@@ -73,29 +67,34 @@
 		}
 	}
 
-	function CheckSelect2(thisform) {
+	function CheckSelect2() {
 		var allfactcode = document.getElementById("checkfactcode");
-		for ( var i = 0; i < thisform.elements.length; i++) {
-			var span = null;
-			var checkbox = thisform.elements[i];
-			if (navigator.userAgent.indexOf("MSIE") > 0) {
+		var factcodelist=document.getElementsByName("factcodelist");
+		for ( var i = 0; i < factcodelist.length; i++) {
+			var checkbox = factcodelist[i];
+			
+			/*if (navigator.userAgent.indexOf("MSIE") > 0) {
 				span = document.getElementById("ssp" + (i - 1));
 			} else {
 				span = document.getElementById("ssp" + i);
-			}
+			}*/
+			//var span = document.getElementById("ssp" + i);
+			var span=jq("#ssp"+i);
 
 			if (checkbox.name === "factcodelist"
 					&& checkbox.type === "checkbox"
 					&& checkbox.checked === false
 					&& allfactcode.checked === true) {
 				checkbox.checked = true;
-				span.style.color = "red";
+				//span.style.color = "red";
+				span.css("color","red");
 			} else if (checkbox.name === "factcodelist"
 					&& checkbox.type === "checkbox"
 					&& checkbox.checked === true
 					&& allfactcode.checked === false) {
 				checkbox.checked = false;
-				span.style.color = "";
+				//span.style.color = "";
+				span.css("color","");
 
 			}
 		}
@@ -130,56 +129,7 @@
 
 	}
 
-	function submis() {
-
-		var jj = jQuery.noConflict();
-		jQuery(function(jj) {
-
-			jj(document).ui_loading({
-				overlay : true,
-				opacity : 0.2,
-				supportIframe : true,
-				message : '請稍後!正在查詢中..'
-			});
-		});
-		var info = "";
-		var info2 = "";
-		var listfactNo = jj('[name = "factnolist"]:checkbox:checked');
-		var listfactCode = jj('[name="factcodelist"]:checkbox:checked');
-		for ( var i = 0; i < listfactNo.length; i++) {
-			// 如果i+1等于选项长度则取值后添加空字符串，否则为逗号
-			info = (info + listfactNo.get(i).value)
-					+ (((i + 1) == listfactNo.length) ? '' : ',');
-		}
-		for ( var i = 0; i < listfactCode.length; i++) {
-			info2 = (info2 + listfactCode.get(i).value)
-					+ (((i + 1) == listfactCode.length) ? '' : ',');
-		}
-
-		var year = document.getElementById("nyear");
-		var month = document.getElementById("fmonth");
-
-		jj.ajax({
-			type : "POST",
-			//dataType : "html",
-			url : "print2Y_print2Y",
-
-			data : {
-				year : year.value,
-				month : month.value,
-				factnolist : info,
-				factcodelist : info2
-			},
-			contentType : "application/vnd.ms-excel",
-			success : function(msg) {
-				jj("#bodyid").html(msg);
-
-			},
-			error : function(xhr) {
-				alert(xhr.responseText);
-			}
-		});
-	}
+	
 
 	function changeinput() {
 		if (navigator.userAgent.indexOf("MSIE") > 0) {
@@ -230,13 +180,13 @@
 					<td class="td_show_title">廠別</td>
 					<td  width="6%"><span style="">全選</span>
 						<input type="checkbox" value="all" id="checkfactno"
-						onclick="CheckSelect(this.form)" style="width:18;height:18" /></td>
+						onclick="CheckSelect()" style="width:18;height:18" /></td>
 					<td class="td_input"><s:iterator value="#session.facts"
 							status="x" id="temp">
-							<span id="sp${x.index+1}">${temp[1]}(${temp[0]})</span>
-							<input id="cb${x.index+1}" type="checkbox" value="${temp[0]}"
+							<span id="sp${x.index}">${temp[1]}(${temp[0]})</span>
+							<input id="cb${x.index}" type="checkbox" value="${temp[0]}"
 								name="factnolist" datatype="*"
-								onclick="checkred('sp${x.index+1}','cb${x.index+1}')" />
+								onclick="checkred('sp${x.index}','cb${x.index}')" />
 						</s:iterator></td>
 					<td rowspan="3" width="5%"><center>
 							<div id="printdiv">
@@ -251,13 +201,13 @@
 					<td class="td_show_title" width="5%">廠別狀態</td>
 					<td ><span style="">全選</span> <input
 						type="checkbox" value="all" id="checkfactcode"
-						onclick="CheckSelect2(this.form)" style="width:18;height:18" /></td>
+						onclick="CheckSelect2()" style="width:18;height:18" /></td>
 					<td class="td_input"><s:iterator value="#session.factcodes"
 							id="temp" status="x">
-							<span id="ssp${x.index+18}">${temp}</span>
+							<span id="ssp${x.index}">${temp}</span>
 							<input type="checkbox" value="${temp}" name="factcodelist"
-								datatype="*" id="id${x.index+18}"
-								onclick="checkred('ssp${x.index+18}','id${x.index+18}')" />
+								datatype="*" id="id${x.index}"
+								onclick="checkred('ssp${x.index}','id${x.index}')" />
 						</s:iterator><span style="color:blue">(提示:打印時自動篩選各廠所擁有的廠別狀態)</span></td>
 				</tr>
 
@@ -270,10 +220,10 @@
 					<td class="td_show_title">廠別</td>
 					<td class="td_show_title" width="6%"><span style="">全選</span>
 						<input type="checkbox" value="all" id="checkfactno"
-						onclick="CheckSelect(this.form)" style="width:18;height:18" /></td>
-					<td class="td_input"><span id="sp1">${factName}(${factNo})</span><input
-						id="cb1" type="checkbox" value="${factNo}" name="factnolist"
-						datatype="*" onclick="checkred('sp1','cb1')" /></td>
+						onclick="CheckSelect()" style="width:18;height:18" /></td>
+					<td class="td_input"><span id="sp0">${factName}(${factNo})</span><input
+						id="cb0" type="checkbox" value="${factNo}" name="factnolist"
+						datatype="*" onclick="checkred('sp0','cb0')" /></td>
 					<td rowspan="3" width="5%"><center>
 							<div id="printdiv">
 								<input type="button" value="下載" onclick="changeresult()"
@@ -287,13 +237,13 @@
 					<td class="td_show_title" width="5%">廠別狀態</td>
 					<td class="td_show_title"><span style="">全選</span> <input
 						type="checkbox" value="all" id="checkfactcode"
-						onclick="CheckSelect2(this.form)" style="width:18;height:18" /></td>
+						onclick="CheckSelect2()" style="width:18;height:18" /></td>
 					<td class="td_input"><s:iterator
 							value="#session.factAreas_login" id="temp" status="x">
-							<span id="ssp${x.index+4}">${temp}</span>
+							<span id="ssp${x.index}">${temp}</span>
 							<input type="checkbox" value="${temp}" name="factcodelist"
-								datatype="*" id="id${x.index+4}"
-								onclick="checkred('ssp${x.index+4}','id${x.index+4}')" />
+								datatype="*" id="id${x.index}"
+								onclick="checkred('ssp${x.index}','id${x.index}')" />
 						</s:iterator></td>
 				</tr>
 
