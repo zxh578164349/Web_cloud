@@ -5037,22 +5037,35 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 		DateFormat fmt=new SimpleDateFormat("yyyyMM");
 		DateFormat fmt2=new SimpleDateFormat("yyyyMMdd");
 		Map<String,Object>map_a=new LinkedHashMap<String,Object>();
-		for(String month:list_months){//for a
-			List<Webestproduct>list=new ArrayList<Webestproduct>();
-			for(WebFact fact:list_facts){
-				list.add(new Webestproduct(new WebestproductId(fact.getId().getFactNo(),fact.getId().getFactArea(),fmt.parse(month),"zd")));
-			}
-			for(Webestproduct pro:list){
+		for(String month:list_months){//for a			
+			List<Webestproduct>list_a=new ArrayList<Webestproduct>();
+			
+			List<String>days=GlobalMethod.findDaysOfMonth(month);
+			List<List<WebYieldData>>list_b=new ArrayList<List<WebYieldData>>();
+			for(WebFact fact:list_facts){//for b1
+				list_a.add(new Webestproduct(new WebestproductId(fact.getId().getFactNo(),fact.getId().getFactArea(),fmt.parse(month),"zd")));
+				
+				List<WebYieldData>list_b1=new ArrayList<WebYieldData>();
+				for(String day:days){
+					list_b1.add(new WebYieldData(new WebYieldDataId(fact.getId().getFactNo(),fact.getId().getFactArea(),fmt2.parse(day))));
+				}
+				list_b.add(list_b1);
+				
+			}//for b1
+			for(Webestproduct pro:list_a){//for b2
 				for(Webestproduct pro2:list_pros){
 					if(pro.getId().getFactNo().equals(pro2.getId().getFactNo())&&
 							pro.getId().getFactCode().equals(pro2.getId().getFactCode())&&
 							fmt.format(pro.getId().getYymm()).equals(fmt.format(pro2.getId().getYymm()))){
 						pro=pro2;
+						break;
 					}
 				}
-			}
-			map_a.put(month, list);
+			}//for b2
+			map_a.put(month, list_a);
 		}//for a
+		
+		
 		
 		
 		
