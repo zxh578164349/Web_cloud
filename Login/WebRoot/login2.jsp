@@ -18,7 +18,7 @@
 
 <!--  <script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>-->
 
-
+<link rel="shortcut icon" href="images/icon/web_ico.ico" /> 
 </head>
 <body >
    

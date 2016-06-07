@@ -35,6 +35,7 @@ import services.IWebEmailService;
 import services.IWebEstProductServices;
 import services.IWebYieldDataServices;
 import services.IWebydataNoinputServices;
+import util.GlobalMethod;
 
 /**
  * 系统启动时的监听类 初始化系统数据
@@ -211,6 +212,26 @@ public class TestTimerAction extends QuartzJobBean {
 	protected void executeInternal(JobExecutionContext arg0)
 			throws JobExecutionException {
 		// TODO Auto-generated method stub
+		try{
+			List<String> ips=GlobalMethod.findIp2();				
+			if(ips.size()==0){
+				this.init();
+			}else{
+				for(int i=0;i<ips.size();i++){
+					if(ips.get(i).equals("192.168.199.101")){
+						this.init();
+						break;
+					}else if(i==ips.size()-1){
+						System.out.println("本機不需要發送Email");
+					}
+				}
+			}
+		}catch(Exception e){
+			
+		}	
+	}
+	
+	public void init(){
 		SimpleDateFormat format=new SimpleDateFormat("yyyyMM");		
 		if(yymm==null||yymm.equals("")){
 			Calendar calendar=Calendar.getInstance();
@@ -286,7 +307,7 @@ public class TestTimerAction extends QuartzJobBean {
 								+ "<span style='color:red;font-size:16'>"
 								+ totalResult
 								+ "</span><br/><br/><br/>"
-								+ "本郵件自動發送,請勿回復!如需回复，請回复到kyinfo.lp@yydg.com.cn咨訊室或者lgx@yydg.com.cn譚香林!"
+								+ "本郵件自動發送,請勿回復!如需回复，請回复到kyinfo@yydg.com.cn咨訊室或者lgx@yydg.com.cn譚香林!"
 						);
 				//每月2號告知哪些廠別未輸入當月的【預計生產】數據
 				int my_day=cal.get(Calendar.DAY_OF_MONTH);
@@ -318,7 +339,6 @@ public class TestTimerAction extends QuartzJobBean {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 	}
 	
 	
@@ -412,7 +432,7 @@ public class TestTimerAction extends QuartzJobBean {
 									+ "<span style='color:red;font-size:16'>"
 									+ totalResult
 									+ "</span><br/><br/><br/>"
-									+ "本郵件自動發送,請勿回復!如需回复，請回复到kyinfo.lp@yydg.com.cn咨訊室或者lgx@yydg.com.cn譚香林!"
+									+ "本郵件自動發送,請勿回復!如需回复，請回复到kyinfo@yydg.com.cn咨訊室或者lgx@yydg.com.cn譚香林!"
 							);
 					//每月2號告知哪些廠別未輸入當月的【預計生產】數據
 					int my_day=cal.get(Calendar.DAY_OF_MONTH);
@@ -438,7 +458,7 @@ public class TestTimerAction extends QuartzJobBean {
 							mail,
 							cc,							
 						    yymm+"加久各工廠油壓產量表匯總",							
-							"本郵件自動發送,請勿回復!如需回复，請回复到kyinfo.lp@yydg.com.cn咨訊室或者lgx@yydg.com.cn譚香林!",yymm);
+							"本郵件自動發送,請勿回復!如需回复，請回复到kyinfo@yydg.com.cn咨訊室或者lgx@yydg.com.cn譚香林!",yymm);
 				}												
 				File file = new File("d://" + yymm + ".xls");
 				if (file.exists()) {

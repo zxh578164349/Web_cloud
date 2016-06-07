@@ -88,8 +88,14 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 	private String yymmdd2;
 	private String email;
 	private String ajaxResult;//申請函文時返回的ajax結果,   0:提交成功       1:提交失敗
-	
-	
+	private int psMk;//加簽時，放在前面，還是放在後面（0:前面     1:後面）
+				
+	public int getPsMk() {
+		return psMk;
+	}
+	public void setPsMk(int psMk) {
+		this.psMk = psMk;
+	}
 	public String getAjaxResult() {
 		return ajaxResult;
 	}
@@ -696,53 +702,83 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 	 * 加簽
 	 */
 	
-	public String addvisabills(){
-		try{
+	public String addvisabills(){		
+		try{			
 			KyVisabillm vbm=new KyVisabillm();
 			vbm=visabillmSer.findById(factNo, visaSort, billNo);
 			List<KyVisabills>list=vbm.getKyVisabillses();
-			//List<KyVisabills>list_temp=vbm.getKyVisabillses();
 			int startnum=Integer.parseInt(itemNo);
 			String nextnum="";
-			if((startnum+1)>9){
-				nextnum=(startnum+1)+"";
-			}else{
-				nextnum="0"+(startnum+1);
-			}
 			KyVisabills vbs=new KyVisabills();
 			KyVisabillsId id=new KyVisabillsId();
 			
 			KyVisabillm kyvbm=new KyVisabillm();
 			KyVisabillmId vbmid=new KyVisabillmId();
-			
-			vbmid.setBillNo(billNo);
-			vbmid.setFactNo(factNo);
-			vbmid.setVisaSort(visaSort);
-			kyvbm.setId(vbmid);
-			id.setKyVisabillm(kyvbm);
-			id.setItemNo(nextnum);
-			vbs.setId(id);
-			vbs.setVisaMk("N");
-			vbs.setFlowMk("Y");
-			if(visaRank!=null&&!visaRank.equals("")){
-				vbs.setVisaRank(visaRank.trim());
-			}
-			if(visaSigner!=null&&!visaSigner.equals("")){
-				vbs.setVisaSigner(visaSigner.trim());
-			}	
-			if(startnum<list.size()){
-				for(int i=startnum;i<list.size();i++){
-					String itemno=list.get(i).getId().getItemNo();
-					String next_itemno="";
-					int itemno_num=Integer.parseInt(itemno);
-					if((itemno_num+1)>9){
-						next_itemno=(itemno_num+1)+"";
-					}else{
-						next_itemno="0"+(itemno_num+1);
-					}
-					list.get(i).getId().setItemNo(next_itemno);
+			switch(psMk){//switch
+			case 0:	//加在前面															
+				vbmid.setBillNo(billNo);
+				vbmid.setFactNo(factNo);
+				vbmid.setVisaSort(visaSort);
+				kyvbm.setId(vbmid);
+				id.setKyVisabillm(kyvbm);
+				id.setItemNo(itemNo);
+				vbs.setId(id);
+				vbs.setVisaMk("N");
+				vbs.setFlowMk("Y");
+				if(visaRank!=null&&!visaRank.equals("")){
+					vbs.setVisaRank(visaRank.trim());
 				}
-			}	
+				if(visaSigner!=null&&!visaSigner.equals("")){
+					vbs.setVisaSigner(visaSigner.trim());
+				}	
+					for(int i=startnum-1;i<list.size();i++){
+						String itemno=list.get(i).getId().getItemNo();
+						String next_itemno="";
+						int itemno_num=Integer.parseInt(itemno);
+						if((itemno_num+1)>9){
+							next_itemno=(itemno_num+1)+"";
+						}else{
+							next_itemno="0"+(itemno_num+1);
+						}
+						list.get(i).getId().setItemNo(next_itemno);
+					}				
+				break;
+			case 1://加在後面
+				if((startnum+1)>9){
+					nextnum=(startnum+1)+"";
+				}else{
+					nextnum="0"+(startnum+1);
+				}								
+				vbmid.setBillNo(billNo);
+				vbmid.setFactNo(factNo);
+				vbmid.setVisaSort(visaSort);
+				kyvbm.setId(vbmid);
+				id.setKyVisabillm(kyvbm);
+				id.setItemNo(nextnum);
+				vbs.setId(id);
+				vbs.setVisaMk("N");
+				vbs.setFlowMk("Y");
+				if(visaRank!=null&&!visaRank.equals("")){
+					vbs.setVisaRank(visaRank.trim());
+				}
+				if(visaSigner!=null&&!visaSigner.equals("")){
+					vbs.setVisaSigner(visaSigner.trim());
+				}	
+				if(startnum<list.size()){
+					for(int i=startnum;i<list.size();i++){
+						String itemno=list.get(i).getId().getItemNo();
+						String next_itemno="";
+						int itemno_num=Integer.parseInt(itemno);
+						if((itemno_num+1)>9){
+							next_itemno=(itemno_num+1)+"";
+						}else{
+							next_itemno="0"+(itemno_num+1);
+						}
+						list.get(i).getId().setItemNo(next_itemno);
+					}
+				}
+				break;
+			}//switcth							
 			list.add(startnum,vbs);
 			vbm.setKyVisabillses(list);
 			visabillmSer.add(vbm);

@@ -836,6 +836,7 @@
 		<action name="vwebprolossfact_*" class="vwebprolossfactAction" method="{1}">
 		
 		</action>
+		<action name="vwebbussortnew_*" class="vWebbussortActionNewAction" method="{1}"></action>
 	</package>
 
 </struts>

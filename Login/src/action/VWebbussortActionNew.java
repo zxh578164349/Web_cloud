@@ -35,12 +35,19 @@ import com.opensymphony.xwork2.ActionSupport;
 import entity.VWebbussort;
 import entity.VWebbussortFcode;
 import entity.VWebbussortFcodeId;
+import entity.VWebbussortFcode;
+import entity.VWebbussortFcodeId;
+import entity.VWebbussortId;
+import entity.VWebbussort;
 import entity.VWebbussortId;
 import entity.WebFact;
 import entity.WebFactId;
+import entity.WebVwebbussortItemn;
+import entity.WebVwebussortSubitem;
 
 import services.IVWebbussortServices;
 import services.IWebFactServices;
+import services.IWebVwebbussortItemnServices;
 import util.GlobalMethod;
 
 /**   
@@ -56,13 +63,14 @@ import util.GlobalMethod;
  * @version    
  *    
  **/
-public class VWebbussortAction extends ActionSupport implements ServletResponseAware{
+public class VWebbussortActionNew extends ActionSupport implements ServletResponseAware{
 	private String yymm;
 	private String yymm2;
 	private List<String>list_factno;
 	private List<String>list_factcode;
 	private IVWebbussortServices vwebbusssorSer;
 	private IWebFactServices webFactSer;
+	private IWebVwebbussortItemnServices webbussitemSer;
 	private javax.servlet.http.HttpServletResponse response;
 	
 	
@@ -98,9 +106,12 @@ public class VWebbussortAction extends ActionSupport implements ServletResponseA
 		this.response=response;
 	}
 	
-	
 	public void setWebFactSer(IWebFactServices webFactSer) {
 		this.webFactSer = webFactSer;
+	}
+	
+	public void setWebbussitemSer(IWebVwebbussortItemnServices webbussitemSer) {
+		this.webbussitemSer = webbussitemSer;
 	}
 	public void print() throws ParseException{		
 		HSSFWorkbook wb=new HSSFWorkbook();
@@ -111,7 +122,7 @@ public class VWebbussortAction extends ActionSupport implements ServletResponseA
 		List<String>list_months=GlobalMethod.findMonths(yymm, yymm2);//所有月份
 		List<Object[]>list_facts=webFactSer.findFactAble2();//所有廠別		
 		Map<String,Object>map_types=this.findTypes();//類型和項目 		
-		List<String>list_temp=findTemps();//臨時集合
+		List<WebVwebussortSubitem>list_temp=findTemps();//臨時集合
 		/********************數據源處理*************************/
 	    //List<List<VWebbussort>>list_all=new ArrayList<List<VWebbussort>>();
 	    Map<String,Object>map_all=new LinkedHashMap<String,Object>();
@@ -155,28 +166,77 @@ public class VWebbussortAction extends ActionSupport implements ServletResponseA
 			for (VWebbussort sort : (List<VWebbussort>)map_all.get(month)) {
 				List<BigDecimal> list_b = new ArrayList<BigDecimal>();
 				if (sort!= null) {
+					//產能
 					list_b.add(sort.getA01());
 					list_b.add(sort.getA02());
 					list_b.add(sort.getA03());
+					//原物料
+					list_b.add(sort.getA31());
+					list_b.add(sort.getA32());
+					list_b.add(sort.getA33());
+					list_b.add(sort.getSortA33());					
+					list_b.add(sort.getA34());
+					list_b.add(sort.getA35());
+					list_b.add(sort.getSortA34());
+					//防霜劑
+					list_b.add(sort.getA36());
+					list_b.add(sort.getA37());
+					list_b.add(sort.getA38());
+					list_b.add(sort.getA39());
+					list_b.add(sort.getSortA38());
+					//色料
+					list_b.add(sort.getA40());
+					list_b.add(sort.getA41());
+					list_b.add(sort.getA42());
+					list_b.add(sort.getA43());
+					list_b.add(sort.getSortA42());
+					//促進劑
+					list_b.add(sort.getA44());
+					list_b.add(sort.getA45());
+					list_b.add(sort.getA46());
+					list_b.add(sort.getA47());
+					list_b.add(sort.getSortA46());
+					//防粘劑
+					list_b.add(sort.getA48());
+					list_b.add(sort.getA49());
+					list_b.add(sort.getA50());
+					list_b.add(sort.getA51());
+					list_b.add(sort.getSortA50());
+					//油漆處理劑
+					list_b.add(sort.getA52());
+					list_b.add(sort.getA53());
+					list_b.add(sort.getA54());
+					list_b.add(sort.getA55());
+					list_b.add(sort.getSortA54());
+					//離型劑
+					list_b.add(sort.getA56());
+					list_b.add(sort.getA57());
+					list_b.add(sort.getA58());
+					list_b.add(sort.getA59());
+					list_b.add(sort.getSortA58());
+					//水
 					list_b.add(sort.getA04());//用水量
 					list_b.add(sort.getA05());//用水金額
 					//北越加久在水"用量單耗"不排名,就把"用量單耗"設爲最大，排名就在最後，便於去除
-					if(sort.getId().getFactNo().equals("GH")){
+					if(sort.getId().getFactNo().equals("GH")||sort.getId().getFactNo().equals("FVAS")){
 						sort.setA06(new BigDecimal(999999999.00));
 					}
 					list_b.add(sort.getA06());//用量單耗
 					list_b.add(sort.getA07());//費用單耗
 					list_b.add(sort.getSortA06());//用量排名
+					//電
 					list_b.add(sort.getA08());
 					list_b.add(sort.getA09());
 					list_b.add(sort.getA10());
 					list_b.add(sort.getA11());
 					list_b.add(sort.getSortA10());
+					//蒸汽
 					list_b.add(sort.getA12());
 					list_b.add(sort.getA13());
 					list_b.add(sort.getA14());
 					list_b.add(sort.getA15());
 					list_b.add(sort.getSortA14());
+					//總工務費用
 					list_b.add(sort.getA16());
 					list_b.add(sort.getA17());
 					list_b.add(sort.getA18());
@@ -191,46 +251,15 @@ public class VWebbussortAction extends ActionSupport implements ServletResponseA
 					list_b.add(sort.getA27());
 					list_b.add(sort.getA28());
 					list_b.add(sort.getSortA28());
-					list_b.add(sort.getA29());
-					list_b.add(sort.getA30());
-					list_b.add(sort.getSortA30());
-					list_b.add(sort.getA31());
-					list_b.add(sort.getA32());
-					list_b.add(sort.getA33());
-					list_b.add(sort.getSortA33());
-					list_b.add(sort.getA34());
-					list_b.add(sort.getA35());
-					list_b.add(sort.getSortA34());
-					list_b.add(sort.getA36());
-					list_b.add(sort.getA37());
-					list_b.add(sort.getA38());
-					list_b.add(sort.getA39());
-					list_b.add(sort.getSortA38());
-					list_b.add(sort.getA40());
-					list_b.add(sort.getA41());
-					list_b.add(sort.getA42());
-					list_b.add(sort.getA43());
-					list_b.add(sort.getSortA42());
-					list_b.add(sort.getA44());
-					list_b.add(sort.getA45());
-					list_b.add(sort.getA46());
-					list_b.add(sort.getA47());
-					list_b.add(sort.getSortA46());
-					list_b.add(sort.getA48());
-					list_b.add(sort.getA49());
-					list_b.add(sort.getA50());
-					list_b.add(sort.getA51());
-					list_b.add(sort.getSortA50());
-					list_b.add(sort.getA52());
-					list_b.add(sort.getA53());
-					list_b.add(sort.getA54());
-					list_b.add(sort.getA55());
-					list_b.add(sort.getSortA54());
-					list_b.add(sort.getA56());
-					list_b.add(sort.getA57());
-					list_b.add(sort.getA58());
-					list_b.add(sort.getA59());
-					list_b.add(sort.getSortA58());
+					//其它
+					list_b.add(sort.getA70());
+					list_b.add(sort.getA71());
+					list_b.add(sort.getA72());
+					list_b.add(sort.getA73());
+					list_b.add(sort.getA74());
+					list_b.add(sort.getA75());
+					list_b.add(sort.getSortA75());
+					//人工費用
 					list_b.add(sort.getA60());
 					list_b.add(sort.getA61());
 					list_b.add(sort.getSortA61());
@@ -246,13 +275,11 @@ public class VWebbussortAction extends ActionSupport implements ServletResponseA
 					list_b.add(sort.getA68());
 					list_b.add(sort.getA69());
 					list_b.add(sort.getSortA69());
-					list_b.add(sort.getA70());
-					list_b.add(sort.getA71());
-					list_b.add(sort.getA72());
-					list_b.add(sort.getA73());
-					list_b.add(sort.getA74());
-					list_b.add(sort.getA75());
-					list_b.add(sort.getSortA75());
+					//成倉
+					list_b.add(sort.getA29());
+					list_b.add(sort.getA30());
+					list_b.add(sort.getSortA30());
+					//廢品倉
 					list_b.add(sort.getA76());
 					list_b.add(sort.getA77());
 					list_b.add(sort.getA78());
@@ -271,9 +298,9 @@ public class VWebbussortAction extends ActionSupport implements ServletResponseA
 		    	List<BigDecimal>list=new ArrayList<BigDecimal>();
 		    	List<BigDecimal>list2=new ArrayList<BigDecimal>();
 		    	List<Integer>list3=new ArrayList<Integer>();
-		    	for(int a=0;a<findTemps().size();a++){//for_b		    		
+		    	for(int a=0;a<list_temp.size();a++){//for_b		    		
 		    		for(int b=0;b<((List<List<BigDecimal>>)map_all2.get(month)).size();b++){//for_c
-			    		if(findTemps().get(a).equals("compare obj")){
+			    		if(list_temp.get(a).getItemname().contains("compare obj")){
 			    			if(b==0){
 			    				//清除内容，为下一次排名做准备
 			    				list.clear();
@@ -283,7 +310,7 @@ public class VWebbussortAction extends ActionSupport implements ServletResponseA
 			    			list.add(((List<List<BigDecimal>>)map_all2.get(month)).get(b).get(a)==null?new BigDecimal(0):((List<List<BigDecimal>>)map_all2.get(month)).get(b).get(a));	
 			    			list2.add(((List<List<BigDecimal>>)map_all2.get(month)).get(b).get(a)==null?new BigDecimal(0):((List<List<BigDecimal>>)map_all2.get(month)).get(b).get(a));
 			    		}		    		
-			    		if(findTemps().get(a).equals("排名")){
+			    		if(list_temp.get(a).getItemname().contains("排名")){
 			    			Collections.sort(list2);
 				    		for(int x=0;x<list.size();x++){
 				    			list3.add(GlobalMethod.getIndex(list.get(x), list2));
@@ -320,7 +347,9 @@ public class VWebbussortAction extends ActionSupport implements ServletResponseA
 					   wb.getSheet(month).getRow(2+b).getCell(3+a).setCellStyle(cs);
 					   
 					   /******************************北越加九用水方面不排名處理******************************/
-					   if(wb.getSheet(month).getRow(1).getCell(3+a).getStringCellValue().equals("北越加九")&&(b+2>4&&b+2<10) ){
+					   if((wb.getSheet(month).getRow(1).getCell(3+a).getStringCellValue().equals("北越加九")||
+							   wb.getSheet(month).getRow(1).getCell(3+a).getStringCellValue().equals("越南賜佳") )
+							   &&(list_temp.get(b).getWebVwebbussortItemn().getMid()==900) ){
 						   wb.getSheet(month).getRow(2+b).getCell(3+a).setCellValue("--");
 						   wb.getSheet(month).getRow(2+b).getCell(3+a).setCellStyle(cs_red2);
 					   }
@@ -375,11 +404,11 @@ public class VWebbussortAction extends ActionSupport implements ServletResponseA
 		Map<String,Object>map=this.findStyles(wb);
 		HSSFCellStyle cs=(HSSFCellStyle)map.get("cs");	
 		HSSFCellStyle cs_red2=(HSSFCellStyle)map.get("cs_red2");
-		List<VWebbussort>lists=vwebbusssorSer.findByYymm(yymm, yymm2);//查詢到的數據
+		//List<VWebbussort>lists=vwebbusssorSer.findByYymm(yymm, yymm2);//查詢到的數據
 		List<String>list_months=GlobalMethod.findMonths(yymm, yymm2);//所有月份
 		List<Object[]>list_facts=webFactSer.findFactAble2();//所有廠別		
 		Map<String,Object>map_types=this.findTypes();//類型和項目 		
-		List<String>list_temp=findTemps();//臨時集合
+		List<WebVwebussortSubitem>list_temp=findTemps();//臨時集合
 		
 		List<VWebbussortFcode>lists2=vwebbusssorSer.findByYymm2(yymm, yymm2);//查詢到的數據
 
@@ -441,27 +470,77 @@ public class VWebbussortAction extends ActionSupport implements ServletResponseA
 				for (VWebbussortFcode sort : (List<VWebbussortFcode>)map_fcode.get(fcode)) {
 					List<BigDecimal> list_b = new ArrayList<BigDecimal>();
 					if (sort!= null) {
+						//產能
 						list_b.add(sort.getA01());
 						list_b.add(sort.getA02());
 						list_b.add(sort.getA03());
-						list_b.add(sort.getA04());
-						list_b.add(sort.getA05());
-						if(sort.getId().getFact().getId().getFactNo().equals("GH")){
+						//原物料
+						list_b.add(sort.getA31());
+						list_b.add(sort.getA32());
+						list_b.add(sort.getA33());
+						list_b.add(sort.getSortA33());					
+						list_b.add(sort.getA34());
+						list_b.add(sort.getA35());
+						list_b.add(sort.getSortA34());
+						//防霜劑
+						list_b.add(sort.getA36());
+						list_b.add(sort.getA37());
+						list_b.add(sort.getA38());
+						list_b.add(sort.getA39());
+						list_b.add(sort.getSortA38());
+						//色料
+						list_b.add(sort.getA40());
+						list_b.add(sort.getA41());
+						list_b.add(sort.getA42());
+						list_b.add(sort.getA43());
+						list_b.add(sort.getSortA42());
+						//促進劑
+						list_b.add(sort.getA44());
+						list_b.add(sort.getA45());
+						list_b.add(sort.getA46());
+						list_b.add(sort.getA47());
+						list_b.add(sort.getSortA46());
+						//防粘劑
+						list_b.add(sort.getA48());
+						list_b.add(sort.getA49());
+						list_b.add(sort.getA50());
+						list_b.add(sort.getA51());
+						list_b.add(sort.getSortA50());
+						//油漆處理劑
+						list_b.add(sort.getA52());
+						list_b.add(sort.getA53());
+						list_b.add(sort.getA54());
+						list_b.add(sort.getA55());
+						list_b.add(sort.getSortA54());
+						//離型劑
+						list_b.add(sort.getA56());
+						list_b.add(sort.getA57());
+						list_b.add(sort.getA58());
+						list_b.add(sort.getA59());
+						list_b.add(sort.getSortA58());
+						//水
+						list_b.add(sort.getA04());//用水量
+						list_b.add(sort.getA05());//用水金額
+						//北越加久在水"用量單耗"不排名,就把"用量單耗"設爲最大，排名就在最後，便於去除
+						if(sort.getId().getFact().getId().getFactNo().equals("GH")||sort.getId().getFact().getId().getFactNo().equals("FVAS")){
 							sort.setA06(new BigDecimal(999999999.00));
 						}
-						list_b.add(sort.getA06());
-						list_b.add(sort.getA07());
-						list_b.add(sort.getSortA06());
+						list_b.add(sort.getA06());//用量單耗
+						list_b.add(sort.getA07());//費用單耗
+						list_b.add(sort.getSortA06());//用量排名
+						//電
 						list_b.add(sort.getA08());
 						list_b.add(sort.getA09());
 						list_b.add(sort.getA10());
 						list_b.add(sort.getA11());
 						list_b.add(sort.getSortA10());
+						//蒸汽
 						list_b.add(sort.getA12());
 						list_b.add(sort.getA13());
 						list_b.add(sort.getA14());
 						list_b.add(sort.getA15());
 						list_b.add(sort.getSortA14());
+						//總工務費用
 						list_b.add(sort.getA16());
 						list_b.add(sort.getA17());
 						list_b.add(sort.getA18());
@@ -476,46 +555,15 @@ public class VWebbussortAction extends ActionSupport implements ServletResponseA
 						list_b.add(sort.getA27());
 						list_b.add(sort.getA28());
 						list_b.add(sort.getSortA28());
-						list_b.add(sort.getA29());
-						list_b.add(sort.getA30());
-						list_b.add(sort.getSortA30());
-						list_b.add(sort.getA31());
-						list_b.add(sort.getA32());
-						list_b.add(sort.getA33());
-						list_b.add(sort.getSortA33());
-						list_b.add(sort.getA34());
-						list_b.add(sort.getA35());
-						list_b.add(sort.getSortA34());
-						list_b.add(sort.getA36());
-						list_b.add(sort.getA37());
-						list_b.add(sort.getA38());
-						list_b.add(sort.getA39());
-						list_b.add(sort.getSortA38());
-						list_b.add(sort.getA40());
-						list_b.add(sort.getA41());
-						list_b.add(sort.getA42());
-						list_b.add(sort.getA43());
-						list_b.add(sort.getSortA42());
-						list_b.add(sort.getA44());
-						list_b.add(sort.getA45());
-						list_b.add(sort.getA46());
-						list_b.add(sort.getA47());
-						list_b.add(sort.getSortA46());
-						list_b.add(sort.getA48());
-						list_b.add(sort.getA49());
-						list_b.add(sort.getA50());
-						list_b.add(sort.getA51());
-						list_b.add(sort.getSortA50());
-						list_b.add(sort.getA52());
-						list_b.add(sort.getA53());
-						list_b.add(sort.getA54());
-						list_b.add(sort.getA55());
-						list_b.add(sort.getSortA54());
-						list_b.add(sort.getA56());
-						list_b.add(sort.getA57());
-						list_b.add(sort.getA58());
-						list_b.add(sort.getA59());
-						list_b.add(sort.getSortA58());
+						//其它
+						list_b.add(sort.getA70());
+						list_b.add(sort.getA71());
+						list_b.add(sort.getA72());
+						list_b.add(sort.getA73());
+						list_b.add(sort.getA74());
+						list_b.add(sort.getA75());
+						list_b.add(sort.getSortA75());
+						//人工費用
 						list_b.add(sort.getA60());
 						list_b.add(sort.getA61());
 						list_b.add(sort.getSortA61());
@@ -531,17 +579,18 @@ public class VWebbussortAction extends ActionSupport implements ServletResponseA
 						list_b.add(sort.getA68());
 						list_b.add(sort.getA69());
 						list_b.add(sort.getSortA69());
-						list_b.add(sort.getA70());
-						list_b.add(sort.getA71());
-						list_b.add(sort.getA72());
-						list_b.add(sort.getA73());
-						list_b.add(sort.getA74());
-						list_b.add(sort.getA75());
-						list_b.add(sort.getSortA75());
+						//成倉
+						list_b.add(sort.getA29());
+						list_b.add(sort.getA30());
+						list_b.add(sort.getSortA30());
+						//廢品倉
 						list_b.add(sort.getA76());
 						list_b.add(sort.getA77());
 						list_b.add(sort.getA78());
 						list_b.add(sort.getSortA78());
+						
+						
+						
 					}
 					listtemp.add(list_b);
 				}
@@ -560,9 +609,9 @@ public class VWebbussortAction extends ActionSupport implements ServletResponseA
 				List<BigDecimal>list=new ArrayList<BigDecimal>();
 			    List<BigDecimal>list2=new ArrayList<BigDecimal>();
 			    List<Integer>list3=new ArrayList<Integer>();
-		    	for(int a=0;a<findTemps().size();a++){//for_b		    				    				    			
+		    	for(int a=0;a<list_temp.size();a++){//for_b		    				    				    			
 				    	for(int b=0;b<((List<List<BigDecimal>>)map_fcode.get(fcode)).size();b++){//for_c
-				    		if(findTemps().get(a).equals("compare obj")){
+				    		if(list_temp.get(a).getItemname().contains("compare obj")){
 				    			if(b==0){
 				    				//清除内容，为下一次排名做准备
 				    				list.clear();
@@ -572,7 +621,7 @@ public class VWebbussortAction extends ActionSupport implements ServletResponseA
 				    			list.add(((List<List<BigDecimal>>)map_fcode.get(fcode)).get(b).get(a)==null?new BigDecimal(0):((List<List<BigDecimal>>)map_fcode.get(fcode)).get(b).get(a));	
 				    			list2.add(((List<List<BigDecimal>>)map_fcode.get(fcode)).get(b).get(a)==null?new BigDecimal(0):((List<List<BigDecimal>>)map_fcode.get(fcode)).get(b).get(a));
 				    		}		    		
-				    		if(findTemps().get(a).equals("排名")){
+				    		if(list_temp.get(a).getItemname().contains("排名")){
 				    			Collections.sort(list2);
 					    		for(int x=0;x<list.size();x++){
 					    			list3.add(GlobalMethod.getIndex(list.get(x), list2));
@@ -619,11 +668,62 @@ public class VWebbussortAction extends ActionSupport implements ServletResponseA
 						   wb.getSheet(month).getRow(y_index).getCell(3+a).setCellValue(((List<List<BigDecimal>>)map_fcode.get(fcode)).get(a).get(b)==null?0:((List<List<BigDecimal>>)map_fcode.get(fcode)).get(a).get(b).doubleValue());
 						   wb.getSheet(month).getRow(y_index).getCell(3+a).setCellStyle(cs);
 						   /******************************北越加九用水方面不排名處理******************************/
-						   if(wb.getSheet(month).getRow(3+y_fcode).getCell(3+a).getStringCellValue().equals("北越加九")&&(4+b>6&&4+b<12)){
+						   if((wb.getSheet(month).getRow(3+y_fcode).getCell(3+a).getStringCellValue().equals("北越加九")||
+								   wb.getSheet(month).getRow(3+y_fcode).getCell(3+a).getStringCellValue().equals("越南賜佳") )
+								   &&(list_temp.get(b).getWebVwebbussortItemn().getMid()==900)){
 							   wb.getSheet(month).getRow(y_index).getCell(3+a).setCellValue("--");
 							   wb.getSheet(month).getRow(y_index).getCell(3+a).setCellStyle(cs_red2);
 						   }
 						   /******************************北越加九用水方面不排名處理******************************/
+						   
+						   /********************過濾處理********************/
+						   if(fcode.equals("MD")){
+							   if(list_temp.get(b).getWebVwebbussortItemn().getMid()==300||
+								  list_temp.get(b).getWebVwebbussortItemn().getMid()==600){
+								   wb.getSheet(month).getRow(y_index).getCell(3+a).setCellValue("/");
+								   wb.getSheet(month).getRow(y_index).getCell(3+a).setCellStyle(cs_red2);
+							   }
+						   }
+						   if(fcode.equals("IP")){
+							   if(list_temp.get(b).getWebVwebbussortItemn().getMid()==300||
+								  list_temp.get(b).getWebVwebbussortItemn().getMid()==500||	   
+								  list_temp.get(b).getWebVwebbussortItemn().getMid()==600){
+								   wb.getSheet(month).getRow(y_index).getCell(3+a).setCellValue("/");
+								   wb.getSheet(month).getRow(y_index).getCell(3+a).setCellStyle(cs_red2);
+							   }
+						   }
+						   if(fcode.equals("PU")){
+							   if(list_temp.get(b).getWebVwebbussortItemn().getMid()==300||
+								  list_temp.get(b).getWebVwebbussortItemn().getMid()==500||
+								  list_temp.get(b).getWebVwebbussortItemn().getMid()==600||
+								  list_temp.get(b).getWebVwebbussortItemn().getMid()==1100){
+								   wb.getSheet(month).getRow(y_index).getCell(3+a).setCellValue("/");
+								   wb.getSheet(month).getRow(y_index).getCell(3+a).setCellStyle(cs_red2);
+							   }
+						   }
+						   if(fcode.equals("底加")){
+							   if(list_temp.get(b).getWebVwebbussortItemn().getMid()==200||
+								  list_temp.get(b).getWebVwebbussortItemn().getMid()==300||
+								  list_temp.get(b).getWebVwebbussortItemn().getMid()==400||
+								  list_temp.get(b).getWebVwebbussortItemn().getMid()==500||
+								  list_temp.get(b).getWebVwebbussortItemn().getMid()==600||
+								  list_temp.get(b).getWebVwebbussortItemn().getMid()==800){
+								   wb.getSheet(month).getRow(y_index).getCell(3+a).setCellValue("/");
+								   wb.getSheet(month).getRow(y_index).getCell(3+a).setCellStyle(cs_red2);
+							   }
+						   }
+						   if(fcode.equals("鞋墊")){
+							   if(list_temp.get(b).getWebVwebbussortItemn().getMid()==300||
+								  list_temp.get(b).getWebVwebbussortItemn().getMid()==400||
+								  list_temp.get(b).getWebVwebbussortItemn().getMid()==500||
+								  list_temp.get(b).getWebVwebbussortItemn().getMid()==600||
+							      list_temp.get(b).getWebVwebbussortItemn().getMid()==700||
+								  list_temp.get(b).getWebVwebbussortItemn().getMid()==800){
+								   wb.getSheet(month).getRow(y_index).getCell(3+a).setCellValue("/");
+								   wb.getSheet(month).getRow(y_index).getCell(3+a).setCellStyle(cs_red2);
+							   }
+						   }
+						   /********************過濾處理********************/
 						   
 					   }
 				   }
@@ -673,7 +773,7 @@ public class VWebbussortAction extends ActionSupport implements ServletResponseA
 	 */
 	public Map<String,Object> findTypes() {
 		Map<String,Object>map = new LinkedHashMap<String,Object>();
-		List<String>list_1=new ArrayList<String>();
+		/*List<String>list_1=new ArrayList<String>();
 		List<String>list_2=new ArrayList<String>();
 		List<String>list_3=new ArrayList<String>();
 		List<String>list_4=new ArrayList<String>();
@@ -689,6 +789,7 @@ public class VWebbussortAction extends ActionSupport implements ServletResponseA
 		List<String>list_14=new ArrayList<String>();
 		List<String>list_15=new ArrayList<String>();
 		List<String>list_16=new ArrayList<String>();	
+		
 						
 		//產能
 		list_1.add("產能模__模");
@@ -806,11 +907,6 @@ public class VWebbussortAction extends ActionSupport implements ServletResponseA
 		list_16.add("重量單耗排名__排名原則");
 		
 		map.put("產能",list_1);
-		map.put("水",list_2);
-		map.put("電",list_3);
-		map.put("蒸汽",list_4);
-		map.put("總工務費用金額(USD)成倉",list_5);
-		map.put("成倉", list_6);
 		map.put("原物料",list_7);
 		map.put("防霜劑",list_8);
 		map.put("色料",list_9);
@@ -818,10 +914,27 @@ public class VWebbussortAction extends ActionSupport implements ServletResponseA
 		map.put("防粘劑",list_11);
 		map.put("油漆/處理劑",list_12);
 		map.put("離型劑",list_13);
-		map.put("人工費用",list_14);
+		map.put("水",list_2);
+		map.put("電",list_3);
+		map.put("蒸汽",list_4);
+		map.put("總工務費用",list_5);
 		map.put("其他",list_15);
-		map.put("廢品倉",list_16);
-
+		map.put("人工費用",list_14);
+		map.put("成倉", list_6);	
+		map.put("廢品倉",list_16);*/
+		
+		List<WebVwebbussortItemn>list=webbussitemSer.findAll();
+		List<WebVwebussortSubitem>list2=webbussitemSer.findAll2();
+		for(WebVwebbussortItemn item:list){
+			List<WebVwebussortSubitem>list3=new ArrayList<WebVwebussortSubitem>();
+			for(WebVwebussortSubitem sub:list2){
+				if(item.getMid().equals(sub.getWebVwebbussortItemn().getMid())){
+					list3.add(sub);
+				}
+			}
+			map.put(item.getItemname()+"__"+item.getMid(), list3);
+		}
+		
 		return map;
 
 	}
@@ -843,27 +956,31 @@ public class VWebbussortAction extends ActionSupport implements ServletResponseA
 	 * @author web
 	 * @date 2016/4/11
 	 */
-	public List<String> findTemps() {
-		List<String> list = new ArrayList<String>();
-
+	public List<WebVwebussortSubitem> findTemps() {
+		/*List<String> list = new ArrayList<String>();			
+		//產能
 		list.add("產能模");
 		list.add("產能雙");
 		list.add("生產天數");
+		//水
 		list.add("用水量");
 		list.add("用水金額");
-		list.add("compare obj");
+		list.add("compare obj");		
 		list.add("費用單耗");
 		list.add("排名");
+		//電
 		list.add("用電量(度)");
 		list.add("用電費用");
 		list.add("compare obj");
 		list.add("費用單耗");
 		list.add("排名");
+		//蒸汽
 		list.add("蒸汽用量");
 		list.add("蒸汽費用");
 		list.add("compare obj");
 		list.add("費用單耗");
 		list.add("排名");
+		//總工務費用
 		list.add("雜項購置");
 		list.add("雜項支出-其他");
 		list.add("電腦耗材");
@@ -878,46 +995,55 @@ public class VWebbussortAction extends ActionSupport implements ServletResponseA
 		list.add("費用小計");
 		list.add("compare obj");
 		list.add("排名");
+		//成倉
 		list.add("成品庫存");
 		list.add("compare obj");
 		list.add("排名");
+		//原物料
 		list.add("原料庫存量");
 		list.add("原料庫存金額");
 		list.add("compare obj");
 		list.add("排名");
 		list.add("compare obj");
-		list.add("呆滯料庫存金額(USD)");
+		list.add("呆滯料庫存金額(USD)");		
 		list.add("排名");
+		//防霜劑
 		list.add("防霜劑用量");
 		list.add("防霜劑金額");
 		list.add("compare obj");
 		list.add("防霜劑金額單耗");
 		list.add("排名");
+		//色料
 		list.add("色料用量");
 		list.add("色料金額");
 		list.add("compare obj");
 		list.add("色料金額單耗");
 		list.add("排名");
+		//促進劑
 		list.add("藥品用量");
 		list.add("藥品金額");
 		list.add("compare obj");
 		list.add("藥品金額單耗");
 		list.add("排名");
+		//防粘劑
 		list.add("防粘劑用量");
 		list.add("防粘劑金額");
 		list.add("compare obj");
 		list.add("防粘劑金額單耗");
 		list.add("排名");
+		//油漆處理劑
 		list.add("油漆溶劑用量");
 		list.add("油漆溶劑金額");
 		list.add("compare obj");
 		list.add("油漆溶劑金額單耗");
 		list.add("排名");
+		//離型劑
 		list.add("離型劑用量");
 		list.add("離型劑金額");
 		list.add("compare obj");
 		list.add("離型劑金額單耗");
 		list.add("排名");
+		//人工費用
 		list.add("直接工資");
 		list.add("compare obj");
 		list.add("排名");
@@ -933,6 +1059,7 @@ public class VWebbussortAction extends ActionSupport implements ServletResponseA
 		list.add("其加金額");
 		list.add("compare obj");
 		list.add("排名");
+		//其它
 		list.add("模具修理費");
 		list.add("差旅費");
 		list.add("交際費用");
@@ -940,10 +1067,12 @@ public class VWebbussortAction extends ActionSupport implements ServletResponseA
 		list.add("其它費用小計");
 		list.add("compare obj");
 		list.add("排名");
+		//廢品倉
 		list.add("廢品倉報廢重量");
 		list.add("廢品倉報廢金額");
 		list.add("compare obj");
-		list.add("排名");
+		list.add("排名");*/
+		List<WebVwebussortSubitem>list=webbussitemSer.findAll2();
 		return list;
 
 	}
@@ -1050,6 +1179,19 @@ public class VWebbussortAction extends ActionSupport implements ServletResponseA
 		cs_red2.setBorderLeft(HSSFCellStyle.BORDER_THIN);
 		cs_red2.setFont(font_red);
 		map.put("cs_red2", cs_red2);
+		
+		//紅色粗字體樣式(有邊框背景)
+		HSSFCellStyle cs_red3=wb.createCellStyle();
+		cs_red3.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		cs_red3.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		cs_red3.setBorderTop(HSSFCellStyle.BORDER_THIN);
+		cs_red3.setBorderRight(HSSFCellStyle.BORDER_THIN);
+		cs_red3.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+		cs_red3.setBorderLeft(HSSFCellStyle.BORDER_THIN);		
+		cs_red3.setFillForegroundColor(IndexedColors.RED.getIndex());
+		cs_red3.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+		cs_red3.setFont(font_bold);
+		map.put("cs_red3", cs_red3);
 		
 		
 		/**********************分類+項目+單位*****************************/
@@ -1188,7 +1330,7 @@ public class VWebbussortAction extends ActionSupport implements ServletResponseA
 	 * @author web
 	 * @date 2016/4/7
 	 */
-	public void printStaticContent(HSSFWorkbook wb,Map<String,Object>map,List<String>list_months,List<Object[]>list_facts,List<String>list_temp,Map<String,Object>map_types){
+	public void printStaticContent(HSSFWorkbook wb,Map<String,Object>map,List<String>list_months,List<Object[]>list_facts,List<WebVwebussortSubitem>list_temp,Map<String,Object>map_types){
 		//HSSFCellStyle cs=(HSSFCellStyle)map.get("cs");
 		HSSFCellStyle cs_head=(HSSFCellStyle)map.get("cs_head");
 		HSSFCellStyle cs_column=(HSSFCellStyle)map.get("cs_column");
@@ -1237,20 +1379,24 @@ public class VWebbussortAction extends ActionSupport implements ServletResponseA
 	    	/********************分類+項目+單位*******************/
 	    	int idx1=2;
     		int idx2=2;
-	    	for(String key:map_types.keySet()){
+	    	for(String key:map_types.keySet()){//for a
 	    		 idx1=idx2;
-	    		 idx2=idx1+((List<String>)map_types.get(key)).size();
+	    		 idx2=idx1+((List<WebVwebussortSubitem>)map_types.get(key)).size();
 	    		CellRangeAddress cra_type=new CellRangeAddress(idx1,idx2-1,0,0);
 	    		sheet.addMergedRegion(cra_type);
-	    		sheet.getRow(idx1).getCell(0).setCellValue(key);
+	    		sheet.getRow(idx1).getCell(0).setCellValue(key.split("__")[0]);
 	    		for(int x=idx1;x<idx2;x++){
 	    			sheet.getRow(x).getCell(0).setCellStyle(cs_bold);
+	    			
 	    		}
 	    		//項目,單位
-	    		for(int y=0;y<((List<String>)map_types.get(key)).size();y++){
-	    			for(int z=0;z<((List<String>)map_types.get(key)).get(y).split("__").length;z++){
-	    				sheet.getRow(y+idx1).getCell(1+z).setCellValue(((List<String>)map_types.get(key)).get(y).split("__")[z]);
-	    				if(((List<String>)map_types.get(key)).get(y).contains("排名")){
+	    		for(int y=0;y<((List<WebVwebussortSubitem>)map_types.get(key)).size();y++){//for b
+	    			for(int z=0;z<((List<WebVwebussortSubitem>)map_types.get(key)).get(y).getItemname().split("__").length;z++){
+	    				if(z>1){
+	    					continue;
+	    				}
+	    				sheet.getRow(y+idx1).getCell(1+z).setCellValue(((List<WebVwebussortSubitem>)map_types.get(key)).get(y).getItemname().split("__")[z]);
+	    				if(((List<WebVwebussortSubitem>)map_types.get(key)).get(y).getItemname().contains("排名")){
 		    				CellRangeAddress cra=new CellRangeAddress(y+idx1,y+idx1,1,2);//合併單元格，隻顯示第一單元 格內容
 			    			sheet.addMergedRegion(cra);
 		    				sheet.getRow(y+idx1).getCell(1+z).setCellStyle(cs_blue);
@@ -1258,8 +1404,8 @@ public class VWebbussortAction extends ActionSupport implements ServletResponseA
 		    				sheet.getRow(y+idx1).getCell(1+z).setCellStyle(cs_bold);
 		    			}
 	    			}	    				    				    			
-	    		}
-	    	}	    	
+	    		}//for b
+	    	}//for a	    	
 	    	/********************分類+項目+單位*******************/
 	    	
 	    }//for1
@@ -1275,13 +1421,14 @@ public class VWebbussortAction extends ActionSupport implements ServletResponseA
 	 * @author web
 	 * @date 2016/4/7
 	 */
-	public void printStaticContent2(HSSFWorkbook wb,Map<String,Object>map,List<String>list_months,List<Object[]>list_facts,List<String>list_temp,Map<String,Object>map_types,Map<String,Object>map_month){
+	public void printStaticContent2(HSSFWorkbook wb,Map<String,Object>map,List<String>list_months,List<Object[]>list_facts,List<WebVwebussortSubitem>list_temp,Map<String,Object>map_types,Map<String,Object>map_month){
 		//HSSFCellStyle cs=(HSSFCellStyle)map.get("cs");
 		HSSFCellStyle cs_head=(HSSFCellStyle)map.get("cs_head");
 		HSSFCellStyle cs_column=(HSSFCellStyle)map.get("cs_column");
 		HSSFCellStyle cs_blue=(HSSFCellStyle)map.get("cs_blue");
 		HSSFCellStyle cs_bold=(HSSFCellStyle)map.get("cs_bold");
 		HSSFCellStyle cs_red=(HSSFCellStyle)map.get("cs_red");
+		HSSFCellStyle cs_red3=(HSSFCellStyle)map.get("cs_red3");
 		 /********************初始化表格*************************/
 	    for(String month:map_month.keySet()){
 	    	wb.createSheet(month);
@@ -1319,7 +1466,7 @@ public class VWebbussortAction extends ActionSupport implements ServletResponseA
 	    		    	
 	    	Map<String,Object>map_fcode=(Map<String,Object>)map_month.get(month);	    	    	
 	    	for(String fcode:map_fcode.keySet()){//for 2	
-	    		
+	    		HSSFCellStyle cs_temp=cs_bold;
 	    		//計算廠別狀態增長量
 	    		if(y_increment>0){
 		    		y_fcode=(list_temp.size()+3)*y_increment;
@@ -1355,19 +1502,75 @@ public class VWebbussortAction extends ActionSupport implements ServletResponseA
 		    	int idx1=y_index;
 	    		int idx2=y_index;
 		    	for(String key:map_types.keySet()){
-		    		 idx1=idx2;
-		    		 idx2=idx1+((List<String>)map_types.get(key)).size();
+		    		/********************過濾處理********************/
+		    		if(fcode.equals("MD")){
+	    				if(key.split("__")[1].equals("300")||
+	    					key.split("__")[1].equals("600")){
+	    					cs_temp=cs_red3;
+	    				}else{
+	    					cs_temp=cs_bold;
+	    				}
+	    			}
+	    			if(fcode.equals("IP")){
+	    				if(key.split("__")[1].equals("300")||
+		    				key.split("__")[1].equals("500")||
+		    				key.split("__")[1].equals("600")){
+		    					cs_temp=cs_red3;
+		    				}else{
+		    					cs_temp=cs_bold;
+		    				}
+	    			}
+	    			if(fcode.equals("PU")){
+	    				if(key.split("__")[1].equals("300")||
+			    				key.split("__")[1].equals("500")||
+			    				key.split("__")[1].equals("600")||
+			    				key.split("__")[1].equals("1100")){
+			    					cs_temp=cs_red3;
+			    				}else{
+			    					cs_temp=cs_bold;
+			    				}
+	    			}
+	    			if(fcode.equals("底加")){
+	    				if(key.split("__")[1].equals("200")||
+			    				key.split("__")[1].equals("300")||
+			    				key.split("__")[1].equals("400")||
+			    				key.split("__")[1].equals("500")||
+			    				key.split("__")[1].equals("600")||				    				
+			    				key.split("__")[1].equals("800")){
+			    					cs_temp=cs_red3;
+			    				}else{
+			    					cs_temp=cs_bold;
+			    				}
+	    			}
+	    			if(fcode.equals("鞋墊")){
+	    				if(key.split("__")[1].equals("300")||
+			    				key.split("__")[1].equals("400")||
+			    				key.split("__")[1].equals("500")||
+			    				key.split("__")[1].equals("600")||
+			    				key.split("__")[1].equals("700")||				    				
+			    				key.split("__")[1].equals("800")){
+			    					cs_temp=cs_red3;
+			    				}else{
+			    					cs_temp=cs_bold;
+			    				}
+	    			}
+	    			/********************過濾處理********************/
+		    		idx1=idx2;
+		    		idx2=idx1+((List<WebVwebussortSubitem>)map_types.get(key)).size();
 		    		CellRangeAddress cra_type=new CellRangeAddress(idx1,idx2-1,0,0);
 		    		sheet.addMergedRegion(cra_type);
-		    		sheet.getRow(idx1).getCell(0).setCellValue(key);
-		    		for(int x=idx1;x<idx2;x++){
-		    			sheet.getRow(x).getCell(0).setCellStyle(cs_bold);
+		    		sheet.getRow(idx1).getCell(0).setCellValue(key.split("__")[0]);
+		    		for(int x=idx1;x<idx2;x++){		    			
+		    			sheet.getRow(x).getCell(0).setCellStyle(cs_temp);		    			
 		    		}
 		    		//項目,單位
-		    		for(int y=0;y<((List<String>)map_types.get(key)).size();y++){
-		    			for(int z=0;z<((List<String>)map_types.get(key)).get(y).split("__").length;z++){
-		    				sheet.getRow(y+idx1).getCell(1+z).setCellValue(((List<String>)map_types.get(key)).get(y).split("__")[z]);
-		    				if(((List<String>)map_types.get(key)).get(y).contains("排名")){
+		    		for(int y=0;y<((List<WebVwebussortSubitem>)map_types.get(key)).size();y++){
+		    			for(int z=0;z<((List<WebVwebussortSubitem>)map_types.get(key)).get(y).getItemname().split("__").length;z++){
+		    				if(z>1){
+		    					continue;
+		    				}
+		    				sheet.getRow(y+idx1).getCell(1+z).setCellValue(((List<WebVwebussortSubitem>)map_types.get(key)).get(y).getItemname().split("__")[z]);
+		    				if(((List<WebVwebussortSubitem>)map_types.get(key)).get(y).getItemname().contains("排名")){
 			    				CellRangeAddress cra=new CellRangeAddress(y+idx1,y+idx1,1,2);//合併單元格，隻顯示第一單元 格內容
 				    			sheet.addMergedRegion(cra);
 			    				sheet.getRow(y+idx1).getCell(1+z).setCellStyle(cs_blue);

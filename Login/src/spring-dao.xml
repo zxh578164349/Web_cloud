@@ -95,5 +95,6 @@
 	<bean id="webremitsdao" class="dao.impl.WebremittancelistsDaoImpl" parent="baseDao"></bean>
 	<bean id="vwebprolossdao" class="dao.impl.VWebprofitlossEveDaoImpl" parent="baseDao"></bean>
 	<bean id="vwebprolossfactdao" class="dao.impl.VWebprofitlossFactEveDaoImpl" parent="baseDao"></bean>
+	<bean id="webvwebbussortitemdao" class="dao.impl.WebVwebbussortItemnDaoImpl" parent="baseDao"></bean>
 </beans>
 

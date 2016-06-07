@@ -76,7 +76,7 @@ jq(function(){
 			      <td><s:property value="menuname"/></td>
 			      <td>
 			        <s:iterator value="submenus">
-			            <input type="checkbox" name="checkbox" value="<s:property value='menuname'/>,<s:property value='submenuname'/>,<s:property value='address'/>"/><s:property value="submenuname" />
+			            <input type="checkbox" name="checkbox" value="<s:property value='menuname'/>,<s:property value='submenuname'/>,<s:property value='address'/>,<s:property value='submenuid'/>"/><s:property value="submenuname" />
 			        </s:iterator>			        			      			        			        
 			      </td>
 			   </tr>

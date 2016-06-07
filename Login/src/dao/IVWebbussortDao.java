@@ -37,6 +37,6 @@ public interface IVWebbussortDao {
 	 * @date 2016/4/19
 	 */
 	public List<VWebbussortFcode>findByYymm2(String yymm,String yymm2);
-	
+		
 
 }

@@ -95,6 +95,7 @@
 	<bean id="webremitsSer" class="services.impl.WebremittancelistsServicesImpl"></bean>
 	<bean id="vwebprolossSer" class="services.impl.VWebprofitlossEveServicesImpl"></bean>
 	<bean id="vwebprolossfacteveSer" class="services.impl.VWebprofitlossFactEveServicesImpl"></bean>
+	<bean id="webbussitemSer" class="services.impl.WebVwebbussortItemnServicesImpl"></bean>
 </beans>
 
 

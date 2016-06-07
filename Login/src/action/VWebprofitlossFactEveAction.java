@@ -846,64 +846,69 @@ public class VWebprofitlossFactEveAction implements ServletResponseAware{
 		DecimalFormat format_per1 = new DecimalFormat("0.0%");
 		DecimalFormat format_per2 = new DecimalFormat("0.00%");
 
-		String A001 = format2.format(eve.getObjA100());
-		String A002 = format2.format(eve.getObjA110());
-		String A003 = format2.format(eve.getObjA128().add(eve.getObjA129()));
-		String A004 = format2.format(eve.getObjA134());
-		String A005 = format2.format(eve.getObjA135());
-		String A006 = format2.format(eve.getObjA100().doubleValue()
+		//損益彙總
+		String A001 = format2.format(eve.getObjA100().doubleValue()/index);
+		String A002 = format2.format(eve.getObjA110().doubleValue()/index);
+		String A003 = format2.format(eve.getObjA128().add(eve.getObjA129()).doubleValue()/index);
+		String A004 = format2.format(eve.getObjA134().doubleValue()/index);
+		String A005 = format2.format(eve.getObjA135().doubleValue()/index);
+		String A006 = format2.format((eve.getObjA100().doubleValue()
 				- eve.getObjA110().doubleValue()
 				- eve.getObjA128().doubleValue()
 				- eve.getObjA129().doubleValue()
 				- eve.getObjA134().doubleValue()
-				+ eve.getObjA135().doubleValue());
-		String B001 = format2.format(eve.getObjA177());
-		String B002 = format2.format(eve.getObjA178());
+				+ eve.getObjA135().doubleValue())/index);
+		//全廠原料庫存
+		String B001 = format2.format(eve.getObjA177().doubleValue()/index);
+		String B002 = format2.format(eve.getObjA178().doubleValue()/index);
 		String B003 = format2.format(this.division(eve.getObjA178()
 				.doubleValue(), eve.getObjA177().doubleValue()));
 		String B004 = format_per2.format(this.division(this.division(eve
 				.getObjA178().doubleValue(), eve.getObjA177().doubleValue())-this.division(eve2.getObjA178().doubleValue(), eve2.getObjA177().doubleValue()),
 				this.division(eve2.getObjA178().doubleValue(), eve2.getObjA177().doubleValue())));
 						
-		String B005 = format2.format(eve.getObjA179());
-		String B006 = format2.format(eve.getObjA179().doubleValue() / 1000);
-		String B007 = format2.format(eve.getObjA180());
+		String B005 = format2.format(eve.getObjA179().doubleValue()/index);
+		String B006 = format2.format(eve.getObjA179().doubleValue() / 1000/index);
+		String B007 = format2.format(eve.getObjA180().doubleValue()/index);
 		String B008 = format2.format(this.division(eve.getObjA180()
 				.doubleValue(), eve.getObjA179().doubleValue()));
 		String B009 = format_per2.format(this.division(this.division(eve
 				.getObjA180().doubleValue(), eve.getObjA179().doubleValue())-this.division(eve2.getObjA180().doubleValue(), eve2.getObjA179().doubleValue()),
 				this.division(eve2.getObjA180().doubleValue(), eve2.getObjA179().doubleValue())));
-		String C001 = format2.format(eve.getSumActualdemo());
-		String C002 = format2.format(eve.getObjA153());
+		//水電油
+		String C001 = format2.format(eve.getSumActualdemo().doubleValue()/index);
+		String C002 = format2.format(eve.getObjA153().doubleValue()/index);
 		String C003 = format5.format(this.division(eve.getObjA153()
 				.doubleValue(), eve.getSumActualdemo().doubleValue()));
-		String C004 = format2.format(eve.getObjA154());
+		String C004 = format2.format(eve.getObjA154().doubleValue()/index);
 		String C005 = format5.format(this.division(eve.getObjA154()
 				.doubleValue(), eve.getSumActualdemo().doubleValue()));
-		String C006 = format2.format(eve.getObjA155());
+		String C006 = format2.format(eve.getObjA155().doubleValue()/index);
 		String C007 = format5.format(this.division(eve.getObjA155()
 				.doubleValue(), eve.getSumActualdemo().doubleValue()));
-		String C008 = format2.format(eve.getObjA156());
+		String C008 = format2.format(eve.getObjA156().doubleValue()/index);
 		String C009 = format5.format(this.division(eve.getObjA156()
 				.doubleValue(), eve.getSumActualdemo().doubleValue()));
-		String C010 = format2.format(eve.getObjA157());
+		String C010 = format2.format(eve.getObjA157().doubleValue()/index);
 		String C011 = format5.format(this.division(eve.getObjA157()
 				.doubleValue(), eve.getSumActualdemo().doubleValue()));
-		String C012 = format2.format(eve.getObjA158());
+		String C012 = format2.format(eve.getObjA158().doubleValue()/index);
 		String C013 = format5.format(this.division(eve.getObjA158()
 				.doubleValue(), eve.getSumActualdemo().doubleValue()));
-		String C014 = format2.format(eve.getObjA159());
+		String C014 = format2.format(eve.getObjA159().doubleValue()/index);
 		String C015 = format5.format(this.division(eve.getObjA159()
 				.doubleValue(), eve.getSumActualdemo().doubleValue()));
-		String C016 = format2.format(eve.getObjA160());
+		String C016 = format2.format(eve.getObjA160().doubleValue()/index);
 		String C017 = format5.format(this.division(eve.getObjA160()
 				.doubleValue(), eve.getSumActualdemo().doubleValue()));
-		String D001 = format2.format(eve.getEstpay());
-		String D002 = format2.format(eve.getEstmoney());
+		//下月請款狀況
+		String D001 = format2.format(eve.getEstpay().doubleValue()/index);
+		String D002 = format2.format(eve.getEstmoney().doubleValue()/index);
 		String D003 = format2.format(this.division(eve.getEstmoney()
 				.doubleValue(), eve.getEstpay().doubleValue()));
-		String D004 = format2.format(eve.getEstmodel());
-		String D005 = format2.format(eve.getMachinepower());
+		//下月生產狀況
+		String D004 = format2.format(eve.getEstmodel().doubleValue()/index);
+		String D005 = format2.format(eve.getMachinepower().doubleValue()/index);
 		String D006 = format_per2.format(this.division(eve.getEstmodel()
 				.doubleValue(), eve.getMachinepower().doubleValue()));
 

@@ -1,8 +1,14 @@
 package util;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.math.BigDecimal;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
+import java.net.UnknownHostException;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.ParseException;
@@ -12,6 +18,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -33,6 +40,8 @@ import com.opensymphony.xwork2.ActionContext;
 
 import entity.KyzExpectmatmLog;
 import entity.WebUser;
+import entity.Webestproduct;
+import entity.WebestproductId;
 
 
 public class GlobalMethod extends HibernateDaoSupport{
@@ -615,35 +624,149 @@ public class GlobalMethod extends HibernateDaoSupport{
 		return db;
 	}
 	
+	/**
+	 * 查找本機IP
+	 * @Title: findIp
+	 * @Description: TODO
+	 * @param @return
+	 * @return String
+	 * @throws
+	 * @author web
+	 * @date 2016/5/30
+	 */
+	public static String findIp(){
+		String ipAddress = null; 
+		try{			
+			ipAddress =ServletActionContext.getRequest().getHeader("x-forwarded-for");									  
+		      if(ipAddress == null || ipAddress.length() == 0 ||"unknown".equalsIgnoreCase(ipAddress)){ 									  
+		          ipAddress =ServletActionContext.getRequest().getHeader("Proxy-Client-IP");									  
+		         }
+		      if (ipAddress == null || ipAddress.length() == 0 || "unknown".equalsIgnoreCase(ipAddress)) {									 
+		          ipAddress =ServletActionContext.getRequest().getHeader("WL-Proxy-Client-IP");								  
+		         } 
+		      if (ipAddress == null || ipAddress.length() == 0 || "unknown".equalsIgnoreCase(ipAddress)) {									 
+		          ipAddress =ServletActionContext.getRequest().getRemoteAddr(); 
+		          if(ipAddress.equals("127.0.0.1")){
+		             InetAddress inet =null;
+		             try { 
+		            	 inet = InetAddress.getLocalHost(); 
+		             }catch (Exception e) { 
+		            	 e.printStackTrace(); 
+		            	 }
+		              ipAddress = inet.getHostAddress();
+		           } 
+		        } 
+		      if (ipAddress!= null && ipAddress.length() > 15) {
+		           if (ipAddress.indexOf(",") > 0) { 
+		        	   ipAddress = ipAddress.substring(0,ipAddress.indexOf(","));						 
+		                  }  
+		      }
+		}catch(Exception e){
+			e.printStackTrace();
+		}		
+	      return ipAddress;
+	}
+	
+	/**
+	 * (quartz專用)獲取本機IP2
+	 * @Title: findIp2
+	 * @Description: TODO
+	 * @param @return
+	 * @return String[]
+	 * @throws
+	 * @author web
+	 * @date 2016/5/30
+	 */
+	public static List<String> findIp2(){		
+		  List<String> res = new ArrayList<String>();  
+	        Enumeration netInterfaces;  
+	        try {  
+	            netInterfaces = NetworkInterface.getNetworkInterfaces();  
+	            InetAddress ip = null;  
+	            while (netInterfaces.hasMoreElements()) {  
+	                NetworkInterface ni = (NetworkInterface) netInterfaces.nextElement();  	                         
+	                Enumeration nii = ni.getInetAddresses();  
+	                while (nii.hasMoreElements()) {  
+	                    ip = (InetAddress) nii.nextElement();  
+	                    if (ip.getHostAddress().indexOf(":") == -1) {  
+	                        res.add(ip.getHostAddress());  
+	                        //System.out.println("本机的ip=" + ip.getHostAddress());  
+	                    }  
+	                }  
+	            }  
+	        } catch (SocketException e) {  
+	            e.printStackTrace();  
+	        }  
+	        return res;
+	        //return (String[]) res.toArray(new String[0]); 	        
+	}
+	
+	
+	
+	/**
+	 * 獲取物理地址
+	 * @Title: getMacAddress
+	 * @Description: TODO
+	 * @param @return
+	 * @return String
+	 * @throws
+	 * @author web
+	 * @date 2016/5/30
+	 */
+	  public static String getMacAddress() {  
+	        String mac = null;  
+	        String line = "";  	  
+	        String os = System.getProperty("os.name");  	  
+	        if (os != null && os.startsWith("Windows")) {  
+	            try {  
+	                String command = "cmd.exe /c ipconfig /all";  
+	                Process p = Runtime.getRuntime().exec(command);  	  
+	                BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));   	                         	  
+	                while ((line = br.readLine()) != null) {  
+	                    if (line.indexOf("Physical Address") > 0||line.indexOf("實體位址")>0) {  
+	                        int index = line.indexOf(":") + 2;  	  
+	                        mac = line.substring(index);  	  
+	                        break;  
+	                    }  
+	                }  	  
+	                br.close();  	  
+	            } catch (IOException e) {  
+	            }  
+	        }  	  
+	        return mac;  
+	    }  
+	
 	public static void main(String[] args) throws ParseException {
-		Integer[] a = {0,3,0,4,5};//原始
-        int[] b = new int[a.length];//有序
-        int[] c = new int[a.length];//返回結果
-        /*for(int i=0; i<a.length; i++) {
-            b[i] = a[i];
-            System.out.print(b[i] + "\t");
+		List<Webestproduct>list=new ArrayList<Webestproduct>();
+		List<String>list2=new ArrayList<String>();
+		List<Webestproduct>list3=new ArrayList<Webestproduct>();
+		Map<String,Object>map=new LinkedHashMap<String,Object>();
+		list2.add("RB");
+		list2.add("MD");
+		list2.add("PU");
+        for(int i=0;i<list2.size();i++){
+        	list.add(new Webestproduct(new WebestproductId("631",list2.get(i),new SimpleDateFormat("yyyyMM").parse("201605"),"zd")));
+        	list3.add(new Webestproduct(new WebestproductId("631",list2.get(i),new SimpleDateFormat("yyyyMM").parse("201605"),"zd")));
         }
-        System.out.println();
-        Arrays.sort(b);
-        for(int i=0; i<a.length; i++) {
-            System.out.print(b[i] + "\t");
+        for(int i=0;i<list3.size();i++){
+        	list3.get(i).setAccessories(3.2-i);
         }
-        System.out.println();
-        for(int i=0; i<a.length; i++) {
-            c[i] = getIndex(a[i], b);
-            System.out.print(c[i] + "\t");
+        for(Webestproduct pro:list){
+        	System.out.println(pro.getAccessories());
         }
-        
-        
-        System.out.println("-------------------------------------------------------");
-        DateFormat frm=new SimpleDateFormat("yyyyMM");
-        Calendar cal=Calendar.getInstance();
-        cal.setTime(frm.parse("201604"));
-        cal.add(Calendar.MONTH, -1);
-        System.out.println(frm.format(cal.getTime()));*/
-        
-        String aa="Y";
-        System.out.println(aa!="Y");
+        System.out.println("------------------------");
+        list3.remove(1);
+       
+        for(Webestproduct pro:list){
+        	for(Webestproduct pro2:list3){
+        		if(pro.getId().getFactCode().equals(pro2.getId().getFactCode())&&
+        				pro.getId().getFactNo().equals(pro2.getId().getFactNo())&&
+        				new SimpleDateFormat("yyyyMM").format(pro.getId().getYymm()).equals(new SimpleDateFormat("yyyyMM").format(pro2.getId().getYymm()))){
+        			pro=pro2;
+        		}
+        	}
+        	System.out.println(pro.getAccessories());
+        }
         
 
        

@@ -13,6 +13,7 @@ public class WebSubmenu implements java.io.Serializable {
 	private String submenuname;
 	private String address;
 	private String subtype;
+	private WebSubmenu2 smenu2;
 
 	// Constructors
 
@@ -77,5 +78,14 @@ public class WebSubmenu implements java.io.Serializable {
 	public void setSubtype(String subtype) {
 		this.subtype = subtype;
 	}
+
+	public WebSubmenu2 getSmenu2() {
+		return smenu2;
+	}
+
+	public void setSmenu2(WebSubmenu2 smenu2) {
+		this.smenu2 = smenu2;
+	}
+	
 
 }

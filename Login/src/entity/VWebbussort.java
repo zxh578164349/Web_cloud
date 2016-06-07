@@ -14,11 +14,11 @@ public class VWebbussort implements java.io.Serializable {
 	private BigDecimal a01;
 	private BigDecimal a02;
 	private BigDecimal a03;
-	private BigDecimal a04;
-	private BigDecimal a05;
-	private BigDecimal a06;
-	private BigDecimal a07;
-	private BigDecimal sortA06;
+	private BigDecimal a04;//用水量
+	private BigDecimal a05;//用水金額
+	private BigDecimal a06;//用量單耗
+	private BigDecimal a07;//費用單耗
+	private BigDecimal sortA06;//用量排名
 	private BigDecimal a08;
 	private BigDecimal a09;
 	private BigDecimal a10;
@@ -120,7 +120,7 @@ public class VWebbussort implements java.io.Serializable {
 	public VWebbussort(VWebbussortId id) {
 		this.id = id;
 	}
-
+	
 	/** full constructor */
 	public VWebbussort(VWebbussortId id, BigDecimal a01, BigDecimal a02,
 			BigDecimal a03, BigDecimal a04, BigDecimal a05, BigDecimal a06,

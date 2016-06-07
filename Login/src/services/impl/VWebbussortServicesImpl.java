@@ -58,4 +58,5 @@ public class VWebbussortServicesImpl implements IVWebbussortServices{
 		return vwebsortdao.findByYymm2(yymm, yymm2);
 	}
 
+
 }

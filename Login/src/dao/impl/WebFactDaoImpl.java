@@ -286,4 +286,19 @@ public class WebFactDaoImpl extends Basedao implements IWebFactDao {
 		return super.findAll(hql, objs);
 	}
 
+	/**
+	 * 日期:2016/6/7
+	 * 描述:
+	 */
+	
+	
+	public List<WebFact> findByList(List<String> list) {
+		// TODO Auto-generated method stub
+		String hql="from WebFact where id.factNo in (:facts) order by factCode,fcodeIndex";
+		Query query=getSession().createQuery(hql);
+		query.setParameterList("facts", list);
+		List<WebFact>list2=(List<WebFact>)query.uniqueResult();
+		return list2;
+	}
+
 }

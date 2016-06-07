@@ -20,10 +20,8 @@
 <meta http-equiv="description" content="This is my page">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="IE=Edge">
-<style type="text/css">
+<link rel="shortcut icon" href="images/icon/web_ico.ico" /> 
 
-
-</style>
 
 
 <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
