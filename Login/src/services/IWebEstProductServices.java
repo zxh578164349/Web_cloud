@@ -47,5 +47,6 @@ public interface IWebEstProductServices {
 	 * @date 2016/4/1
 	 */
 	public List<Webestproduct>findByYymm(String yymm);
+	public List<Webestproduct>findByYymm(String yymm,String yymm2);
 
 }

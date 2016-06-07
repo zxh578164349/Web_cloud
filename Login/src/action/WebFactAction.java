@@ -93,15 +93,7 @@ public class WebFactAction extends ActionSupport {
 	public void findAllFact_code_no(){
 		Map<String,List<WebFact>>map=new LinkedHashMap<String,List<WebFact>>();
 		List<Object[]>list_objs=webFactSer.findAllFactCode2_showA();
-		List<WebFact>list_facts=webFactSer.findAllFact_showA();
-		/*for(int i=0;i<list_objs.size();i++){			
-			Object[]obj=list_objs.get(i);
-			String factCode=obj[0].toString();
-			List<WebFact>list_fact=webFactSer.findFactByFactCode(factCode);						
-			map.put(factCode, list_fact);
-			
-		}*/
-		
+		List<WebFact>list_facts=webFactSer.findAllFact_showA();				
 		for(Object[] obj:list_objs){
 			List<WebFact>list=new ArrayList<WebFact>();
 			for(WebFact fact:list_facts){

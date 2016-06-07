@@ -40,6 +40,8 @@ import com.opensymphony.xwork2.ActionContext;
 
 import entity.KyzExpectmatmLog;
 import entity.WebUser;
+import entity.Webestproduct;
+import entity.WebestproductId;
 
 
 public class GlobalMethod extends HibernateDaoSupport{
@@ -735,17 +737,37 @@ public class GlobalMethod extends HibernateDaoSupport{
 	    }  
 	
 	public static void main(String[] args) throws ParseException {
-		List<Integer>list=new ArrayList<Integer>();
-        list.add(1);list.add(2);list.add(3);list.add(4);
-        synchronized(list){
-        	for(Integer a:list){
-          	  
-         	   if(a>2){
-         		   continue;
-         	   }
-         	   System.out.println(a);
-            }
- 	   }
+		List<Webestproduct>list=new ArrayList<Webestproduct>();
+		List<String>list2=new ArrayList<String>();
+		List<Webestproduct>list3=new ArrayList<Webestproduct>();
+		Map<String,Object>map=new LinkedHashMap<String,Object>();
+		list2.add("RB");
+		list2.add("MD");
+		list2.add("PU");
+        for(int i=0;i<list2.size();i++){
+        	list.add(new Webestproduct(new WebestproductId("631",list2.get(i),new SimpleDateFormat("yyyyMM").parse("201605"),"zd")));
+        	list3.add(new Webestproduct(new WebestproductId("631",list2.get(i),new SimpleDateFormat("yyyyMM").parse("201605"),"zd")));
+        }
+        for(int i=0;i<list3.size();i++){
+        	list3.get(i).setAccessories(3.2-i);
+        }
+        for(Webestproduct pro:list){
+        	System.out.println(pro.getAccessories());
+        }
+        System.out.println("------------------------");
+        list3.remove(1);
+       
+        for(Webestproduct pro:list){
+        	for(Webestproduct pro2:list3){
+        		if(pro.getId().getFactCode().equals(pro2.getId().getFactCode())&&
+        				pro.getId().getFactNo().equals(pro2.getId().getFactNo())&&
+        				new SimpleDateFormat("yyyyMM").format(pro.getId().getYymm()).equals(new SimpleDateFormat("yyyyMM").format(pro2.getId().getYymm()))){
+        			pro=pro2;
+        		}
+        	}
+        	System.out.println(pro.getAccessories());
+        }
+        
 
        
 						
