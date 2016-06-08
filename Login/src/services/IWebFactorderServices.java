@@ -7,6 +7,7 @@ import org.hibernate.Transaction;
 import util.PageBean;
 
 import entity.KyzExpectmatmLog;
+import entity.WebFact;
 import entity.WebFactorder;
 
 public interface IWebFactorderServices {
@@ -66,4 +67,17 @@ public interface IWebFactorderServices {
 	 * @date 2016/4/1
 	 */
 	public void deleteMore(List<String>factAreas,List<String>brank,List<String>customer,List<String>model,List<String>component,String factNo,List<String>factNos,String yymm,String yymm2);
+	
+	/**
+	 * 当月没有導入訂單的廠別
+	 * @Title: findNoinput
+	 * @Description: TODO
+	 * @param @param yymm
+	 * @param @return
+	 * @return List<WebFact>
+	 * @throws
+	 * @author web
+	 * @date 2016/6/8
+	 */
+	public List<WebFact>findNoinput(String yymm);
 }

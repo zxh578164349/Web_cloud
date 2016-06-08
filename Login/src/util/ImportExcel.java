@@ -97,33 +97,23 @@ public class ImportExcel {
 					}
 					/**********************3：列循环***********************/
 					for (short colIx = minColIx; colIx < maxColIx; colIx++) {//注意：colIx < maxColIx,與外循環的rowIx <= maxRowIx不同
-						if(rowIx==row_head){//爲避免年月出現小數點的現象，先把表轉化爲字符串
-							sheet.getRow(row_head).getCell(colIx).setCellType(Cell.CELL_TYPE_STRING);
+						Cell cell = row.getCell(colIx);
+						if(cell==null){
+							cell=row.createCell(colIx);														
 						}
-						Cell cell = row.getCell(new Integer(colIx));											
-						CellValue cellValue = evaluator.evaluate(cell);							
-						if (cellValue == null) {
-							//continue;(原先爲空的話，忽略掉)
-							
-							/*************現在，改爲如果爲空，創建新單元格，幷給新值;如果是非數據列，則取上一行的的值；否則給值0，標記這這裏爲空****************/
-							cell=row.createCell(colIx);																			
-								if(colIx<minColIx+6){
-									sheet.getRow(rowIx-1).getCell(colIx).setCellType(Cell.CELL_TYPE_STRING);//先轉換成CELL_TYPE_STRING，否則可能報數據類型不對的情況20160128
-									cell.setCellValue(sheet.getRow(rowIx-1).getCell(colIx).getStringCellValue());
-								}else{
-									cell.setCellValue(0);
-								}
-								cellValue=evaluator.evaluate(cell);
-								/*************現在，改爲如果爲空，創建新單元格，幷給新值;如果是非數據列，則取上一行的的值；否則給值0，標記這這裏爲空****************/
-									
-						}else{
-							if(colIx<minColIx+6){
-								sheet.getRow(rowIx).getCell(colIx).setCellType(Cell.CELL_TYPE_STRING);//（不爲空的）前6列也要轉成String
-							}						
-						}
+						cell.setCellType(Cell.CELL_TYPE_STRING);
+						CellValue cellValue = evaluator.evaluate(cell);
+						if(cellValue==null||cellValue.getStringValue().trim().equals("")){
+							if(colIx<minColIx+6){									
+								cell.setCellValue(sheet.getRow(rowIx-1).getCell(colIx).getStringCellValue());
+							}else{
+								cell.setCellValue(0);
+							}
+							cellValue=evaluator.evaluate(cell);
+						}						
 						// 经过公式解析，最后只存在Boolean、Numeric和String三种数据类型，此外就是Error了
 						// 其余数据类型，根据官方文档，完全可以忽略http://poi.apache.org/spreadsheet/eval.html
-						switch (cellValue.getCellType()) {
+						switch (cell.getCellType()) {
 						case Cell.CELL_TYPE_BOOLEAN:
 							sb.append(SEPARATOR + cellValue.getBooleanValue());
 							break;

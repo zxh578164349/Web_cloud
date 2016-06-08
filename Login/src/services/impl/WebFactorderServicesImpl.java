@@ -8,6 +8,7 @@ import dao.IWebFactorderDao;
 import services.IWebFactorderServices;
 import util.PageBean;
 import entity.KyzExpectmatmLog;
+import entity.WebFact;
 import entity.WebFactorder;
 
 public class WebFactorderServicesImpl implements IWebFactorderServices{
@@ -125,6 +126,18 @@ public class WebFactorderServicesImpl implements IWebFactorderServices{
 			String factNo, List<String> factNos, String yymm, String yymm2) {
 		// TODO Auto-generated method stub
 		factorderdao.deleteMore(factAreas, brank, customer, model, component, factNo, factNos, yymm, yymm2);
+	}
+
+
+	/**
+	 * 日期:2016/6/8
+	 * 描述:
+	 */
+	
+	
+	public List<WebFact> findNoinput(String yymm) {
+		// TODO Auto-generated method stub
+		return factorderdao.findNoinput(yymm);
 	}
 
 

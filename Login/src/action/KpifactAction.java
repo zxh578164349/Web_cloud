@@ -180,7 +180,7 @@ public class KpifactAction extends ActionSupport implements ServletResponseAware
 		// return temp.replace(",", "");
 	}
 	public String formatDouble_4(double s) {
-		DecimalFormat format = new DecimalFormat(",###.0000");
+		DecimalFormat format = new DecimalFormat("#,##0.0000");
 		String temp = format.format(s);
 		return temp;
 		// return temp.replace(",", "");
@@ -194,6 +194,10 @@ public class KpifactAction extends ActionSupport implements ServletResponseAware
 		DecimalFormat format=new DecimalFormat("#");
 		String temp=format.format(s);
 		return temp;
+	}
+	public String formatDouble_5(double s){
+		DecimalFormat format=new DecimalFormat("#,##0.00000");
+		return format.format(s);
 	}
 	
 	/**

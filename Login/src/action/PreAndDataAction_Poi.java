@@ -5028,8 +5028,8 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 	 */
 	public void print2Y_hb() throws ParseException{
 		HSSFWorkbook wb=new HSSFWorkbook();
-		Map<String,Object>map=this.findStyles(wb);
-		HSSFCellStyle cs=(HSSFCellStyle)map.get("cs");
+		Map<String,Object>map_style=this.findStyles(wb);
+		HSSFCellStyle cs=(HSSFCellStyle)map_style.get("cs");
 		List<String>list_months=GlobalMethod.findMonths(sdate, edate);//所有月份
 		List<WebFact>list_facts=webFactSer.findByList(factnolist);//所有廠別
 		List<Webestproduct>list_pros=estProSer.findByYymm(sdate, edate);//查得的預計生產數據
@@ -5037,8 +5037,10 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 		DateFormat fmt=new SimpleDateFormat("yyyyMM");
 		DateFormat fmt2=new SimpleDateFormat("yyyyMMdd");
 		Map<String,Object>map_a=new LinkedHashMap<String,Object>();
+		Map<String,Object>map_b=new LinkedHashMap<String,Object>();
 		for(String month:list_months){//for a			
 			List<Webestproduct>list_a=new ArrayList<Webestproduct>();
+			List<WebYieldData>list_ydatas=dataSer.findByYymm(month);
 			
 			List<String>days=GlobalMethod.findDaysOfMonth(month);
 			List<List<WebYieldData>>list_b=new ArrayList<List<WebYieldData>>();
@@ -5062,14 +5064,60 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 					}
 				}
 			}//for b2
+			for(List<WebYieldData> list:list_b){//for b3
+				for(WebYieldData ydata:list){
+					for(WebYieldData ydata2:list_ydatas){
+						if(ydata.getId().getFactNo().equals(ydata2.getId().getFactNo())&&
+								ydata.getId().getFactCode().equals(ydata2.getId().getFactCode())&&
+								fmt2.format(ydata.getId().getYymmdd()).equals(fmt2.format(ydata2.getId().getYymmdd()))){
+							ydata=ydata2;							
+						}
+					}
+				}
+			}//for b3
 			map_a.put(month, list_a);
+			map_b.put(month, list_b);
 		}//for a
 		
 		
 		
+				
+	}
+	
+	public void init(HSSFWorkbook wb,Map<String,Object> map_style, List<WebFact> list_facts) {
+		// 初始化表格
+		List<String>list_a=new ArrayList<String>();
+		List<String>list_b=new ArrayList<String>();
+		list_a.add("日期/產量/廠別");
+		list_a.add("戰力分析模數");
+		list_a.add("預計生產模數");
+		list_a.add("預計請款雙數");
+		list_a.add("機台孔位數");
+		list_a.add("總機孔");
+		list_a.add("有效孔位");
+		list_a.add("工程/樣品");
+		list_a.add("補料孔位");
+		list_a.add("其他");
 		
-		
-		
+		HSSFCellStyle cs_title=(HSSFCellStyle)map_style.get("cs_head");
+		HSSFSheet sheet = wb.createSheet("sheet1");
+		int h1 = 9;
+		for (int a = 0; a < h1; a++) {
+			for (int b = 0; b < list_facts.size() * 5 + 1; b++) {
+				sheet.createRow(a).createCell(b);
+			}
+		}
+		sheet.setColumnWidth(0, 4500);
+		sheet.getRow(0).getCell(0).setCellValue("加久各工廠每日產量達成狀況匯總表");
+		CellRangeAddress cra_title = new CellRangeAddress(0, 0, 0, 12);
+		sheet.addMergedRegion(cra_title);
+		for(int a=0;a<12;a++){
+			sheet.getRow(0).getCell(a).setCellStyle(cs_title);
+		}
+		for(int a=0;a<list_a.size();a++){
+			
+		}
+		sheet.getRow(1).getCell(0).setCellValue(list_a.get(0));
 		
 		
 	}
@@ -5159,18 +5207,14 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 		map.put("cs_font", cs_font);
 
 		// 標題字體
-		HSSFCellStyle cs_head = wb.createCellStyle();
-		HSSFFont font_head = wb.createFont();
-		font_head.setFontHeightInPoints((short) 20);
-		font_head.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);// 粗体显示
-		cs_head.setFont(font_head);
-		cs_head.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-		cs_head.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
-		cs_head.setBorderBottom(HSSFCellStyle.BORDER_THIN);
-		cs_head.setBorderLeft(HSSFCellStyle.BORDER_THIN);
-		cs_head.setBorderRight(HSSFCellStyle.BORDER_THIN);
-		cs_head.setBorderTop(HSSFCellStyle.BORDER_THIN);
-		map.put("cs_head", cs_head);
+		HSSFCellStyle cs_title = wb.createCellStyle();
+		HSSFFont font_title = wb.createFont();
+		font_title.setFontHeightInPoints((short) 20);
+		font_title.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);// 粗体显示
+		cs_title.setFont(font_title);
+		cs_title.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		cs_title.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);		
+		map.put("cs_title", cs_title);
 
 		// 紅粗字體
 		HSSFCellStyle cs_font_red_bold = wb.createCellStyle();

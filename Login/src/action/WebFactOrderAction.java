@@ -29,6 +29,9 @@ import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.ServletResponseAware;
 import org.hibernate.Transaction;
+import org.quartz.JobExecutionContext;
+import org.quartz.JobExecutionException;
+import org.springframework.scheduling.quartz.QuartzJobBean;
 
 import net.sf.json.JSONArray;
 
@@ -529,6 +532,29 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 	 * @throws IOException 
 	 */
 	public void print4() throws IOException{
+		
+		//OutputStream os=new FileOutputStream("d:\\tttttt.xls");
+		ServletOutputStream os=response.getOutputStream();
+		response.setContentType("application/vnd.ms-excel");
+		String fileName="fact_reportTotal_"+".xls";
+		int msi=ServletActionContext.getRequest().getHeader("USER-AGENT").toLowerCase().indexOf("msie");
+		if(msi>0){
+			fileName=java.net.URLEncoder.encode(fileName,"utf-8");
+		}else{
+			fileName=new String(fileName.getBytes("utf-8"),"iso-8859-1");
+		}
+		response.setHeader("Content-disposition", "attachment;filename="+fileName);
+		HSSFWorkbook wb=this.print();
+		wb.write(os);
+		os.close();				
+	}
+	public void print_email() throws IOException{
+		HSSFWorkbook wb=this.print();
+		OutputStream os=new FileOutputStream("d:\\"+yymm+".xls");
+		wb.write(os);
+		os.close();
+	}
+	public HSSFWorkbook print(){
 		factNo=(String)ActionContext.getContext().getSession().get("factNo");
 		List<Object[]>list=webfactorderSer.findByGroup2(factNos,factAreas, branks, customers, models, components,factNo,yymm,yymm2);
 		List<Object[]>list2=webfactorderSer.findByGroup(factNos,factAreas, branks, customers, models, components,factNo,yymm,yymm2);
@@ -776,21 +802,7 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 			
 		}
 		/***************************填充數據************************************/
-		//OutputStream os=new FileOutputStream("d:\\tttttt.xls");
-		ServletOutputStream os=response.getOutputStream();
-		response.setContentType("application/vnd.ms-excel");
-		String fileName="fact_reportTotal_"+".xls";
-		int msi=ServletActionContext.getRequest().getHeader("USER-AGENT").toLowerCase().indexOf("msie");
-		if(msi>0){
-			fileName=java.net.URLEncoder.encode(fileName,"utf-8");
-		}else{
-			fileName=new String(fileName.getBytes("utf-8"),"iso-8859-1");
-		}
-		response.setHeader("Content-disposition", "attachment;filename="+fileName);
-		wb.write(os);
-		os.close();
-		
-		
+		return wb;
 	}
 	
 	public String findById(){
@@ -875,5 +887,6 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 			response.getWriter().print("<script>window.parent.layer.msg('刪除失敗',3,3)</script>");
 		}		
 	}
+	
 	
 }
