@@ -15,6 +15,7 @@ import util.PageBean;
 import dao.Basedao;
 import dao.IWebFactorderDao;
 import entity.KyzExpectmatmLog;
+import entity.WebFact;
 import entity.WebFactorder;
 import entity.WebFactorderId;
 
@@ -808,6 +809,18 @@ public class WebFactorderDaoImpl extends Basedao implements IWebFactorderDao{
 		List<WebFactorder>list=super.getAllWithNoPage(hql.toString(), map);
 		System.out.println(list.size());
 		super.deleteList(list);			
+	}
+	/**
+	 * 日期:2016/6/8
+	 * 描述:
+	 */
+	
+	
+	public List<WebFact> findNoinput(String yymm) {
+		// TODO Auto-generated method stub
+		String hql="from WebFact where (id.factNo,id.factArea) not in (select id.factNo,id.factArea from WebFactorder where id.yymm=?) and factShow='0'";
+		String[]objs={yymm};
+		return super.findAll(hql, objs);
 	}
 	
 	

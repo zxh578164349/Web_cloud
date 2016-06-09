@@ -736,8 +736,26 @@ public class GlobalMethod extends HibernateDaoSupport{
 	        return mac;  
 	    }  
 	
+	  /**
+	   * 获取某月的所有天数
+	   * @param yymm
+	   * @return
+	   * @throws ParseException
+	   */
+	  public static List<String> findDaysOfMonth(String yymm) throws ParseException{
+		  List<String>list=new ArrayList<String>();
+		  Calendar cal=Calendar.getInstance();
+		  cal.setTime(new SimpleDateFormat("yyyyMM").parse(yymm));
+		  int maxnum=cal.getActualMaximum(Calendar.DAY_OF_MONTH);
+		  for(int i=1;i<=maxnum;i++){
+			  cal.set(Calendar.DAY_OF_MONTH, i);
+			  list.add(new SimpleDateFormat("yyyyMMdd").format(cal.getTime()));
+		  }
+		  return list;
+	  }
+	
 	public static void main(String[] args) throws ParseException {
-		List<Webestproduct>list=new ArrayList<Webestproduct>();
+		/*List<Webestproduct>list=new ArrayList<Webestproduct>();
 		List<String>list2=new ArrayList<String>();
 		List<Webestproduct>list3=new ArrayList<Webestproduct>();
 		Map<String,Object>map=new LinkedHashMap<String,Object>();
@@ -766,7 +784,26 @@ public class GlobalMethod extends HibernateDaoSupport{
         		}
         	}
         	System.out.println(pro.getAccessories());
-        }
+        }*/
+		DateFormat frm=new SimpleDateFormat("yyyyMM");
+		DateFormat frm2=new SimpleDateFormat("yyyyMMdd");
+		List<String>months=new ArrayList<String>();
+		months.add("201601");
+		months.add("201602");
+		months.add("201603");
+		months.add("201604");
+		Calendar cal=Calendar.getInstance();
+		for(String month:months){
+			cal.setTime(frm.parse(month));
+			//cal.set(Calendar.DAY_OF_MONTH, 1);
+			int maxnum=cal.getActualMaximum(Calendar.DAY_OF_MONTH);
+			for(int i=1;i<=maxnum;i++){
+				cal.set(Calendar.DAY_OF_MONTH, i);
+				System.out.println(frm2.format(cal.getTime()));
+			}
+			System.out.println("-------------------------------------------------");
+			
+		}
         
 
        

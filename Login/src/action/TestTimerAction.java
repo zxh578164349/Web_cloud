@@ -180,25 +180,6 @@ public class TestTimerAction extends QuartzJobBean {
 		return result;
 	}
 
-/*	private void goTimer() throws Exception {
-		Timer timmerTask = new Timer();
-		Calendar calEnviron = Calendar.getInstance();
-		calEnviron.set(Calendar.HOUR_OF_DAY, 17);
-		calEnviron.set(Calendar.MINUTE,30);
-		Date dateSetter = new Date();
-		dateSetter = calEnviron.getTime();
-		Date nowDateSetter = new Date();
-		calEnviron.setTime(nowDateSetter);
-		long intervalEnviron = dateSetter.getTime() - nowDateSetter.getTime();
-		if (intervalEnviron < 0) {
-			calEnviron.add(Calendar.DAY_OF_MONTH, 1);
-			dateSetter = calEnviron.getTime();
-			intervalEnviron = dateSetter.getTime() - nowDateSetter.getTime();
-		}
-		System.out.println(intervalEnviron);
-		timmerTask.schedule(new MyTask(), intervalEnviron, 1 * 1000 * 60 * 60
-				* 24);
-	}*/
 
 	/* 得到最近的日期列表 */
 	public static List getTenDay(int t) {

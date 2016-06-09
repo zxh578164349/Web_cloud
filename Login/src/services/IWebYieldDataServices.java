@@ -72,7 +72,6 @@ public interface IWebYieldDataServices {
 	 * @date 2016/4/1
 	 */
 	public List<WebYieldData>findByYymm(String yymm);
-	
 			
 	
 

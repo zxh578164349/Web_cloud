@@ -40,6 +40,11 @@
              <value>quartz.QuartzDelMk</value>
         </property>
     </bean>
+    <bean id="quantzjobBeanD" class="org.springframework.scheduling.quartz.JobDetailBean">
+        <property name="jobClass">
+             <value>mail.AutoSendWebfactorder</value>
+        </property>
+    </bean>
 
     <!-- 触发任务条件 -->
    <!--  <bean id="simpletriggerbean" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
@@ -82,6 +87,10 @@
     <bean id="CronTriggerBeanE" class="org.springframework.scheduling.quartz.CronTriggerBean">
       <property name="jobDetail" ref="quantzjobBeanA"></property>
       <property name="cronExpression" value="0 0 13 * * ?"></property>      
+    </bean>
+     <bean id="CronTriggerBeanF" class="org.springframework.scheduling.quartz.CronTriggerBean">
+      <property name="jobDetail" ref="quantzjobBeanD"></property>
+      <property name="cronExpression" value="0 54 16 * * ?"></property>      
     </bean> 
     
     <!-- 启动调度 -->
@@ -93,7 +102,8 @@
                 <ref bean="CronTriggerBeanB"/><!-- (第二次) 16點  下一位簽核人 -->    
                 <ref bean="CronTriggerBeanC"/>  <!-- 12點  簽核完畢知會   -->
                 <ref bean="CronTriggerBeanD"/><!-- 每月最後一天24點運行 -->
-                <ref bean="CronTriggerBeanE"/><!-- (第三次) 13點  下一位簽核人 -->				
+                <ref bean="CronTriggerBeanE"/><!-- (第三次) 13點  下一位簽核人 -->	
+                 <ref bean="CronTriggerBeanF"/>			
             </list>
             
         </property>        

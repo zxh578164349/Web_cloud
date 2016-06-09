@@ -374,36 +374,36 @@ jq(function(){
 				<td class="td_show_title">水用量单耗(噸/模)</td>
 				<td class="td_input"><input type="text" name="kpi.waterTon"
 					datatype="9_4"
-					value="<s:property value='kpi.waterTon'/>">
+					value="<s:property value='%{formatDouble_5(kpi.waterTon)}'/>">
 				</td>
 				<td class="td_show_title">用水金額單耗(USD/模)</td>
 				<td class="td_input"><input type="text" name="kpi.waterUsd"
 					datatype="9_4"
-					value="<s:property value='kpi.waterUsd' />">
+					value="<s:property value='%{formatDouble_5(kpi.waterUsd)}' />">
 				</td>
 			</tr>
 			<tr>
 				<td class="td_show_title">电度数单耗(度/模)</td>
 				<td class="td_input"><input type="text" name="kpi.lightDu"
 					datatype="9_4"
-					value="<s:property value='kpi.lightDu' />">
+					value="<s:property value='%{formatDouble_5(kpi.lightDu)}' />">
 				</td>
 				<td class="td_show_title">用電金額單耗(USD/模)</td>
 				<td class="td_input"><input type="text" name="kpi.lightUsd"
 					datatype="9_4"
-					value="<s:property value='kpi.lightUsd' />">
+					value="<s:property value='%{formatDouble_5(kpi.lightUsd)}' />">
 				</td>
 			</tr>
 			<tr>
 				<td class="td_show_title">蒸汽用量單耗(噸/模)</td>
 				<td class="td_input"><input type="text" name="kpi.gasTon"
 					datatype="9_4"
-					value="<s:property value='kpi.gasTon' />">
+					value="<s:property value='%{formatDouble_5(kpi.gasTon)}' />">
 				</td>
 				<td class="td_show_title">用汽金額單耗(USD/模)</td>
 				<td class="td_input"><input type="text" name="kpi.gasUsd"
 					datatype="9_4"
-					value="<s:property value='kpi.gasUsd' />">
+					value="<s:property value='%{formatDouble_5(kpi.gasUsd)}' />">
 				</td>
 			</tr>
 			<tr>
