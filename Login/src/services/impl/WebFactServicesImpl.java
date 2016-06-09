@@ -254,4 +254,14 @@ public class WebFactServicesImpl implements IWebFactServices {
 		return webFactDao.findByList(list);
 	}
 
+	public List<String> findFactNoshow() {
+		// TODO Auto-generated method stub
+		return webFactDao.findFactNoshow();
+	}
+
+	public List<String> findFactCodeshow() {
+		// TODO Auto-generated method stub
+		return webFactDao.findFactCodeshow();
+	}
+
 }

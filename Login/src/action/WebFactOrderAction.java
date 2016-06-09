@@ -83,12 +83,19 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
     private String fileContentType;
     private String ajaxResult;//申請函文時返回的ajax結果,   0:提交成功       1：上传的文档格式不符合要求   2：excel导入失败     3：excel数据格式不符合要求
     private long orderid; 
+    private int autoEmailMk;//是否发送email标识，1为发送
     
     
     
 	
 	
 	
+	public int getAutoEmailMk() {
+		return autoEmailMk;
+	}
+	public void setAutoEmailMk(int autoEmailMk) {
+		this.autoEmailMk = autoEmailMk;
+	}
 	public String getFactArea() {
 		return factArea;
 	}
@@ -555,6 +562,10 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 		os.close();
 	}
 	public HSSFWorkbook print(){
+		if(autoEmailMk==1){
+			factNos=webFactSer.findFactNoshow();
+			factAreas=webFactSer.findFactCodeshow();
+		}
 		factNo=(String)ActionContext.getContext().getSession().get("factNo");
 		List<Object[]>list=webfactorderSer.findByGroup2(factNos,factAreas, branks, customers, models, components,factNo,yymm,yymm2);
 		List<Object[]>list2=webfactorderSer.findByGroup(factNos,factAreas, branks, customers, models, components,factNo,yymm,yymm2);
@@ -588,17 +599,25 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 			}//for2
 			list_all.add(map);
 		}//for1
+		
+		List<Object[]>list_facts=null;
+		if(autoEmailMk==1){
+			list_facts=webFactSer.findFactByFactNo(null);
+		}else{
+			list_facts=(List<Object[]>)ActionContext.getContext().getSession().get("login_facts");//用戶登錄時已經緩存	
+		}			
 		/*********************廠別代號轉換成廠名*****************************/
-		List<Object[]>list_facts=(List<Object[]>)ActionContext.getContext().getSession().get("login_facts");//用戶登錄時已經緩存
-		for(int i=0;i<list.size();i++){
-			for(int j=0;j<list_facts.size();j++){
-				if(list.get(i)[0].toString().equals(list_facts.get(j)[0].toString())){
-					list.get(i)[0]=list_facts.get(j)[1];
-					break;
+		if(list_facts!=null&&list_facts.size()>0){
+			for(int i=0;i<list.size();i++){
+				for(int j=0;j<list_facts.size();j++){
+					if(list.get(i)[0].toString().equals(list_facts.get(j)[0].toString())){
+						list.get(i)[0]=list_facts.get(j)[1];
+						break;
+					}
 				}
 			}
 		}
-		
+				
 		HSSFWorkbook wb=new HSSFWorkbook();
 		HSSFSheet sheet=wb.createSheet("sheet1");
 		

@@ -71,7 +71,8 @@ public class AutoSendWebfactorder extends QuartzJobBean{
 		String yymm=new SimpleDateFormat("yyyyMM").format(new Date());
 		HttpClient client = new HttpClient();
 		//HttpMethod method = new GetMethod("http://203.85.73.161/Login/webfactOrder_print_email?yymm="+yymm);	
-		HttpMethod method = new GetMethod("http://172.17.18.173:8080/Login/webfactOrder_print_email?yymm="+yymm+"&yymm2="+yymm);
+		//HttpMethod method = new GetMethod("http://172.17.18.173:8080/Login/webfactOrder_print_email?yymm="+yymm+"&yymm2="+yymm);
+		HttpMethod method = new GetMethod("http://localhost:8080/Login/webfactOrder_print_email?yymm="+yymm+"&yymm2="+yymm+"&autoEmailMk=1");
 		client.executeMethod(method);
 		method.releaseConnection();
 		ApplicationContext ac = new ClassPathXmlApplicationContext(new String[]{"spring-action.xml","spring-dao.xml", "spring.xml","spring-services.xml"});
@@ -104,8 +105,12 @@ public class AutoSendWebfactorder extends QuartzJobBean{
 			}
 		}*/
 		
-		String[] cc = { "kyinfo.David@yyin.yydg.com.cn"};
+		/*String[] cc = { "kyinfo.David@yyin.yydg.com.cn"};
 		String[] mail={"kyinfo.David@yyin.yydg.com.cn"};
+		String[] mail={MimeUtility.encodeText("張錫洪")+"<kyinfo.David@yyin.yydg.com.cn>"};				
+		String[] cc = {MimeUtility.encodeText("張錫洪")+"<kyinfo.David@yyin.yydg.com.cn>"};*/
+		String[] mail={MimeUtility.encodeText("張錫洪")+"<zxh578164349@qq.com>"};				
+		String[] cc = {MimeUtility.encodeText("張錫洪")+"<zxh578164349@qq.com>"};
 		AutoSendEmailAction send = new AutoSendEmailAction();
 		send.sendmail(mail, cc, "標題", "內容", yymm);
 		File file = new File("d://" + yymm + ".xls");

@@ -129,5 +129,8 @@ public interface IWebFactServices {
 	public List<String> findByFactNo_showA(String factNo);
 	
 	public List<WebFact>findByList(List<String>list);
+	
+	public List<String>findFactNoshow();
+	public List<String>findFactCodeshow();
 
 }

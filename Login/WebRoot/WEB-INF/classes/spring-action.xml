@@ -81,6 +81,7 @@
 	<bean id="vwebprolossAction" class="action.VWebprofitlossEveAction" scope="prototype"/>
 	<bean id="vwebprolossfactAction" class="action.VWebprofitlossFactEveAction" scope="prototype"/>
 	<bean id="vWebbussortActionNewAction" class="action.VWebbussortActionNew" scope="prototype"/>
+	<bean id="AutoSendWebfactorderAction" class="mail.AutoSendWebfactorder" scope="prototype"/>
 </beans> 
 
  

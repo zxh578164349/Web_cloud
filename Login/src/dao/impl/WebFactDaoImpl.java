@@ -301,4 +301,16 @@ public class WebFactDaoImpl extends Basedao implements IWebFactDao {
 		return list2;
 	}
 
+	public List<String> findFactNoshow() {
+		// TODO Auto-generated method stub
+		String hql="select distinct id.factNo from WebFact where factShow='0'";
+		return super.findAll(hql, null);
+	}
+
+	public List<String> findFactCodeshow() {
+		// TODO Auto-generated method stub
+		String hql="select distinct id.factArea from WebFact where factShow='0'";
+		return super.findAll(hql, null);
+	}
+
 }
