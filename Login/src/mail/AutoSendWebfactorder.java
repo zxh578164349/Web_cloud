@@ -29,6 +29,7 @@ import entity.WebFact;
 
 import services.IWebEmailService;
 import services.IWebFactorderServices;
+import util.GlobalMethod;
 
 /**   
  *    
@@ -56,7 +57,20 @@ public class AutoSendWebfactorder extends QuartzJobBean{
 			throws JobExecutionException {
 		// TODO Auto-generated method stub
 		try {
-			this.init();
+			//this.init();
+			List<String> ips=GlobalMethod.findIp2();				
+			if(ips.size()==0){
+				this.init();
+			}else{
+				for(int i=0;i<ips.size();i++){
+					if(ips.get(i).equals("192.168.199.101")){
+						this.init();
+						break;
+					}else if(i==ips.size()-1){
+						System.out.println("本機不需要發送Email");
+					}
+				}
+			}
 		} catch (HttpException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -70,17 +84,20 @@ public class AutoSendWebfactorder extends QuartzJobBean{
 	public void init() throws HttpException, IOException{
 		String yymm=new SimpleDateFormat("yyyyMM").format(new Date());
 		HttpClient client = new HttpClient();
-		//HttpMethod method = new GetMethod("http://203.85.73.161/Login/webfactOrder_print_email?yymm="+yymm);	
-		//HttpMethod method = new GetMethod("http://172.17.18.173:8080/Login/webfactOrder_print_email?yymm="+yymm+"&yymm2="+yymm);
-		HttpMethod method = new GetMethod("http://localhost:8080/Login/webfactOrder_print_email?yymm="+yymm+"&yymm2="+yymm+"&autoEmailMk=1");
+		HttpMethod method = new GetMethod("http://203.85.73.161/Login/webfactOrder_print_email?yymm="+yymm+"&yymm2="+yymm+"&autoEmailMk=1");	
+		//HttpMethod method = new GetMethod("http://172.17.18.173:8080/Login/webfactOrder_print_email?yymm="+yymm+"&yymm2="+yymm+"&autoEmailMk=1");
+		//HttpMethod method = new GetMethod("http://localhost:8080/Login/webfactOrder_print_email?yymm="+yymm+"&yymm2="+yymm+"&autoEmailMk=1");
 		client.executeMethod(method);
 		method.releaseConnection();
 		ApplicationContext ac = new ClassPathXmlApplicationContext(new String[]{"spring-action.xml","spring-dao.xml", "spring.xml","spring-services.xml"});
 		IWebFactorderServices webfactorderSer=(IWebFactorderServices)ac.getBean("webfactorderSer");
 		List<WebFact>list_facts=webfactorderSer.findNoinput(yymm);
 		IWebEmailService eSer =(IWebEmailService)ac.getBean("emailService");
-				
-		/*List<WebEmail> email = eSer.getEmail("Y");
+		StringBuffer fact_strs=new StringBuffer();
+		for(WebFact fact:list_facts){
+			fact_strs.append(fact.getFactSname()+"_"+fact.getId().getFactArea()+"<br/>");
+		}		
+		List<WebEmail> email = eSer.getEmail("Y");
 		String[] mail = new String[email.size()];
 		for (int i = 0; i < email.size(); i++) {
 			if (email.get(i).getName() != null
@@ -103,16 +120,22 @@ public class AutoSendWebfactorder extends QuartzJobBean{
 			} else {
 				cc[j] = Cc.get(j).getName() + Cc.get(j).getEmail();
 			}
-		}*/
-		
-		/*String[] cc = { "kyinfo.David@yyin.yydg.com.cn"};
-		String[] mail={"kyinfo.David@yyin.yydg.com.cn"};
-		String[] mail={MimeUtility.encodeText("張錫洪")+"<kyinfo.David@yyin.yydg.com.cn>"};				
-		String[] cc = {MimeUtility.encodeText("張錫洪")+"<kyinfo.David@yyin.yydg.com.cn>"};*/
+		}
+			
+		/*String[] mail={MimeUtility.encodeText("張錫洪")+"<kyinfo.David@yyin.yydg.com.cn>"};				
+		String[] cc = {MimeUtility.encodeText("張錫洪")+"<kyinfo.David@yyin.yydg.com.cn>"};
 		String[] mail={MimeUtility.encodeText("張錫洪")+"<zxh578164349@qq.com>"};				
-		String[] cc = {MimeUtility.encodeText("張錫洪")+"<zxh578164349@qq.com>"};
+		String[] cc = {MimeUtility.encodeText("張錫洪")+"<zxh578164349@qq.com>"};*/
 		AutoSendEmailAction send = new AutoSendEmailAction();
-		send.sendmail(mail, cc, "標題", "內容", yymm);
+		String title=yymm+"各廠訂單導入狀況";
+		String affixName=yymm+"各廠訂單導入狀況";
+		StringBuffer content=new StringBuffer();
+		content.append(yymm+"未導入訂單工廠如下:<br/><br/>");
+		content.append("<span style='color:red;font-size:16px'>");		
+		content.append(fact_strs);
+		content.append("</span><br/><br/>");
+		content.append("本郵件自動發送,請勿回復!如需回复，請回复到kyinfo@yydg.com.cn咨訊室");
+		send.sendmail(mail, cc, title, content.toString(), yymm,affixName);
 		File file = new File("d://" + yymm + ".xls");
 		if (file.exists()) {
 			if (file.isFile()) {

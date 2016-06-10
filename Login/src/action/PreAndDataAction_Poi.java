@@ -1,6 +1,7 @@
 package action;
 
 import java.awt.Color;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -57,7 +58,7 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 	private IWebYieldDataServices dataSer;
 	private IWebFactServices webFactSer;
 	private IWebEstProductServices estProSer;
-	private List<String> factnolist;
+	private List<String> factnolist=new ArrayList<String>();
 	private String type;
 	private List<String> factcodelist;
 	private String sdate;
@@ -5022,11 +5023,17 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 	 * @param 
 	 * @return void
 	 * @throws ParseException 
+	 * @throws IOException 
 	 * @throws
 	 * @author web
 	 * @date 2016/6/7
 	 */
-	public void print2Y_hb() throws ParseException{
+	public void print2Y_hb() throws ParseException, IOException{
+		sdate="201601";
+		edate="201602";
+		factnolist.add("631");
+		factnolist.add("JW");
+		factnolist.add("HD");
 		HSSFWorkbook wb=new HSSFWorkbook();
 		Map<String,Object>map_style=this.findStyles(wb);
 		HSSFCellStyle cs=(HSSFCellStyle)map_style.get("cs");
@@ -5079,12 +5086,12 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 			map_b.put(month, list_b);
 		}//for a
 		
-		
+		this.init(wb, map_style, list_facts);
 		
 				
 	}
 	
-	public void init(HSSFWorkbook wb,Map<String,Object> map_style, List<WebFact> list_facts) {
+	public void init(HSSFWorkbook wb,Map<String,Object> map_style, List<WebFact> list_facts) throws IOException {
 		// 初始化表格
 		List<String>list_a=new ArrayList<String>();
 		List<String>list_b=new ArrayList<String>();
@@ -5099,12 +5106,14 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 		list_a.add("補料孔位");
 		list_a.add("其他");
 		
-		HSSFCellStyle cs_title=(HSSFCellStyle)map_style.get("cs_head");
+		HSSFCellStyle cs_title=(HSSFCellStyle)map_style.get("cs_title");
+		HSSFCellStyle cs=(HSSFCellStyle)map_style.get("cs");
 		HSSFSheet sheet = wb.createSheet("sheet1");
-		int h1 = 9;
+		int h1 =9;
 		for (int a = 0; a < h1; a++) {
+			sheet.createRow(a);
 			for (int b = 0; b < list_facts.size() * 5 + 1; b++) {
-				sheet.createRow(a).createCell(b);
+				sheet.getRow(a).createCell(b);
 			}
 		}
 		sheet.setColumnWidth(0, 4500);
@@ -5114,10 +5123,48 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 		for(int a=0;a<12;a++){
 			sheet.getRow(0).getCell(a).setCellStyle(cs_title);
 		}
-		for(int a=0;a<list_a.size();a++){
-			
-		}
-		sheet.getRow(1).getCell(0).setCellValue(list_a.get(0));
+		for(int b=0;b<list_facts.size();b++){//for b
+			for(int a=0;a<list_a.size();a++){//for a						
+				if(a==4){
+					sheet.getRow(1+a).getCell(0).setCellValue(list_a.get(a));
+					sheet.getRow(1+a).getCell(1).setCellValue(list_a.get(a+1));				
+					CellRangeAddress cra=new CellRangeAddress(5,8,0,0);
+					sheet.addMergedRegion(cra);				
+					CellRangeAddress cra2=new CellRangeAddress(5,8,1,1);
+					sheet.addMergedRegion(cra2);				
+					CellRangeAddress cr3=new CellRangeAddress(5,8,2,2);
+					sheet.addMergedRegion(cr3);
+					for(int i=0;i<4;i++){
+						sheet.getRow(1+a+i).getCell(0).setCellStyle(cs);
+						sheet.getRow(1+a+i).getCell(1).setCellStyle(cs);
+						sheet.getRow(1+a+i).getCell(2).setCellStyle(cs);
+					}
+					for(int i=0;i<4;i++){
+						sheet.getRow(1+a+i).getCell(3).setCellValue(list_a.get(a+2+i));
+						sheet.getRow(1+a+i).getCell(3).setCellStyle(cs);
+						CellRangeAddress cra4=new CellRangeAddress(1+a+i,1+a+i,4,6);
+						sheet.addMergedRegion(cra4);
+						for(int j=0;j<2;j++){
+							sheet.getRow(1+a+i).getCell(4+j).setCellStyle(cs);
+						}
+					}								
+				}if(a<4){												
+						sheet.getRow(1+a).getCell(0).setCellValue(list_a.get(a));
+						sheet.getRow(1+a).getCell(0).setCellStyle(cs);
+						CellRangeAddress cra=new CellRangeAddress(1+a,1+a,1,6);
+						sheet.addMergedRegion(cra);
+						for(int i=0;i<5;i++){
+							sheet.getRow(1+a).getCell(1+i).setCellStyle(cs);
+						}				
+				}			
+			}// for a
+		}//for b
+		
+		OutputStream os=new FileOutputStream("e:\\"+"ddddd.xls");
+		wb.write(os);
+		os.close();
+		
+		
 		
 		
 	}

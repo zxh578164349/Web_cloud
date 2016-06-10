@@ -31,11 +31,8 @@ public class AutoSendEmailAction {
 
 	private static final String MAIL_FROM_SMTP = "<kyuen@yydg.com.cn>";
 
-	public void sendmail(String[] mailArray, String[] cc, String subject,
-			String content,String yymm) {
-		Properties props = new Properties();
-		
-		
+	public void sendmail(String[] mailArray, String[] cc, String subject,String content,String yymm,String affixName) {			
+		Properties props = new Properties();				
 		props.setProperty("mail.smtp.auth", "true");
 		props.setProperty("mail.transport.protocol", "smtp");
 		props.setProperty("mail.host", "dgmail.yydg.com.cn");
@@ -82,9 +79,7 @@ public class AutoSendEmailAction {
 			//String date = format.format(new Date());
 			DataSource source = new FileDataSource("d://" + yymm + ".xls");
 			messageBodyPart.setDataHandler(new DataHandler(source));
-			String affixName = yymm+"各廠產量資料";
-			messageBodyPart.setFileName("=?BIG5?B?" + enc.encode(affixName.getBytes()) + "?="
-					+ ".xls");
+			messageBodyPart.setFileName("=?BIG5?B?" + enc.encode(affixName.getBytes()) + "?="+ ".xls");					
 			multipart.addBodyPart(messageBodyPart);
 			msg.setContent(multipart);
 			msg.setSentDate(new Date());//發送時間

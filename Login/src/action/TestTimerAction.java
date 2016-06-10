@@ -277,6 +277,7 @@ public class TestTimerAction extends QuartzJobBean {
 				SimpleDateFormat jinri = new SimpleDateFormat("M/dd");
 				//String dates = formast.format(new Date());
 				//郵件內容
+				String affixName=yymm+"各廠產量資料";
 				StringBuffer content=new StringBuffer();
 				content.append("各主管:好!"						
 								+(cal.get(Calendar.DAY_OF_WEEK) == Calendar.MONDAY?formatDates.format(formatDates
@@ -308,7 +309,8 @@ public class TestTimerAction extends QuartzJobBean {
 						cc,
 						formast.format(formatDates.parse(dateAdd(-1)))+ "月份加久各工廠油壓產量表匯總--截止"+ jinri.format(formatDates.parse(dateAdd(-1))),																
 						content.toString(),
-						yymm);				
+						yymm,
+						affixName);				
 				File file = new File("d://" + yymm + ".xls");
 				if (file.exists()) {
 					if (file.isFile()) {
@@ -395,6 +397,7 @@ public class TestTimerAction extends QuartzJobBean {
 				
 				AutoSendEmailAction send = new AutoSendEmailAction();
 				String tyymm=tformat.format(new Date());
+				String affixName=yymm+"各廠產量資料";
 				if(yymm.equals(tyymm)){
 					SimpleDateFormat formatDates = new SimpleDateFormat("yyyy/MM/dd");						
 					DateFormat formast = new SimpleDateFormat("MM");
@@ -402,6 +405,7 @@ public class TestTimerAction extends QuartzJobBean {
 					
 					
 					//郵件內容
+					
 					StringBuffer content=new StringBuffer();
 					content.append("各主管:好!"						
 									+(cal.get(Calendar.DAY_OF_WEEK) == Calendar.MONDAY?formatDates.format(formatDates
@@ -433,13 +437,14 @@ public class TestTimerAction extends QuartzJobBean {
 							cc,
 							formast.format(formatDates.parse(dateAdd(-1)))+ "月份加久各工廠油壓產量表匯總--截止"+ jinri.format(formatDates.parse(dateAdd(-1))),																
 							content.toString(),
-							yymm);
+							yymm,
+							affixName);
 				}else{					
 					send.sendmail(
 							mail,
 							cc,							
 						    yymm+"加久各工廠油壓產量表匯總",							
-							"本郵件自動發送,請勿回復!如需回复，請回复到kyinfo@yydg.com.cn咨訊室或者lgx@yydg.com.cn譚香林!",yymm);
+							"本郵件自動發送,請勿回復!如需回复，請回复到kyinfo@yydg.com.cn咨訊室或者lgx@yydg.com.cn譚香林!",yymm,affixName);
 				}												
 				File file = new File("d://" + yymm + ".xls");
 				if (file.exists()) {

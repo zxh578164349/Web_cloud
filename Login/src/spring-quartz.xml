@@ -90,7 +90,7 @@
     </bean>
      <bean id="CronTriggerBeanF" class="org.springframework.scheduling.quartz.CronTriggerBean">
       <property name="jobDetail" ref="quantzjobBeanD"></property>
-      <property name="cronExpression" value="0 54 16 * * ?"></property>      
+      <property name="cronExpression" value="0 26 13 * * ?"></property>      
     </bean> 
     
     <!-- 启动调度 -->
@@ -103,7 +103,7 @@
                 <ref bean="CronTriggerBeanC"/>  <!-- 12點  簽核完畢知會   -->
                 <ref bean="CronTriggerBeanD"/><!-- 每月最後一天24點運行 -->
                 <ref bean="CronTriggerBeanE"/><!-- (第三次) 13點  下一位簽核人 -->	
-                 <ref bean="CronTriggerBeanF"/>			
+                 <ref bean="CronTriggerBeanF"/>	<!-- 每月6號 -->		
             </list>
             
         </property>        
