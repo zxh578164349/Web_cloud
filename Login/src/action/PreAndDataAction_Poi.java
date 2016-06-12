@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFDataFormat;
 import org.apache.poi.hssf.usermodel.HSSFFont;
+import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.openxml4j.opc.OPCPackage;
@@ -5086,35 +5087,47 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 			map_b.put(month, list_b);
 		}//for a
 		
-		this.init(wb, map_style, list_facts);
+		this.init(wb, map_style, list_facts,list_months,map_a,map_b);
 		
 				
 	}
 	
-	public void init(HSSFWorkbook wb,Map<String,Object> map_style, List<WebFact> list_facts) throws IOException {
+	public void init(HSSFWorkbook wb,Map<String,Object> map_style, List<WebFact> list_facts,List<String> list_months,Map<String,Object>map_a,Map<String,Object>map_b) throws IOException, ParseException {
 		// 初始化表格
 		List<String>list_a=new ArrayList<String>();
 		List<String>list_b=new ArrayList<String>();
+		List<String>list_c=new ArrayList<String>();
 		list_a.add("日期/產量/廠別");
 		list_a.add("戰力分析模數");
 		list_a.add("預計生產模數");
 		list_a.add("預計請款雙數");
 		list_a.add("機台孔位數");
-		list_a.add("總機孔");
-		list_a.add("有效孔位");
-		list_a.add("工程/樣品");
-		list_a.add("補料孔位");
-		list_a.add("其他");
+		
+		
+		
+		list_b.add("有效孔位");
+		list_b.add("工程/樣品");
+		list_b.add("補料孔位");
+		list_b.add("其他");
+		
+		list_c.add("日期");
+		List<String>days=GlobalMethod.findDaysOfMonth("201604");
+		for(String day:days){
+			list_c.add(day);
+		}
+		list_c.add("合計");
+		list_c.add("工作天數");
+		
 		
 		HSSFCellStyle cs_title=(HSSFCellStyle)map_style.get("cs_title");
 		HSSFCellStyle cs=(HSSFCellStyle)map_style.get("cs");
 		HSSFSheet sheet = wb.createSheet("sheet1");
-		int h1 =9;
-		for (int a = 0; a < h1; a++) {
-			sheet.createRow(a);
+
+		for (int a = 0; a < list_a.size()+list_c.size()+5; a++) {			
+			HSSFRow row=sheet.createRow(a);
 			for (int b = 0; b < list_facts.size() * 5 + 1; b++) {
-				sheet.getRow(a).createCell(b);
-			}
+				row.createCell(b);
+			}			
 		}
 		sheet.setColumnWidth(0, 4500);
 		sheet.getRow(0).getCell(0).setCellValue("加久各工廠每日產量達成狀況匯總表");
@@ -5123,48 +5136,59 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 		for(int a=0;a<12;a++){
 			sheet.getRow(0).getCell(a).setCellStyle(cs_title);
 		}
-		for(int b=0;b<list_facts.size();b++){//for b
-			for(int a=0;a<list_a.size();a++){//for a						
-				if(a==4){
-					sheet.getRow(1+a).getCell(0).setCellValue(list_a.get(a));
-					sheet.getRow(1+a).getCell(1).setCellValue(list_a.get(a+1));				
-					CellRangeAddress cra=new CellRangeAddress(5,8,0,0);
-					sheet.addMergedRegion(cra);				
-					CellRangeAddress cra2=new CellRangeAddress(5,8,1,1);
-					sheet.addMergedRegion(cra2);				
-					CellRangeAddress cr3=new CellRangeAddress(5,8,2,2);
-					sheet.addMergedRegion(cr3);
-					for(int i=0;i<4;i++){
-						sheet.getRow(1+a+i).getCell(0).setCellStyle(cs);
-						sheet.getRow(1+a+i).getCell(1).setCellStyle(cs);
-						sheet.getRow(1+a+i).getCell(2).setCellStyle(cs);
-					}
-					for(int i=0;i<4;i++){
-						sheet.getRow(1+a+i).getCell(3).setCellValue(list_a.get(a+2+i));
-						sheet.getRow(1+a+i).getCell(3).setCellStyle(cs);
-						CellRangeAddress cra4=new CellRangeAddress(1+a+i,1+a+i,4,6);
-						sheet.addMergedRegion(cra4);
-						for(int j=0;j<2;j++){
-							sheet.getRow(1+a+i).getCell(4+j).setCellStyle(cs);
-						}
-					}								
-				}if(a<4){												
-						sheet.getRow(1+a).getCell(0).setCellValue(list_a.get(a));
-						sheet.getRow(1+a).getCell(0).setCellStyle(cs);
-						CellRangeAddress cra=new CellRangeAddress(1+a,1+a,1,6);
-						sheet.addMergedRegion(cra);
-						for(int i=0;i<5;i++){
-							sheet.getRow(1+a).getCell(1+i).setCellStyle(cs);
-						}				
-				}			
-			}// for a
-		}//for b
+		
+		
+		this.init(sheet, map_style, list_facts, list_a, list_b, list_c);
 		
 		OutputStream os=new FileOutputStream("e:\\"+"ddddd.xls");
 		wb.write(os);
-		os.close();
-		
-		
+		os.close();	
+	}
+	
+	public void init(HSSFSheet sheet,Map<String,Object> map_style, List<WebFact> list_facts,List<String>list_a,List<String>list_b,List<String>list_c){
+		HSSFCellStyle cs=(HSSFCellStyle)map_style.get("cs");
+		for(int a=0;a<list_a.size();a++){
+			sheet.getRow(a+1).getCell(0).setCellValue(list_a.get(a));
+			sheet.getRow(a+1).getCell(0).setCellStyle(cs);
+		}		
+		for(int b=0;b<list_facts.size();b++){//for b
+			for(int i=0;i<4;i++){
+				CellRangeAddress cra=new CellRangeAddress(i+1,i+1,1+5*b,5+5*b);
+				sheet.addMergedRegion(cra);	
+				for(int j=0;j<5;j++){
+					sheet.getRow(i+1).getCell(j+1+5*b).setCellStyle(cs);
+				}
+			}
+			sheet.getRow(1).getCell(1+5*b).setCellValue(list_facts.get(b).getFactSname()+"_"+list_facts.get(b).getId().getFactArea());
+			sheet.getRow(2).getCell(1+5*b).setCellValue(1);
+			sheet.getRow(3).getCell(1+5*b).setCellValue(1);
+			sheet.getRow(4).getCell(1+5*b).setCellValue(1);
+			
+			for(int i=0;i<3;i++){
+				CellRangeAddress cra=new CellRangeAddress(5,8,i+5*b,i+5*b);
+				sheet.addMergedRegion(cra);	
+				for(int j=0;j<4;j++){
+					sheet.getRow(5+j).getCell(i+5*b).setCellStyle(cs);
+				}
+			}
+			sheet.getRow(5).getCell(1+5*b).setCellValue("總機孔");
+			sheet.getRow(5).getCell(2+5*b).setCellValue(1);
+			for(int i=0;i<list_b.size();i++){
+				sheet.getRow(5+i).getCell(3+5*b).setCellValue(list_b.get(i));
+				sheet.getRow(5+i).getCell(3+5*b).setCellStyle(cs);
+				CellRangeAddress cra=new CellRangeAddress(5+i,5+i,4+5*b,5+5*b);
+				sheet.addMergedRegion(cra);
+				for(int j=0;j<2;j++){
+					sheet.getRow(5+i).getCell(4+j+5*b).setCellStyle(cs);
+				}
+				sheet.getRow(5+i).getCell(4+5*b).setCellValue(1);
+				sheet.getRow(5+i).getCell(4+5*b).setCellStyle(cs);
+			}						
+		}//for b
+		for(int i=0;i<list_c.size();i++){
+			sheet.getRow(9+i).getCell(0).setCellValue(list_c.get(i));
+			sheet.getRow(9+i).getCell(0).setCellStyle(cs);
+		}
 		
 		
 	}

@@ -255,7 +255,7 @@
 				<td class="td_show_title">年月</td>
 				
 				<td class="td_input" colspan="2">
-				<!--  年<span>
+				  年<span>
 				<select
 						name="year" class="td_input" id="nyear" datatype="*">
 							<option value="">請選擇年</option>
@@ -309,10 +309,10 @@
 							<option value="12">12月</option>
 
 					</select> 					
-					</span>-->
-					<span>
-					<input type="text" name="sdate" onclick="WdatePicker({minDate:'{%y-1}-%m',maxDate:'#F{$dp.$D(\'lmonth\',{M:0})||\'%y-%M\'}'})" id="lmonth_1" class="Wdate" datatype="*"/>至					
 					</span>
+					<!-- <span>
+					<input type="text" name="sdate" onclick="WdatePicker({minDate:'{%y-1}-%m',maxDate:'#F{$dp.$D(\'lmonth\',{M:0})||\'%y-%M\'}'})" id="lmonth_1" class="Wdate" datatype="*"/>至					
+					</span> -->
 					<span><input type="text" name="edate" onclick="WdatePicker({minDate:'#F{$dp.$D(\'lmonth_1\',{M:0})}',maxDate:'%y-%M'})" id="lmonth" class="Wdate" disabled/></span> 
 					<input type="hidden" value="" id="hmonth" datatype="*0-12" /> <input
 					type="hidden" value="" name="result" id="result" /> (單月打印<input
