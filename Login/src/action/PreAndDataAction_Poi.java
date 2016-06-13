@@ -5118,15 +5118,30 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 		}//for a
 		
 		HSSFSheet sheet=wb.createSheet("sheet1");
+		HSSFSheet sheet2=null;		
 		for(int i=0;i<50*list_months.size();i++){
 			sheet.createRow(i);
 			for(int j=0;j<list_facts.size()*5+1;j++){
-				if(j>255){
+				if(j>251){					
 					continue;
 				}
 				sheet.getRow(i).createCell(j);
 			}
 		}
+		if(list_facts.size()>49){
+			sheet2=wb.createSheet("sheet2");
+			for(int i=0;i<50*list_months.size();i++){
+				sheet2.createRow(i);
+				for(int j=0;j<list_facts.size()*5+1-251;j++){
+					if(j>251){					
+						continue;
+					}
+					sheet2.getRow(i).createCell(j);
+				}
+			}
+			sheet2.setColumnWidth(0, 4500);
+		}
+		
 		sheet.setColumnWidth(0, 4500);
 		
 		sheet.getRow(0).getCell(0).setCellValue("加久各工廠每日產量達成狀況匯總表");
@@ -5162,7 +5177,7 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 			List<Webestproduct>list_pros=(List<Webestproduct>)map_a.get(list_months.get(i));
 			List<List<WebYieldData>>list_ydatas=(List<List<WebYieldData>>)map_b.get(list_months.get(i));
 						
-			if(list_facts.size()>50){
+			if(list_facts.size()>49){
 				sheet2=wb.getSheet("sheet2")==null?wb.createSheet("sheet2"):wb.getSheet("sheet2");				
 			}			
 				this.init(sheet1,sheet2, map_style, list_facts, list_a_str, list_b_str, list_c_str,list_d_str,list_pros,list_ydatas,i);						
@@ -5183,7 +5198,7 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 		}
 		
 		for(int b=0;b<list_facts.size();b++){//for b
-			if(b>50){				
+			if(b>49){				
 				continue;
 			}
 			Webestproduct pro=list_pros.get(b);			
@@ -5230,7 +5245,7 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 			sheet.getRow(9+i+44*index).getCell(0).setCellStyle(cs);
 		}
 		for(int b=0;b<list_facts.size();b++){//for b2
-			if(b>50){
+			if(b>49){
 				continue;
 			}
 			for(int c=0;c<list_d_str.size();c++){
