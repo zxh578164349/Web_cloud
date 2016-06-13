@@ -6,6 +6,7 @@ package mail;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -82,7 +83,10 @@ public class AutoSendWebfactorder extends QuartzJobBean{
 	}
 	
 	public void init() throws HttpException, IOException{
-		String yymm=new SimpleDateFormat("yyyyMM").format(new Date());
+		Calendar cal=Calendar.getInstance();
+		cal.setTime(new Date());
+		cal.add(Calendar.MONTH, -1);
+		String yymm=new SimpleDateFormat("yyyyMM").format(cal.getTime());
 		HttpClient client = new HttpClient();
 		HttpMethod method = new GetMethod("http://203.85.73.161/Login/webfactOrder_print_email?yymm="+yymm+"&yymm2="+yymm+"&autoEmailMk=1");	
 		//HttpMethod method = new GetMethod("http://172.17.18.173:8080/Login/webfactOrder_print_email?yymm="+yymm+"&yymm2="+yymm+"&autoEmailMk=1");

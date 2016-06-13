@@ -499,7 +499,7 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 									// sheet.getRow(j+totalHeight).createCell(7+width).setCellStyle(cs);
 									break;
 								case 1:
-									Double force = (alllist.get(i))
+									Double force = (alllist.get(i))     
 											.getMachinepower();
 
 									if (force != null) {
@@ -686,7 +686,7 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 									sheet.getRow(j + totalHeight + 1)
 											.createCell(3 + width)
 											.setCellValue(temp);
-									Double sample = (alllist.get(i))
+									Double sample = (alllist.get(i))             
 											.getSample();
 									if (sample != null) {
 										sheet.getRow(j + totalHeight + 1)
@@ -900,9 +900,9 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 								 * ==7||all==8||all==10||all==12){ z_length=32;
 								 * }else{ z_length=31; }
 								 */
-								for (int z = 0; z < z_length; z++) {// for 3
+								for (int z = 0; z < z_length; z++) {// for 3               
 									int day = 0;
-									Double onModulus = null;
+									Double onModulus = null;                            
 									Double personnum = null;
 									Double standardOutput = null;
 									Double actualYield = null;
@@ -5030,27 +5030,48 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 	 * @date 2016/6/7
 	 */
 	public void print2Y_hb() throws ParseException, IOException{
-		sdate="201601";
-		edate="201602";
+		/*sdate="201602";
+		edate="201603";
 		factnolist.add("631");
 		factnolist.add("JW");
-		factnolist.add("HD");
+		factnolist.add("HD");*/
 		HSSFWorkbook wb=new HSSFWorkbook();
 		Map<String,Object>map_style=this.findStyles(wb);
 		HSSFCellStyle cs=(HSSFCellStyle)map_style.get("cs");
+		HSSFCellStyle cs_title=(HSSFCellStyle)map_style.get("cs_title");
 		List<String>list_months=GlobalMethod.findMonths(sdate, edate);//所有月份
 		List<WebFact>list_facts=webFactSer.findByList(factnolist);//所有廠別
 		List<Webestproduct>list_pros=estProSer.findByYymm(sdate, edate);//查得的預計生產數據
-		
 		DateFormat fmt=new SimpleDateFormat("yyyyMM");
-		DateFormat fmt2=new SimpleDateFormat("yyyyMMdd");
+		DateFormat fmt2=new SimpleDateFormat("yyyyMMdd");				
+		List<String>list_a_str=new ArrayList<String>();
+		List<String>list_b_str=new ArrayList<String>();
+		//List<String>list_c_str=new ArrayList<String>();
+		List<String>list_d_str=new ArrayList<String>();
+		list_a_str.add("日期/產量/廠別");
+		list_a_str.add("戰力分析模數");
+		list_a_str.add("預計生產模數");
+		list_a_str.add("預計請款雙數");
+		list_a_str.add("機台孔位數");
+						
+		list_b_str.add("有效孔位");
+		list_b_str.add("工程/樣品");
+		list_b_str.add("補料孔位");
+		list_b_str.add("其他");
+								
+		list_d_str.add("上模數");
+		list_d_str.add("人數");
+		list_d_str.add("標準產量");
+		list_d_str.add("實際產量");
+		list_d_str.add("達成率(%)");
+		
+		
 		Map<String,Object>map_a=new LinkedHashMap<String,Object>();
 		Map<String,Object>map_b=new LinkedHashMap<String,Object>();
-		for(String month:list_months){//for a			
+		for(String month:list_months){//for a
+			List<String>days=GlobalMethod.findDaysOfMonth(month,"yyyyMMdd");
 			List<Webestproduct>list_a=new ArrayList<Webestproduct>();
-			List<WebYieldData>list_ydatas=dataSer.findByYymm(month);
-			
-			List<String>days=GlobalMethod.findDaysOfMonth(month);
+			List<WebYieldData>list_ydatas=dataSer.findByYymm(month);						
 			List<List<WebYieldData>>list_b=new ArrayList<List<WebYieldData>>();
 			for(WebFact fact:list_facts){//for b1
 				list_a.add(new Webestproduct(new WebestproductId(fact.getId().getFactNo(),fact.getId().getFactArea(),fmt.parse(month),"zd")));
@@ -5062,133 +5083,173 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 				list_b.add(list_b1);
 				
 			}//for b1
-			for(Webestproduct pro:list_a){//for b2
+			for(int i=0;i<list_a.size();i++ ){//for b2
+				Webestproduct pro=list_a.get(i);
 				for(Webestproduct pro2:list_pros){
 					if(pro.getId().getFactNo().equals(pro2.getId().getFactNo())&&
 							pro.getId().getFactCode().equals(pro2.getId().getFactCode())&&
 							fmt.format(pro.getId().getYymm()).equals(fmt.format(pro2.getId().getYymm()))){
-						pro=pro2;
+						//pro=pro2;
+						list_a.remove(i);
+						list_a.add(i,pro2);
 						break;
 					}
 				}
 			}//for b2
 			for(List<WebYieldData> list:list_b){//for b3
-				for(WebYieldData ydata:list){
+				for(int i=0;i<list.size();i++){
+					WebYieldData ydata=list.get(i);
 					for(WebYieldData ydata2:list_ydatas){
 						if(ydata.getId().getFactNo().equals(ydata2.getId().getFactNo())&&
 								ydata.getId().getFactCode().equals(ydata2.getId().getFactCode())&&
 								fmt2.format(ydata.getId().getYymmdd()).equals(fmt2.format(ydata2.getId().getYymmdd()))){
-							ydata=ydata2;							
+							//ydata=ydata2;
+							list.remove(i);
+							list.add(i,ydata2);
+							break;
 						}
 					}
 				}
 			}//for b3
 			map_a.put(month, list_a);
 			map_b.put(month, list_b);
+			
+			
 		}//for a
 		
-		this.init(wb, map_style, list_facts,list_months,map_a,map_b);
-		
-				
-	}
-	
-	public void init(HSSFWorkbook wb,Map<String,Object> map_style, List<WebFact> list_facts,List<String> list_months,Map<String,Object>map_a,Map<String,Object>map_b) throws IOException, ParseException {
-		// 初始化表格
-		List<String>list_a=new ArrayList<String>();
-		List<String>list_b=new ArrayList<String>();
-		List<String>list_c=new ArrayList<String>();
-		list_a.add("日期/產量/廠別");
-		list_a.add("戰力分析模數");
-		list_a.add("預計生產模數");
-		list_a.add("預計請款雙數");
-		list_a.add("機台孔位數");
-		
-		
-		
-		list_b.add("有效孔位");
-		list_b.add("工程/樣品");
-		list_b.add("補料孔位");
-		list_b.add("其他");
-		
-		list_c.add("日期");
-		List<String>days=GlobalMethod.findDaysOfMonth("201604");
-		for(String day:days){
-			list_c.add(day);
-		}
-		list_c.add("合計");
-		list_c.add("工作天數");
-		
-		
-		HSSFCellStyle cs_title=(HSSFCellStyle)map_style.get("cs_title");
-		HSSFCellStyle cs=(HSSFCellStyle)map_style.get("cs");
-		HSSFSheet sheet = wb.createSheet("sheet1");
-
-		for (int a = 0; a < list_a.size()+list_c.size()+5; a++) {			
-			HSSFRow row=sheet.createRow(a);
-			for (int b = 0; b < list_facts.size() * 5 + 1; b++) {
-				row.createCell(b);
-			}			
+		HSSFSheet sheet=wb.createSheet("sheet1");
+		for(int i=0;i<50*list_months.size();i++){
+			sheet.createRow(i);
+			for(int j=0;j<list_facts.size()*5+1;j++){
+				if(j>255){
+					continue;
+				}
+				sheet.getRow(i).createCell(j);
+			}
 		}
 		sheet.setColumnWidth(0, 4500);
+		
 		sheet.getRow(0).getCell(0).setCellValue("加久各工廠每日產量達成狀況匯總表");
 		CellRangeAddress cra_title = new CellRangeAddress(0, 0, 0, 12);
 		sheet.addMergedRegion(cra_title);
-		for(int a=0;a<12;a++){
+		for(int a=1;a<12;a++){
 			sheet.getRow(0).getCell(a).setCellStyle(cs_title);
 		}
 		
-		
-		this.init(sheet, map_style, list_facts, list_a, list_b, list_c);
-		
+		this.init(wb, map_style, list_facts,list_months,map_a,map_b,list_a_str,list_b_str,list_d_str);
 		OutputStream os=new FileOutputStream("e:\\"+"ddddd.xls");
 		wb.write(os);
-		os.close();	
+		os.close();					
 	}
 	
-	public void init(HSSFSheet sheet,Map<String,Object> map_style, List<WebFact> list_facts,List<String>list_a,List<String>list_b,List<String>list_c){
+	public void init(HSSFWorkbook wb,Map<String,Object> map_style, List<WebFact> list_facts,List<String> list_months,Map<String,Object>map_a,Map<String,Object>map_b,
+			List<String>list_a_str,List<String>list_b_str,List<String>list_d_str) throws IOException, ParseException {							
 		HSSFCellStyle cs=(HSSFCellStyle)map_style.get("cs");
-		for(int a=0;a<list_a.size();a++){
-			sheet.getRow(a+1).getCell(0).setCellValue(list_a.get(a));
-			sheet.getRow(a+1).getCell(0).setCellStyle(cs);
-		}		
+		List<String>list_c_str=new ArrayList<String>();	
+		
+		HSSFSheet sheet1=wb.getSheet("sheet1");
+		HSSFSheet sheet2=null;
+		for(int i=0;i<list_months.size();i++){
+			list_c_str.clear();
+			List<String>days=GlobalMethod.findDaysOfMonth(list_months.get(i),"MM/dd");
+			list_c_str.clear();
+			list_c_str.add("日期");
+			for(String day:days){
+				list_c_str.add(day);
+			}
+			list_c_str.add("合計");
+			list_c_str.add("工作天數");			
+			List<Webestproduct>list_pros=(List<Webestproduct>)map_a.get(list_months.get(i));
+			List<List<WebYieldData>>list_ydatas=(List<List<WebYieldData>>)map_b.get(list_months.get(i));
+						
+			if(list_facts.size()>50){
+				sheet2=wb.getSheet("sheet2")==null?wb.createSheet("sheet2"):wb.getSheet("sheet2");				
+			}			
+				this.init(sheet1,sheet2, map_style, list_facts, list_a_str, list_b_str, list_c_str,list_d_str,list_pros,list_ydatas,i);						
+		}				
+		
+	}
+	
+	public void init(HSSFSheet sheet,HSSFSheet sheet2,Map<String,Object> map_style, List<WebFact> list_facts,List<String>list_a_str,List<String>list_b_str,List<String>list_c_str,List<String>list_d_str,
+			List<Webestproduct>list_pros,List<List<WebYieldData>>list_ydatas,int index){
+		
+		HSSFCellStyle cs=(HSSFCellStyle)map_style.get("cs");
+		HSSFCellStyle cs_lyellow=(HSSFCellStyle)map_style.get("cs_lyellow");
+		
+		
+		for(int a=0;a<list_a_str.size();a++){
+			sheet.getRow(a+1+44*index).getCell(0).setCellValue(list_a_str.get(a));
+			sheet.getRow(a+1+44*index).getCell(0).setCellStyle(cs);
+		}
+		
 		for(int b=0;b<list_facts.size();b++){//for b
+			if(b>50){				
+				continue;
+			}
+			Webestproduct pro=list_pros.get(b);			
 			for(int i=0;i<4;i++){
-				CellRangeAddress cra=new CellRangeAddress(i+1,i+1,1+5*b,5+5*b);
+				CellRangeAddress cra=new CellRangeAddress(i+1+44*index,i+1+44*index,1+5*b,5+5*b);
 				sheet.addMergedRegion(cra);	
 				for(int j=0;j<5;j++){
-					sheet.getRow(i+1).getCell(j+1+5*b).setCellStyle(cs);
+					sheet.getRow(i+1+44*index).getCell(j+1+5*b).setCellStyle(cs);
 				}
 			}
-			sheet.getRow(1).getCell(1+5*b).setCellValue(list_facts.get(b).getFactSname()+"_"+list_facts.get(b).getId().getFactArea());
-			sheet.getRow(2).getCell(1+5*b).setCellValue(1);
-			sheet.getRow(3).getCell(1+5*b).setCellValue(1);
-			sheet.getRow(4).getCell(1+5*b).setCellValue(1);
+			sheet.getRow(1+44*index).getCell(1+5*b).setCellValue(list_facts.get(b).getFactSname()+"_"+list_facts.get(b).getId().getFactArea());
+			sheet.getRow(2+44*index).getCell(1+5*b).setCellValue(pro.getMachinepower()==null?0:pro.getMachinepower());
+			sheet.getRow(3+44*index).getCell(1+5*b).setCellValue(pro.getEstmodel()==null?0:pro.getEstmodel());
+			sheet.getRow(4+44*index).getCell(1+5*b).setCellValue(pro.getEstpay()==null?0:pro.getEstpay());
 			
 			for(int i=0;i<3;i++){
-				CellRangeAddress cra=new CellRangeAddress(5,8,i+5*b,i+5*b);
+				CellRangeAddress cra=new CellRangeAddress(5+44*index,8+44*index,i+5*b,i+5*b);
 				sheet.addMergedRegion(cra);	
 				for(int j=0;j<4;j++){
-					sheet.getRow(5+j).getCell(i+5*b).setCellStyle(cs);
+					sheet.getRow(5+j+44*index).getCell(i+5*b).setCellStyle(cs_lyellow);
 				}
 			}
-			sheet.getRow(5).getCell(1+5*b).setCellValue("總機孔");
-			sheet.getRow(5).getCell(2+5*b).setCellValue(1);
-			for(int i=0;i<list_b.size();i++){
-				sheet.getRow(5+i).getCell(3+5*b).setCellValue(list_b.get(i));
-				sheet.getRow(5+i).getCell(3+5*b).setCellStyle(cs);
-				CellRangeAddress cra=new CellRangeAddress(5+i,5+i,4+5*b,5+5*b);
+			sheet.getRow(5+44*index).getCell(1+5*b).setCellValue("總機孔");
+			sheet.getRow(5+44*index).getCell(2+5*b).setCellValue(pro.getTotalhole()==null?0:pro.getTotalhole());
+			for(int i=0;i<list_b_str.size();i++){
+				sheet.getRow(5+i+44*index).getCell(3+5*b).setCellValue(list_b_str.get(i));
+				sheet.getRow(5+i+44*index).getCell(3+5*b).setCellStyle(cs_lyellow);
+				CellRangeAddress cra=new CellRangeAddress(5+i+44*index,5+i+44*index,4+5*b,5+5*b);
 				sheet.addMergedRegion(cra);
 				for(int j=0;j<2;j++){
-					sheet.getRow(5+i).getCell(4+j+5*b).setCellStyle(cs);
+					sheet.getRow(5+i+44*index).getCell(4+j+5*b).setCellStyle(cs_lyellow);
 				}
-				sheet.getRow(5+i).getCell(4+5*b).setCellValue(1);
-				sheet.getRow(5+i).getCell(4+5*b).setCellStyle(cs);
-			}						
+				sheet.getRow(5+i+44*index).getCell(4+5*b).setCellStyle(cs_lyellow);
+			}
+			sheet.getRow(5+44*index).getCell(4+5*b).setCellValue(pro.getHole()==null?0:pro.getHole());
+			sheet.getRow(6+44*index).getCell(4+5*b).setCellValue(pro.getSample()==null?0:pro.getSample());
+			sheet.getRow(7+44*index).getCell(4+5*b).setCellValue(pro.getAccessories()==null?0:pro.getAccessories());
+			sheet.getRow(8+44*index).getCell(4+5*b).setCellValue(pro.getOther()==null?0:pro.getOther());
 		}//for b
-		for(int i=0;i<list_c.size();i++){
-			sheet.getRow(9+i).getCell(0).setCellValue(list_c.get(i));
-			sheet.getRow(9+i).getCell(0).setCellStyle(cs);
+		
+		
+		for(int i=0;i<list_c_str.size();i++){
+			sheet.getRow(9+i+44*index).getCell(0).setCellValue(list_c_str.get(i));
+			sheet.getRow(9+i+44*index).getCell(0).setCellStyle(cs);
 		}
+		for(int b=0;b<list_facts.size();b++){//for b2
+			if(b>50){
+				continue;
+			}
+			for(int c=0;c<list_d_str.size();c++){
+				sheet.getRow(9+44*index).getCell(1+c+5*b).setCellValue(list_d_str.get(c));
+				sheet.getRow(9+44*index).getCell(1+c+5*b).setCellStyle(cs);
+			}
+			List<WebYieldData>list_ydata=list_ydatas.get(b);						
+			for(int c=0;c<list_ydata.size();c++){
+				sheet.getRow(10+c+44*index).getCell(1+5*b).setCellValue(list_ydata.get(c).getOnModulus()==null?0:list_ydata.get(c).getOnModulus());
+				sheet.getRow(10+c+44*index).getCell(2+5*b).setCellValue(list_ydata.get(c).getPersonnum()==null?0:list_ydata.get(c).getPersonnum());
+				sheet.getRow(10+c+44*index).getCell(3+5*b).setCellValue(list_ydata.get(c).getStandardOutput()==null?0:list_ydata.get(c).getStandardOutput());
+				sheet.getRow(10+c+44*index).getCell(4+5*b).setCellValue(list_ydata.get(c).getActualYield()==null?0:list_ydata.get(c).getActualYield());
+				sheet.getRow(10+c+44*index).getCell(5+5*b).setCellValue(list_ydata.get(c).getAchievingRate()==null?0:list_ydata.get(c).getAchievingRate());
+				for(int d=0;d<list_d_str.size();d++){
+					sheet.getRow(10+c+44*index).getCell(1+d+5*b).setCellStyle(cs);
+				}
+			}
+		}//for b2
+		
 		
 		
 	}

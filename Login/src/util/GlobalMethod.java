@@ -742,22 +742,23 @@ public class GlobalMethod extends HibernateDaoSupport{
 	   * @return
 	   * @throws ParseException
 	   */
-	  public static List<String> findDaysOfMonth(String yymm) throws ParseException{
+	  public static List<String> findDaysOfMonth(String yymm,String fmt) throws ParseException{
 		  List<String>list=new ArrayList<String>();
 		  Calendar cal=Calendar.getInstance();
 		  cal.setTime(new SimpleDateFormat("yyyyMM").parse(yymm));
 		  int maxnum=cal.getActualMaximum(Calendar.DAY_OF_MONTH);
 		  for(int i=1;i<=maxnum;i++){
 			  cal.set(Calendar.DAY_OF_MONTH, i);
-			  list.add(new SimpleDateFormat("yyyyMMdd").format(cal.getTime()));
+			  list.add(new SimpleDateFormat(fmt).format(cal.getTime()));
 		  }
 		  return list;
 	  }
 	
 	public static void main(String[] args) throws ParseException {
-		/*List<Webestproduct>list=new ArrayList<Webestproduct>();
+		List<Webestproduct>list=new ArrayList<Webestproduct>();
 		List<String>list2=new ArrayList<String>();
 		List<Webestproduct>list3=new ArrayList<Webestproduct>();
+		List<Webestproduct>list4=new ArrayList<Webestproduct>();
 		Map<String,Object>map=new LinkedHashMap<String,Object>();
 		list2.add("RB");
 		list2.add("MD");
@@ -773,19 +774,32 @@ public class GlobalMethod extends HibernateDaoSupport{
         	System.out.println(pro.getAccessories());
         }
         System.out.println("------------------------");
-        list3.remove(1);
+        list3.remove(0);
        
-        for(Webestproduct pro:list){
+        for(int i=0;i<list.size();i++){
+        	Webestproduct pro=list.get(i);
         	for(Webestproduct pro2:list3){
         		if(pro.getId().getFactCode().equals(pro2.getId().getFactCode())&&
         				pro.getId().getFactNo().equals(pro2.getId().getFactNo())&&
         				new SimpleDateFormat("yyyyMM").format(pro.getId().getYymm()).equals(new SimpleDateFormat("yyyyMM").format(pro2.getId().getYymm()))){
-        			pro=pro2;
+        			//pro=pro2;
+        			list.remove(i);
+        			list.add(i,pro2);
         		}
         	}
+        	list4.add(pro);
+        	System.out.println(pro.getAccessories());
+        }
+        for(Webestproduct pro:list){
+        	System.out.println(pro.getAccessories());
+        }
+        map.put("201605", list);
+        /*for(Webestproduct pro:(List<Webestproduct>)map.get("201605")){
         	System.out.println(pro.getAccessories());
         }*/
-		DateFormat frm=new SimpleDateFormat("yyyyMM");
+        
+        
+		/*DateFormat frm=new SimpleDateFormat("yyyyMM");
 		DateFormat frm2=new SimpleDateFormat("yyyyMMdd");
 		List<String>months=new ArrayList<String>();
 		months.add("201601");
@@ -803,7 +817,7 @@ public class GlobalMethod extends HibernateDaoSupport{
 			}
 			System.out.println("-------------------------------------------------");
 			
-		}
+		}*/
         
 
        

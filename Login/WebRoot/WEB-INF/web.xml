@@ -48,14 +48,14 @@ version="2.5">
  </filter-mapping>   -->
 
 
-<filter>
+<!-- <filter>
     <filter-name>sessionfilter</filter-name>
     <filter-class>util.SessionTimeOutFilter</filter-class>
 </filter>
 <filter-mapping>
     <filter-name>sessionfilter</filter-name>
     <url-pattern>/*</url-pattern>
-</filter-mapping>
+</filter-mapping> -->
     
 <filter> 
     <filter-name>struts2</filter-name>

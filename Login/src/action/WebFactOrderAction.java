@@ -10,6 +10,7 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -556,7 +557,10 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 		wb.write(os);
 		os.close();				
 	}
-	public void print_email() throws IOException{
+	public void print_email() throws IOException{		
+		/*yymm="201605";
+		yymm2=yymm;
+		autoEmailMk=1;*/
 		HSSFWorkbook wb=this.print();
 		OutputStream os=new FileOutputStream("d:\\"+yymm+".xls");
 		wb.write(os);
@@ -567,6 +571,7 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 		if(autoEmailMk==1){
 			factNos=webFactSer.findFactNoshow();
 			factAreas=webFactSer.findFactCodeshow();
+			branks=webfactorderSer.findBrank(factNos,factAreas);
 		}
 		/******************是否郵件通知判斷***********************/
 		
