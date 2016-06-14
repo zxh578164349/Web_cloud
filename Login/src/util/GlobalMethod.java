@@ -616,7 +616,7 @@ public class GlobalMethod extends HibernateDaoSupport{
 	 * @param d2
 	 * @return
 	 */
-	public Double division(Double d1,Double d2){
+	public static Double division(Double d1,Double d2){
 		Double db=0.00;
 		if(d2!=0.00){
 			db=d1/d2;
@@ -763,7 +763,7 @@ public class GlobalMethod extends HibernateDaoSupport{
 		list2.add("RB");
 		list2.add("MD");
 		list2.add("PU");
-        for(int i=0;i<list2.size();i++){
+        /*for(int i=0;i<list2.size();i++){
         	list.add(new Webestproduct(new WebestproductId("631",list2.get(i),new SimpleDateFormat("yyyyMM").parse("201605"),"zd")));
         	list3.add(new Webestproduct(new WebestproductId("631",list2.get(i),new SimpleDateFormat("yyyyMM").parse("201605"),"zd")));
         }
@@ -793,7 +793,7 @@ public class GlobalMethod extends HibernateDaoSupport{
         for(Webestproduct pro:list){
         	System.out.println(pro.getAccessories());
         }
-        map.put("201605", list);
+        map.put("201605", list);*/
         /*for(Webestproduct pro:(List<Webestproduct>)map.get("201605")){
         	System.out.println(pro.getAccessories());
         }*/
@@ -818,8 +818,17 @@ public class GlobalMethod extends HibernateDaoSupport{
 			System.out.println("-------------------------------------------------");
 			
 		}*/
+        DateFormat fmt=new SimpleDateFormat("yyyyMMdd");
+        String today=fmt.format(new Date());
+        String q="20160620";
+        String w="20160612";
+        String qq="20160611";
+        String qqq="20150611";
         
-
+        System.out.println(q.compareTo(today));
+        System.out.println(w.compareTo(today));
+        System.out.println(qq.compareTo(today));
+        System.out.println(qqq.compareTo(today));
        
 						
 	}
