@@ -12,6 +12,7 @@ import util.PageBean;
 import dao.Basedao;
 import dao.IWebYieldDataDao;
 import entity.KyzExpectmatmLog;
+import entity.VWebydatabyfcode;
 import entity.WebYieldData;
 import entity.WebYieldDataId;
 import entity.WebYieldDataLog;
@@ -370,6 +371,32 @@ public class WebYieldDataDaoImpl extends Basedao implements IWebYieldDataDao {
 	public List<WebYieldData> findByYymm(String yymm) {
 		// TODO Auto-generated method stub
 		String hql="from WebYieldData where to_char(id.yymmdd,'yyyymm')=? order by id.factNo,id.factCode, id.yymmdd";
+		String[]objs={yymm};
+		return super.findAll(hql, objs);
+	}
+
+	/**
+	 * 日期:2016/6/15
+	 * 描述:
+	 */
+	
+	
+	public List<VWebydatabyfcode> findByYymm2(String yymm) {
+		// TODO Auto-generated method stub
+		String hql="from VWebydatabyfcode where substr(id.yymmdd,0,6)=?";
+		String[]objs={yymm};
+		return super.findAll(hql, objs);
+	}
+
+	/**
+	 * 日期:2016/6/15
+	 * 描述:
+	 */
+	
+	
+	public List<String> findDisFactcode(String yymm) {
+		// TODO Auto-generated method stub
+		String hql="select distinct id.fact_code from VWebydatabyfcode where substr(id.yymmdd,0,6)=?";
 		String[]objs={yymm};
 		return super.findAll(hql, objs);
 	}

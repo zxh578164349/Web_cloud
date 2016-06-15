@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 import util.PageBean;
 import entity.KyzExpectmatmLog;
+import entity.VWebydatabyfcode;
 import entity.WebYieldData;
 import entity.WebYieldDataId;
 import entity.WebYieldDataLog;
@@ -72,6 +73,9 @@ public interface IWebYieldDataServices {
 	 * @date 2016/4/1
 	 */
 	public List<WebYieldData>findByYymm(String yymm);
+	
+	public List<VWebydatabyfcode>findByYymm2(String yymm);
+	public List<String>findDisFactcode(String yymm);
 			
 	
 

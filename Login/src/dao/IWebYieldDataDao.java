@@ -81,6 +81,9 @@ public interface IWebYieldDataDao {
 	 * @date 2016/4/1
 	 */
 	public List<WebYieldData>findByYymm(String yymm);
+	
+	public List<VWebydatabyfcode>findByYymm2(String yymm);
+	public List<String>findDisFactcode(String yymm);
 			
 
 }

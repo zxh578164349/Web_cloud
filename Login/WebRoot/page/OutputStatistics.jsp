@@ -31,6 +31,7 @@
 		var demo = jq("#form2").Validform({
 			btnSubmit : "#sub2",
 			tiptype : 3,
+			tipSweep : true,
 			showAllError : true,
 			datatype : {
 				"*0-12" : /^\d{0,2}$/
@@ -208,7 +209,7 @@
 							<input type="checkbox" value="${temp}" name="factcodelist"
 								datatype="*" id="id${x.index}"
 								onclick="checkred('ssp${x.index}','id${x.index}')" />
-						</s:iterator><span style="color:blue">(提示:打印時自動篩選各廠所擁有的廠別狀態)</span></td>
+						</s:iterator></td>
 				</tr>
 
 
@@ -311,7 +312,7 @@
 					</select> 					
 					</span>--> 
 					<span>
-					<input type="text" name="sdate" onclick="WdatePicker({minDate:'{%y-1}-%m',maxDate:'#F{$dp.$D(\'lmonth\',{M:0})||\'%y-%M\'}'})" id="lmonth_1" class="Wdate" datatype="*"/>至					
+					<input type="text" name="sdate" onclick="WdatePicker({minDate:'%y-{%M-12}',maxDate:'#F{$dp.$D(\'lmonth\',{M:0})||\'%y-%M\'}'})" id="lmonth_1" class="Wdate" datatype="*"/>至					
 					</span> 
 					<span><input type="text" name="edate" onclick="WdatePicker({minDate:'#F{$dp.$D(\'lmonth_1\',{M:0})}',maxDate:'%y-%M'})" id="lmonth" class="Wdate" disabled/></span> 
 					<input type="hidden" value="" id="hmonth" datatype="*0-12" /> <input

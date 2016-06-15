@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -65,8 +66,18 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 	private List<String> factcodelist;
 	private String sdate;
 	private String edate;
+	private int emailMk;
 	
 	
+	
+
+	public int getEmailMk() {
+		return emailMk;
+	}
+
+	public void setEmailMk(int emailMk) {
+		this.emailMk = emailMk;
+	}
 
 	public String getSdate() {
 		return sdate;
@@ -5061,6 +5072,7 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 		
 		Map<String,Object>map_a=new LinkedHashMap<String,Object>();
 		Map<String,Object>map_b=new LinkedHashMap<String,Object>();
+		
 		for(String month:list_months){//for a
 			List<String>days=GlobalMethod.findDaysOfMonth(month,"yyyyMMdd");
 			List<Webestproduct>list_a=new ArrayList<Webestproduct>();
@@ -5109,14 +5121,25 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 			map_a.put(month, list_a);
 			map_b.put(month, list_b);						
 		}//for a
-										
-		//OutputStream os=new FileOutputStream("e:\\"+"ddddd.xls");
+				
 		Workbook wb=null;
-		ServletOutputStream os=response.getOutputStream();
+		String fileName=null;
 		if(type.equals("Excel2003")){
-			wb=this.init(list_months, list_facts, map_a, map_b, list_a_str, list_b_str, list_d_str);
+			wb=this.init(list_months, list_facts, map_a, map_b, list_a_str, list_b_str, list_d_str);			
 			response.setContentType("application/vnd.ms-excel");
-			String fileName="report.xls";							
+			fileName="report.xls";
+		}else{
+			wb=this.init_2007(list_months, list_facts, map_a, map_b, list_a_str, list_b_str, list_d_str);
+			response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+			fileName="report.xlsx";
+		}
+		
+		if(emailMk==1){//發送郵件報表
+			OutputStream os=new FileOutputStream("d:\\"+sdate+".xls");
+			wb.write(os);
+			os.close();	
+		}else{//網頁訪問報表
+			ServletOutputStream os=response.getOutputStream();	
 			int msie=ServletActionContext.getRequest().getHeader("USER-AGENT").toLowerCase().indexOf("msie");//判斷是否為IE瀏覽器,大於0則為IE瀏覽器		
 			if(msie>0){
 				fileName=java.net.URLEncoder.encode(fileName,"utf-8");//解決IE中文文件不能下載的問題
@@ -5124,12 +5147,13 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 				fileName=new String(fileName.getBytes("utf-8"),"iso-8859-1");//解決非IE中文名亂碼問題
 			}		
 			response.setHeader("Content-disposition", "attachment;filename="+fileName);
-		}else{
-			
-		}				
-		wb.write(os);
-		os.close();					
+			wb.write(os);
+			os.close();	
+		}						
 	}
+	
+	
+	
 	public HSSFWorkbook init(List<String>list_months,List<WebFact>list_facts,Map<String,Object>map_a,Map<String,Object>map_b,
 			List<String>list_a_str,List<String>list_b_str,List<String>list_d_str) throws IOException, ParseException{
 		HSSFWorkbook wb=new HSSFWorkbook();
@@ -5170,6 +5194,9 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 			sheet.getRow(0).getCell(a).setCellStyle(cs_title);
 		}		
 		this.init(sheet,sheet2, map_style, list_facts,list_months,map_a,map_b,list_a_str,list_b_str,list_d_str);
+		if(factcodelist!=null&&factcodelist.size()>0){
+			this.fcodeTotal(wb,map_style, factcodelist, list_months);
+		}		
 		return wb;
 	}
 	public void init(HSSFSheet sheet,HSSFSheet sheet2,Map<String,Object> map_style, List<WebFact> list_facts,List<String> list_months,Map<String,Object>map_a,Map<String,Object>map_b,
@@ -5199,8 +5226,8 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 			List<Webestproduct>list_pros,List<List<WebYieldData>>list_ydatas,int index){
 		
 		HSSFCellStyle cs=(HSSFCellStyle)map_style.get("cs");
-		HSSFCellStyle cs_thousand_person=(HSSFCellStyle)map_style.get("cs_thousand_person");
-		HSSFCellStyle cs_data=(HSSFCellStyle)map_style.get("cs_data");
+		//HSSFCellStyle cs_thousand_person=(HSSFCellStyle)map_style.get("cs_thousand_person");
+		//HSSFCellStyle cs_data=(HSSFCellStyle)map_style.get("cs_data");
 		
 		HSSFCellStyle cs_thousand=(HSSFCellStyle)map_style.get("cs_thousand");
 		HSSFCellStyle cs_thousand_lyellow=(HSSFCellStyle)map_style.get("cs_thousand_lyellow");	
@@ -5212,9 +5239,7 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 				sheet2.getRow(a+1+44*index).getCell(0).setCellValue(list_a_str.get(a));
 				sheet2.getRow(a+1+44*index).getCell(0).setCellStyle(cs);
 			}//if sheet2
-		}
-		
-		
+		}				
 		for(int b=0;b<list_facts.size();b++){//for b
 			/*********************************sheet2**************************************************/
 			if(b>49){// if sheet2
@@ -5308,10 +5333,7 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 				sheet2.getRow(9+i+44*index).getCell(0).setCellValue(list_c_str.get(i));
 				sheet2.getRow(9+i+44*index).getCell(0).setCellStyle(cs);
 			}//if sheet2
-		}
-		
-		
-		
+		}						
 		for(int b=0;b<list_facts.size();b++){//for b2
 			WebYieldData ydata=new WebYieldData(0.0,0.0,0.0,0.0,0.0);//合計
 			
@@ -5338,17 +5360,17 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 								  list_ydata.get(c).getDaycount()==null?0:list_ydata.get(c).getDaycount());
 					
 					if(c==list_ydata.size()-1){
-						this.fillYdata_total(ydata, sheet2, 10+days.size()+44*index, 1+5*(b-50));//sheet2下表填充合計
-						for(int d=0;d<list_d_str.size();d++){
+						this.fillYdata_total(map_style,list_d_str,ydata, sheet2, 10+days.size()+44*index, 1+5*(b-50));//sheet2下表填充合計
+						/*for(int d=0;d<list_d_str.size();d++){
 							if(d==list_d_str.size()-1){
 								sheet2.getRow(10+days.size()+44*index).getCell(1+d+5*(b-50)).setCellStyle(cs_data);
 							}else{
 								sheet2.getRow(10+days.size()+44*index).getCell(1+d+5*(b-50)).setCellStyle(cs);
 							}							
-							sheet2.getRow(10+days.size()+44*index+1).getCell(1+d+5*(b-50)).setCellStyle(cs);//天數						
+							sheet2.getRow(11+days.size()+44*index).getCell(1+d+5*(b-50)).setCellStyle(cs);//天數						
 						}
 						CellRangeAddress cra=new CellRangeAddress(11+days.size()+44*index,11+days.size()+44*index,1+5*(b-50),5+5*(b-50));
-						sheet2.addMergedRegion(cra);
+						sheet2.addMergedRegion(cra);*/
 					}
 					/***********************************************合計******************************************************/
 				}
@@ -5378,23 +5400,610 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 							  list_ydata.get(c).getDaycount()==null?0:list_ydata.get(c).getDaycount());
 				
 				if(c==list_ydata.size()-1){
-					this.fillYdata_total(ydata, sheet, 10+days.size()+44*index, 1+5*b);//填充合計
-					for(int d=0;d<list_d_str.size();d++){
+					this.fillYdata_total(map_style,list_d_str,ydata, sheet, 10+days.size()+44*index, 1+5*b);//填充合計
+					/*for(int d=0;d<list_d_str.size();d++){
 						if(d==list_d_str.size()-1){
 							sheet.getRow(10+days.size()+44*index).getCell(1+d+5*b).setCellStyle(cs_data);
 						}else{
 							sheet.getRow(10+days.size()+44*index).getCell(1+d+5*b).setCellStyle(cs);
 						}						
-						sheet.getRow(10+days.size()+44*index+1).getCell(1+d+5*b).setCellStyle(cs);//天數						
+						sheet.getRow(11+days.size()+44*index).getCell(1+d+5*b).setCellStyle(cs);//天數						
 					}
 					CellRangeAddress cra=new CellRangeAddress(11+days.size()+44*index,11+days.size()+44*index,1+5*b,5+5*b);
-					sheet.addMergedRegion(cra);
+					sheet.addMergedRegion(cra);*/
 				}
 				/***********************************************合計******************************************************/
 			}
 		}//for b2						
+	}		
+	public void fillYdata(Map<String,Object> map_style,WebYieldData ydata,HSSFSheet sheet,int x,int y){
+		HSSFCellStyle temp=(HSSFCellStyle)map_style.get("cs");
+		if(ydata.getWorkorholiday()==null||ydata.getWorkorholiday().equals("")){
+			temp=(HSSFCellStyle)map_style.get("cs_font_red");
+			for(int i=0;i<5;i++){
+				sheet.getRow(x).getCell(y+i).setCellValue("無數據");
+			}
+		}else{
+			if(ydata.getWorkorholiday().equals("0")){				
+				sheet.getRow(x).getCell(y).setCellValue(ydata.getOnModulus()==null?0.0:ydata.getOnModulus());
+				sheet.getRow(x).getCell(y+1).setCellValue(ydata.getPersonnum()==null?0.0:ydata.getPersonnum());
+				sheet.getRow(x).getCell(y+2).setCellValue(ydata.getStandardOutput()==null?0.0:ydata.getStandardOutput());
+				sheet.getRow(x).getCell(y+3).setCellValue(ydata.getActualYield()==null?0.0:ydata.getActualYield());
+				sheet.getRow(x).getCell(y+4).setCellValue(GlobalMethod.division(ydata.getActualYield(), ydata.getStandardOutput()));
+			}
+			if(ydata.getWorkorholiday().equals("1")){
+				temp=(HSSFCellStyle)map_style.get("cs_font_blue");
+				for(int i=0;i<5;i++){
+					sheet.getRow(x).getCell(y+i).setCellValue("假日");
+				}
+			}
+			if(ydata.getWorkorholiday().equals("2")){
+				temp=(HSSFCellStyle)map_style.get("cs_font_green");
+				for(int i=0;i<5;i++){
+					sheet.getRow(x).getCell(y+i).setCellValue("未排產");
+				}
+			}
+		}
+		for(int i=0;i<5;i++){			
+			if(ydata.getWorkorholiday()!=null&&ydata.getWorkorholiday().equals("0")){
+				if(i==1){
+					temp=(HSSFCellStyle)map_style.get("cs_thousand_person");
+				}
+				else if(i==4){
+					temp=(HSSFCellStyle)map_style.get("cs_data");
+				}else{
+					temp=(HSSFCellStyle)map_style.get("cs_thousand") ;
+				}
+			}		
+			sheet.getRow(x).getCell(y+i).setCellStyle(temp);
+			
+		}
+	}
+	public void fillYdata_total(Map<String,Object> map_style,List<String>list_d_str,WebYieldData ydata,HSSFSheet sheet,int x,int y){
+		HSSFCellStyle temp=(HSSFCellStyle)map_style.get("cs");
+		HSSFCellStyle cs_thousand=(HSSFCellStyle)map_style.get("cs_thousand");
+		sheet.getRow(x).getCell(y).setCellValue(ydata.getOnModulus());
+		sheet.getRow(x).getCell(y+1).setCellValue(ydata.getPersonnum());
+		sheet.getRow(x).getCell(y+2).setCellValue(ydata.getStandardOutput());
+		sheet.getRow(x).getCell(y+3).setCellValue(ydata.getActualYield());
+		sheet.getRow(x).getCell(y+4).setCellValue(GlobalMethod.division(ydata.getActualYield(), ydata.getStandardOutput()));
+		sheet.getRow(x+1).getCell(y).setCellValue(ydata.getDaycount());	
+		
+		for(int i=0;i<list_d_str.size();i++){
+			if(i==1){
+				temp=(HSSFCellStyle)map_style.get("cs_thousand_person");
+			}else if(i==4){
+				temp=(HSSFCellStyle)map_style.get("cs_data");
+			}else{
+				temp=(HSSFCellStyle)map_style.get("cs_thousand") ;
+			}
+			sheet.getRow(x).getCell(y+i).setCellStyle(temp);
+			sheet.getRow(x+1).getCell(y+i).setCellStyle(cs_thousand);
+		}
+		CellRangeAddress cra=new CellRangeAddress(x+1,x+1,y,4+y);
+		sheet.addMergedRegion(cra);
+		
 	}
 	
+	
+	
+	
+	//---------------------------------------------------------------Excel2007---------------------------------------------------------------------------
+	//---------------------------------------------------------------------------------------------------------------------------------------------------
+	public XSSFWorkbook init_2007(List<String>list_months,List<WebFact>list_facts,Map<String,Object>map_a,Map<String,Object>map_b,
+			List<String>list_a_str,List<String>list_b_str,List<String>list_d_str) throws IOException, ParseException{
+		XSSFWorkbook wb=new XSSFWorkbook();
+		Map<String,Object>map_style=this.findStyle2(wb);		
+		XSSFCellStyle cs_title=(XSSFCellStyle)map_style.get("cs_title");
+		XSSFSheet sheet=wb.createSheet("sheet1");
+		XSSFSheet sheet2=null;		
+		for(int i=0;i<50*list_months.size();i++){
+			sheet.createRow(i);
+			for(int j=0;j<list_facts.size()*5+1;j++){
+				/*if(j>251){					
+					continue;
+				}*/
+				sheet.getRow(i).createCell(j);
+			}
+		}
+		/*if(list_facts.size()>49){
+			sheet2=wb.createSheet("sheet2");
+			for(int i=0;i<50*list_months.size();i++){
+				sheet2.createRow(i);
+				for(int j=0;j<list_facts.size()*5-245;j++){
+					if(j>251){					
+						continue;
+					}
+					sheet2.getRow(i).createCell(j);
+				}
+			}
+			sheet2.setColumnWidth(0, 4500);
+		}*/
+		
+		sheet.setColumnWidth(0, 4500);
+		
+		sheet.getRow(0).getCell(0).setCellValue("加久各工廠每日產量達成狀況匯總表");
+		CellRangeAddress cra_title = new CellRangeAddress(0, 0, 0, 12);
+		sheet.addMergedRegion(cra_title);
+		for(int a=0;a<6;a++){
+			sheet.getRow(0).getCell(a).setCellStyle(cs_title);
+		}		
+		this.init_2007(sheet,sheet2, map_style, list_facts,list_months,map_a,map_b,list_a_str,list_b_str,list_d_str);
+		if(factcodelist!=null&&factcodelist.size()>0){
+			this.fcodeTotal_2007(wb,map_style, factcodelist, list_months);
+		}
+		
+		return wb;
+	}
+	public void init_2007(XSSFSheet sheet,XSSFSheet sheet2,Map<String,Object> map_style, List<WebFact> list_facts,List<String> list_months,Map<String,Object>map_a,Map<String,Object>map_b,
+			List<String>list_a_str,List<String>list_b_str,List<String>list_d_str) throws IOException, ParseException {							
+		//XSSFCellStyle cs=(XSSFCellStyle)map_style.get("cs");
+		List<String>list_c_str=new ArrayList<String>();	
+				
+		for(int i=0;i<list_months.size();i++){
+			list_c_str.clear();
+			List<String>days=GlobalMethod.findDaysOfMonth(list_months.get(i),"MM/dd");
+			list_c_str.clear();
+			list_c_str.add("日期");
+			for(String day:days){
+				list_c_str.add(day);
+			}
+			list_c_str.add("合計");
+			list_c_str.add("工作天數");			
+			List<Webestproduct>list_pros=(List<Webestproduct>)map_a.get(list_months.get(i));
+			List<List<WebYieldData>>list_ydatas=(List<List<WebYieldData>>)map_b.get(list_months.get(i));												
+			this.init_2007(sheet,sheet2, map_style, list_facts, list_a_str, list_b_str, list_c_str,list_d_str,days,list_pros,list_ydatas,i);						
+		}				
+		
+	}
+	
+	public void init_2007(XSSFSheet sheet,XSSFSheet sheet2,Map<String,Object> map_style, List<WebFact> list_facts,
+			List<String>list_a_str,List<String>list_b_str,List<String>list_c_str,List<String>list_d_str,List<String>days,
+			List<Webestproduct>list_pros,List<List<WebYieldData>>list_ydatas,int index){
+		
+		XSSFCellStyle cs=(XSSFCellStyle)map_style.get("cs");				
+		XSSFCellStyle cs_thousand=(XSSFCellStyle)map_style.get("cs_thousand");
+		XSSFCellStyle cs_thousand_lyellow=(XSSFCellStyle)map_style.get("cs_thousand_lyellow");	
+		for(int a=0;a<list_a_str.size();a++){
+			sheet.getRow(a+1+44*index).getCell(0).setCellValue(list_a_str.get(a));
+			sheet.getRow(a+1+44*index).getCell(0).setCellStyle(cs);
+			
+			/*if(list_facts.size()>49){//if sheet2
+				sheet2.getRow(a+1+44*index).getCell(0).setCellValue(list_a_str.get(a));
+				sheet2.getRow(a+1+44*index).getCell(0).setCellStyle(cs);
+			}//if sheet2
+*/		}				
+		for(int b=0;b<list_facts.size();b++){//for b
+			/*********************************sheet2**************************************************/
+			/*if(b>49){// if sheet2
+				Webestproduct pro=list_pros.get(b);			
+				for(int i=0;i<4;i++){
+					CellRangeAddress cra=new CellRangeAddress(i+1+44*index,i+1+44*index,1+5*(b-50),5+5*(b-50));
+					sheet2.addMergedRegion(cra);	
+					for(int j=0;j<5;j++){
+						sheet2.getRow(i+1+44*index).getCell(j+1+5*(b-50)).setCellStyle(cs_thousand);
+					}
+				}
+				sheet2.getRow(1+44*index).getCell(1+5*(b-50)).setCellValue(list_facts.get(b).getFactSname()+"_"+list_facts.get(b).getId().getFactArea());
+				sheet2.getRow(2+44*index).getCell(1+5*(b-50)).setCellValue(pro.getMachinepower()==null?0:pro.getMachinepower());
+				sheet2.getRow(3+44*index).getCell(1+5*(b-50)).setCellValue(pro.getEstmodel()==null?0:pro.getEstmodel());
+				sheet2.getRow(4+44*index).getCell(1+5*(b-50)).setCellValue(pro.getEstpay()==null?0:pro.getEstpay());
+				
+				for(int i=0;i<3;i++){
+					CellRangeAddress cra=new CellRangeAddress(5+44*index,8+44*index,i+5*(b-50),i+5*(b-50));
+					sheet2.addMergedRegion(cra);	
+					for(int j=0;j<4;j++){
+						sheet2.getRow(5+j+44*index).getCell(i+5*(b-50)).setCellStyle(cs_thousand_lyellow);
+					}
+				}
+				sheet2.getRow(5+44*index).getCell(1+5*(b-50)).setCellValue("總機孔");
+				sheet2.getRow(5+44*index).getCell(2+5*(b-50)).setCellValue(pro.getTotalhole()==null?0:pro.getTotalhole());
+				for(int i=0;i<list_b_str.size();i++){
+					sheet2.getRow(5+i+44*index).getCell(3+5*(b-50)).setCellValue(list_b_str.get(i));
+					sheet2.getRow(5+i+44*index).getCell(3+5*(b-50)).setCellStyle(cs_thousand_lyellow);
+					CellRangeAddress cra=new CellRangeAddress(5+i+44*index,5+i+44*index,4+5*(b-50),5+5*(b-50));
+					sheet2.addMergedRegion(cra);
+					for(int j=0;j<2;j++){
+						sheet2.getRow(5+i+44*index).getCell(4+j+5*(b-50)).setCellStyle(cs_thousand_lyellow);
+					}
+					sheet2.getRow(5+i+44*index).getCell(4+5*(b-50)).setCellStyle(cs_thousand_lyellow);
+				}
+				sheet2.getRow(5+44*index).getCell(4+5*(b-50)).setCellValue(pro.getHole()==null?0:pro.getHole());
+				sheet2.getRow(6+44*index).getCell(4+5*(b-50)).setCellValue(pro.getSample()==null?0:pro.getSample());
+				sheet2.getRow(7+44*index).getCell(4+5*(b-50)).setCellValue(pro.getAccessories()==null?0:pro.getAccessories());
+				sheet2.getRow(8+44*index).getCell(4+5*(b-50)).setCellValue(pro.getOther()==null?0:pro.getOther());
+				continue;
+			}//if sheet2
+*/			/*********************************sheet2**************************************************/
+			
+			Webestproduct pro=list_pros.get(b);			
+			for(int i=0;i<4;i++){
+				CellRangeAddress cra=new CellRangeAddress(i+1+44*index,i+1+44*index,1+5*b,5+5*b);
+				sheet.addMergedRegion(cra);	
+				for(int j=0;j<5;j++){
+					sheet.getRow(i+1+44*index).getCell(j+1+5*b).setCellStyle(cs_thousand);
+				}
+			}
+			sheet.getRow(1+44*index).getCell(1+5*b).setCellValue(list_facts.get(b).getFactSname()+"_"+list_facts.get(b).getId().getFactArea());
+			sheet.getRow(2+44*index).getCell(1+5*b).setCellValue(pro.getMachinepower()==null?0:pro.getMachinepower());
+			sheet.getRow(3+44*index).getCell(1+5*b).setCellValue(pro.getEstmodel()==null?0:pro.getEstmodel());
+			sheet.getRow(4+44*index).getCell(1+5*b).setCellValue(pro.getEstpay()==null?0:pro.getEstpay());
+			
+			for(int i=0;i<3;i++){
+				CellRangeAddress cra=new CellRangeAddress(5+44*index,8+44*index,i+5*b,i+5*b);
+				sheet.addMergedRegion(cra);	
+				for(int j=0;j<4;j++){
+					sheet.getRow(5+j+44*index).getCell(i+5*b).setCellStyle(cs_thousand_lyellow);
+				}
+			}
+			sheet.getRow(5+44*index).getCell(1+5*b).setCellValue("總機孔");
+			sheet.getRow(5+44*index).getCell(2+5*b).setCellValue(pro.getTotalhole()==null?0:pro.getTotalhole());
+			for(int i=0;i<list_b_str.size();i++){
+				sheet.getRow(5+i+44*index).getCell(3+5*b).setCellValue(list_b_str.get(i));
+				sheet.getRow(5+i+44*index).getCell(3+5*b).setCellStyle(cs_thousand_lyellow);
+				CellRangeAddress cra=new CellRangeAddress(5+i+44*index,5+i+44*index,4+5*b,5+5*b);
+				sheet.addMergedRegion(cra);
+				for(int j=0;j<2;j++){
+					sheet.getRow(5+i+44*index).getCell(4+j+5*b).setCellStyle(cs_thousand_lyellow);
+				}
+				sheet.getRow(5+i+44*index).getCell(4+5*b).setCellStyle(cs_thousand_lyellow);
+			}
+			sheet.getRow(5+44*index).getCell(4+5*b).setCellValue(pro.getHole()==null?0:pro.getHole());
+			sheet.getRow(6+44*index).getCell(4+5*b).setCellValue(pro.getSample()==null?0:pro.getSample());
+			sheet.getRow(7+44*index).getCell(4+5*b).setCellValue(pro.getAccessories()==null?0:pro.getAccessories());
+			sheet.getRow(8+44*index).getCell(4+5*b).setCellValue(pro.getOther()==null?0:pro.getOther());
+		}//for b
+		
+		
+		
+		
+		//--------------------------------------------------------------------下------------------------------------------------------------------
+		for(int i=0;i<list_c_str.size();i++){
+			sheet.getRow(9+i+44*index).getCell(0).setCellValue(list_c_str.get(i));
+			sheet.getRow(9+i+44*index).getCell(0).setCellStyle(cs);
+			
+			/*if(list_facts.size()>49){//if sheet2
+				sheet2.getRow(9+i+44*index).getCell(0).setCellValue(list_c_str.get(i));
+				sheet2.getRow(9+i+44*index).getCell(0).setCellStyle(cs);
+			}//if sheet2
+*/		}						
+		for(int b=0;b<list_facts.size();b++){//for b2
+			WebYieldData ydata=new WebYieldData(0.0,0.0,0.0,0.0,0.0);//合計
+			
+			/*********************************sheet2**************************************************/
+			/*if(b>49){//if sheet2
+				for(int c=0;c<list_d_str.size();c++){
+					sheet2.getRow(9+44*index).getCell(1+c+5*(b-50)).setCellValue(list_d_str.get(c));
+					sheet2.getRow(9+44*index).getCell(1+c+5*(b-50)).setCellStyle(cs);
+				}
+				List<WebYieldData>list_ydata=list_ydatas.get(b);						
+				for(int c=0;c<days.size();c++){
+					if(c>list_ydata.size()-1){
+						for(int i=0;i<5;i++){
+							sheet2.getRow(10+c+44*index).getCell(1+5*(b-50)+i).setCellStyle(cs);//填充超出今天空的部分
+						}
+						continue;
+					}
+					this.fillYdata_2007(map_style,list_ydata.get(c), sheet2, 10+c+44*index, 1+5*(b-50));	//sheet2下表填充數據									
+					*//***********************************************合計******************************************************//*
+					this.getTotal(ydata, list_ydata.get(c).getOnModulus()==null?0:list_ydata.get(c).getOnModulus(),
+							      list_ydata.get(c).getPersonnum()==null?0:list_ydata.get(c).getPersonnum(),
+								  list_ydata.get(c).getStandardOutput()==null?0:list_ydata.get(c).getStandardOutput(), 
+								  list_ydata.get(c).getActualYield()==null?0:list_ydata.get(c).getActualYield(),
+								  list_ydata.get(c).getDaycount()==null?0:list_ydata.get(c).getDaycount());
+					
+					if(c==list_ydata.size()-1){
+						this.fillYdata_total_2007(map_style,list_d_str,ydata, sheet2, 10+days.size()+44*index, 1+5*(b-50));//sheet2下表填充合計						
+					}
+					*//***********************************************合計******************************************************//*
+				}
+				continue;
+			}//if sheet2
+*/			/*********************************sheet2**************************************************/
+			
+			for(int c=0;c<list_d_str.size();c++){
+				sheet.getRow(9+44*index).getCell(1+c+5*b).setCellValue(list_d_str.get(c));
+				sheet.getRow(9+44*index).getCell(1+c+5*b).setCellStyle(cs);
+			}
+			List<WebYieldData>list_ydata=list_ydatas.get(b);						
+			for(int c=0;c<days.size();c++){
+				if(c>list_ydata.size()-1){
+					for(int i=0;i<5;i++){
+						sheet.getRow(10+c+44*index).getCell(1+5*b+i).setCellStyle(cs);//填充超出今天空的部分
+					}					
+					continue;
+				}
+				this.fillYdata_2007(map_style,list_ydata.get(c), sheet, 10+c+44*index, 1+5*b);//下表填充數據
+				
+				/***********************************************合計******************************************************/
+				this.getTotal(ydata, list_ydata.get(c).getOnModulus()==null?0:list_ydata.get(c).getOnModulus(),
+						      list_ydata.get(c).getPersonnum()==null?0:list_ydata.get(c).getPersonnum(),
+							  list_ydata.get(c).getStandardOutput()==null?0:list_ydata.get(c).getStandardOutput(), 
+							  list_ydata.get(c).getActualYield()==null?0:list_ydata.get(c).getActualYield(),
+							  list_ydata.get(c).getDaycount()==null?0:list_ydata.get(c).getDaycount());
+				
+				if(c==list_ydata.size()-1){
+					this.fillYdata_total_2007(map_style,list_d_str,ydata, sheet, 10+days.size()+44*index, 1+5*b);//填充合計
+				}
+				/***********************************************合計******************************************************/
+			}
+		}//for b2						
+	}		
+	public void fillYdata_2007(Map<String,Object> map_style,WebYieldData ydata,XSSFSheet sheet,int x,int y){
+		XSSFCellStyle temp=(XSSFCellStyle)map_style.get("cs");
+		if(ydata.getWorkorholiday()==null||ydata.getWorkorholiday().equals("")){
+			temp=(XSSFCellStyle)map_style.get("cs_font_red");
+			for(int i=0;i<5;i++){
+				sheet.getRow(x).getCell(y+i).setCellValue("無數據");
+			}
+		}else{
+			if(ydata.getWorkorholiday().equals("0")){				
+				sheet.getRow(x).getCell(y).setCellValue(ydata.getOnModulus());
+				sheet.getRow(x).getCell(y+1).setCellValue(ydata.getPersonnum());
+				sheet.getRow(x).getCell(y+2).setCellValue(ydata.getStandardOutput());
+				sheet.getRow(x).getCell(y+3).setCellValue(ydata.getActualYield());
+				sheet.getRow(x).getCell(y+4).setCellValue(GlobalMethod.division(ydata.getActualYield(), ydata.getStandardOutput()));
+			}
+			if(ydata.getWorkorholiday().equals("1")){
+				temp=(XSSFCellStyle)map_style.get("cs_font_blue");
+				for(int i=0;i<5;i++){
+					sheet.getRow(x).getCell(y+i).setCellValue("假日");
+				}
+			}
+			if(ydata.getWorkorholiday().equals("2")){
+				temp=(XSSFCellStyle)map_style.get("cs_font_green");
+				for(int i=0;i<5;i++){
+					sheet.getRow(x).getCell(y+i).setCellValue("未排產");
+				}
+			}
+		}
+		for(int i=0;i<5;i++){			
+			if(ydata.getWorkorholiday()!=null&&ydata.getWorkorholiday().equals("0")){
+				if(i==1){
+					temp=(XSSFCellStyle)map_style.get("cs_thousand_person");
+				}
+				else if(i==4){
+					temp=(XSSFCellStyle)map_style.get("cs_data");
+				}else{
+					temp=(XSSFCellStyle)map_style.get("cs_thousand") ;
+				}
+			}		
+			sheet.getRow(x).getCell(y+i).setCellStyle(temp);
+			
+		}
+	}
+	public void fillYdata_total_2007(Map<String,Object> map_style,List<String>list_d_str,WebYieldData ydata,XSSFSheet sheet,int x,int y){
+		XSSFCellStyle temp=(XSSFCellStyle)map_style.get("cs");
+		XSSFCellStyle cs_thousand=(XSSFCellStyle)map_style.get("cs_thousand");
+		sheet.getRow(x).getCell(y).setCellValue(ydata.getOnModulus());
+		sheet.getRow(x).getCell(y+1).setCellValue(ydata.getPersonnum());
+		sheet.getRow(x).getCell(y+2).setCellValue(ydata.getStandardOutput());
+		sheet.getRow(x).getCell(y+3).setCellValue(ydata.getActualYield());
+		sheet.getRow(x).getCell(y+4).setCellValue(GlobalMethod.division(ydata.getActualYield(), ydata.getStandardOutput()));
+		sheet.getRow(x+1).getCell(y).setCellValue(ydata.getDaycount());	
+		
+		for(int i=0;i<list_d_str.size();i++){
+			if(i==1){
+				temp=(XSSFCellStyle)map_style.get("cs_thousand_person");
+			}else if(i==4){
+				temp=(XSSFCellStyle)map_style.get("cs_data");
+			}else{
+				temp=(XSSFCellStyle)map_style.get("cs_thousand") ;
+			}
+			sheet.getRow(x).getCell(y+i).setCellStyle(temp);
+			sheet.getRow(x+1).getCell(y+i).setCellStyle(cs_thousand);
+		}
+		CellRangeAddress cra=new CellRangeAddress(x+1,x+1,y,4+y);
+		sheet.addMergedRegion(cra);
+		
+	}
+	
+	
+	public void fcodeTotal(HSSFWorkbook wb,Map<String,Object>map_style,List<String>factcodes,List<String>months) throws ParseException{
+		List<String>list_head2=new ArrayList<String>();
+		HSSFCellStyle cs_font_bgyellow=(HSSFCellStyle)map_style.get("cs_font_bgyellow");
+		HSSFCellStyle cs_thousand=(HSSFCellStyle)map_style.get("cs_thousand");
+		list_head2.add("標準產量");
+		list_head2.add("實際產量");
+		
+			HSSFSheet sheet=wb.createSheet("統計");
+			sheet.setColumnWidth(0, 4500);
+			/***********************初始化行，列*************************/
+			for(int a=0;a<35*(1+months.size());a++){
+				sheet.createRow(a);
+				for(int b=0;b<factcodes.size()*list_head2.size()+1;b++){
+					sheet.getRow(a).createCell(b);
+				}
+			}
+			/***********************初始化行，列*************************/
+			int index=0;
+			for(int a=0;a<months.size();a++){//for a
+				index=35*a;
+				List<String>days=GlobalMethod.findDaysOfMonth(months.get(a),"yyyyMMdd");
+				List<String>list_head=GlobalMethod.findDaysOfMonth(months.get(a),"MM/dd");				
+				list_head.add("合計");
+				List<List<VWebydatabyfcode>>list_a=new ArrayList<List<VWebydatabyfcode>>();
+				List<VWebydatabyfcode>list_ydatas2=dataSer.findByYymm2(months.get(a));
+				for(String factcode:factcodes){//for b
+					List<VWebydatabyfcode>list_a1=new ArrayList<VWebydatabyfcode>();
+					for(String day:days){
+						list_a1.add(new VWebydatabyfcode(new VWebydatabyfcodeId(factcode,day),new BigDecimal(0.0),new BigDecimal(0.0)));
+					}
+					list_a.add(list_a1);
+				}//for b
+				for(List<VWebydatabyfcode>list_a1:list_a){//for b2
+					for(int i=0;i<list_a1.size();i++){
+						VWebydatabyfcode obj=list_a1.get(i);
+						for(VWebydatabyfcode obj2:list_ydatas2){
+							if(obj.getId().getFactCode().equals(obj2.getId().getFactCode())&&
+							   obj.getId().getYymmdd().equals(obj2.getId().getYymmdd())){
+								list_a1.remove(i);
+								list_a1.add(i,obj2);
+							}
+						}
+					}
+				}//for b2
+				
+				/********************************填充表格********************************************/
+				sheet.getRow(0+index).getCell(0).setCellValue("日期");
+				CellRangeAddress cra_date=new CellRangeAddress(0+index,1+index,0,0);
+				sheet.addMergedRegion(cra_date);
+				for(int i=0;i<2;i++){
+					sheet.getRow(i+index).getCell(0).setCellStyle(cs_font_bgyellow);
+				}
+				for(int b=0;b<list_head.size();b++){
+					sheet.getRow(b+2+index).getCell(0).setCellValue(list_head.get(b));
+					sheet.getRow(b+2+index).getCell(0).setCellStyle(cs_font_bgyellow);
+				}
+				
+				
+				for(int b=0;b<factcodes.size();b++){
+					sheet.getRow(0+index).getCell(1+list_head2.size()*b).setCellValue(factcodes.get(b));
+					CellRangeAddress cra=new CellRangeAddress(0+index,0+index,1+list_head2.size()*b,2+list_head2.size()*b);
+					sheet.addMergedRegion(cra);
+					for(int c=0;c<list_head2.size();c++){
+						sheet.getRow(0+index).getCell(c+1+list_head2.size()*b).setCellStyle(cs_font_bgyellow);
+						sheet.getRow(1+index).getCell(c+1+list_head2.size()*b).setCellValue(list_head2.get(c));
+						sheet.getRow(1+index).getCell(c+1+list_head2.size()*b).setCellStyle(cs_font_bgyellow);
+					}					
+				}
+								
+				for(int b=0;b<list_a.size();b++){
+					Double sum_StandardOutput=0.0;
+					Double sum_ActualYield=0.0;
+					List<VWebydatabyfcode>list_a1=list_a.get(b);
+					for(int c=0;c<list_a1.size();c++){
+						sheet.getRow(2+c+index).getCell(1+list_head2.size()*b).setCellValue(list_a1.get(c).getStandardOutput().doubleValue());
+						sheet.getRow(2+c+index).getCell(2+list_head2.size()*b).setCellValue(list_a1.get(c).getActualYield().doubleValue());
+						sum_StandardOutput=sum_StandardOutput+list_a1.get(c).getStandardOutput().doubleValue();
+						sum_ActualYield=sum_ActualYield+list_a1.get(c).getActualYield().doubleValue();
+                        if(c==list_a1.size()-1){
+                        	sheet.getRow(3+c+index).getCell(1+list_head2.size()*b).setCellValue(sum_StandardOutput);
+    						sheet.getRow(3+c+index).getCell(2+list_head2.size()*b).setCellValue(sum_ActualYield);
+    						sum_StandardOutput=null;
+    						sum_ActualYield=null;
+						}
+						for(int d=0;d<list_head2.size();d++){
+							sheet.getRow(2+c+index).getCell(1+d+list_head2.size()*b).setCellStyle(cs_thousand);
+							sheet.getRow(2+c+index).getCell(1+d+list_head2.size()*b).setCellStyle(cs_thousand);
+							if(c==list_a1.size()-1){
+								sheet.getRow(3+c+index).getCell(1+d+list_head2.size()*b).setCellStyle(cs_thousand);
+								sheet.getRow(3+c+index).getCell(1+d+list_head2.size()*b).setCellStyle(cs_thousand);
+							}
+						}
+						
+					}
+				}
+				/********************************填充表格********************************************/											
+			}//for a												
+	}
+	public void fcodeTotal_2007(XSSFWorkbook wb,Map<String,Object>map_style,List<String>factcodes,List<String>months) throws ParseException{
+		List<String>list_head2=new ArrayList<String>();
+		XSSFCellStyle cs_font_bgyellow=(XSSFCellStyle)map_style.get("cs_font_bgyellow");
+		XSSFCellStyle cs_thousand=(XSSFCellStyle)map_style.get("cs_thousand");
+		list_head2.add("標準產量");
+		list_head2.add("實際產量");
+		
+			XSSFSheet sheet=wb.createSheet("統計");
+			sheet.setColumnWidth(0, 4500);
+			/***********************初始化行，列*************************/
+			for(int a=0;a<35*(1+months.size());a++){
+				sheet.createRow(a);
+				for(int b=0;b<factcodes.size()*list_head2.size()+1;b++){
+					sheet.getRow(a).createCell(b);
+				}
+			}
+			/***********************初始化行，列*************************/
+			int index=0;
+			for(int a=0;a<months.size();a++){//for a
+				index=35*a;
+				List<String>days=GlobalMethod.findDaysOfMonth(months.get(a),"yyyyMMdd");
+				List<String>list_head=GlobalMethod.findDaysOfMonth(months.get(a),"MM/dd");				
+				list_head.add("合計");
+				List<List<VWebydatabyfcode>>list_a=new ArrayList<List<VWebydatabyfcode>>();
+				List<VWebydatabyfcode>list_ydatas2=dataSer.findByYymm2(months.get(a));
+				for(String factcode:factcodes){//for b
+					List<VWebydatabyfcode>list_a1=new ArrayList<VWebydatabyfcode>();
+					for(String day:days){
+						list_a1.add(new VWebydatabyfcode(new VWebydatabyfcodeId(factcode,day),new BigDecimal(0.0),new BigDecimal(0.0)));
+					}
+					list_a.add(list_a1);
+				}//for b
+				for(List<VWebydatabyfcode>list_a1:list_a){//for b2
+					for(int i=0;i<list_a1.size();i++){
+						VWebydatabyfcode obj=list_a1.get(i);
+						for(VWebydatabyfcode obj2:list_ydatas2){
+							if(obj.getId().getFactCode().equals(obj2.getId().getFactCode())&&
+							   obj.getId().getYymmdd().equals(obj2.getId().getYymmdd())){
+								list_a1.remove(i);
+								list_a1.add(i,obj2);
+							}
+						}
+					}
+				}//for b2
+				
+				/********************************填充表格********************************************/
+				sheet.getRow(0+index).getCell(0).setCellValue("日期");
+				CellRangeAddress cra_date=new CellRangeAddress(0+index,1+index,0,0);
+				sheet.addMergedRegion(cra_date);
+				for(int i=0;i<2;i++){
+					sheet.getRow(i+index).getCell(0).setCellStyle(cs_font_bgyellow);
+				}
+				for(int b=0;b<list_head.size();b++){
+					sheet.getRow(b+2+index).getCell(0).setCellValue(list_head.get(b));
+					sheet.getRow(b+2+index).getCell(0).setCellStyle(cs_font_bgyellow);
+				}
+				
+				
+				for(int b=0;b<factcodes.size();b++){
+					sheet.getRow(0+index).getCell(1+list_head2.size()*b).setCellValue(factcodes.get(b));
+					CellRangeAddress cra=new CellRangeAddress(0+index,0+index,1+list_head2.size()*b,2+list_head2.size()*b);
+					sheet.addMergedRegion(cra);
+					for(int c=0;c<list_head2.size();c++){
+						sheet.getRow(0+index).getCell(c+1+list_head2.size()*b).setCellStyle(cs_font_bgyellow);
+						sheet.getRow(1+index).getCell(c+1+list_head2.size()*b).setCellValue(list_head2.get(c));
+						sheet.getRow(1+index).getCell(c+1+list_head2.size()*b).setCellStyle(cs_font_bgyellow);
+					}					
+				}
+								
+				for(int b=0;b<list_a.size();b++){
+					Double sum_StandardOutput=0.0;
+					Double sum_ActualYield=0.0;
+					List<VWebydatabyfcode>list_a1=list_a.get(b);
+					for(int c=0;c<list_a1.size();c++){
+						sheet.getRow(2+c+index).getCell(1+list_head2.size()*b).setCellValue(list_a1.get(c).getStandardOutput().doubleValue());
+						sheet.getRow(2+c+index).getCell(2+list_head2.size()*b).setCellValue(list_a1.get(c).getActualYield().doubleValue());
+						sum_StandardOutput=sum_StandardOutput+list_a1.get(c).getStandardOutput().doubleValue();
+						sum_ActualYield=sum_ActualYield+list_a1.get(c).getActualYield().doubleValue();
+                        if(c==list_a1.size()-1){
+                        	sheet.getRow(3+c+index).getCell(1+list_head2.size()*b).setCellValue(sum_StandardOutput);
+    						sheet.getRow(3+c+index).getCell(2+list_head2.size()*b).setCellValue(sum_ActualYield);
+    						sum_StandardOutput=null;
+    						sum_ActualYield=null;
+						}
+						for(int d=0;d<list_head2.size();d++){
+							sheet.getRow(2+c+index).getCell(1+d+list_head2.size()*b).setCellStyle(cs_thousand);
+							sheet.getRow(2+c+index).getCell(1+d+list_head2.size()*b).setCellStyle(cs_thousand);
+							if(c==list_a1.size()-1){
+								sheet.getRow(3+c+index).getCell(1+d+list_head2.size()*b).setCellStyle(cs_thousand);
+								sheet.getRow(3+c+index).getCell(1+d+list_head2.size()*b).setCellStyle(cs_thousand);
+							}
+						}
+						
+					}
+				}
+				/********************************填充表格********************************************/											
+			}//for a												
+	}
+	
+	public WebYieldData getTotal(WebYieldData ydata,Double onModulus,Double personnum,Double standardOutput,Double actualYield,Double daycount){
+		ydata.setOnModulus(ydata.getOnModulus()+onModulus);
+		ydata.setPersonnum(ydata.getPersonnum()+personnum);
+		ydata.setStandardOutput(ydata.getStandardOutput()+standardOutput);
+		ydata.setActualYield(ydata.getActualYield()+actualYield);
+		ydata.setDaycount(ydata.getDaycount()+daycount);
+		return ydata;
+	}
 	public Map<String,Object>findStyles(HSSFWorkbook wb){
 		Map<String,Object>map=new HashMap<String,Object>();
 		// 單元格樣式
@@ -5483,12 +6092,12 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 		HSSFCellStyle cs_title = wb.createCellStyle();
 		HSSFFont font_title = wb.createFont();
 		font_title.setFontHeightInPoints((short) 20);
-		font_title.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);// 粗体显示
+		font_title.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);// 粗体显示		
 		cs_title.setFont(font_title);
 		cs_title.setAlignment(HSSFCellStyle.ALIGN_CENTER);
 		cs_title.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);		
 		map.put("cs_title", cs_title);
-
+		
 		// 紅粗字體
 		HSSFCellStyle cs_font_red_bold = wb.createCellStyle();
 		HSSFFont font_red_bold = wb.createFont();
@@ -5565,9 +6174,10 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 		cs_thousand_person.setAlignment(HSSFCellStyle.ALIGN_CENTER);
 		cs_thousand_person.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);	
 		map.put("cs_thousand_person", cs_thousand_person);
+		
+		
 		return map;
-	}
-	
+	}		
 	public Map<String,Object>findStyle2(XSSFWorkbook wb){
 		Map<String,Object>map=new HashMap<String,Object>();
 		// 單元格樣式
@@ -5640,18 +6250,18 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 		map.put("cs_font", cs_font);
 
 		// 標題字體
-		XSSFCellStyle cs_head = wb.createCellStyle();
-		XSSFFont font_head = wb.createFont();
-		font_head.setFontHeightInPoints((short) 20);
-		font_head.setBoldweight(XSSFFont.BOLDWEIGHT_BOLD);// 粗体显示
-		cs_head.setFont(font_head);
-		cs_head.setAlignment(XSSFCellStyle.ALIGN_CENTER);
-		cs_head.setVerticalAlignment(XSSFCellStyle.VERTICAL_CENTER);
-		cs_head.setBorderBottom(XSSFCellStyle.BORDER_THIN);
-		cs_head.setBorderLeft(XSSFCellStyle.BORDER_THIN);
-		cs_head.setBorderRight(XSSFCellStyle.BORDER_THIN);
-		cs_head.setBorderTop(XSSFCellStyle.BORDER_THIN);
-		map.put("cs_head", cs_head);
+		XSSFCellStyle cs_title = wb.createCellStyle();
+		XSSFFont font_title = wb.createFont();
+		font_title.setFontHeightInPoints((short) 20);
+		font_title.setBoldweight(XSSFFont.BOLDWEIGHT_BOLD);// 粗体显示
+		cs_title.setFont(font_title);
+		cs_title.setAlignment(XSSFCellStyle.ALIGN_CENTER);
+		cs_title.setVerticalAlignment(XSSFCellStyle.VERTICAL_CENTER);
+		cs_title.setBorderBottom(XSSFCellStyle.BORDER_THIN);
+		cs_title.setBorderLeft(XSSFCellStyle.BORDER_THIN);
+		cs_title.setBorderRight(XSSFCellStyle.BORDER_THIN);
+		cs_title.setBorderTop(XSSFCellStyle.BORDER_THIN);
+		map.put("cs_title", cs_title);
 
 		// 粗字體和黃色背景
 		XSSFCellStyle cs_font_bgyellow = wb.createCellStyle();
@@ -5745,83 +6355,7 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 		cs_thousand_person.setAlignment(XSSFCellStyle.ALIGN_CENTER);
 		cs_thousand_person.setVerticalAlignment(XSSFCellStyle.VERTICAL_CENTER);
 		map.put("cs_thousand_person", cs_thousand_person);
-		return map;
-				
-	}
-	
-	public WebYieldData getTotal(WebYieldData ydata,Double onModulus,Double personnum,Double standardOutput,Double actualYield,Double daycount){
-		ydata.setOnModulus(ydata.getOnModulus()+onModulus);
-		ydata.setPersonnum(ydata.getPersonnum()+personnum);
-		ydata.setStandardOutput(ydata.getStandardOutput()+standardOutput);
-		ydata.setActualYield(ydata.getActualYield()+actualYield);
-		ydata.setDaycount(ydata.getDaycount()+daycount);
-		return ydata;
-	}
-	
-	public void fillYdata(Map<String,Object> map_style,WebYieldData ydata,HSSFSheet sheet,int x,int y){
-		HSSFCellStyle temp=(HSSFCellStyle)map_style.get("cs");
-		if(ydata.getWorkorholiday()==null||ydata.getWorkorholiday().equals("")){
-			temp=(HSSFCellStyle)map_style.get("cs_font_red");
-			for(int i=0;i<5;i++){
-				sheet.getRow(x).getCell(y+i).setCellValue("無數據");
-			}
-		}else{
-			if(ydata.getWorkorholiday().equals("0")){				
-				sheet.getRow(x).getCell(y).setCellValue(ydata.getOnModulus());
-				sheet.getRow(x).getCell(y+1).setCellValue(ydata.getPersonnum());
-				sheet.getRow(x).getCell(y+2).setCellValue(ydata.getStandardOutput());
-				sheet.getRow(x).getCell(y+3).setCellValue(ydata.getActualYield());
-				sheet.getRow(x).getCell(y+4).setCellValue(GlobalMethod.division(ydata.getActualYield(), ydata.getStandardOutput()));
-			}
-			if(ydata.getWorkorholiday().equals("1")){
-				temp=(HSSFCellStyle)map_style.get("cs_font_blue");
-				for(int i=0;i<5;i++){
-					sheet.getRow(x).getCell(y+i).setCellValue("假日");
-				}
-			}
-			if(ydata.getWorkorholiday().equals("2")){
-				temp=(HSSFCellStyle)map_style.get("cs_font_green");
-				for(int i=0;i<5;i++){
-					sheet.getRow(x).getCell(y+i).setCellValue("未排產");
-				}
-			}
-		}
-		for(int i=0;i<5;i++){			
-			if(ydata.getWorkorholiday()!=null&&ydata.getWorkorholiday().equals("0")){
-				if(i==1){
-					temp=(HSSFCellStyle)map_style.get("cs_thousand_person");
-				}
-				else if(i==4){
-					temp=(HSSFCellStyle)map_style.get("cs_data");
-				}else{
-					temp=(HSSFCellStyle)map_style.get("cs_thousand") ;
-				}
-			}		
-			sheet.getRow(x).getCell(y+i).setCellStyle(temp);
-			
-		}
-	}
-	public void fillYdata_total(Map<String,Object> map_style,List<String>list_d_str,WebYieldData ydata,HSSFSheet sheet,int x,int y){
-		HSSFCellStyle temp=(HSSFCellStyle)map_style.get("cs");
-		sheet.getRow(x).getCell(y).setCellValue(ydata.getOnModulus());
-		sheet.getRow(x).getCell(y+1).setCellValue(ydata.getPersonnum());
-		sheet.getRow(x).getCell(y+2).setCellValue(ydata.getStandardOutput());
-		sheet.getRow(x).getCell(y+3).setCellValue(ydata.getActualYield());
-		sheet.getRow(x).getCell(y+4).setCellValue(GlobalMethod.division(ydata.getActualYield(), ydata.getStandardOutput()));
-		sheet.getRow(x+1).getCell(y).setCellValue(ydata.getDaycount());	
-		
-		for(int i=0;i<list_d_str.size();i++){
-			if(i==1){
-				temp=(HSSFCellStyle)map_style.get("cs_thousand_person");
-			}else if(i==4){
-				temp=(HSSFCellStyle)map_style.get("cs_data");
-			}else{
-				temp=(HSSFCellStyle)map_style.get("cs_thousand") ;
-			}
-			
-			
-		}
-		
+		return map;				
 	}
 	
 	

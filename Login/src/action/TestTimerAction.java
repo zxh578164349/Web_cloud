@@ -350,8 +350,8 @@ public class TestTimerAction extends QuartzJobBean {
 				System.err.print("ok");
 			} else {
 				HttpClient client = new HttpClient();
-				HttpMethod method = new GetMethod("http://203.85.73.161/Login/printerauto_print?yymm="+yymm);//(在不同的機器上注意修改IP和端口)
-				//HttpMethod method = new GetMethod("http://172.17.18.173:8080/Login/printerauto_print?yymm="+yymm);
+				//HttpMethod method = new GetMethod("http://203.85.73.161/Login/printerauto_print?yymm="+yymm);//(在不同的機器上注意修改IP和端口)
+				HttpMethod method = new GetMethod("http://172.17.18.173:8080/Login/print2Ypoi_print2Y_hb?sdate="+yymm+"&edate="+yymm+"&emailMk=1&type='Excel2003'");
 				//HttpMethod method = new GetMethod("http://localhost:8080/Login/printerauto_print?yymm="+yymm);
 				client.executeMethod(method);
 				method.releaseConnection();
@@ -364,7 +364,7 @@ public class TestTimerAction extends QuartzJobBean {
 				IWebEmailService eSer = (IWebEmailService) ac
 						.getBean("emailService");
 				
-				List<WebEmail> email = eSer.getEmail("Y");
+				/*List<WebEmail> email = eSer.getEmail("Y");
 				String[] mail = new String[email.size()];
 				for (int i = 0; i < email.size(); i++) {
 					if (email.get(i).getName() != null
@@ -388,10 +388,10 @@ public class TestTimerAction extends QuartzJobBean {
 					} else {
 						cc[j] = Cc.get(j).getName() + Cc.get(j).getEmail();
 					}
-				}
+				}*/
 				
-				/*String[] mail={MimeUtility.encodeText("張錫洪")+"<kyinfo.David@yyin.yydg.com.cn>"};				
-				String[] cc = {MimeUtility.encodeText("張錫洪")+"<kyinfo.David@yyin.yydg.com.cn>"};*/
+				String[] mail={MimeUtility.encodeText("張錫洪")+"<kyinfo.David@yyin.yydg.com.cn>"};				
+				String[] cc = {MimeUtility.encodeText("張錫洪")+"<kyinfo.David@yyin.yydg.com.cn>"};
 				/*String[] mail={MimeUtility.encodeText("張錫洪")+"<zxh578164349@qq.com>"};				
 				String[] cc = {MimeUtility.encodeText("張錫洪")+"<zxh578164349@qq.com>"};*/
 				
