@@ -51,6 +51,12 @@ public class SessionTimeOutFilter implements Filter{
 	public void doFilter(ServletRequest request, ServletResponse response,
 			FilterChain chain) throws IOException, ServletException {
 		// TODO Auto-generated method stub
+		/**
+		 * vbm_findById_email:郵件登錄審核
+		 * print2Ypoi_print2Y_hb:自動發送產量報表
+		 * autosendfactorder_:自動發送工廠訂單
+		 * 以上3箇url,用戶user登錄狀態都爲null
+		 */
 		HttpServletRequest httprequest=(HttpServletRequest)request;
 		HttpServletResponse httpresponse=(HttpServletResponse)response;
 		httpresponse.setContentType("text/html;charset=utf-8");
@@ -59,7 +65,7 @@ public class SessionTimeOutFilter implements Filter{
 		KyVisabillm vbm=(KyVisabillm)httprequest.getSession().getAttribute("vbm");
 		System.out.println(requestURL);	
 		if(!requestURL.contains("userlogin")&&!requestURL.contains("webfact_findAllfact")&&!requestURL.equals("/Login/")&&!requestURL.contains("loginpage")&&
-			!requestURL.contains("judge.jsp")&&!requestURL.contains("vbm_findById_email")&&!requestURL.contains("printerauto_print")&&!requestURL.contains("webfactOrder_print_email")&&!requestURL.contains("autosendfactorder_")){
+			!requestURL.contains("judge.jsp")&&!requestURL.contains("vbm_findById_email")&&!requestURL.contains("print2Ypoi_print2Y_hb")&&!requestURL.contains("autosendfactorder_")){
 			if(user==null){
 				if(vbm==null){
 					httpresponse.getWriter().print("<script>window.parent.alert('會話超時,請重新登錄');window.location.href='judge.jsp'</script>");

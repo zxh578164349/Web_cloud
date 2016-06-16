@@ -5041,9 +5041,15 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 	 * @author web
 	 * @date 2016/6/7
 	 */
-	public void print2Y_hb() throws ParseException, IOException{				
+	public void print2Y_hb() throws ParseException, IOException{
+		List<WebFact>list_facts=null;
+		if(emailMk==1){
+			list_facts=webFactSer.findAll();//所有廠別(factShow='0')
+			factcodelist=webFactSer.findFactCodeshow();
+		}else{
+			list_facts=webFactSer.findByList(factnolist);//頁面選擇的廠別
+		}
 		List<String>list_months=GlobalMethod.findMonths(sdate, edate);//所有月份
-		List<WebFact>list_facts=webFactSer.findByList(factnolist);//所有廠別
 		List<Webestproduct>list_pros=estProSer.findByYymm(sdate, edate);//查得的預計生產數據
 		DateFormat fmt=new SimpleDateFormat("yyyyMM");
 		DateFormat fmt2=new SimpleDateFormat("yyyyMMdd");
@@ -5123,7 +5129,7 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 		}//for a
 				
 		Workbook wb=null;
-		String fileName=null;
+		String fileName=null;		
 		if(type.equals("Excel2003")){
 			wb=this.init(list_months, list_facts, map_a, map_b, list_a_str, list_b_str, list_d_str);			
 			response.setContentType("application/vnd.ms-excel");

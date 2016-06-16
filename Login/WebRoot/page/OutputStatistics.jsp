@@ -207,7 +207,7 @@
 							id="temp" status="x">
 							<span id="ssp${x.index}">${temp}</span>
 							<input type="checkbox" value="${temp}" name="factcodelist"
-								datatype="*" id="id${x.index}"
+								 id="id${x.index}"
 								onclick="checkred('ssp${x.index}','id${x.index}')" />
 						</s:iterator></td>
 				</tr>
@@ -243,7 +243,7 @@
 							value="#session.factAreas_login" id="temp" status="x">
 							<span id="ssp${x.index}">${temp}</span>
 							<input type="checkbox" value="${temp}" name="factcodelist"
-								datatype="*" id="id${x.index}"
+								 id="id${x.index}"
 								onclick="checkred('ssp${x.index}','id${x.index}')" />
 						</s:iterator></td>
 				</tr>
@@ -312,16 +312,16 @@
 					</select> 					
 					</span>--> 
 					<span>
-					<input type="text" name="sdate" onclick="WdatePicker({minDate:'%y-{%M-12}',maxDate:'#F{$dp.$D(\'lmonth\',{M:0})||\'%y-%M\'}'})" id="lmonth_1" class="Wdate" datatype="*"/>至					
+					<input type="text" name="sdate" onclick="WdatePicker({dateFmt:'yyyyMM',minDate:'%y-{%M-12}',maxDate:'#F{$dp.$D(\'lmonth\',{M:0})||\'%y-%M\'}'})" id="lmonth_1" class="Wdate" datatype="*"/>至					
 					</span> 
-					<span><input type="text" name="edate" onclick="WdatePicker({minDate:'#F{$dp.$D(\'lmonth_1\',{M:0})}',maxDate:'%y-%M'})" id="lmonth" class="Wdate" disabled/></span> 
+					<span><input type="text" name="edate" onclick="WdatePicker({dateFmt:'yyyyMM',minDate:'#F{$dp.$D(\'lmonth_1\',{M:0})}',maxDate:'%y-%M'})" id="lmonth" class="Wdate" disabled/></span> 
 					<input type="hidden" value="" id="hmonth" datatype="*0-12" /> <input
 					type="hidden" value="" name="result" id="result" /> (單月打印<input
 					type="radio" value="" id="one" checked onclick="clickone()"
 					name="only" />&nbsp;多月打印<input type="radio" value="" id="more"
 					onclick="clickone()" name="only" />) &nbsp;&nbsp;
-					(Excel2007<input type="radio" value="Excel2007" checked
-					name="type" />&nbsp;Excel2003<input type="radio" value="Excel2003"
+					(Excel2003<input type="radio" value="Excel2003" checked
+					name="type" />&nbsp;Excel2007<input type="radio" value="Excel2007"
 					name="type" />)</td>
 			</tr>
 

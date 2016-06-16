@@ -207,6 +207,7 @@ public class TestTimerAction extends QuartzJobBean {
 					}
 				}
 			}
+			//this.init();
 		}catch(Exception e){
 			
 		}	
@@ -234,8 +235,10 @@ public class TestTimerAction extends QuartzJobBean {
 				System.err.print("ok");
 			} else {
 				HttpClient client = new HttpClient();
-				HttpMethod method = new GetMethod(
-						"http://203.85.73.161/Login/printerauto_print?yymm="+yymm);//(在不同的機器上注意修改IP和端口)
+				HttpMethod method = new GetMethod("http://203.85.73.161/Login/print2Ypoi_print2Y_hb?sdate="+yymm+"&edate="+yymm+"&emailMk=1&type=Excel2003");//(在不同的機器上注意修改IP和端口)
+				//HttpMethod method = new GetMethod("http://172.17.18.173:8080/Login/print2Ypoi_print2Y_hb?sdate="+yymm+"&edate="+yymm+"&emailMk=1&type=Excel2003");
+				//HttpMethod method = new GetMethod("http://localhost:8080/Login/print2Ypoi_print2Y_hb?sdate="+yymm+"&edate="+yymm+"&emailMk=1&type=Excel2003");
+				
 				client.executeMethod(method);
 				method.releaseConnection();
 				ApplicationContext ac = new ClassPathXmlApplicationContext(
@@ -243,8 +246,7 @@ public class TestTimerAction extends QuartzJobBean {
 								"spring-dao.xml", "spring.xml",
 								"spring-services.xml" });
 				String totalResult = notInput(ac);				
-				IWebEmailService eSer = (IWebEmailService) ac
-						.getBean("emailService");
+				IWebEmailService eSer = (IWebEmailService) ac.getBean("emailService");						
 				List<WebEmail> email = eSer.getEmail("Y");
 				String[] mail = new String[email.size()];
 				for (int i = 0; i < email.size(); i++) {
@@ -257,7 +259,6 @@ public class TestTimerAction extends QuartzJobBean {
 						mail[i] = email.get(i).getEmail();
 					}
 				}
-				//String[] mail={"kyinfo.David@yyin.yydg.com.cn"};
 				List<WebCc> Cc = eSer.getCC("Y");
 				String[] cc = new String[Cc.size()];
 				for (int j = 0; j < Cc.size(); j++) {
@@ -270,12 +271,15 @@ public class TestTimerAction extends QuartzJobBean {
 						cc[j] = Cc.get(j).getName() + Cc.get(j).getEmail();
 					}
 				}
-				//String[] cc = { "kyinfo.David@yyin.yydg.com.cn"};
+				
+				/*String[] mail={MimeUtility.encodeText("張錫洪")+"<kyinfo.David@yyin.yydg.com.cn>"};				
+				String[] cc = {MimeUtility.encodeText("張錫洪")+"<kyinfo.David@yyin.yydg.com.cn>"};*/
+				/*String[] mail={MimeUtility.encodeText("張錫洪")+"<zxh578164349@qq.com>"};				
+				String[] cc = {MimeUtility.encodeText("張錫洪")+"<zxh578164349@qq.com>"};*/
 				AutoSendEmailAction send = new AutoSendEmailAction();
 				SimpleDateFormat formatDates = new SimpleDateFormat("yyyy/MM/dd");						
 				DateFormat formast = new SimpleDateFormat("MM");
 				SimpleDateFormat jinri = new SimpleDateFormat("M/dd");
-				//String dates = formast.format(new Date());
 				//郵件內容
 				String affixName=yymm+"各廠產量資料";
 				StringBuffer content=new StringBuffer();
@@ -350,21 +354,19 @@ public class TestTimerAction extends QuartzJobBean {
 				System.err.print("ok");
 			} else {
 				HttpClient client = new HttpClient();
-				//HttpMethod method = new GetMethod("http://203.85.73.161/Login/printerauto_print?yymm="+yymm);//(在不同的機器上注意修改IP和端口)
-				HttpMethod method = new GetMethod("http://172.17.18.173:8080/Login/print2Ypoi_print2Y_hb?sdate="+yymm+"&edate="+yymm+"&emailMk=1&type='Excel2003'");
-				//HttpMethod method = new GetMethod("http://localhost:8080/Login/printerauto_print?yymm="+yymm);
+				HttpMethod method = new GetMethod("http://203.85.73.161/Login/print2Ypoi_print2Y_hb?sdate="+yymm+"&edate="+yymm+"&emailMk=1&type=Excel2003");//(在不同的機器上注意修改IP和端口)
+				//HttpMethod method = new GetMethod("http://172.17.18.173:8080/Login/print2Ypoi_print2Y_hb?sdate="+yymm+"&edate="+yymm+"&emailMk=1&type=Excel2003");
+				//HttpMethod method = new GetMethod("http://localhost:8080/Login/print2Ypoi_print2Y_hb?sdate="+yymm+"&edate="+yymm+"&emailMk=1&type=Excel2003");
 				client.executeMethod(method);
 				method.releaseConnection();
 				ApplicationContext ac = new ClassPathXmlApplicationContext(
 						new String[] { "spring-action.xml",
 								"spring-dao.xml", "spring.xml",
 								"spring-services.xml" });
-				String totalResult = notInput(ac);
-				
-				IWebEmailService eSer = (IWebEmailService) ac
-						.getBean("emailService");
-				
-				/*List<WebEmail> email = eSer.getEmail("Y");
+				String totalResult = notInput(ac);				
+				IWebEmailService eSer = (IWebEmailService) ac.getBean("emailService");
+										
+				List<WebEmail> email = eSer.getEmail("Y");
 				String[] mail = new String[email.size()];
 				for (int i = 0; i < email.size(); i++) {
 					if (email.get(i).getName() != null
@@ -388,10 +390,10 @@ public class TestTimerAction extends QuartzJobBean {
 					} else {
 						cc[j] = Cc.get(j).getName() + Cc.get(j).getEmail();
 					}
-				}*/
+				}
 				
-				String[] mail={MimeUtility.encodeText("張錫洪")+"<kyinfo.David@yyin.yydg.com.cn>"};				
-				String[] cc = {MimeUtility.encodeText("張錫洪")+"<kyinfo.David@yyin.yydg.com.cn>"};
+				/*String[] mail={MimeUtility.encodeText("張錫洪")+"<kyinfo.David@yyin.yydg.com.cn>"};				
+				String[] cc = {MimeUtility.encodeText("張錫洪")+"<kyinfo.David@yyin.yydg.com.cn>"};*/
 				/*String[] mail={MimeUtility.encodeText("張錫洪")+"<zxh578164349@qq.com>"};				
 				String[] cc = {MimeUtility.encodeText("張錫洪")+"<zxh578164349@qq.com>"};*/
 				

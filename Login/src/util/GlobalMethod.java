@@ -825,10 +825,13 @@ public class GlobalMethod extends HibernateDaoSupport{
         String qq="20160611";
         String qqq="20150611";
         
-        System.out.println(q.compareTo(today));
+        /*System.out.println(q.compareTo(today));
         System.out.println(w.compareTo(today));
         System.out.println(qq.compareTo(today));
-        System.out.println(qqq.compareTo(today));
+        System.out.println(qqq.compareTo(today));*/
+        
+        String type="Excel2003";
+        System.out.println(type.equals("Excel2003"));
        
 						
 	}
