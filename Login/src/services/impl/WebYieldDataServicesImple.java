@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.List;
 import dao.IWebYieldDataDao;
 import entity.KyzExpectmatmLog;
+import entity.VWebydatabyfcode;
 import entity.WebYieldData;
 import entity.WebYieldDataId;
 import entity.WebYieldDataLog;
@@ -246,6 +247,28 @@ public class WebYieldDataServicesImple implements IWebYieldDataServices {
 	public List<WebYieldData> findByYymm(String yymm) {
 		// TODO Auto-generated method stub
 		return dataDao.findByYymm(yymm);
+	}
+
+	/**
+	 * 日期:2016/6/15
+	 * 描述:
+	 */
+	
+	
+	public List<VWebydatabyfcode> findByYymm2(String yymm) {
+		// TODO Auto-generated method stub
+		return dataDao.findByYymm2(yymm);
+	}
+
+	/**
+	 * 日期:2016/6/15
+	 * 描述:
+	 */
+	
+	
+	public List<String> findDisFactcode(String yymm) {
+		// TODO Auto-generated method stub
+		return dataDao.findDisFactcode(yymm);
 	}
 
 

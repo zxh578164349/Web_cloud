@@ -1,9 +1,11 @@
 package action;
 
 import java.awt.Color;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -20,6 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFDataFormat;
 import org.apache.poi.hssf.usermodel.HSSFFont;
+import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.openxml4j.opc.OPCPackage;
@@ -36,6 +39,7 @@ import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.ServletResponseAware;
 
 import services.IWebEstProductServices;
@@ -57,13 +61,23 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 	private IWebYieldDataServices dataSer;
 	private IWebFactServices webFactSer;
 	private IWebEstProductServices estProSer;
-	private List<String> factnolist;
+	private List<String> factnolist=new ArrayList<String>();
 	private String type;
 	private List<String> factcodelist;
 	private String sdate;
 	private String edate;
+	private int emailMk;
 	
 	
+	
+
+	public int getEmailMk() {
+		return emailMk;
+	}
+
+	public void setEmailMk(int emailMk) {
+		this.emailMk = emailMk;
+	}
 
 	public String getSdate() {
 		return sdate;
@@ -154,41 +168,38 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 		this.estProSer = estProSer;
 	}
 
-	public String print2Y() {
-
+	public String print2Y(){
 		response.reset();
 		try {
-			ServletOutputStream os = response.getOutputStream();
+			ServletOutputStream os=response.getOutputStream();
 			if (type.equals("Excel2007")) {// if Excel2007
-
 				response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
-				StringBuffer tempName = new StringBuffer();
+				StringBuffer tempName=new StringBuffer();
 				tempName.append(year);
 				tempName.append(month);
-				if (lmonth != null && !lmonth.equals("")
-						&& !lmonth.equals("01")) {
+				if (lmonth != null && !lmonth.equals("") && !lmonth.equals("01")) {
 					tempName.append("-" + lmonth);
 				}
 				tempName.append(".xlsx");
-				String fileName = new String(tempName.toString().getBytes(
-						"utf-8"), "ISO8859-1");
-				response.setHeader("Content-disposition", result + fileName);
+				String fileName=new String(tempName.toString().getBytes("utf-8"),"ISO8859-1");
+				response.setHeader("Content-disposition",result + fileName);
 
 				// OutputStream os= new FileOutputStream("D:/create.xlsx");
 
 				// 工作区
-				XSSFWorkbook wb = new XSSFWorkbook();
+				XSSFWorkbook wb=new XSSFWorkbook();
 				// 创建第一个sheet
-				XSSFSheet sheet = wb.createSheet("產量預估與產量統計");
-				sheet.setColumnWidth(0, 3800);
+				XSSFSheet sheet=wb.createSheet("產量預估與產量統計");
+				sheet.setColumnWidth(0,3800);
 				// sheet.createRow(0).setHeightInPoints(50);
-				
-				Map<String,Object>map=this.findStyle2(wb);
+
+				Map<String,Object> map=this.findStyle2(wb);
 				XSSFCellStyle cs=(XSSFCellStyle)map.get("cs");
 				XSSFCellStyle cs_head=(XSSFCellStyle)map.get("cs_head");
 				XSSFCellStyle cs_font_bgyellow=(XSSFCellStyle)map.get("cs_font_bgyellow");
 				XSSFCellStyle cs_thousand=(XSSFCellStyle)map.get("cs_thousand");
-				//XSSFCellStyle cs_lyellow=(XSSFCellStyle)map.get("cs_lyellow");
+				// XSSFCellStyle
+				// cs_lyellow=(XSSFCellStyle)map.get("cs_lyellow");
 				XSSFCellStyle cs_font_red_bold=(XSSFCellStyle)map.get("cs_font_red_bold");
 				XSSFCellStyle cs_font=(XSSFCellStyle)map.get("cs_font");
 				XSSFCellStyle cs_thousand_lyellow=(XSSFCellStyle)map.get("cs_thousand_lyellow");
@@ -198,96 +209,78 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 				XSSFCellStyle cs_thousand_person=(XSSFCellStyle)map.get("cs_thousand_person");
 				XSSFCellStyle cs_data=(XSSFCellStyle)map.get("cs_data");
 				XSSFCellStyle cs_font_bgyellow2=(XSSFCellStyle)map.get("cs_font_bgyellow2");
-						
+
 				// 设置自动换行:
 				cs.setWrapText(true);// 设置自动换行
 
-				int firstMonth = Integer.parseInt(month);
-				int lastMonth = 0;
+				int firstMonth=Integer.parseInt(month);
+				int lastMonth=0;
 				if (lmonth == null || lmonth.equals("")) {
-					lastMonth = firstMonth;
+					lastMonth=firstMonth;
 				} else {
-					lastMonth = Integer.parseInt(lmonth);
+					lastMonth=Integer.parseInt(lmonth);
 				}
 
-				int totalHeight = 1;
-				for (int all = firstMonth; all < lastMonth + 1; all++) { // for
-																			// ALL
+				int totalHeight=1;
+				for (int all=firstMonth; all < lastMonth + 1; all++) { // for
+																		// ALL
 
-					int z_length = 0;
-					int year_int = Integer.parseInt(year);
-					if (all == 1 || all == 3 || all == 5 || all == 7
-							|| all == 8 || all == 10 || all == 12) {
-						z_length = 32 + 1;
+					int z_length=0;
+					int year_int=Integer.parseInt(year);
+					if (all == 1 || all == 3 || all == 5 || all == 7 || all == 8 || all == 10 || all == 12) {
+						z_length=32 + 1;
 					}
 					if (all == 4 || all == 6 || all == 9 || all == 11) {
-						z_length = 31 + 1;
+						z_length=31 + 1;
 					}
 					if (all == 2) {
-						if (year_int % 4 == 0 && year_int % 100 != 0
-								|| year_int % 400 == 0) {
-							z_length = 30 + 1;
+						if (year_int % 4 == 0 && year_int % 100 != 0 || year_int % 400 == 0) {
+							z_length=30 + 1;
 						} else {
-							z_length = 29 + 1;
+							z_length=29 + 1;
 						}
 					}
 
-					StringBuffer yymm = new StringBuffer();
+					StringBuffer yymm=new StringBuffer();
 					yymm.append(year);
 					if (all < 10) {
 						yymm.append("0" + all);
 					} else {
 						yymm.append(all);
 					}
-					List<Webestproduct> alllist = new ArrayList();
-					List<List<WebYieldData>> alllist2 = new ArrayList();
-					List<String> factnoCodelist = new ArrayList();
-					for (int factno = 0; factno < factnolist.size(); factno++) {
-						List factAreas = webFactSer
-								.findFactCodeByFactNo(factnolist.get(factno));
-						String factSname = webFactSer.selByid(factnolist
-								.get(factno));
-						for (int factcode = 0; factcode < factAreas.size(); factcode++) {
-							List<Webestproduct> list = estProSer                                  //---------------------------(4)
-									.findByFactcode(factnolist.get(factno),
-											(String) factAreas.get(factcode),
-											yymm.toString());
-							List<WebYieldData> list2 = dataSer
-									.findDataByFactcode(factnolist.get(factno),
-											(String) factAreas.get(factcode),
-											yymm.toString());
-							List<Webestproduct> listnull = estProSer                                 //----------------------(3)
-									.findNullYpre(factnolist.get(factno),
-											(String) factAreas.get(factcode),
-											yymm.toString());
-							List<WebYieldData> listnull2 = dataSer
-									.findNullYdata(factnolist.get(factno),
-											(String) factAreas.get(factcode),
-											yymm.toString());
-							StringBuffer factnoCode = new StringBuffer();
-							Webestproduct pre = null;
-							WebYieldData ydata = null;
-							if (list.size() > 0 && listnull.size() == 0
-									|| list2.size() > 0
-									&& listnull2.size() == 0
-									|| list2.size() > 0 && listnull2.size() > 0) {
+					List<Webestproduct> alllist=new ArrayList();
+					List<List<WebYieldData>> alllist2=new ArrayList();
+					List<String> factnoCodelist=new ArrayList();
+					for (int factno=0; factno < factnolist.size(); factno++) {
+						List factAreas=webFactSer.findFactCodeByFactNo(factnolist.get(factno));
+						String factSname=webFactSer.selByid(factnolist.get(factno));
+						for (int factcode=0; factcode < factAreas.size(); factcode++) {
+							List<Webestproduct> list=estProSer // ---------------------------(4)
+									.findByFactcode(factnolist.get(factno),(String)factAreas.get(factcode),yymm.toString());
+							List<WebYieldData> list2=dataSer.findDataByFactcode(factnolist.get(factno),(String)factAreas.get(factcode),yymm.toString());
+							List<Webestproduct> listnull=estProSer // ----------------------(3)
+									.findNullYpre(factnolist.get(factno),(String)factAreas.get(factcode),yymm.toString());
+							List<WebYieldData> listnull2=dataSer.findNullYdata(factnolist.get(factno),(String)factAreas.get(factcode),yymm.toString());
+							StringBuffer factnoCode=new StringBuffer();
+							Webestproduct pre=null;
+							WebYieldData ydata=null;
+							if (list.size() > 0 && listnull.size() == 0 || list2.size() > 0 && listnull2.size() == 0 || list2.size() > 0
+									&& listnull2.size() > 0) {
 								factnoCode.append(factSname);
-								factnoCode.append("(" + factnolist.get(factno)
-										+ ")-");
-								factnoCode.append((String) factAreas
-										.get(factcode));
+								factnoCode.append("(" + factnolist.get(factno) + ")-");
+								factnoCode.append((String)factAreas.get(factcode));
 								// factnoCode.append("(" + all + "月份)");
 								factnoCodelist.add(factnoCode.toString());
 								if (list2.size() == 0) {
-									ydata = new WebYieldData();
+									ydata=new WebYieldData();
 									list2.add(ydata);
 								}
 								if (list.size() == 0) {
-									pre = new Webestproduct();
+									pre=new Webestproduct();
 									alllist.add(pre);
 								}
 								if (list.size() > 0) {
-									pre = list.get(0);
+									pre=list.get(0);
 									alllist.add(pre);
 								}
 								if (list2.size() > 0) {
@@ -297,44 +290,37 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 
 							if (list.size() == 0 && list2.size() == 0) {
 								factnoCode.append(factSname);
-								factnoCode.append("(" + factnolist.get(factno)
-										+ ")-");
-								factnoCode.append((String) factAreas
-										.get(factcode));
+								factnoCode.append("(" + factnolist.get(factno) + ")-");
+								factnoCode.append((String)factAreas.get(factcode));
 								// factnoCode.append("(" + all + "月份)");
 								factnoCode.append("還沒有添加數據!!");
 								factnoCodelist.add(factnoCode.toString());
-								pre = new Webestproduct();
-								ydata = new WebYieldData();
+								pre=new Webestproduct();
+								ydata=new WebYieldData();
 								alllist.add(pre);
 								list2.add(ydata);
 								alllist2.add(list2);
 							}
 							if (listnull.size() > 0 && listnull2.size() > 0) {
 								factnoCode.append(factSname);
-								factnoCode.append("(" + factnolist.get(factno)
-										+ ")_");
-								factnoCode.append((String) factAreas
-										.get(factcode));
+								factnoCode.append("(" + factnolist.get(factno) + ")_");
+								factnoCode.append((String)factAreas.get(factcode));
 								// factnoCode.append("(" + all + "月份)");
 								factnoCode.append("還沒有添加數據!!");
 								factnoCodelist.add(factnoCode.toString());
-								pre = list.get(0);
+								pre=list.get(0);
 								alllist.add(pre);
 								alllist2.add(list2);
 							}
-							if (list.size() > 0 && listnull.size() > 0
-									&& list2.size() == 0) {
+							if (list.size() > 0 && listnull.size() > 0 && list2.size() == 0) {
 								factnoCode.append(factSname);
-								factnoCode.append("(" + factnolist.get(factno)
-										+ ")_");
-								factnoCode.append((String) factAreas
-										.get(factcode));
+								factnoCode.append("(" + factnolist.get(factno) + ")_");
+								factnoCode.append((String)factAreas.get(factcode));
 								// factnoCode.append("(" + all + "月份)");
 								factnoCode.append("還沒有添加數據!!");
 								factnoCodelist.add(factnoCode.toString());
-								ydata = new WebYieldData();
-								pre = list.get(0);
+								ydata=new WebYieldData();
+								pre=list.get(0);
 								list2.add(ydata);
 								alllist.add(pre);
 								alllist2.add(list2);
@@ -342,34 +328,29 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 						}
 					}
 
-					int height = 0;
+					int height=0;
 					// ********上部********//
-					int width = 0;
+					int width=0;
 					/*
 					 * 標題設置
 					 */
 					sheet.createRow(0 + totalHeight - 1).setHeightInPoints(50);// 設置標題高度
-					StringBuffer tempName_head = new StringBuffer();
+					StringBuffer tempName_head=new StringBuffer();
 					tempName_head.append(year + "年");
 					tempName_head.append(all + "月");
 
-					CellRangeAddress reg_head = new CellRangeAddress(
-							0 + totalHeight - 1, (short) 0 + totalHeight - 1,
-							0, (short) alllist.size() * 5);
+					CellRangeAddress reg_head=new CellRangeAddress(0 + totalHeight - 1,(short)0 + totalHeight - 1,0,(short)alllist.size() * 5);
 					sheet.addMergedRegion(reg_head);
-					sheet.getRow(0 + totalHeight - 1).createCell(0)
-							.setCellValue(tempName_head + "加久各工廠每日產量達成狀況匯總表");
-					sheet.getRow(0 + totalHeight - 1).getCell(0)
-							.setCellStyle(cs_head);
-					for (int i_head = 1; i_head < alllist.size() * 5 + 1; i_head++) {
-						sheet.getRow(0 + totalHeight - 1).createCell(i_head)
-								.setCellStyle(cs_head);
+					sheet.getRow(0 + totalHeight - 1).createCell(0).setCellValue(tempName_head + "加久各工廠每日產量達成狀況匯總表");
+					sheet.getRow(0 + totalHeight - 1).getCell(0).setCellStyle(cs_head);
+					for (int i_head=1; i_head < alllist.size() * 5 + 1; i_head++) {
+						sheet.getRow(0 + totalHeight - 1).createCell(i_head).setCellStyle(cs_head);
 					}
 
-					for (int i = 0; i < alllist.size() + factcodelist.size(); i++) {// for
+					for (int i=0; i < alllist.size() + factcodelist.size(); i++) {// for
 																					// 1
 						if (i < alllist.size()) { // start "if_top"
-							List<String> cols = new ArrayList();
+							List<String> cols=new ArrayList();
 							cols.add("日期/產量/廠別");
 							cols.add("戰力分析模數");
 							cols.add("預計生產模數");
@@ -381,398 +362,207 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 							cols.add("補料孔位");
 							cols.add("其他");
 							if (i > 0) {
-								width = width - 1;
+								width=width - 1;
 							}
-							for (int j = 0; j < cols.size(); j++) { // for 2
+							for (int j=0; j < cols.size(); j++) { // for 2
 								if (j == 5) {
 									break;
 								}
 								if (i == 0) {
 									if (j < 5) {
-										sheet.createRow(j + totalHeight)
-												.createCell(0 + width)
-												.setCellValue(cols.get(j));
-										sheet.getRow(j + totalHeight)
-												.getCell(0 + width)
-												.setCellStyle(cs);
+										sheet.createRow(j + totalHeight).createCell(0 + width).setCellValue(cols.get(j));
+										sheet.getRow(j + totalHeight).getCell(0 + width).setCellStyle(cs);
 									}
-									sheet.getRow(j + totalHeight).createCell(
-											1 + width);
-									sheet.getRow(j + totalHeight)
-											.getCell(1 + width)
-											.setCellStyle(cs_thousand);
+									sheet.getRow(j + totalHeight).createCell(1 + width);
+									sheet.getRow(j + totalHeight).getCell(1 + width).setCellStyle(cs_thousand);
 									if (j == 4) {
-										CellRangeAddress region1 = new CellRangeAddress(
-												j + totalHeight, (short) j
-														+ totalHeight + 3,
-												0 + width, (short) 0 + width);
+										CellRangeAddress region1=new CellRangeAddress(j + totalHeight,(short)j + totalHeight + 3,0 + width,(short)0 + width);
 										sheet.addMergedRegion(region1);
-										sheet.getRow(j + totalHeight)
-												.getCell(0 + width)
-												.setCellStyle(cs_font_bgyellow2);
-										sheet.createRow(j + totalHeight + 1)
-												.createCell(0 + width)
-												.setCellStyle(cs_font_bgyellow2);
-										sheet.createRow(j + totalHeight + 2)
-												.createCell(0 + width)
-												.setCellStyle(cs_font_bgyellow2);
-										sheet.createRow(j + totalHeight + 3)
-												.createCell(0 + width)
-												.setCellStyle(cs_font_bgyellow2);
+										sheet.getRow(j + totalHeight).getCell(0 + width).setCellStyle(cs_font_bgyellow2);
+										sheet.createRow(j + totalHeight + 1).createCell(0 + width).setCellStyle(cs_font_bgyellow2);
+										sheet.createRow(j + totalHeight + 2).createCell(0 + width).setCellStyle(cs_font_bgyellow2);
+										sheet.createRow(j + totalHeight + 3).createCell(0 + width).setCellStyle(cs_font_bgyellow2);
 									}
 								} else {
 									if (j < 5) {
-										sheet.getRow(j + totalHeight)
-												.createCell(0 + width)
-												.setCellValue(cols.get(j));
-										sheet.getRow(j + totalHeight)
-												.getCell(0 + width)
-												.setCellStyle(cs);
+										sheet.getRow(j + totalHeight).createCell(0 + width).setCellValue(cols.get(j));
+										sheet.getRow(j + totalHeight).getCell(0 + width).setCellStyle(cs);
 									}
-									sheet.getRow(j + totalHeight).createCell(
-											1 + width);
-									sheet.getRow(j + totalHeight)
-											.getCell(1 + width)
-											.setCellStyle(cs_thousand);
+									sheet.getRow(j + totalHeight).createCell(1 + width);
+									sheet.getRow(j + totalHeight).getCell(1 + width).setCellStyle(cs_thousand);
 									if (j == 4) {
-										CellRangeAddress region1 = new CellRangeAddress(
-												j + totalHeight, (short) j
-														+ totalHeight + 3,
-												0 + width, (short) 0 + width);
+										CellRangeAddress region1=new CellRangeAddress(j + totalHeight,(short)j + totalHeight + 3,0 + width,(short)0 + width);
 										sheet.addMergedRegion(region1);
-										sheet.getRow(j + totalHeight)
-												.getCell(0 + width)
-												.setCellStyle(cs_font_bgyellow2);
-										sheet.getRow(j + totalHeight + 1)
-												.createCell(0 + width)
-												.setCellStyle(cs_font_bgyellow2);
-										sheet.getRow(j + totalHeight + 2)
-												.createCell(0 + width)
-												.setCellStyle(cs_font_bgyellow2);
-										sheet.getRow(j + totalHeight + 3)
-												.createCell(0 + width)
-												.setCellStyle(cs_font_bgyellow2);
+										sheet.getRow(j + totalHeight).getCell(0 + width).setCellStyle(cs_font_bgyellow2);
+										sheet.getRow(j + totalHeight + 1).createCell(0 + width).setCellStyle(cs_font_bgyellow2);
+										sheet.getRow(j + totalHeight + 2).createCell(0 + width).setCellStyle(cs_font_bgyellow2);
+										sheet.getRow(j + totalHeight + 3).createCell(0 + width).setCellStyle(cs_font_bgyellow2);
 									}
 								}
 
 								switch (j) {
 								case 0:
-									String factNoAndCode = factnoCodelist
-											.get(i);
+									String factNoAndCode=factnoCodelist.get(i);
 									// sheet.setColumnWidth(1+width, 4000);
-									sheet.getRow(j + totalHeight)
-											.setHeightInPoints(40);
-									sheet.getRow(j + totalHeight)
-											.getCell(1 + width)
-											.setCellValue(factNoAndCode);
-									CellRangeAddress region1 = new CellRangeAddress(
-											j + totalHeight, (short) j
-													+ totalHeight, 1 + width,
-											(short) 5 + width);
+									sheet.getRow(j + totalHeight).setHeightInPoints(40);
+									sheet.getRow(j + totalHeight).getCell(1 + width).setCellValue(factNoAndCode);
+									CellRangeAddress region1=new CellRangeAddress(j + totalHeight,(short)j + totalHeight,1 + width,(short)5 + width);
 									sheet.addMergedRegion(region1);
 									if (factNoAndCode.contains("沒有添加數據")) {
-										sheet.getRow(j + totalHeight)
-												.getCell(1 + width)
-												.setCellStyle(cs_font_red_bold);
+										sheet.getRow(j + totalHeight).getCell(1 + width).setCellStyle(cs_font_red_bold);
 									} else {
-										sheet.getRow(j + totalHeight)
-												.getCell(1 + width)
-												.setCellStyle(cs_font);
+										sheet.getRow(j + totalHeight).getCell(1 + width).setCellStyle(cs_font);
 									}
-									sheet.getRow(j + totalHeight)
-											.createCell(2 + width)
-											.setCellStyle(cs);
-									sheet.getRow(j + totalHeight)
-											.createCell(3 + width)
-											.setCellStyle(cs);
-									sheet.getRow(j + totalHeight)
-											.createCell(4 + width)
-											.setCellStyle(cs);
-									sheet.getRow(j + totalHeight)
-											.createCell(5 + width)
-											.setCellStyle(cs);
+									sheet.getRow(j + totalHeight).createCell(2 + width).setCellStyle(cs);
+									sheet.getRow(j + totalHeight).createCell(3 + width).setCellStyle(cs);
+									sheet.getRow(j + totalHeight).createCell(4 + width).setCellStyle(cs);
+									sheet.getRow(j + totalHeight).createCell(5 + width).setCellStyle(cs);
 									// sheet.getRow(j +
 									// totalHeight).createCell(6 +
 									// width).setCellStyle(cs);
 									// sheet.getRow(j+totalHeight).createCell(7+width).setCellStyle(cs);
 									break;
 								case 1:
-									Double force = (alllist.get(i))
-											.getMachinepower();
+									Double force=(alllist.get(i)).getMachinepower();
 
 									if (force != null) {
-										sheet.getRow(j + totalHeight)
-												.getCell(1 + width)
-												.setCellValue(force);
+										sheet.getRow(j + totalHeight).getCell(1 + width).setCellValue(force);
 									} else {
-										sheet.getRow(j + totalHeight)
-												.getCell(1 + width)
-												.setCellValue("");
+										sheet.getRow(j + totalHeight).getCell(1 + width).setCellValue("");
 									}
-									CellRangeAddress region2 = new CellRangeAddress(
-											j + totalHeight, (short) j
-													+ totalHeight, 1 + width,
-											(short) 5 + width);
+									CellRangeAddress region2=new CellRangeAddress(j + totalHeight,(short)j + totalHeight,1 + width,(short)5 + width);
 									sheet.addMergedRegion(region2);
-									sheet.getRow(j + totalHeight)
-											.createCell(2 + width)
-											.setCellStyle(cs);
-									sheet.getRow(j + totalHeight)
-											.createCell(3 + width)
-											.setCellStyle(cs);
-									sheet.getRow(j + totalHeight)
-											.createCell(4 + width)
-											.setCellStyle(cs);
-									sheet.getRow(j + totalHeight)
-											.createCell(5 + width)
-											.setCellStyle(cs);
+									sheet.getRow(j + totalHeight).createCell(2 + width).setCellStyle(cs);
+									sheet.getRow(j + totalHeight).createCell(3 + width).setCellStyle(cs);
+									sheet.getRow(j + totalHeight).createCell(4 + width).setCellStyle(cs);
+									sheet.getRow(j + totalHeight).createCell(5 + width).setCellStyle(cs);
 									// sheet.getRow(j +
 									// totalHeight).createCell(6 +
 									// width).setCellStyle(cs);
 									// sheet.getRow(j+totalHeight).createCell(7+width).setCellStyle(cs);
 									break;
 								case 2:
-									Double expect = (alllist.get(i))
-											.getEstmodel();
+									Double expect=(alllist.get(i)).getEstmodel();
 
 									if (expect != null) {
-										sheet.getRow(j + totalHeight)
-												.getCell(1 + width)
-												.setCellValue(expect);
+										sheet.getRow(j + totalHeight).getCell(1 + width).setCellValue(expect);
 									} else {
-										sheet.getRow(j + totalHeight)
-												.getCell(1 + width)
-												.setCellValue("");
+										sheet.getRow(j + totalHeight).getCell(1 + width).setCellValue("");
 									}
-									CellRangeAddress region3 = new CellRangeAddress(
-											j + totalHeight, (short) j
-													+ totalHeight, 1 + width,
-											(short) 5 + width);
+									CellRangeAddress region3=new CellRangeAddress(j + totalHeight,(short)j + totalHeight,1 + width,(short)5 + width);
 									sheet.addMergedRegion(region3);
-									sheet.getRow(j + totalHeight)
-											.createCell(2 + width)
-											.setCellStyle(cs);
-									sheet.getRow(j + totalHeight)
-											.createCell(3 + width)
-											.setCellStyle(cs);
-									sheet.getRow(j + totalHeight)
-											.createCell(4 + width)
-											.setCellStyle(cs);
-									sheet.getRow(j + totalHeight)
-											.createCell(5 + width)
-											.setCellStyle(cs);
+									sheet.getRow(j + totalHeight).createCell(2 + width).setCellStyle(cs);
+									sheet.getRow(j + totalHeight).createCell(3 + width).setCellStyle(cs);
+									sheet.getRow(j + totalHeight).createCell(4 + width).setCellStyle(cs);
+									sheet.getRow(j + totalHeight).createCell(5 + width).setCellStyle(cs);
 									// sheet.getRow(j +
 									// totalHeight).createCell(6 +
 									// width).setCellStyle(cs);
 									// sheet.getRow(j+totalHeight).createCell(7+width).setCellStyle(cs);
 									break;
 								case 3:
-									Double expPay = (alllist.get(i))
-											.getEstpay();
+									Double expPay=(alllist.get(i)).getEstpay();
 
 									if (expPay != null) {
-										sheet.getRow(j + totalHeight)
-												.getCell(1 + width)
-												.setCellValue(expPay);
+										sheet.getRow(j + totalHeight).getCell(1 + width).setCellValue(expPay);
 									} else {
-										sheet.getRow(j + totalHeight)
-												.getCell(1 + width)
-												.setCellValue("");
+										sheet.getRow(j + totalHeight).getCell(1 + width).setCellValue("");
 									}
-									CellRangeAddress region4 = new CellRangeAddress(
-											j + totalHeight, (short) j
-													+ totalHeight, 1 + width,
-											(short) 5 + width);
+									CellRangeAddress region4=new CellRangeAddress(j + totalHeight,(short)j + totalHeight,1 + width,(short)5 + width);
 									sheet.addMergedRegion(region4);
-									sheet.getRow(j + totalHeight)
-											.createCell(2 + width)
-											.setCellStyle(cs);
-									sheet.getRow(j + totalHeight)
-											.createCell(3 + width)
-											.setCellStyle(cs);
-									sheet.getRow(j + totalHeight)
-											.createCell(4 + width)
-											.setCellStyle(cs);
-									sheet.getRow(j + totalHeight)
-											.createCell(5 + width)
-											.setCellStyle(cs);
+									sheet.getRow(j + totalHeight).createCell(2 + width).setCellStyle(cs);
+									sheet.getRow(j + totalHeight).createCell(3 + width).setCellStyle(cs);
+									sheet.getRow(j + totalHeight).createCell(4 + width).setCellStyle(cs);
+									sheet.getRow(j + totalHeight).createCell(5 + width).setCellStyle(cs);
 									// sheet.getRow(j +
 									// totalHeight).createCell(6 +
 									// width).setCellStyle(cs);
 									// sheet.getRow(j+totalHeight).createCell(7+width).setCellStyle(cs);
 									break;
 								case 4:
-									sheet.getRow(j + totalHeight)
-											.getCell(1 + width)
-											.setCellValue(cols.get(j + 1));
-									CellRangeAddress hole_cell = new CellRangeAddress(
-											j + totalHeight, j + totalHeight
-													+ 3, 1 + width, 1 + width);
+									sheet.getRow(j + totalHeight).getCell(1 + width).setCellValue(cols.get(j + 1));
+									CellRangeAddress hole_cell=new CellRangeAddress(j + totalHeight,j + totalHeight + 3,1 + width,1 + width);
 									sheet.addMergedRegion(hole_cell);
-									sheet.getRow(j + totalHeight)
-											.getCell(1 + width)
-											.setCellStyle(cs_font_bgyellow2);
-									sheet.getRow(j + totalHeight + 1)
-											.createCell(1 + width)
-											.setCellStyle(cs_font_bgyellow2);
-									sheet.getRow(j + totalHeight + 2)
-											.createCell(1 + width)
-											.setCellStyle(cs_font_bgyellow2);
-									sheet.getRow(j + totalHeight + 3)
-											.createCell(1 + width)
-											.setCellStyle(cs_font_bgyellow2);
-									CellRangeAddress hole_cell_value = new CellRangeAddress(
-											j + totalHeight, j + totalHeight
-													+ 3, 2 + width, 2 + width);
+									sheet.getRow(j + totalHeight).getCell(1 + width).setCellStyle(cs_font_bgyellow2);
+									sheet.getRow(j + totalHeight + 1).createCell(1 + width).setCellStyle(cs_font_bgyellow2);
+									sheet.getRow(j + totalHeight + 2).createCell(1 + width).setCellStyle(cs_font_bgyellow2);
+									sheet.getRow(j + totalHeight + 3).createCell(1 + width).setCellStyle(cs_font_bgyellow2);
+									CellRangeAddress hole_cell_value=new CellRangeAddress(j + totalHeight,j + totalHeight + 3,2 + width,2 + width);
 									sheet.addMergedRegion(hole_cell_value);
-									sheet.getRow(j + totalHeight + 1)
-											.createCell(2 + width)
-											.setCellStyle(cs_font_bgyellow2);
-									sheet.getRow(j + totalHeight + 2)
-											.createCell(2 + width)
-											.setCellStyle(cs_font_bgyellow2);
-									sheet.getRow(j + totalHeight + 3)
-											.createCell(2 + width)
-											.setCellStyle(cs_font_bgyellow2);
-									Double hole = (alllist.get(i)).getTotalhole();//------------------------------------------總機孔
+									sheet.getRow(j + totalHeight + 1).createCell(2 + width).setCellStyle(cs_font_bgyellow2);
+									sheet.getRow(j + totalHeight + 2).createCell(2 + width).setCellStyle(cs_font_bgyellow2);
+									sheet.getRow(j + totalHeight + 3).createCell(2 + width).setCellStyle(cs_font_bgyellow2);
+									Double hole=(alllist.get(i)).getTotalhole();// ------------------------------------------總機孔
 									if (hole != null) {
-										sheet.getRow(j + totalHeight)
-												.createCell(2 + width)
-												.setCellValue(hole);
+										sheet.getRow(j + totalHeight).createCell(2 + width).setCellValue(hole);
 									} else {
-										sheet.getRow(j + totalHeight)
-												.createCell(2 + width)
-												.setCellValue("");
+										sheet.getRow(j + totalHeight).createCell(2 + width).setCellValue("");
 									}
-									sheet.getRow(j + totalHeight)
-											.getCell(2 + width)
-											.setCellStyle(cs_thousand_lyellow);
-									sheet.getRow(j + totalHeight)
-											.createCell(3 + width)
-											.setCellValue(cols.get(j + 2));
+									sheet.getRow(j + totalHeight).getCell(2 + width).setCellStyle(cs_thousand_lyellow);
+									sheet.getRow(j + totalHeight).createCell(3 + width).setCellValue(cols.get(j + 2));
 
-									Double posNum = (alllist.get(i))
-											.getHole();//----------------------------------------------getHole有效孔位數
+									Double posNum=(alllist.get(i)).getHole();// ----------------------------------------------getHole有效孔位數
 
 									if (posNum != null) {
-										sheet.getRow(j + totalHeight)
-												.createCell(4 + width)
-												.setCellValue(posNum);
+										sheet.getRow(j + totalHeight).createCell(4 + width).setCellValue(posNum);
 									} else {
-										sheet.getRow(j + totalHeight)
-												.createCell(4 + width)
-												.setCellValue("");
+										sheet.getRow(j + totalHeight).createCell(4 + width).setCellValue("");
 									}
-									sheet.getRow(j + totalHeight)
-											.getCell(3 + width)
-											.setCellStyle(cs_font_bgyellow2);
-									sheet.getRow(j + totalHeight)
-											.getCell(4 + width)
-											.setCellStyle(cs_thousand_lyellow);
-									CellRangeAddress posNum_cell_value = new CellRangeAddress(
-											j + totalHeight, j + totalHeight,
-											4 + width, 5 + width);
+									sheet.getRow(j + totalHeight).getCell(3 + width).setCellStyle(cs_font_bgyellow2);
+									sheet.getRow(j + totalHeight).getCell(4 + width).setCellStyle(cs_thousand_lyellow);
+									CellRangeAddress posNum_cell_value=new CellRangeAddress(j + totalHeight,j + totalHeight,4 + width,5 + width);
 									sheet.addMergedRegion(posNum_cell_value);
-									sheet.getRow(j + totalHeight)
-											.createCell(5 + width)
-											.setCellStyle(cs_font_bgyellow2);
+									sheet.getRow(j + totalHeight).createCell(5 + width).setCellStyle(cs_font_bgyellow2);
 									// sheet.getRow(j +
 									// totalHeight).createCell(6 +
 									// width).setCellStyle(cs);
 									// sheet.getRow(j+totalHeight).createCell(7+width).setCellStyle(cs);
-									String temp = cols.get(j + 3);
-									sheet.getRow(j + totalHeight + 1)
-											.createCell(3 + width)
-											.setCellValue(temp);
-									Double sample = (alllist.get(i))
-											.getSample();
+									String temp=cols.get(j + 3);
+									sheet.getRow(j + totalHeight + 1).createCell(3 + width).setCellValue(temp);
+									Double sample=(alllist.get(i)).getSample();
 									if (sample != null) {
-										sheet.getRow(j + totalHeight + 1)
-												.createCell(4 + width)
-												.setCellValue(sample);
+										sheet.getRow(j + totalHeight + 1).createCell(4 + width).setCellValue(sample);
 									} else {
-										sheet.getRow(j + totalHeight + 1)
-												.createCell(4 + width)
-												.setCellValue("");
+										sheet.getRow(j + totalHeight + 1).createCell(4 + width).setCellValue("");
 									}
-									sheet.getRow(j + totalHeight + 1)
-											.getCell(3 + width)
-											.setCellStyle(cs_font_bgyellow2);
-									sheet.getRow(j + totalHeight + 1)
-											.getCell(4 + width)
-											.setCellStyle(cs_thousand_lyellow);
-									CellRangeAddress sample_cell_value = new CellRangeAddress(
-											j + totalHeight + 1, j
-													+ totalHeight + 1,
-											4 + width, 5 + width);
+									sheet.getRow(j + totalHeight + 1).getCell(3 + width).setCellStyle(cs_font_bgyellow2);
+									sheet.getRow(j + totalHeight + 1).getCell(4 + width).setCellStyle(cs_thousand_lyellow);
+									CellRangeAddress sample_cell_value=new CellRangeAddress(j + totalHeight + 1,j + totalHeight + 1,4 + width,5 + width);
 									sheet.addMergedRegion(sample_cell_value);
-									sheet.getRow(j + totalHeight + 1)
-											.createCell(5 + width)
-											.setCellStyle(cs_font_bgyellow2);
+									sheet.getRow(j + totalHeight + 1).createCell(5 + width).setCellStyle(cs_font_bgyellow2);
 									// sheet.getRow(j + totalHeight +
 									// 1).createCell(6 +
 									// width).setCellStyle(cs);
 									// sheet.getRow(j+totalHeight+1).createCell(7+width).setCellStyle(cs);
-									sheet.getRow(j + totalHeight + 2)
-											.createCell(3 + width)
-											.setCellValue(cols.get(j + 4));
-									Double acce = (alllist.get(i))
-											.getAccessories();
+									sheet.getRow(j + totalHeight + 2).createCell(3 + width).setCellValue(cols.get(j + 4));
+									Double acce=(alllist.get(i)).getAccessories();
 									if (acce != null) {
-										sheet.getRow(j + totalHeight + 2)
-												.createCell(4 + width)
-												.setCellValue(acce);
+										sheet.getRow(j + totalHeight + 2).createCell(4 + width).setCellValue(acce);
 									} else {
-										sheet.getRow(j + totalHeight + 2)
-												.createCell(4 + width)
-												.setCellValue("");
+										sheet.getRow(j + totalHeight + 2).createCell(4 + width).setCellValue("");
 									}
-									sheet.getRow(j + totalHeight + 2)
-											.getCell(3 + width)
-											.setCellStyle(cs_font_bgyellow2);
+									sheet.getRow(j + totalHeight + 2).getCell(3 + width).setCellStyle(cs_font_bgyellow2);
 
-									sheet.getRow(j + totalHeight + 2)
-											.getCell(4 + width)
-											.setCellStyle(cs_thousand_lyellow);
-									CellRangeAddress acce_cell_value = new CellRangeAddress(
-											j + totalHeight + 2, j
-													+ totalHeight + 2,
-											4 + width, 5 + width);
+									sheet.getRow(j + totalHeight + 2).getCell(4 + width).setCellStyle(cs_thousand_lyellow);
+									CellRangeAddress acce_cell_value=new CellRangeAddress(j + totalHeight + 2,j + totalHeight + 2,4 + width,5 + width);
 									sheet.addMergedRegion(acce_cell_value);
-									sheet.getRow(j + totalHeight + 2)
-											.createCell(5 + width)
-											.setCellStyle(cs_font_bgyellow2);
+									sheet.getRow(j + totalHeight + 2).createCell(5 + width).setCellStyle(cs_font_bgyellow2);
 									// sheet.getRow(j + totalHeight +
 									// 2).createCell(6 +
 									// width).setCellStyle(cs);
 									// sheet.getRow(j+totalHeight+2).createCell(7+width).setCellStyle(cs);
-									sheet.getRow(j + totalHeight + 3)
-											.createCell(3 + width)
-											.setCellValue(cols.get(j + 5));
-									Double other = (alllist.get(i)).getOther();
+									sheet.getRow(j + totalHeight + 3).createCell(3 + width).setCellValue(cols.get(j + 5));
+									Double other=(alllist.get(i)).getOther();
 									if (other != null) {
-										sheet.getRow(j + totalHeight + 3)
-												.createCell(4 + width)
-												.setCellValue(other);
+										sheet.getRow(j + totalHeight + 3).createCell(4 + width).setCellValue(other);
 									} else {
-										sheet.getRow(j + totalHeight + 3)
-												.createCell(4 + width)
-												.setCellValue("");
+										sheet.getRow(j + totalHeight + 3).createCell(4 + width).setCellValue("");
 									}
-									sheet.getRow(j + totalHeight + 3)
-											.getCell(3 + width)
-											.setCellStyle(cs_font_bgyellow2);
-									sheet.getRow(j + totalHeight + 3)
-											.getCell(4 + width)
-											.setCellStyle(cs_thousand_lyellow);
-									CellRangeAddress other_cell_value = new CellRangeAddress(
-											j + totalHeight + 3, j
-													+ totalHeight + 3,
-											4 + width, 5 + width);
+									sheet.getRow(j + totalHeight + 3).getCell(3 + width).setCellStyle(cs_font_bgyellow2);
+									sheet.getRow(j + totalHeight + 3).getCell(4 + width).setCellStyle(cs_thousand_lyellow);
+									CellRangeAddress other_cell_value=new CellRangeAddress(j + totalHeight + 3,j + totalHeight + 3,4 + width,5 + width);
 									sheet.addMergedRegion(other_cell_value);
-									sheet.getRow(j + totalHeight + 3)
-											.createCell(5 + width)
-											.setCellStyle(cs_font_bgyellow2);
+									sheet.getRow(j + totalHeight + 3).createCell(5 + width).setCellStyle(cs_font_bgyellow2);
 									// sheet.getRow(j + totalHeight +
 									// 3).createCell(6 +
 									// width).setCellStyle(cs);
@@ -780,40 +570,29 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 									break;
 								}
 							} // end for 2
-							width = width + 6;
+							width=width + 6;
 						}// end "if_top"
 
 						if (i >= alllist.size()) { // start "if top2"
-							String temp = factcodelist
-									.get(factcodelist.size()
-											- (alllist.size()
-													+ factcodelist.size() - (i + 1))
-											- 1);
-							CellRangeAddress region1 = new CellRangeAddress(
-									6 + totalHeight, (short) 7 + totalHeight,
-									width, (short) 1 + width);
+							String temp=factcodelist.get(factcodelist.size() - (alllist.size() + factcodelist.size() - (i + 1)) - 1);
+							CellRangeAddress region1=new CellRangeAddress(6 + totalHeight,(short)7 + totalHeight,width,(short)1 + width);
 							sheet.addMergedRegion(region1);
-							sheet.getRow(6 + totalHeight).createCell(width)
-									.setCellStyle(cs_font_bgyellow);
-							sheet.getRow(6 + totalHeight).getCell(width)
-									.setCellValue(temp);
-							sheet.getRow(6 + totalHeight).createCell(1 + width)
-									.setCellStyle(cs_font_bgyellow);
-							sheet.getRow(7 + totalHeight).createCell(width)
-									.setCellStyle(cs_font_bgyellow);
-							sheet.getRow(7 + totalHeight).createCell(1 + width)
-									.setCellStyle(cs_font_bgyellow);
-							width = width + 2;
+							sheet.getRow(6 + totalHeight).createCell(width).setCellStyle(cs_font_bgyellow);
+							sheet.getRow(6 + totalHeight).getCell(width).setCellValue(temp);
+							sheet.getRow(6 + totalHeight).createCell(1 + width).setCellStyle(cs_font_bgyellow);
+							sheet.getRow(7 + totalHeight).createCell(width).setCellStyle(cs_font_bgyellow);
+							sheet.getRow(7 + totalHeight).createCell(1 + width).setCellStyle(cs_font_bgyellow);
+							width=width + 2;
 						}// end "if top2"
 					}// end for 1
 
-					height = 8;
-					width = 0;
+					height=8;
+					width=0;
 					// **********下部*******//
-					for (int x = 0; x < alllist2.size() + factcodelist.size(); x++) { // for
-																						// 1
-						List<String> cols = new ArrayList();
-						List<Object[]> sum_list = new ArrayList();
+					for (int x=0; x < alllist2.size() + factcodelist.size(); x++) { // for
+																					// 1
+						List<String> cols=new ArrayList();
+						List<Object[]> sum_list=new ArrayList();
 						if (x < alllist2.size()) {
 							cols.add("日期");
 							cols.add("上模數");
@@ -829,66 +608,50 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 							cols.add("日期");
 							cols.add("標準產量");
 							cols.add("實際產量");
-							String temp = factcodelist
-									.get(factcodelist.size()
-											- (alllist2.size()
-													+ factcodelist.size() - (x + 1))
-											- 1);
-							for (int x2 = 0; x2 < 31; x2++) {
-								StringBuffer yymmdd = new StringBuffer();
+							String temp=factcodelist.get(factcodelist.size() - (alllist2.size() + factcodelist.size() - (x + 1)) - 1);
+							for (int x2=0; x2 < 31; x2++) {
+								StringBuffer yymmdd=new StringBuffer();
 								yymmdd.append(yymm);
 								if ((x2 + 1) < 10) {
 									yymmdd.append("0" + (x2 + 1));
 								} else {
 									yymmdd.append(x2 + 1);
 								}
-								Object[] list_temp = dataSer.totalWithFactCode(
-										temp, yymmdd.toString());
+								Object[] list_temp=dataSer.totalWithFactCode(temp,yymmdd.toString());
 								sum_list.add(list_temp);
 							}
 						}
 
-						double sumStandardOutput = 0;// 標準產量合計
-						double sumActualYield = 0;// 實際產量合計
-						double sumAchievingRate = 0;// 月達成率
-						double sum_standardoutput_all = 0;// 標準產量(廠別狀態統計)
-						double sum_actualyield_all = 0;// 實際產量(廠別狀態統計)
+						double sumStandardOutput=0;// 標準產量合計
+						double sumActualYield=0;// 實際產量合計
+						double sumAchievingRate=0;// 月達成率
+						double sum_standardoutput_all=0;// 標準產量(廠別狀態統計)
+						double sum_actualyield_all=0;// 實際產量(廠別狀態統計)
 
 						if (x < alllist2.size()) {// start "if 無廠別狀態統計"
-							for (int y = 0; y < cols.size(); y++) { // for 2
+							for (int y=0; y < cols.size(); y++) { // for 2
 								if (x == 0) {
 									if (y == 0) {
-										sheet.createRow(height + totalHeight)
-												.createCell(y + width)
-												.setCellValue(cols.get(y));
+										sheet.createRow(height + totalHeight).createCell(y + width).setCellValue(cols.get(y));
 									} else {
-										sheet.getRow(height + totalHeight)
-												.createCell(y + width)
-												.setCellValue(cols.get(y));
+										sheet.getRow(height + totalHeight).createCell(y + width).setCellValue(cols.get(y));
 									}
-									sheet.getRow(height + totalHeight)
-											.getCell(y + width)
-											.setCellStyle(cs);
+									sheet.getRow(height + totalHeight).getCell(y + width).setCellStyle(cs);
 								}
 								if (x > 0) {
 									if (y == 0) {
 										continue;
 									}
-									sheet.getRow(height + totalHeight)
-											.createCell(y + width)
-											.setCellValue(cols.get(y));
-									sheet.getRow(height + totalHeight)
-											.getCell(y + width)
-											.setCellStyle(cs);
+									sheet.getRow(height + totalHeight).createCell(y + width).setCellValue(cols.get(y));
+									sheet.getRow(height + totalHeight).getCell(y + width).setCellStyle(cs);
 								}
 
-								double sumOnModulus = 0;// 上模數合計
-								double sumPersonnum = 0;// 人數合計
-								double sumDayCount = 0;// 總天數
+								double sumOnModulus=0;// 上模數合計
+								double sumPersonnum=0;// 人數合計
+								double sumDayCount=0;// 總天數
 								if (sumStandardOutput != 0) {
-									sumAchievingRate = sumActualYield
-											/ sumStandardOutput;
-								}else{
+									sumAchievingRate=sumActualYield / sumStandardOutput;
+								} else {
 									sumAchievingRate=0.0;
 								}
 
@@ -898,18 +661,18 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 								 * ==7||all==8||all==10||all==12){ z_length=32;
 								 * }else{ z_length=31; }
 								 */
-								for (int z = 0; z < z_length; z++) {// for 3
-									int day = 0;
-									Double onModulus = null;
-									Double personnum = null;
-									Double standardOutput = null;
-									Double actualYield = null;
-									Double achievingRate = null;
-									Double daycount = null;
-									String holiday = null;
+								for (int z=0; z < z_length; z++) {// for 3
+									int day=0;
+									Double onModulus=null;
+									Double personnum=null;
+									Double standardOutput=null;
+									Double actualYield=null;
+									Double achievingRate=null;
+									Double daycount=null;
+									String holiday=null;
 									switch (y) {
 									case 0:
-										StringBuffer date = new StringBuffer();
+										StringBuffer date=new StringBuffer();
 										// date.append(year + "/");
 										if (all < 10) {
 											date.append("0" + all + "/");
@@ -922,41 +685,16 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 											date.append(z + 1);
 										}
 										if (z < z_length - 2) {
-											sheet.createRow(
-													z + height + totalHeight
-															+ 1)
-													.createCell(y + width)
-													.setCellValue(
-															date.toString());
-											sheet.getRow(
-													z + height + totalHeight
-															+ 1)
-													.getCell(y + width)
-													.setCellStyle(cs);
+											sheet.createRow(z + height + totalHeight + 1).createCell(y + width).setCellValue(date.toString());
+											sheet.getRow(z + height + totalHeight + 1).getCell(y + width).setCellStyle(cs);
 										}
 										if (z == z_length - 2) {
-											sheet.createRow(
-													z + height + totalHeight
-															+ 1)
-													.createCell(y + width)
-													.setCellValue("合計");
-											sheet.getRow(
-													z + height + totalHeight
-															+ 1)
-													.getCell(y + width)
-													.setCellStyle(cs_font);
+											sheet.createRow(z + height + totalHeight + 1).createCell(y + width).setCellValue("合計");
+											sheet.getRow(z + height + totalHeight + 1).getCell(y + width).setCellStyle(cs_font);
 										}
 										if (z == z_length - 1) {
-											sheet.createRow(
-													z + height + totalHeight
-															+ 1)
-													.createCell(y + width)
-													.setCellValue("工作天數");
-											sheet.getRow(
-													z + height + totalHeight
-															+ 1)
-													.getCell(y + width)
-													.setCellStyle(cs_font);
+											sheet.createRow(z + height + totalHeight + 1).createCell(y + width).setCellValue("工作天數");
+											sheet.getRow(z + height + totalHeight + 1).getCell(y + width).setCellStyle(cs_font);
 
 										}
 										/*
@@ -969,13 +707,10 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 										 */
 										break;
 									case 1:
-										if (sheet.getRow(
-												z + height + totalHeight + 1)
-												.getCell(y + width) == null) {
+										if (sheet.getRow(z + height + totalHeight + 1).getCell(y + width) == null) {
 											// sheet.getRow(z+height+totalHeight+1).createCell(y+width).setCellStyle(cs);
-											StringBuffer olddate = new StringBuffer();
-											SimpleDateFormat dateFormat = new SimpleDateFormat(
-													"yyyyMMdd");
+											StringBuffer olddate=new StringBuffer();
+											SimpleDateFormat dateFormat=new SimpleDateFormat("yyyyMMdd");
 											olddate.append(yymm);
 											if (z == 31) {
 												olddate.append(z);
@@ -988,45 +723,19 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 												olddate.append(z + 1);
 											}
 
-											String temp1 = olddate.toString();
-											String temp2 = dateFormat
-													.format(new Date());
+											String temp1=olddate.toString();
+											String temp2=dateFormat.format(new Date());
 											try {
-												Date beginDate = dateFormat
-														.parse(temp1);
-												Date endDate = dateFormat
-														.parse(temp2);
-												long beginNum = beginDate
-														.getTime();
-												long endNum = endDate.getTime();
+												Date beginDate=dateFormat.parse(temp1);
+												Date endDate=dateFormat.parse(temp2);
+												long beginNum=beginDate.getTime();
+												long endNum=endDate.getTime();
 												if (beginNum > endNum) {
-													sheet.getRow(
-															z
-																	+ height
-																	+ totalHeight
-																	+ 1)
-															.createCell(
-																	y + width)
-															.setCellStyle(
-																	cs_font_blue);
+													sheet.getRow(z + height + totalHeight + 1).createCell(y + width).setCellStyle(cs_font_blue);
 													// sheet.getRow(z+height+totalHeight+1).getCell(y+width).setCellValue("日期超前");
 												} else {
-													sheet.getRow(
-															z
-																	+ height
-																	+ totalHeight
-																	+ 1)
-															.createCell(
-																	y + width)
-															.setCellStyle(
-																	cs_font_red);
-													sheet.getRow(
-															z
-																	+ height
-																	+ totalHeight
-																	+ 1)
-															.getCell(y + width)
-															.setCellValue("無數據");
+													sheet.getRow(z + height + totalHeight + 1).createCell(y + width).setCellStyle(cs_font_red);
+													sheet.getRow(z + height + totalHeight + 1).getCell(y + width).setCellValue("無數據");
 												}
 											} catch (ParseException e) {
 												// TODO Auto-generated catch
@@ -1035,188 +744,65 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 											}
 										}
 										try {
-											day = alllist2.get(x).get(z)
-													.getId().getYymmdd()
-													.getDate();
-											onModulus = alllist2.get(x).get(z)
-													.getOnModulus();
-											personnum = alllist2.get(x).get(z)
-													.getPersonnum();
-											daycount = alllist2.get(x).get(z)
-													.getDaycount();
-											achievingRate = alllist2.get(x)
-													.get(z).getAchievingRate();
-											holiday = alllist2.get(x).get(z)
-													.getWorkorholiday();
-											if (onModulus != null
-													&& z == day - 1) {
-												sheet.getRow(
-														z + height
-																+ totalHeight
-																+ 1)
-														.createCell(y + width)
-														.setCellValue(onModulus);
-												sheet.getRow(
-														z + height
-																+ totalHeight
-																+ 1)
-														.getCell(y + width)
-														.setCellStyle(
-																cs_thousand);
+											day=alllist2.get(x).get(z).getId().getYymmdd().getDate();
+											onModulus=alllist2.get(x).get(z).getOnModulus();
+											personnum=alllist2.get(x).get(z).getPersonnum();
+											daycount=alllist2.get(x).get(z).getDaycount();
+											achievingRate=alllist2.get(x).get(z).getAchievingRate();
+											holiday=alllist2.get(x).get(z).getWorkorholiday();
+											if (onModulus != null && z == day - 1) {
+												sheet.getRow(z + height + totalHeight + 1).createCell(y + width).setCellValue(onModulus);
+												sheet.getRow(z + height + totalHeight + 1).getCell(y + width).setCellStyle(cs_thousand);
 											}
-											if (onModulus != null
-													&& z != day - 1) {
-												sheet.getRow(
-														(day - 1) + height
-																+ totalHeight
-																+ 1)
-														.createCell(y + width)
-														.setCellValue(onModulus);
-												sheet.getRow(
-														(day - 1) + height
-																+ totalHeight
-																+ 1)
-														.getCell(y + width)
-														.setCellStyle(
-																cs_thousand);
+											if (onModulus != null && z != day - 1) {
+												sheet.getRow((day - 1) + height + totalHeight + 1).createCell(y + width).setCellValue(onModulus);
+												sheet.getRow((day - 1) + height + totalHeight + 1).getCell(y + width).setCellStyle(cs_thousand);
 											}
-											if (onModulus == null
-													&& z == day - 1
-													&& holiday.equals("1")) {
+											if (onModulus == null && z == day - 1 && holiday.equals("1")) {
 
-												sheet.getRow(
-														z + height
-																+ totalHeight
-																+ 1)
-														.createCell(y + width)
-														.setCellValue("假日");
-												sheet.getRow(
-														z + height
-																+ totalHeight
-																+ 1)
-														.getCell(y + width)
-														.setCellStyle(
-																cs_font_blue);
+												sheet.getRow(z + height + totalHeight + 1).createCell(y + width).setCellValue("假日");
+												sheet.getRow(z + height + totalHeight + 1).getCell(y + width).setCellStyle(cs_font_blue);
 											}
 
-											if (onModulus == null
-													&& z != day - 1
-													&& holiday.equals("1")) {
+											if (onModulus == null && z != day - 1 && holiday.equals("1")) {
 
-												sheet.getRow(
-														(day - 1) + height
-																+ totalHeight
-																+ 1)
-														.createCell(y + width)
-														.setCellValue("假日");
-												sheet.getRow(
-														(day - 1) + height
-																+ totalHeight
-																+ 1)
-														.getCell(y + width)
-														.setCellStyle(
-																cs_font_blue);
+												sheet.getRow((day - 1) + height + totalHeight + 1).createCell(y + width).setCellValue("假日");
+												sheet.getRow((day - 1) + height + totalHeight + 1).getCell(y + width).setCellStyle(cs_font_blue);
 											}
-											if (onModulus == null
-													&& z == day - 1
-													&& holiday.equals("2")) {
+											if (onModulus == null && z == day - 1 && holiday.equals("2")) {
 
-												sheet.getRow(
-														z + height
-																+ totalHeight
-																+ 1)
-														.createCell(y + width)
-														.setCellValue("未排產");
-												sheet.getRow(
-														z + height
-																+ totalHeight
-																+ 1)
-														.getCell(y + width)
-														.setCellStyle(
-																cs_font_green);
+												sheet.getRow(z + height + totalHeight + 1).createCell(y + width).setCellValue("未排產");
+												sheet.getRow(z + height + totalHeight + 1).getCell(y + width).setCellStyle(cs_font_green);
 											}
 
-											if (onModulus == null
-													&& z != day - 1
-													&& holiday.equals("2")) {
-												sheet.getRow(
-														(day - 1) + height
-																+ totalHeight
-																+ 1)
-														.createCell(y + width)
-														.setCellValue("未排產");
-												sheet.getRow(
-														(day - 1) + height
-																+ totalHeight
-																+ 1)
-														.getCell(y + width)
-														.setCellStyle(
-																cs_font_green);
+											if (onModulus == null && z != day - 1 && holiday.equals("2")) {
+												sheet.getRow((day - 1) + height + totalHeight + 1).createCell(y + width).setCellValue("未排產");
+												sheet.getRow((day - 1) + height + totalHeight + 1).getCell(y + width).setCellStyle(cs_font_green);
 											}
-											if (onModulus == null
-													&& z == day - 1
-													&& (personnum != null
-															|| daycount != null || achievingRate != null)) {
-												sheet.getRow(
-														z + height
-																+ totalHeight
-																+ 1)
-														.createCell(y + width)
-														.setCellValue("無數據");
-												sheet.getRow(
-														z + height
-																+ totalHeight
-																+ 1)
-														.getCell(y + width)
-														.setCellStyle(
-																cs_font_red);
+											if (onModulus == null && z == day - 1 && (personnum != null || daycount != null || achievingRate != null)) {
+												sheet.getRow(z + height + totalHeight + 1).createCell(y + width).setCellValue("無數據");
+												sheet.getRow(z + height + totalHeight + 1).getCell(y + width).setCellStyle(cs_font_red);
 											}
 
-											if (onModulus == null
-													&& z != day - 1
-													&& (personnum != null
-															|| daycount != null || achievingRate != null)) {
-												sheet.getRow(
-														(day - 1) + height
-																+ totalHeight
-																+ 1)
-														.createCell(y + width)
-														.setCellValue("無數據");
-												sheet.getRow(
-														(day - 1) + height
-																+ totalHeight
-																+ 1)
-														.getCell(y + width)
-														.setCellStyle(
-																cs_font_red);
+											if (onModulus == null && z != day - 1 && (personnum != null || daycount != null || achievingRate != null)) {
+												sheet.getRow((day - 1) + height + totalHeight + 1).createCell(y + width).setCellValue("無數據");
+												sheet.getRow((day - 1) + height + totalHeight + 1).getCell(y + width).setCellStyle(cs_font_red);
 											}
-											sumOnModulus = sumOnModulus
-													+ onModulus;
+											sumOnModulus=sumOnModulus + onModulus;
 										} catch (Exception e) {
 											// TODO: handle exception
 										}
 										if (z == z_length - 2) {
-											sheet.getRow(
-													z + height + totalHeight
-															+ 1)
-													.createCell(y + width)
-													.setCellValue(sumOnModulus);
-											sheet.getRow(
-													z + height + totalHeight
-															+ 1)
-													.getCell(y + width)
-													.setCellStyle(cs_thousand);
+											sheet.getRow(z + height + totalHeight + 1).createCell(y + width).setCellValue(sumOnModulus);
+											sheet.getRow(z + height + totalHeight + 1).getCell(y + width).setCellStyle(cs_thousand);
 										}
 
 										break;
 									case 2:
-										if (sheet.getRow(
-												z + height + totalHeight + 1)
-												.getCell(y + width) == null) {
+										if (sheet.getRow(z + height + totalHeight + 1).getCell(y + width) == null) {
 											// sheet.getRow(z+height+totalHeight+1).createCell(y+width).setCellStyle(cs);
-											StringBuffer olddate = new StringBuffer();
-											SimpleDateFormat dateFormat = new SimpleDateFormat(
-													"yyyyMMdd");
+											StringBuffer olddate=new StringBuffer();
+											SimpleDateFormat dateFormat=new SimpleDateFormat("yyyyMMdd");
 											olddate.append(yymm);
 											if (z == 31) {
 												olddate.append(z);
@@ -1229,48 +815,22 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 												olddate.append(z + 1);
 											}
 
-											String temp1 = olddate.toString();
-											String temp2 = dateFormat
-													.format(new Date());
+											String temp1=olddate.toString();
+											String temp2=dateFormat.format(new Date());
 
 											try {
-												Date beginDate = dateFormat
-														.parse(temp1);
+												Date beginDate=dateFormat.parse(temp1);
 
-												Date endDate = dateFormat
-														.parse(temp2);
+												Date endDate=dateFormat.parse(temp2);
 
-												long beginNum = beginDate
-														.getTime();
-												long endNum = endDate.getTime();
+												long beginNum=beginDate.getTime();
+												long endNum=endDate.getTime();
 												if (beginNum > endNum) {
-													sheet.getRow(
-															z
-																	+ height
-																	+ totalHeight
-																	+ 1)
-															.createCell(
-																	y + width)
-															.setCellStyle(
-																	cs_font_blue);
+													sheet.getRow(z + height + totalHeight + 1).createCell(y + width).setCellStyle(cs_font_blue);
 													// sheet.getRow(z+height+totalHeight+1).getCell(y+width).setCellValue("日期超前");
 												} else {
-													sheet.getRow(
-															z
-																	+ height
-																	+ totalHeight
-																	+ 1)
-															.createCell(
-																	y + width)
-															.setCellStyle(
-																	cs_font_red);
-													sheet.getRow(
-															z
-																	+ height
-																	+ totalHeight
-																	+ 1)
-															.getCell(y + width)
-															.setCellValue("無數據");
+													sheet.getRow(z + height + totalHeight + 1).createCell(y + width).setCellStyle(cs_font_red);
+													sheet.getRow(z + height + totalHeight + 1).getCell(y + width).setCellValue("無數據");
 												}
 											} catch (ParseException e) {
 												// TODO Auto-generated catch
@@ -1280,195 +840,71 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 										}
 										// Double personnum=null;
 										try {
-											day = alllist2.get(x).get(z)
-													.getId().getYymmdd()
-													.getDate();
+											day=alllist2.get(x).get(z).getId().getYymmdd().getDate();
 
-											personnum = alllist2.get(x).get(z)
-													.getPersonnum();
+											personnum=alllist2.get(x).get(z).getPersonnum();
 
-											onModulus = alllist2.get(x).get(z)
-													.getOnModulus();
+											onModulus=alllist2.get(x).get(z).getOnModulus();
 
-											daycount = alllist2.get(x).get(z)
-													.getDaycount();
+											daycount=alllist2.get(x).get(z).getDaycount();
 
-											achievingRate = alllist2.get(x)
-													.get(z).getAchievingRate();
+											achievingRate=alllist2.get(x).get(z).getAchievingRate();
 
-											holiday = alllist2.get(x).get(z)
-													.getWorkorholiday();
+											holiday=alllist2.get(x).get(z).getWorkorholiday();
 
-											if (personnum != null
-													&& z == day - 1) {
-												sheet.getRow(
-														z + height
-																+ totalHeight
-																+ 1)
-														.createCell(y + width)
-														.setCellValue(personnum);
-												sheet.getRow(
-														z + height
-																+ totalHeight
-																+ 1)
-														.getCell(y + width)
-														.setCellStyle(
-																cs_thousand_person);
+											if (personnum != null && z == day - 1) {
+												sheet.getRow(z + height + totalHeight + 1).createCell(y + width).setCellValue(personnum);
+												sheet.getRow(z + height + totalHeight + 1).getCell(y + width).setCellStyle(cs_thousand_person);
 											}
-											if (personnum != null
-													&& z != day - 1) {
-												sheet.getRow(
-														(day - 1) + height
-																+ totalHeight
-																+ 1)
-														.createCell(y + width)
-														.setCellValue(personnum);
-												sheet.getRow(
-														(day - 1) + height
-																+ totalHeight
-																+ 1)
-														.getCell(y + width)
-														.setCellStyle(
-																cs_thousand_person);
+											if (personnum != null && z != day - 1) {
+												sheet.getRow((day - 1) + height + totalHeight + 1).createCell(y + width).setCellValue(personnum);
+												sheet.getRow((day - 1) + height + totalHeight + 1).getCell(y + width).setCellStyle(cs_thousand_person);
 											}
-											if (personnum == null
-													&& z == day - 1
-													&& holiday.equals("1")) {
+											if (personnum == null && z == day - 1 && holiday.equals("1")) {
 
-												sheet.getRow(
-														z + height
-																+ totalHeight
-																+ 1)
-														.createCell(y + width)
-														.setCellValue("假日");
-												sheet.getRow(
-														z + height
-																+ totalHeight
-																+ 1)
-														.getCell(y + width)
-														.setCellStyle(
-																cs_font_blue);
+												sheet.getRow(z + height + totalHeight + 1).createCell(y + width).setCellValue("假日");
+												sheet.getRow(z + height + totalHeight + 1).getCell(y + width).setCellStyle(cs_font_blue);
 											}
 
-											if (personnum == null
-													&& z != day - 1
-													&& holiday.equals("1")) {
+											if (personnum == null && z != day - 1 && holiday.equals("1")) {
 
-												sheet.getRow(
-														(day - 1) + height
-																+ totalHeight
-																+ 1)
-														.createCell(y + width)
-														.setCellValue("假日");
-												sheet.getRow(
-														(day - 1) + height
-																+ totalHeight
-																+ 1)
-														.getCell(y + width)
-														.setCellStyle(
-																cs_font_blue);
+												sheet.getRow((day - 1) + height + totalHeight + 1).createCell(y + width).setCellValue("假日");
+												sheet.getRow((day - 1) + height + totalHeight + 1).getCell(y + width).setCellStyle(cs_font_blue);
 											}
-											if (personnum == null
-													&& z == day - 1
-													&& holiday.equals("2")) {
+											if (personnum == null && z == day - 1 && holiday.equals("2")) {
 
-												sheet.getRow(
-														z + height
-																+ totalHeight
-																+ 1)
-														.createCell(y + width)
-														.setCellValue("未排產");
-												sheet.getRow(
-														z + height
-																+ totalHeight
-																+ 1)
-														.getCell(y + width)
-														.setCellStyle(
-																cs_font_green);
+												sheet.getRow(z + height + totalHeight + 1).createCell(y + width).setCellValue("未排產");
+												sheet.getRow(z + height + totalHeight + 1).getCell(y + width).setCellStyle(cs_font_green);
 											}
 
-											if (personnum == null
-													&& z != day - 1
-													&& holiday.equals("2")) {
+											if (personnum == null && z != day - 1 && holiday.equals("2")) {
 
-												sheet.getRow(
-														(day - 1) + height
-																+ totalHeight
-																+ 1)
-														.createCell(y + width)
-														.setCellValue("未排產");
-												sheet.getRow(
-														(day - 1) + height
-																+ totalHeight
-																+ 1)
-														.getCell(y + width)
-														.setCellStyle(
-																cs_font_green);
+												sheet.getRow((day - 1) + height + totalHeight + 1).createCell(y + width).setCellValue("未排產");
+												sheet.getRow((day - 1) + height + totalHeight + 1).getCell(y + width).setCellStyle(cs_font_green);
 											}
-											if (personnum == null
-													&& z == day - 1
-													&& (onModulus != null
-															|| daycount != null || achievingRate != null)) {
-												sheet.getRow(
-														z + height
-																+ totalHeight
-																+ 1)
-														.createCell(y + width)
-														.setCellValue("無數據");
-												sheet.getRow(
-														z + height
-																+ totalHeight
-																+ 1)
-														.getCell(y + width)
-														.setCellStyle(
-																cs_font_red);
+											if (personnum == null && z == day - 1 && (onModulus != null || daycount != null || achievingRate != null)) {
+												sheet.getRow(z + height + totalHeight + 1).createCell(y + width).setCellValue("無數據");
+												sheet.getRow(z + height + totalHeight + 1).getCell(y + width).setCellStyle(cs_font_red);
 											}
-											if (personnum == null
-													&& z != day - 1
-													&& (onModulus != null
-															|| daycount != null || achievingRate != null)) {
-												sheet.getRow(
-														(day - 1) + height
-																+ totalHeight
-																+ 1)
-														.createCell(y + width)
-														.setCellValue("無數據");
-												sheet.getRow(
-														(day - 1) + height
-																+ totalHeight
-																+ 1)
-														.getCell(y + width)
-														.setCellStyle(
-																cs_font_red);
+											if (personnum == null && z != day - 1 && (onModulus != null || daycount != null || achievingRate != null)) {
+												sheet.getRow((day - 1) + height + totalHeight + 1).createCell(y + width).setCellValue("無數據");
+												sheet.getRow((day - 1) + height + totalHeight + 1).getCell(y + width).setCellStyle(cs_font_red);
 											}
-											sumPersonnum = sumPersonnum
-													+ personnum;
+											sumPersonnum=sumPersonnum + personnum;
 
 										} catch (Exception e) {
 											// TODO: handle exception
 										}
 										if (z == z_length - 2) {
-											sheet.getRow(
-													z + height + totalHeight
-															+ 1)
-													.createCell(y + width)
-													.setCellValue(sumPersonnum);
-											sheet.getRow(
-													z + height + totalHeight
-															+ 1)
-													.getCell(y + width)
-													.setCellStyle(
-															cs_thousand_person);
+											sheet.getRow(z + height + totalHeight + 1).createCell(y + width).setCellValue(sumPersonnum);
+											sheet.getRow(z + height + totalHeight + 1).getCell(y + width).setCellStyle(cs_thousand_person);
 										}
 										break;
 									case 3:
-										if (sheet.getRow(
-												z + height + totalHeight + 1)
-												.getCell(y + width) == null) {
+										if (sheet.getRow(z + height + totalHeight + 1).getCell(y + width) == null) {
 											// sheet.getRow(z+height+totalHeight+1).createCell(y+width).setCellStyle(cs);
-											StringBuffer olddate = new StringBuffer();
-											SimpleDateFormat dateFormat = new SimpleDateFormat(
-													"yyyyMMdd");
+											StringBuffer olddate=new StringBuffer();
+											SimpleDateFormat dateFormat=new SimpleDateFormat("yyyyMMdd");
 											olddate.append(yymm);
 											if (z == 31) {
 												olddate.append(z);
@@ -1481,47 +917,21 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 												olddate.append(z + 1);
 											}
 
-											String temp1 = olddate.toString();
-											String temp2 = dateFormat
-													.format(new Date());
+											String temp1=olddate.toString();
+											String temp2=dateFormat.format(new Date());
 											try {
-												Date beginDate = dateFormat
-														.parse(temp1);
+												Date beginDate=dateFormat.parse(temp1);
 
-												Date endDate = dateFormat
-														.parse(temp2);
+												Date endDate=dateFormat.parse(temp2);
 
-												long beginNum = beginDate
-														.getTime();
-												long endNum = endDate.getTime();
+												long beginNum=beginDate.getTime();
+												long endNum=endDate.getTime();
 												if (beginNum > endNum) {
-													sheet.getRow(
-															z
-																	+ height
-																	+ totalHeight
-																	+ 1)
-															.createCell(
-																	y + width)
-															.setCellStyle(
-																	cs_font_blue);
+													sheet.getRow(z + height + totalHeight + 1).createCell(y + width).setCellStyle(cs_font_blue);
 													// sheet.getRow(z+height+totalHeight+1).getCell(y+width).setCellValue("日期超前");
 												} else {
-													sheet.getRow(
-															z
-																	+ height
-																	+ totalHeight
-																	+ 1)
-															.createCell(
-																	y + width)
-															.setCellStyle(
-																	cs_font_red);
-													sheet.getRow(
-															z
-																	+ height
-																	+ totalHeight
-																	+ 1)
-															.getCell(y + width)
-															.setCellValue("無數據");
+													sheet.getRow(z + height + totalHeight + 1).createCell(y + width).setCellStyle(cs_font_red);
+													sheet.getRow(z + height + totalHeight + 1).getCell(y + width).setCellValue("無數據");
 												}
 											} catch (ParseException e) {
 												// TODO Auto-generated catch
@@ -1530,186 +940,60 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 											}
 										}
 										try {
-											day = alllist2.get(x).get(z)
-													.getId().getYymmdd()
-													.getDate();
-											onModulus = alllist2.get(x).get(z)
-													.getOnModulus();
-											personnum = alllist2.get(x).get(z)
-													.getPersonnum();
-											daycount = alllist2.get(x).get(z)
-													.getDaycount();
-											standardOutput = alllist2.get(x)
-													.get(z).getStandardOutput();
-											holiday = alllist2.get(x).get(z)
-													.getWorkorholiday();
-											if (standardOutput != null
-													&& z == day - 1) {
-												sheet.getRow(
-														z + height
-																+ totalHeight
-																+ 1)
-														.createCell(y + width)
-														.setCellValue(
-																standardOutput);
-												sheet.getRow(
-														z + height
-																+ totalHeight
-																+ 1)
-														.getCell(y + width)
-														.setCellStyle(
-																cs_thousand);
+											day=alllist2.get(x).get(z).getId().getYymmdd().getDate();
+											onModulus=alllist2.get(x).get(z).getOnModulus();
+											personnum=alllist2.get(x).get(z).getPersonnum();
+											daycount=alllist2.get(x).get(z).getDaycount();
+											standardOutput=alllist2.get(x).get(z).getStandardOutput();
+											holiday=alllist2.get(x).get(z).getWorkorholiday();
+											if (standardOutput != null && z == day - 1) {
+												sheet.getRow(z + height + totalHeight + 1).createCell(y + width).setCellValue(standardOutput);
+												sheet.getRow(z + height + totalHeight + 1).getCell(y + width).setCellStyle(cs_thousand);
 											}
-											if (standardOutput != null
-													&& z != day - 1) {
+											if (standardOutput != null && z != day - 1) {
 
-												sheet.getRow(
-														(day - 1) + height
-																+ totalHeight
-																+ 1)
-														.createCell(y + width)
-														.setCellValue(
-																standardOutput);
-												sheet.getRow(
-														(day - 1) + height
-																+ totalHeight
-																+ 1)
-														.getCell(y + width)
-														.setCellStyle(
-																cs_thousand);
+												sheet.getRow((day - 1) + height + totalHeight + 1).createCell(y + width).setCellValue(standardOutput);
+												sheet.getRow((day - 1) + height + totalHeight + 1).getCell(y + width).setCellStyle(cs_thousand);
 											}
-											if (standardOutput == null
-													&& z == day - 1
-													&& holiday.equals("1")) {
-												sheet.getRow(
-														z + height
-																+ totalHeight
-																+ 1)
-														.createCell(y + width)
-														.setCellValue("假日");
-												sheet.getRow(
-														z + height
-																+ totalHeight
-																+ 1)
-														.getCell(y + width)
-														.setCellStyle(
-																cs_font_blue);
+											if (standardOutput == null && z == day - 1 && holiday.equals("1")) {
+												sheet.getRow(z + height + totalHeight + 1).createCell(y + width).setCellValue("假日");
+												sheet.getRow(z + height + totalHeight + 1).getCell(y + width).setCellStyle(cs_font_blue);
 											}
-											if (standardOutput == null
-													&& z != day - 1
-													&& holiday.equals("1")) {
-												sheet.getRow(
-														(day - 1) + height
-																+ totalHeight
-																+ 1)
-														.createCell(y + width)
-														.setCellValue("假日");
-												sheet.getRow(
-														(day - 1) + height
-																+ totalHeight
-																+ 1)
-														.getCell(y + width)
-														.setCellStyle(
-																cs_font_blue);
+											if (standardOutput == null && z != day - 1 && holiday.equals("1")) {
+												sheet.getRow((day - 1) + height + totalHeight + 1).createCell(y + width).setCellValue("假日");
+												sheet.getRow((day - 1) + height + totalHeight + 1).getCell(y + width).setCellStyle(cs_font_blue);
 											}
-											if (standardOutput == null
-													&& z == day - 1
-													&& holiday.equals("2")) {
-												sheet.getRow(
-														z + height
-																+ totalHeight
-																+ 1)
-														.createCell(y + width)
-														.setCellValue("未排產");
-												sheet.getRow(
-														z + height
-																+ totalHeight
-																+ 1)
-														.getCell(y + width)
-														.setCellStyle(
-																cs_font_green);
+											if (standardOutput == null && z == day - 1 && holiday.equals("2")) {
+												sheet.getRow(z + height + totalHeight + 1).createCell(y + width).setCellValue("未排產");
+												sheet.getRow(z + height + totalHeight + 1).getCell(y + width).setCellStyle(cs_font_green);
 											}
-											if (standardOutput == null
-													&& z != day - 1
-													&& holiday.equals("2")) {
-												sheet.getRow(
-														(day - 1) + height
-																+ totalHeight
-																+ 1)
-														.createCell(y + width)
-														.setCellValue("未排產");
-												sheet.getRow(
-														(day - 1) + height
-																+ totalHeight
-																+ 1)
-														.getCell(y + width)
-														.setCellStyle(
-																cs_font_green);
+											if (standardOutput == null && z != day - 1 && holiday.equals("2")) {
+												sheet.getRow((day - 1) + height + totalHeight + 1).createCell(y + width).setCellValue("未排產");
+												sheet.getRow((day - 1) + height + totalHeight + 1).getCell(y + width).setCellStyle(cs_font_green);
 											}
-											if (standardOutput == null
-													&& z == day - 1
-													&& (onModulus != null
-															|| personnum != null || daycount != null)) {
-												sheet.getRow(
-														z + height
-																+ totalHeight
-																+ 1)
-														.createCell(y + width)
-														.setCellValue("無數據");
-												sheet.getRow(
-														z + height
-																+ totalHeight
-																+ 1)
-														.getCell(y + width)
-														.setCellStyle(
-																cs_font_red);
+											if (standardOutput == null && z == day - 1 && (onModulus != null || personnum != null || daycount != null)) {
+												sheet.getRow(z + height + totalHeight + 1).createCell(y + width).setCellValue("無數據");
+												sheet.getRow(z + height + totalHeight + 1).getCell(y + width).setCellStyle(cs_font_red);
 											}
-											if (standardOutput == null
-													&& z != day - 1
-													&& (onModulus != null
-															|| personnum != null || daycount != null)) {
-												sheet.getRow(
-														(day - 1) + height
-																+ totalHeight
-																+ 1)
-														.createCell(y + width)
-														.setCellValue("無數據");
-												sheet.getRow(
-														(day - 1) + height
-																+ totalHeight
-																+ 1)
-														.getCell(y + width)
-														.setCellStyle(
-																cs_font_red);
+											if (standardOutput == null && z != day - 1 && (onModulus != null || personnum != null || daycount != null)) {
+												sheet.getRow((day - 1) + height + totalHeight + 1).createCell(y + width).setCellValue("無數據");
+												sheet.getRow((day - 1) + height + totalHeight + 1).getCell(y + width).setCellStyle(cs_font_red);
 											}
-											sumStandardOutput = sumStandardOutput
-													+ standardOutput;
+											sumStandardOutput=sumStandardOutput + standardOutput;
 
 										} catch (Exception e) {
 											// TODO: handle exception
 										}
 										if (z == z_length - 2) {
-											sheet.getRow(
-													z + height + totalHeight
-															+ 1)
-													.createCell(y + width)
-													.setCellValue(
-															sumStandardOutput);
-											sheet.getRow(
-													z + height + totalHeight
-															+ 1)
-													.getCell(y + width)
-													.setCellStyle(cs_thousand);
+											sheet.getRow(z + height + totalHeight + 1).createCell(y + width).setCellValue(sumStandardOutput);
+											sheet.getRow(z + height + totalHeight + 1).getCell(y + width).setCellStyle(cs_thousand);
 										}
 										break;
 									case 4:
-										if (sheet.getRow(
-												z + height + totalHeight + 1)
-												.getCell(y + width) == null) {
+										if (sheet.getRow(z + height + totalHeight + 1).getCell(y + width) == null) {
 											// sheet.getRow(z+height+totalHeight+1).createCell(y+width).setCellStyle(cs);
-											StringBuffer olddate = new StringBuffer();
-											SimpleDateFormat dateFormat = new SimpleDateFormat(
-													"yyyyMMdd");
+											StringBuffer olddate=new StringBuffer();
+											SimpleDateFormat dateFormat=new SimpleDateFormat("yyyyMMdd");
 											olddate.append(yymm);
 											if (z == 31) {
 												olddate.append(z);
@@ -1721,45 +1005,19 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 											if (z >= 9) {
 												olddate.append(z + 1);
 											}
-											String temp1 = olddate.toString();
-											String temp2 = dateFormat
-													.format(new Date());
+											String temp1=olddate.toString();
+											String temp2=dateFormat.format(new Date());
 											try {
-												Date beginDate = dateFormat
-														.parse(temp1);
-												Date endDate = dateFormat
-														.parse(temp2);
-												long beginNum = beginDate
-														.getTime();
-												long endNum = endDate.getTime();
+												Date beginDate=dateFormat.parse(temp1);
+												Date endDate=dateFormat.parse(temp2);
+												long beginNum=beginDate.getTime();
+												long endNum=endDate.getTime();
 												if (beginNum > endNum) {
-													sheet.getRow(
-															z
-																	+ height
-																	+ totalHeight
-																	+ 1)
-															.createCell(
-																	y + width)
-															.setCellStyle(
-																	cs_font_blue);
+													sheet.getRow(z + height + totalHeight + 1).createCell(y + width).setCellStyle(cs_font_blue);
 													// sheet.getRow(z+height+totalHeight+1).getCell(y+width).setCellValue("日期超前");
 												} else {
-													sheet.getRow(
-															z
-																	+ height
-																	+ totalHeight
-																	+ 1)
-															.createCell(
-																	y + width)
-															.setCellStyle(
-																	cs_font_red);
-													sheet.getRow(
-															z
-																	+ height
-																	+ totalHeight
-																	+ 1)
-															.getCell(y + width)
-															.setCellValue("無數據");
+													sheet.getRow(z + height + totalHeight + 1).createCell(y + width).setCellStyle(cs_font_red);
+													sheet.getRow(z + height + totalHeight + 1).getCell(y + width).setCellValue("無數據");
 												}
 											} catch (ParseException e) {
 												// TODO Auto-generated catch
@@ -1768,186 +1026,60 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 											}
 										}
 										try {
-											day = alllist2.get(x).get(z)
-													.getId().getYymmdd()
-													.getDate();
-											onModulus = alllist2.get(x).get(z)
-													.getOnModulus();
-											personnum = alllist2.get(x).get(z)
-													.getPersonnum();
-											daycount = alllist2.get(x).get(z)
-													.getDaycount();
-											actualYield = alllist2.get(x)
-													.get(z).getActualYield();
-											holiday = alllist2.get(x).get(z)
-													.getWorkorholiday();
-											if (actualYield != null
-													&& z == day - 1) {
-												sheet.getRow(
-														z + height
-																+ totalHeight
-																+ 1)
-														.createCell(y + width)
-														.setCellValue(
-																actualYield);
-												sheet.getRow(
-														z + height
-																+ totalHeight
-																+ 1)
-														.getCell(y + width)
-														.setCellStyle(
-																cs_thousand);
+											day=alllist2.get(x).get(z).getId().getYymmdd().getDate();
+											onModulus=alllist2.get(x).get(z).getOnModulus();
+											personnum=alllist2.get(x).get(z).getPersonnum();
+											daycount=alllist2.get(x).get(z).getDaycount();
+											actualYield=alllist2.get(x).get(z).getActualYield();
+											holiday=alllist2.get(x).get(z).getWorkorholiday();
+											if (actualYield != null && z == day - 1) {
+												sheet.getRow(z + height + totalHeight + 1).createCell(y + width).setCellValue(actualYield);
+												sheet.getRow(z + height + totalHeight + 1).getCell(y + width).setCellStyle(cs_thousand);
 											}
-											if (actualYield != null
-													& z != day - 1) {
-												sheet.getRow(
-														(day - 1) + height
-																+ totalHeight
-																+ 1)
-														.createCell(y + width)
-														.setCellValue(
-																actualYield);
-												sheet.getRow(
-														(day - 1) + height
-																+ totalHeight
-																+ 1)
-														.getCell(y + width)
-														.setCellStyle(
-																cs_thousand);
+											if (actualYield != null & z != day - 1) {
+												sheet.getRow((day - 1) + height + totalHeight + 1).createCell(y + width).setCellValue(actualYield);
+												sheet.getRow((day - 1) + height + totalHeight + 1).getCell(y + width).setCellStyle(cs_thousand);
 											}
-											if (actualYield == null
-													&& z == day - 1
-													&& holiday.equals("1")) {
-												sheet.getRow(
-														z + height
-																+ totalHeight
-																+ 1)
-														.createCell(y + width)
-														.setCellValue("假日");
-												sheet.getRow(
-														z + height
-																+ totalHeight
-																+ 1)
-														.getCell(y + width)
-														.setCellStyle(
-																cs_font_blue);
+											if (actualYield == null && z == day - 1 && holiday.equals("1")) {
+												sheet.getRow(z + height + totalHeight + 1).createCell(y + width).setCellValue("假日");
+												sheet.getRow(z + height + totalHeight + 1).getCell(y + width).setCellStyle(cs_font_blue);
 											}
-											if (actualYield == null
-													&& z != day - 1
-													&& holiday.equals("1")) {
-												sheet.getRow(
-														(day - 1) + height
-																+ totalHeight
-																+ 1)
-														.createCell(y + width)
-														.setCellValue("假日");
-												sheet.getRow(
-														(day - 1) + height
-																+ totalHeight
-																+ 1)
-														.getCell(y + width)
-														.setCellStyle(
-																cs_font_blue);
+											if (actualYield == null && z != day - 1 && holiday.equals("1")) {
+												sheet.getRow((day - 1) + height + totalHeight + 1).createCell(y + width).setCellValue("假日");
+												sheet.getRow((day - 1) + height + totalHeight + 1).getCell(y + width).setCellStyle(cs_font_blue);
 											}
-											if (actualYield == null
-													&& z == day - 1
-													&& holiday.equals("2")) {
-												sheet.getRow(
-														z + height
-																+ totalHeight
-																+ 1)
-														.createCell(y + width)
-														.setCellValue("未排產");
-												sheet.getRow(
-														z + height
-																+ totalHeight
-																+ 1)
-														.getCell(y + width)
-														.setCellStyle(
-																cs_font_green);
+											if (actualYield == null && z == day - 1 && holiday.equals("2")) {
+												sheet.getRow(z + height + totalHeight + 1).createCell(y + width).setCellValue("未排產");
+												sheet.getRow(z + height + totalHeight + 1).getCell(y + width).setCellStyle(cs_font_green);
 											}
-											if (actualYield == null
-													&& z != day - 1
-													&& holiday.equals("2")) {
-												sheet.getRow(
-														(day - 1) + height
-																+ totalHeight
-																+ 1)
-														.createCell(y + width)
-														.setCellValue("未排產");
-												sheet.getRow(
-														(day - 1) + height
-																+ totalHeight
-																+ 1)
-														.getCell(y + width)
-														.setCellStyle(
-																cs_font_green);
+											if (actualYield == null && z != day - 1 && holiday.equals("2")) {
+												sheet.getRow((day - 1) + height + totalHeight + 1).createCell(y + width).setCellValue("未排產");
+												sheet.getRow((day - 1) + height + totalHeight + 1).getCell(y + width).setCellStyle(cs_font_green);
 											}
-											if (actualYield == null
-													&& z == day - 1
-													&& (onModulus != null
-															|| personnum != null || daycount != null)) {
-												sheet.getRow(
-														z + height
-																+ totalHeight
-																+ 1)
-														.createCell(y + width)
-														.setCellValue("無數據");
-												sheet.getRow(
-														z + height
-																+ totalHeight
-																+ 1)
-														.getCell(y + width)
-														.setCellStyle(
-																cs_font_red);
+											if (actualYield == null && z == day - 1 && (onModulus != null || personnum != null || daycount != null)) {
+												sheet.getRow(z + height + totalHeight + 1).createCell(y + width).setCellValue("無數據");
+												sheet.getRow(z + height + totalHeight + 1).getCell(y + width).setCellStyle(cs_font_red);
 											}
-											if (actualYield == null
-													&& z != day - 1
-													&& (onModulus != null
-															|| personnum != null || daycount != null)) {
-												sheet.getRow(
-														(day - 1) + height
-																+ totalHeight
-																+ 1)
-														.createCell(y + width)
-														.setCellValue("無數據");
-												sheet.getRow(
-														(day - 1) + height
-																+ totalHeight
-																+ 1)
-														.getCell(y + width)
-														.setCellStyle(
-																cs_font_red);
+											if (actualYield == null && z != day - 1 && (onModulus != null || personnum != null || daycount != null)) {
+												sheet.getRow((day - 1) + height + totalHeight + 1).createCell(y + width).setCellValue("無數據");
+												sheet.getRow((day - 1) + height + totalHeight + 1).getCell(y + width).setCellStyle(cs_font_red);
 											}
-											sumActualYield = sumActualYield
-													+ actualYield;
+											sumActualYield=sumActualYield + actualYield;
 
 										} catch (Exception e) {
 											// TODO: handle exception
 										}
 										if (z == z_length - 2) {
-											sheet.getRow(
-													z + height + totalHeight
-															+ 1)
-													.createCell(y + width)
-													.setCellValue(
-															sumActualYield);
-											sheet.getRow(
-													z + height + totalHeight
-															+ 1)
-													.getCell(y + width)
-													.setCellStyle(cs_thousand);
+											sheet.getRow(z + height + totalHeight + 1).createCell(y + width).setCellValue(sumActualYield);
+											sheet.getRow(z + height + totalHeight + 1).getCell(y + width).setCellStyle(cs_thousand);
 										}
 
 										break;
 									case 5:
-										if (sheet.getRow(
-												z + height + totalHeight + 1)
-												.getCell(y + width) == null) {
+										if (sheet.getRow(z + height + totalHeight + 1).getCell(y + width) == null) {
 											// sheet.getRow(z+height+totalHeight+1).createCell(y+width).setCellStyle(cs);
-											StringBuffer olddate = new StringBuffer();
-											SimpleDateFormat dateFormat = new SimpleDateFormat(
-													"yyyyMMdd");
+											StringBuffer olddate=new StringBuffer();
+											SimpleDateFormat dateFormat=new SimpleDateFormat("yyyyMMdd");
 											olddate.append(yymm);
 											if (z == 31) {
 												olddate.append(z);
@@ -1960,45 +1092,19 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 												olddate.append(z + 1);
 											}
 
-											String temp1 = olddate.toString();
-											String temp2 = dateFormat
-													.format(new Date());
+											String temp1=olddate.toString();
+											String temp2=dateFormat.format(new Date());
 											try {
-												Date beginDate = dateFormat
-														.parse(temp1);
-												Date endDate = dateFormat
-														.parse(temp2);
-												long beginNum = beginDate
-														.getTime();
-												long endNum = endDate.getTime();
+												Date beginDate=dateFormat.parse(temp1);
+												Date endDate=dateFormat.parse(temp2);
+												long beginNum=beginDate.getTime();
+												long endNum=endDate.getTime();
 												if (beginNum > endNum) {
-													sheet.getRow(
-															z
-																	+ height
-																	+ totalHeight
-																	+ 1)
-															.createCell(
-																	y + width)
-															.setCellStyle(
-																	cs_font_blue);
+													sheet.getRow(z + height + totalHeight + 1).createCell(y + width).setCellStyle(cs_font_blue);
 													// sheet.getRow(z+height+totalHeight+1).getCell(y+width).setCellValue("日期超前");
 												} else {
-													sheet.getRow(
-															z
-																	+ height
-																	+ totalHeight
-																	+ 1)
-															.createCell(
-																	y + width)
-															.setCellStyle(
-																	cs_font_red);
-													sheet.getRow(
-															z
-																	+ height
-																	+ totalHeight
-																	+ 1)
-															.getCell(y + width)
-															.setCellValue("無數據");
+													sheet.getRow(z + height + totalHeight + 1).createCell(y + width).setCellStyle(cs_font_red);
+													sheet.getRow(z + height + totalHeight + 1).getCell(y + width).setCellValue("無數據");
 												}
 											} catch (ParseException e) {
 												// TODO Auto-generated catch
@@ -2007,201 +1113,63 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 											}
 										}
 										try {
-											day = alllist2.get(x).get(z)
-													.getId().getYymmdd()
-													.getDate();
-											onModulus = alllist2.get(x).get(z)
-													.getOnModulus();
-											personnum = alllist2.get(x).get(z)
-													.getPersonnum();
-											achievingRate = alllist2.get(x)
-													.get(z).getAchievingRate();
-											daycount = alllist2.get(x).get(z)
-													.getDaycount();
-											holiday = alllist2.get(x).get(z)
-													.getWorkorholiday();
-											if (achievingRate != null
-													&& z == day - 1) {
-												sheet.getRow(
-														z + height
-																+ totalHeight
-																+ 1)
-														.createCell(y + width)
-														.setCellValue(
-																achievingRate);
-												sheet.getRow(
-														z + height
-																+ totalHeight
-																+ 1)
-														.getCell(y + width)
-														.setCellStyle(cs_data);
+											day=alllist2.get(x).get(z).getId().getYymmdd().getDate();
+											onModulus=alllist2.get(x).get(z).getOnModulus();
+											personnum=alllist2.get(x).get(z).getPersonnum();
+											achievingRate=alllist2.get(x).get(z).getAchievingRate();
+											daycount=alllist2.get(x).get(z).getDaycount();
+											holiday=alllist2.get(x).get(z).getWorkorholiday();
+											if (achievingRate != null && z == day - 1) {
+												sheet.getRow(z + height + totalHeight + 1).createCell(y + width).setCellValue(achievingRate);
+												sheet.getRow(z + height + totalHeight + 1).getCell(y + width).setCellStyle(cs_data);
 											}
-											if (achievingRate != null
-													&& z != day - 1) {
-												sheet.getRow(
-														(day - 1) + height
-																+ totalHeight
-																+ 1)
-														.createCell(y + width)
-														.setCellValue(
-																achievingRate);
-												sheet.getRow(
-														(day - 1) + height
-																+ totalHeight
-																+ 1)
-														.getCell(y + width)
-														.setCellStyle(cs_data);
+											if (achievingRate != null && z != day - 1) {
+												sheet.getRow((day - 1) + height + totalHeight + 1).createCell(y + width).setCellValue(achievingRate);
+												sheet.getRow((day - 1) + height + totalHeight + 1).getCell(y + width).setCellStyle(cs_data);
 											}
-											if (achievingRate == null
-													&& z == day - 1
-													&& holiday.equals("1")) {
-												sheet.getRow(
-														z + height
-																+ totalHeight
-																+ 1)
-														.createCell(y + width)
-														.setCellValue("假日");
-												sheet.getRow(
-														z + height
-																+ totalHeight
-																+ 1)
-														.getCell(y + width)
-														.setCellStyle(
-																cs_font_blue);
+											if (achievingRate == null && z == day - 1 && holiday.equals("1")) {
+												sheet.getRow(z + height + totalHeight + 1).createCell(y + width).setCellValue("假日");
+												sheet.getRow(z + height + totalHeight + 1).getCell(y + width).setCellStyle(cs_font_blue);
 											}
-											if (achievingRate == null
-													&& z != day - 1
-													&& holiday.equals("1")) {
-												sheet.getRow(
-														(day - 1) + height
-																+ totalHeight
-																+ 1)
-														.createCell(y + width)
-														.setCellValue("假日");
-												sheet.getRow(
-														(day - 1) + height
-																+ totalHeight
-																+ 1)
-														.getCell(y + width)
-														.setCellStyle(
-																cs_font_blue);
+											if (achievingRate == null && z != day - 1 && holiday.equals("1")) {
+												sheet.getRow((day - 1) + height + totalHeight + 1).createCell(y + width).setCellValue("假日");
+												sheet.getRow((day - 1) + height + totalHeight + 1).getCell(y + width).setCellStyle(cs_font_blue);
 											}
-											if (achievingRate == null
-													&& z == day - 1
-													&& holiday.equals("2")) {
-												sheet.getRow(
-														z + height
-																+ totalHeight
-																+ 1)
-														.createCell(y + width)
-														.setCellValue("未排產");
-												sheet.getRow(
-														z + height
-																+ totalHeight
-																+ 1)
-														.getCell(y + width)
-														.setCellStyle(
-																cs_font_green);
+											if (achievingRate == null && z == day - 1 && holiday.equals("2")) {
+												sheet.getRow(z + height + totalHeight + 1).createCell(y + width).setCellValue("未排產");
+												sheet.getRow(z + height + totalHeight + 1).getCell(y + width).setCellStyle(cs_font_green);
 											}
-											if (achievingRate == null
-													&& z != day - 1
-													&& holiday.equals("2")) {
-												sheet.getRow(
-														(day - 1) + height
-																+ totalHeight
-																+ 1)
-														.createCell(y + width)
-														.setCellValue("未排產");
-												sheet.getRow(
-														(day - 1) + height
-																+ totalHeight
-																+ 1)
-														.getCell(y + width)
-														.setCellStyle(
-																cs_font_green);
+											if (achievingRate == null && z != day - 1 && holiday.equals("2")) {
+												sheet.getRow((day - 1) + height + totalHeight + 1).createCell(y + width).setCellValue("未排產");
+												sheet.getRow((day - 1) + height + totalHeight + 1).getCell(y + width).setCellStyle(cs_font_green);
 											}
-											if (achievingRate == null
-													&& z == day - 1
-													&& (onModulus != null
-															|| personnum != null || daycount != null)) {
-												sheet.getRow(
-														z + height
-																+ totalHeight
-																+ 1)
-														.createCell(y + width)
-														.setCellValue("無數據");
-												sheet.getRow(
-														z + height
-																+ totalHeight
-																+ 1)
-														.getCell(y + width)
-														.setCellStyle(
-																cs_font_red);
+											if (achievingRate == null && z == day - 1 && (onModulus != null || personnum != null || daycount != null)) {
+												sheet.getRow(z + height + totalHeight + 1).createCell(y + width).setCellValue("無數據");
+												sheet.getRow(z + height + totalHeight + 1).getCell(y + width).setCellStyle(cs_font_red);
 											}
-											if (achievingRate == null
-													&& z != day - 1
-													&& (onModulus != null
-															|| personnum != null || daycount != null)) {
-												sheet.getRow(
-														(day - 1) + height
-																+ totalHeight
-																+ 1)
-														.createCell(y + width)
-														.setCellValue("無數據");
-												sheet.getRow(
-														(day - 1) + height
-																+ totalHeight
-																+ 1)
-														.getCell(y + width)
-														.setCellStyle(
-																cs_font_red);
+											if (achievingRate == null && z != day - 1 && (onModulus != null || personnum != null || daycount != null)) {
+												sheet.getRow((day - 1) + height + totalHeight + 1).createCell(y + width).setCellValue("無數據");
+												sheet.getRow((day - 1) + height + totalHeight + 1).getCell(y + width).setCellStyle(cs_font_red);
 											}
-											sumDayCount = sumDayCount
-													+ daycount;
+											sumDayCount=sumDayCount + daycount;
 										} catch (Exception e) {
 											// TODO: handle exception
 										}
 										if (z == z_length - 2) {
-											sheet.getRow(
-													z + height + totalHeight
-															+ 1)
-													.createCell(y + width)
-													.setCellValue(
-															sumAchievingRate);
-											sheet.getRow(
-													z + height + totalHeight
-															+ 1)
-													.getCell(y + width)
-													.setCellStyle(cs_data);
+											sheet.getRow(z + height + totalHeight + 1).createCell(y + width).setCellValue(sumAchievingRate);
+											sheet.getRow(z + height + totalHeight + 1).getCell(y + width).setCellStyle(cs_data);
 										}
 										/*
 										 * 計算總天數
 										 */
 										if (z == z_length - 1) {
-											CellRangeAddress region_daycount = new CellRangeAddress(
-													z + height + totalHeight
-															+ 1, (short) z
-															+ height
-															+ totalHeight + 1,
-													y + width - 4, (short) y
-															+ width);
+											CellRangeAddress region_daycount=new CellRangeAddress(z + height + totalHeight + 1,(short)z + height + totalHeight
+													+ 1,y + width - 4,(short)y + width);
 											sheet.addMergedRegion(region_daycount);
-											sheet.getRow(
-													z + height + totalHeight
-															+ 1)
-													.createCell(y + width)
-													.setCellStyle(cs_thousand);
+											sheet.getRow(z + height + totalHeight + 1).createCell(y + width).setCellStyle(cs_thousand);
 											// 由於應用了初始化時,日期超前的單元格格式,所以要轉成"cs_thousand"格式
-											sheet.getRow(
-													z + height + totalHeight
-															+ 1)
-													.getCell(y + width - 4)
-													.setCellStyle(cs_thousand);
-											sheet.getRow(
-													z + height + totalHeight
-															+ 1)
-													.getCell(y + width - 4)
-													.setCellValue(sumDayCount);
+											sheet.getRow(z + height + totalHeight + 1).getCell(y + width - 4).setCellStyle(cs_thousand);
+											sheet.getRow(z + height + totalHeight + 1).getCell(y + width - 4).setCellValue(sumDayCount);
 										}
 
 										break;
@@ -2350,42 +1318,32 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 									}
 								}// end for 3
 							}// end for 2
-							width = width + 5;
+							width=width + 5;
 
 						}// end "if 無廠別狀態統計"
 
 						if (x >= alllist2.size()) {// start "if有廠別狀態統計"
-							for (int y = 0; y < cols.size(); y++) { // for 2
+							for (int y=0; y < cols.size(); y++) { // for 2
 								if (x == 0) {
 									if (y == 0) {
-										sheet.createRow(height + totalHeight)
-												.createCell(y + width)
-												.setCellValue(cols.get(y));
+										sheet.createRow(height + totalHeight).createCell(y + width).setCellValue(cols.get(y));
 									} else {
-										sheet.getRow(height + totalHeight)
-												.createCell(y + width)
-												.setCellValue(cols.get(y));
+										sheet.getRow(height + totalHeight).createCell(y + width).setCellValue(cols.get(y));
 									}
-									sheet.getRow(height + totalHeight)
-											.getCell(y + width)
-											.setCellStyle(cs);
+									sheet.getRow(height + totalHeight).getCell(y + width).setCellStyle(cs);
 								}
 								if (x > 0) {
 									if (y == 0) {
 										continue;
 									}
-									sheet.getRow(height + totalHeight)
-											.createCell(y + width)
-											.setCellValue(cols.get(y));
-									sheet.getRow(height + totalHeight)
-											.getCell(y + width)
-											.setCellStyle(cs);
+									sheet.getRow(height + totalHeight).createCell(y + width).setCellValue(cols.get(y));
+									sheet.getRow(height + totalHeight).getCell(y + width).setCellStyle(cs);
 								}
-								for (int z = 0; z < z_length; z++) {// for 3
+								for (int z=0; z < z_length; z++) {// for 3
 
 									switch (y) {
 									case 0:
-										StringBuffer date = new StringBuffer();
+										StringBuffer date=new StringBuffer();
 										date.append(year + "/");
 										if (all < 10) {
 											date.append("0" + all + "/");
@@ -2398,41 +1356,23 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 											date.append(z + 1);
 										}
 										if (z == z_length - 2) {
-											sheet.createRow(
-													z + height + totalHeight
-															+ 1)
-													.createCell(y + width)
-													.setCellValue("合計");
-											sheet.getRow(
-													z + height + totalHeight
-															+ 1)
-													.getCell(y + width)
-													.setCellStyle(cs_font);
+											sheet.createRow(z + height + totalHeight + 1).createCell(y + width).setCellValue("合計");
+											sheet.getRow(z + height + totalHeight + 1).getCell(y + width).setCellStyle(cs_font);
 										} else {
-											sheet.createRow(
-													z + height + totalHeight
-															+ 1)
-													.createCell(y + width)
-													.setCellValue(
-															date.toString());
-											sheet.getRow(
-													z + height + totalHeight
-															+ 1)
-													.getCell(y + width)
-													.setCellStyle(cs);
+											sheet.createRow(z + height + totalHeight + 1).createCell(y + width).setCellValue(date.toString());
+											sheet.getRow(z + height + totalHeight + 1).getCell(y + width).setCellStyle(cs);
 										}
 										break;
 
 									case 1:
-										Double sum_standardoutput = null;
+										Double sum_standardoutput=null;
 										/*
 										 * if(z==z_length-2){
 										 * sum_standardoutput=
 										 * (Double)sum_list.get(z-1)[0]; }
 										 */
 										if (z < z_length - 2) {
-											sum_standardoutput = (Double) sum_list
-													.get(z)[0];
+											sum_standardoutput=(Double)sum_list.get(z)[0];
 										}
 										/*
 										 * else{
@@ -2440,51 +1380,27 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 										 * .get(z)[0]; }
 										 */
 										if (sum_standardoutput == null) {
-											sheet.getRow(
-													z + height + totalHeight
-															+ 1)
-													.createCell(y + width)
-													.setCellStyle(cs_thousand);
+											sheet.getRow(z + height + totalHeight + 1).createCell(y + width).setCellStyle(cs_thousand);
 										} else {
-											sheet.getRow(
-													z + height + totalHeight
-															+ 1)
-													.createCell(y + width)
-													.setCellValue(
-															sum_standardoutput);
-											sheet.getRow(
-													z + height + totalHeight
-															+ 1)
-													.getCell(y + width)
-													.setCellStyle(cs_thousand);
-											sum_standardoutput_all = sum_standardoutput_all
-													+ sum_standardoutput;
+											sheet.getRow(z + height + totalHeight + 1).createCell(y + width).setCellValue(sum_standardoutput);
+											sheet.getRow(z + height + totalHeight + 1).getCell(y + width).setCellStyle(cs_thousand);
+											sum_standardoutput_all=sum_standardoutput_all + sum_standardoutput;
 										}
 										if (z == z_length - 2) {
-											sheet.getRow(
-													z + height + totalHeight
-															+ 1)
-													.createCell(y + width)
-													.setCellValue(
-															sum_standardoutput_all);
-											sheet.getRow(
-													z + height + totalHeight
-															+ 1)
-													.getCell(y + width)
-													.setCellStyle(cs_thousand);
+											sheet.getRow(z + height + totalHeight + 1).createCell(y + width).setCellValue(sum_standardoutput_all);
+											sheet.getRow(z + height + totalHeight + 1).getCell(y + width).setCellStyle(cs_thousand);
 										}
 
 										break;
 									case 2:
-										Double sum_actualyield = null;
+										Double sum_actualyield=null;
 										/*
 										 * if(z==z_length-2){
 										 * sum_actualyield=(Double
 										 * )sum_list.get(z-1)[1]; }
 										 */
 										if (z < z_length - 2) {
-											sum_actualyield = (Double) sum_list
-													.get(z)[1];
+											sum_actualyield=(Double)sum_list.get(z)[1];
 										}
 										/*
 										 * else{
@@ -2492,50 +1408,27 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 										 * .get(z)[1]; }
 										 */
 										if (sum_actualyield == null) {
-											sheet.getRow(
-													z + height + totalHeight
-															+ 1)
-													.createCell(y + width)
-													.setCellStyle(cs_thousand);
+											sheet.getRow(z + height + totalHeight + 1).createCell(y + width).setCellStyle(cs_thousand);
 										} else {
-											sheet.getRow(
-													z + height + totalHeight
-															+ 1)
-													.createCell(y + width)
-													.setCellValue(
-															sum_actualyield);
-											sheet.getRow(
-													z + height + totalHeight
-															+ 1)
-													.getCell(y + width)
-													.setCellStyle(cs_thousand);
-											sum_actualyield_all = sum_actualyield_all
-													+ sum_actualyield;
+											sheet.getRow(z + height + totalHeight + 1).createCell(y + width).setCellValue(sum_actualyield);
+											sheet.getRow(z + height + totalHeight + 1).getCell(y + width).setCellStyle(cs_thousand);
+											sum_actualyield_all=sum_actualyield_all + sum_actualyield;
 										}
 										if (z == z_length - 2) {
-											sheet.getRow(
-													z + height + totalHeight
-															+ 1)
-													.createCell(y + width)
-													.setCellValue(
-															sum_actualyield_all);
-											sheet.getRow(
-													z + height + totalHeight
-															+ 1)
-													.getCell(y + width)
-													.setCellStyle(cs_thousand);
+											sheet.getRow(z + height + totalHeight + 1).createCell(y + width).setCellValue(sum_actualyield_all);
+											sheet.getRow(z + height + totalHeight + 1).getCell(y + width).setCellStyle(cs_thousand);
 										}
 
 										break;
 									}
 								}// end for 3
 							}// end for 2
-							width = width + 2;
+							width=width + 2;
 
 						}// end "有廠別狀態統計"
 
 					}// end for 1
-					totalHeight = totalHeight + 44;
+					totalHeight=totalHeight + 44;
 
 				}// end for ALL
 
@@ -2549,30 +1442,28 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 			if (type.equals("Excel2003")) {// if Excel2003
 
 				response.setContentType("application/vnd.ms-excel");
-				StringBuffer tempName = new StringBuffer();
+				StringBuffer tempName=new StringBuffer();
 				tempName.append(year);
 				tempName.append(month);
-				if (lmonth != null && !lmonth.equals("")
-						&& !lmonth.equals("01")) {
+				if (lmonth != null && !lmonth.equals("") && !lmonth.equals("01")) {
 					tempName.append("-" + lmonth);
 				}
 				tempName.append(".xls");
-				String fileName = new String(tempName.toString().getBytes(
-						"utf-8"), "ISO8859-1");
-				response.setHeader("Content-disposition", result + fileName);
+				String fileName=new String(tempName.toString().getBytes("utf-8"),"ISO8859-1");
+				response.setHeader("Content-disposition",result + fileName);
 
 				// OutputStream os= new FileOutputStream("D:/create.xlsx");
 
 				// 工作区
-				HSSFWorkbook wb = new HSSFWorkbook();
+				HSSFWorkbook wb=new HSSFWorkbook();
 				// 创建第一个sheet
-				HSSFSheet sheet = wb.createSheet("產量預估與產量統計");
+				HSSFSheet sheet=wb.createSheet("產量預估與產量統計");
 
-				HSSFSheet sheet2 = wb.createSheet("產量預估與產量統計_分頁");
-				sheet2.setColumnWidth(0, 3800);
+				HSSFSheet sheet2=wb.createSheet("產量預估與產量統計_分頁");
+				sheet2.setColumnWidth(0,3800);
 
-				sheet.setColumnWidth(0, 3800);
-				Map<String,Object>map=new HashMap<String,Object>();
+				sheet.setColumnWidth(0,3800);
+				Map<String,Object> map=new HashMap<String,Object>();
 				HSSFCellStyle cs=(HSSFCellStyle)map.get("cs");
 				HSSFCellStyle cs_head=(HSSFCellStyle)map.get("cs_head");
 				HSSFCellStyle cs_font_bgyellow=(HSSFCellStyle)map.get("cs_font_bgyellow");
@@ -2590,91 +1481,73 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 				// 设置自动换行:
 				cs.setWrapText(true);// 设置自动换行
 
-				int firstMonth = Integer.parseInt(month);
-				int lastMonth = 0;
+				int firstMonth=Integer.parseInt(month);
+				int lastMonth=0;
 				if (lmonth == null || lmonth.equals("")) {
-					lastMonth = firstMonth;
+					lastMonth=firstMonth;
 				} else {
-					lastMonth = Integer.parseInt(lmonth);
+					lastMonth=Integer.parseInt(lmonth);
 				}
 
-				int totalHeight = 1;
-				for (int all = firstMonth; all < lastMonth + 1; all++) { // for
-																			// ALL
-					int z_length = 0;
-					int year_int = Integer.parseInt(year);
-					if (all == 1 || all == 3 || all == 5 || all == 7
-							|| all == 8 || all == 10 || all == 12) {
-						z_length = 32 + 1;
+				int totalHeight=1;
+				for (int all=firstMonth; all < lastMonth + 1; all++) { // for
+																		// ALL
+					int z_length=0;
+					int year_int=Integer.parseInt(year);
+					if (all == 1 || all == 3 || all == 5 || all == 7 || all == 8 || all == 10 || all == 12) {
+						z_length=32 + 1;
 					}
 					if (all == 4 || all == 6 || all == 9 || all == 11) {
-						z_length = 31 + 1;
+						z_length=31 + 1;
 					}
 					if (all == 2) {
-						if (year_int % 4 == 0 && year_int % 100 != 0
-								|| year_int % 400 == 0) {
-							z_length = 30 + 1;
+						if (year_int % 4 == 0 && year_int % 100 != 0 || year_int % 400 == 0) {
+							z_length=30 + 1;
 						} else {
-							z_length = 29 + 1;
+							z_length=29 + 1;
 						}
 					}
 
-					StringBuffer yymm = new StringBuffer();
+					StringBuffer yymm=new StringBuffer();
 					yymm.append(year);
 					if (all < 10) {
 						yymm.append("0" + all);
 					} else {
 						yymm.append(all);
 					}
-					List<Webestproduct> alllist = new ArrayList();
-					List<List<WebYieldData>> alllist2 = new ArrayList();
-					List<String> factnoCodelist = new ArrayList();
-					for (int factno = 0; factno < factnolist.size(); factno++) {
-						List factAreas = webFactSer
-								.findFactCodeByFactNo(factnolist.get(factno));
-						String factSname = webFactSer.selByid(factnolist
-								.get(factno));
-						for (int factcode = 0; factcode < factAreas.size(); factcode++) {
-							List<Webestproduct> list = estProSer                       //----------------(2)
-									.findByFactcode(factnolist.get(factno),
-											(String) factAreas.get(factcode),
-											yymm.toString());
-							List<WebYieldData> list2 = dataSer
-									.findDataByFactcode(factnolist.get(factno),
-											(String) factAreas.get(factcode),
-											yymm.toString());
-							List<Webestproduct> listnull = estProSer                       //------------(1)
-									.findNullYpre(factnolist.get(factno),
-											(String) factAreas.get(factcode),
-											yymm.toString());
-							List<WebYieldData> listnull2 = dataSer
-									.findNullYdata(factnolist.get(factno),
-											(String) factAreas.get(factcode),
-											yymm.toString());
-							StringBuffer factnoCode = new StringBuffer();
-							Webestproduct pre = null;
-							WebYieldData ydata = null;
-							if (list.size() > 0 && listnull.size() == 0
-									|| list2.size() > 0
-									&& listnull2.size() == 0
-									|| list2.size() > 0 && listnull2.size() > 0) {
+					List<Webestproduct> alllist=new ArrayList();
+					List<List<WebYieldData>> alllist2=new ArrayList();
+					List<String> factnoCodelist=new ArrayList();
+					for (int factno=0; factno < factnolist.size(); factno++) {
+						List factAreas=webFactSer.findFactCodeByFactNo(factnolist.get(factno));
+						String factSname=webFactSer.selByid(factnolist.get(factno));
+						for (int factcode=0; factcode < factAreas.size(); factcode++) {
+							List<Webestproduct> list=estProSer // ----------------(2)
+									.findByFactcode(factnolist.get(factno),(String)factAreas.get(factcode),yymm.toString());
+							List<WebYieldData> list2=dataSer.findDataByFactcode(factnolist.get(factno),(String)factAreas.get(factcode),yymm.toString());
+							List<Webestproduct> listnull=estProSer // ------------(1)
+									.findNullYpre(factnolist.get(factno),(String)factAreas.get(factcode),yymm.toString());
+							List<WebYieldData> listnull2=dataSer.findNullYdata(factnolist.get(factno),(String)factAreas.get(factcode),yymm.toString());
+							StringBuffer factnoCode=new StringBuffer();
+							Webestproduct pre=null;
+							WebYieldData ydata=null;
+							if (list.size() > 0 && listnull.size() == 0 || list2.size() > 0 && listnull2.size() == 0 || list2.size() > 0
+									&& listnull2.size() > 0) {
 								factnoCode.append(factSname);
-								factnoCode.append("(" + factnolist.get(factno)
-										+ ")-");
-								factnoCode.append((String) factAreas
-										.get(factcode));
+								factnoCode.append("(" + factnolist.get(factno) + ")-");
+								factnoCode.append((String)factAreas.get(factcode));
 								// factnoCode.append("(" + all + "月份)");
 								factnoCodelist.add(factnoCode.toString());
 								if (list2.size() == 0) {
-									ydata = new WebYieldData();
+									ydata=new WebYieldData();
 									list2.add(ydata);
 								}
 								if (list.size() == 0) {
-									pre = new Webestproduct();
+									pre=new Webestproduct();
 									alllist.add(pre);
 								}
 								if (list.size() > 0) {
-									pre = list.get(0);
+									pre=list.get(0);
 									alllist.add(pre);
 								}
 								if (list2.size() > 0) {
@@ -2686,44 +1559,37 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 							if (list.size() == 0 && list2.size() == 0) {
 
 								factnoCode.append(factSname);
-								factnoCode.append("(" + factnolist.get(factno)
-										+ ")-");
-								factnoCode.append((String) factAreas
-										.get(factcode));
+								factnoCode.append("(" + factnolist.get(factno) + ")-");
+								factnoCode.append((String)factAreas.get(factcode));
 								// factnoCode.append("(" + all + "月份)");
 								factnoCode.append("還沒有添加數據!!");
 								factnoCodelist.add(factnoCode.toString());
-								pre = new Webestproduct();
-								ydata = new WebYieldData();
+								pre=new Webestproduct();
+								ydata=new WebYieldData();
 								alllist.add(pre);
 								list2.add(ydata);
 								alllist2.add(list2);
 							}
 							if (listnull.size() > 0 && listnull2.size() > 0) {
 								factnoCode.append(factSname);
-								factnoCode.append("(" + factnolist.get(factno)
-										+ ")_");
-								factnoCode.append((String) factAreas
-										.get(factcode));
+								factnoCode.append("(" + factnolist.get(factno) + ")_");
+								factnoCode.append((String)factAreas.get(factcode));
 								// factnoCode.append("(" + all + "月份)");
 								factnoCode.append("還沒有添加數據!!");
 								factnoCodelist.add(factnoCode.toString());
-								pre = list.get(0);
+								pre=list.get(0);
 								alllist.add(pre);
 								alllist2.add(list2);
 							}
-							if (list.size() > 0 && listnull.size() > 0
-									&& list2.size() == 0) {
+							if (list.size() > 0 && listnull.size() > 0 && list2.size() == 0) {
 								factnoCode.append(factSname);
-								factnoCode.append("(" + factnolist.get(factno)
-										+ ")_");
-								factnoCode.append((String) factAreas
-										.get(factcode));
+								factnoCode.append("(" + factnolist.get(factno) + ")_");
+								factnoCode.append((String)factAreas.get(factcode));
 								// factnoCode.append("(" + all + "月份)");
 								factnoCode.append("還沒有添加數據!!");
 								factnoCodelist.add(factnoCode.toString());
-								ydata = new WebYieldData();
-								pre = list.get(0);
+								ydata=new WebYieldData();
+								pre=list.get(0);
 								list2.add(ydata);
 								alllist.add(pre);
 								alllist2.add(list2);
@@ -2731,111 +1597,74 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 						}
 					}
 
-					int height = 0;
+					int height=0;
 					// ********上部********//
-					int width = 0;
+					int width=0;
 					/*
 					 * 標題設置
 					 */
 					sheet.createRow(0 + totalHeight - 1).setHeightInPoints(50);// 設置標題高度
-					StringBuffer tempName_head = new StringBuffer();
+					StringBuffer tempName_head=new StringBuffer();
 					tempName_head.append(year + "年");
 					tempName_head.append(all + "月");
 
-					CellRangeAddress reg_head = new CellRangeAddress(
-							0 + totalHeight - 1, (short) 0 + totalHeight - 1,
-							0, (short) alllist.size() * 5);
+					CellRangeAddress reg_head=new CellRangeAddress(0 + totalHeight - 1,(short)0 + totalHeight - 1,0,(short)alllist.size() * 5);
 					sheet.addMergedRegion(reg_head);
-					sheet.getRow(0 + totalHeight - 1).createCell(0)
-							.setCellValue(tempName_head + "加久各工廠每日產量達成狀況匯總表");
-					sheet.getRow(0 + totalHeight - 1).getCell(0)
-							.setCellStyle(cs_head);
-					for (int i_head = 1; i_head < alllist.size() * 5 + 1; i_head++) {
-						sheet.getRow(0 + totalHeight - 1).createCell(i_head)
-								.setCellStyle(cs_head);
+					sheet.getRow(0 + totalHeight - 1).createCell(0).setCellValue(tempName_head + "加久各工廠每日產量達成狀況匯總表");
+					sheet.getRow(0 + totalHeight - 1).getCell(0).setCellStyle(cs_head);
+					for (int i_head=1; i_head < alllist.size() * 5 + 1; i_head++) {
+						sheet.getRow(0 + totalHeight - 1).createCell(i_head).setCellStyle(cs_head);
 					}
-					for (int i = 0; i < alllist.size() + factcodelist.size(); i++) {// for
+					for (int i=0; i < alllist.size() + factcodelist.size(); i++) {// for
 																					// 1
 						/**
 						 * 如果alllist.size()+factcodelist.size()>41就分頁
 						 */
 
 						if (i >= alllist.size() && i <= 44) {
-							String temp_code = factcodelist
-									.get(factcodelist.size()
-											- (alllist.size()
-													+ factcodelist.size() - (i + 1))
-											- 1);
-							sheet.getRow(6 + totalHeight).createCell(width)
-									.setCellStyle(cs_font_bgyellow);
-							sheet.getRow(6 + totalHeight).getCell(width)
-									.setCellValue(temp_code);
-							sheet.getRow(6 + totalHeight).createCell(width + 1)
-									.setCellStyle(cs_font_bgyellow);
+							String temp_code=factcodelist.get(factcodelist.size() - (alllist.size() + factcodelist.size() - (i + 1)) - 1);
+							sheet.getRow(6 + totalHeight).createCell(width).setCellStyle(cs_font_bgyellow);
+							sheet.getRow(6 + totalHeight).getCell(width).setCellValue(temp_code);
+							sheet.getRow(6 + totalHeight).createCell(width + 1).setCellStyle(cs_font_bgyellow);
 
-							sheet.getRow(7 + totalHeight).createCell(width)
-									.setCellStyle(cs_font_bgyellow);
-							sheet.getRow(7 + totalHeight).createCell(1 + width)
-									.setCellStyle(cs_font_bgyellow);
-							CellRangeAddress region = new CellRangeAddress(
-									6 + totalHeight, (short) 7 + totalHeight,
-									width, (short) 1 + width);
+							sheet.getRow(7 + totalHeight).createCell(width).setCellStyle(cs_font_bgyellow);
+							sheet.getRow(7 + totalHeight).createCell(1 + width).setCellStyle(cs_font_bgyellow);
+							CellRangeAddress region=new CellRangeAddress(6 + totalHeight,(short)7 + totalHeight,width,(short)1 + width);
 							sheet.addMergedRegion(region);
-							width = width + 2;
+							width=width + 2;
 							continue;
 						}
 						if (i > 44) {
-							String temp_code = factcodelist
-									.get(factcodelist.size()
-											- (alllist.size()
-													+ factcodelist.size() - (i + 1))
-											- 1);
+							String temp_code=factcodelist.get(factcodelist.size() - (alllist.size() + factcodelist.size() - (i + 1)) - 1);
 							if (i == 45) {
-								width = 0;
+								width=0;
 								sheet2.createRow(6 + totalHeight);
 								sheet2.createRow(7 + totalHeight);
 							}
-							sheet2.getRow(6 + totalHeight).createCell(width)
-									.setCellStyle(cs_font_bgyellow);
-							sheet2.getRow(6 + totalHeight).getCell(width)
-									.setCellValue(temp_code);
-							sheet2.getRow(6 + totalHeight)
-									.createCell(width + 1)
-									.setCellStyle(cs_font_bgyellow);
+							sheet2.getRow(6 + totalHeight).createCell(width).setCellStyle(cs_font_bgyellow);
+							sheet2.getRow(6 + totalHeight).getCell(width).setCellValue(temp_code);
+							sheet2.getRow(6 + totalHeight).createCell(width + 1).setCellStyle(cs_font_bgyellow);
 
-							sheet2.getRow(7 + totalHeight).createCell(width)
-									.setCellStyle(cs_font_bgyellow);
-							sheet2.getRow(7 + totalHeight)
-									.createCell(1 + width)
-									.setCellStyle(cs_font_bgyellow);
+							sheet2.getRow(7 + totalHeight).createCell(width).setCellStyle(cs_font_bgyellow);
+							sheet2.getRow(7 + totalHeight).createCell(1 + width).setCellStyle(cs_font_bgyellow);
 
 							if (i == 45) {
 
-								sheet2.getRow(6 + totalHeight)
-										.createCell(2 + width)
-										.setCellStyle(cs_font_bgyellow);
-								sheet2.getRow(7 + totalHeight)
-										.createCell(2 + width)
-										.setCellStyle(cs_font_bgyellow);
-								CellRangeAddress region1 = new CellRangeAddress(
-										6 + totalHeight, (short) 7
-												+ totalHeight, width, (short) 2
-												+ width);
+								sheet2.getRow(6 + totalHeight).createCell(2 + width).setCellStyle(cs_font_bgyellow);
+								sheet2.getRow(7 + totalHeight).createCell(2 + width).setCellStyle(cs_font_bgyellow);
+								CellRangeAddress region1=new CellRangeAddress(6 + totalHeight,(short)7 + totalHeight,width,(short)2 + width);
 								sheet2.addMergedRegion(region1);
-								width = width + 3;
+								width=width + 3;
 
 							} else {
-								CellRangeAddress region2 = new CellRangeAddress(
-										6 + totalHeight, (short) 7
-												+ totalHeight, width, (short) 1
-												+ width);
+								CellRangeAddress region2=new CellRangeAddress(6 + totalHeight,(short)7 + totalHeight,width,(short)1 + width);
 								sheet2.addMergedRegion(region2);
-								width = width + 2;
+								width=width + 2;
 							}
 							continue;
 						}
 						if (i < alllist.size()) { // start "if buttom"
-							List<String> cols = new ArrayList();
+							List<String> cols=new ArrayList();
 							cols.add("日期/產量/廠別");
 							cols.add("戰力分析模數");
 							cols.add("預計生產模數");
@@ -2848,9 +1677,9 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 							cols.add("其他");
 
 							if (i > 0) {
-								width = width - 1;
+								width=width - 1;
 							}
-							for (int j = 0; j < cols.size(); j++) { // for 2
+							for (int j=0; j < cols.size(); j++) { // for 2
 
 								if (j == 5) {
 									break;
@@ -2859,390 +1688,199 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 								if (i == 0) {
 									if (j < 5) {
 
-										sheet.createRow(j + totalHeight)
-												.createCell(0 + width)
-												.setCellValue(cols.get(j));
-										sheet.getRow(j + totalHeight)
-												.getCell(0 + width)
-												.setCellStyle(cs);
+										sheet.createRow(j + totalHeight).createCell(0 + width).setCellValue(cols.get(j));
+										sheet.getRow(j + totalHeight).getCell(0 + width).setCellStyle(cs);
 									}
-									sheet.getRow(j + totalHeight).createCell(
-											1 + width);
-									sheet.getRow(j + totalHeight)
-											.getCell(1 + width)
-											.setCellStyle(cs_thousand);
+									sheet.getRow(j + totalHeight).createCell(1 + width);
+									sheet.getRow(j + totalHeight).getCell(1 + width).setCellStyle(cs_thousand);
 									if (j == 4) {
-										CellRangeAddress region1 = new CellRangeAddress(
-												j + totalHeight, (short) j
-														+ totalHeight + 3,
-												0 + width, (short) 0 + width);
+										CellRangeAddress region1=new CellRangeAddress(j + totalHeight,(short)j + totalHeight + 3,0 + width,(short)0 + width);
 										sheet.addMergedRegion(region1);
-										sheet.getRow(j + totalHeight)
-												.getCell(0 + width)
-												.setCellStyle(cs_lyellow);
-										sheet.createRow(j + totalHeight + 1)
-												.createCell(0 + width)
-												.setCellStyle(cs_lyellow);
-										sheet.createRow(j + totalHeight + 2)
-												.createCell(0 + width)
-												.setCellStyle(cs_lyellow);
-										sheet.createRow(j + totalHeight + 3)
-												.createCell(0 + width)
-												.setCellStyle(cs_lyellow);
+										sheet.getRow(j + totalHeight).getCell(0 + width).setCellStyle(cs_lyellow);
+										sheet.createRow(j + totalHeight + 1).createCell(0 + width).setCellStyle(cs_lyellow);
+										sheet.createRow(j + totalHeight + 2).createCell(0 + width).setCellStyle(cs_lyellow);
+										sheet.createRow(j + totalHeight + 3).createCell(0 + width).setCellStyle(cs_lyellow);
 									}
 								} else {
 									if (j < 5) {
-										sheet.getRow(j + totalHeight)
-												.createCell(0 + width)
-												.setCellValue(cols.get(j));
-										sheet.getRow(j + totalHeight)
-												.getCell(0 + width)
-												.setCellStyle(cs);
+										sheet.getRow(j + totalHeight).createCell(0 + width).setCellValue(cols.get(j));
+										sheet.getRow(j + totalHeight).getCell(0 + width).setCellStyle(cs);
 									}
-									sheet.getRow(j + totalHeight).createCell(
-											1 + width);
-									sheet.getRow(j + totalHeight)
-											.getCell(1 + width)
-											.setCellStyle(cs_thousand);
+									sheet.getRow(j + totalHeight).createCell(1 + width);
+									sheet.getRow(j + totalHeight).getCell(1 + width).setCellStyle(cs_thousand);
 									if (j == 4) {
 										// 注意:0+width要加1,要不然導致"有效孔位"至"其它"會合併
-										CellRangeAddress region1 = new CellRangeAddress(
-												j + totalHeight, (short) j
-														+ totalHeight + 3,
-												0 + width + 1, (short) 0
-														+ width + 1);
+										CellRangeAddress region1=new CellRangeAddress(j + totalHeight,(short)j + totalHeight + 3,0 + width + 1,(short)0 + width
+												+ 1);
 										sheet.addMergedRegion(region1);
-										sheet.getRow(j + totalHeight)
-												.getCell(0 + width + 1)
-												.setCellStyle(cs_lyellow);
-										sheet.getRow(j + totalHeight + 1)
-												.createCell(0 + width + 1)
-												.setCellStyle(cs_lyellow);
-										sheet.getRow(j + totalHeight + 2)
-												.createCell(0 + width + 1)
-												.setCellStyle(cs_lyellow);
-										sheet.getRow(j + totalHeight + 3)
-												.createCell(0 + width + 1)
-												.setCellStyle(cs_lyellow);
+										sheet.getRow(j + totalHeight).getCell(0 + width + 1).setCellStyle(cs_lyellow);
+										sheet.getRow(j + totalHeight + 1).createCell(0 + width + 1).setCellStyle(cs_lyellow);
+										sheet.getRow(j + totalHeight + 2).createCell(0 + width + 1).setCellStyle(cs_lyellow);
+										sheet.getRow(j + totalHeight + 3).createCell(0 + width + 1).setCellStyle(cs_lyellow);
 									}
 								}
 
 								switch (j) {
 								case 0:
-									String factNoAndCode = factnoCodelist
-											.get(i);
+									String factNoAndCode=factnoCodelist.get(i);
 									// sheet.setColumnWidth(1+width, 4000);
-									sheet.getRow(j + totalHeight)
-											.setHeightInPoints(40);
+									sheet.getRow(j + totalHeight).setHeightInPoints(40);
 
-									sheet.getRow(j + totalHeight)
-											.getCell(1 + width)
-											.setCellValue(factNoAndCode);
+									sheet.getRow(j + totalHeight).getCell(1 + width).setCellValue(factNoAndCode);
 
-									CellRangeAddress region1 = new CellRangeAddress(
-											j + totalHeight, (short) j
-													+ totalHeight, 1 + width,
-											(short) 5 + width);
+									CellRangeAddress region1=new CellRangeAddress(j + totalHeight,(short)j + totalHeight,1 + width,(short)5 + width);
 									sheet.addMergedRegion(region1);
 									if (factNoAndCode.contains("沒有添加數據")) {
-										sheet.getRow(j + totalHeight)
-												.getCell(1 + width)
-												.setCellStyle(cs_font_red_bold);
+										sheet.getRow(j + totalHeight).getCell(1 + width).setCellStyle(cs_font_red_bold);
 									} else {
-										sheet.getRow(j + totalHeight)
-												.getCell(1 + width)
-												.setCellStyle(cs_font);
+										sheet.getRow(j + totalHeight).getCell(1 + width).setCellStyle(cs_font);
 									}
-									sheet.getRow(j + totalHeight)
-											.createCell(2 + width)
-											.setCellStyle(cs);
-									sheet.getRow(j + totalHeight)
-											.createCell(3 + width)
-											.setCellStyle(cs);
-									sheet.getRow(j + totalHeight)
-											.createCell(4 + width)
-											.setCellStyle(cs);
-									sheet.getRow(j + totalHeight)
-											.createCell(5 + width)
-											.setCellStyle(cs);
+									sheet.getRow(j + totalHeight).createCell(2 + width).setCellStyle(cs);
+									sheet.getRow(j + totalHeight).createCell(3 + width).setCellStyle(cs);
+									sheet.getRow(j + totalHeight).createCell(4 + width).setCellStyle(cs);
+									sheet.getRow(j + totalHeight).createCell(5 + width).setCellStyle(cs);
 									// sheet.getRow(j +
 									// totalHeight).createCell(6 +
 									// width).setCellStyle(cs);
 									// sheet.getRow(j+totalHeight).createCell(7+width).setCellStyle(cs);
 									break;
 								case 1:
-									Double force = (alllist.get(i))
-											.getMachinepower();
+									Double force=(alllist.get(i)).getMachinepower();
 									if (force != null) {
-										sheet.getRow(j + totalHeight)
-												.getCell(1 + width)
-												.setCellValue(force);
+										sheet.getRow(j + totalHeight).getCell(1 + width).setCellValue(force);
 									} else {
-										sheet.getRow(j + totalHeight)
-												.getCell(1 + width)
-												.setCellValue("");
+										sheet.getRow(j + totalHeight).getCell(1 + width).setCellValue("");
 									}
-									CellRangeAddress region2 = new CellRangeAddress(
-											j + totalHeight, (short) j
-													+ totalHeight, 1 + width,
-											(short) 5 + width);
+									CellRangeAddress region2=new CellRangeAddress(j + totalHeight,(short)j + totalHeight,1 + width,(short)5 + width);
 									sheet.addMergedRegion(region2);
-									sheet.getRow(j + totalHeight)
-											.createCell(2 + width)
-											.setCellStyle(cs);
-									sheet.getRow(j + totalHeight)
-											.createCell(3 + width)
-											.setCellStyle(cs);
-									sheet.getRow(j + totalHeight)
-											.createCell(4 + width)
-											.setCellStyle(cs);
-									sheet.getRow(j + totalHeight)
-											.createCell(5 + width)
-											.setCellStyle(cs);
+									sheet.getRow(j + totalHeight).createCell(2 + width).setCellStyle(cs);
+									sheet.getRow(j + totalHeight).createCell(3 + width).setCellStyle(cs);
+									sheet.getRow(j + totalHeight).createCell(4 + width).setCellStyle(cs);
+									sheet.getRow(j + totalHeight).createCell(5 + width).setCellStyle(cs);
 									// sheet.getRow(j +
 									// totalHeight).createCell(6 +
 									// width).setCellStyle(cs);
 									// sheet.getRow(j+totalHeight).createCell(7+width).setCellStyle(cs);
 									break;
 								case 2:
-									Double expect = (alllist.get(i))
-											.getEstmodel();
+									Double expect=(alllist.get(i)).getEstmodel();
 
 									if (expect != null) {
-										sheet.getRow(j + totalHeight)
-												.getCell(1 + width)
-												.setCellValue(expect);
+										sheet.getRow(j + totalHeight).getCell(1 + width).setCellValue(expect);
 									} else {
-										sheet.getRow(j + totalHeight)
-												.getCell(1 + width)
-												.setCellValue("");
+										sheet.getRow(j + totalHeight).getCell(1 + width).setCellValue("");
 									}
-									CellRangeAddress region3 = new CellRangeAddress(
-											j + totalHeight, (short) j
-													+ totalHeight, 1 + width,
-											(short) 5 + width);
+									CellRangeAddress region3=new CellRangeAddress(j + totalHeight,(short)j + totalHeight,1 + width,(short)5 + width);
 									sheet.addMergedRegion(region3);
-									sheet.getRow(j + totalHeight)
-											.createCell(2 + width)
-											.setCellStyle(cs);
-									sheet.getRow(j + totalHeight)
-											.createCell(3 + width)
-											.setCellStyle(cs);
-									sheet.getRow(j + totalHeight)
-											.createCell(4 + width)
-											.setCellStyle(cs);
-									sheet.getRow(j + totalHeight)
-											.createCell(5 + width)
-											.setCellStyle(cs);
+									sheet.getRow(j + totalHeight).createCell(2 + width).setCellStyle(cs);
+									sheet.getRow(j + totalHeight).createCell(3 + width).setCellStyle(cs);
+									sheet.getRow(j + totalHeight).createCell(4 + width).setCellStyle(cs);
+									sheet.getRow(j + totalHeight).createCell(5 + width).setCellStyle(cs);
 									// sheet.getRow(j +
 									// totalHeight).createCell(6 +
 									// width).setCellStyle(cs);
 									// sheet.getRow(j+totalHeight).createCell(7+width).setCellStyle(cs);
 									break;
 								case 3:
-									Double expPay = (alllist.get(i))
-											.getEstpay();
+									Double expPay=(alllist.get(i)).getEstpay();
 
 									if (expPay != null) {
-										sheet.getRow(j + totalHeight)
-												.getCell(1 + width)
-												.setCellValue(expPay);
+										sheet.getRow(j + totalHeight).getCell(1 + width).setCellValue(expPay);
 									} else {
-										sheet.getRow(j + totalHeight)
-												.getCell(1 + width)
-												.setCellValue("");
+										sheet.getRow(j + totalHeight).getCell(1 + width).setCellValue("");
 									}
-									CellRangeAddress region4 = new CellRangeAddress(
-											j + totalHeight, (short) j
-													+ totalHeight, 1 + width,
-											(short) 5 + width);
+									CellRangeAddress region4=new CellRangeAddress(j + totalHeight,(short)j + totalHeight,1 + width,(short)5 + width);
 									sheet.addMergedRegion(region4);
-									sheet.getRow(j + totalHeight)
-											.createCell(2 + width)
-											.setCellStyle(cs);
-									sheet.getRow(j + totalHeight)
-											.createCell(3 + width)
-											.setCellStyle(cs);
-									sheet.getRow(j + totalHeight)
-											.createCell(4 + width)
-											.setCellStyle(cs);
-									sheet.getRow(j + totalHeight)
-											.createCell(5 + width)
-											.setCellStyle(cs);
+									sheet.getRow(j + totalHeight).createCell(2 + width).setCellStyle(cs);
+									sheet.getRow(j + totalHeight).createCell(3 + width).setCellStyle(cs);
+									sheet.getRow(j + totalHeight).createCell(4 + width).setCellStyle(cs);
+									sheet.getRow(j + totalHeight).createCell(5 + width).setCellStyle(cs);
 									// sheet.getRow(j +
 									// totalHeight).createCell(6 +
 									// width).setCellStyle(cs);
 									// sheet.getRow(j+totalHeight).createCell(7+width).setCellStyle(cs);
 									break;
 								case 4:
-									sheet.getRow(j + totalHeight)
-											.getCell(1 + width)
-											.setCellValue(cols.get(j + 1));
-									CellRangeAddress hole_cell = new CellRangeAddress(
-											j + totalHeight, j + totalHeight
-													+ 3, 1 + width, 1 + width);
+									sheet.getRow(j + totalHeight).getCell(1 + width).setCellValue(cols.get(j + 1));
+									CellRangeAddress hole_cell=new CellRangeAddress(j + totalHeight,j + totalHeight + 3,1 + width,1 + width);
 									sheet.addMergedRegion(hole_cell);
-									sheet.getRow(j + totalHeight)
-											.getCell(1 + width)
-											.setCellStyle(cs_lyellow);
-									sheet.getRow(j + totalHeight + 1)
-											.createCell(1 + width)
-											.setCellStyle(cs_lyellow);
-									sheet.getRow(j + totalHeight + 2)
-											.createCell(1 + width)
-											.setCellStyle(cs_lyellow);
-									sheet.getRow(j + totalHeight + 3)
-											.createCell(1 + width)
-											.setCellStyle(cs_lyellow);
-									CellRangeAddress hole_cell_value = new CellRangeAddress(
-											j + totalHeight, j + totalHeight
-													+ 3, 2 + width, 2 + width);
+									sheet.getRow(j + totalHeight).getCell(1 + width).setCellStyle(cs_lyellow);
+									sheet.getRow(j + totalHeight + 1).createCell(1 + width).setCellStyle(cs_lyellow);
+									sheet.getRow(j + totalHeight + 2).createCell(1 + width).setCellStyle(cs_lyellow);
+									sheet.getRow(j + totalHeight + 3).createCell(1 + width).setCellStyle(cs_lyellow);
+									CellRangeAddress hole_cell_value=new CellRangeAddress(j + totalHeight,j + totalHeight + 3,2 + width,2 + width);
 									sheet.addMergedRegion(hole_cell_value);
-									sheet.getRow(j + totalHeight + 1)
-											.createCell(2 + width)
-											.setCellStyle(cs_lyellow);
-									sheet.getRow(j + totalHeight + 2)
-											.createCell(2 + width)
-											.setCellStyle(cs_lyellow);
-									sheet.getRow(j + totalHeight + 3)
-											.createCell(2 + width)
-											.setCellStyle(cs_lyellow);
-									Double hole = (alllist.get(i)).getTotalhole();//---------------------------------總機孔
+									sheet.getRow(j + totalHeight + 1).createCell(2 + width).setCellStyle(cs_lyellow);
+									sheet.getRow(j + totalHeight + 2).createCell(2 + width).setCellStyle(cs_lyellow);
+									sheet.getRow(j + totalHeight + 3).createCell(2 + width).setCellStyle(cs_lyellow);
+									Double hole=(alllist.get(i)).getTotalhole();// ---------------------------------總機孔
 									if (hole != null) {
-										sheet.getRow(j + totalHeight)
-												.createCell(2 + width)
-												.setCellValue(hole);
+										sheet.getRow(j + totalHeight).createCell(2 + width).setCellValue(hole);
 									} else {
-										sheet.getRow(j + totalHeight)
-												.createCell(2 + width)
-												.setCellValue("");
+										sheet.getRow(j + totalHeight).createCell(2 + width).setCellValue("");
 									}
-									sheet.getRow(j + totalHeight)
-											.getCell(2 + width)
-											.setCellStyle(cs_thousand_lyellow);
-									sheet.getRow(j + totalHeight)
-											.createCell(3 + width)
-											.setCellValue(cols.get(j + 2));
-									Double posNum = (alllist.get(i))
-											.getHole();//-----------------------------------getHole有效孔位數
+									sheet.getRow(j + totalHeight).getCell(2 + width).setCellStyle(cs_thousand_lyellow);
+									sheet.getRow(j + totalHeight).createCell(3 + width).setCellValue(cols.get(j + 2));
+									Double posNum=(alllist.get(i)).getHole();// -----------------------------------getHole有效孔位數
 									if (posNum != null) {
-										sheet.getRow(j + totalHeight)
-												.createCell(4 + width)
-												.setCellValue(posNum);
+										sheet.getRow(j + totalHeight).createCell(4 + width).setCellValue(posNum);
 									} else {
-										sheet.getRow(j + totalHeight)
-												.createCell(4 + width)
-												.setCellValue("");
+										sheet.getRow(j + totalHeight).createCell(4 + width).setCellValue("");
 									}
-									sheet.getRow(j + totalHeight)
-											.getCell(3 + width)
-											.setCellStyle(cs_lyellow);
-									sheet.getRow(j + totalHeight)
-											.getCell(4 + width)
-											.setCellStyle(cs_thousand_lyellow);
-									CellRangeAddress posNum_cell_value = new CellRangeAddress(
-											j + totalHeight, j + totalHeight,
-											4 + width, 5 + width);
+									sheet.getRow(j + totalHeight).getCell(3 + width).setCellStyle(cs_lyellow);
+									sheet.getRow(j + totalHeight).getCell(4 + width).setCellStyle(cs_thousand_lyellow);
+									CellRangeAddress posNum_cell_value=new CellRangeAddress(j + totalHeight,j + totalHeight,4 + width,5 + width);
 									sheet.addMergedRegion(posNum_cell_value);
-									sheet.getRow(j + totalHeight)
-											.createCell(5 + width)
-											.setCellStyle(cs_lyellow);
+									sheet.getRow(j + totalHeight).createCell(5 + width).setCellStyle(cs_lyellow);
 									// sheet.getRow(j +
 									// totalHeight).createCell(6 +
 									// width).setCellStyle(cs);
 									// sheet.getRow(j+totalHeight).createCell(7+width).setCellStyle(cs);
-									String temp = cols.get(j + 3);
-									sheet.getRow(j + totalHeight + 1)
-											.createCell(3 + width)
-											.setCellValue(temp);
-									Double sample = (alllist.get(i))
-											.getSample();
+									String temp=cols.get(j + 3);
+									sheet.getRow(j + totalHeight + 1).createCell(3 + width).setCellValue(temp);
+									Double sample=(alllist.get(i)).getSample();
 									if (sample != null) {
-										sheet.getRow(j + totalHeight + 1)
-												.createCell(4 + width)
-												.setCellValue(sample);
+										sheet.getRow(j + totalHeight + 1).createCell(4 + width).setCellValue(sample);
 									} else {
-										sheet.getRow(j + totalHeight + 1)
-												.createCell(4 + width)
-												.setCellValue("");
+										sheet.getRow(j + totalHeight + 1).createCell(4 + width).setCellValue("");
 									}
-									sheet.getRow(j + totalHeight + 1)
-											.getCell(3 + width)
-											.setCellStyle(cs_lyellow);
-									sheet.getRow(j + totalHeight + 1)
-											.getCell(4 + width)
-											.setCellStyle(cs_thousand_lyellow);
-									CellRangeAddress sample_cell_value = new CellRangeAddress(
-											j + totalHeight + 1, j
-													+ totalHeight + 1,
-											4 + width, 5 + width);
+									sheet.getRow(j + totalHeight + 1).getCell(3 + width).setCellStyle(cs_lyellow);
+									sheet.getRow(j + totalHeight + 1).getCell(4 + width).setCellStyle(cs_thousand_lyellow);
+									CellRangeAddress sample_cell_value=new CellRangeAddress(j + totalHeight + 1,j + totalHeight + 1,4 + width,5 + width);
 									sheet.addMergedRegion(sample_cell_value);
-									sheet.getRow(j + totalHeight + 1)
-											.createCell(5 + width)
-											.setCellStyle(cs_lyellow);
+									sheet.getRow(j + totalHeight + 1).createCell(5 + width).setCellStyle(cs_lyellow);
 									// sheet.getRow(j + totalHeight +
 									// 1).createCell(6 +
 									// width).setCellStyle(cs);
 									// sheet.getRow(j+totalHeight+1).createCell(7+width).setCellStyle(cs);
-									sheet.getRow(j + totalHeight + 2)
-											.createCell(3 + width)
-											.setCellValue(cols.get(j + 4));
-									Double acce = (alllist.get(i))
-											.getAccessories();
+									sheet.getRow(j + totalHeight + 2).createCell(3 + width).setCellValue(cols.get(j + 4));
+									Double acce=(alllist.get(i)).getAccessories();
 									if (acce != null) {
-										sheet.getRow(j + totalHeight + 2)
-												.createCell(4 + width)
-												.setCellValue(acce);
+										sheet.getRow(j + totalHeight + 2).createCell(4 + width).setCellValue(acce);
 									} else {
-										sheet.getRow(j + totalHeight + 2)
-												.createCell(4 + width)
-												.setCellValue("");
+										sheet.getRow(j + totalHeight + 2).createCell(4 + width).setCellValue("");
 									}
-									sheet.getRow(j + totalHeight + 2)
-											.getCell(3 + width)
-											.setCellStyle(cs_lyellow);
-									sheet.getRow(j + totalHeight + 2)
-											.getCell(4 + width)
-											.setCellStyle(cs_thousand_lyellow);
-									CellRangeAddress acce_cell_value = new CellRangeAddress(
-											j + totalHeight + 2, j
-													+ totalHeight + 2,
-											4 + width, 5 + width);
+									sheet.getRow(j + totalHeight + 2).getCell(3 + width).setCellStyle(cs_lyellow);
+									sheet.getRow(j + totalHeight + 2).getCell(4 + width).setCellStyle(cs_thousand_lyellow);
+									CellRangeAddress acce_cell_value=new CellRangeAddress(j + totalHeight + 2,j + totalHeight + 2,4 + width,5 + width);
 									sheet.addMergedRegion(acce_cell_value);
-									sheet.getRow(j + totalHeight + 2)
-											.createCell(5 + width)
-											.setCellStyle(cs_lyellow);
+									sheet.getRow(j + totalHeight + 2).createCell(5 + width).setCellStyle(cs_lyellow);
 									// sheet.getRow(j + totalHeight +
 									// 2).createCell(6 +
 									// width).setCellStyle(cs);
 									// sheet.getRow(j+totalHeight+2).createCell(7+width).setCellStyle(cs);
-									sheet.getRow(j + totalHeight + 3)
-											.createCell(3 + width)
-											.setCellValue(cols.get(j + 5));
-									Double other = (alllist.get(i)).getOther();
+									sheet.getRow(j + totalHeight + 3).createCell(3 + width).setCellValue(cols.get(j + 5));
+									Double other=(alllist.get(i)).getOther();
 									if (other != null) {
-										sheet.getRow(j + totalHeight + 3)
-												.createCell(4 + width)
-												.setCellValue(other);
+										sheet.getRow(j + totalHeight + 3).createCell(4 + width).setCellValue(other);
 									} else {
-										sheet.getRow(j + totalHeight + 3)
-												.createCell(4 + width)
-												.setCellValue("");
+										sheet.getRow(j + totalHeight + 3).createCell(4 + width).setCellValue("");
 									}
-									sheet.getRow(j + totalHeight + 3)
-											.getCell(3 + width)
-											.setCellStyle(cs_lyellow);
-									sheet.getRow(j + totalHeight + 3)
-											.getCell(4 + width)
-											.setCellStyle(cs_thousand_lyellow);
-									CellRangeAddress other_cell_value = new CellRangeAddress(
-											j + totalHeight + 3, j
-													+ totalHeight + 3,
-											4 + width, 5 + width);
+									sheet.getRow(j + totalHeight + 3).getCell(3 + width).setCellStyle(cs_lyellow);
+									sheet.getRow(j + totalHeight + 3).getCell(4 + width).setCellStyle(cs_thousand_lyellow);
+									CellRangeAddress other_cell_value=new CellRangeAddress(j + totalHeight + 3,j + totalHeight + 3,4 + width,5 + width);
 									sheet.addMergedRegion(other_cell_value);
-									sheet.getRow(j + totalHeight + 3)
-											.createCell(5 + width)
-											.setCellStyle(cs_lyellow);
+									sheet.getRow(j + totalHeight + 3).createCell(5 + width).setCellStyle(cs_lyellow);
 									// sheet.getRow(j + totalHeight +
 									// 3).createCell(6 +
 									// width).setCellStyle(cs);
@@ -3250,18 +1888,18 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 									break;
 								}
 							} // end for 2
-							width = width + 6;
+							width=width + 6;
 						} // end "if buttom"
 					}// end for 1
 
-					height = 8;
-					width = 0;
+					height=8;
+					width=0;
 					// **********下部*******//
-					for (int x = 0; x < alllist2.size() + factcodelist.size(); x++) { // for
-																						// 1
+					for (int x=0; x < alllist2.size() + factcodelist.size(); x++) { // for
+																					// 1
 
-						List<String> cols = new ArrayList();
-						List<Object[]> sum_list = new ArrayList();
+						List<String> cols=new ArrayList();
+						List<Object[]> sum_list=new ArrayList();
 						cols.add("日期");
 						cols.add("上模數");
 						cols.add("人數");
@@ -3272,35 +1910,30 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 						// cols.add("工作日/假日");
 
 						if (x >= alllist2.size()) {
-							String temp = factcodelist
-									.get(factcodelist.size()
-											- (alllist2.size()
-													+ factcodelist.size() - (x + 1))
-											- 1);
-							for (int x2 = 0; x2 < z_length; x2++) {
-								StringBuffer yymmdd = new StringBuffer();
+							String temp=factcodelist.get(factcodelist.size() - (alllist2.size() + factcodelist.size() - (x + 1)) - 1);
+							for (int x2=0; x2 < z_length; x2++) {
+								StringBuffer yymmdd=new StringBuffer();
 								yymmdd.append(yymm);
 								if ((x2 + 1) < 10) {
 									yymmdd.append("0" + (x2 + 1));
 								} else {
 									yymmdd.append(x2 + 1);
 								}
-								Object[] list_temp = dataSer.totalWithFactCode(
-										temp, yymmdd.toString());
+								Object[] list_temp=dataSer.totalWithFactCode(temp,yymmdd.toString());
 								sum_list.add(list_temp);
 							}
 						}
 
-						double sumStandardOutput = 0;// 標準產量合計
-						double sumActualYield = 0;// 實際產量合計
-						double sumAchievingRate = 0;// 月達成率
+						double sumStandardOutput=0;// 標準產量合計
+						double sumActualYield=0;// 實際產量合計
+						double sumAchievingRate=0;// 月達成率
 
-						double sum_standardoutput_all = 0;// 標準產量(廠別狀態統計)
-						double sum_actualyield_all = 0;// 實際產量(廠別狀態統計)
+						double sum_standardoutput_all=0;// 標準產量(廠別狀態統計)
+						double sum_actualyield_all=0;// 實際產量(廠別狀態統計)
 
-						double sumOnModulus = 0;// 上模數合計
-						double sumPersonnum = 0;// 人數合計
-						double sumDayCount = 0;// 總天數
+						double sumOnModulus=0;// 上模數合計
+						double sumPersonnum=0;// 人數合計
+						double sumDayCount=0;// 總天數
 
 						/**
 						 * 如果alllist2.size()+factcodelist.size()>41就分頁
@@ -3311,41 +1944,28 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 							cols.add("標準產量");
 							cols.add("實際產量");
 							if (x <= 44) {// start "if x<41"
-								for (int y_code = 1; y_code < cols.size(); y_code++) {// start
-																						// "for2_2"
+								for (int y_code=1; y_code < cols.size(); y_code++) {// start
+																					// "for2_2"
 									if (x == alllist2.size()) {
 										if (y_code == 0) {
-											sheet.createRow(
-													height + totalHeight)
-													.createCell(y_code + width)
-													.setCellValue(
-															cols.get(y_code));
+											sheet.createRow(height + totalHeight).createCell(y_code + width).setCellValue(cols.get(y_code));
 										} else {
-											sheet.getRow(height + totalHeight)
-													.createCell(y_code + width)
-													.setCellValue(
-															cols.get(y_code));
+											sheet.getRow(height + totalHeight).createCell(y_code + width).setCellValue(cols.get(y_code));
 										}
-										sheet.getRow(height + totalHeight)
-												.getCell(y_code + width)
-												.setCellStyle(cs);
+										sheet.getRow(height + totalHeight).getCell(y_code + width).setCellStyle(cs);
 									}
 									if (x > alllist2.size()) {
 										if (y_code == 0) {
 											continue;
 										}
-										sheet.getRow(height + totalHeight)
-												.createCell(y_code + width)
-												.setCellValue(cols.get(y_code));
-										sheet.getRow(height + totalHeight)
-												.getCell(y_code + width)
-												.setCellStyle(cs);
+										sheet.getRow(height + totalHeight).createCell(y_code + width).setCellValue(cols.get(y_code));
+										sheet.getRow(height + totalHeight).getCell(y_code + width).setCellStyle(cs);
 									}
-									for (int z_code = 0; z_code < z_length; z_code++) {// start
+									for (int z_code=0; z_code < z_length; z_code++) {// start
 																						// "for3_3"
 										switch (y_code) {
 										case 1:
-											Double sum_standardoutput = null;
+											Double sum_standardoutput=null;
 											/*
 											 * if(z_code==z_length-1){
 											 * sum_standardoutput
@@ -3356,57 +1976,22 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 											 * }
 											 */
 											if (z_code < z_length - 2) {
-												sum_standardoutput = (Double) sum_list
-														.get(z_code)[0];
+												sum_standardoutput=(Double)sum_list.get(z_code)[0];
 											}
 											if (sum_standardoutput == null) {
-												sheet.getRow(
-														z_code + height
-																+ totalHeight
-																+ 1)
-														.createCell(
-																y_code + width)
-														.setCellStyle(
-																cs_thousand);
+												sheet.getRow(z_code + height + totalHeight + 1).createCell(y_code + width).setCellStyle(cs_thousand);
 											} else {
-												sheet.getRow(
-														z_code + height
-																+ totalHeight
-																+ 1)
-														.createCell(
-																y_code + width)
-														.setCellValue(
-																sum_standardoutput);
-												sheet.getRow(
-														z_code + height
-																+ totalHeight
-																+ 1)
-														.getCell(y_code + width)
-														.setCellStyle(
-																cs_thousand);
-												sum_standardoutput_all = sum_standardoutput_all
-														+ sum_standardoutput;
+												sheet.getRow(z_code + height + totalHeight + 1).createCell(y_code + width).setCellValue(sum_standardoutput);
+												sheet.getRow(z_code + height + totalHeight + 1).getCell(y_code + width).setCellStyle(cs_thousand);
+												sum_standardoutput_all=sum_standardoutput_all + sum_standardoutput;
 											}
 											if (z_code == z_length - 2) {
-												sheet.getRow(
-														z_code + height
-																+ totalHeight
-																+ 1)
-														.createCell(
-																y_code + width)
-														.setCellValue(
-																sum_standardoutput_all);
-												sheet.getRow(
-														z_code + height
-																+ totalHeight
-																+ 1)
-														.getCell(y_code + width)
-														.setCellStyle(
-																cs_thousand);
+												sheet.getRow(z_code + height + totalHeight + 1).createCell(y_code + width).setCellValue(sum_standardoutput_all);
+												sheet.getRow(z_code + height + totalHeight + 1).getCell(y_code + width).setCellStyle(cs_thousand);
 											}
 											break;
 										case 2:
-											Double sum_actualyield = null;
+											Double sum_actualyield=null;
 											/*
 											 * if(z_code==z_length-1){
 											 * sum_actualyield
@@ -3417,105 +2002,57 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 											 * }
 											 */
 											if (z_code < z_length - 2) {
-												sum_actualyield = (Double) sum_list
-														.get(z_code)[1];
+												sum_actualyield=(Double)sum_list.get(z_code)[1];
 											}
 											if (sum_actualyield == null) {
-												sheet.getRow(
-														z_code + height
-																+ totalHeight
-																+ 1)
-														.createCell(
-																y_code + width)
-														.setCellStyle(
-																cs_thousand);
+												sheet.getRow(z_code + height + totalHeight + 1).createCell(y_code + width).setCellStyle(cs_thousand);
 											} else {
-												sheet.getRow(
-														z_code + height
-																+ totalHeight
-																+ 1)
-														.createCell(
-																y_code + width)
-														.setCellValue(
-																sum_actualyield);
-												sheet.getRow(
-														z_code + height
-																+ totalHeight
-																+ 1)
-														.getCell(y_code + width)
-														.setCellStyle(
-																cs_thousand);
-												sum_actualyield_all = sum_actualyield_all
-														+ sum_actualyield;
+												sheet.getRow(z_code + height + totalHeight + 1).createCell(y_code + width).setCellValue(sum_actualyield);
+												sheet.getRow(z_code + height + totalHeight + 1).getCell(y_code + width).setCellStyle(cs_thousand);
+												sum_actualyield_all=sum_actualyield_all + sum_actualyield;
 											}
 											if (z_code == z_length - 2) {
-												sheet.getRow(
-														z_code + height
-																+ totalHeight
-																+ 1)
-														.createCell(
-																y_code + width)
-														.setCellValue(
-																sum_actualyield_all);
-												sheet.getRow(
-														z_code + height
-																+ totalHeight
-																+ 1)
-														.getCell(y_code + width)
-														.setCellStyle(
-																cs_thousand);
+												sheet.getRow(z_code + height + totalHeight + 1).createCell(y_code + width).setCellValue(sum_actualyield_all);
+												sheet.getRow(z_code + height + totalHeight + 1).getCell(y_code + width).setCellStyle(cs_thousand);
 											}
 											break;
 										}
 									}// end "for3_3"
 
 								}// end "for2_2"
-								width = width + 2;
+								width=width + 2;
 								continue;
 							}// end "if x<41"
 
 							if (x > 44) {// start "if 下部分頁"
 
 								if (x == 45) {
-									width = 0;
+									width=0;
 								}
 
-								for (int y_page = 0; y_page < cols.size(); y_page++) {// start
-																						// "for 下部分頁_1"
+								for (int y_page=0; y_page < cols.size(); y_page++) {// start
+																					// "for 下部分頁_1"
 									if (x == 45) {
 										if (y_page == 0) {
-											sheet2.createRow(
-													height + totalHeight)
-													.createCell(y_page + width)
-													.setCellValue(
-															cols.get(y_page));
+											sheet2.createRow(height + totalHeight).createCell(y_page + width).setCellValue(cols.get(y_page));
 										} else {
-											sheet2.getRow(height + totalHeight)
-													.createCell(y_page + width)
-													.setCellValue(
-															cols.get(y_page));
+											sheet2.getRow(height + totalHeight).createCell(y_page + width).setCellValue(cols.get(y_page));
 										}
-										sheet2.getRow(height + totalHeight)
-												.getCell(y_page + width)
-												.setCellStyle(cs);
+										sheet2.getRow(height + totalHeight).getCell(y_page + width).setCellStyle(cs);
 									}
 									if (x > 45) {
 										if (y_page == 0) {
 											continue;
 										}
-										sheet2.getRow(height + totalHeight)
-												.createCell(y_page + width)
-												.setCellValue(cols.get(y_page));
-										sheet2.getRow(height + totalHeight)
-												.getCell(y_page + width)
-												.setCellStyle(cs);
+										sheet2.getRow(height + totalHeight).createCell(y_page + width).setCellValue(cols.get(y_page));
+										sheet2.getRow(height + totalHeight).getCell(y_page + width).setCellStyle(cs);
 
 									}
 
-									for (int z_page = 0; z_page < z_length - 1; z_page++) {// start"for 下部分頁_2"
+									for (int z_page=0; z_page < z_length - 1; z_page++) {// start"for 下部分頁_2"
 										switch (y_page) {
 										case 0:
-											StringBuffer date = new StringBuffer();
+											StringBuffer date=new StringBuffer();
 											// date.append(year + "/");
 											if (all < 10) {
 												date.append("0" + all + "/");
@@ -3528,35 +2065,12 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 												date.append(z_page + 1);
 											}
 											if (z_page == z_length - 2) {
-												sheet2.createRow(
-														z_page + height
-																+ totalHeight
-																+ 1)
-														.createCell(
-																y_page + width)
-														.setCellValue("合計");
-												sheet2.getRow(
-														z_page + height
-																+ totalHeight
-																+ 1)
-														.getCell(y_page + width)
-														.setCellStyle(cs_font);
+												sheet2.createRow(z_page + height + totalHeight + 1).createCell(y_page + width).setCellValue("合計");
+												sheet2.getRow(z_page + height + totalHeight + 1).getCell(y_page + width).setCellStyle(cs_font);
 											}
 											if (z_page < z_length - 2) {
-												sheet2.createRow(
-														z_page + height
-																+ totalHeight
-																+ 1)
-														.createCell(
-																y_page + width)
-														.setCellValue(
-																date.toString());
-												sheet2.getRow(
-														z_page + height
-																+ totalHeight
-																+ 1)
-														.getCell(y_page + width)
-														.setCellStyle(cs);
+												sheet2.createRow(z_page + height + totalHeight + 1).createCell(y_page + width).setCellValue(date.toString());
+												sheet2.getRow(z_page + height + totalHeight + 1).getCell(y_page + width).setCellStyle(cs);
 											}
 											/*
 											 * else { sheet2.createRow(z_page +
@@ -3571,7 +2085,7 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 											break;
 
 										case 1:
-											Double sum_standardoutput = null;
+											Double sum_standardoutput=null;
 											/*
 											 * if(z_page==z_length-1){
 											 * sum_standardoutput
@@ -3582,57 +2096,23 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 											 * }
 											 */
 
-											sum_standardoutput = (Double) sum_list
-													.get(z_page)[0];
+											sum_standardoutput=(Double)sum_list.get(z_page)[0];
 
 											if (sum_standardoutput == null) {
-												sheet2.getRow(
-														z_page + height
-																+ totalHeight
-																+ 1)
-														.createCell(
-																y_page + width)
-														.setCellStyle(
-																cs_thousand);
+												sheet2.getRow(z_page + height + totalHeight + 1).createCell(y_page + width).setCellStyle(cs_thousand);
 											} else {
-												sheet2.getRow(
-														z_page + height
-																+ totalHeight
-																+ 1)
-														.createCell(
-																y_page + width)
-														.setCellValue(
-																sum_standardoutput);
-												sheet2.getRow(
-														z_page + height
-																+ totalHeight
-																+ 1)
-														.getCell(y_page + width)
-														.setCellStyle(
-																cs_thousand);
-												sum_standardoutput_all = sum_standardoutput_all
-														+ sum_standardoutput;
+												sheet2.getRow(z_page + height + totalHeight + 1).createCell(y_page + width).setCellValue(sum_standardoutput);
+												sheet2.getRow(z_page + height + totalHeight + 1).getCell(y_page + width).setCellStyle(cs_thousand);
+												sum_standardoutput_all=sum_standardoutput_all + sum_standardoutput;
 											}
 											if (z_page == z_length - 2) {
-												sheet2.getRow(
-														z_page + height
-																+ totalHeight
-																+ 1)
-														.createCell(
-																y_page + width)
-														.setCellValue(
-																sum_standardoutput_all);
-												sheet2.getRow(
-														z_page + height
-																+ totalHeight
-																+ 1)
-														.getCell(y_page + width)
-														.setCellStyle(
-																cs_thousand);
+												sheet2.getRow(z_page + height + totalHeight + 1).createCell(y_page + width)
+														.setCellValue(sum_standardoutput_all);
+												sheet2.getRow(z_page + height + totalHeight + 1).getCell(y_page + width).setCellStyle(cs_thousand);
 											}
 											break;
 										case 2:
-											Double sum_actualyield = null;
+											Double sum_actualyield=null;
 											/*
 											 * if(z_page==z_length-1){
 											 * sum_actualyield
@@ -3643,53 +2123,18 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 											 * }
 											 */
 											if (z_page < z_length - 2) {
-												sum_actualyield = (Double) sum_list
-														.get(z_page)[1];
+												sum_actualyield=(Double)sum_list.get(z_page)[1];
 											}
 											if (sum_actualyield == null) {
-												sheet2.getRow(
-														z_page + height
-																+ totalHeight
-																+ 1)
-														.createCell(
-																y_page + width)
-														.setCellStyle(
-																cs_thousand);
+												sheet2.getRow(z_page + height + totalHeight + 1).createCell(y_page + width).setCellStyle(cs_thousand);
 											} else {
-												sheet2.getRow(
-														z_page + height
-																+ totalHeight
-																+ 1)
-														.createCell(
-																y_page + width)
-														.setCellValue(
-																sum_actualyield);
-												sheet2.getRow(
-														z_page + height
-																+ totalHeight
-																+ 1)
-														.getCell(y_page + width)
-														.setCellStyle(
-																cs_thousand);
-												sum_actualyield_all = sum_actualyield_all
-														+ sum_actualyield;
+												sheet2.getRow(z_page + height + totalHeight + 1).createCell(y_page + width).setCellValue(sum_actualyield);
+												sheet2.getRow(z_page + height + totalHeight + 1).getCell(y_page + width).setCellStyle(cs_thousand);
+												sum_actualyield_all=sum_actualyield_all + sum_actualyield;
 											}
 											if (z_page == z_length - 2) {
-												sheet2.getRow(
-														z_page + height
-																+ totalHeight
-																+ 1)
-														.createCell(
-																y_page + width)
-														.setCellValue(
-																sum_actualyield_all);
-												sheet2.getRow(
-														z_page + height
-																+ totalHeight
-																+ 1)
-														.getCell(y_page + width)
-														.setCellStyle(
-																cs_thousand);
+												sheet2.getRow(z_page + height + totalHeight + 1).createCell(y_page + width).setCellValue(sum_actualyield_all);
+												sheet2.getRow(z_page + height + totalHeight + 1).getCell(y_page + width).setCellStyle(cs_thousand);
 											}
 											break;
 
@@ -3697,56 +2142,47 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 									}// end "for 下部分頁_2"
 
 								}// end "for 下部分頁_1"
-								width = width + 2;
+								width=width + 2;
 								continue;
 							}// end "if 下部分頁"
 						}// end "if 有廠別狀態統計"
 
-						for (int y = 0; y < cols.size(); y++) { // for 2
+						for (int y=0; y < cols.size(); y++) { // for 2
 
 							if (x == 0) {
 								if (y == 0) {
-									sheet.createRow(height + totalHeight)
-											.createCell(y + width)
-											.setCellValue(cols.get(y));
+									sheet.createRow(height + totalHeight).createCell(y + width).setCellValue(cols.get(y));
 								} else {
-									sheet.getRow(height + totalHeight)
-											.createCell(y + width)
-											.setCellValue(cols.get(y));
+									sheet.getRow(height + totalHeight).createCell(y + width).setCellValue(cols.get(y));
 								}
-								sheet.getRow(height + totalHeight)
-										.getCell(y + width).setCellStyle(cs);
+								sheet.getRow(height + totalHeight).getCell(y + width).setCellStyle(cs);
 							}
 							if (x > 0) {
 								if (y == 0) {
 									continue;
 								}
-								sheet.getRow(height + totalHeight)
-										.createCell(y + width)
-										.setCellValue(cols.get(y));
-								sheet.getRow(height + totalHeight)
-										.getCell(y + width).setCellStyle(cs);
+								sheet.getRow(height + totalHeight).createCell(y + width).setCellValue(cols.get(y));
+								sheet.getRow(height + totalHeight).getCell(y + width).setCellStyle(cs);
 							}
 
 							if (sumStandardOutput != 0) {
-								sumAchievingRate = sumActualYield
-										/ sumStandardOutput;
-							}else{
+								sumAchievingRate=sumActualYield / sumStandardOutput;
+							} else {
 								sumAchievingRate=0.0;
 							}
-							for (int z = 0; z < z_length; z++) {// for 3
+							for (int z=0; z < z_length; z++) {// for 3
 
-								int day = 0;
-								Double onModulus = null;
-								Double personnum = null;
-								Double standardOutput = null;
-								Double actualYield = null;
-								Double achievingRate = null;
-								Double daycount = null;
-								String holiday = null;
+								int day=0;
+								Double onModulus=null;
+								Double personnum=null;
+								Double standardOutput=null;
+								Double actualYield=null;
+								Double achievingRate=null;
+								Double daycount=null;
+								String holiday=null;
 								switch (y) {
 								case 0:
-									StringBuffer date = new StringBuffer();
+									StringBuffer date=new StringBuffer();
 									// date.append(year + "/");
 									if (all < 10) {
 										date.append("0" + all + "/");
@@ -3759,34 +2195,16 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 										date.append(z + 1);
 									}
 									if (z == z_length - 1) {
-										sheet.createRow(
-												z + height + totalHeight + 1)
-												.createCell(y + width)
-												.setCellValue("工作天數");
-										sheet.getRow(
-												z + height + totalHeight + 1)
-												.getCell(y + width)
-												.setCellStyle(cs_font);
+										sheet.createRow(z + height + totalHeight + 1).createCell(y + width).setCellValue("工作天數");
+										sheet.getRow(z + height + totalHeight + 1).getCell(y + width).setCellStyle(cs_font);
 									}
 									if (z == z_length - 2) {
-										sheet.createRow(
-												z + height + totalHeight + 1)
-												.createCell(y + width)
-												.setCellValue("合計");
-										sheet.getRow(
-												z + height + totalHeight + 1)
-												.getCell(y + width)
-												.setCellStyle(cs_font);
+										sheet.createRow(z + height + totalHeight + 1).createCell(y + width).setCellValue("合計");
+										sheet.getRow(z + height + totalHeight + 1).getCell(y + width).setCellStyle(cs_font);
 									}
 									if (z < z_length - 2) {
-										sheet.createRow(
-												z + height + totalHeight + 1)
-												.createCell(y + width)
-												.setCellValue(date.toString());
-										sheet.getRow(
-												z + height + totalHeight + 1)
-												.getCell(y + width)
-												.setCellStyle(cs);
+										sheet.createRow(z + height + totalHeight + 1).createCell(y + width).setCellValue(date.toString());
+										sheet.getRow(z + height + totalHeight + 1).getCell(y + width).setCellStyle(cs);
 									}
 									/*
 									 * else { sheet.createRow(z + height +
@@ -3797,12 +2215,9 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 									 */
 									break;
 								case 1:
-									if (sheet.getRow(
-											z + height + totalHeight + 1)
-											.getCell(y + width) == null) {
-										StringBuffer olddate = new StringBuffer();
-										SimpleDateFormat dateFormat = new SimpleDateFormat(
-												"yyyyMMdd");
+									if (sheet.getRow(z + height + totalHeight + 1).getCell(y + width) == null) {
+										StringBuffer olddate=new StringBuffer();
+										SimpleDateFormat dateFormat=new SimpleDateFormat("yyyyMMdd");
 										olddate.append(yymm);
 										if (z == z_length - 1) {
 											olddate.append(z);
@@ -3814,39 +2229,19 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 										if (z >= 9) {
 											olddate.append(z + 1);
 										}
-										String temp1 = olddate.toString();
-										String temp2 = dateFormat
-												.format(new Date());
+										String temp1=olddate.toString();
+										String temp2=dateFormat.format(new Date());
 										try {
-											Date beginDate = dateFormat
-													.parse(temp1);
-											Date endDate = dateFormat
-													.parse(temp2);
-											long beginNum = beginDate.getTime();
-											long endNum = endDate.getTime();
+											Date beginDate=dateFormat.parse(temp1);
+											Date endDate=dateFormat.parse(temp2);
+											long beginNum=beginDate.getTime();
+											long endNum=endDate.getTime();
 											if (beginNum > endNum) {
-												sheet.getRow(
-														z + height
-																+ totalHeight
-																+ 1)
-														.createCell(y + width)
-														.setCellStyle(
-																cs_font_blue);
+												sheet.getRow(z + height + totalHeight + 1).createCell(y + width).setCellStyle(cs_font_blue);
 												// sheet.getRow(z+height+totalHeight+1).getCell(y+width).setCellValue("日期超前");
 											} else {
-												sheet.getRow(
-														z + height
-																+ totalHeight
-																+ 1)
-														.createCell(y + width)
-														.setCellStyle(
-																cs_font_red);
-												sheet.getRow(
-														z + height
-																+ totalHeight
-																+ 1)
-														.getCell(y + width)
-														.setCellValue("無數據");
+												sheet.getRow(z + height + totalHeight + 1).createCell(y + width).setCellStyle(cs_font_red);
+												sheet.getRow(z + height + totalHeight + 1).getCell(y + width).setCellValue("無數據");
 											}
 										} catch (ParseException e) {
 											// TODO Auto-generated catch block
@@ -3856,186 +2251,63 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 									// Double onModulus=null;
 									if (x < alllist2.size()) {// start "if 1"
 										try {
-											day = alllist2.get(x).get(z)
-													.getId().getYymmdd()
-													.getDate();
-											onModulus = alllist2.get(x).get(z)
-													.getOnModulus();
-											personnum = alllist2.get(x).get(z)
-													.getPersonnum();
-											daycount = alllist2.get(x).get(z)
-													.getDaycount();
-											achievingRate = alllist2.get(x)
-													.get(z).getAchievingRate();
-											holiday = alllist2.get(x).get(z)
-													.getWorkorholiday();
-											if (onModulus != null
-													&& z == day - 1) {
-												sheet.getRow(
-														z + height
-																+ totalHeight
-																+ 1)
-														.createCell(y + width)
-														.setCellValue(onModulus);
-												sheet.getRow(
-														z + height
-																+ totalHeight
-																+ 1)
-														.getCell(y + width)
-														.setCellStyle(
-																cs_thousand);
+											day=alllist2.get(x).get(z).getId().getYymmdd().getDate();
+											onModulus=alllist2.get(x).get(z).getOnModulus();
+											personnum=alllist2.get(x).get(z).getPersonnum();
+											daycount=alllist2.get(x).get(z).getDaycount();
+											achievingRate=alllist2.get(x).get(z).getAchievingRate();
+											holiday=alllist2.get(x).get(z).getWorkorholiday();
+											if (onModulus != null && z == day - 1) {
+												sheet.getRow(z + height + totalHeight + 1).createCell(y + width).setCellValue(onModulus);
+												sheet.getRow(z + height + totalHeight + 1).getCell(y + width).setCellStyle(cs_thousand);
 											}
-											if (onModulus != null
-													&& z != day - 1) {
-												sheet.getRow(
-														(day - 1) + height
-																+ totalHeight
-																+ 1)
-														.createCell(y + width)
-														.setCellValue(onModulus);
-												sheet.getRow(
-														(day - 1) + height
-																+ totalHeight
-																+ 1)
-														.getCell(y + width)
-														.setCellStyle(
-																cs_thousand);
+											if (onModulus != null && z != day - 1) {
+												sheet.getRow((day - 1) + height + totalHeight + 1).createCell(y + width).setCellValue(onModulus);
+												sheet.getRow((day - 1) + height + totalHeight + 1).getCell(y + width).setCellStyle(cs_thousand);
 											}
 
-											if (onModulus == null
-													&& z == day - 1
-													&& holiday.equals("1")) {
-												sheet.getRow(
-														z + height
-																+ totalHeight
-																+ 1)
-														.createCell(y + width)
-														.setCellValue("假日");
-												sheet.getRow(
-														z + height
-																+ totalHeight
-																+ 1)
-														.getCell(y + width)
-														.setCellStyle(
-																cs_font_blue);
+											if (onModulus == null && z == day - 1 && holiday.equals("1")) {
+												sheet.getRow(z + height + totalHeight + 1).createCell(y + width).setCellValue("假日");
+												sheet.getRow(z + height + totalHeight + 1).getCell(y + width).setCellStyle(cs_font_blue);
 											}
 
-											if (onModulus == null
-													&& z != day - 1
-													&& holiday.equals("1")) {
-												sheet.getRow(
-														(day - 1) + height
-																+ totalHeight
-																+ 1)
-														.createCell(y + width)
-														.setCellValue("假日");
-												sheet.getRow(
-														(day - 1) + height
-																+ totalHeight
-																+ 1)
-														.getCell(y + width)
-														.setCellStyle(
-																cs_font_blue);
+											if (onModulus == null && z != day - 1 && holiday.equals("1")) {
+												sheet.getRow((day - 1) + height + totalHeight + 1).createCell(y + width).setCellValue("假日");
+												sheet.getRow((day - 1) + height + totalHeight + 1).getCell(y + width).setCellStyle(cs_font_blue);
 											}
-											if (onModulus == null
-													&& z == day - 1
-													&& holiday.equals("2")) {
-												sheet.getRow(
-														z + height
-																+ totalHeight
-																+ 1)
-														.createCell(y + width)
-														.setCellValue("未排產");
-												sheet.getRow(
-														z + height
-																+ totalHeight
-																+ 1)
-														.getCell(y + width)
-														.setCellStyle(
-																cs_font_green);
+											if (onModulus == null && z == day - 1 && holiday.equals("2")) {
+												sheet.getRow(z + height + totalHeight + 1).createCell(y + width).setCellValue("未排產");
+												sheet.getRow(z + height + totalHeight + 1).getCell(y + width).setCellStyle(cs_font_green);
 											}
 
-											if (onModulus == null
-													&& z != day - 1
-													&& holiday.equals("2")) {
-												sheet.getRow(
-														(day - 1) + height
-																+ totalHeight
-																+ 1)
-														.createCell(y + width)
-														.setCellValue("未排產");
-												sheet.getRow(
-														(day - 1) + height
-																+ totalHeight
-																+ 1)
-														.getCell(y + width)
-														.setCellStyle(
-																cs_font_green);
+											if (onModulus == null && z != day - 1 && holiday.equals("2")) {
+												sheet.getRow((day - 1) + height + totalHeight + 1).createCell(y + width).setCellValue("未排產");
+												sheet.getRow((day - 1) + height + totalHeight + 1).getCell(y + width).setCellStyle(cs_font_green);
 											}
-											if (onModulus == null
-													&& z == day - 1
-													&& (personnum != null
-															|| daycount != null || achievingRate != null)) {
-												sheet.getRow(
-														z + height
-																+ totalHeight
-																+ 1)
-														.createCell(y + width)
-														.setCellValue("無數據");
-												sheet.getRow(
-														z + height
-																+ totalHeight
-																+ 1)
-														.getCell(y + width)
-														.setCellStyle(
-																cs_font_red);
+											if (onModulus == null && z == day - 1 && (personnum != null || daycount != null || achievingRate != null)) {
+												sheet.getRow(z + height + totalHeight + 1).createCell(y + width).setCellValue("無數據");
+												sheet.getRow(z + height + totalHeight + 1).getCell(y + width).setCellStyle(cs_font_red);
 											}
-											if (onModulus == null
-													&& z != day - 1
-													&& (personnum != null
-															|| daycount != null || achievingRate != null)) {
-												sheet.getRow(
-														(day - 1) + height
-																+ totalHeight
-																+ 1)
-														.createCell(y + width)
-														.setCellValue("無數據");
-												sheet.getRow(
-														(day - 1) + height
-																+ totalHeight
-																+ 1)
-														.getCell(y + width)
-														.setCellStyle(
-																cs_font_red);
+											if (onModulus == null && z != day - 1 && (personnum != null || daycount != null || achievingRate != null)) {
+												sheet.getRow((day - 1) + height + totalHeight + 1).createCell(y + width).setCellValue("無數據");
+												sheet.getRow((day - 1) + height + totalHeight + 1).getCell(y + width).setCellStyle(cs_font_red);
 											}
-											sumOnModulus = sumOnModulus
-													+ onModulus;
+											sumOnModulus=sumOnModulus + onModulus;
 										} catch (Exception e) {
 											// TODO: handle exception
 										}
 										if (z == z_length - 2) {
-											sheet.getRow(
-													z + height + totalHeight
-															+ 1)
-													.createCell(y + width)
-													.setCellValue(sumOnModulus);
-											sheet.getRow(
-													z + height + totalHeight
-															+ 1)
-													.getCell(y + width)
-													.setCellStyle(cs_thousand);
+											sheet.getRow(z + height + totalHeight + 1).createCell(y + width).setCellValue(sumOnModulus);
+											sheet.getRow(z + height + totalHeight + 1).getCell(y + width).setCellStyle(cs_thousand);
 										}
 									}// end "if 1"
 
 									break;
 								case 2:
-									if (sheet.getRow(
-											z + height + totalHeight + 1)
-											.getCell(y + width) == null) {
+									if (sheet.getRow(z + height + totalHeight + 1).getCell(y + width) == null) {
 										// sheet.getRow(z+height+totalHeight+1).createCell(y+width).setCellStyle(cs);
-										StringBuffer olddate = new StringBuffer();
-										SimpleDateFormat dateFormat = new SimpleDateFormat(
-												"yyyyMMdd");
+										StringBuffer olddate=new StringBuffer();
+										SimpleDateFormat dateFormat=new SimpleDateFormat("yyyyMMdd");
 										olddate.append(yymm);
 										if (z == z_length - 1) {
 											olddate.append(z);
@@ -4047,39 +2319,19 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 										if (z >= 9) {
 											olddate.append(z + 1);
 										}
-										String temp1 = olddate.toString();
-										String temp2 = dateFormat
-												.format(new Date());
+										String temp1=olddate.toString();
+										String temp2=dateFormat.format(new Date());
 										try {
-											Date beginDate = dateFormat
-													.parse(temp1);
-											Date endDate = dateFormat
-													.parse(temp2);
-											long beginNum = beginDate.getTime();
-											long endNum = endDate.getTime();
+											Date beginDate=dateFormat.parse(temp1);
+											Date endDate=dateFormat.parse(temp2);
+											long beginNum=beginDate.getTime();
+											long endNum=endDate.getTime();
 											if (beginNum > endNum) {
-												sheet.getRow(
-														z + height
-																+ totalHeight
-																+ 1)
-														.createCell(y + width)
-														.setCellStyle(
-																cs_font_blue);
+												sheet.getRow(z + height + totalHeight + 1).createCell(y + width).setCellStyle(cs_font_blue);
 												// sheet.getRow(z+height+totalHeight+1).getCell(y+width).setCellValue("日期超前");
 											} else {
-												sheet.getRow(
-														z + height
-																+ totalHeight
-																+ 1)
-														.createCell(y + width)
-														.setCellStyle(
-																cs_font_red);
-												sheet.getRow(
-														z + height
-																+ totalHeight
-																+ 1)
-														.getCell(y + width)
-														.setCellValue("無數據");
+												sheet.getRow(z + height + totalHeight + 1).createCell(y + width).setCellStyle(cs_font_red);
+												sheet.getRow(z + height + totalHeight + 1).getCell(y + width).setCellValue("無數據");
 											}
 										} catch (ParseException e) {
 											// TODO Auto-generated catch block
@@ -4089,186 +2341,62 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 									// Double personnum=null;
 									if (x < alllist2.size()) {// start "if 2"
 										try {
-											day = alllist2.get(x).get(z)
-													.getId().getYymmdd()
-													.getDate();
-											personnum = alllist2.get(x).get(z)
-													.getPersonnum();
-											onModulus = alllist2.get(x).get(z)
-													.getOnModulus();
-											daycount = alllist2.get(x).get(z)
-													.getDaycount();
-											achievingRate = alllist2.get(x)
-													.get(z).getAchievingRate();
-											holiday = alllist2.get(x).get(z)
-													.getWorkorholiday();
-											if (personnum != null
-													&& z == day - 1) {
-												sheet.getRow(
-														z + height
-																+ totalHeight
-																+ 1)
-														.createCell(y + width)
-														.setCellValue(personnum);
-												sheet.getRow(
-														z + height
-																+ totalHeight
-																+ 1)
-														.getCell(y + width)
-														.setCellStyle(
-																cs_thousand_person);
+											day=alllist2.get(x).get(z).getId().getYymmdd().getDate();
+											personnum=alllist2.get(x).get(z).getPersonnum();
+											onModulus=alllist2.get(x).get(z).getOnModulus();
+											daycount=alllist2.get(x).get(z).getDaycount();
+											achievingRate=alllist2.get(x).get(z).getAchievingRate();
+											holiday=alllist2.get(x).get(z).getWorkorholiday();
+											if (personnum != null && z == day - 1) {
+												sheet.getRow(z + height + totalHeight + 1).createCell(y + width).setCellValue(personnum);
+												sheet.getRow(z + height + totalHeight + 1).getCell(y + width).setCellStyle(cs_thousand_person);
 											}
-											if (personnum != null
-													&& z != day - 1) {
-												sheet.getRow(
-														(day - 1) + height
-																+ totalHeight
-																+ 1)
-														.createCell(y + width)
-														.setCellValue(personnum);
-												sheet.getRow(
-														(day - 1) + height
-																+ totalHeight
-																+ 1)
-														.getCell(y + width)
-														.setCellStyle(
-																cs_thousand_person);
+											if (personnum != null && z != day - 1) {
+												sheet.getRow((day - 1) + height + totalHeight + 1).createCell(y + width).setCellValue(personnum);
+												sheet.getRow((day - 1) + height + totalHeight + 1).getCell(y + width).setCellStyle(cs_thousand_person);
 											}
-											if (personnum == null
-													&& z == day - 1
-													&& holiday.equals("1")) {
+											if (personnum == null && z == day - 1 && holiday.equals("1")) {
 
-												sheet.getRow(
-														z + height
-																+ totalHeight
-																+ 1)
-														.createCell(y + width)
-														.setCellValue("假日");
-												sheet.getRow(
-														z + height
-																+ totalHeight
-																+ 1)
-														.getCell(y + width)
-														.setCellStyle(
-																cs_font_blue);
+												sheet.getRow(z + height + totalHeight + 1).createCell(y + width).setCellValue("假日");
+												sheet.getRow(z + height + totalHeight + 1).getCell(y + width).setCellStyle(cs_font_blue);
 											}
-											if (personnum == null
-													&& z != day - 1
-													&& holiday.equals("1")) {
-												sheet.getRow(
-														(day - 1) + height
-																+ totalHeight
-																+ 1)
-														.createCell(y + width)
-														.setCellValue("假日");
-												sheet.getRow(
-														(day - 1) + height
-																+ totalHeight
-																+ 1)
-														.getCell(y + width)
-														.setCellStyle(
-																cs_font_blue);
+											if (personnum == null && z != day - 1 && holiday.equals("1")) {
+												sheet.getRow((day - 1) + height + totalHeight + 1).createCell(y + width).setCellValue("假日");
+												sheet.getRow((day - 1) + height + totalHeight + 1).getCell(y + width).setCellStyle(cs_font_blue);
 											}
-											if (personnum == null
-													&& z == day - 1
-													&& holiday.equals("2")) {
-												sheet.getRow(
-														z + height
-																+ totalHeight
-																+ 1)
-														.createCell(y + width)
-														.setCellValue("未排產");
-												sheet.getRow(
-														z + height
-																+ totalHeight
-																+ 1)
-														.getCell(y + width)
-														.setCellStyle(
-																cs_font_green);
+											if (personnum == null && z == day - 1 && holiday.equals("2")) {
+												sheet.getRow(z + height + totalHeight + 1).createCell(y + width).setCellValue("未排產");
+												sheet.getRow(z + height + totalHeight + 1).getCell(y + width).setCellStyle(cs_font_green);
 											}
-											if (personnum == null
-													&& z != day - 1
-													&& holiday.equals("2")) {
-												sheet.getRow(
-														(day - 1) + height
-																+ totalHeight
-																+ 1)
-														.createCell(y + width)
-														.setCellValue("未排產");
-												sheet.getRow(
-														(day - 1) + height
-																+ totalHeight
-																+ 1)
-														.getCell(y + width)
-														.setCellStyle(
-																cs_font_green);
+											if (personnum == null && z != day - 1 && holiday.equals("2")) {
+												sheet.getRow((day - 1) + height + totalHeight + 1).createCell(y + width).setCellValue("未排產");
+												sheet.getRow((day - 1) + height + totalHeight + 1).getCell(y + width).setCellStyle(cs_font_green);
 											}
-											if (personnum == null
-													&& z == day - 1
-													&& (onModulus != null
-															|| daycount != null || achievingRate != null)) {
-												sheet.getRow(
-														z + height
-																+ totalHeight
-																+ 1)
-														.createCell(y + width)
-														.setCellValue("無數據");
-												sheet.getRow(
-														z + height
-																+ totalHeight
-																+ 1)
-														.getCell(y + width)
-														.setCellStyle(
-																cs_font_red);
+											if (personnum == null && z == day - 1 && (onModulus != null || daycount != null || achievingRate != null)) {
+												sheet.getRow(z + height + totalHeight + 1).createCell(y + width).setCellValue("無數據");
+												sheet.getRow(z + height + totalHeight + 1).getCell(y + width).setCellStyle(cs_font_red);
 											}
-											if (personnum == null
-													&& z != day - 1
-													&& (onModulus != null
-															|| daycount != null || achievingRate != null)) {
-												sheet.getRow(
-														(day - 1) + height
-																+ totalHeight
-																+ 1)
-														.createCell(y + width)
-														.setCellValue("無數據");
-												sheet.getRow(
-														(day - 1) + height
-																+ totalHeight
-																+ 1)
-														.getCell(y + width)
-														.setCellStyle(
-																cs_font_red);
+											if (personnum == null && z != day - 1 && (onModulus != null || daycount != null || achievingRate != null)) {
+												sheet.getRow((day - 1) + height + totalHeight + 1).createCell(y + width).setCellValue("無數據");
+												sheet.getRow((day - 1) + height + totalHeight + 1).getCell(y + width).setCellStyle(cs_font_red);
 											}
-											sumPersonnum = sumPersonnum
-													+ personnum;
+											sumPersonnum=sumPersonnum + personnum;
 
 										} catch (Exception e) {
 											// TODO: handle exception
 										}
 										if (z == z_length - 2) {
-											sheet.getRow(
-													z + height + totalHeight
-															+ 1)
-													.createCell(y + width)
-													.setCellValue(sumPersonnum);
-											sheet.getRow(
-													z + height + totalHeight
-															+ 1)
-													.getCell(y + width)
-													.setCellStyle(
-															cs_thousand_person);
+											sheet.getRow(z + height + totalHeight + 1).createCell(y + width).setCellValue(sumPersonnum);
+											sheet.getRow(z + height + totalHeight + 1).getCell(y + width).setCellStyle(cs_thousand_person);
 										}
 									}// end "if 2"
 
 									break;
 								case 3:
-									if (sheet.getRow(
-											z + height + totalHeight + 1)
-											.getCell(y + width) == null) {
+									if (sheet.getRow(z + height + totalHeight + 1).getCell(y + width) == null) {
 										// sheet.getRow(z+height+totalHeight+1).createCell(y+width).setCellStyle(cs);
-										StringBuffer olddate = new StringBuffer();
-										SimpleDateFormat dateFormat = new SimpleDateFormat(
-												"yyyyMMdd");
+										StringBuffer olddate=new StringBuffer();
+										SimpleDateFormat dateFormat=new SimpleDateFormat("yyyyMMdd");
 										olddate.append(yymm);
 										if (z == z_length - 1) {
 											olddate.append(z);
@@ -4281,39 +2409,19 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 											olddate.append(z + 1);
 										}
 
-										String temp1 = olddate.toString();
-										String temp2 = dateFormat
-												.format(new Date());
+										String temp1=olddate.toString();
+										String temp2=dateFormat.format(new Date());
 										try {
-											Date beginDate = dateFormat
-													.parse(temp1);
-											Date endDate = dateFormat
-													.parse(temp2);
-											long beginNum = beginDate.getTime();
-											long endNum = endDate.getTime();
+											Date beginDate=dateFormat.parse(temp1);
+											Date endDate=dateFormat.parse(temp2);
+											long beginNum=beginDate.getTime();
+											long endNum=endDate.getTime();
 											if (beginNum > endNum) {
-												sheet.getRow(
-														z + height
-																+ totalHeight
-																+ 1)
-														.createCell(y + width)
-														.setCellStyle(
-																cs_font_blue);
+												sheet.getRow(z + height + totalHeight + 1).createCell(y + width).setCellStyle(cs_font_blue);
 												// sheet.getRow(z+height+totalHeight+1).getCell(y+width).setCellValue("日期超前");
 											} else {
-												sheet.getRow(
-														z + height
-																+ totalHeight
-																+ 1)
-														.createCell(y + width)
-														.setCellStyle(
-																cs_font_red);
-												sheet.getRow(
-														z + height
-																+ totalHeight
-																+ 1)
-														.getCell(y + width)
-														.setCellValue("無數據");
+												sheet.getRow(z + height + totalHeight + 1).createCell(y + width).setCellStyle(cs_font_red);
+												sheet.getRow(z + height + totalHeight + 1).getCell(y + width).setCellValue("無數據");
 											}
 										} catch (ParseException e) {
 											// TODO Auto-generated catch block
@@ -4322,187 +2430,61 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 									}
 									if (x < alllist2.size()) {// start "if 3"
 										try {
-											day = alllist2.get(x).get(z)
-													.getId().getYymmdd()
-													.getDate();
-											onModulus = alllist2.get(x).get(z)
-													.getOnModulus();
-											personnum = alllist2.get(x).get(z)
-													.getPersonnum();
-											daycount = alllist2.get(x).get(z)
-													.getDaycount();
-											standardOutput = alllist2.get(x)
-													.get(z).getStandardOutput();
-											holiday = alllist2.get(x).get(z)
-													.getWorkorholiday();
-											if (standardOutput != null
-													&& z == day - 1) {
-												sheet.getRow(
-														z + height
-																+ totalHeight
-																+ 1)
-														.createCell(y + width)
-														.setCellValue(
-																standardOutput);
-												sheet.getRow(
-														z + height
-																+ totalHeight
-																+ 1)
-														.getCell(y + width)
-														.setCellStyle(
-																cs_thousand);
+											day=alllist2.get(x).get(z).getId().getYymmdd().getDate();
+											onModulus=alllist2.get(x).get(z).getOnModulus();
+											personnum=alllist2.get(x).get(z).getPersonnum();
+											daycount=alllist2.get(x).get(z).getDaycount();
+											standardOutput=alllist2.get(x).get(z).getStandardOutput();
+											holiday=alllist2.get(x).get(z).getWorkorholiday();
+											if (standardOutput != null && z == day - 1) {
+												sheet.getRow(z + height + totalHeight + 1).createCell(y + width).setCellValue(standardOutput);
+												sheet.getRow(z + height + totalHeight + 1).getCell(y + width).setCellStyle(cs_thousand);
 											}
-											if (standardOutput != null
-													&& z != day - 1) {
-												sheet.getRow(
-														(day - 1) + height
-																+ totalHeight
-																+ 1)
-														.createCell(y + width)
-														.setCellValue(
-																standardOutput);
-												sheet.getRow(
-														(day - 1) + height
-																+ totalHeight
-																+ 1)
-														.getCell(y + width)
-														.setCellStyle(
-																cs_thousand);
+											if (standardOutput != null && z != day - 1) {
+												sheet.getRow((day - 1) + height + totalHeight + 1).createCell(y + width).setCellValue(standardOutput);
+												sheet.getRow((day - 1) + height + totalHeight + 1).getCell(y + width).setCellStyle(cs_thousand);
 											}
-											if (standardOutput == null
-													&& z == day - 1
-													&& holiday.equals("1")) {
-												sheet.getRow(
-														z + height
-																+ totalHeight
-																+ 1)
-														.createCell(y + width)
-														.setCellValue("假日");
-												sheet.getRow(
-														z + height
-																+ totalHeight
-																+ 1)
-														.getCell(y + width)
-														.setCellStyle(
-																cs_font_blue);
+											if (standardOutput == null && z == day - 1 && holiday.equals("1")) {
+												sheet.getRow(z + height + totalHeight + 1).createCell(y + width).setCellValue("假日");
+												sheet.getRow(z + height + totalHeight + 1).getCell(y + width).setCellStyle(cs_font_blue);
 											}
-											if (standardOutput == null
-													&& z != day - 1
-													&& holiday.equals("1")) {
-												sheet.getRow(
-														(day - 1) + height
-																+ totalHeight
-																+ 1)
-														.createCell(y + width)
-														.setCellValue("假日");
-												sheet.getRow(
-														(day - 1) + height
-																+ totalHeight
-																+ 1)
-														.getCell(y + width)
-														.setCellStyle(
-																cs_font_blue);
+											if (standardOutput == null && z != day - 1 && holiday.equals("1")) {
+												sheet.getRow((day - 1) + height + totalHeight + 1).createCell(y + width).setCellValue("假日");
+												sheet.getRow((day - 1) + height + totalHeight + 1).getCell(y + width).setCellStyle(cs_font_blue);
 											}
-											if (standardOutput == null
-													&& z == day - 1
-													&& holiday.equals("2")) {
-												sheet.getRow(
-														z + height
-																+ totalHeight
-																+ 1)
-														.createCell(y + width)
-														.setCellValue("未排產");
-												sheet.getRow(
-														z + height
-																+ totalHeight
-																+ 1)
-														.getCell(y + width)
-														.setCellStyle(
-																cs_font_green);
+											if (standardOutput == null && z == day - 1 && holiday.equals("2")) {
+												sheet.getRow(z + height + totalHeight + 1).createCell(y + width).setCellValue("未排產");
+												sheet.getRow(z + height + totalHeight + 1).getCell(y + width).setCellStyle(cs_font_green);
 											}
-											if (standardOutput == null
-													&& z != day - 1
-													&& holiday.equals("2")) {
-												sheet.getRow(
-														(day - 1) + height
-																+ totalHeight
-																+ 1)
-														.createCell(y + width)
-														.setCellValue("未排產");
-												sheet.getRow(
-														(day - 1) + height
-																+ totalHeight
-																+ 1)
-														.getCell(y + width)
-														.setCellStyle(
-																cs_font_green);
+											if (standardOutput == null && z != day - 1 && holiday.equals("2")) {
+												sheet.getRow((day - 1) + height + totalHeight + 1).createCell(y + width).setCellValue("未排產");
+												sheet.getRow((day - 1) + height + totalHeight + 1).getCell(y + width).setCellStyle(cs_font_green);
 											}
-											if (standardOutput == null
-													&& z == day - 1
-													&& (onModulus != null
-															|| personnum != null || daycount != null)) {
-												sheet.getRow(
-														z + height
-																+ totalHeight
-																+ 1)
-														.createCell(y + width)
-														.setCellValue("無數據");
-												sheet.getRow(
-														z + height
-																+ totalHeight
-																+ 1)
-														.getCell(y + width)
-														.setCellStyle(
-																cs_font_red);
+											if (standardOutput == null && z == day - 1 && (onModulus != null || personnum != null || daycount != null)) {
+												sheet.getRow(z + height + totalHeight + 1).createCell(y + width).setCellValue("無數據");
+												sheet.getRow(z + height + totalHeight + 1).getCell(y + width).setCellStyle(cs_font_red);
 											}
-											if (standardOutput == null
-													&& z != day - 1
-													&& (onModulus != null
-															|| personnum != null || daycount != null)) {
-												sheet.getRow(
-														(day - 1) + height
-																+ totalHeight
-																+ 1)
-														.createCell(y + width)
-														.setCellValue("無數據");
-												sheet.getRow(
-														(day - 1) + height
-																+ totalHeight
-																+ 1)
-														.getCell(y + width)
-														.setCellStyle(
-																cs_font_red);
+											if (standardOutput == null && z != day - 1 && (onModulus != null || personnum != null || daycount != null)) {
+												sheet.getRow((day - 1) + height + totalHeight + 1).createCell(y + width).setCellValue("無數據");
+												sheet.getRow((day - 1) + height + totalHeight + 1).getCell(y + width).setCellStyle(cs_font_red);
 											}
-											sumStandardOutput = sumStandardOutput
-													+ standardOutput;
+											sumStandardOutput=sumStandardOutput + standardOutput;
 
 										} catch (Exception e) {
 											// TODO: handle exception
 										}
 										if (z == z_length - 2) {
-											sheet.getRow(
-													z + height + totalHeight
-															+ 1)
-													.createCell(y + width)
-													.setCellValue(
-															sumStandardOutput);
-											sheet.getRow(
-													z + height + totalHeight
-															+ 1)
-													.getCell(y + width)
-													.setCellStyle(cs_thousand);
+											sheet.getRow(z + height + totalHeight + 1).createCell(y + width).setCellValue(sumStandardOutput);
+											sheet.getRow(z + height + totalHeight + 1).getCell(y + width).setCellStyle(cs_thousand);
 										}
 									}// end "if 3"
 
 									break;
 								case 4:
-									if (sheet.getRow(
-											z + height + totalHeight + 1)
-											.getCell(y + width) == null) {
+									if (sheet.getRow(z + height + totalHeight + 1).getCell(y + width) == null) {
 										// sheet.getRow(z+height+totalHeight+1).createCell(y+width).setCellStyle(cs);
-										StringBuffer olddate = new StringBuffer();
-										SimpleDateFormat dateFormat = new SimpleDateFormat(
-												"yyyyMMdd");
+										StringBuffer olddate=new StringBuffer();
+										SimpleDateFormat dateFormat=new SimpleDateFormat("yyyyMMdd");
 										olddate.append(yymm);
 										if (z == z_length - 1) {
 											olddate.append(z);
@@ -4515,39 +2497,19 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 											olddate.append(z + 1);
 										}
 
-										String temp1 = olddate.toString();
-										String temp2 = dateFormat
-												.format(new Date());
+										String temp1=olddate.toString();
+										String temp2=dateFormat.format(new Date());
 										try {
-											Date beginDate = dateFormat
-													.parse(temp1);
-											Date endDate = dateFormat
-													.parse(temp2);
-											long beginNum = beginDate.getTime();
-											long endNum = endDate.getTime();
+											Date beginDate=dateFormat.parse(temp1);
+											Date endDate=dateFormat.parse(temp2);
+											long beginNum=beginDate.getTime();
+											long endNum=endDate.getTime();
 											if (beginNum > endNum) {
-												sheet.getRow(
-														z + height
-																+ totalHeight
-																+ 1)
-														.createCell(y + width)
-														.setCellStyle(
-																cs_font_blue);
+												sheet.getRow(z + height + totalHeight + 1).createCell(y + width).setCellStyle(cs_font_blue);
 												// sheet.getRow(z+height+totalHeight+1).getCell(y+width).setCellValue("日期超前");
 											} else {
-												sheet.getRow(
-														z + height
-																+ totalHeight
-																+ 1)
-														.createCell(y + width)
-														.setCellStyle(
-																cs_font_red);
-												sheet.getRow(
-														z + height
-																+ totalHeight
-																+ 1)
-														.getCell(y + width)
-														.setCellValue("無數據");
+												sheet.getRow(z + height + totalHeight + 1).createCell(y + width).setCellStyle(cs_font_red);
+												sheet.getRow(z + height + totalHeight + 1).getCell(y + width).setCellValue("無數據");
 											}
 										} catch (ParseException e) {
 											// TODO Auto-generated catch block
@@ -4556,188 +2518,62 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 									}
 									if (x < alllist2.size()) {// start "if 4"
 										try {
-											day = alllist2.get(x).get(z)
-													.getId().getYymmdd()
-													.getDate();
-											onModulus = alllist2.get(x).get(z)
-													.getOnModulus();
-											personnum = alllist2.get(x).get(z)
-													.getPersonnum();
-											daycount = alllist2.get(x).get(z)
-													.getDaycount();
-											actualYield = alllist2.get(x)
-													.get(z).getActualYield();
-											holiday = alllist2.get(x).get(z)
-													.getWorkorholiday();
-											if (actualYield != null
-													&& z == day - 1) {
-												sheet.getRow(
-														z + height
-																+ totalHeight
-																+ 1)
-														.createCell(y + width)
-														.setCellValue(
-																actualYield);
-												sheet.getRow(
-														z + height
-																+ totalHeight
-																+ 1)
-														.getCell(y + width)
-														.setCellStyle(
-																cs_thousand);
+											day=alllist2.get(x).get(z).getId().getYymmdd().getDate();
+											onModulus=alllist2.get(x).get(z).getOnModulus();
+											personnum=alllist2.get(x).get(z).getPersonnum();
+											daycount=alllist2.get(x).get(z).getDaycount();
+											actualYield=alllist2.get(x).get(z).getActualYield();
+											holiday=alllist2.get(x).get(z).getWorkorholiday();
+											if (actualYield != null && z == day - 1) {
+												sheet.getRow(z + height + totalHeight + 1).createCell(y + width).setCellValue(actualYield);
+												sheet.getRow(z + height + totalHeight + 1).getCell(y + width).setCellStyle(cs_thousand);
 											}
-											if (actualYield != null
-													& z != day - 1) {
-												sheet.getRow(
-														(day - 1) + height
-																+ totalHeight
-																+ 1)
-														.createCell(y + width)
-														.setCellValue(
-																actualYield);
-												sheet.getRow(
-														(day - 1) + height
-																+ totalHeight
-																+ 1)
-														.getCell(y + width)
-														.setCellStyle(
-																cs_thousand);
+											if (actualYield != null & z != day - 1) {
+												sheet.getRow((day - 1) + height + totalHeight + 1).createCell(y + width).setCellValue(actualYield);
+												sheet.getRow((day - 1) + height + totalHeight + 1).getCell(y + width).setCellStyle(cs_thousand);
 											}
-											if (actualYield == null
-													&& z == day - 1
-													&& holiday.equals("1")) {
+											if (actualYield == null && z == day - 1 && holiday.equals("1")) {
 
-												sheet.getRow(
-														z + height
-																+ totalHeight
-																+ 1)
-														.createCell(y + width)
-														.setCellValue("假日");
-												sheet.getRow(
-														z + height
-																+ totalHeight
-																+ 1)
-														.getCell(y + width)
-														.setCellStyle(
-																cs_font_blue);
+												sheet.getRow(z + height + totalHeight + 1).createCell(y + width).setCellValue("假日");
+												sheet.getRow(z + height + totalHeight + 1).getCell(y + width).setCellStyle(cs_font_blue);
 											}
-											if (actualYield == null
-													&& z != day - 1
-													&& holiday.equals("1")) {
-												sheet.getRow(
-														(day - 1) + height
-																+ totalHeight
-																+ 1)
-														.createCell(y + width)
-														.setCellValue("假日");
-												sheet.getRow(
-														(day - 1) + height
-																+ totalHeight
-																+ 1)
-														.getCell(y + width)
-														.setCellStyle(
-																cs_font_blue);
+											if (actualYield == null && z != day - 1 && holiday.equals("1")) {
+												sheet.getRow((day - 1) + height + totalHeight + 1).createCell(y + width).setCellValue("假日");
+												sheet.getRow((day - 1) + height + totalHeight + 1).getCell(y + width).setCellStyle(cs_font_blue);
 											}
-											if (actualYield == null
-													&& z == day - 1
-													&& holiday.equals("2")) {
-												sheet.getRow(
-														z + height
-																+ totalHeight
-																+ 1)
-														.createCell(y + width)
-														.setCellValue("未排產");
-												sheet.getRow(
-														z + height
-																+ totalHeight
-																+ 1)
-														.getCell(y + width)
-														.setCellStyle(
-																cs_font_green);
+											if (actualYield == null && z == day - 1 && holiday.equals("2")) {
+												sheet.getRow(z + height + totalHeight + 1).createCell(y + width).setCellValue("未排產");
+												sheet.getRow(z + height + totalHeight + 1).getCell(y + width).setCellStyle(cs_font_green);
 											}
-											if (actualYield == null
-													&& z != day - 1
-													&& holiday.equals("2")) {
-												sheet.getRow(
-														(day - 1) + height
-																+ totalHeight
-																+ 1)
-														.createCell(y + width)
-														.setCellValue("未排產");
-												sheet.getRow(
-														(day - 1) + height
-																+ totalHeight
-																+ 1)
-														.getCell(y + width)
-														.setCellStyle(
-																cs_font_green);
+											if (actualYield == null && z != day - 1 && holiday.equals("2")) {
+												sheet.getRow((day - 1) + height + totalHeight + 1).createCell(y + width).setCellValue("未排產");
+												sheet.getRow((day - 1) + height + totalHeight + 1).getCell(y + width).setCellStyle(cs_font_green);
 											}
-											if (actualYield == null
-													&& z == day - 1
-													&& (onModulus != null
-															|| personnum != null || daycount != null)) {
-												sheet.getRow(
-														z + height
-																+ totalHeight
-																+ 1)
-														.createCell(y + width)
-														.setCellValue("無數據");
-												sheet.getRow(
-														z + height
-																+ totalHeight
-																+ 1)
-														.getCell(y + width)
-														.setCellStyle(
-																cs_font_red);
+											if (actualYield == null && z == day - 1 && (onModulus != null || personnum != null || daycount != null)) {
+												sheet.getRow(z + height + totalHeight + 1).createCell(y + width).setCellValue("無數據");
+												sheet.getRow(z + height + totalHeight + 1).getCell(y + width).setCellStyle(cs_font_red);
 											}
-											if (actualYield == null
-													&& z != day - 1
-													&& (onModulus != null
-															|| personnum != null || daycount != null)) {
-												sheet.getRow(
-														(day - 1) + height
-																+ totalHeight
-																+ 1)
-														.createCell(y + width)
-														.setCellValue("無數據");
-												sheet.getRow(
-														(day - 1) + height
-																+ totalHeight
-																+ 1)
-														.getCell(y + width)
-														.setCellStyle(
-																cs_font_red);
+											if (actualYield == null && z != day - 1 && (onModulus != null || personnum != null || daycount != null)) {
+												sheet.getRow((day - 1) + height + totalHeight + 1).createCell(y + width).setCellValue("無數據");
+												sheet.getRow((day - 1) + height + totalHeight + 1).getCell(y + width).setCellStyle(cs_font_red);
 											}
-											sumActualYield = sumActualYield
-													+ actualYield;
+											sumActualYield=sumActualYield + actualYield;
 
 										} catch (Exception e) {
 											// TODO: handle exception
 										}
 										if (z == z_length - 2) {
-											sheet.getRow(
-													z + height + totalHeight
-															+ 1)
-													.createCell(y + width)
-													.setCellValue(
-															sumActualYield);
-											sheet.getRow(
-													z + height + totalHeight
-															+ 1)
-													.getCell(y + width)
-													.setCellStyle(cs_thousand);
+											sheet.getRow(z + height + totalHeight + 1).createCell(y + width).setCellValue(sumActualYield);
+											sheet.getRow(z + height + totalHeight + 1).getCell(y + width).setCellStyle(cs_thousand);
 										}
 									}// end "if 4"
 
 									break;
 								case 5:
-									if (sheet.getRow(
-											z + height + totalHeight + 1)
-											.getCell(y + width) == null) {
+									if (sheet.getRow(z + height + totalHeight + 1).getCell(y + width) == null) {
 										// sheet.getRow(z+height+totalHeight+1).createCell(y+width).setCellStyle(cs);
-										StringBuffer olddate = new StringBuffer();
-										SimpleDateFormat dateFormat = new SimpleDateFormat(
-												"yyyyMMdd");
+										StringBuffer olddate=new StringBuffer();
+										SimpleDateFormat dateFormat=new SimpleDateFormat("yyyyMMdd");
 										olddate.append(yymm);
 										if (z == z_length - 1) {
 											olddate.append(z);
@@ -4749,39 +2585,19 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 										if (z >= 9) {
 											olddate.append(z + 1);
 										}
-										String temp1 = olddate.toString();
-										String temp2 = dateFormat
-												.format(new Date());
+										String temp1=olddate.toString();
+										String temp2=dateFormat.format(new Date());
 										try {
-											Date beginDate = dateFormat
-													.parse(temp1);
-											Date endDate = dateFormat
-													.parse(temp2);
-											long beginNum = beginDate.getTime();
-											long endNum = endDate.getTime();
+											Date beginDate=dateFormat.parse(temp1);
+											Date endDate=dateFormat.parse(temp2);
+											long beginNum=beginDate.getTime();
+											long endNum=endDate.getTime();
 											if (beginNum > endNum) {
-												sheet.getRow(
-														z + height
-																+ totalHeight
-																+ 1)
-														.createCell(y + width)
-														.setCellStyle(
-																cs_font_blue);
+												sheet.getRow(z + height + totalHeight + 1).createCell(y + width).setCellStyle(cs_font_blue);
 												// sheet.getRow(z+height+totalHeight+1).getCell(y+width).setCellValue("日期超前");
 											} else {
-												sheet.getRow(
-														z + height
-																+ totalHeight
-																+ 1)
-														.createCell(y + width)
-														.setCellStyle(
-																cs_font_red);
-												sheet.getRow(
-														z + height
-																+ totalHeight
-																+ 1)
-														.getCell(y + width)
-														.setCellValue("無數據");
+												sheet.getRow(z + height + totalHeight + 1).createCell(y + width).setCellStyle(cs_font_red);
+												sheet.getRow(z + height + totalHeight + 1).getCell(y + width).setCellValue("無數據");
 											}
 										} catch (ParseException e) {
 											// TODO Auto-generated catch block
@@ -4790,213 +2606,75 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 									}
 									if (x < alllist2.size()) {// start "if 5"
 										try {
-											day = alllist2.get(x).get(z)
-													.getId().getYymmdd()
-													.getDate();
-											onModulus = alllist2.get(x).get(z)
-													.getOnModulus();
-											personnum = alllist2.get(x).get(z)
-													.getPersonnum();
-											achievingRate = alllist2.get(x)
-													.get(z).getAchievingRate();
-											daycount = alllist2.get(x).get(z)
-													.getDaycount();
-											holiday = alllist2.get(x).get(z)
-													.getWorkorholiday();
-											if (achievingRate != null
-													&& z == day - 1) {
-												sheet.getRow(
-														z + height
-																+ totalHeight
-																+ 1)
-														.createCell(y + width)
-														.setCellValue(
-																achievingRate);
-												sheet.getRow(
-														z + height
-																+ totalHeight
-																+ 1)
-														.getCell(y + width)
-														.setCellStyle(cs_data);
+											day=alllist2.get(x).get(z).getId().getYymmdd().getDate();
+											onModulus=alllist2.get(x).get(z).getOnModulus();
+											personnum=alllist2.get(x).get(z).getPersonnum();
+											achievingRate=alllist2.get(x).get(z).getAchievingRate();
+											daycount=alllist2.get(x).get(z).getDaycount();
+											holiday=alllist2.get(x).get(z).getWorkorholiday();
+											if (achievingRate != null && z == day - 1) {
+												sheet.getRow(z + height + totalHeight + 1).createCell(y + width).setCellValue(achievingRate);
+												sheet.getRow(z + height + totalHeight + 1).getCell(y + width).setCellStyle(cs_data);
 											}
-											if (achievingRate != null
-													&& z != day - 1) {
-												sheet.getRow(
-														(day - 1) + height
-																+ totalHeight
-																+ 1)
-														.createCell(y + width)
-														.setCellValue(
-																achievingRate);
-												sheet.getRow(
-														(day - 1) + height
-																+ totalHeight
-																+ 1)
-														.getCell(y + width)
-														.setCellStyle(cs_data);
+											if (achievingRate != null && z != day - 1) {
+												sheet.getRow((day - 1) + height + totalHeight + 1).createCell(y + width).setCellValue(achievingRate);
+												sheet.getRow((day - 1) + height + totalHeight + 1).getCell(y + width).setCellStyle(cs_data);
 											}
-											if (achievingRate == null
-													&& z == day - 1
-													&& holiday.equals("1")) {
-												sheet.getRow(
-														z + height
-																+ totalHeight
-																+ 1)
-														.createCell(y + width)
-														.setCellValue("假日");
-												sheet.getRow(
-														z + height
-																+ totalHeight
-																+ 1)
-														.getCell(y + width)
-														.setCellStyle(
-																cs_font_blue);
+											if (achievingRate == null && z == day - 1 && holiday.equals("1")) {
+												sheet.getRow(z + height + totalHeight + 1).createCell(y + width).setCellValue("假日");
+												sheet.getRow(z + height + totalHeight + 1).getCell(y + width).setCellStyle(cs_font_blue);
 											}
 
-											if (achievingRate == null
-													&& z != day - 1
-													&& holiday.equals("1")) {
-												sheet.getRow(
-														(day - 1) + height
-																+ totalHeight
-																+ 1)
-														.createCell(y + width)
-														.setCellValue("假日");
-												sheet.getRow(
-														(day - 1) + height
-																+ totalHeight
-																+ 1)
-														.getCell(y + width)
-														.setCellStyle(
-																cs_font_blue);
+											if (achievingRate == null && z != day - 1 && holiday.equals("1")) {
+												sheet.getRow((day - 1) + height + totalHeight + 1).createCell(y + width).setCellValue("假日");
+												sheet.getRow((day - 1) + height + totalHeight + 1).getCell(y + width).setCellStyle(cs_font_blue);
 											}
-											if (achievingRate == null
-													&& z == day - 1
-													&& holiday.equals("2")) {
-												sheet.getRow(
-														z + height
-																+ totalHeight
-																+ 1)
-														.createCell(y + width)
-														.setCellValue("未排產");
-												sheet.getRow(
-														z + height
-																+ totalHeight
-																+ 1)
-														.getCell(y + width)
-														.setCellStyle(
-																cs_font_green);
+											if (achievingRate == null && z == day - 1 && holiday.equals("2")) {
+												sheet.getRow(z + height + totalHeight + 1).createCell(y + width).setCellValue("未排產");
+												sheet.getRow(z + height + totalHeight + 1).getCell(y + width).setCellStyle(cs_font_green);
 											}
 
-											if (achievingRate == null
-													&& z != day - 1
-													&& holiday.equals("2")) {
-												sheet.getRow(
-														(day - 1) + height
-																+ totalHeight
-																+ 1)
-														.createCell(y + width)
-														.setCellValue("未排產");
-												sheet.getRow(
-														(day - 1) + height
-																+ totalHeight
-																+ 1)
-														.getCell(y + width)
-														.setCellStyle(
-																cs_font_green);
+											if (achievingRate == null && z != day - 1 && holiday.equals("2")) {
+												sheet.getRow((day - 1) + height + totalHeight + 1).createCell(y + width).setCellValue("未排產");
+												sheet.getRow((day - 1) + height + totalHeight + 1).getCell(y + width).setCellStyle(cs_font_green);
 											}
-											if (achievingRate == null
-													&& z == day - 1
-													&& (onModulus != null
-															|| personnum != null || daycount != null)) {
-												sheet.getRow(
-														z + height
-																+ totalHeight
-																+ 1)
-														.createCell(y + width)
-														.setCellValue("無數據");
-												sheet.getRow(
-														z + height
-																+ totalHeight
-																+ 1)
-														.getCell(y + width)
-														.setCellStyle(
-																cs_font_red);
+											if (achievingRate == null && z == day - 1 && (onModulus != null || personnum != null || daycount != null)) {
+												sheet.getRow(z + height + totalHeight + 1).createCell(y + width).setCellValue("無數據");
+												sheet.getRow(z + height + totalHeight + 1).getCell(y + width).setCellStyle(cs_font_red);
 											}
-											if (achievingRate == null
-													&& z != day - 1
-													&& (onModulus != null
-															|| personnum != null || daycount != null)) {
-												sheet.getRow(
-														(day - 1) + height
-																+ totalHeight
-																+ 1)
-														.createCell(y + width)
-														.setCellValue("無數據");
-												sheet.getRow(
-														(day - 1) + height
-																+ totalHeight
-																+ 1)
-														.getCell(y + width)
-														.setCellStyle(
-																cs_font_red);
+											if (achievingRate == null && z != day - 1 && (onModulus != null || personnum != null || daycount != null)) {
+												sheet.getRow((day - 1) + height + totalHeight + 1).createCell(y + width).setCellValue("無數據");
+												sheet.getRow((day - 1) + height + totalHeight + 1).getCell(y + width).setCellStyle(cs_font_red);
 											}
-											sumDayCount = sumDayCount
-													+ daycount;
+											sumDayCount=sumDayCount + daycount;
 										} catch (Exception e) {
 											// TODO: handle exception
 										}
 										if (z == z_length - 2) {
-											sheet.getRow(
-													z + height + totalHeight
-															+ 1)
-													.createCell(y + width)
-													.setCellValue(
-															sumAchievingRate);
-											sheet.getRow(
-													z + height + totalHeight
-															+ 1)
-													.getCell(y + width)
-													.setCellStyle(cs_data);
+											sheet.getRow(z + height + totalHeight + 1).createCell(y + width).setCellValue(sumAchievingRate);
+											sheet.getRow(z + height + totalHeight + 1).getCell(y + width).setCellStyle(cs_data);
 										}
 										/*
 										 * 計算總天數
 										 */
 										if (z == z_length - 1) {
-											CellRangeAddress region_daycount = new CellRangeAddress(
-													z + height + totalHeight
-															+ 1, (short) z
-															+ height
-															+ totalHeight + 1,
-													y + width - 4, (short) y
-															+ width);
+											CellRangeAddress region_daycount=new CellRangeAddress(z + height + totalHeight + 1,(short)z + height + totalHeight
+													+ 1,y + width - 4,(short)y + width);
 											sheet.addMergedRegion(region_daycount);
-											sheet.getRow(
-													z + height + totalHeight
-															+ 1)
-													.createCell(y + width)
-													.setCellStyle(cs_thousand);
+											sheet.getRow(z + height + totalHeight + 1).createCell(y + width).setCellStyle(cs_thousand);
 											// 由於應用了初始化時,日期超前的單元格格式,所以要轉成"cs_thousand"格式
-											sheet.getRow(
-													z + height + totalHeight
-															+ 1)
-													.getCell(y + width - 4)
-													.setCellStyle(cs_thousand);
-											sheet.getRow(
-													z + height + totalHeight
-															+ 1)
-													.getCell(y + width - 4)
-													.setCellValue(sumDayCount);
+											sheet.getRow(z + height + totalHeight + 1).getCell(y + width - 4).setCellStyle(cs_thousand);
+											sheet.getRow(z + height + totalHeight + 1).getCell(y + width - 4).setCellValue(sumDayCount);
 										}
 									}// end "if 5"
 
-									break;								
+									break;
 								}
 							}// end for 3
 						}// end for 2
-						width = width + 5;
+						width=width + 5;
 					}// end for 1
-					totalHeight = totalHeight + 44;
+					totalHeight=totalHeight + 44;
 
 				}// end for ALL
 
@@ -5022,106 +2700,980 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 	 * @param 
 	 * @return void
 	 * @throws ParseException 
+	 * @throws IOException 
 	 * @throws
 	 * @author web
 	 * @date 2016/6/7
 	 */
-	public void print2Y_hb() throws ParseException{
-		HSSFWorkbook wb=new HSSFWorkbook();
-		Map<String,Object>map_style=this.findStyles(wb);
-		HSSFCellStyle cs=(HSSFCellStyle)map_style.get("cs");
+	public void print2Y_hb() throws ParseException, IOException{
+		List<WebFact>list_facts=null;
+		if(emailMk==1){
+			list_facts=webFactSer.findAll();//所有廠別(factShow='0')
+			factcodelist=webFactSer.findFactCodeshow();
+		}else{
+			list_facts=webFactSer.findByList(factnolist);//頁面選擇的廠別
+		}
 		List<String>list_months=GlobalMethod.findMonths(sdate, edate);//所有月份
-		List<WebFact>list_facts=webFactSer.findByList(factnolist);//所有廠別
 		List<Webestproduct>list_pros=estProSer.findByYymm(sdate, edate);//查得的預計生產數據
-		
 		DateFormat fmt=new SimpleDateFormat("yyyyMM");
 		DateFormat fmt2=new SimpleDateFormat("yyyyMMdd");
+		String today=fmt2.format(new Date());//今天
+		List<String>list_a_str=new ArrayList<String>();
+		List<String>list_b_str=new ArrayList<String>();
+		//List<String>list_c_str=new ArrayList<String>();
+		List<String>list_d_str=new ArrayList<String>();
+		list_a_str.add("日期/產量/廠別");
+		list_a_str.add("戰力分析模數");
+		list_a_str.add("預計生產模數");
+		list_a_str.add("預計請款雙數");
+		list_a_str.add("機台孔位數");
+						
+		list_b_str.add("有效孔位");
+		list_b_str.add("工程/樣品");
+		list_b_str.add("補料孔位");
+		list_b_str.add("其他");
+								
+		list_d_str.add("上模數");
+		list_d_str.add("人數");
+		list_d_str.add("標準產量");
+		list_d_str.add("實際產量");
+		list_d_str.add("達成率(%)");
+		
+		
 		Map<String,Object>map_a=new LinkedHashMap<String,Object>();
 		Map<String,Object>map_b=new LinkedHashMap<String,Object>();
-		for(String month:list_months){//for a			
+		
+		for(String month:list_months){//for a
+			List<String>days=GlobalMethod.findDaysOfMonth(month,"yyyyMMdd");
 			List<Webestproduct>list_a=new ArrayList<Webestproduct>();
-			List<WebYieldData>list_ydatas=dataSer.findByYymm(month);
-			
-			List<String>days=GlobalMethod.findDaysOfMonth(month);
+			List<WebYieldData>list_ydatas=dataSer.findByYymm(month);						
 			List<List<WebYieldData>>list_b=new ArrayList<List<WebYieldData>>();
 			for(WebFact fact:list_facts){//for b1
-				list_a.add(new Webestproduct(new WebestproductId(fact.getId().getFactNo(),fact.getId().getFactArea(),fmt.parse(month),"zd")));
-				
+				list_a.add(new Webestproduct(new WebestproductId(fact.getId().getFactNo(),fact.getId().getFactArea(),fmt.parse(month),"zd")));			
 				List<WebYieldData>list_b1=new ArrayList<WebYieldData>();
 				for(String day:days){
+					if(day.compareTo(today)>=0){
+						continue;
+					}
 					list_b1.add(new WebYieldData(new WebYieldDataId(fact.getId().getFactNo(),fact.getId().getFactArea(),fmt2.parse(day))));
 				}
 				list_b.add(list_b1);
 				
 			}//for b1
-			for(Webestproduct pro:list_a){//for b2
+			for(int i=0;i<list_a.size();i++ ){//for b2
+				Webestproduct pro=list_a.get(i);
 				for(Webestproduct pro2:list_pros){
 					if(pro.getId().getFactNo().equals(pro2.getId().getFactNo())&&
 							pro.getId().getFactCode().equals(pro2.getId().getFactCode())&&
 							fmt.format(pro.getId().getYymm()).equals(fmt.format(pro2.getId().getYymm()))){
-						pro=pro2;
+						//pro=pro2;
+						list_a.remove(i);
+						list_a.add(i,pro2);
 						break;
 					}
 				}
 			}//for b2
 			for(List<WebYieldData> list:list_b){//for b3
-				for(WebYieldData ydata:list){
+				for(int i=0;i<list.size();i++){
+					WebYieldData ydata=list.get(i);
 					for(WebYieldData ydata2:list_ydatas){
 						if(ydata.getId().getFactNo().equals(ydata2.getId().getFactNo())&&
 								ydata.getId().getFactCode().equals(ydata2.getId().getFactCode())&&
 								fmt2.format(ydata.getId().getYymmdd()).equals(fmt2.format(ydata2.getId().getYymmdd()))){
-							ydata=ydata2;							
+							//ydata=ydata2;
+							list.remove(i);
+							list.add(i,ydata2);
+							break;
 						}
 					}
 				}
 			}//for b3
 			map_a.put(month, list_a);
-			map_b.put(month, list_b);
+			map_b.put(month, list_b);						
 		}//for a
-		
-		
-		
 				
+		Workbook wb=null;
+		String fileName=null;		
+		if(type.equals("Excel2003")){
+			wb=this.init(list_months, list_facts, map_a, map_b, list_a_str, list_b_str, list_d_str);			
+			response.setContentType("application/vnd.ms-excel");
+			fileName="report.xls";
+		}else{
+			wb=this.init_2007(list_months, list_facts, map_a, map_b, list_a_str, list_b_str, list_d_str);
+			response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+			fileName="report.xlsx";
+		}
+		
+		if(emailMk==1){//發送郵件報表
+			OutputStream os=new FileOutputStream("d:\\"+sdate+".xls");
+			wb.write(os);
+			os.close();	
+		}else{//網頁訪問報表
+			ServletOutputStream os=response.getOutputStream();	
+			int msie=ServletActionContext.getRequest().getHeader("USER-AGENT").toLowerCase().indexOf("msie");//判斷是否為IE瀏覽器,大於0則為IE瀏覽器		
+			if(msie>0){
+				fileName=java.net.URLEncoder.encode(fileName,"utf-8");//解決IE中文文件不能下載的問題
+			}else{
+				fileName=new String(fileName.getBytes("utf-8"),"iso-8859-1");//解決非IE中文名亂碼問題
+			}		
+			response.setHeader("Content-disposition", "attachment;filename="+fileName);
+			wb.write(os);
+			os.close();	
+		}						
 	}
 	
-	public void init(HSSFWorkbook wb,Map<String,Object> map_style, List<WebFact> list_facts) {
-		// 初始化表格
-		List<String>list_a=new ArrayList<String>();
-		List<String>list_b=new ArrayList<String>();
-		list_a.add("日期/產量/廠別");
-		list_a.add("戰力分析模數");
-		list_a.add("預計生產模數");
-		list_a.add("預計請款雙數");
-		list_a.add("機台孔位數");
-		list_a.add("總機孔");
-		list_a.add("有效孔位");
-		list_a.add("工程/樣品");
-		list_a.add("補料孔位");
-		list_a.add("其他");
-		
-		HSSFCellStyle cs_title=(HSSFCellStyle)map_style.get("cs_head");
-		HSSFSheet sheet = wb.createSheet("sheet1");
-		int h1 = 9;
-		for (int a = 0; a < h1; a++) {
-			for (int b = 0; b < list_facts.size() * 5 + 1; b++) {
-				sheet.createRow(a).createCell(b);
+	
+	
+	public HSSFWorkbook init(List<String>list_months,List<WebFact>list_facts,Map<String,Object>map_a,Map<String,Object>map_b,
+			List<String>list_a_str,List<String>list_b_str,List<String>list_d_str) throws IOException, ParseException{
+		HSSFWorkbook wb=new HSSFWorkbook();
+		Map<String,Object>map_style=this.findStyles(wb);
+		//HSSFCellStyle cs=(HSSFCellStyle)map_style.get("cs");
+		HSSFCellStyle cs_title=(HSSFCellStyle)map_style.get("cs_title");
+		HSSFSheet sheet=wb.createSheet("sheet1");
+		HSSFSheet sheet2=null;		
+		for(int i=0;i<50*list_months.size();i++){
+			sheet.createRow(i);
+			for(int j=0;j<list_facts.size()*5+1;j++){
+				if(j>251){					
+					continue;
+				}
+				sheet.getRow(i).createCell(j);
 			}
 		}
+		if(list_facts.size()>49){
+			sheet2=wb.createSheet("sheet2");
+			for(int i=0;i<50*list_months.size();i++){
+				sheet2.createRow(i);
+				for(int j=0;j<list_facts.size()*5-245;j++){
+					if(j>251){					
+						continue;
+					}
+					sheet2.getRow(i).createCell(j);
+				}
+			}
+			sheet2.setColumnWidth(0, 4500);
+		}
+		
 		sheet.setColumnWidth(0, 4500);
+		
 		sheet.getRow(0).getCell(0).setCellValue("加久各工廠每日產量達成狀況匯總表");
 		CellRangeAddress cra_title = new CellRangeAddress(0, 0, 0, 12);
 		sheet.addMergedRegion(cra_title);
-		for(int a=0;a<12;a++){
+		for(int a=0;a<6;a++){
 			sheet.getRow(0).getCell(a).setCellStyle(cs_title);
-		}
-		for(int a=0;a<list_a.size();a++){
-			
-		}
-		sheet.getRow(1).getCell(0).setCellValue(list_a.get(0));
-		
+		}		
+		this.init(sheet,sheet2, map_style, list_facts,list_months,map_a,map_b,list_a_str,list_b_str,list_d_str);
+		if(factcodelist!=null&&factcodelist.size()>0){
+			this.fcodeTotal(wb,map_style, factcodelist, list_months);
+		}		
+		return wb;
+	}
+	public void init(HSSFSheet sheet,HSSFSheet sheet2,Map<String,Object> map_style, List<WebFact> list_facts,List<String> list_months,Map<String,Object>map_a,Map<String,Object>map_b,
+			List<String>list_a_str,List<String>list_b_str,List<String>list_d_str) throws IOException, ParseException {							
+		//HSSFCellStyle cs=(HSSFCellStyle)map_style.get("cs");
+		List<String>list_c_str=new ArrayList<String>();	
+				
+		for(int i=0;i<list_months.size();i++){
+			list_c_str.clear();
+			List<String>days=GlobalMethod.findDaysOfMonth(list_months.get(i),"MM/dd");
+			list_c_str.clear();
+			list_c_str.add("日期");
+			for(String day:days){
+				list_c_str.add(day);
+			}
+			list_c_str.add("合計");
+			list_c_str.add("工作天數");			
+			List<Webestproduct>list_pros=(List<Webestproduct>)map_a.get(list_months.get(i));
+			List<List<WebYieldData>>list_ydatas=(List<List<WebYieldData>>)map_b.get(list_months.get(i));												
+			this.init(sheet,sheet2, map_style, list_facts, list_a_str, list_b_str, list_c_str,list_d_str,days,list_pros,list_ydatas,i);						
+		}				
 		
 	}
 	
+	public void init(HSSFSheet sheet,HSSFSheet sheet2,Map<String,Object> map_style, List<WebFact> list_facts,
+			List<String>list_a_str,List<String>list_b_str,List<String>list_c_str,List<String>list_d_str,List<String>days,
+			List<Webestproduct>list_pros,List<List<WebYieldData>>list_ydatas,int index){
+		
+		HSSFCellStyle cs=(HSSFCellStyle)map_style.get("cs");
+		//HSSFCellStyle cs_thousand_person=(HSSFCellStyle)map_style.get("cs_thousand_person");
+		//HSSFCellStyle cs_data=(HSSFCellStyle)map_style.get("cs_data");
+		
+		HSSFCellStyle cs_thousand=(HSSFCellStyle)map_style.get("cs_thousand");
+		HSSFCellStyle cs_thousand_lyellow=(HSSFCellStyle)map_style.get("cs_thousand_lyellow");	
+		for(int a=0;a<list_a_str.size();a++){
+			sheet.getRow(a+1+44*index).getCell(0).setCellValue(list_a_str.get(a));
+			sheet.getRow(a+1+44*index).getCell(0).setCellStyle(cs);
+			
+			if(list_facts.size()>49){//if sheet2
+				sheet2.getRow(a+1+44*index).getCell(0).setCellValue(list_a_str.get(a));
+				sheet2.getRow(a+1+44*index).getCell(0).setCellStyle(cs);
+			}//if sheet2
+		}				
+		for(int b=0;b<list_facts.size();b++){//for b
+			/*********************************sheet2**************************************************/
+			if(b>49){// if sheet2
+				Webestproduct pro=list_pros.get(b);			
+				for(int i=0;i<4;i++){
+					CellRangeAddress cra=new CellRangeAddress(i+1+44*index,i+1+44*index,1+5*(b-50),5+5*(b-50));
+					sheet2.addMergedRegion(cra);	
+					for(int j=0;j<5;j++){
+						sheet2.getRow(i+1+44*index).getCell(j+1+5*(b-50)).setCellStyle(cs_thousand);
+					}
+				}
+				sheet2.getRow(1+44*index).getCell(1+5*(b-50)).setCellValue(list_facts.get(b).getFactSname()+"_"+list_facts.get(b).getId().getFactArea());
+				sheet2.getRow(2+44*index).getCell(1+5*(b-50)).setCellValue(pro.getMachinepower()==null?0:pro.getMachinepower());
+				sheet2.getRow(3+44*index).getCell(1+5*(b-50)).setCellValue(pro.getEstmodel()==null?0:pro.getEstmodel());
+				sheet2.getRow(4+44*index).getCell(1+5*(b-50)).setCellValue(pro.getEstpay()==null?0:pro.getEstpay());
+				
+				for(int i=0;i<3;i++){
+					CellRangeAddress cra=new CellRangeAddress(5+44*index,8+44*index,i+5*(b-50),i+5*(b-50));
+					sheet2.addMergedRegion(cra);	
+					for(int j=0;j<4;j++){
+						sheet2.getRow(5+j+44*index).getCell(i+5*(b-50)).setCellStyle(cs_thousand_lyellow);
+					}
+				}
+				sheet2.getRow(5+44*index).getCell(1+5*(b-50)).setCellValue("總機孔");
+				sheet2.getRow(5+44*index).getCell(2+5*(b-50)).setCellValue(pro.getTotalhole()==null?0:pro.getTotalhole());
+				for(int i=0;i<list_b_str.size();i++){
+					sheet2.getRow(5+i+44*index).getCell(3+5*(b-50)).setCellValue(list_b_str.get(i));
+					sheet2.getRow(5+i+44*index).getCell(3+5*(b-50)).setCellStyle(cs_thousand_lyellow);
+					CellRangeAddress cra=new CellRangeAddress(5+i+44*index,5+i+44*index,4+5*(b-50),5+5*(b-50));
+					sheet2.addMergedRegion(cra);
+					for(int j=0;j<2;j++){
+						sheet2.getRow(5+i+44*index).getCell(4+j+5*(b-50)).setCellStyle(cs_thousand_lyellow);
+					}
+					sheet2.getRow(5+i+44*index).getCell(4+5*(b-50)).setCellStyle(cs_thousand_lyellow);
+				}
+				sheet2.getRow(5+44*index).getCell(4+5*(b-50)).setCellValue(pro.getHole()==null?0:pro.getHole());
+				sheet2.getRow(6+44*index).getCell(4+5*(b-50)).setCellValue(pro.getSample()==null?0:pro.getSample());
+				sheet2.getRow(7+44*index).getCell(4+5*(b-50)).setCellValue(pro.getAccessories()==null?0:pro.getAccessories());
+				sheet2.getRow(8+44*index).getCell(4+5*(b-50)).setCellValue(pro.getOther()==null?0:pro.getOther());
+				continue;
+			}//if sheet2
+			/*********************************sheet2**************************************************/
+			
+			Webestproduct pro=list_pros.get(b);			
+			for(int i=0;i<4;i++){
+				CellRangeAddress cra=new CellRangeAddress(i+1+44*index,i+1+44*index,1+5*b,5+5*b);
+				sheet.addMergedRegion(cra);	
+				for(int j=0;j<5;j++){
+					sheet.getRow(i+1+44*index).getCell(j+1+5*b).setCellStyle(cs_thousand);
+				}
+			}
+			sheet.getRow(1+44*index).getCell(1+5*b).setCellValue(list_facts.get(b).getFactSname()+"_"+list_facts.get(b).getId().getFactArea());
+			sheet.getRow(2+44*index).getCell(1+5*b).setCellValue(pro.getMachinepower()==null?0:pro.getMachinepower());
+			sheet.getRow(3+44*index).getCell(1+5*b).setCellValue(pro.getEstmodel()==null?0:pro.getEstmodel());
+			sheet.getRow(4+44*index).getCell(1+5*b).setCellValue(pro.getEstpay()==null?0:pro.getEstpay());
+			
+			for(int i=0;i<3;i++){
+				CellRangeAddress cra=new CellRangeAddress(5+44*index,8+44*index,i+5*b,i+5*b);
+				sheet.addMergedRegion(cra);	
+				for(int j=0;j<4;j++){
+					sheet.getRow(5+j+44*index).getCell(i+5*b).setCellStyle(cs_thousand_lyellow);
+				}
+			}
+			sheet.getRow(5+44*index).getCell(1+5*b).setCellValue("總機孔");
+			sheet.getRow(5+44*index).getCell(2+5*b).setCellValue(pro.getTotalhole()==null?0:pro.getTotalhole());
+			for(int i=0;i<list_b_str.size();i++){
+				sheet.getRow(5+i+44*index).getCell(3+5*b).setCellValue(list_b_str.get(i));
+				sheet.getRow(5+i+44*index).getCell(3+5*b).setCellStyle(cs_thousand_lyellow);
+				CellRangeAddress cra=new CellRangeAddress(5+i+44*index,5+i+44*index,4+5*b,5+5*b);
+				sheet.addMergedRegion(cra);
+				for(int j=0;j<2;j++){
+					sheet.getRow(5+i+44*index).getCell(4+j+5*b).setCellStyle(cs_thousand_lyellow);
+				}
+				sheet.getRow(5+i+44*index).getCell(4+5*b).setCellStyle(cs_thousand_lyellow);
+			}
+			sheet.getRow(5+44*index).getCell(4+5*b).setCellValue(pro.getHole()==null?0:pro.getHole());
+			sheet.getRow(6+44*index).getCell(4+5*b).setCellValue(pro.getSample()==null?0:pro.getSample());
+			sheet.getRow(7+44*index).getCell(4+5*b).setCellValue(pro.getAccessories()==null?0:pro.getAccessories());
+			sheet.getRow(8+44*index).getCell(4+5*b).setCellValue(pro.getOther()==null?0:pro.getOther());
+		}//for b
+		
+		
+		
+		
+		//--------------------------------------------------------------------下------------------------------------------------------------------
+		for(int i=0;i<list_c_str.size();i++){
+			sheet.getRow(9+i+44*index).getCell(0).setCellValue(list_c_str.get(i));
+			sheet.getRow(9+i+44*index).getCell(0).setCellStyle(cs);
+			
+			if(list_facts.size()>49){//if sheet2
+				sheet2.getRow(9+i+44*index).getCell(0).setCellValue(list_c_str.get(i));
+				sheet2.getRow(9+i+44*index).getCell(0).setCellStyle(cs);
+			}//if sheet2
+		}						
+		for(int b=0;b<list_facts.size();b++){//for b2
+			WebYieldData ydata=new WebYieldData(0.0,0.0,0.0,0.0,0.0);//合計
+			
+			/*********************************sheet2**************************************************/
+			if(b>49){//if sheet2
+				for(int c=0;c<list_d_str.size();c++){
+					sheet2.getRow(9+44*index).getCell(1+c+5*(b-50)).setCellValue(list_d_str.get(c));
+					sheet2.getRow(9+44*index).getCell(1+c+5*(b-50)).setCellStyle(cs);
+				}
+				List<WebYieldData>list_ydata=list_ydatas.get(b);						
+				for(int c=0;c<days.size();c++){
+					if(c>list_ydata.size()-1){
+						for(int i=0;i<5;i++){
+							sheet2.getRow(10+c+44*index).getCell(1+5*(b-50)+i).setCellStyle(cs);//填充超出今天空的部分
+						}
+						continue;
+					}
+					this.fillYdata(map_style,list_ydata.get(c), sheet2, 10+c+44*index, 1+5*(b-50));	//sheet2下表填充數據									
+					/***********************************************合計******************************************************/
+					this.getTotal(ydata, list_ydata.get(c).getOnModulus()==null?0:list_ydata.get(c).getOnModulus(),
+							      list_ydata.get(c).getPersonnum()==null?0:list_ydata.get(c).getPersonnum(),
+								  list_ydata.get(c).getStandardOutput()==null?0:list_ydata.get(c).getStandardOutput(), 
+								  list_ydata.get(c).getActualYield()==null?0:list_ydata.get(c).getActualYield(),
+								  list_ydata.get(c).getDaycount()==null?0:list_ydata.get(c).getDaycount());
+					
+					if(c==list_ydata.size()-1){
+						this.fillYdata_total(map_style,list_d_str,ydata, sheet2, 10+days.size()+44*index, 1+5*(b-50));//sheet2下表填充合計
+						/*for(int d=0;d<list_d_str.size();d++){
+							if(d==list_d_str.size()-1){
+								sheet2.getRow(10+days.size()+44*index).getCell(1+d+5*(b-50)).setCellStyle(cs_data);
+							}else{
+								sheet2.getRow(10+days.size()+44*index).getCell(1+d+5*(b-50)).setCellStyle(cs);
+							}							
+							sheet2.getRow(11+days.size()+44*index).getCell(1+d+5*(b-50)).setCellStyle(cs);//天數						
+						}
+						CellRangeAddress cra=new CellRangeAddress(11+days.size()+44*index,11+days.size()+44*index,1+5*(b-50),5+5*(b-50));
+						sheet2.addMergedRegion(cra);*/
+					}
+					/***********************************************合計******************************************************/
+				}
+				continue;
+			}//if sheet2
+			/*********************************sheet2**************************************************/
+			
+			for(int c=0;c<list_d_str.size();c++){
+				sheet.getRow(9+44*index).getCell(1+c+5*b).setCellValue(list_d_str.get(c));
+				sheet.getRow(9+44*index).getCell(1+c+5*b).setCellStyle(cs);
+			}
+			List<WebYieldData>list_ydata=list_ydatas.get(b);						
+			for(int c=0;c<days.size();c++){
+				if(c>list_ydata.size()-1){
+					for(int i=0;i<5;i++){
+						sheet.getRow(10+c+44*index).getCell(1+5*b+i).setCellStyle(cs);//填充超出今天空的部分
+					}					
+					continue;
+				}
+				this.fillYdata(map_style,list_ydata.get(c), sheet, 10+c+44*index, 1+5*b);//下表填充數據
+				
+				/***********************************************合計******************************************************/
+				this.getTotal(ydata, list_ydata.get(c).getOnModulus()==null?0:list_ydata.get(c).getOnModulus(),
+						      list_ydata.get(c).getPersonnum()==null?0:list_ydata.get(c).getPersonnum(),
+							  list_ydata.get(c).getStandardOutput()==null?0:list_ydata.get(c).getStandardOutput(), 
+							  list_ydata.get(c).getActualYield()==null?0:list_ydata.get(c).getActualYield(),
+							  list_ydata.get(c).getDaycount()==null?0:list_ydata.get(c).getDaycount());
+				
+				if(c==list_ydata.size()-1){
+					this.fillYdata_total(map_style,list_d_str,ydata, sheet, 10+days.size()+44*index, 1+5*b);//填充合計
+					/*for(int d=0;d<list_d_str.size();d++){
+						if(d==list_d_str.size()-1){
+							sheet.getRow(10+days.size()+44*index).getCell(1+d+5*b).setCellStyle(cs_data);
+						}else{
+							sheet.getRow(10+days.size()+44*index).getCell(1+d+5*b).setCellStyle(cs);
+						}						
+						sheet.getRow(11+days.size()+44*index).getCell(1+d+5*b).setCellStyle(cs);//天數						
+					}
+					CellRangeAddress cra=new CellRangeAddress(11+days.size()+44*index,11+days.size()+44*index,1+5*b,5+5*b);
+					sheet.addMergedRegion(cra);*/
+				}
+				/***********************************************合計******************************************************/
+			}
+		}//for b2						
+	}		
+	public void fillYdata(Map<String,Object> map_style,WebYieldData ydata,HSSFSheet sheet,int x,int y){
+		HSSFCellStyle temp=(HSSFCellStyle)map_style.get("cs");
+		if(ydata.getWorkorholiday()==null||ydata.getWorkorholiday().equals("")){
+			temp=(HSSFCellStyle)map_style.get("cs_font_red");
+			for(int i=0;i<5;i++){
+				sheet.getRow(x).getCell(y+i).setCellValue("無數據");
+			}
+		}else{
+			if(ydata.getWorkorholiday().equals("0")){				
+				sheet.getRow(x).getCell(y).setCellValue(ydata.getOnModulus()==null?0.0:ydata.getOnModulus());
+				sheet.getRow(x).getCell(y+1).setCellValue(ydata.getPersonnum()==null?0.0:ydata.getPersonnum());
+				sheet.getRow(x).getCell(y+2).setCellValue(ydata.getStandardOutput()==null?0.0:ydata.getStandardOutput());
+				sheet.getRow(x).getCell(y+3).setCellValue(ydata.getActualYield()==null?0.0:ydata.getActualYield());
+				sheet.getRow(x).getCell(y+4).setCellValue(GlobalMethod.division(ydata.getActualYield(), ydata.getStandardOutput()));
+			}
+			if(ydata.getWorkorholiday().equals("1")){
+				temp=(HSSFCellStyle)map_style.get("cs_font_blue");
+				for(int i=0;i<5;i++){
+					sheet.getRow(x).getCell(y+i).setCellValue("假日");
+				}
+			}
+			if(ydata.getWorkorholiday().equals("2")){
+				temp=(HSSFCellStyle)map_style.get("cs_font_green");
+				for(int i=0;i<5;i++){
+					sheet.getRow(x).getCell(y+i).setCellValue("未排產");
+				}
+			}
+		}
+		for(int i=0;i<5;i++){			
+			if(ydata.getWorkorholiday()!=null&&ydata.getWorkorholiday().equals("0")){
+				if(i==1){
+					temp=(HSSFCellStyle)map_style.get("cs_thousand_person");
+				}
+				else if(i==4){
+					temp=(HSSFCellStyle)map_style.get("cs_data");
+				}else{
+					temp=(HSSFCellStyle)map_style.get("cs_thousand") ;
+				}
+			}		
+			sheet.getRow(x).getCell(y+i).setCellStyle(temp);
+			
+		}
+	}
+	public void fillYdata_total(Map<String,Object> map_style,List<String>list_d_str,WebYieldData ydata,HSSFSheet sheet,int x,int y){
+		HSSFCellStyle temp=(HSSFCellStyle)map_style.get("cs");
+		HSSFCellStyle cs_thousand=(HSSFCellStyle)map_style.get("cs_thousand");
+		sheet.getRow(x).getCell(y).setCellValue(ydata.getOnModulus());
+		sheet.getRow(x).getCell(y+1).setCellValue(ydata.getPersonnum());
+		sheet.getRow(x).getCell(y+2).setCellValue(ydata.getStandardOutput());
+		sheet.getRow(x).getCell(y+3).setCellValue(ydata.getActualYield());
+		sheet.getRow(x).getCell(y+4).setCellValue(GlobalMethod.division(ydata.getActualYield(), ydata.getStandardOutput()));
+		sheet.getRow(x+1).getCell(y).setCellValue(ydata.getDaycount());	
+		
+		for(int i=0;i<list_d_str.size();i++){
+			if(i==1){
+				temp=(HSSFCellStyle)map_style.get("cs_thousand_person");
+			}else if(i==4){
+				temp=(HSSFCellStyle)map_style.get("cs_data");
+			}else{
+				temp=(HSSFCellStyle)map_style.get("cs_thousand") ;
+			}
+			sheet.getRow(x).getCell(y+i).setCellStyle(temp);
+			sheet.getRow(x+1).getCell(y+i).setCellStyle(cs_thousand);
+		}
+		CellRangeAddress cra=new CellRangeAddress(x+1,x+1,y,4+y);
+		sheet.addMergedRegion(cra);
+		
+	}
+	
+	
+	
+	
+	//---------------------------------------------------------------Excel2007---------------------------------------------------------------------------
+	//---------------------------------------------------------------------------------------------------------------------------------------------------
+	public XSSFWorkbook init_2007(List<String>list_months,List<WebFact>list_facts,Map<String,Object>map_a,Map<String,Object>map_b,
+			List<String>list_a_str,List<String>list_b_str,List<String>list_d_str) throws IOException, ParseException{
+		XSSFWorkbook wb=new XSSFWorkbook();
+		Map<String,Object>map_style=this.findStyle2(wb);		
+		XSSFCellStyle cs_title=(XSSFCellStyle)map_style.get("cs_title");
+		XSSFSheet sheet=wb.createSheet("sheet1");
+		XSSFSheet sheet2=null;		
+		for(int i=0;i<50*list_months.size();i++){
+			sheet.createRow(i);
+			for(int j=0;j<list_facts.size()*5+1;j++){
+				/*if(j>251){					
+					continue;
+				}*/
+				sheet.getRow(i).createCell(j);
+			}
+		}
+		/*if(list_facts.size()>49){
+			sheet2=wb.createSheet("sheet2");
+			for(int i=0;i<50*list_months.size();i++){
+				sheet2.createRow(i);
+				for(int j=0;j<list_facts.size()*5-245;j++){
+					if(j>251){					
+						continue;
+					}
+					sheet2.getRow(i).createCell(j);
+				}
+			}
+			sheet2.setColumnWidth(0, 4500);
+		}*/
+		
+		sheet.setColumnWidth(0, 4500);
+		
+		sheet.getRow(0).getCell(0).setCellValue("加久各工廠每日產量達成狀況匯總表");
+		CellRangeAddress cra_title = new CellRangeAddress(0, 0, 0, 12);
+		sheet.addMergedRegion(cra_title);
+		for(int a=0;a<6;a++){
+			sheet.getRow(0).getCell(a).setCellStyle(cs_title);
+		}		
+		this.init_2007(sheet,sheet2, map_style, list_facts,list_months,map_a,map_b,list_a_str,list_b_str,list_d_str);
+		if(factcodelist!=null&&factcodelist.size()>0){
+			this.fcodeTotal_2007(wb,map_style, factcodelist, list_months);
+		}
+		
+		return wb;
+	}
+	public void init_2007(XSSFSheet sheet,XSSFSheet sheet2,Map<String,Object> map_style, List<WebFact> list_facts,List<String> list_months,Map<String,Object>map_a,Map<String,Object>map_b,
+			List<String>list_a_str,List<String>list_b_str,List<String>list_d_str) throws IOException, ParseException {							
+		//XSSFCellStyle cs=(XSSFCellStyle)map_style.get("cs");
+		List<String>list_c_str=new ArrayList<String>();	
+				
+		for(int i=0;i<list_months.size();i++){
+			list_c_str.clear();
+			List<String>days=GlobalMethod.findDaysOfMonth(list_months.get(i),"MM/dd");
+			list_c_str.clear();
+			list_c_str.add("日期");
+			for(String day:days){
+				list_c_str.add(day);
+			}
+			list_c_str.add("合計");
+			list_c_str.add("工作天數");			
+			List<Webestproduct>list_pros=(List<Webestproduct>)map_a.get(list_months.get(i));
+			List<List<WebYieldData>>list_ydatas=(List<List<WebYieldData>>)map_b.get(list_months.get(i));												
+			this.init_2007(sheet,sheet2, map_style, list_facts, list_a_str, list_b_str, list_c_str,list_d_str,days,list_pros,list_ydatas,i);						
+		}				
+		
+	}
+	
+	public void init_2007(XSSFSheet sheet,XSSFSheet sheet2,Map<String,Object> map_style, List<WebFact> list_facts,
+			List<String>list_a_str,List<String>list_b_str,List<String>list_c_str,List<String>list_d_str,List<String>days,
+			List<Webestproduct>list_pros,List<List<WebYieldData>>list_ydatas,int index){
+		
+		XSSFCellStyle cs=(XSSFCellStyle)map_style.get("cs");				
+		XSSFCellStyle cs_thousand=(XSSFCellStyle)map_style.get("cs_thousand");
+		XSSFCellStyle cs_thousand_lyellow=(XSSFCellStyle)map_style.get("cs_thousand_lyellow");	
+		for(int a=0;a<list_a_str.size();a++){
+			sheet.getRow(a+1+44*index).getCell(0).setCellValue(list_a_str.get(a));
+			sheet.getRow(a+1+44*index).getCell(0).setCellStyle(cs);
+			
+			/*if(list_facts.size()>49){//if sheet2
+				sheet2.getRow(a+1+44*index).getCell(0).setCellValue(list_a_str.get(a));
+				sheet2.getRow(a+1+44*index).getCell(0).setCellStyle(cs);
+			}//if sheet2
+*/		}				
+		for(int b=0;b<list_facts.size();b++){//for b
+			/*********************************sheet2**************************************************/
+			/*if(b>49){// if sheet2
+				Webestproduct pro=list_pros.get(b);			
+				for(int i=0;i<4;i++){
+					CellRangeAddress cra=new CellRangeAddress(i+1+44*index,i+1+44*index,1+5*(b-50),5+5*(b-50));
+					sheet2.addMergedRegion(cra);	
+					for(int j=0;j<5;j++){
+						sheet2.getRow(i+1+44*index).getCell(j+1+5*(b-50)).setCellStyle(cs_thousand);
+					}
+				}
+				sheet2.getRow(1+44*index).getCell(1+5*(b-50)).setCellValue(list_facts.get(b).getFactSname()+"_"+list_facts.get(b).getId().getFactArea());
+				sheet2.getRow(2+44*index).getCell(1+5*(b-50)).setCellValue(pro.getMachinepower()==null?0:pro.getMachinepower());
+				sheet2.getRow(3+44*index).getCell(1+5*(b-50)).setCellValue(pro.getEstmodel()==null?0:pro.getEstmodel());
+				sheet2.getRow(4+44*index).getCell(1+5*(b-50)).setCellValue(pro.getEstpay()==null?0:pro.getEstpay());
+				
+				for(int i=0;i<3;i++){
+					CellRangeAddress cra=new CellRangeAddress(5+44*index,8+44*index,i+5*(b-50),i+5*(b-50));
+					sheet2.addMergedRegion(cra);	
+					for(int j=0;j<4;j++){
+						sheet2.getRow(5+j+44*index).getCell(i+5*(b-50)).setCellStyle(cs_thousand_lyellow);
+					}
+				}
+				sheet2.getRow(5+44*index).getCell(1+5*(b-50)).setCellValue("總機孔");
+				sheet2.getRow(5+44*index).getCell(2+5*(b-50)).setCellValue(pro.getTotalhole()==null?0:pro.getTotalhole());
+				for(int i=0;i<list_b_str.size();i++){
+					sheet2.getRow(5+i+44*index).getCell(3+5*(b-50)).setCellValue(list_b_str.get(i));
+					sheet2.getRow(5+i+44*index).getCell(3+5*(b-50)).setCellStyle(cs_thousand_lyellow);
+					CellRangeAddress cra=new CellRangeAddress(5+i+44*index,5+i+44*index,4+5*(b-50),5+5*(b-50));
+					sheet2.addMergedRegion(cra);
+					for(int j=0;j<2;j++){
+						sheet2.getRow(5+i+44*index).getCell(4+j+5*(b-50)).setCellStyle(cs_thousand_lyellow);
+					}
+					sheet2.getRow(5+i+44*index).getCell(4+5*(b-50)).setCellStyle(cs_thousand_lyellow);
+				}
+				sheet2.getRow(5+44*index).getCell(4+5*(b-50)).setCellValue(pro.getHole()==null?0:pro.getHole());
+				sheet2.getRow(6+44*index).getCell(4+5*(b-50)).setCellValue(pro.getSample()==null?0:pro.getSample());
+				sheet2.getRow(7+44*index).getCell(4+5*(b-50)).setCellValue(pro.getAccessories()==null?0:pro.getAccessories());
+				sheet2.getRow(8+44*index).getCell(4+5*(b-50)).setCellValue(pro.getOther()==null?0:pro.getOther());
+				continue;
+			}//if sheet2
+*/			/*********************************sheet2**************************************************/
+			
+			Webestproduct pro=list_pros.get(b);			
+			for(int i=0;i<4;i++){
+				CellRangeAddress cra=new CellRangeAddress(i+1+44*index,i+1+44*index,1+5*b,5+5*b);
+				sheet.addMergedRegion(cra);	
+				for(int j=0;j<5;j++){
+					sheet.getRow(i+1+44*index).getCell(j+1+5*b).setCellStyle(cs_thousand);
+				}
+			}
+			sheet.getRow(1+44*index).getCell(1+5*b).setCellValue(list_facts.get(b).getFactSname()+"_"+list_facts.get(b).getId().getFactArea());
+			sheet.getRow(2+44*index).getCell(1+5*b).setCellValue(pro.getMachinepower()==null?0:pro.getMachinepower());
+			sheet.getRow(3+44*index).getCell(1+5*b).setCellValue(pro.getEstmodel()==null?0:pro.getEstmodel());
+			sheet.getRow(4+44*index).getCell(1+5*b).setCellValue(pro.getEstpay()==null?0:pro.getEstpay());
+			
+			for(int i=0;i<3;i++){
+				CellRangeAddress cra=new CellRangeAddress(5+44*index,8+44*index,i+5*b,i+5*b);
+				sheet.addMergedRegion(cra);	
+				for(int j=0;j<4;j++){
+					sheet.getRow(5+j+44*index).getCell(i+5*b).setCellStyle(cs_thousand_lyellow);
+				}
+			}
+			sheet.getRow(5+44*index).getCell(1+5*b).setCellValue("總機孔");
+			sheet.getRow(5+44*index).getCell(2+5*b).setCellValue(pro.getTotalhole()==null?0:pro.getTotalhole());
+			for(int i=0;i<list_b_str.size();i++){
+				sheet.getRow(5+i+44*index).getCell(3+5*b).setCellValue(list_b_str.get(i));
+				sheet.getRow(5+i+44*index).getCell(3+5*b).setCellStyle(cs_thousand_lyellow);
+				CellRangeAddress cra=new CellRangeAddress(5+i+44*index,5+i+44*index,4+5*b,5+5*b);
+				sheet.addMergedRegion(cra);
+				for(int j=0;j<2;j++){
+					sheet.getRow(5+i+44*index).getCell(4+j+5*b).setCellStyle(cs_thousand_lyellow);
+				}
+				sheet.getRow(5+i+44*index).getCell(4+5*b).setCellStyle(cs_thousand_lyellow);
+			}
+			sheet.getRow(5+44*index).getCell(4+5*b).setCellValue(pro.getHole()==null?0:pro.getHole());
+			sheet.getRow(6+44*index).getCell(4+5*b).setCellValue(pro.getSample()==null?0:pro.getSample());
+			sheet.getRow(7+44*index).getCell(4+5*b).setCellValue(pro.getAccessories()==null?0:pro.getAccessories());
+			sheet.getRow(8+44*index).getCell(4+5*b).setCellValue(pro.getOther()==null?0:pro.getOther());
+		}//for b
+		
+		
+		
+		
+		//--------------------------------------------------------------------下------------------------------------------------------------------
+		for(int i=0;i<list_c_str.size();i++){
+			sheet.getRow(9+i+44*index).getCell(0).setCellValue(list_c_str.get(i));
+			sheet.getRow(9+i+44*index).getCell(0).setCellStyle(cs);
+			
+			/*if(list_facts.size()>49){//if sheet2
+				sheet2.getRow(9+i+44*index).getCell(0).setCellValue(list_c_str.get(i));
+				sheet2.getRow(9+i+44*index).getCell(0).setCellStyle(cs);
+			}//if sheet2
+*/		}						
+		for(int b=0;b<list_facts.size();b++){//for b2
+			WebYieldData ydata=new WebYieldData(0.0,0.0,0.0,0.0,0.0);//合計
+			
+			/*********************************sheet2**************************************************/
+			/*if(b>49){//if sheet2
+				for(int c=0;c<list_d_str.size();c++){
+					sheet2.getRow(9+44*index).getCell(1+c+5*(b-50)).setCellValue(list_d_str.get(c));
+					sheet2.getRow(9+44*index).getCell(1+c+5*(b-50)).setCellStyle(cs);
+				}
+				List<WebYieldData>list_ydata=list_ydatas.get(b);						
+				for(int c=0;c<days.size();c++){
+					if(c>list_ydata.size()-1){
+						for(int i=0;i<5;i++){
+							sheet2.getRow(10+c+44*index).getCell(1+5*(b-50)+i).setCellStyle(cs);//填充超出今天空的部分
+						}
+						continue;
+					}
+					this.fillYdata_2007(map_style,list_ydata.get(c), sheet2, 10+c+44*index, 1+5*(b-50));	//sheet2下表填充數據									
+					*//***********************************************合計******************************************************//*
+					this.getTotal(ydata, list_ydata.get(c).getOnModulus()==null?0:list_ydata.get(c).getOnModulus(),
+							      list_ydata.get(c).getPersonnum()==null?0:list_ydata.get(c).getPersonnum(),
+								  list_ydata.get(c).getStandardOutput()==null?0:list_ydata.get(c).getStandardOutput(), 
+								  list_ydata.get(c).getActualYield()==null?0:list_ydata.get(c).getActualYield(),
+								  list_ydata.get(c).getDaycount()==null?0:list_ydata.get(c).getDaycount());
+					
+					if(c==list_ydata.size()-1){
+						this.fillYdata_total_2007(map_style,list_d_str,ydata, sheet2, 10+days.size()+44*index, 1+5*(b-50));//sheet2下表填充合計						
+					}
+					*//***********************************************合計******************************************************//*
+				}
+				continue;
+			}//if sheet2
+*/			/*********************************sheet2**************************************************/
+			
+			for(int c=0;c<list_d_str.size();c++){
+				sheet.getRow(9+44*index).getCell(1+c+5*b).setCellValue(list_d_str.get(c));
+				sheet.getRow(9+44*index).getCell(1+c+5*b).setCellStyle(cs);
+			}
+			List<WebYieldData>list_ydata=list_ydatas.get(b);						
+			for(int c=0;c<days.size();c++){
+				if(c>list_ydata.size()-1){
+					for(int i=0;i<5;i++){
+						sheet.getRow(10+c+44*index).getCell(1+5*b+i).setCellStyle(cs);//填充超出今天空的部分
+					}					
+					continue;
+				}
+				this.fillYdata_2007(map_style,list_ydata.get(c), sheet, 10+c+44*index, 1+5*b);//下表填充數據
+				
+				/***********************************************合計******************************************************/
+				this.getTotal(ydata, list_ydata.get(c).getOnModulus()==null?0:list_ydata.get(c).getOnModulus(),
+						      list_ydata.get(c).getPersonnum()==null?0:list_ydata.get(c).getPersonnum(),
+							  list_ydata.get(c).getStandardOutput()==null?0:list_ydata.get(c).getStandardOutput(), 
+							  list_ydata.get(c).getActualYield()==null?0:list_ydata.get(c).getActualYield(),
+							  list_ydata.get(c).getDaycount()==null?0:list_ydata.get(c).getDaycount());
+				
+				if(c==list_ydata.size()-1){
+					this.fillYdata_total_2007(map_style,list_d_str,ydata, sheet, 10+days.size()+44*index, 1+5*b);//填充合計
+				}
+				/***********************************************合計******************************************************/
+			}
+		}//for b2						
+	}		
+	public void fillYdata_2007(Map<String,Object> map_style,WebYieldData ydata,XSSFSheet sheet,int x,int y){
+		XSSFCellStyle temp=(XSSFCellStyle)map_style.get("cs");
+		if(ydata.getWorkorholiday()==null||ydata.getWorkorholiday().equals("")){
+			temp=(XSSFCellStyle)map_style.get("cs_font_red");
+			for(int i=0;i<5;i++){
+				sheet.getRow(x).getCell(y+i).setCellValue("無數據");
+			}
+		}else{
+			if(ydata.getWorkorholiday().equals("0")){				
+				sheet.getRow(x).getCell(y).setCellValue(ydata.getOnModulus());
+				sheet.getRow(x).getCell(y+1).setCellValue(ydata.getPersonnum());
+				sheet.getRow(x).getCell(y+2).setCellValue(ydata.getStandardOutput());
+				sheet.getRow(x).getCell(y+3).setCellValue(ydata.getActualYield());
+				sheet.getRow(x).getCell(y+4).setCellValue(GlobalMethod.division(ydata.getActualYield(), ydata.getStandardOutput()));
+			}
+			if(ydata.getWorkorholiday().equals("1")){
+				temp=(XSSFCellStyle)map_style.get("cs_font_blue");
+				for(int i=0;i<5;i++){
+					sheet.getRow(x).getCell(y+i).setCellValue("假日");
+				}
+			}
+			if(ydata.getWorkorholiday().equals("2")){
+				temp=(XSSFCellStyle)map_style.get("cs_font_green");
+				for(int i=0;i<5;i++){
+					sheet.getRow(x).getCell(y+i).setCellValue("未排產");
+				}
+			}
+		}
+		for(int i=0;i<5;i++){			
+			if(ydata.getWorkorholiday()!=null&&ydata.getWorkorholiday().equals("0")){
+				if(i==1){
+					temp=(XSSFCellStyle)map_style.get("cs_thousand_person");
+				}
+				else if(i==4){
+					temp=(XSSFCellStyle)map_style.get("cs_data");
+				}else{
+					temp=(XSSFCellStyle)map_style.get("cs_thousand") ;
+				}
+			}		
+			sheet.getRow(x).getCell(y+i).setCellStyle(temp);
+			
+		}
+	}
+	public void fillYdata_total_2007(Map<String,Object> map_style,List<String>list_d_str,WebYieldData ydata,XSSFSheet sheet,int x,int y){
+		XSSFCellStyle temp=(XSSFCellStyle)map_style.get("cs");
+		XSSFCellStyle cs_thousand=(XSSFCellStyle)map_style.get("cs_thousand");
+		sheet.getRow(x).getCell(y).setCellValue(ydata.getOnModulus());
+		sheet.getRow(x).getCell(y+1).setCellValue(ydata.getPersonnum());
+		sheet.getRow(x).getCell(y+2).setCellValue(ydata.getStandardOutput());
+		sheet.getRow(x).getCell(y+3).setCellValue(ydata.getActualYield());
+		sheet.getRow(x).getCell(y+4).setCellValue(GlobalMethod.division(ydata.getActualYield(), ydata.getStandardOutput()));
+		sheet.getRow(x+1).getCell(y).setCellValue(ydata.getDaycount());	
+		
+		for(int i=0;i<list_d_str.size();i++){
+			if(i==1){
+				temp=(XSSFCellStyle)map_style.get("cs_thousand_person");
+			}else if(i==4){
+				temp=(XSSFCellStyle)map_style.get("cs_data");
+			}else{
+				temp=(XSSFCellStyle)map_style.get("cs_thousand") ;
+			}
+			sheet.getRow(x).getCell(y+i).setCellStyle(temp);
+			sheet.getRow(x+1).getCell(y+i).setCellStyle(cs_thousand);
+		}
+		CellRangeAddress cra=new CellRangeAddress(x+1,x+1,y,4+y);
+		sheet.addMergedRegion(cra);
+		
+	}
+	
+	
+	public void fcodeTotal(HSSFWorkbook wb,Map<String,Object>map_style,List<String>factcodes,List<String>months) throws ParseException{
+		List<String>list_head2=new ArrayList<String>();
+		HSSFCellStyle cs_font_bgyellow=(HSSFCellStyle)map_style.get("cs_font_bgyellow");
+		HSSFCellStyle cs_thousand=(HSSFCellStyle)map_style.get("cs_thousand");
+		list_head2.add("標準產量");
+		list_head2.add("實際產量");
+		
+			HSSFSheet sheet=wb.createSheet("統計");
+			sheet.setColumnWidth(0, 4500);
+			/***********************初始化行，列*************************/
+			for(int a=0;a<35*(1+months.size());a++){
+				sheet.createRow(a);
+				for(int b=0;b<factcodes.size()*list_head2.size()+1;b++){
+					sheet.getRow(a).createCell(b);
+				}
+			}
+			/***********************初始化行，列*************************/
+			int index=0;
+			for(int a=0;a<months.size();a++){//for a
+				index=35*a;
+				List<String>days=GlobalMethod.findDaysOfMonth(months.get(a),"yyyyMMdd");
+				List<String>list_head=GlobalMethod.findDaysOfMonth(months.get(a),"MM/dd");				
+				list_head.add("合計");
+				List<List<VWebydatabyfcode>>list_a=new ArrayList<List<VWebydatabyfcode>>();
+				List<VWebydatabyfcode>list_ydatas2=dataSer.findByYymm2(months.get(a));
+				for(String factcode:factcodes){//for b
+					List<VWebydatabyfcode>list_a1=new ArrayList<VWebydatabyfcode>();
+					for(String day:days){
+						list_a1.add(new VWebydatabyfcode(new VWebydatabyfcodeId(factcode,day),new BigDecimal(0.0),new BigDecimal(0.0)));
+					}
+					list_a.add(list_a1);
+				}//for b
+				for(List<VWebydatabyfcode>list_a1:list_a){//for b2
+					for(int i=0;i<list_a1.size();i++){
+						VWebydatabyfcode obj=list_a1.get(i);
+						for(VWebydatabyfcode obj2:list_ydatas2){
+							if(obj.getId().getFactCode().equals(obj2.getId().getFactCode())&&
+							   obj.getId().getYymmdd().equals(obj2.getId().getYymmdd())){
+								list_a1.remove(i);
+								list_a1.add(i,obj2);
+							}
+						}
+					}
+				}//for b2
+				
+				/********************************填充表格********************************************/
+				sheet.getRow(0+index).getCell(0).setCellValue("日期");
+				CellRangeAddress cra_date=new CellRangeAddress(0+index,1+index,0,0);
+				sheet.addMergedRegion(cra_date);
+				for(int i=0;i<2;i++){
+					sheet.getRow(i+index).getCell(0).setCellStyle(cs_font_bgyellow);
+				}
+				for(int b=0;b<list_head.size();b++){
+					sheet.getRow(b+2+index).getCell(0).setCellValue(list_head.get(b));
+					sheet.getRow(b+2+index).getCell(0).setCellStyle(cs_font_bgyellow);
+				}
+				
+				
+				for(int b=0;b<factcodes.size();b++){
+					sheet.getRow(0+index).getCell(1+list_head2.size()*b).setCellValue(factcodes.get(b));
+					CellRangeAddress cra=new CellRangeAddress(0+index,0+index,1+list_head2.size()*b,2+list_head2.size()*b);
+					sheet.addMergedRegion(cra);
+					for(int c=0;c<list_head2.size();c++){
+						sheet.getRow(0+index).getCell(c+1+list_head2.size()*b).setCellStyle(cs_font_bgyellow);
+						sheet.getRow(1+index).getCell(c+1+list_head2.size()*b).setCellValue(list_head2.get(c));
+						sheet.getRow(1+index).getCell(c+1+list_head2.size()*b).setCellStyle(cs_font_bgyellow);
+					}					
+				}
+								
+				for(int b=0;b<list_a.size();b++){
+					Double sum_StandardOutput=0.0;
+					Double sum_ActualYield=0.0;
+					List<VWebydatabyfcode>list_a1=list_a.get(b);
+					for(int c=0;c<list_a1.size();c++){
+						sheet.getRow(2+c+index).getCell(1+list_head2.size()*b).setCellValue(list_a1.get(c).getStandardOutput().doubleValue());
+						sheet.getRow(2+c+index).getCell(2+list_head2.size()*b).setCellValue(list_a1.get(c).getActualYield().doubleValue());
+						sum_StandardOutput=sum_StandardOutput+list_a1.get(c).getStandardOutput().doubleValue();
+						sum_ActualYield=sum_ActualYield+list_a1.get(c).getActualYield().doubleValue();
+                        if(c==list_a1.size()-1){
+                        	sheet.getRow(3+c+index).getCell(1+list_head2.size()*b).setCellValue(sum_StandardOutput);
+    						sheet.getRow(3+c+index).getCell(2+list_head2.size()*b).setCellValue(sum_ActualYield);
+    						sum_StandardOutput=null;
+    						sum_ActualYield=null;
+						}
+						for(int d=0;d<list_head2.size();d++){
+							sheet.getRow(2+c+index).getCell(1+d+list_head2.size()*b).setCellStyle(cs_thousand);
+							sheet.getRow(2+c+index).getCell(1+d+list_head2.size()*b).setCellStyle(cs_thousand);
+							if(c==list_a1.size()-1){
+								sheet.getRow(3+c+index).getCell(1+d+list_head2.size()*b).setCellStyle(cs_thousand);
+								sheet.getRow(3+c+index).getCell(1+d+list_head2.size()*b).setCellStyle(cs_thousand);
+							}
+						}
+						
+					}
+				}
+				/********************************填充表格********************************************/											
+			}//for a												
+	}
+	public void fcodeTotal_2007(XSSFWorkbook wb,Map<String,Object>map_style,List<String>factcodes,List<String>months) throws ParseException{
+		List<String>list_head2=new ArrayList<String>();
+		XSSFCellStyle cs_font_bgyellow=(XSSFCellStyle)map_style.get("cs_font_bgyellow");
+		XSSFCellStyle cs_thousand=(XSSFCellStyle)map_style.get("cs_thousand");
+		list_head2.add("標準產量");
+		list_head2.add("實際產量");
+		
+			XSSFSheet sheet=wb.createSheet("統計");
+			sheet.setColumnWidth(0, 4500);
+			/***********************初始化行，列*************************/
+			for(int a=0;a<35*(1+months.size());a++){
+				sheet.createRow(a);
+				for(int b=0;b<factcodes.size()*list_head2.size()+1;b++){
+					sheet.getRow(a).createCell(b);
+				}
+			}
+			/***********************初始化行，列*************************/
+			int index=0;
+			for(int a=0;a<months.size();a++){//for a
+				index=35*a;
+				List<String>days=GlobalMethod.findDaysOfMonth(months.get(a),"yyyyMMdd");
+				List<String>list_head=GlobalMethod.findDaysOfMonth(months.get(a),"MM/dd");				
+				list_head.add("合計");
+				List<List<VWebydatabyfcode>>list_a=new ArrayList<List<VWebydatabyfcode>>();
+				List<VWebydatabyfcode>list_ydatas2=dataSer.findByYymm2(months.get(a));
+				for(String factcode:factcodes){//for b
+					List<VWebydatabyfcode>list_a1=new ArrayList<VWebydatabyfcode>();
+					for(String day:days){
+						list_a1.add(new VWebydatabyfcode(new VWebydatabyfcodeId(factcode,day),new BigDecimal(0.0),new BigDecimal(0.0)));
+					}
+					list_a.add(list_a1);
+				}//for b
+				for(List<VWebydatabyfcode>list_a1:list_a){//for b2
+					for(int i=0;i<list_a1.size();i++){
+						VWebydatabyfcode obj=list_a1.get(i);
+						for(VWebydatabyfcode obj2:list_ydatas2){
+							if(obj.getId().getFactCode().equals(obj2.getId().getFactCode())&&
+							   obj.getId().getYymmdd().equals(obj2.getId().getYymmdd())){
+								list_a1.remove(i);
+								list_a1.add(i,obj2);
+							}
+						}
+					}
+				}//for b2
+				
+				/********************************填充表格********************************************/
+				sheet.getRow(0+index).getCell(0).setCellValue("日期");
+				CellRangeAddress cra_date=new CellRangeAddress(0+index,1+index,0,0);
+				sheet.addMergedRegion(cra_date);
+				for(int i=0;i<2;i++){
+					sheet.getRow(i+index).getCell(0).setCellStyle(cs_font_bgyellow);
+				}
+				for(int b=0;b<list_head.size();b++){
+					sheet.getRow(b+2+index).getCell(0).setCellValue(list_head.get(b));
+					sheet.getRow(b+2+index).getCell(0).setCellStyle(cs_font_bgyellow);
+				}
+				
+				
+				for(int b=0;b<factcodes.size();b++){
+					sheet.getRow(0+index).getCell(1+list_head2.size()*b).setCellValue(factcodes.get(b));
+					CellRangeAddress cra=new CellRangeAddress(0+index,0+index,1+list_head2.size()*b,2+list_head2.size()*b);
+					sheet.addMergedRegion(cra);
+					for(int c=0;c<list_head2.size();c++){
+						sheet.getRow(0+index).getCell(c+1+list_head2.size()*b).setCellStyle(cs_font_bgyellow);
+						sheet.getRow(1+index).getCell(c+1+list_head2.size()*b).setCellValue(list_head2.get(c));
+						sheet.getRow(1+index).getCell(c+1+list_head2.size()*b).setCellStyle(cs_font_bgyellow);
+					}					
+				}
+								
+				for(int b=0;b<list_a.size();b++){
+					Double sum_StandardOutput=0.0;
+					Double sum_ActualYield=0.0;
+					List<VWebydatabyfcode>list_a1=list_a.get(b);
+					for(int c=0;c<list_a1.size();c++){
+						sheet.getRow(2+c+index).getCell(1+list_head2.size()*b).setCellValue(list_a1.get(c).getStandardOutput().doubleValue());
+						sheet.getRow(2+c+index).getCell(2+list_head2.size()*b).setCellValue(list_a1.get(c).getActualYield().doubleValue());
+						sum_StandardOutput=sum_StandardOutput+list_a1.get(c).getStandardOutput().doubleValue();
+						sum_ActualYield=sum_ActualYield+list_a1.get(c).getActualYield().doubleValue();
+                        if(c==list_a1.size()-1){
+                        	sheet.getRow(3+c+index).getCell(1+list_head2.size()*b).setCellValue(sum_StandardOutput);
+    						sheet.getRow(3+c+index).getCell(2+list_head2.size()*b).setCellValue(sum_ActualYield);
+    						sum_StandardOutput=null;
+    						sum_ActualYield=null;
+						}
+						for(int d=0;d<list_head2.size();d++){
+							sheet.getRow(2+c+index).getCell(1+d+list_head2.size()*b).setCellStyle(cs_thousand);
+							sheet.getRow(2+c+index).getCell(1+d+list_head2.size()*b).setCellStyle(cs_thousand);
+							if(c==list_a1.size()-1){
+								sheet.getRow(3+c+index).getCell(1+d+list_head2.size()*b).setCellStyle(cs_thousand);
+								sheet.getRow(3+c+index).getCell(1+d+list_head2.size()*b).setCellStyle(cs_thousand);
+							}
+						}
+						
+					}
+				}
+				/********************************填充表格********************************************/											
+			}//for a												
+	}
+	
+	public WebYieldData getTotal(WebYieldData ydata,Double onModulus,Double personnum,Double standardOutput,Double actualYield,Double daycount){
+		ydata.setOnModulus(ydata.getOnModulus()+onModulus);
+		ydata.setPersonnum(ydata.getPersonnum()+personnum);
+		ydata.setStandardOutput(ydata.getStandardOutput()+standardOutput);
+		ydata.setActualYield(ydata.getActualYield()+actualYield);
+		ydata.setDaycount(ydata.getDaycount()+daycount);
+		return ydata;
+	}
 	public Map<String,Object>findStyles(HSSFWorkbook wb){
 		Map<String,Object>map=new HashMap<String,Object>();
 		// 單元格樣式
@@ -5162,7 +3714,7 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 		cs_font_red.setBorderTop(HSSFCellStyle.BORDER_THIN);
 		map.put("cs_font_red", cs_font_red);
 
-		// 粗字體
+		// 藍字體
 		HSSFCellStyle cs_font_blue = wb.createCellStyle();
 		HSSFFont font_blue = wb.createFont();
 		font_blue.setFontHeightInPoints((short) 10);
@@ -5177,7 +3729,7 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 		cs_font_blue.setBorderTop(HSSFCellStyle.BORDER_THIN);
 		map.put("cs_font_blue", cs_font_blue);
 
-		// 粗字體
+		// 綠字體
 		HSSFCellStyle cs_font_green = wb.createCellStyle();
 		HSSFFont font_green = wb.createFont();
 		font_green.setFontHeightInPoints((short) 10);
@@ -5210,12 +3762,12 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 		HSSFCellStyle cs_title = wb.createCellStyle();
 		HSSFFont font_title = wb.createFont();
 		font_title.setFontHeightInPoints((short) 20);
-		font_title.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);// 粗体显示
+		font_title.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);// 粗体显示		
 		cs_title.setFont(font_title);
 		cs_title.setAlignment(HSSFCellStyle.ALIGN_CENTER);
 		cs_title.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);		
 		map.put("cs_title", cs_title);
-
+		
 		// 紅粗字體
 		HSSFCellStyle cs_font_red_bold = wb.createCellStyle();
 		HSSFFont font_red_bold = wb.createFont();
@@ -5291,10 +3843,11 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 		cs_thousand_person.setBorderTop(HSSFCellStyle.BORDER_THIN);
 		cs_thousand_person.setAlignment(HSSFCellStyle.ALIGN_CENTER);
 		cs_thousand_person.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);	
-		map.put("cs_thousand_lyellow", cs_thousand_lyellow);
+		map.put("cs_thousand_person", cs_thousand_person);
+		
+		
 		return map;
-	}
-	
+	}		
 	public Map<String,Object>findStyle2(XSSFWorkbook wb){
 		Map<String,Object>map=new HashMap<String,Object>();
 		// 單元格樣式
@@ -5367,18 +3920,18 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 		map.put("cs_font", cs_font);
 
 		// 標題字體
-		XSSFCellStyle cs_head = wb.createCellStyle();
-		XSSFFont font_head = wb.createFont();
-		font_head.setFontHeightInPoints((short) 20);
-		font_head.setBoldweight(XSSFFont.BOLDWEIGHT_BOLD);// 粗体显示
-		cs_head.setFont(font_head);
-		cs_head.setAlignment(XSSFCellStyle.ALIGN_CENTER);
-		cs_head.setVerticalAlignment(XSSFCellStyle.VERTICAL_CENTER);
-		cs_head.setBorderBottom(XSSFCellStyle.BORDER_THIN);
-		cs_head.setBorderLeft(XSSFCellStyle.BORDER_THIN);
-		cs_head.setBorderRight(XSSFCellStyle.BORDER_THIN);
-		cs_head.setBorderTop(XSSFCellStyle.BORDER_THIN);
-		map.put("cs_head", cs_head);
+		XSSFCellStyle cs_title = wb.createCellStyle();
+		XSSFFont font_title = wb.createFont();
+		font_title.setFontHeightInPoints((short) 20);
+		font_title.setBoldweight(XSSFFont.BOLDWEIGHT_BOLD);// 粗体显示
+		cs_title.setFont(font_title);
+		cs_title.setAlignment(XSSFCellStyle.ALIGN_CENTER);
+		cs_title.setVerticalAlignment(XSSFCellStyle.VERTICAL_CENTER);
+		cs_title.setBorderBottom(XSSFCellStyle.BORDER_THIN);
+		cs_title.setBorderLeft(XSSFCellStyle.BORDER_THIN);
+		cs_title.setBorderRight(XSSFCellStyle.BORDER_THIN);
+		cs_title.setBorderTop(XSSFCellStyle.BORDER_THIN);
+		map.put("cs_title", cs_title);
 
 		// 粗字體和黃色背景
 		XSSFCellStyle cs_font_bgyellow = wb.createCellStyle();
@@ -5472,7 +4025,8 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 		cs_thousand_person.setAlignment(XSSFCellStyle.ALIGN_CENTER);
 		cs_thousand_person.setVerticalAlignment(XSSFCellStyle.VERTICAL_CENTER);
 		map.put("cs_thousand_person", cs_thousand_person);
-		return map;
-				
+		return map;				
 	}
+	
+	
 }

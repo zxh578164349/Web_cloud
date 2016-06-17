@@ -10,6 +10,7 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -50,6 +51,7 @@ import dao.IKyzExpectmatmFileDao;
 
 import entity.KyzExpectmatmFile;
 import entity.KyzExpectmatmLog;
+import entity.WebFact;
 import entity.WebFactorder;
 import entity.WebUser;
 
@@ -555,22 +557,36 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 		wb.write(os);
 		os.close();				
 	}
-	public void print_email() throws IOException{
+	public void print_email() throws IOException{		
+		/*yymm="201605";
+		yymm2=yymm;
+		autoEmailMk=1;*/
 		HSSFWorkbook wb=this.print();
 		OutputStream os=new FileOutputStream("d:\\"+yymm+".xls");
 		wb.write(os);
 		os.close();
 	}
 	public HSSFWorkbook print(){
+		/******************是否郵件通知判斷***********************/
 		if(autoEmailMk==1){
 			factNos=webFactSer.findFactNoshow();
 			factAreas=webFactSer.findFactCodeshow();
+			branks=webfactorderSer.findBrank(factNos,factAreas);
 		}
+		/******************是否郵件通知判斷***********************/
+		
 		factNo=(String)ActionContext.getContext().getSession().get("factNo");
 		List<Object[]>list=webfactorderSer.findByGroup2(factNos,factAreas, branks, customers, models, components,factNo,yymm,yymm2);
 		List<Object[]>list2=webfactorderSer.findByGroup(factNos,factAreas, branks, customers, models, components,factNo,yymm,yymm2);
-		List<String>list_date=GlobalMethod.getDateNum(yymm, yymm2);
-		//List<List<Double>>list_all=new ArrayList<List<Double>>();
+		/******************是否郵件通知判斷***********************/
+		if(autoEmailMk==1){
+			List<WebFact>list_facts=webfactorderSer.findNoinput(yymm);
+			for(WebFact fact:list_facts){
+				list.add(new Object[]{fact.getFactSname(),fact.getId().getFactArea(),"","","","",yymm.substring(0,2)});
+			}
+		}
+		/******************是否郵件通知判斷***********************/
+		List<String>list_date=GlobalMethod.getDateNum(yymm, yymm2);		
 		List<Map<String,Double>>list_all=new ArrayList<Map<String,Double>>();
 		
 		for(int i=0;i<list.size();i++){//for1
@@ -578,8 +594,7 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 				if(list.get(i)[x]==null){
 					list.get(i)[x]="";
 				}
-			}
-			//List<Double>list_one=new ArrayList<Double>();
+			}			
 			Map<String,Double>map=new LinkedHashMap<String,Double>();
 			for(int j=0;j<list2.size();j++){//for2
 				for(int y=0;y<6;y++){
@@ -592,8 +607,7 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 						list.get(i)[2].toString().equals(list2.get(j)[2].toString())&&
 						list.get(i)[3].toString().equals(list2.get(j)[3].toString())&&
 						list.get(i)[4].toString().equals(list2.get(j)[4].toString())&&
-						list.get(i)[5].toString().equals(list2.get(j)[5].toString())){
-					//list_one.add(Double.parseDouble(list2.get(j)[6].toString()));
+						list.get(i)[5].toString().equals(list2.get(j)[5].toString())){					
 					map.put((String)list2.get(j)[6], Double.parseDouble(list2.get(j)[7].toString()));
 				}
 			}//for2
@@ -601,11 +615,15 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 		}//for1
 		
 		List<Object[]>list_facts=null;
+		
+		/******************是否郵件通知判斷***********************/
 		if(autoEmailMk==1){
 			list_facts=webFactSer.findFactByFactNo(null);
 		}else{
 			list_facts=(List<Object[]>)ActionContext.getContext().getSession().get("login_facts");//用戶登錄時已經緩存	
-		}			
+		}
+		/*****************是否郵件通知判斷***********************/
+		
 		/*********************廠別代號轉換成廠名*****************************/
 		if(list_facts!=null&&list_facts.size()>0){
 			for(int i=0;i<list.size();i++){
@@ -621,74 +639,11 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 		HSSFWorkbook wb=new HSSFWorkbook();
 		HSSFSheet sheet=wb.createSheet("sheet1");
 		
-		HSSFCellStyle cs=wb.createCellStyle();
-		cs.setBorderBottom(HSSFCellStyle.BORDER_THIN);
-		cs.setBorderLeft(HSSFCellStyle.BORDER_THIN);
-		cs.setBorderRight(HSSFCellStyle.BORDER_THIN);
-		cs.setBorderTop(HSSFCellStyle.BORDER_THIN);
-		
-		HSSFDataFormat frm=wb.createDataFormat();
-		
-		//數字格式
-		HSSFCellStyle cs_data=wb.createCellStyle();
-		cs_data.setBorderBottom(HSSFCellStyle.BORDER_THIN);
-		cs_data.setBorderLeft(HSSFCellStyle.BORDER_THIN);
-		cs_data.setBorderRight(HSSFCellStyle.BORDER_THIN);
-		cs_data.setBorderTop(HSSFCellStyle.BORDER_THIN);
-		cs_data.setDataFormat(frm.getFormat("#,##0.0"));
-		
-		
-		//標題樣式
-		HSSFCellStyle cs_title=wb.createCellStyle();
-		HSSFFont font_title=wb.createFont();
-		font_title.setFontHeightInPoints((short)14);
-		font_title.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
-		cs_title.setFont(font_title);
-		
-		// 紅字體
-		HSSFCellStyle cs_font_red = wb.createCellStyle();
-		HSSFFont font_red = wb.createFont();
-		font_red.setFontHeightInPoints((short) 10);
-		font_red.setBoldweight(HSSFFont.BOLDWEIGHT_NORMAL);
-		font_red.setColor(HSSFFont.COLOR_RED);
-		cs_font_red.setFont(font_red);
-		cs_font_red.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-		cs_font_red.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
-		cs_font_red.setBorderBottom(HSSFCellStyle.BORDER_THIN);
-		cs_font_red.setBorderLeft(HSSFCellStyle.BORDER_THIN);
-		cs_font_red.setBorderRight(HSSFCellStyle.BORDER_THIN);
-		cs_font_red.setBorderTop(HSSFCellStyle.BORDER_THIN);
-		
-		// 藍字體
-		HSSFCellStyle cs_font_blue = wb.createCellStyle();
-		HSSFFont font_blue = wb.createFont();
-		font_blue.setFontHeightInPoints((short) 10);
-		font_blue.setBoldweight(HSSFFont.BOLDWEIGHT_NORMAL);
-		font_blue.setColor(IndexedColors.BLUE.getIndex());
-		cs_font_blue.setFont(font_blue);
-		cs_font_blue.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-		cs_font_blue.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
-		cs_font_blue.setBorderBottom(HSSFCellStyle.BORDER_THIN);
-		cs_font_blue.setBorderLeft(HSSFCellStyle.BORDER_THIN);
-		cs_font_blue.setBorderRight(HSSFCellStyle.BORDER_THIN);
-		cs_font_blue.setBorderTop(HSSFCellStyle.BORDER_THIN);
-		
-		//表頭樣式
-		HSSFCellStyle cs_head = wb.createCellStyle();
-		HSSFFont font_head=wb.createFont();
-		font_head.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
-		cs_head.setFont(font_head);
-		cs_head.setBorderBottom(HSSFCellStyle.BORDER_THIN);
-		cs_head.setBorderLeft(HSSFCellStyle.BORDER_THIN);
-		cs_head.setBorderRight(HSSFCellStyle.BORDER_THIN);
-		cs_head.setBorderTop(HSSFCellStyle.BORDER_THIN);
-		cs_head.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-		cs_head.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
-		cs_head.setFillForegroundColor(IndexedColors.YELLOW.getIndex());				
-		cs_head.setFillPattern(XSSFCellStyle.SOLID_FOREGROUND);
-		
-		
-		
+		Map<String,Object>map=this.findStyle(wb);
+		HSSFCellStyle cs_title=(HSSFCellStyle)map.get("cs_title");
+		HSSFCellStyle cs_data=(HSSFCellStyle)map.get("cs_data");
+		HSSFCellStyle cs_head=(HSSFCellStyle)map.get("cs_head");
+		HSSFCellStyle cs_font_red=(HSSFCellStyle)map.get("cs_font_red");		
 		
 		/***************************初始化表格************************************/
 		int index=0;//不顯示列名標識，沒有選擇的條件就不顯示，則index-1     20160129
@@ -702,8 +657,7 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 		for(int i=1;i<list.size()+2+1;i++){//數據行+標題行+表頭行+匯總行20160129
 			sheet.createRow(i);
 			for(int j=0;j<30;j++){
-				sheet.getRow(i).createCell(j);
-				//sheet.getRow(i).getCell(j).setCellStyle(cs);
+				sheet.getRow(i).createCell(j);				
 				sheet.getRow(i).getCell(j).setCellStyle(cs_data);//20160121
 			}
 			if(i==1){
@@ -734,9 +688,7 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 				}else{
 					index--;
 				}
-				
-				
-							
+															
 				for(int k=0;k<list_date.size();k++){					
 					sheet.getRow(i).getCell(6+k+index).setCellValue(list_date.get(k));										
 				}
@@ -905,6 +857,80 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 			ajaxResult="1";
 			response.getWriter().print("<script>window.parent.layer.msg('刪除失敗',3,3)</script>");
 		}		
+	}
+	
+	public Map<String,Object>findStyle(HSSFWorkbook wb){
+		Map<String,Object>map=new HashMap<String,Object>();
+		HSSFCellStyle cs=wb.createCellStyle();
+		cs.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+		cs.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+		cs.setBorderRight(HSSFCellStyle.BORDER_THIN);
+		cs.setBorderTop(HSSFCellStyle.BORDER_THIN);
+		map.put("cs", cs);
+		HSSFDataFormat frm=wb.createDataFormat();
+		
+		//數字格式
+		HSSFCellStyle cs_data=wb.createCellStyle();
+		cs_data.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+		cs_data.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+		cs_data.setBorderRight(HSSFCellStyle.BORDER_THIN);
+		cs_data.setBorderTop(HSSFCellStyle.BORDER_THIN);
+		cs_data.setDataFormat(frm.getFormat("#,##0.0"));
+		map.put("cs_data", cs_data);
+		
+		//標題樣式
+		HSSFCellStyle cs_title=wb.createCellStyle();
+		HSSFFont font_title=wb.createFont();
+		font_title.setFontHeightInPoints((short)14);
+		font_title.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+		cs_title.setFont(font_title);
+		map.put("cs_title", cs_title);
+		
+		// 紅字體
+		HSSFCellStyle cs_font_red = wb.createCellStyle();
+		HSSFFont font_red = wb.createFont();
+		font_red.setFontHeightInPoints((short) 10);
+		font_red.setBoldweight(HSSFFont.BOLDWEIGHT_NORMAL);
+		font_red.setColor(HSSFFont.COLOR_RED);
+		cs_font_red.setFont(font_red);
+		cs_font_red.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		cs_font_red.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		cs_font_red.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+		cs_font_red.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+		cs_font_red.setBorderRight(HSSFCellStyle.BORDER_THIN);
+		cs_font_red.setBorderTop(HSSFCellStyle.BORDER_THIN);
+		map.put("cs_font_red", cs_font_red);
+		
+		// 藍字體
+		HSSFCellStyle cs_font_blue = wb.createCellStyle();
+		HSSFFont font_blue = wb.createFont();
+		font_blue.setFontHeightInPoints((short) 10);
+		font_blue.setBoldweight(HSSFFont.BOLDWEIGHT_NORMAL);
+		font_blue.setColor(IndexedColors.BLUE.getIndex());
+		cs_font_blue.setFont(font_blue);
+		cs_font_blue.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		cs_font_blue.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		cs_font_blue.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+		cs_font_blue.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+		cs_font_blue.setBorderRight(HSSFCellStyle.BORDER_THIN);
+		cs_font_blue.setBorderTop(HSSFCellStyle.BORDER_THIN);
+		map.put("cs_font_blue", cs_font_blue);
+		
+		//表頭樣式
+		HSSFCellStyle cs_head = wb.createCellStyle();
+		HSSFFont font_head=wb.createFont();
+		font_head.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+		cs_head.setFont(font_head);
+		cs_head.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+		cs_head.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+		cs_head.setBorderRight(HSSFCellStyle.BORDER_THIN);
+		cs_head.setBorderTop(HSSFCellStyle.BORDER_THIN);
+		cs_head.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		cs_head.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		cs_head.setFillForegroundColor(IndexedColors.YELLOW.getIndex());				
+		cs_head.setFillPattern(XSSFCellStyle.SOLID_FOREGROUND);
+		map.put("cs_head", cs_head);
+		return map;
 	}
 	
 	

@@ -29,7 +29,7 @@ public class AutoEmail {
 		AutoSendEmailAction send = new AutoSendEmailAction();
 		String[]to={MimeUtility.encodeText("洪","utf-8","Q")+"<kyinfo.David@yyin.yydg.com.cn>"};
 		String[]cc={MimeUtility.encodeText("洪")+"<zxh578164349@qq.com>"};
-		send.sendmail(to, cc, "主題測試", "內容測試", "日期測試");				
+		send.sendmail(to, cc, "主題測試", "內容測試", "日期測試","");				
 	}
 
 }

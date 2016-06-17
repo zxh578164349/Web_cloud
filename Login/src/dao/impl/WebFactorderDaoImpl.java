@@ -818,7 +818,7 @@ public class WebFactorderDaoImpl extends Basedao implements IWebFactorderDao{
 	
 	public List<WebFact> findNoinput(String yymm) {
 		// TODO Auto-generated method stub
-		String hql="from WebFact where (id.factNo,id.factArea) not in (select id.factNo,id.factArea from WebFactorder where id.yymm=?) and factShow='0'";
+		String hql="from WebFact where (id.factNo,id.factArea) not in (select id.factNo,id.factArea from WebFactorder where id.yymm=?) and factShow='0' order by factCode,fcodeIndex";
 		String[]objs={yymm};
 		return super.findAll(hql, objs);
 	}

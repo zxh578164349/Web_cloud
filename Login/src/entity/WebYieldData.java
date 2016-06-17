@@ -62,6 +62,14 @@ public class WebYieldData implements java.io.Serializable {
 		this.backnum=backnum;
 		this.workhours=workhours;
 	}
+	
+	public WebYieldData(Double onModulus,Double personnum,Double standardOutput, Double actualYield,Double daycount){
+		this.onModulus = onModulus;
+		this.personnum = personnum;
+		this.standardOutput = standardOutput;
+		this.actualYield = actualYield;
+		this.daycount=daycount;
+	}
 
 	// Property accessors
 

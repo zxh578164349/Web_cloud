@@ -297,7 +297,7 @@ public class WebFactDaoImpl extends Basedao implements IWebFactDao {
 		String hql="from WebFact where id.factNo in (:facts) order by factCode,fcodeIndex";
 		Query query=getSession().createQuery(hql);
 		query.setParameterList("facts", list);
-		List<WebFact>list2=(List<WebFact>)query.uniqueResult();
+		List<WebFact>list2=(List<WebFact>)query.list();
 		return list2;
 	}
 

@@ -23,6 +23,13 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -616,7 +623,7 @@ public class GlobalMethod extends HibernateDaoSupport{
 	 * @param d2
 	 * @return
 	 */
-	public Double division(Double d1,Double d2){
+	public static Double division(Double d1,Double d2){
 		Double db=0.00;
 		if(d2!=0.00){
 			db=d1/d2;
@@ -742,27 +749,28 @@ public class GlobalMethod extends HibernateDaoSupport{
 	   * @return
 	   * @throws ParseException
 	   */
-	  public static List<String> findDaysOfMonth(String yymm) throws ParseException{
+	  public static List<String> findDaysOfMonth(String yymm,String fmt) throws ParseException{
 		  List<String>list=new ArrayList<String>();
 		  Calendar cal=Calendar.getInstance();
 		  cal.setTime(new SimpleDateFormat("yyyyMM").parse(yymm));
 		  int maxnum=cal.getActualMaximum(Calendar.DAY_OF_MONTH);
 		  for(int i=1;i<=maxnum;i++){
 			  cal.set(Calendar.DAY_OF_MONTH, i);
-			  list.add(new SimpleDateFormat("yyyyMMdd").format(cal.getTime()));
+			  list.add(new SimpleDateFormat(fmt).format(cal.getTime()));
 		  }
 		  return list;
 	  }
-	
+	  		
 	public static void main(String[] args) throws ParseException {
-		/*List<Webestproduct>list=new ArrayList<Webestproduct>();
+		List<Webestproduct>list=new ArrayList<Webestproduct>();
 		List<String>list2=new ArrayList<String>();
 		List<Webestproduct>list3=new ArrayList<Webestproduct>();
+		List<Webestproduct>list4=new ArrayList<Webestproduct>();
 		Map<String,Object>map=new LinkedHashMap<String,Object>();
 		list2.add("RB");
 		list2.add("MD");
 		list2.add("PU");
-        for(int i=0;i<list2.size();i++){
+        /*for(int i=0;i<list2.size();i++){
         	list.add(new Webestproduct(new WebestproductId("631",list2.get(i),new SimpleDateFormat("yyyyMM").parse("201605"),"zd")));
         	list3.add(new Webestproduct(new WebestproductId("631",list2.get(i),new SimpleDateFormat("yyyyMM").parse("201605"),"zd")));
         }
@@ -773,19 +781,32 @@ public class GlobalMethod extends HibernateDaoSupport{
         	System.out.println(pro.getAccessories());
         }
         System.out.println("------------------------");
-        list3.remove(1);
+        list3.remove(0);
        
-        for(Webestproduct pro:list){
+        for(int i=0;i<list.size();i++){
+        	Webestproduct pro=list.get(i);
         	for(Webestproduct pro2:list3){
         		if(pro.getId().getFactCode().equals(pro2.getId().getFactCode())&&
         				pro.getId().getFactNo().equals(pro2.getId().getFactNo())&&
         				new SimpleDateFormat("yyyyMM").format(pro.getId().getYymm()).equals(new SimpleDateFormat("yyyyMM").format(pro2.getId().getYymm()))){
-        			pro=pro2;
+        			//pro=pro2;
+        			list.remove(i);
+        			list.add(i,pro2);
         		}
         	}
+        	list4.add(pro);
+        	System.out.println(pro.getAccessories());
+        }
+        for(Webestproduct pro:list){
+        	System.out.println(pro.getAccessories());
+        }
+        map.put("201605", list);*/
+        /*for(Webestproduct pro:(List<Webestproduct>)map.get("201605")){
         	System.out.println(pro.getAccessories());
         }*/
-		DateFormat frm=new SimpleDateFormat("yyyyMM");
+        
+        
+		/*DateFormat frm=new SimpleDateFormat("yyyyMM");
 		DateFormat frm2=new SimpleDateFormat("yyyyMMdd");
 		List<String>months=new ArrayList<String>();
 		months.add("201601");
@@ -803,11 +824,48 @@ public class GlobalMethod extends HibernateDaoSupport{
 			}
 			System.out.println("-------------------------------------------------");
 			
-		}
-        
-
-       
-						
+		}*/
+		
+		System.out.println("Start ...");  
+		  
+        ExecutorService exec = Executors.newCachedThreadPool();  
+          
+        testTask(exec, 15); // 任务成功结束后等待计算结果，不需要等到15秒  
+        testTask(exec, 20); // 只等待5秒，任务还没结束，所以将任务中止  
+ 
+        exec.shutdown();  
+        System.out.println("End!");					
 	}
+	
+	 public static void testTask(ExecutorService exec, int timeout) {  
+	        MyTask task = new MyTask();  
+	        Future<Boolean> future = exec.submit(task);  
+	        Boolean taskResult = null;  
+	        String failReason = null;  
+	        try {  
+	            // 等待计算结果，最长等待timeout秒，timeout秒后中止任务  
+	            taskResult = future.get(timeout, TimeUnit.SECONDS);  
+	        } catch (InterruptedException e) {  
+	            failReason = "主线程在等待计算结果时被中断！";  
+	        } catch (ExecutionException e) {  
+	            failReason = "主线程等待计算结果，但计算抛出异常！";  
+	        } catch (TimeoutException e) {  
+	            failReason = "主线程等待计算结果超时，因此中断任务线程！";  
+	            exec.shutdownNow();  
+	        }  
+	  
+	        System.out.println("\ntaskResult : " + taskResult);  
+	        System.out.println("failReason : " + failReason);  
+	    }  
 
 }
+class MyTask implements Callable<Boolean> {  	  
+    public Boolean call() throws Exception {  
+        // 总计耗时约10秒  
+        for (int i = 0; i < 100L; i++) {  
+            Thread.sleep(100); // 睡眠0.1秒  
+            System.out.print('-');  
+        } 
+        return Boolean.TRUE;  
+    }  
+}  
