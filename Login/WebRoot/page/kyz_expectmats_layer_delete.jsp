@@ -108,7 +108,7 @@ $(document).ajaxStop(function(){
 
 			<s:iterator value="kyz.kyzExpectmatses" status="x" id="temp">
 				<tr>
-				 <td><input type="button" value="刪除" onclick="del('${kyz.id.factNo}','${kyz.id.billNo}','${temp.id.itemNo}')"</td>
+				 <td><input type="button" value="刪除" onclick="del('${kyz.id.factNo}','${kyz.id.billNo}','${temp.id.itemNo}')"/></td>
 				 <td ><s:property value='itemNm'/></td>				 	     
 			     <td ><s:property value='matNo'/></td>
 			     <td ><s:property value='qtyExpect'/></td>

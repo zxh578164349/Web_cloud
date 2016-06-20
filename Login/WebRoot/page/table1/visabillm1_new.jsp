@@ -156,12 +156,13 @@
 							<input type="hidden" value="down" name="lookordown"/>						
 					</form>
 										
-					<form action="vbm_sendEmail" method="post" id="8subform${x.index}" style="float:left" target="_blank">
+					<form action="vbm_sendEmail" method="post" id="8subform${x.index}" style="float:left"  target="frameFile">
 						<input type="hidden" value="<s:property value='id.kyVisabillm.id.factNo'/>"
 							name="factNo" /> <input type="hidden"
 							value="<s:property value='id.kyVisabillm.id.billNo'/>" name="billNo" />
 							<input type="hidden" value="<s:property value='id.kyVisabillm.id.visaSort'/>" name="visaSort"/>													
 					</form>
+					<iframe id="frameFile" name="frameFile" style="display: none;"></iframe>
 				    </td>	 
 					<s:if test='#session.loginUser.userread!="1"'>
 					<td>					
@@ -210,7 +211,7 @@
 				     <s:if test='#session.loginUser.username=="admin"'>
 				     <s:if test='id.kyVisabillm.visaMk=="N"&&id.kyVisabillm.emailMk==null'>
 				        <td>
-				            <a href="javascript:document.getElementById('8subform${x.index}').submit()">Email</a>
+				            <a href="javascript:layer.load('請稍等...');document.getElementById('8subform${x.index}').submit()">Email</a>
 				        </td> 
 				     </s:if>
 				     <s:else>
