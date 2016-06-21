@@ -115,8 +115,9 @@ public class KyVisabillmDaoImpl extends Basedao implements IKyVisaBillmDao{
 		
 	public List<KyVisabillm> findByVisaMk2(String visaMk) {
 		// TODO Auto-generated method stub
-		//String hql="from KyVisabillm where visaMk=? and dateCreate>'20150901'  and substr(id.billNo,0,2) in ('CM','EM','BM') and emailMk is null and delMk is null  order by dateCreate"; 
-		String hql="from KyVisabillm where visaMk=? and dateCreate>'20150901'  and emailMk is null and delMk is null  order by dateCreate"; 
+		//String hql="from KyVisabillm where visaMk=? and dateCreate>'20150901'  and substr(id.billNo,0,2) in ('CM','EM','BM') and emailMk is null and delMk is null  order by dateCreate"; 		
+		//String hql="from KyVisabillm where visaMk=? and dateCreate>'20160531'  and emailMk='Y' and delMk is null and id.factNo='GJ' and id.billNo like'BM%'  order by dateCreate"; 
+		String hql="from KyVisabillm where visaMk=? and dateCreate>'20150901'  and emailMk is null and delMk is null  order by dateCreate";
 		String[]objs={visaMk};
 		List<KyVisabillm>list=super.findAll(hql, objs);//解決hibernate延遲問題
 		for(KyVisabillm vbm:list){
