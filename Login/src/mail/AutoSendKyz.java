@@ -81,13 +81,7 @@ public class AutoSendKyz extends QuartzJobBean{
 			throws JobExecutionException {
 		// TODO Auto-generated method stub
 		try{
-			List<String> ips=GlobalMethod.findIp2();
-			/*String mac=GlobalMethod.getMacAddress();			
-			if(ips[1].equals("192.168.199.101")){
-				this.init();
-			}else{
-				System.out.println("本機不需要發送Email");
-			}*/
+			List<String> ips=GlobalMethod.findIp2();			
 			if(ips.size()==0){
 				this.init();
 			}else{
@@ -99,8 +93,10 @@ public class AutoSendKyz extends QuartzJobBean{
 						System.out.println("本機不需要發送Email");
 					}
 				}
-			}			
+			}	
+			//this.init();
 		}catch(Exception e){
+			System.out.println(e);
 		}														
 	}
 	
@@ -167,7 +163,11 @@ public class AutoSendKyz extends QuartzJobBean{
 				      		"<br/>本郵件定時自動發送,請勿回復!如需回復或者問題，請回复到kyinfo.lp@yydg.com.cn劉平!<br/>"+
 				    		"<hr/>";
 				}
-				if(visaMk.equals("T")){				
+				if(visaMk.equals("T")){
+					////由於出差函文流程中可能不包括申請人， 所有需要從函文中獲取申請email 20160621
+					if(list_vbm.get(i).getWebbussletter().getUserEmail()!=null&&!list_vbm.get(i).getWebbussletter().getUserEmail().equals("")){
+						list_email.add(list_vbm.get(i).getWebbussletter().getUserEmail());
+					}
 						subject="函文退回定時通知_"+billNo+"("+factNo+")";//退回函文隻發送一次，所以也要鎖定狀態emailMk	
 						list_vbm.get(i).setEmailMk("Y");
 						visabillmSer.add(list_vbm.get(i));

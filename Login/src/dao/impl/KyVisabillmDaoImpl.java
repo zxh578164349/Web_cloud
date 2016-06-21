@@ -104,7 +104,13 @@ public class KyVisabillmDaoImpl extends Basedao implements IKyVisaBillmDao{
 		//String hql="from KyVisabillm where visaMk<>? and dateCreate>'20150901' and substr(id.billNo,0,2) in ('CM','EM','BM') and emailMk is null and delMk is null ";
 		String hql="from KyVisabillm where visaMk<>? and dateCreate>'20150901'  and emailMk is null and delMk is null ";
 		String[]objs={visaMk};
-		return super.findAll(hql, objs);
+		List<KyVisabillm>list=super.findAll(hql,objs);
+		for(KyVisabillm vbm:list){
+			if(vbm.getId().getBillNo().substring(0,2).equals("BM")){
+				 vbm.getWebbussletter().getUserEmail();//獲取出差函文申請人的Email
+			}		   
+		}
+		return list;
 	}
 		
 	public List<KyVisabillm> findByVisaMk2(String visaMk) {
@@ -113,8 +119,11 @@ public class KyVisabillmDaoImpl extends Basedao implements IKyVisaBillmDao{
 		String hql="from KyVisabillm where visaMk=? and dateCreate>'20150901'  and emailMk is null and delMk is null  order by dateCreate"; 
 		String[]objs={visaMk};
 		List<KyVisabillm>list=super.findAll(hql, objs);//解決hibernate延遲問題
-		for(int i=0;i<list.size();i++){
-			list.get(i).getKyVisabillses().size();
+		for(KyVisabillm vbm:list){
+			vbm.getKyVisabillses().size();
+			if(vbm.getId().getBillNo().substring(0,2).equals("BM")){
+				 vbm.getWebbussletter().getUserEmail();//獲取出差函文申請人的Email
+			}
 		}
 		return list;
 	}

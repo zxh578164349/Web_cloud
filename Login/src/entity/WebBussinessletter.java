@@ -30,6 +30,7 @@ public class WebBussinessletter implements java.io.Serializable {
 	private KyVisabillm vbm;
 	private String delMk;//刪除標記     0或空 未刪除     1刪除
 	private String visaSortM;//類別大類
+	private String userEmail;//申請人Email
 
 	// Constructors
 
@@ -218,6 +219,14 @@ public class WebBussinessletter implements java.io.Serializable {
 
 	public void setVisaSortM(String visaSortM) {
 		this.visaSortM = visaSortM;
+	}
+
+	public String getUserEmail(){
+		return userEmail;
+	}
+
+	public void setUserEmail(String userEmail){
+		this.userEmail=userEmail;
 	}
 	
 	
