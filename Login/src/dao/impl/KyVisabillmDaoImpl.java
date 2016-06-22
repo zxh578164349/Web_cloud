@@ -83,7 +83,11 @@ public class KyVisabillmDaoImpl extends Basedao implements IKyVisaBillmDao{
 		String hql="from KyVisabillm where id.billNo=?";
 		Query query=getSession().createQuery(hql);
 		query.setString(0, billNo);
-		return (KyVisabillm)query.uniqueResult();
+		KyVisabillm vbm=(KyVisabillm)query.uniqueResult();
+		if(vbm.getId().getBillNo().substring(0,2).equals("BM")){
+			vbm.getWebbussletter().getUserEmail();
+		}		
+		return vbm;
 	}
 
 	

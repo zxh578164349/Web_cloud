@@ -943,9 +943,11 @@ public class GlobalMethod extends HibernateDaoSupport{
 					}
 					if(visaMk.equals("T")){
 						////由於出差函文流程中可能不包括申請人， 所有需要從函文中獲取申請email 20160621
-						if(list_vbm.get(i).getWebbussletter().getUserEmail()!=null&&!list_vbm.get(i).getWebbussletter().getUserEmail().equals("")){
-							list_email.add(list_vbm.get(i).getWebbussletter().getUserEmail());
-						}
+						if(list_vbm.get(i).getId().getBillNo().substring(0,2).equals("BM")){
+							if(list_vbm.get(i).getWebbussletter().getUserEmail()!=null&&!list_vbm.get(i).getWebbussletter().getUserEmail().equals("")){
+								list_email.add(list_vbm.get(i).getWebbussletter().getUserEmail());
+							}
+						}						
 							subject="函文退回定時通知_"+billNo+"("+factNo+")";//退回函文隻發送一次，所以也要鎖定狀態emailMk	
 							list_vbm.get(i).setEmailMk("Y");
 							visabillmSer.add(list_vbm.get(i));
@@ -996,9 +998,11 @@ public class GlobalMethod extends HibernateDaoSupport{
 			List<String>list_emails=new ArrayList<String>();//所有發送人
 			list_emails.add("kyuen@yydg.com.cn");
 			//由於出差函文流程中可能不包括申請人， 所有需要從函文中獲取申請email 20160621
-			if(vbm2.getWebbussletter().getUserEmail()!=null&&!vbm2.getWebbussletter().getUserEmail().equals("")){
-				list_emails.add(vbm2.getWebbussletter().getUserEmail());
-			}
+			if(vbm2.getId().getBillNo().substring(0,2).equals("BM")){
+				if(vbm2.getWebbussletter().getUserEmail()!=null&&!vbm2.getWebbussletter().getUserEmail().equals("")){
+					list_emails.add(vbm2.getWebbussletter().getUserEmail());
+				}
+			}		
 			for(KyVisabills bills:list_visa2){
 				list_emails.add(bills.getVisaSigner());
 				if(bills.getFlowMk().equals("Y")){//要簽核的人才需要通知知會人
