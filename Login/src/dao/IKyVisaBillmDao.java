@@ -6,8 +6,7 @@ import entity.KyVisabillm;
 import entity.KyzExpectmatmLog;
 import util.PageBean;
 
-public interface IKyVisaBillmDao {
-	public PageBean findPageBean(int pageSize, int page, String factNo,String BillNo,String visaMk);
+public interface IKyVisaBillmDao {		
 	public void add(KyVisabillm vbm);
 	public KyVisabillm findById(String factNo,String visaSort,String billNo);
 	public void delete(String factNo,String visaSort,String billNo,KyzExpectmatmLog delLog);
@@ -20,6 +19,8 @@ public interface IKyVisaBillmDao {
 	
 	public List<KyVisabillm>findBefor2Month();//兩箇月之前沒有添加刪除標記的函文20160216
 	public void addLarge(List<KyVisabillm>list);//大批量添加 20160216
+	
+
 	
 	
 	

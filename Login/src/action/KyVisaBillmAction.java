@@ -37,6 +37,7 @@ import services.IWebTypeServices;
 import services.IWebUserService;
 import services.IWebuserEmailAServices;
 import services.IWebuserEmailServices;
+import util.GlobalMethod;
 import util.JasperHelper;
 import util.PageBean;
 
@@ -511,84 +512,7 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 		ActionContext.getContext().getSession().put("vbm", vbm);//爲了在函文簽核的彈出窗口顯示已簽人的備註信息
 		return "findById_email2";
 	}
-	
-	/**
-	 * 審核
-	 * 
-	 * @return
-	 */
 		
-	/*public void add() throws IOException{
-		KyVisabillm vbm=visabillmSer.findById(factNo, visaSort, billNo);
-		if(itemNo==null||itemNo.equals("")){
-			itemNo=vbm.getItemNext();
-		}
-		SimpleDateFormat format=new SimpleDateFormat("yyyyMMdd_hh");
-		int num_temp=Integer.parseInt(itemNo);//把項次轉化為數字
-		int num=Integer.parseInt(itemNo)-1;//用於識別KyVisabills集合裡的每幾個對象									
-		String next_singer="";
-		int num_next=0;		
-		KyVisabills vbs=vbm.getKyVisabillses().get(num);
-		*//**
-		 * 如果最後一個不要審核,則要去掉(也就是總長度-1)（現在，>=1000的最後三位都不要審核，則總長度-3      20150803）
-		 *//*
-		int vbs_size=vbm.getKyVisabillses().size();	
-		int nos=visabillSer.findBillsWithNo(visaSort, billNo);
-		if(nos>0){
-			vbs_size=vbs_size-nos;
-		}				
-		String last_singer=vbm.getKyVisabillses().get(num).getVisaSigner();								
-		if(visa_mk.equals("Y")){//start if
-			//當最後一個審核人時
-			
-			if((num+1)==vbs_size){
-				vbm.setVisaMk(visa_mk);
-				next_singer=vbm.getKyVisabillses().get(num).getVisaSigner();
-				num_next=num_temp;
-			}else{
-				next_singer=vbm.getKyVisabillses().get(num+1).getVisaSigner();
-				num_next=num_temp+1;
-			}
-		}//end if
-		if(visa_mk.equals("T")){//start if2
-			vbm.setVisaMk(visa_mk);
-			num_next=1; //退回第一項次
-			next_singer=vbm.getKyVisabillses().get(0).getVisaSigner();//退回第一個Email											
-		}// end if2
-		vbs.setDateVisa(format.format(new Date()));
-		vbs.setVisaMk(visa_mk);//子表的當前狀態
-		vbm.setSignerLast(last_singer);//當前人Email
-		vbm.setSignerNext(next_singer);//下一個人Email
-		vbm.setLastMk(visa_mk);        //當前狀態  
-		String item_next=""; 
-		if(num_next<10){
-			item_next="0"+num_next;
-		}else{
-			item_next=num_next+"";
-		}
-		vbm.setItemLast(itemNo);       //當前項次
-		vbm.setItemNext(item_next);	   //下一項次	
-				
-		//標記當前審核人的信息,並保存在session中,用於備註修改				
-		*//******************************remark***********************************//*										
-				String dateVisa=format.format(new Date());
-				vbs.setDateVisa(dateVisa);
-				vbs.setMemo(memo);
-				String lastmk=vbm.getLastMk();
-				
-				if(lastmk.equals("Y")){										
-					if(num_temp==vbm.getKyVisabillses().size()){
-						vbm.setMemoMk(memo);							
-					}
-				}
-				if(lastmk.equals("T")){
-					vbm.setMemoMk(memo);																			
-				}		
-				visabillmSer.add(vbm);								
-		*//******************************remark***********************************//*
-	}*/
-	
-	
 	/**
 	 * 登錄web審核和郵件審核
 	 * 20160322
@@ -1808,82 +1732,16 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 	public void sendEmail() throws IOException{
 		try{
 			response.setContentType("text/html;charset=utf-8");
-			String subject="";
-			String content="";
-			MailSenderInfo mailInfo = new MailSenderInfo();
-			SimpleMailSender sms = new SimpleMailSender();
-			mailInfo.setValidate(true);
+			ApplicationContext ac=new ClassPathXmlApplicationContext(new String[]{"spring.xml","spring-dao.xml","spring-services.xml"});
+			IKyVisabillmServices visabillmSer=(IKyVisabillmServices)ac.getBean("visabillmSer");	
+			List<KyVisabillm>list_vbm=new ArrayList<KyVisabillm>();
 			vbm=visabillmSer.findByBillNo(billNo);
-			List<String>list_email=new ArrayList<String>();
-			String signerNext=vbm.getSignerNext();
-			String factNo=vbm.getId().getFactNo();
-			String billNo=vbm.getId().getBillNo();
-			String visaSort=vbm.getId().getVisaSort();
-			String visaMk=vbm.getVisaMk();
-			 /******************20151113备签人请使用方法findByFactNoAEmailPwd2(String factNo,String email)**********************/
-			//String emailPwd = webuseremailSer.findEmailPWD(factNo,signerNext);//備簽人Email
-			list_email.add(signerNext);
-			if(factNo.equals("GJ")){
-				String visaSinger=visaSer.findVisaSigner(factNo, visaSort);
-				list_email.add(visaSinger);
-			}
-			List<String>list_emailPwd=webuseremailSer.findByFactNoAEmailPwd2(factNo, signerNext);
-				if(list_emailPwd.size()>0){
-					for(int j=0;j<list_emailPwd.size();j++){
-						list_email.add(list_emailPwd.get(j));
-					}
-				}
-			/******************20151113备签人请使用方法findByFactNoAEmailPwd2(String factNo,String email)**********************/
-				
-			/***************************************中途知會人的email20160217********************************************/
-				List<String>list_emailPwd_a=webuseremailaSer.findByEmail(factNo, signerNext, visaSort);
-				for(int k=0;k<list_emailPwd_a.size();k++){
-					list_email.add(list_emailPwd_a.get(k));
-				}
-			/***************************************中途知會人的email20160217********************************************/
-				
-			list_email.add("kyuen@yydg.com.cn");
-			String emailUrl="http://203.85.73.161/Login/vbm_findById_email?visaSort="+visaSort+"&billNo="+billNo
-			         +"&factNo="+factNo+"&email="+signerNext;
-			String emailUrl2="http://203.85.73.161/Login/vbm_findById_email2?visaSort="+visaSort+"&billNo="+billNo
-			         +"&factNo="+factNo+"&email="+signerNext;
-			if(visaMk.equals("N")){
-				subject="函文審核定時通知_"+billNo+"("+factNo+")";
-				content="函文單號:"+"<span style='color:red'>"+billNo+"</span>"+"&nbsp;&nbsp;廠別:"+factNo+
-			    		  "<br/>點擊單號直接審核:<a href='"+emailUrl2+"'>"+billNo+"</a>(電腦適用)"+
-			    		  "<br/>點擊單號直接審核:<a href='"+emailUrl+"'>"+billNo+"</a>(手機平板適用)"+				    		 
-					      "<hr/>"+
-			    		 "如需查詢以往單據請登錄加久網站:(云端)<a href='http://203.85.73.161/Login'>http://203.85.73.161/Login</a>" +		            
-			      		"<br/>進入[KPI數據]--[函文審核]中查找對應單號審核"+			    		
-			    		"<hr/>"+
-			      		"<br/>本郵件定時自動發送,請勿回復!如需回復或者問題，請回复到kyinfo.lp@yydg.com.cn劉平!<br/>"+
-			    		"<hr/>";
-			}
-			if(visaMk.equals("T")){				
-					subject="函文退回定時通知_"+billNo+"("+factNo+")";//退回函文隻發送一次，所以也要鎖定狀態emailMk	
-					vbm.setEmailMk("Y");
-					visabillmSer.add(vbm);
-					content="函文單號:"+"<span style='color:red'>"+billNo+"</span>"+"&nbsp;&nbsp;"+"不通過，備註如下:"+
-				    		  "<br/>"+
-				    		  "<span style='color:red'>"+(vbm.getMemoMk()==null?"無備註":vbm.getMemoMk())+"</span>"+				    		 
-						      "<hr/>"+
-				    		 "詳情請登錄加久網站:(云端)<a href='http://203.85.73.161/Login'>http://203.85.73.161/Login</a>" +		            
-				      		"<br/>進入[KPI數據]--[函文審核]中查找對應單號審核"+			    		
-				    		"<hr/>"+
-				      		"<br/>本郵件定時自動發送,請勿回復!如需回復或者問題，請回复到kyinfo.lp@yydg.com.cn劉平!<br/>"+
-				    		"<hr/>";
-			}
-			for(int j=0;j<list_email.size();j++){//start for2
-				  mailInfo.setToAddress(list_email.get(j));    
-			      mailInfo.setSubject(subject);    			      
-			      mailInfo.setContent(content); 				    		  			           
-			      sms.sendHtmlMail(mailInfo);//发送html格式
-			}//end for2				
+			list_vbm.add(vbm);
+			GlobalMethod.sendEmailA(ac,list_vbm);			
 			response.getWriter().print("<script>window.parent.layer.alert('發送成功',1)</script>");
 		}catch(Exception e){
 			response.getWriter().print("<script>window.parent.layer.alert('發送失敗',3)</script>");
-		}
-		
+		}		
 	}
     
 

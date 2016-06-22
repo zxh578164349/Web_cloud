@@ -33,18 +33,29 @@ import java.util.concurrent.TimeoutException;
 
 import javax.servlet.http.HttpServletResponse;
 
+import mail.MailSenderInfo;
+import mail.SimpleMailSender;
+
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFDataFormat;
 import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.struts2.ServletActionContext;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
+import services.IKyVisabillmServices;
 import services.IKyzExpectmatmLogServices;
+import services.IKyzVisaFlowServices;
+import services.IWebuserEmailAServices;
+import services.IWebuserEmailServices;
 
 import com.opensymphony.xwork2.ActionContext;
 
+import entity.KyVisabillm;
+import entity.KyVisabills;
 import entity.KyzExpectmatmLog;
 import entity.WebUser;
 import entity.Webestproduct;
@@ -856,7 +867,173 @@ public class GlobalMethod extends HibernateDaoSupport{
 	  
 	        System.out.println("\ntaskResult : " + taskResult);  
 	        System.out.println("failReason : " + failReason);  
-	    }  
+	    } 
+	 
+	 
+	 /**
+	  * 函文審核通知email
+	  * @Title: sendEmailA
+	  * @Description: TODO
+	  * @param @param ac
+	  * @param @param list_vbm
+	  * @return void
+	  * @throws
+	  * @author web
+	  * @date 2016/6/22
+	  */
+	 public static void sendEmailA(ApplicationContext ac,List<KyVisabillm>list_vbm){		   
+		    IWebuserEmailServices webuseremailSer=(IWebuserEmailServices)ac.getBean("webuseremailSer");
+			IWebuserEmailAServices webuseremailaSer=(IWebuserEmailAServices)ac.getBean("webuseremailaSer");
+			IKyzVisaFlowServices visaSer=(IKyzVisaFlowServices)ac.getBean("visaSer");
+			IKyVisabillmServices visabillmSer=(IKyVisabillmServices)ac.getBean("visabillmSer");
+		    String subject="";
+			String result="";
+			String content="";		
+			if(list_vbm.size()>0){//start if
+			MailSenderInfo mailInfo = new MailSenderInfo();
+			MailSenderInfo mailInfo2 = new MailSenderInfo();
+			SimpleMailSender sms = new SimpleMailSender();
+			mailInfo.setValidate(true);
+			mailInfo2.setValidate(true);	   
+				for(int i=0;i<list_vbm.size();i++){// start for1	
+					List<String>list_email=new ArrayList<String>();
+					String signerNext=list_vbm.get(i).getSignerNext();
+					String factNo=list_vbm.get(i).getId().getFactNo();
+					String billNo=list_vbm.get(i).getId().getBillNo();
+					String visaSort=list_vbm.get(i).getId().getVisaSort();
+					String visaMk=list_vbm.get(i).getVisaMk();				
+					list_email.add(signerNext);
+					 /******************20151113备签人请使用方法findByFactNoAEmailPwd2(String factNo,String email)**********************/				
+					/***************如果是臺灣加久，備簽人同時也是申請人，那麼根據流程代號找到申請人（也就是備簽人）*******************/
+					if(factNo.equals("GJ")){
+						String visaSinger=visaSer.findVisaSigner(factNo, visaSort);
+						list_email.add(visaSinger);
+					}
+					List<String>list_emailPwd=webuseremailSer.findByFactNoAEmailPwd2(factNo, signerNext);
+						if(list_emailPwd.size()>0){
+							for(int j=0;j<list_emailPwd.size();j++){
+								list_email.add(list_emailPwd.get(j));
+							}
+						}
+						/******************20151113备签人请使用方法findByFactNoAEmailPwd2(String factNo,String email)**********************/
+						
+					/***************************************中途知會人的email20160217********************************************/
+					List<String>list_emailPwd_a=webuseremailaSer.findByEmail(factNo, signerNext, visaSort);
+					for(int k=0;k<list_emailPwd_a.size();k++){
+						list_email.add(list_emailPwd_a.get(k));
+					}
+					/***************************************中途知會人的email20160217********************************************/
+					
+					list_email.add("kyuen@yydg.com.cn");
+					String emailUrl="http://203.85.73.161/Login/vbm_findById_email?visaSort="+visaSort+"&billNo="+billNo
+					         +"&factNo="+factNo+"&email="+signerNext;
+					String emailUrl2="http://203.85.73.161/Login/vbm_findById_email2?visaSort="+visaSort+"&billNo="+billNo
+					         +"&factNo="+factNo+"&email="+signerNext;
+					if(visaMk.equals("N")){
+						subject="函文審核定時通知_"+billNo+"("+factNo+")";
+						content="函文單號:"+"<span style='color:red'>"+billNo+"</span>"+"&nbsp;&nbsp;廠別:"+factNo+
+					    		  "<br/>點擊單號直接審核:<a href='"+emailUrl2+"'>"+billNo+"</a>(電腦適用)"+
+					    		  "<br/>點擊單號直接審核:<a href='"+emailUrl+"'>"+billNo+"</a>(手機平板適用)"+				    		 
+							      "<hr/>"+
+					    		 result+"如需查詢以往單據請登錄加久網站:(云端)<a href='http://203.85.73.161/Login'>http://203.85.73.161/Login</a>" +		            
+					      		"<br/>進入[KPI數據]--[函文審核]中查找對應單號審核"+			    		
+					    		"<hr/>"+
+					      		"<br/>本郵件定時自動發送,請勿回復!如需回復或者問題，請回复到kyinfo.lp@yydg.com.cn劉平!<br/>"+
+					    		"<hr/>";
+					}
+					if(visaMk.equals("T")){
+						////由於出差函文流程中可能不包括申請人， 所有需要從函文中獲取申請email 20160621
+						if(list_vbm.get(i).getWebbussletter().getUserEmail()!=null&&!list_vbm.get(i).getWebbussletter().getUserEmail().equals("")){
+							list_email.add(list_vbm.get(i).getWebbussletter().getUserEmail());
+						}
+							subject="函文退回定時通知_"+billNo+"("+factNo+")";//退回函文隻發送一次，所以也要鎖定狀態emailMk	
+							list_vbm.get(i).setEmailMk("Y");
+							visabillmSer.add(list_vbm.get(i));
+							content="函文單號:"+"<span style='color:red'>"+billNo+"</span>"+"&nbsp;&nbsp;"+"不通過，備註如下:"+
+						    		  "<br/>"+
+						    		  "<span style='color:red'>"+(list_vbm.get(i).getMemoMk()==null?"無備註":list_vbm.get(i).getMemoMk())+"</span>"+				    		 
+								      "<hr/>"+
+						    		 result+"詳情請登錄加久網站:(云端)<a href='http://203.85.73.161/Login'>http://203.85.73.161/Login</a>" +		            
+						      		"<br/>進入[KPI數據]--[函文審核]中查找對應單號審核"+			    		
+						    		"<hr/>"+
+						      		"<br/>本郵件定時自動發送,請勿回復!如需回復或者問題，請回复到kyinfo.lp@yydg.com.cn劉平!<br/>"+
+						    		"<hr/>";
+					}
+					for(int j=0;j<list_email.size();j++){//start for2
+						  mailInfo.setToAddress(list_email.get(j));
+						  if(list_email.get(j).equals("kyuen@yydg.com.cn")){						  
+							  String content_msg=content+"下一箇簽核:<span style='color:blue'>"+signerNext+"</span>";
+							  mailInfo.setContent(content_msg);					      
+						  }else{
+							  mailInfo.setContent(content);
+						  }
+					      mailInfo.setSubject(subject);    			       				    		  			           
+					      sms.sendHtmlMail(mailInfo);//发送html格式
+					}//end for2								
+				}//end for1
+			}//end if	
+		 
+	 }
+	 
+	 /**
+	  * 函文審核完畢通知email
+	  * @Title: sendEmailB
+	  * @Description: TODO
+	  * @param @param local_factNo
+	  * @param @param local_billNo
+	  * @param @param local_visaSort
+	  * @param @param vbm2
+	  * @param @param ac
+	  * @return void
+	  * @throws
+	  * @author web
+	  * @date 2016/6/22
+	  */
+	 public static void sendEmailB(String local_factNo,String local_billNo,String local_visaSort,KyVisabillm vbm2,ApplicationContext ac){
+		 IWebuserEmailAServices webuseremailaSer=(IWebuserEmailAServices)ac.getBean("webuseremailaSer");/******知會人********/		
+			List<KyVisabills>list_visa2=vbm2.getKyVisabillses();
+			//这个类主要是设置邮件   
+			List<String>list_emails=new ArrayList<String>();//所有發送人
+			list_emails.add("kyuen@yydg.com.cn");
+			//由於出差函文流程中可能不包括申請人， 所有需要從函文中獲取申請email 20160621
+			if(vbm2.getWebbussletter().getUserEmail()!=null&&!vbm2.getWebbussletter().getUserEmail().equals("")){
+				list_emails.add(vbm2.getWebbussletter().getUserEmail());
+			}
+			for(KyVisabills bills:list_visa2){
+				list_emails.add(bills.getVisaSigner());
+				if(bills.getFlowMk().equals("Y")){//要簽核的人才需要通知知會人
+					List<String>list_emailPwd=webuseremailaSer.findByEmail(local_factNo,bills.getVisaSigner(),local_visaSort);
+					for(String str:list_emailPwd){
+						list_emails.add(str);
+					}
+				}
+			}
+			
+			String[] attachFileNames = { "d:/" + local_billNo + ".pdf" };// 附件
+			SimpleMailSender sms = new SimpleMailSender();
+			MailSenderInfo mailInfo = new MailSenderInfo();
+			
+			for(String email:list_emails){//for
+				mailInfo.setValidate(true);			
+				mailInfo.setSubject("函文知會定時通知(審核完畢)_" + local_billNo + "("
+						+ local_factNo + ")");
+
+				mailInfo.setAttachFileNames(attachFileNames);
+				mailInfo.setContent("單號為:" + "<span style='color:red'>"
+						+ local_billNo + "</span>" + "的函文已審核完畢,請查看附件"
+						+ "<br/>本郵件自動定時發送，請勿回覆");
+
+				String toAddress = email;
+				mailInfo.setToAddress(toAddress);
+				sms.sendHtmlMail(mailInfo);// 发送html格式
+			}//for
+			File file = new File("d:/" + local_billNo + ".pdf");
+			if (file.exists()) {
+				if (file.isFile()) {
+					file.delete();
+				}
+			}
+	 }
 
 }
 class MyTask implements Callable<Boolean> {  	  
@@ -868,4 +1045,6 @@ class MyTask implements Callable<Boolean> {
         } 
         return Boolean.TRUE;  
     }  
-}  
+}
+
+
