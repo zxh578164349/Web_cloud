@@ -837,7 +837,7 @@ public class GlobalMethod extends HibernateDaoSupport{
 			
 		}*/
 		
-		System.out.println("Start ...");  
+		/*System.out.println("Start ...");  
 		  
         ExecutorService exec = Executors.newCachedThreadPool();  
           
@@ -845,7 +845,9 @@ public class GlobalMethod extends HibernateDaoSupport{
         testTask(exec, 20); // 只等待5秒，任务还没结束，所以将任务中止  
  
         exec.shutdown();  
-        System.out.println("End!");					
+        System.out.println("End!");*/
+		Map<String,Double>map1=new LinkedHashMap<String,Double>();
+		System.out.println(map1.size());
 	}
 	
 	 public static void testTask(ExecutorService exec, int timeout) {  

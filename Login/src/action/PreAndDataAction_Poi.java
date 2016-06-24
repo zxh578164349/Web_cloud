@@ -3695,7 +3695,7 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 		cs_lyellow.setAlignment(HSSFCellStyle.ALIGN_CENTER);
 		cs_lyellow.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
 		cs_lyellow.setFillForegroundColor(IndexedColors.LIGHT_YELLOW.getIndex());				
-		cs_lyellow.setFillPattern(XSSFCellStyle.SOLID_FOREGROUND);
+		cs_lyellow.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
 		map.put("cs_lyellow", cs_lyellow);
 
 		// 设置字体:
@@ -3787,16 +3787,16 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 		HSSFCellStyle cs_font_bgyellow = wb.createCellStyle();
 		HSSFFont font_bold_bgyellow = wb.createFont();
 		font_bold_bgyellow.setFontHeightInPoints((short) 10);
-		font_bold_bgyellow.setBoldweight(XSSFFont.BOLDWEIGHT_BOLD);// 粗体显示
+		font_bold_bgyellow.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);// 粗体显示
 		cs_font_bgyellow.setFont(font_bold_bgyellow);
-		cs_font_bgyellow.setAlignment(XSSFCellStyle.ALIGN_CENTER);
-		cs_font_bgyellow.setVerticalAlignment(XSSFCellStyle.VERTICAL_CENTER);				
-		cs_font_bgyellow.setBorderBottom(XSSFCellStyle.BORDER_THIN);
-		cs_font_bgyellow.setBorderLeft(XSSFCellStyle.BORDER_THIN);
-		cs_font_bgyellow.setBorderRight(XSSFCellStyle.BORDER_THIN);
-		cs_font_bgyellow.setBorderTop(XSSFCellStyle.BORDER_THIN);
+		cs_font_bgyellow.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		cs_font_bgyellow.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);				
+		cs_font_bgyellow.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+		cs_font_bgyellow.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+		cs_font_bgyellow.setBorderRight(HSSFCellStyle.BORDER_THIN);
+		cs_font_bgyellow.setBorderTop(HSSFCellStyle.BORDER_THIN);
 		cs_font_bgyellow.setFillForegroundColor(IndexedColors.YELLOW.getIndex());				
-		cs_font_bgyellow.setFillPattern(XSSFCellStyle.SOLID_FOREGROUND);
+		cs_font_bgyellow.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
 		map.put("cs_font_bgyellow", cs_font_bgyellow);
 		
 		// 數字格式
@@ -3832,7 +3832,7 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 		cs_thousand_lyellow.setAlignment(HSSFCellStyle.ALIGN_CENTER);
 		cs_thousand_lyellow.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);			
 		cs_thousand_lyellow.setFillForegroundColor(IndexedColors.LIGHT_YELLOW.getIndex());										
-		cs_thousand_lyellow.setFillPattern(XSSFCellStyle.SOLID_FOREGROUND);
+		cs_thousand_lyellow.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
 		map.put("cs_thousand_lyellow", cs_thousand_lyellow);
 				
 		HSSFCellStyle cs_thousand_person = wb.createCellStyle();

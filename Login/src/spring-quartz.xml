@@ -90,7 +90,7 @@
     </bean>
      <bean id="CronTriggerBeanF" class="org.springframework.scheduling.quartz.CronTriggerBean">
       <property name="jobDetail" ref="quantzjobBeanD"></property>
-      <property name="cronExpression" value="0 5 15 * * ?"></property>      
+      <property name="cronExpression" value="0 0 9 6 * ?"></property>      
     </bean> 
     
     <!-- 启动调度 -->
