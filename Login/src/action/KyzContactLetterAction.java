@@ -1,9 +1,13 @@
 package action;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
@@ -266,17 +270,18 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 				uploadFile_backup.mkdirs();
 			}
 			for(int i=0;i<files.size();i++){							
-				if(files.get(i)!=null){									
-					FileInputStream in=new FileInputStream(files.get(i));
-					//FileOutputStream out=new FileOutputStream(uploadFile+"\\"+filesFileName.get(i));
-					FileOutputStream out_backup=new FileOutputStream(uploadFile_backup+"\\"+filesFileName.get(i));//備份
+				if(files.get(i)!=null){	
+				    Long date_a=new Date().getTime();
+					/*FileInputStream in=new FileInputStream(files.get(i));
+					FileOutputStream out_backup=new FileOutputStream(uploadFile_backup+"\\"+filesFileName.get(i));//備份		*/		
+					InputStream in=new BufferedInputStream(new FileInputStream(files.get(i)));
+                    OutputStream out_backup=new BufferedOutputStream(new FileOutputStream(uploadFile_backup+"\\"+filesFileName.get(i)));
 					byte[]b=new byte[1024];
 					int length=0;
 					while((length=in.read(b))>0){
-						//out.write(b,0,length);
 						out_backup.write(b,0,length);//備份
 					}
-																									
+					System.out.println("******************"+(new Date().getTime()-date_a)+"***********************");																				
 					KyzExpectmatmFile kyzexpFile=new KyzExpectmatmFile();//函文附檔
 					kyzexpFile.setBillno(kyzletter.getId().getBillNo());
 					kyzexpFile.setFilename(filesFileName.get(i));
