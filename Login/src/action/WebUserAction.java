@@ -369,52 +369,20 @@ public class WebUserAction extends ActionSupport implements ServletResponseAware
 	 * 用户登录
 	 * 
 	 * @return
-	 */
-	/*int j = 0;
-	@SuppressWarnings("unused")
-	Map<String, Integer> loginCount = new HashMap<String, Integer>();
-	int g = 0;
-	List<WebUser> userCount = new ArrayList<WebUser>();*/
-
+	 */	
 	public String login() throws InterruptedException, IOException {
 		ActionContext.getContext().getSession().remove("Email");//清除函文郵件中Email(在KyVisaBillmAction中的findById_email方法)
-		DateFormat format=new SimpleDateFormat("yyyyMMdd");
-		//String resultIndex = "chengong";		
+		DateFormat format=new SimpleDateFormat("yyyyMMdd");			
 		List userList = webUserService.findMoreUser(webUsers.getUsername().trim());					
 		WebUser wUser = webUserService.selByuserId(factNo, webUsers.getUsername().trim());
 		/*用戶名,密碼,廠別都正確*/
 		if (wUser != null) {//if
 			if (wUser.getPwd().equals(webUsers.getPwd().trim())) {//start if2
 					try {
-						ajax_result="0";
-							  /*String ipAddress = null; ipAddress =ServletActionContext.getRequest().getHeader("x-forwarded-for");									  
-						      if(ipAddress == null || ipAddress.length() == 0 ||"unknown".equalsIgnoreCase(ipAddress)){ 									  
-						          ipAddress =ServletActionContext.getRequest().getHeader("Proxy-Client-IP");									  
-						         }
-						      if (ipAddress == null || ipAddress.length() == 0 || "unknown".equalsIgnoreCase(ipAddress)) {									 
-						          ipAddress =ServletActionContext.getRequest().getHeader("WL-Proxy-Client-IP");								  
-						         } 
-						      if (ipAddress == null || ipAddress.length() == 0 || "unknown".equalsIgnoreCase(ipAddress)) {									 
-						          ipAddress =ServletActionContext.getRequest().getRemoteAddr(); 
-						          if(ipAddress.equals("127.0.0.1")){
-						             InetAddress inet =null;
-						             try { 
-						            	 inet = InetAddress.getLocalHost(); 
-						             }catch (Exception e) { 
-						            	 e.printStackTrace(); 
-						            	 }
-						              ipAddress = inet.getHostAddress();
-						           } 
-						        } 
-						      if (ipAddress!= null && ipAddress.length() > 15) {
-						           if (ipAddress.indexOf(",") > 0) { 
-						        	   ipAddress = ipAddress.substring(0,ipAddress.indexOf(","));						 
-						                  }  
-						      }*/
+						ajax_result="0";							  
 						  String ipAddress=GlobalMethod.findIp();
 						  ActionContext.getContext().getSession() .put("ip",ipAddress);
 						  WebLog log =new WebLog();
-
 							  log=new WebLog();
 							  Date date =new Date();
 							  log.setIp(ipAddress);
@@ -464,10 +432,7 @@ public class WebUserAction extends ActionSupport implements ServletResponseAware
 						ActionContext.getContext().getSession().put("login_facts", list_fact);
 																																				
 					//如果用戶不可用，也就是available的值為1
-					if(wUser.getAvailable()==1){						
-						/*response.setContentType("text/html;charset=utf-8");
-						response.getWriter().print("<script>alert('當前用戶已註銷!');history.back()</script>");
-						return null;*/
+					if(wUser.getAvailable()==1){												
 						ajax_result="1";
 						return "json_login";
 					}
@@ -476,31 +441,16 @@ public class WebUserAction extends ActionSupport implements ServletResponseAware
 					ActionContext.getContext().getSession().put("list_webtype", list_type);/**********20151029登錄時，保存各個廠別的函文類型************/
 					} catch (Exception e) {
 						e.printStackTrace();
-					}					
-					//return resultIndex;
+					}										
 					return "json_login";
 				}//end if2			
 			}//if
 		/*用戶名正確,但廠別不正確,*/
-		if (wUser == null && userList.size() > 0) {
-			/*for (int i = 0; i < userList.size(); i++) {
-				WebUser u = (WebUser) userList.get(i);
-				if (!factNo.equals(u.getFactno())) {					
-					factError = "(當前用戶不屬於該廠別)";
-					response.setContentType("text/html;charset=utf-8");
-					response.getWriter().print("<script>alert('對不起,廠別不正確!');history.back()</script>");
-					break;					
-				}
-			}*/
+		if (wUser == null && userList.size() > 0) {			
 			ajax_result="2";
 			return "json_login";
-			//return null;
-			
-		}				
-		/*用戶名或者密碼錯誤*/
-		/*response.setContentType("text/html;charset=utf-8");
-		response.getWriter().print("<script>alert('用戶或密碼錯誤!');history.back()</script>");				
-		return null;*/
+			//return null;			
+		}						
 		ajax_result="3";
 		return "json_login";
 	}
