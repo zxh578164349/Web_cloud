@@ -30,7 +30,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
              tipSweep:true,
              showAllError:true,
              beforeCheck:function(){
-            	 window.parent.layer.msg("出現無數據時,請檢查<br/>【產量資料(盤點)】【預計生產】【基本數據導入】是否同時具備數據",3,1); 
+            	 window.parent.layer.alert("出現無數據時,請檢查<br/>【產量資料(盤點)】【預計生產】【基本數據導入】是否同時具備數據",0); 
              }
          });
          jq("#subform2").Validform({
@@ -39,7 +39,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
              tipSweep:true,
              showAllError:true,
              beforeCheck:function(){
-            	 window.parent.layer.msg("出現無數據時,請檢查<br/>【產量資料(盤點)】【預計生產】【基本數據導入】是否同時具備數據",3,1); 
+            	 window.parent.layer.alert("出現無數據時,請檢查<br/>【產量資料(盤點)】【預計生產】【基本數據導入】是否同時具備數據",0);           	 
              }
          });
          jq("#subform3").Validform({
@@ -48,7 +48,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
              tipSweep:true,
              showAllError:true,
              beforeCheck:function(){
-            	 window.parent.layer.msg("出現無數據時,請檢查<br/>【產量資料(盤點)】【預計生產】【基本數據導入】是否同時具備數據",3,1); 
+            	 window.parent.layer.alert("出現無數據時,請檢查<br/>【產量資料(盤點)】【預計生產】【基本數據導入】是否同時具備數據",0); 
              }
          })
       }  
@@ -101,12 +101,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
          allfactcodes[i].checked=false;  
          checkAll(allfactcodes[i].value);
       }
-      }
-      
-      
-
-      
-      
+      }     
    }  
     
     
