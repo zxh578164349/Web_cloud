@@ -1,5 +1,6 @@
 package util;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -285,6 +286,8 @@ public class JasperHelper {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
+		/*byte[]bytes=File2byte(filenurl);
+		is=new ByteArrayInputStream(bytes);*/
 		export(lists, parameters, exportType, defaultFilename, is, request,
 				response);
 	}
@@ -306,4 +309,45 @@ public class JasperHelper {
         }
         return returnFileName;
     }
+	
+	
+	/**
+	 * 文件流轉字節流
+	 * @Title: File2byte
+	 * @Description: TODO
+	 * @param @param filePath
+	 * @param @return
+	 * @return byte[]
+	 * @throws
+	 * @author web
+	 * @date 2016/7/7
+	 */
+	public static byte[] File2byte(String filePath)  
+    {  
+        byte[] buffer = null;  
+        try  
+        {  
+            File file = new File(filePath);  
+            FileInputStream fis = new FileInputStream(file);  
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();  
+            byte[] b = new byte[1024];  
+            int n;  
+            while ((n = fis.read(b)) != -1)  
+            {  
+                bos.write(b, 0, n);  
+            }  
+            fis.close();  
+            bos.close();  
+            buffer = bos.toByteArray();  
+        }  
+        catch (FileNotFoundException e)  
+        {  
+            e.printStackTrace();  
+        }  
+        catch (IOException e)  
+        {  
+            e.printStackTrace();  
+        }  
+        return buffer;  
+    }  
 }

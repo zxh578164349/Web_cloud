@@ -26,7 +26,7 @@ body,html,#main_container{
 	color:white;
 }
 #top #currentTime{
-	color:#99CCCC;
+	color:#99FFFF;
 	float:left;
 }
 #top #lg_info{
@@ -49,6 +49,9 @@ body,html,#main_container{
 #left img{
 	vertical-align:middle;
 	border:0px;
+}
+#left .mmenu{
+	margin:8px;
 }
 .a_disable{ 
 color: #afafaf; 

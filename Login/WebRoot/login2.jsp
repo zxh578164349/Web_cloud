@@ -14,11 +14,57 @@
 <meta charset="utf-8" />
 <!-- Load stylesheets -->
 <link type="text/css" rel="stylesheet" href="loginpage/css/login_style_chrome.css" media="screen" />	
-<!-- // Load stylesheets -->
+<script>
+	jq(document).ready(function() {
+		jq("#submit1").hover(function() {
+			jq(this).animate({
+				"opacity" : "0"
+			}, "slow");
+		}, function() {
+			jq(this).animate({
+				"opacity" : "1"
+			}, "slow");
+		});
+	});
+	function checkFact() {
+		var factNO = document.getElementById("url_factno");
+		var names = document.getElementById("url_username_input");
+		var pwd = document.getElementById("url_pwd_input");
+		if (factNO.value == 0 || names.value == "" || pwd.value == "") {
+			alert("請輸入完整的信息", '提示信息');
+		} else {						
+			jq.ajax({
+				type:"POST",
+				dataType:"json",
+				data:jq("#loginform").serialize(),
+				url:"userlogin",
+				success:function(data){
+					 if(data=='0'){
+						 location.href="main.jsp";
+					  }
+					  if(data=='1'){
+						  alert("當前賬號已註銷!");
+					  }
+					  if(data=='2'){
+						  alert("廠別不正確!");
+					  }
+					  if(data=='3'){
+						  alert("賬號或密碼不正確!");
+					  }
+				},
+				error:function(err){
+					alert(err.responseText);
+				}
+			});
+		}
+	}
 
-<!--  <script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>-->
-
-<link rel="shortcut icon" href="images/icon/web_ico.ico" /> 
+	jq(document).keyup(function(event) {
+		if (event.keyCode == 13) {
+			checkFact();
+		}
+	});	
+</script> 
 </head>
 <body >
    
@@ -79,70 +125,5 @@
 		<div id="wrapperbottom"></div>	
 	</div>
 		
-<script src="http://apps.bdimg.com/libs/jquery/1.9.1/jquery.min.js"></script> 
-<script>window.jQuery || document.write('<script src="loginpage/jquery/jquery-1.9.1.min.js"><\/script>');</script>
-<script type="text/javascript" src="loginpage/jquery/layer/layer.min.js"></script>
-
-
-<script>
-var jq=jQuery.noConflict();
-var loadi;
-jq(document).ajaxStart(function(){
-	loadi=layer.load("正在登錄,請稍等...");
-});
-jq(document).ajaxStop(function(){
-	layer.close(loadi);
-});
-	jq(document).ready(function() {
-		jq("#submit1").hover(function() {
-			jq(this).animate({
-				"opacity" : "0"
-			}, "slow");
-		}, function() {
-			jq(this).animate({
-				"opacity" : "1"
-			}, "slow");
-		});
-	});
-	function checkFact() {
-		var factNO = document.getElementById("url_factno");
-		var names = document.getElementById("url_username_input");
-		var pwd = document.getElementById("url_pwd_input");
-		if (factNO.value == 0 || names.value == "" || pwd.value == "") {
-			alert("請輸入完整的信息", '提示信息');
-		} else {						
-			jq.ajax({
-				type:"POST",
-				dataType:"json",
-				data:jq("#loginform").serialize(),
-				url:"userlogin",
-				success:function(data){
-					 if(data=='0'){
-						 location.href="main.jsp";
-					  }
-					  if(data=='1'){
-						  alert("當前賬號已註銷!");
-					  }
-					  if(data=='2'){
-						  alert("廠別不正確!");
-					  }
-					  if(data=='3'){
-						  alert("賬號或密碼不正確!");
-					  }
-				},
-				error:function(err){
-					alert(err.responseText);
-				}
-			});
-		}
-	}
-
-	jq(document).keyup(function(event) {
-		if (event.keyCode == 13) {
-			checkFact();
-		}
-	});	
-</script>
-<jsp:include page="copyright_login.jsp"/>	
 </body>
 </html>

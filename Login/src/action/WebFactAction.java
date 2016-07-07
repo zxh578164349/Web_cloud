@@ -75,12 +75,13 @@ public class WebFactAction extends ActionSupport {
 	 */
 	public String findAllfact2() {
 		//退出時，清除session的所有內容（廠別，用戶名），因為退出時指向了jedge.jsp，而這個頁面又指向此方法
-		ActionContext.getContext().getSession().clear();
+		/*ActionContext.getContext().getSession().clear();
 		List list = webFactSer.findAllFact();		
 		List factCodes=webFactSer.findAllFactCode_show();		
 		ActionContext.getContext().getSession().put("factcodes", factCodes);
 		ActionContext.getContext().getSession().put("facts", list);		
-		this.findAllFact_code_no();
+		this.findAllFact_code_no();*/
+		this.findAllfact();
 		return "findAllfact2";
 	}
 	/**

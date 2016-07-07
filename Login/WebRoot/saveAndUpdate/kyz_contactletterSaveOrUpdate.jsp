@@ -194,6 +194,27 @@ function getKyType2(factno){
 	  layer.msg("操作成功",3,1);
 	  loadUrl("kyzletter_findPageBean");
   }
+  
+  function lookJson(billNo,id,filename){
+	   jq.ajax({
+	      type:"get",
+	      dataType:"json",
+	      url:"kyzfile_findKyzFileJson",
+	      data:"billNo="+billNo+"&id="+id+"&filename="+filename,
+	      success:function(files){
+	         jq("#fileJson").html("");
+	          var item;
+	          var item_url;
+	         jq.each(files,function(i,file){
+	            item_url="javascript:lookJson('"+file.billno+"',"+file.id+",'"+file.filename+"')";
+	            item="<a href='/upload/"+file.billno+"/"+file.filename+"' target='_blank' title='點擊查看'>"+file.filename+            
+	            "</a>"+
+	            "<a href="+item_url+"><img src='images/icon/del_file.png' alt='刪除' title='刪除' style='border:0px'/></a>&nbsp;";
+	            jq("#fileJson").append(item);
+	         }) 
+	      }
+	   })
+	}
 </script>
 <script type='text/javascript' src='/Login/dwr/interface/kyzcontactletterjs.js'></script>
 <script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>
@@ -363,9 +384,14 @@ jq(function(){
 			<s:if test='kyzletter.filesYn=="1"'>
 	           <hr/>
 	          <span style="color:blue;">附檔:</span><br/>
+	          <div id="fileJson" style="width:850px">
 	           <s:iterator value="#session.list_filesexp">
-	             <a href="/upload_letter/<s:property value='billno'/>/<s:property value="%{toUrl2(filename)}"/>" target="_blank"><s:property value="%{toUrl(filename)}"/></a>&nbsp;
-	         </s:iterator>	  
+	             <a href="/upload_letter/<s:property value='billno'/>/<s:property value="%{toUrl2(filename)}"/>" target="_blank"><s:property value="%{toUrl(filename)}"/></a>
+	             <a href="javascript:lookJson('${billno}',${id},'<s:property value="%{toUrl(filename)}"/>')">
+	              <img src="images/icon/del_file.png" alt="刪除" title="刪除" style="border:0px"/>
+	           </a>&nbsp;&nbsp;
+	         </s:iterator>
+	         </div>	  
 	         </s:if>
 	         <hr/> 						 
 			  <center style="width:850px;margin-left:50px">			    

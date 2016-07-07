@@ -18,28 +18,36 @@
 
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
-<link rel="shortcut icon" href="images/icon/web_ico.ico" /> 
-</head>
-<!--<script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script> -->
+<link rel="shortcut icon" href="images/icon/web_ico.ico" />
+
 <script src="http://apps.bdimg.com/libs/jquery/1.9.1/jquery.min.js"></script> 
 <script>window.jQuery || document.write('<script src="loginpage/jquery/jquery-1.9.1.min.js"><\/script>');</script>
 <script type="text/javascript" src="loginpage/jquery/layer/layer.min.js"></script>
-
-
-<body onload="loadpage()">
-	<script type="text/javascript">
-	function loadpage(){
+<script type="text/javascript">
+	var jq=jQuery.noConflict();
+	var loadi;
+	jq(document).ajaxStart(function(){
+		loadi=layer.load("正在登錄,請稍等...");
+	});
+	jq(document).ajaxStop(function(){
+		layer.close(loadi);
+	});
+	jq(function loadpage(){
 		var agent = navigator.userAgent.toLowerCase();
-		layer.load("正在加載,請稍等...");
 		if (agent.indexOf("msie") > 0) {			
-			window.location.href = "/Login/webfact_findAllfact";
+			//window.location.href = "/Login/webfact_findAllfact";
+			jq("#bodyid").load("/Login/webfact_findAllfact");
+			
 		}else {			
-			window.location.href = "/Login/webfact_findAllfact2";
+			//window.location.href = "/Login/webfact_findAllfact2";
+			jq("#bodyid").load("/Login/webfact_findAllfact2");
 		}	
-	}
-	
+	})
+</script> 
+</head>
 
-</script>
+<body>
+<div id="bodyid"></div>
 <jsp:include page="copyright_login.jsp"/>
 </body >
 </html>

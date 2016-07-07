@@ -439,10 +439,10 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 			for(int i=0;i<files.size();i++){							
 				if(files.get(i)!=null){	
 					long date1=new Date().getTime();
-					/*FileInputStream in=new FileInputStream(files.get(i));
-					FileOutputStream out_backup=new FileOutputStream(uploadFile_backup+"\\"+filesFileName.get(i));//備份*/
-					InputStream in=new BufferedInputStream(new FileInputStream(files.get(i)));
-					OutputStream out_backup=new BufferedOutputStream(new FileOutputStream(uploadFile_backup+"\\"+filesFileName.get(i)));
+					FileInputStream in=new FileInputStream(files.get(i));
+					FileOutputStream out_backup=new FileOutputStream(uploadFile_backup+"\\"+filesFileName.get(i));//備份
+					/*InputStream in=new BufferedInputStream(new FileInputStream(files.get(i)));
+					OutputStream out_backup=new BufferedOutputStream(new FileOutputStream(uploadFile_backup+"\\"+filesFileName.get(i)));*/
 					byte[]b=new byte[1024];
 					int length=0;
 					while((length=in.read(b))>0){

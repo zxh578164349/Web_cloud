@@ -37,7 +37,7 @@
 						</div>						
 						<div class="panel-body">
 						    <s:iterator value="#session.login_menus" status="x" id="menu">
-						        <div>
+						        <div class="mmenu">
 						           <a href="javascript:showDiv_main('${x.index}')">
 										   <span id="a${x.index}" class="glyphicon glyphicon-folder-close mmenu_font">&nbsp;<s:property value="menuname"/></span>
 								   </a>
@@ -54,7 +54,7 @@
 								   </div>
 						        </div>
 						    </s:iterator>
-						    <div><a href="javascript:location.href='judge.jsp'"><span class="glyphicon glyphicon-folder-close mmenu_font">&nbsp;退出管理</span></a></div>
+						    <div class="mmenu"><a href="javascript:location.href='judge.jsp'"><span class="glyphicon glyphicon-folder-close mmenu_font">&nbsp;退出管理</span></a></div>
 						    <s:iterator value="#session.loginUser.webJurisdictions">
 			                    <s:iterator value="webSubmenus">
 			                        <input type="hidden" value="<s:property value='submenuname'/>,<s:property value='address'/>" name="a_hidden"/>

@@ -272,11 +272,12 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 			for(int i=0;i<files.size();i++){							
 				if(files.get(i)!=null){	
 				    Long date_a=new Date().getTime();
-					/*FileInputStream in=new FileInputStream(files.get(i));
-					FileOutputStream out_backup=new FileOutputStream(uploadFile_backup+"\\"+filesFileName.get(i));//備份		*/		
-					InputStream in=new BufferedInputStream(new FileInputStream(files.get(i)));
-                    OutputStream out_backup=new BufferedOutputStream(new FileOutputStream(uploadFile_backup+"\\"+filesFileName.get(i)));
-					byte[]b=new byte[1024];
+					FileInputStream in=new FileInputStream(files.get(i));
+					FileOutputStream out_backup=new FileOutputStream(uploadFile_backup+"\\"+filesFileName.get(i));//備份		
+				    
+					/*InputStream in=new BufferedInputStream(new FileInputStream(files.get(i)));
+                    OutputStream out_backup=new BufferedOutputStream(new FileOutputStream(uploadFile_backup+"\\"+filesFileName.get(i)));*/
+					byte[]b=new byte[2048];
 					int length=0;
 					while((length=in.read(b))>0){
 						out_backup.write(b,0,length);//備份

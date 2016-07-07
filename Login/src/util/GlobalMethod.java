@@ -2,6 +2,8 @@ package util;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.math.BigDecimal;
@@ -23,6 +25,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Scanner;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -31,6 +34,12 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
+import javax.script.Bindings;
+import javax.script.Invocable;
+import javax.script.ScriptContext;
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
 import javax.servlet.http.HttpServletResponse;
 
 import mail.MailSenderInfo;
@@ -772,83 +781,7 @@ public class GlobalMethod extends HibernateDaoSupport{
 		  return list;
 	  }
 	  		
-	public static void main(String[] args) throws ParseException {
-		List<Webestproduct>list=new ArrayList<Webestproduct>();
-		List<String>list2=new ArrayList<String>();
-		List<Webestproduct>list3=new ArrayList<Webestproduct>();
-		List<Webestproduct>list4=new ArrayList<Webestproduct>();
-		Map<String,Object>map=new LinkedHashMap<String,Object>();
-		list2.add("RB");
-		list2.add("MD");
-		list2.add("PU");
-        /*for(int i=0;i<list2.size();i++){
-        	list.add(new Webestproduct(new WebestproductId("631",list2.get(i),new SimpleDateFormat("yyyyMM").parse("201605"),"zd")));
-        	list3.add(new Webestproduct(new WebestproductId("631",list2.get(i),new SimpleDateFormat("yyyyMM").parse("201605"),"zd")));
-        }
-        for(int i=0;i<list3.size();i++){
-        	list3.get(i).setAccessories(3.2-i);
-        }
-        for(Webestproduct pro:list){
-        	System.out.println(pro.getAccessories());
-        }
-        System.out.println("------------------------");
-        list3.remove(0);
-       
-        for(int i=0;i<list.size();i++){
-        	Webestproduct pro=list.get(i);
-        	for(Webestproduct pro2:list3){
-        		if(pro.getId().getFactCode().equals(pro2.getId().getFactCode())&&
-        				pro.getId().getFactNo().equals(pro2.getId().getFactNo())&&
-        				new SimpleDateFormat("yyyyMM").format(pro.getId().getYymm()).equals(new SimpleDateFormat("yyyyMM").format(pro2.getId().getYymm()))){
-        			//pro=pro2;
-        			list.remove(i);
-        			list.add(i,pro2);
-        		}
-        	}
-        	list4.add(pro);
-        	System.out.println(pro.getAccessories());
-        }
-        for(Webestproduct pro:list){
-        	System.out.println(pro.getAccessories());
-        }
-        map.put("201605", list);*/
-        /*for(Webestproduct pro:(List<Webestproduct>)map.get("201605")){
-        	System.out.println(pro.getAccessories());
-        }*/
-        
-        
-		/*DateFormat frm=new SimpleDateFormat("yyyyMM");
-		DateFormat frm2=new SimpleDateFormat("yyyyMMdd");
-		List<String>months=new ArrayList<String>();
-		months.add("201601");
-		months.add("201602");
-		months.add("201603");
-		months.add("201604");
-		Calendar cal=Calendar.getInstance();
-		for(String month:months){
-			cal.setTime(frm.parse(month));
-			//cal.set(Calendar.DAY_OF_MONTH, 1);
-			int maxnum=cal.getActualMaximum(Calendar.DAY_OF_MONTH);
-			for(int i=1;i<=maxnum;i++){
-				cal.set(Calendar.DAY_OF_MONTH, i);
-				System.out.println(frm2.format(cal.getTime()));
-			}
-			System.out.println("-------------------------------------------------");
-			
-		}*/
-		
-		/*System.out.println("Start ...");  
-		  
-        ExecutorService exec = Executors.newCachedThreadPool();  
-          
-        testTask(exec, 15); // 任务成功结束后等待计算结果，不需要等到15秒  
-        testTask(exec, 20); // 只等待5秒，任务还没结束，所以将任务中止  
- 
-        exec.shutdown();  
-        System.out.println("End!");*/
-		Map<String,Double>map1=new LinkedHashMap<String,Double>();
-		System.out.println(map1.size());
-	}
+	
 	
 	 public static void testTask(ExecutorService exec, int timeout) {  
 	        MyTask task = new MyTask();  
@@ -1037,6 +970,118 @@ public class GlobalMethod extends HibernateDaoSupport{
 			if (file.exists()) {
 				if (file.isFile()) {
 					file.delete();
+				}
+			}
+	 }
+	 
+	 public static void main(String[] args) throws ParseException, FileNotFoundException, ScriptException, NoSuchMethodException {
+			List<Webestproduct>list=new ArrayList<Webestproduct>();
+			List<String>list2=new ArrayList<String>();
+			List<Webestproduct>list3=new ArrayList<Webestproduct>();
+			List<Webestproduct>list4=new ArrayList<Webestproduct>();
+			Map<String,Object>map=new LinkedHashMap<String,Object>();
+			list2.add("RB");
+			list2.add("MD");
+			list2.add("PU");
+	        /*for(int i=0;i<list2.size();i++){
+	        	list.add(new Webestproduct(new WebestproductId("631",list2.get(i),new SimpleDateFormat("yyyyMM").parse("201605"),"zd")));
+	        	list3.add(new Webestproduct(new WebestproductId("631",list2.get(i),new SimpleDateFormat("yyyyMM").parse("201605"),"zd")));
+	        }
+	        for(int i=0;i<list3.size();i++){
+	        	list3.get(i).setAccessories(3.2-i);
+	        }
+	        for(Webestproduct pro:list){
+	        	System.out.println(pro.getAccessories());
+	        }
+	        System.out.println("------------------------");
+	        list3.remove(0);
+	       
+	        for(int i=0;i<list.size();i++){
+	        	Webestproduct pro=list.get(i);
+	        	for(Webestproduct pro2:list3){
+	        		if(pro.getId().getFactCode().equals(pro2.getId().getFactCode())&&
+	        				pro.getId().getFactNo().equals(pro2.getId().getFactNo())&&
+	        				new SimpleDateFormat("yyyyMM").format(pro.getId().getYymm()).equals(new SimpleDateFormat("yyyyMM").format(pro2.getId().getYymm()))){
+	        			//pro=pro2;
+	        			list.remove(i);
+	        			list.add(i,pro2);
+	        		}
+	        	}
+	        	list4.add(pro);
+	        	System.out.println(pro.getAccessories());
+	        }
+	        for(Webestproduct pro:list){
+	        	System.out.println(pro.getAccessories());
+	        }
+	        map.put("201605", list);*/
+	        /*for(Webestproduct pro:(List<Webestproduct>)map.get("201605")){
+	        	System.out.println(pro.getAccessories());
+	        }*/
+	        
+	        
+			/*DateFormat frm=new SimpleDateFormat("yyyyMM");
+			DateFormat frm2=new SimpleDateFormat("yyyyMMdd");
+			List<String>months=new ArrayList<String>();
+			months.add("201601");
+			months.add("201602");
+			months.add("201603");
+			months.add("201604");
+			Calendar cal=Calendar.getInstance();
+			for(String month:months){
+				cal.setTime(frm.parse(month));
+				//cal.set(Calendar.DAY_OF_MONTH, 1);
+				int maxnum=cal.getActualMaximum(Calendar.DAY_OF_MONTH);
+				for(int i=1;i<=maxnum;i++){
+					cal.set(Calendar.DAY_OF_MONTH, i);
+					System.out.println(frm2.format(cal.getTime()));
+				}
+				System.out.println("-------------------------------------------------");
+				
+			}*/
+			
+			/*System.out.println("Start ...");  
+			  
+	        ExecutorService exec = Executors.newCachedThreadPool();  
+	          
+	        testTask(exec, 15); // 任务成功结束后等待计算结果，不需要等到15秒  
+	        testTask(exec, 20); // 只等待5秒，任务还没结束，所以将任务中止  
+	 
+	        exec.shutdown();  
+	        System.out.println("End!");
+			Map<String,Double>map1=new LinkedHashMap<String,Double>();
+			System.out.println(map1.size());*/
+			runJs();
+						
+		}
+	 
+	 
+	 /**
+	  * 執行js腳本文件
+	  * @Title: runJs
+	  * @Description: TODO
+	  * @param @throws FileNotFoundException
+	  * @param @throws ScriptException
+	  * @param @throws NoSuchMethodException
+	  * @return void
+	  * @throws
+	  * @author web
+	  * @date 2016/7/6
+	  */
+	 public static void runJs() throws FileNotFoundException, ScriptException, NoSuchMethodException{
+		 ScriptEngine eng=new ScriptEngineManager().getEngineByName("javascript");
+			Bindings bid=eng.createBindings();
+			bid.put("index",1);
+			eng.setBindings(bid,ScriptContext.ENGINE_SCOPE);
+			Scanner scan=new Scanner(System.in);
+			while(scan.hasNext()){
+				int first=scan.nextInt();
+				int sec=scan.nextInt();
+				System.out.println("輸入參數："+first+" "+sec);
+				eng.eval(new FileReader("f:\\myjs.js"));
+				if(eng instanceof Invocable){
+					Invocable in=(Invocable)eng;
+					Double result=(Double)in.invokeFunction("test",first,sec);
+					System.out.println("輸出結果："+result.intValue());
 				}
 			}
 	 }
