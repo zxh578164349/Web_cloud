@@ -17,6 +17,7 @@ import services.IKyVisabillmServices;
 import services.IWebremittancelistServices;
 import services.IWebremittancelistsServices;
 import services.IWebuserEmailServices;
+import util.GlobalMethod;
 import util.JasperHelper;
 import util.PageBean;
 
@@ -183,77 +184,11 @@ public class WebremittancelistAction extends ActionSupport implements ServletRes
 		response.setContentType("text/html;charset=utf-8");
 		try{
 			if(saveOrUpdate.equals("save")){
-				webremiSer.add(webremit);
-					ajaxResult="0";				
-					KyVisabillm vbm=visabillmSer.findById(webremit.getWebtype().getId().getFactNo(), webremit.getVisaType(), webremit.getBillNo());							
-					String emailUrl_in="http://203.85.73.161/Login/vbm_findById_email?visaSort="+webremit.getVisaType()+"&billNo="+webremit.getBillNo()
-					         +"&factNo="+webremit.getFactNo()+"&email="+vbm.getSignerNext();
-					String emailUrl_in2="http://203.85.73.161/Login/vbm_findById_email2?visaSort="+webremit.getVisaType()+"&billNo="+webremit.getBillNo()
-					         +"&factNo="+webremit.getWebtype().getId().getFactNo()+"&email="+vbm.getSignerNext();							
-					/**
-					 * 發送郵件
-					 */														
-					String singernext=vbm.getSignerNext();
-					String vbm_billno=vbm.getId().getBillNo();
-					String vbm_factno=vbm.getId().getFactNo();
-					MailSenderInfo mailinfo=new MailSenderInfo();
-					mailinfo.setValidate(true);					
-					mailinfo.setToAddress(singernext);
-					mailinfo.setSubject("新函文初次審核-"+vbm_billno+"("+vbm_factno+")");
-					mailinfo.setContent("單號:<span style='color:red'>"+vbm_billno+"</span>"+"&nbsp;&nbsp;廠別:"+vbm_factno+																	
-							"<br/>點擊單號直接審核:<a href='"+emailUrl_in2+"'>"+vbm_billno+"</a>(電腦適用)"+
-							"<br/>點擊單號直接審核:<a href='"+emailUrl_in+"'>"+vbm_billno+"</a>(手機平板適用)"+
-							"<hr/>"+
-							"如需查詢以往單據請登陸:(云端)<a href='http://203.85.73.161/Login'>http://203.85.73.161/Login</a>" +									
-							"<br/>進入[KPI數據]--[函文審核]查找對應單號審核" +									
-							"<hr/>"+
-							"<br/>本郵件自動發送,請勿回復!如需回復或者問題，請回复到kyinfo.lp@yydg.com.cn劉平!<br/>"+
-							"<hr/>");
-				    //这个类主要来发送邮件   
-				      SimpleMailSender sms = new SimpleMailSender();    
-				      sms.sendHtmlMail(mailinfo);//发送html格式  
-																	
-				 /**
-			       * 发送给备签人  20150817
-			       */			
-				 /******************20151113备签人请使用方法findByFactNoAEmailPwd2(String factNo,String email)**********************/			     
-			      
-			      List<String>list_emailPwd=webuseremailSer.findByFactNoAEmailPwd2(webremit.getFactNo(),vbm.getSignerNext());
-			      if(list_emailPwd.size()>0){//if
-			    	  for(int i=0;i<list_emailPwd.size();i++){
-			    		  MailSenderInfo mailInfo2 = new MailSenderInfo();    				         
-					      mailInfo2.setValidate(true);    					        
-					      mailInfo2.setToAddress(list_emailPwd.get(i));    
-					      mailInfo2.setSubject("新函文初次審核"+vbm.getId().getBillNo()+"("+vbm.getId().getFactNo()+")");    
-					      mailInfo2.setContent("函文單號:"+"<span style='color:red'>"+vbm.getId().getBillNo()+"</span>"+"&nbsp;&nbsp;廠別:"+vbm.getId().getFactNo()+
-					    		  "<br/>點擊單號直接審核:<a href='"+emailUrl_in2+"'>"+vbm.getId().getBillNo()+"</a>(電腦適用)"+
-					    		  "<br/>點擊單號直接審核:<a href='"+emailUrl_in+"'>"+vbm.getId().getBillNo()+"</a>(手機平板適用)"+			    		  	
-							      "<hr/>"+
-					    		 "如需查詢以往單據請登錄加久網站:(云端)<a href='http://203.85.73.161/Login'>http://203.85.73.161/Login</a>" +			      		
-					      		"<br/>進入[KPI數據]--[函文審核]中查找對應單號審核,"+	      		    		
-					    		"<hr/>"+
-					      		"<br/>本郵件自動發送,請勿回復!如需回復或者問題，請回复到kyinfo.lp@yydg.com.cn劉平!<br/>"+
-					    		"<hr/>"
-					    		);      
-					         //这个类主要来发送邮件   
-					      SimpleMailSender sms2 = new SimpleMailSender();   
-					      sms2.sendHtmlMail(mailInfo2);//发送html格式  
-				      } 
-			      }//if
-			      
-			      
-			      /**
-			       * 測試主站kyuen@yydg.com.cn有沒有收到郵件
-			       */
-			      MailSenderInfo mailinfo3=new MailSenderInfo();
-			      mailinfo3.setValidate(true);		      
-			      mailinfo3.setToAddress("kyuen@yydg.com.cn");
-			      mailinfo3.setSubject("新函文初次審核(總站已收到)");
-			      mailinfo3.setContent("請登錄加久網站:(云端)<a href='http://203.85.73.161/Login'>http://203.85.73.161/Login</a>" +							
-							"<br/>進入[KPI數據]--[函文審核]查找對應單號進行審核" +
-							"<br/>單號:<span style='color:red'>"+vbm.getId().getBillNo()+"<span>"+"&nbsp;&nbsp;廠別:"+vbm.getId().getFactNo());
-			      SimpleMailSender sms3=new SimpleMailSender();
-			      sms3.sendHtmlMail(mailinfo3);
+				webremiSer.add(webremit);			
+					KyVisabillm vbm=visabillmSer.findById(webremit.getWebtype().getId().getFactNo(), webremit.getVisaType(), webremit.getBillNo());	
+					List<String>list_emailPwd=webuseremailSer.findByFactNoAEmailPwd2(vbm.getId().getFactNo(),vbm.getSignerNext());
+					
+					GlobalMethod.sendNewEmail(vbm,list_emailPwd);//發送郵件															
 			}else{
 				webremiSer.add(webremit);					
 			}

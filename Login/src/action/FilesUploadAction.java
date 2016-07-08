@@ -1,5 +1,7 @@
 package action;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -13,6 +15,7 @@ import java.util.List;
 import org.apache.struts2.ServletActionContext;
 
 import services.IWebUploadFileServices;
+import util.GlobalMethod;
 
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
@@ -124,7 +127,7 @@ public class FilesUploadAction extends ActionSupport{
 	        	uploadFile.mkdirs();
 	        } 	       
 	        if(files!=null){
-	        	for(int j=0;j<files.size();j++){
+	        	for(int j=0;j<files.size();j++){//for
 	        		int index=0;
 	        		String firstName=filesFileName.get(j);
 	        		for(int k=j+1;k<files.size();k++){
@@ -136,28 +139,29 @@ public class FilesUploadAction extends ActionSupport{
 	        			}
 	        		}
 	        		
-	        	 //第一种文件上传的方法  
-		        //声明文件输入流，为输入流指定文件路径  
-		        FileInputStream input=new FileInputStream(files.get(j));  
-		        //获取输出流，获取文件的文件地址及名称  
-		        FileOutputStream out=new FileOutputStream(uploadFile + "\\" +filesFileName.get(j));  		          
+		        /*BufferedInputStream input=new BufferedInputStream(new FileInputStream(files.get(j)));  
+		        BufferedOutputStream out=new BufferedOutputStream(new FileOutputStream(uploadFile + "\\" +filesFileName.get(j)));  		          
 		        try{		        	
 		        		byte[] b=new byte[1024];//每次写入的大小  
 			            int i=0;  
-			            while((i=input.read(b))>0){  
+			            while((i=input.read(b))!=-1){  
 			                out.write(b,0,i);		               
 			            }
-			            uploadfile.setFilename(filesFileName.get(j));
-		                uploadfile.setFiletype(filesContentType.get(j));
-		                webuploadSer.add(uploadfile);
+			            out.close();
+			            input.close();
+			            
 		        			            
 		        }catch(Exception e){  
 		            e.printStackTrace();
 		        }finally{  
 		            input.close();  
 		            out.close();  
-		        }
-	        	}
+		        }*/
+		        GlobalMethod.uploadFile(files.get(j),uploadFile + "\\" +filesFileName.get(j));
+		        uploadfile.setFilename(filesFileName.get(j));
+                uploadfile.setFiletype(filesContentType.get(j));
+                webuploadSer.add(uploadfile);
+	        	}//for
 	        }
 	        System.out.println(fileContentType);
 	        System.out.print(fileFileName);

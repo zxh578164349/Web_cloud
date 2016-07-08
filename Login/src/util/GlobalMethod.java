@@ -1,8 +1,12 @@
 package util;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -72,6 +76,7 @@ import entity.WebestproductId;
 
 
 public class GlobalMethod extends HibernateDaoSupport{
+	private static final String URL="http://203.85.73.161/Login/";
 	
 
 	public static void print(List list,String factNo,String yymm,String yymm2,String file,HttpServletResponse response) throws IOException{
@@ -860,9 +865,9 @@ public class GlobalMethod extends HibernateDaoSupport{
 					/***************************************中途知會人的email20160217********************************************/
 					
 					list_email.add("kyuen@yydg.com.cn");
-					String emailUrl="http://203.85.73.161/Login/vbm_findById_email?visaSort="+visaSort+"&billNo="+billNo
+					String emailUrl=URL+"vbm_findById_email?visaSort="+visaSort+"&billNo="+billNo
 					         +"&factNo="+factNo+"&email="+signerNext;
-					String emailUrl2="http://203.85.73.161/Login/vbm_findById_email2?visaSort="+visaSort+"&billNo="+billNo
+					String emailUrl2=URL+"vbm_findById_email2?visaSort="+visaSort+"&billNo="+billNo
 					         +"&factNo="+factNo+"&email="+signerNext;
 					if(visaMk.equals("N")){
 						subject="函文審核定時通知_"+billNo+"("+factNo+")";
@@ -974,6 +979,102 @@ public class GlobalMethod extends HibernateDaoSupport{
 			}
 	 }
 	 
+	 /**
+	  * 執行js腳本文件
+	  * @Title: runJs
+	  * @Description: TODO
+	  * @param @throws FileNotFoundException
+	  * @param @throws ScriptException
+	  * @param @throws NoSuchMethodException
+	  * @return void
+	  * @throws
+	  * @author web
+	  * @date 2016/7/6
+	  */
+	 public static void runJs() throws FileNotFoundException, ScriptException, NoSuchMethodException{
+		 ScriptEngine eng=new ScriptEngineManager().getEngineByName("javascript");
+			Bindings bid=eng.createBindings();
+			bid.put("index",1);
+			eng.setBindings(bid,ScriptContext.ENGINE_SCOPE);
+			Scanner scan=new Scanner(System.in);
+			while(scan.hasNext()){
+				int first=scan.nextInt();
+				int sec=scan.nextInt();
+				System.out.println("輸入參數："+first+" "+sec);
+				eng.eval(new FileReader("f:\\myjs.js"));
+				if(eng instanceof Invocable){
+					Invocable in=(Invocable)eng;
+					Double result=(Double)in.invokeFunction("test",first,sec);
+					System.out.println("輸出結果："+result.intValue());
+				}
+			}
+	 }
+	 
+	 /**
+	  * 上傳文件
+	  * @Title: uploadFile
+	  * @Description: TODO
+	  * @param @param upFile  要上傳的源文件
+	  * @param @param downFilepath  上傳文件后的保存路徑
+	  * @return void
+	 * @throws IOException 
+	 * @throws
+	  * @author web
+	  * @date 2016/7/8
+	  */
+	 public static void uploadFile(File upFile,String  downFilepath) throws IOException{
+		 BufferedInputStream in=new BufferedInputStream(new FileInputStream(upFile));
+		 BufferedOutputStream out=new BufferedOutputStream(new FileOutputStream(downFilepath));
+		 byte[]bytes=new byte[1024];
+		 int len=0;
+		 while((len=in.read(bytes))!=-1){
+			 out.write(bytes,0,len);
+		 }
+		 out.close();
+		 in.close();
+	 }
+	 			 
+	 /**
+	  * 新函文發送email
+	  * @Title: sendNewEmail
+	  * @Description: TODO
+	  * @param @param vbm
+	  * @param @param list_emailPwd
+	  * @return void
+	  * @throws
+	  * @author web
+	  * @date 2016/7/8
+	  */
+	 public static void sendNewEmail(KyVisabillm vbm,List<String>list_emailPwd){
+		 List<String>list=new ArrayList<String>();
+		 list.add(vbm.getSignerNext());
+		 for(String str:list_emailPwd){
+			 list.add(str);
+		 }
+		 list.add("kyuen@yydg.com.cn");
+		 String emailUrl_in=URL+"vbm_findById_email?visaSort="+vbm.getId().getVisaSort()+"&billNo="+vbm.getId().getBillNo()
+		         +"&factNo="+vbm.getId().getFactNo()+"&email="+vbm.getSignerNext();	
+		 String emailUrl_in2=URL+"vbm_findById_email2?visaSort="+vbm.getId().getVisaSort()+"&billNo="+vbm.getId().getBillNo()
+		         +"&factNo="+vbm.getId().getFactNo()+"&email="+vbm.getSignerNext();
+		 MailSenderInfo mailinfo=new MailSenderInfo();
+		 SimpleMailSender sms = new SimpleMailSender();  
+			mailinfo.setValidate(true);					
+			mailinfo.setSubject("新函文初次審核"+vbm.getId().getBillNo()+"("+vbm.getId().getFactNo()+")");
+			mailinfo.setContent("單號:<span style='color:red'>"+vbm.getId().getBillNo()+"</span>"+"&nbsp;&nbsp;廠別:"+vbm.getId().getFactNo()+								
+					"<br/>點擊單號直接審核:<a href='"+emailUrl_in2+"'>"+vbm.getId().getBillNo()+"</a>(電腦適用)"+
+					"<br/>點擊單號直接審核:<a href='"+emailUrl_in+"'>"+vbm.getId().getBillNo()+"</a>(手機平板適用)"+
+					"<hr/>"+
+					"如需查詢以往單據請登陸:(云端)<a href='"+URL+"'>"+URL+"</a>" +							
+					"<br/>進入[KPI數據]--[函文審核]查找對應單號審核" +									
+					"<hr/>"+
+					"<br/>本郵件自動發送,請勿回復!如需回復或者問題，請回复到kyinfo.lp@yydg.com.cn劉平!<br/>"+
+					"<hr/>");
+		      for(String email:list){		    	  
+		    	  mailinfo.setToAddress(email);
+		    	  sms.sendHtmlMail(mailinfo);
+		      } 				          		       			 
+	 }
+	 
 	 public static void main(String[] args) throws ParseException, FileNotFoundException, ScriptException, NoSuchMethodException {
 			List<Webestproduct>list=new ArrayList<Webestproduct>();
 			List<String>list2=new ArrayList<String>();
@@ -1055,36 +1156,7 @@ public class GlobalMethod extends HibernateDaoSupport{
 		}
 	 
 	 
-	 /**
-	  * 執行js腳本文件
-	  * @Title: runJs
-	  * @Description: TODO
-	  * @param @throws FileNotFoundException
-	  * @param @throws ScriptException
-	  * @param @throws NoSuchMethodException
-	  * @return void
-	  * @throws
-	  * @author web
-	  * @date 2016/7/6
-	  */
-	 public static void runJs() throws FileNotFoundException, ScriptException, NoSuchMethodException{
-		 ScriptEngine eng=new ScriptEngineManager().getEngineByName("javascript");
-			Bindings bid=eng.createBindings();
-			bid.put("index",1);
-			eng.setBindings(bid,ScriptContext.ENGINE_SCOPE);
-			Scanner scan=new Scanner(System.in);
-			while(scan.hasNext()){
-				int first=scan.nextInt();
-				int sec=scan.nextInt();
-				System.out.println("輸入參數："+first+" "+sec);
-				eng.eval(new FileReader("f:\\myjs.js"));
-				if(eng instanceof Invocable){
-					Invocable in=(Invocable)eng;
-					Double result=(Double)in.invokeFunction("test",first,sec);
-					System.out.println("輸出結果："+result.intValue());
-				}
-			}
-	 }
+	
 
 }
 class MyTask implements Callable<Boolean> {  	  

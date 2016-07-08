@@ -25,6 +25,7 @@ import services.IKyzExpectmatmLogServices;
 import services.IKyzVisaFlowServices;
 import services.IWebBussinessletterServices;
 import services.IWebFactServices;
+import services.IWebuserEmailServices;
 import util.GlobalMethod;
 import util.JasperHelper;
 import util.PageBean;
@@ -65,7 +66,7 @@ public class WebBussinessletterAction extends ActionSupport implements ServletRe
 	private IKyVisabillmServices visabillmSer;
 	private javax.servlet.http.HttpServletResponse response;
 	private IKyzExpectmatmLogServices kyzExpLogSer;
-	
+	private IWebuserEmailServices webuseremailSer;
 	
 	
 	public int getBackIndex() {
@@ -179,11 +180,13 @@ public class WebBussinessletterAction extends ActionSupport implements ServletRe
 		this.response=response;
 	}
 	
-	
-	
-	
 	public void setKyzExpLogSer(IKyzExpectmatmLogServices kyzExpLogSer) {
 		this.kyzExpLogSer = kyzExpLogSer;
+	}
+	
+	
+	public void setWebuseremailSer(IWebuserEmailServices webuseremailSer){
+		this.webuseremailSer=webuseremailSer;
 	}
 	public String add() throws ParseException{				
 		String result="add";
@@ -202,48 +205,12 @@ public class WebBussinessletterAction extends ActionSupport implements ServletRe
 				bussletter.setVisaSortM(bussletter.getVisaSort().substring(0,2));
 				webbussletterSer.add(bussletter);
 				KyVisabillm vbm=visabillmSer.findById(bussletter.getFactNo(),bussletter.getVisaSort(), bussletter.getBlNo());
+				List<String>list_emailPwd=webuseremailSer.findByFactNoAEmailPwd2(vbm.getId().getFactNo(),vbm.getSignerNext());
 				/**
 				 * 發送郵件
 				 */
-				String emailUrl_in="http://203.85.73.161/Login/vbm_findById_email?visaSort="+bussletter.getVisaSort()+"&billNo="+bussletter.getBlNo()
-				         +"&factNo="+bussletter.getFactNo()+"&email="+vbm.getSignerNext();	
-				String emailUrl_in2="http://203.85.73.161/Login/vbm_findById_email2?visaSort="+bussletter.getVisaSort()+"&billNo="+bussletter.getBlNo()
-				         +"&factNo="+bussletter.getFactNo()+"&email="+vbm.getSignerNext();
-				String singernext=vbm.getSignerNext();
-				String vbm_billno=vbm.getId().getBillNo();
-				String vbm_factno=vbm.getId().getFactNo();
-				MailSenderInfo mailinfo=new MailSenderInfo();
-				mailinfo.setValidate(true);
-				
-				mailinfo.setToAddress(singernext);
-				mailinfo.setSubject("新函文初次審核"+vbm_billno+"("+vbm_factno+")");
-				mailinfo.setContent("單號:<span style='color:red'>"+vbm_billno+"</span>"+"&nbsp;&nbsp;廠別:"+vbm_factno+								
-						"<br/>點擊單號直接審核:<a href='"+emailUrl_in2+"'>"+vbm_billno+"</a>(電腦適用)"+
-						"<br/>點擊單號直接審核:<a href='"+emailUrl_in+"'>"+vbm_billno+"</a>(手機平板適用)"+
-						"<hr/>"+
-						"如需查詢以往單據請登陸:(云端)<a href='http://203.85.73.161/Login'>http://203.85.73.161/Login</a>" +							
-						"<br/>進入[KPI數據]--[函文審核]查找對應單號審核" +									
-						"<hr/>"+
-						"<br/>本郵件自動發送,請勿回復!如需回復或者問題，請回复到kyinfo.lp@yydg.com.cn劉平!<br/>"+
-						"<hr/>");
-			    //这个类主要来发送邮件   
-			      SimpleMailSender sms = new SimpleMailSender();   
-			         // sms.sendTextMail(mailInfo);//发送文体格式    
-			      sms.sendHtmlMail(mailinfo);//发送html格式  	          
-			      
-			      /**
-			       * 測試主站kyuen@yydg.com.cn有沒有收到郵件
-			       */
-			      MailSenderInfo mailinfo2=new MailSenderInfo();
-			      mailinfo2.setValidate(true);			      
-			      mailinfo2.setToAddress("kyuen@yydg.com.cn");
-			      mailinfo2.setSubject("新函文初次審核(總站已收到)");
-			      mailinfo2.setContent("請登錄加久網站:(云端)<a href='http://203.85.73.161/Login'>http://203.85.73.161/Login</a>" +								
-							"<br/>進入[KPI數據]--[函文審核]查找對應單號進行審核" +
-							"&nbsp;&nbsp;單號:<span style='color:red'>"+vbm_billno+"<span>"+"&nbsp;&nbsp;廠別:"+vbm_factno);
-			      SimpleMailSender sms2=new SimpleMailSender();
-			      sms2.sendHtmlMail(mailinfo2);
-			      ajaxResult="0";
+				GlobalMethod.sendNewEmail(vbm,list_emailPwd);//發送郵件								
+			    ajaxResult="0";			      
 				}else{
 					bussletter.setVisaSortM(bussletter.getVisaSort().substring(0,2));
 					webbussletterSer.add(bussletter);

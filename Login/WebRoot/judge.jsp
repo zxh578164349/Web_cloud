@@ -32,7 +32,16 @@
 	jq(document).ajaxStop(function(){
 		layer.close(loadi);
 	});
-	jq(function loadpage(){
+	jq(function (){
+		/*jQuery.fn.center = function () {
+		      this.css("position","absolute");
+		      this.css("top", ( jq(window).height() - this.height() ) / 2+jq(window).scrollTop() + "px");
+		      this.css("left", ( jq(window).width() - this.width() ) / 2+jq(window).scrollLeft() + "px");
+		      return this;
+		  }
+        jq("#bodyid").center();*/
+        
+        
 		var agent = navigator.userAgent.toLowerCase();
 		if (agent.indexOf("msie") > 0) {			
 			//window.location.href = "/Login/webfact_findAllfact";
@@ -41,12 +50,16 @@
 		}else {			
 			//window.location.href = "/Login/webfact_findAllfact2";
 			jq("#bodyid").load("/Login/webfact_findAllfact2");
-		}	
-	})
+		}
+		
+		
+	});
+	
 </script> 
 </head>
 
 <body>
+<!--  <div id="bodyid" style="width:200px;height:200px;background:red;"></div>-->
 <div id="bodyid"></div>
 <jsp:include page="copyright_login.jsp"/>
 </body >

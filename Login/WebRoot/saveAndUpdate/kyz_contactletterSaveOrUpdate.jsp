@@ -164,6 +164,7 @@ function getKyType2(factno){
       inputfile.type="file";
       inputfile.name="files";
       inputfile.style.width="150px";
+      inputfile.id="fileid"+i;
       aEle.innerHTML="刪除";
       aEle.style.color="red";
       aEle.href="javascript:void(0)";
@@ -214,7 +215,7 @@ function getKyType2(factno){
 	         }) 
 	      }
 	   })
-	}
+	}  
 </script>
 <script type='text/javascript' src='/Login/dwr/interface/kyzcontactletterjs.js'></script>
 <script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>
