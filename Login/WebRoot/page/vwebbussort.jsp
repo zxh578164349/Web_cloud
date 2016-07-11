@@ -23,18 +23,23 @@
 <link rel="stylesheet" type="text/css" href="css/select_beautiful.css">
 <link rel="stylesheet" type="text/css" href="css/form.css" />
 <script type="text/javascript">
+function tips(){
+	   window.parent.layer.alert("出現無數據時,請檢查<br/>【產量資料(盤點)】【基本數據導入】是否同時具備數據",0); 
+}
 jq(function(){
     jq("#subform").Validform({
 			tiptype : 3,
 			showAllError : true,
 			ignoreHidden : true,
-			tipSweep : true
+			tipSweep : true,
+			beforeSubmit:tips
     });
     jq("#subform2").Validform({
 		tiptype : 1,
 		showAllError : true,
 		ignoreHidden : true,
-		tipSweep : true
+		tipSweep : true,
+		beforeSubmit:tips
 });   
 })
 

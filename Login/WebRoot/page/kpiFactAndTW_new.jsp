@@ -29,27 +29,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
              tiptype:3,
              tipSweep:true,
              showAllError:true,
-             beforeCheck:function(){
-            	 window.parent.layer.alert("出現無數據時,請檢查<br/>【產量資料(盤點)】【預計生產】【基本數據導入】是否同時具備數據",0); 
-             }
+             beforeSubmit:tips
          });
          jq("#subform2").Validform({
              btnSubmit:"#btn2",
              tiptype:3,
              tipSweep:true,
              showAllError:true,
-             beforeCheck:function(){
-            	 window.parent.layer.alert("出現無數據時,請檢查<br/>【產量資料(盤點)】【預計生產】【基本數據導入】是否同時具備數據",0);           	 
-             }
+             beforeSubmit:tips
          });
          jq("#subform3").Validform({
              btnSubmit:"#btn3",
              tiptype:3,
              tipSweep:true,
              showAllError:true,
-             beforeCheck:function(){
-            	 window.parent.layer.alert("出現無數據時,請檢查<br/>【產量資料(盤點)】【預計生產】【基本數據導入】是否同時具備數據",0); 
-             }
+             beforeSubmit:tips
          })
       }  
    )
@@ -144,7 +138,7 @@ function checkdate(){
 }
 
 function tips(){
-	layer.msg("出現無數據時,請檢查<br/>【產量資料(盤點)】【預計生產】【基本數據導入】是否同時具備數據",3,1);
+	window.parent.layer.alert("出現無數據時,請檢查<br/>【產量資料(盤點)】【預計生產】【基本數據導入】是否同時具備數據",0); 
 }
 </script>
 <script type='text/javascript' src='/Login/dwr/interface/kpifactjs.js'></script>

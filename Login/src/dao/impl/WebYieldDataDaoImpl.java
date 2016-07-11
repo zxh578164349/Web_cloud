@@ -289,7 +289,7 @@ public class WebYieldDataDaoImpl extends Basedao implements IWebYieldDataDao {
 	public List<String[]> getFactPrint_show(String date) {
 		String hql = "select factSname,id.factArea,id.factNo from WebFact where id.factNo||id.factArea not in "
 				+ "(select id.factNo||id.factCode from WebYieldData  where to_char(id.yymmdd,'yyyy/MM/dd')= ? )"
-				+ " and factShow='0'";
+				+ " and factShow='0' order by orderNo,fcodeIndex";
 		String[] objs = { date };
 		return super.findAll(hql, objs);
 	}
