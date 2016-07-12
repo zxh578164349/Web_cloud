@@ -1,4 +1,3 @@
-
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 <%@ taglib uri="/struts-tags" prefix="s"%>
 
@@ -109,11 +108,11 @@ var jq=jQuery.noConflict();
 					
 		function switchSysBar() {			
 			if (jq("#t_index").text()=="＜＜＜") {
-			    jq("#left").hide(200);
+			    jq("#left").hide();
 			    
 			    jq("#t_index").text("＞＞＞");											
 			} else {
-			    jq("#left").show(200);
+			    jq("#left").show();
 			    jq("#t_index").text("＜＜＜") ;
 			   
 			}
@@ -144,12 +143,12 @@ var jq=jQuery.noConflict();
 		if (divName== "none") {
 			sts.removeClass("glyphicon glyphicon-folder-close");
 			sts.addClass("glyphicon glyphicon-folder-open");
-			jq("#submenu"+index).show(200);
+			jq("#submenu"+index).show();
 			//img.attr("src","image/folderopen.gif");
 		} else {
 			sts.removeClass("glyphicon glyphicon-folder-open");
 			sts.addClass("glyphicon glyphicon-folder-close");
-			jq("#submenu"+index).hide(200);
+			jq("#submenu"+index).hide();
 			//img.attr("src","image/folder.gif");
 		}
 	}

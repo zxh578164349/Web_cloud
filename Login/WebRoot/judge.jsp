@@ -20,6 +20,19 @@
 <meta http-equiv="description" content="This is my page">
 <link rel="shortcut icon" href="images/icon/web_ico.ico" />
 
+<!--[if !IE]><!-->
+<link type="text/css" rel="stylesheet" href="loginpage/css/login_style_chrome.css" media="screen" />
+ <!--<![endif]-->
+<!--[if lt IE 9]>
+<link type="text/css" rel="stylesheet" href="loginpage/css/login_style_ie.css" media="screen"> 
+<![endif]-->
+
+</head>
+
+<body>
+<div id="bodyid"></div>
+<jsp:include page="copyright_login.jsp"/>
+
 <script src="http://apps.bdimg.com/libs/jquery/1.9.1/jquery.min.js"></script> 
 <script>window.jQuery || document.write('<script src="loginpage/jquery/jquery-1.9.1.min.js"><\/script>');</script>
 <script type="text/javascript" src="loginpage/jquery/layer/layer.min.js"></script>
@@ -56,11 +69,5 @@
 	});
 	
 </script> 
-</head>
-
-<body>
-<!--  <div id="bodyid" style="width:200px;height:200px;background:red;"></div>-->
-<div id="bodyid"></div>
-<jsp:include page="copyright_login.jsp"/>
 </body >
 </html>

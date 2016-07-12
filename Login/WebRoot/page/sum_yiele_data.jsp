@@ -86,6 +86,7 @@
 <body>
 
 	<form action="sumwebydata_add" method="post" id="form">
+	         <h2>添加盤點資料</h2>
 		      <table class="table table-condensed">
 		        <tr>
 		          <td class="td_show_title">始末日期</td>
