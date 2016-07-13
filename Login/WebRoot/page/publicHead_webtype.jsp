@@ -16,25 +16,7 @@
 	-->
 <link rel="stylesheet" type="text/css" href="css/select_beautiful.css">	
 <LINK href="css/list.css" type="text/css" rel="stylesheet">
-<script type="text/javascript" src="jquery/DatePicker/WdatePicker.js"></script>
-<script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script>
 
-<script type="text/javascript" src="jquery_alert_dialogs/jquery.js"></script>
-<script type="text/javascript" src="jquery_alert_dialogs/jquery.alerts.js"></script>	
-<link rel="stylesheet" type="text/css" href="jquery_alert_dialogs/jquery.alerts.css" />	
-<script type="text/javascript" src="jquery_alert_dialogs/jquery.ui.draggable.js"></script>	
-<link rel="stylesheet" type="text/css" href="jquery/loding/ui.loading.css" />	
-<script type="text/javascript" src="jquery/loding/ui.loading.js"></script>
-<script type="text/javascript">
- 
-
-jq(document).keyup(function(event){
-   if(event.keyCode==13){
-      submis();
-   }
-});
-
-</script>
 
 </head>
 <body>
@@ -61,5 +43,13 @@ jq(document).keyup(function(event){
 			</td>
 		</tr>
 	</table>
+<script type="text/javascript">
+jq(document).keyup(function(event){
+   if(event.keyCode==13){
+      submis();
+   }
+});
+
+</script>	
 </body>
 </html>

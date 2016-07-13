@@ -21,10 +21,6 @@
 <meta http-equiv="description" content="This is my page">
 <link href="css/validate.css" rel="stylesheet" type="text/css" />
 <link rel="stylesheet" type="text/css" href="css/form.css" />
-<script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script>
-<script type="text/javascript" src="jquery/Validform_v5.3.2_min.js"></script>
-<script type="text/javascript" src="jquery/DatePicker/my_WdatePicker.js"></script>
-<script type="text/javascript" src="jquery/layer/layer.min.js"></script>
 </head>
 <script type="text/javascript">
 var jq=jQuery.noConflict();
@@ -233,8 +229,8 @@ jq(document).ajaxStop(function(){
 
 </script>
 <script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/engine.js'></script>
-<script type='text/javascript' src='/Login/dwr/util.js'></script>
+<!-- <script type='text/javascript' src='/Login/dwr/engine.js'></script>
+<script type='text/javascript' src='/Login/dwr/util.js'></script> -->
 
 <body onload="init()">
 

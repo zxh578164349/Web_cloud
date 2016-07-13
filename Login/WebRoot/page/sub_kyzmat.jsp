@@ -153,15 +153,6 @@ function subkyzmat_addSubKyzmat(){
 
 	
 </script>
-<script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/kyzsecjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/kyzacctjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/kyzpettyjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/engine.js'></script>
-<script type='text/javascript' src='/Login/dwr/util.js'></script>
-
-
-
 
 <body>
 	<jsp:include page="publicHead_kyzmat.jsp"/>

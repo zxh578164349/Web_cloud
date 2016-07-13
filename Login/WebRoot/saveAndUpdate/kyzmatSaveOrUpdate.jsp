@@ -134,7 +134,7 @@ jq(document).keyup(function(event){
 <script type='text/javascript' src='/Login/dwr/util.js'></script> 
 <script type="text/javascript">
   jq(function(){
-	  findAllAcct();
+	  //findAllAcct();
 	   findallBN();
 	   noNull(); 
   });

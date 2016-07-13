@@ -126,28 +126,28 @@ function showDiv(){
     
             
 });
-    }	
+    }
+    
+  function isDelete(subform){
+ 	   var flag=confirm("確定要刪除嗎?");
+ 	   
+ 	   if(flag==true){	   
+ 	      //document.getElementById(subform).submit();
+ 	      jq.ajax({
+ 	    	  type:"POST",
+ 	    	  dataType:"html",
+ 	    	  data:jq("#"+subform).serialize(),
+ 	    	  url:"kyzpetty_delete",
+ 	    	  success:function(data){
+ 	    		  jq("#bodyid").html(data);
+ 	    	  },
+ 	    	  error:function(err){
+ 	    		  jq("#bodyid").html(err.responseText);
+ 	    	  }
+ 	      })
+ 	   }
+ 	}    
 </script>
-
-
-<script type="text/javascript">
-	//你确定要删除吗？	
-	function isDelete(mid) {
-		jConfirm('你确定这么做吗?', '确认对话框', function(r) {
-			if (r == true) {
-				/* window.location.href = "backmat_delete?billNo=" + mid; */
-				document.getElementById(mid).submit();
-			}
-		});
-	}
-</script>
-<script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/kyzsecjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/kyzacctjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/kyzpettyjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/engine.js'></script>
-<script type='text/javascript' src='/Login/dwr/util.js'></script>
-
 
 
 

@@ -92,7 +92,7 @@
 		var names = document.getElementById("url_username_input");
 		var pwd = document.getElementById("url_pwd_input");
 		if (factNO.value == 0 || names.value == "" || pwd.value == "") {
-			alert("請輸入完整的信息", '提示信息');
+			alert("請輸入完整的信息");
 		} else {						
 			jq.ajax({
 				type:"POST",

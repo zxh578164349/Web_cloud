@@ -15,23 +15,9 @@
 <meta http-equiv="cache-control" content="no-cache">
 <meta http-equiv="expires" content="0">
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
-<meta http-equiv="description" content="This is my page">
-<!--  <link rel="stylesheet" type="text/css" href="css/button_css.css" />
-<link rel="stylesheet" type="text/css" href="css/general_css.css" />
-<link href="tablecloth/tablecloth.css" rel="stylesheet" type="text/css" media="screen" />
-<script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script>
-<script type="text/javascript" src="page/jquerys/layer/layer.min.js"></script>-->
- 
+<meta http-equiv="description" content="This is my page"> 
 </head>
 <script>
-	/* var jq=jQuery.noConflict();
-	var loadi; 
-	jq(document).ajaxStart(function(){
-		loadi=layer.load(0);
-	});
-	jq(document).ajaxStop(function(){
-		layer.close(loadi);
-	}); */
 	function pages(page) {
 		jq.ajax({
 			type : "POST",

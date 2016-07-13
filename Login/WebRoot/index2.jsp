@@ -58,16 +58,7 @@
 		var password = document.getElementById("pwd");
 		if (factNO.value == 0 || names.value == "" || password.value == "") {		
 			alert("請輸入完整的信息");
-		} else {		  		    
-		    /*注意：要先提交，再顯示加載層，否則gif圖片不會動  */		    
-		    //document.getElementById('subform').submit();
-		    //layer.load("正在登錄中,請稍等.....");
-		    /*jq(document).ajaxStart(function(){
-		    	loadi=layer.load("正在登錄,請稍等.....");
-		    });
-		    jq(document).ajaxStop(function(){
-		    	layer.close(loadi);
-		    });*/
+		} else {		  		    		   
 			jq.ajax({
 			  type:"POST",
 			  url:"userlogin",

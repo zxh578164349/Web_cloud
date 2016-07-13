@@ -93,12 +93,6 @@
 		      </table>
 		   </form>
 
-	<div id="mydiv">
-		<p>
-			<img alt="" src="images/loading004.gif"><br> Loading....
-		</p>
-	</div>
-
 </body>
 
 </html>

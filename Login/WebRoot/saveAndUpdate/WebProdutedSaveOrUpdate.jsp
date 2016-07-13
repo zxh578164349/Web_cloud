@@ -98,8 +98,8 @@ function back(){
 </script>
 <script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>
 <script type='text/javascript' src='/Login/dwr/interface/webprodutedjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/engine.js'></script>
-<script type='text/javascript' src='/Login/dwr/util.js'></script>
+<!-- <script type='text/javascript' src='/Login/dwr/engine.js'></script>
+<script type='text/javascript' src='/Login/dwr/util.js'></script> -->
 </head>
 <body>
 	<form action="webProduted_addProduted" method="post" id="form">

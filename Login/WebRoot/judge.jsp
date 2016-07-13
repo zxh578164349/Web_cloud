@@ -30,7 +30,7 @@
 </head>
 
 <body>
-<div id="bodyid"></div>
+<div id="bodyid" style="display:none"></div>
 <jsp:include page="copyright_login.jsp"/>
 
 <script src="http://apps.bdimg.com/libs/jquery/1.9.1/jquery.min.js"></script> 
@@ -46,25 +46,16 @@
 		layer.close(loadi);
 	});
 	jq(function (){
-		/*jQuery.fn.center = function () {
-		      this.css("position","absolute");
-		      this.css("top", ( jq(window).height() - this.height() ) / 2+jq(window).scrollTop() + "px");
-		      this.css("left", ( jq(window).width() - this.width() ) / 2+jq(window).scrollLeft() + "px");
-		      return this;
-		  }
-        jq("#bodyid").center();*/
-        
-        
 		var agent = navigator.userAgent.toLowerCase();
 		if (agent.indexOf("msie") > 0) {			
 			//window.location.href = "/Login/webfact_findAllfact";
-			jq("#bodyid").load("/Login/webfact_findAllfact");
-			
+			jq("#bodyid").load("/Login/webfact_findAllfact");						
 		}else {			
 			//window.location.href = "/Login/webfact_findAllfact2";
 			jq("#bodyid").load("/Login/webfact_findAllfact2");
 		}
-		
+		jq("#bodyid").fadeIn(1500);
+		//jq("#bodyid").slideDown(300);
 		
 	});
 	

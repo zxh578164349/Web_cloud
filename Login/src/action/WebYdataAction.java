@@ -689,7 +689,7 @@ public class WebYdataAction extends ActionSupport implements
 	}
 
 	public String formatDouble_percent(double s) {
-		DecimalFormat format = new DecimalFormat("#.0%");
+		DecimalFormat format = new DecimalFormat("0.0%");
 		String temp = format.format(s);
 		return temp;
 	}

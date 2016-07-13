@@ -21,13 +21,7 @@
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
 
-<!-- 分頁樣式 -->
-<!-- <link rel="stylesheet" type="text/css" href="css/mystyle.css" />-->
 
-
-<script type="text/javascript">
-
-</script>
 </head>
 <body>
   <div id="container">
@@ -76,12 +70,12 @@
 						 <input type="hidden" value="<s:property value='billNo'/>" name="billNo" />													 						
 					</form>
 					<s:if test="vbm.lastMk==null">
-					    <a href="javascript:findById('subform${x.index}','webremit_findById')" onclick=""><img alt="修改" src="images/icon/edit001.png" title="修改" ></a>						  																									
+					    <a href="javascript:findById_form('subform${x.index}','webremit_findById')" onclick=""><img alt="修改" src="images/icon/edit001.png" title="修改" ></a>						  																									
 					    <a href="javascript:void(0)" onclick="isDelete('2subform${x.index}')"><img alt="刪除" src="images/icon/delete001.png" title="刪除" ></a>	
 					</s:if>
 					<s:else>
 					   <s:if test="#session.loginUser.username=='admin'">
-					         <a href="javascript:findById('subform${x.index}','webremit_findById')" onclick=""><img alt="修改" src="images/icon/edit001.png" title="修改" ></a>						  																									
+					         <a href="javascript:findById_form('subform${x.index}','webremit_findById')" onclick=""><img alt="修改" src="images/icon/edit001.png" title="修改" ></a>						  																									
 					         <a href="javascript:void(0)" onclick="isDelete('2subform${x.index}')"><img alt="刪除" src="images/icon/delete001.png" title="刪除" ></a>
 					      </s:if>
 					      <s:else>

@@ -21,11 +21,6 @@
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
 
-<!-- <link rel="stylesheet" type="text/css" href="css/mystyle.css" />-->
-<script type="text/javascript">
-	
-</script>
-
 </head>
 
 <body>
@@ -148,7 +143,7 @@
 						<input type="hidden" value="<s:property value='id.factCode'/>" name="factCode" />							
 						<input type="hidden" value="<s:property value='id.yyyy'/>" name="yyyy" />							
 					</form> 
-					<a href="javascript:findById('subform${x.index}','kpifact_findById')"					
+					<a href="javascript:findById_form('subform${x.index}','kpifact_findById')"					
 					onclick=""><img alt="修改" src="images/icon/edit001.png" title="修改" ></a>
 
 					<form action="kpifact_delete" method="post" id="2subform${x.index}" style="float:left">						
@@ -173,19 +168,7 @@
 		</tbody>
 	</table>
  </div>
-	<%-- <hr />
-	<center id="center_page">
-	　　<a href="javascript:pages(0)">首頁</a>
-	    <a href="javascript:pages(<s:property value='bean.currentPage'/>-1)">上一頁</a>	    
-	        (第<s:property value="bean.currentPage" />頁 <a href="javascript:void(0)" onclick="showPage()" id="a_page">▽</a>|共<s:property value="bean.totalPage" />頁)
-	           <div id="divpage">
-	               <c:forEach begin="1"  end="${bean.totalPage}" var="id">
-	                   <a href="javascript:pages(${id })">${id}</a>
-	               </c:forEach>
-	           </div>	  
-	    <a href="javascript:pages(<s:property value='bean.currentPage'/>+1)">下一頁</a>
-	    <a href="javascript:pages(<s:property value='bean.totalPage'/>)">尾頁</a>		
-	</center> --%>
+	
 	<ul class="pagination" style="padding-left:42%">
 		    <li><a href="javascript:pages(0)">首頁</a></li>
 			<li><a href="javascript:pages(<s:property value='bean.currentPage'/>-1)">&laquo;</a></li>			

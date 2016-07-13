@@ -32,7 +32,7 @@ jq(document).keyup(function(event){
 	<table  id="tb_search">
 		<tr>
 			<td><s:if test="#attr.factNo=='tw'">
-					<select name="factNo" id="factNo" onchange="getType2(this.value)">
+					<select name="factNo" id="factNo" onchange="getType(this.value)">
 						<option value="nothing">請選擇廠別</option>						
 						<s:iterator value="#attr.facts" id="temp">
 							<option value="${temp[0] }">${temp[1]}(${temp[0]})</option>								
@@ -40,7 +40,8 @@ jq(document).keyup(function(event){
 					</select>
 				</s:if>
 				 <s:else>				 
-					<select name="factNo" id="factNo" ">
+					<select name="factNo" id="factNo" onchange="getType(this.value)">
+					<option value="nothing">請選擇廠別</option>	
 						<option value="<s:property value="#attr.factNo"/>">
 							<s:property value="#attr.factName" />(<s:property value="#attr.factNo"/>)
 						</option>

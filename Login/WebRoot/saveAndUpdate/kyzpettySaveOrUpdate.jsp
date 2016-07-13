@@ -151,10 +151,12 @@ function back() {
       jjqq(selector).chosen(config[selector]);
     }
   </script>
-<!-- <script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>
+<script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>
 <script type='text/javascript' src='/Login/dwr/interface/kyzsecjs.js'></script>
 <script type='text/javascript' src='/Login/dwr/interface/kyzacctjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/engine.js'></script>
+<script type='text/javascript' src='/Login/dwr/interface/kyzpettyjs.js'></script>
+
+<!-- <script type='text/javascript' src='/Login/dwr/engine.js'></script>
 <script type='text/javascript' src='/Login/dwr/util.js'></script> -->
 
 <body >

@@ -333,7 +333,7 @@
 		      <param name="root">ajaxResult</param>
 		   </result>
 		   <result name="findById">saveAndUpdate/kyzpettySaveOrUpdate.jsp</result>
-		   <result name="delete" type="redirectAction">kyzpetty_findPageBean</result>
+		   <result name="delete" type="redirectAction">kyzpetty_findPageBean3</result>
 		   <result name="findAllSecNoAndAcctNo">saveAndUpdate/kyzpettySaveOrUpdate.jsp</result>
 		</action>				
 		<action name="filesUpload_*" class="fileUploadAction" method="{1}">	

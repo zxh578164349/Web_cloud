@@ -140,8 +140,8 @@
 <script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>
 <script type='text/javascript' src='/Login/dwr/interface/websubjs.js'></script>
 <script type='text/javascript' src='/Login/dwr/interface/webfixjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/engine.js'></script>
-<script type='text/javascript' src='/Login/dwr/util.js'></script>
+<!-- <script type='text/javascript' src='/Login/dwr/engine.js'></script>
+<script type='text/javascript' src='/Login/dwr/util.js'></script> -->
 <script type="text/javascript">
 jq(function(){
 	getMajor();

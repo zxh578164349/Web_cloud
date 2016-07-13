@@ -98,8 +98,8 @@ window.onload=function(){
 </script>
 <script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>
 <script type='text/javascript' src='/Login/dwr/interface/webscraptjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/engine.js'></script>
-<script type='text/javascript' src='/Login/dwr/util.js'></script>
+<!-- <script type='text/javascript' src='/Login/dwr/engine.js'></script>
+<script type='text/javascript' src='/Login/dwr/util.js'></script> -->
 </head>
 <body>
 	<form action="webScrapt_addscrapt" method="post" id="form">

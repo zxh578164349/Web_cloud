@@ -61,10 +61,9 @@ jq(document).keyup(function(event){
 	}*/
 </script>
 <script type='text/javascript' src='/Login/dwr/interface/kyzscmjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/kyzmatjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/kyzacctjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/engine.js'></script>
-<script type='text/javascript' src='/Login/dwr/util.js'></script> 
+
+<!--  <script type='text/javascript' src='/Login/dwr/engine.js'></script>
+<script type='text/javascript' src='/Login/dwr/util.js'></script> -->
 <script type="text/javascript">
   jq(function(){
 	  findallBN();
@@ -89,15 +88,15 @@ jq(document).keyup(function(event){
 			</td>
 			<td>
 			<br>			
-			 <select name="typeBno"  id="bNo" onclick="findallMN(this.value), makeMatNo()">
+			 <select name="typeBno"  id="bNo" onclick="findallMN(this.value)">
 					     <option value="">大分類選擇</option>
 			 </select>
 			 <br>
-			 <select name="typeMno" id="mNo" onclick="findallSN(this.value), makeMatNo()">
+			 <select name="typeMno" id="mNo" onclick="findallSN(this.value)">
 					         <option value="">中分類選擇</option>
 			 </select>
 			 <br>
-			 <select name="typeSno"  id="sNo" onclick=" makeMatNo()">
+			 <select name="typeSno"  id="sNo" >
 					         <option value="">小分類選擇</option>
 		     </select>	
 			</td>			

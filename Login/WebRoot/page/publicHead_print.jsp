@@ -15,20 +15,6 @@
 <link rel="stylesheet" type="text/css" href="css/select_beautiful.css">	
 <LINK href="css/list.css" type="text/css" rel="stylesheet"> 
 
-
-
-
-<script type="text/javascript">
- 
-//var jq=jQuery.noConflict();
-jq(document).keyup(function(event){
-   if(event.keyCode==13){
-      submis();
-   }
-});
-
-</script>
-
 </head>
 <body>
   
@@ -74,6 +60,13 @@ jq(document).keyup(function(event){
 		    </tr>
 		</table>
 	</form>
-
+<script type="text/javascript">
+//var jq=jQuery.noConflict();
+jq(document).keyup(function(event){
+   if(event.keyCode==13){
+      submis();
+   }
+});
+</script>
 </body>
 </html>

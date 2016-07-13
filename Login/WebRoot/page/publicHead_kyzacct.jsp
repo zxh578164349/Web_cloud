@@ -26,14 +26,7 @@
 
 
 <script type="text/javascript">
-   
-   //dwr加載函文類別
-/*    function getType(){
-       kytypejs.findByTypeNo("VV",function(x){
-	         dwr.util.addOptions("visaSort",x,"typeName","typeSname");
-	   });
-   } */
-   
+  
 jq(document).keyup(function(event) {
 		if (event.keyCode == 13) {
 			submis();
@@ -41,9 +34,6 @@ jq(document).keyup(function(event) {
 	});  
 
 </script>
-<script type='text/javascript' src='/Login/dwr/interface/kytypejs.js'></script>
-<script type='text/javascript' src='/Login/dwr/engine.js'></script>
-<script type='text/javascript' src='/Login/dwr/util.js'></script>
 </head>
 <body >
 	<table  id="tb_search">

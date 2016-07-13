@@ -106,12 +106,13 @@ jq(document).keyup(function(event){
 <script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>
 <script type='text/javascript' src='/Login/dwr/interface/kyzsecjs.js'></script>
 <script type='text/javascript' src='/Login/dwr/interface/kyzacctjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/engine.js'></script>
-<script type='text/javascript' src='/Login/dwr/util.js'></script>
+<!-- <script type='text/javascript' src='/Login/dwr/engine.js'></script>
+<script type='text/javascript' src='/Login/dwr/util.js'></script> -->
 
 <body>
 
 	<form action="kyzacct_add" method="post" id="form">
+	  <h2>會計科目</h2>
 		<table class="table table-condensed"
 			id="table1">							
 					<tr>					  

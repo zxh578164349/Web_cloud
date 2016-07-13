@@ -19,32 +19,6 @@
 <meta http-equiv="expires" content="0">
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
-<!-- <link rel="stylesheet" type="text/css" href="css/mystyle.css" />-->
-	<script type="text/javascript">
-	 /*var defaultColor="#97CBFF";
-	 var clickColor="#CCFFFF";
-	 function click_color(obj){
-        var tbody=document.getElementById("tbody");
-        var length=document.getElementById("tbody").rows.length;
-        for(var i=0;i<length;i++){
-            tbody.rows[i].style.backgroundColor=defaultColor;
-        }
-        obj.style.backgroundColor=clickColor;        
-    }
-      function move(obj){
-     obj.style.backgroundColor=defaultColor;
-    }
-    function showPage(){
-	    var j=jQuery.noConflict();
-	    j("#divpage").toggle(200,function(){
-	        if(document.getElementById("a_page").innerHTML=="▽"){
-	          document.getElementById("a_page").innerHTML="△";
-	        }else{
-	           document.getElementById("a_page").innerHTML="▽";
-	        }
-	    });	   
-	}*/
-	</script>
 
 </head>
 <body>

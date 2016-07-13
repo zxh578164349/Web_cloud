@@ -23,39 +23,9 @@
 <link rel="stylesheet" type="text/css" href="css/select_beautiful.css">	
 <LINK href="css/list.css" type="text/css" rel="stylesheet">
 
-
-<style type="text/css">
-
-</style>
-
-<script type="text/javascript">
-  //dwr加載函文類別
-/*    function getType(){
-       kytypejs.findByTypeNo("VV",function(x){
-	         dwr.util.addOptions("visaSort",x,"typeName","typeSname");
-	   });
-   } */
-   
-   jq(document).keyup(function(event){
-       if(event.keyCode==13){
-          submis();
-       }
-   })
-   
-   function getType(factNo){
-     document.getElementById("visaSort").length=1;
-     webtypejs.findByFactNo(factNo,function(x){
-       if(x.length>0){
-          dwr.util.addOptions("visaSort",x,"webtypeMk","typeName");
-       }
-         
-     });
-   }
-</script>
-<script type='text/javascript' src='/Login/dwr/interface/kytypejs.js'></script>
 <script type='text/javascript' src='/Login/dwr/interface/webtypejs.js'></script>
-<script type='text/javascript' src='/Login/dwr/engine.js'></script>
-<script type='text/javascript' src='/Login/dwr/util.js'></script>
+<!--  <script type='text/javascript' src='/Login/dwr/engine.js'></script>
+<script type='text/javascript' src='/Login/dwr/util.js'></script>-->
 </head>
 <body >
 	<table  id="tb_search" >
@@ -93,6 +63,23 @@
 			</td>
 		</tr>
 	</table>
+<script type="text/javascript">   
+   jq(document).keyup(function(event){
+       if(event.keyCode==13){
+          submis();
+       }
+   })
+   
+   function getType(factNo){
+     document.getElementById("visaSort").length=1;
+     webtypejs.findByFactNo(factNo,function(x){
+       if(x.length>0){
+          dwr.util.addOptions("visaSort",x,"webtypeMk","typeName");
+       }
+         
+     });
+   }
+</script>	
 </body>
 </html>
 

@@ -1,15 +1,5 @@
-
-
-<%@page
-	import="org.springframework.context.support.ClassPathXmlApplicationContext"%>
-<%@page import="org.springframework.context.ApplicationContext"%>
-<%@page import="dao.IKyFactDao"%>
-<%@page import="services.impl.KyFactServicesImpl"%>
-<%@page import="services.IKyFactServices"%>
-<%@page import="com.opensymphony.xwork2.ActionContext"%>
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib uri="/struts-tags" prefix="s"%>
-<%@page import="entity.*"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
@@ -35,9 +25,6 @@
    
 
 </script>
-<script type='text/javascript' src='/Login/dwr/interface/kytypejs.js'></script>
-<script type='text/javascript' src='/Login/dwr/engine.js'></script>
-<script type='text/javascript' src='/Login/dwr/util.js'></script>
 </head>
 <body >
 	<table  id="tb_search" >

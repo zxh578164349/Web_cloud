@@ -87,8 +87,8 @@ function findById(factno,email,emailpwd,visasort){
 
 </script>
 <script type='text/javascript' src='/Login/dwr/interface/webuseremailajs.js'></script>
-<script type='text/javascript' src='/Login/dwr/engine.js'></script>
-<script type='text/javascript' src='/Login/dwr/util.js'></script>
+<!--  <script type='text/javascript' src='/Login/dwr/engine.js'></script>
+<script type='text/javascript' src='/Login/dwr/util.js'></script>-->
 <body>
 	<jsp:include page="publicHead_webuseremail_A.jsp" />
 	<hr />

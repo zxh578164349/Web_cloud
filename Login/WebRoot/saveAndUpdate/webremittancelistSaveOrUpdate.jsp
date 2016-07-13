@@ -246,11 +246,10 @@ function gook(){
 }
 </script>
 <script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/kytypejs.js'></script>
 <script type='text/javascript' src='/Login/dwr/interface/kyzvisaflowjs.js'></script>
 <script type='text/javascript' src='/Login/dwr/interface/webtypejs.js'></script>
-<script type='text/javascript' src='/Login/dwr/engine.js'></script>
-<script type='text/javascript' src='/Login/dwr/util.js'></script>
+<!-- <script type='text/javascript' src='/Login/dwr/engine.js'></script>
+<script type='text/javascript' src='/Login/dwr/util.js'></script> -->
 
 <script type="text/javascript">
 jq(function(){

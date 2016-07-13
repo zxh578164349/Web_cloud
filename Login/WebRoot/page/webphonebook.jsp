@@ -16,7 +16,7 @@
 <meta http-equiv="expires" content="0">
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
- 
+<script type="text/javascript" src="jquery/jquery-form.js"></script> 
 
 </head>
 <script type="text/javascript">

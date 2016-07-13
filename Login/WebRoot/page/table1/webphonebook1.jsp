@@ -19,32 +19,6 @@
 <meta http-equiv="expires" content="0">
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
-<!-- <link rel="stylesheet" type="text/css" href="css/mystyle.css" />-->
-	<script type="text/javascript">
-	 /*var defaultColor="#97CBFF";
-	 var clickColor="#CCFFFF";
-	 function click_color(obj){
-        var tbody=document.getElementById("tbody");
-        var length=document.getElementById("tbody").rows.length;
-        for(var i=0;i<length;i++){
-            tbody.rows[i].style.backgroundColor=defaultColor;
-        }
-        obj.style.backgroundColor=clickColor;        
-    }
-      function move(obj){
-     obj.style.backgroundColor=defaultColor;
-    }
-    function showPage(){
-	    var j=jQuery.noConflict();
-	    j("#divpage").toggle(200,function(){
-	        if(document.getElementById("a_page").innerHTML=="▽"){
-	          document.getElementById("a_page").innerHTML="△";
-	        }else{
-	           document.getElementById("a_page").innerHTML="▽";
-	        }
-	    });	   
-	}*/
-</script>
 	
 </head>
 <body>
@@ -105,7 +79,7 @@
 					    <input type="hidden" value="<s:property value='id.phoneC'/>" name="phoneC"/>
 					    <input type="hidden" value="<s:property value='id.email'/>" name="email"/>
 					</form>					  
-						<a href="javascript:findById('subform${x.index}','webphonebook_findById')" ><img alt="修改" src="images/icon/edit001.png" title="修改"></a>&nbsp;						
+						<a href="javascript:findById_form('subform${x.index}','webphonebook_findById')" ><img alt="修改" src="images/icon/edit001.png" title="修改"></a>&nbsp;						
 						<a href="javascript:mydelete('2subform${x.index}')" ><img alt="刪除" src="images/icon/delete001.png" title="刪除"></a>						
 					</td>
 				</tr>

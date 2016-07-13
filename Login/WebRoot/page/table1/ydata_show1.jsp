@@ -22,37 +22,6 @@
 <meta http-equiv="description" content="This is my page">
 
 <script type="text/javascript">
-<%--$(function() {
-		var j = jQuery.noConflict();
-		var demo = j("#form").Validform({
-			tiptype : 1,
-		//showAllError : true,
-		});
-	});--%>
-	
-	 /**var defaultColor="#97CBFF";
-	 var clickColor="#CCFFFF";
-	 function click_color(obj){
-        var tbody=document.getElementById("tbody");
-        var length=document.getElementById("tbody").rows.length;
-        for(var i=0;i<length;i++){
-            tbody.rows[i].style.backgroundColor=defaultColor;
-        }
-        obj.style.backgroundColor=clickColor;        
-    }
-      function move(obj){
-     obj.style.backgroundColor=defaultColor;
-    }
-    function showPage(){
-	    var j=jQuery.noConflict();
-	    j("#divpage").toggle(200,function(){
-	        if(document.getElementById("a_page").innerHTML=="▽"){
-	          document.getElementById("a_page").innerHTML="△";
-	        }else{
-	           document.getElementById("a_page").innerHTML="▽";
-	        }
-	    });	   
-	}*/
 
 //沒有提示的修改	
 function update_ydata(subform){
@@ -116,9 +85,10 @@ function delete_admin(factNo,yymmdd,subform){
 
 	
 </script>
-<script type='text/javascript' src='/Login/dwr/engine.js'></script>
-<script type='text/javascript' src='/Login/dwr/util.js'></script>
 <script type='text/javascript' src='/Login/dwr/interface/sumwebydatajs.js'></script>
+<!-- <script type='text/javascript' src='/Login/dwr/engine.js'></script>
+<script type='text/javascript' src='/Login/dwr/util.js'></script> -->
+
 </head>
 
 <body >
@@ -195,7 +165,7 @@ function delete_admin(factNo,yymmdd,subform){
 							name="id.yymmdd" />
 					</form> 
 					<s:if test='username==#attr.loginUser.username||#attr.loginUser.username=="admin"'>					  
-					  <a href="javascript:findById('subform${x.index}','ydata_findById')" ><img alt="修改" src="images/icon/edit001.png" title="修改" ></a> 				  	
+					  <a href="javascript:findById_form('subform${x.index}','ydata_findById')" ><img alt="修改" src="images/icon/edit001.png" title="修改" ></a> 				  	
 					</s:if>
 					<s:else>
 					  <a disabled style="color:grey"><img alt="修改" src="images/icon/edit001_1.png" title="修改" ></a>
@@ -223,20 +193,7 @@ function delete_admin(factNo,yymmdd,subform){
 	</table>
     </div>
   </div>
-	<%-- <hr />
-	<center id="center_page">
-	　　<a href="javascript:pages(0)">首頁</a>
-	    <a href="javascript:pages(<s:property value='bean.currentPage'/>-1)">上一頁</a>	    
-	        (第<s:property value="bean.currentPage" />頁 <a href="javascript:void(0)" onclick="showPage()" id="a_page">▽</a>|共<s:property value="bean.totalPage" />頁)
-	           <div id="divpage">
-	               <c:forEach begin="1"  end="${bean.totalPage}" var="id">
-	                   <a href="javascript:pages(${id })">${id}</a>
-	               </c:forEach>
-	           </div>	  
-	    <a href="javascript:pages(<s:property value='bean.currentPage'/>+1)">下一頁</a>
-	    <a href="javascript:pages(<s:property value='bean.totalPage'/>)">尾頁</a>		
-	</center> --%>
-	
+		
 	<ul class="pagination" style="padding-left:42%">
 		    <li><a href="javascript:pages(0)">首頁</a></li>
 			<li><a href="javascript:pages(<s:property value='bean.currentPage'/>-1)">&laquo;</a></li>			

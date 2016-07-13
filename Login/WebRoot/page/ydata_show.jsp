@@ -16,11 +16,6 @@
 <meta http-equiv="expires" content="0">
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
-<!--  <link rel="stylesheet" type="text/css" href="css/button_css.css" />
-<link rel="stylesheet" type="text/css" href="css/general_css.css" />
-<link href="tablecloth/tablecloth.css" rel="stylesheet" type="text/css" media="screen" />
-<script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script>-->
-
 	
 </head>
 <script>
@@ -84,7 +79,7 @@
 			}
 		});
 	}
-	//無提示刪除
+
 	function delete_ydata(subform){
 	   var flag=confirm("確定要刪除嗎?");
 	   
