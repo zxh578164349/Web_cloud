@@ -1151,7 +1151,20 @@ public class GlobalMethod extends HibernateDaoSupport{
 	        System.out.println("End!");
 			Map<String,Double>map1=new LinkedHashMap<String,Double>();
 			System.out.println(map1.size());*/
-			runJs();
+			//runJs();
+			StringBuffer t1=new StringBuffer();
+			StringBuilder t2=new StringBuilder();
+			long start=System.currentTimeMillis();
+			for(int i=0;i<1000000;i++){
+				t1.append("testqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq_");
+			}
+			System.out.println("StringBuffer運行時間："+(System.currentTimeMillis()-start));
+			
+			long start2=System.currentTimeMillis();
+			for(int i=0;i<1000000;i++){
+				t2.append("testqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq_");
+			}
+			System.out.println("StringBuilder運行時間："+(System.currentTimeMillis()-start2));
 						
 		}
 	 

@@ -9,7 +9,7 @@
 %>
 
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html>
 <head>
 <base href="<%=basePath%>">
 <title>函文審核</title>
@@ -22,19 +22,18 @@
 <meta http-equiv="X-UA-Compatible" content="IE=Edge">
 <link rel="shortcut icon" href="images/icon/web_ico.ico" /> 
 
-
-
 <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
-<link href="http://libs.baidu.com/bootstrap/3.0.3/css/style.css" rel="stylesheet">
+<!-- <link href="http://apps.bdimg.com/libs/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet"> -->
 <script src="http://apps.bdimg.com/libs/jquery/1.9.1/jquery.min.js"></script> 
-<script>window.jQuery || document.write('<script src="jquery/jquery-1.9.1.min.js"><\/script>');</script>	
-<!--  <script src="http://libs.baidu.com/jquery/1.9.1/jquery.min.js"></script>-->
-<script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="page/jquerys/layer/layer.min.js"></script>
+<script>window.jQuery || document.write('<script src="jquery/jquery-1.9.1.min.js"><\/script>');</script>
+<script type="text/javascript" src="jquery/layer/layer.min.js"></script>	
+<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+<script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 <!--[if lt IE 9]>  
   <script src="http://apps.bdimg.com/libs/html5shiv/3.7/html5shiv.min.js"></script>
   <script src="http://apps.bdimg.com/libs/respond.js/1.4.2/respond.min.js"></script>
   <![endif]-->
+
 <script type="text/javascript">
 $(function () { $("[data-toggle='popover']").popover(); });
 $(function(){
@@ -80,38 +79,40 @@ function check(factNo,visaSort,billNo,itemNo){
 		 itemNo_g=itemNo;
 		 visaSort_g=visaSort;
 	}
-
-function goYes(){
-	   //window.location.href='vbm_add?billNo='+billNo_g+'& visa_mk=Y'+'& factNo='+factNo_g+'& itemNo='+itemNo_g+'& visaSort='+visaSort_g;
-	 
-	  /* 修改5   20151025 */
-	  var memo_leg=document.getElementById("memo_txt").value;
+var loadi;
+$(document).ajaxStart(function(){
+	 loadi=layer.load("請稍等...");
+});
+$(document).ajaxStop(function(){
+	layer.close(loadi);
+});
+function yesorno(passMk){
+	 var memo_leg=document.getElementById("memo_txt").value;
 	  if(memo_leg.length>150){
 	     alert("備註不可超過150字");
 	  }else{
-	     document.getElementById("visa_mk").value="Y";
-	     window.location.href='success.html';
-	     document.getElementById("memo").submit();
-	     layer.load("正在處理，請稍等...");
-	  } 
-	  
-	  /* 修改5   20151025 */
-} 
-function goNo(){
-	   //window.location.href='vbm_add?billNo='+billNo_g+'& visa_mk=T'+'& factNo='+factNo_g+'& itemNo='+itemNo_g+'& visaSort='+visaSort_g;
-	   /* 修改5   20151025 */
-	  var memo_leg=document.getElementById("memo_txt").value;
-	  if(memo_leg.length>150){
-	     alert("備註不可超過150字");
-	  }else{
-	     document.getElementById("visa_mk").value="T";
-	     window.location.href='success.html';
-	     document.getElementById("memo").submit();
-	     layer.load("正在處理，請稍等...");
+	     document.getElementById("visa_mk").value=passMk;	    
+	    $.ajax({
+	    	type:"POST",
+	    	dataType:"json",
+	    	url:"vbm_add",
+	    	data:$("#memo").serialize(),
+	    	success:function(data){
+	    		if(data=="0"){
+	    			layer.msg("簽核成功",2,1);
+	    			//$("#myModalA").modal("hide");
+	    			window.setTimeout(function(){location.reload()}, 1000);	    			
+	    		}else{
+	    			layer.msg("簽核失敗",2,3);
+	    		}
+	    	},
+	    	error:function(error){
+	    		alert(error.responseText);
+	    	}
+	    });
+	    
 	  }
-	  /* 修改5   20151025 */
-}   
-    
+}
 </script>
 </head>
 <body>
@@ -265,11 +266,11 @@ aria-labelledby="myModalLabelA" aria-hidden="true">
 				</form> 
 				 <!--------------------------- 修改4 20151025 --------------------------------------->
 				 
-				<button type="button" class="btn btn-default" data-dismiss="modal">关闭
+				<button type="button" class="btn btn-default" data-dismiss="modal" id="cbtn">关闭
 				 </button>
-				 <a href="javascript:goYes()" 
+				 <a href="javascript:yesorno('Y')" 
 				 class="btn btn-primary">通過</a>
-				 <a href="javascript:goNo()"
+				 <a href="javascript:yesorno('T')"
 				 type="button" class="btn btn-primary">不通過</a>
 			 </div>
 		 </div>

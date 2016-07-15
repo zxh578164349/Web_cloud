@@ -129,9 +129,9 @@ jq(document).keyup(function(event){
 </script>
 <script type='text/javascript' src='/Login/dwr/interface/kyzscmjs.js'></script>
 <script type='text/javascript' src='/Login/dwr/interface/kyzmatjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/kyzacctjs.js'></script>
+<!-- <script type='text/javascript' src='/Login/dwr/interface/kyzacctjs.js'></script>
 <script type='text/javascript' src='/Login/dwr/engine.js'></script>
-<script type='text/javascript' src='/Login/dwr/util.js'></script> 
+<script type='text/javascript' src='/Login/dwr/util.js'></script>  -->
 <script type="text/javascript">
   jq(function(){
 	  //findAllAcct();

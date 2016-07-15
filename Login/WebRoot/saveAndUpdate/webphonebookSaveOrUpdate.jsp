@@ -118,11 +118,9 @@ jq(function(){
 });	
 </script>
 <script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>
-<script type='text/javascript'
-	src='/Login/dwr/interface/webbackfeetjs.js'></script>
 <script type='text/javascript' src='/Login/dwr/interface/userjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/engine.js'></script>
-<script type='text/javascript' src='/Login/dwr/util.js'></script>
+<!-- <script type='text/javascript' src='/Login/dwr/engine.js'></script>
+<script type='text/javascript' src='/Login/dwr/util.js'></script> -->
 
 
 <body>

@@ -206,7 +206,7 @@ function findById_form(subform,url){
 			jq("#r_content").html(data);
 		},
 		error:function(error){
-			jq("#r_content").html(error);
+			jq("#r_content").html(error.responseText);
 		}
 	});
 }

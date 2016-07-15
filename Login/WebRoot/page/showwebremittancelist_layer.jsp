@@ -56,9 +56,6 @@ table.gridtable td {
 	width:60px;
 }
 </style>
-<script type="text/javascript">
-
-</script>
 
 </head>
 

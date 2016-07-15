@@ -54,10 +54,9 @@ table.gridtable td {
 	background-color: #ffffff;
 	width:60px;
 }
-</style>
-<script type="text/javascript">
 
-</script>
+
+</style>
 
 </head>
 
@@ -163,6 +162,5 @@ table.gridtable td {
   <br><br><br>
    <h1 style="color:red" align="center">內部聯絡函已刪除</h1>
 </s:else>
-
 </body>
 </html>

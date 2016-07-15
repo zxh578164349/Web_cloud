@@ -34,6 +34,13 @@
   <script src="bootstrap/respond.min.js"></script>
   <![endif]-->	
 <script type="text/javascript">
+var loadi;
+$(document).ajaxStart(function(){
+	 loadi=layer.load("請稍等...");
+});
+$(document).ajaxStop(function(){
+	layer.close(loadi);
+});
     function showDiv(billNo,factNo){
     	var area_w;
     	var area_h;
@@ -127,42 +134,11 @@
     iframe:{src:src,scrolling:'auto'},
     /* 修改1   20151025 */
     
-     yes:function(){              
-     //window.location.href='vbm_add?billNo='+billNo+'& visa_mk=Y'+'& factNo='+factNo+'& itemNo='+itemNo+'& visaSort='+visaSort; 
-     
-     /*********************** 修改2   20151025 ******************************/
-     var memo=layer.getChildFrame("#memo_txt",layer.index).val();
-     layer.getChildFrame("#visa_mk",layer.index).val('Y'); 
-     if(memo.length>150){
-        alert("備註不可超過150字");
-     }else{
-        window.location.href='success.html';             
-         layer.getChildFrame("#memo",layer.index).submit();
-         layer.load("正在處理，請稍等...");
-     }
-     
-     /*********************** 修改2   20151025 ******************************/  
-   
-    },
-    no:function(){
-      //window.location.href='vbm_add?billNo='+billNo+'& visa_mk=T'+'& factNo='+factNo+'& itemNo='+itemNo+'& visaSort='+visaSort;
-      /*********************** 修改2   20151025 ******************************/
-     var memo=layer.getChildFrame("#memo_txt",layer.index).val();
-     layer.getChildFrame("#visa_mk",layer.index).val('T'); 
-     if(memo.length>150){
-        alert("備註不可超過150字");
-     }else{
-        window.location.href='success.html';             
-         layer.getChildFrame("#memo",layer.index).submit();
-         layer.load("正在處理，請稍等...");
-     }
-       
-     /*********************** 修改2   20151025 ******************************/ 
-    }       
+     yes:function(){yesorno('Y')},
+     no:function(){yesorno('T')}       
 });
 }
     
-
 function tips(memo,index){
     if(memo==''){
        memo='無備註';
@@ -173,6 +149,34 @@ function tips(memo,index){
     time: 10,
     closeBtn:[0, true]
 });
+}
+
+function yesorno(passMk){
+	var memo=layer.getChildFrame("#memo_txt",layer.index).val();
+    layer.getChildFrame("#visa_mk",layer.index).val(passMk);
+    if(memo.length>150){
+       alert("備註不可超過150字");
+    }else{     
+       $.ajax({
+       	type:"POST",
+       	dataType:"json",
+       	url:"vbm_add",
+       	data:layer.getChildFrame("#memo",layer.index).serialize(),
+       	success:function(data){
+       		if(data=="0"){
+       			layer.msg("簽核成功",2,1);           		
+           		//window.setTimeout(function(){layer.closeAll()},3000);
+           		window.setTimeout(function(){location.reload()},1000);
+       		}else{
+       			layer.msg("簽核失敗",2,3);  
+       		} 
+       		layer.index=layer.index-2;//(減2箇層：加載層    信息層)
+       	},
+       	error:function(error){
+       		alert(error.responseText);       		
+       	}
+       });
+    }
 }
 </script>
 </head>

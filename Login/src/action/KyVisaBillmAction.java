@@ -518,14 +518,13 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 	 * 20160322
 	 * @throws IOException
 	 */
-	public void add() throws IOException{
-		try{
-			response.setContentType("text/html;charset=utf-8");
-			response.getWriter().print("<script>window.parent.layer.load('正在處理...')</script>");
+	public String add() throws IOException{
+		try{			
 			KyVisabillm vbm=visabillmSer.findById(factNo, visaSort, billNo);
 			if(itemNo==null||itemNo.equals("")){
 				itemNo=vbm.getItemNext();
 			}
+			//int jj=5/0;
 			SimpleDateFormat format=new SimpleDateFormat("yyyyMMdd_hh");
 			int num_temp=Integer.parseInt(itemNo);//把項次轉化為數字
 			int num=Integer.parseInt(itemNo)-1;//用於識別KyVisabills集合裡的每幾個對象									
@@ -588,16 +587,12 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 						vbm.setMemoMk(memo);																			
 					}
 					visabillmSer.add(vbm);
-					
-					response.getWriter().print("<script>window.parent.location.href='success.html'</script>");						
+					ajaxResult="0";											
 		}catch(Exception e){
-			System.out.println(e);
-			response.setContentType("text/html;charset=utf-8");
-			response.getWriter().print("<script>window.parent.layer.msg('審核失敗',3,3)</script>");
-			
+			ajaxResult="1";
+			System.out.println(e);						
 		}
-									
-		/******************************remark***********************************/
+			return "add";								
 	}
 	
 	/**
