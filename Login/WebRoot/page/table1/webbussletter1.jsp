@@ -34,6 +34,7 @@
 		</h2>
 		<thead>			
 			<tr class="tr_show">
+			    <th>序號</th>
 				<th>單號</th>
 				<th>所屬單位</th>
 				<th>姓名</th>
@@ -52,6 +53,7 @@
 		<tbody id="tbody">
 		<s:iterator value="bean.list" status="x" id="temp">		  
 		     <tr> 
+		        <td>${25*(bean.currentPage-1)+x.index+1}</td>
 				<td><s:property value="blNo"/></td>
 				<td><s:property value="unit" /></td>
 				<td><s:property value="username" /></td>
@@ -120,28 +122,8 @@
 	</table>
 	</div>
 </div>	
-
+<jsp:include page="pagenation.jsp" flush="true"/>	
 	
-	<ul class="pagination" style="padding-left:42%">
-		    <li><a href="javascript:pages(0)">首頁</a></li>
-			<li><a href="javascript:pages(<s:property value='bean.currentPage'/>-1)">&laquo;</a></li>			
-			<li><a href="javascript:pages(<s:property value='bean.currentPage'/>)"><s:property value='bean.currentPage'/></a></li>
-			<s:if test="bean.currentPage+1==bean.totalPage||bean.currentPage+1<bean.totalPage">
-			    <li><a href="javascript:pages(<s:property value='bean.currentPage'/>+1)"><s:property value='bean.currentPage+1'/></a></li>
-			</s:if>
-			<s:if test="bean.currentPage+2==bean.totalPage||bean.currentPage+2<bean.totalPage">
-			    <li><a href="javascript:pages(<s:property value='bean.currentPage'/>+2)"><s:property value='bean.currentPage+2'/></a></li>
-			</s:if>
-			<s:if test="bean.currentPage+3==bean.totalPage||bean.currentPage+3<bean.totalPage">
-			    <li><a href="javascript:pages(<s:property value='bean.currentPage'/>+3)"><s:property value='bean.currentPage+3'/></a></li>
-			</s:if>
-			<s:if test="bean.currentPage+4==bean.totalPage||bean.currentPage+4<bean.totalPage">
-			    <li><a href="javascript:pages(<s:property value='bean.currentPage'/>+4)"><s:property value='bean.currentPage+4'/></a></li>
-			</s:if>									
-			<li><a href="javascript:pages(<s:property value='bean.currentPage'/>+1)">&raquo;</a></li>
-			<li><a href="javascript:pages(<s:property value='bean.totalPage'/>)">尾頁</a></li>			
-		</ul>	
-				
-	<hr>
+	
 </body>
 </html>

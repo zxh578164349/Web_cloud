@@ -57,7 +57,7 @@
 		var names = document.getElementById("user");
 		var password = document.getElementById("pwd");
 		if (factNO.value == 0 || names.value == "" || password.value == "") {		
-			alert("請輸入完整的信息");
+			layer.alert("請輸入完整的信息");
 		} else {		  		    		   
 			jq.ajax({
 			  type:"POST",
@@ -71,13 +71,13 @@
 					  location.href="main.jsp"; 
 				  }
 				  if(data=='1'){
-					  alert("當前賬號已註銷!");
+					  layer.alert("當前賬號已註銷!");
 				  }
 				  if(data=='2'){
-					  alert("廠別不正確!");
+					  layer.alert("廠別不正確!");
 				  }
 				  if(data=='3'){
-					  alert("賬號或密碼不正確!");
+					  layer.alert("賬號或密碼不正確!");
 				  }
 			  },			  
 			  error:function(err){

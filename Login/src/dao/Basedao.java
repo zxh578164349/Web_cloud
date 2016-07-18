@@ -35,6 +35,7 @@ import entity.WebJurisdiction;
 
 public class Basedao extends HibernateDaoSupport {
 	private static final Log log = LogFactory.getLog(Basedao.class);
+	private static final int PAGENUMS=20;
 
 	// property constants
 	protected void initDao() {
@@ -173,7 +174,7 @@ public class Basedao extends HibernateDaoSupport {
 					}
 				}
 				query.setFirstResult(offset);
-				query.setMaxResults(length);
+				query.setMaxResults(PAGENUMS);
 				List list = query.list();
 				return list;
 			}
