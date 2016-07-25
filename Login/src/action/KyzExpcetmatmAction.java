@@ -455,11 +455,12 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 		try {
 			response.setContentType("text/html;charset=utf-8");
 			date = format.parse(yymmdd);
-			kyz.setTimeCreate(date);				        
+			kyz.setTimeCreate(date);
+			kyz.setVisaTypeM(kyz.getVisaType().substring(0,2));
 			if(isnull.equals("isNull")){			
 				KyzExpectmatm temp=kyzSer.findById(kyz.getId().getFactNo(), kyz.getId().getBillNo());										
 				if(temp==null){
-					kyz.setVisaTypeM(kyz.getVisaType().substring(0,2));
+					//kyz.setVisaTypeM(kyz.getVisaType().substring(0,2));
 					kyzSer.add(kyz);											
 					KyVisabillm vbm=visabillmSer.findById(kyz.getId().getFactNo(), kyz.getVisaType(), kyz.getId().getBillNo());
 					List<String>list_emailPwd=webuseremailSer.findByFactNoAEmailPwd2(vbm.getId().getFactNo(),vbm.getSignerNext());																					
@@ -474,7 +475,7 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 							"<script>window.parent.alert('數據庫已存在(" + kyz.getId().getBillNo() + ")!');window.parent.layer.closeAll()</script>");
 				}																							 				
 			}else{
-				kyz.setVisaTypeM(kyz.getVisaType().substring(0,2));
+				//kyz.setVisaTypeM(kyz.getVisaType().substring(0,2));
 				kyzSer.add(kyz);			
 			}
 			response.setContentType("text/html;charset=utf-8");

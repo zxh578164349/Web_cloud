@@ -40,7 +40,7 @@
 	var jq=jQuery.noConflict();
 	var loadi;
 	jq(document).ajaxStart(function(){
-		loadi=layer.load("正在登錄,請稍等...");
+		loadi=layer.load("請稍等...");
 	});
 	jq(document).ajaxStop(function(){
 		layer.close(loadi);

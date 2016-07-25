@@ -18,19 +18,21 @@ body,html,#main_container{
 	background:#292929;
 	font-size:12px;
 	color:#99CCCC;
-	overflow:hidden;
-	
-	
+			
 }
-#top h1{
+#top #top_title{
+	width:50%;
 	color:white;
 }
+
 #top #currentTime{
 	color:#99FFFF;
 	float:left;
 }
 #top #lg_info{
 	float:right;
+	padding:25px;
+	
 }
 #top #lg_info a{
 	color:#FF6666;

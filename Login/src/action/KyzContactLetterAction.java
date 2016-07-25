@@ -284,12 +284,13 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 		}
 		
 		try{
+			kyzletter.setVisaTypeM(kyzletter.getVisaType().substring(0,2));
 			if(isnull.equals("isNull")){//start if
 				String factno=kyzletter.getId().getFactNo();
 				String billno=kyzletter.getId().getBillNo();
 				KyzContactletter letter=kyzletterSer.findById(factno, billno);
 				if(letter==null){
-					kyzletter.setVisaTypeM(kyzletter.getVisaType().substring(0,2));
+					//kyzletter.setVisaTypeM(kyzletter.getVisaType().substring(0,2));
 					kyzletterSer.add(kyzletter);
 					KyVisabillm vbm=visabillmSer.findById(kyzletter.getId().getFactNo(), kyzletter.getVisaType(), kyzletter.getId().getBillNo());				      
 				    List<String>list_emailPwd=webuseremailSer.findByFactNoAEmailPwd2(vbm.getId().getFactNo(),vbm.getSignerNext());//備簽人
@@ -310,7 +311,7 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 					}								
 			}//end if
 			else{
-				kyzletter.setVisaTypeM(kyzletter.getVisaType().substring(0,2));
+				//kyzletter.setVisaTypeM(kyzletter.getVisaType().substring(0,2));
 				kyzletterSer.add(kyzletter);
 			}
 			response.setContentType("text/html;charset=utf-8");

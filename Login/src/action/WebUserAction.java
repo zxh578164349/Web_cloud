@@ -462,18 +462,12 @@ public class WebUserAction extends ActionSupport implements ServletResponseAware
 	 * @throws IOException 
 	 */
 	public String updateUesr() throws IOException {
-		boolean yz = webUserService.updateUser(updateU);
-		/*if (yz == true) {
-			//return "updateSuccess";
-			response.setContentType("text/html;charset=utf-8");
-			response.getWriter().print("<script>alert('修改成功！');history.back()</script>");
-			return null;
-		} else {
-			response.setContentType("text/html;charset=utf-8");
-			response.getWriter().print("<script>alert('修改失敗！');history.back()</script>");
-			return null;
-			//return NONE;
-		}*/
+		try{
+			boolean yz = webUserService.updateUser(updateU);
+			ajax_result="0";
+		}catch(Exception e){
+			ajax_result="1";
+		}				
 		return "updateUesr";
 	}
 

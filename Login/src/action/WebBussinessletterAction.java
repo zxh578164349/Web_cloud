@@ -201,8 +201,9 @@ public class WebBussinessletterAction extends ActionSupport implements ServletRe
 			bussletter.setTimeEnd(fmt2.parse(timeEnd));
 		}			
 			try{
-				if(isnull.equals("isNull")){
 				bussletter.setVisaSortM(bussletter.getVisaSort().substring(0,2));
+				if(isnull.equals("isNull")){
+				//bussletter.setVisaSortM(bussletter.getVisaSort().substring(0,2));
 				webbussletterSer.add(bussletter);
 				KyVisabillm vbm=visabillmSer.findById(bussletter.getFactNo(),bussletter.getVisaSort(), bussletter.getBlNo());
 				List<String>list_emailPwd=webuseremailSer.findByFactNoAEmailPwd2(vbm.getId().getFactNo(),vbm.getSignerNext());
@@ -212,7 +213,7 @@ public class WebBussinessletterAction extends ActionSupport implements ServletRe
 				GlobalMethod.sendNewEmail(vbm,list_emailPwd);//發送郵件								
 			    ajaxResult="0";			      
 				}else{
-					bussletter.setVisaSortM(bussletter.getVisaSort().substring(0,2));
+					//bussletter.setVisaSortM(bussletter.getVisaSort().substring(0,2));
 					webbussletterSer.add(bussletter);
 					ajaxResult="0";
 				}

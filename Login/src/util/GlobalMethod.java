@@ -1152,22 +1152,44 @@ public class GlobalMethod extends HibernateDaoSupport{
 			Map<String,Double>map1=new LinkedHashMap<String,Double>();
 			System.out.println(map1.size());*/
 			//runJs();
-			StringBuffer t1=new StringBuffer();
+			/*StringBuffer t1=new StringBuffer();
 			StringBuilder t2=new StringBuilder();
 			long start=System.currentTimeMillis();
 			for(int i=0;i<1000000;i++){
-				t1.append("testqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq_");
+				t1.append(i);
 			}
 			System.out.println("StringBuffer運行時間："+(System.currentTimeMillis()-start));
 			
 			long start2=System.currentTimeMillis();
 			for(int i=0;i<1000000;i++){
-				t2.append("testqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq_");
+				t2.append(i);
 			}
-			System.out.println("StringBuilder運行時間："+(System.currentTimeMillis()-start2));
+			System.out.println("StringBuilder運行時間："+(System.currentTimeMillis()-start2));*/
+			
+			for(Season s:Season.values()){
+				System.out.println(s);
+				System.out.println("最舒服的季節："+Season.getComfortableSeason().getCon());
+				System.out.println(Season.Summer.ordinal());;
+			}
+			
 						
 		}
-	 
+	 enum Season{
+		 Spring("春天"),Summer("夏天"),Autumn("秋天"),Winter("冬天");
+		 private String con;
+		 Season(String con){this.con=con;}
+		 public String getCon(){
+			 return con;
+		 }
+		 public void setCon(String con){
+			 this.con=con;
+		 }
+		 
+		 public static Season getComfortableSeason(){
+			 return Spring;
+		 }
+		 
+		 }
 	 
 	
 

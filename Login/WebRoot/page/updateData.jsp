@@ -17,7 +17,7 @@
 <meta http-equiv="expires" content="0">
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
-
+<link rel="stylesheet" type="text/css" href="css/form.css" />
 </head>
 
 <script type="text/javascript">
@@ -58,6 +58,28 @@ function gosubmit(){
 		}
 	});
 }
+jq(function() {
+	var demo = jq("#form").Validform({
+		btnSubmit : "#sub",
+		tiptype : 4,
+		tipSweep:true,
+		showAllError : true,
+		datatype : {
+			"*0-6" : /^-?\d{1,12}(\.[0-9]{1,3})?$/
+		},
+		ajaxPost:true,
+		callback:function(data){
+			if(data=="0"){
+				layer.msg("修改成功,請重新登錄!",3,1);
+				window.setTimeout(function(){location.href="judge.jsp"},3000);				
+			}else{
+				//alert(data.responseText);
+				layer.msg("修改失敗",3,3);
+			}				
+		}
+	});
+	demo.tipmsg.w["*0-6"] = "只能數字且不超過12位數,可保留三位以內小數";
+});
 
 /*禁止空格輸入*/
 /*window.onload=function(){            
@@ -81,10 +103,9 @@ jq(function(){
 function back(){	
 	loadUrl("/Login/userfindPageBean3?backIndex=1");
 }
+
 </script>
 <script type='text/javascript' src='/Login/dwr/interface/userjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/engine.js'></script>
-<script type='text/javascript' src='/Login/dwr/util.js'></script>
 <body>
 	
 	<form action="userupdateUesr" method="post"  id="form">
@@ -114,12 +135,17 @@ function back(){
 			<tr>
 				<td class="td1">密碼:</td>
 				<td ><input name="updateU.pwd"
-					value="<s:property value="#attr.webU.pwd"/>" type="password"></td>
+					value="<s:property value="#attr.webU.pwd"/>" type="password" datatype="*"></td>
+			</tr>
+			<tr>
+				<td class="td1">密碼確認:</td>
+				<td ><input name="pwd2"
+					value="<s:property value="#attr.webU.pwd"/>" type="password" recheck="updateU.pwd" datatype="*"></td>
 			</tr>
 			<tr>
 				<td class="td1">姓名:</td>
 				<td ><input name="updateU.name"
-					value="<s:property value="#attr.webU.name"/>" type="text"></td>
+					value="<s:property value="#attr.webU.name"/>" type="text" datatype="*"></td>
 			</tr>
 			
 			<tr>
@@ -130,7 +156,7 @@ function back(){
 			
 			<tr>
 			     <td class="td1">Email:</td>
-			     <td><input name="updateU.email" value="<s:property value="#attr.webU.email"/>" type="text" id="email" onblur="checkUserName()"/>
+			     <td><input name="updateU.email" value="<s:property value="#attr.webU.email"/>" type="text" id="email" datatype="e" onblur="checkUserName()"/>
 			       <input  value="<s:property value="#attr.webU.email"/>" type="hidden" id="hidden_email"/>
 			     </td>
 			</tr>			
@@ -163,9 +189,8 @@ function back(){
 			</tr> 
 			<tr>
 				<td colspan="2">
-				  <input type="button" value="確認修改" onclick="gosubmit()" class="btn btn-primary"/>&nbsp;
-				  <!-- <input type="button" onclick="location.href='userrecoveryData'" value="恢復默認" class="btn btn-primary"/>&nbsp; -->
-				  <input type="button" onclick="back()" value="返回" class="btn btn-primary"/>		
+				  <input type="submit" value="確認修改"  class="btn btn-primary"/>&nbsp;				 				
+				  <input type="button" class="btn btn-primary" value="退出" onclick="history.go('main.jsp')"/>	
 				  </td>
 						
 			</tr>
