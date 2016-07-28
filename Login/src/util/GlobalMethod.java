@@ -1075,6 +1075,12 @@ public class GlobalMethod extends HibernateDaoSupport{
 		      } 				          		       			 
 	 }
 	 
+	 public static Date to_date(String source, String format) throws ParseException {  	        
+	        SimpleDateFormat sdf = new SimpleDateFormat(format);  
+	        Date date = sdf.parse(source);  
+	        return date;  
+	    } 
+	 
 	 public static void main(String[] args) throws ParseException, FileNotFoundException, ScriptException, NoSuchMethodException {
 			List<Webestproduct>list=new ArrayList<Webestproduct>();
 			List<String>list2=new ArrayList<String>();

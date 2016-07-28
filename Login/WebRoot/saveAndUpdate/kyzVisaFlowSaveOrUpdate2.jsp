@@ -66,7 +66,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 										document.getElementById("tip2").innerHTML += "<div onclick="
 												+ "document.getElementById('skeys"+"').value=this.innerText;"
 												+ "document.getElementById('tip2"+"').innerText='';"
-												+ "document.getElementById('keys"+"').value='"+data[i].name+"';"
+												//+ "document.getElementById('keys"+"').value='"+data[i].name+"';"
 												+ "this.style.display='none';"												
 												
 												+ " onmouseout="

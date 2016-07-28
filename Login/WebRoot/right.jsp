@@ -49,8 +49,8 @@ setTimeout("showBills(),findKyVisaBills_Int()",1000);
 setTimeout("hideBills2()",15000); 	
 </script>
 <script type='text/javascript' src='/Login/dwr/interface/kyvisabillsjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/engine.js'></script>
-<script type='text/javascript' src='/Login/dwr/util.js'></script>
+<!-- <script type='text/javascript' src='/Login/dwr/engine.js'></script>
+<script type='text/javascript' src='/Login/dwr/util.js'></script> -->
 
 </head>
 <body>
