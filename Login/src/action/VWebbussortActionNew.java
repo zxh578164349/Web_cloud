@@ -701,7 +701,7 @@ public class VWebbussortActionNew extends ActionSupport implements ServletRespon
 								   wb.getSheet(month).getRow(y_index).getCell(3+a).setCellStyle(cs_red2);
 							   }
 						   }
-						   if(fcode.equals("底加")){
+						   if(fcode.equals("DJ")){
 							   if(list_temp.get(b).getWebVwebbussortItemn().getMid()==200||
 								  list_temp.get(b).getWebVwebbussortItemn().getMid()==300||
 								  list_temp.get(b).getWebVwebbussortItemn().getMid()==400||
@@ -1530,7 +1530,7 @@ public class VWebbussortActionNew extends ActionSupport implements ServletRespon
 			    					cs_temp=cs_bold;
 			    				}
 	    			}
-	    			if(fcode.equals("底加")){
+	    			if(fcode.equals("DJ")){
 	    				if(key.split("__")[1].equals("200")||
 			    				key.split("__")[1].equals("300")||
 			    				key.split("__")[1].equals("400")||
