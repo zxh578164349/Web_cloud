@@ -77,7 +77,7 @@
 		<tbody id="tbody">
 		<s:iterator value="bean.list" status="x" id="temp">		
 		        <tr onmousemove="click_color(this)" onmouseout="move(this)">
-				<td>${ 25*(bean.currentPage-1)+x.index+1}</td>
+				<td>${ bean.pageSizs*(bean.currentPage-1)+x.index+1}</td>
 				<td><s:property value="id.kyVisabillm.id.factNo" />
 				</td>
 				<td>							

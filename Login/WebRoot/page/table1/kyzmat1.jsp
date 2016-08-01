@@ -65,7 +65,7 @@
 		<tbody id="tbody">
 		<s:iterator value="bean.list" status="x" id="temp">		 
 		        <tr >
-				<td>${25*(bean.currentPage-1)+x.index+1}</td>
+				<td>${bean.pageSize*(bean.currentPage-1)+x.index+1}</td>
 				<td><s:property value="id.kyzMat.matNo" /></td>
 				<td><s:property value="id.kyzMat.matCname"/></td>														
 				<td><s:property value="id.kyzMat.matType"/></td>				

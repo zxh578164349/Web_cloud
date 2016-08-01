@@ -66,7 +66,7 @@
 		<tbody id="tbody">
 		<s:iterator value="bean.list" status="x" id="temp">
 			<tr>
-				<td>${25*(bean.currentPage-1)+x.index+1}</td>
+				<td>${bean.pageSize*(bean.currentPage-1)+x.index+1}</td>
 				<td><s:property value="id.factNo" /></td>
 				<td><s:property value="id.factCode" /></td>
 				<td><s:date name="id.yymm" format="yyyyMM" /></td>

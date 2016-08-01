@@ -66,7 +66,7 @@
 		<s:iterator value="bean.list" status="x" id="temp">		 
 		        <tr >
 		        <td><input type="checkbox" value="<s:property value='matNo'/>" name="cb_list"/></td>
-				<td>${25*(bean.currentPage-1)+x.index+1}</td>
+				<td>${bean.pageSize*(bean.currentPage-1)+x.index+1}</td>
 				<td><s:property value="matNo" /></td>
 				<td><s:property value="matCname"/></td>														
 				<td><s:property value="matType"/></td>				
