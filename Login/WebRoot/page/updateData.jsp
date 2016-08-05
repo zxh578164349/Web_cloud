@@ -216,6 +216,7 @@
 						value="<s:property value="#attr.webU.id"/>"> <input
 						type="hidden" name="updateU.available"
 						value="<s:property value="#attr.webU.available"/>">
+						<input type="hidden" name="updateU.adminMk" value="<s:property value='#attr.webU.adminMk'/>"/>  
 					<div class="form-group">
 						<label for="inputEmail3" class="col-sm-2 control-label">工號</label>
 						<div class="col-sm-10">

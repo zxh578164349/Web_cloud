@@ -41,7 +41,7 @@
 		<tbody id="tbody">
 		<s:iterator value="bean.list" status="x" id="temp">		
 		        <tr >
-				<td>${ bean.pageSizs*(bean.currentPage-1)+x.index+1}</td>
+				<td>${ bean.pageSize*(bean.currentPage-1)+x.index+1}</td>
 				<td><s:property value="id.kyVisabillm.id.factNo" />
 				</td>
 				<td>											

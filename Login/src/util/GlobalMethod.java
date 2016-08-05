@@ -1079,7 +1079,29 @@ public class GlobalMethod extends HibernateDaoSupport{
 	        SimpleDateFormat sdf = new SimpleDateFormat(format);  
 	        Date date = sdf.parse(source);  
 	        return date;  
-	    } 
+	    }
+	 
+	 /**
+	  * 根據函文簽核人數來選擇不同的函文文件模板
+	  * @Title: getSubfile
+	  * @Description: TODO
+	  * @param @param num
+	  * @param @return
+	  * @return String
+	  * @throws
+	  * @author web
+	  * @date 2016/8/5
+	  */
+	 public static String getSubfile(int num){
+		 String result="sub_file.jasper";
+		 if(num<=3){
+			 result="sub_file_3.jasper";
+		 }
+		 if(num>3&&num<=6){
+			 result="sub_file_6.jasper";
+		 }
+		 return result;		 
+	 }
 	 
 	 public static void main(String[] args) throws ParseException, FileNotFoundException, ScriptException, NoSuchMethodException {
 			List<Webestproduct>list=new ArrayList<Webestproduct>();
