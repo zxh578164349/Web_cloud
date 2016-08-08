@@ -29,229 +29,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 <link rel="stylesheet" type="text/css" href="css/select_beautiful.css">
 
 
-<script type="text/javascript">
 
-	/*jq(function() {
-		var demo = jq("#subform").Validform({
-			btnSubmit : "#sub",
-			tiptype : 4,
-			tipSweep:true,
-			showAllError : true,
-			datatype : {
-				"0-8" : /^-?\d{0,8}(\.[0-9]{1,2})?$/
-			},									
-			beforeSubmit:checkFile,														
-			ajaxPost:true,
-			callback:function(data){
-				if(data=="0"){
-					layer.msg("提交成功!",3,1);
-					//location.href="/Login/webwlo_getList";
-				}
-				if(data=="1"){
-					alert("提交失敗");
-				}
-				if(data=="2"){
-					layer.msg("數據已經存在",3,1);
-				}
-			}
-		});
-		demo.tipmsg.w["0-8"] = "只能數字且不超過8位數,可保留2位以內小數";
-		demo.addRule([{ele:":checkbox:first",datatype:"*"},{ele:":radio:first",datatype:"*"}]); (注意:checkbox:first和:radio:first前面要加":")
-	});*/
-	jq(function(){
-		var options={
-				beforeSubmit:checkForm,  		       		       
-		        //resetForm: true, 
-		        url:"webtabpom_add",
-		        dataType:'json' ,
-		        success:function(data){
-		        	if(data=="0"){
-		        		layer.msg("操作成功!",3,1);
-		        		//location.href="/Login/kyz_findPageBean";
-		        	}else if(data=="1"){
-		        		layer.msg("操作失敗!",3,3);
-		        	}else if(data=="2"){
-		        		layer.msg("數據已存在該數據",3,3);
-		        	}else if(data=="3"){
-		        		layer.msg("單個文件不可超過5M",2,3);
-		        	}else if(data=="4"){
-		        		layer.msg("僅允許上傳圖片文件",2,3);
-		        	}else{
-		        		alert(data);
-		        	}		        			        	        	
-		         }		         
-		};
-		jq("#subform").submit(function(){
-			jq(this).ajaxSubmit(options);
-			return false;
-		})										
-	})
-	function getAllWebbrank(){
-		webbrankjs.findAll(function(x){
-			dwr.util.addOptions("dwrWebbrank",x,"BNo","BName");
-		});
-	}
-
-/*禁止空格輸入*/
-window.onload=function(){            
-            var inputs=document.getElementsByTagName("input"); 
-            for (var i=0;i<inputs.length; i++) {  
-                if(inputs[i].getAttribute("type")=="text") 
-                 inputs[i].onkeyup=function(){ 
-                    this.value=this.value.replace(/(^\s+)|\s+$/g,""); 
-                 }; 
-            }  
-        }
-        
-function makePomNo(){
-	var tabpomDate=jq("#tabpomDate").val();
-	var component=jq("#component").val();	
-	if(tabpomDate!=""&&component!=""){
-		webtabpomjs.makePomNo(component,tabpomDate,function(x){			
-			jq("#pomNo").val(x);
-		})
-	}
-	
-}
-var i=0;	
-function addFile(){
-    i++;
-    if(i<5){
-    var divfile=document.getElementById("divfile");
-    var inputfile=document.createElement("input");
-    var aEle=document.createElement("a");
-    inputfile.type="file";
-    inputfile.name="files";
-    inputfile.style.width="150px";
-    aEle.innerHTML="刪除";
-    aEle.style.color="red";
-    aEle.href="javascript:void(0)";
-    aEle.onclick=function(){
-       var parentnode=aEle.parentNode;
-       if(parentnode){
-          parentnode.removeChild(aEle);
-          parentnode.removeChild(inputfile);
-          if(i>4){
-             i=4;
-          }
-          i--;
-       }
-    };
-    divfile.appendChild(inputfile);
-    divfile.appendChild(aEle);  
-    }else{
-       alert("附檔不能超過5個!");
-    }               
-}
-function back(){
-	loadUrl("/Login/webtabpom_findPageBean3?backIndex=1");
-}
-
-
-function checkForm(){	
-			var agent = navigator.userAgent.toLowerCase();
-			var eles=jq("input[name='files']");
-			var flag=true;
-				if(agent.indexOf("msie") > 0){
-					var path;
-					var img=new Image();
-					jq.each(eles,function(i,ele){
-						path=ele.value;
-						if(path!=""){//if
-						img.src=path;
-						var extname=path.substr(path.lastIndexOf(".")).toLowerCase()
-						if(extname!=".jpg"&&extname!=".jpeg"&&extname!=".gif"&&extname!=".bmp"&&extname!=".tif"&&extname!=""){
-							layer.msg("僅允許上傳圖片文件",2,3);
-							flag=false;
-							return false;
-							
-						}
-						if(img.fileSize/(1024*1024)>5){
-							layer.msg("單個文件不可超過5M",2,3);
-							//break;
-							flag=false;
-							return false;
-						}
-						}//if
-						
-					})
-				}else{
-					jq.each(eles,function(i,ele){
-						path=ele.value;
-						var extname=path.substr(path.lastIndexOf(".")).toLowerCase()
-						if(path!=""){//if
-						   if(extname!=".jpg"&&extname!=".jpeg"&&extname!=".gif"&&extname!=".bmp"&&extname!=".tif"){
-							layer.msg("僅允許上傳圖片文件",2,3);
-							flag=false;
-							return false;
-						}
-						if(ele.files[0].size/(1024*1024)>5){
-							layer.msg("單個文件不可超過5M",2,3);
-							//break;
-							flag=false;
-							return false;
-						}
-						}//if
-						
-					})
-				}
-				
-				var component=jq("#component").val();
-				var pomName=jq("#pomName").val();
-				var dwrWebbrank=jq("#dwrWebbrank").val();
-				if(component==""){
-					layer.msg("請選擇部件",2,3);
-					flag=false;
-				}
-				if(pomName==""){
-					layer.msg("物料名稱不能爲空",2,3);
-					flag=false;
-				}
-				if(dwrWebbrank==""){
-					layer.msg("請選擇品牌",2,3);
-					flag=false;
-				}
-				return flag;
-}
-
-function lookJson(pomNo,filename){
-	//var jQ = jQuery.noConflict();
-	/*var loadi;
-	filename=encodeURI(encodeURI(filename));
-	jq(document).ajaxStart(function(){
-		loadi=layer.load(0);
-	});
-	jq(document).ajaxStop(function(){
-		layer.close(loadi);
-	});*/
-	   jq.ajax({
-	      type:"get",
-	      dataType:"json",
-	      url:"webtabpomfile_findwebtabpomFileJson",
-	      data:"pomNo="+pomNo+"&filename="+filename,
-	      success:function(files){
-	         jq("#fileJson").html("");
-	          var item;
-	          var item_url;
-	         jq.each(files,function(i,file){
-	            item_url="javascript:lookJson('"+file.id.webTabpom.pomNo+"',"+"'"+file.id.filename+"')";
-	            item="<a href='/upload/"+file.id.webTabpom.pomNo+"/"+file.id.filename+"' target='_blank' title='點擊查看'>"+id.file.filename+            
-	            "</a>"+
-	            "<a href="+item_url+"><img src='images/icon/del_file.png' alt='刪除' title='刪除' style='border:0px'/></a>&nbsp;";
-	            jq("#fileJson").append(item);
-	         }) 
-	      }
-	   })
-	}
-	
-//window.onload=getAllWebbrank;
-
-</script>
-<script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/webbrankjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/webtabpomjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/engine.js'></script>
-<script type='text/javascript' src='/Login/dwr/util.js'></script>
 <script type="text/javascript">
 jq(function(){
 	getAllWebbrank();
@@ -519,5 +297,218 @@ jq(function(){
 				onclick="javascript:back()" class="btn btn-primary"/>
 		</center>
 	</form>
+	
+<script type="text/javascript">
+
+	/*jq(function() {
+		var demo = jq("#subform").Validform({
+			btnSubmit : "#sub",
+			tiptype : 4,
+			tipSweep:true,
+			showAllError : true,
+			datatype : {
+				"0-8" : /^-?\d{0,8}(\.[0-9]{1,2})?$/
+			},									
+			beforeSubmit:checkFile,														
+			ajaxPost:true,
+			callback:function(data){
+				if(data=="0"){
+					layer.msg("提交成功!",3,1);
+					//location.href="/Login/webwlo_getList";
+				}
+				if(data=="1"){
+					alert("提交失敗");
+				}
+				if(data=="2"){
+					layer.msg("數據已經存在",3,1);
+				}
+			}
+		});
+		demo.tipmsg.w["0-8"] = "只能數字且不超過8位數,可保留2位以內小數";
+		demo.addRule([{ele:":checkbox:first",datatype:"*"},{ele:":radio:first",datatype:"*"}]); (注意:checkbox:first和:radio:first前面要加":")
+	});*/
+	jq(function(){
+		var options={
+				beforeSubmit:checkForm,  		       		       
+		        //resetForm: true, 
+		        url:"webtabpom_add",
+		        dataType:'json' ,
+		        success:function(data){
+		        	if(data=="0"){
+		        		layer.msg("操作成功!",3,1);
+		        		//location.href="/Login/kyz_findPageBean";
+		        	}else if(data=="1"){
+		        		layer.msg("操作失敗!",3,3);
+		        	}else if(data=="2"){
+		        		layer.msg("數據已存在該數據",3,3);
+		        	}else if(data=="3"){
+		        		layer.msg("單個文件不可超過5M",2,3);
+		        	}else if(data=="4"){
+		        		layer.msg("僅允許上傳圖片文件",2,3);
+		        	}else{
+		        		alert(data);
+		        	}		        			        	        	
+		         }		         
+		};
+		jq("#subform").submit(function(){
+			jq(this).ajaxSubmit(options);
+			return false;
+		})										
+	})
+	function getAllWebbrank(){
+		webbrankjs.findAll(function(x){
+			dwr.util.addOptions("dwrWebbrank",x,"BNo","BName");
+		});
+	}
+
+/*禁止空格輸入*/
+window.onload=function(){            
+            var inputs=document.getElementsByTagName("input"); 
+            for (var i=0;i<inputs.length; i++) {  
+                if(inputs[i].getAttribute("type")=="text") 
+                 inputs[i].onkeyup=function(){ 
+                    this.value=this.value.replace(/(^\s+)|\s+$/g,""); 
+                 }; 
+            }  
+        }
+        
+function makePomNo(){
+	var tabpomDate=jq("#tabpomDate").val();
+	var component=jq("#component").val();	
+	if(tabpomDate!=""&&component!=""){
+		webtabpomjs.makePomNo(component,tabpomDate,function(x){			
+			jq("#pomNo").val(x);
+		})
+	}
+	
+}
+var i=0;	
+function addFile(){
+    i++;
+    if(i<5){
+    var divfile=document.getElementById("divfile");
+    var inputfile=document.createElement("input");
+    var aEle=document.createElement("a");
+    inputfile.type="file";
+    inputfile.name="files";
+    inputfile.style.width="150px";
+    aEle.innerHTML="刪除";
+    aEle.style.color="red";
+    aEle.href="javascript:void(0)";
+    aEle.onclick=function(){
+       var parentnode=aEle.parentNode;
+       if(parentnode){
+          parentnode.removeChild(aEle);
+          parentnode.removeChild(inputfile);
+          if(i>4){
+             i=4;
+          }
+          i--;
+       }
+    };
+    divfile.appendChild(inputfile);
+    divfile.appendChild(aEle);  
+    }else{
+       alert("附檔不能超過5個!");
+    }               
+}
+function back(){
+	loadUrl("/Login/webtabpom_findPageBean3?backIndex=1");
+}
+
+
+function checkForm(){	
+			var agent = navigator.userAgent.toLowerCase();
+			var eles=jq("input[name='files']");
+			var flag=true;
+				if(agent.indexOf("msie") > 0){
+					var path;
+					var img=new Image();
+					jq.each(eles,function(i,ele){
+						path=ele.value;
+						if(path!=""){//if
+						img.src=path;
+						var extname=path.substr(path.lastIndexOf(".")).toLowerCase()
+						if(extname!=".jpg"&&extname!=".jpeg"&&extname!=".gif"&&extname!=".bmp"&&extname!=".tif"&&extname!=""){
+							layer.msg("僅允許上傳圖片文件",2,3);
+							flag=false;
+							return false;
+							
+						}
+						if(img.fileSize/(1024*1024)>5){
+							layer.msg("單個文件不可超過5M",2,3);
+							//break;
+							flag=false;
+							return false;
+						}
+						}//if
+						
+					})
+				}else{
+					jq.each(eles,function(i,ele){
+						path=ele.value;
+						var extname=path.substr(path.lastIndexOf(".")).toLowerCase()
+						if(path!=""){//if
+						   if(extname!=".jpg"&&extname!=".jpeg"&&extname!=".gif"&&extname!=".bmp"&&extname!=".tif"){
+							layer.msg("僅允許上傳圖片文件",2,3);
+							flag=false;
+							return false;
+						}
+						if(ele.files[0].size/(1024*1024)>5){
+							layer.msg("單個文件不可超過5M",2,3);
+							//break;
+							flag=false;
+							return false;
+						}
+						}//if
+						
+					})
+				}
+				
+				var component=jq("#component").val();
+				var pomName=jq("#pomName").val();
+				var dwrWebbrank=jq("#dwrWebbrank").val();
+				if(component==""){
+					layer.msg("請選擇部件",2,3);
+					flag=false;
+				}
+				if(pomName==""){
+					layer.msg("物料名稱不能爲空",2,3);
+					flag=false;
+				}
+				if(dwrWebbrank==""){
+					layer.msg("請選擇品牌",2,3);
+					flag=false;
+				}
+				return flag;
+}
+
+function lookJson(pomNo,filename){
+	   jq.ajax({
+	      type:"get",
+	      dataType:"json",
+	      url:"webtabpomfile_findwebtabpomFileJson",
+	      data:"pomNo="+pomNo+"&filename="+filename,
+	      success:function(files){
+	         jq("#fileJson").html("");
+	          var item;
+	          var item_url;
+	         jq.each(files,function(i,file){
+	            item_url="javascript:lookJson('"+file.id.webTabpom.pomNo+"',"+"'"+file.id.filename+"')";
+	            item="<a href='/upload/"+file.id.webTabpom.pomNo+"/"+file.id.filename+"' target='_blank' title='點擊查看'>"+id.file.filename+            
+	            "</a>"+
+	            "<a href="+item_url+"><img src='images/icon/del_file.png' alt='刪除' title='刪除' style='border:0px'/></a>&nbsp;";
+	            jq("#fileJson").append(item);
+	         }) 
+	      }
+	   })
+	}
+	
+//window.onload=getAllWebbrank;
+
+</script>
+<script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>
+<script type='text/javascript' src='/Login/dwr/interface/webbrankjs.js'></script>
+<script type='text/javascript' src='/Login/dwr/interface/webtabpomjs.js'></script>
 </body>
 </html>

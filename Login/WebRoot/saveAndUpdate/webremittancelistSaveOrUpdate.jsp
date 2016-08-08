@@ -25,248 +25,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 <meta http-equiv="description" content="This is my page">
 <link rel="stylesheet" type="text/css" href="css/form.css" />
 <link rel="stylesheet" type="text/css" href="css/select_beautiful.css">
-<script type="text/javascript" src="jquery/jquery-form.js"></script>
 
-<script type="text/javascript">
-
-jq(function() {		
-		var demo = jq("#form").Validform({
-			btnSubmit : "#sub",
-			tiptype : 4,
-			showAllError : true,
-			tipSweep : true,
-			datatype : {
-				"my0-8": /^\d{0,8}(\.[0-9]{1,4})?$/,
-				"my0-12": /^\d{0,12}(\.[0-9]{1,4})?$/
-			},
-			beforeSubmit:function(curform){
-				loadi=layer.load("正在處理,請稍等...");
-			}									
-		});
-		demo.tipmsg.w["my0-8"]="只能數字且不超過8位數,可保留四位以內小數";
-		demo.tipmsg.w["my0-12"]="只能數字且不超過12位數,可保留四位以內小數";
-	});
-			
-	function getFactArea(mid) {
-		document.getElementById("dwrFactArea").length = 1;
-		webfactjs.findFactCodeByFactNo(mid, function(x) {
-			dwr.util.addOptions("dwrFactArea", x);
-		});
-		
-	}
-				
-function makeBillNo() {       
-		var factno = jq("#dwrFactNo").val();
-		var web_yymm=jq("#web_yymm").val();
-		if (factno != "" && web_yymm != "") {
-			jq.ajax({
-				type:"POST",
-				dataType:"json",
-				data:"factNo="+factno+"&yymm="+web_yymm,
-				url:"webremit_makeBillNo",
-				success:function(data){
-					jq("#webremit_billno").val(data);
-				},
-				error:function(error){
-					alert(error.responseText);
-				}
-			});
-			document.getElementById("addbtn").disabled="";
-			document.getElementById("addbtn").style.color="black";				  		
-		}
-		
-	}
-	
-var j=0;
-	function addRow(){
-        var billno=document.getElementById("webremit_billno").value; 
-       
-        //设置列内容和属性
-        var cboxlist=document.getElementsByName("cbox");
-        if(cboxlist.length>29){
-           alert("對不起,不能超過30條記錄!");
-        }else{
-    		j++;
-     	    //添加一行
-             var newTr = webremits_body2.insertRow();
-             //添加列
-             var newTd00=newTr.insertCell();
-             var newTd0 = newTr.insertCell();
-             var newTd1 = newTr.insertCell();
-             var newTd2=newTr.insertCell();
-             var newTd3=newTr.insertCell();
-             var newTd4=newTr.insertCell();
-             var newTd5=newTr.insertCell();
-             var newTd6=newTr.insertCell();
-             var newTd7=newTr.insertCell();
-        newTd00.innerHTML='<input type="hidden" name="cbox"/><input type="image" src="images/del.gif" onclick="this.parentNode.parentNode.parentNode.removeChild(this.parentNode.parentNode)"/>';     
-        newTd0.innerHTML = '<input type="text" name="webremit.webremittancelistses['+j+'].currency"  datatype="*"/><span class="Validform_checktip"></span>'; 
-        newTd1.innerHTML = '<input type="text" name="webremit.webremittancelistses['+j+'].manufacturers"  datatype="*"/><span class="Validform_checktip"></span>';             
-        newTd2.innerHTML='<input type="text" name="webremit.webremittancelistses['+j+'].toBank"  datatype="*"/><span class="Validform_checktip"></span>';
-        newTd3.innerHTML='<input type="text" name="webremit.webremittancelistses['+j+'].toAccount"  datatype="*"/><span class="Validform_checktip"></span>';
-        newTd4.innerHTML='<input type="text" name="webremit.webremittancelistses['+j+'].payment"  datatype="my0-8"/><span class="Validform_checktip"></span>';
-        newTd5.innerHTML='<input type="text" name="webremit.webremittancelistses['+j+'].cost"  datatype="my0-8"/><span class="Validform_checktip"></span>';
-        newTd6.innerHTML='<input type="text" name="webremit.webremittancelistses['+j+'].acAmount"  datatype="my0-8"/><span class="Validform_checktip"></span>';    
-        newTd7.innerHTML='<input type="text" name="webremit.webremittancelistses['+j+'].remark"  /><span class="Validform_checktip"></span>'+   
-        '<input type="hidden" name="webremit.webremittancelistses['+j+'].id.webremittancelist.billNo" value="'+billno+'"/>'+
-        '<input type="hidden" name="webremit.webremittancelistses['+j+'].id.itemNo" value="'+j+'"/>';     
-        }
-        
-	}
-							
-	function getFactCode(){
-	    document.getElementById("dwrFactArea").value=document.getElementById("webremits_factcode").value;
-	}
-   function getKyType(){	 	 
-	 var factno=document.getElementById("dwrFactNo").value;
-	 if(factno!=null&&factno!=""){
-	     webtypejs.findByFactNo3(factno,function(x){//過濾出差類"TR"20160203
-       if(x.length>0){
-          dwr.util.addOptions("dwr_kytype",x,"webtypeMk","typeName");
-       }        
-     });
-	 }   
-	}
-	
-function getKyType2(factno){
-	 document.getElementById("dwr_kytype").length=1;	 
-	 if(factno!=null&&factno!=""){
-	     webtypejs.findByFactNo3(factno,function(x){//過濾出差類"TR"20160203
-       if(x.length>0){
-          dwr.util.addOptions("dwr_kytype",x,"webtypeMk","typeName");
-       }
-         
-     });
-	 }    
-	}
-	
-	
-	
-  var i=0;	
-  function addFile(){
-      i++;
-      if(i<15){
-      var divfile=document.getElementById("divfile");
-      var inputfile=document.createElement("input");
-      var aEle=document.createElement("a");
-      inputfile.type="file";
-      inputfile.name="files";
-      inputfile.style.width="150px";
-      aEle.innerHTML="刪除";
-      aEle.style.color="red";
-      aEle.href="javascript:void(0)";
-      aEle.onclick=function(){
-         var parentnode=aEle.parentNode;
-         if(parentnode){
-            parentnode.removeChild(aEle);
-            parentnode.removeChild(inputfile);
-            if(i>14){
-               i=14;
-            }
-            i--;
-         }
-      };
-      divfile.appendChild(inputfile);
-      divfile.appendChild(aEle);  
-      }else{
-         alert("附檔不能超過15個!");
-      }               
-  }
-  
-  function checkType(type){
-     dwrFactNo=document.getElementById("dwrFactNo").value;
-     dwremail=document.getElementById("dwr_email").value.toLowerCase(); //登錄人的email要轉化爲小寫,因爲申請人email已全部轉化爲小寫（20151022）  
-     if(dwrFactNo!=""&&type!=""){
-         kyzvisaflowjs.findByType_Dwr(dwrFactNo,type,function(x){
-            if(x==0){//流程不存在
-               alert("該類型審核流程不存在，請重新選定!");
-               document.getElementById("sub").disabled=true;
-               document.getElementById("sub").style.color="red";
-               document.getElementById("dwr_kytype").style.color="red";
-            }else{       
-                kyzvisaflowjs.findVisaSort_dwr(dwrFactNo,type,dwremail,function(y){
-                  if(y==null){
-                     alert("對不起，你不是該類別函文申請人，請重新選定!");
-                     document.getElementById("sub").disabled=true;
-                     document.getElementById("sub").style.color="red";
-                     document.getElementById("dwr_kytype").style.color="red";                    
-                  }else{
-                     document.getElementById("sub").disabled=false;
-                     document.getElementById("sub").style.color="white";
-                     document.getElementById("dwr_kytype").style.color="black";
-                     document.getElementById("hidden_kytype").value=y;                    
-                  }
-                  
-               }); 
-            }                                
-         });
-     }
-  }
-function lookJson(billNo,id,filename){
-   jq.ajax({
-      type:"get",
-      dataType:"json",
-      url:"webremitfile_findKyzFileJson",
-      data:"billNo="+billNo+"&id="+id+"&filename="+filename,
-      success:function(files){
-         jq("#fileJson").html("");
-          var item;
-          var item_url;
-         jq.each(files,function(i,file){
-            item_url="javascript:lookJson('"+file.billno+"',"+file.id+",'"+file.filename+"')";
-            item="<a href='/upload/"+file.billno+"/"+file.filename+"' target='_blank' title='點擊查看'>"+file.filename+            
-            "</a>"+
-            "<a href="+item_url+"><img src='images/icon/del_file.png' alt='刪除' title='刪除' style='border:0px'/></a>&nbsp;";
-            jq("#fileJson").append(item);
-         }) 
-      }
-   })
-}
-
-function selall(){
-	var allcb=jq("#allbox");
-	var list=jq("[name='cbox']")
-	if(allcb.prop("checked")){
-		for(var i=0;i<list.length;i++){
-			list[i].checked=true;
-		}
-	}else{
-		for(var i=0;i<list.length;i++){
-			list[i].checked=false;
-		}
-	}
-}
-
-function back(){	
-	loadUrl("/Login/webremit_findPageBean3?backIndex=1");
-}
-function gook(){
-	  layer.msg("操作成功",3,1);
-	  loadUrl("webremit_findPageBean");
-}
-</script>
-<script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/kyzvisaflowjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/webtypejs.js'></script>
-<!-- <script type='text/javascript' src='/Login/dwr/engine.js'></script>
-<script type='text/javascript' src='/Login/dwr/util.js'></script> -->
-
-<script type="text/javascript">
-jq(function(){
-	if(jq("[name='saveOrUpdate']").val()=="save"){
-		getKyType();
-	}else{
-		jq("#addbtn").removeAttr("disabled").removeAttr("style");
-		//jq("#addbtn").removeAttr("style");
-		
-	}
-	
-	j=jq("#maxItemno").val()
-	if(isNaN(j)){
-		j=0;
-	}
-});
-</script>
 
 </head>
 <body >  
@@ -503,5 +262,244 @@ jq(function(){
 			</center>					
 	</form>
 	<iframe id="frameFile" name="frameFile" style="display: none;"></iframe>
+	
+<script type="text/javascript">
+
+jq(function() {		
+		var demo = jq("#form").Validform({
+			btnSubmit : "#sub",
+			tiptype : 4,
+			showAllError : true,
+			tipSweep : true,
+			datatype : {
+				"my0-8": /^\d{0,8}(\.[0-9]{1,4})?$/,
+				"my0-12": /^\d{0,12}(\.[0-9]{1,4})?$/
+			},
+			beforeSubmit:function(curform){
+				loadi=layer.load("正在處理,請稍等...");
+			}									
+		});
+		demo.tipmsg.w["my0-8"]="只能數字且不超過8位數,可保留四位以內小數";
+		demo.tipmsg.w["my0-12"]="只能數字且不超過12位數,可保留四位以內小數";
+	});
+			
+	function getFactArea(mid) {
+		document.getElementById("dwrFactArea").length = 1;
+		webfactjs.findFactCodeByFactNo(mid, function(x) {
+			dwr.util.addOptions("dwrFactArea", x);
+		});
+		
+	}
+				
+function makeBillNo() {       
+		var factno = jq("#dwrFactNo").val();
+		var web_yymm=jq("#web_yymm").val();
+		if (factno != "" && web_yymm != "") {
+			jq.ajax({
+				type:"POST",
+				dataType:"json",
+				data:"factNo="+factno+"&yymm="+web_yymm,
+				url:"webremit_makeBillNo",
+				success:function(data){
+					jq("#webremit_billno").val(data);
+				},
+				error:function(error){
+					alert(error.responseText);
+				}
+			});
+			document.getElementById("addbtn").disabled="";
+			document.getElementById("addbtn").style.color="black";				  		
+		}
+		
+	}
+	
+var j=0;
+	function addRow(){
+        var billno=document.getElementById("webremit_billno").value; 
+       
+        //设置列内容和属性
+        var cboxlist=document.getElementsByName("cbox");
+        if(cboxlist.length>29){
+           alert("對不起,不能超過30條記錄!");
+        }else{
+    		j++;
+     	    //添加一行
+             var newTr = webremits_body2.insertRow();
+             //添加列
+             var newTd00=newTr.insertCell();
+             var newTd0 = newTr.insertCell();
+             var newTd1 = newTr.insertCell();
+             var newTd2=newTr.insertCell();
+             var newTd3=newTr.insertCell();
+             var newTd4=newTr.insertCell();
+             var newTd5=newTr.insertCell();
+             var newTd6=newTr.insertCell();
+             var newTd7=newTr.insertCell();
+        newTd00.innerHTML='<input type="hidden" name="cbox"/><input type="image" src="images/del.gif" onclick="this.parentNode.parentNode.parentNode.removeChild(this.parentNode.parentNode)"/>';     
+        newTd0.innerHTML = '<input type="text" name="webremit.webremittancelistses['+j+'].currency"  datatype="*"/><span class="Validform_checktip"></span>'; 
+        newTd1.innerHTML = '<input type="text" name="webremit.webremittancelistses['+j+'].manufacturers"  datatype="*"/><span class="Validform_checktip"></span>';             
+        newTd2.innerHTML='<input type="text" name="webremit.webremittancelistses['+j+'].toBank"  datatype="*"/><span class="Validform_checktip"></span>';
+        newTd3.innerHTML='<input type="text" name="webremit.webremittancelistses['+j+'].toAccount"  datatype="*"/><span class="Validform_checktip"></span>';
+        newTd4.innerHTML='<input type="text" name="webremit.webremittancelistses['+j+'].payment"  datatype="my0-8"/><span class="Validform_checktip"></span>';
+        newTd5.innerHTML='<input type="text" name="webremit.webremittancelistses['+j+'].cost"  datatype="my0-8"/><span class="Validform_checktip"></span>';
+        newTd6.innerHTML='<input type="text" name="webremit.webremittancelistses['+j+'].acAmount"  datatype="my0-8"/><span class="Validform_checktip"></span>';    
+        newTd7.innerHTML='<input type="text" name="webremit.webremittancelistses['+j+'].remark"  /><span class="Validform_checktip"></span>'+   
+        '<input type="hidden" name="webremit.webremittancelistses['+j+'].id.webremittancelist.billNo" value="'+billno+'"/>'+
+        '<input type="hidden" name="webremit.webremittancelistses['+j+'].id.itemNo" value="'+j+'"/>';     
+        }
+        
+	}
+							
+	function getFactCode(){
+	    document.getElementById("dwrFactArea").value=document.getElementById("webremits_factcode").value;
+	}
+   function getKyType(){	 	 
+	 var factno=document.getElementById("dwrFactNo").value;
+	 if(factno!=null&&factno!=""){
+	     webtypejs.findByFactNo3(factno,function(x){//過濾出差類"TR"20160203
+       if(x.length>0){
+          dwr.util.addOptions("dwr_kytype",x,"webtypeMk","typeName");
+       }        
+     });
+	 }   
+	}
+	
+function getKyType2(factno){
+	 document.getElementById("dwr_kytype").length=1;	 
+	 if(factno!=null&&factno!=""){
+	     webtypejs.findByFactNo3(factno,function(x){//過濾出差類"TR"20160203
+       if(x.length>0){
+          dwr.util.addOptions("dwr_kytype",x,"webtypeMk","typeName");
+       }
+         
+     });
+	 }    
+	}
+	
+	
+	
+  var i=0;	
+  function addFile(){
+      i++;
+      if(i<15){
+      var divfile=document.getElementById("divfile");
+      var inputfile=document.createElement("input");
+      var aEle=document.createElement("a");
+      inputfile.type="file";
+      inputfile.name="files";
+      inputfile.style.width="150px";
+      aEle.innerHTML="刪除";
+      aEle.style.color="red";
+      aEle.href="javascript:void(0)";
+      aEle.onclick=function(){
+         var parentnode=aEle.parentNode;
+         if(parentnode){
+            parentnode.removeChild(aEle);
+            parentnode.removeChild(inputfile);
+            if(i>14){
+               i=14;
+            }
+            i--;
+         }
+      };
+      divfile.appendChild(inputfile);
+      divfile.appendChild(aEle);  
+      }else{
+         alert("附檔不能超過15個!");
+      }               
+  }
+  
+  function checkType(type){
+     dwrFactNo=document.getElementById("dwrFactNo").value;
+     dwremail=document.getElementById("dwr_email").value.toLowerCase(); //登錄人的email要轉化爲小寫,因爲申請人email已全部轉化爲小寫（20151022）  
+     if(dwrFactNo!=""&&type!=""){
+         kyzvisaflowjs.findByType_Dwr(dwrFactNo,type,function(x){
+            if(x==0){//流程不存在
+               alert("該類型審核流程不存在，請重新選定!");
+               document.getElementById("sub").disabled=true;
+               document.getElementById("sub").style.color="red";
+               document.getElementById("dwr_kytype").style.color="red";
+            }else{       
+                kyzvisaflowjs.findVisaSort_dwr(dwrFactNo,type,dwremail,function(y){
+                  if(y==null){
+                     alert("對不起，你不是該類別函文申請人，請重新選定!");
+                     document.getElementById("sub").disabled=true;
+                     document.getElementById("sub").style.color="red";
+                     document.getElementById("dwr_kytype").style.color="red";                    
+                  }else{
+                     document.getElementById("sub").disabled=false;
+                     document.getElementById("sub").style.color="white";
+                     document.getElementById("dwr_kytype").style.color="black";
+                     document.getElementById("hidden_kytype").value=y;                    
+                  }
+                  
+               }); 
+            }                                
+         });
+     }
+  }
+function lookJson(billNo,id,filename){
+   jq.ajax({
+      type:"get",
+      dataType:"json",
+      url:"webremitfile_findKyzFileJson",
+      data:"billNo="+billNo+"&id="+id+"&filename="+filename,
+      success:function(files){
+         jq("#fileJson").html("");
+          var item;
+          var item_url;
+         jq.each(files,function(i,file){
+            item_url="javascript:lookJson('"+file.billno+"',"+file.id+",'"+file.filename+"')";
+            item="<a href='/upload/"+file.billno+"/"+file.filename+"' target='_blank' title='點擊查看'>"+file.filename+            
+            "</a>"+
+            "<a href="+item_url+"><img src='images/icon/del_file.png' alt='刪除' title='刪除' style='border:0px'/></a>&nbsp;";
+            jq("#fileJson").append(item);
+         }) 
+      }
+   })
+}
+
+function selall(){
+	var allcb=jq("#allbox");
+	var list=jq("[name='cbox']")
+	if(allcb.prop("checked")){
+		for(var i=0;i<list.length;i++){
+			list[i].checked=true;
+		}
+	}else{
+		for(var i=0;i<list.length;i++){
+			list[i].checked=false;
+		}
+	}
+}
+
+function back(){	
+	loadUrl("/Login/webremit_findPageBean3?backIndex=1");
+}
+function gook(){
+	  layer.msg("操作成功",3,1);
+	  loadUrl("webremit_findPageBean");
+}
+</script>
+<script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>
+<script type='text/javascript' src='/Login/dwr/interface/kyzvisaflowjs.js'></script>
+<script type='text/javascript' src='/Login/dwr/interface/webtypejs.js'></script>
+
+<script type="text/javascript">
+jq(function(){
+	if(jq("[name='saveOrUpdate']").val()=="save"){
+		getKyType();
+	}else{
+		jq("#addbtn").removeAttr("disabled").removeAttr("style");
+		//jq("#addbtn").removeAttr("style");
+		
+	}
+	
+	j=jq("#maxItemno").val()
+	if(isNaN(j)){
+		j=0;
+	}
+});
+</script>	
 </body>
 </html>

@@ -16,10 +16,17 @@
 <meta http-equiv="expires" content="0">
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
-
-
-
 </head>
+
+
+<body>
+	<jsp:include page="publicHead_webuser.jsp" />
+	<hr />
+	
+	<div id="bodyid">
+		<jsp:include page="table1/managerUser1.jsp" />
+	</div>
+	
 <script type="text/javascript">
 	
 	function pages(page) {
@@ -55,14 +62,6 @@
 			}
 		});
 	}
-	
-
-   
-/* jq(document).keyup(function(event){
-    if(event.keyCode==13){
-       submis();
-    }
-})  */
  
  function mydelete(id){
     var flag=confirm("確定要刪除嗎?");
@@ -91,14 +90,6 @@ function loadjur(id,factNo){
 function loaduser(id){	
 	loadUrl("/Login/userinitialUpdate?id="+id);
 }
-</script>
-
-<body>
-	<jsp:include page="publicHead_webuser.jsp" />
-	<hr />
-	
-	<div id="bodyid">
-		<jsp:include page="table1/managerUser1.jsp" />
-	</div>
+</script>	
 </body>
 </html>

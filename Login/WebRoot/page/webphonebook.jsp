@@ -17,8 +17,27 @@
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
 <script type="text/javascript" src="jquery/jquery-form.js"></script> 
-
 </head>
+
+<body>
+	<jsp:include page="publicHead_webphonebook.jsp" />
+	<hr />								  	       	       	     		
+	<form  method="post" enctype="multipart/form-data" id="upload_form">
+	<table>
+	  <tr>	   
+	   <td>
+	        <input value="導入Excel" type="submit" class="btn btn-info" />			  
+	   </td>
+	   <td>	
+	       <input type="file" name="file" style="width:150px" id="id_file" class="btn btn-info"/>     
+	   </td>
+	  </tr>
+	</table>
+	</form>
+	<div id="bodyid">
+		<jsp:include page="table1/webphonebook1.jsp" />
+	</div>
+	
 <script type="text/javascript">
 	
 	function pages(page) {
@@ -53,14 +72,6 @@
 			}
 		});
 	}
-	
-
-   
-/* jq(document).keyup(function(event){
-    if(event.keyCode==13){
-       submis();
-    }
-})  */
  
  function mydelete(subform){
     var flag=confirm("確定要刪除嗎?");
@@ -162,25 +173,6 @@ function print(subform){
 	subform.attr("target","_blank");
 	subform.submit();
 }
-</script>
-
-<body>
-	<jsp:include page="publicHead_webphonebook.jsp" />
-	<hr />								  	       	       	     		
-	<form  method="post" enctype="multipart/form-data" id="upload_form">
-	<table>
-	  <tr>	   
-	   <td>
-	        <input value="導入Excel" type="submit" class="btn btn-info" />			  
-	   </td>
-	   <td>	
-	       <input type="file" name="file" style="width:150px" id="id_file" class="btn btn-info"/>     
-	   </td>
-	  </tr>
-	</table>
-	</form>
-	<div id="bodyid">
-		<jsp:include page="table1/webphonebook1.jsp" />
-	</div>
+</script>	
 </body>
 </html>

@@ -81,7 +81,7 @@
 						<input type="hidden" value="<s:property value='id.component'/>" name="component"/>
 													
 					</form> 
-					<a href="javascript:void(0)" onclick="isDelete('2subform${x.index}')"><img alt="刪除" src="images/icon/delete001.png" title="刪除"></a>
+					<a href="javascript:isDelete('2subform${x.index}','webfactOrder_delete')" ><img alt="刪除" src="images/icon/delete001.png" title="刪除"></a>
 					</td>
 				</s:if>
 			</tr>

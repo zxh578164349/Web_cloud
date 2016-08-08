@@ -23,7 +23,47 @@
 <link rel="stylesheet" type="text/css" href="css/form.css" />
 <link rel="stylesheet" type="text/css" href="css/select_beautiful.css">
 </head>
+<body>
 
+	<form action="kyzacct_add" method="post" id="form">
+	  <h2>會計科目</h2>
+		<table class="table table-condensed"
+			id="table1">							
+					<tr>					  
+						<td class="td_show_title" >科目代號</td>
+					<s:if test="kyzacct==null">
+						<td class="td_input">
+						   <input type="text" name="kyzacct.acctNo" datatype="s1-8" onblur="checkAcctNo(this.value)"  />
+						   <input type="hidden" name="isnull" value="isNull"/>						   
+						</td>
+					</s:if>
+					<s:else>
+					    <td class="td_input">
+					       <input type="text" name="kyzacct.acctNo" value="<s:property value='kyzacct.acctNo'/>" style="color:blue" readonly/>
+					       <input type="hidden" name="isnull" value="isNotnull">
+					    </td>					    
+					</s:else>
+						<td class="td_show_title">科目名稱</td>
+						<td class="td_input"><input type="text" name="kyzacct.acctName" value="<s:property value='kyzacct.acctName'/>" datatype="*0-50"/></td>											
+					</tr>														
+			　　<tr>
+					<td class="td_show_title">分類代號<br></td>
+					<td class="td_input"><input type="text" name="kyzacct.bacctNo" datatype="s0-10" value="<s:property value='kyzacct.bacctNo'/>"/></td>						  					
+					<td class="td_show_title">分類名稱</td>
+					<td class="td_input"><input type="text" name="kyzacct.bacctName"  value="<s:property value='kyzacct.bacctName'/>" datatype="*0-40"/>	</td>					 						
+				</tr>				
+		</table>
+
+
+		<center>
+			<input type="submit" id="sub" value="確定" class="btn btn-primary"/>&nbsp;&nbsp;&nbsp; 
+			<input type="reset" id="reset" value="重置" class="btn btn-primary"/>&nbsp;&nbsp;&nbsp;
+			<input type="button" value="返回" id="btn_back"
+				onclick="javascript:back()" class="btn btn-primary"/>		
+		</center>
+	</form>
+
+	
 <script type="text/javascript">
  	jq(function() {
 		var demo = jq("#form").Validform({
@@ -94,63 +134,10 @@
 	   });
 	}
 	
-jq(document).keyup(function(event){
-   if(event.keyCode==13){
-      submis();
-   }
-});
-	
-	
-
 </script>
 <script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>
 <script type='text/javascript' src='/Login/dwr/interface/kyzsecjs.js'></script>
 <script type='text/javascript' src='/Login/dwr/interface/kyzacctjs.js'></script>
-<!-- <script type='text/javascript' src='/Login/dwr/engine.js'></script>
-<script type='text/javascript' src='/Login/dwr/util.js'></script> -->
-
-<body>
-
-	<form action="kyzacct_add" method="post" id="form">
-	  <h2>會計科目</h2>
-		<table class="table table-condensed"
-			id="table1">							
-					<tr>					  
-						<td class="td_show_title" >科目代號</td>
-					<s:if test="kyzacct==null">
-						<td class="td_input">
-						   <input type="text" name="kyzacct.acctNo" datatype="s1-8" onblur="checkAcctNo(this.value)"  />
-						   <input type="hidden" name="isnull" value="isNull"/>						   
-						</td>
-					</s:if>
-					<s:else>
-					    <td class="td_input">
-					       <input type="text" name="kyzacct.acctNo" value="<s:property value='kyzacct.acctNo'/>" style="color:blue" readonly/>
-					       <input type="hidden" name="isnull" value="isNotnull">
-					    </td>					    
-					</s:else>
-						<td class="td_show_title">科目名稱</td>
-						<td class="td_input"><input type="text" name="kyzacct.acctName" value="<s:property value='kyzacct.acctName'/>" datatype="*0-50"/></td>											
-					</tr>														
-			　　<tr>
-					<td class="td_show_title">分類代號<br></td>
-					<td class="td_input"><input type="text" name="kyzacct.bacctNo" datatype="s0-10" value="<s:property value='kyzacct.bacctNo'/>"/></td>						  					
-					<td class="td_show_title">分類名稱</td>
-					<td class="td_input"><input type="text" name="kyzacct.bacctName"  value="<s:property value='kyzacct.bacctName'/>" datatype="*0-40"/>	</td>					 						
-				</tr>				
-		</table>
-
-
-		<center>
-			<input type="submit" id="sub" value="確定" class="btn btn-primary"/>&nbsp;&nbsp;&nbsp; 
-			<input type="reset" id="reset" value="重置" class="btn btn-primary"/>&nbsp;&nbsp;&nbsp;
-			<input type="button" value="返回" id="btn_back"
-				onclick="javascript:back()" class="btn btn-primary"/>		
-		</center>
-	</form>
-
-	
-
 </body>
 
 </html>

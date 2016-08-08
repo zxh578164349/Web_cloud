@@ -18,42 +18,59 @@
 <meta http-equiv="description" content="This is my page">
 	
 </head>
-<script>
+
+
+<body>
+	<jsp:include page="publicHead_print.jsp" />
+	<hr />
+		
+	<div id="bodyid">
+		<jsp:include page="table1/webWlo1.jsp" />
+	</div>
 	
-	function pages(page) {	
-		jq.ajax({
-			type : "POST",
-			dataType : "Html",
-			url : "webwlo_getList3",
-			data : "page=" + page ,
-			success : function(msg) {
-				jq("#bodyid").html(msg);
-			},
-			error : function(xhr) {
-				//alert(xhr.responseText);
-				jq("#bodyid").html(xhr.responseText);
-			}
-		});
-	}
-	function submis(public_form) {
-		var fact = document.getElementById("factNo");
-		var ym = document.getElementById("year");
-		var subform=jq("#"+public_form);
-		jq.ajax({
-			type : "POST",
-			dataType : "Html",
-			url : "webwlo_getList2",
-			//data : "factNo=" + fact.value + "&yymm=" + ym.value,
-			data:subform.serialize(),
-			success : function(msg) {
-				jq("#bodyid").html(msg);
-			},
-			error : function(xhr) {
-				//alert(xhr.responseText);
-				jq("#bodyid").html(xhr.responseText);
-			}
-		});
-	}
+<script>
+function pages(page) {	
+	jq.ajax({
+		type : "POST",
+		dataType : "Html",
+		url : "webwlo_getList3",
+		data : "page=" + page ,
+		success : function(msg) {
+			jq("#bodyid").html(msg);
+		},
+		error : function(xhr) {
+			//alert(xhr.responseText);
+			jq("#bodyid").html(xhr.responseText);
+		}
+	});
+}
+function submis(public_form) {
+	var fact = document.getElementById("factNo");
+	var ym = document.getElementById("year");
+	var subform=jq("#"+public_form);
+	jq.ajax({
+		type : "POST",
+		dataType : "Html",
+		url : "webwlo_getList2",
+		//data : "factNo=" + fact.value + "&yymm=" + ym.value,
+		data:subform.serialize(),
+		success : function(msg) {
+			jq("#bodyid").html(msg);
+		},
+		error : function(xhr) {
+			//alert(xhr.responseText);
+			jq("#bodyid").html(xhr.responseText);
+		}
+	});
+}
+function print(subform){
+	var subform=jq("#"+subform);
+	subform.attr("action","webwlo_print");
+	subform.attr("target","_blank");
+	subform.submit();
+}
+	/*
+	
 	//你确定要删除吗？
 	function isDelete(mid) {
 	    var flag=confirm("確定要刪除嗎?");		
@@ -73,20 +90,7 @@
 				});
 			}	
 	}
-	function print(subform){
-		var subform=jq("#"+subform);
-		subform.attr("action","webwlo_print");
-		subform.attr("target","_blank");
-		subform.submit();
-	}
-</script>
-
-<body>
-	<jsp:include page="publicHead_print.jsp" />
-	<hr />
-		
-	<div id="bodyid">
-		<jsp:include page="table1/webWlo1.jsp" />
-	</div>
+	*/
+</script>	
 </body>
 </html>

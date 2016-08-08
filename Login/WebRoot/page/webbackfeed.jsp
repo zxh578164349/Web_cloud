@@ -18,6 +18,15 @@
 <meta http-equiv="description" content="This is my page">
 
 </head>
+
+
+<body>
+	<jsp:include page="publicHead_print.jsp" flush="true" />
+	<hr />	
+	<div id="bodyid">
+		<jsp:include page="table1/webbackfeed1.jsp" />
+	</div>
+	
 <script>
 	function pages(page) {
 		jq.ajax({
@@ -54,7 +63,7 @@
 		});
 	}
 	//你确定要删除吗？
-	function isDelete(mid) {
+	/*function isDelete(mid) {
 		 var flag=confirm("確定要刪除嗎?");
 		
 			if (flag == true) {
@@ -73,7 +82,7 @@
 				});
 			}
 		
-	}
+	}*/
 	function print(public_form){
 		var subform=jq("#"+public_form);
 		subform.attr("action","webbackfeed_print");
@@ -81,13 +90,6 @@
 		subform.submit();
 	}
 	
-</script>
-
-<body>
-	<jsp:include page="publicHead_print.jsp" flush="true" />
-	<hr />	
-	<div id="bodyid">
-		<jsp:include page="table1/webbackfeed1.jsp" />
-	</div>
+</script>	
 </body>
 </html>

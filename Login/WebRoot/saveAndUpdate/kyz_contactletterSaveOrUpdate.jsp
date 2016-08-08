@@ -26,211 +26,6 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 <link href="css/validate.css" rel="stylesheet" type="text/css" />
 <link rel="stylesheet" type="text/css" href="css/form.css" />
 <link rel="stylesheet" type="text/css" href="css/select_beautiful.css">
-<script type="text/javascript">
-	jq(function() {
-		var demo = jq("#form").Validform({
-			btnSubmit : "#sub",
-			tiptype : 4,
-			showAllError : true,
-			tipSweep : true,
-			datatype : {
-				"*0-6" : /^\d{0,9}(\.[0-9]{1,3})?$/,
-				"my0-8": /^\d{0,8}(\.[0-9]{1,4})?$/
-			},
-			beforeSubmit:function(curform){
-				layer.load("正在處理,請稍等...(系統爲了節省開銷,已取消自動下載函文!)")
-			}
-			
-		});
-		demo.tipmsg.w["*0-6"] = "只能數字且不超過9位數,可保留三位以內小數";
-		demo.tipmsg.w["my0-8"]="只能數字且不超過8位數,可保留四位以內小數";
-	});
-
-	function getFactArea(mid) {
-		document.getElementById("dwrFactArea").length = 1;
-		webfactjs.findFactCodeByFactNo(mid, function(x) {
-			dwr.util.addOptions("dwrFactArea", x);
-		});
-		
-	}
-	
-
-function makeBillNo() {
-        
-		var factno = document.getElementById("dwrFactNo").value;
-		var timecreat = document.getElementById("ymExpect").value;
-		var factcode=document.getElementById("dwrFactArea").value;
-		var billnos = document.getElementById("kyzletter_billno");
-		var cbox_length=document.getElementsByName("cbox").length;
-		if (factno != "" && timecreat != "") {
-			kyzcontactletterjs.makeBillNo(factno, timecreat, function(x) {
-				dwr.util.setValue("kyzletter_billno", x);								  			  								
-			});				 		
-		}
-		
-	}
-							
- /*   function getKyType(){
-	   kytypejs.findByTypeNo("VV",function(x){
-	         dwr.util.addOptions("dwr_kytype",x,"typeName","typeSname");
-	   });
-	} */
-	
-function getKyType(){
-	 var factno=document.getElementById("dwrFactNo").value;
-	 if(factno!=null&&factno!=""){
-	     webtypejs.findByFactNo3(factno,function(x){//過濾出差類"TR"20160203
-       if(x.length>0){
-          dwr.util.addOptions("dwr_kytype",x,"webtypeMk","typeName");
-       }
-         
-     });
-	 }
-    
-	}
-	
-function getKyType2(factno){
-	 document.getElementById("dwr_kytype").length=1;	 
-	 if(factno!=null&&factno!=""){
-	     webtypejs.findByFactNo3(factno,function(x){//過濾出差類"TR"20160203
-       if(x.length>0){
-          dwr.util.addOptions("dwr_kytype",x,"webtypeMk","typeName");
-       }
-         
-     });
-	 }
-    
-	}
-	 
-  function checkType(type){
-     dwrFactNo=document.getElementById("dwrFactNo").value;
-     dwremail=document.getElementById("dwr_email").value.toLowerCase(); //登錄人的email要轉化爲小寫,因爲申請人email已全部轉化爲小寫（20151022）;
-     if(dwrFactNo!=""&&type!=""){
-         kyzvisaflowjs.findByType_Dwr(dwrFactNo,type,function(x){
-            if(x==0){//流程不存在
-               alert("該類型審核流程不存在，請重新選定!");
-               document.getElementById("sub").disabled=true;
-               document.getElementById("sub").style.color="red";
-               document.getElementById("dwr_kytype").style.color="red";
-            }else{             
-                kyzvisaflowjs.findVisaSort_dwr(dwrFactNo,type,dwremail,function(y){
-                  if(y==null){
-                     alert("對不起，你不是該類別函文申請人，請重新選定!");
-                     document.getElementById("sub").disabled=true;
-                     document.getElementById("sub").style.color="red";
-                     document.getElementById("dwr_kytype").style.color="red";                    
-                  }else{
-                     document.getElementById("sub").disabled=false;
-                     document.getElementById("sub").style.color="white";
-                     document.getElementById("dwr_kytype").style.color="black";
-                     document.getElementById("hidden_kytype").value=y;                    
-                  }
-                  
-               }); 
-            }
-            
-           /*   else if(type.charAt(0)=='C'){//如果流程是C类（C1,C2....）  ,则要 根据申请人来选择审核流程的代号              
-                kyzvisaflowjs.findVisaSort_dwr(dwrFactNo,type,dwremail,function(y){
-                  if(y==null){
-                     alert("對不起，你不是該類別函文申請人，請重新選定!");
-                     document.getElementById("sub").disabled=true;
-                     document.getElementById("sub").style.color="red";
-                     document.getElementById("dwr_kytype").style.color="red";                    
-                  }else{
-                     document.getElementById("sub").disabled=false;
-                     document.getElementById("sub").style.color="white";
-                     document.getElementById("dwr_kytype").style.color="black";
-                     document.getElementById("hidden_kytype").value=y;                    
-                  }
-                  
-               }); 
-            } else{ //如果流程是非C类，则不需要根据申请人选择流程,直接選擇類型代號，就對應審核流程代號
-                     document.getElementById("sub").disabled=false;
-                     document.getElementById("sub").style.color="white";
-                     document.getElementById("dwr_kytype").style.color="black";
-                     document.getElementById("hidden_kytype").value=type;
-            } */
-          
-         });
-     }
-  }
-  var i=0;	
-  function addFile(){
-      i++;
-      if(i<15){
-      var divfile=document.getElementById("divfile");
-      var inputfile=document.createElement("input");
-      var aEle=document.createElement("a");
-      inputfile.type="file";
-      inputfile.name="files";
-      inputfile.style.width="150px";
-      inputfile.id="fileid"+i;
-      aEle.innerHTML="刪除";
-      aEle.style.color="red";
-      aEle.href="javascript:void(0)";
-      aEle.onclick=function(){
-         var parentnode=aEle.parentNode;
-         if(parentnode){
-            parentnode.removeChild(aEle);
-            parentnode.removeChild(inputfile);
-            if(i>14){
-               i=14;
-            }
-            i--;
-         }
-      };
-      divfile.appendChild(inputfile);
-      divfile.appendChild(aEle);  
-      }else{
-         alert("附檔不能超過15個!");
-      }               
-  }
-
-  function back(){		
-		loadUrl("/Login/kyzletter_findPageBean3?backIndex=1");
-	}
- 
-  
-  function gook(){
-	  layer.msg("操作成功",3,1);
-	  loadUrl("kyzletter_findPageBean");
-  }
-  
-  function lookJson(billNo,id,filename){
-	   jq.ajax({
-	      type:"get",
-	      dataType:"json",
-	      url:"kyzfile_findKyzFileJson",
-	      data:"billNo="+billNo+"&id="+id+"&filename="+filename,
-	      success:function(files){
-	         jq("#fileJson").html("");
-	          var item;
-	          var item_url;
-	         jq.each(files,function(i,file){
-	            item_url="javascript:lookJson('"+file.billno+"',"+file.id+",'"+file.filename+"')";
-	            item="<a href='/upload/"+file.billno+"/"+file.filename+"' target='_blank' title='點擊查看'>"+file.filename+            
-	            "</a>"+
-	            "<a href="+item_url+"><img src='images/icon/del_file.png' alt='刪除' title='刪除' style='border:0px'/></a>&nbsp;";
-	            jq("#fileJson").append(item);
-	         }) 
-	      }
-	   })
-	}  
-</script>
-<script type='text/javascript' src='/Login/dwr/interface/kyzcontactletterjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/kyzvisaflowjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/webtypejs.js'></script>
-<!-- <script type='text/javascript' src='/Login/dwr/engine.js'></script>
-<script type='text/javascript' src='/Login/dwr/util.js'></script> -->
-
-<script type="text/javascript">
-jq(function(){
-	if(jq("#addorupdate").val()!="update"){
-		getKyType();makeBillNo();
-	}  
-});
-</script>
 
 </head>
 <body >  
@@ -403,5 +198,180 @@ jq(function(){
 			<input type="hidden" name="addorupdate" value="<s:property value='addorupdate'/>" id="addorupdate"/>	<!-- 添加或更新標識     -->	
 	</form>
 	<iframe id="frameFile" name="frameFile" style="display: none;"></iframe>
+	
+<script type="text/javascript">
+	jq(function() {
+		var demo = jq("#form").Validform({
+			btnSubmit : "#sub",
+			tiptype : 4,
+			showAllError : true,
+			tipSweep : true,
+			datatype : {
+				"*0-6" : /^\d{0,9}(\.[0-9]{1,3})?$/,
+				"my0-8": /^\d{0,8}(\.[0-9]{1,4})?$/
+			},
+			beforeSubmit:function(curform){
+				layer.load("正在處理,請稍等...(系統爲了節省開銷,已取消自動下載函文!)")
+			}
+			
+		});
+		demo.tipmsg.w["*0-6"] = "只能數字且不超過9位數,可保留三位以內小數";
+		demo.tipmsg.w["my0-8"]="只能數字且不超過8位數,可保留四位以內小數";
+	});
+
+	function getFactArea(mid) {
+		document.getElementById("dwrFactArea").length = 1;
+		webfactjs.findFactCodeByFactNo(mid, function(x) {
+			dwr.util.addOptions("dwrFactArea", x);
+		});
+		
+	}
+	
+
+function makeBillNo() {
+        
+		var factno = document.getElementById("dwrFactNo").value;
+		var timecreat = document.getElementById("ymExpect").value;
+		var factcode=document.getElementById("dwrFactArea").value;
+		var billnos = document.getElementById("kyzletter_billno");
+		var cbox_length=document.getElementsByName("cbox").length;
+		if (factno != "" && timecreat != "") {
+			kyzcontactletterjs.makeBillNo(factno, timecreat, function(x) {
+				dwr.util.setValue("kyzletter_billno", x);								  			  								
+			});				 		
+		}
+		
+	}
+								
+function getKyType(){
+	 var factno=document.getElementById("dwrFactNo").value;
+	 if(factno!=null&&factno!=""){
+	     webtypejs.findByFactNo3(factno,function(x){//過濾出差類"TR"20160203
+       if(x.length>0){
+          dwr.util.addOptions("dwr_kytype",x,"webtypeMk","typeName");
+       }
+         
+     });
+	 }
+    
+	}
+	
+function getKyType2(factno){
+	 document.getElementById("dwr_kytype").length=1;	 
+	 if(factno!=null&&factno!=""){
+	     webtypejs.findByFactNo3(factno,function(x){//過濾出差類"TR"20160203
+       if(x.length>0){
+          dwr.util.addOptions("dwr_kytype",x,"webtypeMk","typeName");
+       }
+         
+     });
+	 }
+    
+	}
+	 
+  function checkType(type){
+     dwrFactNo=document.getElementById("dwrFactNo").value;
+     dwremail=document.getElementById("dwr_email").value.toLowerCase(); //登錄人的email要轉化爲小寫,因爲申請人email已全部轉化爲小寫（20151022）;
+     if(dwrFactNo!=""&&type!=""){
+         kyzvisaflowjs.findByType_Dwr(dwrFactNo,type,function(x){
+            if(x==0){//流程不存在
+               alert("該類型審核流程不存在，請重新選定!");
+               document.getElementById("sub").disabled=true;
+               document.getElementById("sub").style.color="red";
+               document.getElementById("dwr_kytype").style.color="red";
+            }else{             
+                kyzvisaflowjs.findVisaSort_dwr(dwrFactNo,type,dwremail,function(y){
+                  if(y==null){
+                     alert("對不起，你不是該類別函文申請人，請重新選定!");
+                     document.getElementById("sub").disabled=true;
+                     document.getElementById("sub").style.color="red";
+                     document.getElementById("dwr_kytype").style.color="red";                    
+                  }else{
+                     document.getElementById("sub").disabled=false;
+                     document.getElementById("sub").style.color="white";
+                     document.getElementById("dwr_kytype").style.color="black";
+                     document.getElementById("hidden_kytype").value=y;                    
+                  }
+                  
+               }); 
+            }                           
+         });
+     }
+  }
+  var i=0;	
+  function addFile(){
+      i++;
+      if(i<15){
+      var divfile=document.getElementById("divfile");
+      var inputfile=document.createElement("input");
+      var aEle=document.createElement("a");
+      inputfile.type="file";
+      inputfile.name="files";
+      inputfile.style.width="150px";
+      inputfile.id="fileid"+i;
+      aEle.innerHTML="刪除";
+      aEle.style.color="red";
+      aEle.href="javascript:void(0)";
+      aEle.onclick=function(){
+         var parentnode=aEle.parentNode;
+         if(parentnode){
+            parentnode.removeChild(aEle);
+            parentnode.removeChild(inputfile);
+            if(i>14){
+               i=14;
+            }
+            i--;
+         }
+      };
+      divfile.appendChild(inputfile);
+      divfile.appendChild(aEle);  
+      }else{
+         alert("附檔不能超過15個!");
+      }               
+  }
+
+  function back(){		
+		loadUrl("/Login/kyzletter_findPageBean3?backIndex=1");
+	}
+ 
+  
+  function gook(){
+	  layer.msg("操作成功",3,1);
+	  loadUrl("kyzletter_findPageBean");
+  }
+  
+  function lookJson(billNo,id,filename){
+	   jq.ajax({
+	      type:"get",
+	      dataType:"json",
+	      url:"kyzfile_findKyzFileJson",
+	      data:"billNo="+billNo+"&id="+id+"&filename="+filename,
+	      success:function(files){
+	         jq("#fileJson").html("");
+	          var item;
+	          var item_url;
+	         jq.each(files,function(i,file){
+	            item_url="javascript:lookJson('"+file.billno+"',"+file.id+",'"+file.filename+"')";
+	            item="<a href='/upload/"+file.billno+"/"+file.filename+"' target='_blank' title='點擊查看'>"+file.filename+            
+	            "</a>"+
+	            "<a href="+item_url+"><img src='images/icon/del_file.png' alt='刪除' title='刪除' style='border:0px'/></a>&nbsp;";
+	            jq("#fileJson").append(item);
+	         }) 
+	      }
+	   })
+	}  
+</script>
+<script type='text/javascript' src='/Login/dwr/interface/kyzcontactletterjs.js'></script>
+<script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>
+<script type='text/javascript' src='/Login/dwr/interface/kyzvisaflowjs.js'></script>
+<script type='text/javascript' src='/Login/dwr/interface/webtypejs.js'></script>
+
+<script type="text/javascript">
+jq(function(){
+	if(jq("#addorupdate").val()!="update"){
+		getKyType();makeBillNo();
+	}  
+});
+</script>	
 </body>
 </html>

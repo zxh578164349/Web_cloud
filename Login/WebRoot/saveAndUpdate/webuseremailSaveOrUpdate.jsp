@@ -24,6 +24,68 @@
 <link rel="stylesheet" type="text/css" href="css/form.css" />
 <link rel="stylesheet" type="text/css" href="css/select_beautiful.css">
 </head>
+
+
+
+<body>
+	<form action="webuseremail_add" method="post" id="form">
+		<table class="table table-condensed">
+		　　<h2>新添備簽人</h2>			      						
+					<tr>
+						<td class="td_show_title">廠別</td>
+						<s:if test="useremail==null">						
+						<td class="td_input">
+						<s:if test="#session.factNo!='tw'">						
+						<input type="text" style="color:blue" name="useremail.id.factNo" value="${factNo}" readonly id="dwr_factno"/>												
+						</s:if>	
+						<s:if test="#session.factNo=='tw'">	
+						<select style="color:blue"
+							name="useremail.id.factNo" datatype="*"
+							onchange="check()" id="dwr_factno">
+								<option value="">請選擇廠別</option>
+								<s:iterator value="#session.facts" id="temp">
+									<option value="${temp[0]}">${temp[1]
+										}&nbsp;(${temp[0]})</option>
+								</s:iterator>
+						</select>
+						</s:if>
+						<span id="error1"></span>
+						</td>																																					
+						</s:if>
+						<s:else>
+						   <td><input type="text" name="useremail.id.factNo" value="<s:property value='useremail.id.factNo'/>" readonly style="color:blue"/>
+						   <span id="error1"></span>
+						   </td>
+						</s:else>
+						<td class="td_show_title">主簽人Email</td>
+				        <td class="td_input"><input type="text" name="useremail.id.email" datatype="e" value="<s:property value='useremail.id.email'/>" id="email" onblur="check()">									
+				</td>			
+				</tr>													
+			<tr>
+				
+				<td class="td_show_title">備簽人Email</td>
+				<td class="td_input"><input type="text" name="useremail.id.emailpassword"
+					datatype="e" value="<s:property value='useremail.id.emailpassword'/>" id="emailPwd" onblur="check()"/>					
+					</td>
+					<td class="td_show_title">主簽人姓名</td>
+					<td class="td_input"><input type="text" name="useremail.name" value="<s:property value='useremail.name'/>"/></td>
+						   
+			</tr>						
+			<tr>
+			    <td class="td_show_title">备签人姓名</td>
+			    <td class="td_input"><input type="text" name="useremail.namePwd" value="<s:property value='useremail.namePwd'/>"  id="emailpwd"/></td>				 					
+					
+			</tr>			
+		</table>
+		<center>
+			<input type="submit" id="sub" value="確定" class="btn btn-primary"/>&nbsp;&nbsp;&nbsp; <input
+				type="reset" id="reset" value="重置" class="btn btn-primary"/>&nbsp;&nbsp;&nbsp;					
+				<input type="button" value="返回" onclick="back()" id="btn_back" class="btn btn-primary"/>		
+
+		</center>
+	</form>
+
+
 <script type="text/javascript">
 	
 	jq(function() {
@@ -93,67 +155,5 @@ jq(function(){
 </script>
 <script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>
 <script type='text/javascript' src='/Login/dwr/interface/webuseremailjs.js'></script>
-<!-- <script type='text/javascript' src='/Login/dwr/engine.js'></script>
-<script type='text/javascript' src='/Login/dwr/util.js'></script> -->
-
-
-<body>
-	<form action="webuseremail_add" method="post" id="form">
-		<table class="table table-condensed">
-		　　<h2>新添備簽人</h2>			      						
-					<tr>
-						<td class="td_show_title">廠別</td>
-						<s:if test="useremail==null">						
-						<td class="td_input">
-						<s:if test="#session.factNo!='tw'">						
-						<input type="text" style="color:blue" name="useremail.id.factNo" value="${factNo}" readonly id="dwr_factno"/>												
-						</s:if>	
-						<s:if test="#session.factNo=='tw'">	
-						<select style="color:blue"
-							name="useremail.id.factNo" datatype="*"
-							onchange="check()" id="dwr_factno">
-								<option value="">請選擇廠別</option>
-								<s:iterator value="#session.facts" id="temp">
-									<option value="${temp[0]}">${temp[1]
-										}&nbsp;(${temp[0]})</option>
-								</s:iterator>
-						</select>
-						</s:if>
-						<span id="error1"></span>
-						</td>																																					
-						</s:if>
-						<s:else>
-						   <td><input type="text" name="useremail.id.factNo" value="<s:property value='useremail.id.factNo'/>" readonly style="color:blue"/>
-						   <span id="error1"></span>
-						   </td>
-						</s:else>
-						<td class="td_show_title">主簽人Email</td>
-				        <td class="td_input"><input type="text" name="useremail.id.email" datatype="e" value="<s:property value='useremail.id.email'/>" id="email" onblur="check()">									
-				</td>			
-				</tr>													
-			<tr>
-				
-				<td class="td_show_title">備簽人Email</td>
-				<td class="td_input"><input type="text" name="useremail.id.emailpassword"
-					datatype="e" value="<s:property value='useremail.id.emailpassword'/>" id="emailPwd" onblur="check()"/>					
-					</td>
-					<td class="td_show_title">主簽人姓名</td>
-					<td class="td_input"><input type="text" name="useremail.name" value="<s:property value='useremail.name'/>"/></td>
-						   
-			</tr>						
-			<tr>
-			    <td class="td_show_title">备签人姓名</td>
-			    <td class="td_input"><input type="text" name="useremail.namePwd" value="<s:property value='useremail.namePwd'/>"  id="emailpwd"/></td>				 					
-					
-			</tr>			
-		</table>
-		<center>
-			<input type="submit" id="sub" value="確定" class="btn btn-primary"/>&nbsp;&nbsp;&nbsp; <input
-				type="reset" id="reset" value="重置" class="btn btn-primary"/>&nbsp;&nbsp;&nbsp;					
-				<input type="button" value="返回" onclick="back()" id="btn_back" class="btn btn-primary"/>		
-
-		</center>
-	</form>
-
 </body>
 </html>

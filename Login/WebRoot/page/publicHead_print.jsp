@@ -18,10 +18,7 @@
 </head>
 <body>
   
-  <form id="public_form" method="post" >
-	
-		
-			<!-- <td><label class="control-label">廠別</label></td> -->
+  <form id="public_form" method="post" >						
 			<table id="tb_search">
 			<tr>
 			<td>
@@ -60,13 +57,5 @@
 		    </tr>
 		</table>
 	</form>
-<script type="text/javascript">
-//var jq=jQuery.noConflict();
-jq(document).keyup(function(event){
-   if(event.keyCode==13){
-      submis();
-   }
-});
-</script>
 </body>
 </html>

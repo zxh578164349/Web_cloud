@@ -64,12 +64,5 @@
 	</table>
 	</form>	
 </body>
-<script type="text/javascript">  
-jq(document).keyup(function(event){
-    if(event.keyCode==13){
-       submis();
-    }
-})   
-</script>
 </html>
 

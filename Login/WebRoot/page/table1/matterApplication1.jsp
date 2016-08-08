@@ -91,13 +91,13 @@
 					</form>
 					   <s:if test="vbm.lastMk==null">
 					     <a href="javascript:findById_form('subform${x.index}','kyz_findById')" onclick=""><img alt="修改" src="images/icon/edit001.png" title="修改" ></a>						  																									
-					     <a href="javascript:void(0)" onclick="isDelete('2subform${x.index}')"><img alt="刪除" src="images/icon/delete001.png" title="刪除" ></a>
+					     <a href="javascript:void(0)" onclick="isDelete('2subform${x.index}','kyz_delete')"><img alt="刪除" src="images/icon/delete001.png" title="刪除" ></a>
 					     <a href="javascript:showDivList('${temp.id.factNo}','${temp.id.billNo}')" ><img alt="函文細項" src="images/icon/list_menu.png" title="函文細項"></a>
 					   </s:if>
 					   <s:else>
 					      <s:if test="#session.loginUser.username=='admin'">
 					         <a href="javascript:findById_form('subform${x.index}','kyz_findById')" onclick=""><img alt="修改" src="images/icon/edit001.png" title="修改" ></a>						  																									
-					         <a href="javascript:void(0)" onclick="isDelete('2subform${x.index}')"><img alt="刪除" src="images/icon/delete001.png" title="刪除" ></a>
+					         <a href="javascript:void(0)" onclick="isDelete('2subform${x.index}','kyz_delete')"><img alt="刪除" src="images/icon/delete001.png" title="刪除" ></a>
 					         <a href="javascript:showDivList('${temp.id.factNo}','${temp.id.billNo}')" ><img alt="函文細項" src="images/icon/list_menu.png" title="函文細項"></a>
 					      </s:if>
 					      <s:else>

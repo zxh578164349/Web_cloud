@@ -26,96 +26,6 @@
 <link rel="stylesheet" type="text/css" href="css/form.css" />
 <link rel="stylesheet" type="text/css" href="css/select_beautiful.css">
 </head>
-<script type="text/javascript">	
-	jq(function() {
-		var demo = jq("#form").Validform({
-			btnSubmit : "#sub",
-			tiptype : 4,
-			showAllError : true,
-			tipSweep:true,
-			datatype : {
-				"9_1" : /^-?\d{1,9}(\.[0-9]{1})?$/,
-				"9_2" : /^-?\d{1,9}(\.[0-9]{1,2})?$/,
-				"9_4" : /^-?\d{1,9}(\.[0-9]{1,4})?$/,
-				"my9_4" : /^-?\d{1,9}(\.[0-9]{4})$/		
-			},
-			ajaxPost:true,
-			callback:function(data){
-				if(data=="0"){
-					layer.msg("提交成功!",3,1);
-					location.href="/Login/kpifact_findPageBean";
-				}
-				if(data=="1"){
-					alert(data.responseText);
-				}
-			}
-		});
-		demo.tipmsg.w["9_1"] = "只能數字且不超過9位數,可保留一位以內小數";
-		demo.tipmsg.w["9_2"] = "只能數字且不超過9位數,可保留兩位小數";
-		demo.tipmsg.w["9_4"] = "只能數字且不超過9位數,可保留四位小數";
-		demo.tipmsg.w["my9_4"]="只能數字且不超過9位數,和精確到四位小數";
-	});
-
-	function getFactArea(mid) {
-		document.getElementById("dwrFactArea").length = 1;
-		webfactjs.findFactCodeByFactNo_show_dw(mid, function(x) {
-			dwr.util.addOptions("dwrFactArea", x);
-		});
-
-	}
-	function back() {		    
-			loadUrl("/Login/kpifact_findPageBean3?backIndex=1");
-	}
-	 function check(){
-       var factno=document.getElementById("dwr_factno").value;
-       var factcode=document.getElementById("dwrFactArea").value;
-       var yymmdd=document.getElementById("dwr_yymmdd").value;
-       if(factno!=""&&factcode!=""&&yymmdd!=""){
-          kpifactjs.findById(factno,factcode,yymmdd,function(x){
-              if(x!=null){
-              alert("數據庫已存在("+factno+factcode+yymmdd+")");
-              document.getElementById("sub").disabled=true;
-              document.getElementById("sub").value="已鎖定";
-              document.getElementById("sub").style.color="red";
-              document.getElementById("error1").innerHTML="<font color='color'>！</font>";
-              document.getElementById("error2").innerHTML="<font color='color'>！</font>";
-              document.getElementById("error3").innerHTML="<font color='color'>！</font>";
-          }else{
-            document.getElementById("sub").disabled=false;
-            document.getElementById("sub").value="確定";
-            document.getElementById("sub").style.color="white";
-            document.getElementById("error1").innerHTML="";
-            document.getElementById("error2").innerHTML="";
-            document.getElementById("error3").innerHTML="";
-          }        
-          });               
-       }                    
-   }
-             /*禁止空格輸入*/
-/* window.onload=function(){            
-            var inputs=document.getElementsByTagName("input"); 
-            for (var i=0;i<inputs.length; i++) {  
-                if(inputs[i].getAttribute("type")=="text") 
-                 inputs[i].onkeyup=function(){ 
-                    this.value=this.value.replace(/(^\s+)|\s+$/g,""); 
-                 }; 
-            }  
-        } */
-jq(function(){
-   var inputs=document.getElementsByTagName("input"); 
-            for (var i=0;i<inputs.length; i++) {  
-                if(inputs[i].getAttribute("type")=="text") 
-                 inputs[i].onkeyup=function(){ 
-                    this.value=this.value.replace(/(^\s+)|\s+$/g,""); 
-                 }; 
-            }
-});         
-</script>
-<script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/webcostjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/kpifactjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/engine.js'></script>
-<script type='text/javascript' src='/Login/dwr/util.js'></script>
 
 
 <body>
@@ -477,5 +387,86 @@ jq(function(){
 		</center>
 	</form>
 
+
+<script type="text/javascript">	
+	jq(function() {
+		var demo = jq("#form").Validform({
+			btnSubmit : "#sub",
+			tiptype : 4,
+			showAllError : true,
+			tipSweep:true,
+			datatype : {
+				"9_1" : /^-?\d{1,9}(\.[0-9]{1})?$/,
+				"9_2" : /^-?\d{1,9}(\.[0-9]{1,2})?$/,
+				"9_4" : /^-?\d{1,9}(\.[0-9]{1,4})?$/,
+				"my9_4" : /^-?\d{1,9}(\.[0-9]{4})$/		
+			},
+			ajaxPost:true,
+			callback:function(data){
+				if(data=="0"){
+					layer.msg("提交成功!",3,1);
+					location.href="/Login/kpifact_findPageBean";
+				}
+				if(data=="1"){
+					alert(data.responseText);
+				}
+			}
+		});
+		demo.tipmsg.w["9_1"] = "只能數字且不超過9位數,可保留一位以內小數";
+		demo.tipmsg.w["9_2"] = "只能數字且不超過9位數,可保留兩位小數";
+		demo.tipmsg.w["9_4"] = "只能數字且不超過9位數,可保留四位小數";
+		demo.tipmsg.w["my9_4"]="只能數字且不超過9位數,和精確到四位小數";
+	});
+
+	function getFactArea(mid) {
+		document.getElementById("dwrFactArea").length = 1;
+		webfactjs.findFactCodeByFactNo_show_dw(mid, function(x) {
+			dwr.util.addOptions("dwrFactArea", x);
+		});
+
+	}
+	function back() {		    
+			loadUrl("/Login/kpifact_findPageBean3?backIndex=1");
+	}
+	 function check(){
+       var factno=document.getElementById("dwr_factno").value;
+       var factcode=document.getElementById("dwrFactArea").value;
+       var yymmdd=document.getElementById("dwr_yymmdd").value;
+       if(factno!=""&&factcode!=""&&yymmdd!=""){
+          kpifactjs.findById(factno,factcode,yymmdd,function(x){
+              if(x!=null){
+              alert("數據庫已存在("+factno+factcode+yymmdd+")");
+              document.getElementById("sub").disabled=true;
+              document.getElementById("sub").value="已鎖定";
+              document.getElementById("sub").style.color="red";
+              document.getElementById("error1").innerHTML="<font color='color'>！</font>";
+              document.getElementById("error2").innerHTML="<font color='color'>！</font>";
+              document.getElementById("error3").innerHTML="<font color='color'>！</font>";
+          }else{
+            document.getElementById("sub").disabled=false;
+            document.getElementById("sub").value="確定";
+            document.getElementById("sub").style.color="white";
+            document.getElementById("error1").innerHTML="";
+            document.getElementById("error2").innerHTML="";
+            document.getElementById("error3").innerHTML="";
+          }        
+          });               
+       }                    
+   }
+             /*禁止空格輸入*/
+
+jq(function(){
+   var inputs=document.getElementsByTagName("input"); 
+            for (var i=0;i<inputs.length; i++) {  
+                if(inputs[i].getAttribute("type")=="text") 
+                 inputs[i].onkeyup=function(){ 
+                    this.value=this.value.replace(/(^\s+)|\s+$/g,""); 
+                 }; 
+            }
+});         
+</script>
+<script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>
+<script type='text/javascript' src='/Login/dwr/interface/webcostjs.js'></script>
+<script type='text/javascript' src='/Login/dwr/interface/kpifactjs.js'></script>
 </body>
 </html>

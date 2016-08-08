@@ -14,17 +14,6 @@
 <link rel="stylesheet" type="text/css" href="css/select_beautiful.css">	
 <LINK href="css/list.css" type="text/css" rel="stylesheet">
 
-<script type="text/javascript">
- 
-
-jq(document).keyup(function(event){
-   if(event.keyCode==13){
-      submis();
-   }
-});
-
-</script>
-
 </head>
 <body>
   <form id="public_form" method="post">

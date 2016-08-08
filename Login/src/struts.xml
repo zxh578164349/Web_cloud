@@ -106,7 +106,7 @@
 		   <result name="beanList">page/kyzsec.jsp</result>
 		   <result name="beanList1">page/table1/kyzsec1.jsp</result>
 		   <result name="findById">saveAndUpdate/kyzsecSaveOrUpdate.jsp</result>
-		   <result name="delete" type="redirectAction">kyzsec_findPageBean</result>
+		   <result name="delete" type="redirectAction">kyzsec_findPageBean3</result>
 		</action>
 		<action name="kyzacct_*" class="kyzacctAction" method="{1}">
 		   <result name="add" type="json">
@@ -114,7 +114,7 @@
 		   </result>
 		   <result name="beanList">page/kyzacct.jsp</result>
 		   <result name="beanList1">page/table1/kyzacct1.jsp</result>
-		   <result name="delete" type="redirectAction">kyzacct_findPageBean</result>
+		   <result name="delete" type="redirectAction">kyzacct_findPageBean3</result>
 		   <result name="findById">saveAndUpdate/kyzacctSaveOrUpdate.jsp</result>
 		</action>
 		<action name="kyzpetty_*" class="kyzpettyAction" method="{1}">

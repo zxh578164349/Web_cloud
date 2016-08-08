@@ -104,7 +104,7 @@
 				   <a href="javascript:findById_form('2subform${x.index}','sumwebydata_findById')">
 				   <img alt="修改" src="images/icon/edit001.png" title="修改" ></a>
 				   </s:if>
-				   <a href="javascript:void(0)" onclick="isDelete('subform${x.index}')"><img alt="刪除" src="images/icon/delete001.png" title="刪除"></a>	
+				   <a href="javascript:isDelete('subform${x.index}','sumwebydata_delete')" ><img alt="刪除" src="images/icon/delete001.png" title="刪除"></a>	
 				   </s:if>
 				</td>															
 			</tr>

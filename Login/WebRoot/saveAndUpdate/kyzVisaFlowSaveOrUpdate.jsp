@@ -25,6 +25,103 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 <link rel="stylesheet" type="text/css" href="css/form.css" />
 <link rel="stylesheet" type="text/css" href="css/select_beautiful.css">
 
+
+
+</head>
+<body  >
+   <div id="pop">
+       <form action="visaflow_add" method="post" id="form">
+       <h2>審核流程</h2>
+		<table class="table table-condensed" >
+		    		    																 			
+			<tbody id="visaflow_body">
+			 	
+			 <s:if test="flows==null">
+			    <tr>
+			     <td><input type="checkbox" id="cboxall" onclick="checkAll()" disabled/></td>
+			     <td>廠別</td>
+			     <td >類別</td>			     
+			     <td >項次</td>
+			     <td >姓名</td>
+			     <td >Email地址</td>
+			     <td >職務</td>
+			 </tr>
+			 
+			    <tr>
+			     <td><input type="checkbox" name="cbox" disabled/></td>
+			     <s:if test="#session.factNo!='tw'">
+			        <td >
+							<select  datatype="*" id="dwrFactNo"
+							onchange="getAddBtn(),checkSame()">
+							    <option value="${factNo}">${factNo}</option>
+							</select>
+							<input type="hidden" name="flows[0].id.factNo" value="${factNo}"/>
+							<span id="error1"></span>														
+					</td>			     
+			  </s:if>
+			  <s:else>
+			     <td ><select 
+							 datatype="*" id="dwrFactNo"
+							onchange="getAddBtn(),checkSame(),getValue('dwrFactNo','dwrFactNo2'),getKyType2(this.value)">
+								<option value="">請選擇廠別</option>
+								<s:iterator value="#session.facts" id="temp">
+									<option value="${temp[0]}">${temp[1]
+										}&nbsp;(${temp[0]})</option>
+								</s:iterator>
+						</select>
+						<input type="hidden" name="flows[0].id.factNo" id="dwrFactNo2"/>
+						<span id="error1"></span></td>
+			  </s:else>   			     
+			     <td>
+			     <select  id="dwr_kytype" onchange="getAddBtn(),checkSame(),getValue('dwr_kytype','dwr_kytype2')" datatype="*">
+			       <option value="">請選擇</option>
+			     </select>
+			     <input type="hidden" name="flows[0].id.visaSort" id="dwr_kytype2"/>
+			     <span id="error2"></span>
+			     </td>
+			     <td ><input type="text" name="flows[0].id.itemNo" value="01" datatype="*"  readonly/></td>
+			     <td >			     			     
+			     <input type="text" name="flows[0].id.purmanNo" value=""  datatype="*"  id="keys0" onkeyup="gog(0)" />
+			     <div style="position:relative">
+			     <div id="tishi0" style="z-index:100;position:absolute;background:yellow;top:0px;left:0px;width:180px;display:none"></div>
+			     </div>
+			     </td>			     			     
+			     <td >			     
+			     <input type="text" name="flows[0].visaSigner" value=""  datatype="e" id="skeys0" onkeyup="getEmail(0);" onblur="getLow(this),checkSame()" />
+			     <div style="position:relative"  >			     
+			     <div id="emaildwr0" style="z-index:100;position:absolute;background:yellow;top:0px;left:0px;width:180px;display:none" ></div>			     
+			     </div>
+			     </td>
+			     <td ><input type="text" name="flows[0].visaRank" value="" datatype="*"/>
+			       <input type="hidden" name="isnull" value="yes"/><!-- 變量isnull -->
+			     </td>		     			     		      		      
+			  </tr>		
+			 </s:if>		
+			         			  			 	  			
+			</tbody>
+			<tfoot>
+			<tr>
+			<td colspan="10">
+			  <s:if test="flows==null">
+			     <input type="button" value="添加行" onclick="addRow()"  id="addbtn" class="btn btn-info" disabled style="color:grey"/>
+			     <input type="button" value="刪除行" onclick="delRow()"  id="delbtn" class="btn btn-info"/>
+			    <!--  <input type="radio" value="Y" name="index" id="per1" checked disabled/>审核人员&nbsp;
+			     <input type="radio" value="N" id="per2" name="index" onclick="clickOne()" disabled/>知会人员 -->
+			  </s:if>			    			    		    
+			</td>
+			</tr>
+			</tfoot>			
+		    
+		</table >
+			<center>			    
+				<input type="submit" id="sub" value="確定" class="btn btn-primary"/>&nbsp;&nbsp;&nbsp; 
+				<input type="reset" id="reset" value="重置"  disabled="false" style="color:red" class="btn btn-primary"/>
+			    <input type="button" value="返回" onclick="back()" id="btn_back" class="btn btn-primary"/>
+			</center>
+							
+	</form>
+	</div>
+	
 <script type="text/javascript">
 
 	jq(function() {
@@ -444,111 +541,10 @@ function back(){
 <script type='text/javascript' src='/Login/dwr/interface/kyzvisaflowjs.js'></script>
 <script type='text/javascript' src='/Login/dwr/interface/userjs.js'></script>
 <script type='text/javascript' src='/Login/dwr/interface/webtypejs.js'></script>
-
-<!-- <script type='text/javascript' src='/Login/dwr/interface/kytypejs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/kyzjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/engine.js'></script>
-<script type='text/javascript' src='/Login/dwr/util.js'></script> -->
-
 <script type="text/javascript">
 jq(function(){
 	getKyType();
 });
-</script>
-
-</head>
-<body  >
-   <div id="pop">
-       <form action="visaflow_add" method="post" id="form">
-       <h2>審核流程</h2>
-		<table class="table table-condensed" >
-		    		    																 			
-			<tbody id="visaflow_body">
-			 	
-			 <s:if test="flows==null">
-			    <tr>
-			     <td><input type="checkbox" id="cboxall" onclick="checkAll()" disabled/></td>
-			     <td>廠別</td>
-			     <td >類別</td>			     
-			     <td >項次</td>
-			     <td >姓名</td>
-			     <td >Email地址</td>
-			     <td >職務</td>
-			 </tr>
-			 
-			    <tr>
-			     <td><input type="checkbox" name="cbox" disabled/></td>
-			     <s:if test="#session.factNo!='tw'">
-			        <td >
-							<select  datatype="*" id="dwrFactNo"
-							onchange="getAddBtn(),checkSame()">
-							    <option value="${factNo}">${factNo}</option>
-							</select>
-							<input type="hidden" name="flows[0].id.factNo" value="${factNo}"/>
-							<span id="error1"></span>														
-					</td>			     
-			  </s:if>
-			  <s:else>
-			     <td ><select 
-							 datatype="*" id="dwrFactNo"
-							onchange="getAddBtn(),checkSame(),getValue('dwrFactNo','dwrFactNo2'),getKyType2(this.value)">
-								<option value="">請選擇廠別</option>
-								<s:iterator value="#session.facts" id="temp">
-									<option value="${temp[0]}">${temp[1]
-										}&nbsp;(${temp[0]})</option>
-								</s:iterator>
-						</select>
-						<input type="hidden" name="flows[0].id.factNo" id="dwrFactNo2"/>
-						<span id="error1"></span></td>
-			  </s:else>   			     
-			     <td>
-			     <select  id="dwr_kytype" onchange="getAddBtn(),checkSame(),getValue('dwr_kytype','dwr_kytype2')" datatype="*">
-			       <option value="">請選擇</option>
-			     </select>
-			     <input type="hidden" name="flows[0].id.visaSort" id="dwr_kytype2"/>
-			     <span id="error2"></span>
-			     </td>
-			     <td ><input type="text" name="flows[0].id.itemNo" value="01" datatype="*"  readonly/></td>
-			     <td >			     			     
-			     <input type="text" name="flows[0].id.purmanNo" value=""  datatype="*"  id="keys0" onkeyup="gog(0)" />
-			     <div style="position:relative">
-			     <div id="tishi0" style="z-index:100;position:absolute;background:yellow;top:0px;left:0px;width:180px;display:none"></div>
-			     </div>
-			     </td>			     			     
-			     <td >			     
-			     <input type="text" name="flows[0].visaSigner" value=""  datatype="e" id="skeys0" onkeyup="getEmail(0);" onblur="getLow(this),checkSame()" />
-			     <div style="position:relative"  >			     
-			     <div id="emaildwr0" style="z-index:100;position:absolute;background:yellow;top:0px;left:0px;width:180px;display:none" ></div>			     
-			     </div>
-			     </td>
-			     <td ><input type="text" name="flows[0].visaRank" value="" datatype="*"/>
-			       <input type="hidden" name="isnull" value="yes"/><!-- 變量isnull -->
-			     </td>		     			     		      		      
-			  </tr>		
-			 </s:if>		
-			         			  			 	  			
-			</tbody>
-			<tfoot>
-			<tr>
-			<td colspan="10">
-			  <s:if test="flows==null">
-			     <input type="button" value="添加行" onclick="addRow()"  id="addbtn" class="btn btn-info" disabled style="color:grey"/>
-			     <input type="button" value="刪除行" onclick="delRow()"  id="delbtn" class="btn btn-info"/>
-			    <!--  <input type="radio" value="Y" name="index" id="per1" checked disabled/>审核人员&nbsp;
-			     <input type="radio" value="N" id="per2" name="index" onclick="clickOne()" disabled/>知会人员 -->
-			  </s:if>			    			    		    
-			</td>
-			</tr>
-			</tfoot>			
-		    
-		</table >
-			<center>			    
-				<input type="submit" id="sub" value="確定" class="btn btn-primary"/>&nbsp;&nbsp;&nbsp; 
-				<input type="reset" id="reset" value="重置"  disabled="false" style="color:red" class="btn btn-primary"/>
-			    <input type="button" value="返回" onclick="back()" id="btn_back" class="btn btn-primary"/>
-			</center>
-							
-	</form>
-	</div>
+</script>	
 </body>
 </html>

@@ -24,6 +24,78 @@
 <link rel="stylesheet" type="text/css" href="css/form.css" />
 <link rel="stylesheet" type="text/css" href="css/select_beautiful.css">
 </head>
+
+
+<body>
+	<form action="webuseremaila_add" method="post" id="form">
+		<table class="table table-condensed">
+		　　<h2>新添知會人</h2>			      						
+					<tr>
+					<s:if test="emailobj==null">
+						<td class="td_show_title">廠別</td>											
+						<td class="td_input">
+						<s:if test="#session.factNo!='tw'">						
+						<input type="text" style="color:blue"  value="${factNo}" readonly id="dwr_factno"/>																		
+						</s:if>	
+						<s:if test="#session.factNo=='tw'">	
+						<select style="color:blue"
+							name="emailobj.id.factNo" datatype="*"
+							onchange="getKyType2(this.value),check()" id="dwr_factno">
+								<option value="">請選擇廠別</option>
+								<s:iterator value="#session.facts" id="temp">
+									<option value="${temp[0]}">${temp[1]
+										}&nbsp;(${temp[0]})</option>
+								</s:iterator>
+						</select>
+						</s:if>
+						<span id="error1"></span>
+						</td>																																																	
+						<td class="td_show_title">函文類別</td>
+				        <td class="td_input">
+				          <select name="emailobj.id.visaSort" id="visaSort" datatype="*" onchange="check()">
+				             <option value="">請選擇</option>
+				          </select>									
+				</td>			
+				</tr>													
+			<tr>
+				<td class="td_show_title">主簽人Email</td>
+				<td class="td_input"><input type="text" name="emailobj.id.email" datatype="e" value="<s:property value='emailobj.id.email'/>" id="email" onblur="getLow(this),check()">									
+				</td>
+				<td class="td_show_title">知會人Email</td>
+				<td class="td_input"><input type="text" name="emailobj.id.emailpassword"
+					datatype="e" value="<s:property value='emailobj.id.emailpassword'/>" id="emailPwd" onblur="getLow(this),check()"/>					
+					</td>											   
+			</tr>
+			</s:if>
+			<s:else>
+			  <tr>
+			   <td class="td_show_title">廠別</td>
+			   <td class="td_input"><input type="text" name="emailobj.id.factNo" value="<s:property value='emailobj.id.factNo'/>" readonly style="color:blue"/></td>			
+			   <td class="td_show_title">函文類別</td>
+			   <td class="td_input"><input type="text" name="emailobj.id.visaSort" value="<s:property value='emailobj.id.visaSort'/>" readonly style="color:blue"/></td>
+			  </tr>
+			  <tr> 
+			   <td class="td_show_title">主簽人Email</td>
+			   <td class="td_input"><input type="text" name="emailobj.id.email" value="<s:property value='emailobj.id.email'/>" readonly style="color:blue"/></td>
+			   <td class="td_show_title">知會人Email</td>
+			   <td class="td_input"><input type="text" name="emailobj.id.emailpassword" value="<s:property value='emailobj.id.emailpassword'/>" readonly style="color:blue"/></td>	
+			  </tr>
+			</s:else>						
+			<tr>
+			<td class="td_show_title">主簽人姓名</td>
+					<td class="td_input"><input type="text" name="emailobj.name" value="<s:property value='emailobj.name'/>"/></td>
+			    <td class="td_show_title">知會人姓名</td>
+			    <td class="td_input"><input type="text" name="emailobj.namePwd" value="<s:property value='emailobj.namePwd'/>"  id="emailpwd"/></td>				 					
+					
+			</tr>			
+		</table>
+		<center>
+			<input type="submit" id="sub" value="確定" class="btn btn-primary"/>&nbsp;&nbsp;&nbsp; <input
+				type="reset" id="reset" value="重置" class="btn btn-primary"/>&nbsp;&nbsp;&nbsp;										
+				<input type="button" value="返回" onclick="back()" id="btn_back" class="btn btn-primary"/>			
+		</center>
+	</form>
+
 <script type="text/javascript">
 
 	jq(function() {
@@ -134,8 +206,6 @@
 <script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>
 <script type='text/javascript' src='/Login/dwr/interface/webtypejs.js'></script>
 <script type='text/javascript' src='/Login/dwr/interface/webuseremailajs.js'></script>
-<!-- <script type='text/javascript' src='/Login/dwr/engine.js'></script>
-<script type='text/javascript' src='/Login/dwr/util.js'></script> -->
 <script type="text/javascript">
 jq(function(){
 	var inputs=document.getElementsByTagName("input"); 
@@ -149,76 +219,5 @@ jq(function(){
 	
 });
 </script>
-
-<body>
-	<form action="webuseremaila_add" method="post" id="form">
-		<table class="table table-condensed">
-		　　<h2>新添知會人</h2>			      						
-					<tr>
-					<s:if test="emailobj==null">
-						<td class="td_show_title">廠別</td>											
-						<td class="td_input">
-						<s:if test="#session.factNo!='tw'">						
-						<input type="text" style="color:blue"  value="${factNo}" readonly id="dwr_factno"/>																		
-						</s:if>	
-						<s:if test="#session.factNo=='tw'">	
-						<select style="color:blue"
-							name="emailobj.id.factNo" datatype="*"
-							onchange="getKyType2(this.value),check()" id="dwr_factno">
-								<option value="">請選擇廠別</option>
-								<s:iterator value="#session.facts" id="temp">
-									<option value="${temp[0]}">${temp[1]
-										}&nbsp;(${temp[0]})</option>
-								</s:iterator>
-						</select>
-						</s:if>
-						<span id="error1"></span>
-						</td>																																																	
-						<td class="td_show_title">函文類別</td>
-				        <td class="td_input">
-				          <select name="emailobj.id.visaSort" id="visaSort" datatype="*" onchange="check()">
-				             <option value="">請選擇</option>
-				          </select>									
-				</td>			
-				</tr>													
-			<tr>
-				<td class="td_show_title">主簽人Email</td>
-				<td class="td_input"><input type="text" name="emailobj.id.email" datatype="e" value="<s:property value='emailobj.id.email'/>" id="email" onblur="getLow(this),check()">									
-				</td>
-				<td class="td_show_title">知會人Email</td>
-				<td class="td_input"><input type="text" name="emailobj.id.emailpassword"
-					datatype="e" value="<s:property value='emailobj.id.emailpassword'/>" id="emailPwd" onblur="getLow(this),check()"/>					
-					</td>											   
-			</tr>
-			</s:if>
-			<s:else>
-			  <tr>
-			   <td class="td_show_title">廠別</td>
-			   <td class="td_input"><input type="text" name="emailobj.id.factNo" value="<s:property value='emailobj.id.factNo'/>" readonly style="color:blue"/></td>			
-			   <td class="td_show_title">函文類別</td>
-			   <td class="td_input"><input type="text" name="emailobj.id.visaSort" value="<s:property value='emailobj.id.visaSort'/>" readonly style="color:blue"/></td>
-			  </tr>
-			  <tr> 
-			   <td class="td_show_title">主簽人Email</td>
-			   <td class="td_input"><input type="text" name="emailobj.id.email" value="<s:property value='emailobj.id.email'/>" readonly style="color:blue"/></td>
-			   <td class="td_show_title">知會人Email</td>
-			   <td class="td_input"><input type="text" name="emailobj.id.emailpassword" value="<s:property value='emailobj.id.emailpassword'/>" readonly style="color:blue"/></td>	
-			  </tr>
-			</s:else>						
-			<tr>
-			<td class="td_show_title">主簽人姓名</td>
-					<td class="td_input"><input type="text" name="emailobj.name" value="<s:property value='emailobj.name'/>"/></td>
-			    <td class="td_show_title">知會人姓名</td>
-			    <td class="td_input"><input type="text" name="emailobj.namePwd" value="<s:property value='emailobj.namePwd'/>"  id="emailpwd"/></td>				 					
-					
-			</tr>			
-		</table>
-		<center>
-			<input type="submit" id="sub" value="確定" class="btn btn-primary"/>&nbsp;&nbsp;&nbsp; <input
-				type="reset" id="reset" value="重置" class="btn btn-primary"/>&nbsp;&nbsp;&nbsp;										
-				<input type="button" value="返回" onclick="back()" id="btn_back" class="btn btn-primary"/>			
-		</center>
-	</form>
-
 </body>
 </html>

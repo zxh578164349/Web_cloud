@@ -18,6 +18,17 @@
 <meta http-equiv="description" content="This is my page">	
 </head>
 
+
+
+<body>
+
+	<jsp:include page="publicHead_kyzsec.jsp" flush="true" />
+	<hr />
+		
+	<div id="bodyid">
+		<jsp:include page="table1/kyzsec1.jsp" />
+	</div>
+
 <script>
 
 	function pages(page) {
@@ -53,7 +64,7 @@
 		});
 	}
 	
-function showDiv(){
+/*function showDiv(){
     jq.layer({
     type: 1,   //0-4的选择,
     title: '費用組別',
@@ -72,43 +83,28 @@ function showDiv(){
     }
             
 });
-    }	
-</script>
+    }
 
-<script type="text/javascript">
-	//你确定要删除吗？
-	function isDelete(mid) {
-		var flag=confirm("確定要刪除嗎?");		
-			if (flag == true) {
-				document.getElementById(mid).submit();
-				jq({
-					type:"POST",
-					dataType:"html",
-					data:$("#"+mid).serialize(),
-					url:"kyzsec_delete",
-					success:function(data){
-						jq("#bodyid").html(data);
-					},
-					error:function(error){
-						jq("#bodyid").html(error.responseText);
-					}
-				});
-			}
-		
-	}
-</script>
-
-
-<body>
-
-	<jsp:include page="publicHead_kyzsec.jsp" flush="true" />
-	<hr />
-		
-	<div id="bodyid">
-		<jsp:include page="table1/kyzsec1.jsp" />
-	</div>
-
+function isDelete(mid) {
+	var flag=confirm("確定要刪除嗎?");		
+		if (flag == true) {
+			document.getElementById(mid).submit();
+			jq({
+				type:"POST",
+				dataType:"html",
+				data:$("#"+mid).serialize(),
+				url:"kyzsec_delete",
+				success:function(data){
+					jq("#bodyid").html(data);
+				},
+				error:function(error){
+					jq("#bodyid").html(error.responseText);
+				}
+			});
+		}
 	
+}*/
+</script>	
 
 
 </body>

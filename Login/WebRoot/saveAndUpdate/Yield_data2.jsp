@@ -23,14 +23,6 @@
 <link rel="stylesheet" type="text/css" href="css/form.css" />
 </head>
 <script type="text/javascript">
-var jq=jQuery.noConflict();
-var loadi;
-jq(document).ajaxStart(function(){
-	loadi=layer.load("正在提交幷更新盤點數據,請稍等...");
-});
-jq(document).ajaxStop(function(){
-	layer.close(loadi);
-});
 	jq(function() {
 		var demo = jq("#form").Validform({
 			btnSubmit : "#sub",
@@ -73,7 +65,7 @@ jq(document).ajaxStop(function(){
 	} */
 
 	function back() {		
-			window.location.href = "/Login/ydata_findPageBean3?backIndex=1";		
+		loadUrl("/Login/ydata_findPageBean3?backIndex=1");		
 	}
 
 	function holiday() {
@@ -229,16 +221,12 @@ jq(document).ajaxStop(function(){
 
 </script>
 <script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>
-<!-- <script type='text/javascript' src='/Login/dwr/engine.js'></script>
-<script type='text/javascript' src='/Login/dwr/util.js'></script> -->
 
 <body onload="init()">
 
 	<form action="ydata_addData" method="post" id="form">
-
-		<table width="100%" align="center" cellspacing="0" cellpadding="0"
-			id="table1">
-             <caption>產量資料</caption>
+        <h2>產量資料</h2>
+		<table class="table table-condensed" id="table1">
 			<s:if test="ydata==null">
 
 				<s:if test="#session.factNo!='tw'">
@@ -451,16 +439,10 @@ jq(document).ajaxStop(function(){
 		</table>
 
 			
-		<center>
-			<input type="submit" id="sub" value="確定"
-				onmouseover="this.style.backgroundPosition='left -40px'"
-				onmouseout="this.style.backgroundPosition='left top'" />&nbsp;&nbsp;&nbsp;
-			<input type="reset" id="reset" value="重置"
-				onmouseover="this.style.backgroundPosition='left -40px'"
-				onmouseout="this.style.backgroundPosition='left top'" />&nbsp;&nbsp;&nbsp;						
-				<input type="button" value="返回" onclick="back()" id="btn_back"
-					onmouseover="this.style.backgroundPosition='left -40px'"
-					onmouseout="this.style.backgroundPosition='left top'" />
+		<center>								
+			<input type="submit" id="sub" value="確定" class="btn btn-primary"/>&nbsp;&nbsp;&nbsp;				 
+			<input type="reset" id="reset" value="重置" class="btn btn-primary"/>&nbsp;&nbsp;&nbsp;				 						
+			<input type="button" value="返回" onclick="back()" id="btn_back" class="btn btn-primary"/>		
 		</center>
 	</form>
 

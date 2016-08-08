@@ -78,7 +78,7 @@
 						<input type="hidden" value="<s:property value='id.factCode'/>" name="factCode" />							
 						<input type="hidden" value="<s:date name='id.yymmdd' format='yyyyMMdd'/>" name="yymm" />							
 					</form> 					
-					<a href="javascript:void(0)" onclick="isDelete('2subform${x.index}')"><img alt="刪除" src="images/icon/delete001.png" title="刪除" ></a>
+					<a href="javascript:isDelete('2subform${x.index}','webcashout_delete')" ><img alt="刪除" src="images/icon/delete001.png" title="刪除" ></a>
 				</td>
 				</s:if>
 			</tr>

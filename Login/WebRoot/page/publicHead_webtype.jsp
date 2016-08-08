@@ -11,9 +11,6 @@
 <meta http-equiv="expires" content="0">
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
-<!--
-	<link rel="stylesheet" type="text/css" href="styles.css">
-	-->
 <link rel="stylesheet" type="text/css" href="css/select_beautiful.css">	
 <LINK href="css/list.css" type="text/css" rel="stylesheet">
 
@@ -42,14 +39,6 @@
 			 <input value="搜索" type="button" class="btn btn-primary" onclick="javascript:submis()" />		
 			</td>
 		</tr>
-	</table>
-<script type="text/javascript">
-jq(document).keyup(function(event){
-   if(event.keyCode==13){
-      submis();
-   }
-});
-
-</script>	
+	</table>	
 </body>
 </html>

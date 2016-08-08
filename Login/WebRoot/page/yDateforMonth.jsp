@@ -18,6 +18,21 @@
 <meta http-equiv="description" content="This is my page">
 
 </head>
+
+
+<body>
+	<jsp:include page="publicHead.jsp" flush="true" />
+	<hr />
+	
+		<span style="float:right"><input type="button"
+		onclick="findPageBean('ydata_findPageBean')" 
+		class="btn btn-link btn-sm" value="按日詳細查看"/>
+	</span>
+
+	<div id="bodyid">
+		<jsp:include page="table1/yDateforMonth1.jsp" />
+	</div>
+	
 <script>	
 	function pages(page) {
 		jq.ajax({
@@ -52,19 +67,6 @@
 		});
 	}
 
-</script>
-
-<body>
-	<jsp:include page="publicHead.jsp" flush="true" />
-	<hr />
-	
-		<span style="float:right"><input type="button"
-		onclick="findPageBean('ydata_findPageBean')" 
-		class="btn btn-link btn-sm" value="按日詳細查看"/>
-	</span>
-
-	<div id="bodyid">
-		<jsp:include page="table1/yDateforMonth1.jsp" />
-	</div>
+</script>	
 </body>
 </html>

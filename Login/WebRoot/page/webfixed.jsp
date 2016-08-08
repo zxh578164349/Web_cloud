@@ -19,6 +19,17 @@
 
 	
 </head>
+
+
+<body>
+	<jsp:include page="publicHead_webfix.jsp" />
+	<hr/>
+	
+	<div id="bodyid">
+		<jsp:include page="table1/webfixed1.jsp" />
+	</div>	
+	
+	
 <script>
 	
 	function pages(page) {	    		
@@ -58,8 +69,7 @@
 	}
 	//你确定要删除吗？
 	function isDelete(mid) {
-		 var flag=confirm("確定要刪除嗎?");
-		
+		 var flag=confirm("確定要刪除嗎?");		
 			if (flag == true) {
 				//document.getElementById("mydiv").style.display = "block";
 				//location.href = "fix_delete?id=" + mid;
@@ -86,14 +96,6 @@ function print(public_form){
 	public_form.attr("target","_blank");
 	public_form.submit();
 }
-</script>
-
-<body>
-	<jsp:include page="publicHead_webfix.jsp" />
-	<hr/>
-	
-	<div id="bodyid">
-		<jsp:include page="table1/webfixed1.jsp" />
-	</div>		
+</script>		
 </body>
 </html>

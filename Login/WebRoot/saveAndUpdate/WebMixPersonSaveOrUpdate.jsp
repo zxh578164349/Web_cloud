@@ -24,82 +24,7 @@
 <link href="css/validate.css" rel="stylesheet" type="text/css" />
 <link rel="stylesheet" type="text/css" href="css/form.css" />
 <link rel="stylesheet" type="text/css" href="css/select_beautiful.css"></script>
-<script type="text/javascript">
 
-	jq(function() {
-		var demo = jq("#form").Validform({
-			btnSubmit : "#sub",
-			tiptype : 4,
-			showAllError : true,
-			tipSweep : true,
-			datatype : {
-				"*0-6" : /^\d{1,12}(\.[0-9]{1,3})?$/
-			},
-			ajaxPost:true,
-			callback:function(data){
-				if(data=="0"){
-					layer.msg("提交成功!",3,1);
-					//location.href="/Login/webmixPerson_getList";
-					loadUrl("/Login/webmixPerson_getList");
-				}else{
-					//alert(data.responseText);
-					layer.msg("提交失敗",3,3);
-				}				
-			}
-		});
-		demo.tipmsg.w["*0-6"] = "只能數字且不超過12位數,可保留三位以內小數";
-	});
-
-	function getFactArea(mid) {
-		document.getElementById("dwrFactArea").length = 1;
-		webfactjs.findFactCodeByFactNo_show_dw(mid, function(x) {
-			dwr.util.addOptions("dwrFactArea", x);
-		});
-	}
-	
-	   function check(){
-       var factno=document.getElementById("dwr_factno").value;
-       var factcode=document.getElementById("dwrFactArea").value;
-       var yymmdd=document.getElementById("dwr_yymmdd").value;
-       if(factno!=""&&factcode!=""&&yymmdd!=""){
-          webmixpersonjs.check(factno,factcode,yymmdd,function(x){
-              if(x==true){
-              alert("數據庫已存在("+factno+factcode+yymmdd+")");
-              document.getElementById("sub").disabled=true;
-              document.getElementById("sub").value="已鎖定";
-              document.getElementById("sub").style.color="red";
-              document.getElementById("error1").innerHTML="<font color='color'>！</font>";
-              document.getElementById("error2").innerHTML="<font color='color'>！</font>";
-              document.getElementById("error3").innerHTML="<font color='color'>！</font>";
-          }else{
-            document.getElementById("sub").disabled=false;
-            document.getElementById("sub").value="確定";
-            document.getElementById("sub").style.color="white";
-            document.getElementById("error1").innerHTML="";
-            document.getElementById("error2").innerHTML="";
-            document.getElementById("error3").innerHTML="";
-          }        
-          });               
-       }                    
-   }
-/*禁止空格輸入*/
-window.onload=function(){            
-            var inputs=document.getElementsByTagName("input"); 
-            for (var i=0;i<inputs.length; i++) {  
-                if(inputs[i].getAttribute("type")=="text") 
-                 inputs[i].onkeyup=function(){ 
-                    this.value=this.value.replace(/(^\s+)|\s+$/g,""); 
-                 }; 
-            }  
-        } 
-function back(){
-	loadUrl("/Login/webmixPerson_getList3?backIndex=1");
-}
-</script>
-<script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/webmixpersonjs.js'></script>
-<!-- <script type='text/javascript' src='/Login/dwr/engine.js'></script>
-<script type='text/javascript' src='/Login/dwr/util.js'></script> -->
 </head>
 
 <body>
@@ -261,5 +186,80 @@ function back(){
 
 		</center>
 	</form>
+	
+<script type="text/javascript">
+
+	jq(function() {
+		var demo = jq("#form").Validform({
+			btnSubmit : "#sub",
+			tiptype : 4,
+			showAllError : true,
+			tipSweep : true,
+			datatype : {
+				"*0-6" : /^\d{1,12}(\.[0-9]{1,3})?$/
+			},
+			ajaxPost:true,
+			callback:function(data){
+				if(data=="0"){
+					layer.msg("提交成功!",3,1);
+					//location.href="/Login/webmixPerson_getList";
+					loadUrl("/Login/webmixPerson_getList");
+				}else{
+					//alert(data.responseText);
+					layer.msg("提交失敗",3,3);
+				}				
+			}
+		});
+		demo.tipmsg.w["*0-6"] = "只能數字且不超過12位數,可保留三位以內小數";
+	});
+
+	function getFactArea(mid) {
+		document.getElementById("dwrFactArea").length = 1;
+		webfactjs.findFactCodeByFactNo_show_dw(mid, function(x) {
+			dwr.util.addOptions("dwrFactArea", x);
+		});
+	}
+	
+	   function check(){
+       var factno=document.getElementById("dwr_factno").value;
+       var factcode=document.getElementById("dwrFactArea").value;
+       var yymmdd=document.getElementById("dwr_yymmdd").value;
+       if(factno!=""&&factcode!=""&&yymmdd!=""){
+          webmixpersonjs.check(factno,factcode,yymmdd,function(x){
+              if(x==true){
+              alert("數據庫已存在("+factno+factcode+yymmdd+")");
+              document.getElementById("sub").disabled=true;
+              document.getElementById("sub").value="已鎖定";
+              document.getElementById("sub").style.color="red";
+              document.getElementById("error1").innerHTML="<font color='color'>！</font>";
+              document.getElementById("error2").innerHTML="<font color='color'>！</font>";
+              document.getElementById("error3").innerHTML="<font color='color'>！</font>";
+          }else{
+            document.getElementById("sub").disabled=false;
+            document.getElementById("sub").value="確定";
+            document.getElementById("sub").style.color="white";
+            document.getElementById("error1").innerHTML="";
+            document.getElementById("error2").innerHTML="";
+            document.getElementById("error3").innerHTML="";
+          }        
+          });               
+       }                    
+   }
+/*禁止空格輸入*/
+window.onload=function(){            
+            var inputs=document.getElementsByTagName("input"); 
+            for (var i=0;i<inputs.length; i++) {  
+                if(inputs[i].getAttribute("type")=="text") 
+                 inputs[i].onkeyup=function(){ 
+                    this.value=this.value.replace(/(^\s+)|\s+$/g,""); 
+                 }; 
+            }  
+        } 
+function back(){
+	loadUrl("/Login/webmixPerson_getList3?backIndex=1");
+}
+</script>
+<script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>
+<script type='text/javascript' src='/Login/dwr/interface/webmixpersonjs.js'></script>	
 </body>
 </html>

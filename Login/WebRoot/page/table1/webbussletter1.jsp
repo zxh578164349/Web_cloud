@@ -82,12 +82,12 @@
 					</form>
 					   <s:if test="vbm.lastMk==null">
 					      <a href="javascript:findById_form('subform${x.index}','bussletter_findById')" onclick=""><img alt="修改" src="images/icon/edit001.png" title="修改" ></a>						  																									
-					      <a href="javascript:void(0)" onclick="isDelete('2subform${x.index}')"><img alt="刪除" src="images/icon/delete001.png" title="刪除" ></a>
+					      <a href="javascript:isDelete('2subform${x.index}','bussletter_delete')" ><img alt="刪除" src="images/icon/delete001.png" title="刪除" ></a>
 					   </s:if>
 					   <s:else>					      
 					      <s:if test="#session.loginUser.username=='admin'">
 					          <a href="javascript:findById_form('subform${x.index}','bussletter_findById')" onclick=""><img alt="修改" src="images/icon/edit001.png" title="修改" ></a>	
-					          <a href="javascript:void(0)" onclick="isDelete('2subform${x.index}')"><img alt="刪除" src="images/icon/delete001.png" title="刪除" ></a>
+					          <a href="javascript:isDelete('2subform${x.index}','bussletter_delete')" ><img alt="刪除" src="images/icon/delete001.png" title="刪除" ></a>
 					      </s:if>
 					      <s:else>
 					           <a ><img alt="修改" src="images/icon/edit001_1.png" title="修改" ></a>

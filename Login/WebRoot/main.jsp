@@ -131,10 +131,8 @@
 	<script type="text/javascript" src="page/jquerys/layer/layer.min.js"></script>
 	<script type="text/javascript" src="jquery/DatePicker/WdatePicker.js"></script>
 	<script type="text/javascript" src="jquery/Validform_v5.3.2_min.js"></script>
-	<script>
-		window.jQuery
-				|| document
-						.write('<script src="jquery/jquery-form.js"><\/script>');
+	<script type="text/javascript" src="jquery/jquery-form.js"></script>
+	<!-- <script>window.jQuery|| document.write('<script src="jquery/jquery-form.js"><\/script>'); -->
 	</script>
 	<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
 	<script
@@ -265,7 +263,52 @@
 				}
 			});
 		}
+		
+		
+		
+		
+		//你确定要删除吗？
+		function isDelete(mid,url) {
+		    var flag=confirm("確定要刪除嗎?");		
+				if (flag == true) {					
+					jq.ajax({
+						type:"POST",
+						dataType:"html",
+						data:jq("#"+mid).serialize(),
+						url:url,
+						success:function(data){
+							jq("#bodyid").html(data);
+						},
+						error:function(data){
+							jq("#bodyid").html(data.responseText);
+						}
+					});
+				}	
+		}
+				
+		function hideBills2(){
+		   jq("#divBills2").hide(300);
+		}
+		function goHere(){
+			
+			loadUrl("/Login/vbm_findPageBean");
+		}
+		function findKyVisaBills_Int(){
+		   kyvisabillsjs.findKyVisaBills_Int(function(x){
+			   var temp;
+		       if(x>0){               
+		         temp="<a href='javascript:goHere()'>你好，目前有"+x+"封函文需要審核!(可點擊進入)</a>"         
+		       }else{         
+		          temp="<b>你好，目前暂无函文需要審核!</b>";        
+		       }
+		       jq("#td_content_right").append(temp);
+		       jq("#divBills2").show();
+		   })
+		}
+		setTimeout("findKyVisaBills_Int()",1000);
+		setTimeout("hideBills2()",15000); 			
 	</script>
+	<script type='text/javascript' src='/Login/dwr/interface/kyvisabillsjs.js'></script>
 </body>
 
 </html>

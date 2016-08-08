@@ -18,6 +18,17 @@
 <meta http-equiv="description" content="This is my page">
 	
 </head>
+
+
+<body>
+	<jsp:include page="publicHead.jsp" flush="true" />
+	<hr />
+	
+
+	<div id="bodyid">
+		<jsp:include page="table1/webcashout1.jsp" />
+	</div>
+	
 <script>
 	
 	function pages(page) {	
@@ -53,7 +64,7 @@
 		});
 	}
 	//你确定要删除吗？
-	function isDelete(mid) {
+	/*function isDelete(mid) {
 		 var flag=confirm("確定要刪除嗎?");
 		
 			if (flag == true) {
@@ -72,16 +83,7 @@
 				});
 			}
 		
-	}
-</script>
-
-<body>
-	<jsp:include page="publicHead.jsp" flush="true" />
-	<hr />
-	
-
-	<div id="bodyid">
-		<jsp:include page="table1/webcashout1.jsp" />
-	</div>
+	}*/
+</script>	
 </body>
 </html>

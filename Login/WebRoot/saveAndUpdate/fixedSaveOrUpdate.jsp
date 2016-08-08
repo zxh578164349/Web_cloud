@@ -22,131 +22,7 @@
 
 <link rel="stylesheet" type="text/css" href="css/form.css" />
 <link rel="stylesheet" type="text/css" href="css/select_beautiful.css">
-<script type="text/javascript">
 
-	jq(function() {
-		var demo = jq("#form").Validform({
-			btnSubmit : "#sub",
-			tiptype : 4,
-			showAllError : true,
-			ignoreHidden : true,
-			tipSweep : true,
-			ajaxPost:true,
-			callback : function(data) {
-				if(data=="0"){
-					layer.msg("提交成功!",3,1);
-					//location.href="/Login/fix_findPageBean";
-					loadUrl("/Login/fix_findPageBean");
-				}
-				if(data=="1"){
-					//alert(data.responseText);
-					layer.msg("提交失敗",3,3);
-				}
-			},
-			datatype : {
-				"*0-8" : /^\d{0,8}(\.[0-9]{1,2})?$/,
-				"*1-6" : /^[1-9]{1}\d{0,8}(\.[0-9]{1,3})?$/,
-				"*0-7" : /^\d{0,7}(\.[0-9]{1})?$/,
-				"test" : /^\w{0,10}$/
-			}
-		});
-		demo.tipmsg.w["*0-8"] = "只能數字且不超過8位數,可保留兩位以內小數";
-		demo.tipmsg.w["*1-6"] = "不為0的數字且不超過9位數,可保留三位以內小數";
-		demo.tipmsg.w["*0-7"] = "只能數字且不超過7位數,可保留一位以內小數";
-		demo.tipmsg.w["test"] = "字符串";
-
-	});
-
-	function back() {			
-			loadUrl("/Login/fix_findPageBean3?backIndex=1");
-	}
-
-	function getFactArea(mid) {
-		document.getElementById("dwrFactArea").length = 1;
-		webfactjs.findFactCodeByFactNo_show_dw(mid, function(x) {
-			//alert(mid);
-			dwr.util.addOptions("dwrFactArea", x);
-		});
-
-	}
-	function getSub(mid) {
-		document.getElementById("dwrSub").length = 1;
-		if (document.getElementById("dwrMajor").value != "") {
-			websubjs.findById(mid, function(x) {
-				dwr.util.addOptions("dwrSub", x, "subid", "subname");
-			});
-		}
-	}
-	function getMajor() {
-		webmajorjs.findAll(function(x) {
-			dwr.util.addOptions("dwrMajor", x, "majorid", "majorname");
-		});
-	}
-
-	function getSub_id(mid) {
-		document.getElementById("dwrSub_id").length = 1;
-		if (document.getElementById("dwrMajor").value != "") {
-			websubjs.findById(mid, function(x) {
-				dwr.util.addOptions("dwrSub", x, "subid", "subid");
-			});
-
-		}
-	}
-
-	function getSubName(id) {
-		websubjs.findById2(id, function(x) {
-			dwr.util.setValue("subname_hidden", x);
-		});
-		dwr.util.setValue("subid", id);
-	}
-	function getMajorName(id) {
-		webmajorjs.findById(id, function(x) {
-			dwr.util.setValue("majorname_hidden", x);
-		});
-		dwr.util.setValue("majorid", id);
-	}
-
-	function makeSsetscoding() {
-		var factno = document.getElementById("dwrFactNo").value;
-		var majorid = document.getElementById("dwrMajor").value;
-		var yymm = document.getElementById("addtime").value;
-		var addscode = document.getElementById("scoding");
-		if (factno != "" && majorid != "" && yymm != "" && addscode != null) {
-			webfixjs.makeSssetscoding(factno, majorid, yymm, function(x) {
-				dwr.util.setValue("scoding", x);
-
-			});
-			//dwr.util.setValue("scoding2",addscode.value);
-
-		}
-	}
-
-	function goFix() {
-		document.getElementById("fid2").value = document.getElementById("fid1").value;
-	}
-
-	function goFix2() {
-		if (document.getElementById("goclear").checked == true) {
-			document.getElementById("fid1").disabled = "";
-			document.getElementById("fid1").value = "";
-			document.getElementById("fid1").focus();
-		} else {
-			document.getElementById("fid1").disabled = "disabled";
-		}
-	}
-	
-</script>
-<script type='text/javascript' src='/Login/dwr/interface/webmajorjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/websubjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/webfixjs.js'></script>
-<!-- <script type='text/javascript' src='/Login/dwr/engine.js'></script>
-<script type='text/javascript' src='/Login/dwr/util.js'></script> -->
-<script type="text/javascript">
-jq(function(){
-	getMajor();
-});
-</script>
 </head>
 
 <body >
@@ -506,10 +382,128 @@ jq(function(){
 	</div>
 
 
-	<%--<div id="mydiv">
-		<p>
-			<img alt="" src="images/loading004.gif"><br> Loading....
-		</p>
-	</div>--%>
+<script type="text/javascript">
+
+	jq(function() {
+		var demo = jq("#form").Validform({
+			btnSubmit : "#sub",
+			tiptype : 4,
+			showAllError : true,
+			ignoreHidden : true,
+			tipSweep : true,
+			ajaxPost:true,
+			callback : function(data) {
+				if(data=="0"){
+					layer.msg("提交成功!",3,1);
+					//location.href="/Login/fix_findPageBean";
+					loadUrl("/Login/fix_findPageBean");
+				}
+				if(data=="1"){
+					//alert(data.responseText);
+					layer.msg("提交失敗",3,3);
+				}
+			},
+			datatype : {
+				"*0-8" : /^\d{0,8}(\.[0-9]{1,2})?$/,
+				"*1-6" : /^[1-9]{1}\d{0,8}(\.[0-9]{1,3})?$/,
+				"*0-7" : /^\d{0,7}(\.[0-9]{1})?$/,
+				"test" : /^\w{0,10}$/
+			}
+		});
+		demo.tipmsg.w["*0-8"] = "只能數字且不超過8位數,可保留兩位以內小數";
+		demo.tipmsg.w["*1-6"] = "不為0的數字且不超過9位數,可保留三位以內小數";
+		demo.tipmsg.w["*0-7"] = "只能數字且不超過7位數,可保留一位以內小數";
+		demo.tipmsg.w["test"] = "字符串";
+
+	});
+
+	function back() {			
+			loadUrl("/Login/fix_findPageBean3?backIndex=1");
+	}
+
+	function getFactArea(mid) {
+		document.getElementById("dwrFactArea").length = 1;
+		webfactjs.findFactCodeByFactNo_show_dw(mid, function(x) {
+			//alert(mid);
+			dwr.util.addOptions("dwrFactArea", x);
+		});
+
+	}
+	function getSub(mid) {
+		document.getElementById("dwrSub").length = 1;
+		if (document.getElementById("dwrMajor").value != "") {
+			websubjs.findById(mid, function(x) {
+				dwr.util.addOptions("dwrSub", x, "subid", "subname");
+			});
+		}
+	}
+	function getMajor() {
+		webmajorjs.findAll(function(x) {
+			dwr.util.addOptions("dwrMajor", x, "majorid", "majorname");
+		});
+	}
+
+	function getSub_id(mid) {
+		document.getElementById("dwrSub_id").length = 1;
+		if (document.getElementById("dwrMajor").value != "") {
+			websubjs.findById(mid, function(x) {
+				dwr.util.addOptions("dwrSub", x, "subid", "subid");
+			});
+
+		}
+	}
+
+	function getSubName(id) {
+		websubjs.findById2(id, function(x) {
+			dwr.util.setValue("subname_hidden", x);
+		});
+		dwr.util.setValue("subid", id);
+	}
+	function getMajorName(id) {
+		webmajorjs.findById(id, function(x) {
+			dwr.util.setValue("majorname_hidden", x);
+		});
+		dwr.util.setValue("majorid", id);
+	}
+
+	function makeSsetscoding() {
+		var factno = document.getElementById("dwrFactNo").value;
+		var majorid = document.getElementById("dwrMajor").value;
+		var yymm = document.getElementById("addtime").value;
+		var addscode = document.getElementById("scoding");
+		if (factno != "" && majorid != "" && yymm != "" && addscode != null) {
+			webfixjs.makeSssetscoding(factno, majorid, yymm, function(x) {
+				dwr.util.setValue("scoding", x);
+
+			});
+			//dwr.util.setValue("scoding2",addscode.value);
+
+		}
+	}
+
+	function goFix() {
+		document.getElementById("fid2").value = document.getElementById("fid1").value;
+	}
+
+	function goFix2() {
+		if (document.getElementById("goclear").checked == true) {
+			document.getElementById("fid1").disabled = "";
+			document.getElementById("fid1").value = "";
+			document.getElementById("fid1").focus();
+		} else {
+			document.getElementById("fid1").disabled = "disabled";
+		}
+	}
+	
+</script>
+<script type='text/javascript' src='/Login/dwr/interface/webmajorjs.js'></script>
+<script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>
+<script type='text/javascript' src='/Login/dwr/interface/websubjs.js'></script>
+<script type='text/javascript' src='/Login/dwr/interface/webfixjs.js'></script>
+<script type="text/javascript">
+jq(function(){
+	getMajor();
+});
+</script>
 </body>
 </html>

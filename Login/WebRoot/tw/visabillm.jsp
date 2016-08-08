@@ -19,6 +19,17 @@
 	
 </head>
 
+
+
+<body>
+
+	<jsp:include page="publicHead_kybillm_tw.jsp" flush="true" />
+	<hr />	
+	<div id="bodyid">
+		<jsp:include page="tw1/visabillm1.jsp" />
+	</div>
+
+	
 <script>
  
 	function pages(page) {
@@ -76,29 +87,7 @@
 		//jq.post("vbm_findPageBean2",{"factNo":fact.value,"billNo":billno.value,"visaMk":visaMk.value},function(data){jq("#bodyid").html(data)});
 	}
 	
-	
-	function check(visaSort,billNo,factNo){
-	     jq.layer({
-    type: 1,   //0-4的选择,
-    title: '函文內容',
-    //border: [0],
-    closeBtn: [1,true],
-    shade: [0],
-    //shade: [0.5, '#000'],
-    shadeClose: false,
-    border: [10, 0.3, '#000'],
-   // btns:1,
-    //fadeIn:300,
-    shift:'top',
-    offset:['40px',''],
-    area: ['800px', '560px'],
-    page:{
-      url:'vbm_findById?visaSort='+visaSort+'&billNo='+billNo+'&factNo='+factNo    
-    }                 
-});
-	}
-	
-	 function getKyType(factno){
+	 function getType(factno){
 		 document.getElementById("dwr_kytype").length=1;
 			 if(factno!=null&&factno!=""&&factno!="nothing"){
 			     webtypejs.findByFactNo(factno,function(x){
@@ -109,15 +98,6 @@
 			 }   
 			}
 	 
-   /*function getType2(factNo){
-     document.getElementById("dwr_kytype").length=1;
-     webtypejs.findByFactNo(factNo,function(x){
-       if(x.length>0){
-          dwr.util.addOptions("dwr_kytype",x,"webtypeMk","typeName");
-       }      
-     });
-   } */
-   
 function tips(memo,index){
     if(memo==''){
        memo='無';
@@ -147,21 +127,6 @@ function goPreviewOrPrint(subform,billNo){
 }
 </script>
 <script type='text/javascript' src='/Login/dwr/interface/webtypejs.js'></script>
-<!--  <script type='text/javascript' src='/Login/dwr/engine.js'></script>
-<script type='text/javascript' src='/Login/dwr/util.js'></script>-->
-
-
-
-<body>
-
-	<jsp:include page="publicHead_kybillm_tw.jsp" flush="true" />
-	<hr />	
-	<div id="bodyid">
-		<jsp:include page="tw1/visabillm1.jsp" />
-	</div>
-
-	
-
 
 </body>
 </html>

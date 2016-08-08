@@ -13,32 +13,6 @@
 <meta http-equiv="description" content="This is my page">
 <link rel="stylesheet" type="text/css" href="css/select_beautiful.css">	
 <LINK href="css/list.css" type="text/css" rel="stylesheet">
-
-<script type="text/javascript">
- 
-//var jq=jQuery.noConflict();
-jq(document).keyup(function(event){
-   if(event.keyCode==13){
-      submis();
-   }
-});
-
-function getAllWebbrank(){
-	webbrankjs.findAll(function(x){
-		dwr.util.addOptions("dwrWebbrank",x,"BNo","BName");
-	})
-}
-//window.onload=getAllWebbrank;
-</script>
-
-<script type='text/javascript' src='/Login/dwr/interface/webbrankjs.js'></script>
-<!--  <script type='text/javascript' src='/Login/dwr/engine.js'></script>
-<script type='text/javascript' src='/Login/dwr/util.js'></script>-->
-<script type="text/javascript">
-jq(function(){
-	getAllWebbrank();
-});
-</script>
 </head>
 <body>
   <form id="public_form" method="post">
@@ -63,5 +37,20 @@ jq(function(){
 		</tr>
 	</table>
 	</form>
+	
+<script type="text/javascript">
+function getAllWebbrank(){
+	webbrankjs.findAll(function(x){
+		dwr.util.addOptions("dwrWebbrank",x,"BNo","BName");
+	})
+}
+</script>
+
+<script type='text/javascript' src='/Login/dwr/interface/webbrankjs.js'></script>
+<script type="text/javascript">
+jq(function(){
+	getAllWebbrank();
+});
+</script>	
 </body>
 </html>

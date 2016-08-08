@@ -15,9 +15,16 @@
 <meta http-equiv="cache-control" content="no-cache">
 <meta http-equiv="expires" content="0">
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
-<meta http-equiv="description" content="This is my page">
-	
+<meta http-equiv="description" content="This is my page">	
 </head>
+<body>
+	<jsp:include page="publicHead_webtabpom.jsp" />
+	<hr />
+	
+	<div id="bodyid">
+		<jsp:include page="table1/webTabpom1.jsp" />
+	</div>
+	
 <script>
 	
 	function pages(page) {	
@@ -79,14 +86,6 @@
 		subform.attr("target","_blank");
 		subform.submit();
 	}
-</script>
-
-<body>
-	<jsp:include page="publicHead_webtabpom.jsp" />
-	<hr />
-	
-	<div id="bodyid">
-		<jsp:include page="table1/webTabpom1.jsp" />
-	</div>
+</script>	
 </body>
 </html>

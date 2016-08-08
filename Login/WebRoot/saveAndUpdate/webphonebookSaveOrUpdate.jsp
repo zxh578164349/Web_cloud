@@ -24,104 +24,6 @@
 <link rel="stylesheet" type="text/css" href="css/form.css" />
 <link rel="stylesheet" type="text/css" href="css/select_beautiful.css">
 </head>
-<script type="text/javascript">
-	
-	jq(function() {
-		var demo = jq("#form").Validform({
-			btnSubmit : "#sub",
-			tiptype : 4,
-			tipSweep : true,
-			showAllError : true,
-			ajaxPost : true,
-			callback : function(data) {
-				if (data == "0") {
-					layer.msg("提交成功!", 3, 1);
-					//location.href="/Login/userfindPageBean";
-				} else {
-					layer.msg("提交失敗",3,3);
-				}
-			}
-		});
-	});
-
-	function back() {
-		
-		loadUrl("/Login/webphonebook_findPageBean3?backIndex=1");
-	}
-	function check() {
-		var factno = document.getElementById("dwr_factno").value;
-		var username = document.getElementById("username").value;
-		if (factno != "" && username != "") {
-			userjs
-					.findByIdDwr2(
-							factno,
-							username,
-							function(x) {
-								if (x != null) {
-									alert("该厂已存在(" + username + ")");
-									document.getElementById("sub").disabled = true;
-									document.getElementById("sub").value = "已鎖定";
-									document.getElementById("sub").style.color = "red";
-									document.getElementById("error1").innerHTML = "<font color='color'>！</font>";
-								} else {
-									document.getElementById("sub").disabled = false;
-									document.getElementById("sub").value = "確定";
-									document.getElementById("sub").style.color = "white";
-									document.getElementById("error1").innerHTML = "";
-								}
-							});
-		}
-	}
-	function checkEmail() {
-		var factno = document.getElementById("dwr_factno").value;
-		var email = document.getElementById("email").value;
-		if (factno != "" && email != "") {
-			userjs
-					.findUserByFactNoAEmail(
-							factno,
-							email,
-							function(x) {
-								if (x != null) {
-									alert("当前Email(" + email + ")已被使用");
-									document.getElementById("sub").disabled = true;
-									document.getElementById("sub").value = "已鎖定";
-									document.getElementById("sub").style.color = "red";
-									document.getElementById("error2").innerHTML = "<font color='color'>！</font>";
-								} else {
-									document.getElementById("sub").disabled = false;
-									document.getElementById("sub").value = "確定";
-									document.getElementById("sub").style.color = "white";
-									document.getElementById("error2").innerHTML = "";
-								}
-							});
-		}
-	}
-
-	/*禁止空格輸入*/
-	/*window.onload = function() {
-		var inputs = document.getElementsByTagName("input");
-		for ( var i = 0; i < inputs.length; i++) {
-			if (inputs[i].getAttribute("type") == "text")
-				inputs[i].onkeyup = function() {
-					this.value = this.value.replace(/(^\s+)|\s+$/g, "");
-				};
-		}
-	}*/
-jq(function(){
-	var inputs = document.getElementsByTagName("input");
-	for ( var i = 0; i < inputs.length; i++) {
-		if (inputs[i].getAttribute("type") == "text")
-			inputs[i].onkeyup = function() {
-				this.value = this.value.replace(/(^\s+)|\s+$/g, "");
-			};
-	}
-});	
-</script>
-<script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/userjs.js'></script>
-<!-- <script type='text/javascript' src='/Login/dwr/engine.js'></script>
-<script type='text/javascript' src='/Login/dwr/util.js'></script> -->
-
 
 <body>
 	<form action="webphonebook_add" method="post" id="form">
@@ -215,5 +117,92 @@ jq(function(){
 		</center>
 	</form>
 
+
+<script type="text/javascript">
+	
+	jq(function() {
+		var demo = jq("#form").Validform({
+			btnSubmit : "#sub",
+			tiptype : 4,
+			tipSweep : true,
+			showAllError : true,
+			ajaxPost : true,
+			callback : function(data) {
+				if (data == "0") {
+					layer.msg("提交成功!", 3, 1);
+					//location.href="/Login/userfindPageBean";
+				} else {
+					layer.msg("提交失敗",3,3);
+				}
+			}
+		});
+	});
+
+	function back() {
+		
+		loadUrl("/Login/webphonebook_findPageBean3?backIndex=1");
+	}
+	function check() {
+		var factno = document.getElementById("dwr_factno").value;
+		var username = document.getElementById("username").value;
+		if (factno != "" && username != "") {
+			userjs
+					.findByIdDwr2(
+							factno,
+							username,
+							function(x) {
+								if (x != null) {
+									alert("该厂已存在(" + username + ")");
+									document.getElementById("sub").disabled = true;
+									document.getElementById("sub").value = "已鎖定";
+									document.getElementById("sub").style.color = "red";
+									document.getElementById("error1").innerHTML = "<font color='color'>！</font>";
+								} else {
+									document.getElementById("sub").disabled = false;
+									document.getElementById("sub").value = "確定";
+									document.getElementById("sub").style.color = "white";
+									document.getElementById("error1").innerHTML = "";
+								}
+							});
+		}
+	}
+	function checkEmail() {
+		var factno = document.getElementById("dwr_factno").value;
+		var email = document.getElementById("email").value;
+		if (factno != "" && email != "") {
+			userjs
+					.findUserByFactNoAEmail(
+							factno,
+							email,
+							function(x) {
+								if (x != null) {
+									alert("当前Email(" + email + ")已被使用");
+									document.getElementById("sub").disabled = true;
+									document.getElementById("sub").value = "已鎖定";
+									document.getElementById("sub").style.color = "red";
+									document.getElementById("error2").innerHTML = "<font color='color'>！</font>";
+								} else {
+									document.getElementById("sub").disabled = false;
+									document.getElementById("sub").value = "確定";
+									document.getElementById("sub").style.color = "white";
+									document.getElementById("error2").innerHTML = "";
+								}
+							});
+		}
+	}
+
+	/*禁止空格輸入*/	
+jq(function(){
+	var inputs = document.getElementsByTagName("input");
+	for ( var i = 0; i < inputs.length; i++) {
+		if (inputs[i].getAttribute("type") == "text")
+			inputs[i].onkeyup = function() {
+				this.value = this.value.replace(/(^\s+)|\s+$/g, "");
+			};
+	}
+});	
+</script>
+<script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>
+<script type='text/javascript' src='/Login/dwr/interface/userjs.js'></script>
 </body>
 </html>

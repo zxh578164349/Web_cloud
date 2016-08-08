@@ -31,134 +31,6 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
  <link rel="stylesheet" href="css/select/chosen.css">
 </head>
 
-
-
-
-<script type="text/javascript">
-	jq(function() {
-		var demo = jq("#form").Validform({
-			btnSubmit : "#sub",
-			tiptype : 4,
-			showAllError : true,
-			ignoreHidden : true,
-			tipSweep : true,
-			ajaxPost:true,
-			callback : function(data) {
-				if(data=="0"){
-					layer.msg("操作成功",3,1);
-					loadUrl("kyzpetty_findPageBean");
-				}else{
-					layer.msg("操作失敗",3,3);
-				}
-			},
-			datatype : {
-				"my0-6" : /^\d{0,9}(\.[0-9]{1,3})?$/,
-				"my1-6" : /^[1-9]{1}\d{0,8}(\.[0-9]{1,3})?$/,
-				"my0-7" : /^\d{0,7}(\.[0-9]{1})?$/
-
-			}
-		});
-		demo.tipmsg.w["my0-6"] = "只能數字且不超過9位數,可保留三位以內小數";
-		demo.tipmsg.w["my1-6"] = "不為0的數字且不超過9位數,可保留三位以內小數";
-		demo.tipmsg.w["my0-7"] = "只能數字且不超過7位數,可保留一位以內小數";
-
-	});
-
-/* 	function getAllAcctNo() {
-		kyzacctjs.findAll(function(x) {
-			dwr.util.addOptions("dwrkyzacct",x,"acctNo","acctName");
-		});
-	}
-
- 	function getAllSecNo() {
- 	    var factno=document.getElementById("login_factno").value;
-		kyzsecjs.findByFactno(factno, function(x) {
-		    for(var i=0;i<x.length;i++){
-		       x[i].deptNo=x[i].id.secNo;
-		    }		   
-			dwr.util.addOptions("single-label-example", x,"deptNo","secNm");
-		});
-	}  */
-
-	
-	function makeSecno(obj){
-	   var factno=document.getElementById("dwrFactNo").value;
-	   if(factno!=""){
-	      kyzsecjs.makeSecNo(obj,function(x){
-	         dwr.util.setValue("secno",x);
-	      });
-	   }
-	}
-	
-	function checkAcctNo(obj){
-	   kyzacctjs.checkAcctNo(obj,function(x){
-	          if(x==false){
-	             alert("科目代號  "+obj+" 已存在,請重新輸入!");	             	            
-	           } 
-	   });
-	}
-	
-	
-	
-	function makeItemNo(factno){
-	//var timecreate=document.getElementById("timecreate").value;	
-	var datepaybill=document.getElementById("datepaybill").value;	   
-	    kyzpettyjs.makeItemNo(factno,datepaybill,function(x){
-	        if(factno!=""&&datepaybill!=""){
-	           dwr.util.setValue("itemno",x);
-	        }	          
-	    });
-	}
-	function maikBillNo(factno){
-	//var datepaybills=document.getElementById("timecreate").value;
-	var datepaybill=document.getElementById("datepaybill").value;	
-	  kyzpettyjs.makeBillNo(factno,datepaybill,function(x){
-	      if(factno!=""&&datepaybill!=""){
-	         dwr.util.setValue("dwrBillNo",x);
-	      }
-	  }); 
-	}
-	
-	function getSecNoByFactNo(factno){
-	   var bb=jQuery.noConflict();	   
-	    bb.post("kyzsec_getSecNoByFactNo",                 /*要進入的action*/
-                   {"factNo":factno},
-                   function(date){alert(date)});/*要傳遞的數據*/                  
-                  
-	}
-	
-jq(document).keyup(function(event){
-   if(event.keyCode==13){
-      submis();
-   }
-});
-function back() {			
-	loadUrl("/Login/kyzpetty_findPageBean3?backIndex=1");
-}
-</script>
-  <script src="jquery/select/chosen.jquery.js" type="text/javascript"></script>
-  <script src="jquery/select/prism.js" type="text/javascript" charset="utf-8"></script>
-    <script type="text/javascript">
-    var config = {
-      '.chosen-select'           : {},
-      '.chosen-select-deselect'  : {allow_single_deselect:true},
-      '.chosen-select-no-single' : {disable_search_threshold:10},
-      '.chosen-select-no-results': {no_results_text:'Oops, nothing found!'},
-      '.chosen-select-width'     : {width:"95%"}
-    }
-    var jjqq=jQuery.noConflict();
-    for (var selector in config) {
-      jjqq(selector).chosen(config[selector]);
-    }
-  </script>
-<script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/kyzsecjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/kyzacctjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/kyzpettyjs.js'></script>
-
-<!-- <script type='text/javascript' src='/Login/dwr/engine.js'></script>
-<script type='text/javascript' src='/Login/dwr/util.js'></script> -->
-
 <body >
 
 	<form action="kyzpetty_add" method="post" id="form">
@@ -425,7 +297,110 @@ function back() {
 	</form>
 
 	
+<script type="text/javascript">
+	jq(function() {
+		var demo = jq("#form").Validform({
+			btnSubmit : "#sub",
+			tiptype : 4,
+			showAllError : true,
+			ignoreHidden : true,
+			tipSweep : true,
+			ajaxPost:true,
+			callback : function(data) {
+				if(data=="0"){
+					layer.msg("操作成功",3,1);
+					loadUrl("kyzpetty_findPageBean");
+				}else{
+					layer.msg("操作失敗",3,3);
+				}
+			},
+			datatype : {
+				"my0-6" : /^\d{0,9}(\.[0-9]{1,3})?$/,
+				"my1-6" : /^[1-9]{1}\d{0,8}(\.[0-9]{1,3})?$/,
+				"my0-7" : /^\d{0,7}(\.[0-9]{1})?$/
 
+			}
+		});
+		demo.tipmsg.w["my0-6"] = "只能數字且不超過9位數,可保留三位以內小數";
+		demo.tipmsg.w["my1-6"] = "不為0的數字且不超過9位數,可保留三位以內小數";
+		demo.tipmsg.w["my0-7"] = "只能數字且不超過7位數,可保留一位以內小數";
+
+	});
+	
+	function makeSecno(obj){
+	   var factno=document.getElementById("dwrFactNo").value;
+	   if(factno!=""){
+	      kyzsecjs.makeSecNo(obj,function(x){
+	         dwr.util.setValue("secno",x);
+	      });
+	   }
+	}
+	
+	function checkAcctNo(obj){
+	   kyzacctjs.checkAcctNo(obj,function(x){
+	          if(x==false){
+	             alert("科目代號  "+obj+" 已存在,請重新輸入!");	             	            
+	           } 
+	   });
+	}
+	
+	
+	
+	function makeItemNo(factno){
+	//var timecreate=document.getElementById("timecreate").value;	
+	var datepaybill=document.getElementById("datepaybill").value;	   
+	    kyzpettyjs.makeItemNo(factno,datepaybill,function(x){
+	        if(factno!=""&&datepaybill!=""){
+	           dwr.util.setValue("itemno",x);
+	        }	          
+	    });
+	}
+	function maikBillNo(factno){
+	//var datepaybills=document.getElementById("timecreate").value;
+	var datepaybill=document.getElementById("datepaybill").value;	
+	  kyzpettyjs.makeBillNo(factno,datepaybill,function(x){
+	      if(factno!=""&&datepaybill!=""){
+	         dwr.util.setValue("dwrBillNo",x);
+	      }
+	  }); 
+	}
+	
+	function getSecNoByFactNo(factno){
+	   var bb=jQuery.noConflict();	   
+	    bb.post("kyzsec_getSecNoByFactNo",                 /*要進入的action*/
+                   {"factNo":factno},
+                   function(date){alert(date)});/*要傳遞的數據*/                  
+                  
+	}
+	
+jq(document).keyup(function(event){
+   if(event.keyCode==13){
+      submis();
+   }
+});
+function back() {			
+	loadUrl("/Login/kyzpetty_findPageBean3?backIndex=1");
+}
+</script>
+  <script src="jquery/select/chosen.jquery.js" type="text/javascript"></script>
+  <script src="jquery/select/prism.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript">
+    var config = {
+      '.chosen-select'           : {},
+      '.chosen-select-deselect'  : {allow_single_deselect:true},
+      '.chosen-select-no-single' : {disable_search_threshold:10},
+      '.chosen-select-no-results': {no_results_text:'Oops, nothing found!'},
+      '.chosen-select-width'     : {width:"95%"}
+    }
+    var jjqq=jQuery.noConflict();
+    for (var selector in config) {
+      jjqq(selector).chosen(config[selector]);
+    }
+  </script>
+<script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>
+<script type='text/javascript' src='/Login/dwr/interface/kyzsecjs.js'></script>
+<script type='text/javascript' src='/Login/dwr/interface/kyzacctjs.js'></script>
+<script type='text/javascript' src='/Login/dwr/interface/kyzpettyjs.js'></script>
 </body>
 
 </html>

@@ -12,59 +12,7 @@
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
 
-<script type="text/javascript">
- 
 
-jq(document).keyup(function(event){
-   if(event.keyCode==13){
-      submis();
-   }
-});
-
-function getDepartments(factno){
-	jq("#se_department").html("");
-	jq.ajax({
-		type:"POST",
-		dataType:"json",
-		data:"factNo="+factno,
-		url:"webphonebook_findDepartments",
-		success:function(data){
-			var items="<option value=''>請選擇</option>";
-			if(data!=null){
-				jq.each(data,function(i,obj){
-					items+="<option value='"+obj+"'>"+obj+"<option/>";
-				});
-				jq("#se_department").append(items);
-			}
-			
-		}
-	});
-}
-
-function getPosts(factno){
-	jq("#se_post").html("");
-	jq.ajax({
-		type:"POST",
-		dataType:"json",
-		data:"factNo="+factno,
-		url:"webphonebook_findPosts",
-		success:function(data){
-			var items="<option value=''>請選擇</option>";
-			if(data!=null){
-				jq.each(data,function(i,obj){
-					items+="<option value='"+obj+"'>"+obj+"<option/>";
-				});
-				jq("#se_post").append(items);
-			}
-			
-		}
-	});
-}
-
-jq(function(){
-	getDepartments("");getPosts("");
-});
-</script>
 
 </head>
 <body>
@@ -109,5 +57,52 @@ jq(function(){
 		</tr>
 	</table>
 	</form>
+	
+<script type="text/javascript">
+
+function getDepartments(factno){
+	jq("#se_department").html("");
+	jq.ajax({
+		type:"POST",
+		dataType:"json",
+		data:"factNo="+factno,
+		url:"webphonebook_findDepartments",
+		success:function(data){
+			var items="<option value=''>請選擇</option>";
+			if(data!=null){
+				jq.each(data,function(i,obj){
+					items+="<option value='"+obj+"'>"+obj+"<option/>";
+				});
+				jq("#se_department").append(items);
+			}
+			
+		}
+	});
+}
+
+function getPosts(factno){
+	jq("#se_post").html("");
+	jq.ajax({
+		type:"POST",
+		dataType:"json",
+		data:"factNo="+factno,
+		url:"webphonebook_findPosts",
+		success:function(data){
+			var items="<option value=''>請選擇</option>";
+			if(data!=null){
+				jq.each(data,function(i,obj){
+					items+="<option value='"+obj+"'>"+obj+"<option/>";
+				});
+				jq("#se_post").append(items);
+			}
+			
+		}
+	});
+}
+
+jq(function(){
+	getDepartments("");getPosts("");
+});
+</script>	
 </body>
 </html>

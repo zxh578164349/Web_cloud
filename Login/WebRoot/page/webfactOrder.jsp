@@ -19,9 +19,31 @@
 <script type="text/javascript" src="jquery/jquery-form.js"></script>
 
 </head>
-<script>
+
+
+<body>
+<div>
+    <input type="hidden" id="global_temp"/>
+	<jsp:include page="publicHead_print_webfactorder.jsp" flush="true"/>
+	<hr />
 	
-	
+	<form  method="post" enctype="multipart/form-data" id="upload_form">
+	  <table>
+	      <td>	 
+	         <input type="file" name="file" style="width:150px" id="id_file" class="btn btn-info"/>	        	       
+	       </td>
+	       <td>
+	       	    <input value="導入Excel" type="submit" id="search_forday" class="btn btn-info"/>
+	       </td>
+	  </table>          	
+	</form>
+	<hr/>			
+	<div id="bodyid">
+		<jsp:include page="table1/webfactOrder1.jsp" />
+	</div>	
+</div>	
+
+<script>	
 	function pages(page) {
 		jq.ajax({
 			type : "POST",
@@ -88,7 +110,7 @@
 	}
 	
 	//你确定要删除吗？
-	function isDelete(mid) {
+	/*function isDelete(mid) {
 		jq("#global_temp").val("delete");
 		var flag=confirm("確定要刪除嗎?");
 			if (flag == true) {
@@ -106,7 +128,7 @@
 					}
 				});
 			}		
-	}
+	}*/
 	function print(public_form){
 		var subform=jq("#"+public_form);
 		var checkboxs=jq("input[name='factNos']:checked");
@@ -245,30 +267,5 @@ function showDiv(){
     }
 	
 </script>
-
-<body>
-<div>
-    <input type="hidden" id="global_temp"/>
-	<jsp:include page="publicHead_print_webfactorder.jsp" flush="true"/>
-	<hr />
-	
-	<form  method="post" enctype="multipart/form-data" id="upload_form">
-	  <table>
-	      <td>	 
-	         <input type="file" name="file" style="width:150px" id="id_file" class="btn btn-info"/>	        	       
-	       </td>
-	       <td>
-	       	    <input value="導入Excel" type="submit" id="search_forday" class="btn btn-info"/>
-	       </td>
-	  </table>          	
-	</form>
-	<hr/>			
-	<div id="bodyid">
-		<jsp:include page="table1/webfactOrder1.jsp" />
-	</div>
-	
-	
-	
-</div>	
 </body>
 </html>

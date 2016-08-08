@@ -152,7 +152,7 @@
 						<input type="hidden" value="<s:property value='id.yyyy'/>" name="yyyy" />							
 					</form> 
 					<a href="javascript:void(0)"
-					onclick="isDelete('2subform${x.index}')"><img alt="刪除" src="images/icon/delete001.png" title="刪除" ></a>
+					onclick="isDelete('2subform${x.index}','kpifact_delete')"><img alt="刪除" src="images/icon/delete001.png" title="刪除" ></a>
 					
 					<form action="kpifact_findById_copy" method="post" id="3subform${x.index}" style="float:left">						
 						<input type="hidden" value="<s:property value='id.factNo'/>" name="factNo" />

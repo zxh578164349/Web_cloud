@@ -106,7 +106,7 @@
 					<img alt="預覽" src="images/icon/view24.png" title="預覽"></a>
 					<a href="javascript:document.getElementById('4subform${x.index}').submit()" >
 					<img alt="下載" src="images/icon/print24.png" title="下載"></a>
-					<a href="javascript:void(0)" onclick="isDelete('2subform${x.index}')">					
+					<a href="javascript:isDelete('2subform${x.index}','webtabpom_delete')" >					
 					<img alt="刪除" src="images/icon/delete001.png" title="刪除"></a>
 				</td>
 				</s:if>

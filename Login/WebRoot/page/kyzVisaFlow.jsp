@@ -64,7 +64,7 @@
 		});
 	}
 	//你确定要删除吗？
-	function isDelete(mid) {
+	/*function isDelete(mid) {
 		var flag=confirm("確定要刪除嗎?");
 		
 			if (flag == true) {
@@ -83,7 +83,7 @@
 				});
 			}
 		
-	}
+	}*/
 	
 	function isDelete2(factno,visasort) {
 		var flag=confirm("刪除申請人,就會刪除整個流程,确定要刪除吗?");

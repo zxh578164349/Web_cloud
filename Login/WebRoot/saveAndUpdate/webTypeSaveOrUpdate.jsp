@@ -24,6 +24,84 @@
 <link rel="stylesheet" type="text/css" href="css/form.css" />
 <link rel="stylesheet" type="text/css" href="css/select_beautiful.css">
 </head>
+
+
+
+<body>
+	<form action="webtype_add" method="post" id="form">
+	<h2>各廠函文類別管理</h2>
+		<table class="table table-condensed">		      						
+					<tr>
+						<td class="td_show_title">廠別</td>
+						<s:if test="webtype==null">						
+						<td class="td_input">
+						<s:if test="#session.factNo!='tw'">						
+						<input type="text" style="color:blue" name="webtype.id.factNo" value="${factNo}" readonly id="dwr_factno"/>												
+						</s:if>	
+						<s:if test="#session.factNo=='tw'">	
+						<select style="color:blue"
+							name="webtype.id.factNo" datatype="*"
+							onchange="check()" id="dwr_factno">
+								<option value="">請選擇廠別</option>
+								<s:iterator value="#session.facts" id="temp">
+									<option value="${temp[0]}">${temp[1]
+										}&nbsp;(${temp[0]})</option>
+								</s:iterator>
+						</select>
+						</s:if>						
+						</td>																																					
+						</s:if>
+						<s:else>
+						   <td><input type="text" name="webtype.id.factNo" value="<s:property value='webtype.id.factNo'/>" readonly style="color:blue"/>
+						   </td>
+						</s:else>
+										
+				        <td class="td_show_title">類別代號</td>
+				        <td class="td_input">
+				          <s:if test="webtype==null">
+				             <div id="div_typeno">
+				              <input type="radio" value="TR" name="typeNo" onclick="checkRadio(),check(this)" id="typeno_tr"/>出差類&nbsp;
+				              <input type="radio" value="0" name="typeNo" checked onclick="checkRadio()"/>非出差類				             
+				             <input type="text" name="webtype.id.typeNo" datatype="s2-2" onblur="check(this),checkType(this)" id="typeno"/>
+				            <span id="error1"></span>
+				             </div>				              
+				          </s:if>
+				          <s:else>
+				              <input type="text" name="webtype.id.typeNo" value="<s:property value='webtype.id.typeNo'/>" readonly style="color:blue"/>
+				          </s:else>			             				            								
+				         </td>							
+				</tr>													
+			    <tr>
+ 				          <td class="td_show_title">類別名称  </td>
+				          <td class="td_input"><input type="text" name="webtype.typeName"
+					           value="<s:property value='webtype.typeName'/>" id="typeName"  datatype="*1-60" />
+					         <input type="hidden" name="webtype.webtypeMk" value="Y"/>
+					         <input type="hidden" name="webtype.delMk" value="0"/><!-- 默認未刪除 -->					
+				          </td>	
+				                             
+				<!-- <td class="td_show_title">是否可用</td>
+				<td class="td_input">				
+				          可用<input type="radio" name="webtype.webtypeMk"
+					 value="0" checked/>
+					 <s:if test="webtype.webtypeMk==null||webtype.webtypeMk==''">
+					    不可用<input type="radio" name="webtype.webtypeMk"
+					 value="1"/> 
+					 </s:if>
+					 <s:else>
+					    不可用<input type="radio" name="webtype.webtypeMk"
+					 value="1" checked/>
+					 </s:else>					
+				</td>	 -->   
+			</tr>											
+		</table>
+		<center>
+			<input type="submit" id="sub" value="確定" class="btn btn-primary"/>&nbsp;&nbsp;&nbsp; <input
+				type="reset" id="reset" value="重置" class="btn btn-primary"/>&nbsp;&nbsp;&nbsp;			
+            <input type="button" value="返回" onclick="back()" id="btn_back" class="btn btn-primary"/>
+					 
+		</center>
+	</form>
+
 <script type="text/javascript">
 
 	jq(function() {
@@ -147,82 +225,5 @@ function checkRadio(){
 <script type='text/javascript' src='/Login/dwr/interface/webtypejs.js'></script>
 <!-- <script type='text/javascript' src='/Login/dwr/engine.js'></script>
 <script type='text/javascript' src='/Login/dwr/util.js'></script> -->
-
-
-<body>
-	<form action="webtype_add" method="post" id="form">
-	<h2>各廠函文類別管理</h2>
-		<table class="table table-condensed">		      						
-					<tr>
-						<td class="td_show_title">廠別</td>
-						<s:if test="webtype==null">						
-						<td class="td_input">
-						<s:if test="#session.factNo!='tw'">						
-						<input type="text" style="color:blue" name="webtype.id.factNo" value="${factNo}" readonly id="dwr_factno"/>												
-						</s:if>	
-						<s:if test="#session.factNo=='tw'">	
-						<select style="color:blue"
-							name="webtype.id.factNo" datatype="*"
-							onchange="check()" id="dwr_factno">
-								<option value="">請選擇廠別</option>
-								<s:iterator value="#session.facts" id="temp">
-									<option value="${temp[0]}">${temp[1]
-										}&nbsp;(${temp[0]})</option>
-								</s:iterator>
-						</select>
-						</s:if>						
-						</td>																																					
-						</s:if>
-						<s:else>
-						   <td><input type="text" name="webtype.id.factNo" value="<s:property value='webtype.id.factNo'/>" readonly style="color:blue"/>
-						   </td>
-						</s:else>
-										
-				        <td class="td_show_title">類別代號</td>
-				        <td class="td_input">
-				          <s:if test="webtype==null">
-				             <div id="div_typeno">
-				              <input type="radio" value="TR" name="typeNo" onclick="checkRadio(),check(this)" id="typeno_tr"/>出差類&nbsp;
-				              <input type="radio" value="0" name="typeNo" checked onclick="checkRadio()"/>非出差類				             
-				             <input type="text" name="webtype.id.typeNo" datatype="s2-2" onblur="check(this),checkType(this)" id="typeno"/>
-				            <span id="error1"></span>
-				             </div>				              
-				          </s:if>
-				          <s:else>
-				              <input type="text" name="webtype.id.typeNo" value="<s:property value='webtype.id.typeNo'/>" readonly style="color:blue"/>
-				          </s:else>			             				            								
-				         </td>							
-				</tr>													
-			    <tr>
- 				          <td class="td_show_title">類別名称  </td>
-				          <td class="td_input"><input type="text" name="webtype.typeName"
-					           value="<s:property value='webtype.typeName'/>" id="typeName"  datatype="*1-60" />
-					         <input type="hidden" name="webtype.webtypeMk" value="Y"/>
-					         <input type="hidden" name="webtype.delMk" value="0"/><!-- 默認未刪除 -->					
-				          </td>	
-				                             
-				<!-- <td class="td_show_title">是否可用</td>
-				<td class="td_input">				
-				          可用<input type="radio" name="webtype.webtypeMk"
-					 value="0" checked/>
-					 <s:if test="webtype.webtypeMk==null||webtype.webtypeMk==''">
-					    不可用<input type="radio" name="webtype.webtypeMk"
-					 value="1"/> 
-					 </s:if>
-					 <s:else>
-					    不可用<input type="radio" name="webtype.webtypeMk"
-					 value="1" checked/>
-					 </s:else>					
-				</td>	 -->   
-			</tr>											
-		</table>
-		<center>
-			<input type="submit" id="sub" value="確定" class="btn btn-primary"/>&nbsp;&nbsp;&nbsp; <input
-				type="reset" id="reset" value="重置" class="btn btn-primary"/>&nbsp;&nbsp;&nbsp;			
-            <input type="button" value="返回" onclick="back()" id="btn_back" class="btn btn-primary"/>
-					 
-		</center>
-	</form>
-
 </body>
 </html>

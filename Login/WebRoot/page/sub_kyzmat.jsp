@@ -16,12 +16,25 @@
 <meta http-equiv="expires" content="0">
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
-
-
-
-
 </head>
 
+
+
+<body>
+	<jsp:include page="publicHead_kyzmat.jsp"/>
+	<hr>		
+		
+		<!--<input value="返回物料資料" type="button" id="search_forday" onclick="backKyzmat()"/>-->
+		
+		<span style="float:right"> <input type="button"
+		onclick="backKyzmat()"
+		class="btn btn-link btn-sm" value="返回物料資料"/>
+	    </span>		
+	<div id="bodyid">
+		<jsp:include page="table1/sub_kyzmat1.jsp" />
+	</div>
+
+	
 <script>
  
 	function pages(page) {
@@ -64,27 +77,6 @@
 		});
 	}
 	
-    function showDiv(matno){   
-    jq.layer({
-    type: 1,   //0-4的选择,
-    title: '物料資料所屬廠別',
-    //border: [0],
-    closeBtn: [1,true],
-    shade: [0],
-    shadeClose: false,
-     border: [10, 0.3, '#000'],
-   // btns:1,
-    fadeIn:300,    
-    //shift:'top',
-    moveOut:false,
-    moveType:1,    
-    offset:['50px','200px'],
-    area: ['500px', '300px'],
-    page:{
-      url:'subkyzmat_findfactnoByMatno?matNo='+matno
-    }               
-});
-} 
 function selectAll(){
   var cb_all=document.getElementById("cb_all");
   var cbs=jq("[name='cb_list']");
@@ -153,23 +145,6 @@ function subkyzmat_addSubKyzmat(){
 
 	
 </script>
-
-<body>
-	<jsp:include page="publicHead_kyzmat.jsp"/>
-	<hr>		
-		
-		<!--<input value="返回物料資料" type="button" id="search_forday" onclick="backKyzmat()"/>-->
-		
-		<span style="float:right"> <input type="button"
-		onclick="backKyzmat()"
-		class="btn btn-link btn-sm" value="返回物料資料"/>
-	    </span>		
-	<div id="bodyid">
-		<jsp:include page="table1/sub_kyzmat1.jsp" />
-	</div>
-
-	
-
 
 </body>
 </html>

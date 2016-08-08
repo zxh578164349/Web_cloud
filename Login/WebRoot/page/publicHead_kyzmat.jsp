@@ -1,13 +1,6 @@
-<%@page
-	import="org.springframework.context.support.ClassPathXmlApplicationContext"%>
-<%@page import="org.springframework.context.ApplicationContext"%>
-<%@page import="dao.IKyFactDao"%>
-<%@page import="services.impl.KyFactServicesImpl"%>
-<%@page import="services.IKyFactServices"%>
-<%@page import="com.opensymphony.xwork2.ActionContext"%>
+
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib uri="/struts-tags" prefix="s"%>
-<%@page import="entity.*"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
@@ -23,52 +16,7 @@
 <link rel="stylesheet" type="text/css" href="css/select_beautiful.css">	
 <LINK href="css/list.css" type="text/css" rel="stylesheet">
 
-<script type="text/javascript">
- 
 
-jq(document).keyup(function(event){
-   if(event.keyCode==13){
-      submis();
-   }
-});
-
-	function findallBN(){
-	      kyzscmjs.findBN(function(x){
-	          dwr.util.addOptions("bNo",x);
-	      });                             
-	}
-	function findallMN(bNo){
-	     document.getElementById("mNo").length=1;
-	     document.getElementById("sNo").length=1;
-	     kyzscmjs.findMN(bNo,function(x){
-	     if(bNo!=""){
-	        dwr.util.addOptions("mNo",x);
-	     }	         
-	     });
-	}
-	function findallSN(mNo){
-	     document.getElementById("sNo").length=1;
-	     kyzscmjs.findSN(mNo,function(x){
-	     if(mNo!=""){
-	        dwr.util.addOptions("sNo",x);
-	     }	         
-	     });
-	}
-
-	
-	/*window.onload=function(){
-	   findallBN();
-	}*/
-</script>
-<script type='text/javascript' src='/Login/dwr/interface/kyzscmjs.js'></script>
-
-<!--  <script type='text/javascript' src='/Login/dwr/engine.js'></script>
-<script type='text/javascript' src='/Login/dwr/util.js'></script> -->
-<script type="text/javascript">
-  jq(function(){
-	  findallBN();
-  });
-</script>
 </head>
 <body>
    <form  method="post" id="public_form">
@@ -107,6 +55,35 @@ jq(document).keyup(function(event){
 		</tr>
 	</table>
 	</form>
-	 	
+<script type="text/javascript">
+function findallBN(){
+    kyzscmjs.findBN(function(x){
+        dwr.util.addOptions("bNo",x);
+    });                             
+}
+function findallMN(bNo){
+   document.getElementById("mNo").length=1;
+   document.getElementById("sNo").length=1;
+   kyzscmjs.findMN(bNo,function(x){
+   if(bNo!=""){
+      dwr.util.addOptions("mNo",x);
+   }	         
+   });
+}
+function findallSN(mNo){
+   document.getElementById("sNo").length=1;
+   kyzscmjs.findSN(mNo,function(x){
+   if(mNo!=""){
+      dwr.util.addOptions("sNo",x);
+   }	         
+   });
+}
+</script>
+<script type='text/javascript' src='/Login/dwr/interface/kyzscmjs.js'></script>
+<script type="text/javascript">
+  jq(function(){
+	  findallBN();
+  });
+</script>	 	
 </body>
 </html>
