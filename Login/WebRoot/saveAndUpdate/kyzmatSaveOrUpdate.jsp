@@ -24,13 +24,8 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 <meta http-equiv="expires" content="0">
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
-<link href="css/validate.css" rel="stylesheet" type="text/css" />
 <link rel="stylesheet" type="text/css" href="css/form.css" />
-<link rel="stylesheet" type="text/css" href="css/select_beautiful.css">
-<link rel="stylesheet" href="css/select/prism.css">
-<link rel="stylesheet" href="css/select/chosen.css">
 </head>
-
 
 <body >
 
@@ -335,17 +330,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 	     dwr.util.addOptions("kyzacctNo",x,"acctNo","acctName");
 	  });
 	}
-
-/*禁止空格輸入*/
-function noNull(){            
-            var inputs=document.getElementsByTagName("input"); 
-            for (var i=0;i<inputs.length; i++) {  
-                if(inputs[i].getAttribute("type")=="text") 
-                 inputs[i].onkeyup=function(){ 
-                    this.value=this.value.replace(/(^\s+)|\s+$/g,""); 
-                 }; 
-            }  
-        }	
+	
 	function back(){
 		loadUrl("/Login/kyzmat_findPageBean3?backIndex=1");
 	}
@@ -354,9 +339,8 @@ function noNull(){
 <script type='text/javascript' src='/Login/dwr/interface/kyzmatjs.js'></script>
 <script type="text/javascript">
   jq(function(){
-	  //findAllAcct();
+	  goTrim();
 	   findallBN();
-	   noNull(); 
   });
 </script>	
 

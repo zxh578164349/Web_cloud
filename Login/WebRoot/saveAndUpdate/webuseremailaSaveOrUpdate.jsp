@@ -19,10 +19,8 @@
 <meta http-equiv="expires" content="0">
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
-
-
 <link rel="stylesheet" type="text/css" href="css/form.css" />
-<link rel="stylesheet" type="text/css" href="css/select_beautiful.css">
+
 </head>
 
 
@@ -192,29 +190,14 @@
 	    obj.value=obj.value.toLowerCase();
 	}
   
-/*禁止空格輸入*/
-/*window.onload=function(){            
-            var inputs=document.getElementsByTagName("input"); 
-            for (var i=0;i<inputs.length; i++) {  
-                if(inputs[i].getAttribute("type")=="text") 
-                 inputs[i].onkeyup=function(){ 
-                    this.value=this.value.replace(/(^\s+)|\s+$/g,""); 
-                 }; 
-            }  
-        }*/ 
+
 </script>
 <script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>
 <script type='text/javascript' src='/Login/dwr/interface/webtypejs.js'></script>
 <script type='text/javascript' src='/Login/dwr/interface/webuseremailajs.js'></script>
 <script type="text/javascript">
 jq(function(){
-	var inputs=document.getElementsByTagName("input"); 
-    for (var i=0;i<inputs.length; i++) {  
-        if(inputs[i].getAttribute("type")=="text") 
-         inputs[i].onkeyup=function(){ 
-            this.value=this.value.replace(/(^\s+)|\s+$/g,""); 
-         }; 
-    }
+	goTrim();
     getKyType();
 	
 });

@@ -24,9 +24,242 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
 <link rel="stylesheet" type="text/css" href="css/form.css" />
-<link rel="stylesheet" type="text/css" href="css/select_beautiful.css">
-<script type="text/javascript" src="jquery/jquery-form.js"></script>
-
+</head>
+<body >  
+    <form action="kyz_add"  method="post" id="form"  enctype="multipart/form-data" target="frameFile">
+        <h2>函文申請</h2>
+		<table class="table table-condensed" >		    	
+			<tbody id="tb_list_info2">
+				    <tr>
+				        <td class="tdcolor">標題</td>
+				        <td><input type="text" name="kyz.memoSmk" datatype="*"  value="<s:property value='kyz.memoSmk'/>" id="memoSmk"/></td>
+				        
+				        <td class="tdcolor">電話</td>
+				        <td><input type="text" name="kyz.telNo" datatype="n0-11"  value="<s:property value='kyz.telNo'/>" id="telNo"/></td> 				        
+				        <td class="tdcolor">申請單位</td>
+				        <td><input type="text" name="kyz.secNo"  value="<s:property value='kyz.secNo'/>" datatype="*1-10" id="secNo"/></td>
+				        
+				    </tr>
+				    <s:if test="kyz==null">
+				   	<input type="hidden" name="isnull" value="isNull"/><!--判斷變量 -->					
+					<s:if test="#session.factNo!='tw'">
+					<tr>
+						<td class="tdcolor">廠別</td>
+						<td ><input type="text" style="color:blue"
+							name="kyz.id.factNo" value="${factNo}" readonly id="dwrFactNo" />							
+						</td>
+						
+						<td class="tdcolor">廠別狀態</td>
+						<td><select name="kyz.factCode"
+							 id="dwrFactArea"  style="color:blue">
+								<option value="">請選擇廠別狀態</option>
+								<s:iterator value="#session.factAreas_login" id="temp">
+									<option value="${temp}">${temp}</option>
+								</s:iterator>
+						</select></td>
+						
+						<td class="tdcolor">建立日期</td>
+				        <td ><input type="text" name="yymmdd" id="kyz_timecreate"  readonly  value="<%=str_date%>" style="color:blue">
+					</tr>
+				</s:if>
+				<s:if test="#session.factNo=='tw'">
+					<tr>
+						<td class="tdcolor">廠別</td>
+						<td ><select style="color:blue"
+							name="kyz.id.factNo" datatype="*" id="dwrFactNo"
+							onchange="getFactArea(this.value),makeBillNo(),getKyType2(this.value)">
+								<option value="">請選擇廠別</option>
+								<s:iterator value="#session.facts" id="temp">
+									<option value="${temp[0]}">${temp[1]
+										}&nbsp;(${temp[0]})</option>
+								</s:iterator>
+						</select></td>
+						
+						<td class="tdcolor">廠別狀態</td>
+						<td><select name="kyz.factCode"
+							 id="dwrFactArea" onchange="makeBillNo()">
+								<option value="">請選擇廠別狀態</option>
+						</select></td>
+						
+						<td class="tdcolor">建立日期</td>
+				        <td ><input type="text" name="yymmdd" id="kyz_timecreate"  readonly  value="<%=str_date%>" style="color:blue"></td>
+					</tr>
+					</s:if>																							    
+				   </s:if>
+				   <s:else>
+				      <td class="tdcolor">廠別</td>				      
+				      <td>
+				      <input type="text" name="kyz.id.factNo" value="<s:property value='kyz.id.factNo'/>" readonly style="color:blue" id="dwrFactNo"/>
+				      <input type="hidden" name="isnull" value="notNull"/><!--判斷變量 -->
+				      </td>
+				     
+				      <td class="tdcolor">廠別狀態</td>
+				      <td><input type="text" name="kyz.factCode" value="<s:property value='kyz.factCode'/>" readonly style="color:blue" id="dwrFactArea"/></td>
+				     
+				      <td class="tdcolor">修改日期</td>
+				      <td><input type="text" name="yymmdd" value="<%=str_date%>" readonly style="color:blue" /></td>				     				     
+				   </s:else>
+				   
+				    <tr>			    				    
+				      <td class="tdcolor">申請單號</td>				        
+				      <td>
+				        <s:if test="kyz==null">	
+				          		<input type="text" name="kyz.id.billNo" value="自動生成" readonly style="color:blue" id="kyz_billno" datatype="*"/>	        
+				        </s:if>
+				        <s:else>
+				               <input type="text" name="kyz.id.billNo" value="<s:property value='kyz.id.billNo'/>" id="kyz_billno" readonly style="color:blue" />
+				        </s:else>				      
+				      </td>
+				        	        
+				       <td class="tdcolor">申請者</td>
+						<td >
+						<s:if test="kyz==null">
+						   <input type="text" name="kyz.userNm" datatype="*"  value="<s:property value='#session.loginUser.name'/>" style="color:blue" readonly/>
+						   <input type="hidden" name="kyz.username" value="<s:property value='#session.loginUser.username'/>"/>
+						</s:if>
+						<s:else>
+						   <input type="text" name="kyz.userNm" datatype="*"  value="<s:property value='kyz.userNm'/>" style="color:blue" readonly/>
+						   <input type="hidden" name="kyz.username" value="<s:property value='kyz.username'/>"/>
+						</s:else>
+						</td>
+						
+						<td class="tdcolor">是否緊急</td>
+						<s:if test="kyz==null">
+						   <td >是<input type="radio" name="kyz.emerWhether" value="0" checked/>&nbsp;&nbsp;否<input type="radio" name="kyz.emerWhether" value="1"/></td>
+						</s:if>
+						<s:else>
+						   <s:if test="kyz.emerWhether==0">
+						       <td >是<input type="radio" name="kyz.emerWhether" value="<s:property value='kyz.emerWhether'/>" checked/>&nbsp;&nbsp;否<input type="radio" name="kyz.emerWhether" value="1"/></td>
+						   </s:if>
+						   <s:if test="kyz.emerWhether==1">
+						       <td >是<input type="radio" name="kyz.emerWhether" value="0" />&nbsp;&nbsp;否<input type="radio" name="kyz.emerWhether" value="<s:property value='kyz.emerWhether'/>" checked/></td>
+						   </s:if>
+						    <s:if test="kyz.emerWhether==null">
+						       <td >是<input type="radio" name="kyz.emerWhether" value="0" checked/>&nbsp;&nbsp;否<input type="radio" name="kyz.emerWhether" value="1" /></td>
+						   </s:if>
+						</s:else>					
+										        
+				    </tr>
+				    <tr>
+				      <td class="tdcolor">類別</td>
+				      <td >
+				         <s:if test="kyz==null">
+				            <select  id="dwr_kytype" onchange="checkType(this.value)" datatype="*" style="color:blue">
+				            <option value="">請選擇</option>
+				         </select>
+				         <input type="hidden" id="dwr_email" value="<s:property value='#session.loginUser.email'/>"/>
+				         <input type="hidden" name="kyz.visaType" id="hidden_kytype" datatype="*"/>
+				         <input type="hidden" id="dwr_username" value="<s:property value='#session.loginUser.username'/>"/>					         
+				         </s:if>
+				         <s:else>
+				            <input type="text" value="<s:property value='kyz.visaType'/>" name="kyz.visaType" style="color:blue"  readonly/>
+				         </s:else>				         				        				        
+				      </td>					     
+				      <td class="tdcolor">附檔</td>
+				      <td >
+				      <div style="width:300px" id="divfile">
+				      <input type="file" name="files" style="width:150px"/><a href="javascript:addFile()">添加多個</a>
+				      </div>
+				      </td>	
+				      <td class="tdcolor">是否顯示第一頁</td>		       
+				       <s:if test="kyz==null">
+						   <td >是<input type="radio" name="kyz.firstPage" value="0" checked/>&nbsp;&nbsp;否<input type="radio" name="kyz.firstPage" value="1"/></td>
+						</s:if>
+						<s:else>
+						   <s:if test="kyz.firstPage==0">
+						       <td >是<input type="radio" name="kyz.firstPage" value="<s:property value='kyz.firstPage'/>" checked/>&nbsp;&nbsp;否<input type="radio" name="kyz.firstPage" value="1"/></td>
+						   </s:if>
+						   <s:if test="kyz.firstPage==1">
+						       <td >是<input type="radio" name="kyz.firstPage" value="0" />&nbsp;&nbsp;否<input type="radio" name="kyz.firstPage" value="<s:property value='kyz.firstPage'/>" checked/></td>
+						   </s:if>
+						    <s:if test="kyz.firstPage==null">
+						       <td >是<input type="radio" name="kyz.firstPage" value="0" checked/>&nbsp;&nbsp;否<input type="radio" name="kyz.firstPage" value="1" /></td>
+						   </s:if>
+						</s:else>		      
+				    </tr>					
+					<tr>
+					    <td class="tdcolor">申請內容</td>	
+						<td  colspan="10">
+				           <textarea style="width:100%;height:120px" name="kyz.memoMk"  wrap="off"   tip="申請內容" altercss="gray" class="gray"><s:property value="kyz.memoMk"/></textarea>				                                           				         
+				           
+				           
+				           <input type="hidden" value="<s:property value='kyz.filesYn'/>" name="kyz.filesYn"/>
+				           <input type="hidden" value="<s:property value='maxNum'/>" id="maxNum"/>
+				        </td>
+						
+					</tr>													
+			</tbody>
+			</table>	
+			<table class="table table-condensed">								 			
+			<tbody id="kyzs_body" >
+			  <tr>
+			     <td class="tdcolor"></td>
+			     <td class="tdcolor">名稱</td>
+			     <td class="tdcolor">項次</td>
+			     <td class="tdcolor">規格</td>
+			     <td class="tdcolor">單價</td>
+			     <td class="tdcolor">數量</td>
+			     <td class="tdcolor">使用人數</td>
+			     <td class="tdcolor">單位</td>
+			     <td class="tdcolor">幣種</td>		     
+			     <td class="tdcolor">備註</td>
+			 </tr>				
+			  
+			    <s:iterator value="kyz.kyzExpectmatses" status="x" id="temp">
+			    <tr class="bluecss">
+			     <td><input type="hidden" name="cbox"/></td>			           			          			          			            			          	     
+			     <td ><input type="text" name="kyz.kyzExpectmatses[${x.index}].itemNm" value="<s:property value='itemNm'/>" /></td>			    
+			     <td><input type="text" name="kyz.kyzExpectmatses[${x.index}].id.itemNo" value="<s:property value='id.itemNo'/>" readonly style="color:blue" /></td>			    			     			     
+			     <td ><input type="text" name="kyz.kyzExpectmatses[${x.index}].matNo" value="<s:property value='matNo'/>" /></td>			     
+			     <td ><input type="text" name="kyz.kyzExpectmatses[${x.index}].qtyExpect" value="<s:property value='qtyExpect'/>" datatype="my0-8"  id="qtyExpect_${x.index}"/></td>
+			     <td ><input type="text" name="kyz.kyzExpectmatses[${x.index}].qtyOk" value="<s:property value='%{formatDouble(qtyOk)}'/>" datatype="my0-8"  id="qtyOk_${x.index}"/></td>
+			     <td ><input type="text" name="kyz.kyzExpectmatses[${x.index}].personNo" value="<s:property value='%{formatDouble(personNo)}'/>" datatype="n0-8"  id="personNo_${x.index}"/></td>
+			     <td ><input type="text" name="kyz.kyzExpectmatses[${x.index}].qtyPair" value="<s:property value='qtyPair'/>"   /></td>
+			     <td ><input type="text" name="kyz.kyzExpectmatses[${x.index}].moneyType" value="<s:property value='moneyType'/>"  /></td>
+			      <td >
+			      <input type="text" name="kyz.kyzExpectmatses[${x.index}].memoMk" value="<s:property value='memoMk'/>" />			      
+			      <input type="hidden" name="kyz.kyzExpectmatses[${x.index}].id.kyzExpectmatm.id.factNo" value="<s:property value='id.kyzExpectmatm.id.factNo'/>" />
+			      <input type="hidden" name="kyz.kyzExpectmatses[${x.index}].id.kyzExpectmatm.id.billNo" value="<s:property value='id.kyzExpectmatm.id.billNo'/>" />
+			      <input type="hidden" name="kyz.kyzExpectmatses[${x.index}].factCode" value="<s:property value='factCode'/>" />
+			      </td>			      		      
+			  </tr>
+			    </s:iterator>
+			    <input type="hidden" value="<s:property value='kyz.id.factNo'/>" name="factNo"/>
+			    <input type="hidden" value="<s:property value='kyz.id.billNo'/>" name="billNo"/>
+			    	         			  			 	  			
+			</tbody>
+			<tfoot><tr>			
+			<td colspan="10">			     			  
+			     <input type="button" value="添加行" onclick="addRow()" disabled="disabled" id="addbtn" style="color:grey"/>			     
+			 </td>    			 					    			    		   		
+			</tr>
+			</tfoot>					    
+		</table >
+	
+		<s:if test='kyz.filesYn=="1"'>
+	       <hr/>
+	       <div style="color:blue;">附檔:</div><br/>
+	       <div id="fileJson" style="width:850px">
+	      <s:iterator value="#session.list_filesexp">	        
+	           <a href="/upload/<s:property value='billno'/>/<s:property value="%{toUrl2(filename)}"/>" target="_blank" title="點擊查看">
+	                 <s:property value="%{toUrl(filename)}"/>
+	           </a>           
+	           <a href="javascript:lookJson('${billno}',${id},'<s:property value="%{toUrl(filename)}"/>')">
+	              <img src="images/icon/del_file.png" alt="刪除" title="刪除" style="border:0px"/>
+	           </a>&nbsp;&nbsp;	        	        	        
+	     </s:iterator>
+	     </div>		     	     	        	       
+	   </s:if>
+	   <hr/>	  
+			  <center style="width:850px;margin-left:50px">			    
+				<input type="submit" id="sub" value="確定" class="btn btn-primary"/>&nbsp;&nbsp;&nbsp; <input
+					type="reset" id="reset" value="重置" class="btn btn-primary"/>
+				<input type="button" value="返回" onclick="back()" id="btn_back" class="btn btn-primary"/>						
+			</center>
+		<input type="hidden" name="addorupdate" value="<s:property value='addorupdate'/>" id="addorupdate"/>	<!-- 添加或更新標識     -->				
+	</form>
+	<iframe id="frameFile" name="frameFile" style="display: none;"></iframe>
+	
 <script type="text/javascript">
 
 jq(function() {		
@@ -346,9 +579,6 @@ function gook(){
 <script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>
 <script type='text/javascript' src='/Login/dwr/interface/kyzvisaflowjs.js'></script>
 <script type='text/javascript' src='/Login/dwr/interface/webtypejs.js'></script>
-<!-- <script type='text/javascript' src='/Login/dwr/engine.js'></script>
-<script type='text/javascript' src='/Login/dwr/util.js'></script> -->
-
 <script type="text/javascript">
 jq(function(){
 	if(jq("#addorupdate").val()!="update"){
@@ -361,242 +591,6 @@ jq(function(){
 		j=0;
 	}
 });
-</script>
-
-</head>
-<body >  
-    <form action="kyz_add"  method="post" id="form"  enctype="multipart/form-data" target="frameFile">
-        <h2>函文申請</h2>
-		<table class="table table-condensed" >		    	
-			<tbody id="tb_list_info2">
-				    <tr>
-				        <td class="tdcolor">標題</td>
-				        <td><input type="text" name="kyz.memoSmk" datatype="*"  value="<s:property value='kyz.memoSmk'/>" id="memoSmk"/></td>
-				        
-				        <td class="tdcolor">電話</td>
-				        <td><input type="text" name="kyz.telNo" datatype="n0-11"  value="<s:property value='kyz.telNo'/>" id="telNo"/></td> 				        
-				        <td class="tdcolor">申請單位</td>
-				        <td><input type="text" name="kyz.secNo"  value="<s:property value='kyz.secNo'/>" datatype="*1-10" id="secNo"/></td>
-				        
-				    </tr>
-				    <s:if test="kyz==null">
-				   	<input type="hidden" name="isnull" value="isNull"/><!--判斷變量 -->					
-					<s:if test="#session.factNo!='tw'">
-					<tr>
-						<td class="tdcolor">廠別</td>
-						<td ><input type="text" style="color:blue"
-							name="kyz.id.factNo" value="${factNo}" readonly id="dwrFactNo" />							
-						</td>
-						
-						<td class="tdcolor">廠別狀態</td>
-						<td><select name="kyz.factCode"
-							 id="dwrFactArea"  style="color:blue">
-								<option value="">請選擇廠別狀態</option>
-								<s:iterator value="#session.factAreas_login" id="temp">
-									<option value="${temp}">${temp}</option>
-								</s:iterator>
-						</select></td>
-						
-						<td class="tdcolor">建立日期</td>
-				        <td ><input type="text" name="yymmdd" id="kyz_timecreate"  readonly  value="<%=str_date%>" style="color:blue">
-					</tr>
-				</s:if>
-				<s:if test="#session.factNo=='tw'">
-					<tr>
-						<td class="tdcolor">廠別</td>
-						<td ><select style="color:blue"
-							name="kyz.id.factNo" datatype="*" id="dwrFactNo"
-							onchange="getFactArea(this.value),makeBillNo(),getKyType2(this.value)">
-								<option value="">請選擇廠別</option>
-								<s:iterator value="#session.facts" id="temp">
-									<option value="${temp[0]}">${temp[1]
-										}&nbsp;(${temp[0]})</option>
-								</s:iterator>
-						</select></td>
-						
-						<td class="tdcolor">廠別狀態</td>
-						<td><select name="kyz.factCode"
-							 id="dwrFactArea" onchange="makeBillNo()">
-								<option value="">請選擇廠別狀態</option>
-						</select></td>
-						
-						<td class="tdcolor">建立日期</td>
-				        <td ><input type="text" name="yymmdd" id="kyz_timecreate"  readonly  value="<%=str_date%>" style="color:blue"></td>
-					</tr>
-					</s:if>																							    
-				   </s:if>
-				   <s:else>
-				      <td class="tdcolor">廠別</td>				      
-				      <td>
-				      <input type="text" name="kyz.id.factNo" value="<s:property value='kyz.id.factNo'/>" readonly style="color:blue" id="dwrFactNo"/>
-				      <input type="hidden" name="isnull" value="notNull"/><!--判斷變量 -->
-				      </td>
-				     
-				      <td class="tdcolor">廠別狀態</td>
-				      <td><input type="text" name="kyz.factCode" value="<s:property value='kyz.factCode'/>" readonly style="color:blue" id="dwrFactArea"/></td>
-				     
-				      <td class="tdcolor">修改日期</td>
-				      <td><input type="text" name="yymmdd" value="<%=str_date%>" readonly style="color:blue" /></td>				     				     
-				   </s:else>
-				   
-				    <tr>			    				    
-				      <td class="tdcolor">申請單號</td>				        
-				      <td>
-				        <s:if test="kyz==null">	
-				          		<input type="text" name="kyz.id.billNo" value="自動生成" readonly style="color:blue" id="kyz_billno" datatype="*"/>	        
-				        </s:if>
-				        <s:else>
-				               <input type="text" name="kyz.id.billNo" value="<s:property value='kyz.id.billNo'/>" id="kyz_billno" readonly style="color:blue" />
-				        </s:else>				      
-				      </td>
-				        	        
-				       <td class="tdcolor">申請者</td>
-						<td >
-						<s:if test="kyz==null">
-						   <input type="text" name="kyz.userNm" datatype="*"  value="<s:property value='#session.loginUser.name'/>" style="color:blue" readonly/>
-						   <input type="hidden" name="kyz.username" value="<s:property value='#session.loginUser.username'/>"/>
-						</s:if>
-						<s:else>
-						   <input type="text" name="kyz.userNm" datatype="*"  value="<s:property value='kyz.userNm'/>" style="color:blue" readonly/>
-						   <input type="hidden" name="kyz.username" value="<s:property value='kyz.username'/>"/>
-						</s:else>
-						</td>
-						
-						<td class="tdcolor">是否緊急</td>
-						<s:if test="kyz==null">
-						   <td >是<input type="radio" name="kyz.emerWhether" value="0" checked/>&nbsp;&nbsp;否<input type="radio" name="kyz.emerWhether" value="1"/></td>
-						</s:if>
-						<s:else>
-						   <s:if test="kyz.emerWhether==0">
-						       <td >是<input type="radio" name="kyz.emerWhether" value="<s:property value='kyz.emerWhether'/>" checked/>&nbsp;&nbsp;否<input type="radio" name="kyz.emerWhether" value="1"/></td>
-						   </s:if>
-						   <s:if test="kyz.emerWhether==1">
-						       <td >是<input type="radio" name="kyz.emerWhether" value="0" />&nbsp;&nbsp;否<input type="radio" name="kyz.emerWhether" value="<s:property value='kyz.emerWhether'/>" checked/></td>
-						   </s:if>
-						    <s:if test="kyz.emerWhether==null">
-						       <td >是<input type="radio" name="kyz.emerWhether" value="0" checked/>&nbsp;&nbsp;否<input type="radio" name="kyz.emerWhether" value="1" /></td>
-						   </s:if>
-						</s:else>					
-										        
-				    </tr>
-				    <tr>
-				      <td class="tdcolor">類別</td>
-				      <td >
-				         <s:if test="kyz==null">
-				            <select  id="dwr_kytype" onchange="checkType(this.value)" datatype="*" style="color:blue">
-				            <option value="">請選擇</option>
-				         </select>
-				         <input type="hidden" id="dwr_email" value="<s:property value='#session.loginUser.email'/>"/>
-				         <input type="hidden" name="kyz.visaType" id="hidden_kytype" datatype="*"/>
-				         <input type="hidden" id="dwr_username" value="<s:property value='#session.loginUser.username'/>"/>					         
-				         </s:if>
-				         <s:else>
-				            <input type="text" value="<s:property value='kyz.visaType'/>" name="kyz.visaType" style="color:blue"  readonly/>
-				         </s:else>				         				        				        
-				      </td>					     
-				      <td class="tdcolor">附檔</td>
-				      <td >
-				      <div style="width:300px" id="divfile">
-				      <input type="file" name="files" style="width:150px"/><a href="javascript:addFile()">添加多個</a>
-				      </div>
-				      </td>	
-				      <td class="tdcolor">是否顯示第一頁</td>		       
-				       <s:if test="kyz==null">
-						   <td >是<input type="radio" name="kyz.firstPage" value="0" checked/>&nbsp;&nbsp;否<input type="radio" name="kyz.firstPage" value="1"/></td>
-						</s:if>
-						<s:else>
-						   <s:if test="kyz.firstPage==0">
-						       <td >是<input type="radio" name="kyz.firstPage" value="<s:property value='kyz.firstPage'/>" checked/>&nbsp;&nbsp;否<input type="radio" name="kyz.firstPage" value="1"/></td>
-						   </s:if>
-						   <s:if test="kyz.firstPage==1">
-						       <td >是<input type="radio" name="kyz.firstPage" value="0" />&nbsp;&nbsp;否<input type="radio" name="kyz.firstPage" value="<s:property value='kyz.firstPage'/>" checked/></td>
-						   </s:if>
-						    <s:if test="kyz.firstPage==null">
-						       <td >是<input type="radio" name="kyz.firstPage" value="0" checked/>&nbsp;&nbsp;否<input type="radio" name="kyz.firstPage" value="1" /></td>
-						   </s:if>
-						</s:else>		      
-				    </tr>					
-					<tr>
-					    <td class="tdcolor">申請內容</td>	
-						<td  colspan="10">
-				           <textarea style="width:100%;height:120px" name="kyz.memoMk"  wrap="off"   tip="申請內容" altercss="gray" class="gray"><s:property value="kyz.memoMk"/></textarea>				                                           				         
-				           
-				           
-				           <input type="hidden" value="<s:property value='kyz.filesYn'/>" name="kyz.filesYn"/>
-				           <input type="hidden" value="<s:property value='maxNum'/>" id="maxNum"/>
-				        </td>
-						
-					</tr>													
-			</tbody>
-			</table>	
-			<table class="table table-condensed">								 			
-			<tbody id="kyzs_body" >
-			  <tr>
-			     <td class="tdcolor"></td>
-			     <td class="tdcolor">名稱</td>
-			     <td class="tdcolor">項次</td>
-			     <td class="tdcolor">規格</td>
-			     <td class="tdcolor">單價</td>
-			     <td class="tdcolor">數量</td>
-			     <td class="tdcolor">使用人數</td>
-			     <td class="tdcolor">單位</td>
-			     <td class="tdcolor">幣種</td>		     
-			     <td class="tdcolor">備註</td>
-			 </tr>				
-			  
-			    <s:iterator value="kyz.kyzExpectmatses" status="x" id="temp">
-			    <tr class="bluecss">
-			     <td><input type="hidden" name="cbox"/></td>			           			          			          			            			          	     
-			     <td ><input type="text" name="kyz.kyzExpectmatses[${x.index}].itemNm" value="<s:property value='itemNm'/>" /></td>			    
-			     <td><input type="text" name="kyz.kyzExpectmatses[${x.index}].id.itemNo" value="<s:property value='id.itemNo'/>" readonly style="color:blue" /></td>			    			     			     
-			     <td ><input type="text" name="kyz.kyzExpectmatses[${x.index}].matNo" value="<s:property value='matNo'/>" /></td>			     
-			     <td ><input type="text" name="kyz.kyzExpectmatses[${x.index}].qtyExpect" value="<s:property value='qtyExpect'/>" datatype="my0-8"  id="qtyExpect_${x.index}"/></td>
-			     <td ><input type="text" name="kyz.kyzExpectmatses[${x.index}].qtyOk" value="<s:property value='%{formatDouble(qtyOk)}'/>" datatype="my0-8"  id="qtyOk_${x.index}"/></td>
-			     <td ><input type="text" name="kyz.kyzExpectmatses[${x.index}].personNo" value="<s:property value='%{formatDouble(personNo)}'/>" datatype="n0-8"  id="personNo_${x.index}"/></td>
-			     <td ><input type="text" name="kyz.kyzExpectmatses[${x.index}].qtyPair" value="<s:property value='qtyPair'/>"   /></td>
-			     <td ><input type="text" name="kyz.kyzExpectmatses[${x.index}].moneyType" value="<s:property value='moneyType'/>"  /></td>
-			      <td >
-			      <input type="text" name="kyz.kyzExpectmatses[${x.index}].memoMk" value="<s:property value='memoMk'/>" />			      
-			      <input type="hidden" name="kyz.kyzExpectmatses[${x.index}].id.kyzExpectmatm.id.factNo" value="<s:property value='id.kyzExpectmatm.id.factNo'/>" />
-			      <input type="hidden" name="kyz.kyzExpectmatses[${x.index}].id.kyzExpectmatm.id.billNo" value="<s:property value='id.kyzExpectmatm.id.billNo'/>" />
-			      <input type="hidden" name="kyz.kyzExpectmatses[${x.index}].factCode" value="<s:property value='factCode'/>" />
-			      </td>			      		      
-			  </tr>
-			    </s:iterator>
-			    <input type="hidden" value="<s:property value='kyz.id.factNo'/>" name="factNo"/>
-			    <input type="hidden" value="<s:property value='kyz.id.billNo'/>" name="billNo"/>
-			    	         			  			 	  			
-			</tbody>
-			<tfoot><tr>			
-			<td colspan="10">			     			  
-			     <input type="button" value="添加行" onclick="addRow()" disabled="disabled" id="addbtn" style="color:grey"/>			     
-			 </td>    			 					    			    		   		
-			</tr>
-			</tfoot>					    
-		</table >
-	
-		<s:if test='kyz.filesYn=="1"'>
-	       <hr/>
-	       <div style="color:blue;">附檔:</div><br/>
-	       <div id="fileJson" style="width:850px">
-	      <s:iterator value="#session.list_filesexp">	        
-	           <a href="/upload/<s:property value='billno'/>/<s:property value="%{toUrl2(filename)}"/>" target="_blank" title="點擊查看">
-	                 <s:property value="%{toUrl(filename)}"/>
-	           </a>           
-	           <a href="javascript:lookJson('${billno}',${id},'<s:property value="%{toUrl(filename)}"/>')">
-	              <img src="images/icon/del_file.png" alt="刪除" title="刪除" style="border:0px"/>
-	           </a>&nbsp;&nbsp;	        	        	        
-	     </s:iterator>
-	     </div>		     	     	        	       
-	   </s:if>
-	   <hr/>	  
-			  <center style="width:850px;margin-left:50px">			    
-				<input type="submit" id="sub" value="確定" class="btn btn-primary"/>&nbsp;&nbsp;&nbsp; <input
-					type="reset" id="reset" value="重置" class="btn btn-primary"/>
-				<input type="button" value="返回" onclick="back()" id="btn_back" class="btn btn-primary"/>						
-			</center>
-		<input type="hidden" name="addorupdate" value="<s:property value='addorupdate'/>" id="addorupdate"/>	<!-- 添加或更新標識     -->				
-	</form>
-	<iframe id="frameFile" name="frameFile" style="display: none;"></iframe>
+</script>	
 </body>
 </html>

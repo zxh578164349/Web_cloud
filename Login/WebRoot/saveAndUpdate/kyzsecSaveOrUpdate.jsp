@@ -19,9 +19,7 @@
 <meta http-equiv="expires" content="0">
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
-<link href="css/validate.css" rel="stylesheet" type="text/css" />
 <link rel="stylesheet" type="text/css" href="css/form.css" />
-<link rel="stylesheet" type="text/css" href="css/select_beautiful.css">
 </head>
 
 <body>
@@ -191,11 +189,7 @@
 	      });
 	   }
 	}	
-jq(document).keyup(function(event){
-   if(event.keyCode==13){
-      submis();
-   }
-});
+
 </script>
 <script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>
 <script type='text/javascript' src='/Login/dwr/interface/kyzsecjs.js'></script>

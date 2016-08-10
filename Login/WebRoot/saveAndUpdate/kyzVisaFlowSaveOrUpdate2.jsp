@@ -21,9 +21,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 <meta http-equiv="expires" content="0">
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
-<link href="css/validate.css" rel="stylesheet" type="text/css" />
 <link rel="stylesheet" type="text/css" href="css/form.css" />
-<link rel="stylesheet" type="text/css" href="css/select_beautiful.css">
 
 </head>
 <body >
@@ -65,9 +63,8 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 			</tbody>							    
 		</table >
 			<center>			    
-				<input type="submit" id="sub" value="確定" class="btn btn-primary"/>&nbsp;&nbsp;&nbsp; 
-				<input type="reset" id="reset" value="重置" class="btn btn-primary"/>
-			<input type="button" value="返回" onclick="back()" id="btn_back" class="btn btn-primary"/>
+				<input type="submit" id="sub" value="確定" class="btn btn-primary"/>&nbsp;&nbsp;&nbsp; 				
+			    <input type="button" value="返回" onclick="back()" id="btn_back" class="btn btn-primary"/>
 			</center>
 							
 	</form>

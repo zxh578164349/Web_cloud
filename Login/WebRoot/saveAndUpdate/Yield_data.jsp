@@ -19,15 +19,13 @@
 <meta http-equiv="expires" content="0">
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
-<link href="css/validate.css" rel="stylesheet" type="text/css" />
 <link rel="stylesheet" type="text/css" href="css/form.css" />
-<link rel="stylesheet" type="text/css" href="css/select_beautiful.css">
 </head>
 
 
 <body >
 
-	<form action="ydata_addData" method="post" id="form">
+	<form action="ydata_addData" method="post" id="form" role="form" class="form-inline">
        <h2>產量資料</h2>
 		<table class="table table-condensed"
 			id="table1">			
@@ -157,13 +155,13 @@
 				<td class="td_show_title" width="10%">人數(人)</td>
 
 				<td class="td_input"><span id="personnum"><input
-						id="renshu" type="text" name="ydata.personnum"
+						id="hd_renshu" type="text" name="ydata.personnum"
 						value="<s:property value='%{formatDouble2(ydata.personnum)}'/>"
 						datatype="*,*0-6"> </span>
 				</td>
 				<td class="td_show_title">上模數(模)</td>
 				<td class="td_input"><span id="onModulus"><input
-						id="shangmoshu" type="text" name="ydata.onModulus" datatype="*,*0-6"
+						id="hd_shangmoshu" type="text" name="ydata.onModulus" datatype="*,*0-6"
 						value="<s:property value='%{formatDouble2(ydata.onModulus)}'/>">
 				</span>
 				</td>
@@ -172,14 +170,14 @@
 			<tr>
 				<td class="td_show_title">標準產量(模)</td>
 				<td class="td_input"><span id="standardOutput"><input
-						id="bzcl" type="text" name="ydata.standardOutput"
+						id="hd_bzcl" type="text" name="ydata.standardOutput"
 						value="<s:property value='%{formatDouble2(ydata.standardOutput)}'/>"
 						datatype="*,*0-6"> </span>
 				</td>
 
 				<td class="td_show_title">實際產量(模)</td>
 				<td class="td_input"><span id="actualYield"><input
-						id="sjcl" type="text" name="ydata.actualYield"
+						id="hd_sjcl" type="text" name="ydata.actualYield"
 						value="<s:property value='%{formatDouble2(ydata.actualYield)}'/>"
 						datatype="*,*0-6"> </span>
 				</td>
@@ -190,14 +188,14 @@
 			<tr>
 				<td class="td_show_title">實際生產雙數(雙)</td>
 				<td class="td_input"><span id="actualpairs"><input
-						id="in_actualpairs" type="text" name="ydata.actualpairs"
+						id="hd_in_actualpairs" type="text" name="ydata.actualpairs"
 						value="<s:property value='%{formatDouble2(ydata.actualpairs)}'/>"
 						datatype="*,*0-6"> </span>
 				</td>
 
 				<td class="td_show_title">客補生產雙數(雙)</td>
 				<td class="td_input"><span id="hostpairs"><input
-						id="in_hostpairs" type="text" name="ydata.hostpairs"
+						id="hd_in_hostpairs" type="text" name="ydata.hostpairs"
 						value="<s:property value='%{formatDouble2(ydata.hostpairs)}'/>"
 						datatype="*,*0-6"> </span>
 				</td>
@@ -206,14 +204,14 @@
 			<tr>
 				<td class="td_show_title">廠補生產雙數(雙)</td>
 				<td class="td_input"><span id="factpairs"><input
-						id="in_factpairs" type="text" name="ydata.factpairs"
+						id="hd_in_factpairs" type="text" name="ydata.factpairs"
 						value="<s:property value='%{formatDouble2(ydata.factpairs)}'/>"
 						datatype="*,*0-6"> </span>
 				</td>
 
 				<td class="td_show_title">樣品生產雙數(雙)</td>
 				<td class="td_input"><span id="samplepairs"><input
-						id="in_samplepairs" type="text" name="ydata.samplepairs"
+						id="hd_in_samplepairs" type="text" name="ydata.samplepairs"
 						value="<s:property value='%{formatDouble2(ydata.samplepairs)}'/>"
 						datatype="*,*0-6"> </span>
 				</td>
@@ -222,14 +220,14 @@
 			<tr>
 				<td class="td_show_title">出貨數(雙)</td>
 				<td class="td_input"><span id="outnum"><input
-						id="in_outnum" type="text" name="ydata.outnum"
+						id="hd_in_outnum" type="text" name="ydata.outnum"
 						value="<s:property value='%{formatDouble2(ydata.outnum)}'/>"
 						datatype="*,*0-6"> </span>
 				</td>
 
 				<td class="td_show_title">退貨數(雙)</td>
 				<td class="td_input"><span id="backnum"><input
-						id="in_backnum" type="text" name="ydata.backnum"
+						id="hd_in_backnum" type="text" name="ydata.backnum"
 						value="<s:property value='%{formatDouble2(ydata.backnum)}'/>"
 						datatype="*,*0-6"> </span>
 				</td>
@@ -238,7 +236,7 @@
 			<tr>
 				<td class="td_show_title">天數(天)</td>
 				<td class="td_input"><span id="daycount"><input
-						id="tianshu" type="text" name="ydata.daycount"
+						id="hd_tianshu" type="text" name="ydata.daycount"
 						value="<s:property value='%{formatDouble2(ydata.daycount)}'/>"
 						datatype="*,*0-7"> </span> <input type="hidden"
 					value="<s:property value='#session.loginUser.username'/>"
@@ -248,7 +246,7 @@
 
 				<td class="td_show_title">上模總工時(小時)</td>
 				<td class="td_input"><span id="workhours"><input
-						id="in_workhours" type="text" name="ydata.workhours"
+						id="hd_in_workhours" type="text" name="ydata.workhours"
 						value="<s:property value='%{formatDouble2(ydata.workhours)}'/>"
 						datatype="*,*0-6"> </span>
 				</td>
@@ -338,8 +336,42 @@
 		}
 	}
 
-	function showRow() {		
-		var renshu = document.getElementById("renshu");
+	function showRow() {
+		/*document.getElementById("renshu").disabled=true;
+		jq("#renshu").attr("disabled","disabled");
+		jq("#renshu").removeAttr("disabled");*/
+		
+		var workholiday = jq("#workholiday");
+		
+		/*var renshu = jq("#hd_renshu");
+		var shangmoshu = jq("#hd_shangmoshu");
+		var bzcl = jq("#hd_bzcl");
+		var sjcl = jq("#hd_sjcl");
+		var tianshu = jq("#hd_tianshu");				
+		var in_actualpairs=jq("#hd_in_actualpairs");
+		var in_hostpairs=jq("#hd_in_hostpairs");
+		var in_factpairs=jq("#hd_in_factpairs");
+		var in_samplepairs=jq("#hd_in_samplepairs");
+		var in_outnum=jq("#hd_in_outnum");
+		var in_backnum=jq("#hd_in_backnum");
+		var in_workhours=jq("#hd_in_workhours");*/
+		
+		var arrays=jq("input[id^='hd_']");
+		if(workholiday.val()==1||workholiday.val()==2){
+			for(var i=0;i<arrays.length;i++){
+				arrays.eq(i).prop("disabled",true);
+				arrays.eq(i).val(null);
+				arrays.eq(i).removeAttr("datatype");
+			}			
+		}else{
+			for(var i=0;i<arrays.length;i++){
+				arrays.eq(i).prop("disabled",false);
+				arrays.eq(i).attr("datatype","*,*0-6");
+			}
+		}
+		
+		
+		/*var renshu = document.getElementById("renshu");
 		var shangmoshu = document.getElementById("shangmoshu");
 		var bzcl = document.getElementById("bzcl");
 		var sjcl = document.getElementById("sjcl");
@@ -353,7 +385,7 @@
 		var in_outnum=document.getElementById("in_outnum");
 		var in_backnum=document.getElementById("in_backnum");
 		var in_workhours=document.getElementById("in_workhours");
-		if (workholiday.value == 1 || workholiday.value == 2) {
+		if (workholiday.value == 1 || workholiday.value == 2) {							
 			renshu.style.display = "none";
 			shangmoshu.style.display = "none";
 			bzcl.style.display = "none";
@@ -395,9 +427,6 @@
 			in_outnum.value="";
 			in_backnum.value="";
 			in_workhours.value="";
-			
-			
-
 		}
 
 		if (workholiday.value == 0) {
@@ -428,8 +457,7 @@
 			document.getElementById("outnum").style.display = "block";
 			document.getElementById("backnum").style.display = "block";
 			document.getElementById("workhours").style.display = "block";
-
-		}
+		}*/
 
 	}
 
@@ -468,17 +496,11 @@
           });               
        }                    
    }
-   
-/*禁止空格輸入*/
-window.onload=function(){            
-            var inputs=document.getElementsByTagName("input"); 
-            for (var i=0;i<inputs.length; i++) {  
-                if(inputs[i].getAttribute("type")=="text") 
-                 inputs[i].onkeyup=function(){ 
-                    this.value=this.value.replace(/(^\s+)|\s+$/g,""); 
-                 }; 
-            }  
-        }       
+           
+jq(function(){
+	goTrim();
+	showRow();	
+})        
 </script>
 <script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>
 <script type='text/javascript' src='/Login/dwr/interface/webydatejs.js'></script>

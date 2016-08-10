@@ -178,25 +178,17 @@
 			location.href = "/Login/judge.jsp";
 		}
 
-		function showDiv_main(index) {
-			//var sts = document.getElementById("a" + index).innerHTML;
-			var sts = jq("#a" + index);
-
-			/*if (sts.text().replace(/(^\s*)|(\s*$)/g, "")=="退出管理") {
-				location.href = "judge.jsp";
-			}*/
-			var divName = jq("#submenu" + index).css("display");
-			//var img =jq("#img" + index);
+		function showDiv_main(index) {			
+			var sts = jq("#a" + index);			
+			var divName = jq("#submenu" + index).css("display");			
 			if (divName == "none") {
 				sts.removeClass("glyphicon glyphicon-folder-close");
 				sts.addClass("glyphicon glyphicon-folder-open");
-				jq("#submenu" + index).show();
-				//img.attr("src","image/folderopen.gif");
+				jq("#submenu" + index).show();				
 			} else {
 				sts.removeClass("glyphicon glyphicon-folder-open");
 				sts.addClass("glyphicon glyphicon-folder-close");
-				jq("#submenu" + index).hide();
-				//img.attr("src","image/folder.gif");
+				jq("#submenu" + index).hide();				
 			}
 		}
 		jq(document)
@@ -285,6 +277,22 @@
 					});
 				}	
 		}
+		
+		//禁止輸入空格
+		function goTrim(){
+			 var inputs=document.getElementsByTagName("input"); 
+             for (var i=0;i<inputs.length; i++) {  
+                 if(inputs[i].getAttribute("type")=="text"){                
+                  inputs[i].onkeyup=function(){
+                 	 if(this.value.indexOf(" "!=-1)){
+                 		//this.value=this.value.trim();
+                 		this.value=this.value.replace(/(^\s+)|\s+$/g,""); 
+                 	 }
+                  };                
+                 }  
+             }
+		}
+		
 				
 		function hideBills2(){
 		   jq("#divBills2").hide(300);

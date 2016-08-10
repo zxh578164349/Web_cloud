@@ -495,12 +495,13 @@ public class WebYdataAction extends ActionSupport implements
 
 	public String findById() {
 		ydata = dataSer.findById(id);
-		if (ydata.getWorkorholiday() == null
+		/*if (ydata.getWorkorholiday() == null
 				|| ydata.getWorkorholiday().equals("0")) {
 			return "findById";
 		} else {
 			return "findById2";
-		}
+		}*/
+		return "findById";
 
 	}
 
