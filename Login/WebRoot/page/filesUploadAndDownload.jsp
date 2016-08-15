@@ -87,8 +87,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 	</table>
 	</div>
 	</div>
-<!-- <script src="uploadify/jquery.min.js" type="text/javascript"></script>	
-<script src="uploadify/jquery.uploadify.min.js" type="text/javascript"></script> -->
+
 <script type="text/javascript">
 //var jq = jQuery.noConflict();
 var uploadify_config = {
