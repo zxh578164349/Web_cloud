@@ -141,11 +141,11 @@
                 <param name="allowedExtensions">jpg,bmp,xls,xlsx,txt,pdf</param>             
            </interceptor-ref>
            <interceptor-ref name="defaultStack"></interceptor-ref>        
-		    <result name="success" type="redirectAction">
-               filesUpload_findByName
-            </result>
+		    <result name="uploadFile" type="redirectAction">filesUpload_findByName_1</result>
             <result name="input">none.jsp</result>
             <result name="findByName">page/filesUploadAndDownload.jsp</result>
+            <result name="delete" type="redirectAction">filesUpload_findByName_1</result> 
+            <result name="findByName_1">page/table1/filesUploadAndDownload1.jsp</result>
 		</action>		
 		<action name="download_*" class="downLoadAction" method="{1}">  
         <result name="download" type="stream">

@@ -106,14 +106,7 @@ public class FilesDownLoadAction extends ActionSupport{
 		String result="";
 		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
 		String factNo=user.getFactno();
-		String userName=user.getUsername();
-		/**
-		 * �A�Ⱦ����|
-		 */
-		//File file=new File(ServletActionContext.getServletContext().getRealPath("upload\\"+factNo+"_"+userName+"\\"+fileName));
-		/**
-		 * ���a���|
-		 */
+		String userName=user.getUsername();		
 		KyzExpectmatmLog log=new KyzExpectmatmLog();
 		log.setUsername(user.getUsername());
 		log.setFactNo(factNo);
@@ -133,6 +126,5 @@ public class FilesDownLoadAction extends ActionSupport{
 		return result;
 	}
 	
-
 
 }

@@ -28,7 +28,7 @@
 
 </head>
 <body>
-    <h3 class="single_h3">函文審核</h3>
+    <h3 >函文審核</h3>
 	<table>							
 		<tr>
 			<td>					

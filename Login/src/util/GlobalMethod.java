@@ -29,6 +29,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.Scanner;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
@@ -1100,7 +1101,26 @@ public class GlobalMethod extends HibernateDaoSupport{
 		 if(num>3&&num<=6){
 			 result="sub_file_6.jasper";
 		 }
+		 if(num>6&&num<=9){
+			 result="sub_file_9.jasper";
+		 }
 		 return result;		 
+	 }
+	 
+	 public static String randomString(int num){
+		Random rd=new Random(num);
+		 StringBuilder sb=new StringBuilder();
+		 while(true){
+			 int k=rd.nextInt(27);
+			 if(k==0){
+				 break;
+			 }
+			 sb.append((char)('`'+k));
+		 }
+		 return sb.toString();
+		 
+		 
+		 
 	 }
 	 
 	 public static void main(String[] args) throws ParseException, FileNotFoundException, ScriptException, NoSuchMethodException {
@@ -1194,11 +1214,14 @@ public class GlobalMethod extends HibernateDaoSupport{
 			}
 			System.out.println("StringBuilder運行時間："+(System.currentTimeMillis()-start2));*/
 			
-			for(Season s:Season.values()){
+			/*for(Season s:Season.values()){
 				System.out.println(s);
 				System.out.println("最舒服的季節："+Season.getComfortableSeason().getCon());
 				System.out.println(Season.Summer.ordinal());;
-			}
+			}*/
+			System.out.println(randomString(-229985452)+" "+randomString(-147909649));
+			
+			
 			
 						
 		}

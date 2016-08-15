@@ -20,6 +20,7 @@ import util.GlobalMethod;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
+import entity.KyzExpectmatmLog;
 import entity.WebUploadfiles;
 import entity.WebUser;
 
@@ -108,9 +109,10 @@ public class FilesUploadAction extends ActionSupport{
 		public void setWebuploadSer(IWebUploadFileServices webuploadSer) {
 			this.webuploadSer = webuploadSer;
 		}
-	           
-	    public String goHome() throws Exception{     
-	          
+		
+		
+
+		public void uploadFile() throws Exception{     	        	        	         
 	        //获取需要上传文件的文件路径  
 	        //File uploadFile=new File(ServletActionContext.getServletContext().getRealPath("upload"));
 	    	/**
@@ -121,6 +123,7 @@ public class FilesUploadAction extends ActionSupport{
 	    	 * 上傳到本地
 	    	 */
 	    	File uploadFile=new File("d:\\webupload\\"+uploadfile.getFilefactno()+"_"+uploadfile.getFileuser());
+	    	//File uploadFile=new File("d:\\webupload\\"+user.getFactno()+"_"+user.getUsername());
 	        //判断文件是否上传，如果上传的话将会创建该目录  
 	        if(!uploadFile.exists()){  
 	            //uploadFile.mkdir(); //创建该目录  
@@ -137,35 +140,14 @@ public class FilesUploadAction extends ActionSupport{
 	        				index++;
 	        				filesFileName.set(k, mixName[0]+"-"+index+"."+mixName[1]);
 	        			}
-	        		}
-	        		
-		        /*BufferedInputStream input=new BufferedInputStream(new FileInputStream(files.get(j)));  
-		        BufferedOutputStream out=new BufferedOutputStream(new FileOutputStream(uploadFile + "\\" +filesFileName.get(j)));  		          
-		        try{		        	
-		        		byte[] b=new byte[1024];//每次写入的大小  
-			            int i=0;  
-			            while((i=input.read(b))!=-1){  
-			                out.write(b,0,i);		               
-			            }
-			            out.close();
-			            input.close();
-			            
-		        			            
-		        }catch(Exception e){  
-		            e.printStackTrace();
-		        }finally{  
-		            input.close();  
-		            out.close();  
-		        }*/
+	        		}	        				       
 		        GlobalMethod.uploadFile(files.get(j),uploadFile + "\\" +filesFileName.get(j));
 		        uploadfile.setFilename(filesFileName.get(j));
                 uploadfile.setFiletype(filesContentType.get(j));
                 webuploadSer.add(uploadfile);
 	        	}//for
-	        }
-	        System.out.println(fileContentType);
-	        System.out.print(fileFileName);
-	        return "success";  
+	        }	       
+	       // return "uploadFile";  
 	    }
 	    
 		public String findByName(){
@@ -176,10 +158,16 @@ public class FilesUploadAction extends ActionSupport{
 			ActionContext.getContext().getSession().put("uploadfiles", list);
 			return "findByName";
 		}
+		public String findByName_1(){
+			this.findByName();
+			return "findByName_1";
+		}
 		public String urlEncode(String fname) throws UnsupportedEncodingException{
 			String tempname=java.net.URLEncoder.encode(fname,"utf-8");
 			return tempname;
 		}
+		
+		
 		
 
  

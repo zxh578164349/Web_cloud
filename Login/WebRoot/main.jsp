@@ -123,20 +123,14 @@
 	<script type='text/javascript' src='/Login/dwr/engine.js'></script>
 	<script type='text/javascript' src='/Login/dwr/util.js'></script>
 	<script src="http://apps.bdimg.com/libs/jquery/1.9.1/jquery.min.js"></script>
-	<script>
-		window.jQuery
-				|| document
-						.write('<script src="jquery/jquery-1.9.1.min.js"><\/script>');
-	</script>
+	<script>window.jQuery|| document.write('<script src="jquery/jquery-1.9.1.min.js"><\/script>');</script>
 	<script type="text/javascript" src="page/jquerys/layer/layer.min.js"></script>
 	<script type="text/javascript" src="jquery/DatePicker/WdatePicker.js"></script>
 	<script type="text/javascript" src="jquery/Validform_v5.3.2_min.js"></script>
 	<script type="text/javascript" src="jquery/jquery-form.js"></script>
-	<!-- <script>window.jQuery|| document.write('<script src="jquery/jquery-form.js"><\/script>'); -->
-	</script>
 	<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
-	<script
-		src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+	<script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>	
+	<script src="uploadify/jquery.uploadify.min.js" type="text/javascript"></script>
 
 	<!--[if lt IE 9]>  
   <script src="bootstrap/html5.js"></script>
