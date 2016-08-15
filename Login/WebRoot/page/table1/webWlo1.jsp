@@ -19,10 +19,6 @@
 <meta http-equiv="expires" content="0">
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
-<!--  <link rel="stylesheet" type="text/css" href="css/mystyle.css" />-->
-	<script type="text/javascript">
-	
-	</script>
 </head>
 <body>
   <div id="container">
@@ -61,7 +57,7 @@
 		<tbody id="tbody">
 		<s:iterator value="bean.list" status="x" id="temp">
 			<tr>
-				<td>${25*(pages.page-1)+x.index+1}</td>
+				<td>${bean.pageSize*(pages.page-1)+x.index+1}</td>
 				<td><s:property value="id.factNo" /></td>
 				<td><s:date name="id.yymm" format="yyyyMM" /></td>
 				<td><s:property value="id.factCode" /></td>
@@ -85,7 +81,7 @@
 						<input type="hidden" value="<s:property value='id.yymm'/>"
 							name="id.yymm" />
 					</form> <a
-					href="javascript:findById('subform${x.index}','webwlo_findWloById')"
+					href="javascript:findById_form('subform${x.index}','webwlo_findWloById')"
 					onclick=""><img alt="修改" src="images/icon/edit001.png" title="修改" ></a>
 					<form action="webwlo_delete2" method="post" id="2subform${x.index}"
 						style="float:left">
@@ -95,7 +91,7 @@
 						<input type="hidden" value="<s:property value='id.yymm'/>"
 							name="id.yymm" />
 					</form> <a href="javascript:void(0)"
-					onclick="isDelete('2subform${x.index}')"><img alt="刪除" src="images/icon/delete001.png" title="刪除"></a>
+					onclick="isDelete('2subform${x.index}','webwlo_delete2')"><img alt="刪除" src="images/icon/delete001.png" title="刪除"></a>
 				</td>
 				</s:if>
 			</tr>
@@ -103,37 +99,7 @@
 		</tbody>
 	</table>
 </div>	
-<%-- 	<hr />
-	<center id="center_page">
-	　　<a href="javascript:pages(0)">首頁</a>
-	    <a href="javascript:pages(<s:property value='bean.currentPage'/>-1)">上一頁</a>	    
-	        (第<s:property value="bean.currentPage" />頁 <a href="javascript:void(0)" onclick="showPage()" id="a_page">▽</a>|共<s:property value="bean.totalPage" />頁)
-	           <div id="divpage">
-	               <c:forEach begin="1"  end="${bean.totalPage}" var="id">
-	                   <a href="javascript:pages(${id })">${id}</a>
-	               </c:forEach>
-	           </div>	  
-	    <a href="javascript:pages(<s:property value='bean.currentPage'/>+1)">下一頁</a>
-	    <a href="javascript:pages(<s:property value='bean.totalPage'/>)">尾頁</a>		
-	</center> --%>
-	<ul class="pagination" style="padding-left:42%">
-		    <li><a href="javascript:pages(0)">首頁</a></li>
-			<li><a href="javascript:pages(<s:property value='bean.currentPage'/>-1)">&laquo;</a></li>			
-			<li><a href="javascript:pages(<s:property value='bean.currentPage'/>)"><s:property value='bean.currentPage'/></a></li>
-			<s:if test="bean.currentPage+1==bean.totalPage||bean.currentPage+1<bean.totalPage">
-			    <li><a href="javascript:pages(<s:property value='bean.currentPage'/>+1)"><s:property value='bean.currentPage+1'/></a></li>
-			</s:if>
-			<s:if test="bean.currentPage+2==bean.totalPage||bean.currentPage+2<bean.totalPage">
-			    <li><a href="javascript:pages(<s:property value='bean.currentPage'/>+2)"><s:property value='bean.currentPage+2'/></a></li>
-			</s:if>
-			<s:if test="bean.currentPage+3==bean.totalPage||bean.currentPage+3<bean.totalPage">
-			    <li><a href="javascript:pages(<s:property value='bean.currentPage'/>+3)"><s:property value='bean.currentPage+3'/></a></li>
-			</s:if>
-			<s:if test="bean.currentPage+4==bean.totalPage||bean.currentPage+4<bean.totalPage">
-			    <li><a href="javascript:pages(<s:property value='bean.currentPage'/>+4)"><s:property value='bean.currentPage+4'/></a></li>
-			</s:if>									
-			<li><a href="javascript:pages(<s:property value='bean.currentPage'/>+1)">&raquo;</a></li>
-			<li><a href="javascript:pages(<s:property value='bean.totalPage'/>)">尾頁</a></li>			
-		</ul>
+  <jsp:include page="pagenation.jsp" flush="true"/>
+	
 </body>
 </html>

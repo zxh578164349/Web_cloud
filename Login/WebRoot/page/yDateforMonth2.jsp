@@ -15,23 +15,33 @@
 <meta http-equiv="cache-control" content="no-cache">
 <meta http-equiv="expires" content="0">
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
-<meta http-equiv="description" content="This is my page">
-<!--  <link rel="stylesheet" type="text/css" href="css/button_css.css" />
-<link rel="stylesheet" type="text/css" href="css/general_css.css" />
-<link href="tablecloth/tablecloth.css" rel="stylesheet" type="text/css" media="screen" />
-<script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script>
-<script type="text/javascript" src="page/jquerys/layer/layer.min.js"></script>-->
- 
+<meta http-equiv="description" content="This is my page"> 
 </head>
+
+
+<body>
+	<jsp:include page="publicHead_sumydata.jsp" flush="true" />
+	<hr />	
+	<s:if test='#session.loginUser.userread!="1"'>
+	<span style="float:right">
+	  <input type="button" onclick="loadUrl('page/sum_yiele_data.jsp')" class="btn btn-link btn-sm" value="添加每月盤點數據"/>
+	</span>
+	</s:if>
+	<span style="float:right"> <input type="button"
+		onclick="loadUrl('ydata_findPageBean')" 
+		class="btn btn-link btn-sm" value="按日詳細查看"/>
+	</span>
+	<!-- <s:if test="#session.loginUser.username=='admin'">
+	<span style="float:right"> <img alt="" src="images/136.gif"><a
+		href="javascript:updateAll()" 
+		style="color:blue;text-decoration:underline;float:right;padding-right:30px">更新所有</a>
+	</span>
+    </s:if> -->
+	<div id="bodyid">
+		<jsp:include page="table1/yDateforMonth1_1.jsp" />
+	</div>
+	
 <script>
-	/* var jq=jQuery.noConflict();
-	var loadi; 
-	jq(document).ajaxStart(function(){
-		loadi=layer.load(0);
-	});
-	jq(document).ajaxStop(function(){
-		layer.close(loadi);
-	}); */
 	function pages(page) {
 		jq.ajax({
 			type : "POST",
@@ -68,7 +78,7 @@
 	}
 
 	//你确定要删除吗？
- 	function isDelete(mid) {
+ 	/*function isDelete(mid) {
 	 jConfirm('你确定这么做吗?', '确认对话框', function(r) {
 	 if (r == true) {		 
 	   //document.getElementById(mid).submit();
@@ -86,7 +96,7 @@
 	   });
 	 }
 	 });
-	 }
+	 }*/
 	 
 	 //更新
 	 function update(sumform){
@@ -149,40 +159,12 @@ function showDiv_update(factNo,factCode,yymm){
           this.showDiv();
        }
     }
-   /* function print(){
-       var factNo=document.getElementById("factNo").value;
-       var begin_yymm=document.getElementById("begin_yymm").value;
-       var end_yymm=document.getElementById("end_yymm").value;
-       location.href="sumwebydata_print?factNo="+factNo+"&begin_yymm="+begin_yymm+"&end_yymm="+end_yymm;
-    } */
     function print(public_form){
     	var public_form=jq("#"+public_form);
     	public_form.attr("action","sumwebydata_print");
     	public_form.attr("target","_blank");
     	public_form.submit();
     }
-</script>
-
-<body>
-	<jsp:include page="publicHead_sumydata.jsp" flush="true" />
-	<hr />	
-	<s:if test='#session.loginUser.userread!="1"'>
-	<span style="float:right">
-	  <input type="button" onclick="loadUrl('page/sum_yiele_data.jsp')" class="btn btn-link btn-sm" value="添加每月盤點數據"/>
-	</span>
-	</s:if>
-	<span style="float:right"> <input type="button"
-		onclick="loadUrl('ydata_findPageBean')" 
-		class="btn btn-link btn-sm" value="按日詳細查看"/>
-	</span>
-	<!-- <s:if test="#session.loginUser.username=='admin'">
-	<span style="float:right"> <img alt="" src="images/136.gif"><a
-		href="javascript:updateAll()" 
-		style="color:blue;text-decoration:underline;float:right;padding-right:30px">更新所有</a>
-	</span>
-    </s:if> -->
-	<div id="bodyid">
-		<jsp:include page="table1/yDateforMonth1_1.jsp" />
-	</div>
+</script>	
 </body>
 </html>

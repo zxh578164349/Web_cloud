@@ -97,8 +97,9 @@ public class AutoSendKyzAll extends QuartzJobBean{
 						}
 					}
 				}
+				//this.init();
 			}catch(Exception e){
-				
+				System.out.println(e);
 			}								
 	}
 	
@@ -165,8 +166,8 @@ public class AutoSendKyzAll extends QuartzJobBean{
 		/**
 		 * 發郵件
 		 * 由於要給所有人(包括不要審核的)發送郵件,所以要重新從數據庫中獲取,而不能使用上面已有的list_visa
-		 */
-		this.sendEmail(local_factNo, local_billNo, local_visaSort,vbm,ac);      
+		 */		
+		GlobalMethod.sendEmailB(local_factNo,local_billNo,local_visaSort,vbm,ac);
 		
 		
 	}
@@ -187,9 +188,7 @@ public class AutoSendKyzAll extends QuartzJobBean{
 		 * 發郵件
 		 * 由於要給所有人(包括不要審核的)發送郵件,所以要重新從數據庫中獲取,而不能使用上面已有的list_visa
 		 */
-		 this.sendEmail(local_factNo, local_billNo, local_visaSort,vbm,ac);
-		
-								
+		GlobalMethod.sendEmailB(local_factNo,local_billNo,local_visaSort,vbm,ac);		 								
 	}
 	
 	/**
@@ -209,7 +208,7 @@ public class AutoSendKyzAll extends QuartzJobBean{
 		 * 發郵件
 		 * 由於要給所有人(包括不要審核的)發送郵件,所以要重新從數據庫中獲取,而不能使用上面已有的list_visa
 		 */
-		 this.sendEmail(local_factNo, local_billNo, local_visaSort,vbm,ac);     										
+		GlobalMethod.sendEmailB(local_factNo,local_billNo,local_visaSort,vbm,ac);		     										
 	}
 	
 	/**
@@ -229,7 +228,7 @@ public class AutoSendKyzAll extends QuartzJobBean{
 		 * 發郵件
 		 * 由於要給所有人(包括不要審核的)發送郵件,所以要重新從數據庫中獲取,而不能使用上面已有的list_visa
 		 */
-		 this.sendEmail(local_factNo, local_billNo, local_visaSort,vbm,ac);     										
+		GlobalMethod.sendEmailB(local_factNo,local_billNo,local_visaSort,vbm,ac);		    										
 	}
 	
 				
@@ -349,53 +348,5 @@ public class AutoSendKyzAll extends QuartzJobBean{
 		map=(Map<String,Object>)map_result.get("map");
 		List<Webremittancelist>list=(List<Webremittancelist>)map_result.get("list");
 		this.exportmain("auto", map, "webremittancelist.jasper", list, billNo, "jasper/audit/");
-	}
-	
-	
-	public void sendEmail(String local_factNo,String local_billNo,String local_visaSort,KyVisabillm vbm2,ApplicationContext ac){
-		//ApplicationContext ac=new ClassPathXmlApplicationContext(new String[]{"spring.xml","spring-dao.xml","spring-services.xml"});
-		//IKyVisabillmServices visabillmSer=(IKyVisabillmServices)ac.getBean("visabillmSer");
-		//IWebuserEmailServices webuseremailSer=(IWebuserEmailServices)ac.getBean("webuseremailSer");/****備簽人****/
-		IWebuserEmailAServices webuseremailaSer=(IWebuserEmailAServices)ac.getBean("webuseremailaSer");/******知會人********/
-		//KyVisabillm vbm2=visabillmSer.findById(local_factNo, local_visaSort, local_billNo);//用參數傳遞vbm,減少連接數據庫
-		List<KyVisabills>list_visa2=vbm2.getKyVisabillses();
-		//这个类主要是设置邮件   
-		List<String>list_emails=new ArrayList<String>();//所有發送人
-		list_emails.add("kyuen@yydg.com.cn");
-		for(KyVisabills bills:list_visa2){
-			list_emails.add(bills.getVisaSigner());
-			if(bills.getFlowMk().equals("Y")){//要簽核的人才需要通知知會人
-				List<String>list_emailPwd=webuseremailaSer.findByEmail(local_factNo,bills.getVisaSigner(),local_visaSort);
-				for(String str:list_emailPwd){
-					list_emails.add(str);
-				}
-			}
-		}
-		
-		String[] attachFileNames = { "d:/" + local_billNo + ".pdf" };// 附件
-		SimpleMailSender sms = new SimpleMailSender();
-		MailSenderInfo mailInfo = new MailSenderInfo();
-		
-		for(String email:list_emails){//for
-			mailInfo.setValidate(true);			
-			mailInfo.setSubject("函文知會定時通知(審核完畢)_" + local_billNo + "("
-					+ local_factNo + ")");
-
-			mailInfo.setAttachFileNames(attachFileNames);
-			mailInfo.setContent("單號為:" + "<span style='color:red'>"
-					+ local_billNo + "</span>" + "的函文已審核完畢,請查看附件"
-					+ "<br/>本郵件自動定時發送，請勿回覆");
-
-			String toAddress = email;
-			mailInfo.setToAddress(toAddress);
-			sms.sendHtmlMail(mailInfo);// 发送html格式
-		}//for
-		File file = new File("d:/" + local_billNo + ".pdf");
-		if (file.exists()) {
-			if (file.isFile()) {
-				file.delete();
-			}
-		}							       	          
-	}
-	
+	}	
 }

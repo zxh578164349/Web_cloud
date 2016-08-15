@@ -16,9 +16,17 @@
 <meta http-equiv="expires" content="0">
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
- 
-
 </head>
+
+
+<body>
+	<jsp:include page="publicHead_webuseremail.jsp" />
+	<hr />
+	
+	<div id="bodyid">
+		<jsp:include page="table1/managerUserEmail1.jsp" />
+	</div>
+	
 <script type="text/javascript">
 	
 	function pages(page) {
@@ -55,13 +63,6 @@
 		});
 	}
 	
-
-   
-/* jq(document).keyup(function(event){
-    if(event.keyCode==13){
-       submis();
-    }
-})  */
  
  function mydelete(factNo,email,emailpwd){
     var flag=confirm("確定要刪除嗎?");
@@ -84,14 +85,6 @@ function findById(factno,email,emailpwd){
 	loadUrl("webuseremail_findById?factNo="+factno+"&email="+email+"&emailpwd="+emailpwd);
 }
 
-</script>
-
-<body>
-	<jsp:include page="publicHead_webuseremail.jsp" />
-	<hr />
-	
-	<div id="bodyid">
-		<jsp:include page="table1/managerUserEmail1.jsp" />
-	</div>
+</script>	
 </body>
 </html>

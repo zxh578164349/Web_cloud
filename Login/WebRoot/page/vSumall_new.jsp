@@ -22,19 +22,24 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <link rel="stylesheet" type="text/css" href="css/select_beautiful.css">
 
 <script type="text/javascript">
+function tips(){
+	   window.parent.layer.alert("出現無數據時,請檢查<br/>【產量資料(盤點)】【預計生產】【基本數據導入】是否同時具備數據",0); 
+}
    jq(
       function(){
          jq("#subform1").Validform({
              btnSubmit : "#btn1",
              tiptype:3,
              tipSweep:true,
-             showAllError:true
+             showAllError:true,
+             beforeSubmit:tips
          });
          jq("#subform2").Validform({
              btnSubmit:"#btn2",
              tiptype:3,
              tipSweep:true,
-             showAllError:true
+             showAllError:true,
+             beforeSubmit:tips
          });
           /*jq("#subform3").Validform({
              btnSubmit:"#btn3",
@@ -108,6 +113,7 @@ function print_tw(){
 		layer.alert("請選擇廠別");
 		return false;
 	}
+	tips();
 	jq("#subform3").submit();
 }
 </script>

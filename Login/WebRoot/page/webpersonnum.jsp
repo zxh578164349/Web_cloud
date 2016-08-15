@@ -16,11 +16,24 @@
 <meta http-equiv="expires" content="0">
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
-<!--  <link rel="stylesheet" type="text/css" href="css/button_css.css" />
-<link rel="stylesheet" type="text/css" href="css/general_css.css" />
-<link href="tablecloth/tablecloth.css" rel="stylesheet" type="text/css" media="screen" />-->
 	
 </head>
+
+
+<body>
+	<jsp:include page="publicHead_webPersonnum.jsp" flush="true" />
+	<hr />
+		<s:if test="#session.factNo=='tw'">
+		<span style="float:right">
+		<input type="button"
+		onclick="javascript:showDiv()" 
+		class="btn btn-link btn-sm" value="出勤統計報表"/>
+	   </span>
+		</s:if>			
+	<div id="bodyid">
+		<jsp:include page="table1/webpersonnum1.jsp" />
+	</div>
+	
 <script>
 	
 	function pages(page) {
@@ -58,7 +71,7 @@
 		});
 	}
 	//你确定要删除吗？
-	function isDelete(mid) {
+	/*function isDelete(mid) {
 		 var flag=confirm("確定要刪除嗎?");
 		
 			if (flag == true) {
@@ -77,7 +90,7 @@
 				});
 			}
 		
-	}
+	}*/
 	
 function showDiv(){
     jq.layer({
@@ -97,10 +110,8 @@ function showDiv(){
     area: ['500px', '150px'],
     page:{
       url:'search/webpersonnum_search_print.jsp'   
-    },
-    close:function(){
-       window.location.href='webpersonnum_findPageBean';
     }
+    
             
 });
     }
@@ -111,20 +122,6 @@ function showDiv(){
     	public_form.attr("target","_blank");
     	public_form.submit();
     }
-</script>
-
-<body>
-	<jsp:include page="publicHead_webPersonnum.jsp" flush="true" />
-	<hr />
-		<s:if test="#session.factNo=='tw'">
-		<span style="float:right">
-		<input type="button"
-		onclick="javascript:showDiv()" 
-		class="btn btn-link btn-sm" value="出勤統計報表"/>
-	   </span>
-		</s:if>			
-	<div id="bodyid">
-		<jsp:include page="table1/webpersonnum1.jsp" />
-	</div>
+</script>	
 </body>
 </html>

@@ -1,11 +1,14 @@
 package action;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URLDecoder;
@@ -426,25 +429,13 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 		if(files!=null&&files.get(0)!=null){//不為空代表有上傳附檔,不能寫成files.size()>0,否則報空指針
 			kyz.setFilesYn("1");//標示是否帶有附檔
 			//File uploadFile=new File(ServletActionContext.getServletContext().getRealPath("KyzexpFile\\"+kyz.getId().getBillNo()));//附檔上傳到項目
-			File uploadFile_backup=new File("d:\\KyzexpFile_backup\\"+kyz.getId().getBillNo());//附檔上傳到D盤(為了避免更新項目時丟失附檔,所在上傳到D盤)
-			/*if(!uploadFile.exists()){
-				uploadFile.mkdirs();
-			}*/
+			File uploadFile_backup=new File("d:\\KyzexpFile_backup\\"+kyz.getId().getBillNo());//附檔上傳到D盤(為了避免更新項目時丟失附檔,所在上傳到D盤)			
 			if(!uploadFile_backup.exists()){
 				uploadFile_backup.mkdirs();
 			}
 			for(int i=0;i<files.size();i++){							
-				if(files.get(i)!=null){									
-					FileInputStream in=new FileInputStream(files.get(i));
-					//FileOutputStream out=new FileOutputStream(uploadFile+"\\"+filesFileName.get(i));
-					FileOutputStream out_backup=new FileOutputStream(uploadFile_backup+"\\"+filesFileName.get(i));//備份
-					byte[]b=new byte[1024];
-					int length=0;
-					while((length=in.read(b))>0){
-						//out.write(b,0,length);
-						out_backup.write(b,0,length);//備份
-					}
-																									
+				if(files.get(i)!=null){																									
+					GlobalMethod.uploadFile(files.get(i),uploadFile_backup+"\\"+filesFileName.get(i));//文件上傳																							
 					KyzExpectmatmFile kyzexpFile=new KyzExpectmatmFile();//函文附檔
 					kyzexpFile.setBillno(kyz.getId().getBillNo());
 					kyzexpFile.setFilename(filesFileName.get(i));
@@ -458,122 +449,40 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 			}
 		}
 		
-		
-		
-		String result=null;
+
 		SimpleDateFormat format=new SimpleDateFormat("yyyyMMdd");
 		Date date;
 		try {
 			response.setContentType("text/html;charset=utf-8");
 			date = format.parse(yymmdd);
 			kyz.setTimeCreate(date);
-				        
-			if(isnull.equals("isNull")){//start if
-				//String fact=(String)ActionContext.getContext().getSession().get("factNo");
-				KyzExpectmatm temp=kyzSer.findById(kyz.getId().getFactNo(), kyz.getId().getBillNo());						
-				String emailUrl_in="";
-				String emailUrl_in2="";
-				if(temp==null){//if
-					kyz.setVisaTypeM(kyz.getVisaType().substring(0,2));
-					kyzSer.add(kyz);							
-					result="add";
-					ajaxResult="0";					
-					KyVisabillm vbm=visabillmSer.findById(kyz.getId().getFactNo(), kyz.getVisaType(), kyz.getId().getBillNo());							
-					emailUrl_in="http://203.85.73.161/Login/vbm_findById_email?visaSort="+kyz.getVisaType()+"&billNo="+kyz.getId().getBillNo()
-					         +"&factNo="+kyz.getId().getFactNo()+"&email="+vbm.getSignerNext();
-					emailUrl_in2="http://203.85.73.161/Login/vbm_findById_email2?visaSort="+kyz.getVisaType()+"&billNo="+kyz.getId().getBillNo()
-					         +"&factNo="+kyz.getId().getFactNo()+"&email="+vbm.getSignerNext();	
-											
-					/**
-					 * 發送郵件
-					 */														
-					String singernext=vbm.getSignerNext();
-					String vbm_billno=vbm.getId().getBillNo();
-					String vbm_factno=vbm.getId().getFactNo();
-					MailSenderInfo mailinfo=new MailSenderInfo();
-					mailinfo.setValidate(true);					
-					mailinfo.setToAddress(singernext);
-					mailinfo.setSubject("新函文初次審核-"+vbm_billno+"("+vbm_factno+")");
-					mailinfo.setContent("單號:<span style='color:red'>"+vbm_billno+"</span>"+"&nbsp;&nbsp;廠別:"+vbm_factno+																	
-							"<br/>點擊單號直接審核:<a href='"+emailUrl_in2+"'>"+vbm_billno+"</a>(電腦適用)"+
-							"<br/>點擊單號直接審核:<a href='"+emailUrl_in+"'>"+vbm_billno+"</a>(手機平板適用)"+
-							"<hr/>"+
-							"如需查詢以往單據請登陸:(云端)<a href='http://203.85.73.161/Login'>http://203.85.73.161/Login</a>" +									
-							"<br/>進入[KPI數據]--[函文審核]查找對應單號審核" +									
-							"<hr/>"+
-							"<br/>本郵件自動發送,請勿回復!如需回復或者問題，請回复到kyinfo.lp@yydg.com.cn劉平!<br/>"+
-							"<hr/>");
-				    //这个类主要来发送邮件   
-				      SimpleMailSender sms = new SimpleMailSender();   
-				         // sms.sendTextMail(mailInfo);//发送文体格式    
-				      sms.sendHtmlMail(mailinfo);//发送html格式
-				      
-				      
-				      /**
-				       * 发送给备签人  20150817
-				       */							
-					 /******************20151113备签人请使用方法findByFactNoAEmailPwd2(String factNo,String email)**********************/			     
-				      
-				      List<String>list_emailPwd=webuseremailSer.findByFactNoAEmailPwd2(kyz.getId().getFactNo(),vbm.getSignerNext());
-				      if(list_emailPwd.size()>0){//if
-				    	  for(int i=0;i<list_emailPwd.size();i++){
-				    		  MailSenderInfo mailInfo2 = new MailSenderInfo();    				         
-						      mailInfo2.setValidate(true);    					        
-						      mailInfo2.setToAddress(list_emailPwd.get(i));    
-						      mailInfo2.setSubject("新函文初次審核"+vbm.getId().getBillNo()+"("+vbm.getId().getFactNo()+")");    
-						      mailInfo2.setContent("函文單號:"+"<span style='color:red'>"+vbm.getId().getBillNo()+"</span>"+"&nbsp;&nbsp;廠別:"+vbm.getId().getFactNo()+
-						    		  "<br/>點擊單號直接審核:<a href='"+emailUrl_in2+"'>"+vbm.getId().getBillNo()+"</a>(電腦適用)"+
-						    		  "<br/>點擊單號直接審核:<a href='"+emailUrl_in+"'>"+vbm.getId().getBillNo()+"</a>(手機平板適用)"+			    		  	
-								      "<hr/>"+
-						    		 "如需查詢以往單據請登錄加久網站:(云端)<a href='http://203.85.73.161/Login'>http://203.85.73.161/Login</a>" +			      		
-						      		"<br/>進入[KPI數據]--[函文審核]中查找對應單號審核,"+	      		    		
-						    		"<hr/>"+
-						      		"<br/>本郵件自動發送,請勿回復!如需回復或者問題，請回复到kyinfo.lp@yydg.com.cn劉平!<br/>"+
-						    		"<hr/>"
-						    		);      
-						         //这个类主要来发送邮件   
-						      SimpleMailSender sms2 = new SimpleMailSender();   
-						      sms2.sendHtmlMail(mailInfo2);//发送html格式  
-					      } 
-				      }//if
-				      
-				      
-				      /**
-				       * 測試主站kyuen@yydg.com.cn有沒有收到郵件
-				       */
-				      MailSenderInfo mailinfo3=new MailSenderInfo();
-				      mailinfo3.setValidate(true);				      
-				      mailinfo3.setToAddress("kyuen@yydg.com.cn");
-				      mailinfo3.setSubject("新函文初次審核(總站已收到)");
-				      mailinfo3.setContent("請登錄加久網站:(云端)<a href='http://203.85.73.161/Login'>http://203.85.73.161/Login</a>" +							
-								"<br/>進入[KPI數據]--[函文審核]查找對應單號進行審核" +
-								"<br/>單號:<span style='color:red'>"+vbm.getId().getBillNo()+"<span>"+"&nbsp;&nbsp;廠別:"+vbm.getId().getFactNo());
-				      SimpleMailSender sms3=new SimpleMailSender();
-				      sms3.sendHtmlMail(mailinfo3);
+			kyz.setVisaTypeM(kyz.getVisaType().substring(0,2));
+			if(isnull.equals("isNull")){			
+				KyzExpectmatm temp=kyzSer.findById(kyz.getId().getFactNo(), kyz.getId().getBillNo());										
+				if(temp==null){
+					//kyz.setVisaTypeM(kyz.getVisaType().substring(0,2));
+					kyzSer.add(kyz);											
+					KyVisabillm vbm=visabillmSer.findById(kyz.getId().getFactNo(), kyz.getVisaType(), kyz.getId().getBillNo());
+					List<String>list_emailPwd=webuseremailSer.findByFactNoAEmailPwd2(vbm.getId().getFactNo(),vbm.getSignerNext());																					
+																								
+					GlobalMethod.sendNewEmail(vbm,list_emailPwd);//發送郵件
 				      
 				      /****************************函文打印************************************/
 					 //print(kyz.getId(),kyz.getVisaType());
 					  /****************************函文打印************************************/
 				}else{
-					response.getWriter()
-					.print("<script>window.parent.alert('數據庫已存在("							
-							+ kyz.getId().getBillNo()
-							+ ")!');window.parent.layer.closeAll()</script>");
+					response.getWriter().print(
+							"<script>window.parent.alert('數據庫已存在(" + kyz.getId().getBillNo() + ")!');window.parent.layer.closeAll()</script>");
 				}																							 				
-			}//end if
-			else{
-				kyz.setVisaTypeM(kyz.getVisaType().substring(0,2));
-				kyzSer.add(kyz);
-				result="update";
-				ajaxResult="0";
-				
+			}else{
+				//kyz.setVisaTypeM(kyz.getVisaType().substring(0,2));
+				kyzSer.add(kyz);			
 			}
 			response.setContentType("text/html;charset=utf-8");
 			response.getWriter().print("<script>window.parent.gook();</script>");										
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			response.getWriter().print("<script>window.parent.layer.msg('操作失敗',3,3);window.parent.layer.closeAll()</script>");
-			ajaxResult="1";
 			e.printStackTrace();
 		} 	
 		return null;
@@ -587,158 +496,7 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 
 	
 	public void print(String factNo,String billNo,String sort,KyVisabillm vbm) throws IOException{
-		/*String factname=webFactSer.selByid(id.getFactNo());
-		String secNo="";//申請單位
-		List<KyzExpectmatm> list=kyzSer.findById_Print(id);
 		
-		if(list.size()==0){
-			response.setContentType("text/html;charset=utf-8");
-			response.getWriter().print("<script>alert('單號為"+id.getBillNo()+"的函文不存在!');window.close()</script>");
-			return null;
-		}else{
-			list.get(0).setSecNo(ZHConverter.convert(list.get(0).getSecNo(), ZHConverter.TRADITIONAL));
-			list.get(0).setUserNm(ZHConverter.convert(list.get(0).getUserNm(), ZHConverter.TRADITIONAL));			
-			list.get(0).setMemoMk(ZHConverter.convert(list.get(0).getMemoMk(), ZHConverter.TRADITIONAL));
-			list.get(0).setMemoSmk(ZHConverter.convert(list.get(0).getMemoSmk(), ZHConverter.TRADITIONAL));
-		}
-		if(list.get(0).getSecNo()!=null&&!list.get(0).getSecNo().equals("")){
-			secNo="("+list.get(0).getSecNo()+")";
-		}
-		String result=factname+secNo+"費用申請單";
-		map = new HashMap<String, Object>();
-		map.put("SUBREPORT_DIR",ServletActionContext.getRequest().getRealPath("/jasper/audit/")+ "/");
-		map.put("pic", ServletActionContext.getRequest().getRealPath("/jasper/audit/images/")+ "/");//圖片路徑		
-		map.put("pfactno", id.getFactNo());
-		map.put("pbillno",id.getBillNo());
-		map.put("title",result);		
-		
-		List<KyzExpectmats> sub_list = new ArrayList<KyzExpectmats>();		
-		KyzExpectmats temp=new KyzExpectmats();
-		
-		if(list.get(0).getKyzExpectmatses().size()==1){
-			KyzExpectmats kyzss=list.get(0).getKyzExpectmatses().get(0);			
-			if(kyzss.getMatNo()==null&&kyzss.getItemNm()==null||(kyzss.getMatNo().trim().equals("")&&kyzss.getItemNm().trim().equals(""))){
-				list.get(0).setKyzsMk("1");
-			}else{
-				for(int i=0;i<list.get(0).getKyzExpectmatses().size();i++){
-					KyzExpectmats kyzs=list.get(0).getKyzExpectmatses().get(i);
-					kyzs.setMatNo(ZHConverter.convert(kyzs.getMatNo(), ZHConverter.TRADITIONAL));
-					kyzs.setQtyPair(ZHConverter.convert(kyzs.getQtyPair(), ZHConverter.TRADITIONAL));
-					kyzs.setItemNm(ZHConverter.convert(kyzs.getItemNm(), ZHConverter.TRADITIONAL));
-					sub_list.add(kyzs);
-				}
-				while(sub_list.size()<10){
-					sub_list.add(temp);
-				}
-			}
-		}else{
-			for(int i=0;i<list.get(0).getKyzExpectmatses().size();i++){
-				KyzExpectmats kyzs=list.get(0).getKyzExpectmatses().get(i);
-				kyzs.setMatNo(ZHConverter.convert(kyzs.getMatNo(), ZHConverter.TRADITIONAL));
-				kyzs.setQtyPair(ZHConverter.convert(kyzs.getQtyPair(), ZHConverter.TRADITIONAL));
-				kyzs.setItemNm(ZHConverter.convert(kyzs.getItemNm(), ZHConverter.TRADITIONAL));
-				sub_list.add(kyzs);
-			}
-			while(sub_list.size()<10){
-				sub_list.add(temp);
-			}
-		}
-		
-		
-		Map<String,Object> sub_map=new HashMap<String,Object>();
-		sub_map.put("sub_list", sub_list);
-				
-		SimpleDateFormat format=new SimpleDateFormat("yyyyMMdd");
-		KyVisabillm vbm=visabillmSer.findById(id.getFactNo(), sort, id.getBillNo());
-		List<KyVisabills>list_visa=vbm.getKyVisabillses();
-		List<KyzVisaflow>list_visaflow=visaSer.findByType(id.getFactNo(),sort);		
-		*//**
-		 * 最後個不用審核的,就去掉
-		 *//*
-		int nos=visabillSer.findBillsWithNo(sort, id.getBillNo());
-		if(nos>0){
-			for(int i=0;i<nos;i++){
-				list_visa.remove(list_visa.size()-1);
-				list_visaflow.remove(list_visaflow.size()-1);
-			}
-		}
-		
-		List<VisabillsTemp>list_visabillstemp=new ArrayList<VisabillsTemp>();		
-		for(int i=0;i<list_visa.size()-nos;i++){//for
-			VisabillsTemp visabillstemp=new VisabillsTemp();
-			String visa_result="";
-			String visamk_temp="";
-			Date date=null;
-			
-			String datestr=list_visa.get(i).getDateVisa();
-			try {
-				if(datestr!=null){
-					date=format.parse(datestr);
-					visabillstemp.setCreateDate(date);
-				}
-				
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			String name=list_visa.get(i).getVisaRank();
-			String visamk=list_visa.get(i).getVisaMk();
-			String memo=list_visa.get(i).getMemo();
-			if(visamk.equals("Y")){
-				visamk_temp="(已審核)";
-			}
-			if(visamk.equals("N")){
-				visamk_temp="(未審核)";
-			}
-			if(visamk.equals("T")){
-				visamk_temp="(未通過)";
-			}			
-			visa_result=name+visamk_temp;
-			visabillstemp.setVisaNameAndMk(visa_result);			
-			if(list_visa.size()==list_visaflow.size()){
-				String visaRank=list_visaflow.get(i).getVisaRank();
-				visabillstemp.setVisaRank(visaRank+":");
-			}
-			if(memo!=null){
-				visabillstemp.setMemo("(備註:"+memo+")");
-			}
-			visabillstemp.setVisaSigner(list_visa.get(i).getVisaSigner());
-			visabillstemp.setVisaMk(list_visa.get(i).getVisaMk());
-			visabillstemp.setVisaName(name);
-			list_visabillstemp.add(visabillstemp);
-		}//for
-		
-		*//*********************簡體轉繁體******************//*
-		for(int i=0;i<list_visabillstemp.size();i++){
-			list_visabillstemp.get(i).setMemo(ZHConverter.convert(list_visabillstemp.get(i).getMemo(), ZHConverter.TRADITIONAL));
-			list_visabillstemp.get(i).setVisaName(ZHConverter.convert(list_visabillstemp.get(i).getVisaName(), ZHConverter.TRADITIONAL));
-			list_visabillstemp.get(i).setVisaNameAndMk(ZHConverter.convert(list_visabillstemp.get(i).getVisaNameAndMk(), ZHConverter.TRADITIONAL));
-			list_visabillstemp.get(i).setVisaRank(ZHConverter.convert(list_visabillstemp.get(i).getVisaRank(), ZHConverter.TRADITIONAL));			
-		}
-		*//*********************簡體轉繁體******************//*
-		
-		
-		
-		Map<String,Object> visa_map=new HashMap<String,Object>();
-		visa_map.put("list_visa", list_visabillstemp);
-		
-		map.put("sub_map", sub_map);
-		map.put("visa_map", visa_map);
-		
-		Map<String,Object> main_map=new HashMap<String,Object>();    把list（List<KyzExpectmatm> list=kyzSer.findById_Print(id)）放在一个子表,便于打印  20150804
-		main_map.put("list_main", list);
-		map.put("main_map", main_map);
-		
-		函文附檔
-		//String pic_file=ServletActionContext.getRequest().getRealPath("/KyzexpFile/"+id.getBillNo()+"/")+"/";//函文附檔圖片路徑(附檔在項目的路徑)
-		String pic_file=new File("d:\\KyzexpFile_backup\\"+id.getBillNo()).toString();//函文附檔圖片路徑(附檔在D盤的路徑)
-		List<KyzExpectmatmFile>list_kyzexpfile=kyzexpfileSer.findByBillNo(id.getBillNo());
-		if(pic_file!=null&&list_kyzexpfile.size()>0){
-			map.put("pic_file", pic_file+"\\");
-			Map<String,Object> file_map=new HashMap<String,Object>();
-			file_map.put("list_kyzexpfile", list_kyzexpfile);
-			map.put("file_map", file_map);
-		}*/	
 		Map<String,Object>map_result=kyzSer.print(factNo,billNo, sort,null);		
 		if(map_result!=null&&map_result.size()>0){
 			map=(Map<String,Object>)map_result.get("map");

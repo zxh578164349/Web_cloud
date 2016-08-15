@@ -11,10 +11,10 @@ public class WebFactorderId implements java.io.Serializable {
 	private String factNo;
 	private String factArea;
 	private String yymm;
-	private String modelNo;
-	private String customer;
-	private String brank;
-	private String component;
+	private String modelNo;//模型
+	private String customer;//客戶
+	private String brank;//品牌
+	private String component;//部件
 
 	// Constructors
 

@@ -19,6 +19,16 @@
 
  
 </head>
+
+
+<body>
+	<jsp:include page="publicHead_webtype.jsp" />
+	<hr />
+		
+	<div id="bodyid">
+		<jsp:include page="table1/webtype1.jsp" />
+	</div>
+
 <script type="text/javascript">
 	
 	function pages(page) {
@@ -52,27 +62,6 @@
 		});
 	}
 	
-var defaultColor="#97CBFF";
-var clickColor="#CCFFFF";
-function click_color(obj){
-        var tbody=document.getElementById("tbody");
-        var length=document.getElementById("tbody").rows.length;
-        for(var i=0;i<length;i++){
-            tbody.rows[i].style.backgroundColor=defaultColor;
-        }
-        obj.style.backgroundColor=clickColor;        
-    }
-    
-function move(obj){
-     obj.style.backgroundColor=defaultColor;
-    }
-   
-/* jq(document).keyup(function(event){
-    if(event.keyCode==13){
-       submis();
-    }
-})  */
- 
  function mydelete(factNo,typeNo){
     var flag=confirm("警告,刪除類別,將同時刪除該類別的所有函文及流程,確定要刪除嗎?");
     if(flag==true){   	
@@ -113,14 +102,6 @@ function recovery(subform){
 	});
 	
 }
-</script>
-
-<body>
-	<jsp:include page="publicHead_webtype.jsp" />
-	<hr />
-		
-	<div id="bodyid">
-		<jsp:include page="table1/webtype1.jsp" />
-	</div>
+</script>	
 </body>
 </html>

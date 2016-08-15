@@ -1,13 +1,5 @@
-<%@page
-	import="org.springframework.context.support.ClassPathXmlApplicationContext"%>
-<%@page import="org.springframework.context.ApplicationContext"%>
-<%@page import="dao.IKyFactDao"%>
-<%@page import="services.impl.KyFactServicesImpl"%>
-<%@page import="services.IKyFactServices"%>
-<%@page import="com.opensymphony.xwork2.ActionContext"%>
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib uri="/struts-tags" prefix="s"%>
-<%@page import="entity.*"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
@@ -20,29 +12,6 @@
 <link rel="stylesheet" type="text/css" href="css/select_beautiful.css">	
 <LINK href="css/list.css" type="text/css" rel="stylesheet">
 
-<script type="text/javascript">
-  var jb=jQuery.noConflict();
-   jb(document).keyup(function(event){
-      if(event.keyCode==13){
-          submis();
-      }
-   })
-   
-   function getType(factNo){
-     document.getElementById("visaSort").length=1;
-     webtypejs.findByFactNo(factNo,function(x){
-       if(x.length>0){
-          dwr.util.addOptions("visaSort",x,"webtypeMk","typeName");
-       }
-         
-     });
-   }   
-  	
-</script>
-<script type='text/javascript' src='/Login/dwr/interface/kytypejs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/webtypejs.js'></script>
-<script type='text/javascript' src='/Login/dwr/engine.js'></script>
-<script type='text/javascript' src='/Login/dwr/util.js'></script>
 </head>
 <body >
 	<table  id="tb_search">
@@ -77,5 +46,19 @@
 			<input value="搜索" type="button" class="btn btn-primary" onclick="submis()" /></td>
 		</tr>
 	</table>
+	
+<script type="text/javascript">  
+   function getType(factNo){
+     document.getElementById("visaSort").length=1;
+     webtypejs.findByFactNo(factNo,function(x){
+       if(x.length>0){
+          dwr.util.addOptions("visaSort",x,"webtypeMk","typeName");
+       }
+         
+     });
+   }   
+  	
+</script>
+<script type='text/javascript' src='/Login/dwr/interface/webtypejs.js'></script>	
 </body>
 </html>

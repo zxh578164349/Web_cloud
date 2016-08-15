@@ -19,6 +19,22 @@
 
 </head>
 
+
+
+<body>
+	<jsp:include page="publicHead_kyzmat.jsp"/>
+	<hr>		
+		
+		<!--  <input value="物料資料管理" type="button" id="search_forday" onclick="gotoSubmat()"/>-->
+		<span style="float:right"> <input type="button"
+		onclick="gotoSubmat()"
+		class="btn btn-link btn-sm" value="物料資料管理"/>
+	    </span>	
+	<div id="bodyid">
+		<jsp:include page="table1/kyzmat1.jsp" />
+	</div>
+
+	
 <script>
    
 	function pages(page) {
@@ -60,32 +76,7 @@
 			}
 		});
 	}
-	
-	/*function print() {
-		var loadi=layer.load("正在生成....");
-		var begindate = document.getElementById("beginDate");
-		var enddate=document.getElementById("endDate");
-		var matNo=document.getElementById("matNo");
-		var bNo=document.getElementById("bNo");
-		var mNo=document.getElementById("mNo");
-		var sNo=document.getElementById("sNo");
-		jq.ajax({
-			type : "POST",
-			dataType : "Html",
-			url : "kyzmat_print",
-			data : "fromDate=" + begindate.value +"& endDate="+enddate.value+"& matNo="+matNo.value
-			        +"& typeBno="+bNo.value+"& typeMno="+mNo.value+"& typeSno="+sNo.value,
-			success : function() {
-			    layer.close(loadi);
-				//jq("#bodyid").html(msg);				
-			},
-			error : function(xhr) {
-				alert(xhr.responseText);
-			}
-		});
-	}*/
-	      
-
+		    
     function gotoSubmat(){     
       loadUrl("kyzmat_findPageBean");
      
@@ -117,34 +108,7 @@
 				});
 			}
 		
-	}  
-</script>
-
-<script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/kyzsecjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/kyzacctjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/kyzpettyjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/engine.js'></script>
-<script type='text/javascript' src='/Login/dwr/util.js'></script>
-
-
-
-
-<body>
-	<jsp:include page="publicHead_kyzmat.jsp"/>
-	<hr>		
-		
-		<!--  <input value="物料資料管理" type="button" id="search_forday" onclick="gotoSubmat()"/>-->
-		<span style="float:right"> <input type="button"
-		onclick="gotoSubmat()"
-		class="btn btn-link btn-sm" value="物料資料管理"/>
-	    </span>	
-	<div id="bodyid">
-		<jsp:include page="table1/kyzmat1.jsp" />
-	</div>
-
-	
-
-
+	}
+ </script>
 </body>
 </html>

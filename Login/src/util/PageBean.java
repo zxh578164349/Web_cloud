@@ -2,14 +2,15 @@ package util;
 
 import java.util.List;
 
-public class PageBean {
+public  class PageBean {
 
 	private List list;// 
 	private int allRow;// 
 	private int totalPage;// 
 	private int currentPage;// 
-	private int pageSize;// 
-
+	private int pageSize=20;// 
+	private static final int PAGENUMS=20;
+	
 	public List getList() {
 		return list;
 	}
@@ -47,7 +48,8 @@ public class PageBean {
 	}
 
 	public void setPageSize(int pageSize) {
-		this.pageSize = pageSize;
+		//this.pageSize = pageSize;
+		this.pageSize=PAGENUMS;
 	}
 
 	private boolean isFirstPage;// 
@@ -83,14 +85,14 @@ public class PageBean {
 
 	
 	public static int countTotalPage(final int pageSize, final int allRow) {
-		int totalPage = allRow % pageSize == 0 ? allRow / pageSize : allRow
-				/ pageSize + 1;
+		int totalPage = allRow % PAGENUMS == 0 ? allRow / PAGENUMS : allRow
+				/ PAGENUMS + 1;
 		return totalPage;
 	}
 
 	
 	public static int countOffset(final int pageSize, final int currentPage) {
-		final int offset = pageSize * (currentPage - 1);
+		final int offset = PAGENUMS * (currentPage - 1);
 		return offset;
 	}
 

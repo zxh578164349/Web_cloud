@@ -15,27 +15,10 @@
 <link rel="stylesheet" type="text/css" href="css/select_beautiful.css">	
 <LINK href="css/list.css" type="text/css" rel="stylesheet"> 
 
-
-
-
-<script type="text/javascript">
- 
-//var jq=jQuery.noConflict();
-jq(document).keyup(function(event){
-   if(event.keyCode==13){
-      submis();
-   }
-});
-
-</script>
-
 </head>
 <body>
   
-  <form id="public_form" method="post" >
-	
-		
-			<!-- <td><label class="control-label">廠別</label></td> -->
+  <form id="public_form" method="post" >						
 			<table id="tb_search">
 			<tr>
 			<td>
@@ -74,6 +57,5 @@ jq(document).keyup(function(event){
 		    </tr>
 		</table>
 	</form>
-
 </body>
 </html>

@@ -16,9 +16,51 @@
 <meta http-equiv="expires" content="0">
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
-
-	
 </head>
+
+
+<body>
+	<jsp:include page="publicHead_print.jsp" />
+	<hr/>
+	<form action="weballobj_addMore"  method="post" enctype="multipart/form-data" id="upload_form" target="frameFile">
+	  <table id="tb_search">
+	      <td>	 
+	         <input type="file" name="file"  id="id_file" class="btn btn-info"/>	        	       
+	       </td>
+	       <td>
+	          <s:if test="#session.factNo=='tw'">
+					<select name="factNo" id="factNo_a" class="search" >
+						<option value="nothing">請選擇廠別</option>							
+						<s:iterator value="#session.facts" id="temp">
+							<option value="${temp[0]}">${temp[1]}(${temp[0]})</option>								
+						</s:iterator>
+					</select>
+					
+				</s:if> 
+				<s:else>
+				
+					<select name="factNo" id="factNo_a" class="search">						
+						<option value="<s:property value="#session.factNo"/>">
+							<s:property value="#session.factName" />(<s:property value="#session.factNo"/>)
+						</option>
+					</select>
+					
+				</s:else>
+	       </td>
+	       <td>
+	         <input type="text" id="yymm_in" name="yymm" onClick="WdatePicker({dataFmt:'yyyyMM'})" readonly="readonly" class="Wdate search"/>
+	       </td>
+	       <td>
+	       	    &nbsp;<input value="導入Excel" type=button onclick="checkForm()" id="search_forday" class="btn btn-info"/>
+	       </td>
+	  </table>          	
+	</form>
+	<iframe id="frameFile" name="frameFile" style="display: none;"></iframe>
+	<hr/>
+	<div id="bodyid">
+		<jsp:include page="table1/weballobj1.jsp" />
+	</div>	
+	
 <script>
 
 	function checkForm(){
@@ -123,48 +165,6 @@ function showDiv(){
     iframe:{src:'page/sample/sample_weballobj.jsp',scrolling:'auto'}	                    
 });
 }
-</script>
-
-<body>
-	<jsp:include page="publicHead_print.jsp" />
-	<hr/>
-	<form action="weballobj_addMore"  method="post" enctype="multipart/form-data" id="upload_form" target="frameFile">
-	  <table id="tb_search">
-	      <td>	 
-	         <input type="file" name="file"  id="id_file" class="btn btn-info"/>	        	       
-	       </td>
-	       <td>
-	          <s:if test="#session.factNo=='tw'">
-					<select name="factNo" id="factNo_a" class="search" >
-						<option value="nothing">請選擇廠別</option>							
-						<s:iterator value="#session.facts" id="temp">
-							<option value="${temp[0]}">${temp[1]}(${temp[0]})</option>								
-						</s:iterator>
-					</select>
-					
-				</s:if> 
-				<s:else>
-				
-					<select name="factNo" id="factNo_a" class="search">						
-						<option value="<s:property value="#session.factNo"/>">
-							<s:property value="#session.factName" />(<s:property value="#session.factNo"/>)
-						</option>
-					</select>
-					
-				</s:else>
-	       </td>
-	       <td>
-	         <input type="text" id="yymm_in" name="yymm" onClick="WdatePicker({dataFmt:'yyyyMM'})" readonly="readonly" class="Wdate search"/>
-	       </td>
-	       <td>
-	       	    &nbsp;<input value="導入Excel" type=button onclick="checkForm()" id="search_forday" class="btn btn-info"/>
-	       </td>
-	  </table>          	
-	</form>
-	<iframe id="frameFile" name="frameFile" style="display: none;"></iframe>
-	<hr/>
-	<div id="bodyid">
-		<jsp:include page="table1/weballobj1.jsp" />
-	</div>		
+</script>		
 </body>
 </html>

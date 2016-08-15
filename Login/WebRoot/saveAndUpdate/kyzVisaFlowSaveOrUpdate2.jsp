@@ -21,9 +21,55 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 <meta http-equiv="expires" content="0">
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
-<link href="css/validate.css" rel="stylesheet" type="text/css" />
 <link rel="stylesheet" type="text/css" href="css/form.css" />
-<link rel="stylesheet" type="text/css" href="css/select_beautiful.css">
+
+</head>
+<body >
+   <div id="pop">
+       <form action="visaflow_update" method="post" id="form">
+       <h2>審核流程</h2>
+		<table class="table table-condensed" >		    	    																 			
+			<tbody >			 				 						
+			   <tr>
+			   <td>廠別</td>
+			   <td><input type="text" value="<s:property value='flow.id.factNo'/>" readonly style="color:blue" name="flow.id.factNo" id="dwrFactNo"/></td>
+			   <td>類別</td>
+			   <td><input type="text" value="<s:property value='flow.id.visaSort'/>" readonly style="color:blue" name="flow.id.visaSort"/></td>
+			   </tr>
+			   <tr>
+			   <td>姓名</td>
+			   <td>
+			   <input type="text" value="<s:property value='flow.id.purmanNo'/>"  name="flow.id.purmanNo" id="keys" style="color:blue" readonly/>
+			   <div style="position:relative">
+			     <div id="tip" style="z-index:100;position:absolute;background:yellow;top:0px;left:0px;width:180px;display:none"></div>
+			    </div>
+			   </td>
+			   <td>項次</td>
+			   <td><input type="text" value="<s:property value='flow.id.itemNo'/>" readonly style="color:blue" name="flow.id.itemNo"/></td>
+			   </tr>
+			   <tr>
+			   <td>Email地址</td>
+			   <td><input type="text" value="<s:property value='flow.visaSigner'/>"  datatype="e" name="flow.visaSigner" id="skeys" onkeyup="gog()"/>
+			   <div style="position:relative"  >			     
+			     <div id="tip2" style="z-index:100;position:absolute;background:yellow;top:0px;left:0px;width:180px;display:none" ></div>			     
+			     </div>
+			   </td>
+			   <td>職務</td>
+			   <td>
+			   <input type="text" value="<s:property value='flow.visaRank'/>"  name="flow.visaRank"/>
+			   <input type="hidden" value="<s:property value='flow.flowMk'/>"  name="flow.flowMk"/>
+			   </td>
+			   </tr>			          			  			 	  			
+			</tbody>							    
+		</table >
+			<center>			    
+				<input type="submit" id="sub" value="確定" class="btn btn-primary"/>&nbsp;&nbsp;&nbsp; 				
+			    <input type="button" value="返回" onclick="back()" id="btn_back" class="btn btn-primary"/>
+			</center>
+							
+	</form>
+	</div>
+	
 <script type="text/javascript">
 
 	jq(function() {
@@ -66,7 +112,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 										document.getElementById("tip2").innerHTML += "<div onclick="
 												+ "document.getElementById('skeys"+"').value=this.innerText;"
 												+ "document.getElementById('tip2"+"').innerText='';"
-												+ "document.getElementById('keys"+"').value='"+data[i].name+"';"
+												//+ "document.getElementById('keys"+"').value='"+data[i].name+"';"
 												+ "this.style.display='none';"												
 												
 												+ " onmouseout="
@@ -92,62 +138,8 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 		loadUrl("/Login/visaflow_findPageBean3?backIndex=1");
 	}
 </script>
-<script type='text/javascript' src='/Login/dwr/interface/kyzjs.js'></script>
 <script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/kytypejs.js'></script>
 <script type='text/javascript' src='/Login/dwr/interface/kyzvisaflowjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/userjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/engine.js'></script>
-<script type='text/javascript' src='/Login/dwr/util.js'></script>
-
-
-
-</head>
-<body >
-   <div id="pop">
-       <form action="visaflow_update" method="post" id="form">
-       <h2>審核流程</h2>
-		<table class="table table-condensed" >		    	    																 			
-			<tbody >			 				 						
-			   <tr>
-			   <td>廠別</td>
-			   <td><input type="text" value="<s:property value='flow.id.factNo'/>" readonly style="color:blue" name="flow.id.factNo" id="dwrFactNo"/></td>
-			   <td>類別</td>
-			   <td><input type="text" value="<s:property value='flow.id.visaSort'/>" readonly style="color:blue" name="flow.id.visaSort"/></td>
-			   </tr>
-			   <tr>
-			   <td>姓名</td>
-			   <td>
-			   <input type="text" value="<s:property value='flow.id.purmanNo'/>"  name="flow.id.purmanNo" id="keys" style="color:blue" readonly/>
-			   <div style="position:relative">
-			     <div id="tip" style="z-index:100;position:absolute;background:yellow;top:0px;left:0px;width:180px;display:none"></div>
-			    </div>
-			   </td>
-			   <td>項次</td>
-			   <td><input type="text" value="<s:property value='flow.id.itemNo'/>" readonly style="color:blue" name="flow.id.itemNo"/></td>
-			   </tr>
-			   <tr>
-			   <td>Email地址</td>
-			   <td><input type="text" value="<s:property value='flow.visaSigner'/>"  datatype="e" name="flow.visaSigner" id="skeys" onkeyup="gog()"/>
-			   <div style="position:relative"  >			     
-			     <div id="tip2" style="z-index:100;position:absolute;background:yellow;top:0px;left:0px;width:180px;display:none" ></div>			     
-			     </div>
-			   </td>
-			   <td>職務</td>
-			   <td>
-			   <input type="text" value="<s:property value='flow.visaRank'/>"  name="flow.visaRank"/>
-			   <input type="hidden" value="<s:property value='flow.flowMk'/>"  name="flow.flowMk"/>
-			   </td>
-			   </tr>			          			  			 	  			
-			</tbody>							    
-		</table >
-			<center>			    
-				<input type="submit" id="sub" value="確定" class="btn btn-primary"/>&nbsp;&nbsp;&nbsp; 
-				<input type="reset" id="reset" value="重置" class="btn btn-primary"/>
-			<input type="button" value="返回" onclick="back()" id="btn_back" class="btn btn-primary"/>
-			</center>
-							
-	</form>
-	</div>
+<script type='text/javascript' src='/Login/dwr/interface/userjs.js'></script>	
 </body>
 </html>

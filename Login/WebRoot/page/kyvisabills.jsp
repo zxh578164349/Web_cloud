@@ -117,36 +117,8 @@
     //iframe:{src:'kyz_findById_layer?billNo='+billNo+'& factNo='+factNo,scrolling:'auto'},   
     iframe:{src:src,scrolling:'auto'},
     
-     yes:function(){              
-     //window.location.href='vbm_add?billNo='+billNo+'& visa_mk=Y'+'& factNo='+factNo+'& itemNo='+itemNo+'& visaSort='+visaSort; 
-     
-     /*********************** 修改2   20151025 ******************************/
-     var memo=layer.getChildFrame("#memo_txt",layer.index).val();
-     layer.getChildFrame("#visa_mk",layer.index).val('Y'); 
-     if(memo.length>150){
-       alert("備註不可超過150字");
-     }else{ 
-       layer.getChildFrame("#memo",layer.index).submit();
-       window.setTimeout(function(){parent.layer.close(parent.layer.getFrameIndex(window.name));},1000);       
-       loadUrl("vbm_findPageBean");
-      
-     }        
-    },
-    no:function(){
-      //window.location.href='vbm_add?billNo='+billNo+'& visa_mk=T'+'& factNo='+factNo+'& itemNo='+itemNo+'& visaSort='+visaSort;
-      /*********************** 修改2   20151025 ******************************/
-     var memo=layer.getChildFrame("#memo_txt",layer.index).val(); 
-     layer.getChildFrame("#visa_mk",layer.index).val('T'); 
-     if(memo.length>150){
-        alert("備註不可超過150字");
-     }else{
-      layer.getChildFrame("#memo",layer.index).submit();
-      window.setTimeout(function(){parent.layer.close(parent.layer.getFrameIndex(window.name));},1000);
-      loadUrl("vbm_findPageBean");        
-     } 
-     
-     /*********************** 修改2   20151025 ******************************/ 
-    }              
+    yes:function(){yesorno('Y')},
+    no:function(){yesorno('T')}              
 });
 }
    
@@ -163,11 +135,41 @@ function tips(memo,index){
     closeBtn:[0, true]
 });
 }
+
 function back(){
 	
 	loadUrl("/Login/vbm_findPageBean");
 }
-
+function yesorno(passMk){
+	 var memo=layer.getChildFrame("#memo_txt",layer.index).val();
+     layer.getChildFrame("#visa_mk",layer.index).val(passMk);
+     if(memo.length>150){
+       alert("備註不可超過150字");
+     }else{ 
+       /*layer.getChildFrame("#memo",layer.index).submit();
+       window.setTimeout(function(){parent.layer.close(parent.layer.getFrameIndex(window.name));},1500);       
+       loadUrl("vbm_findPageBean");*/
+       jq.ajax({
+    	   type:"POST",
+    	   dataType:"json",
+    	   url:"vbm_add",
+    	   data:layer.getChildFrame("#memo",layer.index).serialize(),
+    	   success:function(data){
+    		   if(data=="0"){
+    			   layer.msg("簽核成功",2,1);   			   
+    			   window.setTimeout(function(){layer.closeAll();loadUrl("vbm_findPageBean")},2000);
+    		   }else{   			   
+    			   layer.msg("簽核失敗",2,3);
+    		   }
+    		   layer.index=layer.index-2;//(減2箇層：加載層    信息層)
+    	   },
+    	   error:function(error){
+    		   alert(error.responseText);
+    	   }
+       });
+      
+     }
+}
 </script>
 </head>
 <body>

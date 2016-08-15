@@ -45,7 +45,7 @@ public class WebBussinessletterDaoImpl extends Basedao implements IWebBussinessl
 		}
 		hql.append(" and delMk is null ");
 		hql2.append(hql);
-		hql.append(" order by factNo,blNo");
+		hql.append(" order by factNo,createDate desc");
 		//int rows=0;
 		Integer allrow=(Integer)ActionContext.getContext().getSession().get("allrow");
 		if(allrow==null){

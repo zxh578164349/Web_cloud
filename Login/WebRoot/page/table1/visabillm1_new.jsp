@@ -18,35 +18,7 @@
 
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
-<!-- 分頁樣式 -->
-<!--  <link rel="stylesheet" type="text/css" href="css/mystyle.css" />-->
-<script type="text/javascript">
 
-	
-	/*var defaultColor="#97CBFF";
-	 var clickColor="#CCFFFF";
-	 function click_color(obj){
-        var tbody=document.getElementById("tbody");
-        var length=document.getElementById("tbody").rows.length;
-        for(var i=0;i<length;i++){
-            tbody.rows[i].style.backgroundColor=defaultColor;
-        }
-        obj.style.backgroundColor=clickColor;        
-    }
-     function move(obj){
-     obj.style.backgroundColor=defaultColor;
-    }
-   function showPage(){
-	    var j=jQuery.noConflict();
-	    j("#divpage").toggle(200,function(){
-	        if(document.getElementById("a_page").innerHTML=="▽"){
-	          document.getElementById("a_page").innerHTML="△";
-	        }else{
-	           document.getElementById("a_page").innerHTML="▽";
-	        }
-	    });	   
-	}*/
-</script>
 
 </head>
 
@@ -78,7 +50,7 @@
 		<tbody id="tbody">
 		<s:iterator value="bean.list" status="x" id="temp">		
 		        <tr >
-				<td>${ 25*(bean.currentPage-1)+x.index+1}</td>
+				<td>${ bean.pageSize*(bean.currentPage-1)+x.index+1}</td>
 				<td><s:property value="id.kyVisabillm.id.factNo" />
 				</td>
 				<td>							
@@ -121,18 +93,20 @@
 							value="<s:property value='id.kyVisabillm.id.billNo'/>" name="billNo" />						
 							<input type="hidden" value="<s:property value='id.kyVisabillm.id.visaSort'/>" name="visaSort"/>
 					 </form>
-					  <form action="vbm_findById3" method="post" id="2form${x.index}" style="float:left">
+					 
+					  <!--  <form action="vbm_findById3" method="post" id="2form${x.index}" style="float:left">
 					   <input type="hidden" value="<s:property value='id.kyVisabillm.id.factNo'/>"
 							name="factNo" /> <input type="hidden"
 							value="<s:property value='id.kyVisabillm.id.billNo'/>" name="billNo" />						
 							<input type="hidden" value="<s:property value='id.kyVisabillm.id.visaSort'/>" name="visaSort"/>
-					 </form>
+					 </form>				 
 					 <form action="vbm_findById4" method="post" id="3form${x.index}" style="float:left">
 					   <input type="hidden" value="<s:property value='id.kyVisabillm.id.factNo'/>"
 							name="factNo" /> <input type="hidden"
 							value="<s:property value='id.kyVisabillm.id.billNo'/>" name="billNo" />						
 							<input type="hidden" value="<s:property value='id.kyVisabillm.id.visaSort'/>" name="visaSort"/>
-					 </form>
+					 </form>-->
+					 
 					 <form action="vbm_findById5" method="post" id="3_3form${x.index}" style="float:left">
 					   <input type="hidden" value="<s:property value='id.kyVisabillm.id.factNo'/>"
 							name="factNo" /> <input type="hidden"
@@ -156,22 +130,23 @@
 							<input type="hidden" value="down" name="lookordown"/>						
 					</form>
 										
-					<form action="vbm_sendEmail" method="post" id="8subform${x.index}" style="float:left" target="_blank">
+					<form action="vbm_sendEmail" method="post" id="8subform${x.index}" style="float:left"  target="frameFile">
 						<input type="hidden" value="<s:property value='id.kyVisabillm.id.factNo'/>"
 							name="factNo" /> <input type="hidden"
 							value="<s:property value='id.kyVisabillm.id.billNo'/>" name="billNo" />
 							<input type="hidden" value="<s:property value='id.kyVisabillm.id.visaSort'/>" name="visaSort"/>													
 					</form>
+					<iframe id="frameFile" name="frameFile" style="display: none;"></iframe>
 				    </td>	 
 					<s:if test='#session.loginUser.userread!="1"'>
 					<td>					
-					<a href="javascript:findById('0form${x.index}','vbm_findById')" >
+					<a href="javascript:findById_form('0form${x.index}','vbm_findById')" >
 					<img alt="審核" src="images/icon/check24.png" title="審核"><br>審核
 					</a>
 					</td>
 					<s:if test='id.kyVisabillm.visaMk=="N"'>
 					<td>
-					 <a href="javascript:findById('1form${x.index}','vbm_findById2')"><img alt="加簽" src="images/icon/add24.png" title="加簽"><br>加簽</a>
+					 <a href="javascript:findById_form('1form${x.index}','vbm_findById2')"><img alt="加簽" src="images/icon/add24.png" title="加簽"><br>加簽</a>
 					</td>
 					<!-- 20160311禁用
 					 <s:if test='#session.loginUser.factno=="JW"'>
@@ -181,7 +156,7 @@
 					 </s:if>
 					  -->
 					 <td>
-					   <a href="javascript:findById('3_3form${x.index}','vbm_findById5')"><img alt="減簽(带删除)" src="images/icon/remove.png" title="減簽(带删除)"><br>減簽</a>
+					   <a href="javascript:findById_form('3_3form${x.index}','vbm_findById5')"><img alt="減簽(带删除)" src="images/icon/remove.png" title="減簽(带删除)"><br>減簽</a>
 					 </td>
 					 </s:if>
 					 <s:else>
@@ -194,7 +169,7 @@
 					 </td>
 					 </s:if>
 					 <td>
-					   <a><img alt="減簽(带删除)" src="images/icon/remove_1.png" title="減簽(带删除)"><br>減簽D</a>
+					   <a><img alt="減簽(带删除)" src="images/icon/remove_1.png" title="減簽(带删除)"><br>減簽</a>
 					 </td>    
 					 </s:else>											   					 					 						
 					 </s:if>
@@ -210,7 +185,7 @@
 				     <s:if test='#session.loginUser.username=="admin"'>
 				     <s:if test='id.kyVisabillm.visaMk=="N"&&id.kyVisabillm.emailMk==null'>
 				        <td>
-				            <a href="javascript:document.getElementById('8subform${x.index}').submit()">Email</a>
+				            <a href="javascript:layer.load('請稍等...');document.getElementById('8subform${x.index}').submit()">Email</a>
 				        </td> 
 				     </s:if>
 				     <s:else>
@@ -226,40 +201,9 @@
 		</tbody>
 	</table>
 	</div>
- </div>		
-	<%-- <hr />
-	<center id="center_page">
-	　　<a href="javascript:pages(0)">首頁</a>
-	    <a href="javascript:pages(<s:property value='bean.currentPage'/>-1)">上一頁</a>	    
-	        (第<s:property value="bean.currentPage" />頁 <a href="javascript:void(0)" onclick="showPage()" id="a_page">▽</a>|共<s:property value="bean.totalPage" />頁)
-	           <div id="divpage">
-	               <c:forEach begin="1"  end="${bean.totalPage}" var="id">
-	                   <a href="javascript:pages(${id })">${id}</a>
-	               </c:forEach>
-	           </div>	  
-	    <a href="javascript:pages(<s:property value='bean.currentPage'/>+1)">下一頁</a>
-	    <a href="javascript:pages(<s:property value='bean.totalPage'/>)">尾頁</a>		
-	</center> --%>
-	
-	<ul class="pagination" style="padding-left:42%">
-		    <li><a href="javascript:pages(0)">首頁</a></li>
-			<li><a href="javascript:pages(<s:property value='bean.currentPage'/>-1)">&laquo;</a></li>			
-			<li><a href="javascript:pages(<s:property value='bean.currentPage'/>)"><s:property value='bean.currentPage'/></a></li>
-			<s:if test="bean.currentPage+1==bean.totalPage||bean.currentPage+1<bean.totalPage">
-			    <li><a href="javascript:pages(<s:property value='bean.currentPage'/>+1)"><s:property value='bean.currentPage+1'/></a></li>
-			</s:if>
-			<s:if test="bean.currentPage+2==bean.totalPage||bean.currentPage+2<bean.totalPage">
-			    <li><a href="javascript:pages(<s:property value='bean.currentPage'/>+2)"><s:property value='bean.currentPage+2'/></a></li>
-			</s:if>
-			<s:if test="bean.currentPage+3==bean.totalPage||bean.currentPage+3<bean.totalPage">
-			    <li><a href="javascript:pages(<s:property value='bean.currentPage'/>+3)"><s:property value='bean.currentPage+3'/></a></li>
-			</s:if>
-			<s:if test="bean.currentPage+4==bean.totalPage||bean.currentPage+4<bean.totalPage">
-			    <li><a href="javascript:pages(<s:property value='bean.currentPage'/>+4)"><s:property value='bean.currentPage+4'/></a></li>
-			</s:if>									
-			<li><a href="javascript:pages(<s:property value='bean.currentPage'/>+1)">&raquo;</a></li>
-			<li><a href="javascript:pages(<s:property value='bean.totalPage'/>)">尾頁</a></li>			
-		</ul>	
+ </div>			
+	<jsp:include page="pagenation.jsp" flush="true"/>	
+		
 </body>
 
 </html>

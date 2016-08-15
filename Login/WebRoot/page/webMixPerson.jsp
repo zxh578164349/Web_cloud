@@ -16,20 +16,19 @@
 <meta http-equiv="expires" content="0">
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
-<!-- <link rel="stylesheet" type="text/css" href="css/button_css.css" />
-<link rel="stylesheet" type="text/css" href="css/general_css.css" />
-<link href="tablecloth/tablecloth.css" rel="stylesheet" type="text/css" media="screen" /> -->
 
 </head>
+
+
+<body>
+	<jsp:include page="publicHead_print.jsp" />
+	<hr />
+	
+	<div id="bodyid">
+		<jsp:include page="table1/webMixPerson1.jsp" />
+	</div>
+	
 <script>
-	/*var jq=jQuery.noConflict();
-	var loadi;
-	jq(document).ajaxStart(function(){
-		loadi=layer.load(0);
-	});
-	jq(document).ajaxStop(function(){
-		layer.close(loadi);
-	});*/
 	function pages(page) {		
 		jq.ajax({
 			type : "POST",
@@ -65,7 +64,7 @@
 		});
 	}
 	//你确定要删除吗？
-	function isDelete(mid) {
+	/*function isDelete(mid) {
 		 var flag=confirm("確定要刪除嗎?");
 		
 			if (flag == true) {
@@ -84,21 +83,13 @@
 				});
 			}
 		
-	}
+	}*/
 	function print(public_form){
 		var subform=jq("#"+public_form);
 		subform.attr("action","webmixPerson_print");
 		subform.attr("target","_blank");
 		subform.submit();
 	}
-</script>
-
-<body>
-	<jsp:include page="publicHead_print.jsp" />
-	<hr />
-	
-	<div id="bodyid">
-		<jsp:include page="table1/webMixPerson1.jsp" />
-	</div>
+</script>	
 </body>
 </html>

@@ -20,13 +20,78 @@
 <meta http-equiv="description" content="This is my page">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="shortcut icon" href="images/icon/web_ico.ico" /> 
+<!-- 新 Bootstrap 核心 CSS 文件 -->
+<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
-<!-- <script type="text/javascript" src="page/jquerys/jquery-1.9.1.min.js"></script> -->
+
+</head>
+<body>
+<div class="container-fluid">
+	<div class="row-fluid">
+		<div class="span12">
+		<h3 class="single_h3">函文審核</h3>
+	    <table class="table table-bordered table-condensed">
+		<thead>
+		 <tr class="info">
+		  <td>函文單號</td>
+		  <s:iterator value="vbm.kyVisabillses">
+		   <td><s:property value="visaRank"/></td>
+		  </s:iterator> 
+		 </tr>
+		</thead>
+		<tr class="warning">
+		  <td>
+		  <a id="a_show" href="javascript:showDiv('<s:property value='vbm.id.billNo'/>','<s:property value='vbm.id.factNo'/>')">
+		  <s:property value="vbm.id.billNo"/></a>
+		  <s:if test='vbm.visaMk=="Y"||vbm.visaMk=="T"'>
+		      <input type="hidden" value="Y" id="isDone"/><!--判斷函文是否簽核完畢-->	
+		  </s:if>		 
+		  </td> 
+		  <s:iterator value="vbm.kyVisabillses" status="x">
+	       <td>
+	       <!-- <s:property value="vbm.signerNext"/>(<s:property value="visaSigner"/>) -->
+	       <s:if test='flowMk=="Y"'>
+	       <s:if test='visaMk=="N"'><!-- 1.判斷未審和已審狀態 -->
+	         <s:if test='id.itemNo==vbm.itemNext'><!--2.判斷當前審核人的項次是否為下一位審核人 的項次 -->	           
+	           <s:if test="%{strToLow(visaSigner)==strToLow(email)}"><!-- 3.判斷登錄者是否為當前審核人 -->
+	              <a style="color:red" href="javascript:check('<s:property value='id.kyVisabillm.id.factNo'/>','<s:property value='id.kyVisabillm.id.visaSort'/>',
+	              '<s:property value='id.kyVisabillm.id.billNo'/>','<s:property value='id.itemNo'/>')">       
+	                                     未審核<s:property value="id.itemNo"/>(當前審核人)	                                     
+	              </a>
+	              <input type="hidden" value="N" id="expiredMk"/><!--判斷郵件審核鏈接是否過期   N:未過期    Y:過期-->	                        	              
+	           </s:if>	
+	            <s:else>
+	             <a disabled style="color:grey">未審核</a>
+	             <input type="hidden" value="Y" id="expiredMk"/><!--判斷郵件審核鏈接是否過期   N:未過期    Y:過期-->
+	           </s:else>             
+	         </s:if>
+	          <s:else>
+	             <a disabled style="color:grey">未審核</a>
+	           </s:else> 	        	       
+	       </s:if>
+	       <s:if test='visaMk=="Y"'>	       
+	        <a style="color:green" href="javascript:tips('${memo}','index${x.index}')" id="index${x.index}">已審核<br/>(<s:property value="dateVisa"/>)</a>	         
+	       </s:if>
+	       <s:if test='visaMk=="T"'>
+	         <a style="color:blue" href="javascript:tips('${memo}','index${x.index}')" id="index${x.index}">未通過<br/>(<s:property value="dateVisa"/>)</a>
+	       </s:if>
+	       </s:if>
+	       <s:else>
+	       <a style="color:#b45b3e">只知會</a>
+	       </s:else>
+	       </td>
+	      </s:iterator>
+		</tr>		
+	</table>
+ </div>	
+</div>	
+</div>
+<jsp:include page="../copyright.jsp"/>
+
+
 <script src="http://apps.bdimg.com/libs/jquery/1.9.1/jquery.min.js"></script> 
 <script>window.jQuery || document.write('<script src="jquery/jquery-1.9.1.min.js"><\/script>');</script>	
 <script type="text/javascript" src="page/jquerys/layer/layer.min.js"></script>
-<!-- 新 Bootstrap 核心 CSS 文件 -->
-<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
 <script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>
  <!--[if lt IE 9]>  
@@ -34,6 +99,13 @@
   <script src="bootstrap/respond.min.js"></script>
   <![endif]-->	
 <script type="text/javascript">
+var loadi;
+$(document).ajaxStart(function(){
+	 loadi=layer.load("請稍等...");
+});
+$(document).ajaxStop(function(){
+	layer.close(loadi);
+});
     function showDiv(billNo,factNo){
     	var area_w;
     	var area_h;
@@ -127,42 +199,11 @@
     iframe:{src:src,scrolling:'auto'},
     /* 修改1   20151025 */
     
-     yes:function(){              
-     //window.location.href='vbm_add?billNo='+billNo+'& visa_mk=Y'+'& factNo='+factNo+'& itemNo='+itemNo+'& visaSort='+visaSort; 
-     
-     /*********************** 修改2   20151025 ******************************/
-     var memo=layer.getChildFrame("#memo_txt",layer.index).val();
-     layer.getChildFrame("#visa_mk",layer.index).val('Y'); 
-     if(memo.length>150){
-        alert("備註不可超過150字");
-     }else{
-        window.location.href='success.html';             
-         layer.getChildFrame("#memo",layer.index).submit();
-         layer.load("正在處理，請稍等...");
-     }
-     
-     /*********************** 修改2   20151025 ******************************/  
-   
-    },
-    no:function(){
-      //window.location.href='vbm_add?billNo='+billNo+'& visa_mk=T'+'& factNo='+factNo+'& itemNo='+itemNo+'& visaSort='+visaSort;
-      /*********************** 修改2   20151025 ******************************/
-     var memo=layer.getChildFrame("#memo_txt",layer.index).val();
-     layer.getChildFrame("#visa_mk",layer.index).val('T'); 
-     if(memo.length>150){
-        alert("備註不可超過150字");
-     }else{
-        window.location.href='success.html';             
-         layer.getChildFrame("#memo",layer.index).submit();
-         layer.load("正在處理，請稍等...");
-     }
-       
-     /*********************** 修改2   20151025 ******************************/ 
-    }       
+     yes:function(){yesorno('Y')},
+     no:function(){yesorno('T')}       
 });
 }
     
-
 function tips(memo,index){
     if(memo==''){
        memo='無備註';
@@ -174,64 +215,45 @@ function tips(memo,index){
     closeBtn:[0, true]
 });
 }
+
+function yesorno(passMk){
+	var memo=layer.getChildFrame("#memo_txt",layer.index).val();
+    layer.getChildFrame("#visa_mk",layer.index).val(passMk);
+    if(memo.length>150){
+       alert("備註不可超過150字");
+    }else{     
+       $.ajax({
+       	type:"POST",
+       	dataType:"json",
+       	url:"vbm_add",
+       	data:layer.getChildFrame("#memo",layer.index).serialize(),
+       	success:function(data){
+       		if(data=="0"){
+       			layer.msg("簽核成功",2,1);           		
+           		//window.setTimeout(function(){layer.closeAll()},3000);         		
+           		window.setTimeout(function(){location.reload()},1000);
+           		
+       		}else{
+       			layer.msg("簽核失敗",2,3);  
+       		} 
+       		layer.index=layer.index-2;//(減2箇層：加載層    信息層)
+       	},
+       	error:function(error){
+       		alert(error.responseText);       		
+       	}
+       });
+    }
+}
+
+$(function(){
+	if($("#expiredMk").val()=="Y"){
+		layer.msg("當前函文鏈接已審核",3,0);
+	}
+	if($("#isDone").val()=="Y"){
+		layer.msg("當前函文已簽核完畢",3,1);
+	}
+});
 </script>
-</head>
-<body>
-<div class="container-fluid">
-	<div class="row-fluid">
-		<div class="span12">
-		<h3 class="single_h3">函文審核</h3>
-	    <table class="table table-bordered table-condensed">
-		<thead>
-		 <tr class="info">
-		  <td>函文單號</td>
-		  <s:iterator value="vbm.kyVisabillses">
-		   <td><s:property value="visaRank"/></td>
-		  </s:iterator> 
-		 </tr>
-		</thead>
-		<tr class="warning">
-		  <td>
-		  <a id="a_show" href="javascript:showDiv('<s:property value='vbm.id.billNo'/>','<s:property value='vbm.id.factNo'/>')">
-		  <s:property value="vbm.id.billNo"/></a>		 
-		  </td> 
-		  <s:iterator value="vbm.kyVisabillses" status="x">
-	       <td>
-	       <!-- <s:property value="vbm.signerNext"/>(<s:property value="visaSigner"/>) -->
-	       <s:if test='flowMk=="Y"'>
-	       <s:if test='visaMk=="N"'><!-- 1.判斷未審和已審狀態 -->
-	         <s:if test='id.itemNo==vbm.itemNext'><!--2.判斷當前審核人的項次是否為下一位審核人 的項次 -->	           
-	           <s:if test="%{strToLow(visaSigner)==strToLow(email)}"><!-- 3.判斷登錄者是否為當前審核人 -->
-	              <a style="color:red" href="javascript:check('<s:property value='id.kyVisabillm.id.factNo'/>','<s:property value='id.kyVisabillm.id.visaSort'/>',
-	              '<s:property value='id.kyVisabillm.id.billNo'/>','<s:property value='id.itemNo'/>')">       
-	                                     未審核<s:property value="id.itemNo"/>(當前審核人)
-	              </a>	              	              
-	           </s:if>	
-	            <s:else>
-	             <a disabled style="color:grey">未審核</a>
-	           </s:else>             
-	         </s:if>
-	          <s:else>
-	             <a disabled style="color:grey">未審核</a>
-	           </s:else> 	        	       
-	       </s:if>
-	       <s:if test='visaMk=="Y"'>	       
-	        <a style="color:green" href="javascript:tips('${memo}','index${x.index}')" id="index${x.index}">已審核<br/>(<s:property value="dateVisa"/>)</a>
-	       </s:if>
-	       <s:if test='visaMk=="T"'>
-	         <a style="color:blue" href="javascript:tips('${memo}','index${x.index}')" id="index${x.index}">未通過<br/>(<s:property value="dateVisa"/>)</a>
-	       </s:if>
-	       </s:if>
-	       <s:else>
-	       <a style="color:#b45b3e">只知會</a>
-	       </s:else>
-	       </td>
-	      </s:iterator>
-		</tr>		
-	</table>
- </div>	
-</div>	
-</div>
-<jsp:include page="../copyright.jsp"/>	
+	
 </body>
 </html>

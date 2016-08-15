@@ -16,14 +16,20 @@
 <meta http-equiv="expires" content="0">
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
-
-	
-<!-- <link rel="stylesheet" type="text/css" href="css/general_css.css" />
-<link rel="stylesheet" type="text/css" href="css/button_css.css" />
-<link href="tablecloth/tablecloth.css" rel="stylesheet" type="text/css" media="screen" /> -->
 	
 </head>
 
+
+
+<body>
+
+	<jsp:include page="publicHead_kybillm_tw.jsp" flush="true" />
+	<hr />	
+	<div id="bodyid">
+		<jsp:include page="tw1/visabillm1.jsp" />
+	</div>
+
+	
 <script>
  
 	function pages(page) {
@@ -81,42 +87,9 @@
 		//jq.post("vbm_findPageBean2",{"factNo":fact.value,"billNo":billno.value,"visaMk":visaMk.value},function(data){jq("#bodyid").html(data)});
 	}
 	
-	
-	//你确定要删除吗？
-	function isDelete(mid) {
-		var flag=confirm("確定要刪除嗎?");
-		
-			if (flag == true) {
-				/* window.location.href = "backmat_delete?billNo=" + mid; */
-				document.getElementById(mid).submit();
-			}
-		
-	}
-	
-	function check(visaSort,billNo,factNo){
-	     jq.layer({
-    type: 1,   //0-4的选择,
-    title: '函文內容',
-    //border: [0],
-    closeBtn: [1,true],
-    shade: [0],
-    //shade: [0.5, '#000'],
-    shadeClose: false,
-    border: [10, 0.3, '#000'],
-   // btns:1,
-    //fadeIn:300,
-    shift:'top',
-    offset:['40px',''],
-    area: ['800px', '560px'],
-    page:{
-      url:'vbm_findById?visaSort='+visaSort+'&billNo='+billNo+'&factNo='+factNo    
-    }                 
-});
-	}
-	
-	 function getKyType(){	 	 
-			 var factno=document.getElementById("factNo").value;
-			 if(factno!=null&&factno!=""){
+	 function getType(factno){
+		 document.getElementById("dwr_kytype").length=1;
+			 if(factno!=null&&factno!=""&&factno!="nothing"){
 			     webtypejs.findByFactNo(factno,function(x){
 		       if(x.length>0){
 		          dwr.util.addOptions("dwr_kytype",x,"webtypeMk","typeName");
@@ -124,16 +97,7 @@
 		     });
 			 }   
 			}
-   function getType2(factNo){
-     document.getElementById("dwr_kytype").length=1;
-     webtypejs.findByFactNo(factNo,function(x){
-       if(x.length>0){
-          dwr.util.addOptions("dwr_kytype",x,"webtypeMk","typeName");
-       }
-         
-     });
-   } 
-   
+	 
 function tips(memo,index){
     if(memo==''){
        memo='無';
@@ -162,23 +126,7 @@ function goPreviewOrPrint(subform,billNo){
 	   jq("#"+subform).submit();
 }
 </script>
-<script type='text/javascript' src='/Login/dwr/interface/kyzjs.js'></script>
 <script type='text/javascript' src='/Login/dwr/interface/webtypejs.js'></script>
-<script type='text/javascript' src='/Login/dwr/engine.js'></script>
-<script type='text/javascript' src='/Login/dwr/util.js'></script>
-
-
-
-<body>
-
-	<jsp:include page="publicHead_kybillm_tw.jsp" flush="true" />
-	<hr />	
-	<div id="bodyid">
-		<jsp:include page="tw1/visabillm1.jsp" />
-	</div>
-
-	
-
 
 </body>
 </html>

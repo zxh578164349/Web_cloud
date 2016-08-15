@@ -20,78 +20,6 @@
 <meta http-equiv="expires" content="0">
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
-<!-- <link rel="stylesheet" type="text/css" href="css/mystyle.css" />-->
-
-<script type="text/javascript">
-
-	   
-	   	function addflow(subform,btn){
-	   		var jq = jQuery.noConflict();
-	   		var loadi;
-	   		jq(document).ajaxStart(function(){
-	   			loadi=layer.load(0);
-	   		});
-	   		jq(document).ajaxStop(function(){
-	   			layer.close(loadi);
-	   		});
-	   		jq(subform).Validform({
-	   			btnSubmit : btn,
-	   			tiptype : 4,
-	   			showAllError : true,
-	   			tipSweep : true,
-	   			ajaxPost:true,
-	   			callback:function(data){	   				
-	   					if(data=="0"){
-	   						layer.msg("提交成功!",3,1);
-	   						location.href="/Login/visaflow_findPageBean";
-	   					}
-	   					if(data=="1"){
-	   						alert(data.responseText);
-	   					}
-	   			}	   			
-	   			});
-	   			
-	   	}
-						 	
-	function showDiv(obj){
-	  var j=jQuery.noConflict();
-	  j("#"+obj).show(300);
-	}
-	function hideDiv(obj){
-	  var j=jQuery.noConflict();
-	  j("#"+obj).hide(300);
-	}
-	function showPage(){
-	    var j=jQuery.noConflict();
-	    j("#divpage").toggle(200,function(){
-	        if(document.getElementById("a_page").innerHTML=="▽"){
-	          document.getElementById("a_page").innerHTML="△";
-	        }else{
-	           document.getElementById("a_page").innerHTML="▽";
-	        }
-	    });	   
-	}
-	
-	var defaultColor="#97CBFF";
-	var clickColor="#CCFFFF";
-	 function click_color(obj){
-        var tbody=document.getElementById("tbody");
-        var length=document.getElementById("tbody").rows.length;
-        for(var i=0;i<length;i++){
-            tbody.rows[i].style.backgroundColor=defaultColor;
-        }
-        obj.style.backgroundColor=clickColor;        
-    }
-     function move(obj){
-     obj.style.backgroundColor=defaultColor;
-    }
-    	
-</script>
-
-
-
-
-
 </head>
 <body>
   <div id="container">
@@ -146,7 +74,7 @@
 							<input type="hidden" value="<s:property value='id.itemNo'/>" name="id.itemNo"/>							
 					</form> 					
 					
-					  <a href="javascript:findById('subform${x.index}','visaflow_findById')"><img alt="修改" src="images/icon/edit001.png" title="修改" ></a>&nbsp;														
+					  <a href="javascript:findById_form('subform${x.index}','visaflow_findById')"><img alt="修改" src="images/icon/edit001.png" title="修改" ></a>&nbsp;														
 					<form action="visaflow_delete" method="post" id="2subform${x.index}"
 						style="float:left">
 						<input type="hidden" value="<s:property value='id.factNo'/>"
@@ -169,11 +97,11 @@
 					</form>
 					
 					 <s:if test='id.itemNo!="01"'>
-					  <a href="javascript:void(0)" onclick="isDelete('2subform${x.index}')"><img alt="刪除" src="images/icon/minus002.png" title="刪除" ></a>				 					  
+					  <a href="javascript:isDelete('2subform${x.index}','visaflow_delete')"><img alt="刪除" src="images/icon/minus002.png" title="刪除" ></a>				 					  
 					 </s:if>
 					 <s:else>
 					   <a href="javascript:void(0)" onclick="isDelete2('${temp.id.factNo}','${temp.id.visaSort}')"><img alt="刪除全部" src="images/icon/delete_all.png" title="刪除全部" ></a>
-					   <a href="javascript:findById('3subform${x.index}','visaflow_findMaxItem')"><img alt="添加知會" src="images/icon/add001_2.png" title="添加知會"></a>
+					   <a href="javascript:findById_form('3subform${x.index}','visaflow_findMaxItem')"><img alt="添加知會" src="images/icon/add001_2.png" title="添加知會"></a>
 					 </s:else>	
 					 
 					 <form action="visaflow_addflow" method="post" id="5subform${x.index}"
@@ -219,44 +147,47 @@
 	</table>
 	</div>
 </div>	
-	<%-- <hr />
-	<center id="center_page">
-	　　<a href="javascript:pages(0)">首頁</a>
-	    <a href="javascript:pages(<s:property value='bean.currentPage'/>-1)">上一頁</a>	    
-	        (第<s:property value="bean.currentPage" />頁 <a href="javascript:void(0)" onclick="showPage()" id="a_page">▽</a>|共<s:property value="bean.totalPage" />頁)
-	           <div id="divpage">
-	               <c:forEach begin="1"  end="${bean.totalPage}" var="id">
-	                   <a href="javascript:pages(${id })">${id}</a>
-	               </c:forEach>
-	           </div>	  
-	    <a href="javascript:pages(<s:property value='bean.currentPage'/>+1)">下一頁</a>
-	    <a href="javascript:pages(<s:property value='bean.totalPage'/>)">尾頁</a>		
-	</center>	
-	<hr>
-		<div id="mydiv">
-		<p>
-			<img alt="" src="images/loading004.gif"><br> Loading....
-		</p>
-	</div> --%>
-		<ul class="pagination" style="padding-left:42%">
-		    <li><a href="javascript:pages(0)">首頁</a></li>
-			<li><a href="javascript:pages(<s:property value='bean.currentPage'/>-1)">&laquo;</a></li>			
-			<li><a href="javascript:pages(<s:property value='bean.currentPage'/>)"><s:property value='bean.currentPage'/></a></li>
-			<s:if test="bean.currentPage+1==bean.totalPage||bean.currentPage+1<bean.totalPage">
-			    <li><a href="javascript:pages(<s:property value='bean.currentPage'/>+1)"><s:property value='bean.currentPage+1'/></a></li>
-			</s:if>
-			<s:if test="bean.currentPage+2==bean.totalPage||bean.currentPage+2<bean.totalPage">
-			    <li><a href="javascript:pages(<s:property value='bean.currentPage'/>+2)"><s:property value='bean.currentPage+2'/></a></li>
-			</s:if>
-			<s:if test="bean.currentPage+3==bean.totalPage||bean.currentPage+3<bean.totalPage">
-			    <li><a href="javascript:pages(<s:property value='bean.currentPage'/>+3)"><s:property value='bean.currentPage+3'/></a></li>
-			</s:if>
-			<s:if test="bean.currentPage+4==bean.totalPage||bean.currentPage+4<bean.totalPage">
-			    <li><a href="javascript:pages(<s:property value='bean.currentPage'/>+4)"><s:property value='bean.currentPage+4'/></a></li>
-			</s:if>									
-			<li><a href="javascript:pages(<s:property value='bean.currentPage'/>+1)">&raquo;</a></li>
-			<li><a href="javascript:pages(<s:property value='bean.totalPage'/>)">尾頁</a></li>			
-		</ul>
-	<hr>
+<jsp:include page="pagenation.jsp" flush="true"/>	
+	
+		
+<script type="text/javascript">   
+	   	function addflow(subform,btn){
+	   		var jq = jQuery.noConflict();
+	   		var loadi;
+	   		jq(document).ajaxStart(function(){
+	   			loadi=layer.load(0);
+	   		});
+	   		jq(document).ajaxStop(function(){
+	   			layer.close(loadi);
+	   		});
+	   		jq(subform).Validform({
+	   			btnSubmit : btn,
+	   			tiptype : 4,
+	   			showAllError : true,
+	   			tipSweep : true,
+	   			ajaxPost:true,
+	   			callback:function(data){	   				
+	   					if(data=="0"){
+	   						layer.msg("提交成功!",3,1);
+	   						location.href="/Login/visaflow_findPageBean";
+	   					}
+	   					if(data=="1"){
+	   						alert(data.responseText);
+	   					}
+	   			}	   			
+	   			});
+	   			
+	   	}
+						 	
+	function showDiv(obj){
+	  var j=jQuery.noConflict();
+	  j("#"+obj).show(300);
+	}
+	function hideDiv(obj){
+	  var j=jQuery.noConflict();
+	  j("#"+obj).hide(300);
+	}
+	   	
+</script>	
 </body>
 </html>

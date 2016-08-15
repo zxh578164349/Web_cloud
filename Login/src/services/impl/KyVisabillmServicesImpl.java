@@ -15,11 +15,6 @@ public class KyVisabillmServicesImpl implements IKyVisabillmServices{
 		this.visabillmDao = visabillmDao;
 	}
 
-	public PageBean findPageBean(int pageSize, int page, String factNo,
-			String billNo,String visaMk) {
-		// TODO Auto-generated method stub
-		return visabillmDao.findPageBean(pageSize, page, factNo, billNo,visaMk);
-	}
 
 	public void add(KyVisabillm vbm) {
 		// TODO Auto-generated method stub

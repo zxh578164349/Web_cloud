@@ -1,9 +1,13 @@
 package action;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
@@ -249,34 +253,23 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 						response.setContentType("text/html;charset=utf-8");
 						response.getWriter().print("<script>window.parent.alert('只允許jpg,bmp,jpeg,gif,tif圖片');window.parent.layer.closeAll()</script>");
 						return null;
-					}					
+					}										
 				}
 			}
 		}
+		
 		
 		/*文件上傳*/
 		if(files!=null&&files.get(0)!=null){//不為空代表有上傳附檔,不能寫成files.size()>0,否則報空指針
 			kyzletter.setFilesYn("1");//標示是否帶有附檔
 			//File uploadFile=new File(ServletActionContext.getServletContext().getRealPath("KyzexpFile\\"+kyz.getId().getBillNo()));//附檔上傳到項目
-			File uploadFile_backup=new File("d:\\KyzletterexpFile_backup\\"+kyzletter.getId().getBillNo());//附檔上傳到D盤(為了避免更新項目時丟失附檔,所在上傳到D盤)
-			/*if(!uploadFile.exists()){
-				uploadFile.mkdirs();
-			}*/
+			File uploadFile_backup=new File("d:\\KyzletterexpFile_backup\\"+kyzletter.getId().getBillNo());//附檔上傳到D盤(為了避免更新項目時丟失附檔,所在上傳到D盤)			
 			if(!uploadFile_backup.exists()){
 				uploadFile_backup.mkdirs();
 			}
 			for(int i=0;i<files.size();i++){							
-				if(files.get(i)!=null){									
-					FileInputStream in=new FileInputStream(files.get(i));
-					//FileOutputStream out=new FileOutputStream(uploadFile+"\\"+filesFileName.get(i));
-					FileOutputStream out_backup=new FileOutputStream(uploadFile_backup+"\\"+filesFileName.get(i));//備份
-					byte[]b=new byte[1024];
-					int length=0;
-					while((length=in.read(b))>0){
-						//out.write(b,0,length);
-						out_backup.write(b,0,length);//備份
-					}
-																									
+				if(files.get(i)!=null){					    										
+					GlobalMethod.uploadFile(files.get(i),uploadFile_backup+"\\"+filesFileName.get(i));//文件上傳																									
 					KyzExpectmatmFile kyzexpFile=new KyzExpectmatmFile();//函文附檔
 					kyzexpFile.setBillno(kyzletter.getId().getBillNo());
 					kyzexpFile.setFilename(filesFileName.get(i));
@@ -290,112 +283,19 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 			}
 		}
 		
-		String result=null;	
 		try{
+			kyzletter.setVisaTypeM(kyzletter.getVisaType().substring(0,2));
 			if(isnull.equals("isNull")){//start if
 				String factno=kyzletter.getId().getFactNo();
 				String billno=kyzletter.getId().getBillNo();
 				KyzContactletter letter=kyzletterSer.findById(factno, billno);
 				if(letter==null){
-					kyzletter.setVisaTypeM(kyzletter.getVisaType().substring(0,2));
+					//kyzletter.setVisaTypeM(kyzletter.getVisaType().substring(0,2));
 					kyzletterSer.add(kyzletter);
-					KyVisabillm vbm=visabillmSer.findById(kyzletter.getId().getFactNo(), kyzletter.getVisaType(), kyzletter.getId().getBillNo());
-					result="add";
-					ajaxResult="0";
-					/**
-					 * 發送郵件
-					 */
-					String emailUrl_in="http://203.85.73.161/Login/vbm_findById_email?visaSort="+kyzletter.getVisaType()+"&billNo="+kyzletter.getId().getBillNo()
-					         +"&factNo="+kyzletter.getId().getFactNo()+"&email="+vbm.getSignerNext();	
-					String emailUrl_in2="http://203.85.73.161/Login/vbm_findById_email2?visaSort="+kyzletter.getVisaType()+"&billNo="+kyzletter.getId().getBillNo()
-					         +"&factNo="+kyzletter.getId().getFactNo()+"&email="+vbm.getSignerNext();
-					String singernext=vbm.getSignerNext();
-					String vbm_billno=vbm.getId().getBillNo();
-					String vbm_factno=vbm.getId().getFactNo();
-					MailSenderInfo mailinfo=new MailSenderInfo();
-					mailinfo.setValidate(true);
-					/*mailinfo.setUserName("kyuen@yydg.com.cn");
-					mailinfo.setPassword("yydgmail");
-					mailinfo.setFromAddress("<kyuen@yydg.com.cn>");*/
-					mailinfo.setToAddress(singernext);
-					mailinfo.setSubject("新函文初次審核"+vbm_billno+"("+vbm_factno+")");
-					mailinfo.setContent("單號:<span style='color:red'>"+vbm_billno+"</span>"+"&nbsp;&nbsp;廠別:"+vbm_factno+								
-							"<br/>點擊單號直接審核:<a href='"+emailUrl_in2+"'>"+vbm_billno+"</a>(電腦適用)"+
-							"<br/>點擊單號直接審核:<a href='"+emailUrl_in+"'>"+vbm_billno+"</a>(手機平板適用)"+
-							"<hr/>"+
-							"如需查詢以往單據請登陸:(云端)<a href='http://203.85.73.161/Login'>http://203.85.73.161/Login</a>" +							
-							"<br/>進入[KPI數據]--[函文審核]查找對應單號審核" +									
-							"<hr/>"+
-							"<br/>本郵件自動發送,請勿回復!如需回復或者問題，請回复到kyinfo.lp@yydg.com.cn劉平!<br/>"+
-							"<hr/>");
-				    //这个类主要来发送邮件   
-				      SimpleMailSender sms = new SimpleMailSender();   
-				         // sms.sendTextMail(mailInfo);//发送文体格式    
-				      sms.sendHtmlMail(mailinfo);//发送html格式  	          
-				      
-				      /**
-				       * 測試主站kyuen@yydg.com.cn有沒有收到郵件
-				       */
-				      MailSenderInfo mailinfo2=new MailSenderInfo();
-				      mailinfo2.setValidate(true);
-				      /*mailinfo2.setUserName("kyuen@yydg.com.cn");
-				      mailinfo2.setPassword("yydgmail");
-				      mailinfo2.setFromAddress("<kyuen@yydg.com.cn>");*/
-				      mailinfo2.setToAddress("kyuen@yydg.com.cn");
-				      mailinfo2.setSubject("新函文初次審核(總站已收到)");
-				      mailinfo2.setContent("請登錄加久網站:(云端)<a href='http://203.85.73.161/Login'>http://203.85.73.161/Login</a>" +								
-								"<br/>進入[KPI數據]--[函文審核]查找對應單號進行審核" +
-								"&nbsp;&nbsp;單號:<span style='color:red'>"+vbm_billno+"<span>"+"&nbsp;&nbsp;廠別:"+vbm_factno);
-				      SimpleMailSender sms2=new SimpleMailSender();
-				      sms2.sendHtmlMail(mailinfo2);
-				      
-				      /**
-				       * 给备签人发送邮件
-				       */
-				      /******************20151113备签人请使用方法findByFactNoAEmailPwd2(String factNo,String email)**********************/
-				      /*String emailPwd=webuseremailSer.findEmailPWD(kyzletter.getId().getFactNo(),singernext);
-				      if(emailPwd!=null){
-				    	  MailSenderInfo mailinfo3=new MailSenderInfo();
-							mailinfo3.setValidate(true);
-							mailinfo3.setUserName("kyuen@yydg.com.cn");
-							mailinfo3.setPassword("yydgmail");
-							mailinfo3.setFromAddress("<kyuen@yydg.com.cn>");
-							mailinfo3.setToAddress(emailPwd);
-							mailinfo3.setSubject("新函文初次審核"+vbm_billno+"("+vbm_factno+")");
-							mailinfo3.setContent("單號:<span style='color:red'>"+vbm_billno+"</span>"+"&nbsp;&nbsp;廠別:"+vbm_factno+								
-									"<br/>點擊單號直接審核:<a href='"+emailUrl_in2+"'>"+vbm_billno+"</a>(電腦適用)"+
-									"<br/>點擊單號直接審核:<a href='"+emailUrl_in+"'>"+vbm_billno+"</a>(手機平板適用)"+
-									"<hr/>"+
-									"如需查詢以往單據請登陸:(云端)<a href='http://203.85.73.161/Login'>http://203.85.73.161/Login</a>" +									
-									"<br/>進入[KPI數據]--[函文審核]查找對應單號審核" +									
-									"<hr/>"+
-									"<br/>本郵件自動發送,請勿回復!如需回復或者問題，請回复到kyinfo.lp@yydg.com.cn劉平!<br/>"+
-									"<hr/>");
-						    //这个类主要来发送邮件   
-						      SimpleMailSender sms3 = new SimpleMailSender();   
-						      sms3.sendHtmlMail(mailinfo3);//发送html格式  
-				      }*/
-				      List<String>list_emailPwd=webuseremailSer.findByFactNoAEmailPwd2(kyzletter.getId().getFactNo(),singernext);
-				      if(list_emailPwd.size()>0){//if
-				    	  for(int i=0;i<list_emailPwd.size();i++){
-				    		  MailSenderInfo mailinfo3=new MailSenderInfo();
-								mailinfo3.setValidate(true);							
-								mailinfo3.setToAddress(list_emailPwd.get(i));
-								mailinfo3.setSubject("新函文初次審核"+vbm_billno+"("+vbm_factno+")");
-								mailinfo3.setContent("單號:<span style='color:red'>"+vbm_billno+"</span>"+"&nbsp;&nbsp;廠別:"+vbm_factno+								
-										"<br/>點擊單號直接審核:<a href='"+emailUrl_in2+"'>"+vbm_billno+"</a>(電腦適用)"+
-										"<br/>點擊單號直接審核:<a href='"+emailUrl_in+"'>"+vbm_billno+"</a>(手機平板適用)"+
-										"<hr/>"+
-										"如需查詢以往單據請登陸:(云端)<a href='http://203.85.73.161/Login'>http://203.85.73.161/Login</a>" +									
-										"<br/>進入[KPI數據]--[函文審核]查找對應單號審核" +									
-										"<hr/>"+
-										"<br/>本郵件自動發送,請勿回復!如需回復或者問題，請回复到kyinfo.lp@yydg.com.cn劉平!<br/>"+
-										"<hr/>");
-							    //这个类主要来发送邮件   
-							      SimpleMailSender sms3 = new SimpleMailSender();   
-							      sms3.sendHtmlMail(mailinfo3);//发送html格式  
-				    	  }				    	    
-				      }//if		
+					KyVisabillm vbm=visabillmSer.findById(kyzletter.getId().getFactNo(), kyzletter.getVisaType(), kyzletter.getId().getBillNo());				      
+				    List<String>list_emailPwd=webuseremailSer.findByFactNoAEmailPwd2(vbm.getId().getFactNo(),vbm.getSignerNext());//備簽人
+												      
+					GlobalMethod.sendNewEmail(vbm,list_emailPwd);//發送郵件
 				      /****************************函文打印************************************/
 					  //print(kyzletter.getId().getFactNo(),kyzletter.getId().getBillNo(),kyzletter.getVisaType());
 				      /****************************函文打印************************************/
@@ -411,10 +311,8 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 					}								
 			}//end if
 			else{
-				kyzletter.setVisaTypeM(kyzletter.getVisaType().substring(0,2));
+				//kyzletter.setVisaTypeM(kyzletter.getVisaType().substring(0,2));
 				kyzletterSer.add(kyzletter);
-				result="update";
-				ajaxResult="0";
 			}
 			response.setContentType("text/html;charset=utf-8");
 			response.getWriter().print("<script>window.parent.gook();</script>");
@@ -422,9 +320,7 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 			// TODO Auto-generated catch block
 			response.setContentType("text/html;charset=urf-8");
 			response.getWriter().print("<script>window.parent.layer.msg('操作失敗',3,3);window.parent.layer.closeAll()</script>");
-			ajaxResult="1";
-			e.printStackTrace();
-			
+			e.printStackTrace();			
 		}
 		return null;
 }

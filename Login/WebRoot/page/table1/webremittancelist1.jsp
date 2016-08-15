@@ -21,13 +21,7 @@
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
 
-<!-- 分頁樣式 -->
-<!-- <link rel="stylesheet" type="text/css" href="css/mystyle.css" />-->
 
-
-<script type="text/javascript">
-
-</script>
 </head>
 <body>
   <div id="container">
@@ -58,7 +52,7 @@
 		<tbody id="tbody">
 		<s:iterator value="bean.list" status="x" id="temp">		  
 		     <tr> 
-				<td>${25*(bean.currentPage-1)+x.index+1}</td>							
+				<td>${bean.pageSize*(bean.currentPage-1)+x.index+1}</td>							
 				<td><s:property value="factNo" /></td>
 				<td><s:property value="factCode" /></td>
 				<td><s:property value="yymm"/></td>
@@ -76,13 +70,13 @@
 						 <input type="hidden" value="<s:property value='billNo'/>" name="billNo" />													 						
 					</form>
 					<s:if test="vbm.lastMk==null">
-					    <a href="javascript:findById('subform${x.index}','webremit_findById')" onclick=""><img alt="修改" src="images/icon/edit001.png" title="修改" ></a>						  																									
-					    <a href="javascript:void(0)" onclick="isDelete('2subform${x.index}')"><img alt="刪除" src="images/icon/delete001.png" title="刪除" ></a>	
+					    <a href="javascript:findById_form('subform${x.index}','webremit_findById')" onclick=""><img alt="修改" src="images/icon/edit001.png" title="修改" ></a>						  																									
+					    <a href="javascript:isDelete('2subform${x.index}','webremit_delete')" ><img alt="刪除" src="images/icon/delete001.png" title="刪除" ></a>	
 					</s:if>
 					<s:else>
 					   <s:if test="#session.loginUser.username=='admin'">
-					         <a href="javascript:findById('subform${x.index}','webremit_findById')" onclick=""><img alt="修改" src="images/icon/edit001.png" title="修改" ></a>						  																									
-					         <a href="javascript:void(0)" onclick="isDelete('2subform${x.index}')"><img alt="刪除" src="images/icon/delete001.png" title="刪除" ></a>
+					         <a href="javascript:findById_form('subform${x.index}','webremit_findById')" onclick=""><img alt="修改" src="images/icon/edit001.png" title="修改" ></a>						  																									
+					         <a href="javascript:isDelete('2subform${x.index}','webremit_delete')" ><img alt="刪除" src="images/icon/delete001.png" title="刪除" ></a>
 					      </s:if>
 					      <s:else>
 					          <a ><img alt="修改" src="images/icon/edit001_1.png" title="修改" ></a>						  																									
@@ -116,27 +110,7 @@
 	</table>
 	</div>
 </div>	
-		
-	<ul class="pagination" style="padding-left:42%">
-		    <li><a href="javascript:pages(0)">首頁</a></li>
-			<li><a href="javascript:pages(<s:property value='bean.currentPage'/>-1)">&laquo;</a></li>			
-			<li><a href="javascript:pages(<s:property value='bean.currentPage'/>)"><s:property value='bean.currentPage'/></a></li>
-			<s:if test="bean.currentPage+1==bean.totalPage||bean.currentPage+1<bean.totalPage">
-			    <li><a href="javascript:pages(<s:property value='bean.currentPage'/>+1)"><s:property value='bean.currentPage+1'/></a></li>
-			</s:if>
-			<s:if test="bean.currentPage+2==bean.totalPage||bean.currentPage+2<bean.totalPage">
-			    <li><a href="javascript:pages(<s:property value='bean.currentPage'/>+2)"><s:property value='bean.currentPage+2'/></a></li>
-			</s:if>
-			<s:if test="bean.currentPage+3==bean.totalPage||bean.currentPage+3<bean.totalPage">
-			    <li><a href="javascript:pages(<s:property value='bean.currentPage'/>+3)"><s:property value='bean.currentPage+3'/></a></li>
-			</s:if>
-			<s:if test="bean.currentPage+4==bean.totalPage||bean.currentPage+4<bean.totalPage">
-			    <li><a href="javascript:pages(<s:property value='bean.currentPage'/>+4)"><s:property value='bean.currentPage+4'/></a></li>
-			</s:if>									
-			<li><a href="javascript:pages(<s:property value='bean.currentPage'/>+1)">&raquo;</a></li>
-			<li><a href="javascript:pages(<s:property value='bean.totalPage'/>)">尾頁</a></li>			
-		</ul>	
-				
-	<hr>
+	<jsp:include page="pagenation.jsp" flush="true"/>		
+	
 </body>
 </html>

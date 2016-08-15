@@ -19,83 +19,10 @@
 <meta http-equiv="expires" content="0">
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
-
-
 <link rel="stylesheet" type="text/css" href="css/form.css" />
-<link rel="stylesheet" type="text/css" href="css/select_beautiful.css">
+
 </head>
-<script type="text/javascript">
-	
-	jq(function() {
-		var demo = jq("#form").Validform({
-			btnSubmit : "#sub",
-			tiptype : 4,
-			tipSweep:false,
-			showAllError : true	,
-			ajaxPost:true,
-			callback:function(data){
-				if(data=="0"){
-					layer.msg("提交成功!",3,1);
-					location.href="/Login/webuseremail_indPageBean";
-				}else{
-					alert(data.responseText);
-				}				
-			}
-		});	
-	}); 
 
-	function back() {
-		    
-			loadUrl("/Login/webuseremail_findPageBean3?backIndex=1");		
-	}
-	 function check(){
-       var factno=document.getElementById("dwr_factno").value;
-       var email=document.getElementById("email").value;
-       var emailPwd=document.getElementById("emailPwd").value;
-       if(factno!=""&&email!=""&&emailPwd!=""){
-          webuseremailjs.findById(factno,email,emailPwd,function(x){
-              if(x!=null){
-              alert("該備簽人已存在，請重新添加");
-              document.getElementById("sub").disabled=true;
-              document.getElementById("sub").value="已鎖定";
-              document.getElementById("sub").style.color="red";
-              document.getElementById("error1").innerHTML="<font color='color'>！</font>";
-          }else{
-            document.getElementById("sub").disabled=false;
-            document.getElementById("sub").value="確定";
-            document.getElementById("sub").style.color="white";
-            document.getElementById("error1").innerHTML="";
-          }        
-          });               
-       }                    
-   }
-  
-/*禁止空格輸入*/
-/* window.onload=function(){            
-            var inputs=document.getElementsByTagName("input"); 
-            for (var i=0;i<inputs.length; i++) {  
-                if(inputs[i].getAttribute("type")=="text") 
-                 inputs[i].onkeyup=function(){ 
-                    this.value=this.value.replace(/(^\s+)|\s+$/g,""); 
-                 }; 
-            }  
-        } */
-
-jq(function(){
-   var inputs=document.getElementsByTagName("input"); 
-            for (var i=0;i<inputs.length; i++) {  
-                if(inputs[i].getAttribute("type")=="text") 
-                 inputs[i].onkeyup=function(){ 
-                    this.value=this.value.replace(/(^\s+)|\s+$/g,""); 
-                 }; 
-            }
-});        
-</script>
-<script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/webbackfeetjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/webuseremailjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/engine.js'></script>
-<script type='text/javascript' src='/Login/dwr/util.js'></script>
 
 
 <body>
@@ -156,5 +83,69 @@ jq(function(){
 		</center>
 	</form>
 
+
+<script type="text/javascript">
+	
+	jq(function() {
+		var demo = jq("#form").Validform({
+			btnSubmit : "#sub",
+			tiptype : 4,
+			tipSweep:false,
+			showAllError : true	,
+			ajaxPost:true,
+			callback:function(data){
+				if(data=="0"){
+					layer.msg("提交成功!",3,1);
+					location.href="/Login/webuseremail_indPageBean";
+				}else{
+					alert(data.responseText);
+				}				
+			}
+		});	
+	}); 
+
+	function back() {
+		    
+			loadUrl("/Login/webuseremail_findPageBean3?backIndex=1");		
+	}
+	 function check(){
+       var factno=document.getElementById("dwr_factno").value;
+       var email=document.getElementById("email").value;
+       var emailPwd=document.getElementById("emailPwd").value;
+       if(factno!=""&&email!=""&&emailPwd!=""){
+          webuseremailjs.findById(factno,email,emailPwd,function(x){
+              if(x!=null){
+              alert("該備簽人已存在，請重新添加");
+              document.getElementById("sub").disabled=true;
+              document.getElementById("sub").value="已鎖定";
+              document.getElementById("sub").style.color="red";
+              document.getElementById("error1").innerHTML="<font color='color'>！</font>";
+          }else{
+            document.getElementById("sub").disabled=false;
+            document.getElementById("sub").value="確定";
+            document.getElementById("sub").style.color="white";
+            document.getElementById("error1").innerHTML="";
+          }        
+          });               
+       }                    
+   }
+  
+/*禁止空格輸入*/
+/* window.onload=function(){            
+            var inputs=document.getElementsByTagName("input"); 
+            for (var i=0;i<inputs.length; i++) {  
+                if(inputs[i].getAttribute("type")=="text") 
+                 inputs[i].onkeyup=function(){ 
+                    this.value=this.value.replace(/(^\s+)|\s+$/g,""); 
+                 }; 
+            }  
+        } */
+
+jq(function(){
+	goTrim();
+});        
+</script>
+<script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>
+<script type='text/javascript' src='/Login/dwr/interface/webuseremailjs.js'></script>
 </body>
 </html>

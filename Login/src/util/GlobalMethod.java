@@ -1,7 +1,13 @@
 package util;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.math.BigDecimal;
@@ -23,6 +29,8 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
+import java.util.Scanner;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -31,7 +39,16 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
+import javax.script.Bindings;
+import javax.script.Invocable;
+import javax.script.ScriptContext;
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
 import javax.servlet.http.HttpServletResponse;
+
+import mail.MailSenderInfo;
+import mail.SimpleMailSender;
 
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFDataFormat;
@@ -39,12 +56,20 @@ import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.struts2.ServletActionContext;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
+import services.IKyVisabillmServices;
 import services.IKyzExpectmatmLogServices;
+import services.IKyzVisaFlowServices;
+import services.IWebuserEmailAServices;
+import services.IWebuserEmailServices;
 
 import com.opensymphony.xwork2.ActionContext;
 
+import entity.KyVisabillm;
+import entity.KyVisabills;
 import entity.KyzExpectmatmLog;
 import entity.WebUser;
 import entity.Webestproduct;
@@ -52,6 +77,7 @@ import entity.WebestproductId;
 
 
 public class GlobalMethod extends HibernateDaoSupport{
+	private static final String URL="http://203.85.73.161/Login/";
 	
 
 	public static void print(List list,String factNo,String yymm,String yymm2,String file,HttpServletResponse response) throws IOException{
@@ -761,81 +787,7 @@ public class GlobalMethod extends HibernateDaoSupport{
 		  return list;
 	  }
 	  		
-	public static void main(String[] args) throws ParseException {
-		List<Webestproduct>list=new ArrayList<Webestproduct>();
-		List<String>list2=new ArrayList<String>();
-		List<Webestproduct>list3=new ArrayList<Webestproduct>();
-		List<Webestproduct>list4=new ArrayList<Webestproduct>();
-		Map<String,Object>map=new LinkedHashMap<String,Object>();
-		list2.add("RB");
-		list2.add("MD");
-		list2.add("PU");
-        /*for(int i=0;i<list2.size();i++){
-        	list.add(new Webestproduct(new WebestproductId("631",list2.get(i),new SimpleDateFormat("yyyyMM").parse("201605"),"zd")));
-        	list3.add(new Webestproduct(new WebestproductId("631",list2.get(i),new SimpleDateFormat("yyyyMM").parse("201605"),"zd")));
-        }
-        for(int i=0;i<list3.size();i++){
-        	list3.get(i).setAccessories(3.2-i);
-        }
-        for(Webestproduct pro:list){
-        	System.out.println(pro.getAccessories());
-        }
-        System.out.println("------------------------");
-        list3.remove(0);
-       
-        for(int i=0;i<list.size();i++){
-        	Webestproduct pro=list.get(i);
-        	for(Webestproduct pro2:list3){
-        		if(pro.getId().getFactCode().equals(pro2.getId().getFactCode())&&
-        				pro.getId().getFactNo().equals(pro2.getId().getFactNo())&&
-        				new SimpleDateFormat("yyyyMM").format(pro.getId().getYymm()).equals(new SimpleDateFormat("yyyyMM").format(pro2.getId().getYymm()))){
-        			//pro=pro2;
-        			list.remove(i);
-        			list.add(i,pro2);
-        		}
-        	}
-        	list4.add(pro);
-        	System.out.println(pro.getAccessories());
-        }
-        for(Webestproduct pro:list){
-        	System.out.println(pro.getAccessories());
-        }
-        map.put("201605", list);*/
-        /*for(Webestproduct pro:(List<Webestproduct>)map.get("201605")){
-        	System.out.println(pro.getAccessories());
-        }*/
-        
-        
-		/*DateFormat frm=new SimpleDateFormat("yyyyMM");
-		DateFormat frm2=new SimpleDateFormat("yyyyMMdd");
-		List<String>months=new ArrayList<String>();
-		months.add("201601");
-		months.add("201602");
-		months.add("201603");
-		months.add("201604");
-		Calendar cal=Calendar.getInstance();
-		for(String month:months){
-			cal.setTime(frm.parse(month));
-			//cal.set(Calendar.DAY_OF_MONTH, 1);
-			int maxnum=cal.getActualMaximum(Calendar.DAY_OF_MONTH);
-			for(int i=1;i<=maxnum;i++){
-				cal.set(Calendar.DAY_OF_MONTH, i);
-				System.out.println(frm2.format(cal.getTime()));
-			}
-			System.out.println("-------------------------------------------------");
-			
-		}*/
-		
-		System.out.println("Start ...");  
-		  
-        ExecutorService exec = Executors.newCachedThreadPool();  
-          
-        testTask(exec, 15); // 任务成功结束后等待计算结果，不需要等到15秒  
-        testTask(exec, 20); // 只等待5秒，任务还没结束，所以将任务中止  
- 
-        exec.shutdown();  
-        System.out.println("End!");					
-	}
+	
 	
 	 public static void testTask(ExecutorService exec, int timeout) {  
 	        MyTask task = new MyTask();  
@@ -856,7 +808,441 @@ public class GlobalMethod extends HibernateDaoSupport{
 	  
 	        System.out.println("\ntaskResult : " + taskResult);  
 	        System.out.println("failReason : " + failReason);  
-	    }  
+	    } 
+	 
+	 
+	 /**
+	  * 函文審核通知email
+	  * @Title: sendEmailA
+	  * @Description: TODO
+	  * @param @param ac
+	  * @param @param list_vbm
+	  * @return void
+	  * @throws
+	  * @author web
+	  * @date 2016/6/22
+	  */
+	 public static void sendEmailA(ApplicationContext ac,List<KyVisabillm>list_vbm){		   
+		    IWebuserEmailServices webuseremailSer=(IWebuserEmailServices)ac.getBean("webuseremailSer");
+			IWebuserEmailAServices webuseremailaSer=(IWebuserEmailAServices)ac.getBean("webuseremailaSer");
+			IKyzVisaFlowServices visaSer=(IKyzVisaFlowServices)ac.getBean("visaSer");
+			IKyVisabillmServices visabillmSer=(IKyVisabillmServices)ac.getBean("visabillmSer");
+		    String subject="";
+			String result="";
+			String content="";		
+			if(list_vbm.size()>0){//start if
+			MailSenderInfo mailInfo = new MailSenderInfo();
+			MailSenderInfo mailInfo2 = new MailSenderInfo();
+			SimpleMailSender sms = new SimpleMailSender();
+			mailInfo.setValidate(true);
+			mailInfo2.setValidate(true);	   
+				for(int i=0;i<list_vbm.size();i++){// start for1	
+					List<String>list_email=new ArrayList<String>();
+					String signerNext=list_vbm.get(i).getSignerNext();
+					String factNo=list_vbm.get(i).getId().getFactNo();
+					String billNo=list_vbm.get(i).getId().getBillNo();
+					String visaSort=list_vbm.get(i).getId().getVisaSort();
+					String visaMk=list_vbm.get(i).getVisaMk();				
+					list_email.add(signerNext);
+					 /******************20151113备签人请使用方法findByFactNoAEmailPwd2(String factNo,String email)**********************/				
+					/***************如果是臺灣加久，備簽人同時也是申請人，那麼根據流程代號找到申請人（也就是備簽人）*******************/
+					if(factNo.equals("GJ")){
+						String visaSinger=visaSer.findVisaSigner(factNo, visaSort);
+						list_email.add(visaSinger);
+					}
+					List<String>list_emailPwd=webuseremailSer.findByFactNoAEmailPwd2(factNo, signerNext);
+						if(list_emailPwd.size()>0){
+							for(int j=0;j<list_emailPwd.size();j++){
+								list_email.add(list_emailPwd.get(j));
+							}
+						}
+						/******************20151113备签人请使用方法findByFactNoAEmailPwd2(String factNo,String email)**********************/
+						
+					/***************************************中途知會人的email20160217********************************************/
+					List<String>list_emailPwd_a=webuseremailaSer.findByEmail(factNo, signerNext, visaSort);
+					for(int k=0;k<list_emailPwd_a.size();k++){
+						list_email.add(list_emailPwd_a.get(k));
+					}
+					/***************************************中途知會人的email20160217********************************************/
+					
+					list_email.add("kyuen@yydg.com.cn");
+					String emailUrl=URL+"vbm_findById_email?visaSort="+visaSort+"&billNo="+billNo
+					         +"&factNo="+factNo+"&email="+signerNext;
+					String emailUrl2=URL+"vbm_findById_email2?visaSort="+visaSort+"&billNo="+billNo
+					         +"&factNo="+factNo+"&email="+signerNext;
+					if(visaMk.equals("N")){
+						subject="函文審核定時通知_"+billNo+"("+factNo+")";
+						content="函文單號:"+"<span style='color:red'>"+billNo+"</span>"+"&nbsp;&nbsp;廠別:"+factNo+
+					    		  "<br/>點擊單號直接審核:<a href='"+emailUrl2+"'>"+billNo+"</a>(電腦適用)"+
+					    		  "<br/>點擊單號直接審核:<a href='"+emailUrl+"'>"+billNo+"</a>(手機平板適用)"+				    		 
+							      "<hr/>"+
+					    		 result+"如需查詢以往單據請登錄加久網站:(云端)<a href='http://203.85.73.161/Login'>http://203.85.73.161/Login</a>" +		            
+					      		"<br/>進入[KPI數據]--[函文審核]中查找對應單號審核"+			    		
+					    		"<hr/>"+
+					      		"<br/>本郵件定時自動發送,請勿回復!如需回復或者問題，請回复到kyinfo.lp@yydg.com.cn劉平!<br/>"+
+					    		"<hr/>";
+					}
+					if(visaMk.equals("T")){
+						////由於出差函文流程中可能不包括申請人， 所有需要從函文中獲取申請email 20160621
+						if(list_vbm.get(i).getId().getBillNo().substring(0,2).equals("BM")){
+							if(list_vbm.get(i).getWebbussletter().getUserEmail()!=null&&!list_vbm.get(i).getWebbussletter().getUserEmail().equals("")){
+								list_email.add(list_vbm.get(i).getWebbussletter().getUserEmail());
+							}
+						}						
+							subject="函文退回定時通知_"+billNo+"("+factNo+")";//退回函文隻發送一次，所以也要鎖定狀態emailMk	
+							list_vbm.get(i).setEmailMk("Y");
+							visabillmSer.add(list_vbm.get(i));
+							content="函文單號:"+"<span style='color:red'>"+billNo+"</span>"+"&nbsp;&nbsp;"+"不通過，備註如下:"+
+						    		  "<br/>"+
+						    		  "<span style='color:red'>"+(list_vbm.get(i).getMemoMk()==null?"無備註":list_vbm.get(i).getMemoMk())+"</span>"+				    		 
+								      "<hr/>"+
+						    		 result+"詳情請登錄加久網站:(云端)<a href='http://203.85.73.161/Login'>http://203.85.73.161/Login</a>" +		            
+						      		"<br/>進入[KPI數據]--[函文審核]中查找對應單號審核"+			    		
+						    		"<hr/>"+
+						      		"<br/>本郵件定時自動發送,請勿回復!如需回復或者問題，請回复到kyinfo.lp@yydg.com.cn劉平!<br/>"+
+						    		"<hr/>";
+					}
+					for(int j=0;j<list_email.size();j++){//start for2
+						  mailInfo.setToAddress(list_email.get(j));
+						  if(list_email.get(j).equals("kyuen@yydg.com.cn")){						  
+							  String content_msg=content+"下一箇簽核:<span style='color:blue'>"+signerNext+"</span>";
+							  mailInfo.setContent(content_msg);					      
+						  }else{
+							  mailInfo.setContent(content);
+						  }
+					      mailInfo.setSubject(subject);    			       				    		  			           
+					      sms.sendHtmlMail(mailInfo);//发送html格式
+					}//end for2								
+				}//end for1
+			}//end if	
+		 
+	 }
+	 
+	 /**
+	  * 函文審核完畢通知email
+	  * @Title: sendEmailB
+	  * @Description: TODO
+	  * @param @param local_factNo
+	  * @param @param local_billNo
+	  * @param @param local_visaSort
+	  * @param @param vbm2
+	  * @param @param ac
+	  * @return void
+	  * @throws
+	  * @author web
+	  * @date 2016/6/22
+	  */
+	 public static void sendEmailB(String local_factNo,String local_billNo,String local_visaSort,KyVisabillm vbm2,ApplicationContext ac){
+		 IWebuserEmailAServices webuseremailaSer=(IWebuserEmailAServices)ac.getBean("webuseremailaSer");/******知會人********/		
+			List<KyVisabills>list_visa2=vbm2.getKyVisabillses();
+			//这个类主要是设置邮件   
+			List<String>list_emails=new ArrayList<String>();//所有發送人
+			list_emails.add("kyuen@yydg.com.cn");
+			//由於出差函文流程中可能不包括申請人， 所有需要從函文中獲取申請email 20160621
+			if(vbm2.getId().getBillNo().substring(0,2).equals("BM")){
+				if(vbm2.getWebbussletter().getUserEmail()!=null&&!vbm2.getWebbussletter().getUserEmail().equals("")){
+					list_emails.add(vbm2.getWebbussletter().getUserEmail());
+				}
+			}		
+			for(KyVisabills bills:list_visa2){
+				list_emails.add(bills.getVisaSigner());
+				if(bills.getFlowMk().equals("Y")){//要簽核的人才需要通知知會人
+					List<String>list_emailPwd=webuseremailaSer.findByEmail(local_factNo,bills.getVisaSigner(),local_visaSort);
+					for(String str:list_emailPwd){
+						list_emails.add(str);
+					}
+				}
+			}
+			
+			String[] attachFileNames = { "d:/" + local_billNo + ".pdf" };// 附件
+			SimpleMailSender sms = new SimpleMailSender();
+			MailSenderInfo mailInfo = new MailSenderInfo();
+			
+			for(String email:list_emails){//for
+				mailInfo.setValidate(true);			
+				mailInfo.setSubject("函文知會定時通知(審核完畢)_" + local_billNo + "("
+						+ local_factNo + ")");
+
+				mailInfo.setAttachFileNames(attachFileNames);
+				mailInfo.setContent("單號為:" + "<span style='color:red'>"
+						+ local_billNo + "</span>" + "的函文已審核完畢,請查看附件"
+						+ "<br/>本郵件自動定時發送，請勿回覆");
+
+				String toAddress = email;
+				mailInfo.setToAddress(toAddress);
+				sms.sendHtmlMail(mailInfo);// 发送html格式
+			}//for
+			File file = new File("d:/" + local_billNo + ".pdf");
+			if (file.exists()) {
+				if (file.isFile()) {
+					file.delete();
+				}
+			}
+	 }
+	 
+	 /**
+	  * 執行js腳本文件
+	  * @Title: runJs
+	  * @Description: TODO
+	  * @param @throws FileNotFoundException
+	  * @param @throws ScriptException
+	  * @param @throws NoSuchMethodException
+	  * @return void
+	  * @throws
+	  * @author web
+	  * @date 2016/7/6
+	  */
+	 public static void runJs() throws FileNotFoundException, ScriptException, NoSuchMethodException{
+		 ScriptEngine eng=new ScriptEngineManager().getEngineByName("javascript");
+			Bindings bid=eng.createBindings();
+			bid.put("index",1);
+			eng.setBindings(bid,ScriptContext.ENGINE_SCOPE);
+			Scanner scan=new Scanner(System.in);
+			while(scan.hasNext()){
+				int first=scan.nextInt();
+				int sec=scan.nextInt();
+				System.out.println("輸入參數："+first+" "+sec);
+				eng.eval(new FileReader("f:\\myjs.js"));
+				if(eng instanceof Invocable){
+					Invocable in=(Invocable)eng;
+					Double result=(Double)in.invokeFunction("test",first,sec);
+					System.out.println("輸出結果："+result.intValue());
+				}
+			}
+	 }
+	 
+	 /**
+	  * 上傳文件
+	  * @Title: uploadFile
+	  * @Description: TODO
+	  * @param @param upFile  要上傳的源文件
+	  * @param @param downFilepath  上傳文件后的保存路徑
+	  * @return void
+	 * @throws IOException 
+	 * @throws
+	  * @author web
+	  * @date 2016/7/8
+	  */
+	 public static void uploadFile(File upFile,String  downFilepath) throws IOException{
+		 BufferedInputStream in=new BufferedInputStream(new FileInputStream(upFile));
+		 BufferedOutputStream out=new BufferedOutputStream(new FileOutputStream(downFilepath));
+		 byte[]bytes=new byte[1024];
+		 int len=0;
+		 while((len=in.read(bytes))!=-1){
+			 out.write(bytes,0,len);
+		 }
+		 out.close();
+		 in.close();
+	 }
+	 			 
+	 /**
+	  * 新函文發送email
+	  * @Title: sendNewEmail
+	  * @Description: TODO
+	  * @param @param vbm
+	  * @param @param list_emailPwd
+	  * @return void
+	  * @throws
+	  * @author web
+	  * @date 2016/7/8
+	  */
+	 public static void sendNewEmail(KyVisabillm vbm,List<String>list_emailPwd){
+		 List<String>list=new ArrayList<String>();
+		 list.add(vbm.getSignerNext());
+		 for(String str:list_emailPwd){
+			 list.add(str);
+		 }
+		 list.add("kyuen@yydg.com.cn");
+		 String emailUrl_in=URL+"vbm_findById_email?visaSort="+vbm.getId().getVisaSort()+"&billNo="+vbm.getId().getBillNo()
+		         +"&factNo="+vbm.getId().getFactNo()+"&email="+vbm.getSignerNext();	
+		 String emailUrl_in2=URL+"vbm_findById_email2?visaSort="+vbm.getId().getVisaSort()+"&billNo="+vbm.getId().getBillNo()
+		         +"&factNo="+vbm.getId().getFactNo()+"&email="+vbm.getSignerNext();
+		 MailSenderInfo mailinfo=new MailSenderInfo();
+		 SimpleMailSender sms = new SimpleMailSender();  
+			mailinfo.setValidate(true);					
+			mailinfo.setSubject("新函文初次審核"+vbm.getId().getBillNo()+"("+vbm.getId().getFactNo()+")");
+			mailinfo.setContent("單號:<span style='color:red'>"+vbm.getId().getBillNo()+"</span>"+"&nbsp;&nbsp;廠別:"+vbm.getId().getFactNo()+								
+					"<br/>點擊單號直接審核:<a href='"+emailUrl_in2+"'>"+vbm.getId().getBillNo()+"</a>(電腦適用)"+
+					"<br/>點擊單號直接審核:<a href='"+emailUrl_in+"'>"+vbm.getId().getBillNo()+"</a>(手機平板適用)"+
+					"<hr/>"+
+					"如需查詢以往單據請登陸:(云端)<a href='"+URL+"'>"+URL+"</a>" +							
+					"<br/>進入[KPI數據]--[函文審核]查找對應單號審核" +									
+					"<hr/>"+
+					"<br/>本郵件自動發送,請勿回復!如需回復或者問題，請回复到kyinfo.lp@yydg.com.cn劉平!<br/>"+
+					"<hr/>");
+		      for(String email:list){		    	  
+		    	  mailinfo.setToAddress(email);
+		    	  sms.sendHtmlMail(mailinfo);
+		      } 				          		       			 
+	 }
+	 
+	 public static Date to_date(String source, String format) throws ParseException {  	        
+	        SimpleDateFormat sdf = new SimpleDateFormat(format);  
+	        Date date = sdf.parse(source);  
+	        return date;  
+	    }
+	 
+	 /**
+	  * 根據函文簽核人數來選擇不同的函文文件模板
+	  * @Title: getSubfile
+	  * @Description: TODO
+	  * @param @param num
+	  * @param @return
+	  * @return String
+	  * @throws
+	  * @author web
+	  * @date 2016/8/5
+	  */
+	 public static String getSubfile(int num){
+		 String result="sub_file.jasper";
+		 if(num<=3){
+			 result="sub_file_3.jasper";
+		 }
+		 if(num>3&&num<=6){
+			 result="sub_file_6.jasper";
+		 }
+		 if(num>6&&num<=9){
+			 result="sub_file_9.jasper";
+		 }
+		 return result;		 
+	 }
+	 
+	 public static String randomString(int num){
+		Random rd=new Random(num);
+		 StringBuilder sb=new StringBuilder();
+		 while(true){
+			 int k=rd.nextInt(27);
+			 if(k==0){
+				 break;
+			 }
+			 sb.append((char)('`'+k));
+		 }
+		 return sb.toString();
+		 
+		 
+		 
+	 }
+	 
+	 public static void main(String[] args) throws ParseException, FileNotFoundException, ScriptException, NoSuchMethodException {
+			List<Webestproduct>list=new ArrayList<Webestproduct>();
+			List<String>list2=new ArrayList<String>();
+			List<Webestproduct>list3=new ArrayList<Webestproduct>();
+			List<Webestproduct>list4=new ArrayList<Webestproduct>();
+			Map<String,Object>map=new LinkedHashMap<String,Object>();
+			list2.add("RB");
+			list2.add("MD");
+			list2.add("PU");
+	        /*for(int i=0;i<list2.size();i++){
+	        	list.add(new Webestproduct(new WebestproductId("631",list2.get(i),new SimpleDateFormat("yyyyMM").parse("201605"),"zd")));
+	        	list3.add(new Webestproduct(new WebestproductId("631",list2.get(i),new SimpleDateFormat("yyyyMM").parse("201605"),"zd")));
+	        }
+	        for(int i=0;i<list3.size();i++){
+	        	list3.get(i).setAccessories(3.2-i);
+	        }
+	        for(Webestproduct pro:list){
+	        	System.out.println(pro.getAccessories());
+	        }
+	        System.out.println("------------------------");
+	        list3.remove(0);
+	       
+	        for(int i=0;i<list.size();i++){
+	        	Webestproduct pro=list.get(i);
+	        	for(Webestproduct pro2:list3){
+	        		if(pro.getId().getFactCode().equals(pro2.getId().getFactCode())&&
+	        				pro.getId().getFactNo().equals(pro2.getId().getFactNo())&&
+	        				new SimpleDateFormat("yyyyMM").format(pro.getId().getYymm()).equals(new SimpleDateFormat("yyyyMM").format(pro2.getId().getYymm()))){
+	        			//pro=pro2;
+	        			list.remove(i);
+	        			list.add(i,pro2);
+	        		}
+	        	}
+	        	list4.add(pro);
+	        	System.out.println(pro.getAccessories());
+	        }
+	        for(Webestproduct pro:list){
+	        	System.out.println(pro.getAccessories());
+	        }
+	        map.put("201605", list);*/
+	        /*for(Webestproduct pro:(List<Webestproduct>)map.get("201605")){
+	        	System.out.println(pro.getAccessories());
+	        }*/
+	        
+	        
+			/*DateFormat frm=new SimpleDateFormat("yyyyMM");
+			DateFormat frm2=new SimpleDateFormat("yyyyMMdd");
+			List<String>months=new ArrayList<String>();
+			months.add("201601");
+			months.add("201602");
+			months.add("201603");
+			months.add("201604");
+			Calendar cal=Calendar.getInstance();
+			for(String month:months){
+				cal.setTime(frm.parse(month));
+				//cal.set(Calendar.DAY_OF_MONTH, 1);
+				int maxnum=cal.getActualMaximum(Calendar.DAY_OF_MONTH);
+				for(int i=1;i<=maxnum;i++){
+					cal.set(Calendar.DAY_OF_MONTH, i);
+					System.out.println(frm2.format(cal.getTime()));
+				}
+				System.out.println("-------------------------------------------------");
+				
+			}*/
+			
+			/*System.out.println("Start ...");  
+			  
+	        ExecutorService exec = Executors.newCachedThreadPool();  
+	          
+	        testTask(exec, 15); // 任务成功结束后等待计算结果，不需要等到15秒  
+	        testTask(exec, 20); // 只等待5秒，任务还没结束，所以将任务中止  
+	 
+	        exec.shutdown();  
+	        System.out.println("End!");
+			Map<String,Double>map1=new LinkedHashMap<String,Double>();
+			System.out.println(map1.size());*/
+			//runJs();
+			/*StringBuffer t1=new StringBuffer();
+			StringBuilder t2=new StringBuilder();
+			long start=System.currentTimeMillis();
+			for(int i=0;i<1000000;i++){
+				t1.append(i);
+			}
+			System.out.println("StringBuffer運行時間："+(System.currentTimeMillis()-start));
+			
+			long start2=System.currentTimeMillis();
+			for(int i=0;i<1000000;i++){
+				t2.append(i);
+			}
+			System.out.println("StringBuilder運行時間："+(System.currentTimeMillis()-start2));*/
+			
+			/*for(Season s:Season.values()){
+				System.out.println(s);
+				System.out.println("最舒服的季節："+Season.getComfortableSeason().getCon());
+				System.out.println(Season.Summer.ordinal());;
+			}*/
+			System.out.println(randomString(-229985452)+" "+randomString(-147909649));
+			
+			
+			
+						
+		}
+	 enum Season{
+		 Spring("春天"),Summer("夏天"),Autumn("秋天"),Winter("冬天");
+		 private String con;
+		 Season(String con){this.con=con;}
+		 public String getCon(){
+			 return con;
+		 }
+		 public void setCon(String con){
+			 this.con=con;
+		 }
+		 
+		 public static Season getComfortableSeason(){
+			 return Spring;
+		 }
+		 
+		 }
+	 
+	
 
 }
 class MyTask implements Callable<Boolean> {  	  
@@ -868,4 +1254,6 @@ class MyTask implements Callable<Boolean> {
         } 
         return Boolean.TRUE;  
     }  
-}  
+}
+
+

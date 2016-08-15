@@ -16,12 +16,16 @@
 <meta http-equiv="expires" content="0">
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
-
-
-
-
 </head>
+<body>
+	<jsp:include page="publicHead_kyzacct.jsp"/>
+	<hr>		
+			
+	<div id="bodyid">
+		<jsp:include page="table1/kyzacct1.jsp" />
+	</div>
 
+	
 <script>
 
 	function pages(page) {
@@ -58,33 +62,7 @@
 		});
 	}
 	
-function showDiv(){
-    jq.layer({
-    type: 1,   //0-4的选择,
-    title: '會計科目',
-    //border: [0],
-    closeBtn: [1,true],
-    shade: [0],
-    shadeClose: false,
-     border: [10, 0.3, '#000'],
-   // btns:1,
-    fadeIn:300,    
-    //shift:'top',
-    offset:['100px',''],
-    area: ['750px', '300px'],
-    page:{
-      url:'saveAndUpdate/kyzacctSaveOrUpdate.jsp'   
-    }
-            
-});
-    }
-	
-	
-</script>
-
-<script type="text/javascript">
-//你确定要删除吗？
-	function isDelete(mid) {
+	/*function isDelete(mid) {
 	    var flag=confirm("確定要刪除嗎?");		
 			if (flag == true) {				
 				jq.ajax({
@@ -101,22 +79,8 @@ function showDiv(){
 				});
 			}
 		
-	}
+	}*/
 </script>
-
-
-
-
-<body>
-	<jsp:include page="publicHead_kyzacct.jsp"/>
-	<hr>		
-			
-	<div id="bodyid">
-		<jsp:include page="table1/kyzacct1.jsp" />
-	</div>
-
-	
-
 
 </body>
 </html>

@@ -6,6 +6,7 @@ import dao.IWebEmailDao;
 
 import entity.WebCc;
 import entity.WebEmail;
+import entity.WebEmailAll;
 import services.IWebEmailService;
 
 public class WebEmailServiceImpl implements IWebEmailService {
@@ -22,6 +23,28 @@ public class WebEmailServiceImpl implements IWebEmailService {
 
 	public List<WebCc> getCC(String sendif) {
 		return emailDao.getCC(sendif);
+	}
+
+	/**
+	 * 日期:2016/6/24
+	 * 描述:
+	 */
+	
+	
+	public List<WebEmailAll> findEmail(){
+		// TODO Auto-generated method stub
+		return emailDao.findEmail();
+	}
+
+	/**
+	 * 日期:2016/6/24
+	 * 描述:
+	 */
+	
+	
+	public List<WebEmailAll> findCC(){
+		// TODO Auto-generated method stub
+		return emailDao.findCC();
 	}
 
 }

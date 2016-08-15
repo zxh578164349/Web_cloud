@@ -19,75 +19,8 @@
 <meta http-equiv="expires" content="0">
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
-<link href="css/validate.css" rel="stylesheet" type="text/css" />
 <link rel="stylesheet" type="text/css" href="css/form.css" />
-<link rel="stylesheet" type="text/css" href="css/select_beautiful.css">
 </head>
-<script type="text/javascript">
-	jq(function() {
-		var demo = jq("#form").Validform({
-			btnSubmit : "#sub",
-			tiptype : 4,
-			showAllError : true,
-			ignoreHidden : true,
-			tipSweep : true,
-			ajaxPost:true,
-			callback:function(data){
-				if(data=="0"){
-					layer.msg("操作成功",3,1);
-					loadUrl("kyzsec_findPageBean");
-				}else{
-					layer.msg("操作失敗",3,3);
-				}
-			},
-			datatype : {
-				"my0-6" : /^\d{0,9}(\.[0-9]{1,3})?$/,
-				"my1-6" : /^[1-9]{1}\d{0,8}(\.[0-9]{1,3})?$/,
-				"my0-7" : /^\d{0,7}(\.[0-9]{1})?$/
-
-			}
-		});
-		demo.tipmsg.w["my0-6"] = "只能數字且不超過9位數,可保留三位以內小數";
-		demo.tipmsg.w["my1-6"] = "不為0的數字且不超過9位數,可保留三位以內小數";
-		demo.tipmsg.w["my0-7"] = "只能數字且不超過7位數,可保留一位以內小數";
-
-	});
-
-	function getFactArea(mid) {
-		document.getElementById("dwrFactArea").length = 1;
-		webfactjs.findFactCodeByFactNo(mid, function(x) {
-			//alert(mid);
-			dwr.util.addOptions("dwrFactArea", x);
-		});
-	}
-
-	function getFactArea2(mid) {
-		document.getElementById("dwrFactArea2").length = 1;
-		webfactjs.findFactCodeByFactNo(mid, function(x) {
-			//alert(mid);
-			dwr.util.addOptions("dwrFactArea2", x);
-		});
-	}
-
-	
-	function makeSecno(obj){
-	   var factno=document.getElementById("dwrFactNo").value;
-	   if(factno!=""){
-	      kyzsecjs.makeSecNo(obj,function(x){
-	         dwr.util.setValue("secno",x);
-	      });
-	   }
-	}	
-jq(document).keyup(function(event){
-   if(event.keyCode==13){
-      submis();
-   }
-});
-</script>
-<script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/kyzsecjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/engine.js'></script>
-<script type='text/javascript' src='/Login/dwr/util.js'></script>
 
 <body>
 
@@ -194,10 +127,6 @@ jq(document).keyup(function(event){
 				</tr>
 		</table>
 
-
-
-
-
 		<center>
 			<input type="button" id="sub" value="確定" class="btn btn-primary"/>&nbsp;&nbsp;&nbsp; 
 			<input type="reset" id="reset" value="重置" class="btn btn-primary"/>&nbsp;&nbsp;&nbsp;					    		    			
@@ -205,7 +134,65 @@ jq(document).keyup(function(event){
 	</form>
 
 	
+<script type="text/javascript">
+	jq(function() {
+		var demo = jq("#form").Validform({
+			btnSubmit : "#sub",
+			tiptype : 4,
+			showAllError : true,
+			ignoreHidden : true,
+			tipSweep : true,
+			ajaxPost:true,
+			callback:function(data){
+				if(data=="0"){
+					layer.msg("操作成功",3,1);
+					loadUrl("kyzsec_findPageBean");
+				}else{
+					layer.msg("操作失敗",3,3);
+				}
+			},
+			datatype : {
+				"my0-6" : /^\d{0,9}(\.[0-9]{1,3})?$/,
+				"my1-6" : /^[1-9]{1}\d{0,8}(\.[0-9]{1,3})?$/,
+				"my0-7" : /^\d{0,7}(\.[0-9]{1})?$/
 
+			}
+		});
+		demo.tipmsg.w["my0-6"] = "只能數字且不超過9位數,可保留三位以內小數";
+		demo.tipmsg.w["my1-6"] = "不為0的數字且不超過9位數,可保留三位以內小數";
+		demo.tipmsg.w["my0-7"] = "只能數字且不超過7位數,可保留一位以內小數";
+
+	});
+
+	function getFactArea(mid) {
+		document.getElementById("dwrFactArea").length = 1;
+		webfactjs.findFactCodeByFactNo(mid, function(x) {
+			//alert(mid);
+			dwr.util.addOptions("dwrFactArea", x);
+		});
+	}
+
+	function getFactArea2(mid) {
+		document.getElementById("dwrFactArea2").length = 1;
+		webfactjs.findFactCodeByFactNo(mid, function(x) {
+			//alert(mid);
+			dwr.util.addOptions("dwrFactArea2", x);
+		});
+	}
+
+	
+	function makeSecno(obj){
+	   var factno=document.getElementById("dwrFactNo").value;
+	   if(factno!=""){
+	      kyzsecjs.makeSecNo(obj,function(x){
+	         dwr.util.setValue("secno",x);
+	      });
+	   }
+	}	
+
+</script>
+<script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>
+<script type='text/javascript' src='/Login/dwr/interface/kyzsecjs.js'></script>
 </body>
 
 </html>

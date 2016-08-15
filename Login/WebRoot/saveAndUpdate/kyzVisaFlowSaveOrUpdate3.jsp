@@ -21,9 +21,75 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 <meta http-equiv="expires" content="0">
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
-<link href="css/validate.css" rel="stylesheet" type="text/css" />
 <link rel="stylesheet" type="text/css" href="css/form.css" />
-<link rel="stylesheet" type="text/css" href="css/select_beautiful.css">
+
+</head>
+<body>
+   <div id="pop">
+       <form action="visaflow_addMaxFlow" method="post" id="form">
+       <h2>審核流程</h2>
+		<table class="table table-condensed">	    																 			
+			<tbody id="visaflow_body">
+			 	
+			 <s:if test="flows==null">
+			    <tr>
+			     <td><input type="checkbox" id="cboxall" onclick="checkAll()" disabled/></td>
+			     <td>廠別</td>
+			     <td >類別</td>			     
+			     <td >項次</td>
+			     <td >姓名</td>
+			     <td >Email地址</td>			     
+			 </tr>
+			 
+			    <tr>
+			     <td><input type="checkbox" name="cbox" disabled/></td>
+			    
+			  
+			     <td >			 			  
+			       <input type="text" name="flows[0].id.factNo" id="dwrFactNo" value="<s:property value='flow.id.factNo'/>" readonly/>			     
+			     <td>
+			       <input type="text" name="flows[0].id.visaSort" id="dwr_kytype" value="<s:property value='flow.id.visaSort'/>" readonly/>			     
+			     </td>
+			     <td ><input type="text" name="flows[0].id.itemNo" value="<s:property value='flow.id.itemNo'/>" readonly/></td>
+			     <td >			     			     
+			     <input type="text" name="flows[0].id.purmanNo" value=""  datatype="*"  id="keys0" onkeyup="gog(0)" />
+			     <div style="position:relative">
+			     <div id="tishi0" style="z-index:100;position:absolute;background:yellow;top:0px;left:0px;width:180px;display:none"></div>
+			     </div>
+			     </td>			     			     
+			     <td >			     
+			     <input type="text" name="flows[0].visaSigner" value=""  datatype="e" id="skeys0" onkeyup="getEmail(0);"  />
+			     <div style="position:relative"  >			     
+			     <div id="emaildwr0" style="z-index:100;position:absolute;background:yellow;top:0px;left:0px;width:180px;display:none" ></div>			     
+			     </div>
+			     </td>
+			     <td >
+			       <input type="hidden" value="<s:property value='maxItem'/>" id="maxItem"/><!-- 后台传递过来的最大序列号 -->
+			     </td>		     			     		      		      
+			  </tr>		
+			 </s:if>		
+			         			  			 	  			
+			</tbody>
+			<tfoot>
+			<tr>
+			<td colspan="10">
+			  <s:if test="flows==null">
+			     <input type="button" value="添加行" onclick="addRow()"  id="addbtn" class="btn btn-info"/>
+			     <input type="button" value="刪除行" onclick="delRow()"  id="delbtn" class="btn btn-info"/>			   
+			  </s:if>			    			    		    
+			</td>
+			</tr>
+			</tfoot>			
+		    
+		</table >
+			<center>			    
+				<input type="submit" id="sub" value="確定" class="btn btn-primary" />&nbsp;&nbsp;&nbsp; 				
+			    <input type="button" value="返回" onclick="back()" id="btn_back" class="btn btn-primary"/>
+			</center>
+							
+	</form>
+	</div>
+
 <script type="text/javascript">
 
 	jq(function() {
@@ -51,19 +117,6 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 		demo.tipmsg.w["*0-6"] = "只能數字且不超過9位數,可保留三位以內小數";
 		demo.tipmsg.w["my0-8"]="只能數字且不超過8位數,可保留四位以內小數";
 	});
-
-	function getFactArea(mid) {
-		document.getElementById("dwrFactArea").length = 1;
-		webfactjs.findFactCodeByFactNo(mid, function(x) {
-			dwr.util.addOptions("dwrFactArea", x);
-		});
-		
-	}
-	function getAllFact(){
-	   webfactjs.findAllFact2(function(x){
-	       dwr.util.addOptions("tempfact",x,"factCode","factSname");
-	   });
-	}
 		
 var j=0;
 var k=0;		
@@ -132,31 +185,14 @@ var k2=0;
 	     j=0;
 	     k=0;
 	  }	 	  	   
-	   var cboxlist=document.getElementsByName("cbox");
-	   //刪除選中行
-	 /* for(var k=0;k<cboxlist.length;k++){
-	     if(cboxlist[k].checked==true&&k>0){
-	        visaflow_body.deleteRow(k+1);
-	        k=k-1;
-	     }	    
-	   } */ 
-	   	   
+	   var cboxlist=document.getElementsByName("cbox");	  	   	   
 	   if(cboxlist.length>1){
-	      visaflow_body.deleteRow(cboxlist.length);
-	      
-	      /* if(document.getElementById("per2").ckecked=true){
-	         document.getElementById("per2").value=cboxlist.length-1;
-	      }	 */     
+	      visaflow_body.deleteRow(cboxlist.length);	      	          
 	   }
 	   //刪除最後一行
 	   if(cboxlist.length==1){
 	      document.getElementById("dwrFactNo").disabled=false;
-	      document.getElementById("dwr_kytype").disabled=false;
-	      
-	     /*  document.getElementById("per1").disabled=false;
-	      document.getElementById("per1").ckecked=true;
-	      document.getElementById("per2").disabled=false; */
-	      
+	      document.getElementById("dwr_kytype").disabled=false;	      	     	      
 	   }	  	   	  	   
 	}
 	function checkAll(){
@@ -172,110 +208,7 @@ var k2=0;
 	       }
 	  }
 	}
-	function getKyType(){
-	   /* kytypejs.findByTypeNo("VV",function(x){
-	         dwr.util.addOptions("dwr_kytype",x,"typeName","typeSname");
-	   }); */
-	   
-	 var factno=document.getElementById("dwrFactNo").value;
-	 if(factno!=null&&factno!=""){
-	     webtypejs.findByFactNo(factno,function(x){
-       if(x.length>0){
-          dwr.util.addOptions("dwr_kytype",x,"webtypeMk","typeName");
-       }
-         
-     });
-	 }
-    
-	}
-	
-	function getKyType2(factno){
-	 document.getElementById("dwr_kytype").length=1;	 
-	 if(factno!=null&&factno!=""){
-	     webtypejs.findByFactNo(factno,function(x){
-       if(x.length>0){
-          dwr.util.addOptions("dwr_kytype",x,"webtypeMk","typeName");
-       }
-         
-     });
-	 }
-    
-	}
-	function getAddBtn(){
-	    var factno=document.getElementById("dwrFactNo").value;
-        var typeno=document.getElementById("dwr_kytype").value;
-        if(factno!=""&&typeno!=""){
-          document.getElementById("addbtn").disabled="";
-          document.getElementById("addbtn").style.color="white";
-        }else{
-          document.getElementById("addbtn").disabled="disabled";
-          document.getElementById("addbtn").style.color="grey";
-        }
-	}
-	 function Trim(str)
-         { 
-             return str.replace(/(^\s*)|(\s*$)/g, ""); 
-     }
-     
-     function checkSame(){
-       var factno=document.getElementById("dwrFactNo").value;
-       var visasort=document.getElementById("dwr_kytype").value;
-       var first_visasort=visasort.charAt(0);
-       var visaSigner=document.getElementById("skeys0").value;
-       var visasort_obj=document.getElementById("dwr_kytype");
-       var visasort_index=visasort_obj.selectedIndex;
-       var visasort_text=visasort_obj.options[visasort_index].text;
-       if(factno!=""&&visasort!=""){
-          if(first_visasort!='C'){
-             kyzvisaflowjs.findByFactNoVisaSort(factno,visasort,function(x){
-               if(x.length>0){
-                 alert("廠別為("+factno+")類別為("+visasort_text+")的審核流程已存在!");
-                 document.getElementById("error1").innerHTML='<font color="red">！</font>';
-                 document.getElementById("error2").innerHTML='<font color="red">！</font>'; 
-                 document.getElementById("sub").disabled=true;
-                 document.getElementById("addbtn").disabled=true;
-                 document.getElementById("sub").value="已鎖定";
-                 document.getElementById("sub").style.color="red";
-                 document.getElementById("addbtn").style.color="red";
-               }else{
-                 document.getElementById("error1").innerHTML='';
-                 document.getElementById("error2").innerHTML='';
-                 document.getElementById("sub").disabled=false;
-                 document.getElementById("addbtn").disabled=false;
-                 document.getElementById("sub").value="確定";
-                 document.getElementById("sub").style.color="white";
-                 document.getElementById("addbtn").style.color="white";
-               }
-          });
-          }else{//如果是C类别,也就是C1,C2,C3....,就限定同类中，第一个申请人只能申请一个流程（因为在申请函文选择类别时，是要根据第一人，也就是申请人来选择流程的代号）             
-                 if(visaSigner!=""){                 
-                   kyzvisaflowjs.findVisaSort_dwr(factno,visasort,visaSigner,function(x){
-                        if(x!=null){
-                           alert("廠別為("+factno+")類別為("+visasort_text+")的審核流程已存在!");
-                           document.getElementById("error1").innerHTML='<font color="red">！</font>';
-                           document.getElementById("error2").innerHTML='<font color="red">！</font>';
-                           document.getElementById("sub").disabled=true;
-                           document.getElementById("addbtn").disabled=true;
-                           document.getElementById("sub").value="已鎖定";
-                           document.getElementById("sub").style.color="red";
-                           document.getElementById("addbtn").style.color="red";
-                        }else{
-                           document.getElementById("error1").innerHTML='';
-                           document.getElementById("error2").innerHTML='';
-                           document.getElementById("sub").disabled=false;
-                           document.getElementById("addbtn").disabled=false;
-                           document.getElementById("sub").value="確定";
-                           document.getElementById("sub").style.color="white";
-                           document.getElementById("addbtn").style.color="white";
-                        }
-                   });
-                 }
-                 
-          }
-       } 
-     }
-     
-
+				     
 	function gog(index) {	   	 	    
 		var keys = document.getElementById("keys"+index).value;
 		var factno=document.getElementById("dwrFactNo").value;
@@ -347,116 +280,13 @@ var k2=0;
 						
 	}
 	
-	
-/* 	function checkName(obj,index){
-	   var factno=document.getElementById("dwrFactNo").value;
-	   if(obj!=""&&factno!=""){
-	      userjs.findByNameAndFactNoDwr(factno,obj,function(x){
-	           if(x==null){
-	              alert("該廠不存在當前用戶!");
-	           }else{
-	             document.getElementById("skeys"+index).value=x.email;	
-	                        
-	           }
-	      });
-	   }
-	} */
-
- function getValue(str1,str2){
-    document.getElementById(str2).value=document.getElementById(str1).value;
- }
-
-function clickOne(){
-   if(document.getElementById("per2").checked==true){
-      document.getElementById("per1").disabled=true;
-      document.getElementById("per2").value=j;
-   }
-   alert("当前为知会人员"+document.getElementById("per2").value);
-}
-
 function back(){	
 	loadUrl("/Login/visaflow_findPageBean3?backIndex=1");
 }
 </script>
-<script type='text/javascript' src='/Login/dwr/interface/kyzjs.js'></script>
 <script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/kytypejs.js'></script>
 <script type='text/javascript' src='/Login/dwr/interface/kyzvisaflowjs.js'></script>
 <script type='text/javascript' src='/Login/dwr/interface/userjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/webtypejs.js'></script>
-<script type='text/javascript' src='/Login/dwr/engine.js'></script>
-<script type='text/javascript' src='/Login/dwr/util.js'></script>
-
-
-
-</head>
-<body>
-   <div id="pop">
-       <form action="visaflow_addMaxFlow" method="post" id="form">
-       <h2>審核流程</h2>
-		<table class="table table-condensed">	    																 			
-			<tbody id="visaflow_body">
-			 	
-			 <s:if test="flows==null">
-			    <tr>
-			     <td><input type="checkbox" id="cboxall" onclick="checkAll()" disabled/></td>
-			     <td>廠別</td>
-			     <td >類別</td>			     
-			     <td >項次</td>
-			     <td >姓名</td>
-			     <td >Email地址</td>			     
-			 </tr>
-			 
-			    <tr>
-			     <td><input type="checkbox" name="cbox" disabled/></td>
-			    
-			  
-			     <td >			 			  
-			       <input type="text" name="flows[0].id.factNo" id="dwrFactNo" value="<s:property value='flow.id.factNo'/>" readonly/>			     
-			     <td>
-			       <input type="text" name="flows[0].id.visaSort" id="dwr_kytype" value="<s:property value='flow.id.visaSort'/>" readonly/>			     
-			     </td>
-			     <td ><input type="text" name="flows[0].id.itemNo" value="<s:property value='flow.id.itemNo'/>" readonly/></td>
-			     <td >			     			     
-			     <input type="text" name="flows[0].id.purmanNo" value=""  datatype="*"  id="keys0" onkeyup="gog(0)" />
-			     <div style="position:relative">
-			     <div id="tishi0" style="z-index:100;position:absolute;background:yellow;top:0px;left:0px;width:180px;display:none"></div>
-			     </div>
-			     </td>			     			     
-			     <td >			     
-			     <input type="text" name="flows[0].visaSigner" value=""  datatype="e" id="skeys0" onkeyup="getEmail(0);" onblur="checkSame()" />
-			     <div style="position:relative"  >			     
-			     <div id="emaildwr0" style="z-index:100;position:absolute;background:yellow;top:0px;left:0px;width:180px;display:none" ></div>			     
-			     </div>
-			     </td>
-			     <td >
-			       <input type="hidden" value="<s:property value='maxItem'/>" id="maxItem"/><!-- 后台传递过来的最大序列号 -->
-			     </td>		     			     		      		      
-			  </tr>		
-			 </s:if>		
-			         			  			 	  			
-			</tbody>
-			<tfoot>
-			<tr>
-			<td colspan="10">
-			  <s:if test="flows==null">
-			     <input type="button" value="添加行" onclick="addRow()"  id="addbtn" class="btn btn-info"/>
-			     <input type="button" value="刪除行" onclick="delRow()"  id="delbtn" class="btn btn-info"/>
-			    <!--  <input type="radio" value="Y" name="index" id="per1" checked disabled/>审核人员&nbsp;
-			     <input type="radio" value="N" id="per2" name="index" onclick="clickOne()" disabled/>知会人员 -->
-			  </s:if>			    			    		    
-			</td>
-			</tr>
-			</tfoot>			
-		    
-		</table >
-			<center>			    
-				<input type="submit" id="sub" value="確定" class="btn btn-primary" />&nbsp;&nbsp;&nbsp; 
-				<input type="reset" id="reset" value="重置" class="btn btn-primary" disabled="false" style="color:red"/>
-			    <input type="button" value="返回" onclick="back()" id="btn_back" class="btn btn-primary"/>
-			</center>
-							
-	</form>
-	</div>
+<script type='text/javascript' src='/Login/dwr/interface/webtypejs.js'></script>	
 </body>
 </html>

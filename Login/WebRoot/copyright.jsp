@@ -22,6 +22,8 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 
 </head>
 <body >	
-	<div class="copyright" >Copyright © 2014-<%=str_date%>,東莞加元鞋材制品有限公司,All Rights Reserved</div>
+	<div class="copyright" >Copyright © 2014-<%=str_date%>,東莞加元鞋材制品有限公司,All Rights Reserved
+	<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1259940248'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1259940248%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+	</div>	
 </body>
 </html>

@@ -25,6 +25,7 @@ import org.apache.poi.hssf.usermodel.HSSFDataFormat;
 import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.struts2.ServletActionContext;
@@ -578,16 +579,22 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 		factNo=(String)ActionContext.getContext().getSession().get("factNo");
 		List<Object[]>list=webfactorderSer.findByGroup2(factNos,factAreas, branks, customers, models, components,factNo,yymm,yymm2);
 		List<Object[]>list2=webfactorderSer.findByGroup(factNos,factAreas, branks, customers, models, components,factNo,yymm,yymm2);
-		/******************是否郵件通知判斷***********************/
-		if(autoEmailMk==1){
-			List<WebFact>list_facts=webfactorderSer.findNoinput(yymm);
-			for(WebFact fact:list_facts){
-				list.add(new Object[]{fact.getFactSname(),fact.getId().getFactArea(),"","","","",yymm.substring(0,2)});
-			}
-		}
-		/******************是否郵件通知判斷***********************/
 		List<String>list_date=GlobalMethod.getDateNum(yymm, yymm2);		
 		List<Map<String,Double>>list_all=new ArrayList<Map<String,Double>>();
+		
+		/******************是否郵件通知判斷***********************/
+		/*if(autoEmailMk==1){
+			for(String month:list_date){
+				List<WebFact>list_facts=webfactorderSer.findNoinput(month);
+				list.add(new Object[]{month+"未導入","","","","","",month.substring(0,2)});
+				for(WebFact fact:list_facts){
+					list.add(new Object[]{fact.getFactSname(),fact.getId().getFactArea(),"","","","",month.substring(0,2)});
+				}
+			}
+			
+		}*/
+		/******************是否郵件通知判斷***********************/
+		
 		
 		for(int i=0;i<list.size();i++){//for1
 			for(int x=0;x<6;x++){
@@ -643,7 +650,8 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 		HSSFCellStyle cs_title=(HSSFCellStyle)map.get("cs_title");
 		HSSFCellStyle cs_data=(HSSFCellStyle)map.get("cs_data");
 		HSSFCellStyle cs_head=(HSSFCellStyle)map.get("cs_head");
-		HSSFCellStyle cs_font_red=(HSSFCellStyle)map.get("cs_font_red");		
+		HSSFCellStyle cs_font_red=(HSSFCellStyle)map.get("cs_font_red");
+		//HSSFCellStyle cs_font_bgyellow=(HSSFCellStyle)map.get("cs_font_bgyellow");
 		
 		/***************************初始化表格************************************/
 		int index=0;//不顯示列名標識，沒有選擇的條件就不顯示，則index-1     20160129
@@ -705,6 +713,9 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 		int index2=0;//不顯示列名標識，沒有選擇的條件就不顯示，則index2-1     20160129
 		for(int i=0;i<list.size();i++){
 			sheet.getRow(i+2).getCell(0).setCellValue(list.get(i)[0].toString());
+			/*if(list.get(i)[0].toString().contains("未導入")){
+				sheet.getRow(i+2).getCell(0).setCellStyle(cs_font_bgyellow);
+			}*/
 			if(factAreas.size()>0){
 				sheet.getRow(i+2).getCell(1).setCellValue(list.get(i)[1].toString());
 			}else{
@@ -731,33 +742,45 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 			}else{
 				index2--;
 			}
-			
-			
-			double row_total=0.0;						
-			for(int j=0;j<list_date.size();j++){//for
-				if(list_all.get(i).size()==0){
-					sheet.getRow(i+2).getCell(6+j+index2).setCellValue(0);
-					sheet.getRow(i+2).getCell(6+j+index2).setCellStyle(cs_font_red);
-				}
-				for(String key:list_all.get(i).keySet()){
-					if(list_date.get(j).equals(key)){
-						sheet.getRow(i+2).getCell(6+j+index2).setCellValue(list_all.get(i).get(key));
-						row_total=row_total+list_all.get(i).get(key);
-						list_all.get(i).remove(key);
 						
-					}else{
+			double row_total=0.0;				
+			if(list_all.get(i).size()==0){
+			  for(int j=0;j<list_date.size();j++){
+				sheet.getRow(i+2).getCell(6+j+index2).setCellValue("/");
+				sheet.getRow(i+2).getCell(6+j+index2).setCellStyle(cs_font_red);
+			  }
+			}else{
+				for(int j=0;j<list_date.size();j++){//for
+					if(list_all.get(i).size()==0){
 						sheet.getRow(i+2).getCell(6+j+index2).setCellValue(0);
 						sheet.getRow(i+2).getCell(6+j+index2).setCellStyle(cs_font_red);
-					}
-					break;
-				}
-			}//for
+					}else{
+						for(String key:list_all.get(i).keySet()){
+							if(list_date.get(j).equals(key)){
+								sheet.getRow(i+2).getCell(6+j+index2).setCellValue(list_all.get(i).get(key));
+								row_total=row_total+list_all.get(i).get(key);
+								list_all.get(i).remove(key);
+								
+							}else{
+								sheet.getRow(i+2).getCell(6+j+index2).setCellValue(0);
+								sheet.getRow(i+2).getCell(6+j+index2).setCellStyle(cs_font_red);
+							}
+							break;
+						}
+					}				
+				}//for
+			}
+			
+			
 			sheet.getRow(i+2).getCell(6+list_date.size()+index2).setCellValue(row_total);
 			/*************************最後一行是各箇月份的匯總****************************/
             if(i==list.size()-1){
 				for(int x=0;x<=list_date.size();x++){
 					double col_total=0;
 					for(int y=0;y<list.size();y++){
+						if(sheet.getRow(y+2).getCell(6+x+index2).getCellType()==Cell.CELL_TYPE_STRING){
+							continue;
+						}
 						col_total=col_total+sheet.getRow(y+2).getCell(6+x+index2).getNumericCellValue();
 					}
 					if(x==0){
@@ -930,6 +953,21 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 		cs_head.setFillForegroundColor(IndexedColors.YELLOW.getIndex());				
 		cs_head.setFillPattern(XSSFCellStyle.SOLID_FOREGROUND);
 		map.put("cs_head", cs_head);
+		
+		HSSFCellStyle cs_font_bgyellow = wb.createCellStyle();
+		HSSFFont font_bold_bgyellow = wb.createFont();
+		font_bold_bgyellow.setFontHeightInPoints((short) 10);
+		font_bold_bgyellow.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);// 粗体显示
+		cs_font_bgyellow.setFont(font_bold_bgyellow);
+		cs_font_bgyellow.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		cs_font_bgyellow.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);				
+		cs_font_bgyellow.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+		cs_font_bgyellow.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+		cs_font_bgyellow.setBorderRight(HSSFCellStyle.BORDER_THIN);
+		cs_font_bgyellow.setBorderTop(HSSFCellStyle.BORDER_THIN);
+		cs_font_bgyellow.setFillForegroundColor(IndexedColors.YELLOW.getIndex());				
+		cs_font_bgyellow.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+		map.put("cs_font_bgyellow", cs_font_bgyellow);
 		return map;
 	}
 	

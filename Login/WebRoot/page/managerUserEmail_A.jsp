@@ -16,9 +16,16 @@
 <meta http-equiv="expires" content="0">
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
-
- 
 </head>
+
+<body>
+	<jsp:include page="publicHead_webuseremail_A.jsp" />
+	<hr />
+	
+	<div id="bodyid">
+		<jsp:include page="table1/managerUserEmail1_A.jsp" />
+	</div>
+	
 <script type="text/javascript">
 	function pages(page) {
 		jq.ajax({
@@ -54,13 +61,6 @@
 		});
 	}
 	
-
-   
-/* jq(document).keyup(function(event){
-    if(event.keyCode==13){
-       submis();
-    }
-})  */
  
  function mydelete(factNo,email,emailpwd,visaSort){
     var flag=confirm("確定要刪除嗎?");
@@ -86,15 +86,6 @@ function findById(factno,email,emailpwd,visasort){
 }
 
 </script>
-<script type='text/javascript' src='/Login/dwr/interface/webuseremailajs.js'></script>
-<script type='text/javascript' src='/Login/dwr/engine.js'></script>
-<script type='text/javascript' src='/Login/dwr/util.js'></script>
-<body>
-	<jsp:include page="publicHead_webuseremail_A.jsp" />
-	<hr />
-	
-	<div id="bodyid">
-		<jsp:include page="table1/managerUserEmail1_A.jsp" />
-	</div>
+<script type='text/javascript' src='/Login/dwr/interface/webuseremailajs.js'></script>	
 </body>
 </html>

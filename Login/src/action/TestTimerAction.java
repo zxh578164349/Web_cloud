@@ -145,7 +145,7 @@ public class TestTimerAction extends QuartzJobBean {
 				}
 			} else {
 				if(cal.get(Calendar.DAY_OF_WEEK) == Calendar.MONDAY){
-				totalTemp.append(list_day.get(i)+"<br/>"+result);
+				totalTemp.append("<span style='color:blue'>"+list_day.get(i)+"</span>"+"<br/>"+result);
 				}else{
 					totalTemp.append(result);
 				}

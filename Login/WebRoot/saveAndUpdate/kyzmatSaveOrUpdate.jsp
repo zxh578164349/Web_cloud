@@ -24,121 +24,9 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 <meta http-equiv="expires" content="0">
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
-<link href="css/validate.css" rel="stylesheet" type="text/css" />
 <link rel="stylesheet" type="text/css" href="css/form.css" />
-<link rel="stylesheet" type="text/css" href="css/select_beautiful.css">
 </head>
 
-<link rel="stylesheet" href="css/select/prism.css">
- <link rel="stylesheet" href="css/select/chosen.css">
-
-
-<script type="text/javascript">
-	jq(function() {
-		var demo = jq("#form").Validform({
-			btnSubmit : "#sub",
-			tiptype : 4,
-			showAllError : true,
-			ignoreHidden : true,
-			tipSweep : true,
-			ajaxPost:true,
-			callback : function(data) {
-				if(data=="0"){
-					layer.msg("操作成功",3,1);
-					loadUrl("kyzmat_findPageBean");
-				}else{
-					layer.msg("操作失敗",3,3);
-				}
-			},
-			datatype : {
-				"my0-10" : /^-?\d{0,10}(\.[0-9]{1,2})?$/,
-				"my1-10" : /^-?[1-9]{1}\d{0,9}(\.[0-9]{1,2})?$/
-
-			}
-		});
-		demo.tipmsg.w["my0-6"] = "只能數字且不超過9位數,可保留三位以內小數";
-		demo.tipmsg.w["my1-6"] = "不為0的數字且不超過9位數,可保留三位以內小數";
-		demo.tipmsg.w["my0-7"] = "只能數字且不超過7位數,可保留一位以內小數";
-
-	});
-		
-	function makeMatNo(){
-	var bNo=document.getElementById("bNo").value;
-	var mNo=document.getElementById("mNo").value;
-	var sNo=document.getElementById("sNo").value;
-	if(bNo!=""&&mNo!=""&&sNo!=""){
-	   kyzmatjs.makeMatNo(bNo,mNo,sNo,function(x){	      
-	         dwr.util.setValue("matNo",x);	      
-	  }); 
-	}	
-	  
-	}
-	
-	function findallBN(){
-	      kyzscmjs.findBN(function(x){
-	          dwr.util.addOptions("bNo",x);
-	      });                             
-	}
-	function findallMN(bNo){
-	     document.getElementById("mNo").length=1;
-	     kyzscmjs.findMN(bNo,function(x){
-	     if(bNo!=""){
-	        dwr.util.addOptions("mNo",x);
-	     }	         
-	     });
-	}
-	function findallSN(mNo){
-	     document.getElementById("sNo").length=1;
-	     kyzscmjs.findSN(mNo,function(x){
-	     if(mNo!=""){
-	        dwr.util.addOptions("sNo",x);
-	     }	         
-	     });
-	}
-	function findAllAcct(){
-	  kyzacctjs.findAll(function(x){
-	     dwr.util.addOptions("kyzacctNo",x,"acctNo","acctName");
-	  });
-	}
-
-/*禁止空格輸入*/
-function noNull(){            
-            var inputs=document.getElementsByTagName("input"); 
-            for (var i=0;i<inputs.length; i++) {  
-                if(inputs[i].getAttribute("type")=="text") 
-                 inputs[i].onkeyup=function(){ 
-                    this.value=this.value.replace(/(^\s+)|\s+$/g,""); 
-                 }; 
-            }  
-        }	
-	/*window.onload=function(){
-	   findAllAcct();
-	   findallBN();
-	   noNull();
-	}*/
-
-  	
-jq(document).keyup(function(event){
-   if(event.keyCode==13){
-      submis();
-   }
-});
-	function back(){
-		loadUrl("/Login/kyzmat_findPageBean3?backIndex=1");
-	}
-</script>
-<script type='text/javascript' src='/Login/dwr/interface/kyzscmjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/kyzmatjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/kyzacctjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/engine.js'></script>
-<script type='text/javascript' src='/Login/dwr/util.js'></script> 
-<script type="text/javascript">
-  jq(function(){
-	  findAllAcct();
-	   findallBN();
-	   noNull(); 
-  });
-</script>
 <body >
 
 	<form action="kyzmat_add" method="post" id="form">
@@ -375,7 +263,86 @@ jq(document).keyup(function(event){
 		</center>
 	</form>
 
+<script type="text/javascript">
+	jq(function() {
+		var demo = jq("#form").Validform({
+			btnSubmit : "#sub",
+			tiptype : 4,
+			showAllError : true,
+			ignoreHidden : true,
+			tipSweep : true,
+			ajaxPost:true,
+			callback : function(data) {
+				if(data=="0"){
+					layer.msg("操作成功",3,1);
+					loadUrl("kyzmat_findPageBean");
+				}else{
+					layer.msg("操作失敗",3,3);
+				}
+			},
+			datatype : {
+				"my0-10" : /^-?\d{0,10}(\.[0-9]{1,2})?$/,
+				"my1-10" : /^-?[1-9]{1}\d{0,9}(\.[0-9]{1,2})?$/
+
+			}
+		});
+		demo.tipmsg.w["my0-6"] = "只能數字且不超過9位數,可保留三位以內小數";
+		demo.tipmsg.w["my1-6"] = "不為0的數字且不超過9位數,可保留三位以內小數";
+		demo.tipmsg.w["my0-7"] = "只能數字且不超過7位數,可保留一位以內小數";
+
+	});
+		
+	function makeMatNo(){
+	var bNo=document.getElementById("bNo").value;
+	var mNo=document.getElementById("mNo").value;
+	var sNo=document.getElementById("sNo").value;
+	if(bNo!=""&&mNo!=""&&sNo!=""){
+	   kyzmatjs.makeMatNo(bNo,mNo,sNo,function(x){	      
+	         dwr.util.setValue("matNo",x);	      
+	  }); 
+	}	
+	  
+	}
 	
+	function findallBN(){
+	      kyzscmjs.findBN(function(x){
+	          dwr.util.addOptions("bNo",x);
+	      });                             
+	}
+	function findallMN(bNo){
+	     document.getElementById("mNo").length=1;
+	     kyzscmjs.findMN(bNo,function(x){
+	     if(bNo!=""){
+	        dwr.util.addOptions("mNo",x);
+	     }	         
+	     });
+	}
+	function findallSN(mNo){
+	     document.getElementById("sNo").length=1;
+	     kyzscmjs.findSN(mNo,function(x){
+	     if(mNo!=""){
+	        dwr.util.addOptions("sNo",x);
+	     }	         
+	     });
+	}
+	function findAllAcct(){
+	  kyzacctjs.findAll(function(x){
+	     dwr.util.addOptions("kyzacctNo",x,"acctNo","acctName");
+	  });
+	}
+	
+	function back(){
+		loadUrl("/Login/kyzmat_findPageBean3?backIndex=1");
+	}
+</script>
+<script type='text/javascript' src='/Login/dwr/interface/kyzscmjs.js'></script>
+<script type='text/javascript' src='/Login/dwr/interface/kyzmatjs.js'></script>
+<script type="text/javascript">
+  jq(function(){
+	  goTrim();
+	   findallBN();
+  });
+</script>	
 
 </body>
 

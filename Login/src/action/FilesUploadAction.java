@@ -1,5 +1,7 @@
 package action;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -13,10 +15,12 @@ import java.util.List;
 import org.apache.struts2.ServletActionContext;
 
 import services.IWebUploadFileServices;
+import util.GlobalMethod;
 
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
+import entity.KyzExpectmatmLog;
 import entity.WebUploadfiles;
 import entity.WebUser;
 
@@ -105,9 +109,10 @@ public class FilesUploadAction extends ActionSupport{
 		public void setWebuploadSer(IWebUploadFileServices webuploadSer) {
 			this.webuploadSer = webuploadSer;
 		}
-	           
-	    public String goHome() throws Exception{     
-	          
+		
+		
+
+		public void uploadFile() throws Exception{     	        	        	         
 	        //获取需要上传文件的文件路径  
 	        //File uploadFile=new File(ServletActionContext.getServletContext().getRealPath("upload"));
 	    	/**
@@ -118,13 +123,14 @@ public class FilesUploadAction extends ActionSupport{
 	    	 * 上傳到本地
 	    	 */
 	    	File uploadFile=new File("d:\\webupload\\"+uploadfile.getFilefactno()+"_"+uploadfile.getFileuser());
+	    	//File uploadFile=new File("d:\\webupload\\"+user.getFactno()+"_"+user.getUsername());
 	        //判断文件是否上传，如果上传的话将会创建该目录  
 	        if(!uploadFile.exists()){  
 	            //uploadFile.mkdir(); //创建该目录  
 	        	uploadFile.mkdirs();
 	        } 	       
 	        if(files!=null){
-	        	for(int j=0;j<files.size();j++){
+	        	for(int j=0;j<files.size();j++){//for
 	        		int index=0;
 	        		String firstName=filesFileName.get(j);
 	        		for(int k=j+1;k<files.size();k++){
@@ -134,34 +140,14 @@ public class FilesUploadAction extends ActionSupport{
 	        				index++;
 	        				filesFileName.set(k, mixName[0]+"-"+index+"."+mixName[1]);
 	        			}
-	        		}
-	        		
-	        	 //第一种文件上传的方法  
-		        //声明文件输入流，为输入流指定文件路径  
-		        FileInputStream input=new FileInputStream(files.get(j));  
-		        //获取输出流，获取文件的文件地址及名称  
-		        FileOutputStream out=new FileOutputStream(uploadFile + "\\" +filesFileName.get(j));  		          
-		        try{		        	
-		        		byte[] b=new byte[1024];//每次写入的大小  
-			            int i=0;  
-			            while((i=input.read(b))>0){  
-			                out.write(b,0,i);		               
-			            }
-			            uploadfile.setFilename(filesFileName.get(j));
-		                uploadfile.setFiletype(filesContentType.get(j));
-		                webuploadSer.add(uploadfile);
-		        			            
-		        }catch(Exception e){  
-		            e.printStackTrace();
-		        }finally{  
-		            input.close();  
-		            out.close();  
-		        }
-	        	}
-	        }
-	        System.out.println(fileContentType);
-	        System.out.print(fileFileName);
-	        return "success";  
+	        		}	        				       
+		        GlobalMethod.uploadFile(files.get(j),uploadFile + "\\" +filesFileName.get(j));
+		        uploadfile.setFilename(filesFileName.get(j));
+                uploadfile.setFiletype(filesContentType.get(j));
+                webuploadSer.add(uploadfile);
+	        	}//for
+	        }	       
+	       // return "uploadFile";  
 	    }
 	    
 		public String findByName(){
@@ -172,10 +158,16 @@ public class FilesUploadAction extends ActionSupport{
 			ActionContext.getContext().getSession().put("uploadfiles", list);
 			return "findByName";
 		}
+		public String findByName_1(){
+			this.findByName();
+			return "findByName_1";
+		}
 		public String urlEncode(String fname) throws UnsupportedEncodingException{
 			String tempname=java.net.URLEncoder.encode(fname,"utf-8");
 			return tempname;
 		}
+		
+		
 		
 
  

@@ -19,6 +19,23 @@
 
 </head>
 
+
+
+
+
+<body>
+	<jsp:include page="publicHead.jsp"/>
+	<hr>		
+				
+	<span style="float:right;padding-bottom:0">
+		 <input type="button" onclick="javascript:showDiv_print()" 
+		class="btn btn-link" value="零用金報表打印"/>
+	</span>	
+	<div id="bodyid">
+		<jsp:include page="table1/kyzpetty1.jsp" />
+	</div>
+
+	
 <script>
   
 	function pages(page) {
@@ -54,7 +71,52 @@
 		});
 	}
 	
-function showDiv(){
+
+    
+    function showDiv_print(){
+    jq.layer({
+    type: 1,   //0-4的选择,
+    title: '零用金支出報表',
+    //border: [0],
+    closeBtn: [1,true],
+    shade: [0],
+    shadeClose: false,
+     border: [10, 0.3, '#000'],
+   // btns:1,
+    fadeIn:300,    
+    //shift:'top',
+    moveOut:false,
+    moveType:0,
+    offset:['50px','200px'],
+    area: ['600px', '200px'],
+    page:{
+      url:'search/kyzpetty_search_print.jsp'   
+    }
+    
+            
+});
+    }
+    
+  /*function isDelete(subform){
+ 	   var flag=confirm("確定要刪除嗎?");
+ 	   
+ 	   if(flag==true){	   
+ 	      //document.getElementById(subform).submit();
+ 	      jq.ajax({
+ 	    	  type:"POST",
+ 	    	  dataType:"html",
+ 	    	  data:jq("#"+subform).serialize(),
+ 	    	  url:"kyzpetty_delete",
+ 	    	  success:function(data){
+ 	    		  jq("#bodyid").html(data);
+ 	    	  },
+ 	    	  error:function(err){
+ 	    		  jq("#bodyid").html(err.responseText);
+ 	    	  }
+ 	      })
+ 	   }
+ 	}
+  function showDiv(){
     jq.layer({
     type: 1,   //0-4的选择,
     title: '零用金支出',
@@ -103,68 +165,8 @@ function showDiv(){
             
 });
     }
-    
-    function showDiv_print(){
-    jq.layer({
-    type: 1,   //0-4的选择,
-    title: '零用金支出報表',
-    //border: [0],
-    closeBtn: [1,true],
-    shade: [0],
-    shadeClose: false,
-     border: [10, 0.3, '#000'],
-   // btns:1,
-    fadeIn:300,    
-    //shift:'top',
-    moveOut:false,
-    moveType:0,
-    offset:['50px','200px'],
-    area: ['600px', '200px'],
-    page:{
-      url:'search/kyzpetty_search_print.jsp'   
-    }
-    
-            
-});
-    }	
+  */    
 </script>
-
-
-<script type="text/javascript">
-	//你确定要删除吗？	
-	function isDelete(mid) {
-		jConfirm('你确定这么做吗?', '确认对话框', function(r) {
-			if (r == true) {
-				/* window.location.href = "backmat_delete?billNo=" + mid; */
-				document.getElementById(mid).submit();
-			}
-		});
-	}
-</script>
-<script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/kyzsecjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/kyzacctjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/kyzpettyjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/engine.js'></script>
-<script type='text/javascript' src='/Login/dwr/util.js'></script>
-
-
-
-
-<body>
-	<jsp:include page="publicHead.jsp"/>
-	<hr>		
-				
-	<span style="float:right;padding-bottom:0">
-		 <input type="button" onclick="javascript:showDiv_print()" 
-		class="btn btn-link" value="零用金報表打印"/>
-	</span>	
-	<div id="bodyid">
-		<jsp:include page="table1/kyzpetty1.jsp" />
-	</div>
-
-	
-
 
 </body>
 </html>

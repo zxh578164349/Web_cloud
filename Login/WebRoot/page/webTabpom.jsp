@@ -15,12 +15,16 @@
 <meta http-equiv="cache-control" content="no-cache">
 <meta http-equiv="expires" content="0">
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
-<meta http-equiv="description" content="This is my page">
-<!--  <link rel="stylesheet" type="text/css" href="css/button_css.css" />
-<link rel="stylesheet" type="text/css" href="css/general_css.css" />
-<link href="tablecloth/tablecloth.css" rel="stylesheet" type="text/css" media="screen" />-->
-	
+<meta http-equiv="description" content="This is my page">	
 </head>
+<body>
+	<jsp:include page="publicHead_webtabpom.jsp" />
+	<hr />
+	
+	<div id="bodyid">
+		<jsp:include page="table1/webTabpom1.jsp" />
+	</div>
+	
 <script>
 	
 	function pages(page) {	
@@ -82,14 +86,6 @@
 		subform.attr("target","_blank");
 		subform.submit();
 	}
-</script>
-
-<body>
-	<jsp:include page="publicHead_webtabpom.jsp" />
-	<hr />
-	
-	<div id="bodyid">
-		<jsp:include page="table1/webTabpom1.jsp" />
-	</div>
+</script>	
 </body>
 </html>

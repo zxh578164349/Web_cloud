@@ -15,15 +15,8 @@
 		</global-results>
 		<action name="judge" class="webUserAction" method="judge">
 		    <result name="judge">judge.jsp</result>
-		</action>		
-		<action name="poiUpload" class="poiAction" method="upload">		 
-			<result name="ok">ok.jsp</result>
-		</action>
-		<!-- <action name="readSession" class="sessionLoad" method="isOnline"></action> -->
-		<action name="printData" class="data" method="print">
-			<result name="tishi">baobiaotishi.jsp</result>
-			<result name="format">ok.jsp</result>
-		</action>
+		</action>				
+		
 		<action name="menu_*" class="webMenuAction" method="{1}">
 			<result name="findAllMenu">test.jsp</result>
 		</action>
@@ -32,8 +25,7 @@
 			<result name="chengong">test.jsp</result>		   			
 			<result name="initial">page/updateData.jsp</result>
 			<result name="all">page/managerUser.jsp</result>
-			<result name="qx">page/Jurisdiction.jsp</result>
-			<result name="updateSuccess">success.jsp</result>
+			<result name="qx">page/Jurisdiction.jsp</result>			
 			<result name="findMoreusers">index2.jsp</result>
 			<result name="findMoreusers2">login2.jsp</result>
 			<result name="beanList">page/managerUser.jsp</result>
@@ -46,208 +38,14 @@
 			<result name="json_login" type="json">
 			    <param name="root">ajax_result</param>
 			</result>
-			<result name="updateUesr" type="redirectAction">userfindPageBean3_1</result>			    			
+			<result name="updateUesr" type="json">
+			   <param name="root">ajax_result</param>
+			</result>			    			
 		</action>
 		<action name="show*" class="showAction" method="{1}">
 			<result name="titleSuccess">page/show.jsp</result>
 		</action>
-		<action name="backmat_*" class="webBackmatAction" method="{1}">
-			<result name="addWebbackMat" type="redirectAction">backmat_findPageBean
-			</result>     <!-- 增加與更新 -->
-			<result name="showList1">page/table1/backmat1.jsp</result>
-			<result name="showList">page/backmat.jsp</result>
-			<result name="list">page/table/backmatShow.jsp</result>
-			<result name="findBackmatById">saveAndUpdate/backMatSaveOrUpdate.jsp
-			</result>
-			<result name="findBackmatById2" type="redirectAction">backmat_getList</result>  <!-- 刪除 -->
-			<result>none.jsp</result>
-			<result name="excel">ok.jsp</result>
-			<result name="beanList">page/backmat.jsp</result>
-			<result name="beanList1">page/table1/backmat1.jsp</result>
-			<result name="delete" type="redirectAction">backmat_findPageBean</result>
-		</action>
-		<action name="backcp_*" class="webBackpfAction" method="{1}">
-			<result name="addBackpf" type="redirectAction">backcp_findPageBean</result>
-			<result name="findBackById">saveAndUpdate/backpfSaveOrUpdate.jsp</result>
-			<result name="showList1">page/table1/backpf1.jsp</result>
-			<result name="showList">page/backpf.jsp</result>
-			<result name="list">page/table/backpfShow.jsp</result>
-			<result>none.jsp</result>
-			<result name="excel">ok.jsp</result>
-			<result name="beanList">page/backpf.jsp</result>
-			<result name="beanList1">page/table1/backpf1.jsp</result>
-			<result name="delete" type="redirectAction">backcp_findPageBean</result>
-		</action>
-		<action name="store_*" class="webStoreAction" method="{1}">
-			<result name="addWebCpStore" type="redirectAction">store_findPageBean</result>
-			<result name="showList1">page/table1/cpstore1.jsp</result>
-			<result name="showList">page/cpstore.jsp</result>
-			<result name="list">page/table/cpstoreShow.jsp</result>
-			<result name="findById">saveAndUpdate/cpstoreSaveOrUpdate.jsp</result>
-			<result>none.jsp</result>
-			<result name="excel">ok.jsp</result>
-			<result name="beanList">page/cpstore.jsp</result>
-			<result name="beanList1">page/table1/cpstore1.jsp</result>
-			<result name="delete" type="redirectAction">store_findPageBean</result>
-		</action>
-		<action name="gw_*" class="webGwAction" method="{1}">
-			<result name="addWebGw" type="redirectAction">gw_findPageBean</result>
-			<result name="showList1">page/table1/gw1.jsp</result>
-			<result name="showList">page/gw.jsp</result>
-			<result name="list">page/table/gwShow.jsp</result>
-			<result name="findById">saveAndUpdate/gwSaveOrUpdate.jsp</result>
-			<result>none.jsp</result>
-			<result name="excel">ok.jsp</result>
-			<result name="beanList">page/gw.jsp</result>
-			<result name="beanList1">page/table1/gw1.jsp</result>
-			<result name="delete" type="redirectAction">gw_findPageBean</result>
-		</action>
-		<action name="machine_*" class="webMachineAction" method="{1}">
-			<result name="addMachine" type="redirectAction">machine_findPageBean</result>
-			<result>none.jsp</result>
-			<result name="showList1">page/table1/machin1.jsp</result>
-			<result name="showList">page/MACHIN.jsp</result>
-			<result name="list">page/table/machineShow.jsp</result>
-
-			<result name="findById">saveAndUpdate/machineSaveOrUpdate.jsp</result>
-			<result name="excel">ok.jsp</result>
-			<result name="beanList">page/MACHIN.jsp</result>
-			<result name="beanList1">page/table1/machin1.jsp</result>
-			<result name="delete" type="redirectAction">machine_findPageBean</result>
-		</action>
-		<action name="mat2_*" class="webMats2Action" method="{1}">
-			<result name="addMats2" type="redirectAction">mat2_findPageBean</result>
-			<result name="showList1">page/table1/mats21.jsp</result>
-			<result name="showList">page/mats2.jsp</result>
-			<result name="list">page/table/mats2Show.jsp</result>
-			<result name="findById">saveAndUpdate/mate2SaveOrUpdate.jsp</result>
-			<result>none.jsp</result>
-			<result name="excel">ok.jsp</result>
-			<result name="beanList">page/mats2.jsp</result>
-			<result name="beanList1">page/table1/mats21.jsp</result>
-			<result name="delete" type="redirectAction">mat2_findPageBean</result>
-		</action>
-		<action name="mat_*" class="webMatsAction" method="{1}">
-			<result name="addMats" type="redirectAction">mat_findPageBean</result>
-			<result name="showList1">page/table1/mats1.jsp</result>
-			<result name="showList">page/mats.jsp</result>
-			<result name="list">page/table/matsShow.jsp</result>
-			<result name="findById">saveAndUpdate/mateSaveOrUpdate.jsp</result>
-			<result>none.jsp</result>
-			<result name="excel">ok.jsp</result>
-			<result name="beanList">page/mats.jsp</result>
-			<result name="beanList1">page/table1/mats1.jsp</result>
-			<result name="delete" type="redirectAction">mat_findPageBean</result>
-		</action>
-		<action name="mastore_*" class="webMatstoreAction" method="{1}">
-			<result name="addMatStore" type="redirectAction">mastore_findPageBean</result>
-			<result name="showList1">page/table1/matsore1.jsp</result>
-			<result name="showList">page/matstore.jsp</result>
-			<result name="list">page/table/matstoreShow.jsp</result>
-			<result name="findById">saveAndUpdate/mastoreaveOrUpdate.jsp</result>
-			<result>none.jsp</result>
-			<result name="excel">ok.jsp</result>
-			<result name="beanList">page/matstore.jsp</result>
-			<result name="beanList1">page/table1/matsore1.jsp</result>
-			<result name="delete" type="redirectAction">mastore_findPageBean</result>
-		</action>
-		<action name="outback_*" class="webOutbackAction" method="{1}">
-			<result name="addBack" type="redirectAction">outback_findPageBean</result>
-			<result name="showList1">page/table1/outback1.jsp</result>
-			<result name="showList">page/outback.jsp</result>
-			<result name="list">page/table/outbackShow.jsp</result>
-			<result name="findById">saveAndUpdate/outBackSaveOrUpdate.jsp</result>
-			<result>none.jsp</result>
-			<result name="excel">ok.jsp</result>
-			<result name="beanList">page/outback.jsp</result>
-			<result name="beanList1">page/table1/outback1.jsp</result>
-			<result name="delete" type="redirectAction">outback_findPageBean</result>
-		</action>
-		<action name="inv_*" class="webOutputInvAction" method="{1}">
-			<result name="addInv" type="redirectAction">inv_findPageBean</result>
-			<result name="showList1">page/table1/outputnv1.jsp</result>
-			<result name="showList">page/outputnv.jsp</result>
-			<result name="list">page/table/outputnvShow.jsp</result>
-			<result name="findById">saveAndUpdate/outputnvSaveOrUpdate.jsp</result>
-			<result>none.jsp</result>
-			<result name="excel">ok.jsp</result>
-			<result name="beanList">page/outputnv.jsp</result>
-			<result name="beanList1">page/table1/outputnv1.jsp</result>
-			<result name="delete" type="redirectAction">inv_findPageBean</result>
-		</action>
-		<action name="person_*" class="webPersonAction" method="{1}">
-			<result name="addPerson" type="redirectAction">person_findPageBean</result>
-			<result name="showList1">page/table1/person1.jsp</result>
-			<result name="showList">page/person.jsp</result>
-			<result name="list">page/table/personShow.jsp</result>
-			<result name="findById">saveAndUpdate/personSaveOrUpdate.jsp</result>
-			<result>none.jsp</result>
-			<result name="excel">ok.jsp</result>
-			<result name="beanList">page/person.jsp</result>
-			<result name="beanList1">page/table1/person1.jsp</result>
-			<result name="delete" type="redirectAction">person_findPageBean</result>
-		</action>
-		<action name="avprice_*" class="webPfavgPriceAction" method="{1}">
-			<result name="addprice" type="redirectAction">avprice_findPageBean</result>
-			<result name="showList1">page/table1/pfavgprice1.jsp</result>
-			<result name="showList">page/pfavgprice.jsp</result>
-			<result name="list">page/table/pfavgpriceShow.jsp</result>
-			<result name="findById">saveAndUpdate/pfavgpriceSaveOrUpdate.jsp</result>
-			<result>none.jsp</result>
-			<result name="excel">ok.jsp</result>
-			<result name="beanList">page/pfavgprice.jsp</result>
-			<result name="beanList1">page/table1/pfavgprice1.jsp</result>
-			<result name="delete" type="redirectAction">avprice_findPageBean</result>
-		</action>
-		<action name="profit_*" class="webProfitAction" method="{1}">
-			<result name="addProfit" type="redirectAction">profit_findPageBean</result>
-			<result name="showList1">page/table1/profit1.jsp</result>
-			<result name="showList">page/profit.jsp</result>
-			<result name="list">page/table/profitShow.jsp</result>
-			<result name="findById">saveAndUpdate/profitSaveOrUpdate.jsp</result>
-			<result>none.jsp</result>
-			<result name="excel">ok.jsp</result>
-			<result name="beanList">page/profit.jsp</result>
-			<result name="beanList1">page/table1/profit1.jsp</result>
-			<result name="delete" type="redirectAction">profit_findPageBean</result>
-		</action>
-		<action name="count_*" class="webProfitCountAction" method="{1}">
-			<result name="addCount" type="redirectAction">count_findPageBean</result>
-			<result name="showList1">page/table1/profitcount1.jsp</result>
-			<result name="showList">page/profitcount.jsp</result>
-			<result name="list">page/table/profitcountShow.jsp</result>
-			<result name="findById">saveAndUpdate/profitcountSaveOrUpdate.jsp
-			</result>
-			<result>none.jsp</result>
-			<result name="excel">ok.jsp</result>
-			<result name="beanList">page/profitcount.jsp</result>
-			<result name="beanList1">page/table1/profitcount1.jsp</result>
-			<result name="delete" type="redirectAction">count_findPageBean</result>
-		</action>
-		<action name="side_*" class="webSideAction" method="{1}">
-			<result name="addSide" type="redirectAction">side_findPageBean</result>
-			<result name="showList1">page/table1/side1.jsp</result>
-			<result name="showList">page/side.jsp</result>
-			<result name="list">page/table/sideShow.jsp</result>
-			<result name="findById">saveAndUpdate/sideSaveOrUpdate.jsp</result>
-			<result>none.jsp</result>
-			<result name="excel">ok.jsp</result>
-			<result name="beanList">page/side.jsp</result>
-			<result name="beanList1">page/table1/side1.jsp</result>
-			<result name="delete" type="redirectAction">side_findPageBean</result>
-		</action>
-		<action name="cash_*" class="webZwcashAction" method="{1}">
-			<result name="addCash" type="redirectAction">cash_findPageBean</result>
-			<result name="getList1">page/table1/zwcash1.jsp</result>
-			<result name="getList">page/zwcash.jsp</result>
-			<result name="list">page/table/zwcashsShow.jsp</result>
-			<result name="findById">saveAndUpdate/zwcashSaveOrUpdate.jsp</result>
-			<result>none.jsp</result>
-			<result name="excel">ok.jsp</result>
-			<result name="beanList">page/zwcash.jsp</result>
-			<result name="beanList1">page/table1/zwcash1.jsp</result>
-			<result name="delete" type="redirectAction">cash_findPageBean</result>
-		</action>		
+	
 		<action name="print2Y_*" class="preAndDataAction" method="{1}">
 		</action>
 		<action name="ypre_*" class="ypreAction" method="{1}">
@@ -273,18 +71,11 @@
 			<result name="findFactByFactNo" type="json">
 			   <param name="root">jsons</param>
 			</result>
-		</action>
-		<action name="print2Yireport_*" class="preAndDataActionireport"
-			method="{1}">
-			<result name="print2Yirepoter">ok.jsp</result>
-			<result name="print2Yirepoter2">ok.jsp</result>
-		</action>
+		</action>		
 		<action name="print2Ypoi_*" class="preAndDataActionipoi"
 			method="{1}">
 		</action>		
-		<action name="mix_machine_*" class="mixAction_machine" method="{1}">
-			<result name="add_machineOutbackOutInv">ok.jsp</result>
-		</action>				
+						
 		<action name="webmix1_*" class="webmix1Action" method="{1}">
 			<result name="beanList">page/webmix1.jsp</result>
 			<result name="beanList1">page/table1/webmix1_1.jsp</result>
@@ -315,7 +106,7 @@
 		   <result name="beanList">page/kyzsec.jsp</result>
 		   <result name="beanList1">page/table1/kyzsec1.jsp</result>
 		   <result name="findById">saveAndUpdate/kyzsecSaveOrUpdate.jsp</result>
-		   <result name="delete" type="redirectAction">kyzsec_findPageBean</result>
+		   <result name="delete" type="redirectAction">kyzsec_findPageBean3</result>
 		</action>
 		<action name="kyzacct_*" class="kyzacctAction" method="{1}">
 		   <result name="add" type="json">
@@ -323,7 +114,7 @@
 		   </result>
 		   <result name="beanList">page/kyzacct.jsp</result>
 		   <result name="beanList1">page/table1/kyzacct1.jsp</result>
-		   <result name="delete" type="redirectAction">kyzacct_findPageBean</result>
+		   <result name="delete" type="redirectAction">kyzacct_findPageBean3</result>
 		   <result name="findById">saveAndUpdate/kyzacctSaveOrUpdate.jsp</result>
 		</action>
 		<action name="kyzpetty_*" class="kyzpettyAction" method="{1}">
@@ -333,7 +124,7 @@
 		      <param name="root">ajaxResult</param>
 		   </result>
 		   <result name="findById">saveAndUpdate/kyzpettySaveOrUpdate.jsp</result>
-		   <result name="delete" type="redirectAction">kyzpetty_findPageBean</result>
+		   <result name="delete" type="redirectAction">kyzpetty_findPageBean3</result>
 		   <result name="findAllSecNoAndAcctNo">saveAndUpdate/kyzpettySaveOrUpdate.jsp</result>
 		</action>				
 		<action name="filesUpload_*" class="fileUploadAction" method="{1}">	
@@ -350,11 +141,11 @@
                 <param name="allowedExtensions">jpg,bmp,xls,xlsx,txt,pdf</param>             
            </interceptor-ref>
            <interceptor-ref name="defaultStack"></interceptor-ref>        
-		    <result name="success" type="redirectAction">
-               filesUpload_findByName
-            </result>
+		    <result name="uploadFile" type="redirectAction">filesUpload_findByName_1</result>
             <result name="input">none.jsp</result>
             <result name="findByName">page/filesUploadAndDownload.jsp</result>
+            <result name="delete" type="redirectAction">filesUpload_findByName_1</result> 
+            <result name="findByName_1">page/table1/filesUploadAndDownload1.jsp</result>
 		</action>		
 		<action name="download_*" class="downLoadAction" method="{1}">  
         <result name="download" type="stream">
@@ -617,9 +408,7 @@
                 <param name="allowedExtensions">jpg,bmp</param>             
            </interceptor-ref>
            <interceptor-ref name="defaultStack"></interceptor-ref>  -->
-			<result name="add" type="redirectAction">
-			   <!--<param name="root">ajaxResult</param>
-			   <param name="contentType">text/html</param>-->
+			<result name="add" type="redirectAction">			   
 			   kyz_findPageBean
 			</result>
 			<result name="input">none.jsp</result>
@@ -660,7 +449,9 @@
 		  <result name="findById5">page/kyvisabills_minus2.jsp</result><!-- 減簽(帶刪除) -->
 		  <result name="findById_email">/page/kyvisabills_email.jsp</result><!-- email直接審核,不需要登錄帳號（手機平板） -->
 		  <result name="findById_email2">/page/kyvisabills_email2.jsp</result><!-- email直接審核,不需要登錄帳號（普通電腦 ） -->
-		  <result name="add">page/checkpass/remark.jsp</result><!-- 函文是否通過 -->
+		  <result name="add" type="json">
+               <param name="root">ajaxResult</param>
+          </result>
 		  <result name="success">/success.html</result>
 		  <result name="remark" type="redirectAction">vbm_findPageBean</result><!-- 備註 -->		  
 		  <!-- <result name="addvisabills" type="redirectAction">

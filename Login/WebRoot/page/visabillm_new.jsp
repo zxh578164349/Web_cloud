@@ -16,10 +16,16 @@
 <meta http-equiv="expires" content="0">
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
+</head>
+<body>
+
+	<jsp:include page="publicHead_kybillm_new.jsp" flush="true" />
+	<hr />	
+	<div id="bodyid">
+		<jsp:include page="table1/visabillm1_new.jsp" />
+	</div>
 
 	
-
-</head>
 
 <script>
   
@@ -70,41 +76,16 @@
 		//jq.post("vbm_findPageBean2",{"factNo":fact.value,"billNo":billno.value,"visaMk":visaMk.value},function(data){jq("#bodyid").html(data)});
 	}
 	
-	
-	//你确定要删除吗？
-	function isDelete(mid) {
-		jConfirm('你确定这么做吗?', '确认对话框', function(r) {
-			if (r == true) {
-				/* window.location.href = "backmat_delete?billNo=" + mid; */
-				document.getElementById(mid).submit();
-			}
-		});
-	}
-	
-	/*function check(visaSort,billNo,factNo){
-	     jq.layer({
-    type: 1,   //0-4的选择,
-    title: '函文內容',
-    closeBtn: [1,true],
-    shade: [0],
-    shadeClose: false,
-    border: [10, 0.3, '#000'],
-    shift:'top',
-    offset:['40px',''],
-    area: ['800px', '560px'],
-    page:{
-      url:'vbm_findById?visaSort='+visaSort+'&billNo='+billNo+'&factNo='+factNo    
-    }                 
-});
-}*/
-   function getType(factNo){
+
+   function getType(factno){
      document.getElementById("dwr_kytype").length=1;
-     webtypejs.findByFactNo(factNo,function(x){
-       if(x.length>0){
-          dwr.util.addOptions("dwr_kytype",x,"webtypeMk","typeName");
-       }
-         
-     });
+     if(factno!=null&&factno!=""&&factno!="nothing"){
+    	 webtypejs.findByFactNo(factno,function(x){
+    	       if(x.length>0){
+    	          dwr.util.addOptions("dwr_kytype",x,"webtypeMk","typeName");
+    	       }   	         
+    	     });
+     }    
    }
    
    function goPreviewOrPrint(subform,billNo){
@@ -123,25 +104,6 @@
 	   jq("#"+subform).submit();
    }
 </script>
-<script type='text/javascript' src='/Login/dwr/interface/kyzjs.js'></script>
 <script type='text/javascript' src='/Login/dwr/interface/webtypejs.js'></script>
-<script type='text/javascript' src='/Login/dwr/engine.js'></script>
-<script type='text/javascript' src='/Login/dwr/util.js'></script>
-
-
-
-<body>
-
-	<jsp:include page="publicHead_kybillm_new.jsp" flush="true" />
-	<hr />
-	<!-- <input value="添加" type="button"
-		onclick="javascript:location.href='saveAndUpdate/kyzVisaFlowSaveOrUpdate.jsp'" /> -->	
-	<div id="bodyid">
-		<jsp:include page="table1/visabillm1_new.jsp" />
-	</div>
-
-	
-
-
 </body>
 </html>

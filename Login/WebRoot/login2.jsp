@@ -12,13 +12,7 @@
 <meta name="description" content="" />
 <meta name="robots" content="index, follow" />
 <meta charset="utf-8" />
-<!-- Load stylesheets -->
-<link type="text/css" rel="stylesheet" href="loginpage/css/login_style_chrome.css" media="screen" />	
-<!-- // Load stylesheets -->
-
-<!--  <script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>-->
-
-<link rel="shortcut icon" href="images/icon/web_ico.ico" /> 
+<!-- Load stylesheets -->	
 </head>
 <body >
    
@@ -79,20 +73,9 @@
 		<div id="wrapperbottom"></div>	
 	</div>
 		
-<script src="http://apps.bdimg.com/libs/jquery/1.9.1/jquery.min.js"></script> 
-<script>window.jQuery || document.write('<script src="loginpage/jquery/jquery-1.9.1.min.js"><\/script>');</script>
-<script type="text/javascript" src="loginpage/jquery/layer/layer.min.js"></script>
-
+</body>
 
 <script>
-var jq=jQuery.noConflict();
-var loadi;
-jq(document).ajaxStart(function(){
-	loadi=layer.load("正在登錄,請稍等...");
-});
-jq(document).ajaxStop(function(){
-	layer.close(loadi);
-});
 	jq(document).ready(function() {
 		jq("#submit1").hover(function() {
 			jq(this).animate({
@@ -109,7 +92,7 @@ jq(document).ajaxStop(function(){
 		var names = document.getElementById("url_username_input");
 		var pwd = document.getElementById("url_pwd_input");
 		if (factNO.value == 0 || names.value == "" || pwd.value == "") {
-			alert("請輸入完整的信息", '提示信息');
+			layer.msg("請輸入完整的信息");
 		} else {						
 			jq.ajax({
 				type:"POST",
@@ -121,13 +104,13 @@ jq(document).ajaxStop(function(){
 						 location.href="main.jsp";
 					  }
 					  if(data=='1'){
-						  alert("當前賬號已註銷!");
+						  layer.alert("當前賬號已註銷!");
 					  }
 					  if(data=='2'){
-						  alert("廠別不正確!");
+						  layer.alert("廠別不正確!");
 					  }
 					  if(data=='3'){
-						  alert("賬號或密碼不正確!");
+						  layer.alert("賬號或密碼不正確!");
 					  }
 				},
 				error:function(err){
@@ -143,6 +126,4 @@ jq(document).ajaxStop(function(){
 		}
 	});	
 </script>
-<jsp:include page="copyright_login.jsp"/>	
-</body>
 </html>

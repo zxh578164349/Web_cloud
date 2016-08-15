@@ -26,9 +26,10 @@ public class CheckAllInputAction {
 	private IWebwloServices wloService;//���q�o
 	private IWebCostServices costSer;//������
 	private IWebBackFeedServices feedSer;//�^�Y��
-	private IVSumWebmix1Services vmix1ser;//���q���
+	//private IVSumWebmix1Services vmix1ser;//���q���
 	private ISumWebYieldDataServices sumydateSer;//���q���(�L�I)
 	private IWebFactServices webFactSer;
+	private IWeballobjServices weballobjser;
 	private String factNo;
 	private String yymm;
 	private String beginDate;
@@ -89,16 +90,17 @@ public class CheckAllInputAction {
 	public void setFeedSer(IWebBackFeedServices feedSer) {
 		this.feedSer = feedSer;
 	}
-	public void setVmix1ser(IVSumWebmix1Services vmix1ser) {
-		this.vmix1ser = vmix1ser;
-	}
-	
 	
 	public void setSumydateSer(ISumWebYieldDataServices sumydateSer) {
 		this.sumydateSer = sumydateSer;
 	}
 	public void setWebFactSer(IWebFactServices webFactSer) {
 		this.webFactSer = webFactSer;
+	}
+	
+	
+	public void setWeballobjser(IWeballobjServices weballobjser){
+		this.weballobjser=weballobjser;
 	}
 	public void print() throws ParseException{
 		List<Webwlo>list=new ArrayList<Webwlo>();//�D�?�X�A�D�n�O�Ω�`�����L�l��A�@�n�`�����L9�i�l��A�G�U��i���i�֩�9���A�i�j��9
@@ -122,16 +124,7 @@ public class CheckAllInputAction {
 		Map<String,Object>map_mixperson=new HashMap<String,Object>();
 		Map<String,Object>map_product=new HashMap<String,Object>();
 		Map<String,Object>map_scrapt=new HashMap<String,Object>();
-		
-		/*List<Webwlo>list_wlo=wloService.findByAny(factNo, beginDate,endDate);
-		List<Webcost>list_cost=costSer.findByAny(factNo,beginDate,endDate);
-		List<Webmix2>list_mix2=mix2Service.findByAny(factNo, beginDate, endDate);
-		List<SumWebYieldData>list_sumydate=sumydateSer.findByAny(factNo, beginDate, endDate);
-		List<Webbackfeed>list_backfeed=feedSer.findByAny(factNo, beginDate, endDate);
-		List<Webestproduct>list_estpro=estProSer.findByAny(factNo, beginDate, endDate);
-		List<Webmixperson>list_mixperson=mixPersonService.findByAny(factNo, beginDate, endDate);
-		List<Webproduted>list_product=produtedService.findByAny(factNo, beginDate, endDate);
-		List<Webscrapt>list_scrapt=scraptService.findByAny(factNo, beginDate, endDate);*/
+		Map<String,Object>map_weball=new HashMap<String,Object>();
 		
 		List<Webwlo>list_wlo=new ArrayList<Webwlo>();
 		List<Webcost>list_cost=new ArrayList<Webcost>();
@@ -142,32 +135,37 @@ public class CheckAllInputAction {
 		List<Webmixperson>list_mixperson=new ArrayList<Webmixperson>();
 		List<Webproduted>list_product=new ArrayList<Webproduted>();
 		List<Webscrapt>list_scrapt=new ArrayList<Webscrapt>();
+		List<Weballobj>list_weball=new ArrayList<Weballobj>();
 		
 		
 		List list_factcodes=webFactSer.findFactCodeByFactNo(factNo);//???
 		for(int i=0;i<list_factcodes.size();i++){
 			String factCode=list_factcodes.get(i).toString();
 			if(beginDate.equals(endDate)){
-				Webwlo wlo=this.getwlo(factNo, factCode, beginDate);
+				/*Webwlo wlo=this.getwlo(factNo, factCode, beginDate);
 				Webcost cost=this.getcost(factNo, factCode, beginDate);
-				Webmix2 mix2=this.getmix2(factNo, factCode, beginDate);
-				SumWebYieldData ydata=this.getsumydate(factNo, factCode, beginDate);
-				Webbackfeed feed=this.getfeed(factNo, factCode, beginDate);
-				Webestproduct estpro_zd=this.getest(factNo, factCode, beginDate, "zd");
-				Webestproduct estpro_tz=this.getest(factNo, factCode, beginDate, "tz");
+				Webmix2 mix2=this.getmix2(factNo, factCode, beginDate);				
+				Webbackfeed feed=this.getfeed(factNo, factCode, beginDate);						
 				Webmixperson person=this.getperson(factNo, factCode, beginDate);
 				Webproduted pro=this.getpro(factNo, factCode, beginDate);
-				Webscrapt scr=this.getsra(factNo, factCode, beginDate);
+				Webscrapt scr=this.getsra(factNo, factCode, beginDate);				
 				list_wlo.add(wlo);
 				list_cost.add(cost);
-				list_mix2.add(mix2);
-				list_sumydate.add(ydata);
-				list_backfeed.add(feed);
-				list_estpro.add(estpro_zd);
-				list_estpro.add(estpro_tz);
+				list_mix2.add(mix2);				
+				list_backfeed.add(feed);				
 				list_mixperson.add(person);
 				list_product.add(pro);
-				list_scrapt.add(scr);
+				list_scrapt.add(scr);*/
+				
+				
+				Webestproduct estpro_zd=this.getest(factNo, factCode, beginDate, "zd");	
+				Webestproduct estpro_tz=this.getest(factNo, factCode, beginDate, "tz");
+				SumWebYieldData ydata=this.getsumydate(factNo, factCode, beginDate);
+				Weballobj obj=this.getweball(factNo,factCode,yymm);								
+				list_sumydate.add(ydata);
+				list_estpro.add(estpro_zd);
+				list_estpro.add(estpro_tz);
+				list_weball.add(obj);
 			}else{
 				Date date_beg=myformat().parse(beginDate);
 				Date date_end=myformat().parse(endDate);
@@ -186,55 +184,63 @@ public class CheckAllInputAction {
 						cal_beg.add(Calendar.MONTH,1);
 					}
 					yymm2=myformat().format(cal_beg.getTime());
-					//System.out.println(yymm2);
 					
-					Webwlo wlo=this.getwlo(factNo, factCode, yymm2);
+					/*Webwlo wlo=this.getwlo(factNo, factCode, yymm2);
 					Webcost cost=this.getcost(factNo, factCode, yymm2);
-					Webmix2 mix2=this.getmix2(factNo, factCode, yymm2);
-					SumWebYieldData ydata=this.getsumydate(factNo, factCode, yymm2);
-					Webbackfeed feed=this.getfeed(factNo, factCode, yymm2);
-					Webestproduct estpro_zd=this.getest(factNo, factCode, yymm2, "zd");
-					Webestproduct estpro_tz=this.getest(factNo, factCode, yymm2, "tz");
+					Webmix2 mix2=this.getmix2(factNo, factCode, yymm2);					
+					Webbackfeed feed=this.getfeed(factNo, factCode, yymm2);					
 					Webmixperson person=this.getperson(factNo, factCode, yymm2);
 					Webproduted pro=this.getpro(factNo, factCode, yymm2);
-					Webscrapt scr=this.getsra(factNo, factCode, yymm2);
+					Webscrapt scr=this.getsra(factNo, factCode, yymm2);										
 					list_wlo.add(wlo);
 					list_cost.add(cost);
-					list_mix2.add(mix2);
-					list_sumydate.add(ydata);
-					list_backfeed.add(feed);
-					list_estpro.add(estpro_zd);
-					list_estpro.add(estpro_tz);
+					list_mix2.add(mix2);					
+					list_backfeed.add(feed);					
 					list_mixperson.add(person);
 					list_product.add(pro);
-					list_scrapt.add(scr);
+					list_scrapt.add(scr);*/
+					
+					
+					SumWebYieldData ydata=this.getsumydate(factNo, factCode, yymm2);
+					Webestproduct estpro_zd=this.getest(factNo, factCode, yymm2, "zd");
+					Webestproduct estpro_tz=this.getest(factNo, factCode, yymm2, "tz");
+					Weballobj obj=this.getweball(factNo,factCode,yymm2);
+					list_sumydate.add(ydata);
+					list_estpro.add(estpro_zd);
+					list_estpro.add(estpro_tz);
+					list_weball.add(obj);
 				}
 			}
 		}
 		map_wlo.put("list_wlo", list_wlo);
 		map_cost.put("list_cost", list_cost);
-		map_mix2.put("list_mix2", list_mix2);
-		map_sumydate.put("list_sumydate", list_sumydate);
-		map_backfeed.put("list_backfeed", list_backfeed);
-		map_estpro.put("list_estpro", list_estpro);
+		map_mix2.put("list_mix2", list_mix2);	
+		map_backfeed.put("list_backfeed", list_backfeed);		
 		map_mixperson.put("list_mixperson", list_mixperson);
 		map_product.put("list_product", list_product);
 		map_scrapt.put("list_scrapt", list_scrapt);
+		
+		map_sumydate.put("list_sumydate", list_sumydate);
+		map_estpro.put("list_estpro", list_estpro);
+		map_weball.put("list_weball",list_weball);
+		
 		map.put("map_wlo", map_wlo);
 		map.put("map_cost", map_cost);
-		map.put("map_mix2", map_mix2);
-		map.put("map_sumydate", map_sumydate);
-		map.put("map_backfeed",map_backfeed);
-		map.put("map_estpro", map_estpro);
+		map.put("map_mix2", map_mix2);		
+		map.put("map_backfeed",map_backfeed);		
 		map.put("map_mixperson", map_mixperson);
 		map.put("map_product", map_product);
 		map.put("map_scrapt", map_scrapt);
-		map.put("mixOne", mixOne);		
+		map.put("mixOne", mixOne);
+		
+		map.put("map_estpro", map_estpro);
+		map.put("map_sumydate", map_sumydate);
+		map.put("map_weball",map_weball);
 		map.put("SUBREPORT_DIR",ServletActionContext.getRequest().getRealPath("/jasper/input/")+ "/");
 		if(temp.equals("look")){
-			JasperHelper.exportmain("html", map,"CheckAllReport.jasper", list,fileName, "jasper/input/");
+			JasperHelper.exportmain("html", map,"CheckAllReport_new.jasper", list,fileName, "jasper/input/");
 		}else{
-			JasperHelper.exportmain("excel", map,"CheckAllReport.jasper", list,fileName, "jasper/input/");
+			JasperHelper.exportmain("excel", map,"CheckAllReport_new.jasper", list,fileName, "jasper/input/");
 		}
 			
 		
@@ -307,6 +313,13 @@ public class CheckAllInputAction {
 			scr=new Webscrapt(new WebscraptId(factNo,factCode,myformat().parse(yymm)));
 		}
 		return scr;
+	}
+	public Weballobj getweball(String factNo,String factCode,String yymm){
+		Weballobj obj=weballobjser.findById(factNo,factCode,yymm);
+		if(obj==null){
+			obj=new Weballobj(new WeballobjId(new WebFact(new WebFactId(factNo,factCode)),yymm));
+		}
+		return obj;
 	}
 	
 	

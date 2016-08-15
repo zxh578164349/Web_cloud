@@ -23,24 +23,27 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 <script type="text/javascript">
     jq(
-      function(){      
+      function(){    	 
          jq("#subform1").Validform({
              btnSubmit : "#btn1",
              tiptype:3,
              tipSweep:true,
-             showAllError:true
+             showAllError:true,
+             beforeSubmit:tips
          });
          jq("#subform2").Validform({
              btnSubmit:"#btn2",
              tiptype:3,
              tipSweep:true,
-             showAllError:true
+             showAllError:true,
+             beforeSubmit:tips
          });
          jq("#subform3").Validform({
              btnSubmit:"#btn3",
              tiptype:3,
              tipSweep:true,
-             showAllError:true
+             showAllError:true,
+             beforeSubmit:tips
          })
       }  
    )
@@ -92,12 +95,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
          allfactcodes[i].checked=false;  
          checkAll(allfactcodes[i].value);
       }
-      }
-      
-      
-
-      
-      
+      }     
    }  
     
     
@@ -137,7 +135,11 @@ function checkdate(){
             dwr.util.addOptions("dwr_yymm", x);
         });
      }
-}	   
+}
+
+function tips(){
+	window.parent.layer.alert("出現無數據時,請檢查<br/>【產量資料(盤點)】【預計生產】【基本數據導入】是否同時具備數據",0); 
+}
 </script>
 <script type='text/javascript' src='/Login/dwr/interface/kpifactjs.js'></script>
 <script type='text/javascript' src='/Login/dwr/engine.js'></script>
@@ -259,10 +261,10 @@ function checkdate(){
        <td>
        <font style="font-size:14px;color:blue">
                                     當KPI報表出現無數據時請檢查:<br/>
-                                    在同一廠別,同一廠別狀態,同一月份,以下3個是否都有數據：<br/>
-                                   【基本數據導入】<br/> 
-                                   【預計生產】 <br/>                                             
-                                   【 產量資料(盤點)】  <br/>                                  
+                                    以下三項是否同時具備數據：<br/>
+                                   【 產量資料(盤點)】  <br/> 
+                                   【預計生產】 <br/>   
+                                   【基本數據導入】<br/>                                                                                                                                                  
        </font>                             
        </td>
        </tr>

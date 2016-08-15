@@ -26,6 +26,7 @@ import action.AutoSendEmailAction;
 
 import entity.WebCc;
 import entity.WebEmail;
+import entity.WebEmailAll;
 import entity.WebFact;
 
 import services.IWebEmailService;
@@ -83,62 +84,70 @@ public class AutoSendWebfactorder extends QuartzJobBean{
 	}
 	
 	public void init() throws HttpException, IOException{
+		String yymm=new SimpleDateFormat("yyyy").format(new Date())+"01";
 		Calendar cal=Calendar.getInstance();
 		cal.setTime(new Date());
 		cal.add(Calendar.MONTH, -1);
-		String yymm=new SimpleDateFormat("yyyyMM").format(cal.getTime());
+		String yymm2=new SimpleDateFormat("yyyyMM").format(cal.getTime());
 		HttpClient client = new HttpClient();
-		HttpMethod method = new GetMethod("http://203.85.73.161/Login/webfactOrder_print_email?yymm="+yymm+"&yymm2="+yymm+"&autoEmailMk=1");	
-		//HttpMethod method = new GetMethod("http://172.17.18.173:8080/Login/webfactOrder_print_email?yymm="+yymm+"&yymm2="+yymm+"&autoEmailMk=1");
-		//HttpMethod method = new GetMethod("http://localhost:8080/Login/webfactOrder_print_email?yymm="+yymm+"&yymm2="+yymm+"&autoEmailMk=1");
+		HttpMethod method = new GetMethod("http://203.85.73.161/Login/webfactOrder_print_email?yymm="+yymm+"&yymm2="+yymm2+"&autoEmailMk=1");	
+		//HttpMethod method = new GetMethod("http://172.17.18.173:8080/Login/webfactOrder_print_email?yymm="+yymm+"&yymm2="+yymm2+"&autoEmailMk=1");
+		//HttpMethod method = new GetMethod("http://localhost:8080/Login/webfactOrder_print_email?yymm="+yymm+"&yymm2="+yymm2+"&autoEmailMk=1");
 		client.executeMethod(method);
 		method.releaseConnection();
 		ApplicationContext ac = new ClassPathXmlApplicationContext(new String[]{"spring-action.xml","spring-dao.xml", "spring.xml","spring-services.xml"});
-		IWebFactorderServices webfactorderSer=(IWebFactorderServices)ac.getBean("webfactorderSer");
-		List<WebFact>list_facts=webfactorderSer.findNoinput(yymm);
-		IWebEmailService eSer =(IWebEmailService)ac.getBean("emailService");
+		IWebFactorderServices webfactorderSer=(IWebFactorderServices)ac.getBean("webfactorderSer");		
+		IWebEmailService eSer =(IWebEmailService)ac.getBean("emailService");		
 		StringBuffer fact_strs=new StringBuffer();
-		for(WebFact fact:list_facts){
-			fact_strs.append(fact.getFactSname()+"_"+fact.getId().getFactArea()+"<br/>");
-		}		
-		List<WebEmail> email = eSer.getEmail("Y");
+		List<String>list_date=GlobalMethod.getDateNum(yymm, yymm2);	
+		for(String month:list_date){
+			List<WebFact>list_facts=webfactorderSer.findNoinput(month);
+			//fact_strs.append("<br/>");
+			fact_strs.append("<span style='color:blue'>"+month+"月份</span><br/>");
+			for(WebFact fact:list_facts){
+				fact_strs.append(fact.getFactSname()+"_"+fact.getId().getFactArea()+"<br/>");
+			}
+		}
+				
+		List<WebEmailAll> email = eSer.findEmail();
 		String[] mail = new String[email.size()];
 		for (int i = 0; i < email.size(); i++) {
-			if (email.get(i).getName() != null
-					|| !email.get(i).getName().equals("")) {
+			if (email.get(i).getUsername() != null
+					|| !email.get(i).getUsername().equals("")) {
 				//mail[i] = MimeUtility.encodeText(email.get(i).getName())+ "<"+ email.get(i).getEmail()+ ">";
 				//解決收件人中文亂碼的問題，因爲因爲數據是utf-8編碼
-				mail[i] = MimeUtility.encodeText(email.get(i).getName(),"utf-8","Q")+ "<"+ email.get(i).getEmail()+ ">";
+				mail[i] = email.get(i).getFactNo()+"_"+MimeUtility.encodeText(email.get(i).getUsername(),"utf-8","Q")+ "<"+ email.get(i).getEmail()+ ">";
 			} else {
 				mail[i] = email.get(i).getEmail();
 			}
 		}		
-		List<WebCc> Cc = eSer.getCC("Y");
+		List<WebEmailAll> Cc = eSer.findCC();
 		String[] cc = new String[Cc.size()];
 		for (int j = 0; j < Cc.size(); j++) {
-			if (Cc.get(j).getName() != null
-					|| !Cc.get(j).getName().equals("")) {
+			if (Cc.get(j).getUsername() != null
+					|| !Cc.get(j).getUsername().equals("")) {
 				//cc[j] = MimeUtility.encodeText(Cc.get(j).getName())+ "<" + Cc.get(j).getEmail() + ">";
 				//解決收件人中文亂碼的問題，因爲因爲數據是utf-8編碼
-				cc[j] = MimeUtility.encodeText(Cc.get(j).getName(),"utf-8","Q")+ "<" + Cc.get(j).getEmail() + ">";		
+				cc[j] = Cc.get(j).getFactNo()+"_"+MimeUtility.encodeText(Cc.get(j).getUsername(),"utf-8","Q")+ "<" + Cc.get(j).getEmail() + ">";		
 			} else {
-				cc[j] = Cc.get(j).getName() + Cc.get(j).getEmail();
+				cc[j] = Cc.get(j).getEmail();
 			}
 		}
 			
 		/*String[] mail={MimeUtility.encodeText("張錫洪")+"<kyinfo.David@yyin.yydg.com.cn>"};				
-		String[] cc = {MimeUtility.encodeText("張錫洪")+"<kyinfo.David@yyin.yydg.com.cn>"};
-		String[] mail={MimeUtility.encodeText("張錫洪")+"<zxh578164349@qq.com>"};				
+		String[] cc = {MimeUtility.encodeText("張錫洪")+"<kyinfo.David@yyin.yydg.com.cn>"};*/
+		/*String[] mail={MimeUtility.encodeText("張錫洪")+"<zxh578164349@qq.com>"};				
 		String[] cc = {MimeUtility.encodeText("張錫洪")+"<zxh578164349@qq.com>"};*/
-		AutoSendEmailAction send = new AutoSendEmailAction();
-		String title=yymm+"各廠訂單導入狀況";
-		String affixName=yymm+"各廠訂單導入狀況";
+		AutoSendEmailAction send = new AutoSendEmailAction();		
+		String title="各廠訂單導入狀況";
+		String affixName="各廠訂單導入狀況";
 		StringBuffer content=new StringBuffer();
-		content.append(yymm+"未導入訂單工廠如下:<br/><br/>");
+		content.append("未導入訂單工廠如下:<br/><br/>");
 		content.append("<span style='color:red;font-size:16px'>");		
 		content.append(fact_strs);
 		content.append("</span><br/><br/>");
 		content.append("本郵件自動發送,請勿回復!如需回复，請回复到kyinfo@yydg.com.cn咨訊室");
+						
 		send.sendmail(mail, cc, title, content.toString(), yymm,affixName);
 		File file = new File("d://" + yymm + ".xls");
 		if (file.exists()) {

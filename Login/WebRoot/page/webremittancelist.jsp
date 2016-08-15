@@ -16,9 +16,18 @@
 <meta http-equiv="expires" content="0">
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
+</head>
+
+<body>
+
+	<jsp:include page="publicHead_matterApplication.jsp" flush="true" />
+	<hr />
+			
+	<div id="bodyid">
+		<jsp:include page="table1/webremittancelist1.jsp" />
+	</div>
 
 	
-</head>
 
 <script>
 
@@ -59,7 +68,7 @@
 		});
 	}
 	//你确定要删除吗？
-	function isDelete(mid) {
+	/*function isDelete(mid) {
 	    var flag=confirm("確定要刪除嗎?");
 		
 			if (flag == true) {//if			   
@@ -78,7 +87,7 @@
 				//document.getElementById(mid).submit();
 			}//if
 		
-	}
+	}*/
 	
 function showDivList(billNo){	    	
 	    jq.layer({
@@ -95,21 +104,5 @@ function showDivList(billNo){
 	});
 	    }	
 </script>
-
-
-
-
-<body>
-
-	<jsp:include page="publicHead_matterApplication.jsp" flush="true" />
-	<hr />
-			
-	<div id="bodyid">
-		<jsp:include page="table1/webremittancelist1.jsp" />
-	</div>
-
-	
-
-
 </body>
 </html>

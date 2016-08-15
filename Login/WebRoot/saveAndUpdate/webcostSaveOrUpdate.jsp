@@ -1,6 +1,5 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
-<%@ taglib prefix="bean" uri="http://struts.apache.org/tags-bean"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%
 	String path = request.getContextPath();
@@ -21,90 +20,8 @@
 <meta http-equiv="expires" content="0">
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
-
-<link href="css/validate.css" rel="stylesheet" type="text/css" />
 <link rel="stylesheet" type="text/css" href="css/form.css" />
-<link rel="stylesheet" type="text/css" href="css/select_beautiful.css"></script>
 </head>
-<script type="text/javascript">
-
-	jq(function() {
-		var demo = jq("#form").Validform({
-			btnSubmit : "#sub",
-			tiptype : 4,
-			showAllError : true,
-			datatype : {
-				"*0-9" : /^-?\d{1,9}(\.[0-9]{1,3})?$/,
-				"*0-7" : /^-?\d{1,7}(\.[0-9])?$/
-			},
-			ajaxPost:true,
-			callback:function(data){				
-				if(data=="0"){
-					layer.msg("提交成功!",3,1);
-					//location.href="/Login/webcost_findPageBean";
-					loadUrl("/Login/webcost_findPageBean");
-				}else{
-					//alert(data.responseText);
-					layer.msg("提交失敗",3,3);
-				}
-				
-			}
-		});
-		demo.tipmsg.w["*0-9"] = "只能數字且不超過9位數,可保留三位以內小數";
-		demo.tipmsg.w["*0-7"] = "只能數字且不超過7位數,可保留一位小數";
-	});
-
-	function getFactArea(mid) {
-		document.getElementById("dwrFactArea").length = 1;
-		webfactjs.findFactCodeByFactNo_show_dw(mid, function(x) {
-			dwr.util.addOptions("dwrFactArea", x);
-		});
-
-	}
-	function back() {
-			loadUrl("/Login/webcost_findPageBean3?backIndex=1");
-	}
-	 function check(){
-       var factno=document.getElementById("dwr_factno").value;
-       var factcode=document.getElementById("dwrFactArea").value;
-       var yymmdd=document.getElementById("dwr_yymmdd").value;
-       if(factno!=""&&factcode!=""&&yymmdd!=""){
-          webcostjs.check(factno,factcode,yymmdd,function(x){
-              if(x==true){
-              alert("數據庫已存在("+factno+factcode+yymmdd+")");
-              document.getElementById("sub").disabled=true;
-              document.getElementById("sub").value="已鎖定";
-              document.getElementById("sub").style.color="red";
-              document.getElementById("error1").innerHTML="<font color='color'>！</font>";
-              document.getElementById("error2").innerHTML="<font color='color'>！</font>";
-              document.getElementById("error3").innerHTML="<font color='color'>！</font>";
-          }else{
-            document.getElementById("sub").disabled=false;
-            document.getElementById("sub").value="確定";
-            document.getElementById("sub").style.color="white";
-            document.getElementById("error1").innerHTML="";
-            document.getElementById("error2").innerHTML="";
-            document.getElementById("error3").innerHTML="";
-          }        
-          });               
-       }                    
-   }
-             /*禁止空格輸入*/
-window.onload=function(){            
-            var inputs=document.getElementsByTagName("input"); 
-            for (var i=0;i<inputs.length; i++) {  
-                if(inputs[i].getAttribute("type")=="text") 
-                 inputs[i].onkeyup=function(){ 
-                    this.value=this.value.replace(/(^\s+)|\s+$/g,""); 
-                 }; 
-            }  
-        } 
-</script>
-<script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/webcostjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/engine.js'></script>
-<script type='text/javascript' src='/Login/dwr/util.js'></script>
-
 
 <body>
 	<form action="webcost_add" method="post" id="form">
@@ -328,5 +245,76 @@ window.onload=function(){
 		</center>
 	</form>
 
+
+<script type="text/javascript">
+
+	jq(function() {
+		var demo = jq("#form").Validform({
+			btnSubmit : "#sub",
+			tiptype : 4,
+			showAllError : true,
+			datatype : {
+				"*0-9" : /^-?\d{1,9}(\.[0-9]{1,3})?$/,
+				"*0-7" : /^-?\d{1,7}(\.[0-9])?$/
+			},
+			ajaxPost:true,
+			callback:function(data){				
+				if(data=="0"){
+					layer.msg("提交成功!",3,1);
+					//location.href="/Login/webcost_findPageBean";
+					loadUrl("/Login/webcost_findPageBean");
+				}else{
+					//alert(data.responseText);
+					layer.msg("提交失敗",3,3);
+				}
+				
+			}
+		});
+		demo.tipmsg.w["*0-9"] = "只能數字且不超過9位數,可保留三位以內小數";
+		demo.tipmsg.w["*0-7"] = "只能數字且不超過7位數,可保留一位小數";
+	});
+
+	function getFactArea(mid) {
+		document.getElementById("dwrFactArea").length = 1;
+		webfactjs.findFactCodeByFactNo_show_dw(mid, function(x) {
+			dwr.util.addOptions("dwrFactArea", x);
+		});
+
+	}
+	function back() {
+			loadUrl("/Login/webcost_findPageBean3?backIndex=1");
+	}
+	 function check(){
+       var factno=document.getElementById("dwr_factno").value;
+       var factcode=document.getElementById("dwrFactArea").value;
+       var yymmdd=document.getElementById("dwr_yymmdd").value;
+       if(factno!=""&&factcode!=""&&yymmdd!=""){
+          webcostjs.check(factno,factcode,yymmdd,function(x){
+              if(x==true){
+              alert("數據庫已存在("+factno+factcode+yymmdd+")");
+              document.getElementById("sub").disabled=true;
+              document.getElementById("sub").value="已鎖定";
+              document.getElementById("sub").style.color="red";
+              document.getElementById("error1").innerHTML="<font color='color'>！</font>";
+              document.getElementById("error2").innerHTML="<font color='color'>！</font>";
+              document.getElementById("error3").innerHTML="<font color='color'>！</font>";
+          }else{
+            document.getElementById("sub").disabled=false;
+            document.getElementById("sub").value="確定";
+            document.getElementById("sub").style.color="white";
+            document.getElementById("error1").innerHTML="";
+            document.getElementById("error2").innerHTML="";
+            document.getElementById("error3").innerHTML="";
+          }        
+          });               
+       }                    
+   }
+             /*禁止空格輸入*/
+jq(function(){
+	goTrim();
+}); 
+</script>
+<script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>
+<script type='text/javascript' src='/Login/dwr/interface/webcostjs.js'></script>
 </body>
 </html>

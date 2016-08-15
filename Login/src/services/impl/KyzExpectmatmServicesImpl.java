@@ -35,6 +35,7 @@ import entity.KyzVisaflow;
 import entity.WebUser;
 import entity_temp.VisabillsTemp;
 import services.IKyzExpectmatmServices;
+import util.GlobalMethod;
 import util.PageBean;
 
 public class KyzExpectmatmServicesImpl implements IKyzExpectmatmServices {
@@ -357,6 +358,9 @@ public class KyzExpectmatmServicesImpl implements IKyzExpectmatmServices {
 			file_map.put("list_kyzexpfile", list_kyzexpfile);
 			map.put("file_map", file_map);
 		}
+		
+		String sub_file=GlobalMethod.getSubfile(list_visa.size()-nos);
+		map.put("sub_file",sub_file);
 		map_result.put("map", map);
 		map_result.put("list", list);
 		return map_result;

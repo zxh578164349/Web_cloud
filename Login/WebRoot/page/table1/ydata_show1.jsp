@@ -21,104 +21,7 @@
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
 
-<script type="text/javascript">
-<%--$(function() {
-		var j = jQuery.noConflict();
-		var demo = j("#form").Validform({
-			tiptype : 1,
-		//showAllError : true,
-		});
-	});--%>
-	
-	 /**var defaultColor="#97CBFF";
-	 var clickColor="#CCFFFF";
-	 function click_color(obj){
-        var tbody=document.getElementById("tbody");
-        var length=document.getElementById("tbody").rows.length;
-        for(var i=0;i<length;i++){
-            tbody.rows[i].style.backgroundColor=defaultColor;
-        }
-        obj.style.backgroundColor=clickColor;        
-    }
-      function move(obj){
-     obj.style.backgroundColor=defaultColor;
-    }
-    function showPage(){
-	    var j=jQuery.noConflict();
-	    j("#divpage").toggle(200,function(){
-	        if(document.getElementById("a_page").innerHTML=="▽"){
-	          document.getElementById("a_page").innerHTML="△";
-	        }else{
-	           document.getElementById("a_page").innerHTML="▽";
-	        }
-	    });	   
-	}*/
 
-//沒有提示的修改	
-function update_ydata(subform){
-   document.getElementById(subform).submit();
-}
-
-//有提示的修改	
-function checkResult(factNo,yymmdd,subform){
-     var date=yymmdd.toString();
-     var month_str=date.substr(4,2);
-     var month_int=parseInt(month_str);
-     sumwebydatajs.findByFactNo2(factNo,yymmdd,function(x){
-        if(x.length>0){
-           alert("對不起，"+month_int+"月盤點數據已確定，該產量資料不可修改!");
-           //alert("注意！修改完數據後,請前往數據盤點頁面,\n更新所屬月份的盤點數據.\n否則導致KPI報表數據不正確")        
-           //document.getElementById(subform).submit();          
-        }else{          
-           document.getElementById(subform).submit();   
-        }
-    })    
-}
-function checkResult_delete(factNo,yymmdd,subform){
-    var date=yymmdd.toString();
-    var month_str=date.substr(4,2);
-    var month_int=parseInt(month_str);
-    sumwebydatajs.findByFactNo2(factNo,yymmdd,function(x){
-         if(x.length>0){
-             alert("對不起，"+month_int+"月盤點數據已確定，該產量資料不可刪除!");
-         }else{
-             var flag=confirm("確定要刪除嗎?");
-             if(flag==true){
-                document.getElementById(subform).submit();
-             }
-         }
-    })
-}
-//此方法管理員可用
-function checkResult_admin(factNo,yymmdd,subform){
-    sumwebydatajs.findByFactNo2(factNo,yymmdd,function(x){
-       if(x.length>0){
-          alert("請注意，盤點數據已經確定，更改數據後，請及時更新盤點數據!");
-          document.getElementById(subform).submit();
-       }else{
-          document.getElementById(subform).submit();
-       }
-    })
-}
-function delete_admin(factNo,yymmdd,subform){
-   sumwebydatajs.findByFactNo2(factNo,yymmdd,function(x){
-       if(x.lenght>0){
-          alert("請注意，盤點數據已經確定，刪除後，請及時更新盤點數據!");
-          document.getElementById(subform).submit();
-       }else{
-          var flag=confirm("確定要刪除嗎？");
-          if(flag==true){
-             document.getElementById(subform).submit();
-          }
-       }
-   })
-}
-
-	
-</script>
-<script type='text/javascript' src='/Login/dwr/engine.js'></script>
-<script type='text/javascript' src='/Login/dwr/util.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/sumwebydatajs.js'></script>
 </head>
 
 <body >
@@ -160,7 +63,7 @@ function delete_admin(factNo,yymmdd,subform){
 		<tbody id="tbody">
 		<s:iterator value="bean.list" status="x" id="temp">
 			<tr> 
-				<td>${25*(bean.currentPage-1)+x.index+1}</td>
+				<td>${bean.pageSize*(bean.currentPage-1)+x.index+1}</td>
 				<td><s:property value="id.factNo" /></td>
 				<td><s:property value="id.factCode" /></td>
 				<td><s:date name="id.yymmdd" format="yyyyMMdd" /></td>
@@ -195,7 +98,7 @@ function delete_admin(factNo,yymmdd,subform){
 							name="id.yymmdd" />
 					</form> 
 					<s:if test='username==#attr.loginUser.username||#attr.loginUser.username=="admin"'>					  
-					  <a href="javascript:findById('subform${x.index}','ydata_findById')" ><img alt="修改" src="images/icon/edit001.png" title="修改" ></a> 				  	
+					  <a href="javascript:findById_form('subform${x.index}','ydata_findById')" ><img alt="修改" src="images/icon/edit001.png" title="修改" ></a> 				  	
 					</s:if>
 					<s:else>
 					  <a disabled style="color:grey"><img alt="修改" src="images/icon/edit001_1.png" title="修改" ></a>
@@ -208,9 +111,8 @@ function delete_admin(factNo,yymmdd,subform){
 						<input type="hidden" value="<s:property value='id.yymmdd'/>"
 							name="id.yymmdd" />
 					</form>
-					 <s:if test='username==#attr.loginUser.username||#attr.loginUser.username=="admin"'>
-					  <%-- <a href="javascript:void(0)" onclick="checkResult_delete('${temp.id.factNo}',<s:date name='id.yymmdd' format='yyyyMM'/>,'2subform${x.index}')"><img alt="刪除" src="images/icon/delete001.png" title="刪除"></a> --%>
-					  <a href="javascript:void(0)" onclick="delete_ydata('2subform${x.index}')"><img alt="刪除" src="images/icon/delete001.png" title="刪除"></a>
+					 <s:if test='username==#attr.loginUser.username||#attr.loginUser.username=="admin"'>			
+					  <a href="javascript:isDelete('2subform${x.index}','ydata_delete')" ><img alt="刪除" src="images/icon/delete001.png" title="刪除"></a>
 					 </s:if>
 					 <s:else>
 					   <a disabled style="color:grey"><img alt="刪除" src="images/icon/delete001_1.jpg" title="刪除"></a>
@@ -223,41 +125,8 @@ function delete_admin(factNo,yymmdd,subform){
 	</table>
     </div>
   </div>
-	<%-- <hr />
-	<center id="center_page">
-	　　<a href="javascript:pages(0)">首頁</a>
-	    <a href="javascript:pages(<s:property value='bean.currentPage'/>-1)">上一頁</a>	    
-	        (第<s:property value="bean.currentPage" />頁 <a href="javascript:void(0)" onclick="showPage()" id="a_page">▽</a>|共<s:property value="bean.totalPage" />頁)
-	           <div id="divpage">
-	               <c:forEach begin="1"  end="${bean.totalPage}" var="id">
-	                   <a href="javascript:pages(${id })">${id}</a>
-	               </c:forEach>
-	           </div>	  
-	    <a href="javascript:pages(<s:property value='bean.currentPage'/>+1)">下一頁</a>
-	    <a href="javascript:pages(<s:property value='bean.totalPage'/>)">尾頁</a>		
-	</center> --%>
+		<jsp:include page="pagenation.jsp" flush="true"/>
 	
-	<ul class="pagination" style="padding-left:42%">
-		    <li><a href="javascript:pages(0)">首頁</a></li>
-			<li><a href="javascript:pages(<s:property value='bean.currentPage'/>-1)">&laquo;</a></li>			
-			<li><a href="javascript:pages(<s:property value='bean.currentPage'/>)"><s:property value='bean.currentPage'/></a></li>
-			<s:if test="bean.currentPage+1==bean.totalPage||bean.currentPage+1<bean.totalPage">
-			    <li><a href="javascript:pages(<s:property value='bean.currentPage'/>+1)"><s:property value='bean.currentPage+1'/></a></li>
-			</s:if>
-			<s:if test="bean.currentPage+2==bean.totalPage||bean.currentPage+2<bean.totalPage">
-			    <li><a href="javascript:pages(<s:property value='bean.currentPage'/>+2)"><s:property value='bean.currentPage+2'/></a></li>
-			</s:if>
-			<s:if test="bean.currentPage+3==bean.totalPage||bean.currentPage+3<bean.totalPage">
-			    <li><a href="javascript:pages(<s:property value='bean.currentPage'/>+3)"><s:property value='bean.currentPage+3'/></a></li>
-			</s:if>
-			<s:if test="bean.currentPage+4==bean.totalPage||bean.currentPage+4<bean.totalPage">
-			    <li><a href="javascript:pages(<s:property value='bean.currentPage'/>+4)"><s:property value='bean.currentPage+4'/></a></li>
-			</s:if>									
-			<li><a href="javascript:pages(<s:property value='bean.currentPage'/>+1)">&raquo;</a></li>
-			<li><a href="javascript:pages(<s:property value='bean.totalPage'/>)">尾頁</a></li>			
-		</ul>
-	<hr>
-
 </body>
 
 

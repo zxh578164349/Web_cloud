@@ -19,55 +19,8 @@
 <meta http-equiv="expires" content="0">
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
-
 <link rel="stylesheet" type="text/css" href="css/form.css" />
-<link rel="stylesheet" type="text/css" href="css/select_beautiful.css">
-<script type="text/javascript">
-	jq(function() {
-		jq("#form").Validform({
-			btnSubmit : "#sub",
-			tiptype : 4,
-			showAllError : true,
-			ignoreHidden : true,
-			tipSweep : true,
-			ajaxPost:true,
-			callback : function(data) {
-				if(data=="0"){
-					layer.msg("提交成功!",3,1);
-					//location.href="/Login/fix_findPageBean";
-					loadUrl("/Login/fix_findPageBean");
-				}
-				if(data=="1"){
-					//alert(data.responseText);
-					layer.msg("提交失敗",3,3);
-				}
-				if(data=="2"){
-					layer.msg("數據已存在,請重新調撥",3,3);
-				}
-			}
-		});
 
-	});
-
-	function back() {
-		loadUrl("/Login/fix_findPageBean3?backIndex=1");
-	}
-
-	function getFactArea(mid) {
-		document.getElementById("dwrFactArea").length = 1;
-		webfactjs.findFactCodeByFactNo(mid, function(x) {
-			//alert(mid);
-			dwr.util.addOptions("dwrFactArea", x);
-		});
-
-	}
-</script>
-<script type='text/javascript' src='/Login/dwr/interface/webmajorjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/websubjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/webfixjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/engine.js'></script>
-<script type='text/javascript' src='/Login/dwr/util.js'></script>
 </head>
 <body >
 	<form action="fix_addlog" method="post" id="form">
@@ -166,6 +119,51 @@
 
 		</table>
 	</form>
-	
+
+
+<script type="text/javascript">
+	jq(function() {
+		jq("#form").Validform({
+			btnSubmit : "#sub",
+			tiptype : 4,
+			showAllError : true,
+			ignoreHidden : true,
+			tipSweep : true,
+			ajaxPost:true,
+			callback : function(data) {
+				if(data=="0"){
+					layer.msg("提交成功!",3,1);
+					//location.href="/Login/fix_findPageBean";
+					loadUrl("/Login/fix_findPageBean");
+				}
+				if(data=="1"){
+					//alert(data.responseText);
+					layer.msg("提交失敗",3,3);
+				}
+				if(data=="2"){
+					layer.msg("數據已存在,請重新調撥",3,3);
+				}
+			}
+		});
+
+	});
+
+	function back() {
+		loadUrl("/Login/fix_findPageBean3?backIndex=1");
+	}
+
+	function getFactArea(mid) {
+		document.getElementById("dwrFactArea").length = 1;
+		webfactjs.findFactCodeByFactNo(mid, function(x) {
+			//alert(mid);
+			dwr.util.addOptions("dwrFactArea", x);
+		});
+
+	}
+</script>
+<script type='text/javascript' src='/Login/dwr/interface/webmajorjs.js'></script>
+<script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>
+<script type='text/javascript' src='/Login/dwr/interface/websubjs.js'></script>
+<script type='text/javascript' src='/Login/dwr/interface/webfixjs.js'></script>	
 </body>
 </html>

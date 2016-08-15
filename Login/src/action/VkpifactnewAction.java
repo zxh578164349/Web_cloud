@@ -1920,6 +1920,8 @@ public class VkpifactnewAction extends ActionSupport implements ServletResponseA
 	      list_a.get(a).setSumActualdemo(list_b.get(b).getSumActualdemo().add(list_c.get(c).getSumActualdemo()));
 	      list_a.get(a).setSumActualpairs(list_b.get(b).getSumActualpairs().add(list_c.get(c).getSumActualpairs()));
 	      list_a.get(a).setSumFactpairs(list_b.get(b).getSumFactpairs().add(list_c.get(c).getSumFactpairs()));
+	      list_a.get(a).setSumWorkhours(list_b.get(b).getSumWorkhours()+list_c.get(c).getSumWorkhours());
+	      list_a.get(a).setSumWorkdays(list_b.get(b).getSumWorkdays().add(list_c.get(c).getSumWorkdays()));
 	      list_a.get(a).setHole(list_b.get(b).getHole()+list_c.get(c).getHole());						      
 	      list_a.get(a).setObja100(list_b.get(b).getObja100()+list_c.get(c).getObja100());
 	      list_a.get(a).setObja101(list_b.get(b).getObja101()+list_c.get(c).getObja101());

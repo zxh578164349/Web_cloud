@@ -16,13 +16,44 @@
 <meta http-equiv="expires" content="0">
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
-<!--  <link rel="stylesheet" type="text/css" href="css/button_css.css" />
-<link rel="stylesheet" type="text/css" href="css/general_css.css" />
-<link href="tablecloth/tablecloth.css" rel="stylesheet" type="text/css" media="screen" />
-<script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script>-->
-
 	
 </head>
+
+
+<body>
+	<jsp:include page="publicHead_webYdate.jsp" flush="true" />
+	<hr />
+	
+	
+	<s:if test='#session.loginUser.userread!="1"'>
+	<span style="float:right">	  
+	  <input type="button" onclick="loadUrl('page/sum_yiele_data.jsp')" class="btn btn-link btn-sm" value="添加每月盤點數據"/>
+	</span>
+	</s:if>	
+	<span style="float:right"> <input type="button"
+		onclick="findPageBean('sumwebydata_findPageBean')" 
+		class="btn btn-link btn-sm" value="查看盤點數據"/>
+	</span> 	
+	<span style="float:right"> <input type="button"
+		onclick="findPageBean('ydata_findPageBeanForMonth')" 
+		class="btn btn-link btn-sm" value="按月合計查看"/>
+	</span>	
+	<span style="float:right"> <input type="button"
+		onclick="findPageBean('webyadanoinput_findPageBean')"
+		class="btn btn-link btn-sm" value="未按時輸入記錄"/>
+	</span>
+	<s:if test='#attr.loginUser.username=="admin"'>
+	<form method="post" action="timer_print_manual" id="emailform">
+	<span style="float:right"> 	
+	<input type="text" name="yymm" onClick="WdatePicker()" readonly="readonly" class="Wdate"/>
+	<input type="button" value="發送產量匯總郵件" onclick="gosubmit()" class="btn btn-primary btn-sm"/>	
+	</span>
+	</form>	
+	</s:if>	
+	<div id="bodyid">
+		<jsp:include page="table1/ydata_show1.jsp" />
+	</div>
+	
 <script>
 	function pages(page) {	
 		jq.ajax({
@@ -76,16 +107,9 @@
 		});
 	  //document.getElementById("emailform").submit();
 	}
-	//你确定要删除吗？
-	function isDelete(mid) {
-		jConfirm('你确定这么做吗?', '确认对话框', function(r) {
-			if (r == true) {
-				document.getElementById(mid).submit();
-			}
-		});
-	}
-	//無提示刪除
-	function delete_ydata(subform){
+	
+
+	/*function delete_ydata(subform){
 	   var flag=confirm("確定要刪除嗎?");
 	   
 	   if(flag==true){	   
@@ -136,7 +160,7 @@ function showDiv(){
        if(flag==true){
           this.showDiv();
        }
-    }
+    }*/
   
 function print(public_form){
 	var public_form=jq("#"+public_form);
@@ -146,40 +170,6 @@ function print(public_form){
 	
 }	
   
-</script>
-
-<body>
-	<jsp:include page="publicHead_webYdate.jsp" flush="true" />
-	<hr />
-	
-	
-	<s:if test='#session.loginUser.userread!="1"'>
-	<span style="float:right">	  
-	  <input type="button" onclick="loadUrl('page/sum_yiele_data.jsp')" class="btn btn-link btn-sm" value="添加每月盤點數據"/>
-	</span>
-	</s:if>	
-	<span style="float:right"> <input type="button"
-		onclick="findPageBean('sumwebydata_findPageBean')" 
-		class="btn btn-link btn-sm" value="查看盤點數據"/>
-	</span> 	
-	<span style="float:right"> <input type="button"
-		onclick="findPageBean('ydata_findPageBeanForMonth')" 
-		class="btn btn-link btn-sm" value="按月合計查看"/>
-	</span>	
-	<span style="float:right"> <input type="button"
-		onclick="findPageBean('webyadanoinput_findPageBean')"
-		class="btn btn-link btn-sm" value="未按時輸入記錄"/>
-	</span>
-	<s:if test='#attr.loginUser.username=="admin"'>
-	<form method="post" action="timer_print_manual" id="emailform">
-	<span style="float:right"> 	
-	<input type="text" name="yymm" onClick="WdatePicker()" readonly="readonly" class="Wdate"/>
-	<input type="button" value="發送產量匯總郵件" onclick="gosubmit()" class="btn btn-primary btn-sm"/>	
-	</span>
-	</form>	
-	</s:if>	
-	<div id="bodyid">
-		<jsp:include page="table1/ydata_show1.jsp" />
-	</div>
+</script>	
 </body>
 </html>

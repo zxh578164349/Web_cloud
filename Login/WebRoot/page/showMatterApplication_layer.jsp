@@ -26,8 +26,7 @@
 <meta http-equiv="expires" content="0">
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
-<script type="text/javascript" src="page/jquerys/jquery-1.9.1.min.js"></script>
-<script type="text/javascript" src="page/jquerys/layer/layer.min.js"></script>
+
 <style type="text/css">
 table.gridtable {
 	font-family: verdana, arial, sans-serif;
@@ -57,10 +56,6 @@ table.gridtable td {
 }
 
 </style>
-<script type="text/javascript">
-
-</script>
-
 </head>
 
 <body>
@@ -116,7 +111,7 @@ table.gridtable td {
 			<tr>
 				<td>申請內容</td>
 				<td colspan="9">					
-					<textarea style="width:560px;height:180px" readonly><s:property value="kyz.memoMk" /></textarea>
+					<textarea style="width:560px;height:180px;overflow:auto" readonly><s:property value="kyz.memoMk" /></textarea>
 					</td>
 			</tr>
 		</tbody>
