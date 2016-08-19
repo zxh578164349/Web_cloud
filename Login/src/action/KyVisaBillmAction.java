@@ -1336,62 +1336,19 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
     	String result=format.format(format2.parse(date));
     	return result;
     }
-    public void test() throws IOException{
-    	ApplicationContext ac = new ClassPathXmlApplicationContext(
-				new String[] { "spring-action.xml", "spring-dao.xml",
-						"spring.xml", "spring-services.xml" });
-    	KyzExpcetmatmAction kyzexp=new KyzExpcetmatmAction();
-    	KyzExpectmatmId id=new KyzExpectmatmId(); 
-    	id.setBillNo("EMXW15050505");
-    	id.setFactNo("XW");
-    	//kyzexp.print(id, "C21");
-
-    }
     
-	/*public void getKyzTitle(PageBean bean){
-		List<KyVisabills>list=bean.getList();
-		for(int i=0;i<list.size();i++){
-			String billNo=list.get(i).getId().getKyVisabillm().getId().getBillNo();
-			String title="";
-			//判斷費用函文還是內部聯絡函
-			if(billNo.substring(0, 2).equals("EM")){
-				title=kyzSer.findTitleByBillno(billNo);
-			}else{
-				title=kyzletterSer.findTitleByBillno(billNo);
-			}
-			if(title!=null){
-				list.get(i).setMemo(title);
-			}else{
-				list.get(i).setMemo("");
-			}						
-		}
-	}*/
+    	
 	public void getKyzTitle(PageBean bean){
 		List<KyVisabills>list=bean.getList();
-		List<Object[]>list_kyz=null;
-		List<Object[]>list_letter=null;
-		//list_kyz=(List<Object[]>)ActionContext.getContext().getSession().get("list_kyz");
-		//list_letter=(List<Object[]>)ActionContext.getContext().getSession().get("list_letter");
+		List<String>list_billnos=new ArrayList<String>();
+		for(int i=0;i<list.size();i++){
+			list_billnos.add(list.get(i).getId().getKyVisabillm().getId().getBillNo());
+		}
+		List<Object[]>list_kyz=kyzSer.findTitle(list_billnos);
+		List<Object[]>list_letter=kyzletterSer.findTitle(list_billnos);		
 		String title="";
-		if(list.size()>0){
-			for(int i=0;i<list.size();i++){
-				String billNo=list.get(i).getId().getKyVisabillm().getId().getBillNo();
-				if(billNo.substring(0,2).equals("EM")){
-					list_kyz=kyzSer.findTitle(factNo);
-					//ActionContext.getContext().getSession().put("list_kyz", list_kyz);
-					break;
-				}
-			}
-			for(int i=0;i<list.size();i++){
-				String billNo=list.get(i).getId().getKyVisabillm().getId().getBillNo();
-				if(billNo.substring(0,2).equals("CM")){
-					list_letter=kyzletterSer.findTitle(factNo);
-					//ActionContext.getContext().getSession().put("list_letter", list_letter);
-					break;
-				}
-			}
-			for(int i=0;i<list.size();i++){//for
-				
+		if(list.size()>0){			
+			for(int i=0;i<list.size();i++){//for				
 				String billNo=list.get(i).getId().getKyVisabillm().getId().getBillNo();
 				if(billNo.substring(0, 2).equals("EM")&&list_kyz!=null){
 					for(int j=0;j<list_kyz.size();j++){
@@ -1411,9 +1368,53 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 						}
 					}
 				}
-				//list.get(i).setMemo(title);
-			}//for
+			}//for			
 		}
+		
+		
+		
+		/*long start=System.currentTimeMillis();		
+		List<Object[]>list_kyz=null;
+		List<Object[]>list_letter=null;		
+		String title="";
+		if(list.size()>0){
+			for(int i=0;i<list.size();i++){
+				String billNo=list.get(i).getId().getKyVisabillm().getId().getBillNo();
+				if(billNo.substring(0,2).equals("EM")){
+					list_kyz=kyzSer.findTitle(factNo);					
+					break;
+				}
+			}
+			for(int i=0;i<list.size();i++){
+				String billNo=list.get(i).getId().getKyVisabillm().getId().getBillNo();
+				if(billNo.substring(0,2).equals("CM")){
+					list_letter=kyzletterSer.findTitle(factNo);					
+					break;
+				}
+			}
+			for(int i=0;i<list.size();i++){//for				
+				String billNo=list.get(i).getId().getKyVisabillm().getId().getBillNo();
+				if(billNo.substring(0, 2).equals("EM")&&list_kyz!=null){
+					for(int j=0;j<list_kyz.size();j++){
+						if(billNo.equals((String)list_kyz.get(j)[1])){
+							title=(String)list_kyz.get(j)[2];
+							list.get(i).setMemo(title);
+							break;
+						}
+					}
+				}
+				if(billNo.substring(0,2).equals("CM")&&list_letter!=null){
+					for(int j=0;j<list_letter.size();j++){
+						if(billNo.equals((String)list_letter.get(j)[1])){
+							title=(String)list_letter.get(j)[2];
+							list.get(i).setMemo(title);
+							break;
+						}
+					}
+				}
+			}//for
+			System.out.println("運行時間："+(System.currentTimeMillis()-start));
+		}*/
 	}
 	
 	public void getTypeName(PageBean bean){

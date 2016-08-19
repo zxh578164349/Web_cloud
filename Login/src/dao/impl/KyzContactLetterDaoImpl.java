@@ -148,6 +148,19 @@ public class KyzContactLetterDaoImpl extends Basedao implements IKyzContactLette
 		List<Object[]>list=super.getAllWithNoPage(hql.toString(), map);
 		return list;
 	}
+	
+	public List<Object[]> findTitle(List<String>billnos) {
+		// TODO Auto-generated method stub
+		StringBuffer hql=new StringBuffer();
+		Map<String,Object>map=new HashMap<String,Object>();
+		hql.append("select id.factNo,id.billNo,title from KyzContactletter where 1=1 ");
+		if(billnos!=null&&billnos.size()>0){
+			hql.append(" and id.billNo in (:billnos)");
+			map.put("billnos", billnos);
+		}
+		List<Object[]>list=super.getAllWithNoPage(hql.toString(), map);
+		return list;
+	}
 
 	/**
 	 * 

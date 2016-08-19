@@ -135,6 +135,11 @@ public class KyzContactLetterServicesImpl implements IKyzContactLetterServices{
 		// TODO Auto-generated method stub
 		return kyzletterDao.findTitle(factNo);
 	}
+	
+	public List<Object[]> findTitle(List<String>billnos) {
+		// TODO Auto-generated method stub
+		return kyzletterDao.findTitle(billnos);
+	}
 
 	public List<KyzContactletter> findBefor2Month() {
 		// TODO Auto-generated method stub

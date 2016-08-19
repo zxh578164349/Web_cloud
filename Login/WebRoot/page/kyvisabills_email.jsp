@@ -25,7 +25,12 @@
 <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <!-- <link href="http://apps.bdimg.com/libs/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet"> -->
 
-
+<style type="text/css">
+.div-border{
+   border:1px solid grey; 
+   background-color:#FCF8E3;
+}
+</style>
 </head>
 <body>
     <h3 >函文審核</h3>
@@ -46,12 +51,10 @@
 				<div class="container">
 					<div class="row">
 						<s:iterator value="vbm.kyVisabillses" status="x">
-							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4"
-								style="background-color: #dedef8; box-shadow: 
-                          inset 1px -1px 1px #444, inset -1px 1px 1px #444;">
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 div-border">
 								<p class="visible-xs visible-sm "
 									style="font-size:2em">
-									(${x.index+1}) 
+									<font>(${x.index+1})<s:property value="visaRank"/></font>
 									<s:if test='flowMk=="Y"'>
 										<s:if test='visaMk=="N"'>
 											<!-- 1.判斷未審和已審狀態 -->
@@ -62,7 +65,7 @@
 														<a style="color:red"
 															href="#myModalA" data-toggle="modal" data-target="#myModalA" onclick="check('<s:property value='id.kyVisabillm.id.factNo'/>','<s:property value='id.kyVisabillm.id.visaSort'/>',
 	              '<s:property value='id.kyVisabillm.id.billNo'/>','<s:property value='id.itemNo'/>')">     
-															未審核<s:property value="id.itemNo" />(當前審核人) </a>	
+															(當前審核人) </a>	
 															<input type="hidden" value="N" id="expiredMk"/><!--判斷郵件審核鏈接是否過期   N:未過期    Y:過期-->												
 												</s:if>
 												<s:else>
@@ -87,10 +90,10 @@
 									<s:else>
 										<a style="color:#b45b3e">只知會</a>
 									</s:else>
-									(<s:property value="visaRank"/>)
+									
 								</p>
 								<p class="visible-md visible-lg" style="font-size:1em">
-								(${x.index+1}) 
+								<font>(${x.index+1})<s:property value="visaRank"/></font>
 									<s:if test='flowMk=="Y"'>
 										<s:if test='visaMk=="N"'>
 											<!-- 1.判斷未審和已審狀態 -->
@@ -101,7 +104,7 @@
 															<a style="color:red"
 															href="#myModalA" data-toggle="modal" data-target="#myModalA" onclick="check('<s:property value='id.kyVisabillm.id.factNo'/>','<s:property value='id.kyVisabillm.id.visaSort'/>',
 	              '<s:property value='id.kyVisabillm.id.billNo'/>','<s:property value='id.itemNo'/>')">     
-															<s:property value="id.itemNo" />(當前審核人) </a>
+															(當前審核人) </a>
 															<input type="hidden" value="N" id="expiredMk"/><!--判斷郵件審核鏈接是否過期   N:未過期    Y:過期-->													
 												</s:if>
 												<s:else>
@@ -124,8 +127,7 @@
 									</s:if>
 									<s:else>
 										<a style="color:#b45b3e">只知會</a>
-									</s:else>
-									(<s:property value="visaRank"/>)
+									</s:else>									
 								</p>
 							</div>
 						</s:iterator>

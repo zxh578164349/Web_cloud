@@ -65,7 +65,7 @@
 				<div id="submit">
 					
 					<input type="button" value="登  錄" id="submit1" onclick="checkFact()"/>
-					<input type="button" value="登  錄" id="submit2" onclick="checkFact()"/>						
+					<input type="button" value="登  錄" id="submit2" />						
 				</div>
 				<div id="remembered"><input type="checkbox" value="remembered" name="remembered"/>記住賬號與廠別</div>
 			</form>		
@@ -86,44 +86,6 @@
 				"opacity" : "1"
 			}, "slow");
 		});
-	});
-	function checkFact() {
-		var factNO = document.getElementById("url_factno");
-		var names = document.getElementById("url_username_input");
-		var pwd = document.getElementById("url_pwd_input");
-		if (factNO.value == 0 || names.value == "" || pwd.value == "") {
-			layer.msg("請輸入完整的信息");
-		} else {						
-			jq.ajax({
-				type:"POST",
-				dataType:"json",
-				data:jq("#loginform").serialize(),
-				url:"userlogin",
-				success:function(data){
-					 if(data=='0'){
-						 location.href="main.jsp";
-					  }
-					  if(data=='1'){
-						  layer.alert("當前賬號已註銷!");
-					  }
-					  if(data=='2'){
-						  layer.alert("廠別不正確!");
-					  }
-					  if(data=='3'){
-						  layer.alert("賬號或密碼不正確!");
-					  }
-				},
-				error:function(err){
-					alert(err.responseText);
-				}
-			});
-		}
-	}
-
-	jq(document).keyup(function(event) {
-		if (event.keyCode == 13) {
-			checkFact();
-		}
 	});	
 </script>
 </html>

@@ -29,6 +29,7 @@ public interface IKyzExpectmatmDao {
 	public String findTitleByBillno(String billNo);
 	
 	public List<Object[]>findTitle(String factNo);
+	public List<Object[]>findTitle(List<String>list_billnos);
 	public KyzExpectmatm findById(String factNo,String billNo);
 	
 	public List<KyzExpectmatm>findBefor2Month();//兩箇月之前沒有添加刪除標記的函文20160216

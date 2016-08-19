@@ -212,6 +212,19 @@ public class KyzExpcetmatmDaoImpl extends Basedao implements IKyzExpectmatmDao {
 		List<Object[]>list=super.getAllWithNoPage(hql.toString(), map);
 		return list;
 	}
+	
+	public List<Object[]> findTitle(List<String>billnos) {
+		// TODO Auto-generated method stub
+		StringBuffer hql=new StringBuffer();
+		Map<String,Object>map=new HashMap<String,Object>();
+		hql.append("select id.factNo,id.billNo,memoSmk from KyzExpectmatm where 1=1 ");
+		if(billnos!=null&&billnos.size()>0){
+			hql.append(" and id.billNo in (:billnos) ");
+			map.put("billnos", billnos);
+		}
+		List<Object[]>list=super.getAllWithNoPage(hql.toString(), map);
+		return list;
+	}
 
 	public KyzExpectmatm findById(String factNo, String billNo) {
 		// TODO Auto-generated method stub
