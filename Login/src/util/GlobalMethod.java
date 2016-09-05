@@ -1098,10 +1098,10 @@ public class GlobalMethod extends HibernateDaoSupport{
 		 if(num<=3){
 			 result="sub_file_3.jasper";
 		 }
-		 if(num>3&&num<=6){
+		 if(num>3&&num<6){
 			 result="sub_file_6.jasper";
 		 }
-		 if(num>6&&num<=9){
+		 if(num>=6&&num<=9){
 			 result="sub_file_9.jasper";
 		 }
 		 return result;		 
