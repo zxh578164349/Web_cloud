@@ -149,6 +149,7 @@ public interface IWebFactDao {
 	public List<Object[]>findFactAble2();
 	
 	public List<String> findByFactNo_showA(String factNo);
+	public List<Object[]> findByFactNo_showA_order(String factNo);
 	
 	public List<WebFact>findByList(List<String>list);
 	

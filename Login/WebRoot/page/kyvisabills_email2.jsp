@@ -29,7 +29,7 @@
 <div class="container-fluid">
 	<div class="row-fluid">
 		<div class="span12">
-		<h3 class="single_h3">函文審核</h3>
+		<h3>函文審核</h3>
 	    <table class="table table-bordered table-condensed">
 		<thead>
 		 <tr class="info">

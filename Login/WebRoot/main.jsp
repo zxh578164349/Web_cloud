@@ -15,9 +15,7 @@
 <link rel="shortcut icon" href="images/icon/web_ico.ico" />
 <!-- 新 Bootstrap 核心 CSS 文件 -->
 <!-- <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">-->
-<link
-	href="http://apps.bdimg.com/libs/bootstrap/3.3.0/css/bootstrap.min.css"
-	rel="stylesheet">
+<link href="http://apps.bdimg.com/libs/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
 
@@ -25,7 +23,6 @@
 	<div id="main_container">
 		<div id="top">
 			<div id="lg_info">
-
 				<div class="dropdown">
 					<button type="button"
 						class="btn btn-default btn-sm dropdown-toggle " id="dropdownMenu1"
@@ -130,7 +127,7 @@
 	<script type="text/javascript" src="jquery/jquery-form.js"></script>
 	<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
 	<script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>	
-	<script src="uploadify/jquery.uploadify.min.js" type="text/javascript"></script>
+	<script src="uploadify/jquery.uploadify.min.js" type="text/javascript"></script>	
 
 	<!--[if lt IE 9]>  
   <script src="bootstrap/html5.js"></script>
@@ -308,7 +305,8 @@
 		   })
 		}
 		setTimeout("findKyVisaBills_Int()",1000);
-		setTimeout("hideBills2()",15000); 			
+		setTimeout("hideBills2()",15000); 
+				
 	</script>
 	<script type='text/javascript' src='/Login/dwr/interface/kyvisabillsjs.js'></script>
 </body>

@@ -162,6 +162,9 @@ public class KyzExpectmatmServicesImpl implements IKyzExpectmatmServices {
 		// TODO Auto-generated method stub
 		return kyzDao.findTitle(factNo);
 	}
+	public List<Object[]> findTitle(List<String>billnos){
+		return kyzDao.findTitle(billnos);
+	}
 
 	public KyzExpectmatm findById(String factNo, String billNo) {
 		// TODO Auto-generated method stub

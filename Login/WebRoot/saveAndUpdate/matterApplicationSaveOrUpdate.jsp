@@ -574,6 +574,10 @@ function gook(){
 	  layer.msg("操作成功",3,1);
 	  loadUrl("kyz_findPageBean");
 }
+
+function lookPic(url){
+	window.location.href=url;
+}
 </script>
 <script type='text/javascript' src='/Login/dwr/interface/kyzjs.js'></script>
 <script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>

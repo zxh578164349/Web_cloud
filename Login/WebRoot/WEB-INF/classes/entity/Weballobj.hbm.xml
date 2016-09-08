@@ -324,6 +324,9 @@
         <property name="objA202" type="java.lang.Double">
             <column name="OBJ_A202" precision="13" scale="4" />
         </property>
+        <property name="objA203" type="java.lang.Double">
+            <column name="OBJ_A203" precision="13" scale="4" />
+        </property>
         <property name="username" type="java.lang.String">
             <column name="USERNAME" length="50"/>
         </property>

@@ -15,6 +15,7 @@ public interface IKyzContactLetterDao {
 	public void delete(String factNo,String billNo,KyzExpectmatmLog delLog);
 	public String findTitleByBillno(String billNo);
 	public List<Object[]>findTitle(String factNo);
+	public List<Object[]>findTitle(List<String>billnos);
 	
 	/**
 	 * 
