@@ -713,6 +713,28 @@ public class GlobalMethod extends HibernateDaoSupport{
 		cs_head2.setFillPattern(XSSFCellStyle.SOLID_FOREGROUND);
 		map.put("cs_head2", cs_head2);
 		
+		XSSFCellStyle cs_red_bg=wb.createCellStyle();		
+		cs_red_bg.setAlignment(XSSFCellStyle.ALIGN_CENTER);
+		cs_red_bg.setVerticalAlignment(XSSFCellStyle.VERTICAL_CENTER);
+		cs_red_bg.setBorderTop(XSSFCellStyle.BORDER_THIN);
+		cs_red_bg.setBorderRight(XSSFCellStyle.BORDER_THIN);
+		cs_red_bg.setBorderBottom(XSSFCellStyle.BORDER_THIN);
+		cs_red_bg.setBorderLeft(XSSFCellStyle.BORDER_THIN);
+		cs_red_bg.setFillForegroundColor(IndexedColors.RED.getIndex());
+		cs_red_bg.setFillPattern(XSSFCellStyle.SOLID_FOREGROUND);
+		map.put("cs_red_bg", cs_red_bg);
+		
+		XSSFCellStyle cs_green_bg=wb.createCellStyle();		
+		cs_green_bg.setAlignment(XSSFCellStyle.ALIGN_CENTER);
+		cs_green_bg.setVerticalAlignment(XSSFCellStyle.VERTICAL_CENTER);
+		cs_green_bg.setBorderTop(XSSFCellStyle.BORDER_THIN);
+		cs_green_bg.setBorderRight(XSSFCellStyle.BORDER_THIN);
+		cs_green_bg.setBorderBottom(XSSFCellStyle.BORDER_THIN);
+		cs_green_bg.setBorderLeft(XSSFCellStyle.BORDER_THIN);
+		cs_green_bg.setFillForegroundColor(IndexedColors.GREEN.getIndex());
+		cs_green_bg.setFillPattern(XSSFCellStyle.SOLID_FOREGROUND);
+		map.put("cs_green_bg", cs_green_bg);
+		
 		
 		//紅色加粗字體
 		XSSFFont font_red=wb.createFont();
@@ -1454,7 +1476,14 @@ public class GlobalMethod extends HibernateDaoSupport{
 				System.out.println("最舒服的季節："+Season.getComfortableSeason().getCon());
 				System.out.println(Season.Summer.ordinal());;
 			}*/
-			System.out.println(randomString(-229985452)+" "+randomString(-147909649));
+			//System.out.println(randomString(-229985452)+" "+randomString(-147909649));
+			List<Double>tt=new ArrayList<Double>();
+			tt.add(22.1);tt.add(11.3);tt.add(66.2);tt.add(2.3);tt.add(10.5);
+			System.out.println(tt);
+			tt.add(1.111);
+			System.out.println(tt);
+			Collections.sort(tt);
+			System.out.print(tt);
 			
 			
 			

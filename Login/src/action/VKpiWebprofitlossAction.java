@@ -8,6 +8,7 @@ import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
@@ -57,6 +58,7 @@ public class VKpiWebprofitlossAction extends ActionSupport implements ServletRes
 	private List<String>list_factcode;
 	private List<String>list_factno;
 	private final static String RISERATE="漲福比率";
+	private final static int NUM=25;//print_tw  多少箇項目（24+1）
 	private IVKpiWebprofitlossServices vkpiprofitser;
 	private IWebFactServices webFactSer;
 	private javax.servlet.http.HttpServletResponse response;
@@ -190,10 +192,13 @@ public class VKpiWebprofitlossAction extends ActionSupport implements ServletRes
 	public void print_tw() throws IOException{
 		XSSFWorkbook wb=new XSSFWorkbook();
 		XSSFSheet sheet=wb.createSheet("匯總");
+		XSSFSheet sheet2=wb.createSheet("total");
 		Map<String,Object>map_style=GlobalMethod.findStyles2007(wb);
 		XSSFCellStyle cs_head2=(XSSFCellStyle)map_style.get("cs_head2");
 		XSSFCellStyle cs_head=(XSSFCellStyle)map_style.get("cs_head");
 		XSSFCellStyle cs=(XSSFCellStyle)map_style.get("cs");
+		XSSFCellStyle cs_red_bg=(XSSFCellStyle)map_style.get("cs_red_bg");
+		XSSFCellStyle cs_green_bg=(XSSFCellStyle)map_style.get("cs_green_bg");
 		List<VKpiWebprofitloss>list_source=vkpiprofitser.findVKpiWebprofitloss(list_factcode,yymm);
 		Map<String,Object>map=new LinkedHashMap<String,Object>();
 		for(String factcode:list_factcode){
@@ -226,22 +231,66 @@ public class VKpiWebprofitlossAction extends ActionSupport implements ServletRes
 				sheet.getRow(1).getCell(3+temp+i).setCellStyle(cs_head2);
 			}
 			
-			List<List<String>>list_pack=this.packageTostring(list_obj,1);
 			
+			List<List<String>>list_pack=this.packageTostring(list_obj,1);			
 			for(int a=0;a<list_pack.size();a++){
 				List<String>list=list_pack.get(a);
 				for(int b=0;b<list.size();b++){
 					sheet.getRow(2+b).getCell(3+a+temp).setCellValue(list.get(b));
 					if(b==0){
 						sheet.getRow(2+b).getCell(3+a+temp).setCellStyle(cs_head);
-					}else{
-						sheet.getRow(2+b).getCell(3+a+temp).setCellStyle(cs);
 					}
+					/*else{
+						sheet.getRow(2+b).getCell(3+a+temp).setCellStyle(cs);
+					}*/
 					
 				}
 			}
 			temp=temp+length;
 		}
+		
+		/******************sheet2********************/
+		int temp2=0;
+		this.init(sheet2,map,map_style,0);
+		for(String factcode:map.keySet()){
+			List<VKpiWebprofitloss>list_obj=(List<VKpiWebprofitloss>)map.get(factcode);	
+			int length=list_obj.size();
+			sheet2.getRow(1).getCell(3+temp2).setCellValue(factcode);
+			CellRangeAddress cra=new CellRangeAddress(1,(short)1,3+temp2,(short)2+temp2+length);
+			sheet2.addMergedRegion(cra);
+			for(int i=0;i<length;i++){
+				sheet2.getRow(1).getCell(3+temp2+i).setCellStyle(cs_head2);
+			}
+			temp2=temp2+length;
+		}
+		
+		List<List<Double>>list_doubles=this.packageToListDouble(map);
+		for(int i=0;i<list_doubles.size();i++){
+			List<Double>list_double=list_doubles.get(i);
+			if(i==0){
+				for(int j=0;j<list_double.size()-2;j++){
+					sheet2.getRow(2+i).getCell(3+j).setCellValue(list_double.get(j));
+					sheet2.getRow(2+i).getCell(3+j).setCellStyle(cs_head);
+				}
+			}else{
+				for(int j=0;j<list_double.size()-2;j++){
+					sheet2.getRow(2+i).getCell(3+j).setCellValue(list_double.get(j));
+					if(list_double.get(j)<=list_double.get(list_double.size()-2)){
+						sheet2.getRow(2+i).getCell(3+j).setCellStyle(cs_red_bg);
+						sheet.getRow(2+i).getCell(3+j).setCellStyle(cs_red_bg);
+					}else if(list_double.get(j)>=list_double.get(list_double.size()-1)){
+						sheet2.getRow(2+i).getCell(3+j).setCellStyle(cs_green_bg);
+						sheet.getRow(2+i).getCell(3+j).setCellStyle(cs_green_bg);
+					}else{
+						sheet2.getRow(2+i).getCell(3+j).setCellStyle(cs);
+						sheet.getRow(2+i).getCell(3+j).setCellStyle(cs);
+					}								
+				}
+			}
+			
+		}
+		/******************sheet2********************/
+		
 		
 		ServletOutputStream os=response.getOutputStream();
 		//response.setContentType("application/vnd.ms-excel");
@@ -272,10 +321,11 @@ public class VKpiWebprofitlossAction extends ActionSupport implements ServletRes
 				List<VKpiWebprofitloss>list_obj=(List<VKpiWebprofitloss>)map.get(factcode);
 				for(int j=0;j<list_obj.size()+mk;j++){					
 					row.createCell(index);
-					index++;
 					if(i==0){
 						sheet.setColumnWidth(index,3000);
 					}
+					index++;
+					
 				}
 			}			
 		}
@@ -291,7 +341,7 @@ public class VKpiWebprofitlossAction extends ActionSupport implements ServletRes
 		if(factname!=null){
 			sheet.getRow(0).getCell(0).setCellValue("重點指標匯總_"+factname);
 		}else{
-			sheet.getRow(0).getCell(0).setCellValue("重點指標匯總");
+			sheet.getRow(0).getCell(0).setCellValue("各廠重點指標匯總");
 		}
 		
 		for(int i=0;i<5;i++){
@@ -444,6 +494,68 @@ public class VKpiWebprofitlossAction extends ActionSupport implements ServletRes
 		}
 		return result;
 		
+	}
+	
+			
+	public List<List<Double>> packageToListDouble(Map<String,Object>map){
+		List<List<Double>>list_result=new ArrayList<List<Double>>();
+		for(int i=0;i<NUM;i++){
+			List<Double>list=new ArrayList<Double>();
+			list_result.add(list);
+		}
+		
+			for(String factcode:map.keySet()){
+				List<VKpiWebprofitloss>list_obj=(List<VKpiWebprofitloss>)map.get(factcode);
+				for(VKpiWebprofitloss obj:list_obj){
+					list_result.get(0).add(-1.0);
+					list_result.get(1).add(obj.getVKw01().doubleValue());
+					list_result.get(2).add(obj.getVKw02().doubleValue());
+					list_result.get(3).add(obj.getVKw03().doubleValue());			
+					list_result.get(4).add(obj.getVKw04());
+					list_result.get(5).add(obj.getVKw05().doubleValue());
+					list_result.get(6).add(obj.getVKw06().doubleValue());
+					list_result.get(7).add(obj.getVKw07().doubleValue());
+					list_result.get(8).add(obj.getVKw08().doubleValue());
+					list_result.get(9).add(obj.getVKw09().doubleValue());
+					list_result.get(10).add(obj.getVKw10().doubleValue());
+					list_result.get(11).add(obj.getVKw11().doubleValue());
+					list_result.get(12).add(obj.getVKw12().doubleValue());
+					list_result.get(13).add(obj.getVKw13().doubleValue());
+					list_result.get(14).add(obj.getVKw14().doubleValue());
+					list_result.get(15).add(obj.getVKw15().doubleValue());
+					list_result.get(16).add(obj.getVKw16().doubleValue());
+					list_result.get(17).add(obj.getVKw17().doubleValue());
+					list_result.get(18).add(obj.getVKw18().doubleValue());
+					list_result.get(19).add(obj.getVKw19().doubleValue());
+					list_result.get(20).add(obj.getVKw20().doubleValue());
+					list_result.get(21).add(obj.getVKw21().doubleValue());
+					list_result.get(22).add(obj.getVKw22().doubleValue());
+					list_result.get(23).add(obj.getVKw23().doubleValue());
+					list_result.get(24).add(obj.getVKw24().doubleValue());										
+				}
+			}
+			List<List<Double>>list_result_sort=new ArrayList<List<Double>>();
+			for(List<Double> list_db:list_result){
+				List<Double>list_db2=new ArrayList<Double>();
+				for(Double db:list_db){
+					list_db2.add(db);
+				}
+				list_result_sort.add(list_db2);
+			}
+			for(int i=0;i<list_result_sort.size();i++){
+				List<Double>list=list_result_sort.get(i);
+				List<Double>list2=list_result.get(i);
+				Collections.sort(list);
+				list2.add(list.get(2));
+				list2.add(list.get(list.size()-3));
+			}
+			for(List<Double>list:list_result){
+				for(int i=0;i<list.size();i++){
+					System.out.println(i+1+":"+list.get(i)+"***");
+				}
+				System.out.println("---------------------------");
+			}
+		return list_result;
 	}
 	
 }
