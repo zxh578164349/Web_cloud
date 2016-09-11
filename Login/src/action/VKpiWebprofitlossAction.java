@@ -59,6 +59,11 @@ public class VKpiWebprofitlossAction extends ActionSupport implements ServletRes
 	private List<String>list_factno;
 	private final static String RISERATE="漲福比率";
 	private final static int NUM=25;//print_tw  多少箇項目（24+1）
+	private final static String STR_LONG="-999999";
+	private final static String STR_DB="-999999.0";
+	private final static String STR_BIG="-99999900.00%";
+	private final static Double DB1=-999999.0;
+	private final static Long LG1=-999999L;
 	private IVKpiWebprofitlossServices vkpiprofitser;
 	private IWebFactServices webFactSer;
 	private javax.servlet.http.HttpServletResponse response;
@@ -161,7 +166,7 @@ public class VKpiWebprofitlossAction extends ActionSupport implements ServletRes
 			for(int a=0;a<list_pack.size();a++){
 				List<String>list=list_pack.get(a);
 				for(int b=0;b<list.size();b++){
-					sheet.getRow(2+b).getCell(3+a+temp*length).setCellValue(list.get(b));
+					sheet.getRow(2+b).getCell(3+a+temp*length).setCellValue(this.isMyNull(list.get(b)));
 					if(b==0){
 						sheet.getRow(2+b).getCell(3+a+temp*length).setCellStyle(cs_head);
 					}else{
@@ -236,7 +241,7 @@ public class VKpiWebprofitlossAction extends ActionSupport implements ServletRes
 			for(int a=0;a<list_pack.size();a++){
 				List<String>list=list_pack.get(a);
 				for(int b=0;b<list.size();b++){
-					sheet.getRow(2+b).getCell(3+a+temp).setCellValue(list.get(b));
+					sheet.getRow(2+b).getCell(3+a+temp).setCellValue(this.isMyNull(list.get(b)));
 					if(b==0){
 						sheet.getRow(2+b).getCell(3+a+temp).setCellStyle(cs_head);
 					}
@@ -275,10 +280,10 @@ public class VKpiWebprofitlossAction extends ActionSupport implements ServletRes
 			}else{
 				for(int j=0;j<list_double.size()-2;j++){
 					sheet2.getRow(2+i).getCell(3+j).setCellValue(list_double.get(j));
-					if(list_double.get(j)<=list_double.get(list_double.size()-2)){
+					if(list_double.size()>5&&list_double.get(j)<=list_double.get(list_double.size()-2)&&!list_double.get(j).equals(DB1)){
 						sheet2.getRow(2+i).getCell(3+j).setCellStyle(cs_red_bg);
 						sheet.getRow(2+i).getCell(3+j).setCellStyle(cs_red_bg);
-					}else if(list_double.get(j)>=list_double.get(list_double.size()-1)){
+					}else if(list_double.size()>5&&list_double.get(j)>=list_double.get(list_double.size()-1)&&!list_double.get(j).equals(DB1)){
 						sheet2.getRow(2+i).getCell(3+j).setCellStyle(cs_green_bg);
 						sheet.getRow(2+i).getCell(3+j).setCellStyle(cs_green_bg);
 					}else{
@@ -344,7 +349,7 @@ public class VKpiWebprofitlossAction extends ActionSupport implements ServletRes
 			sheet.getRow(0).getCell(0).setCellValue("各廠重點指標匯總");
 		}
 		
-		for(int i=0;i<5;i++){
+		for(int i=0;i<4;i++){
 			sheet.getRow(0).getCell(i).setCellStyle(cs_title);
 		}
 		
@@ -460,35 +465,35 @@ public class VKpiWebprofitlossAction extends ActionSupport implements ServletRes
 			list.add(obj.getVKw23().toString());
 			list.add(frm.format(obj.getVKw24()));
 			result.add(list);
-			if(list_obj.size()>1&&i==list_obj.size()-1&&isTotal==0){
+			if(list_obj.size()>1&&i==list_obj.size()-1&&isTotal==0){//漲福比率
 				List<String>list2=new ArrayList<String>();
 				VKpiWebprofitloss obj1=list_obj.get(list_obj.size()-2);
 				VKpiWebprofitloss obj2=list_obj.get(list_obj.size()-1);
 				list2.add(RISERATE);
-				list2.add(frm.format(GlobalMethod.division(obj2.getVKw01().doubleValue()-obj1.getVKw01().doubleValue(),obj1.getVKw01().doubleValue())));
-				list2.add(frm.format(GlobalMethod.division(obj2.getVKw02().doubleValue()-obj1.getVKw02().doubleValue(),obj1.getVKw02().doubleValue())));
-				list2.add(frm.format(GlobalMethod.division(obj2.getVKw03().doubleValue()-obj1.getVKw03().doubleValue(),obj1.getVKw03().doubleValue())));
-				list2.add(frm.format(GlobalMethod.division(obj2.getVKw04()-obj1.getVKw04(),obj1.getVKw04())));
-				list2.add(frm.format(GlobalMethod.division(obj2.getVKw05().doubleValue()-obj1.getVKw05().doubleValue(),obj1.getVKw05().doubleValue())));
-				list2.add(frm.format(GlobalMethod.division(obj2.getVKw06().doubleValue()-obj1.getVKw06().doubleValue(),obj1.getVKw06().doubleValue())));
-				list2.add(frm.format(GlobalMethod.division(obj2.getVKw07().doubleValue()-obj1.getVKw07().doubleValue(),obj1.getVKw07().doubleValue())));
-				list2.add(frm.format(GlobalMethod.division(obj2.getVKw08().doubleValue()-obj1.getVKw08().doubleValue(),obj1.getVKw08().doubleValue())));
-				list2.add(frm.format(GlobalMethod.division(obj2.getVKw09().doubleValue()-obj1.getVKw09().doubleValue(),obj1.getVKw09().doubleValue())));
-				list2.add(frm.format(GlobalMethod.division(obj2.getVKw10().doubleValue()-obj1.getVKw10().doubleValue(),obj1.getVKw10().doubleValue())));
-				list2.add(frm.format(GlobalMethod.division(obj2.getVKw11().doubleValue()-obj1.getVKw11().doubleValue(),obj1.getVKw11().doubleValue())));
-				list2.add(frm.format(GlobalMethod.division(obj2.getVKw12().doubleValue()-obj1.getVKw12().doubleValue(),obj1.getVKw12().doubleValue())));
-				list2.add(frm.format(GlobalMethod.division(obj2.getVKw13().doubleValue()-obj1.getVKw13().doubleValue(),obj1.getVKw13().doubleValue())));
-				list2.add(frm.format(GlobalMethod.division(obj2.getVKw14().doubleValue()-obj1.getVKw14().doubleValue(),obj1.getVKw14().doubleValue())));
-				list2.add(frm.format(GlobalMethod.division(obj2.getVKw15().doubleValue()-obj1.getVKw15().doubleValue(),obj1.getVKw15().doubleValue())));
-				list2.add(frm.format(GlobalMethod.division(obj2.getVKw16()-obj1.getVKw16(),obj1.getVKw16())));
-				list2.add(frm.format(GlobalMethod.division(obj2.getVKw17().doubleValue()-obj1.getVKw17().doubleValue(),obj1.getVKw17().doubleValue())));
-				list2.add(frm.format(GlobalMethod.division(obj2.getVKw18().doubleValue()-obj1.getVKw18().doubleValue(),obj1.getVKw18().doubleValue())));
-				list2.add(frm.format(GlobalMethod.division(obj2.getVKw19().doubleValue()-obj1.getVKw19().doubleValue(),obj1.getVKw19().doubleValue())));
-				list2.add(frm.format(GlobalMethod.division(obj2.getVKw20().doubleValue()-obj1.getVKw20().doubleValue(),obj1.getVKw20().doubleValue())));
-				list2.add(frm.format(GlobalMethod.division(obj2.getVKw21().doubleValue()-obj1.getVKw21().doubleValue(),obj1.getVKw21().doubleValue())));
-				list2.add(frm.format(GlobalMethod.division(obj2.getVKw22().doubleValue()-obj1.getVKw22().doubleValue(),obj1.getVKw22().doubleValue())));
-				list2.add(frm.format(GlobalMethod.division(obj2.getVKw23().doubleValue()-obj1.getVKw23().doubleValue(),obj1.getVKw23().doubleValue())));
-				list2.add(frm.format(GlobalMethod.division(obj2.getVKw24().doubleValue()-obj1.getVKw24().doubleValue(),obj1.getVKw24().doubleValue())));
+				list2.add(this.isMyNull(frm,obj2.getVKw01().doubleValue(),obj1.getVKw01().doubleValue(),obj1.getVKw01().doubleValue()));
+				list2.add(this.isMyNull(frm,obj2.getVKw02().doubleValue(),obj1.getVKw02().doubleValue(),obj1.getVKw02().doubleValue()));
+				list2.add(this.isMyNull(frm,obj2.getVKw03().doubleValue(),obj1.getVKw03().doubleValue(),obj1.getVKw03().doubleValue()));
+				list2.add(this.isMyNull(frm,obj2.getVKw04(),obj1.getVKw04(),obj1.getVKw04()));
+				list2.add(this.isMyNull(frm,obj2.getVKw05().doubleValue(),obj1.getVKw05().doubleValue(),obj1.getVKw05().doubleValue()));
+				list2.add(this.isMyNull(frm,obj2.getVKw06().doubleValue(),obj1.getVKw06().doubleValue(),obj1.getVKw06().doubleValue()));
+				list2.add(this.isMyNull(frm,obj2.getVKw07().doubleValue(),obj1.getVKw07().doubleValue(),obj1.getVKw07().doubleValue()));
+				list2.add(this.isMyNull(frm,obj2.getVKw08().doubleValue(),obj1.getVKw08().doubleValue(),obj1.getVKw08().doubleValue()));
+				list2.add(this.isMyNull(frm,obj2.getVKw09().doubleValue(),obj1.getVKw09().doubleValue(),obj1.getVKw09().doubleValue()));
+				list2.add(this.isMyNull(frm,obj2.getVKw10().doubleValue(),obj1.getVKw10().doubleValue(),obj1.getVKw10().doubleValue()));
+				list2.add(this.isMyNull(frm,obj2.getVKw11().doubleValue(),obj1.getVKw11().doubleValue(),obj1.getVKw11().doubleValue()));
+				list2.add(this.isMyNull(frm,obj2.getVKw12().doubleValue(),obj1.getVKw12().doubleValue(),obj1.getVKw12().doubleValue()));
+				list2.add(this.isMyNull(frm,obj2.getVKw13().doubleValue(),obj1.getVKw13().doubleValue(),obj1.getVKw13().doubleValue()));
+				list2.add(this.isMyNull(frm,obj2.getVKw14().doubleValue(),obj1.getVKw14().doubleValue(),obj1.getVKw14().doubleValue()));
+				list2.add(this.isMyNull(frm,obj2.getVKw15().doubleValue(),obj1.getVKw15().doubleValue(),obj1.getVKw15().doubleValue()));
+				list2.add(this.isMyNull(frm,obj2.getVKw16(),obj1.getVKw16(),obj1.getVKw16()));
+				list2.add(this.isMyNull(frm,obj2.getVKw17().doubleValue(),obj1.getVKw17().doubleValue(),obj1.getVKw17().doubleValue()));
+				list2.add(this.isMyNull(frm,obj2.getVKw18().doubleValue(),obj1.getVKw18().doubleValue(),obj1.getVKw18().doubleValue()));
+				list2.add(this.isMyNull(frm,obj2.getVKw19().doubleValue(),obj1.getVKw19().doubleValue(),obj1.getVKw19().doubleValue()));
+				list2.add(this.isMyNull(frm,obj2.getVKw20().doubleValue(),obj1.getVKw20().doubleValue(),obj1.getVKw20().doubleValue()));
+				list2.add(this.isMyNull(frm,obj2.getVKw21().doubleValue(),obj1.getVKw21().doubleValue(),obj1.getVKw21().doubleValue()));
+				list2.add(this.isMyNull(frm,obj2.getVKw22().doubleValue(),obj1.getVKw22().doubleValue(),obj1.getVKw22().doubleValue()));
+				list2.add(this.isMyNull(frm,obj2.getVKw23().doubleValue(),obj1.getVKw23().doubleValue(),obj1.getVKw23().doubleValue()));
+				list2.add(this.isMyNull(frm,obj2.getVKw24().doubleValue(),obj1.getVKw24().doubleValue(),obj1.getVKw24().doubleValue()));
 				result.add(list2);
 			}						
 		}
@@ -545,9 +550,25 @@ public class VKpiWebprofitlossAction extends ActionSupport implements ServletRes
 			for(int i=0;i<list_result_sort.size();i++){
 				List<Double>list=list_result_sort.get(i);
 				List<Double>list2=list_result.get(i);
-				Collections.sort(list);
-				list2.add(list.get(2));
-				list2.add(list.get(list.size()-3));
+				//Collections.sort(list);
+				GlobalMethod.removeSameDouble(list);
+				for(int j=0;j<list.size();j++){
+					if(list.get(j).equals(DB1)){
+						list.remove(j);
+					}
+				}
+				/*if(list.size()>0&&list.size()<3){
+					list2.add(list.get(0));
+					list2.add(list.get(list.size()-1));
+				}*/
+				if(list.size()>3){
+					list2.add(list.get(2));
+					list2.add(list.get(list.size()-3));
+				}
+				if(list.size()<=3){
+					list2.add(DB1);list2.add(DB1);
+				}
+				
 			}
 			for(List<Double>list:list_result){
 				for(int i=0;i<list.size();i++){
@@ -557,5 +578,38 @@ public class VKpiWebprofitlossAction extends ActionSupport implements ServletRes
 			}
 		return list_result;
 	}
+	
+	
+	/**
+	 * 判斷是否無數據
+	 * @return
+	 */
+	public String isMyNull(String str){
+		if(str.equals(STR_BIG)||str.equals(STR_LONG)||str.equals(STR_DB)){
+			str="無";
+		}
+		return str;
+	}
+	
+	
+	/**
+	 * 判斷漲福是否無數據
+	 * @param frm
+	 * @param d1
+	 * @param d2
+	 * @param d3
+	 * @return
+	 */
+	public String isMyNull(DecimalFormat frm,Double d1,Double d2,Double d3){
+		String result=null;
+		if(d1.equals(DB1)||d2.equals(DB1)||d3.equals(DB1)){
+			result="無";
+		}else{
+			result=frm.format(GlobalMethod.division(d1-d2, d3));
+		}
+		return result;
+	}
+	
+	
 	
 }
