@@ -112,6 +112,7 @@ public class Weballobj implements java.io.Serializable {
 	private Double objA200;
 	private Double objA201;
 	private Double objA202;
+	private Double objA203;
 	private String username;
 	private String usernameUd;
 	private String createDate;
@@ -154,7 +155,7 @@ public class Weballobj implements java.io.Serializable {
 			Double objA190, Double objA191, Double objA192, Double objA193,
 			Double objA194, Double objA195, Double objA196, Double objA197,
 			Double objA198, Double objA199, Double objA200, Double objA201,
-			Double objA202) {
+			Double objA202,Double objA203) {
 		this.id = id;
 		this.objA100 = objA100;
 		this.objA101 = objA101;
@@ -259,6 +260,7 @@ public class Weballobj implements java.io.Serializable {
 		this.objA200 = objA200;
 		this.objA201 = objA201;
 		this.objA202 = objA202;
+		this.objA203 = objA203;
 	}
 
 	// Property accessors
@@ -1097,6 +1099,16 @@ public class Weballobj implements java.io.Serializable {
 
 	public void setObjA202(Double objA202) {
 		this.objA202 = objA202;
+	}
+	
+	
+
+	public Double getObjA203(){
+		return objA203;
+	}
+
+	public void setObjA203(Double objA203){
+		this.objA203=objA203;
 	}
 
 	public String getUsername() {

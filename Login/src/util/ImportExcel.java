@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.io.FilenameUtils;
+import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -323,11 +324,18 @@ public class ImportExcel {
 		  Map<String ,Object>map=new HashMap<String,Object>();
 		  int sheets=wb.getNumberOfSheets();//獲取所有的sheet
 		  FormulaEvaluator eval=wb.getCreationHelper().createFormulaEvaluator();
-		  for(int i=0;i<sheets;i++){//for a
+		  for(int i=0;i<sheets;i++){//for a			  
 			  int headrow=wb.getSheetAt(i).getFirstRowNum()+1;//排除標題
-			  int lastrow=wb.getSheetAt(i).getLastRowNum();			  			  
-			  int firstcol=wb.getSheetAt(i).getRow(headrow).getFirstCellNum();//排隊序號列
-			  int lastcol=wb.getSheetAt(i).getRow(headrow).getLastCellNum();
+			  int lastrow=wb.getSheetAt(i).getLastRowNum();	
+			  
+			  int temp=0;
+			  Row row=wb.getSheetAt(i).getRow(headrow);
+			  while(row==null){
+				  temp++;
+				  row=wb.getSheetAt(i).getRow(headrow+temp);
+			  }
+			  int firstcol=row.getFirstCellNum();//排隊序號列
+			  int lastcol=row.getLastCellNum();
 			  List<String>list=new ArrayList<String>();
 			  for(int j=headrow;j<=lastrow;j++){//for b				  
 				  if(wb.getSheetAt(i).getRow(j)==null){

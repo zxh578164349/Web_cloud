@@ -234,13 +234,19 @@ public class WebFactServicesImpl implements IWebFactServices {
 
 	/**
 	 * 日期:2016/5/5
-	 * 描述:
+	 * 描述:無序
 	 */
-	
-	
 	public List<String> findByFactNo_showA(String factNo) {
 		// TODO Auto-generated method stub
 		return webFactDao.findByFactNo_showA(factNo);
+	}
+	
+	/**
+	 * 日期:2016/5/5
+	 * 描述:有序
+	 */
+	public List<Object[]> findByFactNo_showA_order(String factNo){
+		return webFactDao.findByFactNo_showA_order(factNo);
 	}
 
 	/**

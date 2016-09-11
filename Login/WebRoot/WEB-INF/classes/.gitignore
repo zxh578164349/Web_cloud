@@ -1,4 +1,14 @@
+/entity
 /action
 /dao
 /email
+<<<<<<< HEAD
 /entity
+=======
+/entity_temp
+/mail
+/override
+/quartz
+/services
+/util
+>>>>>>> refs/remotes/origin/company_push
