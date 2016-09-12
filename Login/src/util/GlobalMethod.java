@@ -1374,10 +1374,24 @@ public class GlobalMethod extends HibernateDaoSupport{
 			 }
 			 sb.append((char)('`'+k));
 		 }
-		 return sb.toString();
-		 
-		 
-		 
+		 return sb.toString();		 		 		 
+	 }
+	 
+	 /**
+	  * 移除相同元素並排序
+	  * @param list
+	  * @return
+	  */
+	 public static List<Double> removeSameDouble(List<Double>list){
+		 for(int i=0;i<list.size();i++){
+			 for(int j=list.size()-1;j>i;j--){
+				 if(list.get(j).equals(list.get(i))){
+					 list.remove(j);
+				 }
+			 }
+		 }
+		 Collections.sort(list);
+		 return list;
 	 }
 	 
 	 public static void main(String[] args) throws ParseException, FileNotFoundException, ScriptException, NoSuchMethodException {
@@ -1478,12 +1492,19 @@ public class GlobalMethod extends HibernateDaoSupport{
 			}*/
 			//System.out.println(randomString(-229985452)+" "+randomString(-147909649));
 			List<Double>tt=new ArrayList<Double>();
-			tt.add(22.1);tt.add(11.3);tt.add(66.2);tt.add(2.3);tt.add(10.5);
+			tt.add(22.1);tt.add(11.3);tt.add(22.1);tt.add(66.2);tt.add(2.3);tt.add(10.5);tt.add(22.1);
 			System.out.println(tt);
 			tt.add(1.111);
 			System.out.println(tt);
-			Collections.sort(tt);
-			System.out.print(tt);
+			//Collections.sort(tt);
+			List<Double>tt2=new ArrayList<Double>();
+			for(int i=0;i<tt.size();i++){
+				tt2.add(tt.get(i));
+			}
+			removeSameDouble(tt2);
+			System.out.print(tt2);
+			Long jj=999999L;
+			System.out.println(jj.doubleValue());
 			
 			
 			

@@ -11,30 +11,30 @@ public class VKpiWebprofitloss implements java.io.Serializable{
 	// Fields
 
 	private VKpiWebprofitlossId id;
-	private BigDecimal VKw01=new BigDecimal(0.0);
-	private BigDecimal VKw02=new BigDecimal(0.0);
-	private BigDecimal VKw03=new BigDecimal(0.0);
-	private Double VKw04=0.0;
-	private BigDecimal VKw05=new BigDecimal(0.0);
-	private Long VKw06=0L;
-	private Long VKw07=0L;
-	private BigDecimal VKw08=new BigDecimal(0.0);
-	private BigDecimal VKw09=new BigDecimal(0.0);
-	private BigDecimal VKw10=new BigDecimal(0.0);
-	private BigDecimal VKw11=new BigDecimal(0.0);
-	private BigDecimal VKw12=new BigDecimal(0.0);
-	private BigDecimal VKw13=new BigDecimal(0.0);
-	private BigDecimal VKw14=new BigDecimal(0.0);
-	private BigDecimal VKw15=new BigDecimal(0.0);
-	private Double VKw16=0.0;
-	private BigDecimal VKw17=new BigDecimal(0.0);
-	private BigDecimal VKw18=new BigDecimal(0.0);
-	private BigDecimal VKw19=new BigDecimal(0.0);
-	private BigDecimal VKw20=new BigDecimal(0.0);
-	private BigDecimal VKw21=new BigDecimal(0.0);
-	private BigDecimal VKw22=new BigDecimal(0.0);
-	private BigDecimal VKw23=new BigDecimal(0.0);
-	private BigDecimal VKw24=new BigDecimal(0.0);
+	private BigDecimal VKw01=new BigDecimal(-999999.0);
+	private BigDecimal VKw02=new BigDecimal(-999999.0);
+	private BigDecimal VKw03=new BigDecimal(-999999.0);
+	private Double VKw04=-999999.0;
+	private BigDecimal VKw05=new BigDecimal(-999999.0);
+	private Long VKw06=-999999L;
+	private Long VKw07=-999999L;
+	private BigDecimal VKw08=new BigDecimal(-999999.0);
+	private BigDecimal VKw09=new BigDecimal(-999999.0);
+	private BigDecimal VKw10=new BigDecimal(-999999.0);
+	private BigDecimal VKw11=new BigDecimal(-999999.0);
+	private BigDecimal VKw12=new BigDecimal(-999999.0);
+	private BigDecimal VKw13=new BigDecimal(-999999.0);
+	private BigDecimal VKw14=new BigDecimal(-999999.0);
+	private BigDecimal VKw15=new BigDecimal(-999999.0);
+	private Double VKw16=-999999.0;
+	private BigDecimal VKw17=new BigDecimal(-999999.0);
+	private BigDecimal VKw18=new BigDecimal(-999999.0);
+	private BigDecimal VKw19=new BigDecimal(-999999.0);
+	private BigDecimal VKw20=new BigDecimal(-999999.0);
+	private BigDecimal VKw21=new BigDecimal(-999999.0);
+	private BigDecimal VKw22=new BigDecimal(-999999.0);
+	private BigDecimal VKw23=new BigDecimal(-999999.0);
+	private BigDecimal VKw24=new BigDecimal(-999999.0);
 
 	// Constructors
 
