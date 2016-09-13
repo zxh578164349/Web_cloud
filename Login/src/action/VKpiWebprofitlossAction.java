@@ -19,6 +19,7 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.poi.ss.util.CellRangeAddress;
+import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -198,7 +199,8 @@ public class VKpiWebprofitlossAction extends ActionSupport implements ServletRes
 						
 		List<List<Double>>list_doubles=this.packageToListDouble(map).get(0);
 		List<List<Double>>list_doubles_sort=this.packageToListDouble(map).get(1);
-		for(int i=0;i<list_doubles.size();i++){
+		List<XSSFCellStyle>list_styles=new ArrayList<XSSFCellStyle>();
+		for(int i=0;i<list_doubles.size();i++){			
 			List<Double>list_double=list_doubles.get(i);
 			List<Double>list_double_sort=list_doubles_sort.get(i);
 			if(i==0){
@@ -207,14 +209,15 @@ public class VKpiWebprofitlossAction extends ActionSupport implements ServletRes
 					sheet2.getRow(2+i).getCell(3+j).setCellStyle(cs_head);
 				}*/
 			}else{
+				this.isRedOrGreen(i,list_styles,cs_red_bg,cs_green_bg);
 				for(int j=0;j<list_double.size()-2;j++){
 					//sheet2.getRow(2+i).getCell(3+j).setCellValue(list_double.get(j));
 					if(list_double_sort.size()>3&&list_double.get(j)<=list_double.get(list_double.size()-2)&&!list_double.get(j).equals(DB1)){
-						//sheet2.getRow(2+i).getCell(3+j).setCellStyle(cs_red_bg);
-						sheet.getRow(2+i).getCell(3+j).setCellStyle(cs_red_bg);
+						//sheet2.getRow(2+i).getCell(3+j).setCellStyle(temp);
+						sheet.getRow(2+i).getCell(3+j).setCellStyle(list_styles.get(0));
 					}else if(list_double_sort.size()>3&&list_double.get(j)>=list_double.get(list_double.size()-1)&&!list_double.get(j).equals(DB1)){
-						//sheet2.getRow(2+i).getCell(3+j).setCellStyle(cs_green_bg);
-						sheet.getRow(2+i).getCell(3+j).setCellStyle(cs_green_bg);
+						//sheet2.getRow(2+i).getCell(3+j).setCellStyle(temp);
+						sheet.getRow(2+i).getCell(3+j).setCellStyle(list_styles.get(1));
 					}else{
 						//sheet2.getRow(2+i).getCell(3+j).setCellStyle(cs);
 						sheet.getRow(2+i).getCell(3+j).setCellStyle(cs);
@@ -359,33 +362,42 @@ public class VKpiWebprofitlossAction extends ActionSupport implements ServletRes
 	}
 	
 	
-	
+	/**
+	 * 
+	 * @Title: findItems
+	 * @Description: __0:正序    __1:反序
+	 * @param @return
+	 * @return List<String>
+	 * @throws
+	 * @author web
+	 * @date 2016/9/13
+	 */
 	public List<String>findItems(){
 		List<String>list=new ArrayList<String>();
-		list.add("機台利用率__%");//1
-		list.add("實際回轉數__回");
-		list.add("成本率__%");//3
-		list.add("利潤率__%");//4
-		list.add("退貨率__%");//5
-		list.add("直工__人");
-		list.add("間工__人");
-		list.add("全廠總人數__人");
-		list.add("直間比__:");
-		list.add("直工人均產能__模");
-		list.add("全廠人均產能__模");
-		list.add("時產能__模/H");
-		list.add("總損耗__%");//13
-		list.add("平均邊料重__G/雙");
-		list.add("邊料率__%");//15
-		list.add("不良重量__KG");
-		list.add("不良率__%");//17
-		list.add("用水單耗__USD/雙");
-		list.add("用電單耗__USD/雙");
-		list.add("蒸氣單耗__噸/雙");
-		list.add("色料藥品單耗__G/雙");
-		list.add("色料藥品單耗__USD/雙");
-		list.add("加班費__USD");
-		list.add("油壓回收率__%");//24
+		list.add("機台利用率__%__0");//1
+		list.add("實際回轉數__回__0");
+		list.add("成本率__%__0");//3
+		list.add("利潤率__%__0");//4
+		list.add("退貨率__%__0");//5
+		list.add("直工__人__0");
+		list.add("間工__人__0");
+		list.add("全廠總人數__人__0");
+		list.add("直間比__:__0");
+		list.add("直工人均產能__模__0");
+		list.add("全廠人均產能__模__0");
+		list.add("時產能__模/H__0");
+		list.add("總損耗__%__0");//13
+		list.add("平均邊料重__G/雙__0");
+		list.add("邊料率__%__0");//15
+		list.add("不良重量__KG__0");
+		list.add("不良率__%__0");//17
+		list.add("用水單耗__USD/雙__0");
+		list.add("用電單耗__USD/雙__0");
+		list.add("蒸氣單耗__噸/雙__0");
+		list.add("色料藥品單耗__G/雙__0");
+		list.add("色料藥品單耗__USD/雙__0");
+		list.add("加班費__USD__0");
+		list.add("油壓回收率__%__0");//24
 		return list;
 		
 	}
@@ -615,6 +627,39 @@ public class VKpiWebprofitlossAction extends ActionSupport implements ServletRes
 		}
 		return list_result;
 		
+	}
+	
+	/**
+	 * 判斷正序  反序
+	 * @Title: isRedOrGreen
+	 * @Description: 
+	 * @param @param row
+	 * @param @param cs_red
+	 * @param @param cs_green
+	 * @param @return
+	 * @return XSSFCellStyle
+	 * @throws
+	 * @author web
+	 * @date 2016/9/13
+	 */
+	public List<XSSFCellStyle> isRedOrGreen(int row,List<XSSFCellStyle>list_styles,XSSFCellStyle cs_red_bg,XSSFCellStyle cs_green_bg){
+		list_styles.clear();		
+		List<String>list=new ArrayList<String>();
+		list.add("factno__factno__factno");//1
+		List<String>list_items=this.findItems();
+		for(String item:list_items){
+			list.add(item);
+		}				
+		if(list.get(row).split("__")[2].equals("0")){//0:正序    1:反序
+			list_styles.add(cs_red_bg);
+			list_styles.add(cs_green_bg);
+		}
+		if(list.get(row).split("__")[2].equals("1")){//反序時，紅  綠樣式交換
+			list_styles.add(cs_green_bg);
+			list_styles.add(cs_red_bg);
+		}
+		
+		return list_styles;
 	}
 	
 	
