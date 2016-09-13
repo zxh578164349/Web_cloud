@@ -1491,12 +1491,11 @@ public class GlobalMethod extends HibernateDaoSupport{
 				System.out.println(Season.Summer.ordinal());;
 			}*/
 			//System.out.println(randomString(-229985452)+" "+randomString(-147909649));
-			List<Double>tt=new ArrayList<Double>();
+			/*List<Double>tt=new ArrayList<Double>();
 			tt.add(22.1);tt.add(11.3);tt.add(22.1);tt.add(66.2);tt.add(2.3);tt.add(10.5);tt.add(22.1);
 			System.out.println(tt);
 			tt.add(1.111);
 			System.out.println(tt);
-			//Collections.sort(tt);
 			List<Double>tt2=new ArrayList<Double>();
 			for(int i=0;i<tt.size();i++){
 				tt2.add(tt.get(i));
@@ -1504,12 +1503,51 @@ public class GlobalMethod extends HibernateDaoSupport{
 			removeSameDouble(tt2);
 			System.out.print(tt2);
 			Long jj=999999L;
-			System.out.println(jj.doubleValue());
+			System.out.println(jj.doubleValue());*/
 			
+			List<Double>kk=maopaoList();
+			for(Double d:kk){
+				System.out.print("---"+d);
+			}
 			
 			
 						
 		}
+	 
+	 public static List<Double> maopaoList(){
+		 List<Double>list=new ArrayList<Double>();
+		 list.add(1.11);list.add(2.22);list.add(3.33);list.add(4.44);list.add(0.1);list.add(0.3);list.add(1.5);		 
+		for(int i=0;i<list.size();i++){
+			 for(int j=list.size()-1;j>i;j--){
+				 Double a=list.get(i);Double b=list.get(j); 
+				 if(list.get(i)>list.get(j)){
+					 list.remove(i);list.add(i,b);
+					 list.remove(j);list.add(j,a);
+				 }
+				 
+			 }
+		 }
+		 return list;
+	 }
+	 
+	 /**
+	  * 
+	  * @Title: exchangeAToB
+	  * @Description: 兩箇數交換
+	  * @param @param a
+	  * @param @param b
+	  * @return void
+	  * @throws
+	  * @author web
+	  * @date 2016/9/13
+	  */
+	 public static void exchangeAToB(Double a,Double b){
+		 Double temp=a;
+		 a=b;
+		 b=temp;
+		 
+	 }
+	 
 	 enum Season{
 		 Spring("春天"),Summer("夏天"),Autumn("秋天"),Winter("冬天");
 		 private String con;
