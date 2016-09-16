@@ -6,7 +6,7 @@
 -->
 <hibernate-mapping>
     <class name="entity.VKpiWebprofitloss" table="V_KPI_WEBPROFITLOSS" schema="WEB">
-        <composite-id name="id" class="entity.VKpiWebprofitlossId">           
+        <composite-id name="id" class="entity.VKpiWebprofitlossId">
             <key-many-to-one name="fact" class="entity.WebFact">
                  <column name="FACT_NO" length="10"/>
                  <column name="FACT_CODE" length="20"/>
@@ -25,7 +25,7 @@
             <column name="V_KW03" precision="22" scale="0" />
         </property>
         <property name="VKw04" type="java.lang.Double">
-            <column name="V_KW04" precision="13" />
+            <column name="V_KW04" precision="13" scale="1" />
         </property>
         <property name="VKw05" type="java.math.BigDecimal">
             <column name="V_KW05" precision="22" scale="0" />
@@ -60,8 +60,8 @@
         <property name="VKw15" type="java.math.BigDecimal">
             <column name="V_KW15" precision="22" scale="0" />
         </property>
-        <property name="VKw16" type="java.lang.Double">
-            <column name="V_KW16" precision="13" />
+        <property name="VKw16" type="java.math.BigDecimal">
+            <column name="V_KW16" precision="22" scale="0" />
         </property>
         <property name="VKw17" type="java.math.BigDecimal">
             <column name="V_KW17" precision="22" scale="0" />
@@ -69,8 +69,8 @@
         <property name="VKw18" type="java.math.BigDecimal">
             <column name="V_KW18" precision="22" scale="0" />
         </property>
-        <property name="VKw19" type="java.math.BigDecimal">
-            <column name="V_KW19" precision="22" scale="0" />
+        <property name="VKw19" type="java.lang.Double">
+            <column name="V_KW19" precision="13" />
         </property>
         <property name="VKw20" type="java.math.BigDecimal">
             <column name="V_KW20" precision="22" scale="0" />
@@ -78,14 +78,23 @@
         <property name="VKw21" type="java.math.BigDecimal">
             <column name="V_KW21" precision="22" scale="0" />
         </property>
-        <property name="VKw22" type="java.math.BigDecimal">
-            <column name="V_KW22" precision="22" scale="0" />
+        <property name="VKw22" type="java.lang.Double">
+            <column name="V_KW22" precision="13" scale="1" />
         </property>
         <property name="VKw23" type="java.math.BigDecimal">
             <column name="V_KW23" precision="22" scale="0" />
         </property>
         <property name="VKw24" type="java.math.BigDecimal">
             <column name="V_KW24" precision="22" scale="0" />
+        </property>
+        <property name="VKw25" type="java.math.BigDecimal">
+            <column name="V_KW25" precision="22" scale="0" />
+        </property>
+        <property name="VKw26" type="java.math.BigDecimal">
+            <column name="V_KW26" precision="22" scale="0" />
+        </property>
+        <property name="VKw27" type="java.math.BigDecimal">
+            <column name="V_KW27" precision="22" scale="0" />
         </property>
     </class>
 </hibernate-mapping>

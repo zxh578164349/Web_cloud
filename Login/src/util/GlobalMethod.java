@@ -663,6 +663,14 @@ public class GlobalMethod extends HibernateDaoSupport{
 		 * 報表相關樣式
 		 */
 		Map<String,Object>map=new HashMap<String,Object>();
+		
+		//斜體
+		XSSFFont font_itatic=wb.createFont();
+		font_itatic.setItalic(true);
+		
+		XSSFCellStyle cs_itatic=wb.createCellStyle();
+		cs_itatic.setFont(font_itatic);
+		map.put("cs_itatic",cs_itatic);
 		//標題樣式
 		XSSFCellStyle cs_title=wb.createCellStyle();
 		XSSFFont font_title=wb.createFont();
@@ -724,16 +732,16 @@ public class GlobalMethod extends HibernateDaoSupport{
 		cs_red_bg.setFillPattern(XSSFCellStyle.SOLID_FOREGROUND);
 		map.put("cs_red_bg", cs_red_bg);
 		
-		XSSFCellStyle cs_green_bg=wb.createCellStyle();		
-		cs_green_bg.setAlignment(XSSFCellStyle.ALIGN_CENTER);
-		cs_green_bg.setVerticalAlignment(XSSFCellStyle.VERTICAL_CENTER);
-		cs_green_bg.setBorderTop(XSSFCellStyle.BORDER_THIN);
-		cs_green_bg.setBorderRight(XSSFCellStyle.BORDER_THIN);
-		cs_green_bg.setBorderBottom(XSSFCellStyle.BORDER_THIN);
-		cs_green_bg.setBorderLeft(XSSFCellStyle.BORDER_THIN);
-		cs_green_bg.setFillForegroundColor(IndexedColors.GREEN.getIndex());
-		cs_green_bg.setFillPattern(XSSFCellStyle.SOLID_FOREGROUND);
-		map.put("cs_green_bg", cs_green_bg);
+		XSSFCellStyle cs_lblue_bg=wb.createCellStyle();		
+		cs_lblue_bg.setAlignment(XSSFCellStyle.ALIGN_CENTER);
+		cs_lblue_bg.setVerticalAlignment(XSSFCellStyle.VERTICAL_CENTER);
+		cs_lblue_bg.setBorderTop(XSSFCellStyle.BORDER_THIN);
+		cs_lblue_bg.setBorderRight(XSSFCellStyle.BORDER_THIN);
+		cs_lblue_bg.setBorderBottom(XSSFCellStyle.BORDER_THIN);
+		cs_lblue_bg.setBorderLeft(XSSFCellStyle.BORDER_THIN);
+		cs_lblue_bg.setFillForegroundColor(IndexedColors.SKY_BLUE.getIndex());
+		cs_lblue_bg.setFillPattern(XSSFCellStyle.SOLID_FOREGROUND);
+		map.put("cs_lblue_bg", cs_lblue_bg);
 		
 		
 		//紅色加粗字體
