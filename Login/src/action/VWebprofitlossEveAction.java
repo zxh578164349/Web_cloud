@@ -895,8 +895,8 @@ public class VWebprofitlossEveAction implements ServletResponseAware{
 	 */
 	public void init(HSSFWorkbook wb,Map<String,Object>map_data,Map<String,Object>map_cs,List<String>list_head,Map<String,Object>map_head){		
 		Map<String,Object>map=findItems();//左三列
+		HSSFCellStyle cs_title=(HSSFCellStyle)map_cs.get("cs_title");
 		HSSFCellStyle cs_head=(HSSFCellStyle)map_cs.get("cs_head");
-		HSSFCellStyle cs_column=(HSSFCellStyle)map_cs.get("cs_column");
 		HSSFCellStyle cs_bold=(HSSFCellStyle)map_cs.get("cs_bold");
 				
 		//注意：初始行：150，初始列：30;項目有擴展時，要在這裏擴展行與列
@@ -924,7 +924,7 @@ public class VWebprofitlossEveAction implements ServletResponseAware{
 			}
 			
 			for(int a=0;a<11;a++){
-				sheet.getRow(0).getCell(a).setCellStyle(cs_head);
+				sheet.getRow(0).getCell(a).setCellStyle(cs_title);
 			}
 			//廠別狀態
 			sheet.getRow(2).getCell(0).setCellValue(factcode);
@@ -936,7 +936,7 @@ public class VWebprofitlossEveAction implements ServletResponseAware{
 			/*************臺灣的表頭根據factcode動態變化的*************/
 			for(int a=0;a<list_head.size();a++){
 				sheet.getRow(3).getCell(a).setCellValue(list_head.get(a));
-				sheet.getRow(3).getCell(a).setCellStyle(cs_column);
+				sheet.getRow(3).getCell(a).setCellStyle(cs_head);
 			}
 			//項目,細項，單位
 			int idx=4;
