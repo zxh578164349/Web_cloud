@@ -11,30 +11,33 @@ public class VKpiWebprofitloss implements java.io.Serializable{
 	// Fields
 
 	private VKpiWebprofitlossId id;
-	private BigDecimal VKw01=new BigDecimal(0.0);
-	private BigDecimal VKw02=new BigDecimal(0.0);
-	private BigDecimal VKw03=new BigDecimal(0.0);
-	private Double VKw04=0.0;
-	private BigDecimal VKw05=new BigDecimal(0.0);
-	private Long VKw06=0L;
-	private Long VKw07=0L;
-	private BigDecimal VKw08=new BigDecimal(0.0);
-	private BigDecimal VKw09=new BigDecimal(0.0);
-	private BigDecimal VKw10=new BigDecimal(0.0);
-	private BigDecimal VKw11=new BigDecimal(0.0);
-	private BigDecimal VKw12=new BigDecimal(0.0);
-	private BigDecimal VKw13=new BigDecimal(0.0);
-	private BigDecimal VKw14=new BigDecimal(0.0);
-	private BigDecimal VKw15=new BigDecimal(0.0);
-	private Double VKw16=0.0;
-	private BigDecimal VKw17=new BigDecimal(0.0);
-	private BigDecimal VKw18=new BigDecimal(0.0);
-	private BigDecimal VKw19=new BigDecimal(0.0);
-	private BigDecimal VKw20=new BigDecimal(0.0);
-	private BigDecimal VKw21=new BigDecimal(0.0);
-	private BigDecimal VKw22=new BigDecimal(0.0);
-	private BigDecimal VKw23=new BigDecimal(0.0);
-	private BigDecimal VKw24=new BigDecimal(0.0);
+	private BigDecimal VKw01=new BigDecimal(-999999.0);
+	private BigDecimal VKw02=new BigDecimal(-999999.0);
+	private BigDecimal VKw03=new BigDecimal(-999999.0);
+	private Double VKw04=-999999.0;
+	private BigDecimal VKw05=new BigDecimal(-999999.0);
+	private Long VKw06=-999999L;;
+	private Long VKw07=-999999L;;
+	private BigDecimal VKw08=new BigDecimal(-999999.0);
+	private BigDecimal VKw09=new BigDecimal(-999999.0);
+	private BigDecimal VKw10=new BigDecimal(-999999.0);
+	private BigDecimal VKw11=new BigDecimal(-999999.0);
+	private BigDecimal VKw12=new BigDecimal(-999999.0);
+	private BigDecimal VKw13=new BigDecimal(-999999.0);
+	private BigDecimal VKw14=new BigDecimal(-999999.0);
+	private BigDecimal VKw15=new BigDecimal(-999999.0);
+	private BigDecimal VKw16=new BigDecimal(-999999.0);
+	private BigDecimal VKw17=new BigDecimal(-999999.0);
+	private BigDecimal VKw18=new BigDecimal(-999999.0);
+	private Double VKw19=-999999.0;
+	private BigDecimal VKw20=new BigDecimal(-999999.0);
+	private BigDecimal VKw21=new BigDecimal(-999999.0);
+	private Double VKw22=-999999.0;
+	private BigDecimal VKw23=new BigDecimal(-999999.0);
+	private BigDecimal VKw24=new BigDecimal(-999999.0);
+	private BigDecimal VKw25=new BigDecimal(-999999.0);
+	private BigDecimal VKw26=new BigDecimal(-999999.0);
+	private BigDecimal VKw27=new BigDecimal(-999999.0);
 
 	// Constructors
 
@@ -50,7 +53,8 @@ public class VKpiWebprofitloss implements java.io.Serializable{
 	/** full constructor */
 	public VKpiWebprofitloss(VKpiWebprofitlossId id,BigDecimal VKw01,BigDecimal VKw02,BigDecimal VKw03,Double VKw04,BigDecimal VKw05,Long VKw06,Long VKw07,
 			BigDecimal VKw08,BigDecimal VKw09,BigDecimal VKw10,BigDecimal VKw11,BigDecimal VKw12,BigDecimal VKw13,BigDecimal VKw14,BigDecimal VKw15,
-			Double VKw16,BigDecimal VKw17,BigDecimal VKw18,BigDecimal VKw19,BigDecimal VKw20,BigDecimal VKw21,BigDecimal VKw22,BigDecimal VKw23,BigDecimal VKw24){
+			BigDecimal VKw16,BigDecimal VKw17,BigDecimal VKw18,Double VKw19,BigDecimal VKw20,BigDecimal VKw21,Double VKw22,BigDecimal VKw23,BigDecimal VKw24,
+			BigDecimal VKw25,BigDecimal VKw26,BigDecimal VKw27){
 		this.id=id;
 		this.VKw01=VKw01;
 		this.VKw02=VKw02;
@@ -76,6 +80,9 @@ public class VKpiWebprofitloss implements java.io.Serializable{
 		this.VKw22=VKw22;
 		this.VKw23=VKw23;
 		this.VKw24=VKw24;
+		this.VKw25=VKw25;
+		this.VKw26=VKw26;
+		this.VKw27=VKw27;
 	}
 
 	// Property accessors
@@ -208,11 +215,11 @@ public class VKpiWebprofitloss implements java.io.Serializable{
 		this.VKw15=VKw15;
 	}
 
-	public Double getVKw16(){
+	public BigDecimal getVKw16(){
 		return this.VKw16;
 	}
 
-	public void setVKw16(Double VKw16){
+	public void setVKw16(BigDecimal VKw16){
 		this.VKw16=VKw16;
 	}
 
@@ -232,11 +239,11 @@ public class VKpiWebprofitloss implements java.io.Serializable{
 		this.VKw18=VKw18;
 	}
 
-	public BigDecimal getVKw19(){
+	public Double getVKw19(){
 		return this.VKw19;
 	}
 
-	public void setVKw19(BigDecimal VKw19){
+	public void setVKw19(Double VKw19){
 		this.VKw19=VKw19;
 	}
 
@@ -256,11 +263,11 @@ public class VKpiWebprofitloss implements java.io.Serializable{
 		this.VKw21=VKw21;
 	}
 
-	public BigDecimal getVKw22(){
+	public Double getVKw22(){
 		return this.VKw22;
 	}
 
-	public void setVKw22(BigDecimal VKw22){
+	public void setVKw22(Double VKw22){
 		this.VKw22=VKw22;
 	}
 
@@ -278,6 +285,30 @@ public class VKpiWebprofitloss implements java.io.Serializable{
 
 	public void setVKw24(BigDecimal VKw24){
 		this.VKw24=VKw24;
+	}
+
+	public BigDecimal getVKw25(){
+		return this.VKw25;
+	}
+
+	public void setVKw25(BigDecimal VKw25){
+		this.VKw25=VKw25;
+	}
+
+	public BigDecimal getVKw26(){
+		return this.VKw26;
+	}
+
+	public void setVKw26(BigDecimal VKw26){
+		this.VKw26=VKw26;
+	}
+
+	public BigDecimal getVKw27(){
+		return this.VKw27;
+	}
+
+	public void setVKw27(BigDecimal VKw27){
+		this.VKw27=VKw27;
 	}
 
 }

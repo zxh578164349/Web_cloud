@@ -663,6 +663,14 @@ public class GlobalMethod extends HibernateDaoSupport{
 		 * 報表相關樣式
 		 */
 		Map<String,Object>map=new HashMap<String,Object>();
+		
+		//斜體
+		XSSFFont font_itatic=wb.createFont();
+		font_itatic.setItalic(true);
+		
+		XSSFCellStyle cs_itatic=wb.createCellStyle();
+		cs_itatic.setFont(font_itatic);
+		map.put("cs_itatic",cs_itatic);
 		//標題樣式
 		XSSFCellStyle cs_title=wb.createCellStyle();
 		XSSFFont font_title=wb.createFont();
@@ -723,6 +731,19 @@ public class GlobalMethod extends HibernateDaoSupport{
 		cs_red_bg.setFillForegroundColor(IndexedColors.RED.getIndex());
 		cs_red_bg.setFillPattern(XSSFCellStyle.SOLID_FOREGROUND);
 		map.put("cs_red_bg", cs_red_bg);
+		
+		XSSFCellStyle cs_lblue_bg=wb.createCellStyle();		
+		cs_lblue_bg.setAlignment(XSSFCellStyle.ALIGN_CENTER);
+		cs_lblue_bg.setVerticalAlignment(XSSFCellStyle.VERTICAL_CENTER);
+		cs_lblue_bg.setBorderTop(XSSFCellStyle.BORDER_THIN);
+		cs_lblue_bg.setBorderRight(XSSFCellStyle.BORDER_THIN);
+		cs_lblue_bg.setBorderBottom(XSSFCellStyle.BORDER_THIN);
+		cs_lblue_bg.setBorderLeft(XSSFCellStyle.BORDER_THIN);
+		cs_lblue_bg.setFillForegroundColor(IndexedColors.SKY_BLUE.getIndex());
+		cs_lblue_bg.setFillPattern(XSSFCellStyle.SOLID_FOREGROUND);
+		map.put("cs_lblue_bg", cs_lblue_bg);
+		
+		
 		
 		XSSFCellStyle cs_green_bg=wb.createCellStyle();		
 		cs_green_bg.setAlignment(XSSFCellStyle.ALIGN_CENTER);
@@ -1374,10 +1395,24 @@ public class GlobalMethod extends HibernateDaoSupport{
 			 }
 			 sb.append((char)('`'+k));
 		 }
-		 return sb.toString();
-		 
-		 
-		 
+		 return sb.toString();		 		 		 
+	 }
+	 
+	 /**
+	  * 移除相同元素並排序
+	  * @param list
+	  * @return
+	  */
+	 public static List<Double> removeSameDouble(List<Double>list){
+		 for(int i=0;i<list.size();i++){
+			 for(int j=list.size()-1;j>i;j--){
+				 if(list.get(j).equals(list.get(i))){
+					 list.remove(j);
+				 }
+			 }
+		 }
+		 Collections.sort(list);
+		 return list;
 	 }
 	 
 	 public static void main(String[] args) throws ParseException, FileNotFoundException, ScriptException, NoSuchMethodException {
@@ -1477,18 +1512,65 @@ public class GlobalMethod extends HibernateDaoSupport{
 				System.out.println(Season.Summer.ordinal());;
 			}*/
 			//System.out.println(randomString(-229985452)+" "+randomString(-147909649));
-			List<Double>tt=new ArrayList<Double>();
-			tt.add(22.1);tt.add(11.3);tt.add(66.2);tt.add(2.3);tt.add(10.5);
+
+			/*List<Double>tt=new ArrayList<Double>();
+			tt.add(22.1);tt.add(11.3);tt.add(22.1);tt.add(66.2);tt.add(2.3);tt.add(10.5);tt.add(22.1);
 			System.out.println(tt);
 			tt.add(1.111);
 			System.out.println(tt);
-			Collections.sort(tt);
-			System.out.print(tt);
+			List<Double>tt2=new ArrayList<Double>();
+			for(int i=0;i<tt.size();i++){
+				tt2.add(tt.get(i));
+			}
+			removeSameDouble(tt2);
+			System.out.print(tt2);
+			Long jj=999999L;
+			System.out.println(jj.doubleValue());*/
+
 			
+			List<Double>kk=maopaoList();
+			for(Double d:kk){
+				System.out.print("---"+d);
+			}
 			
 			
 						
 		}
+	 
+	 public static List<Double> maopaoList(){
+		 List<Double>list=new ArrayList<Double>();
+		 list.add(1.11);list.add(2.22);list.add(3.33);list.add(4.44);list.add(0.1);list.add(0.3);list.add(1.5);		 
+		for(int i=0;i<list.size();i++){
+			 for(int j=list.size()-1;j>i;j--){
+				 Double a=list.get(i);Double b=list.get(j); 
+				 if(list.get(i)>list.get(j)){
+					 list.remove(i);list.add(i,b);
+					 list.remove(j);list.add(j,a);
+				 }
+				 
+			 }
+		 }
+		 return list;
+	 }
+	 
+	 /**
+	  * 
+	  * @Title: exchangeAToB
+	  * @Description: 兩箇數交換
+	  * @param @param a
+	  * @param @param b
+	  * @return void
+	  * @throws
+	  * @author web
+	  * @date 2016/9/13
+	  */
+	 public static void exchangeAToB(Double a,Double b){
+		 Double temp=a;
+		 a=b;
+		 b=temp;
+		 
+	 }
+	 
 	 enum Season{
 		 Spring("春天"),Summer("夏天"),Autumn("秋天"),Winter("冬天");
 		 private String con;

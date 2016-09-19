@@ -142,6 +142,7 @@
 						<th>粗坯用量</th>
 						<th>裁斷回頭料</th>
 						<th>油壓退料</th>
+						<th>利潤率<font style="font-style:italic" color="red">(new)</font></th>
 						<s:if test='#session.loginUser.userread!="1"'>
 							<th>操作</th>
 						</s:if>
@@ -362,6 +363,8 @@
 							<td><s:property value="objA201" />
 							</td>
 							<td><s:property value="objA202" />
+							</td>
+							<td><s:property value="objA203" />
 							</td>
 							<s:if test='#session.loginUser.userread!="1"'>
 								<td>

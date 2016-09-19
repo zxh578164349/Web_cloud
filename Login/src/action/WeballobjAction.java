@@ -323,8 +323,9 @@ public class WeballobjAction  extends ActionSupport implements ServletResponseAw
 					obj.setObjA200(Double.valueOf(list.get(101).split(SEPARATOR)[i]));
 					obj.setObjA201(Double.valueOf(list.get(102).split(SEPARATOR)[i]));
 					obj.setObjA202(Double.valueOf(list.get(103).split(SEPARATOR)[i]));
-					obj.setObjA203(Double.valueOf(list.get(104).split(SEPARATOR)[i]));
-												
+					if(list.size()==105){
+						obj.setObjA203(Double.valueOf(list.get(104).split(SEPARATOR)[i]));
+					}																	
 					obj.setUsername(user.getUsername());
 					obj.setCreateDate(new SimpleDateFormat("yyyyMMdd").format(new Date()));
 					list_b.add(obj);
@@ -528,6 +529,7 @@ public class WeballobjAction  extends ActionSupport implements ServletResponseAw
 						list_b.add(obj.getObjA200());
 						list_b.add(obj.getObjA201());
 						list_b.add(obj.getObjA202());
+						list_b.add(obj.getObjA203());
 						list_a.add(list_b);
 					}				
 				}
@@ -541,7 +543,12 @@ public class WeballobjAction  extends ActionSupport implements ServletResponseAw
 					for(int a=0;a<list_a.size();a++){
 						List<Double>list_b=list_a.get(a);
 						for(int b=0;b<list_b.size();b++){
-							sheet.getRow(3+b).getCell(3+a).setCellValue(list_b.get(b));
+							if(list_b.get(b)==null){
+								sheet.getRow(3+b).getCell(3+a).setCellValue("無");	//利潤率有可能爲null,所以要判斷  obj.getObjA203()      20160916
+							}else{
+								sheet.getRow(3+b).getCell(3+a).setCellValue(list_b.get(b));
+							}
+							
 							sheet.getRow(3+b).getCell(3+a).setCellStyle(this.findStyleByIndex(map_cs, b));
 						}
 					}
@@ -685,6 +692,7 @@ public class WeballobjAction  extends ActionSupport implements ServletResponseAw
 		list.add("200__粗坯用量 __KG");
 		list.add("201__裁斷回頭料__KG");
 		list.add("202__油壓退料__KG");
+		list.add("203__利潤率__--");
 		return list;
 	}
 	
