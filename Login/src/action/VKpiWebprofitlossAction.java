@@ -59,7 +59,7 @@ public class VKpiWebprofitlossAction extends ActionSupport implements ServletRes
 	private List<String>list_factcode;
 	private List<String>list_factno;
 	private final static String RISERATE="漲福比率";
-	private final static int NUM=28;//print_tw  多少箇項目（24+1）
+	private final static int NUM=30;//print_tw  多少箇項目（29+1）
 	private final static String STR_LONG="-999999";
 	private final static String STR_DB="-999999.0";
 	private final static String STR_BIG="-99999900.00%";
@@ -282,7 +282,7 @@ public class VKpiWebprofitlossAction extends ActionSupport implements ServletRes
 		if(factname!=null){
 			sheet.getRow(0).getCell(0).setCellValue("重點指標匯總_"+factname);
 		}else{
-			sheet.getRow(0).getCell(0).setCellValue("各廠重點指標匯總");
+			sheet.getRow(0).getCell(0).setCellValue("各廠重點指標匯總_"+yymm);
 		}
 		
 		for(int i=0;i<4;i++){
@@ -347,7 +347,7 @@ public class VKpiWebprofitlossAction extends ActionSupport implements ServletRes
 	
 	public void init(XSSFSheet sheet,Map<String,Object>map,int mk){
 		sheet.setColumnWidth(1,4500);		
-		for(int i=0;i<31;i++){
+		for(int i=0;i<NUM+2;i++){
 			XSSFRow row=sheet.createRow(i);
 			int index=3;
 			for(String factcode:map.keySet()){
@@ -381,33 +381,7 @@ public class VKpiWebprofitlossAction extends ActionSupport implements ServletRes
 	 * @date 2016/9/13
 	 */
 	public List<String>findItems(){
-		List<String>list=new ArrayList<String>();
-		/*list.add("機台利用率__%__0");//1
-		list.add("實際回轉數__回__0");
-		list.add("成本率__%__0");//3
-		list.add("利潤率__%__0");//4
-		list.add("退貨率__%__0");//5
-		list.add("直工__人__0");
-		list.add("間工__人__0");
-		list.add("全廠總人數__人__0");
-		list.add("直間比__:__0");
-		list.add("直工人均產能__模__0");
-		list.add("全廠人均產能__模__0");
-		list.add("時產能__模/H__0");
-		list.add("總損耗__%__0");//13
-		list.add("平均邊料重__G/雙__0");
-		list.add("邊料率__%__0");//15
-		list.add("不良重量__KG__0");
-		list.add("不良率__%__0");//17
-		list.add("用水單耗__USD/雙__0");
-		list.add("用電單耗__USD/雙__0");
-		list.add("蒸氣單耗__噸/雙__0");
-		list.add("色料藥品單耗__G/雙__0");
-		list.add("色料藥品單耗__USD/雙__0");
-		list.add("加班費__USD__0");
-		list.add("油壓回收率__%__0");//24
-*/		
-		
+		List<String>list=new ArrayList<String>();						
 		list.add("機臺孔位數__孔__0");
 		list.add("機台利用率__%__0");//2
 		list.add("生產數__模__0");
@@ -420,19 +394,21 @@ public class VKpiWebprofitlossAction extends ActionSupport implements ServletRes
 		list.add("直工人均產能__模__0");
 		list.add("全廠人均產能__模__0");
 		list.add("時產能__雙__0");
+		list.add("時迴轉__模/H__0");
 		list.add("加班費__USD__0");
-		list.add("成本率__%__0");//14
-		list.add("利潤率__%__0");//15
-		list.add("總損耗__%__0");//16
+		list.add("成本率__%__0");//15
+		list.add("利潤率__%__0");//16
+		list.add("總損耗__%__0");//17
 		list.add("平均邊料重__G/雙__0");
-		list.add("邊料率__%__0");//18
+		list.add("邊料率__%__0");//19
 		list.add("不良重量__KG__0");
-		list.add("不良率__%__0");//20
-		list.add("退貨率__%__0");//21
+		list.add("不良率__%__0");//21
+		list.add("退貨率__%__0");//22
 		list.add("成倉庫存__雙__0");
 		list.add("用水單耗__USD/模__0");
 		list.add("用電單耗__USD/模__0");
-		list.add("蒸汽單耗__KG/雙__0");
+		list.add("蒸汽單耗__USD/模__0");
+		list.add("蒸汽單耗__KG/模__0");
 		list.add("色料藥品單耗__G/雙__0");
 		list.add("色料藥品單耗__USD/雙__0");
 
@@ -467,8 +443,12 @@ public class VKpiWebprofitlossAction extends ActionSupport implements ServletRes
 				
 			}else{
 				list.add(obj.getId().getYymm());
-			}			
-			list.add(obj.getVKw01().toString());
+			}
+			List<String>list_str=this.isPercents(obj);
+			for(String str:list_str){
+				list.add(str);
+			}
+			/*list.add(obj.getVKw01().toString());
 			list.add(frm.format(obj.getVKw02()));
 			list.add(obj.getVKw03().toString());			
 			list.add(obj.getVKw04().toString());
@@ -481,20 +461,22 @@ public class VKpiWebprofitlossAction extends ActionSupport implements ServletRes
 			list.add(obj.getVKw11().toString());
 			list.add(obj.getVKw12().toString());
 			list.add(obj.getVKw13().toString());
-			list.add(frm.format(obj.getVKw14()));
+			list.add(obj.getVKw14().toString());
 			list.add(frm.format(obj.getVKw15()));
 			list.add(frm.format(obj.getVKw16()));
-			list.add(obj.getVKw17().toString());
-			list.add(frm.format(obj.getVKw18()));
-			list.add(obj.getVKw19().toString());
-			list.add(frm.format(obj.getVKw20()));
+			list.add(frm.format(obj.getVKw17()));
+			list.add(obj.getVKw18().toString());
+			list.add(frm.format(obj.getVKw19()));
+			list.add(obj.getVKw20().toString());
 			list.add(frm.format(obj.getVKw21()));
-			list.add(obj.getVKw22().toString());
+			list.add(frm.format(obj.getVKw22()));
 			list.add(obj.getVKw23().toString());
 			list.add(obj.getVKw24().toString());
 			list.add(obj.getVKw25().toString());
 			list.add(obj.getVKw26().toString());
 			list.add(obj.getVKw27().toString());
+			list.add(obj.getVKw28().toString());
+			list.add(obj.getVKw29().toString());*/
 			result.add(list);
 			if(list_obj.size()>1&&i==list_obj.size()-1&&mk==1){//漲福比率
 				List<String>list2=new ArrayList<String>();
@@ -513,7 +495,7 @@ public class VKpiWebprofitlossAction extends ActionSupport implements ServletRes
 				list2.add(this.isMyNull(frm,obj2.getVKw10().doubleValue(),obj1.getVKw10().doubleValue(),obj1.getVKw10().doubleValue()));
 				list2.add(this.isMyNull(frm,obj2.getVKw11().doubleValue(),obj1.getVKw11().doubleValue(),obj1.getVKw11().doubleValue()));
 				list2.add(this.isMyNull(frm,obj2.getVKw12().doubleValue(),obj1.getVKw12().doubleValue(),obj1.getVKw12().doubleValue()));
-				list2.add(this.isMyNull(frm,obj2.getVKw13().doubleValue(),obj1.getVKw13().doubleValue(),obj1.getVKw13().doubleValue()));
+				list2.add(this.isMyNull(frm,obj2.getVKw13(),obj1.getVKw13(),obj1.getVKw13()));
 				list2.add(this.isMyNull(frm,obj2.getVKw14().doubleValue(),obj1.getVKw14().doubleValue(),obj1.getVKw14().doubleValue()));
 				list2.add(this.isMyNull(frm,obj2.getVKw15().doubleValue(),obj1.getVKw15().doubleValue(),obj1.getVKw15().doubleValue()));
 				list2.add(this.isMyNull(frm,obj2.getVKw16().doubleValue(),obj1.getVKw16().doubleValue(),obj1.getVKw16().doubleValue()));
@@ -528,6 +510,8 @@ public class VKpiWebprofitlossAction extends ActionSupport implements ServletRes
 				list2.add(this.isMyNull(frm,obj2.getVKw25().doubleValue(),obj1.getVKw25().doubleValue(),obj1.getVKw25().doubleValue()));
 				list2.add(this.isMyNull(frm,obj2.getVKw26().doubleValue(),obj1.getVKw26().doubleValue(),obj1.getVKw26().doubleValue()));
 				list2.add(this.isMyNull(frm,obj2.getVKw27().doubleValue(),obj1.getVKw27().doubleValue(),obj1.getVKw27().doubleValue()));
+				list2.add(this.isMyNull(frm,obj2.getVKw28().doubleValue(),obj1.getVKw28().doubleValue(),obj1.getVKw28().doubleValue()));
+				list2.add(this.isMyNull(frm,obj2.getVKw29().doubleValue(),obj1.getVKw29().doubleValue(),obj1.getVKw29().doubleValue()));
 				result.add(list2);
 			}						
 		}
@@ -560,7 +544,7 @@ public class VKpiWebprofitlossAction extends ActionSupport implements ServletRes
 					list_result.get(10).add(obj.getVKw10().doubleValue());
 					list_result.get(11).add(obj.getVKw11().doubleValue());
 					list_result.get(12).add(obj.getVKw12().doubleValue());
-					list_result.get(13).add(obj.getVKw13().doubleValue());
+					list_result.get(13).add(obj.getVKw13());
 					list_result.get(14).add(obj.getVKw14().doubleValue());
 					list_result.get(15).add(obj.getVKw15().doubleValue());
 					list_result.get(16).add(obj.getVKw16().doubleValue());
@@ -574,7 +558,9 @@ public class VKpiWebprofitlossAction extends ActionSupport implements ServletRes
 					list_result.get(24).add(obj.getVKw24().doubleValue());
 					list_result.get(25).add(obj.getVKw25().doubleValue());
 					list_result.get(26).add(obj.getVKw26().doubleValue());
-					list_result.get(27).add(obj.getVKw27().doubleValue());	
+					list_result.get(27).add(obj.getVKw27().doubleValue());
+					list_result.get(28).add(obj.getVKw28().doubleValue());
+					list_result.get(29).add(obj.getVKw29().doubleValue());
 				}
 			}			
 			List<List<Double>>list_result_sort=this.deepCloneList(list_result);//克隆集合
@@ -707,6 +693,61 @@ public class VKpiWebprofitlossAction extends ActionSupport implements ServletRes
 		}
 		
 		return list_styles;
+	}
+	
+	/**
+	 * 
+	 * @Title: isPercents
+	 * @Description: 判斷哪些數據用 % 號
+	 * @param @param obj
+	 * @param @return
+	 * @return List<String>
+	 * @throws
+	 * @author web
+	 * @date 2016/9/20
+	 */
+	public List<String> isPercents(VKpiWebprofitloss obj){
+		List<Object>list=new ArrayList<Object>();
+		List<String>list_items=this.findItems();
+		List<String>list_result=new ArrayList<String>();
+		DecimalFormat frm=new DecimalFormat("0.00%");
+		list.add(obj.getVKw01());
+		list.add(obj.getVKw02());
+		list.add(obj.getVKw03());			
+		list.add(obj.getVKw04());
+		list.add(obj.getVKw05());
+		list.add(obj.getVKw06());
+		list.add(obj.getVKw07());
+		list.add(obj.getVKw08());
+		list.add(obj.getVKw09());
+		list.add(obj.getVKw10());
+		list.add(obj.getVKw11());
+		list.add(obj.getVKw12());
+		list.add(obj.getVKw13());
+		list.add(obj.getVKw14());
+		list.add(obj.getVKw15());
+		list.add(obj.getVKw16());
+		list.add(obj.getVKw17());
+		list.add(obj.getVKw18());
+		list.add(obj.getVKw19());
+		list.add(obj.getVKw20());
+		list.add(obj.getVKw21());
+		list.add(obj.getVKw22());
+		list.add(obj.getVKw23());
+		list.add(obj.getVKw24());
+		list.add(obj.getVKw25());
+		list.add(obj.getVKw26());
+		list.add(obj.getVKw27());
+		list.add(obj.getVKw28());
+		list.add(obj.getVKw29());		
+		for(int i=0;i<list.size();i++){			
+			if(list_items.get(i).split("__")[1].equals("%")){
+				list_result.add(frm.format(list.get(i)));
+			}else{
+				list_result.add(list.get(i).toString());
+			}			
+		}			
+		return list_result;
 	}
 	
 	
