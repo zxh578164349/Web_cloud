@@ -713,10 +713,10 @@ public class GlobalMethod extends HibernateDaoSupport{
 		cs_head2.setFont(font_head2);
 		cs_head2.setAlignment(XSSFCellStyle.ALIGN_CENTER);
 		cs_head2.setVerticalAlignment(XSSFCellStyle.VERTICAL_CENTER);
-		cs_head2.setBorderTop(XSSFCellStyle.BORDER_THIN);
-		cs_head2.setBorderRight(XSSFCellStyle.BORDER_THIN);
-		cs_head2.setBorderBottom(XSSFCellStyle.BORDER_THIN);
-		cs_head2.setBorderLeft(XSSFCellStyle.BORDER_THIN);
+		cs_head2.setBorderTop(XSSFCellStyle.BORDER_THICK);
+		cs_head2.setBorderRight(XSSFCellStyle.BORDER_THICK);
+		cs_head2.setBorderBottom(XSSFCellStyle.BORDER_THICK);
+		cs_head2.setBorderLeft(XSSFCellStyle.BORDER_THICK);
 		cs_head2.setFillForegroundColor(IndexedColors.BRIGHT_GREEN.getIndex());
 		cs_head2.setFillPattern(XSSFCellStyle.SOLID_FOREGROUND);
 		map.put("cs_head2", cs_head2);
