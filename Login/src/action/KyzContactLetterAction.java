@@ -389,7 +389,7 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 		if(backIndex==1){
 			result="beanList";
 		}
-		factNo = (String) ActionContext.getContext().getSession().get("public_factno");				
+		factNo = (String) ActionContext.getContext().getSession().get("public_factNo");				
 		visaSort = (String) ActionContext.getContext().getSession().get("public_visaSort");				
 		billNo=(String)ActionContext.getContext().getSession().get("public_billNo");
 		yymmdd=(String)ActionContext.getContext().getSession().get("public_timeCreate");

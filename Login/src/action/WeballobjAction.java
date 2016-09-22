@@ -323,9 +323,9 @@ public class WeballobjAction  extends ActionSupport implements ServletResponseAw
 					obj.setObjA200(Double.valueOf(list.get(101).split(SEPARATOR)[i]));
 					obj.setObjA201(Double.valueOf(list.get(102).split(SEPARATOR)[i]));
 					obj.setObjA202(Double.valueOf(list.get(103).split(SEPARATOR)[i]));
-					if(list.size()==105){
+					/*if(list.size()==105){
 						obj.setObjA203(Double.valueOf(list.get(104).split(SEPARATOR)[i]));
-					}																	
+					}*/																	
 					obj.setUsername(user.getUsername());
 					obj.setCreateDate(new SimpleDateFormat("yyyyMMdd").format(new Date()));
 					list_b.add(obj);
@@ -529,7 +529,7 @@ public class WeballobjAction  extends ActionSupport implements ServletResponseAw
 						list_b.add(obj.getObjA200());
 						list_b.add(obj.getObjA201());
 						list_b.add(obj.getObjA202());
-						list_b.add(obj.getObjA203());
+						//list_b.add(obj.getObjA203());
 						list_a.add(list_b);
 					}				
 				}
@@ -692,7 +692,7 @@ public class WeballobjAction  extends ActionSupport implements ServletResponseAw
 		list.add("200__粗坯用量 __KG");
 		list.add("201__裁斷回頭料__KG");
 		list.add("202__油壓退料__KG");
-		list.add("203__利潤率__--");
+		//list.add("203__利潤率__--");
 		return list;
 	}
 	
