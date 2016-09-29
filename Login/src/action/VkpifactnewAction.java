@@ -1484,9 +1484,9 @@ public class VkpifactnewAction extends ActionSupport implements ServletResponseA
 		//無形損耗Double wasteNo=this.division((actlost-avgbuttomweight2-noglueweight-sideweit-badweit-otherbadweight), (avgbuttomweight2+noglueweight));
 		Double wasteNo=Double.valueOf(format4.format(this.division((eve.getObja115()-eve.getObja117()-eve.getObja118()-eve.getObja161()-eve.getObja165()-eve.getObja167()), (eve.getObja117()+eve.getObja118()))));
 		//邊料率Double sideRate=this.division(sideweit, (avgbuttomweight2+sideweit+badweit));
-		Double sideRate=Double.valueOf(format4.format(this.division(eve.getObja161(), ( eve.getObja117()+eve.getObja161()+eve.getObja165()))));
+		Double sideRate=Double.valueOf(format4.format(this.division(eve.getObja161(), ( eve.getObja117()+eve.getObja161()+eve.getObja165()+eve.getObja167()))));
 		//不良率Double uheal_rate=badcount/(sumActualpairs+badcount);
-		Double uheal_rate=Double.valueOf(format4.format(this.division(eve.getObja163(), eve.getSumActualpairs().doubleValue()+eve.getObja163())));
+		Double uheal_rate=Double.valueOf(format4.format(this.division(eve.getObja165(), ( eve.getObja117()+eve.getObja161()+eve.getObja165()+eve.getObja167()))));
 		//報廢率Double wasteRate=this.division(badweit, (avgbuttomweight2+sideweit+badweit));
 		Double wasteRate=Double.valueOf(format4.format(this.division(eve.getObja161()+eve.getObja165()+eve.getObja167(), (eve.getObja117()+eve.getObja161()+eve.getObja165()))));		
 		//廠補率Double factaddRate=this.division(sumFactpairs, sumActualpairs);

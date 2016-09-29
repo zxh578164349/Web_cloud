@@ -25,18 +25,14 @@
 <body>
   <div id="container">
     <div id="content">
-	<table class="table table-striped table-hover table-bordered" >
-		<h2>函文審核</h2>
+    <h2>函文審核</h2>
+	<table class="table table-striped table-hover table-bordered" >		
 		<thead>			
 			<tr class="tr_show">
 				<th>序號</th>
 				<th>廠別</th>
 				<th>類別</th>
-				<th>單號</th>
-				<!-- <th>最近審核人(Email)</th>
-				<th>下一位審核人(Email)</th>
-				<th>最近項次</th>
-				<th>下一個項次</th> -->
+				<th>單號</th>				
 				<th>標題</th>
 				<th>最近審核狀態</th>
 				<th>當前審核狀態</th>
@@ -48,8 +44,13 @@
 			</tr>
 		</thead>
 		<tbody id="tbody">
-		<s:iterator value="bean.list" status="x" id="temp">		
-		        <tr >
+		<s:iterator value="bean.list" status="x" id="temp">	
+		  <s:if test='id.kyVisabillm.delMk=="1"'>
+		     <tr class="danger">
+		  </s:if>
+		  <s:else>
+		     <tr>
+		  </s:else>	
 				<td>${ bean.pageSize*(bean.currentPage-1)+x.index+1}</td>
 				<td><s:property value="id.kyVisabillm.id.factNo" />
 				</td>
@@ -59,15 +60,7 @@
 				<td><s:property value="id.kyVisabillm.id.billNo"/>
 				</td>
 				<td><s:property value="memo"/>			
-				</td>
-				<!-- <td><s:property value="id.kyVisabillm.signerLast" />
-				</td>
-				<td><s:property value="id.kyVisabillm.signerNext" />
-				</td>
-				<td><s:property value="id.kyVisabillm.itemLast" />
-				</td>
-				<td><s:property value="id.kyVisabillm.itemNext" />
-				</td> -->
+				</td>				
 				<td><s:property value="id.kyVisabillm.lastMk" />
 				</td>
 				<td><s:property value="id.kyVisabillm.visaMk" />

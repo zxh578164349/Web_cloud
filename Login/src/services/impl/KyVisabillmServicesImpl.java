@@ -56,6 +56,11 @@ public class KyVisabillmServicesImpl implements IKyVisabillmServices{
 		// TODO Auto-generated method stub
 		return visabillmDao.findBefor2Month();
 	}
+	
+	public List<KyVisabillm> findBefor2Month2() {
+		// TODO Auto-generated method stub
+		return visabillmDao.findBefor2Month2();
+	}
 
 	public void addLarge(List<KyVisabillm> list) {
 		// TODO Auto-generated method stub

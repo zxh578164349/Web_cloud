@@ -1402,7 +1402,7 @@ public class GlobalMethod extends HibernateDaoSupport{
 		 return list;
 	 }
 	 
-	 public static void main(String[] args) throws ParseException, FileNotFoundException, ScriptException, NoSuchMethodException {
+	 public static void main(String[] args) throws ParseException, FileNotFoundException, ScriptException, NoSuchMethodException, ClassNotFoundException {
 			List<Webestproduct>list=new ArrayList<Webestproduct>();
 			List<String>list2=new ArrayList<String>();
 			List<Webestproduct>list3=new ArrayList<Webestproduct>();
@@ -1411,6 +1411,7 @@ public class GlobalMethod extends HibernateDaoSupport{
 			list2.add("RB");
 			list2.add("MD");
 			list2.add("PU");
+
 	        /*for(int i=0;i<list2.size();i++){
 	        	list.add(new Webestproduct(new WebestproductId("631",list2.get(i),new SimpleDateFormat("yyyyMM").parse("201605"),"zd")));
 	        	list3.add(new Webestproduct(new WebestproductId("631",list2.get(i),new SimpleDateFormat("yyyyMM").parse("201605"),"zd")));
@@ -1511,16 +1512,36 @@ public class GlobalMethod extends HibernateDaoSupport{
 			removeSameDouble(tt2);
 			System.out.print(tt2);
 			Long jj=999999L;
-			System.out.println(jj.doubleValue());*/
+			System.out.println(jj.doubleValue());
 			
 			List<Double>kk=maopaoList();
 			for(Double d:kk){
 				System.out.print("---"+d);
-			}
+			}*/
+			
+			
+			test_a("a");
+			
+			
+			
+			
 			
 			
 						
 		}
+	 
+	 public static <T> void test_a(T x) throws ClassNotFoundException{
+		 System.out.println(x+"getClass類型："+x.getClass().getName());
+		 List<T>list=new ArrayList<T>();
+		 list.add((T)"a");  
+		 list.add((T)new Double(12.3));
+		 list.add((T)new Integer(15));
+		 list.add((T)new Long(5));
+		 for(T t:list){
+			 System.out.println("list元素類型"+t+":"+t.getClass().getName());
+		 }	 
+	 }
+	
 	 
 	 public static List<Double> maopaoList(){
 		 List<Double>list=new ArrayList<Double>();

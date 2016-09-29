@@ -259,7 +259,7 @@ public class KyVisabillsDaoImpl extends Basedao implements IKyVisaBillsDao{
 			hql.append(" and id.kyVisabillm.id.factNo=:factno");
 			map.put("factno", factNo);
 		}						
-		hql.append(" and id.kyVisabillm.delMk is null ");
+		//hql.append(" and id.kyVisabillm.delMk is null ");
 		hql2.append(hql);
 		hql.append(" order by id.kyVisabillm.id.factNo desc,id.kyVisabillm.dateCreate desc");
 		

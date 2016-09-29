@@ -101,6 +101,17 @@ public class KyVisabillmDaoImpl extends Basedao implements IKyVisaBillmDao{
 		String hql="from KyVisabillm where dateCreate<to_char(add_months(sysdate,-2),'yyyymmdd') and delMk is null order by dateCreate ";
 		return super.findAll(hql, null);
 	}
+	
+	/**
+	 * 
+	 * 日期:2016/9/29
+	 * 描述:兩箇月之前沒有添加刪除標記,且沒有簽核的函文
+	 */
+	public List<KyVisabillm> findBefor2Month2() {
+		// TODO Auto-generated method stub
+		String hql="from KyVisabillm where dateCreate<to_char(add_months(sysdate,-2),'yyyymmdd') and delMk is null and visaMk='N' order by dateCreate ";
+		return super.findAll(hql, null);
+	}
 
 	/**
 	 * 

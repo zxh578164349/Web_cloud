@@ -90,8 +90,14 @@
 					          <a href="javascript:isDelete('2subform${x.index}','bussletter_delete')" ><img alt="刪除" src="images/icon/delete001.png" title="刪除" ></a>
 					      </s:if>
 					      <s:else>
-					           <a ><img alt="修改" src="images/icon/edit001_1.png" title="修改" ></a>
+					         <a ><img alt="修改" src="images/icon/edit001_1.png" title="修改" ></a>
+					         <s:if test='vbm.itemLast=="01"'>
+					           <a href="javascript:isDelete('2subform${x.index}','bussletter_delete')" ><img alt="刪除" src="images/icon/delete001.png" title="刪除" ></a>
+					         </s:if>
+					         <s:else>
 					           <a ><img alt="刪除" src="images/icon/delete001_1.jpg" title="刪除" ></a>
+					         </s:else>
+					          		           
 					      </s:else>						  																									
 					      
 					   </s:else>										
