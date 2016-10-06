@@ -39,8 +39,13 @@
 			</tr>
 		</thead>
 		<tbody id="tbody">
-		<s:iterator value="bean.list" status="x" id="temp">		
-		        <tr >
+		<s:iterator value="bean.list" status="x" id="temp">	
+		   <s:if test='id.kyVisabillm.delMk=="1"'>
+		      <tr class="danger">
+		   </s:if>
+		   <s:else>
+		      <tr>
+		   </s:else>	
 				<td>${ bean.pageSize*(bean.currentPage-1)+x.index+1}</td>
 				<td><s:property value="id.kyVisabillm.id.factNo" />
 				</td>

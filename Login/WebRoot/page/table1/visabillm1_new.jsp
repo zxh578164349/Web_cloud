@@ -140,14 +140,7 @@
 					<s:if test='id.kyVisabillm.visaMk=="N"'>
 					<td>
 					 <a href="javascript:findById_form('1form${x.index}','vbm_findById2')"><img alt="加簽" src="images/icon/add24.png" title="加簽"><br>加簽</a>
-					</td>
-					<!-- 20160311禁用
-					 <s:if test='#session.loginUser.factno=="JW"'>
-					<td>
-					 <a href="javascript:findById('3form${x.index}','vbm_findById4')"><img alt="減簽" src="images/icon/minus24.png" title="減簽"><br>減簽</a>					 
-					 </td>
-					 </s:if>
-					  -->
+					</td>					
 					 <td>
 					   <a href="javascript:findById_form('3_3form${x.index}','vbm_findById5')"><img alt="減簽(带删除)" src="images/icon/remove.png" title="減簽(带删除)"><br>減簽</a>
 					 </td>
@@ -155,12 +148,7 @@
 					 <s:else>
 					 <td>
 					   <a><img alt="加簽" src="images/icon/add24_1.jpg" title="加簽"><br>加簽</a>
-					 </td>
-					 <s:if test='#session.loginUser.factno=="JW"'>
-					 <td>
-					   <a><img alt="減簽" src="images/icon/minus24_1.jpg" title="減簽"><br>減簽</a>
-					 </td>
-					 </s:if>
+					 </td>					 
 					 <td>
 					   <a><img alt="減簽(带删除)" src="images/icon/remove_1.png" title="減簽(带删除)"><br>減簽</a>
 					 </td>    
