@@ -24,10 +24,9 @@
 <body onload="changeinput()">	
 	<form action="print2Ypoi_print2Y_hb" method="post" id="form2"
 		target="_blank">
+		<h2>產量預估與產量資料下載</h2><br/>
 		<table id="tb" class="table table-bordered table-condensed">
-			<caption>
-				產量預估與產量資料下載				
-			</caption>
+			
 			<s:if test="#session.factNo=='tw'">
 
 				<tr>
