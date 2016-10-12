@@ -18,6 +18,10 @@ import java.util.Map;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.poi.hssf.usermodel.HSSFCellStyle;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
@@ -833,6 +837,343 @@ public class VKpiWebprofitlossAction extends ActionSupport implements ServletRes
 		}			
 		return list_result;
 	}
+	
+	
+	
+	
+	
+	/**************************************************2003版本分界線*****************************************************/
+	/**************************************************2003版本分界線*****************************************************/
+	public void print_month_2003() throws ParseException, IOException{		
+		HSSFWorkbook wb=new HSSFWorkbook();
+		HSSFSheet sheet=wb.createSheet(factNo);
+		Map<String,Object>map_style=GlobalMethod.findStyles(wb);				
+		List<String>list_months=GlobalMethod.findMonths(yymm,yymm2);
+		List<Object[]>list_factcodes=webFactSer.findByFactNo_showA_order(factNo);
+		List<VKpiWebprofitloss>list_vkpipros=vkpiprofitser.findVKpiWebprofitloss(factNo,yymm,yymm2);
+		
+		Map<String,Object>map=new LinkedHashMap<String,Object>();
+		for(Object[] factcode:list_factcodes){
+			List<VKpiWebprofitloss>list=new LinkedList<VKpiWebprofitloss>();
+			for(String month:list_months){
+				list.add(new VKpiWebprofitloss(new VKpiWebprofitlossId(new WebFact(new WebFactId(factNo,(String)factcode[0])),month)));
+			}
+			for(int i=0;i<list.size();i++){
+				VKpiWebprofitloss loss=list.get(i);
+				for(VKpiWebprofitloss obj:list_vkpipros){
+					if(loss.getId().getFact().getId().getFactNo().equals(obj.getId().getFact().getId().getFactNo())&&loss.getId().getFact().getId().getFactArea().equals(obj.getId().getFact().getId().getFactArea())&&
+							loss.getId().getYymm().equals(obj.getId().getYymm())){
+						list.remove(i);
+						list.add(i,obj);
+					}
+				}
+			}
+			map.put((String)factcode[0],list);						
+		}
+				
+		this.init_more_2003(sheet,map,map_style,1);				
+		
+		ServletOutputStream os=response.getOutputStream();
+		response.setContentType("application/vnd.ms-excel");
+		//response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+		String fileName="report.xls";
+		int msie=ServletActionContext.getRequest().getHeader("USER-AGENT").toLowerCase().indexOf("msie");
+		if(msie>0){
+			fileName=java.net.URLEncoder.encode(fileName,"utf-8");
+		}else{
+			fileName=new String(fileName.getBytes("utf-8"),"iso8859-1");
+		}
+		response.setHeader("Content-disposition","attachment;filename="+fileName);
+		wb.write(os);
+		os.close();
+		
+	}
+	
+	public void print_tw_2003() throws IOException{
+		HSSFWorkbook wb=new HSSFWorkbook();
+		HSSFSheet sheet=wb.createSheet("匯總");
+		HSSFSheet sheet2=wb.createSheet();
+		Map<String,Object>map_style=GlobalMethod.findStyles(wb);		
+		HSSFCellStyle cs=(HSSFCellStyle)map_style.get("cs");
+		HSSFCellStyle cs_red_bg=(HSSFCellStyle)map_style.get("cs_red_bg");
+		HSSFCellStyle cs_lblue_bg=(HSSFCellStyle)map_style.get("cs_lblue_bg");
+		HSSFCellStyle cs_itatic=(HSSFCellStyle)map_style.get("cs_itatic");
+		List<VKpiWebprofitloss>list_source=vkpiprofitser.findVKpiWebprofitloss(list_factcode,yymm);
+		Map<String,Object>map=new LinkedHashMap<String,Object>();
+		for(String factcode:list_factcode){
+			List<VKpiWebprofitloss>list_obj=new LinkedList<VKpiWebprofitloss>();
+			for(String factno:list_factno){
+				if(factcode.equals(factno.split("_")[0])){
+					list_obj.add(new VKpiWebprofitloss(new VKpiWebprofitlossId(new WebFact(new WebFactId(factno,factcode)),yymm)));
+				}
+			}
+			for(int i=0;i<list_obj.size();i++){
+				VKpiWebprofitloss obj=list_obj.get(i);
+				for(VKpiWebprofitloss loss:list_source){
+					if(obj.getId().getFact().getId().getFactArea().equals(loss.getId().getFact().getId().getFactArea())&&obj.getId().getFact().getId().getFactNo().split("_")[1].equals(loss.getId().getFact().getId().getFactNo())){
+						list_obj.remove(i);
+						list_obj.add(i,loss);
+					}
+				}
+			}
+			map.put(factcode,list_obj);
+		}
+		this.init_more_2003(sheet,map,map_style,0);					
+		/******************sheet2********************/
+		
+		//this.init_more(sheet2,map,map_style,0);
+		this.init_2003(sheet2,map,0);
+		
+		
+		/*******************************按factcode 標出第1名與最后1名*************************************/
+		Map<String,Object>map_result=this.packageToListDouble_map(map);
+		int col_index=0;
+		for(String factcode:map_result.keySet()){
+			List<List<List<Double>>>list_all=(List<List<List<Double>>>)map_result.get(factcode);
+			List<List<Double>>list_doubles=list_all.get(0);
+			List<List<Double>>list_doubles_sort=list_all.get(1);
+			int length=list_doubles.get(0).size()-2;//每箇factcode所含有的factno箇數
+			List<HSSFCellStyle>list_styles=new ArrayList<HSSFCellStyle>();
+			for(int i=0;i<list_doubles.size();i++){
+				List<Double>list_double=list_doubles.get(i);
+				List<Double>list_double_sort=list_doubles_sort.get(i);
+				if(i==0){
+					/*for(int j=0;j<list_double.size()-2;j++){
+						sheet2.getRow(2+i).getCell(3+j+col_index).setCellValue(list_double.get(j));
+						sheet2.getRow(2+i).getCell(3+j+col_index).setCellStyle(cs_head);
+					}*/
+				}else{
+					this.isRedOrGreen_2003(i,list_styles,map_style);
+					for(int j=0;j<list_double.size()-2;j++){
+						//sheet2.getRow(2+i).getCell(3+j+col_index).setCellValue(list_double.get(j));
+						if(list_double_sort.size()>=NUM2&&list_double.get(j)==list_double.get(list_double.size()-2)&&!list_double.get(j).equals(DB1)){
+							//sheet2.getRow(2+i).getCell(3+j+col_index).setCellStyle(temp);
+							sheet.getRow(2+i).getCell(3+j+col_index).setCellStyle(list_styles.get(0));
+						}else if(list_double_sort.size()>=NUM2&&list_double.get(j)==list_double.get(list_double.size()-1)&&!list_double.get(j).equals(DB1)){
+							//sheet2.getRow(2+i).getCell(3+j+col_index).setCellStyle(temp);
+							sheet.getRow(2+i).getCell(3+j+col_index).setCellStyle(list_styles.get(1));
+						}else{
+							//sheet2.getRow(2+i).getCell(3+j+col_index).setCellStyle(cs);
+							sheet.getRow(2+i).getCell(3+j+col_index).setCellStyle(cs);
+						}								
+					}
+				}
+			}
+			col_index=col_index+length;
+		}
+		/*******************************按factcode 標出第1名與最后1名*************************************/
+		
+		/*List<List<Double>>list_doubles=this.packageToListDouble(map).get(0);
+		List<List<Double>>list_doubles_sort=this.packageToListDouble(map).get(1);
+		List<HSSFCellStyle>list_styles=new ArrayList<HSSFCellStyle>();
+		for(int i=0;i<list_doubles.size();i++){			
+			List<Double>list_double=list_doubles.get(i);
+			List<Double>list_double_sort=list_doubles_sort.get(i);
+			if(i==0){
+				for(int j=0;j<list_double.size()-2;j++){
+					sheet2.getRow(2+i).getCell(3+j).setCellValue(list_double.get(j));
+					sheet2.getRow(2+i).getCell(3+j).setCellStyle(cs_head);
+				}
+			}else{
+				this.isRedOrGreen(i,list_styles,cs_red_bg,cs_lblue_bg);
+				for(int j=0;j<list_double.size()-2;j++){
+					//sheet2.getRow(2+i).getCell(3+j).setCellValue(list_double.get(j));
+					if(list_double_sort.size()>3&&list_double.get(j)<=list_double.get(list_double.size()-2)&&!list_double.get(j).equals(DB1)){
+						//sheet2.getRow(2+i).getCell(3+j).setCellStyle(temp);
+						sheet.getRow(2+i).getCell(3+j).setCellStyle(list_styles.get(0));
+					}else if(list_double_sort.size()>3&&list_double.get(j)>=list_double.get(list_double.size()-1)&&!list_double.get(j).equals(DB1)){
+						//sheet2.getRow(2+i).getCell(3+j).setCellStyle(temp);
+						sheet.getRow(2+i).getCell(3+j).setCellStyle(list_styles.get(1));
+					}else{
+						//sheet2.getRow(2+i).getCell(3+j).setCellStyle(cs);
+						sheet.getRow(2+i).getCell(3+j).setCellStyle(cs);
+					}								
+				}
+			}
+			
+		}*/
+		
+		
+		sheet.createRow(NUM+5).createCell(1).setCellStyle(cs_red_bg);
+		sheet.createRow(NUM+6).createCell(1).setCellStyle(cs_lblue_bg);
+		
+		sheet.getRow(NUM+5).createCell(2).setCellValue(":最前1名");
+		sheet.getRow(NUM+6).createCell(2).setCellValue(":最后1名");
+		sheet.getRow(NUM+5).getCell(2).setCellStyle(cs_itatic);
+		sheet.getRow(NUM+6).getCell(2).setCellStyle(cs_itatic);
+		/******************sheet2********************/
+		
+		
+		ServletOutputStream os=response.getOutputStream();
+		response.setContentType("application/vnd.ms-excel");
+		//response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+		String fileName="report_total.xls";
+		int msie=ServletActionContext.getRequest().getHeader("USER-AGENT").toLowerCase().indexOf("msie");
+		if(msie>0){
+			fileName=java.net.URLEncoder.encode(fileName,"utf-8");
+		}else{
+			fileName=new String(fileName.getBytes("utf-8"),"iso8859-1");
+		}
+		response.setHeader("Content-disposition","attachment;filename="+fileName);
+		wb.write(os);
+		os.close();
+	}
+	
+		
+	/**
+	 * 
+	 * @Title: init_more
+	 * @Description: TODO
+	 * @param @param sheet
+	 * @param @param map
+	 * @param @param map_style
+	 * @param @param mk   1:print_month報表     0:print_tw報表
+	 * @param @throws IOException
+	 * @return void
+	 * @throws
+	 * @author web
+	 * @date 2016/9/12
+	 */
+	public void init_more_2003(HSSFSheet sheet,Map<String,Object>map,Map<String,Object>map_style,int mk) throws IOException{	
+		
+		this.init_2003(sheet,map,mk);
+		
+		//樣式
+		HSSFCellStyle cs_title=(HSSFCellStyle)map_style.get("cs_title");
+		HSSFCellStyle cs_head=(HSSFCellStyle)map_style.get("cs_head");
+		HSSFCellStyle cs_head2=(HSSFCellStyle)map_style.get("cs_head2");
+		HSSFCellStyle cs=(HSSFCellStyle)map_style.get("cs");
+		//標題
+		CellRangeAddress cra_title=new CellRangeAddress(0,(short)0,0,(short)5);
+		sheet.addMergedRegion(cra_title);
+		if(factname!=null){
+			sheet.getRow(0).getCell(0).setCellValue("重點指標匯總_"+factname);
+		}else{
+			sheet.getRow(0).getCell(0).setCellValue("各廠重點指標匯總_"+yymm);
+		}
+		
+		for(int i=0;i<4;i++){
+			sheet.getRow(0).getCell(i).setCellStyle(cs_title);
+		}
+		
+		CellRangeAddress cra=new CellRangeAddress(1,(short)1,0,(short)2);
+		sheet.addMergedRegion(cra);
+		sheet.getRow(1).getCell(0).setCellValue("廠別狀態");
+		for(int i=0;i<3;i++){
+			sheet.getRow(1).getCell(i).setCellStyle(cs_head2);
+		}
+		
+		List<String>list_head=new ArrayList<String>();
+		list_head.add("項次");
+		list_head.add("項目");
+		list_head.add("單位");						
+		for(int i=0;i<list_head.size();i++){
+			sheet.getRow(2).getCell(i).setCellValue(list_head.get(i));
+			sheet.getRow(2).getCell(i).setCellStyle(cs_head);
+		}
+		
+		List<String>list_items=this.findItems();
+		for(int i=0;i<list_items.size();i++){
+			sheet.getRow(3+i).getCell(0).setCellValue(i+1);
+			sheet.getRow(3+i).getCell(1).setCellValue(list_items.get(i).split("__")[0]);//項目
+			sheet.getRow(3+i).getCell(2).setCellValue(list_items.get(i).split("__")[1]);//單位
+			for(int j=0;j<3;j++){
+				sheet.getRow(3+i).getCell(j).setCellStyle(cs);
+			}
+		}
+		
+		int temp=0;
+		for(String factcode:map.keySet()){
+			List<VKpiWebprofitloss>list_obj=(List<VKpiWebprofitloss>)map.get(factcode);	
+			int length=list_obj.size();
+			if(length>1&&mk==1){
+				length++;
+			}
+			sheet.getRow(1).getCell(3+temp).setCellValue(factcode);
+			CellRangeAddress cra1=new CellRangeAddress(1,(short)1,3+temp,(short)2+temp+length);
+			sheet.addMergedRegion(cra1);
+			for(int i=0;i<length;i++){
+				sheet.getRow(1).getCell(3+temp+i).setCellStyle(cs_head2);
+			}
+			
+			List<List<String>>list_pack=this.packageTostring(list_obj,mk);			
+			for(int a=0;a<list_pack.size();a++){
+				List<String>list=list_pack.get(a);
+				for(int b=0;b<list.size();b++){
+					sheet.getRow(2+b).getCell(3+a+temp).setCellValue(this.isMyNull(list.get(b)));
+					if(b==0){
+						sheet.getRow(2+b).getCell(3+a+temp).setCellStyle(cs_head);
+					}else if(mk==1){
+						sheet.getRow(2+b).getCell(3+a+temp).setCellStyle(cs);
+					}										
+				}
+			}
+			temp=temp+length;
+		}				
+	}
+	
+	public void init_2003(HSSFSheet sheet,Map<String,Object>map,int mk){
+		sheet.setColumnWidth(1,4500);		
+		for(int i=0;i<NUM+2;i++){
+			HSSFRow row=sheet.createRow(i);
+			int index=3;
+			for(String factcode:map.keySet()){
+				if(index==3){
+					for(int j=0;j<index;j++){
+						row.createCell(j);
+					}
+				}
+				List<VKpiWebprofitloss>list_obj=(List<VKpiWebprofitloss>)map.get(factcode);
+				for(int j=0;j<list_obj.size()+mk;j++){					
+					row.createCell(index);
+					if(i==0){
+						sheet.setColumnWidth(index,3000);
+					}
+					index++;
+					
+				}
+			}			
+		}
+	}
+	
+	/**
+	 * 判斷正序  反序
+	 * @Title: isRedOrGreen
+	 * @Description: 
+	 * @param @param row
+	 * @param @param cs_red
+	 * @param @param cs_green
+	 * @param @return
+	 * @return XSSFCellStyle
+	 * @throws
+	 * @author web
+	 * @date 2016/9/13
+	 */
+	public List<HSSFCellStyle> isRedOrGreen_2003(int row,List<HSSFCellStyle>list_styles,Map<String,Object>map_style){
+		list_styles.clear();
+		HSSFCellStyle cs_red_bg=(HSSFCellStyle)map_style.get("cs_red_bg");
+		HSSFCellStyle cs_lblue_bg=(HSSFCellStyle)map_style.get("cs_lblue_bg");
+		HSSFCellStyle cs=(HSSFCellStyle)map_style.get("cs");
+		List<String>list=new ArrayList<String>();
+		list.add("factno__factno__factno");//1
+		List<String>list_items=this.findItems();
+		for(String item:list_items){
+			list.add(item);
+		}				
+		if(list.get(row).split("__")[2].equals("0")){//0:越大真好（降序）    1:越少真好（升序）   
+			list_styles.add(cs_lblue_bg);
+			list_styles.add(cs_red_bg);
+		}else if(list.get(row).split("__")[2].equals("1")){					
+			list_styles.add(cs_red_bg);
+			list_styles.add(cs_lblue_bg);
+		}else{
+			list_styles.add(cs);
+			list_styles.add(cs);
+		}
+		
+		return list_styles;
+	}
+	
 	
 	
 	

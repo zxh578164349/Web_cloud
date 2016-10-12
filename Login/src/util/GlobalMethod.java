@@ -446,6 +446,13 @@ public class GlobalMethod extends HibernateDaoSupport{
 		 * 報表相關樣式
 		 */
 		Map<String,Object>map=new HashMap<String,Object>();
+		//斜體
+		HSSFFont font_itatic=wb.createFont();
+		font_itatic.setItalic(true);
+				
+		HSSFCellStyle cs_itatic=wb.createCellStyle();
+		cs_itatic.setFont(font_itatic);
+		map.put("cs_itatic",cs_itatic);
 		//標題樣式
 		HSSFCellStyle cs_title=wb.createCellStyle();
 		HSSFFont font_title=wb.createFont();
@@ -480,6 +487,44 @@ public class GlobalMethod extends HibernateDaoSupport{
 		cs_head.setFillForegroundColor(IndexedColors.YELLOW.getIndex());
 		cs_head.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
 		map.put("cs_head", cs_head);
+		
+		HSSFCellStyle cs_red_bg=wb.createCellStyle();		
+		cs_red_bg.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		cs_red_bg.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		cs_red_bg.setBorderTop(HSSFCellStyle.BORDER_THIN);
+		cs_red_bg.setBorderRight(HSSFCellStyle.BORDER_THIN);
+		cs_red_bg.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+		cs_red_bg.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+		cs_red_bg.setFillForegroundColor(IndexedColors.RED.getIndex());
+		cs_red_bg.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+		map.put("cs_red_bg", cs_red_bg);
+		
+		
+		HSSFCellStyle cs_lblue_bg=wb.createCellStyle();		
+		cs_lblue_bg.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		cs_lblue_bg.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		cs_lblue_bg.setBorderTop(HSSFCellStyle.BORDER_THIN);
+		cs_lblue_bg.setBorderRight(HSSFCellStyle.BORDER_THIN);
+		cs_lblue_bg.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+		cs_lblue_bg.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+		cs_lblue_bg.setFillForegroundColor(IndexedColors.SKY_BLUE.getIndex());
+		cs_lblue_bg.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+		map.put("cs_lblue_bg", cs_lblue_bg);
+		
+		HSSFCellStyle cs_head2=wb.createCellStyle();
+		HSSFFont font_head2=wb.createFont();
+		font_head2.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+		font_head2.setFontHeightInPoints((short)12);
+		cs_head2.setFont(font_head2);
+		cs_head2.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		cs_head2.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		cs_head2.setBorderTop(HSSFCellStyle.BORDER_THICK);
+		cs_head2.setBorderRight(HSSFCellStyle.BORDER_THICK);
+		cs_head2.setBorderBottom(HSSFCellStyle.BORDER_THICK);
+		cs_head2.setBorderLeft(HSSFCellStyle.BORDER_THICK);
+		cs_head2.setFillForegroundColor(IndexedColors.BRIGHT_GREEN.getIndex());
+		cs_head2.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+		map.put("cs_head2", cs_head2);
 		
 		
 		
@@ -731,6 +776,7 @@ public class GlobalMethod extends HibernateDaoSupport{
 		cs_red_bg.setFillForegroundColor(IndexedColors.RED.getIndex());
 		cs_red_bg.setFillPattern(XSSFCellStyle.SOLID_FOREGROUND);
 		map.put("cs_red_bg", cs_red_bg);
+		
 		
 		XSSFCellStyle cs_lblue_bg=wb.createCellStyle();		
 		cs_lblue_bg.setAlignment(XSSFCellStyle.ALIGN_CENTER);
