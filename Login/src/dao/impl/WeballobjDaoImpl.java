@@ -166,4 +166,27 @@ public class WeballobjDaoImpl extends Basedao implements IWeballobjDao{
 		super.delete(obj,log);
 	}
 
+	/**
+	 * 日期:2016/10/13
+	 * 描述:
+	 */
+	
+	
+	public List<Weballobj> findObj(String yymm,String yymm2){
+		// TODO Auto-generated method stub
+		StringBuffer hql=new StringBuffer();
+		Map<String,Object>map=new HashMap<String,Object>();
+		hql.append("from Weballobj where 1=1 ");
+		if(yymm!=null&&!yymm.equals("")){
+			hql.append(" and id.yymm>=:yymm ");
+			map.put("yymm",yymm);
+		}
+		if(yymm2!=null&&!yymm2.equals("")){
+			hql.append(" and id.yymm<=:yymm2");
+			map.put("yymm2",yymm2);
+		}
+		return super.getAllWithNoPage(hql.toString(),map);
+		
+	}
+
 }

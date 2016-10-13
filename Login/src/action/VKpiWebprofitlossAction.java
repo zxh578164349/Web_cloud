@@ -39,6 +39,7 @@ import com.opensymphony.xwork2.ActionSupport;
 
 import entity.VKpiWebprofitloss;
 import entity.VKpiWebprofitlossId;
+import entity.VKpiWebprofitlossItems;
 import entity.WebFact;
 import entity.WebFactId;
 
@@ -130,7 +131,7 @@ public class VKpiWebprofitlossAction extends ActionSupport implements ServletRes
 		List<String>list_months=GlobalMethod.findMonths(yymm,yymm2);
 		List<Object[]>list_factcodes=webFactSer.findByFactNo_showA_order(factNo);
 		List<VKpiWebprofitloss>list_vkpipros=vkpiprofitser.findVKpiWebprofitloss(factNo,yymm,yymm2);
-		
+		List<String>list_items=this.findItems();
 		Map<String,Object>map=new LinkedHashMap<String,Object>();
 		for(Object[] factcode:list_factcodes){
 			List<VKpiWebprofitloss>list=new LinkedList<VKpiWebprofitloss>();
@@ -150,7 +151,7 @@ public class VKpiWebprofitlossAction extends ActionSupport implements ServletRes
 			map.put((String)factcode[0],list);						
 		}
 				
-		this.init_more(sheet,map,map_style,1);				
+		this.init_more(sheet,map,map_style,list_items,1);				
 		
 		ServletOutputStream os=response.getOutputStream();
 		//response.setContentType("application/vnd.ms-excel");
@@ -179,6 +180,7 @@ public class VKpiWebprofitlossAction extends ActionSupport implements ServletRes
 		XSSFCellStyle cs_itatic=(XSSFCellStyle)map_style.get("cs_itatic");
 		List<VKpiWebprofitloss>list_source=vkpiprofitser.findVKpiWebprofitloss(list_factcode,yymm);
 		Map<String,Object>map=new LinkedHashMap<String,Object>();
+		List<String>list_items=this.findItems();
 		for(String factcode:list_factcode){
 			List<VKpiWebprofitloss>list_obj=new LinkedList<VKpiWebprofitloss>();
 			for(String factno:list_factno){
@@ -197,7 +199,7 @@ public class VKpiWebprofitlossAction extends ActionSupport implements ServletRes
 			}
 			map.put(factcode,list_obj);
 		}
-		this.init_more(sheet,map,map_style,0);					
+		this.init_more(sheet,map,map_style,list_items,0);					
 		/******************sheet2********************/
 		
 		//this.init_more(sheet2,map,map_style,0);
@@ -222,7 +224,7 @@ public class VKpiWebprofitlossAction extends ActionSupport implements ServletRes
 						sheet2.getRow(2+i).getCell(3+j+col_index).setCellStyle(cs_head);
 					}*/
 				}else{
-					this.isRedOrGreen(i,list_styles,map_style);
+					this.isRedOrGreen(i,list_styles,map_style,list_items);
 					for(int j=0;j<list_double.size()-2;j++){
 						//sheet2.getRow(2+i).getCell(3+j+col_index).setCellValue(list_double.get(j));
 						if(list_double_sort.size()>=NUM2&&list_double.get(j)==list_double.get(list_double.size()-2)&&!list_double.get(j).equals(DB1)){
@@ -313,7 +315,7 @@ public class VKpiWebprofitlossAction extends ActionSupport implements ServletRes
 	 * @author web
 	 * @date 2016/9/12
 	 */
-	public void init_more(XSSFSheet sheet,Map<String,Object>map,Map<String,Object>map_style,int mk) throws IOException{	
+	public void init_more(XSSFSheet sheet,Map<String,Object>map,Map<String,Object>map_style,List<String>list_items,int mk) throws IOException{	
 		
 		this.init(sheet,map,mk);
 		
@@ -351,7 +353,7 @@ public class VKpiWebprofitlossAction extends ActionSupport implements ServletRes
 			sheet.getRow(2).getCell(i).setCellStyle(cs_head);
 		}
 		
-		List<String>list_items=this.findItems();
+		//List<String>list_items=this.findItems();
 		for(int i=0;i<list_items.size();i++){
 			sheet.getRow(3+i).getCell(0).setCellValue(i+1);
 			sheet.getRow(3+i).getCell(1).setCellValue(list_items.get(i).split("__")[0]);//項目
@@ -375,7 +377,7 @@ public class VKpiWebprofitlossAction extends ActionSupport implements ServletRes
 				sheet.getRow(1).getCell(3+temp+i).setCellStyle(cs_head2);
 			}
 			
-			List<List<String>>list_pack=this.packageTostring(list_obj,mk);			
+			List<List<String>>list_pack=this.packageTostring(list_obj,list_items,mk);			
 			for(int a=0;a<list_pack.size();a++){
 				List<String>list=list_pack.get(a);
 				for(int b=0;b<list.size();b++){
@@ -428,7 +430,7 @@ public class VKpiWebprofitlossAction extends ActionSupport implements ServletRes
 	 */
 	public List<String>findItems(){
 		List<String>list=new ArrayList<String>();						
-		list.add("機臺孔位數__孔__2");
+		/*list.add("機臺孔位數__孔__2");
 		list.add("機台利用率__%__0");
 		list.add("生產數__模__0");
 		list.add("請款雙數__雙__0");
@@ -443,7 +445,7 @@ public class VKpiWebprofitlossAction extends ActionSupport implements ServletRes
 		list.add("時迴轉__模/H__0");
 		list.add("加班費__USD__1");
 		list.add("成本率__%__1");
-		list.add("利潤率__%__1");
+		list.add("利潤率__%__0");
 		list.add("總損耗__%__1");
 		list.add("平均邊料重__G/雙__1");
 		list.add("邊料率__%__1");
@@ -456,8 +458,12 @@ public class VKpiWebprofitlossAction extends ActionSupport implements ServletRes
 		list.add("蒸汽單耗__USD/模__1");
 		list.add("蒸汽單耗__KG/模__1");
 		list.add("色料藥品單耗__G/雙__1");
-		list.add("色料藥品單耗__USD/雙__1");
+		list.add("色料藥品單耗__USD/雙__1");*/
 
+		List<VKpiWebprofitlossItems>list_items=vkpiprofitser.findItems();
+		for(VKpiWebprofitlossItems item:list_items){
+			list.add(item.getItemName());
+		}
 		return list;
 		
 	}
@@ -474,7 +480,7 @@ public class VKpiWebprofitlossAction extends ActionSupport implements ServletRes
 	 * @author web
 	 * @date 2016/9/8
 	 */
-	public List<List<String>> packageTostring(List<VKpiWebprofitloss>list_obj,int mk){
+	public List<List<String>> packageTostring(List<VKpiWebprofitloss>list_obj,List<String>list_items,int mk){
 		List<List<String>>result=new ArrayList<List<String>>();
 		DecimalFormat frm=new DecimalFormat("0.00%");
 		for(int i=0;i<list_obj.size();i++){
@@ -490,7 +496,7 @@ public class VKpiWebprofitlossAction extends ActionSupport implements ServletRes
 			}else{
 				list.add(obj.getId().getYymm());
 			}
-			List<String>list_str=this.isPercents(obj);
+			List<String>list_str=this.isPercents(obj,list_items);
 			for(String str:list_str){
 				list.add(str);
 			}			
@@ -758,14 +764,14 @@ public class VKpiWebprofitlossAction extends ActionSupport implements ServletRes
 	 * @author web
 	 * @date 2016/9/13
 	 */
-	public List<XSSFCellStyle> isRedOrGreen(int row,List<XSSFCellStyle>list_styles,Map<String,Object>map_style){
+	public List<XSSFCellStyle> isRedOrGreen(int row,List<XSSFCellStyle>list_styles,Map<String,Object>map_style,List<String>list_items){
 		list_styles.clear();
 		XSSFCellStyle cs_red_bg=(XSSFCellStyle)map_style.get("cs_red_bg");
 		XSSFCellStyle cs_lblue_bg=(XSSFCellStyle)map_style.get("cs_lblue_bg");
 		XSSFCellStyle cs=(XSSFCellStyle)map_style.get("cs");
 		List<String>list=new ArrayList<String>();
 		list.add("factno__factno__factno");//1
-		List<String>list_items=this.findItems();
+		//List<String>list_items=this.findItems();
 		for(String item:list_items){
 			list.add(item);
 		}				
@@ -794,9 +800,9 @@ public class VKpiWebprofitlossAction extends ActionSupport implements ServletRes
 	 * @author web
 	 * @date 2016/9/20
 	 */
-	public List<String> isPercents(VKpiWebprofitloss obj){
+	public List<String> isPercents(VKpiWebprofitloss obj,List<String> list_items){
 		List<Object>list=new ArrayList<Object>();
-		List<String>list_items=this.findItems();
+		//List<String>list_items=this.findItems();
 		List<String>list_result=new ArrayList<String>();
 		DecimalFormat frm=new DecimalFormat("0.00%");
 		list.add(obj.getVKw01());
@@ -851,7 +857,7 @@ public class VKpiWebprofitlossAction extends ActionSupport implements ServletRes
 		List<String>list_months=GlobalMethod.findMonths(yymm,yymm2);
 		List<Object[]>list_factcodes=webFactSer.findByFactNo_showA_order(factNo);
 		List<VKpiWebprofitloss>list_vkpipros=vkpiprofitser.findVKpiWebprofitloss(factNo,yymm,yymm2);
-		
+		List<String>list_items=this.findItems();
 		Map<String,Object>map=new LinkedHashMap<String,Object>();
 		for(Object[] factcode:list_factcodes){
 			List<VKpiWebprofitloss>list=new LinkedList<VKpiWebprofitloss>();
@@ -871,7 +877,7 @@ public class VKpiWebprofitlossAction extends ActionSupport implements ServletRes
 			map.put((String)factcode[0],list);						
 		}
 				
-		this.init_more_2003(sheet,map,map_style,1);				
+		this.init_more_2003(sheet,map,map_style,list_items,1);				
 		
 		ServletOutputStream os=response.getOutputStream();
 		response.setContentType("application/vnd.ms-excel");
@@ -900,6 +906,7 @@ public class VKpiWebprofitlossAction extends ActionSupport implements ServletRes
 		HSSFCellStyle cs_itatic=(HSSFCellStyle)map_style.get("cs_itatic");
 		List<VKpiWebprofitloss>list_source=vkpiprofitser.findVKpiWebprofitloss(list_factcode,yymm);
 		Map<String,Object>map=new LinkedHashMap<String,Object>();
+		List<String>list_items=this.findItems();
 		for(String factcode:list_factcode){
 			List<VKpiWebprofitloss>list_obj=new LinkedList<VKpiWebprofitloss>();
 			for(String factno:list_factno){
@@ -918,7 +925,7 @@ public class VKpiWebprofitlossAction extends ActionSupport implements ServletRes
 			}
 			map.put(factcode,list_obj);
 		}
-		this.init_more_2003(sheet,map,map_style,0);					
+		this.init_more_2003(sheet,map,map_style,list_items,0);					
 		/******************sheet2********************/
 		
 		//this.init_more(sheet2,map,map_style,0);
@@ -943,7 +950,7 @@ public class VKpiWebprofitlossAction extends ActionSupport implements ServletRes
 						sheet2.getRow(2+i).getCell(3+j+col_index).setCellStyle(cs_head);
 					}*/
 				}else{
-					this.isRedOrGreen_2003(i,list_styles,map_style);
+					this.isRedOrGreen_2003(i,list_styles,map_style,list_items);
 					for(int j=0;j<list_double.size()-2;j++){
 						//sheet2.getRow(2+i).getCell(3+j+col_index).setCellValue(list_double.get(j));
 						if(list_double_sort.size()>=NUM2&&list_double.get(j)==list_double.get(list_double.size()-2)&&!list_double.get(j).equals(DB1)){
@@ -1034,7 +1041,7 @@ public class VKpiWebprofitlossAction extends ActionSupport implements ServletRes
 	 * @author web
 	 * @date 2016/9/12
 	 */
-	public void init_more_2003(HSSFSheet sheet,Map<String,Object>map,Map<String,Object>map_style,int mk) throws IOException{	
+	public void init_more_2003(HSSFSheet sheet,Map<String,Object>map,Map<String,Object>map_style,List<String>list_items,int mk) throws IOException{	
 		
 		this.init_2003(sheet,map,mk);
 		
@@ -1072,7 +1079,7 @@ public class VKpiWebprofitlossAction extends ActionSupport implements ServletRes
 			sheet.getRow(2).getCell(i).setCellStyle(cs_head);
 		}
 		
-		List<String>list_items=this.findItems();
+		//List<String>list_items=this.findItems();
 		for(int i=0;i<list_items.size();i++){
 			sheet.getRow(3+i).getCell(0).setCellValue(i+1);
 			sheet.getRow(3+i).getCell(1).setCellValue(list_items.get(i).split("__")[0]);//項目
@@ -1096,7 +1103,7 @@ public class VKpiWebprofitlossAction extends ActionSupport implements ServletRes
 				sheet.getRow(1).getCell(3+temp+i).setCellStyle(cs_head2);
 			}
 			
-			List<List<String>>list_pack=this.packageTostring(list_obj,mk);			
+			List<List<String>>list_pack=this.packageTostring(list_obj,list_items,mk);			
 			for(int a=0;a<list_pack.size();a++){
 				List<String>list=list_pack.get(a);
 				for(int b=0;b<list.size();b++){
@@ -1149,14 +1156,14 @@ public class VKpiWebprofitlossAction extends ActionSupport implements ServletRes
 	 * @author web
 	 * @date 2016/9/13
 	 */
-	public List<HSSFCellStyle> isRedOrGreen_2003(int row,List<HSSFCellStyle>list_styles,Map<String,Object>map_style){
+	public List<HSSFCellStyle> isRedOrGreen_2003(int row,List<HSSFCellStyle>list_styles,Map<String,Object>map_style,List<String>list_items){
 		list_styles.clear();
 		HSSFCellStyle cs_red_bg=(HSSFCellStyle)map_style.get("cs_red_bg");
 		HSSFCellStyle cs_lblue_bg=(HSSFCellStyle)map_style.get("cs_lblue_bg");
 		HSSFCellStyle cs=(HSSFCellStyle)map_style.get("cs");
 		List<String>list=new ArrayList<String>();
 		list.add("factno__factno__factno");//1
-		List<String>list_items=this.findItems();
+		//List<String>list_items=this.findItems();
 		for(String item:list_items){
 			list.add(item);
 		}				

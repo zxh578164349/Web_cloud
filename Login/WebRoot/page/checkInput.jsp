@@ -54,7 +54,8 @@ jq(function() {
 			<span>
 			 <s:if test="#session.factNo=='tw'">
 					<select name="factNo" id="factNo" datatype="*">
-						<option value="">請選擇廠別</option>						
+						<option value="">請選擇廠別</option>	
+						<option value="all">全部</option>					
 						<s:iterator value="#session.facts" id="temp">
 							<option value="${temp[0]}">${temp[1]}(${temp[0]})</option>								
 						</s:iterator>

@@ -226,10 +226,7 @@ public class WebEstProductDaoImpl extends Basedao implements IWebEstProductDao {
 	
 	
 	public List<Webestproduct> findByYymm(String yymm, String yymm2) {
-		// TODO Auto-generated method stub
-		//String hql="from Webestproduct where to_char(id.yymm,'yyyymm')>=? and to_char(id.yymm,'yyyymm')<=? and id.type='zd'";
-		String[]objs={yymm,yymm2};
-		
+		// TODO Auto-generated method stub				
 		StringBuffer hql=new StringBuffer();
 		Map<String,Object>map=new HashMap<String,Object>();
 		hql.append("from Webestproduct where 1=1 ");
@@ -242,6 +239,28 @@ public class WebEstProductDaoImpl extends Basedao implements IWebEstProductDao {
 			map.put("yymm2", yymm2);
 		}
 		hql.append(" and id.type='zd'");
+		return super.getAllWithNoPage(hql.toString(), map);
+	}
+
+	/**
+	 * 日期:2016/10/13
+	 * 描述:
+	 */
+	
+	
+	public List<Webestproduct> findByYymm_all(String yymm,String yymm2){
+		// TODO Auto-generated method stub
+		StringBuffer hql=new StringBuffer();
+		Map<String,Object>map=new HashMap<String,Object>();
+		hql.append("from Webestproduct where 1=1 ");
+		if(yymm!=null&&!yymm.equals("")){
+			hql.append(" and to_char(id.yymm,'yyyymm')>=:yymm ");
+			map.put("yymm", yymm);
+		}
+		if(yymm2!=null&&!yymm2.equals("")){
+			hql.append(" and to_char(id.yymm,'yyyymm')<=:yymm2 ");
+			map.put("yymm2", yymm2);
+		}
 		return super.getAllWithNoPage(hql.toString(), map);
 	}
 

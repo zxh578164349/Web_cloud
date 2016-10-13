@@ -215,7 +215,8 @@
 				<value>entity/WebVwebussortSubitem.hbm.xml</value>
 				<value>entity/VWebydatabyfcode.hbm.xml</value>
 				<value>entity/WebEmailAll.hbm.xml</value>
-				<value>entity/VKpiWebprofitloss.hbm.xml</value></list>
+				<value>entity/VKpiWebprofitloss.hbm.xml</value>
+				<value>entity/VKpiWebprofitlossItems.hbm.xml</value></list>
 		</property>
 	</bean>
 		

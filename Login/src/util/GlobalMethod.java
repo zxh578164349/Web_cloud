@@ -1566,9 +1566,11 @@ public class GlobalMethod extends HibernateDaoSupport{
 			}*/
 			
 			
-			test_a("a");
+			//test_a("a");
 			
-			
+			Date d1=new Date(22);
+			Date d2=new Date(21);
+			System.out.println(d1.equals(d2));
 			
 			
 			
