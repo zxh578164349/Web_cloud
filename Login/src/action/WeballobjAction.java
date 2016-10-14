@@ -239,15 +239,15 @@ public class WeballobjAction  extends ActionSupport implements ServletResponseAw
 					obj.setObjA116(Double.valueOf(list.get(17).split(SEPARATOR)[i]));
 					obj.setObjA117(Double.valueOf(list.get(18).split(SEPARATOR)[i]));
 					obj.setObjA118(Double.valueOf(list.get(19).split(SEPARATOR)[i]));
-					obj.setObjA119((int)Double.parseDouble(list.get(20).split(SEPARATOR)[i]));
-					obj.setObjA120((int)Double.parseDouble(list.get(21).split(SEPARATOR)[i]));
+					obj.setObjA119(Double.valueOf(list.get(20).split(SEPARATOR)[i]));
+					obj.setObjA120(Double.valueOf(list.get(21).split(SEPARATOR)[i]));
 					obj.setObjA121(Double.valueOf(list.get(22).split(SEPARATOR)[i]));
 					obj.setObjA122(Double.valueOf(list.get(23).split(SEPARATOR)[i]));
 					obj.setObjA123(Double.valueOf(list.get(24).split(SEPARATOR)[i]));
 					obj.setObjA124(Double.valueOf(list.get(25).split(SEPARATOR)[i]));
-					obj.setObjA125((int)Double.parseDouble(list.get(26).split(SEPARATOR)[i]));
-					obj.setObjA126((int)Double.parseDouble(list.get(27).split(SEPARATOR)[i]));
-					obj.setObjA127((int)Double.parseDouble(list.get(28).split(SEPARATOR)[i]));
+					obj.setObjA125(Double.valueOf(list.get(26).split(SEPARATOR)[i]));
+					obj.setObjA126(Double.valueOf(list.get(27).split(SEPARATOR)[i]));
+					obj.setObjA127(Double.valueOf(list.get(28).split(SEPARATOR)[i]));
 					obj.setObjA128(Double.valueOf(list.get(29).split(SEPARATOR)[i]));
 					obj.setObjA129(Double.valueOf(list.get(30).split(SEPARATOR)[i]));
 					obj.setObjA130(Double.valueOf(list.get(31).split(SEPARATOR)[i]));
@@ -445,15 +445,15 @@ public class WeballobjAction  extends ActionSupport implements ServletResponseAw
 						list_b.add(obj.getObjA116());
 						list_b.add(obj.getObjA117());
 						list_b.add(obj.getObjA118());
-						list_b.add(obj.getObjA119().doubleValue());
-						list_b.add(obj.getObjA120().doubleValue());
+						list_b.add(obj.getObjA119());
+						list_b.add(obj.getObjA120());
 						list_b.add(obj.getObjA121());
 						list_b.add(obj.getObjA122());
 						list_b.add(obj.getObjA123());
 						list_b.add(obj.getObjA124());
-						list_b.add(obj.getObjA125().doubleValue());
-						list_b.add(obj.getObjA126().doubleValue());
-						list_b.add(obj.getObjA127().doubleValue());
+						list_b.add(obj.getObjA125());
+						list_b.add(obj.getObjA126());
+						list_b.add(obj.getObjA127());
 						list_b.add(obj.getObjA128());
 						list_b.add(obj.getObjA129());
 						list_b.add(obj.getObjA130());
@@ -882,9 +882,9 @@ public class WeballobjAction  extends ActionSupport implements ServletResponseAw
 	
 	public HSSFCellStyle findStyleByIndex(Map<String,Object>map,int index){
 		HSSFCellStyle cs=(HSSFCellStyle)map.get("cs_poi2");
-		if(index==19||index==20||index==25||index==26||index==27){
+		/*if(index==19||index==20||index==25||index==26||index==27){
 			cs=(HSSFCellStyle)map.get("cs_poi");
-		}
+		}*/
 		if(index==1||index==3||index==5||(index>=121&&index<=124)||index==163||(index>=169&&index<=176)){
 			cs=(HSSFCellStyle)map.get("cs_poi1");
 		}

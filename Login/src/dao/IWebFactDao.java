@@ -150,6 +150,7 @@ public interface IWebFactDao {
 	
 	public List<String> findByFactNo_showA(String factNo);
 	public List<Object[]> findByFactNo_showA_order(String factNo);
+	public List<Object[]> findByFactNo_order(String factNo);
 	
 	public List<WebFact>findByList(List<String>list);
 	

@@ -374,8 +374,8 @@ public class WebYdataAction extends ActionSupport implements
 					}
 				}
 				log.setIp(ipAddress);
-				dataSer.addYdate_log(log);
-				dataSer.addYdata(ydata);
+				//dataSer.addYdate_log(log);
+				//dataSer.addYdata(ydata);
 				
 				//更新盤點數據
 				yymm=yymmdd.substring(0,6);
@@ -404,7 +404,11 @@ public class WebYdataAction extends ActionSupport implements
 							}							
 						}
 					}							
-				}							
+				}
+				
+				//先更新盤點資料，再更新要修改的產量資料,因爲更新盤點資料有可能出錯,導致產量資料修改了,但對應的盤點資料卻沒有更新  20161014
+				dataSer.addYdate_log(log);
+				dataSer.addYdata(ydata);
 				result = "upData";
 				ajaxResult="0";
 			}// end "else 1"
@@ -629,7 +633,7 @@ public class WebYdataAction extends ActionSupport implements
 					//sumydateSer.delete(sumYdata);
 					String sumydata_username=sumYdata.getUsername()==null?"none":sumYdata.getUsername();
 					String sumydata_username_ud=sumYdata.getUsernameUd()==null?"none":sumYdata.getUsernameUd();
-					this.add_sumYdata(id.getFactNo(), list_yymm.get(i), sumYdata.getStartDate(), sumYdata.getEndDate(),sumydata_username,sumydata_username_ud);
+					//this.add_sumYdata(id.getFactNo(), list_yymm.get(i), sumYdata.getStartDate(), sumYdata.getEndDate(),sumydata_username,sumydata_username_ud);
 				}
 			}							
 		}		
@@ -798,17 +802,30 @@ public class WebYdataAction extends ActionSupport implements
 			id.setYymm(yymm);
 			ydate.setId(id);
 			if(list_ydata!=0){
-				BigDecimal onModulus=new BigDecimal(objs[0].toString());
-				BigDecimal personnum=new BigDecimal(objs[1].toString());
-				BigDecimal standardOutput=new BigDecimal(objs[2].toString());
-				BigDecimal actualYield=new BigDecimal(objs[3].toString());
-				BigDecimal daycount=new BigDecimal(objs[4].toString());
-				BigDecimal actualpairs=new BigDecimal(objs[5].toString());
-				BigDecimal hostpairs=new BigDecimal(objs[6].toString());
-				BigDecimal factpairs=new BigDecimal(objs[7].toString());
-				BigDecimal samplepairs=new BigDecimal(objs[8].toString());
-				BigDecimal outnum=new BigDecimal(objs[9].toString());
-				BigDecimal backnum=new BigDecimal(objs[10].toString());
+				BigDecimal onModulus=new BigDecimal((objs[0]==null?0:objs[0]).toString());
+				BigDecimal personnum=new BigDecimal((objs[1]==null?0:objs[1]).toString());
+				BigDecimal standardOutput=new BigDecimal((objs[2]==null?0:objs[2]).toString());
+				BigDecimal actualYield=new BigDecimal((objs[3]==null?0:objs[3]).toString());
+				BigDecimal daycount=new BigDecimal((objs[4]==null?0:objs[4]).toString());
+				BigDecimal actualpairs=new BigDecimal((objs[5]==null?0:objs[5]).toString());
+				BigDecimal hostpairs=new BigDecimal((objs[6]==null?0:objs[6]).toString());
+				BigDecimal factpairs=new BigDecimal((objs[7]==null?0:objs[7]).toString());
+				BigDecimal samplepairs=new BigDecimal((objs[8]==null?0:objs[8]).toString());
+				BigDecimal outnum=new BigDecimal((objs[9]==null?0:objs[9]).toString());
+				BigDecimal backnum=new BigDecimal((objs[10]==null?0:objs[10]).toString());
+				
+				/*BigDecimal onModulus=new BigDecimal(objs[0].toString());
+				BigDecimal personnum=new BigDecimal((objs[1]).toString());
+				BigDecimal standardOutput=new BigDecimal((objs[2]).toString());
+				BigDecimal actualYield=new BigDecimal((objs[3]).toString());
+				BigDecimal daycount=new BigDecimal((objs[4]).toString());
+				BigDecimal actualpairs=new BigDecimal((objs[5]).toString());
+				BigDecimal hostpairs=new BigDecimal((objs[6]).toString());
+				BigDecimal factpairs=new BigDecimal((objs[7]).toString());
+				BigDecimal samplepairs=new BigDecimal((objs[8]).toString());
+				BigDecimal outnum=new BigDecimal((objs[9]).toString());
+				BigDecimal backnum=new BigDecimal((objs[10]).toString());*/
+				
 				Double workhours=(Double)objs[11];
 				ydate.setSumEverydemo(onModulus);
 				ydate.setSumEverypeople(personnum);
@@ -827,7 +844,7 @@ public class WebYdataAction extends ActionSupport implements
 			ydate.setEndDate(endDate);
 			ydate.setUsername(username);
 			ydate.setUsernameUd(usernameUd);
-			sumydateSer.add(ydate);
+			//sumydateSer.add(ydate);
 			
 			//內存回收20160219
 			ydate=null;

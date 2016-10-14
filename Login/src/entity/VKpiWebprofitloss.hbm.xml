@@ -30,11 +30,11 @@
         <property name="VKw05" type="java.math.BigDecimal">
             <column name="V_KW05" precision="22" scale="0" />
         </property>
-        <property name="VKw06" type="java.lang.Long">
-            <column name="V_KW06" precision="13" scale="0" />
+        <property name="VKw06" type="java.math.BigDecimal">
+            <column name="V_KW06" precision="22" scale="0" />
         </property>
-        <property name="VKw07" type="java.lang.Long">
-            <column name="V_KW07" precision="13" scale="0" />
+        <property name="VKw07" type="java.math.BigDecimal">
+            <column name="V_KW07" precision="22" scale="0" />
         </property>
         <property name="VKw08" type="java.math.BigDecimal">
             <column name="V_KW08" precision="22" scale="0" />

@@ -129,7 +129,11 @@ public class VKpiWebprofitlossAction extends ActionSupport implements ServletRes
 		XSSFSheet sheet=wb.createSheet(factNo);
 		Map<String,Object>map_style=GlobalMethod.findStyles2007(wb);				
 		List<String>list_months=GlobalMethod.findMonths(yymm,yymm2);
-		List<Object[]>list_factcodes=webFactSer.findByFactNo_showA_order(factNo);
+		List<Object[]>list_factcodes=new ArrayList<Object[]>();
+		list_factcodes=webFactSer.findByFactNo_showA_order(factNo);
+		if(list_factcodes.size()==0){
+			list_factcodes=webFactSer.findByFactNo_order(factNo);//如果有效的factcode數量爲0, 則查詢所有的factcode,否則,初始化表格時,報空指針錯誤
+		}
 		List<VKpiWebprofitloss>list_vkpipros=vkpiprofitser.findVKpiWebprofitloss(factNo,yymm,yymm2);
 		List<String>list_items=this.findItems();
 		Map<String,Object>map=new LinkedHashMap<String,Object>();

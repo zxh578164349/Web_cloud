@@ -248,6 +248,13 @@ public class WebFactServicesImpl implements IWebFactServices {
 	public List<Object[]> findByFactNo_showA_order(String factNo){
 		return webFactDao.findByFactNo_showA_order(factNo);
 	}
+	/**
+	 * 日期:2016/10/14
+	 * 描述:有序
+	 */
+	public List<Object[]> findByFactNo_order(String factNo){
+		return webFactDao.findByFactNo_order(factNo);
+	}
 
 	/**
 	 * 日期:2016/6/7

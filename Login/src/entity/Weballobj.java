@@ -28,15 +28,15 @@ public class Weballobj implements java.io.Serializable {
 	private Double objA116;
 	private Double objA117;
 	private Double objA118;
-	private Integer objA119;
-	private Integer objA120;
+	private Double objA119;//
+	private Double objA120;//
 	private Double objA121;
 	private Double objA122;
 	private Double objA123;
 	private Double objA124;
-	private Integer objA125;
-	private Integer objA126;
-	private Integer objA127;
+	private Double objA125;//
+	private Double objA126;//
+	private Double objA127;//
 	private Double objA128;
 	private Double objA129;
 	private Double objA130;
@@ -134,9 +134,9 @@ public class Weballobj implements java.io.Serializable {
 			Double objA106, Double objA107, Double objA108, Double objA109,
 			Double objA110, Double objA111, Double objA112, Double objA113,
 			Double objA114, Double objA115, Double objA116, Double objA117,
-			Double objA118, Integer objA119, Integer objA120, Double objA121,
-			Double objA122, Double objA123, Double objA124, Integer objA125,
-			Integer objA126, Integer objA127, Double objA128, Double objA129,
+			Double objA118, Double objA119, Double objA120, Double objA121,
+			Double objA122, Double objA123, Double objA124, Double objA125,
+			Double objA126, Double objA127, Double objA128, Double objA129,
 			Double objA130, Double objA131, Double objA132, Double objA133,
 			Double objA134, Double objA135, Double objA136, Double objA137,
 			Double objA138, Double objA139, Double objA140, Double objA141,
@@ -427,20 +427,22 @@ public class Weballobj implements java.io.Serializable {
 
 	
 
-	public Integer getObjA119() {
+	
+
+	public Double getObjA119(){
 		return objA119;
 	}
 
-	public void setObjA119(Integer objA119) {
-		this.objA119 = objA119;
+	public void setObjA119(Double objA119){
+		this.objA119=objA119;
 	}
 
-	public Integer getObjA120() {
+	public Double getObjA120(){
 		return objA120;
 	}
 
-	public void setObjA120(Integer objA120) {
-		this.objA120 = objA120;
+	public void setObjA120(Double objA120){
+		this.objA120=objA120;
 	}
 
 	public Double getObjA121() {
@@ -475,30 +477,29 @@ public class Weballobj implements java.io.Serializable {
 		this.objA124 = objA124;
 	}
 
-	
 
-	public Integer getObjA125() {
+	public Double getObjA125(){
 		return objA125;
 	}
 
-	public void setObjA125(Integer objA125) {
-		this.objA125 = objA125;
+	public void setObjA125(Double objA125){
+		this.objA125=objA125;
 	}
 
-	public Integer getObjA126() {
+	public Double getObjA126(){
 		return objA126;
 	}
 
-	public void setObjA126(Integer objA126) {
-		this.objA126 = objA126;
+	public void setObjA126(Double objA126){
+		this.objA126=objA126;
 	}
 
-	public Integer getObjA127() {
+	public Double getObjA127(){
 		return objA127;
 	}
 
-	public void setObjA127(Integer objA127) {
-		this.objA127 = objA127;
+	public void setObjA127(Double objA127){
+		this.objA127=objA127;
 	}
 
 	public Double getObjA128() {

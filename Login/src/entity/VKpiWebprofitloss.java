@@ -16,8 +16,8 @@ public class VKpiWebprofitloss implements java.io.Serializable{
 	private BigDecimal VKw03=new BigDecimal(-999999.0);
 	private Double VKw04=-999999.0;
 	private BigDecimal VKw05=new BigDecimal(-999999.0);
-	private Long VKw06=-999999L;;
-	private Long VKw07=-999999L;;
+	private BigDecimal VKw06=new BigDecimal(-999999.0);
+	private BigDecimal VKw07=new BigDecimal(-999999.0);
 	private BigDecimal VKw08=new BigDecimal(-999999.0);
 	private BigDecimal VKw09=new BigDecimal(-999999.0);
 	private BigDecimal VKw10=new BigDecimal(-999999.0);
@@ -53,7 +53,7 @@ public class VKpiWebprofitloss implements java.io.Serializable{
 	}
 
 	/** full constructor */
-	public VKpiWebprofitloss(VKpiWebprofitlossId id,BigDecimal VKw01,BigDecimal VKw02,BigDecimal VKw03,Double VKw04,BigDecimal VKw05,Long VKw06,Long VKw07,
+	public VKpiWebprofitloss(VKpiWebprofitlossId id,BigDecimal VKw01,BigDecimal VKw02,BigDecimal VKw03,Double VKw04,BigDecimal VKw05,BigDecimal VKw06,BigDecimal VKw07,
 			BigDecimal VKw08,BigDecimal VKw09,BigDecimal VKw10,BigDecimal VKw11,BigDecimal VKw12,Double VKw13,BigDecimal VKw14,BigDecimal VKw15,
 			BigDecimal VKw16,BigDecimal VKw17,BigDecimal VKw18,Double VKw19,BigDecimal VKw20,BigDecimal VKw21,Double VKw22,BigDecimal VKw23,BigDecimal VKw24,
 			BigDecimal VKw25,BigDecimal VKw26,BigDecimal VKw27,BigDecimal VKw28,BigDecimal VKw29){
@@ -139,20 +139,24 @@ public class VKpiWebprofitloss implements java.io.Serializable{
 		this.VKw05=VKw05;
 	}
 
-	public Long getVKw06(){
-		return this.VKw06;
+	
+
+	
+
+	public BigDecimal getVKw06(){
+		return VKw06;
 	}
 
-	public void setVKw06(Long VKw06){
-		this.VKw06=VKw06;
+	public void setVKw06(BigDecimal vKw06){
+		VKw06=vKw06;
 	}
 
-	public Long getVKw07(){
-		return this.VKw07;
+	public BigDecimal getVKw07(){
+		return VKw07;
 	}
 
-	public void setVKw07(Long VKw07){
-		this.VKw07=VKw07;
+	public void setVKw07(BigDecimal vKw07){
+		VKw07=vKw07;
 	}
 
 	public BigDecimal getVKw08(){
