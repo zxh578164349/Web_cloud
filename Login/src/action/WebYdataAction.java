@@ -374,8 +374,8 @@ public class WebYdataAction extends ActionSupport implements
 					}
 				}
 				log.setIp(ipAddress);
-				//dataSer.addYdate_log(log);
-				//dataSer.addYdata(ydata);
+				dataSer.addYdate_log(log);
+				dataSer.addYdata(ydata);
 				
 				//更新盤點數據
 				yymm=yymmdd.substring(0,6);
@@ -400,15 +400,14 @@ public class WebYdataAction extends ActionSupport implements
 								//sumydateSer.delete(sumYdata);
 								String sumydata_username=sumYdata.getUsername()==null?"none":sumYdata.getUsername();
 								String sumydata_usernameUd=sumYdata.getUsernameUd()==null?"none":sumYdata.getUsernameUd();
-								this.add_sumYdata(ydata.getId().getFactNo(), list_yymm.get(i), sumYdata.getStartDate(), sumYdata.getEndDate(),sumydata_username,sumydata_usernameUd);
+								this.add_sumYdata(sumYdata.getId().getFactNo().getFactNo(),sumYdata.getId().getFactCode(), list_yymm.get(i), sumYdata.getStartDate(), sumYdata.getEndDate(),sumydata_username,sumydata_usernameUd);
 							}							
 						}
 					}							
 				}
 				
-				//先更新盤點資料，再更新要修改的產量資料,因爲更新盤點資料有可能出錯,導致產量資料修改了,但對應的盤點資料卻沒有更新  20161014
-				dataSer.addYdate_log(log);
-				dataSer.addYdata(ydata);
+				/*dataSer.addYdate_log(log);
+				dataSer.addYdata(ydata);*/
 				result = "upData";
 				ajaxResult="0";
 			}// end "else 1"
@@ -633,7 +632,7 @@ public class WebYdataAction extends ActionSupport implements
 					//sumydateSer.delete(sumYdata);
 					String sumydata_username=sumYdata.getUsername()==null?"none":sumYdata.getUsername();
 					String sumydata_username_ud=sumYdata.getUsernameUd()==null?"none":sumYdata.getUsernameUd();
-					//this.add_sumYdata(id.getFactNo(), list_yymm.get(i), sumYdata.getStartDate(), sumYdata.getEndDate(),sumydata_username,sumydata_username_ud);
+					this.add_sumYdata(sumYdata.getId().getFactNo().getFactNo(),sumYdata.getId().getFactCode(), list_yymm.get(i), sumYdata.getStartDate(), sumYdata.getEndDate(),sumydata_username,sumydata_username_ud);
 				}
 			}							
 		}		
@@ -787,18 +786,18 @@ public class WebYdataAction extends ActionSupport implements
 	 * @param startDate
 	 * @param endDate
 	 */
-	public void add_sumYdata(String factNo,String yymm,String startDate,String endDate,String username,String usernameUd){
+	public void add_sumYdata(String factNo,String factCode,String yymm,String startDate,String endDate,String username,String usernameUd){
 		List list=webFactSer.findFactCodeByFactNo(factNo);
-		for(int i=0;i<list.size();i++){
-			String factcode=(String)list.get(i);
-			Object[]objs=dataSer.getSumWebYieldDate(factNo, factcode, startDate, endDate);
-			long list_ydata=dataSer.findYdateSdateToEnddate(factNo, factcode, startDate, endDate);
+		
+			//String factcode=(String)list.get(i);
+			Object[]objs=dataSer.getSumWebYieldDate(factNo, factCode, startDate, endDate);
+			long list_ydata=dataSer.findYdateSdateToEnddate(factNo, factCode, startDate, endDate);
 			SumWebYieldData ydate=new SumWebYieldData();
 			SumWebYieldDataId id=new SumWebYieldDataId();
 			VWebFact fact=new VWebFact();
 			fact.setFactNo(factNo);
 			id.setFactNo(fact);
-			id.setFactCode(factcode);
+			id.setFactCode(factCode);
 			id.setYymm(yymm);
 			ydate.setId(id);
 			if(list_ydata!=0){
@@ -844,13 +843,13 @@ public class WebYdataAction extends ActionSupport implements
 			ydate.setEndDate(endDate);
 			ydate.setUsername(username);
 			ydate.setUsernameUd(usernameUd);
-			//sumydateSer.add(ydate);
+			sumydateSer.add(ydate);
 			
 			//內存回收20160219
 			ydate=null;
 			id=null;
 			fact=null;
-		}
+		
 	}
 	
 	public void print(){
