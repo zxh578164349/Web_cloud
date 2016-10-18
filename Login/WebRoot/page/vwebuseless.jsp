@@ -36,7 +36,8 @@ jq(function(){
 </head>
 
 <body>
-<h2>無價值率</h2>
+<h2 id="h2_title">無價值率</h2>
+<br/>
 	<form action="vwebuseless_print" method="post" id="subform" target="_blank">
 		<table id="tb_search">
 			<tr>

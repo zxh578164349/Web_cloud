@@ -26,7 +26,7 @@
   <div id="container">
     <div id="content">
 	<table class="table table-striped table-hover table-bordered">
-		<h2>函文審核狀況</h2>
+		<h2 id="h2_title">函文審核狀況</h2>
 		<thead>			
 			<tr class="tr_show">
 				<th>序號</th>

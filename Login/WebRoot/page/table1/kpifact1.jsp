@@ -31,7 +31,7 @@
 	    <input value="添加" type="button" class="btn btn-info"
 		onclick="loadUrl('saveAndUpdate/kpifactSaveOrUpdate.jsp')" />
         </s:if>
-		KPI年度目標
+		<span id="h2_title">KPI年度目標</span>
 		</h2>
 		<thead>
 			<tr class="tr_show">

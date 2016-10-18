@@ -153,7 +153,7 @@ function getFactName(){
 </head>
   
   <body>
-  <h2>重點指標匯總比較</h2>
+  <h2 id="h2_title">重點指標匯總比較</h2>
         <br/>
      <div class="panel panel-default">
         <div class="panel-heading">

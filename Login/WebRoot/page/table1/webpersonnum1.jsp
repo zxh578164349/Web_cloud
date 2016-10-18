@@ -31,7 +31,7 @@
 	    <input value="添加" type="button" class="btn btn-info"
 		onclick="loadUrl('saveAndUpdate/webpersonnumSaveOrUpdate.jsp')" />
 		</s:if>	
-		人員考勤
+		<span id="h2_title">人員考勤</span>
 		</h2>
 		<thead>
 			<tr class="tr_show">

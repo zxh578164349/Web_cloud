@@ -31,7 +31,7 @@
 		<s:if test='#session.loginUser.userread!="1"'>
 		<input value="添加" type="button" class="btn btn-info"
 		onclick="loadUrl('saveAndUpdate/kyzmatSaveOrUpdate.jsp')" /></s:if>
-		物料資料
+		<span id="h2_title">物料資料</span>
 		</h2>
 		<thead>			
 			<tr class="tr_show">

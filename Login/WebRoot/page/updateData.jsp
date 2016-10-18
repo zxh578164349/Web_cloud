@@ -209,7 +209,7 @@
 	<div class="container">
 		<div class="row clearfix">
 			<div class="col-md-12 column">
-			<h2>個人資料修改</h2>
+			<h2 id="h2_title">個人資料修改</h2>
 				<form class="form-horizontal" role="form" id="form"
 					action="userupdateUesr" method="post">
 					<input type="hidden" name="updateU.id"

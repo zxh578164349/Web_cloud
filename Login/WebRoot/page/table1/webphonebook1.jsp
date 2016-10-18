@@ -26,9 +26,9 @@
 	<table class="table table-striped table-hover table-bordered"  >
 		<h2>		
 		<s:if test='#session.loginUser.userread!="1"'>
-	      <input value="添加新用戶" type="button" class="btn btn-info" onclick="loadUrl('saveAndUpdate/webphonebookSaveOrUpdate.jsp')"/> 	      
+	      <input value="添加" type="button" class="btn btn-info" onclick="loadUrl('saveAndUpdate/webphonebookSaveOrUpdate.jsp')"/> 	      
 	   </s:if>
-		用戶聯系資料
+		<span id="h2_title">用戶聯系資料</span>
 		</h2>
 		<thead>
 			<tr class="tr_show">

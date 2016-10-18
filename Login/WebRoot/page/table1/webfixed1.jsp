@@ -31,7 +31,7 @@
 	<s:if test='#session.loginUser.userread!="1"'>
 	<input type="button" class="btn btn-info" value="添加" onclick="loadUrl('saveAndUpdate/fixedSaveOrUpdate.jsp')"/>	
 	</s:if>	
-	固定資產
+	<span id="h2_title">固定資產</span>
 	</h2>
 		<thead>			
 			<tr class="tr_show">

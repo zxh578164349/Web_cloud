@@ -27,7 +27,7 @@
 		<s:if test='#session.loginUser.userread!="1"'>	
 		<input value="添加新用戶" type="button" class="btn btn-info" onclick="loadUrl('saveAndUpdate/webuserSaveOrUpdate.jsp')"/>
 	    </s:if>	
-		用戶管理
+		<span id="h2_title">用戶管理</span>
 		</h2>
 		<thead>
 			<tr class="tr_show">

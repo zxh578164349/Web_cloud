@@ -28,7 +28,7 @@
 	    <input value="添加" type="button" class="btn btn-info"
 		onclick="loadUrl('saveAndUpdate/WebProdutedSaveOrUpdate.jsp')" />
 	</s:if>	
-		成品資料(每月輸入)
+		<span id="h2_title">成品資料(每月輸入)</span>
 		</h2>
 		<thead>
 			<tr class="tr_show">

@@ -30,7 +30,7 @@
 		<s:if test='#session.loginUser.userread!="1"'>
 	    <input value="添加" type="button" class="btn btn-info"
 		onclick="loadUrl('saveAndUpdate/webbussletterSaveOrUpdate.jsp')" /></s:if>	
-		人員出差申請書
+		<span id="h2_title">人員出差申請書</span>
 		</h2>
 		<thead>			
 			<tr class="tr_show">

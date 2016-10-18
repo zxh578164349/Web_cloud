@@ -14,8 +14,8 @@
 <LINK href="css/list.css" type="text/css" rel="stylesheet">
 <link rel="shortcut icon" href="images/icon/web_ico.ico" />
 <!-- 新 Bootstrap 核心 CSS 文件 -->
-<!-- <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">-->
-<link href="http://apps.bdimg.com/libs/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
+<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<!-- <link href="http://apps.bdimg.com/libs/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet"> -->
 </head>
 
 
@@ -119,14 +119,15 @@
 
 	<script type='text/javascript' src='/Login/dwr/engine.js'></script>
 	<script type='text/javascript' src='/Login/dwr/util.js'></script>
-	<script src="http://apps.bdimg.com/libs/jquery/1.9.1/jquery.min.js"></script>
+	<!-- <script src="http://apps.bdimg.com/libs/jquery/1.9.1/jquery.min.js"></script> -->
 	<script>window.jQuery|| document.write('<script src="jquery/jquery-1.9.1.min.js"><\/script>');</script>
 	<script type="text/javascript" src="page/jquerys/layer/layer.min.js"></script>
 	<script type="text/javascript" src="jquery/DatePicker/WdatePicker.js"></script>
 	<script type="text/javascript" src="jquery/Validform_v5.3.2_min.js"></script>
 	<script type="text/javascript" src="jquery/jquery-form.js"></script>
 	<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
-	<script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>	
+	<!-- <script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script> -->
+	<script src="bootstrap/js/bootstrap.min.js"></script>	
 	<script src="uploadify/jquery.uploadify.min.js" type="text/javascript"></script>	
 
 	<!--[if lt IE 9]>  
@@ -204,7 +205,8 @@
 												"javascript:changeTitle('"
 														+ array[0]
 														+ "');findPageBean('"
-														+ array[1] + "')");
+														+ array[1] + "','"
+														+array[0]+"')");
 										alinks.eq(i).removeClass("a_disable");
 										break;
 									}
@@ -214,15 +216,17 @@
 						});
 
 		function changeTitle(title) {
-			jq(document).attr("title", title);
+			jq(document).attr("title", title);	
 		}
-		function findPageBean(url) {
+		
+		function findPageBean(url,title) {
 			jq.ajax({
 				type : "POST",
 				dataType : "html",
 				url : url,
 				success : function(data) {
 					jq("#r_content").html(data);
+					jq("#h2_title").text(title);
 				},
 				error : function(error) {
 					jq("#r_content").html(error.responseText);

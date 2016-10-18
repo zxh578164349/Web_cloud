@@ -132,8 +132,15 @@ function print(){
 </head>
 
 <body>
-<h2>經營評比</h2>
-	<form action="vwebbussortnew_print" method="post" id="subform" target="_blank">
+<h2 id="h2_title">經營評比</h2>
+
+<br/>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">不分形態</h3>
+  </div>
+  <div class="panel-body">
+      <form action="vwebbussortnew_print" method="post" id="subform" target="_blank">
 		<table id="tb_search">
 			<tr>
 				<td>
@@ -152,12 +159,15 @@ function print(){
 			</tr>
 		</table>					
 	</form>
-	
-	
-	
-	<hr/>
-	<h2>經營評比(分形態)</h2>
-	<form action="vwebbussortnew_print_fcode" method="post" id="subform2" target="_blank">
+  </div>
+</div>
+<br/><br/><br/>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">分形態</h3>
+  </div>
+  <div class="panel-body">
+        <form action="vwebbussortnew_print_fcode" method="post" id="subform2" target="_blank">
 		<table id="tb_search">
 			<tr>
 				<td>
@@ -197,11 +207,8 @@ function print(){
       </s:iterator>
     </table>					
 	</form>
-	
-	<hr>
-
-
-
+  </div>
+</div>
 
 
 </body>

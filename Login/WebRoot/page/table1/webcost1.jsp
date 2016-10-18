@@ -31,7 +31,7 @@
 	    <input value="添加" type="button" class="btn btn-info"
 		onclick="loadUrl('saveAndUpdate/webcostSaveOrUpdate.jsp')" />
         </s:if>
-		資材資料
+		<span id="h2_title">資材資料</span>
 		</h2>
 		<thead>
 			<tr class="tr_show">

@@ -30,7 +30,7 @@
 		<s:if test='#session.loginUser.userread!="1"'>
 	     <input value="添加" type="button" class="btn btn-info"
 		onclick="loadUrl('saveAndUpdate/matterApplicationSaveOrUpdate.jsp')" /></s:if>
-		函文申請
+		<span id="h2_title">函文申請</span>
 		</h2>
 		<thead>			
 			<tr class="tr_show">

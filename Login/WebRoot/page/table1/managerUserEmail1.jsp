@@ -27,7 +27,7 @@
 		<s:if test='#session.loginUser.userread!="1"'>	
 		<input value="添加備簽人" type="button" class="btn btn-info" onclick="loadUrl('saveAndUpdate/webuseremailSaveOrUpdate.jsp')"/>
 	    </s:if>	
-		備簽人管理
+		<span id="h2_title">備簽人管理</span>
 		</h2>
 		<thead>
 			<tr class="tr_show">

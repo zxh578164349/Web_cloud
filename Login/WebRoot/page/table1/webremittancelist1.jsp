@@ -31,7 +31,7 @@
 		<s:if test='#session.loginUser.userread!="1"'>
 	     <input value="添加" type="button" class="btn btn-info"
 		onclick="loadUrl('saveAndUpdate/webremittancelistSaveOrUpdate.jsp')" /></s:if>
-		加伟鞋材对公费用汇款清单
+		<span id="h2_title">加伟鞋材对公费用汇款清单</span>
 		</h2>
 		<thead>			
 			<tr class="tr_show">

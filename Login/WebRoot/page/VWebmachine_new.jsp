@@ -148,7 +148,7 @@ function print_tw(){
 </head>
   
   <body>
-    <h2>分形態損益表(new)</h2>
+    <h2 id="h2_title">分形態損益表(new)</h2>
      <br/>
 
 	<div class="panel panel-default">

@@ -31,7 +31,7 @@
 	    <input value="添加" type="button" class="btn btn-info"
 		onclick="loadUrl('saveAndUpdate/webestproSaveOrUpdate.jsp')" />
         </s:if>
-		預計生產
+		<span id="h2_title">預計生產</span>
 		</h2>
 		<thead>
 			<tr class="tr_show">

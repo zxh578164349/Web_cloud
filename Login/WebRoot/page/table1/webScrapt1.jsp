@@ -29,7 +29,7 @@
 	     <input value="添加" type="button" class="btn btn-info"
 		onclick="loadUrl('saveAndUpdate/WebScraptSaveOrUpdate.jsp')" />
 	    </s:if>	
-		廢品邊料(每月輸入)
+		<span id="h2_title">廢品邊料(每月輸入)</span>
 		</h2>
 		<thead>
 			<tr class="tr_show">

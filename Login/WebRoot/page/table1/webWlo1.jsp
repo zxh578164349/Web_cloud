@@ -30,7 +30,7 @@
 	      <input value="添加" type="button" class="btn btn-info"
 		  onclick="loadUrl('saveAndUpdate/WebWLOSaveOrUpdate.jsp')" />
 	     </s:if>
-	                  水電油(每月輸入)
+	     <span id="h2_title"> 水電油(每月輸入)</span>
 	     </h2>
 	     
 		<thead>

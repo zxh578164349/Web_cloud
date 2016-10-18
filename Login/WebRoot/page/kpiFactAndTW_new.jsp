@@ -147,7 +147,7 @@ function tips(){
 </head>
   
   <body>
-  <h2>KPI工廠與KPI台灣(new)</h2>
+  <h2 id="h2_title">KPI工廠與KPI台灣(new)</h2>
   <br/>
     <div class="panel panel-default">
       <div class="panel-heading">

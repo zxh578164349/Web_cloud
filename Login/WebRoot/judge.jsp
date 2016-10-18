@@ -89,7 +89,7 @@
            </div>
 </script>
 
-<script src="http://apps.bdimg.com/libs/jquery/1.9.1/jquery.min.js"></script> 
+<!-- <script src="http://apps.bdimg.com/libs/jquery/1.9.1/jquery.min.js"></script>  -->
 <script>window.jQuery || document.write('<script src="loginpage/jquery/jquery-1.9.1.min.js"><\/script>');</script>
 <script type="text/javascript" src="loginpage/nprogress/nprogress.js"></script>
 <script type="text/javascript" src="loginpage/jquery/layer/layer.min.js"></script>

@@ -29,7 +29,7 @@
 	    <input value="添加" type="button" class="btn btn-info"
 		onclick="loadUrl('saveAndUpdate/WebMix2SaveOrUpdate.jsp')" />
 	</s:if>	
-		營收損益(每月輸入)
+		<span id="h2_title">營收損益(每月輸入)</span>
 		</h2>
 		<thead>
 			<tr class="tr_show">

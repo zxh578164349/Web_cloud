@@ -27,7 +27,7 @@
 	    <input value="添加" type="button" class="btn btn-info"
 		onclick="loadUrl('saveAndUpdate/WebTabpomSaveOrUpdate.jsp')" />
 	   </s:if>	
-		實驗室形體物性
+		<span id="h2_title">實驗室形體物性</span>
 		</h2>
 	<table class="table table-striped table-hover table-bordered" >
 		

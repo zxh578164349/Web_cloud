@@ -30,7 +30,7 @@
 		<s:if test='#session.loginUser.userread!="1"'>
 	    <input value="添加" type="button" class="btn btn-info"
 		onclick="loadUrl('saveAndUpdate/kyz_contactletterSaveOrUpdate.jsp')" /></s:if>
-		內部聯絡函
+		<span id="h2_title">內部聯絡函</span>
 		</h2>
 		<thead>			
 			<tr class="tr_show">
