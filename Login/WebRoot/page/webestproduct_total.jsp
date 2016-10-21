@@ -46,9 +46,14 @@
 				 <input type="text" name="yymm" onClick="WdatePicker()"
 					readonly="readonly" class="Wdate" datatype="*" id="iyymm" />
 				</span>
-					<input type="hidden" name="lookordown" id="lookordown"/>
-					<input type="submit" value="預覽"  class="btn btn-primary"/>&nbsp;&nbsp;
-				    <input type="submit" value="下載"  class="btn btn-primary"/>&nbsp;&nbsp;
+				<span>
+			 <select name="lookordown" datatype="*">
+			   <option value="">請選擇操作方式</option>
+			   <option value="look">預覽</option>
+			   <option value="down">下載</option>
+			</select>
+			</span>
+					<input type="submit" value="確定"  class="btn btn-primary"/>&nbsp;&nbsp;
 					<input type="button" value="返回" onclick="loadUrl('webestpro_findPageBean')" class="btn btn-primary"/>
 				</td>				
 			</tr>
