@@ -36,7 +36,7 @@
 				<th>標題</th>
 				<th>最近審核狀態</th>
 				<th>當前審核狀態</th>
-				<th>重審狀態</th>				
+				<th>審核時間</th>				
 				<th>創建日期</th>
 				<s:if test='#session.loginUser.userread!="1"'>			
 				<th>操作</th>
@@ -65,7 +65,7 @@
 				</td>
 				<td><s:property value="id.kyVisabillm.visaMk" />
 				</td>
-				<td><s:property value="id.kyVisabillm.revisaMk" />
+				<td><s:property value="dateVisa" />
 				</td>				
 				<td><s:property value="%{formatDate(id.kyVisabillm.dateCreate)}" />
 				</td>

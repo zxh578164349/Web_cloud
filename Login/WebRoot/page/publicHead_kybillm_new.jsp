@@ -19,7 +19,7 @@
 
 </head>
 <body >
-   <form>
+   <form id="subform">
 	<table  id="tb_search" >
 		<tr>
 			<td><s:if test="#session.factNo=='tw'">
@@ -49,16 +49,29 @@
 			</td>									
 		</tr>
 		<tr>
-			<td><input type="text" id="yymmdd" name="yymmdd" 
-				onClick="WdatePicker()" readonly="readonly" class="Wdate"/>
+			<td>
+			<s:if test='#session.loginUser.adminMk!="Y"'>
+			      <input type="text" id="yymmdd" name="yymmdd" 
+				onClick="WdatePicker({dateFmt:'yyyyMMdd_HH',minDate:'#F{$dp.$D(\'yymmdd2\',{d:-30});}',maxDate:'#F{$dp.$D(\'yymmdd2\',{d:-15});}'})" readonly="readonly" class="Wdate"/>
 				至
 			<input type="text" id="yymmdd2" name="yymmdd2" 
-				onClick="WdatePicker()" readonly="readonly" class="Wdate"/>
+				onClick="WdatePicker({dateFmt:'yyyyMMdd_HH',minDate:'#F{$dp.$D(\'yymmdd\',{d:15});}',maxDate:'#F{$dp.$D(\'yymmdd\',{d:30});}'})" readonly="readonly" class="Wdate"/>
+			</s:if>
+			<s:else>
+			   <input type="text" id="yymmdd" name="yymmdd" 
+				onClick="WdatePicker(dateFmt:'yyyyMM',maxDate:'#F{$dp.$D(\'yymmdd2\',{M:-1});}')" readonly="readonly" class="Wdate"/>
+				至
+			<input type="text" id="yymmdd2" name="yymmdd2" 
+				onClick="WdatePicker(dateFmt:'yyyyMM',minDate:'#F{$dp.$D(\'yymmdd\',{M:1});}')" readonly="readonly" class="Wdate"/>
+			</s:else>
+			
+				
 				<input type="radio" value="Y" name="visaMk" />已審核|
 			    <input type="radio" value="N" name="visaMk" checked="checked"/>未審核|
 			    <input type="radio" value="T" name="visaMk"  />未通過
 				
 				<input value="搜索" type="button" class="btn btn-primary" onclick="javascript:submis()" />
+				
 				</td>
 		</tr>
 	</table>

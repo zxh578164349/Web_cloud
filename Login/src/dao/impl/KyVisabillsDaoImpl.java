@@ -138,6 +138,87 @@ public class KyVisabillsDaoImpl extends Basedao implements IKyVisaBillsDao{
 		bean.setTotalPage(totalPage);
 		return bean;
 	}
+	
+	public List<KyVisabills> findtoprint(String visaMk, String factNo, String billNo, String visaSort,
+			String createDate, String createDate2,WebUser user){
+		String adminMk=user.getAdminMk();
+		String email=user.getEmail();		
+		if(email==null||email.equals("")){
+			email="no";
+		}
+		StringBuffer hql=new StringBuffer();
+		StringBuffer hql2=new StringBuffer();
+		Map<String,Object>map=new HashMap<String,Object>();
+		int allrow=0;
+		Integer rows=(Integer)ActionContext.getContext().getSession().get("rows");
+		hql.append("from KyVisabills where 1=1");
+		hql2.append("select count(id.itemNo) ");
+		if(adminMk==null||adminMk.equals("")||adminMk.equals("N")){//非管理員
+			hql.append(" and lower(visaSigner)=:visaSigner");
+			map.put("visaSigner", email.toLowerCase());
+		}else{
+			hql.append(" and id.itemNo='01'");
+		}			
+		if(visaMk!=null&&!visaMk.equals("")){
+			hql.append(" and id.kyVisabillm.visaMk=:visamk");
+			map.put("visamk", visaMk);
+		}
+		if(factNo!=null&&!factNo.equals("")&&!factNo.equals("tw")&&!factNo.equals("nothing")){
+			hql.append(" and id.kyVisabillm.id.factNo=:factno");
+			map.put("factno", factNo);
+		}
+		if(billNo!=null&&!billNo.equals("")){
+			hql.append(" and id.kyVisabillm.id.billNo=:billno");
+			map.put("billno", billNo);
+		}
+		if(visaSort!=null&&!visaSort.equals("")&&!visaSort.equals("nothing")){
+			hql.append(" and id.kyVisabillm.id.visaSort like:visasort");
+			map.put("visasort", visaSort+"%");
+		}
+		if(createDate!=null&&!createDate.equals("")){
+			hql.append(" and id.kyVisabillm.dateCreate>=:createdate");
+			map.put("createdate", createDate);
+		}
+		if(createDate!=null&&!createDate.equals("")&&(createDate2!=null&&!createDate2.equals(""))){
+			hql.append(" and id.kyVisabillm.dateCreate between :createdate and :createdate2");
+			map.put("createdate", createDate);
+			map.put("createdate2", createDate2);
+		}
+		if(createDate2!=null&&!createDate2.equals("")){
+			hql.append(" and id.kyVisabillm.dateCreate<=:createdate2");
+			map.put("createdate2", createDate2);
+		}
+		if(factNo.equals("nothing")&&(visaMk==null||visaMk.equals(""))&&(billNo==null||billNo.equals(""))
+				&&(visaSort.equals("nothing")||visaSort==null||visaSort.equals(""))
+				&&(createDate==null||createDate.equals(""))
+				&&(createDate2==null||createDate2.equals(""))){
+			hql.append(" and id.kyVisabillm.id.factNo=:factno");
+			map.put("factno", factNo);
+		}		
+		//hql.append(" and id.kyVisabillm.delMk is null ");
+		hql2.append(hql);
+		hql.append(" order by id.kyVisabillm.id.factNo desc,id.kyVisabillm.dateCreate desc");		
+		List<KyVisabills>list=super.getAllWithNoPage(hql.toString(),map);
+		
+		//解決hibernate延遲問題
+		if(list.size()>0){
+			for(int i=0;i<list.size();i++){
+				list.get(i).getId().getKyVisabillm().getKyVisabillses().size();
+				/***************************要分類查找，否則報No row with the given identifier exis錯誤***************************/
+				/*if(list.get(i).getId().getKyVisabillm().getId().getBillNo().substring(0,2).equals("EM")){
+					list.get(i).getId().getKyVisabillm().getKyzexp().getMemoSmk();
+				}
+				if(list.get(i).getId().getKyVisabillm().getId().getBillNo().substring(0,2).equals("CM")){
+					list.get(i).getId().getKyVisabillm().getKyzletter().getTitle();
+				}*/
+				
+				/*******************出差函文暫不要查標題，因爲沒有標題*****************/
+				
+			}
+		}
+		return list;
+		
+	}
 
 	public KyVisabills findById(String factNo,String visaSort,String billNo,String itemNo) {
 		// TODO Auto-generated method stub
@@ -192,6 +273,7 @@ public class KyVisabillsDaoImpl extends Basedao implements IKyVisaBillsDao{
 		if(email==null||email.equals("")){
 			email="no";
 		}
+		String date_temp;                  //20161028
 		StringBuffer hql=new StringBuffer();
 		StringBuffer hql2=new StringBuffer();
 		Map<String,Object>map=new HashMap<String,Object>();
@@ -218,12 +300,14 @@ public class KyVisabillsDaoImpl extends Basedao implements IKyVisaBillsDao{
 			}else{
 				hql.append(" and id.itemNo=id.kyVisabillm.itemNext and visaMk='N'");
 			}
+			date_temp=" and dateVisa";          //20161028
 		}else{//管理員
 			if(visaMk!=null&&!visaMk.equals("")){
 				hql.append(" and id.kyVisabillm.visaMk=:visamk");
 				map.put("visamk", visaMk);
 			}
 			hql.append(" and id.itemNo='01'");
+			date_temp=" and id.kyVisabillm.dateCreate";             //20161028
 		}	
 		if(factNo!=null&&!factNo.equals("")&&!factNo.equals("tw")&&!factNo.equals("nothing")){
 			hql.append(" and id.kyVisabillm.id.factNo=:factno");
@@ -240,16 +324,16 @@ public class KyVisabillsDaoImpl extends Basedao implements IKyVisaBillsDao{
 			map.put("visasort", visaSort+"%");
 		}
 		if(createDate!=null&&!createDate.equals("")){
-			hql.append(" and id.kyVisabillm.dateCreate>=:createdate");
+			hql.append(date_temp+">=:createdate");
 			map.put("createdate", createDate);
 		}
-		if(createDate!=null&&!createDate.equals("")&&(createDate2!=null&&!createDate2.equals(""))){
+		/*if(createDate!=null&&!createDate.equals("")&&(createDate2!=null&&!createDate2.equals(""))){
 			hql.append(" and id.kyVisabillm.dateCreate between :createdate and :createdate2");
 			map.put("createdate", createDate);
 			map.put("createdate2", createDate2);
-		}
+		}*/
 		if(createDate2!=null&&!createDate2.equals("")){
-			hql.append(" and id.kyVisabillm.dateCreate<=:createdate2");
+			hql.append(date_temp+"<=:createdate2");
 			map.put("createdate2", createDate2);
 		}
 		if(factNo.equals("nothing")&&(visaMk==null||visaMk.equals(""))&&(billNo==null||billNo.equals(""))

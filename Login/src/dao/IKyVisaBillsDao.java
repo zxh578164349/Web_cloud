@@ -60,5 +60,8 @@ public interface IKyVisaBillsDao {
 	public int findBillsWithNo(String visaSort,String billNo);
 	public List<KyVisabills> findBillsWithNo2(String visaSort,String billNo);//visaMk=N  flowMk=Y
 	public void delete(KyVisabills bils);
+	
+	public List<KyVisabills> findtoprint(String visaMk, String factNo, String billNo, String visaSort,
+			String createDate, String createDate2,WebUser user);
 
 }

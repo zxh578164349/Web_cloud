@@ -32,7 +32,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 			<tbody id="tb_list_info2">
 				    <tr>
 				        <td class="tdcolor">標題</td>
-				        <td><input type="text" name="kyz.memoSmk" datatype="*"  value="<s:property value='kyz.memoSmk'/>" id="memoSmk"/></td>
+				        <td><input type="text" name="kyz.memoSmk" datatype="*1-100"  value="<s:property value='kyz.memoSmk'/>" id="memoSmk"/></td>
 				        
 				        <td class="tdcolor">電話</td>
 				        <td><input type="text" name="kyz.telNo" datatype="n0-11"  value="<s:property value='kyz.telNo'/>" id="telNo"/></td> 				        

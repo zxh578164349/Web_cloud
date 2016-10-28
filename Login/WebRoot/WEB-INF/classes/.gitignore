@@ -1,12 +1,5 @@
 /entity
 /log4j.properties
-/spring-action.xml
-/spring-dao.xml
-/spring-quartz.xml
-/spring-services.xml
-/spring.xml
-/struts.xml
-/uploadError.properties
 /action
 /dao
 /email

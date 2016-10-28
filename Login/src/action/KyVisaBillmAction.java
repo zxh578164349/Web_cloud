@@ -1804,4 +1804,7 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 			}
 		}						             
 }
+	public void printList(){
+		//List<KyVisabills>list=visabillSer.findtoprint(visaMk,factNo,billNo,visaSort,yymmdd,yymmdd2,user);
+	}
 }

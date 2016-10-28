@@ -23,6 +23,9 @@ public interface IKyVisaBillsServices {
 	public int findBillsWithNo(String visaSort,String billNo);
 	public int findBillsWithNo2(String visaSort,String billNo);//visaMk=N  flowMk=Y
 	public void delete(KyVisabills bils);
+	
+	public List<KyVisabills> findtoprint(String visaMk, String factNo, String billNo, String visaSort,
+			String createDate, String createDate2,WebUser user);
 			
 
 }

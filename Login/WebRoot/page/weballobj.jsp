@@ -20,7 +20,7 @@
 
 
 <body>
-	<jsp:include page="publicHead_print.jsp" />
+	<jsp:include page="publicHead_print.jsp" />	
 	<hr/>
 	<form action="weballobj_addMore"  method="post" enctype="multipart/form-data" id="upload_form" target="frameFile">
 	  <table id="tb_search">

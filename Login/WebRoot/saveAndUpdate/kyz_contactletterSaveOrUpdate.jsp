@@ -34,7 +34,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 			<tbody id="tb_list_info2">
 				    <tr>
 				        <td class="tdcolor">標題</td>
-				        <td><input type="text" name="kyzletter.title" datatype="*"  value="<s:property value='kyzletter.title'/>" /></td>
+				        <td><input type="text" name="kyzletter.title" datatype="*1-100"  value="<s:property value='kyzletter.title'/>" /></td>
 				        
 				        <td class="tdcolor">受文者</td>
 				        <td><input type="text" name="kyzletter.toUser" datatype="*0-50"  value="<s:property value='kyzletter.toUser'/>"/></td>
