@@ -59,10 +59,10 @@
 			</s:if>
 			<s:else>
 			   <input type="text" id="yymmdd" name="yymmdd" 
-				onClick="WdatePicker(dateFmt:'yyyyMM',maxDate:'#F{$dp.$D(\'yymmdd2\',{M:-1});}')" readonly="readonly" class="Wdate"/>
+				onClick="WdatePicker({dateFmt:'yyyyMM',maxDate:'#F{$dp.$D(\'yymmdd2\',{M:-1});}'})" readonly="readonly" class="Wdate"/>
 				至
 			<input type="text" id="yymmdd2" name="yymmdd2" 
-				onClick="WdatePicker(dateFmt:'yyyyMM',minDate:'#F{$dp.$D(\'yymmdd\',{M:1});}')" readonly="readonly" class="Wdate"/>
+				onClick="WdatePicker({dateFmt:'yyyyMM',minDate:'#F{$dp.$D(\'yymmdd\',{M:1});}'})" readonly="readonly" class="Wdate"/>
 			</s:else>
 			
 				

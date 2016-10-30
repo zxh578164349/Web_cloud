@@ -35,6 +35,7 @@ import services.IWebBussinessletterServices;
 import services.IWebFactServices;
 import services.IWebTypeServices;
 import services.IWebUserService;
+import services.IWebremittancelistServices;
 import services.IWebuserEmailAServices;
 import services.IWebuserEmailServices;
 import util.GlobalMethod;
@@ -57,6 +58,7 @@ import entity.KyzVisaflow;
 import entity.WebBussinessletter;
 import entity.WebType;
 import entity.WebUser;
+import entity.Webremittancelist;
 import entity_temp.VisabillsTemp;
 
 public class KyVisaBillmAction extends ActionSupport implements ServletResponseAware{
@@ -69,6 +71,7 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 	private IWebBussinessletterServices webbussletterSer;
 	private IWebuserEmailServices webuseremailSer;
 	private IWebuserEmailAServices webuseremailaSer;
+	private IWebremittancelistServices webremiSer;
 	private PageBean bean;
 	private String factNo;
 	private String visaSort;
@@ -246,12 +249,22 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 	public void setWebbussletterSer(IWebBussinessletterServices webbussletterSer) {
 		this.webbussletterSer = webbussletterSer;
 	}
-		
+
+	public void setWebremiSer(IWebremittancelistServices webremiSer) {
+		this.webremiSer = webremiSer;
+	}
 	
 	
 	
 	
 	
+	
+	
+	
+	
+	
+	
+
 	/********************************函文审核******************************************/
 	public String findPageBean(){
 		//ActionContext.getContext().getApplication().clear();
@@ -1804,9 +1817,22 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 			}
 		}						             
 }
-	public void printList() throws IOException{
+	
+	
+	//導出函文
+	public void printList() throws Exception{
 		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
 		List<KyVisabills>list=visabillSer.findtoprint(visaMk,factNo,billNo,visaSort,yymmdd,yymmdd2,user);
+		if(list.size()>21){
+			response.setContentType("text/html;charset=utf-8");
+			response.getWriter().print("<script>window.parent.alert('函文超出上限,禁止導出')</script>");
+		}else{
+			printList_init(list);
+		}	
+	}
+	
+	public void printList_init(List<KyVisabills>list) throws Exception{
+		List<File>files=new ArrayList<File>();
 		for(KyVisabills obj:list){
 			Map<String,Object>map_result=null;
 			String local_factNo=obj.getId().getKyVisabillm().getId().getFactNo();
@@ -1837,12 +1863,20 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 				}
 			}
 			if(obj.getId().getKyVisabillm().getId().getBillNo().substring(0,2).equals("RM")){
-				
+				map_result=webremiSer.print(local_factNo, local_billNo, local_visaSort, obj.getId().getKyVisabillm());
+				map=(Map<String,Object>)map_result.get("map");
+				List<Webremittancelist>listremit=(List<Webremittancelist>)map_result.get("list");
+				JasperHelper.exportmain("auto", map, "webremittancelist.jasper", listremit, local_billNo, "jasper/audit/");
 			}
-			
-			
-		}
-		response.setContentType("text/html;charset=utf-8");
-		response.getWriter().print("導出成功");
+			files.add(new File("D:/"+local_billNo+".pdf"));									
+		}		
+			GlobalMethod.downLoadFiles(files, null, response);
+			for(File file:files){
+				if(file.exists()){
+					if(file.isFile()){
+						file.delete();
+					}
+				}
+			}
 	}
 }
