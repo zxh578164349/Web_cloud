@@ -1804,7 +1804,45 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 			}
 		}						             
 }
-	public void printList(){
-		//List<KyVisabills>list=visabillSer.findtoprint(visaMk,factNo,billNo,visaSort,yymmdd,yymmdd2,user);
+	public void printList() throws IOException{
+		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
+		List<KyVisabills>list=visabillSer.findtoprint(visaMk,factNo,billNo,visaSort,yymmdd,yymmdd2,user);
+		for(KyVisabills obj:list){
+			Map<String,Object>map_result=null;
+			String local_factNo=obj.getId().getKyVisabillm().getId().getFactNo();
+			String local_billNo=obj.getId().getKyVisabillm().getId().getBillNo();
+			String local_visaSort=obj.getId().getKyVisabillm().getId().getVisaSort();
+			if(local_billNo.substring(0,2).equals("EM")){
+				map_result=kyzSer.print(local_factNo, local_billNo,local_visaSort,obj.getId().getKyVisabillm());
+				if(map_result!=null&&map_result.size()>0){
+					map=(Map<String,Object>)map_result.get("map");
+					List<KyzExpectmatm>listkyz=(List<KyzExpectmatm>)map_result.get("list");
+					JasperHelper.exportmain("auto", map,"matterApplication.jasper", listkyz,local_billNo, "jasper/audit/");
+				}
+			}
+			if(local_billNo.substring(0,2).equals("CM")){
+				map_result=kyzletterSer.print(local_factNo, local_billNo, local_visaSort,obj.getId().getKyVisabillm());
+				if(map_result!=null&&map_result.size()>0){
+					map=(Map<String,Object>)map_result.get("map");
+					List<KyzContactletter>listkyzc=(List<KyzContactletter>)map_result.get("list");
+					JasperHelper.exportmain("auto", map,"kyz_contactletter.jasper", listkyzc,local_billNo, "jasper/audit/");
+				}
+			}
+			if(local_billNo.substring(0,2).equals("BM")){
+				map_result=webbussletterSer.print(local_factNo, local_billNo, local_visaSort,obj.getId().getKyVisabillm());
+				if(map_result!=null&&map_result.size()>0){
+					map=(Map<String,Object>)map_result.get("map");
+					List<WebBussinessletter>listbusss=(List<WebBussinessletter>)map_result.get("list");
+					JasperHelper.exportmain("auto", map,"webbussletter.jasper", listbusss,local_billNo, "jasper/audit/");
+				}
+			}
+			if(obj.getId().getKyVisabillm().getId().getBillNo().substring(0,2).equals("RM")){
+				
+			}
+			
+			
+		}
+		response.setContentType("text/html;charset=utf-8");
+		response.getWriter().print("導出成功");
 	}
 }

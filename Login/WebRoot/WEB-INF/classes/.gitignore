@@ -1,11 +1,4 @@
-/entity
-/log4j.properties
 /action
-/dao
 /email
-/entity_temp
-/mail
-/override
-/quartz
 /services
 /util

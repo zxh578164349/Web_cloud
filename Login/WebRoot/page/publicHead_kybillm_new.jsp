@@ -71,7 +71,7 @@
 			    <input type="radio" value="T" name="visaMk"  />未通過
 				
 				<input value="搜索" type="button" class="btn btn-primary" onclick="javascript:submis()" />
-				
+				<input value="導出" type="button" class="btn btn-primary" onclick="javascript:print('subform')" />
 				</td>
 		</tr>
 	</table>
