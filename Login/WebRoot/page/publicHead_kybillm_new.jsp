@@ -52,10 +52,10 @@
 			<td>
 			<s:if test='#session.loginUser.adminMk!="Y"'>
 			      <input type="text" id="yymmdd" name="yymmdd" 
-				onClick="WdatePicker({dateFmt:'yyyyMMdd_HH',minDate:'#F{$dp.$D(\'yymmdd2\',{d:-30});}',maxDate:'#F{$dp.$D(\'yymmdd2\',{d:-15});}'})" readonly="readonly" class="Wdate"/>
+				onClick="WdatePicker({dateFmt:'yyyyMMdd_HH',minDate:'#F{$dp.$D(\'yymmdd2\',{d:-30});}',maxDate:'#F{$dp.$D(\'yymmdd2\',{d:-2});}'})" readonly="readonly" class="Wdate"/>
 				至
 			<input type="text" id="yymmdd2" name="yymmdd2" 
-				onClick="WdatePicker({dateFmt:'yyyyMMdd_HH',minDate:'#F{$dp.$D(\'yymmdd\',{d:15});}',maxDate:'#F{$dp.$D(\'yymmdd\',{d:30});}'})" readonly="readonly" class="Wdate"/>
+				onClick="WdatePicker({dateFmt:'yyyyMMdd_HH',minDate:'#F{$dp.$D(\'yymmdd\',{d:2});}',maxDate:'#F{$dp.$D(\'yymmdd\',{d:30});}'})" readonly="readonly" class="Wdate"/>
 			</s:if>
 			<s:else>
 			   <input type="text" id="yymmdd" name="yymmdd" 

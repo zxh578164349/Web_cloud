@@ -29,13 +29,8 @@ public class WebTabpomDaoImpl extends Basedao implements IWebTabpomDao{
 		Query query=getSession().createQuery(hql);
 		query.setString(0, pomNo);
 		WebTabpom obj=(WebTabpom)query.uniqueResult();
-		/**hibernate延遲問題解決**/
-		for(VWebFact fact:obj.getWebfacts()){
-			fact.getFactNo();
-			fact.getFactSname();
-		}
-		//obj.getWebfacts().size();
-		obj.getWebtabfiles().size();
+		/**hibernate延遲問題解決**/		
+		obj.getWebTabpomfiles().size();
 		obj.getWebBrank().getBName();
 		/**hibernate延遲問題解決**/
 		
@@ -61,7 +56,7 @@ public class WebTabpomDaoImpl extends Basedao implements IWebTabpomDao{
 		hql.append("from WebTabpom where 1=1 ");
 		hql2.append("select count(pomNo) ");
 		if(pomName!=null&&!pomName.equals("")){
-			hql.append(" and pomName like:pomname");
+			hql.append(" and formulaId=:pomname");
 			map.put("pomname", "%"+pomName+"%");
 		}
 		if(brank!=null&&!brank.equals("")){
@@ -96,11 +91,7 @@ public class WebTabpomDaoImpl extends Basedao implements IWebTabpomDao{
 		/***解決延遲加載問題****/
 		if(list.size()>0){
 			for(int i=0;i<list.size();i++){
-				list.get(i).getWebBrank().getBName();
-				for(int j=0;j<list.get(i).getWebfacts().size();j++){
-					list.get(i).getWebfacts().get(j).getFactSname();
-				}
-				
+				list.get(i).getWebBrank().getBName();								
 			}
 		}
 		/***解決延遲加載問題****/
@@ -160,11 +151,7 @@ public class WebTabpomDaoImpl extends Basedao implements IWebTabpomDao{
 		/***解決延遲加載問題****/
 		if(list.size()>0){
 			for(int i=0;i<list.size();i++){
-				list.get(i).getWebBrank().getBName();
-				for(int j=0;j<list.get(i).getWebfacts().size();j++){
-					list.get(i).getWebfacts().get(j).getFactSname();
-				}
-				
+				list.get(i).getWebBrank().getBName();								
 			}
 		}
 		/***解決延遲加載問題****/

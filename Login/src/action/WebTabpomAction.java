@@ -277,7 +277,7 @@ public class WebTabpomAction extends ActionSupport implements ServletResponseAwa
 					list_file.add(webtabFile);
 				}
 			}
-			tabpom.setWebtabfiles(list_file);
+			tabpom.setWebTabpomfiles(list_file);
 		}
 		
 		switch(nullmk){
@@ -286,16 +286,7 @@ public class WebTabpomAction extends ActionSupport implements ServletResponseAwa
 			if(pomNo!=null&&!pomNo.equals("")){
 				ajaxResult="2";
 			}else{
-				try{
-					if(list_fact!=null&&list_fact.size()>0){					
-						List<VWebFact>list_vfact=new ArrayList<VWebFact>();
-						for(int i=0;i<list_fact.size();i++){
-							VWebFact vfact=new VWebFact();
-							vfact.setFactNo(list_fact.get(i));
-							list_vfact.add(vfact);
-						}
-						tabpom.setWebfacts(list_vfact);
-					}
+				try{				
 					tabpomSer.add(tabpom);
 					ajaxResult="0";
 				}catch(Exception e){
@@ -304,16 +295,7 @@ public class WebTabpomAction extends ActionSupport implements ServletResponseAwa
 			}
 			break;
 		case 1:
-			try{
-				if(list_fact!=null&&list_fact.size()>0){					
-					List<VWebFact>list_vfact=new ArrayList<VWebFact>();
-					for(int i=0;i<list_fact.size();i++){
-						VWebFact vfact=new VWebFact();
-						vfact.setFactNo(list_fact.get(i));
-						list_vfact.add(vfact);
-					}
-					tabpom.setWebfacts(list_vfact);
-				}
+			try{				
 				tabpomSer.add(tabpom);
 				ajaxResult="0";
 			}catch(Exception e){
@@ -394,13 +376,13 @@ public class WebTabpomAction extends ActionSupport implements ServletResponseAwa
 	 */
 	public void printSerch() throws IOException{
 		List<WebTabpom>list=tabpomSer.findByAny(pomName, brank, yymm, yymm2);
-		for(WebTabpom tabpom:list){
+		/*for(WebTabpom tabpom:list){
 			StringBuffer factSnames=new StringBuffer();
 			for(VWebFact vwebfact:tabpom.getWebfacts()){
 				factSnames.append(vwebfact.getFactSname()+" ");
 			}
 			tabpom.setVwebfacts(factSnames.toString());
-		}
+		}*/
 		GlobalMethod.print_webtabpom(list, pomName, brank, yymm, yymm2, "webtabpom.jasper", response);
 	}
 	
@@ -427,8 +409,8 @@ public class WebTabpomAction extends ActionSupport implements ServletResponseAwa
 		map.put("SUBREPORT_DIR",ServletActionContext.getRequest().getRealPath("/jasper/webtabpom/")+ "/");
 	    String pic_file="d:\\WebtabpomFile_backup\\"+pomNo;
 	    map.put("pic_file", pic_file+"\\");
-	    map.put("list_file", tabpom.getWebtabfiles());
-	    map.put("list_fact", tabpom.getWebfacts());
+	    map.put("list_file", tabpom.getWebTabpomfiles());
+	    //map.put("list_fact", tabpom.getWebfacts());
 	    if(lookordown.equals("look")){
 	    	JasperHelper.exportmain("line", map, "webtabpom_one.jasper", list, pomNo, "jasper/webtabpom/");
 	    }else{

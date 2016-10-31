@@ -1,393 +1,573 @@
 package entity;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * WebTabpom entity. @author MyEclipse Persistence Tools
  */
 
-public class WebTabpom implements java.io.Serializable {
+public class WebTabpom implements java.io.Serializable{
 
 	// Fields
 
 	private String pomNo;//物性編號
-	private String pomName;//物料名稱
-	private String spematerial;//指定料
-	private String component;//部件
+	private WebBrank webBrank;//品牌
+	private String formulaId;//配方索引（配方系統關聯）
 	private Double hardness;//硬度
-	private Double forces;//拉力↑
-	private Double extends_;//延伸↑
-	private Double tearingC;//C型撕裂↑
-	private Double tearingK;//褲型撕裂↑
-	private Double proportion;//比重(1.13±0.25)
-	private Double wresistingAkron;//AKRON耐磨↓
-	private Double wresistingDin;//DIN耐磨↓
-	private Double ratioA;//止滑係數↑
-	private Double ratioB;//耐油係數↓
+	private Double forces;//拉力
+	private Double extend;//延伸
+	private Double tearingC;//C型撕裂
+	private Double tearingK;//褲型撕裂
+	private Double proportion;//比重
+	private Double wresistingAkron;//AKRON耐磨
+	private Double wresistingDin;//DIN耐磨
+	private Double ratioA;//止滑係數
+	private Double ratioB;//耐油係數
 	private Double ableBend;//抗彎曲
-	private String ableYellow;//抗黃變(String)
-	private String defyPress;//抗高壓(String)
+	private Double ableYellow;//抗黃變
+	private Double defyPress;//抗高壓
 	private Double defyEle;//抗靜電
-	private String ageing;//老化水解(String)
-	private String contract;//收縮(String)
-	private Double elasticity;//彈性↑
-	private String compression;//壓縮↓(String)
-	private Double division;//分裂↑
+	private Double ageing;//老化水解
+	private Double contract;//收縮
+	private Double elasticity;//彈性
+	private Double compression;//壓縮
+	private Double division;//分裂
 	private String authentications;//認證
 	private String instruction;//特性說明
 	private String fileMk;//附檔
-	private String userName;//創建人
+	private String username;//創建人
 	private String tabpomDate;//創建日期
-	private WebBrank webBrank;//品牌
-	private Double proportionA;//比重誤差（與比重連起來用）
-	//private VWebFact webfact;
-	private List<VWebFact>webfacts=new ArrayList<VWebFact>();
-	private List<WebTabpomfile>webtabfiles=new ArrayList<WebTabpomfile>();//記錄附檔文件
-	
-	private String vwebfacts;//便於jasperreport模板打印，此列不需要映射到數據庫物理表中
+	private Double hardness2;//±值
+	private String hardnessDescription;//測試方式說明
+	private String forcesDescription;
+	private String extendsDescription;
+	private String tearingCDescription;
+	private String tearingKDescription;
+	private Double proportion2;//±值
+	private String proportionDescription;
+	private String wresistingAkronDes;
+	private String wresistingDinDes;
+	private String ratioADes;
+	private String ratioBDes;
+	private String ableBendDes;
+	private String ableYellowDes;
+	private String defyPressDes;
+	private String defyEleDes;
+	private String ageingDes;
+	private String contractDes;
+	private String elasticityDes;
+	private String compressionDes;
+	private String divisionDes;
+	private Double modulus300;//300% Modulus
+	private String modulus300Des;
+	private Double spitCream;//吐霜
+	private String spitCreamDes;
+	private List<WebTabpomfile> webTabpomfiles=new ArrayList<WebTabpomfile>();
 
 	// Constructors
 
 	/** default constructor */
-	public WebTabpom() {
+	public WebTabpom(){
 	}
 
 	/** minimal constructor */
-	public WebTabpom(String pomNo) {
-		this.pomNo = pomNo;
+	public WebTabpom(String pomNo){
+		this.pomNo=pomNo;
 	}
 
 	/** full constructor */
-	public WebTabpom(String pomNo, WebBrank webBrank, String pomName,
-			String spematerial, String component, /*VWebFact webfact,*/
-			Double hardness, Double forces, Double extends_, Double tearingC,
-			Double tearingK, Double proportion, Double wresistingAkron,
-			Double wresistingDin, Double ratioA, Double ratioB,
-			Double ableBend, String ableYellow, String defyPress,
-			Double defyEle, String ageing, String contract, Double elasticity,
-			String compression, Double division, String authentications,Double proportionA,
-			String instruction, String fileMk,List<VWebFact> webfacts) {
-		this.pomNo = pomNo;
-		this.webBrank = webBrank;
-		this.pomName = pomName;
-		this.spematerial = spematerial;
-		this.component = component;
-		//this.webfact = webfact;
-		this.webfacts=webfacts;
-		this.hardness = hardness;
-		this.forces = forces;
-		this.extends_ = extends_;
-		this.tearingC = tearingC;
-		this.tearingK = tearingK;
-		this.proportion = proportion;
-		this.wresistingAkron = wresistingAkron;
-		this.wresistingDin = wresistingDin;
-		this.ratioA = ratioA;
-		this.ratioB = ratioB;
-		this.ableBend = ableBend;
-		this.ableYellow = ableYellow;
-		this.defyPress = defyPress;
-		this.defyEle = defyEle;
-		this.ageing = ageing;
-		this.contract = contract;
-		this.elasticity = elasticity;
-		this.compression = compression;
-		this.division = division;
-		this.authentications = authentications;
-		this.instruction = instruction;
-		this.fileMk = fileMk;
+	public WebTabpom(String pomNo,WebBrank webBrank,String formulaId,Double hardness,Double forces,Double extend,Double tearingC,Double tearingK,
+			Double proportion,Double wresistingAkron,Double wresistingDin,Double ratioA,Double ratioB,Double ableBend,Double ableYellow,Double defyPress,
+			Double defyEle,Double ageing,Double contract,Double elasticity,Double compression,Double division,String authentications,String instruction,
+			String fileMk,String username,String tabpomDate,Double hardness2,String hardnessDescription,String forcesDescription,String extendsDescription,
+			String tearingCDescription,String tearingKDescription,Double proportion2,String proportionDescription,String wresistingAkronDes,
+			String wresistingDinDes,String ratioADes,String ratioBDes,String ableBendDes,String ableYellowDes,String defyPressDes,String defyEleDes,
+			String ageingDes,String contractDes,String elasticityDes,String compressionDes,String divisionDes,Double modulus300,String modulus300Des,
+			Double spitCream,String spitCreamDes,List<WebTabpomfile> webTabpomfiles){
+		this.pomNo=pomNo;
+		this.webBrank=webBrank;
+		this.formulaId=formulaId;
+		this.hardness=hardness;
+		this.forces=forces;
+		this.extend=extend;
+		this.tearingC=tearingC;
+		this.tearingK=tearingK;
+		this.proportion=proportion;
+		this.wresistingAkron=wresistingAkron;
+		this.wresistingDin=wresistingDin;
+		this.ratioA=ratioA;
+		this.ratioB=ratioB;
+		this.ableBend=ableBend;
+		this.ableYellow=ableYellow;
+		this.defyPress=defyPress;
+		this.defyEle=defyEle;
+		this.ageing=ageing;
+		this.contract=contract;
+		this.elasticity=elasticity;
+		this.compression=compression;
+		this.division=division;
+		this.authentications=authentications;
+		this.instruction=instruction;
+		this.fileMk=fileMk;
+		this.username=username;
+		this.tabpomDate=tabpomDate;
+		this.hardness2=hardness2;
+		this.hardnessDescription=hardnessDescription;
+		this.forcesDescription=forcesDescription;
+		this.extendsDescription=extendsDescription;
+		this.tearingCDescription=tearingCDescription;
+		this.tearingKDescription=tearingKDescription;
+		this.proportion2=proportion2;
+		this.proportionDescription=proportionDescription;
+		this.wresistingAkronDes=wresistingAkronDes;
+		this.wresistingDinDes=wresistingDinDes;
+		this.ratioADes=ratioADes;
+		this.ratioBDes=ratioBDes;
+		this.ableBendDes=ableBendDes;
+		this.ableYellowDes=ableYellowDes;
+		this.defyPressDes=defyPressDes;
+		this.defyEleDes=defyEleDes;
+		this.ageingDes=ageingDes;
+		this.contractDes=contractDes;
+		this.elasticityDes=elasticityDes;
+		this.compressionDes=compressionDes;
+		this.divisionDes=divisionDes;
+		this.modulus300=modulus300;
+		this.modulus300Des=modulus300Des;
+		this.spitCream=spitCream;
+		this.spitCreamDes=spitCreamDes;
+		this.webTabpomfiles=webTabpomfiles;
 	}
 
 	// Property accessors
 
-	public String getPomNo() {
+	public String getPomNo(){
 		return this.pomNo;
 	}
 
-	public void setPomNo(String pomNo) {
-		this.pomNo = pomNo;
+	public void setPomNo(String pomNo){
+		this.pomNo=pomNo;
 	}
 
-	public WebBrank getWebBrank() {
+	public WebBrank getWebBrank(){
 		return this.webBrank;
 	}
 
-	public void setWebBrank(WebBrank webBrank) {
-		this.webBrank = webBrank;
+	public void setWebBrank(WebBrank webBrank){
+		this.webBrank=webBrank;
 	}
 
-	public String getPomName() {
-		return this.pomName;
+	public String getFormulaId(){
+		return this.formulaId;
 	}
 
-	public void setPomName(String pomName) {
-		this.pomName = pomName;
+	public void setFormulaId(String formulaId){
+		this.formulaId=formulaId;
 	}
 
-	public String getSpematerial() {
-		return this.spematerial;
-	}
-
-	public void setSpematerial(String spematerial) {
-		this.spematerial = spematerial;
-	}
-
-	public String getComponent() {
-		return this.component;
-	}
-
-	public void setComponent(String component) {
-		this.component = component;
-	}
-
-
-
-	public Double getHardness() {
+	public Double getHardness(){
 		return this.hardness;
 	}
 
-	public void setHardness(Double hardness) {
-		this.hardness = hardness;
+	public void setHardness(Double hardness){
+		this.hardness=hardness;
 	}
 
-	public Double getForces() {
+	public Double getForces(){
 		return this.forces;
 	}
 
-	public void setForces(Double forces) {
-		this.forces = forces;
+	public void setForces(Double forces){
+		this.forces=forces;
 	}
 
-	public Double getExtends_() {
-		return this.extends_;
+	public Double getExtend(){
+		return extend;
 	}
 
-	public void setExtends_(Double extends_) {
-		this.extends_ = extends_;
+	public void setExtend(Double extend){
+		this.extend=extend;
 	}
 
-	public Double getTearingC() {
+	public Double getTearingC(){
 		return this.tearingC;
 	}
 
-	public void setTearingC(Double tearingC) {
-		this.tearingC = tearingC;
+	public void setTearingC(Double tearingC){
+		this.tearingC=tearingC;
 	}
 
-	public Double getTearingK() {
+	public Double getTearingK(){
 		return this.tearingK;
 	}
 
-	public void setTearingK(Double tearingK) {
-		this.tearingK = tearingK;
+	public void setTearingK(Double tearingK){
+		this.tearingK=tearingK;
 	}
 
-	public Double getProportion() {
+	public Double getProportion(){
 		return this.proportion;
 	}
 
-	public void setProportion(Double proportion) {
-		this.proportion = proportion;
+	public void setProportion(Double proportion){
+		this.proportion=proportion;
 	}
 
-	public Double getWresistingAkron() {
+	public Double getWresistingAkron(){
 		return this.wresistingAkron;
 	}
 
-	public void setWresistingAkron(Double wresistingAkron) {
-		this.wresistingAkron = wresistingAkron;
+	public void setWresistingAkron(Double wresistingAkron){
+		this.wresistingAkron=wresistingAkron;
 	}
 
-	public Double getWresistingDin() {
+	public Double getWresistingDin(){
 		return this.wresistingDin;
 	}
 
-	public void setWresistingDin(Double wresistingDin) {
-		this.wresistingDin = wresistingDin;
+	public void setWresistingDin(Double wresistingDin){
+		this.wresistingDin=wresistingDin;
 	}
 
-	public Double getRatioA() {
+	public Double getRatioA(){
 		return this.ratioA;
 	}
 
-	public void setRatioA(Double ratioA) {
-		this.ratioA = ratioA;
+	public void setRatioA(Double ratioA){
+		this.ratioA=ratioA;
 	}
 
-	public Double getRatioB() {
+	public Double getRatioB(){
 		return this.ratioB;
 	}
 
-	public void setRatioB(Double ratioB) {
-		this.ratioB = ratioB;
+	public void setRatioB(Double ratioB){
+		this.ratioB=ratioB;
 	}
 
-	public Double getAbleBend() {
+	public Double getAbleBend(){
 		return this.ableBend;
 	}
 
-	public void setAbleBend(Double ableBend) {
-		this.ableBend = ableBend;
+	public void setAbleBend(Double ableBend){
+		this.ableBend=ableBend;
 	}
 
-	
+	public Double getAbleYellow(){
+		return this.ableYellow;
+	}
 
-	
+	public void setAbleYellow(Double ableYellow){
+		this.ableYellow=ableYellow;
+	}
 
-	public Double getDefyEle() {
+	public Double getDefyPress(){
+		return this.defyPress;
+	}
+
+	public void setDefyPress(Double defyPress){
+		this.defyPress=defyPress;
+	}
+
+	public Double getDefyEle(){
 		return this.defyEle;
 	}
 
-	public void setDefyEle(Double defyEle) {
-		this.defyEle = defyEle;
+	public void setDefyEle(Double defyEle){
+		this.defyEle=defyEle;
 	}
 
-	
+	public Double getAgeing(){
+		return this.ageing;
+	}
 
-	
+	public void setAgeing(Double ageing){
+		this.ageing=ageing;
+	}
 
-	public Double getElasticity() {
+	public Double getContract(){
+		return this.contract;
+	}
+
+	public void setContract(Double contract){
+		this.contract=contract;
+	}
+
+	public Double getElasticity(){
 		return this.elasticity;
 	}
 
-	public void setElasticity(Double elasticity) {
-		this.elasticity = elasticity;
+	public void setElasticity(Double elasticity){
+		this.elasticity=elasticity;
 	}
 
-	
+	public Double getCompression(){
+		return this.compression;
+	}
 
-	public Double getDivision() {
+	public void setCompression(Double compression){
+		this.compression=compression;
+	}
+
+	public Double getDivision(){
 		return this.division;
 	}
 
-	public void setDivision(Double division) {
-		this.division = division;
+	public void setDivision(Double division){
+		this.division=division;
 	}
 
-	public String getAuthentications() {
+	public String getAuthentications(){
 		return this.authentications;
 	}
 
-	public void setAuthentications(String authentications) {
-		this.authentications = authentications;
+	public void setAuthentications(String authentications){
+		this.authentications=authentications;
 	}
 
-	public String getInstruction() {
+	public String getInstruction(){
 		return this.instruction;
 	}
 
-	public void setInstruction(String instruction) {
-		this.instruction = instruction;
+	public void setInstruction(String instruction){
+		this.instruction=instruction;
 	}
 
-	public String getFileMk() {
+	public String getFileMk(){
 		return this.fileMk;
 	}
 
-	public void setFileMk(String fileMk) {
-		this.fileMk = fileMk;
+	public void setFileMk(String fileMk){
+		this.fileMk=fileMk;
 	}
 
-
-	public String getUserName() {
-		return userName;
+	public String getUsername(){
+		return this.username;
 	}
 
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setUsername(String username){
+		this.username=username;
 	}
 
-	public String getTabpomDate() {
-		return tabpomDate;
+	public String getTabpomDate(){
+		return this.tabpomDate;
 	}
 
-	public void setTabpomDate(String tabpomDate) {
-		this.tabpomDate = tabpomDate;
+	public void setTabpomDate(String tabpomDate){
+		this.tabpomDate=tabpomDate;
 	}
 
-	public List<VWebFact> getWebfacts() {
-		return webfacts;
+	public Double getHardness2(){
+		return this.hardness2;
 	}
 
-	public void setWebfacts(List<VWebFact> webfacts) {
-		this.webfacts = webfacts;
+	public void setHardness2(Double hardness2){
+		this.hardness2=hardness2;
 	}
 
-	public List<WebTabpomfile> getWebtabfiles() {
-		return webtabfiles;
+	public String getHardnessDescription(){
+		return this.hardnessDescription;
 	}
 
-	public void setWebtabfiles(List<WebTabpomfile> webtabfiles) {
-		this.webtabfiles = webtabfiles;
+	public void setHardnessDescription(String hardnessDescription){
+		this.hardnessDescription=hardnessDescription;
 	}
 
-	public String getAbleYellow() {
-		return ableYellow;
+	public String getForcesDescription(){
+		return this.forcesDescription;
 	}
 
-	public void setAbleYellow(String ableYellow) {
-		this.ableYellow = ableYellow;
+	public void setForcesDescription(String forcesDescription){
+		this.forcesDescription=forcesDescription;
 	}
 
-	public String getDefyPress() {
-		return defyPress;
+	public String getExtendsDescription(){
+		return this.extendsDescription;
 	}
 
-	public void setDefyPress(String defyPress) {
-		this.defyPress = defyPress;
+	public void setExtendsDescription(String extendsDescription){
+		this.extendsDescription=extendsDescription;
 	}
 
-	public String getAgeing() {
-		return ageing;
+	public String getTearingCDescription(){
+		return this.tearingCDescription;
 	}
 
-	public void setAgeing(String ageing) {
-		this.ageing = ageing;
+	public void setTearingCDescription(String tearingCDescription){
+		this.tearingCDescription=tearingCDescription;
 	}
 
-	public String getContract() {
-		return contract;
+	public String getTearingKDescription(){
+		return this.tearingKDescription;
 	}
 
-	public void setContract(String contract) {
-		this.contract = contract;
+	public void setTearingKDescription(String tearingKDescription){
+		this.tearingKDescription=tearingKDescription;
 	}
 
-	public String getCompression() {
-		return compression;
+	public Double getProportion2(){
+		return this.proportion2;
 	}
 
-	public void setCompression(String compression) {
-		this.compression = compression;
+	public void setProportion2(Double proportion2){
+		this.proportion2=proportion2;
 	}
 
-	public Double getProportionA() {
-		return proportionA;
+	public String getProportionDescription(){
+		return this.proportionDescription;
 	}
 
-	public void setProportionA(Double proportionA) {
-		this.proportionA = proportionA;
+	public void setProportionDescription(String proportionDescription){
+		this.proportionDescription=proportionDescription;
 	}
 
-	public String getVwebfacts() {
-		return vwebfacts;
+	public String getWresistingAkronDes(){
+		return this.wresistingAkronDes;
 	}
 
-	public void setVwebfacts(String vwebfacts) {
-		this.vwebfacts = vwebfacts;
+	public void setWresistingAkronDes(String wresistingAkronDes){
+		this.wresistingAkronDes=wresistingAkronDes;
 	}
-	
-	
-	
 
-	
-	
-	
-	
-	
-	
-	
+	public String getWresistingDinDes(){
+		return this.wresistingDinDes;
+	}
+
+	public void setWresistingDinDes(String wresistingDinDes){
+		this.wresistingDinDes=wresistingDinDes;
+	}
+
+	public String getRatioADes(){
+		return this.ratioADes;
+	}
+
+	public void setRatioADes(String ratioADes){
+		this.ratioADes=ratioADes;
+	}
+
+	public String getRatioBDes(){
+		return this.ratioBDes;
+	}
+
+	public void setRatioBDes(String ratioBDes){
+		this.ratioBDes=ratioBDes;
+	}
+
+	public String getAbleBendDes(){
+		return this.ableBendDes;
+	}
+
+	public void setAbleBendDes(String ableBendDes){
+		this.ableBendDes=ableBendDes;
+	}
+
+	public String getAbleYellowDes(){
+		return this.ableYellowDes;
+	}
+
+	public void setAbleYellowDes(String ableYellowDes){
+		this.ableYellowDes=ableYellowDes;
+	}
+
+	public String getDefyPressDes(){
+		return this.defyPressDes;
+	}
+
+	public void setDefyPressDes(String defyPressDes){
+		this.defyPressDes=defyPressDes;
+	}
+
+	public String getDefyEleDes(){
+		return this.defyEleDes;
+	}
+
+	public void setDefyEleDes(String defyEleDes){
+		this.defyEleDes=defyEleDes;
+	}
+
+	public String getAgeingDes(){
+		return this.ageingDes;
+	}
+
+	public void setAgeingDes(String ageingDes){
+		this.ageingDes=ageingDes;
+	}
+
+	public String getContractDes(){
+		return this.contractDes;
+	}
+
+	public void setContractDes(String contractDes){
+		this.contractDes=contractDes;
+	}
+
+	public String getElasticityDes(){
+		return this.elasticityDes;
+	}
+
+	public void setElasticityDes(String elasticityDes){
+		this.elasticityDes=elasticityDes;
+	}
+
+	public String getCompressionDes(){
+		return this.compressionDes;
+	}
+
+	public void setCompressionDes(String compressionDes){
+		this.compressionDes=compressionDes;
+	}
+
+	public String getDivisionDes(){
+		return this.divisionDes;
+	}
+
+	public void setDivisionDes(String divisionDes){
+		this.divisionDes=divisionDes;
+	}
+
+	public Double getModulus300(){
+		return this.modulus300;
+	}
+
+	public void setModulus300(Double modulus300){
+		this.modulus300=modulus300;
+	}
+
+	public String getModulus300Des(){
+		return this.modulus300Des;
+	}
+
+	public void setModulus300Des(String modulus300Des){
+		this.modulus300Des=modulus300Des;
+	}
+
+	public Double getSpitCream(){
+		return this.spitCream;
+	}
+
+	public void setSpitCream(Double spitCream){
+		this.spitCream=spitCream;
+	}
+
+	public String getSpitCreamDes(){
+		return spitCreamDes;
+	}
+
+	public void setSpitCreamDes(String spitCreamDes){
+		this.spitCreamDes=spitCreamDes;
+	}
+
+	public List<WebTabpomfile> getWebTabpomfiles(){
+		return webTabpomfiles;
+	}
+
+	public void setWebTabpomfiles(List<WebTabpomfile> webTabpomfiles){
+		this.webTabpomfiles=webTabpomfiles;
+	}
+
 	
 
 }

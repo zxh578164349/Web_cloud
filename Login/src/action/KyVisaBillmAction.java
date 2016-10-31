@@ -1823,9 +1823,11 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 	public void printList() throws Exception{
 		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
 		List<KyVisabills>list=visabillSer.findtoprint(visaMk,factNo,billNo,visaSort,yymmdd,yymmdd2,user);
-		if(list.size()>21){
-			response.setContentType("text/html;charset=utf-8");
-			response.getWriter().print("<script>window.parent.alert('函文超出上限,禁止導出')</script>");
+		response.setContentType("text/html;charset=utf-8");
+		if(list.size()>21){			
+			response.getWriter().print("<script>window.parent.alert('函文數目超出上限,禁止導出')</script>");
+		}else if(list.size()==0){
+			response.getWriter().print("<script>window.parent.alert('該時間段,沒有相關函文')</script>");
 		}else{
 			printList_init(list);
 		}	

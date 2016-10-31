@@ -13,27 +13,17 @@
         <many-to-one name="webBrank" class="entity.WebBrank" fetch="select">
             <column name="BRANK" length="20" />
         </many-to-one>
-        <!-- <many-to-one name="webfact" class="entity.VWebFact" fetch="select">
-            <column name="FACT_NO" length="20" />
-        </many-to-one> -->
-        <property name="pomName" type="java.lang.String">
-            <column name="POM_NAME" length="30" />
+        <property name="formulaId" type="java.lang.String">
+            <column name="FORMULA_ID" length="40" />
         </property>
-        <property name="spematerial" type="java.lang.String">
-            <column name="SPEMATERIAL" length="2" />
-        </property>
-        <property name="component" type="java.lang.String">
-            <column name="COMPONENT" length="8" />
-        </property>
-       
         <property name="hardness" type="java.lang.Double">
             <column name="HARDNESS" precision="10" />
         </property>
         <property name="forces" type="java.lang.Double">
             <column name="FORCES" precision="10" />
         </property>
-        <property name="extends_" type="java.lang.Double">
-            <column name="EXTENDS" precision="10" />
+        <property name="extend" type="java.lang.Double">
+            <column name="EXTEND" precision="10" />
         </property>
         <property name="tearingC" type="java.lang.Double">
             <column name="TEARING_C" precision="10" />
@@ -59,26 +49,26 @@
         <property name="ableBend" type="java.lang.Double">
             <column name="ABLE_BEND" precision="10" />
         </property>
-        <property name="ableYellow" type="java.lang.String">
-            <column name="ABLE_YELLOW" length="20" />
+        <property name="ableYellow" type="java.lang.Double">
+            <column name="ABLE_YELLOW" precision="10" />
         </property>
-        <property name="defyPress" type="java.lang.String">
-            <column name="DEFY_PRESS" length="20" />
+        <property name="defyPress" type="java.lang.Double">
+            <column name="DEFY_PRESS" precision="10" />
         </property>
         <property name="defyEle" type="java.lang.Double">
             <column name="DEFY_ELE" precision="10" />
         </property>
-        <property name="ageing" type="java.lang.String">
-            <column name="AGEING" length="20" />
+        <property name="ageing" type="java.lang.Double">
+            <column name="AGEING" precision="10" />
         </property>
-        <property name="contract" type="java.lang.String">
-            <column name="CONTRACT" length="20" />
+        <property name="contract" type="java.lang.Double">
+            <column name="CONTRACT" precision="10" />
         </property>
         <property name="elasticity" type="java.lang.Double">
             <column name="ELASTICITY" precision="10" />
         </property>
-        <property name="compression" type="java.lang.String">
-            <column name="COMPRESSION" length="20" />
+        <property name="compression" type="java.lang.Double">
+            <column name="COMPRESSION" precision="10" />
         </property>
         <property name="division" type="java.lang.Double">
             <column name="DIVISION" precision="10" />
@@ -92,26 +82,92 @@
         <property name="fileMk" type="java.lang.String">
             <column name="FILE_MK" length="2" />
         </property>
-        <property name="userName" type="java.lang.String">
-            <column name="USERNAME" length="30"/>
-        </property> 
+        <property name="username" type="java.lang.String">
+            <column name="USERNAME" length="30" />
+        </property>
         <property name="tabpomDate" type="java.lang.String">
-           <column name="TABPOM_DATE" length="8"/>
+            <column name="TABPOM_DATE" length="8" />
         </property>
-        <property name="proportionA" type="java.lang.Double">
-           <column name="PROPORTION_A" precision="10"/>
+        <property name="hardness2" type="java.lang.Double">
+            <column name="HARDNESS2" precision="10" />
         </property>
-        <bag name="webfacts"  table="web_tabpom_fact">
+        <property name="hardnessDescription" type="java.lang.String">
+            <column name="HARDNESS_DESCRIPTION" length="500" />
+        </property>
+        <property name="forcesDescription" type="java.lang.String">
+            <column name="FORCES_DESCRIPTION" length="500" />
+        </property>
+        <property name="extendsDescription" type="java.lang.String">
+            <column name="EXTENDS_DESCRIPTION" length="500" />
+        </property>
+        <property name="tearingCDescription" type="java.lang.String">
+            <column name="TEARING_C_DESCRIPTION" length="500" />
+        </property>
+        <property name="tearingKDescription" type="java.lang.String">
+            <column name="TEARING_K_DESCRIPTION" length="500" />
+        </property>
+        <property name="proportion2" type="java.lang.Double">
+            <column name="PROPORTION2" precision="10" />
+        </property>
+        <property name="proportionDescription" type="java.lang.String">
+            <column name="PROPORTION_DESCRIPTION" length="500" />
+        </property>
+        <property name="wresistingAkronDes" type="java.lang.String">
+            <column name="WRESISTING_AKRON_DES" length="500" />
+        </property>
+        <property name="wresistingDinDes" type="java.lang.String">
+            <column name="WRESISTING_DIN_DES" length="500" />
+        </property>
+        <property name="ratioADes" type="java.lang.String">
+            <column name="RATIO_A_DES" length="500" />
+        </property>
+        <property name="ratioBDes" type="java.lang.String">
+            <column name="RATIO_B_DES" length="500" />
+        </property>
+        <property name="ableBendDes" type="java.lang.String">
+            <column name="ABLE_BEND_DES" length="500" />
+        </property>
+        <property name="ableYellowDes" type="java.lang.String">
+            <column name="ABLE_YELLOW_DES" length="500" />
+        </property>
+        <property name="defyPressDes" type="java.lang.String">
+            <column name="DEFY_PRESS_DES" length="500" />
+        </property>
+        <property name="defyEleDes" type="java.lang.String">
+            <column name="DEFY_ELE_DES" length="500" />
+        </property>
+        <property name="ageingDes" type="java.lang.String">
+            <column name="AGEING_DES" length="500" />
+        </property>
+        <property name="contractDes" type="java.lang.String">
+            <column name="CONTRACT_DES" length="500" />
+        </property>
+        <property name="elasticityDes" type="java.lang.String">
+            <column name="ELASTICITY_DES" length="500" />
+        </property>
+        <property name="compressionDes" type="java.lang.String">
+            <column name="COMPRESSION_DES" length="500" />
+        </property>
+        <property name="divisionDes" type="java.lang.String">
+            <column name="DIVISION_DES" length="500" />
+        </property>
+        <property name="modulus300" type="java.lang.Double">
+            <column name="MODULUS300" precision="10" />
+        </property>
+        <property name="modulus300Des" type="java.lang.String">
+            <column name="MODULUS300_DES" length="500" />
+        </property>
+        <property name="spitCream" type="java.lang.Double">
+            <column name="SPIT_CREAM" precision="10" />
+        </property>
+        <property name="spitCreamDes" type="java.lang.String">
+            <column name="SPIT_CREAM_DES" length="500" />
+        </property>
+        <bag name="webTabpomfiles" cascade="all" inverse="true">
             <key>
-                <column name="WEBTABPOM_ID" length="20" />
+                <column name="POMNO" length="14" not-null="true" />
             </key>
-            <many-to-many class="entity.VWebFact" column="WEBFACT_ID" fetch="select"/>
+            <one-to-many class="entity.WebTabpomfile" />
         </bag>
-        <bag name="webtabfiles" cascade="all" inverse="true">
-          <key>
-             <column name="POMNO" length="14"/> 
-          </key>
-          <one-to-many class="entity.WebTabpomfile"/>
-        </bag>     
     </class>
 </hibernate-mapping>

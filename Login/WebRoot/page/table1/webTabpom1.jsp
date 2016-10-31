@@ -25,7 +25,7 @@
         <h2>
 		<s:if test='#session.loginUser.userread!="1"'>
 	    <input value="添加" type="button" class="btn btn-info"
-		onclick="loadUrl('saveAndUpdate/WebTabpomSaveOrUpdate.jsp')" />
+		onclick="loadUrl('saveAndUpdate/WebTabpomSaveOrUpdate2.jsp')" />
 	   </s:if>	
 		<span id="h2_title">實驗室形體物性</span>
 		</h2>
@@ -35,10 +35,7 @@
 			<tr class="tr_show">
 				<th>序號</th>
 				<th>物性編號</th>
-				<th>物料名稱</th>
-				<th>指定料</th>
-				<th>部件</th>
-				<th>生產工廠</th>
+				<th>配方索引</th>
 				<th>品牌</th>
 				<th>硬度</th>
 				<th>拉力</th>
@@ -59,31 +56,17 @@
 			<tr >
 				<td>${bean.pageSize*(bean.currentPage-1)+x.index+1}</td>
 				<td><s:property value="pomNo" /></td>
-				<td><s:property value="pomName"/></td>
-				<td>
-				  <s:if test='spematerial=="0"'>
-				     是
-				  </s:if>
-				  <s:else>
-				  否
-				  </s:else>
-				</td>
-				<td><s:property value="component" /></td>
-				<td>
-				   <s:iterator value="webfacts">
-				       <s:property value="factSname"/>&nbsp;
-				   </s:iterator>
-				</td>
+				<td><s:property value="formulaId"/></td>								
 				<td><s:property value="webBrank.BName"/></td>
 				<td><s:property value="hardness" /></td>
 				<td><s:property value="forces" /></td>
-				<td><s:property value="extends_" /></td>
+				<td><s:property value="extend" /></td>
 				<td><s:property value="tearingC" /></td>
 				<td><s:property value="tearingK" /></td>
 				<td><s:property value="proportion" /></td>
 				<td><s:property value="wresistingAkron"/></td>
 				<td><s:property value="wresistingDin"/></td>	
-				<td><s:property value="userName" /></td>
+				<td><s:property value="username" /></td>
 				<s:if test='#session.loginUser.userread!="1"'>
 				<td>
 					<form action="webtabpom_findById" method="post" id="subform${x.index}">						
