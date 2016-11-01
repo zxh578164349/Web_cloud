@@ -10,7 +10,7 @@
             <column name="POM_NO" length="14" />
             <generator class="assigned" />
         </id>
-        <many-to-one name="webBrank" class="entity.WebBrank" fetch="select">
+        <many-to-one name="webBrank" class="entity.WebErpBrankProcess" fetch="select">
             <column name="BRANK" length="20" />
         </many-to-one>
         <property name="formulaId" type="java.lang.String">

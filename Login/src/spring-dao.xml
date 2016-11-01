@@ -97,5 +97,7 @@
 	<bean id="vwebprolossfactdao" class="dao.impl.VWebprofitlossFactEveDaoImpl" parent="baseDao"></bean>
 	<bean id="webvwebbussortitemdao" class="dao.impl.WebVwebbussortItemnDaoImpl" parent="baseDao"></bean>
 	<bean id="vpikprofitdao" class="dao.impl.VKpiWebprofitlossDaoImpl" parent="baseDao"></bean>
+	<bean id="weberpbpdao" class="dao.impl.WebErpBrankProcessDaoImpl" parent="baseDao"></bean>
+	<bean id="weberppfdao" class="dao.impl.WebErpProductinFormationDaoImpl" parent="baseDao"></bean>
 </beans>
 

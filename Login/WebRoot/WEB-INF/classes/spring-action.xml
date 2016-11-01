@@ -79,6 +79,8 @@
 	<bean id="vWebbussortActionNewAction" class="action.VWebbussortActionNew" scope="prototype"/>
 	<bean id="AutoSendWebfactorderAction" class="mail.AutoSendWebfactorder" scope="prototype"/>
 	<bean id="vkpiprofitAction" class="action.VKpiWebprofitlossAction" scope="prototype"/>
+	<bean id="weberpbpAction" class="action.WebErpBrankProcessAction" scope="prototype"/>
+	<bean id="weberppfAction" class="action.WebErpProductinFormationAction" scope="prototype"/>
 </beans> 
 
  

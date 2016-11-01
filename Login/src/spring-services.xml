@@ -97,6 +97,8 @@
 	<bean id="vwebprolossfacteveSer" class="services.impl.VWebprofitlossFactEveServicesImpl"></bean>
 	<bean id="webbussitemSer" class="services.impl.WebVwebbussortItemnServicesImpl"></bean>
 	<bean id="vkpiprofitser" class="services.impl.VKpiWebprofitlossServicesImpl"></bean>
+	<bean id="weberppfser" class="services.impl.WebErpProductinFormationServicesImpl"></bean>
+	<bean id="weberpbpser" class="services.impl.WebErpBrankProcessServicesImpl"></bean>
 </beans>
 
 

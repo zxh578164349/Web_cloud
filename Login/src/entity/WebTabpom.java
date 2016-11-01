@@ -14,7 +14,7 @@ public class WebTabpom implements java.io.Serializable{
 	// Fields
 
 	private String pomNo;//物性編號
-	private WebBrank webBrank;//品牌
+	private WebErpBrankProcess webBrank;//品牌
 	private String formulaId;//配方索引（配方系統關聯）
 	private Double hardness;//硬度
 	private Double forces;//拉力
@@ -79,7 +79,7 @@ public class WebTabpom implements java.io.Serializable{
 	}
 
 	/** full constructor */
-	public WebTabpom(String pomNo,WebBrank webBrank,String formulaId,Double hardness,Double forces,Double extend,Double tearingC,Double tearingK,
+	public WebTabpom(String pomNo,WebErpBrankProcess webBrank,String formulaId,Double hardness,Double forces,Double extend,Double tearingC,Double tearingK,
 			Double proportion,Double wresistingAkron,Double wresistingDin,Double ratioA,Double ratioB,Double ableBend,Double ableYellow,Double defyPress,
 			Double defyEle,Double ageing,Double contract,Double elasticity,Double compression,Double division,String authentications,String instruction,
 			String fileMk,String username,String tabpomDate,Double hardness2,String hardnessDescription,String forcesDescription,String extendsDescription,
@@ -151,12 +151,12 @@ public class WebTabpom implements java.io.Serializable{
 	public void setPomNo(String pomNo){
 		this.pomNo=pomNo;
 	}
-
-	public WebBrank getWebBrank(){
-		return this.webBrank;
+	
+	public WebErpBrankProcess getWebBrank(){
+		return webBrank;
 	}
 
-	public void setWebBrank(WebBrank webBrank){
+	public void setWebBrank(WebErpBrankProcess webBrank){
 		this.webBrank=webBrank;
 	}
 

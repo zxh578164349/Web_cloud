@@ -216,7 +216,9 @@
 				<value>entity/VWebydatabyfcode.hbm.xml</value>
 				<value>entity/WebEmailAll.hbm.xml</value>
 				<value>entity/VKpiWebprofitloss.hbm.xml</value>
-				<value>entity/VKpiWebprofitlossItems.hbm.xml</value></list>
+				<value>entity/VKpiWebprofitlossItems.hbm.xml</value>
+				<value>entity/WebErpBrankProcess.hbm.xml</value>
+				<value>entity/WebErpProductinFormation.hbm.xml</value></list>
 		</property>
 	</bean>
 		

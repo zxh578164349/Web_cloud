@@ -630,6 +630,18 @@
 		<action name="vwebbussortnew_*" class="vWebbussortActionNewAction" method="{1}"></action>
 		<action name="autosendfactorder_*" class="AutoSendWebfactorderAction" method="{1}"></action>
 		<action name="vkpiwebpro_*" class="vkpiprofitAction" method="{1}"></action>
+		
+		<action name="weberppf_*" class="weberppfAction" method="{1}">
+		   
+		</action>
+		<action name="weberpbp_*" class="weberpbpAction" method="{1}">
+		   <result name="findObjOp1" type="json">
+		      <param name="root">jsons</param>
+		   </result>
+		   <result name="findObjOp2" type="json">
+		       <param name="root">jsons</param>
+		   </result>
+		</action>
 	</package>
 
 </struts>

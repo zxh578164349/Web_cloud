@@ -31,7 +31,7 @@ public class WebTabpomDaoImpl extends Basedao implements IWebTabpomDao{
 		WebTabpom obj=(WebTabpom)query.uniqueResult();
 		/**hibernate延遲問題解決**/		
 		obj.getWebTabpomfiles().size();
-		obj.getWebBrank().getBName();
+		obj.getWebBrank().getName();
 		/**hibernate延遲問題解決**/
 		
 		return obj;
@@ -91,7 +91,7 @@ public class WebTabpomDaoImpl extends Basedao implements IWebTabpomDao{
 		/***解決延遲加載問題****/
 		if(list.size()>0){
 			for(int i=0;i<list.size();i++){
-				list.get(i).getWebBrank().getBName();								
+				list.get(i).getWebBrank().getName();								
 			}
 		}
 		/***解決延遲加載問題****/
@@ -151,7 +151,7 @@ public class WebTabpomDaoImpl extends Basedao implements IWebTabpomDao{
 		/***解決延遲加載問題****/
 		if(list.size()>0){
 			for(int i=0;i<list.size();i++){
-				list.get(i).getWebBrank().getBName();								
+				list.get(i).getWebBrank().getName();								
 			}
 		}
 		/***解決延遲加載問題****/

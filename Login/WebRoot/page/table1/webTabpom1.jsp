@@ -25,7 +25,7 @@
         <h2>
 		<s:if test='#session.loginUser.userread!="1"'>
 	    <input value="添加" type="button" class="btn btn-info"
-		onclick="loadUrl('saveAndUpdate/WebTabpomSaveOrUpdate2.jsp')" />
+		onclick="loadUrl('saveAndUpdate/WebTabpomSaveOrUpdate.jsp')" />
 	   </s:if>	
 		<span id="h2_title">實驗室形體物性</span>
 		</h2>
