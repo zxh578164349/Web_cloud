@@ -522,7 +522,10 @@
 		    <result name="beanList">page/webTabpom.jsp</result>
 		    <result name="beanList1">page/table1/webTabpom1.jsp</result>
 		    <result name="findById">/saveAndUpdate/WebTabpomSaveOrUpdate.jsp</result>
-		    <result name="delete" type="redirectAction">webtabpom_findPageBean3</result>		    
+		    <result name="delete" type="redirectAction">webtabpom_findPageBean3</result>
+		    <result name="makePomNo" type="json">
+		      <param name="root">ajaxResult</param>
+		    </result>		    
 		</action>
 		<action name="webfactOrder_*" class="webfactorderAction" method="{1}">
 		   <result name="beanList">page/webfactOrder.jsp</result>

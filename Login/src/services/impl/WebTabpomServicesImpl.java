@@ -47,11 +47,11 @@ public class WebTabpomServicesImpl implements IWebTabpomServices{
 		return tabpomDao.findPomNoById(pomNo);
 	}
 
-	public String makePomNo(String component, String tabpomDate) {
+	public String makePomNo(String brank, String tabpomDate) {
 		// TODO Auto-generated method stub
 		StringBuffer pomNo=new StringBuffer();
-		pomNo.append("WX"+component+tabpomDate.substring(2));
-		List<String>list=tabpomDao.findPomNos(component, tabpomDate);
+		pomNo.append("WX"+brank+tabpomDate.substring(2));
+		List<String>list=tabpomDao.findPomNos(brank, tabpomDate);
 		if(list.size()>0){
 			String indexStr=list.get(0).substring(list.get(0).length()-3);
 			Integer temp=Integer.parseInt(indexStr)+1;
@@ -72,6 +72,17 @@ public class WebTabpomServicesImpl implements IWebTabpomServices{
 	public List<WebTabpom> findByAny(String pomName, String brank,String yymm,String yymm2) {
 		// TODO Auto-generated method stub
 		return tabpomDao.findByAny(pomName, brank,yymm,yymm2);
+	}
+
+	/**
+	 * 日期:2016/11/2
+	 * 描述:
+	 */
+	
+	
+	public List<String> findPomNos(String brank,String tabpomDate){
+		// TODO Auto-generated method stub
+		return tabpomDao.findPomNos(brank,tabpomDate);
 	}
 
 }

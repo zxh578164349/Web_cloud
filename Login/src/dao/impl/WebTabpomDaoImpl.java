@@ -60,7 +60,7 @@ public class WebTabpomDaoImpl extends Basedao implements IWebTabpomDao{
 			map.put("pomname", "%"+pomName+"%");
 		}
 		if(brank!=null&&!brank.equals("")){
-			hql.append(" and brank=:brank");
+			hql.append(" and webBrank.sysno=:brank");
 			map.put("brank", brank);
 		}
 		if(yymm!=null&&!yymm.equals("")){
@@ -118,10 +118,10 @@ public class WebTabpomDaoImpl extends Basedao implements IWebTabpomDao{
 		return (String)query.uniqueResult();
 	}
 
-	public List<String> findPomNos(String component,String tabpomDate ) {
+	public List<String> findPomNos(String brank,String tabpomDate ) {
 		// TODO Auto-generated method stub
-		String hql="select pomNo from WebTabpom where component=? and tabpomDate=? order by pomNo desc";
-		String[]objs={component,tabpomDate};
+		String hql="select pomNo from WebTabpom where webBrank.id=? and tabpomDate=? order by pomNo desc";
+		Object[]objs={Integer.parseInt(brank),tabpomDate};
 		return super.findAll(hql, objs);
 	}
 

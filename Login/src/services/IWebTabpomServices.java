@@ -14,7 +14,8 @@ public interface IWebTabpomServices {
 	public PageBean findPageBean(int pageSize,int page,String pomName,String brank,String yymm,String yymm2);
 	
 	public String findPomNoById(String pomNo);
-	public String makePomNo(String component,String tabpomDate);
+	public String makePomNo(String brank,String tabpomDate);
 	public List<WebTabpom> findByAny(String pomName,String brank,String yymm,String yymm2);
+	public List<String>findPomNos(String brank,String tabpomDate);
 
 }

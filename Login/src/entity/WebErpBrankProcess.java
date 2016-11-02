@@ -1,5 +1,7 @@
 package entity;
 
+import java.util.List;
+
 /**
  * WebErpBrankProcess entity. @author MyEclipse Persistence Tools
  */
@@ -15,6 +17,7 @@ public class WebErpBrankProcess implements java.io.Serializable{
 	private String tname;
 	private String cname;
 	private String description;
+	private List<WebTabpom> webTabpoms;
 
 	// Constructors
 
@@ -95,5 +98,14 @@ public class WebErpBrankProcess implements java.io.Serializable{
 	public void setDescription(String description){
 		this.description=description;
 	}
+
+	public List<WebTabpom> getWebTabpoms(){
+		return webTabpoms;
+	}
+
+	public void setWebTabpoms(List<WebTabpom> webTabpoms){
+		this.webTabpoms=webTabpoms;
+	}
+	
 
 }

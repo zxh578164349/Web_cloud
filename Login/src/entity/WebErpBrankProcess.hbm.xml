@@ -28,5 +28,11 @@
         <property name="description" type="java.lang.String">
             <column name="DESCRIPTION" length="80" />
         </property>
+        <bag name="webTabpoms" inverse="true" cascade="all">
+            <key>
+                <column name="BRANK"  />
+            </key>
+            <one-to-many class="entity.WebTabpom" />
+        </bag>
     </class>
 </hibernate-mapping>

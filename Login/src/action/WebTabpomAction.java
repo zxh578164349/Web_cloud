@@ -58,12 +58,20 @@ public class WebTabpomAction extends ActionSupport implements ServletResponseAwa
     private File file;
 	private String fileFileName;
 	private String fileContentType;
+	private String tabpomDate; 
 	private IWebTabpomServices tabpomSer;
 	private IWebTabpomfileServices tabpomfileSer;
 	private javax.servlet.http.HttpServletResponse response;
 	private int backIndex;//返回標識      0或null:不走返回路徑         1:走返回路徑
 	
 	
+	
+	public String getTabpomDate(){
+		return tabpomDate;
+	}
+	public void setTabpomDate(String tabpomDate){
+		this.tabpomDate=tabpomDate;
+	}	
 	public int getBackIndex() {
 		return backIndex;
 	}
@@ -286,8 +294,8 @@ public class WebTabpomAction extends ActionSupport implements ServletResponseAwa
 			if(pomNo!=null&&!pomNo.equals("")){
 				ajaxResult="2";
 			}else{
-				try{				
-					tabpomSer.add(tabpom);
+				try{
+				   tabpomSer.add(tabpom);
 					ajaxResult="0";
 				}catch(Exception e){
 					ajaxResult="1";
@@ -417,6 +425,32 @@ public class WebTabpomAction extends ActionSupport implements ServletResponseAwa
 	    	JasperHelper.exportmain("pdf", map, "webtabpom_one.jasper", list, pomNo, "jasper/webtabpom/");
 	    }		
 	}
+	
+	
+	public String makePomNo() {
+		// TODO Auto-generated method stub
+		StringBuffer pomNo=new StringBuffer();
+		pomNo.append("WX"+brank+tabpomDate.substring(2));
+		List<String>list=tabpomSer.findPomNos(brank, tabpomDate);
+		if(list.size()>0){
+			String indexStr=list.get(0).substring(list.get(0).length()-3);
+			Integer temp=Integer.parseInt(indexStr)+1;
+			String temp2=temp.toString();
+			if(temp2.length()==1){
+				temp2="00"+temp2;
+			}
+			if(temp2.length()==2){
+				temp2="0"+temp2;
+			}
+			pomNo.append(temp2);
+		}else{
+			pomNo.append("001");
+		}
+		ajaxResult=pomNo.toString();
+		return "makePomNo";
+	}
+	
+	
 	
 	
 

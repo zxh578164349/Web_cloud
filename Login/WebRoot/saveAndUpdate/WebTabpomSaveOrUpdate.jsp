@@ -50,12 +50,11 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 						<td class="td_show_title">品牌</td>
 						<td class="td_input">
 						  <s:if test="tabpom==null">
-						     <select name="tabpom.webBrank.sysno" id="dwrWebbrank" datatype="*">
-						       <option value="">請選擇</option>						        					        
+						     <select name="tabpom.webBrank.id" id="dwrWebbrank" datatype="*" onchange="makePomNo2('dwrWebbrank','tabpomDate')">						      					        					        
 						     </select>
 						  </s:if>
 						  <s:else>
-						     <input type="text" name="tabpom.webBrank.sysno" value="<s:property value='tabpom.webBrank.BNo'/>" readonly style="color:blue"/>
+						     <input type="text" name="tabpom.webBrank.id" value="<s:property value='tabpom.webBrank.sysno'/>" readonly style="color:blue"/>
 						  </s:else>   
 						</td>
 					</tr>
@@ -286,10 +285,11 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 		/*加載所有品牌*/
 		jq.ajax({
 			type:"get",
-			url:"weberpbp_findObjOp1",
+			url:"weberpbp_findObjOp2",
 			dataType:"json",
 			success:function(data){
 				jq("#dwrWebbrank").empty();
+				jq("#dwrWebbrank").append("<option value=''>品牌選擇</option>");
 				var item;
 				jq.each(data,function(i,obj){
 					item="<option value='"+obj[0]+"'>"+obj[1]+"</option>";
@@ -298,11 +298,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 			}
 		});
 	})
-	function getAllWebbrank(){
-		webbrankjs.findAll(function(x){
-			dwr.util.addOptions("dwrWebbrank",x,"BNo","BName");
-		});
-	}
+	
 
 /*禁止空格輸入*/
 window.onload=function(){            
@@ -322,9 +318,28 @@ function makePomNo(){
 		webtabpomjs.makePomNo(component,tabpomDate,function(x){			
 			jq("#pomNo").val(x);
 		})
-	}
-	
+	}	
 }
+
+/*物性編號*/
+function makePomNo2(dwrWebbrank,tabpomDate){
+	var brank=jq("#"+dwrWebbrank).val();
+	var tabpomDate=jq("#"+tabpomDate).val();
+	if(brank!=""&&brank!=null&&tabpomDate!=""&&tabpomDate!=null){
+		jq.ajax({
+			type:"POST",
+			dataType:"json",
+			url:"webtabpom_makePomNo",
+			data:{"brank":brank,"tabpomDate":tabpomDate},
+			//data:"{'brank':'"+ brank +"','tabpomDate':'"+ tabpomDate +"'}",
+			success:function(data){
+				jq("#pomNo").val(data);
+			}			
+		});
+	}	
+}
+
+
 var i=0;	
 function addFile(){
     i++;
@@ -450,9 +465,6 @@ function lookJson(pomNo,filename){
 //window.onload=getAllWebbrank;
 
 </script>
-<script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/webbrankjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/webtabpomjs.js'></script>
 <script type="text/javascript">
 jq(function(){
 	//getAllWebbrank();

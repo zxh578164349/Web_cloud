@@ -57,7 +57,7 @@
 				<td>${bean.pageSize*(bean.currentPage-1)+x.index+1}</td>
 				<td><s:property value="pomNo" /></td>
 				<td><s:property value="formulaId"/></td>								
-				<td><s:property value="webBrank.BName"/></td>
+				<td><s:property value="webBrank.name"/></td>
 				<td><s:property value="hardness" /></td>
 				<td><s:property value="forces" /></td>
 				<td><s:property value="extend" /></td>
