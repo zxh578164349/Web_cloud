@@ -29,8 +29,7 @@
 
 
 <body>
-	<form action="webestpro_add" method="post" id="form">
-	<h2>預計生產</h2>
+	<form action="webestpro_add" method="post" id="form">	
 		<table class="table table-condensed">
 		<tbody id="tb_list_info2">
 			<s:if test="pro==null">				

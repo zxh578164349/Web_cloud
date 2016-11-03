@@ -27,7 +27,6 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 <body>
    <div id="pop">
        <form action="visaflow_addMaxFlow" method="post" id="form">
-       <h2>審核流程</h2>
 		<table class="table table-condensed">	    																 			
 			<tbody id="visaflow_body">
 			 	

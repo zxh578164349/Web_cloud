@@ -25,8 +25,7 @@
 
 <body>
 	<form action="webphonebook_add" method="post" id="form">
-		<table class="table table-condensed">
-			<h2>新添聯系資料</h2>
+		<table class="table table-condensed">			
 			<tr>
 				<td class="td_show_title">廠別</td>
 				<td class="td_input"><s:if test="webphone==null">

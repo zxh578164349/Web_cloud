@@ -99,6 +99,7 @@
 	<bean id="vkpiprofitser" class="services.impl.VKpiWebprofitlossServicesImpl"></bean>
 	<bean id="weberppfser" class="services.impl.WebErpProductinFormationServicesImpl"></bean>
 	<bean id="weberpbpser" class="services.impl.WebErpBrankProcessServicesImpl"></bean>
+	<bean id="webformulaser" class="services.impl.WebFormulaServicesImpl"></bean>
 </beans>
 
 

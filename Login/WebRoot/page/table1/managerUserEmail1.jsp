@@ -23,12 +23,12 @@
 <body>
   <div id="container">
 	<table class="table table-striped table-hover table-bordered" >
-		<h2>
+		<h3>
 		<s:if test='#session.loginUser.userread!="1"'>	
 		<input value="添加備簽人" type="button" class="btn btn-info" onclick="loadUrl('saveAndUpdate/webuseremailSaveOrUpdate.jsp')"/>
 	    </s:if>	
 		<span id="h2_title">備簽人管理</span>
-		</h2>
+		</h3>
 		<thead>
 			<tr class="tr_show">
 				<th>備簽人廠別</th>

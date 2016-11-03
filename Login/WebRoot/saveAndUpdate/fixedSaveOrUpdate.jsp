@@ -24,8 +24,7 @@
 
 <body >
 	<div>
-		<form action="fix_addFix" method="post" id="form">
-		<h2>固定資產</h2>
+		<form action="fix_addFix" method="post" id="form">		
 			<table class="table table-condensed"
 				id="msg1">
 				　

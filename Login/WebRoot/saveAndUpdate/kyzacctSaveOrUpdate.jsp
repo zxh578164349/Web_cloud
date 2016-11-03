@@ -24,7 +24,6 @@
 <body>
 
 	<form action="kyzacct_add" method="post" id="form">
-	  <h2>會計科目</h2>
 		<table class="table table-condensed"
 			id="table1">							
 					<tr>					  

@@ -24,8 +24,7 @@
 </head>
 
 <body>
-	<form action="webcost_add" method="post" id="form">
-	<h2>資材資料</h2>
+	<form action="webcost_add" method="post" id="form">	
 		<table class="table table-condensed">
 		　　
 			<s:if test="cost==null">

@@ -24,7 +24,6 @@
 </head>
 <body>
 	<form action="webScrapt_addscrapt" method="post" id="form">
-	<h2>廢品邊料(每月輸入)</h2>
 		<table class="table table-condensed"
 			id="msg1">
 			  

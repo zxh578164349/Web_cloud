@@ -27,8 +27,7 @@
 
 
 <body>
-	<form action="webbackfeed_add" method="post" id="form">
-	<h2>回頭料(每月輸入)</h2>
+	<form action="webbackfeed_add" method="post" id="form">	
 		<table class="table table-condensed">
 		　　
 			<s:if test="feed==null">

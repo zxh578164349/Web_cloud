@@ -27,12 +27,12 @@
    <div id="container">
    <div id="content">
 	<table class="table table-striped table-hover table-bordered"  >
-	<h2>
+	<h3>
 	<s:if test='#session.loginUser.userread!="1"'>
 	<input type="button" class="btn btn-info" value="添加" onclick="loadUrl('saveAndUpdate/fixedSaveOrUpdate.jsp')"/>	
 	</s:if>	
 	<span id="h2_title">固定資產</span>
-	</h2>
+	</h3>
 		<thead>			
 			<tr class="tr_show">
 			    <th>序號</th>

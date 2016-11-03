@@ -29,8 +29,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 
 <body >
 
-	<form action="kyzmat_add" method="post" id="form">
-	<h2>物料資料</h2>	 
+	<form action="kyzmat_add" method="post" id="form">	 
 	  <s:if test="mat!=null">
 			<input type="hidden" name="mat.updateMan" value="<s:property value='#attr.loginUser.username'/>"/>
 		    <input type="hidden" name="mat.dateUpdate" value="<%=str_date%>"/>	 

@@ -27,7 +27,6 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 </head>
 <body >  
     <form action="kyz_add"  method="post" id="form"  enctype="multipart/form-data" target="frameFile">
-        <h2>函文申請</h2>
 		<table class="table table-condensed" >		    	
 			<tbody id="tb_list_info2">
 				    <tr>

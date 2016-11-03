@@ -3,6 +3,9 @@
  */
 package action;
 
+import java.util.List;
+
+import net.sf.json.JSONArray;
 import services.IWebErpProductinFormationServices;
 
 /**   
@@ -19,11 +22,46 @@ import services.IWebErpProductinFormationServices;
  *    
  **/
 public class WebErpProductinFormationAction{
+	private String itemcategory;
+	private JSONArray jsons;
+	
+	
+	public JSONArray getJsons(){
+		return jsons;
+	}
+
+	public void setJsons(JSONArray jsons){
+		this.jsons=jsons;
+	}
+
+	public String getItemcategory(){
+		return itemcategory;
+	}
+
+	public void setItemcategory(String itemcategory){
+		this.itemcategory=itemcategory;
+	}
+
 	private IWebErpProductinFormationServices weberppfser;
 
 	public void setWeberppfser(IWebErpProductinFormationServices weberppfser){
 		this.weberppfser=weberppfser;
 	}
+	
+	public String findItemcategoryAble(){
+		List<Object[]>list=weberppfser.findItemcategoryAble();
+		jsons=JSONArray.fromObject(list);
+		return "findItemcategoryAble";
+	}
+	
+	public String findNamece(){
+		List<Object[]>list=weberppfser.findNamece(itemcategory);
+		jsons=JSONArray.fromObject(list);
+		return "findNamece";
+	}
+	
+	
+	
 	
 	
 	

@@ -22,13 +22,13 @@
 </head>
 <body>
   <div id="container">
-        <h2>
+        <h3>
 		<s:if test='#session.loginUser.userread!="1"'>
 	    <input value="添加" type="button" class="btn btn-info"
 		onclick="loadUrl('saveAndUpdate/WebTabpomSaveOrUpdate.jsp')" />
 	   </s:if>	
 		<span id="h2_title">實驗室形體物性</span>
-		</h2>
+		</h3>
 	<table class="table table-striped table-hover table-bordered" >
 		
 		<thead>

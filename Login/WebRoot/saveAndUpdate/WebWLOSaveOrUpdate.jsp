@@ -24,7 +24,6 @@
 
 <body>
 	<form action="webwlo_addwlo" method="post" id="form">
-	<h2>水電油(每月輸入)</h2>
 		<table class="table table-condensed"
 			id="msg1">
 			  

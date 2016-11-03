@@ -19,7 +19,29 @@ import java.util.List;
  *    
  **/
 public interface IWebErpProductinFormationServices{
-	public List<String>findItemCodeAble();
+	/**
+	 * 
+	 * @Title: findItemcategoryAble
+	 * @Description: 可用配方原料類別代號state=3 and status <> 0
+	 * @param @return
+	 * @return List<Object[]>
+	 * @throws
+	 * @author web
+	 * @date 2016/11/3
+	 */
+	public List<Object[]>findItemcategoryAble();
+	
+	/**
+	 * 
+	 * @Title: findNamece
+	 * @Description: 根據類別查找對應的原料
+	 * @param @return
+	 * @return List<Object[]>
+	 * @throws
+	 * @author web
+	 * @date 2016/11/3
+	 */
+	public List<Object[]>findNamece(String itemcategory);
 	
 
 }

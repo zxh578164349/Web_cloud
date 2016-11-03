@@ -38,9 +38,9 @@ function update_ydata(subform){
  <div id="container">
  <div id="content">
 	<table class="table table-striped table-hover table-bordered" >
-		<h2>		
+		<h3>		
 		產量資料未輸入記錄
-		</h2>
+		</h3>
 		<thead>
 			<tr class="tr_show">
 				<th>序號</th>

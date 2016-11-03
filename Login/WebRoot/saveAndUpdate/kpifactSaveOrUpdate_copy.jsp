@@ -26,7 +26,6 @@
 
 <body>
 	<form action="kpifact_add" method="post" id="form">
-	 <h2>KPI年度目標(複製)</h2>
 		<table class="table table-condensed">		
 				<tr>
 					<td class="td_show_title">廠別</td>

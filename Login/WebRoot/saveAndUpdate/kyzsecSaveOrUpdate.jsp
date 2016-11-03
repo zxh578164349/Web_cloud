@@ -24,8 +24,7 @@
 
 <body>
 
-	<form action="kyzsec_add" method="post" id="form">
-        <h2>費用組別</h2>
+	<form action="kyzsec_add" method="post" id="form">      
 		<table class="table table-condensed"
 			id="table1">
 

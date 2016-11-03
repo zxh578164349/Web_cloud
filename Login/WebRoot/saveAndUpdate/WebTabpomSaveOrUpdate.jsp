@@ -28,7 +28,6 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 
 <body>
 	<form action="webtabpom_add" method="post" id="subform" enctype="multipart/form-data">
-	  <h2>實驗室形體物性</h2>
 		<table class="table table-condensed">			
 			<thead>				
 					<tr>

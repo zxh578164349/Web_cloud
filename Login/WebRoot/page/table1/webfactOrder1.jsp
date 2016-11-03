@@ -23,7 +23,7 @@
 <body>
   <div id="container">
 	<table class="table table-striped table-hover table-bordered">
-		<h2 id="h2_title">工廠客戶訂單</h2>
+		<h3 id="h2_title">工廠客戶訂單</h3>
 		<thead>
 			<tr class="tr_show">
 				<th>序號</th>

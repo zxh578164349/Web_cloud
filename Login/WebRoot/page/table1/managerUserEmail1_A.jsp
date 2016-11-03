@@ -24,12 +24,12 @@
 <body>
   <div id="container">
 	<table class="table table-striped table-hover table-bordered"  >
-		<h2>
+		<h3>
 		<s:if test='#session.loginUser.userread!="1"'>	
 		<input value="添加知會人" type="button" class="btn btn-info" onclick="loadUrl('saveAndUpdate/webuseremailaSaveOrUpdate.jsp')"/>
 	    </s:if>	
 		<span id="h2_title">知會人管理</span>
-		</h2>
+		</h3>
 		<thead>
 			<tr class="tr_show">
 				<th>廠別</th>

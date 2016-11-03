@@ -23,8 +23,7 @@
 </head>
 
 <body>
-	<form action="webmixPerson_addMixPerson" method="post" id="form">
-	<h2>人數工時(每月輸入)</h2>
+	<form action="webmixPerson_addMixPerson" method="post" id="form">	
 		<table class="table table-condensed"
 			id="msg1">
 			 

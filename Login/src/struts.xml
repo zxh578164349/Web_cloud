@@ -635,7 +635,12 @@
 		<action name="vkpiwebpro_*" class="vkpiprofitAction" method="{1}"></action>
 		
 		<action name="weberppf_*" class="weberppfAction" method="{1}">
-		   
+		   <result name="findItemcategoryAble" type="json">
+		      <param name="root">jsons</param>
+		   </result>
+		   <result name="findNamece" type="json">
+		      <param name="root">jsons</param>
+		   </result>
 		</action>
 		<action name="weberpbp_*" class="weberpbpAction" method="{1}">
 		   <result name="findObjOp1" type="json">
@@ -644,6 +649,10 @@
 		   <result name="findObjOp2" type="json">
 		       <param name="root">jsons</param>
 		   </result>
+		</action>
+		<action name="webformula_*" class="webformulaAction" method="{1}">
+		    <result name="findPageBean">page/webformula.jsp</result>
+		    <result name="findPageBean">page/table1/webformula1.jsp</result>
 		</action>
 	</package>
 

@@ -26,7 +26,6 @@
 <body >
 
 	<form action="ydata_addData" method="post" id="form" role="form" class="form-inline">
-       <h2>產量資料</h2>
 		<table class="table table-condensed"
 			id="table1">			
 			<s:if test="ydata==null">

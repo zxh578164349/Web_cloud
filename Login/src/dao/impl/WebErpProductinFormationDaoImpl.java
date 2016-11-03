@@ -27,12 +27,25 @@ public class WebErpProductinFormationDaoImpl extends Basedao implements IWebErpP
 	 * 日期:2016/11/1
 	 * 描述:
 	 */
+	private final static String STATE="state=3 and status<>0";//篩選條件
 	
-	
-	public List<String> findItemCodeAble(){
+	public List<Object[]> findItemcategoryAble(){
 		// TODO Auto-generated method stub
-		String hql="select itemcode from WebErpProductinFormation where state=3 and status<>0";
+		String hql="select itemcategory,itemcategoryname from WebErpProductinFormation where"+STATE+"  order by itemcategory";
 		return super.findAll(hql,null);
+	}
+
+	/**
+	 * 日期:2016/11/3
+	 * 描述:
+	 */
+	
+	
+	public List<Object[]> findNamece(String itemcategory){
+		// TODO Auto-generated method stub
+		String hql="select itemid,namec1,namec2 from WebErpProductinFormation where "+STATE+"  and itemcategory=? order by itemid";
+		String objs[]={itemcategory};
+		return super.findAll(hql,objs);
 	}
 
 }

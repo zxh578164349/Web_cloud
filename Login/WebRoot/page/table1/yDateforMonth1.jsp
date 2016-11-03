@@ -25,13 +25,13 @@
   <div id="container">
   <div id="content">
 	<table class="table table-striped table-hover table-bordered" >
-		<h2>
+		<h3>
 		<s:if test='#session.loginUser.userread!="1"'>
 	    <input type="button" value="添加" class="btn btn-info"
 		onclick="javascript:location.href='saveAndUpdate/Yield_data.jsp'" />
 	    </s:if>	
 		產量資料(月統計)
-		</h2>
+		</h3>
 		<thead>
 			<tr class="tr_show">
 				<th>序號</th>

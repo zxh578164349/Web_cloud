@@ -24,8 +24,7 @@
 </head>
 
 <body>
-	<form action="webmix2_addMix2" method="post" id="form">
-	<h2>營收損益(每月輸入)</h2>
+	<form action="webmix2_addMix2" method="post" id="form">	
 		<table class="table table-condensed"
 			id="msg1">
 			

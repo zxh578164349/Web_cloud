@@ -26,8 +26,7 @@
 
 
 <body>
-	<form action="webcashout_add" method="post" id="form">
-	<h2>請款資料</h2>
+	<form action="webcashout_add" method="post" id="form">	
 		<table class="table table-condensed">
 		　　
 			<s:if test="cashout==null">

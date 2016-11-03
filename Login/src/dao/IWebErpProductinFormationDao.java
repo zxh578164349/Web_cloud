@@ -19,6 +19,8 @@ import java.util.List;
  *    
  **/
 public interface IWebErpProductinFormationDao{
-	public List<String>findItemCodeAble();
+	public List<Object[]>findItemcategoryAble();
+	public List<Object[]>findNamece(String itemcategory);
+
 
 }

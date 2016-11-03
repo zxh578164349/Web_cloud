@@ -26,7 +26,6 @@
 
 <body>
 	<form action="webtype_add" method="post" id="form">
-	<h2>各廠函文類別管理</h2>
 		<table class="table table-condensed">		      						
 					<tr>
 						<td class="td_show_title">廠別</td>

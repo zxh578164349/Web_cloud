@@ -27,8 +27,7 @@
 
 <body>
 	<form action="webuseremail_add" method="post" id="form">
-		<table class="table table-condensed">
-		　　<h2>新添備簽人</h2>			      						
+		<table class="table table-condensed">		      						
 					<tr>
 						<td class="td_show_title">廠別</td>
 						<s:if test="useremail==null">						

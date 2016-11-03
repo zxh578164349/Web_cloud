@@ -27,8 +27,7 @@
 
 
 <body>
-	<form action="webpersonnum_add" method="post" id="form">
-	<h2>人員考勤</h2>
+	<form action="webpersonnum_add" method="post" id="form">	
 		<table class="table table-condensed">
 		  
 			<s:if test="person==null">

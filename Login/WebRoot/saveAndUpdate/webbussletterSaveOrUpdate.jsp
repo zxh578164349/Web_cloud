@@ -29,8 +29,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
  
 　     
     
-    <form action="bussletter_add" method="post" id="form"  enctype="multipart/form-data">   
-        <h2>人員出差申請書</h2>
+    <form action="bussletter_add" method="post" id="form"  enctype="multipart/form-data">         
 		<table  class="table table-condensed" >	    	
 			<tbody >
 				    <tr>

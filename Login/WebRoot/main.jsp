@@ -105,8 +105,8 @@
 					src="images/icon/arrow.png" border="0" />
 				</a>
 			</div>
-
-			<div id="r_content">
+            <h2 id="h2_title2"></h2>
+			<div id="r_content">		
 				<jsp:include page="right.jsp" flush="true" />
 			</div>
 		</div>
@@ -227,6 +227,7 @@
 				success : function(data) {
 					jq("#r_content").html(data);
 					jq("#h2_title").text(title);
+					jq("#h2_title2").text(title);
 				},
 				error : function(error) {
 					jq("#r_content").html(error.responseText);

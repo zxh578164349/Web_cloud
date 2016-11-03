@@ -224,7 +224,6 @@
 <body onload="init()">
 
 	<form action="ydata_addData" method="post" id="form">
-        <h2>產量資料</h2>
 		<table class="table table-condensed" id="table1">
 			<s:if test="ydata==null">
 

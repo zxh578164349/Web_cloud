@@ -27,7 +27,6 @@
 
 <body>
 	<form action="kpifact_add" method="post" id="form">
-	<h2>KPI年度目標</h2>
 		<table class="table table-condensed">
 		　　
 			<s:if test="kpi==null">

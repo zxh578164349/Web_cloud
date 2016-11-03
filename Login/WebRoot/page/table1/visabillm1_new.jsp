@@ -25,7 +25,7 @@
 <body>
   <div id="container">
     <div id="content">
-    <h2 id="h2_title">函文審核</h2>
+    <h3 id="h2_title">函文審核</h3>
 	<table class="table table-striped table-hover table-bordered" >		
 		<thead>			
 			<tr class="tr_show">

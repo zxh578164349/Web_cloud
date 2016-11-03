@@ -26,8 +26,7 @@
 
 <body>
 	<form action="useradd" method="post" id="form">
-		<table class="table table-condensed">
-		　　<h2>新添帳號</h2>	
+		<table class="table table-condensed">	
 		        <tr>
 					<td class="td_show_title">帳號</td>
 					<td class="td_input"><input type="text" name="webUsers.username"

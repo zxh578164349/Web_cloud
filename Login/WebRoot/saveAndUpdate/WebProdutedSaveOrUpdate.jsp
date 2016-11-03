@@ -23,8 +23,7 @@
 
 </head>
 <body>
-	<form action="webProduted_addProduted" method="post" id="form">
-	<h2>成品資料(每月輸入)</h2>
+	<form action="webProduted_addProduted" method="post" id="form">	
 		<table class="table table-condensed"
 			id="msg1">
 						
