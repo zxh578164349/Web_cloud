@@ -291,7 +291,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 				jq("#dwrWebbrank").append("<option value=''>品牌選擇</option>");
 				var item;
 				jq.each(data,function(i,obj){
-					item="<option value='"+obj[0]+"'>"+obj[1]+"</option>";
+					item="<option value='"+obj[0]+"'>"+obj[2]+"</option>";
 					jq("#dwrWebbrank").append(item);
 				})
 			}

@@ -2,6 +2,7 @@ package services;
 
 import java.util.List;
 
+import entity.VWebFact;
 import entity.WebFact;
 
 public interface IWebFactServices {
@@ -133,5 +134,8 @@ public interface IWebFactServices {
 	
 	public List<String>findFactNoshow();
 	public List<String>findFactCodeshow();
+	
+	
+	public List<Object[]>findAllVwebfact();
 
 }

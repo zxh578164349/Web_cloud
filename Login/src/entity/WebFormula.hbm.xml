@@ -10,7 +10,7 @@
             <column name="FORMULA_INDEX" length="30" />
             <generator class="assigned" />
         </id>        
-        <many-to-one name="factNo" class="entity.VWebFact">
+        <many-to-one name="factNo" class="entity.VWebFact" fetch="select">
             <column name="FACT_NO" length="10"/>
         </many-to-one>
         <property name="formulaNo" type="java.lang.String">
@@ -19,9 +19,9 @@
         <property name="formulaName" type="java.lang.String">
             <column name="FORMULA_NAME" length="50" />
         </property>
-        <property name="factCode" type="java.lang.String">
-            <column name="FACT_CODE" length="20" />
-        </property>
+        <many-to-one name="factCode" class="entity.WebErpBrankProcess" fetch="select">
+           <column name="FACT_CODE" length="20"/>
+        </many-to-one>       
         <property name="magnification" type="java.lang.Double">
             <column name="MAGNIFICATION" precision="8" scale="4" />
         </property>

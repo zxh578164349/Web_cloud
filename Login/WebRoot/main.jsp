@@ -273,6 +273,25 @@
 					});
 				}	
 		}
+		function isDelete2(mid,url,url2) {
+		    var flag=confirm("確定要刪除嗎?");		
+				if (flag == true) {					
+					jq.ajax({
+						type:"POST",
+						dataType:"json",
+						data:jq("#"+mid).serialize(),
+						url:url,
+						success:function(data){
+							if(data=="0"){
+								layer.msg("刪除成功",3,1);
+								loadUrl(url2);
+							}else{
+								layer.msg("刪除失敗",3,3);
+							}
+						}						
+					});
+				}	
+		}
 		
 		//禁止輸入空格
 		function goTrim(){

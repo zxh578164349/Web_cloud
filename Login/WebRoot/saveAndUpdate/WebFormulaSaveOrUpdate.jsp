@@ -6,7 +6,11 @@
 			+ request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 %>
-
+<%
+java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("yyyyMMdd");
+java.util.Date currentTime = new java.util.Date();//得到当前系统时间
+String str_date = formatter.format(currentTime); //将日期时间格式化
+%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
@@ -23,47 +27,39 @@
 </head>
 
 <body>
-	<form action="webformula_addformula" method="post" id="form">
-		<table class="table table-condensed">			  			
+	<form action="webformula_add" method="post" id="form">
+		<table class="table table-condensed">
 			<tbody id="tb_list_info2">
 				<s:if test="formula==null">
 					<tr>
-						<td class="td_show_title"><span id="sfactNo2"></span>廠別</td>
-						<td class="td_input"><s:if test="#session.factNo!='tw'">
-								<input type="text" style="color:blue" name="formula.id.factNo"
-									value="${factNo}" readonly id="dwr_factno"/><span id="error1"></span>
-							</s:if> <s:if test="#session.factNo=='tw'">
-								<select style="color:blue" name="formula.id.factNo"
-									onchange="getFactArea(this.value),check()" datatype="*" id="dwr_factno">
-									<option value="">請選擇廠別</option>
-									<s:iterator value="#session.facts" id="temp">
-										<option value="${temp[0]}">${temp[1]
-											}&nbsp;(${temp[0]})</option>
-									</s:iterator>
-								</select><span id="error1"></span>
-							</s:if> <span id="sfactNo"></span></td>
-						<td class="td_show_title"><span id="syymm2"></span>年月</td>
-						<td class="td_input"><input type="text" name="yymm" readonly="readonly"
-							class="Wdate" onClick="WdatePicker();" datatype="*" id="dwr_yymmdd" onchange="check()"/><span id="error3"></span></td>
+						<td class="td_show_title">廠別</td>
+						<td class="td_input">
+						    <s:if test="#session.factNo!='tw'">
+								<input type="text"  name="formula.factNo.factNo"
+									value="${factNo}" readonly id="dwr_factno" />
+							</s:if> 
+							<s:if test="#session.factNo=='tw'">
+								<select  name="formula.factNo.factNo"
+									onchange="makeFormulaIndex()" datatype="*"
+									id="dwr_factno">									
+								</select>
+							</s:if>
+						</td>
+						<td class="td_show_title">配方索引</td>
+						<td class="td_input"><input type="text" style="color:blue"
+							name="formula.formulaIndex" readonly="readonly" datatype="*" id="formulaIndex"/>
+						</td>
 					</tr>
 					<tr>
-						<td class="td_show_title">廠別狀態</td>
-						<td class="td_input"><s:if test="#session.factNo=='tw'">
-								<select name="formula.id.factCode" datatype="*" id="dwrFactArea" onchange="check()">
-									<option value="">請選擇廠別狀態</option>
-								</select><span id="error2"></span>
-							</s:if> <s:else>
-								<select name="formula.id.factCode" datatype="*" id="dwrFactArea" onchange="check()">
-									<option value="">請選擇廠別狀態</option>
-									<s:iterator value="#session.factAreas_login" id="temp">
-										<option value="${temp}">${temp}</option>
-									</s:iterator>
-								</select><span id="error2"></span>
-							</s:else>
-						</td>
-						<td class="td_show_title">用水量(噸)</td>
-						<td class="td_input"><input type="text" name="formula.waterton"
-							value="<s:property value='formula.waterton' />" datatype="*0-6">
+						<td class="td_show_title">製程類別</td>
+						<td class="td_input">
+						<select name="factCode" 
+							datatype="*" id="dwrFactArea" onchange="makeFormulaIndex()">								
+						</select> </td>
+						<td class="td_show_title">配方編號</td>
+						<td class="td_input"><input type="text"
+							name="formula.formulaNo"
+							value="<s:property value='formula.formulaNo' />" datatype="*0-6">
 						</td>
 					</tr>
 				</s:if>
@@ -73,87 +69,108 @@
 						<td class="td_show_title">廠別</td>
 						<td class="td_input"><font color="blue"><input
 								type="text" id="factNo" style="color:blue"
-								value="<s:property value='formula.id.factNo'/>" name="formula.id.factNo"
-								readonly /> </font>
-						</td>
-						<td class="td_show_title">年月</td>
+								value="<s:property value='formula.factNo.factNo'/>"
+								name="formula.factNo.factNo" readonly /> </font></td>
+						<td class="td_show_title">配方索引</td>
 						<td class="td_input"><input type="text" style="color:blue"
-							id="yymm" value="<s:date name='formula.id.yymm' format='yyyyMM'/>"
-							name="yymm" readonly />
-							<input type="hidden" value="${loginUser.username}" name="formula.usernameUd"/> <!--  修改者-->
-						</td>
+							value="<s:property value='formula.formulaIndex' />"
+							name="formula.formulaIndex" readonly /></td>
 					</tr>
 					<tr>
-						<td class="td_show_title">廠別狀態</td>
-						<td class="td_input">
-						<input type="text" value="<s:property value='formula.id.factCode'/>" name="formula.id.factCode" style="color:blue" readonly/>						
-						</td>
-						<td class="td_show_title">用水量(噸)</td>
-						<td class="td_input"><input type="text" name="formula.waterton"
-							value="<s:property value='formula.waterton' />" datatype="*0-6">
+						<td class="td_show_title">製程類別</td>
+						<td class="td_input"><input type="text"
+							value="<s:property value='formula.factCode.id'/>"
+							name="formula.factCode.id" style="color:blue" readonly /></td>
+						<td class="td_show_title">配方編號</td>
+						<td class="td_input"><input type="text"
+							name="formula.formulaNo"
+							value="<s:property value='formula.formulaNo' />" datatype="*0-6">
+							<input type="hidden" value="${loginUser.username}"
+							name="formula.modifyName" /> <!--  修改者--> <input type="hidden"
+							value="<%=str_date%>" name="formula.modifyDate" /> <!--  修改日期-->
 						</td>
 					</tr>
 				</s:if>
 
 				<tr>
-					<td class="td_show_title">用水金額(USD)</td>
-					<td class="td_input"><input type="text" name="formula.waterusd"
-						value="<s:property value='formula.waterusd' />" datatype="*0-6">
+					<td class="td_show_title">配方名稱</td>
+					<td class="td_input"><input type="text"
+						name="formula.formulaName"
+						value="<s:property value='formula.formulaName' />" datatype="*0-6">
 					</td>
-					<td class="td_show_title">用電量(度)</td>
-					<td class="td_input"><input type="text" name="formula.electricdu"
-						value="<s:property value='formula.electricdu' />" datatype="*0-6">
+					<td class="td_show_title">倍率</td>
+					<td class="td_input"><input type="text"
+						name="formula.magnification"
+						value="<s:property value='formula.magnification' />"
+						datatype="*0-6"></td>
+				</tr>
+				<tr>
+					<td class="td_show_title">帶皮半成品硬度</td>
+					<td class="td_input"><input type="text"
+						name="formula.semifinishedProductHardness"
+						value="<s:property value='formula.semifinishedProductHardness' />"
+						datatype="*0-6"></td>
+					<td class="td_show_title">成品硬度</td>
+					<td class="td_input"><input type="text"
+						name="formula.productHardness"
+						value="<s:property value='formula.productHardness' />"
+						datatype="*0-6"></td>
+				</tr>
+				<tr>
+					<td class="td_show_title">品牌形體</td>
+					<td class="td_input"><input type="text"
+						name="formula.brandBody"
+						value="<s:property value='formula.brandBody' />" datatype="*0-6">
 					</td>
-					<td class="td_info"><div id="questionTip" style="width:100%;"></div>
+					<td class="td_show_title">顏色</td>
+					<td class="td_input"><input type="text" name="formula.color"
+						value="<s:property value='formula.color' />" datatype="*0-6">
 					</td>
 				</tr>
 				<tr>
-					<td class="td_show_title">用電金額(USD)</td>
-					<td class="td_input"><input type="text" name="formula.electricusd"
-						value="<s:property value='formula.electricusd' />" datatype="*0-6">
+					<td class="td_show_title">發行日期</td>
+					<td class="td_input"><input type="text"
+						name="formula.issuedDate"
+						value="<s:property value='formula.issuedDate' />" datatype="*0-6" />
 					</td>
-					<td class="td_show_title">用蒸汽量(噸)</td>
-					<td class="td_input"><input type="text" name="formula.gaston"
-						value="<s:property value='formula.gaston' />" datatype="*0-6">
+					<td class="td_show_title">品牌指定</td>
+					<td class="td_input">
+					<s:if test="formula==null">
+					     指     定<input type="radio" name="formula.assignBrand" value="1"/>
+					     非指定<input type="radio" name="formula.assignBrand" value="0" checked/>
+					</s:if>
+					<s:else>
+					   <s:if test='formula.assignBrand=="0"'>
+					             指     定<input type="radio" name="formula.assignBrand" value="1"/>
+					             非指定<input type="radio" name="formula.assignBrand" value="0" checked/>
+					   </s:if>
+					   <s:else>
+					             指     定<input type="radio" name="formula.assignBrand" value="1" checked/>
+					             非指定<input type="radio" name="formula.assignBrand" value="0" />
+					   </s:else>
+					</s:else>					 					
 					</td>
-					<td class="td_info"><div id="questionTip" style="width:100%;"></div>
-					</td>
+
 				</tr>
 				<tr>
-					<td class="td_show_title">用蒸汽金額(USD)</td>
-					<td class="td_input"><input type="text" name="formula.gasusd"
-						value="<s:property value='formula.gasusd' />" datatype="*0-6">
-					</td>
-					<td class="td_show_title">用柴油量(噸)</td>
-					<td class="td_input"><input type="text" name="formula.oilton"
-						value="<s:property value='formula.oilton' />" datatype="*0-6">
-					</td>
-					<td class="td_info"><div id="questionTip" style="width:100%;"></div>
-					</td>
-				</tr>
-				<tr>
-					<td class="td_show_title">用柴油金額(USD)</td>
-					<td class="td_input"><input type="text" name="formula.oilusd"
-						value="<s:property value='formula.oilusd' />" datatype="*0-6" />						
-					</td>
-					<td class="td_show_title">修繕金額(USD)</td>
-					<td class="td_input"><input type="text" name="formula.repiarMoney"
-						value="<s:property value='formula.repiarMoney' />" datatype="*0-6" />
-						<input type="hidden" value="<s:property value='#session.loginUser.username'/>" name="formula.username" />
-					</td>
-					
+					<td>備註</td>
+					<td><textarea style="width:500px;height:240px"><s:property value="formula.remark" /></textarea> 					
+						<input type="hidden"
+						value="<s:property value='#session.loginUser.username'/>"
+						name="formula.createName" /> <input type="hidden"
+						value="<%=str_date%>" name="formula.createDate" id="createDate"/></td>
 				</tr>
 			</tbody>
 		</table>
 		<center>
-			<input type="button" id="sub" value="確定" class="btn btn-primary"/>&nbsp;&nbsp;&nbsp;			 
-				<input type="reset" id="reset" value="重置" class="btn btn-primary"/>&nbsp;&nbsp;&nbsp; 			
-				<input type="button" value="返回" id="btn_back"
-				onclick="javascript:back()" class="btn btn-primary"/>
+			<input type="button" id="sub" value="確定" class="btn btn-primary" />&nbsp;&nbsp;&nbsp;
+			<input type="reset" id="reset" value="重置" class="btn btn-primary" />&nbsp;&nbsp;&nbsp;
+			<input type="button" value="返回" id="btn_back"
+				onclick="javascript:back()" class="btn btn-primary" />
 		</center>
 	</form>
-	
-<script type="text/javascript">
+
+	<script type="text/javascript">
 
 	jq(function() {
 		var demo = jq("#form").Validform({
@@ -167,54 +184,69 @@
 			ajaxPost:true,
 			callback:function(data){
 				if(data=="0"){
-					layer.msg("提交成功!",3,1);
-					//location.href="/Login/webformula_getList";
-					loadUrl("/Login/webformula_getList");
+					layer.msg("提交成功!",3,1);				
+					loadUrl("/Login/webformula_findPageBean3");
 				}else{
-					//alert(data.responseText);
 					layer.msg("提交失敗",3,3);
 				}				
 			}
 		});
 		demo.tipmsg.w["*0-6"] = "只能數字且不超過12位數,可保留三位以內小數";
-	});
-	function getFactArea(mid) {
-		document.getElementById("dwrFactArea").length = 1;
-		webfactjs.findFactCodeByFactNo_show_dw(mid, function(x) {
-			dwr.util.addOptions("dwrFactArea", x);
+		
+		jq.ajax({
+			type:"get",
+			dataType:"json",
+			url:"webfact_findAllVwebfact",
+			success:function(data){
+				var item;
+				jq("#dwr_factno").empty();
+				jq("#dwr_factno").append("<option value=''>請選擇廠別</option>");
+				jq.each(data,function(i,obj){
+					item="<option value='"+obj[3]+"'>"+obj[1]+"("+obj[3]+")</option>";
+					jq("#dwr_factno").append(item);
+				});
+			}
 		});
-	}
-	function check(){
-       var factno=document.getElementById("dwr_factno").value;
-       var factcode=document.getElementById("dwrFactArea").value;
-       var yymmdd=document.getElementById("dwr_yymmdd").value;
-       if(factno!=""&&factcode!=""&&yymmdd!=""){
-          webformulajs.check(factno,factcode,yymmdd,function(x){
-              if(x==true){
-              alert("數據庫已存在("+factno+factcode+yymmdd+")");
-              document.getElementById("sub").disabled=true;
-              document.getElementById("sub").value="已鎖定";
-              document.getElementById("sub").style.color="red";
-              document.getElementById("error1").innerHTML="<font color='color'>！</font>";
-              document.getElementById("error2").innerHTML="<font color='color'>！</font>";
-              document.getElementById("error3").innerHTML="<font color='color'>！</font>";
-          }else{
-            document.getElementById("sub").disabled=false;
-            document.getElementById("sub").value="確定";
-            document.getElementById("sub").style.color="white";
-            document.getElementById("error1").innerHTML="";
-            document.getElementById("error2").innerHTML="";
-            document.getElementById("error3").innerHTML="";
-          }        
-          });               
-       }                    
+		
+		jq.ajax({
+			type:"post",
+			dataType:"json",
+			url:"weberpbp_findObjOp1",
+			success:function(data){
+				var item;
+				jq("#dwrFactArea").empty();
+				jq("#dwrFactArea").append("<option value=''>請選擇製程類別</option>");
+				jq.each(data,function(i,obj){
+					item="<option value='"+obj[0]+"__"+obj[1]+"'>"+obj[2]+"</option>";
+					jq("#dwrFactArea").append(item);
+				});
+			}
+		});		
+	});
+	
+	function makeFormulaIndex(){      
+		var dwr_factno=jq("#dwr_factno");
+		var dwrFactArea=jq("#dwrFactArea");
+		var createDate=jq("#createDate");
+		if(dwr_factno.val()!=""&&dwrFactArea.val()!=""&&createDate.val()!=""){
+			jq.ajax({
+				type:"get",
+				dataType:"json",
+				url:"webformula_makeFormulaIndex",
+				data:{factNo:dwr_factno.val(),factCode:dwrFactArea.val(),createDate:createDate.val()},
+				success:function(data){
+					jq("#formulaIndex").val(data);
+				}
+			});
+		}		
    }
-             /*禁止空格輸入*/
+	
+/*禁止空格輸入*/
 jq(function(){
 	goTrim();
 });
 function back(){	
-	loadUrl("/Login/webformula_getList3?backIndex=1");
+	loadUrl("/Login/webformula_findPageBean3?backIndex=1");
 }             
 </script>
 </body>

@@ -57,29 +57,35 @@
 					<s:iterator value="bean.list" status="x" id="temp">
 						<tr>
 							<td>${ bean.pageSize*(bean.currentPage-1)+x.index+1}</td>
-							<td><s:property value="id.fact.factSname" />
+							<td><s:property value="formulaIndex" />
 							</td>
-							<td><s:property value="id.fact.id.factArea" />
+							<td><s:property value="factNo.factNo" />
 							</td>
-							<td><s:property value="id.yymm" />
+							<td><s:property value="factCode.name" />
+							</td>							
+							<td><s:property value="formulaNo" />
 							</td>
-							<td><s:property value="objA100" />
+							<td><s:property value="formulaName" />
 							</td>
-							<td><s:property value="objA101" />
+							<td><s:property value="magnification" />
 							</td>
-							<td><s:property value="objA102" />
+							<td><s:property value="brandBody" />
 							</td>
-							<td><s:property value="objA103" />
+							<td><s:property value="semifinishedProductHardness" />
 							</td>
-							<td><s:property value="objA104" />
+							<td><s:property value="productHardness" />
 							</td>
-							<td><s:property value="objA105" />
+							<td><s:property value="color" />
 							</td>
-							<td><s:property value="objA106" />
+							<td><s:property value="issuedDate" />
 							</td>
-							<td><s:property value="objA107" />
-							</td>
-							<td><s:property value="objA108" />
+							<td>
+							   <s:if test='assignBrand=="1"'>
+							                  指定
+							   </s:if>
+							   <s:else>
+							                  非指定 
+							   </s:else>							
 							</td>
 												
 							<s:if test='#session.loginUser.userread!="1"'>
@@ -92,12 +98,10 @@
 									<a href="javascript:findById('subform${x.index}','webwlo_findWloById')">
 									<img alt="修改" src="images/icon/edit001.png" title="修改">										
 								    </a>--%>
-									<form action="weballobj_delete" method="post" id="2subform${x.index}" style="float:left">										
-										<input type="hidden" value="<s:property value='id.fact.id.factNo'/>" name="factNo" />
-										<input type="hidden" value="<s:property value='id.fact.id.factArea'/>" name="factCode" />											
-										<input type="hidden" value="<s:property value='id.yymm'/>" name="yymm" />											
+									<form  id="2subform${x.index}" style="float:left">										
+										<input type="hidden" value="<s:property value='formulaIndex'/>" name="formulaIndex" />																														
 									</form> 
-									<a href="javascript:isDelete('2subform${x.index}','weballobj_delete')" >
+									<a href="javascript:isDelete('2subform${x.index}','webformula_delete','webformula_findPageBean3')" >
 									<img alt="刪除" src="images/icon/delete001.png" title="刪除">
 								    </a>
 								</td>

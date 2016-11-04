@@ -141,6 +141,14 @@ public class WebFactAction extends ActionSupport {
 		return "findFactByFactNo";
 	}
 	
+	public String findAllVwebfact(){
+		List<Object[]>list=webFactSer.findAllVwebfact();
+		jsons=JSONArray.fromObject(list);
+		return "findAllVwebfact";
+	}
+	
+	
+	
 	
 	
 	

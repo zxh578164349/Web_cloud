@@ -17,7 +17,7 @@ public class WebFormula implements java.io.Serializable{
 	private VWebFact factNo;
 	private String formulaNo;
 	private String formulaName;
-	private String factCode;
+	private WebErpBrankProcess factCode;
 	private Double magnification;
 	private String semifinishedProductHardness;
 	private String productHardness;
@@ -44,7 +44,7 @@ public class WebFormula implements java.io.Serializable{
 	}
 
 	/** full constructor */
-	public WebFormula(String formulaIndex,VWebFact factNo,String formulaNo,String formulaName,String factCode,Double magnification,
+	public WebFormula(String formulaIndex,VWebFact factNo,String formulaNo,String formulaName,WebErpBrankProcess factCode,Double magnification,
 			String semifinishedProductHardness,String productHardness,String brandBody,String color,String issuedDate,String assignBrand,String remark,
 			String createName,String createDate,String modifyName,String modifyDate,List<WebFormulaItems> webFormulaItemses){
 		this.formulaIndex=formulaIndex;
@@ -93,11 +93,11 @@ public class WebFormula implements java.io.Serializable{
 		this.formulaName=formulaName;
 	}
 
-	public String getFactCode(){
-		return this.factCode;
+	public WebErpBrankProcess getFactCode(){
+		return factCode;
 	}
 
-	public void setFactCode(String factCode){
+	public void setFactCode(WebErpBrankProcess factCode){
 		this.factCode=factCode;
 	}
 

@@ -3,6 +3,10 @@
  */
 package services;
 
+import java.util.List;
+
+import entity.WebFormula;
+
 import util.PageBean;
 
 /**   
@@ -20,5 +24,9 @@ import util.PageBean;
  **/
 public interface IWebFormulaServices{
 	public PageBean findPageBean(int page,int pageSize,String formulaIndex);
+	public List<String> findFormulaIndex(String factNo,String factCode,String createDate);
+	public void add(WebFormula formula);
+	public WebFormula findById(String formulaIndex);
+	public void delete(String formulaIndex);
 
 }

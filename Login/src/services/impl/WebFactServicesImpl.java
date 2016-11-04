@@ -5,6 +5,7 @@ import java.util.List;
 
 import dao.IWebFactDao;
 
+import entity.VWebFact;
 import entity.WebFact;
 import entity.WebFactId;
 import services.IWebFactServices;
@@ -275,6 +276,17 @@ public class WebFactServicesImpl implements IWebFactServices {
 	public List<String> findFactCodeshow() {
 		// TODO Auto-generated method stub
 		return webFactDao.findFactCodeshow();
+	}
+
+	/**
+	 * 日期:2016/11/4
+	 * 描述:
+	 */
+	
+	
+	public List<Object[]> findAllVwebfact(){
+		// TODO Auto-generated method stub
+		return webFactDao.findAllVwebfact();
 	}
 
 }

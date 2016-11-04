@@ -31,7 +31,7 @@ public class WebErpBrankProcessDaoImpl extends Basedao implements IWebErpBrankPr
 	
 	public List<Object[]> findObj(String sysCode){
 		// TODO Auto-generated method stub
-		String hql="select id,name from WebErpBrankProcess where syscode=?";
+		String hql="select id,sysno,name from WebErpBrankProcess where syscode=?";
 		String[]objs={sysCode};
 		return super.findAll(hql,objs);
 	}

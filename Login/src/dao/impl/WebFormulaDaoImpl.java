@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.hibernate.Query;
+
 import com.opensymphony.xwork2.ActionContext;
 
 import util.PageBean;
@@ -60,6 +62,10 @@ public class WebFormulaDaoImpl extends Basedao implements IWebFormulaDao{
 		}
 		int offset=PageBean.countOffset(pageSize,currentPage);
 		List<WebFormula>list=super.queryForPage(hql.toString(),offset,pageSize,map);
+		for(WebFormula obj:list){
+			obj.getFactCode().getName();
+			//obj.getFactNo().getFactSname();
+		}
 		PageBean bean=new PageBean();
 		bean.setAllRow(allrow);
 		bean.setCurrentPage(currentPage);
@@ -68,6 +74,59 @@ public class WebFormulaDaoImpl extends Basedao implements IWebFormulaDao{
 		bean.setTotalPage(totalPage);
 		return bean;
 	}
+
+	/**
+	 * 日期:2016/11/4
+	 * 描述:
+	 */
+	
+	
+	public List<String> findFormulaIndex(String factNo,String factCode,String createDate){
+		// TODO Auto-generated method stub
+		String hql="select formulaIndex from WebFormula where factNo.factNo=? and factCode.id=? and createDate=? order by formulaIndex desc";
+		Object[]objs={factNo,Integer.parseInt(factCode),createDate};
+		return super.findAll(hql,objs);
+	}
+
+	/**
+	 * 日期:2016/11/4
+	 * 描述:
+	 */
+	
+	
+	public void add(WebFormula formula){
+		// TODO Auto-generated method stub
+		super.merge(formula);
+		
+	}
+	
+	/**
+	 * 日期:2016/11/4
+	 * 描述:
+	 */
+	
+	
+	public WebFormula findById(String formulaIndex){
+		// TODO Auto-generated method stub
+		String hql="from WebFormula where formulaIndex=?";
+		Query query=getSession().createQuery(hql);
+		query.setString(0,formulaIndex);
+		return (WebFormula)query.uniqueResult();
+	}
+
+	/**
+	 * 日期:2016/11/4
+	 * 描述:
+	 */
+	
+	
+	public void delete(String formulaIndex){
+		// TODO Auto-generated method stub
+		WebFormula obj=findById(formulaIndex);
+		super.delete(obj);
+	}
+
+	
 	
 
 }
