@@ -112,7 +112,7 @@ function goSubmit(){
 		
 <div style="width:100%;position:fixed;bottom:0" align="center" >
 <font color="grey" style="font-size:10px;font-family: Arial, Helvetica, sans-serif;">
-Copyright © 2014,東莞加元鞋材制品有限公司,All Rights Reserved</font>
+Copyright © 2014,加久企業股份有限公司,All Rights Reserved</font>
 </div>			
 			
 </body>

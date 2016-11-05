@@ -49,7 +49,7 @@
 				</div>
 			</div>
 			<div id="top_title">
-				<h1>東莞加元鞋材制品有限公司</h1>
+				<h1>加久企業股份有限公司</h1>
 			</div>
 
 			<div id="currentTime"></div>

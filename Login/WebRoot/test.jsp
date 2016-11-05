@@ -147,7 +147,7 @@
 		<TR>
 			<TD align=center width="100%" height=80 bgcolor="#292929">	<!--  #48525E-->		
 				<div id="top">
-					<h1 style="color:white;">東莞加元鞋材制品有限公司</h1>						    							
+					<h1 style="color:white;">加久企業股份有限公司</h1>						    							
 						<span style="font-size:12px;float:right;color:#CCCC99">
 						   登录人：<s:property value="#session.loginUser.name" />(<s:if test="#attr.factNo=='tw'">所有數據</s:if>								
 								 <s:else> <s:property value="#attr.factName" /></s:else> ),欢迎您 ！								
@@ -207,7 +207,7 @@
 	   <br>		
 	   <div style="width:100%;position:fixed;bottom:0" align="center" id="tab3">
 	   <font color="grey" style="font-size:10px;font-family: Arial, Helvetica, sans-serif;">
-	   Copyright © 2014,東莞加元鞋材制品有限公司,All Rights Reserved
+	   Copyright © 2014,加久企業股份有限公司,All Rights Reserved
 	   </font>
 	   </div>
 </body>
