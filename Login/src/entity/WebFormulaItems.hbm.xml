@@ -15,9 +15,9 @@
         </many-to-one>
         <property name="sectionNo" type="java.lang.Integer">
             <column name="SECTION_NO" precision="6" scale="0" />
-        </property>
+        </property>             
         <property name="typeNo" type="java.lang.String">
-            <column name="TYPE_NO" length="30" />
+           <column name="TYPE_NO" length="30"/>
         </property>
         <property name="namece1" type="java.lang.String">
             <column name="NAMECE1" length="50" />
@@ -46,5 +46,8 @@
         <property name="createDate" type="java.lang.String">
             <column name="CREATE_DATE" length="50" />
         </property>
+        <many-to-one name="fk_weberp_pf" class="entity.WebErpProductinFormation">
+            <column name="FK_WEBERPPRO_FOR"/>
+        </many-to-one>
     </class>
 </hibernate-mapping>

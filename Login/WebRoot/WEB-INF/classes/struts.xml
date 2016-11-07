@@ -637,11 +637,11 @@
 		<action name="autosendfactorder_*" class="AutoSendWebfactorderAction" method="{1}"></action>
 		<action name="vkpiwebpro_*" class="vkpiprofitAction" method="{1}"></action>
 		
-		<action name="weberppf_*" class="weberppfAction" method="{1}">
-		   <result name="findItemcategoryAble" type="json">
+		<action name="weberppf_*" class="weberppfAction" method="{1}">		   
+		   <result name="findNamece" type="json">
 		      <param name="root">jsons</param>
 		   </result>
-		   <result name="findNamece" type="json">
+		   <result name="findTypeNo" type="json">
 		      <param name="root">jsons</param>
 		   </result>
 		</action>

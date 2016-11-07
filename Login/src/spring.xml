@@ -220,7 +220,8 @@
 				<value>entity/WebErpBrankProcess.hbm.xml</value>
 				<value>entity/WebErpProductinFormation.hbm.xml</value>
 				<value>entity/WebFormula.hbm.xml</value>
-				<value>entity/WebFormulaItems.hbm.xml</value></list>
+				<value>entity/WebFormulaItems.hbm.xml</value>
+				<value>entity/VWebErpProductinFormation.hbm.xml</value></list>
 		</property>
 	</bean>
 		

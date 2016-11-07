@@ -6,6 +6,7 @@ package services.impl;
 import java.util.List;
 
 import dao.IWebErpProductinFormationDao;
+import entity.VWebErpProductinFormation;
 
 import services.IWebErpProductinFormationServices;
 
@@ -34,10 +35,6 @@ public class WebErpProductinFormationServicesImpl implements IWebErpProductinFor
 		this.weberppfdao=weberppfdao;
 	}
 
-	public List<Object[]> findItemcategoryAble(){
-		// TODO Auto-generated method stub
-		return weberppfdao.findItemcategoryAble();
-	}
 
 	/**
 	 * 日期:2016/11/3
@@ -48,6 +45,17 @@ public class WebErpProductinFormationServicesImpl implements IWebErpProductinFor
 	public List<Object[]> findNamece(String itemcategory){
 		// TODO Auto-generated method stub
 		return weberppfdao.findNamece(itemcategory);
+	}
+
+	/**
+	 * 日期:2016/11/7
+	 * 描述:
+	 */
+	
+	
+	public List<VWebErpProductinFormation> findTypeNo(){
+		// TODO Auto-generated method stub
+		return weberppfdao.findTypeNo();
 	}
 
 }

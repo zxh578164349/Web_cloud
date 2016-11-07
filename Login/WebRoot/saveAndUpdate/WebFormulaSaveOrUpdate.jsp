@@ -28,7 +28,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 
 <body>
 	<form action="webformula_add" method="post" id="form">
-		<table class="table table-condensed">
+		<table class="table table-condensed" id="tb_main">
 			<tbody id="tb_list_info2">
 				<s:if test="formula==null">
 					<tr>
@@ -151,17 +151,25 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 					</s:else>					 					
 					</td>
 
-				</tr>
+				</tr>				
 				<tr>
-					<td>備註</td>
-					<td><textarea style="width:500px;height:240px"><s:property value="formula.remark" /></textarea> 					
+				   <td colspan="4" ><center><input type="button" value="添加配方階段" onclick="addScection()" class="btn"/></center></td>
+				</tr>
+			</tbody>			
+		</table>
+		
+		
+		<table class="table table-condensed">
+		   <tr>
+					<td class="td_show_title">備註</td>
+					<td colspan="3"><textarea style="width:780px;height:240px"><s:property value="formula.remark" /></textarea> 					
 						<input type="hidden"
 						value="<s:property value='#session.loginUser.username'/>"
 						name="formula.createName" /> <input type="hidden"
 						value="<%=str_date%>" name="formula.createDate" id="createDate"/></td>
 				</tr>
-			</tbody>
 		</table>
+		
 		<center>
 			<input type="button" id="sub" value="確定" class="btn btn-primary" />&nbsp;&nbsp;&nbsp;
 			<input type="reset" id="reset" value="重置" class="btn btn-primary" />&nbsp;&nbsp;&nbsp;
@@ -247,7 +255,30 @@ jq(function(){
 });
 function back(){	
 	loadUrl("/Login/webformula_findPageBean3?backIndex=1");
-}             
+}
+
+var i=0;
+function addScection(){
+	i++;
+	var div="<div id='section_"+i+"'>SECTION"+i+"<div>";
+	jq("#tb_main").after(div);
+	var sel="<select id='sectionNo'><option value=''></option></select>";
+	jq.ajax({
+		type:"post",
+		dataType:"json",
+		url:"weberppf_findTypeNo",
+		success:function(data){
+			jq("#sectionNo").empty();
+			jq("#sectionNo").append("<option value=''>請選擇類別</option>");
+			var item;
+			jq.each(data,function(index,obj){
+				item="<option value='"+obj.itemcategory+"'>"+obj.itemcategoryname+"</option>"
+				jq("#sectionNo").append(item);
+			});
+		}
+	});
+	jq("#section_"+i).append(sel);	
+}
 </script>
 </body>
 </html>

@@ -7,6 +7,7 @@ import java.util.List;
 
 import dao.Basedao;
 import dao.IWebErpProductinFormationDao;
+import entity.VWebErpProductinFormation;
 
 /**   
  *    
@@ -23,17 +24,9 @@ import dao.IWebErpProductinFormationDao;
  **/
 public class WebErpProductinFormationDaoImpl extends Basedao implements IWebErpProductinFormationDao{
 
-	/**
-	 * 日期:2016/11/1
-	 * 描述:
-	 */
 	private final static String STATE="state=3 and status<>0";//篩選條件
 	
-	public List<Object[]> findItemcategoryAble(){
-		// TODO Auto-generated method stub
-		String hql="select itemcategory,itemcategoryname from WebErpProductinFormation where"+STATE+"  order by itemcategory";
-		return super.findAll(hql,null);
-	}
+	
 
 	/**
 	 * 日期:2016/11/3
@@ -46,6 +39,18 @@ public class WebErpProductinFormationDaoImpl extends Basedao implements IWebErpP
 		String hql="select itemid,namec1,namec2 from WebErpProductinFormation where "+STATE+"  and itemcategory=? order by itemid";
 		String objs[]={itemcategory};
 		return super.findAll(hql,objs);
+	}
+
+	/**
+	 * 日期:2016/11/7
+	 * 描述:
+	 */
+	
+	
+	public List<VWebErpProductinFormation> findTypeNo(){
+		// TODO Auto-generated method stub
+		String hql="from VWebErpProductinFormation order by itemcategory";
+		return super.findAll(hql,null);
 	}
 
 }

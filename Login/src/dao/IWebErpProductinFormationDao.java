@@ -5,6 +5,8 @@ package dao;
 
 import java.util.List;
 
+import entity.VWebErpProductinFormation;
+
 /**   
  *    
  * 项目名称：Login   
@@ -19,8 +21,8 @@ import java.util.List;
  *    
  **/
 public interface IWebErpProductinFormationDao{
-	public List<Object[]>findItemcategoryAble();
 	public List<Object[]>findNamece(String itemcategory);
+	public List<VWebErpProductinFormation>findTypeNo();
 
 
 }

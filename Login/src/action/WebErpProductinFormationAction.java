@@ -5,6 +5,8 @@ package action;
 
 import java.util.List;
 
+import entity.VWebErpProductinFormation;
+
 import net.sf.json.JSONArray;
 import services.IWebErpProductinFormationServices;
 
@@ -47,17 +49,17 @@ public class WebErpProductinFormationAction{
 	public void setWeberppfser(IWebErpProductinFormationServices weberppfser){
 		this.weberppfser=weberppfser;
 	}
-	
-	public String findItemcategoryAble(){
-		List<Object[]>list=weberppfser.findItemcategoryAble();
-		jsons=JSONArray.fromObject(list);
-		return "findItemcategoryAble";
-	}
-	
+		
 	public String findNamece(){
 		List<Object[]>list=weberppfser.findNamece(itemcategory);
 		jsons=JSONArray.fromObject(list);
 		return "findNamece";
+	}
+	
+	public String findTypeNo(){
+		List<VWebErpProductinFormation>list=weberppfser.findTypeNo();
+		jsons=JSONArray.fromObject(list);
+		return "findTypeNo";
 	}
 	
 	

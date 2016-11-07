@@ -10,8 +10,8 @@ public class WebFormulaItems implements java.io.Serializable{
 
 	private Integer itemId;
 	private WebFormula webFormula;
-	private Integer sectionNo;
-	private String typeNo;
+	private Integer sectionNo;//階段號
+	private VWebErpProductinFormation typeNo;
 	private String namece1;
 	private String namece2;
 	private Double phrVal;
@@ -21,6 +21,9 @@ public class WebFormulaItems implements java.io.Serializable{
 	private String modifyDate;
 	private String createName;
 	private String createDate;
+	private WebErpProductinFormation  fk_weberp_pf;//關聯配方原料表  （WebErpProductinFormation）
+	
+	
 
 	// Constructors
 
@@ -34,7 +37,7 @@ public class WebFormulaItems implements java.io.Serializable{
 	}
 
 	/** full constructor */
-	public WebFormulaItems(Integer itemId,WebFormula webFormula,Integer sectionNo,String typeNo,String namece1,String namece2,Double phrVal,Double weightVal,
+	public WebFormulaItems(Integer itemId,WebFormula webFormula,Integer sectionNo,VWebErpProductinFormation typeNo,String namece1,String namece2,Double phrVal,Double weightVal,
 			String remark,String modifyName,String modifyDate,String createName,String createDate){
 		this.itemId=itemId;
 		this.webFormula=webFormula;
@@ -77,11 +80,15 @@ public class WebFormulaItems implements java.io.Serializable{
 		this.sectionNo=sectionNo;
 	}
 
-	public String getTypeNo(){
-		return this.typeNo;
+	
+
+	
+
+	public VWebErpProductinFormation getTypeNo(){
+		return typeNo;
 	}
 
-	public void setTypeNo(String typeNo){
+	public void setTypeNo(VWebErpProductinFormation typeNo){
 		this.typeNo=typeNo;
 	}
 
@@ -156,5 +163,17 @@ public class WebFormulaItems implements java.io.Serializable{
 	public void setCreateDate(String createDate){
 		this.createDate=createDate;
 	}
+
+	public WebErpProductinFormation getFk_weberp_pf(){
+		return fk_weberp_pf;
+	}
+
+	public void setFk_weberp_pf(WebErpProductinFormation fk_weberp_pf){
+		this.fk_weberp_pf=fk_weberp_pf;
+	}
+
+	
+	
+	
 
 }
