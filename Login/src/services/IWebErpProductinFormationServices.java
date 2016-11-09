@@ -46,5 +46,7 @@ public interface IWebErpProductinFormationServices{
 	 */
 	public List<VWebErpProductinFormation>findTypeNo();
 	
+	public List<Object[]>findNamece(List<String>itemcategorys);
+	
 
 }

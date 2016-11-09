@@ -3,7 +3,9 @@
  */
 package dao.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import dao.Basedao;
 import dao.IWebErpProductinFormationDao;
@@ -51,6 +53,25 @@ public class WebErpProductinFormationDaoImpl extends Basedao implements IWebErpP
 		// TODO Auto-generated method stub
 		String hql="from VWebErpProductinFormation order by itemcategory";
 		return super.findAll(hql,null);
+	}
+
+	/**
+	 * 日期:2016/11/8
+	 * 描述:
+	 */
+	
+	
+	public List<Object[]> findNamece(List<String> itemcategorys){
+		// TODO Auto-generated method stub
+		StringBuffer hql=new StringBuffer();
+		Map<String,Object>map=new HashMap<String,Object>();
+		hql.append("select itemid,itemcategoryname,namec1,namec2 from WebErpProductinFormation where 1=1 ");
+		if(itemcategorys!=null&&itemcategorys.size()>0){
+			hql.append(" and itemcategory in(:itemcategorys) ");
+			map.put("itemcategorys",itemcategorys);
+		}
+		hql.append("and "+STATE+" order by itemid ");
+		return super.getAllWithNoPage(hql.toString(),map);
 	}
 
 }

@@ -36,7 +36,6 @@ jq(function(){
 </head>
 
 <body>
-<h2 id="h2_title">生產與請款達成狀況統計分析表</h2>
 <br/>
 	<form action="webcashout_report" method="post" id="subform" target="_blank">
 		<table id="tb_search">

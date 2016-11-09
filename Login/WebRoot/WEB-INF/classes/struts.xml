@@ -644,6 +644,9 @@
 		   <result name="findTypeNo" type="json">
 		      <param name="root">jsons</param>
 		   </result>
+		   <result name="findNameces" type="json">
+		      <param name="root">jsons</param>
+		   </result>
 		</action>
 		<action name="weberpbp_*" class="weberpbpAction" method="{1}">
 		   <result name="findObjOp1" type="json">

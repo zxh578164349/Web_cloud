@@ -58,4 +58,16 @@ public class WebErpProductinFormationServicesImpl implements IWebErpProductinFor
 		return weberppfdao.findTypeNo();
 	}
 
+
+	/**
+	 * 日期:2016/11/8
+	 * 描述:
+	 */
+	
+	
+	public List<Object[]> findNamece(List<String> itemcategorys){
+		// TODO Auto-generated method stub
+		return weberppfdao.findNamece(itemcategorys);
+	}
+
 }

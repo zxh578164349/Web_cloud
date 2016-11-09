@@ -23,6 +23,7 @@ import entity.VWebErpProductinFormation;
 public interface IWebErpProductinFormationDao{
 	public List<Object[]>findNamece(String itemcategory);
 	public List<VWebErpProductinFormation>findTypeNo();
+	public List<Object[]>findNamece(List<String>itemcategorys);
 
 
 }

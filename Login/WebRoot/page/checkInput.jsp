@@ -46,7 +46,6 @@ jq(function() {
 
 </head>
 <body>
-<h2 id="h2_title">資料輸入狀況</h2>
 <br/>
   <form action="checkinput_print" method="post" id="subform" target="_blank">
 	<table  id="tb_search">

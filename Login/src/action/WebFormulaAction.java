@@ -137,7 +137,7 @@ public class WebFormulaAction{
 		formulaIndex=(String)ActionContext.getContext().getSession().get("formulaIndex");
 		bean=webformulaser.findPageBean(page,PAGESIZE,formulaIndex);
 		String temp="findPageBean1";
-		if(backIndex.equals("1")){
+		if(backIndex!=null&&backIndex.equals("1")){
 			temp="findPageBean";//
 		}
 		return temp;

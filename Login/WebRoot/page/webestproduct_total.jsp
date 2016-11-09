@@ -36,7 +36,6 @@
 </head>
 
 <body>
-<h2 id="h2_title">預計生產與請款匯總</h2>
 <br/>
 	<form action="webestpro_print" method="post" id="subform" target="_blank">
 		<table id="tb_search">

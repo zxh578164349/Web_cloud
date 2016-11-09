@@ -30,7 +30,6 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 </head>
 
 <body >
-<h2 id="h2_title">文件上傳與下載</h2>
 <br/>
     <div id="bodyid">
 	<form action="filesUpload_uploadFile" method="post" enctype="multipart/form-data" id="form">			

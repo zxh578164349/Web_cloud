@@ -21,8 +21,7 @@
 <link rel="stylesheet" type="text/css" href="css/form.css" /> 
 </head>
 
-<body onload="changeinput()">
-<h2 id="h2_title">產量預估與產量資料下載</h2><br/>	
+<body onload="changeinput()">	
 	<form action="print2Ypoi_print2Y_hb" method="post" id="form2"
 		target="_blank">		
 		<table id="tb" class="table table-bordered table-condensed">

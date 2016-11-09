@@ -73,11 +73,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
    				font.css("color","") ;				
    			}						
    		}//for
-   		if(allfactno.prop("checked")){
+   		/*if(allfactno.prop("checked")){
    			   jq("#"+factcode+"_div").show(300);
    			}else{
    			  jq("#"+factcode+"_div").hide(300); 
-   			}
+   			}*/
    	}
    	
    	/**
@@ -120,7 +120,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	           }
 	       }
 	       if(index==allcheckboxs.length){
-	           jq("#"+factcode+"_div").hide(300);
+	           //jq("#"+factcode+"_div").hide(300);
 	           cb_factcode.checked=false;
 	       }
 	   } 	  
@@ -147,7 +147,6 @@ function tips(){
 </head>
   
   <body>
-  <h2 id="h2_title">KPI工廠與KPI台灣(new)</h2>
   <br/>
     <div class="panel panel-default">
       <div class="panel-heading">
@@ -253,7 +252,7 @@ function tips(){
                  onclick="checkAll('${map.key}')" style="width:18px;height:18px"/>
                  <font style="font-size:14px;font-weight:bold" ><s:property value='key'/> </font>
                  <br> 
-                 <div id="<s:property value='key'/>_div" style="display:none">               
+                 <div id="<s:property value='key'/>_div" >               
                  <s:iterator value="value" status="y">
                     <input type="checkbox" value="${map.key}_<s:property value='id.factNo'/>" id="<s:property value='key'/>_factno" class="<s:property value='key'/>_factno"
                     name="list_factno" onclick="clickOne(this,'font_${map.key}_${y.index}','${map.key}')"/>

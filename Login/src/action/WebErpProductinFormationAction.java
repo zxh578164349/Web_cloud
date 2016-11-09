@@ -26,8 +26,18 @@ import services.IWebErpProductinFormationServices;
 public class WebErpProductinFormationAction{
 	private String itemcategory;
 	private JSONArray jsons;
+	private List<String> itemcategorys;
 	
 	
+	
+	public List<String> getItemcategorys(){
+		return itemcategorys;
+	}
+
+	public void setItemcategorys(List<String> itemcategorys){
+		this.itemcategorys=itemcategorys;
+	}
+
 	public JSONArray getJsons(){
 		return jsons;
 	}
@@ -60,6 +70,12 @@ public class WebErpProductinFormationAction{
 		List<VWebErpProductinFormation>list=weberppfser.findTypeNo();
 		jsons=JSONArray.fromObject(list);
 		return "findTypeNo";
+	}
+	
+	public String findNameces(){
+		List<Object[]>list=weberppfser.findNamece(itemcategorys);		
+		jsons=JSONArray.fromObject(list);			
+		return "findNameces";
 	}
 	
 	
