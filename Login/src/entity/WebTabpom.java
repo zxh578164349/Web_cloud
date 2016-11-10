@@ -15,7 +15,7 @@ public class WebTabpom implements java.io.Serializable{
 
 	private String pomNo;//物性編號
 	private WebErpBrankProcess webBrank;//品牌
-	private String formulaId;//配方索引（配方系統關聯）
+	private WebFormula formulaId;//配方索引（配方系統關聯）
 	private Double hardness;//硬度
 	private Double forces;//拉力
 	private Double extend;//延伸
@@ -79,7 +79,7 @@ public class WebTabpom implements java.io.Serializable{
 	}
 
 	/** full constructor */
-	public WebTabpom(String pomNo,WebErpBrankProcess webBrank,String formulaId,Double hardness,Double forces,Double extend,Double tearingC,Double tearingK,
+	public WebTabpom(String pomNo,WebErpBrankProcess webBrank,WebFormula formulaId,Double hardness,Double forces,Double extend,Double tearingC,Double tearingK,
 			Double proportion,Double wresistingAkron,Double wresistingDin,Double ratioA,Double ratioB,Double ableBend,Double ableYellow,Double defyPress,
 			Double defyEle,Double ageing,Double contract,Double elasticity,Double compression,Double division,String authentications,String instruction,
 			String fileMk,String username,String tabpomDate,Double hardness2,String hardnessDescription,String forcesDescription,String extendsDescription,
@@ -160,11 +160,13 @@ public class WebTabpom implements java.io.Serializable{
 		this.webBrank=webBrank;
 	}
 
-	public String getFormulaId(){
-		return this.formulaId;
+	
+
+	public WebFormula getFormulaId(){
+		return formulaId;
 	}
 
-	public void setFormulaId(String formulaId){
+	public void setFormulaId(WebFormula formulaId){
 		this.formulaId=formulaId;
 	}
 

@@ -26,10 +26,10 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 <link rel="stylesheet" type="text/css" href="css/form.css" />
 <style type="text/css">
   .div_border_green{
-    width:450px;height:300px;overflow:auto;border:1px dashed green;text-align:left
+    width:100%;height:250px;overflow:auto;border:1px dashed green;text-align:left
   }
   .div_border_blue{
-    width:1100px;height:300px;overflow:auto;border:1px dashed blue;text-align:left
+    width:100%;height:250px;overflow:auto;border:1px dashed blue;text-align:left
   }
   
 #myTabContent ul{margin:0px;padding:0px}
@@ -43,7 +43,11 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 </head>
 
 <body>
+
 	<form action="webformula_add" method="post" id="form">
+	<div class="panel panel-default">
+	    <div class="panel-heading">配方表頭</div>
+	    <div class="panel-body">
 		<table class="table table-condensed" id="tb_main">
 			<tbody id="tb_list_info2">
 				<s:if test="formula==null">
@@ -52,7 +56,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 						<td class="td_input">
 						    <s:if test="#session.factNo!='tw'">
 								<input type="text"  name="formula.factNo.factNo"
-									value="${factNo}" readonly id="dwr_factno" />
+									value="${loginUser.factno}__${loginUser.erpfactno}" readonly id="dwr_factno" />
 							</s:if> 
 							<s:if test="#session.factNo=='tw'">
 								<select  name="formula.factNo.factNo"
@@ -76,11 +80,12 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 						<td class="td_input"><input type="text"
 							name="formula.formulaNo"
 							value="<s:property value='formula.formulaNo' />" datatype="*0-6">
+							
+							<input type="hidden" name="isnull" value="isnull"/>
 						</td>
 					</tr>
 				</s:if>
-				<s:if test="formula!=null">
-					<input type="hidden" value="1" name="bs" />
+				<s:if test="formula!=null">					
 					<tr>
 						<td class="td_show_title">廠別</td>
 						<td class="td_input"><font color="blue"><input
@@ -167,11 +172,20 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 					</s:else>					 					
 					</td>
 
-				</tr>				
-				<tr>
-				   <td colspan="4" >
-							<div id="div_webformalaitem">
-								<ul id="myTab" class="nav nav-tabs">
+				</tr>												  																														
+			</tbody>			
+		</table>
+		</div>
+		</div>
+		
+		<div class="panel panel-default" id="div_webformalaitem" style="display:none">	
+		   <div class="panel-heading">
+		                配方階段與物性資料&nbsp;&nbsp;&nbsp;
+		      <input type="button" value="添加配方階段" onclick="addSection()" class="btn btn-primary disabled" id="btn_addsec" />&nbsp; 
+		      <input type="button" value="新增物性資料" onclick="addSection()" class="btn btn-primary disabled" id="btn_addwebtabpom" />         
+		   </div>	
+		   <div class="panel-body">
+		         <ul id="myTab" class="nav nav-tabs">
 									<li class="active"><a href="#tab_typeno"
 										data-toggle="tab" id="tab_typeno_a">配方類別</a>
 									</li>
@@ -207,26 +221,21 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 										</div>
 									</div>
 								</div>
-							</div>
-							<input type="button" value="添加配方階段" onclick="addSection()" class="btn disabled" id="btn_addsec" />								
-						</td>
-				</tr>
-			</tbody>			
-		</table>
+								<center></center>		
+		   </div>
+		   </div>												
+                    
 		
-
-		
-		
-		<table class="table table-condensed">
-		   <tr>
-					<td class="td_show_title">備註</td>
-					<td colspan="3"><textarea style="width:780px;height:240px"><s:property value="formula.remark" /></textarea> 					
+		<div class="panel panel-default">
+		   <div class="panel-heading">備註</div>
+		   <div class="panel-body">
+		      <textarea style="width:100%;height:200px"><s:property value="formula.remark" /></textarea> 					
 						<input type="hidden"
 						value="<s:property value='#session.loginUser.username'/>"
 						name="formula.createName" /> <input type="hidden"
-						value="<%=str_date%>" name="formula.createDate" id="createDate"/></td>
-				</tr>
-		</table>
+						value="<%=str_date%>" name="formula.createDate" id="createDate"/>
+		   </div>
+		</div>		
 		
 		<center>
 			<input type="button" id="sub" value="確定" class="btn btn-primary" />&nbsp;&nbsp;&nbsp;
@@ -268,7 +277,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 				jq("#dwr_factno").empty();
 				jq("#dwr_factno").append("<option value=''>請選擇廠別</option>");
 				jq.each(data,function(i,obj){
-					item="<option value='"+obj[3]+"'>"+obj[1]+"("+obj[3]+")</option>";
+					item="<option value='"+obj[0]+"__"+obj[3]+"'>"+obj[1]+"("+obj[3]+")</option>";
 					jq("#dwr_factno").append(item);
 				});
 			}
@@ -304,7 +313,8 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 		});
 	});
 	
-	function makeFormulaIndex(){      
+	function makeFormulaIndex(){
+		jq("#formulaIndex").val("");
 		var dwr_factno=jq("#dwr_factno");
 		var dwrFactArea=jq("#dwrFactArea");
 		var createDate=jq("#createDate");
@@ -316,6 +326,13 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 				data:{factNo:dwr_factno.val(),factCode:dwrFactArea.val(),createDate:createDate.val()},
 				success:function(data){
 					jq("#formulaIndex").val(data);
+					jq("#div_webformalaitem").css("display","block");
+					jq("#btn_addwebtabpom").removeClass("disabled");
+				},
+				error:function(){
+					layer.msg("生成配方索引失敗",3,3);
+					jq("#div_webformalaitem").css("display","none");
+					jq("#btn_addwebtabpom").addClass("disabled");
 				}
 			});
 		}		
@@ -406,14 +423,17 @@ function removeSection(){
 	jq("#btn_addsec").val("添加配方階段("+(index+1)+")");
 	if(index==0){
 		jq("#del_img").css("display","none");
+		jq("#tab_namece_a").click();
+	}else{
+		jq("#tab_section_a_"+index).click();
 	}
-	jq("#tab_section_a_"+index).click();
 	checkIndex();
 }
 
 function checkbtn(){
 	var items=jq("input[name='itemids']:checked");
-	if(items!=null&&items.length>0){
+    var formulaIndex=jq("#formulaIndex");
+	if(items!=null&&items.length>0&&formulaIndex.val()!=""){
 		jq("#btn_addsec").removeClass("disabled");
 	}else{
 		jq("#btn_addsec").addClass("disabled");
@@ -424,9 +444,11 @@ function checkIndex(){
 	if(index>0){
 		jq("#dwr_factno").attr("disabled","disabled");
 		jq("#dwrFactArea").attr("disabled","disabled");
+		
 	}else{
 		jq("#dwr_factno").removeAttr("disabled");
 		jq("#dwrFactArea").removeAttr("disabled");
+		
 	}
 }
 

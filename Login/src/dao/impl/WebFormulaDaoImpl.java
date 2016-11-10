@@ -64,7 +64,7 @@ public class WebFormulaDaoImpl extends Basedao implements IWebFormulaDao{
 		List<WebFormula>list=super.queryForPage(hql.toString(),offset,pageSize,map);
 		for(WebFormula obj:list){
 			obj.getFactCode().getName();
-			//obj.getFactNo().getFactSname();
+			obj.getFactNo().getFactSname();
 		}
 		PageBean bean=new PageBean();
 		bean.setAllRow(allrow);

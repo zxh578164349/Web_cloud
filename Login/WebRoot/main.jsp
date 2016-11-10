@@ -237,6 +237,9 @@
 		function loadUrl(url) {
 			jq("#r_content").load(url);
 		}
+		function loadUrl_bodyid(url) {
+			jq("#bodyid").load(url);
+		}
 		function findById_form(subform, url) {
 			jq.ajax({
 				type : "POST",
@@ -284,7 +287,7 @@
 						success:function(data){
 							if(data=="0"){
 								layer.msg("刪除成功",3,1);
-								loadUrl(url2);
+								loadUrl_bodyid(url2);
 							}else{
 								layer.msg("刪除失敗",3,3);
 							}

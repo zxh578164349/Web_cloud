@@ -37,9 +37,18 @@ public class WebFormulaAction{
 	private String createDate;
 	private String ajaxResult;
 	private String backIndex;//返回標籤
+	private String isnull;//添加  修改標識
 	
 	
 	
+	public String getIsnull(){
+		return isnull;
+	}
+
+	public void setIsnull(String isnull){
+		this.isnull=isnull;
+	}
+
 	public String getBackIndex(){
 		return backIndex;
 	}
@@ -144,9 +153,10 @@ public class WebFormulaAction{
 	}
 	
 	public String makeFormulaIndex(){
+		//int jj=2/0;
 		StringBuffer index=new StringBuffer();
-		index.append("GJ"+factNo+factCode.split("__")[1]+"-"+createDate);
-		List<String>list=webformulaser.findFormulaIndex(factNo,factCode.split("__")[0],createDate);
+		index.append("GJ"+factNo.split("__")[1]+factCode.split("__")[1]+"-"+createDate);
+		List<String>list=webformulaser.findFormulaIndex(factNo.split("__")[0],factCode.split("__")[0],createDate);
 		if(list.size()>0){
 			String temp=(Integer.parseInt(list.get(0).substring(list.get(0).length()-3))+1)+"";
 			if(temp.length()==1){
@@ -168,6 +178,11 @@ public class WebFormulaAction{
 			String temp=factCode.split("__")[0];
 			WebErpBrankProcess obj=new WebErpBrankProcess(Integer.parseInt(temp));			
 			formula.setFactCode(obj);
+			
+			String factno=formula.getFactNo().getFactNo();
+			if(isnull!=null&&isnull.equals("isnull")){
+				formula.getFactNo().setFactNo(factno.split("__")[0]);
+			}
 			webformulaser.add(formula);
 			ajaxResult="0";
 		}catch(Exception e){

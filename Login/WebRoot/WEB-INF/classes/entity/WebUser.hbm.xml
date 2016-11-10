@@ -28,6 +28,9 @@
         <property name="factno" type="java.lang.String">
             <column name="FACTNO" length="50" not-null="true" />
         </property>
+        <property name="erpfactno" type="java.lang.String">
+            <column name="ERP_FACT_CODE" length="20"/>
+        </property>
         <property name="name" type="java.lang.String">
             <column name="NAME" length="20" />
         </property>

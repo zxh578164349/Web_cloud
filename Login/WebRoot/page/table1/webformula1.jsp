@@ -59,7 +59,7 @@
 							<td>${ bean.pageSize*(bean.currentPage-1)+x.index+1}</td>
 							<td><s:property value="formulaIndex" />
 							</td>
-							<td><s:property value="factNo.factNo" />
+							<td><s:property value="factNo.factSname" />
 							</td>
 							<td><s:property value="factCode.name" />
 							</td>							
@@ -101,7 +101,7 @@
 									<form  id="2subform${x.index}" style="float:left">										
 										<input type="hidden" value="<s:property value='formulaIndex'/>" name="formulaIndex" />																														
 									</form> 
-									<a href="javascript:isDelete('2subform${x.index}','webformula_delete','webformula_findPageBean3')" >
+									<a href="javascript:isDelete2('2subform${x.index}','webformula_delete','webformula_findPageBean3')" >
 									<img alt="刪除" src="images/icon/delete001.png" title="刪除">
 								    </a>
 								</td>
