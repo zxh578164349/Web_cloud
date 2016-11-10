@@ -257,6 +257,10 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 				"*0-6" : /^-?\d{1,12}(\.[0-9]{1,3})?$/
 			},
 			ajaxPost:true,
+			beforeSubmit:function(){
+			    jq("#dwr_factno").removeAttr("disabled");
+		        jq("#dwrFactArea").removeAttr("disabled");
+			},
 			callback:function(data){
 				if(data=="0"){
 					layer.msg("提交成功!",3,1);				
