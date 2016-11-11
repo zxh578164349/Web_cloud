@@ -12,10 +12,8 @@
         </id>
         <many-to-one name="webBrank" class="entity.WebErpBrankProcess" fetch="select">
             <column name="BRANK" length="20" />
-        </many-to-one>
-        <property name="formulaId" type="java.lang.String">
-            <column name="FORMULA_ID" length="40" />
-        </property>
+        </many-to-one>       
+        <many-to-one name="formulaId" class="entity.WebFormula" column="FORMULA_ID" fetch="select" unique="true"/>
         <property name="hardness" type="java.lang.Double">
             <column name="HARDNESS" precision="10" />
         </property>

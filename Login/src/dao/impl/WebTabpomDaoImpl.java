@@ -56,7 +56,7 @@ public class WebTabpomDaoImpl extends Basedao implements IWebTabpomDao{
 		hql.append("from WebTabpom where 1=1 ");
 		hql2.append("select count(pomNo) ");
 		if(pomName!=null&&!pomName.equals("")){
-			hql.append(" and formulaId=:pomname");
+			hql.append(" and formulaId.formulaIndex=:pomname");
 			map.put("pomname", "%"+pomName+"%");
 		}
 		if(brank!=null&&!brank.equals("")){

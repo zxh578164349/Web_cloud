@@ -31,6 +31,7 @@ public class WebFormula implements java.io.Serializable{
 	private String modifyName;
 	private String modifyDate;
 	private List<WebFormulaItems> webFormulaItemses=new ArrayList<WebFormulaItems>();
+	private WebTabpom pom;
 
 	// Constructors
 
@@ -212,6 +213,16 @@ public class WebFormula implements java.io.Serializable{
 	public void setWebFormulaItemses(List<WebFormulaItems> webFormulaItemses){
 		this.webFormulaItemses=webFormulaItemses;
 	}
+
+	public WebTabpom getPom(){
+		return pom;
+	}
+
+	public void setPom(WebTabpom pom){
+		this.pom=pom;
+	}
+	
+	
 
 
 }

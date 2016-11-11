@@ -28,6 +28,8 @@ public class WebErpProductinFormation implements java.io.Serializable{
 	private Integer modifiedby;
 	private Byte state;
 	private Byte status;
+	private String selfchar1;//原料類別代號
+	private String selfchar1Name;//原料類別名稱
 
 	// Constructors
 
@@ -227,5 +229,25 @@ public class WebErpProductinFormation implements java.io.Serializable{
 	public void setStatus(Byte status){
 		this.status=status;
 	}
+
+	public String getSelfchar1(){
+		return selfchar1;
+	}
+
+	public void setSelfchar1(String selfchar1){
+		this.selfchar1=selfchar1;
+	}
+
+	public String getSelfchar1Name(){
+		return selfchar1Name;
+	}
+
+	public void setSelfchar1Name(String selfchar1Name){
+		this.selfchar1Name=selfchar1Name;
+	}
+
+	
+	
+	
 
 }

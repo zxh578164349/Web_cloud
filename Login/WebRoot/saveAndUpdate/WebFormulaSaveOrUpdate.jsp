@@ -171,7 +171,16 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 					   </s:else>
 					</s:else>					 					
 					</td>
-
+				</tr>
+				<tr>
+				<td>備註</td>
+				<td colspan="3">
+				     <textarea style="width:100%;height:200px"><s:property value="formula.remark" /></textarea> 					
+						<input type="hidden"
+						value="<s:property value='#session.loginUser.username'/>"
+						name="formula.createName" /> <input type="hidden"
+						value="<%=str_date%>" name="formula.createDate" id="createDate"/>
+				</td>
 				</tr>												  																														
 			</tbody>			
 		</table>
@@ -181,8 +190,8 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 		<div class="panel panel-default" id="div_webformalaitem" style="display:none">	
 		   <div class="panel-heading">
 		                配方階段與物性資料&nbsp;&nbsp;&nbsp;
-		      <input type="button" value="添加配方階段" onclick="addSection()" class="btn btn-primary disabled" id="btn_addsec" />&nbsp; 
-		      <input type="button" value="新增物性資料" onclick="addSection()" class="btn btn-primary disabled" id="btn_addwebtabpom" />         
+		      <input type="button" value="添加配方階段" onclick="check_addSection()" class="btn btn-primary disabled" id="btn_addsec" />&nbsp; 
+		      <input type="button" value="新增物性資料" onclick="addSection()" class="btn btn-primary disabled" id="btn_addwebtabpom" /> 		              
 		   </div>	
 		   <div class="panel-body">
 		         <ul id="myTab" class="nav nav-tabs">
@@ -212,11 +221,11 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 									<div class="tab-pane fade" id="tab_namece">
 										<div
 											class="div_border_green">
-											<div>
+											<!-- <div>
 												<input type="checkbox" id="all_namece"
-													onclick="" />全选
+													onclick="checkallItems()" />全选
 											</div>
-											<hr />										
+											<hr />	 -->									
 											<div id="div_namece"><label style="color:red">請先選擇配方類別</label></div>
 										</div>
 									</div>
@@ -224,18 +233,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 								<center></center>		
 		   </div>
 		   </div>												
-                    
-		
-		<div class="panel panel-default">
-		   <div class="panel-heading">備註</div>
-		   <div class="panel-body">
-		      <textarea style="width:100%;height:200px"><s:property value="formula.remark" /></textarea> 					
-						<input type="hidden"
-						value="<s:property value='#session.loginUser.username'/>"
-						name="formula.createName" /> <input type="hidden"
-						value="<%=str_date%>" name="formula.createDate" id="createDate"/>
-		   </div>
-		</div>		
+                    			
 		
 		<center>
 			<input type="button" id="sub" value="確定" class="btn btn-primary" />&nbsp;&nbsp;&nbsp;
@@ -245,7 +243,8 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 		</center>
 	</form>
 
-	<script type="text/javascript">
+
+<script type="text/javascript">
 
 	jq(function() {
 		var demo = jq("#form").Validform({
@@ -319,6 +318,8 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 	
 	function makeFormulaIndex(){
 		jq("#formulaIndex").val("");
+		jq("#btn_addwebtabpom").addClass("disabled");
+		jq("#btn_addsec").addClass("disabled");
 		var dwr_factno=jq("#dwr_factno");
 		var dwrFactArea=jq("#dwrFactArea");
 		var createDate=jq("#createDate");
@@ -332,11 +333,13 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 					jq("#formulaIndex").val(data);
 					jq("#div_webformalaitem").css("display","block");
 					jq("#btn_addwebtabpom").removeClass("disabled");
+					checkbtn();
 				},
 				error:function(){
 					layer.msg("生成配方索引失敗",3,3);
 					jq("#div_webformalaitem").css("display","none");
 					jq("#btn_addwebtabpom").addClass("disabled");
+					jq("#btn_addsec").addClass("disabled");
 				}
 			});
 		}		
@@ -368,7 +371,7 @@ function loadNamece(){
 			data:{'itemcategorys':itemcategorys},
 			url:"weberppf_findNameces",
 			success:function(data){
-				var item="";
+				var item="<input type='checkbox' id='all_namece' onclick='checkallItems(),checkbtn()'/>全選<hr/>";
 				jq.each(data,function(i,obj){
 					item+="<div><input type='checkbox' value='"+obj[0]+"' name='itemids' onclick='checkbtn()'/><label>"+obj[2]+"&nbsp;&nbsp;"+obj[3]+"__"+obj[1]+"</label></div>";					
 				});
@@ -383,8 +386,17 @@ function loadNamece(){
 
 var index=0;
 var item_nums=0;
-function addSection(){
+function check_addSection(){
+	var list_items_val=jq("input[name='itemids']:checked");
+	if(list_items_val.length>100){
+		layer.msg("所選配方原料超過上限",3,3);
+	}else{
+		addSection(list_items_val);
+	}	
+}
+function addSection(list_items_val){
 	var cvformulaIndex=jq("#formulaIndex").val();
+	//var list_items_val=jq("input[name='itemids']:checked");	
 	index++;
 	jq("#btn_addsec").val("添加配方階段("+(index+1)+")");
 	var section="<li id='tab_section_"+index+"'><a href='#div_section_"+index+"' data-toggle='tab' id='tab_section_a_"+index+"'>配方階段("+index+")</a></li>";	
@@ -398,27 +410,29 @@ function addSection(){
 	jq("#div_section_"+index).append(ul);
 	jq("#ul_"+index).append(li_head);
 	
-	var list_items_val=jq("input[name='itemids']:checked");
-	var li_content="";
+	
+	var li_content="";	
 	list_items_val.each(function(i){
-		var val=jq(this).val();
-		var txt1=jq(this).next().text().split("__")[1];
-        var txt2=jq(this).next().text().split("__")[0]
-		li_content+="<li>"+txt1+"</li><li>"+txt2+"</li><li><input type='text' name='formula.webFormulaItemses["+(i+item_nums)+"].phrVal'/></li>"+
-		"<li><input type='text' name='formula.webFormulaItemses["+(i+item_nums)+"].weightVal'/></li><li >"+
-		"<input type='text' name='formula.webFormulaItemses["+(i+item_nums)+"].remark'/>"+
-		"<input type='hidden' value='"+val+"' name='formula.webFormulaItemses["+(i+item_nums)+"].fk_weberp_pf.itemid'/>"+
-		"<input type='hidden' value='"+index+"' name='formula.webFormulaItemses["+(i+item_nums)+"].sectionNo'/>"+
-		"<input type='hidden' value='"+cvformulaIndex+"' name='formula.webFormulaItemses["+(i+item_nums)+"].webFormula.formulaIndex'/></li>";
-	});
-	jq("#ul_"+index).append(li_content);
-	
-	jq("#del_img").css("display","block");
-	jq("#tab_section_a_"+index).click();
-	
-	item_nums+=list_items_val.length;
-	checkIndex();
+			var val=jq(this).val();
+			var txt1=jq(this).next().text().split("__")[1];
+	        var txt2=jq(this).next().text().split("__")[0]
+			li_content+="<li>"+txt1+"</li><li>"+txt2+"</li><li><input type='text' name='formula.webFormulaItemses["+(i+item_nums)+"].phrVal'/></li>"+
+			"<li><input type='text' name='formula.webFormulaItemses["+(i+item_nums)+"].weightVal'/></li><li >"+
+			"<input type='text' name='formula.webFormulaItemses["+(i+item_nums)+"].remark'/>"+
+			"<img src='images/icon/del_file.png' style='border:0' onclick='removeOneItem()' id='img_temp'/>"+
+			"<input type='hidden' value='"+val+"' name='formula.webFormulaItemses["+(i+item_nums)+"].fk_weberp_pf.itemid'/>"+
+			"<input type='hidden' value='"+index+"' name='formula.webFormulaItemses["+(i+item_nums)+"].sectionNo'/>"+
+			"<input type='hidden' value='"+cvformulaIndex+"' name='formula.webFormulaItemses["+(i+item_nums)+"].webFormula.formulaIndex'/></li>"
+			;
+		});	
+		jq("#ul_"+index).append(li_content);		
+		jq("#del_img").css("display","block");
+		jq("#tab_section_a_"+index).click();		
+		item_nums+=list_items_val.length;		
+	    checkIndex();
 }
+
+
 
 function removeSection(){
 	jq("#tab_section_"+index).remove();
@@ -432,6 +446,12 @@ function removeSection(){
 		jq("#tab_section_a_"+index).click();
 	}
 	checkIndex();
+}
+function removeOneItem(){
+	alert(jq("#img_temp").next().val());
+		//jq(this).prev().remove();
+	
+	
 }
 
 function checkbtn(){
@@ -449,12 +469,36 @@ function checkIndex(){
 		jq("#dwr_factno").attr("disabled","disabled");
 		jq("#dwrFactArea").attr("disabled","disabled");
 		
+		jq("#dwr_factno").css("color","grey");
+		jq("#dwrFactArea").css("color","grey");
+		
 	}else{
 		jq("#dwr_factno").removeAttr("disabled");
 		jq("#dwrFactArea").removeAttr("disabled");
 		
+		jq("#dwr_factno").css("color","");
+		jq("#dwrFactArea").css("color","");					
 	}
 }
+
+function checkallItems(){
+	var one=jq("#all_namece");
+	if(one.prop("checked")){
+		jq("input[name='itemids']").each(function(){
+			jq(this).prop("checked",true);
+		});
+	}else{
+		jq("input[name='itemids']").each(function(){
+			jq(this).prop("checked",false);
+		});
+	}
+}
+
+
+
+
+
+
 
 </script>
 </body>
