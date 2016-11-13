@@ -191,7 +191,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 		   <div class="panel-heading">
 		                配方階段與物性資料&nbsp;&nbsp;&nbsp;
 		      <input type="button" value="添加配方階段" onclick="check_addSection()" class="btn btn-primary disabled" id="btn_addsec" />&nbsp; 
-		      <input type="button" value="新增物性資料" onclick="addSection()" class="btn btn-primary disabled" id="btn_addwebtabpom" /> 		              
+		      <input type="button" value="新增物性資料" onclick="addWebtabtom()" class="btn btn-primary disabled" id="btn_addwebtabpom" /> 		              
 		   </div>	
 		   <div class="panel-body">
 		         <ul id="myTab" class="nav nav-tabs">
@@ -492,6 +492,32 @@ function checkallItems(){
 			jq(this).prop("checked",false);
 		});
 	}
+}
+
+ function addWebtabtom(){ 
+    var formulaIndex=jq("#formulaIndex").val();  	    	
+    jq.layer({
+    type: 2,   //0-4的选择,
+    title: '物性資料',
+    //border: [0],
+    border: [10, 0.3, '#000'],
+    closeBtn: [1,true],
+    shade: [0],
+    //shade: [0.5, '#000'],
+    shadeClose: false,
+     btns:2,
+     btn:['通過','不通過'],
+    //fadeIn:300,
+    //shift:'top',
+    offset:['10px',''],
+    area: ['750px', '600px'],
+    //page:{url:'kyz_findById_layer?billNo='+billNo+'& factNo='+factNo},
+    //iframe:{src:'kyz_findById_layer?billNo='+billNo+'& factNo='+factNo,scrolling:'auto'},   
+    iframe:{src:'saveAndUpdate/WebTabpomSaveOrUpdate_layer.jsp?formulaIndex='+formulaIndex,scrolling:'auto'},
+    
+    yes:function(){},
+    no:function(){}              
+});
 }
 
 
