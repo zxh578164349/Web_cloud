@@ -7,6 +7,7 @@ import java.util.List;
 
 import dao.IWebFormulaDao;
 import entity.WebFormula;
+import entity.WebTabpom;
 import services.IWebFormulaServices;
 import util.PageBean;
 
@@ -36,21 +37,11 @@ public class WebFormulaServicesImpl implements IWebFormulaServices{
 	 */
 	
 	
-	public PageBean findPageBean(int page,int pageSize,String formulaIndex){
+	public PageBean findPageBean(int page,int pageSize,WebFormula formula){
 		// TODO Auto-generated method stub
-		return webformuladao.findPageBean(page,pageSize,formulaIndex);
+		return webformuladao.findPageBean(page,pageSize, formula);
 	}
 
-	/**
-	 * 日期:2016/11/4
-	 * 描述:
-	 */
-	
-	
-	public List<String> findFormulaIndex(String factNo,String factCode,String createDate){
-		// TODO Auto-generated method stub
-		return webformuladao.findFormulaIndex(factNo,factCode,createDate);
-	}
 
 	/**
 	 * 日期:2016/11/4
@@ -83,6 +74,17 @@ public class WebFormulaServicesImpl implements IWebFormulaServices{
 	public void delete(String formulaIndex){
 		// TODO Auto-generated method stub
 		webformuladao.delete(formulaIndex);
+	}
+
+	/**
+	 * 日期:2016/11/14
+	 * 描述:
+	 */
+	
+	
+	public List<String> findFormulaIndex(String factNo,String factCode,String createDate){
+		// TODO Auto-generated method stub
+		return webformuladao.findFormulaIndex(factNo,factCode,createDate);
 	}
 
 	

@@ -9,6 +9,7 @@ import com.opensymphony.xwork2.ActionContext;
 
 import entity.WebErpBrankProcess;
 import entity.WebFormula;
+import entity.WebTabpom;
 
 import services.IWebFormulaServices;
 import util.PageBean;
@@ -40,7 +41,7 @@ public class WebFormulaAction{
 	private String isnull;//添加  修改標識
 	
 	
-	
+
 	public String getIsnull(){
 		return isnull;
 	}
@@ -131,20 +132,20 @@ public class WebFormulaAction{
 	public String findPageBean(){
 		ActionContext.getContext().getSession().remove("allrow");//dao層  allrow
 		ActionContext.getContext().getSession().remove("formulaIndex");
-		bean=webformulaser.findPageBean(page,PAGESIZE,formulaIndex);
+		bean=webformulaser.findPageBean(page,PAGESIZE,formula);
 		return "findPageBean";
 	}
 	
 	public String findPageBean2(){
 		ActionContext.getContext().getSession().remove("allrow");
 		ActionContext.getContext().getSession().put("formulaIndex",formulaIndex);
-		bean=webformulaser.findPageBean(page,PAGESIZE,formulaIndex);
+		bean=webformulaser.findPageBean(page,PAGESIZE,formula);
 		return "findPageBean1";		
 	}
 	
 	public String findPageBean3(){
 		formulaIndex=(String)ActionContext.getContext().getSession().get("formulaIndex");
-		bean=webformulaser.findPageBean(page,PAGESIZE,formulaIndex);
+		bean=webformulaser.findPageBean(page,PAGESIZE,formula);
 		String temp="findPageBean1";
 		if(backIndex!=null&&backIndex.equals("1")){
 			temp="findPageBean";//
