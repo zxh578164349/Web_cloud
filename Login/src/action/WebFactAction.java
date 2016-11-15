@@ -74,16 +74,23 @@ public class WebFactAction extends ActionSupport {
 	 * @return
 	 */
 	public String findAllfact2() {
-		//退出時，清除session的所有內容（廠別，用戶名），因為退出時指向了jedge.jsp，而這個頁面又指向此方法
-		/*ActionContext.getContext().getSession().clear();
-		List list = webFactSer.findAllFact();		
-		List factCodes=webFactSer.findAllFactCode_show();		
-		ActionContext.getContext().getSession().put("factcodes", factCodes);
-		ActionContext.getContext().getSession().put("facts", list);		
-		this.findAllFact_code_no();*/
+		//退出時，清除session的所有內容（廠別，用戶名），因為退出時指向了jedge.jsp，而這個頁面又指向此方法		
 		this.findAllfact();
 		return "findAllfact2";
 	}
+	
+	/**************************爲了讓舊地址提示無效findAllfact,  更換了新地址findAllWebfact     20161115***************************/
+	public String findAllWebfact(){
+		this.findAllfact();
+		return "findAllfact";
+	}
+	
+	public String findAllWebfact2(){
+		this.findAllfact();
+		return "findAllfact2";
+	}
+	/**************************爲了讓舊地址提示無效findAllfact,  更換了新地址findAllWebfact     20161115***************************/
+	
 	/**
 	 * 20160419
 	 * 用于"分形態損益表"

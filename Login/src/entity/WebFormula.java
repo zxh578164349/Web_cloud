@@ -32,6 +32,7 @@ public class WebFormula implements java.io.Serializable{
 	private String modifyDate;
 	private List<WebFormulaItems> webFormulaItemses=new ArrayList<WebFormulaItems>();
 	private WebTabpom pom;
+	private KyVisabillm vbm;
 
 	// Constructors
 
@@ -66,6 +67,12 @@ public class WebFormula implements java.io.Serializable{
 		this.modifyName=modifyName;
 		this.modifyDate=modifyDate;
 		this.webFormulaItemses=webFormulaItemses;
+	}
+	
+	public WebFormula(VWebFact factNo,WebErpBrankProcess factCode,WebTabpom pom){
+		this.factNo=factNo;
+		this.factCode=factCode;
+		this.pom=pom;
 	}
 
 	// Property accessors
@@ -220,6 +227,14 @@ public class WebFormula implements java.io.Serializable{
 
 	public void setPom(WebTabpom pom){
 		this.pom=pom;
+	}
+
+	public KyVisabillm getVbm(){
+		return vbm;
+	}
+
+	public void setVbm(KyVisabillm vbm){
+		this.vbm=vbm;
 	}
 	
 	

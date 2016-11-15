@@ -73,6 +73,7 @@
            <column name="FACT_NO"/>
            <column name="BILL_NO"/>
         </many-to-one>
-        <many-to-one name="webrel" column="BILL_NO" unique="true" insert="false" update="false"/>      
+        <many-to-one name="webrel" column="BILL_NO" unique="true" insert="false" update="false"/>
+        <many-to-one name="formula" column="BILL_NO" unique="true" insert="false" update="false"/>   
     </class>
 </hibernate-mapping>

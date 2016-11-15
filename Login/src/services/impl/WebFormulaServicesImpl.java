@@ -37,9 +37,9 @@ public class WebFormulaServicesImpl implements IWebFormulaServices{
 	 */
 	
 	
-	public PageBean findPageBean(int page,int pageSize,WebFormula formula){
+	public PageBean findPageBean(int page,int pageSize,WebFormula formula,String issuedDate_a,String issuedDate_b){
 		// TODO Auto-generated method stub
-		return webformuladao.findPageBean(page,pageSize, formula);
+		return webformuladao.findPageBean(page,pageSize, formula,issuedDate_a,issuedDate_b);
 	}
 
 

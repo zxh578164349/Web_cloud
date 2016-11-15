@@ -21,7 +21,7 @@
 
 
 <body>
-	<jsp:include page="publicHead_print.jsp" />
+	<jsp:include page="publicHead_webformula.jsp" />
 	<hr />
 		
 	<div id="bodyid">

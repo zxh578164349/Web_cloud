@@ -65,5 +65,6 @@
             <one-to-many class="entity.WebFormulaItems" />
         </bag>
         <one-to-one name="pom" property-ref="formulaId" cascade="all"/>
+        <one-to-one name="vbm" property-ref="formula" cascade="all"/>
     </class>
 </hibernate-mapping>

@@ -39,8 +39,25 @@ public class WebFormulaAction{
 	private String ajaxResult;
 	private String backIndex;//返回標籤
 	private String isnull;//添加  修改標識
+	private String issuedDate_a;
+	private String issuedDate_b;
 	
-	
+		
+	public String getIssuedDate_a(){
+		return issuedDate_a;
+	}
+
+	public void setIssuedDate_a(String issuedDate_a){
+		this.issuedDate_a=issuedDate_a;
+	}
+
+	public String getIssuedDate_b(){
+		return issuedDate_b;
+	}
+
+	public void setIssuedDate_b(String issuedDate_b){
+		this.issuedDate_b=issuedDate_b;
+	}
 
 	public String getIsnull(){
 		return isnull;
@@ -132,20 +149,20 @@ public class WebFormulaAction{
 	public String findPageBean(){
 		ActionContext.getContext().getSession().remove("allrow");//dao層  allrow
 		ActionContext.getContext().getSession().remove("formulaIndex");
-		bean=webformulaser.findPageBean(page,PAGESIZE,formula);
+		bean=webformulaser.findPageBean(page,PAGESIZE,formula,issuedDate_a,issuedDate_b);
 		return "findPageBean";
 	}
 	
 	public String findPageBean2(){
 		ActionContext.getContext().getSession().remove("allrow");
 		ActionContext.getContext().getSession().put("formulaIndex",formulaIndex);
-		bean=webformulaser.findPageBean(page,PAGESIZE,formula);
+		bean=webformulaser.findPageBean(page,PAGESIZE,formula,issuedDate_a,issuedDate_b);
 		return "findPageBean1";		
 	}
 	
 	public String findPageBean3(){
 		formulaIndex=(String)ActionContext.getContext().getSession().get("formulaIndex");
-		bean=webformulaser.findPageBean(page,PAGESIZE,formula);
+		bean=webformulaser.findPageBean(page,PAGESIZE,formula,issuedDate_a,issuedDate_b);
 		String temp="findPageBean1";
 		if(backIndex!=null&&backIndex.equals("1")){
 			temp="findPageBean";//

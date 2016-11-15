@@ -15,6 +15,8 @@ import util.PageBean;
 
 import dao.Basedao;
 import dao.IWebFormulaDao;
+import entity.VWebFact;
+import entity.WebErpBrankProcess;
 import entity.WebFormula;
 import entity.WebTabpom;
 
@@ -39,13 +41,16 @@ public class WebFormulaDaoImpl extends Basedao implements IWebFormulaDao{
 	 */
 	
 	
-	public PageBean findPageBean(int page,int pageSize,WebFormula formula){
+	public PageBean findPageBean(int page,int pageSize,WebFormula formula,String issuedDate_a,String issuedDate_b){
 		// TODO Auto-generated method stub
 		StringBuffer hql=new StringBuffer();
 		StringBuffer hql2=new StringBuffer();
 		Map<String,Object>map=new HashMap<String,Object>();
 		hql.append("from WebFormula where 1=1 ");
 		hql2.append("select count(formulaIndex) ");
+		if(formula==null){
+			formula=new WebFormula(new VWebFact(),new WebErpBrankProcess(),new WebTabpom());
+		}
 		if(formula.getFormulaIndex()!=null&&!"".equals(formula.getFormulaIndex())){
 			hql.append(" and formulaIndex=:formulaIndex");
 			map.put("formulaIndex",formula.getFormulaIndex());
@@ -65,6 +70,14 @@ public class WebFormulaDaoImpl extends Basedao implements IWebFormulaDao{
 		if(formula.getIssuedDate()!=null&&!"".equals(formula.getIssuedDate())){
 			hql.append(" and issuedDate=:issuedDate");
 			map.put("issuedDate",formula.getIssuedDate());
+		}
+		if(issuedDate_a!=null&&!"".equals(issuedDate_a)){
+			hql.append(" and issuedDate>=:issuedDate_a");
+			map.put("issuedDate_a",issuedDate_a);
+		}
+		if(issuedDate_b!=null&&!"".equals(issuedDate_b)){
+			hql.append(" and issuedDate<=:issuedDate_b");
+			map.put("issuedDate_b",issuedDate_b);
 		}
 		if(formula.getAssignBrand()!=null&&!"".equals(formula.getAssignBrand())){
 			hql.append(" and assignBrand=:assignBrand");

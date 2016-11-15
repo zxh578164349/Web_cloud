@@ -91,9 +91,7 @@
 							<s:if test='#session.loginUser.userread!="1"'>
 								<td>
 									<%--<form action="weballobj_findWloById" method="post" id="subform${x.index}">										
-										<input type="hidden" value="<s:property value='id.fact.id.factNo'/>" name="factNo" />
-										<input type="hidden" value="<s:property value='id.fact.id.factCode'/>" name="factCode" />											
-										<input type="hidden" value="<s:property value='id.yymm'/>" name="yymm" />											
+										<input type="hidden" value="<s:property value='formulaIndex'/>" name="formulaIndex" />																					
 									</form> 
 									<a href="javascript:findById('subform${x.index}','webwlo_findWloById')">
 									<img alt="修改" src="images/icon/edit001.png" title="修改">										
@@ -101,6 +99,7 @@
 									<form  id="2subform${x.index}" style="float:left">										
 										<input type="hidden" value="<s:property value='formulaIndex'/>" name="formulaIndex" />																														
 									</form> 
+									<a href="javascript:addvbm()" class="btn btn-sm">送簽</a>
 									<a href="javascript:isDelete2('2subform${x.index}','webformula_delete','webformula_findPageBean3')" >
 									<img alt="刪除" src="images/icon/delete001.png" title="刪除">
 								    </a>
@@ -117,7 +116,32 @@
   </div>	
 </div>
 <jsp:include page="pagenation.jsp" flush="true"/>	
-	
+
+
+<script type="text/javascript">
+function addvbm(){
+	var div='<div style="width:420px; height:260px; padding:20px; border:1px solid #ccc; background-color:#eee;">'+
+	'<form action=""><select><option>請選擇類別</option></select></form>'+
+	'<button id="pagebtn" class="btns" onclick="">关闭</button></div>';
+	var pageii = jq.layer({
+		  type: 1,
+		  title: false,
+		  area: ['auto', 'auto'],
+		  border: [0], //去掉默认边框
+		  shade: [0], //去掉遮罩
+		  closeBtn: [0, false], //去掉默认关闭按钮
+		  shift: 'left', //从左动画弹出
+		  page: {
+		    html: div
+		  }
+		});
+		//自设关闭
+		jq('#pagebtn').on('click', function(){
+		  layer.close(pageii);
+		});
+}
+
+</script>	
 	
 </body>
 </html>

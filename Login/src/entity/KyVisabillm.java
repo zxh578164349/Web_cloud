@@ -32,6 +32,7 @@ public class KyVisabillm implements java.io.Serializable {
 	private KyzExpectmatm kyzexp;
 	private KyzContactletter kyzletter;
 	private Webremittancelist webrel;
+	private WebFormula formula;//工廠配方
 
 	// Constructors
 
@@ -219,6 +220,14 @@ public class KyVisabillm implements java.io.Serializable {
 
 	public void setWebrel(Webremittancelist webrel) {
 		this.webrel = webrel;
+	}
+
+	public WebFormula getFormula(){
+		return formula;
+	}
+
+	public void setFormula(WebFormula formula){
+		this.formula=formula;
 	}
 
 	

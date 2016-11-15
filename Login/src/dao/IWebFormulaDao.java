@@ -24,7 +24,7 @@ import util.PageBean;
  *    
  **/
 public interface IWebFormulaDao{
-	public PageBean findPageBean(int page,int pageSize,WebFormula formula);
+	public PageBean findPageBean(int page,int pageSize,WebFormula formula,String issuedDate_a,String issuedDate_b);
 	public List<String> findFormulaIndex(String factNo,String factCode,String createDate);
 	public void add(WebFormula formula);
 	public WebFormula findById(String formulaIndex);
