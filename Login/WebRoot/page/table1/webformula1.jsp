@@ -54,7 +54,7 @@
 					</tr>
 				</thead>
 				<tbody id="tbody">
-					<s:iterator value="bean.list" status="x" id="temp">
+					<s:iterator value="bean.list" status="x" id="obj">
 						<tr>
 							<td>${ bean.pageSize*(bean.currentPage-1)+x.index+1}</td>
 							<td><s:property value="formulaIndex" />
@@ -99,7 +99,7 @@
 									<form  id="2subform${x.index}" style="float:left">										
 										<input type="hidden" value="<s:property value='formulaIndex'/>" name="formulaIndex" />																														
 									</form> 
-									<a href="javascript:addvbm()" class="btn btn-sm">送簽</a>
+									<a href="javascript:addvbm('${obj.formulaIndex }','${obj.factNo.factNo }')" class="btn btn-sm">送簽</a>
 									<a href="javascript:isDelete2('2subform${x.index}','webformula_delete','webformula_findPageBean3')" >
 									<img alt="刪除" src="images/icon/delete001.png" title="刪除">
 								    </a>
@@ -119,9 +119,11 @@
 
 
 <script type="text/javascript">
-function addvbm(){
+function addvbm(billNo,factNo){
 	var div='<div style="width:420px; height:260px; padding:20px; border:1px solid #ccc; background-color:#eee;">'+
-	'<form action=""><select><option>請選擇類別</option></select></form>'+
+	'<form action=""><select name="vbm.id.visaSort" id="visaSort"><option>請選擇類別</option></select></form>'+
+	'<input type="hidden" name="vbm.id.billNo" value="'+billNo+'"/>'+
+	'<input type="hidden" name="vbm.id.factNo" value="'+factNo+'"/>'+
 	'<button id="pagebtn" class="btns" onclick="">关闭</button></div>';
 	var pageii = jq.layer({
 		  type: 1,
@@ -134,6 +136,19 @@ function addvbm(){
 		  page: {
 		    html: div
 		  }
+		});
+		jq.ajax({
+		  type:'post',
+		  dataType:'json',
+		  data:{factNo:factNo},
+		  url:'webtype_findByFactNo',
+		  success:function(data){
+		     var item="<option value=''>請選擇類別</option> ";
+		     jq.each(data,function(i,obj){
+		       item+="<option value='"+obj.id.typeNo+"'>"+obj.typeName+"</option>";
+		     });
+		     jq("#visaSort").append(item);
+		  } 
 		});
 		//自设关闭
 		jq('#pagebtn').on('click', function(){

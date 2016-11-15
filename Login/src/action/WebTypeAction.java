@@ -4,6 +4,8 @@ import java.io.File;
 import java.util.Date;
 import java.util.List;
 
+import net.sf.json.JSONArray;
+
 import services.IKyVisabillmServices;
 import services.IKyzContactLetterServices;
 import services.IKyzExpectmatmFileServices;
@@ -39,6 +41,15 @@ public class WebTypeAction extends ActionSupport{
 	private IKyzVisaFlowServices visaSer;
 	private IWebBussinessletterServices webbussletterSer;
 	private IKyVisabillmServices visabillmSer;
+	private JSONArray jsons;
+	
+	
+	public JSONArray getJsons() {
+		return jsons;
+	}
+	public void setJsons(JSONArray jsons) {
+		this.jsons = jsons;
+	}
 	public int getBackIndex() {
 		return backIndex;
 	}
@@ -204,6 +215,15 @@ public class WebTypeAction extends ActionSupport{
 		}
 		return "recovery";
 	}
+	
+	
+	public String findByFactNo(){
+		List<WebType>list=webtypeSer.findByFactNo(factNo);
+		jsons=JSONArray.fromObject(list);
+		return "findByFactNo";
+	}
+	
+	
 	
 	
 	

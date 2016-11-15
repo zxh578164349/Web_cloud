@@ -212,6 +212,9 @@
              <result name="recovery" type="json">
                   <param name="root">ajaxResult</param>
              </result>
+             <result name="findByFactNo" type="json">
+                  <param name="root">jsons</param>
+             </result>
         </action>
         <action name="proloss_*" class="profitlossAction" method="{1}"></action>
         <action name="kyzfile_*" class="filekyzAction" method="{1}">
