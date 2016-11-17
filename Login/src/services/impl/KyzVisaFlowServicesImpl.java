@@ -92,4 +92,15 @@ public class KyzVisaFlowServicesImpl implements IKyzVisaFlowServices{
 		return visaDao.findWebbuss(factNo);
 	}
 
+	/**
+	 * 日期:2016/11/17
+	 * 描述:
+	 */
+	
+	
+	public int findNums(String factNo,String visaSort){
+		// TODO Auto-generated method stub
+		return visaDao.findNums(factNo,visaSort);
+	}
+
 }

@@ -157,6 +157,12 @@
         <param name="contentDisposition">attachment;filename="${fileName}"</param>   
         <param name="bufferSize">4096</param>
         </result>
+        <result name="inline" type="stream">
+         <param name="contentType">image/jpeg;charset=utf-8</param>
+        <param name="inputName">fileInput</param>  
+        <param name="contentDisposition">inline;filename="${fileName}"</param>   
+        <param name="bufferSize">4096</param>
+        </result>
         <result name="input">none.jsp</result>
         <result name="delete" type="redirectAction">filesUpload_findByName</result>     
         </action>       
@@ -212,8 +218,11 @@
              <result name="recovery" type="json">
                   <param name="root">ajaxResult</param>
              </result>
-             <result name="findByFactNo" type="json">
-                  <param name="root">jsons</param>
+             <result name="findPF" type="json">
+                  <param name="root">ajaxResult</param>
+             </result>
+             <result name="findTypes" type="json">
+                   <param name="root">jsons</param>
              </result>
         </action>
         <action name="proloss_*" class="profitlossAction" method="{1}"></action>
@@ -406,7 +415,15 @@
              kyzletter_findPageBean
           </result>
           <result name="delete" type="redirectAction">kyzletter_findPageBean3</result>
+          <result name="lookFile" type="stream">		     
+           <param name="contentType">image/jpeg;charset=utf-8</param>
+           <param name="inputName">fileInput</param>  
+           <param name="contentDisposition">inline;filename="${fileName}"</param>   
+           <param name="bufferSize">4096</param>       
+		  </result>
         </action>
+        
+		  
         <action name="kyz_*" class="kyzAction" method="{1}">
 		   <!--   <interceptor-ref name="fileUpload">
 		    配置允许上传的文件大小，单位字节,本例为：5MB 
@@ -440,8 +457,14 @@
          <param name="contentType">application/octet-stream;charset=utf-8</param>
         <param name="inputName">fileInput</param>  
         <param name="contentDisposition">inline;filename="${fileName}"</param>   
-        <param name="bufferSize">4096</param>
+        <param name="bufferSize">4096</param>        
         </result>
+        <result name="lookFile" type="stream">		     
+           <param name="contentType">image/jpeg;charset=utf-8</param>
+           <param name="inputName">fileInput2</param>  
+           <param name="contentDisposition">inline;filename="${fileName}"</param>   
+           <param name="bufferSize">4096</param>       
+		  </result>
 		</action>
 		<action name="vbm_*" class="visabillmAction" method="{1}">
 		  <!--   函文審核 -->
@@ -495,7 +518,7 @@
 		  <!-- 函文審核狀況 -->
 		  <result name="beanList_1">/tw/visabillm.jsp</result>
 		  <result name="beanList1_1">/tw/tw1/visabillm1.jsp</result>
-		  <!-- 函文審核狀況 -->
+		  <!-- 函文審核狀況 -->		  		  
 		</action>
 		<action name="visaflow_*" class="kyzVisaFlowAction" method="{1}">
 		    <result name="add" type="json">

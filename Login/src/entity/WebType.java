@@ -14,6 +14,7 @@ public class WebType implements java.io.Serializable {
 	private String typeName;
 	private String webtypeMk;
 	private String delMk;//刪除標記        0或空 未刪除     1刪除
+	private String typeMk; //區分 出差類(TR)    配方類(PF)     其它類(0)
 	private List<KyzExpectmatm>list_kyzexp;
 	private List<KyzContactletter>list_letter;
 	private List<WebBussinessletter>list_buss;
@@ -113,6 +114,15 @@ public class WebType implements java.io.Serializable {
 		this.list_webrel = list_webrel;
 	}
 
+	public String getTypeMk(){
+		return typeMk;
+	}
+
+	public void setTypeMk(String typeMk){
+		this.typeMk=typeMk;
+	}
+
+	
 	
 	
 

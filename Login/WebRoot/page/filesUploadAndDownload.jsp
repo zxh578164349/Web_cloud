@@ -70,7 +70,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 	     <s:if test='filetype.contains("image")'>
 	       <img src="images/icon/picture.jpg"/>
 	     </s:if> -->       		        	        	         
-	     <a href="download_download?fileName=<s:property value='filename'/>" ><s:property value="filename"/></a>
+	     <a href="download_inline?fileName=<s:property value='filename'/>" target="_blank"><s:property value="filename"/></a>
 	    </span>
 	    <form id="del_form${x.index}">
 	      <input type="hidden" value="<s:property value='filename'/>" name="fileName"/>

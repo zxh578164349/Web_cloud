@@ -99,7 +99,7 @@
 									<form  id="2subform${x.index}" style="float:left">										
 										<input type="hidden" value="<s:property value='formulaIndex'/>" name="formulaIndex" />																														
 									</form> 
-									<a href="javascript:addvbm('${obj.formulaIndex }','${obj.factNo.factNo }')" class="btn btn-sm">送簽</a>
+									<a href="javascript:addvbm('${obj.factNo.factNo }')" class="btn btn-sm">送簽</a>
 									<a href="javascript:isDelete2('2subform${x.index}','webformula_delete','webformula_findPageBean3')" >
 									<img alt="刪除" src="images/icon/delete001.png" title="刪除">
 								    </a>
@@ -119,13 +119,8 @@
 
 
 <script type="text/javascript">
-function addvbm(billNo,factNo){
-	var div='<div style="width:420px; height:260px; padding:20px; border:1px solid #ccc; background-color:#eee;">'+
-	'<form action=""><select name="vbm.id.visaSort" id="visaSort"><option>請選擇類別</option></select></form>'+
-	'<input type="hidden" name="vbm.id.billNo" value="'+billNo+'"/>'+
-	'<input type="hidden" name="vbm.id.factNo" value="'+factNo+'"/>'+
-	'<button id="pagebtn" class="btns" onclick="">关闭</button></div>';
-	var pageii = jq.layer({
+function addvbm(factNo){	
+	/*var pageii = jq.layer({
 		  type: 1,
 		  title: false,
 		  area: ['auto', 'auto'],
@@ -136,24 +131,26 @@ function addvbm(billNo,factNo){
 		  page: {
 		    html: div
 		  }
-		});
+		});*/
 		jq.ajax({
 		  type:'post',
 		  dataType:'json',
 		  data:{factNo:factNo},
-		  url:'webtype_findByFactNo',
+		  url:'webtype_findPF',
 		  success:function(data){
-		     var item="<option value=''>請選擇類別</option> ";
-		     jq.each(data,function(i,obj){
-		       item+="<option value='"+obj.id.typeNo+"'>"+obj.typeName+"</option>";
-		     });
-		     jq("#visaSort").append(item);
+			  if(data==null){
+				  layer.msg("還沒有建立配方送簽流程,不能送簽",3,3);
+			  }else if(data=='1'){
+				  layer.msg("送簽失敗",3,3);  
+			  }else{
+				  layer.msg("送簽成功",3,1);
+			  }		     
 		  } 
 		});
 		//自设关闭
-		jq('#pagebtn').on('click', function(){
+		/*jq('#pagebtn').on('click', function(){
 		  layer.close(pageii);
-		});
+		});*/
 }
 
 </script>	

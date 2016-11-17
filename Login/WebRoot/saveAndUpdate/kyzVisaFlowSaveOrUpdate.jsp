@@ -57,7 +57,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 			  <s:else>
 			     <td ><select 
 							 datatype="*" id="dwrFactNo"
-							onchange="getAddBtn(),checkSame(),getValue('dwrFactNo','dwrFactNo2'),getKyType2(this.value)">
+							onchange="getAddBtn(),checkSame(),getValue('dwrFactNo','dwrFactNo2'),checkWebtype()">
 								<option value="">請選擇廠別</option>
 								<s:iterator value="#session.facts" id="temp">
 									<option value="${temp[0]}">${temp[1]
@@ -68,7 +68,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 						<span id="error1"></span></td>
 			  </s:else>   			     
 			     <td>
-			     <select  id="dwr_kytype" onchange="getAddBtn(),checkSame(),getValue('dwr_kytype','dwr_kytype2')" datatype="*">
+			     <select  id="dwr_kytype" onchange="getAddBtn(),checkSame(),getValue('dwr_kytype','dwr_kytype2'),alert(this.value)" datatype="*" >
 			       <option value="">請選擇</option>
 			     </select>
 			     <input type="hidden" name="flows[0].id.visaSort" id="dwr_kytype2"/>
@@ -252,35 +252,7 @@ var j=0;
 	       }
 	  }
 	}
-	function getKyType(){
-	   /* kytypejs.findByTypeNo("VV",function(x){
-	         dwr.util.addOptions("dwr_kytype",x,"typeName","typeSname");
-	   }); */
-	   
-	 var factno=document.getElementById("dwrFactNo").value;
-	 if(factno!=null&&factno!=""){
-	     webtypejs.findByFactNo(factno,function(x){
-       if(x.length>0){
-          dwr.util.addOptions("dwr_kytype",x,"webtypeMk","typeName");
-       }
-         
-     });
-	 }
-    
-	}
 	
-	function getKyType2(factno){
-	 document.getElementById("dwr_kytype").length=1;	 
-	 if(factno!=null&&factno!=""){
-	     webtypejs.findByFactNo(factno,function(x){
-       if(x.length>0){
-          dwr.util.addOptions("dwr_kytype",x,"webtypeMk","typeName");
-       }
-         
-     });
-	 }
-    
-	}
 	function getAddBtn(){
 	    var factno=document.getElementById("dwrFactNo").value;
         var typeno=document.getElementById("dwr_kytype").value;
@@ -295,35 +267,15 @@ var j=0;
 	      
      function checkSame(){
        var factno=document.getElementById("dwrFactNo").value;
-       var visasort=document.getElementById("dwr_kytype").value;
-       var first_visasort=visasort.charAt(0);
+       var visasort=document.getElementById("dwr_kytype").value.split("__")[0]; 
+       var visasort2=document.getElementById("dwr_kytype").value.split("__")[1]; 
        var visaSigner=document.getElementById("skeys0").value;
        var visasort_obj=document.getElementById("dwr_kytype");
        var visasort_index=visasort_obj.selectedIndex;
        var visasort_text=visasort_obj.options[visasort_index].text;
        if(factno!=""&&visasort!=""){
-          if(first_visasort!='C'){
-             /* kyzvisaflowjs.findByFactNoVisaSort(factno,visasort,function(x){
-               if(x.length>0){
-                 alert("廠別為("+factno+")類別為("+visasort_text+")的審核流程已存在!");
-                 document.getElementById("error1").innerHTML='<font color="red">！</font>';
-                 document.getElementById("error2").innerHTML='<font color="red">！</font>'; 
-                 document.getElementById("sub").disabled=true;
-                 document.getElementById("addbtn").disabled=true;
-                 document.getElementById("sub").value="已鎖定";
-                 document.getElementById("sub").style.color="red";
-                 document.getElementById("addbtn").style.color="red";
-               }else{
-                 document.getElementById("error1").innerHTML='';
-                 document.getElementById("error2").innerHTML='';
-                 document.getElementById("sub").disabled=false;
-                 document.getElementById("addbtn").disabled=false;
-                 document.getElementById("sub").value="確定";
-                 document.getElementById("sub").style.color="white";
-                 document.getElementById("addbtn").style.color="white";
-               }
-          }); */
-           if(visaSigner!=""){                 
+    	   if(visasort2=="0"){//【其它類】
+    		   if(visaSigner!=""){                 
                    kyzvisaflowjs.findVisaSort_dwr(factno,visasort,visaSigner,function(x){
                         if(x!=null){
                            alert("該Email("+visaSigner+")的審核流程已存在!");
@@ -344,41 +296,31 @@ var j=0;
                            document.getElementById("addbtn").style.color="white";
                         }
                    });
-                 }
-          }else{//如果是C类别,也就是C1,C2,C3....,就限定同类中，第一个申请人只能申请一个流程（因为在申请函文选择类别时，是要根据第一人，也就是申请人来选择流程的代号）
-                /************************爲了避免由於上麪的操作鎖定，所以在選擇C類時，要重新解鎖***********************/
-                 document.getElementById("error1").innerHTML='';
-                 document.getElementById("error2").innerHTML='';
-                 document.getElementById("sub").disabled=false;
-                 document.getElementById("addbtn").disabled=false;
-                 document.getElementById("sub").value="確定";
-                 document.getElementById("sub").style.color="white";
-                 document.getElementById("addbtn").style.color="white";
-                 /************************爲了避免由於上麪的操作鎖定，所以在選擇C類時，要重新解鎖***********************/             
-                 if(visaSigner!=""){                 
-                   kyzvisaflowjs.findVisaSort_dwr(factno,visasort,visaSigner,function(x){
-                        if(x!=null){
-                           alert("該Email("+visaSigner+")的審核流程已存在!");
-                           document.getElementById("error1").innerHTML='<font color="red">！</font>';
-                           document.getElementById("error2").innerHTML='<font color="red">！</font>';
-                           document.getElementById("sub").disabled=true;
-                           document.getElementById("addbtn").disabled=true;
-                           document.getElementById("sub").value="已鎖定";
-                           document.getElementById("sub").style.color="red";
-                           document.getElementById("addbtn").style.color="red";
-                        }else{
-                           document.getElementById("error1").innerHTML='';
-                           document.getElementById("error2").innerHTML='';
-                           document.getElementById("sub").disabled=false;
-                           document.getElementById("addbtn").disabled=false;
-                           document.getElementById("sub").value="確定";
-                           document.getElementById("sub").style.color="white";
-                           document.getElementById("addbtn").style.color="white";
-                        }
-                   });
-                 }
-                 
-          }
+                 }  
+    	   }else{//【出差類】【配方類】
+    		   alert(visasort2);
+    		   kyzvisaflowjs.findNums(factno,visasort,function(x){
+    			   if(x!=0){
+    				   alert("該廠的審核流程已存在!");
+                       document.getElementById("error1").innerHTML='<font color="red">！</font>';
+                       document.getElementById("error2").innerHTML='<font color="red">！</font>';
+                       document.getElementById("sub").disabled=true;
+                       document.getElementById("addbtn").disabled=true;
+                       document.getElementById("sub").value="已鎖定";
+                       document.getElementById("sub").style.color="red";
+                       document.getElementById("addbtn").style.color="red";
+    			   }else{
+    				   document.getElementById("error1").innerHTML='';
+                       document.getElementById("error2").innerHTML='';
+                       document.getElementById("sub").disabled=false;
+                       document.getElementById("addbtn").disabled=false;
+                       document.getElementById("sub").value="確定";
+                       document.getElementById("sub").style.color="white";
+                       document.getElementById("addbtn").style.color="white";
+    			   }
+    		   });
+    	   }
+                    
        } 
      }
      
@@ -469,15 +411,40 @@ function back(){
 	loadUrl("/Login/visaflow_findPageBean3?backIndex=1");
 }
 
+function checkWebtype(){
+	jq("#dwr_kytype").empty();
+	var factno=jq("#dwrFactNo");
+	if(factno!=null){
+		jq.ajax({
+			type:"post",
+			dataType:"json",
+			url:"webtype_findTypes",
+			data:{factNo:factno.val()},
+			success:function(data){
+				var item="";
+				if(data.length>0){
+					item+="<option value=''>請選擇類別</option>";
+					jq.each(data,function(i,obj){
+						item+="<option value='"+obj[0]+"__"+obj[2]+"'>"+obj[1]+"</option>";
+					});
+				}else{
+					item+="<option value=''>無數據</option>";
+				}				
+				jq("#dwr_kytype").append(item);
+			}
+		});
+	}
+	
+}
+
 </script>
 
 <script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>
 <script type='text/javascript' src='/Login/dwr/interface/kyzvisaflowjs.js'></script>
 <script type='text/javascript' src='/Login/dwr/interface/userjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/webtypejs.js'></script>
 <script type="text/javascript">
 jq(function(){
-	getKyType();
+	checkWebtype();
 });
 </script>	
 </body>

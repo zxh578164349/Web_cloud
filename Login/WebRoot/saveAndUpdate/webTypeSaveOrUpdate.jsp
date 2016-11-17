@@ -57,7 +57,8 @@
 				          <s:if test="webtype==null">
 				             <div id="div_typeno">
 				              <input type="radio" value="TR" name="typeNo" onclick="checkRadio(),check(this)" id="typeno_tr"/>出差類&nbsp;
-				              <input type="radio" value="0" name="typeNo" checked onclick="checkRadio()"/>非出差類				             
+				              <input type="radio" value="PF" name="typeNo" onclick="checkRadio(),check(this)" id="typeno_tr"/>配方類&nbsp;
+				              <input type="radio" value="0" name="typeNo" checked onclick="checkRadio()"/>其它類				             
 				             <input type="text" name="webtype.id.typeNo" datatype="s2-2" onblur="check(this),checkType(this)" id="typeno"/>
 				            <span id="error1"></span>
 				             </div>				              
@@ -120,16 +121,16 @@
 	}); 
 
 	 function check(typeno){
-       var factno=document.getElementById("dwr_factno").value;
-      // var typeno=document.getElementById("typeno").value;           
+       var factno=document.getElementById("dwr_factno").value;           
        if(factno!=""&&typeno.value!=""){
           webtypejs.findById(factno,typeno.value,function(x){
               if(x!=null){
-            	  if(typeno.value=="TR"){
+            	  /*if(typeno.value=="TR"){
             		alert("出差類已存在");  
             	  }else{
             		  alert("該類別已存在");
-            	  }              
+            	  }*/
+            	  alert("該類別已存在");
               document.getElementById("sub").disabled=true;
               document.getElementById("sub").value="已鎖定";
               document.getElementById("sub").style.color="red";
@@ -163,8 +164,8 @@
 	}
   
   	function checkType(type){
-	   if(type.value.charAt(0).toUpperCase()=='C'||type.value.toUpperCase()=='TR'){
-	      alert("不可以使用C字母开头或TR");
+	   if(type.value.charAt(0).toUpperCase()=='C'||type.value.toUpperCase()=='TR'||type.value.toUpperCase()=='PF'){
+	      alert("不可以使用C字母开头或TR,PF");
 	      type.value='';
 	   }
 	}

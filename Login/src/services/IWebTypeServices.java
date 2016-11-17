@@ -17,5 +17,19 @@ public interface IWebTypeServices {
 	public String findTypeNameById(String factNo,String typeNo);
 	public List<WebType>findByFactNo2(String factNo);
 	public void addToUpdate(WebType type);
+	public List<Object[]>findTypes(String factNo);
+	
+	/**
+	 * 
+	 * @Title: findPF
+	 * @Description: 查找配方簽核類
+	 * @param @param factNo
+	 * @param @return
+	 * @return String
+	 * @throws
+	 * @author web
+	 * @date 2016/11/16
+	 */
+	public String findPF(String factNo);//查找配方簽核類
 
 }

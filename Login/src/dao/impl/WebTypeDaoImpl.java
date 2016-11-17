@@ -90,7 +90,7 @@ public class WebTypeDaoImpl extends Basedao implements IWebTypeDao{
 	public List<WebType> findByFactNo3(String factNo) {
 		// TODO Auto-generated method stub
 		/*********************************有過濾函文出差類（TR）20160203**************************************/
-		String hql="from WebType where id.factNo=? and id.typeNo not in('TR')  and delMk='0'";
+		String hql="from WebType where id.factNo=? and typeMk='0'  and delMk='0'";
 		String[]objs={factNo};
 		return super.findAll(hql, objs);
 	}
@@ -127,6 +127,26 @@ public class WebTypeDaoImpl extends Basedao implements IWebTypeDao{
 	public void update(WebType type) {
 		// TODO Auto-generated method stub
 		super.update(type);
+	}
+
+	/**
+	 * 日期:2016/11/16
+	 * 描述:
+	 */
+	
+	
+	public List<Object[]> findTypes(String factNo){
+		// TODO Auto-generated method stub
+		String hql="select id.typeNo,typeName,typeMk from WebType where id.factNo=?";
+		String[]objs={factNo};
+		return super.findAll(hql,objs);
+	}
+	
+	public String findPF(String factNo){
+		String hql="select id.typeNo from WebType where id.factNo=? and id.typeNo='PF'";
+		Query query=getSession().createQuery(hql);
+		query.setString(0,factNo);
+		return (String)query.uniqueResult();
 	}
 
 	

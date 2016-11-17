@@ -25,9 +25,18 @@ public class FilesDownLoadAction extends ActionSupport{
 	private String fileName;
 	private InputStream fileInput;
 	private int id;
+	private String attachmentOrInline;
 	private IWebUploadFileServices webuploadSer;
 	
 	
+	public String getAttachmentOrInline(){
+		return attachmentOrInline;
+	}
+
+	public void setAttachmentOrInline(String attachmentOrInline){
+		this.attachmentOrInline=attachmentOrInline;
+	}
+
 	public void setWebuploadSer(IWebUploadFileServices webuploadSer) {
 		this.webuploadSer = webuploadSer;
 	}
@@ -81,6 +90,16 @@ public class FilesDownLoadAction extends ActionSupport{
 			result="input";
 		}else{
 			result="download";
+		}		
+		return result;
+	}
+	public String inline() throws UnsupportedEncodingException, FileNotFoundException{
+		String result="";
+		fileInput=this.getFileInput();
+		if(fileInput==null){
+			result="input";
+		}else{
+			result="inline";
 		}		
 		return result;
 	}

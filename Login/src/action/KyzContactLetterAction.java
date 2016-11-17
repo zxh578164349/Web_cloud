@@ -4,6 +4,7 @@ import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -79,6 +80,8 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 	private List<File> files;
     private List<String> filesFileName;
     private List<String> filesContentType;
+    private InputStream fileInput;
+	private String fileName;
 	private IKyzContactLetterServices kyzletterSer;
 	private IKyVisabillmServices visabillmSer;
 	private IKyzExpectmatmFileServices kyzexpfileSer;
@@ -88,6 +91,18 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 	
 	
 	
+	public InputStream getFileInput(){
+		return fileInput;
+	}
+	public void setFileInput(InputStream fileInput){
+		this.fileInput=fileInput;
+	}
+	public String getFileName(){
+		return fileName;
+	}
+	public void setFileName(String fileName){
+		this.fileName=fileName;
+	}
 	public String getAddorupdate() {
 		return addorupdate;
 	}
@@ -563,6 +578,22 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 	 */
 	public String toUrl2(String filename){
 		return filename.replace("+", "%20");
+	}
+	
+	/**
+	 * 查看函文附檔
+	 * @Title: lookFile
+	 * @Description: TODO
+	 * @param @return
+	 * @return String
+	 * @throws FileNotFoundException 
+	 * @throws
+	 * @author web
+	 * @date 2016/11/17
+	 */
+	public String lookFile() throws FileNotFoundException{
+		fileInput=GlobalMethod.getFileInput("D:\\KyzletterexpFile_backup\\"+billNo+"\\"+fileName);
+		return "lookFile";
 	}
 	
 

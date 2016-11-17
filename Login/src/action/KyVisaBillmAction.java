@@ -4,8 +4,10 @@ import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -93,7 +95,22 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 	private String email;
 	private String ajaxResult;//申請函文時返回的ajax結果,   0:提交成功       1:提交失敗
 	private int psMk;//加簽時，放在前面，還是放在後面（0:前面     1:後面）
-				
+	private InputStream fileInput;
+	private String fileName;
+	
+	
+	public String getFileName(){
+		return fileName;
+	}
+	public void setFileName(String fileName){
+		this.fileName=fileName;
+	}
+	public InputStream getFileInput(){
+		return fileInput;
+	}
+	public void setFileInput(InputStream fileInput){
+		this.fileInput=fileInput;
+	}
 	public int getPsMk() {
 		return psMk;
 	}
@@ -1880,5 +1897,21 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 					}
 				}
 			}
+	}
+	
+	/**
+	 * 查看函文附檔
+	 * @Title: lookFile
+	 * @Description: TODO
+	 * @param @return
+	 * @return String
+	 * @throws FileNotFoundException 
+	 * @throws
+	 * @author web
+	 * @date 2016/11/17
+	 */
+	public String lookFile() throws FileNotFoundException{
+		fileInput=GlobalMethod.getFileInput("D:\\KyzexpFile_backup\\"+billNo+"\\"+fileName);
+		return "lookFile";
 	}
 }

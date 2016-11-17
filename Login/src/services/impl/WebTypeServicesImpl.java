@@ -97,6 +97,32 @@ public class WebTypeServicesImpl implements IWebTypeServices{
 
 
 
+	/**
+	 * 日期:2016/11/16
+	 * 描述:
+	 */
+	
+	
+	public List<Object[]> findTypes(String factNo){
+		// TODO Auto-generated method stub
+		return webtypeDao.findTypes(factNo);
+	}
+
+
+
+	/**
+	 * 日期:2016/11/16
+	 * 描述:
+	 */
+	
+	
+	public String findPF(String factNo){
+		// TODO Auto-generated method stub
+		return webtypeDao.findPF(factNo);
+	}
+
+
+
 
 
 }

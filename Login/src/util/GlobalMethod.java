@@ -1590,7 +1590,24 @@ public class GlobalMethod extends HibernateDaoSupport{
 			e.printStackTrace();
 		}
 	}
-	//****************************************多個文件打包壓縮並下載  20161030*************************************	 
+	//****************************************多個文件打包壓縮並下載  20161030*************************************
+	
+	/**
+	 * 獲取文件流
+	 * @Title: getFileInput
+	 * @Description: TODO
+	 * @param @param path
+	 * @param @return
+	 * @param @throws FileNotFoundException
+	 * @return InputStream
+	 * @throws
+	 * @author web
+	 * @date 2016/11/17
+	 */
+	public static InputStream getFileInput(String path) throws FileNotFoundException{
+		FileInputStream stream=new FileInputStream(path);
+		return stream;
+	}
 	 
 	 
 	 

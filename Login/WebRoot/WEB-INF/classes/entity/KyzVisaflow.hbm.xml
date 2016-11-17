@@ -35,5 +35,8 @@
         <property name="visaSortM" type="java.lang.String">
             <column name="VISA_SORT_M" length="2"/>
         </property>
+        <property name="typeMk" type="java.lang.String">
+            <column name="TYPE_MK" length="2"/>
+        </property>
     </class>
 </hibernate-mapping>

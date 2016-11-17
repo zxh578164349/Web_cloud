@@ -131,8 +131,8 @@ public class WebTypeAction extends ActionSupport{
 	}
 	public String add(){
 		try{
-			//如果頁面上選擇了"出差類"，則要給值爲TR，標明爲"出差類"20160203
-			if(typeNo!=null&&typeNo.equals("TR")){
+			//如果頁面上選擇了 "其它類" 以外選項時，則在後臺賦值typeNo     20161116
+			if(typeNo!=null&&!typeNo.equals("0")){
 				webtype.getId().setTypeNo(typeNo);
 			}
 			webtypeSer.add(webtype);
@@ -217,10 +217,20 @@ public class WebTypeAction extends ActionSupport{
 	}
 	
 	
-	public String findByFactNo(){
-		List<WebType>list=webtypeSer.findByFactNo(factNo);
+	public String findPF(){
+		try{
+			ajaxResult=webtypeSer.findPF(factNo);
+		}catch(Exception e){
+			ajaxResult="1";
+			System.out.println(e);
+		}
+		return "findPF";
+	}
+	
+	public String findTypes(){
+		List<Object[]>list=webtypeSer.findTypes(factNo);
 		jsons=JSONArray.fromObject(list);
-		return "findByFactNo";
+		return "findTypes";
 	}
 	
 	

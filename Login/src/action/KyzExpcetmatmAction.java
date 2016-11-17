@@ -87,6 +87,7 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
     private String lookordown;
     private String fileName;
     private InputStream fileInput;
+    private InputStream fileInput2;
     private String userNm;
     private String yymmdd2;
     private String itemNo;
@@ -108,7 +109,16 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
     private String addorupdate;//添加或更新標識    update表示進入更新狀態
     
     
-    public String getAddorupdate() {
+    
+    public InputStream getFileInput2(){
+		return fileInput2;
+	}
+
+	public void setFileInput2(InputStream fileInput2){
+		this.fileInput2=fileInput2;
+	}
+
+	public String getAddorupdate() {
 		return addorupdate;
 	}
 
@@ -885,6 +895,22 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 	 */
 	public String toUrl2(String filename){
 		return filename.replace("+", "%20");
+	}
+	
+	/**
+	 * 查看函文附檔
+	 * @Title: lookFile
+	 * @Description: TODO
+	 * @param @return
+	 * @return String
+	 * @throws FileNotFoundException 
+	 * @throws
+	 * @author web
+	 * @date 2016/11/17
+	 */
+	public String lookFile() throws FileNotFoundException{
+		fileInput2=GlobalMethod.getFileInput("D:\\KyzexpFile_backup\\"+billNo+"\\"+fileName);
+		return "lookFile";
 	}
 	
 	
