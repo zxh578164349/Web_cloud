@@ -14,7 +14,7 @@ public class KyVisabillm implements java.io.Serializable {
 	// Fields
 
 	private KyVisabillmId id;
-	private String purmanNo;
+	private String purmanNo;//函文承辦人
 	private String signerNext;//下一位審核人(Email)
 	private String signerLast;//最近審核人(Email)
 	private String lastMk;//最近審核狀態(最近一個審核人決定  :Y:已審核;T:打回)
@@ -27,6 +27,7 @@ public class KyVisabillm implements java.io.Serializable {
 	private String emailMk;//是否已经发送知会email
 	private String colTemp;
 	private String delMk;//刪除標記    0或空 未刪除     1刪除
+	private String userCreate;//函文創新者
 	private List<KyVisabills> kyVisabillses = new ArrayList<KyVisabills>();
 	private WebBussinessletter webbussletter;
 	private KyzExpectmatm kyzexp;
@@ -229,6 +230,15 @@ public class KyVisabillm implements java.io.Serializable {
 	public void setFormula(WebFormula formula){
 		this.formula=formula;
 	}
+
+	public String getUserCreate(){
+		return userCreate;
+	}
+
+	public void setUserCreate(String userCreate){
+		this.userCreate=userCreate;
+	}
+	
 
 	
 	

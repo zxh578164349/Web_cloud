@@ -694,6 +694,9 @@
 		    <result name="delete" type="json">
 		        <param name="root">ajaxResult</param>
 		    </result>
+		    <result name="sendEmail" type="json">
+		        <param name="root">jsons</param>
+		    </result>
 		</action>
 	</package>
 

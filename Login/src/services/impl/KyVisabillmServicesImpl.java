@@ -67,4 +67,23 @@ public class KyVisabillmServicesImpl implements IKyVisabillmServices{
 		visabillmDao.addLarge(list);
 	}
 
+
+	/**
+	 * 日期:2016/11/18
+	 * 描述:
+	 */
+	
+	
+	public boolean add2(KyVisabillm vbm){
+		// TODO Auto-generated method stub
+		boolean flag=true;
+		try{
+			visabillmDao.add(vbm);
+		}catch(Exception e){
+			flag=false;
+			System.out.println(e);
+		}
+		return flag;
+	}
+
 }

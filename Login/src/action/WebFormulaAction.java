@@ -3,15 +3,29 @@
  */
 package action;
 
+import java.text.ParseException;
+import java.util.Date;
 import java.util.List;
+
+import net.sf.json.JSONArray;
 
 import com.opensymphony.xwork2.ActionContext;
 
+import entity.KyVisabillm;
+import entity.KyVisabillmId;
+import entity.KyVisabills;
+import entity.KyVisabillsId;
+import entity.KyzVisaflow;
 import entity.WebErpBrankProcess;
 import entity.WebFormula;
 import entity.WebTabpom;
+import entity.WebUser;
 
+import services.IKyVisabillmServices;
+import services.IKyzVisaFlowServices;
 import services.IWebFormulaServices;
+import services.IWebuserEmailServices;
+import util.GlobalMethod;
 import util.PageBean;
 
 /**   
@@ -41,8 +55,20 @@ public class WebFormulaAction{
 	private String isnull;//添加  修改標識
 	private String issuedDate_a;
 	private String issuedDate_b;
+	private JSONArray jsons;
+	private IWebFormulaServices webformulaser;
+	private IKyzVisaFlowServices visaSer;
+	private IKyVisabillmServices visabillmSer;
+	private IWebuserEmailServices webuseremailSer;
 	
-		
+	public JSONArray getJsons(){
+		return jsons;
+	}
+
+	public void setJsons(JSONArray jsons){
+		this.jsons=jsons;
+	}
+
 	public String getIssuedDate_a(){
 		return issuedDate_a;
 	}
@@ -138,14 +164,26 @@ public class WebFormulaAction{
 	public void setFormulaIndex(String formulaIndex){
 		this.formulaIndex=formulaIndex;
 	}
-
-	private IWebFormulaServices webformulaser;
+	
+	public void setVisaSer(IKyzVisaFlowServices visaSer){
+		this.visaSer=visaSer;
+	}
 
 	public void setWebformulaser(IWebFormulaServices webformulaser){
 		this.webformulaser=webformulaser;
 	}
 	
 	
+	public void setVisabillmSer(IKyVisabillmServices visabillmSer){
+		this.visabillmSer=visabillmSer;
+	}
+	
+	
+
+	public void setWebuseremailSer(IWebuserEmailServices webuseremailSer){
+		this.webuseremailSer=webuseremailSer;
+	}
+
 	public String findPageBean(){
 		ActionContext.getContext().getSession().remove("allrow");//dao層  allrow
 		ActionContext.getContext().getSession().remove("formulaIndex");
@@ -220,6 +258,44 @@ public class WebFormulaAction{
 		}
 		return "delete";
 	}
+	
+	public String sendEmail() throws ParseException{
+		List<KyzVisaflow>list=visaSer.findPF(factNo);
+		jsons=JSONArray.fromObject(list);
+		if(jsons.size()>0){
+			try{
+				String visaType=list.get(0).getId().getVisaSort();
+				KyVisabillm vbm=new KyVisabillm(new KyVisabillmId(factNo,visaType,formulaIndex));
+				WebUser user=GlobalMethod.getLoginUser();
+				vbm.setUserCreate(user.getUsername());
+				vbm.setPurmanNo(list.get(0).getId().getPurmanNo());
+				vbm.setSignerNext(list.get(0).getVisaSigner());
+				String date=GlobalMethod.to_date2(new Date(),"yyyyMMdd_hh");
+				vbm.setVisaMk("N");
+				vbm.setRevisaMk("N");
+				vbm.setItemNext("01");
+				vbm.setDateCreate(date);			
+				for(KyzVisaflow flow:list){
+					KyVisabills vbs=new KyVisabills(new KyVisabillsId(vbm,flow.getId().getItemNo()));
+					vbs.setVisaSigner(flow.getVisaSigner());
+					vbs.setVisaRank(flow.getVisaRank());
+					vbs.setVisaMk("N");
+					vbs.setFlowMk(flow.getFlowMk());
+					vbm.getKyVisabillses().add(vbs);
+				}				
+				visabillmSer.add(vbm);
+				List<String>list_emailPwd=webuseremailSer.findByFactNoAEmailPwd2(vbm.getId().getFactNo(),vbm.getSignerNext());
+				GlobalMethod.sendNewEmail(vbm,list_emailPwd);//發送郵件
+				jsons.add(0,"0");
+			}catch(Exception e){
+				jsons.add(0,"1");
+				System.out.println(e);
+			}						
+		}					
+		return "sendEmail";
+	}
+	
+	
 	
 	
 	

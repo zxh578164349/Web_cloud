@@ -68,7 +68,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 						<span id="error1"></span></td>
 			  </s:else>   			     
 			     <td>
-			     <select  id="dwr_kytype" onchange="getAddBtn(),checkSame(),getValue('dwr_kytype','dwr_kytype2'),alert(this.value)" datatype="*" >
+			     <select  id="dwr_kytype" onchange="getAddBtn(),checkSame(),getValue('dwr_kytype','dwr_kytype2')" datatype="*" >
 			       <option value="">請選擇</option>
 			     </select>
 			     <input type="hidden" name="flows[0].id.visaSort" id="dwr_kytype2"/>
@@ -298,7 +298,6 @@ var j=0;
                    });
                  }  
     	   }else{//【出差類】【配方類】
-    		   alert(visasort2);
     		   kyzvisaflowjs.findNums(factno,visasort,function(x){
     			   if(x!=0){
     				   alert("該廠的審核流程已存在!");

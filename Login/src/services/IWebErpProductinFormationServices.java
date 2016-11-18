@@ -32,7 +32,7 @@ public interface IWebErpProductinFormationServices{
 	 * @author web
 	 * @date 2016/11/3
 	 */
-	public List<Object[]>findNamece(String itemcategory);
+	public List<Object[]>findNamece(String selfchar1);
 	
 	/**
 	 * 可用配方原料類別代號
@@ -46,7 +46,7 @@ public interface IWebErpProductinFormationServices{
 	 */
 	public List<VWebErpProductinFormation>findTypeNo();
 	
-	public List<Object[]>findNamece(List<String>itemcategorys);
+	public List<Object[]>findNamece(List<String>selfchar1s);
 	
 
 }

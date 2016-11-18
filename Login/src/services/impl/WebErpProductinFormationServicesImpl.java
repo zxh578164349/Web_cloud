@@ -42,9 +42,9 @@ public class WebErpProductinFormationServicesImpl implements IWebErpProductinFor
 	 */
 	
 	
-	public List<Object[]> findNamece(String itemcategory){
+	public List<Object[]> findNamece(String selfchar1){
 		// TODO Auto-generated method stub
-		return weberppfdao.findNamece(itemcategory);
+		return weberppfdao.findNamece(selfchar1);
 	}
 
 	/**
@@ -55,6 +55,7 @@ public class WebErpProductinFormationServicesImpl implements IWebErpProductinFor
 	
 	public List<VWebErpProductinFormation> findTypeNo(){
 		// TODO Auto-generated method stub
+		List<VWebErpProductinFormation>list=weberppfdao.findTypeNo();
 		return weberppfdao.findTypeNo();
 	}
 
@@ -65,9 +66,9 @@ public class WebErpProductinFormationServicesImpl implements IWebErpProductinFor
 	 */
 	
 	
-	public List<Object[]> findNamece(List<String> itemcategorys){
+	public List<Object[]> findNamece(List<String> selfchar1s){
 		// TODO Auto-generated method stub
-		return weberppfdao.findNamece(itemcategorys);
+		return weberppfdao.findNamece(selfchar1s);
 	}
 
 }

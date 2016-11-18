@@ -309,7 +309,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 				//jq("#div_typeno").html("");			
 				var item="";
 				jq.each(data,function(index,obj){
-					item+="<div><input type='checkbox' value='"+obj.itemcategory+"' name='typenos' onclick='loadNamece(),checkbtn()'/><label>"+obj.itemcategoryname+"</label></div>";					
+					item+="<div><input type='checkbox' value='"+obj.selfchar1+"' name='typenos' onclick='loadNamece(),checkbtn()'/><label>"+obj.selfchar1name+"</label></div>";					
 				});
 				jq("#div_typeno").append(item);
 			}
@@ -358,17 +358,17 @@ function back(){
 
 function loadNamece(){
 	jq("#div_namece").empty();
-	var itemcategorys=new Array();
+	var selfchar1s=new Array();
 	var list=jq("input[name='typenos']:checked");
 	list.each(function(i,typeno){
-		itemcategorys.push(typeno.value);
+		selfchar1s.push(typeno.value);
 	});
-	if(itemcategorys.length>0){
+	if(selfchar1s.length>0){
 		jq.ajax({
 			type:"post",
 			dataType:"json",
 			traditional:true,
-			data:{'itemcategorys':itemcategorys},
+			data:{'selfchar1s':selfchar1s},
 			url:"weberppf_findNameces",
 			success:function(data){
 				var item="<input type='checkbox' id='all_namece' onclick='checkallItems(),checkbtn()'/>全選<hr/>";

@@ -56,6 +56,9 @@
         <property name="delMk" type="java.lang.String">
             <column name="DEL_MK" length="2"/>
         </property>
+        <property name="userCreate" type="java.lang.String">
+            <column name="USER_CREATE" length="50"/>
+        </property>
         <bag name="kyVisabillses" inverse="true" cascade="all" >
             <key>
                 <column name="FACT_NO" length="4" not-null="true" />

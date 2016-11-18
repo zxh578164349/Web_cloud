@@ -6,12 +6,12 @@
 -->
 <hibernate-mapping>
     <class name="entity.VWebErpProductinFormation" table="V_WEB_ERP_PRODUCTIN_FORMATION" schema="WEB">
-        <id name="itemcategory" type="java.lang.String">
-            <column name="ITEMCATEGORY" length="20" />
+        <id name="selfchar1" type="java.lang.String">
+            <column name="SELFCHAR1" length="20" />
             <generator class="assigned" />
         </id>
-        <property name="itemcategoryname" type="java.lang.String">
-            <column name="ITEMCATEGORYNAME" length="100" />
+        <property name="selfchar1name" type="java.lang.String">
+            <column name="SELFCHAR1NAME" length="200" />
         </property>
     </class>
 </hibernate-mapping>

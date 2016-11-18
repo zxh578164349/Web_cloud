@@ -8,8 +8,8 @@ public class VWebErpProductinFormation implements java.io.Serializable{
 
 	// Fields
 
-	private String itemcategory;
-	private String itemcategoryname;
+	private String selfchar1;
+	private String selfchar1name;
 
 	// Constructors
 
@@ -18,32 +18,34 @@ public class VWebErpProductinFormation implements java.io.Serializable{
 	}
 
 	/** minimal constructor */
-	public VWebErpProductinFormation(String itemcategory){
-		this.itemcategory=itemcategory;
+	public VWebErpProductinFormation(String selfchar1){
+		this.selfchar1=selfchar1;
 	}
 
 	/** full constructor */
-	public VWebErpProductinFormation(String itemcategory,String itemcategoryname){
-		this.itemcategory=itemcategory;
-		this.itemcategoryname=itemcategoryname;
+	public VWebErpProductinFormation(String selfchar1,String selfchar1name){
+		this.selfchar1=selfchar1;
+		this.selfchar1name=selfchar1name;
+	}
+
+	public String getSelfchar1(){
+		return selfchar1;
+	}
+
+	public void setSelfchar1(String selfchar1){
+		this.selfchar1=selfchar1;
+	}
+
+	public String getSelfchar1name(){
+		return selfchar1name;
+	}
+
+	public void setSelfchar1name(String selfchar1name){
+		this.selfchar1name=selfchar1name;
 	}
 
 	// Property accessors
 
-	public String getItemcategory(){
-		return this.itemcategory;
-	}
-
-	public void setItemcategory(String itemcategory){
-		this.itemcategory=itemcategory;
-	}
-
-	public String getItemcategoryname(){
-		return this.itemcategoryname;
-	}
-
-	public void setItemcategoryname(String itemcategoryname){
-		this.itemcategoryname=itemcategoryname;
-	}
+	
 
 }

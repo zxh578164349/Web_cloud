@@ -260,6 +260,7 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 					}
 				}else{//【出差類】,【配方類】
 					for(int i=0;i<flows.size();i++){
+						flows.get(i).getId().setVisaSort(visaSort_main);
 						flows.get(i).getId().setPurmanNo(flows.get(i).getId().getPurmanNo().trim());
 					    flows.get(i).setVisaSigner(flows.get(i).getVisaSigner().trim());
 						flows.get(i).setFlowMk("Y");

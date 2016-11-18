@@ -1392,9 +1392,42 @@ public class GlobalMethod extends HibernateDaoSupport{
 		      } 				          		       			 
 	 }
 	 
+	 
+	 /**
+	  * 返回Date日期
+	  * @Title: to_date
+	  * @Description: TODO
+	  * @param @param source
+	  * @param @param format
+	  * @param @return
+	  * @param @throws ParseException
+	  * @return Date
+	  * @throws
+	  * @author web
+	  * @date 2016/11/18
+	  */
 	 public static Date to_date(String source, String format) throws ParseException {  	        
 	        SimpleDateFormat sdf = new SimpleDateFormat(format);  
 	        Date date = sdf.parse(source);  
+	        return date;  
+	    }
+	 
+	 /**
+	  * 返回String日期
+	  * @Title: to_date
+	  * @Description: TODO
+	  * @param @param source
+	  * @param @param format
+	  * @param @return
+	  * @param @throws ParseException
+	  * @return Date
+	  * @throws
+	  * @author web
+	  * @date 2016/11/18
+	  */
+	 public static String to_date2(Date source, String format) throws ParseException {  	        
+	        SimpleDateFormat sdf = new SimpleDateFormat(format);  
+	        String date = sdf.format(source);  
 	        return date;  
 	    }
 	 
@@ -1607,6 +1640,21 @@ public class GlobalMethod extends HibernateDaoSupport{
 	public static InputStream getFileInput(String path) throws FileNotFoundException{
 		FileInputStream stream=new FileInputStream(path);
 		return stream;
+	}
+	
+	/**
+	 * 獲取用戶的信息
+	 * @Title: getLoginUser
+	 * @Description: TODO
+	 * @param @return
+	 * @return WebUser
+	 * @throws
+	 * @author web
+	 * @date 2016/11/18
+	 */
+	public static WebUser getLoginUser(){
+		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
+		return user;
 	}
 	 
 	 

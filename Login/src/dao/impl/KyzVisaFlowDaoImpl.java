@@ -195,14 +195,39 @@ public class KyzVisaFlowDaoImpl extends Basedao implements IKyzVisaFlowDao {
 	 */
 	
 	
-	public int findNums(String factNo,String visaSort){
+	public Long findNums(String factNo,String visaSort){
 		// TODO Auto-generated method stub
 		String hql="select count(id.factNo) from KyzVisaflow where id.factNo=? and id.visaSort=?";
 		Query query=getSession().createQuery(hql);
 		query.setString(0,factNo);
 		query.setString(1,visaSort);
-		int temp=(Integer)query.uniqueResult();
-		return (Integer)query.uniqueResult();
+		return (Long)query.uniqueResult();
+	}
+
+	/**
+	 * 日期:2016/11/18
+	 * 描述:
+	 */
+	
+	
+	public List<KyzVisaflow> findTR(String factNo){
+		// TODO Auto-generated method stub
+		String hql="from KyzVisaflow where id.factNo=? and id.visaSort='TR' order by id.itemNo";
+		String[]objs={factNo};
+		return super.findAll(hql,objs);
+	}
+
+	/**
+	 * 日期:2016/11/18
+	 * 描述:
+	 */
+	
+	
+	public List<KyzVisaflow> findPF(String factNo){
+		// TODO Auto-generated method stub
+		String hql="from KyzVisaflow where id.factNo=? and id.visaSort='PF' order by id.itemNo";
+		String[]objs={factNo};
+		return super.findAll(hql,objs);
 	}
 
 

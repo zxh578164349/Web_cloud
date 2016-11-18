@@ -36,10 +36,10 @@ public class WebErpProductinFormationDaoImpl extends Basedao implements IWebErpP
 	 */
 	
 	
-	public List<Object[]> findNamece(String itemcategory){
+	public List<Object[]> findNamece(String selfchar1){
 		// TODO Auto-generated method stub
-		String hql="select itemid,namec1,namec2 from WebErpProductinFormation where "+STATE+"  and itemcategory=? order by itemid";
-		String objs[]={itemcategory};
+		String hql="select itemid,namec1,namec2 from WebErpProductinFormation where "+STATE+"  and selfchar1=? order by itemid";
+		String objs[]={selfchar1};
 		return super.findAll(hql,objs);
 	}
 
@@ -51,7 +51,7 @@ public class WebErpProductinFormationDaoImpl extends Basedao implements IWebErpP
 	
 	public List<VWebErpProductinFormation> findTypeNo(){
 		// TODO Auto-generated method stub
-		String hql="from VWebErpProductinFormation order by itemcategory";
+		String hql="from VWebErpProductinFormation order by selfchar1";
 		return super.findAll(hql,null);
 	}
 
@@ -61,14 +61,14 @@ public class WebErpProductinFormationDaoImpl extends Basedao implements IWebErpP
 	 */
 	
 	
-	public List<Object[]> findNamece(List<String> itemcategorys){
+	public List<Object[]> findNamece(List<String> selfchar1s){
 		// TODO Auto-generated method stub
 		StringBuffer hql=new StringBuffer();
 		Map<String,Object>map=new HashMap<String,Object>();
-		hql.append("select itemid,itemcategoryname,namec1,namec2 from WebErpProductinFormation where 1=1 ");
-		if(itemcategorys!=null&&itemcategorys.size()>0){
-			hql.append(" and itemcategory in(:itemcategorys) ");
-			map.put("itemcategorys",itemcategorys);
+		hql.append("select itemid,selfchar1Name,namec1,namec2 from WebErpProductinFormation where 1=1 ");
+		if(selfchar1s!=null&&selfchar1s.size()>0){
+			hql.append(" and selfchar1 in(:selfchar1s) ");
+			map.put("selfchar1s",selfchar1s);
 		}
 		hql.append("and "+STATE+" order by itemid ");
 		return super.getAllWithNoPage(hql.toString(),map);

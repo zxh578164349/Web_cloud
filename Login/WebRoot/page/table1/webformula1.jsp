@@ -98,8 +98,17 @@
 								    </a>--%>
 									<form  id="2subform${x.index}" style="float:left">										
 										<input type="hidden" value="<s:property value='formulaIndex'/>" name="formulaIndex" />																														
-									</form> 
-									<a href="javascript:addvbm('${obj.factNo.factNo }')" class="btn btn-sm">送簽</a>
+									</form>
+									 <form  id="3subform${x.index}" style="float:left">										
+										<input type="hidden" value="<s:property value='formulaIndex'/>" name="formulaIndex" />
+										<input type="hidden" value="<s:property value='factNo.factNo'/>" name="factNo" />																														
+									</form>
+									<s:if test="vbm==null">
+									<a href="javascript:addvbm('3subform${x.index}')" class="btn btn-sm">送簽</a>
+									</s:if>
+									<s:else>
+									 <a href="#" class="btn btn-sm disabled">已送簽</a>
+									</s:else>
 									<a href="javascript:isDelete2('2subform${x.index}','webformula_delete','webformula_findPageBean3')" >
 									<img alt="刪除" src="images/icon/delete001.png" title="刪除">
 								    </a>
@@ -119,7 +128,7 @@
 
 
 <script type="text/javascript">
-function addvbm(factNo){	
+function addvbm(subform){	
 	/*var pageii = jq.layer({
 		  type: 1,
 		  title: false,
@@ -135,15 +144,16 @@ function addvbm(factNo){
 		jq.ajax({
 		  type:'post',
 		  dataType:'json',
-		  data:{factNo:factNo},
-		  url:'webtype_findPF',
+		  data:jq("#"+subform).serialize(),
+		  url:'webformula_sendEmail',
 		  success:function(data){
-			  if(data==null){
-				  layer.msg("還沒有建立配方送簽流程,不能送簽",3,3);
-			  }else if(data=='1'){
+			  if(data.length==0){
+				  layer.msg("還沒有建立配方送簽流程,暫時不能送簽",3,3);	
+			  }else if(data[0]=='1'){				  
 				  layer.msg("送簽失敗",3,3);  
 			  }else{
 				  layer.msg("送簽成功",3,1);
+				  loadUrl_bodyid("webformula_findPageBean3");
 			  }		     
 		  } 
 		});
