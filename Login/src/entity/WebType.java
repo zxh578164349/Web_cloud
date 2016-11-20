@@ -9,7 +9,7 @@ import java.util.List;
 public class WebType implements java.io.Serializable {
 
 	// Fields
-
+	//private static final long serialVersionUID =-8880440583205006515L;
 	private WebTypeId id;
 	private String typeName;
 	private String webtypeMk;

@@ -70,7 +70,7 @@ public class WebErpProductinFormationDaoImpl extends Basedao implements IWebErpP
 			hql.append(" and selfchar1 in(:selfchar1s) ");
 			map.put("selfchar1s",selfchar1s);
 		}
-		hql.append("and "+STATE+" order by itemid ");
+		hql.append("and "+STATE+" order by selfchar1Name, itemid ");
 		return super.getAllWithNoPage(hql.toString(),map);
 	}
 
