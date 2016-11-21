@@ -69,6 +69,36 @@ function print(subform){
 	subform.attr("target","_blank");
 	subform.submit();
 }
+
+
+jq.ajax({
+	type:"get",
+	dataType:"json",
+	url:"webfact_findAllVwebfact",
+	success:function(data){
+		var item;
+		jq("#factno").empty();
+		jq("#factno").append("<option value=''>請選擇廠別</option>");
+		jq.each(data,function(i,obj){
+			item="<option value='"+obj[0]+"'>"+obj[1]+"("+obj[3]+")</option>";
+			jq("#factno").append(item);
+		});
+	}
+});
+jq.ajax({
+	type:"post",
+	dataType:"json",
+	url:"weberpbp_findObjOp1",
+	success:function(data){
+		var item;
+		jq("#factcode").empty();
+		jq("#factcode").append("<option value=''>請選擇製程類別</option>");
+		jq.each(data,function(i,obj){
+			item="<option value='"+obj[0]+"'>"+obj[2]+"</option>";
+			jq("#factcode").append(item);
+		});
+	}
+});
 	
 </script>	
 </body>

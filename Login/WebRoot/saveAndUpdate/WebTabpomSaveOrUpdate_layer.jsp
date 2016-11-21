@@ -91,6 +91,11 @@ String formulaIndex=request.getParameter("formulaIndex");
 	                   <td><input type="text" name="tabpom.tearingCDescription" value="<s:property value='tabpom.tearingCDescription'/>"/></td>
 	                </tr>
 	                <tr>
+	                   <td>褲型撕裂</td>
+	                   <td><input type="text" name="tabpom.tearingK" value="<s:property value='tabpom.tearingK'/>"/></td>
+	                   <td><input type="text" name="tabpom.tearingKDescription" value="<s:property value='tabpom.tearingKDescription'/>"/></td>
+	                </tr>
+	                <tr>
 	                   <td>比重</td>
 	                   <td>
 	                      <input type="text" name="tabpom.proportion" value="<s:property value='tabpom.proportion'/>"/><br/>

@@ -67,10 +67,7 @@ public class WebFormulaDaoImpl extends Basedao implements IWebFormulaDao{
 			hql.append(" and factCode.id=:id");
 			map.put("id",formula.getFactCode().getId());
 		}
-		if(formula.getIssuedDate()!=null&&!"".equals(formula.getIssuedDate())){
-			hql.append(" and issuedDate=:issuedDate");
-			map.put("issuedDate",formula.getIssuedDate());
-		}
+		
 		if(issuedDate_a!=null&&!"".equals(issuedDate_a)){
 			hql.append(" and issuedDate>=:issuedDate_a");
 			map.put("issuedDate_a",issuedDate_a);
@@ -85,7 +82,7 @@ public class WebFormulaDaoImpl extends Basedao implements IWebFormulaDao{
 		}
 		/**********************以下爲Double類型*******************************/
 		if(formula.getPom().getHardness()!=null&&formula.getPom().getHardness2()!=null){
-			hql.append(" and pom.hardness>=:hardness1 and and pom.hardness<=:hardness2");
+			hql.append(" and pom.hardness>=:hardness1 and pom.hardness<=:hardness2");
 			map.put("hardness1",formula.getPom().getHardness()-formula.getPom().getHardness2());
 			map.put("hardness2",formula.getPom().getHardness()+formula.getPom().getHardness2());
 		}else if(formula.getPom().getHardness()!=null){
@@ -131,7 +128,7 @@ public class WebFormulaDaoImpl extends Basedao implements IWebFormulaDao{
 		}
 		if(formula.getPom().getRatioB()!=null){
 			hql.append(" and pom.ratioB=:ratioB");
-			map.put("ratioA",formula.getPom().getRatioB());
+			map.put("ratioB",formula.getPom().getRatioB());
 		}
 		if(formula.getPom().getAbleBend()!=null){
 			hql.append(" and pom.ableBend=:ableBend");
@@ -177,6 +174,10 @@ public class WebFormulaDaoImpl extends Basedao implements IWebFormulaDao{
 		if(formula.getPom().getSpitCream()!=null){
 			hql.append(" and pom.spitCream=:spitCream");
 			map.put("spitCream",formula.getPom().getSpitCream());
+		}
+		if(formula.getPom().getAuthentications()!=null){
+			hql.append(" and pom.authentications=:authentications");
+			map.put("authentications",formula.getPom().getAuthentications());
 		}
 		
 		hql2.append(hql);

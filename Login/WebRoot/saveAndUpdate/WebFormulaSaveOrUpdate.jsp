@@ -152,7 +152,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 					<td class="td_show_title">發行日期</td>
 					<td class="td_input"><input type="text"
 						name="formula.issuedDate"
-						value="<s:property value='formula.issuedDate' />" datatype="*0-6" />
+						value="<s:property value='formula.issuedDate' />" onclick="WdatePicker({dateFmt:'yyyyMMdd',maxDate:'%y-%M-%d'})" datatype="*0-6" class="Wdate"/>
 					</td>
 					<td class="td_show_title">品牌指定</td>
 					<td class="td_input">

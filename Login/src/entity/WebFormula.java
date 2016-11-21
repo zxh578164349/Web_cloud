@@ -13,19 +13,19 @@ public class WebFormula implements java.io.Serializable{
 
 	// Fields
 
-	private String formulaIndex;
+	private String formulaIndex;//配方索引
 	private VWebFact factNo;
-	private String formulaNo;
-	private String formulaName;
-	private WebErpBrankProcess factCode;
-	private Double magnification;
-	private String semifinishedProductHardness;
-	private String productHardness;
-	private String brandBody;
-	private String color;
-	private String issuedDate;
-	private String assignBrand;
-	private String remark;
+	private String formulaNo;//配方編號
+	private String formulaName;//配方名稱
+	private WebErpBrankProcess factCode;//製程類別
+	private Double magnification;//倍率
+	private String semifinishedProductHardness;//帶皮半成品硬度
+	private String productHardness;//成品硬度
+	private String brandBody;//品牌形體
+	private String color;//顏色
+	private String issuedDate;//發行日期
+	private String assignBrand;//品牌指定
+	private String remark;//備註
 	private String createName;
 	private String createDate;
 	private String modifyName;
