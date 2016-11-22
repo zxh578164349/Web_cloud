@@ -100,7 +100,7 @@
 					  <a href="javascript:isDelete('2subform${x.index}','visaflow_delete')"><img alt="刪除" src="images/icon/minus002.png" title="刪除" ></a>				 					  
 					 </s:if>
 					 <s:else>
-					   <a href="javascript:void(0)" onclick="isDelete2('${temp.id.factNo}','${temp.id.visaSort}')"><img alt="刪除全部" src="images/icon/delete_all.png" title="刪除全部" ></a>
+					   <a href="javascript:void(0)" onclick="isDelete_flows('${temp.id.factNo}','${temp.id.visaSort}')"><img alt="刪除全部" src="images/icon/delete_all.png" title="刪除全部" ></a>
 					   <a href="javascript:findById_form('3subform${x.index}','visaflow_findMaxItem')"><img alt="添加知會" src="images/icon/add001_2.png" title="添加知會"></a>
 					 </s:else>	
 					 

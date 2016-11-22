@@ -85,7 +85,7 @@
 		
 	}*/
 	
-	function isDelete2(factno,visasort) {
+	function isDelete_flows(factno,visasort) {
 		var flag=confirm("刪除申請人,就會刪除整個流程,确定要刪除吗?");
 			if (flag == true) {								
 				jq.ajax({

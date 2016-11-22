@@ -101,7 +101,13 @@
 									</form>
 									 <form  id="3subform${x.index}" style="float:left">										
 										<input type="hidden" value="<s:property value='formulaIndex'/>" name="formulaIndex" />
-										<input type="hidden" value="<s:property value='factNo.factNo'/>" name="factNo" />																														
+										<input type="hidden" value="<s:property value='factNo.factNo'/>" name="factNo" />
+										<input type="hidden" value="look" name="lookordown"/>																														
+									</form>
+									<form  id="4subform${x.index}" action="webformula_print2" method="post" style="float:left" target="_blank">										
+										<input type="hidden" value="<s:property value='formulaIndex'/>" name="formulaIndex" />
+										<input type="hidden" value="<s:property value='factNo.factNo'/>" name="factNo" />
+										<input type="hidden" value="look" name="lookordown"/>																														
 									</form>
 									<s:if test="vbm==null">
 									<a href="javascript:addvbm('3subform${x.index}')" class="btn btn-sm">送簽</a>
@@ -112,6 +118,7 @@
 									<a href="javascript:isDelete2('2subform${x.index}','webformula_delete','webformula_findPageBean3')" >
 									<img alt="刪除" src="images/icon/delete001.png" title="刪除">
 								    </a>
+								    <a href="javascript:jq('#4subform${x.index}').submit()" class="btn btn-sm">預覽</a>
 								</td>
 							</s:if>
 							

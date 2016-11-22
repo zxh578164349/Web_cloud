@@ -27,8 +27,31 @@ public interface IWebFormulaDao{
 	public PageBean findPageBean(int page,int pageSize,WebFormula formula,String issuedDate_a,String issuedDate_b);
 	public List<String> findFormulaIndex(String factNo,String factCode,String createDate);
 	public void add(WebFormula formula);
-	public WebFormula findById(String formulaIndex);
-	public void delete(String formulaIndex);
 	
-
+	/**
+	 * 不加載關聯的屬性
+	 * @Title: findById_nosession
+	 * @Description: TODO
+	 * @param @param formulaIndex
+	 * @param @return
+	 * @return WebFormula
+	 * @throws
+	 * @author web
+	 * @date 2016/11/22
+	 */
+	public WebFormula findById_nosession(String formulaIndex);
+	
+	/**
+	 * 加載關聯的屬性
+	 * @Title: findById
+	 * @Description: TODO
+	 * @param @param formulaIndex
+	 * @param @return
+	 * @return WebFormula
+	 * @throws
+	 * @author web
+	 * @date 2016/11/22
+	 */
+	public WebFormula findById(String formulaIndex);
+	public void delete(String formulaIndex);	
 }

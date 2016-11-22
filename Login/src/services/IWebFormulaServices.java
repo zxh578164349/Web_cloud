@@ -4,7 +4,9 @@
 package services;
 
 import java.util.List;
+import java.util.Map;
 
+import entity.KyVisabillm;
 import entity.WebFormula;
 import entity.WebTabpom;
 
@@ -28,6 +30,8 @@ public interface IWebFormulaServices{
 	public List<String> findFormulaIndex(String factNo,String factCode,String createDate);
 	public void add(WebFormula formula);
 	public WebFormula findById(String formulaIndex);
+	public WebFormula findById_nosession(String formulaIndex);
 	public void delete(String formulaIndex);
+	public Map<String,Object> print(String factNo,String billNo,KyVisabillm vbm);
 
 }

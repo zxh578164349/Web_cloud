@@ -17,7 +17,9 @@ import dao.Basedao;
 import dao.IWebFormulaDao;
 import entity.VWebFact;
 import entity.WebErpBrankProcess;
+import entity.WebErpProductinFormation;
 import entity.WebFormula;
+import entity.WebFormulaItems;
 import entity.WebTabpom;
 
 /**   
@@ -230,19 +232,31 @@ public class WebFormulaDaoImpl extends Basedao implements IWebFormulaDao{
 		super.merge(formula);
 		
 	}
-	
-	/**
-	 * 日期:2016/11/4
-	 * 描述:
-	 */
-	
-	
-	public WebFormula findById(String formulaIndex){
-		// TODO Auto-generated method stub
+		
+	public WebFormula findById_nosession(String formulaIndex){
 		String hql="from WebFormula where formulaIndex=?";
 		Query query=getSession().createQuery(hql);
 		query.setString(0,formulaIndex);
-		return (WebFormula)query.uniqueResult();
+		WebFormula obj=(WebFormula)query.uniqueResult();
+		return obj;
+	}
+	
+	public WebFormula findById(String formulaIndex){
+		// TODO Auto-generated method stub
+		
+		WebFormula obj=findById_nosession(formulaIndex);
+		obj.getVbm().getId().getBillNo();
+		obj.getFactNo().getFactSname();
+		obj.getFactCode().getName();
+		for(WebFormulaItems item:obj.getWebFormulaItemses()){
+			item.getFk_weberp_pf();
+			item.getFk_weberp_pf().getNamec1();
+			item.getFk_weberp_pf().getNamec2();
+			item.getFk_weberp_pf().getItemcategoryname();
+			
+		}
+		
+		return obj;
 	}
 
 	/**
@@ -253,7 +267,7 @@ public class WebFormulaDaoImpl extends Basedao implements IWebFormulaDao{
 	
 	public void delete(String formulaIndex){
 		// TODO Auto-generated method stub
-		WebFormula obj=findById(formulaIndex);
+		WebFormula obj=findById_nosession(formulaIndex);
 		super.delete(obj);
 	}
 

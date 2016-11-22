@@ -3,9 +3,15 @@
  */
 package action;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.struts2.interceptor.ServletResponseAware;
 
 import net.sf.json.JSONArray;
 
@@ -15,6 +21,7 @@ import entity.KyVisabillm;
 import entity.KyVisabillmId;
 import entity.KyVisabills;
 import entity.KyVisabillsId;
+import entity.KyzExpectmatm;
 import entity.KyzVisaflow;
 import entity.WebErpBrankProcess;
 import entity.WebFormula;
@@ -26,6 +33,7 @@ import services.IKyzVisaFlowServices;
 import services.IWebFormulaServices;
 import services.IWebuserEmailServices;
 import util.GlobalMethod;
+import util.JasperHelper;
 import util.PageBean;
 
 /**   
@@ -41,7 +49,7 @@ import util.PageBean;
  * @version    
  *    
  **/
-public class WebFormulaAction{
+public class WebFormulaAction implements ServletResponseAware{
 	private int page;
 	private final static int PAGESIZE=20;
 	private String formulaIndex;
@@ -56,11 +64,32 @@ public class WebFormulaAction{
 	private String issuedDate_a;
 	private String issuedDate_b;
 	private JSONArray jsons;
+	private String lookordown;
+	private Map<String,Object> map;
+	private HttpServletResponse response;
 	private IWebFormulaServices webformulaser;
 	private IKyzVisaFlowServices visaSer;
 	private IKyVisabillmServices visabillmSer;
 	private IWebuserEmailServices webuseremailSer;
 	
+	
+	
+	public String getLookordown(){
+		return lookordown;
+	}
+
+	public void setLookordown(String lookordown){
+		this.lookordown=lookordown;
+	}
+
+	public Map<String,Object> getMap(){
+		return map;
+	}
+
+	public void setMap(Map<String,Object> map){
+		this.map=map;
+	}
+
 	public JSONArray getJsons(){
 		return jsons;
 	}
@@ -183,6 +212,11 @@ public class WebFormulaAction{
 	public void setWebuseremailSer(IWebuserEmailServices webuseremailSer){
 		this.webuseremailSer=webuseremailSer;
 	}
+	public void setServletResponse(HttpServletResponse response){
+		// TODO Auto-generated method stub
+		this.response=response;
+	}
+	
 
 	public String findPageBean(){
 		ActionContext.getContext().getSession().remove("allrow");//dao層  allrow
@@ -295,7 +329,30 @@ public class WebFormulaAction{
 		return "sendEmail";
 	}
 	
-	
+	public void print2() throws IOException{
+		print(factNo,formulaIndex,null);
+	}
+
+	public void print(String factNo,String billNo,KyVisabillm vbm) throws IOException{		
+		Map<String,Object>map_result=webformulaser.print(factNo,billNo,null);		
+		if(map_result!=null&&map_result.size()>0){
+			map=(Map<String,Object>)map_result.get("map");
+			List<KyzExpectmatm>list=(List<KyzExpectmatm>)map_result.get("list");
+			if(lookordown!=null){
+				if(lookordown.equals("look")){
+					JasperHelper.exportmain("line", map,"web_formula.jasper", list,billNo, "jasper/audit/");
+				}else{
+					JasperHelper.exportmain("pdf", map,"web_formula.jasper", list,billNo, "jasper/audit/");
+				}
+			}else{
+				JasperHelper.exportmain("pdf", map,"web_formula.jasper", list,billNo, "jasper/audit/");
+			}
+		}else{
+			response.setContentType("text/html;charset=utf-8");
+			response.getWriter().print("<script>alert('單號為"+billNo+"的函文不存在!');window.close()</script>");
+		}						
+				
+	}
 	
 	
 	
