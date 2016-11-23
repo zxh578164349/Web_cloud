@@ -138,25 +138,11 @@ public class WebFormulaServicesImpl implements IWebFormulaServices{
 		if(obj!=null){
 			list.add(obj);
 		}		
-		if(list.size()==0){
-			/*response.setContentType("text/html;charset=utf-8");
-			try {
-				response.getWriter().print("<script>alert('單號為"+id.getBillNo()+"的函文不存在!');window.close()</script>");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}*/
+		if(list.size()==0){			
 			return null;
 		}else{
-			/*list.get(0).setSecNo(ZHConverter.convert(list.get(0).getSecNo(), ZHConverter.TRADITIONAL));
-			list.get(0).setUserNm(ZHConverter.convert(list.get(0).getUserNm(), ZHConverter.TRADITIONAL));			
-			list.get(0).setMemoMk(ZHConverter.convert(list.get(0).getMemoMk(), ZHConverter.TRADITIONAL));
-			list.get(0).setMemoSmk(ZHConverter.convert(list.get(0).getMemoSmk(), ZHConverter.TRADITIONAL));*/
-		}
-		/*if(list.get(0).getSecNo()!=null&&!list.get(0).getSecNo().equals("")){
-			secNo="("+list.get(0).getSecNo()+")";
-		}*/
-		//String result=factname+secNo+"費用申請單";
+			
+		}		
 		map = new HashMap<String, Object>();
 		//map.put("SUBREPORT_DIR",ServletActionContext.getRequest().getRealPath("/jasper/audit/")+ "/");
 		//map.put("pic", ServletActionContext.getRequest().getRealPath("/jasper/audit/images/")+ "/");//圖片路徑
@@ -164,127 +150,107 @@ public class WebFormulaServicesImpl implements IWebFormulaServices{
 		map.put("pic", ContextLoader.getCurrentWebApplicationContext().getServletContext().getRealPath("/jasper/audit/images/")+ "/");//圖片路徑
 		map.put("pfactno", factNo);
 		map.put("pbillno",billNo);
-		//map.put("title",result);		
 		
-		List<WebFormulaItems> sub_list =obj.getWebFormulaItemses();		
-		
-		/*if(list.get(0).getKyzExpectmatses().size()==1){
-			KyzExpectmats kyzss=list.get(0).getKyzExpectmatses().get(0);			
-			if(kyzss.getMatNo()==null&&kyzss.getItemNm()==null||(kyzss.getMatNo().trim().equals("")&&kyzss.getItemNm().trim().equals(""))){
-				list.get(0).setKyzsMk("1");
-			}else{
-				for(int i=0;i<list.get(0).getKyzExpectmatses().size();i++){
-					KyzExpectmats kyzs=list.get(0).getKyzExpectmatses().get(i);
-					kyzs.setMatNo(ZHConverter.convert(kyzs.getMatNo(), ZHConverter.TRADITIONAL));
-					kyzs.setQtyPair(ZHConverter.convert(kyzs.getQtyPair(), ZHConverter.TRADITIONAL));
-					kyzs.setItemNm(ZHConverter.convert(kyzs.getItemNm(), ZHConverter.TRADITIONAL));
-					sub_list.add(kyzs);
-				}
-				while(sub_list.size()<10){
-					sub_list.add(temp);
+		List<WebFormulaItems> sub_list =obj.getWebFormulaItemses();	
+		for(int i=0;i<sub_list.size()-1;i++){
+			for(int j=0;j<sub_list.size()-1-i;j++){
+				if(sub_list.get(j).getSectionNo()>sub_list.get(j+1).getSectionNo()){
+					sub_list.add(j,sub_list.get(j+1));
+					sub_list.add(j+2,sub_list.get(j+1));
+					sub_list.remove(j+1);
+					sub_list.remove(j+2);
 				}
 			}
-		}else{
-			for(int i=0;i<list.get(0).getKyzExpectmatses().size();i++){
-				KyzExpectmats kyzs=list.get(0).getKyzExpectmatses().get(i);
-				kyzs.setMatNo(ZHConverter.convert(kyzs.getMatNo(), ZHConverter.TRADITIONAL));
-				kyzs.setQtyPair(ZHConverter.convert(kyzs.getQtyPair(), ZHConverter.TRADITIONAL));
-				kyzs.setItemNm(ZHConverter.convert(kyzs.getItemNm(), ZHConverter.TRADITIONAL));
-				sub_list.add(kyzs);
-			}
-			while(sub_list.size()<10){
-				sub_list.add(temp);
-			}
-		}*/
-		
-		
+			
+		}								
 		Map<String,Object> sub_map=new HashMap<String,Object>();
-		sub_map.put("sub_list", sub_list);
-		
-		
-		/*String type=list.get(0).getVisaType();
-		List<KyzVisaflow> list_visa=visaSer.findByType(type);*/
-		
+		sub_map.put("sub_list", sub_list);								
 		SimpleDateFormat format=new SimpleDateFormat("yyyyMMdd");
 		if(vbm==null){
 			vbm=list.get(0).getVbm();
-		}	
-		String sort=vbm.getId().getVisaSort();
-		List<KyVisabills>list_visa=vbm.getKyVisabillses();
-		List<KyzVisaflow>list_visaflow=visaDao.findByType(factNo,sort);		
-		/**
-		 * 最後個不用審核的,就去掉
-		 */
-		int nos=visabillDao.findBillsWithNo(sort, billNo);				
-		List<VisabillsTemp>list_visabillstemp=new ArrayList<VisabillsTemp>();		
-		for(int i=0;i<list_visa.size()-nos;i++){//for
-			VisabillsTemp visabillstemp=new VisabillsTemp();
-			String visa_result="";
-			String visamk_temp="";
-			Date date=null;
-			
-			String datestr=list_visa.get(i).getDateVisa();
-			try {
-				if(datestr!=null){
-					date=format.parse(datestr);
-					visabillstemp.setCreateDate(date);
-				}
-				
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			String name=list_visa.get(i).getVisaRank();
-			String visamk=list_visa.get(i).getVisaMk();
-			//String visadate=list_visa.get(i).getDateVisa();
-			String memo=list_visa.get(i).getMemo();
-			if(visamk.equals("Y")){
-				visamk_temp="(已審核)";
-			}
-			if(visamk.equals("N")){
-				visamk_temp="(未審核)";
-			}
-			if(visamk.equals("T")){
-				visamk_temp="(未通過)";
-			}			
-			visa_result=name+visamk_temp;
-			visabillstemp.setVisaNameAndMk(visa_result);								
-			//************************解決加簽後而破壞流程順序，使得打印函文時，職位與名字不對應的問題  20161030******************************
-			for(int j=0;j<list_visaflow.size()-nos;j++){
-				if(list_visa.get(i).getVisaSigner().equals(list_visaflow.get(j).getVisaSigner())){
-					visabillstemp.setVisaRank(list_visaflow.get(j).getVisaRank()+":");
-					break;
-				}else if(j==list_visaflow.size()-nos-1){
-					visabillstemp.setVisaRank("(加簽)");
-				}
-			}
-			//************************解決加簽後而破壞流程順序，使得打印函文時，職位與名字不對應的問題  20161030******************************
-			
-			if(memo!=null){
-				visabillstemp.setMemo("(備註:"+memo+")");
-			}
-			visabillstemp.setVisaSigner(list_visa.get(i).getVisaSigner());
-			visabillstemp.setVisaMk(list_visa.get(i).getVisaMk());
-			visabillstemp.setVisaName(name);
-			list_visabillstemp.add(visabillstemp);
-		}//for
-		
-		/*********************簡體轉繁體******************/
-		for(int i=0;i<list_visabillstemp.size();i++){
-			list_visabillstemp.get(i).setMemo(ZHConverter.convert(list_visabillstemp.get(i).getMemo(), ZHConverter.TRADITIONAL));
-			list_visabillstemp.get(i).setVisaName(ZHConverter.convert(list_visabillstemp.get(i).getVisaName(), ZHConverter.TRADITIONAL));
-			list_visabillstemp.get(i).setVisaNameAndMk(ZHConverter.convert(list_visabillstemp.get(i).getVisaNameAndMk(), ZHConverter.TRADITIONAL));
-			list_visabillstemp.get(i).setVisaRank(ZHConverter.convert(list_visabillstemp.get(i).getVisaRank(), ZHConverter.TRADITIONAL));			
 		}
-		/*********************簡體轉繁體******************/
 		
 		
 		
-		Map<String,Object> visa_map=new HashMap<String,Object>();
-		visa_map.put("list_visa", list_visabillstemp);
-		
+		if(vbm!=null){
+			String sort=vbm.getId().getVisaSort();
+			List<KyVisabills>list_visa=vbm.getKyVisabillses();
+			List<KyzVisaflow>list_visaflow=visaDao.findByType(factNo,sort);		
+			/**
+			 * 最後個不用審核的,就去掉
+			 */
+			int nos=visabillDao.findBillsWithNo(sort, billNo);				
+			List<VisabillsTemp>list_visabillstemp=new ArrayList<VisabillsTemp>();		
+			for(int i=0;i<list_visa.size()-nos;i++){//for
+				VisabillsTemp visabillstemp=new VisabillsTemp();
+				String visa_result="";
+				String visamk_temp="";
+				Date date=null;
+				
+				String datestr=list_visa.get(i).getDateVisa();
+				try {
+					if(datestr!=null){
+						date=format.parse(datestr);
+						visabillstemp.setCreateDate(date);
+					}
+					
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				String name=list_visa.get(i).getVisaRank();
+				String visamk=list_visa.get(i).getVisaMk();
+				String memo=list_visa.get(i).getMemo();
+				if(visamk.equals("Y")){
+					visamk_temp="(已審核)";
+				}
+				if(visamk.equals("N")){
+					visamk_temp="(未審核)";
+				}
+				if(visamk.equals("T")){
+					visamk_temp="(未通過)";
+				}			
+				visa_result=name+visamk_temp;
+				visabillstemp.setVisaNameAndMk(visa_result);								
+				//************************解決加簽後而破壞流程順序，使得打印函文時，職位與名字不對應的問題  20161030******************************
+				for(int j=0;j<list_visaflow.size()-nos;j++){
+					if(list_visa.get(i).getVisaSigner().equals(list_visaflow.get(j).getVisaSigner())){
+						visabillstemp.setVisaRank(list_visaflow.get(j).getVisaRank()+":");
+						break;
+					}else if(j==list_visaflow.size()-nos-1){
+						visabillstemp.setVisaRank("(加簽)");
+					}
+				}
+				//************************解決加簽後而破壞流程順序，使得打印函文時，職位與名字不對應的問題  20161030******************************
+				
+				if(memo!=null){
+					visabillstemp.setMemo("(備註:"+memo+")");
+				}
+				visabillstemp.setVisaSigner(list_visa.get(i).getVisaSigner());
+				visabillstemp.setVisaMk(list_visa.get(i).getVisaMk());
+				visabillstemp.setVisaName(name);
+				list_visabillstemp.add(visabillstemp);
+			}//for
+			
+			/*********************簡體轉繁體******************/
+			for(int i=0;i<list_visabillstemp.size();i++){
+				list_visabillstemp.get(i).setMemo(ZHConverter.convert(list_visabillstemp.get(i).getMemo(), ZHConverter.TRADITIONAL));
+				list_visabillstemp.get(i).setVisaName(ZHConverter.convert(list_visabillstemp.get(i).getVisaName(), ZHConverter.TRADITIONAL));
+				list_visabillstemp.get(i).setVisaNameAndMk(ZHConverter.convert(list_visabillstemp.get(i).getVisaNameAndMk(), ZHConverter.TRADITIONAL));
+				list_visabillstemp.get(i).setVisaRank(ZHConverter.convert(list_visabillstemp.get(i).getVisaRank(), ZHConverter.TRADITIONAL));			
+			}
+			/*********************簡體轉繁體******************/
+			
+			
+			
+			Map<String,Object> visa_map=new HashMap<String,Object>();
+			visa_map.put("list_visa", list_visabillstemp);
+			map.put("visa_map", visa_map);	
+			String sub_file=GlobalMethod.getSubfile(list_visa.size()-nos);
+			map.put("sub_file",sub_file);
+		}				
 		map.put("sub_map", sub_map);
-		map.put("visa_map", visa_map);
+		
 		
 		Map<String,Object> main_map=new HashMap<String,Object>();    /*把list（List<KyzExpectmatm> list=kyzSer.findById_Print(id)）放在一个子表,便于打印  20150804*/
 		main_map.put("list_main", list);
@@ -299,12 +265,16 @@ public class WebFormulaServicesImpl implements IWebFormulaServices{
 			Map<String,Object> file_map=new HashMap<String,Object>();
 			file_map.put("list_kyzexpfile", list_kyzexpfile);
 			map.put("file_map", file_map);
-		}
-		
-		String sub_file=GlobalMethod.getSubfile(list_visa.size()-nos);
-		map.put("sub_file",sub_file);
+		}						
+		if(obj.getPom()!=null){
+			Map<String,Object>map_pom=new HashMap<String,Object>();
+			List<WebTabpom>list_poms=new ArrayList<WebTabpom>();
+			list_poms.add(obj.getPom());
+			map_pom.put("list_poms",list_poms);
+			map.put("map_pom",map_pom);
+		}		
 		map_result.put("map", map);
-		map_result.put("list", list);
+		map_result.put("list", list);				
 		return map_result;
 		
 	}

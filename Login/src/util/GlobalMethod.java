@@ -1660,133 +1660,29 @@ public class GlobalMethod extends HibernateDaoSupport{
 	 
 	 
 	 public static void main(String[] args) throws ParseException, FileNotFoundException, ScriptException, NoSuchMethodException, ClassNotFoundException {
-			List<Webestproduct>list=new ArrayList<Webestproduct>();
-			List<String>list2=new ArrayList<String>();
-			List<Webestproduct>list3=new ArrayList<Webestproduct>();
-			List<Webestproduct>list4=new ArrayList<Webestproduct>();
-			Map<String,Object>map=new LinkedHashMap<String,Object>();
-			list2.add("RB");
-			list2.add("MD");
-			list2.add("PU");
-
-	        /*for(int i=0;i<list2.size();i++){
-	        	list.add(new Webestproduct(new WebestproductId("631",list2.get(i),new SimpleDateFormat("yyyyMM").parse("201605"),"zd")));
-	        	list3.add(new Webestproduct(new WebestproductId("631",list2.get(i),new SimpleDateFormat("yyyyMM").parse("201605"),"zd")));
-	        }
-	        for(int i=0;i<list3.size();i++){
-	        	list3.get(i).setAccessories(3.2-i);
-	        }
-	        for(Webestproduct pro:list){
-	        	System.out.println(pro.getAccessories());
-	        }
-	        System.out.println("------------------------");
-	        list3.remove(0);
-	       
-	        for(int i=0;i<list.size();i++){
-	        	Webestproduct pro=list.get(i);
-	        	for(Webestproduct pro2:list3){
-	        		if(pro.getId().getFactCode().equals(pro2.getId().getFactCode())&&
-	        				pro.getId().getFactNo().equals(pro2.getId().getFactNo())&&
-	        				new SimpleDateFormat("yyyyMM").format(pro.getId().getYymm()).equals(new SimpleDateFormat("yyyyMM").format(pro2.getId().getYymm()))){
-	        			//pro=pro2;
-	        			list.remove(i);
-	        			list.add(i,pro2);
-	        		}
-	        	}
-	        	list4.add(pro);
-	        	System.out.println(pro.getAccessories());
-	        }
-	        for(Webestproduct pro:list){
-	        	System.out.println(pro.getAccessories());
-	        }
-	        map.put("201605", list);*/
-	        /*for(Webestproduct pro:(List<Webestproduct>)map.get("201605")){
-	        	System.out.println(pro.getAccessories());
-	        }*/
-	        
-	        
-			/*DateFormat frm=new SimpleDateFormat("yyyyMM");
-			DateFormat frm2=new SimpleDateFormat("yyyyMMdd");
-			List<String>months=new ArrayList<String>();
-			months.add("201601");
-			months.add("201602");
-			months.add("201603");
-			months.add("201604");
-			Calendar cal=Calendar.getInstance();
-			for(String month:months){
-				cal.setTime(frm.parse(month));
-				//cal.set(Calendar.DAY_OF_MONTH, 1);
-				int maxnum=cal.getActualMaximum(Calendar.DAY_OF_MONTH);
-				for(int i=1;i<=maxnum;i++){
-					cal.set(Calendar.DAY_OF_MONTH, i);
-					System.out.println(frm2.format(cal.getTime()));
+			List<Integer>list=new ArrayList<Integer>();
+			list.add(1);list.add(1);list.add(2);list.add(2);list.add(3);list.add(3);
+			list.add(1);list.add(1);list.add(1);list.add(2);list.add(2);list.add(2);
+			for(Integer ii:list){
+				System.out.print(ii+"\t");
+			}
+			System.out.println("*****************");
+			for(int i=0;i<list.size()-1;i++){
+				for(int j=0;j<list.size()-1-i;j++){
+					if(list.get(j)>list.get(j+1)){
+						list.add(j,list.get(j+1));
+						list.add(j+2,list.get(j+1));
+						list.remove(j+1);
+						list.remove(j+2);
+					}
 				}
-				System.out.println("-------------------------------------------------");
 				
-			}*/
-			
-			/*System.out.println("Start ...");  
-			  
-	        ExecutorService exec = Executors.newCachedThreadPool();  
-	          
-	        testTask(exec, 15); // 任务成功结束后等待计算结果，不需要等到15秒  
-	        testTask(exec, 20); // 只等待5秒，任务还没结束，所以将任务中止  
-	 
-	        exec.shutdown();  
-	        System.out.println("End!");
-			Map<String,Double>map1=new LinkedHashMap<String,Double>();
-			System.out.println(map1.size());*/
-			//runJs();
-			/*StringBuffer t1=new StringBuffer();
-			StringBuilder t2=new StringBuilder();
-			long start=System.currentTimeMillis();
-			for(int i=0;i<1000000;i++){
-				t1.append(i);
 			}
-			System.out.println("StringBuffer運行時間："+(System.currentTimeMillis()-start));
-			
-			long start2=System.currentTimeMillis();
-			for(int i=0;i<1000000;i++){
-				t2.append(i);
+			for(Integer ii:list){
+				System.out.print(ii+"\t");
 			}
-			System.out.println("StringBuilder運行時間："+(System.currentTimeMillis()-start2));*/
-			
-			/*for(Season s:Season.values()){
-				System.out.println(s);
-				System.out.println("最舒服的季節："+Season.getComfortableSeason().getCon());
-				System.out.println(Season.Summer.ordinal());;
-			}*/
-			//System.out.println(randomString(-229985452)+" "+randomString(-147909649));
-			/*List<Double>tt=new ArrayList<Double>();
-			tt.add(22.1);tt.add(11.3);tt.add(22.1);tt.add(66.2);tt.add(2.3);tt.add(10.5);tt.add(22.1);
-			System.out.println(tt);
-			tt.add(1.111);
-			System.out.println(tt);
-			List<Double>tt2=new ArrayList<Double>();
-			for(int i=0;i<tt.size();i++){
-				tt2.add(tt.get(i));
-			}
-			removeSameDouble(tt2);
-			System.out.print(tt2);
-			Long jj=999999L;
-			System.out.println(jj.doubleValue());
-			
-			List<Double>kk=maopaoList();
-			for(Double d:kk){
-				System.out.print("---"+d);
-			}*/
 			
 			
-			//test_a("a");
-			
-			Date d1=new Date(22);
-			Date d2=new Date(21);
-			System.out.println(d1.equals(d2));
-			
-			
-			
-			
-						
 		}
 	 
 	 public static <T> void test_a(T x) throws ClassNotFoundException{
