@@ -118,10 +118,12 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 									<td><s:if test='formula.assignBrand=="0"'>
 					                                                            指     定<input type="radio" name="formula.assignBrand" value="1" />
 					                                                            非指定<input type="radio" name="formula.assignBrand" value="0" checked />
-										</s:if> <s:else>
+										</s:if> 
+										<s:else>
 					                                                             指     定<input type="radio" name="formula.assignBrand" value="1" checked />
 					                                                              非指定<input type="radio" name="formula.assignBrand" value="0" />
-										</s:else></td>
+										</s:else>
+									</td>
 								</tr>
 								<tr>
 									<th colspan="2">備註</th>
@@ -139,34 +141,18 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 				</div>
 
 			</div>
-			<div class="tab-pane fade" id="tab_webformaulaitems">
-			    <s:if test="">
+			<div class="tab-pane fade" id="tab_webformaulaitems">			   
 			         <div>
-					
-				     </div>
-			    </s:if>
-				
+					    <jsp:include page="WebFormulaSaveOrUpdate.jsp" />
+				     </div>			    				
 			</div>
 			<div class="tab-pane fade" id="tab_webtabpom">
 				<div>
-					
+					<jsp:include page="WebTabpomSaveOrUpdate.jsp" />
 				</div>
 			</div>
 	  </div>
-	
-	
-	
-	
-	
-	
-	
-															                   					
-		<center>
-			<input type="button" id="sub" value="確定" class="btn btn-primary" />&nbsp;&nbsp;&nbsp;
-			<input type="reset" id="reset" value="重置" class="btn btn-primary" />&nbsp;&nbsp;&nbsp;
-			<input type="button" value="返回" id="btn_back"
-				onclick="javascript:back()" class="btn btn-primary" />
-		</center>
+															     
 	</form>
 
 
