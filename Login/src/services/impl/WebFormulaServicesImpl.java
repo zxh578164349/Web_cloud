@@ -258,14 +258,15 @@ public class WebFormulaServicesImpl implements IWebFormulaServices{
 		
 		/*函文附檔*/
 		//String pic_file=ServletActionContext.getRequest().getRealPath("/KyzexpFile/"+id.getBillNo()+"/")+"/";//函文附檔圖片路徑(附檔在項目的路徑)
-		String pic_file=new File("d:\\KyzexpFile_backup\\"+billNo).toString();//函文附檔圖片路徑(附檔在D盤的路徑)
+		/*String pic_file=new File("d:\\KyzexpFile_backup\\"+billNo).toString();//函文附檔圖片路徑(附檔在D盤的路徑)
 		List<KyzExpectmatmFile>list_kyzexpfile=kyzexpfileDao.findByBillNo(billNo);
 		if(pic_file!=null&&list_kyzexpfile.size()>0){
 			map.put("pic_file", pic_file+"\\");
 			Map<String,Object> file_map=new HashMap<String,Object>();
 			file_map.put("list_kyzexpfile", list_kyzexpfile);
 			map.put("file_map", file_map);
-		}						
+		}*/
+		
 		if(obj.getPom()!=null){
 			Map<String,Object>map_pom=new HashMap<String,Object>();
 			List<WebTabpom>list_poms=new ArrayList<WebTabpom>();

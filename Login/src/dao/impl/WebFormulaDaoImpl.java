@@ -244,10 +244,12 @@ public class WebFormulaDaoImpl extends Basedao implements IWebFormulaDao{
 	public WebFormula findById(String formulaIndex){
 		// TODO Auto-generated method stub
 		
-		WebFormula obj=findById_nosession(formulaIndex);
-		obj.getVbm().getId().getBillNo();
+		WebFormula obj=findById_nosession(formulaIndex);		
 		obj.getFactNo().getFactSname();
 		obj.getFactCode().getName();
+		if(obj.getVbm()!=null){
+			obj.getVbm().getId().getBillNo();
+		}
 		for(WebFormulaItems item:obj.getWebFormulaItemses()){
 			item.getFk_weberp_pf();
 			item.getFk_weberp_pf().getNamec1();

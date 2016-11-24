@@ -265,14 +265,13 @@ public class WebFormulaAction implements ServletResponseAware{
 	
 	public String add(){
 		try{
-			String temp=factCode.split("__")[0];
-			WebErpBrankProcess obj=new WebErpBrankProcess(Integer.parseInt(temp));			
-			formula.setFactCode(obj);
-			
-			String factno=formula.getFactNo().getFactNo();
 			if(isnull!=null&&isnull.equals("isnull")){
+				String temp=factCode.split("__")[0];
+				WebErpBrankProcess obj=new WebErpBrankProcess(Integer.parseInt(temp));			
+				formula.setFactCode(obj);				
+				String factno=formula.getFactNo().getFactNo();
 				formula.getFactNo().setFactNo(factno.split("__")[0]);
-			}
+			}						
 			webformulaser.add(formula);
 			ajaxResult="0";
 		}catch(Exception e){
@@ -291,6 +290,11 @@ public class WebFormulaAction implements ServletResponseAware{
 			System.out.println(e);
 		}
 		return "delete";
+	}
+	
+	public String findById(){
+		formula=webformulaser.findById(formulaIndex);
+		return "findById";
 	}
 	
 	public String sendEmail() throws ParseException{

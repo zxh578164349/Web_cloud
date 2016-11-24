@@ -83,7 +83,7 @@
 						<input type="hidden" value="<s:property value='pomNo'/>" name="pomNo" />							
 						<input type="hidden" value="down" name="lookordown"/>
 					</form> 
-					<a href="javascript:findById('subform${x.index}','webtabpom_findById')" >					
+					<a href="javascript:findById_form('subform${x.index}','webtabpom_findById')" >					
 					<img alt="修改" src="images/icon/edit001.png" title="修改" ></a>
 					<a href="javascript:document.getElementById('3subform${x.index}').submit()" >
 					<img alt="預覽" src="images/icon/view24.png" title="預覽"></a>

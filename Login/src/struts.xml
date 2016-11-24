@@ -697,6 +697,7 @@
 		    <result name="sendEmail" type="json">
 		        <param name="root">jsons</param>
 		    </result>
+		    <result name="findById">saveAndUpdate/WebFormulaSaveOrUpdate2.jsp</result>		    
 		</action>
 	</package>
 

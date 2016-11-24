@@ -43,191 +43,124 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 </head>
 
 <body>
-
 	<form action="webformula_add" method="post" id="form">
-	<div class="panel panel-default">
-	    <div class="panel-heading">配方表頭</div>
-	    <div class="panel-body">
-		<table class="table table-condensed" id="tb_main">
-			<tbody id="tb_list_info2">
-				<s:if test="formula==null">
-					<tr>
-						<td class="td_show_title">廠別</td>
-						<td class="td_input">
-						    <s:if test="#session.factNo!='tw'">
-								<input type="text"  name="formula.factNo.factNo"
-									value="${loginUser.factno}__${loginUser.erpfactno}" readonly id="dwr_factno" />
-							</s:if> 
-							<s:if test="#session.factNo=='tw'">
-								<select  name="formula.factNo.factNo"
-									onchange="makeFormulaIndex()" datatype="*"
-									id="dwr_factno">									
-								</select>
-							</s:if>
-						</td>
-						<td class="td_show_title">配方索引</td>
-						<td class="td_input"><input type="text" style="color:blue"
-							name="formula.formulaIndex" readonly="readonly" datatype="*" id="formulaIndex"/>
-						</td>
-					</tr>
-					<tr>
-						<td class="td_show_title">製程類別</td>
-						<td class="td_input">
-						<select name="factCode" 
-							datatype="*" id="dwrFactArea" onchange="makeFormulaIndex()">								
-						</select> </td>
-						<td class="td_show_title">配方編號</td>
-						<td class="td_input"><input type="text"
-							name="formula.formulaNo"
-							value="<s:property value='formula.formulaNo' />" datatype="*0-6">
-							
-							<input type="hidden" name="isnull" value="isnull"/>
-						</td>
-					</tr>
-				</s:if>
-				<s:if test="formula!=null">					
-					<tr>
-						<td class="td_show_title">廠別</td>
-						<td class="td_input"><font color="blue"><input
-								type="text" id="factNo" style="color:blue"
-								value="<s:property value='formula.factNo.factNo'/>"
-								name="formula.factNo.factNo" readonly /> </font></td>
-						<td class="td_show_title">配方索引</td>
-						<td class="td_input"><input type="text" style="color:blue"
-							value="<s:property value='formula.formulaIndex' />"
-							name="formula.formulaIndex" readonly /></td>
-					</tr>
-					<tr>
-						<td class="td_show_title">製程類別</td>
-						<td class="td_input"><input type="text"
-							value="<s:property value='formula.factCode.id'/>"
-							name="formula.factCode.id" style="color:blue" readonly /></td>
-						<td class="td_show_title">配方編號</td>
-						<td class="td_input"><input type="text"
-							name="formula.formulaNo"
-							value="<s:property value='formula.formulaNo' />" datatype="*0-6">
-							<input type="hidden" value="${loginUser.username}"
-							name="formula.modifyName" /> <!--  修改者--> <input type="hidden"
-							value="<%=str_date%>" name="formula.modifyDate" /> <!--  修改日期-->
-						</td>
-					</tr>
-				</s:if>
+	
+	   <ul id="myTab" class="nav nav-tabs">
+		 <li class="active"><a href="#tab_webformula" data-toggle="tab" id="a_webformula">配方主表</a></li>			  		 
+		 <li><a href="#tab_webformaulaitems" data-toggle="tab" id="a_webformaulaitems">配方階段</a></li>	
+		 <li><a href="#tab_webtabpom" data-toggle="tab" id="a_webtabpom">物性資料</a></li>		 
+		</ul>
+		<div id="myTabContent" class="tab-content">
+			<div class="tab-pane fade in active" id="tab_webformula">
 
-				<tr>
-					<td class="td_show_title">配方名稱</td>
-					<td class="td_input"><input type="text"
-						name="formula.formulaName"
-						value="<s:property value='formula.formulaName' />" datatype="*0-6">
-					</td>
-					<td class="td_show_title">倍率</td>
-					<td class="td_input"><input type="text"
-						name="formula.magnification"
-						value="<s:property value='formula.magnification' />"
-						datatype="*0-6"></td>
-				</tr>
-				<tr>
-					<td class="td_show_title">帶皮半成品硬度</td>
-					<td class="td_input"><input type="text"
-						name="formula.semifinishedProductHardness"
-						value="<s:property value='formula.semifinishedProductHardness' />"
-						datatype="*0-6"></td>
-					<td class="td_show_title">成品硬度</td>
-					<td class="td_input"><input type="text"
-						name="formula.productHardness"
-						value="<s:property value='formula.productHardness' />"
-						datatype="*0-6"></td>
-				</tr>
-				<tr>
-					<td class="td_show_title">品牌形體</td>
-					<td class="td_input"><input type="text"
-						name="formula.brandBody"
-						value="<s:property value='formula.brandBody' />" datatype="*0-6">
-					</td>
-					<td class="td_show_title">顏色</td>
-					<td class="td_input"><input type="text" name="formula.color"
-						value="<s:property value='formula.color' />" datatype="*0-6">
-					</td>
-				</tr>
-				<tr>
-					<td class="td_show_title">發行日期</td>
-					<td class="td_input"><input type="text"
-						name="formula.issuedDate"
-						value="<s:property value='formula.issuedDate' />" onclick="WdatePicker({dateFmt:'yyyyMMdd',maxDate:'%y-%M-%d'})" datatype="*0-6" class="Wdate"/>
-					</td>
-					<td class="td_show_title">品牌指定</td>
-					<td class="td_input">
-					<s:if test="formula==null">
-					     指     定<input type="radio" name="formula.assignBrand" value="1"/>
-					     非指定<input type="radio" name="formula.assignBrand" value="0" checked/>
-					</s:if>
-					<s:else>
-					   <s:if test='formula.assignBrand=="0"'>
-					             指     定<input type="radio" name="formula.assignBrand" value="1"/>
-					             非指定<input type="radio" name="formula.assignBrand" value="0" checked/>
-					   </s:if>
-					   <s:else>
-					             指     定<input type="radio" name="formula.assignBrand" value="1" checked/>
-					             非指定<input type="radio" name="formula.assignBrand" value="0" />
-					   </s:else>
-					</s:else>					 					
-					</td>
-				</tr>
-				<tr>
-				<td>備註</td>
-				<td colspan="3">
-				     <textarea name='formula.remark' style="width:100%;height:200px"><s:property value="formula.remark" /></textarea> 					
-						<input type="hidden"
-						value="<s:property value='#session.loginUser.username'/>"
-						name="formula.createName" /> <input type="hidden"
-						value="<%=str_date%>" name="formula.createDate" id="createDate"/>
-				</td>
-				</tr>												  																														
-			</tbody>			
-		</table>
-		</div>
-		</div>
-		
-		<div class="panel panel-default" id="div_webformalaitem" style="display:none">	
-		   <div class="panel-heading">
-		                配方階段與物性資料&nbsp;&nbsp;&nbsp;
-		      <input type="button" value="添加配方階段" onclick="check_addSection()" class="btn btn-primary disabled" id="btn_addsec" />&nbsp; 
-		      <input type="button" value="新增物性資料" onclick="addWebtabtom()" class="btn btn-primary disabled" id="btn_addwebtabpom" /> 		              
-		   </div>	
-		   <div class="panel-body">
-		         <ul id="myTab" class="nav nav-tabs">
-									<li class="active"><a href="#tab_typeno"
-										data-toggle="tab" id="tab_typeno_a">配方類別</a>
-									</li>
-									<li><a href="#tab_namece" data-toggle="tab" id="tab_namece_a">配方原料</a>
-									</li>
-									<li id="del_li"><img src="images/icon/del_file.png" style="display:none" id="del_img" onclick="removeSection()"/></li>
-								</ul>
-								
-								
-								
-								<div id="myTabContent" class="tab-content">
-									<div class="tab-pane fade in active" id="tab_typeno">
-										<div id="div_typeno"
-											class="div_border_green">
-											<div>
-												<input type="checkbox" id="all_typeno"
-													onclick="" />
-												全选
-											</div>
-											<hr />
-											
-										</div>
-									</div>
-									<div class="tab-pane fade" id="tab_namece">
-										<div class="div_border_green">																															
-											<div id="div_namece"><label style="color:red">請先選擇配方類別</label></div>
-										</div>
-									</div>
-								</div>									
-		   </div>
-		   </div>												
-                    			
-		
+				<div class="panel panel-default">
+					<div class="panel-heading">配方表頭</div>
+					<div class="panel-body">
+						<table class="table table-condensed" id="tb_main">
+							<tbody>
+								<tr>
+									<th>廠別</th>
+									<th>配方索引</th>
+								</tr>
+								<tr>
+									<td><input type="text" id="factNo" style="color:blue" value="<s:property value='formula.factNo.factNo'/>" name="formula.factNo.factNo" readonly /></td>
+									<td><input type="text" style="color:blue" value="<s:property value='formula.formulaIndex' />" name="formula.formulaIndex" readonly />
+									</td>
+								</tr>
+								<tr>
+									<th>製程類別</th>
+									<th>配方編號</th>
+								</tr>
+								<tr>
+									<td><input type="text" value="<s:property value='formula.factCode.id'/>" name="formula.factCode.id" style="color:blue" readonly />
+									</td>
+									<td><input type="text" name="formula.formulaNo" value="<s:property value='formula.formulaNo' />" datatype="*0-6">
+									</td>
+								</tr>
+								<tr>
+									<th>配方名稱</th>
+									<th>倍率</th>
+								</tr>
+								<tr>
+									<td><input type="text" name="formula.formulaName" value="<s:property value='formula.formulaName' />" datatype="*0-6">
+									</td>
+									<td><input type="text" name="formula.magnification" value="<s:property value='formula.magnification' />" datatype="*0-6">
+									</td>
+								</tr>
+								<tr>
+									<th>帶皮半成品硬度</th>
+									<th>成品硬度</th>
+								</tr>
+								<tr>
+									<td><input type="text" name="formula.semifinishedProductHardness" value="<s:property value='formula.semifinishedProductHardness' />" datatype="*0-6">
+									</td>
+									<td><input type="text" name="formula.productHardness" value="<s:property value='formula.productHardness' />" datatype="*0-6">
+									</td>
+								</tr>
+								<tr>
+									<th>品牌形體</th>
+									<th>顏色</th>
+								</tr>
+								<tr>
+									<td><input type="text" name="formula.brandBody" value="<s:property value='formula.brandBody' />" datatype="*0-6">
+									</td>
+									<td><input type="text" name="formula.color" value="<s:property value='formula.color' />" datatype="*0-6">
+									</td>
+								</tr>
+								<tr>
+									<th>發行日期</th>
+									<th>品牌指定</th>
+								</tr>
+								<tr>
+									<td><input type="text" name="formula.issuedDate" value="<s:property value='formula.issuedDate' />" onclick="WdatePicker({dateFmt:'yyyyMMdd',maxDate:'%y-%M-%d'})"
+										datatype="*0-6" class="Wdate" />
+									</td>
+									<td><s:if test='formula.assignBrand=="0"'>
+					                                                            指     定<input type="radio" name="formula.assignBrand" value="1" />
+					                                                            非指定<input type="radio" name="formula.assignBrand" value="0" checked />
+										</s:if> <s:else>
+					                                                             指     定<input type="radio" name="formula.assignBrand" value="1" checked />
+					                                                              非指定<input type="radio" name="formula.assignBrand" value="0" />
+										</s:else></td>
+								</tr>
+								<tr>
+									<th colspan="2">備註</th>
+								</tr>
+								<tr>
+									<td colspan="2"><textarea style="width:100%;height:200px" name='formula.remark'><s:property value="formula.remark" /></textarea>
+									 <input type="hidden" value="<s:property value='formula.createName'/>" name="formula.createName" /> 
+									 <input type="hidden" value="<s:property value='formula.createDate'/>" name="formula.createDate" id="createDate" />
+									 <input type="hidden" value="${loginUser.username}" name="formula.modifyName" /> <!--  修改者--> 
+									 <input type="hidden" value="<%=str_date%>" name="formula.modifyDate" /> <!--  修改日期--></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+
+			</div>
+			<div class="tab-pane fade" id="tab_webformaulaitems">
+			    <s:if test="">
+			         <div>
+					
+				     </div>
+			    </s:if>
+				
+			</div>
+			<div class="tab-pane fade" id="tab_webtabpom">
+				<div>
+					
+				</div>
+			</div>
+	  </div>
+	
+	
+	
+	
+	
+	
+	
+															                   					
 		<center>
 			<input type="button" id="sub" value="確定" class="btn btn-primary" />&nbsp;&nbsp;&nbsp;
 			<input type="reset" id="reset" value="重置" class="btn btn-primary" />&nbsp;&nbsp;&nbsp;
@@ -434,7 +367,7 @@ function removeSection(){
 	jq("#btn_addsec").val("添加配方階段("+(index+1)+")");
 	if(index==0){
 		jq("#del_img").css("display","none");
-		jq("#tab_namece_a").click();
+		jq("#tab_webformaulaitems_a").click();
 	}else{
 		jq("#tab_section_a_"+index).click();
 	}
@@ -504,8 +437,8 @@ function checkallItems(){
     shade: [0],
     //shade: [0.5, '#000'],
     shadeClose: false,
-     //btns:2,
-     //btn:['通過','不通過'],
+    // btns:2,
+    // btn:['通過','不通過'],
     //fadeIn:300,
     //shift:'top',
     offset:['10px',''],

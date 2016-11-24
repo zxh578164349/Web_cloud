@@ -90,12 +90,12 @@
 												
 							<s:if test='#session.loginUser.userread!="1"'>
 								<td>
-									<%--<form action="weballobj_findWloById" method="post" id="subform${x.index}">										
+									<form  id="subform${x.index}">										
 										<input type="hidden" value="<s:property value='formulaIndex'/>" name="formulaIndex" />																					
 									</form> 
-									<a href="javascript:findById('subform${x.index}','webwlo_findWloById')">
+									<a href="javascript:findById_form('subform${x.index}','webformula_findById')">
 									<img alt="修改" src="images/icon/edit001.png" title="修改">										
-								    </a>--%>
+								    </a>
 									<form  id="2subform${x.index}" style="float:left">										
 										<input type="hidden" value="<s:property value='formulaIndex'/>" name="formulaIndex" />																														
 									</form>
@@ -118,7 +118,7 @@
 									<a href="javascript:isDelete2('2subform${x.index}','webformula_delete','webformula_findPageBean3')" >
 									<img alt="刪除" src="images/icon/delete001.png" title="刪除">
 								    </a>
-								    <a href="javascript:jq('#4subform${x.index}').submit()" class="btn btn-sm">預覽</a>
+								    <a href="javascript:document.getElementById('4subform${x.index}').submit()" class="btn btn-sm">預覽</a>
 								</td>
 							</s:if>
 							
