@@ -33,24 +33,17 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
   }
   
 #myTabContent ul{margin:0px;padding:0px}
-.list{margin:0px 0px; width:127%;}  
-.list li.columnhead,.list li.col_item,.list li.col_item4{font-size: 12px;font-weight:bold;}  
+.list{margin:0px 0px; width:100%;}  
+.list li.columnhead{font-size: 12px;font-weight:bold;}  
 .list li,.list li.columnhead{  
-    width:15%;height:28px;text-align:left;float:left;margin:0px 0px;list-style:none; border:1px solid ; 
-} 
-.list li.col_item,.list li.col_item2{
-   width:16%;height:28px;text-align:left;float:left;margin:0px 0px;list-style:none; border:1px solid ; 
-}
-.list li.col_item3,.list li.col_item4{
-  height:28px;text-align:left;float:left;margin:0px 0px;list-style:none; border:1px solid ; 
-}
-
+    width:20%;height:28px;text-align:left;float:left;margin:0px 0px;list-style:none; border:1px solid ; 
+}  
 </style>
 
 </head>
 
 <body>
-	
+	<form action="webformula_add" method="post" id="form">
 	
 	   <ul id="myTab" class="nav nav-tabs">
 		 <li class="active"><a href="#tab_webformula" data-toggle="tab" id="a_webformula">配方主表</a></li>			  		 
@@ -58,14 +51,99 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 		 <li><a href="#tab_webtabpom" data-toggle="tab" id="a_webtabpom">物性資料</a></li>		 
 		</ul>
 		<div id="myTabContent" class="tab-content">
-			<div class="tab-pane fade in active" id="tab_webformula">				
-                <div>
-                  <jsp:include page="WebFormulaSaveOrUpdate2_main.jsp" />
-                </div>  
+			<div class="tab-pane fade in active" id="tab_webformula">
+
+				<div class="panel panel-default">
+					<div class="panel-heading">配方表頭</div>
+					<div class="panel-body">
+						<table class="table table-condensed" id="tb_main">
+							<tbody>
+								<tr>
+									<th>廠別</th>
+									<th>配方索引</th>
+								</tr>
+								<tr>
+									<td><input type="text" id="factNo" style="color:blue" value="<s:property value='formula.factNo.factNo'/>" name="formula.factNo.factNo" readonly /></td>
+									<td><input type="text" style="color:blue" value="<s:property value='formula.formulaIndex' />" name="formula.formulaIndex" readonly />
+									</td>
+								</tr>
+								<tr>
+									<th>製程類別</th>
+									<th>配方編號</th>
+								</tr>
+								<tr>
+									<td><input type="text" value="<s:property value='formula.factCode.id'/>" name="formula.factCode.id" style="color:blue" readonly />
+									</td>
+									<td><input type="text" name="formula.formulaNo" value="<s:property value='formula.formulaNo' />" datatype="*0-6">
+									</td>
+								</tr>
+								<tr>
+									<th>配方名稱</th>
+									<th>倍率</th>
+								</tr>
+								<tr>
+									<td><input type="text" name="formula.formulaName" value="<s:property value='formula.formulaName' />" datatype="*0-6">
+									</td>
+									<td><input type="text" name="formula.magnification" value="<s:property value='formula.magnification' />" datatype="*0-6">
+									</td>
+								</tr>
+								<tr>
+									<th>帶皮半成品硬度</th>
+									<th>成品硬度</th>
+								</tr>
+								<tr>
+									<td><input type="text" name="formula.semifinishedProductHardness" value="<s:property value='formula.semifinishedProductHardness' />" datatype="*0-6">
+									</td>
+									<td><input type="text" name="formula.productHardness" value="<s:property value='formula.productHardness' />" datatype="*0-6">
+									</td>
+								</tr>
+								<tr>
+									<th>品牌形體</th>
+									<th>顏色</th>
+								</tr>
+								<tr>
+									<td><input type="text" name="formula.brandBody" value="<s:property value='formula.brandBody' />" datatype="*0-6">
+									</td>
+									<td><input type="text" name="formula.color" value="<s:property value='formula.color' />" datatype="*0-6">
+									</td>
+								</tr>
+								<tr>
+									<th>發行日期</th>
+									<th>品牌指定</th>
+								</tr>
+								<tr>
+									<td><input type="text" name="formula.issuedDate" value="<s:property value='formula.issuedDate' />" onclick="WdatePicker({dateFmt:'yyyyMMdd',maxDate:'%y-%M-%d'})"
+										datatype="*0-6" class="Wdate" />
+									</td>
+									<td><s:if test='formula.assignBrand=="0"'>
+					                                                            指     定<input type="radio" name="formula.assignBrand" value="1" />
+					                                                            非指定<input type="radio" name="formula.assignBrand" value="0" checked />
+										</s:if> 
+										<s:else>
+					                                                             指     定<input type="radio" name="formula.assignBrand" value="1" checked />
+					                                                              非指定<input type="radio" name="formula.assignBrand" value="0" />
+										</s:else>
+									</td>
+								</tr>
+								<tr>
+									<th colspan="2">備註</th>
+								</tr>
+								<tr>
+									<td colspan="2"><textarea style="width:100%;height:200px" name='formula.remark'><s:property value="formula.remark" /></textarea>
+									 <input type="hidden" value="<s:property value='formula.createName'/>" name="formula.createName" /> 
+									 <input type="hidden" value="<s:property value='formula.createDate'/>" name="formula.createDate" id="createDate" />
+									 <input type="hidden" value="${loginUser.username}" name="formula.modifyName" /> <!--  修改者--> 
+									 <input type="hidden" value="<%=str_date%>" name="formula.modifyDate" /> <!--  修改日期--></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+
 			</div>
 			<div class="tab-pane fade" id="tab_webformaulaitems">			   
 			         <div>
-					   <jsp:include page="WebFormulaSaveOrUpdate2_items.jsp" />
+					    <!-- <jsp:include page="WebFormulaSaveOrUpdate.jsp" /> -->
 				     </div>			    				
 			</div>
 			<div class="tab-pane fade" id="tab_webtabpom">
@@ -75,7 +153,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 			</div>
 	  </div>
 															     
-	
+	</form>
 
 
 <script type="text/javascript">
@@ -281,7 +359,7 @@ function removeSection(){
 	}
 	checkIndex();
 }
-/*function removeOneItem(img,img_name){
+function removeOneItem(img,img_name){
 	    img.parent().prev().prev().prev().prev().remove();
 	    img.parent().prev().prev().prev().remove();
 	    img.parent().prev().prev().remove();
@@ -292,7 +370,7 @@ function removeSection(){
 		}
 	
 	
-}*/
+}
 
 function checkbtn(){
 	var items=jq("input[name='itemids']:checked");

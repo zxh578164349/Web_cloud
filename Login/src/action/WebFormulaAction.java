@@ -25,6 +25,7 @@ import entity.KyzExpectmatm;
 import entity.KyzVisaflow;
 import entity.WebErpBrankProcess;
 import entity.WebFormula;
+import entity.WebFormulaItems;
 import entity.WebTabpom;
 import entity.WebUser;
 
@@ -66,6 +67,7 @@ public class WebFormulaAction implements ServletResponseAware{
 	private JSONArray jsons;
 	private String lookordown;
 	private Map<String,Object> map;
+	private List<WebFormulaItems>items;
 	private HttpServletResponse response;
 	private IWebFormulaServices webformulaser;
 	private IKyzVisaFlowServices visaSer;
@@ -74,6 +76,14 @@ public class WebFormulaAction implements ServletResponseAware{
 	
 	
 	
+	public List<WebFormulaItems> getItems(){
+		return items;
+	}
+
+	public void setItems(List<WebFormulaItems> items){
+		this.items=items;
+	}
+
 	public String getLookordown(){
 		return lookordown;
 	}
@@ -279,6 +289,17 @@ public class WebFormulaAction implements ServletResponseAware{
 			System.out.println(e);
 		}		
 		return "add";
+	}
+	public String addItems(){
+		try{
+			webformulaser.addItems(items);
+			ajaxResult="0";
+		}catch(Exception e){
+			ajaxResult="1";
+			System.out.println(e);
+		}
+		return "addItems";
+		
 	}
 	
 	public String delete(){

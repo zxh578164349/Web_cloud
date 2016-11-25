@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.hibernate.Query;
+import org.hibernate.Transaction;
 
 import com.opensymphony.xwork2.ActionContext;
 
@@ -271,6 +272,32 @@ public class WebFormulaDaoImpl extends Basedao implements IWebFormulaDao{
 		// TODO Auto-generated method stub
 		WebFormula obj=findById_nosession(formulaIndex);
 		super.delete(obj);
+	}
+
+	/**
+	 * 日期:2016/11/25
+	 * 描述:
+	 */
+	
+	
+	public void addItems(List<WebFormulaItems> webFormulaItemses){
+		// TODO Auto-generated method stub
+		Transaction tx=null;
+		try{
+			tx=getSession().beginTransaction();
+			for(int i=0;i<webFormulaItemses.size();i++){
+				getSession().merge(webFormulaItemses.get(i));
+				if(i%10==0){
+					getSession().flush();
+					getSession().clear();
+				}				
+			}
+			//tx.commit();
+		}catch(Exception e){
+			tx.rollback();
+			System.out.println(e);
+		}
+		
 	}
 
 	

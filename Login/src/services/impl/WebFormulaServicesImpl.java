@@ -289,6 +289,16 @@ public class WebFormulaServicesImpl implements IWebFormulaServices{
 		// TODO Auto-generated method stub
 		return webformuladao.findById_nosession(formulaIndex);
 	}
+	/**
+	 * 日期:2016/11/25
+	 * 描述:
+	 */
+	
+	
+	public void addItems(List<WebFormulaItems> webFormulaItemses){
+		// TODO Auto-generated method stub
+		webformuladao.addItems(webFormulaItemses);
+	}
 
 	
 }

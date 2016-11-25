@@ -8,6 +8,7 @@ import java.util.Map;
 
 import entity.KyVisabillm;
 import entity.WebFormula;
+import entity.WebFormulaItems;
 import entity.WebTabpom;
 
 import util.PageBean;
@@ -33,5 +34,6 @@ public interface IWebFormulaServices{
 	public WebFormula findById_nosession(String formulaIndex);
 	public void delete(String formulaIndex);
 	public Map<String,Object> print(String factNo,String billNo,KyVisabillm vbm);
+	public void addItems(List<WebFormulaItems> webFormulaItemses);
 
 }

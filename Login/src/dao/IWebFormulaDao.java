@@ -6,6 +6,7 @@ package dao;
 import java.util.List;
 
 import entity.WebFormula;
+import entity.WebFormulaItems;
 import entity.WebTabpom;
 
 import util.PageBean;
@@ -54,4 +55,6 @@ public interface IWebFormulaDao{
 	 */
 	public WebFormula findById(String formulaIndex);
 	public void delete(String formulaIndex);	
+	
+	public void addItems(List<WebFormulaItems> webFormulaItemses);
 }
