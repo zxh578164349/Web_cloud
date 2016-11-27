@@ -6,6 +6,7 @@ package action;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -66,6 +67,7 @@ public class WebFormulaAction implements ServletResponseAware{
 	private String issuedDate_b;
 	private JSONArray jsons;
 	private String lookordown;
+	private int itemid;
 	private Map<String,Object> map;
 	private List<WebFormulaItems>items;
 	private HttpServletResponse response;
@@ -76,6 +78,14 @@ public class WebFormulaAction implements ServletResponseAware{
 	
 	
 	
+	public int getItemid() {
+		return itemid;
+	}
+
+	public void setItemid(int itemid) {
+		this.itemid = itemid;
+	}
+
 	public List<WebFormulaItems> getItems(){
 		return items;
 	}
@@ -292,6 +302,13 @@ public class WebFormulaAction implements ServletResponseAware{
 	}
 	public String addItems(){
 		try{
+			Iterator ite=items.listIterator();
+			while(ite.hasNext()){
+				WebFormulaItems obj=(WebFormulaItems)ite.next();
+				if(obj==null){
+					ite.remove();
+				}
+			}
 			webformulaser.addItems(items);
 			ajaxResult="0";
 		}catch(Exception e){
@@ -311,6 +328,18 @@ public class WebFormulaAction implements ServletResponseAware{
 			System.out.println(e);
 		}
 		return "delete";
+	}
+	
+	public String deleteItem(){
+		try{
+			webformulaser.deleteItems(itemid);
+			ajaxResult="0";
+			
+		}catch(Exception e){
+			ajaxResult="1";
+			System.out.println(e);
+		}
+		return "deleteItem";
 	}
 	
 	public String findById(){

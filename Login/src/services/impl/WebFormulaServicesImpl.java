@@ -299,6 +299,14 @@ public class WebFormulaServicesImpl implements IWebFormulaServices{
 		// TODO Auto-generated method stub
 		webformuladao.addItems(webFormulaItemses);
 	}
+	public WebFormulaItems findById(int itemid) {
+		// TODO Auto-generated method stub
+		return webformuladao.findById(itemid);
+	}
+	public void deleteItems(int itemid) {
+		// TODO Auto-generated method stub
+		webformuladao.deleteItems(itemid);
+	}
 
 	
 }

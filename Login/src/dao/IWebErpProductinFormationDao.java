@@ -25,5 +25,7 @@ public interface IWebErpProductinFormationDao{
 	public List<VWebErpProductinFormation>findTypeNo();
 	public List<Object[]>findNamece(List<String>selfchar1s);
 
+	
+
 
 }

@@ -190,33 +190,7 @@ function back(){
 
 
 
-function loadNamece(){
-	jq("#div_namece").empty();
-	var selfchar1s=new Array();
-	var list=jq("input[name='typenos']:checked");
-	list.each(function(i,typeno){
-		selfchar1s.push(typeno.value);
-	});
-	if(selfchar1s.length>0){
-		jq.ajax({
-			type:"post",
-			dataType:"json",
-			traditional:true,
-			data:{'selfchar1s':selfchar1s},
-			url:"weberppf_findNameces",
-			success:function(data){
-				var item="<input type='checkbox' id='all_namece' onclick='checkallItems(),checkbtn()'/>全選<hr/>";
-				jq.each(data,function(i,obj){
-					item+="<div><input type='checkbox' value='"+obj[0]+"' name='itemids' onclick='checkbtn()'/><label>"+obj[2]+"&nbsp;&nbsp;"+obj[3]+"__"+obj[1]+"</label></div>";					
-				});
-				jq("#div_namece").append(item);
-			}
-			
-		});
-	}else{
-		jq("#div_namece").append("<label style='color:red'>請先選擇配方類別</label>");
-	}	
-}
+
 
 var index=0;
 var item_nums=0;

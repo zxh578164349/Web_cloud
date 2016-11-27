@@ -252,7 +252,7 @@ public class WebFormulaDaoImpl extends Basedao implements IWebFormulaDao{
 			obj.getVbm().getId().getBillNo();
 		}
 		for(WebFormulaItems item:obj.getWebFormulaItemses()){
-			item.getFk_weberp_pf();
+			//item.getFk_weberp_pf();
 			item.getFk_weberp_pf().getNamec1();
 			item.getFk_weberp_pf().getNamec2();
 			item.getFk_weberp_pf().getItemcategoryname();
@@ -298,6 +298,20 @@ public class WebFormulaDaoImpl extends Basedao implements IWebFormulaDao{
 			System.out.println(e);
 		}
 		
+	}
+
+	public WebFormulaItems findById(int itemid) {
+		// TODO Auto-generated method stub
+		String hql="from WebFormulaItems where itemId=?";
+		Query query=getSession().createQuery(hql);
+		query.setInteger(0, itemid);
+		return (WebFormulaItems)query.uniqueResult();
+	}
+
+	public void deleteItems(int itemid) {
+		// TODO Auto-generated method stub
+		WebFormulaItems obj=findById(itemid);
+		super.delete(obj);
 	}
 
 	

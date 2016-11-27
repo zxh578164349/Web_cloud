@@ -57,4 +57,7 @@ public interface IWebFormulaDao{
 	public void delete(String formulaIndex);	
 	
 	public void addItems(List<WebFormulaItems> webFormulaItemses);
+	public WebFormulaItems findById(int itemid);
+	public void deleteItems(int itemid);
+	
 }

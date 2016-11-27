@@ -284,13 +284,13 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 			dataType:"json",
 			url:"weberpbp_findObjOp1",
 			success:function(data){
-				var item;
+				var item="";
 				jq("#dwrFactArea").empty();
 				jq("#dwrFactArea").append("<option value=''>請選擇製程類別</option>");
 				jq.each(data,function(i,obj){
-					item="<option value='"+obj[0]+"__"+obj[1]+"'>"+obj[2]+"</option>";
-					jq("#dwrFactArea").append(item);
+					item+="<option value='"+obj[0]+"__"+obj[1]+"'>"+obj[2]+"</option>";					
 				});
+				jq("#dwrFactArea").append(item);
 			}
 		});	
 		

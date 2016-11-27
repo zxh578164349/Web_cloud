@@ -35,5 +35,7 @@ public interface IWebFormulaServices{
 	public void delete(String formulaIndex);
 	public Map<String,Object> print(String factNo,String billNo,KyVisabillm vbm);
 	public void addItems(List<WebFormulaItems> webFormulaItemses);
+	public WebFormulaItems findById(int itemid);
+	public void deleteItems(int itemid);
 
 }

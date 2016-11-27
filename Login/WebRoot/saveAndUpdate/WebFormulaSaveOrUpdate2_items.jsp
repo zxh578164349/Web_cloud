@@ -59,7 +59,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 					<input type="hidden" value="<s:property value='createDate'/>" name="items[${x.index}].createDate">
 					<input type="hidden" value="${loginUser.username}" name="items[${x.index}].modifyName">
 					<input type="hidden" value="<%=str_date%>" name="items[${x.index}].modifyDate">
-					<img src="images/icon/del_file.png" style="border:0" onclick="removeOneItem(jq(this))"/>
+					<img src="images/icon/del_file.png" style="border:0" onclick="deleteItem(<s:property value='itemId'/>,jq(this))"/>
 				   </li>	
 				</s:iterator>							
 			</ul> 
@@ -101,7 +101,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 					loadUrl("/Login/webformula_findPageBean");
 				}else{
 					layer.msg("提交失敗",3,3);
-				}				
+				}			
 			}
 		});
 		demo.tipmsg.w["*0-6"] = "只能數字且不超過12位數,可保留三位以內小數";				
@@ -111,35 +111,88 @@ var ii=0;
 function addItem(){
 	var formulaIndex=jq("#formulaIndex").val();
 	var num_size=parseInt(jq("#num_size").val())+ii;
-	alert(num_size);
 	var item="";
 	var options="";
 	for(var j=1;j<8;j++){
 		options+="<option value='"+j+"'>"+j+"</option>";
 	}	
 	item+="<li><select name='items["+num_size+"].sectionNo'>"+options+"</select></li>";
-	item+="<li><select id='items_type'></select></li>";
-	item+="<li><select id='fk_weberp_pf'></select></li>";
-	item+="<li><input type='text' name='items["+num_size+"].phrVal'/></li>"
-	item+="<li><input type='text' name='items["+num_size+"].weightVal'/></li>"
-	item+="<li class='col_item3'><input type='text' name='items["+num_size+"].remark'/>"
+	item+="<li><select id='items_type"+ii+"' onchange='loadNamece(jq(this))'></select></li>";
+	item+="<li><select id='fk_weberp_pf"+ii+"' name='items["+num_size+"].fk_weberp_pf.itemid'></select></li>";
+	item+="<li><input type='text' name='items["+num_size+"].phrVal'/></li>";
+	item+="<li><input type='text' name='items["+num_size+"].weightVal'/></li>";
+	item+="<li class='col_item3'><input type='text' name='items["+num_size+"].remark'/>";
 	item+="<input type='hidden' value='"+formulaIndex+"' name='items["+num_size+"].webFormula.formulaIndex' readonly/>";
 	item+="<input type='hidden' name='items["+num_size+"].createName' value='${loginUser.username}' readonly/>";
 	item+="<input type='hidden' name='items["+num_size+"].createDate' value='"+<%=str_date%>+"'/>";
 	item+="<img src='images/icon/del_file.png' style='border:0px' onclick='removeOneItem(jq(this))'/></li>";
 	jq("#ul_item").append(item);
+	var kk="#items_type"+ii;
+	jq.ajax({
+			type:"post",
+			dataType:"json",
+			url:"weberppf_findTypeNo",
+			success:function(data){		
+				var item2="<option value=''>請選擇類別</option>";
+				jq.each(data,function(index,obj){
+					item2+="<option value='"+obj.selfchar1+"'>"+obj.selfchar1name+"</option>";					
+				});		
+				jq(kk).append(item2);
+				//jq("#items_type"+ii).append(item2);这样写就变成ii的全局变量，也就是ii自加后结果
+			}
+		});
 	ii++;
 }
 
+function loadNamece(item_typeno){
+    item_typeno.parent().next().children().empty();	
+	if(item_typeno.val()!=""){
+		jq.ajax({
+			type:"post",
+			dataType:"json",
+			traditional:true,
+			data:{'selfchar1':item_typeno.val()},
+			url:"weberppf_findNamece",
+			success:function(data){
+				var item="<option>請選擇配方原料</option>";
+				jq.each(data,function(i,obj){
+					item+="<option value='"+obj[0]+"'>"+obj[2]+"&nbsp;&nbsp;"+obj[3]+"__"+obj[1]+"</option>";					
+				});
+				item_typeno.parent().next().children().append(item);
+			}
+			
+		});
+	}else{
+		item_typeno.parent().next().children().append("<label style='color:red'>請先選擇配方類別</label>");
+	}	
+}
+
 function removeOneItem(obj){
-	obj.parent().prev().prev().prev().prev().prev().prev().remove();
+	obj.parent().prev().prev().prev().prev().prev().remove();
 	obj.parent().prev().prev().prev().prev().remove();
 	obj.parent().prev().prev().prev().remove();
 	obj.parent().prev().prev().remove();
 	obj.parent().prev().remove();
 	obj.parent().remove();
+	//ii--;
 }
 
+function deleteItem(itemid,obj){
+   jq.ajax({
+     type:"post",
+     dataType:"json",
+     data:"itemid="+itemid,
+     url:"webformula_deleteItem",
+     success:function(data){
+       if(data=="0"){
+          removeOneItem(obj);
+          layer.msg("刪除成功",3,1);
+       }else{
+          layer.msg("刪除失敗",3,3);
+       }
+     }
+   });
+}
 
 </script>
 </body>
