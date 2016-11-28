@@ -123,6 +123,11 @@ var uploadify_config = {
 	    //'onUploadError' : uploadify_onUploadError,
 	   'onQueueComplete' : function(){
 		   loadUrl("filesUpload_findByName");
+	   },
+	   'onSelectError' :function(file, errorCode, errorMsg){
+	      if(errorCode==-130){
+	         alert("文件類型不對");
+	      }
 	   }	   
 	};
 jq(function(){
