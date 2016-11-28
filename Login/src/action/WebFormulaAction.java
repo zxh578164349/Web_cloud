@@ -4,6 +4,8 @@
 package action;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.Iterator;
@@ -23,6 +25,7 @@ import entity.KyVisabillmId;
 import entity.KyVisabills;
 import entity.KyVisabillsId;
 import entity.KyzExpectmatm;
+import entity.KyzExpectmatmLog;
 import entity.KyzVisaflow;
 import entity.WebErpBrankProcess;
 import entity.WebFormula;
@@ -320,8 +323,13 @@ public class WebFormulaAction implements ServletResponseAware{
 	}
 	
 	public String delete(){
-		try{
-			webformulaser.delete(formulaIndex);
+		try{					
+			KyzExpectmatmLog log=new KyzExpectmatmLog();
+			log.setObj("WebFormula");
+			log.setBillNo(formulaIndex);
+			WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
+			log.setUsername(user.getUsername());
+			webformulaser.delete(formulaIndex,log);	
 			ajaxResult="0";
 		}catch(Exception e){
 			ajaxResult="1";
@@ -332,7 +340,11 @@ public class WebFormulaAction implements ServletResponseAware{
 	
 	public String deleteItem(){
 		try{
-			webformulaser.deleteItems(itemid);
+			KyzExpectmatmLog log=new KyzExpectmatmLog();
+			log.setObj("WebFormulaItem");
+			WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
+			log.setUsername(user.getUsername());
+			webformulaser.deleteItems(itemid,log);
 			ajaxResult="0";
 			
 		}catch(Exception e){
@@ -406,6 +418,18 @@ public class WebFormulaAction implements ServletResponseAware{
 			response.getWriter().print("<script>alert('單號為"+billNo+"的函文不存在!');window.close()</script>");
 		}						
 				
+	}
+	
+	public String toUrl(String filename) throws UnsupportedEncodingException{
+		//String filename2=filename.replace("/u", "%");
+		String urlname2=URLDecoder.decode(filename,"utf-8");
+		return urlname2;
+	}
+	/**
+	 * 解決url中空格轉換成 +號的問題
+	 */
+	public String toUrl2(String filename){
+		return filename.replace("+", "%20");
 	}
 	
 	

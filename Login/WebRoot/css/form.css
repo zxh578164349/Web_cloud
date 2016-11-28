@@ -27,6 +27,7 @@
 
 .Validform_error {
 	background-color: #ffe7e7;
+	color: red;
 }
 
 #Validform_msg {

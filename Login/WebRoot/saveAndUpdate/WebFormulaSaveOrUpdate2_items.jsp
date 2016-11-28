@@ -71,10 +71,11 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 			        </s:else>                      
 		</div>		
 		&nbsp;<br><br>
-		<center>       
-			 <input type="button" id="sub_items" value="確定" class="btn btn-primary" />&nbsp;&nbsp;&nbsp;			 
-			 <input type="button"  value="新增配方原料" class="btn btn-primary" onclick="addItem()"/>&nbsp;&nbsp;&nbsp;
-			 <input type="button" value="返回"  onclick="javascript:back()" class="btn btn-primary" />			            
+		<center> 
+		     <input type="button"  value="新增配方原料" class="btn btn-primary" onclick="addItem()"/>&nbsp;&nbsp;&nbsp;      
+			 <input type="button" id="sub_items" value="確定" class="btn btn-primary" />&nbsp;&nbsp;&nbsp;			 			 
+			 <input type="button" value="返回"  onclick="javascript:back()" class="btn btn-primary" />
+			 <span id="msgtip" style="margin-left:30px;"></span>			            
 		</center>
 	</form>
 
@@ -84,27 +85,28 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 	jq(function() {
 		var demo = jq("#form_items").Validform({
 			btnSubmit : "#sub_items",
-			tiptype : 4,
-			tipSweep:true,
-			showAllError : true,
+			tiptype : function(msg,o,cssctl){
+				var objtip=jq("#msgtip");
+				cssctl(objtip,o.type);
+				objtip.text(msg);
+			},
+			//tipSweep:true,
+			//showAllError : true,
 			datatype : {
-				"*0-6" : /^-?\d{1,12}(\.[0-9]{1,3})?$/
+				"*9-2" : /^-?\d{0,9}(\.[0-9]{1,2})?$/
 			},
 			ajaxPost:true,
-			beforeSubmit:function(){
-			    jq("#dwr_factno").removeAttr("disabled");
-		        jq("#dwrFactArea").removeAttr("disabled");
-			},
+			
 			callback:function(data){
 				if(data=="0"){
 					layer.msg("提交成功!",3,1);				
-					loadUrl("/Login/webformula_findPageBean");
+					loadUrl("/Login/webformula_findById?formulaIndex="+jq("#formulaIndex").val());
 				}else{
 					layer.msg("提交失敗",3,3);
 				}			
 			}
 		});
-		demo.tipmsg.w["*0-6"] = "只能數字且不超過12位數,可保留三位以內小數";				
+		demo.tipmsg.w["*9-2"] = "只能數字且不超過9位數,可保留2位以內小數";				
 	});
 
 var ii=0;
@@ -112,16 +114,16 @@ function addItem(){
 	var formulaIndex=jq("#formulaIndex").val();
 	var num_size=parseInt(jq("#num_size").val())+ii;
 	var item="";
-	var options="";
+	var options="<option value=''>請選擇配方階段</option>";
 	for(var j=1;j<8;j++){
 		options+="<option value='"+j+"'>"+j+"</option>";
 	}	
-	item+="<li><select name='items["+num_size+"].sectionNo'>"+options+"</select></li>";
-	item+="<li><select id='items_type"+ii+"' onchange='loadNamece(jq(this))'></select></li>";
-	item+="<li><select id='fk_weberp_pf"+ii+"' name='items["+num_size+"].fk_weberp_pf.itemid'></select></li>";
-	item+="<li><input type='text' name='items["+num_size+"].phrVal'/></li>";
-	item+="<li><input type='text' name='items["+num_size+"].weightVal'/></li>";
-	item+="<li class='col_item3'><input type='text' name='items["+num_size+"].remark'/>";
+	item+="<li><select name='items["+num_size+"].sectionNo' datatype='*'>"+options+"</select></li>";
+	item+="<li><select id='items_type"+ii+"' onchange='loadNamece(jq(this))' datatype='*'></select></li>";
+	item+="<li><select id='fk_weberp_pf"+ii+"' name='items["+num_size+"].fk_weberp_pf.itemid' datatype='*'></select></li>";
+	item+="<li><input type='text' name='items["+num_size+"].phrVal' datatype='*9-2'/></li>";
+	item+="<li><input type='text' name='items["+num_size+"].weightVal' datatype='*9-2'/></li>";
+	item+="<li class='col_item3'><input type='text' name='items["+num_size+"].remark' datatype='*0-10'/>";
 	item+="<input type='hidden' value='"+formulaIndex+"' name='items["+num_size+"].webFormula.formulaIndex' readonly/>";
 	item+="<input type='hidden' name='items["+num_size+"].createName' value='${loginUser.username}' readonly/>";
 	item+="<input type='hidden' name='items["+num_size+"].createDate' value='"+<%=str_date%>+"'/>";
@@ -154,7 +156,7 @@ function loadNamece(item_typeno){
 			data:{'selfchar1':item_typeno.val()},
 			url:"weberppf_findNamece",
 			success:function(data){
-				var item="<option>請選擇配方原料</option>";
+				var item="<option value=''>請選擇配方原料</option>";
 				jq.each(data,function(i,obj){
 					item+="<option value='"+obj[0]+"'>"+obj[2]+"&nbsp;&nbsp;"+obj[3]+"__"+obj[1]+"</option>";					
 				});

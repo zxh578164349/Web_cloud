@@ -37,7 +37,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 	               <tr>
 	                  <td>
 	                     <s:if test="tabpom==null">
-	                        <input type="text" name="tabpom.pomNo" value="自動生成" id="pomNo" style="color:blue" readonly/>
+	                        <input type="text" name="tabpom.pomNo" placeholder="自動生成" id="pomNo" style="color:blue" readonly datatype="*"/>
 						    <input type="hidden" name="nullmk" value="0"/>
 	                     </s:if>
 	                     <s:else>
@@ -46,7 +46,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 	                     </s:else>
 	                  </td>
 	                  <td>
-	                      <input type="text" name="tabpom.formulaId.formulaIndex" value="<s:property value='tabpom.formulaId.formulaIndex'/>" id="pomName" datatype="*1-30" />
+	                      <input type="text" name="tabpom.formulaId.formulaIndex" value="<s:property value='tabpom.formulaId.formulaIndex'/>" id="pomName" datatype="*"  style="color:blue"/>
 	                  </td>
 	                  <td>
 	                      <s:if test="tabpom==null">
@@ -54,7 +54,8 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 						     </select>
 						  </s:if>
 						  <s:else>
-						     <input type="text" name="tabpom.webBrank.id" value="<s:property value='tabpom.webBrank.sysno'/>" readonly style="color:blue"/>
+						     <input type="text"  value="<s:property value='tabpom.webBrank.name'/>" readonly style="color:blue"/>
+						     <input type="hidden" name="tabpom.webBrank.id" value="<s:property value='tabpom.webBrank.id'/>"/>
 						  </s:else>   
 	                  </td>
 	               </tr>
@@ -175,24 +176,26 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 	                   <td>認證</td>
 	                   <td colspan="2">
 	                       <s:if test='tabpom.authentications=="0"'>
-					   是<input type="radio" name="tabpom.authentications" value="0"
-								checked="checked" />
-						</s:if> <s:else>
-					   是<input type="radio" name="tabpom.authentications" value="0" />
-						</s:else> <s:if test='tabpom.authentications=="1"'>
-					   否<input type="radio" name="tabpom.authentications" value="1"
-								checked="checked" />
-						</s:if> <s:else>
-					   否<input type="radio" name="tabpom.authentications" value="1" />
+					                            是<input type="radio" name="tabpom.authentications" value="0" checked="checked" />
+								
+						</s:if>
+						 <s:else>
+					                            是<input type="radio" name="tabpom.authentications" value="0" />
+						</s:else> 
+						<s:if test='tabpom.authentications=="1"'>
+					                        否<input type="radio" name="tabpom.authentications" value="1" checked="checked" />								
+						</s:if> 
+						<s:else>
+					                          否<input type="radio" name="tabpom.authentications" value="1" />
 						</s:else>
 	                   </td>
 	                </tr>
 	                <tr>
 	                   <td>特性說明</td>
 	                   <td colspan="2">
-	                           <textarea style="width:100%;height:100px" name="tabpom.instruction"><s:property value='tabpom.instruction' /></textarea>
-					<input type="hidden" value="<s:property value='#session.loginUser.username'/>" name="tabpom.username" />
-						<s:if test="tabpom==null">
+	                         <textarea style="width:100%;height:100px" name="tabpom.instruction"><s:property value='tabpom.instruction' /></textarea>
+					         <input type="hidden" value="<s:property value='#session.loginUser.username'/>" name="tabpom.username" />
+						 <s:if test="tabpom==null">
 						   <input type="hidden" value="<%=str_date%>" name="tabpom.tabpomDate" id="tabpomDate"/>
 						</s:if>
 						<s:else>
@@ -209,11 +212,11 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 				           </div>
 				      
 				           <hr/>		
-		<s:if test="tabpom.webtabfiles.size>0">		
+		<s:if test="tabpom.webTabpomfiles.size>0">		
 		<div id="webtabfiledao">	
 		 <b style="color: blue">附檔:</b><br/>
 		 <div id="fileJson">
-		   <s:iterator value="tabpom.webtabfiles">
+		   <s:iterator value="tabpom.webTabpomfiles">
 		        <a href="/upload_webtabpom/<s:property value='id.webTabpom.pomNo'/>/<s:property value="%{toUrl2(id.filename)}"/>" target="_blank">
 		        <s:property value="id.filename"/>&nbsp;
 		        </a>

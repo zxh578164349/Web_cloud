@@ -70,7 +70,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 			</div>
 			<div class="tab-pane fade" id="tab_webtabpom">
 				<div>
-					<jsp:include page="WebTabpomSaveOrUpdate.jsp" />
+					<jsp:include page="WebFormulaSaveOrUpdate2_pom.jsp" />
 				</div>
 			</div>
 	  </div>
@@ -81,103 +81,14 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 <script type="text/javascript">
 
 	jq(function() {
-		var demo = jq("#form").Validform({
-			btnSubmit : "#sub",
-			tiptype : 4,
-			tipSweep:true,
-			showAllError : true,
-			datatype : {
-				"*0-6" : /^-?\d{1,12}(\.[0-9]{1,3})?$/
-			},
-			ajaxPost:true,
-			beforeSubmit:function(){
-			    jq("#dwr_factno").removeAttr("disabled");
-		        jq("#dwrFactArea").removeAttr("disabled");
-			},
-			callback:function(data){
-				if(data=="0"){
-					layer.msg("提交成功!",3,1);				
-					loadUrl("/Login/webformula_findPageBean");
-				}else{
-					layer.msg("提交失敗",3,3);
-				}				
-			}
-		});
-		demo.tipmsg.w["*0-6"] = "只能數字且不超過12位數,可保留三位以內小數";
 		
-		jq.ajax({
-			type:"get",
-			dataType:"json",
-			url:"webfact_findAllVwebfact",
-			success:function(data){
-				var item;
-				jq("#dwr_factno").empty();
-				jq("#dwr_factno").append("<option value=''>請選擇廠別</option>");
-				jq.each(data,function(i,obj){
-					item="<option value='"+obj[0]+"__"+obj[3]+"'>"+obj[1]+"("+obj[3]+")</option>";
-					jq("#dwr_factno").append(item);
-				});
-			}
-		});
 		
-		jq.ajax({
-			type:"post",
-			dataType:"json",
-			url:"weberpbp_findObjOp1",
-			success:function(data){
-				var item;
-				jq("#dwrFactArea").empty();
-				jq("#dwrFactArea").append("<option value=''>請選擇製程類別</option>");
-				jq.each(data,function(i,obj){
-					item="<option value='"+obj[0]+"__"+obj[1]+"'>"+obj[2]+"</option>";
-					jq("#dwrFactArea").append(item);
-				});
-			}
-		});	
 		
-		jq.ajax({
-			type:"post",
-			dataType:"json",
-			url:"weberppf_findTypeNo",
-			success:function(data){
-				//jq("#div_typeno").html("");			
-				var item="";
-				jq.each(data,function(index,obj){
-					item+="<div><input type='checkbox' value='"+obj.selfchar1+"' name='typenos' onclick='loadNamece(),checkbtn()'/><label>"+obj.selfchar1name+"</label></div>";					
-				});
-				jq("#div_typeno").append(item);
-			}
-		});
+					
+		
 	});
 	
-	function makeFormulaIndex(){
-		jq("#formulaIndex").val("");
-		jq("#btn_addwebtabpom").addClass("disabled");
-		jq("#btn_addsec").addClass("disabled");
-		var dwr_factno=jq("#dwr_factno");
-		var dwrFactArea=jq("#dwrFactArea");
-		var createDate=jq("#createDate");
-		if(dwr_factno.val()!=""&&dwrFactArea.val()!=""&&createDate.val()!=""){
-			jq.ajax({
-				type:"get",
-				dataType:"json",
-				url:"webformula_makeFormulaIndex",
-				data:{factNo:dwr_factno.val(),factCode:dwrFactArea.val(),createDate:createDate.val()},
-				success:function(data){
-					jq("#formulaIndex").val(data);
-					jq("#div_webformalaitem").css("display","block");
-					jq("#btn_addwebtabpom").removeClass("disabled");
-					checkbtn();
-				},
-				error:function(){
-					layer.msg("生成配方索引失敗",3,3);
-					jq("#div_webformalaitem").css("display","none");
-					jq("#btn_addwebtabpom").addClass("disabled");
-					jq("#btn_addsec").addClass("disabled");
-				}
-			});
-		}		
-   }
+	
 	
 /*禁止空格輸入*/
 jq(function(){
@@ -192,149 +103,14 @@ function back(){
 
 
 
-var index=0;
-var item_nums=0;
-function check_addSection(){
-	var list_items_val=jq("input[name='itemids']:checked");
-	if(list_items_val.length>100){
-		layer.msg("所選配方原料超過上限",3,3);
-	}else{
-		addSection(list_items_val);
-	}	
-}
-function addSection(list_items_val){
-	var cvformulaIndex=jq("#formulaIndex").val();
-	//var list_items_val=jq("input[name='itemids']:checked");	
-	index++;
-	jq("#btn_addsec").val("添加配方階段("+(index+1)+")");
-	var section="<li id='tab_section_"+index+"'><a href='#div_section_"+index+"' data-toggle='tab' id='tab_section_a_"+index+"'>配方階段("+index+")</a></li>";	
-	var div_section="<div id='div_section_"+index+"' class='tab-pane fade div_border_blue'></div>";
-	var ul="<ul class='list' id='ul_"+index+"'></ul>";
-	var li_head="<li class='columnhead'>類別</li><li class='columnhead'>原料名稱</li><li class='columnhead'>PHR</li>"+
-		"<li class='columnhead'>重量(KG)</li><li class='columnhead'>備註</li>";
-		
-	jq("#del_li").before(section);
-	jq("#myTabContent").append(div_section);
-	jq("#div_section_"+index).append(ul);
-	jq("#ul_"+index).append(li_head);
-	
-	
-	var li_content="";	
-	list_items_val.each(function(i){
-			var val=jq(this).val();
-			var txt1=jq(this).next().text().split("__")[1];
-	        var txt2=jq(this).next().text().split("__")[0];
-			li_content+="<li>"+txt1+"</li><li>"+txt2+"</li>"+
-			"<li><input type='text' name='formula.webFormulaItemses["+(i+item_nums)+"].phrVal'/></li>"+
-			"<li><input type='text' name='formula.webFormulaItemses["+(i+item_nums)+"].weightVal'/></li><li >"+
-			"<input type='text' name='formula.webFormulaItemses["+(i+item_nums)+"].remark'/>"+
-			"<img src='images/icon/del_file.png' style='border:0' onclick='removeOneItem(jq(this),\"img"+item_nums+"\")' id='img_temp' name='img"+item_nums+"'/>"+
-			"<input type='hidden' value='"+val+"' name='formula.webFormulaItemses["+(i+item_nums)+"].fk_weberp_pf.itemid'/>"+
-			"<input type='hidden' value='"+index+"' name='formula.webFormulaItemses["+(i+item_nums)+"].sectionNo'/>"+
-			"<input type='hidden' value='"+cvformulaIndex+"' name='formula.webFormulaItemses["+(i+item_nums)+"].webFormula.formulaIndex'/></li>";
-		});	
-		jq("#ul_"+index).append(li_content);		
-		jq("#del_img").css("display","block");
-		jq("#tab_section_a_"+index).click();		
-		item_nums+=list_items_val.length;		
-	    checkIndex();
-}
 
 
 
-function removeSection(){
-	jq("#tab_section_"+index).remove();
-	jq("#div_section_"+index).remove();
-	index--;
-	jq("#btn_addsec").val("添加配方階段("+(index+1)+")");
-	if(index==0){
-		jq("#del_img").css("display","none");
-		jq("#tab_webformaulaitems_a").click();
-	}else{
-		jq("#tab_section_a_"+index).click();
-	}
-	checkIndex();
-}
-/*function removeOneItem(img,img_name){
-	    img.parent().prev().prev().prev().prev().remove();
-	    img.parent().prev().prev().prev().remove();
-	    img.parent().prev().prev().remove();
-	    img.parent().prev().remove();
-		img.parent().remove();
-		if(jq("[name='"+img_name+"']").length==0){
-			removeSection();
-		}
-	
-	
-}*/
 
-function checkbtn(){
-	var items=jq("input[name='itemids']:checked");
-    var formulaIndex=jq("#formulaIndex");
-	if(items!=null&&items.length>0&&formulaIndex.val()!=""){
-		jq("#btn_addsec").removeClass("disabled");
-	}else{
-		jq("#btn_addsec").addClass("disabled");
-	}
-}
 
-function checkIndex(){
-	if(index>0){
-		jq("#dwr_factno").attr("disabled","disabled");
-		jq("#dwrFactArea").attr("disabled","disabled");
-		
-		jq("#dwr_factno").css("color","grey");
-		jq("#dwrFactArea").css("color","grey");
-		
-	}else{
-		jq("#dwr_factno").removeAttr("disabled");
-		jq("#dwrFactArea").removeAttr("disabled");
-		
-		jq("#dwr_factno").css("color","");
-		jq("#dwrFactArea").css("color","");					
-	}
-}
 
-function checkallItems(){
-	var one=jq("#all_namece");
-	if(one.prop("checked")){
-		jq("input[name='itemids']").each(function(){
-			jq(this).prop("checked",true);
-		});
-	}else{
-		jq("input[name='itemids']").each(function(){
-			jq(this).prop("checked",false);
-		});
-	}
-}
 
- function addWebtabtom(){ 
-    var formulaIndex=jq("#formulaIndex").val();  	    	
-    jq.layer({
-    type: 2,   //0-4的选择,
-    title: '物性資料',
-    //border: [0],
-    border: [10, 0.3, '#000'],
-    closeBtn: [1,true],
-    shade: [0],
-    //shade: [0.5, '#000'],
-    shadeClose: false,
-    // btns:2,
-    // btn:['通過','不通過'],
-    //fadeIn:300,
-    //shift:'top',
-    offset:['10px',''],
-    area: ['750px', '600px'],
-    maxmin:true,
-    //page:{url:'kyz_findById_layer?billNo='+billNo+'& factNo='+factNo},
-    //iframe:{src:'kyz_findById_layer?billNo='+billNo+'& factNo='+factNo,scrolling:'auto'},   
-    iframe:{src:'saveAndUpdate/WebTabpomSaveOrUpdate_layer.jsp?formulaIndex='+formulaIndex,scrolling:'auto'},
-    
-    yes:function(){},
-    no:function(){}              
-});
-}
-
+ 
 
 
 

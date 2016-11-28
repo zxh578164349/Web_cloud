@@ -24,6 +24,7 @@ import entity.KyVisabillm;
 import entity.KyVisabills;
 import entity.KyzExpectmatm;
 import entity.KyzExpectmatmFile;
+import entity.KyzExpectmatmLog;
 import entity.KyzExpectmats;
 import entity.KyzVisaflow;
 import entity.WebFormula;
@@ -106,9 +107,9 @@ public class WebFormulaServicesImpl implements IWebFormulaServices{
 	 */
 	
 	
-	public void delete(String formulaIndex){
+	public void delete(String formulaIndex,KyzExpectmatmLog log){
 		// TODO Auto-generated method stub
-		webformuladao.delete(formulaIndex);
+		webformuladao.delete(formulaIndex,log);
 	}
 
 	/**
@@ -303,9 +304,9 @@ public class WebFormulaServicesImpl implements IWebFormulaServices{
 		// TODO Auto-generated method stub
 		return webformuladao.findById(itemid);
 	}
-	public void deleteItems(int itemid) {
+	public void deleteItems(int itemid,KyzExpectmatmLog log) {
 		// TODO Auto-generated method stub
-		webformuladao.deleteItems(itemid);
+		webformuladao.deleteItems(itemid,log);
 	}
 
 	

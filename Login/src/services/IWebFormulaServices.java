@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import entity.KyVisabillm;
+import entity.KyzExpectmatmLog;
 import entity.WebFormula;
 import entity.WebFormulaItems;
 import entity.WebTabpom;
@@ -32,10 +33,10 @@ public interface IWebFormulaServices{
 	public void add(WebFormula formula);
 	public WebFormula findById(String formulaIndex);
 	public WebFormula findById_nosession(String formulaIndex);
-	public void delete(String formulaIndex);
+	public void delete(String formulaIndex,KyzExpectmatmLog log);
 	public Map<String,Object> print(String factNo,String billNo,KyVisabillm vbm);
 	public void addItems(List<WebFormulaItems> webFormulaItemses);
 	public WebFormulaItems findById(int itemid);
-	public void deleteItems(int itemid);
+	public void deleteItems(int itemid,KyzExpectmatmLog log);
 
 }

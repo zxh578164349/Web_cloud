@@ -5,6 +5,7 @@ package dao;
 
 import java.util.List;
 
+import entity.KyzExpectmatmLog;
 import entity.WebFormula;
 import entity.WebFormulaItems;
 import entity.WebTabpom;
@@ -54,10 +55,10 @@ public interface IWebFormulaDao{
 	 * @date 2016/11/22
 	 */
 	public WebFormula findById(String formulaIndex);
-	public void delete(String formulaIndex);	
+	public void delete(String formulaIndex,KyzExpectmatmLog log);	
 	
 	public void addItems(List<WebFormulaItems> webFormulaItemses);
 	public WebFormulaItems findById(int itemid);
-	public void deleteItems(int itemid);
+	public void deleteItems(int itemid,KyzExpectmatmLog log);
 	
 }

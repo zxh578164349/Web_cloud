@@ -16,12 +16,14 @@ import util.PageBean;
 
 import dao.Basedao;
 import dao.IWebFormulaDao;
+import entity.KyzExpectmatmLog;
 import entity.VWebFact;
 import entity.WebErpBrankProcess;
 import entity.WebErpProductinFormation;
 import entity.WebFormula;
 import entity.WebFormulaItems;
 import entity.WebTabpom;
+import entity.WebTabpomfile;
 
 /**   
  *    
@@ -258,6 +260,14 @@ public class WebFormulaDaoImpl extends Basedao implements IWebFormulaDao{
 			item.getFk_weberp_pf().getItemcategoryname();
 			
 		}
+		if(obj.getPom()!=null){
+			obj.getPom().getPomNo();
+			obj.getPom().getWebBrank().getSysno();
+			/*for(WebTabpomfile file:obj.getPom().getWebTabpomfiles()){
+				file.getId().getFilename();
+			}*/
+			obj.getPom().getWebTabpomfiles().size();
+		}
 		
 		return obj;
 	}
@@ -268,10 +278,10 @@ public class WebFormulaDaoImpl extends Basedao implements IWebFormulaDao{
 	 */
 	
 	
-	public void delete(String formulaIndex){
+	public void delete(String formulaIndex,KyzExpectmatmLog log){
 		// TODO Auto-generated method stub
 		WebFormula obj=findById_nosession(formulaIndex);
-		super.delete(obj);
+		super.delete(obj,log);
 	}
 
 	/**
@@ -305,13 +315,18 @@ public class WebFormulaDaoImpl extends Basedao implements IWebFormulaDao{
 		String hql="from WebFormulaItems where itemId=?";
 		Query query=getSession().createQuery(hql);
 		query.setInteger(0, itemid);
-		return (WebFormulaItems)query.uniqueResult();
+		WebFormulaItems obj=(WebFormulaItems)query.uniqueResult();
+		obj.getFk_weberp_pf().getNamec1();
+		obj.getFk_weberp_pf().getNamec2();
+		return obj;
 	}
 
-	public void deleteItems(int itemid) {
+	public void deleteItems(int itemid,KyzExpectmatmLog log) {
 		// TODO Auto-generated method stub
 		WebFormulaItems obj=findById(itemid);
-		super.delete(obj);
+		log.setBillNo(obj.getWebFormula().getFormulaIndex());
+		log.setContent(obj.getItemId()+"__"+obj.getFk_weberp_pf().getNamec1()+"__"+obj.getFk_weberp_pf().getNamec2());
+		super.delete(obj,log);
 	}
 
 	

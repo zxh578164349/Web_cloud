@@ -46,7 +46,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 								<tr>
 									<td><input type="text" value="<s:property value='formula.factCode.id'/>" name="formula.factCode.id" style="color:blue" readonly />
 									</td>
-									<td><input type="text" name="formula.formulaNo" value="<s:property value='formula.formulaNo' />" datatype="*0-6">
+									<td><input type="text" name="formula.formulaNo" value="<s:property value='formula.formulaNo' />" datatype="*8-4">
 									</td>
 								</tr>
 								<tr>
@@ -54,9 +54,9 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 									<th>倍率</th>
 								</tr>
 								<tr>
-									<td><input type="text" name="formula.formulaName" value="<s:property value='formula.formulaName' />" datatype="*0-6">
+									<td><input type="text" name="formula.formulaName" value="<s:property value='formula.formulaName' />" datatype="*1-50">
 									</td>
-									<td><input type="text" name="formula.magnification" value="<s:property value='formula.magnification' />" datatype="*0-6">
+									<td><input type="text" name="formula.magnification" value="<s:property value='formula.magnification' />" datatype="*8-4">
 									</td>
 								</tr>
 								<tr>
@@ -64,9 +64,9 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 									<th>成品硬度</th>
 								</tr>
 								<tr>
-									<td><input type="text" name="formula.semifinishedProductHardness" value="<s:property value='formula.semifinishedProductHardness' />" datatype="*0-6">
+									<td><input type="text" name="formula.semifinishedProductHardness" value="<s:property value='formula.semifinishedProductHardness' />" datatype="*0-30">
 									</td>
-									<td><input type="text" name="formula.productHardness" value="<s:property value='formula.productHardness' />" datatype="*0-6">
+									<td><input type="text" name="formula.productHardness" value="<s:property value='formula.productHardness' />" datatype="*0-30">
 									</td>
 								</tr>
 								<tr>
@@ -74,9 +74,9 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 									<th>顏色</th>
 								</tr>
 								<tr>
-									<td><input type="text" name="formula.brandBody" value="<s:property value='formula.brandBody' />" datatype="*0-6">
+									<td><input type="text" name="formula.brandBody" value="<s:property value='formula.brandBody' />" datatype="*0-30">
 									</td>
-									<td><input type="text" name="formula.color" value="<s:property value='formula.color' />" datatype="*0-6">
+									<td><input type="text" name="formula.color" value="<s:property value='formula.color' />" datatype="*0-30">
 									</td>
 								</tr>
 								<tr>
@@ -85,14 +85,14 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 								</tr>
 								<tr>
 									<td><input type="text" name="formula.issuedDate" value="<s:property value='formula.issuedDate' />" onclick="WdatePicker({dateFmt:'yyyyMMdd',maxDate:'%y-%M-%d'})"
-										datatype="*0-6" class="Wdate" />
+										datatype="*0-30" class="Wdate" />
 									</td>
 									<td><s:if test='formula.assignBrand=="0"'>
-					                                                            指     定<input type="radio" name="formula.assignBrand" value="1" />
+					                                                            指     定<input type="radio" name="formula.assignBrand" value="1" datatype="*"/>
 					                                                            非指定<input type="radio" name="formula.assignBrand" value="0" checked />
 										</s:if> 
 										<s:else>
-					                                                             指     定<input type="radio" name="formula.assignBrand" value="1" checked />
+					                                                             指     定<input type="radio" name="formula.assignBrand" value="1" checked  datatype="*"/>
 					                                                              非指定<input type="radio" name="formula.assignBrand" value="0" />
 										</s:else>
 									</td>
@@ -101,7 +101,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 									<th colspan="2">備註</th>
 								</tr>
 								<tr>
-									<td colspan="2"><textarea style="width:100%;height:200px" name='formula.remark'><s:property value="formula.remark" /></textarea>
+									<td colspan="2"><textarea style="width:100%;height:200px" name='formula.remark' datatype="*0-200"><s:property value="formula.remark"/></textarea>
 									 <input type="hidden" value="<s:property value='formula.createName'/>" name="formula.createName" /> 
 									 <input type="hidden" value="<s:property value='formula.createDate'/>" name="formula.createDate" id="createDate" />
 									 <input type="hidden" value="${loginUser.username}" name="formula.modifyName" /> <!--  修改者--> 
@@ -126,23 +126,19 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 			tipSweep:true,
 			showAllError : true,
 			datatype : {
-				"*0-6" : /^-?\d{1,12}(\.[0-9]{1,3})?$/
+				"*8-4" : /^-?\d{0,8}(\.[0-9]{0,4})?$/
 			},
-			ajaxPost:true,
-			beforeSubmit:function(){
-			    jq("#dwr_factno").removeAttr("disabled");
-		        jq("#dwrFactArea").removeAttr("disabled");
-			},
+			ajaxPost:true,			
 			callback:function(data){
 				if(data=="0"){
 					layer.msg("提交成功!",3,1);				
-					loadUrl("/Login/webformula_findPageBean");
+					loadUrl("/Login/webformula_findById?formulaIndex="+jq("#formulaIndex").val());
 				}else{
 					layer.msg("提交失敗",3,3);
 				}				
 			}
 		});
-		demo.tipmsg.w["*0-6"] = "只能數字且不超過12位數,可保留三位以內小數";
+		demo.tipmsg.w["*8-4"] = "只能數字且不超過8位數,可保留4位以內小數";
 
 	});	
 </script>
