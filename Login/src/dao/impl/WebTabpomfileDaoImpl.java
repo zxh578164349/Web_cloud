@@ -30,7 +30,7 @@ public class WebTabpomfileDaoImpl extends Basedao implements IWebTabpomfileDao{
 		String[]objs={pomNo};
 		List<WebTabpomfile>list=super.findAll(hql, objs);
 		for(int i=0;i<list.size();i++){//解決hibernate延遲問題
-			list.get(i).getWebTabpom();
+			list.get(i).getWebTabpom().getPomNo();
 		}
 		return list;
 	}

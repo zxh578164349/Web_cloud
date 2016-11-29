@@ -311,16 +311,21 @@ public class WebTabpomAction extends ActionSupport implements ServletResponseAwa
 				uploadFile_backup.mkdirs();
 			}
 			List<WebTabpomfile>list_tabfile=(List<WebTabpomfile>)ActionContext.getContext().getSession().get("list_tabfile");
-			List<BufferedInputStream>ins=(List<BufferedInputStream>)ActionContext.getContext().get("ins");
+			List<BufferedInputStream>ins=(List<BufferedInputStream>)ActionContext.getContext().getSession().get("ins");
 			filesFileName=(List<String>)ActionContext.getContext().getSession().get("filesFileName");
 			for(WebTabpomfile obj:list_tabfile){
 				obj.setWebTabpom(tabpom);
+			}
+			List<BufferedOutputStream>outs=new ArrayList<BufferedOutputStream>();
+			for(String filename:filesFileName){
+				BufferedOutputStream out=new BufferedOutputStream(new FileOutputStream(uploadFile_backup+"\\"+filename));
+				outs.add(out);
 			}
 			tabpom.setWebTabpomfiles(list_tabfile);	
 			if(list_tabfile!=null&&list_tabfile.size()>0){
 				tabpom.setFileMk("1");//標示是否帶有附檔
 			}
-			GlobalMethod.uploadFiles(files,filesFileName,uploadFile_backup+"\\");					
+			GlobalMethod.uploadFiles(ins,outs);					
 	}
 	
 	public void uploadfile_session(){

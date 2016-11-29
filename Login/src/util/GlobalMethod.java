@@ -1360,15 +1360,16 @@ public class GlobalMethod extends HibernateDaoSupport{
 		 }		
 	 }
 	 
-	 public static void uploadFile(List<BufferedInputStream>ins,List<String>filesFileName,String downFilepath) throws IOException{
-		 BufferedOutputStream out=new BufferedOutputStream(new FileOutputStream(downFilepath));
+	 public static void uploadFiles(List<BufferedInputStream>ins,List<BufferedOutputStream>outs) throws IOException{
 		 byte[]bytes=new byte[1024];
 		 int len=0;
-		 while((len=in.read(bytes))!=-1){
-			 out.write(bytes,0,len);
-		 }
-		 out.close();
-		 //in.close();
+		 for(int i=0;i<ins.size();i++){			 
+			 while((len=ins.get(i).read(bytes))!=-1){
+				 outs.get(i).write(bytes,0,len);
+			 }
+			 outs.get(i).close();
+			 ins.get(i).close();
+		 }		 
 	 }
 	 
 	 

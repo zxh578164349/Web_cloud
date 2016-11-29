@@ -315,7 +315,7 @@ jq(function(){
 				//location.href="/Login/webwlo_getList";
 			}
 			if(data=="1"){
-				alert("提交失敗");
+				layer.msg("提交失敗",3,3);
 			}
 			if(data=="2"){
 				layer.msg("數據已經存在",3,1);
