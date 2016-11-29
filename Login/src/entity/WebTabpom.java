@@ -40,6 +40,8 @@ public class WebTabpom implements java.io.Serializable{
 	private String fileMk;//附檔
 	private String username;//創建人
 	private String tabpomDate;//創建日期
+	private String modifyName;//修改人
+	private String modifyDate;//修改日期
 	private Double hardness2;//±值
 	private String hardnessDescription;//測試方式說明
 	private String forcesDescription;
@@ -568,6 +570,22 @@ public class WebTabpom implements java.io.Serializable{
 
 	public void setWebTabpomfiles(List<WebTabpomfile> webTabpomfiles){
 		this.webTabpomfiles=webTabpomfiles;
+	}
+
+	public String getModifyName(){
+		return modifyName;
+	}
+
+	public void setModifyName(String modifyName){
+		this.modifyName=modifyName;
+	}
+
+	public String getModifyDate(){
+		return modifyDate;
+	}
+
+	public void setModifyDate(String modifyDate){
+		this.modifyDate=modifyDate;
 	}
 
 	

@@ -161,6 +161,12 @@
         <property name="spitCreamDes" type="java.lang.String">
             <column name="SPIT_CREAM_DES" length="500" />
         </property>
+        <property name="modifyName" type="java.lang.String">
+            <column name="MODIFY_NAME" length="50"/>
+        </property>
+        <property name="modifyDate" type="java.lang.String">
+            <column name="MODIFY_DATE" length="12"/>
+        </property>
         <bag name="webTabpomfiles" cascade="all" inverse="true">
             <key>
                 <column name="POMNO" length="14" not-null="true" />

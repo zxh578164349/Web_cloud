@@ -79,17 +79,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 
 
 <script type="text/javascript">
-
-	jq(function() {
 		
-		
-		
-					
-		
-	});
-	
-	
-	
 /*禁止空格輸入*/
 jq(function(){
 	goTrim();
@@ -97,25 +87,6 @@ jq(function(){
 function back(){	
 	loadUrl("/Login/webformula_findPageBean3?backIndex=1");
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
- 
-
-
-
-
-
 
 </script>
 </body>

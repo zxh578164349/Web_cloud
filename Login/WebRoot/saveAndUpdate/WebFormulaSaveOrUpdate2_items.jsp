@@ -93,7 +93,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 			//tipSweep:true,
 			//showAllError : true,
 			datatype : {
-				"*9-2" : /^-?\d{0,9}(\.[0-9]{1,2})?$/
+				"*9-2" : /^-?\d{0,7}(\.[0-9]{1,2})?$/
 			},
 			ajaxPost:true,
 			
@@ -106,7 +106,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 				}			
 			}
 		});
-		demo.tipmsg.w["*9-2"] = "只能數字且不超過9位數,可保留2位以內小數";				
+		demo.tipmsg.w["*9-2"] = "只能數字且不超過7位數,可保留2位以內小數";				
 	});
 
 var ii=0;
