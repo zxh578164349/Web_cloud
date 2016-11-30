@@ -469,8 +469,8 @@ function lookJson(pomNo,filename){
 	          var item;
 	          var item_url;
 	         jq.each(files,function(i,file){
-	            item_url="javascript:lookJson('"+file.id.webTabpom.pomNo+"',"+"'"+file.id.filename+"')";
-	            item="<a href='/upload/"+file.id.webTabpom.pomNo+"/"+file.id.filename+"' target='_blank' title='點擊查看'>"+id.file.filename+            
+	            item_url="javascript:lookJson('"+file[0]+"',"+"'"+file[1]+"')";
+	            item="<a href='/upload/"+file[0]+"/"+file.id.filename+"' target='_blank' title='點擊查看'>"+file[1]+            
 	            "</a>"+
 	            "<a href="+item_url+"><img src='images/icon/del_file.png' alt='刪除' title='刪除' style='border:0px'/></a>&nbsp;";
 	            jq("#fileJson").append(item);

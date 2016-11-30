@@ -27,10 +27,12 @@ String formulaIndex=request.getParameter("formulaIndex");
 <meta http-equiv="description" content="This is my page">
 <link rel="stylesheet" type="text/css" href="css/form.css" />
 <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="uploadify/uploadify.css">
+
 </head>
 
 <body>
-	<form action="webtabpom_add" method="post" id="subform" enctype="multipart/form-data">	
+	<form action="webtabpom_add" method="post" id="form_pom" enctype="multipart/form-data">	
 	    <div class="panel panel-default">	        
 	        <div class="panel-body">	        	            	           
 	            <table class="table table-condensed">	              
@@ -39,26 +41,26 @@ String formulaIndex=request.getParameter("formulaIndex");
 	                 </tr>	                          	                
 	               <tr>
 	                  <td>
-	                     <s:if test="tabpom==null">
-	                        <input type="text" name="tabpom.pomNo" value="自動生成" id="pomNo" style="color:blue" readonly/>
+	                     <s:if test="formula.pom==null">
+	                        <input type="text" name="tabpom.pomNo" placeholder="自動生成" id="pomNo" style="color:blue" readonly datatype="*"/>
 						    <input type="hidden" name="nullmk" value="0"/>
 	                     </s:if>
 	                     <s:else>
-	                         <input type="text" name="tabpom.pomNo" value="<s:property value='tabpom.pomNo'/>" style="color:blue" readonly/>
+	                         <input type="text" name="tabpom.pomNo" value="<s:property value='formula.pom.pomNo'/>" id="pomNo" style="color:blue" readonly/>
 						     <input type="hidden" name="nullmk" value="1"/>
 	                     </s:else>
 	                  </td>
 	                  <td>
-	                      <!-- <input type="text" name="tabpom.formulaId.formulaIndex" value="<s:property value='tabpom.formulaId.formulaIndex'/>" id="pomName" datatype="*1-30" /> -->
-	                      <input type="text" name="tabpom.formulaId.formulaIndex" value="<%=formulaIndex%>" id="pomName" datatype="*1-30" readonly style="color:blue"/>
+	                      <input type="text" name="tabpom.formulaId.formulaIndex" value="<s:property value='formula.formulaIndex'/>" id="pomName" datatype="*" readonly style="color:blue"/>
 	                  </td>
 	                  <td>
-	                      <s:if test="tabpom==null">
+	                      <s:if test="formula.pom==null">
 						     <select name="tabpom.webBrank.id" id="dwrWebbrank" datatype="*" onchange="makePomNo2('dwrWebbrank','tabpomDate')">						      					        					        
 						     </select>
 						  </s:if>
 						  <s:else>
-						     <input type="text" name="tabpom.webBrank.id" value="<s:property value='tabpom.webBrank.sysno'/>" readonly style="color:blue"/>
+						     <input type="text"  value="<s:property value='formula.pom.webBrank.name'/>" readonly style="color:blue"/>
+						      <input type="hidden" name="tabpom.webBrank.id" value="<s:property value='formula.pom.webBrank.id'/>" readonly style="color:blue"/>
 						  </s:else>   
 	                  </td>
 	               </tr>
@@ -68,117 +70,112 @@ String formulaIndex=request.getParameter("formulaIndex");
 	                <tr>
 	                   <td>硬度</td>
 	                   <td>
-	                      <input type="text" name="tabpom.hardness" value="<s:property value='tabpom.hardness'/>"/><br/>
-	                      <input type="text" name="tabpom.hardness2" value="<s:property value='tabpom.hardness2'/>">(±值)
+	                      <input type="text" name="tabpom.hardness" value="<s:property value='formula.pom.hardness'/>" datatype="*8-2"/><br/>
+	                      <input type="text" name="tabpom.hardness2" value="<s:property value='pom.hardness2'/>" datatype="*8-2"/>(±值)
 	                   </td>
 	                   <td>
-	                      <input type="text" name="tabpom.hardnessDescription" value="<s:property value='tabpom.hardnessDescription'/>"/>
+	                      <input type="text" name="tabpom.hardnessDescription" value="<s:property value='pom.hardnessDescription'/>" datatype="*0-300"/>
 	                   </td>
 	                </tr>
 	                <tr>
 	                   <td>拉力</td>
-	                   <td><input type="text" name="tabpom.forces" value="<s:property value='tabpom.forces'/>"/></td>
-	                   <td><input type="text" name="tabpom.forcesDescription" value="<s:property value='tabpom.forcesDescription'/>"/></td>
+	                   <td><input type="text" name="tabpom.forces" value="<s:property value='pom.forces'/>" datatype="*8-2"/></td>
+	                   <td><input type="text" name="tabpom.forcesDescription" value="<s:property value='pom.forcesDescription'/>" datatype="*0-300"/></td>
 	                </tr>
 	                <tr>
 	                   <td>延伸</td>
-	                   <td><input type="text" name="tabpom.extend" value="<s:property value='tabpom.extend'/>"/></td>
-	                   <td><input type="text" name="tabpom.extendsDescription" value="<s:property value='tabpom.extendsDescription'/>"/></td>
+	                   <td><input type="text" name="tabpom.extend" value="<s:property value='pom.extend'/>" datatype="*8-2"/></td>
+	                   <td><input type="text" name="tabpom.extendsDescription" value="<s:property value='pom.extendsDescription'/>" datatype="*0-300"/></td>
 	                </tr>
 	                <tr>
 	                   <td>C型撕裂</td>
-	                   <td><input type="text" name="tabpom.tearingC" value="<s:property value='tabpom.tearingC'/>"/></td>
-	                   <td><input type="text" name="tabpom.tearingCDescription" value="<s:property value='tabpom.tearingCDescription'/>"/></td>
-	                </tr>
-	                <tr>
-	                   <td>褲型撕裂</td>
-	                   <td><input type="text" name="tabpom.tearingK" value="<s:property value='tabpom.tearingK'/>"/></td>
-	                   <td><input type="text" name="tabpom.tearingKDescription" value="<s:property value='tabpom.tearingKDescription'/>"/></td>
+	                   <td><input type="text" name="tabpom.tearingC" value="<s:property value='pom.tearingC'/>" datatype="*8-2"/></td>
+	                   <td><input type="text" name="tabpom.tearingCDescription" value="<s:property value='pom.tearingCDescription'/>" datatype="*0-300"/></td>
 	                </tr>
 	                <tr>
 	                   <td>比重</td>
 	                   <td>
-	                      <input type="text" name="tabpom.proportion" value="<s:property value='tabpom.proportion'/>"/><br/>
-	                      <input type="text" name="tabpom.proportion2" value="<s:property value='tabpom.proportion2'/>">(±值)
+	                      <input type="text" name="tabpom.proportion" value="<s:property value='pom.proportion'/>" datatype="*8-2"/><br/>
+	                      <input type="text" name="tabpom.proportion2" value="<s:property value='pom.proportion2'/>" datatype="*8-2"/>(±值)
 	                   </td>
 	                   <td>
-	                     <input type="text" name="tabpom.proportionDescription" value="<s:property value='tabpom.proportionDescription'/>"/> 
+	                     <input type="text" name="tabpom.proportionDescription" value="<s:property value='pom.proportionDescription'/>" datatype="*0-300"/> 
 	                   </td>
 	                </tr>
 	                <tr>
 	                   <td>AKRON耐磨</td>
-	                   <td><input type="text" name="tabpom.wresistingAkron" value="<s:property value='tabpom.wresistingAkron'/>"/></td>
-	                   <td><input type="text" name="tabpom.wresistingAkronDes" value="<s:property value='tabpom.wresistingAkronDes'/>"/></td>
+	                   <td><input type="text" name="tabpom.wresistingAkron" value="<s:property value='pom.wresistingAkron'/>" datatype="*8-2"/></td>
+	                   <td><input type="text" name="tabpom.wresistingAkronDes" value="<s:property value='pom.wresistingAkronDes'/>" datatype="*0-300"/></td>
 	                </tr>
 	                <tr>
 	                   <td>DIN耐磨</td>
-	                   <td><input type="text" name="tabpom.wresistingDin" value="<s:property value='tabpom.wresistingDin'/>"/></td>
-	                   <td><input type="text" name="tabpom.wresistingDinDes" value="<s:property value='tabpom.wresistingDinDes'/>"/></td>
+	                   <td><input type="text" name="tabpom.wresistingDin" value="<s:property value='pom.wresistingDin'/>" datatype="*8-2"/></td>
+	                   <td><input type="text" name="tabpom.wresistingDinDes" value="<s:property value='pom.wresistingDinDes'/>" datatype="*0-300"/></td>
 	                </tr>
 	                <tr>
 	                   <td>止滑係數</td>
-	                   <td><input type="text" name="tabpom.ratioA" value="<s:property value='tabpom.ratioA'/>"/></td>
-	                   <td><input type="text" name="tabpom.ratioADes" value="<s:property value='tabpom.ratioADes'/>"/></td>
+	                   <td><input type="text" name="tabpom.ratioA" value="<s:property value='pom.ratioA'/>" datatype="*8-2"/></td>
+	                   <td><input type="text" name="tabpom.ratioADes" value="<s:property value='pom.ratioADes'/>" datatype="*0-300"/></td>
 	                </tr>
 	                <tr>
 	                   <td>耐油係數</td>
-	                   <td><input type="text" name="tabpom.ratioB" value="<s:property value='tabpom.ratioB'/>"/></td>
-	                   <td><input type="text" name="tabpom.ratioBDes" value="<s:property value='tabpom.ratioBDes'/>"/></td>
+	                   <td><input type="text" name="tabpom.ratioB" value="<s:property value='pom.ratioB'/>" datatype="*8-2"/></td>
+	                   <td><input type="text" name="tabpom.ratioBDes" value="<s:property value='pom.ratioBDes'/>" datatype="*0-300"/></td>
 	                </tr>
 	                <tr>
 	                   <td>耐彎曲</td>
-	                   <td><input type="text" name="tabpom.ableBend" value="<s:property value='tabpom.ableBend'/>"/></td>
-	                   <td><input type="text" name="tabpom.ableBendDes" value="<s:property value='tabpom.ableBendDes'/>"/></td>
+	                   <td><input type="text" name="tabpom.ableBend" value="<s:property value='pom.ableBend'/>" datatype="*8-2"/></td>
+	                   <td><input type="text" name="tabpom.ableBendDes" value="<s:property value='pom.ableBendDes'/>" datatype="*0-300"/></td>
 	                </tr>
 	                <tr>
 	                   <td>耐黃變</td>
-	                   <td><input type="text" name="tabpom.ableYellow" value="<s:property value='tabpom.ableYellow'/>"/></td>
-	                   <td><input type="text" name="tabpom.ableYellowDes" value="<s:property value='tabpom.ableYellowDes'/>"/></td>
+	                   <td><input type="text" name="tabpom.ableYellow" value="<s:property value='pom.ableYellow'/>" datatype="*8-2"/></td>
+	                   <td><input type="text" name="tabpom.ableYellowDes" value="<s:property value='pom.ableYellowDes'/>" datatype="*0-300"/></td>
 	                </tr>
 	                <tr>
 	                   <td>抗高壓</td>
-	                   <td><input type="text" name="tabpom.defyPress" value="<s:property value='tabpom.defyPress'/>"/></td>
-	                   <td><input type="text" name="tabpom.defyPressDes" value="<s:property value='tabpom.defyPressDes'/>"/></td>
+	                   <td><input type="text" name="tabpom.defyPress" value="<s:property value='pom.defyPress'/>" datatype="*8-2"/></td>
+	                   <td><input type="text" name="tabpom.defyPressDes" value="<s:property value='pom.defyPressDes'/>" datatype="*0-300"/></td>
 	                </tr>
 	                <tr>
 	                   <td>抗靜電</td>
-	                   <td><input type="text" name="tabpom.defyEle" value="<s:property value='tabpom.defyEle'/>"/></td>
-	                   <td><input type="text" name="tabpom.defyEleDes" value="<s:property value='tabpom.defyEleDes'/>"/></td>
+	                   <td><input type="text" name="tabpom.defyEle" value="<s:property value='pom.defyEle'/>" datatype="*8-2"/></td>
+	                   <td><input type="text" name="tabpom.defyEleDes" value="<s:property value='pom.defyEleDes'/>" datatype="*0-300"/></td>
 	                </tr>
 	                <tr>
 	                   <td>老化水解</td>
-	                   <td><input type="text" name="tabpom.ageing" value="<s:property value='tabpom.ageing'/>"/></td>
-	                   <td><input type="text" name="tabpom.ageingDes" value="<s:property value='tabpom.ageingDes'/>"/></td>
+	                   <td><input type="text" name="tabpom.ageing" value="<s:property value='pom.ageing'/>" datatype="*8-2"/></td>
+	                   <td><input type="text" name="tabpom.ageingDes" value="<s:property value='pom.ageingDes'/>" datatype="*0-300"/></td>
 	                </tr>
 	                <tr>
 	                   <td>收縮</td>
-	                   <td><input type="text" name="tabpom.contract" value="<s:property value='tabpom.contract'/>"/></td>
-	                   <td><input type="text" name="tabpom.contractDes" value="<s:property value='tabpom.contractDes'/>"/></td>
+	                   <td><input type="text" name="tabpom.contract" value="<s:property value='pom.contract'/>" datatype="*8-2"/></td>
+	                   <td><input type="text" name="tabpom.contractDes" value="<s:property value='pom.contractDes'/>" datatype="*0-300"/></td>
 	                </tr>
 	                <tr>
 	                   <td>彈性</td>
-	                   <td><input type="text" name="tabpom.elasticity" value="<s:property value='tabpom.elasticity'/>"/></td>
-	                   <td><input type="text" name="tabpom.elasticityDes" value="<s:property value='tabpom.elasticityDes'/>"/></td>
+	                   <td><input type="text" name="tabpom.elasticity" value="<s:property value='pom.elasticity'/>" datatype="*8-2"/></td>
+	                   <td><input type="text" name="tabpom.elasticityDes" value="<s:property value='pom.elasticityDes'/>" datatype="*0-300"/></td>
 	                </tr>
 	                <tr>
 	                   <td>壓縮</td>
-	                   <td><input type="text" name="tabpom.compression" value="<s:property value='tabpom.compression'/>"/></td>
-	                   <td><input type="text" name="tabpom.compressionDes" value="<s:property value='tabpom.compressionDes'/>"/></td>
+	                   <td><input type="text" name="tabpom.compression" value="<s:property value='pom.compression'/>" datatype="*8-2"/></td>
+	                   <td><input type="text" name="tabpom.compressionDes" value="<s:property value='pom.compressionDes'/>" datatype="*0-300"/></td>
 	                </tr>
 	                <tr>
 	                   <td>分裂</td>
-	                   <td><input type="text" name="tabpom.division" value="<s:property value='tabpom.division'/>"/></td>
-	                   <td><input type="text" name="tabpom.divisionDes" value="<s:property value='tabpom.divisionDes'/>"/></td>
+	                   <td><input type="text" name="tabpom.division" value="<s:property value='pom.division'/>" datatype="*8-2"/></td>
+	                   <td><input type="text" name="tabpom.divisionDes" value="<s:property value='pom.divisionDes'/>" datatype="*0-300"/></td>
 	                </tr>
 	                <tr>
 	                   <td>300% Modulus</td>
-	                   <td><input type="text" name="tabpom.modulus300" value="<s:property value='tabpom.modulus300'/>"/></td>
-	                   <td><input type="text" name="tabpom.modulus300Des" value="<s:property value='tabpom.modulus300Des'/>"/></td>
+	                   <td><input type="text" name="tabpom.modulus300" value="<s:property value='pom.modulus300'/>" datatype="*8-2"/></td>
+	                   <td><input type="text" name="tabpom.modulus300Des" value="<s:property value='pom.modulus300Des'/>" datatype="*0-300"/></td>
 	                </tr>
 	                <tr>
 	                   <td>吐霜</td>
-	                   <td><input type="text" name="tabpom.spitCream" value="<s:property value='tabpom.spitCream'/>"/></td>
-	                   <td><input type="text" name="tabpom.spitCreamDes" value="<s:property value='tabpom.spitCreamDes'/>"/></td>
+	                   <td><input type="text" name="tabpom.spitCream" value="<s:property value='pom.spitCream'/>" datatype="*8-2"/></td>
+	                   <td><input type="text" name="tabpom.spitCreamDes" value="<s:property value='pom.spitCreamDes'/>" datatype="*0-300"/></td>
 	                </tr>
 	                <tr>
 	                   <td>認證</td>
@@ -199,30 +196,53 @@ String formulaIndex=request.getParameter("formulaIndex");
 	                <tr>
 	                   <td>特性說明</td>
 	                   <td colspan="2">
-	                           <textarea style="width:100%;height:100px" name="tabpom.instruction"><s:property value='tabpom.instruction' /></textarea>
-					<input type="hidden" value="<s:property value='#session.loginUser.username'/>" name="tabpom.username" />
+	                      <textarea style="width:100%;height:100px" name="tabpom.instruction" datatype="*0-300"><s:property value='pom.instruction'/></textarea>					      
 						<s:if test="tabpom==null">
-						   <input type="hidden" value="<%=str_date%>" name="tabpom.tabpomDate" id="tabpomDate"/>
+						<input type="hidden" value="<s:property value='#session.loginUser.username'/>" name="tabpom.username" />
+						<input type="hidden" value="<%=str_date%>" name="tabpom.tabpomDate" id="tabpomDate"/>
 						</s:if>
 						<s:else>
-						   <input type="hidden" value="<s:property value='tabpom.tabpomDate'/>" name="tabpom.tabpomDate" />
+						   <input type="hidden" value="<s:property value='pom.tabpomDate'/>" name="tabpom.tabpomDate" />
+						   <input type="hidden" value="<s:property value='pom.username'/>" name="tabpom.username" />
+						   <input type="hidden" value="${loginUser.username }" name="tabpom.modifyName" />
+						   <input type="hidden" value="<%=str_date%>" name="tabpom.modifyDate" />
 						</s:else>
 	                     
+	                     <input type="hidden" name="<s:property value='pom.fileMk'/>" value="tabpom.fileMk"/>
 	                   </td>                 
 	                </tr>
-	                <tr>
-	                   <td>附檔上傳</td>
-	                   <td colspan="2">	                 
-	                       <div style="width:300px" id="divfile">
-				               <input type="file" name="files" style="width:150px" id="files"/><a href="javascript:addFile()">添加多個</a>
-				           </div>
-				      
-				           <hr/>		
-		<s:if test="tabpom.webtabfiles.size>0">		
-		<div id="webtabfiledao">	
-		 <b style="color: blue">附檔:</b><br/>
+	                                         											
+</table>
+	
+</div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">文檔上傳</div>
+    <div class="panel-body">
+       <div  id="divfile">
+	   <div class="file-box">				
+			<input type="hidden"  name="file" id="uploadify_m" />																				
+			<input type="hidden"  id="uploaddate" value="<%=str_date %>"/>
+			<input type="hidden"  id="fileuser" value="${loginUser.username}"/>
+			<a href="javascript:jq('#uploadify_m').uploadify('cancel','*')" class="btn btn-default">取消上传</a>
+            <!-- <a href="javascript:checkpomNo()" class="btn btn-default">上传</a>-->
+		</div>					
+	</div>
+	</div>
+</div>
+<center>
+			<input type="button" id="sub_pom" value="確定"  class="btn btn-primary"/>&nbsp;&nbsp;&nbsp;			 			
+			<input type="button" value="返回" onclick="javascript:back()" class="btn btn-primary"/>
+				
+</center>
+ </form>		
+	<hr/>		
+     <s:if test="formula.pom.webTabpomfiles.size>0">		
+      <div id="webtabfiledao">	
+	    <b style="color: blue">附檔:</b><br/>
 		 <div id="fileJson">
-		   <s:iterator value="tabpom.webtabfiles">
+		   <s:iterator value="formula.pom.webTabpomfiles">
 		        <a href="/upload_webtabpom/<s:property value='id.webTabpom.pomNo'/>/<s:property value="%{toUrl2(id.filename)}"/>" target="_blank">
 		        <s:property value="id.filename"/>&nbsp;
 		        </a>
@@ -230,23 +250,10 @@ String formulaIndex=request.getParameter("formulaIndex");
 	              <img src="images/icon/del_file.png" alt="刪除" title="刪除" style="border:0px"/>
 	           </a>&nbsp;&nbsp;
 		   </s:iterator>
-		   </div>	  
-		</div>		
-		<hr/>
-		</s:if> 
-	 </td>
-  </tr>                               											
-</table>
-</div>
-</div>
-
-<center>
-			<input type="submit" id="sub" value="確定"  class="btn btn-primary"/>&nbsp;&nbsp;&nbsp;			 
-				<input type="reset" id="reset" value="重置" class="btn btn-primary"/>&nbsp;&nbsp;&nbsp; 			
-				<input type="button" value="返回" id="btn_back"
-				onclick="javascript:back()" class="btn btn-primary"/>
-</center>	
-</form>
+		  </div>	  
+     </div>		
+    <hr/>
+</s:if> 
 
 
 
@@ -259,67 +266,82 @@ String formulaIndex=request.getParameter("formulaIndex");
 	<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
 	<!-- <script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script> -->
 	<script src="bootstrap/js/bootstrap.min.js"></script>
+	<script src="uploadify/jquery.uploadify.min.js" type="text/javascript"></script>
 	<!--[if lt IE 9]>  
   <script src="bootstrap/html5.js"></script>
   <script src="bootstrap/respond.min.js"></script>
   <![endif]-->		
-<script type="text/javascript">
-
-	/*jq(function() {
-		var demo = jq("#subform").Validform({
-			btnSubmit : "#sub",
+<script type="text/javascript">	
+	var jq=jQuery.noConflict();
+	var uploadify_config = {
+			'method':'POST',
+		    'uploader' : 'webtabpom_uploadfile_session;jsessionid=${pageContext.session.id}',
+		    'swf' : 'uploadify/uploadify.swf',
+		    'removeTimeout' : 0,
+		    'width' : 80,
+		    'height' : 30,
+		    'multi' : true,
+		    'debug':false,
+		    'auto' : false,
+		    'buttonText' : '選擇文件',
+		    'fileTypeExts' : '*.png;*.jpg;*.jpeg;*.tif;*.bmp;*.txt;*.pdf;*.doc;*.xls;*.docx;*.xlsx;*.odt',
+		    'fileSizeLimit' : '3MB',
+		    'queueSizeLimit' : 5,
+		    'fileObjName':'file',
+		    'formData':{
+		    	"filecreatedate":jq("#uploaddate").val(),
+		    	"fileusername":jq("#fileuser").val(),
+		    	"pomNo":jq("#pomNo").val()
+		    	},
+		    'onFallback':function(){
+		            alert("您未安裝FLASH控件，無法上傳圖片！請安裝FLASH控件后再試。");
+		        },	
+		    //'buttonImage':'images/btn_login_black.gif',
+		    //'fileTypeDesc' : 'Image Files',
+		    //'formData' : {"action": "upload", "sid" : ""},
+		    // 'onSelect' : uploadify_onSelect,
+		    //'onSelectError' : uploadify_onSelectError,
+		    //'onUploadError' : uploadify_onUploadError,
+		   /*'onQueueComplete' : function(){
+			   //loadUrl("filesUpload_findByName");
+		   },*/
+		   'onSelectError' :function(file, errorCode, errorMsg){
+		      if(errorCode==-130){
+		         alert("文件類型不對");
+		      }
+		   }	   
+		};
+	jq(function(){
+		jq("#uploadify_m").uploadify(uploadify_config);
+		
+		
+		var demo = jq("#form_pom").Validform({
+			btnSubmit : "#sub_pom",
 			tiptype : 4,
 			tipSweep:true,
 			showAllError : true,
 			datatype : {
-				"0-8" : /^-?\d{0,8}(\.[0-9]{1,2})?$/
+				"*8-2" : /^-?\d{0,8}(\.[0-9]{0,2})?$/
 			},									
-			beforeSubmit:checkFile,														
+			beforeSubmit:checkpomNo,														
 			ajaxPost:true,
 			callback:function(data){
 				if(data=="0"){
 					layer.msg("提交成功!",3,1);
-					//location.href="/Login/webwlo_getList";
+					loadUrl("/Login/webformula_findById?formulaIndex="+jq("#formulaIndex").val());
 				}
 				if(data=="1"){
-					alert("提交失敗");
+					layer.msg("提交失敗",3,3);
 				}
 				if(data=="2"){
 					layer.msg("數據已經存在",3,1);
 				}
+				if(data=="3"){
+					layer.msg("附檔上傳失敗",3,3);
+				}
 			}
 		});
-		demo.tipmsg.w["0-8"] = "只能數字且不超過8位數,可保留2位以內小數";
-		demo.addRule([{ele:":checkbox:first",datatype:"*"},{ele:":radio:first",datatype:"*"}]); (注意:checkbox:first和:radio:first前面要加":")
-	});*/
-	var jq=jQuery.noConflict();
-	jq(function(){
-		var options={
-				beforeSubmit:checkForm,  		       		       
-		        //resetForm: true, 
-		        url:"webtabpom_add",
-		        dataType:'json' ,
-		        success:function(data){
-		        	if(data=="0"){
-		        		layer.msg("操作成功!",3,1);
-		        		//location.href="/Login/kyz_findPageBean";
-		        	}else if(data=="1"){
-		        		layer.msg("操作失敗!",3,3);
-		        	}else if(data=="2"){
-		        		layer.msg("數據已存在該數據",3,3);
-		        	}else if(data=="3"){
-		        		layer.msg("單個文件不可超過5M",2,3);
-		        	}else if(data=="4"){
-		        		layer.msg("僅允許上傳圖片文件",2,3);
-		        	}else{
-		        		alert(data);
-		        	}		        			        	        	
-		         }		         
-		};
-		jq("#subform").submit(function(){
-			jq(this).ajaxSubmit(options);
-			return false;
-		});
+		demo.tipmsg.w["*8-2"] = "只能數字且不超過8位數,可保留2位以內小數";	
 		
 		/*加載所有品牌*/
 		jq.ajax({
@@ -336,172 +358,66 @@ String formulaIndex=request.getParameter("formulaIndex");
 				})
 			}
 		});
+			
 	})
-	
 
-/*禁止空格輸入*/
-window.onload=function(){            
-            var inputs=document.getElementsByTagName("input"); 
-            for (var i=0;i<inputs.length; i++) {  
-                if(inputs[i].getAttribute("type")=="text") 
-                 inputs[i].onkeyup=function(){ 
-                    this.value=this.value.replace(/(^\s+)|\s+$/g,""); 
-                 }; 
-            }  
-        }
-        
-function makePomNo(){
-	var tabpomDate=jq("#tabpomDate").val();
-	var component=jq("#component").val();	
-	if(tabpomDate!=""&&component!=""){
-		webtabpomjs.makePomNo(component,tabpomDate,function(x){			
-			jq("#pomNo").val(x);
-		})
-	}	
-}
-
-/*物性編號*/
-function makePomNo2(dwrWebbrank,tabpomDate){
-	var brank=jq("#"+dwrWebbrank).val();
-	var tabpomDate=jq("#"+tabpomDate).val();
-	if(brank!=""&&brank!=null&&tabpomDate!=""&&tabpomDate!=null){
-		jq.ajax({
-			type:"POST",
-			dataType:"json",
-			url:"webtabpom_makePomNo",
-			data:{"brank":brank,"tabpomDate":tabpomDate},
-			//data:"{'brank':'"+ brank +"','tabpomDate':'"+ tabpomDate +"'}",
-			success:function(data){
-				jq("#pomNo").val(data);
-			}			
-		});
-	}	
-}
-
-
-var i=0;	
-function addFile(){
-    i++;
-    if(i<5){
-    var divfile=document.getElementById("divfile");
-    var inputfile=document.createElement("input");
-    var aEle=document.createElement("a");
-    inputfile.type="file";
-    inputfile.name="files";
-    inputfile.style.width="150px";
-    aEle.innerHTML="刪除";
-    aEle.style.color="red";
-    aEle.href="javascript:void(0)";
-    aEle.onclick=function(){
-       var parentnode=aEle.parentNode;
-       if(parentnode){
-          parentnode.removeChild(aEle);
-          parentnode.removeChild(inputfile);
-          if(i>4){
-             i=4;
-          }
-          i--;
-       }
-    };
-    divfile.appendChild(inputfile);
-    divfile.appendChild(aEle);  
-    }else{
-       alert("附檔不能超過5個!");
-    }               
-}
-function back(){
-	loadUrl("/Login/webtabpom_findPageBean3?backIndex=1");
-}
-
-
-function checkForm(){	
-			var agent = navigator.userAgent.toLowerCase();
-			var eles=jq("input[name='files']");
-			var flag=true;
-				if(agent.indexOf("msie") > 0){
-					var path;
-					var img=new Image();
-					jq.each(eles,function(i,ele){
-						path=ele.value;
-						if(path!=""){//if
-						img.src=path;
-						var extname=path.substr(path.lastIndexOf(".")).toLowerCase()
-						if(extname!=".jpg"&&extname!=".jpeg"&&extname!=".gif"&&extname!=".bmp"&&extname!=".tif"&&extname!=""){
-							layer.msg("僅允許上傳圖片文件",2,3);
-							flag=false;
-							return false;
-							
-						}
-						if(img.fileSize/(1024*1024)>5){
-							layer.msg("單個文件不可超過5M",2,3);
-							//break;
-							flag=false;
-							return false;
-						}
-						}//if
-						
-					})
-				}else{
-					jq.each(eles,function(i,ele){
-						path=ele.value;
-						var extname=path.substr(path.lastIndexOf(".")).toLowerCase()
-						if(path!=""){//if
-						   if(extname!=".jpg"&&extname!=".jpeg"&&extname!=".gif"&&extname!=".bmp"&&extname!=".tif"){
-							layer.msg("僅允許上傳圖片文件",2,3);
-							flag=false;
-							return false;
-						}
-						if(ele.files[0].size/(1024*1024)>5){
-							layer.msg("單個文件不可超過5M",2,3);
-							//break;
-							flag=false;
-							return false;
-						}
-						}//if
-						
-					})
+	function checkpomNo(){
+		if(jq("#pomNo").val()==""){
+			alert("請完整資料,再上傳附檔");
+		}else{
+			//jq.load("webtabpom_clearSession");
+			jq.ajax({
+				type:"get",
+				url:"webtabpom_clearSession",
+				success:function(){
+					jq("#uploadify_m").uploadify("upload","*");
 				}
-				
-				var component=jq("#component").val();
-				var pomName=jq("#pomName").val();
-				var dwrWebbrank=jq("#dwrWebbrank").val();
-				if(component==""){
-					layer.msg("請選擇部件",2,3);
-					flag=false;
-				}
-				if(pomName==""){
-					layer.msg("配方索引不能爲空",2,3);
-					flag=false;
-				}
-				if(dwrWebbrank==""){
-					layer.msg("請選擇品牌",2,3);
-					flag=false;
-				}
-				return flag;
-}
-
-function lookJson(pomNo,filename){
-	   jq.ajax({
-	      type:"get",
-	      dataType:"json",
-	      url:"webtabpomfile_findwebtabpomFileJson",
-	      data:"pomNo="+pomNo+"&filename="+filename,
-	      success:function(files){
-	         jq("#fileJson").html("");
-	          var item;
-	          var item_url;
-	         jq.each(files,function(i,file){
-	            item_url="javascript:lookJson('"+file.id.webTabpom.pomNo+"',"+"'"+file.id.filename+"')";
-	            item="<a href='/upload/"+file.id.webTabpom.pomNo+"/"+file.id.filename+"' target='_blank' title='點擊查看'>"+id.file.filename+            
-	            "</a>"+
-	            "<a href="+item_url+"><img src='images/icon/del_file.png' alt='刪除' title='刪除' style='border:0px'/></a>&nbsp;";
-	            jq("#fileJson").append(item);
-	         }) 
-	      }
-	   })
+			});
+			
+		}
 	}
+
+				
+		       
+	/*物性編號*/
+	function makePomNo2(dwrWebbrank,tabpomDate){
+		var brank=jq("#"+dwrWebbrank).val();
+		var tabpomDate=jq("#"+tabpomDate).val();
+		if(brank!=""&&brank!=null&&tabpomDate!=""&&tabpomDate!=null){
+			jq.ajax({
+				type:"POST",
+				dataType:"json",
+				url:"webtabpom_makePomNo",
+				data:{"brank":brank,"tabpomDate":tabpomDate},
+				//data:"{'brank':'"+ brank +"','tabpomDate':'"+ tabpomDate +"'}",
+				success:function(data){
+					jq("#pomNo").val(data);
+				}			
+			});
+		}	
+	}
+
+	function lookJson(pomNo,filename){
+		   jq.ajax({
+		      type:"get",
+		      dataType:"json",
+		      url:"webtabpomfile_findwebtabpomFileJson",
+		      data:"pomNo="+pomNo+"&filename="+filename,
+		      success:function(files){
+		         jq("#fileJson").html("");
+		          var item;
+		          var item_url;
+		         jq.each(files,function(i,file){
+		            item_url="javascript:lookJson('"+file[0]+"',"+"'"+file[1]+"')";
+		            item="<a href='/upload/"+file[0]+"/"+file[1]+"' target='_blank' title='點擊查看'>"+file[1]+            
+		            "</a>"+
+		            "<a href="+item_url+"><img src='images/icon/del_file.png' alt='刪除' title='刪除' style='border:0px'/></a>&nbsp;";
+		            jq("#fileJson").append(item);
+		         }) 
+		      }
+		   })
+		}
 	
-//window.onload=getAllWebbrank;
 
 </script>
 

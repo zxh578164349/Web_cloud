@@ -66,7 +66,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 	                <tr>
 	                   <td>硬度</td>
 	                   <td>
-	                      <input type="text" name="tabpom.hardness" value="<s:property value='pom.hardness'/>" datatype="*8-2"/><br/>
+	                      <input type="text" name="tabpom.hardness" value="<s:property value='formula.pom.hardness'/>" datatype="*8-2"/><br/>
 	                      <input type="text" name="tabpom.hardness2" value="<s:property value='pom.hardness2'/>" datatype="*8-2"/>(±值)
 	                   </td>
 	                   <td>
@@ -199,47 +199,50 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 						</s:if>
 						<s:else>
 						   <input type="hidden" value="<s:property value='pom.tabpomDate'/>" name="tabpom.tabpomDate" />
-						   <input type="hidden" value="<s:property value='tabpom.username'/>" name="tabpom.username" />
+						   <input type="hidden" value="<s:property value='pom.username'/>" name="tabpom.username" />
 						   <input type="hidden" value="${loginUser.username }" name="tabpom.modifyName" />
 						   <input type="hidden" value="<%=str_date%>" name="tabpom.modifyDate" />
 						</s:else>
 	                     
+	                     <input type="hidden" name="<s:property value='pom.fileMk'/>" value="tabpom.fileMk"/>
 	                   </td>                 
 	                </tr>
 	                                         											
 </table>
+	
+</div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">文檔上傳</div>
+    <div class="panel-body">
+       <div  id="divfile">
+	   <div class="file-box">				
+			<input type="hidden"  name="file" id="uploadify_m" />																				
+			<input type="hidden"  id="uploaddate" value="<%=str_date %>"/>
+			<input type="hidden"  id="fileuser" value="${loginUser.username}"/>
+			<a href="javascript:jq('#uploadify_m').uploadify('cancel','*')" class="btn btn-default">取消上传</a>
+            <!-- <a href="javascript:checkpomNo()" class="btn btn-default">上传</a>-->
+		</div>					
+	</div>
+	</div>
+</div>
 <center>
 			<input type="button" id="sub_pom" value="確定"  class="btn btn-primary"/>&nbsp;&nbsp;&nbsp;			 			
 			<input type="button" value="返回" onclick="javascript:back()" class="btn btn-primary"/>
 				
-</center>	
-</div>
-</div>
-</form>
- <div class="panel panel-default">
-    <div class="panel-heading">文檔上傳</div>
-    <div class="panel-body">
-       <div  id="divfile">
-	   <div class="file-box">
-			<!-- <input type="file"  name="files" id="uploadify_m" /> -->	
-			<input type="hidden"  name="files" id="uploadify_m" />																				
-			<input type="hidden"  id="uploaddate" value="<%=str_date %>"/>
-			<input type="hidden"  id="fileuser" value="${loginUser.username}"/>	
-			<a href="javascript:jq('#uploadify_m').uploadify('cancel','*')" class="btn btn-default">取消上传</a>
-            <a href="javascript:checkpomNo()" class="btn btn-default">上传</a>
-		</div>					
-	</div>
-	
+</center>
+ </form>		
 	<hr/>		
      <s:if test="formula.pom.webTabpomfiles.size>0">		
       <div id="webtabfiledao">	
 	    <b style="color: blue">附檔:</b><br/>
 		 <div id="fileJson">
 		   <s:iterator value="formula.pom.webTabpomfiles">
-		        <a href="/upload_webtabpom/<s:property value='webTabpom.pomNo'/>/<s:property value="%{toUrl2(filename)}"/>" target="_blank">
-		        <s:property value="filename"/>&nbsp;
+		        <a href="/upload_webtabpom/<s:property value='id.webTabpom.pomNo'/>/<s:property value="%{toUrl2(id.filename)}"/>" target="_blank">
+		        <s:property value="id.filename"/>&nbsp;
 		        </a>
-		        <a href="javascript:lookJson('<s:property value="webTabpom.pomNo"/>','<s:property value="%{toUrl(filename)}"/>')">
+		        <a href="javascript:lookJson('<s:property value="id.webTabpom.pomNo"/>','<s:property value="%{toUrl(id.filename)}"/>')">
 	              <img src="images/icon/del_file.png" alt="刪除" title="刪除" style="border:0px"/>
 	           </a>&nbsp;&nbsp;
 		   </s:iterator>
@@ -247,8 +250,8 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
      </div>		
     <hr/>
 </s:if> 	 
-</div>
-</div>				
+
+			
 
 		
 
@@ -266,10 +269,10 @@ var uploadify_config = {
 	    'debug':false,
 	    'auto' : false,
 	    'buttonText' : '選擇文件',
-	    'fileTypeExts' : '*.png;*.jpg;*.jpeg;*.tif;*.bmp;*.txt',
+	    'fileTypeExts' : '*.png;*.jpg;*.jpeg;*.tif;*.bmp;*.txt;*.pdf;*.doc;*.xls;*.docx;*.xlsx;*.odt',
 	    'fileSizeLimit' : '3MB',
 	    'queueSizeLimit' : 5,
-	    'fileObjName':'files',
+	    'fileObjName':'file',
 	    'formData':{
 	    	"filecreatedate":jq("#uploaddate").val(),
 	    	"fileusername":jq("#fileuser").val(),
@@ -279,16 +282,14 @@ var uploadify_config = {
 	            alert("您未安裝FLASH控件，無法上傳圖片！請安裝FLASH控件后再試。");
 	        },	
 	    //'buttonImage':'images/btn_login_black.gif',
-
 	    //'fileTypeDesc' : 'Image Files',
 	    //'formData' : {"action": "upload", "sid" : ""},
-	   // 'onSelect' : uploadify_onSelect,
+	    // 'onSelect' : uploadify_onSelect,
 	    //'onSelectError' : uploadify_onSelectError,
 	    //'onUploadError' : uploadify_onUploadError,
-	   'onQueueComplete' : function(){
+	   /*'onQueueComplete' : function(){
 		   //loadUrl("filesUpload_findByName");
-		   alert("上傳成功");
-	   },
+	   },*/
 	   'onSelectError' :function(file, errorCode, errorMsg){
 	      if(errorCode==-130){
 	         alert("文件類型不對");
@@ -307,18 +308,21 @@ jq(function(){
 		datatype : {
 			"*8-2" : /^-?\d{0,8}(\.[0-9]{0,2})?$/
 		},									
-		//beforeSubmit:checkFile,														
+		beforeSubmit:checkpomNo,														
 		ajaxPost:true,
 		callback:function(data){
 			if(data=="0"){
 				layer.msg("提交成功!",3,1);
-				//location.href="/Login/webwlo_getList";
+				loadUrl("/Login/webformula_findById?formulaIndex="+jq("#formulaIndex").val());
 			}
 			if(data=="1"){
 				layer.msg("提交失敗",3,3);
 			}
 			if(data=="2"){
 				layer.msg("數據已經存在",3,1);
+			}
+			if(data=="3"){
+				layer.msg("附檔上傳失敗",3,3);
 			}
 		}
 	});
@@ -345,10 +349,19 @@ jq(function(){
 function checkpomNo(){
 	if(jq("#pomNo").val()==""){
 		alert("請完整資料,再上傳附檔");
-	}else{		
-		jq("#uploadify_m").uploadify("upload","*");
+	}else{
+		//jq.load("webtabpom_clearSession");
+		jq.ajax({
+			type:"get",
+			url:"webtabpom_clearSession",
+			success:function(){
+				jq("#uploadify_m").uploadify("upload","*");
+			}
+		});
+		
 	}
 }
+
 			
 	       
 /*物性編號*/
@@ -380,8 +393,8 @@ function lookJson(pomNo,filename){
 	          var item;
 	          var item_url;
 	         jq.each(files,function(i,file){
-	            item_url="javascript:lookJson('"+file.id.webTabpom.pomNo+"',"+"'"+file.id.filename+"')";
-	            item="<a href='/upload/"+file.id.webTabpom.pomNo+"/"+file.id.filename+"' target='_blank' title='點擊查看'>"+file.id.filename+            
+	            item_url="javascript:lookJson('"+file[0]+"',"+"'"+file[1]+"')";
+	            item="<a href='/upload/"+file[0]+"/"+file[1]+"' target='_blank' title='點擊查看'>"+file[1]+            
 	            "</a>"+
 	            "<a href="+item_url+"><img src='images/icon/del_file.png' alt='刪除' title='刪除' style='border:0px'/></a>&nbsp;";
 	            jq("#fileJson").append(item);

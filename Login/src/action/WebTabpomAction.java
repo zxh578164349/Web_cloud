@@ -4,23 +4,23 @@ import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.apache.struts2.ServletActionContext;
+import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.ServletResponseAware;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import services.IWebTabpomServices;
 import services.IWebTabpomfileServices;
@@ -31,13 +31,10 @@ import util.PageBean;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
-import entity.KyzExpectmatmFile;
 import entity.KyzExpectmatmLog;
-import entity.VWebFact;
-import entity.WebFact;
-import entity.WebFactId;
 import entity.WebTabpom;
 import entity.WebTabpomfile;
+import entity.WebTabpomfileId;
 import entity.WebUser;
 
 public class WebTabpomAction extends ActionSupport implements ServletResponseAware{
@@ -66,8 +63,7 @@ public class WebTabpomAction extends ActionSupport implements ServletResponseAwa
 	private WebTabpomfile webtabFile;
 	private IWebTabpomServices tabpomSer;
 	private IWebTabpomfileServices tabpomfileSer;
-	private javax.servlet.http.HttpServletResponse response;
-	
+	private javax.servlet.http.HttpServletResponse response;	
 	
 	public String getFileusername(){
 		return fileusername;
@@ -219,14 +215,14 @@ public class WebTabpomAction extends ActionSupport implements ServletResponseAwa
 	public void setServletResponse(HttpServletResponse response) {
 		// TODO Auto-generated method stub
 		this.response=response;
-	}
+	}	
 	
 	
 	public String findPageBean(){
 		ActionContext.getContext().getSession().remove("tabpom_name");
 		ActionContext.getContext().getSession().remove("tabpom_brank");
 		ActionContext.getContext().getSession().remove("tabpom_yymm");
-		ActionContext.getContext().getSession().remove("tabpom_yymm2");
+		ActionContext.getContext().getSession().remove("tabpom_yymm2");		
 		bean=tabpomSer.findPageBean(25, page, pomName, brank,yymm,yymm2);
 		return "beanList";
 	}
@@ -251,32 +247,16 @@ public class WebTabpomAction extends ActionSupport implements ServletResponseAwa
 		bean=tabpomSer.findPageBean(25, page, pomName, brank,yymm,yymm2);
 		return result;
 	}
-	public String add() throws IOException{
-		/*文件上傳驗證*/
-		/*if(files!=null&&files.get(0)!=null){
-			for(int i=0;i<files.size();i++){
-				if(files.get(i)!=null){
-					long filesize=files.get(i).length();
-					String filetype=filesFileName.get(i).substring(filesFileName.get(i).lastIndexOf(".")).toLowerCase();
-					if(filesize>5120000){						
-						ajaxResult="3";
-						return "add";
-					}
-					if(!filetype.equals(".bmp")&&!filetype.equals(".jpg")&&!filetype.equals(".jpeg")&&!filetype.equals(".gif")&&!filetype.equals(".tif")){						
-						ajaxResult="4";
-						return "add";
-					}
-					
-				}
-			}
-		}*/
+	public String add() throws IOException{		
 		
-		/*文件上傳*/
+		/*附檔上傳*/
 		try{
 			uploadfile(tabpom);	
 		}catch(Exception e){
-			System.out.println(e);
-		}
+			e.printStackTrace();
+			ajaxResult="3";
+			return "add";
+		}		
 		switch(nullmk){
 		case 0:
 			pomNo=tabpomSer.findPomNoById(tabpom.getPomNo());
@@ -298,8 +278,7 @@ public class WebTabpomAction extends ActionSupport implements ServletResponseAwa
 			}catch(Exception e){
 				ajaxResult="1";
 			}
-		}
-		
+		}		
 		return "add";
 	}
 	
@@ -312,43 +291,51 @@ public class WebTabpomAction extends ActionSupport implements ServletResponseAwa
 			}
 			List<WebTabpomfile>list_tabfile=(List<WebTabpomfile>)ActionContext.getContext().getSession().get("list_tabfile");
 			List<BufferedInputStream>ins=(List<BufferedInputStream>)ActionContext.getContext().getSession().get("ins");
-			filesFileName=(List<String>)ActionContext.getContext().getSession().get("filesFileName");
-			for(WebTabpomfile obj:list_tabfile){
-				obj.setWebTabpom(tabpom);
-			}
-			List<BufferedOutputStream>outs=new ArrayList<BufferedOutputStream>();
-			for(String filename:filesFileName){
-				BufferedOutputStream out=new BufferedOutputStream(new FileOutputStream(uploadFile_backup+"\\"+filename));
-				outs.add(out);
-			}
-			tabpom.setWebTabpomfiles(list_tabfile);	
+			filesFileName=(List<String>)ActionContext.getContext().getSession().get("filenames");
+			
 			if(list_tabfile!=null&&list_tabfile.size()>0){
+				for(WebTabpomfile obj:list_tabfile){
+					obj.getId().setWebTabpom(tabpom);
+				}
+				List<BufferedOutputStream>outs=new ArrayList<BufferedOutputStream>();
+				for(String filename:filesFileName){
+					BufferedOutputStream out=new BufferedOutputStream(new FileOutputStream(uploadFile_backup+"\\"+filename));
+					outs.add(out);
+				}
+				tabpom.setWebTabpomfiles(list_tabfile);
 				tabpom.setFileMk("1");//標示是否帶有附檔
-			}
-			GlobalMethod.uploadFiles(ins,outs);					
+				GlobalMethod.uploadFiles(ins,outs);
+			}										
 	}
 	
-	public void uploadfile_session(){
-		List<WebTabpomfile>list_tabfile=new ArrayList<WebTabpomfile>();
-		for(String filename:filesFileName){
-			WebTabpomfile webtabFile=new WebTabpomfile();
+	public void uploadfile_session(){		
+		List<WebTabpomfile>list_tabfile=(List<WebTabpomfile>)ActionContext.getContext().getSession().get("list_tabfile");
+		List<BufferedInputStream>ins=(List<BufferedInputStream>)ActionContext.getContext().getSession().get("ins");
+		List<String>filenames=(List<String>)ActionContext.getContext().getSession().get("filenames");
+		if(list_tabfile==null){
+			list_tabfile=new ArrayList<WebTabpomfile>();
+		}
+		if(ins==null){
+			ins=new ArrayList<BufferedInputStream>();	
+		}
+		if(filenames==null){
+			filenames=new ArrayList<String>();
+		}
+		
+		try{			
+			WebTabpomfile webtabFile=new WebTabpomfile(new WebTabpomfileId());				
 			webtabFile.setCreatedate(filecreatedate);
 			webtabFile.setUsername(fileusername);
-			webtabFile.setFilename(filename);
-			list_tabfile.add(webtabFile);
-		}
-		List<BufferedInputStream>ins=new ArrayList<BufferedInputStream>();
-		for(File file:files){
-			try {
-				ins.add(new BufferedInputStream(new FileInputStream(file)));
-			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		ActionContext.getContext().getSession().put("list_tabfile",list_tabfile);
-		ActionContext.getContext().getSession().put("ins",ins);
-		ActionContext.getContext().getSession().put("filesFileName",filesFileName);
+			webtabFile.getId().setFilename(fileFileName);
+			list_tabfile.add(webtabFile);						
+			ins.add(new BufferedInputStream(new FileInputStream(file)));				
+			filenames.add(fileFileName);
+			ActionContext.getContext().getSession().put("list_tabfile",list_tabfile);
+			ActionContext.getContext().getSession().put("ins",ins);
+			ActionContext.getContext().getSession().put("filenames",filenames);
+		}catch(Exception e){			
+			e.printStackTrace();
+		}		
 	}
 	
 	public String findById(){
@@ -372,48 +359,6 @@ public class WebTabpomAction extends ActionSupport implements ServletResponseAwa
 		return "delete";
 	}
 	
-	/*
-	 * 文件上傳
-	 */
-	public void swfuploadfile() throws IOException{
-		//File uploadFile_backup=new File("d:\\WebtabpomFile_backup\\"+tabpom.getPomNo());//附檔上傳到D盤(為了避免更新項目時丟失附檔,所在上傳到D盤)
-		File uploadFile_backup=new File("d:\\WebtabpomFile_backup\\"+"test");
-		/*if(!uploadFile.exists()){
-			uploadFile.mkdirs();
-		}*/
-		if(!uploadFile_backup.exists()){
-			uploadFile_backup.mkdirs();
-		}
-		/*for(int i=0;i<files.size();i++){							
-			if(files.get(i)!=null){									
-				FileInputStream in=new FileInputStream(files.get(i));
-				//FileOutputStream out=new FileOutputStream(uploadFile+"\\"+filesFileName.get(i));
-				FileOutputStream out_backup=new FileOutputStream(uploadFile_backup+"\\"+filesFileName.get(i));//備份
-				byte[]b=new byte[1024];
-				int length=0;
-				while((length=in.read(b))>0){
-					//out.write(b,0,length);
-					out_backup.write(b,0,length);//備份
-				}																									
-				WebTabpomfile webtabFile=new WebTabpomfile();//函文附檔
-				webtabFile.getId().setFilename(filesFileName.get(i));
-				webtabFile.getId().setWebTabpom(tabpom);																			
-			}
-		}*/
-		fileFileName = URLDecoder.decode(fileFileName, "UTF-8");  
-		
-		InputStream is = new FileInputStream(file);
-	
-		File deskFile = new File(uploadFile_backup, this.getFileFileName());
-		OutputStream os = new FileOutputStream(deskFile);
-		byte[] bytefer = new byte[1024];
-		int length = 0;
-		while ((length = is.read(bytefer)) != -1) {
-			os.write(bytefer, 0, length);
-		}
-		os.close();
-		is.close();
-	}
 	
 	/**
 	 * 搜索打印
@@ -486,6 +431,26 @@ public class WebTabpomAction extends ActionSupport implements ServletResponseAwa
 		ajaxResult=pomNo.toString();
 		return "makePomNo";
 	}
+	
+	/**
+	 * 每次點擊上傳附檔時都要清除session
+	 * @Title: clearSession
+	 * @Description: TODO
+	 * @param 
+	 * @return void
+	 * @throws
+	 * @author web
+	 * @date 2016/11/30
+	 */
+	public void clearSession(){
+		ActionContext.getContext().getSession().remove("list_tabfile");
+		ActionContext.getContext().getSession().remove("ins");
+		ActionContext.getContext().getSession().remove("filenames");
+	}
+	
+	
+	
+	
 	
 	
 	

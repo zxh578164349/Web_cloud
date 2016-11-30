@@ -44,13 +44,13 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 				   <s:property value="fk_weberp_pf.namec2"/>
 				   </li>
 				   <li >
-					<input type="text" name="items[${x.index}].phrVal" value="<s:property value='phrVal'/>"/>
+					<input type="text" name="items[${x.index}].phrVal" value="<s:property value='phrVal'/>" datatype="*9-2"/>
 				   </li>
 				   <li>
-					<input type="text" name="items[${x.index}].weightVal" value="<s:property value='weightVal'/>">
+					<input type="text" name="items[${x.index}].weightVal" value="<s:property value='weightVal'/>" datatype="*9-2"/>
 				   </li>
 				   <li class="col_item3">
-					<input type="text" name="items[${x.index}].remark" value="<s:property value='remark'/>">					
+					<input type="text" name="items[${x.index}].remark" value="<s:property value='remark'/>" datatype="*0-200"/>					
 					<input type="hidden" value="<s:property value='itemId'/>" name="items[${x.index}].itemId">
 					<input type="hidden" value="<s:property value='fk_weberp_pf.itemid'/>" name="items[${x.index}].fk_weberp_pf.itemid">
 					<input type="hidden" value="<s:property value='sectionNo'/>" name="items[${x.index}].sectionNo">
@@ -93,7 +93,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 			//tipSweep:true,
 			//showAllError : true,
 			datatype : {
-				"*9-2" : /^-?\d{0,7}(\.[0-9]{1,2})?$/
+				"*9-2" : /^-?\d{0,9}(\.[0-9]{1,2})?$/
 			},
 			ajaxPost:true,
 			
@@ -106,7 +106,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 				}			
 			}
 		});
-		demo.tipmsg.w["*9-2"] = "只能數字且不超過7位數,可保留2位以內小數";				
+		demo.tipmsg.w["*9-2"] = "只能數字且不超過9位數,可保留2位以內小數";				
 	});
 
 var ii=0;
@@ -123,7 +123,7 @@ function addItem(){
 	item+="<li><select id='fk_weberp_pf"+ii+"' name='items["+num_size+"].fk_weberp_pf.itemid' datatype='*'></select></li>";
 	item+="<li><input type='text' name='items["+num_size+"].phrVal' datatype='*9-2'/></li>";
 	item+="<li><input type='text' name='items["+num_size+"].weightVal' datatype='*9-2'/></li>";
-	item+="<li class='col_item3'><input type='text' name='items["+num_size+"].remark' datatype='*0-10'/>";
+	item+="<li class='col_item3'><input type='text' name='items["+num_size+"].remark' datatype='*0-200'/>";
 	item+="<input type='hidden' value='"+formulaIndex+"' name='items["+num_size+"].webFormula.formulaIndex' readonly/>";
 	item+="<input type='hidden' name='items["+num_size+"].createName' value='${loginUser.username}' readonly/>";
 	item+="<input type='hidden' name='items["+num_size+"].createDate' value='"+<%=str_date%>+"'/>";

@@ -1683,7 +1683,8 @@ public class GlobalMethod extends HibernateDaoSupport{
 	 
 	 
 	 public static void main(String[] args) throws ParseException, FileNotFoundException, ScriptException, NoSuchMethodException, ClassNotFoundException {
-			List<Integer>list=new ArrayList<Integer>();
+			/**集合排序
+		    List<Integer>list=new ArrayList<Integer>();
 			list.add(1);list.add(1);list.add(2);list.add(2);list.add(3);list.add(3);
 			list.add(1);list.add(1);list.add(1);list.add(2);list.add(2);list.add(2);
 			for(Integer ii:list){
@@ -1703,8 +1704,12 @@ public class GlobalMethod extends HibernateDaoSupport{
 			}
 			for(Integer ii:list){
 				System.out.print(ii+"\t");
-			}
-			
+			}**/
+		 List<Integer>list=new ArrayList<Integer>();
+		 for(int i:list){
+			 System.out.println(i);
+		 }
+		 
 			
 		}
 	 

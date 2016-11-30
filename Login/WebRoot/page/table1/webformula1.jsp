@@ -92,10 +92,7 @@
 								<td>
 									<form  id="subform${x.index}">										
 										<input type="hidden" value="<s:property value='formulaIndex'/>" name="formulaIndex" />																					
-									</form> 
-									<a href="javascript:findById_form('subform${x.index}','webformula_findById')">
-									<img alt="修改" src="images/icon/edit001.png" title="修改">										
-								    </a>
+									</form> 									
 									<form  id="2subform${x.index}" style="float:left">										
 										<input type="hidden" value="<s:property value='formulaIndex'/>" name="formulaIndex" />																														
 									</form>
@@ -109,16 +106,27 @@
 										<input type="hidden" value="<s:property value='factNo.factNo'/>" name="factNo" />
 										<input type="hidden" value="look" name="lookordown"/>																														
 									</form>
+									<form  id="5subform${x.index}" action="webformula_print2" method="post" style="float:left" target="_blank">										
+										<input type="hidden" value="<s:property value='formulaIndex'/>" name="formulaIndex" />
+										<input type="hidden" value="<s:property value='factNo.factNo'/>" name="factNo" />
+										<input type="hidden" value="down" name="lookordown"/>																														
+									</form>
 									<s:if test="vbm==null">
-									<a href="javascript:addvbm('3subform${x.index}')" class="btn btn-sm">送簽</a>
+									<a href="javascript:findById_form('subform${x.index}','webformula_findById')" class="btn btn-xs btn-primary">
+									  修改									
+								    </a>
+									<a href="javascript:addvbm('3subform${x.index}')" class="btn btn-xs btn-primary">送簽</a>
+									<a href="javascript:isDelete2('2subform${x.index}','webformula_delete','webformula_findPageBean3')"  class="btn btn-xs btn-primary">
+									 刪除
+								    </a>									
 									</s:if>
 									<s:else>
-									 <a href="#" class="btn btn-sm disabled">已送簽</a>
-									</s:else>
-									<a href="javascript:isDelete2('2subform${x.index}','webformula_delete','webformula_findPageBean3')" >
-									<img alt="刪除" src="images/icon/delete001.png" title="刪除">
-								    </a>
-								    <a href="javascript:document.getElementById('4subform${x.index}').submit()" class="btn btn-sm">預覽</a>
+									<a href="#" class="btn btn-xs disabled btn-warning"> 鎖定 </a>																									   
+									 <a href="#" class="btn btn-xs disabled btn-warning">已送</a>
+									 <a href="#" class="btn btn-xs disabled btn-warning">刪除	</a>	
+									</s:else>																 								    
+								    <a href="javascript:document.getElementById('4subform${x.index}').submit()" class="btn btn-xs btn-primary">預覽</a>
+								    <a href="javascript:document.getElementById('5subform${x.index}').submit()" class="btn btn-xs btn-primary">下載</a>
 								</td>
 							</s:if>
 							

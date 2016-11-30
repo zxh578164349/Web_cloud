@@ -90,7 +90,6 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 	</div>
 
 <script type="text/javascript">
-//var jq = jQuery.noConflict();
 var uploadify_config = {
 		'method':'POST',
 	    'uploader' : 'filesUpload_uploadFile;jsessionid=${pageContext.session.id}',

@@ -25,7 +25,7 @@ public class WebTabpomfileServicesImpl implements IWebTabpomfileServices{
 		webtabfiledao.delete(pomNo, fileName);
 	}
 
-	public List<WebTabpomfile> findByPomNo(String pomNo) {
+	public List<Object[]> findByPomNo(String pomNo) {
 		// TODO Auto-generated method stub
 		return webtabfiledao.findByPomNo(pomNo);
 	}

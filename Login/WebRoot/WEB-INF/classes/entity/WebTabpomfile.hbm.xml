@@ -6,17 +6,16 @@
 -->
 <hibernate-mapping>
     <class name="entity.WebTabpomfile" table="WEB_TABPOMFILE" schema="WEB">
-        <id name="pfileId" type="java.lang.Long">
+        <composite-id name="id" class="entity.WebTabpomfileId">
+            <key-many-to-one name="webTabpom" class="entity.WebTabpom">
+                <column name="POMNO" length="20" />
+            </key-many-to-one>
+            <key-property name="filename" type="java.lang.String">
+                <column name="FILENAME" length="50" />
+            </key-property>
+        </composite-id>
+        <property name="pfileId" type="java.lang.Long">
             <column name="PFILE_ID" precision="10" scale="0" />
-            <generator class="sequence">
-              <param name="sequence">SEQ_webtabpomfile</param>
-            </generator>
-        </id>
-        <many-to-one name="webTabpom" class="entity.WebTabpom" fetch="select">
-            <column name="POMNO" length="20" />
-        </many-to-one>
-        <property name="filename" type="java.lang.String">
-            <column name="FILENAME" length="50" />
         </property>
         <property name="factNo" type="java.lang.String">
             <column name="FACT_NO" length="10" />

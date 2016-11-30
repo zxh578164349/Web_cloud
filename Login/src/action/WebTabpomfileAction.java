@@ -51,7 +51,7 @@ public class WebTabpomfileAction extends ActionSupport{
 			file.delete();
 			tabpomfileSer.delete(pomNo,filename);
 		}
-		List<WebTabpomfile> listfiles=tabpomfileSer.findByPomNo(pomNo);				
+		List<Object[]> listfiles=tabpomfileSer.findByPomNo(pomNo);				
 		/******************list轉json*************************/
 		jsons=JSONArray.fromObject(listfiles);		
 		/******************list轉json*************************/
