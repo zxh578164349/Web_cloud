@@ -40,28 +40,16 @@ String formulaIndex=request.getParameter("formulaIndex");
 	                    <th>物性編號</th><th>配方索引</th><th>品牌</th>
 	                 </tr>	                          	                
 	               <tr>
-	                  <td>
-	                     <s:if test="formula.pom==null">
+	                  <td>	                   
 	                        <input type="text" name="tabpom.pomNo" placeholder="自動生成" id="pomNo" style="color:blue" readonly datatype="*"/>
-						    <input type="hidden" name="nullmk" value="0"/>
-	                     </s:if>
-	                     <s:else>
-	                         <input type="text" name="tabpom.pomNo" value="<s:property value='formula.pom.pomNo'/>" id="pomNo" style="color:blue" readonly/>
-						     <input type="hidden" name="nullmk" value="1"/>
-	                     </s:else>
+						    <input type="hidden" name="nullmk" value="0"/>	                    	                    
 	                  </td>
 	                  <td>
-	                      <input type="text" name="tabpom.formulaId.formulaIndex" value="<s:property value='formula.formulaIndex'/>" id="pomName" datatype="*" readonly style="color:blue"/>
+	                      <input type="text" name="tabpom.formulaId.formulaIndex" value="<%=formulaIndex%>" id="pomName" datatype="*" readonly style="color:blue"/>
 	                  </td>
-	                  <td>
-	                      <s:if test="formula.pom==null">
+	                  <td>	                      
 						     <select name="tabpom.webBrank.id" id="dwrWebbrank" datatype="*" onchange="makePomNo2('dwrWebbrank','tabpomDate')">						      					        					        
-						     </select>
-						  </s:if>
-						  <s:else>
-						     <input type="text"  value="<s:property value='formula.pom.webBrank.name'/>" readonly style="color:blue"/>
-						      <input type="hidden" name="tabpom.webBrank.id" value="<s:property value='formula.pom.webBrank.id'/>" readonly style="color:blue"/>
-						  </s:else>   
+						     </select>						  					  
 	                  </td>
 	               </tr>
 	                   <tr class="active">
@@ -70,112 +58,112 @@ String formulaIndex=request.getParameter("formulaIndex");
 	                <tr>
 	                   <td>硬度</td>
 	                   <td>
-	                      <input type="text" name="tabpom.hardness" value="<s:property value='formula.pom.hardness'/>" datatype="*8-2"/><br/>
-	                      <input type="text" name="tabpom.hardness2" value="<s:property value='pom.hardness2'/>" datatype="*8-2"/>(±值)
+	                      <input type="text" name="tabpom.hardness" value="<s:property value='tabpom.hardness'/>" datatype="*8-2"/><br/>
+	                      <input type="text" name="tabpom.hardness2" value="<s:property value='tabpom.hardness2'/>" datatype="*8-2"/>(±值)
 	                   </td>
 	                   <td>
-	                      <input type="text" name="tabpom.hardnessDescription" value="<s:property value='pom.hardnessDescription'/>" datatype="*0-300"/>
+	                      <input type="text" name="tabpom.hardnessDescription" value="<s:property value='tabpom.hardnessDescription'/>" datatype="*0-300"/>
 	                   </td>
 	                </tr>
 	                <tr>
 	                   <td>拉力</td>
-	                   <td><input type="text" name="tabpom.forces" value="<s:property value='pom.forces'/>" datatype="*8-2"/></td>
-	                   <td><input type="text" name="tabpom.forcesDescription" value="<s:property value='pom.forcesDescription'/>" datatype="*0-300"/></td>
+	                   <td><input type="text" name="tabpom.forces" value="<s:property value='tabpom.forces'/>" datatype="*8-2"/></td>
+	                   <td><input type="text" name="tabpom.forcesDescription" value="<s:property value='tabpom.forcesDescription'/>" datatype="*0-300"/></td>
 	                </tr>
 	                <tr>
 	                   <td>延伸</td>
-	                   <td><input type="text" name="tabpom.extend" value="<s:property value='pom.extend'/>" datatype="*8-2"/></td>
-	                   <td><input type="text" name="tabpom.extendsDescription" value="<s:property value='pom.extendsDescription'/>" datatype="*0-300"/></td>
+	                   <td><input type="text" name="tabpom.extend" value="<s:property value='tabpom.extend'/>" datatype="*8-2"/></td>
+	                   <td><input type="text" name="tabpom.extendsDescription" value="<s:property value='tabpom.extendsDescription'/>" datatype="*0-300"/></td>
 	                </tr>
 	                <tr>
 	                   <td>C型撕裂</td>
-	                   <td><input type="text" name="tabpom.tearingC" value="<s:property value='pom.tearingC'/>" datatype="*8-2"/></td>
-	                   <td><input type="text" name="tabpom.tearingCDescription" value="<s:property value='pom.tearingCDescription'/>" datatype="*0-300"/></td>
+	                   <td><input type="text" name="tabpom.tearingC" value="<s:property value='tabpom.tearingC'/>" datatype="*8-2"/></td>
+	                   <td><input type="text" name="tabpom.tearingCDescription" value="<s:property value='tabpom.tearingCDescription'/>" datatype="*0-300"/></td>
 	                </tr>
 	                <tr>
 	                   <td>比重</td>
 	                   <td>
-	                      <input type="text" name="tabpom.proportion" value="<s:property value='pom.proportion'/>" datatype="*8-2"/><br/>
-	                      <input type="text" name="tabpom.proportion2" value="<s:property value='pom.proportion2'/>" datatype="*8-2"/>(±值)
+	                      <input type="text" name="tabpom.proportion" value="<s:property value='tabpom.proportion'/>" datatype="*8-2"/><br/>
+	                      <input type="text" name="tabpom.proportion2" value="<s:property value='tabpom.proportion2'/>" datatype="*8-2"/>(±值)
 	                   </td>
 	                   <td>
-	                     <input type="text" name="tabpom.proportionDescription" value="<s:property value='pom.proportionDescription'/>" datatype="*0-300"/> 
+	                     <input type="text" name="tabpom.proportionDescription" value="<s:property value='tabpom.proportionDescription'/>" datatype="*0-300"/> 
 	                   </td>
 	                </tr>
 	                <tr>
 	                   <td>AKRON耐磨</td>
-	                   <td><input type="text" name="tabpom.wresistingAkron" value="<s:property value='pom.wresistingAkron'/>" datatype="*8-2"/></td>
-	                   <td><input type="text" name="tabpom.wresistingAkronDes" value="<s:property value='pom.wresistingAkronDes'/>" datatype="*0-300"/></td>
+	                   <td><input type="text" name="tabpom.wresistingAkron" value="<s:property value='tabpom.wresistingAkron'/>" datatype="*8-2"/></td>
+	                   <td><input type="text" name="tabpom.wresistingAkronDes" value="<s:property value='tabpom.wresistingAkronDes'/>" datatype="*0-300"/></td>
 	                </tr>
 	                <tr>
 	                   <td>DIN耐磨</td>
-	                   <td><input type="text" name="tabpom.wresistingDin" value="<s:property value='pom.wresistingDin'/>" datatype="*8-2"/></td>
-	                   <td><input type="text" name="tabpom.wresistingDinDes" value="<s:property value='pom.wresistingDinDes'/>" datatype="*0-300"/></td>
+	                   <td><input type="text" name="tabpom.wresistingDin" value="<s:property value='tabpom.wresistingDin'/>" datatype="*8-2"/></td>
+	                   <td><input type="text" name="tabpom.wresistingDinDes" value="<s:property value='tabpom.wresistingDinDes'/>" datatype="*0-300"/></td>
 	                </tr>
 	                <tr>
 	                   <td>止滑係數</td>
-	                   <td><input type="text" name="tabpom.ratioA" value="<s:property value='pom.ratioA'/>" datatype="*8-2"/></td>
-	                   <td><input type="text" name="tabpom.ratioADes" value="<s:property value='pom.ratioADes'/>" datatype="*0-300"/></td>
+	                   <td><input type="text" name="tabpom.ratioA" value="<s:property value='tabpom.ratioA'/>" datatype="*8-2"/></td>
+	                   <td><input type="text" name="tabpom.ratioADes" value="<s:property value='tabpom.ratioADes'/>" datatype="*0-300"/></td>
 	                </tr>
 	                <tr>
 	                   <td>耐油係數</td>
-	                   <td><input type="text" name="tabpom.ratioB" value="<s:property value='pom.ratioB'/>" datatype="*8-2"/></td>
-	                   <td><input type="text" name="tabpom.ratioBDes" value="<s:property value='pom.ratioBDes'/>" datatype="*0-300"/></td>
+	                   <td><input type="text" name="tabpom.ratioB" value="<s:property value='tabpom.ratioB'/>" datatype="*8-2"/></td>
+	                   <td><input type="text" name="tabpom.ratioBDes" value="<s:property value='tabpom.ratioBDes'/>" datatype="*0-300"/></td>
 	                </tr>
 	                <tr>
 	                   <td>耐彎曲</td>
-	                   <td><input type="text" name="tabpom.ableBend" value="<s:property value='pom.ableBend'/>" datatype="*8-2"/></td>
-	                   <td><input type="text" name="tabpom.ableBendDes" value="<s:property value='pom.ableBendDes'/>" datatype="*0-300"/></td>
+	                   <td><input type="text" name="tabpom.ableBend" value="<s:property value='tabpom.ableBend'/>" datatype="*8-2"/></td>
+	                   <td><input type="text" name="tabpom.ableBendDes" value="<s:property value='tabpom.ableBendDes'/>" datatype="*0-300"/></td>
 	                </tr>
 	                <tr>
 	                   <td>耐黃變</td>
-	                   <td><input type="text" name="tabpom.ableYellow" value="<s:property value='pom.ableYellow'/>" datatype="*8-2"/></td>
-	                   <td><input type="text" name="tabpom.ableYellowDes" value="<s:property value='pom.ableYellowDes'/>" datatype="*0-300"/></td>
+	                   <td><input type="text" name="tabpom.ableYellow" value="<s:property value='tabpom.ableYellow'/>" datatype="*8-2"/></td>
+	                   <td><input type="text" name="tabpom.ableYellowDes" value="<s:property value='tabpom.ableYellowDes'/>" datatype="*0-300"/></td>
 	                </tr>
 	                <tr>
 	                   <td>抗高壓</td>
-	                   <td><input type="text" name="tabpom.defyPress" value="<s:property value='pom.defyPress'/>" datatype="*8-2"/></td>
-	                   <td><input type="text" name="tabpom.defyPressDes" value="<s:property value='pom.defyPressDes'/>" datatype="*0-300"/></td>
+	                   <td><input type="text" name="tabpom.defyPress" value="<s:property value='tabpom.defyPress'/>" datatype="*8-2"/></td>
+	                   <td><input type="text" name="tabpom.defyPressDes" value="<s:property value='tabpom.defyPressDes'/>" datatype="*0-300"/></td>
 	                </tr>
 	                <tr>
 	                   <td>抗靜電</td>
-	                   <td><input type="text" name="tabpom.defyEle" value="<s:property value='pom.defyEle'/>" datatype="*8-2"/></td>
-	                   <td><input type="text" name="tabpom.defyEleDes" value="<s:property value='pom.defyEleDes'/>" datatype="*0-300"/></td>
+	                   <td><input type="text" name="tabpom.defyEle" value="<s:property value='tabpom.defyEle'/>" datatype="*8-2"/></td>
+	                   <td><input type="text" name="tabpom.defyEleDes" value="<s:property value='tabpom.defyEleDes'/>" datatype="*0-300"/></td>
 	                </tr>
 	                <tr>
 	                   <td>老化水解</td>
-	                   <td><input type="text" name="tabpom.ageing" value="<s:property value='pom.ageing'/>" datatype="*8-2"/></td>
-	                   <td><input type="text" name="tabpom.ageingDes" value="<s:property value='pom.ageingDes'/>" datatype="*0-300"/></td>
+	                   <td><input type="text" name="tabpom.ageing" value="<s:property value='tabpom.ageing'/>" datatype="*8-2"/></td>
+	                   <td><input type="text" name="tabpom.ageingDes" value="<s:property value='tabpom.ageingDes'/>" datatype="*0-300"/></td>
 	                </tr>
 	                <tr>
 	                   <td>收縮</td>
-	                   <td><input type="text" name="tabpom.contract" value="<s:property value='pom.contract'/>" datatype="*8-2"/></td>
-	                   <td><input type="text" name="tabpom.contractDes" value="<s:property value='pom.contractDes'/>" datatype="*0-300"/></td>
+	                   <td><input type="text" name="tabpom.contract" value="<s:property value='tabpom.contract'/>" datatype="*8-2"/></td>
+	                   <td><input type="text" name="tabpom.contractDes" value="<s:property value='tabpom.contractDes'/>" datatype="*0-300"/></td>
 	                </tr>
 	                <tr>
 	                   <td>彈性</td>
-	                   <td><input type="text" name="tabpom.elasticity" value="<s:property value='pom.elasticity'/>" datatype="*8-2"/></td>
-	                   <td><input type="text" name="tabpom.elasticityDes" value="<s:property value='pom.elasticityDes'/>" datatype="*0-300"/></td>
+	                   <td><input type="text" name="tabpom.elasticity" value="<s:property value='tabpom.elasticity'/>" datatype="*8-2"/></td>
+	                   <td><input type="text" name="tabpom.elasticityDes" value="<s:property value='tabpom.elasticityDes'/>" datatype="*0-300"/></td>
 	                </tr>
 	                <tr>
 	                   <td>壓縮</td>
-	                   <td><input type="text" name="tabpom.compression" value="<s:property value='pom.compression'/>" datatype="*8-2"/></td>
-	                   <td><input type="text" name="tabpom.compressionDes" value="<s:property value='pom.compressionDes'/>" datatype="*0-300"/></td>
+	                   <td><input type="text" name="tabpom.compression" value="<s:property value='tabpom.compression'/>" datatype="*8-2"/></td>
+	                   <td><input type="text" name="tabpom.compressionDes" value="<s:property value='tabpom.compressionDes'/>" datatype="*0-300"/></td>
 	                </tr>
 	                <tr>
 	                   <td>分裂</td>
-	                   <td><input type="text" name="tabpom.division" value="<s:property value='pom.division'/>" datatype="*8-2"/></td>
-	                   <td><input type="text" name="tabpom.divisionDes" value="<s:property value='pom.divisionDes'/>" datatype="*0-300"/></td>
+	                   <td><input type="text" name="tabpom.division" value="<s:property value='tabpom.division'/>" datatype="*8-2"/></td>
+	                   <td><input type="text" name="tabpom.divisionDes" value="<s:property value='tabpom.divisionDes'/>" datatype="*0-300"/></td>
 	                </tr>
 	                <tr>
 	                   <td>300% Modulus</td>
-	                   <td><input type="text" name="tabpom.modulus300" value="<s:property value='pom.modulus300'/>" datatype="*8-2"/></td>
-	                   <td><input type="text" name="tabpom.modulus300Des" value="<s:property value='pom.modulus300Des'/>" datatype="*0-300"/></td>
+	                   <td><input type="text" name="tabpom.modulus300" value="<s:property value='tabpom.modulus300'/>" datatype="*8-2"/></td>
+	                   <td><input type="text" name="tabpom.modulus300Des" value="<s:property value='tabpom.modulus300Des'/>" datatype="*0-300"/></td>
 	                </tr>
 	                <tr>
 	                   <td>吐霜</td>
-	                   <td><input type="text" name="tabpom.spitCream" value="<s:property value='pom.spitCream'/>" datatype="*8-2"/></td>
-	                   <td><input type="text" name="tabpom.spitCreamDes" value="<s:property value='pom.spitCreamDes'/>" datatype="*0-300"/></td>
+	                   <td><input type="text" name="tabpom.spitCream" value="<s:property value='tabpom.spitCream'/>" datatype="*8-2"/></td>
+	                   <td><input type="text" name="tabpom.spitCreamDes" value="<s:property value='tabpom.spitCreamDes'/>" datatype="*0-300"/></td>
 	                </tr>
 	                <tr>
 	                   <td>認證</td>
@@ -196,19 +184,19 @@ String formulaIndex=request.getParameter("formulaIndex");
 	                <tr>
 	                   <td>特性說明</td>
 	                   <td colspan="2">
-	                      <textarea style="width:100%;height:100px" name="tabpom.instruction" datatype="*0-300"><s:property value='pom.instruction'/></textarea>					      
+	                      <textarea style="width:100%;height:100px" name="tabpom.instruction" datatype="*0-300"><s:property value='tabpom.instruction'/></textarea>					      
 						<s:if test="tabpom==null">
 						<input type="hidden" value="<s:property value='#session.loginUser.username'/>" name="tabpom.username" />
 						<input type="hidden" value="<%=str_date%>" name="tabpom.tabpomDate" id="tabpomDate"/>
 						</s:if>
 						<s:else>
-						   <input type="hidden" value="<s:property value='pom.tabpomDate'/>" name="tabpom.tabpomDate" />
-						   <input type="hidden" value="<s:property value='pom.username'/>" name="tabpom.username" />
+						   <input type="hidden" value="<s:property value='tabpom.tabpomDate'/>" name="tabpom.tabpomDate" />
+						   <input type="hidden" value="<s:property value='tabpom.username'/>" name="tabpom.username" />
 						   <input type="hidden" value="${loginUser.username }" name="tabpom.modifyName" />
 						   <input type="hidden" value="<%=str_date%>" name="tabpom.modifyDate" />
 						</s:else>
 	                     
-	                     <input type="hidden" name="<s:property value='pom.fileMk'/>" value="tabpom.fileMk"/>
+	                     <input type="hidden" name="tabpom.fileMk" value="<s:property value='tabpom.fileMk'/>"/>
 	                   </td>                 
 	                </tr>
 	                                         											
@@ -238,11 +226,11 @@ String formulaIndex=request.getParameter("formulaIndex");
 </center>
  </form>		
 	<hr/>		
-     <s:if test="formula.pom.webTabpomfiles.size>0">		
+     <s:if test="webTabpomfiles.size>0">		
       <div id="webtabfiledao">	
 	    <b style="color: blue">附檔:</b><br/>
 		 <div id="fileJson">
-		   <s:iterator value="formula.pom.webTabpomfiles">
+		   <s:iterator value="webTabpomfiles">
 		        <a href="/upload_webtabpom/<s:property value='id.webTabpom.pomNo'/>/<s:property value="%{toUrl2(id.filename)}"/>" target="_blank">
 		        <s:property value="id.filename"/>&nbsp;
 		        </a>
@@ -259,7 +247,6 @@ String formulaIndex=request.getParameter("formulaIndex");
 
 <script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script>
 	<script type="text/javascript" src="page/jquerys/layer/layer.min.js"></script>
-	<!-- <script type="text/javascript" src="jquery/layer3/layer.js"></script> -->
 	<script type="text/javascript" src="jquery/DatePicker/WdatePicker.js"></script>
 	<script type="text/javascript" src="jquery/Validform_v5.3.2_min.js"></script>
 	<script type="text/javascript" src="jquery/jquery-form.js"></script>
@@ -355,7 +342,7 @@ String formulaIndex=request.getParameter("formulaIndex");
 				jq.each(data,function(i,obj){
 					item="<option value='"+obj[0]+"'>"+obj[2]+"</option>";
 					jq("#dwrWebbrank").append(item);
-				})
+				});
 			}
 		});
 			
@@ -413,9 +400,9 @@ String formulaIndex=request.getParameter("formulaIndex");
 		            "</a>"+
 		            "<a href="+item_url+"><img src='images/icon/del_file.png' alt='刪除' title='刪除' style='border:0px'/></a>&nbsp;";
 		            jq("#fileJson").append(item);
-		         }) 
+		         });
 		      }
-		   })
+		   });
 		}
 	
 

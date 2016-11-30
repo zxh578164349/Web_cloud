@@ -204,7 +204,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 						   <input type="hidden" value="<%=str_date%>" name="tabpom.modifyDate" />
 						</s:else>
 	                     
-	                     <input type="hidden" name="<s:property value='pom.fileMk'/>" value="tabpom.fileMk"/>
+	                     <input type="hidden" name="tabpom.fileMk" value="<s:property value='pom.fileMk'/>"/>
 	                   </td>                 
 	                </tr>
 	                                         											

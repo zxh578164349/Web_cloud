@@ -441,10 +441,7 @@ function checkallItems(){
     maxmin:true,
     //page:{url:'kyz_findById_layer?billNo='+billNo+'& factNo='+factNo},
     //iframe:{src:'kyz_findById_layer?billNo='+billNo+'& factNo='+factNo,scrolling:'auto'},   
-    iframe:{src:'saveAndUpdate/WebTabpomSaveOrUpdate_layer.jsp?formulaIndex='+formulaIndex,scrolling:'auto'},
-    
-    yes:function(){},
-    no:function(){}              
+    iframe:{src:'saveAndUpdate/WebTabpomSaveOrUpdate_layer.jsp?formulaIndex='+formulaIndex,scrolling:'auto'}             
 });
 }
 
