@@ -10,7 +10,6 @@
 java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("yyyyMMdd");
 java.util.Date currentTime = new java.util.Date();//得到当前系统时间
 String str_date = formatter.format(currentTime); //将日期时间格式化
-String formulaIndex=request.getParameter("formulaIndex");
 %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
@@ -41,7 +40,7 @@ String formulaIndex=request.getParameter("formulaIndex");
 	                        <input type="text" name="tabpom.pomNo" placeholder="自動生成" id="pomNo" style="color:blue" readonly datatype="*"/>						    	                    	                    
 	                  </td>
 	                  <td>
-	                      <input type="text" name="tabpom.formulaId.formulaIndex" value="<%=formulaIndex%>" id="pomName" datatype="*" readonly style="color:blue"/>
+	                      <input type="text" name="tabpom.formulaId.formulaIndex"  id="formulaIndex2" datatype="*" readonly style="color:blue"/>
 	                  </td>
 	                  <td>	                      
 						     <select name="tabpom.webBrank.id" id="dwrWebbrank" datatype="*" onchange="makePomNo2('dwrWebbrank','tabpomDate')">						      					        					        
@@ -232,19 +231,10 @@ String formulaIndex=request.getParameter("formulaIndex");
 </s:if> 
 
 	
-<script type="text/javascript">	
-	var jq=jQuery.noConflict();
-	isLoadUploadify = true;
-	var loadi;
-	jq(document).ajaxStart(function() {
-		loadi = layer.load("請稍等...");
-	});
-	jq(document).ajaxStop(function() {
-		layer.close(loadi);
-	});
+<script type="text/javascript">		
 	var uploadify_config = {
 			'method':'POST',
-		    'uploader' : '../webtabpom_uploadfile_session;jsessionid=${pageContext.session.id}',
+		    'uploader' : 'webtabpom_uploadfile_session;jsessionid=${pageContext.session.id}',
 		    'swf' : 'uploadify/uploadify.swf',
 		    'removeTimeout' : 0,
 		    'width' : 80,
@@ -308,6 +298,7 @@ String formulaIndex=request.getParameter("formulaIndex");
 					layer.msg("附檔上傳失敗",3,3);
 				}*/
 				layer.msg("添加成功",3,1);
+				jq("#a_webformula").click();
 			}
 		});
 		demo.tipmsg.w["*8-2"] = "只能數字且不超過8位數,可保留2位以內小數";	

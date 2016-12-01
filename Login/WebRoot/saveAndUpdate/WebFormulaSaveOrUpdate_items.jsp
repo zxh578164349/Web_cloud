@@ -45,7 +45,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 <body>
 
 	<form action="webformula_add" method="post" id="form">
-	<div class="panel panel-default">
+	<%-- <div class="panel panel-default">
 	    <div class="panel-heading">配方表頭</div>
 	    <div class="panel-body">
 				<table class="table table-condensed" id="tb_main">
@@ -114,7 +114,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 					</tbody>
 				</table>
 			</div>
-		</div>
+		</div> --%>
 		
 		<div class="panel panel-default" id="div_webformalaitem" style="display:none">	
 		   <div class="panel-heading">

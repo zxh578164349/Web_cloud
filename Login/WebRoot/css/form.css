@@ -28,6 +28,7 @@
 .Validform_error {
 	background-color: #ffe7e7;
 	color: red;
+	border: 1px solid red;
 }
 
 #Validform_msg {

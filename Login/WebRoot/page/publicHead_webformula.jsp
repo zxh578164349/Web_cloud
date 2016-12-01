@@ -34,11 +34,11 @@
 				   <input type="text"  name="formula.factNo.factNo" value="${loginUser.factno}__${loginUser.erpfactno}" readonly id="factno" />									
 			    </s:if>
 			    <s:else>
-			      <select  name="formula.factNo.factNo" onchange="makeFormulaIndex()" datatype="*" id="factno"></select>
+			      <select  name="formula.factNo.factNo"  datatype="*" id="factno"></select>
 			    </s:else>
 			  </td>
 			  <td>
-			     <select name="formula.factCode.id" datatype="*" id="factcode" onchange="makeFormulaIndex()"></select>
+			     <select name="formula.factCode.id" datatype="*" id="factcode" ></select>
 			     &nbsp;&nbsp;
 			     <input value="搜索" type="button" class="btn btn-primary" onclick="submis('public_form')" />
 			     <!-- <input value="導出Excel" type="button" class="btn btn-primary" onclick="print('public_form','factNo','yymm','yymm2')"/> -->

@@ -32,6 +32,13 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
     width:100%;height:250px;overflow:auto;border:1px dashed blue;text-align:left
   }
   
+#myTabContent_item ul{margin:0px;padding:0px}
+.list_item{margin:0px 0px; width:100%;}  
+.list_item li.columnhead{font-size: 12px;font-weight:bold;}  
+.list_item li,.list_item li.columnhead{  
+    width:20%;height:28px;text-align:left;float:left;margin:0px 0px;list-style:none; border:1px solid ; 
+}    
+  
 #myTabContent ul{margin:0px;padding:0px}
 .list{margin:0px 0px; width:127%;}  
 .list li.columnhead,.list li.col_item,.list li.col_item4{font-size: 12px;font-weight:bold;}  
@@ -53,9 +60,9 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 	
 	
 	   <ul id="myTab" class="nav nav-tabs">
-		 <li class="active"><a href="#tab_webformula" data-toggle="tab" id="a_webformula">配方主表</a></li>			  		 
-		 <li><a href="#tab_webformaulaitems" data-toggle="tab" id="a_webformaulaitems">配方階段</a></li>	
-		 <li><a href="#tab_webtabpom" data-toggle="tab" id="a_webtabpom">物性資料</a></li>		 
+		 <li class="active"><a href="#tab_webformula" data-toggle="tab" id="a_webformula">配方資料</a></li>			  		 
+		 <!-- <li><a href="#tab_webformaulaitems" data-toggle="tab" id="a_webformaulaitems">配方階段</a></li> -->	
+		 <li ><a href="#tab_webtabpom" data-toggle="tab" id="a_webtabpom">物性資料</a></li>		 
 		</ul>
 		<div id="myTabContent" class="tab-content">
 			<div class="tab-pane fade in active" id="tab_webformula">				
@@ -63,11 +70,11 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
                   <jsp:include page="WebFormulaSaveOrUpdate_main.jsp" />
                 </div>  
 			</div>
-			<div class="tab-pane fade" id="tab_webformaulaitems">			   
+			<!-- <div class="tab-pane fade" id="tab_webformaulaitems">			   
 			         <div>
 					   <jsp:include page="WebFormulaSaveOrUpdate_items.jsp" />
 				     </div>			    				
-			</div>
+			</div> -->
 			<div class="tab-pane fade" id="tab_webtabpom">
 				<div>
 					<jsp:include page="WebFormulaSaveOrUpdate_pom.jsp" />
