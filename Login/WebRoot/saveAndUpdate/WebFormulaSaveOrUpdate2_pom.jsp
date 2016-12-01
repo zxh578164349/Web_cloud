@@ -67,111 +67,111 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 	                   <td>硬度</td>
 	                   <td>
 	                      <input type="text" name="tabpom.hardness" value="<s:property value='formula.pom.hardness'/>" datatype="*8-2"/><br/>
-	                      <input type="text" name="tabpom.hardness2" value="<s:property value='pom.hardness2'/>" datatype="*8-2"/>(±值)
+	                      <input type="text" name="tabpom.hardness2" value="<s:property value='formula.pom.hardness2'/>" datatype="*8-2"/>(±值)
 	                   </td>
 	                   <td>
-	                      <input type="text" name="tabpom.hardnessDescription" value="<s:property value='pom.hardnessDescription'/>" datatype="*0-300"/>
+	                      <input type="text" name="tabpom.hardnessDescription" value="<s:property value='formula.pom.hardnessDescription'/>" datatype="*0-300"/>
 	                   </td>
 	                </tr>
 	                <tr>
 	                   <td>拉力</td>
-	                   <td><input type="text" name="tabpom.forces" value="<s:property value='pom.forces'/>" datatype="*8-2"/></td>
-	                   <td><input type="text" name="tabpom.forcesDescription" value="<s:property value='pom.forcesDescription'/>" datatype="*0-300"/></td>
+	                   <td><input type="text" name="tabpom.forces" value="<s:property value='formula.pom.forces'/>" datatype="*8-2"/></td>
+	                   <td><input type="text" name="tabpom.forcesDescription" value="<s:property value='formula.pom.forcesDescription'/>" datatype="*0-300"/></td>
 	                </tr>
 	                <tr>
 	                   <td>延伸</td>
-	                   <td><input type="text" name="tabpom.extend" value="<s:property value='pom.extend'/>" datatype="*8-2"/></td>
-	                   <td><input type="text" name="tabpom.extendsDescription" value="<s:property value='pom.extendsDescription'/>" datatype="*0-300"/></td>
+	                   <td><input type="text" name="tabpom.extend" value="<s:property value='formula.pom.extend'/>" datatype="*8-2"/></td>
+	                   <td><input type="text" name="tabpom.extendsDescription" value="<s:property value='formula.pom.extendsDescription'/>" datatype="*0-300"/></td>
 	                </tr>
 	                <tr>
 	                   <td>C型撕裂</td>
-	                   <td><input type="text" name="tabpom.tearingC" value="<s:property value='pom.tearingC'/>" datatype="*8-2"/></td>
-	                   <td><input type="text" name="tabpom.tearingCDescription" value="<s:property value='pom.tearingCDescription'/>" datatype="*0-300"/></td>
+	                   <td><input type="text" name="tabpom.tearingC" value="<s:property value='formula.pom.tearingC'/>" datatype="*8-2"/></td>
+	                   <td><input type="text" name="tabpom.tearingCDescription" value="<s:property value='formula.pom.tearingCDescription'/>" datatype="*0-300"/></td>
 	                </tr>
 	                <tr>
 	                   <td>比重</td>
 	                   <td>
-	                      <input type="text" name="tabpom.proportion" value="<s:property value='pom.proportion'/>" datatype="*8-2"/><br/>
-	                      <input type="text" name="tabpom.proportion2" value="<s:property value='pom.proportion2'/>" datatype="*8-2"/>(±值)
+	                      <input type="text" name="tabpom.proportion" value="<s:property value='formula.pom.proportion'/>" datatype="*8-2"/><br/>
+	                      <input type="text" name="tabpom.proportion2" value="<s:property value='formula.pom.proportion2'/>" datatype="*8-2"/>(±值)
 	                   </td>
 	                   <td>
-	                     <input type="text" name="tabpom.proportionDescription" value="<s:property value='pom.proportionDescription'/>" datatype="*0-300"/> 
+	                     <input type="text" name="tabpom.proportionDescription" value="<s:property value='formula.pom.proportionDescription'/>" datatype="*0-300"/> 
 	                   </td>
 	                </tr>
 	                <tr>
 	                   <td>AKRON耐磨</td>
-	                   <td><input type="text" name="tabpom.wresistingAkron" value="<s:property value='pom.wresistingAkron'/>" datatype="*8-2"/></td>
-	                   <td><input type="text" name="tabpom.wresistingAkronDes" value="<s:property value='pom.wresistingAkronDes'/>" datatype="*0-300"/></td>
+	                   <td><input type="text" name="tabpom.wresistingAkron" value="<s:property value='formula.pom.wresistingAkron'/>" datatype="*8-2"/></td>
+	                   <td><input type="text" name="tabpom.wresistingAkronDes" value="<s:property value='formula.pom.wresistingAkronDes'/>" datatype="*0-300"/></td>
 	                </tr>
 	                <tr>
 	                   <td>DIN耐磨</td>
-	                   <td><input type="text" name="tabpom.wresistingDin" value="<s:property value='pom.wresistingDin'/>" datatype="*8-2"/></td>
-	                   <td><input type="text" name="tabpom.wresistingDinDes" value="<s:property value='pom.wresistingDinDes'/>" datatype="*0-300"/></td>
+	                   <td><input type="text" name="tabpom.wresistingDin" value="<s:property value='formula.pom.wresistingDin'/>" datatype="*8-2"/></td>
+	                   <td><input type="text" name="tabpom.wresistingDinDes" value="<s:property value='formula.pom.wresistingDinDes'/>" datatype="*0-300"/></td>
 	                </tr>
 	                <tr>
 	                   <td>止滑係數</td>
-	                   <td><input type="text" name="tabpom.ratioA" value="<s:property value='pom.ratioA'/>" datatype="*8-2"/></td>
-	                   <td><input type="text" name="tabpom.ratioADes" value="<s:property value='pom.ratioADes'/>" datatype="*0-300"/></td>
+	                   <td><input type="text" name="tabpom.ratioA" value="<s:property value='formula.pom.ratioA'/>" datatype="*8-2"/></td>
+	                   <td><input type="text" name="tabpom.ratioADes" value="<s:property value='formula.pom.ratioADes'/>" datatype="*0-300"/></td>
 	                </tr>
 	                <tr>
 	                   <td>耐油係數</td>
-	                   <td><input type="text" name="tabpom.ratioB" value="<s:property value='pom.ratioB'/>" datatype="*8-2"/></td>
-	                   <td><input type="text" name="tabpom.ratioBDes" value="<s:property value='pom.ratioBDes'/>" datatype="*0-300"/></td>
+	                   <td><input type="text" name="tabpom.ratioB" value="<s:property value='formula.pom.ratioB'/>" datatype="*8-2"/></td>
+	                   <td><input type="text" name="tabpom.ratioBDes" value="<s:property value='formula.pom.ratioBDes'/>" datatype="*0-300"/></td>
 	                </tr>
 	                <tr>
 	                   <td>耐彎曲</td>
-	                   <td><input type="text" name="tabpom.ableBend" value="<s:property value='pom.ableBend'/>" datatype="*8-2"/></td>
-	                   <td><input type="text" name="tabpom.ableBendDes" value="<s:property value='pom.ableBendDes'/>" datatype="*0-300"/></td>
+	                   <td><input type="text" name="tabpom.ableBend" value="<s:property value='formula.pom.ableBend'/>" datatype="*8-2"/></td>
+	                   <td><input type="text" name="tabpom.ableBendDes" value="<s:property value='formula.pom.ableBendDes'/>" datatype="*0-300"/></td>
 	                </tr>
 	                <tr>
 	                   <td>耐黃變</td>
-	                   <td><input type="text" name="tabpom.ableYellow" value="<s:property value='pom.ableYellow'/>" datatype="*8-2"/></td>
-	                   <td><input type="text" name="tabpom.ableYellowDes" value="<s:property value='pom.ableYellowDes'/>" datatype="*0-300"/></td>
+	                   <td><input type="text" name="tabpom.ableYellow" value="<s:property value='formula.pom.ableYellow'/>" datatype="*8-2"/></td>
+	                   <td><input type="text" name="tabpom.ableYellowDes" value="<s:property value='formula.pom.ableYellowDes'/>" datatype="*0-300"/></td>
 	                </tr>
 	                <tr>
 	                   <td>抗高壓</td>
-	                   <td><input type="text" name="tabpom.defyPress" value="<s:property value='pom.defyPress'/>" datatype="*8-2"/></td>
-	                   <td><input type="text" name="tabpom.defyPressDes" value="<s:property value='pom.defyPressDes'/>" datatype="*0-300"/></td>
+	                   <td><input type="text" name="tabpom.defyPress" value="<s:property value='formula.pom.defyPress'/>" datatype="*8-2"/></td>
+	                   <td><input type="text" name="tabpom.defyPressDes" value="<s:property value='formula.pom.defyPressDes'/>" datatype="*0-300"/></td>
 	                </tr>
 	                <tr>
 	                   <td>抗靜電</td>
-	                   <td><input type="text" name="tabpom.defyEle" value="<s:property value='pom.defyEle'/>" datatype="*8-2"/></td>
-	                   <td><input type="text" name="tabpom.defyEleDes" value="<s:property value='pom.defyEleDes'/>" datatype="*0-300"/></td>
+	                   <td><input type="text" name="tabpom.defyEle" value="<s:property value='formula.pom.defyEle'/>" datatype="*8-2"/></td>
+	                   <td><input type="text" name="tabpom.defyEleDes" value="<s:property value='formula.pom.defyEleDes'/>" datatype="*0-300"/></td>
 	                </tr>
 	                <tr>
 	                   <td>老化水解</td>
-	                   <td><input type="text" name="tabpom.ageing" value="<s:property value='pom.ageing'/>" datatype="*8-2"/></td>
-	                   <td><input type="text" name="tabpom.ageingDes" value="<s:property value='pom.ageingDes'/>" datatype="*0-300"/></td>
+	                   <td><input type="text" name="tabpom.ageing" value="<s:property value='formula.pom.ageing'/>" datatype="*8-2"/></td>
+	                   <td><input type="text" name="tabpom.ageingDes" value="<s:property value='formula.pom.ageingDes'/>" datatype="*0-300"/></td>
 	                </tr>
 	                <tr>
 	                   <td>收縮</td>
-	                   <td><input type="text" name="tabpom.contract" value="<s:property value='pom.contract'/>" datatype="*8-2"/></td>
-	                   <td><input type="text" name="tabpom.contractDes" value="<s:property value='pom.contractDes'/>" datatype="*0-300"/></td>
+	                   <td><input type="text" name="tabpom.contract" value="<s:property value='formula.pom.contract'/>" datatype="*8-2"/></td>
+	                   <td><input type="text" name="tabpom.contractDes" value="<s:property value='formula.pom.contractDes'/>" datatype="*0-300"/></td>
 	                </tr>
 	                <tr>
 	                   <td>彈性</td>
-	                   <td><input type="text" name="tabpom.elasticity" value="<s:property value='pom.elasticity'/>" datatype="*8-2"/></td>
-	                   <td><input type="text" name="tabpom.elasticityDes" value="<s:property value='pom.elasticityDes'/>" datatype="*0-300"/></td>
+	                   <td><input type="text" name="tabpom.elasticity" value="<s:property value='formula.pom.elasticity'/>" datatype="*8-2"/></td>
+	                   <td><input type="text" name="tabpom.elasticityDes" value="<s:property value='formula.pom.elasticityDes'/>" datatype="*0-300"/></td>
 	                </tr>
 	                <tr>
 	                   <td>壓縮</td>
-	                   <td><input type="text" name="tabpom.compression" value="<s:property value='pom.compression'/>" datatype="*8-2"/></td>
-	                   <td><input type="text" name="tabpom.compressionDes" value="<s:property value='pom.compressionDes'/>" datatype="*0-300"/></td>
+	                   <td><input type="text" name="tabpom.compression" value="<s:property value='formula.pom.compression'/>" datatype="*8-2"/></td>
+	                   <td><input type="text" name="tabpom.compressionDes" value="<s:property value='formula.pom.compressionDes'/>" datatype="*0-300"/></td>
 	                </tr>
 	                <tr>
 	                   <td>分裂</td>
-	                   <td><input type="text" name="tabpom.division" value="<s:property value='pom.division'/>" datatype="*8-2"/></td>
-	                   <td><input type="text" name="tabpom.divisionDes" value="<s:property value='pom.divisionDes'/>" datatype="*0-300"/></td>
+	                   <td><input type="text" name="tabpom.division" value="<s:property value='formula.pom.division'/>" datatype="*8-2"/></td>
+	                   <td><input type="text" name="tabpom.divisionDes" value="<s:property value='formula.pom.divisionDes'/>" datatype="*0-300"/></td>
 	                </tr>
 	                <tr>
 	                   <td>300% Modulus</td>
-	                   <td><input type="text" name="tabpom.modulus300" value="<s:property value='pom.modulus300'/>" datatype="*8-2"/></td>
-	                   <td><input type="text" name="tabpom.modulus300Des" value="<s:property value='pom.modulus300Des'/>" datatype="*0-300"/></td>
+	                   <td><input type="text" name="tabpom.modulus300" value="<s:property value='formula.pom.modulus300'/>" datatype="*8-2"/></td>
+	                   <td><input type="text" name="tabpom.modulus300Des" value="<s:property value='formula.pom.modulus300Des'/>" datatype="*0-300"/></td>
 	                </tr>
 	                <tr>
 	                   <td>吐霜</td>
-	                   <td><input type="text" name="tabpom.spitCream" value="<s:property value='pom.spitCream'/>" datatype="*8-2"/></td>
-	                   <td><input type="text" name="tabpom.spitCreamDes" value="<s:property value='pom.spitCreamDes'/>" datatype="*0-300"/></td>
+	                   <td><input type="text" name="tabpom.spitCream" value="<s:property value='formula.pom.spitCream'/>" datatype="*8-2"/></td>
+	                   <td><input type="text" name="tabpom.spitCreamDes" value="<s:property value='formula.pom.spitCreamDes'/>" datatype="*0-300"/></td>
 	                </tr>
 	                <tr>
 	                   <td>認證</td>
@@ -192,19 +192,19 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 	                <tr>
 	                   <td>特性說明</td>
 	                   <td colspan="2">
-	                      <textarea style="width:100%;height:100px" name="tabpom.instruction" datatype="*0-300"><s:property value='pom.instruction'/></textarea>					      
+	                      <textarea style="width:100%;height:100px" name="tabpom.instruction" datatype="*0-300"><s:property value='formula.pom.instruction'/></textarea>					      
 						<s:if test="tabpom==null">
 						<input type="hidden" value="<s:property value='#session.loginUser.username'/>" name="tabpom.username" />
 						<input type="hidden" value="<%=str_date%>" name="tabpom.tabpomDate" id="tabpomDate"/>
 						</s:if>
 						<s:else>
-						   <input type="hidden" value="<s:property value='pom.tabpomDate'/>" name="tabpom.tabpomDate" />
-						   <input type="hidden" value="<s:property value='pom.username'/>" name="tabpom.username" />
+						   <input type="hidden" value="<s:property value='formula.pom.tabpomDate'/>" name="tabpom.tabpomDate" />
+						   <input type="hidden" value="<s:property value='formula.pom.username'/>" name="tabpom.username" />
 						   <input type="hidden" value="${loginUser.username }" name="tabpom.modifyName" />
 						   <input type="hidden" value="<%=str_date%>" name="tabpom.modifyDate" />
 						</s:else>
 	                     
-	                     <input type="hidden" name="tabpom.fileMk" value="<s:property value='pom.fileMk'/>"/>
+	                     <input type="hidden" name="tabpom.fileMk" value="<s:property value='formula.pom.fileMk'/>"/>
 	                   </td>                 
 	                </tr>
 	                                         											

@@ -80,6 +80,8 @@ import com.opensymphony.xwork2.ActionContext;
 import entity.KyVisabillm;
 import entity.KyVisabills;
 import entity.KyzExpectmatmLog;
+import entity.WebTabpom;
+import entity.WebTabpomfile;
 import entity.WebUser;
 import entity.Webestproduct;
 import entity.WebestproductId;
@@ -1679,6 +1681,31 @@ public class GlobalMethod extends HibernateDaoSupport{
 		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
 		return user;
 	}
+	
+	public static void uploadfile(WebTabpom tabpom) throws IOException{		
+		
+		//File uploadFile=new File(ServletActionContext.getServletContext().getRealPath("KyzexpFile\\"+tabpom.getPomNo()));//附檔上傳到項目
+		File uploadFile_backup=new File("d:\\WebtabpomFile_backup\\"+tabpom.getPomNo());//附檔上傳到D盤(為了避免更新項目時丟失附檔,所在上傳到D盤)			
+		if(!uploadFile_backup.exists()){
+			uploadFile_backup.mkdirs();
+		}
+		List<WebTabpomfile>list_tabfile=(List<WebTabpomfile>)ActionContext.getContext().getSession().get("list_tabfile");
+		List<BufferedInputStream>ins=(List<BufferedInputStream>)ActionContext.getContext().getSession().get("ins");
+		List<String>filesFileName=(List<String>)ActionContext.getContext().getSession().get("filenames");		
+		if(list_tabfile!=null&&list_tabfile.size()>0){
+			for(WebTabpomfile obj:list_tabfile){
+				obj.getId().setWebTabpom(tabpom);
+			}
+			List<BufferedOutputStream>outs=new ArrayList<BufferedOutputStream>();
+			for(String filename:filesFileName){
+				BufferedOutputStream out=new BufferedOutputStream(new FileOutputStream(uploadFile_backup+"\\"+filename));
+				outs.add(out);
+			}
+			tabpom.setWebTabpomfiles(list_tabfile);
+			tabpom.setFileMk("1");//標示是否帶有附檔
+			GlobalMethod.uploadFiles(ins,outs);
+		}										
+}
 	 
 	 
 	 

@@ -40,6 +40,7 @@ public class VKpiWebprofitloss implements java.io.Serializable{
 	private BigDecimal VKw27=new BigDecimal(-999999.0);
 	private BigDecimal VKw28=new BigDecimal(-999999.0);
 	private BigDecimal VKw29=new BigDecimal(-999999.0);
+	private Double VKw30=-999999.0;
 
 	// Constructors
 
@@ -336,6 +337,15 @@ public class VKpiWebprofitloss implements java.io.Serializable{
 	public void setVKw29(BigDecimal vKw29){
 		VKw29=vKw29;
 	}
+
+	public Double getVKw30(){
+		return VKw30;
+	}
+
+	public void setVKw30(Double vKw30){
+		VKw30=vKw30;
+	}
+	
 	
 	
 

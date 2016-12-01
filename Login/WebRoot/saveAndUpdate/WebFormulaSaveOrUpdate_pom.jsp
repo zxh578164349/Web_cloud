@@ -25,7 +25,6 @@ String formulaIndex=request.getParameter("formulaIndex");
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
 <link rel="stylesheet" type="text/css" href="css/form.css" />
-<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="uploadify/uploadify.css">
 </head>
 
@@ -232,19 +231,7 @@ String formulaIndex=request.getParameter("formulaIndex");
     <hr/>
 </s:if> 
 
-
-
-<script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script>
-<script type="text/javascript" src="jquery/layer/layer.min.js"></script>
-<script type="text/javascript" src="jquery/DatePicker/WdatePicker.js"></script>
-<script type="text/javascript" src="jquery/Validform_v5.3.2_min.js"></script>
-<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->	
-<script src="bootstrap/js/bootstrap.min.js"></script>
-<script src="uploadify/jquery.uploadify.js" type="text/javascript"></script>
-<!--[if lt IE 9]>  
-  <script src="bootstrap/html5.js"></script>
-  <script src="bootstrap/respond.min.js"></script>
-<![endif]-->		
+	
 <script type="text/javascript">	
 	var jq=jQuery.noConflict();
 	isLoadUploadify = true;

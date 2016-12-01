@@ -251,7 +251,8 @@ public class WebTabpomAction extends ActionSupport implements ServletResponseAwa
 		
 		/*附檔上傳*/
 		try{
-			uploadfile(tabpom);	
+			//uploadfile(tabpom);	
+			GlobalMethod.uploadfile(tabpom);
 		}catch(Exception e){
 			e.printStackTrace();
 			ajaxResult="3";
@@ -282,6 +283,11 @@ public class WebTabpomAction extends ActionSupport implements ServletResponseAwa
 		return "add";
 	}
 	
+	public  void add_session(){
+		ActionContext.getContext().getSession().put("tabpom",tabpom);
+		System.out.println(tabpom.getPomNo());
+	}
+	
 	public void uploadfile(WebTabpom tabpom) throws IOException{		
 			
 			//File uploadFile=new File(ServletActionContext.getServletContext().getRealPath("KyzexpFile\\"+tabpom.getPomNo()));//附檔上傳到項目
@@ -308,6 +314,16 @@ public class WebTabpomAction extends ActionSupport implements ServletResponseAwa
 			}										
 	}
 	
+	/**
+	 * 上傳的附檔保存到session
+	 * @Title: uploadfile_session
+	 * @Description: TODO
+	 * @param 
+	 * @return void
+	 * @throws
+	 * @author web
+	 * @date 2016/12/1
+	 */
 	public void uploadfile_session(){		
 		List<WebTabpomfile>list_tabfile=(List<WebTabpomfile>)ActionContext.getContext().getSession().get("list_tabfile");
 		List<BufferedInputStream>ins=(List<BufferedInputStream>)ActionContext.getContext().getSession().get("ins");

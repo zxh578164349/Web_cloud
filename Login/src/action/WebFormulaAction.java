@@ -293,9 +293,16 @@ public class WebFormulaAction implements ServletResponseAware{
 				WebErpBrankProcess obj=new WebErpBrankProcess(Integer.parseInt(temp));			
 				formula.setFactCode(obj);				
 				String factno=formula.getFactNo().getFactNo();
-				formula.getFactNo().setFactNo(factno.split("__")[0]);
+				formula.getFactNo().setFactNo(factno.split("__")[0]);							
+				WebTabpom tabpom=(WebTabpom)ActionContext.getContext().getSession().get("tabpom");
+				if(tabpom!=null){
+					formula.setPom(tabpom);
+					GlobalMethod.uploadfile(tabpom);
+				}
+				
 			}						
 			webformulaser.add(formula);
+			ActionContext.getContext().getSession().remove("tabpom");
 			ajaxResult="0";
 		}catch(Exception e){
 			ajaxResult="1";

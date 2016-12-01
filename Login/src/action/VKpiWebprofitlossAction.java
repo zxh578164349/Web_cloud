@@ -64,7 +64,7 @@ public class VKpiWebprofitlossAction extends ActionSupport implements ServletRes
 	private List<String>list_factcode;
 	private List<String>list_factno;
 	private final static String RISERATE="漲福比率";
-	private final static int NUM=30;//print_tw  多少箇項目（29+1）
+	private final static int NUM=31;//print_tw  多少箇項目（29+1）
 	private final static int NUM2=2;//集合移除相同元素后的箇數
 	private final static String STR_LONG="-999999";
 	private final static String STR_DB="-999999.0";
@@ -539,6 +539,7 @@ public class VKpiWebprofitlossAction extends ActionSupport implements ServletRes
 				list2.add(this.isMyNull(frm,obj2.getVKw27().doubleValue(),obj1.getVKw27().doubleValue(),obj1.getVKw27().doubleValue()));
 				list2.add(this.isMyNull(frm,obj2.getVKw28().doubleValue(),obj1.getVKw28().doubleValue(),obj1.getVKw28().doubleValue()));
 				list2.add(this.isMyNull(frm,obj2.getVKw29().doubleValue(),obj1.getVKw29().doubleValue(),obj1.getVKw29().doubleValue()));
+				list2.add(this.isMyNull(frm,obj2.getVKw30(),obj1.getVKw30(),obj1.getVKw30()));
 				result.add(list2);
 			}						
 		}
@@ -588,6 +589,7 @@ public class VKpiWebprofitlossAction extends ActionSupport implements ServletRes
 					list_result.get(27).add(obj.getVKw27().doubleValue());
 					list_result.get(28).add(obj.getVKw28().doubleValue());
 					list_result.get(29).add(obj.getVKw29().doubleValue());
+					list_result.get(30).add(obj.getVKw30());
 				}
 			}			
 			List<List<Double>>list_result_sort=this.deepCloneList(list_result);//克隆集合
@@ -655,6 +657,7 @@ public class VKpiWebprofitlossAction extends ActionSupport implements ServletRes
 					list_result.get(27).add(obj.getVKw27().doubleValue());
 					list_result.get(28).add(obj.getVKw28().doubleValue());
 					list_result.get(29).add(obj.getVKw29().doubleValue());
+					list_result.get(30).add(obj.getVKw30());
 				}
 				
 				
@@ -837,7 +840,8 @@ public class VKpiWebprofitlossAction extends ActionSupport implements ServletRes
 		list.add(obj.getVKw26());
 		list.add(obj.getVKw27());
 		list.add(obj.getVKw28());
-		list.add(obj.getVKw29());		
+		list.add(obj.getVKw29());
+		list.add(obj.getVKw30());
 		for(int i=0;i<list.size();i++){			
 			if(list_items.get(i).split("__")[1].equals("%")){
 				list_result.add(frm.format(list.get(i)));

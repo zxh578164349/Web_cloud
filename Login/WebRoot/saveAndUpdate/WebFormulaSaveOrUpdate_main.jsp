@@ -34,17 +34,44 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 									<th>廠別</th>
 									<th>配方索引</th>
 								</tr>
-								<tr>
+								<s:if test="formula==null">
+								    <tr>
+									<td>							
+									    <s:if test="#session.factNo!='tw'">
+									      <input type="text" name="formula.factNo.factNo" value="${loginUser.factno}__${loginUser.erpfactno}" readonly id="dwr_factno" />
+								        </s:if> 
+								        <s:if test="#session.factNo=='tw'">
+									      <select name="formula.factNo.factNo" onchange="makeFormulaIndex()" datatype="*" id="dwr_factno">
+									      </select>
+								        </s:if>																								
+									</td>
+									<td>
+									<input type="text" style="color:blue" name="formula.formulaIndex" readonly="readonly" datatype="*" id="formulaIndex" />
+																	
+									</td>
+								</tr> 
+								</s:if>
+								<s:else>
+								   <tr>
 									<td><input type="text" id="factNo" style="color:blue" value="<s:property value='formula.factNo.factNo'/>"  name="formula.factNo.factNo" readonly /></td>
 									<td><input type="text" style="color:blue" value="<s:property value='formula.formulaIndex' />"  name="formula.formulaIndex" id="formulaIndex" readonly />
+									<input type="hidden" value="${loginUser.username}" name="formula.modifyName" /> <!--  修改者--> 
+									 <input type="hidden" value="<%=str_date%>" name="formula.modifyDate" /> <!--  修改日期-->
 									</td>
-								</tr>
+								   </tr>
+								</s:else>								
 								<tr>
 									<th>製程類別</th>
 									<th>配方編號</th>
 								</tr>
 								<tr>
-									<td><input type="text" value="<s:property value='formula.factCode.id'/>" name="formula.factCode.id" style="color:blue" readonly />
+									<td>
+									<s:if test="formula==null">
+									  <select name="factCode" datatype="*" id="dwrFactArea" onchange="makeFormulaIndex()"></select>
+									</s:if>
+									<s:else>
+									  <input type="text" value="<s:property value='formula.factCode.id'/>" name="formula.factCode.id" style="color:blue" readonly />
+									</s:else>
 									</td>
 									<td><input type="text" name="formula.formulaNo" value="<s:property value='formula.formulaNo' />" datatype="*1-30">
 									</td>
@@ -64,7 +91,8 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 									<th>成品硬度</th>
 								</tr>
 								<tr>
-									<td><input type="text" name="formula.semifinishedProductHardness" value="<s:property value='formula.semifinishedProductHardness' />" datatype="*0-30">
+									<td>
+									<input type="text" name="formula.semifinishedProductHardness" value="<s:property value='formula.semifinishedProductHardness' />" datatype="*0-30">
 									</td>
 									<td><input type="text" name="formula.productHardness" value="<s:property value='formula.productHardness' />" datatype="*0-30">
 									</td>
@@ -101,11 +129,10 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 									<th colspan="2">備註</th>
 								</tr>
 								<tr>
-									<td colspan="2"><textarea style="width:100%;height:200px" name='formula.remark' datatype="*0-200"><s:property value="formula.remark"/></textarea>
+									<td colspan="2"><textarea style="width:100%;height:200px" name='formula.remark' datatype="*0-200"><s:property value="formula.remark"/></textarea>									 
 									 <input type="hidden" value="<s:property value='formula.createName'/>" name="formula.createName" /> 
-									 <input type="hidden" value="<s:property value='formula.createDate'/>" name="formula.createDate" id="createDate" />
-									 <input type="hidden" value="${loginUser.username}" name="formula.modifyName" /> <!--  修改者--> 
-									 <input type="hidden" value="<%=str_date%>" name="formula.modifyDate" /> <!--  修改日期--></td>
+									 <input type="hidden" value="<s:property value='formula.createDate'/>" name="formula.createDate" id="createDate" />	
+									 </td>
 								</tr>
 							</tbody>
 						</table>
