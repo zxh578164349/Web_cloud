@@ -47,7 +47,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 	                     </s:else>
 	                  </td>
 	                  <td>
-	                      <input type="text" name="tabpom.formulaId.formulaIndex" value="<s:property value='formula.formulaIndex'/>" id="pomName" datatype="*" readonly style="color:blue"/>
+	                      <input type="text" name="tabpom.formulaId.formulaIndex" value="<s:property value='formula.formulaIndex'/>"  datatype="*" readonly style="color:blue"/>
 	                  </td>
 	                  <td>
 	                      <s:if test="formula.pom==null">
@@ -221,14 +221,14 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 			<input type="hidden"  name="file" id="uploadify_m" />																				
 			<input type="hidden"  id="uploaddate" value="<%=str_date %>"/>
 			<input type="hidden"  id="fileuser" value="${loginUser.username}"/>
-			<a href="javascript:jq('#uploadify_m').uploadify('cancel','*')" class="btn btn-default">取消上传</a>
-            <!-- <a href="javascript:checkpomNo()" class="btn btn-default">上传</a>-->
+			<a href="javascript:checkpomNo()" class="btn btn-default" id="btn_upload">上傳</a>
+			<a href="javascript:cancelFile()" class="btn btn-default">取消</a>           
 		</div>					
 	</div>
 	</div>
 </div>
 <center>
-			<input type="button" id="sub_pom" value="確定"  class="btn btn-primary"/>&nbsp;&nbsp;&nbsp;			 			
+			<input type="button" id="sub_pom" value="確定"  class="btn btn-primary"/>&nbsp;&nbsp;&nbsp;					 			
 			<input type="button" value="返回" onclick="javascript:back()" class="btn btn-primary"/>
 				
 </center>
@@ -250,12 +250,6 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
      </div>		
     <hr/>
 </s:if> 	 
-
-			
-
-		
-
-
 	
 <script type="text/javascript">
 var uploadify_config = {
@@ -275,21 +269,18 @@ var uploadify_config = {
 	    'fileObjName':'file',
 	    'formData':{
 	    	"filecreatedate":jq("#uploaddate").val(),
-	    	"fileusername":jq("#fileuser").val(),
-	    	"pomNo":jq("#pomNo").val()
-	    	},
+	    	"fileusername":jq("#fileuser").val()
+	    	},	    	   
 	    'onFallback':function(){
-	            alert("您未安裝FLASH控件，無法上傳圖片！請安裝FLASH控件后再試。");
-	        },	
-	    //'buttonImage':'images/btn_login_black.gif',
-	    //'fileTypeDesc' : 'Image Files',
-	    //'formData' : {"action": "upload", "sid" : ""},
-	    // 'onSelect' : uploadify_onSelect,
-	    //'onSelectError' : uploadify_onSelectError,
-	    //'onUploadError' : uploadify_onUploadError,
-	   /*'onQueueComplete' : function(){
+	          alert("您未安裝FLASH控件，無法上傳圖片！請安裝FLASH控件后再試。");
+	        },
+	    'onDialogOpen':function(){//打開文件選擇時觸發
+		    jq("#btn_upload").removeClass("disabled");
+		  },     
+	    'onQueueComplete' : function(){
 		   //loadUrl("filesUpload_findByName");
-	   },*/
+		   jq("#btn_upload").addClass("disabled");
+	     },
 	   'onSelectError' :function(file, errorCode, errorMsg){
 	      if(errorCode==-130){
 	         alert("文件類型不對");
@@ -308,7 +299,7 @@ jq(function(){
 		datatype : {
 			"*8-2" : /^-?\d{0,8}(\.[0-9]{0,2})?$/
 		},									
-		beforeSubmit:checkpomNo,														
+		//beforeSubmit:checkpomNo,														
 		ajaxPost:true,
 		callback:function(data){
 			if(data=="0"){
@@ -326,7 +317,7 @@ jq(function(){
 			}
 		}
 	});
-	demo.tipmsg.w["*8-2"] = "只能數字且不超過8位數,可保留2位以內小數";	
+	demo.tipmsg.w["*8-2"] = "只能數字且不超過8位數,可保留2位以內小數";		
 	
 	/*加載所有品牌*/
 	jq.ajax({
@@ -349,19 +340,21 @@ jq(function(){
 function checkpomNo(){
 	if(jq("#pomNo").val()==""){
 		alert("請完整資料,再上傳附檔");
-	}else{
-		//jq.load("webtabpom_clearSession");
+	}else{		
 		jq.ajax({
 			type:"get",
 			url:"webtabpom_clearSession",
+			async:false,
 			success:function(){
-				jq("#uploadify_m").uploadify("upload","*");
+				jq("#uploadify_m").uploadify("upload","*");								
 			}
 		});
-		
 	}
 }
-
+function cancelFile(){
+	jq("#uploadify_m").uploadify("cancel","*");
+	jq("#btn_upload").addClass("disabled");
+}
 			
 	       
 /*物性編號*/
@@ -401,8 +394,7 @@ function lookJson(pomNo,filename){
 	         }) 
 	      }
 	   })
-	}
-	
+	}	
 </script>
 </body>
 </html>

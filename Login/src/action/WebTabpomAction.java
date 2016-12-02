@@ -284,8 +284,7 @@ public class WebTabpomAction extends ActionSupport implements ServletResponseAwa
 	}
 	
 	public  void add_session(){
-		ActionContext.getContext().getSession().put("tabpom",tabpom);
-		System.out.println(tabpom.getPomNo());
+		ActionContext.getContext().getSession().put("tabpom",tabpom);						
 	}
 	
 	public void uploadfile(WebTabpom tabpom) throws IOException{		

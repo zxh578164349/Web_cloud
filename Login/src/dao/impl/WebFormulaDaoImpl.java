@@ -24,6 +24,7 @@ import entity.WebFormula;
 import entity.WebFormulaItems;
 import entity.WebTabpom;
 import entity.WebTabpomfile;
+import entity.WebUser;
 
 /**   
  *    
@@ -52,9 +53,13 @@ public class WebFormulaDaoImpl extends Basedao implements IWebFormulaDao{
 		StringBuffer hql2=new StringBuffer();
 		Map<String,Object>map=new HashMap<String,Object>();
 		hql.append("from WebFormula where 1=1 ");
-		hql2.append("select count(formulaIndex) ");
+		hql2.append("select count(formulaIndex) ");		
 		if(formula==null){
 			formula=new WebFormula(new VWebFact(),new WebErpBrankProcess(),new WebTabpom());
+		}
+		if(formula.getFactNo().getFactNo()==null||formula.getFactNo().getFactNo().equals("")){
+			String factNo=(String)ActionContext.getContext().getSession().get("factNo");//用戶的登錄廠別
+			formula.getFactNo().setFactNo(factNo);
 		}
 		if(formula.getFormulaIndex()!=null&&!"".equals(formula.getFormulaIndex())){
 			hql.append(" and formulaIndex=:formulaIndex");
@@ -64,7 +69,7 @@ public class WebFormulaDaoImpl extends Basedao implements IWebFormulaDao{
 			hql.append(" and formulaNo=:formulaNo");
 			map.put("formulaNo",formula.getFormulaNo());
 		}
-		if(formula.getFactNo().getFactNo()!=null&&!"".equals(formula.getFactNo().getFactNo())){
+		if(formula.getFactNo().getFactNo()!=null&&!"".equals(formula.getFactNo().getFactNo())&&!formula.getFactNo().getFactNo().equals("tw")){
 			hql.append(" and factNo.factNo=:factNo");
 			map.put("factNo",formula.getFactNo().getFactNo());
 		}

@@ -60,7 +60,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 		<div id="myTabContent" class="tab-content">
 			<div class="tab-pane fade in active" id="tab_webformula">				
                 <div>
-                  <jsp:include page="WebFormulaSaveOrUpdate_main.jsp" />
+                  <jsp:include page="WebFormulaSaveOrUpdate2_main.jsp" />
                 </div>  
 			</div>
 			<div class="tab-pane fade" id="tab_webformaulaitems">			   

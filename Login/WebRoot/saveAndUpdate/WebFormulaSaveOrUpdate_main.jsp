@@ -159,7 +159,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 					<div class="tab-pane fade in active" id="tab_typeno">
 						<div id="div_typeno" class="div_border_green">
 							<div>
-								<input type="checkbox" id="all_typeno" onclick="" /> 全选
+								<!-- <input type="checkbox" id="all_typeno" onclick="" /> 全选 -->
 							</div>
 							<hr />
 
@@ -226,7 +226,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 			},
 			datatype : {
 				"*8-4" : /^-?\d{0,8}(\.[0-9]{0,4})?$/,
-				"*9-2" : /^-?\d{1,9}(\.[0-9]{1,2})?$/		
+				"*9-2" : /^-?\d{0,9}(\.[0-9]{0,2})?$/		
 			},
 			ajaxPost:true,
 			beforeSubmit:function(){
@@ -310,14 +310,14 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 					jq("#formulaIndex").val(data);
 					jq("#formulaIndex2").val(data);
 					jq("#div_webformalaitem").css("display","block");
-					jq("#btn_addwebtabpom").removeClass("disabled");
+					jq("#li_webtabpom").css("display","block");
 					checkbtn();
 				},
 				error:function(){
 					layer.msg("生成配方索引失敗",3,3);
 					jq("#div_webformalaitem").css("display","none");
-					jq("#btn_addwebtabpom").addClass("disabled");
-					jq("#btn_addsec").addClass("disabled");
+					jq("#btn_addsec").addClass("disabled");	
+					jq("#li_webtabpom").css("display","none");
 				}
 			});
 		}		
@@ -341,7 +341,7 @@ function loadNamece(){
 			success:function(data){
 				var item="<input type='checkbox' id='all_namece' onclick='checkallItems(),checkbtn()'/>全選<hr/>";
 				jq.each(data,function(i,obj){
-					item+="<div><input type='checkbox' value='"+obj[0]+"' name='itemids' onclick='checkbtn()'/><label>"+obj[2]+"&nbsp;&nbsp;"+obj[3]+"__"+obj[1]+"</label></div>";					
+					item+="<div><input type='checkbox' value='"+obj[0]+"' name='itemids' onclick='checkbtn()'/><label>"+obj[2]+"&nbsp;&nbsp;"+obj[3]+"__("+obj[1]+")</label></div>";					
 				});
 				jq("#div_namece").append(item);
 			}

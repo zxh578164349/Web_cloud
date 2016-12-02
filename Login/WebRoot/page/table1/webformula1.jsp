@@ -94,7 +94,8 @@
 										<input type="hidden" value="<s:property value='formulaIndex'/>" name="formulaIndex" />																					
 									</form> 									
 									<form  id="2subform${x.index}" style="float:left">										
-										<input type="hidden" value="<s:property value='formulaIndex'/>" name="formulaIndex" />																														
+										<input type="hidden" value="<s:property value='formulaIndex'/>" name="formulaIndex" />
+										<input type="hidden" value="<s:property value='pom.pomNo'/>" name="pomNo" />																														
 									</form>
 									 <form  id="3subform${x.index}" style="float:left">										
 										<input type="hidden" value="<s:property value='formulaIndex'/>" name="formulaIndex" />

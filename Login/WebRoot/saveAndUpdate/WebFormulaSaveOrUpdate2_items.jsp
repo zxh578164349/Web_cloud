@@ -93,7 +93,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 			//tipSweep:true,
 			//showAllError : true,
 			datatype : {
-				"*9-2" : /^-?\d{0,9}(\.[0-9]{1,2})?$/
+				"*9-2" : /^-?\d{0,9}(\.[0-9]{0,2})?$/
 			},
 			ajaxPost:true,
 			

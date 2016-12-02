@@ -554,7 +554,8 @@
 		    <result name="delete" type="redirectAction">webtabpom_findPageBean3</result>
 		    <result name="makePomNo" type="json">
 		      <param name="root">ajaxResult</param>
-		    </result>		    
+		    </result>
+		      
 		</action>
 		<action name="webfactOrder_*" class="webfactorderAction" method="{1}">
 		   <result name="beanList">page/webfactOrder.jsp</result>

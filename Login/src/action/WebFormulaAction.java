@@ -3,6 +3,7 @@
  */
 package action;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
@@ -71,6 +72,7 @@ public class WebFormulaAction implements ServletResponseAware{
 	private JSONArray jsons;
 	private String lookordown;
 	private int itemid;
+	private String pomNo;
 	private Map<String,Object> map;
 	private List<WebFormulaItems>items;
 	private HttpServletResponse response;
@@ -81,6 +83,14 @@ public class WebFormulaAction implements ServletResponseAware{
 	
 	
 	
+	public String getPomNo(){
+		return pomNo;
+	}
+
+	public void setPomNo(String pomNo){
+		this.pomNo=pomNo;
+	}
+
 	public int getItemid() {
 		return itemid;
 	}
@@ -337,6 +347,11 @@ public class WebFormulaAction implements ServletResponseAware{
 			WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
 			log.setUsername(user.getUsername());
 			webformulaser.delete(formulaIndex,log);	
+			
+			File file=new File("d:\\WebtabpomFile_backup\\"+pomNo);
+			if(file.exists()){
+				GlobalMethod.deletefile(file);//引用下面刪除文件夾方法
+			}
 			ajaxResult="0";
 		}catch(Exception e){
 			ajaxResult="1";

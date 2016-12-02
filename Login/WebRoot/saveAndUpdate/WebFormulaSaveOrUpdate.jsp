@@ -62,7 +62,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 	   <ul id="myTab" class="nav nav-tabs">
 		 <li class="active"><a href="#tab_webformula" data-toggle="tab" id="a_webformula">配方資料</a></li>			  		 
 		 <!-- <li><a href="#tab_webformaulaitems" data-toggle="tab" id="a_webformaulaitems">配方階段</a></li> -->	
-		 <li ><a href="#tab_webtabpom" data-toggle="tab" id="a_webtabpom">物性資料</a></li>		 
+		 <li style="display:none" id="li_webtabpom"><a href="#tab_webtabpom" data-toggle="tab" id="a_webtabpom">物性資料</a></li>		 
 		</ul>
 		<div id="myTabContent" class="tab-content">
 			<div class="tab-pane fade in active" id="tab_webformula">				

@@ -183,7 +183,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 						  <input type="hidden" value="<s:property value='#session.loginUser.username'/>" name="tabpom.username" />
 						  <input type="hidden" value="<%=str_date%>" name="tabpom.tabpomDate" id="tabpomDate"/>													                     
 	                      <input type="hidden" name="tabpom.fileMk" value="<s:property value='tabpom.fileMk'/>"/>
-	                      <input type="hidden" name="nullmk" value="0"/><!-- 標識:修改或是添加 -->
+	                      <input type="hidden" name="isnull" value="0"/><!-- 標識:修改或是添加 -->
 	                   </td>                 
 	                </tr>
 	                                         											
@@ -199,9 +199,9 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 	   <div class="file-box">				
 			<input type="hidden"  name="file" id="uploadify_m" />																				
 			<input type="hidden"  id="uploaddate" value="<%=str_date %>"/>
-			<input type="hidden"  id="fileuser" value="${loginUser.username}"/>
-			<a href="javascript:jq('#uploadify_m').uploadify('cancel','*')" class="btn btn-default">取消上传</a>
-            <!-- <a href="javascript:checkpomNo()" class="btn btn-default">上传</a>-->
+			<input type="hidden"  id="fileuser" value="${loginUser.username}"/>			
+            <a href="javascript:checkpomNo()" class="btn btn-default" id="btn_upload">上傳</a>
+			<a href="javascript:cancelFile()" class="btn btn-default">取消</a> 
 		</div>					
 	</div>
 	</div>
@@ -252,17 +252,15 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 		    	"fileusername":jq("#fileuser").val()
 		    	},
 		    'onFallback':function(){
-		            alert("您未安裝FLASH控件，無法上傳圖片！請安裝FLASH控件后再試。");
+		          alert("您未安裝FLASH控件，無法上傳圖片！請安裝FLASH控件后再試。");
 		        },	
-		    //'buttonImage':'images/btn_login_black.gif',
-		    //'fileTypeDesc' : 'Image Files',
-		    //'formData' : {"action": "upload", "sid" : ""},
-		    // 'onSelect' : uploadify_onSelect,
-		    //'onSelectError' : uploadify_onSelectError,
-		    //'onUploadError' : uploadify_onUploadError,
-		   /*'onQueueComplete' : function(){
-			   //loadUrl("filesUpload_findByName");
-		   },*/
+			'onDialogOpen':function(){//打開文件選擇時觸發
+				  jq("#btn_upload").removeClass("disabled");
+			   },     
+			'onQueueComplete' : function(){//上傳完成時觸發
+				   //loadUrl("filesUpload_findByName");
+				 jq("#btn_upload").addClass("disabled");
+			 },
 		   'onSelectError' :function(file, errorCode, errorMsg){
 		      if(errorCode==-130){
 		         alert("文件類型不對");
@@ -281,7 +279,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 			datatype : {
 				"*8-2" : /^-?\d{0,8}(\.[0-9]{0,2})?$/
 			},									
-			beforeSubmit:checkpomNo,														
+			//beforeSubmit:checkpomNo,														
 			ajaxPost:true,
 			callback:function(data){
 				/*if(data=="0"){
@@ -336,7 +334,10 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 			
 		}
 	}
-
+	function cancelFile(){
+		jq("#uploadify_m").uploadify("cancel","*");
+		jq("#btn_upload").addClass("disabled");
+	}
 				
 		       
 	/*物性編號*/
