@@ -11,7 +11,7 @@ public interface IWebTabpomServices {
 	public WebTabpom findById(String pomNo);
 	public void delete(WebTabpom tabpom,KyzExpectmatmLog delLog);
 	public void delete(String pomNo,KyzExpectmatmLog delLog);
-	public PageBean findPageBean(int pageSize,int page,String pomName,String brank,String yymm,String yymm2);
+	public PageBean findPageBean(int pageSize,int page,String pomNo,String brank,String yymm,String yymm2);
 	
 	public String findPomNoById(String pomNo);
 	public String makePomNo(String brank,String tabpomDate);

@@ -7,7 +7,7 @@
 			+ path + "/";
 %>
 <%
-java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("yyyyMMdd");
+java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("yyyyMMdd-hh");
 java.util.Date currentTime = new java.util.Date();//得到当前系统时间
 String str_date = formatter.format(currentTime); //将日期时间格式化
 %>
@@ -131,10 +131,15 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 			ajaxPost:true,			
 			callback:function(data){
 				if(data=="0"){
-					layer.msg("提交成功!",3,1);				
-					loadUrl("/Login/webformula_findById?formulaIndex="+jq("#formulaIndex").val());
-				}else{
+					layer.msg("提交成功!",3,1);
+					loadUrl("/Login/webformula_findPageBean");				
+					//loadUrl("/Login/webformula_findById?formulaIndex="+jq("#formulaIndex").val());
+				}
+				if(data=="1"){
 					layer.msg("提交失敗",3,3);
+				}
+				if(data=="3"){
+				   layer.msg("保存附檔失敗",3,3);
 				}				
 			}
 		});

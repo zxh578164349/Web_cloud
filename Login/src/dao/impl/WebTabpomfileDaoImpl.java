@@ -26,10 +26,15 @@ public class WebTabpomfileDaoImpl extends Basedao implements IWebTabpomfileDao{
 
 	public List<Object[]> findByPomNo(String pomNo) {
 		// TODO Auto-generated method stub
-		String hql="select id.webTabpom.pomNo,id.filename from WebTabpomfile where id.webTabpom.pomNo=?";
+		String hql="select id.webTabpom.pomNo,id.filename,createdate from WebTabpomfile where id.webTabpom.pomNo=?";
 		String[]objs={pomNo};
 		List<Object[]>list=super.findAll(hql, objs);
 		return list;
+	}
+
+	public void add(WebTabpomfile file) {
+		// TODO Auto-generated method stub
+		super.merge(file);
 	}
 
 	

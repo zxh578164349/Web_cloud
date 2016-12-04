@@ -219,20 +219,20 @@ public class WebTabpomAction extends ActionSupport implements ServletResponseAwa
 	
 	
 	public String findPageBean(){
-		ActionContext.getContext().getSession().remove("tabpom_name");
+		ActionContext.getContext().getSession().remove("tabpom_no");
 		ActionContext.getContext().getSession().remove("tabpom_brank");
 		ActionContext.getContext().getSession().remove("tabpom_yymm");
 		ActionContext.getContext().getSession().remove("tabpom_yymm2");		
-		bean=tabpomSer.findPageBean(25, page, pomName, brank,yymm,yymm2);
+		bean=tabpomSer.findPageBean(25, page, pomNo, brank,yymm,yymm2);
 		return "beanList";
 	}
 	
 	public String findPageBean2(){
-		ActionContext.getContext().getSession().put("tabpom_name", pomName);			
+		ActionContext.getContext().getSession().put("tabpom_no", pomNo);			
 		ActionContext.getContext().getSession().put("tabpom_brank", brank);
 		ActionContext.getContext().getSession().put("tabpom_yymm", yymm);			
 		ActionContext.getContext().getSession().put("tabpom_yymm2", yymm2);	
-		bean=tabpomSer.findPageBean(25, page, pomName, brank,yymm,yymm2);
+		bean=tabpomSer.findPageBean(25, page, pomNo, brank,yymm,yymm2);
 		return "beanList1";
 	}
 	public String findPageBean3(){
@@ -240,19 +240,20 @@ public class WebTabpomAction extends ActionSupport implements ServletResponseAwa
 		if(backIndex==1){
 			result="beanList";
 		}
-		pomName=(String)ActionContext.getContext().getSession().get("tabpom_name");
+		pomName=(String)ActionContext.getContext().getSession().get("tabpom_no");
 		brank=(String)ActionContext.getContext().getSession().get("tabpom_brank");
 		pomName=(String)ActionContext.getContext().getSession().get("tabpom_yymm");
 		brank=(String)ActionContext.getContext().getSession().get("tabpom_yymm2");
-		bean=tabpomSer.findPageBean(25, page, pomName, brank,yymm,yymm2);
+		bean=tabpomSer.findPageBean(25, page, pomNo, brank,yymm,yymm2);
 		return result;
 	}
 	public String add() throws IOException{		
 		
 		/*附檔上傳*/
+		Map<String,Object>map=new HashMap<String,Object>();
 		try{
 			//uploadfile(tabpom);	
-			GlobalMethod.uploadfile(tabpom);
+			map=GlobalMethod.uploadfile(tabpom);
 		}catch(Exception e){
 			e.printStackTrace();
 			ajaxResult="3";
@@ -265,10 +266,11 @@ public class WebTabpomAction extends ActionSupport implements ServletResponseAwa
 				ajaxResult="2";
 			}else{
 				try{
-				   tabpomSer.add(tabpom);
+				   tabpomSer.add(tabpom);				   
 					ajaxResult="0";
 				}catch(Exception e){
 					ajaxResult="1";
+					return "add";
 				}
 			}
 			break;
@@ -278,8 +280,20 @@ public class WebTabpomAction extends ActionSupport implements ServletResponseAwa
 				ajaxResult="0";
 			}catch(Exception e){
 				ajaxResult="1";
+				return "add";
 			}
-		}		
+		}
+		try{
+			List<BufferedInputStream>ins=(List<BufferedInputStream>)map.get("ins");
+			List<BufferedOutputStream>outs=(List<BufferedOutputStream>)map.get("outs");
+			   if(outs!=null&&outs.size()>0){
+				   GlobalMethod.uploadFiles(ins, outs);
+			   }
+		}catch(Exception e){
+			e.printStackTrace();
+			ajaxResult="3";
+			return "add";
+		}
 		return "add";
 	}
 	
@@ -353,9 +367,30 @@ public class WebTabpomAction extends ActionSupport implements ServletResponseAwa
 		}		
 	}
 	
+	public void uploadfile_nosession(){
+		try{
+			WebTabpomfile webtabFile=new WebTabpomfile(new WebTabpomfileId(new WebTabpom(pomNo),fileFileName));				
+			webtabFile.setCreatedate(filecreatedate);
+			webtabFile.setUsername(fileusername);
+			tabpomfileSer.add(webtabFile);
+			GlobalMethod.uploadFile(file, "d:\\WebtabpomFile_backup\\"+pomNo+"\\"+fileFileName);			
+		}catch(Exception e){
+			e.printStackTrace();
+		}			
+	}
+	
 	public String findById(){
 		tabpom=tabpomSer.findById(pomNo);
 		return "findById";
+	}
+	
+	public String findByIdfiles(){
+		this.findById();
+		return "findByIdfiles";
+	}
+	public String findByIdfiles_ajax(){
+		this.findById();
+		return "findByIdfiles_ajax";
 	}
 	
 	public String delete(){
@@ -367,10 +402,10 @@ public class WebTabpomAction extends ActionSupport implements ServletResponseAwa
 		tabpomSer.delete(pomNo,log);
 		
 		//同时删除文档20160227
-		/*File file=new File("d:\\WebtabpomFile_backup\\"+pomNo);
+		File file=new File("d:\\WebtabpomFile_backup\\"+pomNo);
 		if(file.exists()){
 			GlobalMethod.deletefile(file);//引用下面刪除文件夾方法
-		}*/
+		}
 		return "delete";
 	}
 	

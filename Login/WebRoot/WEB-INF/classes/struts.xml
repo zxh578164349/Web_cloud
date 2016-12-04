@@ -555,6 +555,8 @@
 		    <result name="makePomNo" type="json">
 		      <param name="root">ajaxResult</param>
 		    </result>
+		    <result name="findByIdfiles">page/webtabpomfilesUploadAndDownload.jsp</result>
+		    <result name="findByIdfiles_ajax">page/table1/webtabpomfilesUploadAndDownload1.jsp</result>
 		      
 		</action>
 		<action name="webfactOrder_*" class="webfactorderAction" method="{1}">
@@ -600,6 +602,9 @@
 		<action name="webtabpomfile_*" class="webtabpomfileAction" method="{1}">
 		   <result name="findwebtabpomFileJson" type="json">
 		      <param name="root">jsons</param>
+		   </result>
+		   <result name="findByPomNo" type="json">
+		       <param name="root">jsons</param>
 		   </result>
 		</action>
 		<action name="webphonebook_*" class="webphonebookAction" method="{1}">

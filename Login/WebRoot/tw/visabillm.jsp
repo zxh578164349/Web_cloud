@@ -110,7 +110,7 @@ function tips(memo,index){
 });
 }
 
-function goPreviewOrPrint(subform,billNo){
+/* function goPreviewOrPrint(subform,billNo){
 	   if(billNo.substring(0,2)=="EM"){
 		   jq("#"+subform).attr("action","kyz_print2");
 	   }
@@ -124,7 +124,7 @@ function goPreviewOrPrint(subform,billNo){
 		   jq("#"+subform).attr("action","webremit_print");
 	   }
 	   jq("#"+subform).submit();
-}
+} */
 </script>
 <script type='text/javascript' src='/Login/dwr/interface/webtypejs.js'></script>
 

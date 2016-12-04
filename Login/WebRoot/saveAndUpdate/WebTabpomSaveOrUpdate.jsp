@@ -24,6 +24,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
 <link rel="stylesheet" type="text/css" href="css/form.css" />
+<link rel="stylesheet" type="text/css" href="uploadify/uploadify.css">
 </head>
 
 <body>
@@ -37,11 +38,17 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 	               <tr>
 	                  <td>
 	                     <s:if test="tabpom==null">
-	                        <input type="text" name="tabpom.pomNo" placeholder="自動生成" id="pomNo" style="color:blue" readonly datatype="*"/>
+	                        <input type="text" name="tabpom.pomNo" placeholder="自動生成" id="pomNo" style="color:blue" readonly datatype="*"/>						    
+						    <input type="hidden" value="<s:property value='#session.loginUser.username'/>" name="tabpom.username" />
+						    <input type="hidden" value="<%=str_date%>" name="tabpom.tabpomDate" id="tabpomDate"/>
 						    <input type="hidden" name="nullmk" value="0"/>
 	                     </s:if>
 	                     <s:else>
-	                         <input type="text" name="tabpom.pomNo" value="<s:property value='tabpom.pomNo'/>" style="color:blue" readonly/>
+	                         <input type="text" name="tabpom.pomNo" value="<s:property value='tabpom.pomNo'/>" id="pomNo" style="color:blue" readonly/>						     
+						     <input type="hidden" value="<s:property value='tabpom.username'/>" name="tabpom.username" />
+						     <input type="hidden" value="<s:property value='tabpom.tabpomDate'/>" name="tabpom.tabpomDate" />
+						     <input type="hidden" value="<s:property value='#session.loginUser.username'/>" name="tabpom.modifyName"/>
+						     <input type="hidden" value="<%=str_date%>" name="tabpom.modifyDate" />
 						     <input type="hidden" name="nullmk" value="1"/>
 	                     </s:else>
 	                  </td>
@@ -86,6 +93,11 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 	                   <td>C型撕裂</td>
 	                   <td><input type="text" name="tabpom.tearingC" value="<s:property value='tabpom.tearingC'/>"/></td>
 	                   <td><input type="text" name="tabpom.tearingCDescription" value="<s:property value='tabpom.tearingCDescription'/>"/></td>
+	                </tr>
+	                <tr>
+	                   <td>褲型撕裂</td>
+	                   <td><input type="text" name="tabpom.tearingK" value="<s:property value='tabpom.tearingK'/>"/></td>
+	                   <td><input type="text" name="tabpom.tearingKDescription" value="<s:property value='tabpom.tearingKDescription'/>"/></td>
 	                </tr>
 	                <tr>
 	                   <td>比重</td>
@@ -194,25 +206,36 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 	                   <td>特性說明</td>
 	                   <td colspan="2">
 	                         <textarea style="width:100%;height:100px" name="tabpom.instruction"><s:property value='tabpom.instruction' /></textarea>
-					         <input type="hidden" value="<s:property value='#session.loginUser.username'/>" name="tabpom.username" />
-						 <s:if test="tabpom==null">
-						   <input type="hidden" value="<%=str_date%>" name="tabpom.tabpomDate" id="tabpomDate"/>
-						</s:if>
-						<s:else>
-						   <input type="hidden" value="<s:property value='tabpom.tabpomDate'/>" name="tabpom.tabpomDate" />
-						</s:else>
-	                     
+	                         <input type="hidden" name="tabpom.fileMk" value="<s:property value='tabpom.fileMk'/>"/>					         							                     
 	                   </td>                 
 	                </tr>
-	                <tr>
-	                   <td>附檔上傳</td>
-	                   <td colspan="2">	                 
-	                       <div style="width:300px" id="divfile">
-				               <input type="file" name="files" style="width:150px" id="files"/><a href="javascript:addFile()">添加多個</a>
-				           </div>
-				      
-				           <hr/>		
-		<s:if test="tabpom.webTabpomfiles.size>0">		
+	                                               											
+</table>
+</div>
+</div>
+<div class="panel panel-default">
+    <div class="panel-heading">文檔上傳</div>
+    <div class="panel-body">
+       <div  id="divfile">
+	   <div class="file-box">				
+			<input type="hidden"  name="file" id="uploadify_m" />																				
+			<input type="hidden"  id="uploaddate" value="<%=str_date %>"/>
+			<input type="hidden"  id="fileuser" value="${loginUser.username}"/>
+			<a href="javascript:checkpomNo()" class="btn btn-default" id="btn_upload">上傳</a>
+			<a href="javascript:cancelFile()" class="btn btn-default">取消</a>           
+		</div>					
+	</div>
+	</div>
+</div>
+<center>
+			<input type="submit" id="sub" value="確定"  class="btn btn-primary"/>&nbsp;&nbsp;&nbsp;			 
+			<input type="reset" id="reset" value="重置" class="btn btn-primary"/>&nbsp;&nbsp;&nbsp; 			
+			<input type="button" value="返回" id="btn_back" onclick="javascript:back()" class="btn btn-primary"/>
+				
+</center>	
+</form>
+<hr/>	
+<s:if test="tabpom.webTabpomfiles.size>0">		
 		<div id="webtabfiledao">	
 		 <b style="color: blue">附檔:</b><br/>
 		 <div id="fileJson">
@@ -228,76 +251,76 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 		</div>		
 		<hr/>
 		</s:if> 
-	 </td>
-  </tr>                               											
-</table>
-</div>
-</div>
-
-<center>
-			<input type="submit" id="sub" value="確定"  class="btn btn-primary"/>&nbsp;&nbsp;&nbsp;			 
-				<input type="reset" id="reset" value="重置" class="btn btn-primary"/>&nbsp;&nbsp;&nbsp; 			
-				<input type="button" value="返回" id="btn_back"
-				onclick="javascript:back()" class="btn btn-primary"/>
-</center>	
-</form>
 	
 <script type="text/javascript">
-
-	/*jq(function() {
-		var demo = jq("#subform").Validform({
-			btnSubmit : "#sub",
-			tiptype : 4,
-			tipSweep:true,
-			showAllError : true,
-			datatype : {
-				"0-8" : /^-?\d{0,8}(\.[0-9]{1,2})?$/
-			},									
-			beforeSubmit:checkFile,														
-			ajaxPost:true,
-			callback:function(data){
-				if(data=="0"){
-					layer.msg("提交成功!",3,1);
-					//location.href="/Login/webwlo_getList";
-				}
-				if(data=="1"){
-					alert("提交失敗");
-				}
-				if(data=="2"){
-					layer.msg("數據已經存在",3,1);
-				}
-			}
-		});
-		demo.tipmsg.w["0-8"] = "只能數字且不超過8位數,可保留2位以內小數";
-		demo.addRule([{ele:":checkbox:first",datatype:"*"},{ele:":radio:first",datatype:"*"}]); (注意:checkbox:first和:radio:first前面要加":")
-	});*/
+var uploadify_config = {
+		'method':'POST',
+	    'uploader' : 'webtabpom_uploadfile_session;jsessionid=${pageContext.session.id}',
+	    'swf' : 'uploadify/uploadify.swf',
+	    'removeTimeout' : 0,
+	    'width' : 80,
+	    'height' : 30,
+	    'multi' : true,
+	    'debug':false,
+	    'auto' : false,
+	    'buttonText' : '選擇文件',
+	    'fileTypeExts' : '*.png;*.jpg;*.jpeg;*.tif;*.bmp;*.txt;*.pdf;*.doc;*.xls;*.docx;*.xlsx;*.odt',
+	    'fileSizeLimit' : '3MB',
+	    'queueSizeLimit' : 5,
+	    'fileObjName':'file',
+	    'formData':{
+	    	"filecreatedate":jq("#uploaddate").val(),
+	    	"fileusername":jq("#fileuser").val()
+	    	},	    	   
+	    'onFallback':function(){
+	          alert("您未安裝FLASH控件，無法上傳圖片！請安裝FLASH控件后再試。");
+	        },
+	    'onDialogOpen':function(){//打開文件選擇時觸發
+		    jq("#btn_upload").removeClass("disabled");
+		  },     
+	    'onQueueComplete' : function(){
+		   //loadUrl("filesUpload_findByName");
+		   jq("#btn_upload").addClass("disabled");
+		   layer.msg("請按下面的【確定】保存",3,1);
+	     },
+	   'onSelectError' :function(file, errorCode, errorMsg){
+	      if(errorCode==-130){
+	         alert("文件類型不對");
+	      }
+	   }	   
+	};
+	
 	jq(function(){
-		var options={
-				beforeSubmit:checkForm,  		       		       
-		        //resetForm: true, 
-		        url:"webtabpom_add",
-		        dataType:'json' ,
-		        success:function(data){
-		        	if(data=="0"){
-		        		layer.msg("操作成功!",3,1);
-		        		//location.href="/Login/kyz_findPageBean";
-		        	}else if(data=="1"){
-		        		layer.msg("操作失敗!",3,3);
-		        	}else if(data=="2"){
-		        		layer.msg("數據已存在該數據",3,3);
-		        	}else if(data=="3"){
-		        		layer.msg("單個文件不可超過5M",2,3);
-		        	}else if(data=="4"){
-		        		layer.msg("僅允許上傳圖片文件",2,3);
-		        	}else{
-		        		alert(data);
-		        	}		        			        	        	
-		         }		         
-		};
-		jq("#subform").submit(function(){
-			jq(this).ajaxSubmit(options);
-			return false;
-		});
+		jq("#uploadify_m").uploadify(uploadify_config);
+	
+	
+	var demo = jq("#form_pom").Validform({
+		btnSubmit : "#sub_pom",
+		tiptype : 4,
+		tipSweep:true,
+		showAllError : true,
+		datatype : {
+			"*8-2" : /^-?\d{0,8}(\.[0-9]{0,2})?$/
+		},									
+		//beforeSubmit:checkpomNo,														
+		ajaxPost:true,
+		callback:function(data){
+			if(data=="0"){
+				layer.msg("提交成功!",3,1);
+				loadUrl("/Login/webformula_findById?formulaIndex="+jq("#formulaIndex").val());
+			}
+			if(data=="1"){
+				layer.msg("提交失敗",3,3);
+			}
+			if(data=="2"){
+				layer.msg("數據已經存在",3,1);
+			}
+			if(data=="3"){
+				layer.msg("附檔上傳失敗",3,3);
+			}
+		}
+	});
+	demo.tipmsg.w["*8-2"] = "只能數字且不超過8位數,可保留2位以內小數";	
 		
 		/*加載所有品牌*/
 		jq.ajax({
@@ -307,36 +330,35 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 			success:function(data){
 				jq("#dwrWebbrank").empty();
 				jq("#dwrWebbrank").append("<option value=''>品牌選擇</option>");
-				var item;
+				var item="";
 				jq.each(data,function(i,obj){
-					item="<option value='"+obj[0]+"'>"+obj[2]+"</option>";
-					jq("#dwrWebbrank").append(item);
-				})
+					item+="<option value='"+obj[0]+"'>"+obj[2]+"</option>";					
+				});
+				jq("#dwrWebbrank").append(item);
 			}
 		});
 	})
-	
 
-/*禁止空格輸入*/
-window.onload=function(){            
-            var inputs=document.getElementsByTagName("input"); 
-            for (var i=0;i<inputs.length; i++) {  
-                if(inputs[i].getAttribute("type")=="text") 
-                 inputs[i].onkeyup=function(){ 
-                    this.value=this.value.replace(/(^\s+)|\s+$/g,""); 
-                 }; 
-            }  
-        }
-        
-function makePomNo(){
-	var tabpomDate=jq("#tabpomDate").val();
-	var component=jq("#component").val();	
-	if(tabpomDate!=""&&component!=""){
-		webtabpomjs.makePomNo(component,tabpomDate,function(x){			
-			jq("#pomNo").val(x);
-		})
-	}	
+function checkpomNo(){
+	if(jq("#pomNo").val()==""){
+		alert("請完整資料,再上傳附檔");
+	}else{		
+		jq.ajax({
+			type:"get",
+			url:"webtabpom_clearSession",
+			async:false,
+			success:function(){
+				jq("#uploadify_m").uploadify("upload","*");								
+			}
+		});
+	}
 }
+function cancelFile(){
+	jq("#uploadify_m").uploadify("cancel","*");
+	jq("#btn_upload").addClass("disabled");
+}	
+
+
 
 /*物性編號*/
 function makePomNo2(dwrWebbrank,tabpomDate){
@@ -356,108 +378,6 @@ function makePomNo2(dwrWebbrank,tabpomDate){
 	}	
 }
 
-
-var i=0;	
-function addFile(){
-    i++;
-    if(i<5){
-    var divfile=document.getElementById("divfile");
-    var inputfile=document.createElement("input");
-    var aEle=document.createElement("a");
-    inputfile.type="file";
-    inputfile.name="files";
-    inputfile.style.width="150px";
-    aEle.innerHTML="刪除";
-    aEle.style.color="red";
-    aEle.href="javascript:void(0)";
-    aEle.onclick=function(){
-       var parentnode=aEle.parentNode;
-       if(parentnode){
-          parentnode.removeChild(aEle);
-          parentnode.removeChild(inputfile);
-          if(i>4){
-             i=4;
-          }
-          i--;
-       }
-    };
-    divfile.appendChild(inputfile);
-    divfile.appendChild(aEle);  
-    }else{
-       alert("附檔不能超過5個!");
-    }               
-}
-function back(){
-	loadUrl("/Login/webtabpom_findPageBean3?backIndex=1");
-}
-
-
-function checkForm(){	
-			var agent = navigator.userAgent.toLowerCase();
-			var eles=jq("input[name='files']");
-			var flag=true;
-				if(agent.indexOf("msie") > 0){
-					var path;
-					var img=new Image();
-					jq.each(eles,function(i,ele){
-						path=ele.value;
-						if(path!=""){//if
-						img.src=path;
-						var extname=path.substr(path.lastIndexOf(".")).toLowerCase()
-						if(extname!=".jpg"&&extname!=".jpeg"&&extname!=".gif"&&extname!=".bmp"&&extname!=".tif"&&extname!=""){
-							layer.msg("僅允許上傳圖片文件",2,3);
-							flag=false;
-							return false;
-							
-						}
-						if(img.fileSize/(1024*1024)>5){
-							layer.msg("單個文件不可超過5M",2,3);
-							//break;
-							flag=false;
-							return false;
-						}
-						}//if
-						
-					})
-				}else{
-					jq.each(eles,function(i,ele){
-						path=ele.value;
-						var extname=path.substr(path.lastIndexOf(".")).toLowerCase()
-						if(path!=""){//if
-						   if(extname!=".jpg"&&extname!=".jpeg"&&extname!=".gif"&&extname!=".bmp"&&extname!=".tif"){
-							layer.msg("僅允許上傳圖片文件",2,3);
-							flag=false;
-							return false;
-						}
-						if(ele.files[0].size/(1024*1024)>5){
-							layer.msg("單個文件不可超過5M",2,3);
-							//break;
-							flag=false;
-							return false;
-						}
-						}//if
-						
-					})
-				}
-				
-				var component=jq("#component").val();
-				var pomName=jq("#pomName").val();
-				var dwrWebbrank=jq("#dwrWebbrank").val();
-				if(component==""){
-					layer.msg("請選擇部件",2,3);
-					flag=false;
-				}
-				if(pomName==""){
-					layer.msg("配方索引不能爲空",2,3);
-					flag=false;
-				}
-				if(dwrWebbrank==""){
-					layer.msg("請選擇品牌",2,3);
-					flag=false;
-				}
-				return flag;
-}
-
 function lookJson(pomNo,filename){
 	   jq.ajax({
 	      type:"get",
@@ -466,26 +386,25 @@ function lookJson(pomNo,filename){
 	      data:"pomNo="+pomNo+"&filename="+filename,
 	      success:function(files){
 	         jq("#fileJson").html("");
-	          var item;
+	          var item="";
 	          var item_url;
 	         jq.each(files,function(i,file){
 	            item_url="javascript:lookJson('"+file[0]+"',"+"'"+file[1]+"')";
-	            item="<a href='/upload/"+file[0]+"/"+file.id.filename+"' target='_blank' title='點擊查看'>"+file[1]+            
+	            item+="<a href='/upload/"+file[0]+"/"+file.id.filename+"' target='_blank' title='點擊查看'>"+file[1]+            
 	            "</a>"+
-	            "<a href="+item_url+"><img src='images/icon/del_file.png' alt='刪除' title='刪除' style='border:0px'/></a>&nbsp;";
-	            jq("#fileJson").append(item);
-	         }) 
+	            "<a href="+item_url+"><img src='images/icon/del_file.png' alt='刪除' title='刪除' style='border:0px'/></a>&nbsp;";	            
+	         });
+	         jq("#fileJson").append(item); 
 	      }
-	   })
+	   });
 	}
 	
-//window.onload=getAllWebbrank;
+function back(){
+	loadUrl("/Login/webtabpom_findPageBean3?backIndex=1");
+}
+/*禁止空格輸入*/
+goTrim();	
 
-</script>
-<script type="text/javascript">
-jq(function(){
-	//getAllWebbrank();
-})
 </script>
 </body>
 </html>

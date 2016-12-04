@@ -15,6 +15,7 @@ import dao.IWebTabpomDao;
 import entity.KyzExpectmatmLog;
 import entity.VWebFact;
 import entity.WebTabpom;
+import entity.WebTabpomfile;
 
 public class WebTabpomDaoImpl extends Basedao implements IWebTabpomDao{
 
@@ -32,6 +33,7 @@ public class WebTabpomDaoImpl extends Basedao implements IWebTabpomDao{
 		/**hibernate延遲問題解決**/		
 		obj.getWebTabpomfiles().size();
 		obj.getWebBrank().getName();
+		
 		/**hibernate延遲問題解決**/
 		
 		return obj;
@@ -47,7 +49,7 @@ public class WebTabpomDaoImpl extends Basedao implements IWebTabpomDao{
 		super.delete(findById(pomNo),delLog);
 	}
 
-	public PageBean findPageBean(int pageSize, int page, String pomName,
+	public PageBean findPageBean(int pageSize, int page, String pomNo,
 			String brank,String yymm,String yymm2) {
 		// TODO Auto-generated method stub
 		StringBuffer hql=new StringBuffer();
@@ -55,9 +57,9 @@ public class WebTabpomDaoImpl extends Basedao implements IWebTabpomDao{
 		Map<String,Object>map=new HashMap<String,Object>();
 		hql.append("from WebTabpom where 1=1 ");
 		hql2.append("select count(pomNo) ");
-		if(pomName!=null&&!pomName.equals("")){
-			hql.append(" and formulaId.formulaIndex=:pomname");
-			map.put("pomname", "%"+pomName+"%");
+		if(pomNo!=null&&!pomNo.equals("")){
+			hql.append(" and pomNo=:pomNo");
+			map.put("pomNo", pomNo);
 		}
 		if(brank!=null&&!brank.equals("")){
 			hql.append(" and webBrank.sysno=:brank");
@@ -91,7 +93,8 @@ public class WebTabpomDaoImpl extends Basedao implements IWebTabpomDao{
 		/***解決延遲加載問題****/
 		if(list.size()>0){
 			for(int i=0;i<list.size();i++){
-				list.get(i).getWebBrank().getName();								
+				list.get(i).getWebBrank().getName();
+				list.get(i).getFormulaId().getVbm();
 			}
 		}
 		/***解決延遲加載問題****/

@@ -1682,8 +1682,8 @@ public class GlobalMethod extends HibernateDaoSupport{
 		return user;
 	}
 	
-	public static void uploadfile(WebTabpom tabpom) throws IOException{		
-		
+	public static Map<String,Object> uploadfile(WebTabpom tabpom) throws IOException{
+		Map<String,Object>map=new HashMap<String,Object>();
 		//File uploadFile=new File(ServletActionContext.getServletContext().getRealPath("KyzexpFile\\"+tabpom.getPomNo()));//附檔上傳到項目
 		File uploadFile_backup=new File("d:\\WebtabpomFile_backup\\"+tabpom.getPomNo());//附檔上傳到D盤(為了避免更新項目時丟失附檔,所在上傳到D盤)			
 		if(!uploadFile_backup.exists()){
@@ -1691,20 +1691,25 @@ public class GlobalMethod extends HibernateDaoSupport{
 		}
 		List<WebTabpomfile>list_tabfile=(List<WebTabpomfile>)ActionContext.getContext().getSession().get("list_tabfile");
 		List<BufferedInputStream>ins=(List<BufferedInputStream>)ActionContext.getContext().getSession().get("ins");
-		List<String>filesFileName=(List<String>)ActionContext.getContext().getSession().get("filenames");		
+		List<String>filesFileName=(List<String>)ActionContext.getContext().getSession().get("filenames");	
+		List<BufferedOutputStream>outs=new ArrayList<BufferedOutputStream>();
 		if(list_tabfile!=null&&list_tabfile.size()>0){
 			for(WebTabpomfile obj:list_tabfile){
 				obj.getId().setWebTabpom(tabpom);
 			}
-			List<BufferedOutputStream>outs=new ArrayList<BufferedOutputStream>();
+			
 			for(String filename:filesFileName){
 				BufferedOutputStream out=new BufferedOutputStream(new FileOutputStream(uploadFile_backup+"\\"+filename));
 				outs.add(out);
 			}
 			tabpom.setWebTabpomfiles(list_tabfile);
 			tabpom.setFileMk("1");//標示是否帶有附檔
-			GlobalMethod.uploadFiles(ins,outs);
-		}										
+			//GlobalMethod.uploadFiles(ins,outs);
+		}
+		map.put("ins", ins);
+		map.put("outs", outs);
+		return map;
+		
 }
 	 
 	 
@@ -1732,11 +1737,13 @@ public class GlobalMethod extends HibernateDaoSupport{
 			for(Integer ii:list){
 				System.out.print(ii+"\t");
 			}**/
-		 List<Integer>list=new ArrayList<Integer>();
-		 for(int i:list){
-			 System.out.println(i);
-		 }
-		 
+		Map<String,Object>map=new HashMap<String,Object>();
+		List<String>list=(List<String>)map.get("ff");
+		if(list!=null&&list.size()>0){
+			System.out.println("OK");
+		} else{
+			System.out.println("00");
+		}
 			
 		}
 	 

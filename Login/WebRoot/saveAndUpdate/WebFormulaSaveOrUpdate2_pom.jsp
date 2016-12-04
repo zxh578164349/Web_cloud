@@ -7,7 +7,7 @@
 			+ path + "/";
 %>
 <%
-java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("yyyyMMdd");
+java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("yyyyMMdd-hh");
 java.util.Date currentTime = new java.util.Date();//得到当前系统时间
 String str_date = formatter.format(currentTime); //将日期时间格式化
 %>
@@ -39,10 +39,16 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 	                  <td>
 	                     <s:if test="formula.pom==null">
 	                        <input type="text" name="tabpom.pomNo" placeholder="自動生成" id="pomNo" style="color:blue" readonly datatype="*"/>
+	                        <input type="hidden" value="<s:property value='#session.loginUser.username'/>" name="tabpom.username" />
+						    <input type="hidden" value="<%=str_date%>" name="tabpom.tabpomDate" id="tabpomDate"/>
 						    <input type="hidden" name="nullmk" value="0"/>
 	                     </s:if>
 	                     <s:else>
 	                         <input type="text" name="tabpom.pomNo" value="<s:property value='formula.pom.pomNo'/>" id="pomNo" style="color:blue" readonly/>
+						     <input type="hidden" value="<s:property value='formula.pom.tabpomDate'/>" name="tabpom.tabpomDate" />
+						     <input type="hidden" value="<s:property value='formula.pom.username'/>" name="tabpom.username" />
+						     <input type="hidden" value="${loginUser.username }" name="tabpom.modifyName" />
+						     <input type="hidden" value="<%=str_date%>" name="tabpom.modifyDate" />
 						     <input type="hidden" name="nullmk" value="1"/>
 	                     </s:else>
 	                  </td>
@@ -87,6 +93,11 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 	                   <td>C型撕裂</td>
 	                   <td><input type="text" name="tabpom.tearingC" value="<s:property value='formula.pom.tearingC'/>" datatype="*8-2"/></td>
 	                   <td><input type="text" name="tabpom.tearingCDescription" value="<s:property value='formula.pom.tearingCDescription'/>" datatype="*0-300"/></td>
+	                </tr>
+	                <tr>
+	                   <td>褲型撕裂</td>
+	                   <td><input type="text" name="tabpom.tearingK" value="<s:property value='formula.pom.tearingK'/>" datatype="*8-2"/></td>
+	                   <td><input type="text" name="tabpom.tearingKDescription" value="<s:property value='formula.pom.tearingKDescription'/>" datatype="*0-300"/></td>
 	                </tr>
 	                <tr>
 	                   <td>比重</td>
@@ -192,19 +203,8 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 	                <tr>
 	                   <td>特性說明</td>
 	                   <td colspan="2">
-	                      <textarea style="width:100%;height:100px" name="tabpom.instruction" datatype="*0-300"><s:property value='formula.pom.instruction'/></textarea>					      
-						<s:if test="tabpom==null">
-						<input type="hidden" value="<s:property value='#session.loginUser.username'/>" name="tabpom.username" />
-						<input type="hidden" value="<%=str_date%>" name="tabpom.tabpomDate" id="tabpomDate"/>
-						</s:if>
-						<s:else>
-						   <input type="hidden" value="<s:property value='formula.pom.tabpomDate'/>" name="tabpom.tabpomDate" />
-						   <input type="hidden" value="<s:property value='formula.pom.username'/>" name="tabpom.username" />
-						   <input type="hidden" value="${loginUser.username }" name="tabpom.modifyName" />
-						   <input type="hidden" value="<%=str_date%>" name="tabpom.modifyDate" />
-						</s:else>
-	                     
-	                     <input type="hidden" name="tabpom.fileMk" value="<s:property value='formula.pom.fileMk'/>"/>
+	                      <textarea style="width:100%;height:100px" name="tabpom.instruction" datatype="*0-300"><s:property value='formula.pom.instruction'/></textarea>					      							                     
+	                      <input type="hidden" name="tabpom.fileMk" value="<s:property value='formula.pom.fileMk'/>"/>
 	                   </td>                 
 	                </tr>
 	                                         											
@@ -280,6 +280,7 @@ var uploadify_config = {
 	    'onQueueComplete' : function(){
 		   //loadUrl("filesUpload_findByName");
 		   jq("#btn_upload").addClass("disabled");
+		   layer.msg("請按下面的【確定】保存",3,0);
 	     },
 	   'onSelectError' :function(file, errorCode, errorMsg){
 	      if(errorCode==-130){
@@ -327,11 +328,11 @@ jq(function(){
 		success:function(data){
 			jq("#dwrWebbrank").empty();
 			jq("#dwrWebbrank").append("<option value=''>品牌選擇</option>");
-			var item;
+			var item="";
 			jq.each(data,function(i,obj){
-				item="<option value='"+obj[0]+"'>"+obj[2]+"</option>";
-				jq("#dwrWebbrank").append(item);
-			})
+				item+="<option value='"+obj[0]+"'>"+obj[2]+"</option>";				
+			});
+			jq("#dwrWebbrank").append(item);
 		}
 	});
 		
@@ -383,17 +384,17 @@ function lookJson(pomNo,filename){
 	      data:"pomNo="+pomNo+"&filename="+filename,
 	      success:function(files){
 	         jq("#fileJson").html("");
-	          var item;
+	          var item="";
 	          var item_url;
 	         jq.each(files,function(i,file){
 	            item_url="javascript:lookJson('"+file[0]+"',"+"'"+file[1]+"')";
-	            item="<a href='/upload/"+file[0]+"/"+file[1]+"' target='_blank' title='點擊查看'>"+file[1]+            
+	            item+="<a href='/upload/"+file[0]+"/"+file[1]+"' target='_blank' title='點擊查看'>"+file[1]+            
 	            "</a>"+
-	            "<a href="+item_url+"><img src='images/icon/del_file.png' alt='刪除' title='刪除' style='border:0px'/></a>&nbsp;";
-	            jq("#fileJson").append(item);
-	         }) 
+	            "<a href="+item_url+"><img src='images/icon/del_file.png' alt='刪除' title='刪除' style='border:0px'/></a>&nbsp;";	            
+	         });
+	         jq("#fileJson").append(item); 
 	      }
-	   })
+	   });
 	}	
 </script>
 </body>

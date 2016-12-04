@@ -7,7 +7,7 @@
 			+ path + "/";
 %>
 <%
-java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("yyyyMMdd");
+java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("yyyyMMdd-hh");
 java.util.Date currentTime = new java.util.Date();//得到当前系统时间
 String str_date = formatter.format(currentTime); //将日期时间格式化
 %>
@@ -49,7 +49,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 								        </s:if>																								
 									</td>
 									<td>
-									<input type="text" style="color:blue" name="formula.formulaIndex" readonly="readonly" datatype="*" id="formulaIndex" />
+									<input type="text" style="color:blue" name="formula.formulaIndex" readonly="readonly" datatype="*" id="formulaIndex" placeholder="自動生成"/>
 									<input type="hidden" value="${loginUser.username}" name="formula.createName" /> 
 									 <input type="hidden" value="<%=str_date%>" name="formula.createDate" id="createDate" />
 									 <input type="hidden" name="isnull" value="isnull" />									
@@ -191,29 +191,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 
 
 <script type="text/javascript">
-
-	jq(function() {
-		/* var demo = jq("#form_main").Validform({
-			btnSubmit : "#sub_main",
-			tiptype : 4,
-			tipSweep:true,
-			showAllError : true,
-			datatype : {
-				"*8-4" : /^-?\d{0,8}(\.[0-9]{0,4})?$/
-			},
-			ajaxPost:true,			
-			callback:function(data){
-				if(data=="0"){
-					layer.msg("提交成功!",3,1);				
-					loadUrl("/Login/webformula_findById?formulaIndex="+jq("#formulaIndex").val());
-				}else{
-					layer.msg("提交失敗",3,3);
-				}				
-			}
-		});
-		demo.tipmsg.w["*8-4"] = "只能數字且不超過8位數,可保留4位以內小數"; */
-		
-		
+	jq(function() {	
 		var demo = jq("#form_main").Validform({
 			btnSubmit : "#sub_main",
 			//tiptype : 4,
@@ -238,8 +216,12 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 					layer.msg("提交成功!",3,1);				
 					loadUrl("/Login/webformula_findPageBean");
 					//loadUrl("/Login/webformula_findById?formulaIndex="+jq("#formulaIndex").val());
-				}else{
+				}
+				if(data=="1"){
 					layer.msg("提交失敗",3,3);
+				}
+				if(data=="3"){
+				    layer.msg("保存附檔失敗",3,3);
 				}				
 			}
 		});

@@ -44,6 +44,7 @@ import services.IKyzExpectmatmServices;
 import services.IKyzVisaFlowServices;
 import services.IWebBussinessletterServices;
 import services.IWebFactServices;
+import services.IWebFormulaServices;
 import services.IWebremittancelistServices;
 import services.IWebuserEmailAServices;
 import services.IWebuserEmailServices;
@@ -130,6 +131,9 @@ public class AutoSendKyzAll extends QuartzJobBean{
 					}
 					if(billNo.substring(0,2).equals("RM")){
 						this.addVisabillsAndEmail4(factNo, billNo, visaSort, list_vbm.get(i), ac);
+					}
+					if(billNo.substring(0, 2).equals("GJ")){
+						this.addVisabillsAndEmail5(factNo, billNo, visaSort, list_vbm.get(i), ac);
 					}
 					mailInfo.setSubject("發送Email成功"+billNo);
 					sms.sendHtmlMail(mailInfo);
@@ -223,6 +227,26 @@ public class AutoSendKyzAll extends QuartzJobBean{
 		 * 打印
 		 */
 		this.print_webremittancelist(local_factNo, local_billNo, local_visaSort,vbm,ac);
+		
+		/**
+		 * 發郵件
+		 * 由於要給所有人(包括不要審核的)發送郵件,所以要重新從數據庫中獲取,而不能使用上面已有的list_visa
+		 */
+		GlobalMethod.sendEmailB(local_factNo,local_billNo,local_visaSort,vbm,ac);		    										
+	}
+	
+	/**
+	 *配方系統
+	 * @param local_factNo
+	 * @param local_billNo
+	 * @param local_visaSort
+	 * @throws IOException
+	 */
+	public void addVisabillsAndEmail5(String local_factNo,String local_billNo,String local_visaSort,KyVisabillm vbm,ApplicationContext ac) throws IOException{
+		/**
+		 * 打印
+		 */
+		this.print_webformula(local_factNo, local_billNo, local_visaSort,vbm,ac);
 		
 		/**
 		 * 發郵件
@@ -348,5 +372,13 @@ public class AutoSendKyzAll extends QuartzJobBean{
 		map=(Map<String,Object>)map_result.get("map");
 		List<Webremittancelist>list=(List<Webremittancelist>)map_result.get("list");
 		this.exportmain("auto", map, "webremittancelist.jasper", list, billNo, "jasper/audit/");
-	}	
+	}
+	
+	public void print_webformula(String factNo,String billNo,String visaSort,KyVisabillm vbm,ApplicationContext ac){
+		IWebFormulaServices webformulaser=(IWebFormulaServices)ac.getBean("webformulaser");
+		Map<String,Object>map_result=webformulaser.print(factNo,billNo,vbm);
+		map=(Map<String,Object>)map_result.get("map");
+		List<Webremittancelist>list=(List<Webremittancelist>)map_result.get("list");
+		this.exportmain("auto", map, "webremittancelist.jasper", list, billNo, "jasper/audit/");
+	}
 }

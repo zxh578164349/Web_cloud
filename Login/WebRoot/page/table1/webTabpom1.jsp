@@ -23,10 +23,10 @@
 <body>
   <div id="container">
         <h3>
-		<s:if test='#session.loginUser.userread!="1"'>
+		<!-- <s:if test='#session.loginUser.userread!="1"'>
 	    <input value="添加" type="button" class="btn btn-info"
 		onclick="loadUrl('saveAndUpdate/WebTabpomSaveOrUpdate.jsp')" />
-	   </s:if>	
+	   </s:if>	 -->
 		<span id="h2_title">實驗室形體物性</span>
 		</h3>
 	<table class="table table-striped table-hover table-bordered" >
@@ -75,22 +75,33 @@
 					<form action="webtabpom_delete" method="post" id="2subform${x.index}" style="float:left">						
 						<input type="hidden" value="<s:property value='pomNo'/>" name="pomNo" />							
 					</form>
-					<form action="webtabpom_printOne" method="post" id="3subform${x.index}" style="float:left" target="_blank">						
+					<form action="webtabpom_findByIdfiles" method="post" id="3subform${x.index}" style="float:left" target="_blank">						
 						<input type="hidden" value="<s:property value='pomNo'/>" name="pomNo" />							
-						<input type="hidden" value="look" name="lookordown"/>
 					</form>
-					<form action="webtabpom_printOne" method="post" id="4subform${x.index}" style="float:left" target="_blank">						
-						<input type="hidden" value="<s:property value='pomNo'/>" name="pomNo" />							
-						<input type="hidden" value="down" name="lookordown"/>
-					</form> 
-					<a href="javascript:findById_form('subform${x.index}','webtabpom_findById')" >					
-					<img alt="修改" src="images/icon/edit001.png" title="修改" ></a>
-					<a href="javascript:document.getElementById('3subform${x.index}').submit()" >
-					<img alt="預覽" src="images/icon/view24.png" title="預覽"></a>
-					<a href="javascript:document.getElementById('4subform${x.index}').submit()" >
-					<img alt="下載" src="images/icon/print24.png" title="下載"></a>
-					<a href="javascript:isDelete('2subform${x.index}','webtabpom_delete')" >					
-					<img alt="刪除" src="images/icon/delete001.png" title="刪除"></a>
+					
+					<s:if test="formulaId.vbm==null">
+					   <a href="javascript:findById_form('subform${x.index}','webtabpom_findById')" class="btn btn-xs btn-success">					
+					             修改</a>
+					    <a href="javascript:isDelete('2subform${x.index}','webtabpom_delete')" class="btn btn-xs btn-success">					
+					            刪除</a>         
+					</s:if>
+					<s:else>
+					  <s:if test='#session.loginUser.adminMk=="Y"'>
+					    <a href="javascript:findById_form('subform${x.index}','webtabpom_findById')" class="btn btn-xs btn-success">					
+					             修改</a>
+					    <a href="javascript:isDelete('2subform${x.index}','webtabpom_delete')" class="btn btn-xs btn-success">					
+					            刪除</a>  
+					  </s:if>
+					  <s:else>
+					    <a href="#" class="btn btn-xs disabled btn-warning"> 鎖定 </a>
+					   <a href="#" class="btn btn-xs disabled btn-warning"> 刪除 </a>
+					  </s:else>
+					   
+					</s:else> 
+					
+					<a href="javascript:document.getElementById('3subform${x.index}').submit()" class="btn btn-xs btn-success" target="_blank">
+					附檔</a>					
+					
 				</td>
 				</s:if>
 			</tr>

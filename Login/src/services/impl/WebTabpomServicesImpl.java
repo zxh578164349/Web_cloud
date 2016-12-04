@@ -36,10 +36,10 @@ public class WebTabpomServicesImpl implements IWebTabpomServices{
 		tabpomDao.delete(pomNo,delLog);
 	}
 
-	public PageBean findPageBean(int pageSize, int page, String pomName,
+	public PageBean findPageBean(int pageSize, int page, String pomNo,
 			String brank,String yymm,String yymm2) {
 		// TODO Auto-generated method stub
-		return tabpomDao.findPageBean(pageSize, page, pomName, brank,yymm,yymm2);
+		return tabpomDao.findPageBean(pageSize, page, pomNo, brank,yymm,yymm2);
 	}
 
 	public String findPomNoById(String pomNo) {

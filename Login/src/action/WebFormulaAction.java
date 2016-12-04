@@ -3,12 +3,15 @@
  */
 package action;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.text.ParseException;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -297,6 +300,7 @@ public class WebFormulaAction implements ServletResponseAware{
 	}
 	
 	public String add(){
+		Map<String,Object>map=new HashMap<String,Object>();
 		try{
 			if(isnull!=null&&isnull.equals("isnull")){
 				String temp=factCode.split("__")[0];
@@ -307,17 +311,27 @@ public class WebFormulaAction implements ServletResponseAware{
 				WebTabpom tabpom=(WebTabpom)ActionContext.getContext().getSession().get("tabpom");
 				if(tabpom!=null){
 					formula.setPom(tabpom);
-					GlobalMethod.uploadfile(tabpom);
+					//GlobalMethod.uploadfile(tabpom);
+					try{			
+						map=GlobalMethod.uploadfile(tabpom);
+						List<BufferedInputStream>ins=(List<BufferedInputStream>)map.get("ins");
+						List<BufferedOutputStream>outs=(List<BufferedOutputStream>)map.get("outs");
+						GlobalMethod.uploadFiles(ins, outs);
+					}catch(Exception e){
+						e.printStackTrace();
+						ajaxResult="3";
+						return "add";
+					}
 				}
 				
 			}						
-			webformulaser.add(formula);
-			ActionContext.getContext().getSession().remove("tabpom");
+			webformulaser.add(formula);			
 			ajaxResult="0";
 		}catch(Exception e){
 			ajaxResult="1";
 			System.out.println(e);
-		}		
+		}
+		ActionContext.getContext().getSession().remove("tabpom");
 		return "add";
 	}
 	public String addItems(){

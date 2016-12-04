@@ -88,7 +88,7 @@
      }    
    }
    
-   function goPreviewOrPrint(subform,billNo){
+  /*  function goPreviewOrPrint(subform,billNo){
 	   if(billNo.substring(0,2)=="EM"){
 		   jq("#"+subform).attr("action","kyz_print2");
 	   }
@@ -102,7 +102,7 @@
 		   jq("#"+subform).attr("action","webremit_print");
 	   }
 	   jq("#"+subform).submit();
-   }
+   } */
    
    function print(subform){
 		var subform=jq("#"+subform);

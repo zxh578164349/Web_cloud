@@ -35,6 +35,7 @@ import services.IKyzExpectmatmsServices;
 import services.IKyzVisaFlowServices;
 import services.IWebBussinessletterServices;
 import services.IWebFactServices;
+import services.IWebFormulaServices;
 import services.IWebTypeServices;
 import services.IWebUserService;
 import services.IWebremittancelistServices;
@@ -74,6 +75,8 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 	private IWebuserEmailServices webuseremailSer;
 	private IWebuserEmailAServices webuseremailaSer;
 	private IWebremittancelistServices webremiSer;
+	private IKyzExpectmatmFileServices kyzexpfileSer;
+	private IWebFormulaServices webformulaser;
 	private PageBean bean;
 	private String factNo;
 	private String visaSort;
@@ -86,7 +89,6 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 	private String visaRank;
 	private String visaSigner;
 	private Map<String, Object> map;
-	private IKyzExpectmatmFileServices kyzexpfileSer;
 	private String visaMk;//審核的最終狀態(Y已審核,N未審核,T退回)
 	private String userName;
 	private javax.servlet.http.HttpServletResponse response;
@@ -97,8 +99,18 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 	private int psMk;//加簽時，放在前面，還是放在後面（0:前面     1:後面）
 	private InputStream fileInput;
 	private String fileName;
+	private String lookordown;
 	
 	
+	public void setWebformulaser(IWebFormulaServices webformulaser) {
+		this.webformulaser = webformulaser;
+	}
+	public String getLookordown() {
+		return lookordown;
+	}
+	public void setLookordown(String lookordown) {
+		this.lookordown = lookordown;
+	}
 	public String getFileName(){
 		return fileName;
 	}
@@ -907,197 +919,14 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 	 * @param local_visaSort
 	 * @throws IOException
 	 */
-	public void addVisabillsAndEmail(String local_factNo,String local_billNo,String local_visaSort,KyVisabillm vbm) throws IOException{
-		
-		/**
-		 * 打印
-		 */				
-		/*KyzExpectmatmId kyzid=new KyzExpectmatmId();
-		kyzid.setBillNo(local_billNo);
-		kyzid.setFactNo(local_factNo);
-		String factname=webFactSer.selByid(kyzid.getFactNo());
-		String factCode="";
-		List<KyzExpectmatm> listkyz=kyzSer.findById_Print(kyzid);
-		if(listkyz.size()==0){
-			response.setContentType("text/html;charset=utf-8");
-			response.getWriter().print("<script>alert('單號為"+billNo+"的函文不存在!');window.close()</script>");
-			return null;
-		}
-		factCode=listkyz.get(0).getFactCode();
-		String result=factname+"("+factCode+")"+"費用申請單";
-		map = new HashMap<String, Object>();
-		map.put("SUBREPORT_DIR",ServletActionContext.getRequest().getRealPath("/jasper/audit/")+ "/");
-		map.put("pic", ServletActionContext.getRequest().getRealPath("/jasper/audit/images/")+ "/");//圖片路徑
-		map.put("pfactno", kyzid.getFactNo());
-		map.put("pbillno",kyzid.getBillNo());
-		map.put("title",result);
-		List<KyzExpectmats> sub_list = new ArrayList<KyzExpectmats>();
-		
-		KyzExpectmats temp=new KyzExpectmats();
-		for(int i=0;i<listkyz.get(0).getKyzExpectmatses().size();i++){
-			KyzExpectmats kyzs=listkyz.get(0).getKyzExpectmatses().get(i);
-			sub_list.add(kyzs);
-		}
-		while(sub_list.size()<10){
-			sub_list.add(temp);
-		}
-		Map sub_map=new HashMap<String,Object>();
-		sub_map.put("sub_list", sub_list);
-		
-		String type=list.get(0).getVisaType();
-		List<KyzVisaflow> list_visa=visaSer.findByType(type);
-		
-		SimpleDateFormat format=new SimpleDateFormat("yyyyMMdd");
-		KyVisabillm vbm=visabillmSer.findById(local_factNo, local_visaSort, local_billNo);
-		List<KyVisabills>list_visa=vbm.getKyVisabillses();		
-		List<KyzVisaflow>list_visaflow=visaSer.findByType(local_factNo,local_visaSort);
-		
-		*//**
-		 * 如果最後不用審核,則去掉
-		 *//*
-		int nos=visabillSer.findBillsWithNo(local_visaSort, local_billNo);
-		if(nos>0){
-			for(int i=0;i<nos;i++){
-				list_visa.remove(list_visa.size()-1);
-				list_visaflow.remove(list_visaflow.size()-1);
-			}
-		}
-		
-		List<VisabillsTemp>list_visabillstemp=new ArrayList();		
-		for(int i=0;i<list_visa.size();i++){
-			VisabillsTemp visabillstemp=new VisabillsTemp();
-			String visa_result="";
-			String visamk_temp="";
-			Date date=null;			
-			String datestr=list_visa.get(i).getDateVisa();
-			try {
-				if(datestr!=null){
-					date=format.parse(datestr);
-					visabillstemp.setCreateDate(date);
-				}
-				
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			String name=list_visa.get(i).getVisaRank();
-			String visamk=list_visa.get(i).getVisaMk();
-			String visadate=list_visa.get(i).getDateVisa();
-			String memo=list_visa.get(i).getMemo();
-			if(visamk.equals("Y")){
-				visamk_temp="(已審核)";
-			}
-			if(visamk.equals("N")){
-				visamk_temp="(未審核)";
-			}
-			if(visamk.equals("T")){
-				visamk_temp="(未通過)";
-			}			
-			visa_result=name+visamk_temp;
-			visabillstemp.setVisaNameAndMk(visa_result);
-			if(list_visa.size()==list_visaflow.size()){
-				String visaRank=list_visaflow.get(i).getVisaRank();
-				visabillstemp.setVisaRank(visaRank+":");
-			}
-			
-			if(memo!=null){
-				visabillstemp.setMemo("(備註:"+memo+")");
-			}
-			visabillstemp.setVisaSigner(list_visa.get(i).getVisaSigner());
-			visabillstemp.setVisaMk(list_visa.get(i).getVisaMk());
-			visabillstemp.setVisaName(name);
-			list_visabillstemp.add(visabillstemp);
-		}
-						
-		Map visa_map=new HashMap<String,Object>();
-		visa_map.put("list_visa", list_visabillstemp);
-		
-		map.put("sub_map", sub_map);
-		map.put("visa_map", visa_map);
-		Map main_map=new HashMap<String,Object>();    把list（List<KyzExpectmatm> list=kyzSer.findById_Print(id)）放在一个子表,便于打印  20150804
-		main_map.put("list_main", listkyz);
-		map.put("main_map", main_map);
-		
-		函文附檔
-		//String pic_file=ServletActionContext.getRequest().getRealPath("/KyzexpFile/"+kyzid.getBillNo()+"/")+"/";//函文附檔圖片路徑
-		String pic_file=new File("d:\\KyzexpFile_backup\\"+kyzid.getBillNo()).toString();//函文附檔圖片路徑(附檔在D盤的路徑)
-		List<KyzExpectmatmFile>list_kyzexpfile=kyzexpfileSer.findByBillNo(kyzid.getBillNo());
-		if(pic_file!=null&&list_kyzexpfile.size()>0){
-			map.put("pic_file", pic_file+"\\");
-			Map file_map=new HashMap<String,Object>();
-			file_map.put("list_kyzexpfile", list_kyzexpfile);
-			map.put("file_map", file_map);
-		}*/
-		
+	public void addVisabillsAndEmail(String local_factNo,String local_billNo,String local_visaSort,KyVisabillm vbm) throws IOException{	
 		Map<String,Object>map_result=kyzSer.print(local_factNo, local_billNo,local_visaSort,vbm);
 		if(map_result!=null&&map_result.size()>0){
 			map=(Map<String,Object>)map_result.get("map");
 			List<KyzExpectmatm>listkyz=(List<KyzExpectmatm>)map_result.get("list");
 			JasperHelper.exportmain("auto", map,"matterApplication.jasper", listkyz,local_billNo, "jasper/audit/");
 		}
-		this.sendEmail(local_factNo, local_billNo, local_visaSort, vbm);
-		
-		/**
-		 * 發郵件
-		 * 由於要給所有人(包括不要審核的)發送郵件,所以要重新從數據庫中獲取,而不能使用上面已有的list_visa
-		 */
-		      
-		/*KyVisabillm vbm2=visabillmSer.findById(local_factNo, local_visaSort, local_billNo);
-		List<KyVisabills>list_visa2=vbm2.getKyVisabillses();
-		//这个类主要是设置邮件   
-		
-		String[] attachFileNames = { "d:/" + local_billNo + ".pdf" };// 附件
-		for (int i = 0; i < list_visa2.size(); i++) {
-			MailSenderInfo mailInfo = new MailSenderInfo();
-			// 这个类主要来发送邮件
-			SimpleMailSender sms = new SimpleMailSender();
-			mailInfo.setValidate(true);
-			mailInfo.setUserName("kyuen@yydg.com.cn");
-			mailInfo.setPassword("yydgmail");// 您的邮箱密码
-			mailInfo.setFromAddress("<kyuen@yydg.com.cn>");
-			mailInfo.setSubject("函文知會(審核完畢)_" + local_billNo + "("
-					+ local_factNo + ")");
-
-			//String[] attachFileNames = { "d:/" + local_billNo + ".pdf" };
-			mailInfo.setAttachFileNames(attachFileNames);
-			mailInfo.setContent("單號為:" + "<span style='color:red'>"
-					+ local_billNo + "</span>" + "的函文已審核完畢,請查看附件.");
-
-			String toAddress = list_visa2.get(i).getVisaSigner();
-			mailInfo.setToAddress(toAddress);
-			sms.sendHtmlMail(mailInfo);// 发送html格式
-
-			// 给备签人发送邮件
-			 *//******************20151113备签人请使用方法findByFactNoAEmailPwd2(String factNo,String email)**********************//*
-			//String emailPwd = webuseremailSer.findEmailPWD(local_factNo,list_visa2.get(i).getVisaSigner());
-			String emailPwd="";
-			if (emailPwd != null&&!emailPwd.equals("")) {
-				MailSenderInfo mailInfo2 = new MailSenderInfo();
-				// 这个类主要来发送邮件
-				SimpleMailSender sms2 = new SimpleMailSender();
-				mailInfo2.setValidate(true);
-				mailInfo2.setUserName("kyuen@yydg.com.cn");
-				mailInfo2.setPassword("yydgmail");// 您的邮箱密码
-				mailInfo2.setFromAddress("<kyuen@yydg.com.cn>");
-				mailInfo2.setSubject("函文知會(審核完畢)_" + local_billNo + "("
-						+ local_factNo + ")");
-				mailInfo2.setAttachFileNames(attachFileNames);
-				mailInfo2.setContent("單號為:" + "<span style='color:red'>"
-						+ local_billNo + "</span>" + "的函文已審核完畢,請查看附件.");
-
-				mailInfo2.setToAddress(emailPwd);
-				sms2.sendHtmlMail(mailInfo2);// 发送html格式
-
-			}
-
-		}
-	       
-	          File file = new File("d:/" + local_billNo + ".pdf");
-				if (file.exists()) {
-					if (file.isFile()) {
-						file.delete();
-					}
-				}*/
+		this.sendEmail(local_factNo, local_billNo, local_visaSort, vbm);				
 		
 	}
 	
@@ -1108,167 +937,14 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 	 * @param local_visaSort
 	 * @throws IOException
 	 */
-	public void addVisabillsAndEmail2(String local_factNo,String local_billNo,String local_visaSort,KyVisabillm vbm) throws IOException{
-		/*List<KyzContactletter>list=new ArrayList<KyzContactletter>();
-		Map<String,Object>map=new HashMap<String,Object>();
-		String factname=webFactSer.selByid(local_factNo);
-		String factCode="";
-		KyzContactletter letter=kyzletterSer.findById(local_factNo,local_billNo);
-		if(letter==null){
-			response.setContentType("text/html;charset=utf-8");
-			response.getWriter().print("<script>alert('單號為"+local_billNo+"的函文不存在!');window.close()</script>");
-			return null;
-		}else{
-			list.add(letter);
-		}	
-		list.add(letter);
-		factCode=letter.getFactCode();
-		String result=factname+"("+factCode+")"+"內部聯絡函";
-		//map = new HashMap<String, Object>();
-		map.put("SUBREPORT_DIR",ServletActionContext.getRequest().getRealPath("/jasper/audit/")+ "/");
-		map.put("pic", ServletActionContext.getRequest().getRealPath("/jasper/audit/images/")+ "/");//圖片路徑		
-		map.put("pfactno", local_factNo);
-		map.put("pbillno",local_billNo);
-		map.put("title",result);
-		List<KyzExpectmats> sub_list = new ArrayList<KyzExpectmats>();		
-		KyzExpectmats temp=new KyzExpectmats();		
-				
-		SimpleDateFormat format=new SimpleDateFormat("yyyyMMdd");
-		KyVisabillm vbm=visabillmSer.findById(local_factNo, local_visaSort, local_billNo);
-		List<KyVisabills>list_visa=vbm.getKyVisabillses();
-		List<KyzVisaflow>list_visaflow=visaSer.findByType(local_factNo,local_visaSort);
-		int num1=list_visa.size();
-		int num2=list_visaflow.size();
-		*//**
-		 * 最後個不用審核的,就去掉
-		 *//*
-		int nos=visabillSer.findBillsWithNo(local_visaSort, local_billNo);
-		if(nos>0){
-			for(int i=0;i<nos;i++){
-				list_visa.remove(list_visa.size()-1);
-				list_visaflow.remove(list_visaflow.size()-1);
-			}
-		}		
-		
-		List<VisabillsTemp>list_visabillstemp=new ArrayList();		
-		for(int i=0;i<list_visa.size();i++){
-			VisabillsTemp visabillstemp=new VisabillsTemp();
-			String visa_result="";
-			String visamk_temp="";
-			Date date=null;
-			
-			String datestr=list_visa.get(i).getDateVisa();
-			try {
-				if(datestr!=null){
-					date=format.parse(datestr);
-					visabillstemp.setCreateDate(date);
-				}
-				
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			String name=list_visa.get(i).getVisaRank();
-			String visamk=list_visa.get(i).getVisaMk();
-			String visadate=list_visa.get(i).getDateVisa();
-			String memo=list_visa.get(i).getMemo();
-			if(visamk.equals("Y")){
-				visamk_temp="(已審核)";
-			}
-			if(visamk.equals("N")){
-				visamk_temp="(未審核)";
-			}
-			if(visamk.equals("T")){
-				visamk_temp="(未通過)";
-			}			
-			visa_result=name+visamk_temp;
-			visabillstemp.setVisaNameAndMk(visa_result);			
-			if(list_visa.size()==list_visaflow.size()){
-				String visaRank=list_visaflow.get(i).getVisaRank();
-				visabillstemp.setVisaRank(visaRank+":");
-			}
-			if(memo!=null){
-				visabillstemp.setMemo("(備註:"+memo+")");
-			}
-			visabillstemp.setVisaSigner(list_visa.get(i).getVisaSigner());
-			visabillstemp.setVisaMk(list_visa.get(i).getVisaMk());
-			visabillstemp.setVisaName(name);
-			list_visabillstemp.add(visabillstemp);
-		}
-		
-		
-		
-		Map visa_map=new HashMap<String,Object>();
-		visa_map.put("list_visa", list_visabillstemp);
-		
-		map.put("visa_map", visa_map);
-		Map main_map=new HashMap<String,Object>();    把list（List<KyzExpectmatm> list=kyzSer.findById_Print(id)）放在一个子表,便于打印  20150804
-		main_map.put("list_main", list);
-		map.put("main_map", main_map);*/
-		
+	public void addVisabillsAndEmail2(String local_factNo,String local_billNo,String local_visaSort,KyVisabillm vbm) throws IOException{				
 		Map<String,Object>map_result=kyzletterSer.print(local_factNo, local_billNo, local_visaSort,vbm);
 		if(map_result!=null&&map_result.size()>0){
 			map=(Map<String,Object>)map_result.get("map");
 			List<KyzContactletter>list=(List<KyzContactletter>)map_result.get("list");
 			JasperHelper.exportmain("auto", map,"kyz_contactletter.jasper", list,local_billNo, "jasper/audit/");
 		}
-		this.sendEmail(local_factNo, local_billNo, local_visaSort, vbm);
-		
-		/**
-		 * 發郵件
-		 * 由於要給所有人(包括不要審核的)發送郵件,所以要重新從數據庫中獲取,而不能使用上面已有的list_visa
-		 */
-		      
-		/*KyVisabillm vbm2=visabillmSer.findById(local_factNo, local_visaSort, local_billNo);
-		List<KyVisabills>list_visa2=vbm2.getKyVisabillses();
-		//这个类主要是设置邮件   
-		String[] attachFileNames = { "d:/" + local_billNo + ".pdf" };// 附件
-		for (int i = 0; i < list_visa2.size(); i++) {
-			MailSenderInfo mailInfo = new MailSenderInfo();
-			// 这个类主要来发送邮件
-			SimpleMailSender sms = new SimpleMailSender();
-			mailInfo.setValidate(true);
-			mailInfo.setUserName("kyuen@yydg.com.cn");
-			mailInfo.setPassword("yydgmail");// 您的邮箱密码
-			mailInfo.setFromAddress("<kyuen@yydg.com.cn>");
-			mailInfo.setSubject("函文知會(審核完畢)_" + local_billNo + "("
-					+ local_factNo + ")");
-
-			// String[] attachFileNames={"d:/"+local_billNo+".pdf"};
-			mailInfo.setAttachFileNames(attachFileNames);
-			mailInfo.setContent("單號為:" + "<span style='color:red'>"
-					+ local_billNo + "</span>" + "的函文已審核完畢,請查看附件.");
-
-			String toAddress = list_visa2.get(i).getVisaSigner();
-			mailInfo.setToAddress(toAddress);
-			sms.sendHtmlMail(mailInfo);// 发送html格式
-			
-			// 给备签人发送邮件
-			 *//******************20151113备签人请使用方法findByFactNoAEmailPwd2(String factNo,String email)**********************//*
-			//String emailPwd = webuseremailSer.findEmailPWD(local_factNo,list_visa2.get(i).getVisaSigner());
-			String emailPwd="";
-			if(emailPwd!=null&&!emailPwd.equals("")){
-				MailSenderInfo mailInfo2 = new MailSenderInfo();
-				// 这个类主要来发送邮件
-				SimpleMailSender sms2 = new SimpleMailSender();
-				mailInfo2.setValidate(true);				
-				mailInfo2.setSubject("函文知會(審核完畢)_" + local_billNo + "("
-						+ local_factNo + ")");
-				mailInfo2.setAttachFileNames(attachFileNames);
-				mailInfo2.setContent("單號為:" + "<span style='color:red'>"
-						+ local_billNo + "</span>" + "的函文已審核完畢,請查看附件.");
-
-				mailInfo2.setToAddress(emailPwd);
-				sms2.sendHtmlMail(mailInfo2);// 发送html格式
-			}
-		}
-	       
-	          File file = new File("d:/" + local_billNo + ".pdf");
-				if (file.exists()) {
-					if (file.isFile()) {
-						file.delete();
-					}
-				}*/
+		this.sendEmail(local_factNo, local_billNo, local_visaSort, vbm);				
 								
 }
 	
@@ -1914,4 +1590,149 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 		fileInput=GlobalMethod.getFileInput("D:\\KyzexpFile_backup\\"+billNo+"\\"+fileName);
 		return "lookFile";
 	}
+	
+	
+	
+	public void print_all() throws IOException{
+		if(billNo.substring(0, 2).equals("EM")){
+			this.print_kyz();
+		}
+		if(billNo.substring(0, 2).equals("CM")){
+			this.print_letter();
+		}
+		if(billNo.substring(0, 2).equals("BM")){
+			this.print_buss();
+		}
+		if(billNo.substring(0, 2).equals("RM")){
+			this.print_rm();
+		}
+		if(billNo.substring(0, 2).equals("GJ")){
+			this.print_formula();
+		}
+	}
+	
+	/**
+	 * 函文申請打印
+	 * @param factNo
+	 * @param billNo
+	 * @param sort
+	 * @param vbm
+	 * @throws IOException
+	 */
+    public void print_kyz() throws IOException{		
+		Map<String,Object>map_result=kyzSer.print(factNo,billNo, visaSort,null);		
+		if(map_result!=null&&map_result.size()>0){
+			map=(Map<String,Object>)map_result.get("map");
+			List<KyzExpectmatm>list=(List<KyzExpectmatm>)map_result.get("list");
+			if(lookordown!=null){
+				if(lookordown.equals("look")){
+					JasperHelper.exportmain("line", map,"matterApplication.jasper", list,billNo, "jasper/audit/");
+				}else{
+					JasperHelper.exportmain("pdf", map,"matterApplication.jasper", list,billNo, "jasper/audit/");
+				}
+			}else{
+				JasperHelper.exportmain("pdf", map,"matterApplication.jasper", list,billNo, "jasper/audit/");
+			}
+		}else{
+			response.setContentType("text/html;charset=utf-8");
+			response.getWriter().print("<script>alert('單號為"+billNo+"的函文不存在!');window.close()</script>");
+		}						
+				
+	}
+    
+    /**
+	 * 內部聯絡函打印
+	 * @param factNo
+	 * @param billNo
+	 * @param sort
+	 * @throws IOException
+	 */
+	public void print_letter() throws IOException{		
+		Map<String,Object>map_result=kyzletterSer.print(factNo, billNo, visaSort,null);
+		if(map_result!=null&&map_result.size()>0){
+			Map<String,Object>map=(Map<String,Object>)map_result.get("map");
+			List<KyzContactletter>list=(List<KyzContactletter>)map_result.get("list");
+			if(lookordown!=null){
+				if(lookordown.equals("look")){
+					JasperHelper.exportmain("line", map,"kyz_contactletter.jasper", list,billNo, "jasper/audit/");
+				}else{
+					JasperHelper.exportmain("pdf", map,"kyz_contactletter.jasper", list,billNo, "jasper/audit/");
+				}
+			}else{
+				JasperHelper.exportmain("pdf", map,"kyz_contactletter.jasper", list,billNo, "jasper/audit/");
+			}
+		}								
+	}
+	
+	/**
+	 * 出差函文打印
+	 * @param factNo
+	 * @param billNo
+	 * @param visaSort
+	 * @throws IOException
+	 */
+   public void print_buss() throws IOException{		
+		Map<String,Object>map_result=webbussletterSer.print(factNo, billNo, visaSort,null);
+		if(map_result!=null&&map_result.size()>0){
+			Map<String,Object>map=(Map<String,Object>)map_result.get("map");
+			List<WebBussinessletter>list=(List<WebBussinessletter>)map_result.get("list");
+			if(lookordown!=null){
+				if(lookordown.equals("look")){
+					JasperHelper.exportmain("line", map,"webbussletter.jasper", list,billNo, "jasper/audit/");
+				}else{
+					JasperHelper.exportmain("pdf", map,"webbussletter.jasper", list,billNo, "jasper/audit/");
+				}
+			}else{
+				JasperHelper.exportmain("pdf", map,"webbussletter.jasper", list,billNo, "jasper/audit/");
+			}
+		}										
+	}
+   
+   /**
+    * 湘威費用清單函文打印
+    * @throws IOException
+    */
+   public void print_rm() throws IOException{				
+		Map<String,Object>map_result=webremiSer.print(factNo, billNo, visaSort,null);
+		if(map_result!=null&&map_result.size()>0){
+			Map<String,Object>map=(Map<String,Object>)map_result.get("map");
+			List<Webremittancelist>list=(List<Webremittancelist>)map_result.get("list");
+			if(lookordown!=null){
+				if(lookordown.equals("look")){
+					JasperHelper.exportmain("line", map,"webremittancelist.jasper", list,billNo, "jasper/audit/");
+				}else{
+					JasperHelper.exportmain("pdf", map,"webremittancelist.jasper", list,billNo, "jasper/audit/");
+				}
+			}else{
+				JasperHelper.exportmain("pdf", map,"webremittancelist.jasper", list,billNo, "jasper/audit/");
+			}
+		}										
+	}
+   
+   /**
+    * 配方系統函文
+    * @throws IOException
+    */
+   public void print_formula() throws IOException{		
+		Map<String,Object>map_result=webformulaser.print(factNo,billNo,null);		
+		if(map_result!=null&&map_result.size()>0){
+			map=(Map<String,Object>)map_result.get("map");
+			List<KyzExpectmatm>list=(List<KyzExpectmatm>)map_result.get("list");
+			if(lookordown!=null){
+				if(lookordown.equals("look")){
+					JasperHelper.exportmain("line", map,"web_formula.jasper", list,billNo, "jasper/audit/");
+				}else{
+					JasperHelper.exportmain("pdf", map,"web_formula.jasper", list,billNo, "jasper/audit/");
+				}
+			}else{
+				JasperHelper.exportmain("pdf", map,"web_formula.jasper", list,billNo, "jasper/audit/");
+			}
+		}else{
+			response.setContentType("text/html;charset=utf-8");
+			response.getWriter().print("<script>alert('單號為"+billNo+"的函文不存在!');window.close()</script>");
+		}						
+				
+	}
+	
+	
 }

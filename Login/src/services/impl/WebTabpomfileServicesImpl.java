@@ -30,4 +30,9 @@ public class WebTabpomfileServicesImpl implements IWebTabpomfileServices{
 		return webtabfiledao.findByPomNo(pomNo);
 	}
 
+	public void add(WebTabpomfile file) {
+		// TODO Auto-generated method stub
+		webtabfiledao.add(file);
+	}
+
 }

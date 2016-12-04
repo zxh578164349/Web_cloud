@@ -11,46 +11,31 @@
 <meta http-equiv="expires" content="0">
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
-<link rel="stylesheet" type="text/css" href="css/select_beautiful.css">	
-<LINK href="css/list.css" type="text/css" rel="stylesheet">
 </head>
 <body>
   <form id="public_form" method="post">
 	<table id="tb_search">
 		<tr>
-			<td>物料名稱</td>
+			<th>物性編號</th>
+			<th>開始日期</th>
+			<th>結束日期</th>
+		</tr>
+		<tr>	
 			<td>
-			   <input type="text" name="pomName"/>
+			   <input type="text" name="pomNo"/>
 			</td>
-			<td>品牌</td>
+			
 			<td>
-			   <select name="brank" id="dwrWebbrank"></select>
-			</td>
-			<td>
-			  <input type="text" id="year" name="yymm" onClick="WdatePicker({dataFmt:'yyyyMM'})" readonly="readonly" class="Wdate"/>至
-			  <input type="text" id="year" name="yymm2" onClick="WdatePicker({dataFmt:'yyyyMM'})" readonly="readonly" class="Wdate"/>			
-			</td>
-			<td>
-			 <input value="搜索" type="button" class="btn btn-primary" onclick="submis('public_form')" />
-			 <input value="導出Excel" type="button" class="btn btn-primary" onclick="print('public_form')"/>	
+			  <input type="text" id="year" name="yymm" onClick="WdatePicker({dataFmt:'yyyyMM'})" readonly="readonly" class="Wdate"/>
+			 </td>
+			 <td> 
+			  <input type="text" id="year" name="yymm2" onClick="WdatePicker({dataFmt:'yyyyMM'})" readonly="readonly" class="Wdate"/>
+			  &nbsp;&nbsp;
+			  <input value="搜索" type="button" class="btn btn-primary" onclick="submis('public_form')" />
+			  <input value="導出Excel" type="button" class="btn btn-primary" onclick="print('public_form')"/>				
 			</td>
 		</tr>
 	</table>
 	</form>
-	
-<script type="text/javascript">
-function getAllWebbrank(){
-	webbrankjs.findAll(function(x){
-		dwr.util.addOptions("dwrWebbrank",x,"BNo","BName");
-	})
-}
-</script>
-
-<script type='text/javascript' src='/Login/dwr/interface/webbrankjs.js'></script>
-<script type="text/javascript">
-jq(function(){
-	getAllWebbrank();
-});
-</script>	
 </body>
 </html>

@@ -113,21 +113,35 @@
 										<input type="hidden" value="down" name="lookordown"/>																														
 									</form>
 									<s:if test="vbm==null">
-									<a href="javascript:findById_form('subform${x.index}','webformula_findById')" class="btn btn-xs btn-primary">
+									<a href="javascript:findById_form('subform${x.index}','webformula_findById')" class="btn btn-xs btn-success">
 									  修改									
 								    </a>
-									<a href="javascript:addvbm('3subform${x.index}')" class="btn btn-xs btn-primary">送簽</a>
-									<a href="javascript:isDelete2('2subform${x.index}','webformula_delete','webformula_findPageBean3')"  class="btn btn-xs btn-primary">
+								    <a href="javascript:isDelete2('2subform${x.index}','webformula_delete','webformula_findPageBean3')"  class="btn btn-xs btn-success">
 									 刪除
-								    </a>									
+								    </a>
+									<a href="javascript:addvbm('3subform${x.index}')" class="btn btn-xs btn-success">送簽</a>																		
 									</s:if>
 									<s:else>
-									<a href="#" class="btn btn-xs disabled btn-warning"> 鎖定 </a>																									   
-									 <a href="#" class="btn btn-xs disabled btn-warning">已送</a>
-									 <a href="#" class="btn btn-xs disabled btn-warning">刪除	</a>	
-									</s:else>																 								    
-								    <a href="javascript:document.getElementById('4subform${x.index}').submit()" class="btn btn-xs btn-primary">預覽</a>
-								    <a href="javascript:document.getElementById('5subform${x.index}').submit()" class="btn btn-xs btn-primary">下載</a>
+									 																									   									 
+									 <s:if test='#session.loginUser.adminMk=="Y"'>
+									   <a href="javascript:findById_form('subform${x.index}','webformula_findById')" class="btn btn-xs btn-success">
+									             修改									
+								       </a>
+									   <a href="javascript:isDelete2('2subform${x.index}','webformula_delete','webformula_findPageBean3')"  class="btn btn-xs btn-success">
+									          刪除
+									   </a>
+									 </s:if>
+									 <s:else>
+									    <a href="#" class="btn btn-xs disabled btn-warning"> 鎖定 </a>
+									    <a href="#" class="btn btn-xs disabled btn-warning">刪除	</a>
+									 </s:else>
+									 <a href="#" class="btn btn-xs disabled btn-warning">已送</a>	
+									</s:else>
+																									 								    
+								    <a href="javascript:document.getElementById('4subform${x.index}').submit()" class="btn btn-xs btn-success">預覽</a>
+								    <a href="javascript:document.getElementById('5subform${x.index}').submit()" class="btn btn-xs btn-success">下載</a>
+								    <a href="webtabpom_findByIdfiles?pomNo=${obj.pom.pomNo}" class="btn btn-xs btn-success" target="_blank">
+					                                             附檔</a>
 								</td>
 							</s:if>
 							

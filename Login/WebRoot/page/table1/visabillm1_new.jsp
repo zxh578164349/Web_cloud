@@ -106,20 +106,18 @@
 							value="<s:property value='id.kyVisabillm.id.billNo'/>" name="billNo" />						
 							<input type="hidden" value="<s:property value='id.kyVisabillm.id.visaSort'/>" name="visaSort"/>
 					 </form>
-					 <form  method="post" id="4subform${x.index}" style="float:left" target="_blank">
+					 <form action="vbm_print_all"  method="post" id="4subform${x.index}" style="float:left" target="_blank">
 						<input type="hidden" value="<s:property value='id.kyVisabillm.id.factNo'/>"
 							name="factNo" /> <input type="hidden"
 							value="<s:property value='id.kyVisabillm.id.billNo'/>" name="billNo" />
-							<input type="hidden" value="<s:property value='id.kyVisabillm.id.visaSort'/>" name="visaSort"/>
-							<input type="hidden" value="<s:property value='id.kyVisabillm.id.visaSort'/>" name="visaType"/><!-- 湘威費用清單函文 -->
+							<input type="hidden" value="<s:property value='id.kyVisabillm.id.visaSort'/>" name="visaSort"/>							
 							<input type="hidden" value="look" name="lookordown"/>						
 					</form>
-					<form  method="post" id="5subform${x.index}" style="float:left" target="_blank">
+					<form action="vbm_print_all"  method="post" id="5subform${x.index}" style="float:left" target="_blank">
 						<input type="hidden" value="<s:property value='id.kyVisabillm.id.factNo'/>"
 							name="factNo" /> <input type="hidden"
 							value="<s:property value='id.kyVisabillm.id.billNo'/>" name="billNo" />
-							<input type="hidden" value="<s:property value='id.kyVisabillm.id.visaSort'/>" name="visaSort"/>
-							<input type="hidden" value="<s:property value='id.kyVisabillm.id.visaSort'/>" name="visaType"/><!-- 湘威費用清單函文 -->
+							<input type="hidden" value="<s:property value='id.kyVisabillm.id.visaSort'/>" name="visaSort"/>							
 							<input type="hidden" value="down" name="lookordown"/>						
 					</form>
 										
@@ -156,10 +154,10 @@
 					 </s:if>
 								    					 
 					 <td>
-					 <a href="javascript:goPreviewOrPrint('4subform${x.index}','${temp.id.kyVisabillm.id.billNo}')" ><img alt="預覽" src="images/icon/view24.png" title="預覽"><br>預覽</a>
+					 <a href="javascript:document.getElementById('4subform${x.index}').submit()" ><img alt="預覽" src="images/icon/view24.png" title="預覽"><br>預覽</a>
 					 </td>
 					 <td>
-					 <a href="javascript:goPreviewOrPrint('5subform${x.index}','${temp.id.kyVisabillm.id.billNo}')"><img alt="打印" src="images/icon/print24.png" title="打印"><br>打印</a>
+					 <a href="javascript:document.getElementById('5subform${x.index}').submit()"><img alt="打印" src="images/icon/print24.png" title="打印"><br>打印</a>
 				     </td>
 				    	
 				     
