@@ -281,7 +281,7 @@ public class WebFormulaAction implements ServletResponseAware{
 	public String makeFormulaIndex(){
 		//int jj=2/0;
 		StringBuffer index=new StringBuffer();
-		index.append("GJ"+factNo.split("__")[1]+factCode.split("__")[1]+"-"+createDate);
+		index.append("GJ"+factNo.split("__")[1]+factCode.split("__")[1]+"-"+createDate.split("-")[0]);
 		List<String>list=webformulaser.findFormulaIndex(factNo.split("__")[0],factCode.split("__")[0],createDate);
 		if(list.size()>0){
 			String temp=(Integer.parseInt(list.get(0).substring(list.get(0).length()-3))+1)+"";

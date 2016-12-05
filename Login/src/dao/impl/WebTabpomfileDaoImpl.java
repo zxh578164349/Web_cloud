@@ -19,9 +19,9 @@ public class WebTabpomfileDaoImpl extends Basedao implements IWebTabpomfileDao{
 		return (WebTabpomfile)query.uniqueResult();
 	}
 
-	public void delete(String pomNo, String fileName) {
+	public void delete(String pomNo, String fileName,KyzExpectmatmLog log) {
 		// TODO Auto-generated method stub
-		super.delete(this.findById(pomNo, fileName));
+		super.delete(this.findById(pomNo, fileName),log);
 	}
 
 	public List<Object[]> findByPomNo(String pomNo) {

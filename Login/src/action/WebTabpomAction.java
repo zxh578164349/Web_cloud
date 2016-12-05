@@ -61,10 +61,18 @@ public class WebTabpomAction extends ActionSupport implements ServletResponseAwa
 	private String fileusername;
 	private String filecreatedate;
 	private WebTabpomfile webtabFile;
+	private String factNo;
 	private IWebTabpomServices tabpomSer;
 	private IWebTabpomfileServices tabpomfileSer;
 	private javax.servlet.http.HttpServletResponse response;	
 	
+	
+	public String getFactNo(){
+		return factNo;
+	}
+	public void setFactNo(String factNo){
+		this.factNo=factNo;
+	}
 	public String getFileusername(){
 		return fileusername;
 	}
@@ -223,7 +231,7 @@ public class WebTabpomAction extends ActionSupport implements ServletResponseAwa
 		ActionContext.getContext().getSession().remove("tabpom_brank");
 		ActionContext.getContext().getSession().remove("tabpom_yymm");
 		ActionContext.getContext().getSession().remove("tabpom_yymm2");		
-		bean=tabpomSer.findPageBean(25, page, pomNo, brank,yymm,yymm2);
+		bean=tabpomSer.findPageBean(25, page, pomNo, brank,yymm,yymm2,factNo);
 		return "beanList";
 	}
 	
@@ -232,7 +240,7 @@ public class WebTabpomAction extends ActionSupport implements ServletResponseAwa
 		ActionContext.getContext().getSession().put("tabpom_brank", brank);
 		ActionContext.getContext().getSession().put("tabpom_yymm", yymm);			
 		ActionContext.getContext().getSession().put("tabpom_yymm2", yymm2);	
-		bean=tabpomSer.findPageBean(25, page, pomNo, brank,yymm,yymm2);
+		bean=tabpomSer.findPageBean(25, page, pomNo, brank,yymm,yymm2,factNo);
 		return "beanList1";
 	}
 	public String findPageBean3(){
@@ -244,7 +252,7 @@ public class WebTabpomAction extends ActionSupport implements ServletResponseAwa
 		brank=(String)ActionContext.getContext().getSession().get("tabpom_brank");
 		pomName=(String)ActionContext.getContext().getSession().get("tabpom_yymm");
 		brank=(String)ActionContext.getContext().getSession().get("tabpom_yymm2");
-		bean=tabpomSer.findPageBean(25, page, pomNo, brank,yymm,yymm2);
+		bean=tabpomSer.findPageBean(25, page, pomNo, brank,yymm,yymm2,factNo);
 		return result;
 	}
 	public String add() throws IOException{		
@@ -462,7 +470,7 @@ public class WebTabpomAction extends ActionSupport implements ServletResponseAwa
 	public String makePomNo() {
 		// TODO Auto-generated method stub
 		StringBuffer pomNo=new StringBuffer();
-		pomNo.append("WX"+brank+tabpomDate.substring(2));
+		pomNo.append("WX"+brank+"-"+tabpomDate.split("-")[0]);
 		List<String>list=tabpomSer.findPomNos(brank, tabpomDate);
 		if(list.size()>0){
 			String indexStr=list.get(0).substring(list.get(0).length()-3);

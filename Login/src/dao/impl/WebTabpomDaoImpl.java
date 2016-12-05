@@ -50,13 +50,16 @@ public class WebTabpomDaoImpl extends Basedao implements IWebTabpomDao{
 	}
 
 	public PageBean findPageBean(int pageSize, int page, String pomNo,
-			String brank,String yymm,String yymm2) {
+			String brank,String yymm,String yymm2,String factNo) {
 		// TODO Auto-generated method stub
 		StringBuffer hql=new StringBuffer();
 		StringBuffer hql2=new StringBuffer();
 		Map<String,Object>map=new HashMap<String,Object>();
 		hql.append("from WebTabpom where 1=1 ");
 		hql2.append("select count(pomNo) ");
+		if(factNo==null||factNo.equals("")){
+			factNo=(String)ActionContext.getContext().getSession().get("factNo");
+		}
 		if(pomNo!=null&&!pomNo.equals("")){
 			hql.append(" and pomNo=:pomNo");
 			map.put("pomNo", pomNo);
@@ -72,6 +75,10 @@ public class WebTabpomDaoImpl extends Basedao implements IWebTabpomDao{
 		if(yymm2!=null&&!yymm2.equals("")){
 			hql.append(" and tabpomDate<=:yymm2 ");
 			map.put("yymm2", yymm2);
+		}
+		if(factNo!=null&&!factNo.equals("")&&!factNo.equals("tw")){
+			hql.append(" and formulaId.factNo.factNo=:factNo");
+			map.put("factNo",factNo);
 		}
 		hql2.append(hql);
 		hql.append(" order by tabpomDate");

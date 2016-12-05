@@ -233,13 +233,13 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 			dataType:"json",
 			url:"webfact_findAllVwebfact",
 			success:function(data){
-				var item;
+				var item="";
 				jq("#dwr_factno").empty();
 				jq("#dwr_factno").append("<option value=''>請選擇廠別</option>");
 				jq.each(data,function(i,obj){
-					item="<option value='"+obj[0]+"__"+obj[3]+"'>"+obj[1]+"("+obj[3]+")</option>";
-					jq("#dwr_factno").append(item);
+					item+="<option value='"+obj[0]+"__"+obj[3]+"'>"+obj[1]+"("+obj[3]+")</option>";					
 				});
+				jq("#dwr_factno").append(item);
 			}
 		});
 		
@@ -337,11 +337,15 @@ function loadNamece(){
 var index=0;
 var item_nums=0;
 function check_addSection(){
-	var list_items_val=jq("input[name='itemids']:checked");
-	if(list_items_val.length>100){
-		layer.msg("所選配方原料超過上限",3,3);
-	}else{
-		addSection(list_items_val);
+	if(index>1){
+		layer.msg("達到配方階段上限",3,3);
+	}else{		
+		var list_items_val=jq("input[name='itemids']:checked");
+		if(list_items_val.length>100){
+			layer.msg("所選配方原料超過上限",3,3);
+		}else{
+			addSection(list_items_val);
+		}
 	}	
 }
 function addSection(list_items_val){

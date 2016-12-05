@@ -12,6 +12,7 @@ import services.IWebTabpomfileServices;
 import com.opensymphony.xwork2.ActionSupport;
 
 import entity.KyzExpectmatmFile;
+import entity.KyzExpectmatmLog;
 import entity.WebTabpomfile;
 
 public class WebTabpomfileAction extends ActionSupport{
@@ -49,7 +50,11 @@ public class WebTabpomfileAction extends ActionSupport{
 		        
 		if(file.exists()){
 			file.delete();
-			tabpomfileSer.delete(pomNo,filename);
+			KyzExpectmatmLog log=new KyzExpectmatmLog();
+			log.setBillNo(pomNo);
+			log.setObj("WebTabpomfile");
+			log.setContent(filename);
+			tabpomfileSer.delete(pomNo,filename,log);
 		}
 		List<Object[]> listfiles=tabpomfileSer.findByPomNo(pomNo);				
 		/******************list轉json*************************/

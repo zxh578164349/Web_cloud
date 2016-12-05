@@ -29,7 +29,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 	<form action="webformula_addItems" method="post" id="form_items">
 		<div>
 			<ul class="list" id="ul_item">
-			    <li class="columnhead">配方階段</li>
+			    <li class="columnhead">配方階段<%=str_date%></li>
 				<li class="columnhead">類別</li>
 				<li class="columnhead">原料名稱</li>
 				<li class="columnhead">PHR</li>
@@ -111,11 +111,12 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 
 var ii=0;
 function addItem(){
+	var createDate="<%=str_date%>";
 	var formulaIndex=jq("#formulaIndex").val();
 	var num_size=parseInt(jq("#num_size").val())+ii;
 	var item="";
 	var options="<option value=''>請選擇配方階段</option>";
-	for(var j=1;j<8;j++){
+	for(var j=1;j<3;j++){
 		options+="<option value='"+j+"'>"+j+"</option>";
 	}	
 	item+="<li><select name='items["+num_size+"].sectionNo' datatype='*'>"+options+"</select></li>";
@@ -126,7 +127,7 @@ function addItem(){
 	item+="<li class='col_item3'><input type='text' name='items["+num_size+"].remark' datatype='*0-200'/>";
 	item+="<input type='hidden' value='"+formulaIndex+"' name='items["+num_size+"].webFormula.formulaIndex' readonly/>";
 	item+="<input type='hidden' name='items["+num_size+"].createName' value='${loginUser.username}' readonly/>";
-	item+="<input type='hidden' name='items["+num_size+"].createDate' value='"+<%=str_date%>+"'/>";
+	item+="<input type='hidden' name='items["+num_size+"].createDate' value='"+createDate+"'/>";
 	item+="<img src='images/icon/del_file.png' style='border:0px' onclick='removeOneItem(jq(this))'/></li>";
 	jq("#ul_item").append(item);
 	var kk="#items_type"+ii;
@@ -158,7 +159,7 @@ function loadNamece(item_typeno){
 			success:function(data){
 				var item="<option value=''>請選擇配方原料</option>";
 				jq.each(data,function(i,obj){
-					item+="<option value='"+obj[0]+"'>"+obj[2]+"&nbsp;&nbsp;"+obj[3]+"__"+obj[1]+"</option>";					
+					item+="<option value='"+obj[0]+"'>"+obj[2]+"&nbsp;&nbsp;"+obj[3]+"__("+obj[1]+")</option>";					
 				});
 				item_typeno.parent().next().children().append(item);
 			}

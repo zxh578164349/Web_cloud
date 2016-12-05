@@ -716,6 +716,10 @@ public class WebUserAction extends ActionSupport implements ServletResponseAware
 	}
 	public String add(){
 		try{
+			String factno=webUsers.getFactno().split("__")[0];
+			String erpfactno=webUsers.getFactno().split("__")[1];
+			webUsers.setFactno(factno);
+			webUsers.setErpfactno(erpfactno);
 			webUserService.add(webUsers);
 			ajax_result="0";
 		}catch(Exception e){
