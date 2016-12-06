@@ -255,6 +255,7 @@ public class WebFormulaAction implements ServletResponseAware{
 	
 
 	public String findPageBean(){
+        this.clearSession();
 		ActionContext.getContext().getSession().remove("allrow");//dao層  allrow
 		ActionContext.getContext().getSession().remove("formulaIndex");
 		bean=webformulaser.findPageBean(page,PAGESIZE,formula,issuedDate_a,issuedDate_b);
@@ -300,7 +301,7 @@ public class WebFormulaAction implements ServletResponseAware{
 	}
 	
 	public String add(){
-		Map<String,Object>map=new HashMap<String,Object>();
+		//Map<String,Object>map=new HashMap<String,Object>();
 		try{
 			if(isnull!=null&&isnull.equals("isnull")){
 				String temp=factCode.split("__")[0];
@@ -311,27 +312,28 @@ public class WebFormulaAction implements ServletResponseAware{
 				WebTabpom tabpom=(WebTabpom)ActionContext.getContext().getSession().get("tabpom");
 				if(tabpom!=null){
 					formula.setPom(tabpom);
-					//GlobalMethod.uploadfile(tabpom);
-					try{			
-						map=GlobalMethod.uploadfile(tabpom);
-						List<BufferedInputStream>ins=(List<BufferedInputStream>)map.get("ins");
-						List<BufferedOutputStream>outs=(List<BufferedOutputStream>)map.get("outs");
-						GlobalMethod.uploadFiles(ins, outs);
+					try{						
+						GlobalMethod.uploadfile(tabpom);												
+						List<BufferedInputStream>ins=(List<BufferedInputStream>)ActionContext.getContext().getSession().get("ins");
+						List<BufferedOutputStream>outs=(List<BufferedOutputStream>)ActionContext.getContext().getSession().get("outs");
+						if(outs!=null&&outs.size()>0){
+							GlobalMethod.uploadFiles(ins, outs);
+						}
+						
 					}catch(Exception e){
 						e.printStackTrace();
 						ajaxResult="3";
 						return "add";
 					}
-				}
-				
+				}				
 			}						
-			webformulaser.add(formula);			
+			webformulaser.add(formula);	
+			this.clearSession();//添加成功后,清除session
 			ajaxResult="0";
 		}catch(Exception e){
 			ajaxResult="1";
 			System.out.println(e);
-		}
-		ActionContext.getContext().getSession().remove("tabpom");
+		}			
 		return "add";
 	}
 	public String addItems(){
@@ -391,6 +393,7 @@ public class WebFormulaAction implements ServletResponseAware{
 	}
 	
 	public String findById(){
+		this.clearSession();
 		formula=webformulaser.findById(formulaIndex);
 		return "findById";
 	}
@@ -467,6 +470,26 @@ public class WebFormulaAction implements ServletResponseAware{
 	public String toUrl2(String filename){
 		return filename.replace("+", "%20");
 	}
+	
+	
+	/**
+	 * 每次點擊上傳附檔時都要清除session
+	 * @Title: clearSession
+	 * @Description: TODO
+	 * @param 
+	 * @return void
+	 * @throws
+	 * @author web
+	 * @date 2016/11/30
+	 */
+	public void clearSession(){
+		ActionContext.getContext().getSession().remove("list_tabfile");		
+		ActionContext.getContext().getSession().remove("filenames");
+		ActionContext.getContext().getSession().remove("ins");
+		ActionContext.getContext().getSession().remove("outs");
+		ActionContext.getContext().getSession().remove("tabpom");
+	}
+	
 	
 	
 	

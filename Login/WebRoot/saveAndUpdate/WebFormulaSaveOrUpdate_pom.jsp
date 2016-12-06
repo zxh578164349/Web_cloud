@@ -37,7 +37,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 	                 </tr>	                          	                
 	               <tr>
 	                  <td>	                   
-	                        <input type="text" name="tabpom.pomNo" placeholder="自動生成" id="pomNo" style="color:blue" readonly datatype="*"/>						    	                    	                    
+	                        <input type="text" name="tabpom.pomNo" placeholder="自動生成" id="pomNo"  style="color:blue" readonly datatype="*"/>						    	                    	                    
 	                  </td>
 	                  <td>
 	                      <input type="text" name="tabpom.formulaId.formulaIndex"  id="formulaIndex2" datatype="*" readonly style="color:blue"/>
@@ -204,7 +204,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 			<input type="hidden"  name="file" id="uploadify_m" />																				
 			<input type="hidden"  id="uploaddate" value="<%=str_date %>"/>
 			<input type="hidden"  id="fileuser" value="${loginUser.username}"/>			
-            <a href="javascript:checkpomNo()" class="btn btn-default" id="btn_upload">上傳</a>
+            <a href="javascript:checkpomNo()" class="btn btn-default disabled" id="btn_upload">上傳</a>
 			<a href="javascript:cancelFile()" class="btn btn-default">取消</a> 
 		</div>					
 	</div>
@@ -254,7 +254,11 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 		    'formData':{
 		    	"filecreatedate":jq("#uploaddate").val(),
 		    	"fileusername":jq("#fileuser").val()
+		    	//"pomNo":jq("#pomNo").val()
 		    	},
+		    'onUploadStart':function(){ jq("#uploadify_m").uploadify("settings", "formData", { 'pomNo': jq("#pomNo").val() });  
+             //在onUploadStart事件中，也就是上传之前，把参数写好传递到后台。  
+            }  ,
 		    'onFallback':function(){
 		          alert("您未安裝FLASH控件，無法上傳圖片！請安裝FLASH控件后再試。");
 		        },	
@@ -274,8 +278,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 		};
 	jq(function(){
 		jq("#uploadify_m").uploadify(uploadify_config);
-		
-		
+				
 		var demo = jq("#form_pom").Validform({
 			btnSubmit : "#sub_pom",
 			tiptype : 4,
@@ -358,8 +361,12 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 				//data:"{'brank':'"+ brank +"','tabpomDate':'"+ tabpomDate +"'}",
 				success:function(data){
 					jq("#pomNo").val(data);
-					parent.jq("#temp_pomno").val(data);
-				}			
+					jq("#btn_upload").removeClass("disabled");
+				},
+				error:function(){
+					jq("#pomNo").val("");
+					jq("#btn_upload").addClass("disabled");
+				}
 			});
 		}	
 	}

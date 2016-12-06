@@ -221,7 +221,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 			<input type="hidden"  name="file" id="uploadify_m" />																				
 			<input type="hidden"  id="uploaddate" value="<%=str_date %>"/>
 			<input type="hidden"  id="fileuser" value="${loginUser.username}"/>
-			<a href="javascript:checkpomNo()" class="btn btn-default" id="btn_upload">上傳</a>
+			<a href="javascript:checkpomNo()" class="btn btn-default disabled" id="btn_upload">上傳</a>
 			<a href="javascript:cancelFile()" class="btn btn-default">取消</a>           
 		</div>					
 	</div>
@@ -269,7 +269,8 @@ var uploadify_config = {
 	    'fileObjName':'file',
 	    'formData':{
 	    	"filecreatedate":jq("#uploaddate").val(),
-	    	"fileusername":jq("#fileuser").val()
+	    	"fileusername":jq("#fileuser").val(),
+	    	"pomNo":jq("#pomNo").val()
 	    	},	    	   
 	    'onFallback':function(){
 	          alert("您未安裝FLASH控件，無法上傳圖片！請安裝FLASH控件后再試。");
@@ -371,7 +372,12 @@ function makePomNo2(dwrWebbrank,tabpomDate){
 			//data:"{'brank':'"+ brank +"','tabpomDate':'"+ tabpomDate +"'}",
 			success:function(data){
 				jq("#pomNo").val(data);
-			}			
+				jq("#btn_upload").removeClass("disabled");
+			},
+			error:function(){
+				jq("#pomNo").val("");
+				jq("#btn_upload").addClass("disabled");
+			}
 		});
 	}	
 }

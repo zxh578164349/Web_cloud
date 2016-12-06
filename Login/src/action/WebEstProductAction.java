@@ -298,6 +298,7 @@ public class WebEstProductAction extends ActionSupport implements
 		log.setYymm(new SimpleDateFormat("yyyyMM").format(id.getYymm()));
 		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
 		log.setUsername(user.getUsername());
+		log.setContent(id.getType());
 		estProSer.delete(id,log);
 		return "delete";
 	}

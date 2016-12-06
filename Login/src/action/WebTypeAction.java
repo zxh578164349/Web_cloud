@@ -135,6 +135,7 @@ public class WebTypeAction extends ActionSupport{
 			if(typeNo!=null&&!typeNo.equals("0")){
 				webtype.getId().setTypeNo(typeNo);
 			}
+			webtype.setTypeMk(typeNo);
 			webtypeSer.add(webtype);
 			ajaxResult="0";
 		}catch(Exception e){

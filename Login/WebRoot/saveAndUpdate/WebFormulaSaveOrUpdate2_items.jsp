@@ -29,7 +29,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 	<form action="webformula_addItems" method="post" id="form_items">
 		<div>
 			<ul class="list" id="ul_item">
-			    <li class="columnhead">配方階段<%=str_date%></li>
+			    <li class="columnhead">配方階段</li>
 				<li class="columnhead">類別</li>
 				<li class="columnhead">原料名稱</li>
 				<li class="columnhead">PHR</li>
