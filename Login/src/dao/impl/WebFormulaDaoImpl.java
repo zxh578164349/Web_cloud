@@ -262,6 +262,7 @@ public class WebFormulaDaoImpl extends Basedao implements IWebFormulaDao{
 			item.getFk_weberp_pf().getNamec1();
 			item.getFk_weberp_pf().getNamec2();
 			item.getFk_weberp_pf().getItemcategoryname();
+			item.getFk_weberp_pf().getSelfchar1();
 			
 		}
 		if(obj.getPom()!=null){

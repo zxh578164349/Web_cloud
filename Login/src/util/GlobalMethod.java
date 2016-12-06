@@ -1723,13 +1723,25 @@ public class GlobalMethod extends HibernateDaoSupport{
 			for(Integer ii:list){
 				System.out.print(ii+"\t");
 			}**/
-		 List<BufferedInputStream>ins=(List<BufferedInputStream>)ActionContext.getContext().getSession().get("ins");
-		 List<BufferedOutputStream>outs=(List<BufferedOutputStream>)ActionContext.getContext().getSession().get("outs");
-			   if(outs.isEmpty()){
-				   System.out.println("is null");
-			   }else{
-				   System.out.println("not null");
-			   }
+		 List<String>list=new ArrayList<String>();
+		 list.add("04");list.add("02");list.add("01");list.add("02");list.add("03");list.add("01");list.add("ZZ");
+		 for(String kk:list){
+			 System.out.print(kk+"\t");
+		 }
+		 System.out.println("*********************");
+		 for(int i=0;i<list.size()-1;i++){
+			 for(int j=0;j<list.size()-1-i;j++){
+				 if(list.get(j).compareTo(list.get(j+1))>0){
+					 list.add(j,list.get(j+1));
+					 list.add(j+2,list.get(j+1));
+					 list.remove(j+1);
+					 list.remove(j+2);
+				 }
+			 }
+		 }
+		 for(String kk:list){
+			 System.out.print(kk+"\t");
+		 }
 			
 		}
 	 

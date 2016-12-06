@@ -155,12 +155,15 @@ public class WebFormulaServicesImpl implements IWebFormulaServices{
 		List<WebFormulaItems> sub_list =obj.getWebFormulaItemses();	
 		for(int i=0;i<sub_list.size()-1;i++){
 			for(int j=0;j<sub_list.size()-1-i;j++){
-				if(sub_list.get(j).getSectionNo()>sub_list.get(j+1).getSectionNo()){
-					sub_list.add(j,sub_list.get(j+1));
-					sub_list.add(j+2,sub_list.get(j+1));
-					sub_list.remove(j+1);
-					sub_list.remove(j+2);
+				if(sub_list.get(j).getSectionNo()==sub_list.get(j+1).getSectionNo()){//相同配方階段的才排序
+					if(sub_list.get(j).getFk_weberp_pf().getSelfchar1().compareTo(sub_list.get(j+1).getFk_weberp_pf().getSelfchar1())>0){
+						sub_list.add(j,sub_list.get(j+1));
+						sub_list.add(j+2,sub_list.get(j+1));
+						sub_list.remove(j+1);
+						sub_list.remove(j+2);
+					}
 				}
+				
 			}
 			
 		}								

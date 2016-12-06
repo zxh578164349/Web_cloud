@@ -58,7 +58,7 @@
         <property name="modifyDate" type="java.lang.String">
             <column name="MODIFY_DATE" length="50" />
         </property>
-        <bag name="webFormulaItemses" inverse="true" cascade="all" order-by="SECTION_NO,FK_WEBERPPRO_FOR">
+        <bag name="webFormulaItemses" inverse="true" cascade="all" order-by="SECTION_NO,FK_WEBERPPRO_FOR" >
             <key>
                 <column name="FORMULA_INDEX" length="30" />
             </key>
