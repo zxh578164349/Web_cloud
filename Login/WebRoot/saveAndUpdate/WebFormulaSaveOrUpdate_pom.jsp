@@ -377,7 +377,8 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 		      type:"get",
 		      dataType:"json",
 		      url:"webtabpomfile_findwebtabpomFileJson",
-		      data:"pomNo="+pomNo+"&filename="+filename,
+		      //data:"pomNo="+pomNo+"&filename="+filename,
+		      data:{"pomNo":pomNo,"filename":filename},
 		      success:function(files){
 		         jq("#fileJson").html("");
 		          var item="";

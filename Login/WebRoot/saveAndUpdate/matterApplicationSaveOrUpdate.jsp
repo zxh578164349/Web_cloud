@@ -548,18 +548,19 @@ function lookJson(billNo,id,filename){
       type:"get",
       dataType:"json",
       url:"kyzfile_findKyzFileJson",
-      data:"billNo="+billNo+"&id="+id+"&filename="+filename,
+      //data:"billNo="+billNo+"&id="+id+"&filename="+filename,
+      data:{"billNo":billNo,"id":id,"filename":filename},
       success:function(files){
          jq("#fileJson").html("");
-          var item;
+          var item="";
           var item_url;
          jq.each(files,function(i,file){
             item_url="javascript:lookJson('"+file.billno+"',"+file.id+",'"+file.filename+"')";
-            item="<a href='/upload/"+file.billno+"/"+file.filename+"' target='_blank' title='點擊查看'>"+file.filename+            
+            item+="<a href='/upload/"+file.billno+"/"+file.filename+"' target='_blank' title='點擊查看'>"+file.filename+            
             "</a>"+
-            "<a href="+item_url+"><img src='images/icon/del_file.png' alt='刪除' title='刪除' style='border:0px'/></a>&nbsp;";
-            jq("#fileJson").append(item);
-         }) 
+            "<a href="+item_url+"><img src='images/icon/del_file.png' alt='刪除' title='刪除' style='border:0px'/></a>&nbsp;";           
+         }); 
+         jq("#fileJson").append(item);
       }
    })
 }

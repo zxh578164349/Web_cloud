@@ -449,6 +449,7 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 	 * @throws UnsupportedEncodingException
 	 */
 	public String findById_layer() throws UnsupportedEncodingException{
+		ActionContext.getContext().getSession().remove("list_filesexp");
 		kyzletter=kyzletterSer.findById(factNo, billNo);
 		if(kyzletter!=null){
 			String file_yn=kyzletter.getFilesYn();
