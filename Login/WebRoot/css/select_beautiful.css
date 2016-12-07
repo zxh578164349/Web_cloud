@@ -52,10 +52,6 @@ input[class='pinfo_form']{
           transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
 }
 
-form[id='form'] input[disabled]{
-	cursor: not-allowed;
-	background-color: #eee;
-    opacity: 1;
-}
+
 
 

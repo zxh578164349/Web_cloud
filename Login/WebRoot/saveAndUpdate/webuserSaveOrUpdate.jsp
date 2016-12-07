@@ -96,18 +96,16 @@
 				}
 			});
 
-			jq
-					.ajax({
+			
+		 jq.ajax({
 						type : "get",
 						dataType : "json",
 						url : "webfact_findAllVwebfact",
 						success : function(data) {
 							var item = "";
 							jq("#dwr_factno").empty();
-							jq("#dwr_factno").append(
-									"<option value=''>請選擇廠別</option>");
-							jq
-									.each(
+							jq("#dwr_factno").append("<option value=''>請選擇廠別</option><option value='tw__tw'>TW</option>");									
+							jq.each(
 											data,
 											function(i, obj) {
 												item += "<option value='"+obj[0]+"__"+obj[3]+"'>"
@@ -125,7 +123,8 @@
 			loadUrl("/Login/userfindPageBean");
 		}
 		function check() {
-			var factno = document.getElementById("dwr_factno").value.split("__")[0];
+			var factno = document.getElementById("dwr_factno").value
+					.split("__")[0];
 			var username = document.getElementById("username").value;
 			if (factno != "" && username != "") {
 				userjs
@@ -149,7 +148,8 @@
 			}
 		}
 		function checkEmail() {
-			var factno = document.getElementById("dwr_factno").value.split("__")[0];
+			var factno = document.getElementById("dwr_factno").value
+					.split("__")[0];
 			var email = document.getElementById("email").value;
 			if (factno != "" && email != "") {
 				userjs

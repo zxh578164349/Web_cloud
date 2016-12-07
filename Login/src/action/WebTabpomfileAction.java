@@ -47,14 +47,14 @@ public class WebTabpomfileAction extends ActionSupport{
 	public String findwebtabpomFileJson() throws IOException{
 		filename=URLDecoder.decode(filename,"utf-8");
 		File file=new File("d:\\WebtabpomFile_backup\\"+pomNo+"\\"+filename);
-		        
+		  
+		KyzExpectmatmLog log=new KyzExpectmatmLog();
+		log.setBillNo(pomNo);
+		log.setObj("WebTabpomfile");
+		log.setContent(filename);
+		tabpomfileSer.delete(pomNo,filename,log);
 		if(file.exists()){
-			file.delete();
-			KyzExpectmatmLog log=new KyzExpectmatmLog();
-			log.setBillNo(pomNo);
-			log.setObj("WebTabpomfile");
-			log.setContent(filename);
-			tabpomfileSer.delete(pomNo,filename,log);
+			file.delete();			
 		}
 		List<Object[]> listfiles=tabpomfileSer.findByPomNo(pomNo);				
 		/******************list轉json*************************/

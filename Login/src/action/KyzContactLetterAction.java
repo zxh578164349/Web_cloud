@@ -272,34 +272,12 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 				}
 			}
 		}
-		
-		
-		/*文件上傳*/
-		if(files!=null&&files.get(0)!=null){//不為空代表有上傳附檔,不能寫成files.size()>0,否則報空指針
-			kyzletter.setFilesYn("1");//標示是否帶有附檔
-			//File uploadFile=new File(ServletActionContext.getServletContext().getRealPath("KyzexpFile\\"+kyz.getId().getBillNo()));//附檔上傳到項目
-			File uploadFile_backup=new File("d:\\KyzletterexpFile_backup\\"+kyzletter.getId().getBillNo());//附檔上傳到D盤(為了避免更新項目時丟失附檔,所在上傳到D盤)			
-			if(!uploadFile_backup.exists()){
-				uploadFile_backup.mkdirs();
-			}
-			for(int i=0;i<files.size();i++){							
-				if(files.get(i)!=null){					    										
-					GlobalMethod.uploadFile(files.get(i),uploadFile_backup+"\\"+filesFileName.get(i));//文件上傳																									
-					KyzExpectmatmFile kyzexpFile=new KyzExpectmatmFile();//函文附檔
-					kyzexpFile.setBillno(kyzletter.getId().getBillNo());
-					kyzexpFile.setFilename(filesFileName.get(i));
-					WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
-					String username=user.getName();
-					kyzexpFile.setUsername(username);
-					kyzexpFile.setFactNo(kyzletter.getId().getFactNo());
-					kyzexpFile.setVisaTypeM(kyzletter.getVisaType().substring(0,2));
-					kyzexpfileSer.add(kyzexpFile);
-				}
-			}
-		}
-		
+				
 		try{
 			kyzletter.setVisaTypeM(kyzletter.getVisaType().substring(0,2));
+			if(files!=null&&files.get(0)!=null){
+				kyzletter.setFilesYn("1");//標示是否帶有附檔
+			}
 			if(isnull.equals("isNull")){//start if
 				String factno=kyzletter.getId().getFactNo();
 				String billno=kyzletter.getId().getBillNo();
@@ -307,14 +285,10 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 				if(letter==null){
 					//kyzletter.setVisaTypeM(kyzletter.getVisaType().substring(0,2));
 					kyzletterSer.add(kyzletter);
+					
 					KyVisabillm vbm=visabillmSer.findById(kyzletter.getId().getFactNo(), kyzletter.getVisaType(), kyzletter.getId().getBillNo());				      
-				    List<String>list_emailPwd=webuseremailSer.findByFactNoAEmailPwd2(vbm.getId().getFactNo(),vbm.getSignerNext());//備簽人
-												      
-					GlobalMethod.sendNewEmail(vbm,list_emailPwd);//發送郵件
-				      /****************************函文打印************************************/
-					  //print(kyzletter.getId().getFactNo(),kyzletter.getId().getBillNo(),kyzletter.getVisaType());
-				      /****************************函文打印************************************/
-					  //return null;
+				    List<String>list_emailPwd=webuseremailSer.findByFactNoAEmailPwd2(vbm.getId().getFactNo(),vbm.getSignerNext());//備簽人												      
+					GlobalMethod.sendNewEmail(vbm,list_emailPwd);//發送郵件									     
 					}else{
 						response.setContentType("text/html;charset=utf-8");
 						response.getWriter()
@@ -329,6 +303,29 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 				//kyzletter.setVisaTypeM(kyzletter.getVisaType().substring(0,2));
 				kyzletterSer.add(kyzletter);
 			}
+			/*文件上傳*/
+			if(files!=null&&files.get(0)!=null){//不為空代表有上傳附檔,不能寫成files.size()>0,否則報空指針
+				//kyzletter.setFilesYn("1");//標示是否帶有附檔
+				//File uploadFile=new File(ServletActionContext.getServletContext().getRealPath("KyzexpFile\\"+kyz.getId().getBillNo()));//附檔上傳到項目
+				File uploadFile_backup=new File("d:\\KyzletterexpFile_backup\\"+kyzletter.getId().getBillNo());//附檔上傳到D盤(為了避免更新項目時丟失附檔,所在上傳到D盤)			
+				if(!uploadFile_backup.exists()){
+					uploadFile_backup.mkdirs();
+				}
+				for(int i=0;i<files.size();i++){							
+					if(files.get(i)!=null){					    																																		
+						KyzExpectmatmFile kyzexpFile=new KyzExpectmatmFile();//函文附檔
+						kyzexpFile.setBillno(kyzletter.getId().getBillNo());
+						kyzexpFile.setFilename(filesFileName.get(i));
+						WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
+						String username=user.getName();
+						kyzexpFile.setUsername(username);
+						kyzexpFile.setFactNo(kyzletter.getId().getFactNo());
+						kyzexpFile.setVisaTypeM(kyzletter.getVisaType().substring(0,2));
+						kyzexpfileSer.add(kyzexpFile);
+						GlobalMethod.uploadFile(files.get(i),uploadFile_backup+"\\"+filesFileName.get(i));//文件上傳		
+					}
+				}
+			}						
 			response.setContentType("text/html;charset=utf-8");
 			response.getWriter().print("<script>window.parent.gook();</script>");
 		}catch(Exception e){

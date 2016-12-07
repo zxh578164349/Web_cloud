@@ -11,7 +11,7 @@ java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("yyyyMMdd-
 java.util.Date currentTime = new java.util.Date();//得到当前系统时间
 String str_date = formatter.format(currentTime); //将日期时间格式化
 %>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE HTML>
 <html>
 <head>
 <base href="<%=basePath%>">
@@ -33,16 +33,19 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
   }
   
 #myTabContent ul{margin:0px;padding:0px}
-.list{margin:0px 0px; width:127%;}  
+.list{margin:0px 0px; width:100%;}  
 .list li.columnhead,.list li.col_item,.list li.col_item4{font-size: 12px;font-weight:bold;}  
 .list li,.list li.columnhead{  
-    width:15%;height:28px;text-align:left;float:left;margin:0px 0px;list-style:none; border:1px solid ; 
+    width:12%;height:28px;text-align:left;float:left;margin:0px 0px;list-style:none; border:1px solid ; 
 } 
-.list li.col_item,.list li.col_item2{
-   width:16%;height:28px;text-align:left;float:left;margin:0px 0px;list-style:none; border:1px solid ; 
-}
 .list li.col_item3,.list li.col_item4{
-  height:28px;text-align:left;float:left;margin:0px 0px;list-style:none; border:1px solid ; 
+  width:25%;height:28px;text-align:left;float:left;margin:0px 0px;list-style:none; border:1px solid ; 
+}
+.list li input[type=text],.list li select{
+  width:100%
+}
+.list li.col_item3 input[type=text]{
+  width:93%
 }
 
 </style>

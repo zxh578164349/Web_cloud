@@ -17,6 +17,7 @@ import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
 import entity.KyzExpectmatmFile;
+import entity.KyzExpectmatmLog;
 
 public class KyzFileAction extends ActionSupport{
 	private String billNo;
@@ -88,12 +89,18 @@ public class KyzFileAction extends ActionSupport{
 		File file=new File("");
 		if(billNo.substring(0,2).equals("EM")){
 			file=new File("d:\\KyzexpFile_backup\\"+billNo+"\\"+filename);
-		}else{
+		}
+		if(billNo.substring(0,2).equals("CM")){
 			file=new File("d:\\KyzletterexpFile_backup\\"+billNo+"\\"+filename);
-		}          
+		}
+		KyzExpectmatmLog log=new KyzExpectmatmLog();
+		log.setBillNo(billNo);
+		log.setContent(filename);
+		log.setObj("KyzExpectmatmFile");
+		kyzexpfileSer.delete(new KyzExpectmatmFile(id),log);
 		if(file.exists()){
 			file.delete();
-			kyzexpfileSer.delete(id);
+			//kyzexpfileSer.delete(id);
 		}
 		List<KyzExpectmatmFile> listfiles=kyzexpfileSer.findByBillNo(billNo);				
 		/******************list轉json*************************/

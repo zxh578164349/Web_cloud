@@ -11,7 +11,7 @@ java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("yyyyMMdd-
 java.util.Date currentTime = new java.util.Date();//得到当前系统时间
 String str_date = formatter.format(currentTime); //将日期时间格式化
 %>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE HTML>
 <html>
 <head>
 <base href="<%=basePath%>">
@@ -204,7 +204,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 			},
 			datatype : {
 				"*8-4" : /^-?\d{0,8}(\.[0-9]{0,4})?$/,
-				"*9-2" : /^-?\d{0,9}(\.[0-9]{0,2})?$/		
+				"*9-5" : /^-?\d{0,9}(\.[0-9]{0,5})?$/		
 			},
 			ajaxPost:true,
 			beforeSubmit:function(){
@@ -226,7 +226,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 			}
 		});
 		demo.tipmsg.w["*8-4"] = "只能數字且不超過8位數,可保留4位以內小數";
-		demo.tipmsg.w["*9-2"] = "只能數字且不超過9位數,可保留2位以內小數";
+		demo.tipmsg.w["*9-5"] = "只能數字且不超過9位數,可保留5位以內小數";
 		
 		jq.ajax({
 			type:"get",
@@ -356,8 +356,8 @@ function addSection(list_items_val){
 	var section="<li id='tab_section_"+index+"'><a href='#div_section_"+index+"' data-toggle='tab' id='tab_section_a_"+index+"'>配方階段("+index+")</a></li>";	
 	var div_section="<div id='div_section_"+index+"' class='tab-pane fade div_border_blue'></div>";
 	var ul="<ul class='list_item' id='ul_"+index+"'></ul>";
-	var li_head="<li class='columnhead'>類別</li><li class='columnhead'>原料名稱</li><li class='columnhead'>PHR</li>"+
-		"<li class='columnhead'>重量(KG)</li><li class='columnhead'>備註</li>";
+	var li_head="<li class='columnhead'>類別</li><li class='columnhead2'>原料名稱</li><li class='columnhead'>PHR</li>"+
+		"<li class='columnhead'>重量(KG)</li><li class='columnhead2'>備註</li>";
 		
 	jq("#del_li").before(section);
 	jq("#myTabContent_item").append(div_section);
@@ -368,12 +368,12 @@ function addSection(list_items_val){
 	var li_content="";	
 	list_items_val.each(function(i){
 			var val=jq(this).val();
-			var txt1=jq(this).next().text().split("__")[1];
+			var txt1=jq(this).next().text().split("__")[1].replace("(","").replace(")","");
 	        var txt2=jq(this).next().text().split("__")[0];
-			li_content+="<li>"+txt1+"</li><li>"+txt2+"</li>"+
-			"<li><input type='text' name='formula.webFormulaItemses["+(i+item_nums)+"].phrVal' datatype='*9-2'/></li>"+
-			"<li><input type='text' name='formula.webFormulaItemses["+(i+item_nums)+"].weightVal' datatype='*9-2'/></li><li >"+
-			"<input type='text' name='formula.webFormulaItemses["+(i+item_nums)+"].remark' datatype='*0-200'/>"+
+			li_content+="<li>"+txt1+"</li><li class='column2'>"+txt2+"</li>"+
+			"<li><input type='text' name='formula.webFormulaItemses["+(i+item_nums)+"].phrVal' datatype='*9-5'/></li>"+
+			"<li><input type='text' name='formula.webFormulaItemses["+(i+item_nums)+"].weightVal' datatype='*9-5'/></li>"+
+			"<li class='column2'><input type='text' name='formula.webFormulaItemses["+(i+item_nums)+"].remark' datatype='*0-200'/>"+
 			"<img src='images/icon/del_file.png' style='border:0' onclick='removeOneItem(jq(this),\"img"+item_nums+"\")' id='img_temp' name='img"+item_nums+"'/>"+
 			"<input type='hidden' value='"+val+"' name='formula.webFormulaItemses["+(i+item_nums)+"].fk_weberp_pf.itemid'/>"+
 			"<input type='hidden' value='"+index+"' name='formula.webFormulaItemses["+(i+item_nums)+"].sectionNo'/>"+

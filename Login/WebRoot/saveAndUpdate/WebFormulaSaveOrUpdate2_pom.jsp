@@ -11,7 +11,7 @@ java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("yyyyMMdd-
 java.util.Date currentTime = new java.util.Date();//得到当前系统时间
 String str_date = formatter.format(currentTime); //将日期时间格式化
 %>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE HTML>
 <html>
 <head>
 <base href="<%=basePath%>">
@@ -23,7 +23,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 <meta http-equiv="expires" content="0">
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
-<meta http-equiv="X-UA-Compatible" content="IE=8" >
+<meta http-equiv="X-UA-Compatible" content="IE=edge" >
 <link rel="stylesheet" type="text/css" href="css/form.css" />
 <link rel="stylesheet" type="text/css" href="uploadify/uploadify.css">
 </head>
@@ -188,17 +188,14 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 	                <tr>
 	                   <td>認證</td>
 	                   <td colspan="2">
-	                       <s:if test='tabpom.authentications=="0"'>
-					   是<input type="radio" name="tabpom.authentications" value="0"
-								checked="checked" />
-						</s:if> <s:else>
-					   是<input type="radio" name="tabpom.authentications" value="0" />
-						</s:else> <s:if test='tabpom.authentications=="1"'>
-					   否<input type="radio" name="tabpom.authentications" value="1"
-								checked="checked" />
-						</s:if> <s:else>
-					   否<input type="radio" name="tabpom.authentications" value="1" />
-						</s:else>
+	                       <s:if test='formula.pom.authentications=="0"'>
+					                         是<input type="radio" name="tabpom.authentications" value="0" checked="checked" />
+					                          否<input type="radio" name="tabpom.authentications" value="1" />								
+						   </s:if> 
+						   <s:else>
+					                      是<input type="radio" name="tabpom.authentications" value="0" />
+					                       否<input type="radio" name="tabpom.authentications" value="1" checked="checked" />	
+						   </s:else> 						   
 	                   </td>
 	                </tr>
 	                <tr>

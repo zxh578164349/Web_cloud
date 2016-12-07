@@ -28,10 +28,10 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 <body>
 	<form action="webformula_addItems" method="post" id="form_items">
 		<div>
-			<ul class="list" id="ul_item">
+			<ul class="list" id="ul_items2">
 			    <li class="columnhead">配方階段</li>
 				<li class="columnhead">類別</li>
-				<li class="columnhead">原料名稱</li>
+				<li class="col_item4">原料名稱</li>
 				<li class="columnhead">PHR</li>
 				<li class="columnhead">重量(KG)</li>
 				<li class="col_item4">備註</li>
@@ -39,15 +39,15 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 				<s:iterator value="formula.webFormulaItemses" status="x">
 				   <li><s:property value='sectionNo'/></li>
 				   <li><s:property value="fk_weberp_pf.selfchar1Name"/></li>
-				   <li>
+				   <li class="col_item3">
 				   <s:property value="fk_weberp_pf.namec1"/>&nbsp;&nbsp;&nbsp;
 				   <s:property value="fk_weberp_pf.namec2"/>
 				   </li>
 				   <li >
-					<input type="text" name="items[${x.index}].phrVal" value="<s:property value='phrVal'/>" datatype="*9-2"/>
+					<input type="text" name="items[${x.index}].phrVal" value="<s:property value='phrVal'/>" datatype="*9-5"/>
 				   </li>
 				   <li>
-					<input type="text" name="items[${x.index}].weightVal" value="<s:property value='weightVal'/>" datatype="*9-2"/>
+					<input type="text" name="items[${x.index}].weightVal" value="<s:property value='weightVal'/>" datatype="*9-5"/>
 				   </li>
 				   <li class="col_item3">
 					<input type="text" name="items[${x.index}].remark" value="<s:property value='remark'/>" datatype="*0-200"/>					
@@ -93,7 +93,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 			//tipSweep:true,
 			//showAllError : true,
 			datatype : {
-				"*9-2" : /^-?\d{0,9}(\.[0-9]{0,2})?$/
+				"*9-5" : /^-?\d{0,9}(\.[0-9]{0,5})?$/
 			},
 			ajaxPost:true,
 			
@@ -106,7 +106,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 				}			
 			}
 		});
-		demo.tipmsg.w["*9-2"] = "只能數字且不超過9位數,可保留2位以內小數";				
+		demo.tipmsg.w["*9-5"] = "只能數字且不超過9位數,可保留5位以內小數";				
 	});
 
 var ii=0;
@@ -121,15 +121,15 @@ function addItem(){
 	}	
 	item+="<li><select name='items["+num_size+"].sectionNo' datatype='*'>"+options+"</select></li>";
 	item+="<li><select id='items_type"+ii+"' onchange='loadNamece(jq(this))' datatype='*'></select></li>";
-	item+="<li><select id='fk_weberp_pf"+ii+"' name='items["+num_size+"].fk_weberp_pf.itemid' datatype='*'></select></li>";
-	item+="<li><input type='text' name='items["+num_size+"].phrVal' datatype='*9-2'/></li>";
-	item+="<li><input type='text' name='items["+num_size+"].weightVal' datatype='*9-2'/></li>";
+	item+="<li class='col_item3'><select id='fk_weberp_pf"+ii+"' name='items["+num_size+"].fk_weberp_pf.itemid' datatype='*'></select></li>";
+	item+="<li><input type='text' name='items["+num_size+"].phrVal' datatype='*9-5'/></li>";
+	item+="<li><input type='text' name='items["+num_size+"].weightVal' datatype='*9-5'/></li>";
 	item+="<li class='col_item3'><input type='text' name='items["+num_size+"].remark' datatype='*0-200'/>";
 	item+="<input type='hidden' value='"+formulaIndex+"' name='items["+num_size+"].webFormula.formulaIndex' readonly/>";
 	item+="<input type='hidden' name='items["+num_size+"].createName' value='${loginUser.username}' readonly/>";
 	item+="<input type='hidden' name='items["+num_size+"].createDate' value='"+createDate+"'/>";
 	item+="<img src='images/icon/del_file.png' style='border:0px' onclick='removeOneItem(jq(this))'/></li>";
-	jq("#ul_item").append(item);
+	jq("#ul_items2").append(item);
 	var kk="#items_type"+ii;
 	jq.ajax({
 			type:"post",
