@@ -28,7 +28,7 @@
 </head>
 
 <body>
-	<table class="table table-condensed">
+	<table class="table table-condensed table-bordered">
 		<tbody>
 			<tr>
 				<th>廠別</th>
@@ -96,7 +96,7 @@
 			</tr>
 
 
-			<s:iterator value="#session.vbm.kyVisabillses">
+			<s:iterator value="formula.vbm.kyVisabillses">
 				<s:if test='memo!=null&&memo!=""'>
 					<tr>
 						<td><s:property value="visaRank" />:</td>
@@ -106,36 +106,26 @@
 					</tr>
 				</s:if>
 			</s:iterator>
-			<!------------------------- 修改3   20151027---------------   -->
+			
 			<s:if test='readMk=="N"'>
 				<tr>
-					<td colspan="12" style="color:red">備註↓↓↓</td>
+					<td colspan="12" style="color:red">簽核備註↓↓↓</td>
 				</tr>
 				<tr>
 					<td colspan="12">
 						<form id="memo" method="post" action="vbm_add" target="frameFile">
-							<textarea name="memo" id="memo_txt"
-								style="width:566px;height:120px;overflow:auto"></textarea>
-							<input type="hidden" name="factNo"
-								value="<s:property value='factNo'/>" /> <input type="hidden"
-								name="billNo" value="<s:property value='billNo'/>" /> <input
-								type="hidden" name="itemNo" value="<s:property value='itemNo'/>" />
-							<input type="hidden" name="visaSort"
-								value="<s:property value="visaSort"/>" /> <input type="hidden"
-								name="visa_mk" id="visa_mk" />
-						</form> <iframe id="frameFile" name="frameFile" style="display: none;"></iframe>
+							<textarea name="memo" id="memo_txt" style="width:100%;height:120px;overflow:auto"></textarea>								
+							<input type="hidden" name="factNo" value="<s:property value='factNo'/>" /> 
+							<input type="hidden" name="billNo" value="<s:property value='billNo'/>" />
+							<input type="hidden" name="itemNo" value="<s:property value='itemNo'/>" />								
+							<input type="hidden" name="visaSort" value="<s:property value="visaSort"/>" />
+							<input type="hidden" name="visa_mk" id="visa_mk" />								
+						</form> 
+						<iframe id="frameFile" name="frameFile" style="display: none;"></iframe>
 					</td>
 				</tr>
 			</s:if>
 		</tbody>
-	</table>
-      <s:if test='kyzletter.filesYn=="1"'>
-	  <hr/>
-	  <span style="color:blue;">附檔:</span><br/>
-	  <s:iterator value="#session.list_filesexp">
-	     <a href="/upload_letter/<s:property value='billno'/>/<s:property value='%{toUrl2(filename)}'/>" target="_blank"><s:property value="%{toUrl(filename)}"/></a>&nbsp;
-	  </s:iterator>	  
-	</s:if> 
-
+	</table>     
 </body>
 </html>

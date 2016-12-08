@@ -23,38 +23,9 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 <meta http-equiv="expires" content="0">
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
-<link rel="stylesheet" type="text/css" href="css/form.css" />
-<style type="text/css">
-  .div_border_green{
-    width:100%;height:250px;overflow:auto;border:1px dashed green;text-align:left
-  }
-  .div_border_blue{
-    width:100%;height:250px;overflow:auto;border:1px dashed blue;text-align:left
-  }
-  
-#myTabContent ul{margin:0px;padding:0px}
-.list{margin:0px 0px; width:100%;}  
-.list li.columnhead,.list li.col_item,.list li.col_item4{font-size: 12px;font-weight:bold;}  
-.list li,.list li.columnhead{  
-    width:12%;height:28px;text-align:left;float:left;margin:0px 0px;list-style:none; border:1px solid ; 
-} 
-.list li.col_item3,.list li.col_item4{
-  width:25%;height:28px;text-align:left;float:left;margin:0px 0px;list-style:none; border:1px solid ; 
-}
-.list li input[type=text],.list li select{
-  width:100%
-}
-.list li.col_item3 input[type=text]{
-  width:93%
-}
-
-</style>
-
+<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
 </head>
-
-<body>
-	
-	
+<body>	
 	   <ul id="myTab" class="nav nav-tabs">
 		 <li class="active"><a href="#tab_webformula" data-toggle="tab" id="a_webformula">配方主表</a></li>			  		 
 		 <li><a href="#tab_webformaulaitems" data-toggle="tab" id="a_webformaulaitems">配方階段</a></li>	
@@ -81,16 +52,12 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 	
 
 
-<script type="text/javascript">
+<script>window.jQuery|| document.write('<script src="jquery/jquery-1.9.1.min.js"><\/script>');</script>
+<script src="bootstrap/js/bootstrap.min.js"></script>	
+<!--[if lt IE 9]>  
+<script src="bootstrap/html5.js"></script>
+<script src="bootstrap/respond.min.js"></script>
+<![endif]-->
 		
-/*禁止空格輸入*/
-jq(function(){
-	goTrim();
-});
-function back(){	
-	loadUrl("/Login/webformula_findPageBean3?backIndex=1");
-}
-
-</script>
 </body>
 </html>

@@ -257,6 +257,7 @@ public class WebFormulaDaoImpl extends Basedao implements IWebFormulaDao{
 		obj.getFactCode().getName();
 		if(obj.getVbm()!=null){
 			obj.getVbm().getId().getBillNo();
+			obj.getVbm().getKyVisabillses().size();
 		}
 		for(WebFormulaItems item:obj.getWebFormulaItemses()){
 			item.getFk_weberp_pf().getNamec1();

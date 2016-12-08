@@ -26,43 +26,14 @@
 <meta http-equiv="expires" content="0">
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
-
-<style type="text/css">
-table.gridtable {
-	font-family: verdana, arial, sans-serif;
-	font-size: 14px;
-	color: #333333;
-	border-width: 1px;
-	border-style: solid;
-	border-color: #666666;
-	border-collapse: collapse;
-
-}
-
-table.gridtable th {
-	border-width: 1px;
-	padding: 8px;
-	border-style: solid;
-	border-color: #666666;
-	background-color: #dedede;
-}
-
-table.gridtable td {
-	border-width: 1px;
-	/* padding: 8px; */
-	border-style: solid;
-	border-color: #666666;
-	background-color: #ffffff;
-	width:60px;
-}
-</style>
+<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
 </head>
 
 <body>
     <h3>人員出差申請書 </h3>
     <s:if test="bussletter!=null">
-	<table class="gridtable" align="center">		
+	<table class="table table-condensed table-bordered">		
 		<tbody id="tb_list_info2">
 			<tr>
 				<td>申請單號</td>
@@ -131,7 +102,7 @@ table.gridtable td {
 			    <tr><td colspan="12" style="color:red">備註↓↓↓</td></tr>
 				<tr><td colspan="12">									
 					<form id="memo" method="post" action="vbm_add" target="frameFile">
-						<textarea style="width:566px;height:150px" name="memo" id="memo_txt"></textarea>						
+						<textarea style="width:100%;height:150px" name="memo" id="memo_txt"></textarea>						
 						<input type="hidden" name="factNo" value="<s:property value='factNo'/>"/>
 						<input type="hidden" name="billNo" value="<s:property value='billNo'/>"/>
 						<input type="hidden" name="itemNo" value="<s:property value='itemNo'/>"/>
@@ -158,5 +129,11 @@ table.gridtable td {
    <h1 style="color:red" align="center">函文已刪除</h1>
 </s:else>
 
+<script>window.jQuery|| document.write('<script src="jquery/jquery-1.9.1.min.js"><\/script>');</script>
+<script src="bootstrap/js/bootstrap.min.js"></script>	
+<!--[if lt IE 9]>  
+<script src="bootstrap/html5.js"></script>
+<script src="bootstrap/respond.min.js"></script>
+<![endif]-->
 </body>
 </html>

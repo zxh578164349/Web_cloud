@@ -76,7 +76,11 @@ public class WebFormulaAction implements ServletResponseAware{
 	private String lookordown;
 	private int itemid;
 	private String pomNo;
+	private String billNo;
+	private String itemNo;
+	private String visaSort;
 	private Map<String,Object> map;
+	private String readMk;//標識返回函文查看頁面(Y)，還是返回函文提交頁面(N)
 	private List<WebFormulaItems>items;
 	private HttpServletResponse response;
 	private IWebFormulaServices webformulaser;
@@ -86,6 +90,38 @@ public class WebFormulaAction implements ServletResponseAware{
 	
 	
 	
+	public String getBillNo(){
+		return billNo;
+	}
+
+	public void setBillNo(String billNo){
+		this.billNo=billNo;
+	}
+
+	public String getItemNo(){
+		return itemNo;
+	}
+
+	public void setItemNo(String itemNo){
+		this.itemNo=itemNo;
+	}
+
+	public String getVisaSort(){
+		return visaSort;
+	}
+
+	public void setVisaSort(String visaSort){
+		this.visaSort=visaSort;
+	}
+
+	public String getReadMk(){
+		return readMk;
+	}
+
+	public void setReadMk(String readMk){
+		this.readMk=readMk;
+	}
+
 	public String getPomNo(){
 		return pomNo;
 	}
@@ -396,6 +432,10 @@ public class WebFormulaAction implements ServletResponseAware{
 		this.clearSession();
 		formula=webformulaser.findById(formulaIndex);
 		return "findById";
+	}
+	public String findById_layer(){
+		formula=webformulaser.findById(billNo);//注意,應該是billNo,因爲簽核頁面統一使用變量名billNo
+		return "findById_layer";
 	}
 	
 	public String sendEmail() throws ParseException{

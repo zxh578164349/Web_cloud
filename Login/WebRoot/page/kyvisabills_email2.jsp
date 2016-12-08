@@ -88,16 +88,18 @@
 </div>
 <jsp:include page="../copyright.jsp"/>
 
-
-<script src="http://apps.bdimg.com/libs/jquery/1.9.1/jquery.min.js"></script> 
-<script>window.jQuery || document.write('<script src="jquery/jquery-1.9.1.min.js"><\/script>');</script>	
-<script type="text/javascript" src="page/jquerys/layer/layer.min.js"></script>
+  
+<!-- <script src="http://apps.bdimg.com/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="jquery/jquery-1.9.1.min.js"><\/script>');</script>  -->
+<script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script>	
+<script type="text/javascript" src="jquery/layer/layer.min.js"></script>	
 <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
-<script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>
- <!--[if lt IE 9]>  
-  <script src="bootstrap/html5.js"></script>
-  <script src="bootstrap/respond.min.js"></script>
-  <![endif]-->	
+<!--  <script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>-->
+<script src="bootstrap/js/bootstrap.min.js"></script>
+<!--[if lt IE 9]>  
+  <script src="http://apps.bdimg.com/libs/html5shiv/3.7/html5shiv.min.js"></script>
+  <script src="http://apps.bdimg.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->  
 <script type="text/javascript">
 var loadi;
 $(document).ajaxStart(function(){
@@ -106,6 +108,10 @@ $(document).ajaxStart(function(){
 $(document).ajaxStop(function(){
 	layer.close(loadi);
 });
+
+function loadjs(){
+	document.write("");
+}
     function showDiv(billNo,factNo){
     	var area_w;
     	var area_h;
@@ -130,6 +136,11 @@ $(document).ajaxStop(function(){
     		area_h='560px';
     		src='webremit_findById_layer?billNo='+billNo+'& factNo='+factNo+'& readMk=Y';
     	}
+    	if(billNo.substring(0,2)=='GJ'){
+    		area_w='650px';
+    		area_h='560px';
+    		src='webformula_findById_layer?billNo='+billNo+'& readMk=Y';
+    	}
     $.layer({
     type: 2,   //0-4的选择,
     title: '函文內容',
@@ -145,7 +156,8 @@ $(document).ajaxStop(function(){
     offset:['10px',''],
     //area: ['800px', '560px'],
     area:[area_w,area_h],
-    //page:{url:'kyz_findById_layer?billNo='+billNo+'& factNo='+factNo}                   
+    //page:{url:'kyz_findById_layer?billNo='+billNo+'& factNo='+factNo}  
+    maxmin:true,
     iframe:{src:src,scrolling:'auto'}	
     /* close:function(){
 		location.reload();
@@ -177,6 +189,11 @@ $(document).ajaxStop(function(){
     		area_h='560px';
     		src='webremit_findById_layer?billNo='+billNo+'& factNo='+factNo+'& itemNo='+itemNo+'& visaSort='+visaSort+'& readMk=N';
     	}
+    	if(billNo.substring(0,2)=='GJ'){
+    		area_w='650px';
+    		area_h='560px';
+    		src='webformula_findById_layer?billNo='+billNo+'& factNo='+factNo+'& itemNo='+itemNo+'& visaSort='+visaSort+'& readMk=N';
+    	}
     $.layer({
     type: 2,   //0-4的选择,
     title: '函文內容',
@@ -192,6 +209,7 @@ $(document).ajaxStop(function(){
     //shift:'top',
     offset:['10px',''],
     area: [area_w, area_h],
+    maxmin:true,
     //page:{url:'kyz_findById_layer?billNo='+billNo+'& factNo='+factNo},
     //iframe:{src:'kyz_findById_layer?billNo='+billNo+'& factNo='+factNo,scrolling:'auto'},
     

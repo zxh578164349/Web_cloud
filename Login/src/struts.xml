@@ -709,7 +709,8 @@
 		    </result>
 		    <result name="deleteItem" type="json">
 		        <param name="root">ajaxResult</param>
-		    </result>		    
+		    </result>
+		    <result name="findById_layer">page/webformula_layer/WebFormula_layer.jsp</result>		    
 		</action>
 	</package>
 

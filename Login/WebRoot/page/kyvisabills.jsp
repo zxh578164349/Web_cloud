@@ -50,6 +50,11 @@
     		area_h='560px';
     		src='webremit_findById_layer?billNo='+billNo+'& readMk=Y';
     	}
+    	if(billNo.substring(0,2)=='GJ'){
+    		area_w='650px';
+    		area_h='560px';
+    		src='webformula_findById_layer?billNo='+billNo+'& readMk=Y';
+    	}
     jq.layer({
     type: 2,   //0-4的选择,
     title: '函文內容',
@@ -65,6 +70,7 @@
     offset:['10px',''],
     //area: ['800px', '560px'],
     area:[area_w,area_h],
+    maxmin:true,
     //page:{url:'kyz_findById_layer?billNo='+billNo+'& factNo='+factNo}                   
     iframe:{src:src,scrolling:'auto'}	
     /* close:function(){
@@ -98,6 +104,11 @@
     		area_h='560px';
     		src='webremit_findById_layer?billNo='+billNo+'& factNo='+factNo+'& itemNo='+itemNo+'& visaSort='+visaSort+'& readMk=N';
     	}
+    	if(billNo.substring(0,2)=='GJ'){
+    		area_w='650px';
+    		area_h='560px';
+    		src='webformula_findById_layer?billNo='+billNo+'& factNo='+factNo+'& itemNo='+itemNo+'& visaSort='+visaSort+'& readMk=N';
+    	}
     jq.layer({
     type: 2,   //0-4的选择,
     title: '函文內容',
@@ -113,6 +124,7 @@
     //shift:'top',
     offset:['10px',''],
     area: [area_w, area_h],
+    maxmin:true,
     //page:{url:'kyz_findById_layer?billNo='+billNo+'& factNo='+factNo},
     //iframe:{src:'kyz_findById_layer?billNo='+billNo+'& factNo='+factNo,scrolling:'auto'},   
     iframe:{src:src,scrolling:'auto'},
