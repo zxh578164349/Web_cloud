@@ -24,8 +24,6 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
 <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-<link rel="stylesheet" type="text/css" href="css/form.css" />
-<link rel="stylesheet" type="text/css" href="uploadify/uploadify.css">
 </head>
 
 <body>	   	        	            	           

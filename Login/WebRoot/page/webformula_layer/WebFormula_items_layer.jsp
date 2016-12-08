@@ -34,6 +34,7 @@
 			<th>備註</th>
 		<tr>
 			<s:iterator value="formula.webFormulaItemses" status="x">
+			<tr>
 				<td><s:property value='sectionNo' />
 				</td>
 				<td><s:property value="fk_weberp_pf.selfchar1Name" />
@@ -42,6 +43,7 @@
 				<td><s:property value='phrVal' /></td>
 				<td><s:property value='weightVal' /></td>
 				<td><s:property value='remark' /></td>
+			</tr>	
 			</s:iterator>
 	</table>
 </body>

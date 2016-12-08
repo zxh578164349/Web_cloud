@@ -175,12 +175,12 @@ aria-labelledby="myModalLabelA" aria-hidden="true">
 				<form action="vbm_add" method="post" id="memo" role="form" />
 				<div class="form-group">
 					<label>備註↓↓↓</label>
-					<textarea class="form-control" rows="3" name="memo" id="memo_txt"></textarea>			             			          
+					<textarea class="form-control" style="width:100%;height:120px" name="memo" id="memo_txt"></textarea>			             			          
 				</div>				
 				<input type="hidden" value="<s:property value='vbm.id.factNo'/>" name="factNo"/>
 				<input type="hidden" value="<s:property value='vbm.id.billNo'/>" name="billNo"/>
 				<input type="hidden" value="<s:property value='vbm.id.visaSort'/>" name="visaSort"/>
-				<input type="text" value="<s:property value='vbm.itemNext'/>" name="itemNo" />
+				<input type="hidden" value="<s:property value='vbm.itemNext'/>" name="itemNo" />
 				<input type="hidden" name="visa_mk" id="visa_mk"/>					
 				</form> 
 				 <!--------------------------- 修改4 20151025 --------------------------------------->
@@ -241,7 +241,7 @@ function getSrc(billNo){
 		src="webremit_findById_layer";
 	}
 	if(billNo.substring(0,2)=="GJ"){
-		src="webformula_findById_layer";
+		src="webformula_findById_layer2";
 	}
 	return src;
 }
@@ -249,8 +249,9 @@ function showDiv(billNo,factNo){
 	var src=getSrc(billNo);
 	
 		$("#myModal").on("show.bs.modal",function(){
-			$(".modal-body").load(src,{"billNo":billNo,"factNo":factNo});			
-		});				
+			$("#myModal").find(".modal-body").load(src,{"billNo":billNo,"factNo":factNo});
+			$("#myModalA").find(".modal-body").empty();	//	#myModalA跨層子元素				
+		});		
 }
 
 /*全局變量*/
@@ -260,12 +261,15 @@ var factNo_g,billNo_g,itemNo_g,visaSort_g;
 function check(factNo,visaSort,billNo,itemNo){
 	var src=getSrc(billNo);
 		 $("#myModalA").on("show.bs.modal",function(){
-			 $(".modal-body").load(src,{"billNo":billNo,"factNo":factNo,"visaSort":visaSort,"itemNo":itemNo});
+			 $("#myModalA").find(".modal-body").load(src,{"billNo":billNo,"factNo":factNo,"visaSort":visaSort,"itemNo":itemNo});
+			 $("#myModal").find(".modal-body").empty();
+			 
 		 });
 		 factNo_g=factNo;
 		 billNo_g=billNo;
 		 itemNo_g=itemNo;
 		 visaSort_g=visaSort;
+		 
 	}
 var loadi;
 $(document).ajaxStart(function(){

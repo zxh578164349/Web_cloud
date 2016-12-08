@@ -25,7 +25,6 @@
 
 <body>
     <h3>函文申請</h3>
-    <input type="hidden" id="boot_mk" value="0"/>
     <s:if test="kyz!=null">
 	<table class="table table-condensed table-bordered">		
 		<tbody id="tb_list_info2">
@@ -168,8 +167,8 @@
    <h1 style="color:red" align="center">函文已刪除</h1>
 </s:else>
 
-<script>window.jQuery|| document.write('<script src="jquery/jquery-1.9.1.min.js"><\/script>');</script>
-<script src="bootstrap/js/bootstrap.min.js"></script>	
+
+
 <!--[if lt IE 9]>  
 <script src="bootstrap/html5.js"></script>
 <script src="bootstrap/respond.min.js"></script>

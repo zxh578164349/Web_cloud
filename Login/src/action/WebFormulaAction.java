@@ -437,6 +437,10 @@ public class WebFormulaAction implements ServletResponseAware{
 		formula=webformulaser.findById(billNo);//注意,應該是billNo,因爲簽核頁面統一使用變量名billNo
 		return "findById_layer";
 	}
+	public String findById_layer2(){
+		this.findById_layer();//手機訪問頁面
+		return "findById_layer2";
+	}
 	
 	public String sendEmail() throws ParseException{
 		List<KyzVisaflow>list=visaSer.findPF(factNo);

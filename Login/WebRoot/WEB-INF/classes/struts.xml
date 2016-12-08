@@ -710,7 +710,8 @@
 		    <result name="deleteItem" type="json">
 		        <param name="root">ajaxResult</param>
 		    </result>
-		    <result name="findById_layer">page/webformula_layer/WebFormula_layer.jsp</result>		    
+		    <result name="findById_layer">page/webformula_layer/WebFormula_layer.jsp</result>
+		    <result name="findById_layer2">page/webformula_layer/WebFormula_layer2.jsp</result>		    
 		</action>
 	</package>
 

@@ -23,7 +23,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 <meta http-equiv="expires" content="0">
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
-<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
 </head>
 <body>	
 	   <ul id="myTab" class="nav nav-tabs">
@@ -49,9 +49,9 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 			</div>			
 	  </div>
 															     
-	
-<script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script>
-<script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>	
+<!-- 这个页面与WebFormula_layer的区别是，这个页面要去掉 jquery与boootstrap的js文件,因为这个页面是嵌套在手機訪問的頁面的，手機訪問的頁面已經存在這兩個js文件了，否則會彈不出layer -->	
+<!-- <script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script> -->	
 <!--[if lt IE 9]>  
 <script src="bootstrap/html5.js"></script>
 <script src="bootstrap/respond.min.js"></script>
