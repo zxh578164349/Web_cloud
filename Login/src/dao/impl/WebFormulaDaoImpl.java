@@ -48,14 +48,63 @@ public class WebFormulaDaoImpl extends Basedao implements IWebFormulaDao{
 	
 	
 	public PageBean findPageBean(int page,int pageSize,WebFormula formula,String issuedDate_a,String issuedDate_b){
-		// TODO Auto-generated method stub
+		// TODO Auto-generated method stub				
+		Map<String,Object>map_result=this.hqlMap(formula,issuedDate_a,issuedDate_b);
+		StringBuffer hql=(StringBuffer)(StringBuffer)map_result.get("hql");
+		StringBuffer hql2=(StringBuffer)(StringBuffer)map_result.get("hql2");
+		Map<String,Object>map=(Map<String,Object>)map_result.get("hql_map");
+		int currentPage=PageBean.countCurrentPage(page);
+		Integer allrow=(Integer)ActionContext.getContext().getSession().get("allrow");
+		if(allrow==null){
+			allrow=super.getAllRowCount2(hql2.toString(),map);
+		}
+		int totalPage=PageBean.countTotalPage(pageSize,allrow);
+		if(currentPage>totalPage){
+			currentPage=totalPage;
+		}
+		int offset=PageBean.countOffset(pageSize,currentPage);
+		List<WebFormula>list=super.queryForPage(hql.toString(),offset,pageSize,map);
+		for(WebFormula obj:list){
+			obj.getFactCode().getName();
+			obj.getFactNo().getFactSname();
+		}
+		PageBean bean=new PageBean();
+		bean.setAllRow(allrow);
+		bean.setCurrentPage(currentPage);
+		bean.setList(list);
+		bean.setPageSize(pageSize);
+		bean.setTotalPage(totalPage);
+		return bean;
+	}
+	
+	public List<WebFormula> findList(WebFormula formula,String issuedDate_a,String issuedDate_b){
+		Map<String,Object>map_result=this.hqlMap(formula,issuedDate_a,issuedDate_b);
+		StringBuffer hql=(StringBuffer)(StringBuffer)map_result.get("hql");
+		hql.append(" order by formulaIndex ");
+		Map<String,Object>map=(Map<String,Object>)map_result.get("hql_map");
+		List<WebFormula>list=super.getAllWithNoPage_sql(hql.toString(),map);
+		for(WebFormula obj:list){
+			for(WebFormulaItems item:obj.getWebFormulaItemses()){
+				item.getFk_weberp_pf().getNamec1();
+				item.getFk_weberp_pf().getNamec1();
+				item.getFk_weberp_pf().getSelfchar1Name();
+			}
+			obj.getFactCode().getName();
+			obj.getFactNo().getFactSname();
+			obj.getPom().getWebBrank().getName();
+		}
+		return list;
+	}
+	
+	public Map<String,Object> hqlMap(WebFormula formula,String issuedDate_a,String issuedDate_b){
+		Map<String,Object>map_result=new HashMap<String,Object>();
 		StringBuffer hql=new StringBuffer();
 		StringBuffer hql2=new StringBuffer();
 		Map<String,Object>map=new HashMap<String,Object>();
 		hql.append("from WebFormula where 1=1 ");
 		hql2.append("select count(formulaIndex) ");		
 		if(formula==null){
-			formula=new WebFormula(new VWebFact(),new WebErpBrankProcess(),new WebTabpom());
+			formula=new WebFormula(new VWebFact(),new WebErpBrankProcess(),new WebTabpom(new WebErpBrankProcess()));
 		}
 		if(formula.getFactNo().getFactNo()==null||formula.getFactNo().getFactNo().equals("")){
 			String factNo=(String)ActionContext.getContext().getSession().get("factNo");//用戶的登錄廠別
@@ -90,15 +139,11 @@ public class WebFormulaDaoImpl extends Basedao implements IWebFormulaDao{
 			hql.append(" and assignBrand=:assignBrand");
 			map.put("assignBrand",formula.getAssignBrand());
 		}
-		/**********************以下爲Double類型*******************************/
-		if(formula.getPom().getHardness()!=null&&formula.getPom().getHardness2()!=null){
-			hql.append(" and pom.hardness>=:hardness1 and pom.hardness<=:hardness2");
-			map.put("hardness1",formula.getPom().getHardness()-formula.getPom().getHardness2());
-			map.put("hardness2",formula.getPom().getHardness()+formula.getPom().getHardness2());
-		}else if(formula.getPom().getHardness()!=null){
-			hql.append(" and pom.hardness=:hardness");
-			map.put("hardness",formula.getPom().getHardness());
-		}
+		/**********************以下爲Double類型*******************************/		
+		 if(formula.getPom().getHardness()!=null){
+				hql.append(" and :hardness between pom.hardness-pom.hardness2 and pom.hardness+pom.hardness2");
+				map.put("hardness",formula.getPom().getHardness());
+			}
 		
 		if(formula.getPom().getForces()!=null){
 			hql.append(" and pom.forces=:forces");
@@ -115,13 +160,9 @@ public class WebFormulaDaoImpl extends Basedao implements IWebFormulaDao{
 		if(formula.getPom().getTearingK()!=null){
 			hql.append(" and pom.tearingK=:tearingK");
 			map.put("tearingK",formula.getPom().getTearingK());
-		}
-		if(formula.getPom().getProportion()!=null&&formula.getPom().getProportion2()!=null){
-			hql.append(" and pom.proportion>=:proportion1 and pom.proportion<=:proportion2");
-			map.put("proportion1",formula.getPom().getProportion()-formula.getPom().getProportion2());
-			map.put("proportion2",formula.getPom().getProportion()+formula.getPom().getProportion2());
-		}else if(formula.getPom().getProportion()!=null){
-			hql.append(" and pom.proportion=:proportion");
+		}		
+		if(formula.getPom().getProportion()!=null){
+			hql.append(" and pom.proportion between pom.proportion-pom.proportion2 and pom.proportion+pom.proportion2");
 			map.put("proportion",formula.getPom().getProportion());
 		}
 		if(formula.getPom().getWresistingAkron()!=null){
@@ -189,31 +230,17 @@ public class WebFormulaDaoImpl extends Basedao implements IWebFormulaDao{
 			hql.append(" and pom.authentications=:authentications");
 			map.put("authentications",formula.getPom().getAuthentications());
 		}
-		
+		if(formula.getPom().getWebBrank().getId()!=null){
+			hql.append(" and pom.webBrank.id=:webBrank");
+			map.put("webBrank",formula.getPom().getWebBrank().getId());
+		}				
 		hql2.append(hql);
 		hql.append(" order by formulaIndex ");
-		int currentPage=PageBean.countCurrentPage(page);
-		Integer allrow=(Integer)ActionContext.getContext().getSession().get("allrow");
-		if(allrow==null){
-			allrow=super.getAllRowCount2(hql2.toString(),map);
-		}
-		int totalPage=PageBean.countTotalPage(pageSize,allrow);
-		if(currentPage>totalPage){
-			currentPage=totalPage;
-		}
-		int offset=PageBean.countOffset(pageSize,currentPage);
-		List<WebFormula>list=super.queryForPage(hql.toString(),offset,pageSize,map);
-		for(WebFormula obj:list){
-			obj.getFactCode().getName();
-			obj.getFactNo().getFactSname();
-		}
-		PageBean bean=new PageBean();
-		bean.setAllRow(allrow);
-		bean.setCurrentPage(currentPage);
-		bean.setList(list);
-		bean.setPageSize(pageSize);
-		bean.setTotalPage(totalPage);
-		return bean;
+		
+		map_result.put("hql",hql);
+		map_result.put("hql2",hql2);
+		map_result.put("hql_map",map);
+		return map_result;
 	}
 
 	/**
@@ -262,7 +289,6 @@ public class WebFormulaDaoImpl extends Basedao implements IWebFormulaDao{
 		for(WebFormulaItems item:obj.getWebFormulaItemses()){
 			item.getFk_weberp_pf().getNamec1();
 			item.getFk_weberp_pf().getNamec2();
-			item.getFk_weberp_pf().getItemcategoryname();
 			item.getFk_weberp_pf().getSelfchar1();
 			
 		}

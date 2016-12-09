@@ -534,6 +534,11 @@ public class WebFormulaAction implements ServletResponseAware{
 		ActionContext.getContext().getSession().remove("tabpom");
 	}
 	
+	public void printlist(){
+		List<WebFormula>list=webformulaser.findList(formula,issuedDate_a,issuedDate_b);
+		
+	}
+	
 	
 	
 	

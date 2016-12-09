@@ -99,7 +99,21 @@ jq.ajax({
 		});
 	}
 });
-	
+/*加載所有品牌*/
+jq.ajax({
+	type:"get",
+	url:"weberpbp_findObjOp2",
+	dataType:"json",
+	success:function(data){
+		jq("#dwrWebbrank").empty();
+		jq("#dwrWebbrank").append("<option value=''>品牌選擇</option>");
+		var item="";
+		jq.each(data,function(i,obj){
+			item+="<option value='"+obj[0]+"'>"+obj[2]+"</option>";					
+		});
+		jq("#dwrWebbrank").append(item);
+	}
+});	
 </script>	
 </body>
 </html>

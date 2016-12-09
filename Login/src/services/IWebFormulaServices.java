@@ -38,5 +38,6 @@ public interface IWebFormulaServices{
 	public void addItems(List<WebFormulaItems> webFormulaItemses);
 	public WebFormulaItems findById(int itemid);
 	public void deleteItems(int itemid,KyzExpectmatmLog log);
+	public List<WebFormula> findList(WebFormula formula,String issuedDate_a,String issuedDate_b);
 
 }

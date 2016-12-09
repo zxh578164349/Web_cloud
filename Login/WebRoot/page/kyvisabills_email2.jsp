@@ -91,10 +91,9 @@
   
 <!-- <script src="http://apps.bdimg.com/libs/jquery/1.9.1/jquery.min.js"></script>
 <script>window.jQuery || document.write('<script src="jquery/jquery-1.9.1.min.js"><\/script>');</script>  -->
+<!--  <script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>-->
 <script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script>	
 <script type="text/javascript" src="jquery/layer/layer.min.js"></script>	
-<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
-<!--  <script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>-->
 <script src="bootstrap/js/bootstrap.min.js"></script>
 <!--[if lt IE 9]>  
   <script src="http://apps.bdimg.com/libs/html5shiv/3.7/html5shiv.min.js"></script>
@@ -109,9 +108,6 @@ $(document).ajaxStop(function(){
 	layer.close(loadi);
 });
 
-function loadjs(){
-	document.write("");
-}
     function showDiv(billNo,factNo){
     	var area_w;
     	var area_h;
@@ -155,7 +151,7 @@ function loadjs(){
     //shift:'top',
     offset:['10px',''],
     //area: ['800px', '560px'],
-    area:[area_w,area_h],
+    area:['650px','560px'],
     //page:{url:'kyz_findById_layer?billNo='+billNo+'& factNo='+factNo}  
     maxmin:true,
     iframe:{src:src,scrolling:'auto'}	
@@ -208,7 +204,7 @@ function loadjs(){
     //fadeIn:300,
     //shift:'top',
     offset:['10px',''],
-    area: [area_w, area_h],
+    area: ['650px', '560px'],
     maxmin:true,
     //page:{url:'kyz_findById_layer?billNo='+billNo+'& factNo='+factNo},
     //iframe:{src:'kyz_findById_layer?billNo='+billNo+'& factNo='+factNo,scrolling:'auto'},
@@ -245,11 +241,12 @@ function yesorno(passMk){
        	dataType:"json",
        	url:"vbm_add",
        	data:layer.getChildFrame("#memo",layer.index).serialize(),
+       	//async:false,
        	success:function(data){
        		if(data=="0"){
-       			layer.msg("簽核成功",2,1);           		
-           		//window.setTimeout(function(){layer.closeAll()},3000);         		
-           		window.setTimeout(function(){location.reload()},1000);
+       			layer.msg("簽核成功",2,1);  
+           		window.setTimeout(function(){location.reload()},1000);//設置了ajax同步就不要定時器
+           		//location.reload();
            		
        		}else{
        			layer.msg("簽核失敗",2,3);  

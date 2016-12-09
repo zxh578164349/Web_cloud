@@ -311,6 +311,16 @@ public class WebFormulaServicesImpl implements IWebFormulaServices{
 		// TODO Auto-generated method stub
 		webformuladao.deleteItems(itemid,log);
 	}
+	/**
+	 * 日期:2016/12/9
+	 * 描述:
+	 */
+	
+	
+	public List<WebFormula> findList(WebFormula formula,String issuedDate_a,String issuedDate_b){
+		// TODO Auto-generated method stub
+		return webformuladao.findList(formula,issuedDate_a,issuedDate_b);
+	}
 
 	
 }

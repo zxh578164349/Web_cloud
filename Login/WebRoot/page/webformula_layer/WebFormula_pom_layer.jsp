@@ -174,7 +174,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 	                <tr>
 	                   <td>特性說明</td>
 	                   <td colspan="2">
-	                      <textarea style="width:100%;height:100px"><s:property value='formula.pom.instruction'/></textarea>					      							                     	                    
+	                      <textarea style="width:100%;height:100px" readonly><s:property value='formula.pom.instruction'/></textarea>					      							                     	                    
 	                   </td>                 
 	                </tr>	                                         											
 </table>	

@@ -79,6 +79,9 @@ public class WebTabpom implements java.io.Serializable{
 	public WebTabpom(String pomNo){
 		this.pomNo=pomNo;
 	}
+	public WebTabpom(WebErpBrankProcess webBrank){
+		this.webBrank=webBrank;
+	}
 
 	/** full constructor */
 	public WebTabpom(String pomNo,WebErpBrankProcess webBrank,WebFormula formulaId,Double hardness,Double forces,Double extend,Double tearingC,Double tearingK,

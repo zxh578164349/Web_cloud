@@ -174,7 +174,7 @@ aria-labelledby="myModalLabelA" aria-hidden="true">
 			    <!--------------------------- 修改4 20151025 --------------------------------------->
 				<form action="vbm_add" method="post" id="memo" role="form" />
 				<div class="form-group">
-					<label>備註↓↓↓</label>
+					<label style="color:red">簽核備註↓↓↓</label>
 					<textarea class="form-control" style="width:100%;height:120px" name="memo" id="memo_txt"></textarea>			             			          
 				</div>				
 				<input type="hidden" value="<s:property value='vbm.id.factNo'/>" name="factNo"/>
@@ -254,22 +254,13 @@ function showDiv(billNo,factNo){
 		});		
 }
 
-/*全局變量*/
-var factNo_g,billNo_g,itemNo_g,visaSort_g;
-
 /*****************************20151027更新***********************************/
 function check(factNo,visaSort,billNo,itemNo){
 	var src=getSrc(billNo);
 		 $("#myModalA").on("show.bs.modal",function(){
 			 $("#myModalA").find(".modal-body").load(src,{"billNo":billNo,"factNo":factNo,"visaSort":visaSort,"itemNo":itemNo});
-			 $("#myModal").find(".modal-body").empty();
-			 
-		 });
-		 factNo_g=factNo;
-		 billNo_g=billNo;
-		 itemNo_g=itemNo;
-		 visaSort_g=visaSort;
-		 
+			 $("#myModal").find(".modal-body").empty();			 
+		 });		 	 
 	}
 var loadi;
 $(document).ajaxStart(function(){
@@ -289,11 +280,12 @@ function yesorno(passMk){
 	    	dataType:"json",
 	    	url:"vbm_add",
 	    	data:$("#memo").serialize(),
+	    	//async:false,
 	    	success:function(data){
 	    		if(data=="0"){
 	    			layer.msg("簽核成功",2,1);
-	    			//$("#myModalA").modal("hide");
-	    			window.setTimeout(function(){location.reload()}, 1000);	    			
+	    			window.setTimeout(function(){location.reload()}, 1000);
+	    			//location.reload();
 	    		}else{
 	    			layer.msg("簽核失敗",2,3);
 	    		}

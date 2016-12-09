@@ -10,12 +10,6 @@
 			+ request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 %>
-<%
-	java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat(
-			"yyyyMMdd");
-	java.util.Date currentTime = new java.util.Date();//得到当前系统时间
-	String str_date = formatter.format(currentTime); //将日期时间格式化
-%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
@@ -27,7 +21,6 @@
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
 <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
 </head>
 
 <body>
@@ -81,7 +74,7 @@
 			<tr>
 				<td>出差計劃</td>
 				<td colspan="11">
-				  <textarea style="width:500px;height:240px" readonly><s:property value="bussletter.planList" /></textarea>				     				 					
+				  <textarea style="width:100%;height:120px" readonly><s:property value="bussletter.planList" /></textarea>				     				 					
 				</td>
 
 			</tr>
@@ -99,10 +92,10 @@
 			</s:iterator>
 			<!------------------------- 修改3   20151027---------------   -->
 			<s:if test='readMk=="N"'>
-			    <tr><td colspan="12" style="color:red">備註↓↓↓</td></tr>
+			    <tr><td colspan="12"><label style="color:red">簽核備註↓↓↓</label></td></tr>
 				<tr><td colspan="12">									
 					<form id="memo" method="post" action="vbm_add" target="frameFile">
-						<textarea style="width:100%;height:150px" name="memo" id="memo_txt"></textarea>						
+						<textarea style="width:100%;height:120px" name="memo" id="memo_txt"></textarea>						
 						<input type="hidden" name="factNo" value="<s:property value='factNo'/>"/>
 						<input type="hidden" name="billNo" value="<s:property value='billNo'/>"/>
 						<input type="hidden" name="itemNo" value="<s:property value='itemNo'/>"/>

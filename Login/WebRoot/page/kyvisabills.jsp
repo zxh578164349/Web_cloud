@@ -69,7 +69,7 @@
     //shift:'top',
     offset:['10px',''],
     //area: ['800px', '560px'],
-    area:[area_w,area_h],
+    area:['650px','560px'],
     maxmin:true,
     //page:{url:'kyz_findById_layer?billNo='+billNo+'& factNo='+factNo}                   
     iframe:{src:src,scrolling:'auto'}	
@@ -123,7 +123,7 @@
     //fadeIn:300,
     //shift:'top',
     offset:['10px',''],
-    area: [area_w, area_h],
+    area: ['650px', '560px'],
     maxmin:true,
     //page:{url:'kyz_findById_layer?billNo='+billNo+'& factNo='+factNo},
     //iframe:{src:'kyz_findById_layer?billNo='+billNo+'& factNo='+factNo,scrolling:'auto'},   
@@ -166,10 +166,12 @@ function yesorno(passMk){
     	   dataType:"json",
     	   url:"vbm_add",
     	   data:layer.getChildFrame("#memo",layer.index).serialize(),
+    	   //async:false,
     	   success:function(data){
     		   if(data=="0"){
     			   layer.msg("簽核成功",2,1);   			   
     			   window.setTimeout(function(){layer.closeAll();loadUrl("vbm_findPageBean")},2000);
+    			   //layer.closeAll();loadUrl("vbm_findPageBean");
     		   }else{   			   
     			   layer.msg("簽核失敗",2,3);
     		   }

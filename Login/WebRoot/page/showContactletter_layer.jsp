@@ -96,7 +96,7 @@
 			</s:iterator>
 			<!------------------------- 修改3   20151027---------------   -->
 			<s:if test='readMk=="N"'>
-			    <tr><td colspan="12" style="color:red">備註↓↓↓</td></tr>
+			    <tr><td colspan="12"><label style="color:red">簽核備註↓↓↓</label></td></tr>
 				<tr><td colspan="12">									
 					<form id="memo" method="post" action="vbm_add" target="frameFile">
 						<textarea  name="memo" id="memo_txt" style="width:100%;height:120px;overflow:auto"></textarea>						
