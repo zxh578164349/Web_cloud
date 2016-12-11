@@ -11,7 +11,6 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.text.ParseException;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -19,16 +18,13 @@ import java.util.Map;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.struts2.interceptor.ServletResponseAware;
-
 import net.sf.json.JSONArray;
 
 import com.opensymphony.xwork2.ActionContext;
-
 import entity.KyVisabillm;
 import entity.KyVisabillmId;
 import entity.KyVisabills;
 import entity.KyVisabillsId;
-import entity.KyzExpectmatm;
 import entity.KyzExpectmatmLog;
 import entity.KyzVisaflow;
 import entity.WebErpBrankProcess;
@@ -486,7 +482,7 @@ public class WebFormulaAction implements ServletResponseAware{
 		Map<String,Object>map_result=webformulaser.print(factNo,billNo,null);		
 		if(map_result!=null&&map_result.size()>0){
 			map=(Map<String,Object>)map_result.get("map");
-			List<KyzExpectmatm>list=(List<KyzExpectmatm>)map_result.get("list");
+			List<WebFormula>list=(List<WebFormula>)map_result.get("list");
 			if(lookordown!=null){
 				if(lookordown.equals("look")){
 					JasperHelper.exportmain("line", map,"web_formula.jasper", list,billNo, "jasper/audit/");
@@ -534,8 +530,24 @@ public class WebFormulaAction implements ServletResponseAware{
 		ActionContext.getContext().getSession().remove("tabpom");
 	}
 	
-	public void printlist(){
-		List<WebFormula>list=webformulaser.findList(formula,issuedDate_a,issuedDate_b);
+	public void printlist() throws IOException{
+		Map<String,Object>map_result=webformulaser.print2(formula, issuedDate_a, issuedDate_b);		
+		if(map_result!=null&&map_result.size()>0){
+			map=(Map<String,Object>)map_result.get("map");
+			List<WebFormula>list=(List<WebFormula>)map_result.get("list");
+			if(lookordown!=null){
+				if(lookordown.equals("look")){
+					JasperHelper.exportmain("line", null,"webformul_excel.jasper", list,"reportlist", "jasper/audit/");
+				}else{
+					JasperHelper.exportmain("excel", null,"webformul_excel.jasper", list,"reportlist", "jasper/audit/");
+				}
+			}else{
+				JasperHelper.exportmain("excel", null,"webformul_excel.jasper", list,"reportlist", "jasper/audit/");
+			}
+		}else{
+			response.setContentType("text/html;charset=utf-8");
+			response.getWriter().print("<script>alert('無數據');window.close()</script>");
+		}
 		
 	}
 	

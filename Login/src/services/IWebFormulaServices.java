@@ -35,6 +35,7 @@ public interface IWebFormulaServices{
 	public WebFormula findById_nosession(String formulaIndex);
 	public void delete(String formulaIndex,KyzExpectmatmLog log);
 	public Map<String,Object> print(String factNo,String billNo,KyVisabillm vbm);
+	public Map<String,Object> print2(WebFormula formula,String issuedDate_a,String issuedDate_b);
 	public void addItems(List<WebFormulaItems> webFormulaItemses);
 	public WebFormulaItems findById(int itemid);
 	public void deleteItems(int itemid,KyzExpectmatmLog log);

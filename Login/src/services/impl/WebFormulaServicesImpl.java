@@ -144,7 +144,6 @@ public class WebFormulaServicesImpl implements IWebFormulaServices{
 		}else{
 			
 		}		
-		map = new HashMap<String, Object>();
 		//map.put("SUBREPORT_DIR",ServletActionContext.getRequest().getRealPath("/jasper/audit/")+ "/");
 		//map.put("pic", ServletActionContext.getRequest().getRealPath("/jasper/audit/images/")+ "/");//圖片路徑
 		map.put("SUBREPORT_DIR",ContextLoader.getCurrentWebApplicationContext().getServletContext().getRealPath("/jasper/audit/")+ "/");
@@ -153,7 +152,7 @@ public class WebFormulaServicesImpl implements IWebFormulaServices{
 		map.put("pbillno",billNo);
 		
 		List<WebFormulaItems> sub_list =obj.getWebFormulaItemses();	
-		for(int i=0;i<sub_list.size()-1;i++){
+		/*for(int i=0;i<sub_list.size()-1;i++){
 			for(int j=0;j<sub_list.size()-1-i;j++){
 				if(sub_list.get(j).getSectionNo()==sub_list.get(j+1).getSectionNo()){//相同配方階段的才排序
 					if(sub_list.get(j).getFk_weberp_pf().getSelfchar1().compareTo(sub_list.get(j+1).getFk_weberp_pf().getSelfchar1())>0){
@@ -166,7 +165,7 @@ public class WebFormulaServicesImpl implements IWebFormulaServices{
 				
 			}
 			
-		}								
+		}*/								
 		Map<String,Object> sub_map=new HashMap<String,Object>();
 		sub_map.put("sub_list", sub_list);								
 		SimpleDateFormat format=new SimpleDateFormat("yyyyMMdd");
@@ -256,20 +255,9 @@ public class WebFormulaServicesImpl implements IWebFormulaServices{
 		map.put("sub_map", sub_map);
 		
 		
-		Map<String,Object> main_map=new HashMap<String,Object>();    /*把list（List<KyzExpectmatm> list=kyzSer.findById_Print(id)）放在一个子表,便于打印  20150804*/
+		Map<String,Object> main_map=new HashMap<String,Object>();
 		main_map.put("list_main", list);
 		map.put("main_map", main_map);
-		
-		/*函文附檔*/
-		//String pic_file=ServletActionContext.getRequest().getRealPath("/KyzexpFile/"+id.getBillNo()+"/")+"/";//函文附檔圖片路徑(附檔在項目的路徑)
-		/*String pic_file=new File("d:\\KyzexpFile_backup\\"+billNo).toString();//函文附檔圖片路徑(附檔在D盤的路徑)
-		List<KyzExpectmatmFile>list_kyzexpfile=kyzexpfileDao.findByBillNo(billNo);
-		if(pic_file!=null&&list_kyzexpfile.size()>0){
-			map.put("pic_file", pic_file+"\\");
-			Map<String,Object> file_map=new HashMap<String,Object>();
-			file_map.put("list_kyzexpfile", list_kyzexpfile);
-			map.put("file_map", file_map);
-		}*/
 		
 		if(obj.getPom()!=null){
 			Map<String,Object>map_pom=new HashMap<String,Object>();
@@ -283,6 +271,26 @@ public class WebFormulaServicesImpl implements IWebFormulaServices{
 		return map_result;
 		
 	}
+	
+	
+	public Map<String,Object> print2(WebFormula formula,String issuedDate_a,String issuedDate_b){
+		// TODO Auto-generated method stub
+		Map<String,Object>map_result=new HashMap<String,Object>();
+		List<WebFormula>list=this.findList(formula, issuedDate_a, issuedDate_b);
+		if(list.size()==0){			
+			return null;
+		}	
+		/*map.put("SUBREPORT_DIR",ContextLoader.getCurrentWebApplicationContext().getServletContext().getRealPath("/jasper/audit/")+ "/");
+		map.put("pic", ContextLoader.getCurrentWebApplicationContext().getServletContext().getRealPath("/jasper/audit/images/")+ "/");//圖片路徑																																	
+		Map<String,Object> main_map=new HashMap<String,Object>();  
+		map.put("main_map", main_map);								
+		map_result.put("map", map);*/
+		map_result.put("list", list);				
+		return map_result;
+		
+	}
+	
+	
 	/**
 	 * 日期:2016/11/22
 	 * 描述:

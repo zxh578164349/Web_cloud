@@ -79,19 +79,21 @@ public class WebFormulaDaoImpl extends Basedao implements IWebFormulaDao{
 	
 	public List<WebFormula> findList(WebFormula formula,String issuedDate_a,String issuedDate_b){
 		Map<String,Object>map_result=this.hqlMap(formula,issuedDate_a,issuedDate_b);
-		StringBuffer hql=(StringBuffer)(StringBuffer)map_result.get("hql");
-		hql.append(" order by formulaIndex ");
+		StringBuffer hql=(StringBuffer)map_result.get("hql");
 		Map<String,Object>map=(Map<String,Object>)map_result.get("hql_map");
-		List<WebFormula>list=super.getAllWithNoPage_sql(hql.toString(),map);
+		List<WebFormula>list=super.getAllWithNoPage(hql.toString(),map);
 		for(WebFormula obj:list){
-			for(WebFormulaItems item:obj.getWebFormulaItemses()){
+		    for(WebFormulaItems item:obj.getWebFormulaItemses()){
 				item.getFk_weberp_pf().getNamec1();
-				item.getFk_weberp_pf().getNamec1();
+		        item.getFk_weberp_pf().getNamec2();
 				item.getFk_weberp_pf().getSelfchar1Name();
 			}
 			obj.getFactCode().getName();
 			obj.getFactNo().getFactSname();
-			obj.getPom().getWebBrank().getName();
+			if(obj.getPom()!=null){
+				obj.getPom().getWebBrank().getName();
+			}
+			
 		}
 		return list;
 	}
@@ -279,7 +281,25 @@ public class WebFormulaDaoImpl extends Basedao implements IWebFormulaDao{
 	public WebFormula findById(String formulaIndex){
 		// TODO Auto-generated method stub
 		
-		WebFormula obj=findById_nosession(formulaIndex);		
+		WebFormula obj=findById_nosession(formulaIndex);
+		
+		//子集排序
+		List<WebFormulaItems> sub_list =obj.getWebFormulaItemses();	
+		for(int i=0;i<sub_list.size()-1;i++){
+			for(int j=0;j<sub_list.size()-1-i;j++){
+				if(sub_list.get(j).getSectionNo()==sub_list.get(j+1).getSectionNo()){//相同配方階段的才排序
+					if(sub_list.get(j).getFk_weberp_pf().getSelfchar1().compareTo(sub_list.get(j+1).getFk_weberp_pf().getSelfchar1())>0){
+						sub_list.add(j,sub_list.get(j+1));
+						sub_list.add(j+2,sub_list.get(j+1));
+						sub_list.remove(j+1);
+						sub_list.remove(j+2);
+					}
+				}
+				
+			}
+			
+		}
+		
 		obj.getFactNo().getFactSname();
 		obj.getFactCode().getName();
 		if(obj.getVbm()!=null){

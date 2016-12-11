@@ -5,6 +5,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+
 /**
  * WebFormula entity. @author MyEclipse Persistence Tools
  */
@@ -31,10 +33,21 @@ public class WebFormula implements java.io.Serializable{
 	private String modifyName;
 	private String modifyDate;
 	private List<WebFormulaItems> webFormulaItemses=new ArrayList<WebFormulaItems>();
+	private JRBeanCollectionDataSource webFormulaItemses2;
 	private WebTabpom pom;
 	private KyVisabillm vbm;
+	private List<KyFact>kk;
 
 	// Constructors
+
+	public List<KyFact> getKk() {
+		return kk;
+	}
+
+	public void setKk(List<KyFact> kk) {
+		
+		this.kk = kk;
+	}
 
 	/** default constructor */
 	public WebFormula(){
@@ -235,6 +248,14 @@ public class WebFormula implements java.io.Serializable{
 
 	public void setVbm(KyVisabillm vbm){
 		this.vbm=vbm;
+	}
+
+	public JRBeanCollectionDataSource getWebFormulaItemses2() {
+		return webFormulaItemses2;
+	}
+
+	public void setWebFormulaItemses2(JRBeanCollectionDataSource webFormulaItemses2) {
+		this.webFormulaItemses2 = webFormulaItemses2;
 	}
 	
 	

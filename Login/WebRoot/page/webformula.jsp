@@ -65,7 +65,7 @@ function submis(public_form) {
 }
 function print(subform){
 	var subform=jq("#"+subform);
-	subform.attr("action","webformula_print");
+	subform.attr("action","webformula_printlist");
 	subform.attr("target","_blank");
 	subform.submit();
 }
@@ -113,7 +113,8 @@ jq.ajax({
 		});
 		jq("#dwrWebbrank").append(item);
 	}
-});	
+});
+
 </script>	
 </body>
 </html>
