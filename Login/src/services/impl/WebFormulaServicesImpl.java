@@ -276,15 +276,10 @@ public class WebFormulaServicesImpl implements IWebFormulaServices{
 	public Map<String,Object> print2(WebFormula formula,String issuedDate_a,String issuedDate_b){
 		// TODO Auto-generated method stub
 		Map<String,Object>map_result=new HashMap<String,Object>();
-		List<WebFormula>list=this.findList(formula, issuedDate_a, issuedDate_b);
-		if(list.size()==0){			
-			return null;
-		}	
-		/*map.put("SUBREPORT_DIR",ContextLoader.getCurrentWebApplicationContext().getServletContext().getRealPath("/jasper/audit/")+ "/");
-		map.put("pic", ContextLoader.getCurrentWebApplicationContext().getServletContext().getRealPath("/jasper/audit/images/")+ "/");//圖片路徑																																	
-		Map<String,Object> main_map=new HashMap<String,Object>();  
-		map.put("main_map", main_map);								
-		map_result.put("map", map);*/
+		List<WebFormula>list=this.findList(formula, issuedDate_a, issuedDate_b);		
+		Map<String,Object>map=new HashMap<String,Object>();		
+		map.put("SUBREPORT_DIR",ContextLoader.getCurrentWebApplicationContext().getServletContext().getRealPath("/jasper/audit/")+ "/");		
+		map_result.put("map", map);
 		map_result.put("list", list);				
 		return map_result;
 		

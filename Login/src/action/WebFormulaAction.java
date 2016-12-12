@@ -531,24 +531,19 @@ public class WebFormulaAction implements ServletResponseAware{
 	}
 	
 	public void printlist() throws IOException{
-		Map<String,Object>map_result=webformulaser.print2(formula, issuedDate_a, issuedDate_b);		
-		if(map_result!=null&&map_result.size()>0){
-			map=(Map<String,Object>)map_result.get("map");
-			List<WebFormula>list=(List<WebFormula>)map_result.get("list");
-			if(lookordown!=null){
-				if(lookordown.equals("look")){
-					JasperHelper.exportmain("line", null,"webformul_excel.jasper", list,"reportlist", "jasper/audit/");
-				}else{
-					JasperHelper.exportmain("excel", null,"webformul_excel.jasper", list,"reportlist", "jasper/audit/");
-				}
+		response.setContentType("text/html;charset=utf-8");
+		Map<String,Object>map_result=webformulaser.print2(formula, issuedDate_a, issuedDate_b);	
+		map=(Map<String,Object>)map_result.get("map");
+		List<WebFormula>list=(List<WebFormula>)map_result.get("list");
+		if(list!=null&&list.size()>0){
+			if(list.size()>1500){
+				response.getWriter().print("<script>alert('數據過多,導出失敗');window.close()</script>");
 			}else{
-				JasperHelper.exportmain("excel", null,"webformul_excel.jasper", list,"reportlist", "jasper/audit/");
+				JasperHelper.exportmain("excel", map,"webformul_excel.jasper", list,"reportlist", "jasper/audit/");
 			}
-		}else{
-			response.setContentType("text/html;charset=utf-8");
+		}else{			
 			response.getWriter().print("<script>alert('無數據');window.close()</script>");
-		}
-		
+		}						
 	}
 	
 	

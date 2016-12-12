@@ -194,6 +194,7 @@
 						<div class="col-sm-10">
 							<input type="text" class="pinfo_form" value="<s:property value='#attr.webU.department'/>" name="updateU.department" />
 							<input type="hidden" value="<s:property value='updateU.erpfactno'/>" name="updateU.erpfactno"/> 
+							<input type="hidden" value="<s:property value='updateU.userType'/>" name="updateU.userType"/>
 						</div>
 					</div>
 					<div class="form-group">

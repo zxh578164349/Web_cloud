@@ -23,7 +23,7 @@
             <column name="IP" length="20" />
         </property>
         <property name="workno" type="java.lang.String">
-            <column name="WORKNO" length="20" not-null="true" />
+            <column name="WORKNO" length="20"  />
         </property>
         <property name="factno" type="java.lang.String">
             <column name="FACTNO" length="50" not-null="true" />
@@ -57,6 +57,9 @@
         </property>
         <property name="adminMk" type="java.lang.String">
             <column name="ADMIN_MK" length="2"></column>
+        </property>
+        <property name="userType" type="java.lang.String">
+            <column name="USER_TYPE" length="2"></column>
         </property>
         <bag name="webJurisdictions" cascade="delete" inverse="true" >
             <key>

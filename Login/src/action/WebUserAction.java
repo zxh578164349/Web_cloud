@@ -454,6 +454,8 @@ public class WebUserAction extends ActionSupport implements ServletResponseAware
 		ajax_result="3";
 		return "json_login";
 	}
+	
+	
 		
 	/**
 	 * 修改用戶
@@ -476,18 +478,17 @@ public class WebUserAction extends ActionSupport implements ServletResponseAware
 	 * 
 	 * @return
 	 */
-	public String initialUpdate() {
-		WebUser wU = (WebUser) ActionContext.getContext().getSession()
-				.get("loginUser");
-		WebUser webUser = null;
+	public String initialUpdate(){
+		WebUser wU=(WebUser)ActionContext.getContext().getSession().get("loginUser");
+		WebUser webUser=null;
 		if (id != 0) {
-			webUser = webUserService.selByuserId(id);
+			webUser=webUserService.selByuserId(id);
 		} else {
-			webUser = webUserService.selByuserId(wU.getId());
+			webUser=webUserService.selByuserId(wU.getId());
 		}
-		ActionContext.getContext().getSession().put("User", webUser);
-		ServletActionContext.getRequest().setAttribute("webU", webUser);
-		id = 0;
+		ActionContext.getContext().getSession().put("User",webUser);
+		ServletActionContext.getRequest().setAttribute("webU",webUser);
+		id=0;
 		return "initial";
 	}
 
@@ -719,7 +720,7 @@ public class WebUserAction extends ActionSupport implements ServletResponseAware
 			String factno=webUsers.getFactno().split("__")[0];
 			String erpfactno=webUsers.getFactno().split("__")[1];
 			webUsers.setFactno(factno);
-			webUsers.setErpfactno(erpfactno);
+			webUsers.setErpfactno(erpfactno);			
 			webUserService.add(webUsers);
 			ajax_result="0";
 		}catch(Exception e){
@@ -874,6 +875,92 @@ public class WebUserAction extends ActionSupport implements ServletResponseAware
 			}
 		}//if
 		
+	}
+	
+	
+	public String login_guest() throws InterruptedException, IOException {
+		ActionContext.getContext().getSession().remove("Email");//清除函文郵件中Email(在KyVisaBillmAction中的findById_email方法)
+		DateFormat format=new SimpleDateFormat("yyyyMMdd");			
+		List userList = webUserService.findMoreUser(webUsers.getUsername().trim());					
+		WebUser wUser = webUserService.selByuserId(factNo, webUsers.getUsername().trim());
+		/*用戶名,密碼,廠別都正確*/
+		if (wUser != null) {//if
+			if (wUser.getPwd().equals(webUsers.getPwd().trim())) {//start if2
+					try {
+						ajax_result="0";							  
+						  String ipAddress=GlobalMethod.findIp();
+						  ActionContext.getContext().getSession() .put("ip",ipAddress);
+						  WebLog log =new WebLog();
+							  log=new WebLog();
+							  Date date =new Date();
+							  log.setIp(ipAddress);
+							  log.setLogtime(date);
+							  log.setUsername(wUser.getUsername());
+							  log.setFactno(wUser.getFactno());					  						  
+						      webLogService.saveWebLog(log);
+						      
+						      //更新用戶登錄時間，如果一天登錄多次就不更新
+						      if(wUser.getLogdate()==null||!wUser.getLogdate().equals(format.format(new Date()))){
+						    	  wUser.setLogdate(format.format(new Date()));
+							      webUserService.add(wUser);
+						      }						      						  
+						  
+						  /*設定cookie
+						   * 设定有效时间 以秒(s)为单位
+						   * 设置Cookie路径和域名
+						   * */
+					if(remembered!=null){
+						Cookie cookieuser= new Cookie("user",factNo+","+wUser.getUsername());													
+						cookieuser.setMaxAge(60*60*24*7);//一周限期					 
+						//cookieuser.setPath("/");
+						ServletActionContext.getResponse().addCookie(cookieuser);
+					}
+					/*菜单名统一按名字进行排序*/
+					Collections.sort(wUser.getWebJurisdictions(), new Comparator<WebJurisdiction>() {
+			            public int compare(WebJurisdiction arg0, WebJurisdiction arg1) {
+			                return arg0.getWebMenu().getMenuname().compareTo(arg1.getWebMenu().getMenuname());
+			            }
+			        });
+						
+						ActionContext.getContext().getSession().put("loginUser", wUser);
+						List<WebMenu>login_menus=menuSer.findAllMenu();
+						ActionContext.getContext().getSession().put("login_menus", login_menus);//登錄時保存所有的菜單項目
+						if (factNo.equals("tw")&& wUser.getUsername().equals("admin")) {								
+							ActionContext.getContext().getSession().put("factNo", factNo);									
+						} else {
+							factNo = wUser.getFactno();
+							ActionContext.getContext().getSession().put("factNo", factNo);									
+							String factName = webFactSer.selByid(factNo);
+							ActionContext.getContext().getSession().put("factName", factName);									
+							List factCodes = webFactSer.findFactCodeByFactNo_show_dw(factNo);									
+							ActionContext.getContext().getSession().put("factAreas_login", factCodes);	//【各廠產量統計】加載的廠別狀態								
+						}
+						/******************緩存用戶所屬的廠別信息20160125******************/
+						List<Object[]>list_fact=webFactSer.findFactByFactNo(factNo);
+						ActionContext.getContext().getSession().put("login_facts", list_fact);
+																																				
+					//如果用戶不可用，也就是available的值為1
+					if(wUser.getAvailable()==1){												
+						ajax_result="1";
+						return "json_login";
+					}
+					
+					List<WebType>list_type=webtypeSer.findByFactNo2(factNo);
+					ActionContext.getContext().getSession().put("list_webtype", list_type);/**********20151029登錄時，保存各個廠別的函文類型************/
+					} catch (Exception e) {
+						e.printStackTrace();
+					}										
+					return "json_login";
+				}//end if2			
+			}//if
+		/*用戶名正確,但廠別不正確,*/
+		if (wUser == null && userList.size() > 0) {			
+			ajax_result="2";
+			return "json_login";
+			//return null;			
+		}						
+		ajax_result="3";
+		return "json_login";
 	}
 	
 }

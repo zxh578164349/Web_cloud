@@ -29,6 +29,7 @@ public class WebUser implements java.io.Serializable {
 	private String post;//職務
     private String adminMk;//管理員標識
     private String erpfactno;
+    private String userType;//用戶類型
 	private List<WebJurisdiction> webJurisdictions = new ArrayList<WebJurisdiction>();
 
 	// Constructors
@@ -205,6 +206,16 @@ public class WebUser implements java.io.Serializable {
 	public void setErpfactno(String erpfactno){
 		this.erpfactno=erpfactno;
 	}
+
+	public String getUserType(){
+		return userType;
+	}
+
+	public void setUserType(String userType){
+		this.userType=userType;
+	}
+	
+	
 	
 
 	

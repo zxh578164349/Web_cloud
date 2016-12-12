@@ -318,10 +318,10 @@ public class WebUserDaoImpl extends Basedao implements IWebUserDao {
 
 	public WebUser findByIdDwr2(String factNo, String userName) {
 		// TODO Auto-generated method stub
-		String hql="from WebUser where factno=? and username=?";
+		String hql="from WebUser where factno=? and lower(username)=?";
 		Query query=getSession().createQuery(hql);
 		query.setString(0, factNo);
-		query.setString(1, userName);
+		query.setString(1, userName.toLowerCase());
 		WebUser user=(WebUser)query.uniqueResult();
 		return user;
 	}
@@ -348,10 +348,10 @@ public class WebUserDaoImpl extends Basedao implements IWebUserDao {
 
 	public WebUser findUserByFactNoAEmail(String factNo, String email) {
 		// TODO Auto-generated method stub
-		String hql="from WebUser where factno=? and email=?";
+		String hql="from WebUser where factno=? and lower(email)=?";
 		Query query=getSession().createQuery(hql);
 		query.setString(0, factNo);
-		query.setString(1, email);
+		query.setString(1, email.toLowerCase());
 		WebUser user=(WebUser)query.uniqueResult();
 		return user;
 	}
