@@ -15,8 +15,7 @@
 <!-- Load stylesheets -->	
 </head>
 <body >
-   
-	<div id="wrapper">
+	 <div id="wrapper">
 		<div id="wrappertop"></div>
 
 		<div id="wrappermiddle">
@@ -38,7 +37,7 @@
 					</div>
 					<div id="password_inputright"></div>
 				</div>
-				<div id="factno_select">
+				<!--<div id="factno_select">
 					<div id="factno_selectleft"></div>
 					<div id="factno_selectmiddle">
 						<select id="url_factno" name="factNo">
@@ -60,11 +59,12 @@
 					<div id="factno_selectright"></div>
 					<br/>
 					<span id="sfact"><s:property value='factError' /></span>
-				</div>
+				</div>-->
+				<input type="hidden" name="factNo" value="1" id="url_factno"/>
 				<br/>
 				<div id="submit">
 					
-					<input type="button" value="登  錄" id="submit1" onclick="checkFact('userlogin')"/>
+					<input type="button" value="登  錄" id="submit1" onclick="checkFact('userlogin_guest')"/>
 					<input type="button" value="登  錄" id="submit2" />						
 				</div>
 				<div id="remembered"><input type="checkbox" value="remembered" name="remembered"/>記住賬號與廠別</div>
@@ -72,20 +72,12 @@
 		</div>
 		<div id="wrapperbottom"></div>	
 	</div>
+	
+	
+	
+
+
+
 		
 </body>
-
-<script>
-	jq(document).ready(function() {
-		jq("#submit1").hover(function() {
-			jq(this).animate({
-				"opacity" : "0"
-			}, "slow");
-		}, function() {
-			jq(this).animate({
-				"opacity" : "1"
-			}, "slow");
-		});
-	});	
-</script>
 </html>

@@ -880,8 +880,7 @@ public class WebUserAction extends ActionSupport implements ServletResponseAware
 	
 	public String login_guest() throws InterruptedException, IOException {
 		ActionContext.getContext().getSession().remove("Email");//清除函文郵件中Email(在KyVisaBillmAction中的findById_email方法)
-		DateFormat format=new SimpleDateFormat("yyyyMMdd");			
-		List userList = webUserService.findMoreUser(webUsers.getUsername().trim());					
+		DateFormat format=new SimpleDateFormat("yyyyMMdd");							
 		WebUser wUser = webUserService.selByuserId(factNo, webUsers.getUsername().trim());
 		/*用戶名,密碼,廠別都正確*/
 		if (wUser != null) {//if
@@ -952,13 +951,7 @@ public class WebUserAction extends ActionSupport implements ServletResponseAware
 					}										
 					return "json_login";
 				}//end if2			
-			}//if
-		/*用戶名正確,但廠別不正確,*/
-		if (wUser == null && userList.size() > 0) {			
-			ajax_result="2";
-			return "json_login";
-			//return null;			
-		}						
+			}					
 		ajax_result="3";
 		return "json_login";
 	}

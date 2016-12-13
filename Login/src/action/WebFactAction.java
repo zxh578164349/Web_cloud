@@ -91,6 +91,10 @@ public class WebFactAction extends ActionSupport {
 	}
 	/**************************爲了讓舊地址提示無效findAllfact,  更換了新地址findAllWebfact     20161115***************************/
 	
+	public String findAllWebfact_guest(){
+		this.findAllfact();
+		return "findAllWebfact_guest";
+	}
 	/**
 	 * 20160419
 	 * 用于"分形態損益表"

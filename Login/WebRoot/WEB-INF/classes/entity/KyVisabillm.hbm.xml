@@ -59,6 +59,9 @@
         <property name="userCreate" type="java.lang.String">
             <column name="USER_CREATE" length="50"/>
         </property>
+        <property name="oneMk" type="java.lang.String">
+            <column name="ONE_MK" length="2"/>
+        </property>
         <bag name="kyVisabillses" inverse="true" cascade="all" >
             <key>
                 <column name="FACT_NO" length="4" not-null="true" />
@@ -77,6 +80,7 @@
            <column name="BILL_NO"/>
         </many-to-one>
         <many-to-one name="webrel" column="BILL_NO" unique="true" insert="false" update="false"/>
-        <many-to-one name="formula" column="BILL_NO" unique="true" insert="false" update="false"/>   
+        <many-to-one name="formula" column="BILL_NO" unique="true" insert="false" update="false"/>  
+        <many-to-one name="factNo2" column="FACT_NO" unique="true" insert="false" update="false"/>  
     </class>
 </hibernate-mapping>

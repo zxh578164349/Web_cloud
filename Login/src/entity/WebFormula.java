@@ -36,18 +36,8 @@ public class WebFormula implements java.io.Serializable{
 	private JRBeanCollectionDataSource webFormulaItemses2;
 	private WebTabpom pom;
 	private KyVisabillm vbm;
-	private List<KyFact>kk;
 
 	// Constructors
-
-	public List<KyFact> getKk() {
-		return kk;
-	}
-
-	public void setKk(List<KyFact> kk) {
-		
-		this.kk = kk;
-	}
 
 	/** default constructor */
 	public WebFormula(){

@@ -123,12 +123,12 @@
 		if (agent.indexOf("msie") > 0) {						
 			jq("#bodyid").load("/Login/webfact_findAllWebfact");						
 		}else {						
-			jq("#bodyid").load("/Login/webfact_findAllWebfact2");
+			jq("#bodyid").load("/Login/webfact_findAllWebfact_guest");
 		}
 		jq("#bodyid").fadeIn(1500);					
 	});
 	
-	function checkFact() {
+	function checkFact(url) {
 		var factNO = jq("#url_factno");
 		var names = jq("#url_username_input");
 		var pwd = jq("#url_pwd_input");
@@ -140,7 +140,7 @@
 				type:"POST",
 				dataType:"json",
 				data:jq("#loginform").serialize(),
-				url:"userlogin",
+				url:url,
 				success:function(data){
 					 if(data=='0'){
 						 location.href="main.jsp";

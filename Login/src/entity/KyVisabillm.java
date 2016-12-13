@@ -34,6 +34,9 @@ public class KyVisabillm implements java.io.Serializable {
 	private KyzContactletter kyzletter;
 	private Webremittancelist webrel;
 	private WebFormula formula;//工廠配方
+	private String oneMk;//發送一次標識    0或null :正常發送    1:隻發送1次
+	private VWebFact factNo2;
+	private String general;//函文概要(不需要映射列名)
 
 	// Constructors
 
@@ -238,6 +241,32 @@ public class KyVisabillm implements java.io.Serializable {
 	public void setUserCreate(String userCreate){
 		this.userCreate=userCreate;
 	}
+
+	public String getOneMk(){
+		return oneMk;
+	}
+
+	public void setOneMk(String oneMk){
+		this.oneMk=oneMk;
+	}
+
+	public String getGeneral(){
+		return general;
+	}
+
+	public void setGeneral(String general){
+		this.general=general;
+	}
+
+	public VWebFact getFactNo2(){
+		return factNo2;
+	}
+
+	public void setFactNo2(VWebFact factNo2){
+		this.factNo2=factNo2;
+	}
+
+	
 	
 
 	

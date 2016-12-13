@@ -42,7 +42,7 @@
             <input type="checkbox" name="remembered" id="remember_me" value="remembered"> 記住賬號與廠別           　　　　　
           </label>
         </p>     
-        <p class="submit"><input type="button"  value="登錄" id="submit1" onclick="checkFact()"></p>
+        <p class="submit"><input type="button"  value="登錄" id="submit1" onclick="checkFact('userlogin')"></p>
         
        <%-- <input type="hidden" value="<%=cookie.clearCookie()%>"/> --%>
       </form>

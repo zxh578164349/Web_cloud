@@ -51,9 +51,28 @@ public class KyVisabillmDaoImpl extends Basedao implements IKyVisaBillmDao{
 		String[]objs={visaMk};
 		List<KyVisabillm>list=super.findAll(hql,objs);
 		for(KyVisabillm vbm:list){
+			vbm.getFactNo2().getFactSname();
 			if(vbm.getId().getBillNo().substring(0,2).equals("BM")){
 				 vbm.getWebbussletter().getUserEmail();//獲取出差函文申請人的Email
-			}		   
+				 vbm.getWebbussletter().getUsername();//出差人
+				 vbm.setGeneral("("+vbm.getFactNo2().getFactSname()+")"+vbm.getWebbussletter().getUsername()+
+						 vbm.getWebbussletter().getUsername()+"人員出差申請書_"+vbm.getId().getBillNo());
+			}
+			if(vbm.getId().getBillNo().substring(0,2).equals("GJ")){
+				vbm.getFormula().getFormulaName();//配方名稱
+				vbm.setGeneral("("+vbm.getFactNo2().getFactSname()+")"+vbm.getFormula().getFormulaName()+"配方單_"+
+						vbm.getId().getBillNo());
+			}
+			if(vbm.getId().getBillNo().substring(0,2).equals("CM")){
+				vbm.getKyzexp().getMemoSmk();//標題
+				vbm.setGeneral("("+vbm.getFactNo2().getFactSname()+")"+vbm.getKyzexp().getMemoSmk()+"_"+
+				vbm.getId().getBillNo());
+			}
+			if(vbm.getId().getBillNo().substring(0,2).equals("EM")){
+				vbm.getKyzletter().getTitle();//標題
+				vbm.setGeneral("("+vbm.getFactNo2().getFactSname()+")"+vbm.getKyzletter().getTitle()+"_"+
+				vbm.getId().getBillNo());
+			}
 		}
 		return list;
 	}

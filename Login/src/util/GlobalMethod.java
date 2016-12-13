@@ -1160,8 +1160,16 @@ public class GlobalMethod extends HibernateDaoSupport{
 					String factNo=list_vbm.get(i).getId().getFactNo();
 					String billNo=list_vbm.get(i).getId().getBillNo();
 					String visaSort=list_vbm.get(i).getId().getVisaSort();
-					String visaMk=list_vbm.get(i).getVisaMk();				
-					list_email.add(signerNext);
+					String visaMk=list_vbm.get(i).getVisaMk();
+					if(signerNext.toLowerCase().equals("liujung@mail.gj.com.tw")){//劉小姐隻發送一次:liujung@mail.gj.com.tw 20161213
+						if(list_vbm.get(i).getOneMk()==null){
+							list_vbm.get(i).setOneMk("1");//標識隻發送一次
+							visabillmSer.add(list_vbm.get(i));
+							list_email.add(signerNext);
+						}
+					}else{
+						list_email.add(signerNext);
+					}										
 					 /******************20151113备签人请使用方法findByFactNoAEmailPwd2(String factNo,String email)**********************/				
 					/***************如果是臺灣加久，備簽人同時也是申請人，那麼根據流程代號找到申請人（也就是備簽人）*******************/
 					if(factNo.equals("GJ")){
@@ -1189,7 +1197,7 @@ public class GlobalMethod extends HibernateDaoSupport{
 					String emailUrl2=URL+"vbm_findById_email2?visaSort="+visaSort+"&billNo="+billNo
 					         +"&factNo="+factNo+"&email="+signerNext;
 					if(visaMk.equals("N")){
-						subject="函文審核定時通知_"+billNo+"("+factNo+")";
+						subject="函文審核定時通知_"+list_vbm.get(i).getGeneral();
 						content="函文單號:"+"<span style='color:red'>"+billNo+"</span>"+"&nbsp;&nbsp;廠別:"+factNo+
 					    		  "<br/>點擊單號直接審核:<a href='"+emailUrl2+"'>"+billNo+"</a>(電腦適用)"+
 					    		  "<br/>點擊單號直接審核:<a href='"+emailUrl+"'>"+billNo+"</a>(手機平板適用)"+				    		 
@@ -1739,8 +1747,10 @@ public class GlobalMethod extends HibernateDaoSupport{
 				 }
 			 }
 		 }
+		 String dd;
 		 for(String kk:list){
-			 System.out.print(kk+"\t");
+			 dd=kk;
+			 System.out.print(dd+"\t");
 		 }
 			
 		}

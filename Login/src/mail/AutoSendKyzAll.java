@@ -64,6 +64,7 @@ import entity.KyzExpectmatmId;
 import entity.KyzExpectmats;
 import entity.KyzVisaflow;
 import entity.WebBussinessletter;
+import entity.WebFormula;
 import entity.Webremittancelist;
 import entity_temp.VisabillsTemp;
 
@@ -378,7 +379,7 @@ public class AutoSendKyzAll extends QuartzJobBean{
 		IWebFormulaServices webformulaser=(IWebFormulaServices)ac.getBean("webformulaser");
 		Map<String,Object>map_result=webformulaser.print(factNo,billNo,vbm);
 		map=(Map<String,Object>)map_result.get("map");
-		List<Webremittancelist>list=(List<Webremittancelist>)map_result.get("list");
-		this.exportmain("auto", map, "webremittancelist.jasper", list, billNo, "jasper/audit/");
+		List<WebFormula>list=(List<WebFormula>)map_result.get("list");
+		this.exportmain("auto", map, "web_formula.jasper", list, billNo, "jasper/audit/");
 	}
 }
