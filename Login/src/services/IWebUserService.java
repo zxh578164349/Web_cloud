@@ -36,7 +36,7 @@ public interface IWebUserService {
 
 	public List<WebUser> findSameUser(WebUser user);
 	
-	public PageBean findPageBean(int pageSize,int page,String userName,String factNo);
+	public PageBean findPageBean(int pageSize,int page,String userName,String factNo,String userType);
 	
 	public WebUser findByIdDWR(String factNo,String username);
 	
@@ -47,7 +47,6 @@ public interface IWebUserService {
 	public WebUser findByNameAndFactNoDwr(String factNo,String name);
 	public void delete(int id,KyzExpectmatmLog delLog);
 	public WebUser findByIdDwr2(String factNo, String userName);
-	public PageBean findPageBean_init(int pageSize, int page, String userName,String factNo);
 	public WebUser findUser(String username,String pwd,String factNo);
 	
 	public List<WebUser> findByEmailDwr2(String factNo,String email);

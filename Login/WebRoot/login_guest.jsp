@@ -37,29 +37,7 @@
 					</div>
 					<div id="password_inputright"></div>
 				</div>
-				<!--<div id="factno_select">
-					<div id="factno_selectleft"></div>
-					<div id="factno_selectmiddle">
-						<select id="url_factno" name="factNo">
-						    <s:if test="factNo!=null">
-								<option value="<s:property value='factNo'/>">
-									<s:property value="factname" />&nbsp;(<s:property value="factNo" />)																											
-								</option>
-							</s:if>
-							<option value="<%=cookie.getCookFactNo() %>"><%=cookie.getCookFactNo() %></option> 
-							<option value=0>請選擇廠別</option>
-							<option value="tw">TW</option>
-							<s:iterator value="#session.facts" id="temp">
-								<option value="${temp[0]}">
-									${temp[1]}&nbsp;(${temp[0]})</option>
-							</s:iterator>
-						</select>
-						<img id="url_password" src="loginpage/images/login2/factno1.png" alt="fa" title="廠別" />																			
-					</div>
-					<div id="factno_selectright"></div>
-					<br/>
-					<span id="sfact"><s:property value='factError' /></span>
-				</div>-->
+				
 				<input type="hidden" name="factNo" value="1" id="url_factno"/>
 				<br/>
 				<div id="submit">

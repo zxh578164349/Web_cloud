@@ -89,7 +89,7 @@ import entity.WebestproductId;
 
 public class GlobalMethod extends HibernateDaoSupport{
 	private static final String URL="http://203.85.73.161/Login/";
-	
+	private static final String URL2="http://203.85.73.161/Login";
 
 	public static void print(List list,String factNo,String yymm,String yymm2,String file,HttpServletResponse response) throws IOException{
 		//List<Webwlo>list=wloService.findByAny(factNo, yymm, yymm2);
@@ -1146,7 +1146,6 @@ public class GlobalMethod extends HibernateDaoSupport{
 			IKyzVisaFlowServices visaSer=(IKyzVisaFlowServices)ac.getBean("visaSer");
 			IKyVisabillmServices visabillmSer=(IKyVisabillmServices)ac.getBean("visabillmSer");
 		    String subject="";
-			String result="";
 			String content="";		
 			if(list_vbm.size()>0){//start if
 			MailSenderInfo mailInfo = new MailSenderInfo();
@@ -1160,8 +1159,8 @@ public class GlobalMethod extends HibernateDaoSupport{
 					String factNo=list_vbm.get(i).getId().getFactNo();
 					String billNo=list_vbm.get(i).getId().getBillNo();
 					String visaSort=list_vbm.get(i).getId().getVisaSort();
-					String visaMk=list_vbm.get(i).getVisaMk();
-					if(signerNext.toLowerCase().equals("liujung@mail.gj.com.tw")){//劉小姐隻發送一次:liujung@mail.gj.com.tw 20161213
+					String visaMk=list_vbm.get(i).getVisaMk();										
+					if("liujung@mail.gj.com.tw".equals(signerNext.toLowerCase())){//劉小姐隻發送一次:liujung@mail.gj.com.tw 20161213
 						if(list_vbm.get(i).getOneMk()==null){
 							list_vbm.get(i).setOneMk("1");//標識隻發送一次
 							visabillmSer.add(list_vbm.get(i));
@@ -1198,14 +1197,15 @@ public class GlobalMethod extends HibernateDaoSupport{
 					         +"&factNo="+factNo+"&email="+signerNext;
 					if(visaMk.equals("N")){
 						subject="函文審核定時通知_"+list_vbm.get(i).getGeneral();
-						content="函文單號:"+"<span style='color:red'>"+billNo+"</span>"+"&nbsp;&nbsp;廠別:"+factNo+
+						content=list_vbm.get(i).getGeneral()+"<br/>"+
+								"函文單號:"+"<span style='color:red'>"+billNo+"</span>"+"&nbsp;&nbsp;廠別:"+factNo+
 					    		  "<br/>點擊單號直接審核:<a href='"+emailUrl2+"'>"+billNo+"</a>(電腦適用)"+
 					    		  "<br/>點擊單號直接審核:<a href='"+emailUrl+"'>"+billNo+"</a>(手機平板適用)"+				    		 
 							      "<hr/>"+
-					    		 result+"如需查詢以往單據請登錄加久網站:(云端)<a href='http://203.85.73.161/Login'>http://203.85.73.161/Login</a>" +		            
+					    		  "如需查詢以往單據請登錄加久網站:(云端)<a href='"+URL2+"'>"+URL2+"</a>" +		            
 					      		"<br/>進入[KPI數據]--[函文審核]中查找對應單號審核"+			    		
 					    		"<hr/>"+
-					      		"<br/>本郵件定時自動發送,請勿回復!如需回復或者問題，請回复到kyinfo.lp@yydg.com.cn劉平!<br/>"+
+					      		"<br/>本郵件定時自動發送,請勿回復!如需回復或者問題，請回复到kyuen@yydg.com.cn資訊室!<br/>"+
 					    		"<hr/>";
 					}
 					if(visaMk.equals("T")){
@@ -1215,17 +1215,18 @@ public class GlobalMethod extends HibernateDaoSupport{
 								list_email.add(list_vbm.get(i).getWebbussletter().getUserEmail());
 							}
 						}						
-							subject="函文退回定時通知_"+billNo+"("+factNo+")";//退回函文隻發送一次，所以也要鎖定狀態emailMk	
+							subject="函文退回定時通知_"+list_vbm.get(i).getGeneral();;//退回函文隻發送一次，所以也要鎖定狀態emailMk	
 							list_vbm.get(i).setEmailMk("Y");
 							visabillmSer.add(list_vbm.get(i));
-							content="函文單號:"+"<span style='color:red'>"+billNo+"</span>"+"&nbsp;&nbsp;"+"不通過，備註如下:"+
+							content=list_vbm.get(i).getGeneral()+"<br/>"+
+							         "函文單號:"+"<span style='color:red'>"+billNo+"</span>"+"&nbsp;&nbsp;"+"不通過，備註如下:"+
 						    		  "<br/>"+
 						    		  "<span style='color:red'>"+(list_vbm.get(i).getMemoMk()==null?"無備註":list_vbm.get(i).getMemoMk())+"</span>"+				    		 
 								      "<hr/>"+
-						    		 result+"詳情請登錄加久網站:(云端)<a href='http://203.85.73.161/Login'>http://203.85.73.161/Login</a>" +		            
+						    		 "詳情請登錄加久網站:(云端)<a href='"+URL2+"'>"+URL2+"</a>" +		            
 						      		"<br/>進入[KPI數據]--[函文審核]中查找對應單號審核"+			    		
 						    		"<hr/>"+
-						      		"<br/>本郵件定時自動發送,請勿回復!如需回復或者問題，請回复到kyinfo.lp@yydg.com.cn劉平!<br/>"+
+						      		"<br/>本郵件定時自動發送,請勿回復!如需回復或者問題，請回复到kyuen@yydg.com.cn資訊室!<br/>"+
 						    		"<hr/>";
 					}
 					for(int j=0;j<list_email.size();j++){//start for2
@@ -1237,9 +1238,11 @@ public class GlobalMethod extends HibernateDaoSupport{
 							  mailInfo.setContent(content);
 						  }
 					      mailInfo.setSubject(subject);    			       				    		  			           
-					      sms.sendHtmlMail(mailInfo);//发送html格式
-					}//end for2								
-				}//end for1
+					      sms.sendHtmlMail(mailInfo);//发送html格式					      
+					}//end for2		
+					subject=null;//清空
+					content=null;
+				}//end for1				
 			}//end if	
 		 
 	 }
@@ -1286,11 +1289,11 @@ public class GlobalMethod extends HibernateDaoSupport{
 			
 			for(String email:list_emails){//for
 				mailInfo.setValidate(true);			
-				mailInfo.setSubject("函文知會定時通知(審核完畢)_" + local_billNo + "("
-						+ local_factNo + ")");
+				mailInfo.setSubject("函文知會定時通知(審核完畢)_" +vbm2.getGeneral());
 
 				mailInfo.setAttachFileNames(attachFileNames);
-				mailInfo.setContent("單號為:" + "<span style='color:red'>"
+				mailInfo.setContent(vbm2.getGeneral() +"<br/>"+
+						"單號為:" + "<span style='color:red'>"
 						+ local_billNo + "</span>" + "的函文已審核完畢,請查看附件"
 						+ "<br/>本郵件自動定時發送，請勿回覆");
 
@@ -1417,7 +1420,7 @@ public class GlobalMethod extends HibernateDaoSupport{
 					"如需查詢以往單據請登陸:(云端)<a href='"+URL+"'>"+URL+"</a>" +							
 					"<br/>進入[KPI數據]--[函文審核]查找對應單號審核" +									
 					"<hr/>"+
-					"<br/>本郵件自動發送,請勿回復!如需回復或者問題，請回复到kyinfo.lp@yydg.com.cn劉平!<br/>"+
+					"<br/>本郵件自動發送,請勿回復!如需回復或者問題，請回复到kyuen@yydg.com.cn資訊室!<br/>"+
 					"<hr/>");
 		      for(String email:list){		    	  
 		    	  mailinfo.setToAddress(email);
@@ -1705,6 +1708,56 @@ public class GlobalMethod extends HibernateDaoSupport{
 			tabpom.setFileMk("1");//標示是否帶有附檔						
 		}				
 }
+	
+	/**
+	 * 根據不同的函文類型來更改相應的函文標題，內容（函文定時審核通知）
+	 * @Title: vbmCotentsTypes
+	 * @Description: TODO
+	 * @param @param list
+	 * @return void
+	 * @throws
+	 * @author web
+	 * @date 2016/12/14
+	 */
+	public static void vbmCotentsTypes(List<KyVisabillm>list){
+		for(KyVisabillm vbm:list){
+			if(vbm.getId().getBillNo().substring(0,2).equals("BM")){
+				 vbm.getWebbussletter().getUserEmail();//獲取出差函文申請人的Email				
+				 vbm.setGeneral("("+vbm.getFactNo2().getFactSname()+")"+vbm.getWebbussletter().getUsername()+
+						 "人員出差申請書_"+vbm.getId().getBillNo()+"("+vbm.getId().getFactNo()+")");
+			}
+			if(vbm.getId().getBillNo().substring(0,2).equals("GJ")){
+				vbm.setGeneral("("+vbm.getFactNo2().getFactSname()+")"+vbm.getFormula().getFormulaName()+"配方單_"+
+						vbm.getId().getBillNo()+"("+vbm.getId().getFactNo()+")");
+			}
+			if(vbm.getId().getBillNo().substring(0,2).equals("CM")){												
+				vbm.setGeneral("("+vbm.getFactNo2().getFactSname()+")"+vbm.getKyzletter().getTitle()+"_"+
+						vbm.getId().getBillNo()+"("+vbm.getId().getFactNo()+")");
+			}
+			if(vbm.getId().getBillNo().substring(0,2).equals("EM")){				
+				vbm.setGeneral("("+vbm.getFactNo2().getFactSname()+")"+vbm.getKyzexp().getMemoSmk()+"_"+
+						vbm.getId().getBillNo()+"("+vbm.getId().getFactNo()+")");
+			}
+		}
+	}
+	
+	
+	/**
+	 * 根據不同的函文類型來更改相應的函文標題，內容（函文定時審核完畢）
+	 * @Title: vbmCotentsTypes
+	 * @Description: TODO
+	 * @param @param list
+	 * @return void
+	 * @throws
+	 * @author web
+	 * @date 2016/12/14
+	 */
+	public static void vbmCotentsTypes2(List<KyVisabillm>list){
+		vbmCotentsTypes(list);
+		for(KyVisabillm vbm:list){
+			vbm.getKyVisabillses().size();
+		}
+	}
 	 
 	 
 	 

@@ -8,6 +8,7 @@ import org.hibernate.Query;
 
 import com.opensymphony.xwork2.ActionContext;
 
+import util.GlobalMethod;
 import util.PageBean;
 import dao.Basedao;
 import dao.IKyVisaBillmDao;
@@ -47,33 +48,14 @@ public class KyVisabillmDaoImpl extends Basedao implements IKyVisaBillmDao{
 
 	public List<KyVisabillm> findByVisaMk(String visaMk) {
 		// TODO Auto-generated method stub		
-		String hql="from KyVisabillm where visaMk<>? and dateCreate>'"+SDATE+"'  and emailMk is null and delMk is null ";
+		String hql="from KyVisabillm where visaMk<>? and dateCreate>'"+SDATE+"'  and emailMk is null and delMk is null";
 		String[]objs={visaMk};
 		List<KyVisabillm>list=super.findAll(hql,objs);
-		for(KyVisabillm vbm:list){
-			vbm.getFactNo2().getFactSname();
-			if(vbm.getId().getBillNo().substring(0,2).equals("BM")){
-				 vbm.getWebbussletter().getUserEmail();//獲取出差函文申請人的Email
-				 vbm.getWebbussletter().getUsername();//出差人
-				 vbm.setGeneral("("+vbm.getFactNo2().getFactSname()+")"+vbm.getWebbussletter().getUsername()+
-						 vbm.getWebbussletter().getUsername()+"人員出差申請書_"+vbm.getId().getBillNo());
-			}
-			if(vbm.getId().getBillNo().substring(0,2).equals("GJ")){
-				vbm.getFormula().getFormulaName();//配方名稱
-				vbm.setGeneral("("+vbm.getFactNo2().getFactSname()+")"+vbm.getFormula().getFormulaName()+"配方單_"+
-						vbm.getId().getBillNo());
-			}
-			if(vbm.getId().getBillNo().substring(0,2).equals("CM")){
-				vbm.getKyzexp().getMemoSmk();//標題
-				vbm.setGeneral("("+vbm.getFactNo2().getFactSname()+")"+vbm.getKyzexp().getMemoSmk()+"_"+
-				vbm.getId().getBillNo());
-			}
-			if(vbm.getId().getBillNo().substring(0,2).equals("EM")){
-				vbm.getKyzletter().getTitle();//標題
-				vbm.setGeneral("("+vbm.getFactNo2().getFactSname()+")"+vbm.getKyzletter().getTitle()+"_"+
-				vbm.getId().getBillNo());
-			}
-		}
+		try{
+			GlobalMethod.vbmCotentsTypes(list);//根據不同的函文類型來更改相應的函文標題，內容	(同時也解決hibernate延遲問題)	
+		}catch(Exception e){
+			e.printStackTrace();
+		}		
 		return list;
 	}
 		
@@ -82,13 +64,12 @@ public class KyVisabillmDaoImpl extends Basedao implements IKyVisaBillmDao{
 		//String hql="from KyVisabillm where visaMk=? and dateCreate>'20160531'  and emailMk='Y' and delMk is null and id.factNo='GJ' and id.billNo like'BM%'  order by dateCreate"; 
 		String hql="from KyVisabillm where visaMk=? and dateCreate>'"+SDATE+"'  and emailMk is null and delMk is null   order by dateCreate";
 		String[]objs={visaMk};
-		List<KyVisabillm>list=super.findAll(hql, objs);//解決hibernate延遲問題
-		for(KyVisabillm vbm:list){
-			vbm.getKyVisabillses().size();
-			if(vbm.getId().getBillNo().substring(0,2).equals("BM")){
-				 vbm.getWebbussletter().getUserEmail();//獲取出差函文申請人的Email
-			}
-		}
+		List<KyVisabillm>list=super.findAll(hql, objs);
+		try{
+			GlobalMethod.vbmCotentsTypes2(list);
+		}catch(Exception e){
+			e.printStackTrace();
+		}		
 		return list;
 	}
 	public List<KyVisabillm> findAllVbm() {

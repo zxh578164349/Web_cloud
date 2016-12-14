@@ -78,10 +78,9 @@ public class WebUserServiceImpl implements IWebUserService {
 		return webUserDao.findSameUser(user);
 	}
 
-	public PageBean findPageBean(int pageSize, int page, String userName,
-			String factNo) {
+	public PageBean findPageBean(int pageSize, int page, String userName,String factNo,String userType) {
 		// TODO Auto-generated method stub
-		return webUserDao.findPageBean(pageSize, page, userName, factNo);
+		return webUserDao.findPageBean(pageSize, page, userName, factNo,userType);
 	}
 
 	public WebUser findByIdDWR(String factNo, String username) {
@@ -119,12 +118,7 @@ public class WebUserServiceImpl implements IWebUserService {
 		// TODO Auto-generated method stub
 		return webUserDao.findByIdDwr2(factNo, userName);
 	}
-
-	public PageBean findPageBean_init(int pageSize, int page, String userName,
-			String factNo) {
-		// TODO Auto-generated method stub
-		return webUserDao.findPageBean_init(pageSize, page, userName, factNo);
-	}
+	
 
 	public WebUser findUser(String username, String pwd, String factNo) {
 		// TODO Auto-generated method stub

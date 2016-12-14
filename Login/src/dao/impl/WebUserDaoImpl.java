@@ -187,9 +187,15 @@ public class WebUserDaoImpl extends Basedao implements IWebUserDao {
 		return users;
 	}
 
-	public PageBean findPageBean(int pageSize, int page, String userName,
-			String factNo) {
+	public PageBean findPageBean(int pageSize, int page, String userName,String factNo,String userType) {
 		// TODO Auto-generated method stub
+		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
+		String factno_session=user.getFactno();
+		if(factNo==null||"".equals(factNo)){
+			if(!"tw".equals(factno_session)){
+				factNo=factno_session;
+			}						
+		}
 		StringBuffer hql=new StringBuffer();
 		StringBuffer hql2=new StringBuffer();
 		final Map<String,Object>map=new HashMap<String,Object>();
@@ -201,54 +207,12 @@ public class WebUserDaoImpl extends Basedao implements IWebUserDao {
 			hql.append(" and (lower(username) like :username or lower(name) like :username)");			
 			map.put("username", "%"+userName.toLowerCase()+"%");
 		}
-		if(factNo!=null&&!factNo.equals("")){
+		if(factNo!=null&&!"".equals(factNo)){
 			hql.append(" and factno=:factNo");
 			map.put("factNo", factNo);
 		}
-		
-		hql2.append(hql);
-		hql.append(" order by id");
-		if(rows!=null&&page>0){
-			allrow=rows;
-		}else{
-			allrow=super.getAllRowCount2(hql2.toString(), map);
-			ActionContext.getContext().getSession().put("allrow", allrow);
-		}
-		int currentPage=PageBean.countCurrentPage(page);
-		int totalPage=PageBean.countTotalPage(pageSize, allrow);
-		if(currentPage>totalPage){
-			currentPage=totalPage;
-		}
-		final int offset=PageBean.countOffset(pageSize, currentPage);
-		final int length=pageSize;
-		List<WebUser> list=super.queryForPage(hql.toString(), offset, length, map);
-		PageBean bean=new PageBean();
-		bean.setAllRow(allrow);
-		bean.setCurrentPage(currentPage);
-		bean.setList(list);
-		bean.setPageSize(pageSize);
-		bean.setTotalPage(totalPage);
-		return bean;
-	}
-	public PageBean findPageBean_init(int pageSize, int page, String userName,
-			String factNo) {
-		// TODO Auto-generated method stub
-		StringBuffer hql=new StringBuffer();
-		StringBuffer hql2=new StringBuffer();
-		final Map<String,Object>map=new HashMap<String,Object>();
-		int allrow=0;
-		Integer rows=(Integer)ActionContext.getContext().getSession().get("allrow");
-		hql.append("from WebUser where 1=1 ");
-		hql2.append("select count(id) ");
-		if(userName!=null&&!userName.equals("")){
-			hql.append(" and (lower(username) like :username or lower(name) like :username)");			
-			map.put("username", "%"+userName.toLowerCase()+"%");
-		}
-		if(factNo!=null&&!factNo.equals("")&&!factNo.equals("tw")){
-			hql.append(" and factno=:factNo");
-			map.put("factNo", factNo);
-		}
-		
+		hql.append(" and userType=:userType");//查看使用者用戶還是訪客用戶（0：使用者    1：訪客）
+		map.put("userType",userType);
 		hql2.append(hql);
 		hql.append(" order by id");
 		if(rows!=null&&page>0){

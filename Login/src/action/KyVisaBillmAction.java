@@ -856,7 +856,7 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 	    		"如需查詢以往單據請登錄加久網站:((云端))<a href='http://203.85.73.161/Login'>http://203.85.73.161/Login</a>" +	            
 	      		"<br/>進入[KPI數據]--[函文審核]中查找對應單號審核,"+	      	    		
 	    		"<hr/>"+	      		
-	    		"<br/>本郵件自動發送,請勿回復!如需回復或者問題，請回复到kyinfo.lp@yydg.com.cn劉平!<br/>" +
+	    		"<br/>本郵件自動發送,請勿回復!如需回復或者問題，請回复到kyuen@yydg.com.cn資訊室!<br/>" +
 	    		"<hr/>");    	       	      
 	      sms.sendHtmlMail(mailInfo);
 	      /**
@@ -1224,7 +1224,7 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 	     	    		"<br/>如需查詢以往單據請登錄加久網站:((云端))<a href='http://203.85.73.161/Login'>http://203.85.73.161/Login</a>" +	            
 	     	      		"<br/>進入[KPI數據]--[函文審核]中查找對應單號審核,"+	      	    		
 	     	    		"<hr/>"+	      		
-	     	    		"<br/>本郵件自動發送,請勿回復!如需回復或者問題，請回复到kyinfo.lp@yydg.com.cn劉平!<br/>" +
+	     	    		"<br/>本郵件自動發送,請勿回復!如需回復或者問題，請回复到kyuen@yydg.com.cn資訊室!<br/>" +
 	     	    		"<hr/>");
 	      		 sms_n.sendHtmlMail(mailInfo_n);
 	      		//****************通知下一位签核人***************/
@@ -1374,7 +1374,7 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
      	    		"<br/>如需查詢以往單據請登錄加久網站:((云端))<a href='http://203.85.73.161/Login'>http://203.85.73.161/Login</a>" +	            
      	      		"<br/>進入[KPI數據]--[函文審核]中查找對應單號審核,"+	      	    		
      	    		"<hr/>"+	      		
-     	    		"<br/>本郵件自動發送,請勿回復!如需回復或者問題，請回复到kyinfo.lp@yydg.com.cn劉平!<br/>" +
+     	    		"<br/>本郵件自動發送,請勿回復!如需回復或者問題，請回复到kyuen@yydg.com.cn資訊室!<br/>" +
      	    		"<hr/>");
       		 sms_n.sendHtmlMail(mailInfo_n);
       		//****************通知下一位签核人***************/

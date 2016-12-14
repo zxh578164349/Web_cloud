@@ -40,7 +40,7 @@ public interface IWebUserDao {
 	public List<WebUser> findSameUser(WebUser webUser);
 	
 	
-	public PageBean findPageBean(int pageSize,int page,String userName,String factNo);
+	public PageBean findPageBean(int pageSize,int page,String userName,String factNo,String userType);
 	
 	public void add(WebUser user);
 	
@@ -49,7 +49,6 @@ public interface IWebUserDao {
 	public WebUser findByNameAndFactNoDwr(String factNo,String name);
 	public void delete(int id,KyzExpectmatmLog delLog);
 	public WebUser findByIdDwr2(String factNo,String userName);
-	public PageBean findPageBean_init(int pageSize, int page, String userName,String factNo);
 	
 	public WebUser findUser(String username,String pwd,String factNo);
 	

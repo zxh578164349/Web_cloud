@@ -656,17 +656,15 @@ public class WebUserAction extends ActionSupport implements ServletResponseAware
 		return "findMoreusers2";
 	}
 	
+	/**********************************findPageBean 使用者******************************************/
 	public String findPageBean(){
-		//ActionContext.getContext().getApplication().clear();
 		ActionContext.getContext().getSession().remove("public_conditions");
 		ActionContext.getContext().getSession().remove("public_factno");
-		factNo=(String)ActionContext.getContext().getSession().get("factNo");
-		bean=webUserService.findPageBean_init(25, page, conditions, factNo);
+		bean=webUserService.findPageBean(25, page, conditions, factNo,"0");
 		this.findFactName(bean);
 		return "beanList";
 	}
 	public String findPageBean2(){
-		//ActionContext.getContext().getApplication().clear();
 		ActionContext.getContext().getSession().remove("public_conditions");
 		ActionContext.getContext().getSession().remove("public_factno");
 
@@ -676,7 +674,7 @@ public class WebUserAction extends ActionSupport implements ServletResponseAware
 		if(factNo!=null&&!factNo.equals("")){
 			ActionContext.getContext().getSession().put("public_factno", factNo);
 		}
-		bean=webUserService.findPageBean(25, page, conditions, factNo);
+		bean=webUserService.findPageBean(25, page, conditions, factNo,"0");
 		this.findFactName(bean);
 		return "beanList1";
 	}
@@ -686,16 +684,51 @@ public class WebUserAction extends ActionSupport implements ServletResponseAware
 			result="beanList";
 		}
 		conditions=(String)ActionContext.getContext().getSession().get("public_conditions");
-		factNo=(String)ActionContext.getContext().getSession().get("public_factno");
-		if(factNo==null||factNo.equals("")){
-			factNo=(String)ActionContext.getContext().getSession().get("factNo");
-			bean=webUserService.findPageBean_init(25, page, conditions, factNo);
-		}else{
-			bean=webUserService.findPageBean(25, page, conditions, factNo);
-		}
+		factNo=(String)ActionContext.getContext().getSession().get("public_factno");		
+		bean=webUserService.findPageBean(25, page, conditions, factNo,"0");
+		
 		this.findFactName(bean);
 		return result;
 	}
+	/**********************************findPageBean 使用者******************************************/
+	
+	
+	/**********************************findPageBean 訪客******************************************/
+	public String findPageBean_guest(){
+		ActionContext.getContext().getSession().remove("public_conditions");
+		ActionContext.getContext().getSession().remove("public_factno");
+		bean=webUserService.findPageBean(25, page, conditions, factNo,"1");
+		this.findFactName(bean);
+		return "beanList";
+	}
+	public String findPageBean2_guest(){
+		ActionContext.getContext().getSession().remove("public_conditions");
+		ActionContext.getContext().getSession().remove("public_factno");
+
+		if(conditions!=null&&!conditions.equals("")){
+			ActionContext.getContext().getSession().put("public_conditions", conditions);
+		}
+		if(factNo!=null&&!factNo.equals("")){
+			ActionContext.getContext().getSession().put("public_factno", factNo);
+		}
+		bean=webUserService.findPageBean(25, page, conditions, factNo,"1");
+		this.findFactName(bean);
+		return "beanList1";
+	}
+	public String findPageBean3_guest(){
+		String result="beanList1";
+		if(backIndex==1){
+			result="beanList";
+		}
+		conditions=(String)ActionContext.getContext().getSession().get("public_conditions");
+		factNo=(String)ActionContext.getContext().getSession().get("public_factno");		
+		bean=webUserService.findPageBean(25, page, conditions, factNo,"1");
+		
+		this.findFactName(bean);
+		return result;
+	}
+	/**********************************findPageBean 訪客******************************************/
+	
 
 	public void setServletResponse(HttpServletResponse response) {
 		// TODO Auto-generated method stub

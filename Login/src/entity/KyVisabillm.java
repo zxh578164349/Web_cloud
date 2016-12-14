@@ -35,7 +35,7 @@ public class KyVisabillm implements java.io.Serializable {
 	private Webremittancelist webrel;
 	private WebFormula formula;//工廠配方
 	private String oneMk;//發送一次標識    0或null :正常發送    1:隻發送1次
-	private VWebFact factNo2;
+	private VWebFact factNo2;//關聯工廠名稱(不需要映射列名)
 	private String general;//函文概要(不需要映射列名)
 
 	// Constructors
