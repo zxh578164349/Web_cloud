@@ -1784,7 +1784,7 @@ public class GlobalMethod extends HibernateDaoSupport{
 			for(Integer ii:list){
 				System.out.print(ii+"\t");
 			}**/
-		 List<String>list=new ArrayList<String>();
+		 /*List<String>list=new ArrayList<String>();
 		 list.add("04");list.add("02");list.add("01");list.add("02");list.add("03");list.add("01");list.add("ZZ");
 		 for(String kk:list){
 			 System.out.print(kk+"\t");
@@ -1804,7 +1804,11 @@ public class GlobalMethod extends HibernateDaoSupport{
 		 for(String kk:list){
 			 dd=kk;
 			 System.out.print(dd+"\t");
-		 }
+		 }*/
+		 String yymmdd="20160618";
+		 Date date=new SimpleDateFormat("yyyyMMdd").parse(yymmdd);
+		 String yymm=new SimpleDateFormat("yyyyMM").format(date);
+		 System.out.println(yymm);
 			
 		}
 	 

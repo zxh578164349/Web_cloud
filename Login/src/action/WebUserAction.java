@@ -402,7 +402,7 @@ public class WebUserAction extends ActionSupport implements ServletResponseAware
 						   * 设置Cookie路径和域名
 						   * */
 					if(remembered!=null){
-						Cookie cookieuser= new Cookie("user",factNo+","+wUser.getUsername());													
+						Cookie cookieuser= new Cookie("user",factNo+","+wUser.getUsername()+","+wUser.getPwd());													
 						cookieuser.setMaxAge(60*60*24*7);//一周限期					 
 						//cookieuser.setPath("/");
 						ServletActionContext.getResponse().addCookie(cookieuser);

@@ -124,6 +124,7 @@
 			jq("#bodyid").load("/Login/webfact_findAllWebfact");						
 		}else {						
 			jq("#bodyid").load("/Login/webfact_findAllWebfact2");
+			//jq("#bodyid").load("/Login/webfact_findAllWebfact_guest");
 		}
 		jq("#bodyid").fadeIn(1500);					
 	});

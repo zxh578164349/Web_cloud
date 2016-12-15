@@ -23,6 +23,7 @@ import org.apache.struts2.interceptor.ServletResponseAware;
 import services.ISumWebYieldDataServices;
 import services.IWebFactServices;
 import services.IWebYieldDataServices;
+import util.GlobalMethod;
 import util.JasperHelper;
 import util.Page;
 import util.PageBean;
@@ -242,7 +243,6 @@ public class WebYdataAction extends ActionSupport implements
 
 	public String addData() throws ParseException, IOException {				
 		DateFormat format = new SimpleDateFormat("yyyyMMdd");
-		DateFormat format2=new SimpleDateFormat("yyyyMM");
 		String result = null;
 		Date date = null;
 		String lastday="";
@@ -270,7 +270,6 @@ public class WebYdataAction extends ActionSupport implements
 			 * 添加
 			 */
 			if (isnull.equals("isnull")) {// start "if 1"
-				ydata.setDateCreate(new SimpleDateFormat("yyMMddhhmm").format(new Date()));//記錄創建時間
 				/**************************************超時錄入數據記錄20160331**************************************************/
 				/*Calendar cal2 = Calendar.getInstance();
 				Date createDate=new Date();//創建時間
@@ -343,8 +342,8 @@ public class WebYdataAction extends ActionSupport implements
 				log.setYymmdd(ydata.getId().getYymmdd());
 				log.setLogTime(new Date());
 
-				String ipAddress = null;
-				ipAddress = request.getHeader("x-forwarded-for");
+				//String ipAddress = null;				
+				/*ipAddress = request.getHeader("x-forwarded-for");
 				if (ipAddress == null || ipAddress.length() == 0
 						|| "unknown".equalsIgnoreCase(ipAddress)) {
 					ipAddress = request.getHeader("Proxy-Client-IP");
@@ -366,19 +365,18 @@ public class WebYdataAction extends ActionSupport implements
 						ipAddress = inet.getHostAddress();
 					}
 				}
-				if (ipAddress != null && ipAddress.length() > 15) { // "***.***.***.***".length()
-																	// = 15
+				if (ipAddress != null && ipAddress.length() > 15) { 
 					if (ipAddress.indexOf(",") > 0) {
 						ipAddress = ipAddress.substring(0,
 								ipAddress.indexOf(","));
 					}
-				}
+				}*/
+				String ipAddress=GlobalMethod.findIp();//獲取本機IP
 				log.setIp(ipAddress);
 				dataSer.addYdate_log(log);
 				dataSer.addYdata(ydata);
-				
-				//更新盤點數據
-				yymm=yymmdd.substring(0,6);
+								
+				/*yymm=yymmdd.substring(0,6);
 				String yymm_last="";
 				String yymm_next="";
 				Calendar cal2=Calendar.getInstance();
@@ -404,10 +402,9 @@ public class WebYdataAction extends ActionSupport implements
 							}							
 						}
 					}							
-				}
-				
-				/*dataSer.addYdate_log(log);
-				dataSer.addYdata(ydata);*/
+				}*/
+				//更新盤點數據
+				this.updatesumYdate(ydata.getId().getFactNo(),yymmdd);
 				result = "upData";
 				ajaxResult="0";
 			}// end "else 1"
@@ -576,8 +573,8 @@ public class WebYdataAction extends ActionSupport implements
 		log.setIsdel("0");
 		log.setLogTime(new Date());
 
-		String ipAddress = null;
-		ipAddress = request.getHeader("x-forwarded-for");
+		//String ipAddress = null;	
+		/*ipAddress = request.getHeader("x-forwarded-for");
 		if (ipAddress == null || ipAddress.length() == 0
 				|| "unknown".equalsIgnoreCase(ipAddress)) {
 			ipAddress = request.getHeader("Proxy-Client-IP");
@@ -599,18 +596,17 @@ public class WebYdataAction extends ActionSupport implements
 				ipAddress = inet.getHostAddress();
 			}
 		}
-		if (ipAddress != null && ipAddress.length() > 15) { // "***.***.***.***".length()
-															// = 15
+		if (ipAddress != null && ipAddress.length() > 15) {
 			if (ipAddress.indexOf(",") > 0) {
 				ipAddress = ipAddress.substring(0, ipAddress.indexOf(","));
 			}
-		}
+		}*/
+		String ipAddress=GlobalMethod.findIp();//獲取本機IP
 		log.setIp(ipAddress);
 		dataSer.addYdate_log(log);
 		dataSer.delete(id);
-		
-		//更新盤點數據
-		DateFormat format=new SimpleDateFormat("yyyyMM");
+				
+		/*DateFormat format=new SimpleDateFormat("yyyyMM");
 		yymm=format.format(id.getYymmdd());
 		String yymm_last="";
 		String yymm_next="";
@@ -635,9 +631,55 @@ public class WebYdataAction extends ActionSupport implements
 					this.add_sumYdata(sumYdata.getId().getFactNo().getFactNo(),sumYdata.getId().getFactCode(), list_yymm.get(i), sumYdata.getStartDate(), sumYdata.getEndDate(),sumydata_username,sumydata_username_ud);
 				}
 			}							
-		}		
+		}*/	
+		
+		//更新盤點數據
+		this.updatesumYdate(id.getFactNo(),new SimpleDateFormat("yyyyMMdd").format(id.getYymmdd()));
 		return "delete";
 	}
+	
+	/**
+	 * 更新盤點數據
+	 * @Title: updatesumYdate
+	 * @Description: TODO
+	 * @param @param yymmdd
+	 * @return void
+	 * @throws ParseException 
+	 * @throws
+	 * @author web
+	 * @date 2016/12/15
+	 */
+	public void updatesumYdate(String factNo,String yymmdd) throws ParseException{
+		DateFormat format=new SimpleDateFormat("yyyyMM");
+		yymm=format.format(new SimpleDateFormat("yyyyMMdd").parse(yymmdd));
+		String yymm_last="";
+		String yymm_next="";
+		Calendar cal=Calendar.getInstance();
+		cal.setTime(format.parse(yymm));
+		cal.add(Calendar.MONTH, -1);
+		yymm_last=format.format(cal.getTime());
+		cal.add(Calendar.MONTH, 2);
+		yymm_next=format.format(cal.getTime());
+		List<String>list_yymm=new ArrayList<String>();
+		list_yymm.add(yymm_last);
+		list_yymm.add(yymm);
+		list_yymm.add(yymm_next);
+		for(int i=0;i<list_yymm.size();i++){
+			List<SumWebYieldData>list_sumYdata=sumydateSer.findByFactNo2(factNo, list_yymm.get(i));
+			if(list_sumYdata.size()>0){
+				for(int k=0;k<list_sumYdata.size();k++){
+					SumWebYieldData sumYdata=list_sumYdata.get(k);
+					if(sumYdata!=null){
+						//sumydateSer.delete(sumYdata);
+						String sumydata_username=sumYdata.getUsername()==null?"none":sumYdata.getUsername();
+						String sumydata_usernameUd=sumYdata.getUsernameUd()==null?"none":sumYdata.getUsernameUd();
+						this.add_sumYdata(sumYdata.getId().getFactNo().getFactNo(),sumYdata.getId().getFactCode(), list_yymm.get(i), sumYdata.getStartDate(), sumYdata.getEndDate(),sumydata_username,sumydata_usernameUd);
+					}							
+				}
+			}							
+		}
+	}
+	
 
 	public String transit() {// 瘛餃�銝剛�action
 		transit = "transit";

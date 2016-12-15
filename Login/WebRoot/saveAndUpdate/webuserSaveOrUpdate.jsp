@@ -77,7 +77,6 @@
 		function checkEmail(factno, email,sub,error) {
 			var factno = document.getElementById(factno).value.split("__")[0];
 			var email = document.getElementById(email).value;
-			alert(email);
 			if (factno != "" && email != "") {
 				userjs
 						.findUserByFactNoAEmail(

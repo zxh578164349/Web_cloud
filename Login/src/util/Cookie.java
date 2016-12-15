@@ -24,7 +24,7 @@ public class Cookie {
 		}			
 		return "";
 	}
-	
+		
 	public static String getCookFactNo(){
 		javax.servlet.http.Cookie[] cookies = ServletActionContext.getRequest().getCookies();
 		javax.servlet.http.Cookie cookie=null;
@@ -46,6 +46,25 @@ public class Cookie {
 		}
 		
 		return "";
+	}
+	
+	public static String getCookAll() {		
+		javax.servlet.http.Cookie[] cookies = ServletActionContext.getRequest().getCookies();
+		javax.servlet.http.Cookie cookie=null;
+		String result="";
+		if(cookies!=null){
+			for(int i=0;i<cookies.length;i++){
+				cookie=cookies[i];
+				if(cookie!=null){
+					if(cookie.getName().equals("user")){
+						result=cookie.getValue();						
+					}																				
+				}
+			}
+		}else{
+			System.out.print("還沒有cookie");
+		}			
+		return result;
 	}
 	
 	public static String clearCookie(){
