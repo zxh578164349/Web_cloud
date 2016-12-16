@@ -211,8 +211,10 @@ public class WebUserDaoImpl extends Basedao implements IWebUserDao {
 			hql.append(" and factno=:factNo");
 			map.put("factNo", factNo);
 		}
-		hql.append(" and userType=:userType");//查看使用者用戶還是訪客用戶（0：使用者    1：訪客）
-		map.put("userType",userType);
+		if(userType!=null&&!"".equals(userType)){
+			hql.append(" and userType=:userType");//查看使用者用戶還是訪客用戶（0：使用者    1：訪客）
+			map.put("userType",userType);
+		}		
 		hql2.append(hql);
 		hql.append(" order by id");
 		if(rows!=null&&page>0){

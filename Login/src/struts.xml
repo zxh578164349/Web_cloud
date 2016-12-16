@@ -40,7 +40,8 @@
 			</result>
 			<result name="updateUesr" type="json">
 			   <param name="root">ajax_result</param>
-			</result>			    			
+			</result>
+			<result name="logout">judge.jsp</result>			    			
 		</action>
 		<action name="show*" class="showAction" method="{1}">
 			<result name="titleSuccess">page/show.jsp</result>
@@ -692,6 +693,8 @@
 		<action name="webformula_*" class="webformulaAction" method="{1}">
 		    <result name="findPageBean">page/webformula.jsp</result>
 		    <result name="findPageBean1">page/table1/webformula1.jsp</result>
+		    <result name="findPageBean_guest">page_guest/webformula.jsp</result>
+		    <result name="findPageBean_guest1">page_guest/table1/webformula1.jsp</result>
 		    <result name="makeFormulaIndex" type="json">
 		        <param name="root">ajaxResult</param>
 		    </result>

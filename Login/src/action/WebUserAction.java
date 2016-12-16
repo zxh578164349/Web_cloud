@@ -74,8 +74,17 @@ public class WebUserAction extends ActionSupport implements ServletResponseAware
 	private String ajax_result;//返回頁面的ajax結果   (0:登錄成功    1:當前用戶已註銷   2:廠別不對    3:賬號或密碼錯誤)
 	private IWebTypeServices webtypeSer;
 	private int backIndex;//返回標識      0或null:不走返回路徑         1:走返回路徑
+	private String userType;//用戶類型  0：使用者     1：訪客
 	
+
 	
+	public String getUserType(){
+		return userType;
+	}
+
+	public void setUserType(String userType){
+		this.userType=userType;
+	}
 
 	public int getBackIndex() {
 		return backIndex;
@@ -299,7 +308,7 @@ public class WebUserAction extends ActionSupport implements ServletResponseAware
 	}
 
 	// 獲取用戶有哪些權限
-	private String[] checkbox;
+	private String[] checkbox={};
 
 	public String[] getCheckbox() {
 		return checkbox;
@@ -415,8 +424,12 @@ public class WebUserAction extends ActionSupport implements ServletResponseAware
 			        });
 						
 						ActionContext.getContext().getSession().put("loginUser", wUser);
-						List<WebMenu>login_menus=menuSer.findAllMenu();
+						List<WebMenu>login_menus=menuSer.findAllMenu("0");//使用者類型的菜單目錄						
 						ActionContext.getContext().getSession().put("login_menus", login_menus);//登錄時保存所有的菜單項目
+						
+						List<WebMenu>login_menus_all=menuSer.findAllMenu(null);//全部的菜單目錄  20161216
+						ActionContext.getContext().getSession().put("login_menus_all", login_menus_all);//20161216保存爲session,用於修改用戶權限時，要顯示用戶者與訪客的全部菜單
+						
 						if (factNo.equals("tw")&& wUser.getUsername().equals("admin")) {								
 							ActionContext.getContext().getSession().put("factNo", factNo);									
 						} else {
@@ -556,7 +569,7 @@ public class WebUserAction extends ActionSupport implements ServletResponseAware
 	 */
 	public String updateJurisdiction() {		
 		try{			
-			List<WebMenu>list_menu=(List<WebMenu>)ActionContext.getContext().getSession().get("login_menus");//登錄時記錄（所有的主菜單）			
+			List<WebMenu>list_menu=(List<WebMenu>)ActionContext.getContext().getSession().get("login_menus_all");//登錄時記錄（使用者與訪客所有的主菜單）			
             if(list_menu!=null&&list_menu.size()>0){
             	//List<String>menuname_checked=new ArrayList<String>();
             	//menuname_checked.add("退出管理");
@@ -576,11 +589,11 @@ public class WebUserAction extends ActionSupport implements ServletResponseAware
     				List<WebSubmenu> list_submenu = new ArrayList<WebSubmenu>();
     				for(int j=0;j<checkbox.length;j++){
     					String[] info = checkbox[j].split(",");    					
-    					if(list_menu.get(i).getMenuname().equals(info[0])){
+    					if(info[3].equals(list_menu.get(i).getMenuid().toString())){
     						WebSubmenu submenu=new WebSubmenu();
     						submenu.setSubmenuname(info[1]);
     						submenu.setAddress(info[2]);					
-    						submenu.setSubtype("A0" + j);
+    						//submenu.setSubtype("A0" + j);
     						//submenu.setSmenu2(new WebSubmenu2(Integer.parseInt(info[3])));//20160524
     						list_submenu.add(submenu);
     					}					
@@ -615,7 +628,7 @@ public class WebUserAction extends ActionSupport implements ServletResponseAware
 			}																	
 		}catch(Exception e){
 			ajax_result="1";
-			System.out.println(e);
+			e.printStackTrace();
 		}				
 		return "updateJurisdiction";
 	}
@@ -660,7 +673,7 @@ public class WebUserAction extends ActionSupport implements ServletResponseAware
 	public String findPageBean(){
 		ActionContext.getContext().getSession().remove("public_conditions");
 		ActionContext.getContext().getSession().remove("public_factno");
-		bean=webUserService.findPageBean(25, page, conditions, factNo,"0");
+		bean=webUserService.findPageBean(25, page, conditions, factNo,userType);
 		this.findFactName(bean);
 		return "beanList";
 	}
@@ -674,7 +687,7 @@ public class WebUserAction extends ActionSupport implements ServletResponseAware
 		if(factNo!=null&&!factNo.equals("")){
 			ActionContext.getContext().getSession().put("public_factno", factNo);
 		}
-		bean=webUserService.findPageBean(25, page, conditions, factNo,"0");
+		bean=webUserService.findPageBean(25, page, conditions, factNo,userType);
 		this.findFactName(bean);
 		return "beanList1";
 	}
@@ -685,51 +698,13 @@ public class WebUserAction extends ActionSupport implements ServletResponseAware
 		}
 		conditions=(String)ActionContext.getContext().getSession().get("public_conditions");
 		factNo=(String)ActionContext.getContext().getSession().get("public_factno");		
-		bean=webUserService.findPageBean(25, page, conditions, factNo,"0");
+		bean=webUserService.findPageBean(25, page, conditions, factNo,userType);
 		
 		this.findFactName(bean);
 		return result;
 	}
 	/**********************************findPageBean 使用者******************************************/
 	
-	
-	/**********************************findPageBean 訪客******************************************/
-	public String findPageBean_guest(){
-		ActionContext.getContext().getSession().remove("public_conditions");
-		ActionContext.getContext().getSession().remove("public_factno");
-		bean=webUserService.findPageBean(25, page, conditions, factNo,"1");
-		this.findFactName(bean);
-		return "beanList";
-	}
-	public String findPageBean2_guest(){
-		ActionContext.getContext().getSession().remove("public_conditions");
-		ActionContext.getContext().getSession().remove("public_factno");
-
-		if(conditions!=null&&!conditions.equals("")){
-			ActionContext.getContext().getSession().put("public_conditions", conditions);
-		}
-		if(factNo!=null&&!factNo.equals("")){
-			ActionContext.getContext().getSession().put("public_factno", factNo);
-		}
-		bean=webUserService.findPageBean(25, page, conditions, factNo,"1");
-		this.findFactName(bean);
-		return "beanList1";
-	}
-	public String findPageBean3_guest(){
-		String result="beanList1";
-		if(backIndex==1){
-			result="beanList";
-		}
-		conditions=(String)ActionContext.getContext().getSession().get("public_conditions");
-		factNo=(String)ActionContext.getContext().getSession().get("public_factno");		
-		bean=webUserService.findPageBean(25, page, conditions, factNo,"1");
-		
-		this.findFactName(bean);
-		return result;
-	}
-	/**********************************findPageBean 訪客******************************************/
-	
-
 	public void setServletResponse(HttpServletResponse response) {
 		// TODO Auto-generated method stub
 		this.response=response;
@@ -955,7 +930,7 @@ public class WebUserAction extends ActionSupport implements ServletResponseAware
 			        });
 						
 						ActionContext.getContext().getSession().put("loginUser", wUser);
-						List<WebMenu>login_menus=menuSer.findAllMenu();
+						List<WebMenu>login_menus=menuSer.findAllMenu("1");//訪客類型的菜單目錄
 						ActionContext.getContext().getSession().put("login_menus", login_menus);//登錄時保存所有的菜單項目
 						if (factNo.equals("tw")&& wUser.getUsername().equals("admin")) {								
 							ActionContext.getContext().getSession().put("factNo", factNo);									
@@ -987,6 +962,11 @@ public class WebUserAction extends ActionSupport implements ServletResponseAware
 			}					
 		ajax_result="3";
 		return "json_login";
+	}
+	
+	public String logout(){
+		ActionContext.getContext().getSession().clear();
+		return "logout";
 	}
 	
 }

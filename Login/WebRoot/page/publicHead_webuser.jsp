@@ -15,7 +15,11 @@
 <LINK href="css/list.css" type="text/css" rel="stylesheet">
 </head>
 <body>
-	<table  id="tb_search">
+  <form id="subform">
+	<table  id="tb_search" class="table table-condensed">
+	    <tr>
+	        <td>廠別</td><td>帳號</td><td>用戶類型</td>
+	    </tr>
 		<tr>
 			<td><s:if test="#session.factNo=='tw'">			    
 					<select name="factNo" id="factNo">						
@@ -34,12 +38,13 @@
 					</select>
 				</s:else>
 				</td>
-			<td>帳號</td>
-			<td><input type="text" id="conditions">&nbsp;&nbsp;(請輸入姓名或登錄名查詢)</td>
+			<td><input type="text" id="conditions" name="conditions"/></td>
+			<td>使用者<input type="radio" value="0" name="userType"/>&nbsp;&nbsp;訪客<input type="radio" value="1" name="userType"/></td>
 			<td>
-			 <input value="搜索" type="button" class="btn btn-primary" onclick="javascript:submis()" />		
+			 <input value="搜索" type="button" class="btn btn-primary" onclick="javascript:submis('subform')" />		
 			</td>
 		</tr>
 	</table>
+</form>	
 </body>
 </html>

@@ -33,18 +33,18 @@ public class WebMenuAction extends ActionSupport {
 	}
 
 	/**
-	 * ¬d§ä©Ò¦³µæ³æ¦W
+	 * ï¿½dï¿½ï¿½Ò¦ï¿½ï¿½ï¿½ï¿½W
 	 * 
 	 * @return
 	 */
 	public String findAllMenu() {
-		List list = menuSer.findAllMenu();
+		List list = menuSer.findAllMenu("0");
 		ActionContext.getContext().getSession().put("menus", list);
 		return "findAllMenu";
 	}
 
 	/**
-	 * ®Ú¾ÚID¬d§äµæ³æ¦W
+	 * ï¿½Ú¾ï¿½IDï¿½dï¿½ï¿½ï¿½ï¿½W
 	 */
 	public String findMenuById() {
 		menu = menuSer.findMenuById(mid);

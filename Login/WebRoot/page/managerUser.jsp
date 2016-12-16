@@ -45,14 +45,13 @@
 		});
 	}
 
-	function submis() {		
-		var username = document.getElementById("conditions");
-		var factno=document.getElementById("factNo")
+	function submis(subform) {				
 		jq.ajax({
 			type : "POST",
 			dataType : "Html",
 			url : "userfindPageBean2",
-			data : "conditions=" + username.value+"&factNo="+factno.value,
+			//data : "conditions=" + username.value+"&factNo="+factno.value,
+			data:jq("#"+subform).serialize(),
 			success : function(msg) {
 				jq("#bodyid").html(msg);
 			},

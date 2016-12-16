@@ -103,15 +103,25 @@ public class WebFormulaDaoImpl extends Basedao implements IWebFormulaDao{
 		StringBuffer hql=new StringBuffer();
 		StringBuffer hql2=new StringBuffer();
 		Map<String,Object>map=new HashMap<String,Object>();
+		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
+		System.out.println(user.getUserType());
+		System.out.println(user.getUsername());
 		hql.append("from WebFormula where 1=1 ");
 		hql2.append("select count(formulaIndex) ");		
 		if(formula==null){
 			formula=new WebFormula(new VWebFact(),new WebErpBrankProcess(),new WebTabpom(new WebErpBrankProcess()));
 		}
-		if(formula.getFactNo().getFactNo()==null||formula.getFactNo().getFactNo().equals("")){
-			String factNo=(String)ActionContext.getContext().getSession().get("factNo");//用戶的登錄廠別
-			formula.getFactNo().setFactNo(factNo);
-		}
+		//隻有使用者用戶才廠別
+		if("0".equals(user.getUserType())){
+			if(formula.getFactNo().getFactNo()==null||formula.getFactNo().getFactNo().equals("")){
+				String factNo=(String)ActionContext.getContext().getSession().get("factNo");//用戶的登錄廠別
+				formula.getFactNo().setFactNo(factNo);
+			}
+			if(formula.getFactNo().getFactNo()!=null&&!"".equals(formula.getFactNo().getFactNo())&&!formula.getFactNo().getFactNo().equals("tw")){
+				hql.append(" and factNo.factNo=:factNo");
+				map.put("factNo",formula.getFactNo().getFactNo());
+			}
+		}		
 		if(formula.getFormulaIndex()!=null&&!"".equals(formula.getFormulaIndex())){
 			hql.append(" and formulaIndex=:formulaIndex");
 			map.put("formulaIndex",formula.getFormulaIndex());
@@ -120,10 +130,7 @@ public class WebFormulaDaoImpl extends Basedao implements IWebFormulaDao{
 			hql.append(" and formulaNo=:formulaNo");
 			map.put("formulaNo",formula.getFormulaNo());
 		}
-		if(formula.getFactNo().getFactNo()!=null&&!"".equals(formula.getFactNo().getFactNo())&&!formula.getFactNo().getFactNo().equals("tw")){
-			hql.append(" and factNo.factNo=:factNo");
-			map.put("factNo",formula.getFactNo().getFactNo());
-		}
+		
 		if(formula.getFactCode().getId()!=null){//Integer類型
 			hql.append(" and factCode.id=:id");
 			map.put("id",formula.getFactCode().getId());

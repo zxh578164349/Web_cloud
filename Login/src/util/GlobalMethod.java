@@ -1805,10 +1805,8 @@ public class GlobalMethod extends HibernateDaoSupport{
 			 dd=kk;
 			 System.out.print(dd+"\t");
 		 }*/
-		 String yymmdd="20160618";
-		 Date date=new SimpleDateFormat("yyyyMMdd").parse(yymmdd);
-		 String yymm=new SimpleDateFormat("yyyyMM").format(date);
-		 System.out.println(yymm);
+		 Integer jj=0;
+		 System.out.println(jj.toString().equals("0"));
 			
 		}
 	 

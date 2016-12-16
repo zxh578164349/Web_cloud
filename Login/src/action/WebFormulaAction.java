@@ -286,6 +286,7 @@ public class WebFormulaAction implements ServletResponseAware{
 	}
 	
 
+	/**********************************使用者findPageBean********************************************/
 	public String findPageBean(){
         this.clearSession();
 		ActionContext.getContext().getSession().remove("allrow");//dao層  allrow
@@ -310,6 +311,25 @@ public class WebFormulaAction implements ServletResponseAware{
 		}
 		return temp;
 	}
+	/**********************************使用者findPageBean********************************************/
+	
+	/**********************************訪客findPageBean********************************************/
+	public String findPageBean_guest(){
+        this.findPageBean();
+		return "findPageBean_guest";
+	}
+	
+	public String findPageBean2_guest(){
+		this.findPageBean2();
+		return "findPageBean_guest1";		
+	}
+	
+	public String findPageBean3_guest(){
+		this.findPageBean3();
+		return "findPageBean_guest1";
+	}
+	/**********************************訪客findPageBean********************************************/
+	
 	
 	public String makeFormulaIndex(){
 		//int jj=2/0;

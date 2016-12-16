@@ -4,13 +4,13 @@ import java.util.List;
 import entity.WebMenu;
 
 public interface IWebMenuServices {
-	// ®Ú¾Ú¥Î¤á¬d§ä¬ÛÀ³ªºµæ³æ
-	public List findAllMenu();
+	// ï¿½Ú¾Ú¥Î¤ï¿½dï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	public List findAllMenu(String typeMk);
 
-	// ®Ú¾Úµæ³æ¬d§ä¹ïÀ³ªº¤lµæ³æ
+	// ï¿½Ú¾Úµï¿½ï¿½dï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½lï¿½ï¿½ï¿½
 	public WebMenu findMenuById(Integer mid);
 
-	// ®Ú¾Úµæ³æ¦Wªð¦^µæ³æ¹ï¶H
+	// ï¿½Ú¾Úµï¿½ï¿½Wï¿½ï¿½^ï¿½ï¿½ï¿½ï¿½H
 	public WebMenu selByname(String name);
 
 }

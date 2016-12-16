@@ -29,13 +29,19 @@
 						data-toggle="dropdown">
 
 						<span class="glyphicon glyphicon-user"></span>
-						<s:property value="#session.loginUser.name" />
-						(
-						<s:if test="#session.factNo=='tw'">所有數據</s:if>
+						<s:if test='#session.loginUser.userType=="0"'>
+						     <s:property value="#session.loginUser.name" />
+						     (
+						      <s:if test="#session.factNo=='tw'">所有數據</s:if>
+						      <s:else>
+							      <s:property value="#session.factName" />
+						      </s:else>
+						     )
+						</s:if>
 						<s:else>
-							<s:property value="#session.factName" />
+						    <s:property value="#session.loginUser.name" />
 						</s:else>
-						) <span class="caret"></span>
+					    <span class="caret"></span>
 					</button>
 					<ul class="dropdown-menu" role="menu"
 						aria-labelledby="dropdownMenu1">
@@ -65,33 +71,31 @@
 				<div class="panel-body">
 					<s:iterator value="#session.login_menus" status="x" id="menu">
 						<div class="mmenu">
-							<a href="javascript:showDiv_main('${x.index}')"> <span
-								id="a${x.index}"
-								class="glyphicon glyphicon-folder-close mmenu_font">&nbsp;<s:property
-										value="menuname" />
-							</span> </a>
+							<a href="javascript:showDiv_main('${x.index}')">
+								<span id="a${x.index}" class="glyphicon glyphicon-folder-close mmenu_font">&nbsp;<s:property value="menuname" /> </span>
+							</a>
 							<div id="submenu${x.index}" style="display:none">
 								<s:iterator value="submenus" status="x" id="submenu">
 									<div>
-										<span class="glyphicon glyphicon-file"> <a name="alink"
-											class="smenu_font a_disable"
-											title="<s:property value='submenuname'/>"> <s:property
-													value="submenuname" /> </a> </span>
+										<span class="glyphicon glyphicon-file"> 
+										    <a name="alink" class="smenu_font a_disable" title="<s:property value='submenuname'/>">
+												<s:property value="submenuname" />
+											</a>
+											<input type="hidden" value="<s:property value='address'/>" name="alink_address"/> 
+										</span>
 									</div>
 								</s:iterator>
 							</div>
 						</div>
 					</s:iterator>
 					<div class="mmenu">
-						<a href="javascript:location.href='judge.jsp'"><span
-							class="glyphicon glyphicon-folder-close mmenu_font">&nbsp;退出管理</span>
+						<a href="javascript:back_judge()">
+							<span class="glyphicon glyphicon-folder-close mmenu_font">&nbsp;退出管理</span>
 						</a>
 					</div>
 					<s:iterator value="#session.loginUser.webJurisdictions">
 						<s:iterator value="webSubmenus">
-							<input type="hidden"
-								value="<s:property value='submenuname'/>,<s:property value='address'/>"
-								name="a_hidden" />
+							<input type="hidden" value="<s:property value='submenuname'/>,<s:property value='address'/>" name="a_hidden" />
 						</s:iterator>
 					</s:iterator>
 				</div>
@@ -168,7 +172,7 @@
 		window.setInterval("run();", 1000);
 
 		function back_judge() {
-			location.href = "/Login/judge.jsp";
+			location.href = "userlogout";
 		}
 
 		function showDiv_main(index) {			
@@ -196,11 +200,12 @@
 
 							var alinks = jq("a[name='alink']");
 							var ahidens = jq("input[name='a_hidden']");
+							var alink_addresss=jq("input[name='alink_address']");
 							for ( var i = 0; i < alinks.length; i++) {
 								for ( var j = 0; j < ahidens.length; j++) {
 									var array = ahidens.eq(j).val().split(",");
-									if (alinks.eq(i).html().replace(
-											/(^\s+)|\s+$/g, "") == array[0]) {
+									//if (alinks.eq(i).html().replace(/(^\s+)|\s+$/g, "") == array[0]){	
+									if (alink_addresss.eq(i).val()== array[1]){
 										alinks.eq(i).attr(
 												"href",
 												"javascript:changeTitle('"
