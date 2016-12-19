@@ -116,8 +116,8 @@ public class KyVisaBillsAction extends ActionSupport{
 		bill.getId().getKyVisabillm().setLastMk(visa_mk);
 		KyVisabillm vbm=bill.getId().getKyVisabillm();*/
 		
-		int num_temp=Integer.parseInt(itemNo);//把項次轉化為數字
-		int num=Integer.parseInt(itemNo)-1;//用於識別KyVisabills集合裡的每幾個對象
+		int num_temp=Integer.parseInt(itemNo);//嚙賤項嚙踝蕭嚙踝蕭え嚙踝蕭あr
+		int num=Integer.parseInt(itemNo)-1;//嚙諄抬蕭嚙諸別KyVisabills嚙踝蕭嚙碼嚙諒迎蕭嚙瘠嚙碼嚙諉對蕭H
 		int num_next=num_temp+1;
 		String item_next="0"+num_next;
 		KyVisabillm vbm=visabillmSer.findById(factNo, visaSort, billNo);
@@ -145,7 +145,7 @@ public class KyVisaBillsAction extends ActionSupport{
 		factNo=(String)ActionContext.getContext().getSession().get("factNo");
 		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
 		userName=user.getName();
-		bean=visabillSer.findPageBean(25, page, userName, visaMk, factNo, billNo,visaSort,yymmdd,yymmdd2);
+		bean=visabillSer.findPageBean(20,page, userName, visaMk, factNo, billNo,visaSort,yymmdd,yymmdd2);
 		return "beanList";
 	}
 	public String findPageBean2(){
@@ -170,7 +170,7 @@ public class KyVisaBillsAction extends ActionSupport{
 		}
 		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
 		userName=user.getName();
-		bean=visabillSer.findPageBean(25, page, userName, visaMk, factNo, billNo,visaSort,yymmdd,yymmdd2);
+		bean=visabillSer.findPageBean(20,page, userName, visaMk, factNo, billNo,visaSort,yymmdd,yymmdd2);
 		return "beanList1";		
 	}
 	public String findPageBean3(){
@@ -185,7 +185,7 @@ public class KyVisaBillsAction extends ActionSupport{
 		if(factNo==null||factNo.equals("")){
 			factNo=(String)ActionContext.getContext().getSession().get("factNo");
 		}
-		bean=visabillSer.findPageBean(25, page, userName, visaMk, factNo, billNo,visaSort,yymmdd,yymmdd2);
+		bean=visabillSer.findPageBean(20,page, userName, visaMk, factNo, billNo,visaSort,yymmdd,yymmdd2);
 		return "beanList1";
 	}*/
 

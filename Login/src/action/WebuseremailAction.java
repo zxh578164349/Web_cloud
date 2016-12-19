@@ -93,14 +93,14 @@ public class WebuseremailAction extends ActionSupport{
 		ActionContext.getContext().getSession().remove("public_factno");
 		ActionContext.getContext().getSession().remove("public_email");
 		factNo=(String)ActionContext.getContext().getSession().get("factNo");
-		bean=webuseremailSer.findPageBean(25, page, factNo, email);
+		bean=webuseremailSer.findPageBean(20,page, factNo, email);
 		return "beanList";
 	}
 	public String findPageBean2(){
 		//ActionContext.getContext().getApplication().clear();
 		ActionContext.getContext().getSession().remove("public_factno");
 		ActionContext.getContext().getSession().remove("public_email");
-		bean=webuseremailSer.findPageBean(25, page, factNo, email);
+		bean=webuseremailSer.findPageBean(20,page, factNo, email);
 		ActionContext.getContext().getSession().put("public_factno", factNo);
 		ActionContext.getContext().getSession().put("public_email", email);
 		return "beanList1";
@@ -115,7 +115,7 @@ public class WebuseremailAction extends ActionSupport{
 		if(factNo==null||factNo.equals("")){
 			factNo=(String)ActionContext.getContext().getSession().get("factNo");
 		}
-		bean=webuseremailSer.findPageBean(25, page, factNo, email);
+		bean=webuseremailSer.findPageBean(20,page, factNo, email);
 		return result;
 	}
 	

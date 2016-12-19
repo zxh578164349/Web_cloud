@@ -200,7 +200,7 @@ public class WebFixedAction extends ActionSupport implements
 		ActionContext.getContext().getSession().remove("public_yymms");
 		ActionContext.getContext().getSession().remove("public_lostmk");
 		factNo = (String) ActionContext.getContext().getSession().get("factNo");
-		bean = fixSer.findPageBean(25, page, factNo, yymm,yymm_s,lostmk);
+		bean = fixSer.findPageBean(20,page, factNo, yymm,yymm_s,lostmk);
 		return "beanList";
 	}
 
@@ -224,7 +224,7 @@ public class WebFixedAction extends ActionSupport implements
 			ActionContext.getContext().getSession().put("public_lostmk", lostmk);
 		}
 
-		bean = fixSer.findPageBean(25, page, factNo, yymm,yymm_s,lostmk);
+		bean = fixSer.findPageBean(20,page, factNo, yymm,yymm_s,lostmk);
 		return "beanList1";
 	}
 
@@ -241,7 +241,7 @@ public class WebFixedAction extends ActionSupport implements
 		if (factNo == null || factNo.equals("") || factNo.equals("tw")) {
 			factNo = (String) ActionContext.getContext().getSession().get("factNo");					
 		}
-		bean = fixSer.findPageBean(25, page, factNo, yymm,yymm_s,lostmk);
+		bean = fixSer.findPageBean(20,page, factNo, yymm,yymm_s,lostmk);
 
 		return result;
 
@@ -263,7 +263,7 @@ public class WebFixedAction extends ActionSupport implements
 					.put("print_fix_yymm", yymm);
 		}
 		
-		bean = fixSer.findPageBean(25, page, factNo, yymm,null,lostmk);
+		bean = fixSer.findPageBean(20,page, factNo, yymm,null,lostmk);
 		return "list";
 	}
 
@@ -278,7 +278,7 @@ public class WebFixedAction extends ActionSupport implements
 			factNo = (String) ActionContext.getContext().getSession()
 					.get("factNo");
 		}
-		bean = fixSer.findPageBean(25, page, factNo, yymm,null,lostmk);
+		bean = fixSer.findPageBean(20,page, factNo, yymm,null,lostmk);
 		return "list";
 	}
 

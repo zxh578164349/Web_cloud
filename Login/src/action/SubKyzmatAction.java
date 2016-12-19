@@ -197,12 +197,12 @@ public class SubKyzmatAction extends ActionSupport implements ServletResponseAwa
 	public String findPageBean(){
 		ActionContext.getContext().getApplication().clear();
 		factNo=(String)ActionContext.getContext().getSession().get("factNo");
-		bean=subkyzmatSer.findPageBean(25, page, fromDate, endDate,matCname,typeBno,typeMno,typeSno,factNo,matNo);
+		bean=subkyzmatSer.findPageBean(20,page, fromDate, endDate,matCname,typeBno,typeMno,typeSno,factNo,matNo);
 		return "findPageBean";
 	}
 	public String findPageBean2(){
 		ActionContext.getContext().getApplication().clear();
-		bean=subkyzmatSer.findPageBean(25, page, fromDate, endDate,matCname.trim(),typeBno,typeMno,typeSno,factNo,matNo.trim());
+		bean=subkyzmatSer.findPageBean(20,page, fromDate, endDate,matCname.trim(),typeBno,typeMno,typeSno,factNo,matNo.trim());
 		if(fromDate!=null&&!fromDate.equals("")){
 			ActionContext.getContext().getApplication().put("fromdate", fromDate);
 		}
@@ -241,7 +241,7 @@ public class SubKyzmatAction extends ActionSupport implements ServletResponseAwa
 		if(factNo==null||factNo.equals("")){
 			factNo=(String)ActionContext.getContext().getSession().get("factNo");
 		}
-		bean=subkyzmatSer.findPageBean(25, page, fromDate, endDate,matCname,typeBno,typeMno,typeSno,factNo,matNo);
+		bean=subkyzmatSer.findPageBean(20,page, fromDate, endDate,matCname,typeBno,typeMno,typeSno,factNo,matNo);
 		String result="findPageBean1";
 		if(backIndex==1){
 			result="findPageBean";

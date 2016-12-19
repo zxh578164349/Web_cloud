@@ -338,7 +338,7 @@ public class WebMix2Action extends ActionSupport implements
 		ActionContext.getContext().getSession().remove("public_yymm");
 		ActionContext.getContext().getSession().remove("public_yymm2");
 		factNo=(String)ActionContext.getContext().getSession().get("factNo");
-		bean=mix2Service.findPageBean(25, page, factNo, yymm,yymm2);
+		bean=mix2Service.findPageBean(20,page, factNo, yymm,yymm2);
 		return "showList";
 	}
 	public String getList2(){
@@ -355,7 +355,7 @@ public class WebMix2Action extends ActionSupport implements
 		if(yymm2!=null&&!yymm2.equals("")){
 			ActionContext.getContext().getSession().put("public_yymm2", yymm2);
 		}
-		bean=mix2Service.findPageBean(25, page, factNo, yymm,yymm2);
+		bean=mix2Service.findPageBean(20,page, factNo, yymm,yymm2);
 		return "showList1";
 	}
 	public String getList3(){
@@ -369,7 +369,7 @@ public class WebMix2Action extends ActionSupport implements
 		if(factNo==null||factNo.equals("")){
 			factNo=(String)ActionContext.getContext().getSession().get("factNo");
 		}
-		bean=mix2Service.findPageBean(25, page, factNo, yymm,yymm2);
+		bean=mix2Service.findPageBean(20,page, factNo, yymm,yymm2);
 		return result;
 	}
 	/**

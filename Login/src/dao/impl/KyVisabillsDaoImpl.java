@@ -80,11 +80,7 @@ public class KyVisabillsDaoImpl extends Basedao implements IKyVisaBillsDao{
 			hql.append(" and id.kyVisabillm.dateCreate>=:createdate");
 			map.put("createdate", createDate);
 		}
-		if(createDate!=null&&!createDate.equals("")&&(createDate2!=null&&!createDate2.equals(""))){
-			hql.append(" and id.kyVisabillm.dateCreate between :createdate and :createdate2");
-			map.put("createdate", createDate);
-			map.put("createdate2", createDate2);
-		}
+		
 		if(createDate2!=null&&!createDate2.equals("")){
 			hql.append(" and id.kyVisabillm.dateCreate<=:createdate2");
 			map.put("createdate2", createDate2);
@@ -96,9 +92,9 @@ public class KyVisabillsDaoImpl extends Basedao implements IKyVisaBillsDao{
 			hql.append(" and id.kyVisabillm.id.factNo=:factno");
 			map.put("factno", factNo);
 		}		
-		//hql.append(" and id.kyVisabillm.delMk is null ");
+		//hql.append(" and id.kyVisabillm.dateCreate>'20150901' ");
 		hql2.append(hql);
-		hql.append(" order by id.kyVisabillm.id.factNo desc,id.kyVisabillm.dateCreate desc");
+		hql.append(" order by id.kyVisabillm.id.factNo desc,id.kyVisabillm.dateCreate desc,id.kyVisabillm.id.billNo desc");
 		if(rows!=null&&page>0){
 			allrow=rows;
 		}else{
@@ -123,8 +119,7 @@ public class KyVisabillsDaoImpl extends Basedao implements IKyVisaBillsDao{
 				}
 				if(list.get(i).getId().getKyVisabillm().getId().getBillNo().substring(0,2).equals("CM")){
 					list.get(i).getId().getKyVisabillm().getKyzletter().getTitle();
-				}*/
-				
+				}*/												
 				/*******************出差函文暫不要查標題，因爲沒有標題*****************/
 				
 			}
@@ -348,7 +343,7 @@ public class KyVisabillsDaoImpl extends Basedao implements IKyVisaBillsDao{
 		}						
 		//hql.append(" and id.kyVisabillm.delMk is null ");
 		hql2.append(hql);
-		hql.append(" order by id.kyVisabillm.id.factNo desc,id.kyVisabillm.dateCreate desc");
+		hql.append(" order by id.kyVisabillm.id.factNo desc,id.kyVisabillm.dateCreate desc,id.kyVisabillm.id.billNo desc");
 		
 		if(rows!=null&&page>0){
 			allrow=rows;

@@ -137,7 +137,7 @@ public class WebydataNoinputAction extends ActionSupport implements ServletRespo
 		ActionContext.getContext().getSession().put("public_factNo",factNo);
 		ActionContext.getContext().getSession().remove("public_yymmdd");
 		ActionContext.getContext().getSession().remove("public_yymmdd2");	
-		bean=webydatenoinputSer.findPageBean(25, page, factNo, yymmdd, yymmdd2);
+		bean=webydatenoinputSer.findPageBean(20,page, factNo, yymmdd, yymmdd2);
 		return "findPageBean";
 	}
 	public String findPageBean2(){
@@ -148,14 +148,14 @@ public class WebydataNoinputAction extends ActionSupport implements ServletRespo
 		ActionContext.getContext().getSession().put("public_factNo", factNo);
 		ActionContext.getContext().getSession().put("public_yymmdd", yymmdd);
 		ActionContext.getContext().getSession().put("public_yymmdd2", yymmdd2);
-		bean=webydatenoinputSer.findPageBean(25, page, factNo, yymmdd, yymmdd2);
+		bean=webydatenoinputSer.findPageBean(20,page, factNo, yymmdd, yymmdd2);
 		return "findPageBean1";
 	}
 	public String findPageBean3(){
 		ActionContext.getContext().getSession().get("public_factNo");
 		ActionContext.getContext().getSession().get("public_yymmdd");
 		ActionContext.getContext().getSession().get("public_yymmdd2");
-		bean=webydatenoinputSer.findPageBean(25, page, factNo, yymmdd, yymmdd2);
+		bean=webydatenoinputSer.findPageBean(20,page, factNo, yymmdd, yymmdd2);
 		return"findPageBean1";
 	}
 	public void print(){

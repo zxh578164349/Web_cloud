@@ -136,14 +136,14 @@ public class KpifactAction extends ActionSupport implements ServletResponseAware
 		ActionContext.getContext().getSession().remove("public_factno");
 		ActionContext.getContext().getSession().remove("public_yyyy");
 		factNo=(String)ActionContext.getContext().getSession().get("factNo");
-		bean=kpiSer.findPageBean(25, page, factNo, yyyy);
+		bean=kpiSer.findPageBean(20,page, factNo, yyyy);
 		return "findPageBean";		
 	}
 	public String findPageBean2(){
 		//ActionContext.getContext().getApplication().clear();
 		ActionContext.getContext().getSession().remove("public_factno");
 		ActionContext.getContext().getSession().remove("public_yyyy");
-		bean=kpiSer.findPageBean(25, page, factNo, yyyy);
+		bean=kpiSer.findPageBean(20,page, factNo, yyyy);
 		ActionContext.getContext().getSession().put("public_factno", factNo);
 		ActionContext.getContext().getSession().put("public_yyyy", yyyy);
 		return "findPageBean1";
@@ -158,7 +158,7 @@ public class KpifactAction extends ActionSupport implements ServletResponseAware
 		if(factNo==null||factNo.equals("")){
 			factNo=(String)ActionContext.getContext().getSession().get("factNo");
 		}
-		bean=kpiSer.findPageBean(25, page, factNo, yyyy);
+		bean=kpiSer.findPageBean(20,page, factNo, yyyy);
 		return result;
 	}
 	public String delete(){

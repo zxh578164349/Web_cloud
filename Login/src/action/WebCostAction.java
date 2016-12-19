@@ -201,7 +201,7 @@ public class WebCostAction extends ActionSupport implements
 		ActionContext.getContext().getSession().remove("pubic_yymm");
 		ActionContext.getContext().getSession().remove("pubic_yymm2");
 		factNo = (String) ActionContext.getContext().getSession().get("factNo");
-		bean = costSer.findPageBean(25, page, factNo, yymm,yymm2);
+		bean = costSer.findPageBean(20,page, factNo, yymm,yymm2);
 
 		return "beanList";
 
@@ -219,7 +219,7 @@ public class WebCostAction extends ActionSupport implements
 			ActionContext.getContext().getSession().put("pubic_yymm2", yymm2);
 		}
 
-		bean = costSer.findPageBean(25, page, factNo, yymm,yymm2);
+		bean = costSer.findPageBean(20,page, factNo, yymm,yymm2);
 
 		return "beanList1";
 	}
@@ -235,7 +235,7 @@ public class WebCostAction extends ActionSupport implements
 		if (factNo == null || factNo.equals("") || factNo.equals("tw")) {
 			factNo = (String) ActionContext.getContext().getSession().get("factNo");					
 		}
-		bean = costSer.findPageBean(25, page, factNo, yymm,yymm2);
+		bean = costSer.findPageBean(20,page, factNo, yymm,yymm2);
 
 		return result;
 

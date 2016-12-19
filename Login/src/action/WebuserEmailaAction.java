@@ -155,7 +155,7 @@ public class WebuserEmailaAction extends ActionSupport implements ServletRespons
 		ActionContext.getContext().getSession().remove("public_email");
 		ActionContext.getContext().getSession().remove("public_visaSort");
 		factNo=(String)ActionContext.getContext().getSession().get("factNo");
-		bean=webuseremailaSer.findPageBean(25, page, factNo, email, visaSort);
+		bean=webuseremailaSer.findPageBean(20,page, factNo, email, visaSort);
 		this.getTypeName(bean);
 		return "beanList";
 	}
@@ -164,7 +164,7 @@ public class WebuserEmailaAction extends ActionSupport implements ServletRespons
 		ActionContext.getContext().getSession().remove("public_factno");
 		ActionContext.getContext().getSession().remove("public_email");
 		ActionContext.getContext().getSession().remove("public_visaSort");
-		bean=webuseremailaSer.findPageBean(25, page, factNo, email, visaSort);
+		bean=webuseremailaSer.findPageBean(20,page, factNo, email, visaSort);
 		if(factNo!=null&&!factNo.equals("")){
 			ActionContext.getContext().getSession().put("public_factno", factNo);
 		}
@@ -189,7 +189,7 @@ public class WebuserEmailaAction extends ActionSupport implements ServletRespons
 		if(factNo==null||factNo.equals("")){
 			factNo=(String)ActionContext.getContext().getSession().get("factNo");
 		}
-		bean=webuseremailaSer.findPageBean(25, page, factNo, email, visaSort);
+		bean=webuseremailaSer.findPageBean(20,page, factNo, email, visaSort);
 		this.getTypeName(bean);
 		return result;
 	}

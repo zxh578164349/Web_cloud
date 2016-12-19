@@ -55,10 +55,10 @@
 		</tr>
 		<tr>
 			<td><input type="text" id="yymmdd" name="yymmdd" 
-				onClick="WdatePicker()" readonly="readonly" class="Wdate"/>
+				onClick="WdatePicker({dateFmt:'yyyyMMdd'})" readonly="readonly" class="Wdate"/>
 				至
 			<input type="text" id="yymmdd2" name="yymmdd2" 
-				onClick="WdatePicker()" readonly="readonly" class="Wdate"/>				
+				onClick="WdatePicker({dateFmt:'yyyyMMdd'})" readonly="readonly" class="Wdate"/>				
 				單號:<input type="text" name="billNo" value="" id="billNo" />																
 				</td>
 		</tr>

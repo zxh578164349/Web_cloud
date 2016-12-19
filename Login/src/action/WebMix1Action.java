@@ -210,7 +210,7 @@ public class WebMix1Action extends ActionSupport implements
 	public String findPageBean() {
 		ActionContext.getContext().getApplication().clear();
 		factNo = (String) ActionContext.getContext().getSession().get("factNo");
-		bean = mix1Ser.findPageBean(25, page, factNo, yymm);
+		bean = mix1Ser.findPageBean(20,page, factNo, yymm);
 
 		return "beanList";
 
@@ -226,7 +226,7 @@ public class WebMix1Action extends ActionSupport implements
 			ActionContext.getContext().getApplication().put("mix1_yymm", yymm);
 		}
 
-		bean = mix1Ser.findPageBean(25, page, factNo, yymm);
+		bean = mix1Ser.findPageBean(20,page, factNo, yymm);
 
 		return "beanList1";
 	}
@@ -240,7 +240,7 @@ public class WebMix1Action extends ActionSupport implements
 			factNo = (String) ActionContext.getContext().getSession()
 					.get("factNo");
 		}
-		bean = mix1Ser.findPageBean(25, page, factNo, yymm);
+		bean = mix1Ser.findPageBean(20,page, factNo, yymm);
 
 		return "beanList1";
 

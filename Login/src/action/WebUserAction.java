@@ -673,7 +673,7 @@ public class WebUserAction extends ActionSupport implements ServletResponseAware
 	public String findPageBean(){
 		ActionContext.getContext().getSession().remove("public_conditions");
 		ActionContext.getContext().getSession().remove("public_factno");
-		bean=webUserService.findPageBean(25, page, conditions, factNo,userType);
+		bean=webUserService.findPageBean(20,page, conditions, factNo,userType);
 		this.findFactName(bean);
 		return "beanList";
 	}
@@ -687,7 +687,7 @@ public class WebUserAction extends ActionSupport implements ServletResponseAware
 		if(factNo!=null&&!factNo.equals("")){
 			ActionContext.getContext().getSession().put("public_factno", factNo);
 		}
-		bean=webUserService.findPageBean(25, page, conditions, factNo,userType);
+		bean=webUserService.findPageBean(20,page, conditions, factNo,userType);
 		this.findFactName(bean);
 		return "beanList1";
 	}
@@ -698,7 +698,7 @@ public class WebUserAction extends ActionSupport implements ServletResponseAware
 		}
 		conditions=(String)ActionContext.getContext().getSession().get("public_conditions");
 		factNo=(String)ActionContext.getContext().getSession().get("public_factno");		
-		bean=webUserService.findPageBean(25, page, conditions, factNo,userType);
+		bean=webUserService.findPageBean(20,page, conditions, factNo,userType);
 		
 		this.findFactName(bean);
 		return result;

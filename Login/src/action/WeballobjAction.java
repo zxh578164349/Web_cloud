@@ -347,7 +347,7 @@ public class WeballobjAction  extends ActionSupport implements ServletResponseAw
 		ActionContext.getContext().getSession().remove("public_yymm2");
 		factNo=(String)ActionContext.getContext().getSession().get("factNo");
 		ActionContext.getContext().getSession().put("public_factno", factNo);
-		bean=weballobjser.findPageBean(25, page, factNo, yymm, yymm2);
+		bean=weballobjser.findPageBean(20,page, factNo, yymm, yymm2);
 		return "beanList";
 		
 	}
@@ -359,14 +359,14 @@ public class WeballobjAction  extends ActionSupport implements ServletResponseAw
 		ActionContext.getContext().getSession().put("public_factno", factNo);
 		ActionContext.getContext().getSession().put("public_yymm", yymm);
 		ActionContext.getContext().getSession().put("public_yymm2", yymm2);		
-		bean=weballobjser.findPageBean(25, page, factNo, yymm, yymm2);
+		bean=weballobjser.findPageBean(20,page, factNo, yymm, yymm2);
 		return "beanList1";
 	}
 	public String findPageBean3(){
 		factNo=(String)ActionContext.getContext().getSession().get("public_factno");
 		yymm=(String)ActionContext.getContext().getSession().get("public_yymm");
 		yymm2=(String)ActionContext.getContext().getSession().get("public_yymm2");
-		bean=weballobjser.findPageBean(25, page, factNo, yymm, yymm2);
+		bean=weballobjser.findPageBean(20,page, factNo, yymm, yymm2);
 		return "beanList1";
 	}
 	

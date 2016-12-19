@@ -240,7 +240,7 @@ public class WebPersonnumAction extends ActionSupport implements
 		ActionContext.getContext().getSession().remove("public_begin");
 		ActionContext.getContext().getSession().remove("public_end");
 		factNo = (String) ActionContext.getContext().getSession().get("factNo");
-		bean = personNumSer.findPageBean(25, page, factNo, null,beginDay,endDay);
+		bean = personNumSer.findPageBean(20,page, factNo, null,beginDay,endDay);
 
 		return "beanList";
 
@@ -267,7 +267,7 @@ public class WebPersonnumAction extends ActionSupport implements
 			ActionContext.getContext().getSession().put("public_end", endDay);
 		}
 
-		bean = personNumSer.findPageBean(25, page, factNo, null,beginDay,endDay);
+		bean = personNumSer.findPageBean(20,page, factNo, null,beginDay,endDay);
 
 		return "beanList1";
 	}
@@ -287,7 +287,7 @@ public class WebPersonnumAction extends ActionSupport implements
 			factNo = (String) ActionContext.getContext().getSession().get("factNo");
 					
 		}
-		bean = personNumSer.findPageBean(25, page, factNo, null,beginDay,endDay);
+		bean = personNumSer.findPageBean(20,page, factNo, null,beginDay,endDay);
 
 		return result;
 

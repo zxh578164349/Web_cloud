@@ -109,11 +109,11 @@ public class KyzAcctAction extends ActionSupport implements ServletResponseAware
 	
 	public String findPageBean(){
 		ActionContext.getContext().getApplication().clear();
-		bean=kyzacctSer.findPageBean(25, page, acctNo,acctName);
+		bean=kyzacctSer.findPageBean(20,page, acctNo,acctName);
 		return "beanList";		
 	}
 	public String findPageBean2(){
-		bean=kyzacctSer.findPageBean(25, page, acctNo.trim(), acctName.trim());
+		bean=kyzacctSer.findPageBean(20,page, acctNo.trim(), acctName.trim());
 		ActionContext.getContext().getApplication().clear();
 		if(acctNo!=null&&!acctNo.equals("")){
 			ActionContext.getContext().getApplication().put("kyzacct_acctNo", acctNo.trim());
@@ -126,7 +126,7 @@ public class KyzAcctAction extends ActionSupport implements ServletResponseAware
 	public String findPageBean3(){
 		acctNo=(String)ActionContext.getContext().getApplication().get("kyzacct_acctNo");
 		acctName=(String)ActionContext.getContext().getApplication().get("kyzacct_acctName");
-		bean=kyzacctSer.findPageBean(25, page, acctNo, acctName);
+		bean=kyzacctSer.findPageBean(20,page, acctNo, acctName);
 		return "beanList1";
 	}
 	public String findById(){

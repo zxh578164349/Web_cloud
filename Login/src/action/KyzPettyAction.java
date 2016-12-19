@@ -149,13 +149,13 @@ public class KyzPettyAction extends ActionSupport{
 	public String findPageBean(){
 		ActionContext.getContext().getApplication().clear();
 		factNo=(String)ActionContext.getContext().getSession().get("factNo");
-		bean=kyzpettySer.findPageBean(25, page, factNo, billNo, yymm);
+		bean=kyzpettySer.findPageBean(20,page, factNo, billNo, yymm);
 		return "beanList";
 	}
 	
 	public String findPageBean2(){
 		ActionContext.getContext().getApplication().clear();
-		bean=kyzpettySer.findPageBean(25, page, factNo, billNo, yymm);
+		bean=kyzpettySer.findPageBean(20,page, factNo, billNo, yymm);
 		if(factNo!=null&&!factNo.equals("")){
 			ActionContext.getContext().getApplication().put("kyzpetty_factno", factNo);
 		}
@@ -179,7 +179,7 @@ public class KyzPettyAction extends ActionSupport{
 		if(factNo==null||factNo.equals("")){
 			factNo=(String)ActionContext.getContext().getSession().get("factNo");
 		}
-		bean=kyzpettySer.findPageBean(25, page, factNo, billNo, yymm);
+		bean=kyzpettySer.findPageBean(20,page, factNo, billNo, yymm);
 		return result;
 	}
 	

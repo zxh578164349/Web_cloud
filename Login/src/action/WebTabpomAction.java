@@ -232,7 +232,7 @@ public class WebTabpomAction extends ActionSupport implements ServletResponseAwa
 		ActionContext.getContext().getSession().remove("tabpom_brank");
 		ActionContext.getContext().getSession().remove("tabpom_yymm");
 		ActionContext.getContext().getSession().remove("tabpom_yymm2");		
-		bean=tabpomSer.findPageBean(25, page, pomNo, brank,yymm,yymm2,factNo);
+		bean=tabpomSer.findPageBean(20,page, pomNo, brank,yymm,yymm2,factNo);
 		return "beanList";
 	}
 	
@@ -241,7 +241,7 @@ public class WebTabpomAction extends ActionSupport implements ServletResponseAwa
 		ActionContext.getContext().getSession().put("tabpom_brank", brank);
 		ActionContext.getContext().getSession().put("tabpom_yymm", yymm);			
 		ActionContext.getContext().getSession().put("tabpom_yymm2", yymm2);	
-		bean=tabpomSer.findPageBean(25, page, pomNo, brank,yymm,yymm2,factNo);
+		bean=tabpomSer.findPageBean(20,page, pomNo, brank,yymm,yymm2,factNo);
 		return "beanList1";
 	}
 	public String findPageBean3(){
@@ -253,7 +253,7 @@ public class WebTabpomAction extends ActionSupport implements ServletResponseAwa
 		brank=(String)ActionContext.getContext().getSession().get("tabpom_brank");
 		pomName=(String)ActionContext.getContext().getSession().get("tabpom_yymm");
 		brank=(String)ActionContext.getContext().getSession().get("tabpom_yymm2");
-		bean=tabpomSer.findPageBean(25, page, pomNo, brank,yymm,yymm2,factNo);
+		bean=tabpomSer.findPageBean(20,page, pomNo, brank,yymm,yymm2,factNo);
 		return result;
 	}
 	

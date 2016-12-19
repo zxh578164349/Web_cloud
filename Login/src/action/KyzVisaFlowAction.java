@@ -293,7 +293,7 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 		ActionContext.getContext().getSession().remove("public_factNo");
 		ActionContext.getContext().getSession().remove("public_visaSort");
 		factNo = (String) ActionContext.getContext().getSession().get("factNo");
-		bean = visaSer.findPageBean(25, page, factNo, visaSort);		
+		bean = visaSer.findPageBean(20,page, factNo, visaSort);		
 		this.getTypeName(bean);//从webtype获取类别名称
 		return "beanList";
 	}
@@ -309,7 +309,7 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 		if (visaSort != null && !visaSort.equals("")) {
 			ActionContext.getContext().getSession().put("public_visaSort", visaSort);
 		}
-		bean = visaSer.findPageBean(25, page, factNo, visaSort);
+		bean = visaSer.findPageBean(20,page, factNo, visaSort);
 		this.getTypeName(bean);
 		return "beanList1";
 	}
@@ -324,7 +324,7 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 		if (factNo == null || factNo.equals("") || factNo.equals("tw")){
 			factNo = (String) ActionContext.getContext().getSession().get("factNo");					
 		}
-		bean = visaSer.findPageBean(25, page, factNo, visaSort);
+		bean = visaSer.findPageBean(20,page, factNo, visaSort);
 		this.getTypeName(bean);
 		return result;
 	}

@@ -270,7 +270,7 @@ public class SumWebYieldDataAction extends ActionSupport implements ServletRespo
 	public String findPageBean(){
 		ActionContext.getContext().getApplication().clear();
 		factNo=(String)ActionContext.getContext().getSession().get("factNo");
-		bean=sumydateSer.findPageBean(25, page, factNo, begin_yymm,end_yymm);
+		bean=sumydateSer.findPageBean(20,page, factNo, begin_yymm,end_yymm);
 		return "findPageBean";
 	}
 	public String findPageBean2(){
@@ -284,7 +284,7 @@ public class SumWebYieldDataAction extends ActionSupport implements ServletRespo
 		if(end_yymm!=null&&!end_yymm.equals("")){
 			ActionContext.getContext().getApplication().put("sumydate_end_yymm", end_yymm);
 		}
-		bean=sumydateSer.findPageBean(25, page, factNo, begin_yymm,end_yymm);
+		bean=sumydateSer.findPageBean(20,page, factNo, begin_yymm,end_yymm);
 		return "findPageBean1";
 	}
 	public String findPageBean3(){
@@ -294,7 +294,7 @@ public class SumWebYieldDataAction extends ActionSupport implements ServletRespo
 		if(factNo==null||factNo.equals("")){
 			factNo=(String)ActionContext.getContext().getSession().get("factNo");
 		}
-		bean=sumydateSer.findPageBean(25, page, factNo, begin_yymm,end_yymm);
+		bean=sumydateSer.findPageBean(20,page, factNo, begin_yymm,end_yymm);
 		return "findPageBean1";
 	}
 	public String formatDouble(double s) {

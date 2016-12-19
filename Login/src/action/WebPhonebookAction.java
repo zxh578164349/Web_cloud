@@ -202,7 +202,7 @@ public class WebPhonebookAction extends ActionSupport implements ServletResponse
 		ActionContext.getContext().getSession().remove("public_post");
 		ActionContext.getContext().getSession().remove("public_username");
 		factNo=(String)ActionContext.getContext().getSession().get("factNo");
-		bean=webphonebookSer.findPageBean(25, page, factNo, department, post, userName);
+		bean=webphonebookSer.findPageBean(20,page, factNo, department, post, userName);
 		return "beanList";
 	}
 	public String findPageBean2(){
@@ -214,7 +214,7 @@ public class WebPhonebookAction extends ActionSupport implements ServletResponse
 		ActionContext.getContext().getSession().put("public_department", department);
 		ActionContext.getContext().getSession().put("public_post", post);
 		ActionContext.getContext().getSession().put("public_username", userName);
-		bean=webphonebookSer.findPageBean(25, page, factNo, department, post, userName);
+		bean=webphonebookSer.findPageBean(20,page, factNo, department, post, userName);
 		return "beanList1";
 	}
 	public String findPageBean3(){
@@ -229,7 +229,7 @@ public class WebPhonebookAction extends ActionSupport implements ServletResponse
 		if(factNo==null||factNo.equals("")){
 			factNo=(String)ActionContext.getContext().getSession().get("factNo");
 		}
-		bean=webphonebookSer.findPageBean(25, page, factNo, department, post, userName);
+		bean=webphonebookSer.findPageBean(20,page, factNo, department, post, userName);
 		return result;
 	}
 	public String findById(){

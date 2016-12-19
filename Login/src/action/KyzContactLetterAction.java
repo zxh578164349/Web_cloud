@@ -363,7 +363,7 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 		ActionContext.getContext().getSession().remove("public_timeCreate2");
 		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
 		factNo = (String) ActionContext.getContext().getSession().get("factNo");
-		bean = kyzletterSer.findPageBean(25, page, factNo, visaSort,billNo,user,yymmdd,yymmdd2);
+		bean = kyzletterSer.findPageBean(20,page, factNo, visaSort,billNo,user,yymmdd,yymmdd2);
 		this.getTypeName(bean);
 		return "beanList";
 	}
@@ -391,7 +391,7 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 			ActionContext.getContext().getSession().put("public_timeCreate2", yymmdd2);
 		}
 		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
-		bean = kyzletterSer.findPageBean(25, page, factNo, visaSort,billNo.trim(),user,yymmdd,yymmdd2);
+		bean = kyzletterSer.findPageBean(20,page, factNo, visaSort,billNo.trim(),user,yymmdd,yymmdd2);
 		this.getTypeName(bean);
 		return "beanList1";
 	}
@@ -410,7 +410,7 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 			factNo = (String) ActionContext.getContext().getSession().get("factNo");				
 		}
 		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
-		bean = kyzletterSer.findPageBean(25, page, factNo, visaSort,billNo,user,yymmdd,yymmdd2);
+		bean = kyzletterSer.findPageBean(20,page, factNo, visaSort,billNo,user,yymmdd,yymmdd2);
 		this.getTypeName(bean);
 		return result;
 	}

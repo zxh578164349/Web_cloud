@@ -74,11 +74,11 @@ public class KyzSecAction extends ActionSupport{
 	public String findPageBean(){
 		ActionContext.getContext().getApplication().clear();
 		factNo=(String)ActionContext.getContext().getSession().get("factNo");
-		bean=kyzsecSer.findPageBean(25, page, factNo, secNo);
+		bean=kyzsecSer.findPageBean(20,page, factNo, secNo);
 		return "beanList";
 	}
 	public String findPageBean2(){
-		bean=kyzsecSer.findPageBean(25, page, factNo, secNo.trim());
+		bean=kyzsecSer.findPageBean(20,page, factNo, secNo.trim());
 		ActionContext.getContext().getApplication().clear();
 		if(factNo!=null&&!factNo.equals("")){
 			ActionContext.getContext().getApplication().put("kyzsec_factNo", factNo);
@@ -94,7 +94,7 @@ public class KyzSecAction extends ActionSupport{
     	if(factNo==null||factNo.equals("")){
     		factNo=(String)ActionContext.getContext().getSession().get("factNo");
     	}
-    	bean=kyzsecSer.findPageBean(25, page, factNo, secNo);
+    	bean=kyzsecSer.findPageBean(20,page, factNo, secNo);
     	return "beanList1";
     }
     public String findById(){

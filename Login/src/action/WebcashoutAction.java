@@ -222,14 +222,14 @@ public class WebcashoutAction extends ActionSupport implements ServletResponseAw
 		ActionContext.getContext().getSession().remove("public_factno");
 		ActionContext.getContext().getSession().remove("public_yymm");
 		factNo=(String)ActionContext.getContext().getSession().get("factNo");
-		bean=cashoutSer.findPageBean(25, page, factNo, factCode, yymm);
+		bean=cashoutSer.findPageBean(20,page, factNo, factCode, yymm);
 		return "findPageBean";
 	}
 	public String findPageBean2(){
 		//ActionContext.getContext().getApplication().clear();
 		ActionContext.getContext().getSession().remove("public_factno");
 		ActionContext.getContext().getSession().remove("public_yymm");
-		bean=cashoutSer.findPageBean(25, page, factNo, factCode, yymm);
+		bean=cashoutSer.findPageBean(20,page, factNo, factCode, yymm);
 		ActionContext.getContext().getSession().put("public_factno", factNo);
 		ActionContext.getContext().getSession().put("public_yymm", yymm);
 		//ActionContext.getContext().getApplication().put("public_factCode", factCode);
@@ -246,7 +246,7 @@ public class WebcashoutAction extends ActionSupport implements ServletResponseAw
 		if(factNo==null||factNo.equals("")){
 			factNo=(String)ActionContext.getContext().getSession().get("factNo");
 		}
-		bean=cashoutSer.findPageBean(25, page, factNo, factCode, yymm);
+		bean=cashoutSer.findPageBean(20,page, factNo, factCode, yymm);
 		return result;
 	}
 	public String findById(){
