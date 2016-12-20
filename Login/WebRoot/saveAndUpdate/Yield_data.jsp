@@ -265,23 +265,9 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 			loadUrl("/Login/ydata_findPageBean3?backIndex=1");
 		}
 
-		function holiday() {
-			var workholiday = document.getElementById("workholiday");
-			if (workholiday.value == 1) {
-				//alert("dfdf");
-				document.getElementById("div1").style.display = "none";
-				document.getElementById("div2").style.display = "block";
-			}
-			if (workholiday.value == 0) {
-				//alert("dfdf");
-				document.getElementById("div1").style.display = "block";
-				document.getElementById("div2").style.display = "none";
-			}
-		}
-
 		function showRow() {
 			var workholiday = jq("#workholiday");
-			var arrays = jq("input[class='input_hidden']");
+			var arrays = jq("input[class*='input_hidden']");
 			if (workholiday.val() == 1 || workholiday.val() == 2) {
 				for ( var i = 0; i < arrays.length; i++) {
 					arrays.eq(i).prop("disabled", true);

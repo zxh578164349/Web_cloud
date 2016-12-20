@@ -80,9 +80,6 @@ body {
 #wrapper {
 	padding: 70px 0 0 0px;
 	height: 100%;
-}
-
-#wrapper {
 	width: 350px;
 	margin: auto;
 	top: 160px;
@@ -97,6 +94,10 @@ body {
 #wrappermiddle {
 	background: url(../images/login2/wrapper_middle.png) repeat-y;
 	height: 300px;
+}
+#wrappermiddle_guest {
+	background: url(../images/login2/wrapper_middle.png) repeat-y;
+	height: 250px;
 }
 
 #wrapperbottom {
@@ -243,11 +244,21 @@ body {
 	height: 50px;
 }
 
-#submit {
+#submit{
 	float: left;
 	position: relative;
 	padding: 0;
 	margin-top: 220px;
+	margin-left: 25px;
+	width: 300px;
+	height: 40px;
+	border: 0;
+}
+#submit_guest {
+	float: left;
+	position: relative;
+	padding: 0;
+	margin-top: 160px;
 	margin-left: 25px;
 	width: 300px;
 	height: 40px;

@@ -46,7 +46,7 @@
 					<ul class="dropdown-menu" role="menu"
 						aria-labelledby="dropdownMenu1">
 						<li role="presentation"><a role="menuitem" tabindex="-1"
-							href="javascript:loadUrl('userinitialUpdate?id=${loginUser.id}')">用戶信息</a></li>
+							href="javascript:loadUrl('userinitialUpdate?id=${loginUser.id}');change_h2_title('');changeTitle('用戶信息')">用戶信息</a></li>
 						<li role="presentation" class="divider"></li>
 						<li role="presentation"><a role="menuitem" tabindex="-1"
 							id="exit" href="javascript:back_judge()" target="_parent">退出登录</a>
@@ -65,7 +65,7 @@
 			<div class="panel panel-info">
 				<div class="panel-heading">
 					<span class="glyphicon glyphicon-file"> <a
-						href="javascript:changeTitle('首頁');loadUrl('right.jsp')"
+						href="javascript:changeTitle('首頁');loadUrl('right.jsp');change_h2_title('')"
 						title="返回首頁"> 網站首頁</a> </span>
 				</div>
 				<div class="panel-body">
@@ -232,7 +232,7 @@
 				url : url,
 				success : function(data) {
 					jq("#r_content").html(data);
-					jq("#h2_title").text(title);
+					jq("#h2_title").text(title);	
 					jq("#h2_title2").text(title);
 				},
 				error : function(error) {
@@ -339,7 +339,11 @@
 		}
 		setTimeout("findKyVisaBills_Int()",1000);
 		setTimeout("hideBills2()",15000); 
-				
+		
+function change_h2_title(title){
+	jq("#h2_title2").text(title);
+	}		
+
 	</script>
 	<script type='text/javascript' src='/Login/dwr/interface/kyvisabillsjs.js'></script>
 </body>

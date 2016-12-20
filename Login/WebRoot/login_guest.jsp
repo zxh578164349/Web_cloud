@@ -19,10 +19,9 @@ String cook_pwd=cookie.getCookAll().split(",")[2];%>
 <body >
 	 <div id="wrapper">
 		<div id="wrappertop"></div>
-
-		<div id="wrappermiddle">
+		<div id="wrappermiddle_guest">
 			<form  method="post" id="loginform">
-				<h2>Web系統登錄  <s:property value='userName'/></h2>
+				<h2>Web系統登錄(訪客)<s:property value='userName'/></h2>
 				<div id="username_input">
 					<div id="username_inputleft"></div>
 					<div id="username_inputmiddle">
@@ -39,15 +38,13 @@ String cook_pwd=cookie.getCookAll().split(",")[2];%>
 					</div>
 					<div id="password_inputright"></div>
 				</div>
-				
 				<input type="hidden" name="factNo" value="1" id="url_factno"/>
 				<br/>
-				<div id="submit">
-					
+				<div id="submit_guest">					
 					<input type="button" value="登  錄" id="submit1" onclick="checkFact('userlogin_guest')"/>
 					<input type="button" value="登  錄" id="submit2" />						
 				</div>				
-				<div id="remembered"><input type="checkbox" value="remembered" name="remembered"/>記住賬號與廠別</div>
+				<div id="remembered"><input type="checkbox" value="remembered" name="remembered"/>記住賬號和密碼</div>
 			</form>		
 		</div>
 		<div id="wrapperbottom"></div>	

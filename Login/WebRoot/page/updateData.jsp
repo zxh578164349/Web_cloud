@@ -44,20 +44,7 @@
 			});
 		}
 	}
-	function gosubmit() {
-		jq.ajax({
-			type : "POST",
-			dataType : "html",
-			data : jq("#form").serialize(),
-			url : "userupdateUesr",
-			success : function(data) {
-				jq("#r_content").html(data);
-			},
-			error : function(error) {
-				jq("#r_content").html(error);
-			}
-		});
-	}
+	
 	jq(function() {
 		var demo = jq("#form").Validform({
 			btnSubmit : "#sub",
@@ -81,27 +68,10 @@
 			}
 		});
 		demo.tipmsg.w["*0-6"] = "只能數字且不超過12位數,可保留三位以內小數";
+		
+		goTrim();//禁止空格
 	});
-
-	/*禁止空格輸入*/
-	/*window.onload=function(){            
-	 var inputs=document.getElementsByTagName("input"); 
-	 for (var i=0;i<inputs.length; i++) {  
-	 if(inputs[i].getAttribute("type")=="text") 
-	 inputs[i].onkeyup=function(){ 
-	 this.value=this.value.replace(/(^\s+)|\s+$/g,""); 
-	 }; 
-	 }  
-	 }*/
-	jq(function() {
-		var inputs = document.getElementsByTagName("input");
-		for ( var i = 0; i < inputs.length; i++) {
-			if (inputs[i].getAttribute("type") == "text")
-				inputs[i].onkeyup = function() {
-					this.value = this.value.replace(/(^\s+)|\s+$/g, "");
-				};
-		}
-	});
+		
 	function back() {
 		loadUrl("/Login/userfindPageBean3?backIndex=1");
 	}

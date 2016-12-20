@@ -71,7 +71,7 @@ public class SessionTimeOutFilter implements Filter{
 		}
 		if(!requestURL.contains("userlogin")&&!requestURL.contains("webfact_findAllWebfact")&&!requestURL.equals("/Login/")&&!requestURL.contains("loginpage")&&
 			!requestURL.contains("judge.jsp")&&!requestURL.contains("vbm_findById_email")&&!requestURL.contains("print2Ypoi_print2Y_hb")&&!requestURL.contains("autosendfactorder_")&&
-			!requestURL.contains("webfactOrder_print_email")){
+			!requestURL.contains("webfactOrder_print_email")&&!requestURL.equals("/Login_scm/")&&!requestURL.contains("login_guest.jsp")){
 			if(user==null){
 				if(vbm==null){
 					if(requestURL.contains("webfact_findAllfact")){
