@@ -44,7 +44,7 @@ String cook_pwd=cookie.getCookAll().split(",")[2];%>
 					<input type="button" value="登  錄" id="submit1" onclick="checkFact('userlogin_guest')"/>
 					<input type="button" value="登  錄" id="submit2" />						
 				</div>				
-				<div id="remembered"><input type="checkbox" value="remembered" name="remembered"/>記住賬號和密碼</div>
+				<div id="remembered"><input type="checkbox" value="remembered" name="remembered"/>記住賬號和密碼22</div>
 			</form>		
 		</div>
 		<div id="wrapperbottom"></div>	

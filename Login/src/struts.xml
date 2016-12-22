@@ -6,6 +6,7 @@
 	<constant name="struts.multipart.maxSize" value="25600000"></constant>
 	 <constant name="struts.custom.i18n.resources" value="uploadError"/>
 	 
+	
 	<package name="strutsL" extends="struts-default,jasperreports-default,json-default" namespace="/">
 	<default-action-ref name="judge"/><!-- 用於jetty容器，因為jetty不支持web.xml文件中<welcome-file-list>，與下面的"judge"action搭配使用 -->				
 		<global-results>
@@ -693,8 +694,8 @@
 		<action name="webformula_*" class="webformulaAction" method="{1}">
 		    <result name="findPageBean">page/webformula.jsp</result>
 		    <result name="findPageBean1">page/table1/webformula1.jsp</result>
-		    <result name="findPageBean_guest">page_guest/webformula.jsp</result>
-		    <result name="findPageBean_guest1">page_guest/table1/webformula1.jsp</result>
+		    <result name="findPageBean_guest">guest/page/webformula.jsp</result>
+		    <result name="findPageBean_guest1">guest/page/table1/webformula1.jsp</result>
 		    <result name="makeFormulaIndex" type="json">
 		        <param name="root">ajaxResult</param>
 		    </result>
@@ -719,5 +720,11 @@
 		</action>
 	</package>
 
+     <package name="guest" extends="struts-default,jasperreports-default,json-default" namespace="/guest">
+	    <action name="webformula_*" class="webformulaAction" method="{1}">
+	        <result name="findPageBean_guest">page/webformula.jsp</result>
+		    <result name="findPageBean_guest1">page/table1/webformula1.jsp</result> 
+	    </action>
+	 </package>
 </struts>
  

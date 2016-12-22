@@ -37,7 +37,7 @@
 		</div>
 		<div class="tab-pane fade" id="tab_guest">
 			<div>
-				<jsp:include page="webuserSaveOrUpdate_guest.jsp" />
+				<jsp:include page="../guest/saveAndUpdate/webuserSaveOrUpdate_guest.jsp" />
 			</div>
 		</div>
 	</div>
