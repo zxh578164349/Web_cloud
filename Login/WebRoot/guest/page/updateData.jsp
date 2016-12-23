@@ -59,7 +59,7 @@
 				if (data == "0") {
 					layer.msg("修改成功,請重新登錄!", 3, 1);
 					window.setTimeout(function() {
-						location.href = "judge.jsp"
+						location.href = "guest/judge.jsp"
 					}, 3000);
 				} else {
 					//alert(data.responseText);
@@ -84,13 +84,7 @@
 				<h2 id="h2_title">個人資料修改</h2>
 				<form class="form-horizontal" role="form" id="form" action="userupdateUesr" method="post">
 					<input type="hidden" name="updateU.id" value="<s:property value="#attr.webU.id"/>"> <input type="hidden" name="updateU.available"
-						value="<s:property value="#attr.webU.available"/>"> <input type="hidden" name="updateU.adminMk" value="<s:property value='#attr.webU.adminMk'/>" />
-					<div class="form-group">
-						<label for="inputEmail3" class="col-sm-2 control-label">工號</label>
-						<div class="col-sm-10">
-							<input type="text" class="pinfo_form" name="updateU.workno" value="<s:property value="#attr.webU.workno"/>" readonly  />
-						</div>
-					</div>
+						value="<s:property value="#attr.webU.available"/>"> <input type="hidden" name="updateU.adminMk" value="<s:property value='#attr.webU.adminMk'/>" />					
 					<div class="form-group">
 						<label for="inputPassword3" class="col-sm-2 control-label">登錄名</label>
 						<div class="col-sm-10">
@@ -165,6 +159,7 @@
 							<input type="text" class="pinfo_form" value="<s:property value='#attr.webU.department'/>" name="updateU.department" />
 							<input type="hidden" value="<s:property value='#attr.webU.erpfactno'/>" name="updateU.erpfactno"/> 
 							<input type="hidden" value="<s:property value='#attr.webU.userType'/>" name="updateU.userType"/>
+							<input type="hidden"  name="updateU.factno" value="<s:property value="#attr.webU.factno"/>"/>
 						</div>
 					</div>
 					<div class="form-group">

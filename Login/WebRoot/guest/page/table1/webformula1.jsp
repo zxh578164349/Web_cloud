@@ -95,8 +95,8 @@
 									</form>																																											 								    
 								    <a href="javascript:document.getElementById('4subform${x.index}').submit()" class="btn btn-xs btn-success">預覽</a>
 								    <a href="javascript:document.getElementById('5subform${x.index}').submit()" class="btn btn-xs btn-success">下載</a>
-								    <a href="webtabpom_findByIdfiles?pomNo=${obj.pom.pomNo}" class="btn btn-xs btn-success" target="_blank">
-					                                             附檔</a>
+								    <!-- <a href="webtabpom_findByIdfiles?pomNo=${obj.pom.pomNo}" class="btn btn-xs btn-success" target="_blank">
+					                                             附檔</a>-->
 								</td>							
 						</tr>
 					</s:iterator>
@@ -105,6 +105,6 @@
 			</table>
   </div>	
 </div>
-<jsp:include page="pagenation.jsp" flush="true"/>			
+<jsp:include page="../../../page/table1/pagenation.jsp" flush="true"/>			
 </body>
 </html>

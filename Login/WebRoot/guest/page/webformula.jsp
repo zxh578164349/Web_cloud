@@ -33,7 +33,7 @@ function pages(page) {
 	jq.ajax({
 		type : "POST",
 		dataType : "Html",
-		url : "webformula_findPageBean3",
+		url : "webformula_findPageBean3_guest",
 		data : "page=" + page ,
 		success : function(msg) {
 			jq("#bodyid").html(msg);
@@ -51,7 +51,7 @@ function submis(public_form) {
 	jq.ajax({
 		type : "POST",
 		dataType : "Html",
-		url : "webformula_findPageBean2",
+		url : "webformula_findPageBean2_guest",
 		//data : "factNo=" + fact.value + "&yymm=" + ym.value,
 		data:subform.serialize(),
 		success : function(msg) {

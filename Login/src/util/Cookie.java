@@ -51,13 +51,14 @@ public class Cookie {
 	public static String getCookAll() {		
 		javax.servlet.http.Cookie[] cookies = ServletActionContext.getRequest().getCookies();
 		javax.servlet.http.Cookie cookie=null;
-		String result="";
+		String result=",,";
 		if(cookies!=null){
 			for(int i=0;i<cookies.length;i++){
 				cookie=cookies[i];
 				if(cookie!=null){
 					if(cookie.getName().equals("user")){
-						result=cookie.getValue();						
+						result=cookie.getValue();
+						return result;
 					}																				
 				}
 			}

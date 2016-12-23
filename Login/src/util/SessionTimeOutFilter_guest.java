@@ -30,7 +30,7 @@ import entity.WebUser;
  * @version    
  *    
  **/
-public class SessionTimeOutFilter implements Filter{
+public class SessionTimeOutFilter_guest implements Filter{
 
 	/**
 	 * 日期:2016/5/11
@@ -75,9 +75,9 @@ public class SessionTimeOutFilter implements Filter{
 			if(user==null){
 				if(vbm==null){
 					if(requestURL.contains("webfact_findAllfact")){
-						httpresponse.getWriter().print("<script>window.parent.alert('地址無效,點擊確定重新登錄');window.location.href='judge.jsp'</script>");//20161115
+						httpresponse.getWriter().print("<script>window.parent.alert('地址無效,點擊確定重新登錄');window.location.href='judge_guest.jsp'</script>");//20161115
 					}else{
-						httpresponse.getWriter().print("<script>window.parent.alert('會話超時,請重新登錄');window.location.href='judge.jsp'</script>");
+						httpresponse.getWriter().print("<script>window.parent.alert('會話超時,請重新登錄');window.location.href='judge_guest.jsp'</script>");
 					}
 					
 				}else{

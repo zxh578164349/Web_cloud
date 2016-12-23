@@ -9,12 +9,12 @@
 <meta http-equiv="expires" content="0">
 <title>Web系統</title>
 <head>
-<link href="../css/main.css" rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="../css/select_beautiful.css">
-<LINK href="../css/list.css" type="text/css" rel="stylesheet">
-<link rel="shortcut icon" href="../images/icon/web_ico.ico" />
+<link href="css/main.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="css/select_beautiful.css">
+<LINK href="css/list.css" type="text/css" rel="stylesheet">
+<link rel="shortcut icon" href="images/icon/web_ico.ico" />
 <!-- 新 Bootstrap 核心 CSS 文件 -->
-<link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
 
@@ -64,7 +64,7 @@
 			<div class="panel panel-info">
 				<div class="panel-heading">
 					<span class="glyphicon glyphicon-file"> <a
-						href="javascript:changeTitle('首頁');loadUrl('right.jsp');change_h2_title('')"
+						href="javascript:changeTitle('首頁');loadUrl('right_guest.jsp');change_h2_title('')"
 						title="返回首頁"> 網站首頁</a> </span>
 				</div>
 				<div class="panel-body">
@@ -105,12 +105,12 @@
 			<div id="toolbar">
 				<span id="t_index" style="display:none">＜＜＜</span> <a
 					href="javascript:switchSysBar()"><img
-					src="../images/icon/arrow.png" border="0" />
+					src="images/icon/arrow.png" border="0" />
 				</a>
 			</div>
             <h2 id="h2_title2"></h2>
 			<div id="r_content">		
-				<jsp:include page="right.jsp" flush="true" />
+				<jsp:include page="right_guest.jsp" flush="true" />
 			</div>
 		</div>
 
@@ -121,19 +121,19 @@
 	</div>
 
 	<!-- <script src="http://apps.bdimg.com/libs/jquery/1.9.1/jquery.min.js"></script> -->
-	<script>window.jQuery|| document.write('<script src="../jquery/jquery-1.9.1.min.js"><\/script>');</script>
-	<script type="text/javascript" src="../jquery/layer/layer.min.js"></script>
-	<script type="text/javascript" src="../jquery/DatePicker/WdatePicker.js"></script>
-	<script type="text/javascript" src="../jquery/Validform_v5.3.2_min.js"></script>
-	<script type="text/javascript" src="../jquery/jquery-form.js"></script>
+	<script>window.jQuery|| document.write('<script src="jquery/jquery-1.9.1.min.js"><\/script>');</script>
+	<script type="text/javascript" src="jquery/layer/layer.min.js"></script>
+	<script type="text/javascript" src="jquery/DatePicker/WdatePicker.js"></script>
+	<script type="text/javascript" src="jquery/Validform_v5.3.2_min.js"></script>
+	<script type="text/javascript" src="jquery/jquery-form.js"></script>
 	<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
 	<!-- <script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script> -->
-	<script src="../bootstrap/js/bootstrap.min.js"></script>	
-	<script src="../uploadify/jquery.uploadify.min.js" type="text/javascript"></script>	
+	<script src="bootstrap/js/bootstrap.min.js"></script>	
+	<script src="uploadify/jquery.uploadify.min.js" type="text/javascript"></script>	
 
 	<!--[if lt IE 9]>  
-  <script src="../bootstrap/html5.js"></script>
-  <script src="../bootstrap/respond.min.js"></script>
+  <script src="bootstrap/html5.js"></script>
+  <script src="bootstrap/respond.min.js"></script>
   <![endif]-->
 	<script>
 		var jq = jQuery.noConflict();
@@ -168,7 +168,7 @@
 		window.setInterval("run();", 1000);
 
 		function back_judge() {
-			location.href = "userlogout";
+			location.href = "userlogout_guest";
 		}
 
 		function showDiv_main(index) {			

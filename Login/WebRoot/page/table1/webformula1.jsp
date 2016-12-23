@@ -154,7 +154,7 @@
 			</table>
   </div>	
 </div>
-<jsp:include page="pagenation.jsp" flush="true"/>	
+<jsp:include page="pagenation.jsp" flush="true"/>		
 
 
 <script type="text/javascript">

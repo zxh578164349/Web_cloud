@@ -24,7 +24,8 @@
 		<action name="user*" class="webUserAction" method="{1}">
 			<!-- <result name="chengong" type="redirectAction">menu_findAllMenu</result>  -->
 			<result name="chengong">test.jsp</result>		   			
-			<result name="initial">page/updateData.jsp</result>
+			<result name="initialUpdate">page/updateData.jsp</result>
+			<result name="initialUpdate_guest">guest/page/updateData.jsp</result>
 			<result name="all">page/managerUser.jsp</result>
 			<result name="qx">page/Jurisdiction.jsp</result>			
 			<result name="findMoreusers">index2.jsp</result>
@@ -42,7 +43,9 @@
 			<result name="updateUesr" type="json">
 			   <param name="root">ajax_result</param>
 			</result>
-			<result name="logout">judge.jsp</result>			    			
+			
+			<result name="logout">judge.jsp</result>
+			<result name="logout_guest">judge_guest.jsp</result>			    			
 		</action>
 		<action name="show*" class="showAction" method="{1}">
 			<result name="titleSuccess">page/show.jsp</result>
@@ -721,10 +724,7 @@
 	</package>
 
      <package name="guest" extends="struts-default,jasperreports-default,json-default" namespace="/guest">
-	    <action name="webformula_*" class="webformulaAction" method="{1}">
-	        <result name="findPageBean_guest">page/webformula.jsp</result>
-		    <result name="findPageBean_guest1">page/table1/webformula1.jsp</result> 
-	    </action>
+	    	    	    
 	 </package>
 </struts>
  

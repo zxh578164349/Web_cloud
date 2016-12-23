@@ -21,7 +21,7 @@
 
 		<div id="wrappermiddle">
 			<form  method="post" id="loginform">
-				<h2>Web系統登錄  <s:property value='userName'/></h2>
+				<h2>Web系統登錄</h2>
 				<div id="username_input">
 					<div id="username_inputleft"></div>
 					<div id="username_inputmiddle">

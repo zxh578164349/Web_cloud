@@ -290,20 +290,23 @@ public class WebFormulaAction implements ServletResponseAware{
 	public String findPageBean(){
         this.clearSession();
 		ActionContext.getContext().getSession().remove("allrow");//dao層  allrow
-		ActionContext.getContext().getSession().remove("formulaIndex");
+		//ActionContext.getContext().getSession().remove("formulaIndex");
+		ActionContext.getContext().getSession().remove("formula");
 		bean=webformulaser.findPageBean(page,PAGESIZE,formula,issuedDate_a,issuedDate_b);
 		return "findPageBean";
 	}
 	
 	public String findPageBean2(){
 		ActionContext.getContext().getSession().remove("allrow");
-		ActionContext.getContext().getSession().put("formulaIndex",formulaIndex);
+		//ActionContext.getContext().getSession().put("formulaIndex",formulaIndex);
+		ActionContext.getContext().getSession().put("formula",formula);
 		bean=webformulaser.findPageBean(page,PAGESIZE,formula,issuedDate_a,issuedDate_b);
 		return "findPageBean1";		
 	}
 	
 	public String findPageBean3(){
-		formulaIndex=(String)ActionContext.getContext().getSession().get("formulaIndex");
+		//formulaIndex=(String)ActionContext.getContext().getSession().get("formulaIndex");
+		formula=(WebFormula)ActionContext.getContext().getSession().get("formula");
 		bean=webformulaser.findPageBean(page,PAGESIZE,formula,issuedDate_a,issuedDate_b);
 		String temp="findPageBean1";
 		if(backIndex!=null&&backIndex.equals("1")){
