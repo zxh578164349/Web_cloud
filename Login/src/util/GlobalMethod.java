@@ -90,6 +90,7 @@ import entity.WebestproductId;
 public class GlobalMethod extends HibernateDaoSupport{
 	private static final String URL="http://203.85.73.161/Login/";
 	private static final String URL2="http://203.85.73.161/Login";
+	private static final String EMAIL="kyuen@yydg.com.cn";
 
 	public static void print(List list,String factNo,String yymm,String yymm2,String file,HttpServletResponse response) throws IOException{
 		//List<Webwlo>list=wloService.findByAny(factNo, yymm, yymm2);
@@ -1190,7 +1191,7 @@ public class GlobalMethod extends HibernateDaoSupport{
 					}
 					/***************************************中途知會人的email20160217********************************************/
 					
-					list_email.add("kyuen@yydg.com.cn");
+					list_email.add(EMAIL);
 					String emailUrl=URL+"vbm_findById_email?visaSort="+visaSort+"&billNo="+billNo
 					         +"&factNo="+factNo+"&email="+signerNext;
 					String emailUrl2=URL+"vbm_findById_email2?visaSort="+visaSort+"&billNo="+billNo
@@ -1205,7 +1206,7 @@ public class GlobalMethod extends HibernateDaoSupport{
 					    		  "如需查詢以往單據請登錄加久網站:(云端)<a href='"+URL2+"'>"+URL2+"</a>" +		            
 					      		"<br/>進入[KPI數據]--[函文審核]中查找對應單號審核"+			    		
 					    		"<hr/>"+
-					      		"<br/>本郵件定時自動發送,請勿回復!如需回復或者問題，請回复到kyuen@yydg.com.cn資訊室!<br/>"+
+					      		"<br/>本郵件定時自動發送,請勿回復!如需回復或者問題，請回复到"+EMAIL+"資訊室!<br/>"+
 					    		"<hr/>";
 					}
 					if(visaMk.equals("T")){
@@ -1226,12 +1227,12 @@ public class GlobalMethod extends HibernateDaoSupport{
 						    		 "詳情請登錄加久網站:(云端)<a href='"+URL2+"'>"+URL2+"</a>" +		            
 						      		"<br/>進入[KPI數據]--[函文審核]中查找對應單號審核"+			    		
 						    		"<hr/>"+
-						      		"<br/>本郵件定時自動發送,請勿回復!如需回復或者問題，請回复到kyuen@yydg.com.cn資訊室!<br/>"+
+						      		"<br/>本郵件定時自動發送,請勿回復!如需回復或者問題，請回复到"+EMAIL+"資訊室!<br/>"+
 						    		"<hr/>";
 					}
 					for(int j=0;j<list_email.size();j++){//start for2
 						  mailInfo.setToAddress(list_email.get(j));
-						  if(list_email.get(j).equals("kyuen@yydg.com.cn")){						  
+						  if(list_email.get(j).equals(EMAIL)){						  
 							  String content_msg=content+"下一箇簽核:<span style='color:blue'>"+signerNext+"</span>";
 							  mailInfo.setContent(content_msg);					      
 						  }else{
@@ -1266,7 +1267,7 @@ public class GlobalMethod extends HibernateDaoSupport{
 			List<KyVisabills>list_visa2=vbm2.getKyVisabillses();
 			//这个类主要是设置邮件   
 			List<String>list_emails=new ArrayList<String>();//所有發送人
-			list_emails.add("kyuen@yydg.com.cn");
+			list_emails.add(EMAIL);
 			//由於出差函文流程中可能不包括申請人， 所有需要從函文中獲取申請email 20160621
 			if(vbm2.getId().getBillNo().substring(0,2).equals("BM")){
 				if(vbm2.getWebbussletter().getUserEmail()!=null&&!vbm2.getWebbussletter().getUserEmail().equals("")){
@@ -1307,6 +1308,91 @@ public class GlobalMethod extends HibernateDaoSupport{
 					file.delete();
 				}
 			}
+	 }
+	 
+	 /**
+	  * 新函文發送email
+	  * @Title: sendNewEmail
+	  * @Description: TODO
+	  * @param @param vbm
+	  * @param @param list_emailPwd
+	  * @return void
+	  * @throws
+	  * @author web
+	  * @date 2016/7/8
+	  */
+	 public static void sendNewEmail(KyVisabillm vbm,List<String>list_emailPwd){
+		 List<String>list=new ArrayList<String>();
+		 list.add(vbm.getSignerNext());
+		 for(String str:list_emailPwd){
+			 list.add(str);
+		 }
+		 list.add(EMAIL);
+		 String emailUrl_in=URL+"vbm_findById_email?visaSort="+vbm.getId().getVisaSort()+"&billNo="+vbm.getId().getBillNo()
+		         +"&factNo="+vbm.getId().getFactNo()+"&email="+vbm.getSignerNext();	
+		 String emailUrl_in2=URL+"vbm_findById_email2?visaSort="+vbm.getId().getVisaSort()+"&billNo="+vbm.getId().getBillNo()
+		         +"&factNo="+vbm.getId().getFactNo()+"&email="+vbm.getSignerNext();
+		 MailSenderInfo mailinfo=new MailSenderInfo();
+		 SimpleMailSender sms = new SimpleMailSender();  
+			mailinfo.setValidate(true);					
+			mailinfo.setSubject("新函文初次審核"+vbm.getId().getBillNo()+"("+vbm.getId().getFactNo()+")");
+			mailinfo.setContent("單號:<span style='color:red'>"+vbm.getId().getBillNo()+"</span>"+"&nbsp;&nbsp;廠別:"+vbm.getId().getFactNo()+								
+					"<br/>點擊單號直接審核:<a href='"+emailUrl_in2+"'>"+vbm.getId().getBillNo()+"</a>(電腦適用)"+
+					"<br/>點擊單號直接審核:<a href='"+emailUrl_in+"'>"+vbm.getId().getBillNo()+"</a>(手機平板適用)"+
+					"<hr/>"+
+					"如需查詢以往單據請登陸:(云端)<a href='"+URL+"'>"+URL+"</a>" +							
+					"<br/>進入[KPI數據]--[函文審核]查找對應單號審核" +									
+					"<hr/>"+
+					"<br/>本郵件自動發送,請勿回復!如需回復或者問題，請回复到"+EMAIL+"資訊室!<br/>"+
+					"<hr/>");
+		      for(String email:list){		    	  
+		    	  mailinfo.setToAddress(email);
+		    	  sms.sendHtmlMail(mailinfo);
+		      } 				          		       			 
+	 }
+	 
+	 /**
+	  * 減簽函文郵件
+	  * @Title: sendEmail_minus
+	  * @Description: TODO
+	  * @param @param content
+	  * @param @param subject
+	  * @param @param factNo
+	  * @param @param billNo
+	  * @param @param visaSort
+	  * @param @param email
+	  * @return void
+	  * @throws
+	  * @author web
+	  * @date 2016/12/26
+	  */
+	 public static void sendEmail_minus(String factNo,String billNo,String visaSort,String email){
+		 //****************通知下一位签核人***************/
+		 List<String>list=new ArrayList<String>();
+		 list.add(email);
+		 list.add(EMAIL);
+		 SimpleMailSender sms = new SimpleMailSender();
+		 MailSenderInfo mailInfo = new MailSenderInfo();
+  		 String emailUrl_in=URL+"vbm_findById_email?visaSort="+visaSort+"&billNo="+billNo
+		         +"&factNo="+factNo+"&email="+email;
+  		String emailUrl_in2=URL+"vbm_findById_email2?visaSort="+visaSort+"&billNo="+billNo
+		         +"&factNo="+factNo+"&email="+email;
+  		 
+  		 mailInfo.setSubject("函文減簽(下一位審核)_"+billNo+"("+factNo+")");
+  		 mailInfo.setContent(
+ 	    		"函文單號:"+"<span style='color:red'>"+billNo+"</span>"+"&nbsp;&nbsp;廠別:"+factNo+
+ 	    		"<br/>點擊單號直接審核:<a href='"+emailUrl_in2+"'>"+billNo+"</a>(電腦適用)"+
+ 	    		"<br/>點擊單號直接審核:<a href='"+emailUrl_in+"'>"+billNo+"</a>(手機平板適用)"+
+ 	    		"<br/>如需查詢以往單據請登錄加久網站:((云端))<a href='"+URL2+"'>"+URL2+"</a>" +	            
+ 	      		"<br/>進入[KPI數據]--[函文審核]中查找對應單號審核,"+	      	    		
+ 	    		"<hr/>"+	      		
+ 	    		"<br/>本郵件自動發送,請勿回復!如需回復或者問題，請回复到"+EMAIL+"資訊室!<br/>" +
+ 	    		"<hr/>");
+  		 for(String address:list){
+  			mailInfo.setToAddress(address);
+  			sms.sendHtmlMail(mailInfo);
+  		 }		 
+  		//****************通知下一位签核人***************/
 	 }
 	 
 	 /**
@@ -1387,46 +1473,7 @@ public class GlobalMethod extends HibernateDaoSupport{
 	 
 	 
 	 			 
-	 /**
-	  * 新函文發送email
-	  * @Title: sendNewEmail
-	  * @Description: TODO
-	  * @param @param vbm
-	  * @param @param list_emailPwd
-	  * @return void
-	  * @throws
-	  * @author web
-	  * @date 2016/7/8
-	  */
-	 public static void sendNewEmail(KyVisabillm vbm,List<String>list_emailPwd){
-		 List<String>list=new ArrayList<String>();
-		 list.add(vbm.getSignerNext());
-		 for(String str:list_emailPwd){
-			 list.add(str);
-		 }
-		 list.add("kyuen@yydg.com.cn");
-		 String emailUrl_in=URL+"vbm_findById_email?visaSort="+vbm.getId().getVisaSort()+"&billNo="+vbm.getId().getBillNo()
-		         +"&factNo="+vbm.getId().getFactNo()+"&email="+vbm.getSignerNext();	
-		 String emailUrl_in2=URL+"vbm_findById_email2?visaSort="+vbm.getId().getVisaSort()+"&billNo="+vbm.getId().getBillNo()
-		         +"&factNo="+vbm.getId().getFactNo()+"&email="+vbm.getSignerNext();
-		 MailSenderInfo mailinfo=new MailSenderInfo();
-		 SimpleMailSender sms = new SimpleMailSender();  
-			mailinfo.setValidate(true);					
-			mailinfo.setSubject("新函文初次審核"+vbm.getId().getBillNo()+"("+vbm.getId().getFactNo()+")");
-			mailinfo.setContent("單號:<span style='color:red'>"+vbm.getId().getBillNo()+"</span>"+"&nbsp;&nbsp;廠別:"+vbm.getId().getFactNo()+								
-					"<br/>點擊單號直接審核:<a href='"+emailUrl_in2+"'>"+vbm.getId().getBillNo()+"</a>(電腦適用)"+
-					"<br/>點擊單號直接審核:<a href='"+emailUrl_in+"'>"+vbm.getId().getBillNo()+"</a>(手機平板適用)"+
-					"<hr/>"+
-					"如需查詢以往單據請登陸:(云端)<a href='"+URL+"'>"+URL+"</a>" +							
-					"<br/>進入[KPI數據]--[函文審核]查找對應單號審核" +									
-					"<hr/>"+
-					"<br/>本郵件自動發送,請勿回復!如需回復或者問題，請回复到kyuen@yydg.com.cn資訊室!<br/>"+
-					"<hr/>");
-		      for(String email:list){		    	  
-		    	  mailinfo.setToAddress(email);
-		    	  sms.sendHtmlMail(mailinfo);
-		      } 				          		       			 
-	 }
+	 
 	 
 	 
 	 /**
@@ -1721,6 +1768,10 @@ public class GlobalMethod extends HibernateDaoSupport{
 	 */
 	public static void vbmCotentsTypes(List<KyVisabillm>list){
 		for(KyVisabillm vbm:list){
+			vbmCotentsType(vbm);
+		}
+	}
+	public static void vbmCotentsType(KyVisabillm vbm){		
 			if(vbm.getId().getBillNo().substring(0,2).equals("BM")){
 				 vbm.getWebbussletter().getUserEmail();//獲取出差函文申請人的Email				
 				 vbm.setGeneral("("+vbm.getFactNo2().getFactSname()+")"+vbm.getWebbussletter().getUsername()+
@@ -1738,7 +1789,7 @@ public class GlobalMethod extends HibernateDaoSupport{
 				vbm.setGeneral("("+vbm.getFactNo2().getFactSname()+")"+vbm.getKyzexp().getMemoSmk()+"_"+
 						vbm.getId().getBillNo()+"("+vbm.getId().getFactNo()+")");
 			}
-		}
+		
 	}
 	
 	

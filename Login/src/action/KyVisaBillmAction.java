@@ -59,6 +59,7 @@ import entity.KyzExpectmatmId;
 import entity.KyzExpectmats;
 import entity.KyzVisaflow;
 import entity.WebBussinessletter;
+import entity.WebFormula;
 import entity.WebType;
 import entity.WebUser;
 import entity.Webremittancelist;
@@ -355,23 +356,7 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 		if(factNo==null||factNo.equals("")){
 			factNo=(String)ActionContext.getContext().getSession().get("factNo");
 		}
-		bean=visabillSer.findPageBean_tw(20,page, visaMk, factNo, billNo,visaSort,yymmdd,yymmdd2,user);
-		/*List<KyVisabills>list=bean.getList();
-		for(int i=0;i<list.size();i++){
-			String billNo=list.get(i).getId().getKyVisabillm().getId().getBillNo();
-			String title="";
-			//判斷費用函文還是內部聯絡函
-			if(billNo.substring(0, 2).equals("EM")){
-				title=kyzSer.findTitleByBillno(billNo);
-			}else{
-				title=kyzletterSer.findTitleByBillno(billNo);
-			}
-			if(title!=null){
-				list.get(i).setMemo(title);
-			}else{
-				list.get(i).setMemo("");
-			}						
-		}*/
+		bean=visabillSer.findPageBean_tw(20,page, visaMk, factNo, billNo,visaSort,yymmdd,yymmdd2,user);		
 		this.getKyzTitle(bean);
 		this.getTypeName(bean);
 		return "beanList1";
@@ -655,27 +640,6 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 			return "add";								
 	}
 	
-	/**
-	 * (暫無使用)郵件進入審核（bootstrap）
-	 * 20160321
-	 * @return
-	 * @throws IOException
-	 */
-	public String add2() throws IOException{
-		this.add();
-		return "success";
-	}
-	
-	/**
-	 * 暫無使用
-	 * 20160321
-	 * @throws IOException 
-	 */
-	public String add3() throws IOException{
-		this.add();
-		return "beanList";
-	}
-		
 	
 	/**
 	 * 加簽
@@ -768,212 +732,7 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 		}											
 		return "addvisabills";
 	}
-	
-	/**
-	 * 減簽（不刪除）（湘威JW專用）
-	 * @Title: minusvisabills
-	 * @Description: TODO
-	 * @param @return
-	 * @param @throws IOException
-	 * @return String
-	 * @throws
-	 * @author web
-	 * @date 2016/3/11
-	 */
-	
-	public String minusvisabills() throws IOException{
-		SimpleDateFormat format=new SimpleDateFormat("yyyyMMdd");
-		KyVisabillm vbm=new KyVisabillm();
-		vbm=visabillmSer.findById(factNo, visaSort, billNo);
-		List<KyVisabills>list=vbm.getKyVisabillses();
-		int startnum=Integer.parseInt(itemNo);
-		/**
-		 * 如果最後一個不要審核,則要去掉(也就是總長度-1)
-		 */
-		int vbs_list=list.size();
-		int nos=visabillSer.findBillsWithNo(visaSort, billNo);
-		if(nos>0){
-			vbs_list=vbs_list-nos;
-		}
-						
-		for(int i=startnum;i>0;i--){
-			KyVisabills bills=list.get(i-1);
-			bills.setVisaMk("Y");
-			String datevisa=bills.getDateVisa();
-			if(datevisa==null||datevisa.equals("")){
-				bills.setDateVisa(format.format(new Date()));
-			}
-		}
-		int nextnum=0;
-		if(startnum==vbs_list){
-			nextnum=startnum;
-		}else{
-			nextnum=startnum+1;
-		}
-		String nextnumstr="";
-		if(nextnum<10){
-			nextnumstr="0"+nextnum;
-		}else{
-			nextnumstr=""+nextnum;
-		}
-		KyVisabills vbs_first=visabillSer.findById(factNo, visaSort, billNo, itemNo);
-		KyVisabills vbs_next=visabillSer.findById(factNo, visaSort, billNo, nextnumstr);
-		String singernext=vbs_next.getVisaSigner();
-		String singerlast=vbs_first.getVisaSigner();
-		String itemnext=vbs_next.getId().getItemNo();
-		String itemlast=vbs_first.getId().getItemNo();
 		
-		String flowMknext=vbs_next.getFlowMk();//標識下一位是否為"知會"的
-		
-		vbm.setSignerNext(singernext);
-		vbm.setSignerLast(singerlast);
-		vbm.setItemNext(itemnext);
-		vbm.setItemLast(itemlast);
-		vbm.setLastMk("Y");
-		if(startnum==vbs_list){
-			vbm.setVisaMk("Y");
-		}
-		//visabillmSer.add(vbm);
-						
-		//这个类主要来发送邮件  
-		SimpleMailSender sms = new SimpleMailSender();
-		//这个类主要是设置邮件
-		MailSenderInfo mailInfo = new MailSenderInfo(); 
-		
-		/**
-		 * 發郵件到當前減簽的下一位審核人
-		 * 如果當前減簽人不是最後一個審核人,則要發送郵件審核通知
-		 */  
-		if(startnum!=vbs_list&&flowMknext.equals("Y")){//start if	
-			String emailUrl_in="http://203.85.73.161/Login/vbm_findById_email?visaSort="+vbm.getId().getVisaSort()+"& billNo="+billNo
-			         +"& factNo="+vbm.getId().getFactNo()+"& email="+singernext;			
-	      mailInfo.setValidate(true);    	       
-	      mailInfo.setToAddress(singernext);    
-	      mailInfo.setSubject("函文減簽(下一位審核)_"+billNo+"("+factNo+")");    
-	      mailInfo.setContent(
-	    		"函文單號:"+"<span style='color:red'>"+billNo+"</span>"+"&nbsp;&nbsp;廠別:"+factNo+
-	    		"<br/>點擊單號直接審核:<a href='"+emailUrl_in+"'>"+billNo+"</a>"+				
-	    		"如需查詢以往單據請登錄加久網站:((云端))<a href='http://203.85.73.161/Login'>http://203.85.73.161/Login</a>" +	            
-	      		"<br/>進入[KPI數據]--[函文審核]中查找對應單號審核,"+	      	    		
-	    		"<hr/>"+	      		
-	    		"<br/>本郵件自動發送,請勿回復!如需回復或者問題，請回复到kyuen@yydg.com.cn資訊室!<br/>" +
-	    		"<hr/>");    	       	      
-	      sms.sendHtmlMail(mailInfo);
-	      /**
-	       * 給當前減簽人前面沒有審核的人發郵件(包括當前減簽人)
-	       */
-	      for(int i=startnum;i>0;i--){
-	    	  //注意:要重新從數據庫中查找vbm,因為前面已經把vbm中KyVisabills的visaMk Set為Y了,所以不能再使用前面的vbm,但還沒有保存到數據庫
-	    	  KyVisabillm vbm2=visabillmSer.findById(factNo, visaSort, billNo);
-	    	  List<KyVisabills>list2=vbm2.getKyVisabillses();
-	    	  KyVisabills bills=list2.get(i-1);
-	    	  String visamk=bills.getVisaMk();	    	 
-	    	  String visaSigner=bills.getVisaSigner();
-	    	  //當前減簽的人,是當前登錄者
-	    	  WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
-	    	  String userName=user.getUsername();
-	    	  if(visamk.equals("N")){
-	    		  SimpleMailSender sms_n=new SimpleMailSender();
-	    		  MailSenderInfo mailInfo_n=new MailSenderInfo();
-	    		  mailInfo_n.setValidate(true);	    		
-	    		  mailInfo_n.setToAddress(visaSigner);
-	    		  mailInfo_n.setSubject("函文減簽通知_"+billNo+"("+factNo+")");
-	    		  mailInfo_n.setContent("你好,單號為:"+"<span style='color:red'>"+billNo+"</span>"+"的函文已由用戶:"
-	    		                         +"<span style='color:blue'>"+userName+"</span>"+"減簽,收到該郵件的人,不需要審核此單號的函文.");
-	    		  sms_n.sendHtmlMail(mailInfo_n);
-	    	  }
-	      }
-	      }//end if1
-			     	          	          	         
-	          /**
-	           * 注意,函文要放到最後保存
-	           */
-	          visabillmSer.add(vbm);
-	          
-	          /**
-	           * 注意,這裡要放在visabillmSer.add(vbm)之後
-	  		 * 如果是最後一個,則要給所有人發送郵件(相當於知會)
-	  		 */
-	  		if(startnum==vbs_list){
-	  			//判斷是費用函文還是內部聯絡函
-	  			if(billNo.substring(0, 2).equals("EM")){
-	  				this.addVisabillsAndEmail(factNo, billNo, visaSort,vbm);
-	  			}else{
-	  				this.addVisabillsAndEmail2(factNo, billNo, visaSort,vbm);
-	  			}
-	  			
-	  		}
-	         	  		
-		return "minusvisabills";
-	}
-	
-	
-	
-	
-	
-	
-	/**
-	 * 費用函文
-	 * @param local_factNo
-	 * @param local_billNo
-	 * @param local_visaSort
-	 * @throws IOException
-	 */
-	public void addVisabillsAndEmail(String local_factNo,String local_billNo,String local_visaSort,KyVisabillm vbm) throws IOException{	
-		Map<String,Object>map_result=kyzSer.print(local_factNo, local_billNo,local_visaSort,vbm);
-		if(map_result!=null&&map_result.size()>0){
-			map=(Map<String,Object>)map_result.get("map");
-			List<KyzExpectmatm>listkyz=(List<KyzExpectmatm>)map_result.get("list");
-			JasperHelper.exportmain("auto", map,"matterApplication.jasper", listkyz,local_billNo, "jasper/audit/");
-		}
-		this.sendEmail(local_factNo, local_billNo, local_visaSort, vbm);				
-		
-	}
-	
-	/**
-	 * 內部聯絡函
-	 * @param local_factNo
-	 * @param local_billNo
-	 * @param local_visaSort
-	 * @throws IOException
-	 */
-	public void addVisabillsAndEmail2(String local_factNo,String local_billNo,String local_visaSort,KyVisabillm vbm) throws IOException{				
-		Map<String,Object>map_result=kyzletterSer.print(local_factNo, local_billNo, local_visaSort,vbm);
-		if(map_result!=null&&map_result.size()>0){
-			map=(Map<String,Object>)map_result.get("map");
-			List<KyzContactletter>list=(List<KyzContactletter>)map_result.get("list");
-			JasperHelper.exportmain("auto", map,"kyz_contactletter.jasper", list,local_billNo, "jasper/audit/");
-		}
-		this.sendEmail(local_factNo, local_billNo, local_visaSort, vbm);				
-								
-}
-	
-	/**
-	 * 人員出差函文
-	 * @Title: addVisabillsAndEmail3
-	 * @Description: TODO
-	 * @param @param local_factNo
-	 * @param @param local_billNo
-	 * @param @param local_visaSort
-	 * @param @param vbm
-	 * @param @throws IOException
-	 * @return void
-	 * @throws
-	 * @author web
-	 * @date 2016/3/11
-	 */
-	public void addVisabillsAndEmail3(String local_factNo,String local_billNo,String local_visaSort,KyVisabillm vbm) throws IOException{
-		Map<String,Object>map_result=webbussletterSer.print(factNo, billNo, visaSort,vbm);
-		if(map_result!=null&&map_result.size()>0){
-			map=(Map<String,Object>)map_result.get("map");
-			List<WebBussinessletter>list=(List<WebBussinessletter>)map_result.get("list");
-			JasperHelper.exportmain("auto", map,"webbussletter.jasper", list,billNo, "jasper/audit/");
-		}
-		this.sendEmail(local_factNo, local_billNo, local_visaSort, vbm);
-	}
-	
-	
-	
 	/**
 	 * 複製文件
 	 * @param sourceFile
@@ -1076,51 +835,6 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 				}
 			}//for			
 		}
-		
-		
-		
-		/*long start=System.currentTimeMillis();		
-		List<Object[]>list_kyz=null;
-		List<Object[]>list_letter=null;		
-		String title="";
-		if(list.size()>0){
-			for(int i=0;i<list.size();i++){
-				String billNo=list.get(i).getId().getKyVisabillm().getId().getBillNo();
-				if(billNo.substring(0,2).equals("EM")){
-					list_kyz=kyzSer.findTitle(factNo);					
-					break;
-				}
-			}
-			for(int i=0;i<list.size();i++){
-				String billNo=list.get(i).getId().getKyVisabillm().getId().getBillNo();
-				if(billNo.substring(0,2).equals("CM")){
-					list_letter=kyzletterSer.findTitle(factNo);					
-					break;
-				}
-			}
-			for(int i=0;i<list.size();i++){//for				
-				String billNo=list.get(i).getId().getKyVisabillm().getId().getBillNo();
-				if(billNo.substring(0, 2).equals("EM")&&list_kyz!=null){
-					for(int j=0;j<list_kyz.size();j++){
-						if(billNo.equals((String)list_kyz.get(j)[1])){
-							title=(String)list_kyz.get(j)[2];
-							list.get(i).setMemo(title);
-							break;
-						}
-					}
-				}
-				if(billNo.substring(0,2).equals("CM")&&list_letter!=null){
-					for(int j=0;j<list_letter.size();j++){
-						if(billNo.equals((String)list_letter.get(j)[1])){
-							title=(String)list_letter.get(j)[2];
-							list.get(i).setMemo(title);
-							break;
-						}
-					}
-				}
-			}//for
-			System.out.println("運行時間："+(System.currentTimeMillis()-start));
-		}*/
 	}
 	
 	public void getTypeName(PageBean bean){
@@ -1167,8 +881,8 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 			int index=Integer.parseInt(vbs.getId().getItemNo())-1;//当前减签人的位置（集合从0开始，所以减1）
 			
 			//當前減簽的人,是當前登錄者
-	  	    WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
-	  	    String userName=user.getUsername();
+	  	    //WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
+	  	    //String userName=user.getUsername();
 			
 	  	    /**
 	  	     * 如果减签的刚好函文的下一位签核人，
@@ -1179,24 +893,8 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 	  	    
 	  	    //*********************************************如果当前减签人刚好是函文的下一位签核人**********************************************//
 			if(visaNext.equals(singer)&&flowMk.equals("Y")){
-				//*********发送email通知已经减签***********//
-			  SimpleMailSender sms_n=new SimpleMailSender();
-	  		  MailSenderInfo mailInfo_n=new MailSenderInfo();
-	  		  mailInfo_n.setValidate(true);
-	  		  /*mailInfo_n.setUserName("kyuen@yydg.com.cn");
-	  		  mailInfo_n.setPassword("yydgmail");
-	  		  mailInfo_n.setFromAddress("<kyuen@yydg.com.cn>");*/
-	  		  mailInfo_n.setToAddress(visaNext);
-	  		  mailInfo_n.setSubject("函文減簽通知_"+billNo+"("+factNo+")");
-	  		  mailInfo_n.setContent("你好,單號為:"+"<span style='color:red'>"+billNo+"</span>"+"的函文已由用戶:"
-	  		                         +"<span style='color:blue'>"+userName+"</span>"+"減簽,收到該郵件的人,不需要審核此單號的函文.");
-	  		  sms_n.sendHtmlMail(mailInfo_n);
-	  		  
-	  		  /****************發送到kyuen@yydg.com.cn***********************/
-	  		  mailInfo_n.setToAddress("kyuen@yydg.com.cn");
-	  		  sms_n.sendHtmlMail(mailInfo_n);
-	  		  
-	  		//*********更新下一位签核人***********//
+				//*********发送email通知已经减签***********//				  		  
+	  		       //*********更新下一位签核人***********//
 	  		  //如果不是最后一个签核人，并且不是最后一个知会人,则不需要更新
 	  		  int num001=vbm.getKyVisabillses().size()-visabillSer.findBillsWithNo(visaSort, billNo);
 	  		  if(Integer.parseInt(itemNo)!=num001&&Integer.parseInt(itemNo)!=vbm.getKyVisabillses().size()){//if 			
@@ -1210,27 +908,11 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 	      		  vbm.setSignerNext(bills.getVisaSigner());
 	      		 // visabillmSer.add(vbm);
 	      		  
-	      		  //****************通知下一位签核人***************/
-	      		 String emailUrl_in="http://203.85.73.161/Login/vbm_findById_email?visaSort="+visaSort+"&billNo="+billNo
-				         +"&factNo="+factNo+"&email="+bills.getVisaSigner();
-	      		String emailUrl_in2="http://203.85.73.161/Login/vbm_findById_email2?visaSort="+visaSort+"&billNo="+billNo
-				         +"&factNo="+factNo+"&email="+bills.getVisaSigner();
-	      		 mailInfo_n.setToAddress(bills.getVisaSigner());
-	      		 mailInfo_n.setSubject("函文減簽(下一位審核)_"+billNo+"("+factNo+")");
-	      		 mailInfo_n.setContent(
-	     	    		"函文單號:"+"<span style='color:red'>"+billNo+"</span>"+"&nbsp;&nbsp;廠別:"+factNo+
-	     	    		"<br/>點擊單號直接審核:<a href='"+emailUrl_in2+"'>"+billNo+"</a>(電腦適用)"+
-	     	    		"<br/>點擊單號直接審核:<a href='"+emailUrl_in+"'>"+billNo+"</a>(手機平板適用)"+
-	     	    		"<br/>如需查詢以往單據請登錄加久網站:((云端))<a href='http://203.85.73.161/Login'>http://203.85.73.161/Login</a>" +	            
-	     	      		"<br/>進入[KPI數據]--[函文審核]中查找對應單號審核,"+	      	    		
-	     	    		"<hr/>"+	      		
-	     	    		"<br/>本郵件自動發送,請勿回復!如需回復或者問題，請回复到kyuen@yydg.com.cn資訊室!<br/>" +
-	     	    		"<hr/>");
-	      		 sms_n.sendHtmlMail(mailInfo_n);
+	      		  //****************通知下一位签核人***************/	      		
+	      		 GlobalMethod.sendEmail_minus(factNo,billNo,visaSort,bills.getVisaSigner());
 	      		//****************通知下一位签核人***************/
 	  		  }//if 
-	  		  
-	  		  
+	  		 	  		  
 	  		  if(Integer.parseInt(itemNo)==num001){
 	  			  vbm.setVisaMk("Y");
 	  		  }
@@ -1240,14 +922,7 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 			//*********************************************如果当前减签人刚好是函文的下一位签核人**********************************************//
 			
 			visabillSer.delete(factNo, visaSort, billNo, itemNo);//直接删除
-			vbm.getKyVisabillses().remove(index);
-							
-			/*for(int i=0;i<vbm.getKyVisabillses().size();i++){
-				KyVisabills bls=vbm.getKyVisabillses().get(i);
-				String itemno=bls.getId().getItemNo();
-				System.out.println(itemno+"---"+bls.getVisaRank()+"----"+bls.getFlowMk());
-			}
-			System.out.println("--------------------------------------------------");*/		
+			vbm.getKyVisabillses().remove(index);											
 			for(int i=index;i<vbm.getKyVisabillses().size();i++){//从index开始（如果index是最后一个，则跳出循环）
 				KyVisabills bls=vbm.getKyVisabillses().get(i);
 				visabillSer.delete(bls);//为了避免最后一个出现重复，所以要先删除（这点很重要）
@@ -1261,33 +936,8 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 				itemno=tempnum;	
 				bls.getId().setItemNo(tempnum);
 				visabillSer.add(bls);
-				System.out.println(itemno+"---"+bls.getVisaRank()+"----"+bls.getFlowMk());
-			}
-			/*System.out.println("--------------------------------------------------");
-			for(int i=index;i<vbm.getKyVisabillses().size();i++){
-				KyVisabills bls=vbm.getKyVisabillses().get(i);
-				String itemno=bls.getId().getItemNo();
-				System.out.println(itemno+"---"+bls.getVisaRank()+"----"+bls.getFlowMk());
-			}*/
-			
-			//如果未签核的人数为0，也就签完，则进行知会email通知
-	        //int numYes=visabillSer.findBillsWithYes(visaSort, billNo);
-			
-			/*********************最後知會（每天定時有發送，所以註釋）20160311*********************************/
-	        /*int numNo=visabillSer.findBillsWithNo2(visaSort, billNo);//未签核的人数
-			if(numNo==0){
-				//判斷是費用函文還是內部聯絡函
-	  			if(billNo.substring(0, 2).equals("EM")){
-	  				this.addVisabillsAndEmail(factNo, billNo, visaSort,vbm);
-	  			}
-	  			if((billNo.substring(0, 2).equals("CM"))){
-	  				this.addVisabillsAndEmail2(factNo, billNo, visaSort,vbm);
-	  			}
-	  			if((billNo.substring(0, 2).equals("BM"))){
-	  				this.addVisabillsAndEmail3(factNo, billNo, visaSort, vbm);
-	  			}
-			}*/
-			/*********************最後知會（每天定時有發送，所以註釋）*********************************/
+				//System.out.println(itemno+"---"+bls.getVisaRank()+"----"+bls.getFlowMk());
+			}			
 			ajaxResult="0";
 		}catch(Exception e){
 			ajaxResult="1";
@@ -1296,150 +946,7 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 		
 		return "minusvisabills2";
 	}
-	
-	
-
-	
-	/**
-	 * 暫無用
-	 * @Title: minusvisabills3
-	 * @Description: TODO
-	 * @param @return
-	 * @param @throws IOException
-	 * @return String
-	 * @throws
-	 * @author web
-	 * @date 2016/3/11
-	 */
-	public String minusvisabills3() throws IOException{
-		KyVisabillm vbm=visabillmSer.findById(factNo, visaSort, billNo);		
-		KyVisabills vbs=visabillSer.findById(factNo, visaSort, billNo, itemNo);
-		
-		String visaNext=vbm.getSignerNext();
-		String singer=vbs.getVisaSigner();
-		String flowMk=vbs.getFlowMk();
-		int index=Integer.parseInt(vbs.getId().getItemNo())-1;//当前减签人的位置（集合从0开始，所以减1）
-		
-		//當前減簽的人,是當前登錄者
-  	    WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
-  	    String userName=user.getUsername();
-		
-  	    /**
-  	     * 如果减签的刚好函文的下一位签核人，
-  	     * （1）则要email通知他不要签
-  	     * （2）并且更新下一位签核人,并且把新sigerNext赋给的sigerNext,主表的itemNext不需要变；      
-  	     * （3）email通知新的下一位签核
-  	     */
-  	    
-  	    //*********************************************如果当前减签人刚好是函文的下一位签核人**********************************************//
-		if(visaNext.equals(singer)&&flowMk.equals("Y")){
-			//*********发送email通知已经减签***********//
-		  SimpleMailSender sms_n=new SimpleMailSender();
-  		  MailSenderInfo mailInfo_n=new MailSenderInfo();
-  		  mailInfo_n.setValidate(true);
-  		  /*mailInfo_n.setUserName("kyuen@yydg.com.cn");
-  		  mailInfo_n.setPassword("yydgmail");
-  		  mailInfo_n.setFromAddress("<kyuen@yydg.com.cn>");*/
-  		  mailInfo_n.setToAddress(visaNext);
-  		  mailInfo_n.setSubject("函文減簽通知_"+billNo+"("+factNo+")");
-  		  mailInfo_n.setContent("你好,單號為:"+"<span style='color:red'>"+billNo+"</span>"+"的函文已由用戶:"
-  		                         +"<span style='color:blue'>"+userName+"</span>"+"減簽,收到該郵件的人,不需要審核此單號的函文.");
-  		  sms_n.sendHtmlMail(mailInfo_n);
-  		  
-  		//*********更新下一位签核人***********//
-  		  //如果是最后一个签核人，或者最后一个知会人（不是最后一个签核人，并且不是最后一个知会人）则不需要更新
-  		  int num001=vbm.getKyVisabillses().size()-visabillSer.findBillsWithNo(visaSort, billNo);
-  		  if(Integer.parseInt(itemNo)!=num001&&Integer.parseInt(itemNo)!=vbm.getKyVisabillses().size()){ 			
-  			  String new_nextItemno="";
-      		  if(Integer.parseInt(itemNo)+1<10){
-      			  new_nextItemno="0"+(Integer.parseInt(itemNo)+1);
-      		  }else{
-      			  new_nextItemno=""+(Integer.parseInt(itemNo)+1);
-      		  }
-      		  KyVisabills bills=visabillSer.findById(factNo, visaSort, billNo, new_nextItemno);
-      		  vbm.setSignerNext(bills.getVisaSigner());
-      		  visabillmSer.add(vbm);
-      		  
-      		  //****************通知下一位签核人***************/
-      		 String emailUrl_in="http://203.85.73.161/Login/vbm_findById_email?visaSort="+visaSort+"&billNo="+billNo
-			         +"&factNo="+factNo+"&email="+bills.getVisaSigner();
-      		String emailUrl_in2="http://203.85.73.161/Login/vbm_findById_email?visaSort="+visaSort+"&billNo="+billNo
-			         +"&factNo="+factNo+"&email="+bills.getVisaSigner();
-      		 mailInfo_n.setToAddress(bills.getVisaSigner());
-      		 mailInfo_n.setSubject("函文減簽(下一位審核)_"+billNo+"("+factNo+")");
-      		 mailInfo_n.setContent(
-     	    		"函文單號:"+"<span style='color:red'>"+billNo+"</span>"+"&nbsp;&nbsp;廠別:"+factNo+
-     	    		"<br/>點擊單號直接審核:<a href='"+emailUrl_in2+"'>"+billNo+"</a>(電腦適用)"+
-     	    		"<br/>點擊單號直接審核:<a href='"+emailUrl_in+"'>"+billNo+"</a>(手機平板適用)"+
-     	    		"<br/>如需查詢以往單據請登錄加久網站:((云端))<a href='http://203.85.73.161/Login'>http://203.85.73.161/Login</a>" +	            
-     	      		"<br/>進入[KPI數據]--[函文審核]中查找對應單號審核,"+	      	    		
-     	    		"<hr/>"+	      		
-     	    		"<br/>本郵件自動發送,請勿回復!如需回復或者問題，請回复到kyuen@yydg.com.cn資訊室!<br/>" +
-     	    		"<hr/>");
-      		 sms_n.sendHtmlMail(mailInfo_n);
-      		//****************通知下一位签核人***************/
-  		  } 
-  		//*********更新下一位签核人***********//
-		}		
-		//*********************************************如果当前减签人刚好是函文的下一位签核人**********************************************//
-		
-		visabillSer.delete(factNo, visaSort, billNo, itemNo);//直接删除
-		vbm.getKyVisabillses().remove(index);
-						
-		/*for(int i=0;i<vbm.getKyVisabillses().size();i++){
-			KyVisabills bls=vbm.getKyVisabillses().get(i);
-			String itemno=bls.getId().getItemNo();
-			System.out.println(itemno+"---"+bls.getVisaRank()+"----"+bls.getFlowMk());
-		}
-		System.out.println("--------------------------------------------------");*/		
-		for(int i=index;i<vbm.getKyVisabillses().size();i++){//从index开始（如果index是最后一个，则跳出循环）
-			KyVisabills bls=vbm.getKyVisabillses().get(i);
-			visabillSer.delete(bls);//为了避免最后一个出现重复，所以要先删除（这点很重要）
-			String itemno=bls.getId().getItemNo();			
-			String tempnum="";
-			if(i+1<10){
-				tempnum="0"+(i+1);
-			}else{
-				tempnum=""+(i+1);
-			}
-			itemno=tempnum;	
-			bls.getId().setItemNo(tempnum);
-			visabillSer.add(bls);
-			System.out.println(itemno+"---"+bls.getVisaRank()+"----"+bls.getFlowMk());
-		}
-		/*********************保留減簽的人員，幷放到最後**************************/
-		int lastItemNo=vbm.getKyVisabillses().size();
-		String str_lastItemNo="";
-		if(lastItemNo+1<10){
-			str_lastItemNo="0"+lastItemNo;
-		}else{
-			str_lastItemNo=""+lastItemNo;
-		}
-		vbs.getId().setItemNo(str_lastItemNo);
-		vbs.setFlowMk("N");
-		
-		/*System.out.println("--------------------------------------------------");
-		for(int i=index;i<vbm.getKyVisabillses().size();i++){
-			KyVisabills bls=vbm.getKyVisabillses().get(i);
-			String itemno=bls.getId().getItemNo();
-			System.out.println(itemno+"---"+bls.getVisaRank()+"----"+bls.getFlowMk());
-		}*/
-		
-		//如果未签核的人数为0，也就签完，则进行知会email通知
-        //int numYes=visabillSer.findBillsWithYes(visaSort, billNo);		
-        int numNo=visabillSer.findBillsWithNo2(visaSort, billNo);//未签核的人数（不包含知会的）
-		if(numNo==0){
-			//判斷是費用函文還是內部聯絡函
-  			if(billNo.substring(0, 2).equals("EM")){
-  				this.addVisabillsAndEmail(factNo, billNo, visaSort,vbm);
-  			}else{
-  				this.addVisabillsAndEmail2(factNo, billNo, visaSort,vbm);
-  			}
-		}
-		return "minusvisabills3";
-	}
-	
-	
+			
 	public String strToLow(String str){
 		return str.toLowerCase();
 	}
@@ -1454,64 +961,14 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 			response.setContentType("text/html;charset=utf-8");
 			ApplicationContext ac=new ClassPathXmlApplicationContext(new String[]{"spring.xml","spring-dao.xml","spring-services.xml"});
 			IKyVisabillmServices visabillmSer=(IKyVisabillmServices)ac.getBean("visabillmSer");	
-			List<KyVisabillm>list_vbm=new ArrayList<KyVisabillm>();
-			vbm=visabillmSer.findByBillNo(billNo);
-			list_vbm.add(vbm);
+			List<KyVisabillm>list_vbm=visabillmSer.findByBillNo2(billNo);		
 			GlobalMethod.sendEmailA(ac,list_vbm);			
 			response.getWriter().print("<script>window.parent.layer.alert('發送成功',1)</script>");
 		}catch(Exception e){
 			response.getWriter().print("<script>window.parent.layer.alert('發送失敗',3)</script>");
 		}		
 	}
-    
-
-	public void sendEmail(String local_factNo,String local_billNo,String local_visaSort,KyVisabillm vbm){
-		//ApplicationContext ac=new ClassPathXmlApplicationContext(new String[]{"spring.xml","spring-dao.xml","spring-services.xml"});
-		//IKyVisabillmServices visabillmSer=(IKyVisabillmServices)ac.getBean("visabillmSer");
-		//IWebuserEmailServices webuseremailSer=(IWebuserEmailServices)ac.getBean("webuseremailSer");/****備簽人****/
-		//IWebuserEmailAServices webuseremailaSer=(IWebuserEmailAServices)ac.getBean("webuseremailaSer");/******知會人********/
-		//KyVisabillm vbm2=visabillmSer.findById(local_factNo, local_visaSort, local_billNo);//用參數傳遞vbm,減少連接數據庫
-		List<KyVisabills>list_visa2=vbm.getKyVisabillses();
-		//这个类主要是设置邮件   
-		List<String>list_emails=new ArrayList<String>();//所有發送人
-		list_emails.add("kyuen@yydg.com.cn");
-		for(KyVisabills bills:list_visa2){
-			list_emails.add(bills.getVisaSigner());
-			if(bills.getFlowMk().equals("Y")){//要簽核的人才需要通知知會人
-				List<String>list_emailPwd=webuseremailaSer.findByEmail(local_factNo,bills.getVisaSigner(),local_visaSort);
-				for(String str:list_emailPwd){
-					list_emails.add(str);
-				}
-			}
-		}
-		
-		String[] attachFileNames = { "d:/" + local_billNo + ".pdf" };// 附件
-		SimpleMailSender sms = new SimpleMailSender();
-		MailSenderInfo mailInfo = new MailSenderInfo();
-		
-		for(String email:list_emails){//for
-			mailInfo.setValidate(true);			
-			mailInfo.setSubject("函文知會定時通知(審核完畢)_" + local_billNo + "("
-					+ local_factNo + ")");
-
-			mailInfo.setAttachFileNames(attachFileNames);
-			mailInfo.setContent("單號為:" + "<span style='color:red'>"
-					+ local_billNo + "</span>" + "的函文已審核完畢,請查看附件"
-					+ "<br/>本郵件自動定時發送，請勿回覆");
-
-			String toAddress = email;
-			mailInfo.setToAddress(toAddress);
-			sms.sendHtmlMail(mailInfo);// 发送html格式
-		}//for
-		File file = new File("d:/" + local_billNo + ".pdf");
-		if (file.exists()) {
-			if (file.isFile()) {
-				file.delete();
-			}
-		}						             
-}
-	
-	
+    	
 	//導出函文
 	public void printList() throws Exception{
 		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
@@ -1557,12 +1014,18 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 					JasperHelper.exportmain("auto", map,"webbussletter.jasper", listbusss,local_billNo, "jasper/audit/");
 				}
 			}
-			if(obj.getId().getKyVisabillm().getId().getBillNo().substring(0,2).equals("RM")){
+			if(local_billNo.substring(0,2).equals("RM")){
 				map_result=webremiSer.print(local_factNo, local_billNo, local_visaSort, obj.getId().getKyVisabillm());
 				map=(Map<String,Object>)map_result.get("map");
 				List<Webremittancelist>listremit=(List<Webremittancelist>)map_result.get("list");
 				JasperHelper.exportmain("auto", map, "webremittancelist.jasper", listremit, local_billNo, "jasper/audit/");
 			}
+			if(local_billNo.substring(0,2).equals("GJ")){
+				map_result=webformulaser.print(local_factNo,local_billNo,obj.getId().getKyVisabillm());
+				map=(Map<String,Object>)map_result.get("map");
+				List<WebFormula>list_webformula=(List<WebFormula>)map_result.get("list");
+				JasperHelper.exportmain("auto", map, "web_formula.jasper", list_webformula, local_billNo, "jasper/audit/");
+			}			
 			files.add(new File("D:/"+local_billNo+".pdf"));									
 		}		
 			GlobalMethod.downLoadFiles(files, null, response);

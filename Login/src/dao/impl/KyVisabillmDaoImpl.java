@@ -89,6 +89,15 @@ public class KyVisabillmDaoImpl extends Basedao implements IKyVisaBillmDao{
 		}		
 		return vbm;
 	}
+	
+	public List<KyVisabillm> findByBillNo2(String billNo) {
+		// TODO Auto-generated method stub
+		String hql="from KyVisabillm where id.billNo=?";
+		String[]objs={billNo};
+		List<KyVisabillm>list=super.findAll(hql,objs);
+		GlobalMethod.vbmCotentsTypes(list);//根據不同的函文類型來更改相應的函文標題，內容	(同時也解決hibernate延遲問題)	
+		return list;		
+	}
 
 	
 	/**

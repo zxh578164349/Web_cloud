@@ -37,6 +37,7 @@ public class KyVisabillm implements java.io.Serializable {
 	private String oneMk;//發送一次標識    0或null :正常發送    1:隻發送1次
 	private VWebFact factNo2;//關聯工廠名稱(不需要映射列名)
 	private String general;//函文概要(不需要映射列名)
+	private String visaSortM;//函文大類
 
 	// Constructors
 
@@ -264,6 +265,14 @@ public class KyVisabillm implements java.io.Serializable {
 
 	public void setFactNo2(VWebFact factNo2){
 		this.factNo2=factNo2;
+	}
+
+	public String getVisaSortM(){
+		return visaSortM;
+	}
+
+	public void setVisaSortM(String visaSortM){
+		this.visaSortM=visaSortM;
 	}
 
 	

@@ -51,6 +51,10 @@ public class KyVisabillmServicesImpl implements IKyVisabillmServices{
 		// TODO Auto-generated method stub
 		return visabillmDao.findByBillNo(billNo);
 	}
+	public List<KyVisabillm> findByBillNo2(String billNo) {
+		// TODO Auto-generated method stub
+		return visabillmDao.findByBillNo2(billNo);
+	}
 
 	public List<KyVisabillm> findBefor2Month() {
 		// TODO Auto-generated method stub
