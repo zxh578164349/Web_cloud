@@ -36,8 +36,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 								<tr>
 									<th>廠別</th>
 									<th>配方索引</th>
-								</tr>
-								<s:if test="formula==null">
+								</tr>							
 								    <tr>
 									<td>							
 									    <s:if test="#session.factNo!='tw'">
@@ -52,19 +51,12 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 									<input type="text" style="color:blue" name="formula.formulaIndex" readonly="readonly" datatype="*" id="formulaIndex" placeholder="自動生成"/>
 									<input type="hidden" value="${loginUser.username}" name="formula.createName" /> 
 									 <input type="hidden" value="<%=str_date%>" name="formula.createDate" id="createDate" />
-									 <input type="hidden" name="isnull" value="isnull" />									
+									 <input type="hidden" name="isnull" value="isnull" />
+									 <input type="hidden" name="formula.visaSort" value="PF"/>									
 									</td>
 								</tr> 
-								</s:if>
-								<s:else>
-								   <tr>
-									<td><input type="text" id="factNo" style="color:blue" value="<s:property value='formula.factNo.factNo'/>"  name="formula.factNo.factNo" readonly /></td>
-									<td><input type="text" style="color:blue" value="<s:property value='formula.formulaIndex' />"  name="formula.formulaIndex" id="formulaIndex" readonly />
-									<input type="hidden" value="${loginUser.username}" name="formula.modifyName" /> <!--  修改者--> 
-									 <input type="hidden" value="<%=str_date%>" name="formula.modifyDate" /> <!--  修改日期-->
-									</td>
-								   </tr>
-								</s:else>								
+								
+														
 								<tr>
 									<th>製程類別</th>
 									<th>配方編號</th>

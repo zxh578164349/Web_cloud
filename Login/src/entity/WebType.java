@@ -20,7 +20,7 @@ public class WebType implements java.io.Serializable {
 	private List<WebBussinessletter>list_buss;
 	private List<KyzVisaflow>list_visaflow;
 	private List<Webremittancelist>list_webrel;
-	
+	private List<WebFormula>list_formula;
 
 	// Constructors
 
@@ -121,6 +121,16 @@ public class WebType implements java.io.Serializable {
 	public void setTypeMk(String typeMk){
 		this.typeMk=typeMk;
 	}
+
+	public List<WebFormula> getList_formula(){
+		return list_formula;
+	}
+
+	public void setList_formula(List<WebFormula> list_formula){
+		this.list_formula=list_formula;
+	}
+	
+	
 
 	
 	

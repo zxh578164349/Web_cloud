@@ -40,31 +40,19 @@
 			},
 			error : function(xhr) {
 				//alert(xhr.responseText);
-				jq("#bodyid").html(responseText);
+				jq("#bodyid").html(xhr);
 			}
 		});
 	}
 	
 		function submis() {		
-		var fact = document.getElementById("factNo");
-		var billno=document.getElementById("billNo");
-		var visaMks=document.getElementsByName("visaMk");
-		var visaSort=document.getElementById("dwr_kytype");
-		var yymmdd=document.getElementById("yymmdd");
-		var yymmdd2=document.getElementById("yymmdd2");
-		var visaMk;
-
-		for(var i=0;i<visaMks.length;i++){
-		   if(visaMks[i].checked==true){
-		      visaMk=visaMks[i]
-		      break;
-		   }
-		}				
+					
 		 jq.ajax({
 			type : "POST",
 			dataType : "Html",
 			url : "vbm_findPageBean2",
-			data : "factNo=" + fact.value +"& billNo="+billno.value+"& visaMk="+visaMk.value+"& visaSort="+visaSort.value+"& yymmdd="+yymmdd.value+"& yymmdd2="+yymmdd2.value,
+			data:jq("#subform").serialize(),
+			//data : "factNo=" + fact.value +"& billNo="+billno.value+"& visaMk="+visaMk.value+"& visaSort="+visaSort.value+"& yymmdd="+yymmdd.value+"& yymmdd2="+yymmdd2.value,
 			 success : function(msg) {			    
 				jq("#bodyid").html(msg);
 			},

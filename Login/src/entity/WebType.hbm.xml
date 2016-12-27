@@ -62,5 +62,12 @@
            </key>
            <one-to-many class="entity.Webremittancelist"/>
         </bag>
+        <bag name="list_formula" inverse="true" cascade="all">
+           <key>
+             <column name="FACT_NO" length="10"/>
+             <column name="VISA_SORT" length="3"/>
+           </key>
+           <one-to-many class="entity.WebFormula"/>
+        </bag>
     </class>
 </hibernate-mapping>

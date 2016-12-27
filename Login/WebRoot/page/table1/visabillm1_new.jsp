@@ -52,14 +52,17 @@
 		     <tr>
 		  </s:else>	
 				<td>${ bean.pageSize*(bean.currentPage-1)+x.index+1}</td>
-				<td><s:property value="id.kyVisabillm.id.factNo" />
+				<td><s:property value="id.kyVisabillm.factNo2.factSname" />
 				</td>
 				<td>							
-				<s:property value="id.kyVisabillm.colTemp"/>									  						
+				<!-- <s:property value="id.kyVisabillm.colTemp"/>-->
+				<s:property value="id.kyVisabillm.webtype.typeName" />									  						
 				</td>
 				<td><s:property value="id.kyVisabillm.id.billNo"/>
 				</td>
-				<td><s:property value="memo"/>			
+				<td>
+				<!-- <s:property value="memo"/>	-->
+				<s:property value="id.kyVisabillm.general" />			
 				</td>				
 				<td><s:property value="id.kyVisabillm.lastMk" />
 				</td>

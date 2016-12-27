@@ -62,6 +62,9 @@
         <property name="userAccount" type="java.lang.String">
             <column name="USER_ACCOUNT" length="50"/>
         </property>
+        <property name="emerMk" type="java.lang.String">
+            <column name="EMER_MK" length="2"/>
+        </property>
         <bag name="list_file" inverse="true" cascade="all">
             <key>
                <column name="FACT_NO"/>

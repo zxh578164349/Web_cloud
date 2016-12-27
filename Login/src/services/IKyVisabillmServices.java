@@ -9,6 +9,7 @@ import util.PageBean;
 public interface IKyVisabillmServices {
 	public void add(KyVisabillm vbm);
 	public KyVisabillm findById(String factNo, String visaSort, String billNo);
+	public KyVisabillm findById2(String factNo, String visaSort, String billNo);
 	public void delete(String factNo,String visaSort,String billNo,KyzExpectmatmLog delLog);
 	
 	public List<KyVisabillm>findByVisaMk(String visaMk);

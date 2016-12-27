@@ -85,5 +85,9 @@
         <many-to-one name="webrel" column="BILL_NO" unique="true" insert="false" update="false"/>
         <many-to-one name="formula" column="BILL_NO" unique="true" insert="false" update="false"/>  
         <many-to-one name="factNo2" column="FACT_NO" unique="true" insert="false" update="false"/>  
+        <many-to-one name="webtype" insert="false" update="false">
+           <column name="FACT_NO"/>
+           <column name="VISA_SORT_M"/>
+        </many-to-one>
     </class>
 </hibernate-mapping>

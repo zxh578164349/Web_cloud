@@ -82,6 +82,7 @@ import entity.KyVisabills;
 import entity.KyzExpectmatmLog;
 import entity.WebTabpom;
 import entity.WebTabpomfile;
+import entity.WebType;
 import entity.WebUser;
 import entity.Webestproduct;
 import entity.WebestproductId;
@@ -1150,10 +1151,8 @@ public class GlobalMethod extends HibernateDaoSupport{
 			String content="";		
 			if(list_vbm.size()>0){//start if
 			MailSenderInfo mailInfo = new MailSenderInfo();
-			MailSenderInfo mailInfo2 = new MailSenderInfo();
 			SimpleMailSender sms = new SimpleMailSender();
 			mailInfo.setValidate(true);
-			mailInfo2.setValidate(true);	   
 				for(int i=0;i<list_vbm.size();i++){// start for1	
 					List<String>list_email=new ArrayList<String>();
 					String signerNext=list_vbm.get(i).getSignerNext();
@@ -1247,7 +1246,7 @@ public class GlobalMethod extends HibernateDaoSupport{
 			}//end if	
 		 
 	 }
-	 
+	 	 
 	 /**
 	  * 函文審核完畢通知email
 	  * @Title: sendEmailB
@@ -1788,8 +1787,8 @@ public class GlobalMethod extends HibernateDaoSupport{
 			if(vbm.getId().getBillNo().substring(0,2).equals("EM")){				
 				vbm.setGeneral("("+vbm.getFactNo2().getFactSname()+")"+vbm.getKyzexp().getMemoSmk()+"_"+
 						vbm.getId().getBillNo()+"("+vbm.getId().getFactNo()+")");
-			}
-		
+			}			
+			vbm.getWebtype().getTypeName();		
 	}
 	
 	
@@ -1856,8 +1855,17 @@ public class GlobalMethod extends HibernateDaoSupport{
 			 dd=kk;
 			 System.out.print(dd+"\t");
 		 }*/
-		 Integer jj=0;
-		 System.out.println(jj.toString().equals("0"));
+		 
+		 KyVisabillm vbm=new KyVisabillm();
+		 System.out.println("1".equals(null));
+		 System.out.println("1".equals("0"));
+		 System.out.println("1".equals("1"));
+		 if(vbm.getKyzexp()!=null){
+			 System.out.println("1".equals(vbm.getKyzexp().getEmerMk())); 
+		 }else{
+			 System.out.println("*******");
+		 }
+		 
 			
 		}
 	 

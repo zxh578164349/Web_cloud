@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.hibernate.Query;
 
+import util.GlobalMethod;
 import util.PageBean;
 
 import com.opensymphony.xwork2.ActionContext;
@@ -20,6 +21,7 @@ import entity.KyzExpectmatmLog;
 import entity.WebUser;
 
 public class KyVisabillsDaoImpl extends Basedao implements IKyVisaBillsDao{
+	private final static String STR=" and id.kyVisabillm.dateCreate>'20150701' and id.kyVisabillm.delMk is null ";
 
 	public List<KyVisabills> findVisaBills(String visaSort, String billNo) {
 		// TODO Auto-generated method stub
@@ -92,7 +94,7 @@ public class KyVisabillsDaoImpl extends Basedao implements IKyVisaBillsDao{
 			hql.append(" and id.kyVisabillm.id.factNo=:factno");
 			map.put("factno", factNo);
 		}		
-		//hql.append(" and id.kyVisabillm.dateCreate>'20150901' ");
+		hql.append(STR);
 		hql2.append(hql);
 		hql.append(" order by id.kyVisabillm.id.factNo desc,id.kyVisabillm.dateCreate desc,id.kyVisabillm.id.billNo desc");
 		if(rows!=null&&page>0){
@@ -112,16 +114,8 @@ public class KyVisabillsDaoImpl extends Basedao implements IKyVisaBillsDao{
 		//解決hibernate延遲問題
 		if(list.size()>0){
 			for(int i=0;i<list.size();i++){
-				list.get(i).getId().getKyVisabillm().getKyVisabillses().size();
-				/***************************要分類查找，否則報No row with the given identifier exis錯誤***************************/
-				/*if(list.get(i).getId().getKyVisabillm().getId().getBillNo().substring(0,2).equals("EM")){
-					list.get(i).getId().getKyVisabillm().getKyzexp().getMemoSmk();
-				}
-				if(list.get(i).getId().getKyVisabillm().getId().getBillNo().substring(0,2).equals("CM")){
-					list.get(i).getId().getKyVisabillm().getKyzletter().getTitle();
-				}*/												
-				/*******************出差函文暫不要查標題，因爲沒有標題*****************/
-				
+				list.get(i).getId().getKyVisabillm().getKyVisabillses().size();				
+				GlobalMethod.vbmCotentsType(list.get(i).getId().getKyVisabillm());
 			}
 		}
 		
@@ -176,12 +170,7 @@ public class KyVisabillsDaoImpl extends Basedao implements IKyVisaBillsDao{
 		if(createDate!=null&&!createDate.equals("")){
 			hql.append(date_temp+">=:createdate");
 			map.put("createdate", createDate);
-		}
-		/*if(createDate!=null&&!createDate.equals("")&&(createDate2!=null&&!createDate2.equals(""))){
-			hql.append(" and id.kyVisabillm.dateCreate between :createdate and :createdate2");
-			map.put("createdate", createDate);
-			map.put("createdate2", createDate2);
-		}*/
+		}		
 		if(createDate2!=null&&!createDate2.equals("")){
 			hql.append(date_temp+"<=:createdate2");
 			map.put("createdate2", createDate2);
@@ -193,7 +182,7 @@ public class KyVisabillsDaoImpl extends Basedao implements IKyVisaBillsDao{
 			hql.append(" and id.kyVisabillm.id.factNo=:factno");
 			map.put("factno", factNo);
 		}		
-		//hql.append(" and id.kyVisabillm.delMk is null ");
+		hql.append(STR);
 		hql2.append(hql);
 		hql.append(" order by id.kyVisabillm.id.factNo desc,id.kyVisabillm.dateCreate desc");		
 		List<KyVisabills>list=super.getAllWithNoPage(hql.toString(),map);
@@ -324,12 +313,7 @@ public class KyVisabillsDaoImpl extends Basedao implements IKyVisaBillsDao{
 		if(createDate!=null&&!createDate.equals("")){
 			hql.append(date_temp+">=:createdate");
 			map.put("createdate", createDate);
-		}
-		/*if(createDate!=null&&!createDate.equals("")&&(createDate2!=null&&!createDate2.equals(""))){
-			hql.append(" and id.kyVisabillm.dateCreate between :createdate and :createdate2");
-			map.put("createdate", createDate);
-			map.put("createdate2", createDate2);
-		}*/
+		}		
 		if(createDate2!=null&&!createDate2.equals("")){
 			hql.append(date_temp+"<=:createdate2");
 			map.put("createdate2", createDate2);
@@ -341,7 +325,7 @@ public class KyVisabillsDaoImpl extends Basedao implements IKyVisaBillsDao{
 			hql.append(" and id.kyVisabillm.id.factNo=:factno");
 			map.put("factno", factNo);
 		}						
-		//hql.append(" and id.kyVisabillm.delMk is null ");
+		hql.append(STR);
 		hql2.append(hql);
 		hql.append(" order by id.kyVisabillm.id.factNo desc,id.kyVisabillm.dateCreate desc,id.kyVisabillm.id.billNo desc");
 		
@@ -364,6 +348,7 @@ public class KyVisabillsDaoImpl extends Basedao implements IKyVisaBillsDao{
 			for(int i=0;i<list.size();i++){
 				KyVisabillm billm=list.get(i).getId().getKyVisabillm();
 				billm.getSignerNext();
+				GlobalMethod.vbmCotentsType(billm);
 			}
 		}
 		

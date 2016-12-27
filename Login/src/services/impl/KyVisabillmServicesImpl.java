@@ -25,6 +25,11 @@ public class KyVisabillmServicesImpl implements IKyVisabillmServices{
 		// TODO Auto-generated method stub
 		return visabillmDao.findById(factNo, visaSort, billNo);
 	}
+	
+	public KyVisabillm findById2(String factNo, String visaSort, String billNo) {
+		// TODO Auto-generated method stub
+		return visabillmDao.findById2(factNo, visaSort, billNo);
+	}
 
 	public void delete(String factNo, String visaSort, String billNo,KyzExpectmatmLog delLog) {
 		// TODO Auto-generated method stub

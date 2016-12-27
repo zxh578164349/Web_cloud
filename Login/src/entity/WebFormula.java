@@ -36,6 +36,7 @@ public class WebFormula implements java.io.Serializable{
 	private JRBeanCollectionDataSource webFormulaItemses2;
 	private WebTabpom pom;
 	private KyVisabillm vbm;
+	private String visaSort;
 
 	// Constructors
 
@@ -246,6 +247,14 @@ public class WebFormula implements java.io.Serializable{
 
 	public void setWebFormulaItemses2(JRBeanCollectionDataSource webFormulaItemses2) {
 		this.webFormulaItemses2 = webFormulaItemses2;
+	}
+
+	public String getVisaSort(){
+		return visaSort;
+	}
+
+	public void setVisaSort(String visaSort){
+		this.visaSort=visaSort;
 	}
 	
 	

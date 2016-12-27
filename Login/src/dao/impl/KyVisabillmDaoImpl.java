@@ -38,6 +38,21 @@ public class KyVisabillmDaoImpl extends Basedao implements IKyVisaBillmDao{
 		}
 		return vbm;
 	}
+	
+	public KyVisabillm findById2(String factNo, String visaSort, String billNo) {
+		// TODO Auto-generated method stub
+		String hql="from KyVisabillm where id.factNo=? and id.visaSort=? and id.billNo=?";
+		Query query=getSession().createQuery(hql);
+		query.setString(0, factNo);
+		query.setString(1, visaSort);
+		query.setString(2, billNo);
+		KyVisabillm vbm=(KyVisabillm)query.uniqueResult();
+		if(vbm!=null){
+			vbm.getKyVisabillses().size();
+			GlobalMethod.vbmCotentsType(vbm);
+		}
+		return vbm;
+	}
 
 	public void delete(String factNo, String visaSort, String billNo,KyzExpectmatmLog delLog) {
 		// TODO Auto-generated method stub

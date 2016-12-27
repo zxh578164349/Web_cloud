@@ -47,10 +47,10 @@
 		      <tr>
 		   </s:else>	
 				<td>${ bean.pageSize*(bean.currentPage-1)+x.index+1}</td>
-				<td><s:property value="id.kyVisabillm.id.factNo" />
+				<td><s:property value="id.kyVisabillm.factNo2.factSname" />
 				</td>
 				<td>											
-				<s:property value="id.kyVisabillm.colTemp"/>									  						
+				<s:property value="id.kyVisabillm.webtype.typeName"/>									  						
 				</td>
 				<td>
 				<form action="vbm_findById" method="post" id="0form${x.index}" style="float:left">
@@ -64,7 +64,7 @@
 				</a>
 				</td>				
 				<td>
-				<s:property value="memo" />
+				<s:property value="id.kyVisabillm.general" />
 				</td> 
 				<td>
 				  <form action="vbm_print_all" method="post" id="4subform${x.index}" style="float:left" target="_blank">

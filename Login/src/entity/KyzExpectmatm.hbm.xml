@@ -83,6 +83,9 @@
         <property name="visaTypeM" type="java.lang.String">
             <column name="VISA_TYPE_M" length="2"/>
         </property>
+        <property name="emerMk" type="java.lang.String">
+            <column name="EMER_MK" length="2"/>
+        </property>
         <bag name="kyzExpectmatses" inverse="true" cascade="all" >
             <key>
                 <column name="FACT_NO" length="6" not-null="true" />

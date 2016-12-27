@@ -38,6 +38,7 @@ public class KyVisabillm implements java.io.Serializable {
 	private VWebFact factNo2;//關聯工廠名稱(不需要映射列名)
 	private String general;//函文概要(不需要映射列名)
 	private String visaSortM;//函文大類
+	private WebType webtype;//函文大類外鍵
 
 	// Constructors
 
@@ -273,6 +274,14 @@ public class KyVisabillm implements java.io.Serializable {
 
 	public void setVisaSortM(String visaSortM){
 		this.visaSortM=visaSortM;
+	}
+
+	public WebType getWebtype(){
+		return webtype;
+	}
+
+	public void setWebtype(WebType webtype){
+		this.webtype=webtype;
 	}
 
 	
