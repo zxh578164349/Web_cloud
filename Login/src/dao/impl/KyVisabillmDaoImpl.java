@@ -63,7 +63,7 @@ public class KyVisabillmDaoImpl extends Basedao implements IKyVisaBillmDao{
 
 	public List<KyVisabillm> findByVisaMk(String visaMk) {
 		// TODO Auto-generated method stub		
-		String hql="from KyVisabillm where visaMk<>? and dateCreate>'"+SDATE+"'  and emailMk is null and delMk is null";
+		String hql="from KyVisabillm where visaMk<>? and dateCreate>'"+SDATE+"'  and emailMk is null and delMk is null and id.factNo='631'";
 		String[]objs={visaMk};
 		List<KyVisabillm>list=super.findAll(hql,objs);
 		try{

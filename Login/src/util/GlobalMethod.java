@@ -92,6 +92,10 @@ public class GlobalMethod extends HibernateDaoSupport{
 	private static final String URL="http://203.85.73.161/Login/";
 	private static final String URL2="http://203.85.73.161/Login";
 	private static final String EMAIL="kyuen@yydg.com.cn";
+	private static final String SUBJECT="函文審核定時通知_";
+	private static final String SUBJECT2="函文審核通知_";
+	private static final String SUBJECT3="函文退回定時通知_";
+	private static final String SUBJECT4="函文退回通知_";
 
 	public static void print(List list,String factNo,String yymm,String yymm2,String file,HttpServletResponse response) throws IOException{
 		//List<Webwlo>list=wloService.findByAny(factNo, yymm, yymm2);
@@ -1142,18 +1146,28 @@ public class GlobalMethod extends HibernateDaoSupport{
 	  * @author web
 	  * @date 2016/6/22
 	  */
-	 public static void sendEmailA(ApplicationContext ac,List<KyVisabillm>list_vbm){		   
+	 	 
+	 public static void sendEmailA(ApplicationContext ac,List<KyVisabillm>list_vbm){//定時發送郵件
+		 sendEmailA(ac,list_vbm,SUBJECT,SUBJECT3);		    			 
+	 }
+	 
+	 public static void sendEmailA2(ApplicationContext ac,List<KyVisabillm>list_vbm){//簽核即時發送郵件
+		 sendEmailA(ac,list_vbm,SUBJECT2,SUBJECT4);	
+	 }
+	 
+	 public static void sendEmailA(ApplicationContext ac,List<KyVisabillm>list_vbm,String sub1,String sub2){		   
 		    IWebuserEmailServices webuseremailSer=(IWebuserEmailServices)ac.getBean("webuseremailSer");
 			IWebuserEmailAServices webuseremailaSer=(IWebuserEmailAServices)ac.getBean("webuseremailaSer");
 			IKyzVisaFlowServices visaSer=(IKyzVisaFlowServices)ac.getBean("visaSer");
-			IKyVisabillmServices visabillmSer=(IKyVisabillmServices)ac.getBean("visabillmSer");
-		    String subject="";
+			IKyVisabillmServices visabillmSer=(IKyVisabillmServices)ac.getBean("visabillmSer");		    
 			String content="";		
 			if(list_vbm.size()>0){//start if
 			MailSenderInfo mailInfo = new MailSenderInfo();
 			SimpleMailSender sms = new SimpleMailSender();
 			mailInfo.setValidate(true);
-				for(int i=0;i<list_vbm.size();i++){// start for1	
+				for(int i=0;i<list_vbm.size();i++){// start for1
+					StringBuffer subject=new StringBuffer();
+					subject.append(isEmey(list_vbm.get(i)));
 					List<String>list_email=new ArrayList<String>();
 					String signerNext=list_vbm.get(i).getSignerNext();
 					String factNo=list_vbm.get(i).getId().getFactNo();
@@ -1196,7 +1210,7 @@ public class GlobalMethod extends HibernateDaoSupport{
 					String emailUrl2=URL+"vbm_findById_email2?visaSort="+visaSort+"&billNo="+billNo
 					         +"&factNo="+factNo+"&email="+signerNext;
 					if(visaMk.equals("N")){
-						subject="函文審核定時通知_"+list_vbm.get(i).getGeneral();
+						subject.append(sub1+list_vbm.get(i).getGeneral());
 						content=list_vbm.get(i).getGeneral()+"<br/>"+
 								"函文單號:"+"<span style='color:red'>"+billNo+"</span>"+"&nbsp;&nbsp;廠別:"+factNo+
 					    		  "<br/>點擊單號直接審核:<a href='"+emailUrl2+"'>"+billNo+"</a>(電腦適用)"+
@@ -1215,7 +1229,7 @@ public class GlobalMethod extends HibernateDaoSupport{
 								list_email.add(list_vbm.get(i).getWebbussletter().getUserEmail());
 							}
 						}						
-							subject="函文退回定時通知_"+list_vbm.get(i).getGeneral();;//退回函文隻發送一次，所以也要鎖定狀態emailMk	
+							subject.append(sub2+list_vbm.get(i).getGeneral());//退回函文隻發送一次，所以也要鎖定狀態emailMk	
 							list_vbm.get(i).setEmailMk("Y");
 							visabillmSer.add(list_vbm.get(i));
 							content=list_vbm.get(i).getGeneral()+"<br/>"+
@@ -1237,15 +1251,19 @@ public class GlobalMethod extends HibernateDaoSupport{
 						  }else{
 							  mailInfo.setContent(content);
 						  }
-					      mailInfo.setSubject(subject);    			       				    		  			           
+					      mailInfo.setSubject(subject.toString());    			       				    		  			           
 					      sms.sendHtmlMail(mailInfo);//发送html格式					      
 					}//end for2		
-					subject=null;//清空
+					//subject=null;//清空
 					content=null;
 				}//end for1				
-			}//end if	
-		 
+			}//end if			 
 	 }
+	 
+	 
+	 
+	 
+	 
 	 	 
 	 /**
 	  * 函文審核完畢通知email
@@ -1783,10 +1801,12 @@ public class GlobalMethod extends HibernateDaoSupport{
 			if(vbm.getId().getBillNo().substring(0,2).equals("CM")){												
 				vbm.setGeneral("("+vbm.getFactNo2().getFactSname()+")"+vbm.getKyzletter().getTitle()+"_"+
 						vbm.getId().getBillNo()+"("+vbm.getId().getFactNo()+")");
+				vbm.getKyzletter().getEmerMk();
 			}
 			if(vbm.getId().getBillNo().substring(0,2).equals("EM")){				
 				vbm.setGeneral("("+vbm.getFactNo2().getFactSname()+")"+vbm.getKyzexp().getMemoSmk()+"_"+
 						vbm.getId().getBillNo()+"("+vbm.getId().getFactNo()+")");
+				vbm.getKyzexp().getEmerMk();
 			}			
 			vbm.getWebtype().getTypeName();		
 	}
@@ -1807,6 +1827,32 @@ public class GlobalMethod extends HibernateDaoSupport{
 		for(KyVisabillm vbm:list){
 			vbm.getKyVisabillses().size();
 		}
+	}
+	
+	/**
+	 * 判斷是否特急函文（目前只有EM與CM兩种函文有特急屬性，所以隻需要判斷EM與CM兩种函文）
+	 * @Title: isEmey
+	 * @Description: TODO
+	 * @param @param vbm
+	 * @param @return
+	 * @return String
+	 * @throws
+	 * @author web
+	 * @date 2016/12/28
+	 */
+	public static String isEmey(KyVisabillm vbm){
+		String result="";
+		if(vbm.getId().getBillNo().substring(0,2).equals("EM")){
+			if("0".equals(vbm.getKyzexp().getEmerMk())){
+				result="(特急)";
+			}
+		}
+		if(vbm.getId().getBillNo().substring(0,2).equals("CM")){
+			if("0".equals(vbm.getKyzletter().getEmerMk())){
+				result="(特急)";
+			}
+		}
+		return result;
 	}
 	 
 	 

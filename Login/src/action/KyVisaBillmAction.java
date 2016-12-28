@@ -574,18 +574,18 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 					/****************如果是緊急函文，就立即發送郵件 (目前只有普通函文和內部函文有緊急屬性)20161227****************/
 					List<KyVisabillm>list=new ArrayList<KyVisabillm>();
 					list.add(vbm);
-					if(vbm.getKyzexp()!=null){
-						if("1".equals(vbm.getKyzexp().getEmerMk())){
+					if(billNo.substring(0,2).equals("EM")){
+						if("0".equals(vbm.getKyzexp().getEmerMk())){
 							ApplicationContext ac=new ClassPathXmlApplicationContext(new String[]{"spring.xml","spring-dao.xml","spring-services.xml"});
-							GlobalMethod.sendEmailA(ac,list);
+							GlobalMethod.sendEmailA2(ac,list);
 						}
 					}
-					if(vbm.getKyzletter()!=null){
-						if("1".equals(vbm.getKyzletter().getEmerMk())){
+					if(billNo.substring(0,2).equals("CM")){
+						if("0".equals(vbm.getKyzletter().getEmerMk())){
 							ApplicationContext ac=new ClassPathXmlApplicationContext(new String[]{"spring.xml","spring-dao.xml","spring-services.xml"});
-							GlobalMethod.sendEmailA(ac,list);
+							GlobalMethod.sendEmailA2(ac,list);
 						}
-					}					
+					}										
 					
 					/****************如果是緊急函文，就立即發送郵件 20161227****************/
 					

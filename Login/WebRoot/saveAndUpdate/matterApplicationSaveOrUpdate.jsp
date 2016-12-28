@@ -122,21 +122,17 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 						</s:else>
 						</td>
 						
-						<td class="tdcolor">是否緊急</td>
-						<s:if test="kyz==null">
-						   <td >是<input type="radio" name="kyz.emerWhether" value="0" checked/>&nbsp;&nbsp;否<input type="radio" name="kyz.emerWhether" value="1"/></td>
-						</s:if>
-						<s:else>
-						   <s:if test="kyz.emerWhether==0">
-						       <td >是<input type="radio" name="kyz.emerWhether" value="<s:property value='kyz.emerWhether'/>" checked/>&nbsp;&nbsp;否<input type="radio" name="kyz.emerWhether" value="1"/></td>
+						<td class="tdcolor">是否緊急</td>											
+						   <s:if test='kyz.emerMk=="0"'>
+						       <td >是<input type="radio" name="kyz.emerMk" value="<s:property value='kyz.emerMk'/>" checked/>&nbsp;&nbsp;否<input type="radio" name="kyz.emerMk" value="1"/></td>
 						   </s:if>
-						   <s:if test="kyz.emerWhether==1">
-						       <td >是<input type="radio" name="kyz.emerWhether" value="0" />&nbsp;&nbsp;否<input type="radio" name="kyz.emerWhether" value="<s:property value='kyz.emerWhether'/>" checked/></td>
+						   <s:if test='kyz.emerMk=="1"'>
+						       <td >是<input type="radio" name="kyz.emerMk" value="0" />&nbsp;&nbsp;否<input type="radio" name="kyz.emerMk" value="<s:property value='kyz.emerMk'/>" checked/></td>
 						   </s:if>
-						    <s:if test="kyz.emerWhether==null">
-						       <td >是<input type="radio" name="kyz.emerWhether" value="0" checked/>&nbsp;&nbsp;否<input type="radio" name="kyz.emerWhether" value="1" /></td>
+						    <s:if test="kyz.emerMk==null">
+						       <td >是<input type="radio" name="kyz.emerMk" value="0" />&nbsp;&nbsp;否<input type="radio" name="kyz.emerMk" value="1" checked/></td>
 						   </s:if>
-						</s:else>					
+							<td >是<input type="radio" name="kyz.emerMk" value="0" />&nbsp;&nbsp;否<input type="radio" name="kyz.emerMk" value="1" checked/></td>			
 										        
 				    </tr>
 				    <tr>

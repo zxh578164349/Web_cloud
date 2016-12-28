@@ -502,7 +502,7 @@ public class WebUserAction extends ActionSupport implements ServletResponseAware
 		//ActionContext.getContext().getSession().put("User",webUser);
 		ServletActionContext.getRequest().setAttribute("webU",webUser);
 		id=0;
-		return "initial";
+		return "initialUpdate";
 	}
 	public String initialUpdate_guest(){
 		this.initialUpdate();

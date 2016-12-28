@@ -147,11 +147,22 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 				        </s:else>				      
 				      </td>
 				      <td class="tdcolor">附档</td>
-				      <td colspan="3">
+				      <td>
 				      <div style="width:300px" id="divfile">
 				      <input type="file" name="files" style="width:150px"/><a href="javascript:addFile()">添加多個</a>
 				      </div>
-				      </td>				        	        				       																					        
+				      </td>
+				      <td class="tdcolor">是否緊急</td>											
+						   <s:if test='kyzletter.emerMk=="0"'>
+						       <td >是<input type="radio" name="kyzletter.emerMk" value="<s:property value='kyzletter.emerMk'/>" checked/>&nbsp;&nbsp;否<input type="radio" name="kyzletter.emerMk" value="1"/></td>
+						   </s:if>
+						   <s:if test='kyzletter.emerMk=="1"'>
+						       <td >是<input type="radio" name="kyzletter.emerMk" value="0" />&nbsp;&nbsp;否<input type="radio" name="kyzletter.emerMk" value="<s:property value='kyzletter.emerMk'/>" checked/></td>
+						   </s:if>
+						    <s:if test="kyzletter.emerMk==null">
+						       <td >是<input type="radio" name="kyzletter.emerMk" value="0" />&nbsp;&nbsp;否<input type="radio" name="kyzletter.emerMk" value="1" checked/></td>
+						   </s:if>
+							<td >是<input type="radio" name="kyzletter.emerMk" value="0" />&nbsp;&nbsp;否<input type="radio" name="kyzletter.emerMk" value="1" checked/></td>				        	        				       																					        
 				    </tr>
 				    <tr>
 					    <td class="tdcolor">CC(呈)</td>	
@@ -168,6 +179,9 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 				           <input type="hidden" value="<s:property value='kyzletter.firstPage'/>" name="kyzletter.firstPage"/>
 				        </td>
 						
+					</tr>
+					<tr>
+					  
 					</tr>												
 			</tbody>			
 			</table>
