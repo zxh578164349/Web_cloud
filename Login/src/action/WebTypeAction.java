@@ -134,8 +134,8 @@ public class WebTypeAction extends ActionSupport{
 			//如果頁面上選擇了 "其它類" 以外選項時，則在後臺賦值typeNo     20161116
 			if(typeNo!=null&&!typeNo.equals("0")){
 				webtype.getId().setTypeNo(typeNo);
-			}
-			webtype.setTypeMk(typeNo);
+				webtype.setTypeMk(typeNo);
+			}			
 			webtypeSer.add(webtype);
 			ajaxResult="0";
 		}catch(Exception e){

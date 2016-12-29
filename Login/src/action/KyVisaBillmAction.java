@@ -502,7 +502,8 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 	 * @throws IOException
 	 */
 	public String add() throws IOException{
-		try{			
+		try{
+			String isLastMan="N";//標識是否最後一箇簽核人，如果是則不需要發送郵件(Y:是     N:否)
 			KyVisabillm vbm=visabillmSer.findById2(factNo, visaSort, billNo);
 			if(itemNo==null||itemNo.equals("")){
 				itemNo=vbm.getItemNext();
@@ -530,6 +531,7 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 					vbm.setVisaMk(visa_mk);
 					next_singer=vbm.getKyVisabillses().get(num).getVisaSigner();
 					num_next=num_temp;
+					isLastMan="Y";//標識最後一箇簽核人20161229
 				}else{
 					next_singer=vbm.getKyVisabillses().get(num+1).getVisaSigner();
 					num_next=num_temp+1;
@@ -561,7 +563,7 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 					vbs.setMemo(memo);
 					String lastmk=vbm.getLastMk();
 					
-					if(lastmk.equals("Y")){										
+					if(lastmk.equals("N")){										
 						if(num_temp==vbm.getKyVisabillses().size()){
 							vbm.setMemoMk(memo);							
 						}
@@ -574,18 +576,21 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 					/****************如果是緊急函文，就立即發送郵件 (目前只有普通函文和內部函文有緊急屬性)20161227****************/
 					List<KyVisabillm>list=new ArrayList<KyVisabillm>();
 					list.add(vbm);
-					if(billNo.substring(0,2).equals("EM")){
-						if("0".equals(vbm.getKyzexp().getEmerMk())){
-							ApplicationContext ac=new ClassPathXmlApplicationContext(new String[]{"spring.xml","spring-dao.xml","spring-services.xml"});
-							GlobalMethod.sendEmailA2(ac,list);
+					if("N".equals(isLastMan)){
+						if(billNo.substring(0,2).equals("EM")){
+							if("0".equals(vbm.getKyzexp().getEmerMk())){
+								ApplicationContext ac=new ClassPathXmlApplicationContext(new String[]{"spring.xml","spring-dao.xml","spring-services.xml"});
+								GlobalMethod.sendEmailA2(ac,list);
+							}
 						}
+						if(billNo.substring(0,2).equals("CM")){
+							if("0".equals(vbm.getKyzletter().getEmerMk())){
+								ApplicationContext ac=new ClassPathXmlApplicationContext(new String[]{"spring.xml","spring-dao.xml","spring-services.xml"});
+								GlobalMethod.sendEmailA2(ac,list);
+							}
+						}	
 					}
-					if(billNo.substring(0,2).equals("CM")){
-						if("0".equals(vbm.getKyzletter().getEmerMk())){
-							ApplicationContext ac=new ClassPathXmlApplicationContext(new String[]{"spring.xml","spring-dao.xml","spring-services.xml"});
-							GlobalMethod.sendEmailA2(ac,list);
-						}
-					}										
+														
 					
 					/****************如果是緊急函文，就立即發送郵件 20161227****************/
 					

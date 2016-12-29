@@ -31,6 +31,7 @@ public class WebUser implements java.io.Serializable {
     private String erpfactno;
     private String userType;//用戶類型
 	private List<WebJurisdiction> webJurisdictions = new ArrayList<WebJurisdiction>();
+	private List<WebOperationToUser>webOperationToUsers=new ArrayList<WebOperationToUser>();//操作權限
 
 	// Constructors
 
@@ -214,6 +215,16 @@ public class WebUser implements java.io.Serializable {
 	public void setUserType(String userType){
 		this.userType=userType;
 	}
+
+	public List<WebOperationToUser> getWebOperationToUsers(){
+		return webOperationToUsers;
+	}
+
+	public void setWebOperationToUsers(List<WebOperationToUser> webOperationToUsers){
+		this.webOperationToUsers=webOperationToUsers;
+	}
+
+	
 	
 	
 	

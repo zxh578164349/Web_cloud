@@ -159,10 +159,9 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 						   <s:if test='kyzletter.emerMk=="1"'>
 						       <td >是<input type="radio" name="kyzletter.emerMk" value="0" />&nbsp;&nbsp;否<input type="radio" name="kyzletter.emerMk" value="<s:property value='kyzletter.emerMk'/>" checked/></td>
 						   </s:if>
-						    <s:if test="kyzletter.emerMk==null">
+						    <s:if test="kyzletter==null">
 						       <td >是<input type="radio" name="kyzletter.emerMk" value="0" />&nbsp;&nbsp;否<input type="radio" name="kyzletter.emerMk" value="1" checked/></td>
-						   </s:if>
-							<td >是<input type="radio" name="kyzletter.emerMk" value="0" />&nbsp;&nbsp;否<input type="radio" name="kyzletter.emerMk" value="1" checked/></td>				        	        				       																					        
+						   </s:if>							   			        	        				       																					        
 				    </tr>
 				    <tr>
 					    <td class="tdcolor">CC(呈)</td>	
