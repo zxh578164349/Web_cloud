@@ -19,6 +19,7 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 import org.apache.commons.lang.StringUtils;
@@ -59,6 +60,7 @@ import entity.WebSubmenu;
 import entity.WebSubmenu2;
 import entity.WebType;
 import entity.WebUser;
+import entity.WebUserOperation;
 
 public class WebUserAction extends ActionSupport implements ServletResponseAware {
 	private IWebUserService webUserService;
@@ -75,9 +77,17 @@ public class WebUserAction extends ActionSupport implements ServletResponseAware
 	private IWebTypeServices webtypeSer;
 	private int backIndex;//返回標識      0或null:不走返回路徑         1:走返回路徑
 	private String userType;//用戶類型  0：使用者     1：訪客
-	
+	private JSONArray jsons;
 
 	
+	public JSONArray getJsons(){
+		return jsons;
+	}
+
+	public void setJsons(JSONArray jsons){
+		this.jsons=jsons;
+	}
+
 	public String getUserType(){
 		return userType;
 	}
@@ -975,6 +985,16 @@ public class WebUserAction extends ActionSupport implements ServletResponseAware
 	public String logout_guest(){
 		this.logout();
 		return "logout_guest";
+	}
+	
+	public String findAllOperations(){
+		try{
+			List<WebUserOperation>list=webUserService.findAllOperations();;
+			jsons=JSONArray.fromObject(list);
+		}catch(Exception e){
+			e.printStackTrace();			
+		}
+		return "findAllOperations";
 	}
 	
 }

@@ -14,7 +14,9 @@ import dao.Basedao;
 import dao.IWebUserDao;
 import entity.KyzExpectmatmLog;
 import entity.WebBackmat;
+import entity.WebOperationToUser;
 import entity.WebUser;
+import entity.WebUserOperation;
 
 public class WebUserDaoImpl extends Basedao implements IWebUserDao {
 	private int size;
@@ -170,10 +172,15 @@ public class WebUserDaoImpl extends Basedao implements IWebUserDao {
 		query.setString(1, fact);
 		WebUser user=(WebUser)query.uniqueResult();
 		if(user!=null){
-			//user.getWebJurisdictions().size();//解決hibernate延遲問題
+			//獲取各項目的權限
 			for(int i=0;i<user.getWebJurisdictions().size();i++){
 				user.getWebJurisdictions().get(i).getWebMenu().getMenuname();
-				user.getWebJurisdictions().get(i).getWebSubmenus().size();
+				user.getWebJurisdictions().get(i).getWebSubmenus().size();				
+			}
+			//獲取操作的權限
+			for(WebOperationToUser obj:user.getWebOperationToUsers()){
+				obj.getWebUserOperation().getId();
+				obj.getWebUserOperation().getOperationCname();
 			}
 		}			
 		return user;
@@ -320,6 +327,18 @@ public class WebUserDaoImpl extends Basedao implements IWebUserDao {
 		query.setString(1, email.toLowerCase());
 		WebUser user=(WebUser)query.uniqueResult();
 		return user;
+	}
+
+	/**
+	 * 日期:2016/12/30
+	 * 描述:
+	 */
+	
+	
+	public List<WebUserOperation> findAllOperations(){
+		// TODO Auto-generated method stub
+		String hql="from WebUserOperation";
+		return super.findAll(hql,null);
 	}
 
 

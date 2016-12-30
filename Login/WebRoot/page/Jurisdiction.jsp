@@ -50,8 +50,20 @@
 			        </s:iterator>			        			      			        			        
 			      </td>
 			   </tr>
-			</s:iterator>
-			
+			  </s:iterator> 
+			   <tr>
+			      <td>操作權限</td>
+			      <td>
+			      <div id="div_checkbox2">
+			              
+			      </div>   					          
+			      <s:iterator value="#session.jurisdiction_user.webOperationToUsers">	
+			              <input type="hidden" value="<s:property value='webUserOperation.id'/>" name="checkbox_hidden2"/>
+		          </s:iterator>			          
+			      </td>
+			      
+			   </tr>						   
+			 
 			
 			<s:iterator value="#session.jurisdiction_user.webJurisdictions">
 			           <s:iterator value="webSubmenus">
@@ -88,9 +100,23 @@ function back(){
 }
 
 jq(function(){
-	var list=jq("[name='checkbox']");
+	jq.ajax({
+		type:"post",
+		dataType:"json",
+		success:function(data){
+			var item="";
+			for(var i=0;i<data.length;i++){
+				<input type="checkbox" name="checkbox2" value="<s:property value='id'/>"/><s:property value="operationCname"/>
+				item+="";
+			}
+			jq("#div_checkbox2").append();
+		}
+	});
+	
 	var userType=jq("#userType").val();
+	var list=jq("[name='checkbox']");	
 	var list_hidden=jq("[name='checkbox_hidden']");
+	
 	for(var i=0;i<list.length;i++){
 		var attr=list.eq(i).val().split(",");
 		if(attr[4]==userType){
@@ -103,10 +129,25 @@ jq(function(){
 		}else{
 			list.eq(i).prop("disabled","disabled");
 			list.eq(i).css("background","grey");
-		}
-		
-		
-	}				
+		}	
+	}
+	
+	var list2=jq("[name='checkbox2']");
+	var list_hedden2=jq("[name='checkbox_hidden2']");
+	for(var i=0;i<list2.length;i++){
+		var attr=list2.eq(i).val();
+		if(attr[4]==userType){
+			for(var j=0;j<list_hidden2.length;j++){
+				if(attr[2]==list_hidden.eq(j).val()){
+					list2.eq(i).prop("checked",true);
+					break;
+				}
+			}
+		}else{
+			list2.eq(i).prop("disabled","disabled");
+			list2.eq(i).css("background","grey");
+		}	
+	}
 });
 </script>	
 </body>

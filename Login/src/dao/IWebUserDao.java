@@ -5,6 +5,7 @@ import java.util.List;
 import util.PageBean;
 import entity.KyzExpectmatmLog;
 import entity.WebUser;
+import entity.WebUserOperation;
 
 public interface IWebUserDao {
 	// �ھڥΤ�W�d��Τ��H
@@ -57,6 +58,8 @@ public interface IWebUserDao {
 	public String findEmailPWD(String email);
 	
 	public WebUser findUserByFactNoAEmail(String factNo,String email);
+	
+	public List<WebUserOperation>findAllOperations();
 	
 	
 	

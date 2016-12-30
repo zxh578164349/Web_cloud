@@ -6,6 +6,7 @@ import util.PageBean;
 import dao.IWebUserDao;
 import entity.KyzExpectmatmLog;
 import entity.WebUser;
+import entity.WebUserOperation;
 
 public class WebUserServiceImpl implements IWebUserService {
 
@@ -138,6 +139,17 @@ public class WebUserServiceImpl implements IWebUserService {
 	public WebUser findUserByFactNoAEmail(String factNo, String email) {
 		// TODO Auto-generated method stub
 		return webUserDao.findUserByFactNoAEmail(factNo, email);
+	}
+
+	/**
+	 * 日期:2016/12/30
+	 * 描述:
+	 */
+	
+	
+	public List<WebUserOperation> findAllOperations(){
+		// TODO Auto-generated method stub
+		return webUserDao.findAllOperations();
 	}
 
 
