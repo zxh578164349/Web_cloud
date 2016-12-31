@@ -337,7 +337,7 @@ public class WebUserDaoImpl extends Basedao implements IWebUserDao {
 	
 	public List<WebUserOperation> findAllOperations(){
 		// TODO Auto-generated method stub
-		String hql="from WebUserOperation";
+		String hql="select id,operationCname from WebUserOperation";
 		return super.findAll(hql,null);
 	}
 

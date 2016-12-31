@@ -989,7 +989,7 @@ public class WebUserAction extends ActionSupport implements ServletResponseAware
 	
 	public String findAllOperations(){
 		try{
-			List<WebUserOperation>list=webUserService.findAllOperations();;
+			List<WebUserOperation>list=webUserService.findAllOperations();
 			jsons=JSONArray.fromObject(list);
 		}catch(Exception e){
 			e.printStackTrace();			

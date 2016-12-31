@@ -46,31 +46,27 @@
 			      <td>
 			        <s:iterator value="submenus">
 			            <input type="checkbox" name="checkbox" value="<s:property value='menuname'/>,<s:property value='submenuname'/>,<s:property value='address'/>,<s:property value='menuid'/>,<s:property value='typeMk'/>"/>            
-			            <s:property value="submenuname" />
-			        </s:iterator>			        			      			        			        
+			            <s:property value="submenuname" />&nbsp;
+			        </s:iterator>
+			        
+			        <s:iterator value="#session.jurisdiction_user.webJurisdictions">
+			           <s:iterator value="webSubmenus">
+			              <input type="hidden" value="<s:property value='address'/>" name="checkbox_hidden"/>
+			           </s:iterator>
+		            </s:iterator>			        			      			        			        
 			      </td>
 			   </tr>
 			  </s:iterator> 
 			   <tr>
 			      <td>操作權限</td>
 			      <td>
-			      <div id="div_checkbox2">
-			              
+			      <div id="div_checkbox2">			              
 			      </div>   					          
 			      <s:iterator value="#session.jurisdiction_user.webOperationToUsers">	
 			              <input type="hidden" value="<s:property value='webUserOperation.id'/>" name="checkbox_hidden2"/>
 		          </s:iterator>			          
-			      </td>
-			      
-			   </tr>						   
-			 
-			
-			<s:iterator value="#session.jurisdiction_user.webJurisdictions">
-			           <s:iterator value="webSubmenus">
-			              <input type="hidden" value="<s:property value='address'/>" name="checkbox_hidden"/>
-			           </s:iterator>
-		   </s:iterator>
-		
+			      </td>			      
+			   </tr>						   		
              <tr>
 				<td colspan="2">
 				<input  value="確認修改" onclick="getSub()" type="button" class="btn btn-primary">
@@ -103,13 +99,13 @@ jq(function(){
 	jq.ajax({
 		type:"post",
 		dataType:"json",
+		url:"userfindAllOperations",
 		success:function(data){
 			var item="";
 			for(var i=0;i<data.length;i++){
-				<input type="checkbox" name="checkbox2" value="<s:property value='id'/>"/><s:property value="operationCname"/>
-				item+="";
+				item+="<input type='checkbox' name='checkbox2' value='"+data[i][0]+"' />"+data[i][1]+"&nbsp;";
 			}
-			jq("#div_checkbox2").append();
+			jq("#div_checkbox2").append(item);
 		}
 	});
 	
