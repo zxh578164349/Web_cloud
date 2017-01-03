@@ -8,7 +8,9 @@
     <class name="entity.WebOperationToUser" table="WEB_OPERATION_TO_USER" schema="WEB">
         <id name="id" type="java.lang.Integer">
             <column name="ID" precision="6" scale="0" />
-            <generator class="assigned" />
+            <generator class="sequence">
+                <param name="sequence">SEQ_operationtowebuser</param>
+            </generator>
         </id>
         <many-to-one name="webUser" class="entity.WebUser" fetch="select">
             <column name="USER_ID" precision="6" scale="0" />

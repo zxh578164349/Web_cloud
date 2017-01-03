@@ -39,6 +39,9 @@ public class WebUser implements java.io.Serializable {
 	public WebUser() {
 	}
 
+	public WebUser(Integer id){
+		this.id=id;
+	}
 	/** minimal constructor */
 	public WebUser(Integer id, String username, String pwd, String workno,
 			String factno, Integer available) {

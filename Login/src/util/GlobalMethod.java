@@ -1902,16 +1902,11 @@ public class GlobalMethod extends HibernateDaoSupport{
 			 System.out.print(dd+"\t");
 		 }*/
 		 
-		 KyVisabillm vbm=new KyVisabillm();
-		 System.out.println("1".equals(null));
-		 System.out.println("1".equals("0"));
-		 System.out.println("1".equals("1"));
-		 if(vbm.getKyzexp()!=null){
-			 System.out.println("1".equals(vbm.getKyzexp().getEmerMk())); 
-		 }else{
-			 System.out.println("*******");
-		 }
-		 
+		 String str="";
+		 String str2="0,2";
+		 System.out.println(str.split(",").length);
+		 System.out.println(str2.split(",").length);
+		 System.out.println(str.split(",")[0]);
 			
 		}
 	 

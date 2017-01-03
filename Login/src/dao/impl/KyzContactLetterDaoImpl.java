@@ -50,17 +50,12 @@ public class KyzContactLetterDaoImpl extends Basedao implements IKyzContactLette
 			map.put("useraccount", user.getUsername());
 			map.put("usernm", user.getName());
 		}
-		if(timeCreate!=null&&!timeCreate.equals("")&&(timeCreate2==null||timeCreate2.equals(""))){
+		if(timeCreate!=null&&!timeCreate.equals("")){
 			hql.append(" and ymExpect>=:timecreate");
 			map.put("timecreate", timeCreate);
 		}
-		if(timeCreate!=null&&!timeCreate.equals("")&&(timeCreate2!=null&&!timeCreate2.equals(""))){
-			hql.append(" and ymExpect between :timecreate and :timecreate2");
-			map.put("timecreate", timeCreate);
-			map.put("timecreate2", timeCreate2);
-		}
-		if(timeCreate2!=null&&!timeCreate2.equals("")&&(timeCreate==null||timeCreate.equals(""))){
-			hql.append(" and ymExpect<=:timecreate");
+		if(timeCreate2!=null&&!timeCreate2.equals("")){
+			hql.append(" and ymExpect<=:timecreate2");
 			map.put("timecreate2", timeCreate2);
 		}
 		if(factNo.equals("nothing")&&(visaSort==null||visaSort.equals(""))

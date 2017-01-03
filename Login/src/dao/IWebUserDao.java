@@ -4,6 +4,7 @@ import java.util.List;
 
 import util.PageBean;
 import entity.KyzExpectmatmLog;
+import entity.WebOperationToUser;
 import entity.WebUser;
 import entity.WebUserOperation;
 
@@ -60,6 +61,10 @@ public interface IWebUserDao {
 	public WebUser findUserByFactNoAEmail(String factNo,String email);
 	
 	public List<WebUserOperation>findAllOperations();
+	
+	public void addWebOperations(List<WebOperationToUser>list);
+	public List<WebOperationToUser> findoperations(Integer userid);
+	public void delete_operation(List<WebOperationToUser>list);
 	
 	
 	

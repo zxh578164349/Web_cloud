@@ -54,8 +54,8 @@
 								<div class="panel-body">
 									<table>
 										<tr>
-											<td><input type="text" id="yymmdd" name="yymmdd" onClick="WdatePicker()" readonly="readonly" class="Wdate" />至 <input
-												type="text" id="yymmdd2" name="yymmdd2" onClick="WdatePicker()" readonly="readonly" class="Wdate" /></td>
+											<td><input type="text" id="yymmdd" name="yymmdd" onClick="WdatePicker({dateFmt:'yyyyMMdd'})" readonly="readonly" class="Wdate" />至 <input
+												type="text" id="yymmdd2" name="yymmdd2" onClick="WdatePicker({dateFmt:'yyyyMMdd'})" readonly="readonly" class="Wdate" /></td>
 										</tr>
 									</table>
 								</div>

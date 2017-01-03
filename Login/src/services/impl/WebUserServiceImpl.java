@@ -5,6 +5,7 @@ import services.IWebUserService;
 import util.PageBean;
 import dao.IWebUserDao;
 import entity.KyzExpectmatmLog;
+import entity.WebOperationToUser;
 import entity.WebUser;
 import entity.WebUserOperation;
 
@@ -150,6 +151,39 @@ public class WebUserServiceImpl implements IWebUserService {
 	public List<WebUserOperation> findAllOperations(){
 		// TODO Auto-generated method stub
 		return webUserDao.findAllOperations();
+	}
+
+	/**
+	 * 日期:2017/1/2
+	 * 描述:
+	 */
+	
+	
+	public void addWebOperations(List<WebOperationToUser> list){
+		// TODO Auto-generated method stub
+		webUserDao.addWebOperations(list);
+	}
+
+	/**
+	 * 日期:2017/1/3
+	 * 描述:
+	 */
+	
+	
+	public List<WebOperationToUser> findoperations(Integer userid){
+		// TODO Auto-generated method stub
+		return webUserDao.findoperations(userid);
+	}
+
+	/**
+	 * 日期:2017/1/3
+	 * 描述:
+	 */
+	
+	
+	public void delete_operation(List<WebOperationToUser>list){
+		// TODO Auto-generated method stub
+		webUserDao.delete_operation(list);
 	}
 
 

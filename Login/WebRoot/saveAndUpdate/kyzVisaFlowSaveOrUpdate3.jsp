@@ -61,10 +61,10 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 			     <div style="position:relative"  >			     
 			     <div id="emaildwr0" style="z-index:100;position:absolute;background:yellow;top:0px;left:0px;width:180px;display:none" ></div>			     
 			     </div>
-			     </td>
-			     <td >
-			       <input type="hidden" value="<s:property value='maxItem'/>" id="maxItem"/><!-- 后台传递过来的最大序列号 -->
-			     </td>		     			     		      		      
+			     
+			     <input type="hidden" value="<s:property value='maxItem'/>" id="maxItem"/><!-- 后台传递过来的最大序列号 -->
+			     <input type="hidden" name="flows[0].typeMk" id="typeMk" value="<s:property value='flow.typeMk'/>"/>	
+			     </td>			    	     			     		      		      
 			  </tr>		
 			 </s:if>		
 			         			  			 	  			
@@ -157,6 +157,7 @@ var k2=0;
         
         var factno=document.getElementById("dwrFactNo").value;
         var typeno=document.getElementById("dwr_kytype").value;
+        var typeMk=document.getElementById("typeMk").value;
                  
         newTd00.innerHTML='<input type="checkbox" name="cbox" disabled/>';          
 	    newTd0.innerHTML = '<input type="text" name="flows['+j+'].id.factNo" value="'+factno+'"  readonly style="color:blue"/>';
@@ -169,7 +170,8 @@ var k2=0;
         newTd3.innerHTML='<input type="text" name="flows['+j+'].id.purmanNo" value="" datatype="*" id="keys'+j+'" onkeyup="gog('+j+')" />'+
         '<div style="position:relative"><div id="tishi'+j+'" style="z-index:100;position:absolute;background:yellow;left:0;top:0px;width:180px;display:none"></div></div>';     
         newTd4.innerHTML='<input type="text" name="flows['+j+'].visaSigner" value="" datatype="e" id="skeys'+j+'" onkeyup="getEmail('+j+')" />'+
-        '<div style="position:relative"><div id="emaildwr'+j+'" style="z-index:100;position:absolute;background:yellow;left:0;top:0px;width:180px;display:none"></div></div>';           
+        '<div style="position:relative"><div id="emaildwr'+j+'" style="z-index:100;position:absolute;background:yellow;left:0;top:0px;width:180px;display:none"></div></div>'+
+        '<input type="hidden" name="flows['+j+'].typeMk" value="'+typeMk+'"/>';           
         } 
                                  
 	}

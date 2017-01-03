@@ -69,7 +69,6 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 			  </s:else>   			     
 			     <td>
 			     <select  id="dwr_kytype" onchange="getAddBtn(),checkSame(),getValue('dwr_kytype','dwr_kytype2')" datatype="*" >
-			       <option value="">請選擇</option>
 			     </select>
 			     <input type="hidden" name="flows[0].id.visaSort" id="dwr_kytype2"/>
 			     <span id="error2"></span>

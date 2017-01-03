@@ -223,7 +223,8 @@
 				<value>entity/WebFormulaItems.hbm.xml</value>
 				<value>entity/VWebErpProductinFormation.hbm.xml</value>
 				<value>entity/WebUserOperation.hbm.xml</value>
-				<value>entity/WebOperationToUser.hbm.xml</value></list>
+				<value>entity/WebOperationToUser.hbm.xml</value>
+				<value>entity/VWebUserEmail.hbm.xml</value></list>
 		</property>
 	</bean>
 		

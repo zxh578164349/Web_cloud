@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.hibernate.Hibernate;
 import org.hibernate.Query;
+import org.hibernate.Transaction;
 
 import util.PageBean;
 
@@ -339,6 +340,63 @@ public class WebUserDaoImpl extends Basedao implements IWebUserDao {
 		// TODO Auto-generated method stub
 		String hql="select id,operationCname from WebUserOperation";
 		return super.findAll(hql,null);
+	}
+
+	/**
+	 * 日期:2017/1/2
+	 * 描述:
+	 */
+	
+	
+	public void addWebOperations(List<WebOperationToUser> list){
+		// TODO Auto-generated method stub
+		Transaction tc=null;
+		try{
+			tc=getSession().beginTransaction();
+			for(WebOperationToUser obj:list){
+				//getSession().save(obj);
+				getSession().merge(obj);
+			}
+		}catch(Exception e){
+			tc.rollback();
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * 日期:2017/1/3
+	 * 描述:
+	 */
+	
+	
+	public List<WebOperationToUser> findoperations(Integer userid){
+		// TODO Auto-generated method stub
+		String hql="from WebOperationToUser where webUser.id=?";
+		Integer[]objs={userid};
+		List<WebOperationToUser>list=super.findAll(hql,objs);
+		return list;
+	}
+
+	/**
+	 * 日期:2017/1/3
+	 * 描述:
+	 */
+	
+	
+	public void delete_operation(List<WebOperationToUser>list){
+		// TODO Auto-generated method stub
+		Transaction tc=null;
+		try{	
+			tc=getSession().beginTransaction();
+			for(WebOperationToUser obj:list){
+				getSession().delete(obj);
+			}
+		}catch(Exception e){
+			tc.rollback();
+			e.printStackTrace();
+		}
+		
+		
 	}
 
 

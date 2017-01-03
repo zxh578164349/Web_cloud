@@ -85,17 +85,12 @@ public class KyzExpcetmatmDaoImpl extends Basedao implements IKyzExpectmatmDao {
 			hql.append(" and username=:usernm");
 			map.put("usernm", user.getUsername());
 		}
-		if(timeCreate!=null&&!timeCreate.equals("")&&(timeCreate2==null||timeCreate2.equals(""))){
+		if(timeCreate!=null&&!timeCreate.equals("")){
 			hql.append(" and to_char(timeCreate,'yyyymmdd')>=:timecreate");
 			map.put("timecreate", timeCreate);
 		}
-		if(timeCreate!=null&&!timeCreate.equals("")&&(timeCreate2!=null&&!timeCreate2.equals(""))){
-			hql.append(" and to_char(timeCreate,'yyyymmdd') between :timecreate and :timecreate2");
-			map.put("timecreate", timeCreate);
-			map.put("timecreate2", timeCreate2);
-		}
-		if(timeCreate2!=null&&!timeCreate2.equals("")&&(timeCreate==null||timeCreate.equals(""))){
-			hql.append(" and to_char(timeCreate,'yyyymmdd')<=:timecreate");
+		if(timeCreate2!=null&&!timeCreate2.equals("")){
+			hql.append(" and to_char(timeCreate,'yyyymmdd')<=:timecreate2");
 			map.put("timecreate2", timeCreate2);
 		}
 		if(factNo.equals("nothing")&&(visaSort==null||visaSort.equals(""))

@@ -48,6 +48,9 @@
 			<result name="logout_guest">judge_guest.jsp</result>
 			<result name="findAllOperations" type="json">
 			    <param name="root">jsons</param>
+			</result>
+			<result name="addoperations" type="json">
+			    <param name="root">ajax_result</param>
 			</result>			    			
 		</action>
 		<action name="show*" class="showAction" method="{1}">

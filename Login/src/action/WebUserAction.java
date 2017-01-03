@@ -56,6 +56,7 @@ import entity.WebFact;
 import entity.WebJurisdiction;
 import entity.WebLog;
 import entity.WebMenu;
+import entity.WebOperationToUser;
 import entity.WebSubmenu;
 import entity.WebSubmenu2;
 import entity.WebType;
@@ -79,7 +80,18 @@ public class WebUserAction extends ActionSupport implements ServletResponseAware
 	private String userType;//用戶類型  0：使用者     1：訪客
 	private JSONArray jsons;
 
+	private List<Integer>checkbox2;
 	
+	
+	
+	public List<Integer> getCheckbox2(){
+		return checkbox2;
+	}
+
+	public void setCheckbox2(List<Integer> checkbox2){
+		this.checkbox2=checkbox2;
+	}
+
 	public JSONArray getJsons(){
 		return jsons;
 	}
@@ -995,6 +1007,27 @@ public class WebUserAction extends ActionSupport implements ServletResponseAware
 			e.printStackTrace();			
 		}
 		return "findAllOperations";
+	}
+	
+	public String addoperations(){
+		WebUser user=(WebUser)ActionContext.getContext().getSession().get("jurisdiction_user");
+		List<WebOperationToUser>list=new ArrayList<WebOperationToUser>();
+		try{
+			List<WebOperationToUser>list2=webUserService.findoperations(user.getId());
+			for(Integer id:checkbox2){
+				WebOperationToUser obj=new WebOperationToUser();
+				obj.setWebUser(user);
+				obj.setWebUserOperation(new WebUserOperation(id));
+				list.add(obj);
+			}
+			webUserService.addWebOperations(list);
+			webUserService.delete_operation(list2);
+			ajax_result="0";
+		}catch(Exception e){
+			ajax_result="1";
+			e.printStackTrace();
+		}	
+		return "addoperations";
 	}
 	
 }

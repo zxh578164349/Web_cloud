@@ -56,17 +56,7 @@
 		            </s:iterator>			        			      			        			        
 			      </td>
 			   </tr>
-			  </s:iterator> 
-			   <tr>
-			      <td>操作權限</td>
-			      <td>
-			      <div id="div_checkbox2">			              
-			      </div>   					          
-			      <s:iterator value="#session.jurisdiction_user.webOperationToUsers">	
-			              <input type="hidden" value="<s:property value='webUserOperation.id'/>" name="checkbox_hidden2"/>
-		          </s:iterator>			          
-			      </td>			      
-			   </tr>						   		
+			  </s:iterator> 			   						   		
              <tr>
 				<td colspan="2">
 				<input  value="確認修改" onclick="getSub()" type="button" class="btn btn-primary">
@@ -75,6 +65,30 @@
 			</tr>
 		</table>
 	</form>
+	
+	<!-- <s:if test='#session.jurisdiction_user.userType=="0"'>
+	    <form id="subform2">
+	    <table class="table table-striped table-hover table-bordered">
+	      <tr>
+			      <td>操作權限</td>
+			      <td>
+			      
+			      <div id="div_checkbox2">			              
+			      </div>   					          
+			      <s:iterator value="#session.jurisdiction_user.webOperationToUsers">	
+			              <input type="hidden" value="<s:property value='webUserOperation.id'/>" name="checkbox_hidden2"/>
+		          </s:iterator>			          
+			      </td>			      
+			   </tr>
+			   <tr>
+				<td colspan="2">
+				<input  value="確認" id="btn_operation" type="button" class="btn btn-primary">				
+				</td>
+			</tr>
+	    </table>
+	   </form>
+	</s:if>-->
+	
 	
 <script type="text/javascript">		
 function getSub(){    
@@ -100,10 +114,11 @@ jq(function(){
 		type:"post",
 		dataType:"json",
 		url:"userfindAllOperations",
+		async: false,
 		success:function(data){
 			var item="";
 			for(var i=0;i<data.length;i++){
-				item+="<input type='checkbox' name='checkbox2' value='"+data[i][0]+"' />"+data[i][1]+"&nbsp;";
+				item+="<input type='checkbox' name='checkbox2' value='"+data[i][0]+"'/>"+data[i][1]+"&nbsp;";
 			}
 			jq("#div_checkbox2").append(item);
 		}
@@ -128,22 +143,35 @@ jq(function(){
 		}	
 	}
 	
-	var list2=jq("[name='checkbox2']");
-	var list_hedden2=jq("[name='checkbox_hidden2']");
+	//用戶的操作權限
+	/*var list2=jq("[name='checkbox2']");
+	var list_hidden2=jq("[name='checkbox_hidden2']");
 	for(var i=0;i<list2.length;i++){
-		var attr=list2.eq(i).val();
-		if(attr[4]==userType){
 			for(var j=0;j<list_hidden2.length;j++){
-				if(attr[2]==list_hidden.eq(j).val()){
+				if(list2.eq(i).val()==list_hidden2.eq(j).val()){
 					list2.eq(i).prop("checked",true);
 					break;
 				}
+			}		
+	}*/
+	
+	
+	jq("#btn_operation").click(function(){
+		jq.ajax({
+			type:"post",
+			dataType:"json",
+			data:jq("#subform2").serialize(),
+			url:"useraddoperations",
+			success:function(data){
+				if(data=="0"){
+					layer.msg("修改成功",3,1);
+				}else{
+					layer.msg("修改失敗",3,3);
+				}
 			}
-		}else{
-			list2.eq(i).prop("disabled","disabled");
-			list2.eq(i).css("background","grey");
-		}	
-	}
+		});
+	})
+	
 });
 </script>	
 </body>
