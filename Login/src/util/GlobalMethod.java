@@ -1902,11 +1902,13 @@ public class GlobalMethod extends HibernateDaoSupport{
 			 System.out.print(dd+"\t");
 		 }*/
 		 
-		 String str="";
-		 String str2="0,2";
-		 System.out.println(str.split(",").length);
-		 System.out.println(str2.split(",").length);
-		 System.out.println(str.split(",")[0]);
+		 String result=" , , ,";
+		 String str=result.split(",")[0];
+		 String str1=result.split(",")[1];
+		 String str2=result.split(",")[2];
+		 System.out.println(str);
+		 System.out.println(str1);
+		 System.out.println(str2);
 			
 		}
 	 

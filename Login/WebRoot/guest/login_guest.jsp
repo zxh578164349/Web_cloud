@@ -23,7 +23,7 @@ cook_pwd=cookie.getCookAll().split(",")[2];
 		<div id="wrappertop"></div>
 		<div id="wrappermiddle_guest">
 			<form  method="post" id="loginform">
-				<h2>Web系統登錄(訪客)<s:property value='userName'/></h2>
+				<h2>Web系統登錄(訪客)</h2>
 				<div id="username_input">
 					<div id="username_inputleft"></div>
 					<div id="username_inputmiddle">
