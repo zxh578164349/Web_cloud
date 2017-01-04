@@ -508,7 +508,10 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 			if(itemNo==null||itemNo.equals("")){
 				itemNo=vbm.getItemNext();
 			}
-			//int jj=5/0;
+			
+			/*for(KyVisabills obj:vbm.getKyVisabillses()){
+				System.out.println(obj.getId().getItemNo()+":"+obj.getVisaSigner());
+			}*/
 			SimpleDateFormat format=new SimpleDateFormat("yyyyMMdd_hh");
 			int num_temp=Integer.parseInt(itemNo);//把項次轉化為數字
 			int num=Integer.parseInt(itemNo)-1;//用於識別KyVisabills集合裡的每幾個對象									
@@ -840,11 +843,7 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 			String visaNext=vbm.getSignerNext();
 			String singer=vbs.getVisaSigner();
 			String flowMk=vbs.getFlowMk();
-			int index=Integer.parseInt(vbs.getId().getItemNo())-1;//当前减签人的位置（集合从0开始，所以减1）
-			
-			//當前減簽的人,是當前登錄者
-	  	    //WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
-	  	    //String userName=user.getUsername();
+			int index=Integer.parseInt(vbs.getId().getItemNo())-1;//当前减签人的位置（集合从0开始，所以减1）						
 			
 	  	    /**
 	  	     * 如果减签的刚好函文的下一位签核人，
@@ -854,7 +853,8 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 	  	     */
 	  	    
 	  	    //*********************************************如果当前减签人刚好是函文的下一位签核人**********************************************//
-			if(visaNext.equals(singer)&&flowMk.equals("Y")){
+			//if(visaNext.equals(singer)&&flowMk.equals("Y")){
+			if(itemNo.equals(vbm.getItemNext())&&flowMk.equals("Y")){
 				//*********发送email通知已经减签***********//				  		  
 	  		       //*********更新下一位签核人***********//
 	  		  //如果不是最后一个签核人，并且不是最后一个知会人,则不需要更新

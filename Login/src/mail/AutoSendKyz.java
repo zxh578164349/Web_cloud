@@ -93,10 +93,11 @@ public class AutoSendKyz extends QuartzJobBean{
 						System.out.println("本機不需要發送Email");
 					}
 				}
-			}	
+			}
 			//this.init();
 		}catch(Exception e){
-			System.out.println(e);
+			System.out.println("函文定時發送"+e);
+			e.printStackTrace();
 		}														
 	}
 	

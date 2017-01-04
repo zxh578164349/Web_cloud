@@ -101,7 +101,8 @@ public class AutoSendKyzAll extends QuartzJobBean{
 				}
 				//this.init();
 			}catch(Exception e){
-				System.out.println(e);
+				System.out.println("函文審核完畢"+e);
+				e.printStackTrace();
 			}								
 	}
 	
