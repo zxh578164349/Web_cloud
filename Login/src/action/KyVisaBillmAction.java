@@ -903,7 +903,8 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 			ajaxResult="0";
 		}catch(Exception e){
 			ajaxResult="1";
-			System.out.println(e);
+			//System.out.println(e);
+			e.printStackTrace();
 		}
 		
 		return "minusvisabills2";
