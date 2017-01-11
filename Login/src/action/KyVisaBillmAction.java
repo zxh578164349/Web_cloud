@@ -1159,6 +1159,12 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 		}						
 				
 	}
+   
+   public String findKyVisaBills_Int(){
+	   int result=visabillSer.findKyVisaBills_Int();	
+	   ajaxResult=result+"";
+	   return "findKyVisaBills_Int";
+   }
 	
 	
 }

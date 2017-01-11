@@ -530,7 +530,10 @@
 		  <!-- 函文審核狀況 -->
 		  <result name="beanList_1">/tw/visabillm.jsp</result>
 		  <result name="beanList1_1">/tw/tw1/visabillm1.jsp</result>
-		  <!-- 函文審核狀況 -->		  		  
+		  <!-- 函文審核狀況 -->
+		  <result name="findKyVisaBills_Int" type="json">
+		      <param name="root">ajaxResult</param>
+		  </result>		  		  
 		</action>
 		<action name="visaflow_*" class="kyzVisaFlowAction" method="{1}">
 		    <result name="add" type="json">

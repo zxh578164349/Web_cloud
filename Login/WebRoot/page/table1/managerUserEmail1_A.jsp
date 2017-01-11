@@ -26,9 +26,9 @@
 	<table class="table table-striped table-hover table-bordered"  >
 		<h3>
 		<s:if test='#session.loginUser.userread!="1"'>	
-		<input value="添加知會人" type="button" class="btn btn-info" onclick="loadUrl('saveAndUpdate/webuseremailaSaveOrUpdate.jsp')"/>
+		<input value="添加備簽人" type="button" class="btn btn-info" onclick="loadUrl('saveAndUpdate/webuseremailaSaveOrUpdate.jsp')"/>
 	    </s:if>	
-		<span id="h2_title">知會人管理</span>
+		<span id="h2_title">備簽人管理(分類別)</span>
 		</h3>
 		<thead>
 			<tr class="tr_show">

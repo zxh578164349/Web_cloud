@@ -97,7 +97,7 @@
 		          <td class="td_show_title">年月</td>
 		          <td class="td_input">
 		             <s:if test="sumydata==null">
-		             <input type="text" name="yymm" onclick="WdatePicker({minDate:'%y-{%M-6}',maxDate:'%y-%M',dateFmt:'yyyyMM'})" onchange="checkTheSame()" class="Wdate" datatype="*" id="yymm"/>
+		             <input type="text" name="yymm" onclick="WdatePicker({minDate:'%y-{%M-12}',maxDate:'%y-%M',dateFmt:'yyyyMM'})" onchange="checkTheSame()" class="Wdate" datatype="*" id="yymm"/>
 		             <input type="hidden" name="username" value="${loginUser.username}"/><!-- 輸入者  --> 
 		             </s:if>
 		             <s:else>

@@ -188,51 +188,47 @@
 				jq("#submenu" + index).hide();				
 			}
 		}
-		jq(document)
-				.ready(
-						function() {
-							jq("a[name='alink']").click(function() {
-								jq("a[name='alink']").removeClass("linkbg");
-								jq(this).addClass("linkbg");
-							});
-							jq("a[name='alink']").removeAttr("href");
-							jq("a[name='alink']").removeAttr("onClick");
+	
+		jq(document).ready(function() {
+					jq("a[name='alink']").click(function() {
+						jq("a[name='alink']").removeClass("linkbg");
+						jq(this).addClass("linkbg");
+					});
+					jq("a[name='alink']").removeAttr("href");
+					jq("a[name='alink']").removeAttr("onClick");
 
-							var alinks = jq("a[name='alink']");
-							var ahidens = jq("input[name='a_hidden']");
-							var alink_addresss=jq("input[name='alink_address']");
-							for ( var i = 0; i < alinks.length; i++) {
-								for ( var j = 0; j < ahidens.length; j++) {
-									var array = ahidens.eq(j).val().split(",");
-									//if (alinks.eq(i).html().replace(/(^\s+)|\s+$/g, "") == array[0]){	
-									if (alink_addresss.eq(i).val()== array[1]){
-										alinks.eq(i).attr(
-												"href",
-												"javascript:changeTitle('"
-														+ array[0]
-														+ "');findPageBean('"
-														+ array[1] + "','"
-														+array[0]+"')");
-										alinks.eq(i).removeClass("a_disable");
-										break;
-									}
-								}
+					var alinks = jq("a[name='alink']");
+					var ahidens = jq("input[name='a_hidden']");
+					var alink_addresss = jq("input[name='alink_address']");
+					for ( var i = 0; i < alinks.length; i++) {
+						for ( var j = 0; j < ahidens.length; j++) {
+							var array = ahidens.eq(j).val().split(",");
+							if (alink_addresss.eq(i).val() == array[1]) {
+								alinks.eq(i).attr(
+										"href",
+										"javascript:changeTitle('" + array[0]
+												+ "');findPageBean('"
+												+ array[1] + "','" + array[0]
+												+ "')");
+								alinks.eq(i).removeClass("a_disable");
+								break;
 							}
-
-						});
+						}
+					}
+				});
 
 		function changeTitle(title) {
-			jq(document).attr("title", title);	
+			jq(document).attr("title", title);
 		}
-		
-		function findPageBean(url,title) {
+
+		function findPageBean(url, title) {
 			jq.ajax({
 				type : "POST",
 				dataType : "html",
 				url : url,
 				success : function(data) {
 					jq("#r_content").html(data);
-					jq("#h2_title").text(title);	
+					jq("#h2_title").text(title);
 					jq("#h2_title2").text(title);
 				},
 				error : function(error) {
@@ -260,72 +256,68 @@
 				}
 			});
 		}
-		
-		
-		
-		
+
 		//你确定要删除吗？
-		function isDelete(mid,url) {
-		    var flag=confirm("確定要刪除嗎?");		
-				if (flag == true) {					
-					jq.ajax({
-						type:"POST",
-						dataType:"html",
-						data:jq("#"+mid).serialize(),
-						url:url,
-						success:function(data){
-							jq("#bodyid").html(data);
-						},
-						error:function(data){
-							jq("#bodyid").html(data.responseText);
+		function isDelete(mid, url) {
+			var flag = confirm("確定要刪除嗎?");
+			if (flag == true) {
+				jq.ajax({
+					type : "POST",
+					dataType : "html",
+					data : jq("#" + mid).serialize(),
+					url : url,
+					success : function(data) {
+						jq("#bodyid").html(data);
+					},
+					error : function(data) {
+						jq("#bodyid").html(data.responseText);
+					}
+				});
+			}
+		}
+		function isDelete2(mid, url, url2) {
+			var flag = confirm("確定要刪除嗎?");
+			if (flag == true) {
+				jq.ajax({
+					type : "POST",
+					dataType : "json",
+					data : jq("#" + mid).serialize(),
+					url : url,
+					success : function(data) {
+						if (data == "0") {
+							layer.msg("刪除成功", 3, 1);
+							loadUrl_bodyid(url2);
+						} else {
+							layer.msg("刪除失敗", 3, 3);
 						}
-					});
-				}	
+					}
+				});
+			}
 		}
-		function isDelete2(mid,url,url2) {
-		    var flag=confirm("確定要刪除嗎?");		
-				if (flag == true) {					
-					jq.ajax({
-						type:"POST",
-						dataType:"json",
-						data:jq("#"+mid).serialize(),
-						url:url,
-						success:function(data){
-							if(data=="0"){
-								layer.msg("刪除成功",3,1);
-								loadUrl_bodyid(url2);
-							}else{
-								layer.msg("刪除失敗",3,3);
-							}
-						}						
-					});
-				}	
-		}
-		
+
 		//禁止輸入空格
-		function goTrim(){
-			 var inputs=document.getElementsByTagName("input"); 
-             for (var i=0;i<inputs.length; i++) {  
-                 if(inputs[i].getAttribute("type")=="text"){                
-                  inputs[i].onkeyup=function(){
-                 	 if(this.value.indexOf(" "!=-1)){
-                 		//this.value=this.value.trim();
-                 		this.value=this.value.replace(/(^\s+)|\s+$/g,""); 
-                 	 }
-                  };                
-                 }  
-             }
+		function goTrim() {
+			var inputs = document.getElementsByTagName("input");
+			for ( var i = 0; i < inputs.length; i++) {
+				if (inputs[i].getAttribute("type") == "text") {
+					inputs[i].onkeyup = function() {
+						if (this.value.indexOf(" " != -1)) {
+							//this.value=this.value.trim();
+							this.value = this.value.replace(/(^\s+)|\s+$/g, "");
+						}
+					};
+				}
+			}
 		}
-		
-				
-		function hideBills2(){
-		   jq("#divBills2").hide(300);
+
+		function hideBills2() {
+			jq("#divBills2").hide(300);
 		}
-		function goHere(){
-			
+		function goHere() {
 			loadUrl("/Login/vbm_findPageBean");
 		}
-		function findKyVisaBills_Int(){
+
+		/*function findKyVisaBills_Int(){
 		   kyvisabillsjs.findKyVisaBills_Int(function(x){
 			   var temp;
 		       if(x>0){               
@@ -336,16 +328,33 @@
 		       jq("#td_content_right").append(temp);
 		       jq("#divBills2").show();
 		   })
-		}
-		setTimeout("findKyVisaBills_Int()",1000);
-		setTimeout("hideBills2()",15000); 
-		
-function change_h2_title(title){
-	jq("#h2_title2").text(title);
-	}		
+		}*/
 
+		jq(function() {
+			jq.ajax({
+				type : "post",
+				url : "vbm_findKyVisaBills_Int",
+				dataType : "json",
+				success : function(data) {
+					var temp;
+					if (data == "0") {
+						temp = "<b>你好，目前暂无函文需要審核!</b>";
+					} else {
+						temp = "<a href='javascript:goHere()'>你好，目前有" + data
+								+ "封函文需要審核!(可點擊進入)</a>"
+					}
+					jq("#td_content_right").append(temp);
+					jq("#divBills2").show();
+				}
+			})
+		});
+		//setTimeout("findKyVisaBills_Int()",1000);
+		setTimeout("hideBills2()", 15000);
+
+		function change_h2_title(title) {
+			jq("#h2_title2").text(title);
+		}
 	</script>
-	<script type='text/javascript' src='/Login/dwr/interface/kyvisabillsjs.js'></script>
 </body>
 
 </html>
