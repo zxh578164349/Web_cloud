@@ -26,18 +26,18 @@
 	<table class="table table-striped table-hover table-bordered"  >
 		<h3>
 		<s:if test='#session.loginUser.userread!="1"'>	
-		<input value="添加備簽人" type="button" class="btn btn-info" onclick="loadUrl('saveAndUpdate/webuseremailaSaveOrUpdate.jsp')"/>
+		<input value="添加同步人" type="button" class="btn btn-info" onclick="loadUrl('saveAndUpdate/webuseremailaSaveOrUpdate.jsp')"/>
 	    </s:if>	
-		<span id="h2_title">備簽人管理(分類別)</span>
+		<span id="h2_title"></span>
 		</h3>
 		<thead>
 			<tr class="tr_show">
 				<th>廠別</th>
 				<th>函文類別</th>
-					<th>主簽人Email</th>
-					<th>知會人Email</th>
-					<th>主簽人姓名 </th>
-					<th>知會人姓名 </th>										
+					<th>主同步人Email</th>
+					<th>被同步人Email</th>
+					<th>主同步人姓名 </th>
+					<th>被同步人姓名 </th>										
 				<s:if test='#session.loginUser.userread!="1"'>
 				<th>操作</th>
 				</s:if>

@@ -12,6 +12,7 @@ public class WebuserEmailA implements java.io.Serializable {
 	private String name;
 	private String namePwd;
 	private String colTemp;
+	private String typeMk;//簽核人或 知會人            0  簽核人         1  知會人
 
 	// Constructors
 
@@ -65,6 +66,15 @@ public class WebuserEmailA implements java.io.Serializable {
 	public void setColTemp(String colTemp) {
 		this.colTemp = colTemp;
 	}
+
+	public String getTypeMk(){
+		return typeMk;
+	}
+
+	public void setTypeMk(String typeMk){
+		this.typeMk=typeMk;
+	}
+	
 	
 
 }

@@ -54,5 +54,10 @@ public class WebuserEmailAServicesImpl implements IWebuserEmailAServices{
 		return webuseremailaDao.findByEmail(factNo, email, visaSort);
 	}
 	
+	public List<String> findByEmail2(String factNo, String email, String visaSort) {
+		// TODO Auto-generated method stub
+		return webuseremailaDao.findByEmail2(factNo, email, visaSort);
+	}
+	
 
 }

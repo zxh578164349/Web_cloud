@@ -1183,27 +1183,28 @@ public class GlobalMethod extends HibernateDaoSupport{
 					}else{
 						list_email.add(signerNext);
 					}										
-					 /******************20151113备签人请使用方法findByFactNoAEmailPwd2(String factNo,String email)**********************/				
+									
 					/***************如果是臺灣加久，備簽人同時也是申請人，那麼根據流程代號找到申請人（也就是備簽人）*******************/
 					if(factNo.equals("GJ")){
 						String visaSinger=visaSer.findVisaSigner(factNo, visaSort);
 						list_email.add(visaSinger);
 					}
+					
+					 /******************20170112备签人同步**********************/
+					//備簽人（無類別）
 					List<String>list_emailPwd=webuseremailSer.findByFactNoAEmailPwd2(factNo, signerNext);
 						if(list_emailPwd.size()>0){
 							for(int j=0;j<list_emailPwd.size();j++){
 								list_email.add(list_emailPwd.get(j));
 							}
 						}
-						/******************20151113备签人请使用方法findByFactNoAEmailPwd2(String factNo,String email)**********************/
 						
-					/***************************************中途知會人的email20160217********************************************/
+					//備簽人（有類別）					
 					List<String>list_emailPwd_a=webuseremailaSer.findByEmail(factNo, signerNext, visaSort);
 					for(int k=0;k<list_emailPwd_a.size();k++){
 						list_email.add(list_emailPwd_a.get(k));
 					}
-					/***************************************中途知會人的email20160217********************************************/
-					
+					/******************20170112备签人同步**********************/
 					list_email.add(EMAIL);
 					String emailUrl=URL+"vbm_findById_email?visaSort="+visaSort+"&billNo="+billNo
 					         +"&factNo="+factNo+"&email="+signerNext;
@@ -1294,7 +1295,7 @@ public class GlobalMethod extends HibernateDaoSupport{
 			for(KyVisabills bills:list_visa2){
 				list_emails.add(bills.getVisaSigner());
 				if(bills.getFlowMk().equals("Y")){//要簽核的人才需要通知知會人
-					List<String>list_emailPwd=webuseremailaSer.findByEmail(local_factNo,bills.getVisaSigner(),local_visaSort);
+					List<String>list_emailPwd=webuseremailaSer.findByEmail2(local_factNo,bills.getVisaSigner(),local_visaSort);
 					for(String str:list_emailPwd){
 						list_emails.add(str);
 					}

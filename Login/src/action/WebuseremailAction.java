@@ -22,8 +22,15 @@ public class WebuseremailAction extends ActionSupport{
 	private int page;
 	private PageBean bean;
 	private int backIndex;//返回標識      0或null:不走返回路徑         1:走返回路徑
+	private String ajaxResult;
 	
 	
+	public String getAjaxResult(){
+		return ajaxResult;
+	}
+	public void setAjaxResult(String ajaxResult){
+		this.ajaxResult=ajaxResult;
+	}
 	public int getBackIndex() {
 		return backIndex;
 	}
@@ -71,7 +78,13 @@ public class WebuseremailAction extends ActionSupport{
 	}
 	
 	public String add(){
-		webuseremailSer.add(useremail);
+		try{
+			webuseremailSer.add(useremail);
+			ajaxResult="0";
+		}catch(Exception e){
+			ajaxResult="1";
+			e.printStackTrace();
+		}
 		return "add";
 	}
 	public String findById(){

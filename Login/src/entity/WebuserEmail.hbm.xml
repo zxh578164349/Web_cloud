@@ -23,5 +23,8 @@
         <property name="namePwd" type="java.lang.String">
             <column name="NAME_PWD" length="20" />
         </property>
+        <property name="typeMk" type="java.lang.String">
+            <column name="TYPE_MK" length="2"/>
+        </property>
     </class>
 </hibernate-mapping>

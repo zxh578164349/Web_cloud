@@ -51,4 +51,17 @@ public class WebuserEmailServicesImpl implements IWebuserEmailServices{
 		return webuseremailDao.findByFactNoAEmailPwd2(factNo, email);
 	}
 
+
+
+	/**
+	 * 日期:2017/1/12
+	 * 描述:
+	 */
+	
+	
+	public List<String> findByFactNoAEmailPwd3(String factNo,String email){
+		// TODO Auto-generated method stub
+		return webuseremailDao.findByFactNoAEmailPwd3(factNo, email);
+	}
+
 }

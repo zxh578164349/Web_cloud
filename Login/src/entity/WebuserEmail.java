@@ -11,6 +11,7 @@ public class WebuserEmail implements java.io.Serializable {
 	private WebuserEmailId id;
 	private String name;
 	private String namePwd;
+	private String typeMk;//簽核人或 知會人            0  簽核人         1  知會人
 
 	// Constructors
 
@@ -55,5 +56,15 @@ public class WebuserEmail implements java.io.Serializable {
 	public void setNamePwd(String namePwd) {
 		this.namePwd = namePwd;
 	}
+
+	public String getTypeMk(){
+		return typeMk;
+	}
+
+	public void setTypeMk(String typeMk){
+		this.typeMk=typeMk;
+	}
+	
+	
 
 }

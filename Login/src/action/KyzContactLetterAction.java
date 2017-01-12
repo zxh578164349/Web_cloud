@@ -287,7 +287,7 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 					kyzletterSer.add(kyzletter);
 					
 					KyVisabillm vbm=visabillmSer.findById(kyzletter.getId().getFactNo(), kyzletter.getVisaType(), kyzletter.getId().getBillNo());				      
-				    List<String>list_emailPwd=webuseremailSer.findByFactNoAEmailPwd2(vbm.getId().getFactNo(),vbm.getSignerNext());//備簽人												      
+				    List<String>list_emailPwd=webuseremailSer.findByFactNoAEmailPwd2(vbm.getId().getFactNo(),vbm.getSignerNext());											      
 					GlobalMethod.sendNewEmail(vbm,list_emailPwd);//發送郵件									     
 					}else{
 						response.setContentType("text/html;charset=utf-8");

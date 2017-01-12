@@ -46,13 +46,12 @@
 	}
 
 	function submis() {		
-		var email = document.getElementById("email");
-		var factno=document.getElementById("factNo")
 		jq.ajax({
 			type : "POST",
 			dataType : "Html",
 			url : "webuseremail_findPageBean2",
-			data : "email=" + email.value+"&factNo="+factno.value,
+			//data : "email=" + email.value+"&factNo="+factno.value,
+			data:jq("#subform").serialize(),
 			success : function(msg) {
 				jq("#bodyid").html(msg);
 			},

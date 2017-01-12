@@ -13,6 +13,32 @@ public interface IWebuserEmailServices {
 	public void delete(String factNo,String email,String emailpwd,KyzExpectmatmLog delLog);
 	public PageBean findPageBean(int pageSize,int page,String factNo,String email);
 	public List<WebuserEmail> findByFactNoAEmailPwd(String factNo,String email);
+	/**
+	 * 同步簽核人
+	 * @Title: findByFactNoAEmailPwd2
+	 * @Description: TODO
+	 * @param @param factNo
+	 * @param @param email
+	 * @param @return
+	 * @return List<String>
+	 * @throws
+	 * @author web
+	 * @date 2017/1/12
+	 */
 	public List<String> findByFactNoAEmailPwd2(String factNo, String email);
+	
+	/**
+	 * 同步知會人
+	 * @Title: findByFactNoAEmailPwd3
+	 * @Description: TODO
+	 * @param @param factNo
+	 * @param @param email
+	 * @param @return
+	 * @return List<String>
+	 * @throws
+	 * @author web
+	 * @date 2017/1/12
+	 */
+	public List<String> findByFactNoAEmailPwd3(String factNo, String email);
 
 }

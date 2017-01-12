@@ -89,7 +89,14 @@ public class WebuserEmailADaoImpl extends Basedao implements IWebuserEmailADao{
 
 	public List<String> findByEmail(String factNo, String email, String visaSort) {
 		// TODO Auto-generated method stub
-		String hql="select id.emailpassword from WebuserEmailA where id.factNo=? and lower(id.email)=? and id.visaSort=?";
+		String hql="select id.emailpassword from WebuserEmailA where id.factNo=? and lower(id.email)=? and id.visaSort=? and typeMk='0'";
+		String[]objs={factNo,email.toLowerCase(),visaSort.substring(0,2)};
+		return super.findAll(hql, objs);
+	}
+	
+	public List<String> findByEmail2(String factNo, String email, String visaSort) {
+		// TODO Auto-generated method stub
+		String hql="select id.emailpassword from WebuserEmailA where id.factNo=? and lower(id.email)=? and id.visaSort=? and typeMk='1'";
 		String[]objs={factNo,email.toLowerCase(),visaSort.substring(0,2)};
 		return super.findAll(hql, objs);
 	}

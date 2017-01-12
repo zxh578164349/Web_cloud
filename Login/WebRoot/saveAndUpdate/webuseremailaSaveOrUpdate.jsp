@@ -11,7 +11,7 @@
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
-<title>添加知會人</title>
+<title></title>
 <head>
 <base href="<%=basePath%>">
 <meta http-equiv="pragma" content="no-cache">
@@ -55,10 +55,10 @@
 				</td>			
 				</tr>													
 			<tr>
-				<td class="td_show_title">主簽人Email</td>
+				<td class="td_show_title">主同步人Email</td>
 				<td class="td_input"><input type="text" name="emailobj.id.email" datatype="e" value="<s:property value='emailobj.id.email'/>" id="email" onblur="getLow(this),check()">									
 				</td>
-				<td class="td_show_title">知會人Email</td>
+				<td class="td_show_title">被同步人Email</td>
 				<td class="td_input"><input type="text" name="emailobj.id.emailpassword"
 					datatype="e" value="<s:property value='emailobj.id.emailpassword'/>" id="emailPwd" onblur="getLow(this),check()"/>					
 					</td>											   
@@ -72,22 +72,34 @@
 			   <td class="td_input"><input type="text" name="emailobj.id.visaSort" value="<s:property value='emailobj.id.visaSort'/>" readonly style="color:blue"/></td>
 			  </tr>
 			  <tr> 
-			   <td class="td_show_title">主簽人Email</td>
+			   <td class="td_show_title">主同步人Email</td>
 			   <td class="td_input"><input type="text" name="emailobj.id.email" value="<s:property value='emailobj.id.email'/>" readonly style="color:blue"/></td>
-			   <td class="td_show_title">知會人Email</td>
+			   <td class="td_show_title">被同步人Email</td>
 			   <td class="td_input"><input type="text" name="emailobj.id.emailpassword" value="<s:property value='emailobj.id.emailpassword'/>" readonly style="color:blue"/></td>	
 			  </tr>
 			</s:else>						
 			<tr>
-			<td class="td_show_title">主簽人姓名</td>
-					<td class="td_input"><input type="text" name="emailobj.name" value="<s:property value='emailobj.name'/>"/></td>
-			    <td class="td_show_title">知會人姓名</td>
-			    <td class="td_input"><input type="text" name="emailobj.namePwd" value="<s:property value='emailobj.namePwd'/>"  id="emailpwd"/></td>				 					
-					
+			<td class="td_show_title">主同步人姓名</td>
+					<td class="td_input"><input type="text" name="emailobj.name" value="<s:property value='emailobj.name'/>" datatype="*"/></td>
+			    <td class="td_show_title">被同步人姓名</td>
+			    <td class="td_input"><input type="text" name="emailobj.namePwd" value="<s:property value='emailobj.namePwd'/>"  id="emailpwd" datatype="*"/></td>				 									
+			</tr>
+			<tr>
+			   <td>作用域</td>
+			   <td>
+			      <s:if test='emailobj.typeMk==1'>
+				       簽核<input type="radio" value="0" name="emailobj.typeMk"/>&nbsp;&nbsp;
+				       知會<input type="radio" value="1" name="emailobj.typeMk" checked/>
+				  </s:if>
+				  <s:else>
+				       簽核<input type="radio" value="0" name="emailobj.typeMk" checked/>&nbsp;&nbsp;
+				       知會<input type="radio" value="1" name="emailobj.typeMk"/>
+				  </s:else>
+			   </td>			   
 			</tr>			
 		</table>
 		<center>
-			<input type="submit" id="sub" value="確定" class="btn btn-primary"/>&nbsp;&nbsp;&nbsp; <input
+			<input type="button" id="sub" value="確定" class="btn btn-primary"/>&nbsp;&nbsp;&nbsp; <input
 				type="reset" id="reset" value="重置" class="btn btn-primary"/>&nbsp;&nbsp;&nbsp;										
 				<input type="button" value="返回" onclick="back()" id="btn_back" class="btn btn-primary"/>			
 		</center>
@@ -99,16 +111,15 @@
 		var demo = jq("#form").Validform({
 			btnSubmit : "#sub",
 			tiptype : 4,
-			tipSweep:false,
+			tipSweep:true,
 			showAllError : true	,
 			ajaxPost:true,
 			callback:function(data){
 				if(data=="0"){
 					layer.msg("提交成功!",3,1);
-					//location.href="/Login/webuseremaila_findPageBean";
 					loadUrl("/Login/webuseremaila_findPageBean");
 				}else{
-					alert(data.responseText);
+					layer.msg("提交失敗!",3,3);
 				}				
 			}
 		});	
@@ -165,24 +176,7 @@
 	 }    
 	}
 	
-	function check(){
-	    var dwr_factno=document.getElementById("dwr_factno").value;	    
-	    var email=document.getElementById("email").value;
-	    var emailPwd=document.getElementById("emailPwd").value;
-	    var visaSort=document.getElementById("visaSort").value;
-	    if(dwr_factno!=""&&visaSort!=""&&email!=""&&emailPwd!=""){
-	       webuseremailajs.findById(dwr_factno,email,emailPwd,visaSort,function(x){
-	              if(x!=null){
-	                 alert("該函文類型的知會人已存在，請重新添加");
-	                 document.getElementById("sub").disabled=true;
-                     document.getElementById("sub").style.color="red";
-	              }else{
-	                 document.getElementById("sub").disabled=false;
-                     document.getElementById("sub").style.color="white";
-	              }
-	       })
-	    }
-	}
+	
 	
 	/**Email自動轉小寫*/
 	function getLow(obj){
