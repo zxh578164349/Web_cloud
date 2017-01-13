@@ -63,13 +63,13 @@
 	}
 	
  
- function mydelete(factNo,email,emailpwd){
+ function mydelete(factNo,email,emailpwd,typeMk){
     var flag=confirm("確定要刪除嗎?");
     if(flag==true){           
        jq.ajax({
           type:"POST",
           dataType:"html",
-          data:"factNo="+factNo+"&email="+email+"&emailpwd="+emailpwd,
+          data:"factNo="+factNo+"&email="+email+"&emailpwd="+emailpwd+"&typeMk="+typeMk,
           url:"webuseremail_delete",
           success:function(msg){
              jq("#bodyid").html(msg);
@@ -80,8 +80,8 @@
        });
     }
 }
-function findById(factno,email,emailpwd){
-	loadUrl("webuseremail_findById?factNo="+factno+"&email="+email+"&emailpwd="+emailpwd);
+function findById(factno,email,emailpwd,typeMk){
+	loadUrl("webuseremail_findById?factNo="+factno+"&email="+email+"&emailpwd="+emailpwd+"&typeMk="+typeMk);
 }
 
 </script>	

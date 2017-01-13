@@ -23,8 +23,15 @@ public class WebuseremailAction extends ActionSupport{
 	private PageBean bean;
 	private int backIndex;//返回標識      0或null:不走返回路徑         1:走返回路徑
 	private String ajaxResult;
+	private String typeMk;
 	
 	
+	public String getTypeMk(){
+		return typeMk;
+	}
+	public void setTypeMk(String typeMk){
+		this.typeMk=typeMk;
+	}
 	public String getAjaxResult(){
 		return ajaxResult;
 	}
@@ -88,17 +95,17 @@ public class WebuseremailAction extends ActionSupport{
 		return "add";
 	}
 	public String findById(){
-		useremail=webuseremailSer.findById(factNo, email, emailpwd);
+		useremail=webuseremailSer.findById(factNo, email, emailpwd,typeMk);
 		return "findById";
 	}
 	public String delete(){
 		KyzExpectmatmLog log=new KyzExpectmatmLog();
 		log.setObj("WebuserEmail");
 		log.setFactNo(factNo);
-		log.setContent(email+emailpwd);
+		log.setContent(email+emailpwd+"_("+typeMk+")");
 		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
 		log.setUsername(user.getUsername());
-		webuseremailSer.delete(factNo, email, emailpwd,log);                               
+		webuseremailSer.delete(factNo, email, emailpwd,typeMk,log);                               
 		return "delete";
 	}
 	public String findPageBean(){

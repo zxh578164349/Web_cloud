@@ -37,7 +37,8 @@
 					<th>主同步人Email</th>
 					<th>被同步人Email</th>
 					<th>主同步人姓名 </th>
-					<th>被同步人姓名 </th>										
+					<th>被同步人姓名 </th>
+					<th>作用域</th>										
 				<s:if test='#session.loginUser.userread!="1"'>
 				<th>操作</th>
 				</s:if>
@@ -51,12 +52,21 @@
 					<td><s:property value="id.email" /></td>
 					<td><s:property value="id.emailpassword"/></td>
 					<td><s:property value="name" /></td>
-					<td><s:property value="namePwd" /></td>										
+					<td><s:property value="namePwd" /></td>
+					<td>
+					<s:property value="id.typeMk"/>
+					   <s:if test='id.typeMk=="0"'>
+					               簽核
+					   </s:if>
+					   <s:else>
+					              知會
+					   </s:else>
+					</td>										
 					<s:if test='#session.loginUser.userread!="1"'>					
 					<td>
-						<a href="javascript:findById('${id.factNo}','${id.email}','${id.emailpassword}','${id.visaSort}')">
+						<a href="javascript:findById('${id.factNo}','${id.email}','${id.emailpassword}','${id.visaSort}','${id.typeMk}')">
 						<img alt="修改" src="images/icon/edit001.png" title="修改"></a>&nbsp;					
-						<a href="javascript:mydelete('${id.factNo}','${id.email}','${id.emailpassword}','${id.visaSort}')"><img alt="刪除" src="images/icon/delete001.png" title="刪除"></a>						
+						<a href="javascript:mydelete('${id.factNo}','${id.email}','${id.emailpassword}','${id.visaSort}','${id.typeMk}')"><img alt="刪除" src="images/icon/delete001.png" title="刪除"></a>						
 					</td>
 					</s:if>
 				</tr>

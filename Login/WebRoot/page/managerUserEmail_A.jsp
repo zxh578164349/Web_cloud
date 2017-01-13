@@ -61,7 +61,7 @@
 	}
 	
  
- function mydelete(factNo,email,emailpwd,visaSort){
+ function mydelete(factNo,email,emailpwd,visaSort,typeMk){
     var flag=confirm("確定要刪除嗎?");
     if(flag==true){
        //window.location.href="webuseremaila_delete?factNo="+factNo+"&email="+email+"&emailPwd="+emailpwd+"&visaSort="+visaSort;     
@@ -69,7 +69,7 @@
        jq.ajax({
     	   type:"POST",
     	   dataType:"html",
-    	   data:"factNo="+factNo+"&email="+email+"&emailPwd="+emailpwd+"&visaSort="+visaSort,
+    	   data:"factNo="+factNo+"&email="+email+"&emailPwd="+emailpwd+"&visaSort="+visaSort+"&typeMk="+typeMk,
     	   url:"webuseremaila_delete",
     	   success:function(data){
     		   jq("#bodyid").html(data);
@@ -80,8 +80,8 @@
        });
     }
 }
-function findById(factno,email,emailpwd,visasort){	
-	loadUrl("webuseremaila_findById?factNo="+factno+"&email="+email+"&emailPwd="+emailpwd+"&visaSort="+visasort);
+function findById(factno,email,emailpwd,visasort,typeMk){	
+	loadUrl("webuseremaila_findById?factNo="+factno+"&email="+email+"&emailPwd="+emailpwd+"&visaSort="+visasort+"&typeMk="+typeMk);
 }
 
 </script>

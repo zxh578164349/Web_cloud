@@ -72,13 +72,13 @@
 			    <td ><input type="text" name="useremail.namePwd" value="<s:property value='useremail.namePwd'/>"  id="emailpwd" datatype="*"/></td>				 					
 				<td>作用域</td>	
 				<td>
-				  <s:if test='useremail.typeMk==1'>
-				       簽核<input type="radio" value="0" name="useremail.typeMk"/>&nbsp;&nbsp;
-				       知會<input type="radio" value="1" name="useremail.typeMk" checked/>
+				  <s:if test='useremail.id.typeMk==1'>
+				       簽核<input type="radio" value="0" name="useremail.id.typeMk"/>&nbsp;&nbsp;
+				       知會<input type="radio" value="1" name="useremail.id.typeMk" checked/>
 				  </s:if>
 				  <s:else>
-				       簽核<input type="radio" value="0" name="useremail.typeMk" checked/>&nbsp;&nbsp;
-				       知會<input type="radio" value="1" name="useremail.typeMk"/>
+				       簽核<input type="radio" value="0" name="useremail.id.typeMk" checked/>&nbsp;&nbsp;
+				       知會<input type="radio" value="1" name="useremail.id.typeMk"/>
 				  </s:else>
 				</td>
 			</tr>			
@@ -120,8 +120,9 @@
        var factno=document.getElementById("dwr_factno").value;
        var email=document.getElementById("email").value;
        var emailPwd=document.getElementById("emailPwd").value;
+       var typeMk=jq("input[name='useremail.id.typeMk']:checked").val();
        if(factno!=""&&email!=""&&emailPwd!=""){
-          webuseremailjs.findById(factno,email,emailPwd,function(x){
+          webuseremailjs.findById(factno,email,emailPwd,typeMk,function(x){
               if(x!=null){
               alert("該備簽人已存在，請重新添加");
               document.getElementById("sub").disabled=true;

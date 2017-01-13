@@ -16,15 +16,15 @@
             <key-property name="emailpassword" type="java.lang.String">
                 <column name="EMAILPASSWORD" length="50" />
             </key-property>
+            <key-property name="typeMk" type="java.lang.String">
+                <column name="TYPE_MK" length="2" />
+            </key-property>
         </composite-id>
         <property name="name" type="java.lang.String">
             <column name="NAME" length="20" />
         </property>
         <property name="namePwd" type="java.lang.String">
             <column name="NAME_PWD" length="20" />
-        </property>
-        <property name="typeMk" type="java.lang.String">
-            <column name="TYPE_MK" length="2"/>
         </property>
     </class>
 </hibernate-mapping>

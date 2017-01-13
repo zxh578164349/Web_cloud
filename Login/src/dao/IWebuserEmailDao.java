@@ -9,8 +9,8 @@ import entity.WebuserEmail;
 public interface IWebuserEmailDao {
 
 	public void add(WebuserEmail email);
-	public WebuserEmail findById(String factNo,String email,String emailpwd);
-	public void delete(String factNo,String email,String emailpwd,KyzExpectmatmLog delLog);
+	public WebuserEmail findById(String factNo,String email,String emailpwd,String typeMk);
+	public void delete(String factNo,String email,String emailpwd,String typeMk,KyzExpectmatmLog delLog);
 	public PageBean findPageBean(int pageSize,int page,String factNo,String email);
 	public List<WebuserEmail> findByFactNoAEmailPwd(String factNo,String email);
 	/**

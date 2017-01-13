@@ -22,21 +22,22 @@ public class WebuserEmailADaoImpl extends Basedao implements IWebuserEmailADao{
 	}
 
 	public WebuserEmailA findById(String factNo, String email, String emailPwd,
-			String visaSort) {
+			String visaSort,String typeMk) {
 		// TODO Auto-generated method stub
-		String hql="from WebuserEmailA where id.factNo=? and id.email=? and id.emailpassword=? and id.visaSort=?";
+		String hql="from WebuserEmailA where id.factNo=? and id.email=? and id.emailpassword=? and id.visaSort=? and id.typeMk=?";
 		Query query=getSession().createQuery(hql);
 		query.setString(0, factNo);
 		query.setString(1, email);
 		query.setString(2, emailPwd);
 		query.setString(3, visaSort);
+		query.setString(4,typeMk);
 		return (WebuserEmailA)query.uniqueResult();
 	}
 
 	public void delete(String factNo, String email, String emailPwd,
-			String visaSort,KyzExpectmatmLog delLog) {
+			String visaSort,String typeMk,KyzExpectmatmLog delLog) {
 		// TODO Auto-generated method stub
-		WebuserEmailA emaila=findById(factNo,email,emailPwd,visaSort);
+		WebuserEmailA emaila=findById(factNo,email,emailPwd,visaSort,typeMk);
 		super.delete(emaila,delLog);
 		
 	}
@@ -64,7 +65,7 @@ public class WebuserEmailADaoImpl extends Basedao implements IWebuserEmailADao{
 			map.put("visasort", visaSort);
 		}
 		hql2.append(hql);
-		hql.append(" order by id.factNo,id.visaSort");
+		hql.append(" order by id.factNo,id.typeMk,id.visaSort,id.email");
 		if(rows!=null&&page>0){
 			allrow=rows;
 		}else{
@@ -89,14 +90,14 @@ public class WebuserEmailADaoImpl extends Basedao implements IWebuserEmailADao{
 
 	public List<String> findByEmail(String factNo, String email, String visaSort) {
 		// TODO Auto-generated method stub
-		String hql="select id.emailpassword from WebuserEmailA where id.factNo=? and lower(id.email)=? and id.visaSort=? and typeMk='0'";
+		String hql="select id.emailpassword from WebuserEmailA where id.factNo=? and lower(id.email)=? and id.visaSort=? and id.typeMk='0'";
 		String[]objs={factNo,email.toLowerCase(),visaSort.substring(0,2)};
 		return super.findAll(hql, objs);
 	}
 	
 	public List<String> findByEmail2(String factNo, String email, String visaSort) {
 		// TODO Auto-generated method stub
-		String hql="select id.emailpassword from WebuserEmailA where id.factNo=? and lower(id.email)=? and id.visaSort=? and typeMk='1'";
+		String hql="select id.emailpassword from WebuserEmailA where id.factNo=? and lower(id.email)=? and id.visaSort=? and id.typeMk='1'";
 		String[]objs={factNo,email.toLowerCase(),visaSort.substring(0,2)};
 		return super.findAll(hql, objs);
 	}

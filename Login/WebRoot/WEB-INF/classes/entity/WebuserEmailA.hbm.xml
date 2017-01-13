@@ -19,6 +19,9 @@
             <key-property name="visaSort" type="java.lang.String">
                 <column name="VISA_SORT" length="2" />
             </key-property>
+            <key-property name="typeMk" type="java.lang.String">
+                <column name="TYPE_MK" length="2" />
+            </key-property>
         </composite-id>
         <property name="name" type="java.lang.String">
             <column name="NAME" length="20" />
@@ -27,10 +30,7 @@
             <column name="NAME_PWD" length="20" />
         </property>
         <property name="colTemp" type="java.lang.String">
-           <column name="COL_TEMP" length="2"/>
-        </property>
-        <property name="typeMk" type="java.lang.String">
-            <column name="TYPE_MK" length="2"/>
+            <column name="COL_TEMP" length="2" />
         </property>
     </class>
 </hibernate-mapping>

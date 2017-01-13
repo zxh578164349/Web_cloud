@@ -23,14 +23,14 @@ public class WebuserEmailServicesImpl implements IWebuserEmailServices{
 		webuseremailDao.add(email);
 	}
 
-	public WebuserEmail findById(String factNo, String email, String emailpwd) {
+	public WebuserEmail findById(String factNo, String email, String emailpwd,String typeMk) {
 		// TODO Auto-generated method stub
-		return webuseremailDao.findById(factNo, email, emailpwd);
+		return webuseremailDao.findById(factNo, email, emailpwd,typeMk);
 	}
 
-	public void delete(String factNo,String email,String emailpwd,KyzExpectmatmLog delLog) {
+	public void delete(String factNo,String email,String emailpwd,String typeMk,KyzExpectmatmLog delLog) {
 		// TODO Auto-generated method stub
-		webuseremailDao.delete(factNo,email,emailpwd,delLog);
+		webuseremailDao.delete(factNo,email,emailpwd,typeMk,delLog);
 	}
 
 	public PageBean findPageBean(int pageSize, int page, String factNo,

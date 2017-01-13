@@ -8,8 +8,8 @@ import entity.WebuserEmailA;
 
 public interface IWebuserEmailAServices {
 	public void add(WebuserEmailA email);
-	public WebuserEmailA findById(String factNo,String email,String emailPwd,String visaSort);
-	public boolean deleteObj(String factNo,String email,String emailPwd,String visaSort,KyzExpectmatmLog delLog);
+	public WebuserEmailA findById(String factNo,String email,String emailPwd,String visaSort,String typeMk);
+	public boolean deleteObj(String factNo,String email,String emailPwd,String visaSort,String typeMk,KyzExpectmatmLog delLog);
 	public PageBean findPageBean(int pageSize,int page,String factNo,String email,String visaSort);
 	/**
 	 * 同步簽核人

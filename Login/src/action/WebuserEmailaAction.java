@@ -37,8 +37,17 @@ public class WebuserEmailaAction extends ActionSupport implements ServletRespons
 	private IWebTypeServices webtypeSer;
 	private javax.servlet.http.HttpServletResponse response;
 	private javax.servlet.http.HttpServletRequest request;
+	private String typeMk;
     
 	
+	public String getTypeMk(){
+		return typeMk;
+	}
+
+	public void setTypeMk(String typeMk){
+		this.typeMk=typeMk;
+	}
+
 	public int getBackIndex() {
 		return backIndex;
 	}
@@ -139,7 +148,7 @@ public class WebuserEmailaAction extends ActionSupport implements ServletRespons
 		log.setContent(email+emailPwd+visaSort);
 		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
 		log.setUsername(user.getUsername());
-		boolean flag=webuseremailaSer.deleteObj(factNo, email, emailPwd, visaSort,log);
+		boolean flag=webuseremailaSer.deleteObj(factNo, email, emailPwd, visaSort,typeMk,log);
 		if(flag==false){
 			response.setContentType("text/html;charset=utf-8");
 			response.getWriter().print("<script>alert('刪除失敗!');history.back()</script>");
@@ -213,7 +222,7 @@ public class WebuserEmailaAction extends ActionSupport implements ServletRespons
 		}//for1	
 	}
 	public String findById(){
-		emailobj=webuseremailaSer.findById(factNo, email, emailPwd, visaSort);
+		emailobj=webuseremailaSer.findById(factNo, email, emailPwd, visaSort,typeMk);
 		return "findById";
 	}
 

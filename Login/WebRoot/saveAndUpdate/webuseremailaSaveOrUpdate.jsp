@@ -87,13 +87,13 @@
 			<tr>
 			   <td>作用域</td>
 			   <td>
-			      <s:if test='emailobj.typeMk==1'>
-				       簽核<input type="radio" value="0" name="emailobj.typeMk"/>&nbsp;&nbsp;
-				       知會<input type="radio" value="1" name="emailobj.typeMk" checked/>
+			      <s:if test='emailobj.id.typeMk==1'>
+				       簽核<input type="radio" value="0" name="emailobj.id.typeMk"/>&nbsp;&nbsp;
+				       知會<input type="radio" value="1" name="emailobj.id.typeMk" checked/>
 				  </s:if>
 				  <s:else>
-				       簽核<input type="radio" value="0" name="emailobj.typeMk" checked/>&nbsp;&nbsp;
-				       知會<input type="radio" value="1" name="emailobj.typeMk"/>
+				       簽核<input type="radio" value="0" name="emailobj.id.typeMk" checked/>&nbsp;&nbsp;
+				       知會<input type="radio" value="1" name="emailobj.id.typeMk"/>
 				  </s:else>
 			   </td>			   
 			</tr>			
@@ -125,19 +125,14 @@
 		});	
 	}); 
 
-	function back() {
-		   
-			loadUrl("/Login/webuseremaila_findPageBean3?backIndex=1");
+	function back() {		   
+		loadUrl("/Login/webuseremaila_findPageBean3?backIndex=1");
 	}
-	 function check(){
-       var factno=document.getElementById("dwr_factno").value;
-       var email=document.getElementById("email").value;
-       var emailPwd=document.getElementById("emailPwd").value;
-       var visaSort=document.getElementById("visaSort").value;
-       if(factno!=""&&email!=""&&emailPwd!=""){
-          webuseremailjs.findById(factno,email,emailPwd,function(x){
+	 function check_sub(factno,email,emailPwd,visaSort,typeMk){
+       if(factno!=""&&email!=""&&emailPwd!=""&&visaSort!=""){
+          webuseremailajs.findById(factno,email,emailPwd,visaSort,typeMk,function(x){        	  
               if(x!=null){
-              alert("該知會人已存在，請重新添加");
+              alert("該類型已存在相同數據，請重新添加");
               document.getElementById("sub").disabled=true;
               document.getElementById("sub").value="已鎖定";
               document.getElementById("sub").style.color="red";
@@ -151,6 +146,27 @@
           });               
        }                    
    }
+	 
+	 function check(){
+		   var factno=document.getElementById("dwr_factno").value;
+	       var email=document.getElementById("email").value;
+	       var emailPwd=document.getElementById("emailPwd").value;
+	       var visaSort=document.getElementById("visaSort").value;
+	       var typeMk=jq("input[name='emailobj.id.typeMk']:checked").val();
+	       if(factno!=""&&email!=""&&emailPwd!=""){
+	          webuseremailjs.findById(factno,email,emailPwd,typeMk,function(x){
+	              if(x!=null){	            	  
+	              alert("該廠已存相同數據，請重新添加");
+	              document.getElementById("sub").disabled=true;
+	              document.getElementById("sub").value="已鎖定";
+	              document.getElementById("sub").style.color="red";
+	              document.getElementById("error1").innerHTML="<font color='color'>！</font>";
+	          }else{	        	  
+	        	  check_sub(factno,email,emailPwd,visaSort,typeMk); 	            
+	          }        
+	          });               
+	       }                    
+	   } 	 
    
      function getKyType(){	 
 	 var factno=document.getElementById("dwr_factno");
@@ -188,6 +204,7 @@
 <script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>
 <script type='text/javascript' src='/Login/dwr/interface/webtypejs.js'></script>
 <script type='text/javascript' src='/Login/dwr/interface/webuseremailajs.js'></script>
+<script type='text/javascript' src='/Login/dwr/interface/webuseremailjs.js'></script>
 <script type="text/javascript">
 jq(function(){
 	goTrim();

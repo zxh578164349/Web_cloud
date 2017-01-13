@@ -22,17 +22,17 @@ public class WebuserEmailAServicesImpl implements IWebuserEmailAServices{
 	}
 
 	public WebuserEmailA findById(String factNo, String email, String emailPwd,
-			String visaSort) {
+			String visaSort,String typeMk) {
 		// TODO Auto-generated method stub
-		return webuseremailaDao.findById(factNo, email, emailPwd, visaSort);
+		return webuseremailaDao.findById(factNo, email, emailPwd, visaSort,typeMk);
 	}
 
 	public boolean deleteObj(String factNo, String email, String emailPwd,
-			String visaSort,KyzExpectmatmLog delLog) {
+			String visaSort,String typeMk,KyzExpectmatmLog delLog) {
 		// TODO Auto-generated method stub
 		boolean flag=false;
 		try{
-			webuseremailaDao.delete(factNo, email, emailPwd, visaSort,delLog);
+			webuseremailaDao.delete(factNo, email, emailPwd, visaSort,typeMk,delLog);
 			flag=true;
 			
 		}catch(RuntimeException e){
