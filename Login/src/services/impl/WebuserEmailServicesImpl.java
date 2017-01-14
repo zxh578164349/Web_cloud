@@ -34,9 +34,9 @@ public class WebuserEmailServicesImpl implements IWebuserEmailServices{
 	}
 
 	public PageBean findPageBean(int pageSize, int page, String factNo,
-			String email) {
+			String email,String typeMk) {
 		// TODO Auto-generated method stub
-		return webuseremailDao.findPageBean(pageSize, page, factNo, email);
+		return webuseremailDao.findPageBean(pageSize, page, factNo, email,typeMk);
 	}
 
 	public List<WebuserEmail> findByFactNoAEmailPwd(String factNo, String email) {

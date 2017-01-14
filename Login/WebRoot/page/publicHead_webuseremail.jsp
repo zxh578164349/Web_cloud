@@ -11,11 +11,10 @@
 <meta http-equiv="expires" content="0">
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
-<LINK href="css/list.css" type="text/css" rel="stylesheet">
-
 </head>
 <body>
 <form id="subform">
+<div class="well">
 	<table  id="tb_search">
 		<tr>
 			<td><s:if test="#session.factNo=='tw'">
@@ -36,11 +35,16 @@
 				</s:else></td>
 			<td>主同步人Email</td>
 			<td><input type="text" id="email" name="email"></td>
+			<td>			 
+			   簽核<input type="radio" name="typeMk" value="0" checked/>&nbsp;&nbsp;
+			   知會<input type="radio" name="typeMk" value="1"/>  
+			</td>
 			<td>
 			 <input value="搜索" type="button" class="btn btn-primary" onclick="javascript:submis()" />		
 			</td>
 		</tr>
 	</table>
+	</div>
 </form>	
 </body>
 </html>

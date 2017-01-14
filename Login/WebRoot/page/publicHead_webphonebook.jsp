@@ -17,7 +17,7 @@
 </head>
 <body>
    <form id="public_form" method="post">
-	<table  border="0px">
+	<table id="tb_search" class="table table-condensed">
 		<tr>
 			<td>廠別</td>
 			<td><s:if test="#session.factNo=='tw'">			    

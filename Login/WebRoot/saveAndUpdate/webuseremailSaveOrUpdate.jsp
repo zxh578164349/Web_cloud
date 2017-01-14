@@ -72,6 +72,7 @@
 			    <td ><input type="text" name="useremail.namePwd" value="<s:property value='useremail.namePwd'/>"  id="emailpwd" datatype="*"/></td>				 					
 				<td>作用域</td>	
 				<td>
+				 <div id="email_radio">
 				  <s:if test='useremail.id.typeMk==1'>
 				       簽核<input type="radio" value="0" name="useremail.id.typeMk"/>&nbsp;&nbsp;
 				       知會<input type="radio" value="1" name="useremail.id.typeMk" checked/>
@@ -80,6 +81,7 @@
 				       簽核<input type="radio" value="0" name="useremail.id.typeMk" checked/>&nbsp;&nbsp;
 				       知會<input type="radio" value="1" name="useremail.id.typeMk"/>
 				  </s:else>
+				 </div> 
 				</td>
 			</tr>			
 		</table>
@@ -110,7 +112,11 @@
 				}				
 			}
 		});	
+		jq("#email_radio :radio").click(function(){
+			check();
+		})
 		goTrim();
+		
 	}); 
 
 	function back() {		    
@@ -124,7 +130,7 @@
        if(factno!=""&&email!=""&&emailPwd!=""){
           webuseremailjs.findById(factno,email,emailPwd,typeMk,function(x){
               if(x!=null){
-              alert("該備簽人已存在，請重新添加");
+              alert("該廠已存相同數據，請重新添加");
               document.getElementById("sub").disabled=true;
               document.getElementById("sub").value="已鎖定";
               document.getElementById("sub").style.color="red";

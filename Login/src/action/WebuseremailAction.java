@@ -108,21 +108,18 @@ public class WebuseremailAction extends ActionSupport{
 		webuseremailSer.delete(factNo, email, emailpwd,typeMk,log);                               
 		return "delete";
 	}
-	public String findPageBean(){
-		//ActionContext.getContext().getApplication().clear();
+	public String findPageBean(){		
 		ActionContext.getContext().getSession().remove("public_factno");
 		ActionContext.getContext().getSession().remove("public_email");
-		factNo=(String)ActionContext.getContext().getSession().get("factNo");
-		bean=webuseremailSer.findPageBean(20,page, factNo, email);
+		ActionContext.getContext().getSession().remove("public_typeMk");
+		bean=webuseremailSer.findPageBean(20,page, factNo, email,typeMk);
 		return "beanList";
 	}
 	public String findPageBean2(){
-		//ActionContext.getContext().getApplication().clear();
-		ActionContext.getContext().getSession().remove("public_factno");
-		ActionContext.getContext().getSession().remove("public_email");
-		bean=webuseremailSer.findPageBean(20,page, factNo, email);
+		bean=webuseremailSer.findPageBean(20,page, factNo, email,typeMk);
 		ActionContext.getContext().getSession().put("public_factno", factNo);
 		ActionContext.getContext().getSession().put("public_email", email);
+		ActionContext.getContext().getSession().put("public_typeMk",typeMk);
 		return "beanList1";
 	}
 	public String findPageBean3(){
@@ -132,20 +129,9 @@ public class WebuseremailAction extends ActionSupport{
 		}
 		factNo=(String)ActionContext.getContext().getSession().get("public_factno");
 		email=(String)ActionContext.getContext().getSession().get("public_email");
-		if(factNo==null||factNo.equals("")){
-			factNo=(String)ActionContext.getContext().getSession().get("factNo");
-		}
-		bean=webuseremailSer.findPageBean(20,page, factNo, email);
+		typeMk=(String)ActionContext.getContext().getSession().get("public_typeMk");
+		bean=webuseremailSer.findPageBean(20,page, factNo, email,typeMk);
 		return result;
-	}
-	
-	public void testEamil(){
-		factNo="631";
-		email="liujung@mail.gj.com.tw";
-		List<String>list=webuseremailSer.findByFactNoAEmailPwd2(factNo, email);
-		for(int i=0;i<list.size();i++){
-			System.out.println(list.get(i));
-		}
 	}
 
 }

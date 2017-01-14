@@ -10,7 +10,7 @@ public interface IWebuserEmailADao {
 	public void add(WebuserEmailA email);
 	public WebuserEmailA findById(String factNo,String email,String emailPwd,String visaSort,String typeMk);
 	public void delete(String factNo,String email,String emailPwd,String visaSort,String typeMk,KyzExpectmatmLog delLog);
-	public PageBean findPageBean(int pageSize,int page,String factNo,String email,String visaSort);
+	public PageBean findPageBean(int pageSize,int page,String factNo,String email,String visaSort,String typeMk);
 	
 	/**
 	 * 同步簽核人

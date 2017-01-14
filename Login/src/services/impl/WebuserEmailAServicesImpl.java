@@ -44,9 +44,9 @@ public class WebuserEmailAServicesImpl implements IWebuserEmailAServices{
 	}
 
 	public PageBean findPageBean(int pageSize, int page, String factNo,
-			String email, String visaSort) {
+			String email, String visaSort,String typeMk) {
 		// TODO Auto-generated method stub
-		return webuseremailaDao.findPageBean(pageSize, page, factNo, email, visaSort);
+		return webuseremailaDao.findPageBean(pageSize, page, factNo, email, visaSort,typeMk);
 	}
 
 	public List<String> findByEmail(String factNo, String email, String visaSort) {

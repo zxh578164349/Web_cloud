@@ -43,8 +43,11 @@ public class WebuserEmailADaoImpl extends Basedao implements IWebuserEmailADao{
 	}
 
 	public PageBean findPageBean(int pageSize, int page, String factNo,
-			String email, String visaSort) {
+			String email, String visaSort,String typeMk) {
 		// TODO Auto-generated method stub
+		if(factNo==null||factNo.equals("")){
+			factNo=(String)ActionContext.getContext().getSession().get("factNo");//用戶登錄時的廠別
+		}
 		StringBuffer hql=new StringBuffer();
 		StringBuffer hql2=new StringBuffer();
 		Map <String,Object>map=new HashMap<String,Object>();
@@ -63,6 +66,10 @@ public class WebuserEmailADaoImpl extends Basedao implements IWebuserEmailADao{
 		if(visaSort!=null&&!visaSort.equals("")){
 			hql.append(" and id.visaSort=:visasort");
 			map.put("visasort", visaSort);
+		}
+		if(typeMk!=null&&!typeMk.equals("")){
+			hql.append(" and id.typeMk=:typeMk");
+			map.put("typeMk",typeMk);
 		}
 		hql2.append(hql);
 		hql.append(" order by id.factNo,id.typeMk,id.visaSort,id.email");

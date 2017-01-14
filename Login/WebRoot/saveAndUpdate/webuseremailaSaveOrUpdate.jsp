@@ -87,6 +87,7 @@
 			<tr>
 			   <td>作用域</td>
 			   <td>
+			     <div id="emaila_radio">
 			      <s:if test='emailobj.id.typeMk==1'>
 				       簽核<input type="radio" value="0" name="emailobj.id.typeMk"/>&nbsp;&nbsp;
 				       知會<input type="radio" value="1" name="emailobj.id.typeMk" checked/>
@@ -95,6 +96,7 @@
 				       簽核<input type="radio" value="0" name="emailobj.id.typeMk" checked/>&nbsp;&nbsp;
 				       知會<input type="radio" value="1" name="emailobj.id.typeMk"/>
 				  </s:else>
+				  </div>
 			   </td>			   
 			</tr>			
 		</table>
@@ -123,6 +125,12 @@
 				}				
 			}
 		});	
+		
+		jq("#emaila_radio :radio").click(function(){
+			check();
+		});
+		goTrim();
+	    getKyType();
 	}); 
 
 	function back() {		   
@@ -205,12 +213,5 @@
 <script type='text/javascript' src='/Login/dwr/interface/webtypejs.js'></script>
 <script type='text/javascript' src='/Login/dwr/interface/webuseremailajs.js'></script>
 <script type='text/javascript' src='/Login/dwr/interface/webuseremailjs.js'></script>
-<script type="text/javascript">
-jq(function(){
-	goTrim();
-    getKyType();
-	
-});
-</script>
 </body>
 </html>

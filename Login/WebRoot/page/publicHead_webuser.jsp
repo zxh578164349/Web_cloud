@@ -11,16 +11,14 @@
 <meta http-equiv="expires" content="0">
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
-<link rel="stylesheet" type="text/css" href="css/select_beautiful.css">
-<LINK href="css/list.css" type="text/css" rel="stylesheet">
 </head>
 <body>
 	<form id="subform">
 		<table id="tb_search" class="table table-condensed">
 			<tr>
-				<td>廠別</td>
-				<td>帳號</td>
-				<td>用戶類型</td>
+				<th>廠別</th>
+				<th>帳號</th>
+				<th>用戶類型</th>
 			</tr>
 			<tr>
 				<td><s:if test="#session.factNo=='tw'">
@@ -43,9 +41,10 @@
 					</s:else></td>
 				<td><input type="text" id="conditions" name="conditions" />
 				</td>
-				<td>使用者<input type="radio" value="0" name="userType" />&nbsp;&nbsp;訪客<input type="radio" value="1" name="userType" />
+				<td>使用者<input type="radio" value="0" name="userType" />&nbsp;&nbsp;訪客<input type="radio" value="1" name="userType" />&nbsp;
+				<input value="搜索" type="button" class="btn btn-primary" onclick="javascript:submis('subform')" />
 				</td>
-				<td><input value="搜索" type="button" class="btn btn-primary" onclick="javascript:submis('subform')" /></td>
+				
 			</tr>
 		</table>
 	</form>

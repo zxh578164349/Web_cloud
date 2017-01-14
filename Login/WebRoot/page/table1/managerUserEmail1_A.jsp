@@ -54,7 +54,6 @@
 					<td><s:property value="name" /></td>
 					<td><s:property value="namePwd" /></td>
 					<td>
-					<s:property value="id.typeMk"/>
 					   <s:if test='id.typeMk=="0"'>
 					               簽核
 					   </s:if>
