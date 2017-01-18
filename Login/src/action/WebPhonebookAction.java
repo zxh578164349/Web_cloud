@@ -185,12 +185,11 @@ public class WebPhonebookAction extends ActionSupport implements ServletResponse
 		this.response=response;
 	}
 	public String add(){
-		WebPhonebook oldbook=(WebPhonebook)ActionContext.getContext().getSession().get("findById_webphone");//进入修改页面时缓存的
 		try{			
-			webphonebookSer.add(oldbook,webphone,isnull);
+			webphonebookSer.add(webphone);
 			ajaxResult="0";
 		}catch(Exception e){
-			System.out.println("action**********************"+e+"**********************action");
+			e.printStackTrace();
 			ajaxResult="1";
 		}		
 		return "add";
@@ -233,9 +232,7 @@ public class WebPhonebookAction extends ActionSupport implements ServletResponse
 		return result;
 	}
 	public String findById(){
-		ActionContext.getContext().getSession().remove("findById_webphone");
-		webphone=webphonebookSer.findById(factNo, department, post, userName, phoneA, phoneB, phoneC, email);
-		ActionContext.getContext().getSession().put("findById_webphone", webphone);
+		webphone=webphonebookSer.findById(factNo, department, post, userName, phoneA, phoneB, phoneC, email);		
 		return "findById";
 	}
 	public String delete(){

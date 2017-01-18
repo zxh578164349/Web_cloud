@@ -19,14 +19,9 @@ import entity.WebPhonebookId;
 
 public class WebPhonebookDaoImpl extends Basedao implements IWebPhonebookDao{
 
-	public void add(WebPhonebook oldPhone,WebPhonebook newPhone,String isnull) {
+	public void add(WebPhonebook phone) {
 		// TODO Auto-generated method stub	
-		if(isnull!=null&&isnull.equals("isnull")){
-			getSession().merge(newPhone);
-		}else{
-			getSession().delete(oldPhone);
-			getSession().merge(newPhone);
-		}
+		super.merge(phone);
 			
 	}
 
