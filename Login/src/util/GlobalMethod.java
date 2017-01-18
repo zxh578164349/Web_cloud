@@ -28,6 +28,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -80,10 +81,14 @@ import com.opensymphony.xwork2.ActionContext;
 import entity.KyVisabillm;
 import entity.KyVisabills;
 import entity.KyzExpectmatmLog;
+import entity.WebFact;
+import entity.WebFactId;
 import entity.WebTabpom;
 import entity.WebTabpomfile;
 import entity.WebType;
 import entity.WebUser;
+import entity.Weballobj;
+import entity.WeballobjId;
 import entity.Webestproduct;
 import entity.WebestproductId;
 
@@ -96,6 +101,7 @@ public class GlobalMethod extends HibernateDaoSupport{
 	private static final String SUBJECT2="函文審核通知_";
 	private static final String SUBJECT3="函文退回定時通知_";
 	private static final String SUBJECT4="函文退回通知_";
+	private static final String LIUJUNG="liujung@mail.gj.com.tw";
 
 	public static void print(List list,String factNo,String yymm,String yymm2,String file,HttpServletResponse response) throws IOException{
 		//List<Webwlo>list=wloService.findByAny(factNo, yymm, yymm2);
@@ -1174,7 +1180,7 @@ public class GlobalMethod extends HibernateDaoSupport{
 					String billNo=list_vbm.get(i).getId().getBillNo();
 					String visaSort=list_vbm.get(i).getId().getVisaSort();
 					String visaMk=list_vbm.get(i).getVisaMk();										
-					if("liujung@mail.gj.com.tw".equals(signerNext.toLowerCase())){//劉小姐隻發送一次:liujung@mail.gj.com.tw 20161213
+					if(LIUJUNG.equals(signerNext.toLowerCase())){//劉小姐隻發送一次:liujung@mail.gj.com.tw 20161213
 						if(list_vbm.get(i).getOneMk()==null){
 							list_vbm.get(i).setOneMk("1");//標識隻發送一次
 							visabillmSer.add(list_vbm.get(i));
@@ -1902,14 +1908,54 @@ public class GlobalMethod extends HibernateDaoSupport{
 			 dd=kk;
 			 System.out.print(dd+"\t");
 		 }*/
+		 List<Weballobj>list_obj1=new ArrayList<Weballobj>();
+		 list_obj1.add(new Weballobj(new WeballobjId(new WebFact(new WebFactId("HD","RB")),"201601")));
+		 list_obj1.add(new Weballobj(new WeballobjId(new WebFact(new WebFactId("HD","PU")),"201601")));
+		 list_obj1.add(new Weballobj(new WeballobjId(new WebFact(new WebFactId("HD","RB")),"201602")));
+		 list_obj1.add(new Weballobj(new WeballobjId(new WebFact(new WebFactId("HD","PU")),"201602")));		 		 
+		 list_obj1.add(new Weballobj(new WeballobjId(new WebFact(new WebFactId("XS","RB")),"201601")));
+		 list_obj1.add(new Weballobj(new WeballobjId(new WebFact(new WebFactId("XS","PU")),"201601")));
+		 list_obj1.add(new Weballobj(new WeballobjId(new WebFact(new WebFactId("XS","RB")),"201602")));
+		 list_obj1.add(new Weballobj(new WeballobjId(new WebFact(new WebFactId("XS","PU")),"201602")));
+		 for(Weballobj obj:list_obj1){
+			  obj.setObjA100(0.22222222);
+		 }
 		 
-		 String result=" , , ,";
-		 String str=result.split(",")[0];
-		 String str1=result.split(",")[1];
-		 String str2=result.split(",")[2];
-		 System.out.println(str);
-		 System.out.println(str1);
-		 System.out.println(str2);
+		 List<Weballobj>list_obj2=new ArrayList<Weballobj>();
+		 list_obj2.add(new Weballobj(new WeballobjId(new WebFact(new WebFactId("HD","RB")),"201601")));
+		 list_obj2.add(new Weballobj(new WeballobjId(new WebFact(new WebFactId("HD","PU")),"201601")));
+		 list_obj2.add(new Weballobj(new WeballobjId(new WebFact(new WebFactId("HD","RB")),"201602")));
+		 list_obj2.add(new Weballobj(new WeballobjId(new WebFact(new WebFactId("HD","PU")),"201602")));		 		 
+		 list_obj2.add(new Weballobj(new WeballobjId(new WebFact(new WebFactId("XS","RB")),"201601")));
+		 list_obj2.add(new Weballobj(new WeballobjId(new WebFact(new WebFactId("XS","PU")),"201601")));
+		 list_obj2.add(new Weballobj(new WeballobjId(new WebFact(new WebFactId("XS","RB")),"201602")));
+		 list_obj2.add(new Weballobj(new WeballobjId(new WebFact(new WebFactId("XS","PU")),"201602")));
+		 
+		 list_obj2.add(new Weballobj(new WeballobjId(new WebFact(new WebFactId("JW","RB")),"201601")));
+		 list_obj2.add(new Weballobj(new WeballobjId(new WebFact(new WebFactId("JW","PU")),"201601")));
+		 list_obj2.add(new Weballobj(new WeballobjId(new WebFact(new WebFactId("JW","RB")),"201602")));
+		 list_obj2.add(new Weballobj(new WeballobjId(new WebFact(new WebFactId("JW","PU")),"201602")));
+		 for(Weballobj obj:list_obj2){
+			  obj.setObjA100(0.1111111);
+		 }
+		 
+		 for(Iterator<Weballobj> it=list_obj2.iterator();it.hasNext();){
+			 Weballobj obj2=it.next();
+			 for(Weballobj obj:list_obj1){
+				 if(obj2.getId().getFact().getId().getFactNo().equals(obj.getId().getFact().getId().getFactNo())&&
+					obj2.getId().getFact().getId().getFactArea().equals(obj.getId().getFact().getId().getFactArea())&&
+					obj2.getId().getYymm().equals(obj.getId().getYymm())){
+					 it.remove();
+					 //list_obj2.add(obj);
+					 break;
+				 }
+			 }			
+		 }
+		 
+		 for(Weballobj obj2:list_obj2){
+			 System.out.println(obj2.getId().getFact().getId().getFactNo()+"_"+obj2.getId().getFact().getId().getFactArea()+obj2.getId().getYymm()+":"+obj2.getObjA100());
+		 }
+	
 			
 		}
 	 

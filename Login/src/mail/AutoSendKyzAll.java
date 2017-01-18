@@ -80,7 +80,7 @@ public class AutoSendKyzAll extends QuartzJobBean{
 		this.map = map;
 	}
 	public static final String PDF_TYPE_AUTO="auto";
-	
+	public static final String KIP="192.168.199.101";
 	@Override
 	protected void executeInternal(JobExecutionContext arg0)
 			throws JobExecutionException {
@@ -91,7 +91,7 @@ public class AutoSendKyzAll extends QuartzJobBean{
 					this.init();
 				}else{
 					for(int i=0;i<ips.size();i++){
-						if(ips.get(i).equals("192.168.199.101")){
+						if(ips.get(i).equals(KIP)){
 							this.init();
 							break;
 						}else if(i==ips.size()-1){

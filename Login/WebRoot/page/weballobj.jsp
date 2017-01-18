@@ -20,7 +20,7 @@
 
 
 <body>
-	<jsp:include page="publicHead_print.jsp" />	
+	<jsp:include page="publicHead_weballobj.jsp" />	
 	<hr/>
 	<form action="weballobj_addMore"  method="post" enctype="multipart/form-data" id="upload_form" target="frameFile">
 	  <table id="tb_search">
@@ -147,6 +147,17 @@ function print(public_form,factNo,yymm,yymm2){
 		public_form.submit();
 	}	
 }
+function print2(public_form,factNo,yymm,yymm2){
+	var public_form=jq("#"+public_form);
+	public_form.attr("action","weballobj_print2");
+	public_form.attr("target","_blank");	
+	if(jq("#"+factNo).val()=="nothing"||jq("#"+yymm).val()==""||jq("#"+yymm2).val()==""){
+		layer.msg("請選擇廠別和日期",3,3);
+	}else{
+		public_form.submit();
+	}
+}
+
 function showDiv(){
     jq.layer({
     type: 2,   //0-4的选择,

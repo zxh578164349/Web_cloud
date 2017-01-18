@@ -116,6 +116,7 @@ public class Weballobj implements java.io.Serializable {
 	private String username;
 	private String usernameUd;
 	private String createDate;
+	private String str_temp;
 
 	// Constructors
 
@@ -1135,6 +1136,15 @@ public class Weballobj implements java.io.Serializable {
 	public void setCreateDate(String createDate) {
 		this.createDate = createDate;
 	}
+
+	public String getStr_temp(){
+		return str_temp;
+	}
+
+	public void setStr_temp(String str_temp){
+		this.str_temp=str_temp;
+	}
+	
 	
 
 }

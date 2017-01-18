@@ -100,4 +100,15 @@ public class WeballobjServicesImpl implements IWeballobjServices{
 		return weballobjdao.findObj(yymm,yymm2);
 	}
 
+	/**
+	 * 日期:2017/1/17
+	 * 描述:
+	 */
+	
+	
+	public List<String> findFactCodes(String factNo,String yymm,String yymm2){
+		// TODO Auto-generated method stub
+		return weballobjdao.findFactCodes(factNo,yymm,yymm2);
+	}
+
 }

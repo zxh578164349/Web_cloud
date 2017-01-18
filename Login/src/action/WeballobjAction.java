@@ -383,14 +383,10 @@ public class WeballobjAction  extends ActionSupport implements ServletResponseAw
 	public void print() throws ParseException, IOException{
 		HSSFWorkbook wb=new HSSFWorkbook();
 		Map<String,Object>map_cs=findStyles(wb);
-		HSSFCellStyle cs=(HSSFCellStyle)map_cs.get("cs");
-		//HSSFCellStyle cs_poi2=(HSSFCellStyle)map_cs.get("cs_poi2");
-				
+		//HSSFCellStyle cs=(HSSFCellStyle)map_cs.get("cs");				
 		List<String>list_months=GlobalMethod.findMonths(yymm, yymm2);
 		List<String>list_col=findLeftCol();
-		List<Weballobj>list_objs=weballobjser.findAllobj(factNo, yymm, yymm2);
-		
-		System.out.println(list_objs.size());
+		List<Weballobj>list_objs=weballobjser.findAllobj(factNo, yymm, yymm2);		
 		switch(list_objs.size()){//switch		
 		case 0:
 			response.setContentType("text/html;charset=utf-8");
@@ -408,137 +404,32 @@ public class WeballobjAction  extends ActionSupport implements ServletResponseAw
 				map.put(month, list);					
 			}//for
 			
-			List<String>list_fcode=new ArrayList<String>();
+			
+			Map<String,Object>map_fcode=new LinkedHashMap<String,Object>();
 			for(String month:map.keySet()){
 				List<Weballobj>list=(List<Weballobj>)map.get(month);
-				if(list.size()>0){
+				List<String>list_fcode=new ArrayList<String>();				
 					for(Weballobj obj:list){
 						list_fcode.add(obj.getId().getFact().getId().getFactArea());
 					}
-					break;
-				}
+					map_fcode.put(month,list_fcode);
 			}
 			
 			Map<String,Object>map_all=new LinkedHashMap<String,Object>();
 			for(String month:map.keySet()){
 				List<List<Double>>list_a=new ArrayList<List<Double>>();		
-				List<Weballobj>list=(List<Weballobj>)map.get(month);
-				if (list.size() > 0) {			
+				List<Weballobj>list=(List<Weballobj>)map.get(month);							
 					for (Weballobj obj : list) {
-						List<Double> list_b = new ArrayList<Double>();
-						list_b.add(obj.getObjA100());
-						list_b.add(obj.getObjA101());
-						list_b.add(obj.getObjA102());
-						list_b.add(obj.getObjA103());
-						list_b.add(obj.getObjA104());
-						list_b.add(obj.getObjA105());
-						list_b.add(obj.getObjA106());
-						list_b.add(obj.getObjA107());
-						list_b.add(obj.getObjA108());
-						list_b.add(obj.getObjA109());
-						list_b.add(obj.getObjA110());
-						list_b.add(obj.getObjA111());
-						list_b.add(obj.getObjA112());
-						list_b.add(obj.getObjA113());
-						list_b.add(obj.getObjA114());
-						list_b.add(obj.getObjA115());
-						list_b.add(obj.getObjA116());
-						list_b.add(obj.getObjA117());
-						list_b.add(obj.getObjA118());
-						list_b.add(obj.getObjA119());
-						list_b.add(obj.getObjA120());
-						list_b.add(obj.getObjA121());
-						list_b.add(obj.getObjA122());
-						list_b.add(obj.getObjA123());
-						list_b.add(obj.getObjA124());
-						list_b.add(obj.getObjA125());
-						list_b.add(obj.getObjA126());
-						list_b.add(obj.getObjA127());
-						list_b.add(obj.getObjA128());
-						list_b.add(obj.getObjA129());
-						list_b.add(obj.getObjA130());
-						list_b.add(obj.getObjA131());
-						list_b.add(obj.getObjA132());
-						list_b.add(obj.getObjA133());
-						list_b.add(obj.getObjA134());
-						list_b.add(obj.getObjA135());
-						list_b.add(obj.getObjA136());
-						list_b.add(obj.getObjA137());
-						list_b.add(obj.getObjA138());
-						list_b.add(obj.getObjA139());
-						list_b.add(obj.getObjA140());
-						list_b.add(obj.getObjA141());
-						list_b.add(obj.getObjA142());
-						list_b.add(obj.getObjA143());
-						list_b.add(obj.getObjA144());
-						list_b.add(obj.getObjA145());
-						list_b.add(obj.getObjA146());
-						list_b.add(obj.getObjA147());
-						list_b.add(obj.getObjA148());
-						list_b.add(obj.getObjA149());
-						list_b.add(obj.getObjA150());
-						list_b.add(obj.getObjA151());
-						list_b.add(obj.getObjA152());
-						list_b.add(obj.getObjA153());
-						list_b.add(obj.getObjA154());
-						list_b.add(obj.getObjA155());
-						list_b.add(obj.getObjA156());
-						list_b.add(obj.getObjA157());
-						list_b.add(obj.getObjA158());
-						list_b.add(obj.getObjA159());
-						list_b.add(obj.getObjA160());
-						list_b.add(obj.getObjA161());
-						list_b.add(obj.getObjA162());
-						list_b.add(obj.getObjA163());
-						list_b.add(obj.getObjA164());
-						list_b.add(obj.getObjA165());
-						list_b.add(obj.getObjA166());
-						list_b.add(obj.getObjA167());
-						list_b.add(obj.getObjA168());
-						list_b.add(obj.getObjA169());
-						list_b.add(obj.getObjA170());
-						list_b.add(obj.getObjA171());
-						list_b.add(obj.getObjA172());
-						list_b.add(obj.getObjA173());
-						list_b.add(obj.getObjA174());
-						list_b.add(obj.getObjA175());
-						list_b.add(obj.getObjA176());
-						list_b.add(obj.getObjA177());
-						list_b.add(obj.getObjA178());
-						list_b.add(obj.getObjA179());
-						list_b.add(obj.getObjA180());
-						list_b.add(obj.getObjA181());
-						list_b.add(obj.getObjA182());
-						list_b.add(obj.getObjA183());
-						list_b.add(obj.getObjA184());
-						list_b.add(obj.getObjA185());
-						list_b.add(obj.getObjA186());
-						list_b.add(obj.getObjA187());
-						list_b.add(obj.getObjA188());
-						list_b.add(obj.getObjA189());
-						list_b.add(obj.getObjA190());
-						list_b.add(obj.getObjA191());
-						list_b.add(obj.getObjA192());
-						list_b.add(obj.getObjA193());
-						list_b.add(obj.getObjA194());
-						list_b.add(obj.getObjA195());
-						list_b.add(obj.getObjA196());
-						list_b.add(obj.getObjA197());
-						list_b.add(obj.getObjA198());
-						list_b.add(obj.getObjA199());
-						list_b.add(obj.getObjA200());
-						list_b.add(obj.getObjA201());
-						list_b.add(obj.getObjA202());
-						//list_b.add(obj.getObjA203());
+						List<Double> list_b =this.packageObj(obj);						
 						list_a.add(list_b);
-					}				
-				}
+					}								
 				map_all.put(month, list_a);
 			}
-			init(wb,map_cs,list_col,factNo,yymm,yymm2,list_months,list_fcode);	
+			init(wb,map_cs,list_col,factNo,yymm,yymm2,list_months,map_fcode);	
 			for(String month:map_all.keySet()){
 				HSSFSheet sheet=wb.getSheet(month);
 				List<List<Double>>list_a=(List<List<Double>>)map_all.get(month);
+				List<String>list_fcode=(List<String>)map_fcode.get(month);
 				if(list_a.size()>0){
 					for(int a=0;a<list_a.size();a++){
 						List<Double>list_b=list_a.get(a);
@@ -547,19 +438,12 @@ public class WeballobjAction  extends ActionSupport implements ServletResponseAw
 								sheet.getRow(3+b).getCell(3+a).setCellValue("無");	//利潤率有可能爲null,所以要判斷  obj.getObjA203()      20160916
 							}else{
 								sheet.getRow(3+b).getCell(3+a).setCellValue(list_b.get(b));
-							}
-							
+								sheet.setColumnWidth(3+a,4000);
+							}							
 							sheet.getRow(3+b).getCell(3+a).setCellStyle(this.findStyleByIndex(map_cs, b));
 						}
 					}
-				}else{
-					for(int a=0;a<list_fcode.size();a++){
-						for(int b=1;b<list_col.size();b++){
-							sheet.getRow(2+b).getCell(3+a).setCellValue("無數據");
-							sheet.getRow(2+b).getCell(3+a).setCellStyle(cs);
-						}
-					}
-				}								
+				}						
 			}
 			try {
 				/*OutputStream os = new FileOutputStream("E:/" + "websort.xls");
@@ -585,6 +469,239 @@ public class WeballobjAction  extends ActionSupport implements ServletResponseAw
 		}//switch							
 	}
 	
+	/**
+	 * 各廠別狀態的月份統計
+	 * @Title: print2
+	 * @Description: TODO
+	 * @param @throws ParseException
+	 * @param @throws IOException
+	 * @return void
+	 * @throws
+	 * @author web
+	 * @date 2017/1/17
+	 */
+	public void print2() throws ParseException, IOException{
+		HSSFWorkbook wb=new HSSFWorkbook();
+		Map<String,Object>map_cs=findStyles(wb);						
+		List<String>list_months=GlobalMethod.findMonths(yymm, yymm2);
+		List<String>list_col=findLeftCol();
+		List<Weballobj>list_objs=weballobjser.findAllobj(factNo, yymm, yymm2);
+		List<String>list_fcodes=weballobjser.findFactCodes(factNo,yymm,yymm2);
+		
+		Map<String,Object>map=new LinkedHashMap<String,Object>();
+		for(String fcode:list_fcodes){
+			List<Weballobj>list_obj=new ArrayList<Weballobj>();
+			for(String month:list_months){
+				Weballobj obj=new Weballobj(new WeballobjId(new WebFact(new WebFactId(factNo,fcode)),month));
+				list_obj.add(obj);				
+			}
+			for(int i=0;i<list_obj.size();i++){
+				Weballobj obj=list_obj.get(i);
+				for(Weballobj obj2:list_objs){
+					if(obj.getId().getFact().getId().getFactNo().equals(obj2.getId().getFact().getId().getFactNo())&&
+						obj.getId().getFact().getId().getFactArea().equals(obj2.getId().getFact().getId().getFactArea())&&
+						obj.getId().getYymm().equals(obj2.getId().getYymm())){
+						list_obj.remove(i);
+						list_obj.add(i,obj2);
+					}
+				}
+			}
+			map.put(fcode,list_obj);				
+		}
+		
+		
+		
+		switch(list_objs.size()){//switch		
+		case 0:
+			response.setContentType("text/html;charset=utf-8");
+			response.getWriter().print("<script>window.parent.alert('無數據');</script>");			
+			break;
+		default:																	
+			Map<String,Object>map_all=new LinkedHashMap<String,Object>();
+			for(String fcode:map.keySet()){
+				List<List<Double>>list_a=new ArrayList<List<Double>>();		
+				List<Weballobj>list=(List<Weballobj>)map.get(fcode);							
+					for (Weballobj obj : list) {
+						List<Double> list_b =this.packageObj(obj);						
+						list_a.add(list_b);
+					}								
+				map_all.put(fcode, list_a);
+			}
+			init2(wb,map_cs,list_col,factNo,yymm,yymm2,list_months,list_fcodes);
+			
+			for(String fcode:map_all.keySet()){
+				HSSFSheet sheet=wb.getSheet(fcode);
+				List<List<Double>>list_a=(List<List<Double>>)map_all.get(fcode);
+				if(list_a.size()>0){
+					for(int a=0;a<list_a.size();a++){
+						List<Double>list_b=list_a.get(a);
+						for(int b=0;b<list_b.size();b++){
+							if(list_b.get(b)==null){
+								sheet.getRow(3+b).getCell(3+a).setCellValue("無");	//利潤率有可能爲null,所以要判斷  obj.getObjA203()      20160916
+							}else{
+								sheet.getRow(3+b).getCell(3+a).setCellValue(list_b.get(b));
+								sheet.setColumnWidth(3+a,4000);
+							}														
+							sheet.getRow(3+b).getCell(3+a).setCellStyle(this.findStyleByIndex(map_cs, b));
+						}
+						/*****************統計******************/
+						if(a==list_a.size()-1){
+							List<Double>list_total=this.package_total(list_a,list_col);
+							for(int i=0;i<list_total.size();i++){
+								sheet.getRow(3+i).getCell(4+a).setCellValue(list_total.get(i));
+								sheet.getRow(3+i).getCell(4+a).setCellStyle(this.findStyleByIndex(map_cs, i));
+								sheet.setColumnWidth(4+a,4000);
+							}
+						}
+						/*****************統計******************/
+					}
+					
+					
+				}
+				
+				
+			}
+			try {				
+				ServletOutputStream os=response.getOutputStream();
+				response.setContentType("application/vnd.ms-excel");
+				int msie=ServletActionContext.getRequest().getHeader("USER-AGENT").toLowerCase().indexOf("msie");//判斷是否為IE瀏覽器,大於0則為IE瀏覽器
+				String fileName="report_total"+yymm+"-"+yymm2+".xls";
+				if(msie>0){
+					fileName=java.net.URLEncoder.encode(fileName,"utf-8");//解決IE中文文件不能下載的問題
+				}else{
+					fileName=new String(fileName.getBytes("utf-8"),"iso-8859-1");//解決非IE中文名亂碼問題
+				}		
+				response.setHeader("Content-disposition", "attachment;filename="+fileName);					
+				wb.write(os);
+				os.close();						
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		
+		}//switch							
+	}
+	
+	
+	
+	
+	public void init(HSSFWorkbook wb,Map<String,Object>map_cs,List<String>list_col,String factNo,String yymm,String yymm2,List<String>list_months,Map<String,Object>map_fcode) throws ParseException{
+		HSSFCellStyle cs=(HSSFCellStyle)map_cs.get("cs");
+		HSSFCellStyle cs_head=(HSSFCellStyle)map_cs.get("cs_head");
+		HSSFCellStyle cs_title=(HSSFCellStyle)map_cs.get("cs_title");			
+		for(String month:list_months){//for
+			HSSFSheet sheet=wb.createSheet(month);
+			List<String>list_fcode=(List<String>)map_fcode.get(month);			
+			if(list_fcode.size()>0){				
+				sheet.setColumnWidth(1, 5000);
+				for(int a=0;a<2+list_col.size();a++){
+					sheet.createRow(a);				
+					for(int b=0;b<10;b++){
+						sheet.getRow(a).createCell(b);					
+					}
+				}
+				
+				CellRangeAddress cra_title=new CellRangeAddress(0,0,0,4);
+				sheet.addMergedRegion(cra_title);
+				sheet.getRow(0).getCell(0).setCellValue(factNo+"-"+month+"基本數據");
+				for(int i=0;i<6;i++){
+					sheet.getRow(0).getCell(i).setCellStyle(cs_title);
+				}
+				for(int a=0;a<2+list_col.size();a++){
+					if(a<list_col.size()){
+					for(int b=0;b<list_col.get(0).split("__").length;b++){					
+							sheet.getRow(a+2).getCell(b).setCellValue(list_col.get(a).split("__")[b]);
+							if(a==0){
+								sheet.getRow(a+2).getCell(b).setCellStyle(cs_head);
+								if(b==list_col.get(0).split("__").length-1){
+									for(int c=0;c<list_fcode.size();c++){
+										sheet.getRow(a+2).getCell(b+1+c).setCellValue(list_fcode.get(c));
+										sheet.getRow(a+2).getCell(b+1+c).setCellStyle(cs_head);
+									}
+								}
+							}else{
+								sheet.getRow(a+2).getCell(b).setCellStyle(cs);
+							}						
+						}
+					}
+				}
+			}else{
+				sheet.setColumnWidth(0,10000);
+				sheet.createRow(0).createCell(0);
+				sheet.getRow(0).getCell(0).setCellValue("當前月份無數據");
+				sheet.getRow(0).getCell(0).setCellStyle(cs_head);
+			}
+			
+		}//for
+	}
+	
+	
+	public void init2(HSSFWorkbook wb,Map<String,Object>map_cs,List<String>list_col,String factNo,String yymm,String yymm2,List<String>list_months,List<String>list_fcode) throws ParseException{
+		HSSFCellStyle cs=(HSSFCellStyle)map_cs.get("cs");
+		HSSFCellStyle cs_head=(HSSFCellStyle)map_cs.get("cs_head");
+		HSSFCellStyle cs_title=(HSSFCellStyle)map_cs.get("cs_title");			
+		for(String fcode:list_fcode){//for
+			HSSFSheet sheet=wb.createSheet(fcode);						
+				sheet.setColumnWidth(1, 5000);
+				for(int a=0;a<2+list_col.size();a++){
+					sheet.createRow(a);				
+					for(int b=0;b<list_months.size()+6;b++){
+						sheet.getRow(a).createCell(b);					
+					}
+				}
+				
+				CellRangeAddress cra_title=new CellRangeAddress(0,0,0,4);
+				sheet.addMergedRegion(cra_title);
+				sheet.getRow(0).getCell(0).setCellValue(factNo+"--"+fcode+"基本數據(統計)");
+				for(int i=0;i<6;i++){
+					sheet.getRow(0).getCell(i).setCellStyle(cs_title);
+				}
+				for(int a=0;a<2+list_col.size();a++){
+					if(a<list_col.size()){
+					for(int b=0;b<list_col.get(0).split("__").length;b++){					
+							sheet.getRow(a+2).getCell(b).setCellValue(list_col.get(a).split("__")[b]);
+							if(a==0){
+								sheet.getRow(a+2).getCell(b).setCellStyle(cs_head);
+								if(b==list_col.get(0).split("__").length-1){
+									for(int c=0;c<list_months.size();c++){
+										sheet.getRow(a+2).getCell(b+1+c).setCellValue(list_months.get(c));
+										sheet.getRow(a+2).getCell(b+1+c).setCellStyle(cs_head);
+										
+										/*****************統計******************/
+										if(c==list_months.size()-1){
+											sheet.getRow(a+2).getCell(b+2+c).setCellValue("統計");
+											sheet.getRow(a+2).getCell(b+2+c).setCellStyle(cs_head);
+										}
+										/*****************統計******************/
+									}
+								}
+							}else{
+								sheet.getRow(a+2).getCell(b).setCellStyle(cs);
+							}						
+						}
+					}
+				}						
+		}//for
+	}
+	
+	
+	public Map<String,Object> findStyles(HSSFWorkbook wb){		
+		Map<String,Object>map=GlobalMethod.findStyles(wb);				
+		return map;
+	}
+
+	
+	public HSSFCellStyle findStyleByIndex(Map<String,Object>map,int index){
+		HSSFCellStyle cs=(HSSFCellStyle)map.get("cs_poi2");
+		/*if(index==19||index==20||index==25||index==26||index==27){
+			cs=(HSSFCellStyle)map.get("cs_poi");
+		}*/
+		if(index==1||index==3||index==5||(index>=121&&index<=124)||index==163||(index>=169&&index<=176)){
+			cs=(HSSFCellStyle)map.get("cs_poi1");
+		}
+		return cs;
+		
+	}
 	
 	public List<String> findLeftCol(){
 		List<String>list=new ArrayList<String>();
@@ -696,204 +813,128 @@ public class WeballobjAction  extends ActionSupport implements ServletResponseAw
 		return list;
 	}
 	
-	public void init(HSSFWorkbook wb,Map<String,Object>map_cs,List<String>list_col,String factNo,String yymm,String yymm2,List<String>list_months,List<String>list_fcode) throws ParseException{
-		HSSFCellStyle cs=(HSSFCellStyle)map_cs.get("cs");
-		HSSFCellStyle cs_head=(HSSFCellStyle)map_cs.get("cs_head");
-		HSSFCellStyle cs_column=(HSSFCellStyle)map_cs.get("cs_column");			
-		for(String month:list_months){//for
-			HSSFSheet sheet=wb.createSheet(month);
-			sheet.setColumnWidth(1, 5000);
-			for(int a=0;a<2+list_col.size();a++){
-				sheet.createRow(a);				
-				for(int b=0;b<10;b++){
-					sheet.getRow(a).createCell(b);					
-				}
-			}
-			
-			CellRangeAddress cra_title=new CellRangeAddress(0,0,0,4);
-			sheet.addMergedRegion(cra_title);
-			sheet.getRow(0).getCell(0).setCellValue(month+"_"+factNo+"基本數據");
-			for(int i=0;i<6;i++){
-				sheet.getRow(0).getCell(i).setCellStyle(cs_head);
-			}
-			for(int a=0;a<2+list_col.size();a++){
-				if(a<list_col.size()){
-				for(int b=0;b<list_col.get(0).split("__").length;b++){					
-						sheet.getRow(a+2).getCell(b).setCellValue(list_col.get(a).split("__")[b]);
-						if(a==0){
-							sheet.getRow(a+2).getCell(b).setCellStyle(cs_column);
-							if(b==list_col.get(0).split("__").length-1){
-								for(int c=0;c<list_fcode.size();c++){
-									sheet.getRow(a+2).getCell(b+1+c).setCellValue(list_fcode.get(c));
-									sheet.getRow(a+2).getCell(b+1+c).setCellStyle(cs_column);
-								}
-							}
-						}else{
-							sheet.getRow(a+2).getCell(b).setCellStyle(cs);
-						}						
-					}
-				}
-			}
-		}//for
+	public List<Double>packageObj(Weballobj obj){
+		List<Double>list=new ArrayList<Double>();
+		list.add(obj.getObjA100());
+		list.add(obj.getObjA101());
+		list.add(obj.getObjA102());
+		list.add(obj.getObjA103());
+		list.add(obj.getObjA104());
+		list.add(obj.getObjA105());
+		list.add(obj.getObjA106());
+		list.add(obj.getObjA107());
+		list.add(obj.getObjA108());
+		list.add(obj.getObjA109());
+		list.add(obj.getObjA110());
+		list.add(obj.getObjA111());
+		list.add(obj.getObjA112());
+		list.add(obj.getObjA113());
+		list.add(obj.getObjA114());
+		list.add(obj.getObjA115());
+		list.add(obj.getObjA116());
+		list.add(obj.getObjA117());
+		list.add(obj.getObjA118());
+		list.add(obj.getObjA119());
+		list.add(obj.getObjA120());
+		list.add(obj.getObjA121());
+		list.add(obj.getObjA122());
+		list.add(obj.getObjA123());
+		list.add(obj.getObjA124());
+		list.add(obj.getObjA125());
+		list.add(obj.getObjA126());
+		list.add(obj.getObjA127());
+		list.add(obj.getObjA128());
+		list.add(obj.getObjA129());
+		list.add(obj.getObjA130());
+		list.add(obj.getObjA131());
+		list.add(obj.getObjA132());
+		list.add(obj.getObjA133());
+		list.add(obj.getObjA134());
+		list.add(obj.getObjA135());
+		list.add(obj.getObjA136());
+		list.add(obj.getObjA137());
+		list.add(obj.getObjA138());
+		list.add(obj.getObjA139());
+		list.add(obj.getObjA140());
+		list.add(obj.getObjA141());
+		list.add(obj.getObjA142());
+		list.add(obj.getObjA143());
+		list.add(obj.getObjA144());
+		list.add(obj.getObjA145());
+		list.add(obj.getObjA146());
+		list.add(obj.getObjA147());
+		list.add(obj.getObjA148());
+		list.add(obj.getObjA149());
+		list.add(obj.getObjA150());
+		list.add(obj.getObjA151());
+		list.add(obj.getObjA152());
+		list.add(obj.getObjA153());
+		list.add(obj.getObjA154());
+		list.add(obj.getObjA155());
+		list.add(obj.getObjA156());
+		list.add(obj.getObjA157());
+		list.add(obj.getObjA158());
+		list.add(obj.getObjA159());
+		list.add(obj.getObjA160());
+		list.add(obj.getObjA161());
+		list.add(obj.getObjA162());
+		list.add(obj.getObjA163());
+		list.add(obj.getObjA164());
+		list.add(obj.getObjA165());
+		list.add(obj.getObjA166());
+		list.add(obj.getObjA167());
+		list.add(obj.getObjA168());
+		list.add(obj.getObjA169());
+		list.add(obj.getObjA170());
+		list.add(obj.getObjA171());
+		list.add(obj.getObjA172());
+		list.add(obj.getObjA173());
+		list.add(obj.getObjA174());
+		list.add(obj.getObjA175());
+		list.add(obj.getObjA176());
+		list.add(obj.getObjA177());
+		list.add(obj.getObjA178());
+		list.add(obj.getObjA179());
+		list.add(obj.getObjA180());
+		list.add(obj.getObjA181());
+		list.add(obj.getObjA182());
+		list.add(obj.getObjA183());
+		list.add(obj.getObjA184());
+		list.add(obj.getObjA185());
+		list.add(obj.getObjA186());
+		list.add(obj.getObjA187());
+		list.add(obj.getObjA188());
+		list.add(obj.getObjA189());
+		list.add(obj.getObjA190());
+		list.add(obj.getObjA191());
+		list.add(obj.getObjA192());
+		list.add(obj.getObjA193());
+		list.add(obj.getObjA194());
+		list.add(obj.getObjA195());
+		list.add(obj.getObjA196());
+		list.add(obj.getObjA197());
+		list.add(obj.getObjA198());
+		list.add(obj.getObjA199());
+		list.add(obj.getObjA200());
+		list.add(obj.getObjA201());
+		list.add(obj.getObjA202());
+		return list;
+		
 	}
 	
 	
-	public Map<String,Object> findStyles(HSSFWorkbook wb){
-		/**
-		 * 報表相關樣式
-		 */
-		Map<String,Object>map=new HashMap<String,Object>();
-		//標題樣式
-		HSSFCellStyle cs_head=wb.createCellStyle();
-		HSSFFont font_head=wb.createFont();
-		font_head.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
-		font_head.setFontHeightInPoints((short)20);
-		cs_head.setFont(font_head);
-		cs_head.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-		cs_head.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
-		map.put("cs_head", cs_head);
-		
-		//標準單元格樣式
-		HSSFCellStyle cs=wb.createCellStyle();
-		cs.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-		cs.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
-		cs.setBorderTop(HSSFCellStyle.BORDER_THIN);
-		cs.setBorderRight(HSSFCellStyle.BORDER_THIN);
-		cs.setBorderBottom(HSSFCellStyle.BORDER_THIN);
-		cs.setBorderLeft(HSSFCellStyle.BORDER_THIN);
-		map.put("cs", cs);
-		//表頭樣式
-		HSSFCellStyle cs_column=wb.createCellStyle();
-		HSSFFont font_column=wb.createFont();
-		font_column.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
-		font_column.setFontHeightInPoints((short)12);
-		cs_column.setFont(font_column);
-		cs_column.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-		cs_column.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
-		cs_column.setBorderTop(HSSFCellStyle.BORDER_THIN);
-		cs_column.setBorderRight(HSSFCellStyle.BORDER_THIN);
-		cs_column.setBorderBottom(HSSFCellStyle.BORDER_THIN);
-		cs_column.setBorderLeft(HSSFCellStyle.BORDER_THIN);
-		cs_column.setFillForegroundColor(IndexedColors.YELLOW.getIndex());
-		cs_column.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
-		map.put("cs_column", cs_column);
-		
-		
-		
-		//紅色加粗字體
-		HSSFFont font_red=wb.createFont();
-		font_red.setColor(IndexedColors.RED.getIndex());
-		font_red.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
-		
-		/**********************分類+項目+單位*****************************/
-		HSSFFont font_bold = wb.createFont();
-		font_bold.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
-		//font_bold.setFontHeightInPoints((short) 10);
-		// 藍色背景粗字體
-		HSSFCellStyle cs_blue = wb.createCellStyle();
-		cs_blue.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-		cs_blue.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
-		cs_blue.setBorderTop(HSSFCellStyle.BORDER_THIN);
-		cs_blue.setBorderRight(HSSFCellStyle.BORDER_THIN);
-		cs_blue.setBorderBottom(HSSFCellStyle.BORDER_THIN);
-		cs_blue.setBorderLeft(HSSFCellStyle.BORDER_THIN);
-		cs_blue.setFillForegroundColor(IndexedColors.LIGHT_BLUE.getIndex());
-		cs_blue.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
-		cs_blue.setFont(font_bold);
-		map.put("cs_blue", cs_blue);
-		// 標準粗字體樣式
-		HSSFCellStyle cs_bold = wb.createCellStyle();
-		cs_bold.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-		cs_bold.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
-		cs_bold.setBorderTop(HSSFCellStyle.BORDER_THIN);
-		cs_bold.setBorderRight(HSSFCellStyle.BORDER_THIN);
-		cs_bold.setBorderBottom(HSSFCellStyle.BORDER_THIN);
-		cs_bold.setBorderLeft(HSSFCellStyle.BORDER_THIN);		
-		cs_bold.setFont(font_bold);
-		map.put("cs_bold", cs_bold);
-		
-		//紅色粗字體樣式
-		HSSFCellStyle cs_red=wb.createCellStyle();
-		cs_red.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-		cs_red.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);		
-		cs_red.setFont(font_red);
-		map.put("cs_red", cs_red);
-		/**********************分類+項目+單位*****************************/
-		
-		/**
-		 * 數字格式（有背景顏色與無背景顏色）
-		 */
-		
-		HSSFDataFormat format=wb.createDataFormat();
-		//無背景
-		HSSFCellStyle cs_percent=wb.createCellStyle();
-		cs_percent.setDataFormat(format.getFormat("0.00%"));
-		cs_percent.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-		cs_percent.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
-		cs_percent.setBorderTop(HSSFCellStyle.BORDER_THIN);
-		cs_percent.setBorderRight(HSSFCellStyle.BORDER_THIN);
-		cs_percent.setBorderBottom(HSSFCellStyle.BORDER_THIN);
-		cs_percent.setBorderLeft(HSSFCellStyle.BORDER_THIN);
-		map.put("cs_percent", cs_percent);
-		
-		HSSFCellStyle cs_poi=wb.createCellStyle();
-		cs_poi.setDataFormat(format.getFormat("#,##0"));
-		cs_poi.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-		cs_poi.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
-		cs_poi.setBorderTop(HSSFCellStyle.BORDER_THIN);
-		cs_poi.setBorderRight(HSSFCellStyle.BORDER_THIN);
-		cs_poi.setBorderBottom(HSSFCellStyle.BORDER_THIN);
-		cs_poi.setBorderLeft(HSSFCellStyle.BORDER_THIN);
-		map.put("cs_poi", cs_poi);
-		
-		HSSFCellStyle cs_poi1=wb.createCellStyle();
-		cs_poi1.setDataFormat(format.getFormat("#,##0.0"));
-		cs_poi1.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-		cs_poi1.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
-		cs_poi1.setBorderTop(HSSFCellStyle.BORDER_THIN);
-		cs_poi1.setBorderRight(HSSFCellStyle.BORDER_THIN);
-		cs_poi1.setBorderBottom(HSSFCellStyle.BORDER_THIN);
-		cs_poi1.setBorderLeft(HSSFCellStyle.BORDER_THIN);
-		map.put("cs_poi1", cs_poi1);
-		
-		HSSFCellStyle cs_poi2=wb.createCellStyle();
-		cs_poi2.setDataFormat(format.getFormat("#,##0.00"));
-		cs_poi2.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-		cs_poi2.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
-		cs_poi2.setBorderTop(HSSFCellStyle.BORDER_THIN);
-		cs_poi2.setBorderRight(HSSFCellStyle.BORDER_THIN);
-		cs_poi2.setBorderBottom(HSSFCellStyle.BORDER_THIN);
-		cs_poi2.setBorderLeft(HSSFCellStyle.BORDER_THIN);
-		map.put("cs_poi2", cs_poi2);
-		
-		HSSFCellStyle cs_poi4=wb.createCellStyle();
-		cs_poi4.setDataFormat(format.getFormat("#,###,0.0000"));
-		cs_poi4.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-		cs_poi4.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
-		cs_poi4.setBorderTop(HSSFCellStyle.BORDER_THIN);
-		cs_poi4.setBorderRight(HSSFCellStyle.BORDER_THIN);
-		cs_poi4.setBorderBottom(HSSFCellStyle.BORDER_THIN);
-		cs_poi4.setBorderLeft(HSSFCellStyle.BORDER_THIN);
-		map.put("cs_poi4", cs_poi4);
-		
-		return map;
-	}
 
-	
-	public HSSFCellStyle findStyleByIndex(Map<String,Object>map,int index){
-		HSSFCellStyle cs=(HSSFCellStyle)map.get("cs_poi2");
-		/*if(index==19||index==20||index==25||index==26||index==27){
-			cs=(HSSFCellStyle)map.get("cs_poi");
-		}*/
-		if(index==1||index==3||index==5||(index>=121&&index<=124)||index==163||(index>=169&&index<=176)){
-			cs=(HSSFCellStyle)map.get("cs_poi1");
-		}
-		return cs;
-		
+	public List<Double> package_total(List<List<Double>>list,List<String>list_cols){
+		List<Double>list_result=new ArrayList<Double>();			
+				for(int j=0;j<list_cols.size()-1;j++){
+					double temp=0.0;
+					for(int k=0;k<list.size();k++){
+							temp=temp+(list.get(k).get(j)==null?0.0:list.get(k).get(j));																		
+					}
+					list_result.add(temp);
+				}										
+		return list_result;
 	}
-	
-	
-	
 	
 	
 

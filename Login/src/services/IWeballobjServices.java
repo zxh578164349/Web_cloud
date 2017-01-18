@@ -29,5 +29,7 @@ public interface IWeballobjServices {
 	public Weballobj findById(String factNo,String factcode,String yymm);
 	public void delete(String factNo,String factCode,String yymm,KyzExpectmatmLog log);
 	public List<Weballobj>findObj(String yymm,String yymm2);
+	
+	public List<String>findFactCodes(String factNo,String yymm,String yymm2);
 
 }
