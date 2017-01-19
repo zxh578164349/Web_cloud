@@ -28,7 +28,8 @@
 		<table class="table table-condensed">
 			<tr>
 				<td class="td_show_title">廠別</td>
-				<td class="td_input"><s:if test="webphone==null">
+				<td class="td_input">
+				  <s:if test="webphone==null">
 						<s:if test="#session.factNo!='tw'">
 							<input type="text" style="color:blue" name="webphone.id.fact.factNo" value="${factNo}" readonly id="dwr_factno" />
 						</s:if>
@@ -40,10 +41,13 @@
 									<option value="${temp[0]}">${temp[1] }&nbsp;(${temp[0]})</option>
 								</s:iterator>
 							</select>
-						</s:else>
-					</s:if> <s:else>
+						</s:else>												
+					</s:if> 
+					<s:else>
 						<input type="text" name="webphone.id.fact.factNo" value="<s:property value='webphone.id.fact.factNo'/>" readonly style="color:blue" id="dwr_factno"/>
-					</s:else></td>
+					    <input type="hidden" value="0" name="isnull"/><%--修改標識--%>
+					</s:else>
+					</td>
 				<td class="td_show_title">姓名</td>
 				<td class="td_input"><input type="text" name="webphone.id.username" datatype="*1-50"
 					value="<s:property value='webphone.id.username'/>">

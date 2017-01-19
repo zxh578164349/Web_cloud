@@ -187,6 +187,12 @@ public class WebPhonebookAction extends ActionSupport implements ServletResponse
 	public String add(){
 		try{			
 			webphonebookSer.add(webphone);
+			if(isnull!=null){
+				WebPhonebook phone=(WebPhonebook)ActionContext.getContext().getSession().get("WebPhonebook");
+				if(phone!=null){
+					webphonebookSer.delete(phone);
+				}
+			}
 			ajaxResult="0";
 		}catch(Exception e){
 			e.printStackTrace();
@@ -232,7 +238,8 @@ public class WebPhonebookAction extends ActionSupport implements ServletResponse
 		return result;
 	}
 	public String findById(){
-		webphone=webphonebookSer.findById(factNo, department, post, userName, phoneA, phoneB, phoneC, email);		
+		webphone=webphonebookSer.findById(factNo, department, post, userName, phoneA, phoneB, phoneC, email);
+		ActionContext.getContext().getSession().put("WebPhonebook",webphone);
 		return "findById";
 	}
 	public String delete(){

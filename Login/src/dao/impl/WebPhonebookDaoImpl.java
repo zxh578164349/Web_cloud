@@ -96,6 +96,9 @@ public class WebPhonebookDaoImpl extends Basedao implements IWebPhonebookDao{
 		WebPhonebook book=this.findById(factNo,department,post,userName,phoneA,phoneB,phoneC,email);
 		super.delete(book,delLog);
 	}
+	public void delete(WebPhonebook phone){
+		super.delete(phone);
+	}
 
 	public void addLarge(Map<String, Object> map, String username) {
 		// TODO Auto-generated method stub

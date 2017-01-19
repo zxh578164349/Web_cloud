@@ -84,4 +84,18 @@ public class WebPhonebookServicesImpl implements IWebPhonebookServices{
 		webphonedao.delete(factNo, department, post, userName, phoneA, phoneB, phoneC, email,delLog);
 	}
 
+
+
+	/**
+	 * 日期:2017/1/19
+	 * 描述:
+	 */
+	
+	
+	public void delete(WebPhonebook phone){
+		// TODO Auto-generated method stub
+		webphonedao.delete(phone);
+	}
+	
+
 }

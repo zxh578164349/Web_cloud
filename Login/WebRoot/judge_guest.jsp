@@ -169,7 +169,7 @@
 	
 	jq(document).keyup(function(event) {
 		if (event.keyCode == 13) {
-			checkFact();
+			checkFact("userlogin_guest");
 		}
 	});
 	
