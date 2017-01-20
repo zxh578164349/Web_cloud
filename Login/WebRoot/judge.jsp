@@ -169,7 +169,8 @@
 	
 	jq(document).keyup(function(event) {
 		if (event.keyCode == 13) {
-			checkFact("userlogin");
+			jq("#submit1").click();
+			//checkFact("userlogin");
 		}
 	});
 	

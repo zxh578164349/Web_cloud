@@ -41,7 +41,7 @@
 				<div id="factno_select">
 					<div id="factno_selectleft"></div>
 					<div id="factno_selectmiddle">
-						<select id="url_factno" name="factNo">
+						<select id="url_factno" name="factNo" onchange="this.blur()"><%--this.blur() 讓下拉框失去焦點,按回車鍵就可以觸發登錄事件--%>
 						    <s:if test="factNo!=null">
 								<option value="<s:property value='factNo'/>">
 									<s:property value="factname" />&nbsp;(<s:property value="factNo" />)																											
