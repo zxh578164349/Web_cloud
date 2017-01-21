@@ -38,7 +38,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 						<td class="td_show_title" width="10%">廠別</td>
 						<td class="td_input"><input type="text" style="color:blue" name="ydata.id.factNo" value="${factNo}" readonly id="dwr_factno" /><span id="error1"></span></td>
 						<td class="td_show_title">廠別狀態</td>
-						<td class="td_input"><select name="ydata.id.factCode" datatype="*" id="dwrFactArea" onchange="check()">
+						<td class="td_input"><select name="ydata.id.factCode" datatype="*" id="dwrFactArea" >
 								<option value="">請選擇廠別狀態</option>
 								<s:iterator value="#session.factAreas_login" id="temp">
 									<option value="${temp}">${temp}</option>
@@ -50,7 +50,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 				<s:if test="#session.factNo=='tw'">
 					<tr>
 						<td class="td_show_title">廠別</td>
-						<td class="td_input"><select style="color:blue" name="ydata.id.factNo" datatype="*" id="dwr_factno" onclick="getFactArea(this.value),check()">
+						<td class="td_input"><select style="color:blue" name="ydata.id.factNo" datatype="*" id="dwr_factno" onclick="getFactArea(this.value)">
 								<option value="">請選擇廠別</option>
 								<s:iterator value="#session.facts" id="temp">
 									<option value="${temp[0]}">${temp[1] }&nbsp;(${temp[0]})</option>
@@ -58,7 +58,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 						</select><span id="error1"></span>
 						</td>
 						<td class="td_show_title">廠別狀態</td>
-						<td class="td_input"><select name="ydata.id.factCode" datatype="*" id="dwrFactArea" onchange="check()">
+						<td class="td_input"><select name="ydata.id.factCode" datatype="*" id="dwrFactArea" >
 								<option value="">請選擇廠別狀態</option>
 						</select><span id="error2"></span>
 						</td>
@@ -70,8 +70,9 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 
 					<td class="td_show_title">日期</td>
 
-					<td class="td_input"><input type="text" name="yymmdd" onClick="WdatePicker({maxDate:'%y-%M-{%d+2}',dateFmt:'yyyyMMdd'})" class="Wdate" datatype="*" id="yymmdd"
-						onchange="check()" /><span id="error3"></span>
+					<td class="td_input">
+					<input type="text" name="yymmdd" onClick="WdatePicker({dateFmt:'yyyyMMdd',maxDate:'%y-%M-%d'})" class="Wdate" datatype="*" id="yymmdd"/>
+					<span id="error3"></span>
 					</td>
 
 
@@ -220,15 +221,20 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 				ignoreHidden : true,
 				tipSweep : true,
 				ajaxPost : true,
-				callback : function(data) {
-					//document.getElementById("mydiv").style.display = "block";
-					//form[0].submit();
+				callback : function(data) {					
 					if (data == "0") {
 						layer.msg("提交成功!", 3, 1);
-					} else {
-						//alert(data.responseText);
+					} 
+					if(data=="1") {
 						layer.msg("提交失敗", 3, 3);
 					}
+					if(data=="2"){
+						layer.msg("數據已經存在",3,3);
+					}
+					if(data=="3"){
+						layer.msg("請先輸入所選日期的前天數據",3,3);
+					}
+					
 				},
 				datatype : {
 					"*0-6" : /^-?\d{1,9}(\.[0-9]{1,3})?$/,
@@ -242,7 +248,11 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 			demo.tipmsg.w["*1-6"] = "不為0的數字且不超過9位數,可保留三位以內小數";
 			demo.tipmsg.w["*0-2"] = "天數不符合要求";
 			demo.tipmsg.w["*0-7"] = "只能數字且不超過7位數,可保留一位以內小數";
+			
+			
 
+			goTrim();
+			showRow();
 		});
 
 		function getFactArea(mid) {
@@ -283,57 +293,9 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 				}
 				jq("input[name='ydata.daycount']").attr("datatype","*0-2");
 			}
-		}
-
-		function check() {
-			var factno = document.getElementById("dwr_factno").value;
-			var factcode = document.getElementById("dwrFactArea").value;
-			var yymmdd = document.getElementById("yymmdd").value;
-			if (factno != "" && factcode != "" && yymmdd != "") {
-				webydatejs
-						.check(
-								factno,
-								factcode,
-								yymmdd,
-								function(x) {
-									if (x == "1") {
-										alert("所選日期的前天數據還沒有輸入");
-										document.getElementById("sub").disabled = true;
-										document.getElementById("sub").value = "已鎖定";
-										document.getElementById("sub").style.color = "red";
-										document.getElementById("error1").innerHTML = "<font color='color'>！</font>";
-										document.getElementById("error2").innerHTML = "<font color='color'>！</font>";
-										document.getElementById("error3").innerHTML = "<font color='color'>！</font>";
-									}
-									if (x == "2") {
-										alert("數據庫已存在(" + factno + factcode
-												+ yymmdd + ")");
-										document.getElementById("sub").disabled = true;
-										document.getElementById("sub").value = "已鎖定";
-										document.getElementById("sub").style.color = "red";
-										document.getElementById("error1").innerHTML = "<font color='color'>！</font>";
-										document.getElementById("error2").innerHTML = "<font color='color'>！</font>";
-										document.getElementById("error3").innerHTML = "<font color='color'>！</font>";
-									}
-									if (x == "0") {
-										document.getElementById("sub").disabled = false;
-										document.getElementById("sub").value = "確定";
-										document.getElementById("sub").style.color = "white";
-										document.getElementById("error1").innerHTML = "";
-										document.getElementById("error2").innerHTML = "";
-										document.getElementById("error3").innerHTML = "";
-									}
-								});
-			}
-		}
-
-		jq(function() {
-			goTrim();
-			showRow();
-		})
+		}				
 	</script>
-	<script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>
-	<script type='text/javascript' src='/Login/dwr/interface/webydatejs.js'></script>
+	<script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>	
 </body>
 
 </html>

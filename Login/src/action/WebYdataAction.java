@@ -243,7 +243,6 @@ public class WebYdataAction extends ActionSupport implements
 
 	public String addData() throws ParseException, IOException {				
 		DateFormat format = new SimpleDateFormat("yyyyMMdd");
-		String result = null;
 		Date date = null;
 		String lastday="";
 		Double achievingRate = null;		
@@ -269,21 +268,7 @@ public class WebYdataAction extends ActionSupport implements
 			/**
 			 * 添加
 			 */
-			if (isnull.equals("isnull")) {// start "if 1"
-				/**************************************超時錄入數據記錄20160331**************************************************/
-				/*Calendar cal2 = Calendar.getInstance();
-				Date createDate=new Date();//創建時間
-				cal2.setTime(createDate);
-				if(cal2.get(Calendar.DAY_OF_WEEK) == Calendar.MONDAY){
-					
-				}
-				ydata.setDateCreate(new SimpleDateFormat("yyMMddhhmm").format(createDate));//記錄創建時間
-				long time1=new SimpleDateFormat("yyyyMMddhhmm").parse(yymmdd+"0000").getTime();
-				long time2=createDate.getTime();
-				if((time2-time1)/(1000*60)>2280){
-					ydata.setTimeoutRecorde("1");//超過38小時，也就是2280分，記錄超時
-				}*/
-				/**************************************超時錄入數據記錄20160331**************************************************/
+			if (isnull.equals("isnull")) {// start "if 1"				
 				
 				/****************************隻限制已輸入數據的廠別，沒有數據就不限制***********************************/
 				double nums=dataSer.findNums(ydata.getId().getFactNo(), ydata.getId().getFactCode());
@@ -297,34 +282,28 @@ public class WebYdataAction extends ActionSupport implements
 					cal.add(Calendar.DATE, -1);
 					lastday=format.format(cal.getTime());
 					Date lastday2=format.parse(lastday);
-					WebYieldDataId y_id=new WebYieldDataId();
-					y_id.setFactNo(ydata.getId().getFactNo());
-					y_id.setFactCode(ydata.getId().getFactCode());
-					y_id.setYymmdd(lastday2);							
+					WebYieldDataId y_id=new WebYieldDataId(ydata.getId().getFactNo(),ydata.getId().getFactCode(),lastday2);												
 					WebYieldData ydata_last=dataSer.findById(y_id);
-					if(ydata_last==null){
-						result="noData";
-						//如果大於前21天的就不提示輸入
-						if(betweenDay>21){
-							//如果跳過提示，有可能出現當天數據不為空的，所以也要判斷
-							if(ydata_find!=null){
-								result=null;
+					if(ydata_last==null){						
+						ajaxResult="3";//表示要輸入前天數據												
+						if(betweenDay>21){//如果大於前21天的就不提示輸入						
+							if(ydata_find!=null){//有可能出現當天數據不為空的，所以也要判斷
+								ajaxResult="2";//表示數據已經存在
 							}else{
 								dataSer.addYdata(ydata);
-								result="addData";
 								ajaxResult="0";
 							}												
 						}
 					}else{
 						if(ydata_find==null){
 							dataSer.addYdata(ydata);
-							result = "addData";
 							ajaxResult="0";
+						}else{
+							ajaxResult="2";//表示數據已經存在
 						}
 					}
 				}else{
 					dataSer.addYdata(ydata);
-					result = "addData";
 					ajaxResult="0";
 				}
 				/****************************隻限制已輸入數據的廠別，沒有數據就不限制***********************************/									
@@ -342,102 +321,22 @@ public class WebYdataAction extends ActionSupport implements
 				log.setYymmdd(ydata.getId().getYymmdd());
 				log.setLogTime(new Date());
 
-				//String ipAddress = null;				
-				/*ipAddress = request.getHeader("x-forwarded-for");
-				if (ipAddress == null || ipAddress.length() == 0
-						|| "unknown".equalsIgnoreCase(ipAddress)) {
-					ipAddress = request.getHeader("Proxy-Client-IP");
-				}
-				if (ipAddress == null || ipAddress.length() == 0
-						|| "unknown".equalsIgnoreCase(ipAddress)) {
-					ipAddress = this.request.getHeader("WL-Proxy-Client-IP");
-				}
-				if (ipAddress == null || ipAddress.length() == 0
-						|| "unknown".equalsIgnoreCase(ipAddress)) {
-					ipAddress = this.request.getRemoteAddr();
-					if (ipAddress.equals("127.0.0.1")) {
-						InetAddress inet = null;
-						try {
-							inet = InetAddress.getLocalHost();
-						} catch (Exception e) {
-							e.printStackTrace();
-						}
-						ipAddress = inet.getHostAddress();
-					}
-				}
-				if (ipAddress != null && ipAddress.length() > 15) { 
-					if (ipAddress.indexOf(",") > 0) {
-						ipAddress = ipAddress.substring(0,
-								ipAddress.indexOf(","));
-					}
-				}*/
+				
 				String ipAddress=GlobalMethod.findIp();//獲取本機IP
 				log.setIp(ipAddress);
 				dataSer.addYdate_log(log);
 				dataSer.addYdata(ydata);
-								
-				/*yymm=yymmdd.substring(0,6);
-				String yymm_last="";
-				String yymm_next="";
-				Calendar cal2=Calendar.getInstance();
-				cal2.setTime(format2.parse(yymm));
-				cal2.add(Calendar.MONTH, -1);
-				yymm_last=format2.format(cal2.getTime());
-				cal2.add(Calendar.MONTH, 2);
-				yymm_next=format2.format(cal2.getTime());
-				List<String>list_yymm=new ArrayList<String>();
-				list_yymm.add(yymm_last);
-				list_yymm.add(yymm);
-				list_yymm.add(yymm_next);
-				for(int i=0;i<list_yymm.size();i++){
-					List<SumWebYieldData>list_sumYdata=sumydateSer.findByFactNo2(ydata.getId().getFactNo(), list_yymm.get(i));
-					if(list_sumYdata.size()>0){
-						for(int k=0;k<list_sumYdata.size();k++){
-							SumWebYieldData sumYdata=list_sumYdata.get(k);
-							if(sumYdata!=null){
-								//sumydateSer.delete(sumYdata);
-								String sumydata_username=sumYdata.getUsername()==null?"none":sumYdata.getUsername();
-								String sumydata_usernameUd=sumYdata.getUsernameUd()==null?"none":sumYdata.getUsernameUd();
-								this.add_sumYdata(sumYdata.getId().getFactNo().getFactNo(),sumYdata.getId().getFactCode(), list_yymm.get(i), sumYdata.getStartDate(), sumYdata.getEndDate(),sumydata_username,sumydata_usernameUd);
-							}							
-						}
-					}							
-				}*/
+												
 				//更新盤點數據
 				this.updatesumYdate(ydata.getId().getFactNo(),yymmdd);
-				result = "upData";
 				ajaxResult="0";
 			}// end "else 1"
 		}catch(Exception e){
 			// TODO Auto-generated catch block
 			ajaxResult="1";
 			e.printStackTrace();
-		}
-			
-			if (result == null) {
-				response.setContentType("text/html;charset=utf-8");
-				String temp1 = ydata.getId().getFactNo();
-				String temp2 = ydata.getId().getFactCode();
-				String temp3 = format.format(ydata.getId().getYymmdd());
-				response.getWriter()
-						.print("<script>window.parent.alert('數據已經存在("
-								+ temp1
-								+ " "
-								+ temp2
-								+ " "
-								+ temp3
-								+ ")!');</script>");				
-			}
-			if(result.equals("noData")){
-				response.setContentType("text/html;charset=utf-8");
-				response.getWriter()
-				.print("<script>window.parent.alert('選定日期的前天數據("
-						+ lastday					
-						+ ")還沒有輸入!');</script>");							
-				result=null;
-			}
-		 
-		return result;
+		}							 
+		return "addData";
 
 	}
 

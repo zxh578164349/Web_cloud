@@ -392,10 +392,7 @@
 		<action name="ydata_*" class="ydataAction" method="{1}">
 			<result name="addData" type="json">
 			   <param name="root">ajaxResult</param>			   
-			</result>
-			<result name="upData" type="json">
-			   <param name="root">ajaxResult</param>
-			</result>
+			</result>			
 			<result name="fails">none.jsp</result>
 			<result name="findById">saveAndUpdate/Yield_data.jsp</result>
 			<result name="findById2">saveAndUpdate/Yield_data2.jsp</result>

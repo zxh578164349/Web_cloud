@@ -11,7 +11,7 @@
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
-<title>添加新用户</title>
+<title></title>
 <head>
 <base href="<%=basePath%>">
 <meta http-equiv="pragma" content="no-cache">
