@@ -401,10 +401,12 @@
 			callback:function(data){
 				if(data=="0"){
 					layer.msg("提交成功!",3,1);
-					location.href="/Login/kpifact_findPageBean";
+					//location.href="/Login/kpifact_findPageBean";
+					loadUrl("kpifact_findPageBean");
 				}
 				if(data=="1"){
-					alert(data.responseText);
+					//alert(data.responseText);
+					layer.msg("提交失敗!",3,3);
 				}
 			}
 		});

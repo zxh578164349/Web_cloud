@@ -115,7 +115,8 @@
 					//location.href="/Login/webtype_findPageBean";
 					loadUrl("/Login/webtype_findPageBean");
 				}else{
-					alert(data.responseText);
+					//alert(data.responseText);
+					layer.msg("提交失敗!",3,3);
 				}				
 			}
 		});	
