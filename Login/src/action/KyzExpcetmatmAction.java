@@ -737,16 +737,8 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 			KyzExpectmatmLog log=new KyzExpectmatmLog();
 			log.setObj("KyzExpectmatm");
 			log.setBillNo(id.getBillNo());
-			WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
-			log.setUsername(user.getUsername());
-			kyzSer.delete(id,log);
-			/*visabillmSer.delete(id.getFactNo(), visaSort, id.getBillNo());
-			List<KyzExpectmatmFile>list=kyzexpfileSer.findByBillNo(id.getBillNo());
-			if(list.size()>0){
-				for(int i=0;i<list.size();i++){
-					kyzexpfileSer.delete(list.get(i));				
-				}			
-			}*/
+			log.setFactNo(id.getFactNo());
+			kyzSer.delete(id,log);			
 			File file=new File("d:\\KyzexpFile_backup\\"+id.getBillNo());
 			if(file.exists()){
 				GlobalMethod.deletefile(file);//引用下面刪除文件夾方法

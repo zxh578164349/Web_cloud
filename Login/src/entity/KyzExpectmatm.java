@@ -44,6 +44,7 @@ public class KyzExpectmatm implements java.io.Serializable {
 	private List<KyzExpectmats> kyzExpectmatses = new ArrayList();
 	private KyVisabillm vbm;
 	private List<KyzExpectmatmFile>list_file;
+	private List<KyzExpectmatmLog>list_logs;
 
 	// Constructors
 
@@ -326,6 +327,14 @@ public class KyzExpectmatm implements java.io.Serializable {
 
 	public void setEmerMk(String emerMk){
 		this.emerMk=emerMk;
+	}
+
+	public List<KyzExpectmatmLog> getList_logs(){
+		return list_logs;
+	}
+
+	public void setList_logs(List<KyzExpectmatmLog> list_logs){
+		this.list_logs=list_logs;
 	}
 	
 	
