@@ -128,12 +128,12 @@
 			<tr>
 				<td class="td_show_title">機臺利用率(%)</td>
 				<td class="td_input"><input type="text" name="kpi.mutiRate"
-					datatype="9_4"
+					datatype="9_5"
 					value="<s:property value='kpi.mutiRate' />">
 				</td>
 				<td class="td_show_title">產能達成率(%)</td>
 				<td class="td_input"><input type="text" name="kpi.productRate"
-					datatype="9_4"
+					datatype="9_5"
 					value="<s:property value='kpi.productRate' />">
 				</td>
 			</tr>
@@ -153,12 +153,12 @@
 			<tr>
 				<td class="td_show_title">全廠人均時產能(模/H)</td>
 				<td class="td_input"><input type="text"
-					name="kpi.avgFactpro" datatype="9_4"
+					name="kpi.avgFactpro" datatype="9_5"
 					value="<s:property value='kpi.avgFactpro' />">
 				</td>
 				<td class="td_show_title">成倉庫存(雙)</td>
 				<td class="td_input"><input type="text" name="kpi.storeNum"
-					datatype="9_4"
+					datatype="9_5"
 					value="<s:property value='kpi.storeNum' />">
 				</td>
 
@@ -173,7 +173,7 @@
 				</td>
 				<td class="td_show_title">生產與請款差異率(%)</td>
 				<td class="td_input"><input type="text" name="kpi.outrequestRate"
-					datatype="9_4"
+					datatype="9_5"
 					value="<s:property value='%{formatInteger(kpi.outrequestRate)}' />">
 				</td>
 			</tr>
@@ -181,12 +181,12 @@
 			<tr>
 				<td class="td_show_title">銷貨收入(USD)</td>
 				<td class="td_input"><input type="text" name="kpi.slIncome"
-					datatype="9_4"
+					datatype="9_5"
 					value="<s:property value='kpi.slIncome' />">
 				</td>
 				<td class="td_show_title">主材料成本比率(%)</td>
 				<td class="td_input"><input type="text" name="kpi.mainRate"
-					datatype="9_4"
+					datatype="9_5"
 					value="<s:property value='kpi.mainRate' />">
 				</td>
 
@@ -194,12 +194,12 @@
 			<tr>
 				<td class="td_show_title">人工成本率(%)</td>
 				<td class="td_input"><input type="text" name="kpi.pcostRate"
-					datatype="my9_4"
+					datatype="9_5"
 					value="<s:property value='kpi.pcostRate' />">
 				</td>
 				<td class="td_show_title">費用成本率(%)</td>
 				<td class="td_input"><input type="text" name="kpi.ccostRate"
-					datatype="my9_4"
+					datatype="9_5"
 					value="<s:property value='kpi.ccostRate' />">
 				</td>
 
@@ -207,64 +207,64 @@
 			<tr>
 				<td class="td_show_title">修繕單耗(USD/模)</td>
 				<td class="td_input"><input type="text" name="kpi.wasteUsd"
-					datatype="my9_4"
+					datatype="9_5"
 					value="<s:property value='kpi.wasteUsd' />">
 				</td>
 				<td class="td_show_title">平均單價(USD/雙)</td>
 				<td class="td_input"><input type="text" name="kpi.perPrice"
-					datatype="my9_4"
+					datatype="9_5"
 					value="<s:property value='kpi.perPrice' />">
 				</td>
 			</tr>
 			<tr>
 				<td class="td_show_title">全廠人均薪資(USD/人)</td>
 				<td class="td_input"><input type="text" name="kpi.perSalar"
-					datatype="9_4"
+					datatype="9_5"
 					value="<s:property value='kpi.perSalar' />">
 				</td> 
 				<td class="td_show_title">人均產值(USD/人)</td>
 				<td class="td_input"><input type="text" name="kpi.avgPermoney"
-					datatype="9_4"
+					datatype="9_5"
 					value="<s:property value='kpi.avgPermoney' />">
 				</td>	              
 			</tr>
 			<tr>
 				<td class="td_show_title">人薪產值(USD/人)</td>
 				<td class="td_input"><input type="text" name="kpi.permoney"
-					datatype="9_4"
+					datatype="9_5"
 					value="<s:property value='kpi.permoney' />">
 				</td>
 				<td class="td_show_title">全廠總損耗(%)</td>
 				<td class="td_input"><input type="text" name="kpi.wasteFact"
-					datatype="9_4"
+					datatype="9_5"
 					value="<s:property value='kpi.wasteFact' />">
 				</td>
 			</tr>
 			<tr>
 				<td class="td_show_title">無形損耗(%)</td>
 				<td class="td_input"><input type="text" name="kpi.wasteNo"
-					datatype="9_4"
+					datatype="9_5"
 					value="<s:property value='kpi.wasteNo' />">
 				</td>
 				<td class="td_show_title">邊料率(%)</td>
 				<td class="td_input"><input type="text" name="kpi.sideRate"
-					datatype="9_4"
+					datatype="9_5"
 					value="<s:property value='kpi.sideRate' />">
 				</td>
 			</tr>
 			<tr>
 				<td class="td_show_title">不良率(%)</td>
 				<td class="td_input"><input type="text" name="kpi.uhealRate"
-					datatype="9_4"
+					datatype="9_5"
 					value="<s:property value='kpi.uhealRate' />">
 				</td>
 				<td class="td_show_title">報廢率(%)<br>廠補率(%)</td>
 				<td class="td_input"><span><input type="text" name="kpi.wasteRate"
-					datatype="9_4"
+					datatype="9_5"
 					value="<s:property value='kpi.wasteRate' />"></span><br>
 					<span>
 					<input type="text" name="kpi.factaddRate"
-					datatype="9_4"
+					datatype="9_5"
 					value="<s:property value='kpi.factaddRate' />">
 					</span>
 					<input type="hidden"
@@ -279,96 +279,96 @@
 			<tr>
 				<td class="td_show_title">水用量单耗(噸/模)</td>
 				<td class="td_input"><input type="text" name="kpi.waterTon"
-					datatype="9_4"
+					datatype="9_5"
 					value="<s:property value='%{formatDouble_5(kpi.waterTon)}'/>">
 				</td>
 				<td class="td_show_title">用水金額單耗(USD/模)</td>
 				<td class="td_input"><input type="text" name="kpi.waterUsd"
-					datatype="9_4"
+					datatype="9_5"
 					value="<s:property value='%{formatDouble_5(kpi.waterUsd)}' />">
 				</td>
 			</tr>
 			<tr>
 				<td class="td_show_title">电度数单耗(度/模)</td>
 				<td class="td_input"><input type="text" name="kpi.lightDu"
-					datatype="9_4"
+					datatype="9_5"
 					value="<s:property value='%{formatDouble_5(kpi.lightDu)}' />">
 				</td>
 				<td class="td_show_title">用電金額單耗(USD/模)</td>
 				<td class="td_input"><input type="text" name="kpi.lightUsd"
-					datatype="9_4"
+					datatype="9_5"
 					value="<s:property value='%{formatDouble_5(kpi.lightUsd)}' />">
 				</td>
 			</tr>
 			<tr>
 				<td class="td_show_title">蒸汽用量單耗(噸/模)</td>
 				<td class="td_input"><input type="text" name="kpi.gasTon"
-					datatype="9_4"
+					datatype="9_5"
 					value="<s:property value='%{formatDouble_5(kpi.gasTon)}' />">
 				</td>
 				<td class="td_show_title">用汽金額單耗(USD/模)</td>
 				<td class="td_input"><input type="text" name="kpi.gasUsd"
-					datatype="9_4"
+					datatype="9_5"
 					value="<s:property value='%{formatDouble_5(kpi.gasUsd)}' />">
 				</td>
 			</tr>
 			<tr>
 				<td class="td_show_title">回頭料(%)</td>
 				<td class="td_input"><input type="text" name="kpi.bheadRate"
-					datatype="9_4"
+					datatype="9_5"
 					value="<s:property value='kpi.bheadRate' />">
 				</td>
 				<td class="td_show_title">油壓退料(%)</td>
 				<td class="td_input"><input type="text" name="kpi.bpreRate"
-					datatype="9_4"
+					datatype="9_5"
 					value="<s:property value='kpi.bpreRate' />">
 				</td>
 			</tr>
 			<tr>
 				<td class="td_show_title">回流率(%)</td>
 				<td class="td_input"><input type="text" name="kpi.bflowRate"
-					datatype="9_4"
+					datatype="9_5"
 					value="<s:property value='kpi.bflowRate' />">
 				</td>
 				<td class="td_show_title">藥品用量單耗(g/模)</td>
 				<td class="td_input"><input type="text" name="kpi.drugWast"
-					datatype="9_4"
+					datatype="9_5"
 					value="<s:property value='kpi.drugWast' />">
 				</td>
 			</tr>
 			<tr>
 				<td class="td_show_title">色料用量單耗(g/模)</td>
 				<td class="td_input"><input type="text" name="kpi.clrWast"
-					datatype="9_4"
+					datatype="9_5"
 					value="<s:property value='kpi.clrWast' />">
 				</td>
 				<td class="td_show_title">離型劑金額單耗(USD/模)</td>
 				<td class="td_input"><input type="text" name="kpi.leaveUsd"
-					datatype="9_4"
+					datatype="9_5"
 					value="<s:property value='kpi.leaveUsd' />">
 				</td>
 			</tr>
 			<tr>
 				<td class="td_show_title">直間比</td>
 				<td class="td_input"><input type="text" name="kpi.zjRate"
-					datatype="9_4"
+					datatype="9_5"
 					value="<s:property value='kpi.zjRate' />">
 				</td>
 				<td class="td_show_title">直工離職率(%)</td>
 				<td class="td_input"><input type="text" name="kpi.zgleaveRate"
-					datatype="9_4"
+					datatype="9_5"
 					value="<s:property value='kpi.zgleaveRate' />">
 				</td>
 			</tr>
 			<tr>
 				<td class="td_show_title">全廠離職率(%)</td>
 				<td class="td_input"><input type="text" name="kpi.factleaveRate"
-					datatype="9_4"
+					datatype="9_5"
 					value="<s:property value='kpi.factleaveRate' />">
 				</td>
 				<td class="td_show_title">工傷件數(件)</td>
 				<td class="td_input"><input type="text" name="kpi.hurtNum"
-					datatype="9_4"
+					datatype="9_5"
 					value="<s:property value='kpi.hurtNum' />">
 				</td>
 			</tr>
@@ -395,7 +395,8 @@
 				"9_1" : /^-?\d{1,9}(\.[0-9]{1})?$/,
 				"9_2" : /^-?\d{1,9}(\.[0-9]{1,2})?$/,
 				"9_4" : /^-?\d{1,9}(\.[0-9]{1,4})?$/,
-				"my9_4" : /^-?\d{1,9}(\.[0-9]{4})$/		
+				"my9_4" : /^-?\d{1,9}(\.[0-9]{4})$/	,
+				"9_5" : /^-?\d{1,9}(\.[0-9]{1,5})?$/		
 			},
 			ajaxPost:true,
 			callback:function(data){
@@ -414,6 +415,7 @@
 		demo.tipmsg.w["9_2"] = "只能數字且不超過9位數,可保留兩位小數";
 		demo.tipmsg.w["9_4"] = "只能數字且不超過9位數,可保留四位小數";
 		demo.tipmsg.w["my9_4"]="只能數字且不超過9位數,和精確到四位小數";
+		demo.tipmsg.w["9_5"] = "只能數字且不超過9位數,可保留5位小數";
 	});
 
 	function getFactArea(mid) {

@@ -185,7 +185,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 			</tbody>			
 			</table>
 			<s:if test='kyzletter.filesYn=="1"'>
-	           <hr/>
+	          <%--  <hr/>
 	          <span style="color:blue;">附檔:</span><br/>
 	          <div id="fileJson" style="width:850px">
 	           <s:iterator value="#session.list_filesexp">
@@ -194,7 +194,8 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 	              <img src="images/icon/del_file.png" alt="刪除" title="刪除" style="border:0px"/>
 	           </a>&nbsp;&nbsp;
 	         </s:iterator>
-	         </div>	  
+	         </div>	--%>  
+	         <jsp:include page="publicKyzFiles.jsp" flush="true" />	
 	         </s:if>
 	         <hr/> 						 
 			  <center style="width:850px;margin-left:50px">			    
@@ -348,12 +349,11 @@ function getKyType2(factno){
 	  loadUrl("kyzletter_findPageBean");
   }
   
-  function lookJson(billNo,id,filename){
+  /*function lookJson(billNo,id,filename){
 	   jq.ajax({
 	      type:"get",
 	      dataType:"json",
 	      url:"kyzfile_findKyzFileJson",
-	     // data:"billNo="+billNo+"&id="+id+"&filename="+filename,
 	      data:{"billNo":billNo,"id":id,"filename":filename},
 	      success:function(files){
 	         jq("#fileJson").html("");
@@ -368,7 +368,7 @@ function getKyType2(factno){
 	         jq("#fileJson").append(item); 
 	      }
 	   })
-	}  
+	}*/  
 </script>
 <script type='text/javascript' src='/Login/dwr/interface/kyzcontactletterjs.js'></script>
 <script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>

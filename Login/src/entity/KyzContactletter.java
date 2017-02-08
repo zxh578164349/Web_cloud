@@ -30,6 +30,7 @@ public class KyzContactletter implements java.io.Serializable {
 	private List<KyzExpectmatmFile>list_file;
 	private String userAccount;//申請人賬號
 	private String emerMk;//是否緊急      0緊急       1不緊急 
+	private List<KyzExpectmatmLog>list_logs;
 
 	// Constructors
 
@@ -227,7 +228,13 @@ public class KyzContactletter implements java.io.Serializable {
 		this.emerMk=emerMk;
 	}
 	
-	
+	public List<KyzExpectmatmLog> getList_logs(){
+		return list_logs;
+	}
+
+	public void setList_logs(List<KyzExpectmatmLog> list_logs){
+		this.list_logs=list_logs;
+	}
 	
 	
 

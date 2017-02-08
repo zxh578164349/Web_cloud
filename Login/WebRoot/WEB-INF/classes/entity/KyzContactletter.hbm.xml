@@ -72,6 +72,13 @@
             </key>
             <one-to-many class="entity.KyzExpectmatmFile"/>
         </bag>
+        <bag name="list_logs" inverse="true" cascade="all">
+            <key>
+               <column name="FACT_NO"/>
+               <column name="BILL_NO"/> 
+            </key>
+            <one-to-many class="entity.KyzExpectmatmLog"/>
+        </bag>
         <one-to-one name="vbm" class="entity.KyVisabillm" property-ref="kyzletter" cascade="all" />
     </class>
 </hibernate-mapping>

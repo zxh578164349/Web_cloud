@@ -231,18 +231,19 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 		</table >
 	
 		<s:if test='kyz.filesYn=="1"'>
-	       <hr/>
+	       <%-- <hr/>
 	       <div style="color:blue;">附檔:</div><br/>
 	       <div id="fileJson" style="width:850px">
 	      <s:iterator value="#session.list_filesexp">	        
 	           <a href="/upload/<s:property value='billno'/>/<s:property value="%{toUrl2(filename)}"/>" target="_blank" title="點擊查看">
 	                 <s:property value="%{toUrl(filename)}"/>
 	           </a>           
-	           <a href="javascript:lookJson('${billno}',${id},'<s:property value="%{toUrl(filename)}"/>')">
+	           <a href="javascript:lookJson('${billno}',${id},'<s:property value="%{toUrl(filename)}"/>','${factNo}')">
 	              <img src="images/icon/del_file.png" alt="刪除" title="刪除" style="border:0px"/>
 	           </a>&nbsp;&nbsp;	        	        	        
 	     </s:iterator>
-	     </div>		     	     	        	       
+	     </div>	--%>
+	     <jsp:include page="publicKyzFiles.jsp" flush="true" />	     	     	        	       
 	   </s:if>
 	   <hr/>	  
 			  <center style="width:850px;margin-left:50px">			    
@@ -536,21 +537,18 @@ function getKyType2(factno){
      }
   }
 
-function lookJson(billNo,id,filename){
-//var jQ = jQuery.noConflict();
-
+/*function lookJson(billNo,id,filename,factNo){
    jq.ajax({
       type:"get",
       dataType:"json",
       url:"kyzfile_findKyzFileJson",
-      //data:"billNo="+billNo+"&id="+id+"&filename="+filename,
-      data:{"billNo":billNo,"id":id,"filename":filename},
+      data:{"billNo":billNo,"id":id,"filename":filename,"factNo":factNo},
       success:function(files){
          jq("#fileJson").html("");
           var item="";
           var item_url;
          jq.each(files,function(i,file){
-            item_url="javascript:lookJson('"+file.billno+"',"+file.id+",'"+file.filename+"')";
+            item_url="javascript:lookJson('"+file.billno+"',"+file.id+",'"+file.filename+"','"+file.factNo+"')";
             item+="<a href='/upload/"+file.billno+"/"+file.filename+"' target='_blank' title='點擊查看'>"+file.filename+            
             "</a>"+
             "<a href="+item_url+"><img src='images/icon/del_file.png' alt='刪除' title='刪除' style='border:0px'/></a>&nbsp;";           
@@ -558,7 +556,7 @@ function lookJson(billNo,id,filename){
          jq("#fileJson").append(item);
       }
    })
-}
+}*/
 
 
 function back(){

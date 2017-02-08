@@ -480,6 +480,7 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 						kyzexpFile.setUsername(username);
 						kyzexpFile.setFactNo(kyz.getId().getFactNo());
 						kyzexpFile.setVisaTypeM(kyz.getVisaType().substring(0,2));
+						kyzexpFile.setFileurl("upload");
 						kyzexpfileSer.add(kyzexpFile);
 						GlobalMethod.uploadFile(files.get(i),uploadFile_backup+"\\"+filesFileName.get(i));//文件上傳	
 					}
@@ -535,23 +536,14 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 				maxNum=num;
 			}
 		}
-		String file_yn=kyz.getFilesYn();
-		if(file_yn==null){
-			//return "findById_layer";
-			return "findById";
-		}
-		if(file_yn.equals("1")){
-			List<KyzExpectmatmFile> listfiles=kyzexpfileSer.findByBillNo(id.getBillNo());
-			//退回而生成新函文，不显示旧函文的附档
-			/*if((list==null||list.size()==0)&&billNo.contains("-")){
-				String[]objs=billNo.split("-");
-				list=kyzexpfileSer.findByBillNo(objs[0]);
-			}*/
-		   for(int i=0;i<listfiles.size();i++){
+		String file_yn=kyz.getFilesYn();				
+		if("1".equals(file_yn)){
+			List<KyzExpectmatmFile> listfiles=kyzexpfileSer.findByBillNo(id.getBillNo());			
+		  /* for(int i=0;i<listfiles.size();i++){
 				String tempname=listfiles.get(i).getFilename();			
 				String utfname=URLEncoder.encode(tempname,"utf-8");				
 				listfiles.get(i).setFilename(utfname);
-			}
+			}*/
 			ActionContext.getContext().getSession().put("list_filesexp", listfiles);									
 		}
 		
@@ -570,22 +562,14 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 		kyzId.setFactNo(factNo);
 		kyz=kyzSer.findById(kyzId);
 		if(kyz!=null){
-			String file_yn=kyz.getFilesYn();
-			if(file_yn==null){
-				return "findById_layer";
-			}
-			if(file_yn.equals("1")){
-				List<KyzExpectmatmFile> list=kyzexpfileSer.findByBillNo(billNo);
-				//退回而生成新函文，不显示旧函文的附档
-				/*if((list==null||list.size()==0)&&billNo.contains("-")){
-					String[]objs=billNo.split("-");
-					list=kyzexpfileSer.findByBillNo(objs[0]);
-				}*/
-			   for(int i=0;i<list.size();i++){
+			String file_yn=kyz.getFilesYn();			
+			if("1".equals(file_yn)){
+				List<KyzExpectmatmFile> list=kyzexpfileSer.findByBillNo(billNo);				
+			  /* for(int i=0;i<list.size();i++){
 					String tempname=list.get(i).getFilename();			
 					String utfname=URLEncoder.encode(tempname,"utf-8");				
 					list.get(i).setFilename(utfname);
-				}
+				}*/
 				ActionContext.getContext().getSession().put("list_filesexp", list);			
 			}
 		}
@@ -883,7 +867,16 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 	 * 解決url中空格轉換成 +號的問題
 	 */
 	public String toUrl2(String filename){
+		/*String result=null;
+		try {
+			result=new String(filename.getBytes("ISO-8859-1"),"UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;*/
 		return filename.replace("+", "%20");
+		
 	}
 	
 	/**

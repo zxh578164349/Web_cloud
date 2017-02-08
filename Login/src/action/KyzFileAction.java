@@ -27,9 +27,18 @@ public class KyzFileAction extends ActionSupport{
 	private String list_json;
 	private JSONArray jsons;
 	private String filename;
+	private String factNo;
 
 	
     
+	public String getFactNo(){
+		return factNo;
+	}
+
+	public void setFactNo(String factNo){
+		this.factNo=factNo;
+	}
+
 	public String getFilename() {
 		return filename;
 	}
@@ -97,6 +106,7 @@ public class KyzFileAction extends ActionSupport{
 		log.setBillNo(billNo);
 		log.setContent(filename);
 		log.setObj("KyzExpectmatmFile");
+		log.setFactNo(factNo);
 		kyzexpfileSer.delete(new KyzExpectmatmFile(id),log);
 		if(file.exists()){
 			file.delete();

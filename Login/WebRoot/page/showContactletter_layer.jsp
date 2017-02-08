@@ -116,7 +116,7 @@
 	  <hr/>
 	  <span style="color:blue;">附檔:</span><br/>
 	  <s:iterator value="#session.list_filesexp">
-	     <a href="/upload_letter/<s:property value='billno'/>/<s:property value='%{toUrl2(filename)}'/>" target="_blank"><s:property value="%{toUrl(filename)}"/></a>&nbsp;
+	     <a href="/<s:property value='fileurl'/>/<s:property value='billno'/>/<s:property value='%{toUrl2(filename)}'/>" target="_blank"><s:property value="%{toUrl(filename)}"/></a>&nbsp;
 	  </s:iterator>	  
 	</s:if> 
 	

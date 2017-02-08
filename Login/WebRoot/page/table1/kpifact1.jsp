@@ -159,8 +159,8 @@
 						<input type="hidden" value="<s:property value='id.factCode'/>" name="factCode" />							
 						<input type="hidden" value="<s:property value='id.yyyy'/>" name="yyyy" />							
 					</form> 
-					<a href="javascript:findById('3subform${x.index}','kpifact_findById_copy')"					
-					onclick=""><img alt="複製" src="images/icon/copy.png" title="複製" ></a>
+					<!-- <a href="javascript:findById('3subform${x.index}','kpifact_findById_copy')"					
+					onclick=""><img alt="複製" src="images/icon/copy.png" title="複製" ></a> -->
 				</td> 
 				</s:if>
 			</tr>
