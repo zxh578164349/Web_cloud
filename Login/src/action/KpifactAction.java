@@ -162,14 +162,11 @@ public class KpifactAction extends ActionSupport implements ServletResponseAware
 		return result;
 	}
 	public String delete(){
-		KyzExpectmatmLog log=new KyzExpectmatmLog();
-		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
-		log.setUsername(user.getUsername());
+		KyzExpectmatmLog log=new KyzExpectmatmLog();		
 		log.setFactNo(factNo);
 		log.setFactCode(factCode);
 		log.setObj("Kpifact");
 		log.setYymm(yyyy);
-
 		kpiSer.delete(factNo, factCode, yyyy,log);
 		return "delete";
 	}

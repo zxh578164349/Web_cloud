@@ -1,6 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://"
@@ -93,7 +93,51 @@
 				<td>${bean.pageSize*(bean.currentPage-1)+x.index+1}</td>
 				<td><s:property value="id.factNo" /></td>
 				<td><s:property value="id.factCode" /></td>
-				<td><s:property value="id.yyyy" /></td>
+				<td><s:property value="id.yyyy" /></td>							
+				<td><s:property value="thisYield" /></td>
+				<td><s:property value="avgCircle" /></td>
+				<td><s:property value="avgCirclehour" /></td>
+				<td><fmt:formatNumber value='${temp.mutiRate}' pattern='0.00%'/></td>
+				<td><fmt:formatNumber value='${temp.productRate}' pattern='0.00%'/></td>
+				<td><s:property value="avgZgpro" /></td>
+				<td><s:property value="avgPerpro" /></td>
+				<td><s:property value="avgFactpro" /></td>				
+				<td><s:property value="storeNum" /></td>				
+				<td><s:property value="outRequest" /></td>				
+				<td><fmt:formatNumber value='${temp.outrequestRate}' pattern='0.00%'/></td>				
+				<td><s:property value="slIncome" /></td>				
+				<td><fmt:formatNumber value='${temp.mainRate}' pattern='0.00%'/></td>				
+				<td><fmt:formatNumber value='${temp.pcostRate}' pattern='0.00%'/></td>				
+				<td><fmt:formatNumber value='${temp.ccostRate}' pattern='0.00%'/></td>				
+				<td><fmt:formatNumber value='${temp.wasteUsd}' pattern='#0.00000'/>	</td>			
+				<td><s:property value="perPrice" /></td>				
+				<td><s:property value="perSalar" /></td>				
+				<td><s:property value="avgPermoney" /></td>
+				<td><s:property value="permoney" /></td>				
+				<td><fmt:formatNumber value='${temp.wasteFact}' pattern='0.00%'/></td>				
+				<td><fmt:formatNumber value='${temp.wasteNo}' pattern='0.00%'/></td>				
+				<td><fmt:formatNumber value='${temp.sideRate}' pattern='0.00%'/></td>				
+				<td><fmt:formatNumber value='${temp.uhealRate}' pattern='0.00%'/></td>				
+				<td><fmt:formatNumber value='${temp.wasteRate}' pattern='0.00%'/></td>				
+				<td><fmt:formatNumber value='${temp.factaddRate}' pattern='0.00%'/></td>				
+				<td><fmt:formatNumber value='${temp.waterTon}' pattern='#0.00000'/></td>
+				<td><fmt:formatNumber value='${temp.waterUsd }' pattern='#0.00000'/></td>
+				<td><fmt:formatNumber value='${ temp.lightDu}' pattern='#0.00000'/></td>
+				<td><fmt:formatNumber value='${temp.lightUsd }' pattern='#0.00000'/></td>				
+				<td><fmt:formatNumber value='${temp.gasTon }' pattern='#0.00000'/></td>				
+				<td><fmt:formatNumber value='${temp.gasUsd }' pattern='#0.00000'/></td>				
+				<td><fmt:formatNumber value='${temp.bheadRate}' pattern='0.00%'/></td>				
+				<td><fmt:formatNumber value='${temp.bpreRate}' pattern='0.00%'/></td>				
+				<td><fmt:formatNumber value='${temp.bflowRate}' pattern='0.00%'/></td>				
+				<td><fmt:formatNumber value='${temp.drugWast }' pattern='#0.00000'/></td>				
+				<td><fmt:formatNumber value='${temp.clrWast }' pattern='#0.00000'/></td>				
+				<td><fmt:formatNumber value='${temp.leaveUsd }' pattern='#0.00000'/></td>				
+				<td><s:property value="zjRate" /></td>				
+				<td><fmt:formatNumber value='${temp.zgleaveRate}' pattern='0.00%'/></td>				
+				<td><fmt:formatNumber value='${temp.factleaveRate}' pattern='0.00%'/></td>
+				<td><s:property value="hurtNum" /></td>
+				
+				<%--
 				<td><s:property value="%{formatDouble(thisYield)}" /></td>
 				<td><s:property value="%{formatDouble(avgCircle)}" /></td>
 				<td><s:property value="%{formatDouble(avgCirclehour)}" /></td>
@@ -135,7 +179,9 @@
 				<td><s:property value="%{formatDouble_4(zjRate)}" /></td>				
 				<td><s:property value="%{formatPercent(zgleaveRate)}" /></td>				
 				<td><s:property value="%{formatPercent(factleaveRate)}" /></td>
-				<td><s:property value="%{formatDouble(hurtNum)}" /></td>																								
+				<td><s:property value="%{formatDouble(hurtNum)}" /></td>
+				 --%>
+																												
 				<s:if test='#session.loginUser.userread!="1"'>
 				<td>
 					<form action="kpifact_findById" method="post" id="subform${x.index}">						
@@ -159,8 +205,8 @@
 						<input type="hidden" value="<s:property value='id.factCode'/>" name="factCode" />							
 						<input type="hidden" value="<s:property value='id.yyyy'/>" name="yyyy" />							
 					</form> 
-					<!-- <a href="javascript:findById('3subform${x.index}','kpifact_findById_copy')"					
-					onclick=""><img alt="複製" src="images/icon/copy.png" title="複製" ></a> -->
+					<%-- <a href="javascript:findById('3subform${x.index}','kpifact_findById_copy')"					
+					onclick=""><img alt="複製" src="images/icon/copy.png" title="複製" ></a> --%>
 				</td> 
 				</s:if>
 			</tr>
