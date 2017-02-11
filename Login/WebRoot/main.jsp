@@ -234,7 +234,7 @@
 				error : function(error) {
 					jq("#r_content").html(error.responseText);
 				}
-			});
+			});						
 		}
 		function loadUrl(url) {
 			jq("#r_content").load(url);

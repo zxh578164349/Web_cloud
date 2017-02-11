@@ -1,31 +1,20 @@
 package action;
-
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
 import javax.servlet.http.HttpServletResponse;
-
-import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.ServletResponseAware;
-
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
-
 import services.IWebFactServices;
 import services.IWebwloServices;
 import util.GlobalMethod;
-import util.JasperHelper;
 import util.Page;
 import util.PageBean;
 import entity.KyzExpectmatmLog;
 import entity.WebUser;
-import entity.Webscrapt;
 import entity.Webwlo;
 import entity.WebwloId;
 

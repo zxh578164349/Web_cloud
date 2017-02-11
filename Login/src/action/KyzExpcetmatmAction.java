@@ -1,71 +1,43 @@
 package action;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
-import java.net.URI;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
-import java.sql.Timestamp;
 import java.text.DecimalFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import javax.servlet.http.HttpServletResponse;
-
-import mail.MailSenderInfo;
-import mail.SimpleMailSender;
-import net.sf.json.JSONArray;
-
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.ServletResponseAware;
-
-
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
-import com.spreada.utils.chinese.ZHConverter;
-import com.sun.jndi.toolkit.url.Uri;
-
-import services.IKyVisaBillsServices;
 import services.IKyVisabillmServices;
 import services.IKyzExpectmatmFileServices;
 import services.IKyzExpectmatmLogServices;
 import services.IKyzExpectmatmServices;
 import services.IKyzExpectmatmsServices;
-import services.IKyzVisaFlowServices;
 import services.IWebFactServices;
-import services.IWebTypeServices;
-import services.IWebUserService;
 import services.IWebuserEmailServices;
 import util.GlobalMethod;
 import util.JasperHelper;
 import util.PageBean;
 import entity.KyVisabillm;
 import entity.KyVisabills;
-import entity.KyzContactletter;
 import entity.KyzExpectmatm;
 import entity.KyzExpectmatmFile;
 import entity.KyzExpectmatmId;
 import entity.KyzExpectmatmLog;
 import entity.KyzExpectmats;
-import entity.KyzVisaflow;
 import entity.WebType;
 import entity.WebUser;
-import entity_temp.VisabillsTemp;
 
 public class KyzExpcetmatmAction extends ActionSupport implements ServletResponseAware{
 	private KyzExpectmatm kyz;
@@ -894,7 +866,5 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 		fileInput2=GlobalMethod.getFileInput("D:\\KyzexpFile_backup\\"+billNo+"\\"+fileName);
 		return "lookFile";
 	}
-	
-	
-	
+		
 }
