@@ -69,13 +69,19 @@ public class SessionTimeOutFilter implements Filter{
 		if(requestURL.contains("webfact_findAllfact")){//如果登錄后，使用webfact_findAllfact舊地址，則讓user爲null,讓地址失效   20161115
 			user=null;
 		}
-		if(!requestURL.contains("userlogin")&&!requestURL.contains("webfact_findAllWebfact")&&!requestURL.equals("/Login/")&&!requestURL.contains("loginpage")&&
+		if(!requestURL.equals("/")&&!requestURL.contains("userlogin")&&!requestURL.contains("webfact_findAllWebfact")&&!requestURL.equals("/Login/")&&!requestURL.contains("loginpage")&&
 			!requestURL.contains("judge.jsp")&&!requestURL.contains("vbm_findById_email")&&!requestURL.contains("print2Ypoi_print2Y_hb")&&!requestURL.contains("autosendfactorder_")&&
 			!requestURL.contains("webfactOrder_print_email")&&!requestURL.equals("/Login_scm/")&&!requestURL.contains("login_guest.jsp")&&!requestURL.contains("judge_guest.jsp")&&
-			!requestURL.contains("userlogout")){
+			!requestURL.contains("userlogout")&&
+			!requestURL.contains("/image")&&!requestURL.contains(".css")&&!requestURL.contains(".js")&&!requestURL.contains(".html")){
 			if(user==null){
 				if(vbm==null){
-					httpresponse.getWriter().print("<script>window.parent.alert('會話超時或地址無效,請重新登錄');window.location.href='judge.jsp'</script>");										
+					if(requestURL.contains("/Login")){
+						httpresponse.getWriter().print("<script>window.parent.alert('會話超時或地址無效,請重新登錄');window.location.href='judge.jsp'</script>");
+					}
+					if(requestURL.contains("/Login_scm")){
+						httpresponse.getWriter().print("<script>window.parent.alert('會話超時或地址無效,請重新登錄');window.location.href='judge_guest.jsp'</script>");
+					}
 				}else{
 					chain.doFilter(request, response);	
 				}
@@ -83,7 +89,14 @@ public class SessionTimeOutFilter implements Filter{
 				chain.doFilter(request, response);				
 			}			
 		}else{
-			chain.doFilter(request, response);	
+			if(requestURL.equals("/Login/")||requestURL.contains("Login/judge.jsp")){
+				httpresponse.getWriter().print("<script>window.parent.alert('網址已更改,點擊確定跳轉到新網址');window.location.href='http://www.gj.com.tw/WebLogin'</script>");	
+			}else if(requestURL.equals("/Login_scm/")||requestURL.contains("Login_scm/judge_guest.jsp")){
+				httpresponse.getWriter().print("<script>window.parent.alert('網址已更改,點擊確定跳轉到新網址');window.location.href='http://www.gj.com.tw/WebLogin_scm'</script>");
+			}else{
+				chain.doFilter(request, response);
+			}	
+			//chain.doFilter(request, response);
 		}				
 	}
 

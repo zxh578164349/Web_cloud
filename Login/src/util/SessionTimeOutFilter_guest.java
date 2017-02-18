@@ -72,7 +72,8 @@ public class SessionTimeOutFilter_guest implements Filter{
 		if(!requestURL.contains("userlogin")&&!requestURL.contains("webfact_findAllWebfact")&&!requestURL.equals("/Login/")&&!requestURL.contains("loginpage")&&
 			!requestURL.contains("judge.jsp")&&!requestURL.contains("vbm_findById_email")&&!requestURL.contains("print2Ypoi_print2Y_hb")&&!requestURL.contains("autosendfactorder_")&&
 			!requestURL.contains("webfactOrder_print_email")&&!requestURL.equals("/Login_scm/")&&!requestURL.contains("login_guest.jsp")&&!requestURL.contains("judge_guest.jsp")&&
-			!requestURL.contains("userlogout")){
+			!requestURL.contains("userlogout")&&
+			!requestURL.contains("/image")&&!requestURL.contains(".css")&&!requestURL.contains(".js")&&!requestURL.contains(".html")){
 			if(user==null){
 				if(vbm==null){
 					httpresponse.getWriter().print("<script>window.parent.alert('會話超時或地址無效,請重新登錄');window.location.href='judge_guest.jsp'</script>");										
@@ -83,7 +84,12 @@ public class SessionTimeOutFilter_guest implements Filter{
 				chain.doFilter(request, response);				
 			}			
 		}else{
-			chain.doFilter(request, response);	
+			if(requestURL.equals("/Login_scm/")||requestURL.contains("Login_scm/judge.jsp")){
+				httpresponse.getWriter().print("<script>window.parent.alert('網址已更改,點擊確定跳轉到新網址');window.location.href='http://www.gj.com.tw/WebLogin_scm'</script>");
+			}else{
+				chain.doFilter(request, response);
+			}
+				
 		}				
 	}
 

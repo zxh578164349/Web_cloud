@@ -134,7 +134,7 @@
 	<!-- <script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script> -->
 	<script src="bootstrap/js/bootstrap.min.js"></script>	
 	<script src="uploadify/jquery.uploadify.min.js" type="text/javascript"></script>	
-
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
 	<!--[if lt IE 9]>  
   <script src="bootstrap/html5.js"></script>
   <script src="bootstrap/respond.min.js"></script>
@@ -234,7 +234,26 @@
 				error : function(error) {
 					jq("#r_content").html(error.responseText);
 				}
-			});						
+			});	
+			
+			
+			/*var vm = new Vue({
+			    el: '#navItems',
+			    data: {
+			        navitems: ''
+			    },
+			    created:function () {
+			        var _self = this;
+			        $.ajax({
+			            type: 'GET',
+			            url: 'http://1390.iluckycat.com/api/parent/class',
+			            success: function (data) {
+			                _self.navitems = data.data;
+			                console.log(JSON.stringify(_self.navitems));
+			            }
+			        })
+			    }
+			})*/
 		}
 		function loadUrl(url) {
 			jq("#r_content").load(url);
