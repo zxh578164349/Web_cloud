@@ -31,7 +31,7 @@ public class AutoSendEmailAction {
 
 	private static final String MAIL_FROM_SMTP = "<kyuen@yydg.com.cn>";
 
-	public void sendmail(String[] mailArray, String[] cc, String subject,String content,String yymm,String affixName) {			
+	public void sendmail(String[] mailArray, String[] cc, String subject,String content,String affixName,String filepath) {			
 		Properties props = new Properties();				
 		props.setProperty("mail.smtp.auth", "true");
 		props.setProperty("mail.transport.protocol", "smtp");
@@ -77,7 +77,8 @@ public class AutoSendEmailAction {
 			BodyPart messageBodyPart = new MimeBodyPart();
 			//DateFormat format = new SimpleDateFormat("yyyyMM");
 			//String date = format.format(new Date());
-			DataSource source = new FileDataSource("d://" + yymm + ".xls");
+			//DataSource source = new FileDataSource("d://" + yymm + ".xls");
+			DataSource source = new FileDataSource(filepath);
 			messageBodyPart.setDataHandler(new DataHandler(source));
 			messageBodyPart.setFileName("=?BIG5?B?" + enc.encode(affixName.getBytes()) + "?="+ ".xls");					
 			multipart.addBodyPart(messageBodyPart);

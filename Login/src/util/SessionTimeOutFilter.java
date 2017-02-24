@@ -89,14 +89,14 @@ public class SessionTimeOutFilter implements Filter{
 				chain.doFilter(request, response);				
 			}			
 		}else{
-			if(requestURL.equals("/Login/")||requestURL.contains("Login/judge.jsp")){
-				httpresponse.getWriter().print("<script>window.parent.alert('網址已更改,點擊確定跳轉到新網址');window.location.href='http://www.gj.com.tw/WebLogin'</script>");	
+			/*if(requestURL.equals("/Login/")||requestURL.contains("Login/judge.jsp")){
+				httpresponse.getWriter().print("<script>window.parent.alert('網址已更改,點擊確定跳轉到新網址,請及時保存新網址');window.location.href='http://www.gj.com.tw/WebLogin'</script>");	
 			}else if(requestURL.equals("/Login_scm/")||requestURL.contains("Login_scm/judge_guest.jsp")){
-				httpresponse.getWriter().print("<script>window.parent.alert('網址已更改,點擊確定跳轉到新網址');window.location.href='http://www.gj.com.tw/WebLogin_scm'</script>");
+				httpresponse.getWriter().print("<script>window.parent.alert('網址已更改,點擊確定跳轉到新網址,請及時保存新網址');window.location.href='http://www.gj.com.tw/WebLogin_scm'</script>");
 			}else{
 				chain.doFilter(request, response);
-			}	
-			//chain.doFilter(request, response);
+			}*/	
+			chain.doFilter(request, response);
 		}				
 	}
 

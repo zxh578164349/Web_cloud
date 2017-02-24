@@ -308,14 +308,17 @@ public class TestTimerAction extends QuartzJobBean {
 							+"</span><br/>");
 				}
 				//發送郵件
+				String classes_path=Thread.currentThread().getContextClassLoader().getResource("").getPath();			
+				String filepath=classes_path.replace("/WEB-INF/classes","/TEMPFILES/"+yymm+".xls");//附檔的路徑20170222
 				send.sendmail(
 						mail,
 						cc,
 						formast.format(formatDates.parse(dateAdd(-1)))+ "月份加久各工廠油壓產量表匯總--截止"+ jinri.format(formatDates.parse(dateAdd(-1))),																
-						content.toString(),
-						yymm,
-						affixName);				
-				File file = new File("d://" + yymm + ".xls");
+						content.toString(),						
+						affixName,
+						filepath);				
+				//File file = new File("d://" + yymm + ".xls");
+				File file=new File(filepath);
 				if (file.exists()) {
 					if (file.isFile()) {
 						file.delete();
@@ -402,6 +405,8 @@ public class TestTimerAction extends QuartzJobBean {
 				  String[] cc = {MimeUtility.encodeText("張錫洪")+"<zxh578164349@qq.com>"};
 				 */
 
+				String classes_path=Thread.currentThread().getContextClassLoader().getResource("").getPath();			
+				String filepath=classes_path.replace("/WEB-INF/classes","/TEMPFILES/"+yymm+".xls");
 				AutoSendEmailAction send=new AutoSendEmailAction();
 				String tyymm=tformat.format(new Date());
 				String affixName=yymm + "各廠產量資料";
@@ -427,11 +432,12 @@ public class TestTimerAction extends QuartzJobBean {
 					}
 					// 發送郵件
 					send.sendmail(mail,cc,formast.format(formatDates.parse(dateAdd(-1))) + "月份加久各工廠油壓產量表匯總--截止" + jinri.format(formatDates.parse(dateAdd(-1))),
-							content.toString(),yymm,affixName);
+							content.toString(),affixName,filepath);
 				} else {
-					send.sendmail(mail,cc,yymm + "加久各工廠油壓產量表匯總","本郵件自動發送,請勿回復!如需回复，請回复到kyinfo@yydg.com.cn咨訊室或者lgx@yydg.com.cn譚香林!",yymm,affixName);
+					send.sendmail(mail,cc,yymm + "加久各工廠油壓產量表匯總","本郵件自動發送,請勿回復!如需回复，請回复到kyinfo@yydg.com.cn咨訊室或者lgx@yydg.com.cn譚香林!",affixName,filepath);
 				}
-				File file=new File("d://" + yymm + ".xls");
+				//File file=new File("d://" + yymm + ".xls");
+				File file=new File(filepath);
 				if (file.exists()) {
 					if (file.isFile()) {
 						file.delete();

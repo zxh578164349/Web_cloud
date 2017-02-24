@@ -291,4 +291,14 @@
 	</aop:config>
 	<!-- 分頁 -->
 	<bean id="pages" class="util.Page" />
+	
+	<!-- <bean id="configproperties" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+         <property name="location" value="classpath:config.properties"/>
+    </bean>
+    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+       <property name="properties" ref="configproperties"/>
+    </bean>
+    <bean id="proconfig" class="entity.custom.ProjectConfig">
+       <property name="pName" value="${pj.pname}"/>
+    </bean>	 -->   
 </beans>

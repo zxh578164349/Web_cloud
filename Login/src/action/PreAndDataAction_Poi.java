@@ -288,7 +288,8 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 		}
 		
 		if(emailMk==1){//發送郵件報表
-			OutputStream os=new FileOutputStream("d:\\"+sdate+".xls");
+			//OutputStream os=new FileOutputStream("d:\\"+sdate+".xls");
+			OutputStream os=new FileOutputStream(ServletActionContext.getServletContext().getRealPath("TEMPFILES\\"+sdate+".xls"));
 			wb.write(os);
 			os.close();	
 		}else{//網頁訪問報表

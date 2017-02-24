@@ -91,6 +91,7 @@ import entity.Weballobj;
 import entity.WeballobjId;
 import entity.Webestproduct;
 import entity.WebestproductId;
+import entity.custom.ProjectConfig;
 
 
 public class GlobalMethod extends HibernateDaoSupport{
@@ -1908,53 +1909,16 @@ public class GlobalMethod extends HibernateDaoSupport{
 			 dd=kk;
 			 System.out.print(dd+"\t");
 		 }*/
-		 List<Weballobj>list_obj1=new ArrayList<Weballobj>();
-		 list_obj1.add(new Weballobj(new WeballobjId(new WebFact(new WebFactId("HD","RB")),"201601")));
-		 list_obj1.add(new Weballobj(new WeballobjId(new WebFact(new WebFactId("HD","PU")),"201601")));
-		 list_obj1.add(new Weballobj(new WeballobjId(new WebFact(new WebFactId("HD","RB")),"201602")));
-		 list_obj1.add(new Weballobj(new WeballobjId(new WebFact(new WebFactId("HD","PU")),"201602")));		 		 
-		 list_obj1.add(new Weballobj(new WeballobjId(new WebFact(new WebFactId("XS","RB")),"201601")));
-		 list_obj1.add(new Weballobj(new WeballobjId(new WebFact(new WebFactId("XS","PU")),"201601")));
-		 list_obj1.add(new Weballobj(new WeballobjId(new WebFact(new WebFactId("XS","RB")),"201602")));
-		 list_obj1.add(new Weballobj(new WeballobjId(new WebFact(new WebFactId("XS","PU")),"201602")));
-		 for(Weballobj obj:list_obj1){
-			  obj.setObjA100(0.22222222);
-		 }
+		 SimpleDateFormat format=new SimpleDateFormat("yyyyMMdd_HH");
+		 SimpleDateFormat format2=new SimpleDateFormat("yyyyMMdd_hh");
 		 
-		 List<Weballobj>list_obj2=new ArrayList<Weballobj>();
-		 list_obj2.add(new Weballobj(new WeballobjId(new WebFact(new WebFactId("HD","RB")),"201601")));
-		 list_obj2.add(new Weballobj(new WeballobjId(new WebFact(new WebFactId("HD","PU")),"201601")));
-		 list_obj2.add(new Weballobj(new WeballobjId(new WebFact(new WebFactId("HD","RB")),"201602")));
-		 list_obj2.add(new Weballobj(new WeballobjId(new WebFact(new WebFactId("HD","PU")),"201602")));		 		 
-		 list_obj2.add(new Weballobj(new WeballobjId(new WebFact(new WebFactId("XS","RB")),"201601")));
-		 list_obj2.add(new Weballobj(new WeballobjId(new WebFact(new WebFactId("XS","PU")),"201601")));
-		 list_obj2.add(new Weballobj(new WeballobjId(new WebFact(new WebFactId("XS","RB")),"201602")));
-		 list_obj2.add(new Weballobj(new WeballobjId(new WebFact(new WebFactId("XS","PU")),"201602")));
-		 
-		 list_obj2.add(new Weballobj(new WeballobjId(new WebFact(new WebFactId("JW","RB")),"201601")));
-		 list_obj2.add(new Weballobj(new WeballobjId(new WebFact(new WebFactId("JW","PU")),"201601")));
-		 list_obj2.add(new Weballobj(new WeballobjId(new WebFact(new WebFactId("JW","RB")),"201602")));
-		 list_obj2.add(new Weballobj(new WeballobjId(new WebFact(new WebFactId("JW","PU")),"201602")));
-		 for(Weballobj obj:list_obj2){
-			  obj.setObjA100(0.1111111);
-		 }
-		 
-		 for(Iterator<Weballobj> it=list_obj2.iterator();it.hasNext();){
-			 Weballobj obj2=it.next();
-			 for(Weballobj obj:list_obj1){
-				 if(obj2.getId().getFact().getId().getFactNo().equals(obj.getId().getFact().getId().getFactNo())&&
-					obj2.getId().getFact().getId().getFactArea().equals(obj.getId().getFact().getId().getFactArea())&&
-					obj2.getId().getYymm().equals(obj.getId().getYymm())){
-					 it.remove();
-					 //list_obj2.add(obj);
-					 break;
-				 }
-			 }			
-		 }
-		 
-		 for(Weballobj obj2:list_obj2){
-			 System.out.println(obj2.getId().getFact().getId().getFactNo()+"_"+obj2.getId().getFact().getId().getFactArea()+obj2.getId().getYymm()+":"+obj2.getObjA100());
-		 }
+		 Date date=format.parse("20170201_13");
+		 System.out.println(format.format(new Date()));
+		 System.out.println(format2.format(new Date()));
+		 ApplicationContext ac=new ClassPathXmlApplicationContext("spring.xml");
+		 ProjectConfig pc=(ProjectConfig)ac.getBean("proconfig");
+		 String pname=pc.getpName();
+		 System.out.println(pname);
 	
 			
 		}
