@@ -201,7 +201,7 @@
 
 	}
 	function back() {
-			loadUrl("/Login/webpersonnum_findPageBean3?backIndex=1");
+			loadUrl("webpersonnum_findPageBean3?backIndex=1");
 		
 	}
 	 function check(){
@@ -234,7 +234,7 @@ jq(function(){
 	goTrim();
 }); 
 </script>
-<script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/webpersonnumjs.js'></script>
+<script type='text/javascript' src='dwr/interface/webfactjs.js'></script>
+<script type='text/javascript' src='dwr/interface/webpersonnumjs.js'></script>
 </body>
 </html>

@@ -471,16 +471,16 @@ function selall(){
 }
 
 function back(){	
-	loadUrl("/Login/webremit_findPageBean3?backIndex=1");
+	loadUrl("webremit_findPageBean3?backIndex=1");
 }
 function gook(){
 	  layer.msg("操作成功",3,1);
 	  loadUrl("webremit_findPageBean");
 }
 </script>
-<script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/kyzvisaflowjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/webtypejs.js'></script>
+<script type='text/javascript' src='dwr/interface/webfactjs.js'></script>
+<script type='text/javascript' src='dwr/interface/kyzvisaflowjs.js'></script>
+<script type='text/javascript' src='dwr/interface/webtypejs.js'></script>
 
 <script type="text/javascript">
 jq(function(){

@@ -331,11 +331,11 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 	}
 	
 	function back(){
-		loadUrl("/Login/kyzmat_findPageBean3?backIndex=1");
+		loadUrl("kyzmat_findPageBean3?backIndex=1");
 	}
 </script>
-<script type='text/javascript' src='/Login/dwr/interface/kyzscmjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/kyzmatjs.js'></script>
+<script type='text/javascript' src='dwr/interface/kyzscmjs.js'></script>
+<script type='text/javascript' src='dwr/interface/kyzmatjs.js'></script>
 <script type="text/javascript">
   jq(function(){
 	  goTrim();

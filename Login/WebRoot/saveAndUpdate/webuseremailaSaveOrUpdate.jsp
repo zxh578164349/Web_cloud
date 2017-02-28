@@ -119,7 +119,7 @@
 			callback:function(data){
 				if(data=="0"){
 					layer.msg("提交成功!",3,1);
-					loadUrl("/Login/webuseremaila_findPageBean");
+					loadUrl("webuseremaila_findPageBean");
 				}else{
 					layer.msg("提交失敗!",3,3);
 				}				
@@ -134,7 +134,7 @@
 	}); 
 
 	function back() {		   
-		loadUrl("/Login/webuseremaila_findPageBean3?backIndex=1");
+		loadUrl("webuseremaila_findPageBean3?backIndex=1");
 	}
 	 function check_sub(factno,email,emailPwd,visaSort,typeMk){
        if(factno!=""&&email!=""&&emailPwd!=""&&visaSort!=""){
@@ -209,9 +209,9 @@
   
 
 </script>
-<script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/webtypejs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/webuseremailajs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/webuseremailjs.js'></script>
+<script type='text/javascript' src='dwr/interface/webfactjs.js'></script>
+<script type='text/javascript' src='dwr/interface/webtypejs.js'></script>
+<script type='text/javascript' src='dwr/interface/webuseremailajs.js'></script>
+<script type='text/javascript' src='dwr/interface/webuseremailjs.js'></script>
 </body>
 </html>

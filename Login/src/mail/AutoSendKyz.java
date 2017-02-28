@@ -39,7 +39,7 @@ public class AutoSendKyz extends QuartzJobBean{
 	}
 	
 	public void init(){
-		ApplicationContext ac=new ClassPathXmlApplicationContext(new String[]{"spring.xml","spring-dao.xml","spring-services.xml"});		
+		ApplicationContext ac=new ClassPathXmlApplicationContext(new String[]{"spring.xml","spring-dao.xml","spring-services.xml","spring-projectconfig.xml"});		
 		IKyVisabillmServices visabillmSer=(IKyVisabillmServices)ac.getBean("visabillmSer");	
 		List<KyVisabillm>list_vbm=visabillmSer.findByVisaMk("Y");//所有未簽核完畢的函文			
 		GlobalMethod.sendEmailA(ac,list_vbm);		

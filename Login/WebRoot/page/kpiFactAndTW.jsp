@@ -133,15 +133,14 @@ function checkdate(){
      var year=document.getElementById("year").value;
      document.getElementById("dwr_yymm").length=0;
      if(factno!=""&&year!=""){
-        kpifactjs.findDateByFactNo(factno,year,function(x){           
+        kpifactjs.findDateByFactNo(factno,year,function        
             dwr.util.addOptions("dwr_yymm", x);
         });
-     }
-}	   
+  	   
 </script>
-<script type='text/javascript' src='/Login/dwr/interface/kpifactjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/engine.js'></script>
-<script type='text/javascript' src='/Login/dwr/util.js'></script>
+<script type='text/javascript' src='drface/kpifactjs.js'></script>
+<script type='text/javascript' src='dwr/engine.js'></script>
+<script type='text/javascript' src='dwr/util.js'></script>
 
   </head>
   

@@ -106,7 +106,7 @@ function getSub(){
    });
 }
 function back(){	
-	loadUrl("/Login/userfindPageBean3?backIndex=1");
+	loadUrl("userfindPageBean3?backIndex=1");
 }
 
 jq(function(){

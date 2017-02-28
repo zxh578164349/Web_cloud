@@ -91,7 +91,7 @@
 				callback : function(data) {
 					if (data == "0") {
 						layer.msg("提交成功!", 3, 1);
-						loadUrl("/Login/userfindPageBean");
+						loadUrl("userfindPageBean");
 					} else {
 						layer.msg("提交失敗!", 3, 3);
 					}

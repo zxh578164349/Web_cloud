@@ -105,7 +105,7 @@ function tips(memo,index){
 	   jq("#"+subform).submit();
 } */
 </script>
-<script type='text/javascript' src='/Login/dwr/interface/webtypejs.js'></script>
+<script type='text/javascript' src='dwr/interface/webtypejs.js'></script>
 
 </body>
 </html>

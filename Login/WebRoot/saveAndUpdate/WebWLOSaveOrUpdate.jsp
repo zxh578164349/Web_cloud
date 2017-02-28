@@ -183,8 +183,8 @@
 			callback:function(data){
 				if(data=="0"){
 					layer.msg("提交成功!",3,1);
-					//location.href="/Login/webwlo_getList";
-					loadUrl("/Login/webwlo_getList");
+					//location.href="webwlo_getList";
+					loadUrl("webwlo_getList");
 				}else{
 					//alert(data.responseText);
 					layer.msg("提交失敗",3,3);
@@ -229,10 +229,10 @@ jq(function(){
 	goTrim();
 });
 function back(){	
-	loadUrl("/Login/webwlo_getList3?backIndex=1");
+	loadUrl("webwlo_getList3?backIndex=1");
 }             
 </script>
-<script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/webwlojs.js'></script>	
+<script type='text/javascript' src='dwr/interface/webfactjs.js'></script>
+<script type='text/javascript' src='dwr/interface/webwlojs.js'></script>	
 </body>
 </html>

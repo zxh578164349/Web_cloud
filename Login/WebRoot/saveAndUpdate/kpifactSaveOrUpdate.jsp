@@ -286,7 +286,7 @@
 				callback : function(data) {
 					if (data == "0") {
 						layer.msg("提交成功!", 3, 1);
-						//location.href="/Login/kpifact_findPageBean";
+						//location.href="kpifact_findPageBean";
 						loadUrl("kpifact_findPageBean");
 					}
 					if (data == "1") {
@@ -310,7 +310,7 @@
 
 		}
 		function back() {
-			loadUrl("/Login/kpifact_findPageBean3?backIndex=1");
+			loadUrl("kpifact_findPageBean3?backIndex=1");
 		}
 		function check() {
 			var factno = document.getElementById("dwr_factno").value;
@@ -349,8 +349,8 @@
 			goTrim();
 		});
 	</script>
-	<script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>
-	<script type='text/javascript' src='/Login/dwr/interface/webcostjs.js'></script>
-	<script type='text/javascript' src='/Login/dwr/interface/kpifactjs.js'></script>
+	<script type='text/javascript' src='dwr/interface/webfactjs.js'></script>
+	<script type='text/javascript' src='dwr/interface/webcostjs.js'></script>
+	<script type='text/javascript' src='dwr/interface/kpifactjs.js'></script>
 </body>
 </html>

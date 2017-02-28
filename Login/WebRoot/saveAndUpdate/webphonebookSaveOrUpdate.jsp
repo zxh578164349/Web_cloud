@@ -123,7 +123,7 @@
 		});
 
 		function back() {
-			loadUrl("/Login/webphonebook_findPageBean3?backIndex=1");
+			loadUrl("webphonebook_findPageBean3?backIndex=1");
 		}
 		
 		function checkEmail() {
@@ -151,6 +151,6 @@
 			}
 		}		
 	</script>
-	<script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>
+	<script type='text/javascript' src='dwr/interface/webfactjs.js'></script>
 </body>
 </html>

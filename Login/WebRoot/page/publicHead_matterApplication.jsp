@@ -66,7 +66,7 @@
 		</tr>
 	</table>
 
-	<script type='text/javascript' src='/Login/dwr/interface/webtypejs.js'></script>
+	<script type='text/javascript' src='dwr/interface/webtypejs.js'></script>
 	<script type="text/javascript">
 		function getType(factNo) {
 			document.getElementById("visaSort").length = 1;

@@ -80,7 +80,7 @@
     }
 }
 function findById(factno,typeno){	
-	loadUrl("/Login/webtype_findById?factNo="+factno+"&typeNo="+typeno);
+	loadUrl("webtype_findById?factNo="+factno+"&typeNo="+typeno);
 }
 function recovery(subform){
 	jq.ajax({

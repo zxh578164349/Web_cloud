@@ -158,8 +158,8 @@
 			callback:function(data){
 				if(data=="0"){
 					layer.msg("提交成功!",3,1);
-					//location.href="/Login/webScrapt_getList";
-					loadUrl("/Login/webScrapt_getList");
+					//location.href="webScrapt_getList";
+					loadUrl("webScrapt_getList");
 				}else{
 					//alert(data.responseText);
 					layer.msg("提交失敗",3,3);
@@ -205,10 +205,10 @@ jq(function(){
 	goTrim();
 });
  function back(){
-	 loadUrl("/Login/webScrapt_getList3?backIndex=1");
+	 loadUrl("webScrapt_getList3?backIndex=1");
  }  
 </script>
-<script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/webscraptjs.js'></script>	
+<script type='text/javascript' src='dwr/interface/webfactjs.js'></script>
+<script type='text/javascript' src='dwr/interface/webscraptjs.js'></script>	
 </body>
 </html>

@@ -72,7 +72,7 @@ function findallSN(mNo){
    });
 }
 </script>
-<script type='text/javascript' src='/Login/dwr/interface/kyzscmjs.js'></script>
+<script type='text/javascript' src='dwr/interface/kyzscmjs.js'></script>
 <script type="text/javascript">
   jq(function(){
 	  findallBN();

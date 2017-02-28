@@ -296,7 +296,7 @@ function makeBillNo() {
   }
 
   function back(){		
-		loadUrl("/Login/bussletter_findPageBean?backIndex=1");
+		loadUrl("bussletter_findPageBean?backIndex=1");
 	}
 	
 /*jq(function(){
@@ -364,9 +364,9 @@ function checkWebbussType(fact){
 	});
 }
 </script>
-<script type='text/javascript' src='/Login/dwr/interface/webbussletterjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/kyzvisaflowjs.js'></script>
+<script type='text/javascript' src='dwr/interface/webbussletterjs.js'></script>
+<script type='text/javascript' src='dwr/interface/webfactjs.js'></script>
+<script type='text/javascript' src='dwr/interface/kyzvisaflowjs.js'></script>
 <script type="text/javascript">
 jq(function(){
 	if(jq("#isNull").val()=="isNull"){

@@ -313,7 +313,7 @@ jq(function() {
 		        success:function(data){
 		        	if(data=="0"){
 		        		layer.msg("函文申請成功!",3,1);
-		        		location.href="/Login/kyz_findPageBean";
+		        		location.href="kyz_findPageBean";
 		        	}else{
 		        		alert(data.responseText);
 		        	}		        	       	    									
@@ -561,7 +561,7 @@ function getKyType2(factno){
 
 function back(){
 	
-	loadUrl("/Login/kyz_findPageBean3?backIndex=1");
+	loadUrl("kyz_findPageBean3?backIndex=1");
 }
 function gook(){
 	  layer.msg("操作成功",3,1);
@@ -572,10 +572,10 @@ function lookPic(url){
 	window.location.href=url;
 }
 </script>
-<script type='text/javascript' src='/Login/dwr/interface/kyzjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/kyzvisaflowjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/webtypejs.js'></script>
+<script type='text/javascript' src='dwr/interface/kyzjs.js'></script>
+<script type='text/javascript' src='dwr/interface/webfactjs.js'></script>
+<script type='text/javascript' src='dwr/interface/kyzvisaflowjs.js'></script>
+<script type='text/javascript' src='dwr/interface/webtypejs.js'></script>
 <script type="text/javascript">
 jq(function(){
 	if(jq("#addorupdate").val()!="update"){

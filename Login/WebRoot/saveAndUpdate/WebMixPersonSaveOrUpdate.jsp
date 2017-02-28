@@ -196,8 +196,8 @@
 			callback:function(data){
 				if(data=="0"){
 					layer.msg("提交成功!",3,1);
-					//location.href="/Login/webmixPerson_getList";
-					loadUrl("/Login/webmixPerson_getList");
+					//location.href="webmixPerson_getList";
+					loadUrl("webmixPerson_getList");
 				}else{
 					//alert(data.responseText);
 					layer.msg("提交失敗",3,3);
@@ -244,10 +244,10 @@ jq(function(){
 	goTrim();
 });
 function back(){
-	loadUrl("/Login/webmixPerson_getList3?backIndex=1");
+	loadUrl("webmixPerson_getList3?backIndex=1");
 }
 </script>
-<script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/webmixpersonjs.js'></script>	
+<script type='text/javascript' src='dwr/interface/webfactjs.js'></script>
+<script type='text/javascript' src='dwr/interface/webmixpersonjs.js'></script>	
 </body>
 </html>

@@ -113,7 +113,7 @@ public class WebuserEmailDaoImpl extends Basedao implements IWebuserEmailDao{
 	
 	public List<String> findByFactNoAEmailPwd3(String factNo,String email){
 		// TODO Auto-generated method stub
-		String hql="select id.emailpassword from WebuserEmail where id.factNo=? and lower(id.email)=? and typeMk='1'";
+		String hql="select id.emailpassword from WebuserEmail where id.factNo=? and lower(id.email)=? and id.typeMk='1'";
 		String[]objs={factNo,email.toLowerCase()};
 		return super.findAll(hql, objs);
 	}

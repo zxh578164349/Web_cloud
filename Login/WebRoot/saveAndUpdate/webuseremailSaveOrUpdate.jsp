@@ -106,7 +106,7 @@
 			callback:function(data){
 				if(data=="0"){
 					layer.msg("提交成功!",3,1);
-					loadUrl("/Login/webuseremail_findPageBean");
+					loadUrl("webuseremail_findPageBean");
 				}else{
 					layer.msg("提交失敗!",3,3);
 				}				
@@ -120,7 +120,7 @@
 	}); 
 
 	function back() {		    
-			loadUrl("/Login/webuseremail_findPageBean3?backIndex=1");		
+			loadUrl("webuseremail_findPageBean3?backIndex=1");		
 	}
 	 function check(){
        var factno=document.getElementById("dwr_factno").value;
@@ -145,7 +145,7 @@
        }                    
    }       
 </script>
-<script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/webuseremailjs.js'></script>
+<script type='text/javascript' src='dwr/interface/webfactjs.js'></script>
+<script type='text/javascript' src='dwr/interface/webuseremailjs.js'></script>
 </body>
 </html>

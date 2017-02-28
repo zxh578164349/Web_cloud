@@ -18,18 +18,42 @@ package entity.custom;
  **/
 public class ProjectConfig{
 	private String pName;
-	private String pHost;
+	private String pHostLocal;
+	private String pHostServer;
+	private String pHostLoaclB;
+	private String pUrl;
+	
+	
+	public String getpUrl(){
+		return pUrl;
+	}
+	public void setpUrl(String pUrl){
+		this.pUrl=pUrl;
+	}
 	public String getpName(){
 		return pName;
 	}
 	public void setpName(String pName){
 		this.pName=pName;
 	}
-	public String getpHost(){
-		return pHost;
+	public String getpHostLocal(){
+		return pHostLocal;
 	}
-	public void setpHost(String pHost){
-		this.pHost=pHost;
+	public void setpHostLocal(String pHostLocal){
+		this.pHostLocal=pHostLocal;
 	}
+	public String getpHostServer(){
+		return pHostServer;
+	}
+	public void setpHostServer(String pHostServer){
+		this.pHostServer=pHostServer;
+	}
+	public String getpHostLoaclB(){
+		return pHostLoaclB;
+	}
+	public void setpHostLoaclB(String pHostLoaclB){
+		this.pHostLoaclB=pHostLoaclB;
+	}
+	
 
 }

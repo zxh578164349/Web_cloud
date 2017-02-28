@@ -121,8 +121,8 @@
 		</div>
 	</div>
 
-	<script type='text/javascript' src='/Login/dwr/engine.js'></script>
-	<script type='text/javascript' src='/Login/dwr/util.js'></script>
+	<script type='text/javascript' src='dwr/engine.js'></script>
+	<script type='text/javascript' src='dwr/util.js'></script>
 	<!-- <script src="http://apps.bdimg.com/libs/jquery/1.9.1/jquery.min.js"></script> -->
 	<script>window.jQuery|| document.write('<script src="jquery/jquery-1.9.1.min.js"><\/script>');</script>
 	<script type="text/javascript" src="page/jquerys/layer/layer.min.js"></script>
@@ -134,7 +134,6 @@
 	<!-- <script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script> -->
 	<script src="bootstrap/js/bootstrap.min.js"></script>	
 	<script src="uploadify/jquery.uploadify.min.js" type="text/javascript"></script>	
-    <script src="https://unpkg.com/vue/dist/vue.js"></script>
 	<!--[if lt IE 9]>  
   <script src="bootstrap/html5.js"></script>
   <script src="bootstrap/respond.min.js"></script>
@@ -333,7 +332,7 @@
 			jq("#divBills2").hide(300);
 		}
 		function goHere() {
-			loadUrl("/Login/vbm_findPageBean");
+			loadUrl("vbm_findPageBean");
 		}
 
 		/*function findKyVisaBills_Int(){

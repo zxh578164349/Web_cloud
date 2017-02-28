@@ -391,8 +391,8 @@
 			callback : function(data) {
 				if(data=="0"){
 					layer.msg("提交成功!",3,1);
-					//location.href="/Login/fix_findPageBean";
-					loadUrl("/Login/fix_findPageBean");
+					//location.href="fix_findPageBean";
+					loadUrl("fix_findPageBean");
 				}
 				if(data=="1"){
 					//alert(data.responseText);
@@ -414,7 +414,7 @@
 	});
 
 	function back() {			
-			loadUrl("/Login/fix_findPageBean3?backIndex=1");
+			loadUrl("fix_findPageBean3?backIndex=1");
 	}
 
 	function getFactArea(mid) {
@@ -492,10 +492,10 @@
 	}
 	
 </script>
-<script type='text/javascript' src='/Login/dwr/interface/webmajorjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/websubjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/webfixjs.js'></script>
+<script type='text/javascript' src='dwr/interface/webmajorjs.js'></script>
+<script type='text/javascript' src='dwr/interface/webfactjs.js'></script>
+<script type='text/javascript' src='dwr/interface/websubjs.js'></script>
+<script type='text/javascript' src='dwr/interface/webfixjs.js'></script>
 <script type="text/javascript">
 jq(function(){
 	getMajor();

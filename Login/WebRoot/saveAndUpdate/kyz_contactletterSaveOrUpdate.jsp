@@ -340,7 +340,7 @@ function getKyType2(factno){
   }
 
   function back(){		
-		loadUrl("/Login/kyzletter_findPageBean3?backIndex=1");
+		loadUrl("kyzletter_findPageBean3?backIndex=1");
 	}
  
   
@@ -370,10 +370,10 @@ function getKyType2(factno){
 	   })
 	}*/  
 </script>
-<script type='text/javascript' src='/Login/dwr/interface/kyzcontactletterjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/kyzvisaflowjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/webtypejs.js'></script>
+<script type='text/javascript' src='dwr/interface/kyzcontactletterjs.js'></script>
+<script type='text/javascript' src='dwr/interface/webfactjs.js'></script>
+<script type='text/javascript' src='dwr/interface/kyzvisaflowjs.js'></script>
+<script type='text/javascript' src='dwr/interface/webtypejs.js'></script>
 
 <script type="text/javascript">
 jq(function(){

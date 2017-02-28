@@ -93,7 +93,7 @@ jq(function(){
 	goTrim();
 });
 function back(){	
-	loadUrl("/Login/webformula_findPageBean3?backIndex=1");
+	loadUrl("webformula_findPageBean3?backIndex=1");
 }
 
 </script>

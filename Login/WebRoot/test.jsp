@@ -137,7 +137,7 @@
   
     
     function back(){   	
-    	location.href="/Login/judge.jsp";   	
+    	location.href="judge.jsp";   	
     }
 </script>
 <body >

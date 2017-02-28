@@ -169,7 +169,7 @@
 	   			callback:function(data){	   				
 	   					if(data=="0"){
 	   						layer.msg("提交成功!",3,1);
-	   						location.href="/Login/visaflow_findPageBean";
+	   						location.href="visaflow_findPageBean";
 	   					}
 	   					if(data=="1"){
 	   						alert(data.responseText);

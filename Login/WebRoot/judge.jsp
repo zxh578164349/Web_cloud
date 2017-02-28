@@ -121,10 +121,10 @@
 	jq(function (){
 		var agent = navigator.userAgent.toLowerCase();
 		if (agent.indexOf("msie") > 0) {						
-			jq("#bodyid").load("/Login/webfact_findAllWebfact");						
+			jq("#bodyid").load("webfact_findAllWebfact");						
 		}else {						
-			jq("#bodyid").load("/Login/webfact_findAllWebfact2");
-			//jq("#bodyid").load("/Login/webfact_findAllWebfact_guest");
+			jq("#bodyid").load("webfact_findAllWebfact2");
+			//jq("#bodyid").load("webfact_findAllWebfact_guest");
 		}
 		jq("#bodyid").fadeIn(1500);					
 	});

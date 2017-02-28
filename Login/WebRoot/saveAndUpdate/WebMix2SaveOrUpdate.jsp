@@ -183,8 +183,8 @@
 			callback:function(data){
 				if(data=="0"){
 					layer.msg("提交成功!",3,1);
-					//location.href="/Login/webmix2_getList";
-					loadUrl("/Login/webmix2_getList");
+					//location.href="webmix2_getList";
+					loadUrl("webmix2_getList");
 				}else if(data=="2"){
 					//alert(data.responseText);
 					layer.msg("數據已存在",3,3);
@@ -234,10 +234,10 @@ jq(function(){
 	goTrim();
 });
  function back(){
-	 loadUrl("/Login/webmix2_getList3?backIndex=1");
+	 loadUrl("webmix2_getList3?backIndex=1");
  }           
 </script>
-<script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/webmix2js.js'></script>	
+<script type='text/javascript' src='dwr/interface/webfactjs.js'></script>
+<script type='text/javascript' src='dwr/interface/webmix2js.js'></script>	
 </body>
 </html>

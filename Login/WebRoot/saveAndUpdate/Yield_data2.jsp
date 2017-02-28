@@ -64,7 +64,7 @@
 	} */
 
 	function back() {		
-		loadUrl("/Login/ydata_findPageBean3?backIndex=1");		
+		loadUrl("ydata_findPageBean3?backIndex=1");		
 	}
 
 	function holiday() {
@@ -219,7 +219,7 @@
 	
 
 </script>
-<script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>
+<script type='text/javascript' src='dwr/interface/webfactjs.js'></script>
 
 <body onload="init()">
 

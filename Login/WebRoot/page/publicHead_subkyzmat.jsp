@@ -68,11 +68,11 @@ jq(document).keyup(function(event){
 	   findallBN();
 	}
 </script>
-<script type='text/javascript' src='/Login/dwr/interface/kyzscmjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/kyzmatjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/kyzacctjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/engine.js'></script>
-<script type='text/javascript' src='/Login/dwr/util.js'></script> 
+<script type='text/javascript' src='dwr/interface/kyzscmjs.js'></script>
+<script type='text/javascript' src='dwr/interface/kyzmatjs.js'></script>
+<script type='text/javascript' src='dwr/interface/kyzacctjs.js'></script>
+<script type='text/javascript' src='dwr/engine.js'></script>
+<script type='text/javascript' src='dwr/util.js'></script> 
 </head>
 <body>
   <div style="width:1200px">

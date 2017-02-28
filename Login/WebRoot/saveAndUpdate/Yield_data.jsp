@@ -272,7 +272,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 		}
 
 		function back() {
-			loadUrl("/Login/ydata_findPageBean3?backIndex=1");
+			loadUrl("ydata_findPageBean3?backIndex=1");
 		}
 
 		function showRow() {
@@ -295,7 +295,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 			}
 		}				
 	</script>
-	<script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>	
+	<script type='text/javascript' src='dwr/interface/webfactjs.js'></script>	
 </body>
 
 </html>

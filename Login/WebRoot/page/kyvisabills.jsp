@@ -150,7 +150,7 @@ function tips(memo,index){
 
 function back(){
 	
-	loadUrl("/Login/vbm_findPageBean");
+	loadUrl("vbm_findPageBean");
 }
 function yesorno(passMk){
 	 var memo=layer.getChildFrame("#memo_txt",layer.index).val();

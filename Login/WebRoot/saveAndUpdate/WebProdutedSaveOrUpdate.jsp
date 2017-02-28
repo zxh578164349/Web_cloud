@@ -173,8 +173,8 @@
 			callback:function(data){
 				if(data=="0"){
 					layer.msg("提交成功!",3,1);
-					//location.href="/Login/webProduted_getList";
-					loadUrl("/Login/webProduted_getList");
+					//location.href="webProduted_getList";
+					loadUrl("webProduted_getList");
 				}else{
 					//alert(data.responseText);
 					layer.msg("提交失敗",3,3);
@@ -220,10 +220,10 @@ jq(function(){
 	goTrim();
 });
 function back(){
-	loadUrl("/Login/webProduted_getList3?backIndex=1");
+	loadUrl("webProduted_getList3?backIndex=1");
 }      
 </script>
-<script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/webprodutedjs.js'></script>	
+<script type='text/javascript' src='dwr/interface/webfactjs.js'></script>
+<script type='text/javascript' src='dwr/interface/webprodutedjs.js'></script>	
 </body>
 </html>

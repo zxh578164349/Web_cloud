@@ -28,6 +28,7 @@ import entity.WebCc;
 import entity.WebEmail;
 import entity.WebEmailAll;
 import entity.WebFact;
+import entity.custom.ProjectConfig;
 
 import services.IWebEmailService;
 import services.IWebFactorderServices;
@@ -85,15 +86,16 @@ public class AutoSendWebfactorder extends QuartzJobBean{
 	
 	public void init() throws HttpException, IOException{
 		//String yymm=new SimpleDateFormat("yyyy").format(new Date())+"01";
+		String pname=this.findProjectConfig().getpName();//項目名稱
 		Calendar cal=Calendar.getInstance();
 		cal.setTime(new Date());
 		cal.add(Calendar.MONTH, -1);
 		String yymm2=new SimpleDateFormat("yyyyMM").format(cal.getTime());
 		String yymm=new SimpleDateFormat("yyyy").format(cal.getTime())+"01";//20170106
 		HttpClient client = new HttpClient();
-		HttpMethod method = new GetMethod("http://203.85.73.161/Login/webfactOrder_print_email?yymm="+yymm+"&yymm2="+yymm2+"&autoEmailMk=1");	
-		//HttpMethod method = new GetMethod("http://172.17.18.173:8080/Login/webfactOrder_print_email?yymm="+yymm+"&yymm2="+yymm2+"&autoEmailMk=1");
-		//HttpMethod method = new GetMethod("http://localhost:8080/Login/webfactOrder_print_email?yymm="+yymm+"&yymm2="+yymm2+"&autoEmailMk=1");
+		HttpMethod method = new GetMethod("http://203.85.73.161/"+pname+"/webfactOrder_print_email?yymm="+yymm+"&yymm2="+yymm2+"&autoEmailMk=1");	
+		//HttpMethod method = new GetMethod("http://172.17.18.173:8080/"+pname+"/webfactOrder_print_email?yymm="+yymm+"&yymm2="+yymm2+"&autoEmailMk=1");
+		//HttpMethod method = new GetMethod("http://localhost:8080/"+pname+"/webfactOrder_print_email?yymm="+yymm+"&yymm2="+yymm2+"&autoEmailMk=1");
 		client.executeMethod(method);
 		method.releaseConnection();
 		ApplicationContext ac = new ClassPathXmlApplicationContext(new String[]{"spring-action.xml","spring-dao.xml", "spring.xml","spring-services.xml"});
@@ -158,6 +160,11 @@ public class AutoSendWebfactorder extends QuartzJobBean{
 		}
 		
 												
+	}
+	
+	public ProjectConfig findProjectConfig(){
+		ProjectConfig pro=GlobalMethod.findProjectConfig();
+		return pro;
 	}
 
 }

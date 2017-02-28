@@ -162,8 +162,8 @@
 			callback:function(data){
 				if(data=="0"){
 					layer.msg("提交成功!",3,1);
-					//location.href="/Login/webbackfeed_findPageBean";
-					loadUrl("/Login/webbackfeed_findPageBean");
+					//location.href="webbackfeed_findPageBean";
+					loadUrl("webbackfeed_findPageBean");
 				}else{
 					//alert(data.responseText);
 					layer.msg("提交失敗",3,3);
@@ -182,7 +182,7 @@
 
 	}
 	function back() {
-			loadUrl("/Login/webbackfeed_findPageBean3?backIndex=1");
+			loadUrl("webbackfeed_findPageBean3?backIndex=1");
 	}
 	 function check(){
        var factno=document.getElementById("dwr_factno").value;
@@ -216,7 +216,7 @@ jq(function(){
 	goTrim();
 });
 </script>
-<script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/webbackfeetjs.js'></script>
+<script type='text/javascript' src='dwr/interface/webfactjs.js'></script>
+<script type='text/javascript' src='dwr/interface/webbackfeetjs.js'></script>
 </body>
 </html>

@@ -59,6 +59,20 @@ version="2.5">
 <filter>
     <filter-name>sessionfilter</filter-name>
     <filter-class>util.SessionTimeOutFilter</filter-class>
+    <init-param>
+       <param-name>url_a</param-name>
+       <param-value>/Login/,/Login_scm/,/</param-value>       
+    </init-param>
+    <init-param>
+       <param-name>url_b</param-name>
+       <param-value>
+          webfact_findAllWebfact,userlogin,loginpage,judge.jsp,vbm_findById_email,print2Ypoi_print2Y_hb,webfactOrder_print_email,login_guest.jsp,judge_guest.jsp,userlogout
+       </param-value>
+    </init-param>
+    <init-param>
+       <param-name>url_c</param-name>
+       <param-value>webfact_findAllfact</param-value>
+    </init-param>
 </filter>
 <filter-mapping>
     <filter-name>sessionfilter</filter-name>

@@ -403,7 +403,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 			callback:function(data){
 				if(data=="0"){
 					layer.msg("提交成功!",3,1);
-					//location.href="/Login/webwlo_getList";
+					//location.href="webwlo_getList";
 				}
 				if(data=="1"){
 					alert("提交失敗");
@@ -425,7 +425,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 		        success:function(data){
 		        	if(data=="0"){
 		        		layer.msg("操作成功!",3,1);
-		        		//location.href="/Login/kyz_findPageBean";
+		        		//location.href="kyz_findPageBean";
 		        	}else if(data=="1"){
 		        		layer.msg("操作失敗!",3,3);
 		        	}else if(data=="2"){
@@ -533,7 +533,7 @@ function addFile(){
     }               
 }
 function back(){
-	loadUrl("/Login/webtabpom_findPageBean3?backIndex=1");
+	loadUrl("webtabpom_findPageBean3?backIndex=1");
 }
 
 

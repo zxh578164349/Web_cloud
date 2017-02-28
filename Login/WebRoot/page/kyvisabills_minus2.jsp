@@ -50,7 +50,7 @@ function go_subform(obj,factno,billno,visasort){
 
 
 function back(){	
-	loadUrl("/Login/vbm_findPageBean");
+	loadUrl("vbm_findPageBean");
 }
 </script>
 </head>

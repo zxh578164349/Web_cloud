@@ -307,7 +307,7 @@ var uploadify_config = {
 		callback:function(data){
 			if(data=="0"){
 				layer.msg("提交成功!",3,1);
-				loadUrl("/Login/webformula_findById?formulaIndex="+jq("#formulaIndex").val());
+				loadUrl("webformula_findById?formulaIndex="+jq("#formulaIndex").val());
 			}
 			if(data=="1"){
 				layer.msg("提交失敗",3,3);
@@ -400,7 +400,7 @@ function lookJson(pomNo,filename){
 	}
 	
 function back(){
-	loadUrl("/Login/webtabpom_findPageBean3?backIndex=1");
+	loadUrl("webtabpom_findPageBean3?backIndex=1");
 }
 /*禁止空格輸入*/
 goTrim();	

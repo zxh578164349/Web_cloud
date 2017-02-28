@@ -582,13 +582,13 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 					if("N".equals(isLastMan)){
 						if(billNo.substring(0,2).equals("EM")){
 							if("0".equals(vbm.getKyzexp().getEmerMk())){
-								ApplicationContext ac=new ClassPathXmlApplicationContext(new String[]{"spring.xml","spring-dao.xml","spring-services.xml"});
+								ApplicationContext ac=new ClassPathXmlApplicationContext(new String[]{"spring.xml","spring-dao.xml","spring-services.xml","spring-projectconfig.xml"});
 								GlobalMethod.sendEmailA2(ac,list);
 							}
 						}
 						if(billNo.substring(0,2).equals("CM")){
 							if("0".equals(vbm.getKyzletter().getEmerMk())){
-								ApplicationContext ac=new ClassPathXmlApplicationContext(new String[]{"spring.xml","spring-dao.xml","spring-services.xml"});
+								ApplicationContext ac=new ClassPathXmlApplicationContext(new String[]{"spring.xml","spring-dao.xml","spring-services.xml","spring-projectconfig.xml"});
 								GlobalMethod.sendEmailA2(ac,list);
 							}
 						}	
@@ -922,7 +922,7 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 	public void sendEmail() throws IOException{
 		try{
 			response.setContentType("text/html;charset=utf-8");
-			ApplicationContext ac=new ClassPathXmlApplicationContext(new String[]{"spring.xml","spring-dao.xml","spring-services.xml"});
+			ApplicationContext ac=new ClassPathXmlApplicationContext(new String[]{"spring.xml","spring-dao.xml","spring-services.xml","spring-projectconfig.xml"});
 			IKyVisabillmServices visabillmSer=(IKyVisabillmServices)ac.getBean("visabillmSer");	
 			List<KyVisabillm>list_vbm=visabillmSer.findByBillNo2(billNo);		
 			GlobalMethod.sendEmailA(ac,list_vbm);			

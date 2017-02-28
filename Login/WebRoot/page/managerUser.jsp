@@ -84,10 +84,10 @@
 }
 
 function loadjur(id,factNo){  
-    loadUrl("/Login/userjurisdiction?id="+id+"&fact="+factNo);
+    loadUrl("userjurisdiction?id="+id+"&fact="+factNo);
 }
 function loaduser(id){	
-	loadUrl("/Login/userinitialUpdate?id="+id);
+	loadUrl("userinitialUpdate?id="+id);
 }
 </script>	
 </body>

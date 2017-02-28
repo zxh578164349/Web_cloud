@@ -85,6 +85,6 @@ function findById(factno,email,emailpwd,visasort,typeMk){
 }
 
 </script>
-<script type='text/javascript' src='/Login/dwr/interface/webuseremailajs.js'></script>	
+<script type='text/javascript' src='dwr/interface/webuseremailajs.js'></script>	
 </body>
 </html>

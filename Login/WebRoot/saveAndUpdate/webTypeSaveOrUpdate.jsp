@@ -112,8 +112,8 @@
 			callback:function(data){
 				if(data=="0"){
 					layer.msg("提交成功!",3,1);
-					//location.href="/Login/webtype_findPageBean";
-					loadUrl("/Login/webtype_findPageBean");
+					//location.href="webtype_findPageBean";
+					loadUrl("webtype_findPageBean");
 				}else{
 					//alert(data.responseText);
 					layer.msg("提交失敗!",3,3);
@@ -192,7 +192,7 @@ jq(function(){
       });
 function back(){
 	
-	loadUrl("/Login/webtype_findPageBean3?backIndex=1");
+	loadUrl("webtype_findPageBean3?backIndex=1");
 	
 }
 function checkRadio(){
@@ -210,8 +210,8 @@ function checkRadio(){
 	}
 }
 </script>
-<script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/kytypejs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/webtypejs.js'></script>
+<script type='text/javascript' src='dwr/interface/webfactjs.js'></script>
+<script type='text/javascript' src='dwr/interface/kytypejs.js'></script>
+<script type='text/javascript' src='dwr/interface/webtypejs.js'></script>
 </body>
 </html>

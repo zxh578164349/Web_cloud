@@ -189,7 +189,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 			callback:function(data){
 				if(data=="0"){
 					layer.msg("提交成功!",3,1);				
-					loadUrl("/Login/webformula_findPageBean");
+					loadUrl("webformula_findPageBean");
 				}else{
 					layer.msg("提交失敗",3,3);
 				}				
@@ -276,7 +276,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
    }
 	
 function back(){	
-	loadUrl("/Login/webformula_findPageBean3?backIndex=1");
+	loadUrl("webformula_findPageBean3?backIndex=1");
 }
 
 function loadNamece(){

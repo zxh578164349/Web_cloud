@@ -86,8 +86,8 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 			callback:function(data){
 				if(data=="0"){
 					layer.msg("提交成功!",3,1);
-					loadUrl("/Login/visaflow_findPageBean");
-					//location.href="/Login/visaflow_findPageBean";
+					loadUrl("visaflow_findPageBean");
+					//location.href="visaflow_findPageBean";
 					
 				}
 				if(data=="1"){
@@ -135,11 +135,11 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 	}
 	
 	function back(){
-		loadUrl("/Login/visaflow_findPageBean3?backIndex=1");
+		loadUrl("visaflow_findPageBean3?backIndex=1");
 	}
 </script>
-<script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/kyzvisaflowjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/userjs.js'></script>	
+<script type='text/javascript' src='dwr/interface/webfactjs.js'></script>
+<script type='text/javascript' src='dwr/interface/kyzvisaflowjs.js'></script>
+<script type='text/javascript' src='dwr/interface/userjs.js'></script>	
 </body>
 </html>

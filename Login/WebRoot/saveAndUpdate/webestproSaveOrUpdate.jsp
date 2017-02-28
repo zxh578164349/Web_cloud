@@ -220,8 +220,8 @@
 			callback:function(data){
 				if(data=="0"){
 					layer.msg("提交成功!",3,1);
-					loadUrl("/Login/webestpro_findPageBean");
-					//location.href="/Login/webestpro_findPageBean";
+					loadUrl("webestpro_findPageBean");
+					//location.href="webestpro_findPageBean";
 				}else{
 					//alert(data.responseText);
 					layer.msg("提交失敗",3,3);
@@ -241,7 +241,7 @@
 
 	}
 	function back() {
-		    loadUrl("/Login/webestpro_findPageBean3?backIndex=1");	
+		    loadUrl("webestpro_findPageBean3?backIndex=1");	
 	}
 	 function check(){
        var factno=document.getElementById("dwr_factno").value;
@@ -276,7 +276,7 @@ jq(function(){
 	goTrim();
 }); 
 </script>
-<script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/webestprojs.js'></script>
+<script type='text/javascript' src='dwr/interface/webfactjs.js'></script>
+<script type='text/javascript' src='dwr/interface/webestprojs.js'></script>
 </body>
 </html>

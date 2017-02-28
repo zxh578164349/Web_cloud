@@ -47,7 +47,7 @@
 
 		});
 		function back() {
-			loadUrl("/Login/userfindPageBean");
+			loadUrl("userfindPageBean");
 		}
 
 		function check(factno, username,sub,error) {
@@ -99,6 +99,6 @@
 			}
 		}
 	</script>
-	<script type='text/javascript' src='/Login/dwr/interface/userjs.js'></script>
+	<script type='text/javascript' src='dwr/interface/userjs.js'></script>
 </body>
 </html>

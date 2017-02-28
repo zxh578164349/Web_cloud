@@ -110,7 +110,7 @@
 	}
 
 	function back() {
-		loadUrl("/Login/kyzacct_findPageBean3?backIndex=1"); 
+		loadUrl("kyzacct_findPageBean3?backIndex=1"); 
 			
 
 	}
@@ -132,9 +132,9 @@
 	}
 	
 </script>
-<script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/kyzsecjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/kyzacctjs.js'></script>
+<script type='text/javascript' src='dwr/interface/webfactjs.js'></script>
+<script type='text/javascript' src='dwr/interface/kyzsecjs.js'></script>
+<script type='text/javascript' src='dwr/interface/kyzacctjs.js'></script>
 </body>
 
 </html>

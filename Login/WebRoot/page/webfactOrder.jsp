@@ -209,7 +209,7 @@ jq(function(){
 	        success:function(data){
 	        	if(data=="0"){
 	        		layer.msg("導入成功!",3,1);
-	        		//location.href="/Login/kyz_findPageBean";
+	        		//location.href="kyz_findPageBean";
 	        	}else if(data=="1"){
 	        		layer.msg("僅允許導入Excel文檔",3,3);
 	        	}else if(data=="2"){

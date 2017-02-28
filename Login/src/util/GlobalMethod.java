@@ -69,6 +69,7 @@ import org.apache.struts2.ServletActionContext;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+import org.springframework.web.context.ContextLoader;
 
 import services.IKyVisabillmServices;
 import services.IKyzExpectmatmLogServices;
@@ -95,8 +96,8 @@ import entity.custom.ProjectConfig;
 
 
 public class GlobalMethod extends HibernateDaoSupport{
-	private static final String URL="http://203.85.73.161/Login/";
-	private static final String URL2="http://203.85.73.161/Login";
+	//private static final String URL="http://203.85.73.161/Login/";
+	//private static final String URL="http://203.85.73.161/Login";
 	private static final String EMAIL="kyuen@yydg.com.cn";
 	private static final String SUBJECT="函文審核定時通知_";
 	private static final String SUBJECT2="函文審核通知_";
@@ -1166,7 +1167,8 @@ public class GlobalMethod extends HibernateDaoSupport{
 		    IWebuserEmailServices webuseremailSer=(IWebuserEmailServices)ac.getBean("webuseremailSer");
 			IWebuserEmailAServices webuseremailaSer=(IWebuserEmailAServices)ac.getBean("webuseremailaSer");
 			IKyzVisaFlowServices visaSer=(IKyzVisaFlowServices)ac.getBean("visaSer");
-			IKyVisabillmServices visabillmSer=(IKyVisabillmServices)ac.getBean("visabillmSer");		    
+			IKyVisabillmServices visabillmSer=(IKyVisabillmServices)ac.getBean("visabillmSer");	
+			ProjectConfig pc=(ProjectConfig)ac.getBean("proconfig");
 			String content="";		
 			if(list_vbm.size()>0){//start if
 			MailSenderInfo mailInfo = new MailSenderInfo();
@@ -1213,9 +1215,9 @@ public class GlobalMethod extends HibernateDaoSupport{
 					}
 					/******************20170112备签人同步**********************/
 					list_email.add(EMAIL);
-					String emailUrl=URL+"vbm_findById_email?visaSort="+visaSort+"&billNo="+billNo
+					String emailUrl=pc.getpUrl()+"/vbm_findById_email?visaSort="+visaSort+"&billNo="+billNo
 					         +"&factNo="+factNo+"&email="+signerNext;
-					String emailUrl2=URL+"vbm_findById_email2?visaSort="+visaSort+"&billNo="+billNo
+					String emailUrl2=pc.getpUrl()+"/vbm_findById_email2?visaSort="+visaSort+"&billNo="+billNo
 					         +"&factNo="+factNo+"&email="+signerNext;
 					if(visaMk.equals("N")){
 						subject.append(sub1+list_vbm.get(i).getGeneral());
@@ -1224,7 +1226,7 @@ public class GlobalMethod extends HibernateDaoSupport{
 					    		  "<br/>點擊單號直接審核:<a href='"+emailUrl2+"'>"+billNo+"</a>(電腦適用)"+
 					    		  "<br/>點擊單號直接審核:<a href='"+emailUrl+"'>"+billNo+"</a>(手機平板適用)"+				    		 
 							      "<hr/>"+
-					    		  "如需查詢以往單據請登錄加久網站:(云端)<a href='"+URL2+"'>"+URL2+"</a>" +		            
+					    		  "如需查詢以往單據請登錄加久網站:(云端)<a href='"+pc.getpUrl()+"'>"+pc.getpUrl()+"</a>" +		            
 					      		"<br/>進入[KPI數據]--[函文審核]中查找對應單號審核"+			    		
 					    		"<hr/>"+
 					      		"<br/>本郵件定時自動發送,請勿回復!如需回復或者問題，請回复到"+EMAIL+"資訊室!<br/>"+
@@ -1245,7 +1247,7 @@ public class GlobalMethod extends HibernateDaoSupport{
 						    		  "<br/>"+
 						    		  "<span style='color:red'>"+(list_vbm.get(i).getMemoMk()==null?"無備註":list_vbm.get(i).getMemoMk())+"</span>"+				    		 
 								      "<hr/>"+
-						    		 "詳情請登錄加久網站:(云端)<a href='"+URL2+"'>"+URL2+"</a>" +		            
+						    		 "詳情請登錄加久網站:(云端)<a href='"+pc.getpUrl()+"'>"+pc.getpUrl()+"</a>" +		            
 						      		"<br/>進入[KPI數據]--[函文審核]中查找對應單號審核"+			    		
 						    		"<hr/>"+
 						      		"<br/>本郵件定時自動發送,請勿回復!如需回復或者問題，請回复到"+EMAIL+"資訊室!<br/>"+
@@ -1288,7 +1290,8 @@ public class GlobalMethod extends HibernateDaoSupport{
 	  * @date 2016/6/22
 	  */
 	 public static void sendEmailB(String local_factNo,String local_billNo,String local_visaSort,KyVisabillm vbm2,ApplicationContext ac){
-		 IWebuserEmailAServices webuseremailaSer=(IWebuserEmailAServices)ac.getBean("webuseremailaSer");/******知會人********/		
+		 IWebuserEmailAServices webuseremailaSer=(IWebuserEmailAServices)ac.getBean("webuseremailaSer");
+		 IWebuserEmailServices webuseremailSer=(IWebuserEmailServices)ac.getBean("webuseremailSer");
 			List<KyVisabills>list_visa2=vbm2.getKyVisabillses();
 			//这个类主要是设置邮件   
 			List<String>list_emails=new ArrayList<String>();//所有發送人
@@ -1302,8 +1305,13 @@ public class GlobalMethod extends HibernateDaoSupport{
 			for(KyVisabills bills:list_visa2){
 				list_emails.add(bills.getVisaSigner());
 				if(bills.getFlowMk().equals("Y")){//要簽核的人才需要通知知會人
-					List<String>list_emailPwd=webuseremailaSer.findByEmail2(local_factNo,bills.getVisaSigner(),local_visaSort);
+					List<String>list_emailPwd=webuseremailaSer.findByEmail2(local_factNo,bills.getVisaSigner(),local_visaSort);//有分類
 					for(String str:list_emailPwd){
+						list_emails.add(str);
+					}
+					
+					List<String>list_emailPwd2=webuseremailSer.findByFactNoAEmailPwd3(local_factNo, bills.getVisaSigner());//無分類20170228
+					for(String str:list_emailPwd2){
 						list_emails.add(str);
 					}
 				}
@@ -1347,15 +1355,16 @@ public class GlobalMethod extends HibernateDaoSupport{
 	  * @date 2016/7/8
 	  */
 	 public static void sendNewEmail(KyVisabillm vbm,List<String>list_emailPwd){
+		 ProjectConfig pc=findProjectConfig();
 		 List<String>list=new ArrayList<String>();
 		 list.add(vbm.getSignerNext());
 		 for(String str:list_emailPwd){
 			 list.add(str);
 		 }
 		 list.add(EMAIL);
-		 String emailUrl_in=URL+"vbm_findById_email?visaSort="+vbm.getId().getVisaSort()+"&billNo="+vbm.getId().getBillNo()
+		 String emailUrl_in=pc.getpUrl()+"/vbm_findById_email?visaSort="+vbm.getId().getVisaSort()+"&billNo="+vbm.getId().getBillNo()
 		         +"&factNo="+vbm.getId().getFactNo()+"&email="+vbm.getSignerNext();	
-		 String emailUrl_in2=URL+"vbm_findById_email2?visaSort="+vbm.getId().getVisaSort()+"&billNo="+vbm.getId().getBillNo()
+		 String emailUrl_in2=pc.getpUrl()+"/vbm_findById_email2?visaSort="+vbm.getId().getVisaSort()+"&billNo="+vbm.getId().getBillNo()
 		         +"&factNo="+vbm.getId().getFactNo()+"&email="+vbm.getSignerNext();
 		 MailSenderInfo mailinfo=new MailSenderInfo();
 		 SimpleMailSender sms = new SimpleMailSender();  
@@ -1365,7 +1374,7 @@ public class GlobalMethod extends HibernateDaoSupport{
 					"<br/>點擊單號直接審核:<a href='"+emailUrl_in2+"'>"+vbm.getId().getBillNo()+"</a>(電腦適用)"+
 					"<br/>點擊單號直接審核:<a href='"+emailUrl_in+"'>"+vbm.getId().getBillNo()+"</a>(手機平板適用)"+
 					"<hr/>"+
-					"如需查詢以往單據請登陸:(云端)<a href='"+URL+"'>"+URL+"</a>" +							
+					"如需查詢以往單據請登陸:(云端)<a href='"+pc.getpUrl()+"'>"+pc.getpUrl()+"</a>" +							
 					"<br/>進入[KPI數據]--[函文審核]查找對應單號審核" +									
 					"<hr/>"+
 					"<br/>本郵件自動發送,請勿回復!如需回復或者問題，請回复到"+EMAIL+"資訊室!<br/>"+
@@ -1392,15 +1401,16 @@ public class GlobalMethod extends HibernateDaoSupport{
 	  * @date 2016/12/26
 	  */
 	 public static void sendEmail_minus(String factNo,String billNo,String visaSort,String email){
+		 ProjectConfig pc=findProjectConfig();
 		 //****************通知下一位签核人***************/
 		 List<String>list=new ArrayList<String>();
 		 list.add(email);
 		 list.add(EMAIL);
 		 SimpleMailSender sms = new SimpleMailSender();
 		 MailSenderInfo mailInfo = new MailSenderInfo();
-  		 String emailUrl_in=URL+"vbm_findById_email?visaSort="+visaSort+"&billNo="+billNo
+  		 String emailUrl_in=pc.getpUrl()+"/vbm_findById_email?visaSort="+visaSort+"&billNo="+billNo
 		         +"&factNo="+factNo+"&email="+email;
-  		String emailUrl_in2=URL+"vbm_findById_email2?visaSort="+visaSort+"&billNo="+billNo
+  		String emailUrl_in2=pc.getpUrl()+"/vbm_findById_email2?visaSort="+visaSort+"&billNo="+billNo
 		         +"&factNo="+factNo+"&email="+email;
   		 
   		 mailInfo.setSubject("函文減簽(下一位審核)_"+billNo+"("+factNo+")");
@@ -1408,7 +1418,7 @@ public class GlobalMethod extends HibernateDaoSupport{
  	    		"函文單號:"+"<span style='color:red'>"+billNo+"</span>"+"&nbsp;&nbsp;廠別:"+factNo+
  	    		"<br/>點擊單號直接審核:<a href='"+emailUrl_in2+"'>"+billNo+"</a>(電腦適用)"+
  	    		"<br/>點擊單號直接審核:<a href='"+emailUrl_in+"'>"+billNo+"</a>(手機平板適用)"+
- 	    		"<br/>如需查詢以往單據請登錄加久網站:((云端))<a href='"+URL2+"'>"+URL2+"</a>" +	            
+ 	    		"<br/>如需查詢以往單據請登錄加久網站:((云端))<a href='"+pc.getpUrl()+"'>"+pc.getpUrl()+"</a>" +	            
  	      		"<br/>進入[KPI數據]--[函文審核]中查找對應單號審核,"+	      	    		
  	    		"<hr/>"+	      		
  	    		"<br/>本郵件自動發送,請勿回復!如需回復或者問題，請回复到"+EMAIL+"資訊室!<br/>" +
@@ -1862,6 +1872,22 @@ public class GlobalMethod extends HibernateDaoSupport{
 		}
 		return result;
 	}
+	
+	/**
+	 * 
+	 * @Title: findProjectConfig
+	 * @Description:獲取項目的全局變量    項目的名稱       項目發佈的地址
+	 * @param @return
+	 * @return ProjectConfig
+	 * @throws
+	 * @author web
+	 * @date 2017/2/27
+	 */
+	public static ProjectConfig findProjectConfig(){
+		ApplicationContext ac=new ClassPathXmlApplicationContext("spring-projectconfig.xml");
+		ProjectConfig pc=(ProjectConfig)ac.getBean("proconfig");
+		return pc;
+	}
 	 
 	 
 	 
@@ -1888,39 +1914,37 @@ public class GlobalMethod extends HibernateDaoSupport{
 			for(Integer ii:list){
 				System.out.print(ii+"\t");
 			}**/
-		 /*List<String>list=new ArrayList<String>();
-		 list.add("04");list.add("02");list.add("01");list.add("02");list.add("03");list.add("01");list.add("ZZ");
-		 for(String kk:list){
-			 System.out.print(kk+"\t");
-		 }
-		 System.out.println("*********************");
-		 for(int i=0;i<list.size()-1;i++){
-			 for(int j=0;j<list.size()-1-i;j++){
-				 if(list.get(j).compareTo(list.get(j+1))>0){
-					 list.add(j,list.get(j+1));
-					 list.add(j+2,list.get(j+1));
-					 list.remove(j+1);
-					 list.remove(j+2);
+								 				 
+		 String requestURL="/Login";
+		 List<String>list=new ArrayList<String>();
+		 List<String>list2=new ArrayList<String>();
+		 list.add("/");list.add("/Login/");list.add("/Login_scm/");
+		 list2.add("userlogin");list2.add("webfact_findAllWebfact");list2.add("loginpage");
+		 list2.add("judge.jsp");list2.add("vbm_findById_email");list2.add("print2Ypoi_print2Y_hb");
+		 list2.add("webfactOrder_print_email");list2.add("login_guest.jsp");list2.add("judge_guest.jsp");
+		 list2.add("userlogout");list2.add("/image");list2.add(".css");
+		 list2.add(".js");list2.add(".html");
+		 for(int i=0;i<list.size();i++){
+			 if(requestURL.equals(list.get(i))){
+				 System.out.println("放行");
+				 break;				
+			 }else if(i==list.size()-1){
+				 for(int j=0;j<list2.size();j++){
+					 if(requestURL.contains(list2.get(j))){
+						 System.out.println("放行");
+						 break;
+					 }else if(j==list2.size()-1){
+						 if("user".equals("")){
+							 System.out.println("放行");
+						 }else{
+							 System.out.println("阻止");
+						 }
+					 }
 				 }
 			 }
 		 }
-		 String dd;
-		 for(String kk:list){
-			 dd=kk;
-			 System.out.print(dd+"\t");
-		 }*/
-		 SimpleDateFormat format=new SimpleDateFormat("yyyyMMdd_HH");
-		 SimpleDateFormat format2=new SimpleDateFormat("yyyyMMdd_hh");
-		 
-		 Date date=format.parse("20170201_13");
-		 System.out.println(format.format(new Date()));
-		 System.out.println(format2.format(new Date()));
-		 ApplicationContext ac=new ClassPathXmlApplicationContext("spring.xml");
-		 ProjectConfig pc=(ProjectConfig)ac.getBean("proconfig");
-		 String pname=pc.getpName();
-		 System.out.println(pname);
-	
-			
+		
+		
 		}
 	 
 	 public static <T> void test_a(T x) throws ClassNotFoundException{
