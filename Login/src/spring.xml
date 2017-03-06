@@ -20,7 +20,8 @@
 	destroy-method="close">
 	<!-- 驱动的名字，oracle -->
 	<property name="driver">
-		<value>oracle.jdbc.driver.OracleDriver</value>
+		<!-- <value>oracle.jdbc.driver.OracleDriver</value> -->
+		<value>oracle.jdbc.OracleDriver</value>
 	</property>
 	<!-- proxool 的 url连接串，这个必须确定用户名和密码 -->
 	<property name="driverUrl">

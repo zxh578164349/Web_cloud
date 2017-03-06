@@ -365,7 +365,10 @@ public class KyzExpectmatmServicesImpl implements IKyzExpectmatmServices {
 		
 		/*函文附檔*/
 		//String pic_file=ServletActionContext.getRequest().getRealPath("/KyzexpFile/"+id.getBillNo()+"/")+"/";//函文附檔圖片路徑(附檔在項目的路徑)
-		String pic_file=new File("d:\\KyzexpFile_backup\\"+billNo).toString();//函文附檔圖片路徑(附檔在D盤的路徑)
+		String pic_file="d:\\KyzexpFile_backup\\"+billNo;//函文附檔圖片路徑(附檔在D盤的路徑)
+		if(!new File("d:\\KyzexpFile_backup\\"+billNo).isDirectory()){
+			pic_file="e:\\KyzexpFile_backup\\"+billNo;
+		}
 		List<KyzExpectmatmFile>list_kyzexpfile=kyzexpfileDao.findByBillNo(billNo);
 		if(pic_file!=null&&list_kyzexpfile.size()>0){
 			map.put("pic_file", pic_file+"\\");

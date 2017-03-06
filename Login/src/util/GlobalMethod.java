@@ -1317,7 +1317,9 @@ public class GlobalMethod extends HibernateDaoSupport{
 				}
 			}
 			
-			String[] attachFileNames = { "d:/" + local_billNo + ".pdf" };// 附件
+			//String[] attachFileNames = { "d:/" + local_billNo + ".pdf" };// 附件
+			String classes_path=(Thread.currentThread().getContextClassLoader().getResource("").getPath()).replace("/WEB-INF/classes","/TEMPFILES/"+local_billNo+".pdf");			
+			String[]attachFileNames={classes_path};//附件路徑20170222
 			SimpleMailSender sms = new SimpleMailSender();
 			MailSenderInfo mailInfo = new MailSenderInfo();
 			
@@ -1335,7 +1337,8 @@ public class GlobalMethod extends HibernateDaoSupport{
 				mailInfo.setToAddress(toAddress);
 				sms.sendHtmlMail(mailInfo);// 发送html格式
 			}//for
-			File file = new File("d:/" + local_billNo + ".pdf");
+			//File file = new File("d:/" + local_billNo + ".pdf");
+			File file=new File(classes_path);
 			if (file.exists()) {
 				if (file.isFile()) {
 					file.delete();
@@ -1914,37 +1917,14 @@ public class GlobalMethod extends HibernateDaoSupport{
 			for(Integer ii:list){
 				System.out.print(ii+"\t");
 			}**/
-								 				 
-		 String requestURL="/Login";
-		 List<String>list=new ArrayList<String>();
-		 List<String>list2=new ArrayList<String>();
-		 list.add("/");list.add("/Login/");list.add("/Login_scm/");
-		 list2.add("userlogin");list2.add("webfact_findAllWebfact");list2.add("loginpage");
-		 list2.add("judge.jsp");list2.add("vbm_findById_email");list2.add("print2Ypoi_print2Y_hb");
-		 list2.add("webfactOrder_print_email");list2.add("login_guest.jsp");list2.add("judge_guest.jsp");
-		 list2.add("userlogout");list2.add("/image");list2.add(".css");
-		 list2.add(".js");list2.add(".html");
-		 for(int i=0;i<list.size();i++){
-			 if(requestURL.equals(list.get(i))){
-				 System.out.println("放行");
-				 break;				
-			 }else if(i==list.size()-1){
-				 for(int j=0;j<list2.size();j++){
-					 if(requestURL.contains(list2.get(j))){
-						 System.out.println("放行");
-						 break;
-					 }else if(j==list2.size()-1){
-						 if("user".equals("")){
-							 System.out.println("放行");
-						 }else{
-							 System.out.println("阻止");
-						 }
-					 }
-				 }
-			 }
+		 File file=new File("d:\\123");
+		 if(file.isDirectory()){
+			 System.out.println("目录存在");
+		 }else{
+			 System.out.println("目录不存在");
+			 file.mkdir();
 		 }
-		
-		
+								 				 		 				
 		}
 	 
 	 public static <T> void test_a(T x) throws ClassNotFoundException{

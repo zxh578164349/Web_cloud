@@ -293,7 +293,10 @@ public class AutoSendKyzAll extends QuartzJobBean{
 				+ fileName);*/
 
 		//ServletOutputStream ouputStream = response.getOutputStream();
-		OutputStream ouputStream=new FileOutputStream("D:/" + defaultname);
+		//OutputStream ouputStream=new FileOutputStream("D:/" + defaultname);
+		String classes_path=Thread.currentThread().getContextClassLoader().getResource("").getPath();			
+		String attachFileNames=classes_path.replace("/WEB-INF/classes","/TEMPFILES/"+defaultname);
+		OutputStream ouputStream=new FileOutputStream(attachFileNames);//文件存放在项目中的临时路径20170301		
 		JasperExportManager.exportReportToPdfStream(jasperPrint, ouputStream);
 		ouputStream.flush();
 		ouputStream.close();
