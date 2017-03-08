@@ -3,20 +3,28 @@ package util;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
+import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.OutputStream;
+import java.io.PrintWriter;
+import java.io.PushbackInputStream;
 import java.math.BigDecimal;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.net.UnknownHostException;
+import java.nio.ByteBuffer;
+import java.nio.charset.Charset;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.ParseException;
@@ -34,6 +42,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.Set;
+import java.util.SortedMap;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -79,6 +89,7 @@ import services.IWebuserEmailServices;
 
 import com.opensymphony.xwork2.ActionContext;
 
+import entity.KyFact;
 import entity.KyVisabillm;
 import entity.KyVisabills;
 import entity.KyzExpectmatmLog;
@@ -93,6 +104,7 @@ import entity.WeballobjId;
 import entity.Webestproduct;
 import entity.WebestproductId;
 import entity.custom.ProjectConfig;
+import entity_temp.VisabillsTemp;
 
 
 public class GlobalMethod extends HibernateDaoSupport{
@@ -1916,14 +1928,27 @@ public class GlobalMethod extends HibernateDaoSupport{
 			}
 			for(Integer ii:list){
 				System.out.print(ii+"\t");
-			}**/
-		 File file=new File("d:\\123");
-		 if(file.isDirectory()){
-			 System.out.println("目录存在");
-		 }else{
-			 System.out.println("目录不存在");
-			 file.mkdir();
-		 }
+			}**/		 		 
+		try {
+			KyFact temp=new KyFact();
+			KyFact temp2=new KyFact();
+			temp.setFactCname("aa");
+			temp2.setFactCname("bb");
+			ObjectOutputStream os=new ObjectOutputStream(new FileOutputStream("g:\\file.dat"));
+			os.writeObject(temp);
+			os.writeObject(temp2);
+			ObjectInputStream is=new ObjectInputStream(new FileInputStream("g:\\file.dat"));
+			KyFact fact=(KyFact)is.readObject();
+			KyFact fact2=(KyFact)is.readObject();
+			System.out.println(fact.getFactCname());
+			System.out.println(fact2.getFactCname());
+			
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 								 				 		 				
 		}
 	 

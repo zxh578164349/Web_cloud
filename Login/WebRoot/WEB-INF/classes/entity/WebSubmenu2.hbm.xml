@@ -19,6 +19,9 @@
         <property name="subtype" type="java.lang.String">
             <column name="SUBTYPE" length="20" />
         </property>
+        <property name="enableMk" type="java.lang.String">
+            <column name="ENABLE_MK" length="2"/>
+        </property>
         <many-to-one name="menu" class="entity.WebMenu">
           <column name="MENUID" precision="8" scale="0" not-null="true" />
         </many-to-one>

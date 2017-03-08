@@ -124,6 +124,8 @@ public class SessionTimeOutFilter implements Filter{
 								if(requestURL.contains(arr_a[1])){//arr_a[1]:/Login_scm/
 									httpresponse.getWriter().print("<script>window.parent.alert('會話超時或地址無效,請重新登錄');window.location.href='judge_guest.jsp'</script>");
 								}
+							}else{
+								chain.doFilter(request,response);
 							}
 						}else{
 							chain.doFilter(request,response);

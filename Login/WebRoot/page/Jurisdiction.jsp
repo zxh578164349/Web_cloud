@@ -45,7 +45,12 @@
 			      </td>
 			      <td>
 			        <s:iterator value="submenus">
-			            <input type="checkbox" name="checkbox" value="<s:property value='menuname'/>,<s:property value='submenuname'/>,<s:property value='address'/>,<s:property value='menuid'/>,<s:property value='typeMk'/>"/>            
+			          <s:if test='enableMk=="1"'>
+			             <input type="checkbox" name="checkbox_1" disabled/>
+			          </s:if>
+			          <s:else>
+			             <input type="checkbox" name="checkbox" value="<s:property value='menuname'/>,<s:property value='submenuname'/>,<s:property value='address'/>,<s:property value='menuid'/>,<s:property value='typeMk'/>"/>  
+			          </s:else>		                      
 			            <s:property value="submenuname" />&nbsp;
 			        </s:iterator>
 			        
@@ -65,31 +70,7 @@
 			</tr>
 		</table>
 	</form>
-	
-	<!-- <s:if test='#session.jurisdiction_user.userType=="0"'>
-	    <form id="subform2">
-	    <table class="table table-striped table-hover table-bordered">
-	      <tr>
-			      <td>操作權限</td>
-			      <td>
-			      
-			      <div id="div_checkbox2">			              
-			      </div>   					          
-			      <s:iterator value="#session.jurisdiction_user.webOperationToUsers">	
-			              <input type="hidden" value="<s:property value='webUserOperation.id'/>" name="checkbox_hidden2"/>
-		          </s:iterator>			          
-			      </td>			      
-			   </tr>
-			   <tr>
-				<td colspan="2">
-				<input  value="確認" id="btn_operation" type="button" class="btn btn-primary">				
-				</td>
-			</tr>
-	    </table>
-	   </form>
-	</s:if>-->
-	
-	
+		
 <script type="text/javascript">		
 function getSub(){    
    jq.ajax({
