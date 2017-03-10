@@ -18,12 +18,8 @@
 		    <result name="judge">judge.jsp</result>
 		</action>				
 		
-		<action name="menu_*" class="webMenuAction" method="{1}">
-			<result name="findAllMenu">test.jsp</result>
-		</action>
-		<action name="user*" class="webUserAction" method="{1}">
-			<!-- <result name="chengong" type="redirectAction">menu_findAllMenu</result>  -->
-			<result name="chengong">test.jsp</result>		   			
+		
+		<action name="user*" class="webUserAction" method="{1}">								   			
 			<result name="initialUpdate">page/updateData.jsp</result>
 			<result name="initialUpdate_guest">guest/page/updateData.jsp</result>
 			<result name="all">page/managerUser.jsp</result>
@@ -57,8 +53,6 @@
 			<result name="titleSuccess">page/show.jsp</result>
 		</action>
 	
-		<action name="print2Y_*" class="preAndDataAction" method="{1}">
-		</action>
 		<action name="ypre_*" class="ypreAction" method="{1}">
 			<result name="addYPre" type="redirectAction">ypre_findPageBean</result>
 			<result name="fails">none.jsp</result>

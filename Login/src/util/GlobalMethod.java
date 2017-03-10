@@ -21,6 +21,8 @@ import java.io.PushbackInputStream;
 import java.math.BigDecimal;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.nio.ByteBuffer;
@@ -1906,51 +1908,58 @@ public class GlobalMethod extends HibernateDaoSupport{
 	 
 	 
 	 
-	 public static void main(String[] args) throws ParseException, FileNotFoundException, ScriptException, NoSuchMethodException, ClassNotFoundException {
-			/**集合排序
-		    List<Integer>list=new ArrayList<Integer>();
-			list.add(1);list.add(1);list.add(2);list.add(2);list.add(3);list.add(3);
-			list.add(1);list.add(1);list.add(1);list.add(2);list.add(2);list.add(2);
-			for(Integer ii:list){
-				System.out.print(ii+"\t");
-			}
-			System.out.println("*****************");
-			for(int i=0;i<list.size()-1;i++){
-				for(int j=0;j<list.size()-1-i;j++){
-					if(list.get(j)>list.get(j+1)){
-						list.add(j,list.get(j+1));
-						list.add(j+2,list.get(j+1));
-						list.remove(j+1);
-						list.remove(j+2);
-					}
-				}
-				
-			}
-			for(Integer ii:list){
-				System.out.print(ii+"\t");
-			}**/		 		 
-		try {
-			KyFact temp=new KyFact();
-			KyFact temp2=new KyFact();
-			temp.setFactCname("aa");
-			temp2.setFactCname("bb");
-			ObjectOutputStream os=new ObjectOutputStream(new FileOutputStream("g:\\file.dat"));
-			os.writeObject(temp);
-			os.writeObject(temp2);
-			ObjectInputStream is=new ObjectInputStream(new FileInputStream("g:\\file.dat"));
-			KyFact fact=(KyFact)is.readObject();
-			KyFact fact2=(KyFact)is.readObject();
-			System.out.println(fact.getFactCname());
-			System.out.println(fact2.getFactCname());
-			
-			
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	 public static void main(String[] args) {
+			try{
+				int i=0;
+				ServerSocket s=new ServerSocket(7019);
+				while(true){
+					System.out.println("Swapning"+i);
+					Socket incoming=s.accept();
+					Runnable r=new ThreadEcohHandler(incoming);
+					Thread th=new Thread(r);
+					th.start();
+					i++;
+					
+				}								
+			}catch(IOException e){
+				e.printStackTrace();
+			}	 		 
+		
 		
 								 				 		 				
 		}
+	 
+	 static class ThreadEcohHandler implements Runnable{
+		 private Socket incomming;
+		 public ThreadEcohHandler(Socket i){
+			 this.incomming=i;
+		 }
+		 public void run(){
+			 try{
+				 try{						
+						InputStream is=incomming.getInputStream();
+						OutputStream os=incomming.getOutputStream();
+						Scanner scn=new Scanner(is);
+						PrintWriter pw=new PrintWriter(os,true);
+						boolean flag=false;
+						pw.println("print BYE to exit!");
+						while(!flag&&scn.hasNextLine()){
+							pw.println("Echo"+scn.nextLine());
+							if(scn.nextLine().equals("BYE")){
+								flag=true;
+							}
+						}						
+					} 
+					finally{
+						incomming.close();
+					}
+			 }catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			
+		 }
+	 }
 	 
 	 public static <T> void test_a(T x) throws ClassNotFoundException{
 		 System.out.println(x+"getClass類型："+x.getClass().getName());

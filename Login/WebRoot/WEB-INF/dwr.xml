@@ -113,11 +113,7 @@
 		    <param name="beanName" value="dataSer"/>
 		    <include method="check"/>
 		    <include method="findNums"/>
-		</create>
-		<create javascript="webyprejs" creator="spring">
-		    <param name="beanName" value="preSer"/>
-		    <include method="check"/>
-		</create>
+		</create>		
 		<create javascript="kyzvisaflowjs" creator="spring">
 		    <param name="beanName" value="visaSer"/>
 		    <include method="findByType_Dwr"/>

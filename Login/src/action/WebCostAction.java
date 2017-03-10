@@ -24,7 +24,6 @@ import com.opensymphony.xwork2.ActionSupport;
 
 import entity.KyzExpectmatmLog;
 import entity.WebUser;
-import entity.WebYielePrediction;
 import entity.Webcost;
 import entity.WebcostId;
 

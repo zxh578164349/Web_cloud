@@ -105,29 +105,11 @@
 				<value>entity/WebUser.hbm.xml</value>
 				<value>entity/WebMenu.hbm.xml</value>
 				<value>entity/WebJurisdiction.hbm.xml</value>
-				<value>entity/WebLog.hbm.xml</value>
-				<value>entity/WebMats.hbm.xml</value>
-				<value>entity/WebBackmat.hbm.xml</value>
-				<value>entity/WebCpstore.hbm.xml</value>
-				<value>entity/WebOutback.hbm.xml</value>
-				<value>entity/WebPerson.hbm.xml</value>
-				<value>entity/WebZwcash.hbm.xml</value>
-				<value>entity/WebMachin.hbm.xml</value>
-				<value>entity/WebPfavgprice.hbm.xml</value>
-				<value>entity/WebProfit.hbm.xml</value>
-				<value>entity/WebOutputinv.hbm.xml</value>
-				<value>entity/WebMatstore.hbm.xml</value>
-				<value>entity/WebBackpf.hbm.xml</value>
-				<value>entity/WebGw.hbm.xml</value>
-				<value>entity/WebProfitcount.hbm.xml</value>
-				<value>entity/WebMats2.hbm.xml</value>
-				<value>entity/WebSide.hbm.xml</value>
+				<value>entity/WebLog.hbm.xml</value>																
+				<value>entity/WebPerson.hbm.xml</value>																																								
 				<value>entity/KyFact.hbm.xml</value>
 				<value>entity/WebFixed.hbm.xml</value>
-				<value>entity/WebJurs.hbm.xml</value>
-				<value>entity/WebDistributionsub.hbm.xml</value>
-				<value>entity/WebDistribution.hbm.xml</value>
-				<value>entity/WebYielePrediction.hbm.xml</value>
+				<value>entity/WebJurs.hbm.xml</value>								
 				<value>entity/WebYieldData.hbm.xml</value>
 				<value>entity/WebFact.hbm.xml</value>
 				<value>entity/Webproduted.hbm.xml</value>

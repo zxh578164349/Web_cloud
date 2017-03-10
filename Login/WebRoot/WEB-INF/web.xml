@@ -22,13 +22,7 @@ version="2.5">
   <listener>
     <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
   </listener>  
-  
-<!--    <listener>
-    <listener-class>action.TestTimerAction</listener-class>
-  </listener>
-  <listener>
-  <listener-class>util.SessionListener</listener-class>
-  </listener> -->
+ 
    <!-- 解决延迟加载的问题 -->
   
 <!--  <filter>  
