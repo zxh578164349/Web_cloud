@@ -173,7 +173,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 					<tr>
 					    <td class="tdcolor">申請內容</td>	
 						<td  colspan="10">
-				           <textarea style="width:810px;height:240px" name="kyzletter.memoMk"  wrap="off"   tip="申請內容" altercss="gray" class="gray"><s:property value="kyzletter.memoMk"/></textarea>				                                           				         				           				           
+				           <textarea style="width:810px;height:240px" name="kyzletter.memoMk"  wrap="off"   tip="申請內容" altercss="gray" class="gray" datatype="*"><s:property value="kyzletter.memoMk"/></textarea>				                                           				         				           				           
 				           <input type="hidden" value="<s:property value='kyzletter.filesYn'/>" name="kyzletter.filesYn"/>
 				           <input type="hidden" value="<s:property value='kyzletter.firstPage'/>" name="kyzletter.firstPage"/>
 				        </td>

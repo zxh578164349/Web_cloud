@@ -1309,7 +1309,7 @@ public class GlobalMethod extends HibernateDaoSupport{
 			List<KyVisabills>list_visa2=vbm2.getKyVisabillses();
 			//这个类主要是设置邮件   
 			List<String>list_emails=new ArrayList<String>();//所有發送人
-			list_emails.add(EMAIL);
+			//list_emails.add(EMAIL);
 			//由於出差函文流程中可能不包括申請人， 所有需要從函文中獲取申請email 20160621
 			if(vbm2.getId().getBillNo().substring(0,2).equals("BM")){
 				if(vbm2.getWebbussletter().getUserEmail()!=null&&!vbm2.getWebbussletter().getUserEmail().equals("")){

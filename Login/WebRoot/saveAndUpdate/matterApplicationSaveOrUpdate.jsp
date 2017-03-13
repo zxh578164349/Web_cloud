@@ -174,9 +174,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 					<tr>
 					    <td class="tdcolor">申請內容</td>	
 						<td  colspan="10">
-				           <textarea style="width:100%;height:120px" name="kyz.memoMk"  wrap="off"   tip="申請內容" altercss="gray" class="gray"><s:property value="kyz.memoMk"/></textarea>				                                           				         
-				           
-				           
+				           <textarea style="width:100%;height:120px" name="kyz.memoMk"  wrap="off"   tip="申請內容" altercss="gray" class="gray" datatype="*" id="memoMk"><s:property value="kyz.memoMk"/></textarea>				                                           				         				           			           
 				           <input type="hidden" value="<s:property value='kyz.filesYn'/>" name="kyz.filesYn"/>
 				           <input type="hidden" value="<s:property value='maxNum'/>" id="maxNum"/>
 				        </td>
@@ -273,6 +271,14 @@ jq(function() {
 		});
 		demo.tipmsg.w["my0-8"]="只能數字且不超過8位數,可保留四位以內小數";
 		demo.tipmsg.w["my0-12"]="只能數字且不超過12位數,可保留四位以內小數";
+		
+		jq(":radio").click(function(){			
+			if(jq(this).val()=="0"){
+				jq("#memoMk").attr("datatype","*");
+			}else{
+				jq("#memoMk").removeAttr("datatype");
+			}
+		});
 	});
 		
 	/*function checkForm(index){
@@ -414,11 +420,7 @@ var j=0;
 	function getFactCode(){
 	    document.getElementById("dwrFactArea").value=document.getElementById("kyzs_factcode").value;
 	}
-   function getKyType(){
-	  /*  kytypejs.findByTypeNo("VV",function(x){
-	         dwr.util.addOptions("dwr_kytype",x,"typeName","typeSname");
-	   }); */
-	 
+   function getKyType(){	 	 
 	 var factno=document.getElementById("dwrFactNo").value;
 	 if(factno!=null&&factno!=""){
 	     webtypejs.findByFactNo3(factno,function(x){//過濾出差類"TR"20160203
@@ -502,30 +504,7 @@ function getKyType2(factno){
                   }
                   
                }); 
-            }
-            
-           /* else if(type.charAt(0)=='C'){//如果流程是C类（C1,C2....）  ,则要 根据申请人来选择审核流程的代号        
-                kyzvisaflowjs.findVisaSort_dwr(dwrFactNo,type,dwremail,function(y){
-                  if(y==null){
-                     alert("對不起，你不是該類別函文申請人，請重新選定!");
-                     document.getElementById("sub").disabled=true;
-                     document.getElementById("sub").style.color="red";
-                     document.getElementById("dwr_kytype").style.color="red";                    
-                  }else{
-                     document.getElementById("sub").disabled=false;
-                     document.getElementById("sub").style.color="white";
-                     document.getElementById("dwr_kytype").style.color="black";
-                     document.getElementById("hidden_kytype").value=y;                    
-                  }
-                  
-               }); 
-            } else{//如果流程是非C类，则不需要根据申请人选择流程
-                document.getElementById("sub").disabled=false;
-                document.getElementById("sub").style.color="white";
-                document.getElementById("dwr_kytype").style.color="black";
-                document.getElementById("hidden_kytype").value=type;
-            } */
-            
+            }                               
          });
      }
   }
@@ -536,29 +515,6 @@ function getKyType2(factno){
         
      }
   }
-
-/*function lookJson(billNo,id,filename,factNo){
-   jq.ajax({
-      type:"get",
-      dataType:"json",
-      url:"kyzfile_findKyzFileJson",
-      data:{"billNo":billNo,"id":id,"filename":filename,"factNo":factNo},
-      success:function(files){
-         jq("#fileJson").html("");
-          var item="";
-          var item_url;
-         jq.each(files,function(i,file){
-            item_url="javascript:lookJson('"+file.billno+"',"+file.id+",'"+file.filename+"','"+file.factNo+"')";
-            item+="<a href='/upload/"+file.billno+"/"+file.filename+"' target='_blank' title='點擊查看'>"+file.filename+            
-            "</a>"+
-            "<a href="+item_url+"><img src='images/icon/del_file.png' alt='刪除' title='刪除' style='border:0px'/></a>&nbsp;";           
-         }); 
-         jq("#fileJson").append(item);
-      }
-   })
-}*/
-
-
 function back(){
 	
 	loadUrl("kyz_findPageBean3?backIndex=1");
@@ -571,6 +527,7 @@ function gook(){
 function lookPic(url){
 	window.location.href=url;
 }
+
 </script>
 <script type='text/javascript' src='dwr/interface/kyzjs.js'></script>
 <script type='text/javascript' src='dwr/interface/webfactjs.js'></script>
