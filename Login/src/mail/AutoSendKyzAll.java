@@ -337,6 +337,14 @@ public class AutoSendKyzAll extends QuartzJobBean{
 			e.printStackTrace();
 		}
 		export(lists, parameters, exportType, defaultFilename, is);
+		if(is!=null){
+			try {
+				is.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	

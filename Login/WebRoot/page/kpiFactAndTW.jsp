@@ -128,21 +128,20 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	   } 	  
 	}
 	
-function checkdate(){
-     var factno=document.getElementById("factNo").value;
-     var year=document.getElementById("year").value;
-     document.getElementById("dwr_yymm").length=0;
-     if(factno!=""&&year!=""){
-        kpifactjs.findDateByFactNo(factno,year,function        
-            dwr.util.addOptions("dwr_yymm", x);
-        });
-  	   
-</script>
-<script type='text/javascript' src='drface/kpifactjs.js'></script>
-<script type='text/javascript' src='dwr/engine.js'></script>
-<script type='text/javascript' src='dwr/util.js'></script>
 
-  </head>
+function checkdate(){
+    var factno=document.getElementById("factNo").value;
+    var year=document.getElementById("year").value;
+    document.getElementById("dwr_yymm").length=0;
+    if(factno!=""&&year!=""){
+       kpifactjs.findDateByFactNo(factno,year,function(x){           
+           dwr.util.addOptions("dwr_yymm", x);
+       });
+    }
+}
+</script>
+<script type='text/javascript' src='dwr/interface/kpifactjs.js'></script>
+</head>
   
   <body>
   <h2>KPI-工廠</h2>

@@ -272,6 +272,14 @@ public class JasperHelper{
 		 * is=new ByteArrayInputStream(bytes);
 		 */
 		export(lists,parameters,exportType,defaultFilename,is,request,response);
+		if(is!=null){
+			try {
+				is.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 
 	private String encodingFileName(String fileName){
