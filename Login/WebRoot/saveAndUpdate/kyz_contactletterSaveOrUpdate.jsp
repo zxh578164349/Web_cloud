@@ -110,7 +110,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 				   <s:else>
 				      <td class="tdcolor">廠別</td>				      
 				      <td>
-				      <input type="text" name="kyzletter.id.factNo" value="<s:property value='kyzletter.id.factNo'/>" readonly style="color:blue" />
+				      <input type="text" name="kyzletter.id.factNo" value="<s:property value='kyzletter.id.factNo'/>" readonly style="color:blue" id="dwrFactNo"/>
 				      <input type="hidden" name="isnull" value="notNull"/><!--判斷變量 -->
 				      </td>
 				     
@@ -173,7 +173,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 					<tr>
 					    <td class="tdcolor">申請內容</td>	
 						<td  colspan="10">
-				           <textarea style="width:810px;height:240px" name="kyzletter.memoMk"  wrap="off"   tip="申請內容" altercss="gray" class="gray" datatype="*"><s:property value="kyzletter.memoMk"/></textarea>				                                           				         				           				           
+				           <textarea style="width:810px;height:240px" name="kyzletter.memoMk"  wrap="off"   tip="申請內容" altercss="gray" class="gray" id="memoMk" datatype="*"><s:property value="kyzletter.memoMk"/></textarea>				                                           				         				           				           
 				           <input type="hidden" value="<s:property value='kyzletter.filesYn'/>" name="kyzletter.filesYn"/>
 				           <input type="hidden" value="<s:property value='kyzletter.firstPage'/>" name="kyzletter.firstPage"/>
 				        </td>
@@ -226,6 +226,13 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 		});
 		demo.tipmsg.w["*0-6"] = "只能數字且不超過9位數,可保留三位以內小數";
 		demo.tipmsg.w["my0-8"]="只能數字且不超過8位數,可保留四位以內小數";
+		
+		if(jq("#dwrFactNo").val()="YMUS"){
+			jq("#memoMk").attr("datatype","*40-2000");
+		}else{
+			jq("#memoMk").attr("datatype","*");
+		}
+		
 	});
 
 	function getFactArea(mid) {

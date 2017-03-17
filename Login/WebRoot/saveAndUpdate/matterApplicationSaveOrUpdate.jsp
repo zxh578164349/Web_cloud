@@ -174,7 +174,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 					<tr>
 					    <td class="tdcolor">申請內容</td>	
 						<td  colspan="10">
-				           <textarea style="width:100%;height:120px" name="kyz.memoMk"  wrap="off"   tip="申請內容" altercss="gray" class="gray" datatype="*" id="memoMk"><s:property value="kyz.memoMk"/></textarea>				                                           				         				           			           
+				           <textarea style="width:100%;height:120px" name="kyz.memoMk"  wrap="off"   tip="申請內容" altercss="gray" class="gray"  id="memoMk" datatype="*"><s:property value="kyz.memoMk"/></textarea>				                                           				         				           			           
 				           <input type="hidden" value="<s:property value='kyz.filesYn'/>" name="kyz.filesYn"/>
 				           <input type="hidden" value="<s:property value='maxNum'/>" id="maxNum"/>
 				        </td>
@@ -272,13 +272,23 @@ jq(function() {
 		demo.tipmsg.w["my0-8"]="只能數字且不超過8位數,可保留四位以內小數";
 		demo.tipmsg.w["my0-12"]="只能數字且不超過12位數,可保留四位以內小數";
 		
+		
+		if(jq("#dwrFactNo").val()=="YMUS"){
+			jq("#memoMk").attr("datatype","*40-2000");
+		}else{
+			jq("#memoMk").attr("datatype","*");
+		}
 		jq(":radio").click(function(){			
 			if(jq(this).val()=="0"){
-				jq("#memoMk").attr("datatype","*");
+				if(jq("#dwrFactNo").val()=="YMUS"){
+					jq("#memoMk").attr("datatype","*40-2000");
+				}else{
+					jq("#memoMk").attr("datatype","*");
+				}
 			}else{
 				jq("#memoMk").removeAttr("datatype");
 			}
-		});
+		});				
 	});
 		
 	/*function checkForm(index){
