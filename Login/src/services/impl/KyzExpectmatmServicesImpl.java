@@ -128,9 +128,9 @@ public class KyzExpectmatmServicesImpl implements IKyzExpectmatmServices {
 	}
 
 	public PageBean findPageBean(int pageSize, int page, String factNo,
-			String visaSort,String billNo,WebUser user,String timeCreate,String timeCreate2) {
+			String visaSort,String billNo,WebUser user,String timeCreate,String timeCreate2,String title) {
 		// TODO Auto-generated method stub
-		return kyzDao.findFixWithPage(pageSize, page, factNo, visaSort,billNo,user,timeCreate,timeCreate2);
+		return kyzDao.findFixWithPage(pageSize, page, factNo, visaSort,billNo,user,timeCreate,timeCreate2,title);
 	}
 
 	public void delete(KyzExpectmatmId id,KyzExpectmatmLog delLog) {

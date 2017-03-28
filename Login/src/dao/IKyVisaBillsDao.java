@@ -33,7 +33,7 @@ public interface IKyVisaBillsDao {
 	 * @author web
 	 * @date 2016/5/20
 	 */
-	public PageBean findPageBean(int pageSize,int page,String visaMk,String factNo,String billNo,String visaSort,String createDate,String createDate2,WebUser user);
+	public PageBean findPageBean(int pageSize,int page,String visaMk,String factNo,String billNo,String visaSort,String createDate,String createDate2,WebUser user,String title,String bigType);
 	public List<KyVisabills> findByFNN(String factNo,String userName);
 	/**
 	 * 函文審核
@@ -54,7 +54,7 @@ public interface IKyVisaBillsDao {
 	 * @author web
 	 * @date 2016/5/20
 	 */
-	public PageBean findPageBean_tw(int pageSize,int page,String visaMk,String factNo,String billNo,String visaSort,String createDate,String createDate2, WebUser user);
+	public PageBean findPageBean_tw(int pageSize,int page,String visaMk,String factNo,String billNo,String visaSort,String createDate,String createDate2, WebUser user,String title,String bigType);
 	public int findKyVisaBills_Int(String factNo,String email);
 	
 	public int findBillsWithNo(String visaSort,String billNo);
@@ -62,6 +62,6 @@ public interface IKyVisaBillsDao {
 	public void delete(KyVisabills bils);
 	
 	public List<KyVisabills> findtoprint(String visaMk, String factNo, String billNo, String visaSort,
-			String createDate, String createDate2,WebUser user);
+			String createDate, String createDate2,WebUser user,String title,String bigType);
 
 }

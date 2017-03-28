@@ -81,6 +81,19 @@
 												</s:else> <input type="radio" value="Y" name="visaMk" />已審核| <input type="radio" value="N" name="visaMk" checked="checked" />未審核| <input
 												type="radio" value="T" name="visaMk" />未通過</td>
 										</tr>
+										<tr><th>標題</th></tr>
+										<tr>										   
+										   <td>	
+										     <div class="panel panel-primary">									      
+										          <input type="text" name="title" placeholder="標題" id="p_title" onblur="checktitle()"/>
+										          <div style="display:none" id="div_ptitle">
+										             <input type="radio" name="bigType" value="EM" checked/>普通函文 | 
+										             <input type="radio" name="bigType" value="CM"/>內部函文	
+										          </div>
+										          
+										     </div>     								      
+										   </td>
+										</tr>
 									</table>
 								</div>
 							</div>
@@ -90,6 +103,18 @@
 			</tr>
 		</table>
 	</form>
+	
+<script type="text/javascript">
+   function checktitle(){
+	   if(jq("#p_title").val().trim()!=""){
+		   jq("#div_ptitle").css("display","block");
+	   }else{
+		   jq("#div_ptitle").css("display","none");
+	   }
+   }
+</script>	
+	
+	
 </body>
 </html>
 

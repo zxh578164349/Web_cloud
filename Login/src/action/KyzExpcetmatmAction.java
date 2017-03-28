@@ -82,7 +82,15 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
     
     
     
-    public InputStream getFileInput2(){
+    public String getTitle(){
+		return title;
+	}
+
+	public void setTitle(String title){
+		this.title=title;
+	}
+
+	public InputStream getFileInput2(){
 		return fileInput2;
 	}
 
@@ -279,14 +287,6 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 
 	public final void setFactCode(String factCode) {
 		this.factCode = factCode;
-	}
-
-	public final String getTitle() {
-		return title;
-	}
-
-	public final void setTitle(String title) {
-		this.title = title;
 	}
 
 	public IWebFactServices getWebFactSer() {
@@ -630,37 +630,24 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 		ActionContext.getContext().getSession().remove("public_billNo");
 		ActionContext.getContext().getSession().remove("public_timeCreate");
 		ActionContext.getContext().getSession().remove("public_timeCreate2");
+		ActionContext.getContext().getSession().remove("public_title");
 		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
 		factNo = (String) ActionContext.getContext().getSession().get("factNo");
-		bean = kyzSer.findPageBean(20,page, factNo, visaSort,billNo,user,yymmdd,yymmdd2);
+		bean = kyzSer.findPageBean(20,page, factNo, visaSort,billNo,user,yymmdd,yymmdd2,title);
 		this.getTypeName(bean);
 		return "beanList";
 	}
 
 	public String findPageBean2() {
-		//ActionContext.getContext().getApplication().clear();
-		ActionContext.getContext().getSession().remove("public_factno");
-		ActionContext.getContext().getSession().remove("public_visaSort");
-		ActionContext.getContext().getSession().remove("public_billNo");
-		ActionContext.getContext().getSession().remove("public_timeCreate");
-		ActionContext.getContext().getSession().remove("public_timeCreate2");
-		if (factNo != null && !factNo.equals("") && !factNo.equals("tw")) {
+		//ActionContext.getContext().getApplication().clear();				
 			ActionContext.getContext().getSession().put("public_factno", factNo);					
-		}
-		if (visaSort != null && !visaSort.equals("")) {
 			ActionContext.getContext().getSession().put("public_visaSort", visaSort);
-		}
-		if(billNo!=null&&!billNo.equals("")){
-			ActionContext.getContext().getSession().put("public_billNo", billNo.trim());
-		}
-		if(yymmdd!=null&&!yymmdd.equals("")){
+			ActionContext.getContext().getSession().put("public_billNo", billNo);
 			ActionContext.getContext().getSession().put("public_timeCreate", yymmdd);
-		}
-		if(yymmdd2!=null&&!yymmdd2.equals("")){
 			ActionContext.getContext().getSession().put("public_timeCreate2", yymmdd2);
-		}
+			ActionContext.getContext().getSession().put("public_title",title);
 		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
-		bean = kyzSer.findPageBean(20,page, factNo, visaSort,billNo.trim(),user,yymmdd,yymmdd2);
+		bean = kyzSer.findPageBean(20,page, factNo, visaSort,billNo,user,yymmdd,yymmdd2,title);
 		this.getTypeName(bean);
 		return "beanList1";
 	}
@@ -675,11 +662,9 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 		billNo=(String)ActionContext.getContext().getSession().get("public_billNo");
 		yymmdd=(String)ActionContext.getContext().getSession().get("public_timeCreate");
 		yymmdd2=(String)ActionContext.getContext().getSession().get("public_timeCreate2");
-		if (factNo == null || factNo.equals("") || factNo.equals("tw")){
-			factNo = (String) ActionContext.getContext().getSession().get("factNo");					
-		}
+		title=(String)ActionContext.getContext().getSession().get("public_title");
 		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
-		bean = kyzSer.findPageBean(20,page, factNo, visaSort,billNo,user,yymmdd,yymmdd2);
+		bean = kyzSer.findPageBean(20,page, factNo, visaSort,billNo,user,yymmdd,yymmdd2,title);
 		this.getTypeName(bean);
 		return result;
 	}

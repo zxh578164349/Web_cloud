@@ -104,6 +104,13 @@ function tips(memo,index){
 	   }
 	   jq("#"+subform).submit();
 } */
+
+function print(subform){
+	var subform=jq("#"+subform);
+	subform.attr("action","vbm_printList");
+	subform.attr("target","_blank");
+	subform.submit();
+}
 </script>
 <script type='text/javascript' src='dwr/interface/webtypejs.js'></script>
 

@@ -11,7 +11,7 @@ import entity.WebUser;
 
 public interface IKyzContactLetterServices {
 	public void add(KyzContactletter letter);
-	public PageBean findPageBean(int pageSize, int page, String factNo,String visaSort,String billNo,WebUser user,String timeCreate,String timeCreate2);			
+	public PageBean findPageBean(int pageSize, int page, String factNo,String visaSort,String billNo,WebUser user,String timeCreate,String timeCreate2,String title);			
 	public String makeBillNo(String factNo, String timeCreate);
 	public KyzContactletter findById(String factNo, String billNo);
 	public void delete(String factNo,String billNo,KyzExpectmatmLog delLog);

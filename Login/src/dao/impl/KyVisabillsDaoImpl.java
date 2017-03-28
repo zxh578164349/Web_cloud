@@ -42,8 +42,11 @@ public class KyVisabillsDaoImpl extends Basedao implements IKyVisaBillsDao{
 	 */
 	public PageBean findPageBean(int pageSize, int page,
 			String visaMk, String factNo, String billNo, String visaSort,
-			String createDate, String createDate2,WebUser user) {
+			String createDate, String createDate2,WebUser user,String title,String bigType) {
 		// TODO Auto-generated method stub
+		if(factNo==null||"".equals(factNo)||"nothing".equals(factNo)){
+			factNo=user.getFactno();
+		}
 		String adminMk=user.getAdminMk();
 		String email=user.getEmail();		
 		if(email==null||email.equals("")){
@@ -66,7 +69,7 @@ public class KyVisabillsDaoImpl extends Basedao implements IKyVisaBillsDao{
 			hql.append(" and id.kyVisabillm.visaMk=:visamk");
 			map.put("visamk", visaMk);
 		}
-		if(factNo!=null&&!factNo.equals("")&&!factNo.equals("tw")&&!factNo.equals("nothing")){
+		if(factNo!=null&&!factNo.equals("")&&!factNo.equals("tw")){
 			hql.append(" and id.kyVisabillm.id.factNo=:factno");
 			map.put("factno", factNo);
 		}
@@ -87,13 +90,22 @@ public class KyVisabillsDaoImpl extends Basedao implements IKyVisaBillsDao{
 			hql.append(" and id.kyVisabillm.dateCreate<=:createdate2");
 			map.put("createdate2", createDate2);
 		}
-		if(factNo.equals("nothing")&&(visaMk==null||visaMk.equals(""))&&(billNo==null||billNo.equals(""))
+		/*if(factNo.equals("nothing")&&(visaMk==null||visaMk.equals(""))&&(billNo==null||billNo.equals(""))
 				&&(visaSort.equals("nothing")||visaSort==null||visaSort.equals(""))
 				&&(createDate==null||createDate.equals(""))
 				&&(createDate2==null||createDate2.equals(""))){
 			hql.append(" and id.kyVisabillm.id.factNo=:factno");
 			map.put("factno", factNo);
-		}		
+		}*/	
+		if(title!=null&&!"".equals(title)){
+			if("EM".equals(bigType)){
+				hql.append(" and id.kyVisabillm.kyzexp.memoSmk like:title");
+			}
+			if("CM".equals(bigType)){
+				hql.append(" and id.kyVisabillm.kyzletter.title like:title");
+			}
+			map.put("title","%"+title+"%");
+		}
 		hql.append(STR);
 		hql2.append(hql);
 		hql.append(" order by id.kyVisabillm.id.factNo desc,id.kyVisabillm.dateCreate desc,id.kyVisabillm.id.billNo desc");
@@ -129,7 +141,10 @@ public class KyVisabillsDaoImpl extends Basedao implements IKyVisaBillsDao{
 	}
 	
 	public List<KyVisabills> findtoprint(String visaMk, String factNo, String billNo, String visaSort,
-			String createDate, String createDate2,WebUser user){
+			String createDate, String createDate2,WebUser user,String title,String bigType){
+		if(factNo==null||"".equals(factNo)||"nothing".equals(factNo)){
+			factNo=user.getFactno();
+		}
 		String adminMk=user.getAdminMk();
 		String email=user.getEmail();		
 		if(email==null||email.equals("")){
@@ -155,7 +170,7 @@ public class KyVisabillsDaoImpl extends Basedao implements IKyVisaBillsDao{
 			hql.append(" and id.kyVisabillm.visaMk=:visamk");
 			map.put("visamk", visaMk);
 		}
-		if(factNo!=null&&!factNo.equals("")&&!factNo.equals("tw")&&!factNo.equals("nothing")){
+		if(factNo!=null&&!factNo.equals("")&&!factNo.equals("tw")){
 			hql.append(" and id.kyVisabillm.id.factNo=:factno");
 			map.put("factno", factNo);
 		}
@@ -175,13 +190,22 @@ public class KyVisabillsDaoImpl extends Basedao implements IKyVisaBillsDao{
 			hql.append(date_temp+"<=:createdate2");
 			map.put("createdate2", createDate2);
 		}
-		if(factNo.equals("nothing")&&(visaMk==null||visaMk.equals(""))&&(billNo==null||billNo.equals(""))
+		/*if(factNo.equals("nothing")&&(visaMk==null||visaMk.equals(""))&&(billNo==null||billNo.equals(""))
 				&&(visaSort.equals("nothing")||visaSort==null||visaSort.equals(""))
 				&&(createDate==null||createDate.equals(""))
 				&&(createDate2==null||createDate2.equals(""))){
 			hql.append(" and id.kyVisabillm.id.factNo=:factno");
 			map.put("factno", factNo);
-		}		
+		}*/	
+		if(title!=null&&!"".equals(title)){
+			if("EM".equals(bigType)){
+				hql.append(" and id.kyVisabillm.kyzexp.memoSmk like:title");
+			}
+			if("CM".equals(bigType)){
+				hql.append(" and id.kyVisabillm.kyzletter.title like:title");
+			}
+			map.put("title","%"+title+"%");
+		}
 		hql.append(STR);
 		hql2.append(hql);
 		hql.append(" order by id.kyVisabillm.id.factNo desc,id.kyVisabillm.dateCreate desc");		
@@ -252,9 +276,11 @@ public class KyVisabillsDaoImpl extends Basedao implements IKyVisaBillsDao{
 	 * 描述:
 	 */
 	public PageBean findPageBean_tw(int pageSize, int page,
-			 String visaMk,String factNo,String billNo,String visaSort,String createDate,String createDate2,WebUser user) {
+			 String visaMk,String factNo,String billNo,String visaSort,String createDate,String createDate2,WebUser user,String title,String bigType) {
 		// TODO Auto-generated method stub
-		
+		if(factNo==null||"".equals(factNo)||"nothing".equals(factNo)){
+			factNo=user.getFactno();
+		}
 		String adminMk=user.getAdminMk();
 		String email=user.getEmail();		
 		if(email==null||email.equals("")){
@@ -296,7 +322,7 @@ public class KyVisabillsDaoImpl extends Basedao implements IKyVisaBillsDao{
 			hql.append(" and id.itemNo='01'");
 			date_temp=" and id.kyVisabillm.dateCreate";             //20161028
 		}	
-		if(factNo!=null&&!factNo.equals("")&&!factNo.equals("tw")&&!factNo.equals("nothing")){
+		if(factNo!=null&&!factNo.equals("")&&!factNo.equals("tw")){
 			hql.append(" and id.kyVisabillm.id.factNo=:factno");
 			map.put("factno", factNo);
 			
@@ -318,13 +344,22 @@ public class KyVisabillsDaoImpl extends Basedao implements IKyVisaBillsDao{
 			hql.append(date_temp+"<=:createdate2");
 			map.put("createdate2", createDate2);
 		}
-		if(factNo.equals("nothing")&&(visaMk==null||visaMk.equals(""))&&(billNo==null||billNo.equals(""))
+		/*if(factNo.equals("nothing")&&(visaMk==null||visaMk.equals(""))&&(billNo==null||billNo.equals(""))
 				&&(visaSort.equals("nothing")||visaSort==null||visaSort.equals(""))
 				&&(createDate==null||createDate.equals(""))
 				&&(createDate2==null||createDate2.equals(""))){
 			hql.append(" and id.kyVisabillm.id.factNo=:factno");
 			map.put("factno", factNo);
-		}						
+		}*/	
+		if(title!=null&&!"".equals(title)){
+			if("EM".equals(bigType)){
+				hql.append(" and id.kyVisabillm.kyzexp.memoSmk like:title ");
+			}
+			if("CM".equals(bigType)){
+				hql.append(" and id.kyVisabillm.kyzletter.title like:title ");
+			}
+			map.put("title","%"+title+"%");
+		}
 		hql.append(STR);
 		hql2.append(hql);
 		hql.append(" order by id.kyVisabillm.id.factNo desc,id.kyVisabillm.dateCreate desc,id.kyVisabillm.id.billNo desc");

@@ -24,15 +24,18 @@ public class KyzContactLetterDaoImpl extends Basedao implements IKyzContactLette
 	}
 
 	public PageBean findPageBean(int pageSize, int page, String factNo,
-			String visaSort,String billNo,WebUser user,String timeCreate,String timeCreate2) {
+			String visaSort,String billNo,WebUser user,String timeCreate,String timeCreate2,String title) {
 		// TODO Auto-generated method stub
+		if(factNo==null||"".equals(factNo)||"nothing".equals(factNo)){
+			factNo=user.getFactno();
+		}
 		int allRow=0;
 		final Map<String, Object> map = new HashMap<String, Object>();
 		StringBuffer hql = new StringBuffer();
 		StringBuffer hql2=new StringBuffer();
 		hql.append("from KyzContactletter where 1=1 ");
 		hql2.append("select count(id.factNo) ");
-		if (factNo != null && !factNo.equals("") && !factNo.equals("tw")&&!factNo.equals("nothing")) {
+		if (factNo != null && !factNo.equals("") && !factNo.equals("tw")) {
 			hql.append(" and id.factNo =:factno ");
 			map.put("factno", factNo);
 		}
@@ -58,12 +61,16 @@ public class KyzContactLetterDaoImpl extends Basedao implements IKyzContactLette
 			hql.append(" and ymExpect<=:timecreate2");
 			map.put("timecreate2", timeCreate2);
 		}
-		if(factNo.equals("nothing")&&(visaSort==null||visaSort.equals(""))
+		/*if(factNo.equals("nothing")&&(visaSort==null||visaSort.equals(""))
 				&&(billNo==null||billNo.equals(""))
 				&&(timeCreate==null||timeCreate.equals(""))
 				&&(timeCreate2==null||timeCreate2.equals(""))){
 			hql.append(" and id.factNo=:factno");
 			map.put("factno", factNo);
+		}*/
+		if(title!=null&&!"".equals(title)){			
+			hql.append(" and title like:title");			
+			map.put("title","%"+title+"%");
 		}
 		hql.append(" and delMk is null ");
 		hql2.append(hql);

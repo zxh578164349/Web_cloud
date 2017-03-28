@@ -70,9 +70,9 @@ public class KyzContactLetterServicesImpl implements IKyzContactLetterServices{
 		kyzletterDao.add(letter);
 	}
 
-	public PageBean findPageBean(int pageSize, int page, String factNo,String visaSort,String billNo,WebUser user,String timeCreate,String timeCreate2) {
+	public PageBean findPageBean(int pageSize, int page, String factNo,String visaSort,String billNo,WebUser user,String timeCreate,String timeCreate2,String title) {
 		// TODO Auto-generated method stub
-		return kyzletterDao.findPageBean(pageSize, page, factNo, visaSort, billNo, user, timeCreate, timeCreate2);
+		return kyzletterDao.findPageBean(pageSize, page, factNo, visaSort, billNo, user, timeCreate, timeCreate2,title);
 	}
 	
 	public String makeBillNo(String factNo, String timeCreate) {

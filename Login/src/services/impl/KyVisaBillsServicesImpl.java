@@ -38,9 +38,9 @@ public class KyVisaBillsServicesImpl implements IKyVisaBillsServices{
 		visabillDao.delete(factNo, visaSort, billNo, itemNo);
 	}
 	public PageBean findPageBean(int pageSize, int page,
-			String visaMk, String factNo, String billNo,String visaSort,String createDate,String createDate2,WebUser user) {
+			String visaMk, String factNo, String billNo,String visaSort,String createDate,String createDate2,WebUser user,String title,String bigType) {
 		// TODO Auto-generated method stub
-		return visabillDao.findPageBean(pageSize, page, visaMk, factNo, billNo,visaSort,createDate,createDate2,user);
+		return visabillDao.findPageBean(pageSize, page, visaMk, factNo, billNo,visaSort,createDate,createDate2,user,title,bigType);
 	}
 	public List<KyVisabills> findByFNN(String factNo, String userName) {
 		// TODO Auto-generated method stub
@@ -48,9 +48,9 @@ public class KyVisaBillsServicesImpl implements IKyVisaBillsServices{
 	}
 	public PageBean findPageBean_tw(int pageSize, int page,
 			String visaMk, String factNo, String billNo, String visaSort,
-			String createDate, String createDate2,WebUser user) {
+			String createDate, String createDate2,WebUser user,String title,String bigType) {
 		// TODO Auto-generated method stub
-		return visabillDao.findPageBean_tw(pageSize, page, visaMk, factNo, billNo, visaSort, createDate, createDate2,user);
+		return visabillDao.findPageBean_tw(pageSize, page, visaMk, factNo, billNo, visaSort, createDate, createDate2,user,title,bigType);
 	}
 	public int findKyVisaBills_Int() {
 		// TODO Auto-generated method stub
@@ -79,9 +79,9 @@ public class KyVisaBillsServicesImpl implements IKyVisaBillsServices{
 	 */
 	
 	
-	public List<KyVisabills> findtoprint(String visaMk,String factNo,String billNo,String visaSort,String createDate,String createDate2,WebUser user){
+	public List<KyVisabills> findtoprint(String visaMk,String factNo,String billNo,String visaSort,String createDate,String createDate2,WebUser user,String title,String bigType){
 		// TODO Auto-generated method stub
-		return visabillDao.findtoprint(visaMk,factNo,billNo,visaSort,createDate,createDate2,user);
+		return visabillDao.findtoprint(visaMk,factNo,billNo,visaSort,createDate,createDate2,user,title,bigType);
 	}
 	
 

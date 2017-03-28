@@ -101,8 +101,23 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 	private InputStream fileInput;
 	private String fileName;
 	private String lookordown;
+	private String title;//標題
+	private String bigType;//大分類 EM:普通函文   CM:內部函文
 	
 	
+	
+	public String getBigType(){
+		return bigType;
+	}
+	public void setBigType(String bigType){
+		this.bigType=bigType;
+	}
+	public String getTitle(){
+		return title;
+	}
+	public void setTitle(String title){
+		this.title=title;
+	}	
 	public void setWebformulaser(IWebFormulaServices webformulaser) {
 		this.webformulaser = webformulaser;
 	}
@@ -304,43 +319,30 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 		ActionContext.getContext().getSession().remove("public_visaSort");
 		ActionContext.getContext().getSession().remove("public_timeCreate");
 		ActionContext.getContext().getSession().remove("public_timeCreate2");
-		factNo=(String)ActionContext.getContext().getSession().get("factNo");
+		ActionContext.getContext().getSession().remove("public_title");
+		ActionContext.getContext().getSession().remove("public_bigType");
 		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");		
-		bean=visabillSer.findPageBean_tw(20,page, visaMk, factNo, billNo,visaSort,yymmdd,yymmdd2,user);
+		bean=visabillSer.findPageBean_tw(20,page, visaMk, factNo, billNo,visaSort,yymmdd,yymmdd2,user,title,bigType);
 		
 		//this.getKyzTitle(bean);
 		//this.getTypeName(bean);
 		return "beanList";
 	}
 	public String findPageBean2(){
-		//ActionContext.getContext().getApplication().clear();
-		ActionContext.getContext().getSession().remove("public_factNo");
-		ActionContext.getContext().getSession().remove("public_billNo");
-		ActionContext.getContext().getSession().remove("public_visaMk");
-		ActionContext.getContext().getSession().remove("public_visaSort");
-		ActionContext.getContext().getSession().remove("public_timeCreate");
-		ActionContext.getContext().getSession().remove("public_timeCreate2");
-		if(factNo!=null&&!factNo.equals("")){
+		//ActionContext.getContext().getApplication().clear();		
+		
 			ActionContext.getContext().getSession().put("public_factNo", factNo);
-		}
-		if(billNo!=null&&!billNo.equals("")){
 			billNo=billNo.trim();
 			ActionContext.getContext().getSession().put("public_billNo", billNo);
-		}
-		if(visaMk!=null&&!visaMk.equals("")){
 			ActionContext.getContext().getSession().put("public_visaMk", visaMk);
-		}
-		if(visaSort!=null&&!visaSort.equals("")){
-			ActionContext.getContext().getSession().put("public_visaSort", visaSort);
-		}
-		if(yymmdd!=null&&!yymmdd.equals("")){
-			ActionContext.getContext().getSession().put("public_timeCreate", yymmdd);
-		}
-		if(yymmdd2!=null&&!yymmdd2.equals("")){
+			ActionContext.getContext().getSession().put("public_visaSort", visaSort);	
+			ActionContext.getContext().getSession().put("public_timeCreate", yymmdd);			
 			ActionContext.getContext().getSession().put("public_timeCreate2", yymmdd2);
-		}
+			ActionContext.getContext().getSession().put("public_title",title);
+			ActionContext.getContext().getSession().put("public_bigType",bigType);
+		
 		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");		
-		bean=visabillSer.findPageBean_tw(20,page, visaMk, factNo, billNo,visaSort,yymmdd,yymmdd2,user);		
+		bean=visabillSer.findPageBean_tw(20,page, visaMk, factNo, billNo,visaSort,yymmdd,yymmdd2,user,title,bigType);		
 		//this.getKyzTitle(bean);
 		//this.getTypeName(bean);
 		return "beanList1";		
@@ -352,11 +354,10 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 		visaSort=(String)ActionContext.getContext().getSession().get("public_visaSort");
 		yymmdd=(String)ActionContext.getContext().getSession().get("public_timeCreate");
 		yymmdd2=(String)ActionContext.getContext().getSession().get("public_timeCreate2");
-		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");		
-		if(factNo==null||factNo.equals("")){
-			factNo=(String)ActionContext.getContext().getSession().get("factNo");
-		}
-		bean=visabillSer.findPageBean_tw(20,page, visaMk, factNo, billNo,visaSort,yymmdd,yymmdd2,user);		
+		title=(String)ActionContext.getContext().getSession().get("public_title");
+		bigType=(String)ActionContext.getContext().getSession().get("public_bigType");
+		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");				
+		bean=visabillSer.findPageBean_tw(20,page, visaMk, factNo, billNo,visaSort,yymmdd,yymmdd2,user,title,bigType);		
 		//this.getKyzTitle(bean);
 		//this.getTypeName(bean);
 		return "beanList1";
@@ -372,42 +373,28 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 		ActionContext.getContext().getSession().remove("public_visaSort");
 		ActionContext.getContext().getSession().remove("public_timeCreate");
 		ActionContext.getContext().getSession().remove("public_timeCreate2");
-		factNo=(String)ActionContext.getContext().getSession().get("factNo");
+		ActionContext.getContext().getSession().remove("public_title");
+		ActionContext.getContext().getSession().remove("public_bigType");
 		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");		
-		bean=visabillSer.findPageBean(20,page, visaMk, factNo, billNo,visaSort,yymmdd,yymmdd2,user);
+		bean=visabillSer.findPageBean(20,page, visaMk, factNo, billNo,visaSort,yymmdd,yymmdd2,user,title,bigType);
 		//this.getTypeName(bean);
 		//this.getKyzTitle(bean);
 		return "beanList_1";
 	}
 	public String findPageBean2_1(){
 		//ActionContext.getContext().getApplication().clear();
-		ActionContext.getContext().getSession().remove("public_factNo");
-		ActionContext.getContext().getSession().remove("public_billNo");
-		ActionContext.getContext().getSession().remove("public_visaMk");
-		ActionContext.getContext().getSession().remove("public_visaSort");
-		ActionContext.getContext().getSession().remove("public_timeCreate");
-		ActionContext.getContext().getSession().remove("public_timeCreate2");
-		if(factNo!=null&&!factNo.equals("")){
 			ActionContext.getContext().getSession().put("public_factNo", factNo);
-		}
-		if(billNo!=null&&!billNo.equals("")){
 			billNo=billNo.trim();
 			ActionContext.getContext().getSession().put("public_billNo", billNo);
-		}
-		if(visaMk!=null&&!visaMk.equals("")){
 			ActionContext.getContext().getSession().put("public_visaMk", visaMk);
-		}
-		if(visaSort!=null&&!visaSort.equals("")){
 			ActionContext.getContext().getSession().put("public_visaSort", visaSort);
-		}
-		if(yymmdd!=null&&!yymmdd.equals("")){
 			ActionContext.getContext().getSession().put("public_timeCreate", yymmdd);
-		}
-		if(yymmdd2!=null&&!yymmdd2.equals("")){
 			ActionContext.getContext().getSession().put("public_timeCreate2", yymmdd2);
-		}
+			ActionContext.getContext().getSession().put("public_title",title);
+			ActionContext.getContext().getSession().put("public_bigType",bigType);
+		
 		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");		
-		bean=visabillSer.findPageBean(20,page, visaMk, factNo, billNo,visaSort,yymmdd,yymmdd2,user);
+		bean=visabillSer.findPageBean(20,page, visaMk, factNo, billNo,visaSort,yymmdd,yymmdd2,user,title,bigType);
 		//this.getTypeName(bean);
 		//this.getKyzTitle(bean);
 		return "beanList1_1";
@@ -419,11 +406,10 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 		visaSort=(String)ActionContext.getContext().getSession().get("public_visaSort");
 		yymmdd=(String)ActionContext.getContext().getSession().get("public_timeCreate");
 		yymmdd2=(String)ActionContext.getContext().getSession().get("public_timeCreate2");
-		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");		
-		if(factNo==null||factNo.equals("")){
-			factNo=(String)ActionContext.getContext().getSession().get("factNo");
-		}
-		bean=visabillSer.findPageBean(20,page, visaMk, factNo, billNo,visaSort,yymmdd,yymmdd2,user);
+		title=(String)ActionContext.getContext().getSession().get("public_title");
+		bigType=(String)ActionContext.getContext().getSession().get("public_bigType");
+		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");				
+		bean=visabillSer.findPageBean(20,page, visaMk, factNo, billNo,visaSort,yymmdd,yymmdd2,user,title,bigType);
 		//this.getTypeName(bean);
 		//this.getKyzTitle(bean);
 		return "beanList1_1";
@@ -935,7 +921,7 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 	//導出函文
 	public void printList() throws Exception{
 		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
-		List<KyVisabills>list=visabillSer.findtoprint(visaMk,factNo,billNo,visaSort,yymmdd,yymmdd2,user);
+		List<KyVisabills>list=visabillSer.findtoprint(visaMk,factNo,billNo,visaSort,yymmdd,yymmdd2,user,title,bigType);
 		response.setContentType("text/html;charset=utf-8");
 		if(list.size()>21){			
 			response.getWriter().print("<script>window.parent.alert('函文數目超出上限,禁止導出')</script>");

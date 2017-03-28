@@ -15,9 +15,9 @@ public interface IKyVisaBillsServices {
 	public void add(KyVisabills vbs);
 	public KyVisabills findById(String factNo,String visaSort,String billNo,String itemNo);
 	public void delete(String factNo, String visaSort, String billNo,String itemNo);
-	public PageBean findPageBean(int pageSize,int page,String visaMk,String factNo,String billNo,String visaSort,String createDate,String createDate2,WebUser user);
+	public PageBean findPageBean(int pageSize,int page,String visaMk,String factNo,String billNo,String visaSort,String createDate,String createDate2,WebUser user,String title,String bigType);
 	public List<KyVisabills> findByFNN(String factNo,String userName);
-	public PageBean findPageBean_tw(int pageSize,int page,String visaMk,String factNo,String billNo,String visaSort,String createDate,String createDate2,WebUser user);
+	public PageBean findPageBean_tw(int pageSize,int page,String visaMk,String factNo,String billNo,String visaSort,String createDate,String createDate2,WebUser user,String title,String bigType);
 	public int findKyVisaBills_Int();
 	
 	public int findBillsWithNo(String visaSort,String billNo);
@@ -25,7 +25,7 @@ public interface IKyVisaBillsServices {
 	public void delete(KyVisabills bils);
 	
 	public List<KyVisabills> findtoprint(String visaMk, String factNo, String billNo, String visaSort,
-			String createDate, String createDate2,WebUser user);
+			String createDate, String createDate2,WebUser user,String title,String bigType);
 			
 
 }

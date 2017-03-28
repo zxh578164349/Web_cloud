@@ -19,7 +19,7 @@
 </head>
 <body>
 
-	<jsp:include page="publicHead_matterApplication.jsp" flush="true" />
+	<jsp:include page="publicHead_matterApplication.jsp"  />
 	<hr />
 			
 	<div id="bodyid">
@@ -44,18 +44,13 @@
 			}
 		});
 	}
-	function submis() {
-		var fact = document.getElementById("factNo");
-		var visasort = document.getElementById("visaSort");
-		var billno=document.getElementById("billNo");
-		var yymmdd=document.getElementById("yymmdd");
-		var yymmdd2=document.getElementById("yymmdd2");
-		
+	function submis() {	
 		jq.ajax({
 			type : "POST",
 			dataType : "Html",
 			url : "kyz_findPageBean2",
-			data : "factNo=" + fact.value + "& visaSort=" + visasort.value+"& billNo="+billno.value+"& yymmdd="+yymmdd.value+"& yymmdd2="+yymmdd2.value,
+			//data : "factNo=" + fact.value + "& visaSort=" + visasort.value+"& billNo="+billno.value+"& yymmdd="+yymmdd.value+"& yymmdd2="+yymmdd2.value,
+			data:jq("#public_form").serialize(),
 			success : function(msg) {
 				jq("#bodyid").html(msg);
 			},

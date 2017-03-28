@@ -12,6 +12,7 @@
 
 </head>
 <body>
+   <form id="public_form" method="post">
 	<table id="tb_search">
 		<tr>
 			<td>
@@ -57,6 +58,14 @@
 											<td><input type="text" id="yymmdd" name="yymmdd" onClick="WdatePicker({dateFmt:'yyyyMMdd'})" readonly="readonly" class="Wdate" />至 <input
 												type="text" id="yymmdd2" name="yymmdd2" onClick="WdatePicker({dateFmt:'yyyyMMdd'})" readonly="readonly" class="Wdate" /></td>
 										</tr>
+										<tr><th>標題</th></tr>
+										<tr>										   
+										   <td>	
+										     <div class="panel panel-primary">									      
+										          <input type="text" name="title" placeholder="標題" id="p_title" />										          										          
+										     </div>     								      
+										   </td>
+										</tr>
 									</table>
 								</div>
 							</div>
@@ -65,7 +74,7 @@
 				</div></td>
 		</tr>
 	</table>
-
+</form>
 	<script type='text/javascript' src='dwr/interface/webtypejs.js'></script>
 	<script type="text/javascript">
 		function getType(factNo) {
