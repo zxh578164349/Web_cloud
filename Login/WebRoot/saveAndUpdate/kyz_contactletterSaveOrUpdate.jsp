@@ -227,7 +227,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 		demo.tipmsg.w["*0-6"] = "只能數字且不超過9位數,可保留三位以內小數";
 		demo.tipmsg.w["my0-8"]="只能數字且不超過8位數,可保留四位以內小數";
 		
-		if(jq("#dwrFactNo").val()="YMUS"){
+		if(jq("#dwrFactNo").val()=="YMUS"){
 			jq("#memoMk").attr("datatype","*40-2000");
 		}else{
 			jq("#memoMk").attr("datatype","*");
