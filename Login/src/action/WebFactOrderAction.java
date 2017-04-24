@@ -558,12 +558,10 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 		wb.write(os);
 		os.close();				
 	}
-	public void print_email() throws IOException{		
-		/*yymm="201605";
-		yymm2=yymm;
-		autoEmailMk=1;*/
+	public void print_email() throws IOException{				
 		HSSFWorkbook wb=this.print();
-		OutputStream os=new FileOutputStream("d:\\"+yymm+".xls");
+		//OutputStream os=new FileOutputStream("d:\\"+yymm+".xls");
+		OutputStream os=new FileOutputStream(ServletActionContext.getServletContext().getRealPath("TEMPFILES\\"+yymm+".xls"));
 		wb.write(os);
 		os.close();
 	}
