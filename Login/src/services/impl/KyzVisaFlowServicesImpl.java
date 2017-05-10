@@ -125,4 +125,15 @@ public class KyzVisaFlowServicesImpl implements IKyzVisaFlowServices{
 		return visaDao.findPF(factNo);
 	}
 
+	/**
+	 * 日期:2017/5/9
+	 * 描述:
+	 */
+	
+	
+	public void add_d(KyzVisaflow f1,KyzVisaflow f2){
+		// TODO Auto-generated method stub
+		visaDao.add_d(f1,f2);
+	}
+
 }

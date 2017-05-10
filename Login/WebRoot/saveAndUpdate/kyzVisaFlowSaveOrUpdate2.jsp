@@ -38,7 +38,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 			   <tr>
 			   <td>姓名</td>
 			   <td>
-			   <input type="text" value="<s:property value='flow.id.purmanNo'/>"  name="flow.id.purmanNo" id="keys" style="color:blue" readonly/>
+			   <input type="text" value="<s:property value='flow.id.purmanNo'/>"  name="flow.id.purmanNo" id="keys" datatype="*1-30"/>
 			   <div style="position:relative">
 			     <div id="tip" style="z-index:100;position:absolute;background:yellow;top:0px;left:0px;width:180px;display:none"></div>
 			    </div>

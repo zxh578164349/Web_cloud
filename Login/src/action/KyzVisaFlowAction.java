@@ -231,7 +231,9 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 	public String update(){		
 		try{
 			flow.setVisaSortM(flow.getId().getVisaSort().substring(0,2));
-			visaSer.add(flow);
+			//visaSer.add(flow);
+			KyzVisaflow f2=(KyzVisaflow)ActionContext.getContext().getSession().get("update_flow");
+			visaSer.add_d(flow,f2);
 			ajaxResult="0";
 		}catch(Exception e){
 			e.printStackTrace();
@@ -283,7 +285,8 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 	
 	
 	public String findById(){
-		flow=visaSer.findById(id);	
+		flow=visaSer.findById(id);
+		ActionContext.getContext().getSession().put("update_flow",flow);
 		return "findById";
 	}
 	
