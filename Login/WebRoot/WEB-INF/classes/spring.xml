@@ -58,15 +58,15 @@
 	</property>
 	<!-- 最少保持的空闲连接数 （现在设置20个） -->
 	<property name="prototypeCount">
-		<value>20</value>
+		<value>30</value>
 	</property>
 	<!-- 最大连接数 （现在设置200个） -->
 	<property name="maximumConnectionCount">
-		<value>100</value>
+		<value>200</value>
 	</property>
 	<!-- 最小连接数 （现在设置50个） -->
 	<property name="minimumConnectionCount">
-		<value>50</value>
+		<value>70</value>
 	</property>
 	<!-- 如果为true,那么每个被执行的SQL语句将会在执行期被log记录(DEBUG LEVEL).你也可以注册一个ConnectionListener 
 		(参看ProxoolFacade)得到这些信息. -->

@@ -400,7 +400,8 @@ public class KyVisabillsDaoImpl extends Basedao implements IKyVisaBillsDao{
 		// TODO Auto-generated method stub
 		StringBuffer hql=new StringBuffer();
 		Map<String,Object>map=new HashMap<String,Object>();
-		hql.append("from KyVisabills where 1=1");
+		//hql.append("from KyVisabills where 1=1");
+		hql.append("select count(id.itemNo) from KyVisabills where 1=1");
 		if(factNo!=null&&!factNo.equals("")&&!factNo.equals("tw")){
 			hql.append(" and id.kyVisabillm.id.factNo=:factno");
 			map.put("factno", factNo);
@@ -410,7 +411,7 @@ public class KyVisabillsDaoImpl extends Basedao implements IKyVisaBillsDao{
 		hql.append(" and id.itemNo=id.kyVisabillm.itemNext and visaMk='N'") ;
 		//hql.append(" and substr(id.kyVisabillm.id.billNo,0,2) in ('CM','EM','BM')");
 		hql.append(" and id.kyVisabillm.delMk is null ");
-		int result=super.getAllRowCount(hql.toString(), map);
+		int result=super.getAllRowCount2(hql.toString(), map);
 		return result;
 	}
 
