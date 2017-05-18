@@ -63,5 +63,7 @@ public interface IKyVisaBillsDao {
 	
 	public List<KyVisabills> findtoprint(String visaMk, String factNo, String billNo, String visaSort,
 			String createDate, String createDate2,WebUser user,String title,String bigType);
+	
+	public String findById_01(String billNo);
 
 }

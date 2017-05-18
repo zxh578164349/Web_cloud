@@ -83,6 +83,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.springframework.web.context.ContextLoader;
 
+import services.IKyVisaBillsServices;
 import services.IKyVisabillmServices;
 import services.IKyzExpectmatmLogServices;
 import services.IKyzVisaFlowServices;
@@ -1181,9 +1182,10 @@ public class GlobalMethod extends HibernateDaoSupport{
 		    IWebuserEmailServices webuseremailSer=(IWebuserEmailServices)ac.getBean("webuseremailSer");
 			IWebuserEmailAServices webuseremailaSer=(IWebuserEmailAServices)ac.getBean("webuseremailaSer");
 			IKyzVisaFlowServices visaSer=(IKyzVisaFlowServices)ac.getBean("visaSer");
+			//IKyVisaBillsServices visabillSer=(IKyVisaBillsServices)ac.getBean("visabillSer");
 			IKyVisabillmServices visabillmSer=(IKyVisabillmServices)ac.getBean("visabillmSer");	
 			ProjectConfig pc=(ProjectConfig)ac.getBean("proconfig");
-			String content="";		
+			String content="";			
 			if(list_vbm.size()>0){//start if
 			MailSenderInfo mailInfo = new MailSenderInfo();
 			SimpleMailSender sms = new SimpleMailSender();
@@ -1205,14 +1207,7 @@ public class GlobalMethod extends HibernateDaoSupport{
 						}
 					}else{
 						list_email.add(signerNext);
-					}										
-									
-					/***************如果是臺灣加久，備簽人同時也是申請人，那麼根據流程代號找到申請人（也就是備簽人）*******************/
-					if(factNo.equals("GJ")){
-						String visaSinger=visaSer.findVisaSigner(factNo, visaSort);
-						list_email.add(visaSinger);
-					}
-					
+					}																									
 					 /******************20170112备签人同步**********************/
 					//備簽人（無類別）
 					List<String>list_emailPwd=webuseremailSer.findByFactNoAEmailPwd2(factNo, signerNext);
@@ -1244,7 +1239,7 @@ public class GlobalMethod extends HibernateDaoSupport{
 					      		"<br/>進入[KPI數據]--[函文審核]中查找對應單號審核"+			    		
 					    		"<hr/>"+
 					      		"<br/>本郵件定時自動發送,請勿回復!如需回復或者問題，請回复到"+EMAIL+"資訊室!<br/>"+
-					    		"<hr/>";
+					    		"<hr/>";						
 					}
 					if(visaMk.equals("T")){
 						////由於出差函文流程中可能不包括申請人， 所有需要從函文中獲取申請email 20160621
@@ -1267,20 +1262,82 @@ public class GlobalMethod extends HibernateDaoSupport{
 						      		"<br/>本郵件定時自動發送,請勿回復!如需回復或者問題，請回复到"+EMAIL+"資訊室!<br/>"+
 						    		"<hr/>";
 					}
+					
+					mailInfo.setContent(content);
+					mailInfo.setSubject(subject.toString()); 
 					for(int j=0;j<list_email.size();j++){//start for2
 						  mailInfo.setToAddress(list_email.get(j));
 						  if(list_email.get(j).equals(EMAIL)){						  
 							  String content_msg=content+"下一箇簽核:<span style='color:blue'>"+signerNext+"</span>";
 							  mailInfo.setContent(content_msg);					      
-						  }else{
-							  mailInfo.setContent(content);
-						  }
-					      mailInfo.setSubject(subject.toString());    			       				    		  			           
+						  }					         			       				    		  			           
 					      sms.sendHtmlMail(mailInfo);//发送html格式					      
-					}//end for2		
+					}//end for2	
+					
+					/********************************20170517臺灣加久GJ的函文同步到申請人的，只查看，不簽核*******************************************/
+					String visaSinger=null;
+					/***************如果是臺灣加久，備簽人同時也是申請人，那麼根據流程代號找到申請人（也就是備簽人）*******************/
+					if(factNo.equals("GJ")){												
+						if(list_vbm.get(i).getId().getBillNo().substring(0,2).equals("BM")){//出差函文申請人不在流程,要在出差函文中找
+							if(list_vbm.get(i).getWebbussletter().getUserEmail()!=null&&!list_vbm.get(i).getWebbussletter().getUserEmail().equals("")){								
+								visaSinger=list_vbm.get(i).getWebbussletter().getUserEmail();
+							}
+						}else{
+							visaSinger=visaSer.findVisaSigner(factNo, visaSort);//簽核流程中第一個人
+							//list_email.add(visaSinger);
+						}
+					}
+					if(visaSinger!=null){
+						content=null;
+						emailUrl=pc.getpUrl()+"/vbm_findById_email_gj?visaSort="+visaSort+"&billNo="+billNo
+						         +"&factNo="+factNo;
+						emailUrl2=pc.getpUrl()+"/vbm_findById_email2_gj?visaSort="+visaSort+"&billNo="+billNo
+						         +"&factNo="+factNo;																								
+						if(visaMk.equals("N")){
+							//subject.append(sub1+list_vbm.get(i).getGeneral());
+							content=list_vbm.get(i).getGeneral()+"<br/>"+
+									"函文單號:"+"<span style='color:red'>"+billNo+"</span>"+"&nbsp;&nbsp;廠別:"+factNo+
+						    		  "<br/>點擊單號直接審核:<a href='"+emailUrl2+"'>"+billNo+"</a>(電腦適用)"+
+						    		  "<br/>點擊單號直接審核:<a href='"+emailUrl+"'>"+billNo+"</a>(手機平板適用)"+				    		 
+								      "<hr/>"+
+						    		  "如需查詢以往單據請登錄加久網站:(云端)<a href='"+pc.getpUrl()+"'>"+pc.getpUrl()+"</a>" +		            
+						      		"<br/>進入[KPI數據]--[函文審核]中查找對應單號審核"+			    		
+						    		"<hr/>"+
+						      		"<br/>本郵件定時自動發送,請勿回復!如需回復或者問題，請回复到"+EMAIL+"資訊室!<br/>"+
+						    		"<hr/>";						
+						}
+						if(visaMk.equals("T")){
+							////由於出差函文流程中可能不包括申請人， 所有需要從函文中獲取申請email 20160621
+							if(list_vbm.get(i).getId().getBillNo().substring(0,2).equals("BM")){
+								if(list_vbm.get(i).getWebbussletter().getUserEmail()!=null&&!list_vbm.get(i).getWebbussletter().getUserEmail().equals("")){
+									list_email.add(list_vbm.get(i).getWebbussletter().getUserEmail());
+								}
+							}						
+								//subject.append(sub2+list_vbm.get(i).getGeneral());//退回函文隻發送一次，所以也要鎖定狀態emailMk	
+								list_vbm.get(i).setEmailMk("Y");
+								visabillmSer.add(list_vbm.get(i));
+								content=list_vbm.get(i).getGeneral()+"<br/>"+
+								         "函文單號:"+"<span style='color:red'>"+billNo+"</span>"+"&nbsp;&nbsp;"+"不通過，備註如下:"+
+							    		  "<br/>"+
+							    		  "<span style='color:red'>"+(list_vbm.get(i).getMemoMk()==null?"無備註":list_vbm.get(i).getMemoMk())+"</span>"+				    		 
+									      "<hr/>"+
+							    		 "詳情請登錄加久網站:(云端)<a href='"+pc.getpUrl()+"'>"+pc.getpUrl()+"</a>" +		            
+							      		"<br/>進入[KPI數據]--[函文審核]中查找對應單號審核"+			    		
+							    		"<hr/>"+
+							      		"<br/>本郵件定時自動發送,請勿回復!如需回復或者問題，請回复到"+EMAIL+"資訊室!<br/>"+
+							    		"<hr/>";
+						}
+						subject.append("***只查看***");
+						mailInfo.setToAddress(visaSinger);
+						mailInfo.setSubject(subject.toString()); 
+						mailInfo.setContent(content);
+						sms.sendHtmlMail(mailInfo);	
+						
+					}
+					/********************************20170517臺灣加久GJ的函文同步到申請人的，只查看，不簽核*******************************************/
 					//subject=null;//清空
 					content=null;
-				}//end for1				
+				}//end for1									
 			}//end if			 
 	 }
 	 

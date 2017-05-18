@@ -481,6 +481,39 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 		ActionContext.getContext().getSession().put("vbm", vbm);//爲了在函文簽核的彈出窗口顯示已簽人的備註信息
 		return "findById_email2";
 	}
+	
+	/****************************************20170517不需要审核，不需要登录***********************************************/
+	public String findById_email_gj(){//email不需要審核，不需要登錄帳號（手機平板）
+		vbm=visabillmSer.findById(factNo, visaSort, billNo);
+		if(vbm==null){
+			response.setContentType("text/html;charset=utf-8");
+			try {
+				response.getWriter().print("<script>alert('函文不存在或已刪除');</script>");
+				return null;
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		ActionContext.getContext().getSession().put("vbm", vbm);//爲了在函文簽核的彈出窗口顯示已簽人的備註信息
+		return "findById_email_gj";
+	}
+	public String findById_email2_gj(){//email不需要審核，不需要登錄帳號（普通電腦）findById_email2
+		vbm=visabillmSer.findById(factNo, visaSort, billNo);
+		if(vbm==null){
+			response.setContentType("text/html;charset=utf-8");
+			try {
+				response.getWriter().print("<script>alert('函文不存在或已刪除');</script>");
+				return null;
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		ActionContext.getContext().getSession().put("vbm", vbm);//爲了在函文簽核的彈出窗口顯示已簽人的備註信息
+		return "findById_email2_gj";
+	}
+	/****************************************20170517不需要审核，不需要登录***********************************************/
 		
 	/**
 	 * 登錄web審核和郵件審核

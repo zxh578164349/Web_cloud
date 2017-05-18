@@ -83,6 +83,16 @@ public class KyVisaBillsServicesImpl implements IKyVisaBillsServices{
 		// TODO Auto-generated method stub
 		return visabillDao.findtoprint(visaMk,factNo,billNo,visaSort,createDate,createDate2,user,title,bigType);
 	}
+	/**
+	 * 日期:2017/5/18
+	 * 描述:
+	 */
+	
+	
+	public String findById_01(String billNo){
+		// TODO Auto-generated method stub
+		return visabillDao.findById_01(billNo);
+	}
 	
 
 }

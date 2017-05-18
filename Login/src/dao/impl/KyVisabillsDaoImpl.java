@@ -434,4 +434,19 @@ public class KyVisabillsDaoImpl extends Basedao implements IKyVisaBillsDao{
 		return super.findAll(hql, objs);
 	}
 
+	/**
+	 * 日期:2017/5/18
+	 * 描述:
+	 */
+	
+	
+	public String findById_01(String billNo){
+		// TODO Auto-generated method stub
+		String hql="select visaSigner from KyVisabills where id.kyVisabillm.id.billNo=? and id.itemNo='01'"; 
+		Query query=getSession().createQuery(hql);
+		query.setString(0,billNo);
+		String str=(String)query.uniqueResult();
+		return str;
+	}
+
 }

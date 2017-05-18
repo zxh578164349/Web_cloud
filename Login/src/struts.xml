@@ -481,6 +481,8 @@
 		  <result name="findById5">page/kyvisabills_minus2.jsp</result><!-- 減簽(帶刪除) -->
 		  <result name="findById_email">/page/kyvisabills_email.jsp</result><!-- email直接審核,不需要登錄帳號（手機平板） -->
 		  <result name="findById_email2">/page/kyvisabills_email2.jsp</result><!-- email直接審核,不需要登錄帳號（普通電腦 ） -->
+		  <result name="findById_email_gj">/page/kyvisabills_email_gj.jsp</result><!-- email不需要審核,不需要登錄帳號（手機平板） -->
+		  <result name="findById_email2_gj">/page/kyvisabills_email2_gj.jsp</result><!-- email不需要審核,不需要登錄帳號（普通電腦 ） -->
 		  <result name="add" type="json">
                <param name="root">ajaxResult</param>
           </result>
