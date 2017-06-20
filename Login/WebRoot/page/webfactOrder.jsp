@@ -6,7 +6,7 @@
 			+ request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 %>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE HTML>
 <html>
 <head>
 <base href="<%=basePath%>">
@@ -24,7 +24,7 @@
     <input type="hidden" id="global_temp"/>
 	<jsp:include page="publicHead_print_webfactorder.jsp" flush="true"/>
 	<hr />
-	
+	<s:if test='#session.loginUser.userread!="1"'>
 	<form  method="post" enctype="multipart/form-data" id="upload_form">
 	  <table>
 	      <td>	 
@@ -35,6 +35,7 @@
 	       </td>
 	  </table>          	
 	</form>
+	</s:if>
 	<hr/>			
 	<div id="bodyid">
 		<jsp:include page="table1/webfactOrder1.jsp" />

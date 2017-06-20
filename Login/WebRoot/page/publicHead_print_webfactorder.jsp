@@ -2,7 +2,7 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib uri="/struts-tags" prefix="s"%>
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE HTML>
 <html>
 <head>
 <title>My JSP 'publicHead.jsp' starting page</title>
@@ -160,8 +160,10 @@
 			      <input type="text" id="yymm2" name="yymm2" onClick="WdatePicker({minDate:'#F{$dp.$D(\'yymm\')}',maxDate:'%y-%M',dataFmt:'yyyyMM'})" readonly="readonly" class="Wdate"/>			    
 			     </div>
 			     <input value="搜索" type="button" class="btn btn-primary" onclick="javascript:submis('public_form')" />
-			     <input value="導出Excel" type="button" class="btn btn-primary" onclick="print('public_form')"/>	 
+			     <input value="導出Excel" type="button" class="btn btn-primary" onclick="print('public_form')"/>
+			     <s:if test='#session.loginUser.userread!="1"'>	 
 			     <input value="刪除" type="button" class="btn btn-primary" onclick="deleteMore('public_form')"/>
+			     </s:if>
 		       </td>
 </tr>
 			
