@@ -5,7 +5,7 @@
 	<constant name="struts.i18n.encoding" value="utf-8" />
 	<constant name="struts.multipart.maxSize" value="25600000"></constant>
 	 <constant name="struts.custom.i18n.resources" value="uploadError"/>
-	 
+	 <constant name="struts.devMode" value="true" />
 	
 	<package name="strutsL" extends="struts-default,jasperreports-default,json-default" namespace="/">
 	<default-action-ref name="judge"/><!-- 用於jetty容器，因為jetty不支持web.xml文件中<welcome-file-list>，與下面的"judge"action搭配使用 -->				
