@@ -208,71 +208,39 @@ public class WebMix1Action extends ActionSupport implements
 
 
 	public String findPageBean() {
-		ActionContext.getContext().getApplication().clear();
-		factNo = (String) ActionContext.getContext().getSession().get("factNo");
+		ActionContext.getContext().getSession().remove("mix1_factNo");
+		ActionContext.getContext().getSession().remove("mix1_yymm");
+		//factNo = (String) ActionContext.getContext().getSession().get("factNo");
 		bean = mix1Ser.findPageBean(20,page, factNo, yymm);
-
 		return "beanList";
 
 	}
 
 	public String findPageBean2() {
-		ActionContext.getContext().getApplication().clear();
-		if (factNo != null && !factNo.equals("") && !factNo.equals("tw")) {
-			ActionContext.getContext().getApplication()
-					.put("mix1_factNo", factNo);
-		}
-		if (yymm != null && !yymm.equals("")) {
-			ActionContext.getContext().getApplication().put("mix1_yymm", yymm);
-		}
-
-		bean = mix1Ser.findPageBean(20,page, factNo, yymm);
-
+		ActionContext.getContext().getSession().put("mix1_factNo",factNo);
+		ActionContext.getContext().getSession().put("mix1_yymm",yymm);
+		bean=mix1Ser.findPageBean(20,page,factNo,yymm);
 		return "beanList1";
 	}
 
 	public String findPageBean3() {
-		factNo = (String) ActionContext.getContext().getApplication()
-				.get("mix1_factNo");
-		yymm = (String) ActionContext.getContext().getApplication()
-				.get("mix1_yymm");
-		if (factNo == null || factNo.equals("") || factNo.equals("tw")) {
-			factNo = (String) ActionContext.getContext().getSession()
-					.get("factNo");
-		}
+		factNo = (String) ActionContext.getContext().getSession().get("mix1_factNo");
+		yymm = (String) ActionContext.getContext().getSession().get("mix1_yymm");		
 		bean = mix1Ser.findPageBean(20,page, factNo, yymm);
-
 		return "beanList1";
 
 	}
 
 	public String findPageBean2_print() {
-		ActionContext.getContext().getApplication().clear();
-		if (factNo != null && !factNo.equals("") && !factNo.equals("tw")) {
-			ActionContext.getContext().getApplication()
-					.put("print_mix1_factNo", factNo);
-
-		} else {
-			factNo = (String) ActionContext.getContext().getSession()
-					.get("factNo");
-		}
-		if (yymm != null && !yymm.equals("")) {
-			ActionContext.getContext().getApplication()
-					.put("print_mix1_yymm", yymm);
-		}
-		bean = mix1Ser.findPageBean(10, page, factNo, yymm);
+		ActionContext.getContext().getSession().put("print_mix1_factNo",factNo);
+		ActionContext.getContext().getSession().put("print_mix1_yymm",yymm);
+		bean=mix1Ser.findPageBean(10,page,factNo,yymm);
 		return "list";
 	}
 
 	public String findPageBean3_print() {
-		factNo = (String) ActionContext.getContext().getApplication()
-				.get("print_mix1_factNo");
-		yymm = (String) ActionContext.getContext().getApplication()
-				.get("print_mix1_yymm");
-		if (factNo == null || factNo.equals("") || factNo.equals("tw")) {
-			factNo = (String) ActionContext.getContext().getSession()
-					.get("factNo");
-		}
+		factNo = (String) ActionContext.getContext().getSession().get("print_mix1_factNo");
+		yymm = (String) ActionContext.getContext().getSession().get("print_mix1_yymm");		
 		bean = mix1Ser.findPageBean(10, page, factNo, yymm);
 		return "list";
 	}

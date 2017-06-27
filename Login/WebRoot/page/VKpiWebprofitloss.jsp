@@ -36,10 +36,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<tr>
 					<td><span> <input type="text" id="begin" name="yymm"
 							datatype="*"
-							onclick="WdatePicker({minDate:'{%y-1}-%m',maxDate:'#F{$dp.$D(\'end\',{M:-1})||\'%y-{%M-1}\'}'})"
+							onclick="WdatePicker({minDate:'{%y-1}-%m',maxDate:'#F{$dp.$D(\'end\',{M:-1})||\'%y-{%M-1}\'}',dateFmt:'yyyyMM'})"
 							class="Wdate"> </span>至 <span> <input type="text"
 							id="end" name="yymm2" datatype="*"
-							onclick="WdatePicker({minDate:'#F{$dp.$D(\'begin\',{M:1})}',maxDate:'%y-%M'})"
+							onclick="WdatePicker({minDate:'#F{$dp.$D(\'begin\',{M:1})}',maxDate:'%y-%M',dateFmt:'yyyyMM'})"
 							class="Wdate"> </span> <span> <s:if
 								test="#session.factNo=='tw'">
 								<select name="factNo" datatype="*" onchange="getFactName()"

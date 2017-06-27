@@ -22,7 +22,7 @@
 			
 			<s:if test="#session.factNo=='tw'">
 					<select name="factNo" id="factNo" class="search">
-						<option value="nothing">請選擇廠別</option>						
+						<option value="nothing">請選擇廠別</option>												
 						<s:iterator value="#session.facts" id="temp">
 							<option value="${temp[0]}">${temp[1]}(${temp[0]})</option>								
 						</s:iterator>
@@ -50,6 +50,10 @@
 			   <input value="搜索" type="button" class="btn btn-primary" onclick="submis('public_form')" />&nbsp;
 			   <input value="導出Excel" type="button" class="btn btn-primary" onclick="print('public_form','factNo','yymm','yymm2')"/>&nbsp;
 			   <input value="導出Excel(2)" type="button" class="btn btn-primary" onclick="print2('public_form','factNo','yymm','yymm2')"/>
+			   <s:if test='#session.factNo=="tw"'>
+			       <input value="導出全部" type="button" class="btn btn-primary" onclick="print3('public_form','factNo','yymm','yymm2')"/>
+			   </s:if>
+			   
 		    
 		    </td>
 		    </tr>

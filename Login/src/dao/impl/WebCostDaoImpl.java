@@ -6,6 +6,8 @@ import java.util.Map;
 
 import org.hibernate.Query;
 
+import com.opensymphony.xwork2.ActionContext;
+
 import util.PageBean;
 import dao.Basedao;
 import dao.IWebCostDao;
@@ -30,6 +32,9 @@ public class WebCostDaoImpl extends Basedao implements IWebCostDao {
 		StringBuffer hql2=new StringBuffer();
 		hql.append("from Webcost where 1=1 ");
 		hql2.append("select count(id.factNo) ");
+		if(factNo==null||"".equals(factNo)){
+			factNo=(String)ActionContext.getContext().getSession().get("factNo");
+		}
 		if (factNo != null && !factNo.equals("") && !factNo.equals("tw")&&!factNo.equals("nothing")) {
 			hql.append("and id.factNo=:factno ");
 			map.put("factno", factNo);

@@ -147,24 +147,18 @@ public class KyzPettyAction extends ActionSupport{
 		this.webFactSer = webFactSer;
 	}
 	public String findPageBean(){
-		ActionContext.getContext().getApplication().clear();
-		factNo=(String)ActionContext.getContext().getSession().get("factNo");
+		ActionContext.getContext().getSession().remove("kyzpetty_factno");
+		ActionContext.getContext().getSession().remove("kyzpetty_billno");
+		ActionContext.getContext().getSession().remove("kyzpetty_yymm");
 		bean=kyzpettySer.findPageBean(20,page, factNo, billNo, yymm);
 		return "beanList";
 	}
 	
 	public String findPageBean2(){
-		ActionContext.getContext().getApplication().clear();
-		bean=kyzpettySer.findPageBean(20,page, factNo, billNo, yymm);
-		if(factNo!=null&&!factNo.equals("")){
-			ActionContext.getContext().getApplication().put("kyzpetty_factno", factNo);
-		}
-		if(billNo!=null&&!billNo.equals("")){
-			ActionContext.getContext().getApplication().put("kyzpetty_billno", billNo.trim());
-		}
-		if(yymm!=null&&!yymm.equals("")){
-			ActionContext.getContext().getApplication().put("kyzpetty_yymm", yymm);
-		}
+		bean=kyzpettySer.findPageBean(20,page, factNo, billNo, yymm);		
+		ActionContext.getContext().getSession().put("kyzpetty_factno", factNo);				
+		ActionContext.getContext().getSession().put("kyzpetty_billno", billNo);			
+		ActionContext.getContext().getSession().put("kyzpetty_yymm", yymm);		
 		return "beanList1";
 	}
 	
@@ -173,12 +167,9 @@ public class KyzPettyAction extends ActionSupport{
 		if(backIndex==1){
 			result="beanList";
 		}
-		factNo=(String)ActionContext.getContext().getApplication().get("kyzpetty_factno");
-		billNo=(String)ActionContext.getContext().getApplication().get("kyzpetty_billno");
-		yymm=(String)ActionContext.getContext().getApplication().get("kyzpetty_yymm");
-		if(factNo==null||factNo.equals("")){
-			factNo=(String)ActionContext.getContext().getSession().get("factNo");
-		}
+		factNo=(String)ActionContext.getContext().getSession().get("kyzpetty_factno");
+		billNo=(String)ActionContext.getContext().getSession().get("kyzpetty_billno");
+		yymm=(String)ActionContext.getContext().getSession().get("kyzpetty_yymm");		
 		bean=kyzpettySer.findPageBean(20,page, factNo, billNo, yymm);
 		return result;
 	}

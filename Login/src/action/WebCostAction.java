@@ -195,7 +195,6 @@ public class WebCostAction extends ActionSupport implements
 	}
 
 	public String findPageBean() {
-		//ActionContext.getContext().getApplication().clear();
 		ActionContext.getContext().getSession().remove("pubic_factno");
 		ActionContext.getContext().getSession().remove("pubic_yymm");
 		ActionContext.getContext().getSession().remove("pubic_yymm2");
@@ -206,20 +205,11 @@ public class WebCostAction extends ActionSupport implements
 
 	}
 
-	public String findPageBean2() {
-		ActionContext.getContext().getApplication().clear();
-		if (factNo != null && !factNo.equals("") && !factNo.equals("tw")) {
-			ActionContext.getContext().getSession().put("pubic_factno", factNo);					
-		}
-		if (yymm != null && !yymm.equals("")) {
-			ActionContext.getContext().getSession().put("pubic_yymm", yymm);
-		}
-		if (yymm2 != null && !yymm2.equals("")) {
-			ActionContext.getContext().getSession().put("pubic_yymm2", yymm2);
-		}
-
-		bean = costSer.findPageBean(20,page, factNo, yymm,yymm2);
-
+	public String findPageBean2() {	
+		ActionContext.getContext().getSession().put("pubic_factno",factNo);
+		ActionContext.getContext().getSession().put("pubic_yymm",yymm);
+		ActionContext.getContext().getSession().put("pubic_yymm2",yymm2);
+		bean=costSer.findPageBean(20,page,factNo,yymm,yymm2);
 		return "beanList1";
 	}
 
@@ -230,12 +220,8 @@ public class WebCostAction extends ActionSupport implements
 		}
 		factNo = (String) ActionContext.getContext().getSession().get("pubic_factno");				
 		yymm = (String) ActionContext.getContext().getSession().get("pubic_yymm");
-		yymm2 = (String) ActionContext.getContext().getSession().get("pubic_yymm2");		
-		if (factNo == null || factNo.equals("") || factNo.equals("tw")) {
-			factNo = (String) ActionContext.getContext().getSession().get("factNo");					
-		}
+		yymm2 = (String) ActionContext.getContext().getSession().get("pubic_yymm2");			
 		bean = costSer.findPageBean(20,page, factNo, yymm,yymm2);
-
 		return result;
 
 	}

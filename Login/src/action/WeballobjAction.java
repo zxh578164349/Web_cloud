@@ -469,6 +469,132 @@ public class WeballobjAction  extends ActionSupport implements ServletResponseAw
 		}//switch							
 	}
 	
+	
+	public void print_all() throws ParseException, IOException{
+		factNo="all";
+		HSSFWorkbook wb=new HSSFWorkbook();
+		Map<String,Object>map_cs=findStyles(wb);
+		List<Object[]>list_facts=(List<Object[]>)ActionContext.getContext().getSession().get("facts");//所有廠別	
+		List<String>list_months=GlobalMethod.findMonths(yymm, yymm2);
+		List<String>list_col=findLeftCol();
+		List<Weballobj>list_objs=weballobjser.findAllobj(factNo, yymm, yymm2);		
+		switch(list_objs.size()){//switch		
+		case 0:
+			response.setContentType("text/html;charset=utf-8");
+			response.getWriter().print("<script>window.parent.alert('無數據');</script>");			
+			break;
+		default:
+			Map<String,Object>map=new LinkedHashMap<String,Object>();				
+			for(String month:list_months){	
+				List<Weballobj>list=new ArrayList<Weballobj>();
+				for(Weballobj obj:list_objs){
+					if(month.equals(obj.getId().getYymm())){
+						list.add(obj);
+					}				
+				}
+				Map<String,Object>map2=new LinkedHashMap<String,Object>();
+				for(Object[] fact:list_facts){//for
+					List<Weballobj>list_obj=new ArrayList<Weballobj>();
+					for(Weballobj obj:list){
+						if(fact[0].equals(obj.getId().getFact().getId().getFactNo())){
+							list_obj.add(obj);
+						}
+					}
+					map2.put(fact[0].toString(),list_obj);
+				}
+				map.put(month, map2);	
+			}//for
+			
+			
+			Map<String,Object>map_fcode=new LinkedHashMap<String,Object>();			
+			for(String month:map.keySet()){
+				Map<String,Object>map_fcode2=new LinkedHashMap<String,Object>();
+				Map<String,Object>map2=(Map<String,Object>)map.get(month);
+				for(String factno:map2.keySet()){
+					List<Weballobj>list=(List<Weballobj>)map2.get(factno);
+					List<String>list_fcode=new ArrayList<String>();				
+						for(Weballobj obj:list){
+							list_fcode.add(obj.getId().getFact().getId().getFactArea());
+						}
+						map_fcode2.put(factno,list_fcode);
+				}
+				map_fcode.put(month,map_fcode2);
+			}
+			
+			
+			Map<String,Object>map_all=new LinkedHashMap<String,Object>();
+			
+			for(String month:map.keySet()){
+				Map<String,Object>map_all2=new LinkedHashMap<String,Object>();
+				Map<String,Object>map2=(Map<String,Object>)map.get(month);
+				for(String factno:map2.keySet()){
+					List<List<Double>>list_a=new ArrayList<List<Double>>();		
+					List<Weballobj>list=(List<Weballobj>)map2.get(factno);
+					List<Double> list_b=null;
+					if(list!=null&&list.size()!=0){
+						for (Weballobj obj : list) {
+							list_b =this.packageObj(obj);						
+							list_a.add(list_b);
+						}
+					}														
+					map_all2.put(factno, list_a);
+				}
+				map_all.put(month,map_all2);
+			}
+			
+			init_all(wb,map_cs,list_col,factNo,list_months,map_fcode,map_all);
+			
+			
+			/*for(String month:map_all.keySet()){//for
+				int index_y=0;
+				Map<String,Object>map_all2=(Map<String,Object>)map_all.get(month);
+				Map<String,Object>map_fcode2=(Map<String,Object>)map_fcode.get(month);
+				HSSFSheet sheet=wb.getSheet(month);				
+				for(String factno:map_all2.keySet()){//for2					
+					List<List<Double>>list_a=(List<List<Double>>)map_all2.get(factno);
+					List<String>list_fcode=(List<String>)map_fcode2.get(factno);
+					if(list_a.size()>0){
+						for(int a=0;a<list_a.size();a++){
+							List<Double>list_b=list_a.get(a);
+							for(int b=0;b<list_b.size();b++){
+								if(list_b.get(b)==null){
+									sheet.getRow(3+b+(list_col.size()*index_y)).getCell(3+a).setCellValue("無");	//利潤率有可能爲null,所以要判斷  obj.getObjA203()      20160916
+								}else{
+									sheet.getRow(3+b+(list_col.size()*index_y)).getCell(3+a).setCellValue(list_b.get(b));
+									sheet.setColumnWidth(3+a,4000);
+								}							
+								sheet.getRow(3+b+(list_col.size()*index_y)).getCell(3+a).setCellStyle(this.findStyleByIndex(map_cs, b));
+							}
+						}
+					}
+					index_y++;
+				}//for2				
+			}//for
+*/			
+			try {
+				/*OutputStream os = new FileOutputStream("E:/" + "websort.xls");
+				wb.write(os);
+				os.close();	*/
+				ServletOutputStream os=response.getOutputStream();
+				response.setContentType("application/vnd.ms-excel");
+				int msie=ServletActionContext.getRequest().getHeader("USER-AGENT").toLowerCase().indexOf("msie");//判斷是否為IE瀏覽器,大於0則為IE瀏覽器
+				String fileName="report"+yymm+"-"+yymm2+".xls";
+				if(msie>0){
+					fileName=java.net.URLEncoder.encode(fileName,"utf-8");//解決IE中文文件不能下載的問題
+				}else{
+					fileName=new String(fileName.getBytes("utf-8"),"iso-8859-1");//解決非IE中文名亂碼問題
+				}		
+				response.setHeader("Content-disposition", "attachment;filename="+fileName);					
+				wb.write(os);
+				os.close();						
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		
+		}//switch							
+	}
+	
 	/**
 	 * 各廠別狀態的月份統計
 	 * @Title: print2
@@ -632,6 +758,93 @@ public class WeballobjAction  extends ActionSupport implements ServletResponseAw
 				sheet.getRow(0).getCell(0).setCellStyle(cs_head);
 			}
 			
+		}//for
+	}
+	
+	public void init_all(HSSFWorkbook wb,Map<String,Object>map_cs,List<String>list_col,String factNo,List<String>list_months,Map<String,Object>map_fcode,Map<String,Object>map_all) throws ParseException{
+		HSSFCellStyle cs=(HSSFCellStyle)map_cs.get("cs");
+		HSSFCellStyle cs_head=(HSSFCellStyle)map_cs.get("cs_head");
+		HSSFCellStyle cs_title=(HSSFCellStyle)map_cs.get("cs_title");
+		
+					
+		for(String month:map_fcode.keySet()){//for
+			HSSFSheet sheet=wb.createSheet(month);
+			Map<String,Object>map_fcode2=(Map<String,Object>)map_fcode.get(month);
+			int index_y=0;
+			int index_y2=4;			
+			for(String factno:map_fcode2.keySet()){//for2				
+				List<String>list_fcode=(List<String>)map_fcode2.get(factno);				
+				if(list_fcode.size()>0){
+					for(int a=0;a<4+list_col.size();a++){
+						sheet.createRow(a+index_y);				
+						for(int b=0;b<10;b++){
+							sheet.getRow(a+index_y).createCell(b);					
+						}
+					}
+					sheet.getRow(3+index_y).getCell(0).setCellValue(factno);
+					for(int a=0;a<list_col.size();a++){						
+						for(int b=0;b<list_col.get(0).split("__").length;b++){					
+								sheet.getRow(a+4+index_y).getCell(b).setCellValue(list_col.get(a).split("__")[b]);
+								if(a==0){
+									sheet.getRow(a+4+index_y).getCell(b).setCellStyle(cs_head);
+									if(b==list_col.get(0).split("__").length-1){
+										for(int c=0;c<list_fcode.size();c++){
+											sheet.getRow(a+4+index_y).getCell(b+1+c).setCellValue(list_fcode.get(c));
+											sheet.getRow(a+4+index_y).getCell(b+1+c).setCellStyle(cs_head);
+										}
+									}
+								}else{
+									sheet.getRow(a+4+index_y).getCell(b).setCellStyle(cs);
+								}						
+							}						
+					}
+					
+					Map<String,Object>map_all2=(Map<String,Object>)map_all.get(month);													
+						List<List<Double>>list_a=(List<List<Double>>)map_all2.get(factno);
+						if(list_a.size()>0){
+							for(int a=0;a<list_a.size();a++){
+								List<Double>list_b=list_a.get(a);
+								for(int b=0;b<list_b.size();b++){
+									if(list_b.get(b)==null){
+										sheet.getRow(b+5+index_y).getCell(3+a).setCellValue("無");	//利潤率有可能爲null,所以要判斷  obj.getObjA203()      20160916
+									}else{
+										sheet.getRow(b+5+index_y).getCell(3+a).setCellValue(list_b.get(b));
+										sheet.setColumnWidth(3+a,4000);
+									}							
+									sheet.getRow(b+5+index_y).getCell(3+a).setCellStyle(this.findStyleByIndex(map_cs, b));
+								}
+							}
+						}
+										
+					
+					index_y=index_y+list_col.size()+5;
+				}else{	
+					for(int a=0;a<=index_y2;a++){
+						sheet.createRow(a+index_y);				
+						for(int b=0;b<10;b++){
+							sheet.getRow(a+index_y).createCell(b);					
+						}
+					}
+					sheet.getRow(index_y+index_y2-1).getCell(0).setCellValue(factno);
+					CellRangeAddress cra_null=new CellRangeAddress(index_y+index_y2,index_y+index_y2,0,4);
+					sheet.addMergedRegion(cra_null);					
+					sheet.getRow(index_y+index_y2).getCell(0).setCellValue("當前月份無數據");
+					for(int i=0;i<5;i++){
+						sheet.getRow(index_y+index_y2).getCell(i).setCellStyle(cs_head);
+					}
+					index_y=index_y+index_y2+2;
+				}
+				
+			}//for2	
+			if(sheet.getRow(0)!=null){
+				sheet.setColumnWidth(1, 5000);
+				CellRangeAddress cra_title=new CellRangeAddress(0,0,0,4);
+				sheet.addMergedRegion(cra_title);
+				sheet.getRow(0).getCell(0).setCellValue(month+"-"+"基本數據");
+				for(int i=0;i<6;i++){
+					sheet.getRow(0).getCell(i).setCellStyle(cs_title);
+				}
+			}
 		}//for
 	}
 	

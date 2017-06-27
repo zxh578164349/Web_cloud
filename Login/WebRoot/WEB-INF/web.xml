@@ -14,7 +14,7 @@ version="2.5">
     <param-name>contextConfigLocation</param-name>
     <param-value>classpath:spring.xml,classpath:spring-*.xml</param-value>
   </context-param>
- 
+  <distributable/>
  <!-- session的有效期,單位:分 -->
  <session-config>
     <session-timeout>30</session-timeout>
@@ -44,7 +44,7 @@ version="2.5">
 
 <filter>
     <filter-name>sessionfilter</filter-name>
-    <filter-class>util.SessionTimeOutFilter</filter-class>
+    <filter-class>util.SessionTimeOutFilter_Login</filter-class>
     <init-param>
        <param-name>url_a</param-name>
        <param-value>/Login/,/Login_scm/,/</param-value>       

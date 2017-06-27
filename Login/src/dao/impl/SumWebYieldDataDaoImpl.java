@@ -6,6 +6,8 @@ import java.util.Map;
 
 import org.hibernate.Query;
 
+import com.opensymphony.xwork2.ActionContext;
+
 import util.PageBean;
 import dao.Basedao;
 import dao.ISumWebYieldDataDao;
@@ -27,6 +29,9 @@ public class SumWebYieldDataDaoImpl extends Basedao implements ISumWebYieldDataD
 		Map<String,Object>map=new HashMap<String,Object>();
 		hql.append("from SumWebYieldData where 1=1");
 		hql2.append("select count(id.factNo.factNo) ");
+		if(factNo==null||"".equals(factNo)){
+			factNo=(String)ActionContext.getContext().getSession().get("factNo");
+		}
 		if (factNo != null && !factNo.equals("") && !factNo.equals("tw")&&!factNo.equals("nothing")) {
 			hql.append(" and id.factNo.factNo =:factno ");
 			map.put("factno", factNo);

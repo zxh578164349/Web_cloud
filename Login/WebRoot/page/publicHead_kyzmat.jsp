@@ -24,8 +24,8 @@
 		    </td>			
 			<td>
 			<br>			 
-			(開始日期)<input type="text" id="beginDate"  name="fromDate"  onClick="WdatePicker({minDate:'{%y-1}-%M-%d',maxDate:'#F{$dp.$D(\'endDate\',{d:-1})||\'%y-%M-{%d-1}\'}'})" readonly="readonly" class="Wdate"/><br>
-		    (結束日期)<input type="text" id="endDate"  name="endDate"  onClick="WdatePicker({minDate:'#F{$dp.$D(\'beginDate\',{d:1})}',maxDate:'%y-%M-%d'})" readonly="readonly" class="Wdate"/>
+			(開始日期)<input type="text" id="beginDate"  name="fromDate"  onClick="WdatePicker({minDate:'{%y-1}-%M-%d',maxDate:'#F{$dp.$D(\'endDate\',{d:-1})||\'%y-%M-{%d-1}\'}',dateFmt:'yyyyMMdd'})" readonly="readonly" class="Wdate"/><br>
+		    (結束日期)<input type="text" id="endDate"  name="endDate"  onClick="WdatePicker({minDate:'#F{$dp.$D(\'beginDate\',{d:1})}',maxDate:'%y-%M-%d',dateFmt:'yyyyMMdd'})" readonly="readonly" class="Wdate"/>
 			</td>
 			<td>
 			<br>			

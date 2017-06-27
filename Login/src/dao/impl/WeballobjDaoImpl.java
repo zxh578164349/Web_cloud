@@ -118,7 +118,7 @@ public class WeballobjDaoImpl extends Basedao implements IWeballobjDao{
 		StringBuffer hql=new StringBuffer();
 		Map<String,Object>map=new HashMap<String,Object>();
 		hql.append("from Weballobj where 1=1 ");
-		if(factNo!=null&&!factNo.equals("")&&!factNo.equals("tw")){
+		if(factNo!=null&&!factNo.equals("")&&!factNo.equals("tw")&&!"all".equals(factNo)){
 			hql.append(" and id.fact.id.factNo=:factno");
 			map.put("factno", factNo);
 		}
@@ -133,9 +133,9 @@ public class WeballobjDaoImpl extends Basedao implements IWeballobjDao{
 		hql.append(" order by id.yymm,id.fact.id.factArea");
 		List<Weballobj>list=super.getAllWithNoPage(hql.toString(), map);
 		//解決緩存問題
-		for(Weballobj obj:list){
+		/*for(Weballobj obj:list){
 			obj.getId().getFact().getFactSname();
-		}
+		}*/
 		return list;
 	}
 

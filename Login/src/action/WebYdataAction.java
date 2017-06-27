@@ -404,8 +404,7 @@ public class WebYdataAction extends ActionSupport implements
 
 	}
 
-	public String findPageBean() {
-		//ActionContext.getContext().getApplication().clear();
+	public String findPageBean() {		
 		System.out.println(request.getRequestURI());
 		ActionContext.getContext().getSession().remove("public_factno");
 		ActionContext.getContext().getSession().remove("public_yymm");
@@ -417,8 +416,7 @@ public class WebYdataAction extends ActionSupport implements
 
 	}
 
-	public String findPageBean2() {
-		//ActionContext.getContext().getApplication().clear();
+	public String findPageBean2() {		
 		ActionContext.getContext().getSession().remove("public_factno");
 		ActionContext.getContext().getSession().remove("public_yymm");
 		ActionContext.getContext().getSession().remove("public_yymm2");
@@ -585,37 +583,16 @@ public class WebYdataAction extends ActionSupport implements
 		return "transit";
 	}
 
-	public String findPageBean2_print() {
-		ActionContext.getContext().getApplication().clear();
-		if (factNo != null && !factNo.equals("") && !factNo.equals("tw")) {
-			ActionContext.getContext().getApplication()
-					.put("print_ydata_factNo", factNo);
-
-		} else {
-			factNo = (String) ActionContext.getContext().getSession()
-					.get("factNo");
-		}
-		if (yymm != null && !yymm.equals("")) {
-			ActionContext.getContext().getApplication()
-					.put("print_ydata_yymm", yymm);
-		}
-		bean = dataSer.findPageBean(20,page, factNo, sdate,edate);
-		/*
-		 * ActionContext.getContext().getSession() .put("zwcashList",
-		 * dataSer.getAllWithNoPage(factNo, yymm));
-		 */
+	public String findPageBean2_print() {		
+		ActionContext.getContext().getSession().put("print_ydata_factNo",factNo);
+		ActionContext.getContext().getSession().put("print_ydata_yymm",yymm);
+		bean=dataSer.findPageBean(20,page,factNo,sdate,edate);
 		return "list";
 	}
 
 	public String findPageBean3_print() {
-		factNo = (String) ActionContext.getContext().getApplication()
-				.get("print_ydata_factNo");
-		yymm = (String) ActionContext.getContext().getApplication()
-				.get("print_ydata_yymm");
-		if (factNo == null || factNo.equals("") || factNo.equals("tw")) {
-			factNo = (String) ActionContext.getContext().getSession()
-					.get("factNo");
-		}
+		factNo = (String) ActionContext.getContext().getSession().get("print_ydata_factNo");
+		yymm = (String) ActionContext.getContext().getSession().get("print_ydata_yymm");		
 		bean = dataSer.findPageBean(20,page, factNo, sdate,edate);
 		return "list";
 	}
@@ -640,74 +617,37 @@ public class WebYdataAction extends ActionSupport implements
 	}
 
 	public String findPageBeanForMonth() {
-		ActionContext.getContext().getApplication().clear();
-		factNo = (String) ActionContext.getContext().getSession().get("factNo");
+		ActionContext.getContext().getSession().remove("ydata_factNo_formonth");
+		ActionContext.getContext().getSession().remove("ydata_yymm_formonth");
 		bean = dataSer.findAllYDataForMonth(20,page, factNo, yymm);
 		return "beanListForMonth";
 	}
 
 	public String findPageBean2ForMonth() {
-		ActionContext.getContext().getApplication().clear();
-		if (factNo != null && !factNo.equals("") && !factNo.equals("tw")) {
-			ActionContext.getContext().getApplication()
-					.put("ydata_factNo_formonth", factNo);
-		}
-		if (yymm != null && !yymm.equals("")) {
-			ActionContext.getContext().getApplication()
-					.put("ydata_yymm_formonth", yymm);
-		}
-
-		bean = dataSer.findAllYDataForMonth(20,page, factNo, yymm);
-
+		ActionContext.getContext().getSession().put("ydata_factNo_formonth",factNo);
+		ActionContext.getContext().getSession().put("ydata_yymm_formonth",yymm);
+		bean=dataSer.findAllYDataForMonth(20,page,factNo,yymm);
 		return "beanListForMonth1";
 	}
 
 	public String findPageBean3ForMonth() {
-		factNo = (String) ActionContext.getContext().getApplication()
-				.get("ydata_factNo_formonth");
-		yymm = (String) ActionContext.getContext().getApplication()
-				.get("ydata_yymm_formonth");
-		if (factNo == null || factNo.equals("") || factNo.equals("tw")) {
-			factNo = (String) ActionContext.getContext().getSession()
-					.get("factNo");
-		}
+		factNo = (String) ActionContext.getContext().getSession().get("ydata_factNo_formonth");
+		yymm = (String) ActionContext.getContext().getSession().get("ydata_yymm_formonth");		
 		bean = dataSer.findAllYDataForMonth(20,page, factNo, yymm);
-
 		return "beanListForMonth1";
 
 	}
 
 	public String findPageBean2_print_formonth() {
-		ActionContext.getContext().getApplication().clear();
-		if (factNo != null && !factNo.equals("") && !factNo.equals("tw")) {
-			ActionContext.getContext().getApplication()
-					.put("print_ydata_factNo_formonth", factNo);
-
-		} else {
-			factNo = (String) ActionContext.getContext().getSession()
-					.get("factNo");
-		}
-		if (yymm != null && !yymm.equals("")) {
-			ActionContext.getContext().getApplication()
-					.put("print_ydata_yymm_formonth", yymm);
-		}
-		bean = dataSer.findAllYDataForMonth(15, page, factNo, yymm);
-		/*
-		 * ActionContext.getContext().getSession() .put("zwcashList",
-		 * dataSer.getAllWithNoPage(factNo, yymm));
-		 */
+		ActionContext.getContext().getSession().put("print_ydata_factNo_formonth",factNo);
+		ActionContext.getContext().getSession().put("print_ydata_yymm_formonth",yymm);
+		bean=dataSer.findAllYDataForMonth(15,page,factNo,yymm);
 		return "list_formonth";
 	}
 
 	public String findPageBean3_print_formonth() {
-		factNo = (String) ActionContext.getContext().getApplication()
-				.get("print_ydata_factNo_formonth");
-		yymm = (String) ActionContext.getContext().getApplication()
-				.get("print_ydata_yymm_formonth");
-		if (factNo == null || factNo.equals("") || factNo.equals("tw")) {
-			factNo = (String) ActionContext.getContext().getSession()
-					.get("factNo");
-		}
+		factNo = (String) ActionContext.getContext().getSession().get("print_ydata_factNo_formonth");
+		yymm = (String) ActionContext.getContext().getSession().get("print_ydata_yymm_formonth");		
 		bean = dataSer.findAllYDataForMonth(15, page, factNo, yymm);
 		return "list_formonth";
 	}

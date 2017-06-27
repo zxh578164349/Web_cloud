@@ -398,9 +398,8 @@ public class KyVisabillsDaoImpl extends Basedao implements IKyVisaBillsDao{
 
 	public int findKyVisaBills_Int(String factNo,String email) {
 		// TODO Auto-generated method stub
-		StringBuffer hql=new StringBuffer();
+		/*StringBuffer hql=new StringBuffer();
 		Map<String,Object>map=new HashMap<String,Object>();
-		//hql.append("from KyVisabills where 1=1");
 		hql.append("select count(id.itemNo) from KyVisabills where 1=1");
 		if(factNo!=null&&!factNo.equals("")&&!factNo.equals("tw")){
 			hql.append(" and id.kyVisabillm.id.factNo=:factno");
@@ -408,11 +407,16 @@ public class KyVisabillsDaoImpl extends Basedao implements IKyVisaBillsDao{
 		}
 		hql.append(" and lower(visaSigner)=:visaSigner");
 		map.put("visaSigner", email.toLowerCase());
-		hql.append(" and id.itemNo=id.kyVisabillm.itemNext and visaMk='N' and flowMk='Y'") ;
-		//hql.append(" and substr(id.kyVisabillm.id.billNo,0,2) in ('CM','EM','BM')");
+		hql.append(" and id.itemNo=id.kyVisabillm.itemNext and visaMk='N' and flowMk='Y'") ;		
 		hql.append(" and id.kyVisabillm.delMk is null ");
-		int result=super.getAllRowCount2(hql.toString(), map);
-		return result;
+		int result=super.getAllRowCount2(hql.toString(), map);*/
+		String hql="select id.itemNo from KyVisabills where id.kyVisabillm.id.factNo=? and  lower(visaSigner)=? and " +
+				"id.itemNo=id.kyVisabillm.itemNext and visaMk='N' and flowMk='Y' and id.kyVisabillm.delMk is null";
+		Query query=getSession().createQuery(hql);
+		query.setString(0,factNo);
+		query.setString(1,email);
+		List<KyVisabills>list=query.list();
+		return list.size();
 	}
 
 	public int findBillsWithNo(String visaSort, String billNo) {

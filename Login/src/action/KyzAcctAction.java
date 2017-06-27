@@ -107,25 +107,21 @@ public class KyzAcctAction extends ActionSupport implements ServletResponseAware
 		return "add";
 	}
 	
-	public String findPageBean(){
-		ActionContext.getContext().getApplication().clear();
+	public String findPageBean(){			
+		ActionContext.getContext().getSession().remove("kyzacct_acctNo");
+		ActionContext.getContext().getSession().remove("kyzacct_acctName");
 		bean=kyzacctSer.findPageBean(20,page, acctNo,acctName);
 		return "beanList";		
 	}
 	public String findPageBean2(){
-		bean=kyzacctSer.findPageBean(20,page, acctNo.trim(), acctName.trim());
-		ActionContext.getContext().getApplication().clear();
-		if(acctNo!=null&&!acctNo.equals("")){
-			ActionContext.getContext().getApplication().put("kyzacct_acctNo", acctNo.trim());
-		}
-		if(acctName!=null&&!acctName.equals("")){
-			ActionContext.getContext().getApplication().put("kyzacct_acctName", acctName.trim());
-		}
+		bean=kyzacctSer.findPageBean(20,page, acctNo.trim(), acctName);
+		ActionContext.getContext().getSession().put("kyzacct_acctNo", acctNo);		
+		ActionContext.getContext().getSession().put("kyzacct_acctName", acctName);		
 		return "beanList1";
 	}
 	public String findPageBean3(){
-		acctNo=(String)ActionContext.getContext().getApplication().get("kyzacct_acctNo");
-		acctName=(String)ActionContext.getContext().getApplication().get("kyzacct_acctName");
+		acctNo=(String)ActionContext.getContext().getSession().get("kyzacct_acctNo");
+		acctName=(String)ActionContext.getContext().getSession().get("kyzacct_acctName");
 		bean=kyzacctSer.findPageBean(20,page, acctNo, acctName);
 		return "beanList1";
 	}

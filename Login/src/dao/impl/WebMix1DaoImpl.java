@@ -6,6 +6,8 @@ import java.util.Map;
 
 import org.hibernate.Query;
 
+import com.opensymphony.xwork2.ActionContext;
+
 import util.PageBean;
 import dao.Basedao;
 import dao.IWebMix1Dao;
@@ -28,6 +30,9 @@ public class WebMix1DaoImpl extends Basedao implements IWebMix1Dao {
 		final Map<String, Object> map = new HashMap<String, Object>();
 		StringBuffer hql = new StringBuffer();
 		hql.append("from WebYieldData where 1=1 ");
+		if(factNo==null||"".equals(factNo)){
+			factNo=(String) ActionContext.getContext().getSession().get("factNo");
+		}
 		if (factNo != null && !factNo.equals("") && !factNo.equals("tw")&&!factNo.equals("nothing")) {
 			hql.append("and id.factNo=:factno ");
 			map.put("factno", factNo);

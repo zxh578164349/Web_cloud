@@ -26,7 +26,10 @@ public class KyzPettyDaoImpl extends Basedao implements IKyzPettyDao{
 		Integer rows=(Integer)ActionContext.getContext().getSession().get("allrow");
 		hql.append("from KyzPetty where 1=1 ");
 		hql2.append("select count(id.billNo)  ");
-		if(factNo!=null&&!factNo.equals("")&&!factNo.equals("tw")&&!factNo.equals("nothing")){
+		if(factNo==null||"".equals(factNo)){
+			factNo=(String)ActionContext.getContext().getSession().get("factNo");
+		}
+		if(factNo!=null&&!"".equals(factNo)&&!"tw".equals(factNo)&&!"nothing".equals(factNo)){
 			hql.append(" and id.factNo=:factno");
 			map.put("factno", factNo);
 		}
