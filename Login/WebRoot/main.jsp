@@ -132,7 +132,8 @@
 	<script type='text/javascript' src='dwr/engine.js'></script>
 	<script type='text/javascript' src='dwr/util.js'></script>
 	<!-- <script src="http://apps.bdimg.com/libs/jquery/1.9.1/jquery.min.js"></script> -->
-	<script>window.jQuery|| document.write('<script src="jquery/jquery-1.9.1.min.js"><\/script>');</script>
+	<!--  <script>window.jQuery|| document.write('<script src="jquery/jquery-1.9.1.min.js"><\/script>');</script>-->
+	<script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script>
 	<script type="text/javascript" src="page/jquerys/layer/layer.min.js"></script>
 	<!-- <script type="text/javascript" src="jquery/layer3/layer.js"></script> -->
 	<script type="text/javascript" src="jquery/DatePicker/WdatePicker.js"></script>
