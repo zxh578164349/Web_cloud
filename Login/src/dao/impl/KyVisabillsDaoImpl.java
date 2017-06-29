@@ -1,6 +1,8 @@
 package dao.impl;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -410,8 +412,12 @@ public class KyVisabillsDaoImpl extends Basedao implements IKyVisaBillsDao{
 		hql.append(" and id.itemNo=id.kyVisabillm.itemNext and visaMk='N' and flowMk='Y'") ;		
 		hql.append(" and id.kyVisabillm.delMk is null ");
 		int result=super.getAllRowCount2(hql.toString(), map);*/
+		Calendar cal=Calendar.getInstance();
+		cal.add(Calendar.DAY_OF_MONTH,-2);
+		String yymm=new SimpleDateFormat("yyyyMMdd").format(cal.getTime());
 		String hql="select id.itemNo from KyVisabills where id.kyVisabillm.id.factNo=? and  lower(visaSigner)=? and " +
-				"id.itemNo=id.kyVisabillm.itemNext and visaMk='N' and flowMk='Y' and id.kyVisabillm.delMk is null";
+				"id.itemNo=id.kyVisabillm.itemNext and visaMk='N' and flowMk='Y' and id.kyVisabillm.delMk is null and " +
+				"id.kyVisabillm.dateCreate>'"+yymm+"'";
 		Query query=getSession().createQuery(hql);
 		query.setString(0,factNo);
 		query.setString(1,email);

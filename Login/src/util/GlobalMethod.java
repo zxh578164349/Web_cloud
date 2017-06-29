@@ -1966,7 +1966,7 @@ public class GlobalMethod extends HibernateDaoSupport{
 	 
 	 
 	 public static void main(String[] args) {
-			try{
+			/*try{
 				int i=0;
 				ServerSocket s=new ServerSocket(7019);
 				while(true){
@@ -1980,7 +1980,11 @@ public class GlobalMethod extends HibernateDaoSupport{
 				}								
 			}catch(IOException e){
 				e.printStackTrace();
-			}	 		 
+			}*/	 
+		 Calendar cal=Calendar.getInstance();
+			cal.add(Calendar.MONTH,-2);
+			String yymm=new SimpleDateFormat("yyyyMMdd").format(cal.getTime());
+			System.out.println(yymm);
 		
 		
 								 				 		 				

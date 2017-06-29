@@ -751,6 +751,7 @@ public class WeballobjAction  extends ActionSupport implements ServletResponseAw
 				sheet.createRow(a);					
 			}
 			
+			/*********************************標題***************************************/
 			sheet.setColumnWidth(1, 5000);
 			CellRangeAddress cra_title=new CellRangeAddress(0,0,0,4);
 			sheet.addMergedRegion(cra_title);
@@ -758,7 +759,7 @@ public class WeballobjAction  extends ActionSupport implements ServletResponseAw
 				sheet.getRow(0).createCell(i).setCellStyle(cs_title);
 			}
 			sheet.getRow(0).getCell(0).setCellValue(month+"-"+"各工廠基本數據");
-			
+			/*********************************標題***************************************/
 			
 			int leg_col=list_col.get(0).split("__").length;
 			for(int a=0;a<list_col.size();a++){
@@ -788,8 +789,7 @@ public class WeballobjAction  extends ActionSupport implements ServletResponseAw
 								sheet.getRow(a+4).getCell(b+index_x).setCellStyle(cs);
 							}							
 						}
-					}
-					//Map<String,Object>map_all2=(Map<String,Object>)map_all.get(month);													
+					}																		
 					List<List<Double>>list_a=(List<List<Double>>)map_all2.get(factno);
 					if(list_a.size()>0){
 						for(int a=0;a<list_a.size();a++){
@@ -803,8 +803,7 @@ public class WeballobjAction  extends ActionSupport implements ServletResponseAw
 								sheet.getRow(b+5).getCell(a+index_x).setCellStyle(this.findStyleByIndex(map_cs, b));
 							}
 						}												
-					}																				
-						
+					}																										
 					index_x=index_x+list_fcode.size();//...............002
 				}else{											
 					for(int a=0;a<list_col.size();a++){										
@@ -823,6 +822,7 @@ public class WeballobjAction  extends ActionSupport implements ServletResponseAw
 				}								
 			}//for2	
 			
+			/*********************************合計***************************************/
 			List<Double>list_total=this.package_total2(map_all2,list_col);
 			sheet.getRow(4).createCell(index_x).setCellValue("合計");
 			sheet.getRow(4).getCell(index_x).setCellStyle(cs_head);	
@@ -831,6 +831,7 @@ public class WeballobjAction  extends ActionSupport implements ServletResponseAw
 				sheet.getRow(a+5).createCell(index_x).setCellValue(list_total.get(a));
 				sheet.getRow(a+5).getCell(index_x).setCellStyle(this.findStyleByIndex(map_cs,a));
 			}
+			/*********************************合計***************************************/
 		}//for
 	}
 	
