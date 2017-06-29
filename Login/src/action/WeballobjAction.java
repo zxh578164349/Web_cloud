@@ -501,7 +501,7 @@ public class WeballobjAction  extends ActionSupport implements ServletResponseAw
 							list_obj.add(obj);
 						}
 					}
-					map2.put(fact[0].toString(),list_obj);
+					map2.put(fact[1].toString(),list_obj);
 				}
 				map.put(month, map2);	
 			}//for
@@ -811,7 +811,7 @@ public class WeballobjAction  extends ActionSupport implements ServletResponseAw
 						for(int b=0;b<1;b++){
 							sheet.getRow(a+4).createCell(b+index_x);
 							if(a==0){
-								sheet.getRow(a+4).getCell(b+index_x).setCellValue(factno+"_當月無數據");
+								sheet.getRow(a+4).getCell(b+index_x).setCellValue(factno+"(無數據)");
 								sheet.getRow(a+4).getCell(b+index_x).setCellStyle(cs_head);
 								sheet.setColumnWidth(b+index_x,6000);
 							}else{
