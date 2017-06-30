@@ -372,6 +372,10 @@
 					}
 					jq("#td_content_right").append(temp);
 					jq("#divBills2").show();
+				},
+				error:function(error){
+					alert("函文提示發生錯誤");
+					//alert(error.responseText);
 				}
 			})
 		});
