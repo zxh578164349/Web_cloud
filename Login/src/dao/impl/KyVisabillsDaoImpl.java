@@ -400,7 +400,11 @@ public class KyVisabillsDaoImpl extends Basedao implements IKyVisaBillsDao{
 
 	public int findKyVisaBills_Int(String factNo,String email) {
 		// TODO Auto-generated method stub
-		/*StringBuffer hql=new StringBuffer();
+		
+		Calendar cal=Calendar.getInstance();
+		cal.add(Calendar.MONTH,-2);
+		String yymm=new SimpleDateFormat("yyyyMMdd").format(cal.getTime());
+		StringBuffer hql=new StringBuffer();
 		Map<String,Object>map=new HashMap<String,Object>();
 		hql.append("select count(id.itemNo) from KyVisabills where 1=1");
 		if(factNo!=null&&!factNo.equals("")&&!factNo.equals("tw")){
@@ -411,18 +415,18 @@ public class KyVisabillsDaoImpl extends Basedao implements IKyVisaBillsDao{
 		map.put("visaSigner", email.toLowerCase());
 		hql.append(" and id.itemNo=id.kyVisabillm.itemNext and visaMk='N' and flowMk='Y'") ;		
 		hql.append(" and id.kyVisabillm.delMk is null ");
-		int result=super.getAllRowCount2(hql.toString(), map);*/
-		Calendar cal=Calendar.getInstance();
-		cal.add(Calendar.DAY_OF_MONTH,-2);
-		String yymm=new SimpleDateFormat("yyyyMMdd").format(cal.getTime());
-		String hql="select id.itemNo from KyVisabills where id.kyVisabillm.id.factNo=? and  lower(visaSigner)=? and " +
+		hql.append(" and id.kyVisabillm.dateCreate>'"+yymm+"'");
+		int result=super.getAllRowCount2(hql.toString(), map);
+		return result;
+		
+		/*String hql="select id.itemNo from KyVisabills where id.kyVisabillm.id.factNo=? and  lower(visaSigner)=? and " +
 				"id.itemNo=id.kyVisabillm.itemNext and visaMk='N' and flowMk='Y' and id.kyVisabillm.delMk is null and " +
 				"id.kyVisabillm.dateCreate>'"+yymm+"'";
 		Query query=getSession().createQuery(hql);
 		query.setString(0,factNo);
 		query.setString(1,email);
 		List<KyVisabills>list=query.list();
-		return list.size();
+		return list.size();*/
 	}
 
 	public int findBillsWithNo(String visaSort, String billNo) {

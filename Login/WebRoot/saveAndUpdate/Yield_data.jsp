@@ -71,13 +71,13 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 					<td class="td_show_title">日期</td>
 
 					<td class="td_input">
-					<input type="text" name="yymmdd" onClick="WdatePicker({dateFmt:'yyyyMMdd',maxDate:'%y-%M-%d'})" class="Wdate" datatype="*" id="yymmdd"/>
+					<input type="text" name="yymmdd" onclick="WdatePicker({dateFmt:'yyyyMMdd',maxDate:'%y-%M-%d'})" class="Wdate" datatype="*" id="yymmdd"/>
 					<span id="error3"></span>
 					</td>
 
 
 					<td class="td_show_title">工作日/假日</td>
-					<td class="td_input"><select name="ydata.workorholiday" id="workholiday" datatype="*" onclick="showRow()">
+					<td class="td_input"><select name="ydata.workorholiday" id="workholiday" datatype="*"  onchange="showRow(),fun_limit(this.value)">
 							<option value="">請選擇</option>
 							<option value=0>工作日</option>
 							<option value=1>假日</option>
@@ -293,7 +293,19 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 				}
 				jq("input[name='ydata.daycount']").attr("datatype","*0-2");
 			}
-		}				
+		}	
+		
+		function fun_limit(obj){
+			jq("#yymmdd").removeAttr("onclick");
+			if(obj=="1"||obj=="2"){
+				alert(obj);				
+				jq("#yymmdd").attr("onclick","WdatePicker({dateFmt:'yyyyMMdd',maxDate:'%y-{%M+1}-%d'})");
+			}
+			if(obj=="0"){
+				alert(obj);
+				jq("#yymmdd").attr("onclick","WdatePicker({dateFmt:'yyyyMMdd',maxDate:'%y-%M-%d'})");
+			}
+		}		
 	</script>
 	<script type='text/javascript' src='dwr/interface/webfactjs.js'></script>	
 </body>

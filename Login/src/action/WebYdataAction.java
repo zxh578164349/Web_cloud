@@ -282,26 +282,37 @@ public class WebYdataAction extends ActionSupport implements
 					cal.add(Calendar.DATE, -1);
 					lastday=format.format(cal.getTime());
 					Date lastday2=format.parse(lastday);
-					WebYieldDataId y_id=new WebYieldDataId(ydata.getId().getFactNo(),ydata.getId().getFactCode(),lastday2);												
-					WebYieldData ydata_last=dataSer.findById(y_id);
-					if(ydata_last==null){						
-						ajaxResult="3";//表示要輸入前天數據												
-						if(betweenDay>21){//如果大於前21天的就不提示輸入						
-							if(ydata_find!=null){//有可能出現當天數據不為空的，所以也要判斷
-								ajaxResult="2";//表示數據已經存在
-							}else{
+					WebYieldDataId y_id=new WebYieldDataId(ydata.getId().getFactNo(),ydata.getId().getFactCode(),lastday2);																						
+					/*************************只有工作日才限制输入前天数据*****************************/
+					if("0".equals(ydata.getWorkorholiday())){
+						WebYieldData ydata_last=dataSer.findById(y_id);
+						if(ydata_last==null){						
+							ajaxResult="3";//表示要輸入前天數據												
+							if(betweenDay>21){//如果大於前21天的就不提示輸入						
+								if(ydata_find!=null){//有可能出現當天數據不為空的，所以也要判斷
+									ajaxResult="2";//表示數據已經存在
+								}else{
+									dataSer.addYdata(ydata);
+									ajaxResult="0";
+								}												
+							}
+						}else{
+							if(ydata_find==null){
 								dataSer.addYdata(ydata);
 								ajaxResult="0";
-							}												
+							}else{
+								ajaxResult="2";//表示數據已經存在
+							}
 						}
 					}else{
+					/*************************只有工作日才限制输入前天数据*****************************/	
 						if(ydata_find==null){
 							dataSer.addYdata(ydata);
 							ajaxResult="0";
 						}else{
 							ajaxResult="2";//表示數據已經存在
 						}
-					}
+					}					
 				}else{
 					dataSer.addYdata(ydata);
 					ajaxResult="0";
