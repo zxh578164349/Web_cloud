@@ -71,7 +71,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 					<td class="td_show_title">日期</td>
 
 					<td class="td_input">
-					<input type="text" name="yymmdd" onclick="WdatePicker({dateFmt:'yyyyMMdd',maxDate:'%y-%M-%d'})" class="Wdate" datatype="*" id="yymmdd"/>
+					<input type="text" name="yymmdd" onfocus="WdatePicker({dateFmt:'yyyyMMdd',maxDate:'%y-%M-%d'})" class="Wdate" datatype="*" id="yymmdd"/>
 					<span id="error3"></span>
 					</td>
 
@@ -296,14 +296,12 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 		}	
 		
 		function fun_limit(obj){
-			jq("#yymmdd").removeAttr("onclick");
-			if(obj=="1"||obj=="2"){
-				alert(obj);				
-				jq("#yymmdd").attr("onclick","WdatePicker({dateFmt:'yyyyMMdd',maxDate:'%y-{%M+1}-%d'})");
+			jq("#yymmdd").removeAttr("onfocus");
+			if(obj=="1"||obj=="2"){							
+				jq("#yymmdd").attr("onfocus","WdatePicker({dateFmt:'yyyyMMdd',maxDate:'%y-{%M+1}-%d'})");
 			}
-			if(obj=="0"){
-				alert(obj);
-				jq("#yymmdd").attr("onclick","WdatePicker({dateFmt:'yyyyMMdd',maxDate:'%y-%M-%d'})");
+			if(obj=="0"){				
+				jq("#yymmdd").attr("onfocus","WdatePicker({dateFmt:'yyyyMMdd',maxDate:'%y-%M-%d'})");
 			}
 		}		
 	</script>

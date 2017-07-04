@@ -223,7 +223,28 @@
 							}
 						}
 					}
-				});
+					
+					jq.ajax({
+						type : "post",
+						url : "vbm_findKyVisaBills_Int",
+						dataType : "json",
+						success : function(data) {
+							var temp;
+							if (data == "0") {
+								temp = "<b>你好，目前暂无函文需要審核!</b>";
+							} else {
+								temp = "<a href='javascript:goHere()'>你好，目前有" + data
+										+ "封函文需要審核!(可點擊進入)</a>"
+							}
+							jq("#td_content_right").append(temp);
+							jq("#divBills2").show();
+						},
+						error:function(error){
+							alert("函文提示發生錯誤");
+							//alert(error.responseText);
+						}
+					})	
+		});
 
 		function changeTitle(title) {
 			jq(document).attr("title", title);
@@ -243,25 +264,7 @@
 					jq("#r_content").html(error.responseText);
 				}
 			});	
-			
-			
-			/*var vm = new Vue({
-			    el: '#navItems',
-			    data: {
-			        navitems: ''
-			    },
-			    created:function () {
-			        var _self = this;
-			        $.ajax({
-			            type: 'GET',
-			            url: 'http://1390.iluckycat.com/api/parent/class',
-			            success: function (data) {
-			                _self.navitems = data.data;
-			                console.log(JSON.stringify(_self.navitems));
-			            }
-			        })
-			    }
-			})*/
+									
 		}
 		function loadUrl(url) {
 			jq("#r_content").load(url);
@@ -357,7 +360,7 @@
 		   })
 		}*/
 
-		jq(function() {
+		/*jq(function() {
 			jq.ajax({
 				type : "post",
 				url : "vbm_findKyVisaBills_Int",
@@ -378,7 +381,7 @@
 					//alert(error.responseText);
 				}
 			})
-		});
+		});*/
 		//setTimeout("findKyVisaBills_Int()",1000);
 		setTimeout("hideBills2()", 15000);
 
