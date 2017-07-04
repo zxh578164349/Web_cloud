@@ -12,9 +12,9 @@ public class WebMenuServicesImpl implements IWebMenuServices {
 		this.menuDao = menuDao;
 	}
 
-	public List findAllMenu() {
+	public List findAllMenu(String typeMk) {
 		// TODO Auto-generated method stub
-		return menuDao.findAllMenu();
+		return menuDao.findAllMenu(typeMk);
 	}
 
 	public WebMenu findMenuById(Integer mid) {

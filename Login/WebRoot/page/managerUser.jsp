@@ -6,7 +6,7 @@
 			+ request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 %>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE HTML>
 <html>
 <head>
 <base href="<%=basePath%>">
@@ -45,14 +45,13 @@
 		});
 	}
 
-	function submis() {		
-		var username = document.getElementById("conditions");
-		var factno=document.getElementById("factNo")
+	function submis(subform) {				
 		jq.ajax({
 			type : "POST",
 			dataType : "Html",
 			url : "userfindPageBean2",
-			data : "conditions=" + username.value+"&factNo="+factno.value,
+			//data : "conditions=" + username.value+"&factNo="+factno.value,
+			data:jq("#"+subform).serialize(),
 			success : function(msg) {
 				jq("#bodyid").html(msg);
 			},
@@ -85,10 +84,10 @@
 }
 
 function loadjur(id,factNo){  
-    loadUrl("/Login/userjurisdiction?id="+id+"&fact="+factNo);
+    loadUrl("userjurisdiction?id="+id+"&fact="+factNo);
 }
 function loaduser(id){	
-	loadUrl("/Login/userinitialUpdate?id="+id);
+	loadUrl("userinitialUpdate?id="+id);
 }
 </script>	
 </body>

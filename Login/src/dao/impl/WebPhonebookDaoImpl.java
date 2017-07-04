@@ -19,14 +19,9 @@ import entity.WebPhonebookId;
 
 public class WebPhonebookDaoImpl extends Basedao implements IWebPhonebookDao{
 
-	public void add(WebPhonebook oldPhone,WebPhonebook newPhone,String isnull) {
+	public void add(WebPhonebook phone) {
 		// TODO Auto-generated method stub	
-		if(isnull!=null&&isnull.equals("isnull")){
-			getSession().merge(newPhone);
-		}else{
-			getSession().delete(oldPhone);
-			getSession().merge(newPhone);
-		}
+		super.merge(phone);
 			
 	}
 
@@ -100,6 +95,9 @@ public class WebPhonebookDaoImpl extends Basedao implements IWebPhonebookDao{
 		// TODO Auto-generated method stub
 		WebPhonebook book=this.findById(factNo,department,post,userName,phoneA,phoneB,phoneC,email);
 		super.delete(book,delLog);
+	}
+	public void delete(WebPhonebook phone){
+		super.delete(phone);
 	}
 
 	public void addLarge(Map<String, Object> map, String username) {

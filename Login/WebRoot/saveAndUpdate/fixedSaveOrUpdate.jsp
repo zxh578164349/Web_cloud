@@ -7,7 +7,7 @@
 			+ path + "/";
 %>
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" >
+<!DOCTYPE HTML >
 <html>
 <head>
 <base href="<%=basePath%>">
@@ -24,8 +24,7 @@
 
 <body >
 	<div>
-		<form action="fix_addFix" method="post" id="form">
-		<h2>固定資產</h2>
+		<form action="fix_addFix" method="post" id="form">		
 			<table class="table table-condensed"
 				id="msg1">
 				　
@@ -392,8 +391,8 @@
 			callback : function(data) {
 				if(data=="0"){
 					layer.msg("提交成功!",3,1);
-					//location.href="/Login/fix_findPageBean";
-					loadUrl("/Login/fix_findPageBean");
+					//location.href="fix_findPageBean";
+					loadUrl("fix_findPageBean");
 				}
 				if(data=="1"){
 					//alert(data.responseText);
@@ -415,7 +414,7 @@
 	});
 
 	function back() {			
-			loadUrl("/Login/fix_findPageBean3?backIndex=1");
+			loadUrl("fix_findPageBean3?backIndex=1");
 	}
 
 	function getFactArea(mid) {
@@ -493,10 +492,10 @@
 	}
 	
 </script>
-<script type='text/javascript' src='/Login/dwr/interface/webmajorjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/websubjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/webfixjs.js'></script>
+<script type='text/javascript' src='dwr/interface/webmajorjs.js'></script>
+<script type='text/javascript' src='dwr/interface/webfactjs.js'></script>
+<script type='text/javascript' src='dwr/interface/websubjs.js'></script>
+<script type='text/javascript' src='dwr/interface/webfixjs.js'></script>
 <script type="text/javascript">
 jq(function(){
 	getMajor();

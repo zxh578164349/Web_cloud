@@ -145,6 +145,11 @@ public class WebEstProductServicesImpl implements IWebEstProductServices {
 		// TODO Auto-generated method stub
 		return estProDao.findByYymm(yymm, yymm2);
 	}
+	
+	public List<Webestproduct> findByYymm_all(String yymm, String yymm2) {
+		// TODO Auto-generated method stub
+		return estProDao.findByYymm_all(yymm, yymm2);
+	}
 
 
 }

@@ -11,7 +11,7 @@ java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("yyyyMMdd"
 java.util.Date currentTime = new java.util.Date();//得到当前系统时间
 String str_date = formatter.format(currentTime); //将日期时间格式化
 %>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE HTML>
 <html>
 <head>
 <base href="<%=basePath%>">
@@ -27,7 +27,6 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 <body >
    <div id="pop">
        <form action="visaflow_update" method="post" id="form">
-       <h2>審核流程</h2>
 		<table class="table table-condensed" >		    	    																 			
 			<tbody >			 				 						
 			   <tr>
@@ -39,7 +38,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 			   <tr>
 			   <td>姓名</td>
 			   <td>
-			   <input type="text" value="<s:property value='flow.id.purmanNo'/>"  name="flow.id.purmanNo" id="keys" style="color:blue" readonly/>
+			   <input type="text" value="<s:property value='flow.id.purmanNo'/>"  name="flow.id.purmanNo" id="keys" datatype="*1-30"/>
 			   <div style="position:relative">
 			     <div id="tip" style="z-index:100;position:absolute;background:yellow;top:0px;left:0px;width:180px;display:none"></div>
 			    </div>
@@ -58,6 +57,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 			   <td>
 			   <input type="text" value="<s:property value='flow.visaRank'/>"  name="flow.visaRank"/>
 			   <input type="hidden" value="<s:property value='flow.flowMk'/>"  name="flow.flowMk"/>
+			   <input type="hidden" value="<s:property value='flow.typeMk'/>"  name="flow.typeMk"/>
 			   </td>
 			   </tr>			          			  			 	  			
 			</tbody>							    
@@ -86,8 +86,8 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 			callback:function(data){
 				if(data=="0"){
 					layer.msg("提交成功!",3,1);
-					loadUrl("/Login/visaflow_findPageBean");
-					//location.href="/Login/visaflow_findPageBean";
+					loadUrl("visaflow_findPageBean");
+					//location.href="visaflow_findPageBean";
 					
 				}
 				if(data=="1"){
@@ -135,11 +135,11 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 	}
 	
 	function back(){
-		loadUrl("/Login/visaflow_findPageBean3?backIndex=1");
+		loadUrl("visaflow_findPageBean3?backIndex=1");
 	}
 </script>
-<script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/kyzvisaflowjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/userjs.js'></script>	
+<script type='text/javascript' src='dwr/interface/webfactjs.js'></script>
+<script type='text/javascript' src='dwr/interface/kyzvisaflowjs.js'></script>
+<script type='text/javascript' src='dwr/interface/userjs.js'></script>	
 </body>
 </html>

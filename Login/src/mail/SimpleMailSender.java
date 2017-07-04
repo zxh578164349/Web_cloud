@@ -86,13 +86,14 @@ public class SimpleMailSender {
 	        authenticator = new MyAuthenticator(mailInfo.getUserName(), mailInfo.getPassword());   
 	      }    
 	      // 根据邮件会话属性和密码验证器构造一个发送邮件的session    
-	      Session sendMailSession = Session.getDefaultInstance(pro,authenticator);    
+	      //Session sendMailSession = Session.getDefaultInstance(pro,authenticator);
+	      Session sendMailSession = Session.getInstance(pro,authenticator);
 	      try {    
 	      // 根据session创建一个邮件消息    
 	      Message mailMessage = new MimeMessage(sendMailSession);    
 	      // 创建邮件发送者地址    
 	      //Address from = new InternetAddress(mailInfo.getFromAddress()); 
-	      Address from = new InternetAddress(MimeUtility.encodeText("加久公共信息")+mailInfo.getFromAddress());
+	      Address from = new InternetAddress(MimeUtility.encodeText("加久公共信息","utf-8","B")+mailInfo.getFromAddress());
 	      // 设置邮件消息的发送者    
 	      mailMessage.setFrom(from);    
 	      // 创建邮件的接收者地址，并设置到邮件消息中    
@@ -100,9 +101,9 @@ public class SimpleMailSender {
 	      // Message.RecipientType.TO属性表示接收者的类型为TO    
 	      mailMessage.setRecipient(Message.RecipientType.TO,to);    
 	      // 设置邮件消息的主题    
-	      mailMessage.setSubject(mailInfo.getSubject());
 	      sun.misc.BASE64Encoder enc = new sun.misc.BASE64Encoder();
-		 mailMessage.setSubject("=?BIG5?B?" + enc.encode(mailInfo.getSubject().getBytes()) + "?=");
+		 // mailMessage.setSubject("=?BIG5?B?" + enc.encode(mailInfo.getSubject().getBytes()) + "?=");
+		  mailMessage.setSubject(MimeUtility.encodeText( mailInfo.getSubject(),"utf-8","B"));
 	      // 设置邮件消息发送的时间    
 	      mailMessage.setSentDate(new Date());    
 	      // MiniMultipart类是一个容器类，包含MimeBodyPart类型的对象    

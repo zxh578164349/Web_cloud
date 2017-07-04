@@ -1,4 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE HTML>
 
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
@@ -27,8 +27,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 
 </head>
 <body >  
-    <form action="webremit_add"  method="post" id="form"  enctype="multipart/form-data" target="frameFile">
-        <h2>加伟鞋材对公费用汇款清单</h2>
+    <form action="webremit_add"  method="post" id="form"  enctype="multipart/form-data" target="frameFile">       
 		<table class="table table-condensed" >		    	
 			<tbody id="tb_list_info2">				   
 				    <s:if test="webremit==null">				   											
@@ -472,16 +471,16 @@ function selall(){
 }
 
 function back(){	
-	loadUrl("/Login/webremit_findPageBean3?backIndex=1");
+	loadUrl("webremit_findPageBean3?backIndex=1");
 }
 function gook(){
 	  layer.msg("操作成功",3,1);
 	  loadUrl("webremit_findPageBean");
 }
 </script>
-<script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/kyzvisaflowjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/webtypejs.js'></script>
+<script type='text/javascript' src='dwr/interface/webfactjs.js'></script>
+<script type='text/javascript' src='dwr/interface/kyzvisaflowjs.js'></script>
+<script type='text/javascript' src='dwr/interface/webtypejs.js'></script>
 
 <script type="text/javascript">
 jq(function(){

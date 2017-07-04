@@ -21,7 +21,7 @@
 
 		<div id="wrappermiddle">
 			<form  method="post" id="loginform">
-				<h2>Web系統登錄  <s:property value='userName'/></h2>
+				<h2>Web系統登錄</h2>
 				<div id="username_input">
 					<div id="username_inputleft"></div>
 					<div id="username_inputmiddle">
@@ -41,7 +41,7 @@
 				<div id="factno_select">
 					<div id="factno_selectleft"></div>
 					<div id="factno_selectmiddle">
-						<select id="url_factno" name="factNo">
+						<select id="url_factno" name="factNo" onchange="this.blur()"><%--this.blur() 讓下拉框失去焦點,按回車鍵就可以觸發登錄事件--%>
 						    <s:if test="factNo!=null">
 								<option value="<s:property value='factNo'/>">
 									<s:property value="factname" />&nbsp;(<s:property value="factNo" />)																											
@@ -64,7 +64,7 @@
 				<br/>
 				<div id="submit">
 					
-					<input type="button" value="登  錄" id="submit1" onclick="checkFact()"/>
+					<input type="button" value="登  錄" id="submit1" onclick="checkFact('userlogin')"/>
 					<input type="button" value="登  錄" id="submit2" />						
 				</div>
 				<div id="remembered"><input type="checkbox" value="remembered" name="remembered"/>記住賬號與廠別</div>

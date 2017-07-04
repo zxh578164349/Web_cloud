@@ -6,7 +6,7 @@
 			+ request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 %>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE HTML>
 <html>
 <head>
 <base href="<%=basePath%>">
@@ -40,31 +40,19 @@
 			},
 			error : function(xhr) {
 				//alert(xhr.responseText);
-				jq("#bodyid").html(responseText);
+				jq("#bodyid").html(xhr);
 			}
 		});
 	}
 	
 		function submis() {		
-		var fact = document.getElementById("factNo");
-		var billno=document.getElementById("billNo");
-		var visaMks=document.getElementsByName("visaMk");
-		var visaSort=document.getElementById("dwr_kytype");
-		var yymmdd=document.getElementById("yymmdd");
-		var yymmdd2=document.getElementById("yymmdd2");
-		var visaMk;
-
-		for(var i=0;i<visaMks.length;i++){
-		   if(visaMks[i].checked==true){
-		      visaMk=visaMks[i]
-		      break;
-		   }
-		}				
+					
 		 jq.ajax({
 			type : "POST",
 			dataType : "Html",
 			url : "vbm_findPageBean2",
-			data : "factNo=" + fact.value +"& billNo="+billno.value+"& visaMk="+visaMk.value+"& visaSort="+visaSort.value+"& yymmdd="+yymmdd.value+"& yymmdd2="+yymmdd2.value,
+			data:jq("#subform").serialize(),
+			//data : "factNo=" + fact.value +"& billNo="+billno.value+"& visaMk="+visaMk.value+"& visaSort="+visaSort.value+"& yymmdd="+yymmdd.value+"& yymmdd2="+yymmdd2.value,
 			 success : function(msg) {			    
 				jq("#bodyid").html(msg);
 			},
@@ -88,7 +76,7 @@
      }    
    }
    
-   function goPreviewOrPrint(subform,billNo){
+  /*  function goPreviewOrPrint(subform,billNo){
 	   if(billNo.substring(0,2)=="EM"){
 		   jq("#"+subform).attr("action","kyz_print2");
 	   }
@@ -102,8 +90,15 @@
 		   jq("#"+subform).attr("action","webremit_print");
 	   }
 	   jq("#"+subform).submit();
-   }
+   } */
+   
+   function print(subform){
+		var subform=jq("#"+subform);
+		subform.attr("action","vbm_printList");
+		subform.attr("target","_blank");
+		subform.submit();
+	}
 </script>
-<script type='text/javascript' src='/Login/dwr/interface/webtypejs.js'></script>
+<script type='text/javascript' src='dwr/interface/webtypejs.js'></script>
 </body>
 </html>

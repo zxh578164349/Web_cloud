@@ -4,6 +4,8 @@ import java.io.File;
 import java.util.Date;
 import java.util.List;
 
+import net.sf.json.JSONArray;
+
 import services.IKyVisabillmServices;
 import services.IKyzContactLetterServices;
 import services.IKyzExpectmatmFileServices;
@@ -39,6 +41,15 @@ public class WebTypeAction extends ActionSupport{
 	private IKyzVisaFlowServices visaSer;
 	private IWebBussinessletterServices webbussletterSer;
 	private IKyVisabillmServices visabillmSer;
+	private JSONArray jsons;
+	
+	
+	public JSONArray getJsons() {
+		return jsons;
+	}
+	public void setJsons(JSONArray jsons) {
+		this.jsons = jsons;
+	}
 	public int getBackIndex() {
 		return backIndex;
 	}
@@ -120,10 +131,11 @@ public class WebTypeAction extends ActionSupport{
 	}
 	public String add(){
 		try{
-			//如果頁面上選擇了"出差類"，則要給值爲TR，標明爲"出差類"20160203
-			if(typeNo!=null&&typeNo.equals("TR")){
-				webtype.getId().setTypeNo(typeNo);
+			//如果頁面上選擇了 "其它類" 以外選項時，則在後臺賦值typeNo     20161116
+			if(typeNo!=null&&!typeNo.equals("0")){
+				webtype.getId().setTypeNo(typeNo);				
 			}
+			webtype.setTypeMk(typeNo);
 			webtypeSer.add(webtype);
 			ajaxResult="0";
 		}catch(Exception e){
@@ -204,6 +216,25 @@ public class WebTypeAction extends ActionSupport{
 		}
 		return "recovery";
 	}
+	
+	
+	public String findPF(){
+		try{
+			ajaxResult=webtypeSer.findPF(factNo);
+		}catch(Exception e){
+			ajaxResult="1";
+			System.out.println(e);
+		}
+		return "findPF";
+	}
+	
+	public String findTypes(){
+		List<Object[]>list=webtypeSer.findTypes(factNo);
+		jsons=JSONArray.fromObject(list);
+		return "findTypes";
+	}
+	
+	
 	
 	
 	

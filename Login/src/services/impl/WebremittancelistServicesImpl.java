@@ -214,10 +214,21 @@ public class WebremittancelistServicesImpl implements IWebremittancelistServices
 			}			
 			visa_result=name+visamk_temp;
 			visabillstemp.setVisaNameAndMk(visa_result);			
-			if(list_visa.size()==list_visaflow.size()-nos){
+			/*if(list_visa.size()==list_visaflow.size()-nos){
 				String visaRank=list_visaflow.get(i).getVisaRank();
 				visabillstemp.setVisaRank(visaRank+":");
+			}*/
+			//************************解決加簽後而破壞流程順序，使得打印函文時，職位與名字不對應的問題  20161030******************************
+			for(int j=0;j<list_visaflow.size()-nos;j++){
+				if(list_visa.get(i).getVisaSigner().equals(list_visaflow.get(j).getVisaSigner())){
+					visabillstemp.setVisaRank(list_visaflow.get(j).getVisaRank()+":");
+					break;
+				}else if(j==list_visaflow.size()-nos-1){
+					visabillstemp.setVisaRank("(加簽)");
+				}
 			}
+			//************************解決加簽後而破壞流程順序，使得打印函文時，職位與名字不對應的問題  20161030******************************
+			
 			if(memo!=null){
 				visabillstemp.setMemo("(備註:"+memo+")");
 			}

@@ -12,27 +12,29 @@ import entity.WebTabpomfile;
 public class WebTabpomfileDaoImpl extends Basedao implements IWebTabpomfileDao{
 	public WebTabpomfile findById(String pomNo, String fileName) {
 		// TODO Auto-generated method stub
-		String hql="from WebTabpomfile where id.webTabpom.pomNo=? and id.filename=?";
+		String hql="from WebTabpomfile where id. webTabpom.pomNo=? and id.filename=?";
 		Query query=getSession().createQuery(hql);
 		query.setString(0, pomNo);
 		query.setString(1, fileName);
 		return (WebTabpomfile)query.uniqueResult();
 	}
 
-	public void delete(String pomNo, String fileName) {
+	public void delete(String pomNo, String fileName,KyzExpectmatmLog log) {
 		// TODO Auto-generated method stub
-		super.delete(this.findById(pomNo, fileName));
+		super.delete(this.findById(pomNo, fileName),log);
 	}
 
-	public List<WebTabpomfile> findByPomNo(String pomNo) {
+	public List<Object[]> findByPomNo(String pomNo) {
 		// TODO Auto-generated method stub
-		String hql="from WebTabpomfile where id.webTabpom.pomNo=?";
+		String hql="select id.webTabpom.pomNo,id.filename,createdate from WebTabpomfile where id.webTabpom.pomNo=?";
 		String[]objs={pomNo};
-		List<WebTabpomfile>list=super.findAll(hql, objs);
-		for(int i=0;i<list.size();i++){//解決hibernate延遲問題
-			list.get(i).getId().getWebTabpom();
-		}
+		List<Object[]>list=super.findAll(hql, objs);
 		return list;
+	}
+
+	public void add(WebTabpomfile file) {
+		// TODO Auto-generated method stub
+		super.merge(file);
 	}
 
 	

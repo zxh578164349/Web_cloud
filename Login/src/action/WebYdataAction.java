@@ -23,6 +23,7 @@ import org.apache.struts2.interceptor.ServletResponseAware;
 import services.ISumWebYieldDataServices;
 import services.IWebFactServices;
 import services.IWebYieldDataServices;
+import util.GlobalMethod;
 import util.JasperHelper;
 import util.Page;
 import util.PageBean;
@@ -242,8 +243,6 @@ public class WebYdataAction extends ActionSupport implements
 
 	public String addData() throws ParseException, IOException {				
 		DateFormat format = new SimpleDateFormat("yyyyMMdd");
-		DateFormat format2=new SimpleDateFormat("yyyyMM");
-		String result = null;
 		Date date = null;
 		String lastday="";
 		Double achievingRate = null;		
@@ -269,22 +268,7 @@ public class WebYdataAction extends ActionSupport implements
 			/**
 			 * 添加
 			 */
-			if (isnull.equals("isnull")) {// start "if 1"
-				ydata.setDateCreate(new SimpleDateFormat("yyMMddhhmm").format(new Date()));//記錄創建時間
-				/**************************************超時錄入數據記錄20160331**************************************************/
-				/*Calendar cal2 = Calendar.getInstance();
-				Date createDate=new Date();//創建時間
-				cal2.setTime(createDate);
-				if(cal2.get(Calendar.DAY_OF_WEEK) == Calendar.MONDAY){
-					
-				}
-				ydata.setDateCreate(new SimpleDateFormat("yyMMddhhmm").format(createDate));//記錄創建時間
-				long time1=new SimpleDateFormat("yyyyMMddhhmm").parse(yymmdd+"0000").getTime();
-				long time2=createDate.getTime();
-				if((time2-time1)/(1000*60)>2280){
-					ydata.setTimeoutRecorde("1");//超過38小時，也就是2280分，記錄超時
-				}*/
-				/**************************************超時錄入數據記錄20160331**************************************************/
+			if (isnull.equals("isnull")) {// start "if 1"				
 				
 				/****************************隻限制已輸入數據的廠別，沒有數據就不限制***********************************/
 				double nums=dataSer.findNums(ydata.getId().getFactNo(), ydata.getId().getFactCode());
@@ -298,34 +282,39 @@ public class WebYdataAction extends ActionSupport implements
 					cal.add(Calendar.DATE, -1);
 					lastday=format.format(cal.getTime());
 					Date lastday2=format.parse(lastday);
-					WebYieldDataId y_id=new WebYieldDataId();
-					y_id.setFactNo(ydata.getId().getFactNo());
-					y_id.setFactCode(ydata.getId().getFactCode());
-					y_id.setYymmdd(lastday2);							
-					WebYieldData ydata_last=dataSer.findById(y_id);
-					if(ydata_last==null){
-						result="noData";
-						//如果大於前21天的就不提示輸入
-						if(betweenDay>21){
-							//如果跳過提示，有可能出現當天數據不為空的，所以也要判斷
-							if(ydata_find!=null){
-								result=null;
-							}else{
+					WebYieldDataId y_id=new WebYieldDataId(ydata.getId().getFactNo(),ydata.getId().getFactCode(),lastday2);																						
+					/*************************只有工作日才限制输入前天数据20170704*****************************/
+					if("0".equals(ydata.getWorkorholiday())){
+						WebYieldData ydata_last=dataSer.findById(y_id);
+						if(ydata_last==null){						
+							ajaxResult="3";//表示要輸入前天數據												
+							if(betweenDay>21){//如果大於前21天的就不提示輸入						
+								if(ydata_find!=null){//有可能出現當天數據不為空的，所以也要判斷
+									ajaxResult="2";//表示數據已經存在
+								}else{
+									dataSer.addYdata(ydata);
+									ajaxResult="0";
+								}												
+							}
+						}else{
+							if(ydata_find==null){
 								dataSer.addYdata(ydata);
-								result="addData";
 								ajaxResult="0";
-							}												
+							}else{
+								ajaxResult="2";//表示數據已經存在
+							}
 						}
 					}else{
+					/*************************只有工作日才限制输入前天数据20170704*****************************/	
 						if(ydata_find==null){
 							dataSer.addYdata(ydata);
-							result = "addData";
 							ajaxResult="0";
+						}else{
+							ajaxResult="2";//表示數據已經存在
 						}
-					}
+					}					
 				}else{
 					dataSer.addYdata(ydata);
-					result = "addData";
 					ajaxResult="0";
 				}
 				/****************************隻限制已輸入數據的廠別，沒有數據就不限制***********************************/									
@@ -343,101 +332,22 @@ public class WebYdataAction extends ActionSupport implements
 				log.setYymmdd(ydata.getId().getYymmdd());
 				log.setLogTime(new Date());
 
-				String ipAddress = null;
-				ipAddress = request.getHeader("x-forwarded-for");
-				if (ipAddress == null || ipAddress.length() == 0
-						|| "unknown".equalsIgnoreCase(ipAddress)) {
-					ipAddress = request.getHeader("Proxy-Client-IP");
-				}
-				if (ipAddress == null || ipAddress.length() == 0
-						|| "unknown".equalsIgnoreCase(ipAddress)) {
-					ipAddress = this.request.getHeader("WL-Proxy-Client-IP");
-				}
-				if (ipAddress == null || ipAddress.length() == 0
-						|| "unknown".equalsIgnoreCase(ipAddress)) {
-					ipAddress = this.request.getRemoteAddr();
-					if (ipAddress.equals("127.0.0.1")) {
-						InetAddress inet = null;
-						try {
-							inet = InetAddress.getLocalHost();
-						} catch (Exception e) {
-							e.printStackTrace();
-						}
-						ipAddress = inet.getHostAddress();
-					}
-				}
-				if (ipAddress != null && ipAddress.length() > 15) { // "***.***.***.***".length()
-																	// = 15
-					if (ipAddress.indexOf(",") > 0) {
-						ipAddress = ipAddress.substring(0,
-								ipAddress.indexOf(","));
-					}
-				}
+				
+				String ipAddress=GlobalMethod.findIp();//獲取本機IP
 				log.setIp(ipAddress);
 				dataSer.addYdate_log(log);
 				dataSer.addYdata(ydata);
-				
+												
 				//更新盤點數據
-				yymm=yymmdd.substring(0,6);
-				String yymm_last="";
-				String yymm_next="";
-				Calendar cal2=Calendar.getInstance();
-				cal2.setTime(format2.parse(yymm));
-				cal2.add(Calendar.MONTH, -1);
-				yymm_last=format2.format(cal2.getTime());
-				cal2.add(Calendar.MONTH, 2);
-				yymm_next=format2.format(cal2.getTime());
-				List<String>list_yymm=new ArrayList<String>();
-				list_yymm.add(yymm_last);
-				list_yymm.add(yymm);
-				list_yymm.add(yymm_next);
-				for(int i=0;i<list_yymm.size();i++){
-					List<SumWebYieldData>list_sumYdata=sumydateSer.findByFactNo2(ydata.getId().getFactNo(), list_yymm.get(i));
-					if(list_sumYdata.size()>0){
-						for(int k=0;k<list_sumYdata.size();k++){
-							SumWebYieldData sumYdata=list_sumYdata.get(k);
-							if(sumYdata!=null){
-								//sumydateSer.delete(sumYdata);
-								String sumydata_username=sumYdata.getUsername()==null?"none":sumYdata.getUsername();
-								String sumydata_usernameUd=sumYdata.getUsernameUd()==null?"none":sumYdata.getUsernameUd();
-								this.add_sumYdata(ydata.getId().getFactNo(), list_yymm.get(i), sumYdata.getStartDate(), sumYdata.getEndDate(),sumydata_username,sumydata_usernameUd);
-							}							
-						}
-					}							
-				}							
-				result = "upData";
+				this.updatesumYdate(ydata.getId().getFactNo(),yymmdd);
 				ajaxResult="0";
 			}// end "else 1"
 		}catch(Exception e){
 			// TODO Auto-generated catch block
 			ajaxResult="1";
 			e.printStackTrace();
-		}
-			
-			if (result == null) {
-				response.setContentType("text/html;charset=utf-8");
-				String temp1 = ydata.getId().getFactNo();
-				String temp2 = ydata.getId().getFactCode();
-				String temp3 = format.format(ydata.getId().getYymmdd());
-				response.getWriter()
-						.print("<script>window.parent.alert('數據已經存在("
-								+ temp1
-								+ " "
-								+ temp2
-								+ " "
-								+ temp3
-								+ ")!');</script>");				
-			}
-			if(result.equals("noData")){
-				response.setContentType("text/html;charset=utf-8");
-				response.getWriter()
-				.print("<script>window.parent.alert('選定日期的前天數據("
-						+ lastday					
-						+ ")還沒有輸入!');</script>");							
-				result=null;
-			}
-		 
-		return result;
+		}							 
+		return "addData";
 
 	}
 
@@ -505,21 +415,19 @@ public class WebYdataAction extends ActionSupport implements
 
 	}
 
-	public String findPageBean() {
-		//ActionContext.getContext().getApplication().clear();
+	public String findPageBean() {		
 		System.out.println(request.getRequestURI());
 		ActionContext.getContext().getSession().remove("public_factno");
 		ActionContext.getContext().getSession().remove("public_yymm");
 		ActionContext.getContext().getSession().remove("public_yymm2");
 		factNo = (String) ActionContext.getContext().getSession().get("factNo");
-		bean = dataSer.findPageBean(25, page, factNo, sdate,edate);
+		bean = dataSer.findPageBean(20,page, factNo, sdate,edate);
 
 		return "beanList";
 
 	}
 
-	public String findPageBean2() {
-		//ActionContext.getContext().getApplication().clear();
+	public String findPageBean2() {		
 		ActionContext.getContext().getSession().remove("public_factno");
 		ActionContext.getContext().getSession().remove("public_yymm");
 		ActionContext.getContext().getSession().remove("public_yymm2");
@@ -534,7 +442,7 @@ public class WebYdataAction extends ActionSupport implements
 			ActionContext.getContext().getSession().put("public_yymm2", edate);
 		}
 
-		bean = dataSer.findPageBean(25, page, factNo, sdate,edate);
+		bean = dataSer.findPageBean(20,page, factNo, sdate,edate);
 
 		return "beanList1";
 	}
@@ -550,7 +458,7 @@ public class WebYdataAction extends ActionSupport implements
 		if (factNo == null || factNo.equals("") || factNo.equals("tw")) {
 			factNo = (String) ActionContext.getContext().getSession().get("factNo");					
 		}
-		bean = dataSer.findPageBean(25, page, factNo, sdate,edate);
+		bean = dataSer.findPageBean(20,page, factNo, sdate,edate);
 
 		return result;
 
@@ -573,8 +481,8 @@ public class WebYdataAction extends ActionSupport implements
 		log.setIsdel("0");
 		log.setLogTime(new Date());
 
-		String ipAddress = null;
-		ipAddress = request.getHeader("x-forwarded-for");
+		//String ipAddress = null;	
+		/*ipAddress = request.getHeader("x-forwarded-for");
 		if (ipAddress == null || ipAddress.length() == 0
 				|| "unknown".equalsIgnoreCase(ipAddress)) {
 			ipAddress = request.getHeader("Proxy-Client-IP");
@@ -596,18 +504,17 @@ public class WebYdataAction extends ActionSupport implements
 				ipAddress = inet.getHostAddress();
 			}
 		}
-		if (ipAddress != null && ipAddress.length() > 15) { // "***.***.***.***".length()
-															// = 15
+		if (ipAddress != null && ipAddress.length() > 15) {
 			if (ipAddress.indexOf(",") > 0) {
 				ipAddress = ipAddress.substring(0, ipAddress.indexOf(","));
 			}
-		}
+		}*/
+		String ipAddress=GlobalMethod.findIp();//獲取本機IP
 		log.setIp(ipAddress);
 		dataSer.addYdate_log(log);
 		dataSer.delete(id);
-		
-		//更新盤點數據
-		DateFormat format=new SimpleDateFormat("yyyyMM");
+				
+		/*DateFormat format=new SimpleDateFormat("yyyyMM");
 		yymm=format.format(id.getYymmdd());
 		String yymm_last="";
 		String yymm_next="";
@@ -629,50 +536,75 @@ public class WebYdataAction extends ActionSupport implements
 					//sumydateSer.delete(sumYdata);
 					String sumydata_username=sumYdata.getUsername()==null?"none":sumYdata.getUsername();
 					String sumydata_username_ud=sumYdata.getUsernameUd()==null?"none":sumYdata.getUsernameUd();
-					this.add_sumYdata(id.getFactNo(), list_yymm.get(i), sumYdata.getStartDate(), sumYdata.getEndDate(),sumydata_username,sumydata_username_ud);
+					this.add_sumYdata(sumYdata.getId().getFactNo().getFactNo(),sumYdata.getId().getFactCode(), list_yymm.get(i), sumYdata.getStartDate(), sumYdata.getEndDate(),sumydata_username,sumydata_username_ud);
 				}
 			}							
-		}		
+		}*/	
+		
+		//更新盤點數據
+		this.updatesumYdate(id.getFactNo(),new SimpleDateFormat("yyyyMMdd").format(id.getYymmdd()));
 		return "delete";
 	}
+	
+	/**
+	 * 更新盤點數據
+	 * @Title: updatesumYdate
+	 * @Description: TODO
+	 * @param @param yymmdd
+	 * @return void
+	 * @throws ParseException 
+	 * @throws
+	 * @author web
+	 * @date 2016/12/15
+	 */
+	public void updatesumYdate(String factNo,String yymmdd) throws ParseException{
+		DateFormat format=new SimpleDateFormat("yyyyMM");
+		yymm=format.format(new SimpleDateFormat("yyyyMMdd").parse(yymmdd));
+		String yymm_last="";
+		String yymm_next="";
+		Calendar cal=Calendar.getInstance();
+		cal.setTime(format.parse(yymm));
+		cal.add(Calendar.MONTH, -1);
+		yymm_last=format.format(cal.getTime());
+		cal.add(Calendar.MONTH, 2);
+		yymm_next=format.format(cal.getTime());
+		List<String>list_yymm=new ArrayList<String>();
+		list_yymm.add(yymm_last);
+		list_yymm.add(yymm);
+		list_yymm.add(yymm_next);
+		for(int i=0;i<list_yymm.size();i++){
+			List<SumWebYieldData>list_sumYdata=sumydateSer.findByFactNo2(factNo, list_yymm.get(i));
+			if(list_sumYdata.size()>0){
+				for(int k=0;k<list_sumYdata.size();k++){
+					SumWebYieldData sumYdata=list_sumYdata.get(k);
+					if(sumYdata!=null){
+						//sumydateSer.delete(sumYdata);
+						String sumydata_username=sumYdata.getUsername()==null?"none":sumYdata.getUsername();
+						String sumydata_usernameUd=sumYdata.getUsernameUd()==null?"none":sumYdata.getUsernameUd();
+						this.add_sumYdata(sumYdata.getId().getFactNo().getFactNo(),sumYdata.getId().getFactCode(), list_yymm.get(i), sumYdata.getStartDate(), sumYdata.getEndDate(),sumydata_username,sumydata_usernameUd);
+					}							
+				}
+			}							
+		}
+	}
+	
 
 	public String transit() {// 瘛餃�銝剛�action
 		transit = "transit";
 		return "transit";
 	}
 
-	public String findPageBean2_print() {
-		ActionContext.getContext().getApplication().clear();
-		if (factNo != null && !factNo.equals("") && !factNo.equals("tw")) {
-			ActionContext.getContext().getApplication()
-					.put("print_ydata_factNo", factNo);
-
-		} else {
-			factNo = (String) ActionContext.getContext().getSession()
-					.get("factNo");
-		}
-		if (yymm != null && !yymm.equals("")) {
-			ActionContext.getContext().getApplication()
-					.put("print_ydata_yymm", yymm);
-		}
-		bean = dataSer.findPageBean(25, page, factNo, sdate,edate);
-		/*
-		 * ActionContext.getContext().getSession() .put("zwcashList",
-		 * dataSer.getAllWithNoPage(factNo, yymm));
-		 */
+	public String findPageBean2_print() {		
+		ActionContext.getContext().getSession().put("print_ydata_factNo",factNo);
+		ActionContext.getContext().getSession().put("print_ydata_yymm",yymm);
+		bean=dataSer.findPageBean(20,page,factNo,sdate,edate);
 		return "list";
 	}
 
 	public String findPageBean3_print() {
-		factNo = (String) ActionContext.getContext().getApplication()
-				.get("print_ydata_factNo");
-		yymm = (String) ActionContext.getContext().getApplication()
-				.get("print_ydata_yymm");
-		if (factNo == null || factNo.equals("") || factNo.equals("tw")) {
-			factNo = (String) ActionContext.getContext().getSession()
-					.get("factNo");
-		}
-		bean = dataSer.findPageBean(25, page, factNo, sdate,edate);
+		factNo = (String) ActionContext.getContext().getSession().get("print_ydata_factNo");
+		yymm = (String) ActionContext.getContext().getSession().get("print_ydata_yymm");		
+		bean = dataSer.findPageBean(20,page, factNo, sdate,edate);
 		return "list";
 	}
 
@@ -696,74 +628,37 @@ public class WebYdataAction extends ActionSupport implements
 	}
 
 	public String findPageBeanForMonth() {
-		ActionContext.getContext().getApplication().clear();
-		factNo = (String) ActionContext.getContext().getSession().get("factNo");
-		bean = dataSer.findAllYDataForMonth(25, page, factNo, yymm);
+		ActionContext.getContext().getSession().remove("ydata_factNo_formonth");
+		ActionContext.getContext().getSession().remove("ydata_yymm_formonth");
+		bean = dataSer.findAllYDataForMonth(20,page, factNo, yymm);
 		return "beanListForMonth";
 	}
 
 	public String findPageBean2ForMonth() {
-		ActionContext.getContext().getApplication().clear();
-		if (factNo != null && !factNo.equals("") && !factNo.equals("tw")) {
-			ActionContext.getContext().getApplication()
-					.put("ydata_factNo_formonth", factNo);
-		}
-		if (yymm != null && !yymm.equals("")) {
-			ActionContext.getContext().getApplication()
-					.put("ydata_yymm_formonth", yymm);
-		}
-
-		bean = dataSer.findAllYDataForMonth(25, page, factNo, yymm);
-
+		ActionContext.getContext().getSession().put("ydata_factNo_formonth",factNo);
+		ActionContext.getContext().getSession().put("ydata_yymm_formonth",yymm);
+		bean=dataSer.findAllYDataForMonth(20,page,factNo,yymm);
 		return "beanListForMonth1";
 	}
 
 	public String findPageBean3ForMonth() {
-		factNo = (String) ActionContext.getContext().getApplication()
-				.get("ydata_factNo_formonth");
-		yymm = (String) ActionContext.getContext().getApplication()
-				.get("ydata_yymm_formonth");
-		if (factNo == null || factNo.equals("") || factNo.equals("tw")) {
-			factNo = (String) ActionContext.getContext().getSession()
-					.get("factNo");
-		}
-		bean = dataSer.findAllYDataForMonth(25, page, factNo, yymm);
-
+		factNo = (String) ActionContext.getContext().getSession().get("ydata_factNo_formonth");
+		yymm = (String) ActionContext.getContext().getSession().get("ydata_yymm_formonth");		
+		bean = dataSer.findAllYDataForMonth(20,page, factNo, yymm);
 		return "beanListForMonth1";
 
 	}
 
 	public String findPageBean2_print_formonth() {
-		ActionContext.getContext().getApplication().clear();
-		if (factNo != null && !factNo.equals("") && !factNo.equals("tw")) {
-			ActionContext.getContext().getApplication()
-					.put("print_ydata_factNo_formonth", factNo);
-
-		} else {
-			factNo = (String) ActionContext.getContext().getSession()
-					.get("factNo");
-		}
-		if (yymm != null && !yymm.equals("")) {
-			ActionContext.getContext().getApplication()
-					.put("print_ydata_yymm_formonth", yymm);
-		}
-		bean = dataSer.findAllYDataForMonth(15, page, factNo, yymm);
-		/*
-		 * ActionContext.getContext().getSession() .put("zwcashList",
-		 * dataSer.getAllWithNoPage(factNo, yymm));
-		 */
+		ActionContext.getContext().getSession().put("print_ydata_factNo_formonth",factNo);
+		ActionContext.getContext().getSession().put("print_ydata_yymm_formonth",yymm);
+		bean=dataSer.findAllYDataForMonth(15,page,factNo,yymm);
 		return "list_formonth";
 	}
 
 	public String findPageBean3_print_formonth() {
-		factNo = (String) ActionContext.getContext().getApplication()
-				.get("print_ydata_factNo_formonth");
-		yymm = (String) ActionContext.getContext().getApplication()
-				.get("print_ydata_yymm_formonth");
-		if (factNo == null || factNo.equals("") || factNo.equals("tw")) {
-			factNo = (String) ActionContext.getContext().getSession()
-					.get("factNo");
-		}
+		factNo = (String) ActionContext.getContext().getSession().get("print_ydata_factNo_formonth");
+		yymm = (String) ActionContext.getContext().getSession().get("print_ydata_yymm_formonth");		
 		bean = dataSer.findAllYDataForMonth(15, page, factNo, yymm);
 		return "list_formonth";
 	}
@@ -783,32 +678,45 @@ public class WebYdataAction extends ActionSupport implements
 	 * @param startDate
 	 * @param endDate
 	 */
-	public void add_sumYdata(String factNo,String yymm,String startDate,String endDate,String username,String usernameUd){
+	public void add_sumYdata(String factNo,String factCode,String yymm,String startDate,String endDate,String username,String usernameUd){
 		List list=webFactSer.findFactCodeByFactNo(factNo);
-		for(int i=0;i<list.size();i++){
-			String factcode=(String)list.get(i);
-			Object[]objs=dataSer.getSumWebYieldDate(factNo, factcode, startDate, endDate);
-			long list_ydata=dataSer.findYdateSdateToEnddate(factNo, factcode, startDate, endDate);
+		
+			//String factcode=(String)list.get(i);
+			Object[]objs=dataSer.getSumWebYieldDate(factNo, factCode, startDate, endDate);
+			long list_ydata=dataSer.findYdateSdateToEnddate(factNo, factCode, startDate, endDate);
 			SumWebYieldData ydate=new SumWebYieldData();
 			SumWebYieldDataId id=new SumWebYieldDataId();
 			VWebFact fact=new VWebFact();
 			fact.setFactNo(factNo);
 			id.setFactNo(fact);
-			id.setFactCode(factcode);
+			id.setFactCode(factCode);
 			id.setYymm(yymm);
 			ydate.setId(id);
 			if(list_ydata!=0){
-				BigDecimal onModulus=new BigDecimal(objs[0].toString());
-				BigDecimal personnum=new BigDecimal(objs[1].toString());
-				BigDecimal standardOutput=new BigDecimal(objs[2].toString());
-				BigDecimal actualYield=new BigDecimal(objs[3].toString());
-				BigDecimal daycount=new BigDecimal(objs[4].toString());
-				BigDecimal actualpairs=new BigDecimal(objs[5].toString());
-				BigDecimal hostpairs=new BigDecimal(objs[6].toString());
-				BigDecimal factpairs=new BigDecimal(objs[7].toString());
-				BigDecimal samplepairs=new BigDecimal(objs[8].toString());
-				BigDecimal outnum=new BigDecimal(objs[9].toString());
-				BigDecimal backnum=new BigDecimal(objs[10].toString());
+				BigDecimal onModulus=new BigDecimal((objs[0]==null?0:objs[0]).toString());
+				BigDecimal personnum=new BigDecimal((objs[1]==null?0:objs[1]).toString());
+				BigDecimal standardOutput=new BigDecimal((objs[2]==null?0:objs[2]).toString());
+				BigDecimal actualYield=new BigDecimal((objs[3]==null?0:objs[3]).toString());
+				BigDecimal daycount=new BigDecimal((objs[4]==null?0:objs[4]).toString());
+				BigDecimal actualpairs=new BigDecimal((objs[5]==null?0:objs[5]).toString());
+				BigDecimal hostpairs=new BigDecimal((objs[6]==null?0:objs[6]).toString());
+				BigDecimal factpairs=new BigDecimal((objs[7]==null?0:objs[7]).toString());
+				BigDecimal samplepairs=new BigDecimal((objs[8]==null?0:objs[8]).toString());
+				BigDecimal outnum=new BigDecimal((objs[9]==null?0:objs[9]).toString());
+				BigDecimal backnum=new BigDecimal((objs[10]==null?0:objs[10]).toString());
+				
+				/*BigDecimal onModulus=new BigDecimal(objs[0].toString());
+				BigDecimal personnum=new BigDecimal((objs[1]).toString());
+				BigDecimal standardOutput=new BigDecimal((objs[2]).toString());
+				BigDecimal actualYield=new BigDecimal((objs[3]).toString());
+				BigDecimal daycount=new BigDecimal((objs[4]).toString());
+				BigDecimal actualpairs=new BigDecimal((objs[5]).toString());
+				BigDecimal hostpairs=new BigDecimal((objs[6]).toString());
+				BigDecimal factpairs=new BigDecimal((objs[7]).toString());
+				BigDecimal samplepairs=new BigDecimal((objs[8]).toString());
+				BigDecimal outnum=new BigDecimal((objs[9]).toString());
+				BigDecimal backnum=new BigDecimal((objs[10]).toString());*/
+				
 				Double workhours=(Double)objs[11];
 				ydate.setSumEverydemo(onModulus);
 				ydate.setSumEverypeople(personnum);
@@ -833,7 +741,7 @@ public class WebYdataAction extends ActionSupport implements
 			ydate=null;
 			id=null;
 			fact=null;
-		}
+		
 	}
 	
 	public void print(){

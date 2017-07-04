@@ -4,7 +4,7 @@ package entity;
  * WebuserEmailA entity. @author MyEclipse Persistence Tools
  */
 
-public class WebuserEmailA implements java.io.Serializable {
+public class WebuserEmailA implements java.io.Serializable{
 
 	// Fields
 
@@ -16,55 +16,54 @@ public class WebuserEmailA implements java.io.Serializable {
 	// Constructors
 
 	/** default constructor */
-	public WebuserEmailA() {
+	public WebuserEmailA(){
 	}
 
 	/** minimal constructor */
-	public WebuserEmailA(WebuserEmailAId id) {
-		this.id = id;
+	public WebuserEmailA(WebuserEmailAId id){
+		this.id=id;
 	}
 
 	/** full constructor */
-	public WebuserEmailA(WebuserEmailAId id, String name, String namePwd,String colTemp) {
-		this.id = id;
-		this.name = name;
-		this.namePwd = namePwd;
+	public WebuserEmailA(WebuserEmailAId id,String name,String namePwd,String colTemp){
+		this.id=id;
+		this.name=name;
+		this.namePwd=namePwd;
 		this.colTemp=colTemp;
 	}
 
 	// Property accessors
 
-	public WebuserEmailAId getId() {
+	public WebuserEmailAId getId(){
 		return this.id;
 	}
 
-	public void setId(WebuserEmailAId id) {
-		this.id = id;
+	public void setId(WebuserEmailAId id){
+		this.id=id;
 	}
 
-	public String getName() {
+	public String getName(){
 		return this.name;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setName(String name){
+		this.name=name;
 	}
 
-	public String getNamePwd() {
+	public String getNamePwd(){
 		return this.namePwd;
 	}
 
-	public void setNamePwd(String namePwd) {
-		this.namePwd = namePwd;
+	public void setNamePwd(String namePwd){
+		this.namePwd=namePwd;
 	}
 
-	public String getColTemp() {
-		return colTemp;
+	public String getColTemp(){
+		return this.colTemp;
 	}
 
-	public void setColTemp(String colTemp) {
-		this.colTemp = colTemp;
+	public void setColTemp(String colTemp){
+		this.colTemp=colTemp;
 	}
-	
 
 }

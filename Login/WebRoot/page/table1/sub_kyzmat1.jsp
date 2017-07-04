@@ -8,7 +8,7 @@
 			+ path + "/";
 %>
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE HTML>
 <html>
 <head>
 <base href="<%=basePath%>">
@@ -30,12 +30,12 @@
     <form action="" method="post" theme="simple"  id="subkyzmat_form">
     
 	<table class="table table-striped table-hover table-bordered">
-		<h2>
+		<h3>
 		<s:if test='#session.loginUser.userread!="1"'>
 		<input value="添加" type="button" class="btn btn-info"
 		onclick="loadUrl('saveAndUpdate/kyzmatSaveOrUpdate.jsp')" /></s:if>
-		物料資料管理
-		</h2>
+		<span id="h2_title">物料資料管理</span>
+		</h3>
 		<thead>			
 			<tr class="tr_show">
 			    <th><input type="checkbox" value="wwww" id="cb_all" onclick="selectAll()"/></th>

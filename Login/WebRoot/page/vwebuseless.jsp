@@ -8,7 +8,7 @@
 			+ path + "/";
 %>
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE HTML>
 <html>
 <head>
 <base href="<%=basePath%>">
@@ -36,7 +36,7 @@ jq(function(){
 </head>
 
 <body>
-<h2>無價值率</h2>
+<br/>
 	<form action="vwebuseless_print" method="post" id="subform" target="_blank">
 		<table id="tb_search">
 			<tr>

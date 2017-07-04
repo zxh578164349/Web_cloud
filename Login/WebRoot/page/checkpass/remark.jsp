@@ -11,7 +11,7 @@ java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("yyyyMMdd"
 java.util.Date currentTime = new java.util.Date();//得到当前系统时间
 String str_date = formatter.format(currentTime); //将日期时间格式化
 %>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE HTML>
 <html>
 <head>
 <base href="<%=basePath%>">
@@ -112,7 +112,7 @@ function goSubmit(){
 		
 <div style="width:100%;position:fixed;bottom:0" align="center" >
 <font color="grey" style="font-size:10px;font-family: Arial, Helvetica, sans-serif;">
-Copyright © 2014,東莞加元鞋材制品有限公司,All Rights Reserved</font>
+Copyright © 2014,加久企業股份有限公司,All Rights Reserved</font>
 </div>			
 			
 </body>

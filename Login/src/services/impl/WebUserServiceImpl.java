@@ -5,7 +5,9 @@ import services.IWebUserService;
 import util.PageBean;
 import dao.IWebUserDao;
 import entity.KyzExpectmatmLog;
+import entity.WebOperationToUser;
 import entity.WebUser;
+import entity.WebUserOperation;
 
 public class WebUserServiceImpl implements IWebUserService {
 
@@ -78,10 +80,9 @@ public class WebUserServiceImpl implements IWebUserService {
 		return webUserDao.findSameUser(user);
 	}
 
-	public PageBean findPageBean(int pageSize, int page, String userName,
-			String factNo) {
+	public PageBean findPageBean(int pageSize, int page, String userName,String factNo,String userType) {
 		// TODO Auto-generated method stub
-		return webUserDao.findPageBean(pageSize, page, userName, factNo);
+		return webUserDao.findPageBean(pageSize, page, userName, factNo,userType);
 	}
 
 	public WebUser findByIdDWR(String factNo, String username) {
@@ -119,12 +120,7 @@ public class WebUserServiceImpl implements IWebUserService {
 		// TODO Auto-generated method stub
 		return webUserDao.findByIdDwr2(factNo, userName);
 	}
-
-	public PageBean findPageBean_init(int pageSize, int page, String userName,
-			String factNo) {
-		// TODO Auto-generated method stub
-		return webUserDao.findPageBean_init(pageSize, page, userName, factNo);
-	}
+	
 
 	public WebUser findUser(String username, String pwd, String factNo) {
 		// TODO Auto-generated method stub
@@ -144,6 +140,50 @@ public class WebUserServiceImpl implements IWebUserService {
 	public WebUser findUserByFactNoAEmail(String factNo, String email) {
 		// TODO Auto-generated method stub
 		return webUserDao.findUserByFactNoAEmail(factNo, email);
+	}
+
+	/**
+	 * 日期:2016/12/30
+	 * 描述:
+	 */
+	
+	
+	public List<WebUserOperation> findAllOperations(){
+		// TODO Auto-generated method stub
+		return webUserDao.findAllOperations();
+	}
+
+	/**
+	 * 日期:2017/1/2
+	 * 描述:
+	 */
+	
+	
+	public void addWebOperations(List<WebOperationToUser> list){
+		// TODO Auto-generated method stub
+		webUserDao.addWebOperations(list);
+	}
+
+	/**
+	 * 日期:2017/1/3
+	 * 描述:
+	 */
+	
+	
+	public List<WebOperationToUser> findoperations(Integer userid){
+		// TODO Auto-generated method stub
+		return webUserDao.findoperations(userid);
+	}
+
+	/**
+	 * 日期:2017/1/3
+	 * 描述:
+	 */
+	
+	
+	public void delete_operation(List<WebOperationToUser>list){
+		// TODO Auto-generated method stub
+		webUserDao.delete_operation(list);
 	}
 
 

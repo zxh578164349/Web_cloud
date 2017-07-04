@@ -28,7 +28,10 @@ public class WebUser implements java.io.Serializable {
 	private String department;//部門
 	private String post;//職務
     private String adminMk;//管理員標識
+    private String erpfactno;
+    private String userType;//用戶類型
 	private List<WebJurisdiction> webJurisdictions = new ArrayList<WebJurisdiction>();
+	private List<WebOperationToUser>webOperationToUsers=new ArrayList<WebOperationToUser>();//操作權限
 
 	// Constructors
 
@@ -36,6 +39,9 @@ public class WebUser implements java.io.Serializable {
 	public WebUser() {
 	}
 
+	public WebUser(Integer id){
+		this.id=id;
+	}
 	/** minimal constructor */
 	public WebUser(Integer id, String username, String pwd, String workno,
 			String factno, Integer available) {
@@ -196,8 +202,37 @@ public class WebUser implements java.io.Serializable {
 	public void setAdminMk(String adminMk) {
 		this.adminMk = adminMk;
 	}
+
+	public String getErpfactno(){
+		return erpfactno;
+	}
+
+	public void setErpfactno(String erpfactno){
+		this.erpfactno=erpfactno;
+	}
+
+	public String getUserType(){
+		return userType;
+	}
+
+	public void setUserType(String userType){
+		this.userType=userType;
+	}
+
+	public List<WebOperationToUser> getWebOperationToUsers(){
+		return webOperationToUsers;
+	}
+
+	public void setWebOperationToUsers(List<WebOperationToUser> webOperationToUsers){
+		this.webOperationToUsers=webOperationToUsers;
+	}
+
+	
+	
+	
 	
 
+	
 			
 	
 	

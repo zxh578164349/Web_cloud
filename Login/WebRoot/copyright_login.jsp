@@ -19,6 +19,6 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 
 </head>
 <body >	
-	<div class="copyright" >Copyright © 2014-<%=str_date%>,東莞加元鞋材制品有限公司,All Rights Reserved</div>
+	<div class="copyright" >Copyright © 2014-<%=str_date%>,加久企業股份有限公司,All Rights Reserved</div>
 </body>
 </html>

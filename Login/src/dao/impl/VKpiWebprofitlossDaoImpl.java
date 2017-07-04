@@ -10,6 +10,7 @@ import java.util.Map;
 import dao.Basedao;
 import dao.IVKpiWebprofitlossDao;
 import entity.VKpiWebprofitloss;
+import entity.VKpiWebprofitlossItems;
 
 /**   
  *    
@@ -77,6 +78,18 @@ public class VKpiWebprofitlossDaoImpl extends Basedao implements IVKpiWebprofitl
 			obj.getId().getFact().getFactSname();
 		}
 		return list;
+	}
+
+	/**
+	 * 日期:2016/10/13
+	 * 描述:
+	 */
+	
+	
+	public List<VKpiWebprofitlossItems> findItems(){
+		// TODO Auto-generated method stub
+		String hql="from VKpiWebprofitlossItems order by eid";
+		return super.findAll(hql,null);
 	}
 
 }

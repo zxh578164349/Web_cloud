@@ -6,7 +6,7 @@
 			+ request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 %>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE HTML>
 <html>
 <head>
 <base href="<%=basePath%>">
@@ -20,8 +20,9 @@
 
 
 <body>
-	<jsp:include page="publicHead_print.jsp" />
+	<jsp:include page="publicHead_weballobj.jsp" />	
 	<hr/>
+	<s:if test='#session.loginUser.userread!="1"'>
 	<form action="weballobj_addMore"  method="post" enctype="multipart/form-data" id="upload_form" target="frameFile">
 	  <table id="tb_search">
 	      <td>	 
@@ -46,15 +47,16 @@
 					</select>
 					
 				</s:else>
-	       </td>
+	       </td>	       
 	       <td>
 	         <input type="text" id="yymm_in" name="yymm" onClick="WdatePicker({dataFmt:'yyyyMM'})" readonly="readonly" class="Wdate search"/>
 	       </td>
 	       <td>
 	       	    &nbsp;<input value="導入Excel" type=button onclick="checkForm()" id="search_forday" class="btn btn-info"/>
-	       </td>
+	       </td>	       
 	  </table>          	
 	</form>
+	</s:if>
 	<iframe id="frameFile" name="frameFile" style="display: none;"></iframe>
 	<hr/>
 	<div id="bodyid">
@@ -147,6 +149,29 @@ function print(public_form,factNo,yymm,yymm2){
 		public_form.submit();
 	}	
 }
+function print2(public_form,factNo,yymm,yymm2){
+	var public_form=jq("#"+public_form);
+	public_form.attr("action","weballobj_print2");
+	public_form.attr("target","_blank");	
+	if(jq("#"+factNo).val()=="nothing"||jq("#"+yymm).val()==""||jq("#"+yymm2).val()==""){
+		layer.msg("請選擇廠別和日期",3,3);
+	}else{
+		public_form.submit();
+	}
+}
+
+function print3(public_form,factNo,yymm,yymm2){
+	//jq("#"+factNo).val("all");
+	var public_form=jq("#"+public_form);	
+	public_form.attr("action","weballobj_print_all");
+	public_form.attr("target","_blank");	
+	if(jq("#"+yymm).val()==""||jq("#"+yymm2).val()==""){
+		layer.msg("請選日期",3,3);
+	}else{
+		public_form.submit();
+	}
+}
+
 function showDiv(){
     jq.layer({
     type: 2,   //0-4的选择,

@@ -24,26 +24,30 @@ public class WebuserEmailDaoImpl extends Basedao implements IWebuserEmailDao{
 		super.merge(email);
 	}
 
-	public WebuserEmail findById(String factNo, String email, String emailpwd) {
+	public WebuserEmail findById(String factNo, String email, String emailpwd,String typeMk) {
 		// TODO Auto-generated method stub		
-		String hql="from WebuserEmail where id.factNo=? and lower(id.email)=? and lower(id.emailpassword)=? ";
+		String hql="from WebuserEmail where id.factNo=? and lower(id.email)=? and lower(id.emailpassword)=? and id.typeMk=?";
 		Query query=getSession().createQuery(hql);
 		query.setString(0, factNo);
 		query.setString(1, email.toLowerCase());
 		query.setString(2, emailpwd.toLowerCase());
+		query.setString(3,typeMk);
 		WebuserEmail obj=(WebuserEmail)query.uniqueResult();
 		return obj;
 	}
 
-	public void delete(String factNo,String email,String emailpwd,KyzExpectmatmLog delLog) {
+	public void delete(String factNo,String email,String emailpwd,String typeMk,KyzExpectmatmLog delLog) {
 		// TODO Auto-generated method stub
-		WebuserEmail obj=this.findById(factNo, email, emailpwd);
+		WebuserEmail obj=this.findById(factNo, email, emailpwd,typeMk);
 		super.delete(obj,delLog);
 	}
 
 	public PageBean findPageBean(int pageSize, int page, String factNo,
-			String email) {
+			String email,String typeMk) {
 		// TODO Auto-generated method stub
+		if(factNo==null||factNo.equals("")){
+			factNo=(String)ActionContext.getContext().getSession().get("factNo");//用戶登錄時的廠別
+		}
 		StringBuffer hql=new StringBuffer();
 		StringBuffer hql2=new StringBuffer();
 		Map<String,Object> map=new HashMap<String,Object>();
@@ -59,7 +63,12 @@ public class WebuserEmailDaoImpl extends Basedao implements IWebuserEmailDao{
 			hql.append(" and lower(id.email)=:email");
 			map.put("email", email.toLowerCase());
 		}
+		if(typeMk!=null&&!typeMk.equals("")){
+			hql.append(" and id.typeMk=:typeMk");
+			map.put("typeMk",typeMk);
+		}
 		hql2.append(hql);
+		hql.append(" order by id.factNo,id.typeMk,email");
 		if(rows!=null&&page>0){
 			allrow=rows;
 		}else{
@@ -91,7 +100,20 @@ public class WebuserEmailDaoImpl extends Basedao implements IWebuserEmailDao{
 
 	public List<String> findByFactNoAEmailPwd2(String factNo, String email) {
 		// TODO Auto-generated method stub
-		String hql="select id.emailpassword from WebuserEmail where id.factNo=? and lower(id.email)=?";
+		String hql="select id.emailpassword from WebuserEmail where id.factNo=? and lower(id.email)=? and id.typeMk='0'";
+		String[]objs={factNo,email.toLowerCase()};
+		return super.findAll(hql, objs);
+	}
+
+	/**
+	 * 日期:2017/1/12
+	 * 描述:
+	 */
+	
+	
+	public List<String> findByFactNoAEmailPwd3(String factNo,String email){
+		// TODO Auto-generated method stub
+		String hql="select id.emailpassword from WebuserEmail where id.factNo=? and lower(id.email)=? and id.typeMk='1'";
 		String[]objs={factNo,email.toLowerCase()};
 		return super.findAll(hql, objs);
 	}

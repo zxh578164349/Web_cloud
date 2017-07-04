@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.hibernate.Hibernate;
 import org.hibernate.Query;
+import org.hibernate.Transaction;
 
 import util.PageBean;
 
@@ -13,8 +14,9 @@ import com.opensymphony.xwork2.ActionContext;
 import dao.Basedao;
 import dao.IWebUserDao;
 import entity.KyzExpectmatmLog;
-import entity.WebBackmat;
+import entity.WebOperationToUser;
 import entity.WebUser;
+import entity.WebUserOperation;
 
 public class WebUserDaoImpl extends Basedao implements IWebUserDao {
 	private int size;
@@ -170,10 +172,15 @@ public class WebUserDaoImpl extends Basedao implements IWebUserDao {
 		query.setString(1, fact);
 		WebUser user=(WebUser)query.uniqueResult();
 		if(user!=null){
-			//user.getWebJurisdictions().size();//解決hibernate延遲問題
+			//獲取各項目的權限
 			for(int i=0;i<user.getWebJurisdictions().size();i++){
 				user.getWebJurisdictions().get(i).getWebMenu().getMenuname();
-				user.getWebJurisdictions().get(i).getWebSubmenus().size();
+				user.getWebJurisdictions().get(i).getWebSubmenus().size();				
+			}
+			//獲取操作的權限
+			for(WebOperationToUser obj:user.getWebOperationToUsers()){
+				obj.getWebUserOperation().getId();
+				obj.getWebUserOperation().getOperationCname();
 			}
 		}			
 		return user;
@@ -187,9 +194,15 @@ public class WebUserDaoImpl extends Basedao implements IWebUserDao {
 		return users;
 	}
 
-	public PageBean findPageBean(int pageSize, int page, String userName,
-			String factNo) {
+	public PageBean findPageBean(int pageSize, int page, String userName,String factNo,String userType) {
 		// TODO Auto-generated method stub
+		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
+		String factno_session=user.getFactno();
+		if(factNo==null||"".equals(factNo)){
+			if(!"tw".equals(factno_session)){
+				factNo=factno_session;
+			}						
+		}
 		StringBuffer hql=new StringBuffer();
 		StringBuffer hql2=new StringBuffer();
 		final Map<String,Object>map=new HashMap<String,Object>();
@@ -201,54 +214,14 @@ public class WebUserDaoImpl extends Basedao implements IWebUserDao {
 			hql.append(" and (lower(username) like :username or lower(name) like :username)");			
 			map.put("username", "%"+userName.toLowerCase()+"%");
 		}
-		if(factNo!=null&&!factNo.equals("")){
+		if(factNo!=null&&!"".equals(factNo)){
 			hql.append(" and factno=:factNo");
 			map.put("factNo", factNo);
 		}
-		
-		hql2.append(hql);
-		hql.append(" order by id");
-		if(rows!=null&&page>0){
-			allrow=rows;
-		}else{
-			allrow=super.getAllRowCount2(hql2.toString(), map);
-			ActionContext.getContext().getSession().put("allrow", allrow);
-		}
-		int currentPage=PageBean.countCurrentPage(page);
-		int totalPage=PageBean.countTotalPage(pageSize, allrow);
-		if(currentPage>totalPage){
-			currentPage=totalPage;
-		}
-		final int offset=PageBean.countOffset(pageSize, currentPage);
-		final int length=pageSize;
-		List<WebUser> list=super.queryForPage(hql.toString(), offset, length, map);
-		PageBean bean=new PageBean();
-		bean.setAllRow(allrow);
-		bean.setCurrentPage(currentPage);
-		bean.setList(list);
-		bean.setPageSize(pageSize);
-		bean.setTotalPage(totalPage);
-		return bean;
-	}
-	public PageBean findPageBean_init(int pageSize, int page, String userName,
-			String factNo) {
-		// TODO Auto-generated method stub
-		StringBuffer hql=new StringBuffer();
-		StringBuffer hql2=new StringBuffer();
-		final Map<String,Object>map=new HashMap<String,Object>();
-		int allrow=0;
-		Integer rows=(Integer)ActionContext.getContext().getSession().get("allrow");
-		hql.append("from WebUser where 1=1 ");
-		hql2.append("select count(id) ");
-		if(userName!=null&&!userName.equals("")){
-			hql.append(" and (lower(username) like :username or lower(name) like :username)");			
-			map.put("username", "%"+userName.toLowerCase()+"%");
-		}
-		if(factNo!=null&&!factNo.equals("")&&!factNo.equals("tw")){
-			hql.append(" and factno=:factNo");
-			map.put("factNo", factNo);
-		}
-		
+		if(userType!=null&&!"".equals(userType)){
+			hql.append(" and userType=:userType");//查看使用者用戶還是訪客用戶（0：使用者    1：訪客）
+			map.put("userType",userType);
+		}		
 		hql2.append(hql);
 		hql.append(" order by id");
 		if(rows!=null&&page>0){
@@ -318,10 +291,10 @@ public class WebUserDaoImpl extends Basedao implements IWebUserDao {
 
 	public WebUser findByIdDwr2(String factNo, String userName) {
 		// TODO Auto-generated method stub
-		String hql="from WebUser where factno=? and username=?";
+		String hql="from WebUser where factno=? and lower(username)=?";
 		Query query=getSession().createQuery(hql);
 		query.setString(0, factNo);
-		query.setString(1, userName);
+		query.setString(1, userName.toLowerCase());
 		WebUser user=(WebUser)query.uniqueResult();
 		return user;
 	}
@@ -348,12 +321,81 @@ public class WebUserDaoImpl extends Basedao implements IWebUserDao {
 
 	public WebUser findUserByFactNoAEmail(String factNo, String email) {
 		// TODO Auto-generated method stub
-		String hql="from WebUser where factno=? and email=?";
+		String hql="from WebUser where factno=? and lower(email)=?";
 		Query query=getSession().createQuery(hql);
 		query.setString(0, factNo);
-		query.setString(1, email);
+		query.setString(1, email.toLowerCase());
 		WebUser user=(WebUser)query.uniqueResult();
 		return user;
+	}
+
+	/**
+	 * 日期:2016/12/30
+	 * 描述:
+	 */
+	
+	
+	public List<WebUserOperation> findAllOperations(){
+		// TODO Auto-generated method stub
+		String hql="select id,operationCname from WebUserOperation";
+		return super.findAll(hql,null);
+	}
+
+	/**
+	 * 日期:2017/1/2
+	 * 描述:
+	 */
+	
+	
+	public void addWebOperations(List<WebOperationToUser> list){
+		// TODO Auto-generated method stub
+		Transaction tc=null;
+		try{
+			tc=getSession().beginTransaction();
+			for(WebOperationToUser obj:list){
+				//getSession().save(obj);
+				getSession().merge(obj);
+			}
+		}catch(Exception e){
+			tc.rollback();
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * 日期:2017/1/3
+	 * 描述:
+	 */
+	
+	
+	public List<WebOperationToUser> findoperations(Integer userid){
+		// TODO Auto-generated method stub
+		String hql="from WebOperationToUser where webUser.id=?";
+		Integer[]objs={userid};
+		List<WebOperationToUser>list=super.findAll(hql,objs);
+		return list;
+	}
+
+	/**
+	 * 日期:2017/1/3
+	 * 描述:
+	 */
+	
+	
+	public void delete_operation(List<WebOperationToUser>list){
+		// TODO Auto-generated method stub
+		Transaction tc=null;
+		try{	
+			tc=getSession().beginTransaction();
+			for(WebOperationToUser obj:list){
+				getSession().delete(obj);
+			}
+		}catch(Exception e){
+			tc.rollback();
+			e.printStackTrace();
+		}
+		
+		
 	}
 
 

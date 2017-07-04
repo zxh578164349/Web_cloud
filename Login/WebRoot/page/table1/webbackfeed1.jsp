@@ -8,7 +8,7 @@
 			+ path + "/";
 %>
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE HTML>
 <html>
 <head>
 <base href="<%=basePath%>">
@@ -26,13 +26,13 @@
 <body>
   <div id="container">
 	<table class="table table-striped table-hover table-bordered" >
-		<h2>
+		<h3>
 		<s:if test='#session.loginUser.userread!="1"'>
 	    <input value="添加" type="button" class="btn btn-info"
 		onclick="loadUrl('saveAndUpdate/webbackfeedSaveOrUpdate.jsp')" />
          </s:if>
-		回頭料(每月輸入)
-		</h2>
+		<span id="h2_title">回頭料(每月輸入)</span>
+		</h3>
 		<thead>
 			<tr class="tr_show">
 				<th>序號</th>

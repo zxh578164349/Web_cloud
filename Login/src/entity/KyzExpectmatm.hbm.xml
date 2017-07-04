@@ -83,6 +83,9 @@
         <property name="visaTypeM" type="java.lang.String">
             <column name="VISA_TYPE_M" length="2"/>
         </property>
+        <property name="emerMk" type="java.lang.String">
+            <column name="EMER_MK" length="2"/>
+        </property>
         <bag name="kyzExpectmatses" inverse="true" cascade="all" >
             <key>
                 <column name="FACT_NO" length="6" not-null="true" />
@@ -96,6 +99,13 @@
                <column name="BILLNO"/>            
             </key>
             <one-to-many class="entity.KyzExpectmatmFile"/>
+        </bag>
+        <bag name="list_logs" inverse="true" cascade="all">
+           <key>
+             <column name="FACT_NO"/>
+             <column name="BILL_NO"/> 
+           </key>
+           <one-to-many class="entity.KyzExpectmatmLog"/>
         </bag>
         <one-to-one name="vbm" class="entity.KyVisabillm"  property-ref="kyzexp" cascade="all"/>      
     </class>

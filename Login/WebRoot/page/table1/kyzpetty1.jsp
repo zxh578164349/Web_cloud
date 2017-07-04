@@ -8,7 +8,7 @@
 			+ path + "/";
 %>
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE HTML>
 <html>
 <head>
 <base href="<%=basePath%>">
@@ -26,12 +26,12 @@
   <div id="container">
     <div id="content">
 	<table class="table table-striped table-hover table-bordered" >
-		<h2>
+		<h3>
 		<s:if test='#session.loginUser.userread!="1"'>
 		<input value="添加" type="button" class="btn btn-info"
 		onclick="loadUrl('kyzpetty_findAllSecNoAndAcctNo')" /></s:if>
-		零用金支出
-		</h2>
+		<span id="h2_title">零用金支出</span>
+		</h3>
 		<thead>			
 			<tr class="tr_show">
 				<th>序號</th>

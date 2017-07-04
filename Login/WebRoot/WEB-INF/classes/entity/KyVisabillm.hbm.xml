@@ -56,7 +56,16 @@
         <property name="delMk" type="java.lang.String">
             <column name="DEL_MK" length="2"/>
         </property>
-        <bag name="kyVisabillses" inverse="true" cascade="all" >
+        <property name="userCreate" type="java.lang.String">
+            <column name="USER_CREATE" length="50"/>
+        </property>
+        <property name="oneMk" type="java.lang.String">
+            <column name="ONE_MK" length="2"/>
+        </property>
+        <property name="visaSortM" type="java.lang.String">
+            <column name="VISA_SORT_M" length="2"/>
+        </property>
+        <bag name="kyVisabillses" inverse="true" cascade="all" order-by="BILL_NO,ITEM_NO">
             <key>
                 <column name="FACT_NO" length="4" not-null="true" />
                 <column name="VISA_SORT" length="1" not-null="true" />
@@ -73,6 +82,12 @@
            <column name="FACT_NO"/>
            <column name="BILL_NO"/>
         </many-to-one>
-        <many-to-one name="webrel" column="BILL_NO" unique="true" insert="false" update="false"/>      
+        <many-to-one name="webrel" column="BILL_NO" unique="true" insert="false" update="false"/>
+        <many-to-one name="formula" column="BILL_NO" unique="true" insert="false" update="false"/>  
+        <many-to-one name="factNo2" column="FACT_NO" unique="true" insert="false" update="false"/>  
+        <many-to-one name="webtype" insert="false" update="false">
+           <column name="FACT_NO"/>
+           <column name="VISA_SORT_M"/>
+        </many-to-one>
     </class>
 </hibernate-mapping>

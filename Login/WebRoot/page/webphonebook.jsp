@@ -6,7 +6,7 @@
 			+ request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 %>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE HTML>
 <html>
 <head>
 <base href="<%=basePath%>">
@@ -121,7 +121,7 @@ jq(function(){
 	        success:function(data){
 	        	if(data=="0"){
 	        		layer.msg("導入成功!",3,1);
-	        		//location.href="/Login/kyz_findPageBean";
+	        		//location.href="kyz_findPageBean";
 	        	}else if(data=="1"){
 	        		layer.msg("導入失敗",3,3);
 	        		showDiv();

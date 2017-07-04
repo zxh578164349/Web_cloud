@@ -38,6 +38,9 @@ public class SubKyzmatDaoImpl extends Basedao implements ISubKyzmatDao{
 		Map<String,Object>map=new HashMap<String,Object>();
 		hql.append("from SubKyzmat where 1=1");
 		hql2.append("select count(id.factNo) ");
+		if(factNo==null||"".equals(factNo)){
+			factNo=(String)ActionContext.getContext().getSession().get("factNo");
+		}
 		if((fromDate==null||fromDate.equals(""))&&(endDate==null||endDate.equals(""))
 				&&(matCname==null||matCname.equals(""))&&(bNo==null||bNo.equals(""))
 				&&(mNo==null||mNo.equals(""))&&(sNo==null||sNo.equals(""))&&(factNo==null||factNo.equals(""))
@@ -68,13 +71,9 @@ public class SubKyzmatDaoImpl extends Basedao implements ISubKyzmatDao{
 				hql.append(" and id.kyzMat.typeSno=:sno");
 				map.put("sno", sNo);
 			}
-			if(factNo!=null&&!factNo.equals("")){
-				if(factNo.equals("tw")){
-					hql.append( "and 1=1");
-				}else{
+			if(factNo!=null&&!factNo.equals("")&&!"tw".equals(factNo)){				
 					hql.append(" and id.factNo=:factno");
-					map.put("factno", factNo);
-				}				
+					map.put("factno", factNo);								
 			}
 			if(matNo!=null&&!matNo.equals("")){
 				hql.append(" and id.kyzMat.matNo like:matno");

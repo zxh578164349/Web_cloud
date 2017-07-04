@@ -92,4 +92,48 @@ public class KyzVisaFlowServicesImpl implements IKyzVisaFlowServices{
 		return visaDao.findWebbuss(factNo);
 	}
 
+	/**
+	 * 日期:2016/11/17
+	 * 描述:
+	 */
+	
+	
+	public Long findNums(String factNo,String visaSort){
+		// TODO Auto-generated method stub
+		return visaDao.findNums(factNo,visaSort);
+	}
+
+	/**
+	 * 日期:2016/11/18
+	 * 描述:
+	 */
+	
+	
+	public List<KyzVisaflow> findTR(String factNo){
+		// TODO Auto-generated method stub
+		return visaDao.findTR(factNo);
+	}
+
+	/**
+	 * 日期:2016/11/18
+	 * 描述:
+	 */
+	
+	
+	public List<KyzVisaflow> findPF(String factNo){
+		// TODO Auto-generated method stub
+		return visaDao.findPF(factNo);
+	}
+
+	/**
+	 * 日期:2017/5/9
+	 * 描述:
+	 */
+	
+	
+	public void add_d(KyzVisaflow f1,KyzVisaflow f2){
+		// TODO Auto-generated method stub
+		visaDao.add_d(f1,f2);
+	}
+
 }

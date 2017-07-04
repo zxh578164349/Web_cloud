@@ -18,6 +18,7 @@ public class WebMenu implements java.io.Serializable {
 	private String enableMk;
 	private List<WebJurisdiction> webJurisdictions = new ArrayList<WebJurisdiction>();
 	private List<WebSubmenu2>submenus=new ArrayList<WebSubmenu2>();
+	private String typeMk;//菜單類型     0:使用者可見    1:訪客可見
 
 	// Constructors
 
@@ -78,6 +79,14 @@ public class WebMenu implements java.io.Serializable {
 
 	public void setEnableMk(String enableMk) {
 		this.enableMk = enableMk;
+	}
+
+	public String getTypeMk(){
+		return typeMk;
+	}
+
+	public void setTypeMk(String typeMk){
+		this.typeMk=typeMk;
 	}
 	
 	

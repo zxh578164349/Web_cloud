@@ -101,6 +101,9 @@ public class WebYieldDataDaoImpl extends Basedao implements IWebYieldDataDao {
 		StringBuffer hql2=new StringBuffer();
 		hql.append("from WebYieldData where 1=1 ");
 		hql2.append("select count(id.factNo) ");
+		if(factNo==null||"".equals(factNo)){
+			factNo=(String) ActionContext.getContext().getSession().get("factNo");
+		}
 		if (factNo != null && !factNo.equals("") && !factNo.equals("tw")&&!factNo.equals("nothing")) {
 			hql.append(" and id.factNo =:factno ");
 			map.put("factno", factNo);
@@ -184,7 +187,10 @@ public class WebYieldDataDaoImpl extends Basedao implements IWebYieldDataDao {
 			String yymm) {
 		// TODO Auto-generated method stub
 		final Map<String, Object> map = new HashMap<String, Object>();
-		StringBuffer hql = new StringBuffer();
+		StringBuffer hql = new StringBuffer();		
+		if(factNo==null||"".equals(factNo)){
+			factNo=(String)ActionContext.getContext().getSession().get("factNo");
+		}
 		hql.append("select id.factNo,id.factCode,to_char(id.yymmdd,'yyyyMM'),sum(onModulus),sum(personnum),sum(standardOutput),sum(actualYield),sum(daycount)," +
 				"sum(actualpairs),sum(hostpairs),sum(factpairs),sum(samplepairs),sum(outnum),sum(backnum),sum(workhours) from WebYieldData where 1=1 ");
 		if (factNo != null && !factNo.equals("") && !factNo.equals("tw")) {

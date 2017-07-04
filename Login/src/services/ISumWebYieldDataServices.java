@@ -31,5 +31,6 @@ public interface ISumWebYieldDataServices {
 	 */
 	public List<SumWebYieldData>findByFactNoAndYymm(String factNo,String begin_yymm,String end_yymm);
 	public String findUsername(String factNo,String factCode,String yymm);
+	public List<SumWebYieldData> findObjs(String yymm,String yymm2);
 
 }

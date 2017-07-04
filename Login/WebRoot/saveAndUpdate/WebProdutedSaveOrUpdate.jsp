@@ -7,7 +7,7 @@
 			+ path + "/";
 %>
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE HTML>
 <html>
 <head>
 <base href="<%=basePath%>">
@@ -23,8 +23,7 @@
 
 </head>
 <body>
-	<form action="webProduted_addProduted" method="post" id="form">
-	<h2>成品資料(每月輸入)</h2>
+	<form action="webProduted_addProduted" method="post" id="form">	
 		<table class="table table-condensed"
 			id="msg1">
 						
@@ -174,8 +173,8 @@
 			callback:function(data){
 				if(data=="0"){
 					layer.msg("提交成功!",3,1);
-					//location.href="/Login/webProduted_getList";
-					loadUrl("/Login/webProduted_getList");
+					//location.href="webProduted_getList";
+					loadUrl("webProduted_getList");
 				}else{
 					//alert(data.responseText);
 					layer.msg("提交失敗",3,3);
@@ -221,10 +220,10 @@ jq(function(){
 	goTrim();
 });
 function back(){
-	loadUrl("/Login/webProduted_getList3?backIndex=1");
+	loadUrl("webProduted_getList3?backIndex=1");
 }      
 </script>
-<script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/webprodutedjs.js'></script>	
+<script type='text/javascript' src='dwr/interface/webfactjs.js'></script>
+<script type='text/javascript' src='dwr/interface/webprodutedjs.js'></script>	
 </body>
 </html>

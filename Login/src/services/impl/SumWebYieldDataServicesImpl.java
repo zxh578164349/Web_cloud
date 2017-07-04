@@ -71,4 +71,15 @@ public class SumWebYieldDataServicesImpl implements ISumWebYieldDataServices{
 		return sumydateDao.findUsername(factNo, factCode, yymm);
 	}
 
+	/**
+	 * 日期:2016/10/13
+	 * 描述:
+	 */
+	
+	
+	public List<SumWebYieldData> findObjs(String yymm,String yymm2){
+		// TODO Auto-generated method stub
+		return sumydateDao.findObjs(yymm,yymm2);
+	}
+
 }

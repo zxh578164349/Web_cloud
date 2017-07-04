@@ -23,20 +23,20 @@ public class WebuserEmailServicesImpl implements IWebuserEmailServices{
 		webuseremailDao.add(email);
 	}
 
-	public WebuserEmail findById(String factNo, String email, String emailpwd) {
+	public WebuserEmail findById(String factNo, String email, String emailpwd,String typeMk) {
 		// TODO Auto-generated method stub
-		return webuseremailDao.findById(factNo, email, emailpwd);
+		return webuseremailDao.findById(factNo, email, emailpwd,typeMk);
 	}
 
-	public void delete(String factNo,String email,String emailpwd,KyzExpectmatmLog delLog) {
+	public void delete(String factNo,String email,String emailpwd,String typeMk,KyzExpectmatmLog delLog) {
 		// TODO Auto-generated method stub
-		webuseremailDao.delete(factNo,email,emailpwd,delLog);
+		webuseremailDao.delete(factNo,email,emailpwd,typeMk,delLog);
 	}
 
 	public PageBean findPageBean(int pageSize, int page, String factNo,
-			String email) {
+			String email,String typeMk) {
 		// TODO Auto-generated method stub
-		return webuseremailDao.findPageBean(pageSize, page, factNo, email);
+		return webuseremailDao.findPageBean(pageSize, page, factNo, email,typeMk);
 	}
 
 	public List<WebuserEmail> findByFactNoAEmailPwd(String factNo, String email) {
@@ -49,6 +49,19 @@ public class WebuserEmailServicesImpl implements IWebuserEmailServices{
 	public List<String> findByFactNoAEmailPwd2(String factNo, String email) {
 		// TODO Auto-generated method stub
 		return webuseremailDao.findByFactNoAEmailPwd2(factNo, email);
+	}
+
+
+
+	/**
+	 * 日期:2017/1/12
+	 * 描述:
+	 */
+	
+	
+	public List<String> findByFactNoAEmailPwd3(String factNo,String email){
+		// TODO Auto-generated method stub
+		return webuseremailDao.findByFactNoAEmailPwd3(factNo, email);
 	}
 
 }

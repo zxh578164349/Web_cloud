@@ -22,8 +22,22 @@ public class WebuseremailAction extends ActionSupport{
 	private int page;
 	private PageBean bean;
 	private int backIndex;//返回標識      0或null:不走返回路徑         1:走返回路徑
+	private String ajaxResult;
+	private String typeMk;
 	
 	
+	public String getTypeMk(){
+		return typeMk;
+	}
+	public void setTypeMk(String typeMk){
+		this.typeMk=typeMk;
+	}
+	public String getAjaxResult(){
+		return ajaxResult;
+	}
+	public void setAjaxResult(String ajaxResult){
+		this.ajaxResult=ajaxResult;
+	}
 	public int getBackIndex() {
 		return backIndex;
 	}
@@ -71,38 +85,41 @@ public class WebuseremailAction extends ActionSupport{
 	}
 	
 	public String add(){
-		webuseremailSer.add(useremail);
+		try{
+			webuseremailSer.add(useremail);
+			ajaxResult="0";
+		}catch(Exception e){
+			ajaxResult="1";
+			e.printStackTrace();
+		}
 		return "add";
 	}
 	public String findById(){
-		useremail=webuseremailSer.findById(factNo, email, emailpwd);
+		useremail=webuseremailSer.findById(factNo, email, emailpwd,typeMk);
 		return "findById";
 	}
 	public String delete(){
 		KyzExpectmatmLog log=new KyzExpectmatmLog();
 		log.setObj("WebuserEmail");
 		log.setFactNo(factNo);
-		log.setContent(email+emailpwd);
+		log.setContent(email+emailpwd+"_("+typeMk+")");
 		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
 		log.setUsername(user.getUsername());
-		webuseremailSer.delete(factNo, email, emailpwd,log);                               
+		webuseremailSer.delete(factNo, email, emailpwd,typeMk,log);                               
 		return "delete";
 	}
-	public String findPageBean(){
-		//ActionContext.getContext().getApplication().clear();
+	public String findPageBean(){		
 		ActionContext.getContext().getSession().remove("public_factno");
 		ActionContext.getContext().getSession().remove("public_email");
-		factNo=(String)ActionContext.getContext().getSession().get("factNo");
-		bean=webuseremailSer.findPageBean(25, page, factNo, email);
+		ActionContext.getContext().getSession().remove("public_typeMk");
+		bean=webuseremailSer.findPageBean(20,page, factNo, email,typeMk);
 		return "beanList";
 	}
 	public String findPageBean2(){
-		//ActionContext.getContext().getApplication().clear();
-		ActionContext.getContext().getSession().remove("public_factno");
-		ActionContext.getContext().getSession().remove("public_email");
-		bean=webuseremailSer.findPageBean(25, page, factNo, email);
+		bean=webuseremailSer.findPageBean(20,page, factNo, email,typeMk);
 		ActionContext.getContext().getSession().put("public_factno", factNo);
 		ActionContext.getContext().getSession().put("public_email", email);
+		ActionContext.getContext().getSession().put("public_typeMk",typeMk);
 		return "beanList1";
 	}
 	public String findPageBean3(){
@@ -112,20 +129,9 @@ public class WebuseremailAction extends ActionSupport{
 		}
 		factNo=(String)ActionContext.getContext().getSession().get("public_factno");
 		email=(String)ActionContext.getContext().getSession().get("public_email");
-		if(factNo==null||factNo.equals("")){
-			factNo=(String)ActionContext.getContext().getSession().get("factNo");
-		}
-		bean=webuseremailSer.findPageBean(25, page, factNo, email);
+		typeMk=(String)ActionContext.getContext().getSession().get("public_typeMk");
+		bean=webuseremailSer.findPageBean(20,page, factNo, email,typeMk);
 		return result;
-	}
-	
-	public void testEamil(){
-		factNo="631";
-		email="liujung@mail.gj.com.tw";
-		List<String>list=webuseremailSer.findByFactNoAEmailPwd2(factNo, email);
-		for(int i=0;i<list.size();i++){
-			System.out.println(list.get(i));
-		}
 	}
 
 }

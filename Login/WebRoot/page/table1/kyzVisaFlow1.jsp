@@ -8,7 +8,7 @@
 			+ path + "/";
 %>
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE HTML>
 <html>
 <head>
 <base href="<%=basePath%>">
@@ -25,12 +25,12 @@
   <div id="container">
    <div id="content">
 	<table class="table table-striped table-hover table-bordered" >
-		<h4>
+		<h3>
 		<s:if test='#session.loginUser.userread!="1"'>
 	     <input value="添加" type="button" class="btn btn-info"
 		onclick="loadUrl('saveAndUpdate/kyzVisaFlowSaveOrUpdate.jsp')" /></s:if> 
-		審核流程
-		</h4>
+		<span id="h2_title">審核流程</span>
+		</h3>
 		<thead>			
 			<tr class="tr_show">			    
 				<th>廠別</th>
@@ -100,7 +100,7 @@
 					  <a href="javascript:isDelete('2subform${x.index}','visaflow_delete')"><img alt="刪除" src="images/icon/minus002.png" title="刪除" ></a>				 					  
 					 </s:if>
 					 <s:else>
-					   <a href="javascript:void(0)" onclick="isDelete2('${temp.id.factNo}','${temp.id.visaSort}')"><img alt="刪除全部" src="images/icon/delete_all.png" title="刪除全部" ></a>
+					   <a href="javascript:void(0)" onclick="isDelete_flows('${temp.id.factNo}','${temp.id.visaSort}')"><img alt="刪除全部" src="images/icon/delete_all.png" title="刪除全部" ></a>
 					   <a href="javascript:findById_form('3subform${x.index}','visaflow_findMaxItem')"><img alt="添加知會" src="images/icon/add001_2.png" title="添加知會"></a>
 					 </s:else>	
 					 
@@ -169,7 +169,7 @@
 	   			callback:function(data){	   				
 	   					if(data=="0"){
 	   						layer.msg("提交成功!",3,1);
-	   						location.href="/Login/visaflow_findPageBean";
+	   						location.href="visaflow_findPageBean";
 	   					}
 	   					if(data=="1"){
 	   						alert(data.responseText);

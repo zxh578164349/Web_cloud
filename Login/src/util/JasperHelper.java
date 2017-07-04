@@ -91,8 +91,8 @@ public class JasperHelper{
 		String fileName=defaultname;
 		response.setHeader("Content-disposition","attachment; filename=" + java.net.URLEncoder.encode(fileName,"utf-8"));
 		ServletOutputStream ouputStream=response.getOutputStream();
-		// JRXlsExporter exporter = new JRXlsExporter();
-		JExcelApiExporter exporter=new JExcelApiExporter();
+		 JRXlsExporter exporter = new JRXlsExporter();
+		//JExcelApiExporter exporter=new JExcelApiExporter();
 		exporter.setParameter(JRExporterParameter.JASPER_PRINT,jasperPrint);
 		exporter.setParameter(JRExporterParameter.OUTPUT_STREAM,ouputStream);
 		exporter.setParameter(JRXlsExporterParameter.IS_REMOVE_EMPTY_SPACE_BETWEEN_ROWS,Boolean.TRUE);
@@ -272,6 +272,14 @@ public class JasperHelper{
 		 * is=new ByteArrayInputStream(bytes);
 		 */
 		export(lists,parameters,exportType,defaultFilename,is,request,response);
+		if(is!=null){
+			try {
+				is.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 
 	private String encodingFileName(String fileName){

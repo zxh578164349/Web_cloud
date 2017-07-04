@@ -7,7 +7,7 @@
 			+ path + "/";
 %>
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE HTML>
 <html>
 <head>
 <base href="<%=basePath%>">
@@ -24,7 +24,6 @@
 <body>
 
 	<form action="kyzacct_add" method="post" id="form">
-	  <h2>會計科目</h2>
 		<table class="table table-condensed"
 			id="table1">							
 					<tr>					  
@@ -111,7 +110,7 @@
 	}
 
 	function back() {
-		loadUrl("/Login/kyzacct_findPageBean3?backIndex=1"); 
+		loadUrl("kyzacct_findPageBean3?backIndex=1"); 
 			
 
 	}
@@ -133,9 +132,9 @@
 	}
 	
 </script>
-<script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/kyzsecjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/kyzacctjs.js'></script>
+<script type='text/javascript' src='dwr/interface/webfactjs.js'></script>
+<script type='text/javascript' src='dwr/interface/kyzsecjs.js'></script>
+<script type='text/javascript' src='dwr/interface/kyzacctjs.js'></script>
 </body>
 
 </html>

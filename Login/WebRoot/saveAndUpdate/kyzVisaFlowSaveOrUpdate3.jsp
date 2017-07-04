@@ -11,7 +11,7 @@ java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("yyyyMMdd"
 java.util.Date currentTime = new java.util.Date();//得到当前系统时间
 String str_date = formatter.format(currentTime); //将日期时间格式化
 %>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE HTML>
 <html>
 <head>
 <base href="<%=basePath%>">
@@ -27,7 +27,6 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 <body>
    <div id="pop">
        <form action="visaflow_addMaxFlow" method="post" id="form">
-       <h2>審核流程</h2>
 		<table class="table table-condensed">	    																 			
 			<tbody id="visaflow_body">
 			 	
@@ -62,10 +61,10 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 			     <div style="position:relative"  >			     
 			     <div id="emaildwr0" style="z-index:100;position:absolute;background:yellow;top:0px;left:0px;width:180px;display:none" ></div>			     
 			     </div>
-			     </td>
-			     <td >
-			       <input type="hidden" value="<s:property value='maxItem'/>" id="maxItem"/><!-- 后台传递过来的最大序列号 -->
-			     </td>		     			     		      		      
+			     
+			     <input type="hidden" value="<s:property value='maxItem'/>" id="maxItem"/><!-- 后台传递过来的最大序列号 -->
+			     <input type="hidden" name="flows[0].typeMk" id="typeMk" value="<s:property value='flow.typeMk'/>"/>	
+			     </td>			    	     			     		      		      
 			  </tr>		
 			 </s:if>		
 			         			  			 	  			
@@ -106,8 +105,8 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 			callback:function(data){
 				if(data=="0"){
 					layer.msg("提交成功!",3,1);
-					loadUrl("/Login/visaflow_findPageBean");
-					//location.href="/Login/visaflow_findPageBean";
+					loadUrl("visaflow_findPageBean");
+					//location.href="visaflow_findPageBean";
 				}
 				if(data=="1"){
 					alert(data.responseText);
@@ -158,6 +157,7 @@ var k2=0;
         
         var factno=document.getElementById("dwrFactNo").value;
         var typeno=document.getElementById("dwr_kytype").value;
+        var typeMk=document.getElementById("typeMk").value;
                  
         newTd00.innerHTML='<input type="checkbox" name="cbox" disabled/>';          
 	    newTd0.innerHTML = '<input type="text" name="flows['+j+'].id.factNo" value="'+factno+'"  readonly style="color:blue"/>';
@@ -170,7 +170,8 @@ var k2=0;
         newTd3.innerHTML='<input type="text" name="flows['+j+'].id.purmanNo" value="" datatype="*" id="keys'+j+'" onkeyup="gog('+j+')" />'+
         '<div style="position:relative"><div id="tishi'+j+'" style="z-index:100;position:absolute;background:yellow;left:0;top:0px;width:180px;display:none"></div></div>';     
         newTd4.innerHTML='<input type="text" name="flows['+j+'].visaSigner" value="" datatype="e" id="skeys'+j+'" onkeyup="getEmail('+j+')" />'+
-        '<div style="position:relative"><div id="emaildwr'+j+'" style="z-index:100;position:absolute;background:yellow;left:0;top:0px;width:180px;display:none"></div></div>';           
+        '<div style="position:relative"><div id="emaildwr'+j+'" style="z-index:100;position:absolute;background:yellow;left:0;top:0px;width:180px;display:none"></div></div>'+
+        '<input type="hidden" name="flows['+j+'].typeMk" value="'+typeMk+'"/>';           
         } 
                                  
 	}
@@ -281,12 +282,12 @@ var k2=0;
 	}
 	
 function back(){	
-	loadUrl("/Login/visaflow_findPageBean3?backIndex=1");
+	loadUrl("visaflow_findPageBean3?backIndex=1");
 }
 </script>
-<script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/kyzvisaflowjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/userjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/webtypejs.js'></script>	
+<script type='text/javascript' src='dwr/interface/webfactjs.js'></script>
+<script type='text/javascript' src='dwr/interface/kyzvisaflowjs.js'></script>
+<script type='text/javascript' src='dwr/interface/userjs.js'></script>
+<script type='text/javascript' src='dwr/interface/webtypejs.js'></script>	
 </body>
 </html>

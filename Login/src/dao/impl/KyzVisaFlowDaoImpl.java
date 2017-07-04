@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.hibernate.Query;
+import org.hibernate.Transaction;
 
 import com.opensymphony.xwork2.ActionContext;
 
@@ -189,6 +190,67 @@ public class KyzVisaFlowDaoImpl extends Basedao implements IKyzVisaFlowDao {
 		return result;
 	}
 
+	/**
+	 * 日期:2016/11/17
+	 * 描述:
+	 */
+	
+	
+	public Long findNums(String factNo,String visaSort){
+		// TODO Auto-generated method stub
+		String hql="select count(id.factNo) from KyzVisaflow where id.factNo=? and id.visaSort=?";
+		Query query=getSession().createQuery(hql);
+		query.setString(0,factNo);
+		query.setString(1,visaSort);
+		return (Long)query.uniqueResult();
+	}
 
+	/**
+	 * 日期:2016/11/18
+	 * 描述:
+	 */
+	
+	
+	public List<KyzVisaflow> findTR(String factNo){
+		// TODO Auto-generated method stub
+		String hql="from KyzVisaflow where id.factNo=? and id.visaSort='TR' order by id.itemNo";
+		String[]objs={factNo};
+		return super.findAll(hql,objs);
+	}
 
+	/**
+	 * 日期:2016/11/18
+	 * 描述:
+	 */
+	
+	
+	public List<KyzVisaflow> findPF(String factNo){
+		// TODO Auto-generated method stub
+		String hql="from KyzVisaflow where id.factNo=? and id.visaSort='PF' order by id.itemNo";
+		String[]objs={factNo};
+		return super.findAll(hql,objs);
+	}
+
+	/**
+	 * 日期:2017/5/9
+	 * 描述:
+	 */
+	
+	
+	public void add_d(KyzVisaflow f1,KyzVisaflow f2){
+		// TODO Auto-generated method stub		
+		Transaction tx=null;
+		try{
+			tx=getSession().beginTransaction();
+			if(!f1.getId().getPurmanNo().equals(f2.getId().getPurmanNo())){
+				getSession().delete(f2);
+				getSession().flush();//這一個為了立即執行delete,否則最後就會先是插入（違反唯一原則），後刪除
+			}			
+			getSession().merge(f1);
+		}catch(Exception e){
+			tx.rollback();
+			e.printStackTrace();
+			
+		}			
+	}
 }

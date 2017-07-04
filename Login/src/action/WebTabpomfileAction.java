@@ -2,6 +2,7 @@ package action;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.List;
 
@@ -11,6 +12,7 @@ import services.IWebTabpomfileServices;
 import com.opensymphony.xwork2.ActionSupport;
 
 import entity.KyzExpectmatmFile;
+import entity.KyzExpectmatmLog;
 import entity.WebTabpomfile;
 
 public class WebTabpomfileAction extends ActionSupport{
@@ -45,12 +47,16 @@ public class WebTabpomfileAction extends ActionSupport{
 	public String findwebtabpomFileJson() throws IOException{
 		filename=URLDecoder.decode(filename,"utf-8");
 		File file=new File("d:\\WebtabpomFile_backup\\"+pomNo+"\\"+filename);
-		        
+		  
+		KyzExpectmatmLog log=new KyzExpectmatmLog();
+		log.setBillNo(pomNo);
+		log.setObj("WebTabpomfile");
+		log.setContent(filename);
+		tabpomfileSer.delete(pomNo,filename,log);
 		if(file.exists()){
-			file.delete();
-			tabpomfileSer.delete(pomNo,filename);
+			file.delete();			
 		}
-		List<WebTabpomfile> listfiles=tabpomfileSer.findByPomNo(pomNo);				
+		List<Object[]> listfiles=tabpomfileSer.findByPomNo(pomNo);				
 		/******************list轉json*************************/
 		jsons=JSONArray.fromObject(listfiles);		
 		/******************list轉json*************************/
@@ -59,5 +65,7 @@ public class WebTabpomfileAction extends ActionSupport{
 		return "findwebtabpomFileJson";
 
 	}
+	
+	
 
 }

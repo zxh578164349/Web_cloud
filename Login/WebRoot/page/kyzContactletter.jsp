@@ -6,7 +6,7 @@
 			+ request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 %>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE HTML>
 <html>
 <head>
 <base href="<%=basePath%>">
@@ -45,18 +45,13 @@
 			}
 		});
 	}
-	function submis() {
-		var fact = document.getElementById("factNo");
-		var visasort = document.getElementById("visaSort");
-		var billno=document.getElementById("billNo");
-		var yymmdd=document.getElementById("yymmdd");
-		var yymmdd2=document.getElementById("yymmdd2");
-				
+	function submis() {						
 		jq.ajax({
 			type : "POST",
 			dataType : "Html",
 			url : "kyzletter_findPageBean2",
-			data : "factNo=" + fact.value + "& visaSort=" + visasort.value+"& billNo="+billno.value+"& yymmdd="+yymmdd.value+"& yymmdd2="+yymmdd2.value,
+			//data : "factNo=" + fact.value + "& visaSort=" + visasort.value+"& billNo="+billno.value+"& yymmdd="+yymmdd.value+"& yymmdd2="+yymmdd2.value,
+			data:jq("#public_form").serialize(),
 			success : function(msg) {
 				jq("#bodyid").html(msg);
 			},

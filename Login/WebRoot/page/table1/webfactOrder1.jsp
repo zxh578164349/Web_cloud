@@ -9,7 +9,7 @@
 			+ path + "/";
 %>
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE HTML>
 <html>
 <head>
 <base href="<%=basePath%>">
@@ -23,7 +23,7 @@
 <body>
   <div id="container">
 	<table class="table table-striped table-hover table-bordered">
-		<h2>工廠客戶訂單</h2>
+		<h3 id="h2_title">工廠客戶訂單</h3>
 		<thead>
 			<tr class="tr_show">
 				<th>序號</th>

@@ -1,4 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE HTML>
 
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
@@ -28,13 +28,11 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 <body >  
  
       <form action="kyzletter_add" method="post" id="form"  enctype="multipart/form-data" target="frameFile"> 
-   
-        <h2>內部聯絡函申請</h2>
 		<table class="table table-condensed">	    	
 			<tbody id="tb_list_info2">
 				    <tr>
 				        <td class="tdcolor">標題</td>
-				        <td><input type="text" name="kyzletter.title" datatype="*"  value="<s:property value='kyzletter.title'/>" /></td>
+				        <td><input type="text" name="kyzletter.title" datatype="*1-100"  value="<s:property value='kyzletter.title'/>" /></td>
 				        
 				        <td class="tdcolor">受文者</td>
 				        <td><input type="text" name="kyzletter.toUser" datatype="*0-50"  value="<s:property value='kyzletter.toUser'/>"/></td>
@@ -112,7 +110,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 				   <s:else>
 				      <td class="tdcolor">廠別</td>				      
 				      <td>
-				      <input type="text" name="kyzletter.id.factNo" value="<s:property value='kyzletter.id.factNo'/>" readonly style="color:blue" />
+				      <input type="text" name="kyzletter.id.factNo" value="<s:property value='kyzletter.id.factNo'/>" readonly style="color:blue" id="dwrFactNo"/>
 				      <input type="hidden" name="isnull" value="notNull"/><!--判斷變量 -->
 				      </td>
 				     
@@ -149,11 +147,21 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 				        </s:else>				      
 				      </td>
 				      <td class="tdcolor">附档</td>
-				      <td colspan="3">
+				      <td>
 				      <div style="width:300px" id="divfile">
 				      <input type="file" name="files" style="width:150px"/><a href="javascript:addFile()">添加多個</a>
 				      </div>
-				      </td>				        	        				       																					        
+				      </td>
+				      <td class="tdcolor">是否緊急</td>											
+						   <s:if test='kyzletter.emerMk=="0"'>
+						       <td >是<input type="radio" name="kyzletter.emerMk" value="<s:property value='kyzletter.emerMk'/>" checked/>&nbsp;&nbsp;否<input type="radio" name="kyzletter.emerMk" value="1"/></td>
+						   </s:if>
+						   <s:if test='kyzletter.emerMk=="1"'>
+						       <td >是<input type="radio" name="kyzletter.emerMk" value="0" />&nbsp;&nbsp;否<input type="radio" name="kyzletter.emerMk" value="<s:property value='kyzletter.emerMk'/>" checked/></td>
+						   </s:if>
+						    <s:if test="kyzletter==null">
+						       <td >是<input type="radio" name="kyzletter.emerMk" value="0" />&nbsp;&nbsp;否<input type="radio" name="kyzletter.emerMk" value="1" checked/></td>
+						   </s:if>							   			        	        				       																					        
 				    </tr>
 				    <tr>
 					    <td class="tdcolor">CC(呈)</td>	
@@ -165,16 +173,19 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 					<tr>
 					    <td class="tdcolor">申請內容</td>	
 						<td  colspan="10">
-				           <textarea style="width:810px;height:240px" name="kyzletter.memoMk"  wrap="off"   tip="申請內容" altercss="gray" class="gray"><s:property value="kyzletter.memoMk"/></textarea>				                                           				         				           				           
+				           <textarea style="width:810px;height:240px" name="kyzletter.memoMk"  wrap="off"   tip="申請內容" altercss="gray" class="gray" id="memoMk" datatype="*"><s:property value="kyzletter.memoMk"/></textarea>				                                           				         				           				           
 				           <input type="hidden" value="<s:property value='kyzletter.filesYn'/>" name="kyzletter.filesYn"/>
 				           <input type="hidden" value="<s:property value='kyzletter.firstPage'/>" name="kyzletter.firstPage"/>
 				        </td>
 						
+					</tr>
+					<tr>
+					  
 					</tr>												
 			</tbody>			
 			</table>
 			<s:if test='kyzletter.filesYn=="1"'>
-	           <hr/>
+	          <%--  <hr/>
 	          <span style="color:blue;">附檔:</span><br/>
 	          <div id="fileJson" style="width:850px">
 	           <s:iterator value="#session.list_filesexp">
@@ -183,7 +194,8 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 	              <img src="images/icon/del_file.png" alt="刪除" title="刪除" style="border:0px"/>
 	           </a>&nbsp;&nbsp;
 	         </s:iterator>
-	         </div>	  
+	         </div>	--%>  
+	         <jsp:include page="publicKyzFiles.jsp" flush="true" />	
 	         </s:if>
 	         <hr/> 						 
 			  <center style="width:850px;margin-left:50px">			    
@@ -214,6 +226,13 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 		});
 		demo.tipmsg.w["*0-6"] = "只能數字且不超過9位數,可保留三位以內小數";
 		demo.tipmsg.w["my0-8"]="只能數字且不超過8位數,可保留四位以內小數";
+		
+		if(jq("#dwrFactNo").val()=="YMUS"){
+			jq("#memoMk").attr("datatype","*40-2000");
+		}else{
+			jq("#memoMk").attr("datatype","*");
+		}
+		
 	});
 
 	function getFactArea(mid) {
@@ -328,7 +347,7 @@ function getKyType2(factno){
   }
 
   function back(){		
-		loadUrl("/Login/kyzletter_findPageBean3?backIndex=1");
+		loadUrl("kyzletter_findPageBean3?backIndex=1");
 	}
  
   
@@ -337,31 +356,31 @@ function getKyType2(factno){
 	  loadUrl("kyzletter_findPageBean");
   }
   
-  function lookJson(billNo,id,filename){
+  /*function lookJson(billNo,id,filename){
 	   jq.ajax({
 	      type:"get",
 	      dataType:"json",
 	      url:"kyzfile_findKyzFileJson",
-	      data:"billNo="+billNo+"&id="+id+"&filename="+filename,
+	      data:{"billNo":billNo,"id":id,"filename":filename},
 	      success:function(files){
 	         jq("#fileJson").html("");
-	          var item;
+	          var item="";
 	          var item_url;
 	         jq.each(files,function(i,file){
 	            item_url="javascript:lookJson('"+file.billno+"',"+file.id+",'"+file.filename+"')";
-	            item="<a href='/upload/"+file.billno+"/"+file.filename+"' target='_blank' title='點擊查看'>"+file.filename+            
+	            item+="<a href='/upload/"+file.billno+"/"+file.filename+"' target='_blank' title='點擊查看'>"+file.filename+            
 	            "</a>"+
-	            "<a href="+item_url+"><img src='images/icon/del_file.png' alt='刪除' title='刪除' style='border:0px'/></a>&nbsp;";
-	            jq("#fileJson").append(item);
-	         }) 
+	            "<a href="+item_url+"><img src='images/icon/del_file.png' alt='刪除' title='刪除' style='border:0px'/></a>&nbsp;";	            
+	         });
+	         jq("#fileJson").append(item); 
 	      }
 	   })
-	}  
+	}*/  
 </script>
-<script type='text/javascript' src='/Login/dwr/interface/kyzcontactletterjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/kyzvisaflowjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/webtypejs.js'></script>
+<script type='text/javascript' src='dwr/interface/kyzcontactletterjs.js'></script>
+<script type='text/javascript' src='dwr/interface/webfactjs.js'></script>
+<script type='text/javascript' src='dwr/interface/kyzvisaflowjs.js'></script>
+<script type='text/javascript' src='dwr/interface/webtypejs.js'></script>
 
 <script type="text/javascript">
 jq(function(){

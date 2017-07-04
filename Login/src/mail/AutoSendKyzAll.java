@@ -44,6 +44,7 @@ import services.IKyzExpectmatmServices;
 import services.IKyzVisaFlowServices;
 import services.IWebBussinessletterServices;
 import services.IWebFactServices;
+import services.IWebFormulaServices;
 import services.IWebremittancelistServices;
 import services.IWebuserEmailAServices;
 import services.IWebuserEmailServices;
@@ -63,6 +64,7 @@ import entity.KyzExpectmatmId;
 import entity.KyzExpectmats;
 import entity.KyzVisaflow;
 import entity.WebBussinessletter;
+import entity.WebFormula;
 import entity.Webremittancelist;
 import entity_temp.VisabillsTemp;
 
@@ -78,7 +80,7 @@ public class AutoSendKyzAll extends QuartzJobBean{
 		this.map = map;
 	}
 	public static final String PDF_TYPE_AUTO="auto";
-	
+	public static final String KIP="192.168.199.101";
 	@Override
 	protected void executeInternal(JobExecutionContext arg0)
 			throws JobExecutionException {
@@ -89,7 +91,7 @@ public class AutoSendKyzAll extends QuartzJobBean{
 					this.init();
 				}else{
 					for(int i=0;i<ips.size();i++){
-						if(ips.get(i).equals("192.168.199.101")){
+						if(ips.get(i).equals(KIP)){
 							this.init();
 							break;
 						}else if(i==ips.size()-1){
@@ -99,7 +101,8 @@ public class AutoSendKyzAll extends QuartzJobBean{
 				}
 				//this.init();
 			}catch(Exception e){
-				System.out.println(e);
+				System.out.println("函文審核完畢"+e);
+				e.printStackTrace();
 			}								
 	}
 	
@@ -130,6 +133,9 @@ public class AutoSendKyzAll extends QuartzJobBean{
 					}
 					if(billNo.substring(0,2).equals("RM")){
 						this.addVisabillsAndEmail4(factNo, billNo, visaSort, list_vbm.get(i), ac);
+					}
+					if(billNo.substring(0, 2).equals("GJ")){
+						this.addVisabillsAndEmail5(factNo, billNo, visaSort, list_vbm.get(i), ac);
 					}
 					mailInfo.setSubject("發送Email成功"+billNo);
 					sms.sendHtmlMail(mailInfo);
@@ -231,6 +237,26 @@ public class AutoSendKyzAll extends QuartzJobBean{
 		GlobalMethod.sendEmailB(local_factNo,local_billNo,local_visaSort,vbm,ac);		    										
 	}
 	
+	/**
+	 *配方系統
+	 * @param local_factNo
+	 * @param local_billNo
+	 * @param local_visaSort
+	 * @throws IOException
+	 */
+	public void addVisabillsAndEmail5(String local_factNo,String local_billNo,String local_visaSort,KyVisabillm vbm,ApplicationContext ac) throws IOException{
+		/**
+		 * 打印
+		 */
+		this.print_webformula(local_factNo, local_billNo, local_visaSort,vbm,ac);
+		
+		/**
+		 * 發郵件
+		 * 由於要給所有人(包括不要審核的)發送郵件,所以要重新從數據庫中獲取,而不能使用上面已有的list_visa
+		 */
+		GlobalMethod.sendEmailB(local_factNo,local_billNo,local_visaSort,vbm,ac);		    										
+	}
+	
 				
 	public  void prepareReport(JasperReport jasperReport, String type) {
 		//logger.debug("The method======= prepareReport() start.......................");
@@ -267,7 +293,10 @@ public class AutoSendKyzAll extends QuartzJobBean{
 				+ fileName);*/
 
 		//ServletOutputStream ouputStream = response.getOutputStream();
-		OutputStream ouputStream=new FileOutputStream("D:/" + defaultname);
+		//OutputStream ouputStream=new FileOutputStream("D:/" + defaultname);
+		String classes_path=Thread.currentThread().getContextClassLoader().getResource("").getPath();			
+		String attachFileNames=classes_path.replace("/WEB-INF/classes","/TEMPFILES/"+defaultname);
+		OutputStream ouputStream=new FileOutputStream(attachFileNames);//文件存放在项目中的临时路径20170301		
 		JasperExportManager.exportReportToPdfStream(jasperPrint, ouputStream);
 		ouputStream.flush();
 		ouputStream.close();
@@ -308,6 +337,14 @@ public class AutoSendKyzAll extends QuartzJobBean{
 			e.printStackTrace();
 		}
 		export(lists, parameters, exportType, defaultFilename, is);
+		if(is!=null){
+			try {
+				is.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	
@@ -348,5 +385,13 @@ public class AutoSendKyzAll extends QuartzJobBean{
 		map=(Map<String,Object>)map_result.get("map");
 		List<Webremittancelist>list=(List<Webremittancelist>)map_result.get("list");
 		this.exportmain("auto", map, "webremittancelist.jasper", list, billNo, "jasper/audit/");
-	}	
+	}
+	
+	public void print_webformula(String factNo,String billNo,String visaSort,KyVisabillm vbm,ApplicationContext ac){
+		IWebFormulaServices webformulaser=(IWebFormulaServices)ac.getBean("webformulaser");
+		Map<String,Object>map_result=webformulaser.print(factNo,billNo,vbm);
+		map=(Map<String,Object>)map_result.get("map");
+		List<WebFormula>list=(List<WebFormula>)map_result.get("list");
+		this.exportmain("auto", map, "web_formula.jasper", list, billNo, "jasper/audit/");
+	}
 }

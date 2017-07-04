@@ -234,41 +234,21 @@ public class WebPersonnumAction extends ActionSupport implements
 	}
 
 	public String findPageBean() {
-		//ActionContext.getContext().getApplication().clear();
 		ActionContext.getContext().getSession().remove("public_factNo");
 		ActionContext.getContext().getSession().remove("public_yymm");
 		ActionContext.getContext().getSession().remove("public_begin");
 		ActionContext.getContext().getSession().remove("public_end");
-		factNo = (String) ActionContext.getContext().getSession().get("factNo");
-		bean = personNumSer.findPageBean(25, page, factNo, null,beginDay,endDay);
-
+		bean = personNumSer.findPageBean(20,page, factNo, null,beginDay,endDay);
 		return "beanList";
 
 	}
 
-	public String findPageBean2() {
-		//ActionContext.getContext().getApplication().clear();
-		ActionContext.getContext().getSession().remove("public_factNo");
-		ActionContext.getContext().getSession().remove("public_yymm");
-		ActionContext.getContext().getSession().remove("public_begin");
-		ActionContext.getContext().getSession().remove("public_end");
-		if (factNo != null && !factNo.equals("") && !factNo.equals("tw")) {
-			ActionContext.getContext().getSession().put("public_factNo", factNo);
-					
-		}
-		if (yymm != null && !yymm.equals("")) {
-			ActionContext.getContext().getSession().put("public_yymm", yymm);
-					
-		}
-		if(beginDay!=null&&!beginDay.equals("")){
-			ActionContext.getContext().getSession().put("public_begin", beginDay);
-		}
-		if(endDay!=null&&!endDay.equals("")){
-			ActionContext.getContext().getSession().put("public_end", endDay);
-		}
-
-		bean = personNumSer.findPageBean(25, page, factNo, null,beginDay,endDay);
-
+	public String findPageBean2() {		
+		ActionContext.getContext().getSession().put("public_factNo",factNo);
+		ActionContext.getContext().getSession().put("public_yymm",yymm);
+		ActionContext.getContext().getSession().put("public_begin",beginDay);
+		ActionContext.getContext().getSession().put("public_end",endDay);
+		bean=personNumSer.findPageBean(20,page,factNo,null,beginDay,endDay);
 		return "beanList1";
 	}
 
@@ -277,49 +257,25 @@ public class WebPersonnumAction extends ActionSupport implements
 		if(backIndex==1){
 			result="beanList";
 		}
-		factNo = (String) ActionContext.getContext().getSession().get("public_factNo");
-				
-		yymm = (String) ActionContext.getContext().getSession().get("public_yymm");
-				
+		factNo = (String) ActionContext.getContext().getSession().get("public_factNo");				
+		yymm = (String) ActionContext.getContext().getSession().get("public_yymm");				
 		beginDay=(String)ActionContext.getContext().getSession().get("public_begin");
-		endDay=(String)ActionContext.getContext().getSession().get("public_end");
-		if (factNo == null || factNo.equals("") || factNo.equals("tw")) {
-			factNo = (String) ActionContext.getContext().getSession().get("factNo");
-					
-		}
-		bean = personNumSer.findPageBean(25, page, factNo, null,beginDay,endDay);
-
+		endDay=(String)ActionContext.getContext().getSession().get("public_end");		
+		bean = personNumSer.findPageBean(20,page, factNo, null,beginDay,endDay);
 		return result;
 
 	}
 
 	public String findPageBean2_print() {
-		ActionContext.getContext().getApplication().clear();
-		if (factNo != null && !factNo.equals("") && !factNo.equals("tw")) {
-			ActionContext.getContext().getApplication()
-					.put("print_personnum_factNo", factNo);
-
-		} else {
-			factNo = (String) ActionContext.getContext().getSession()
-					.get("factNo");
-		}
-		if (yymm != null && !yymm.equals("")) {
-			ActionContext.getContext().getApplication()
-					.put("print_personnum_yymm", yymm);
-		}
-		bean = personNumSer.findPageBean(10, page, factNo, yymm,null,null);
+		ActionContext.getContext().getSession().put("print_personnum_factNo",factNo);
+		ActionContext.getContext().getSession().put("print_personnum_yymm",yymm);
+		bean=personNumSer.findPageBean(10,page,factNo,yymm,null,null);
 		return "list";
 	}
 
 	public String findPageBean3_print() {
-		factNo = (String) ActionContext.getContext().getApplication()
-				.get("print_personnum_factNo");
-		yymm = (String) ActionContext.getContext().getApplication()
-				.get("print_personnum_yymm");
-		if (factNo == null || factNo.equals("") || factNo.equals("tw")) {
-			factNo = (String) ActionContext.getContext().getSession()
-					.get("factNo");
-		}
+		factNo = (String) ActionContext.getContext().getSession().get("print_personnum_factNo");
+		yymm = (String) ActionContext.getContext().getSession().get("print_personnum_yymm");		
 		bean = personNumSer.findPageBean(10, page, factNo, yymm,null,null);
 		return "list";
 	}

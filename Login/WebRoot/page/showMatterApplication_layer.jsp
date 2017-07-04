@@ -10,13 +10,7 @@
 			+ request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 %>
-<%
-	java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat(
-			"yyyyMMdd");
-	java.util.Date currentTime = new java.util.Date();//得到当前系统时间
-	String str_date = formatter.format(currentTime); //将日期时间格式化
-%>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE HTML>
 <html>
 <head>
 <base href="<%=basePath%>">
@@ -26,42 +20,13 @@
 <meta http-equiv="expires" content="0">
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
-
-<style type="text/css">
-table.gridtable {
-	font-family: verdana, arial, sans-serif;
-	font-size: 14px;
-	color: #333333;
-	border-width: 1px;
-	border-style: solid;
-	border-color: #666666;
-	border-collapse: collapse;
-}
-
-table.gridtable th {
-	border-width: 1px;
-	padding: 8px;
-	border-style: solid;
-	border-color: #666666;
-	background-color: #dedede;
-}
-
-table.gridtable td {
-	border-width: 1px;
-	/* padding: 8px; */
-	border-style: solid;
-	border-color: #666666;
-	background-color: #ffffff;
-	width: 60px;
-}
-
-</style>
+<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
 <body>
     <h3>函文申請</h3>
     <s:if test="kyz!=null">
-	<table class="gridtable" align="center">		
+	<table class="table table-condensed table-bordered">		
 		<tbody id="tb_list_info2">
 			<tr>
 				<td>標題</td>
@@ -111,7 +76,7 @@ table.gridtable td {
 			<tr>
 				<td>申請內容</td>
 				<td colspan="9">					
-					<textarea style="width:560px;height:180px;overflow:auto" readonly><s:property value="kyz.memoMk" /></textarea>
+					<textarea style="width:100%;height:180px;overflow:auto" readonly><s:property value="kyz.memoMk" /></textarea>
 					</td>
 			</tr>
 		</tbody>
@@ -172,10 +137,10 @@ table.gridtable td {
 			<!-- ---------------------顯示所有人的備註信息20151211----------------------------- -->
 			<!------------------------- 修改3   20151027---------------   -->
 			<s:if test='readMk=="N"'>
-			    <tr><td colspan="10" style="color:red">備註↓↓↓</td></tr>
+			    <tr><td colspan="10"><label style="color:red">簽核備註↓↓↓</label></td></tr>
 				<tr><td colspan="10">									
 					<form id="memo" method="post" action="vbm_add" target="frameFile">
-						<textarea  name="memo" id="memo_txt" style="width:620px;height:120px;overflow:auto"></textarea>						
+						<textarea  name="memo" id="memo_txt" style="width:100%;height:120px;overflow:auto"></textarea>						
 						<input type="hidden" name="factNo" value="<s:property value='factNo'/>"/>
 						<input type="hidden" name="billNo" value="<s:property value='billNo'/>"/>
 						<input type="hidden" name="itemNo" value="<s:property value='itemNo'/>"/>
@@ -192,7 +157,7 @@ table.gridtable td {
 	  <hr/>
 	  <span style="color:blue;">附檔:</span><br/>
 	  <s:iterator value="#session.list_filesexp">
-	     <a href="/upload/<s:property value='billno'/>/<s:property value='%{toUrl2(filename)}'/>" target="_blank"><s:property value="%{toUrl(filename)}"/></a>&nbsp;
+	     <a href="/<s:property value='fileurl'/>/<s:property value='billno'/>/<s:property value='%{toUrl2(filename)}'/>" target="_blank"><s:property value="%{toUrl(filename)}"/></a>&nbsp;
 	  </s:iterator>	  
 	</s:if> 
 	
@@ -201,6 +166,14 @@ table.gridtable td {
   <br><br><br>
    <h1 style="color:red" align="center">函文已刪除</h1>
 </s:else>
+
+
+
+<!--[if lt IE 9]>  
+<script src="bootstrap/html5.js"></script>
+<script src="bootstrap/respond.min.js"></script>
+<![endif]-->
+
 
 </body>
 </html>

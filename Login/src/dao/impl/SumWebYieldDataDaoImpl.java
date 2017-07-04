@@ -6,6 +6,8 @@ import java.util.Map;
 
 import org.hibernate.Query;
 
+import com.opensymphony.xwork2.ActionContext;
+
 import util.PageBean;
 import dao.Basedao;
 import dao.ISumWebYieldDataDao;
@@ -27,6 +29,9 @@ public class SumWebYieldDataDaoImpl extends Basedao implements ISumWebYieldDataD
 		Map<String,Object>map=new HashMap<String,Object>();
 		hql.append("from SumWebYieldData where 1=1");
 		hql2.append("select count(id.factNo.factNo) ");
+		if(factNo==null||"".equals(factNo)){
+			factNo=(String)ActionContext.getContext().getSession().get("factNo");
+		}
 		if (factNo != null && !factNo.equals("") && !factNo.equals("tw")&&!factNo.equals("nothing")) {
 			hql.append(" and id.factNo.factNo =:factno ");
 			map.put("factno", factNo);
@@ -162,6 +167,28 @@ public class SumWebYieldDataDaoImpl extends Basedao implements ISumWebYieldDataD
 		query.setString(2, yymm);
 		String username=(String)query.uniqueResult();
 		return username;
+	}
+
+	/**
+	 * 日期:2016/10/13
+	 * 描述:
+	 */
+	
+	
+	public List<SumWebYieldData> findObjs(String yymm,String yymm2){
+		// TODO Auto-generated method stub
+		StringBuffer hql=new StringBuffer();
+		Map<String,Object>map=new HashMap<String,Object>();
+		hql.append("from SumWebYieldData where 1=1 ");
+		if(yymm!=null&&!yymm.equals("")){
+			hql.append(" and id.yymm>=:yymm ");
+			map.put("yymm", yymm);
+		}
+		if(yymm2!=null&&!yymm2.equals("")){
+			hql.append(" and id.yymm<=:yymm2 ");
+			map.put("yymm2", yymm2);
+		}
+		return super.getAllWithNoPage(hql.toString(), map);
 	}
 
 }

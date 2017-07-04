@@ -7,7 +7,7 @@
 			+ path + "/";
 %>
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE HTML>
 <html>
 <head>
 <base href="<%=basePath%>">
@@ -64,7 +64,7 @@
 	} */
 
 	function back() {		
-		loadUrl("/Login/ydata_findPageBean3?backIndex=1");		
+		loadUrl("ydata_findPageBean3?backIndex=1");		
 	}
 
 	function holiday() {
@@ -219,12 +219,11 @@
 	
 
 </script>
-<script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>
+<script type='text/javascript' src='dwr/interface/webfactjs.js'></script>
 
 <body onload="init()">
 
 	<form action="ydata_addData" method="post" id="form">
-        <h2>產量資料</h2>
 		<table class="table table-condensed" id="table1">
 			<s:if test="ydata==null">
 

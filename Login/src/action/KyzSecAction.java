@@ -72,29 +72,21 @@ public class KyzSecAction extends ActionSupport{
 		return "add";
 	}
 	public String findPageBean(){
-		ActionContext.getContext().getApplication().clear();
-		factNo=(String)ActionContext.getContext().getSession().get("factNo");
-		bean=kyzsecSer.findPageBean(25, page, factNo, secNo);
+		ActionContext.getContext().getSession().remove("kyzsec_factNo");
+		ActionContext.getContext().getSession().remove("kyzsec_secNo");
+		bean=kyzsecSer.findPageBean(20,page, factNo, secNo);
 		return "beanList";
 	}
 	public String findPageBean2(){
-		bean=kyzsecSer.findPageBean(25, page, factNo, secNo.trim());
-		ActionContext.getContext().getApplication().clear();
-		if(factNo!=null&&!factNo.equals("")){
-			ActionContext.getContext().getApplication().put("kyzsec_factNo", factNo);
-		}
-		if(secNo!=null&&!secNo.equals("")){
-			ActionContext.getContext().getApplication().put("kyzsec_secNo", secNo.trim());
-		}
+		bean=kyzsecSer.findPageBean(20,page, factNo, secNo.trim());			
+		ActionContext.getContext().getSession().put("kyzsec_factNo", factNo);		
+		ActionContext.getContext().getSession().put("kyzsec_secNo",secNo);		
 		return "beanList1";
 	}
     public String findPageBean3(){
-    	factNo=(String)ActionContext.getContext().getApplication().get("kyzsec_factNo");
-    	secNo=(String)ActionContext.getContext().getApplication().get("kyzsec_secNo");
-    	if(factNo==null||factNo.equals("")){
-    		factNo=(String)ActionContext.getContext().getSession().get("factNo");
-    	}
-    	bean=kyzsecSer.findPageBean(25, page, factNo, secNo);
+    	factNo=(String)ActionContext.getContext().getSession().get("kyzsec_factNo");
+    	secNo=(String)ActionContext.getContext().getSession().get("kyzsec_secNo");   	
+    	bean=kyzsecSer.findPageBean(20,page, factNo, secNo);
     	return "beanList1";
     }
     public String findById(){

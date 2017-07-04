@@ -8,7 +8,7 @@
 			+ path + "/";
 %>
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE HTML>
 <html>
 <head>
 <base href="<%=basePath%>">
@@ -26,7 +26,7 @@
   <div id="container">
     <div id="content">
 	<table class="table table-striped table-hover table-bordered">
-		<h2>函文審核狀況</h2>
+		<h2 id="h2_title">函文審核狀況</h2>
 		<thead>			
 			<tr class="tr_show">
 				<th>序號</th>
@@ -39,13 +39,18 @@
 			</tr>
 		</thead>
 		<tbody id="tbody">
-		<s:iterator value="bean.list" status="x" id="temp">		
-		        <tr >
+		<s:iterator value="bean.list" status="x" id="temp">	
+		   <s:if test='id.kyVisabillm.delMk=="1"'>
+		      <tr class="danger">
+		   </s:if>
+		   <s:else>
+		      <tr>
+		   </s:else>	
 				<td>${ bean.pageSize*(bean.currentPage-1)+x.index+1}</td>
-				<td><s:property value="id.kyVisabillm.id.factNo" />
+				<td><s:property value="id.kyVisabillm.factNo2.factSname" />
 				</td>
 				<td>											
-				<s:property value="id.kyVisabillm.colTemp"/>									  						
+				<s:property value="id.kyVisabillm.webtype.typeName"/>									  						
 				</td>
 				<td>
 				<form action="vbm_findById" method="post" id="0form${x.index}" style="float:left">
@@ -59,27 +64,25 @@
 				</a>
 				</td>				
 				<td>
-				<s:property value="memo" />
+				<s:property value="id.kyVisabillm.general" />
 				</td> 
 				<td>
-				  <form  method="post" id="4subform${x.index}" style="float:left" target="_blank">
+				  <form action="vbm_print_all" method="post" id="4subform${x.index}" style="float:left" target="_blank">
 						<input type="hidden" value="<s:property value='id.kyVisabillm.id.factNo'/>"
 							name="factNo" /> <input type="hidden"
 							value="<s:property value='id.kyVisabillm.id.billNo'/>" name="billNo" />
 							<input type="hidden" value="<s:property value='id.kyVisabillm.id.visaSort'/>" name="visaSort"/>
-							<input type="hidden" value="<s:property value='id.kyVisabillm.id.visaSort'/>" name="visaType"/><!-- 湘威費用清單函文 -->
 							<input type="hidden" value="look" name="lookordown"/>						
 					</form>
-					<form  method="post" id="5subform${x.index}" style="float:left" target="_blank">
+					<form action="vbm_print_all" method="post" id="5subform${x.index}" style="float:left" target="_blank">
 						<input type="hidden" value="<s:property value='id.kyVisabillm.id.factNo'/>"
 							name="factNo" /> <input type="hidden"
 							value="<s:property value='id.kyVisabillm.id.billNo'/>" name="billNo" />
-							<input type="hidden" value="<s:property value='id.kyVisabillm.id.visaSort'/>" name="visaSort"/>
-							<input type="hidden" value="<s:property value='id.kyVisabillm.id.visaSort'/>" name="visaType"/><!-- 湘威費用清單函文 -->
+							<input type="hidden" value="<s:property value='id.kyVisabillm.id.visaSort'/>" name="visaSort"/>					
 							<input type="hidden" value="down" name="lookordown"/>						
 					</form>
-				   <a href="javascript:goPreviewOrPrint('4subform${x.index}','${temp.id.kyVisabillm.id.billNo}')"><img alt="預覽" src="images/icon/view001.png" title="預覽" ></a>
-				   <a href="javascript:goPreviewOrPrint('5subform${x.index}','${temp.id.kyVisabillm.id.billNo}')" ><img alt="打印" src="images/icon/print001.png" title="打印" ></a>
+				   <a href="javascript:document.getElementById('4subform${x.index}').submit()"><img alt="預覽" src="images/icon/view001.png" title="預覽" ></a>
+				   <a href="javascript:document.getElementById('5subform${x.index}').submit()" ><img alt="打印" src="images/icon/print001.png" title="打印" ></a>
 				</td>
 				   	
 				<td>											 					

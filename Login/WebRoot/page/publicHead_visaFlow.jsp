@@ -1,6 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib uri="/struts-tags" prefix="s"%>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE HTML>
 <html>
 <head>
 <title>My JSP 'publicHead.jsp' starting page</title>
@@ -9,9 +9,6 @@
 <meta http-equiv="expires" content="0">
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
-<link rel="stylesheet" type="text/css" href="css/select_beautiful.css">	
-<LINK href="css/list.css" type="text/css" rel="stylesheet">
-
 </head>
 <body >
 	<table  id="tb_search">
@@ -59,6 +56,6 @@
    }   
   	
 </script>
-<script type='text/javascript' src='/Login/dwr/interface/webtypejs.js'></script>	
+<script type='text/javascript' src='dwr/interface/webtypejs.js'></script>	
 </body>
 </html>

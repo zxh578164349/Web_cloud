@@ -12,8 +12,7 @@
 	<bean id="webLogService" class="services.impl.WebLogServiceImpl" />
 	<bean id="jurisdictionService" class="services.impl.WebJurisdictionServiceImpl" autowire="byName" />		
 	<bean id="submenuService" class="services.impl.WebSubmenuServiceImpl" autowire="byName" />		
-	<bean id="factSer" class="services.impl.KyFactServicesImpl" />
-	<bean id="preSer" class="services.impl.WebYielePredictionServicesImpl" />
+	<bean id="factSer" class="services.impl.KyFactServicesImpl" />	
 	<bean id="dataSer" class="services.impl.WebYieldDataServicesImple" />
 	<bean id="webFactSer" class="services.impl.WebFactServicesImpl" />
 	<bean id="fixSer" class="services.impl.WebFixedServicesImpl" />
@@ -97,6 +96,9 @@
 	<bean id="vwebprolossfacteveSer" class="services.impl.VWebprofitlossFactEveServicesImpl"></bean>
 	<bean id="webbussitemSer" class="services.impl.WebVwebbussortItemnServicesImpl"></bean>
 	<bean id="vkpiprofitser" class="services.impl.VKpiWebprofitlossServicesImpl"></bean>
+	<bean id="weberppfser" class="services.impl.WebErpProductinFormationServicesImpl"></bean>
+	<bean id="weberpbpser" class="services.impl.WebErpBrankProcessServicesImpl"></bean>
+	<bean id="webformulaser" class="services.impl.WebFormulaServicesImpl"></bean>
 </beans>
 
 

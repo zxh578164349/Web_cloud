@@ -8,7 +8,7 @@
 			+ path + "/";
 %>
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE HTML>
 <html>
 <head>
 <base href="<%=basePath%>">
@@ -46,15 +46,16 @@ jq(function() {
 
 </head>
 <body>
+<br/>
   <form action="checkinput_print" method="post" id="subform" target="_blank">
 	<table  id="tb_search">
-	   <h2>資料輸入狀況</h2>
 		<tr>
 			<td>
 			<span>
 			 <s:if test="#session.factNo=='tw'">
 					<select name="factNo" id="factNo" datatype="*">
-						<option value="">請選擇廠別</option>						
+						<option value="">請選擇廠別</option>	
+						<option value="all">全部</option>					
 						<s:iterator value="#session.facts" id="temp">
 							<option value="${temp[0]}">${temp[1]}(${temp[0]})</option>								
 						</s:iterator>

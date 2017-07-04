@@ -8,7 +8,7 @@
 			+ path + "/";
 %>
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE HTML>
 <html>
 <head>
 <base href="<%=basePath%>">
@@ -28,11 +28,11 @@
   <div id="container">
     <div id="content">
 	<table class="table table-striped table-hover table-bordered">
-		<h2>
+		<h3>
 		<s:if test='#session.loginUser.userread!="1"'> 
 		<input value="添加" type="button" class="btn btn-info" onclick="loadUrl('saveAndUpdate/kyzsecSaveOrUpdate.jsp')"/></s:if>
-		費用組別
-		</h2>
+		<span id="h2_title">費用組別</span>
+		</h3>
 		<thead>			
 			<tr class="tr_show">
 				<th>序號</th>

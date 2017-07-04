@@ -9,7 +9,7 @@
 			+ path + "/";
 %>
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE HTML>
 <html>
 <head>
 <base href="<%=basePath%>">
@@ -27,8 +27,7 @@
 
 
 <body>
-	<form action="webpersonnum_add" method="post" id="form">
-	<h2>人員考勤</h2>
+	<form action="webpersonnum_add" method="post" id="form">	
 		<table class="table table-condensed">
 		  
 			<s:if test="person==null">
@@ -202,7 +201,7 @@
 
 	}
 	function back() {
-			loadUrl("/Login/webpersonnum_findPageBean3?backIndex=1");
+			loadUrl("webpersonnum_findPageBean3?backIndex=1");
 		
 	}
 	 function check(){
@@ -235,7 +234,7 @@ jq(function(){
 	goTrim();
 }); 
 </script>
-<script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/webpersonnumjs.js'></script>
+<script type='text/javascript' src='dwr/interface/webfactjs.js'></script>
+<script type='text/javascript' src='dwr/interface/webpersonnumjs.js'></script>
 </body>
 </html>

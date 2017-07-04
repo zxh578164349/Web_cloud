@@ -9,9 +9,9 @@
 			+ path + "/";
 %>
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE HTML>
 <html>
-<title>添加知會人</title>
+<title></title>
 <head>
 <base href="<%=basePath%>">
 <meta http-equiv="pragma" content="no-cache">
@@ -26,8 +26,7 @@
 
 <body>
 	<form action="webuseremaila_add" method="post" id="form">
-		<table class="table table-condensed">
-		　　<h2>新添知會人</h2>			      						
+		<table class="table table-condensed">		      						
 					<tr>
 					<s:if test="emailobj==null">
 						<td class="td_show_title">廠別</td>											
@@ -56,10 +55,10 @@
 				</td>			
 				</tr>													
 			<tr>
-				<td class="td_show_title">主簽人Email</td>
+				<td class="td_show_title">主同步人Email</td>
 				<td class="td_input"><input type="text" name="emailobj.id.email" datatype="e" value="<s:property value='emailobj.id.email'/>" id="email" onblur="getLow(this),check()">									
 				</td>
-				<td class="td_show_title">知會人Email</td>
+				<td class="td_show_title">被同步人Email</td>
 				<td class="td_input"><input type="text" name="emailobj.id.emailpassword"
 					datatype="e" value="<s:property value='emailobj.id.emailpassword'/>" id="emailPwd" onblur="getLow(this),check()"/>					
 					</td>											   
@@ -73,22 +72,36 @@
 			   <td class="td_input"><input type="text" name="emailobj.id.visaSort" value="<s:property value='emailobj.id.visaSort'/>" readonly style="color:blue"/></td>
 			  </tr>
 			  <tr> 
-			   <td class="td_show_title">主簽人Email</td>
+			   <td class="td_show_title">主同步人Email</td>
 			   <td class="td_input"><input type="text" name="emailobj.id.email" value="<s:property value='emailobj.id.email'/>" readonly style="color:blue"/></td>
-			   <td class="td_show_title">知會人Email</td>
+			   <td class="td_show_title">被同步人Email</td>
 			   <td class="td_input"><input type="text" name="emailobj.id.emailpassword" value="<s:property value='emailobj.id.emailpassword'/>" readonly style="color:blue"/></td>	
 			  </tr>
 			</s:else>						
 			<tr>
-			<td class="td_show_title">主簽人姓名</td>
-					<td class="td_input"><input type="text" name="emailobj.name" value="<s:property value='emailobj.name'/>"/></td>
-			    <td class="td_show_title">知會人姓名</td>
-			    <td class="td_input"><input type="text" name="emailobj.namePwd" value="<s:property value='emailobj.namePwd'/>"  id="emailpwd"/></td>				 					
-					
+			<td class="td_show_title">主同步人姓名</td>
+					<td class="td_input"><input type="text" name="emailobj.name" value="<s:property value='emailobj.name'/>" datatype="*"/></td>
+			    <td class="td_show_title">被同步人姓名</td>
+			    <td class="td_input"><input type="text" name="emailobj.namePwd" value="<s:property value='emailobj.namePwd'/>"  id="emailpwd" datatype="*"/></td>				 									
+			</tr>
+			<tr>
+			   <td>作用域</td>
+			   <td>
+			     <div id="emaila_radio">
+			      <s:if test='emailobj.id.typeMk==1'>
+				       簽核<input type="radio" value="0" name="emailobj.id.typeMk"/>&nbsp;&nbsp;
+				       知會<input type="radio" value="1" name="emailobj.id.typeMk" checked/>
+				  </s:if>
+				  <s:else>
+				       簽核<input type="radio" value="0" name="emailobj.id.typeMk" checked/>&nbsp;&nbsp;
+				       知會<input type="radio" value="1" name="emailobj.id.typeMk"/>
+				  </s:else>
+				  </div>
+			   </td>			   
 			</tr>			
 		</table>
 		<center>
-			<input type="submit" id="sub" value="確定" class="btn btn-primary"/>&nbsp;&nbsp;&nbsp; <input
+			<input type="button" id="sub" value="確定" class="btn btn-primary"/>&nbsp;&nbsp;&nbsp; <input
 				type="reset" id="reset" value="重置" class="btn btn-primary"/>&nbsp;&nbsp;&nbsp;										
 				<input type="button" value="返回" onclick="back()" id="btn_back" class="btn btn-primary"/>			
 		</center>
@@ -100,34 +113,34 @@
 		var demo = jq("#form").Validform({
 			btnSubmit : "#sub",
 			tiptype : 4,
-			tipSweep:false,
+			tipSweep:true,
 			showAllError : true	,
 			ajaxPost:true,
 			callback:function(data){
 				if(data=="0"){
 					layer.msg("提交成功!",3,1);
-					//location.href="/Login/webuseremaila_findPageBean";
-					loadUrl("/Login/webuseremaila_findPageBean");
+					loadUrl("webuseremaila_findPageBean");
 				}else{
-					alert(data.responseText);
+					layer.msg("提交失敗!",3,3);
 				}				
 			}
 		});	
+		
+		jq("#emaila_radio :radio").click(function(){
+			check();
+		});
+		goTrim();
+	    getKyType();
 	}); 
 
-	function back() {
-		   
-			loadUrl("/Login/webuseremaila_findPageBean3?backIndex=1");
+	function back() {		   
+		loadUrl("webuseremaila_findPageBean3?backIndex=1");
 	}
-	 function check(){
-       var factno=document.getElementById("dwr_factno").value;
-       var email=document.getElementById("email").value;
-       var emailPwd=document.getElementById("emailPwd").value;
-       var visaSort=document.getElementById("visaSort").value;
-       if(factno!=""&&email!=""&&emailPwd!=""){
-          webuseremailjs.findById(factno,email,emailPwd,function(x){
+	 function check_sub(factno,email,emailPwd,visaSort,typeMk){
+       if(factno!=""&&email!=""&&emailPwd!=""&&visaSort!=""){
+          webuseremailajs.findById(factno,email,emailPwd,visaSort,typeMk,function(x){        	  
               if(x!=null){
-              alert("該知會人已存在，請重新添加");
+              alert("該類型已存在相同數據，請重新添加");
               document.getElementById("sub").disabled=true;
               document.getElementById("sub").value="已鎖定";
               document.getElementById("sub").style.color="red";
@@ -141,6 +154,27 @@
           });               
        }                    
    }
+	 
+	 function check(){
+		   var factno=document.getElementById("dwr_factno").value;
+	       var email=document.getElementById("email").value;
+	       var emailPwd=document.getElementById("emailPwd").value;
+	       var visaSort=document.getElementById("visaSort").value;
+	       var typeMk=jq("input[name='emailobj.id.typeMk']:checked").val();
+	       if(factno!=""&&email!=""&&emailPwd!=""){
+	          webuseremailjs.findById(factno,email,emailPwd,typeMk,function(x){
+	              if(x!=null){	            	  
+	              alert("該廠已存相同數據，請重新添加");
+	              document.getElementById("sub").disabled=true;
+	              document.getElementById("sub").value="已鎖定";
+	              document.getElementById("sub").style.color="red";
+	              document.getElementById("error1").innerHTML="<font color='color'>！</font>";
+	          }else{	        	  
+	        	  check_sub(factno,email,emailPwd,visaSort,typeMk); 	            
+	          }        
+	          });               
+	       }                    
+	   } 	 
    
      function getKyType(){	 
 	 var factno=document.getElementById("dwr_factno");
@@ -166,24 +200,7 @@
 	 }    
 	}
 	
-	function check(){
-	    var dwr_factno=document.getElementById("dwr_factno").value;	    
-	    var email=document.getElementById("email").value;
-	    var emailPwd=document.getElementById("emailPwd").value;
-	    var visaSort=document.getElementById("visaSort").value;
-	    if(dwr_factno!=""&&visaSort!=""&&email!=""&&emailPwd!=""){
-	       webuseremailajs.findById(dwr_factno,email,emailPwd,visaSort,function(x){
-	              if(x!=null){
-	                 alert("該函文類型的知會人已存在，請重新添加");
-	                 document.getElementById("sub").disabled=true;
-                     document.getElementById("sub").style.color="red";
-	              }else{
-	                 document.getElementById("sub").disabled=false;
-                     document.getElementById("sub").style.color="white";
-	              }
-	       })
-	    }
-	}
+	
 	
 	/**Email自動轉小寫*/
 	function getLow(obj){
@@ -192,15 +209,9 @@
   
 
 </script>
-<script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/webtypejs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/webuseremailajs.js'></script>
-<script type="text/javascript">
-jq(function(){
-	goTrim();
-    getKyType();
-	
-});
-</script>
+<script type='text/javascript' src='dwr/interface/webfactjs.js'></script>
+<script type='text/javascript' src='dwr/interface/webtypejs.js'></script>
+<script type='text/javascript' src='dwr/interface/webuseremailajs.js'></script>
+<script type='text/javascript' src='dwr/interface/webuseremailjs.js'></script>
 </body>
 </html>

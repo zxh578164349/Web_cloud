@@ -9,7 +9,7 @@
 			+ path + "/";
 %>
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE HTML>
 <html>
 <title>添加新用户</title>
 <head>
@@ -20,19 +20,17 @@
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
 <link rel="stylesheet" type="text/css" href="css/form.css" />
-
 </head>
 
 
 
 <body>
 	<form action="webuseremail_add" method="post" id="form">
-		<table class="table table-condensed">
-		　　<h2>新添備簽人</h2>			      						
+		<table class="table table-condensed">		      						
 					<tr>
-						<td class="td_show_title">廠別</td>
+						<td >廠別</td>
 						<s:if test="useremail==null">						
-						<td class="td_input">
+						<td >
 						<s:if test="#session.factNo!='tw'">						
 						<input type="text" style="color:blue" name="useremail.id.factNo" value="${factNo}" readonly id="dwr_factno"/>												
 						</s:if>	
@@ -55,28 +53,40 @@
 						   <span id="error1"></span>
 						   </td>
 						</s:else>
-						<td class="td_show_title">主簽人Email</td>
-				        <td class="td_input"><input type="text" name="useremail.id.email" datatype="e" value="<s:property value='useremail.id.email'/>" id="email" onblur="check()">									
+						<td >主同步人Email</td>
+				        <td ><input type="text" name="useremail.id.email" datatype="e" value="<s:property value='useremail.id.email'/>" id="email" onblur="check()">									
 				</td>			
 				</tr>													
 			<tr>
 				
-				<td class="td_show_title">備簽人Email</td>
-				<td class="td_input"><input type="text" name="useremail.id.emailpassword"
+				<td >被同步人Email</td>
+				<td ><input type="text" name="useremail.id.emailpassword"
 					datatype="e" value="<s:property value='useremail.id.emailpassword'/>" id="emailPwd" onblur="check()"/>					
 					</td>
-					<td class="td_show_title">主簽人姓名</td>
-					<td class="td_input"><input type="text" name="useremail.name" value="<s:property value='useremail.name'/>"/></td>
+					<td >主同步姓名</td>
+					<td ><input type="text" name="useremail.name" value="<s:property value='useremail.name'/>" datatype="*"/></td>
 						   
 			</tr>						
 			<tr>
-			    <td class="td_show_title">备签人姓名</td>
-			    <td class="td_input"><input type="text" name="useremail.namePwd" value="<s:property value='useremail.namePwd'/>"  id="emailpwd"/></td>				 					
-					
+			    <td >被同步人姓名</td>
+			    <td ><input type="text" name="useremail.namePwd" value="<s:property value='useremail.namePwd'/>"  id="emailpwd" datatype="*"/></td>				 					
+				<td>作用域</td>	
+				<td>
+				 <div id="email_radio">
+				  <s:if test='useremail.id.typeMk==1'>
+				       簽核<input type="radio" value="0" name="useremail.id.typeMk"/>&nbsp;&nbsp;
+				       知會<input type="radio" value="1" name="useremail.id.typeMk" checked/>
+				  </s:if>
+				  <s:else>
+				       簽核<input type="radio" value="0" name="useremail.id.typeMk" checked/>&nbsp;&nbsp;
+				       知會<input type="radio" value="1" name="useremail.id.typeMk"/>
+				  </s:else>
+				 </div> 
+				</td>
 			</tr>			
 		</table>
 		<center>
-			<input type="submit" id="sub" value="確定" class="btn btn-primary"/>&nbsp;&nbsp;&nbsp; <input
+			<input type="button" id="sub" value="確定" class="btn btn-primary"/>&nbsp;&nbsp;&nbsp; <input
 				type="reset" id="reset" value="重置" class="btn btn-primary"/>&nbsp;&nbsp;&nbsp;					
 				<input type="button" value="返回" onclick="back()" id="btn_back" class="btn btn-primary"/>		
 
@@ -90,32 +100,37 @@
 		var demo = jq("#form").Validform({
 			btnSubmit : "#sub",
 			tiptype : 4,
-			tipSweep:false,
+			tipSweep:true,
 			showAllError : true	,
 			ajaxPost:true,
 			callback:function(data){
 				if(data=="0"){
 					layer.msg("提交成功!",3,1);
-					location.href="/Login/webuseremail_indPageBean";
+					loadUrl("webuseremail_findPageBean");
 				}else{
-					alert(data.responseText);
+					layer.msg("提交失敗!",3,3);
 				}				
 			}
 		});	
+		jq("#email_radio :radio").click(function(){
+			check();
+		})
+		goTrim();
+		
 	}); 
 
-	function back() {
-		    
-			loadUrl("/Login/webuseremail_findPageBean3?backIndex=1");		
+	function back() {		    
+			loadUrl("webuseremail_findPageBean3?backIndex=1");		
 	}
 	 function check(){
        var factno=document.getElementById("dwr_factno").value;
        var email=document.getElementById("email").value;
        var emailPwd=document.getElementById("emailPwd").value;
+       var typeMk=jq("input[name='useremail.id.typeMk']:checked").val();
        if(factno!=""&&email!=""&&emailPwd!=""){
-          webuseremailjs.findById(factno,email,emailPwd,function(x){
+          webuseremailjs.findById(factno,email,emailPwd,typeMk,function(x){
               if(x!=null){
-              alert("該備簽人已存在，請重新添加");
+              alert("該廠已存相同數據，請重新添加");
               document.getElementById("sub").disabled=true;
               document.getElementById("sub").value="已鎖定";
               document.getElementById("sub").style.color="red";
@@ -128,24 +143,9 @@
           }        
           });               
        }                    
-   }
-  
-/*禁止空格輸入*/
-/* window.onload=function(){            
-            var inputs=document.getElementsByTagName("input"); 
-            for (var i=0;i<inputs.length; i++) {  
-                if(inputs[i].getAttribute("type")=="text") 
-                 inputs[i].onkeyup=function(){ 
-                    this.value=this.value.replace(/(^\s+)|\s+$/g,""); 
-                 }; 
-            }  
-        } */
-
-jq(function(){
-	goTrim();
-});        
+   }       
 </script>
-<script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/webuseremailjs.js'></script>
+<script type='text/javascript' src='dwr/interface/webfactjs.js'></script>
+<script type='text/javascript' src='dwr/interface/webuseremailjs.js'></script>
 </body>
 </html>

@@ -14,6 +14,7 @@ public class KyzExpectmatmFile implements java.io.Serializable {
 	private String username;
 	private String factNo;
 	private String visaTypeM;
+	private String fileurl;
 
 	// Constructors
 
@@ -82,6 +83,14 @@ public class KyzExpectmatmFile implements java.io.Serializable {
 
 	public void setVisaTypeM(String visaTypeM) {
 		this.visaTypeM = visaTypeM;
+	}
+
+	public String getFileurl(){
+		return fileurl;
+	}
+
+	public void setFileurl(String fileurl){
+		this.fileurl=fileurl;
 	}
 
 	

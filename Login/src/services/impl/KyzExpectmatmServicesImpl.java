@@ -128,9 +128,9 @@ public class KyzExpectmatmServicesImpl implements IKyzExpectmatmServices {
 	}
 
 	public PageBean findPageBean(int pageSize, int page, String factNo,
-			String visaSort,String billNo,WebUser user,String timeCreate,String timeCreate2) {
+			String visaSort,String billNo,WebUser user,String timeCreate,String timeCreate2,String title) {
 		// TODO Auto-generated method stub
-		return kyzDao.findFixWithPage(pageSize, page, factNo, visaSort,billNo,user,timeCreate,timeCreate2);
+		return kyzDao.findFixWithPage(pageSize, page, factNo, visaSort,billNo,user,timeCreate,timeCreate2,title);
 	}
 
 	public void delete(KyzExpectmatmId id,KyzExpectmatmLog delLog) {
@@ -316,11 +316,23 @@ public class KyzExpectmatmServicesImpl implements IKyzExpectmatmServices {
 				visamk_temp="(未通過)";
 			}			
 			visa_result=name+visamk_temp;
-			visabillstemp.setVisaNameAndMk(visa_result);			
-			if(list_visa.size()==list_visaflow.size()-nos){
+			visabillstemp.setVisaNameAndMk(visa_result);
+			
+			/*if(list_visa.size()==list_visaflow.size()-nos){
 				String visaRank=list_visaflow.get(i).getVisaRank();
 				visabillstemp.setVisaRank(visaRank+":");
+			}*/			
+			//************************解決加簽後而破壞流程順序，使得打印函文時，職位與名字不對應的問題  20161030******************************
+			for(int j=0;j<list_visaflow.size()-nos;j++){
+				if(list_visa.get(i).getVisaSigner().equals(list_visaflow.get(j).getVisaSigner())){
+					visabillstemp.setVisaRank(list_visaflow.get(j).getVisaRank()+":");
+					break;
+				}else if(j==list_visaflow.size()-nos-1){
+					visabillstemp.setVisaRank("(加簽)");
+				}
 			}
+			//************************解決加簽後而破壞流程順序，使得打印函文時，職位與名字不對應的問題  20161030******************************
+			
 			if(memo!=null){
 				visabillstemp.setMemo("(備註:"+memo+")");
 			}
@@ -353,7 +365,10 @@ public class KyzExpectmatmServicesImpl implements IKyzExpectmatmServices {
 		
 		/*函文附檔*/
 		//String pic_file=ServletActionContext.getRequest().getRealPath("/KyzexpFile/"+id.getBillNo()+"/")+"/";//函文附檔圖片路徑(附檔在項目的路徑)
-		String pic_file=new File("d:\\KyzexpFile_backup\\"+billNo).toString();//函文附檔圖片路徑(附檔在D盤的路徑)
+		String pic_file="d:\\KyzexpFile_backup\\"+billNo;//函文附檔圖片路徑(附檔在D盤的路徑)
+		if(!new File("d:\\KyzexpFile_backup\\"+billNo).isDirectory()){
+			pic_file="e:\\KyzexpFile_backup\\"+billNo;
+		}
 		List<KyzExpectmatmFile>list_kyzexpfile=kyzexpfileDao.findByBillNo(billNo);
 		if(pic_file!=null&&list_kyzexpfile.size()>0){
 			map.put("pic_file", pic_file+"\\");

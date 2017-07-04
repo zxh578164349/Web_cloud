@@ -9,7 +9,7 @@
 			+ path + "/";
 %>
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE HTML>
 <html>
 <title>添加新用户</title>
 <head>
@@ -26,7 +26,6 @@
 
 <body>
 	<form action="webtype_add" method="post" id="form">
-	<h2>各廠函文類別管理</h2>
 		<table class="table table-condensed">		      						
 					<tr>
 						<td class="td_show_title">廠別</td>
@@ -58,7 +57,8 @@
 				          <s:if test="webtype==null">
 				             <div id="div_typeno">
 				              <input type="radio" value="TR" name="typeNo" onclick="checkRadio(),check(this)" id="typeno_tr"/>出差類&nbsp;
-				              <input type="radio" value="0" name="typeNo" checked onclick="checkRadio()"/>非出差類				             
+				              <input type="radio" value="PF" name="typeNo" onclick="checkRadio(),check(this)" id="typeno_tr"/>配方類&nbsp;
+				              <input type="radio" value="0" name="typeNo" checked onclick="checkRadio()"/>其它類				             
 				             <input type="text" name="webtype.id.typeNo" datatype="s2-2" onblur="check(this),checkType(this)" id="typeno"/>
 				            <span id="error1"></span>
 				             </div>				              
@@ -73,7 +73,8 @@
 				          <td class="td_input"><input type="text" name="webtype.typeName"
 					           value="<s:property value='webtype.typeName'/>" id="typeName"  datatype="*1-60" />
 					         <input type="hidden" name="webtype.webtypeMk" value="Y"/>
-					         <input type="hidden" name="webtype.delMk" value="0"/><!-- 默認未刪除 -->					
+					         <input type="hidden" name="webtype.delMk" value="0"/><!-- 默認未刪除 -->
+					         <input type="hidden" name="webtype.typeMk" value="<s:property value='webtype.typeMk'/>"/>					
 				          </td>	
 				                             
 				<!-- <td class="td_show_title">是否可用</td>
@@ -111,26 +112,27 @@
 			callback:function(data){
 				if(data=="0"){
 					layer.msg("提交成功!",3,1);
-					//location.href="/Login/webtype_findPageBean";
-					loadUrl("/Login/webtype_findPageBean");
+					//location.href="webtype_findPageBean";
+					loadUrl("webtype_findPageBean");
 				}else{
-					alert(data.responseText);
+					//alert(data.responseText);
+					layer.msg("提交失敗!",3,3);
 				}				
 			}
 		});	
 	}); 
 
 	 function check(typeno){
-       var factno=document.getElementById("dwr_factno").value;
-      // var typeno=document.getElementById("typeno").value;           
+       var factno=document.getElementById("dwr_factno").value;           
        if(factno!=""&&typeno.value!=""){
           webtypejs.findById(factno,typeno.value,function(x){
               if(x!=null){
-            	  if(typeno.value=="TR"){
+            	  /*if(typeno.value=="TR"){
             		alert("出差類已存在");  
             	  }else{
             		  alert("該類別已存在");
-            	  }              
+            	  }*/
+            	  alert("該類別已存在");
               document.getElementById("sub").disabled=true;
               document.getElementById("sub").value="已鎖定";
               document.getElementById("sub").style.color="red";
@@ -164,8 +166,8 @@
 	}
   
   	function checkType(type){
-	   if(type.value.charAt(0).toUpperCase()=='C'||type.value.toUpperCase()=='TR'){
-	      alert("不可以使用C字母开头或TR");
+	   if(type.value.charAt(0).toUpperCase()=='C'||type.value.toUpperCase()=='TR'||type.value.toUpperCase()=='PF'){
+	      alert("不可以使用C字母开头或TR,PF");
 	      type.value='';
 	   }
 	}
@@ -190,7 +192,7 @@ jq(function(){
       });
 function back(){
 	
-	loadUrl("/Login/webtype_findPageBean3?backIndex=1");
+	loadUrl("webtype_findPageBean3?backIndex=1");
 	
 }
 function checkRadio(){
@@ -208,8 +210,8 @@ function checkRadio(){
 	}
 }
 </script>
-<script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/kytypejs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/webtypejs.js'></script>
+<script type='text/javascript' src='dwr/interface/webfactjs.js'></script>
+<script type='text/javascript' src='dwr/interface/kytypejs.js'></script>
+<script type='text/javascript' src='dwr/interface/webtypejs.js'></script>
 </body>
 </html>

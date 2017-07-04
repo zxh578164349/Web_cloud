@@ -26,6 +26,9 @@
         </property> 
         <property name="visaTypeM" type="java.lang.String">
            <column name="VISA_TYPE_M" length="2"/>
+        </property>
+        <property name="fileurl" type="java.lang.String">
+           <column name="FILEURL" length="30"/>
         </property>      
     </class>
 </hibernate-mapping>

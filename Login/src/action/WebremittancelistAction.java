@@ -225,7 +225,7 @@ public class WebremittancelistAction extends ActionSupport implements ServletRes
 		factNo=(String)ActionContext.getContext().getSession().get("factNo");
 		ActionContext.getContext().getSession().put("public_factno", factNo);
 		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
-		bean=webremiSer.findPageBean(25, page, visaSort, factNo, billNo,user);
+		bean=webremiSer.findPageBean(20,page, visaSort, factNo, billNo,user);
 		return "beanList";
 	}
 	public String findPageBean2(){
@@ -237,7 +237,7 @@ public class WebremittancelistAction extends ActionSupport implements ServletRes
 		ActionContext.getContext().getSession().put("public_billNo", billNo);
 		ActionContext.getContext().getSession().put("public_factno", factNo);
 		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
-		bean=webremiSer.findPageBean(25, page, visaSort, factNo, billNo,user);
+		bean=webremiSer.findPageBean(20,page, visaSort, factNo, billNo,user);
 		return "beanList1";
 	}
 	public String findPageBean3(){
@@ -251,7 +251,7 @@ public class WebremittancelistAction extends ActionSupport implements ServletRes
 		visaSort=(String)ActionContext.getContext().getSession().get("public_visaTypem");
 		billNo=(String)ActionContext.getContext().getSession().get("public_billNo");
 		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
-		bean=webremiSer.findPageBean(25, page, visaSort, factNo, billNo,user);		
+		bean=webremiSer.findPageBean(20,page, visaSort, factNo, billNo,user);		
 		return result;
 		
 	}

@@ -18,7 +18,7 @@
 
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
-<link rel="shortcut icon" href="images/icon/web_ico.ico" />
+<link rel="shortcut icon" href="loginpage/images/icon/web_ico.ico" />
 
 
 <style type="text/css">
@@ -89,7 +89,7 @@
            </div>
 </script>
 
-<script src="http://apps.bdimg.com/libs/jquery/1.9.1/jquery.min.js"></script> 
+<!-- <script src="http://apps.bdimg.com/libs/jquery/1.9.1/jquery.min.js"></script>  -->
 <script>window.jQuery || document.write('<script src="loginpage/jquery/jquery-1.9.1.min.js"><\/script>');</script>
 <script type="text/javascript" src="loginpage/nprogress/nprogress.js"></script>
 <script type="text/javascript" src="loginpage/jquery/layer/layer.min.js"></script>
@@ -121,14 +121,15 @@
 	jq(function (){
 		var agent = navigator.userAgent.toLowerCase();
 		if (agent.indexOf("msie") > 0) {						
-			jq("#bodyid").load("/Login/webfact_findAllfact");						
+			jq("#bodyid").load("webfact_findAllWebfact");						
 		}else {						
-			jq("#bodyid").load("/Login/webfact_findAllfact2");
+			jq("#bodyid").load("webfact_findAllWebfact2");
+			//jq("#bodyid").load("webfact_findAllWebfact_guest");
 		}
 		jq("#bodyid").fadeIn(1500);					
 	});
 	
-	function checkFact() {
+	function checkFact(url) {
 		var factNO = jq("#url_factno");
 		var names = jq("#url_username_input");
 		var pwd = jq("#url_pwd_input");
@@ -140,7 +141,7 @@
 				type:"POST",
 				dataType:"json",
 				data:jq("#loginform").serialize(),
-				url:"userlogin",
+				url:url,
 				success:function(data){
 					 if(data=='0'){
 						 location.href="main.jsp";
@@ -168,7 +169,7 @@
 	
 	jq(document).keyup(function(event) {
 		if (event.keyCode == 13) {
-			checkFact();
+			jq("#submit1").click();
 		}
 	});
 	

@@ -14,8 +14,7 @@
 	<bean id="jurisdictionDao" class="dao.impl.WebJurisdictionDaoImpl" parent="baseDao" />		
 	<bean id="submenuDao" class="dao.impl.WebSubmenuDaoImpl" parent="baseDao" />
 	<bean id="factDao" class="dao.impl.KyFactDaoImpl" parent="baseDao" />
-	<bean id="dataDao" class="dao.impl.WebYieldDataDaoImpl" parent="baseDao" />
-	<bean id="preDao" class="dao.impl.WebYielePredictionDaoImpl" parent="baseDao" />		
+	<bean id="dataDao" class="dao.impl.WebYieldDataDaoImpl" parent="baseDao" />			
 	<bean id="webFactDao" class="dao.impl.WebFactDaoImpl" parent="baseDao" />
 	<bean id="fixDao" class="dao.impl.WebFixedDaoImpl" parent="baseDao" />
 	<bean id="costDao" class="dao.impl.WebCostDaoImpl" parent="baseDao" />
@@ -97,5 +96,8 @@
 	<bean id="vwebprolossfactdao" class="dao.impl.VWebprofitlossFactEveDaoImpl" parent="baseDao"></bean>
 	<bean id="webvwebbussortitemdao" class="dao.impl.WebVwebbussortItemnDaoImpl" parent="baseDao"></bean>
 	<bean id="vpikprofitdao" class="dao.impl.VKpiWebprofitlossDaoImpl" parent="baseDao"></bean>
+	<bean id="weberpbpdao" class="dao.impl.WebErpBrankProcessDaoImpl" parent="baseDao"></bean>
+	<bean id="weberppfdao" class="dao.impl.WebErpProductinFormationDaoImpl" parent="baseDao"></bean>
+	<bean id="webformuladao" class="dao.impl.WebFormulaDaoImpl" parent="baseDao"></bean>
 </beans>
 

@@ -60,15 +60,18 @@ public class KyzExpcetmatmDaoImpl extends Basedao implements IKyzExpectmatmDao {
 	}
 
 	public PageBean findFixWithPage(int pageSize, int page, String factNo,
-			String visaSort,String billNo,WebUser user,String timeCreate,String timeCreate2) {
+			String visaSort,String billNo,WebUser user,String timeCreate,String timeCreate2,String title) {
 		// TODO Auto-generated method stub
+		if(factNo==null||"".equals(factNo)||"nothing".equals(factNo)){
+			factNo=user.getFactno();
+		}
 		int allRow=0;
 		final Map<String, Object> map = new HashMap<String, Object>();
 		StringBuffer hql = new StringBuffer();
 		StringBuffer hql2=new StringBuffer();
 		hql.append("from KyzExpectmatm where 1=1 ");
 		hql2.append("select count(id.factNo) ");
-		if (factNo != null && !factNo.equals("") && !factNo.equals("tw")&&!factNo.equals("nothing")) {
+		if (factNo != null && !factNo.equals("") && !factNo.equals("tw")) {
 			hql.append(" and id.factNo =:factno ");
 			map.put("factno", factNo);
 		}
@@ -85,25 +88,24 @@ public class KyzExpcetmatmDaoImpl extends Basedao implements IKyzExpectmatmDao {
 			hql.append(" and username=:usernm");
 			map.put("usernm", user.getUsername());
 		}
-		if(timeCreate!=null&&!timeCreate.equals("")&&(timeCreate2==null||timeCreate2.equals(""))){
+		if(timeCreate!=null&&!timeCreate.equals("")){
 			hql.append(" and to_char(timeCreate,'yyyymmdd')>=:timecreate");
 			map.put("timecreate", timeCreate);
 		}
-		if(timeCreate!=null&&!timeCreate.equals("")&&(timeCreate2!=null&&!timeCreate2.equals(""))){
-			hql.append(" and to_char(timeCreate,'yyyymmdd') between :timecreate and :timecreate2");
-			map.put("timecreate", timeCreate);
+		if(timeCreate2!=null&&!timeCreate2.equals("")){
+			hql.append(" and to_char(timeCreate,'yyyymmdd')<=:timecreate2");
 			map.put("timecreate2", timeCreate2);
 		}
-		if(timeCreate2!=null&&!timeCreate2.equals("")&&(timeCreate==null||timeCreate.equals(""))){
-			hql.append(" and to_char(timeCreate,'yyyymmdd')<=:timecreate");
-			map.put("timecreate2", timeCreate2);
-		}
-		if(factNo.equals("nothing")&&(visaSort==null||visaSort.equals(""))
+		/*if(factNo.equals("nothing")&&(visaSort==null||visaSort.equals(""))
 				&&(billNo==null||billNo.equals(""))
 				&&(timeCreate==null||timeCreate.equals(""))
 				&&(timeCreate2==null||timeCreate2.equals(""))){
 			hql.append(" and id.factNo=:factno");
 			map.put("factno", factNo);
+		}*/
+		if(title!=null&&!"".equals(title)){
+			hql.append(" and memoSmk like :title");
+			map.put("title","%"+title+"%");
 		}
 		hql.append(" and delMk is null ");
 		hql2.append(hql);

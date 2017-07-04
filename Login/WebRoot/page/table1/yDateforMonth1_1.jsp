@@ -7,7 +7,7 @@
 			+ request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 %>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE HTML>
 <html>
 <head>
 <base href="<%=basePath%>">
@@ -24,7 +24,7 @@
   <div id="container">
   <div id="content">
 	<table class="table table-striped table-hover table-bordered">
-		<h2>產量資料(盤點統計)</h2>
+		<h3>產量資料(盤點統計)</h3>
 		<thead>
 			<tr class="tr_show">
 				<th>序號</th>

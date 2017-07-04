@@ -1,7 +1,7 @@
 input[type=text],input[type=password],select{
 	border: 2px solid #7A6F6F;
 	border: 2px solid #7A6F6F \9; /*IE*/
-	width: 190px;
+	width: 200px;
 	height: 20px; 
 	height: 20px \9; /*IE*/
 	padding-left: 5px; /*all*/
@@ -15,12 +15,12 @@ input[type=text],input[type=password],select{
 }
 
 #tb_search input[type=text],#tb_search select{
-	height:30px;
-	height: 30px \9;/*IE*/
+	height:35px;
+	height: 35px \9;/*IE*/
 }
 .tb_search input[type=text],.tb_search select{
-	height:30px;
-	height: 30px \9;/*IE*/
+	height:35px;
+	height: 35px \9;/*IE*/
 }
 #kyzs_body input[type=text]{
 	width:100px;
@@ -52,10 +52,6 @@ input[class='pinfo_form']{
           transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
 }
 
-form[id='form'] input[disabled]{
-	cursor: not-allowed;
-	background-color: #eee;
-    opacity: 1;
-}
+
 
 

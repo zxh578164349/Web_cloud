@@ -21,7 +21,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="IE=Edge">
 <link rel="shortcut icon" href="images/icon/web_ico.ico" /> 
-
 <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <!-- <link href="http://apps.bdimg.com/libs/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet"> -->
 
@@ -175,13 +174,13 @@ aria-labelledby="myModalLabelA" aria-hidden="true">
 			    <!--------------------------- 修改4 20151025 --------------------------------------->
 				<form action="vbm_add" method="post" id="memo" role="form" />
 				<div class="form-group">
-					<label>備註↓↓↓</label>
-					<textarea class="form-control" rows="3" name="memo" id="memo_txt"></textarea>			             			          
+					<label style="color:red">簽核備註↓↓↓</label>
+					<textarea class="form-control" style="width:100%;height:120px" name="memo" id="memo_txt"></textarea>			             			          
 				</div>				
-				<input type="hidden" value="<s:property value='factNo'/>" name="factNo"/>
-				<input type="hidden" value="<s:property value='billNo'/>" name="billNo"/>
-				<input type="hidden" value="<s:property value='visaSort'/>" name="visaSort"/>
-				<input type="hidden" value="<s:property value='itemNo'/>" name="itemNo" />
+				<input type="hidden" value="<s:property value='vbm.id.factNo'/>" name="factNo"/>
+				<input type="hidden" value="<s:property value='vbm.id.billNo'/>" name="billNo"/>
+				<input type="hidden" value="<s:property value='vbm.id.visaSort'/>" name="visaSort"/>
+				<input type="hidden" value="<s:property value='vbm.itemNext'/>" name="itemNo" />
 				<input type="hidden" name="visa_mk" id="visa_mk"/>					
 				</form> 
 				 <!--------------------------- 修改4 20151025 --------------------------------------->
@@ -195,20 +194,30 @@ aria-labelledby="myModalLabelA" aria-hidden="true">
 			 </div>
 		 </div>
 	 </div>
-
 </div>
 <jsp:include page="../copyright.jsp"/>		
 	
 
-<script src="http://apps.bdimg.com/libs/jquery/1.9.1/jquery.min.js"></script> 
+<script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="jquery/layer/layer.min.js"></script>
+<script src="bootstrap/js/bootstrap.min.js"></script>	
+<!--[if lt IE 9]>  
+<script src="bootstrap/html5.js"></script>
+<script src="bootstrap/respond.min.js"></script>
+<![endif]-->  
+
+
+<!-- <script src="http://apps.bdimg.com/libs/jquery/1.9.1/jquery.min.js"></script> 
 <script>window.jQuery || document.write('<script src="jquery/jquery-1.9.1.min.js"><\/script>');</script>
 <script type="text/javascript" src="jquery/layer/layer.min.js"></script>	
-<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
-<script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script> -->
 <!--[if lt IE 9]>  
   <script src="http://apps.bdimg.com/libs/html5shiv/3.7/html5shiv.min.js"></script>
   <script src="http://apps.bdimg.com/libs/respond.js/1.4.2/respond.min.js"></script>
   <![endif]-->
+  
+  
+
 
 <script type="text/javascript">
 $(function () { $("[data-toggle='popover']").popover(); });
@@ -231,29 +240,27 @@ function getSrc(billNo){
 	if(billNo.substring(0,2)=="RM"){
 		src="webremit_findById_layer";
 	}
+	if(billNo.substring(0,2)=="GJ"){
+		src="webformula_findById_layer2";
+	}
 	return src;
 }
 function showDiv(billNo,factNo){
 	var src=getSrc(billNo);
 	
 		$("#myModal").on("show.bs.modal",function(){
-			$(".modal-body").load(src,{"billNo":billNo,"factNo":factNo});			
-		});				
+			$("#myModal").find(".modal-body").load(src,{"billNo":billNo,"factNo":factNo});
+			$("#myModalA").find(".modal-body").empty();	//	#myModalA跨層子元素				
+		});		
 }
-
-/*全局變量*/
-var factNo_g,billNo_g,itemNo_g,visaSort_g;
 
 /*****************************20151027更新***********************************/
 function check(factNo,visaSort,billNo,itemNo){
 	var src=getSrc(billNo);
 		 $("#myModalA").on("show.bs.modal",function(){
-			 $(".modal-body").load(src,{"billNo":billNo,"factNo":factNo,"visaSort":visaSort,"itemNo":itemNo});
-		 });
-		 factNo_g=factNo;
-		 billNo_g=billNo;
-		 itemNo_g=itemNo;
-		 visaSort_g=visaSort;
+			 $("#myModalA").find(".modal-body").load(src,{"billNo":billNo,"factNo":factNo,"visaSort":visaSort,"itemNo":itemNo});
+			 $("#myModal").find(".modal-body").empty();			 
+		 });		 	 
 	}
 var loadi;
 $(document).ajaxStart(function(){
@@ -273,11 +280,12 @@ function yesorno(passMk){
 	    	dataType:"json",
 	    	url:"vbm_add",
 	    	data:$("#memo").serialize(),
+	    	//async:false,
 	    	success:function(data){
 	    		if(data=="0"){
 	    			layer.msg("簽核成功",2,1);
-	    			//$("#myModalA").modal("hide");
-	    			window.setTimeout(function(){location.reload()}, 1000);	    			
+	    			window.setTimeout(function(){location.reload()}, 1000);
+	    			//location.reload();
 	    		}else{
 	    			layer.msg("簽核失敗",2,3);
 	    		}

@@ -9,7 +9,7 @@
 			+ path + "/";
 %>
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE HTML>
 <html>
 <head>
 <base href="<%=basePath%>">
@@ -22,23 +22,20 @@
 </head>
 <body>
   <div id="container">
-        <h2>
-		<s:if test='#session.loginUser.userread!="1"'>
+        <h3>
+		<!-- <s:if test='#session.loginUser.userread!="1"'>
 	    <input value="添加" type="button" class="btn btn-info"
 		onclick="loadUrl('saveAndUpdate/WebTabpomSaveOrUpdate.jsp')" />
-	   </s:if>	
-		實驗室形體物性
-		</h2>
+	   </s:if>	 -->
+		<span id="h2_title">實驗室形體物性</span>
+		</h3>
 	<table class="table table-striped table-hover table-bordered" >
 		
 		<thead>
 			<tr class="tr_show">
 				<th>序號</th>
 				<th>物性編號</th>
-				<th>物料名稱</th>
-				<th>指定料</th>
-				<th>部件</th>
-				<th>生產工廠</th>
+				<th>配方索引</th>
 				<th>品牌</th>
 				<th>硬度</th>
 				<th>拉力</th>
@@ -59,31 +56,17 @@
 			<tr >
 				<td>${bean.pageSize*(bean.currentPage-1)+x.index+1}</td>
 				<td><s:property value="pomNo" /></td>
-				<td><s:property value="pomName"/></td>
-				<td>
-				  <s:if test='spematerial=="0"'>
-				     是
-				  </s:if>
-				  <s:else>
-				  否
-				  </s:else>
-				</td>
-				<td><s:property value="component" /></td>
-				<td>
-				   <s:iterator value="webfacts">
-				       <s:property value="factSname"/>&nbsp;
-				   </s:iterator>
-				</td>
-				<td><s:property value="webBrank.BName"/></td>
+				<td><s:property value="formulaId.formulaIndex"/></td>								
+				<td><s:property value="webBrank.name"/></td>
 				<td><s:property value="hardness" /></td>
 				<td><s:property value="forces" /></td>
-				<td><s:property value="extends_" /></td>
+				<td><s:property value="extend" /></td>
 				<td><s:property value="tearingC" /></td>
 				<td><s:property value="tearingK" /></td>
 				<td><s:property value="proportion" /></td>
 				<td><s:property value="wresistingAkron"/></td>
 				<td><s:property value="wresistingDin"/></td>	
-				<td><s:property value="userName" /></td>
+				<td><s:property value="username" /></td>
 				<s:if test='#session.loginUser.userread!="1"'>
 				<td>
 					<form action="webtabpom_findById" method="post" id="subform${x.index}">						
@@ -92,22 +75,33 @@
 					<form action="webtabpom_delete" method="post" id="2subform${x.index}" style="float:left">						
 						<input type="hidden" value="<s:property value='pomNo'/>" name="pomNo" />							
 					</form>
-					<form action="webtabpom_printOne" method="post" id="3subform${x.index}" style="float:left" target="_blank">						
+					<form action="webtabpom_findByIdfiles" method="post" id="3subform${x.index}" style="float:left" target="_blank">						
 						<input type="hidden" value="<s:property value='pomNo'/>" name="pomNo" />							
-						<input type="hidden" value="look" name="lookordown"/>
 					</form>
-					<form action="webtabpom_printOne" method="post" id="4subform${x.index}" style="float:left" target="_blank">						
-						<input type="hidden" value="<s:property value='pomNo'/>" name="pomNo" />							
-						<input type="hidden" value="down" name="lookordown"/>
-					</form> 
-					<a href="javascript:findById('subform${x.index}','webtabpom_findById')" >					
-					<img alt="修改" src="images/icon/edit001.png" title="修改" ></a>
-					<a href="javascript:document.getElementById('3subform${x.index}').submit()" >
-					<img alt="預覽" src="images/icon/view24.png" title="預覽"></a>
-					<a href="javascript:document.getElementById('4subform${x.index}').submit()" >
-					<img alt="下載" src="images/icon/print24.png" title="下載"></a>
-					<a href="javascript:isDelete('2subform${x.index}','webtabpom_delete')" >					
-					<img alt="刪除" src="images/icon/delete001.png" title="刪除"></a>
+					
+					<s:if test="formulaId.vbm==null">
+					   <a href="javascript:findById_form('subform${x.index}','webtabpom_findById')" class="btn btn-xs btn-success">					
+					             修改</a>
+					    <a href="javascript:isDelete('2subform${x.index}','webtabpom_delete')" class="btn btn-xs btn-success">					
+					            刪除</a>         
+					</s:if>
+					<s:else>
+					  <s:if test='#session.loginUser.adminMk=="Y"'>
+					    <a href="javascript:findById_form('subform${x.index}','webtabpom_findById')" class="btn btn-xs btn-success">					
+					             修改</a>
+					    <a href="javascript:isDelete('2subform${x.index}','webtabpom_delete')" class="btn btn-xs btn-success">					
+					            刪除</a>  
+					  </s:if>
+					  <s:else>
+					    <a href="#" class="btn btn-xs disabled btn-warning"> 鎖定 </a>
+					   <a href="#" class="btn btn-xs disabled btn-warning"> 刪除 </a>
+					  </s:else>
+					   
+					</s:else> 
+					
+					<a href="javascript:document.getElementById('3subform${x.index}').submit()" class="btn btn-xs btn-success" target="_blank">
+					附檔</a>					
+					
 				</td>
 				</s:if>
 			</tr>

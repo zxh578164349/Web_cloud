@@ -18,6 +18,7 @@ public class KyVisabills implements java.io.Serializable {
 	private String dateVisa;
 	private String memo;
 	private String flowMk;
+	private VWebUserEmail vusername;
 
 	// Constructors
 
@@ -126,6 +127,14 @@ public class KyVisabills implements java.io.Serializable {
 
 	public void setFlowMk(String flowMk) {
 		this.flowMk = flowMk;
+	}
+
+	public VWebUserEmail getVusername(){
+		return vusername;
+	}
+
+	public void setVusername(VWebUserEmail vusername){
+		this.vusername=vusername;
 	}
 	
 

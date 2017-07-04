@@ -1,31 +1,20 @@
 package action;
-
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
 import javax.servlet.http.HttpServletResponse;
-
-import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.ServletResponseAware;
-
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
-
 import services.IWebFactServices;
 import services.IWebwloServices;
 import util.GlobalMethod;
-import util.JasperHelper;
 import util.Page;
 import util.PageBean;
 import entity.KyzExpectmatmLog;
 import entity.WebUser;
-import entity.Webscrapt;
 import entity.Webwlo;
 import entity.WebwloId;
 
@@ -335,7 +324,7 @@ public class WebWloAction extends ActionSupport implements ServletResponseAware 
 		ActionContext.getContext().getSession().remove("public_yymm");
 		ActionContext.getContext().getSession().remove("public_yymm2");
 		factNo=(String)ActionContext.getContext().getSession().get("factNo");
-		bean=wloService.findPageBean(25, page, factNo, yymm,yymm2);
+		bean=wloService.findPageBean(20,page, factNo, yymm,yymm2);
 		return "showList";
 	}
 	public String getList2(){
@@ -352,7 +341,7 @@ public class WebWloAction extends ActionSupport implements ServletResponseAware 
 		if(yymm2!=null&&!yymm2.equals("")){
 			ActionContext.getContext().getSession().put("public_yymm2", yymm2);
 		}
-		bean=wloService.findPageBean(25, page, factNo, yymm,yymm2);
+		bean=wloService.findPageBean(20,page, factNo, yymm,yymm2);
 		return "showList1";
 	}
 	public String getList3(){
@@ -366,7 +355,7 @@ public class WebWloAction extends ActionSupport implements ServletResponseAware 
 		if(factNo==null||factNo.equals("")){
 			factNo=(String)ActionContext.getContext().getSession().get("factNo");
 		}
-		bean=wloService.findPageBean(25, page, factNo, yymm,yymm2);
+		bean=wloService.findPageBean(20,page, factNo, yymm,yymm2);
 		return result;
 	}
 	/**

@@ -268,33 +268,25 @@ public class SumWebYieldDataAction extends ActionSupport implements ServletRespo
 		}
 	}
 	public String findPageBean(){
-		ActionContext.getContext().getApplication().clear();
-		factNo=(String)ActionContext.getContext().getSession().get("factNo");
-		bean=sumydateSer.findPageBean(25, page, factNo, begin_yymm,end_yymm);
+		ActionContext.getContext().getSession().remove("sumydate_factno");
+		ActionContext.getContext().getSession().remove("sumydate_begin_yymm");
+		ActionContext.getContext().getSession().remove("sumydate_end_yymm");		
+		bean=sumydateSer.findPageBean(20,page, factNo, begin_yymm,end_yymm);
 		return "findPageBean";
 	}
+
 	public String findPageBean2(){
-		ActionContext.getContext().getApplication().clear();
-		if(factNo!=null&&!factNo.equals("")){
-			ActionContext.getContext().getApplication().put("sumydate_factno", factNo);
-		}
-		if(begin_yymm!=null&&!begin_yymm.equals("")){
-			ActionContext.getContext().getApplication().put("sumydate_begin_yymm", begin_yymm);
-		}
-		if(end_yymm!=null&&!end_yymm.equals("")){
-			ActionContext.getContext().getApplication().put("sumydate_end_yymm", end_yymm);
-		}
-		bean=sumydateSer.findPageBean(25, page, factNo, begin_yymm,end_yymm);
+		ActionContext.getContext().getSession().put("sumydate_factno",factNo);
+		ActionContext.getContext().getSession().put("sumydate_begin_yymm",begin_yymm);
+		ActionContext.getContext().getSession().put("sumydate_end_yymm",end_yymm);
+		bean=sumydateSer.findPageBean(20,page,factNo,begin_yymm,end_yymm);
 		return "findPageBean1";
 	}
 	public String findPageBean3(){
-		factNo=(String)ActionContext.getContext().getApplication().get("sumydate_factno");
-		begin_yymm=(String)ActionContext.getContext().getApplication().get("sumydate_begin_yymm");
-		end_yymm=(String)ActionContext.getContext().getApplication().get("sumydate_end_yymm");
-		if(factNo==null||factNo.equals("")){
-			factNo=(String)ActionContext.getContext().getSession().get("factNo");
-		}
-		bean=sumydateSer.findPageBean(25, page, factNo, begin_yymm,end_yymm);
+		factNo=(String)ActionContext.getContext().getSession().get("sumydate_factno");
+		begin_yymm=(String)ActionContext.getContext().getSession().get("sumydate_begin_yymm");
+		end_yymm=(String)ActionContext.getContext().getSession().get("sumydate_end_yymm");		
+		bean=sumydateSer.findPageBean(20,page, factNo, begin_yymm,end_yymm);
 		return "findPageBean1";
 	}
 	public String formatDouble(double s) {

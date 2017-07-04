@@ -8,7 +8,7 @@
 			+ path + "/";
 %>
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE HTML>
 <html>
 <head>
 <base href="<%=basePath%>">
@@ -26,12 +26,12 @@
   <div id="container">
   <div id="content">
 	<table class="table table-striped table-hover table-bordered">
-		<h2>
+		<h3>
 		<s:if test='#session.loginUser.userread!="1"'>
 	    <input value="添加" type="button" class="btn btn-info"
 		onclick="loadUrl('saveAndUpdate/webbussletterSaveOrUpdate.jsp')" /></s:if>	
-		人員出差申請書
-		</h2>
+		<span id="h2_title">人員出差申請書</span>
+		</h3>
 		<thead>			
 			<tr class="tr_show">
 			    <th>序號</th>
@@ -90,8 +90,14 @@
 					          <a href="javascript:isDelete('2subform${x.index}','bussletter_delete')" ><img alt="刪除" src="images/icon/delete001.png" title="刪除" ></a>
 					      </s:if>
 					      <s:else>
-					           <a ><img alt="修改" src="images/icon/edit001_1.png" title="修改" ></a>
+					         <a ><img alt="修改" src="images/icon/edit001_1.png" title="修改" ></a>
+					         <s:if test='vbm.itemLast=="01"'>
+					           <a href="javascript:isDelete('2subform${x.index}','bussletter_delete')" ><img alt="刪除" src="images/icon/delete001.png" title="刪除" ></a>
+					         </s:if>
+					         <s:else>
 					           <a ><img alt="刪除" src="images/icon/delete001_1.jpg" title="刪除" ></a>
+					         </s:else>
+					          		           
 					      </s:else>						  																									
 					      
 					   </s:else>										

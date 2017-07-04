@@ -14,7 +14,7 @@ public class KyVisabillm implements java.io.Serializable {
 	// Fields
 
 	private KyVisabillmId id;
-	private String purmanNo;
+	private String purmanNo;//函文承辦人
 	private String signerNext;//下一位審核人(Email)
 	private String signerLast;//最近審核人(Email)
 	private String lastMk;//最近審核狀態(最近一個審核人決定  :Y:已審核;T:打回)
@@ -27,11 +27,18 @@ public class KyVisabillm implements java.io.Serializable {
 	private String emailMk;//是否已经发送知会email
 	private String colTemp;
 	private String delMk;//刪除標記    0或空 未刪除     1刪除
+	private String userCreate;//函文創新者
 	private List<KyVisabills> kyVisabillses = new ArrayList<KyVisabills>();
 	private WebBussinessletter webbussletter;
 	private KyzExpectmatm kyzexp;
 	private KyzContactletter kyzletter;
 	private Webremittancelist webrel;
+	private WebFormula formula;//工廠配方
+	private String oneMk;//發送一次標識    0或null :正常發送    1:隻發送1次
+	private VWebFact factNo2;//關聯工廠名稱(不需要映射列名)
+	private String general;//函文概要(不需要映射列名)
+	private String visaSortM;//函文大類
+	private WebType webtype;//函文大類外鍵
 
 	// Constructors
 
@@ -220,6 +227,65 @@ public class KyVisabillm implements java.io.Serializable {
 	public void setWebrel(Webremittancelist webrel) {
 		this.webrel = webrel;
 	}
+
+	public WebFormula getFormula(){
+		return formula;
+	}
+
+	public void setFormula(WebFormula formula){
+		this.formula=formula;
+	}
+
+	public String getUserCreate(){
+		return userCreate;
+	}
+
+	public void setUserCreate(String userCreate){
+		this.userCreate=userCreate;
+	}
+
+	public String getOneMk(){
+		return oneMk;
+	}
+
+	public void setOneMk(String oneMk){
+		this.oneMk=oneMk;
+	}
+
+	public String getGeneral(){
+		return general;
+	}
+
+	public void setGeneral(String general){
+		this.general=general;
+	}
+
+	public VWebFact getFactNo2(){
+		return factNo2;
+	}
+
+	public void setFactNo2(VWebFact factNo2){
+		this.factNo2=factNo2;
+	}
+
+	public String getVisaSortM(){
+		return visaSortM;
+	}
+
+	public void setVisaSortM(String visaSortM){
+		this.visaSortM=visaSortM;
+	}
+
+	public WebType getWebtype(){
+		return webtype;
+	}
+
+	public void setWebtype(WebType webtype){
+		this.webtype=webtype;
+	}
+
+	
+	
 
 	
 	

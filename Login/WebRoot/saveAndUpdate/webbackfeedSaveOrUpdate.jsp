@@ -9,7 +9,7 @@
 			+ path + "/";
 %>
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE HTML>
 <html>
 <head>
 <base href="<%=basePath%>">
@@ -27,8 +27,7 @@
 
 
 <body>
-	<form action="webbackfeed_add" method="post" id="form">
-	<h2>回頭料(每月輸入)</h2>
+	<form action="webbackfeed_add" method="post" id="form">	
 		<table class="table table-condensed">
 		　　
 			<s:if test="feed==null">
@@ -163,8 +162,8 @@
 			callback:function(data){
 				if(data=="0"){
 					layer.msg("提交成功!",3,1);
-					//location.href="/Login/webbackfeed_findPageBean";
-					loadUrl("/Login/webbackfeed_findPageBean");
+					//location.href="webbackfeed_findPageBean";
+					loadUrl("webbackfeed_findPageBean");
 				}else{
 					//alert(data.responseText);
 					layer.msg("提交失敗",3,3);
@@ -183,7 +182,7 @@
 
 	}
 	function back() {
-			loadUrl("/Login/webbackfeed_findPageBean3?backIndex=1");
+			loadUrl("webbackfeed_findPageBean3?backIndex=1");
 	}
 	 function check(){
        var factno=document.getElementById("dwr_factno").value;
@@ -217,7 +216,7 @@ jq(function(){
 	goTrim();
 });
 </script>
-<script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/webbackfeetjs.js'></script>
+<script type='text/javascript' src='dwr/interface/webfactjs.js'></script>
+<script type='text/javascript' src='dwr/interface/webbackfeetjs.js'></script>
 </body>
 </html>

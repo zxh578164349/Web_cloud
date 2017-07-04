@@ -15,6 +15,7 @@ import dao.IWebTabpomDao;
 import entity.KyzExpectmatmLog;
 import entity.VWebFact;
 import entity.WebTabpom;
+import entity.WebTabpomfile;
 
 public class WebTabpomDaoImpl extends Basedao implements IWebTabpomDao{
 
@@ -29,14 +30,10 @@ public class WebTabpomDaoImpl extends Basedao implements IWebTabpomDao{
 		Query query=getSession().createQuery(hql);
 		query.setString(0, pomNo);
 		WebTabpom obj=(WebTabpom)query.uniqueResult();
-		/**hibernate延遲問題解決**/
-		for(VWebFact fact:obj.getWebfacts()){
-			fact.getFactNo();
-			fact.getFactSname();
-		}
-		//obj.getWebfacts().size();
-		obj.getWebtabfiles().size();
-		obj.getWebBrank().getBName();
+		/**hibernate延遲問題解決**/		
+		obj.getWebTabpomfiles().size();
+		obj.getWebBrank().getName();
+		
 		/**hibernate延遲問題解決**/
 		
 		return obj;
@@ -52,20 +49,23 @@ public class WebTabpomDaoImpl extends Basedao implements IWebTabpomDao{
 		super.delete(findById(pomNo),delLog);
 	}
 
-	public PageBean findPageBean(int pageSize, int page, String pomName,
-			String brank,String yymm,String yymm2) {
+	public PageBean findPageBean(int pageSize, int page, String pomNo,
+			String brank,String yymm,String yymm2,String factNo) {
 		// TODO Auto-generated method stub
 		StringBuffer hql=new StringBuffer();
 		StringBuffer hql2=new StringBuffer();
 		Map<String,Object>map=new HashMap<String,Object>();
 		hql.append("from WebTabpom where 1=1 ");
 		hql2.append("select count(pomNo) ");
-		if(pomName!=null&&!pomName.equals("")){
-			hql.append(" and pomName like:pomname");
-			map.put("pomname", "%"+pomName+"%");
+		if(factNo==null||factNo.equals("")){
+			factNo=(String)ActionContext.getContext().getSession().get("factNo");
+		}
+		if(pomNo!=null&&!pomNo.equals("")){
+			hql.append(" and pomNo=:pomNo");
+			map.put("pomNo", pomNo);
 		}
 		if(brank!=null&&!brank.equals("")){
-			hql.append(" and brank=:brank");
+			hql.append(" and webBrank.sysno=:brank");
 			map.put("brank", brank);
 		}
 		if(yymm!=null&&!yymm.equals("")){
@@ -75,6 +75,10 @@ public class WebTabpomDaoImpl extends Basedao implements IWebTabpomDao{
 		if(yymm2!=null&&!yymm2.equals("")){
 			hql.append(" and tabpomDate<=:yymm2 ");
 			map.put("yymm2", yymm2);
+		}
+		if(factNo!=null&&!factNo.equals("")&&!factNo.equals("tw")){
+			hql.append(" and formulaId.factNo.factNo=:factNo");
+			map.put("factNo",factNo);
 		}
 		hql2.append(hql);
 		hql.append(" order by tabpomDate");
@@ -96,11 +100,8 @@ public class WebTabpomDaoImpl extends Basedao implements IWebTabpomDao{
 		/***解決延遲加載問題****/
 		if(list.size()>0){
 			for(int i=0;i<list.size();i++){
-				list.get(i).getWebBrank().getBName();
-				for(int j=0;j<list.get(i).getWebfacts().size();j++){
-					list.get(i).getWebfacts().get(j).getFactSname();
-				}
-				
+				list.get(i).getWebBrank().getName();
+				list.get(i).getFormulaId().getVbm();
 			}
 		}
 		/***解決延遲加載問題****/
@@ -127,10 +128,10 @@ public class WebTabpomDaoImpl extends Basedao implements IWebTabpomDao{
 		return (String)query.uniqueResult();
 	}
 
-	public List<String> findPomNos(String component,String tabpomDate ) {
+	public List<String> findPomNos(String brank,String tabpomDate ) {
 		// TODO Auto-generated method stub
-		String hql="select pomNo from WebTabpom where component=? and tabpomDate=? order by pomNo desc";
-		String[]objs={component,tabpomDate};
+		String hql="select pomNo from WebTabpom where webBrank.id=? and tabpomDate=? order by pomNo desc";
+		Object[]objs={Integer.parseInt(brank),tabpomDate};
 		return super.findAll(hql, objs);
 	}
 
@@ -160,11 +161,7 @@ public class WebTabpomDaoImpl extends Basedao implements IWebTabpomDao{
 		/***解決延遲加載問題****/
 		if(list.size()>0){
 			for(int i=0;i<list.size();i++){
-				list.get(i).getWebBrank().getBName();
-				for(int j=0;j<list.get(i).getWebfacts().size();j++){
-					list.get(i).getWebfacts().get(j).getFactSname();
-				}
-				
+				list.get(i).getWebBrank().getName();								
 			}
 		}
 		/***解決延遲加載問題****/

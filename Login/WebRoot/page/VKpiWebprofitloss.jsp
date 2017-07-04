@@ -5,7 +5,7 @@ String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE HTML>
 <html>
   <head>
     <base href="<%=basePath%>">
@@ -21,6 +21,107 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <link rel="stylesheet" type="text/css" href="css/form.css" />
 <link rel="stylesheet" type="text/css" href="css/select_beautiful.css">	
 
+
+</head>
+  
+  <body>
+        <br/>
+     <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">單個工廠</h3>
+        </div>
+		<div class="panel-body">
+		   <form action="vkpiwebpro_print_month" method="post" id="subform2" target="_blank">
+			<table class="tb_search">
+				<tr>
+					<td><span> <input type="text" id="begin" name="yymm"
+							datatype="*"
+							onclick="WdatePicker({minDate:'{%y-1}-%m',maxDate:'#F{$dp.$D(\'end\',{M:-1})||\'%y-{%M-1}\'}',dateFmt:'yyyyMM'})"
+							class="Wdate"> </span>至 <span> <input type="text"
+							id="end" name="yymm2" datatype="*"
+							onclick="WdatePicker({minDate:'#F{$dp.$D(\'begin\',{M:1})}',maxDate:'%y-%M',dateFmt:'yyyyMM'})"
+							class="Wdate"> </span> <span> <s:if
+								test="#session.factNo=='tw'">
+								<select name="factNo" datatype="*" onchange="getFactName()"
+									id="factno">
+									<option value="">請選擇工廠</option>
+									<s:iterator value="#session.facts" id="temp">
+										<option value="${temp[0]}">${temp[1]}(${temp[0]})</option>
+									</s:iterator>
+								</select>
+								<input type="hidden" name="factname" id="factname" />
+							</s:if> <s:else>
+								<select name="factNo" datatype="*">
+									<option value="<s:property value="#session.factNo"/>">
+										<s:property value="#session.factName" />
+										(
+										<s:property value="#session.factNo" />
+										)
+									</option>
+								</select>
+								<input type=hidden name="factname" value="${factName}" />
+							</s:else> </span> <input type="button" id="btn2" class="btn btn-primary"
+						value="確定" /></td>
+				</tr>
+			</table>
+		  </form>	
+		</div>
+	</div>
+   
+   <br/><br/><br/>
+    <s:if test="#session.factNo=='tw'">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title">多個工廠</h3>
+		</div>
+		<div class="panel-body">
+			<form action="vkpiwebpro_print_tw" method="post" id="subform3"
+				target="_blank">
+				<table class="tb_search">
+					<tr>
+						<td><span><input type="text" name="yymm" datatype="*"
+								onclick="WdatePicker()" class="Wdate" id="yymm_tw">
+						</span> <input type="button" id="btn3" class="btn btn-primary" value="確定"
+							onclick="print_tw()" /></td>
+					</tr>
+				</table>
+
+				<table>
+					<tr>
+						<td><input type="checkbox" onclick="selectAll(this)"
+							style="width:18px;height:18px" />全選
+							<hr>
+						</td>
+					</tr>
+					<s:iterator value="#attr.map" id="map" status="x">
+						<tr>
+							<td><input type="checkbox" value="<s:property value='key'/>"
+								id="<s:property value='key'/>" name="list_factcode"
+								onclick="checkAll('${map.key}')" style="width:18px;height:18px" />
+								<font style="font-size:14px;font-weight:bold"><s:property
+										value='key' /> </font> <br>
+								<div id="<s:property value='key'/>_div" >
+									<s:iterator value="value" status="y">
+										<input type="checkbox"
+											value="${map.key}_<s:property value='id.factNo'/>_<s:property value='factSname'/>"
+											id="<s:property value='key'/>_factno"
+											class="<s:property value='key'/>_factno" name="list_factno"
+											onclick="clickOne(this,'font_${map.key}_${y.index}','${map.key}')" />
+										<font
+											id="font_<s:property value='key'/>_<s:property value='#attr.y.index'/>">
+											<s:property value="factSname" />(<s:property
+												value='id.factNo' />)</font>
+                    &nbsp;
+                 </s:iterator>
+								</div></td>
+						</tr>
+					</s:iterator>
+				</table>
+			</form>
+		</div>
+	</div> 
+    </s:if>   
+   
 <script type="text/javascript">
    function tips(){
 	   window.parent.layer.alert("出現無數據時,請檢查<br/>【產量資料(盤點)】【預計生產】【基本數據導入】是否同時具備數據",0); 
@@ -74,11 +175,11 @@ function checkAll(factcode) {
 				font.css("color","") ;				
 			}						
 		}//for
-		if(allfactno.prop("checked")){
+		/*if(allfactno.prop("checked")){
 			   jq("#"+factcode+"_div").show(300);
 			}else{
 			  jq("#"+factcode+"_div").hide(300); 
-			}
+			}*/
 	}
 	
 	/**
@@ -124,7 +225,7 @@ function selectAll(obj){
 	           }
 	       }
 	       if(index==allcheckboxs.length){
-	           jq("#"+factcode+"_div").hide(300);
+	           //jq("#"+factcode+"_div").hide(300);
 	           cb_factcode.checked=false;
 	       }
 	   } 	  
@@ -149,115 +250,6 @@ function getFactName(){
 }
 	
 
-</script>
-
-  </head>
-  
-  <body>
-  <h2>重點指標匯總比較</h2>
-    <!--  <form action="vwebprolos_print_fact" method="post" id='subform1' target="_blank">
-       <table class="tb_search">
-       <h4>全年報表</h4>
-          <tr>          
-          <td>        
-          <span><input type="text" name="year" class="Wdate" onclick="WdatePicker({dateFmt:'yyyy'})" datatype="*"/></span>                    
-            <span><s:if test="#session.factNo=='tw'">			    
-					<select name="factNo" id="factNo" datatype="*">
-						<option value="">請選擇工廠</option>						
-						<s:iterator value="#session.facts" id="temp">
-							<option value="${temp[0]}">${temp[1]}(${temp[0]})</option>								
-						</s:iterator>
-					</select>					
-				</s:if> 
-				<s:else>				  
-					<select name="factNo" id="factNo" datatype="*">
-						<option value="<s:property value="#session.factNo"/>">
-							<s:property value="#session.factName" />(<s:property value="#session.factNo"/>)
-						</option>
-					</select>					
-				</s:else>
-				</span> 
-				 
-				 <input type="button" id="btn1" class="btn btn-primary" value="確定"/>     
-          </td>
-                          
-          </tr>
-       </table>      
-    </form>-->
-     <hr>
-    <form action="vkpiwebpro_print_month" method="post" id="subform2" target="_blank">
-      <table class="tb_search">
-      <h4>單個工廠</h4>
-         <tr>         
-          <td>
-              <span>
-              <input type="text" id="begin" name="yymm" datatype="*" onclick="WdatePicker({minDate:'{%y-1}-%m',maxDate:'#F{$dp.$D(\'end\',{M:-1})||\'%y-{%M-1}\'}'})" class="Wdate" >
-              </span>至
-              <span>
-               <input type="text" id="end" name="yymm2" datatype="*" onclick="WdatePicker({minDate:'#F{$dp.$D(\'begin\',{M:1})}',maxDate:'%y-%M'})" class="Wdate">
-              </span>
-              <span>
-                <s:if test="#session.factNo=='tw'">			    
-					<select name="factNo"  datatype="*" onchange="getFactName()" id="factno">
-						<option value="">請選擇工廠</option>						
-						<s:iterator value="#session.facts" id="temp">
-							<option value="${temp[0]}">${temp[1]}(${temp[0]})</option>								
-						</s:iterator>
-					</select>
-					<input type="hidden" name="factname" id="factname"/>					
-				</s:if> 
-				<s:else>				  
-					<select name="factNo"  datatype="*">						
-						<option value="<s:property value="#session.factNo"/>">
-							<s:property value="#session.factName" />(<s:property value="#session.factNo"/>)
-						</option>
-					</select>
-					<input type=hidden name="factname" value="${factName}"/>					
-				</s:else>
-              </span>
-              <input type="button" id="btn2"  class="btn btn-primary" value="確定"/>
-          </td>         
-          </tr>
-      </table>
-    </form>
-    <hr>
-    
-    <s:if test="#session.factNo=='tw'">
-    <hr>
-    <h4>多個工廠</h4>
-    <form action="vkpiwebpro_print_tw" method="post" id="subform3" target="_blank">
-        <table class="tb_search">        
-          <tr>
-          <td>
-          <span><input type="text" name="yymm" datatype="*" onclick="WdatePicker()" class="Wdate" id="yymm_tw"></span>
-          <input type="button" id="btn3" class="btn btn-primary" value="確定" onclick="print_tw()"/>
-          </td>
-          </tr>         
-        </table>
-        <hr>
-        <table>
-        <tr><td><input type="checkbox" onclick="selectAll(this)" style="width:18px;height:18px"/>全選<hr></td></tr>
-          <s:iterator value="#attr.map" id="map" status="x">
-          <tr>
-           <td>
-                 <input type="checkbox" value="<s:property value='key'/>" id="<s:property value='key'/>" name="list_factcode" 
-                 onclick="checkAll('${map.key}')" style="width:18px;height:18px"/>
-                 <font style="font-size:14px;font-weight:bold" ><s:property value='key'/> </font>
-                 <br> 
-                 <div id="<s:property value='key'/>_div" style="display:none">               
-                 <s:iterator value="value" status="y">
-                    <input type="checkbox" value="${map.key}_<s:property value='id.factNo'/>_<s:property value='factSname'/>" id="<s:property value='key'/>_factno" class="<s:property value='key'/>_factno"
-                    name="list_factno" onclick="clickOne(this,'font_${map.key}_${y.index}','${map.key}')"/>
-                    <font id="font_<s:property value='key'/>_<s:property value='#attr.y.index'/>">
-                    <s:property value="factSname"/>(<s:property value='id.factNo'/>)</font>
-                    &nbsp;
-                 </s:iterator>
-                 </div>                  
-           </td>
-         </tr>
-      </s:iterator>
-    </table>
-    </form>
-   </s:if>
+</script>   
   </body>
 </html>

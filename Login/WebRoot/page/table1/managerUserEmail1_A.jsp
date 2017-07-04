@@ -9,7 +9,7 @@
 			+ path + "/";
 %>
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE HTML>
 <html>
 <head>
 <base href="<%=basePath%>">
@@ -24,20 +24,21 @@
 <body>
   <div id="container">
 	<table class="table table-striped table-hover table-bordered"  >
-		<h2>
+		<h3>
 		<s:if test='#session.loginUser.userread!="1"'>	
-		<input value="添加知會人" type="button" class="btn btn-info" onclick="loadUrl('saveAndUpdate/webuseremailaSaveOrUpdate.jsp')"/>
+		<input value="添加同步人" type="button" class="btn btn-info" onclick="loadUrl('saveAndUpdate/webuseremailaSaveOrUpdate.jsp')"/>
 	    </s:if>	
-		知會人管理
-		</h2>
+		<span id="h2_title"></span>
+		</h3>
 		<thead>
 			<tr class="tr_show">
 				<th>廠別</th>
 				<th>函文類別</th>
-					<th>主簽人Email</th>
-					<th>知會人Email</th>
-					<th>主簽人姓名 </th>
-					<th>知會人姓名 </th>										
+					<th>主同步人Email</th>
+					<th>被同步人Email</th>
+					<th>主同步人姓名 </th>
+					<th>被同步人姓名 </th>
+					<th>作用域</th>										
 				<s:if test='#session.loginUser.userread!="1"'>
 				<th>操作</th>
 				</s:if>
@@ -51,12 +52,20 @@
 					<td><s:property value="id.email" /></td>
 					<td><s:property value="id.emailpassword"/></td>
 					<td><s:property value="name" /></td>
-					<td><s:property value="namePwd" /></td>										
+					<td><s:property value="namePwd" /></td>
+					<td>
+					   <s:if test='id.typeMk=="0"'>
+					               簽核
+					   </s:if>
+					   <s:else>
+					              知會
+					   </s:else>
+					</td>										
 					<s:if test='#session.loginUser.userread!="1"'>					
 					<td>
-						<a href="javascript:findById('${id.factNo}','${id.email}','${id.emailpassword}','${id.visaSort}')">
+						<a href="javascript:findById('${id.factNo}','${id.email}','${id.emailpassword}','${id.visaSort}','${id.typeMk}')">
 						<img alt="修改" src="images/icon/edit001.png" title="修改"></a>&nbsp;					
-						<a href="javascript:mydelete('${id.factNo}','${id.email}','${id.emailpassword}','${id.visaSort}')"><img alt="刪除" src="images/icon/delete001.png" title="刪除"></a>						
+						<a href="javascript:mydelete('${id.factNo}','${id.email}','${id.emailpassword}','${id.visaSort}','${id.typeMk}')"><img alt="刪除" src="images/icon/delete001.png" title="刪除"></a>						
 					</td>
 					</s:if>
 				</tr>

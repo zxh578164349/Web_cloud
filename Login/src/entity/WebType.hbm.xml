@@ -20,6 +20,9 @@
         <property name="webtypeMk" type="java.lang.String">
             <column name="WEBTYPE_MK" length="2"/>
         </property>
+        <property name="typeMk" type="java.lang.String">
+            <column name="TYPE_MK" length="2"/>
+        </property>
         <property name="delMk" type="java.lang.String">
             <column name="DEL_MK" length="2"/>
         </property>
@@ -58,6 +61,13 @@
              <column name="VISA_TYPE_M" length="5"/>
            </key>
            <one-to-many class="entity.Webremittancelist"/>
+        </bag>
+        <bag name="list_formula" inverse="true" cascade="all">
+           <key>
+             <column name="FACT_NO" length="10"/>
+             <column name="VISA_SORT" length="3"/>
+           </key>
+           <one-to-many class="entity.WebFormula"/>
         </bag>
     </class>
 </hibernate-mapping>

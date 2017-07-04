@@ -6,7 +6,7 @@
 			+ request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 %>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE HTML>
 <html>
 <head>
 <base href="<%=basePath%>">
@@ -19,7 +19,7 @@
 </head>
 
 <body>
-	<jsp:include page="publicHead_webuseremail_A.jsp" />
+	<jsp:include page="publicHead_webuseremail.jsp" />
 	<hr />
 	
 	<div id="bodyid">
@@ -44,13 +44,12 @@
 	}
 
 	function submis() {		
-		var email = document.getElementById("email");
-		var factno=document.getElementById("factNo");
 		jq.ajax({
 			type : "POST",
 			dataType : "Html",
 			url : "webuseremaila_findPageBean2",
-			data : "email=" + email.value+"&factNo="+factno.value,
+			//data : "email=" + email.value+"&factNo="+factno.value,
+			data:jq("#subform").serialize(),
 			success : function(msg) {
 				jq("#bodyid").html(msg);
 			},
@@ -62,7 +61,7 @@
 	}
 	
  
- function mydelete(factNo,email,emailpwd,visaSort){
+ function mydelete(factNo,email,emailpwd,visaSort,typeMk){
     var flag=confirm("確定要刪除嗎?");
     if(flag==true){
        //window.location.href="webuseremaila_delete?factNo="+factNo+"&email="+email+"&emailPwd="+emailpwd+"&visaSort="+visaSort;     
@@ -70,7 +69,7 @@
        jq.ajax({
     	   type:"POST",
     	   dataType:"html",
-    	   data:"factNo="+factNo+"&email="+email+"&emailPwd="+emailpwd+"&visaSort="+visaSort,
+    	   data:"factNo="+factNo+"&email="+email+"&emailPwd="+emailpwd+"&visaSort="+visaSort+"&typeMk="+typeMk,
     	   url:"webuseremaila_delete",
     	   success:function(data){
     		   jq("#bodyid").html(data);
@@ -81,11 +80,11 @@
        });
     }
 }
-function findById(factno,email,emailpwd,visasort){	
-	loadUrl("webuseremaila_findById?factNo="+factno+"&email="+email+"&emailPwd="+emailpwd+"&visaSort="+visasort);
+function findById(factno,email,emailpwd,visasort,typeMk){	
+	loadUrl("webuseremaila_findById?factNo="+factno+"&email="+email+"&emailPwd="+emailpwd+"&visaSort="+visasort+"&typeMk="+typeMk);
 }
 
 </script>
-<script type='text/javascript' src='/Login/dwr/interface/webuseremailajs.js'></script>	
+<script type='text/javascript' src='dwr/interface/webuseremailajs.js'></script>	
 </body>
 </html>

@@ -37,8 +37,17 @@ public class WebuserEmailaAction extends ActionSupport implements ServletRespons
 	private IWebTypeServices webtypeSer;
 	private javax.servlet.http.HttpServletResponse response;
 	private javax.servlet.http.HttpServletRequest request;
+	private String typeMk;
     
 	
+	public String getTypeMk(){
+		return typeMk;
+	}
+
+	public void setTypeMk(String typeMk){
+		this.typeMk=typeMk;
+	}
+
 	public int getBackIndex() {
 		return backIndex;
 	}
@@ -139,7 +148,7 @@ public class WebuserEmailaAction extends ActionSupport implements ServletRespons
 		log.setContent(email+emailPwd+visaSort);
 		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
 		log.setUsername(user.getUsername());
-		boolean flag=webuseremailaSer.deleteObj(factNo, email, emailPwd, visaSort,log);
+		boolean flag=webuseremailaSer.deleteObj(factNo, email, emailPwd, visaSort,typeMk,log);
 		if(flag==false){
 			response.setContentType("text/html;charset=utf-8");
 			response.getWriter().print("<script>alert('刪除失敗!');history.back()</script>");
@@ -150,30 +159,20 @@ public class WebuserEmailaAction extends ActionSupport implements ServletRespons
 		
 	}
 	public String findPageBean(){
-		//ActionContext.getContext().getApplication().clear();
 		ActionContext.getContext().getSession().remove("public_factno");
 		ActionContext.getContext().getSession().remove("public_email");
 		ActionContext.getContext().getSession().remove("public_visaSort");
-		factNo=(String)ActionContext.getContext().getSession().get("factNo");
-		bean=webuseremailaSer.findPageBean(25, page, factNo, email, visaSort);
+		ActionContext.getContext().getSession().remove("public_typeMk");
+		bean=webuseremailaSer.findPageBean(20,page, factNo, email, visaSort,typeMk);
 		this.getTypeName(bean);
 		return "beanList";
 	}
 	public String findPageBean2(){
-		//ActionContext.getContext().getApplication().clear();
-		ActionContext.getContext().getSession().remove("public_factno");
-		ActionContext.getContext().getSession().remove("public_email");
-		ActionContext.getContext().getSession().remove("public_visaSort");
-		bean=webuseremailaSer.findPageBean(25, page, factNo, email, visaSort);
-		if(factNo!=null&&!factNo.equals("")){
-			ActionContext.getContext().getSession().put("public_factno", factNo);
-		}
-		if(email!=null&&!email.equals("")){
-			ActionContext.getContext().getSession().put("public_email", email);
-		}
-		if(visaSort!=null&&!visaSort.equals("")){
-			ActionContext.getContext().getSession().put("public_visaSort", visaSort);
-		}
+		bean=webuseremailaSer.findPageBean(20,page, factNo, email, visaSort,typeMk);		
+		ActionContext.getContext().getSession().put("public_factno", factNo);
+		ActionContext.getContext().getSession().put("public_email", email);
+		ActionContext.getContext().getSession().put("public_visaSort", visaSort);
+		ActionContext.getContext().getSession().put("public_typeMk",typeMk);
 		this.getTypeName(bean);
 		return "beanList1";
 	}
@@ -186,10 +185,8 @@ public class WebuserEmailaAction extends ActionSupport implements ServletRespons
 		factNo=(String)ActionContext.getContext().getSession().get("public_factno");
 		email=(String)ActionContext.getContext().getSession().get("public_email");
 		visaSort=(String)ActionContext.getContext().getSession().get("public_visaSort");
-		if(factNo==null||factNo.equals("")){
-			factNo=(String)ActionContext.getContext().getSession().get("factNo");
-		}
-		bean=webuseremailaSer.findPageBean(25, page, factNo, email, visaSort);
+		typeMk=(String)ActionContext.getContext().getSession().get("public_typeMk");
+		bean=webuseremailaSer.findPageBean(20,page, factNo, email, visaSort,typeMk);
 		this.getTypeName(bean);
 		return result;
 	}
@@ -213,7 +210,7 @@ public class WebuserEmailaAction extends ActionSupport implements ServletRespons
 		}//for1	
 	}
 	public String findById(){
-		emailobj=webuseremailaSer.findById(factNo, email, emailPwd, visaSort);
+		emailobj=webuseremailaSer.findById(factNo, email, emailPwd, visaSort,typeMk);
 		return "findById";
 	}
 

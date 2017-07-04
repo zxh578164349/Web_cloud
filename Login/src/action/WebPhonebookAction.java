@@ -185,12 +185,17 @@ public class WebPhonebookAction extends ActionSupport implements ServletResponse
 		this.response=response;
 	}
 	public String add(){
-		WebPhonebook oldbook=(WebPhonebook)ActionContext.getContext().getSession().get("findById_webphone");//进入修改页面时缓存的
 		try{			
-			webphonebookSer.add(oldbook,webphone,isnull);
+			webphonebookSer.add(webphone);
+			if(isnull!=null){
+				WebPhonebook phone=(WebPhonebook)ActionContext.getContext().getSession().get("WebPhonebook");
+				if(phone!=null){
+					webphonebookSer.delete(phone);
+				}
+			}
 			ajaxResult="0";
 		}catch(Exception e){
-			System.out.println("action**********************"+e+"**********************action");
+			e.printStackTrace();
 			ajaxResult="1";
 		}		
 		return "add";
@@ -202,7 +207,7 @@ public class WebPhonebookAction extends ActionSupport implements ServletResponse
 		ActionContext.getContext().getSession().remove("public_post");
 		ActionContext.getContext().getSession().remove("public_username");
 		factNo=(String)ActionContext.getContext().getSession().get("factNo");
-		bean=webphonebookSer.findPageBean(25, page, factNo, department, post, userName);
+		bean=webphonebookSer.findPageBean(20,page, factNo, department, post, userName);
 		return "beanList";
 	}
 	public String findPageBean2(){
@@ -214,7 +219,7 @@ public class WebPhonebookAction extends ActionSupport implements ServletResponse
 		ActionContext.getContext().getSession().put("public_department", department);
 		ActionContext.getContext().getSession().put("public_post", post);
 		ActionContext.getContext().getSession().put("public_username", userName);
-		bean=webphonebookSer.findPageBean(25, page, factNo, department, post, userName);
+		bean=webphonebookSer.findPageBean(20,page, factNo, department, post, userName);
 		return "beanList1";
 	}
 	public String findPageBean3(){
@@ -229,13 +234,12 @@ public class WebPhonebookAction extends ActionSupport implements ServletResponse
 		if(factNo==null||factNo.equals("")){
 			factNo=(String)ActionContext.getContext().getSession().get("factNo");
 		}
-		bean=webphonebookSer.findPageBean(25, page, factNo, department, post, userName);
+		bean=webphonebookSer.findPageBean(20,page, factNo, department, post, userName);
 		return result;
 	}
 	public String findById(){
-		ActionContext.getContext().getSession().remove("findById_webphone");
 		webphone=webphonebookSer.findById(factNo, department, post, userName, phoneA, phoneB, phoneC, email);
-		ActionContext.getContext().getSession().put("findById_webphone", webphone);
+		ActionContext.getContext().getSession().put("WebPhonebook",webphone);
 		return "findById";
 	}
 	public String delete(){

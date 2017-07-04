@@ -8,7 +8,7 @@
 			+ path + "/";
 %>
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE HTML>
 <html>
 <head>
 <base href="<%=basePath%>">
@@ -22,6 +22,87 @@
 <meta http-equiv="description" content="This is my page">
 <link rel="stylesheet" type="text/css" href="css/select_beautiful.css">
 <link rel="stylesheet" type="text/css" href="css/form.css" />
+
+</head>
+
+<body>
+<br/>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">不分形態</h3>
+  </div>
+  <div class="panel-body">
+      <form action="vwebbussortnew_print" method="post" id="subform" target="_blank">
+		<table id="tb_search">
+			<tr>
+				<td>
+				<span>開始
+				 <input type="text" id="yymm" name="yymm" onClick="WdatePicker({minDate:'{%y-1}-%m',maxDate:'#F{$dp.$D(\'yymm2\',{M:-1})||\'%y-{%M-1}\'}'})"
+					readonly="readonly" class="Wdate" datatype="*" />
+				</span>
+				<span>結束
+					<input type="text" id="yymm2" name="yymm2" onClick="WdatePicker({minDate:'#F{$dp.$D(\'yymm\',{M:0})}',maxDate:'%y-%M'})"
+					readonly="readonly" class="Wdate" datatype="*"  />			 
+				</span>
+				 <input type="submit" value="下載"  class="btn btn-primary"/>&nbsp;&nbsp;
+				 <!--  <input type="button" value="返回" onclick="javascript:location.href='webestpro_findPageBean'" class="btn btn-primary"/>-->	
+				</td>			    
+				
+			</tr>
+		</table>					
+	</form>
+  </div>
+</div>
+<br/><br/><br/>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">分形態</h3>
+  </div>
+  <div class="panel-body">
+        <form action="vwebbussortnew_print_fcode" method="post" id="subform2" target="_blank">
+		<table id="tb_search">
+			<tr>
+				<td>
+				<span>開始
+				 <input type="text" id="begin" name="yymm" onClick="WdatePicker({minDate:'{%y-1}-%m',maxDate:'#F{$dp.$D(\'end\',{M:-1})||\'%y-{%M-1}\'}'})"
+					readonly="readonly" class="Wdate" datatype="*" />
+				</span>
+				<span>結束
+					<input type="text" id="end" name="yymm2" onClick="WdatePicker({minDate:'#F{$dp.$D(\'begin\',{M:0})}',maxDate:'%y-%M'})"
+					readonly="readonly" class="Wdate" datatype="*"  />			 
+				</span>
+				 <input type="submit" value="下載"  class="btn btn-primary"/>&nbsp;&nbsp;					
+				</td>			    
+				
+			</tr>
+		</table>
+		<table>
+        <tr><td><input type="checkbox" onclick="selectAll(this)" style="width:18px;height:18px" />全選<hr></td></tr>
+          <s:iterator value="#attr.map" id="map" status="x">
+          <tr>
+           <td>
+                 <input type="checkbox" value="<s:property value='key'/>" id="<s:property value='key'/>" name="list_factcode" 
+                 onclick="checkAll('${map.key}')" style="width:18px;height:18px" datatype="*"/>
+                 <font style="font-size:14px;font-weight:bold" ><s:property value='key'/> </font>
+                 <br> 
+                 <div id="<s:property value='key'/>_div" >               
+                 <s:iterator value="value" status="y">
+                    <input type="checkbox" value="${map.key}_<s:property value='id.factNo'/>_<s:property value='factSname'/>" id="<s:property value='key'/>_factno" class="<s:property value='key'/>_factno"
+                    name="list_factno" onclick="clickOne(this,'font_${map.key}_${y.index}','${map.key}')"/>
+                    <font id="font_<s:property value='key'/>_<s:property value='#attr.y.index'/>">
+                    <s:property value="factSname"/>(<s:property value='id.factNo'/>)</font>
+                    &nbsp;
+                 </s:iterator>
+                 </div>                  
+           </td>
+         </tr>
+      </s:iterator>
+    </table>					
+	</form>
+  </div>
+</div>
+
+
 <script type="text/javascript">
 function tips(){
 	   window.parent.layer.alert("出現無數據時,請檢查<br/>【產量資料(盤點)】【基本數據導入】是否同時具備數據",0); 
@@ -76,11 +157,11 @@ function print(){
    				font.css("color","") ;				
    			}						
    		}//for
-   		if(allfactno.prop("checked")){
+   		/*if(allfactno.prop("checked")){
    			   jq("#"+factcode+"_div").show(300);
    			}else{
    			  jq("#"+factcode+"_div").hide(300); 
-   			}
+   			}*/
    	}
    	
    	/**
@@ -123,86 +204,12 @@ function print(){
 	           }
 	       }
 	       if(index==allcheckboxs.length){
-	           jq("#"+factcode+"_div").hide(300);
+	           //jq("#"+factcode+"_div").hide(300);
 	           cb_factcode.checked=false;
 	       }
 	   } 	  
 	}
 </script>
-</head>
-
-<body>
-<h2>經營評比</h2>
-	<form action="vwebbussortnew_print" method="post" id="subform" target="_blank">
-		<table id="tb_search">
-			<tr>
-				<td>
-				<span>開始
-				 <input type="text" id="yymm" name="yymm" onClick="WdatePicker({minDate:'{%y-1}-%m',maxDate:'#F{$dp.$D(\'yymm2\',{M:-1})||\'%y-{%M-1}\'}'})"
-					readonly="readonly" class="Wdate" datatype="*" />
-				</span>
-				<span>結束
-					<input type="text" id="yymm2" name="yymm2" onClick="WdatePicker({minDate:'#F{$dp.$D(\'yymm\',{M:0})}',maxDate:'%y-%M'})"
-					readonly="readonly" class="Wdate" datatype="*"  />			 
-				</span>
-				 <input type="submit" value="下載"  class="btn btn-primary"/>&nbsp;&nbsp;
-				 <!--  <input type="button" value="返回" onclick="javascript:location.href='webestpro_findPageBean'" class="btn btn-primary"/>-->	
-				</td>			    
-				
-			</tr>
-		</table>					
-	</form>
-	
-	
-	
-	<hr/>
-	<h2>經營評比(分形態)</h2>
-	<form action="vwebbussortnew_print_fcode" method="post" id="subform2" target="_blank">
-		<table id="tb_search">
-			<tr>
-				<td>
-				<span>開始
-				 <input type="text" id="begin" name="yymm" onClick="WdatePicker({minDate:'{%y-1}-%m',maxDate:'#F{$dp.$D(\'end\',{M:-1})||\'%y-{%M-1}\'}'})"
-					readonly="readonly" class="Wdate" datatype="*" />
-				</span>
-				<span>結束
-					<input type="text" id="end" name="yymm2" onClick="WdatePicker({minDate:'#F{$dp.$D(\'begin\',{M:0})}',maxDate:'%y-%M'})"
-					readonly="readonly" class="Wdate" datatype="*"  />			 
-				</span>
-				 <input type="submit" value="下載"  class="btn btn-primary"/>&nbsp;&nbsp;					
-				</td>			    
-				
-			</tr>
-		</table>
-		<table>
-        <tr><td><input type="checkbox" onclick="selectAll(this)" style="width:18px;height:18px" />全選<hr></td></tr>
-          <s:iterator value="#attr.map" id="map" status="x">
-          <tr>
-           <td>
-                 <input type="checkbox" value="<s:property value='key'/>" id="<s:property value='key'/>" name="list_factcode" 
-                 onclick="checkAll('${map.key}')" style="width:18px;height:18px" datatype="*"/>
-                 <font style="font-size:14px;font-weight:bold" ><s:property value='key'/> </font>
-                 <br> 
-                 <div id="<s:property value='key'/>_div" style="display:none">               
-                 <s:iterator value="value" status="y">
-                    <input type="checkbox" value="${map.key}_<s:property value='id.factNo'/>_<s:property value='factSname'/>" id="<s:property value='key'/>_factno" class="<s:property value='key'/>_factno"
-                    name="list_factno" onclick="clickOne(this,'font_${map.key}_${y.index}','${map.key}')"/>
-                    <font id="font_<s:property value='key'/>_<s:property value='#attr.y.index'/>">
-                    <s:property value="factSname"/>(<s:property value='id.factNo'/>)</font>
-                    &nbsp;
-                 </s:iterator>
-                 </div>                  
-           </td>
-         </tr>
-      </s:iterator>
-    </table>					
-	</form>
-	
-	<hr>
-
-
-
-
 
 </body>
 </html>

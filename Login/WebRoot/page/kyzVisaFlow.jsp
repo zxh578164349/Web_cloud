@@ -6,7 +6,7 @@
 			+ request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 %>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE HTML>
 <html>
 <head>
 <base href="<%=basePath%>">
@@ -85,7 +85,7 @@
 		
 	}*/
 	
-	function isDelete2(factno,visasort) {
+	function isDelete_flows(factno,visasort) {
 		var flag=confirm("刪除申請人,就會刪除整個流程,确定要刪除吗?");
 			if (flag == true) {								
 				jq.ajax({

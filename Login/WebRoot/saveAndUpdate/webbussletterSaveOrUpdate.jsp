@@ -1,4 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE HTML>
 
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
@@ -29,8 +29,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
  
 　     
     
-    <form action="bussletter_add" method="post" id="form"  enctype="multipart/form-data">   
-        <h2>人員出差申請書</h2>
+    <form action="bussletter_add" method="post" id="form"  enctype="multipart/form-data">         
 		<table  class="table table-condensed" >	    	
 			<tbody >
 				    <tr>
@@ -297,7 +296,7 @@ function makeBillNo() {
   }
 
   function back(){		
-		loadUrl("/Login/bussletter_findPageBean?backIndex=1");
+		loadUrl("bussletter_findPageBean?backIndex=1");
 	}
 	
 /*jq(function(){
@@ -365,9 +364,9 @@ function checkWebbussType(fact){
 	});
 }
 </script>
-<script type='text/javascript' src='/Login/dwr/interface/webbussletterjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/kyzvisaflowjs.js'></script>
+<script type='text/javascript' src='dwr/interface/webbussletterjs.js'></script>
+<script type='text/javascript' src='dwr/interface/webfactjs.js'></script>
+<script type='text/javascript' src='dwr/interface/kyzvisaflowjs.js'></script>
 <script type="text/javascript">
 jq(function(){
 	if(jq("#isNull").val()=="isNull"){

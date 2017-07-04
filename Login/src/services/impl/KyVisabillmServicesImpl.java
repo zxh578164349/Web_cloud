@@ -25,6 +25,11 @@ public class KyVisabillmServicesImpl implements IKyVisabillmServices{
 		// TODO Auto-generated method stub
 		return visabillmDao.findById(factNo, visaSort, billNo);
 	}
+	
+	public KyVisabillm findById2(String factNo, String visaSort, String billNo) {
+		// TODO Auto-generated method stub
+		return visabillmDao.findById2(factNo, visaSort, billNo);
+	}
 
 	public void delete(String factNo, String visaSort, String billNo,KyzExpectmatmLog delLog) {
 		// TODO Auto-generated method stub
@@ -51,15 +56,43 @@ public class KyVisabillmServicesImpl implements IKyVisabillmServices{
 		// TODO Auto-generated method stub
 		return visabillmDao.findByBillNo(billNo);
 	}
+	public List<KyVisabillm> findByBillNo2(String billNo) {
+		// TODO Auto-generated method stub
+		return visabillmDao.findByBillNo2(billNo);
+	}
 
 	public List<KyVisabillm> findBefor2Month() {
 		// TODO Auto-generated method stub
 		return visabillmDao.findBefor2Month();
 	}
+	
+	public List<KyVisabillm> findBefor2Month2() {
+		// TODO Auto-generated method stub
+		return visabillmDao.findBefor2Month2();
+	}
 
 	public void addLarge(List<KyVisabillm> list) {
 		// TODO Auto-generated method stub
 		visabillmDao.addLarge(list);
+	}
+
+
+	/**
+	 * 日期:2016/11/18
+	 * 描述:
+	 */
+	
+	
+	public boolean add2(KyVisabillm vbm){
+		// TODO Auto-generated method stub
+		boolean flag=true;
+		try{
+			visabillmDao.add(vbm);
+		}catch(Exception e){
+			flag=false;
+			System.out.println(e);
+		}
+		return flag;
 	}
 
 }

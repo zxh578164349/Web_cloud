@@ -7,7 +7,7 @@
 			+ path + "/";
 %>
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE HTML>
 <html>
 <head>
 <base href="<%=basePath%>">
@@ -24,8 +24,7 @@
 
 <body>
 
-	<form action="kyzsec_add" method="post" id="form">
-        <h2>費用組別</h2>
+	<form action="kyzsec_add" method="post" id="form">      
 		<table class="table table-condensed"
 			id="table1">
 
@@ -191,8 +190,8 @@
 	}	
 
 </script>
-<script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/kyzsecjs.js'></script>
+<script type='text/javascript' src='dwr/interface/webfactjs.js'></script>
+<script type='text/javascript' src='dwr/interface/kyzsecjs.js'></script>
 </body>
 
 </html>

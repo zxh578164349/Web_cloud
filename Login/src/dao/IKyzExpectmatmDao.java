@@ -19,7 +19,7 @@ public interface IKyzExpectmatmDao {
 
 	public List<KyzExpectmatm> getList(String memoSmk);
 	public KyzExpectmatm findById(KyzExpectmatmId id);
-	public PageBean findFixWithPage(int pageSize, int page, String visaSort,String yymm,String billNo,WebUser user,String timeCreate,String timeCreate2);
+	public PageBean findFixWithPage(int pageSize, int page, String visaSort,String yymm,String billNo,WebUser user,String timeCreate,String timeCreate2,String title);
 	public void delete(KyzExpectmatmId id,KyzExpectmatmLog delLog);
 	public List<KyzExpectmatm> findByFactNo(String factno);
 	public List<KyzExpectmatm> findById_Print(KyzExpectmatmId id);

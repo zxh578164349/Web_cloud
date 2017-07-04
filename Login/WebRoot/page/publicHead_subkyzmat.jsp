@@ -8,7 +8,7 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib uri="/struts-tags" prefix="s"%>
 <%@page import="entity.*"%>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE HTML>
 <html>
 <head>
 <title>My JSP 'publicHead.jsp' starting page</title>
@@ -68,11 +68,11 @@ jq(document).keyup(function(event){
 	   findallBN();
 	}
 </script>
-<script type='text/javascript' src='/Login/dwr/interface/kyzscmjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/kyzmatjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/kyzacctjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/engine.js'></script>
-<script type='text/javascript' src='/Login/dwr/util.js'></script> 
+<script type='text/javascript' src='dwr/interface/kyzscmjs.js'></script>
+<script type='text/javascript' src='dwr/interface/kyzmatjs.js'></script>
+<script type='text/javascript' src='dwr/interface/kyzacctjs.js'></script>
+<script type='text/javascript' src='dwr/engine.js'></script>
+<script type='text/javascript' src='dwr/util.js'></script> 
 </head>
 <body>
   <div style="width:1200px">

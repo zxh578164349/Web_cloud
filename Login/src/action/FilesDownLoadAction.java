@@ -25,9 +25,27 @@ public class FilesDownLoadAction extends ActionSupport{
 	private String fileName;
 	private InputStream fileInput;
 	private int id;
+	private String attachmentOrInline;
+	private String pomNo;
 	private IWebUploadFileServices webuploadSer;
 	
-	
+		
+	public String getPomNo() {
+		return pomNo;
+	}
+
+	public void setPomNo(String pomNo) {
+		this.pomNo = pomNo;
+	}
+
+	public String getAttachmentOrInline(){
+		return attachmentOrInline;
+	}
+
+	public void setAttachmentOrInline(String attachmentOrInline){
+		this.attachmentOrInline=attachmentOrInline;
+	}
+
 	public void setWebuploadSer(IWebUploadFileServices webuploadSer) {
 		this.webuploadSer = webuploadSer;
 	}
@@ -51,32 +69,24 @@ public class FilesDownLoadAction extends ActionSupport{
 		this.fileName=fileName;
 	}
 
-
-	public InputStream getFileInput() throws UnsupportedEncodingException, FileNotFoundException {
-		  WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
-		  String factNo=user.getFactno();
-		  String username=user.getUsername();
-		  /**
-		   * �A�Ⱦ����|
-		   */
-		  //return ServletActionContext.getServletContext().getResourceAsStream("upload\\"+factNo+"_"+username+"\\"+fileName);
-		  /**
-		   * ���a���|
-		   */
-		  //return ServletActionContext.getServletContext().getResourceAsStream("\\uploadfile\\"+factNo+"_"+username+"\\"+fileName);
-		  FileInputStream input=new FileInputStream("d:\\webupload\\"+factNo+"_"+username+"\\"+fileName);
-		  return input;
-		  
+	public InputStream getFileInput() {
+		return fileInput;
 	}
-
 
 	public void setFileInput(InputStream fileInput) {
 		this.fileInput = fileInput;
 	}
+	
 
+	
+
+	/************************************************文件上傳與下載**********************************************************/
 	public String download() throws UnsupportedEncodingException, FileNotFoundException{
+		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
+		String factNo=user.getFactno();
+		String username=user.getUsername();
 		String result="";
-		fileInput=this.getFileInput();
+		this.setFileInput(new FileInputStream("d:\\webupload\\"+factNo+"_"+username+"\\"+fileName));
 		if(fileInput==null){
 			result="input";
 		}else{
@@ -84,6 +94,44 @@ public class FilesDownLoadAction extends ActionSupport{
 		}		
 		return result;
 	}
+	public String inline() throws UnsupportedEncodingException, FileNotFoundException{
+		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
+		String factNo=user.getFactno();
+		String username=user.getUsername();
+		String result="";
+		this.setFileInput(new FileInputStream("d:\\webupload\\"+factNo+"_"+username+"\\"+fileName));
+		if(fileInput==null){
+			result="input";
+		}else{
+			result="inline";
+		}		
+		return result;
+	}
+	/************************************************文件上傳與下載**********************************************************/
+	
+	
+	/************************************************物性資料附檔**********************************************************/
+	public String download_pom() throws UnsupportedEncodingException, FileNotFoundException{		
+		String result="";
+		this.setFileInput(new FileInputStream("d:\\WebtabpomFile_backup\\"+pomNo+"\\"+fileName));
+		if(fileInput==null){
+			result="input";
+		}else{
+			result="download";
+		}		
+		return result;
+	}
+	public String inline_pom() throws UnsupportedEncodingException, FileNotFoundException{		
+		String result="";
+		this.setFileInput(new FileInputStream("d:\\WebtabpomFile_backup\\"+pomNo+"\\"+fileName));
+		if(fileInput==null){
+			result="input";
+		}else{
+			result="inline";
+		}		
+		return result;
+	}
+	/************************************************物性資料附檔**********************************************************/
 	
 	private String encodingFileName() {
         String returnFileName = "";

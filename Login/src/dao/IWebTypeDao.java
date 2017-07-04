@@ -19,4 +19,7 @@ public interface IWebTypeDao {
 	public List<WebType>findByFactNo2(String factNo);
 	public void update(WebType type);
 	
+	public List<Object[]>findTypes(String factNo);
+	public String findPF(String factNo);//查找配方簽核類
+	
 }

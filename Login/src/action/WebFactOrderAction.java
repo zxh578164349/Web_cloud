@@ -388,7 +388,7 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 		ActionContext.getContext().getSession().remove("public_factnos");
 		ActionContext.getContext().getSession().remove("public_yymm");
 		ActionContext.getContext().getSession().remove("public_yymm2");
-		bean=webfactorderSer.findPageBean(25, page, factAreas, branks, customers, models, components,factNo,factNos,yymm,yymm2);
+		bean=webfactorderSer.findPageBean(20,page, factAreas, branks, customers, models, components,factNo,factNos,yymm,yymm2);
 		for(WebFactorder order:(List<WebFactorder>)bean.getList()){
 			this.factNoToFactSname(order);
 		}
@@ -416,7 +416,7 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 		ActionContext.getContext().getSession().put("public_factnos", factNos);
 		ActionContext.getContext().getSession().put("public_yymm", yymm);
 		ActionContext.getContext().getSession().put("public_yymm2", yymm2);
-		bean=webfactorderSer.findPageBean(25, page, factAreas, branks, customers, models, components,factNo,factNos,yymm,yymm2);
+		bean=webfactorderSer.findPageBean(20,page, factAreas, branks, customers, models, components,factNo,factNos,yymm,yymm2);
 		for(WebFactorder order:(List<WebFactorder>)bean.getList()){
 			this.factNoToFactSname(order);
 		}
@@ -436,7 +436,7 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 		factNos=(List<String>)ActionContext.getContext().getSession().get("public_factnos");
 		yymm=(String)ActionContext.getContext().getSession().get("public_yymm");
 		yymm2=(String)ActionContext.getContext().getSession().get("public_yymm2");
-		bean=webfactorderSer.findPageBean(25, page, factAreas, branks, customers, models, components,factNo,factNos,yymm,yymm2);
+		bean=webfactorderSer.findPageBean(20,page, factAreas, branks, customers, models, components,factNo,factNos,yymm,yymm2);
 		for(WebFactorder order:(List<WebFactorder>)bean.getList()){
 			this.factNoToFactSname(order);
 		}
@@ -558,12 +558,10 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 		wb.write(os);
 		os.close();				
 	}
-	public void print_email() throws IOException{		
-		/*yymm="201605";
-		yymm2=yymm;
-		autoEmailMk=1;*/
+	public void print_email() throws IOException{				
 		HSSFWorkbook wb=this.print();
-		OutputStream os=new FileOutputStream("d:\\"+yymm+".xls");
+		//OutputStream os=new FileOutputStream("d:\\"+yymm+".xls");
+		OutputStream os=new FileOutputStream(ServletActionContext.getServletContext().getRealPath("TEMPFILES\\"+yymm+".xls"));
 		wb.write(os);
 		os.close();
 	}

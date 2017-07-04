@@ -8,6 +8,7 @@ import java.util.List;
 import dao.IVKpiWebprofitlossDao;
 
 import entity.VKpiWebprofitloss;
+import entity.VKpiWebprofitlossItems;
 import services.IVKpiWebprofitlossServices;
 
 /**   
@@ -58,6 +59,20 @@ public class VKpiWebprofitlossServicesImpl implements IVKpiWebprofitlossServices
 	public List<VKpiWebprofitloss> findVKpiWebprofitloss(List<String> list_factcode,String yymm){
 		// TODO Auto-generated method stub
 		return vpikprofitdao.findVKpiWebprofitloss(list_factcode,yymm);
+	}
+
+
+
+
+	/**
+	 * 日期:2016/10/13
+	 * 描述:
+	 */
+	
+	
+	public List<VKpiWebprofitlossItems> findItems(){
+		// TODO Auto-generated method stub
+		return vpikprofitdao.findItems();
 	}
 
 }

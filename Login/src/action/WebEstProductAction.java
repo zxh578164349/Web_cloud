@@ -211,7 +211,7 @@ public class WebEstProductAction extends ActionSupport implements
 		ActionContext.getContext().getSession().remove("public_yymm");
 		ActionContext.getContext().getSession().remove("public_yymm2");
 		factNo = (String) ActionContext.getContext().getSession().get("factNo");
-		bean = estProSer.findPageBean(25, page, factNo, yymm,yymm2);
+		bean = estProSer.findPageBean(20,page, factNo, yymm,yymm2);
 
 		return "beanList";
 
@@ -232,7 +232,7 @@ public class WebEstProductAction extends ActionSupport implements
 			ActionContext.getContext().getSession().put("public_yymm2", yymm2);					
 		}
 
-		bean = estProSer.findPageBean(25, page, factNo, yymm,yymm2);
+		bean = estProSer.findPageBean(20,page, factNo, yymm,yymm2);
 
 		return "beanList1";
 	}
@@ -249,7 +249,7 @@ public class WebEstProductAction extends ActionSupport implements
 			factNo = (String) ActionContext.getContext().getSession().get("factNo");
 					
 		}
-		bean = estProSer.findPageBean(25, page, factNo, yymm,yymm2);
+		bean = estProSer.findPageBean(20,page, factNo, yymm,yymm2);
 
 		return result;
 
@@ -298,6 +298,7 @@ public class WebEstProductAction extends ActionSupport implements
 		log.setYymm(new SimpleDateFormat("yyyyMM").format(id.getYymm()));
 		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
 		log.setUsername(user.getUsername());
+		log.setContent(id.getType());
 		estProSer.delete(id,log);
 		return "delete";
 	}

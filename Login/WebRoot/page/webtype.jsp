@@ -6,7 +6,7 @@
 			+ request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 %>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE HTML>
 <html>
 <head>
 <base href="<%=basePath%>">
@@ -80,7 +80,7 @@
     }
 }
 function findById(factno,typeno){	
-	loadUrl("/Login/webtype_findById?factNo="+factno+"&typeNo="+typeno);
+	loadUrl("webtype_findById?factNo="+factno+"&typeNo="+typeno);
 }
 function recovery(subform){
 	jq.ajax({

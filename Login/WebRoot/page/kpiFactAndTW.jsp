@@ -5,7 +5,7 @@ String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE HTML>
 <html>
   <head>
     <base href="<%=basePath%>">
@@ -128,22 +128,20 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	   } 	  
 	}
 	
-function checkdate(){
-     var factno=document.getElementById("factNo").value;
-     var year=document.getElementById("year").value;
-     document.getElementById("dwr_yymm").length=0;
-     if(factno!=""&&year!=""){
-        kpifactjs.findDateByFactNo(factno,year,function(x){           
-            dwr.util.addOptions("dwr_yymm", x);
-        });
-     }
-}	   
-</script>
-<script type='text/javascript' src='/Login/dwr/interface/kpifactjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/engine.js'></script>
-<script type='text/javascript' src='/Login/dwr/util.js'></script>
 
-  </head>
+function checkdate(){
+    var factno=document.getElementById("factNo").value;
+    var year=document.getElementById("year").value;
+    document.getElementById("dwr_yymm").length=0;
+    if(factno!=""&&year!=""){
+       kpifactjs.findDateByFactNo(factno,year,function(x){           
+           dwr.util.addOptions("dwr_yymm", x);
+       });
+    }
+}
+</script>
+<script type='text/javascript' src='dwr/interface/kpifactjs.js'></script>
+</head>
   
   <body>
   <h2>KPI-工廠</h2>

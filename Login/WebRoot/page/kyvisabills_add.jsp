@@ -50,7 +50,7 @@ function hideDiv2(obj){
 }
 
 function back(){	
-	loadUrl("/Login/vbm_findPageBean");
+	loadUrl("vbm_findPageBean");
 }
 </script>
 </head>

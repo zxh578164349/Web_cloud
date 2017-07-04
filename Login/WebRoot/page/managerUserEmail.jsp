@@ -6,7 +6,7 @@
 			+ request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 %>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE HTML>
 <html>
 <head>
 <base href="<%=basePath%>">
@@ -46,13 +46,12 @@
 	}
 
 	function submis() {		
-		var email = document.getElementById("email");
-		var factno=document.getElementById("factNo")
 		jq.ajax({
 			type : "POST",
 			dataType : "Html",
 			url : "webuseremail_findPageBean2",
-			data : "email=" + email.value+"&factNo="+factno.value,
+			//data : "email=" + email.value+"&factNo="+factno.value,
+			data:jq("#subform").serialize(),
 			success : function(msg) {
 				jq("#bodyid").html(msg);
 			},
@@ -64,13 +63,13 @@
 	}
 	
  
- function mydelete(factNo,email,emailpwd){
+ function mydelete(factNo,email,emailpwd,typeMk){
     var flag=confirm("確定要刪除嗎?");
     if(flag==true){           
        jq.ajax({
           type:"POST",
           dataType:"html",
-          data:"factNo="+factNo+"&email="+email+"&emailpwd="+emailpwd,
+          data:"factNo="+factNo+"&email="+email+"&emailpwd="+emailpwd+"&typeMk="+typeMk,
           url:"webuseremail_delete",
           success:function(msg){
              jq("#bodyid").html(msg);
@@ -81,8 +80,8 @@
        });
     }
 }
-function findById(factno,email,emailpwd){
-	loadUrl("webuseremail_findById?factNo="+factno+"&email="+email+"&emailpwd="+emailpwd);
+function findById(factno,email,emailpwd,typeMk){
+	loadUrl("webuseremail_findById?factNo="+factno+"&email="+email+"&emailpwd="+emailpwd+"&typeMk="+typeMk);
 }
 
 </script>	

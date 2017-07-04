@@ -10,7 +10,7 @@
 
 
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE HTML>
 <html>
 <head>
 <base href="<%=basePath%>">
@@ -27,12 +27,12 @@
    <div id="container">
    <div id="content">
 	<table class="table table-striped table-hover table-bordered"  >
-	<h2>
+	<h3>
 	<s:if test='#session.loginUser.userread!="1"'>
 	<input type="button" class="btn btn-info" value="添加" onclick="loadUrl('saveAndUpdate/fixedSaveOrUpdate.jsp')"/>	
 	</s:if>	
-	固定資產
-	</h2>
+	<span id="h2_title">固定資產</span>
+	</h3>
 		<thead>			
 			<tr class="tr_show">
 			    <th>序號</th>
@@ -102,14 +102,14 @@
 				</td>
 				<s:if test='#session.loginUser.userread!="1"'>			
 			    <td>
-			     <a href="javascript:loadUrl('/Login/fix_findById?id=${fixedassetsId}')" ><img alt="修改" src="images/icon/edit001.png" title="修改" ></a>	
+			     <a href="javascript:loadUrl('fix_findById?id=${fixedassetsId}')" ><img alt="修改" src="images/icon/edit001.png" title="修改" ></a>	
 			       <s:if test='delMk=="Y"||delMk==null'>
 			          <a href="javascript:isDelete(<s:property value='fixedassetsId'/>)" ><img alt="刪除" src="images/icon/delete001.png" title="刪除" ></a>
 			       </s:if>
 			       <s:if test='delMk=="N"'>
 			           <a disabled style="color:grey"><img alt="刪除" src="images/icon/delete001_1.jpg" title="刪除"></a>
 			       </s:if>								
-					 <a href="javascript:loadUrl('/Login/fix_findById2?id=${fixedassetsId}')"><img alt="調撥" src="images/icon/move001.png" title="調撥"></a>					   					 
+					 <a href="javascript:loadUrl('fix_findById2?id=${fixedassetsId}')"><img alt="調撥" src="images/icon/move001.png" title="調撥"></a>					   					 
                 </td>
                 </s:if>
 			</tr>

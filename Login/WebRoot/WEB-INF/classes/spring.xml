@@ -20,11 +20,12 @@
 	destroy-method="close">
 	<!-- 驱动的名字，oracle -->
 	<property name="driver">
-		<value>oracle.jdbc.driver.OracleDriver</value>
+		<!-- <value>oracle.jdbc.driver.OracleDriver</value> -->
+		<value>oracle.jdbc.OracleDriver</value>
 	</property>
 	<!-- proxool 的 url连接串，这个必须确定用户名和密码 -->
 	<property name="driverUrl">
-		<value>jdbc:oracle:thin:web/tmkyinfo@192.168.199.101:1521:orcl</value>
+		<value>jdbc:oracle:thin:web/tmkyinfo@192.168.199.101:1521:web</value>
 	</property>
 	<!-- 用户名(proxool没有使用，但是不能没有) -->
 	<property name="user">
@@ -57,15 +58,15 @@
 	</property>
 	<!-- 最少保持的空闲连接数 （现在设置20个） -->
 	<property name="prototypeCount">
-		<value>20</value>
+		<value>30</value>
 	</property>
 	<!-- 最大连接数 （现在设置200个） -->
 	<property name="maximumConnectionCount">
-		<value>100</value>
+		<value>200</value>
 	</property>
 	<!-- 最小连接数 （现在设置50个） -->
 	<property name="minimumConnectionCount">
-		<value>50</value>
+		<value>70</value>
 	</property>
 	<!-- 如果为true,那么每个被执行的SQL语句将会在执行期被log记录(DEBUG LEVEL).你也可以注册一个ConnectionListener 
 		(参看ProxoolFacade)得到这些信息. -->
@@ -104,29 +105,11 @@
 				<value>entity/WebUser.hbm.xml</value>
 				<value>entity/WebMenu.hbm.xml</value>
 				<value>entity/WebJurisdiction.hbm.xml</value>
-				<value>entity/WebLog.hbm.xml</value>
-				<value>entity/WebMats.hbm.xml</value>
-				<value>entity/WebBackmat.hbm.xml</value>
-				<value>entity/WebCpstore.hbm.xml</value>
-				<value>entity/WebOutback.hbm.xml</value>
-				<value>entity/WebPerson.hbm.xml</value>
-				<value>entity/WebZwcash.hbm.xml</value>
-				<value>entity/WebMachin.hbm.xml</value>
-				<value>entity/WebPfavgprice.hbm.xml</value>
-				<value>entity/WebProfit.hbm.xml</value>
-				<value>entity/WebOutputinv.hbm.xml</value>
-				<value>entity/WebMatstore.hbm.xml</value>
-				<value>entity/WebBackpf.hbm.xml</value>
-				<value>entity/WebGw.hbm.xml</value>
-				<value>entity/WebProfitcount.hbm.xml</value>
-				<value>entity/WebMats2.hbm.xml</value>
-				<value>entity/WebSide.hbm.xml</value>
+				<value>entity/WebLog.hbm.xml</value>																
+				<value>entity/WebPerson.hbm.xml</value>																																								
 				<value>entity/KyFact.hbm.xml</value>
 				<value>entity/WebFixed.hbm.xml</value>
-				<value>entity/WebJurs.hbm.xml</value>
-				<value>entity/WebDistributionsub.hbm.xml</value>
-				<value>entity/WebDistribution.hbm.xml</value>
-				<value>entity/WebYielePrediction.hbm.xml</value>
+				<value>entity/WebJurs.hbm.xml</value>								
 				<value>entity/WebYieldData.hbm.xml</value>
 				<value>entity/WebFact.hbm.xml</value>
 				<value>entity/Webproduted.hbm.xml</value>
@@ -215,7 +198,16 @@
 				<value>entity/WebVwebussortSubitem.hbm.xml</value>
 				<value>entity/VWebydatabyfcode.hbm.xml</value>
 				<value>entity/WebEmailAll.hbm.xml</value>
-				<value>entity/VKpiWebprofitloss.hbm.xml</value></list>
+				<value>entity/VKpiWebprofitloss.hbm.xml</value>
+				<value>entity/VKpiWebprofitlossItems.hbm.xml</value>
+				<value>entity/WebErpBrankProcess.hbm.xml</value>
+				<value>entity/WebErpProductinFormation.hbm.xml</value>
+				<value>entity/WebFormula.hbm.xml</value>
+				<value>entity/WebFormulaItems.hbm.xml</value>
+				<value>entity/VWebErpProductinFormation.hbm.xml</value>
+				<value>entity/WebUserOperation.hbm.xml</value>
+				<value>entity/WebOperationToUser.hbm.xml</value>
+				<value>entity/VWebUserEmail.hbm.xml</value></list>
 		</property>
 	</bean>
 		
@@ -281,5 +273,5 @@
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="point-cut" />
 	</aop:config>
 	<!-- 分頁 -->
-	<bean id="pages" class="util.Page" />
+	<bean id="pages" class="util.Page" />	      
 </beans>

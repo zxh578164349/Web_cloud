@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-modules id="moduleCoreId" project-version="1.5.0">
-    <wb-module deploy-name="Login">
+    <wb-module deploy-name="WebLogin">
         <wb-resource deploy-path="/" source-path="/WebRoot"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/junit_test"/>
-        <property name="context-root" value="/Login"/>
-        <property name="java-output-path" value="/Login/WebRoot/WEB-INF/classes"/>
+        <property name="java-output-path" value="/WebLogin/WebRoot/WEB-INF/classes"/>
+        <property name="context-root" value="/WebLogin"/>
     </wb-module>
 </project-modules>

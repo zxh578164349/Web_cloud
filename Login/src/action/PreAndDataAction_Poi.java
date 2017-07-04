@@ -266,6 +266,14 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 			map_a.put(month, list_a);
 			map_b.put(month, list_b);						
 		}//for a
+		
+		/****************************各箇欄位數據統計  20161006***************************/
+		WebFact heJi=new WebFact(new WebFactId("","計"));
+		heJi.setFactSname("合");
+		list_facts.add(heJi);
+		this.dayTotal(map_a,map_b);
+		/****************************各箇欄位數據統計  20161006***************************/
+		
 				
 		Workbook wb=null;
 		String fileName=null;		
@@ -280,7 +288,8 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 		}
 		
 		if(emailMk==1){//發送郵件報表
-			OutputStream os=new FileOutputStream("d:\\"+sdate+".xls");
+			//OutputStream os=new FileOutputStream("d:\\"+sdate+".xls");
+			OutputStream os=new FileOutputStream(ServletActionContext.getServletContext().getRealPath("TEMPFILES\\"+sdate+".xls"));
 			wb.write(os);
 			os.close();	
 		}else{//網頁訪問報表
@@ -1530,4 +1539,82 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 	}
 	
 	
+	/**
+	 * 
+	 * @Title: dayTotal
+	 * @Description: 各箇欄位數據統計
+	 * @param @param map_a
+	 * @param @param map_b
+	 * @return void
+	 * @throws
+	 * @author web
+	 * @date 2016/10/6
+	 */
+	public void dayTotal(Map<String,Object>map_a,Map<String,Object>map_b){
+		for(String month:map_a.keySet()){
+			Webestproduct pro=new Webestproduct();
+			Double machinepower=0.0;
+			Double estmodel=0.0;
+			Double estpay=0.0;
+			Double totalhole=0.0;
+			Double hole=0.0;
+			Double sample=0.0;
+			Double accessories=0.0;
+			Double other=0.0;					
+			List<Webestproduct>list_a=(List<Webestproduct>)map_a.get(month);
+			List<List<WebYieldData>>list_b=(List<List<WebYieldData>>)map_b.get(month);
+			for(Webestproduct obj:list_a){
+				machinepower=machinepower+(obj.getMachinepower()==null?0.0:obj.getMachinepower());
+				estmodel=estmodel+(obj.getEstmodel()==null?0.0:obj.getEstmodel());
+				estpay=estpay+(obj.getEstpay()==null?0.0:obj.getEstpay());
+				totalhole=totalhole+(obj.getTotalhole()==null?0.0:obj.getTotalhole());
+				hole=hole+(obj.getHole()==null?0.0:obj.getHole());
+				sample=sample+(obj.getSample()==null?0.0:obj.getSample());
+				accessories=accessories+(obj.getAccessories()==null?0.0:obj.getAccessories());
+				other=other+(obj.getOther()==null?0.0:obj.getOther());
+			}
+			pro.setMachinepower(machinepower);
+			pro.setEstmodel(estmodel);
+			pro.setEstpay(estpay);
+			pro.setTotalhole(totalhole);
+			pro.setHole(hole);
+			pro.setSample(sample);
+			pro.setAccessories(accessories);
+			pro.setOther(other);
+			list_a.add(pro);
+			
+			
+			
+			List<WebYieldData>list_ydata=new ArrayList<WebYieldData>();
+			List<WebYieldData>list1=list_b.get(0);
+			for(int i=0;i<list1.size();i++){
+				Double onModulus=0.0;
+				Double personnum=0.0;
+				Double standardOutput=0.0;
+				Double actualYield=0.0;
+				Double daycount=0.0;
+				WebYieldData ydata=new WebYieldData();
+				for(List<WebYieldData> list2:list_b){
+					
+						onModulus=onModulus+(list2.get(i).getOnModulus()==null?0.0:list2.get(i).getOnModulus());
+						personnum=personnum+(list2.get(i).getPersonnum()==null?0.0:list2.get(i).getPersonnum());
+						standardOutput=standardOutput+(list2.get(i).getStandardOutput()==null?0.0:list2.get(i).getStandardOutput());
+						actualYield=actualYield+(list2.get(i).getActualYield()==null?0.0:list2.get(i).getActualYield());
+						daycount=daycount+(list2.get(i).getDaycount()==null?0.0:list2.get(i).getDaycount());
+					
+					
+				}
+				ydata.setOnModulus(onModulus);
+				ydata.setPersonnum(personnum);
+				ydata.setStandardOutput(standardOutput);
+				ydata.setActualYield(actualYield);
+				ydata.setDaycount(daycount);
+				ydata.setAchievingRate(GlobalMethod.division(actualYield,standardOutput));
+				
+				ydata.setWorkorholiday("0");
+				list_ydata.add(ydata);								
+			}
+			list_b.add(list_ydata);				
+		}		
+	}		
 }

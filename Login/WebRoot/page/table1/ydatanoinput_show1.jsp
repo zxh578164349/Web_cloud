@@ -8,7 +8,7 @@
 			+ path + "/";
 %>
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE HTML>
 <html>
 <head>
 <base href="<%=basePath%>">
@@ -29,18 +29,18 @@ function update_ydata(subform){
 }
 	
 </script>
-<script type='text/javascript' src='/Login/dwr/engine.js'></script>
-<script type='text/javascript' src='/Login/dwr/util.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/sumwebydatajs.js'></script>
+<script type='text/javascript' src='dwr/engine.js'></script>
+<script type='text/javascript' src='dwr/util.js'></script>
+<script type='text/javascript' src='dwr/interface/sumwebydatajs.js'></script>
 </head>
 
 <body >
  <div id="container">
  <div id="content">
 	<table class="table table-striped table-hover table-bordered" >
-		<h2>		
+		<h3>		
 		產量資料未輸入記錄
-		</h2>
+		</h3>
 		<thead>
 			<tr class="tr_show">
 				<th>序號</th>

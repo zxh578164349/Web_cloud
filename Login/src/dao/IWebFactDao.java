@@ -2,6 +2,7 @@ package dao;
 
 import java.util.List;
 
+import entity.VWebFact;
 import entity.WebFact;
 
 public interface IWebFactDao {
@@ -150,10 +151,22 @@ public interface IWebFactDao {
 	
 	public List<String> findByFactNo_showA(String factNo);
 	public List<Object[]> findByFactNo_showA_order(String factNo);
+	public List<Object[]> findByFactNo_order(String factNo);
 	
 	public List<WebFact>findByList(List<String>list);
 	
 	public List<String>findFactNoshow();
 	public List<String>findFactCodeshow();
+	
+	
+	
+	/****************************************************  VWebFact  ***********************************************************************/
+	public List<Object[]>findAllVwebfact();
+	
+	
+	
+	
+	
+	/****************************************************  VWebFact  ***********************************************************************/
 
 }

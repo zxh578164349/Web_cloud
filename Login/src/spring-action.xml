@@ -8,8 +8,7 @@
 	"
 	default-autowire="byName">
 	<bean id="webUserAction" class="action.WebUserAction" scope="prototype" />
-	<bean id="webMenuAction" class="action.WebMenuAction" scope="prototype" />
-	<bean id="webMatsAction" class="action.WebMatsAction" scope="prototype" />
+	<bean id="webMenuAction" class="action.WebMenuAction" scope="prototype" />	
 	<bean id="webMatstoreAction" class="action.WebMatstoreAction" scope="prototype" />			
 	<bean id="factAction" class="action.KyFactAction" scope="prototype" />
 	<bean id="preAndDataAction" class="action.PreAndDataAction" scope="prototype" />
@@ -79,6 +78,9 @@
 	<bean id="vWebbussortActionNewAction" class="action.VWebbussortActionNew" scope="prototype"/>
 	<bean id="AutoSendWebfactorderAction" class="mail.AutoSendWebfactorder" scope="prototype"/>
 	<bean id="vkpiprofitAction" class="action.VKpiWebprofitlossAction" scope="prototype"/>
+	<bean id="weberpbpAction" class="action.WebErpBrankProcessAction" scope="prototype"/>
+	<bean id="weberppfAction" class="action.WebErpProductinFormationAction" scope="prototype"/>
+	<bean id="webformulaAction" class="action.WebFormulaAction" scope="prototype"/>
 </beans> 
 
  

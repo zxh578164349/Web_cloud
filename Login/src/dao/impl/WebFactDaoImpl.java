@@ -8,6 +8,7 @@ import org.hibernate.Query;
 
 import dao.Basedao;
 import dao.IWebFactDao;
+import entity.VWebFact;
 import entity.WebFact;
 
 public class WebFactDaoImpl extends Basedao implements IWebFactDao {
@@ -293,6 +294,16 @@ public class WebFactDaoImpl extends Basedao implements IWebFactDao {
 		String[]objs={factNo};
 		return super.findAll(hql, objs);
 	}
+	/**
+	 * 日期:2016/10/14
+	 * 描述:有序
+	 */
+	public List<Object[]> findByFactNo_order(String factNo) {
+		// TODO Auto-generated method stub
+		String hql="select id.factArea,fcodeIndex from WebFact where id.factNo=?  order by fcodeIndex";
+		String[]objs={factNo};
+		return super.findAll(hql, objs);
+	}
 
 	/**
 	 * 日期:2016/6/7
@@ -319,6 +330,18 @@ public class WebFactDaoImpl extends Basedao implements IWebFactDao {
 		// TODO Auto-generated method stub
 		String hql="select distinct id.factArea from WebFact where factShow='0'";
 		return super.findAll(hql, null);
+	}
+
+	/**
+	 * 日期:2016/11/4
+	 * 描述:
+	 */
+	
+	
+	public List<Object[]> findAllVwebfact(){
+		// TODO Auto-generated method stub
+		String hql="select factNo,factSname,orderNo,erpFactcode from VWebFact order by orderNo";
+		return super.findAll(hql,null);
 	}
 
 }

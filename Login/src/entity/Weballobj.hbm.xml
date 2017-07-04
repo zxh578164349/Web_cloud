@@ -72,11 +72,11 @@
         <property name="objA118" type="java.lang.Double">
             <column name="OBJ_A118" precision="13" scale="4" />
         </property>
-        <property name="objA119" type="java.lang.Integer">
-            <column name="OBJ_A119" precision="13" scale="4" />
+        <property name="objA119" type="java.lang.Double">
+            <column name="OBJ_A119" precision="15" scale="4" />
         </property>
-        <property name="objA120" type="java.lang.Integer">
-            <column name="OBJ_A120" precision="13" scale="4" />
+        <property name="objA120" type="java.lang.Double">
+            <column name="OBJ_A120" precision="15" scale="4" />
         </property>
         <property name="objA121" type="java.lang.Double">
             <column name="OBJ_A121" precision="13" scale="4" />
@@ -90,14 +90,14 @@
         <property name="objA124" type="java.lang.Double">
             <column name="OBJ_A124" precision="13" scale="4" />
         </property>
-        <property name="objA125" type="java.lang.Integer">
-            <column name="OBJ_A125" precision="13" scale="4" />
+        <property name="objA125" type="java.lang.Double">
+            <column name="OBJ_A125" precision="15" scale="4" />
         </property>
-        <property name="objA126" type="java.lang.Integer">
-            <column name="OBJ_A126" precision="13" scale="4" />
+        <property name="objA126" type="java.lang.Double">
+            <column name="OBJ_A126" precision="15" scale="4" />
         </property>
-        <property name="objA127" type="java.lang.Integer">
-            <column name="OBJ_A127" precision="13" scale="4" />
+        <property name="objA127" type="java.lang.Double">
+            <column name="OBJ_A127" precision="15" scale="4" />
         </property>
         <property name="objA128" type="java.lang.Double">
             <column name="OBJ_A128" precision="13" scale="4" />

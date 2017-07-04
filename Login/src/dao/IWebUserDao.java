@@ -4,7 +4,9 @@ import java.util.List;
 
 import util.PageBean;
 import entity.KyzExpectmatmLog;
+import entity.WebOperationToUser;
 import entity.WebUser;
+import entity.WebUserOperation;
 
 public interface IWebUserDao {
 	// �ھڥΤ�W�d��Τ��H
@@ -40,7 +42,7 @@ public interface IWebUserDao {
 	public List<WebUser> findSameUser(WebUser webUser);
 	
 	
-	public PageBean findPageBean(int pageSize,int page,String userName,String factNo);
+	public PageBean findPageBean(int pageSize,int page,String userName,String factNo,String userType);
 	
 	public void add(WebUser user);
 	
@@ -49,7 +51,6 @@ public interface IWebUserDao {
 	public WebUser findByNameAndFactNoDwr(String factNo,String name);
 	public void delete(int id,KyzExpectmatmLog delLog);
 	public WebUser findByIdDwr2(String factNo,String userName);
-	public PageBean findPageBean_init(int pageSize, int page, String userName,String factNo);
 	
 	public WebUser findUser(String username,String pwd,String factNo);
 	
@@ -58,6 +59,12 @@ public interface IWebUserDao {
 	public String findEmailPWD(String email);
 	
 	public WebUser findUserByFactNoAEmail(String factNo,String email);
+	
+	public List<WebUserOperation>findAllOperations();
+	
+	public void addWebOperations(List<WebOperationToUser>list);
+	public List<WebOperationToUser> findoperations(Integer userid);
+	public void delete_operation(List<WebOperationToUser>list);
 	
 	
 	

@@ -12,7 +12,7 @@ java.util.Date currentTime = new java.util.Date();//得到当前系统时间
 String str_date = formatter.format(currentTime); //将日期时间格式化
 %>
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE HTML>
 <html>
 <head>
 <base href="<%=basePath%>">
@@ -372,7 +372,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 	}
 	
 function back() {			
-	loadUrl("/Login/kyzpetty_findPageBean3?backIndex=1");
+	loadUrl("kyzpetty_findPageBean3?backIndex=1");
 }
 </script>
   <script src="jquery/select/chosen.jquery.js" type="text/javascript"></script>
@@ -390,10 +390,10 @@ function back() {
       jjqq(selector).chosen(config[selector]);
     }
   </script>
-<script type='text/javascript' src='/Login/dwr/interface/webfactjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/kyzsecjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/kyzacctjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/kyzpettyjs.js'></script>
+<script type='text/javascript' src='dwr/interface/webfactjs.js'></script>
+<script type='text/javascript' src='dwr/interface/kyzsecjs.js'></script>
+<script type='text/javascript' src='dwr/interface/kyzacctjs.js'></script>
+<script type='text/javascript' src='dwr/interface/kyzpettyjs.js'></script>
 </body>
 
 </html>

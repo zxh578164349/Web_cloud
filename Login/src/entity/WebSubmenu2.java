@@ -15,6 +15,7 @@ public class WebSubmenu2 implements java.io.Serializable {
 	private String submenuname;
 	private String address;
 	private String subtype;
+	private String enableMk; 
 	private List<WebSubmenu>list;
 
 	// Constructors
@@ -91,6 +92,11 @@ public class WebSubmenu2 implements java.io.Serializable {
 	public void setList(List<WebSubmenu> list) {
 		this.list = list;
 	}
+	public String getEnableMk(){
+		return enableMk;
+	}
+	public void setEnableMk(String enableMk){
+		this.enableMk=enableMk;
+	}
 	
-
 }

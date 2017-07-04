@@ -6,6 +6,7 @@ package dao;
 import java.util.List;
 
 import entity.VKpiWebprofitloss;
+import entity.VKpiWebprofitlossItems;
 
 /**   
  *    
@@ -23,5 +24,6 @@ import entity.VKpiWebprofitloss;
 public interface IVKpiWebprofitlossDao{
 	public List<VKpiWebprofitloss>findVKpiWebprofitloss(String factNo,String yymm,String yymm2);
 	public List<VKpiWebprofitloss>findVKpiWebprofitloss(List<String>list_factcode,String yymm);
+	public List<VKpiWebprofitlossItems>findItems();
 
 }

@@ -12,7 +12,7 @@ java.util.Date currentTime = new java.util.Date();//得到当前系统时间
 String str_date = formatter.format(currentTime); //将日期时间格式化
 %>
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE HTML>
 <html>
 <head>
 <base href="<%=basePath%>">
@@ -29,8 +29,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 
 <body >
 
-	<form action="kyzmat_add" method="post" id="form">
-	<h2>物料資料</h2>	 
+	<form action="kyzmat_add" method="post" id="form">	 
 	  <s:if test="mat!=null">
 			<input type="hidden" name="mat.updateMan" value="<s:property value='#attr.loginUser.username'/>"/>
 		    <input type="hidden" name="mat.dateUpdate" value="<%=str_date%>"/>	 
@@ -332,11 +331,11 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 	}
 	
 	function back(){
-		loadUrl("/Login/kyzmat_findPageBean3?backIndex=1");
+		loadUrl("kyzmat_findPageBean3?backIndex=1");
 	}
 </script>
-<script type='text/javascript' src='/Login/dwr/interface/kyzscmjs.js'></script>
-<script type='text/javascript' src='/Login/dwr/interface/kyzmatjs.js'></script>
+<script type='text/javascript' src='dwr/interface/kyzscmjs.js'></script>
+<script type='text/javascript' src='dwr/interface/kyzmatjs.js'></script>
 <script type="text/javascript">
   jq(function(){
 	  goTrim();

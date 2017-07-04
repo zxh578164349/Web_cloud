@@ -5,7 +5,8 @@
 	<constant name="struts.i18n.encoding" value="utf-8" />
 	<constant name="struts.multipart.maxSize" value="25600000"></constant>
 	 <constant name="struts.custom.i18n.resources" value="uploadError"/>
-	 
+	 <constant name="struts.devMode" value="true" />
+	
 	<package name="strutsL" extends="struts-default,jasperreports-default,json-default" namespace="/">
 	<default-action-ref name="judge"/><!-- 用於jetty容器，因為jetty不支持web.xml文件中<welcome-file-list>，與下面的"judge"action搭配使用 -->				
 		<global-results>
@@ -17,13 +18,10 @@
 		    <result name="judge">judge.jsp</result>
 		</action>				
 		
-		<action name="menu_*" class="webMenuAction" method="{1}">
-			<result name="findAllMenu">test.jsp</result>
-		</action>
-		<action name="user*" class="webUserAction" method="{1}">
-			<!-- <result name="chengong" type="redirectAction">menu_findAllMenu</result>  -->
-			<result name="chengong">test.jsp</result>		   			
-			<result name="initial">page/updateData.jsp</result>
+		
+		<action name="user*" class="webUserAction" method="{1}">								   			
+			<result name="initialUpdate">page/updateData.jsp</result>
+			<result name="initialUpdate_guest">guest/page/updateData.jsp</result>
 			<result name="all">page/managerUser.jsp</result>
 			<result name="qx">page/Jurisdiction.jsp</result>			
 			<result name="findMoreusers">index2.jsp</result>
@@ -40,14 +38,21 @@
 			</result>
 			<result name="updateUesr" type="json">
 			   <param name="root">ajax_result</param>
+			</result>
+			
+			<result name="logout">judge.jsp</result>
+			<result name="logout_guest">judge_guest.jsp</result>
+			<result name="findAllOperations" type="json">
+			    <param name="root">jsons</param>
+			</result>
+			<result name="addoperations" type="json">
+			    <param name="root">ajax_result</param>
 			</result>			    			
 		</action>
 		<action name="show*" class="showAction" method="{1}">
 			<result name="titleSuccess">page/show.jsp</result>
 		</action>
 	
-		<action name="print2Y_*" class="preAndDataAction" method="{1}">
-		</action>
 		<action name="ypre_*" class="ypreAction" method="{1}">
 			<result name="addYPre" type="redirectAction">ypre_findPageBean</result>
 			<result name="fails">none.jsp</result>
@@ -61,6 +66,7 @@
 		<action name="webfact_*" class="webFactAction" method="{1}">
 			<result name="findAllfact">index2.jsp</result>
 			<result name="findAllfact2">login2.jsp</result>
+			<result name="findAllWebfact_guest">login_guest.jsp</result>
 			<result name="findAllFact_code_no">page/VWebmachine.jsp</result>
 			<result name="findAllFact_obj" type="json">
 			    <param name="root">jsons</param>
@@ -70,6 +76,9 @@
 			</result>
 			<result name="findFactByFactNo" type="json">
 			   <param name="root">jsons</param>
+			</result>
+			<result name="findAllVwebfact" type="json">
+			    <param name="root">jsons</param>
 			</result>
 		</action>		
 		<action name="print2Ypoi_*" class="preAndDataActionipoi"
@@ -154,6 +163,12 @@
         <param name="contentDisposition">attachment;filename="${fileName}"</param>   
         <param name="bufferSize">4096</param>
         </result>
+        <result name="inline" type="stream">
+         <param name="contentType">image/jpeg;charset=utf-8</param>
+        <param name="inputName">fileInput</param>  
+        <param name="contentDisposition">inline;filename="${fileName}"</param>   
+        <param name="bufferSize">4096</param>
+        </result>
         <result name="input">none.jsp</result>
         <result name="delete" type="redirectAction">filesUpload_findByName</result>     
         </action>       
@@ -208,6 +223,12 @@
              <result name="delete" type="redirectAction">webtype_findPageBean3</result>
              <result name="recovery" type="json">
                   <param name="root">ajaxResult</param>
+             </result>
+             <result name="findPF" type="json">
+                  <param name="root">ajaxResult</param>
+             </result>
+             <result name="findTypes" type="json">
+                   <param name="root">jsons</param>
              </result>
         </action>
         <action name="proloss_*" class="profitlossAction" method="{1}"></action>
@@ -365,10 +386,7 @@
 		<action name="ydata_*" class="ydataAction" method="{1}">
 			<result name="addData" type="json">
 			   <param name="root">ajaxResult</param>			   
-			</result>
-			<result name="upData" type="json">
-			   <param name="root">ajaxResult</param>
-			</result>
+			</result>			
 			<result name="fails">none.jsp</result>
 			<result name="findById">saveAndUpdate/Yield_data.jsp</result>
 			<result name="findById2">saveAndUpdate/Yield_data2.jsp</result>
@@ -400,7 +418,15 @@
              kyzletter_findPageBean
           </result>
           <result name="delete" type="redirectAction">kyzletter_findPageBean3</result>
+          <result name="lookFile" type="stream">		     
+           <param name="contentType">image/jpeg;charset=utf-8</param>
+           <param name="inputName">fileInput</param>  
+           <param name="contentDisposition">inline;filename="${fileName}"</param>   
+           <param name="bufferSize">4096</param>       
+		  </result>
         </action>
+        
+		  
         <action name="kyz_*" class="kyzAction" method="{1}">
 		   <!--   <interceptor-ref name="fileUpload">
 		    配置允许上传的文件大小，单位字节,本例为：5MB 
@@ -434,8 +460,14 @@
          <param name="contentType">application/octet-stream;charset=utf-8</param>
         <param name="inputName">fileInput</param>  
         <param name="contentDisposition">inline;filename="${fileName}"</param>   
-        <param name="bufferSize">4096</param>
+        <param name="bufferSize">4096</param>        
         </result>
+        <result name="lookFile" type="stream">		     
+           <param name="contentType">image/jpeg;charset=utf-8</param>
+           <param name="inputName">fileInput2</param>  
+           <param name="contentDisposition">inline;filename="${fileName}"</param>   
+           <param name="bufferSize">4096</param>       
+		  </result>
 		</action>
 		<action name="vbm_*" class="visabillmAction" method="{1}">
 		  <!--   函文審核 -->
@@ -449,6 +481,8 @@
 		  <result name="findById5">page/kyvisabills_minus2.jsp</result><!-- 減簽(帶刪除) -->
 		  <result name="findById_email">/page/kyvisabills_email.jsp</result><!-- email直接審核,不需要登錄帳號（手機平板） -->
 		  <result name="findById_email2">/page/kyvisabills_email2.jsp</result><!-- email直接審核,不需要登錄帳號（普通電腦 ） -->
+		  <result name="findById_email_gj">/page/kyvisabills_email_gj.jsp</result><!-- email不需要審核,不需要登錄帳號（手機平板） -->
+		  <result name="findById_email2_gj">/page/kyvisabills_email2_gj.jsp</result><!-- email不需要審核,不需要登錄帳號（普通電腦 ） -->
 		  <result name="add" type="json">
                <param name="root">ajaxResult</param>
           </result>
@@ -490,6 +524,9 @@
 		  <result name="beanList_1">/tw/visabillm.jsp</result>
 		  <result name="beanList1_1">/tw/tw1/visabillm1.jsp</result>
 		  <!-- 函文審核狀況 -->
+		  <result name="findKyVisaBills_Int" type="json">
+		      <param name="root">ajaxResult</param>
+		  </result>		  		  
 		</action>
 		<action name="visaflow_*" class="kyzVisaFlowAction" method="{1}">
 		    <result name="add" type="json">
@@ -522,7 +559,13 @@
 		    <result name="beanList">page/webTabpom.jsp</result>
 		    <result name="beanList1">page/table1/webTabpom1.jsp</result>
 		    <result name="findById">/saveAndUpdate/WebTabpomSaveOrUpdate.jsp</result>
-		    <result name="delete" type="redirectAction">webtabpom_findPageBean3</result>		    
+		    <result name="delete" type="redirectAction">webtabpom_findPageBean3</result>
+		    <result name="makePomNo" type="json">
+		      <param name="root">ajaxResult</param>
+		    </result>
+		    <result name="findByIdfiles">page/webtabpomfilesUploadAndDownload.jsp</result>
+		    <result name="findByIdfiles_ajax">page/table1/webtabpomfilesUploadAndDownload1.jsp</result>
+		      
 		</action>
 		<action name="webfactOrder_*" class="webfactorderAction" method="{1}">
 		   <result name="beanList">page/webfactOrder.jsp</result>
@@ -567,6 +610,9 @@
 		<action name="webtabpomfile_*" class="webtabpomfileAction" method="{1}">
 		   <result name="findwebtabpomFileJson" type="json">
 		      <param name="root">jsons</param>
+		   </result>
+		   <result name="findByPomNo" type="json">
+		       <param name="root">jsons</param>
 		   </result>
 		</action>
 		<action name="webphonebook_*" class="webphonebookAction" method="{1}">
@@ -630,7 +676,57 @@
 		<action name="vwebbussortnew_*" class="vWebbussortActionNewAction" method="{1}"></action>
 		<action name="autosendfactorder_*" class="AutoSendWebfactorderAction" method="{1}"></action>
 		<action name="vkpiwebpro_*" class="vkpiprofitAction" method="{1}"></action>
+		
+		<action name="weberppf_*" class="weberppfAction" method="{1}">		   
+		   <result name="findNamece" type="json">
+		      <param name="root">jsons</param>
+		   </result>
+		   <result name="findTypeNo" type="json">
+		      <param name="root">jsons</param>
+		   </result>
+		   <result name="findNameces" type="json">
+		      <param name="root">jsons</param>
+		   </result>
+		</action>
+		<action name="weberpbp_*" class="weberpbpAction" method="{1}">
+		   <result name="findObjOp1" type="json">
+		      <param name="root">jsons</param>
+		   </result>
+		   <result name="findObjOp2" type="json">
+		       <param name="root">jsons</param>
+		   </result>
+		</action>
+		<action name="webformula_*" class="webformulaAction" method="{1}">
+		    <result name="findPageBean">page/webformula.jsp</result>
+		    <result name="findPageBean1">page/table1/webformula1.jsp</result>
+		    <result name="findPageBean_guest">guest/page/webformula.jsp</result>
+		    <result name="findPageBean_guest1">guest/page/table1/webformula1.jsp</result>
+		    <result name="makeFormulaIndex" type="json">
+		        <param name="root">ajaxResult</param>
+		    </result>
+		    <result name="add" type="json">
+		        <param name="root">ajaxResult</param>
+		    </result>
+		    <result name="delete" type="json">
+		        <param name="root">ajaxResult</param>
+		    </result>
+		    <result name="sendEmail" type="json">
+		        <param name="root">jsons</param>
+		    </result>
+		    <result name="findById">saveAndUpdate/WebFormulaSaveOrUpdate2.jsp</result>
+		    <result name="addItems" type="json">
+		        <param name="root">ajaxResult</param>
+		    </result>
+		    <result name="deleteItem" type="json">
+		        <param name="root">ajaxResult</param>
+		    </result>
+		    <result name="findById_layer">page/webformula_layer/WebFormula_layer.jsp</result>
+		    <result name="findById_layer2">page/webformula_layer/WebFormula_layer2.jsp</result>		    
+		</action>
 	</package>
 
+     <package name="guest" extends="struts-default,jasperreports-default,json-default" namespace="/guest">
+	    	    	    
+	 </package>
 </struts>
  

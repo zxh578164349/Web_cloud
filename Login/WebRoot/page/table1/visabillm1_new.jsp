@@ -8,7 +8,7 @@
 			+ path + "/";
 %>
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE HTML>
 <html>
 <head>
 <base href="<%=basePath%>">
@@ -25,22 +25,18 @@
 <body>
   <div id="container">
     <div id="content">
-	<table class="table table-striped table-hover table-bordered" >
-		<h2>函文審核</h2>
+    <h3 id="h2_title">函文審核</h3>
+	<table class="table table-striped table-hover table-bordered" >		
 		<thead>			
 			<tr class="tr_show">
 				<th>序號</th>
 				<th>廠別</th>
 				<th>類別</th>
-				<th>單號</th>
-				<!-- <th>最近審核人(Email)</th>
-				<th>下一位審核人(Email)</th>
-				<th>最近項次</th>
-				<th>下一個項次</th> -->
+				<th>單號</th>				
 				<th>標題</th>
 				<th>最近審核狀態</th>
 				<th>當前審核狀態</th>
-				<th>重審狀態</th>				
+				<th>審核時間</th>				
 				<th>創建日期</th>
 				<s:if test='#session.loginUser.userread!="1"'>			
 				<th>操作</th>
@@ -48,31 +44,31 @@
 			</tr>
 		</thead>
 		<tbody id="tbody">
-		<s:iterator value="bean.list" status="x" id="temp">		
-		        <tr >
+		<s:iterator value="bean.list" status="x" id="temp">	
+		  <s:if test='id.kyVisabillm.delMk=="1"'>
+		     <tr class="danger">
+		  </s:if>
+		  <s:else>
+		     <tr>
+		  </s:else>	
 				<td>${ bean.pageSize*(bean.currentPage-1)+x.index+1}</td>
-				<td><s:property value="id.kyVisabillm.id.factNo" />
+				<td><s:property value="id.kyVisabillm.factNo2.factSname" />
 				</td>
 				<td>							
-				<s:property value="id.kyVisabillm.colTemp"/>									  						
+				<!-- <s:property value="id.kyVisabillm.colTemp"/>-->
+				<s:property value="id.kyVisabillm.webtype.typeName" />									  						
 				</td>
 				<td><s:property value="id.kyVisabillm.id.billNo"/>
 				</td>
-				<td><s:property value="memo"/>			
-				</td>
-				<!-- <td><s:property value="id.kyVisabillm.signerLast" />
-				</td>
-				<td><s:property value="id.kyVisabillm.signerNext" />
-				</td>
-				<td><s:property value="id.kyVisabillm.itemLast" />
-				</td>
-				<td><s:property value="id.kyVisabillm.itemNext" />
-				</td> -->
+				<td>
+				<!-- <s:property value="memo"/>	-->
+				<s:property value="id.kyVisabillm.general" />			
+				</td>				
 				<td><s:property value="id.kyVisabillm.lastMk" />
 				</td>
 				<td><s:property value="id.kyVisabillm.visaMk" />
 				</td>
-				<td><s:property value="id.kyVisabillm.revisaMk" />
+				<td><s:property value="dateVisa" />
 				</td>				
 				<td><s:property value="%{formatDate(id.kyVisabillm.dateCreate)}" />
 				</td>
@@ -113,20 +109,18 @@
 							value="<s:property value='id.kyVisabillm.id.billNo'/>" name="billNo" />						
 							<input type="hidden" value="<s:property value='id.kyVisabillm.id.visaSort'/>" name="visaSort"/>
 					 </form>
-					 <form  method="post" id="4subform${x.index}" style="float:left" target="_blank">
+					 <form action="vbm_print_all"  method="post" id="4subform${x.index}" style="float:left" target="_blank">
 						<input type="hidden" value="<s:property value='id.kyVisabillm.id.factNo'/>"
 							name="factNo" /> <input type="hidden"
 							value="<s:property value='id.kyVisabillm.id.billNo'/>" name="billNo" />
-							<input type="hidden" value="<s:property value='id.kyVisabillm.id.visaSort'/>" name="visaSort"/>
-							<input type="hidden" value="<s:property value='id.kyVisabillm.id.visaSort'/>" name="visaType"/><!-- 湘威費用清單函文 -->
+							<input type="hidden" value="<s:property value='id.kyVisabillm.id.visaSort'/>" name="visaSort"/>							
 							<input type="hidden" value="look" name="lookordown"/>						
 					</form>
-					<form  method="post" id="5subform${x.index}" style="float:left" target="_blank">
+					<form action="vbm_print_all"  method="post" id="5subform${x.index}" style="float:left" target="_blank">
 						<input type="hidden" value="<s:property value='id.kyVisabillm.id.factNo'/>"
 							name="factNo" /> <input type="hidden"
 							value="<s:property value='id.kyVisabillm.id.billNo'/>" name="billNo" />
-							<input type="hidden" value="<s:property value='id.kyVisabillm.id.visaSort'/>" name="visaSort"/>
-							<input type="hidden" value="<s:property value='id.kyVisabillm.id.visaSort'/>" name="visaType"/><!-- 湘威費用清單函文 -->
+							<input type="hidden" value="<s:property value='id.kyVisabillm.id.visaSort'/>" name="visaSort"/>							
 							<input type="hidden" value="down" name="lookordown"/>						
 					</form>
 										
@@ -147,14 +141,7 @@
 					<s:if test='id.kyVisabillm.visaMk=="N"'>
 					<td>
 					 <a href="javascript:findById_form('1form${x.index}','vbm_findById2')"><img alt="加簽" src="images/icon/add24.png" title="加簽"><br>加簽</a>
-					</td>
-					<!-- 20160311禁用
-					 <s:if test='#session.loginUser.factno=="JW"'>
-					<td>
-					 <a href="javascript:findById('3form${x.index}','vbm_findById4')"><img alt="減簽" src="images/icon/minus24.png" title="減簽"><br>減簽</a>					 
-					 </td>
-					 </s:if>
-					  -->
+					</td>					
 					 <td>
 					   <a href="javascript:findById_form('3_3form${x.index}','vbm_findById5')"><img alt="減簽(带删除)" src="images/icon/remove.png" title="減簽(带删除)"><br>減簽</a>
 					 </td>
@@ -162,12 +149,7 @@
 					 <s:else>
 					 <td>
 					   <a><img alt="加簽" src="images/icon/add24_1.jpg" title="加簽"><br>加簽</a>
-					 </td>
-					 <s:if test='#session.loginUser.factno=="JW"'>
-					 <td>
-					   <a><img alt="減簽" src="images/icon/minus24_1.jpg" title="減簽"><br>減簽</a>
-					 </td>
-					 </s:if>
+					 </td>					 
 					 <td>
 					   <a><img alt="減簽(带删除)" src="images/icon/remove_1.png" title="減簽(带删除)"><br>減簽</a>
 					 </td>    
@@ -175,10 +157,10 @@
 					 </s:if>
 								    					 
 					 <td>
-					 <a href="javascript:goPreviewOrPrint('4subform${x.index}','${temp.id.kyVisabillm.id.billNo}')" ><img alt="預覽" src="images/icon/view24.png" title="預覽"><br>預覽</a>
+					 <a href="javascript:document.getElementById('4subform${x.index}').submit()" ><img alt="預覽" src="images/icon/view24.png" title="預覽"><br>預覽</a>
 					 </td>
 					 <td>
-					 <a href="javascript:goPreviewOrPrint('5subform${x.index}','${temp.id.kyVisabillm.id.billNo}')"><img alt="打印" src="images/icon/print24.png" title="打印"><br>打印</a>
+					 <a href="javascript:document.getElementById('5subform${x.index}').submit()"><img alt="打印" src="images/icon/print24.png" title="打印"><br>打印</a>
 				     </td>
 				    	
 				     

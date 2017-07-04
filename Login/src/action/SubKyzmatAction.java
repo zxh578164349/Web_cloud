@@ -195,53 +195,39 @@ public class SubKyzmatAction extends ActionSupport implements ServletResponseAwa
 		return "findfactnoByMatno";
 	}
 	public String findPageBean(){
-		ActionContext.getContext().getApplication().clear();
-		factNo=(String)ActionContext.getContext().getSession().get("factNo");
-		bean=subkyzmatSer.findPageBean(25, page, fromDate, endDate,matCname,typeBno,typeMno,typeSno,factNo,matNo);
+		ActionContext.getContext().getSession().remove("fromdate");
+		ActionContext.getContext().getSession().remove("enddate");
+		ActionContext.getContext().getSession().remove("matNo");
+		ActionContext.getContext().getSession().remove("bNo");
+		ActionContext.getContext().getSession().remove("mNo");
+		ActionContext.getContext().getSession().remove("sNo");
+		ActionContext.getContext().getSession().remove("factno");
+		ActionContext.getContext().getSession().remove("matcname");		
+		bean=subkyzmatSer.findPageBean(20,page, fromDate, endDate,matCname,typeBno,typeMno,typeSno,factNo,matNo);
 		return "findPageBean";
 	}
 	public String findPageBean2(){
-		ActionContext.getContext().getApplication().clear();
-		bean=subkyzmatSer.findPageBean(25, page, fromDate, endDate,matCname.trim(),typeBno,typeMno,typeSno,factNo,matNo.trim());
-		if(fromDate!=null&&!fromDate.equals("")){
-			ActionContext.getContext().getApplication().put("fromdate", fromDate);
-		}
-		if(endDate!=null&&!endDate.equals("")){
-			ActionContext.getContext().getApplication().put("enddate", endDate);
-		}
-		if(matNo!=null&&!matNo.equals("")){
-			ActionContext.getContext().getApplication().put("matNo", matNo.trim());
-		}
-		if(typeBno!=null&&!typeBno.equals("")){
-			ActionContext.getContext().getApplication().put("bNo", typeBno);
-		}
-		if(typeMno!=null&&!typeMno.equals("")){
-			ActionContext.getContext().getApplication().put("mNo", typeMno);
-		}
-		if(typeSno!=null&&!typeSno.equals("")){
-			ActionContext.getContext().getApplication().put("sNo", typeSno);
-		}
-		if(factNo!=null&&!factNo.equals("")){
-			ActionContext.getContext().getApplication().put("factno", factNo);
-		}
-		if(matCname!=null&&!matCname.equals("")){
-			ActionContext.getContext().getApplication().put("matcname", matCname.trim());
-		}
+		bean=subkyzmatSer.findPageBean(20,page, fromDate, endDate,matCname.trim(),typeBno,typeMno,typeSno,factNo,matNo.trim());		
+			ActionContext.getContext().getSession().put("fromdate", fromDate);				
+			ActionContext.getContext().getSession().put("enddate", endDate);				
+			ActionContext.getContext().getSession().put("matNo", matNo);				
+			ActionContext.getContext().getSession().put("bNo", typeBno);				
+			ActionContext.getContext().getSession().put("mNo", typeMno);			
+			ActionContext.getContext().getSession().put("sNo", typeSno);				
+			ActionContext.getContext().getSession().put("factno", factNo);				
+			ActionContext.getContext().getSession().put("matcname", matCname);		
 		return "findPageBean1";
 	}
 	public String findPageBean3(){
-		fromDate=(String)ActionContext.getContext().getApplication().get("fromdate");
-		endDate=(String)ActionContext.getContext().getApplication().get("enddate");
-		matNo=(String)ActionContext.getContext().getApplication().get("matNo");
-		typeBno=(String)ActionContext.getContext().getApplication().get("bNo");
-		typeMno=(String)ActionContext.getContext().getApplication().get("mNo");
-		typeSno=(String)ActionContext.getContext().getApplication().get("sNo");
-		factNo=(String)ActionContext.getContext().getApplication().get("factno");
-		matCname=(String)ActionContext.getContext().getApplication().get("matcname");
-		if(factNo==null||factNo.equals("")){
-			factNo=(String)ActionContext.getContext().getSession().get("factNo");
-		}
-		bean=subkyzmatSer.findPageBean(25, page, fromDate, endDate,matCname,typeBno,typeMno,typeSno,factNo,matNo);
+		fromDate=(String)ActionContext.getContext().getSession().get("fromdate");
+		endDate=(String)ActionContext.getContext().getSession().get("enddate");
+		matNo=(String)ActionContext.getContext().getSession().get("matNo");
+		typeBno=(String)ActionContext.getContext().getSession().get("bNo");
+		typeMno=(String)ActionContext.getContext().getSession().get("mNo");
+		typeSno=(String)ActionContext.getContext().getSession().get("sNo");
+		factNo=(String)ActionContext.getContext().getSession().get("factno");
+		matCname=(String)ActionContext.getContext().getSession().get("matcname");		
+		bean=subkyzmatSer.findPageBean(20,page, fromDate, endDate,matCname,typeBno,typeMno,typeSno,factNo,matNo);
 		String result="findPageBean1";
 		if(backIndex==1){
 			result="findPageBean";

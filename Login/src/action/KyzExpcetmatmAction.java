@@ -1,71 +1,43 @@
 package action;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
-import java.net.URI;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
-import java.sql.Timestamp;
 import java.text.DecimalFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import javax.servlet.http.HttpServletResponse;
-
-import mail.MailSenderInfo;
-import mail.SimpleMailSender;
-import net.sf.json.JSONArray;
-
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.ServletResponseAware;
-
-
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
-import com.spreada.utils.chinese.ZHConverter;
-import com.sun.jndi.toolkit.url.Uri;
-
-import services.IKyVisaBillsServices;
 import services.IKyVisabillmServices;
 import services.IKyzExpectmatmFileServices;
 import services.IKyzExpectmatmLogServices;
 import services.IKyzExpectmatmServices;
 import services.IKyzExpectmatmsServices;
-import services.IKyzVisaFlowServices;
 import services.IWebFactServices;
-import services.IWebTypeServices;
-import services.IWebUserService;
 import services.IWebuserEmailServices;
 import util.GlobalMethod;
 import util.JasperHelper;
 import util.PageBean;
 import entity.KyVisabillm;
 import entity.KyVisabills;
-import entity.KyzContactletter;
 import entity.KyzExpectmatm;
 import entity.KyzExpectmatmFile;
 import entity.KyzExpectmatmId;
 import entity.KyzExpectmatmLog;
 import entity.KyzExpectmats;
-import entity.KyzVisaflow;
 import entity.WebType;
 import entity.WebUser;
-import entity_temp.VisabillsTemp;
 
 public class KyzExpcetmatmAction extends ActionSupport implements ServletResponseAware{
 	private KyzExpectmatm kyz;
@@ -87,6 +59,7 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
     private String lookordown;
     private String fileName;
     private InputStream fileInput;
+    private InputStream fileInput2;
     private String userNm;
     private String yymmdd2;
     private String itemNo;
@@ -108,7 +81,24 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
     private String addorupdate;//添加或更新標識    update表示進入更新狀態
     
     
-    public String getAddorupdate() {
+    
+    public String getTitle(){
+		return title;
+	}
+
+	public void setTitle(String title){
+		this.title=title;
+	}
+
+	public InputStream getFileInput2(){
+		return fileInput2;
+	}
+
+	public void setFileInput2(InputStream fileInput2){
+		this.fileInput2=fileInput2;
+	}
+
+	public String getAddorupdate() {
 		return addorupdate;
 	}
 
@@ -299,14 +289,6 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 		this.factCode = factCode;
 	}
 
-	public final String getTitle() {
-		return title;
-	}
-
-	public final void setTitle(String title) {
-		this.title = title;
-	}
-
 	public IWebFactServices getWebFactSer() {
 		return webFactSer;
 	}
@@ -425,31 +407,6 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 			}
 		}
 		
-		/*文件上傳*/
-		if(files!=null&&files.get(0)!=null){//不為空代表有上傳附檔,不能寫成files.size()>0,否則報空指針
-			kyz.setFilesYn("1");//標示是否帶有附檔
-			//File uploadFile=new File(ServletActionContext.getServletContext().getRealPath("KyzexpFile\\"+kyz.getId().getBillNo()));//附檔上傳到項目
-			File uploadFile_backup=new File("d:\\KyzexpFile_backup\\"+kyz.getId().getBillNo());//附檔上傳到D盤(為了避免更新項目時丟失附檔,所在上傳到D盤)			
-			if(!uploadFile_backup.exists()){
-				uploadFile_backup.mkdirs();
-			}
-			for(int i=0;i<files.size();i++){							
-				if(files.get(i)!=null){																									
-					GlobalMethod.uploadFile(files.get(i),uploadFile_backup+"\\"+filesFileName.get(i));//文件上傳																							
-					KyzExpectmatmFile kyzexpFile=new KyzExpectmatmFile();//函文附檔
-					kyzexpFile.setBillno(kyz.getId().getBillNo());
-					kyzexpFile.setFilename(filesFileName.get(i));
-					WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
-					String username=user.getName();
-					kyzexpFile.setUsername(username);
-					kyzexpFile.setFactNo(kyz.getId().getFactNo());
-					kyzexpFile.setVisaTypeM(kyz.getVisaType().substring(0,2));
-					kyzexpfileSer.add(kyzexpFile);
-				}
-			}
-		}
-		
-
 		SimpleDateFormat format=new SimpleDateFormat("yyyyMMdd");
 		Date date;
 		try {
@@ -457,19 +414,17 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 			date = format.parse(yymmdd);
 			kyz.setTimeCreate(date);
 			kyz.setVisaTypeM(kyz.getVisaType().substring(0,2));
+			if(files!=null&&files.get(0)!=null){
+				kyz.setFilesYn("1");//標示是否帶有附檔
+			}
 			if(isnull.equals("isNull")){			
 				KyzExpectmatm temp=kyzSer.findById(kyz.getId().getFactNo(), kyz.getId().getBillNo());										
-				if(temp==null){
-					//kyz.setVisaTypeM(kyz.getVisaType().substring(0,2));
-					kyzSer.add(kyz);											
+				if(temp==null){					
+					kyzSer.add(kyz);										
+					
 					KyVisabillm vbm=visabillmSer.findById(kyz.getId().getFactNo(), kyz.getVisaType(), kyz.getId().getBillNo());
-					List<String>list_emailPwd=webuseremailSer.findByFactNoAEmailPwd2(vbm.getId().getFactNo(),vbm.getSignerNext());																					
-																								
-					GlobalMethod.sendNewEmail(vbm,list_emailPwd);//發送郵件
-				      
-				      /****************************函文打印************************************/
-					 //print(kyz.getId(),kyz.getVisaType());
-					  /****************************函文打印************************************/
+					List<String>list_emailPwd=webuseremailSer.findByFactNoAEmailPwd2(vbm.getId().getFactNo(),vbm.getSignerNext());																																													
+					GlobalMethod.sendNewEmail(vbm,list_emailPwd);//發送郵件				      				     
 				}else{
 					response.getWriter().print(
 							"<script>window.parent.alert('數據庫已存在(" + kyz.getId().getBillNo() + ")!');window.parent.layer.closeAll()</script>");
@@ -477,6 +432,31 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 			}else{
 				//kyz.setVisaTypeM(kyz.getVisaType().substring(0,2));
 				kyzSer.add(kyz);			
+			}
+			
+			/*文件上傳*/
+			if(files!=null&&files.get(0)!=null){//不為空代表有上傳附檔,不能寫成files.size()>0,否則報空指針
+				//kyz.setFilesYn("1");//標示是否帶有附檔
+				//File uploadFile=new File(ServletActionContext.getServletContext().getRealPath("KyzexpFile\\"+kyz.getId().getBillNo()));//附檔上傳到項目
+				File uploadFile_backup=new File("d:\\KyzexpFile_backup\\"+kyz.getId().getBillNo());//附檔上傳到D盤(為了避免更新項目時丟失附檔,所在上傳到D盤)			
+				if(!uploadFile_backup.exists()){
+					uploadFile_backup.mkdirs();
+				}
+				for(int i=0;i<files.size();i++){							
+					if(files.get(i)!=null){																																																					
+						KyzExpectmatmFile kyzexpFile=new KyzExpectmatmFile();//函文附檔
+						kyzexpFile.setBillno(kyz.getId().getBillNo());
+						kyzexpFile.setFilename(filesFileName.get(i));
+						WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
+						String username=user.getName();
+						kyzexpFile.setUsername(username);
+						kyzexpFile.setFactNo(kyz.getId().getFactNo());
+						kyzexpFile.setVisaTypeM(kyz.getVisaType().substring(0,2));
+						kyzexpFile.setFileurl("upload");
+						kyzexpfileSer.add(kyzexpFile);
+						GlobalMethod.uploadFile(files.get(i),uploadFile_backup+"\\"+filesFileName.get(i));//文件上傳	
+					}
+				}
 			}
 			response.setContentType("text/html;charset=utf-8");
 			response.getWriter().print("<script>window.parent.gook();</script>");										
@@ -528,23 +508,14 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 				maxNum=num;
 			}
 		}
-		String file_yn=kyz.getFilesYn();
-		if(file_yn==null){
-			//return "findById_layer";
-			return "findById";
-		}
-		if(file_yn.equals("1")){
-			List<KyzExpectmatmFile> listfiles=kyzexpfileSer.findByBillNo(id.getBillNo());
-			//退回而生成新函文，不显示旧函文的附档
-			/*if((list==null||list.size()==0)&&billNo.contains("-")){
-				String[]objs=billNo.split("-");
-				list=kyzexpfileSer.findByBillNo(objs[0]);
-			}*/
-		   for(int i=0;i<listfiles.size();i++){
+		String file_yn=kyz.getFilesYn();				
+		if("1".equals(file_yn)){
+			List<KyzExpectmatmFile> listfiles=kyzexpfileSer.findByBillNo(id.getBillNo());			
+		  /* for(int i=0;i<listfiles.size();i++){
 				String tempname=listfiles.get(i).getFilename();			
 				String utfname=URLEncoder.encode(tempname,"utf-8");				
 				listfiles.get(i).setFilename(utfname);
-			}
+			}*/
 			ActionContext.getContext().getSession().put("list_filesexp", listfiles);									
 		}
 		
@@ -563,22 +534,14 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 		kyzId.setFactNo(factNo);
 		kyz=kyzSer.findById(kyzId);
 		if(kyz!=null){
-			String file_yn=kyz.getFilesYn();
-			if(file_yn==null){
-				return "findById_layer";
-			}
-			if(file_yn.equals("1")){
-				List<KyzExpectmatmFile> list=kyzexpfileSer.findByBillNo(billNo);
-				//退回而生成新函文，不显示旧函文的附档
-				/*if((list==null||list.size()==0)&&billNo.contains("-")){
-					String[]objs=billNo.split("-");
-					list=kyzexpfileSer.findByBillNo(objs[0]);
-				}*/
-			   for(int i=0;i<list.size();i++){
+			String file_yn=kyz.getFilesYn();			
+			if("1".equals(file_yn)){
+				List<KyzExpectmatmFile> list=kyzexpfileSer.findByBillNo(billNo);				
+			  /* for(int i=0;i<list.size();i++){
 					String tempname=list.get(i).getFilename();			
 					String utfname=URLEncoder.encode(tempname,"utf-8");				
 					list.get(i).setFilename(utfname);
-				}
+				}*/
 				ActionContext.getContext().getSession().put("list_filesexp", list);			
 			}
 		}
@@ -667,37 +630,24 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 		ActionContext.getContext().getSession().remove("public_billNo");
 		ActionContext.getContext().getSession().remove("public_timeCreate");
 		ActionContext.getContext().getSession().remove("public_timeCreate2");
+		ActionContext.getContext().getSession().remove("public_title");
 		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
 		factNo = (String) ActionContext.getContext().getSession().get("factNo");
-		bean = kyzSer.findPageBean(25, page, factNo, visaSort,billNo,user,yymmdd,yymmdd2);
+		bean = kyzSer.findPageBean(20,page, factNo, visaSort,billNo,user,yymmdd,yymmdd2,title);
 		this.getTypeName(bean);
 		return "beanList";
 	}
 
 	public String findPageBean2() {
-		//ActionContext.getContext().getApplication().clear();
-		ActionContext.getContext().getSession().remove("public_factno");
-		ActionContext.getContext().getSession().remove("public_visaSort");
-		ActionContext.getContext().getSession().remove("public_billNo");
-		ActionContext.getContext().getSession().remove("public_timeCreate");
-		ActionContext.getContext().getSession().remove("public_timeCreate2");
-		if (factNo != null && !factNo.equals("") && !factNo.equals("tw")) {
+		//ActionContext.getContext().getApplication().clear();				
 			ActionContext.getContext().getSession().put("public_factno", factNo);					
-		}
-		if (visaSort != null && !visaSort.equals("")) {
 			ActionContext.getContext().getSession().put("public_visaSort", visaSort);
-		}
-		if(billNo!=null&&!billNo.equals("")){
-			ActionContext.getContext().getSession().put("public_billNo", billNo.trim());
-		}
-		if(yymmdd!=null&&!yymmdd.equals("")){
+			ActionContext.getContext().getSession().put("public_billNo", billNo);
 			ActionContext.getContext().getSession().put("public_timeCreate", yymmdd);
-		}
-		if(yymmdd2!=null&&!yymmdd2.equals("")){
 			ActionContext.getContext().getSession().put("public_timeCreate2", yymmdd2);
-		}
+			ActionContext.getContext().getSession().put("public_title",title);
 		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
-		bean = kyzSer.findPageBean(25, page, factNo, visaSort,billNo.trim(),user,yymmdd,yymmdd2);
+		bean = kyzSer.findPageBean(20,page, factNo, visaSort,billNo,user,yymmdd,yymmdd2,title);
 		this.getTypeName(bean);
 		return "beanList1";
 	}
@@ -712,11 +662,9 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 		billNo=(String)ActionContext.getContext().getSession().get("public_billNo");
 		yymmdd=(String)ActionContext.getContext().getSession().get("public_timeCreate");
 		yymmdd2=(String)ActionContext.getContext().getSession().get("public_timeCreate2");
-		if (factNo == null || factNo.equals("") || factNo.equals("tw")){
-			factNo = (String) ActionContext.getContext().getSession().get("factNo");					
-		}
+		title=(String)ActionContext.getContext().getSession().get("public_title");
 		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
-		bean = kyzSer.findPageBean(25, page, factNo, visaSort,billNo,user,yymmdd,yymmdd2);
+		bean = kyzSer.findPageBean(20,page, factNo, visaSort,billNo,user,yymmdd,yymmdd2,title);
 		this.getTypeName(bean);
 		return result;
 	}
@@ -730,16 +678,8 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 			KyzExpectmatmLog log=new KyzExpectmatmLog();
 			log.setObj("KyzExpectmatm");
 			log.setBillNo(id.getBillNo());
-			WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
-			log.setUsername(user.getUsername());
-			kyzSer.delete(id,log);
-			/*visabillmSer.delete(id.getFactNo(), visaSort, id.getBillNo());
-			List<KyzExpectmatmFile>list=kyzexpfileSer.findByBillNo(id.getBillNo());
-			if(list.size()>0){
-				for(int i=0;i<list.size();i++){
-					kyzexpfileSer.delete(list.get(i));				
-				}			
-			}*/
+			log.setFactNo(id.getFactNo());
+			kyzSer.delete(id,log);			
 			File file=new File("d:\\KyzexpFile_backup\\"+id.getBillNo());
 			if(file.exists()){
 				GlobalMethod.deletefile(file);//引用下面刪除文件夾方法
@@ -884,9 +824,32 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 	 * 解決url中空格轉換成 +號的問題
 	 */
 	public String toUrl2(String filename){
+		/*String result=null;
+		try {
+			result=new String(filename.getBytes("ISO-8859-1"),"UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;*/
 		return filename.replace("+", "%20");
+		
 	}
 	
-	
-	
+	/**
+	 * 查看函文附檔
+	 * @Title: lookFile
+	 * @Description: TODO
+	 * @param @return
+	 * @return String
+	 * @throws FileNotFoundException 
+	 * @throws
+	 * @author web
+	 * @date 2016/11/17
+	 */
+	public String lookFile() throws FileNotFoundException{
+		fileInput2=GlobalMethod.getFileInput("D:\\KyzexpFile_backup\\"+billNo+"\\"+fileName);
+		return "lookFile";
+	}
+		
 }

@@ -7,7 +7,7 @@
 			+ path + "/";
 %>
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE HTML>
 <html>
 <head>
 <base href="<%=basePath%>">
@@ -23,11 +23,9 @@
 
 <body onload="changeinput()">	
 	<form action="print2Ypoi_print2Y_hb" method="post" id="form2"
-		target="_blank">
+		target="_blank">		
 		<table id="tb" class="table table-bordered table-condensed">
-			<caption>
-				產量預估與產量資料下載				
-			</caption>
+			
 			<s:if test="#session.factNo=='tw'">
 
 				<tr>

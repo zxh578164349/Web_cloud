@@ -30,6 +30,7 @@ import entity.WebFact;
 import entity.WebFactId;
 import entity.WebydataNoinput;
 import entity.WebydataNoinputId;
+import entity.custom.ProjectConfig;
 
 import services.IWebEmailService;
 import services.IWebEstProductServices;
@@ -46,7 +47,7 @@ import util.GlobalMethod;
 public class TestTimerAction extends QuartzJobBean {
 	private String yymm;
 	private String ajaxResult;//申請函文時返回的ajax結果,   0:提交成功       1:提交失敗
-	
+		
 	public String getAjaxResult() {
 		return ajaxResult;
 	}
@@ -208,12 +209,14 @@ public class TestTimerAction extends QuartzJobBean {
 				}
 			}
 			//this.init();
+			
 		}catch(Exception e){
 			
 		}	
 	}
 	
 	public void init(){
+		String pname=this.findProjectConfig().getpName();//項目名稱
 		SimpleDateFormat format=new SimpleDateFormat("yyyyMM");		
 		if(yymm==null||yymm.equals("")){
 			Calendar calendar=Calendar.getInstance();
@@ -235,9 +238,9 @@ public class TestTimerAction extends QuartzJobBean {
 				System.err.print("ok");
 			} else {
 				HttpClient client = new HttpClient();
-				HttpMethod method = new GetMethod("http://203.85.73.161/Login/print2Ypoi_print2Y_hb?sdate="+yymm+"&edate="+yymm+"&emailMk=1&type=Excel2003");//(在不同的機器上注意修改IP和端口)
-				//HttpMethod method = new GetMethod("http://172.17.18.173:8080/Login/print2Ypoi_print2Y_hb?sdate="+yymm+"&edate="+yymm+"&emailMk=1&type=Excel2003");
-				//HttpMethod method = new GetMethod("http://localhost:8080/Login/print2Ypoi_print2Y_hb?sdate="+yymm+"&edate="+yymm+"&emailMk=1&type=Excel2003");
+				HttpMethod method = new GetMethod("http://203.85.73.161/"+pname+"/print2Ypoi_print2Y_hb?sdate="+yymm+"&edate="+yymm+"&emailMk=1&type=Excel2003");//(在不同的機器上注意修改IP和端口)
+				//HttpMethod method = new GetMethod("http://172.17.18.173:8080/"+pname+"/print2Ypoi_print2Y_hb?sdate="+yymm+"&edate="+yymm+"&emailMk=1&type=Excel2003");
+				//HttpMethod method = new GetMethod("http://localhost:8080/"+pname+"/print2Ypoi_print2Y_hb?sdate="+yymm+"&edate="+yymm+"&emailMk=1&type=Excel2003");
 				
 				client.executeMethod(method);
 				method.releaseConnection();
@@ -308,14 +311,17 @@ public class TestTimerAction extends QuartzJobBean {
 							+"</span><br/>");
 				}
 				//發送郵件
+				String classes_path=Thread.currentThread().getContextClassLoader().getResource("").getPath();			
+				String filepath=classes_path.replace("/WEB-INF/classes","/TEMPFILES/"+yymm+".xls");//附檔的路徑20170222
 				send.sendmail(
 						mail,
 						cc,
 						formast.format(formatDates.parse(dateAdd(-1)))+ "月份加久各工廠油壓產量表匯總--截止"+ jinri.format(formatDates.parse(dateAdd(-1))),																
-						content.toString(),
-						yymm,
-						affixName);				
-				File file = new File("d://" + yymm + ".xls");
+						content.toString(),						
+						affixName,
+						filepath);				
+				//File file = new File("d://" + yymm + ".xls");
+				File file=new File(filepath);
 				if (file.exists()) {
 					if (file.isFile()) {
 						file.delete();
@@ -334,6 +340,7 @@ public class TestTimerAction extends QuartzJobBean {
 	 * @throws ParseException 
 	 */
 	public String print_manual() throws ParseException {
+		String pname=this.findProjectConfig().getpName();//項目名稱
 		SimpleDateFormat tformat=new SimpleDateFormat("yyyyMM");
 		if (yymm == null || yymm.equals("")) {
 			Calendar calendar=Calendar.getInstance();
@@ -357,9 +364,9 @@ public class TestTimerAction extends QuartzJobBean {
 				System.err.print("ok");
 			} else {
 				HttpClient client=new HttpClient();
-				HttpMethod method=new GetMethod("http://203.85.73.161/Login/print2Ypoi_print2Y_hb?sdate=" + yymm + "&edate=" + yymm+ "&emailMk=1&type=Excel2003");// (在不同的機器上注意修改IP和端口)						
-				//HttpMethod method=new GetMethod("http://172.17.18.173:8080/Login/print2Ypoi_print2Y_hb?sdate="+yymm+"&edate="+yymm+"&emailMk=1&type=Excel2003");
-				// HttpMethod method=new GetMethod("http://localhost:8080/Login/print2Ypoi_print2Y_hb?sdate="+yymm+"&edate="+yymm+"&emailMk=1&type=Excel2003");
+				HttpMethod method=new GetMethod("http://203.85.73.161/"+pname+"/print2Ypoi_print2Y_hb?sdate=" + yymm + "&edate=" + yymm+ "&emailMk=1&type=Excel2003");// (在不同的機器上注意修改IP和端口)						
+				//HttpMethod method=new GetMethod("http://172.17.18.173:8080/"+pname+"/print2Ypoi_print2Y_hb?sdate="+yymm+"&edate="+yymm+"&emailMk=1&type=Excel2003");
+				// HttpMethod method=new GetMethod("http://localhost:8080/"+pname+"/print2Ypoi_print2Y_hb?sdate="+yymm+"&edate="+yymm+"&emailMk=1&type=Excel2003");
 				client.executeMethod(method);
 				method.releaseConnection();
 				ApplicationContext ac=new ClassPathXmlApplicationContext(new String[]{"spring-action.xml","spring-dao.xml","spring.xml","spring-services.xml"});
@@ -402,6 +409,8 @@ public class TestTimerAction extends QuartzJobBean {
 				  String[] cc = {MimeUtility.encodeText("張錫洪")+"<zxh578164349@qq.com>"};
 				 */
 
+				String classes_path=Thread.currentThread().getContextClassLoader().getResource("").getPath();			
+				String filepath=classes_path.replace("/WEB-INF/classes","/TEMPFILES/"+yymm+".xls");
 				AutoSendEmailAction send=new AutoSendEmailAction();
 				String tyymm=tformat.format(new Date());
 				String affixName=yymm + "各廠產量資料";
@@ -427,11 +436,12 @@ public class TestTimerAction extends QuartzJobBean {
 					}
 					// 發送郵件
 					send.sendmail(mail,cc,formast.format(formatDates.parse(dateAdd(-1))) + "月份加久各工廠油壓產量表匯總--截止" + jinri.format(formatDates.parse(dateAdd(-1))),
-							content.toString(),yymm,affixName);
+							content.toString(),affixName,filepath);
 				} else {
-					send.sendmail(mail,cc,yymm + "加久各工廠油壓產量表匯總","本郵件自動發送,請勿回復!如需回复，請回复到kyinfo@yydg.com.cn咨訊室或者lgx@yydg.com.cn譚香林!",yymm,affixName);
+					send.sendmail(mail,cc,yymm + "加久各工廠油壓產量表匯總","本郵件自動發送,請勿回復!如需回复，請回复到kyinfo@yydg.com.cn咨訊室或者lgx@yydg.com.cn譚香林!",affixName,filepath);
 				}
-				File file=new File("d://" + yymm + ".xls");
+				//File file=new File("d://" + yymm + ".xls");
+				File file=new File(filepath);
 				if (file.exists()) {
 					if (file.isFile()) {
 						file.delete();
@@ -445,6 +455,11 @@ public class TestTimerAction extends QuartzJobBean {
 			ajaxResult="1";
 		}
 		return "print_manual";
+	}
+	
+	public ProjectConfig findProjectConfig(){
+		ProjectConfig pro=GlobalMethod.findProjectConfig();
+		return pro;
 	}
 	
 }

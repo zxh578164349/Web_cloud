@@ -26,7 +26,6 @@ import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
 import entity.KyzExpectmatmLog;
-import entity.WebBackmat;
 import entity.WebUser;
 import entity.Webmixperson;
 import entity.WebmixpersonId;
@@ -339,7 +338,7 @@ public class WebMixPersonAction extends ActionSupport implements
 		ActionContext.getContext().getSession().remove("public_yymm");
 		ActionContext.getContext().getSession().remove("public_yymm2");
 		factNo=(String)ActionContext.getContext().getSession().get("factNo");
-		bean=mixPersonService.findPageBean(25, page, factNo, yymm,yymm2);
+		bean=mixPersonService.findPageBean(20,page, factNo, yymm,yymm2);
 		return "showList";
 	}
 	public String getList2(){
@@ -356,7 +355,7 @@ public class WebMixPersonAction extends ActionSupport implements
 		if(yymm2!=null&&!yymm2.equals("")){
 			ActionContext.getContext().getSession().put("public_yymm2", yymm2);
 		}
-		bean=mixPersonService.findPageBean(25, page, factNo, yymm,yymm2);
+		bean=mixPersonService.findPageBean(20,page, factNo, yymm,yymm2);
 		return "showList1";
 	}
 	public String getList3(){
@@ -370,7 +369,7 @@ public class WebMixPersonAction extends ActionSupport implements
 		if(factNo==null||factNo.equals("")){
 			factNo=(String)ActionContext.getContext().getSession().get("factNo");
 		}
-		bean=mixPersonService.findPageBean(25, page, factNo, yymm,yymm2);
+		bean=mixPersonService.findPageBean(20,page, factNo, yymm,yymm2);
 		return result;
 	}
 	/**

@@ -164,48 +164,7 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 	public void setFlowmk(String flowmk) {
 		this.flowmk = flowmk;
 	}
-	
-	
-	
-	
-
-	/*public String add() throws IOException{
-		String visaSort_main=flows.get(0).getId().getVisaSort();		
-		if(visaSort_main.equals("C1")||visaSort_main.equals("C2")){//start if
-			String visaSort_sub="C10";
-			//選中"費用簽核"所有的子類別			
-			List<String>types_str=visaSer.findVisaSort_C(flows.get(0).getId().getFactNo(),visaSort_main);
-			List<Integer>types_int=new ArrayList<Integer>();
-			if(types_str.size()>0){
-				for(int j=0;j<types_str.size();j++){
-					int temp=Integer.parseInt(types_str.get(j).substring(1));
-					types_int.add(temp);
-				}
-				int maxNum=types_int.get(types_int.size()-1);//因為集合已按從小到大的順序排列好的，所以最後一個元素最大
-				if(maxNum==19||maxNum==29){
-					response.setContentType("text/html;charset=utf-8");
-					response.getWriter().print("<script>alert('子類型已滿，不可以再添加!');history.back()</script>");
-					return null;
-				}else{					
-					visaSort_sub="C"+(maxNum+1);
-				}
-			}
-			for(int k=0;k<flows.size();k++){
-				flows.get(k).getId().setVisaSort(visaSort_sub);
-			}
-		}//end if
 		
-		for(int i=0;i<flows.size();i++){			
-		    String purmanNo=flows.get(i).getId().getPurmanNo().trim();
-		    String visaSigner=flows.get(i).getVisaSigner().trim();
-		    flows.get(i).getId().setPurmanNo(purmanNo);
-		    flows.get(i).setVisaSigner(visaSigner);
-		    flows.get(i).setFlowMk("Y");
-			visaSer.add(flows.get(i));
-		}
-		return "add";
-	}*/
-	
 	public void setKyzExpLogSer(IKyzExpectmatmLogServices kyzExpLogSer) {
 		this.kyzExpLogSer = kyzExpLogSer;
 	}
@@ -216,72 +175,15 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 
 	public void setMaxItem(int maxItem) {
 		this.maxItem = maxItem;
-	}
-
-	public String add_old() throws IOException{		
-		String visaSort_main=flows.get(0).getId().getVisaSort();
-		char first_main=visaSort_main.charAt(0);
-		if(first_main=='C'){//start if
-			String visaSort_sub=visaSort_main+"0";
-			//選中"費用簽核"所有的子類別			
-			List<String>types_str=visaSer.findVisaSort_C(flows.get(0).getId().getFactNo(),visaSort_main);
-			List<Integer>types_int=new ArrayList<Integer>();
-			if(types_str.size()>0){
-				for(int j=0;j<types_str.size();j++){
-					int temp=Integer.parseInt(types_str.get(j).substring(1));
-					types_int.add(temp);
-				}
-				int maxNum=types_int.get(types_int.size()-1);//因為集合已按從小到大的順序排列好的，所以最後一個元素最大
-				String str_max=String.valueOf(maxNum);
-				if(str_max.substring(str_max.length()-1,str_max.length()).equals("9")){      										
-					visaSort_sub="C"+maxNum+"0";  //如果最后一位数是9，则在后面再添加一位数（例：C19-->C190,C29-->C290）
-					/*response.setContentType("text/html;charset=utf-8");
-					response.getWriter().print("<script>alert('子類型已滿，不可以再添加!');history.back()</script>");
-					return null;*/					
-				}else{					
-					visaSort_sub="C"+(maxNum+1);
-				}
-			}
-			for(int i=0;i<flows.size();i++){
-				flows.get(i).getId().setVisaSort(visaSort_sub);
-				
-			    String purmanNo=flows.get(i).getId().getPurmanNo().trim();
-			    String visaSigner=flows.get(i).getVisaSigner().trim();
-			    flows.get(i).getId().setPurmanNo(purmanNo);
-			    flows.get(i).setVisaSigner(visaSigner);
-			    flows.get(i).setFlowMk("Y");
-				visaSer.add(flows.get(i));
-			}
-		}else{//end if
-			for(int i=0;i<flows.size();i++){
-				 String purmanNo=flows.get(i).getId().getPurmanNo().trim();
-				    String visaSigner=flows.get(i).getVisaSigner().trim();
-				    flows.get(i).getId().setPurmanNo(purmanNo);
-				    flows.get(i).setVisaSigner(visaSigner);
-				    flows.get(i).setFlowMk("Y");
-					visaSer.add(flows.get(i));
-			}
-			
-		}
-		return "add";
-	}
+	}	
 	
 	public String add() throws IOException{		
-		String visaSort_main=flows.get(0).getId().getVisaSort();
+		String visaSort_main=flows.get(0).getId().getVisaSort().split("__")[0];
+		String visaSort_main2=flows.get(0).getId().getVisaSort().split("__")[1];
 					
 			try{
-				/****************************如果是出差類函文，類別代號就不用自增處理20160203*********************************/
-				if(visaSort_main.equals("TR")){
-					for(int i=0;i<flows.size();i++){
-						flows.get(i).getId().setPurmanNo(flows.get(i).getId().getPurmanNo().trim());
-					    flows.get(i).setVisaSigner(flows.get(i).getVisaSigner().trim());
-						flows.get(i).setFlowMk("Y");
-						flows.get(i).setVisaSortM(visaSort_main);
-						visaSer.add(flows.get(i));
-					}
-				}else{/****************************否則，類別代號就要自增處理20160203*********************************/
-					String visaSort_sub=visaSort_main+"0";
-					//選中"費用簽核"所有的子類別			
+				if(visaSort_main2.equals("0")){//【其它類】
+					String visaSort_sub=visaSort_main+"0";						
 					List<String>types_str=visaSer.findVisaSort_C(flows.get(0).getId().getFactNo(),visaSort_main);
 					List<Integer>types_int=new ArrayList<Integer>();
 					if(types_str.size()>0){
@@ -305,9 +207,20 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 					    flows.get(i).setVisaSigner(visaSigner);
 					    flows.get(i).setFlowMk("Y");
 					    flows.get(i).setVisaSortM(visaSort_main);
+					    flows.get(i).setTypeMk(visaSort_main2);
 						visaSer.add(flows.get(i));
 					}
-				}				
+				}else{//【出差類】,【配方類】
+					for(int i=0;i<flows.size();i++){
+						flows.get(i).getId().setVisaSort(visaSort_main);
+						flows.get(i).getId().setPurmanNo(flows.get(i).getId().getPurmanNo().trim());
+					    flows.get(i).setVisaSigner(flows.get(i).getVisaSigner().trim());
+						flows.get(i).setFlowMk("Y");
+						flows.get(i).setVisaSortM(visaSort_main);
+						flows.get(i).setTypeMk(visaSort_main2);
+						visaSer.add(flows.get(i));
+					}
+				}								
 				ajaxResult="0";
 			}catch(Exception e){
 				e.printStackTrace();
@@ -318,7 +231,9 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 	public String update(){		
 		try{
 			flow.setVisaSortM(flow.getId().getVisaSort().substring(0,2));
-			visaSer.add(flow);
+			//visaSer.add(flow);
+			KyzVisaflow f2=(KyzVisaflow)ActionContext.getContext().getSession().get("update_flow");
+			visaSer.add_d(flow,f2);
 			ajaxResult="0";
 		}catch(Exception e){
 			e.printStackTrace();
@@ -332,7 +247,7 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 		ActionContext.getContext().getSession().remove("public_factNo");
 		ActionContext.getContext().getSession().remove("public_visaSort");
 		factNo = (String) ActionContext.getContext().getSession().get("factNo");
-		bean = visaSer.findPageBean(25, page, factNo, visaSort);		
+		bean = visaSer.findPageBean(20,page, factNo, visaSort);		
 		this.getTypeName(bean);//从webtype获取类别名称
 		return "beanList";
 	}
@@ -348,7 +263,7 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 		if (visaSort != null && !visaSort.equals("")) {
 			ActionContext.getContext().getSession().put("public_visaSort", visaSort);
 		}
-		bean = visaSer.findPageBean(25, page, factNo, visaSort);
+		bean = visaSer.findPageBean(20,page, factNo, visaSort);
 		this.getTypeName(bean);
 		return "beanList1";
 	}
@@ -363,14 +278,15 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 		if (factNo == null || factNo.equals("") || factNo.equals("tw")){
 			factNo = (String) ActionContext.getContext().getSession().get("factNo");					
 		}
-		bean = visaSer.findPageBean(25, page, factNo, visaSort);
+		bean = visaSer.findPageBean(20,page, factNo, visaSort);
 		this.getTypeName(bean);
 		return result;
 	}
 	
 	
 	public String findById(){
-		flow=visaSer.findById(id);	
+		flow=visaSer.findById(id);
+		ActionContext.getContext().getSession().put("update_flow",flow);
 		return "findById";
 	}
 	

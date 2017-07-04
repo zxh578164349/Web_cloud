@@ -1,6 +1,9 @@
 package dao.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import org.hibernate.Query;
 import dao.Basedao;
 import dao.IWebMenuDao;
@@ -9,11 +12,18 @@ import entity.WebUser;
 
 public class WebMenuDaoImpl extends Basedao implements IWebMenuDao {
 
-	public List findAllMenu() {
+	public List findAllMenu(String typeMk) {
 		// TODO Auto-generated method stub
 		//String hql = "from WebMenu order by menuid";
-		String hql = "from WebMenu where enableMk='Y' order by menuid";
-		List<WebMenu>list=super.findAll(hql, null);
+		StringBuffer hql=new StringBuffer();
+		Map<String,Object>map=new HashMap<String,Object>();
+		hql.append("from WebMenu where 1=1 ");
+		if(typeMk!=null&&!typeMk.equals("")){
+			hql.append(" and typeMk=:typeMk ");
+			map.put("typeMk",typeMk);
+		}
+		hql.append("and enableMk='Y' order by menuid");		
+		List<WebMenu>list=super.getAllWithNoPage(hql.toString(),map);
 		for(WebMenu menu:list){
 			menu.getSubmenus().size();
 		}

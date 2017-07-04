@@ -2,7 +2,7 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib uri="/struts-tags" prefix="s"%>
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE HTML>
 <html>
 <head>
 <title>My JSP 'publicHead.jsp' starting page</title>
@@ -17,11 +17,12 @@
 </head>
 <body>
    <form id="public_form" method="post">
-	<table  border="0px">
+	<table id="tb_search" class="table table-condensed">
 		<tr>
 			<td>廠別</td>
 			<td><s:if test="#session.factNo=='tw'">			    
-					<select name="factNo" id="factNo" onchange="getDepartments(this.value);getPosts(this.value)">													
+					<select name="factNo" id="factNo" onchange="getDepartments(this.value);getPosts(this.value)">
+					    <option value="">請選擇廠別</option>													
 						<option value="tw">TW</option>					
 						<s:iterator value="#session.facts" id="temp">
 							<option value="${temp[0]}">${temp[1]}(${temp[0]})</option>								
@@ -29,7 +30,8 @@
 					</select>
 				</s:if> 
 				<s:else>
-					<select name="factNo" id="factNo">						
+					<select name="factNo" id="factNo" onchange="getDepartments(this.value);getPosts(this.value)">
+						<option value="">請選擇廠別</option>						
 						<option value="<s:property value="#session.factNo"/>">
 							<s:property value="#session.factName" />(<s:property value="#session.factNo"/>)
 						</option>
@@ -61,17 +63,17 @@
 <script type="text/javascript">
 
 function getDepartments(factno){
-	jq("#se_department").html("");
 	jq.ajax({
 		type:"POST",
 		dataType:"json",
 		data:"factNo="+factno,
 		url:"webphonebook_findDepartments",
 		success:function(data){
-			var items="<option value=''>請選擇</option>";
+			jq("#se_department").html("");
+			var items="<option value=''>請選擇部門</option>";
 			if(data!=null){
 				jq.each(data,function(i,obj){
-					items+="<option value='"+obj+"'>"+obj+"<option/>";
+					items+="<option value='"+obj+"'>"+obj+"</option>";
 				});
 				jq("#se_department").append(items);
 			}
@@ -80,28 +82,27 @@ function getDepartments(factno){
 	});
 }
 
-function getPosts(factno){
-	jq("#se_post").html("");
+function getPosts(factno){	
 	jq.ajax({
 		type:"POST",
 		dataType:"json",
 		data:"factNo="+factno,
 		url:"webphonebook_findPosts",
 		success:function(data){
-			var items="<option value=''>請選擇</option>";
+			jq("#se_post").html("");
+			var items="<option value=''>請選擇職位</option>";
 			if(data!=null){
 				jq.each(data,function(i,obj){
-					items+="<option value='"+obj+"'>"+obj+"<option/>";
+					items+="<option value='"+obj+"'>"+obj+"</option>";
 				});
 				jq("#se_post").append(items);
-			}
-			
+			}			
 		}
 	});
 }
 
 jq(function(){
-	getDepartments("");getPosts("");
+	//getDepartments("");getPosts("");
 });
 </script>	
 </body>

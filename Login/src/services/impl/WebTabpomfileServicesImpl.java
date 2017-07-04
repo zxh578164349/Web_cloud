@@ -20,14 +20,19 @@ public class WebTabpomfileServicesImpl implements IWebTabpomfileServices{
 		return webtabfiledao.findById(pomNo, fileName);
 	}
 
-	public void delete(String pomNo, String fileName) {
+	public void delete(String pomNo, String fileName,KyzExpectmatmLog log) {
 		// TODO Auto-generated method stub
-		webtabfiledao.delete(pomNo, fileName);
+		webtabfiledao.delete(pomNo, fileName,log);
 	}
 
-	public List<WebTabpomfile> findByPomNo(String pomNo) {
+	public List<Object[]> findByPomNo(String pomNo) {
 		// TODO Auto-generated method stub
 		return webtabfiledao.findByPomNo(pomNo);
+	}
+
+	public void add(WebTabpomfile file) {
+		// TODO Auto-generated method stub
+		webtabfiledao.add(file);
 	}
 
 }

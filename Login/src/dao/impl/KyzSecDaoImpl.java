@@ -31,7 +31,10 @@ public class KyzSecDaoImpl extends Basedao implements IKyzSecDao{
 		Integer rows=(Integer)ActionContext.getContext().getSession().get("allRow");
 		hql.append("from KyzSec where 1=1 ");
 		hql2.append("select count(id.secNo) ");
-		if(!factNo.equals("tw")&&!factNo.equals("nothing")){
+		if(factNo==null||"".equals(factNo)){
+			factNo=(String)ActionContext.getContext().getSession().get("factNo");
+		}
+		if(!"tw".equals(factNo)&&!"nothing".equals(factNo)){
 			hql.append(" and id.factNo=:factno ");
 			map.put("factno", factNo);
 		}
@@ -65,7 +68,7 @@ public class KyzSecDaoImpl extends Basedao implements IKyzSecDao{
 		bean.setList(list);
 		bean.setPageSize(pageSize);
 		bean.setTotalPage(totalPage);
-		bean.init();
+		//bean.init();
 		return bean;
 	}
 

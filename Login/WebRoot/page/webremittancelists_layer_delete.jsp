@@ -9,7 +9,7 @@
 			+ path + "/";
 %>
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE HTML>
 <html>
 <head>
 <base href="<%=basePath%>">
@@ -108,7 +108,7 @@ $(document).ajaxStop(function(){
 
 			<s:iterator value="webremit.webremittancelistses" status="x" id="temp">
 				<tr>
-				 <td><input type="button" value="刪除" onclick="del('${webremit.billNo}','${temp.id.itemNo}')"</td>
+				 <td><input type="button" value="刪除" onclick="del('${webremit.billNo}','${temp.id.itemNo}')"/></td>
 				 <td ><s:property value='currency'/></td>				 	     
 			     <td ><s:property value='Manufacturers'/></td>
 			     <td ><s:property value='toBank'/></td>
