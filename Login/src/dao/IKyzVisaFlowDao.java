@@ -9,14 +9,14 @@ import entity.KyzVisaflowId;
 
 public interface IKyzVisaFlowDao {
 	public void add(KyzVisaflow flow);
-	public PageBean findFixWithPage(int pageSize, int page, String factNo,String visaSort);
+	public PageBean findFixWithPage(int pageSize, int page, String factNo,String visaSort,String trMk);
 	public KyzVisaflow findById(KyzVisaflowId id);
 	public void delete(KyzVisaflowId id,KyzExpectmatmLog log);
 	public void delete(KyzVisaflowId id);
 	public List<KyzVisaflow> findByFactNo(String factno);
 	public List<KyzVisaflow> findByType(String factNo,String visaSort);
 	public String findVisaSort_dwr(String factNo,String visaSort,String email);
-	
+	public String findVisaSort_dwr(String factNo,String visaSort,String email,String trMk);
 	public List<String> findVisaSort_C(String factNo,String maiSort);
 	public List<KyzVisaflow>findByFactNoVisaSort(String factNo,String visaSort);
 	

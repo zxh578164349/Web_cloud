@@ -1274,9 +1274,13 @@ public class GlobalMethod extends HibernateDaoSupport{
 					      sms.sendHtmlMail(mailInfo);//发送html格式					      
 					}//end for2	
 					
-					/********************************20170517臺灣加久GJ的函文同步到申請人的，只查看，不簽核*******************************************/
-					String visaSinger=null;
+					
+					/*******************************************(已取消20170705)***********************************************/
+					/********************************20170517臺灣加久GJ的函文同步到申請人的，只查看，不簽核*******************************************/					
 					/***************如果是臺灣加久，備簽人同時也是申請人，那麼根據流程代號找到申請人（也就是備簽人）*******************/
+					
+					
+					/*String visaSinger=null;					
 					if(factNo.equals("GJ")){												
 						if(list_vbm.get(i).getId().getBillNo().substring(0,2).equals("BM")){//出差函文申請人不在流程,要在出差函文中找
 							if(list_vbm.get(i).getWebbussletter().getUserEmail()!=null&&!list_vbm.get(i).getWebbussletter().getUserEmail().equals("")){								
@@ -1333,8 +1337,9 @@ public class GlobalMethod extends HibernateDaoSupport{
 						mailInfo.setContent(content);
 						sms.sendHtmlMail(mailInfo);	
 						
-					}
+					}*/										
 					/********************************20170517臺灣加久GJ的函文同步到申請人的，只查看，不簽核*******************************************/
+					/*******************************************(已取消20170705)***********************************************/					
 					//subject=null;//清空
 					content=null;
 				}//end for1									

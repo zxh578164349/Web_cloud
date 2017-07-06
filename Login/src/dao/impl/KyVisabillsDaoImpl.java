@@ -385,6 +385,7 @@ public class KyVisabillsDaoImpl extends Basedao implements IKyVisaBillsDao{
 			for(int i=0;i<list.size();i++){
 				KyVisabillm billm=list.get(i).getId().getKyVisabillm();
 				billm.getSignerNext();
+				billm.getUserId().getEmail();
 				GlobalMethod.vbmCotentsType(billm);
 			}
 		}

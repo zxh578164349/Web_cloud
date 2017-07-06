@@ -21,6 +21,7 @@ public class WebType implements java.io.Serializable {
 	private List<KyzVisaflow>list_visaflow;
 	private List<Webremittancelist>list_webrel;
 	private List<WebFormula>list_formula;
+	private String trMk;//是否分部門     Y:是   N:否
 
 	// Constructors
 
@@ -128,6 +129,14 @@ public class WebType implements java.io.Serializable {
 
 	public void setList_formula(List<WebFormula> list_formula){
 		this.list_formula=list_formula;
+	}
+
+	public String getTrMk(){
+		return trMk;
+	}
+
+	public void setTrMk(String trMk){
+		this.trMk=trMk;
 	}
 	
 	

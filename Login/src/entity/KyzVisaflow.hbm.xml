@@ -38,5 +38,8 @@
         <property name="typeMk" type="java.lang.String">
             <column name="TYPE_MK" length="2"/>
         </property>
+        <property name="trMk" type="java.lang.String">
+            <column name="TR_MK" length="2"/>
+        </property>
     </class>
 </hibernate-mapping>

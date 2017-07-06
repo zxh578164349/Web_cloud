@@ -45,6 +45,7 @@ public class KyzExpectmatm implements java.io.Serializable {
 	private KyVisabillm vbm;
 	private List<KyzExpectmatmFile>list_file;
 	private List<KyzExpectmatmLog>list_logs;
+	private Integer userId;
 
 	// Constructors
 
@@ -336,6 +337,16 @@ public class KyzExpectmatm implements java.io.Serializable {
 	public void setList_logs(List<KyzExpectmatmLog> list_logs){
 		this.list_logs=list_logs;
 	}
+
+	public Integer getUserId(){
+		return userId;
+	}
+
+	public void setUserId(Integer userId){
+		this.userId=userId;
+	}
+	
+	
 	
 	
 	

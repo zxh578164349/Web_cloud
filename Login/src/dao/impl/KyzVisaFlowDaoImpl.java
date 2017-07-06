@@ -25,7 +25,7 @@ public class KyzVisaFlowDaoImpl extends Basedao implements IKyzVisaFlowDao {
 	}
 
 	public PageBean findFixWithPage(int pageSize, int page, String factNo,
-			String visaSort) {
+			String visaSort,String trMk) {
 		// TODO Auto-generated method stub
 		int allRow=0;
 		final Map<String, Object> map = new HashMap<String, Object>();
@@ -33,6 +33,9 @@ public class KyzVisaFlowDaoImpl extends Basedao implements IKyzVisaFlowDao {
 		StringBuffer hql2=new StringBuffer();
 		hql.append("from KyzVisaflow where 1=1 ");
 		hql2.append("select count(id.factNo) ");
+		if(factNo==null||"".equals(factNo)){
+			factNo = (String) ActionContext.getContext().getSession().get("factNo");
+		}		
 		if (factNo != null && !factNo.equals("") && !factNo.equals("tw")&&!factNo.equals("nothing")) {
 			hql.append(" and id.factNo =:factno ");
 			map.put("factno", factNo);
@@ -44,6 +47,10 @@ public class KyzVisaFlowDaoImpl extends Basedao implements IKyzVisaFlowDao {
 		if(factNo.equals("nothing")&&(visaSort==null||visaSort.equals(""))){
 			hql.append(" and id.factNo=:factno");
 			map.put("factno", factNo);
+		}
+		if(trMk!=null&&!"".equals(trMk)){
+			hql.append(" and trMk=:trMk");
+			map.put("trMk",trMk);
 		}
 		//hql.append(" and flowMk='Y'");
 		hql2.append(hql);
@@ -126,16 +133,22 @@ public class KyzVisaFlowDaoImpl extends Basedao implements IKyzVisaFlowDao {
 		return visasort;
 	}
 	
-    /**
-     * ����k�Ω�K�[�f�֬y�{�ɡA���ܪ���媺�U����"�O��ñ��1"�P"�O��ñ��2"�ɨϥ�
-     * �]�����"�O��ñ��"�����O�����h�Ө㦳�ƧǪ��l���O
-     * �Ҧp"�O��ñ��1"�GC10,C11,C12....... ;"�O��ñ��2":C20,C21,C22....
-     * �ҥH�A�ھڱƧǥͦ��@�ӷs���l���O
-     */
+	public String findVisaSort_dwr(String factNo, String visaSort, String email,String trMk) {
+		// TODO Auto-generated method stub
+		String hql="select id.visaSort from KyzVisaflow where id.factNo=? and id.visaSort like ? and lower(visaSigner)=? and id.itemNo='01' and trMk=? ";
+		Query query=getSession().createQuery(hql);
+		query.setString(0, factNo);
+		query.setString(1, visaSort+"%");
+		query.setString(2, email);
+		query.setString(3,trMk);
+		String visasort=(String)query.uniqueResult();
+		return visasort;
+	}
+	
 	public List<String> findVisaSort_C(String factNo,String mainSort) {
 		// TODO Auto-generated method stub
 		//String hql="select distinct id.visaSort from KyzVisaflow where id.factNo=? and id.visaSort like ?  order by id.visaSort";
-		String hql="select distinct id.visaSort from KyzVisaflow where id.factNo=? and id.visaSort like ?  order by length(id.visaSort),id.visaSort";
+		String hql="select distinct id.visaSort from KyzVisaflow where id.factNo=? and id.visaSort like ? and trMk='Y'  order by length(id.visaSort),id.visaSort";
 		String[]objs={factNo,mainSort+"%"};
 		return super.findAll(hql, objs);
 	}

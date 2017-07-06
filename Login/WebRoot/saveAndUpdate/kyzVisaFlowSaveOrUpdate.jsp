@@ -89,7 +89,14 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 			     <td ><input type="text" name="flows[0].visaRank" value="" datatype="*"/>
 			       <input type="hidden" name="isnull" value="yes"/><!-- 變量isnull -->
 			     </td>		     			     		      		      
-			  </tr>		
+			  </tr>	
+			  <tr>
+			     <td colspan="10">
+			                          是否分部門&nbsp;&nbsp;&nbsp;
+			                          是<input type="radio" name="trMk" value="Y" datatype="*"/>&nbsp;&nbsp;
+			                          否<input type="radio" name="trMk" value="N"/>                
+			     </td>
+			  </tr>	
 			 </s:if>		
 			         			  			 	  			
 			</tbody>
@@ -272,12 +279,17 @@ var j=0;
        var visasort_obj=document.getElementById("dwr_kytype");
        var visasort_index=visasort_obj.selectedIndex;
        var visasort_text=visasort_obj.options[visasort_index].text;
+       var trMk=jq("input[name='trMk']:checked").val();
        if(factno!=""&&visasort!=""){
     	   if(visasort2=="0"){//【其它類】
     		   if(visaSigner!=""){                 
-                   kyzvisaflowjs.findVisaSort_dwr(factno,visasort,visaSigner,function(x){
+                   kyzvisaflowjs.findVisaSort_dwr2(factno,visasort,visaSigner,trMk,function(x){
                         if(x!=null){
-                           alert("該Email("+visaSigner+")的審核流程已存在!");
+                        	if(trMk=="Y"){
+                        		alert("該Email("+visaSigner+")的審核流程已存在!");
+                        	}else{
+                        		alert("審核流程已存在(不分部門)!");
+                        	}                          
                            document.getElementById("error1").innerHTML='<font color="red">！</font>';
                            document.getElementById("error2").innerHTML='<font color="red">！</font>';
                            document.getElementById("sub").disabled=true;
@@ -297,26 +309,29 @@ var j=0;
                    });
                  }  
     	   }else{//【出差類】【配方類】
-    		   kyzvisaflowjs.findNums(factno,visasort,function(x){
-    			   if(x!=0){
-    				   alert("該廠的審核流程已存在!");
-                       document.getElementById("error1").innerHTML='<font color="red">！</font>';
-                       document.getElementById("error2").innerHTML='<font color="red">！</font>';
-                       document.getElementById("sub").disabled=true;
-                       document.getElementById("addbtn").disabled=true;
-                       document.getElementById("sub").value="已鎖定";
-                       document.getElementById("sub").style.color="red";
-                       document.getElementById("addbtn").style.color="red";
-    			   }else{
-    				   document.getElementById("error1").innerHTML='';
-                       document.getElementById("error2").innerHTML='';
-                       document.getElementById("sub").disabled=false;
-                       document.getElementById("addbtn").disabled=false;
-                       document.getElementById("sub").value="確定";
-                       document.getElementById("sub").style.color="white";
-                       document.getElementById("addbtn").style.color="white";
-    			   }
-    		   });
+    		   if(visaSigner!=""){
+    			   kyzvisaflowjs.findNums(factno,visasort,function(x){
+        			   if(x!=0){
+        				   alert("該廠的審核流程已存在!");
+                           document.getElementById("error1").innerHTML='<font color="red">！</font>';
+                           document.getElementById("error2").innerHTML='<font color="red">！</font>';
+                           document.getElementById("sub").disabled=true;
+                           document.getElementById("addbtn").disabled=true;
+                           document.getElementById("sub").value="已鎖定";
+                           document.getElementById("sub").style.color="red";
+                           document.getElementById("addbtn").style.color="red";
+        			   }else{
+        				   document.getElementById("error1").innerHTML='';
+                           document.getElementById("error2").innerHTML='';
+                           document.getElementById("sub").disabled=false;
+                           document.getElementById("addbtn").disabled=false;
+                           document.getElementById("sub").value="確定";
+                           document.getElementById("sub").style.color="white";
+                           document.getElementById("addbtn").style.color="white";
+        			   }
+        		   });
+    		   }
+    		   
     	   }
                     
        } 

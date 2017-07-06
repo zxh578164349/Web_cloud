@@ -39,6 +39,7 @@ public class KyVisabillm implements java.io.Serializable {
 	private String general;//函文概要(不需要映射列名)
 	private String visaSortM;//函文大類
 	private WebType webtype;//函文大類外鍵
+	private WebUser userId;
 
 	// Constructors
 
@@ -284,6 +285,15 @@ public class KyVisabillm implements java.io.Serializable {
 		this.webtype=webtype;
 	}
 
+	public WebUser getUserId(){
+		return userId;
+	}
+
+	public void setUserId(WebUser userId){
+		this.userId=userId;
+	}
+
+	
 	
 	
 

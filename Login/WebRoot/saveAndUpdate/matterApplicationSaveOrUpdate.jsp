@@ -115,10 +115,12 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 						<s:if test="kyz==null">
 						   <input type="text" name="kyz.userNm" datatype="*"  value="<s:property value='#session.loginUser.name'/>" style="color:blue" readonly/>
 						   <input type="hidden" name="kyz.username" value="<s:property value='#session.loginUser.username'/>"/>
+						   <input type="hidden" name="kyz.userId" value="<s:property value='#session.loginUser.id'/>"/>
 						</s:if>
 						<s:else>
 						   <input type="text" name="kyz.userNm" datatype="*"  value="<s:property value='kyz.userNm'/>" style="color:blue" readonly/>
 						   <input type="hidden" name="kyz.username" value="<s:property value='kyz.username'/>"/>
+						   <input type="hidden" name="kyz.userId" value="<s:property value='kyz.userId'/>"/>
 						</s:else>
 						</td>
 						
@@ -138,7 +140,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 				      <td class="tdcolor">類別</td>
 				      <td >
 				         <s:if test="kyz==null">
-				            <select  id="dwr_kytype" onchange="checkType(this.value)" datatype="*" style="color:blue">
+				            <select  id="dwr_kytype" onchange="checkType()" datatype="*" style="color:blue">
 				            <option value="">請選擇</option>
 				         </select>
 				         <input type="hidden" id="dwr_email" value="<s:property value='#session.loginUser.email'/>"/>
@@ -179,7 +181,17 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 				           <input type="hidden" value="<s:property value='maxNum'/>" id="maxNum"/>
 				        </td>
 						
-					</tr>													
+					</tr>
+					<s:if test="kyz==null">
+					   <tr>
+					    <td class="tdcolor">是否分部門</td>
+					    <td colspan="10">
+					                   是<input type="radio" name="trMk" value="Y" checked datatype="*" onclick="checkType()"/>&nbsp;&nbsp;
+			                                        否<input type="radio" name="trMk" value="N" onclick="checkType()"/> 
+					    </td>
+					   </tr>
+					</s:if>
+																		
 			</tbody>
 			</table>	
 			<table class="table table-condensed">								 			
@@ -488,10 +500,12 @@ function getKyType2(factno){
       }               
   }
   
-  function checkType(type){
-     dwrFactNo=document.getElementById("dwrFactNo").value;
-     dwremail=document.getElementById("dwr_email").value.toLowerCase(); //登錄人的email要轉化爲小寫,因爲申請人email已全部轉化爲小寫（20151022）
-     dwr_username=document.getElementById("dwr_username").value;   
+  function checkType(){	  
+     var dwrFactNo=document.getElementById("dwrFactNo").value;
+     var dwremail=document.getElementById("dwr_email").value.toLowerCase(); //登錄人的email要轉化爲小寫,因爲申請人email已全部轉化爲小寫（20151022）
+     var dwr_username=document.getElementById("dwr_username").value; 
+     var trMk=jq("input[name='trMk']:checked").val();
+     var type=jq("#dwr_kytype").val();
      if(dwrFactNo!=""&&type!=""){
          kyzvisaflowjs.findByType_Dwr(dwrFactNo,type,function(x){
             if(x==0){//流程不存在
@@ -500,9 +514,13 @@ function getKyType2(factno){
                document.getElementById("sub").style.color="red";
                document.getElementById("dwr_kytype").style.color="red";
             }else{       
-                kyzvisaflowjs.findVisaSort_dwr(dwrFactNo,type,dwremail,function(y){
+                kyzvisaflowjs.findVisaSort_dwr2(dwrFactNo,type,dwremail,trMk,function(y){
                   if(y==null){
-                     alert("對不起，你不是該類別函文申請人，請重新選定!");
+                	 if(trMk=="Y"){
+                		 alert("對不起，你不是該類別函文申請人，請重新選定!");
+                	 }else{
+                		 alert("該流程(不分部門)還沒有建立");
+                	 }                    
                      document.getElementById("sub").disabled=true;
                      document.getElementById("sub").style.color="red";
                      document.getElementById("dwr_kytype").style.color="red";                    
@@ -518,13 +536,7 @@ function getKyType2(factno){
          });
      }
   }
-  function getVisaSort(type){
-     dwrfactno=document.getElementById("dwrFactNo").value;
-     dwremail=document.getElementById("email").value;
-     if(dwrfactno!=""){
-        
-     }
-  }
+ 
 function back(){
 	
 	loadUrl("kyz_findPageBean3?backIndex=1");

@@ -16,6 +16,7 @@ public class KyzVisaflow implements java.io.Serializable {
 	private String visaSortM;//類別大類
 	private String delMk;//刪除標記        0或空 未刪除     1刪除
 	private String typeMk; //區分 出差類(TR)    配方類(PF)     其它類(0)
+	private String trMk;//是否分部門     Y:是   N:否
 
 	// Constructors
 
@@ -102,6 +103,15 @@ public class KyzVisaflow implements java.io.Serializable {
 	public void setTypeMk(String typeMk){
 		this.typeMk=typeMk;
 	}
+
+	public String getTrMk(){
+		return trMk;
+	}
+
+	public void setTrMk(String trMk){
+		this.trMk=trMk;
+	}
+	
 	
 	
 

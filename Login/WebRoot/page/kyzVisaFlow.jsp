@@ -46,14 +46,15 @@
 			}
 		});
 	}
-	function submis() {
+	function submis(public_form) {
 		var fact = document.getElementById("factNo");
 		var ym = document.getElementById("visaSort");
 		jq.ajax({
 			type : "POST",
 			dataType : "Html",
 			url : "visaflow_findPageBean2",
-			data : "factNo=" + fact.value + "&visaSort=" + ym.value,
+			//data : "factNo=" + fact.value + "&visaSort=" + ym.value,
+			data:jq("#"+public_form).serialize(),
 			success : function(msg) {
 				jq("#bodyid").html(msg);
 			},

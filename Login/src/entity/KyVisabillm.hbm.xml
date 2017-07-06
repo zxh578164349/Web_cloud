@@ -89,5 +89,7 @@
            <column name="FACT_NO"/>
            <column name="VISA_SORT_M"/>
         </many-to-one>
+         <many-to-one name="userId" column="FK_WEBUSER" unique="true" insert="false" update="false"/>
+         
     </class>
 </hibernate-mapping>

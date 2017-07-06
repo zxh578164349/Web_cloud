@@ -11,6 +11,7 @@
 <meta http-equiv="description" content="This is my page">
 </head>
 <body >
+<form id="public_form" method="post" >
 	<table  id="tb_search">
 		<tr>
 			<td><s:if test="#session.factNo=='tw'">			      
@@ -39,11 +40,15 @@
 				            
 				         </select>			  	         
 			</td>
+			<td>
+			     分部門<input type="radio" name="trMk" value="Y"/>&nbsp;&nbsp;
+			   不分部門<input type="radio" name="trMk" value="N"/>  
+			</td>
 			<td><!-- <input type="image" onclick="submis();" src="images/search002.gif"/> -->
-			<input value="搜索" type="button" class="btn btn-primary" onclick="submis()" /></td>
+			<input value="搜索" type="button" class="btn btn-primary" onclick="submis('public_form')" /></td>
 		</tr>
 	</table>
-	
+</form>	
 <script type="text/javascript">  
    function getType(factNo){
      document.getElementById("visaSort").length=1;

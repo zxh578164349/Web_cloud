@@ -9,7 +9,7 @@ import entity.KyzVisaflowId;
 
 public interface IKyzVisaFlowServices {
 	public void add(KyzVisaflow flow);
-	public PageBean findPageBean(int pageSize, int page, String factNo,String visaSort);
+	public PageBean findPageBean(int pageSize, int page, String factNo,String visaSort,String trMk);
 	public KyzVisaflow findById(KyzVisaflowId id);
 	public void delete(KyzVisaflowId id,KyzExpectmatmLog log);
 	public void delete(KyzVisaflowId id);
@@ -17,7 +17,7 @@ public interface IKyzVisaFlowServices {
 	public List<KyzVisaflow> findByType(String factNo,String visaSort);
 	public int findByType_Dwr(String factNo,String visaSort);
 	public String findVisaSort_dwr(String factNo, String visaSort, String email);
-	
+	public String findVisaSort_dwr2(String factNo, String visaSort, String email,String trMk);
 	public List<String> findVisaSort_C(String factNo,String mainSort);
 	public List<KyzVisaflow>findByFactNoVisaSort(String factNo,String visaSort);
 	

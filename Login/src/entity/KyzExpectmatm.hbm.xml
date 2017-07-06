@@ -107,6 +107,9 @@
            </key>
            <one-to-many class="entity.KyzExpectmatmLog"/>
         </bag>
-        <one-to-one name="vbm" class="entity.KyVisabillm"  property-ref="kyzexp" cascade="all"/>      
+        <one-to-one name="vbm" class="entity.KyVisabillm"  property-ref="kyzexp" cascade="all"/> 
+        <property name="userId" type="java.lang.Integer">
+           <column name="FK_WEBUSER" precision="8" scale="0"/>
+        </property>     
     </class>
 </hibernate-mapping>
