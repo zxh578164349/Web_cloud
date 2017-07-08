@@ -42,11 +42,13 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 						   <input type="text" name="bussletter.username"   value="<s:property value='#session.loginUser.name'/>" style="color:blue" readonly/>
 						   <input type="hidden" name="bussletter.userAccount" value="<s:property value='#session.loginUser.username'/>"/>
 						   <input type="hidden" name="bussletter.userEmail" value="<s:property value='#session.loginUser.email'/>"/>
+						    <input type="hidden" name="bussletter.userId" value="<s:property value='#session.loginUser.id'/>"/>
 						</s:if>
 						<s:else>
 						   <input type="text" name="bussletter.username"   value="<s:property value='bussletter.username'/>" style="color:blue" readonly/>
 						   <input type="hidden" name="bussletter.userAccount" value="<s:property value='bussletter.userAccount'/>"/>
-						   <input type="hidden" name="bussletter.userEmail" value="<s:property value='bussletter.userEmail'/>"/>
+						   <input type="hidden" name="bussletter.userId" value="<s:property value='bussletter.userId'/>"/>
+						   
 						</s:else>
 						</td>										        				        				        				        
 				    </tr>

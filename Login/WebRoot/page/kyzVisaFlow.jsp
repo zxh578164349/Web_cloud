@@ -64,30 +64,9 @@
 			}
 		});
 	}
-	//你确定要删除吗？
-	/*function isDelete(mid) {
-		var flag=confirm("確定要刪除嗎?");
 		
-			if (flag == true) {
-				//document.getElementById(mid).submit();
-				jq.ajax({
-					type:"POST",
-					dataType:"html",
-					url:"visaflow_delete",
-					data:jq("#"+mid).serialize(),
-					success:function(data){
-						jq("#bodyid").html(data);						
-					},
-					error:function(data){
-						jq("#bodyid").html(data.responseText);
-					}
-				});
-			}
-		
-	}*/
-	
 	function isDelete_flows(factno,visasort) {
-		var flag=confirm("刪除申請人,就會刪除整個流程,确定要刪除吗?");
+		var flag=confirm("刪除申請人,就會刪除整個流程,确定要刪除吗?("+visasort+")");
 			if (flag == true) {								
 				jq.ajax({
 					type : "POST",

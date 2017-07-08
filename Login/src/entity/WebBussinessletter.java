@@ -31,6 +31,7 @@ public class WebBussinessletter implements java.io.Serializable {
 	private String delMk;//刪除標記     0或空 未刪除     1刪除
 	private String visaSortM;//類別大類
 	private String userEmail;//申請人Email
+	private Integer userId;
 
 	// Constructors
 
@@ -227,6 +228,14 @@ public class WebBussinessletter implements java.io.Serializable {
 
 	public void setUserEmail(String userEmail){
 		this.userEmail=userEmail;
+	}
+
+	public Integer getUserId(){
+		return userId;
+	}
+
+	public void setUserId(Integer userId){
+		this.userId=userId;
 	}
 	
 	

@@ -100,6 +100,7 @@
 									 <form  id="3subform${x.index}" style="float:left">										
 										<input type="hidden" value="<s:property value='formulaIndex'/>" name="formulaIndex" />
 										<input type="hidden" value="<s:property value='factNo.factNo'/>" name="factNo" />
+										<input type="hidden" value="<s:property value='userId'/>" name="userId"/>
 										<input type="hidden" value="look" name="lookordown"/>																														
 									</form>
 									<form  id="4subform${x.index}" action="webformula_print2" method="post" style="float:left" target="_blank">										

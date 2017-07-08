@@ -41,7 +41,13 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 			     <td >Email地址</td>
 			     <td >職務</td>
 			 </tr>
-			 
+			 <tr>
+			     <td colspan="10">
+			                          是否分部門&nbsp;&nbsp;&nbsp;
+			                          是<input type="radio" name="trMk" value="Y" datatype="*" onclick="checkSame()"/>&nbsp;&nbsp;
+			                          否<input type="radio" name="trMk" value="N" onclick="checkSame()"/>                
+			     </td>
+			  </tr>
 			    <tr>
 			     <td><input type="checkbox" name="cbox" disabled/></td>
 			     <s:if test="#session.factNo!='tw'">
@@ -89,14 +95,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 			     <td ><input type="text" name="flows[0].visaRank" value="" datatype="*"/>
 			       <input type="hidden" name="isnull" value="yes"/><!-- 變量isnull -->
 			     </td>		     			     		      		      
-			  </tr>	
-			  <tr>
-			     <td colspan="10">
-			                          是否分部門&nbsp;&nbsp;&nbsp;
-			                          是<input type="radio" name="trMk" value="Y" datatype="*"/>&nbsp;&nbsp;
-			                          否<input type="radio" name="trMk" value="N"/>                
-			     </td>
-			  </tr>	
+			  </tr>				  	
 			 </s:if>		
 			         			  			 	  			
 			</tbody>
@@ -262,7 +261,8 @@ var j=0;
 	function getAddBtn(){
 	    var factno=document.getElementById("dwrFactNo").value;
         var typeno=document.getElementById("dwr_kytype").value;
-        if(factno!=""&&typeno!=""){
+        var trMk=jq("input[name='trMk']:checked").val();
+        if(factno!=""&&typeno!=""&&trMk!=""&&trMk!=null){
           document.getElementById("addbtn").disabled="";
           document.getElementById("addbtn").style.color="white";
         }else{
@@ -280,60 +280,42 @@ var j=0;
        var visasort_index=visasort_obj.selectedIndex;
        var visasort_text=visasort_obj.options[visasort_index].text;
        var trMk=jq("input[name='trMk']:checked").val();
-       if(factno!=""&&visasort!=""){
+       if(factno!=""&&visasort!=""&&trMk!=""&&trMk!=null){
     	   if(visasort2=="0"){//【其它類】
-    		   if(visaSigner!=""){                 
-                   kyzvisaflowjs.findVisaSort_dwr2(factno,visasort,visaSigner,trMk,function(x){
-                        if(x!=null){
-                        	if(trMk=="Y"){
-                        		alert("該Email("+visaSigner+")的審核流程已存在!");
-                        	}else{
-                        		alert("審核流程已存在(不分部門)!");
-                        	}                          
-                           document.getElementById("error1").innerHTML='<font color="red">！</font>';
-                           document.getElementById("error2").innerHTML='<font color="red">！</font>';
-                           document.getElementById("sub").disabled=true;
-                           document.getElementById("addbtn").disabled=true;
-                           document.getElementById("sub").value="已鎖定";
-                           document.getElementById("sub").style.color="red";
-                           document.getElementById("addbtn").style.color="red";
-                        }else{
-                           document.getElementById("error1").innerHTML='';
-                           document.getElementById("error2").innerHTML='';
-                           document.getElementById("sub").disabled=false;
-                           document.getElementById("addbtn").disabled=false;
-                           document.getElementById("sub").value="確定";
-                           document.getElementById("sub").style.color="white";
-                           document.getElementById("addbtn").style.color="white";
-                        }
-                   });
+    		   if(visaSigner!=""){                                   
+                   if(trMk=="Y"){
+                	   kyzvisaflowjs.findVisaSort_dwr2(factno,visasort,visaSigner,trMk,function(x){
+                           if(x!=null){                          	
+                           	alert("該Email("+visaSigner+")的審核流程已存在!");                           	                                                    
+                           	lockbtn();                             
+                           }else{                             
+                           	unlockbtn();
+                           }
+                      }); 
+                   }else{
+                	   visasort=visasort+"_AA";
+                	   kyzvisaflowjs.findNums(factno,visasort,function(x){
+            			   if(x!=0){
+            				   alert("該廠的審核流程(不分部門)已存在!");                               
+                               lockbtn();
+            			   }else{           				   
+            				   unlockbtn();
+            			   }
+            		   });
+                   }
                  }  
     	   }else{//【出差類】【配方類】
     		   if(visaSigner!=""){
     			   kyzvisaflowjs.findNums(factno,visasort,function(x){
         			   if(x!=0){
-        				   alert("該廠的審核流程已存在!");
-                           document.getElementById("error1").innerHTML='<font color="red">！</font>';
-                           document.getElementById("error2").innerHTML='<font color="red">！</font>';
-                           document.getElementById("sub").disabled=true;
-                           document.getElementById("addbtn").disabled=true;
-                           document.getElementById("sub").value="已鎖定";
-                           document.getElementById("sub").style.color="red";
-                           document.getElementById("addbtn").style.color="red";
-        			   }else{
-        				   document.getElementById("error1").innerHTML='';
-                           document.getElementById("error2").innerHTML='';
-                           document.getElementById("sub").disabled=false;
-                           document.getElementById("addbtn").disabled=false;
-                           document.getElementById("sub").value="確定";
-                           document.getElementById("sub").style.color="white";
-                           document.getElementById("addbtn").style.color="white";
+        				   alert("該廠的審核流程已存在!");                         
+                           lockbtn();
+        			   }else{        				  
+        				   unlockbtn();
         			   }
         		   });
-    		   }
-    		   
-    	   }
-                    
+    		   }    		   
+    	   }                   
        } 
      }
      
@@ -420,7 +402,6 @@ function getLow(obj){
 
 
 function back(){
-	
 	loadUrl("visaflow_findPageBean3?backIndex=1");
 }
 
@@ -448,6 +429,25 @@ function checkWebtype(){
 		});
 	}
 	
+}
+
+function lockbtn(){
+	document.getElementById("error1").innerHTML='<font color="red">！</font>';
+    document.getElementById("error2").innerHTML='<font color="red">！</font>';
+    document.getElementById("sub").disabled=true;
+    document.getElementById("addbtn").disabled=true;
+    document.getElementById("sub").value="已鎖定";
+    document.getElementById("sub").style.color="red";
+    document.getElementById("addbtn").style.color="red";
+}
+function unlockbtn(){
+	 document.getElementById("error1").innerHTML='';
+     document.getElementById("error2").innerHTML='';
+     document.getElementById("sub").disabled=false;
+     document.getElementById("addbtn").disabled=false;
+     document.getElementById("sub").value="確定";
+     document.getElementById("sub").style.color="white";
+     document.getElementById("addbtn").style.color="white";
 }
 
 </script>

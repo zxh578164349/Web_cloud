@@ -57,7 +57,7 @@
 				
 				<td><s:property value="id.factNo" /></td>
 				<td>				  
-				   <s:property value="colTemp"/>
+				   <s:property value="colTemp"/>[<s:property value="id.visaSort"/>]
 				</td>
 				<td><s:property value="id.purmanNo" /></td>
 				<td><s:property value="id.itemNo"/></td>
@@ -152,15 +152,7 @@
 	
 		
 <script type="text/javascript">   
-	   	function addflow(subform,btn){
-	   		var jq = jQuery.noConflict();
-	   		var loadi;
-	   		jq(document).ajaxStart(function(){
-	   			loadi=layer.load(0);
-	   		});
-	   		jq(document).ajaxStop(function(){
-	   			layer.close(loadi);
-	   		});
+	   	function addflow(subform,btn){	   		
 	   		jq(subform).Validform({
 	   			btnSubmit : btn,
 	   			tiptype : 4,
@@ -170,10 +162,11 @@
 	   			callback:function(data){	   				
 	   					if(data=="0"){
 	   						layer.msg("提交成功!",3,1);
-	   						location.href="visaflow_findPageBean";
+	   						loadUrl_bodyid("visaflow_findPageBean3");
 	   					}
 	   					if(data=="1"){
-	   						alert(data.responseText);
+	   						//alert(data.responseText);
+	   						layer.msg("提交失敗!",3,3);
 	   					}
 	   			}	   			
 	   			});

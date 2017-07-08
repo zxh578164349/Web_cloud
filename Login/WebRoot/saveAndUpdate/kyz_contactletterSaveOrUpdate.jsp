@@ -46,7 +46,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 						<s:else>
 						   <input type="text" name="kyzletter.userNm"   value="<s:property value='kyzletter.userNm'/>" style="color:blue" readonly/>
 						   <input type="hidden" name="kyzletter.userAccount" value="<s:property value='kyzletter.userAccount'/>"/>
-						   <input type="hidden" name="kyzletter.userId" value="<s:property value='kyzletter.userId'/>"/>
+						   <input type="hidden" name="kyzletter.userId" value="<s:property value='kyzletter.userId.id'/>"/>
 						</s:else>
 						
 				        </td>  				        				        				        
@@ -182,8 +182,12 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 						
 					</tr>
 					<tr>
-					  
-					</tr>												
+					    <td class="tdcolor">是否分部門</td>
+					    <td colspan="10">
+					                   是<input type="radio" name="trMk" value="Y" checked datatype="*" onclick="checkType()"/>&nbsp;&nbsp;
+			                                        否<input type="radio" name="trMk" value="N" onclick="checkType()"/> 
+					    </td>
+					 </tr>												
 			</tbody>			
 			</table>
 			<s:if test='kyzletter.filesYn=="1"'>
@@ -287,7 +291,7 @@ function getKyType2(factno){
     
 	}
 	 
-  function checkType(type){
+  /*function checkType(type){
      dwrFactNo=document.getElementById("dwrFactNo").value;
      dwremail=document.getElementById("dwr_email").value.toLowerCase(); //登錄人的email要轉化爲小寫,因爲申請人email已全部轉化爲小寫（20151022）;
      if(dwrFactNo!=""&&type!=""){
@@ -315,7 +319,13 @@ function getKyType2(factno){
             }                           
          });
      }
-  }
+  }*/
+  
+  
+  
+  
+  
+  
   var i=0;	
   function addFile(){
       i++;
@@ -357,33 +367,14 @@ function getKyType2(factno){
 	  layer.msg("操作成功",3,1);
 	  loadUrl("kyzletter_findPageBean");
   }
-  
-  /*function lookJson(billNo,id,filename){
-	   jq.ajax({
-	      type:"get",
-	      dataType:"json",
-	      url:"kyzfile_findKyzFileJson",
-	      data:{"billNo":billNo,"id":id,"filename":filename},
-	      success:function(files){
-	         jq("#fileJson").html("");
-	          var item="";
-	          var item_url;
-	         jq.each(files,function(i,file){
-	            item_url="javascript:lookJson('"+file.billno+"',"+file.id+",'"+file.filename+"')";
-	            item+="<a href='/upload/"+file.billno+"/"+file.filename+"' target='_blank' title='點擊查看'>"+file.filename+            
-	            "</a>"+
-	            "<a href="+item_url+"><img src='images/icon/del_file.png' alt='刪除' title='刪除' style='border:0px'/></a>&nbsp;";	            
-	         });
-	         jq("#fileJson").append(item); 
-	      }
-	   })
-	}*/  
+ 
+ 
 </script>
 <script type='text/javascript' src='dwr/interface/kyzcontactletterjs.js'></script>
 <script type='text/javascript' src='dwr/interface/webfactjs.js'></script>
 <script type='text/javascript' src='dwr/interface/kyzvisaflowjs.js'></script>
 <script type='text/javascript' src='dwr/interface/webtypejs.js'></script>
-
+<script type='text/javascript' src='jquery/publicJS.js'></script>
 <script type="text/javascript">
 jq(function(){
 	if(jq("#addorupdate").val()!="update"){

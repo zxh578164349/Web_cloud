@@ -64,6 +64,9 @@
         <property name="userEmail" type="java.lang.String">
             <column name="USER_EMAIL" length="50"/>
         </property>
+        <property name="userId" type="java.lang.Integer">
+           <column name="FK_WEBUSER" precision="8" scale="0"/>
+        </property> 
         <one-to-one name="vbm" class="entity.KyVisabillm"  property-ref="webbussletter" cascade="all"/>        
     </class>
 </hibernate-mapping>

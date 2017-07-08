@@ -49,6 +49,9 @@ public class KyVisabillsDaoImpl extends Basedao implements IKyVisaBillsDao{
 		if(factNo==null||"".equals(factNo)||"nothing".equals(factNo)){
 			factNo=user.getFactno();
 		}
+		if(createDate==null||"".equals(createDate)){
+			createDate=this.twoMonths();
+		}
 		String adminMk=user.getAdminMk();
 		String email=user.getEmail();		
 		if(email==null||email.equals("")){
@@ -62,7 +65,8 @@ public class KyVisabillsDaoImpl extends Basedao implements IKyVisaBillsDao{
 		hql.append("from KyVisabills where 1=1");
 		hql2.append("select count(id.itemNo) ");
 		if(adminMk==null||adminMk.equals("")||adminMk.equals("N")){//非管理員
-			hql.append(" and lower(visaSigner)=:visaSigner");
+			//hql.append(" and lower(visaSigner)=:visaSigner");
+			hql.append(" and (lower(visaSigner)=:visaSigner or id.kyVisabillm.userId.email=:visaSigner)");
 			map.put("visaSigner", email.toLowerCase());
 		}else{
 			hql.append(" and id.itemNo='01'");
@@ -146,6 +150,9 @@ public class KyVisabillsDaoImpl extends Basedao implements IKyVisaBillsDao{
 			String createDate, String createDate2,WebUser user,String title,String bigType){
 		if(factNo==null||"".equals(factNo)||"nothing".equals(factNo)){
 			factNo=user.getFactno();
+		}
+		if(createDate==null||"".equals(createDate)){
+			createDate=this.twoMonths();
 		}
 		String adminMk=user.getAdminMk();
 		String email=user.getEmail();		
@@ -283,6 +290,9 @@ public class KyVisabillsDaoImpl extends Basedao implements IKyVisaBillsDao{
 		if(factNo==null||"".equals(factNo)||"nothing".equals(factNo)){
 			factNo=user.getFactno();
 		}
+		if(createDate==null||"".equals(createDate)){
+			createDate=this.twoMonths();
+		}
 		String adminMk=user.getAdminMk();
 		String email=user.getEmail();		
 		if(email==null||email.equals("")){
@@ -385,7 +395,7 @@ public class KyVisabillsDaoImpl extends Basedao implements IKyVisaBillsDao{
 			for(int i=0;i<list.size();i++){
 				KyVisabillm billm=list.get(i).getId().getKyVisabillm();
 				billm.getSignerNext();
-				billm.getUserId().getEmail();
+				//billm.getUserId().getEmail();
 				GlobalMethod.vbmCotentsType(billm);
 			}
 		}
@@ -402,9 +412,7 @@ public class KyVisabillsDaoImpl extends Basedao implements IKyVisaBillsDao{
 	public int findKyVisaBills_Int(String factNo,String email) {
 		// TODO Auto-generated method stub
 		
-		Calendar cal=Calendar.getInstance();
-		cal.add(Calendar.MONTH,-2);
-		String yymm=new SimpleDateFormat("yyyyMMdd").format(cal.getTime());
+		String yymm=this.twoMonths();
 		StringBuffer hql=new StringBuffer();
 		Map<String,Object>map=new HashMap<String,Object>();
 		hql.append("select count(id.itemNo) from KyVisabills where 1=1");
@@ -462,6 +470,13 @@ public class KyVisabillsDaoImpl extends Basedao implements IKyVisaBillsDao{
 		query.setString(0,billNo);
 		String str=(String)query.uniqueResult();
 		return str;
+	}
+	
+	public String twoMonths(){
+		Calendar cal=Calendar.getInstance();
+		cal.add(Calendar.MONTH,-2);
+		String yymm=new SimpleDateFormat("yyyyMMdd").format(cal.getTime());
+		return yymm;
 	}
 
 }

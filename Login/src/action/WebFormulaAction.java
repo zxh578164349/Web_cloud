@@ -77,6 +77,7 @@ public class WebFormulaAction implements ServletResponseAware{
 	private String visaSort;
 	private Map<String,Object> map;
 	private String readMk;//標識返回函文查看頁面(Y)，還是返回函文提交頁面(N)
+	private Integer userId;
 	private List<WebFormulaItems>items;
 	private HttpServletResponse response;
 	private IWebFormulaServices webformulaser;
@@ -86,6 +87,14 @@ public class WebFormulaAction implements ServletResponseAware{
 	
 	
 	
+	public Integer getUserId(){
+		return userId;
+	}
+
+	public void setUserId(Integer userId){
+		this.userId=userId;
+	}
+
 	public String getBillNo(){
 		return billNo;
 	}
@@ -476,7 +485,8 @@ public class WebFormulaAction implements ServletResponseAware{
 				vbm.setVisaMk("N");
 				vbm.setRevisaMk("N");
 				vbm.setItemNext("01");
-				vbm.setDateCreate(date);			
+				vbm.setDateCreate(date);
+				vbm.setUserId(new WebUser(userId));
 				for(KyzVisaflow flow:list){
 					KyVisabills vbs=new KyVisabills(new KyVisabillsId(vbm,flow.getId().getItemNo()));
 					vbs.setVisaSigner(flow.getVisaSigner());
