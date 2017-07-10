@@ -65,6 +65,9 @@
         <property name="visaSortM" type="java.lang.String">
             <column name="VISA_SORT_M" length="2"/>
         </property>
+        <property name="useremail" type="java.lang.String">
+            <column name="USEREMAIL" length="50"/>
+        </property>
         <bag name="kyVisabillses" inverse="true" cascade="all" order-by="BILL_NO,ITEM_NO">
             <key>
                 <column name="FACT_NO" length="4" not-null="true" />

@@ -46,6 +46,7 @@ public class KyzExpectmatm implements java.io.Serializable {
 	private List<KyzExpectmatmFile>list_file;
 	private List<KyzExpectmatmLog>list_logs;
 	private Integer userId;
+	private String useremail;
 
 	// Constructors
 
@@ -344,6 +345,14 @@ public class KyzExpectmatm implements java.io.Serializable {
 
 	public void setUserId(Integer userId){
 		this.userId=userId;
+	}
+
+	public String getUseremail(){
+		return useremail;
+	}
+
+	public void setUseremail(String useremail){
+		this.useremail=useremail;
 	}
 	
 	

@@ -32,8 +32,17 @@ public class WebBussinessletter implements java.io.Serializable {
 	private String visaSortM;//類別大類
 	private String userEmail;//申請人Email
 	private Integer userId;
+	private String useremail;
 
 	// Constructors
+
+	public String getUseremail(){
+		return useremail;
+	}
+
+	public void setUseremail(String useremail){
+		this.useremail=useremail;
+	}
 
 	/** default constructor */
 	public WebBussinessletter() {

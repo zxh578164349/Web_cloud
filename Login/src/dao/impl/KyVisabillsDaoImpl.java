@@ -66,7 +66,8 @@ public class KyVisabillsDaoImpl extends Basedao implements IKyVisaBillsDao{
 		hql2.append("select count(id.itemNo) ");
 		if(adminMk==null||adminMk.equals("")||adminMk.equals("N")){//非管理員
 			//hql.append(" and lower(visaSigner)=:visaSigner");
-			hql.append(" and (lower(visaSigner)=:visaSigner or id.kyVisabillm.userId.email=:visaSigner)");
+			//hql.append(" and (lower(visaSigner)=:visaSigner or lower(id.kyVisabillm.userId.email)=:visaSigner)");
+			hql.append(" and lower(id.kyVisabillm.useremail)=:visaSigner");
 			map.put("visaSigner", email.toLowerCase());
 		}else{
 			hql.append(" and id.itemNo='01'");
@@ -112,7 +113,7 @@ public class KyVisabillsDaoImpl extends Basedao implements IKyVisaBillsDao{
 			}
 			map.put("title","%"+title+"%");
 		}
-		hql.append(STR);
+		//hql.append(STR);
 		hql2.append(hql);
 		hql.append(" order by id.kyVisabillm.id.factNo desc,id.kyVisabillm.dateCreate desc,id.kyVisabillm.id.billNo desc");
 		if(rows!=null&&page>0){
@@ -325,15 +326,16 @@ public class KyVisabillsDaoImpl extends Basedao implements IKyVisaBillsDao{
 			}else{
 				hql.append(" and id.itemNo=id.kyVisabillm.itemNext and visaMk='N'");
 			}
-			date_temp=" and dateVisa";          //20161028
+			//date_temp=" and dateVisa";          //20161028
 		}else{//管理員
 			if(visaMk!=null&&!visaMk.equals("")){
 				hql.append(" and id.kyVisabillm.visaMk=:visamk");
 				map.put("visamk", visaMk);
 			}
 			hql.append(" and id.itemNo='01'");
-			date_temp=" and id.kyVisabillm.dateCreate";             //20161028
-		}	
+			//date_temp=" and id.kyVisabillm.dateCreate";             //20161028
+		}
+		date_temp=" and id.kyVisabillm.dateCreate";
 		if(factNo!=null&&!factNo.equals("")&&!factNo.equals("tw")){
 			hql.append(" and id.kyVisabillm.id.factNo=:factno");
 			map.put("factno", factNo);

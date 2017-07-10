@@ -74,7 +74,7 @@
 					           value="<s:property value='webtype.typeName'/>" id="typeName"  datatype="*1-60" />
 					         <input type="hidden" name="webtype.webtypeMk" value="Y"/>
 					         <input type="hidden" name="webtype.delMk" value="0"/><!-- 默認未刪除 -->
-					         <input type="hidden" name="webtype.typeMk" value="<s:property value='webtype.typeMk'/>"/>					
+					         <input type="hidden" name="typeNo" value="<s:property value='webtype.typeMk'/>"/>					
 				          </td>
 				          
 				         <!--  <td class="td_show_title">是否分部門</td>

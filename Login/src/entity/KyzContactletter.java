@@ -32,8 +32,17 @@ public class KyzContactletter implements java.io.Serializable {
 	private String emerMk;//是否緊急      0緊急       1不緊急 
 	private List<KyzExpectmatmLog>list_logs;
 	private Integer userId;
+	private String useremail;
 
 	// Constructors
+
+	public String getUseremail(){
+		return useremail;
+	}
+
+	public void setUseremail(String useremail){
+		this.useremail=useremail;
+	}
 
 	public Integer getUserId(){
 		return userId;
