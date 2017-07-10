@@ -66,8 +66,8 @@ public class KyVisabillsDaoImpl extends Basedao implements IKyVisaBillsDao{
 		hql2.append("select count(id.itemNo) ");
 		if(adminMk==null||adminMk.equals("")||adminMk.equals("N")){//非管理員
 			//hql.append(" and lower(visaSigner)=:visaSigner");
-			//hql.append(" and (lower(visaSigner)=:visaSigner or lower(id.kyVisabillm.userId.email)=:visaSigner)");
-			hql.append(" and lower(id.kyVisabillm.useremail)=:visaSigner");
+			hql.append(" and (lower(visaSigner)=:visaSigner or lower(id.kyVisabillm.userId.email)=:visaSigner and id.itemNo='01') ");
+			//hql.append(" and lower(id.kyVisabillm.useremail)=:visaSigner and id.itemNo='01' ");
 			map.put("visaSigner", email.toLowerCase());
 		}else{
 			hql.append(" and id.itemNo='01'");
@@ -97,13 +97,7 @@ public class KyVisabillsDaoImpl extends Basedao implements IKyVisaBillsDao{
 			hql.append(" and id.kyVisabillm.dateCreate<=:createdate2");
 			map.put("createdate2", createDate2);
 		}
-		/*if(factNo.equals("nothing")&&(visaMk==null||visaMk.equals(""))&&(billNo==null||billNo.equals(""))
-				&&(visaSort.equals("nothing")||visaSort==null||visaSort.equals(""))
-				&&(createDate==null||createDate.equals(""))
-				&&(createDate2==null||createDate2.equals(""))){
-			hql.append(" and id.kyVisabillm.id.factNo=:factno");
-			map.put("factno", factNo);
-		}*/	
+		
 		if(title!=null&&!"".equals(title)){
 			if("EM".equals(bigType)){
 				hql.append(" and id.kyVisabillm.kyzexp.memoSmk like:title");
@@ -113,6 +107,7 @@ public class KyVisabillsDaoImpl extends Basedao implements IKyVisaBillsDao{
 			}
 			map.put("title","%"+title+"%");
 		}
+		hql.append(" and flowMk='Y'");
 		//hql.append(STR);
 		hql2.append(hql);
 		hql.append(" order by id.kyVisabillm.id.factNo desc,id.kyVisabillm.dateCreate desc,id.kyVisabillm.id.billNo desc");
