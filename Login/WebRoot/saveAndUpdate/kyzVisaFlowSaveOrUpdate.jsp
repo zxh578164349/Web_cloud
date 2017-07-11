@@ -44,8 +44,9 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 			 <tr>
 			     <td colspan="10">
 			                          是否分部門&nbsp;&nbsp;&nbsp;
-			                          是<input type="radio" name="trMk" value="Y" datatype="*" onclick="checkSame()"/>&nbsp;&nbsp;
-			                          否<input type="radio" name="trMk" value="N" onclick="checkSame()"/>                
+			                          是<input type="radio" name="trMk_r" value="Y" datatype="*" onclick="rplvalue(this.value),checkSame()"/>&nbsp;&nbsp;
+			                          否<input type="radio" name="trMk_r" value="N" onclick="rplvalue(this.value),checkSame()"/>
+			            <input type="hidden" name="trMk"/>                
 			     </td>
 			  </tr>
 			    <tr>
@@ -217,6 +218,7 @@ var j=0;
         if(cboxlist.length>1){
            document.getElementById("dwrFactNo").disabled=true;
            document.getElementById("dwr_kytype").disabled=true;
+           jq("input[name='trMk_r']").attr("disabled","disabled");
         } 
               
         
@@ -235,12 +237,13 @@ var j=0;
 	   var cboxlist=document.getElementsByName("cbox");
 	   //刪除選中行	 	   	   
 	   if(cboxlist.length>1){
-	      visaflow_body.deleteRow(cboxlist.length);	      	         
+	      visaflow_body.deleteRow(cboxlist.length+1);	 //因為   visaflow_body的行數比  cboxlist的數量要多，所以cboxlist要加   +1     
 	   }
 	   //刪除最後一行
 	   if(cboxlist.length==1){
 	      document.getElementById("dwrFactNo").disabled=false;
-	      document.getElementById("dwr_kytype").disabled=false;	      	           
+	      document.getElementById("dwr_kytype").disabled=false;	
+	      jq("input[name='trMk_r']").removeAttr("disabled");
 	   }
 	  	   	  	   
 	}
@@ -261,7 +264,7 @@ var j=0;
 	function getAddBtn(){
 	    var factno=document.getElementById("dwrFactNo").value;
         var typeno=document.getElementById("dwr_kytype").value;
-        var trMk=jq("input[name='trMk']:checked").val();
+        var trMk=jq("input[name='trMk']").val();
         if(factno!=""&&typeno!=""&&trMk!=""&&trMk!=null){
           document.getElementById("addbtn").disabled="";
           document.getElementById("addbtn").style.color="white";
@@ -271,6 +274,10 @@ var j=0;
         }
 	}
 	      
+	function rplvalue(vlu){
+		jq("input[name='trMk']").val(vlu);
+	}
+	
      function checkSame(){
        var factno=document.getElementById("dwrFactNo").value;
        var visasort=document.getElementById("dwr_kytype").value.split("__")[0]; 
@@ -279,7 +286,7 @@ var j=0;
        var visasort_obj=document.getElementById("dwr_kytype");
        var visasort_index=visasort_obj.selectedIndex;
        var visasort_text=visasort_obj.options[visasort_index].text;
-       var trMk=jq("input[name='trMk']:checked").val();
+       var trMk=jq("input[name='trMk']").val();
        if(factno!=""&&visasort!=""&&trMk!=""&&trMk!=null){
     	   if(visasort2=="0"){//【其它類】
     		   if(visaSigner!=""){                                   

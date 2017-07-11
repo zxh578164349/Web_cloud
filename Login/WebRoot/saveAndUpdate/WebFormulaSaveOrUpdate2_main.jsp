@@ -107,7 +107,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 									 <input type="hidden" value="${loginUser.username}" name="formula.modifyName" /> <!--  修改者--> 
 									 <input type="hidden" value="<%=str_date%>" name="formula.modifyDate" /> <!--  修改日期-->
 									 <input type="hidden" value="<s:property value='formula.visaSort'/>" name="formula.visaSort">
-									 <input type="hidden" value="<s:property value='formula.userId'/>" name="formula.userId" />
+									 <input type="hidden" value="<s:property value='formula.userId'/>" name="formula.userId.id" />
 									 <input type="hidden" value="<s:property value='formula.useremail'/>" name="formula.useremail" />
 									 </td>
 								</tr>

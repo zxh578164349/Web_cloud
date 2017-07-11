@@ -53,7 +53,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 									 <input type="hidden" value="<%=str_date%>" name="formula.createDate" id="createDate" />
 									 <input type="hidden" name="isnull" value="isnull" />
 									 <input type="hidden" name="formula.visaSort" value="PF"/>
-									 <input type="hidden" value="${loginUser.id}" name="formula.userId" />
+									 <input type="hidden" value="${loginUser.id}" name="formula.userId.id" />
 									 <input type="hidden" value="${loginUser.email}" name="formula.useremail" /> 									
 									</td>
 								</tr> 
