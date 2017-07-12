@@ -1373,6 +1373,7 @@ public class GlobalMethod extends HibernateDaoSupport{
 			List<String>list_emails=new ArrayList<String>();//所有發送人
 			//list_emails.add(EMAIL);
 			//由於出差函文流程中可能不包括申請人， 所有需要從函文中獲取申請email 20160621
+			
 			if(vbm2.getId().getBillNo().substring(0,2).equals("BM")){
 				if(vbm2.getWebbussletter().getUserEmail()!=null&&!vbm2.getWebbussletter().getUserEmail().equals("")){
 					list_emails.add(vbm2.getWebbussletter().getUserEmail());

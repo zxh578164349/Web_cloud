@@ -74,4 +74,30 @@ public class WebErpProductinFormationDaoImpl extends Basedao implements IWebErpP
 		return super.getAllWithNoPage(hql.toString(),map);
 	}
 
+	/**
+	 * 日期:2017/7/12
+	 * 描述:
+	 */
+	
+	
+	public List<Object[]> findItemcategory(){
+		// TODO Auto-generated method stub
+		String hql="select distinct itemcategory,itemcategoryname from WebErpProductinFormation";
+		
+		return super.findAll(hql,null);
+	}
+
+	/**
+	 * 日期:2017/7/12
+	 * 描述:
+	 */
+	
+	
+	public List<Object[]> findNamece2(String itemcategory){
+		// TODO Auto-generated method stub
+		String hql="select namec1,namec2 from WebErpProductinFormation where itemcategory=?";
+		String[]objs={itemcategory};
+		return super.findAll(hql,objs);
+	}
+
 }
