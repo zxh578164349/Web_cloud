@@ -99,5 +99,6 @@
 	<bean id="weberpbpdao" class="dao.impl.WebErpBrankProcessDaoImpl" parent="baseDao"></bean>
 	<bean id="weberppfdao" class="dao.impl.WebErpProductinFormationDaoImpl" parent="baseDao"></bean>
 	<bean id="webformuladao" class="dao.impl.WebFormulaDaoImpl" parent="baseDao"></bean>
+	<bean id="webbrprodao" class="dao.impl.WebBrProductIDaoImpl" parent="baseDao"></bean>
 </beans>
 

@@ -723,6 +723,12 @@
 		    <result name="findById_layer">page/webformula_layer/WebFormula_layer.jsp</result>
 		    <result name="findById_layer2">page/webformula_layer/WebFormula_layer2.jsp</result>		    
 		</action>
+		
+		<action name="webbrpro_*" calss="webbrproAction" method="{1}">
+		     <result name="findPageBean">page/web_br_product.jsp</result>
+		     <result name="findPageBean1">page/table1/web_br_product1.jsp</result>
+		</action>
+		
 	</package>
 
      <package name="guest" extends="struts-default,jasperreports-default,json-default" namespace="/guest">

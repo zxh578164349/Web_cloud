@@ -81,6 +81,7 @@
 	<bean id="weberpbpAction" class="action.WebErpBrankProcessAction" scope="prototype"/>
 	<bean id="weberppfAction" class="action.WebErpProductinFormationAction" scope="prototype"/>
 	<bean id="webformulaAction" class="action.WebFormulaAction" scope="prototype"/>
+	<bean id="webbrproAction" class="action.WebBrProductAction" scope="prototype"/>
 </beans> 
 
  
