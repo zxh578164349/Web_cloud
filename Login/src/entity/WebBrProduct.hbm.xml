@@ -24,13 +24,7 @@
         </property>
         <property name="namec2" type="java.lang.String">
             <column name="NAMEC2" length="50" />
-        </property>
-        <property name="createUser" type="java.lang.String">
-            <column name="CREATE_USER" length="50" />
-        </property>
-        <property name="editUser" type="java.lang.String">
-            <column name="EDIT_USER" length="50" />
-        </property>
+        </property>       
         <property name="createDate" type="java.lang.String">
             <column name="CREATE_DATE" length="10" />
         </property>
@@ -43,5 +37,7 @@
             </key>
             <one-to-many class="entity.WebBrProductitem" />
         </bag>
+        <many-to-one name="createUser" column="CREATE_USER" unique="true" insert="false" update="false"/>
+        <many-to-one name="editUser" column="EDIT_USER" unique="true" insert="false" update="false"/>
     </class>
 </hibernate-mapping>

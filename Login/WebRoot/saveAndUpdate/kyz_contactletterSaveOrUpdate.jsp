@@ -47,7 +47,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 						<s:else>
 						   <input type="text" name="kyzletter.userNm"   value="<s:property value='kyzletter.userNm'/>" style="color:blue" readonly/>
 						   <input type="hidden" name="kyzletter.userAccount" value="<s:property value='kyzletter.userAccount'/>"/>
-						   <input type="hidden" name="kyzletter.userId" value="<s:property value='kyzletter.userId.id'/>"/>
+						   <input type="hidden" name="kyzletter.userId" value="<s:property value='kyzletter.userId'/>"/>
 						   <input type="hidden" name="kyzletter.useremail" value="<s:property value='kyzletter.useremail'/>"/>
 						</s:else>
 						

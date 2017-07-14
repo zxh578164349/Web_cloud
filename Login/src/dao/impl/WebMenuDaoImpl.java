@@ -22,7 +22,8 @@ public class WebMenuDaoImpl extends Basedao implements IWebMenuDao {
 			hql.append(" and typeMk=:typeMk ");
 			map.put("typeMk",typeMk);
 		}
-		hql.append("and enableMk='Y' order by menuid");		
+		//hql.append("and enableMk='Y' order by menuid");
+		hql.append(" order by menuid");
 		List<WebMenu>list=super.getAllWithNoPage(hql.toString(),map);
 		for(WebMenu menu:list){
 			menu.getSubmenus().size();

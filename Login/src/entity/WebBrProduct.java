@@ -18,8 +18,8 @@ public class WebBrProduct implements java.io.Serializable{
 	private String itemcategoryname;
 	private String namec1;
 	private String namec2;
-	private String createUser;
-	private String editUser;
+	private WebUser createUser;
+	private WebUser editUser;
 	private String createDate;
 	private String editDate;
 	private List webBrProductitems;
@@ -36,16 +36,14 @@ public class WebBrProduct implements java.io.Serializable{
 	}
 
 	/** full constructor */
-	public WebBrProduct(Integer wid,VWebFact factNo,String itemcategory,String itemcategoryname,String namec1,String namec2,String createUser,String editUser,
+	public WebBrProduct(Integer wid,VWebFact factNo,String itemcategory,String itemcategoryname,String namec1,String namec2,
 			String createDate,String editDate,List webBrProductitems){
 		this.wid=wid;
 		this.factNo=factNo;
 		this.itemcategory=itemcategory;
 		this.itemcategoryname=itemcategoryname;
 		this.namec1=namec1;
-		this.namec2=namec2;
-		this.createUser=createUser;
-		this.editUser=editUser;
+		this.namec2=namec2;		
 		this.createDate=createDate;
 		this.editDate=editDate;
 		this.webBrProductitems=webBrProductitems;
@@ -103,21 +101,7 @@ public class WebBrProduct implements java.io.Serializable{
 		this.namec2=namec2;
 	}
 
-	public String getCreateUser(){
-		return this.createUser;
-	}
-
-	public void setCreateUser(String createUser){
-		this.createUser=createUser;
-	}
-
-	public String getEditUser(){
-		return this.editUser;
-	}
-
-	public void setEditUser(String editUser){
-		this.editUser=editUser;
-	}
+	
 
 	public String getCreateDate(){
 		return this.createDate;
@@ -139,9 +123,29 @@ public class WebBrProduct implements java.io.Serializable{
 		return webBrProductitems;
 	}
 
+	public WebUser getCreateUser(){
+		return createUser;
+	}
+
+	public void setCreateUser(WebUser createUser){
+		this.createUser=createUser;
+	}
+
+	public WebUser getEditUser(){
+		return editUser;
+	}
+
+	public void setEditUser(WebUser editUser){
+		this.editUser=editUser;
+	}
+
 	public void setWebBrProductitems(List webBrProductitems){
 		this.webBrProductitems=webBrProductitems;
 	}
+
+	
+	
+	
 
 	
 

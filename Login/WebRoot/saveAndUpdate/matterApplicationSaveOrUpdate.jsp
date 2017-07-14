@@ -121,7 +121,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 						<s:else>
 						   <input type="text" name="kyz.userNm" datatype="*"  value="<s:property value='kyz.userNm'/>" style="color:blue" readonly/>
 						   <input type="hidden" name="kyz.username" value="<s:property value='kyz.username'/>"/>
-						   <input type="hidden" name="kyz.userId" value="<s:property value='kyz.userId.id'/>"/>
+						   <input type="hidden" name="kyz.userId" value="<s:property value='kyz.userId'/>"/>
 						    <input type="hidden" name="kyz.useremail" value="<s:property value='kyz.useremail'/>"/>
 						</s:else>
 						</td>

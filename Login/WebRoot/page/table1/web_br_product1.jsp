@@ -29,7 +29,7 @@
 	<table class="table table-striped table-hover table-bordered"  >
 	<h3>
 	<s:if test='#session.loginUser.userread!="1"'>
-	<input type="button" class="btn btn-info" value="添加" onclick="loadUrl('saveAndUpdate/WebFormulaSaveOrUpdate.jsp')"/>
+	<input type="button" class="btn btn-info" value="添加" onclick="loadUrl('saveAndUpdate/web_br_productSaveOrUpdate.jsp')"/>
 	</s:if>	
 	<span id="h2_title">BR產品設定</span>
 	</h3>

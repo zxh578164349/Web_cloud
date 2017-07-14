@@ -687,6 +687,12 @@
 		   <result name="findNameces" type="json">
 		      <param name="root">jsons</param>
 		   </result>
+		   <result name="findItemcategory" type="json">
+		       <param name="root">jsons</param>
+		   </result>
+		   <result name="findNamece2" type="json">
+		       <param name="root">jsons</param>
+		   </result>
 		</action>
 		<action name="weberpbp_*" class="weberpbpAction" method="{1}">
 		   <result name="findObjOp1" type="json">
@@ -724,7 +730,7 @@
 		    <result name="findById_layer2">page/webformula_layer/WebFormula_layer2.jsp</result>		    
 		</action>
 		
-		<action name="webbrpro_*" calss="webbrproAction" method="{1}">
+		<action name="webbrpro_*" class="webbrproAction" method="{1}">
 		     <result name="findPageBean">page/web_br_product.jsp</result>
 		     <result name="findPageBean1">page/table1/web_br_product1.jsp</result>
 		</action>

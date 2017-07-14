@@ -60,6 +60,10 @@ public class WebBrProductIDaoImpl extends Basedao implements IWebBrProductDao{
 		if(factNo==null||"".equals(factNo)){
 			factNo=(String)ActionContext.getContext().getSession().get("factNo");
 		}
+		if(factNo!=null&&!"".equals(factNo)&&!"tw".equals(factNo)){
+			hql.append(" and factNo.factNo=:factno ");
+			map.put("factno",factNo);
+		}
 		hql2.append(hql);
 		hql.append(" order by factNo,itemcategory,namec1,namec2");
 		Integer allrow=(Integer)ActionContext.getContext().getSession().get("allrow");

@@ -34,107 +34,30 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 						<table class="table table-condensed">
 							<tbody>
 								<tr>
-									<th>廠別</th>
-									<th>配方索引</th>
+									<th>廠別</th>									
 								</tr>							
 								    <tr>
 									<td>							
 									    <s:if test="#session.factNo!='tw'">
-									      <input type="text" name="formula.factNo.factNo" value="${loginUser.factno}__${loginUser.erpfactno}" readonly id="dwr_factno" />
+									      <input type="text" name="wbpro.factNo.factNo" value="${loginUser.factno}__${loginUser.erpfactno}" readonly id="dwr_factno" />
 								        </s:if> 
 								        <s:if test="#session.factNo=='tw'">
-									      <select name="formula.factNo.factNo" onchange="makeFormulaIndex()" datatype="*" id="dwr_factno">
+									      <select name="wbpro.factNo.factNo" onchange="" datatype="*" id="dwr_factno">
 									      </select>
 								        </s:if>																								
 									</td>
-									<td>
-									<input type="text" style="color:blue" name="formula.formulaIndex" readonly="readonly" datatype="*" id="formulaIndex" placeholder="自動生成"/>
-									<input type="hidden" value="${loginUser.username}" name="formula.createName" /> 
-									 <input type="hidden" value="<%=str_date%>" name="formula.createDate" id="createDate" />
-									 <input type="hidden" name="isnull" value="isnull" />
-									 <input type="hidden" name="formula.visaSort" value="PF"/>
-									 <input type="hidden" value="${loginUser.id}" name="formula.userId" />
-									 <input type="hidden" value="${loginUser.email}" name="formula.useremail" /> 									
+									<td>								
+									 <input type="hidden" value="<%=str_date%>" name="wbpro.createDate"  />
+									 <input type="hidden" value="${loginUser.id}" name="wbpro.createUser.id" />								
 									</td>
-								</tr> 
-								
-														
-								<tr>
-									<th>製程類別</th>
-									<th>配方編號</th>
-								</tr>
-								<tr>
-									<td>
-									<s:if test="formula==null">
-									  <select name="factCode" datatype="*" id="dwrFactArea" onchange="makeFormulaIndex()"></select>
-									</s:if>
-									<s:else>
-									  <input type="text" value="<s:property value='formula.factCode.id'/>" name="formula.factCode.id" style="color:blue" readonly />
-									</s:else>
-									</td>
-									<td><input type="text" name="formula.formulaNo" value="<s:property value='formula.formulaNo' />" datatype="*1-30">
-									</td>
-								</tr>
-								<tr>
-									<th>配方名稱</th>
-									<th>倍率</th>
-								</tr>
-								<tr>
-									<td><input type="text" name="formula.formulaName" value="<s:property value='formula.formulaName' />" datatype="*1-50">
-									</td>
-									<td><input type="text" name="formula.magnification" value="<s:property value='formula.magnification' />" datatype="*8-4">
-									</td>
-								</tr>
-								<tr>
-									<th>帶皮半成品硬度</th>
-									<th>成品硬度</th>
-								</tr>
-								<tr>
-									<td>
-									<input type="text" name="formula.semifinishedProductHardness" value="<s:property value='formula.semifinishedProductHardness' />" datatype="*0-30">
-									</td>
-									<td><input type="text" name="formula.productHardness" value="<s:property value='formula.productHardness' />" datatype="*0-30">
-									</td>
-								</tr>
-								<tr>
-									<th>品牌形體</th>
-									<th>顏色</th>
-								</tr>
-								<tr>
-									<td><input type="text" name="formula.brandBody" value="<s:property value='formula.brandBody' />" datatype="*0-30">
-									</td>
-									<td><input type="text" name="formula.color" value="<s:property value='formula.color' />" datatype="*0-30">
-									</td>
-								</tr>
-								<tr>
-									<th>發行日期</th>
-									<th>品牌指定</th>
-								</tr>
-								<tr>
-									<td><input type="text" name="formula.issuedDate" value="<s:property value='formula.issuedDate' />" onclick="WdatePicker({dateFmt:'yyyyMMdd',maxDate:'%y-%M-%d'})"
-										datatype="*0-30" class="Wdate" />
-									</td>
-									<td><s:if test='formula.assignBrand=="0"'>
-					                                                            指     定<input type="radio" name="formula.assignBrand" value="1" datatype="*"/>
-					                                                            非指定<input type="radio" name="formula.assignBrand" value="0" checked />
-										</s:if> 
-										<s:else>
-					                                                             指     定<input type="radio" name="formula.assignBrand" value="1" checked  datatype="*"/>
-					                                                              非指定<input type="radio" name="formula.assignBrand" value="0" />
-										</s:else>
-									</td>
-								</tr>								
+								</tr> 								
 							</tbody>
 						</table>
 					</div>
 		</div>
-		<div class="panel panel-default" id="div_webformalaitem"
-			style="display:none">
+		<div class="panel panel-default" id="div_webformalaitem">
 			<div class="panel-heading">
-				<label>配方階段</label>&nbsp;&nbsp;&nbsp;
-				 <input type="button" value="添加配方階段"
-					onclick="check_addSection()" class="btn btn-primary disabled"
-					id="btn_addsec" />
+				<label>配方階段</label>				 
 			</div>
 			<div class="panel-body">
 				<ul id="myTab_item" class="nav nav-tabs">
@@ -169,12 +92,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 				</div>
 			</div>
 		</div>
-        <div class="panel panel-default" id="div_remark">
-          <div class="panel-heading"><label>配方備註</label></div>
-          <div class="panel-body">
-               <textarea style="width:100%;height:150px" name='formula.remark' datatype="*0-200"><s:property value="formula.remark"/></textarea>                  
-          </div>
-        </div>
+        
 		
 		<center>
 	        <input type="button" id="sub_main" value="確定" class="btn btn-primary" />&nbsp;&nbsp;&nbsp;			              

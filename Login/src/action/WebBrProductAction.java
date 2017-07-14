@@ -33,8 +33,15 @@ public class WebBrProductAction extends ActionSupport{
 	private List<WebBrProduct> listbrpro;
 	private int page;
 	private PageBean bean;
+	private WebBrProduct wbpro;
 	
 	
+	public WebBrProduct getWbpro(){
+		return wbpro;
+	}
+	public void setWbpro(WebBrProduct wbpro){
+		this.wbpro=wbpro;
+	}
 	public int getPage(){
 		return page;
 	}
