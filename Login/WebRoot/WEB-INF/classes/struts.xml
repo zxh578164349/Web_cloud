@@ -733,6 +733,9 @@
 		<action name="webbrpro_*" class="webbrproAction" method="{1}">
 		     <result name="findPageBean">page/web_br_product.jsp</result>
 		     <result name="findPageBean1">page/table1/web_br_product1.jsp</result>
+		     <result name="add" type="json">
+		         <param name="root">ajaxResult</param>
+		     </result>
 		</action>
 		
 	</package>

@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.hibernate.Transaction;
+
 import com.opensymphony.xwork2.ActionContext;
 
 import util.PageBean;
@@ -88,6 +90,32 @@ public class WebBrProductIDaoImpl extends Basedao implements IWebBrProductDao{
 		bean.setPageSize(pageSize);
 		bean.setTotalPage(totalPage);
 		return bean;
+	}
+
+	/**
+	 * 日期:2017/7/17
+	 * 描述:
+	 */
+	
+	
+	public void add(List<WebBrProduct> listbrpro){
+		// TODO Auto-generated method stub
+		Transaction tx=null;
+		try{
+			tx=getSession().beginTransaction();
+			for(int i=0;i<listbrpro.size();i++){
+				getSession().merge(listbrpro.get(i));
+				if(i%10==0){
+					getSession().flush();
+					getSession().clear();
+				}
+			}
+			
+		}catch(Exception e){
+			tx.rollback();
+			e.printStackTrace();
+		}
+		
 	}
 
 }

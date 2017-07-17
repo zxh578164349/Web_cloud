@@ -56,4 +56,16 @@ public class WebBrProductServicesImpl implements IWebBrProductServices{
 		return webbrprodao.findPageBean(pageSize,page,factNo);
 	}
 
+
+	/**
+	 * 日期:2017/7/17
+	 * 描述:
+	 */
+	
+	
+	public void add(List<WebBrProduct> listbrpro){
+		// TODO Auto-generated method stub
+		webbrprodao.add(listbrpro);
+	}
+
 }

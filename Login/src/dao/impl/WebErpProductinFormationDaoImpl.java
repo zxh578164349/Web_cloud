@@ -82,7 +82,7 @@ public class WebErpProductinFormationDaoImpl extends Basedao implements IWebErpP
 	
 	public List<Object[]> findItemcategory(){
 		// TODO Auto-generated method stub
-		String hql="select distinct itemcategory,itemcategoryname from WebErpProductinFormation";
+		String hql="select distinct itemcategory,itemcategoryname from WebErpProductinFormation order by itemcategory";
 		
 		return super.findAll(hql,null);
 	}
@@ -95,7 +95,7 @@ public class WebErpProductinFormationDaoImpl extends Basedao implements IWebErpP
 	
 	public List<Object[]> findNamece2(String itemcategory){
 		// TODO Auto-generated method stub
-		String hql="select namec1,namec2 from WebErpProductinFormation where itemcategory=?";
+		String hql="select itemid, namec1,namec2 from WebErpProductinFormation where itemcategory=? order by namec1,namec2";
 		String[]objs={itemcategory};
 		return super.findAll(hql,objs);
 	}

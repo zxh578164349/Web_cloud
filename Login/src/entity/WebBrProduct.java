@@ -23,6 +23,7 @@ public class WebBrProduct implements java.io.Serializable{
 	private String createDate;
 	private String editDate;
 	private List webBrProductitems;
+	private WebErpProductinFormation weberppr;
 
 	// Constructors
 
@@ -141,6 +142,14 @@ public class WebBrProduct implements java.io.Serializable{
 
 	public void setWebBrProductitems(List webBrProductitems){
 		this.webBrProductitems=webBrProductitems;
+	}
+
+	public WebErpProductinFormation getWeberppr(){
+		return weberppr;
+	}
+
+	public void setWeberppr(WebErpProductinFormation weberppr){
+		this.weberppr=weberppr;
 	}
 
 	

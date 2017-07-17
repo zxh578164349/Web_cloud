@@ -11,6 +11,7 @@ import util.PageBean;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
+import entity.VWebFact;
 import entity.WebBrProduct;
 
 /**   
@@ -34,7 +35,21 @@ public class WebBrProductAction extends ActionSupport{
 	private int page;
 	private PageBean bean;
 	private WebBrProduct wbpro;
-	
+	private String ajaxResult;
+	public String getAjaxResult(){
+		return ajaxResult;
+	}
+	public void setAjaxResult(String ajaxResult){
+		this.ajaxResult=ajaxResult;
+	}
+	public String getItemcategory(){
+		return itemcategory;
+	}
+	public void setItemcategory(String itemcategory){
+		this.itemcategory=itemcategory;
+	}
+
+	private String itemcategory;
 	
 	public WebBrProduct getWbpro(){
 		return wbpro;
@@ -94,6 +109,20 @@ public class WebBrProductAction extends ActionSupport{
 		factNo=(String)ActionContext.getContext().getSession().get("webbrproFactNo");
 		bean=webbrproSer.findPageBean(20,page,factNo);
 		return "findPageBean1";
+	}
+	
+	public String add(){
+		ajaxResult="0";
+		try{
+			for(WebBrProduct obj:listbrpro){
+				obj.setFactNo(new VWebFact(factNo));
+				obj.setItemcategory(itemcategory);
+			}
+			webbrproSer.add(listbrpro);
+		}catch(Exception e){
+			ajaxResult="1";
+		}
+		return "add";
 	}
 	
 	

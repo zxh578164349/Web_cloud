@@ -25,5 +25,6 @@ import entity.WebBrProduct;
 public interface IWebBrProductDao{
 	public List<WebBrProduct> findByFactno(String factNo);
 	public PageBean findPageBean(int pageSize,int page,String factNo);
+	public void add(List<WebBrProduct> listbrpro);
 
 }

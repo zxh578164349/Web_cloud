@@ -8,11 +8,12 @@
     <class name="entity.WebBrProduct" table="WEB_BR_PRODUCT" schema="WEB">
         <id name="wid" type="java.lang.Integer">
             <column name="WID" precision="8" scale="0" />
-            <generator class="assigned" />
+            <!-- <generator class="assigned" /> -->
+            <generator class="sequence">
+               <param name="sequence">seq_webbrproduct</param>
+            </generator>
         </id>        
-        <many-to-one name="factNo" class="entity.VWebFact" fetch="select">
-            <column name="FACT_NO" length="10" />
-        </many-to-one>
+        
         <property name="itemcategory" type="java.lang.String">
             <column name="ITEMCATEGORY" length="20" />
         </property>
@@ -39,5 +40,7 @@
         </bag>
         <many-to-one name="createUser" column="CREATE_USER" unique="true" insert="false" update="false"/>
         <many-to-one name="editUser" column="EDIT_USER" unique="true" insert="false" update="false"/>
+        <many-to-one name="weberppr" column="WEBERPPR" unique="true" insert="false" update="false"/>
+        <many-to-one name="factNo" column="FACT_NO" unique="true" insert="false" update="false"/>
     </class>
 </hibernate-mapping>
