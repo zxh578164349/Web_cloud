@@ -10,6 +10,7 @@ public class WebBrProductitemId implements java.io.Serializable{
 
 	private String factNo;
 	private String yymmdd;
+	private WebBrProduct webBrProduct;
 
 	// Constructors
 
@@ -18,9 +19,10 @@ public class WebBrProductitemId implements java.io.Serializable{
 	}
 
 	/** full constructor */
-	public WebBrProductitemId(String factNo,String yymmdd){
+	public WebBrProductitemId(String factNo,String yymmdd,WebBrProduct webBrProduct){
 		this.factNo=factNo;
 		this.yymmdd=yymmdd;
+		this.webBrProduct=webBrProduct;
 	}
 
 	// Property accessors
@@ -41,6 +43,14 @@ public class WebBrProductitemId implements java.io.Serializable{
 		this.yymmdd=yymmdd;
 	}
 
+	public WebBrProduct getWebBrProduct(){
+		return this.webBrProduct;
+	}
+
+	public void setWebBrProduct(WebBrProduct webBrProduct){
+		this.webBrProduct=webBrProduct;
+	}
+
 	public boolean equals(Object other){
 		if ((this == other))
 			return true;
@@ -53,7 +63,9 @@ public class WebBrProductitemId implements java.io.Serializable{
 		return ((this.getFactNo() == castOther.getFactNo()) || (this.getFactNo() != null && castOther.getFactNo() != null && this.getFactNo().equals(
 				castOther.getFactNo())))
 				&& ((this.getYymmdd() == castOther.getYymmdd()) || (this.getYymmdd() != null && castOther.getYymmdd() != null && this.getYymmdd().equals(
-						castOther.getYymmdd())));
+						castOther.getYymmdd())))
+				&& ((this.getWebBrProduct() == castOther.getWebBrProduct()) || (this.getWebBrProduct() != null && castOther.getWebBrProduct() != null && this
+						.getWebBrProduct().equals(castOther.getWebBrProduct())));
 	}
 
 	public int hashCode(){
@@ -61,6 +73,7 @@ public class WebBrProductitemId implements java.io.Serializable{
 
 		result=37 * result + (getFactNo() == null ? 0 : this.getFactNo().hashCode());
 		result=37 * result + (getYymmdd() == null ? 0 : this.getYymmdd().hashCode());
+		result=37 * result + (getWebBrProduct() == null ? 0 : this.getWebBrProduct().hashCode());
 		return result;
 	}
 

@@ -213,9 +213,11 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 				}
 				if(data=="1"){
 					layer.msg("提交失敗",3,3);
+					jq("#msgtip").text("");
 				}
 				if(data=="3"){
 				    layer.msg("保存附檔失敗",3,3);
+				    jq("#msgtip").text("");
 				}				
 			}
 		});

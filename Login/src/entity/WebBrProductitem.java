@@ -1,9 +1,5 @@
 package entity;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
 /**
  * WebBrProductitem entity. @author MyEclipse Persistence Tools
  */
@@ -13,7 +9,6 @@ public class WebBrProductitem implements java.io.Serializable{
 	// Fields
 
 	private WebBrProductitemId id;
-	private WebBrProduct webBrProduct;
 	private Double inventory;
 	private Double orderNotin;
 	private Double actualUsed;
@@ -21,7 +16,6 @@ public class WebBrProductitem implements java.io.Serializable{
 	private String editUser;
 	private String createDate;
 	private String editDate;
-	private List webBrEstimatingitems;
 
 	// Constructors
 
@@ -35,10 +29,9 @@ public class WebBrProductitem implements java.io.Serializable{
 	}
 
 	/** full constructor */
-	public WebBrProductitem(WebBrProductitemId id,WebBrProduct webBrProduct,Double inventory,Double orderNotin,Double actualUsed,String createUser,
-			String editUser,String createDate,String editDate,List webBrEstimatingitems){
+	public WebBrProductitem(WebBrProductitemId id,Double inventory,Double orderNotin,Double actualUsed,String createUser,String editUser,String createDate,
+			String editDate){
 		this.id=id;
-		this.webBrProduct=webBrProduct;
 		this.inventory=inventory;
 		this.orderNotin=orderNotin;
 		this.actualUsed=actualUsed;
@@ -46,7 +39,6 @@ public class WebBrProductitem implements java.io.Serializable{
 		this.editUser=editUser;
 		this.createDate=createDate;
 		this.editDate=editDate;
-		this.webBrEstimatingitems=webBrEstimatingitems;
 	}
 
 	// Property accessors
@@ -57,14 +49,6 @@ public class WebBrProductitem implements java.io.Serializable{
 
 	public void setId(WebBrProductitemId id){
 		this.id=id;
-	}
-
-	public WebBrProduct getWebBrProduct(){
-		return this.webBrProduct;
-	}
-
-	public void setWebBrProduct(WebBrProduct webBrProduct){
-		this.webBrProduct=webBrProduct;
 	}
 
 	public Double getInventory(){
@@ -122,15 +106,5 @@ public class WebBrProductitem implements java.io.Serializable{
 	public void setEditDate(String editDate){
 		this.editDate=editDate;
 	}
-
-	public List getWebBrEstimatingitems(){
-		return webBrEstimatingitems;
-	}
-
-	public void setWebBrEstimatingitems(List webBrEstimatingitems){
-		this.webBrEstimatingitems=webBrEstimatingitems;
-	}
-
-	
 
 }

@@ -13,10 +13,10 @@
             <key-property name="yymmdd" type="java.lang.String">
                 <column name="YYMMDD" length="10" />
             </key-property>
+            <key-many-to-one name="webBrProduct" class="entity.WebBrProduct">
+                <column name="WID" precision="8" scale="0" />
+            </key-many-to-one>
         </composite-id>
-        <many-to-one name="webBrProduct" class="entity.WebBrProduct" fetch="select">
-            <column name="WID" precision="8" scale="0" />
-        </many-to-one>
         <property name="inventory" type="java.lang.Double">
             <column name="INVENTORY" precision="12" />
         </property>
@@ -38,12 +38,5 @@
         <property name="editDate" type="java.lang.String">
             <column name="EDIT_DATE" length="10" />
         </property>
-        <bag name="webBrEstimatingitems" inverse="true" cascade="all">
-            <key>
-                <column name="FACT_NO" length="10" not-null="true" />
-                <column name="YYMMDD" length="10" not-null="true" />
-            </key>
-            <one-to-many class="entity.WebBrEstimatingitem" />
-        </bag>
     </class>
 </hibernate-mapping>

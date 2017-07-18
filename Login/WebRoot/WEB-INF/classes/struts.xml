@@ -736,6 +736,11 @@
 		     <result name="add" type="json">
 		         <param name="root">ajaxResult</param>
 		     </result>
+		     <result name="delete" type="redirectAction">webbrpro_findPageBean3</result>
+		     <result name="findByFactno" type="json">
+		         <param name="root">jsons</param>
+		     </result>
+		         	     
 		</action>
 		
 	</package>

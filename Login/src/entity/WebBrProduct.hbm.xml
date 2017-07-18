@@ -13,7 +13,9 @@
                <param name="sequence">seq_webbrproduct</param>
             </generator>
         </id>        
-        
+        <property name="factNo" type="java.lang.String">
+            <column name="FACT_NO" length="10"/>
+        </property>
         <property name="itemcategory" type="java.lang.String">
             <column name="ITEMCATEGORY" length="20" />
         </property>
@@ -32,15 +34,24 @@
         <property name="editDate" type="java.lang.String">
             <column name="EDIT_DATE" length="10" />
         </property>
+        <property name="weberppr" type="java.lang.Integer">
+            <column name="WEBERPPR" precision="8" scale="0"/>
+        </property>
+        <property name="createUser" type="java.lang.Integer">
+            <column name="CREATE_USER" precision="8" scale="0"/>
+        </property>
+        <property name="editUser" type="java.lang.Integer">
+            <column name="EDIT_USER" precision="8" scale="0"/>
+        </property>
         <bag name="webBrProductitems" inverse="true" cascade="all">
             <key>
                 <column name="WID" precision="8" scale="0" />
             </key>
             <one-to-many class="entity.WebBrProductitem" />
         </bag>
-        <many-to-one name="createUser" column="CREATE_USER" unique="true" insert="false" update="false"/>
-        <many-to-one name="editUser" column="EDIT_USER" unique="true" insert="false" update="false"/>
-        <many-to-one name="weberppr" column="WEBERPPR" unique="true" insert="false" update="false"/>
-        <many-to-one name="factNo" column="FACT_NO" unique="true" insert="false" update="false"/>
+        <many-to-one name="createUser2" column="CREATE_USER" unique="true" insert="false" update="false"/>
+        <many-to-one name="editUser2" column="EDIT_USER" unique="true" insert="false" update="false"/>
+        <many-to-one name="weberppr2" column="WEBERPPR" unique="true" insert="false" update="false"/>
+        <many-to-one name="factNo2" column="FACT_NO" unique="true" insert="false" update="false"/>
     </class>
 </hibernate-mapping>

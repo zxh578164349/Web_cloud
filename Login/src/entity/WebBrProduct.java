@@ -12,18 +12,22 @@ public class WebBrProduct implements java.io.Serializable{
 
 	// Fields
 
-	private Integer wid;
-	private VWebFact factNo;
+	private Integer wid;	
+	private String factNo;
 	private String itemcategory;
 	private String itemcategoryname;
 	private String namec1;
 	private String namec2;
-	private WebUser createUser;
-	private WebUser editUser;
+	private Integer createUser;
+	private Integer editUser;
 	private String createDate;
 	private String editDate;
 	private List webBrProductitems;
-	private WebErpProductinFormation weberppr;
+	private Integer weberppr;
+	private WebErpProductinFormation weberppr2;
+	private VWebFact factNo2;
+	private WebUser createUser2;
+	private WebUser editUser2;
 
 	// Constructors
 
@@ -37,7 +41,7 @@ public class WebBrProduct implements java.io.Serializable{
 	}
 
 	/** full constructor */
-	public WebBrProduct(Integer wid,VWebFact factNo,String itemcategory,String itemcategoryname,String namec1,String namec2,
+	public WebBrProduct(Integer wid,String factNo,String itemcategory,String itemcategoryname,String namec1,String namec2,
 			String createDate,String editDate,List webBrProductitems){
 		this.wid=wid;
 		this.factNo=factNo;
@@ -62,13 +66,7 @@ public class WebBrProduct implements java.io.Serializable{
 
 	
 
-	public VWebFact getFactNo(){
-		return factNo;
-	}
-
-	public void setFactNo(VWebFact factNo){
-		this.factNo=factNo;
-	}
+	
 
 	public String getItemcategory(){
 		return this.itemcategory;
@@ -124,32 +122,74 @@ public class WebBrProduct implements java.io.Serializable{
 		return webBrProductitems;
 	}
 
-	public WebUser getCreateUser(){
-		return createUser;
-	}
-
-	public void setCreateUser(WebUser createUser){
-		this.createUser=createUser;
-	}
-
-	public WebUser getEditUser(){
-		return editUser;
-	}
-
-	public void setEditUser(WebUser editUser){
-		this.editUser=editUser;
-	}
 
 	public void setWebBrProductitems(List webBrProductitems){
 		this.webBrProductitems=webBrProductitems;
 	}
 
-	public WebErpProductinFormation getWeberppr(){
+
+	public String getFactNo(){
+		return factNo;
+	}
+
+	public void setFactNo(String factNo){
+		this.factNo=factNo;
+	}
+
+	public VWebFact getFactNo2(){
+		return factNo2;
+	}
+
+	public void setFactNo2(VWebFact factNo2){
+		this.factNo2=factNo2;
+	}
+
+	public Integer getWeberppr(){
 		return weberppr;
 	}
 
-	public void setWeberppr(WebErpProductinFormation weberppr){
+	public void setWeberppr(Integer weberppr){
 		this.weberppr=weberppr;
+	}
+
+	public WebErpProductinFormation getWeberppr2(){
+		return weberppr2;
+	}
+
+	public void setWeberppr2(WebErpProductinFormation weberppr2){
+		this.weberppr2=weberppr2;
+	}
+
+	public Integer getCreateUser(){
+		return createUser;
+	}
+
+	public void setCreateUser(Integer createUser){
+		this.createUser=createUser;
+	}
+
+	public Integer getEditUser(){
+		return editUser;
+	}
+
+	public void setEditUser(Integer editUser){
+		this.editUser=editUser;
+	}
+
+	public WebUser getCreateUser2(){
+		return createUser2;
+	}
+
+	public void setCreateUser2(WebUser createUser2){
+		this.createUser2=createUser2;
+	}
+
+	public WebUser getEditUser2(){
+		return editUser2;
+	}
+
+	public void setEditUser2(WebUser editUser2){
+		this.editUser2=editUser2;
 	}
 
 	

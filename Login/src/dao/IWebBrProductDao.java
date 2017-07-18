@@ -7,6 +7,7 @@ import java.util.List;
 
 import util.PageBean;
 
+import entity.KyzExpectmatmLog;
 import entity.WebBrProduct;
 
 /**   
@@ -25,6 +26,9 @@ import entity.WebBrProduct;
 public interface IWebBrProductDao{
 	public List<WebBrProduct> findByFactno(String factNo);
 	public PageBean findPageBean(int pageSize,int page,String factNo);
-	public void add(List<WebBrProduct> listbrpro);
+	public void add(List<WebBrProduct> listbrpro);	
+	public WebBrProduct findById(Integer wid);
+	public void delete(WebBrProduct obj,KyzExpectmatmLog log);
+
 
 }

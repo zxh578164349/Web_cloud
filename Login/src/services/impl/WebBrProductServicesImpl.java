@@ -7,6 +7,7 @@ import java.util.List;
 
 import dao.IWebBrProductDao;
 
+import entity.KyzExpectmatmLog;
 import entity.WebBrProduct;
 import services.IWebBrProductServices;
 import util.PageBean;
@@ -66,6 +67,30 @@ public class WebBrProductServicesImpl implements IWebBrProductServices{
 	public void add(List<WebBrProduct> listbrpro){
 		// TODO Auto-generated method stub
 		webbrprodao.add(listbrpro);
+	}
+
+
+	/**
+	 * 日期:2017/7/18
+	 * 描述:
+	 */
+	
+	
+	public WebBrProduct findById(Integer wid){
+		// TODO Auto-generated method stub
+		return webbrprodao.findById(wid);
+	}
+
+
+	/**
+	 * 日期:2017/7/18
+	 * 描述:
+	 */
+	
+	
+	public void delete(WebBrProduct obj,KyzExpectmatmLog log){
+		// TODO Auto-generated method stub
+		webbrprodao.delete(obj,log);
 	}
 
 }

@@ -5,12 +5,15 @@ package action;
 
 import java.util.List;
 
+import net.sf.json.JSONArray;
+
 import services.IWebBrProductServices;
 import util.PageBean;
 
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
+import entity.KyzExpectmatmLog;
 import entity.VWebFact;
 import entity.WebBrProduct;
 
@@ -36,6 +39,44 @@ public class WebBrProductAction extends ActionSupport{
 	private PageBean bean;
 	private WebBrProduct wbpro;
 	private String ajaxResult;
+	private String createDate;
+	private Integer createUser; 
+	private Integer wid;
+	private JSONArray jsons;
+	private String yymmdd;
+	
+	
+	
+	public String getYymmdd(){
+		return yymmdd;
+	}
+	public void setYymmdd(String yymmdd){
+		this.yymmdd=yymmdd;
+	}
+	public JSONArray getJsons(){
+		return jsons;
+	}
+	public void setJsons(JSONArray jsons){
+		this.jsons=jsons;
+	}
+	public Integer getWid(){
+		return wid;
+	}
+	public void setWid(Integer wid){
+		this.wid=wid;
+	}
+	public String getCreateDate(){
+		return createDate;
+	}
+	public void setCreateDate(String createDate){
+		this.createDate=createDate;
+	}
+	public Integer getCreateUser(){
+		return createUser;
+	}
+	public void setCreateUser(Integer createUser){
+		this.createUser=createUser;
+	}
 	public String getAjaxResult(){
 		return ajaxResult;
 	}
@@ -87,11 +128,7 @@ public class WebBrProductAction extends ActionSupport{
 	}
 	public void setListbrpro(List<WebBrProduct> listbrpro){
 		this.listbrpro=listbrpro;
-	}
-	public String findByFactno(){
-		listbrpro=webbrproSer.findByFactno(factNo);
-		return "findByFactno";
-	}
+	}	
 	
 	public String findPageBean(){
 		ActionContext.getContext().getSession().remove("webbrproFactNo");
@@ -115,16 +152,39 @@ public class WebBrProductAction extends ActionSupport{
 		ajaxResult="0";
 		try{
 			for(WebBrProduct obj:listbrpro){
-				obj.setFactNo(new VWebFact(factNo));
+				obj.setCreateDate(createDate);
+				obj.setCreateUser(createUser);
+				obj.setFactNo(factNo);
 				obj.setItemcategory(itemcategory);
 			}
 			webbrproSer.add(listbrpro);
 		}catch(Exception e){
 			ajaxResult="1";
+			e.printStackTrace();
 		}
 		return "add";
 	}
 	
+	public String delete(){
+		try{
+			KyzExpectmatmLog log=new KyzExpectmatmLog();
+			wbpro=webbrproSer.findById(wid);
+			log.setFactNo(wbpro.getFactNo());
+			log.setContent(wbpro.getNamec1()+"__"+wbpro.getNamec2());
+			log.setObj("WebBrProduct");
+			log.setBillNo(wbpro.getItemcategory());
+			webbrproSer.delete(wbpro,log);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return "delete";
+	}
+	
+	public String findByFactno(){
+		listbrpro=webbrproSer.findByFactno(factNo);
+		jsons=JSONArray.fromObject(listbrpro);
+		return "findByFactno";
+	}
 	
 
 }

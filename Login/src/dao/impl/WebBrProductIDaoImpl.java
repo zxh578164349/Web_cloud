@@ -15,6 +15,7 @@ import util.PageBean;
 
 import dao.Basedao;
 import dao.IWebBrProductDao;
+import entity.KyzExpectmatmLog;
 import entity.WebBrProduct;
 import entity.WebBussinessletter;
 
@@ -69,7 +70,7 @@ public class WebBrProductIDaoImpl extends Basedao implements IWebBrProductDao{
 		hql2.append(hql);
 		hql.append(" order by factNo,itemcategory,namec1,namec2");
 		Integer allrow=(Integer)ActionContext.getContext().getSession().get("allrow");
-		if(allrow==null){
+		if(allrow==null||allrow==0||page==0){
 			allrow=super.getAllRowCount2(hql2.toString(), map);
 			ActionContext.getContext().getSession().put("allrow", allrow);
 		}
@@ -81,7 +82,8 @@ public class WebBrProductIDaoImpl extends Basedao implements IWebBrProductDao{
 		int offset=PageBean.countOffset(pageSize, currentPage);
 		List<WebBrProduct>list=super.queryForPage(hql.toString(), offset, pageSize, map);
 		for(WebBrProduct pro:list){
-			pro.getFactNo().getFactSname();
+			pro.getFactNo2().getFactSname();
+			pro.getWeberppr2().getItemcategoryname();
 		}
 		PageBean bean=new PageBean();
 		bean.setAllRow(allrow);
@@ -110,12 +112,33 @@ public class WebBrProductIDaoImpl extends Basedao implements IWebBrProductDao{
 					getSession().clear();
 				}
 			}
-			
 		}catch(Exception e){
 			tx.rollback();
 			e.printStackTrace();
 		}
-		
+	}
+
+	/**
+	 * 日期:2017/7/18
+	 * 描述:
+	 */
+	
+	
+	public void delete(WebBrProduct obj,KyzExpectmatmLog log){
+		// TODO Auto-generated method stub
+		super.delete(obj,log);
+	}
+
+	/**
+	 * 日期:2017/7/18
+	 * 描述:
+	 */
+	
+	
+	public WebBrProduct findById(Integer wid){
+		// TODO Auto-generated method stub
+		WebBrProduct obj=(WebBrProduct)super.findById(wid,WebBrProduct.class);		
+		return obj;
 	}
 
 }

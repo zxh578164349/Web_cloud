@@ -65,30 +65,23 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 								        <s:if test="#session.factNo=='tw'">
 									      <select name="factNo" onchange="" datatype="*" id="dwr_factno">
 									      </select>
-								        </s:if>																								
+								        </s:if>		
+								        
+								        																						
 									</td>
-									<td>								
-									 <input type="hidden" value="<%=str_date%>" name="createDate"  />
+									<td>
+									<input type="text" name="yymmdd" onfocus="WdatePicker({dateFmt:'yyyyMMdd',maxDate:'%y-%M-%d'})" class="Wdate" datatype="*" id="yymmdd"/> 
+									<input type="hidden" value="<%=str_date%>" name="createDate"  />
 									 <input type="hidden" value="${loginUser.id}" name="createUser" />								
+									 								
 									</td>
 								</tr> 								
 							</tbody>
 						</table>
-					</div>
-		</div>
-		<div class="panel panel-default" id="div_webformalaitem">
-			<div class="panel-heading">
-				<label>產品</label>			 
-			</div>
-			<div class="panel-body">
-			   <select id="div_typeno" onchange="loadNamece(this.value)" datatype="*" name="itemcategory"></select>
-			   <input type="button" value="添加產品"
-					onclick="check_addSection()" class="btn btn-primary disabled"
-					id="btn_addsec" />
-			<hr />
+						
+						<hr />
 				<ul id="myTab_item" class="nav nav-tabs">
-					<li class="active"><a href="#tab_typeno" data-toggle="tab" id="tab_typeno_a">產品名稱</a></li>						
-					<li><a href="#tab_namece" data-toggle="tab" id="tab_namece_a">產品列表</a></li>																					
+					<li class="active"><a href="#tab_typeno" data-toggle="tab" id="tab_typeno_a">產品名稱</a></li>																										
 				</ul>
 				<div id="myTabContent_item" class="tab-content">
 					<div class="tab-pane fade in active" id="tab_typeno">
@@ -98,20 +91,11 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 							</div>
 														
 						</div>
-					</div>
-					<div class="tab-pane fade" id="tab_namece">
-						<div class="div_border_green">
-							<div id="div_list">
-								<ul class='list_item'>
-								   
-								</ul>
-								
-							</div>
-						</div>
-					</div>
+					</div>					
 				</div>
 			</div>
 		</div>
+		
         
 		<center>
 	        <input type="button" id="sub_main" value="確定" class="btn btn-primary" />&nbsp;&nbsp;&nbsp;			              
