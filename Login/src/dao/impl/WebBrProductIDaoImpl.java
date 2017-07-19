@@ -17,6 +17,7 @@ import dao.Basedao;
 import dao.IWebBrProductDao;
 import entity.KyzExpectmatmLog;
 import entity.WebBrProduct;
+import entity.WebBrProductitem;
 import entity.WebBussinessletter;
 
 /**   
@@ -40,9 +41,9 @@ public class WebBrProductIDaoImpl extends Basedao implements IWebBrProductDao{
 	 */
 	
 	
-	public List<WebBrProduct> findByFactno(String factNo){
+	public List<Object[]> findByFactno(String factNo){
 		// TODO Auto-generated method stub
-		String hql="from WebBrProduct where factNo.factNo=?";
+		String hql="select wid,namec1,namec2 from WebBrProduct where factNo=?";
 		String[]objs={factNo};
 		return super.findAll(hql,objs);
 	}
@@ -102,7 +103,7 @@ public class WebBrProductIDaoImpl extends Basedao implements IWebBrProductDao{
 	
 	public void add(List<WebBrProduct> listbrpro){
 		// TODO Auto-generated method stub
-		Transaction tx=null;
+		/*Transaction tx=null;
 		try{
 			tx=getSession().beginTransaction();
 			for(int i=0;i<listbrpro.size();i++){
@@ -115,7 +116,8 @@ public class WebBrProductIDaoImpl extends Basedao implements IWebBrProductDao{
 		}catch(Exception e){
 			tx.rollback();
 			e.printStackTrace();
-		}
+		}*/
+		super.addList(listbrpro);
 	}
 
 	/**
@@ -139,6 +141,17 @@ public class WebBrProductIDaoImpl extends Basedao implements IWebBrProductDao{
 		// TODO Auto-generated method stub
 		WebBrProduct obj=(WebBrProduct)super.findById(wid,WebBrProduct.class);		
 		return obj;
+	}
+
+	/**
+	 * 日期:2017/7/19
+	 * 描述:
+	 */
+	
+	
+	public void add2(List<WebBrProductitem> listitem){
+		// TODO Auto-generated method stub
+		super.addList(listitem);
 	}
 
 }

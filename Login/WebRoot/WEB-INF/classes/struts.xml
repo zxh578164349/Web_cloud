@@ -740,6 +740,9 @@
 		     <result name="findByFactno" type="json">
 		         <param name="root">jsons</param>
 		     </result>
+		     <result name="add2" type="json">
+		         <param name="root">ajaxResult</param>
+		     </result>
 		         	     
 		</action>
 		

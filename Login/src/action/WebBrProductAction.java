@@ -16,6 +16,7 @@ import com.opensymphony.xwork2.ActionSupport;
 import entity.KyzExpectmatmLog;
 import entity.VWebFact;
 import entity.WebBrProduct;
+import entity.WebBrProductitem;
 
 /**   
  *    
@@ -44,9 +45,16 @@ public class WebBrProductAction extends ActionSupport{
 	private Integer wid;
 	private JSONArray jsons;
 	private String yymmdd;
+	private List<WebBrProductitem>listitem;
 	
 	
 	
+	public List<WebBrProductitem> getListitem(){
+		return listitem;
+	}
+	public void setListitem(List<WebBrProductitem> listitem){
+		this.listitem=listitem;
+	}
 	public String getYymmdd(){
 		return yymmdd;
 	}
@@ -181,10 +189,27 @@ public class WebBrProductAction extends ActionSupport{
 	}
 	
 	public String findByFactno(){
-		listbrpro=webbrproSer.findByFactno(factNo);
-		jsons=JSONArray.fromObject(listbrpro);
+		try{
+			List<Object[]>list=webbrproSer.findByFactno(factNo);
+			jsons=JSONArray.fromObject(list);
+		}catch(Exception e){
+			e.printStackTrace();
+		}		
 		return "findByFactno";
 	}
+	
+	public String add2(){
+		ajaxResult="0";
+		try{
+			webbrproSer.add2(listitem);
+		}catch(Exception e){
+			ajaxResult="1";
+			e.printStackTrace();
+		}
+		return "add2";
+	}
+	
+	
 	
 
 }

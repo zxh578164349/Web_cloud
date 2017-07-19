@@ -12,8 +12,8 @@ public class WebBrProductitem implements java.io.Serializable{
 	private Double inventory;
 	private Double orderNotin;
 	private Double actualUsed;
-	private String createUser;
-	private String editUser;
+	private WebUser createUser;
+	private WebUser editUser;
 	private String createDate;
 	private String editDate;
 
@@ -29,7 +29,7 @@ public class WebBrProductitem implements java.io.Serializable{
 	}
 
 	/** full constructor */
-	public WebBrProductitem(WebBrProductitemId id,Double inventory,Double orderNotin,Double actualUsed,String createUser,String editUser,String createDate,
+	public WebBrProductitem(WebBrProductitemId id,Double inventory,Double orderNotin,Double actualUsed,WebUser createUser,WebUser editUser,String createDate,
 			String editDate){
 		this.id=id;
 		this.inventory=inventory;
@@ -75,19 +75,21 @@ public class WebBrProductitem implements java.io.Serializable{
 		this.actualUsed=actualUsed;
 	}
 
-	public String getCreateUser(){
-		return this.createUser;
+	
+
+	public WebUser getCreateUser(){
+		return createUser;
 	}
 
-	public void setCreateUser(String createUser){
+	public void setCreateUser(WebUser createUser){
 		this.createUser=createUser;
 	}
 
-	public String getEditUser(){
-		return this.editUser;
+	public WebUser getEditUser(){
+		return editUser;
 	}
 
-	public void setEditUser(String editUser){
+	public void setEditUser(WebUser editUser){
 		this.editUser=editUser;
 	}
 

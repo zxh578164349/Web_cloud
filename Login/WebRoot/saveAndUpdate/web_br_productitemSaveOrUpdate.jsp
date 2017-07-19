@@ -36,10 +36,10 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 .list_item{margin:0px 0px; width:100%;}  
 .list_item li.columnhead,.list_item li.columnhead2{font-size: 12px;font-weight:bold;}  
 .list_item li,.list_item li.columnhead{  
-    width:30%;height:28px;text-align:left;float:left;margin:0px 0px;list-style:none; border:1px solid ; 
+    width:25%;height:28px;text-align:left;float:left;margin:0px 0px;list-style:none; border:1px solid ; 
 }
 .list_item li.column2,.list_item li.columnhead2{  
-    width:45%;height:28px;text-align:left;float:left;margin:0px 0px;list-style:none; border:1px solid ; 
+    width:25%;height:28px;text-align:left;float:left;margin:0px 0px;list-style:none; border:1px solid ; 
 }  
 .list_item li input[type=text],.list_item li select{  
    width:100% ; 
@@ -51,7 +51,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 </head>
 
 <body>
-	<form action="webbrpro_add" method="post" id="form_main">	
+	<form action="webbrpro_add2" method="post" id="form_main">	
 	   <div class="panel panel-default">
 	     <div class="panel-heading"><label>廠別</label></div>
 	       <div class="panel-body">	  
@@ -63,16 +63,16 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 									      <input type="text" name="factNo" value="${loginUser.factno}" readonly id="dwr_factno" />
 								        </s:if> 
 								        <s:if test="#session.factNo=='tw'">
-									      <select name="factNo" onchange="" datatype="*" id="dwr_factno">
+									      <select name="factNo" onchange="addSection()" datatype="*" id="dwr_factno">
 									      </select>
 								        </s:if>		
 								        
 								        																						
 									</td>
 									<td>
-									<input type="text" name="yymmdd" onfocus="WdatePicker({dateFmt:'yyyyMMdd',maxDate:'%y-%M-%d'})" class="Wdate" datatype="*" id="yymmdd"/> 
-									<input type="hidden" value="<%=str_date%>" name="createDate"  />
-									 <input type="hidden" value="${loginUser.id}" name="createUser" />								
+									<input type="text" name="yymmdd" onfocus="WdatePicker({dateFmt:'yyyyMMdd',maxDate:'%y-%M-%d'})" class="Wdate" datatype="*" /> 
+									<input type="hidden" value="<%=str_date%>" id="createDate"  />
+									 <input type="hidden" value="${loginUser.id}" id="createUser" />								
 									 								
 									</td>
 								</tr> 								
@@ -87,7 +87,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 					<div class="tab-pane fade in active" id="tab_typeno">
 						<div  class="div_border_green">
 							<div id="div_namece">								
-								<label style="color:red">請先選擇產品類別</label>
+								<ul class="list_item"></ul>
 							</div>
 														
 						</div>
@@ -229,44 +229,40 @@ function check_addSection(){
 		}
 		
 }
-function addSection(list_items_val){
-	//var list_items_val=jq("input[name='itemids']:checked");	
-	/*index++;
-	jq("#btn_addsec").val("添加配方階段("+(index+1)+")");
-	var section="<li id='tab_section_"+index+"'><a href='#div_section_"+index+"' data-toggle='tab' id='tab_section_a_"+index+"'>配方階段("+index+")</a></li>";	
-	var div_section="<div id='div_section_"+index+"' class='tab-pane fade div_border_blue'></div>";
-	var ul="<ul class='list_item' id='ul_"+index+"'></ul>";
-	var li_head="<li class='columnhead'>類別</li><li class='columnhead2'>原料名稱</li><li class='columnhead'>PHR</li>"+
-		"<li class='columnhead'>重量(KG)</li><li class='columnhead2'>備註</li>";
-		
-	jq("#del_li").before(section);
-	jq("#myTabContent_item").append(div_section);
-	jq("#div_section_"+index).append(ul);
-	jq("#ul_"+index).append(li_head);*/
-	
-	
-	jq(".list_item").empty();
-	
-	jq(".list_item").append("<li>類別</li><li class='columnhead2'>名稱</li>");
+function addSection(){
+	jq(".list_item").empty();	
+	jq(".list_item").append("<li>產品名稱</li><li>庫存數(KG)</li>");
+	jq(".list_item").append("<li>已訂購未入廠(KG)</li><li>當月耗用(KG)</li>");
 	var li_content="";
-	var div_typeno=jq("#div_typeno").val();
-	var div_typeno_txt=jq("#div_typeno").find("option:selected").text();
-	list_items_val.each(function(i){
-			var val=jq(this).val();
-			var txt1=val.split("__")[0];
-	        var txt2=val.split("__")[1];
-	        var txt3=val.split("__")[2];
-			li_content+="<li>"+div_typeno_txt+"</li><li class='column2'>"+txt2+"&nbsp;&nbsp;"+txt3+
-			"<img src='images/icon/del_file.png' style='border:0' onclick='removeOneItem(jq(this))' name='img_temp'/>"+
-			"<input type='hidden' value='"+txt1+"' name='listbrpro["+i+"].weberppr'/>"+
-			"<input type='hidden' value='"+txt2+"' name='listbrpro["+i+"].namec1'/>"+
-			"<input type='hidden' value='"+txt3+"' name='listbrpro["+i+"].namec2'/>"+
-			"</li>"			
-		});	
-		jq(".list_item").append(li_content);		
-		jq("#tab_namece_a").click();				    
-	    jq("#sub_main").removeClass("disabled");
-	    
+	var factno=jq("#dwr_factno").val();
+	var yymmdd=jq("input[name='yymmdd']").val();
+	var createUser=jq("#createUser").val();
+	var createDate=jq("#createDate").val();
+	if(factno!=""&&yymmdd!=""){
+		jq.ajax({
+			type:"post",
+			dataType:"json",
+			data:{factNo:factno,yymmdd:yymmdd},
+			url:"webbrpro_findByFactno",
+			success:function(data){				
+				jq.each(data,function(i,obj){
+					li_content+="<li>"+obj[1]+"&nbsp;"+obj[2]+"</li>"+
+					"<li><input type='text' name='listitem["+i+"].inventory' datatype='*'/></li>"+
+					"<li><input type='text' name='listitem["+i+"].orderNotin' datatype='*'/></li>"+
+					"<li><input type='text' name='listitem["+i+"].actualUsed' datatype='*'/>"+
+					"<input type='hidden' name='listitem["+i+"].id.webBrProduct.wid' value='"+obj[0]+"'/>"+
+					"<input type='hidden' name='listitem["+i+"].id.factNo' value='"+factno+"'/>"+
+					"<input type='hidden' name='listitem["+i+"].id.yymmdd' value='"+yymmdd+"'/>"+
+					"<input type='hidden' name='listitem["+i+"].createUser.id' value='"+createUser+"'/>"+
+					"<input type='hidden' name='listitem["+i+"].createDate' value='"+createDate+"'/>"+
+					"</li>"
+				})	
+				jq(".list_item").append(li_content);
+			}			
+		});
+		
+	}
+						    	    	    	    	   	    
 }
 
 

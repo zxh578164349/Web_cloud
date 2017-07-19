@@ -9,6 +9,7 @@ import dao.IWebBrProductDao;
 
 import entity.KyzExpectmatmLog;
 import entity.WebBrProduct;
+import entity.WebBrProductitem;
 import services.IWebBrProductServices;
 import util.PageBean;
 
@@ -40,7 +41,7 @@ public class WebBrProductServicesImpl implements IWebBrProductServices{
 	}
 
 
-	public List<WebBrProduct> findByFactno(String factNo){
+	public List<Object[]> findByFactno(String factNo){
 		// TODO Auto-generated method stub
 		return webbrprodao.findByFactno(factNo);
 	}
@@ -91,6 +92,18 @@ public class WebBrProductServicesImpl implements IWebBrProductServices{
 	public void delete(WebBrProduct obj,KyzExpectmatmLog log){
 		// TODO Auto-generated method stub
 		webbrprodao.delete(obj,log);
+	}
+
+
+	/**
+	 * 日期:2017/7/19
+	 * 描述:
+	 */
+	
+	
+	public void add2(List<WebBrProductitem> listitem){
+		// TODO Auto-generated method stub
+		webbrprodao.add2(listitem);
 	}
 
 }

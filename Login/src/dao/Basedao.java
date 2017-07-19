@@ -10,6 +10,7 @@ import org.apache.commons.logging.LogFactory;
 import org.hibernate.HibernateException;
 import org.hibernate.LockMode;
 import org.hibernate.Query;
+import org.hibernate.Transaction;
 //import org.hibernate.classic.Session;
 import org.hibernate.Session;
 import org.springframework.context.ApplicationContext;
@@ -288,6 +289,23 @@ public class Basedao extends HibernateDaoSupport {
 			throw re;
 		}
 		
+	}
+	
+	public void addList(List list){
+		Transaction tx=null;
+		try{
+			tx=getSession().beginTransaction();
+			for(int i=0;i<list.size();i++){
+				getSession().merge(list.get(i));
+				if(i%10==0){
+					getSession().flush();
+					getSession().clear();
+				}
+			}
+		}catch(Exception e){
+			tx.rollback();
+			e.printStackTrace();
+		}
 	}
 
 }

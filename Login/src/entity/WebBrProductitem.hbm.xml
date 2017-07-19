@@ -26,17 +26,18 @@
         <property name="actualUsed" type="java.lang.Double">
             <column name="ACTUAL_USED" precision="12" />
         </property>
-        <property name="createUser" type="java.lang.String">
-            <column name="CREATE_USER" length="50" />
-        </property>
-        <property name="editUser" type="java.lang.String">
-            <column name="EDIT_USER" length="50" />
-        </property>
+        
         <property name="createDate" type="java.lang.String">
             <column name="CREATE_DATE" length="10" />
         </property>
         <property name="editDate" type="java.lang.String">
             <column name="EDIT_DATE" length="10" />
         </property>
+        <many-to-one name="createUser" class="entity.WebUser">
+            <column name="CREATE_USER" precision="8" />
+        </many-to-one>
+        <many-to-one name="editUser" class="entity.WebUser">
+            <column name="EDIT_USER" precision="8" />
+        </many-to-one>
     </class>
 </hibernate-mapping>

@@ -9,6 +9,7 @@ import util.PageBean;
 
 import entity.KyzExpectmatmLog;
 import entity.WebBrProduct;
+import entity.WebBrProductitem;
 
 /**   
  *    
@@ -24,10 +25,12 @@ import entity.WebBrProduct;
  *    
  **/
 public interface IWebBrProductServices{
-	public List<WebBrProduct> findByFactno(String factNo);
+	public List<Object[]> findByFactno(String factNo);
 	public PageBean findPageBean(int pageSize,int page,String factNo);
 	public void add(List<WebBrProduct> listbrpro);
 	public WebBrProduct findById(Integer wid);
 	public void delete(WebBrProduct obj,KyzExpectmatmLog log);
+	
+	public void add2(List<WebBrProductitem>listitem);
 
 }
