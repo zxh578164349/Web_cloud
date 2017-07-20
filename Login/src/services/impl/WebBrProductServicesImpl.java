@@ -77,9 +77,9 @@ public class WebBrProductServicesImpl implements IWebBrProductServices{
 	 */
 	
 	
-	public WebBrProduct findById(Integer wid){
+	public WebBrProduct findById(String factNo,Integer wid){
 		// TODO Auto-generated method stub
-		return webbrprodao.findById(wid);
+		return webbrprodao.findById(factNo,wid);
 	}
 
 

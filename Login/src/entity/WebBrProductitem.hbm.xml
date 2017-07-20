@@ -6,14 +6,12 @@
 -->
 <hibernate-mapping>
     <class name="entity.WebBrProductitem" table="WEB_BR_PRODUCTITEM" schema="WEB">
-        <composite-id name="id" class="entity.WebBrProductitemId">
-            <key-property name="factNo" type="java.lang.String">
-                <column name="FACT_NO" length="10" />
-            </key-property>
+        <composite-id name="id" class="entity.WebBrProductitemId">           
             <key-property name="yymmdd" type="java.lang.String">
                 <column name="YYMMDD" length="10" />
             </key-property>
             <key-many-to-one name="webBrProduct" class="entity.WebBrProduct">
+                <column name="FACT_NO" length="10" />
                 <column name="WID" precision="8" scale="0" />
             </key-many-to-one>
         </composite-id>

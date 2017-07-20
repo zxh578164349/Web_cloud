@@ -7,8 +7,6 @@ package entity;
 public class WebBrProductitemId implements java.io.Serializable{
 
 	// Fields
-
-	private String factNo;
 	private String yymmdd;
 	private WebBrProduct webBrProduct;
 
@@ -19,21 +17,12 @@ public class WebBrProductitemId implements java.io.Serializable{
 	}
 
 	/** full constructor */
-	public WebBrProductitemId(String factNo,String yymmdd,WebBrProduct webBrProduct){
-		this.factNo=factNo;
+	public WebBrProductitemId(String yymmdd,WebBrProduct webBrProduct){
 		this.yymmdd=yymmdd;
 		this.webBrProduct=webBrProduct;
 	}
 
 	// Property accessors
-
-	public String getFactNo(){
-		return this.factNo;
-	}
-
-	public void setFactNo(String factNo){
-		this.factNo=factNo;
-	}
 
 	public String getYymmdd(){
 		return this.yymmdd;
@@ -60,9 +49,7 @@ public class WebBrProductitemId implements java.io.Serializable{
 			return false;
 		WebBrProductitemId castOther=(WebBrProductitemId)other;
 
-		return ((this.getFactNo() == castOther.getFactNo()) || (this.getFactNo() != null && castOther.getFactNo() != null && this.getFactNo().equals(
-				castOther.getFactNo())))
-				&& ((this.getYymmdd() == castOther.getYymmdd()) || (this.getYymmdd() != null && castOther.getYymmdd() != null && this.getYymmdd().equals(
+		return ((this.getYymmdd() == castOther.getYymmdd()) || (this.getYymmdd() != null && castOther.getYymmdd() != null && this.getYymmdd().equals(
 						castOther.getYymmdd())))
 				&& ((this.getWebBrProduct() == castOther.getWebBrProduct()) || (this.getWebBrProduct() != null && castOther.getWebBrProduct() != null && this
 						.getWebBrProduct().equals(castOther.getWebBrProduct())));
@@ -71,7 +58,6 @@ public class WebBrProductitemId implements java.io.Serializable{
 	public int hashCode(){
 		int result=17;
 
-		result=37 * result + (getFactNo() == null ? 0 : this.getFactNo().hashCode());
 		result=37 * result + (getYymmdd() == null ? 0 : this.getYymmdd().hashCode());
 		result=37 * result + (getWebBrProduct() == null ? 0 : this.getWebBrProduct().hashCode());
 		return result;

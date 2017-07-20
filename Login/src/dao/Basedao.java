@@ -304,7 +304,8 @@ public class Basedao extends HibernateDaoSupport {
 			}
 		}catch(Exception e){
 			tx.rollback();
-			e.printStackTrace();
+			//e.printStackTrace();
+			System.out.println("***************************************************8"+e);
 		}
 	}
 

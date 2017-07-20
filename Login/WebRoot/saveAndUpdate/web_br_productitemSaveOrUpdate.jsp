@@ -70,7 +70,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 								        																						
 									</td>
 									<td>
-									<input type="text" name="yymmdd" onfocus="WdatePicker({dateFmt:'yyyyMMdd',maxDate:'%y-%M-%d'})" class="Wdate" datatype="*" /> 
+									<input type="text" name="yymmdd" onclick="WdatePicker({dateFmt:'yyyyMMdd',maxDate:'%y-%M-%d'})" onblur="addSection()" class="Wdate" datatype="*" /> 
 									<input type="hidden" value="<%=str_date%>" id="createDate"  />
 									 <input type="hidden" value="${loginUser.id}" id="createUser" />								
 									 								
@@ -230,15 +230,15 @@ function check_addSection(){
 		
 }
 function addSection(){
-	jq(".list_item").empty();	
-	jq(".list_item").append("<li>產品名稱</li><li>庫存數(KG)</li>");
-	jq(".list_item").append("<li>已訂購未入廠(KG)</li><li>當月耗用(KG)</li>");
 	var li_content="";
 	var factno=jq("#dwr_factno").val();
 	var yymmdd=jq("input[name='yymmdd']").val();
 	var createUser=jq("#createUser").val();
 	var createDate=jq("#createDate").val();
 	if(factno!=""&&yymmdd!=""){
+		jq(".list_item").empty();	
+		jq(".list_item").append("<li>產品名稱</li><li>庫存數(KG)</li>");
+		jq(".list_item").append("<li>已訂購未入廠(KG)</li><li>當月耗用(KG)</li>");
 		jq.ajax({
 			type:"post",
 			dataType:"json",
@@ -250,8 +250,8 @@ function addSection(){
 					"<li><input type='text' name='listitem["+i+"].inventory' datatype='*'/></li>"+
 					"<li><input type='text' name='listitem["+i+"].orderNotin' datatype='*'/></li>"+
 					"<li><input type='text' name='listitem["+i+"].actualUsed' datatype='*'/>"+
-					"<input type='hidden' name='listitem["+i+"].id.webBrProduct.wid' value='"+obj[0]+"'/>"+
-					"<input type='hidden' name='listitem["+i+"].id.factNo' value='"+factno+"'/>"+
+					"<input type='hidden' name='listitem["+i+"].id.webBrProduct.id.webErpProductinFormation.itemid' value='"+obj[0]+"'/>"+
+					"<input type='hidden' name='listitem["+i+"].id.webBrProduct.id.factNo' value='"+factno+"'/>"+
 					"<input type='hidden' name='listitem["+i+"].id.yymmdd' value='"+yymmdd+"'/>"+
 					"<input type='hidden' name='listitem["+i+"].createUser.id' value='"+createUser+"'/>"+
 					"<input type='hidden' name='listitem["+i+"].createDate' value='"+createDate+"'/>"+

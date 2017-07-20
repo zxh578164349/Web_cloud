@@ -54,7 +54,7 @@
 							<td>${ bean.pageSize*(bean.currentPage-1)+x.index+1}</td>
 							<td><s:property value="factNo2.factSname" />
 							</td>
-							<td><s:property value="weberppr2.itemcategoryname"/>
+							<td><s:property value="id.webErpProductinFormation.itemcategoryname"/>
 							</td>
 							<td><s:property value="namec1" />&nbsp;&nbsp;<s:property value="namec1" />
 							</td>							
@@ -62,8 +62,9 @@
 												
 							<s:if test='#session.loginUser.userread!="1"'>
 								<td>
-									<form  id="subform${x.index}">										
-										<input type="hidden" value="<s:property value='wid'/>" name="wid" />																					
+									<form  id="subform${x.index}">													
+										<input type="hidden" value="<s:property value='id.factNo'/>" name="factNo"/>
+										<input type="hidden" value="<s:property value='id.webErpProductinFormation.itemid'/>" name="wid"/>																				
 									</form> 									
 									<!--  <form  id="2subform${x.index}" style="float:left">										
 										<input type="hidden" value="<s:property value='formulaIndex'/>" name="formulaIndex" />

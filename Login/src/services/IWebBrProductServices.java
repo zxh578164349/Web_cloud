@@ -28,7 +28,7 @@ public interface IWebBrProductServices{
 	public List<Object[]> findByFactno(String factNo);
 	public PageBean findPageBean(int pageSize,int page,String factNo);
 	public void add(List<WebBrProduct> listbrpro);
-	public WebBrProduct findById(Integer wid);
+	public WebBrProduct findById(String factNo,Integer wid);
 	public void delete(WebBrProduct obj,KyzExpectmatmLog log);
 	
 	public void add2(List<WebBrProductitem>listitem);

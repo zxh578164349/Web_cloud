@@ -129,15 +129,14 @@ public class WebBrProductAction extends ActionSupport{
 	}
 	
 	
-	
+		
 	
 	public List<WebBrProduct> getListbrpro(){
 		return listbrpro;
 	}
 	public void setListbrpro(List<WebBrProduct> listbrpro){
 		this.listbrpro=listbrpro;
-	}	
-	
+	}
 	public String findPageBean(){
 		ActionContext.getContext().getSession().remove("webbrproFactNo");
 		bean=webbrproSer.findPageBean(20,page,factNo);
@@ -162,7 +161,6 @@ public class WebBrProductAction extends ActionSupport{
 			for(WebBrProduct obj:listbrpro){
 				obj.setCreateDate(createDate);
 				obj.setCreateUser(createUser);
-				obj.setFactNo(factNo);
 				obj.setItemcategory(itemcategory);
 			}
 			webbrproSer.add(listbrpro);
@@ -176,8 +174,8 @@ public class WebBrProductAction extends ActionSupport{
 	public String delete(){
 		try{
 			KyzExpectmatmLog log=new KyzExpectmatmLog();
-			wbpro=webbrproSer.findById(wid);
-			log.setFactNo(wbpro.getFactNo());
+			wbpro=webbrproSer.findById(factNo,wid);
+			log.setFactNo(wbpro.getId().getFactNo());
 			log.setContent(wbpro.getNamec1()+"__"+wbpro.getNamec2());
 			log.setObj("WebBrProduct");
 			log.setBillNo(wbpro.getItemcategory());

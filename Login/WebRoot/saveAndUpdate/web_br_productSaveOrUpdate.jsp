@@ -267,6 +267,7 @@ function addSection(list_items_val){
 	var li_content="";
 	var div_typeno=jq("#div_typeno").val();
 	var div_typeno_txt=jq("#div_typeno").find("option:selected").text();
+	var dwr_factno=jq("#dwr_factno").val();
 	list_items_val.each(function(i){
 			var val=jq(this).val();
 			var txt1=val.split("__")[0];
@@ -274,9 +275,11 @@ function addSection(list_items_val){
 	        var txt3=val.split("__")[2];
 			li_content+="<li>"+div_typeno_txt+"</li><li class='column2'>"+txt2+"&nbsp;&nbsp;"+txt3+
 			"<img src='images/icon/del_file.png' style='border:0' onclick='removeOneItem(jq(this))' name='img_temp'/>"+
-			"<input type='hidden' value='"+txt1+"' name='listbrpro["+i+"].weberppr'/>"+
 			"<input type='hidden' value='"+txt2+"' name='listbrpro["+i+"].namec1'/>"+
 			"<input type='hidden' value='"+txt3+"' name='listbrpro["+i+"].namec2'/>"+
+			"<input type='hidden' value='"+dwr_factno+"' name='listbrpro["+i+"].id.factNo'/>"+
+			"<input type='hidden' value='"+div_typeno+"' name='listbrpro["+i+"].itemcategory'/>"+
+			"<input type='hidden' value='"+txt1+"' name='listbrpro["+i+"].id.webErpProductinFormation.itemid'/>"+
 			"</li>"			
 		});	
 		jq(".list_item").append(li_content);		

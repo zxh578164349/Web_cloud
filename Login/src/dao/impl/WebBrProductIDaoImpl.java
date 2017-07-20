@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.hibernate.Query;
 import org.hibernate.Transaction;
 
 import com.opensymphony.xwork2.ActionContext;
@@ -43,7 +44,7 @@ public class WebBrProductIDaoImpl extends Basedao implements IWebBrProductDao{
 	
 	public List<Object[]> findByFactno(String factNo){
 		// TODO Auto-generated method stub
-		String hql="select wid,namec1,namec2 from WebBrProduct where factNo=?";
+		String hql="select id.webErpProductinFormation.itemid,namec1,namec2 from WebBrProduct where id.factNo=?";
 		String[]objs={factNo};
 		return super.findAll(hql,objs);
 	}
@@ -60,16 +61,16 @@ public class WebBrProductIDaoImpl extends Basedao implements IWebBrProductDao{
 		StringBuffer hql2=new StringBuffer();
 		Map<String,Object>map=new HashMap<String,Object>();
 		hql.append("from WebBrProduct where 1=1 ");
-		hql2.append("select count(wid) ");
+		hql2.append("select count(id.factNo) ");
 		if(factNo==null||"".equals(factNo)){
 			factNo=(String)ActionContext.getContext().getSession().get("factNo");
 		}
 		if(factNo!=null&&!"".equals(factNo)&&!"tw".equals(factNo)){
-			hql.append(" and factNo.factNo=:factno ");
+			hql.append(" and id.factNo=:factno ");
 			map.put("factno",factNo);
 		}
 		hql2.append(hql);
-		hql.append(" order by factNo,itemcategory,namec1,namec2");
+		hql.append(" order by id.factNo,itemcategory,namec1,namec2");
 		Integer allrow=(Integer)ActionContext.getContext().getSession().get("allrow");
 		if(allrow==null||allrow==0||page==0){
 			allrow=super.getAllRowCount2(hql2.toString(), map);
@@ -84,7 +85,7 @@ public class WebBrProductIDaoImpl extends Basedao implements IWebBrProductDao{
 		List<WebBrProduct>list=super.queryForPage(hql.toString(), offset, pageSize, map);
 		for(WebBrProduct pro:list){
 			pro.getFactNo2().getFactSname();
-			pro.getWeberppr2().getItemcategoryname();
+			pro.getId().getWebErpProductinFormation().getItemcategoryname();
 		}
 		PageBean bean=new PageBean();
 		bean.setAllRow(allrow);
@@ -137,9 +138,13 @@ public class WebBrProductIDaoImpl extends Basedao implements IWebBrProductDao{
 	 */
 	
 	
-	public WebBrProduct findById(Integer wid){
+	public WebBrProduct findById(String factNo,Integer wid){
 		// TODO Auto-generated method stub
-		WebBrProduct obj=(WebBrProduct)super.findById(wid,WebBrProduct.class);		
+		String hql="from WebBrProduct where id.factNo=? and id.webErpProductinFormation.itemid=?";
+		Query query=getSession().createQuery(hql);
+	    query.setString(0,factNo);
+	    query.setInteger(1,wid);
+		WebBrProduct obj=(WebBrProduct)query.uniqueResult();		
 		return obj;
 	}
 
