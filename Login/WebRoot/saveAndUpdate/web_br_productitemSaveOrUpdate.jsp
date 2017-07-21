@@ -33,25 +33,29 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
   }
   
 #myTabContent_item ul{margin:0px;padding:0px}
-.list_item{margin:0px 0px; width:100%;}  
+.list_item,.list_item2{margin:0px 0px; width:100%;}  
 .list_item li.columnhead,.list_item li.columnhead2{font-size: 12px;font-weight:bold;}  
 .list_item li,.list_item li.columnhead{  
     width:25%;height:28px;text-align:left;float:left;margin:0px 0px;list-style:none; border:1px solid ; 
 }
 .list_item li.column2,.list_item li.columnhead2{  
     width:25%;height:28px;text-align:left;float:left;margin:0px 0px;list-style:none; border:1px solid ; 
+} 
+.list_item2 li,.list_item2 li.columnhead{  
+    width:20%;height:28px;text-align:left;float:left;margin:0px 0px;list-style:none; border:1px solid ; 
+}
+.list_item2 li.column2,.list_item2 li.columnhead2{  
+    width:20%;height:28px;text-align:left;float:left;margin:0px 0px;list-style:none; border:1px solid ; 
 }  
-.list_item li input[type=text],.list_item li select{  
+.list_item li input[type=text],.list_item li select,.list_item2 li input[type=text],.list_item2 li select{  
    width:100% ; 
 }
-.list_item li.column2 input[type=text]{
-   width:93%;
-}   
+ 
 </style>
 </head>
 
 <body>
-	<form action="webbrpro_add2" method="post" id="form_main">	
+	<form action="webbrpro_add2_3" method="post" id="form_main">	
 	   <div class="panel panel-default">
 	     <div class="panel-heading"><label>廠別</label></div>
 	       <div class="panel-body">	  
@@ -63,14 +67,14 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 									      <input type="text" name="factNo" value="${loginUser.factno}" readonly id="dwr_factno" />
 								        </s:if> 
 								        <s:if test="#session.factNo=='tw'">
-									      <select name="factNo" onchange="addSection()" datatype="*" id="dwr_factno">
+									      <select name="factNo" onchange="checkproduct()" datatype="*" id="dwr_factno">
 									      </select>
 								        </s:if>		
 								        
 								        																						
 									</td>
 									<td>
-									<input type="text" name="yymmdd" onclick="WdatePicker({dateFmt:'yyyyMMdd',maxDate:'%y-%M-%d'})" onblur="addSection()" class="Wdate" datatype="*" /> 
+									<input type="text" name="yymmdd" onclick="WdatePicker({dateFmt:'yyyyMMdd',maxDate:'%y-%M-%d'})" onblur="checkproduct()" class="Wdate" datatype="*" /> 
 									<input type="hidden" value="<%=str_date%>" id="createDate"  />
 									 <input type="hidden" value="${loginUser.id}" id="createUser" />								
 									 								
@@ -81,13 +85,27 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 						
 						<hr />
 				<ul id="myTab_item" class="nav nav-tabs">
-					<li class="active"><a href="#tab_typeno" data-toggle="tab" id="tab_typeno_a">產品名稱</a></li>																										
+					<li class="active"><a href="#tab_typeno" data-toggle="tab" id="tab_typeno_a">產品庫存</a></li>																										
 				</ul>
 				<div id="myTabContent_item" class="tab-content">
 					<div class="tab-pane fade in active" id="tab_typeno">
 						<div  class="div_border_green">
-							<div id="div_namece">								
-								<ul class="list_item"></ul>
+							<div id="div_namece">														
+								<ul class="list_item"></ul>								
+							</div>
+														
+						</div>
+					</div>					
+				</div>
+				
+				<ul id="myTab_item2" class="nav nav-tabs">
+					<li class="active"><a href="#tab_typeno2" data-toggle="tab" id="tab_typeno_a2">產品預估</a></li>																										
+				</ul>
+				<div id="myTabContent_item" class="tab-content">
+					<div class="tab-pane fade in active" id="tab_typeno2">
+						<div  class="div_border_green">
+							<div id="div_namece2">																						
+								<ul class="list_item2"></ul>
 							</div>
 														
 						</div>
@@ -173,21 +191,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 				jq("#div_typeno").append(item);
 			}
 			
-		});	
-		
-		/*jq.ajax({
-			type:"post",
-			dataType:"json",
-			url:"weberppf_findTypeNo",
-			success:function(data){
-				//jq("#div_typeno").html("");			
-				var item="";
-				jq.each(data,function(index,obj){
-					item+="<div><input type='checkbox' value='"+obj.selfchar1+"' name='typenos' onclick='loadNamece(),checkbtn()'/><label>"+obj.selfchar1name+"</label></div>";					
-				});
-				jq("#div_typeno").append(item);
-			}
-		});	*/			
+		});								
 
 	});	
 	
@@ -220,22 +224,43 @@ function loadNamece(itemcategory){
 
 var index=0;
 var item_nums=0;
-function check_addSection(){		
-		var list_items_val=jq("input[name='itemids']:checked");
-		if(list_items_val.length>100){
-			layer.msg("所選配方原料超過上限",3,3);
-		}else{
-			addSection(list_items_val);
+
+function checkproduct(){
+	var factno=jq("#dwr_factno").val();
+	jq.ajax({
+		type:"post",
+		dataType:"json",
+		data:{factNo:factno},
+		url:"webbrpro_findByFactNo2",
+		success:function(data){
+			if(data=="0"){
+				layer.alert("請設定BR產品",0);				
+			}else{
+				addSection();
+			}
 		}
-		
+	});
 }
 function addSection(){
 	var li_content="";
+	var li_content2="";
 	var factno=jq("#dwr_factno").val();
 	var yymmdd=jq("input[name='yymmdd']").val();
 	var createUser=jq("#createUser").val();
 	var createDate=jq("#createDate").val();
 	if(factno!=""&&yymmdd!=""){
+		jq.ajax({
+			type:"post",
+			dataType:"json",
+			data:{factNo:factno,yymmdd:yymmdd},
+			url:"webbrpro_findByfactNoAndyymmdd",
+			success:function(data){
+				if(data=="1"){
+					layer.alert("注意:該廠當前月份部分BR產品庫存已存在,繼續添加會覆蓋舊數據",0);
+				}
+			}
+		});
+		
 		jq(".list_item").empty();	
 		jq(".list_item").append("<li>產品名稱</li><li>庫存數(KG)</li>");
 		jq(".list_item").append("<li>已訂購未入廠(KG)</li><li>當月耗用(KG)</li>");
@@ -261,12 +286,47 @@ function addSection(){
 			}			
 		});
 		
-	}
-						    	    	    	    	   	    
+		jq.ajax({
+			type:"post",
+			dataType:"json",
+			data:{factNo:factno,yymmdd:yymmdd},
+			url:"webbrpro_findByfactNoAndyymmdd2",
+			success:function(data){
+				if(data=="1"){
+					layer.alert("注意:該廠當前月份BR產品預訂已存在,繼續添加會覆蓋舊數據",0);
+				}
+			}
+		});
+		
+		jq(".list_item2").empty();	
+		jq(".list_item2").append("<li>製程</li><li>當月實際生產雙數(含不良)</li>");
+		jq(".list_item2").append("<li>次一月預估生產雙數</li><li>次二月預估生產雙數</li><li>次三月預估生產雙數</li>");
+		jq.ajax({
+			type:"post",
+			dataType:"json",
+			data:{factNo:factno},
+			url:"webfact_findByFactNo_show_order",
+			success:function(data){				
+				jq.each(data,function(i,obj){
+					li_content2+="<li>"+obj[0]+"</li>"+
+					"<li><input type='text' name='listest["+i+"].actualPairs' datatype='*'/></li>"+
+					"<li><input type='text' name='listest["+i+"].estimatingPairs1' datatype='*'/></li>"+
+					"<li><input type='text' name='listest["+i+"].estimatingPairs2' datatype='*'/></li>"+
+					"<li><input type='text' name='listest["+i+"].estimatingPairs3' datatype='*'/>"+
+					"<input type='hidden' name='listest["+i+"].id.factNo' value='"+factno+"'/>"+
+					"<input type='hidden' name='listest["+i+"].id.yymmdd' value='"+yymmdd+"'/>"+
+					"<input type='hidden' name='listest["+i+"].id.factCode' value='"+obj[0]+"'/>"+
+					"<input type='hidden' name='listest["+i+"].createUser.id' value='"+createUser+"'/>"+
+					"<input type='hidden' name='listest["+i+"].createDate' value='"+createDate+"'/>"+
+					"</li>"
+				})	
+				jq(".list_item2").append(li_content2);
+			}			
+		});
+		
+		
+	}						    	    	    	    	   	    
 }
-
-
-
 
 function removeOneItem(img){
 	    img.parent().prev().remove();

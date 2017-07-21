@@ -158,6 +158,12 @@ public class WebFactAction extends ActionSupport {
 		return "findAllVwebfact";
 	}
 	
+	public String findByFactNo_show_order(){
+		List<Object[]>list=webFactSer.findByFactNo_show_order(factNo);
+		jsons=JSONArray.fromObject(list);
+		return "findByFactNo_show_order";
+	}
+	
 	
 	
 	

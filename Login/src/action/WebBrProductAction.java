@@ -3,6 +3,7 @@
  */
 package action;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import net.sf.json.JSONArray;
@@ -15,6 +16,7 @@ import com.opensymphony.xwork2.ActionSupport;
 
 import entity.KyzExpectmatmLog;
 import entity.VWebFact;
+import entity.WebBrEstimatingitem;
 import entity.WebBrProduct;
 import entity.WebBrProductitem;
 
@@ -46,9 +48,16 @@ public class WebBrProductAction extends ActionSupport{
 	private JSONArray jsons;
 	private String yymmdd;
 	private List<WebBrProductitem>listitem;
+	private List<WebBrEstimatingitem>listest;
 	
 	
 	
+	public List<WebBrEstimatingitem> getListest(){
+		return listest;
+	}
+	public void setListest(List<WebBrEstimatingitem> listest){
+		this.listest=listest;
+	}
 	public List<WebBrProductitem> getListitem(){
 		return listitem;
 	}
@@ -207,7 +216,67 @@ public class WebBrProductAction extends ActionSupport{
 		return "add2";
 	}
 	
+	public String  findByfactNoAndyymmdd(){
+		Integer result=webbrproSer.findByfactNoAndyymmdd(factNo,yymmdd);
+		if(result!=null&&result!=0){
+			ajaxResult="1";
+		}else{
+			ajaxResult="0";
+		}
+		return "findByfactNoAndyymmdd";
+	}
 	
+	public String findByfactNoAndyymmdd2(){
+		Integer result=webbrproSer.findByfactNoAndyymmdd2(factNo,yymmdd);
+		if(result!=null&&result!=0){
+			ajaxResult="1";
+		}else{
+			ajaxResult="0";
+		}
+		return "findByfactNoAndyymmdd2";
+	}
+	
+	public String add3(){
+		ajaxResult="0";
+		try{
+			webbrproSer.add3(listest);
+		}catch(Exception e){
+			ajaxResult="1";
+			e.printStackTrace();
+		}
+		return "add3";
+	}
+	
+	public String add2_3(){
+		ajaxResult="0";
+		try{
+			/*webbrproSer.add2(listitem);
+			webbrproSer.add3(listest);*/
+			List list=new ArrayList();
+			for(int i=0;i<listitem.size();i++){
+				list.add(listitem.get(i));
+			}
+			for(int i=0;i<listest.size();i++){
+				list.add(listest.get(i));
+			}			
+			webbrproSer.add2_3(list);
+		}catch(Exception e){
+			ajaxResult="1";
+			e.printStackTrace();
+		}
+		return "add2_3";
+		
+	}
+	
+	public String findByFactNo2(){
+		Integer result=webbrproSer.findByFactNo2(factNo);
+		if(result!=null&&result!=0){
+			ajaxResult="1";
+		}else{
+			ajaxResult="0";
+		}
+		return "findByFactNo2";
+	}
 	
 
 }

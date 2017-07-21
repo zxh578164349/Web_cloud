@@ -13,8 +13,8 @@ public class WebBrEstimatingitem implements java.io.Serializable{
 	private Double estimatingPairs1;
 	private Double estimatingPairs2;
 	private Double estimatingPairs3;
-	private String createUser;
-	private String editUser;
+	private WebUser createUser;
+	private WebUser editUser;
 	private String createDate;
 	private String editDate;
 
@@ -31,14 +31,12 @@ public class WebBrEstimatingitem implements java.io.Serializable{
 
 	/** full constructor */
 	public WebBrEstimatingitem(WebBrEstimatingitemId id,Double actualPairs,Double estimatingPairs1,Double estimatingPairs2,Double estimatingPairs3,
-			String createUser,String editUser,String createDate,String editDate){
+			String createDate,String editDate){
 		this.id=id;
 		this.actualPairs=actualPairs;
 		this.estimatingPairs1=estimatingPairs1;
 		this.estimatingPairs2=estimatingPairs2;
-		this.estimatingPairs3=estimatingPairs3;
-		this.createUser=createUser;
-		this.editUser=editUser;
+		this.estimatingPairs3=estimatingPairs3;		
 		this.createDate=createDate;
 		this.editDate=editDate;
 	}
@@ -85,19 +83,21 @@ public class WebBrEstimatingitem implements java.io.Serializable{
 		this.estimatingPairs3=estimatingPairs3;
 	}
 
-	public String getCreateUser(){
-		return this.createUser;
+	
+
+	public WebUser getCreateUser(){
+		return createUser;
 	}
 
-	public void setCreateUser(String createUser){
+	public void setCreateUser(WebUser createUser){
 		this.createUser=createUser;
 	}
 
-	public String getEditUser(){
-		return this.editUser;
+	public WebUser getEditUser(){
+		return editUser;
 	}
 
-	public void setEditUser(String editUser){
+	public void setEditUser(WebUser editUser){
 		this.editUser=editUser;
 	}
 

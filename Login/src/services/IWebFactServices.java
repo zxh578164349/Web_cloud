@@ -129,6 +129,7 @@ public interface IWebFactServices {
 	
 	public List<String> findByFactNo_showA(String factNo);
 	public List<Object[]> findByFactNo_showA_order(String factNo);
+	public List<Object[]> findByFactNo_show_order(String factNo);
 	public List<Object[]> findByFactNo_order(String factNo);
 	public List<WebFact>findByList(List<String>list);
 	

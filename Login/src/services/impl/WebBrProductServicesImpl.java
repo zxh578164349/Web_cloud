@@ -8,6 +8,7 @@ import java.util.List;
 import dao.IWebBrProductDao;
 
 import entity.KyzExpectmatmLog;
+import entity.WebBrEstimatingitem;
 import entity.WebBrProduct;
 import entity.WebBrProductitem;
 import services.IWebBrProductServices;
@@ -104,6 +105,66 @@ public class WebBrProductServicesImpl implements IWebBrProductServices{
 	public void add2(List<WebBrProductitem> listitem){
 		// TODO Auto-generated method stub
 		webbrprodao.add2(listitem);
+	}
+
+
+	/**
+	 * 日期:2017/7/21
+	 * 描述:
+	 */
+	
+	
+	public Integer findByfactNoAndyymmdd(String factNo,String yymmdd){
+		// TODO Auto-generated method stub
+		return webbrprodao.findByfactNoAndyymmdd(factNo,yymmdd);
+	}
+
+
+	/**
+	 * 日期:2017/7/21
+	 * 描述:
+	 */
+	
+	
+	public Integer findByfactNoAndyymmdd2(String factNo,String yymmdd){
+		// TODO Auto-generated method stub
+		return webbrprodao.findByfactNoAndyymmdd2(factNo,yymmdd);
+	}
+
+
+	/**
+	 * 日期:2017/7/21
+	 * 描述:
+	 */
+	
+	
+	public void add3(List<WebBrEstimatingitem> listest){
+		// TODO Auto-generated method stub
+		webbrprodao.add3(listest);
+	}
+
+
+	/**
+	 * 日期:2017/7/21
+	 * 描述:
+	 */
+	
+	
+	public Integer findByFactNo2(String factNo){
+		// TODO Auto-generated method stub
+		return webbrprodao.findByFactNo2(factNo);
+	}
+
+
+	/**
+	 * 日期:2017/7/21
+	 * 描述:
+	 */
+	
+	
+	public void add2_3(List list){
+		// TODO Auto-generated method stub
+		webbrprodao.add2_3(list);
 	}
 
 }

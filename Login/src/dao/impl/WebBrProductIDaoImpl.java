@@ -17,6 +17,7 @@ import util.PageBean;
 import dao.Basedao;
 import dao.IWebBrProductDao;
 import entity.KyzExpectmatmLog;
+import entity.WebBrEstimatingitem;
 import entity.WebBrProduct;
 import entity.WebBrProductitem;
 import entity.WebBussinessletter;
@@ -103,21 +104,7 @@ public class WebBrProductIDaoImpl extends Basedao implements IWebBrProductDao{
 	
 	
 	public void add(List<WebBrProduct> listbrpro){
-		// TODO Auto-generated method stub
-		/*Transaction tx=null;
-		try{
-			tx=getSession().beginTransaction();
-			for(int i=0;i<listbrpro.size();i++){
-				getSession().merge(listbrpro.get(i));
-				if(i%10==0){
-					getSession().flush();
-					getSession().clear();
-				}
-			}
-		}catch(Exception e){
-			tx.rollback();
-			e.printStackTrace();
-		}*/
+		// TODO Auto-generated method stub		
 		super.addList(listbrpro);
 	}
 
@@ -157,6 +144,63 @@ public class WebBrProductIDaoImpl extends Basedao implements IWebBrProductDao{
 	public void add2(List<WebBrProductitem> listitem){
 		// TODO Auto-generated method stub
 		super.addList(listitem);
+	}
+
+	/**
+	 * 日期:2017/7/21
+	 * 描述:
+	 */
+	
+	
+	public Integer findByfactNoAndyymmdd(String factNo,String yymmdd){
+		// TODO Auto-generated method stub
+		String hql="select id.yymmdd from WebBrProductitem where id.webBrProduct.id.factNo=? and id.yymmdd=?";
+		String[]objs={factNo,yymmdd};
+		List<Object>list=super.findAll(hql,objs);
+		return list.size();
+	}
+
+	/**
+	 * 日期:2017/7/21
+	 * 描述:
+	 */
+	
+	
+	public Integer findByfactNoAndyymmdd2(String factNo,String yymmdd){
+		// TODO Auto-generated method stub
+		String hql="select id.yymmdd from WebBrEstimatingitem where id.factNo=? and id.yymmdd=?";
+		String[]objs={factNo,yymmdd};
+		List<Object>list=super.findAll(hql,objs);
+		return list.size();
+	}
+
+	/**
+	 * 日期:2017/7/21
+	 * 描述:
+	 */
+	
+	
+	public void add3(List<WebBrEstimatingitem> listest){
+		// TODO Auto-generated method stub
+		super.addList(listest);
+	}
+	
+	public Integer findByFactNo2(String factNo){
+		String hql="select id.webErpProductinFormation.itemid from WebBrProduct where id.factNo=?";
+		String[]objs={factNo};
+		List<Object>list=super.findAll(hql,objs);
+		return list.size();
+	}
+
+	/**
+	 * 日期:2017/7/21
+	 * 描述:
+	 */
+	
+	
+	public void add2_3(List list){
+		// TODO Auto-generated method stub
+		super.addList(list);
 	}
 
 }

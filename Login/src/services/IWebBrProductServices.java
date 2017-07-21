@@ -8,6 +8,7 @@ import java.util.List;
 import util.PageBean;
 
 import entity.KyzExpectmatmLog;
+import entity.WebBrEstimatingitem;
 import entity.WebBrProduct;
 import entity.WebBrProductitem;
 
@@ -32,5 +33,10 @@ public interface IWebBrProductServices{
 	public void delete(WebBrProduct obj,KyzExpectmatmLog log);
 	
 	public void add2(List<WebBrProductitem>listitem);
+	public Integer findByfactNoAndyymmdd(String factNo,String yymmdd);
+	public Integer findByfactNoAndyymmdd2(String factNo,String yymmdd);
+	public void add3(List<WebBrEstimatingitem>listest);
+	public Integer findByFactNo2(String factNo);
+	public void add2_3(List list);
 
 }

@@ -80,6 +80,9 @@
 			<result name="findAllVwebfact" type="json">
 			    <param name="root">jsons</param>
 			</result>
+			<result name="findByFactNo_show_order" type="json">
+			    <param name="root">jsons</param>
+			</result>
 		</action>		
 		<action name="print2Ypoi_*" class="preAndDataActionipoi"
 			method="{1}">
@@ -741,6 +744,18 @@
 		         <param name="root">jsons</param>
 		     </result>
 		     <result name="add2" type="json">
+		         <param name="root">ajaxResult</param>
+		     </result>
+		     <result name="findByfactNoAndyymmdd" type="json">
+		         <param name="root">ajaxResult</param>
+		     </result>
+		     <result name="add3" type="json">
+		         <param name="root">ajaxResult</param>
+		     </result>
+		     <result name="add2_3" type="json">
+		         <param name="root">ajaxResult</param>
+		     </result>
+		     <result name="findByFactNo2" type="json">
 		         <param name="root">ajaxResult</param>
 		     </result>
 		         	     
