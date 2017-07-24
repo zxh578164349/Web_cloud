@@ -17,6 +17,7 @@ import util.PageBean;
 import dao.Basedao;
 import dao.IWebBrProductDao;
 import entity.KyzExpectmatmLog;
+import entity.VWebBrProandest;
 import entity.WebBrEstimatingitem;
 import entity.WebBrProduct;
 import entity.WebBrProductitem;
@@ -72,7 +73,8 @@ public class WebBrProductIDaoImpl extends Basedao implements IWebBrProductDao{
 		}
 		hql2.append(hql);
 		hql.append(" order by id.factNo,itemcategory,namec1,namec2");
-		Integer allrow=(Integer)ActionContext.getContext().getSession().get("allrow");
+		
+		Integer allrow=(Integer)ActionContext.getContext().getSession().get("allrow");		
 		if(allrow==null||allrow==0||page==0){
 			allrow=super.getAllRowCount2(hql2.toString(), map);
 			ActionContext.getContext().getSession().put("allrow", allrow);
@@ -201,6 +203,130 @@ public class WebBrProductIDaoImpl extends Basedao implements IWebBrProductDao{
 	public void add2_3(List list){
 		// TODO Auto-generated method stub
 		super.addList(list);
+	}
+
+	/**
+	 * 日期:2017/7/24
+	 * 描述:
+	 */
+	
+	
+	public List<WebBrProductitem> findByfactNoAndYymmdd_print(String factNo,String yymmdd,String yymmdd2){
+		// TODO Auto-generated method stub
+		StringBuffer hql=new StringBuffer();		
+		Map<String,Object>map=new HashMap<String,Object>();
+		hql.append("from WebBrProductitem where 1=1 ");
+		if(factNo==null||"".equals(factNo)){
+			factNo=(String)ActionContext.getContext().getSession().get(factNo);
+		}
+		if(factNo!=null&&!"".equals(factNo)&&!"tw".equals(factNo)){
+			hql.append( "and id.webBrProduct.id.factNo=:factno ");
+			map.put("factno",factNo);
+		}
+		if(yymmdd!=null&&!"".equals(yymmdd)){
+			hql.append(" and id.yymmdd=>:yymmdd ");
+			map.put("yymmdd",yymmdd);
+		}
+		if(yymmdd!=null&&!"".equals(yymmdd2)){
+			hql.append(" and id.yymmdd<=:yymmdd2");
+			map.put("yymmdd2",yymmdd2);
+		}
+		hql.append(" order by id.webBrProduct.id.factNo,id.webBrProduct.namec1,id.webBrProduct.namec2");
+		List<WebBrProductitem>list=super.getAllWithNoPage(hql.toString(),map);
+		for(WebBrProductitem obj:list){
+			obj.getId().getWebBrProduct().getNamec1();
+			obj.getId().getWebBrProduct().getNamec2();
+			obj.getId().getWebBrProduct().getFactNo2().getFactSname();
+		}
+		return list;
+	}
+
+	/**
+	 * 日期:2017/7/24
+	 * 描述:
+	 */
+	
+	
+	public PageBean fincPageBean(int pageSize,int page,String factNo,String yymmdd,String yymmdd2){
+		// TODO Auto-generated method stub
+		StringBuffer hql=new StringBuffer();
+		StringBuffer hql2=new StringBuffer();
+		Map<String,Object>map=new HashMap<String,Object>();
+		hql.append("from WebBrProductitem where 1=1 ");
+		hql2.append("select count(id.yymmdd) ");
+		if(factNo==null||"".equals(factNo)){
+			factNo=(String)ActionContext.getContext().getSession().get("factNo");
+		}
+		if(factNo!=null&&!"".equals(factNo)&&!"tw".equals(factNo)){
+			hql.append(" and id.webBrProduct.id.factNo=:factno");
+			map.put("factno",factNo);
+		}
+		if(yymmdd!=null&&!"".equals(yymmdd)){
+			hql.append(" and id.yymmdd>=:yymmdd");
+			map.put("yymmdd",yymmdd);
+		}
+		if(yymmdd2!=null&&!"".equals(yymmdd2)){
+			hql.append(" and id.yymmdd<=:yymmdd2");
+			map.put("yymmdd2",yymmdd2);
+		}
+		hql2.append(hql);
+		hql.append(" order by id.webBrProduct.id.factNo,id.yymmdd");
+		
+		Integer allrow=(Integer)ActionContext.getContext().getSession().get("allrow");		
+		if(allrow==null||allrow==0||page==0){
+			allrow=super.getAllRowCount2(hql2.toString(), map);
+			ActionContext.getContext().getSession().put("allrow", allrow);
+		}
+		int currentPage=PageBean.countCurrentPage(page);
+		int totalPage=PageBean.countTotalPage(pageSize, allrow);
+		if(currentPage>totalPage){
+			currentPage=totalPage;
+		}
+		int offset=PageBean.countOffset(pageSize, currentPage);
+		List<WebBrProductitem>list=super.queryForPage(hql.toString(), offset, pageSize, map);
+		for(WebBrProductitem pro:list){
+			pro.getId().getWebBrProduct().getId().getWebErpProductinFormation().getNamec1();
+			pro.getId().getWebBrProduct().getId().getWebErpProductinFormation().getNamec2();
+		}
+		PageBean bean=new PageBean();
+		bean.setAllRow(allrow);
+		bean.setCurrentPage(currentPage);
+		bean.setList(list);
+		bean.setPageSize(pageSize);
+		bean.setTotalPage(totalPage);
+		
+		return bean;
+	}
+
+	/**
+	 * 日期:2017/7/24
+	 * 描述:
+	 */
+	
+	
+	public List<VWebBrProandest> findByfactNoAndYymmdd_print2(String factNo,String yymmdd,String yymmdd2){
+		// TODO Auto-generated method stub
+		StringBuffer hql=new StringBuffer();
+		Map<String,Object>map=new HashMap<String,Object>();
+		hql.append("from VWebBrProandest where 1=1 ");
+		if(factNo==null||"".equals(factNo)){
+			factNo=(String)ActionContext.getContext().getSession().get("factNo");
+		}
+		if(factNo!=null&&!"".equals(factNo)&&!"tw".equals(factNo)){
+			hql.append(" and id.factNo=:factno");
+			map.put("factno",factNo);
+		}
+		if(yymmdd!=null&&!"".equals(yymmdd)){
+			hql.append(" and id.yymmdd>=:yymmdd");
+			map.put("yymmdd",yymmdd);
+		}
+		if(yymmdd!=null&&!"".equals(yymmdd2)){
+			hql.append(" and id.yymmdd<=:yymmdd");
+			map.put("yymmdd2",yymmdd2);
+		}
+		hql.append(" order by id.factNo,id.factCode,id.yymmdd");
+		List<VWebBrProandest>list=super.getAllWithNoPage(hql.toString(),map);
+		return list;
 	}
 
 }

@@ -40,9 +40,11 @@
 					<tr class="tr_show">
 						<th>序號</th>
 						<th>工廠</th>
-						<th>產品大類</th>
-						<th>產品名稱</th>
-																	
+						<th>截止日期</th>
+						<th>產品明稱</th>
+						<th>庫存數(KG)</th>
+						<th>已訂購未入廠(KG)</th>
+						<th>當月耗用(KG)</th>											
 						<s:if test='#session.loginUser.userread!="1"'>
 							<th>操作</th>
 						</s:if>
@@ -52,18 +54,22 @@
 					<s:iterator value="bean.list" status="x" id="obj">
 						<tr>
 							<td>${ bean.pageSize*(bean.currentPage-1)+x.index+1}</td>
-							<td><s:property value="factNo2.factSname" />
+							<td><s:property value="id.webBrProduct.id.factNo" />
 							</td>
-							<td><s:property value="weberppr2.itemcategoryname"/>
+							<td><s:property value="id.yymmdd"/>
 							</td>
-							<td><s:property value="namec1" />&nbsp;&nbsp;<s:property value="namec1" />
+							<td><s:property value="id.webBrProduct.id.webErpProductinFormation.namec1" />&nbsp;&nbsp;
+							<s:property value="id.webBrProduct.id.webErpProductinFormation.namec2" />
 							</td>							
-							
-												
+							<td><s:property value="inventory"/></td>
+							<td><s:property value="orderNotin"/></td>
+							<td><s:property value="actualUsed"/></td>					
 							<s:if test='#session.loginUser.userread!="1"'>
 								<td>
 									<form  id="subform${x.index}">										
-										<input type="hidden" value="<s:property value='wid'/>" name="wid" />																					
+										<input type="hidden" value="<s:property value='id.webBrProduct.id.webErpProductinFormation.itemid'/>" name="wid" />
+										<input type="hidden" value="<s:property value='id.webBrProduct.id.factNo'/>" name="factNo"/>
+										<input type="hidden" value="<s:property value='id.yymmdd'/>" name="yymmdd"/>																															
 									</form> 									
 									<!--  <form  id="2subform${x.index}" style="float:left">										
 										<input type="hidden" value="<s:property value='formulaIndex'/>" name="formulaIndex" />
@@ -86,7 +92,7 @@
 										<input type="hidden" value="down" name="lookordown"/>																														
 									</form>-->																	
 								    <a href="javascript:isDelete('subform${x.index}','webbrpro_delete')"  class="btn btn-xs btn-success">
-									 刪除
+									 修改
 								    </a>																																											
 								</td>
 							</s:if>
@@ -102,40 +108,6 @@
 </div>
 <jsp:include page="pagenation.jsp" flush="true"/>		
 
-
-<script type="text/javascript">
-function addvbm(subform){	
-	/*var pageii = jq.layer({
-		  type: 1,
-		  title: false,
-		  area: ['auto', 'auto'],
-		  border: [0], //去掉默认边框
-		  shade: [0], //去掉遮罩
-		  closeBtn: [0, false], //去掉默认关闭按钮
-		  shift: 'left', //从左动画弹出
-		  page: {
-		    html: div
-		  }
-		});*/
-		jq.ajax({
-		  type:'post',
-		  dataType:'json',
-		  data:jq("#"+subform).serialize(),
-		  url:'webformula_sendEmail',
-		  success:function(data){
-			  if(data.length==0){
-				  layer.msg("還沒有建立配方送簽流程,暫時不能送簽",3,3);	
-			  }else if(data[0]=='1'){				  
-				  layer.msg("送簽失敗",3,3);  
-			  }else{
-				  layer.msg("送簽成功",3,1);
-				  loadUrl_bodyid("webformula_findPageBean3");
-			  }		     
-		  } 
-		});		
-}
-
-</script>	
 	
 </body>
 </html>

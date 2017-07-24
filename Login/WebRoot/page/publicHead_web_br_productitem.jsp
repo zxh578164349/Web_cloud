@@ -18,30 +18,34 @@
      <div class="well">					
 			<table id="tb_search">
 			<tr>
-			<td>
-			
+			<td>			
 			<s:if test="#session.factNo=='tw'">
 					<select name="factNo" id="factNo" class="search">
-						<option value="nothing">請選擇廠別</option>						
+						<option value="nothing">請選擇廠別</option>
+						<option value="">全部</option>						
 						<s:iterator value="#session.facts" id="temp">
 							<option value="${temp[0]}">${temp[1]}(${temp[0]})</option>								
 						</s:iterator>
 					</select>
 					
 				</s:if> 
-				<s:else>
-				
+				<s:else>				
 					<select name="factNo" id="factNo" class="search">						
 						<option value="<s:property value="#session.factNo"/>">
 							<s:property value="#session.factName" />(<s:property value="#session.factNo"/>)
 						</option>
-					</select>
-					
+					</select>					
 				</s:else>
+			</td>
+			<td>截止日期</td>
+			<td>
+			  <input type="text" name="yymmdd" onclick="WdatePicker({dateFmt:'yyyyMMdd',maxDate:'%y-%M-%d'})" class="Wdate"/>~
+			  <input type="text" name="yymmdd2" onclick="WdatePicker({dateFmt:'yyyyMMdd',maxDate:'%y-%M-%d'})" class="Wdate"/>
 			</td>			
 			<td>			
 			   <input value="搜索" type="button" class="btn btn-primary" onclick="submis('public_form')" />
-			   <!-- <input value="導出Excel" type="button" class="btn btn-primary" onclick="print('public_form','factNo','yymm','yymm2')"/>	 -->	    
+			   <input value="Excel 導出產品明細" type="button" class="btn btn-primary" onclick="print('public_form','webbrpro_print')"/>	
+			   <input value="Excel 導出預估明細" type="button" class="btn btn-primary" onclick="print('public_form','webbrpro_print2')"/>    
 		    </td>
 		    </tr>
 		</table>

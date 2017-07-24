@@ -211,6 +211,7 @@
 				<value>entity/WebBrProduct.hbm.xml</value>
 				<value>entity/WebBrProductitem.hbm.xml</value>
 				<value>entity/WebBrEstimatingitem.hbm.xml</value>
+				<value>entity/VWebBrProandest.hbm.xml</value>
 				
 				</list>
 				

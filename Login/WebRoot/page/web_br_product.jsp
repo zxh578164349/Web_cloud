@@ -33,7 +33,7 @@ function pages(page) {
 	jq.ajax({
 		type : "POST",
 		dataType : "Html",
-		url : "webformula_findPageBean3",
+		url : "webbrpro_findPageBean3",
 		data : "page=" + page ,
 		success : function(msg) {
 			jq("#bodyid").html(msg);
@@ -51,7 +51,7 @@ function submis(public_form) {
 	jq.ajax({
 		type : "POST",
 		dataType : "Html",
-		url : "webformula_findPageBean2",
+		url : "webbrpro_findPageBean2",
 		//data : "factNo=" + fact.value + "&yymm=" + ym.value,
 		data:subform.serialize(),
 		success : function(msg) {
@@ -65,13 +65,13 @@ function submis(public_form) {
 }
 function print(subform){
 	var subform=jq("#"+subform);
-	subform.attr("action","webformula_printlist");
+	subform.attr("action","webbrpro_printlist");
 	subform.attr("target","_blank");
 	subform.submit();
 }
 
 
-jq.ajax({
+/*jq.ajax({
 	type:"get",
 	dataType:"json",
 	url:"webfact_findAllVwebfact",
@@ -84,36 +84,9 @@ jq.ajax({
 			jq("#factno").append(item);
 		});
 	}
-});
-jq.ajax({
-	type:"post",
-	dataType:"json",
-	url:"weberpbp_findObjOp1",
-	success:function(data){
-		var item;
-		jq("#factcode").empty();
-		jq("#factcode").append("<option value=''>請選擇製程類別</option>");
-		jq.each(data,function(i,obj){
-			item="<option value='"+obj[0]+"'>"+obj[2]+"</option>";
-			jq("#factcode").append(item);
-		});
-	}
-});
-/*加載所有品牌*/
-jq.ajax({
-	type:"get",
-	url:"weberpbp_findObjOp2",
-	dataType:"json",
-	success:function(data){
-		jq("#dwrWebbrank").empty();
-		jq("#dwrWebbrank").append("<option value=''>品牌選擇</option>");
-		var item="";
-		jq.each(data,function(i,obj){
-			item+="<option value='"+obj[0]+"'>"+obj[2]+"</option>";					
-		});
-		jq("#dwrWebbrank").append(item);
-	}
-});
+});*/
+
+
 
 </script>	
 </body>

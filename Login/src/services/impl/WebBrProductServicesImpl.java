@@ -8,6 +8,7 @@ import java.util.List;
 import dao.IWebBrProductDao;
 
 import entity.KyzExpectmatmLog;
+import entity.VWebBrProandest;
 import entity.WebBrEstimatingitem;
 import entity.WebBrProduct;
 import entity.WebBrProductitem;
@@ -165,6 +166,42 @@ public class WebBrProductServicesImpl implements IWebBrProductServices{
 	public void add2_3(List list){
 		// TODO Auto-generated method stub
 		webbrprodao.add2_3(list);
+	}
+
+
+	/**
+	 * 日期:2017/7/24
+	 * 描述:
+	 */
+	
+	
+	public List<WebBrProductitem> findByfactNoAndYymmdd_print(String factNo,String yymmdd,String yymmdd2){
+		// TODO Auto-generated method stub
+		return webbrprodao.findByfactNoAndYymmdd_print(factNo,yymmdd,yymmdd2);
+	}
+
+
+	/**
+	 * 日期:2017/7/24
+	 * 描述:
+	 */
+	
+	
+	public PageBean fincPageBean(int pageSize,int page,String factNo,String yymmdd,String yymmdd2){
+		// TODO Auto-generated method stub
+		return webbrprodao.fincPageBean(pageSize,page,factNo,yymmdd,yymmdd2);
+	}
+
+
+	/**
+	 * 日期:2017/7/24
+	 * 描述:
+	 */
+	
+	
+	public List<VWebBrProandest> findByfactNoAndYymmdd_print2(String factNo,String yymmdd,String yymmdd2){
+		// TODO Auto-generated method stub
+		return webbrprodao.findByfactNoAndYymmdd_print2(factNo,yymmdd,yymmdd2);
 	}
 
 }
