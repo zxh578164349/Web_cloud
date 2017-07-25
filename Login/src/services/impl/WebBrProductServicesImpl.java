@@ -204,4 +204,16 @@ public class WebBrProductServicesImpl implements IWebBrProductServices{
 		return webbrprodao.findByfactNoAndYymmdd_print2(factNo,yymmdd,yymmdd2);
 	}
 
+
+	/**
+	 * 日期:2017/7/25
+	 * 描述:
+	 */
+	
+	
+	public List<VWebBrProandest> findByfactCodeAndfactNoAndYymmdd_print2(String factNo,String factCode,String yymmdd){
+		// TODO Auto-generated method stub
+		return webbrprodao.findByfactCodeAndfactNoAndYymmdd_print2(factNo,factCode,yymmdd);
+	}
+
 }

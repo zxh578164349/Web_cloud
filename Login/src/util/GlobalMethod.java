@@ -1988,9 +1988,28 @@ public class GlobalMethod extends HibernateDaoSupport{
 				e.printStackTrace();
 			}*/	 
 		 Calendar cal=Calendar.getInstance();
-			cal.add(Calendar.MONTH,-2);
+		 Calendar cal2=Calendar.getInstance();
+			/*cal.add(Calendar.MONTH,-2);
 			String yymm=new SimpleDateFormat("yyyyMMdd").format(cal.getTime());
-			System.out.println(yymm);
+			System.out.println(yymm);*/
+			
+			
+			try {
+				cal.setTime(new SimpleDateFormat("yyyyMMdd").parse("20171024"));
+				cal2.setTime(new SimpleDateFormat("yymmMMdd").parse("20170924"));
+				long time=cal.getTimeInMillis();
+				long time2=cal2.getTimeInMillis();
+				
+				long result=(time-time2)/(1000*3600*24);
+				System.out.println(result);
+				
+				
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			
 		
 		
 								 				 		 				

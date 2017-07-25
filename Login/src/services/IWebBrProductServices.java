@@ -42,5 +42,6 @@ public interface IWebBrProductServices{
 	public List<WebBrProductitem>findByfactNoAndYymmdd_print(String factNo,String yymmdd,String yymmdd2);
 	public PageBean fincPageBean(int pageSize,int page,String factNo,String yymmdd,String yymmdd2);
 	public List<VWebBrProandest>findByfactNoAndYymmdd_print2(String factNo,String yymmdd,String yymmdd2);
+	public List<VWebBrProandest> findByfactCodeAndfactNoAndYymmdd_print2(String factNo,String factCode,String yymmdd);
 
 }

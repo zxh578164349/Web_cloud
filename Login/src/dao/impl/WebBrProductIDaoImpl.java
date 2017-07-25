@@ -329,4 +329,35 @@ public class WebBrProductIDaoImpl extends Basedao implements IWebBrProductDao{
 		return list;
 	}
 
+	/**
+	 * 日期:2017/7/25
+	 * 描述:
+	 */
+	
+	
+	public List<VWebBrProandest> findByfactCodeAndfactNoAndYymmdd_print2(String factNo,String factCode,String yymmdd){
+		// TODO Auto-generated method stub
+		StringBuffer hql=new StringBuffer();
+		Map<String,Object>map=new HashMap<String,Object>();
+		hql.append("from VWebBrProandest where 1=1 ");
+		if(factNo==null||"".equals(factNo)){
+			factNo=(String)ActionContext.getContext().getSession().get("factNo");
+		}
+		if(factNo!=null&&!"".equals(factNo)&&!"tw".equals(factNo)){
+			hql.append(" and id.factNo=:factno");
+			map.put("factno",factNo);
+		}
+		if(factCode!=null&&!"".equals(factCode)){
+			hql.append(" and id.factCode=factcode");
+			map.put("factcode",factCode);
+		}
+		if(yymmdd!=null&&!"".equals(yymmdd)){
+			hql.append(" and id.yymmdd=:yymmdd ");
+			map.put("yymmddd",yymmdd);
+		}
+		hql.append(" order by id.factCode,id.factNo,id.yymmdd");
+		List<VWebBrProandest>list=super.getAllWithNoPage(hql.toString(),map);
+		return list;
+	}
+
 }
