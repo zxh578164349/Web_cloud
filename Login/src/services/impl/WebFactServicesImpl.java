@@ -292,4 +292,15 @@ public class WebFactServicesImpl implements IWebFactServices {
 		return webFactDao.findAllVwebfact();
 	}
 
+	/**
+	 * 日期:2017/7/26
+	 * 描述:
+	 */
+	
+	
+	public List<String> findfactarea(){
+		// TODO Auto-generated method stub
+		return webFactDao.findfactarea();
+	}
+
 }

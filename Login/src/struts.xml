@@ -83,6 +83,9 @@
 			<result name="findByFactNo_show_order" type="json">
 			    <param name="root">jsons</param>
 			</result>
+			<result name="findfactarea" type="json">
+			    <param name="root">jsons</param>
+			</result>
 		</action>		
 		<action name="print2Ypoi_*" class="preAndDataActionipoi"
 			method="{1}">

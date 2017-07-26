@@ -351,4 +351,18 @@ public class WebFactDaoImpl extends Basedao implements IWebFactDao {
 		return super.findAll(hql,null);
 	}
 
+	/**
+	 * 日期:2017/7/26
+	 * 描述:
+	 */
+	
+	
+	public List<String> findfactarea(){
+		// TODO Auto-generated method stub
+		String hql="select distinct id.factArea from WebFact where factShow='0'";
+		return super.findAll(hql,null);
+	}
+	
+	
+
 }

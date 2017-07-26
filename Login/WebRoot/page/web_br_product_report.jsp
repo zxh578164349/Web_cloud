@@ -38,10 +38,11 @@
 							<s:property value="#session.factName" />(<s:property value="#session.factNo"/>)
 						</option>
 					</select>					
-				</s:else>--> <select name="formula.factCode.id" datatype="*" id="factcode"></select></td>
+				</s:else>--> 
+				     <select name="factCode" datatype="*" id="factcode"></select></td>
 						<td>截止日期</td>
-						<td><input type="text" name="yymmdd"
-							onclick="WdatePicker({dateFmt:'yyyyMMdd',opposite:true,disabledDates:['....0228','......30']})" class="Wdate" /> <!--<input type="text" name="yymmdd2" onclick="WdatePicker({dateFmt:'yyyyMMdd',minDate:'%y-{%M-6}-%ld',maxDate:'%y-%M-%ld'})" class="Wdate"/>-->
+						<td><input type="text" name="yymmdd" 
+							onclick="WdatePicker({dateFmt:'yyyyMMdd',opposite:true,disabledDates:['....0228','......30']})" class="Wdate" />
 						</td>
 						<td>預估月數</td>
 						<td><input type="text" name="months" />
@@ -65,13 +66,13 @@
 jq.ajax({
 	type:"post",
 	dataType:"json",
-	url:"weberpbp_findObjOp1",
+	url:"webfact_findfactarea",
 	success:function(data){
 		var item;
 		jq("#factcode").empty();
-		jq("#factcode").append("<option value=''>請選擇製程類別</option>");
+		jq("#factcode").append("<option value=''>請選擇製程類別</option><option value='all'>全部</option>");
 		jq.each(data,function(i,obj){
-			item="<option value='"+obj[0]+"'>"+obj[2]+"</option>";
+			item="<option value='"+obj+"'>"+obj+"</option>";
 			jq("#factcode").append(item);
 		});
 	}
@@ -81,7 +82,13 @@ function print(subform,action){
 	var subform=jq("#"+subform);
 	subform.attr("action",action);
 	subform.attr("target","_blank");
-	subform.submit();
+	if(jq("#factcode").val()==""||jq("input[name='yymmdd']").val()==""){
+		layer.alert("請選擇製程和截止日期");
+		return false;
+	}else{
+		subform.submit();
+	}
+	
 }
 </script>	
 </body>

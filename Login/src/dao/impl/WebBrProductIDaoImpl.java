@@ -347,13 +347,13 @@ public class WebBrProductIDaoImpl extends Basedao implements IWebBrProductDao{
 			hql.append(" and id.factNo=:factno");
 			map.put("factno",factNo);
 		}
-		if(factCode!=null&&!"".equals(factCode)){
-			hql.append(" and id.factCode=factcode");
+		if(factCode!=null&&!"".equals(factCode)&&!"all".equals(factCode)){
+			hql.append(" and id.factCode=:factcode");
 			map.put("factcode",factCode);
 		}
 		if(yymmdd!=null&&!"".equals(yymmdd)){
 			hql.append(" and id.yymmdd=:yymmdd ");
-			map.put("yymmddd",yymmdd);
+			map.put("yymmdd",yymmdd);
 		}
 		hql.append(" order by id.factCode,id.factNo,id.yymmdd");
 		List<VWebBrProandest>list=super.getAllWithNoPage(hql.toString(),map);

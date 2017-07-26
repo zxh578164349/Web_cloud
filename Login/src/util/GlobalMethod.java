@@ -1971,29 +1971,9 @@ public class GlobalMethod extends HibernateDaoSupport{
 	 
 	 
 	 
-	 public static void main(String[] args) {
-			/*try{
-				int i=0;
-				ServerSocket s=new ServerSocket(7019);
-				while(true){
-					System.out.println("Swapning"+i);
-					Socket incoming=s.accept();
-					Runnable r=new ThreadEcohHandler(incoming);
-					Thread th=new Thread(r);
-					th.start();
-					i++;
-					
-				}								
-			}catch(IOException e){
-				e.printStackTrace();
-			}*/	 
-		 Calendar cal=Calendar.getInstance();
-		 Calendar cal2=Calendar.getInstance();
-			/*cal.add(Calendar.MONTH,-2);
-			String yymm=new SimpleDateFormat("yyyyMMdd").format(cal.getTime());
-			System.out.println(yymm);*/
-			
-			
+	 public static void main(String[] args) {			 
+		 /*Calendar cal=Calendar.getInstance();
+		 Calendar cal2=Calendar.getInstance();									
 			try {
 				cal.setTime(new SimpleDateFormat("yyyyMMdd").parse("20171024"));
 				cal2.setTime(new SimpleDateFormat("yymmMMdd").parse("20170924"));
@@ -2007,7 +1987,10 @@ public class GlobalMethod extends HibernateDaoSupport{
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}
+			}*/
+		 
+		 System.out.println("hello".indexOf("h"));
+		 System.out.println("hello".indexOf("jj"));
 			
 			
 		

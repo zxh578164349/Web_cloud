@@ -135,6 +135,7 @@ public interface IWebFactServices {
 	
 	public List<String>findFactNoshow();
 	public List<String>findFactCodeshow();
+	public List<String>findfactarea();
 	
 	
 	public List<Object[]>findAllVwebfact();

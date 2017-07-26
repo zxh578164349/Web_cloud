@@ -164,6 +164,12 @@ public class WebFactAction extends ActionSupport {
 		return "findByFactNo_show_order";
 	}
 	
+	public String findfactarea(){
+		List<String>list=webFactSer.findfactarea();
+		jsons=JSONArray.fromObject(list);
+		return "findfactarea";
+	}
+	
 	
 	
 	
