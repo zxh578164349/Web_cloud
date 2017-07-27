@@ -30,6 +30,7 @@ import services.IWebErpBrankProcessServices;
 import services.IWebFactServices;
 import util.GlobalMethod;
 import util.PageBean;
+import util.PoiToHtmlUtil;
 
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
@@ -520,11 +521,11 @@ public class WebBrProductAction extends ActionSupport implements ServletResponse
 		
 	}
 	
-	public void findByfactCodeAndfactNoAndYymmdd_print2() throws IOException, ParseException{
+	public void findByfactCodeAndfactNoAndYymmdd_print2() throws Throwable{
 		listitemAndest=webbrproSer.findByfactCodeAndfactNoAndYymmdd_print2(factNo,factCode,yymmdd);
 		if(listitemAndest==null||listitemAndest.size()==0){
 			response.setContentType("text/html;charset=utf-8");
-			response.getWriter().print("<script>alert('無數據');window.close()</script>");
+			response.getWriter().print("<script>alert('無數據');window.close()</script>");			
 		}else{
 			findByfactCodeAndfactNoAndYymmdd_print2_init2();
 		}
@@ -738,6 +739,9 @@ public class WebBrProductAction extends ActionSupport implements ServletResponse
 		if(listest==null||listest.size()==0){
 			response.setContentType("text/html;charset=utf-8");
 			response.getWriter().print("<script>alert('無數據');window.close();</script>");
+			
+			/*String result=PoiToHtmlUtil.excelToHtml("e:\\", "report.xls");
+			response.getWriter().print(result);*/
 		}else{			
 			List<String>list_months=GlobalMethod.findDaysOfMonth(yymmdd.substring(0,6),yymmdd2.substring(0,6));
 			List<String>list_dates=new ArrayList<String>();

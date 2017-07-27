@@ -1987,14 +1987,14 @@ public class GlobalMethod extends HibernateDaoSupport{
 	 
 	 
 	 
-	 public static void main(String[] args) throws TransformerException, IOException, ParserConfigurationException {
-		 final  String path = "D:\\test\\";
+	 public static void main(String[] args) throws Throwable {
+		 /*final  String path = "D:\\test\\";
 	     final  String file = "test.xls";
 		 InputStream input=new FileInputStream(path+file);
 	     HSSFWorkbook excelBook=new HSSFWorkbook(input);
 	     ExcelToHtmlConverter excelToHtmlConverter = new ExcelToHtmlConverter (DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument() );
 	     excelToHtmlConverter.processWorkbook(excelBook);
-	    /* List pics = excelBook.getAllPictures();
+	     List pics = excelBook.getAllPictures();
 	     if (pics != null) {
 	         for (int i = 0; i < pics.size(); i++) {
 	             Picture pic = (Picture) pics.get (i);
@@ -2004,7 +2004,7 @@ public class GlobalMethod extends HibernateDaoSupport{
 	                 e.printStackTrace();
 	             }
 	         }
-	     }*/
+	     }
 	     Document htmlDocument =excelToHtmlConverter.getDocument();
 	     ByteArrayOutputStream outStream = new ByteArrayOutputStream();
 	     DOMSource domSource = new DOMSource (htmlDocument);
@@ -2019,7 +2019,9 @@ public class GlobalMethod extends HibernateDaoSupport{
 
 	     String content = new String (outStream.toByteArray() );
 
-	     FileUtils.writeStringToFile(new File (path, "exportExcel.html"), content, "utf-8");	
+	     FileUtils.writeStringToFile(new File (path, "exportExcel.html"), content, "utf-8");*/	
+	     
+	     PoiToHtmlUtil.excelToHtml("e:\\", "report.xls");
 	  
 		}
 	 
