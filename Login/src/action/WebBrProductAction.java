@@ -369,70 +369,75 @@ public class WebBrProductAction extends ActionSupport implements ServletResponse
 	}
 	
 	public void print() throws IOException{
-		XSSFWorkbook wb=new XSSFWorkbook();
-		XSSFSheet sheet=wb.createSheet();
 		listitem=webbrproSer.findByfactNoAndYymmdd_print(factNo,yymmdd,yymmdd2);
-		Map<String,Object>map_style=GlobalMethod.findStyles2007(wb);
-		XSSFCellStyle cs_title=(XSSFCellStyle)map_style.get("cs_title");
-		XSSFCellStyle cs_head=(XSSFCellStyle)map_style.get("cs_head");
-		XSSFCellStyle cs=(XSSFCellStyle)map_style.get("cs");
-		XSSFCellStyle cs_poi2=(XSSFCellStyle)map_style.get("cs_poi2");
-		List<String>list_head=new ArrayList<String>();
-		list_head.add("廠別");
-		list_head.add("截止日期");
-		list_head.add("產品明稱");
-		list_head.add("庫存數(KG)");
-		list_head.add("已訂購未入廠(KG)");
-		list_head.add("當月耗用(KG)");
-		for(int a=0;a<=listitem.size()+1;a++){
-			sheet.createRow(a);			
-			for(int b=0;b<list_head.size();b++){
-				if(b>2){
-					sheet.getRow(a).createCell(b).setCellStyle(cs_poi2);
-				}else{
-					sheet.getRow(a).createCell(b).setCellStyle(cs);
-				}				
-				if(a==0){
-					sheet.setColumnWidth(b,5000);
-				}
-			}
-		}		
-				
-		CellRangeAddress cra_head=new CellRangeAddress(0,0,0,5);
-		sheet.addMergedRegion(cra_head);
-		sheet.getRow(0).getCell(0).setCellValue("各廠BR產品庫存耗用明細表");
-		for(int a=0;a<5;a++){
-			sheet.getRow(0).getCell(a).setCellStyle(cs_title);
-		}
-		
-		for(int a=0;a<list_head.size();a++){
-			sheet.getRow(1).getCell(a).setCellValue(list_head.get(a));
-			sheet.getRow(1).getCell(a).setCellStyle(cs_head);
-		}
-		
-		for(int a=0;a<listitem.size();a++){
-			//sheet.getRow(2+a).getCell(0).setCellValue(listitem.get(a).getId().getWebBrProduct().getId().getFactNo());
-			sheet.getRow(2+a).getCell(0).setCellValue(listitem.get(a).getId().getWebBrProduct().getFactNo2().getFactSname());
-			sheet.getRow(2+a).getCell(1).setCellValue(listitem.get(a).getId().getYymmdd());
-			sheet.getRow(2+a).getCell(2).setCellValue(listitem.get(a).getId().getWebBrProduct().getNamec1()+"  "+listitem.get(a).getId().getWebBrProduct().getNamec2());
-			sheet.getRow(2+a).getCell(3).setCellValue(listitem.get(a).getInventory());
-			sheet.getRow(2+a).getCell(4).setCellValue(listitem.get(a).getOrderNotin());
-			sheet.getRow(2+a).getCell(5).setCellValue(listitem.get(a).getActualUsed());	
-		}		
-		
-		ServletOutputStream os=response.getOutputStream();
-		//response.setContentType("application/vnd.ms-excel");
-		response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
-		String fileName="report_webbrproduct.xlsx";
-		int msie=ServletActionContext.getRequest().getHeader("USER-AGENT").toLowerCase().indexOf("msie");
-		if(msie>0){
-			fileName=java.net.URLEncoder.encode(fileName,"utf-8");
+		if(listitem==null||listitem.size()==0){
+			response.setContentType("text/html;charset=utf-8");
+			response.getWriter().print("<script>alert('無數據');window.close();</script>");
 		}else{
-			fileName=new String(fileName.getBytes("utf-8"),"iso8859-1");
-		}
-		response.setHeader("Content-disposition","attachment;filename="+fileName);
-		wb.write(os);
-		os.close();
+			XSSFWorkbook wb=new XSSFWorkbook();
+			XSSFSheet sheet=wb.createSheet();		
+			Map<String,Object>map_style=GlobalMethod.findStyles2007(wb);
+			XSSFCellStyle cs_title=(XSSFCellStyle)map_style.get("cs_title");
+			XSSFCellStyle cs_head=(XSSFCellStyle)map_style.get("cs_head");
+			XSSFCellStyle cs=(XSSFCellStyle)map_style.get("cs");
+			XSSFCellStyle cs_poi2=(XSSFCellStyle)map_style.get("cs_poi2");
+			List<String>list_head=new ArrayList<String>();
+			list_head.add("廠別");
+			list_head.add("截止日期");
+			list_head.add("產品明稱");
+			list_head.add("庫存數(KG)");
+			list_head.add("已訂購未入廠(KG)");
+			list_head.add("當月耗用(KG)");
+			for(int a=0;a<=listitem.size()+1;a++){
+				sheet.createRow(a);			
+				for(int b=0;b<list_head.size();b++){
+					if(b>2){
+						sheet.getRow(a).createCell(b).setCellStyle(cs_poi2);
+					}else{
+						sheet.getRow(a).createCell(b).setCellStyle(cs);
+					}				
+					if(a==0){
+						sheet.setColumnWidth(b,5000);
+					}
+				}
+			}		
+					
+			CellRangeAddress cra_head=new CellRangeAddress(0,0,0,5);
+			sheet.addMergedRegion(cra_head);
+			sheet.getRow(0).getCell(0).setCellValue("各廠BR產品庫存耗用明細表");
+			for(int a=0;a<5;a++){
+				sheet.getRow(0).getCell(a).setCellStyle(cs_title);
+			}
+			
+			for(int a=0;a<list_head.size();a++){
+				sheet.getRow(1).getCell(a).setCellValue(list_head.get(a));
+				sheet.getRow(1).getCell(a).setCellStyle(cs_head);
+			}
+			
+			for(int a=0;a<listitem.size();a++){
+				//sheet.getRow(2+a).getCell(0).setCellValue(listitem.get(a).getId().getWebBrProduct().getId().getFactNo());
+				sheet.getRow(2+a).getCell(0).setCellValue(listitem.get(a).getId().getWebBrProduct().getFactNo2().getFactSname());
+				sheet.getRow(2+a).getCell(1).setCellValue(listitem.get(a).getId().getYymmdd());
+				sheet.getRow(2+a).getCell(2).setCellValue(listitem.get(a).getId().getWebBrProduct().getNamec1()+"  "+listitem.get(a).getId().getWebBrProduct().getNamec2());
+				sheet.getRow(2+a).getCell(3).setCellValue(listitem.get(a).getInventory());
+				sheet.getRow(2+a).getCell(4).setCellValue(listitem.get(a).getOrderNotin());
+				sheet.getRow(2+a).getCell(5).setCellValue(listitem.get(a).getActualUsed());	
+			}		
+			
+			ServletOutputStream os=response.getOutputStream();
+			//response.setContentType("application/vnd.ms-excel");
+			response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+			String fileName="report_webbrproduct.xlsx";
+			int msie=ServletActionContext.getRequest().getHeader("USER-AGENT").toLowerCase().indexOf("msie");
+			if(msie>0){
+				fileName=java.net.URLEncoder.encode(fileName,"utf-8");
+			}else{
+				fileName=new String(fileName.getBytes("utf-8"),"iso8859-1");
+			}
+			response.setHeader("Content-disposition","attachment;filename="+fileName);
+			wb.write(os);
+			os.close();
+		}		
 	}
 	
 	public void print2() throws IOException{
@@ -440,7 +445,7 @@ public class WebBrProductAction extends ActionSupport implements ServletResponse
 		listitemAndest=webbrproSer.findByfactNoAndYymmdd_print2(factNo,yymmdd,yymmdd2);
 		if(listitemAndest!=null&&listitemAndest.size()==0){
 			response.setContentType("text/html;charset=utf-8");
-			response.getWriter().print("<script>alert('無數據');window.close()</script>");
+			response.getWriter().print("<script>alert('無數據');window.close();</script>");
 		}else{
 			XSSFWorkbook wb=new XSSFWorkbook();
 			XSSFSheet sheet=wb.createSheet();
@@ -487,7 +492,7 @@ public class WebBrProductAction extends ActionSupport implements ServletResponse
 			}
 			
 			for(int a=0;a<listitemAndest.size();a++){
-				sheet.getRow(2+a).getCell(0).setCellValue(listitemAndest.get(a).getId().getFactNo());
+				sheet.getRow(2+a).getCell(0).setCellValue(listitemAndest.get(a).getFactNo2().getFactSname());
 				sheet.getRow(2+a).getCell(1).setCellValue(listitemAndest.get(a).getId().getFactCode());
 				sheet.getRow(2+a).getCell(2).setCellValue(listitemAndest.get(a).getId().getYymmdd());
 				sheet.getRow(2+a).getCell(3).setCellValue(listitemAndest.get(a).getInventory().doubleValue());
@@ -625,7 +630,7 @@ public class WebBrProductAction extends ActionSupport implements ServletResponse
 			cal2.setTime(new SimpleDateFormat("yyyyMMdd").parse(yymmdd));
 			cal2.add(Calendar.DAY_OF_MONTH,d5.intValue());
 			date=new SimpleDateFormat("yyyyMMdd").format(cal2.getTime());//庫存可用日期
-			list.add(obj.getId().getFactNo());
+			list.add(obj.getFactNo2().getFactSname());
 			list.add(obj.getInventory());
 			list.add(obj.getOrdernotin());
 			list.add(obj.getActualused());
@@ -728,5 +733,22 @@ public class WebBrProductAction extends ActionSupport implements ServletResponse
 	}
 	
 	
+	public void findEstByYymmdd_print() throws IOException, ParseException{
+		listest=webbrproSer.findEstByYymmdd(yymmdd,yymmdd2);
+		if(listest==null||listest.size()==0){
+			response.setContentType("text/html;charset=utf-8");
+			response.getWriter().print("<script>alert('無數據');window.close();</script>");
+		}else{			
+			List<String>list_months=GlobalMethod.findDaysOfMonth(yymmdd.substring(0,6),yymmdd2.substring(0,6));
+			List<String>list_dates=new ArrayList<String>();
+			for(String month:list_months){
+				if("02".equals(month.substring(4,6))){
+					list_dates.add(month+"28");
+				}else{
+					list_dates.add(month+"30");
+				}
+			}
+		}
+	}
 	
 }

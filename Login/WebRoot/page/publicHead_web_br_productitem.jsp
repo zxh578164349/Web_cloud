@@ -39,8 +39,8 @@
 			</td>
 			<td>截止日期</td>
 			<td>
-			  <input type="text" name="yymmdd" onclick="WdatePicker({dateFmt:'yyyyMMdd',maxDate:'%y-%M-%d'})" class="Wdate"/>~
-			  <input type="text" name="yymmdd2" onclick="WdatePicker({dateFmt:'yyyyMMdd',maxDate:'%y-%M-%d'})" class="Wdate"/>
+			  <input type="text" name="yymmdd" onclick="WdatePicker({dateFmt:'yyyyMMdd',maxDate:'%y-%M-%d',opposite:true,disabledDates:['....0228','......30']})" class="Wdate"/>~
+			  <input type="text" name="yymmdd2" onclick="WdatePicker({dateFmt:'yyyyMMdd',maxDate:'%y-%M-%d',opposite:true,disabledDates:['....0228','......30']})" class="Wdate"/>
 			</td>			
 			<td>			
 			   <input value="搜索" type="button" class="btn btn-primary" onclick="submis('public_form')" />

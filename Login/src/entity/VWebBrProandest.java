@@ -18,6 +18,7 @@ public class VWebBrProandest implements java.io.Serializable{
 	private Double estimatingpairs1;
 	private Double estimatingpairs2;
 	private Double estimatingpairs3;
+	private VWebFact factNo2;
 
 	// Constructors
 
@@ -108,5 +109,15 @@ public class VWebBrProandest implements java.io.Serializable{
 	public void setEstimatingpairs3(Double estimatingpairs3){
 		this.estimatingpairs3=estimatingpairs3;
 	}
+
+	public VWebFact getFactNo2(){
+		return factNo2;
+	}
+
+	public void setFactNo2(VWebFact factNo2){
+		this.factNo2=factNo2;
+	}
+	
+	
 
 }

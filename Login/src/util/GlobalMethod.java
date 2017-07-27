@@ -3,6 +3,7 @@ package util;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -64,10 +65,22 @@ import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 
 import mail.MailSenderInfo;
 import mail.SimpleMailSender;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.poi.hslf.model.Picture;
+import org.apache.poi.hssf.converter.ExcelToHtmlConverter;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFDataFormat;
 import org.apache.poi.hssf.usermodel.HSSFFont;
@@ -82,6 +95,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.springframework.web.context.ContextLoader;
+import org.w3c.dom.Document;
 
 import services.IKyVisaBillsServices;
 import services.IKyVisabillmServices;
@@ -108,6 +122,8 @@ import entity.Webestproduct;
 import entity.WebestproductId;
 import entity.custom.ProjectConfig;
 import entity_temp.VisabillsTemp;
+
+
 
 
 public class GlobalMethod extends HibernateDaoSupport{
@@ -1971,31 +1987,40 @@ public class GlobalMethod extends HibernateDaoSupport{
 	 
 	 
 	 
-	 public static void main(String[] args) {			 
-		 /*Calendar cal=Calendar.getInstance();
-		 Calendar cal2=Calendar.getInstance();									
-			try {
-				cal.setTime(new SimpleDateFormat("yyyyMMdd").parse("20171024"));
-				cal2.setTime(new SimpleDateFormat("yymmMMdd").parse("20170924"));
-				long time=cal.getTimeInMillis();
-				long time2=cal2.getTimeInMillis();
-				
-				long result=(time-time2)/(1000*3600*24);
-				System.out.println(result);
-				
-				
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}*/
-		 
-		 System.out.println("hello".indexOf("h"));
-		 System.out.println("hello".indexOf("jj"));
-			
-			
-		
-		
-								 				 		 				
+	 public static void main(String[] args) throws TransformerException, IOException, ParserConfigurationException {
+		 final  String path = "D:\\test\\";
+	     final  String file = "test.xls";
+		 InputStream input=new FileInputStream(path+file);
+	     HSSFWorkbook excelBook=new HSSFWorkbook(input);
+	     ExcelToHtmlConverter excelToHtmlConverter = new ExcelToHtmlConverter (DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument() );
+	     excelToHtmlConverter.processWorkbook(excelBook);
+	    /* List pics = excelBook.getAllPictures();
+	     if (pics != null) {
+	         for (int i = 0; i < pics.size(); i++) {
+	             Picture pic = (Picture) pics.get (i);
+	             try {
+	                 pic.writeImageContent (new FileOutputStream (path + pic.suggestFullFileName() ) );
+	             } catch (FileNotFoundException e) {
+	                 e.printStackTrace();
+	             }
+	         }
+	     }*/
+	     Document htmlDocument =excelToHtmlConverter.getDocument();
+	     ByteArrayOutputStream outStream = new ByteArrayOutputStream();
+	     DOMSource domSource = new DOMSource (htmlDocument);
+	     StreamResult streamResult = new StreamResult (outStream);
+	     TransformerFactory tf = TransformerFactory.newInstance();
+	     Transformer serializer = tf.newTransformer();
+	     serializer.setOutputProperty (OutputKeys.ENCODING, "utf-8");
+	     serializer.setOutputProperty (OutputKeys.INDENT, "yes");
+	     serializer.setOutputProperty (OutputKeys.METHOD, "html");
+	     serializer.transform (domSource, streamResult);
+	     outStream.close();
+
+	     String content = new String (outStream.toByteArray() );
+
+	     FileUtils.writeStringToFile(new File (path, "exportExcel.html"), content, "utf-8");	
+	  
 		}
 	 
 	 static class ThreadEcohHandler implements Runnable{

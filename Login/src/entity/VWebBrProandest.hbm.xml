@@ -38,5 +38,6 @@
         <property name="estimatingpairs3" type="java.lang.Double">
             <column name="ESTIMATINGPAIRS3" precision="12" />
         </property>
+        <many-to-one name="factNo2" column="FACT_NO" unique="true" insert="false" update="false"/>
     </class>
 </hibernate-mapping>

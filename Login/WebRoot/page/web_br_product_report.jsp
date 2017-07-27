@@ -41,8 +41,8 @@
 				</s:else>--> 
 				     <select name="factCode" datatype="*" id="factcode"></select></td>
 						<td>截止日期</td>
-						<td><input type="text" name="yymmdd" 
-							onclick="WdatePicker({dateFmt:'yyyyMMdd',opposite:true,disabledDates:['....0228','......30']})" class="Wdate" />
+						<td><input type="text" name="yymmdd" id="yymmdd"
+							onclick="WdatePicker({dateFmt:'yyyyMMdd',maxDate:'%y-%M-%d',opposite:true,disabledDates:['....0228','......30']})" class="Wdate" />
 						</td>
 						<td>預估月數</td>
 						<td><input type="text" name="months" />
@@ -57,9 +57,23 @@
 
 	<div class="panel panel-default">
 		<div class="panel-heading">
-			<label>每月生產雙數表</label>
+			<label>每月生產雙數表</label>					
 		</div>
-		<div class="panel-body"></div>
+		<div class="panel-body">
+		    <form id="public_form2" method="post">
+			截止日期:
+			<input type="text" name="yymmdd" id="yymmdd2" 
+			onclick="WdatePicker({dateFmt:'yyyyMMdd',maxDate:'%y-%M-%d',opposite:true,disabledDates:['....0228','......30']})" class="Wdate"/>~
+			<input type="text" name="yymmdd2" id="yymmdd3"
+			onclick="WdatePicker({dateFmt:'yyyyMMdd',maxDate:'%y-%M-%d',opposite:true,disabledDates:['....0228','......30']})" class="Wdate"/>
+			&nbsp;&nbsp;
+			<input value="搜索" type="button" class="btn btn-primary"
+			onclick="print('public_form','webbrpro_findByfactCodeAndfactNoAndYymmdd_print2')" />
+			&nbsp;
+			<input value="Excel" type="button" class="btn btn-primary"
+			onclick="print('public_form','webbrpro_findByfactCodeAndfactNoAndYymmdd_print2')" />
+			</form>
+		</div>
 	</div>
 
 	<script type="text/javascript">
@@ -82,11 +96,20 @@ function print(subform,action){
 	var subform=jq("#"+subform);
 	subform.attr("action",action);
 	subform.attr("target","_blank");
-	if(jq("#factcode").val()==""||jq("input[name='yymmdd']").val()==""){
+	if(jq("#factcode").val()==""||jq("#yymmdd").val()==""){
 		layer.alert("請選擇製程和截止日期");
 		return false;
 	}else{
 		subform.submit();
+	}	
+}
+
+function print2(subform,action){
+	var subform=jq("#"+subform);
+	subform.attr("action",action);
+	subform.attr("target","_blank");
+	if(jq("#yymmdd2").val()==""||jq("#yymmdd3").val()==""){
+		
 	}
 	
 }

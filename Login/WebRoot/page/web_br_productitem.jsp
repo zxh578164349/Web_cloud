@@ -62,24 +62,13 @@ function print(subform,action){
 	var subform=jq("#"+subform);
 	subform.attr("action",action);
 	subform.attr("target","_blank");
-	subform.submit();
+	if(jq("#factNo").val()==""||(jq("input[name='yymmdd']").val()==""&&jq("input[name='yymmdd2']").val()=="")){
+		layer.alert("請選擇廠別和截止日期");
+		return false;
+	}else{
+		subform.submit();
+	}	
 }
-
-
-/*jq.ajax({
-	type:"get",
-	dataType:"json",
-	url:"webfact_findAllVwebfact",
-	success:function(data){
-		var item;
-		jq("#factno").empty();
-		jq("#factno").append("<option value=''>請選擇廠別</option>");
-		jq.each(data,function(i,obj){
-			item="<option value='"+obj[0]+"'>"+obj[1]+"("+obj[3]+")</option>";
-			jq("#factno").append(item);
-		});
-	}
-});*/
 
 
 

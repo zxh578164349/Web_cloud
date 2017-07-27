@@ -224,7 +224,7 @@ public class WebBrProductIDaoImpl extends Basedao implements IWebBrProductDao{
 			map.put("factno",factNo);
 		}
 		if(yymmdd!=null&&!"".equals(yymmdd)){
-			hql.append(" and id.yymmdd=>:yymmdd ");
+			hql.append(" and id.yymmdd>=:yymmdd ");
 			map.put("yymmdd",yymmdd);
 		}
 		if(yymmdd!=null&&!"".equals(yymmdd2)){
@@ -326,6 +326,9 @@ public class WebBrProductIDaoImpl extends Basedao implements IWebBrProductDao{
 		}
 		hql.append(" order by id.factNo,id.factCode,id.yymmdd");
 		List<VWebBrProandest>list=super.getAllWithNoPage(hql.toString(),map);
+		for(VWebBrProandest obj:list){
+			obj.getFactNo2().getFactSname();
+		}
 		return list;
 	}
 
@@ -357,6 +360,33 @@ public class WebBrProductIDaoImpl extends Basedao implements IWebBrProductDao{
 		}
 		hql.append(" order by id.factCode,id.factNo,id.yymmdd");
 		List<VWebBrProandest>list=super.getAllWithNoPage(hql.toString(),map);
+		for(VWebBrProandest obj:list){
+			obj.getFactNo2().getFactSname();
+		}
+		return list;
+	}
+
+	/**
+	 * 日期:2017/7/27
+	 * 描述:
+	 */
+	
+	
+	public List<WebBrEstimatingitem> findEstByYymmdd(String yymmdd,String yymmdd2){
+		// TODO Auto-generated method stub
+		StringBuffer hql=new StringBuffer();
+		Map<String,Object>map=new HashMap<String,Object>();
+		hql.append("from WebBrEstimatingitem where 1=1 ");
+		if(yymmdd!=null&&!"".equals(yymmdd)){
+			hql.append(" and id.yymmdd>=:yymmdd");
+			map.put("yymmdd",yymmdd);
+		}
+		if(yymmdd2!=null&&!"".equals(yymmdd2)){
+			hql.append(" and id.yymmdd<=:yymmdd2");
+			map.put("yymmdd2",yymmdd2);
+		}
+		hql.append(" order by id.factNo,id.factCode,id.yymmdd");
+		List<WebBrEstimatingitem>list=super.getAllWithNoPage(hql.toString(),map);
 		return list;
 	}
 

@@ -74,7 +74,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 								        																						
 									</td>
 									<td>
-									<input type="text" name="yymmdd" onclick="WdatePicker({dateFmt:'yyyyMMdd',opposite:true,disabledDates:['....0228','......30']})" onblur="checkproduct()" class="Wdate" datatype="*" /> 
+									<input type="text" name="yymmdd" onclick="WdatePicker({dateFmt:'yyyyMMdd',maxDate:'%y-%M-%d',opposite:true,disabledDates:['....0228','......30']})" onblur="checkproduct()" class="Wdate" datatype="*" /> 
 									<input type="hidden" value="<%=str_date%>" id="createDate"  />
 									 <input type="hidden" value="${loginUser.id}" id="createUser" />								
 									 								
