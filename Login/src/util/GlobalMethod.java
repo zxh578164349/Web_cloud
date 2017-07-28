@@ -41,6 +41,7 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -538,6 +539,7 @@ public class GlobalMethod extends HibernateDaoSupport{
 		cs_head.setBorderLeft(HSSFCellStyle.BORDER_THIN);
 		cs_head.setFillForegroundColor(IndexedColors.YELLOW.getIndex());
 		cs_head.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+		cs_head.setWrapText(true);//自動換行
 		map.put("cs_head", cs_head);
 		
 		HSSFCellStyle cs_red_bg=wb.createCellStyle();		
@@ -2021,7 +2023,36 @@ public class GlobalMethod extends HibernateDaoSupport{
 
 	     FileUtils.writeStringToFile(new File (path, "exportExcel.html"), content, "utf-8");*/	
 	     
-	     PoiToHtmlUtil.excelToHtml("e:\\", "report.xls");
+	     //PoiToHtmlUtil.excelToHtml("e:\\", "report.xls");
+	    // System.out.println(findMonths("201706","201709"));
+		 List<String>list=new LinkedList<String>();
+		 List<String>list2=new ArrayList<String>();
+		 list.add("11");
+		 list.add("a");
+		 list.add("b");
+		 list.add("c");
+		 list.add("d");
+		 list.add("e");
+		 list.add("f");
+		 list.add("kkk");
+		 list.add("22");
+		 list.add(null);
+		 list.add("22");
+		 
+		 list2.add("aa");
+		 list2.add("bb");
+		 list2.add("ff");
+		 list2.add("gg");
+		 
+		 for(int a=0;a<list.size();a++){
+			 for(String str:list2){
+				 if(str.substring(0,1).equals(list.get(a))){
+					 list.remove(a);
+					 list.add(a,str);
+				 }
+			 }
+		 }
+		 System.out.println(list);
 	  
 		}
 	 

@@ -68,10 +68,10 @@
 			onclick="WdatePicker({dateFmt:'yyyyMMdd',maxDate:'%y-%M-%d',opposite:true,disabledDates:['....0228','......30']})" class="Wdate"/>
 			&nbsp;&nbsp;
 			<input value="搜索" type="button" class="btn btn-primary"
-			onclick="print('public_form','webbrpro_findByfactCodeAndfactNoAndYymmdd_print2')" />
+			onclick="print2('public_form2','webbrpro_findEstByYymmdd_print')"/>
 			&nbsp;
 			<input value="Excel" type="button" class="btn btn-primary"
-			onclick="print('public_form','webbrpro_findByfactCodeAndfactNoAndYymmdd_print2')" />
+			onclick="print2('public_form2','webbrpro_findEstByYymmdd_print')" />
 			</form>
 		</div>
 	</div>
@@ -109,7 +109,10 @@ function print2(subform,action){
 	subform.attr("action",action);
 	subform.attr("target","_blank");
 	if(jq("#yymmdd2").val()==""||jq("#yymmdd3").val()==""){
-		
+		layer.alert("請選擇截止日期區間");
+		return false;
+	}else{
+		subform.submit();
 	}
 	
 }

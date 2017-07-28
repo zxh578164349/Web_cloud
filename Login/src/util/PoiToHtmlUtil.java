@@ -132,7 +132,7 @@ public class PoiToHtmlUtil {
 		}else{
 			serializer.setOutputProperty(OutputKeys.ENCODING, "utf-8");
 		}*/
-		serializer.setOutputProperty(OutputKeys.ENCODING, "gb2312");
+		serializer.setOutputProperty(OutputKeys.ENCODING, "iso-8859-1");
 		
 		serializer.setOutputProperty(OutputKeys.INDENT, "yes");
 		serializer.setOutputProperty(OutputKeys.METHOD, "html");

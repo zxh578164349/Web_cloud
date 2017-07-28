@@ -303,4 +303,15 @@ public class WebFactServicesImpl implements IWebFactServices {
 		return webFactDao.findfactarea();
 	}
 
+	/**
+	 * 日期:2017/7/28
+	 * 描述:
+	 */
+	
+	
+	public List<Object[]> findFnoFcodeShow(){
+		// TODO Auto-generated method stub
+		return webFactDao.findFnoFcodeShow();
+	}
+
 }

@@ -321,7 +321,7 @@ public class WebBrProductIDaoImpl extends Basedao implements IWebBrProductDao{
 			map.put("yymmdd",yymmdd);
 		}
 		if(yymmdd!=null&&!"".equals(yymmdd2)){
-			hql.append(" and id.yymmdd<=:yymmdd");
+			hql.append(" and id.yymmdd<=:yymmdd2");
 			map.put("yymmdd2",yymmdd2);
 		}
 		hql.append(" order by id.factNo,id.factCode,id.yymmdd");
@@ -387,6 +387,30 @@ public class WebBrProductIDaoImpl extends Basedao implements IWebBrProductDao{
 		}
 		hql.append(" order by id.factNo,id.factCode,id.yymmdd");
 		List<WebBrEstimatingitem>list=super.getAllWithNoPage(hql.toString(),map);
+		return list;
+	}
+
+	/**
+	 * 日期:2017/7/28
+	 * 描述:
+	 */
+	
+	
+	public List<Object[]> findSumGroupByfCodeAndYymmdd(String yymmdd,String yymmdd2){
+		// TODO Auto-generated method stub
+		StringBuffer hql=new StringBuffer();
+		Map<String,Object>map=new HashMap<String,Object>();
+		hql.append("select id.factCode,id.yymmdd,sum(actualPairs),sum(estimatingPairs1),sum(estimatingPairs2),sum(estimatingPairs3) from WebBrEstimatingitem where 1=1 ");
+		if(yymmdd!=null&&!"".equals(yymmdd)){
+			hql.append(" and id.yymmdd>=:yymmdd");
+			map.put("yymmdd",yymmdd);
+		}
+		if(yymmdd2!=null&&!"".equals(yymmdd2)){
+			hql.append(" and id. yymmdd<=:yymmdd2");
+			map.put("yymmdd2",yymmdd2);
+		}
+		hql.append(" group by id.factCode,id.yymmdd");
+		List<Object[]>list=super.getAllWithNoPage(hql.toString(),map);
 		return list;
 	}
 

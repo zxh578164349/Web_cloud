@@ -159,6 +159,7 @@ public interface IWebFactDao {
 	public List<String>findFactNoshow();
 	public List<String>findFactCodeshow();
 	public List<String>findfactarea();
+	public List<Object[]>findFnoFcodeShow();
 	
 	
 	/****************************************************  VWebFact  ***********************************************************************/

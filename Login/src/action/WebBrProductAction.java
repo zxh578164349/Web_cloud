@@ -9,12 +9,19 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.poi.hssf.usermodel.HSSFCellStyle;
+import org.apache.poi.hssf.usermodel.HSSFRichTextString;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFRichTextString;
@@ -39,8 +46,10 @@ import entity.KyzExpectmatmLog;
 import entity.VWebBrProandest;
 import entity.VWebFact;
 import entity.WebBrEstimatingitem;
+import entity.WebBrEstimatingitemId;
 import entity.WebBrProduct;
 import entity.WebBrProductitem;
+import entity_temp.WebBrEstimatingitemTemp;
 
 /**   
  *    
@@ -375,13 +384,13 @@ public class WebBrProductAction extends ActionSupport implements ServletResponse
 			response.setContentType("text/html;charset=utf-8");
 			response.getWriter().print("<script>alert('無數據');window.close();</script>");
 		}else{
-			XSSFWorkbook wb=new XSSFWorkbook();
-			XSSFSheet sheet=wb.createSheet();		
-			Map<String,Object>map_style=GlobalMethod.findStyles2007(wb);
-			XSSFCellStyle cs_title=(XSSFCellStyle)map_style.get("cs_title");
-			XSSFCellStyle cs_head=(XSSFCellStyle)map_style.get("cs_head");
-			XSSFCellStyle cs=(XSSFCellStyle)map_style.get("cs");
-			XSSFCellStyle cs_poi2=(XSSFCellStyle)map_style.get("cs_poi2");
+			HSSFWorkbook wb=new HSSFWorkbook();
+			HSSFSheet sheet=wb.createSheet();		
+			Map<String,Object>map_style=GlobalMethod.findStyles(wb);
+			HSSFCellStyle cs_title=(HSSFCellStyle)map_style.get("cs_title");
+			HSSFCellStyle cs_head=(HSSFCellStyle)map_style.get("cs_head");
+			HSSFCellStyle cs=(HSSFCellStyle)map_style.get("cs");
+			HSSFCellStyle cs_poi2=(HSSFCellStyle)map_style.get("cs_poi2");
 			List<String>list_head=new ArrayList<String>();
 			list_head.add("廠別");
 			list_head.add("截止日期");
@@ -402,7 +411,7 @@ public class WebBrProductAction extends ActionSupport implements ServletResponse
 					}
 				}
 			}		
-					
+			sheet.getRow(0).setHeightInPoints(2*sheet.getDefaultRowHeightInPoints());//標題設置兩行默認行高		
 			CellRangeAddress cra_head=new CellRangeAddress(0,0,0,5);
 			sheet.addMergedRegion(cra_head);
 			sheet.getRow(0).getCell(0).setCellValue("各廠BR產品庫存耗用明細表");
@@ -426,9 +435,9 @@ public class WebBrProductAction extends ActionSupport implements ServletResponse
 			}		
 			
 			ServletOutputStream os=response.getOutputStream();
-			//response.setContentType("application/vnd.ms-excel");
-			response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
-			String fileName="report_webbrproduct.xlsx";
+			response.setContentType("application/vnd.ms-excel");
+			//response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+			String fileName="report_webbrproduct.xls";
 			int msie=ServletActionContext.getRequest().getHeader("USER-AGENT").toLowerCase().indexOf("msie");
 			if(msie>0){
 				fileName=java.net.URLEncoder.encode(fileName,"utf-8");
@@ -448,13 +457,13 @@ public class WebBrProductAction extends ActionSupport implements ServletResponse
 			response.setContentType("text/html;charset=utf-8");
 			response.getWriter().print("<script>alert('無數據');window.close();</script>");
 		}else{
-			XSSFWorkbook wb=new XSSFWorkbook();
-			XSSFSheet sheet=wb.createSheet();
-			Map<String,Object>map_style=GlobalMethod.findStyles2007(wb);
-			XSSFCellStyle cs_title=(XSSFCellStyle)map_style.get("cs_title");
-			XSSFCellStyle cs_head=(XSSFCellStyle)map_style.get("cs_head");
-			XSSFCellStyle cs=(XSSFCellStyle)map_style.get("cs");
-			XSSFCellStyle cs_poi2=(XSSFCellStyle)map_style.get("cs_poi2");
+			HSSFWorkbook wb=new HSSFWorkbook();
+			HSSFSheet sheet=wb.createSheet();
+			Map<String,Object>map_style=GlobalMethod.findStyles(wb);
+			HSSFCellStyle cs_title=(HSSFCellStyle)map_style.get("cs_title");
+			HSSFCellStyle cs_head=(HSSFCellStyle)map_style.get("cs_head");
+			HSSFCellStyle cs=(HSSFCellStyle)map_style.get("cs");
+			HSSFCellStyle cs_poi2=(HSSFCellStyle)map_style.get("cs_poi2");
 			List<String>list_head=new ArrayList<String>();
 			list_head.add("廠別");
 			list_head.add("製程");
@@ -481,6 +490,7 @@ public class WebBrProductAction extends ActionSupport implements ServletResponse
 					}
 				}			
 			}
+			sheet.getRow(0).setHeightInPoints(2*sheet.getDefaultRowHeightInPoints());//標題設置兩行默認行高
 			CellRangeAddress cra_head=new CellRangeAddress(0,0,0,5);
 			sheet.addMergedRegion(cra_head);
 			sheet.getRow(0).getCell(0).setCellValue("各廠BR產品預估明細表");
@@ -505,9 +515,9 @@ public class WebBrProductAction extends ActionSupport implements ServletResponse
 				sheet.getRow(2+a).getCell(9).setCellValue(listitemAndest.get(a).getEstimatingpairs3());								
 			}
 			ServletOutputStream os=response.getOutputStream();
-			//response.setContentType("application/vnd.ms-excel");
-			response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
-			String fileName="report_webbrproduct.xlsx";
+			response.setContentType("application/vnd.ms-excel");
+			//response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+			String fileName="report_webbrproduct.xls";
 			int msie=ServletActionContext.getRequest().getHeader("USER-AGENT").toLowerCase().indexOf("msie");
 			if(msie>0){
 				fileName=java.net.URLEncoder.encode(fileName,"utf-8");
@@ -533,8 +543,8 @@ public class WebBrProductAction extends ActionSupport implements ServletResponse
 	
 	public void findByfactCodeAndfactNoAndYymmdd_print2_init2() throws ParseException, IOException{
 		Map<String,Object>map=new HashMap<String,Object>();
-		XSSFWorkbook wb=new XSSFWorkbook();
-		Map<String,Object>map_style=GlobalMethod.findStyles2007(wb);
+		HSSFWorkbook wb=new HSSFWorkbook();
+		Map<String,Object>map_style=GlobalMethod.findStyles(wb);
 		if("all".equals(factCode)){
 			List<String>list_factcode=new ArrayList<String>();
 			List<String>list_obj=webFactSer.findfactarea();
@@ -585,16 +595,16 @@ public class WebBrProductAction extends ActionSupport implements ServletResponse
 		}
 		
 		for(String factcode:map.keySet()){
-			XSSFSheet sheet=wb.createSheet(factcode);
+			HSSFSheet sheet=wb.createSheet(factcode);
 			List<VWebBrProandest>list_parameter=(List<VWebBrProandest>)map.get(factcode);
 			findByfactCodeAndfactNoAndYymmdd_print2_init(sheet,map_style,list_parameter,list_head);
 		}
 		
 		
 		ServletOutputStream os=response.getOutputStream();
-		//response.setContentType("application/vnd.ms-excel");
-		response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
-		String fileName="report_webbrproduct.xlsx";
+		response.setContentType("application/vnd.ms-excel");
+		//response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+		String fileName="report_webbrproduct.xls";
 		int msie=ServletActionContext.getRequest().getHeader("USER-AGENT").toLowerCase().indexOf("msie");
 		if(msie>0){
 			fileName=java.net.URLEncoder.encode(fileName,"utf-8");
@@ -609,8 +619,7 @@ public class WebBrProductAction extends ActionSupport implements ServletResponse
 		
 	}
 	
-	public void findByfactCodeAndfactNoAndYymmdd_print2_init(XSSFSheet sheet,Map<String,Object>map_style, List<VWebBrProandest>list_parameter,List<String>list_head) throws ParseException, IOException{		
-					
+	public void findByfactCodeAndfactNoAndYymmdd_print2_init(HSSFSheet sheet,Map<String,Object>map_style, List<VWebBrProandest>list_parameter,List<String>list_head) throws ParseException, IOException{							
 		List<List>list_all=new ArrayList<List>();		
 		Double d1;
 		Double d2;
@@ -658,27 +667,28 @@ public class WebBrProductAction extends ActionSupport implements ServletResponse
 		
 		
 		
-		XSSFCellStyle cs_title=(XSSFCellStyle)map_style.get("cs_title");
-		XSSFCellStyle cs_head=(XSSFCellStyle)map_style.get("cs_head");
-		XSSFCellStyle cs=(XSSFCellStyle)map_style.get("cs");
-		XSSFCellStyle cs_poi2=(XSSFCellStyle)map_style.get("cs_poi2");
-		
-		for(int a=0;a<10;a++){
+		HSSFCellStyle cs_title=(HSSFCellStyle)map_style.get("cs_title");
+		HSSFCellStyle cs_head=(HSSFCellStyle)map_style.get("cs_head");
+		HSSFCellStyle cs=(HSSFCellStyle)map_style.get("cs");
+		HSSFCellStyle cs_poi2=(HSSFCellStyle)map_style.get("cs_poi2");
+				
+		for(int a=0;a<list_parameter.size()+3;a++){
 			sheet.createRow(a);
 			for(int b=0;b<list_head.size();b++){
 				sheet.getRow(a).createCell(b);
 			}
 		}
+		sheet.getRow(0).setHeightInPoints(2*sheet.getDefaultRowHeightInPoints());//標題設置兩行默認行高
 		CellRangeAddress cra_title=new CellRangeAddress(0,0,0,5);
 		sheet.addMergedRegion(cra_title);
 		sheet.getRow(0).getCell(0).setCellValue("各廠BR消耗進度表");
 		for(int a=0;a<5;a++){
 			sheet.getRow(0).getCell(a).setCellStyle(cs_title);
 		}
+		sheet.getRow(1).setHeightInPoints(2*sheet.getDefaultRowHeightInPoints());//表頭設置兩行默認行高
 		for(int a=0;a<list_head.size();a++){
-			sheet.getRow(1).getCell(a).setCellValue(new XSSFRichTextString(list_head.get(a)));
-			cs_head.setWrapText(true);
 			sheet.getRow(1).getCell(a).setCellStyle(cs_head);
+			sheet.getRow(1).getCell(a).setCellValue(new HSSFRichTextString(list_head.get(a)));			
 			sheet.setColumnWidth(a,5000);
 		}
 		
@@ -734,24 +744,177 @@ public class WebBrProductAction extends ActionSupport implements ServletResponse
 	}
 	
 	
-	public void findEstByYymmdd_print() throws IOException, ParseException{
-		listest=webbrproSer.findEstByYymmdd(yymmdd,yymmdd2);
+	public void findEstByYymmdd_print() throws Throwable{
+		listest=webbrproSer.findEstByYymmdd(yymmdd,yymmdd2);		
 		if(listest==null||listest.size()==0){
-			response.setContentType("text/html;charset=utf-8");
-			response.getWriter().print("<script>alert('無數據');window.close();</script>");
+			/*response.setContentType("text/html;charset=utf-8");
+			response.getWriter().print("<script>alert('無數據');window.close();</script>");*/
 			
-			/*String result=PoiToHtmlUtil.excelToHtml("e:\\", "report.xls");
-			response.getWriter().print(result);*/
-		}else{			
-			List<String>list_months=GlobalMethod.findDaysOfMonth(yymmdd.substring(0,6),yymmdd2.substring(0,6));
-			List<String>list_dates=new ArrayList<String>();
-			for(String month:list_months){
-				if("02".equals(month.substring(4,6))){
-					list_dates.add(month+"28");
-				}else{
-					list_dates.add(month+"30");
+			response.setContentType("text/html;charset=utf-8");
+			String result=PoiToHtmlUtil.excelToHtml("d:\\test\\", "test.xls");
+			response.getWriter().print(result);
+		}else{
+			int index_y=0;
+			HSSFWorkbook wb=new HSSFWorkbook();
+			HSSFSheet sheet=wb.createSheet();
+			Map<String,Object>map_style=GlobalMethod.findStyles(wb);
+			HSSFCellStyle cs=(HSSFCellStyle)map_style.get("cs");
+			HSSFCellStyle cs_title=(HSSFCellStyle)map_style.get("cs_title");
+			HSSFCellStyle cs_head=(HSSFCellStyle)map_style.get("cs_head");
+			HSSFCellStyle cs_poi2=(HSSFCellStyle)map_style.get("cs_poi2");
+			List<String>list_head=new ArrayList<String>();
+			list_head.add("廠別");
+			list_head.add("製程");			
+			
+			List<String>list_months=GlobalMethod.findMonths(yymmdd.substring(0,6),yymmdd2.substring(0,6));
+			for(int a=0;a<list_months.size();a++){
+				list_head.add(list_months.get(a)+"實際生產雙數(含不良)");
+				if(a==list_months.size()-1){
+					Calendar cal=Calendar.getInstance();
+					cal.setTime(new SimpleDateFormat("yyyyMM").parse(list_months.get(a)));
+					for(int b=1;b<=3;b++){					
+						cal.add(Calendar.MONTH,1);
+						list_head.add(new SimpleDateFormat("yyyyMM").format(cal.getTime())+"預估生產雙數");
+					}										
 				}
 			}
+								
+			List<List<WebBrEstimatingitem>>list_all=new ArrayList<List<WebBrEstimatingitem>>();			
+			List<Object[]>list_fact=webFactSer.findFnoFcodeShow();
+			for(String date:list_months){
+				List<WebBrEstimatingitem>listest2=new LinkedList<WebBrEstimatingitem>();
+				for(Object[] obj:list_fact){
+					listest2.add(new WebBrEstimatingitem(new WebBrEstimatingitemId(obj[0].toString(),obj[1].toString(),date)));
+				}
+				list_all.add(listest2);
+			}
+			
+			for(List<WebBrEstimatingitem>list_element:list_all){
+				for(int a=0;a<list_element.size();a++){
+					for(WebBrEstimatingitem obj:listest){
+						if(obj.getId().getFactNo().equals(list_element.get(a).getId().getFactNo())&&
+						   obj.getId().getFactCode().equals(list_element.get(a).getId().getFactCode())&&
+						   obj.getId().getYymmdd().substring(0,6).equals(list_element.get(a).getId().getYymmdd())){
+							list_element.remove(a);
+							list_element.add(a,obj);
+							break;
+						}
+					}
+				}
+				
+			}
+			
+			for(int a=0;a<list_fact.size()+2;a++){
+				sheet.createRow(a);
+				for(int b=0;b<list_head.size();b++){
+					sheet.getRow(a).createCell(b);					
+				}
+			}
+			sheet.getRow(0).setHeightInPoints(2*sheet.getDefaultRowHeightInPoints());
+			CellRangeAddress cra_title=new CellRangeAddress(0,0,0,5);
+			sheet.addMergedRegion(cra_title);
+			sheet.getRow(0).getCell(0).setCellValue("各廠每月實際生產雙數表");
+			for(int a=0;a<5;a++){
+				sheet.getRow(0).getCell(a).setCellStyle(cs_title);
+			}
+			sheet.getRow(1).setHeightInPoints(2*sheet.getDefaultRowHeightInPoints());
+			for(int a=0;a<list_head.size();a++){
+				sheet.getRow(1).getCell(a).setCellValue(new HSSFRichTextString(list_head.get(a)));
+				sheet.getRow(1).getCell(a).setCellStyle(cs_head);
+				sheet.setColumnWidth(a,5000);
+			}
+						
+			for(int a=0;a<list_all.get(0).size();a++){
+				sheet.getRow(2+a).getCell(0).setCellValue(list_all.get(0).get(a).getId().getFactNo());
+				sheet.getRow(2+a).getCell(1).setCellValue(list_all.get(0).get(a).getId().getFactCode());
+				sheet.getRow(2+a).getCell(0).setCellStyle(cs);
+				sheet.getRow(2+a).getCell(1).setCellStyle(cs);
+			}
+			
+			for(int a=0;a<list_all.size();a++){
+				List<WebBrEstimatingitem>list_element=list_all.get(a);
+				for(int b=0;b<list_element.size();b++){
+					if(list_element.get(b).getActualPairs()==null){
+						sheet.getRow(2+b).getCell(2+a).setCellValue("無數據");
+					}else{
+						sheet.getRow(2+b).getCell(2+a).setCellValue(list_element.get(b).getActualPairs());
+					}
+					sheet.getRow(2+b).getCell(2+a).setCellStyle(cs_poi2);
+				}
+				if(a==list_all.size()-1){
+					for(int b=0;b<list_element.size();b++){
+						if(list_element.get(b).getEstimatingPairs1()==null){
+							sheet.getRow(2+b).getCell(3+a).setCellValue("無數據");
+						}else{
+							sheet.getRow(2+b).getCell(3+a).setCellValue(list_element.get(b).getEstimatingPairs1());
+						}
+						if(list_element.get(b).getEstimatingPairs2()==null){
+							sheet.getRow(2+b).getCell(4+a).setCellValue("無數據");
+						}else{
+							sheet.getRow(2+b).getCell(4+a).setCellValue(list_element.get(b).getEstimatingPairs2());
+						}						
+						if(list_element.get(b).getEstimatingPairs3()==null){
+							sheet.getRow(2+b).getCell(5+a).setCellValue("無數據");
+						}else{
+							sheet.getRow(2+b).getCell(5+a).setCellValue(list_element.get(b).getEstimatingPairs3());
+						}
+						sheet.getRow(2+b).getCell(3+a).setCellStyle(cs_poi2);
+						sheet.getRow(2+b).getCell(4+a).setCellStyle(cs_poi2);
+						sheet.getRow(2+b).getCell(5+a).setCellStyle(cs_poi2);
+					}
+					
+					index_y=2+list_element.size();
+				}
+			}
+			
+			
+			List<Object[]>list_obj=webbrproSer.findSumGroupByfCodeAndYymmdd(yymmdd,yymmdd2);//合計製程數據
+			List<String>list_factcode=new ArrayList<String>();
+			for(Object[] obj:list_fact){
+				list_factcode.add(obj[1].toString());
+			}
+			HashSet<String> setfactcode=new HashSet<String>(list_factcode);//去除重覆的製程
+			List<List<WebBrEstimatingitemTemp>>list_total=new ArrayList<List<WebBrEstimatingitemTemp>>();
+			for(String month:list_months){
+				List<WebBrEstimatingitemTemp>list_element=new ArrayList<WebBrEstimatingitemTemp>();
+				for(String fcode:setfactcode){
+					list_element.add(new WebBrEstimatingitemTemp(fcode,month));
+				}
+				list_total.add(list_element);
+			}
+			for(List<WebBrEstimatingitemTemp> list:list_total){
+				for(int a=0;a<list.size();a++){
+					for(Object[] obj:list_obj){
+						if(list.get(a).getFactCode().equals(obj[0])&&list.get(a).getYymmdd().equals(obj[1])){
+							list.remove(a);
+							list.add(a,new WebBrEstimatingitemTemp(obj[0].toString(),obj[1].toString(),Double.parseDouble(obj[2].toString()),
+									Double.parseDouble(obj[3].toString()),Double.parseDouble(obj[4].toString()),Double.parseDouble(obj[5].toString())));
+							
+						}
+					}
+				}
+			}
+			for(int a=0;a<list_total.get(0).size();a++){
+				sheet.getRow(index_y+a).getCell(0).setCellValue(list_total.get(0).get(a).getFactCode());
+				sheet.getRow(index_y+a).getCell(0).setCellStyle(cs);
+			}
+			
+			
+			
+			
+			ServletOutputStream os=response.getOutputStream();
+			response.setContentType("application/vnd.ms-excel");
+			//response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+			String fileName="report_webbrproduct.xls";
+			int msie=ServletActionContext.getRequest().getHeader("USER-AGENT").toLowerCase().indexOf("msie");
+			if(msie>0){
+				fileName=java.net.URLEncoder.encode(fileName,"utf-8");
+			}else{
+				fileName=new String(fileName.getBytes("utf-8"),"iso8859-1");
+			}
+			response.setHeader("Content-disposition","attachment;filename="+fileName);
+			wb.write(os);
+			os.close();
 		}
 	}
 	

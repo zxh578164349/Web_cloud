@@ -228,4 +228,16 @@ public class WebBrProductServicesImpl implements IWebBrProductServices{
 		return webbrprodao.findEstByYymmdd(yymmdd,yymmdd2);
 	}
 
+
+	/**
+	 * 日期:2017/7/28
+	 * 描述:
+	 */
+	
+	
+	public List<Object[]> findSumGroupByfCodeAndYymmdd(String yymmdd,String yymmdd2){
+		// TODO Auto-generated method stub
+		return webbrprodao.findSumGroupByfCodeAndYymmdd(yymmdd,yymmdd2);
+	}
+
 }

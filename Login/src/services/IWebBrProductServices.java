@@ -44,5 +44,6 @@ public interface IWebBrProductServices{
 	public List<VWebBrProandest>findByfactNoAndYymmdd_print2(String factNo,String yymmdd,String yymmdd2);
 	public List<VWebBrProandest> findByfactCodeAndfactNoAndYymmdd_print2(String factNo,String factCode,String yymmdd);
 	public List<WebBrEstimatingitem>findEstByYymmdd(String yymmdd,String yymmdd2);
+	public List<Object[]>findSumGroupByfCodeAndYymmdd(String yymmdd,String yymmdd2);
 
 }
