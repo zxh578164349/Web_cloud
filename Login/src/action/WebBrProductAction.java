@@ -245,25 +245,50 @@ public class WebBrProductAction extends ActionSupport implements ServletResponse
 		ActionContext.getContext().getSession().remove("webitemFactNo");
 		ActionContext.getContext().getSession().remove("webitemYymmdd");
 		ActionContext.getContext().getSession().remove("webitemYymmdd2");
-		bean=webbrproSer.fincPageBean(20,page,factNo,yymmdd,yymmdd2);
+		bean=webbrproSer.findPageBean(20,page,factNo,yymmdd,yymmdd2);
 		return "findPageBean_item";
 	}
 	public String findPageBean_item2(){
 		ActionContext.getContext().getSession().put("webitemFactNo",factNo);
 		ActionContext.getContext().getSession().put("webitemYymmdd",yymmdd);
 		ActionContext.getContext().getSession().put("webitemYymmdd2",yymmdd2);
-		bean=webbrproSer.fincPageBean(20,page,factNo,yymmdd,yymmdd2);
+		bean=webbrproSer.findPageBean(20,page,factNo,yymmdd,yymmdd2);
 		return "findPageBean_item1";
 	}
 	public String findPageBean_item3(){
 		factNo=(String)ActionContext.getContext().getSession().get("webitemFactNo");
 		yymmdd=(String)ActionContext.getContext().getSession().get("webitemYymmdd");
 		yymmdd2=(String)ActionContext.getContext().getSession().get("webitemYymmdd2");
-		bean=webbrproSer.fincPageBean(20,page,factNo,yymmdd,yymmdd2);
+		bean=webbrproSer.findPageBean(20,page,factNo,yymmdd,yymmdd2);
 		return "findPageBean_item1";
 	}
 	/*************************************BR產品庫存**************************************************/
 	
+	
+	/*****************************************BR產品庫存與預估*********************************************/
+	public String findPageBean_proAndest(){
+		ActionContext.getContext().getSession().remove("webitemFactNo");
+		ActionContext.getContext().getSession().remove("webitemYymmdd");
+		ActionContext.getContext().getSession().remove("webitemYymmdd2");
+		bean=webbrproSer.findPageBean_proAndest(20,page,factNo,yymmdd,yymmdd2);
+		return "findPageBean_proAndest";
+	}
+	public String findPageBean_proAndest2(){
+		ActionContext.getContext().getSession().put("webitemFactNo",factNo);
+		ActionContext.getContext().getSession().put("webitemYymmdd",yymmdd);
+		ActionContext.getContext().getSession().put("webitemYymmdd2",yymmdd2);
+		bean=webbrproSer.findPageBean_proAndest(20,page,factNo,yymmdd,yymmdd2);
+		return "findPageBean_proAndest1";
+	}
+	public String findPageBean_proAndest3(){
+		factNo=(String)ActionContext.getContext().getSession().get("webitemFactNo");
+		yymmdd=(String)ActionContext.getContext().getSession().get("webitemYymmdd");
+		yymmdd2=(String)ActionContext.getContext().getSession().get("webitemYymmdd2");
+		bean=webbrproSer.findPageBean_proAndest(20,page,factNo,yymmdd,yymmdd2);
+		return "findPageBean_proAndest1";
+	}
+	
+	/*****************************************BR產品庫存與預估*********************************************/
 	public String add(){
 		ajaxResult="0";
 		try{
@@ -377,6 +402,20 @@ public class WebBrProductAction extends ActionSupport implements ServletResponse
 		}
 		return "findByFactNo2";
 	}
+	
+	public String findPro(){
+		List<Object[]>list_pro=webbrproSer.findPro(factNo,yymmdd);
+		jsons=JSONArray.fromObject(list_pro);
+		return "findPro";
+	}
+	
+	public String findEst(){
+		List<Object[]>list_est=webbrproSer.findEst(factNo,yymmdd);
+		jsons=JSONArray.fromObject(list_est);
+		return "findEst";
+	}
+	
+	
 	
 	public void print() throws IOException{
 		listitem=webbrproSer.findByfactNoAndYymmdd_print(factNo,yymmdd,yymmdd2);
@@ -868,6 +907,8 @@ public class WebBrProductAction extends ActionSupport implements ServletResponse
 			}
 			
 			
+			
+			/****************************************各製程合計************************************************/
 			List<Object[]>list_obj=webbrproSer.findSumGroupByfCodeAndYymmdd(yymmdd,yymmdd2);//合計製程數據
 			List<String>list_factcode=new ArrayList<String>();
 			for(Object[] obj:list_fact){
@@ -885,7 +926,7 @@ public class WebBrProductAction extends ActionSupport implements ServletResponse
 			for(List<WebBrEstimatingitemTemp> list:list_total){
 				for(int a=0;a<list.size();a++){
 					for(Object[] obj:list_obj){
-						if(list.get(a).getFactCode().equals(obj[0])&&list.get(a).getYymmdd().equals(obj[1])){
+						if(list.get(a).getFactCode().equals(obj[0])&&list.get(a).getYymmdd().equals(obj[1].toString().substring(0,6))){
 							list.remove(a);
 							list.add(a,new WebBrEstimatingitemTemp(obj[0].toString(),obj[1].toString(),Double.parseDouble(obj[2].toString()),
 									Double.parseDouble(obj[3].toString()),Double.parseDouble(obj[4].toString()),Double.parseDouble(obj[5].toString())));
@@ -894,12 +935,63 @@ public class WebBrProductAction extends ActionSupport implements ServletResponse
 					}
 				}
 			}
+			
+			
+			for(int a=0;a<setfactcode.size();a++){
+				sheet.createRow(index_y+a);
+				for(int b=0;b<list_head.size()+5;b++){
+					sheet.getRow(index_y+a).createCell(b);
+				}
+			}
 			for(int a=0;a<list_total.get(0).size();a++){
-				sheet.getRow(index_y+a).getCell(0).setCellValue(list_total.get(0).get(a).getFactCode());
-				sheet.getRow(index_y+a).getCell(0).setCellStyle(cs);
+				sheet.getRow(index_y+a).getCell(0).setCellValue(list_total.get(0).get(a).getFactCode()+"合計");
+				CellRangeAddress cra_total=new CellRangeAddress(index_y+a,index_y+a,0,1);
+				sheet.addMergedRegion(cra_total);
+				for(int b=0;b<2;b++){
+					sheet.getRow(index_y+a).getCell(b).setCellStyle(cs);
+				}				
 			}
 			
+			for(int a=0;a<list_total.size();a++){
+				
+				for(int b=0;b<list_total.get(a).size();b++){
+					WebBrEstimatingitemTemp temp=list_total.get(a).get(b);
+					if(list_total.get(a).get(b).getActualPairs()==null){
+						sheet.getRow(index_y+b).getCell(2+a).setCellValue("無數據");
+					}else{
+						sheet.getRow(index_y+b).getCell(2+a).setCellValue(temp.getActualPairs());
+					}
+					
+					sheet.getRow(index_y+b).getCell(2+a).setCellStyle(cs_poi2);
+					
+					
+				}
+				if(a==list_total.size()-1){
+					for(int b=0;b<list_total.get(a).size();b++){
+						WebBrEstimatingitemTemp temp=list_total.get(a).get(b);
+						if(list_total.get(a).get(b).getEstimatingPairs1()==null){
+							sheet.getRow(index_y+b).getCell(3+a).setCellValue("無數據");
+						}else{
+							sheet.getRow(index_y+b).getCell(3+a).setCellValue(temp.getEstimatingPairs1());
+						}
+						if(list_total.get(a).get(b).getEstimatingPairs2()==null){
+							sheet.getRow(index_y+b).getCell(4+a).setCellValue("無數據");
+						}else{
+							sheet.getRow(index_y+b).getCell(4+a).setCellValue(temp.getEstimatingPairs2());
+						}
+						if(list_total.get(a).get(b).getEstimatingPairs3()==null){
+							sheet.getRow(index_y+b).getCell(5+a).setCellValue("無數據");
+						}else{
+							sheet.getRow(index_y+b).getCell(5+a).setCellValue(temp.getEstimatingPairs3());
+						}
+						sheet.getRow(index_y+b).getCell(3+a).setCellStyle(cs_poi2);
+						sheet.getRow(index_y+b).getCell(4+a).setCellStyle(cs_poi2);
+						sheet.getRow(index_y+b).getCell(5+a).setCellStyle(cs_poi2);
+					}
+				}
+			}
 			
+			/****************************************各製程合計************************************************/
 			
 			
 			ServletOutputStream os=response.getOutputStream();

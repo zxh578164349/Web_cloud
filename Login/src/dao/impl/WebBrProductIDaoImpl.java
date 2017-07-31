@@ -247,7 +247,7 @@ public class WebBrProductIDaoImpl extends Basedao implements IWebBrProductDao{
 	 */
 	
 	
-	public PageBean fincPageBean(int pageSize,int page,String factNo,String yymmdd,String yymmdd2){
+	public PageBean findPageBean(int pageSize,int page,String factNo,String yymmdd,String yymmdd2){
 		// TODO Auto-generated method stub
 		StringBuffer hql=new StringBuffer();
 		StringBuffer hql2=new StringBuffer();
@@ -412,6 +412,126 @@ public class WebBrProductIDaoImpl extends Basedao implements IWebBrProductDao{
 		hql.append(" group by id.factCode,id.yymmdd");
 		List<Object[]>list=super.getAllWithNoPage(hql.toString(),map);
 		return list;
+	}
+
+	/**
+	 * 日期:2017/7/31
+	 * 描述:
+	 */
+	
+	
+	public PageBean findPageBean_proAndest(int pageSize,int page,String factNo,String yymmdd,String yymmdd2){
+		// TODO Auto-generated method stub
+		StringBuffer hql=new StringBuffer();
+		StringBuffer hql2=new StringBuffer();
+		Map<String,Object>map=new HashMap<String,Object>();
+		hql.append("from VWebBrProandest where 1=1 ");
+		hql2.append("select count(id.factNo) ");
+		if(factNo==null&&"".equals(factNo)){
+			factNo=(String)ActionContext.getContext().getSession().get("factNo");
+		}
+		if(factNo!=null&&!"".equals(factNo)&&!"tw".equals(factNo)){
+			hql.append(" and id. factNo=:factno ");
+			map.put("factno",factNo);
+		}
+		if(yymmdd!=null&&!"".equals(factNo)){
+			hql.append(" and id.yymmdd=:yymmdd ");
+			map.put("yymmdd",yymmdd);
+		}
+		if(yymmdd2!=null&&!"".equals(yymmdd2)){
+			hql.append(" and id.yymmdd=:yymmdd2 ");
+			map.put("yymmdd2",yymmdd2);
+		}
+		hql2.append(hql);
+		hql.append(" order by id.factNo,id.factCode,id.yymmdd ");
+		List<VWebBrProandest>list=super.getAllWithNoPage(hql.toString(),map);
+		for(VWebBrProandest obj:list){
+			obj.getFactNo2().getFactSname();
+		}
+		Integer allrow=(Integer)ActionContext.getContext().getSession().get("allrow");
+		if(allrow==null||allrow==0||page==1){
+			allrow=super.getAllRowCount2(hql2.toString(),map);
+			ActionContext.getContext().getSession().put("allrow",allrow);
+		}
+		int currentPage=PageBean.countCurrentPage(page);
+		int totalPage=PageBean.countTotalPage(pageSize,allrow);
+		if(currentPage>totalPage){
+			currentPage=totalPage;
+		}
+		int offset=PageBean.countOffset(pageSize,currentPage);
+		PageBean bean=new PageBean();
+		bean.setAllRow(allrow);
+		bean.setCurrentPage(currentPage);
+		bean.setList(list);
+		bean.setPageSize(pageSize);
+		bean.setTotalPage(totalPage);
+		
+		return bean;
+	}
+
+	/**
+	 * 日期:2017/7/31
+	 * 描述:
+	 */
+	
+	
+	public List<Object[]> findPro(String factNo,String yymmdd){
+		// TODO Auto-generated method stub
+		String hql="select id.webBrProduct.id.factNo,id.webBrProduct.id.webErpProductinFormation.itemno,id.yymmdd," +
+				"inventory,orderNotin,actualUsed,createUser.id,createDate " +
+				" from WebBrProductitem where id.webBrProduct.id.factNo=? and id.yymmdd=?";
+		String[]objs={factNo,yymmdd};
+		return super.findAll(hql,objs);
+	}
+
+	/**
+	 * 日期:2017/7/31
+	 * 描述:
+	 */
+	
+	
+	public List<Object[]> findEst(String factNo,String yymmdd){
+		// TODO Auto-generated method stub
+		String hql="select id.factNo,id.factCode,id.yymmdd," +
+				"actualPairs,estimatingPairs1,estimatingPairs2,estimatingPairs3,createUser.id,createDate " +
+				" from WebBrEstimatingitem where id.factNo=? and id.yymmdd=?";
+		String[]objs={factNo,yymmdd};
+		return super.findAll(hql,objs);
+	}
+
+	/**
+	 * 日期:2017/7/31
+	 * 描述:
+	 */
+	
+	
+	public WebBrProductitem findById_Pro(String factNo,Integer wid,String yymmdd){
+		// TODO Auto-generated method stub
+		String hql="from WebBrProductitem where id.webBrProduct.id.factNo=? and id.webBrProduct.id.webErpProductinFormation.itemno=? and id.yymmdd=?";
+		Query query=getSession().createQuery(hql);
+		query.setParameter(0,factNo);
+		query.setParameter(1,wid);
+		query.setParameter(2,yymmdd);
+		WebBrProductitem obj=(WebBrProductitem)query.uniqueResult();
+		return obj;
+		
+	}
+
+	/**
+	 * 日期:2017/7/31
+	 * 描述:
+	 */
+	
+	
+	public WebBrEstimatingitem findById_Est(String factNo,String factCode,String yymmdd){
+		// TODO Auto-generated method stub
+		String hql="from WebBrEstimatingitem where id.factNo=? and id.factCode=? and id.yymmdd=?";
+		Query query=getSession().createQuery(hql);
+		query.setString(0,factNo);
+		query.setString(1,factCode);
+		query.setString(2,yymmdd);
+		WebBrEstimatingitem obj=(WebBrEstimatingitem)query.uniqueResult();
+		return obj;		
 	}
 
 }

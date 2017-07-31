@@ -187,9 +187,9 @@ public class WebBrProductServicesImpl implements IWebBrProductServices{
 	 */
 	
 	
-	public PageBean fincPageBean(int pageSize,int page,String factNo,String yymmdd,String yymmdd2){
+	public PageBean findPageBean(int pageSize,int page,String factNo,String yymmdd,String yymmdd2){
 		// TODO Auto-generated method stub
-		return webbrprodao.fincPageBean(pageSize,page,factNo,yymmdd,yymmdd2);
+		return webbrprodao.findPageBean(pageSize,page,factNo,yymmdd,yymmdd2);
 	}
 
 
@@ -238,6 +238,66 @@ public class WebBrProductServicesImpl implements IWebBrProductServices{
 	public List<Object[]> findSumGroupByfCodeAndYymmdd(String yymmdd,String yymmdd2){
 		// TODO Auto-generated method stub
 		return webbrprodao.findSumGroupByfCodeAndYymmdd(yymmdd,yymmdd2);
+	}
+
+
+	/**
+	 * 日期:2017/7/31
+	 * 描述:
+	 */
+	
+	
+	public PageBean findPageBean_proAndest(int pageSize,int page,String factNo,String yymmdd,String yymmdd2){
+		// TODO Auto-generated method stub
+		return webbrprodao.findPageBean_proAndest(pageSize,page,factNo,yymmdd,yymmdd2);
+	}
+
+
+	/**
+	 * 日期:2017/7/31
+	 * 描述:
+	 */
+	
+	
+	public List<Object[]> findPro(String factNo,String yymmdd){
+		// TODO Auto-generated method stub
+		return webbrprodao.findPro(factNo,yymmdd);
+	}
+
+
+	/**
+	 * 日期:2017/7/31
+	 * 描述:
+	 */
+	
+	
+	public List<Object[]> findEst(String factNo,String yymmdd){
+		// TODO Auto-generated method stub
+		return webbrprodao.findEst(factNo,yymmdd);
+	}
+
+
+	/**
+	 * 日期:2017/7/31
+	 * 描述:
+	 */
+	
+	
+	public WebBrProductitem findById_Pro(String factNo,Integer wid,String yymmdd){
+		// TODO Auto-generated method stub
+		return webbrprodao.findById_Pro(factNo,wid,yymmdd);
+	}
+
+
+	/**
+	 * 日期:2017/7/31
+	 * 描述:
+	 */
+	
+	
+	public WebBrEstimatingitem findById_Est(String factNo,String factCode,String yymmdd){
+		// TODO Auto-generated method stub
+		return webbrprodao.findById_Est(factNo,factCode,yymmdd);
 	}
 
 }

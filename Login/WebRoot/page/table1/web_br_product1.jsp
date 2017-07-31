@@ -39,7 +39,7 @@
 				<thead>
 					<tr class="tr_show">
 						<th>序號</th>
-						<th>工廠</th>
+						<th>廠別</th>
 						<th>產品大類</th>
 						<th>產品名稱</th>
 																	

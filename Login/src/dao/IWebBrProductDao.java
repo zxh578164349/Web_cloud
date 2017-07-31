@@ -41,12 +41,19 @@ public interface IWebBrProductDao{
 	public void add2_3(List list);
 	
 	public List<WebBrProductitem>findByfactNoAndYymmdd_print(String factNo,String yymmdd,String yymmdd2);
-	public PageBean fincPageBean(int pageSize,int page,String factNo,String yymmdd,String yymmdd2);
+	public PageBean findPageBean(int pageSize,int page,String factNo,String yymmdd,String yymmdd2);
 	public List<VWebBrProandest>findByfactNoAndYymmdd_print2(String factNo,String yymmdd,String yymmdd2);
 	public List<VWebBrProandest> findByfactCodeAndfactNoAndYymmdd_print2(String factNo,String factCode,String yymmdd);
 	public List<WebBrEstimatingitem>findEstByYymmdd(String yymmdd,String yymmdd2);
 	
 	public List<Object[]>findSumGroupByfCodeAndYymmdd(String yymmdd,String yymmdd2);
+	public PageBean findPageBean_proAndest(int pageSize,int page,String factNo,String yymmdd,String yymmdd2);
+	public List<Object[]>findPro(String factNo,String yymmdd);
+	public List<Object[]> findEst(String factNo,String yymmdd);
+	
+	public WebBrProductitem findById_Pro(String factNo,Integer wid,String yymmdd);
+	public WebBrEstimatingitem findById_Est(String factNo,String factCode,String yymmdd);
+	
 	
 
 

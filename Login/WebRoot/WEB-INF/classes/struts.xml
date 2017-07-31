@@ -741,6 +741,8 @@
 		     <result name="findPageBean1">page/table1/web_br_product1.jsp</result>
 		     <result name="findPageBean_item">page/web_br_productitem.jsp</result>
 		     <result name="findPageBean_item1">page/web_br_productitem1.jsp</result>
+		     <result name="findPageBean_proAndest">page/web_br_proAndest.jsp</result>
+		     <result name="findPageBean_proAndest1">page/table1/web_br_proAndest1.jsp</result>
 		     <result name="add" type="json">
 		         <param name="root">ajaxResult</param>
 		     </result>
@@ -762,6 +764,12 @@
 		     </result>
 		     <result name="findByFactNo2" type="json">
 		         <param name="root">ajaxResult</param>
+		     </result>
+		     <result name="findPro" type="json">
+		          <param name="root">json</param>
+		     </result>
+		     <result name="findEst" type="json">
+		         <param name="root">json</param>
 		     </result>
 		         	     
 		</action>
