@@ -28,12 +28,10 @@
    <div id="content">
 	<table class="table table-striped table-hover table-bordered"  >
 	<h3>
-	<span id="h2_title">BR產品預估作業</span>
-	<s:if test='#session.loginUser.userread!="1"'>
-	<input type="button" class="btn btn-info" value="添加" onclick="loadUrl('saveAndUpdate/web_br_proAndEstSave.jsp')"/>&nbsp;
-	<input type="button" class="btn btn-info" value="BR產品庫存" onclick="loadUrl('webbrpro_findPageBean_pro')"/>&nbsp;	
-	<input type="button" class="btn btn-info" value="BR產品預估" onclick="loadUrl('webbrpro_findPageBean_est')"/>&nbsp;
-	</s:if>	
+	<span id="h2_title">BR產品預估</span>
+	<!-- <s:if test='#session.loginUser.userread!="1"'>
+	<input type="button" class="btn btn-info" value="添加BR產品" onclick="loadUrl('saveAndUpdate/web_br_productSaveOrUpdate.jsp')"/>&nbsp;	
+	</s:if>	 -->
 	
 	</h3>
 				<thead>
@@ -42,13 +40,10 @@
 						<th>廠別</th>
 						<th>製程</th>
 						<th>截止日期</th>
-						<th>庫存數(KG)</th>
-						<th>已訂購未入廠(KG)</th>
-						<th>當月耗用(KG)</th>
 						<th>當月實際生產雙數(含不良)</th>
 						<th>次一月預估生產雙數</th>
 						<th>次二月預估生產雙數</th>
-						<th>次三月預估生產雙數</th>																	
+						<th>次三月預估生產雙數</th>											
 						<s:if test='#session.loginUser.userread!="1"'>
 							<th>操作</th>
 						</s:if>
@@ -58,25 +53,23 @@
 					<s:iterator value="bean.list" status="x" id="obj">
 						<tr>
 							<td>${ bean.pageSize*(bean.currentPage-1)+x.index+1}</td>
-							<td><s:property value="factNo2.factSname" /></td>
+							<td><s:property value="id.factNo" /></td>
 							<td><s:property value="id.factCode" /></td>
 							<td><s:property value="id.yymmdd" /></td>
-							<td><s:property value="inventory"/></td>
-							<td><s:property value="ordernotin"/></td>
-							<td><s:property value="actualused"/></td>
-							<td><s:property value="actualpairs"/></td>
-							<td><s:property value="estimatingpairs1"/></td>
-							<td><s:property value="estimatingpairs2"/></td>
-							<td><s:property value="estimatingpairs3"/></td>
-							
-
-
+							<td><s:property value="actualPairs" />
+							</td>
+							<td><s:property value="estimatingPairs1" />
+							</td>
+							<td><s:property value="estimatingPairs2" />
+							</td>
+							<td><s:property value="estimatingPairs3" />
+							</td>
 							<s:if test='#session.loginUser.userread!="1"'>
 								<td>
-									<form  id="subform${x.index}">													
-										<input type="hidden" value="<s:property value='id.factNo'/>" name="factNo"/>
-										<input type="hidden" value="<s:property value='id.factCode'/>" name="facdCode"/>
-										<input type="hidden" value="<s:property value='id.yymmdd'/>" name="yymmdd"/>																				
+									<form  id="subform${x.index}">										
+										<input type="hidden" value="<s:property value='id.factNo'/>" name="factNo" />
+										<input type="hidden" value="<s:property value='id.factCode'/>" name="factCode"/>
+										<input type="hidden" value="<s:property value='id.yymmdd'/>" name="yymmdd"/>																															
 									</form> 									
 									<!--  <form  id="2subform${x.index}" style="float:left">										
 										<input type="hidden" value="<s:property value='formulaIndex'/>" name="formulaIndex" />
@@ -97,11 +90,11 @@
 										<input type="hidden" value="<s:property value='formulaIndex'/>" name="formulaIndex" />
 										<input type="hidden" value="<s:property value='factNo.factNo'/>" name="factNo" />
 										<input type="hidden" value="down" name="lookordown"/>																														
-									</form>-->	
-									<a href="javascript:findById_form('subform${x.index}','webbrpro_updateProAndEst')" class="btn btn-xs btn-success">
-									   修改
-									</a>																
-								    <a href="javascript:isDelete('subform${x.index}','webbrpro_delete')"  class="btn btn-xs btn-success">
+									</form>-->																	
+								    <a href="javascript:findById_form('subform${x.index}','webbrpro_findById_Est')"  class="btn btn-xs btn-success">
+									 修改
+								    </a>
+								    <a href="javascript:isDelete('subform${x.index}','webbrpro_delete_est')"  class="btn btn-xs btn-success">
 									 刪除
 								    </a>																																											
 								</td>
@@ -118,40 +111,6 @@
 </div>
 <jsp:include page="pagenation.jsp" flush="true"/>		
 
-
-<script type="text/javascript">
-function addvbm(subform){	
-	/*var pageii = jq.layer({
-		  type: 1,
-		  title: false,
-		  area: ['auto', 'auto'],
-		  border: [0], //去掉默认边框
-		  shade: [0], //去掉遮罩
-		  closeBtn: [0, false], //去掉默认关闭按钮
-		  shift: 'left', //从左动画弹出
-		  page: {
-		    html: div
-		  }
-		});*/
-		jq.ajax({
-		  type:'post',
-		  dataType:'json',
-		  data:jq("#"+subform).serialize(),
-		  url:'webformula_sendEmail',
-		  success:function(data){
-			  if(data.length==0){
-				  layer.msg("還沒有建立配方送簽流程,暫時不能送簽",3,3);	
-			  }else if(data[0]=='1'){				  
-				  layer.msg("送簽失敗",3,3);  
-			  }else{
-				  layer.msg("送簽成功",3,1);
-				  loadUrl_bodyid("webformula_findPageBean3");
-			  }		     
-		  } 
-		});		
-}
-
-</script>	
 	
 </body>
 </html>

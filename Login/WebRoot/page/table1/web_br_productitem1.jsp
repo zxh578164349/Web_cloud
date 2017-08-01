@@ -28,12 +28,10 @@
    <div id="content">
 	<table class="table table-striped table-hover table-bordered"  >
 	<h3>
-	<span id="h2_title">BR產品設定</span>
-	<s:if test='#session.loginUser.userread!="1"'>
-	<input type="button" class="btn btn-info" value="添加BR產品" onclick="loadUrl('saveAndUpdate/web_br_productSaveOrUpdate.jsp')"/>&nbsp;
+	<span id="h2_title">BR產品庫存</span>
+	<!-- <s:if test='#session.loginUser.userread!="1"'>
 	<input type="button" class="btn btn-info" value="添加BR產品庫存明細" onclick="loadUrl('saveAndUpdate/web_br_productSaveOrUpdate.jsp')"/>&nbsp;
-	<input type="button" class="btn btn-info" value="添加BR產品預估明細" onclick="loadUrl('saveAndUpdate/web_br_productSaveOrUpdate.jsp')"/>&nbsp;
-	</s:if>	
+	</s:if>	 -->
 	
 	</h3>
 				<thead>
@@ -91,8 +89,11 @@
 										<input type="hidden" value="<s:property value='factNo.factNo'/>" name="factNo" />
 										<input type="hidden" value="down" name="lookordown"/>																														
 									</form>-->																	
-								    <a href="javascript:isDelete('subform${x.index}','webbrpro_delete')"  class="btn btn-xs btn-success">
+								    <a href="javascript:findById_form('subform${x.index}','webbrpro_findById_Pro')"  class="btn btn-xs btn-success">
 									 修改
+								    </a>
+								    <a href="javascript:isDelete('subform${x.index}','webbrpro_delete_pro')"  class="btn btn-xs btn-success">
+									 刪除
 								    </a>																																											
 								</td>
 							</s:if>

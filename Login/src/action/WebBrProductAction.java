@@ -75,6 +75,8 @@ public class WebBrProductAction extends ActionSupport implements ServletResponse
 	private int page;
 	private PageBean bean;
 	private WebBrProduct wbpro;
+	private WebBrProductitem pro;
+	private WebBrEstimatingitem est;
 	private String ajaxResult;
 	private String createDate;
 	private Integer createUser; 
@@ -88,10 +90,36 @@ public class WebBrProductAction extends ActionSupport implements ServletResponse
 	private String yymmdd2;
 	private String factCode;
 	private int months;
+	private List<Object[]>list_pro;
+	private List<Object[]>list_est;
 	
 	
 	
 	
+	public WebBrProductitem getPro(){
+		return pro;
+	}
+	public void setPro(WebBrProductitem pro){
+		this.pro=pro;
+	}
+	public WebBrEstimatingitem getEst(){
+		return est;
+	}
+	public void setEst(WebBrEstimatingitem est){
+		this.est=est;
+	}
+	public List<Object[]> getList_pro(){
+		return list_pro;
+	}
+	public void setList_pro(List<Object[]> list_pro){
+		this.list_pro=list_pro;
+	}
+	public List<Object[]> getList_est(){
+		return list_est;
+	}
+	public void setList_est(List<Object[]> list_est){
+		this.list_est=list_est;
+	}
 	public int getMonths(){
 		return months;
 	}
@@ -241,26 +269,50 @@ public class WebBrProductAction extends ActionSupport implements ServletResponse
 	
 	
 	/*************************************BR產品庫存**************************************************/
-	public String findPageBean_item(){
+	public String findPageBean_pro(){
 		ActionContext.getContext().getSession().remove("webitemFactNo");
 		ActionContext.getContext().getSession().remove("webitemYymmdd");
 		ActionContext.getContext().getSession().remove("webitemYymmdd2");
-		bean=webbrproSer.findPageBean(20,page,factNo,yymmdd,yymmdd2);
-		return "findPageBean_item";
+		bean=webbrproSer.findPageBean_pro(20,page,factNo,yymmdd,yymmdd2);
+		return "findPageBean_pro";
 	}
-	public String findPageBean_item2(){
+	public String findPageBean_pro2(){
 		ActionContext.getContext().getSession().put("webitemFactNo",factNo);
 		ActionContext.getContext().getSession().put("webitemYymmdd",yymmdd);
 		ActionContext.getContext().getSession().put("webitemYymmdd2",yymmdd2);
-		bean=webbrproSer.findPageBean(20,page,factNo,yymmdd,yymmdd2);
-		return "findPageBean_item1";
+		bean=webbrproSer.findPageBean_pro(20,page,factNo,yymmdd,yymmdd2);
+		return "findPageBean_pro1";
 	}
-	public String findPageBean_item3(){
+	public String findPageBean_pro3(){
 		factNo=(String)ActionContext.getContext().getSession().get("webitemFactNo");
 		yymmdd=(String)ActionContext.getContext().getSession().get("webitemYymmdd");
 		yymmdd2=(String)ActionContext.getContext().getSession().get("webitemYymmdd2");
-		bean=webbrproSer.findPageBean(20,page,factNo,yymmdd,yymmdd2);
-		return "findPageBean_item1";
+		bean=webbrproSer.findPageBean_pro(20,page,factNo,yymmdd,yymmdd2);
+		return "findPageBean_pro1";
+	}
+	/*************************************BR產品庫存**************************************************/
+	
+	/*************************************BR產品庫存**************************************************/
+	public String findPageBean_est(){
+		ActionContext.getContext().getSession().remove("webitemFactNo");
+		ActionContext.getContext().getSession().remove("webitemYymmdd");
+		ActionContext.getContext().getSession().remove("webitemYymmdd2");
+		bean=webbrproSer.findPageBean_est(20,page,factNo,yymmdd,yymmdd2);
+		return "findPageBean_est";
+	}
+	public String findPageBean_est2(){
+		ActionContext.getContext().getSession().put("webitemFactNo",factNo);
+		ActionContext.getContext().getSession().put("webitemYymmdd",yymmdd);
+		ActionContext.getContext().getSession().put("webitemYymmdd2",yymmdd2);
+		bean=webbrproSer.findPageBean_est(20,page,factNo,yymmdd,yymmdd2);
+		return "findPageBean_est1";
+	}
+	public String findPageBean_est3(){
+		factNo=(String)ActionContext.getContext().getSession().get("webitemFactNo");
+		yymmdd=(String)ActionContext.getContext().getSession().get("webitemYymmdd");
+		yymmdd2=(String)ActionContext.getContext().getSession().get("webitemYymmdd2");
+		bean=webbrproSer.findPageBean_est(20,page,factNo,yymmdd,yymmdd2);
+		return "findPageBean_est1";
 	}
 	/*************************************BR產品庫存**************************************************/
 	
@@ -318,6 +370,37 @@ public class WebBrProductAction extends ActionSupport implements ServletResponse
 			e.printStackTrace();
 		}
 		return "delete";
+	}
+	
+	public String delete_pro(){
+		try{
+			KyzExpectmatmLog log=new KyzExpectmatmLog();
+			pro=webbrproSer.findById_Pro(factNo,wid,yymmdd);
+			log.setFactNo(factNo);
+			log.setYymm(yymmdd);
+			log.setContent(pro.getId().getWebBrProduct().getNamec1()+"__"+pro.getId().getWebBrProduct().getNamec2());
+			log.setObj("WebBrProductitem");
+			webbrproSer.delete_pro(pro,log);
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return "delete_pro";
+	}
+	
+	public String delete_est(){
+		try{
+			KyzExpectmatmLog log=new KyzExpectmatmLog();
+			est=webbrproSer.findById_Est(factNo,factCode,yymmdd);
+			log.setFactNo(factNo);
+			log.setFactCode(factCode);
+			log.setYymm(yymmdd);
+			log.setObj("WebBrEstimatingitem");
+			webbrproSer.delete_est(est,log);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return "delete_est";
 	}
 	
 	public String findByFactno(){
@@ -392,6 +475,27 @@ public class WebBrProductAction extends ActionSupport implements ServletResponse
 		return "add2_3";
 		
 	}
+	public String update_pro(){
+		ajaxResult="0";
+		try{
+			webbrproSer.update_pro(pro);
+		}catch(Exception e){
+			ajaxResult="1";
+			e.printStackTrace();
+		}
+		return "update_pro";
+	}
+	
+	public String update_est(){
+		ajaxResult="0";
+		try{
+			webbrproSer.update_est(est);
+		}catch(Exception e){
+			ajaxResult="1";
+			e.printStackTrace();
+		}
+		return "update_est";
+	}
 	
 	public String findByFactNo2(){
 		Integer result=webbrproSer.findByFactNo2(factNo);
@@ -413,6 +517,22 @@ public class WebBrProductAction extends ActionSupport implements ServletResponse
 		List<Object[]>list_est=webbrproSer.findEst(factNo,yymmdd);
 		jsons=JSONArray.fromObject(list_est);
 		return "findEst";
+	}
+	
+	public String updateProAndEst(){
+		listitem=webbrproSer.findPro2(factNo,yymmdd);
+		listest=webbrproSer.findEst2(factNo,yymmdd);
+		return "updateProAndEst";
+	}
+	
+	public String findById_Pro(){
+		pro=webbrproSer.findById_Pro(factNo,wid,yymmdd);
+		return "findById_Pro";
+	}
+	
+	public String findById_Est(){
+		est=webbrproSer.findById_Est(factNo,factCode,yymmdd);
+		return "findById_Est";
 	}
 	
 	
@@ -1008,6 +1128,10 @@ public class WebBrProductAction extends ActionSupport implements ServletResponse
 			wb.write(os);
 			os.close();
 		}
+	}
+	
+	public void viewtoprint() throws Throwable{
+		this.findEstByYymmdd_print();
 	}
 	
 }

@@ -120,6 +120,13 @@ public class WebBrProductIDaoImpl extends Basedao implements IWebBrProductDao{
 		// TODO Auto-generated method stub
 		super.delete(obj,log);
 	}
+	
+	public void delete_pro(WebBrProductitem pro,KyzExpectmatmLog log){
+		super.delete(pro,log);
+	}
+	public void delete_est(WebBrEstimatingitem est,KyzExpectmatmLog log){
+		super.delete(est,log);
+	}
 
 	/**
 	 * 日期:2017/7/18
@@ -247,7 +254,7 @@ public class WebBrProductIDaoImpl extends Basedao implements IWebBrProductDao{
 	 */
 	
 	
-	public PageBean findPageBean(int pageSize,int page,String factNo,String yymmdd,String yymmdd2){
+	public PageBean findPageBean_pro(int pageSize,int page,String factNo,String yymmdd,String yymmdd2){
 		// TODO Auto-generated method stub
 		StringBuffer hql=new StringBuffer();
 		StringBuffer hql2=new StringBuffer();
@@ -295,6 +302,50 @@ public class WebBrProductIDaoImpl extends Basedao implements IWebBrProductDao{
 		bean.setPageSize(pageSize);
 		bean.setTotalPage(totalPage);
 		
+		return bean;
+	}
+	
+	public PageBean findPageBean_est(int pageSize,int page,String factNo,String yymmdd,String yymmdd2){
+		StringBuffer hql=new StringBuffer();
+		StringBuffer hql2=new StringBuffer();
+		Map<String,Object>map=new HashMap<String,Object>();
+		hql.append("from WebBrEstimatingitem where 1=1 ");
+		hql2.append("select count(id.factNo) ");
+		if(factNo==null||"".equals(factNo)){
+			factNo=(String)ActionContext.getContext().getSession().get("factNo");
+		}
+		if(factNo!=null&&!"".equals(factNo)&&!"tw".equals(factNo)){
+			hql.append(" and id.factNo=:factno ");
+			map.put("factno",factNo);
+		}
+		if(yymmdd!=null&&!"".equals(yymmdd)){
+			hql.append(" and id.yymmdd>=:yymmdd");
+			map.put("yymmdd",yymmdd);
+		}
+		if(yymmdd2!=null&&!"".equals(yymmdd2)){
+			hql.append(" and id.yymmdd<=:yymmdd2");
+			map.put("yymmdd2",yymmdd2);
+		}
+		hql2.append(hql);
+		hql.append(" order by id.factNo,id.factCode,id.yymmdd ");
+		Integer allrow=(Integer)ActionContext.getContext().getSession().get("allrow");
+		if(allrow==null||allrow==0||page==0){
+			allrow=super.getAllRowCount2(hql2.toString(),map);
+			ActionContext.getContext().getSession().put("allrow",allrow);
+		}
+		int currentPage=PageBean.countCurrentPage(page);
+		int totalPage=PageBean.countTotalPage(pageSize,allrow);
+		if(currentPage>totalPage){
+			currentPage=totalPage;
+		}
+		int offset=PageBean.countOffset(pageSize,currentPage);
+		List<WebBrEstimatingitem>list=super.getAllWithNoPage(hql.toString(),map);
+		PageBean bean=new PageBean();
+		bean.setAllRow(allrow);
+		bean.setCurrentPage(currentPage);
+		bean.setList(list);
+		bean.setPageSize(pageSize);
+		bean.setTotalPage(totalPage);
 		return bean;
 	}
 
@@ -477,7 +528,7 @@ public class WebBrProductIDaoImpl extends Basedao implements IWebBrProductDao{
 	
 	public List<Object[]> findPro(String factNo,String yymmdd){
 		// TODO Auto-generated method stub
-		String hql="select id.webBrProduct.id.factNo,id.webBrProduct.id.webErpProductinFormation.itemno,id.yymmdd," +
+		String hql="select id.webBrProduct.id.factNo,id.webBrProduct.id.webErpProductinFormation.itemid,id.yymmdd," +
 				"inventory,orderNotin,actualUsed,createUser.id,createDate " +
 				" from WebBrProductitem where id.webBrProduct.id.factNo=? and id.yymmdd=?";
 		String[]objs={factNo,yymmdd};
@@ -498,6 +549,32 @@ public class WebBrProductIDaoImpl extends Basedao implements IWebBrProductDao{
 		String[]objs={factNo,yymmdd};
 		return super.findAll(hql,objs);
 	}
+	
+	public List<WebBrProductitem> findPro2(String factNo,String yymmdd){
+		// TODO Auto-generated method stub
+		String hql="from WebBrProductitem where id.webBrProduct.id.factNo=? and id.yymmdd=?";
+		String[]objs={factNo,yymmdd};
+		List<WebBrProductitem>list=super.findAll(hql,objs);
+		for(WebBrProductitem obj:list){
+			obj.getId().getWebBrProduct().getNamec1();
+			obj.getId().getWebBrProduct().getNamec2();
+		}
+		return list;
+	}
+
+	/**
+	 * 日期:2017/7/31
+	 * 描述:
+	 */
+	
+	
+	public List<WebBrEstimatingitem> findEst2(String factNo,String yymmdd){
+		// TODO Auto-generated method stub
+		String hql="from WebBrEstimatingitem where id.factNo=? and id.yymmdd=?";
+		String[]objs={factNo,yymmdd};
+		List<WebBrEstimatingitem>list=super.findAll(hql,objs);
+		return list;
+	}
 
 	/**
 	 * 日期:2017/7/31
@@ -507,12 +584,14 @@ public class WebBrProductIDaoImpl extends Basedao implements IWebBrProductDao{
 	
 	public WebBrProductitem findById_Pro(String factNo,Integer wid,String yymmdd){
 		// TODO Auto-generated method stub
-		String hql="from WebBrProductitem where id.webBrProduct.id.factNo=? and id.webBrProduct.id.webErpProductinFormation.itemno=? and id.yymmdd=?";
+		String hql="from WebBrProductitem where id.webBrProduct.id.factNo=? and id.webBrProduct.id.webErpProductinFormation.itemid=? and id.yymmdd=?";
 		Query query=getSession().createQuery(hql);
 		query.setParameter(0,factNo);
 		query.setParameter(1,wid);
 		query.setParameter(2,yymmdd);
 		WebBrProductitem obj=(WebBrProductitem)query.uniqueResult();
+		obj.getId().getWebBrProduct().getNamec1();
+		obj.getId().getWebBrProduct().getNamec2();
 		return obj;
 		
 	}
@@ -533,5 +612,29 @@ public class WebBrProductIDaoImpl extends Basedao implements IWebBrProductDao{
 		WebBrEstimatingitem obj=(WebBrEstimatingitem)query.uniqueResult();
 		return obj;		
 	}
+
+	/**
+	 * 日期:2017/8/1
+	 * 描述:
+	 */
+	
+	
+	public void update_pro(WebBrProductitem pro){
+		// TODO Auto-generated method stub
+		super.merge(pro);
+	}
+
+	/**
+	 * 日期:2017/8/1
+	 * 描述:
+	 */
+	
+	
+	public void update_est(WebBrEstimatingitem est){
+		// TODO Auto-generated method stub
+		super.merge(est);
+	}
+
+	
 
 }

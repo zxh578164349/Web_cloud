@@ -32,6 +32,8 @@ public interface IWebBrProductServices{
 	public void add(List<WebBrProduct> listbrpro);
 	public WebBrProduct findById(String factNo,Integer wid);
 	public void delete(WebBrProduct obj,KyzExpectmatmLog log);
+	public void delete_pro(WebBrProductitem pro,KyzExpectmatmLog log);
+	public void delete_est(WebBrEstimatingitem est,KyzExpectmatmLog log);
 	
 	public void add2(List<WebBrProductitem>listitem);
 	public Integer findByfactNoAndyymmdd(String factNo,String yymmdd);
@@ -40,7 +42,8 @@ public interface IWebBrProductServices{
 	public Integer findByFactNo2(String factNo);
 	public void add2_3(List list);
 	public List<WebBrProductitem>findByfactNoAndYymmdd_print(String factNo,String yymmdd,String yymmdd2);
-	public PageBean findPageBean(int pageSize,int page,String factNo,String yymmdd,String yymmdd2);
+	public PageBean findPageBean_pro(int pageSize,int page,String factNo,String yymmdd,String yymmdd2);
+	public PageBean findPageBean_est(int pageSize,int page,String factNo,String yymmdd,String yymmdd2);
 	public List<VWebBrProandest>findByfactNoAndYymmdd_print2(String factNo,String yymmdd,String yymmdd2);
 	public List<VWebBrProandest> findByfactCodeAndfactNoAndYymmdd_print2(String factNo,String factCode,String yymmdd);
 	public List<WebBrEstimatingitem>findEstByYymmdd(String yymmdd,String yymmdd2);
@@ -48,7 +51,12 @@ public interface IWebBrProductServices{
 	public PageBean findPageBean_proAndest(int pageSize,int page,String factNo,String yymmdd,String yymmdd2);
 	public List<Object[]> findPro(String factNo,String yymmdd);
 	public List<Object[]> findEst(String factNo,String yymmdd);
+	public List<WebBrProductitem>findPro2(String factNo,String yymmdd);
+	public List<WebBrEstimatingitem> findEst2(String factNo,String yymmdd);
 	public WebBrProductitem findById_Pro(String factNo,Integer wid,String yymmdd);
 	public WebBrEstimatingitem findById_Est(String factNo,String factCode,String yymmdd);
+	
+	public void update_pro(WebBrProductitem pro);
+	public void update_est(WebBrEstimatingitem est);
 
 }

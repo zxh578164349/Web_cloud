@@ -95,6 +95,14 @@ public class WebBrProductServicesImpl implements IWebBrProductServices{
 		// TODO Auto-generated method stub
 		webbrprodao.delete(obj,log);
 	}
+	
+	public void delete_pro(WebBrProductitem pro,KyzExpectmatmLog log){
+		webbrprodao.delete_pro(pro,log);
+	}
+	
+	public void delete_est(WebBrEstimatingitem est,KyzExpectmatmLog log){
+		webbrprodao.delete_est(est,log);
+	}
 
 
 	/**
@@ -187,9 +195,13 @@ public class WebBrProductServicesImpl implements IWebBrProductServices{
 	 */
 	
 	
-	public PageBean findPageBean(int pageSize,int page,String factNo,String yymmdd,String yymmdd2){
+	public PageBean findPageBean_pro(int pageSize,int page,String factNo,String yymmdd,String yymmdd2){
 		// TODO Auto-generated method stub
-		return webbrprodao.findPageBean(pageSize,page,factNo,yymmdd,yymmdd2);
+		return webbrprodao.findPageBean_pro(pageSize,page,factNo,yymmdd,yymmdd2);
+	}
+	
+	public PageBean findPageBean_est(int pageSize,int page,String factNo,String yymmdd,String yymmdd2){
+		return webbrprodao.findPageBean_est(pageSize,page,factNo,yymmdd,yymmdd2);
 	}
 
 
@@ -275,6 +287,17 @@ public class WebBrProductServicesImpl implements IWebBrProductServices{
 		// TODO Auto-generated method stub
 		return webbrprodao.findEst(factNo,yymmdd);
 	}
+	
+	public List<WebBrProductitem> findPro2(String factNo,String yymmdd){
+		// TODO Auto-generated method stub
+		return webbrprodao.findPro2(factNo,yymmdd);
+	}
+	
+	
+	public List<WebBrEstimatingitem> findEst2(String factNo,String yymmdd){
+		// TODO Auto-generated method stub
+		return webbrprodao.findEst2(factNo,yymmdd);
+	}
 
 
 	/**
@@ -298,6 +321,31 @@ public class WebBrProductServicesImpl implements IWebBrProductServices{
 	public WebBrEstimatingitem findById_Est(String factNo,String factCode,String yymmdd){
 		// TODO Auto-generated method stub
 		return webbrprodao.findById_Est(factNo,factCode,yymmdd);
+	}
+
+
+	/**
+	 * 日期:2017/8/1
+	 * 描述:
+	 */
+	
+	
+	public void update_pro(WebBrProductitem pro){
+		// TODO Auto-generated method stub
+		webbrprodao.update_pro(pro);
+		
+	}
+
+
+	/**
+	 * 日期:2017/8/1
+	 * 描述:
+	 */
+	
+	
+	public void update_est(WebBrEstimatingitem est){
+		// TODO Auto-generated method stub
+		webbrprodao.update_est(est);
 	}
 
 }

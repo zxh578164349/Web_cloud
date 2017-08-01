@@ -30,9 +30,7 @@
 	<h3>
 	<span id="h2_title">BR產品設定</span>
 	<s:if test='#session.loginUser.userread!="1"'>
-	<input type="button" class="btn btn-info" value="添加BR產品" onclick="loadUrl('saveAndUpdate/web_br_productSaveOrUpdate.jsp')"/>&nbsp;
-	<input type="button" class="btn btn-info" value="添加BR產品庫存明細" onclick="loadUrl('saveAndUpdate/web_br_productitemSaveOrUpdate.jsp')"/>&nbsp;
-	<input type="button" class="btn btn-info" value="添加BR產品預估明細" onclick="loadUrl('saveAndUpdate/web_br_productSaveOrUpdate.jsp')"/>&nbsp;
+	<input type="button" class="btn btn-info" value="添加BR產品" onclick="loadUrl('saveAndUpdate/web_br_productSaveOrUpdate.jsp')"/>&nbsp;	
 	</s:if>	
 	
 	</h3>
