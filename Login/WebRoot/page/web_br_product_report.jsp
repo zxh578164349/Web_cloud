@@ -47,8 +47,11 @@
 						<td>預估月數</td>
 						<td><input type="text" name="months" />
 						</td>
-						<td><input value="Excel 導出BR消耗進度表" type="button" class="btn btn-primary"
-							onclick="print('public_form','webbrpro_findByfactCodeAndfactNoAndYymmdd_print2')" /></td>
+						<td>
+						   <input value="搜索"	type="button" class="btn btn-primary" onclick="print('public_form','webbrpro_findByfactCodeAndfactNoAndYymmdd_print2_inline')"/>&nbsp;
+						   <input value="Excel" type="button" class="btn btn-primary" onclick="print('public_form','webbrpro_findByfactCodeAndfactNoAndYymmdd_print2_down')" />
+						   
+						</td>
 					</tr>
 				</table>
 			</form>
@@ -68,10 +71,10 @@
 			onclick="WdatePicker({dateFmt:'yyyyMMdd',maxDate:'%y-%M-%d',opposite:true,disabledDates:['....0228','......30']})" class="Wdate"/>
 			&nbsp;&nbsp;
 			<input value="搜索" type="button" class="btn btn-primary"
-			onclick="print2('public_form2','webbrpro_findEstByYymmdd_print')"/>
+			onclick="print2('public_form2','webbrpro_findEstByYymmdd_print_inline')"/>
 			&nbsp;
 			<input value="Excel" type="button" class="btn btn-primary"
-			onclick="print2('public_form2','webbrpro_findEstByYymmdd_print')" />
+			onclick="print2('public_form2','webbrpro_findEstByYymmdd_print_down')" />
 			</form>
 		</div>
 	</div>

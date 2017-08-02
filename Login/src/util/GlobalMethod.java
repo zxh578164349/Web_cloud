@@ -659,7 +659,8 @@ public class GlobalMethod extends HibernateDaoSupport{
 		map.put("cs_poi1", cs_poi1);
 		
 		HSSFCellStyle cs_poi2=wb.createCellStyle();
-		cs_poi2.setDataFormat(format.getFormat("#,###,0.00"));
+		//cs_poi2.setDataFormat(format.getFormat("#,###,0.00"));
+		cs_poi2.setDataFormat(format.getFormat("#,##0.00"));
 		cs_poi2.setAlignment(HSSFCellStyle.ALIGN_CENTER);
 		cs_poi2.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
 		cs_poi2.setBorderTop(HSSFCellStyle.BORDER_THIN);
@@ -2025,34 +2026,13 @@ public class GlobalMethod extends HibernateDaoSupport{
 	     
 	     //PoiToHtmlUtil.excelToHtml("e:\\", "report.xls");
 	    // System.out.println(findMonths("201706","201709"));
-		 List<String>list=new LinkedList<String>();
-		 List<String>list2=new ArrayList<String>();
-		 list.add("11");
-		 list.add("a");
-		 list.add("b");
-		 list.add("c");
-		 list.add("d");
-		 list.add("e");
-		 list.add("f");
-		 list.add("kkk");
-		 list.add("22");
-		 list.add(null);
-		 list.add("22");
-		 
-		 list2.add("aa");
-		 list2.add("bb");
-		 list2.add("ff");
-		 list2.add("gg");
-		 
-		 for(int a=0;a<list.size();a++){
-			 for(String str:list2){
-				 if(str.substring(0,1).equals(list.get(a))){
-					 list.remove(a);
-					 list.add(a,str);
-				 }
-			 }
+		 Calendar cal=Calendar.getInstance();
+		 Random rd=new Random();
+		 for(int a=0;a<60;a++){
+			 //System.out.println(new SimpleDateFormat("mm:ss").format(cal.getTime()));
+			 System.out.println(rd.nextInt());
 		 }
-		 System.out.println(list);
+		
 	  
 		}
 	 

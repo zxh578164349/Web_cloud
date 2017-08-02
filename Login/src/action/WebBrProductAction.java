@@ -3,7 +3,11 @@
  */
 package action;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -14,6 +18,7 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
@@ -592,20 +597,7 @@ public class WebBrProductAction extends ActionSupport implements ServletResponse
 				sheet.getRow(2+a).getCell(4).setCellValue(listitem.get(a).getOrderNotin());
 				sheet.getRow(2+a).getCell(5).setCellValue(listitem.get(a).getActualUsed());	
 			}		
-			
-			ServletOutputStream os=response.getOutputStream();
-			response.setContentType("application/vnd.ms-excel");
-			//response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
-			String fileName="report_webbrproduct.xls";
-			int msie=ServletActionContext.getRequest().getHeader("USER-AGENT").toLowerCase().indexOf("msie");
-			if(msie>0){
-				fileName=java.net.URLEncoder.encode(fileName,"utf-8");
-			}else{
-				fileName=new String(fileName.getBytes("utf-8"),"iso8859-1");
-			}
-			response.setHeader("Content-disposition","attachment;filename="+fileName);
-			wb.write(os);
-			os.close();
+			this.responseHeader(wb,"webbrpro.xls");			
 		}		
 	}
 	
@@ -673,34 +665,55 @@ public class WebBrProductAction extends ActionSupport implements ServletResponse
 				sheet.getRow(2+a).getCell(8).setCellValue(listitemAndest.get(a).getEstimatingpairs2());
 				sheet.getRow(2+a).getCell(9).setCellValue(listitemAndest.get(a).getEstimatingpairs3());								
 			}
-			ServletOutputStream os=response.getOutputStream();
-			response.setContentType("application/vnd.ms-excel");
-			//response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
-			String fileName="report_webbrproduct.xls";
-			int msie=ServletActionContext.getRequest().getHeader("USER-AGENT").toLowerCase().indexOf("msie");
-			if(msie>0){
-				fileName=java.net.URLEncoder.encode(fileName,"utf-8");
-			}else{
-				fileName=new String(fileName.getBytes("utf-8"),"iso8859-1");
-			}
-			response.setHeader("Content-disposition","attachment;filename="+fileName);
-			wb.write(os);
-			os.close();
+			
+			this.responseHeader(wb,"report_vwebbr.xls");						
 		}
 		
 	}
 	
-	public void findByfactCodeAndfactNoAndYymmdd_print2() throws Throwable{
+	/*********************************消耗進度表下載*****************************************/
+	public void findByfactCodeAndfactNoAndYymmdd_print2_down() throws Throwable{
 		listitemAndest=webbrproSer.findByfactCodeAndfactNoAndYymmdd_print2(factNo,factCode,yymmdd);
-		if(listitemAndest==null||listitemAndest.size()==0){
-			response.setContentType("text/html;charset=utf-8");
+		response.setContentType("text/html;charset=utf-8");
+		if(listitemAndest==null||listitemAndest.size()==0){			
 			response.getWriter().print("<script>alert('無數據');window.close()</script>");			
 		}else{
-			findByfactCodeAndfactNoAndYymmdd_print2_init2();
-		}
+			HSSFWorkbook wb=findByfactCodeAndfactNoAndYymmdd_print2_init2();			
+			this.responseHeader(wb,"report_webbrproAndest.xls");
+		}		
 	}
+	/*********************************消耗進度表下載*****************************************/
 	
-	public void findByfactCodeAndfactNoAndYymmdd_print2_init2() throws ParseException, IOException{
+	
+	/*********************************消耗進度表預覽 *****************************************/		 
+	public void findByfactCodeAndfactNoAndYymmdd_print2_inline() throws Throwable{
+		listitemAndest=webbrproSer.findByfactCodeAndfactNoAndYymmdd_print2(factNo,factCode,yymmdd);
+		response.setContentType("text/html;charset=utf-8");
+		if(listitemAndest==null||listitemAndest.size()==0){			
+			response.getWriter().print("<script>alert('無數據');window.close()</script>");			
+		}else{
+			HSSFWorkbook wb=findByfactCodeAndfactNoAndYymmdd_print2_init2();			
+			this.responseHeader2(wb,"report_webbrproAndest.xls");
+			
+			Random rd=new Random();
+			String fileName="report_webbrproAndest_"+rd.nextInt()+".xls";
+			this.responseHeader2(wb,fileName);
+			
+			String classes_path=Thread.currentThread().getContextClassLoader().getResource("").getPath();
+			String filepath=classes_path.replace("/WEB-INF/classes","/TEMPFILES/");
+			String result=PoiToHtmlUtil.excelToHtml(filepath, fileName);
+			File file=new File(filepath+fileName);
+			if (file.exists()) {
+				if (file.isFile()) {
+					file.delete();
+				}
+			}
+			response.getWriter().print(result);
+		}		
+	}
+	/*********************************消耗進度表預覽*****************************************/
+	
+	public HSSFWorkbook findByfactCodeAndfactNoAndYymmdd_print2_init2() throws ParseException, IOException{
 		Map<String,Object>map=new HashMap<String,Object>();
 		HSSFWorkbook wb=new HSSFWorkbook();
 		Map<String,Object>map_style=GlobalMethod.findStyles(wb);
@@ -758,24 +771,8 @@ public class WebBrProductAction extends ActionSupport implements ServletResponse
 			List<VWebBrProandest>list_parameter=(List<VWebBrProandest>)map.get(factcode);
 			findByfactCodeAndfactNoAndYymmdd_print2_init(sheet,map_style,list_parameter,list_head);
 		}
-		
-		
-		ServletOutputStream os=response.getOutputStream();
-		response.setContentType("application/vnd.ms-excel");
-		//response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
-		String fileName="report_webbrproduct.xls";
-		int msie=ServletActionContext.getRequest().getHeader("USER-AGENT").toLowerCase().indexOf("msie");
-		if(msie>0){
-			fileName=java.net.URLEncoder.encode(fileName,"utf-8");
-		}else{
-			fileName=new String(fileName.getBytes("utf-8"),"iso8859-1");
-		}
-		response.setHeader("Content-disposition","attachment;filename="+fileName);
-		wb.write(os);
-		os.close();
-		
-		
-		
+		return wb;
+								
 	}
 	
 	public void findByfactCodeAndfactNoAndYymmdd_print2_init(HSSFSheet sheet,Map<String,Object>map_style, List<VWebBrProandest>list_parameter,List<String>list_head) throws ParseException, IOException{							
@@ -902,17 +899,47 @@ public class WebBrProductAction extends ActionSupport implements ServletResponse
 		}	
 	}
 	
-	
-	public void findEstByYymmdd_print() throws Throwable{
-		listest=webbrproSer.findEstByYymmdd(yymmdd,yymmdd2);		
+	/****************************生產雙數表 下載**************************************/
+	public void findEstByYymmdd_print_down() throws Throwable{
+		listest=webbrproSer.findEstByYymmdd(yymmdd,yymmdd2);
 		if(listest==null||listest.size()==0){
-			/*response.setContentType("text/html;charset=utf-8");
-			response.getWriter().print("<script>alert('無數據');window.close();</script>");*/
-			
 			response.setContentType("text/html;charset=utf-8");
-			String result=PoiToHtmlUtil.excelToHtml("d:\\test\\", "test.xls");
-			response.getWriter().print(result);
+			response.getWriter().print("<script>alert('無數據');window.close();</script>");					
 		}else{
+			HSSFWorkbook wb=this.findEstByYymmdd_print_init(listest);
+			this.responseHeader(wb,"report_webbrest.xls");
+		}
+	}
+	/****************************生產雙數表 下載**************************************/
+	
+	
+	/****************************生產雙數表 預覽**************************************/
+	public void findEstByYymmdd_print_inline() throws Throwable{
+		listest=webbrproSer.findEstByYymmdd(yymmdd,yymmdd2);
+		response.setContentType("text/html;charset=utf-8");
+		if(listest==null||listest.size()==0){			
+			response.getWriter().print("<script>alert('無數據');window.close();</script>");						
+		}else{
+			Random rd=new Random();
+			String fileName="report_webbrest_"+rd.nextInt()+".xls";
+			HSSFWorkbook wb=this.findEstByYymmdd_print_init(listest);
+			this.responseHeader2(wb,fileName);
+			
+			String classes_path=Thread.currentThread().getContextClassLoader().getResource("").getPath();
+			String filepath=classes_path.replace("/WEB-INF/classes","/TEMPFILES/");
+			String result=PoiToHtmlUtil.excelToHtml(filepath, fileName);
+			File file=new File(filepath+fileName);
+			if (file.exists()) {
+				if (file.isFile()) {
+					file.delete();
+				}
+			}
+			response.getWriter().print(result);
+		}
+	}
+	/****************************生產雙數表 預覽**************************************/
+	
+	public HSSFWorkbook findEstByYymmdd_print_init(List<WebBrEstimatingitem> listest) throws Throwable{				
 			int index_y=0;
 			HSSFWorkbook wb=new HSSFWorkbook();
 			HSSFSheet sheet=wb.createSheet();
@@ -1025,9 +1052,7 @@ public class WebBrProductAction extends ActionSupport implements ServletResponse
 					index_y=2+list_element.size();
 				}
 			}
-			
-			
-			
+									
 			/****************************************各製程合計************************************************/
 			List<Object[]>list_obj=webbrproSer.findSumGroupByfCodeAndYymmdd(yymmdd,yymmdd2);//合計製程數據
 			List<String>list_factcode=new ArrayList<String>();
@@ -1111,27 +1136,32 @@ public class WebBrProductAction extends ActionSupport implements ServletResponse
 				}
 			}
 			
-			/****************************************各製程合計************************************************/
-			
-			
-			ServletOutputStream os=response.getOutputStream();
-			response.setContentType("application/vnd.ms-excel");
-			//response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
-			String fileName="report_webbrproduct.xls";
-			int msie=ServletActionContext.getRequest().getHeader("USER-AGENT").toLowerCase().indexOf("msie");
-			if(msie>0){
-				fileName=java.net.URLEncoder.encode(fileName,"utf-8");
-			}else{
-				fileName=new String(fileName.getBytes("utf-8"),"iso8859-1");
-			}
-			response.setHeader("Content-disposition","attachment;filename="+fileName);
-			wb.write(os);
-			os.close();
+			/****************************************各製程合計************************************************/															
+		return wb;
+	}		
+	
+	public void responseHeader(HSSFWorkbook wb,String fileName) throws IOException{
+		ServletOutputStream os=response.getOutputStream();
+		response.setContentType("application/vnd.ms-excel");
+		//response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+		int msie=ServletActionContext.getRequest().getHeader("USER-AGENT").toLowerCase().indexOf("msie");
+		if(msie>0){
+			fileName=java.net.URLEncoder.encode(fileName,"utf-8");
+		}else{
+			fileName=new String(fileName.getBytes("utf-8"),"iso8859-1");
 		}
+		response.setHeader("Content-disposition","attachment;filename="+fileName);
+		wb.write(os);
+		os.close();
 	}
 	
-	public void viewtoprint() throws Throwable{
-		this.findEstByYymmdd_print();
+	public void responseHeader2(HSSFWorkbook wb,String fileName) throws IOException{
+		String classes_path=Thread.currentThread().getContextClassLoader().getResource("").getPath();
+		String filepath=classes_path.replace("/WEB-INF/classes","/TEMPFILES/" + fileName);
+		OutputStream os=new FileOutputStream(filepath);
+		wb.write(os);
+		os.close();
+						
 	}
 	
 }

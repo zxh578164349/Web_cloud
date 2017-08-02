@@ -141,8 +141,8 @@ public class PoiToHtmlUtil {
 		outStream.close();
 
 		String content = new String(outStream.toByteArray());
-		System.out.println(content);
-		FileUtils.writeStringToFile(new File(path, "report.html"), content, "utf-8");
+		//System.out.println(content);
+		//FileUtils.writeStringToFile(new File(path, "report.html"), content, "utf-8");
 		return content;
 	}
 	
@@ -173,12 +173,12 @@ public class PoiToHtmlUtil {
 				for (int k = 0; k < cols; k++) {
 					HSSFCell cell = row.getCell(k);
 					if(cell!=null)
-					    System.out.println("cell["+j+","+k+"]=:"+cell.getCellType());
+					    //System.out.println("cell["+j+","+k+"]=:"+cell.getCellType());
 					if (cell == null)
 						continue;
 					if (cell.getCellType() == HSSFCell.CELL_TYPE_FORMULA) {
 						cell.setCellFormula(cell.getCellFormula());
-						System.out.println("----公式："+cell.getCellFormula());
+						//System.out.println("----公式："+cell.getCellFormula());
 						cell=e.evaluateInCell(cell);
 						//System.out.println("-----------"+cell.getNumericCellValue());
 					}

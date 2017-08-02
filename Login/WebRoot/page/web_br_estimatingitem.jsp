@@ -21,7 +21,7 @@
 
 
 <body>
-	<jsp:include page="publicHead_web_br_productitem.jsp" />
+	<jsp:include page="publicHead_web_br_est.jsp" />
 	<hr />
 		
 	<div id="bodyid">
@@ -33,7 +33,7 @@ function pages(page) {
 	jq.ajax({
 		type : "POST",
 		dataType : "Html",
-		url : "webbrpro_findPageBean3",
+		url : "webbrpro_findPageBean_est3",
 		data : "page=" + page ,
 		success : function(msg) {
 			jq("#bodyid").html(msg);
@@ -48,7 +48,7 @@ function submis(public_form) {
 	jq.ajax({
 		type : "POST",
 		dataType : "Html",
-		url : "webbrpro_findPageBean2",		
+		url : "webbrpro_findPageBean_est2",		
 		data:subform.serialize(),
 		success : function(msg) {
 			jq("#bodyid").html(msg);

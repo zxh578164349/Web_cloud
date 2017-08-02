@@ -44,8 +44,8 @@
 			</td>			
 			<td>			
 			   <input value="搜索" type="button" class="btn btn-primary" onclick="submis('public_form')" />
-			   <input value="Excel 導出產品明細" type="button" class="btn btn-primary" onclick="print('public_form','webbrpro_print')"/>	
-			   <input value="Excel 導出預估明細" type="button" class="btn btn-primary" onclick="print('public_form','webbrpro_print2')"/>    
+			  <!--  <input value="Excel 導出產品明細" type="button" class="btn btn-primary" onclick="print('public_form','webbrpro_print')"/>	
+			   <input value="Excel 導出預估明細" type="button" class="btn btn-primary" onclick="print('public_form','webbrpro_print2')"/>  -->   
 		    </td>
 		    </tr>
 		</table>

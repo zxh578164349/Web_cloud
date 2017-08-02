@@ -21,7 +21,7 @@
 
 
 <body>
-	<jsp:include page="publicHead_web_br_productitem.jsp" />
+	<jsp:include page="publicHead_web_br_proAndest.jsp" />
 	<hr />
 		
 	<div id="bodyid">
@@ -33,7 +33,7 @@ function pages(page) {
 	jq.ajax({
 		type : "POST",
 		dataType : "Html",
-		url : "webbrpro_findPageBean3",
+		url : "webbrpro_findPageBean_proAndest3",
 		data : "page=" + page ,
 		success : function(msg) {
 			jq("#bodyid").html(msg);
@@ -45,13 +45,11 @@ function pages(page) {
 	});
 }
 function submis(public_form) {
-	var fact = document.getElementById("factNo");
-	var ym = document.getElementById("year");
 	var subform=jq("#"+public_form);
 	jq.ajax({
 		type : "POST",
 		dataType : "Html",
-		url : "webbrpro_findPageBean2",
+		url : "webbrpro_findPageBean_proAndest2",
 		//data : "factNo=" + fact.value + "&yymm=" + ym.value,
 		data:subform.serialize(),
 		success : function(msg) {
@@ -63,9 +61,9 @@ function submis(public_form) {
 		}
 	});
 }
-function print(subform){
+function print(subform,action){
 	var subform=jq("#"+subform);
-	subform.attr("action","webbrpro_printlist");
+	subform.attr("action",action);
 	subform.attr("target","_blank");
 	subform.submit();
 }
