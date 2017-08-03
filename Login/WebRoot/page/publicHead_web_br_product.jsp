@@ -39,7 +39,8 @@
 					
 				</s:else>
 			</td>			
-			<td>			
+			<td>
+			   &nbsp;			
 			   <input value="搜索" type="button" class="btn btn-primary" onclick="submis('public_form')" />
 			   <!-- <input value="導出Excel" type="button" class="btn btn-primary" onclick="print('public_form','factNo','yymm','yymm2')"/>	 -->	    
 		    </td>

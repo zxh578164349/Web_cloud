@@ -53,7 +53,9 @@
 					<s:iterator value="bean.list" status="x" id="obj">
 						<tr>
 							<td>${ bean.pageSize*(bean.currentPage-1)+x.index+1}</td>
-							<td><s:property value="id.factNo" /></td>
+							<td>
+							<s:property value="factNo2.factSname"/>							
+							</td>
 							<td><s:property value="id.factCode" /></td>
 							<td><s:property value="id.yymmdd" /></td>
 							<td><s:property value="actualPairs" />

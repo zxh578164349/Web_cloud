@@ -340,6 +340,9 @@ public class WebBrProductIDaoImpl extends Basedao implements IWebBrProductDao{
 		}
 		int offset=PageBean.countOffset(pageSize,currentPage);
 		List<WebBrEstimatingitem>list=super.getAllWithNoPage(hql.toString(),map);
+		for(WebBrEstimatingitem item:list){
+			item.getFactNo2().getFactSname();
+		}
 		PageBean bean=new PageBean();
 		bean.setAllRow(allrow);
 		bean.setCurrentPage(currentPage);
@@ -438,6 +441,9 @@ public class WebBrProductIDaoImpl extends Basedao implements IWebBrProductDao{
 		}
 		hql.append(" order by id.factNo,id.factCode,id.yymmdd");
 		List<WebBrEstimatingitem>list=super.getAllWithNoPage(hql.toString(),map);
+		for(WebBrEstimatingitem item:list){
+			item.getFactNo2().getFactSname();
+		}
 		return list;
 	}
 
@@ -485,7 +491,7 @@ public class WebBrProductIDaoImpl extends Basedao implements IWebBrProductDao{
 			hql.append(" and id. factNo=:factno ");
 			map.put("factno",factNo);
 		}
-		if(yymmdd!=null&&!"".equals(factNo)){
+		if(yymmdd!=null&&!"".equals(yymmdd)){
 			hql.append(" and id.yymmdd=:yymmdd ");
 			map.put("yymmdd",yymmdd);
 		}

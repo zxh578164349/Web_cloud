@@ -17,6 +17,7 @@ public class WebBrEstimatingitem implements java.io.Serializable{
 	private WebUser editUser;
 	private String createDate;
 	private String editDate;
+	private VWebFact factNo2;
 
 	// Constructors
 
@@ -27,6 +28,11 @@ public class WebBrEstimatingitem implements java.io.Serializable{
 	/** minimal constructor */
 	public WebBrEstimatingitem(WebBrEstimatingitemId id){
 		this.id=id;
+	}
+	
+	public WebBrEstimatingitem(WebBrEstimatingitemId id,VWebFact factNo2){
+		this.id=id;
+		this.factNo2=factNo2;
 	}
 
 	/** full constructor */
@@ -116,5 +122,15 @@ public class WebBrEstimatingitem implements java.io.Serializable{
 	public void setEditDate(String editDate){
 		this.editDate=editDate;
 	}
+
+	public VWebFact getFactNo2(){
+		return factNo2;
+	}
+
+	public void setFactNo2(VWebFact factNo2){
+		this.factNo2=factNo2;
+	}
+	
+	
 
 }

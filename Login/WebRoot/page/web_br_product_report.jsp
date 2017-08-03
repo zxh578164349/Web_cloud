@@ -64,17 +64,20 @@
 		</div>
 		<div class="panel-body">
 		    <form id="public_form2" method="post">
-			截止日期:
-			<input type="text" name="yymmdd" id="yymmdd2" 
-			onclick="WdatePicker({dateFmt:'yyyyMMdd',maxDate:'%y-%M-%d',opposite:true,disabledDates:['....0228','......30']})" class="Wdate"/>~
-			<input type="text" name="yymmdd2" id="yymmdd3"
-			onclick="WdatePicker({dateFmt:'yyyyMMdd',maxDate:'%y-%M-%d',opposite:true,disabledDates:['....0228','......30']})" class="Wdate"/>
-			&nbsp;&nbsp;
-			<input value="搜索" type="button" class="btn btn-primary"
-			onclick="print2('public_form2','webbrpro_findEstByYymmdd_print_inline')"/>
-			&nbsp;
-			<input value="Excel" type="button" class="btn btn-primary"
-			onclick="print2('public_form2','webbrpro_findEstByYymmdd_print_down')" />
+		    <table id="tb_search">
+		      <tr>
+						<td>截止日期: <input type="text" name="yymmdd" id="yymmdd2"
+							onclick="WdatePicker({dateFmt:'yyyyMMdd',maxDate:'%y-%M-%d',opposite:true,disabledDates:['....0228','......30']})" class="Wdate" />~
+							<input type="text" name="yymmdd2" id="yymmdd3"
+							onclick="WdatePicker({dateFmt:'yyyyMMdd',maxDate:'%y-%M-%d',opposite:true,disabledDates:['....0228','......30']})" class="Wdate" />
+							&nbsp;&nbsp;
+						</td>
+						<td><input value="搜索" type="button" class="btn btn-primary"
+							onclick="print2('public_form2','webbrpro_findEstByYymmdd_print_inline')" /> &nbsp; <input value="Excel" type="button"
+							class="btn btn-primary" onclick="print2('public_form2','webbrpro_findEstByYymmdd_print_down')" />
+						</td>
+					</tr>
+		    </table>						
 			</form>
 		</div>
 	</div>

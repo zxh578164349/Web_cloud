@@ -26,10 +26,10 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 <link rel="stylesheet" type="text/css" href="css/form.css" />
 <style type="text/css">
   .div_border_green{
-    width:95%;height:250px;overflow:auto;text-align:left;font-size: 12px
+    width:95%;height:180px;overflow:auto;text-align:left;font-size: 12px
   }
   .div_border_blue{
-    width:95%;height:250px;overflow:auto;text-align:left;font-size: 12px
+    width:95%;height:180px;overflow:auto;text-align:left;font-size: 12px
   }
   
 #myTabContent_item ul{margin:0px;padding:0px}
@@ -57,12 +57,13 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 <body>
 	<form action="webbrpro_add2_3" method="post" id="form_main">	
 	   <div class="panel panel-default">
-	     <div class="panel-heading"><label>廠別</label></div>
+	     <div class="panel-heading"><label>BR預估作業</label></div>
 	       <div class="panel-body">	  
 						<table class="table table-condensed">
 							<tbody>															
 								    <tr>
-									<td>							
+									<td>
+									    廠別:							
 									    <s:if test="#session.factNo!='tw'">
 									      <input type="text" name="factNo" value="${loginUser.factno}" readonly id="dwr_factno" />
 								        </s:if> 
@@ -74,6 +75,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 								        																						
 									</td>
 									<td>
+									截止日期:
 									<input type="text" name="yymmdd" onclick="WdatePicker({dateFmt:'yyyyMMdd',maxDate:'%y-%M-%d',opposite:true,disabledDates:['....0228','......30']})" onblur="checkproduct()" class="Wdate" datatype="*" /> 
 									<input type="hidden" value="<%=str_date%>" id="createDate"  />
 									 <input type="hidden" value="${loginUser.id}" id="createUser" />								
@@ -81,13 +83,13 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 									</td>
 								</tr> 								
 							</tbody>
-						</table>
-						
-						<hr />
-				<ul id="myTab_item" class="nav nav-tabs">
-					<li class="active"><a href="#tab_typeno" data-toggle="tab" id="tab_typeno_a">產品庫存</a></li>																										
-				</ul>
-				<div id="myTabContent_item" class="tab-content">
+						</table>										
+			</div>
+			
+			
+		   <div class="panel-heading"><label>產品庫存</label></div>
+	       <div class="panel-body">	
+	           <div id="myTabContent_item" class="tab-content">
 					<div class="tab-pane fade in active" id="tab_typeno">
 						<div  class="div_border_green">
 							<div id="div_namece">														
@@ -97,11 +99,11 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 						</div>
 					</div>					
 				</div>
-				
-				<ul id="myTab_item2" class="nav nav-tabs">
-					<li class="active"><a href="#tab_typeno2" data-toggle="tab" id="tab_typeno_a2">產品預估</a></li>																										
-				</ul>
-				<div id="myTabContent_item" class="tab-content">
+	       </div>
+	       
+	       <div class="panel-heading"><label>產品預估</label></div>
+	       <div class="panel-body">	
+	           <div id="myTabContent_item" class="tab-content">
 					<div class="tab-pane fade in active" id="tab_typeno2">
 						<div  class="div_border_green">
 							<div id="div_namece2">																						
@@ -111,10 +113,9 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 						</div>
 					</div>					
 				</div>
-			</div>
+	       </div>
 		</div>
-		
-        
+							        
 		<center>
 	        <input type="button" id="sub_main" value="確定" class="btn btn-primary" />&nbsp;&nbsp;&nbsp;			              
 			<input type="button" value="返回"  onclick="javascript:back()" class="btn btn-primary" />	
@@ -198,13 +199,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 
 	
 function loadNamece(itemcategory){
-	jq("#div_namece").empty();
-	/*var selfchar1s=new Array();
-	var list=jq("input[name='typenos']:checked");
-	list.each(function(i,typeno){
-		selfchar1s.push(typeno.value);
-	});*/
-
+	jq("#div_namece").empty();	
 		jq.ajax({
 			type:"post",
 			dataType:"json",
@@ -234,7 +229,7 @@ function checkproduct(){
 		url:"webbrpro_findByFactNo2",
 		success:function(data){
 			if(data=="0"){
-				layer.alert("請設定BR產品",0);	
+				layer.alert("請前往BR產品設定頁面添加BR產品",0);	
 				jq(".list_item").empty();
 				jq(".list_item2").empty();
 			}else{
@@ -324,9 +319,7 @@ function addSection(){
 				})	
 				jq(".list_item2").append(li_content2);
 			}			
-		});
-		
-		
+		});				
 	}						    	    	    	    	   	    
 }
 

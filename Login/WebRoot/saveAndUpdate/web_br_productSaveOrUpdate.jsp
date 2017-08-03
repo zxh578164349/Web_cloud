@@ -51,40 +51,37 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 </head>
 
 <body>
-	<form action="webbrpro_add" method="post" id="form_main">	
-	   <div class="panel panel-default">
-	     <div class="panel-heading"><label>廠別</label></div>
-	       <div class="panel-body">	  
-						<table class="table table-condensed">
-							<tbody>															
-								    <tr>
-									<td>							
-									    <s:if test="#session.factNo!='tw'">
-									      <input type="text" name="factNo" value="${loginUser.factno}" readonly id="dwr_factno" />
-								        </s:if> 
-								        <s:if test="#session.factNo=='tw'">
-									      <select name="factNo" onchange="" datatype="*" id="dwr_factno">
-									      </select>
-								        </s:if>																								
-									</td>
-									<td>								
-									 <input type="hidden" value="<%=str_date%>" name="createDate"  />
-									 <input type="hidden" value="${loginUser.id}" name="createUser" />								
-									</td>
-								</tr> 								
-							</tbody>
-						</table>
-					</div>
-		</div>
+	<form action="webbrpro_add" method="post" id="form_main">		   
 		<div class="panel panel-default" id="div_webformalaitem">
 			<div class="panel-heading">
-				<label>產品</label>			 
+				<label>BR產品設定</label>			 
 			</div>
 			<div class="panel-body">
-			   <select id="div_typeno" onchange="loadNamece(this.value)" datatype="*" name="itemcategory"></select>
-			   <input type="button" value="添加產品"
-					onclick="check_addSection()" class="btn btn-primary disabled"
-					id="btn_addsec" />
+			   <table class="table table-condensed">
+			       <tr>
+						<td>
+						廠別:
+						<s:if test="#session.factNo!='tw'">
+								<input type="text" name="factNo" value="${loginUser.factno}" readonly id="dwr_factno" />
+							</s:if> 
+							<s:if test="#session.factNo=='tw'">
+								<select name="factNo" onchange="" datatype="*" id="dwr_factno">
+								</select>
+							</s:if>
+						</td>
+						<td>
+						  類別:
+						  <select id="div_typeno" onchange="loadNamece(this.value)" datatype="*" name="itemcategory"></select>
+						  <input type="hidden" value="<%=str_date%>" name="createDate"  />
+						  <input type="hidden" value="${loginUser.id}" name="createUser" />
+						</td>
+						<td>
+						   <input type="button" value="添加產品" onclick="check_addSection()" class="btn btn-primary disabled" id="btn_addsec" />
+						</td>
+					</tr>
+			   </table>
+			   
+			   
 			<hr />
 				<ul id="myTab_item" class="nav nav-tabs">
 					<li class="active"><a href="#tab_typeno" data-toggle="tab" id="tab_typeno_a">產品名稱</a></li>						

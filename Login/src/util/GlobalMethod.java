@@ -542,6 +542,37 @@ public class GlobalMethod extends HibernateDaoSupport{
 		cs_head.setWrapText(true);//自動換行
 		map.put("cs_head", cs_head);
 		
+		HSSFCellStyle cs_head2=wb.createCellStyle();
+		HSSFFont font_head2=wb.createFont();
+		font_head2.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+		font_head2.setFontHeightInPoints((short)12);
+		cs_head2.setFont(font_head2);
+		cs_head2.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		cs_head2.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		cs_head2.setBorderTop(HSSFCellStyle.BORDER_THICK);
+		cs_head2.setBorderRight(HSSFCellStyle.BORDER_THICK);
+		cs_head2.setBorderBottom(HSSFCellStyle.BORDER_THICK);
+		cs_head2.setBorderLeft(HSSFCellStyle.BORDER_THICK);
+		cs_head2.setFillForegroundColor(IndexedColors.BRIGHT_GREEN.getIndex());
+		cs_head2.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+		map.put("cs_head2", cs_head2);
+		
+		HSSFCellStyle cs_head3=wb.createCellStyle();
+		HSSFFont font_head3=wb.createFont();
+		font_head3.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+		font_head3.setFontHeightInPoints((short)12);
+		cs_head3.setFont(font_head);
+		cs_head3.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		cs_head3.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		cs_head3.setBorderTop(HSSFCellStyle.BORDER_THIN);
+		cs_head3.setBorderRight(HSSFCellStyle.BORDER_THIN);
+		cs_head3.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+		cs_head3.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+		cs_head3.setFillForegroundColor(IndexedColors.LIGHT_GREEN.getIndex());
+		cs_head3.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+		cs_head3.setWrapText(true);//自動換行
+		map.put("cs_head3", cs_head3);
+		
 		HSSFCellStyle cs_red_bg=wb.createCellStyle();		
 		cs_red_bg.setAlignment(HSSFCellStyle.ALIGN_CENTER);
 		cs_red_bg.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
@@ -565,20 +596,7 @@ public class GlobalMethod extends HibernateDaoSupport{
 		cs_lblue_bg.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
 		map.put("cs_lblue_bg", cs_lblue_bg);
 		
-		HSSFCellStyle cs_head2=wb.createCellStyle();
-		HSSFFont font_head2=wb.createFont();
-		font_head2.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
-		font_head2.setFontHeightInPoints((short)12);
-		cs_head2.setFont(font_head2);
-		cs_head2.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-		cs_head2.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
-		cs_head2.setBorderTop(HSSFCellStyle.BORDER_THICK);
-		cs_head2.setBorderRight(HSSFCellStyle.BORDER_THICK);
-		cs_head2.setBorderBottom(HSSFCellStyle.BORDER_THICK);
-		cs_head2.setBorderLeft(HSSFCellStyle.BORDER_THICK);
-		cs_head2.setFillForegroundColor(IndexedColors.BRIGHT_GREEN.getIndex());
-		cs_head2.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
-		map.put("cs_head2", cs_head2);
+		
 		
 		
 		

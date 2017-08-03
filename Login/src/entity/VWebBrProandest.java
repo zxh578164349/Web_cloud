@@ -33,7 +33,7 @@ public class VWebBrProandest implements java.io.Serializable{
 
 	/** full constructor */
 	public VWebBrProandest(VWebBrProandestId id,BigDecimal inventory,BigDecimal ordernotin,BigDecimal actualused,Double actualpairs,Double estimatingpairs1,
-			Double estimatingpairs2,Double estimatingpairs3){
+			Double estimatingpairs2,Double estimatingpairs3,VWebFact factNo2){
 		this.id=id;
 		this.inventory=inventory;
 		this.ordernotin=ordernotin;
@@ -42,6 +42,7 @@ public class VWebBrProandest implements java.io.Serializable{
 		this.estimatingpairs1=estimatingpairs1;
 		this.estimatingpairs2=estimatingpairs2;
 		this.estimatingpairs3=estimatingpairs3;
+		this.factNo2=factNo2;
 	}
 
 	// Property accessors

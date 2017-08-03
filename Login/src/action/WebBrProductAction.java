@@ -8,6 +8,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
+import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -49,6 +50,7 @@ import com.opensymphony.xwork2.ActionSupport;
 
 import entity.KyzExpectmatmLog;
 import entity.VWebBrProandest;
+import entity.VWebBrProandestId;
 import entity.VWebFact;
 import entity.WebBrEstimatingitem;
 import entity.WebBrEstimatingitemId;
@@ -718,7 +720,7 @@ public class WebBrProductAction extends ActionSupport implements ServletResponse
 		HSSFWorkbook wb=new HSSFWorkbook();
 		Map<String,Object>map_style=GlobalMethod.findStyles(wb);
 		if("all".equals(factCode)){
-			List<String>list_factcode=new ArrayList<String>();
+			/*List<String>list_factcode=new ArrayList<String>();--
 			List<String>list_obj=webFactSer.findfactarea();
 			for(String obj:list_obj){
 				list_factcode.add(obj);
@@ -732,7 +734,35 @@ public class WebBrProductAction extends ActionSupport implements ServletResponse
 					}
 				}
 				map.put(factcode,list_est);
-			}	
+			}*/	
+			
+			List<Object[]>list_fact=webFactSer.findFnoFcodeShow();
+			List<String>list_factcode=new ArrayList<String>();	
+			List<VWebBrProandest>list_est=new LinkedList<VWebBrProandest>();
+			for(Object[] objs:list_fact){
+				list_factcode.add(objs[1].toString());
+				list_est.add(new VWebBrProandest(new VWebBrProandestId(objs[0].toString(),objs[1].toString(),yymmdd),new BigDecimal(0.00),new BigDecimal(0.00),new BigDecimal(0.00),0.00,0.00,0.00,0.00,new VWebFact(objs[0].toString(),objs[2].toString())));
+			}
+			HashSet<String>set_factcode=new HashSet<String>(list_factcode);
+			for(int a=0;a<list_est.size();a++){
+				for(VWebBrProandest est:listitemAndest){
+					if(list_est.get(a).getId().getFactNo().equals(est.getId().getFactNo())&&
+							list_est.get(a).getId().getFactCode().equals(est.getId().getFactCode())&&
+							list_est.get(a).getId().getYymmdd().equals(est.getId().getYymmdd())){
+						list_est.remove(a);
+						list_est.add(a,est);
+					}
+				}
+			}
+			for(String factcode:set_factcode){
+				List<VWebBrProandest>list_temp=new ArrayList<VWebBrProandest>();
+				for(VWebBrProandest est:list_est){
+					if(factcode.equals(est.getId().getFactCode())){
+						list_temp.add(est);
+					}
+				}
+				map.put(factcode,list_temp);
+			}									
 		}else{
 			map.put(factCode,listitemAndest);
 		}
@@ -825,12 +855,13 @@ public class WebBrProductAction extends ActionSupport implements ServletResponse
 		
 		HSSFCellStyle cs_title=(HSSFCellStyle)map_style.get("cs_title");
 		HSSFCellStyle cs_head=(HSSFCellStyle)map_style.get("cs_head");
+		HSSFCellStyle cs_head3=(HSSFCellStyle)map_style.get("cs_head3");
 		HSSFCellStyle cs=(HSSFCellStyle)map_style.get("cs");
 		HSSFCellStyle cs_poi2=(HSSFCellStyle)map_style.get("cs_poi2");
 				
 		for(int a=0;a<list_parameter.size()+3;a++){
 			sheet.createRow(a);
-			for(int b=0;b<list_head.size();b++){
+			for(int b=0;b<list_head.size()+10;b++){
 				sheet.getRow(a).createCell(b);
 			}
 		}
@@ -841,9 +872,15 @@ public class WebBrProductAction extends ActionSupport implements ServletResponse
 		for(int a=0;a<5;a++){
 			sheet.getRow(0).getCell(a).setCellStyle(cs_title);
 		}
+		sheet.getRow(0).getCell(list_head.size()-months).setCellValue("截止日期:");
+		sheet.getRow(0).getCell(list_head.size()-months+1).setCellValue(yymmdd);
 		sheet.getRow(1).setHeightInPoints(2*sheet.getDefaultRowHeightInPoints());//表頭設置兩行默認行高
 		for(int a=0;a<list_head.size();a++){
-			sheet.getRow(1).getCell(a).setCellStyle(cs_head);
+			if(a<list_head.size()-months){
+				sheet.getRow(1).getCell(a).setCellStyle(cs_head3);
+			}else{
+				sheet.getRow(1).getCell(a).setCellStyle(cs_head);
+			}			
 			sheet.getRow(1).getCell(a).setCellValue(new HSSFRichTextString(list_head.get(a)));			
 			sheet.setColumnWidth(a,5000);
 		}
@@ -947,6 +984,7 @@ public class WebBrProductAction extends ActionSupport implements ServletResponse
 			HSSFCellStyle cs=(HSSFCellStyle)map_style.get("cs");
 			HSSFCellStyle cs_title=(HSSFCellStyle)map_style.get("cs_title");
 			HSSFCellStyle cs_head=(HSSFCellStyle)map_style.get("cs_head");
+			HSSFCellStyle cs_head3=(HSSFCellStyle)map_style.get("cs_head3");
 			HSSFCellStyle cs_poi2=(HSSFCellStyle)map_style.get("cs_poi2");
 			List<String>list_head=new ArrayList<String>();
 			list_head.add("廠別");
@@ -970,7 +1008,7 @@ public class WebBrProductAction extends ActionSupport implements ServletResponse
 			for(String date:list_months){
 				List<WebBrEstimatingitem>listest2=new LinkedList<WebBrEstimatingitem>();
 				for(Object[] obj:list_fact){
-					listest2.add(new WebBrEstimatingitem(new WebBrEstimatingitemId(obj[0].toString(),obj[1].toString(),date)));
+					listest2.add(new WebBrEstimatingitem(new WebBrEstimatingitemId(obj[0].toString(),obj[1].toString(),date),new VWebFact(obj[0].toString(),obj[2].toString())));
 				}
 				list_all.add(listest2);
 			}
@@ -1006,12 +1044,17 @@ public class WebBrProductAction extends ActionSupport implements ServletResponse
 			sheet.getRow(1).setHeightInPoints(2*sheet.getDefaultRowHeightInPoints());
 			for(int a=0;a<list_head.size();a++){
 				sheet.getRow(1).getCell(a).setCellValue(new HSSFRichTextString(list_head.get(a)));
-				sheet.getRow(1).getCell(a).setCellStyle(cs_head);
+				if(list_head.get(a).indexOf("預估生產雙數")==-1){
+					sheet.getRow(1).getCell(a).setCellStyle(cs_head3);
+				}else{
+					sheet.getRow(1).getCell(a).setCellStyle(cs_head);
+				}
+				
 				sheet.setColumnWidth(a,5000);
 			}
 						
 			for(int a=0;a<list_all.get(0).size();a++){
-				sheet.getRow(2+a).getCell(0).setCellValue(list_all.get(0).get(a).getId().getFactNo());
+				sheet.getRow(2+a).getCell(0).setCellValue(list_all.get(0).get(a).getFactNo2().getFactSname());
 				sheet.getRow(2+a).getCell(1).setCellValue(list_all.get(0).get(a).getId().getFactCode());
 				sheet.getRow(2+a).getCell(0).setCellStyle(cs);
 				sheet.getRow(2+a).getCell(1).setCellStyle(cs);
