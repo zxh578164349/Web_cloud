@@ -89,7 +89,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
         
 		<center>
 	        <input type="button" id="sub_main" value="確定" class="btn btn-primary" />&nbsp;&nbsp;&nbsp;			              
-			<input type="button" value="返回"  onclick="javascript:back()" class="btn btn-primary" />	
+			<input type="button" value="返回"  onclick="javascript:back_main('webbrpro_findPageBean_pro3?backIndex=1')" class="btn btn-primary" />	
 			<span id="msgtip" style="margin-left:30px;"></span>		            
 		</center>																								     
 	</form>

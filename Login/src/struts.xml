@@ -751,6 +751,12 @@
 		     <result name="delete" type="redirectAction">webbrpro_findPageBean3</result>
 		     <result name="delete_pro" type="redirectAction">webbrpro_findPageBean_item3</result>
 		     <result name="delete_est" type="redirectAction">webbrpro_findPageBean_est3</result>
+		     <result name="delete_pro_json" type="json">
+		          <param name="root">ajaxResult</param>
+		     </result>
+		     <result name="delete_est_json" type="json">
+		          <param name="root">ajaxResult</param>
+		     </result>
 		     <result name="findByFactno" type="json">
 		         <param name="root">jsons</param>
 		     </result>

@@ -99,10 +99,16 @@ public class WebBrProductAction extends ActionSupport implements ServletResponse
 	private int months;
 	private List<Object[]>list_pro;
 	private List<Object[]>list_est;
+	private int backIndex;//返回標識      0或null:不走返回路徑         1:走返回路徑
 	
 	
 	
-	
+	public int getBackIndex(){
+		return backIndex;
+	}
+	public void setBackIndex(int backIndex){
+		this.backIndex=backIndex;
+	}
 	public WebBrProductitem getPro(){
 		return pro;
 	}
@@ -270,7 +276,12 @@ public class WebBrProductAction extends ActionSupport implements ServletResponse
 	public String findPageBean3(){
 		factNo=(String)ActionContext.getContext().getSession().get("webbrproFactNo");
 		bean=webbrproSer.findPageBean(20,page,factNo);
-		return "findPageBean1";
+		if(backIndex==0){
+			return "findPageBean1";
+		}else{
+			return "findPageBean";
+		}
+		
 	}
 	/*************************************BR產品**************************************************/
 	
@@ -295,11 +306,15 @@ public class WebBrProductAction extends ActionSupport implements ServletResponse
 		yymmdd=(String)ActionContext.getContext().getSession().get("webitemYymmdd");
 		yymmdd2=(String)ActionContext.getContext().getSession().get("webitemYymmdd2");
 		bean=webbrproSer.findPageBean_pro(20,page,factNo,yymmdd,yymmdd2);
-		return "findPageBean_pro1";
+		if(backIndex==0){
+			return "findPageBean_pro1";
+		}else{
+			return "findPageBean_pro";
+		}		
 	}
 	/*************************************BR產品庫存**************************************************/
 	
-	/*************************************BR產品庫存**************************************************/
+	/*************************************BR產品預估**************************************************/
 	public String findPageBean_est(){
 		ActionContext.getContext().getSession().remove("webitemFactNo");
 		ActionContext.getContext().getSession().remove("webitemYymmdd");
@@ -319,9 +334,14 @@ public class WebBrProductAction extends ActionSupport implements ServletResponse
 		yymmdd=(String)ActionContext.getContext().getSession().get("webitemYymmdd");
 		yymmdd2=(String)ActionContext.getContext().getSession().get("webitemYymmdd2");
 		bean=webbrproSer.findPageBean_est(20,page,factNo,yymmdd,yymmdd2);
-		return "findPageBean_est1";
+		if(backIndex==0){
+			return "findPageBean_est1";
+		}else{
+			return "findPageBean_est";
+		}
+		
 	}
-	/*************************************BR產品庫存**************************************************/
+	/*************************************BR產品預估**************************************************/
 	
 	
 	/*****************************************BR產品庫存與預估*********************************************/
@@ -343,8 +363,12 @@ public class WebBrProductAction extends ActionSupport implements ServletResponse
 		factNo=(String)ActionContext.getContext().getSession().get("webitemFactNo");
 		yymmdd=(String)ActionContext.getContext().getSession().get("webitemYymmdd");
 		yymmdd2=(String)ActionContext.getContext().getSession().get("webitemYymmdd2");
-		bean=webbrproSer.findPageBean_proAndest(20,page,factNo,yymmdd,yymmdd2);
-		return "findPageBean_proAndest1";
+		bean=webbrproSer.findPageBean_proAndest(20,page,factNo,yymmdd,yymmdd2);		
+		if(backIndex==0){
+			return "findPageBean_proAndest1";
+		}else{
+			return "findPageBean_proAndest";
+		}
 	}
 	
 	/*****************************************BR產品庫存與預估*********************************************/
@@ -395,6 +419,17 @@ public class WebBrProductAction extends ActionSupport implements ServletResponse
 		return "delete_pro";
 	}
 	
+	public String delete_pro_json(){
+		ajaxResult="0";
+		try{
+			this.delete_pro();
+		}catch(Exception e){
+			ajaxResult="1";
+			e.printStackTrace();
+		}		
+		return "delete_pro_json";
+	}
+	
 	public String delete_est(){
 		try{
 			KyzExpectmatmLog log=new KyzExpectmatmLog();
@@ -409,6 +444,19 @@ public class WebBrProductAction extends ActionSupport implements ServletResponse
 		}
 		return "delete_est";
 	}
+	
+	public String delete_est_json(){
+		ajaxResult="0";
+		try{
+			this.delete_est();
+		}catch(Exception e){
+			ajaxResult="1";
+			e.printStackTrace();
+		}
+		return "delete_est_json";
+	}
+	
+	
 	
 	public String findByFactno(){
 		try{

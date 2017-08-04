@@ -71,14 +71,21 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 			           </td>
 			           <td><input type="text" name="listitem[${x.index}].inventory" value="<s:property value='inventory'/>" datatype="*,*8-2"/></td>
 			           <td><input type="text" name="listitem[${x.index}].orderNotin" value="<s:property value='orderNotin'/>" datatype="*,*8-2"/></td>
-			           <td><input type="text" name="listitem[${x.index}].actualUsed" value="<s:property value='actualUsed'/>" datatype="*,*8-2"/></td>
+			           <td><input type="text" name="listitem[${x.index}].actualUsed" value="<s:property value='actualUsed'/>" datatype="*,*8-2"/>
 			           <input type="hidden" name="listitem[${x.index}].id.webBrProduct.id.webErpProductinFormation.itemid" value="<s:property value='id.webBrProduct.id.webErpProductinFormation.itemid'/>" />
 			           <input type="hidden" name="listitem[${x.index}].id.webBrProduct.id.factNo" value="<s:property value='id.webBrProduct.id.factNo'/>"/>
 			           <input type="hidden" name="listitem[${x.index}].id.yymmdd" value="<s:property value='id.yymmdd'/>"/>
 			           <input type="hidden" name="listitem[${x.index}].createUser.id" value="<s:property value='createUser.id'/>"/>
 			           <input type="hidden" name="listitem[${x.index}].createDate" value="<s:property value='createDate'/>"/>
 			           <input type="hidden" name="listitem[${x.index}].editUser.id" value="${loginUser.id}"/>
-			           <input type="hidden" name="listitem[${x.index}].editDate" value="<%=str_date%>"/>			           
+			           <input type="hidden" name="listitem[${x.index}].editDate" value="<%=str_date%>"/>
+			           </td>
+			           <td>
+			              <input type="hidden" value="<s:property value='id.webBrProduct.id.factNo'/>"  id="fno${x.index}"/>
+			              <input type="hidden" value="<s:property value='id.yymmdd'/>"  id="ymd${x.index}"/>
+			              <input type="hidden" value="<s:property value='id.webBrProduct.id.webErpProductinFormation.itemid'/>"  id="wid${x.index}"/>
+			              <input type="hidden" value="刪除" onclick="removeOneItem('webbrpro_delete_pro_json',this,'fno${x.index}','ymd${x.index}','wid${x.index}')"/>
+			           </td>			           
 			        </tr>
 			        </s:iterator>
 			    </table>			 
@@ -97,12 +104,19 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 			              <td><input type="text" value="<s:property value='estimatingPairs1'/>" name="listest[${x.index}].estimatingPairs1" datatype="*,*8-2"/></td>
 			              <td><input type="text" value="<s:property value='estimatingPairs2'/>" name="listest[${x.index}].estimatingPairs2" datatype="*,*8-2"/></td>
 			              <td><input type="text" value="<s:property value='estimatingPairs3'/>" name="listest[${x.index}].estimatingPairs3" datatype="*,*8-2"/></td>
-			              <input type="hidden" value="<s:property value='createUser.id'/>" name="listest[${x.index}].createUser.id"/>
+			              <td><input type="hidden" value="<s:property value='createUser.id'/>" name="listest[${x.index}].createUser.id"/>
 			              <input type="hidden" value="<s:property value='createDate'/>" name="listest[${x.index}].createDate"/>
 			              <input type="hidden" value="${loginUser.id}" name="listest[${x.index}].editUser.id"/>
 			              <input type="hidden" value="<%=str_date%>" name="listest[${x.index}].editDate"/>
 			              <input type="hidden" value="<s:property value='id.factNo'/>" name="listest[${x.index}].id.factNo"/>
-			              <input type="hidden" value="<s:property value='id.yymmdd'/>" name="listest[${x.index}].id.yymmdd"/>
+			              <input type="hidden" value="<s:property value='id.yymmdd'/>" name="listest[${x.index}].id.yymmdd"/>			              			             
+			              </td>
+			              <td>			                
+			                  <input type="hidden" value="<s:property value='id.factCode'/>"  id="factCode${x.index}"/>
+			                  <input type="hidden" value="<s:property value='id.factNo'/>"   id="factNo${x.index}"/>
+			                  <input type="hidden"  value="<s:property value='id.yymmdd'/>"  id="yymmdd${x.index}"/>
+			                  <input type="button"  value="刪除" onclick="removeOneItem('webbrpro_delete_est_json',this,'factNo${x.index}','factCode${x.index}','yymmdd${x.index}')"/>
+			              </td>
 			           </tr>
 			        </s:iterator>
 			        
@@ -115,11 +129,10 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
         
 		<center>
 	        <input type="button" id="sub_main" value="確定" class="btn btn-primary" />&nbsp;&nbsp;&nbsp;			              
-			<input type="button" value="返回"  onclick="javascript:back()" class="btn btn-primary" />	
+			<input type="button" value="返回"  onclick="javascript:back_main('webbrpro_findPageBean_proAndest3?backIndex=1')" class="btn btn-primary" />	
 			<span id="msgtip" style="margin-left:30px;"></span>		            
 		</center>																								     
 	</form>
-
 
 <script type="text/javascript">
 	jq(function() {	
@@ -226,6 +239,7 @@ function addSection(){
 					"<input type='hidden' name='listitem["+i+"].createUser.id' value='"+createUser+"'/>"+
 					"<input type='hidden' name='listitem["+i+"].createDate' value='"+createDate+"'/>"+
 					"</li>"
+					
 				})	
 				jq(".list_item").append(li_content);
 			}			
@@ -273,13 +287,30 @@ function addSection(){
 	}						    	    	    	    	   	    
 }
 
-function removeOneItem(img){
-	    img.parent().prev().remove();
-		img.parent().remove();
-		if(jq("[name='img_temp']").length==0){
-			layer.msg("請添加產品",3,3);
-			jq("#sub_main").addClass("disabled");
-		}
+function removeOneItem(url,obj,par1,par2,par3){
+	/*jq(obj).parent().parent().parent().remove();
+	layer.alert("刪除成功");*/
+	
+	var flag=confirm("確定要刪除嗎?");
+	if(flag){
+		var fno=jq("#"+par1).val();
+		var fcode=jq("#"+par2).val();		
+		var ymd=jq("#"+par3).val();
+		jq.ajax({
+			type:"post",
+			dataType:"json",
+			data:{factNo:fno,factCode:fcode,yymmdd:ymd},
+			url:url,
+			success:function(data){
+				if(data=="0"){
+					jq(obj).parent().parent().remove();
+					layer.alert("刪除成功");
+				}else{
+					layer.alert("刪除失敗");
+				}
+			}			
+		});
+	}		    						
 }
 
 function checkbtn(){

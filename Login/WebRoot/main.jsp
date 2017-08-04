@@ -388,6 +388,11 @@
 		function change_h2_title(title) {
 			jq("#h2_title2").text(title);
 		}
+		
+		//添加修改頁面返回到數據頁面20170804
+		function back_main(url) {
+			loadUrl(url);
+		}
 	</script>
 </body>
 
