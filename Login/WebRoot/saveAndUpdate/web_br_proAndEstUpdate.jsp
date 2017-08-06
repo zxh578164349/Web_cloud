@@ -84,7 +84,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 			              <input type="hidden" value="<s:property value='id.webBrProduct.id.factNo'/>"  id="fno${x.index}"/>
 			              <input type="hidden" value="<s:property value='id.yymmdd'/>"  id="ymd${x.index}"/>
 			              <input type="hidden" value="<s:property value='id.webBrProduct.id.webErpProductinFormation.itemid'/>"  id="wid${x.index}"/>
-			              <input type="hidden" value="刪除" onclick="removeOneItem('webbrpro_delete_pro_json',this,'fno${x.index}','ymd${x.index}','wid${x.index}')"/>
+			              <input type="button" value="刪除" onclick="removeOneItem_pro('webbrpro_delete_pro_json',this,'fno${x.index}','ymd${x.index}','wid${x.index}')"/>
 			           </td>			           
 			        </tr>
 			        </s:iterator>
@@ -111,11 +111,11 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 			              <input type="hidden" value="<s:property value='id.factNo'/>" name="listest[${x.index}].id.factNo"/>
 			              <input type="hidden" value="<s:property value='id.yymmdd'/>" name="listest[${x.index}].id.yymmdd"/>			              			             
 			              </td>
-			              <td>			                
-			                  <input type="hidden" value="<s:property value='id.factCode'/>"  id="factCode${x.index}"/>
+			              <td>			                			                  
 			                  <input type="hidden" value="<s:property value='id.factNo'/>"   id="factNo${x.index}"/>
+			                  <input type="hidden" value="<s:property value='id.factCode'/>"  id="factCode${x.index}"/>
 			                  <input type="hidden"  value="<s:property value='id.yymmdd'/>"  id="yymmdd${x.index}"/>
-			                  <input type="button"  value="刪除" onclick="removeOneItem('webbrpro_delete_est_json',this,'factNo${x.index}','factCode${x.index}','yymmdd${x.index}')"/>
+			                  <input type="button"  value="刪除" onclick="removeOneItem_est('webbrpro_delete_est_json',this,'factNo${x.index}','factCode${x.index}','yymmdd${x.index}')"/>
 			              </td>
 			           </tr>
 			        </s:iterator>
@@ -287,7 +287,33 @@ function addSection(){
 	}						    	    	    	    	   	    
 }
 
-function removeOneItem(url,obj,par1,par2,par3){
+function removeOneItem_pro(url,obj,par1,par2,par3){
+	/*jq(obj).parent().parent().parent().remove();
+	layer.alert("刪除成功");*/
+	
+	var flag=confirm("確定要刪除嗎?");
+	if(flag){
+		var fno=jq("#"+par1).val();
+		var ymd=jq("#"+par2).val();		
+		var wid=jq("#"+par3).val();
+		jq.ajax({
+			type:"post",
+			dataType:"json",
+			data:{factNo:fno,yymmdd:ymd,wid:wid},
+			url:url,
+			success:function(data){
+				if(data=="0"){
+					jq(obj).parent().parent().remove();
+					layer.alert("刪除成功");
+				}else{
+					layer.alert("刪除失敗");
+				}
+			}			
+		});
+	}		    						
+}
+
+function removeOneItem_est(url,obj,par1,par2,par3){
 	/*jq(obj).parent().parent().parent().remove();
 	layer.alert("刪除成功");*/
 	

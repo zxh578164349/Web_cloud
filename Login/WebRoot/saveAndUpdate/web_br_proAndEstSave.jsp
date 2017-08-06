@@ -147,7 +147,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 			callback:function(data){
 				if(data=="0"){
 					layer.msg("提交成功!",3,1);				
-					loadUrl("webbrpro_findPageBean");
+					loadUrl("webbrpro_findPageBean_proAndest");
 					//loadUrl("webbrpro_findById?formulaIndex="+jq("#formulaIndex").val());
 				}
 				if(data=="1"){
