@@ -25,7 +25,7 @@
             </key>
             <one-to-many class="entity.WebJurisdiction" />
         </bag>
-        <bag name="submenus" inverse="true">
+        <bag name="submenus" inverse="true" order-by="submenuid">
             <key>
                 <column name="MENUID" precision="8" scale="0" not-null="true" />
             </key>
