@@ -49,9 +49,9 @@ public class KyVisabillsDaoImpl extends Basedao implements IKyVisaBillsDao{
 		if(factNo==null||"".equals(factNo)||"nothing".equals(factNo)){
 			factNo=user.getFactno();
 		}
-		if(createDate==null||"".equals(createDate)){
+		/*if(createDate==null||"".equals(createDate)){
 			createDate=this.twoMonths();
-		}
+		}*/
 		String adminMk=user.getAdminMk();
 		String email=user.getEmail();		
 		if(email==null||email.equals("")){
@@ -108,7 +108,7 @@ public class KyVisabillsDaoImpl extends Basedao implements IKyVisaBillsDao{
 			map.put("title","%"+title+"%");
 		}
 		hql.append(" and flowMk='Y'");
-		//hql.append(STR);
+		hql.append(STR);
 		hql2.append(hql);
 		hql.append(" order by id.kyVisabillm.id.factNo desc,id.kyVisabillm.dateCreate desc,id.kyVisabillm.id.billNo desc");
 		if(rows!=null&&page>0){
@@ -370,6 +370,7 @@ public class KyVisabillsDaoImpl extends Basedao implements IKyVisaBillsDao{
 			map.put("title","%"+title+"%");
 		}
 		hql.append(STR);
+		hql.append(" and flowMk='Y'");
 		hql2.append(hql);
 		hql.append(" order by id.kyVisabillm.id.factNo desc,id.kyVisabillm.dateCreate desc,id.kyVisabillm.id.billNo desc");
 		

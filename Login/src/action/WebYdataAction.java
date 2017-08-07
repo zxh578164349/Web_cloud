@@ -704,7 +704,7 @@ public class WebYdataAction extends ActionSupport implements
 				BigDecimal samplepairs=new BigDecimal((objs[8]==null?0:objs[8]).toString());
 				BigDecimal outnum=new BigDecimal((objs[9]==null?0:objs[9]).toString());
 				BigDecimal backnum=new BigDecimal((objs[10]==null?0:objs[10]).toString());
-				
+				Double workhours=(Double)(objs[11]==null?0.0:objs[11]);
 				/*BigDecimal onModulus=new BigDecimal(objs[0].toString());
 				BigDecimal personnum=new BigDecimal((objs[1]).toString());
 				BigDecimal standardOutput=new BigDecimal((objs[2]).toString());
@@ -715,9 +715,9 @@ public class WebYdataAction extends ActionSupport implements
 				BigDecimal factpairs=new BigDecimal((objs[7]).toString());
 				BigDecimal samplepairs=new BigDecimal((objs[8]).toString());
 				BigDecimal outnum=new BigDecimal((objs[9]).toString());
-				BigDecimal backnum=new BigDecimal((objs[10]).toString());*/
+				BigDecimal backnum=new BigDecimal((objs[10]).toString());
+				Double workhours=(Double)objs[11];*/
 				
-				Double workhours=(Double)objs[11];
 				ydate.setSumEverydemo(onModulus);
 				ydate.setSumEverypeople(personnum);
 				ydate.setSumStandarddemo(standardOutput);
