@@ -1710,6 +1710,11 @@ public class GlobalMethod extends HibernateDaoSupport{
 	  * @return
 	  */
 	 public static List<Double> removeSameDouble(List<Double>list){
+		 /*for(int a=0;a<list.size();a++){
+			 if(list.get(a)==null){
+				 list.set(a,0.00);
+			 }
+		 }*/
 		 for(int i=0;i<list.size();i++){
 			 for(int j=list.size()-1;j>i;j--){
 				 if(list.get(j).equals(list.get(i))){
