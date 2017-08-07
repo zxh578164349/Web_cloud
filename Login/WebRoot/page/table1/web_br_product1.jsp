@@ -54,7 +54,7 @@
 							</td>
 							<td><s:property value="id.webErpProductinFormation.itemcategoryname"/>
 							</td>
-							<td><s:property value="namec1" />&nbsp;&nbsp;<s:property value="namec1" />
+							<td><s:property value="namec1" />&nbsp;&nbsp;<s:property value="namec2" />
 							</td>							
 							
 												
