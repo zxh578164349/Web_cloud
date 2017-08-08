@@ -111,6 +111,7 @@ import entity.KyFact;
 import entity.KyVisabillm;
 import entity.KyVisabills;
 import entity.KyzExpectmatmLog;
+import entity.SumWebYieldData;
 import entity.WebFact;
 import entity.WebFactId;
 import entity.WebTabpom;
@@ -2010,51 +2011,65 @@ public class GlobalMethod extends HibernateDaoSupport{
 		ProjectConfig pc=(ProjectConfig)ac.getBean("proconfig");
 		return pc;
 	}
+	
+	
+	/**
+	 * 產量盤點數據計算
+	 * @Title: add_sumYdata
+	 * @Description: TODO
+	 * @param @param objs
+	 * @param @param list_ydata
+	 * @param @param ydate
+	 * @return void
+	 * @throws
+	 * @author web
+	 * @date 2017/8/8
+	 */
+	public static void add_sumYdata(Object[]objs,long list_ydata,SumWebYieldData ydate){
+		BigDecimal onModulus=new BigDecimal((objs[0]==null?0:objs[0]).toString());
+		BigDecimal personnum=new BigDecimal((objs[1]==null?0:objs[1]).toString());
+		BigDecimal standardOutput=new BigDecimal((objs[2]==null?0:objs[2]).toString());
+		BigDecimal actualYield=new BigDecimal((objs[3]==null?0:objs[3]).toString());
+		BigDecimal daycount=new BigDecimal((objs[4]==null?0:objs[4]).toString());
+		BigDecimal actualpairs=new BigDecimal((objs[5]==null?0:objs[5]).toString());
+		BigDecimal hostpairs=new BigDecimal((objs[6]==null?0:objs[6]).toString());
+		BigDecimal factpairs=new BigDecimal((objs[7]==null?0:objs[7]).toString());
+		BigDecimal samplepairs=new BigDecimal((objs[8]==null?0:objs[8]).toString());
+		BigDecimal outnum=new BigDecimal((objs[9]==null?0:objs[9]).toString());
+		BigDecimal backnum=new BigDecimal((objs[10]==null?0:objs[10]).toString());
+		Double workhours=(Double)(objs[11]==null?0.0:objs[11]);				
+		
+		ydate.setSumEverydemo(onModulus);
+		ydate.setSumEverypeople(personnum);
+		ydate.setSumStandarddemo(standardOutput);
+		ydate.setSumActualdemo(actualYield);
+		ydate.setSumWorkdays(daycount);
+		ydate.setSumActualpairs(actualpairs);
+		ydate.setSumHostpairs(hostpairs);
+		ydate.setSumFactpairs(factpairs);
+		ydate.setSumSamplepairs(samplepairs);
+		ydate.setSumOutnum(outnum);
+		ydate.setSumBacknum(backnum);
+		ydate.setSumWorkhours(workhours);
+	}
 	 
 	 
 	 
 	 public static void main(String[] args) throws Throwable {
-		 /*final  String path = "D:\\test\\";
-	     final  String file = "test.xls";
-		 InputStream input=new FileInputStream(path+file);
-	     HSSFWorkbook excelBook=new HSSFWorkbook(input);
-	     ExcelToHtmlConverter excelToHtmlConverter = new ExcelToHtmlConverter (DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument() );
-	     excelToHtmlConverter.processWorkbook(excelBook);
-	     List pics = excelBook.getAllPictures();
-	     if (pics != null) {
-	         for (int i = 0; i < pics.size(); i++) {
-	             Picture pic = (Picture) pics.get (i);
-	             try {
-	                 pic.writeImageContent (new FileOutputStream (path + pic.suggestFullFileName() ) );
-	             } catch (FileNotFoundException e) {
-	                 e.printStackTrace();
-	             }
-	         }
-	     }
-	     Document htmlDocument =excelToHtmlConverter.getDocument();
-	     ByteArrayOutputStream outStream = new ByteArrayOutputStream();
-	     DOMSource domSource = new DOMSource (htmlDocument);
-	     StreamResult streamResult = new StreamResult (outStream);
-	     TransformerFactory tf = TransformerFactory.newInstance();
-	     Transformer serializer = tf.newTransformer();
-	     serializer.setOutputProperty (OutputKeys.ENCODING, "utf-8");
-	     serializer.setOutputProperty (OutputKeys.INDENT, "yes");
-	     serializer.setOutputProperty (OutputKeys.METHOD, "html");
-	     serializer.transform (domSource, streamResult);
-	     outStream.close();
-
-	     String content = new String (outStream.toByteArray() );
-
-	     FileUtils.writeStringToFile(new File (path, "exportExcel.html"), content, "utf-8");*/	
-	     
-	     //PoiToHtmlUtil.excelToHtml("e:\\", "report.xls");
-	    // System.out.println(findMonths("201706","201709"));
-		 Calendar cal=Calendar.getInstance();
+		
+		 /*Calendar cal=Calendar.getInstance();
 		 Random rd=new Random();
 		 for(int a=0;a<60;a++){
 			 //System.out.println(new SimpleDateFormat("mm:ss").format(cal.getTime()));
 			 System.out.println(rd.nextInt());
-		 }
+		 }*/
+		 
+		 BigDecimal b1=new BigDecimal(0);
+		 BigDecimal b2=new BigDecimal("0");
+		 System.out.println(b1);
+		 System.out.println(b2);
+		 System.out.println(b1==b2);
+		 System.out.println(b1.equals(b2));;
 		
 	  
 		}

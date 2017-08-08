@@ -18,6 +18,7 @@ import services.ISumWebYieldDataLogServices;
 import services.ISumWebYieldDataServices;
 import services.IWebFactServices;
 import services.IWebYieldDataServices;
+import util.GlobalMethod;
 import util.JasperHelper;
 import util.PageBean;
 
@@ -147,15 +148,7 @@ public class SumWebYieldDataAction extends ActionSupport implements ServletRespo
 	public void setSumydatelogSer(ISumWebYieldDataLogServices sumydatelogSer) {
 		this.sumydatelogSer = sumydatelogSer;
 	}
-	/**
-	 * �K�[
-	 * �L �Ѽ�
-	 * (0)onModulus:(everyDemo)���W�Ҽ�;(1)personnum:(everyPeople)���W�ҤH��;(2)standardOutput:(standardDemo)�Э�Ͳ��Ҽ�;
-	 * (3)actualYield:(actualDemo)��ڥͲ��Ҽ�;(4)daycount:(workDay)�W�Z�Ѽ�
-	 * (5)actualpairs:��ڥͲ����;(6)hostpairs:�ȸɥͲ����;(7)factpairs:�t�ɥͲ����;(8)samplepairs:�˫~�Ͳ����
-	 * (9)outnum:�X�f��;(10)backnum:�h�f��
-	 * @return
-	 */
+	
 	public String add(){
 		List list=webFactSer.findFactCodeByFactNo(factNo);
 		
@@ -173,7 +166,7 @@ public class SumWebYieldDataAction extends ActionSupport implements ServletRespo
 			ydate.setId(id);			
 			//objs���n�P�_�A�ҥH�P�_list_ydata.size()(��̪��d�߱��@�ˡA���G�]�O�@�P)
 			if(list_ydata!=0){
-				BigDecimal onModulus=new BigDecimal(objs[0]==null?"0":objs[0].toString().toString());
+				/*BigDecimal onModulus=new BigDecimal(objs[0]==null?"0":objs[0].toString().toString());
 				BigDecimal personnum=new BigDecimal(objs[1]==null?"0":objs[1].toString().toString());
 				BigDecimal standardOutput=new BigDecimal(objs[2]==null?"0":objs[2].toString());
 				BigDecimal actualYield=new BigDecimal(objs[3]==null?"0":objs[3].toString());
@@ -185,6 +178,7 @@ public class SumWebYieldDataAction extends ActionSupport implements ServletRespo
 				BigDecimal outnum=new BigDecimal(objs[9]==null?"0":objs[9].toString());
 				BigDecimal backnum=new BigDecimal(objs[10]==null?"0":objs[10].toString());
 				Double workhours=(Double)(objs[11]==null?0.0:objs[11]);
+				
 				ydate.setSumEverydemo(onModulus);
 				ydate.setSumEverypeople(personnum);
 				ydate.setSumStandarddemo(standardOutput);
@@ -196,7 +190,8 @@ public class SumWebYieldDataAction extends ActionSupport implements ServletRespo
 				ydate.setSumSamplepairs(samplepairs);
 				ydate.setSumOutnum(outnum);
 				ydate.setSumBacknum(backnum);
-				ydate.setSumWorkhours(workhours);
+				ydate.setSumWorkhours(workhours);*/
+				GlobalMethod.add_sumYdata(objs,list_ydata,ydate);
 			}			
 			ydate.setStartDate(startDate);
 			ydate.setEndDate(endDate);

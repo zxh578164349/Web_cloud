@@ -693,7 +693,7 @@ public class WebYdataAction extends ActionSupport implements
 			id.setYymm(yymm);
 			ydate.setId(id);
 			if(list_ydata!=0){
-				BigDecimal onModulus=new BigDecimal((objs[0]==null?0:objs[0]).toString());
+				/*BigDecimal onModulus=new BigDecimal((objs[0]==null?0:objs[0]).toString());
 				BigDecimal personnum=new BigDecimal((objs[1]==null?0:objs[1]).toString());
 				BigDecimal standardOutput=new BigDecimal((objs[2]==null?0:objs[2]).toString());
 				BigDecimal actualYield=new BigDecimal((objs[3]==null?0:objs[3]).toString());
@@ -704,19 +704,7 @@ public class WebYdataAction extends ActionSupport implements
 				BigDecimal samplepairs=new BigDecimal((objs[8]==null?0:objs[8]).toString());
 				BigDecimal outnum=new BigDecimal((objs[9]==null?0:objs[9]).toString());
 				BigDecimal backnum=new BigDecimal((objs[10]==null?0:objs[10]).toString());
-				Double workhours=(Double)(objs[11]==null?0.0:objs[11]);
-				/*BigDecimal onModulus=new BigDecimal(objs[0].toString());
-				BigDecimal personnum=new BigDecimal((objs[1]).toString());
-				BigDecimal standardOutput=new BigDecimal((objs[2]).toString());
-				BigDecimal actualYield=new BigDecimal((objs[3]).toString());
-				BigDecimal daycount=new BigDecimal((objs[4]).toString());
-				BigDecimal actualpairs=new BigDecimal((objs[5]).toString());
-				BigDecimal hostpairs=new BigDecimal((objs[6]).toString());
-				BigDecimal factpairs=new BigDecimal((objs[7]).toString());
-				BigDecimal samplepairs=new BigDecimal((objs[8]).toString());
-				BigDecimal outnum=new BigDecimal((objs[9]).toString());
-				BigDecimal backnum=new BigDecimal((objs[10]).toString());
-				Double workhours=(Double)objs[11];*/
+				Double workhours=(Double)(objs[11]==null?0.0:objs[11]);				
 				
 				ydate.setSumEverydemo(onModulus);
 				ydate.setSumEverypeople(personnum);
@@ -729,7 +717,8 @@ public class WebYdataAction extends ActionSupport implements
 				ydate.setSumSamplepairs(samplepairs);
 				ydate.setSumOutnum(outnum);
 				ydate.setSumBacknum(backnum);
-				ydate.setSumWorkhours(workhours);
+				ydate.setSumWorkhours(workhours);*/
+				GlobalMethod.add_sumYdata(objs,list_ydata,ydate);
 			}		
 			ydate.setStartDate(startDate);
 			ydate.setEndDate(endDate);
