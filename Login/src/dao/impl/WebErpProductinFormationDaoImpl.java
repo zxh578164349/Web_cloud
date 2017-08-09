@@ -95,7 +95,7 @@ public class WebErpProductinFormationDaoImpl extends Basedao implements IWebErpP
 	
 	public List<Object[]> findNamece2(String itemcategory){
 		// TODO Auto-generated method stub
-		String hql="select itemid, namec1,namec2 from WebErpProductinFormation where itemcategory=? order by namec1,namec2";
+		String hql="select itemid, namec1,namec2,itemcode from WebErpProductinFormation where itemcategory=? order by namec1,namec2";
 		String[]objs={itemcategory};
 		return super.findAll(hql,objs);
 	}

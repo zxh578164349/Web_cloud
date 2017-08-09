@@ -167,7 +167,6 @@ public class WebEstProductAction extends ActionSupport implements
 	public String add() {
 		DateFormat format = new SimpleDateFormat("yyyyMM");
 		Date date = null;
-		String result = null;
 		try {
 			date = format.parse(yymm);
 			pro.getId().setYymm(date);
@@ -175,34 +174,20 @@ public class WebEstProductAction extends ActionSupport implements
 				Webestproduct temp=estProSer.findById(pro.getId().getFactNo(), pro.getId().getFactCode(), yymm, pro.getId().getType());
 				if (temp==null) {
 					estProSer.add(pro);
-					result = "add";
 					ajaxResult="0";
+				}else{
+					ajaxResult="2";//數據庫存在數據
 				} 
 			} else {
 				estProSer.add(pro);
-				result = "add";
 				ajaxResult="0";
-			}
-			if (result == null) {
-				response.setContentType("text/html;charset=utf-8");				
-				response.getWriter()
-						.print("<script>alert('數據庫已經存在("
-								+ pro.getId().getFactNo()
-								+ " "
-								+ pro.getId().getFactCode()
-								+ " "
-								+ format.format(pro.getId().getYymm())
-								+" "
-								+pro.getId().getType()
-								+ ")!');history.back()</script>");
-			} 
+			}			 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			result="add";
 			ajaxResult="1";
 		} 
-		return result;
+		return "add";
 	}
 
 	public String findPageBean() {

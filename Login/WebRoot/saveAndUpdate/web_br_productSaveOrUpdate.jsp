@@ -224,7 +224,7 @@ function loadNamece(itemcategory){
 			success:function(data){
 				var item="<input type='checkbox' id='all_namece' onclick='checkallItems(),checkbtn()'/>全選<hr/>";
 				jq.each(data,function(i,obj){
-					item+="<div><input type='checkbox' value='"+obj[0]+"__"+obj[1]+"__"+obj[2]+"' name='itemids' onclick='checkbtn()'/><label>"+obj[1]+"&nbsp;&nbsp;"+obj[2]+"</label></div>";					
+					item+="<div><input type='checkbox' value='"+obj[0]+"__"+obj[1]+"__"+obj[2]+"' name='itemids' onclick='checkbtn()'/><label>"+obj[1]+"&nbsp;&nbsp;"+obj[2]+"&nbsp;("+obj[3]+")"+"</label></div>";					
 				});
 				jq("#div_namece").append(item);
 			}			
