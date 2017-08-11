@@ -282,9 +282,7 @@ public class WebYdataAction extends ActionSupport implements
 					cal.add(Calendar.DATE, -1);
 					lastday=format.format(cal.getTime());
 					Date lastday2=format.parse(lastday);
-					WebYieldDataId y_id=new WebYieldDataId(ydata.getId().getFactNo(),ydata.getId().getFactCode(),lastday2);																						
-					/*************************只有工作日才限制输入前天数据20170704*****************************/
-					if("0".equals(ydata.getWorkorholiday())){
+					WebYieldDataId y_id=new WebYieldDataId(ydata.getId().getFactNo(),ydata.getId().getFactCode(),lastday2);																															
 						WebYieldData ydata_last=dataSer.findById(y_id);
 						if(ydata_last==null){						
 							ajaxResult="3";//表示要輸入前天數據												
@@ -303,16 +301,7 @@ public class WebYdataAction extends ActionSupport implements
 							}else{
 								ajaxResult="2";//表示數據已經存在
 							}
-						}
-					}else{
-					/*************************只有工作日才限制输入前天数据20170704*****************************/	
-						if(ydata_find==null){
-							dataSer.addYdata(ydata);
-							ajaxResult="0";
-						}else{
-							ajaxResult="2";//表示數據已經存在
-						}
-					}					
+						}										
 				}else{
 					dataSer.addYdata(ydata);
 					ajaxResult="0";
