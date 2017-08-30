@@ -146,7 +146,9 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 				            <option value="">請選擇</option>
 				         </select>
 				         <input type="hidden" id="dwr_email" value="<s:property value='#session.loginUser.email'/>"/>
-				         <input type="hidden" name="kyz.visaType" id="hidden_kytype" datatype="*"/>				         					         
+				         <input type="hidden" name="kyz.visaType" id="hidden_kytype" datatype="*"/>	
+				         
+				         <div id="div_depar" style="display:none"><select id="sel_depar" onchange="checkType2()"></select></div>			         					         
 				         </s:if>
 				         <s:else>
 				            <input type="text" value="<s:property value='kyz.visaType'/>" name="kyz.visaType" style="color:blue"  readonly/>

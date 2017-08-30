@@ -41,7 +41,7 @@ function checkType(){
            		/*********************修改************************/
            		jq.ajax({
            			type:"post",
-           			url:"visaflow_findVisaSort_dwr3",
+           			url:"visaflow_findVisaSort_dwr5",
            			dataType:"json",
            			data:{factNo:dwrFactNo,visaSort:type,visaSigner:dwremail,trMk:trMk},
            			success:function(data){
@@ -52,21 +52,13 @@ function checkType(){
            				jq("#div_depar").hide();
            				}
            				if(data.length==1){
-           					document.getElementById("hidden_kytype").value=data[0][0];  
+           					document.getElementById("hidden_kytype").value=data[0];  
                             unlockbtn();
                             jq("#sel_depar").removeAttr("datatype");
                				jq("#div_depar").hide();
            				}
            				if(data.length>1){
-           					jq("#sel_depar").empty();
-           					alert("當前帳號存在多個部門，請選擇部門");
-           					var item="<option value=''>請選擇部門</option>";
-           					jq.each(data,function(i,obj){
-        						item+="<option value='"+obj[0]+"'>"+obj[1]+"</option>";
-        					});
-           					jq("#sel_depar").append(item);
-           					jq("#sel_depar").attr("datatype","*");
-           					jq("#div_depar").show();
+           					checkType3(dwrFactNo, type, dwremail, trMk, type);
            				}
            			}
            		});
@@ -114,9 +106,41 @@ function checkType2() {
 			unlockbtn();
 		},
 		error:function(error){
-			alert("錯誤");
+			alert("錯誤checkType2");
 			lockbtn();
 		}
 	});
 }
+
+function checkType3(dwrFactNo, type, dwremail, trMk, type) {
+	jq.ajax({
+		type : "post",
+		dataType : "json",
+		url : "visaflow_findVisaSort_dwr3",
+		data : {
+			factNo : dwrFactNo,
+			visaSort : type,
+			visaSigner : dwremail,
+			trMk : trMk
+		},
+		success : function(data) {
+			jq("#sel_depar").empty();
+			alert("當前帳號存在多個部門，請選擇部門");
+			var item = "<option value=''>請選擇部門</option>";
+			jq.each(data, function(i, obj) {
+				item += "<option value='" + obj[0] + "'>" + obj[1]
+						+ "</option>";
+			});
+			jq("#sel_depar").append(item);
+			jq("#sel_depar").attr("datatype", "*");
+			jq("#div_depar").show();
+		},
+		error : function(error) {
+			alert("錯誤checkType3");
+			lockbtn();
+		}
+	});
+}
+
+
 /********************************【函文申請】【內部聯絡函申請】檢測流程相關方法20170707*************************************************/

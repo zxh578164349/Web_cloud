@@ -291,8 +291,9 @@ var j=0;
     	   if(visasort2=="0"){//【其它類】
     		   if(visaSigner!=""){                                   
                    if(trMk=="Y"){
-                	   kyzvisaflowjs.findVisaSort_dwr2(factno,visasort,visaSigner,trMk,function(x){
-                           if(x!=null){                          	
+                	   //kyzvisaflowjs.findVisaSort_dwr2(factno,visasort,visaSigner,trMk,function(x){
+                	   kyzvisaflowjs.findVisaSort_dwr4(factno,visasort,visaSigner,trMk,function(x){
+                           if(x!=null&&x.length>0){                          	
                            	alert("該Email("+visaSigner+")的審核流程已存在!");                           	                                                    
                            	lockbtn();                             
                            }else{                             
