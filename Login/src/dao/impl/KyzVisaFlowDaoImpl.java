@@ -145,6 +145,32 @@ public class KyzVisaFlowDaoImpl extends Basedao implements IKyzVisaFlowDao {
 		return visasort;
 	}
 	
+	public List<Object[]> findVisaSort_dwr2(String factNo, String visaSort, String email,String trMk) {
+		String hql="select depId.depId,depId.depName from KyzVisaflow where id.factNo=? and id.visaSort like ? and lower(visaSigner)=? and id.itemNo='01' and trMk=?";
+		String[]objs={factNo,visaSort+"%",email,trMk};
+		List<Object[]>list=super.findAll(hql,objs);		
+		return list;
+	}
+	
+	public String findVisaSort_dwr2(String factNo,String visaSort,String email,String trMk,String depId){
+		String hql="select id.visaSort from KyzVisaflow where id.factNo=? and id.visaSort like ? and lower(visaSigner)=? and id.itemNo='01' and trMk=? and to_char(depId.depId)=? ";
+		Query query=getSession().createQuery(hql);
+		query.setString(0, factNo);
+		query.setString(1, visaSort+"%");
+		query.setString(2, email);
+		query.setString(3,trMk);
+		query.setString(4,depId);
+		String visasort=(String)query.uniqueResult();
+		return visasort;
+	}
+	
+	public List<String> findVisaSort_dwr3(String factNo, String visaSort, String email,String trMk) {
+		String hql="select id.visaSort from KyzVisaflow where id.factNo=? and id.visaSort like ? and lower(visaSigner)=? and id.itemNo='01' and trMk=?";
+		String[]objs={factNo,visaSort+"%",email,trMk};
+		List<String>list=super.findAll(hql,objs);		
+		return list;
+	}
+	
 	public List<String> findVisaSort_C(String factNo,String mainSort) {
 		// TODO Auto-generated method stub
 		//String hql="select distinct id.visaSort from KyzVisaflow where id.factNo=? and id.visaSort like ?  order by id.visaSort";

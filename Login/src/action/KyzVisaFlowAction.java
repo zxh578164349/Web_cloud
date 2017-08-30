@@ -7,6 +7,8 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
+import net.sf.json.JSONArray;
+
 import org.apache.struts2.interceptor.ServletResponseAware;
 
 import services.IKyzExpectmatmLogServices;
@@ -43,7 +45,8 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 	private int backIndex;//返回標識      0或null:不走返回路徑         1:走返回路徑
 	private IKyzExpectmatmLogServices kyzExpLogSer;//刪除記錄
 	private String trMk;//是否分部門     Y:是       N:否
-	
+	private JSONArray jsons;
+	private String depId;
 	
 	
 	public String getTrMk(){
@@ -186,8 +189,28 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 
 	public void setMaxItem(int maxItem) {
 		this.maxItem = maxItem;
-	}	
+	}
 	
+	
+	
+	public JSONArray getJsons(){
+		return jsons;
+	}
+
+	public void setJsons(JSONArray jsons){
+		this.jsons=jsons;
+	}
+	
+	
+
+	public String getDepId(){
+		return depId;
+	}
+
+	public void setDepId(String depId){
+		this.depId=depId;
+	}
+
 	public String add() throws IOException{		
 		String visaSort_main=flows.get(0).getId().getVisaSort().split("__")[0];
 		String visaSort_main2=flows.get(0).getId().getVisaSort().split("__")[1];
@@ -515,6 +538,23 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 				ajaxResult="1";						
 		}
 		return "findWebbuss";
+	}
+	
+	public String findVisaSort_dwr3(){
+		List<Object[]>list=visaSer.findVisaSort_dwr3(factNo,visaSort,visaSigner,trMk);
+		jsons=JSONArray.fromObject(list);
+		return "findVisaSort_dwr3";
+	}
+	
+	public String findVisaSort_dwr4(){
+		ajaxResult=visaSer.findVisaSort_dwr3(factNo,visaSort,visaSigner,trMk,depId);
+		return "findVisaSort_dwr4";
+	}
+	
+	public String findVisaSort_dwr5(){
+		List<String>list=visaSer.findVisaSort_dwr4(factNo,visaSort,visaSigner,trMk);
+		jsons=JSONArray.fromObject(list);
+		return "findVisaSort_dwr5";
 	}
 
 }

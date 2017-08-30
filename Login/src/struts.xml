@@ -556,6 +556,15 @@
 		    <result name="deleteFirst" type="redirectAction">visaflow_findPageBean3</result>
 		    <result name="findWebbuss" type="json">
 		        <param name="root">ajaxResult</param>
+		    </result>
+		    <result name="findVisaSort_dwr3" type="json">
+		        <param name="root">jsons</param>
+		    </result>
+		    <result name="findVisaSort_dwr4" type="json">
+		        <param name="root">ajaxResult</param>
+		    </result>
+		    <result name="findVisaSort_dwr5" type="json">
+		        <param name="root">jsons</param>
 		    </result>		   
 		</action>
 		<action name="webtabpom_*" class="webtabpomAction" method="{1}">

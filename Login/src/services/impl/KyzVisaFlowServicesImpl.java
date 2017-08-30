@@ -66,6 +66,18 @@ public class KyzVisaFlowServicesImpl implements IKyzVisaFlowServices{
 		// TODO Auto-generated method stub
 		return visaDao.findVisaSort_dwr(factNo, visaSort, email,trMk);
 	}
+	
+	public List<Object[]> findVisaSort_dwr3(String factNo, String visaSort, String email,String trMk){
+		return visaDao.findVisaSort_dwr2(factNo,visaSort,email,trMk);
+	}
+	
+	public String findVisaSort_dwr3(String factNo,String visaSort,String email,String trMk,String depId){
+		return visaDao.findVisaSort_dwr2(factNo,visaSort,email,trMk,depId);
+	}
+	
+	public List<String> findVisaSort_dwr4(String factNo, String visaSort, String email,String trMk){
+		return visaDao.findVisaSort_dwr3(factNo,visaSort,email,trMk);
+	}
 
 	public List<String> findVisaSort_C(String factNo,String mainSort) {
 		// TODO Auto-generated method stub

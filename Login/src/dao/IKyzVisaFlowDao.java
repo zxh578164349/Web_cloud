@@ -17,6 +17,9 @@ public interface IKyzVisaFlowDao {
 	public List<KyzVisaflow> findByType(String factNo,String visaSort);
 	public String findVisaSort_dwr(String factNo,String visaSort,String email);
 	public String findVisaSort_dwr(String factNo,String visaSort,String email,String trMk);
+	public List<Object[]> findVisaSort_dwr2(String factNo,String visaSort,String email,String trMk);
+	public String findVisaSort_dwr2(String factNo,String visaSort,String email,String trMk,String depId);
+	public List<String> findVisaSort_dwr3(String factNo, String visaSort, String email,String trMk);
 	public List<String> findVisaSort_C(String factNo,String maiSort);
 	public List<KyzVisaflow>findByFactNoVisaSort(String factNo,String visaSort);
 	

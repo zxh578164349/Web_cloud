@@ -75,9 +75,11 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 				        <td >
 				         <select  id="dwr_kytype" onchange="checkType(this.value)" datatype="*" style="color:blue">
 				            <option value="">請選擇</option>
-				         </select>
+				         </select>				         
 				         <input type="hidden" id="dwr_email" value="<s:property value='#session.loginUser.email'/>"/>
-				         <input type="hidden" name="kyzletter.visaType" id="hidden_kytype"/>	
+				         <input type="text" name="kyzletter.visaType" id="hidden_kytype"/>
+				         
+				         <div id="div_depar" style="display:none"><select id="sel_depar" onchange="checkType2()"></select></div>	
 				        </td>
 					</tr>
 				</s:if>
