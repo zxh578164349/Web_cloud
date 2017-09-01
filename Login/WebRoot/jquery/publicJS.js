@@ -23,7 +23,7 @@ function checkType(){
     if(dwrFactNo!=""&&type!=""){
         kyzvisaflowjs.findByType_Dwr(dwrFactNo,type,function(x){
            if(x==0){//流程不存在
-              alert("該類型審核流程不存在，請重新選定!");  
+              layer.alert("該類型審核流程不存在，請重新選定!");  
               jq("#sel_depar").removeAttr("datatype");
  			  jq("#div_depar").hide();
               lockbtn();
@@ -31,14 +31,14 @@ function checkType(){
            	if(trMk=="Y"){
            		/*kyzvisaflowjs.findVisaSort_dwr2(dwrFactNo,type,dwremail,trMk,function(y){
                    if(y==null){                	 
-               	 alert("對不起，你不是該類別函文申請人，請重新選定!");               	                                      
+               	 layer.alert("對不起，你不是該類別函文申請人，請重新選定!");               	                                      
                     lockbtn();
                  }else{                                        
                     document.getElementById("hidden_kytype").value=y;  
                     unlockbtn();
                  }                 
                }); */
-           		/*********************修改************************/
+           		/*********************修改20170830************************/
            		jq.ajax({
            			type:"post",
            			url:"visaflow_findVisaSort_dwr5",
@@ -46,7 +46,7 @@ function checkType(){
            			data:{factNo:dwrFactNo,visaSort:type,visaSigner:dwremail,trMk:trMk},
            			success:function(data){
            				if(data==null||data.length==0){
-           				 alert("對不起，你不是該類別函文申請人，請重新選定!");
+           				 layer.alert("對不起，你不是該類別函文申請人，請重新選定!");
            				 lockbtn();
            				jq("#sel_depar").removeAttr("datatype");
            				jq("#div_depar").hide();
@@ -62,14 +62,14 @@ function checkType(){
            				}
            			}
            		});
-           		/*********************修改************************/
+           		/*********************修改20170830************************/
              }else{
             jq("#sel_depar").removeAttr("datatype");
     		jq("#div_depar").hide();	 
            	 type=type+"_AA"; 
            	 kyzvisaflowjs.findNums(dwrFactNo,type,function(y){
                    if(y==0){                 	
-                 	   alert("該流程(不分部門)還沒有建立");                 	                                           
+                 	   layer.alert("該流程(不分部門)還沒有建立");                 	                                           
                       lockbtn();
                    }else{                       
                       //document.getElementById("hidden_kytype").value=y;                       
@@ -106,7 +106,7 @@ function checkType2() {
 			unlockbtn();
 		},
 		error:function(error){
-			alert("錯誤checkType2");
+			layer.alert("錯誤checkType2");
 			lockbtn();
 		}
 	});
@@ -125,7 +125,7 @@ function checkType3(dwrFactNo, type, dwremail, trMk, type) {
 		},
 		success : function(data) {
 			jq("#sel_depar").empty();
-			alert("當前帳號存在多個部門，請選擇部門");
+			layer.alert("當前帳號存在多個部門，請選擇部門");
 			var item = "<option value=''>請選擇部門</option>";
 			jq.each(data, function(i, obj) {
 				item += "<option value='" + obj[0] + "'>" + obj[1]
@@ -136,7 +136,7 @@ function checkType3(dwrFactNo, type, dwremail, trMk, type) {
 			jq("#div_depar").show();
 		},
 		error : function(error) {
-			alert("錯誤checkType3");
+			layer.alert("錯誤checkType3");
 			lockbtn();
 		}
 	});
