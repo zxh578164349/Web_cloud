@@ -125,8 +125,22 @@ public class KyVisabillsDaoImpl extends Basedao implements IKyVisaBillsDao{
 		int offset=PageBean.countOffset(pageSize, currentPage);
 		List<KyVisabills>list=super.queryForPage(hql.toString(), offset, pageSize, map);
 		
+		
+		
+		
 		//解決hibernate延遲問題
 		if(list.size()>0){
+			
+			/**************************去除重覆單號20170905*******************************/
+			for(int a=0;a<list.size()-1;a++){
+				for(int b=list.size()-1;b>a;b--){
+					if(list.get(a).getId().getKyVisabillm().getId().getBillNo().equals(list.get(b).getId().getKyVisabillm().getId().getBillNo())){
+						list.remove(b);
+					}
+				}
+			}
+			/**************************去除重覆單號20170905*******************************/
+			
 			for(int i=0;i<list.size();i++){
 				list.get(i).getId().getKyVisabillm().getKyVisabillses().size();				
 				GlobalMethod.vbmCotentsType(list.get(i).getId().getKyVisabillm());

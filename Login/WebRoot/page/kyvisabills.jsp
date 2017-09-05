@@ -155,8 +155,8 @@ function back(){
 function yesorno(passMk){
 	 var memo=layer.getChildFrame("#memo_txt",layer.index).val();
      layer.getChildFrame("#visa_mk",layer.index).val(passMk);
-     if(memo.length>150){
-       alert("備註不可超過150字");
+     if(memo.length>400){
+       alert("備註不可超過400字");
      }else{ 
        /*layer.getChildFrame("#memo",layer.index).submit();
        window.setTimeout(function(){parent.layer.close(parent.layer.getFrameIndex(window.name));},1500);       

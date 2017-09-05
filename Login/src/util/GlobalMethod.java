@@ -2055,21 +2055,27 @@ public class GlobalMethod extends HibernateDaoSupport{
 	 
 	 
 	 
-	 public static void main(String[] args) throws Throwable {
+	 public static void main(String[] args) {
 		
-		 /*Calendar cal=Calendar.getInstance();
-		 Random rd=new Random();
-		 for(int a=0;a<60;a++){
-			 //System.out.println(new SimpleDateFormat("mm:ss").format(cal.getTime()));
-			 System.out.println(rd.nextInt());
-		 }*/
-		 
-		 BigDecimal b1=new BigDecimal(0);
-		 BigDecimal b2=new BigDecimal("0");
-		 System.out.println(b1);
-		 System.out.println(b2);
-		 System.out.println(b1==b2);
-		 System.out.println(b1.equals(b2));;
+		 List<String>list=new ArrayList<String>();
+		 list.add("aa");
+		 list.add("bb");
+		 list.add("bb");
+		 list.add("cc");
+		 list.add("dd");
+		 list.add("ee");
+		 list.add("aa");
+		 list.add("gg");
+		 list.add("hh");
+		 for(int a=0;a<list.size()-1;a++){
+			 System.out.println("***********************"+list.size());
+			 for(int b=list.size()-1;b>a;b--){
+				 if(list.get(a).equals(list.get(b))){
+					 list.remove(b);
+				 }
+			 }
+		 }
+		 System.out.println(list);
 		
 	  
 		}
