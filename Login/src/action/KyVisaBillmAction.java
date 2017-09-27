@@ -668,7 +668,11 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 							next_itemno="0"+(itemno_num+1);
 						}
 						list.get(i).getId().setItemNo(next_itemno);
-					}				
+					}
+					
+					if(itemNo.equals(vbm.getItemNext())){//如果在當前簽核人的前面加簽，則要修改當前簽核人為要加簽的人20170927
+						vbm.setSignerNext(visaSigner);
+					}
 				break;
 			case 1://加在後面
 				if((startnum+1)>9){
