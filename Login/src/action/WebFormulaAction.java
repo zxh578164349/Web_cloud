@@ -493,6 +493,7 @@ public class WebFormulaAction implements ServletResponseAware{
 					vbs.setVisaRank(flow.getVisaRank());
 					vbs.setVisaMk("N");
 					vbs.setFlowMk(flow.getFlowMk());
+					vbs.setVisible(flow.getVisible());
 					vbm.getKyVisabillses().add(vbs);
 				}				
 				visabillmSer.add(vbm);

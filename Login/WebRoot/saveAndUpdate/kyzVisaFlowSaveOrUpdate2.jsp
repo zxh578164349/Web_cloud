@@ -59,6 +59,23 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 			   <input type="hidden" value="<s:property value='flow.flowMk'/>"  name="flow.flowMk"/>
 			   <input type="hidden" value="<s:property value='flow.typeMk'/>"  name="flow.typeMk"/>
 			   <input type="hidden" value="<s:property value='flow.trMk'/>"  name="flow.trMk"/>
+			   </td>			   
+			   </tr>
+			   <tr>
+			     <td>是否可見</td>
+			   <td>
+			     <s:if test='flow.visible=="Y"'>
+			                    是<input type="radio" value="Y" name="flow.visible"/>
+			     </s:if>
+			     <s:else>
+			                   是<input type="radio" value="Y" name="flow.visible"/>
+			     </s:else>
+			      <s:if test='flow.visible=="N"'>
+			                    否<input type="radio" value="N" name="flow.visible"/>
+			     </s:if>
+			     <s:else>
+			                   否<input type="radio" value="N" name="flow.visible"/>
+			     </s:else>       
 			   </td>
 			   </tr>			          			  			 	  			
 			</tbody>							    

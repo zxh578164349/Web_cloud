@@ -19,6 +19,7 @@ public class KyVisabills implements java.io.Serializable {
 	private String memo;
 	private String flowMk;
 	private VWebUserEmail vusername;
+	private String visible;//是否可見      Y可見     N不可見
 
 	// Constructors
 
@@ -136,6 +137,15 @@ public class KyVisabills implements java.io.Serializable {
 	public void setVusername(VWebUserEmail vusername){
 		this.vusername=vusername;
 	}
+
+	public String getVisible(){
+		return visible;
+	}
+
+	public void setVisible(String visible){
+		this.visible=visible;
+	}
+	
 	
 
 }

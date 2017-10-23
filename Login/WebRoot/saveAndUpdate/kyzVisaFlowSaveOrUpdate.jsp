@@ -40,11 +40,12 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 			     <td >姓名</td>
 			     <td >Email地址</td>
 			     <td >職務</td>
+			     <td>是否可見<div style="width:200px;visibility:hidden"></div></td><!-- 此div用於撐開單元格 -->
 			 </tr>
 			 <tr>
-			     <td colspan="10">
+			     <td colspan="11">
 			                          是否分部門&nbsp;&nbsp;&nbsp;
-			                          是<input type="radio" name="trMk_r" value="Y" datatype="*" onclick="rplvalue(this.value),checkSame()"/>&nbsp;&nbsp;
+			                          是<input type="radio" name="trMk_r" value="Y" datatype="*"  onclick="rplvalue(this.value),checkSame()"/>&nbsp;&nbsp;
 			                          否<input type="radio" name="trMk_r" value="N" onclick="rplvalue(this.value),checkSame()"/>
 			            <input type="hidden" name="trMk"/>                
 			     </td>
@@ -95,14 +96,18 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 			     </td>
 			     <td ><input type="text" name="flows[0].visaRank" value="" datatype="*"/>
 			       <input type="hidden" name="isnull" value="yes"/><!-- 變量isnull -->
-			     </td>		     			     		      		      
+			     </td>	
+			     <td>
+			                   是<input type="radio" name="flows[0].visible" value="Y" checked/>
+			                   否<input type="radio" name="flows[0].visible" value="N"/>
+			     </td>	     			     		      		      
 			  </tr>				  	
 			 </s:if>		
 			         			  			 	  			
 			</tbody>
 			<tfoot>
 			<tr>
-			<td colspan="10">
+			<td colspan="11">
 			  <s:if test="flows==null">
 			     <input type="button" value="添加行" onclick="addRow()"  id="addbtn" class="btn btn-info" disabled style="color:grey"/>
 			     <input type="button" value="刪除行" onclick="delRow()"  id="delbtn" class="btn btn-info"/>			    
@@ -185,6 +190,7 @@ var j=0;
         var newTd3=newTr.insertCell(4);
         var newTd4=newTr.insertCell(5);
         var newTd5=newTr.insertCell(6);
+        var newTd6=newTr.insertCell(7);
         
         var factno=document.getElementById("dwrFactNo").value;
         var typeno=document.getElementById("dwr_kytype").value;
@@ -211,7 +217,11 @@ var j=0;
         '<div style="position:relative"><div id="tishi'+j+'" style="z-index:100;position:absolute;background:yellow;left:0;top:0px;width:180px;display:none"></div></div>';     
         newTd4.innerHTML='<input type="text" name="flows['+j+'].visaSigner" value="" datatype="e" id="skeys'+j+'" onkeyup="getEmail('+j+')" />'+
         '<div style="position:relative"><div id="emaildwr'+j+'" style="z-index:100;position:absolute;background:yellow;left:0;top:0px;width:180px;display:none"></div></div>'
-        newTd5.innerHTML='<input type="text" name="flows['+j+'].visaRank" value="" datatype="*"/>';             
+        newTd5.innerHTML='<input type="text" name="flows['+j+'].visaRank" value="" datatype="*"/>'
+        newTd6.innerHTML='是<input type="radio" name="flows['+j+'].visible" value="Y" checked/>&nbsp;&nbsp;'+
+        '否<input type="radio" name="flows['+j+'].visible" value="N"/>'
+        ; 
+        
         }
         
         var cboxlist=document.getElementsByName("cbox");

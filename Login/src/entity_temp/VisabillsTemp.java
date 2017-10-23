@@ -10,6 +10,7 @@ public class VisabillsTemp {
 	private String visaSigner;
 	private String visaMk;
 	private String visaName;
+	private String visible;
 	public String getMemo() {
 		return memo==null?"":memo;
 	}
@@ -52,6 +53,14 @@ public class VisabillsTemp {
 	public void setVisaName(String visaName) {
 		this.visaName = visaName;
 	}
+	public String getVisible(){
+		return visible;
+	}
+	public void setVisible(String visible){
+		this.visible=visible;
+	}
+	
+	
 	
 	
 

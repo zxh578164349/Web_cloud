@@ -232,8 +232,16 @@ public class WebFormulaServicesImpl implements IWebFormulaServices{
 				visabillstemp.setVisaSigner(list_visa.get(i).getVisaSigner());
 				visabillstemp.setVisaMk(list_visa.get(i).getVisaMk());
 				visabillstemp.setVisaName(name);
+				visabillstemp.setVisible(list_visa.get(i).getVisible());
 				list_visabillstemp.add(visabillstemp);
 			}//for
+			/**********************去掉不顯示出來（visible='N'）20171023****************************/
+			for(int a=0;a<list_visabillstemp.size();a++){
+				if("N".equals(list_visabillstemp.get(a).getVisible())){
+					list_visabillstemp.remove(a);
+				}
+			}
+			/**********************去掉不顯示出來（visible='N'）20171023****************************/
 			
 			/*********************簡體轉繁體******************/
 			for(int i=0;i<list_visabillstemp.size();i++){

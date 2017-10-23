@@ -18,6 +18,7 @@ public class KyzVisaflow implements java.io.Serializable {
 	private String typeMk; //區分 出差類(TR)    配方類(PF)     其它類(0)
 	private String trMk;//是否分部門     Y:是   N:否
 	private WebDepartment depId;//用於同一個帳號可以在多個部門妹建立同一類別的流程    (PS分部門的，並且申請人才有的；default表示默認值)
+	private String visible;//是否可見      Y可見     N不可見
 
 	// Constructors
 
@@ -119,6 +120,14 @@ public class KyzVisaflow implements java.io.Serializable {
 
 	public void setDepId(WebDepartment depId){
 		this.depId=depId;
+	}
+
+	public String getVisible(){
+		return visible;
+	}
+
+	public void setVisible(String visible){
+		this.visible=visible;
 	}
 
 	
