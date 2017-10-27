@@ -65,13 +65,13 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 			     <td>是否可見</td>
 			   <td>
 			     <s:if test='flow.visible=="Y"'>
-			                    是<input type="radio" value="Y" name="flow.visible"/>
+			                    是<input type="radio" value="Y" name="flow.visible" checked/>
 			     </s:if>
 			     <s:else>
 			                   是<input type="radio" value="Y" name="flow.visible"/>
 			     </s:else>
 			      <s:if test='flow.visible=="N"'>
-			                    否<input type="radio" value="N" name="flow.visible"/>
+			                    否<input type="radio" value="N" name="flow.visible" checked/>
 			     </s:if>
 			     <s:else>
 			                   否<input type="radio" value="N" name="flow.visible"/>
