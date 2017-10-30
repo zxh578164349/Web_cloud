@@ -59,6 +59,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 			   <input type="hidden" value="<s:property value='flow.flowMk'/>"  name="flow.flowMk"/>
 			   <input type="hidden" value="<s:property value='flow.typeMk'/>"  name="flow.typeMk"/>
 			   <input type="hidden" value="<s:property value='flow.trMk'/>"  name="flow.trMk"/>
+			   <input type="hidden" value="<s:property value='flow.depId.depId'/>" name="flow.depId.depId"/>
 			   </td>			   
 			   </tr>
 			   <tr>
