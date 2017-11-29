@@ -3,6 +3,8 @@
  */
 package mail;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.security.GeneralSecurityException;
 import java.util.Properties;
 
@@ -21,7 +23,7 @@ public class MailSenderInfo {
     private String toAddress;    
     // 登陆邮件发送服务器的用户名和密码    
     private String userName="kyuen@yydg.com.cn";    
-    private String password="mailyydg";    
+    private String password="yydgmail";    
     // 是否需要身份验证    
     private boolean validate = false;    
     // 邮件主题    
@@ -35,7 +37,14 @@ public class MailSenderInfo {
       * 获得邮件会话属性   
       */    
     public Properties getProperties(){    
-    	Properties p = new Properties();    
+    	Properties p = new Properties();
+    	/*InputStream in = Object. class .getResourceAsStream( "/project_config.properties" );
+    	try {
+			p.load(in);
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}*/
         //p.put("mail.smtp.host", this.mailServerHost);    
         //p.put("mail.smtp.port", this.mailServerPort);    
         p.put("mail.smtp.auth", validate ? "true" : "false");

@@ -44,6 +44,7 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.Set;
@@ -2057,25 +2058,15 @@ public class GlobalMethod extends HibernateDaoSupport{
 	 
 	 public static void main(String[] args) {
 		
-		 List<String>list=new ArrayList<String>();
-		 list.add("aa");
-		 list.add("bb");
-		 list.add("bb");
-		 list.add("cc");
-		 list.add("dd");
-		 list.add("ee");
-		 list.add("aa");
-		 list.add("gg");
-		 list.add("hh");
-		 for(int a=0;a<list.size()-1;a++){
-			 System.out.println("***********************"+list.size());
-			 for(int b=list.size()-1;b>a;b--){
-				 if(list.get(a).equals(list.get(b))){
-					 list.remove(b);
-				 }
-			 }
-		 }
-		 System.out.println(list);
+		 Properties p = new Properties();
+	    	InputStream in = Object. class .getResourceAsStream( "/project_config.properties" );
+	    	try {
+				p.load(in);
+				System.out.println(p.getProperty("project.liujung"));
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		
 	  
 		}

@@ -296,7 +296,7 @@ public class WebEstProductAction extends ActionSupport implements
 			Object[] temp_factnos=(Object[])listfactno.get(i);
 			String temp_factno=(String)temp_factnos[0];//廠別代號
 			String temp_factno2=(String)temp_factnos[1];//廠名
-			List<WebFact>listfactcodes=webFactSer.findFactById_show(temp_factno);
+			List<WebFact>listfactcodes=webFactSer.findFactById_showA(temp_factno);
 			for(int k=0;k<listfactcodes.size();k++){
 				String factcode=listfactcodes.get(k).getId().getFactArea();
 				Webestproduct product_zd=estProSer.findById(temp_factno, factcode, yymm, "zd");
