@@ -802,6 +802,12 @@
 		         	     
 		</action>
 		
+		<action name="webdep_*" class="webDepAction" method="{1}">
+		    <result name="findWebDepartmentByFactNo" type="json">
+		       <param name="root">jsons</param>
+		    </result>
+		</action>
+		
 	</package>
 
      <package name="guest" extends="struts-default,jasperreports-default,json-default" namespace="/guest">

@@ -45,9 +45,11 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 			 <tr>
 			     <td colspan="11">
 			                          是否分部門&nbsp;&nbsp;&nbsp;
-			                          是<input type="radio" name="trMk_r" value="Y" datatype="*"  onclick="rplvalue(this.value),checkSame()"/>&nbsp;&nbsp;
-			                          否<input type="radio" name="trMk_r" value="N" onclick="rplvalue(this.value),checkSame()"/>
-			            <input type="hidden" name="trMk"/>                
+			                          是<input type="radio" name="trMk_r" value="Y" datatype="*"  onclick="rplvalue(this.value),checkSame(),checkdepments()"/>&nbsp;&nbsp;
+			                          否<input type="radio" name="trMk_r" value="N" onclick="rplvalue(this.value),checkSame(),checkdepments()"/>
+			            <input type="hidden" name="trMk"/>
+			         
+			         <div id="div_dep" style="display:none"><select name="depId" datatype="*"></select></div>                   
 			     </td>
 			  </tr>
 			    <tr>
@@ -288,6 +290,28 @@ var j=0;
 		jq("input[name='trMk']").val(vlu);
 	}
 	
+	function checkdepments(factno){
+		jq.ajax({
+			type:"post",
+			dateType:"json",
+			data:{factNo:factno},
+			url:"webdep_findWebDepartmentByFactNo",
+			success:function(data){
+				alert(data.length);
+				var item="";
+				if(data.length>0){
+					item+="<option value=''>請選擇部門</option>";
+					
+					jq("#div_dep").show();
+				}else{
+					item+="<option value=''>無數據</option>";
+					jq("#div_dep").hide();
+				}				
+				jq("#div_dep").append(item);
+			}
+		})
+	}
+	
      function checkSame(){
        var factno=document.getElementById("dwrFactNo").value;
        var visasort=document.getElementById("dwr_kytype").value.split("__")[0]; 
@@ -301,7 +325,7 @@ var j=0;
     	   if(visasort2=="0"){//【其它類】
     		   if(visaSigner!=""){                                   
                    if(trMk=="Y"){
-                	   //kyzvisaflowjs.findVisaSort_dwr2(factno,visasort,visaSigner,trMk,function(x){
+                	   
                 	   kyzvisaflowjs.findVisaSort_dwr4(factno,visasort,visaSigner,trMk,function(x){
                            if(x!=null&&x.length>0){                          	
                            	alert("該Email("+visaSigner+")的審核流程已存在!");                           	                                                    
