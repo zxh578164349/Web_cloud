@@ -8,7 +8,7 @@ public class WebDepartment implements java.io.Serializable{
 
 	// Fields
 
-	private Long depId;
+	private Integer depId;
 	private String factNo;
 	private String depName;
 
@@ -19,12 +19,12 @@ public class WebDepartment implements java.io.Serializable{
 	}
 
 	/** minimal constructor */
-	public WebDepartment(Long depId){
+	public WebDepartment(Integer depId){
 		this.depId=depId;
 	}
 
 	/** full constructor */
-	public WebDepartment(Long depId,String factNo,String depName){
+	public WebDepartment(Integer depId,String factNo,String depName){
 		this.depId=depId;
 		this.factNo=factNo;
 		this.depName=depName;
@@ -32,16 +32,18 @@ public class WebDepartment implements java.io.Serializable{
 
 	// Property accessors
 
-	public Long getDepId(){
-		return this.depId;
-	}
-
-	public void setDepId(Long depId){
-		this.depId=depId;
-	}
+	
 
 	public String getFactNo(){
 		return this.factNo;
+	}
+
+	public Integer getDepId(){
+		return depId;
+	}
+
+	public void setDepId(Integer depId){
+		this.depId=depId;
 	}
 
 	public void setFactNo(String factNo){

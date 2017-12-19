@@ -23,6 +23,7 @@ import entity.KyVisabills;
 import entity.KyzExpectmatmLog;
 import entity.KyzVisaflow;
 import entity.KyzVisaflowId;
+import entity.WebDepartment;
 import entity.WebType;
 import entity.WebUser;
 
@@ -48,7 +49,18 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 	private JSONArray jsons;
 	private String depId;
 	
+	private Integer depId2;
 	
+	
+	
+	public Integer getDepId2(){
+		return depId2;
+	}
+
+	public void setDepId2(Integer depId2){
+		this.depId2=depId2;
+	}
+
 	public String getTrMk(){
 		return trMk;
 	}
@@ -245,6 +257,10 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 						    flows.get(i).setVisaSortM(visaSort_main);
 						    flows.get(i).setTypeMk(visaSort_main2);
 						    flows.get(i).setTrMk(trMk);
+						    if(depId!=null&&!"".equals(depId)){
+						    	//flows.get(i).setDepId(new WebDepartment(Long.parseLong(depId)));
+						    	flows.get(i).setDepId(new WebDepartment(Integer.parseInt(depId)));
+						    }
 							visaSer.add(flows.get(i));
 						}
 						/***************************分部門*************************************/

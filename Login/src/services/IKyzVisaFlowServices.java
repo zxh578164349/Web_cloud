@@ -21,6 +21,7 @@ public interface IKyzVisaFlowServices {
 	public List<Object[]> findVisaSort_dwr3(String factNo, String visaSort, String email,String trMk);
 	public String findVisaSort_dwr3(String factNo,String visaSort,String email,String trMk,String depId);
 	public List<String> findVisaSort_dwr4(String factNo, String visaSort, String email,String trMk);
+	public List<String> findVisaSort_dwr5(String factNo, String visaSort, String depId,String trMk);
 	public List<String> findVisaSort_C(String factNo,String mainSort);
 	public List<KyzVisaflow>findByFactNoVisaSort(String factNo,String visaSort);
 	

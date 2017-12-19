@@ -153,4 +153,15 @@ public class KyzVisaFlowServicesImpl implements IKyzVisaFlowServices{
 		visaDao.add_d(f1,f2);
 	}
 
+	/**
+	 * 日期:2017/12/19
+	 * 描述:
+	 */
+	
+	
+	public List<String> findVisaSort_dwr5(String factNo,String visaSort,String depId,String trMk){
+		// TODO Auto-generated method stub
+		return visaDao.findVisaSort_dwr4(factNo,visaSort,depId,trMk);
+	}
+
 }

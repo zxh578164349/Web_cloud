@@ -32,7 +32,7 @@ public class WebDepartmentDaoImpl extends Basedao implements IWebDepartmentDao{
 	
 	public List<WebDepartment> findWebDepartmentByFactNo(String factNo){
 		// TODO Auto-generated method stub
-		String hql="from WebDepartment factNo=?";
+		String hql="from WebDepartment where factNo=?";
 		String[]objs={factNo};
 		List<WebDepartment>list=super.findAll(hql,objs);
 		return list;

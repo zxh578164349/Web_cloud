@@ -47,9 +47,27 @@ public class WebDepartmentAction extends ActionSupport{
 		this.webdepServices=webdepServices;
 	}
 	
+	/**
+	 * 目前只有臺灣加久（GJ）簽核流程有部分可供選擇簽核流程
+	 * 其他工廠只能根據申請人email自動選擇流程
+	 * 另外，福建鞋塑（XS）目前部門不全，也禁止部門選擇
+	 * 禁止部門選擇的原因是：各廠部門數據沒有完善，一個申請人email只能對應一個部門的流程，否則系統無法識別流程
+	 * @Title: findWebDepartmentByFactNo
+	 * @Description: TODO
+	 * @param @return
+	 * @return String
+	 * @throws
+	 * @author web
+	 * @date 2017/12/18
+	 */
 	public String findWebDepartmentByFactNo(){
-		List<WebDepartment>list=webdepServices.findWebDepartmentByFactNo(factNo);
-		jsons=JSONArray.fromObject(list);
+		List<WebDepartment>list=null;
+		if("GJ".equals(factNo)){
+			list=webdepServices.findWebDepartmentByFactNo(factNo);
+			jsons=JSONArray.fromObject(list);
+		}else{
+			jsons=new JSONArray();
+		}		
 		return "findWebDepartmentByFactNo";
 	}
 

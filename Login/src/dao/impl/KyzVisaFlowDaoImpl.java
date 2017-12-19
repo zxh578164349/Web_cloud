@@ -171,6 +171,14 @@ public class KyzVisaFlowDaoImpl extends Basedao implements IKyzVisaFlowDao {
 		return list;
 	}
 	
+	public List<String> findVisaSort_dwr4(String factNo, String visaSort, String depId,String trMk) {
+		String hql="select id.visaSort from KyzVisaflow where id.factNo=? and id.visaSort like ? and to_char(depId.depId)=? and id.itemNo='01' and trMk=?";
+		String[]objs={factNo,visaSort+"%",depId,trMk};
+		List<String>list=super.findAll(hql,objs);		
+		return list;
+	}
+	
+	
 	public List<String> findVisaSort_C(String factNo,String mainSort) {
 		// TODO Auto-generated method stub
 		//String hql="select distinct id.visaSort from KyzVisaflow where id.factNo=? and id.visaSort like ?  order by id.visaSort";

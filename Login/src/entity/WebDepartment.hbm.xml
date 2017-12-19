@@ -6,8 +6,8 @@
 -->
 <hibernate-mapping>
     <class name="entity.WebDepartment" table="WEB_DEPARTMENT" schema="WEB">
-        <id name="depId" type="java.lang.Long">
-            <column name="DEP_ID" precision="12" scale="0" />
+        <id name="depId" type="java.lang.Integer">
+            <column name="DEP_ID" precision="8" scale="0" />
             <generator class="assigned" />
         </id>
         <property name="factNo" type="java.lang.String">

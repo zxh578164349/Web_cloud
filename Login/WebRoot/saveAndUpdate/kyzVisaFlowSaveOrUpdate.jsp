@@ -44,12 +44,12 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 			 </tr>
 			 <tr>
 			     <td colspan="11">
-			                          是否分部門&nbsp;&nbsp;&nbsp;
+			        <div style="float:left">是否分部門&nbsp;&nbsp;&nbsp;
 			                          是<input type="radio" name="trMk_r" value="Y" datatype="*"  onclick="rplvalue(this.value),checkSame(),checkdepments()"/>&nbsp;&nbsp;
 			                          否<input type="radio" name="trMk_r" value="N" onclick="rplvalue(this.value),checkSame(),checkdepments()"/>
 			            <input type="hidden" name="trMk"/>
-			         
-			         <div id="div_dep" style="display:none"><select name="depId" datatype="*"></select></div>                   
+			         </div> 
+			         <div id="div_dep" style="display:none"><select name="depId" datatype="*" onchange="checkSame()"></select></div>                   
 			     </td>
 			  </tr>
 			    <tr>
@@ -57,7 +57,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 			     <s:if test="#session.factNo!='tw'">
 			        <td >
 							<select  datatype="*" id="dwrFactNo"
-							onchange="getAddBtn(),checkSame()">
+							onchange="getAddBtn(),checkSame(),checkdepments(this.value)">
 							    <option value="${factNo}">${factNo}</option>
 							</select>
 							<input type="hidden" name="flows[0].id.factNo" value="${factNo}"/>
@@ -67,7 +67,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 			  <s:else>
 			     <td ><select 
 							 datatype="*" id="dwrFactNo"
-							onchange="getAddBtn(),checkSame(),getValue('dwrFactNo','dwrFactNo2'),checkWebtype()">
+							onchange="getAddBtn(),checkSame(),getValue('dwrFactNo','dwrFactNo2'),checkWebtype(),checkdepments()">
 								<option value="">請選擇廠別</option>
 								<s:iterator value="#session.facts" id="temp">
 									<option value="${temp[0]}">${temp[1]
@@ -135,6 +135,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 			tiptype : 4,
 			showAllError : true,
 			tipSweep : true,
+			ignoreHidden:true,
 			datatype : {
 				"*0-6" : /^\d{0,9}(\.[0-9]{1,3})?$/,
 				"my0-8": /^\d{0,8}(\.[0-9]{1,4})?$/
@@ -289,30 +290,43 @@ var j=0;
 	function rplvalue(vlu){
 		jq("input[name='trMk']").val(vlu);
 	}
-	
-	function checkdepments(factno){
-		jq.ajax({
-			type:"post",
-			dateType:"json",
-			data:{factNo:factno},
-			url:"webdep_findWebDepartmentByFactNo",
-			success:function(data){
-				alert(data.length);
-				var item="";
-				if(data.length>0){
-					item+="<option value=''>請選擇部門</option>";
+		
+	function checkdepments(){
+		result=0;
+		var factno=jq("#dwrFactNo").val();
+		var trMk=jq("input[name='trMk']").val();
+		if(trMk=="Y"&&factno!=""){
+			jq.ajax({
+				type:"post",
+				dateType:"json",
+				data:{factNo:factno},
+				url:"webdep_findWebDepartmentByFactNo",
+				success:function(data){
+					alert(data.length);
+					jq("select[name='depId']").empty();
+					var item="";
+					if(data.length>0){
+						item+="<option value=''>請選擇部門</option>";
+						jq.each(data,function(i,obj){
+							item+="<option value='"+obj.depId+"'>"+obj.depName+"</option>"						
+						})
+						jq("select[name='depId']").append(item);
+						jq("#div_dep").show();
+						result=data.length;										
+					}else{
+						jq("#div_dep").hide();						
+					}				
 					
-					jq("#div_dep").show();
-				}else{
-					item+="<option value=''>無數據</option>";
-					jq("#div_dep").hide();
-				}				
-				jq("#div_dep").append(item);
-			}
-		})
+				}
+			})
+		}else{
+			jq("#div_dep").hide();
+		}		
+		return result;
 	}
 	
      function checkSame(){
+    	 alert(result);
        var factno=document.getElementById("dwrFactNo").value;
        var visasort=document.getElementById("dwr_kytype").value.split("__")[0]; 
        var visasort2=document.getElementById("dwr_kytype").value.split("__")[1]; 
@@ -321,20 +335,36 @@ var j=0;
        var visasort_index=visasort_obj.selectedIndex;
        var visasort_text=visasort_obj.options[visasort_index].text;
        var trMk=jq("input[name='trMk']").val();
+       //var result=checkdepments(factno);
        if(factno!=""&&visasort!=""&&trMk!=""&&trMk!=null){
     	   if(visasort2=="0"){//【其它類】
     		   if(visaSigner!=""){                                   
                    if(trMk=="Y"){
-                	   
-                	   kyzvisaflowjs.findVisaSort_dwr4(factno,visasort,visaSigner,trMk,function(x){
+                	   if(result>0){
+                		   alert("繼續");
+                		   var depId=jq("select[name='depId']").val();
+                		   alert(depId);
+                		   kyzvisaflowjs.findVisaSort_dwr5(factno,visasort,depId,trMk,function(x){
+                			   if(x!=null&&x.length>0){                          	
+                                  	alert("該部門審核流程已存在!");                           	                                                    
+                                  	lockbtn();                             
+                                  }else{                             
+                                  	unlockbtn();
+                                  }
+                		   })
+                	   }else{
+                		   kyzvisaflowjs.findVisaSort_dwr4(factno,visasort,visaSigner,trMk,function(x){
                            if(x!=null&&x.length>0){                          	
                            	alert("該Email("+visaSigner+")的審核流程已存在!");                           	                                                    
                            	lockbtn();                             
                            }else{                             
                            	unlockbtn();
                            }
-                      }); 
+                      });                		   
+                	   }               	   
+                      //checkdepments(factno,visasort,visaSigner,trMk);
                    }else{
+                	   jq("#div_dep").hide();
                 	   visasort=visasort+"_AA";
                 	   kyzvisaflowjs.findNums(factno,visasort,function(x){
             			   if(x!=0){
@@ -492,15 +522,15 @@ function unlockbtn(){
      document.getElementById("addbtn").style.color="white";
 }
 
+var result=0;
+jq(function(){
+	checkWebtype();
+	result=checkdepments();	
+});
 </script>
 
 <script type='text/javascript' src='dwr/interface/webfactjs.js'></script>
 <script type='text/javascript' src='dwr/interface/kyzvisaflowjs.js'></script>
 <script type='text/javascript' src='dwr/interface/userjs.js'></script>
-<script type="text/javascript">
-jq(function(){
-	checkWebtype();
-});
-</script>	
 </body>
 </html>

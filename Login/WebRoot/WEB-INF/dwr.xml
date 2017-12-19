@@ -120,6 +120,7 @@
 		    <include method="findVisaSort_dwr"/>
 		    <include method="findVisaSort_dwr2"/>
 		    <include method="findVisaSort_dwr4"/>
+		    <include method="findVisaSort_dwr5"/>
 		    <include method="findByFactNoVisaSort"/>
 		    <include method="findNums"/>
 		</create>
