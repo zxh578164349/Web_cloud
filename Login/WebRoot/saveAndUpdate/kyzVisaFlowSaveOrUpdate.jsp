@@ -49,7 +49,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 			                          否<input type="radio" name="trMk_r" value="N" onclick="rplvalue(this.value),checkSame()"/>
 			            <input type="hidden" name="trMk"/>
 			         </div> 
-			         <div id="div_dep" style="display:none"><select name="depId" datatype="*" onchange="checkSame()"></select></div>                   
+			         <div id="div_dep" style="display:none"><select name="depId" datatype="*" onchange="checkdepments()"></select></div>                   
 			     </td>
 			  </tr>
 			    <tr>
@@ -291,7 +291,7 @@ var j=0;
 		jq("input[name='trMk']").val(vlu);
 	}
 		
-	function checkdepments(){		
+	function loaddepments(){		
 		var factno=jq("#dwrFactNo").val();
 		var trMk=jq("input[name='trMk']").val();
 		var result=0;
@@ -301,6 +301,7 @@ var j=0;
 				dateType:"json",
 				data:{factNo:factno},
 				url:"webdep_findWebDepartmentByFactNo",
+				async:false,
 				success:function(data){
 					alert(data.length);
 					jq("select[name='depId']").empty();
@@ -309,7 +310,7 @@ var j=0;
 						item+="<option value=''>請選擇部門</option>";
 						jq.each(data,function(i,obj){
 							item+="<option value='"+obj.depId+"'>"+obj.depName+"</option>"						
-						})
+						});
 						jq("select[name='depId']").append(item);
 						jq("#div_dep").show();
 						result=data.length;										
@@ -318,15 +319,40 @@ var j=0;
 					}				
 					
 				}
-			})
+			});
 		}else{
 			jq("#div_dep").hide();
 		}		
 		return result;
 	}
 	
+	function checkdepments(){
+	   var factno=jq("#dwrFactNo").val();
+	   var visasort=jq("#dwr_kytype").split("__")[0];	   
+	   var depId=jq("select[name='depId']").val();
+	   var trMk=jq("input[name='trMk']").val();
+	   kyzvisaflowjs.findVisaSort_dwr5(factno,visasort,depId,trMk,function(x){
+                			   if(x!=null&&x.length>0){                          	
+                                  	alert("該部門審核流程已存在!");                           	                                                    
+                                  	lockbtn();                             
+                                  }else{                             
+                                  	unlockbtn();
+                                  }
+        });	    	   
+	}
+	
+	function checkNodepments(factno,visasort){
+	           kyzvisaflowjs.findNums(factno,visasort,function(x){
+            		if(x!=0){
+            			alert("該廠的審核流程(不分部門)已存在!");                               
+                        lockbtn();
+            		}else{           				   
+            		  unlockbtn();
+            			 }
+               });
+	}
+	
      function checkSame(){
-    	 alert(result);
        var factno=document.getElementById("dwrFactNo").value;
        var visasort=document.getElementById("dwr_kytype").value.split("__")[0]; 
        var visasort2=document.getElementById("dwr_kytype").value.split("__")[1]; 
@@ -339,6 +365,15 @@ var j=0;
     	   if(visasort2=="0"){//【其它類】
     		   if(visaSigner!=""){                                   
                    if(trMk=="Y"){
+                       kyzvisaflowjs.findVisaSort_dwr4(factno,visasort,visaSigner,trMk,function(x){
+                           if(x!=null&&x.length>0){                          	
+                           	alert("該Email("+visaSigner+")的審核流程已存在!");                           	                                                    
+                           	lockbtn();                             
+                           }else{                             
+                           	unlockbtn();
+                           }
+                       });
+                   
                 	   /*if(result>0){
                 		   alert("繼續");
                 		   var depId=jq("select[name='depId']").val();
@@ -361,27 +396,29 @@ var j=0;
                            }
                       });                		   
                 	   } */              	   
-                      //checkdepments(factno,visasort,visaSigner,trMk);
+                      //loaddepments(factno,visasort,visaSigner,trMk);
                    }else{
                 	   jq("#div_dep").hide();
                 	   visasort=visasort+"_AA";
-                	   kyzvisaflowjs.findNums(factno,visasort,function(x){
+                	   checkNodepments(factno,visasort);
+                	  /* kyzvisaflowjs.findNums(factno,visasort,function(x){
             			   if(x!=0){
             				   alert("該廠的審核流程(不分部門)已存在!");                               
                                lockbtn();
             			   }else{           				   
             				   unlockbtn();
             			   }
-            		   });
+            		   });*/
                    }
                  }  
     	   }else{//【出差類】【配方類】
     		   if(visaSigner!=""){
     			   if(visasort2=="TR"){
-    				   var result=checkdepments();
-    				   if(result>0){
-                		   alert("繼續");               		   
-                		   var depId=jq("select[name='depId']").val();
+    			       if(trMk=="Y"){
+    			          var result=loaddepments();
+    				      alert("*******"+result);
+    				      if(result>0){              		                 		   
+                		   /*var depId=jq("select[name='depId']").val();
                 		   alert(depId);
                 		   kyzvisaflowjs.findVisaSort_dwr5(factno,visasort,depId,trMk,function(x){
                 			   if(x!=null&&x.length>0){                          	
@@ -390,8 +427,9 @@ var j=0;
                                   }else{                             
                                   	unlockbtn();
                                   }
-                		   })
-                	   }else{
+                		   });*/
+                		    checkdepments();
+                	      }else{
                 		   alert("該廠還沒有建立部門資料,無法創建流程");
                 		   lockbtn();
                 		   /*kyzvisaflowjs.findVisaSort_dwr4(factno,visasort,visaSigner,trMk,function(x){
@@ -402,17 +440,25 @@ var j=0;
                            	unlockbtn();
                            }
                            });*/                		   
-                	   }
-    			   }
-    			   
-    			   kyzvisaflowjs.findNums(factno,visasort,function(x){
+                	     }
+    			       }else{
+    			         jq("#div_dep").hide();
+                	     visasort=visasort+"_AA";
+                	     checkNodepments(factno,visasort);
+    			       }
+    				   
+    			   }else{
+    			      kyzvisaflowjs.findNums(factno,visasort,function(x){
         			   if(x!=0){
         				   alert("該廠的審核流程已存在!");                         
                            lockbtn();
         			   }else{        				  
         				   unlockbtn();
         			   }
-        		   });
+        		      });
+    			   }
+    			   
+    			   
     		   }    		   
     	   }                   
        } 
@@ -552,7 +598,7 @@ function unlockbtn(){
 //var result=0;
 jq(function(){
 	checkWebtype();
-	//result=checkdepments();	
+	//result=loaddepments();	
 });
 </script>
 
