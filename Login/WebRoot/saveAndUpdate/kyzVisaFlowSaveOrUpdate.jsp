@@ -45,8 +45,8 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 			 <tr>
 			     <td colspan="11">
 			        <div style="float:left">是否分部門&nbsp;&nbsp;&nbsp;
-			                          是<input type="radio" name="trMk_r" value="Y" datatype="*"  onclick="rplvalue(this.value),checkSame(),checkdepments()"/>&nbsp;&nbsp;
-			                          否<input type="radio" name="trMk_r" value="N" onclick="rplvalue(this.value),checkSame(),checkdepments()"/>
+			                          是<input type="radio" name="trMk_r" value="Y" datatype="*"  onclick="rplvalue(this.value),checkSame()"/>&nbsp;&nbsp;
+			                          否<input type="radio" name="trMk_r" value="N" onclick="rplvalue(this.value),checkSame()"/>
 			            <input type="hidden" name="trMk"/>
 			         </div> 
 			         <div id="div_dep" style="display:none"><select name="depId" datatype="*" onchange="checkSame()"></select></div>                   
@@ -57,7 +57,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 			     <s:if test="#session.factNo!='tw'">
 			        <td >
 							<select  datatype="*" id="dwrFactNo"
-							onchange="getAddBtn(),checkSame(),checkdepments(this.value)">
+							onchange="getAddBtn(),checkSame()">
 							    <option value="${factNo}">${factNo}</option>
 							</select>
 							<input type="hidden" name="flows[0].id.factNo" value="${factNo}"/>
@@ -67,7 +67,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 			  <s:else>
 			     <td ><select 
 							 datatype="*" id="dwrFactNo"
-							onchange="getAddBtn(),checkSame(),getValue('dwrFactNo','dwrFactNo2'),checkWebtype(),checkdepments()">
+							onchange="getAddBtn(),checkSame(),getValue('dwrFactNo','dwrFactNo2'),checkWebtype()">
 								<option value="">請選擇廠別</option>
 								<s:iterator value="#session.facts" id="temp">
 									<option value="${temp[0]}">${temp[1]
@@ -291,10 +291,10 @@ var j=0;
 		jq("input[name='trMk']").val(vlu);
 	}
 		
-	function checkdepments(){
-		result=0;
+	function checkdepments(){		
 		var factno=jq("#dwrFactNo").val();
 		var trMk=jq("input[name='trMk']").val();
+		var result=0;
 		if(trMk=="Y"&&factno!=""){
 			jq.ajax({
 				type:"post",
@@ -334,13 +334,12 @@ var j=0;
        var visasort_obj=document.getElementById("dwr_kytype");
        var visasort_index=visasort_obj.selectedIndex;
        var visasort_text=visasort_obj.options[visasort_index].text;
-       var trMk=jq("input[name='trMk']").val();
-       //var result=checkdepments(factno);
+       var trMk=jq("input[name='trMk']").val();       
        if(factno!=""&&visasort!=""&&trMk!=""&&trMk!=null){
     	   if(visasort2=="0"){//【其它類】
     		   if(visaSigner!=""){                                   
                    if(trMk=="Y"){
-                	   if(result>0){
+                	   /*if(result>0){
                 		   alert("繼續");
                 		   var depId=jq("select[name='depId']").val();
                 		   alert(depId);
@@ -361,7 +360,7 @@ var j=0;
                            	unlockbtn();
                            }
                       });                		   
-                	   }               	   
+                	   } */              	   
                       //checkdepments(factno,visasort,visaSigner,trMk);
                    }else{
                 	   jq("#div_dep").hide();
@@ -378,6 +377,34 @@ var j=0;
                  }  
     	   }else{//【出差類】【配方類】
     		   if(visaSigner!=""){
+    			   if(visasort2=="TR"){
+    				   var result=checkdepments();
+    				   if(result>0){
+                		   alert("繼續");               		   
+                		   var depId=jq("select[name='depId']").val();
+                		   alert(depId);
+                		   kyzvisaflowjs.findVisaSort_dwr5(factno,visasort,depId,trMk,function(x){
+                			   if(x!=null&&x.length>0){                          	
+                                  	alert("該部門審核流程已存在!");                           	                                                    
+                                  	lockbtn();                             
+                                  }else{                             
+                                  	unlockbtn();
+                                  }
+                		   })
+                	   }else{
+                		   alert("該廠還沒有建立部門資料,無法創建流程");
+                		   lockbtn();
+                		   /*kyzvisaflowjs.findVisaSort_dwr4(factno,visasort,visaSigner,trMk,function(x){
+                           if(x!=null&&x.length>0){                          	
+                           	alert("該Email("+visaSigner+")的審核流程已存在!");                           	                                                    
+                           	lockbtn();                             
+                           }else{                             
+                           	unlockbtn();
+                           }
+                           });*/                		   
+                	   }
+    			   }
+    			   
     			   kyzvisaflowjs.findNums(factno,visasort,function(x){
         			   if(x!=0){
         				   alert("該廠的審核流程已存在!");                         
@@ -522,10 +549,10 @@ function unlockbtn(){
      document.getElementById("addbtn").style.color="white";
 }
 
-var result=0;
+//var result=0;
 jq(function(){
 	checkWebtype();
-	result=checkdepments();	
+	//result=checkdepments();	
 });
 </script>
 
