@@ -228,7 +228,7 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 		String visaSort_main2=flows.get(0).getId().getVisaSort().split("__")[1];
 					
 			try{
-				if(visaSort_main2.equals("0")){//【其它類】
+				if("0".equals(visaSort_main2)||"TR".equals(visaSort_main2)){//【其它類】【出差類】
 					if("Y".equals(trMk)){
 						/***************************分部門*************************************/
 						String visaSort_sub=visaSort_main+"0";						
@@ -257,8 +257,7 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 						    flows.get(i).setVisaSortM(visaSort_main);
 						    flows.get(i).setTypeMk(visaSort_main2);
 						    flows.get(i).setTrMk(trMk);
-						    if(depId!=null&&!"".equals(depId)){
-						    	//flows.get(i).setDepId(new WebDepartment(Long.parseLong(depId)));
+						    if(depId!=null&&!"".equals(depId)){						    	
 						    	flows.get(i).setDepId(new WebDepartment(Integer.parseInt(depId)));
 						    }
 							visaSer.add(flows.get(i));
@@ -279,7 +278,7 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 						}
 					}
 					/***************************不分部門*************************************/
-				}else{//【出差類】,【配方類】
+				}else{//【配方類】
 					for(int i=0;i<flows.size();i++){
 						flows.get(i).getId().setVisaSort(visaSort_main);
 						flows.get(i).getId().setPurmanNo(flows.get(i).getId().getPurmanNo().trim());
@@ -514,6 +513,7 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 				flows.get(i).setFlowMk("N");
 				flows.get(i).setVisaSortM(flows.get(i).getId().getVisaSort().substring(0,2));
 				flows.get(i).setTrMk(trMk);
+				flows.get(i).setDepId(new WebDepartment(Integer.parseInt(depId)));
 				visaSer.add(flows.get(i));
 			}
 			ajaxResult="0";

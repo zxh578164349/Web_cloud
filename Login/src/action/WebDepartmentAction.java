@@ -61,13 +61,13 @@ public class WebDepartmentAction extends ActionSupport{
 	 * @date 2017/12/18
 	 */
 	public String findWebDepartmentByFactNo(){
-		List<WebDepartment>list=null;
-		if("GJ".equals(factNo)){
-			list=webdepServices.findWebDepartmentByFactNo(factNo);
-			jsons=JSONArray.fromObject(list);
-		}else{
-			jsons=new JSONArray();
-		}		
+		List<WebDepartment>list=null;		
+		list=webdepServices.findWebDepartmentByFactNo(factNo);
+			if(list==null||list.size()==0){
+				jsons=new JSONArray();				
+			}else{
+				jsons=JSONArray.fromObject(list);
+			}						
 		return "findWebDepartmentByFactNo";
 	}
 

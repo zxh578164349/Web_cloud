@@ -33,6 +33,7 @@ public class WebBussinessletter implements java.io.Serializable {
 	private String userEmail;//申請人Email
 	private Integer userId;
 	private String useremail;
+	private WebDepartment depId;
 
 	// Constructors
 
@@ -245,6 +246,14 @@ public class WebBussinessletter implements java.io.Serializable {
 
 	public void setUserId(Integer userId){
 		this.userId=userId;
+	}
+
+	public WebDepartment getDepId() {
+		return depId;
+	}
+
+	public void setDepId(WebDepartment depId) {
+		this.depId = depId;
 	}
 	
 	

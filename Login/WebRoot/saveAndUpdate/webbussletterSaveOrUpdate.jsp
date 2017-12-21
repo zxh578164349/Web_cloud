@@ -161,6 +161,11 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 				        <input type="hidden" value="<s:property value='bussletter.filesYn'/>" name=""/>
 				        <input type="hidden" value="<s:property value='bussletter.firstPage'/>" name=""/>				       				      
 				      </td>
+				      <td>
+				         <div id="div_dep" style="display:none">
+				                                  部門&nbsp;&nbsp;<select name="bussletter.depId.depId" datatype="*" onchange=" "></select>
+				         </div>
+				      </td>
 				      <%--<td >附档</td>
 				      <td colspan="3">
 				      <div style="width:300px" id="divfile">
@@ -303,50 +308,6 @@ function makeBillNo() {
 		loadUrl("bussletter_findPageBean?backIndex=1");
 	}
 	
-/*jq(function(){
-   if(jq("#isNull").val()=="isNull"){
-     window.onload=makeBillNo();
-     if(jq("#dwrFactNo").val()!="tw"){
-    	 checkWebbussType(jq("#dwrFactNo").val());
-     }
-   }
-});	
-window.onload=function(){
-	if(jq("#isNull").val()=="isNull"){
-	    makeBillNo();
-	     if(jq("#dwrFactNo").val()!="tw"&&jq("#dwrFactNo").val()!=""){
-	    	 checkWebbussType(jq("#dwrFactNo").val());
-	     }
-	   }
-}
-
-function getKyType(){
-	 var factno=document.getElementById("dwrFactNo").value;
-	 if(factno!=null&&factno!=""){
-	     webtypejs.findByFactNo(factno,function(x){
-      if(x.length>0){
-         dwr.util.addOptions("dwr_kytype",x,"webtypeMk","typeName");
-      }
-        
-    });
-	 }   
-	}
-	
-function getKyType2(factno){
-	 document.getElementById("dwr_kytype").length=1;	 
-	 if(factno!=null&&factno!=""){
-	     webtypejs.findByFactNo(factno,function(x){
-      if(x.length>0){
-         dwr.util.addOptions("dwr_kytype",x,"webtypeMk","typeName");
-      }
-        
-    });
-	 }
-   
-	}
-*/
-
-
 function checkWebbussType(fact){
 	jq.ajax({
 		type:"POST",
@@ -367,6 +328,35 @@ function checkWebbussType(fact){
 		}
 	});
 }
+
+function loaddepments(){		
+		var factno=jq("#dwrFactNo").val();
+		if(factno!=""){
+		   jq.ajax({
+				type:"post",
+				dateType:"json",
+				data:{factNo:factno},
+				url:"webdep_findWebDepartmentByFactNo",
+				async:false,
+				success:function(data){
+					alert(data.length);
+					jq("select[name='depId']").empty();
+					var item="";
+					if(data.length>0){
+						item+="<option value=''>請選擇部門</option>";
+						jq.each(data,function(i,obj){
+							item+="<option value='"+obj.depId+"'>"+obj.depName+"</option>"						
+						});
+						jq("select[name='depId']").append(item);
+						jq("#div_dep").show();									
+					}else{
+						jq("#div_dep").hide();						
+					}				
+					
+				}
+			});
+		}						
+	}
 </script>
 <script type='text/javascript' src='dwr/interface/webbussletterjs.js'></script>
 <script type='text/javascript' src='dwr/interface/webfactjs.js'></script>
@@ -375,6 +365,7 @@ function checkWebbussType(fact){
 jq(function(){
 	if(jq("#isNull").val()=="isNull"){
 	    makeBillNo();
+	    loaddepments();
 	     if(jq("#dwrFactNo").val()!="tw"&&jq("#dwrFactNo").val()!=""){
 	    	 checkWebbussType(jq("#dwrFactNo").val());
 	     }

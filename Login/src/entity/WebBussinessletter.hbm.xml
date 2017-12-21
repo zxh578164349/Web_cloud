@@ -70,6 +70,9 @@
         <property name="useremail" type="java.lang.String">
             <column name="USEREMAIL" length="50"/>
         </property>
-        <one-to-one name="vbm" class="entity.KyVisabillm"  property-ref="webbussletter" cascade="all"/>        
+        <one-to-one name="vbm" class="entity.KyVisabillm"  property-ref="webbussletter" cascade="all"/> 
+        <many-to-one name="depId" class="entity.WebDepartment" fetch="select">
+            <column name="DEPID" precision="12" scale="0" />
+        </many-to-one>       
     </class>
 </hibernate-mapping>

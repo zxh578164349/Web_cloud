@@ -65,6 +65,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 			     <input type="hidden" value="<s:property value='maxItem'/>" id="maxItem"/><!-- 后台传递过来的最大序列号 -->
 			     <input type="hidden" name="flows[0].typeMk" id="typeMk" value="<s:property value='flow.typeMk'/>"/>
 			     <input type="hidden" name="trMk" value="<s:property value='flow.trMk'/>"/>
+			     <input type="hidden" value="<s:property value='flow.depId.depId'/>" name="depId"/>
 			     	
 			     </td>			    	     			     		      		      
 			  </tr>		
