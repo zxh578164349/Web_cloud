@@ -806,6 +806,12 @@
 		    <result name="findWebDepartmentByFactNo" type="json">
 		       <param name="root">jsons</param>
 		    </result>
+		    <result name="beanList">/page/webdepartment.jsp</result>
+            <result name="beanList1">/page/table1/webdepartment1.jsp</result>
+            <result name="findById">/saveAndUpdate/webDepartmentSaveOrUpdate.jsp</result>
+            <result name="add" type="json">
+               <param name="root">ajaxResult</param>
+            </result>
 		</action>
 		
 	</package>

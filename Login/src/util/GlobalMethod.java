@@ -2067,6 +2067,10 @@ public class GlobalMethod extends HibernateDaoSupport{
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
+	    	
+	    	String abc="abcd";
+	    	System.out.println(abc.substring(0,1));
+	    	System.out.println(abc.substring(0,2));
 		
 	  
 		}

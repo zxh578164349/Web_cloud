@@ -5,6 +5,8 @@ package dao;
 
 import java.util.List;
 
+import util.PageBean;
+
 import entity.WebDepartment;
 
 /**   
@@ -22,5 +24,8 @@ import entity.WebDepartment;
  **/
 public interface IWebDepartmentDao{
 	public List<WebDepartment>findWebDepartmentByFactNo(String factNo);
+	public PageBean findPageBean(int page, int pageSize, String factNo);
+	public WebDepartment findById(String depId);
+	public void add(WebDepartment dep);
 
 }

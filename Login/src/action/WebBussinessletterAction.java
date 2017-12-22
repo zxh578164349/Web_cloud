@@ -200,7 +200,7 @@ public class WebBussinessletterAction extends ActionSupport implements ServletRe
 		if(timeEnd!=null&&!timeEnd.equals("")){
 			bussletter.setTimeEnd(fmt2.parse(timeEnd));
 		}			
-			try{
+			try{				
 				bussletter.setVisaSortM(bussletter.getVisaSort().substring(0,2));
 				if(isnull.equals("isNull")){
 				//bussletter.setVisaSortM(bussletter.getVisaSort().substring(0,2));
@@ -230,6 +230,7 @@ public class WebBussinessletterAction extends ActionSupport implements ServletRe
 		ActionContext.getContext().getSession().remove("public_factNo");
 		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
 		bean=webbussletterSer.findPageBean(20,page, billNo, factNo,user);
+		
 		return "beanList";	
 	}
 	public String findPageBean2(){

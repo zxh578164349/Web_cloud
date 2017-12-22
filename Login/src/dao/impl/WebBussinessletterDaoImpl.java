@@ -61,6 +61,9 @@ public class WebBussinessletterDaoImpl extends Basedao implements IWebBussinessl
 		List<WebBussinessletter>list=super.queryForPage(hql.toString(), offset, pageSize, map);
 		for(WebBussinessletter letter:list){
 			letter.getVbm().getLastMk();
+			if(letter.getUnit()==null&&letter.getDepId().getDepName()!=null){
+				letter.setUnit(letter.getDepId().getDepName());
+			}			
 		}
 		PageBean bean=new PageBean();
 		bean.setAllRow(allrow);

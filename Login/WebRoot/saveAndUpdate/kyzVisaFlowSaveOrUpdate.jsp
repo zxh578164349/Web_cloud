@@ -305,7 +305,7 @@ var j=0;
 				url:"webdep_findWebDepartmentByFactNo",
 				async:false,
 				success:function(data){
-					alert(data.length);
+					
 					jq("select[name='depId']").empty();
 					var item="";
 					if(data.length>0){
@@ -329,14 +329,13 @@ var j=0;
 	}
 	
 	function checkdepments(){
-	alert("checkdepments");
+	
 	   var factno=jq("#dwrFactNo").val();
 	   var visasort=jq("#dwr_kytype").val().split("__")[0];	   
 	   var depId=jq("select[name='depId']").val();
 	   var trMk=jq("input[name='trMk']").val();
 	      if(factno!=""&&visasort!=""&&depId!=""&&trMk!=""){
-	          kyzvisaflowjs.findVisaSort_dwr5(factno,visasort,depId,trMk,function(x){
-	          alert("checkdepments:"+x.length);
+	          kyzvisaflowjs.findVisaSort_dwr5(factno,visasort,depId,trMk,function(x){	          
                 			   if(x!=null&&x.length>0){                          	
                                   	alert("該部門審核流程已存在!");                           	                                                    
                                   	lockbtn();                             
@@ -394,8 +393,7 @@ var j=0;
     	   }else{//【出差類】【配方類】   		   
     			   if(visasort2=="TR"){
     			       if(trMk=="Y"){
-    			         // var result=loaddepments();
-    				      alert("*******"+result);
+    			         // var result=loaddepments();				     
     				      if(result>0){              		                 		                  		   
                 		    checkdepments();
                 	      }else{

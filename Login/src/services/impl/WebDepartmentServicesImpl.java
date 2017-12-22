@@ -9,6 +9,7 @@ import dao.IWebDepartmentDao;
 
 import entity.WebDepartment;
 import services.IWebDepartmentServices;
+import util.PageBean;
 
 /**   
  *    
@@ -38,6 +39,21 @@ public class WebDepartmentServicesImpl implements IWebDepartmentServices{
 	public List<WebDepartment> findWebDepartmentByFactNo(String factNo){
 		// TODO Auto-generated method stub
 		return webdepDao.findWebDepartmentByFactNo(factNo);
+	}
+
+	public PageBean findPageBean(int page, int pageSize, String factNo) {
+		// TODO Auto-generated method stub
+		return webdepDao.findPageBean(page, pageSize, factNo);
+	}
+
+	public WebDepartment findById(String depId) {
+		// TODO Auto-generated method stub
+		return webdepDao.findById(depId);
+	}
+
+	public void add(WebDepartment dep) {
+		// TODO Auto-generated method stub
+		webdepDao.add(dep);
 	}
 
 }

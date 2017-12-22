@@ -34,7 +34,13 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 			<tbody >
 				    <tr>
 				        <td >所屬單位</td>
-				        <td><input type="text" name="bussletter.unit" datatype="*"  value="<s:property value='bussletter.unit'/>" /></td>
+				        <td>
+				        <!-- <input type="text" name="bussletter.unit" datatype="*"  value="<s:property value='bussletter.unit'/>" /> -->
+				        <input type="text" id="dep_temp" disabled/>
+				        <div id="div_dep" style="display:none">
+				           <select name="bussletter.depId.depId" datatype="*" id="depId" onchange="checkvisaflow()"></select>
+				         </div>
+				        </td>
 				        
 				        <td >姓名</td>
 				        <td>
@@ -55,50 +61,35 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 						</td>										        				        				        				        
 				    </tr>
 				    <s:if test="bussletter==null">
-				   	<input type="hidden" name="isnull" value="isNull" id="isNull"/><!--判斷變量 -->					
-					<s:if test="#session.factNo!='tw'">
+				   	<input type="hidden" name="isnull" value="isNull" id="isNull"/><!--判斷變量 -->										
 					<tr>
 						<td >廠別</td>
 						<td >
-						  
-						<input type="text" style="color:blue"
-							name="bussletter.factNo" value="${factNo}" readonly id="dwrFactNo" />							
-						</td>																	
-						<td ><font color="grey">類別</font></td>
-				        <td >
-				        <input type="hidden" name="bussletter.visaSort" value="TR" id="hidden_kytype"/><!-- 類型寫死爲：TR   20160203 -->
-				         <select  id="dwr_kytype" onchange="checkType(this.value)" style="color:grey;background-color:#f5f5f5;border-color:grey" disabled>
-				            <option value="">請選擇</option>
-				         </select>
-				         <!--  <input type="hidden" id="dwr_email" value="<s:property value='#session.loginUser.email'/>"/>
-				         <input type="hidden" name="bussletter.visaSort" id="hidden_kytype"/>-->	
-				        </td>
-					</tr>
-				</s:if>
-				<s:if test="#session.factNo=='tw'">
-					<tr>
-						<td >廠別</td>
-						<td ><select style="color:blue"
+						<s:if test="#session.factNo!='tw'">
+						   <input type="text" style="color:blue"
+							name="bussletter.factNo" value="${factNo}" readonly id="dwrFactNo" />	
+						</s:if>  
+						<s:else>
+						   <select style="color:blue"
 							name="bussletter.factNo" datatype="*" id="dwrFactNo"
-							onchange="checkWebbussType(this.value),makeBillNo()">
+							onchange="checkvisaflow(),makeBillNo(),loaddepments()">
 								<option value="">請選擇廠別</option>
 								<s:iterator value="#session.facts" id="temp">
 									<option value="${temp[0]}">${temp[1]
 										}&nbsp;(${temp[0]})</option>
 								</s:iterator>
-						</select></td>																		
+						</select>
+						</s:else>						
+						</td>																	
 						<td ><font color="grey">類別</font></td>
 				        <td >
-				         <select  id="dwr_kytype" onchange="checkType(this.value)"  style="color:grey;background-color:#f5f5f5;border-color:grey" disabled>
-				            <option value="">不可用</option>
-				         </select>
-				         <input type="hidden" name="bussletter.visaSort" value="TR" id="hidden_kytype"/><!-- 類型寫死爲：TR   20160203 -->
-				         <!--  <input type="hidden" id="dwr_email" value="<s:property value='#session.loginUser.email'/>"/>
-				         <input type="hidden" name="bussletter.visaSort" id="hidden_kytype"/>
-				         -->	
+				        <!--<input type="hidden" name="bussletter.visaSort" value="TR" id="hidden_kytype"/> 類型寫死爲：TR   20160203 -->
+				        <input type="hidden" name="bussletter.visaSort"  id="hidden_kytype"/>
+				         <select  id="dwr_kytype"  style="color:grey;background-color:#f5f5f5;border-color:grey" disabled>
+				            <option value="">請選擇</option>
+				         </select>				        	
 				        </td>
-					</tr>
-					</s:if>																							    
+					</tr>																													    
 				   </s:if>
 				   <s:else>
 				    <tr>
@@ -160,12 +151,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 				        </s:else>
 				        <input type="hidden" value="<s:property value='bussletter.filesYn'/>" name=""/>
 				        <input type="hidden" value="<s:property value='bussletter.firstPage'/>" name=""/>				       				      
-				      </td>
-				      <td>
-				         <div id="div_dep" style="display:none">
-				                                  部門&nbsp;&nbsp;<select name="bussletter.depId.depId" datatype="*" onchange=" "></select>
-				         </div>
-				      </td>
+				      </td>				     
 				      <%--<td >附档</td>
 				      <td colspan="3">
 				      <div style="width:300px" id="divfile">
@@ -234,7 +220,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 function makeBillNo() {      
 		var factno = document.getElementById("dwrFactNo").value;
 		var timecreat = document.getElementById("ymExpect").value;
-		var billnos = document.getElementById("bussletter_billno");
+		//var billnos = document.getElementById("bussletter_billno");
 		if (factno != "" && timecreat != "") {
 			webbussletterjs.makeBillNo(factno, timecreat, function(x) {
 				dwr.util.setValue("bussletter_billno", x);								  			  								
@@ -243,36 +229,7 @@ function makeBillNo() {
 		
 	}								
 
-	 
-  function checkType(type){
-     dwrFactNo=document.getElementById("dwrFactNo").value;
-     dwremail=document.getElementById("dwr_email").value.toLowerCase(); //登錄人的email要轉化爲小寫,因爲申請人email已全部轉化爲小寫（20151022）;
-     if(dwrFactNo!=""&&type!=""){
-         kyzvisaflowjs.findByType_Dwr(dwrFactNo,type,function(x){
-            if(x==0){//流程不存在
-               alert("該類型審核流程不存在，請重新選定!");
-               document.getElementById("sub").disabled=true;
-               document.getElementById("sub").style.color="red";
-               document.getElementById("dwr_kytype").style.color="red";
-            }else{             
-                kyzvisaflowjs.findVisaSort_dwr(dwrFactNo,type,dwremail,function(y){
-                  if(y==null){
-                     alert("對不起，你不是該類別函文申請人，請重新選定!");
-                     document.getElementById("sub").disabled=true;
-                     document.getElementById("sub").style.color="red";
-                     document.getElementById("dwr_kytype").style.color="red";                    
-                  }else{
-                     document.getElementById("sub").disabled=false;
-                     document.getElementById("sub").style.color="white";
-                     document.getElementById("dwr_kytype").style.color="black";
-                     document.getElementById("hidden_kytype").value=y;                    
-                  }
-                  
-               }); 
-            }                               
-         });
-     }
-  }
+
   var i=0;	
   function addFile(){
       i++;
@@ -338,24 +295,64 @@ function loaddepments(){
 				data:{factNo:factno},
 				url:"webdep_findWebDepartmentByFactNo",
 				async:false,
-				success:function(data){
-					alert(data.length);
-					jq("select[name='depId']").empty();
+				success:function(data){					
+					jq("#depId").empty();
 					var item="";
 					if(data.length>0){
 						item+="<option value=''>請選擇部門</option>";
 						jq.each(data,function(i,obj){
-							item+="<option value='"+obj.depId+"'>"+obj.depName+"</option>"						
+							item+="<option value='"+obj.depId+"'>"+obj.depName+"</option>";					
 						});
-						jq("select[name='depId']").append(item);
-						jq("#div_dep").show();									
+						jq("#depId").append(item);
+						jq("#div_dep").show();
+						jq("#dep_temp").remove();
+						unlockbtn();
+															
 					}else{
-						jq("#div_dep").hide();						
+					    layer.msg("對不起，該廠還沒有部門資料，不能申請",3,3);				    
+					    if(jq("#dep_temp").length==0){
+					       jq("#div_dep").before("<input type='text' id='dep_temp' disabled/>");
+					    }					    
+						jq("#div_dep").hide();
+						lockbtn();												
 					}				
 					
 				}
 			});
 		}						
+	}
+	
+	
+function lockbtn(){
+    jq("#sub").attr("disabled",true);
+	jq("#sub").val("鎖定");
+	jq("#sub").css("color","red");
+}
+
+function unlockbtn(){
+    jq("#sub").removeAttr("disabled");
+	jq("#sub").val("確定");
+	jq("#sub").css("color","white");
+}	
+
+
+	
+	
+	function checkvisaflow() {
+	    var factno=jq("#dwrFactNo").val();
+	    var depId=jq("#depId").val();
+		if (factno != ""  && depId != ""&&depId!=null) {		    
+			kyzvisaflowjs.findVisaSort_dwr5(factno, "TR", depId, "Y",
+					function(x) {
+						if (x != null && x.length > 0) {
+						    jq("#hidden_kytype").val(x);
+							unlockbtn();
+						} else {
+						    layer.msg("對不起，該廠還沒有創建出差流程，不能申請",3,3);
+							lockbtn();
+						}
+					});
+		}
 	}
 </script>
 <script type='text/javascript' src='dwr/interface/webbussletterjs.js'></script>
@@ -365,10 +362,7 @@ function loaddepments(){
 jq(function(){
 	if(jq("#isNull").val()=="isNull"){
 	    makeBillNo();
-	    loaddepments();
-	     if(jq("#dwrFactNo").val()!="tw"&&jq("#dwrFactNo").val()!=""){
-	    	 checkWebbussType(jq("#dwrFactNo").val());
-	     }
+	    loaddepments();	     
 	   }
 })
 </script>	

@@ -8,7 +8,9 @@
     <class name="entity.WebDepartment" table="WEB_DEPARTMENT" schema="WEB">
         <id name="depId" type="java.lang.Integer">
             <column name="DEP_ID" precision="8" scale="0" />
-            <generator class="assigned" />
+            <generator class="sequence">
+               <param name="sequence">seq_webdepartment</param>
+            </generator>
         </id>
         <property name="factNo" type="java.lang.String">
             <column name="FACT_NO" length="10" />
