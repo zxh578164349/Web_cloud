@@ -73,6 +73,11 @@ public class KyzVisaFlowDaoImpl extends Basedao implements IKyzVisaFlowDao {
 		final int offset = PageBean.countOffset(pageSize, currentPage);
 		final int length = pageSize;
 		List<KyzVisaflow> list = super.queryForPage(hql.toString(), offset,length, map);
+		for(KyzVisaflow flow:list){
+			if(flow.getDepId()!=null){
+				flow.getDepId().getDepName();
+			}			
+		}
 				
 		PageBean pageBean = new PageBean();
 		pageBean.setPageSize(pageSize);

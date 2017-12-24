@@ -348,7 +348,7 @@ function unlockbtn(){
 						    jq("#hidden_kytype").val(x);
 							unlockbtn();
 						} else {
-						    layer.msg("對不起，該廠還沒有創建出差流程，不能申請",3,3);
+						    layer.msg("對不起，該部門還沒有創建出差流程，不能申請",3,3);
 							lockbtn();
 						}
 					});
