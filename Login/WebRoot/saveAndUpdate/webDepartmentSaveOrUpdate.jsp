@@ -54,7 +54,7 @@
 										
 				        <td class="td_show_title">部門名稱</td>
 				        <td class="td_input">
-				           	<input type="text" name="dep.depName" value="<s:property value='dep.depName'/>" datetype="s1-50"/>	             				            								
+				           	<input type="text" name="dep.depName" value="<s:property value='dep.depName'/>" datatype="s1-50"/>	             				            								
 				         </td>							
 				</tr>																   											
 		</table>
