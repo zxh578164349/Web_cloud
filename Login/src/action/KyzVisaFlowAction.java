@@ -300,6 +300,9 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 	public String update(){		
 		try{
 			flow.setVisaSortM(flow.getId().getVisaSort().substring(0,2));
+			if(depId!=null&&!"".equals(depId)){
+				flow.setDepId(new WebDepartment(Integer.parseInt(depId)));
+			}			
 			//visaSer.add(flow);
 			KyzVisaflow f2=(KyzVisaflow)ActionContext.getContext().getSession().get("update_flow");
 			visaSer.add_d(flow,f2);
