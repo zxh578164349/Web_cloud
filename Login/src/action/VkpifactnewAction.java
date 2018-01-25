@@ -1522,7 +1522,7 @@ public class VkpifactnewAction extends ActionSupport implements ServletResponseA
 		//全廠離職率Double factleaveRate=this.division((leavenumzg+leavenumjg), (personzg+personjg));
 		Double factleaveRate=Double.valueOf(format4.format(this.division((eve.getObja125()+eve.getObja126()), (eve.getObja119()+eve.getObja120()))));
 		//工傷件數Double hurtNum=hurtnum/index;
-		Double hurtNum=Double.valueOf(format2.format(eve.getObja127()/index));
+		Double hurtNum=Double.valueOf(format.format(eve.getObja127()/index));
 		
 		
 		
