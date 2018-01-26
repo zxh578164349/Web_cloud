@@ -27,7 +27,7 @@ import com.sun.mail.util.MailSSLSocketFactory;
 public class AutoSendEmailAction {
 	private static final String MAIL_USER = "kyuen@yydg.com.cn";
 
-	private static final String MAIL_PASSWORD = "yydgmail";
+	private static final String MAIL_PASSWORD = "yydgmail-001";
 
 	private static final String MAIL_FROM_SMTP = "<kyuen@yydg.com.cn>";
 

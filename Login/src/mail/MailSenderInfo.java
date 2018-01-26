@@ -23,7 +23,7 @@ public class MailSenderInfo {
     private String toAddress;    
     // 登陆邮件发送服务器的用户名和密码    
     private String userName="kyuen@yydg.com.cn";    
-    private String password="yydgmail";    
+    private String password="yydgmail-001";    
     // 是否需要身份验证    
     private boolean validate = false;    
     // 邮件主题    
