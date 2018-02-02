@@ -173,6 +173,7 @@ public class WebEstProductDaoImpl extends Basedao implements IWebEstProductDao {
 			hql.append(" and id.factNo=:factno");
 			map.put("factno", factNo);
 		}
+		//hql.append(" and fact.factShow='0' ");
 		hql.append(" order by id.factNo,id.factCode,id.yymm desc");
 		List<Webestproduct>list=super.getAllWithNoPage(hql.toString(), map);
 		return list;

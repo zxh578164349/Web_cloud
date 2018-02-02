@@ -65,5 +65,9 @@
          <property name="usernameUd" type="java.lang.String">
             <column name="USERNAME_UD" length="50"  />
         </property>
+        <many-to-one name="fact" class="entity.WebFact" fetch="select" unique="true" insert="false" update="false">
+            <column name="FACT_NO" length="10" />
+            <column name="FACT_CODE" length="20" />
+        </many-to-one>
     </class>
 </hibernate-mapping>
