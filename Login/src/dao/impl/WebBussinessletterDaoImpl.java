@@ -88,7 +88,8 @@ public class WebBussinessletterDaoImpl extends Basedao implements IWebBussinessl
 		String hql="from WebBussinessletter where blNo=?";
 		Query query=getSession().createQuery(hql);
 		query.setString(0, billNo);
-		return (WebBussinessletter)query.uniqueResult();
+		WebBussinessletter obj=(WebBussinessletter)query.uniqueResult();
+		return obj;
 	}
 
 	public void delete(WebBussinessletter letter,KyzExpectmatmLog delLog) {

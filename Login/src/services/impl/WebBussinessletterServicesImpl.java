@@ -143,8 +143,8 @@ public class WebBussinessletterServicesImpl implements IWebBussinessletterServic
 		Map<String,Object>map_result=new HashMap<String,Object>();
 		List<WebBussinessletter>list=new ArrayList<WebBussinessletter>();
 		Map<String,Object>map=new HashMap<String,Object>();
-		String factname=webFactDao.selByid(factNo);
-		String unit="";//承辦單位
+		//String factname=webFactDao.selByid(factNo);
+		//String unit="";//承辦單位
 		WebBussinessletter letter=webbussletterdao.findById(billNo);
 		if(letter==null){
 			return null;
@@ -154,14 +154,19 @@ public class WebBussinessletterServicesImpl implements IWebBussinessletterServic
 			letter.setGAgent(ZHConverter.convert(letter.getGAgent(), ZHConverter.TRADITIONAL));
 			letter.setPlanList(ZHConverter.convert(letter.getPlanList(), ZHConverter.TRADITIONAL));
 			letter.setPosition(ZHConverter.convert(letter.getPosition(), ZHConverter.TRADITIONAL));
-			letter.setUnit(ZHConverter.convert(letter.getUnit(), ZHConverter.TRADITIONAL));
+			if(letter.getUnit()!=null){
+				letter.setUnit(ZHConverter.convert(letter.getUnit(), ZHConverter.TRADITIONAL));
+			}else if(letter.getDepId().getDepName()!=null){
+				letter.setUnit(ZHConverter.convert(letter.getDepId().getDepName(), ZHConverter.TRADITIONAL));
+			}
+			
 			letter.setUsername(ZHConverter.convert(letter.getUsername(), ZHConverter.TRADITIONAL));
 			/*******************簡轉繁體********************/
 			letter.setSumDate((int)GlobalMethod.sumDate(letter.getDateFrom(), letter.getDateEnd())+1);//出差天數
 			list.add(letter);
 		}
 		if(letter.getUnit()!=null&&!letter.getUnit().equals("")){
-			unit="("+letter.getUnit()+")";
+			//unit="("+letter.getUnit()+")";
 		}
 		//String result=factname+unit+"人員出差申請書";
 		//map.put("SUBREPORT_DIR",ServletActionContext.getRequest().getRealPath("/jasper/audit/")+ "/");
