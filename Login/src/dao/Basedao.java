@@ -176,6 +176,7 @@ public class Basedao extends HibernateDaoSupport {
 				}
 				query.setFirstResult(offset);
 				query.setMaxResults(PAGENUMS);
+				//query.setMaxResults(length);
 				List list = query.list();
 				return list;
 			}
@@ -218,7 +219,7 @@ public class Basedao extends HibernateDaoSupport {
 					
 				}
 			}
-			String result =(String)query.uniqueResult().toString();			
+			String result =query.uniqueResult().toString();			
 			return Integer.valueOf(result);
 			
 }

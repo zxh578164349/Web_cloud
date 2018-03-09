@@ -124,27 +124,23 @@ public class WebDepartmentAction extends ActionSupport{
 		return "findWebDepartmentByFactNo";
 	}
 	
-	public String findPageBean(){		
-		ActionContext.getContext().getSession().remove("public_factNo");
-		factNo=(String)ActionContext.getContext().getSession().get("factNo");
-		bean=webdepServices.findPageBean(page, 25, factNo);
+	public String findPageBean(){	
+		ActionContext.getContext().getSession().remove("allrow");
+		bean=webdepServices.findPageBean(page, 0, factNo);
+		ActionContext.getContext().getSession().put("public_factNo", factNo);
 		return "beanList";
 	}
-	public String findPageBean2(){		
-		bean=webdepServices.findPageBean(page, 25, factNo);
-		ActionContext.getContext().getSession().put("public_factNo", factNo);
+	public String findPageBean2(){				
+		this.findPageBean();
 		return "beanList1";
 	}
-	public String findPageBean3(){
+	public String findPageBean3(){		
+		factNo=(String)ActionContext.getContext().getSession().get("public_factNo");		
+		bean=webdepServices.findPageBean(page, 0, factNo);
 		String result="beanList1";
 		if(backIndex==1){
 			result="beanList";
 		}
-		factNo=(String)ActionContext.getContext().getSession().get("public_factNo");
-		if(factNo==null||factNo.equals("")){
-			factNo=(String)ActionContext.getContext().getSession().get("factNo");
-		}
-		bean=webdepServices.findPageBean(page, 25, factNo);
 		return result;
 	}
 	

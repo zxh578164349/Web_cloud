@@ -813,6 +813,13 @@
                <param name="root">ajaxResult</param>
             </result>
 		</action>
+		<action name="webweekly_*" class="webweeklyreportAction" method="{1}">
+		   <result name="add" type="json">
+		      <param name="root">ajaxResult</param>
+		   </result>
+		   <result name="findPageBean">page/webweeklyreport.jsp</result>
+		   <result name="findPageBean1">page/table1/webweeklyreport1.jsp</result>
+		</action>
 		
 	</package>
 

@@ -52,23 +52,27 @@ public class WebDepartmentDaoImpl extends Basedao implements IWebDepartmentDao{
 		StringBuffer hql=new StringBuffer();
 		StringBuffer hql2=new StringBuffer();
 		Map<String,Object>map=new HashMap<String,Object>();
-		int allrow=0;
-		Integer rows=(Integer)ActionContext.getContext().getSession().get("allrow");
+		
 		hql.append("from WebDepartment where 1=1");
 		hql2.append("select count(depId) ");
+		
+		if(factNo==null||factNo.equals("")){
+			factNo=(String)ActionContext.getContext().getSession().get("factNo");
+		}
 		if(factNo!=null&&!factNo.equals("")&&!factNo.equals("tw")){
 			hql.append(" and factNo=:factno");
 			map.put("factno", factNo);
 		}
 		hql2.append(hql);
 		hql.append(" order by factNo,depId");
-		int currentPage=PageBean.countCurrentPage(page);		
-		if(rows!=null&&page>0){
-			allrow=rows;
-		}else{
+		
+		
+		Integer allrow=(Integer)ActionContext.getContext().getSession().get("allrow");
+		if(allrow==null){
 			allrow=super.getAllRowCount2(hql2.toString(), map);
 			ActionContext.getContext().getSession().put("allrow", allrow);
 		}
+		int currentPage=PageBean.countCurrentPage(page);
 		int totalPage=PageBean.countTotalPage(pageSize, allrow);
 		if(currentPage>totalPage){
 			currentPage=totalPage;
