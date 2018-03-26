@@ -77,17 +77,18 @@ public class AutoSendWebWeeklyreportItems extends QuartzJobBean{
 			ApplicationContext ac=new ClassPathXmlApplicationContext(new String[]{"spring.xml","spring-dao.xml","spring-services.xml","spring-projectconfig.xml"});
 			SimpleDateFormat sdf=new SimpleDateFormat("yyyyMMdd");
 			Calendar cal=Calendar.getInstance();
-			cal.setFirstDayOfWeek(Calendar.MONDAY);
+			cal.setFirstDayOfWeek(Calendar.MONDAY);			
+			cal.add(Calendar.DAY_OF_WEEK, -7);//注意：發送上周的報告
 			cal.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
-			String sdate=sdf.format(cal.getTime());
+			String sdate_last=sdf.format(cal.getTime());
 			cal.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
-			String edate=sdf.format(cal.getTime());
+			String edate_last=sdf.format(cal.getTime());
 			//Workbook wb=this.excel2003(ac,sdate,edate);
-			Workbook wb=this.excel2007(ac,sdate, edate);
+			Workbook wb=this.excel2007(ac,sdate_last, edate_last);
 			//OutputStream os=new FileOutputStream("d:\\"+sdate+"~"+edate+".xlsx");
 			//String filepath=ServletActionContext.getServletContext().getRealPath("TEMPFILES\\"+sdate+"-"+edate+".xlsx");報空指針
 			String classes_path=Thread.currentThread().getContextClassLoader().getResource("").getPath();
-			String filepath=classes_path.replace("/WEB-INF/classes","/TEMPFILES/"+sdate+"-"+edate+".xlsx");
+			String filepath=classes_path.replace("/WEB-INF/classes","/TEMPFILES/"+sdate_last+"-"+edate_last+".xlsx");
 			OutputStream os=new FileOutputStream(filepath);
 			wb.write(os);
 			os.close();
@@ -116,7 +117,7 @@ public class AutoSendWebWeeklyreportItems extends QuartzJobBean{
 				}
 			}
 			AutoSendEmailAction send = new AutoSendEmailAction();
-			send.sendmail(mail, cc, "業務每週報告匯總表("+sdate+"-"+edate+")", "", "業務每週報告匯總表("+sdate+"-"+edate+").xlsx", filepath);
+			send.sendmail(mail, cc, "業務每週報告匯總表("+sdate_last+"-"+edate_last+")", "", "業務每週報告匯總表("+sdate_last+"-"+edate_last+").xlsx", filepath);
 			File file=new File(filepath);
 			if(file.exists()){
 				if(file.isFile()){
