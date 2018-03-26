@@ -85,7 +85,7 @@ public class AutoSendWebWeeklyreportItems extends QuartzJobBean{
 			//Workbook wb=this.excel2003(ac,sdate,edate);
 			Workbook wb=this.excel2007(ac,sdate, edate);
 			//OutputStream os=new FileOutputStream("d:\\"+sdate+"~"+edate+".xlsx");
-			//String filepath=ServletActionContext.getServletContext().getRealPath("TEMPFILES\\"+sdate+"-"+edate+".xlsx");
+			//String filepath=ServletActionContext.getServletContext().getRealPath("TEMPFILES\\"+sdate+"-"+edate+".xlsx");報空指針
 			String classes_path=Thread.currentThread().getContextClassLoader().getResource("").getPath();
 			String filepath=classes_path.replace("/WEB-INF/classes","/TEMPFILES/"+sdate+"-"+edate+".xlsx");
 			OutputStream os=new FileOutputStream(filepath);
