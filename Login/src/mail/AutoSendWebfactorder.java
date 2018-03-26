@@ -86,16 +86,16 @@ public class AutoSendWebfactorder extends QuartzJobBean{
 	}
 	
 	public void init() throws HttpException, IOException{		
-		String pname=this.findProjectConfig().getpName();//項目名稱
+		String url=this.findProjectConfig().getpUrl();//項目url
 		Calendar cal=Calendar.getInstance();
 		cal.setTime(new Date());
 		cal.add(Calendar.MONTH, -1);
 		String yymm2=new SimpleDateFormat("yyyyMM").format(cal.getTime());
 		String yymm=new SimpleDateFormat("yyyy").format(cal.getTime())+"01";//20170106
 		HttpClient client = new HttpClient();
-		HttpMethod method = new GetMethod("http://203.85.73.161/"+pname+"/webfactOrder_print_email?yymm="+yymm+"&yymm2="+yymm2+"&autoEmailMk=1");	
-		//HttpMethod method = new GetMethod("http://172.17.18.173:8080/"+pname+"/webfactOrder_print_email?yymm="+yymm+"&yymm2="+yymm2+"&autoEmailMk=1");
-		//HttpMethod method = new GetMethod("http://localhost:8080/"+pname+"/webfactOrder_print_email?yymm="+yymm+"&yymm2="+yymm2+"&autoEmailMk=1");
+		HttpMethod method = new GetMethod(url+"/webfactOrder_print_email?yymm="+yymm+"&yymm2="+yymm2+"&autoEmailMk=1");	
+		//HttpMethod method = new GetMethod("http://172.17.18.173:8080/WebLogin"+"/webfactOrder_print_email?yymm="+yymm+"&yymm2="+yymm2+"&autoEmailMk=1");
+		//HttpMethod method = new GetMethod("http://localhost:8080/WebLogin"+"/webfactOrder_print_email?yymm="+yymm+"&yymm2="+yymm2+"&autoEmailMk=1");
 		client.executeMethod(method);
 		method.releaseConnection();
 		ApplicationContext ac = new ClassPathXmlApplicationContext(new String[]{"spring-action.xml","spring-dao.xml", "spring.xml","spring-services.xml"});
@@ -112,7 +112,7 @@ public class AutoSendWebfactorder extends QuartzJobBean{
 			}
 		}
 				
-		List<WebEmailAll> email = eSer.findEmail();
+		List<WebEmailAll> email = eSer.findEmail("E0");
 		String[] mail = new String[email.size()];
 		for (int i = 0; i < email.size(); i++) {
 			if (email.get(i).getUsername() != null
@@ -124,7 +124,7 @@ public class AutoSendWebfactorder extends QuartzJobBean{
 				mail[i] = email.get(i).getEmail();
 			}
 		}		
-		List<WebEmailAll> Cc = eSer.findCC();
+		List<WebEmailAll> Cc = eSer.findCC("E0");
 		String[] cc = new String[Cc.size()];
 		for (int j = 0; j < Cc.size(); j++) {
 			if (Cc.get(j).getUsername() != null
@@ -143,7 +143,7 @@ public class AutoSendWebfactorder extends QuartzJobBean{
 		String[] cc = {MimeUtility.encodeText("張錫洪")+"<zxh578164349@qq.com>"};*/
 		AutoSendEmailAction send = new AutoSendEmailAction();		
 		String title="各廠訂單導入狀況";
-		String affixName="各廠訂單導入狀況";
+		String affixName="各廠訂單導入狀況.xls";
 		StringBuffer content=new StringBuffer();
 		content.append("未導入訂單工廠如下:<br/><br/>");
 		content.append("<span style='color:red;font-size:16px'>");		

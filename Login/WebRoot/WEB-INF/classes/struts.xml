@@ -819,7 +819,19 @@
 		   </result>
 		   <result name="findPageBean">page/webweeklyreport.jsp</result>
 		   <result name="findPageBean1">page/table1/webweeklyreport1.jsp</result>
+		   <result name="findByUidASdate" type="json">
+		       <param name="root">ajaxResult</param>
+		   </result>
+		   <result name="findByUidASdate_last" type="json">
+		       <param name="root">ajaxResult</param>
+		   </result>
+		   <result name="findById">saveAndUpdate/webweeklyreportSaveOrUpdate.jsp</result>
+		   <result name="delete" type="redirectAction">webweekly_findPageBean3</result>
+		   <result name="email_url">page/webweeklyreport_email.jsp</result>
+		   <result name="findByUidASdate_page">page/table1/webweeklyreport_email1.jsp</result>
+		   
 		</action>
+		
 		
 	</package>
 

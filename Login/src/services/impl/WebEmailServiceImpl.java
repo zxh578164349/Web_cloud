@@ -31,9 +31,9 @@ public class WebEmailServiceImpl implements IWebEmailService {
 	 */
 	
 	
-	public List<WebEmailAll> findEmail(){
+	public List<WebEmailAll> findEmail(String emailType){
 		// TODO Auto-generated method stub
-		return emailDao.findEmail();
+		return emailDao.findEmail(emailType);
 	}
 
 	/**
@@ -42,9 +42,9 @@ public class WebEmailServiceImpl implements IWebEmailService {
 	 */
 	
 	
-	public List<WebEmailAll> findCC(){
+	public List<WebEmailAll> findCC(String emailType){
 		// TODO Auto-generated method stub
-		return emailDao.findCC();
+		return emailDao.findCC(emailType);
 	}
 
 }

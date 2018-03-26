@@ -11,6 +11,6 @@ public interface IWebEmailDao {
 
 	public List<WebCc> getCC(String sendif);
 	
-	public List<WebEmailAll>findEmail();
-	public List<WebEmailAll>findCC();
+	public List<WebEmailAll>findEmail(String emailType);
+	public List<WebEmailAll>findCC(String emailType);
 }

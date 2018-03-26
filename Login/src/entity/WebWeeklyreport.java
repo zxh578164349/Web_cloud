@@ -19,6 +19,7 @@ public class WebWeeklyreport implements java.io.Serializable {
 	private Integer weeks;
 	private String createDate;
 	private String updateDate;
+	private String RContentLast;//上周事項
 
 	// Constructors
 
@@ -138,5 +139,15 @@ public class WebWeeklyreport implements java.io.Serializable {
 	public void setUpdateDate(String updateDate) {
 		this.updateDate = updateDate;
 	}
+
+	public String getRContentLast() {
+		return RContentLast;
+	}
+
+	public void setRContentLast(String rContentLast) {
+		RContentLast = rContentLast;
+	}
+	
+	
 
 }

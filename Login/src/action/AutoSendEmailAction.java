@@ -80,7 +80,7 @@ public class AutoSendEmailAction {
 			//DataSource source = new FileDataSource("d://" + yymm + ".xls");
 			DataSource source = new FileDataSource(filepath);
 			messageBodyPart.setDataHandler(new DataHandler(source));
-			messageBodyPart.setFileName("=?BIG5?B?" + enc.encode(affixName.getBytes()) + "?="+ ".xls");					
+			messageBodyPart.setFileName("=?BIG5?B?" + enc.encode(affixName.getBytes()) + "?=");					
 			multipart.addBodyPart(messageBodyPart);
 			msg.setContent(multipart);
 			msg.setSentDate(new Date());//發送時間

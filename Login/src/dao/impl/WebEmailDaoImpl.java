@@ -32,10 +32,11 @@ public class WebEmailDaoImpl extends Basedao implements IWebEmailDao {
 	 */
 	
 	
-	public List<WebEmailAll> findEmail(){
+	public List<WebEmailAll> findEmail(String emailType){
 		// TODO Auto-generated method stub
-		String hql="from WebEmailAll where toMail='Y' and mkA='Y'";
+		String hql="from WebEmailAll where toMail='Y' and emailType=?";
 		Query query=getSession().createQuery(hql);
+		query.setString(0, emailType);
 		return query.list();
 	}
 
@@ -45,10 +46,11 @@ public class WebEmailDaoImpl extends Basedao implements IWebEmailDao {
 	 */
 	
 	
-	public List<WebEmailAll> findCC(){
+	public List<WebEmailAll> findCC(String emailType){
 		// TODO Auto-generated method stub
-		String hql="from WebEmailAll where toCc='Y' and mkA='Y'";
+		String hql="from WebEmailAll where toCc='Y' and emailType=?";
 		Query query=getSession().createQuery(hql);
+		query.setString(0, emailType);
 		return query.list();
 	}
 

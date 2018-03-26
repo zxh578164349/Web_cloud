@@ -22,8 +22,16 @@ public class ProjectConfig{
 	private String pHostServer;
 	private String pHostLoaclB;
 	private String pUrl;
+	private String pEmail;
 	
 	
+	
+	public String getpEmail() {
+		return pEmail;
+	}
+	public void setpEmail(String pEmail) {
+		this.pEmail = pEmail;
+	}
 	public String getpUrl(){
 		return pUrl;
 	}

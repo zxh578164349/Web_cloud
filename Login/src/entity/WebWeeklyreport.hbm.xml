@@ -42,5 +42,8 @@
         <property name="updateDate" type="java.lang.String">
             <column name="UPDATE_DATE" length="8" />
         </property>
+        <property name="RContentLast" type="java.lang.String">
+            <column name="R_CONTENT_LAST"/>
+        </property>
     </class>
 </hibernate-mapping>

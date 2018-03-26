@@ -30,12 +30,9 @@
         </property>
         <property name="toCc" type="java.lang.String">
             <column name="TO_CC" length="2" />
-        </property>
-        <property name="mkA" type="java.lang.String">
-            <column name="MK_A" length="2" />
-        </property>
-        <property name="mkB" type="java.lang.String">
-            <column name="MK_B" length="2" />
+        </property>       
+        <property name="emailType" type="java.lang.String">
+            <column name="EMAIL_TYPE" length="2"/>
         </property>
     </class>
 </hibernate-mapping>

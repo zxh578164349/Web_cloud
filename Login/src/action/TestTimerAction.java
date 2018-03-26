@@ -284,7 +284,7 @@ public class TestTimerAction extends QuartzJobBean {
 				DateFormat formast = new SimpleDateFormat("MM");
 				SimpleDateFormat jinri = new SimpleDateFormat("M/dd");
 				//郵件內容
-				String affixName=yymm+"各廠產量資料";
+				String affixName=yymm+"各廠產量資料.xls";
 				StringBuffer content=new StringBuffer();
 				content.append("各主管:好!"						
 								+(cal.get(Calendar.DAY_OF_WEEK) == Calendar.MONDAY?formatDates.format(formatDates
@@ -413,7 +413,7 @@ public class TestTimerAction extends QuartzJobBean {
 				String filepath=classes_path.replace("/WEB-INF/classes","/TEMPFILES/"+yymm+".xls");
 				AutoSendEmailAction send=new AutoSendEmailAction();
 				String tyymm=tformat.format(new Date());
-				String affixName=yymm + "各廠產量資料";
+				String affixName=yymm + "各廠產量資料.xls";
 				if (yymm.equals(tyymm)) {
 					SimpleDateFormat formatDates=new SimpleDateFormat("yyyy/MM/dd");
 					DateFormat formast=new SimpleDateFormat("MM");

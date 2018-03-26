@@ -1,5 +1,7 @@
 package dao.impl;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,6 +13,7 @@ import com.opensymphony.xwork2.ActionContext;
 import util.PageBean;
 import dao.Basedao;
 import dao.IWebWeeklyreportDao;
+import entity.KyzExpectmatmLog;
 import entity.WebUser;
 import entity.WebWeeklyreport;
 
@@ -21,7 +24,7 @@ public class WebWeeklyreportDaoImpl extends Basedao implements IWebWeeklyreportD
 		super.merge(obj);
 	}
 
-	public PageBean findPageBean(int page, int pageSize,int uid, String createDate) {
+	public PageBean findPageBean(int page, int pageSize,int uid, String sdate,int bid) {
 		// TODO Auto-generated method stub
 		StringBuffer hql=new StringBuffer();
 		StringBuffer hql2=new StringBuffer();
@@ -35,12 +38,16 @@ public class WebWeeklyreportDaoImpl extends Basedao implements IWebWeeklyreportD
 			hql.append(" and webUser.id=:uid");
 			map.put("uid", uid);
 		}
-		if(createDate!=null&&!"".equals(createDate)){
-			hql.append(" and createDate=:createDate");
-			map.put("createDate", createDate);
+		if(sdate!=null&&!"".equals(sdate)){
+			hql.append(" and SDate=:SDate");
+			map.put("SDate", sdate);
+		}
+		if(bid!=0){
+			hql.append(" and webErpBrankProcess.id=:bid");
+			map.put("bid", bid);
 		}
 		hql2.append(hql);
-		hql.append(" order by createDate");
+		hql.append(" order by SDate desc");
 		
 		Integer allrow=(Integer)ActionContext.getContext().getSession().get("allrow");
 		if(allrow==null){
@@ -76,7 +83,55 @@ public class WebWeeklyreportDaoImpl extends Basedao implements IWebWeeklyreportD
 		Query query=getSession().createQuery(hql);
 		query.setInteger(0, rid);
 		WebWeeklyreport obj=(WebWeeklyreport)query.uniqueResult();
+		obj.getWebErpBrankProcess().getName();
 		return obj;
+	}
+
+	public WebWeeklyreport findByUidASdateABid(int uid, String sdate,int bid) {
+		// TODO Auto-generated method stub
+		String hql="from WebWeeklyreport where webUser.id=? and SDate=? and webErpBrankProcess.id=?";
+		Query query=getSession().createQuery(hql);
+		query.setInteger(0, uid);
+		query.setString(1, sdate);
+		query.setInteger(2, bid);
+		WebWeeklyreport obj=(WebWeeklyreport)query.uniqueResult();
+		return obj;
+	}
+
+	public void delete(int rid, KyzExpectmatmLog log) {
+		// TODO Auto-generated method stub
+		WebWeeklyreport obj=this.findById(rid);
+		super.delete(obj, log);
+	}
+
+	public List<WebWeeklyreport> findOneATwo(int uid,int bid, String sdate,
+			String sdate_last) {
+		// TODO Auto-generated method stub
+		String hql="from WebWeeklyreport where webUser.id=? and webErpBrankProcess.id=? and SDate in(?,?) and createDate>=? order by SDate";
+		SimpleDateFormat sdf=new SimpleDateFormat("yyyyMMdd");
+		Calendar cal=Calendar.getInstance();
+		cal.setFirstDayOfWeek(Calendar.MONDAY);
+		cal.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+		Query query=getSession().createQuery(hql);
+		query.setInteger(0, uid);
+		query.setInteger(1, bid);
+		query.setString(2, sdate);
+		query.setString(3, sdate_last);
+		query.setString(4, sdf.format(cal.getTime()));
+		List<WebWeeklyreport>list=query.list();
+		return list;
+	}
+
+	public List<WebWeeklyreport> findByEdate(String sdate) {
+		// TODO Auto-generated method stub
+		String hql="from WebWeeklyreport where SDate=?";
+		String[]objs={sdate};
+		List<WebWeeklyreport>list=super.findAll(hql, objs);
+		for(WebWeeklyreport obj:list){
+			obj.getWebUser().getName();
+			obj.getWebErpBrankProcess().getName();
+		}
+		return list;
 	}
 
 }

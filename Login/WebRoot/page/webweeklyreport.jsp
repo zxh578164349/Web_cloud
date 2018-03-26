@@ -6,6 +6,13 @@
 			+ request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 %>
+<%
+java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyyMMdd");
+Calendar cal=Calendar.getInstance();
+cal.setFirstDayOfWeek(Calendar.MONDAY);
+cal.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);//本周星期一日期
+String sdate=sdf.format(cal.getTime());
+ %>
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -22,13 +29,13 @@
 
 
 <body>
-	<jsp:include page="publicHead_webtype.jsp" />
+	<br><jsp:include page="publicHead_webweeklyreport.jsp" />
 	<hr />
 		
 	<div id="bodyid">
 		<jsp:include page="table1/webweeklyreport1.jsp" />
 	</div>
-
+	
 <script type="text/javascript">
 	
 	function pages(page) {
@@ -47,12 +54,11 @@
 	}
 
 	function submis() {		
-		var factno=document.getElementById("factNo")
 		jq.ajax({
 			type : "POST",
 			dataType : "Html",
 			url : "webweekly_findPageBean2",
-			data : "factNo="+factno.value,
+			data : jq("#public_form").serialize(),
 			success : function(msg) {
 				jq("#bodyid").html(msg);
 			},
@@ -62,13 +68,13 @@
 		});
 	}
 	
- function mydelete(factNo,typeNo){
-    var flag=confirm("警告,刪除類別,將同時刪除該類別的所有函文及流程,確定要刪除嗎?");
+ function mydelete(rid){
+    var flag=confirm("確定要刪除嗎?");
     if(flag==true){   	
        jq.ajax({
     	   type:"POST",
     	   dataType:"html",
-    	   data:"factNo="+factNo+"&typeNo="+typeNo,
+    	   data:{rid:rid},
     	   url:"webweekly_delete",
     	   success:function(data){
     		   jq("#bodyid").html(data);
@@ -79,8 +85,8 @@
        });
     }
 }
-function findById(depid){	
-	loadUrl("webweekly_findById?depId="+depid);
+function findById(rid){	
+	loadUrl("webweekly_findById?rid="+rid);
 }
 function recovery(subform){
 	jq.ajax({
@@ -102,6 +108,24 @@ function recovery(subform){
 	});
 	
 }
+
+/*加載所有品牌*/
+jq.ajax({
+	type:"get",
+	url:"weberpbp_findObjOp2",
+	dataType:"json",
+	success:function(data){
+		jq("#dwrWebbrank").empty();
+		jq("#dwrWebbrank").append("<option value=''>品牌選擇</option>");
+		var item="";
+		jq.each(data,function(i,obj){
+			item+="<option value='"+obj[0]+"'>"+obj[2]+"</option>";					
+		});
+		jq("#dwrWebbrank").append(item);
+	}
+});
+
+
 </script>	
 </body>
 </html>

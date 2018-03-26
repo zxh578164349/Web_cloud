@@ -527,6 +527,26 @@ public class GlobalMethod extends HibernateDaoSupport{
 		cs.setBorderBottom(HSSFCellStyle.BORDER_THIN);
 		cs.setBorderLeft(HSSFCellStyle.BORDER_THIN);
 		map.put("cs", cs);
+		
+		// 標準單元格樣式(左對齊)
+		HSSFCellStyle cs_left = wb.createCellStyle();
+		cs_left.setAlignment(HSSFCellStyle.ALIGN_LEFT);
+		cs_left.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		cs_left.setBorderTop(HSSFCellStyle.BORDER_THIN);
+		cs_left.setBorderRight(HSSFCellStyle.BORDER_THIN);
+		cs_left.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+		cs_left.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+		map.put("cs_left", cs_left);
+		
+		// 標準單元格樣式(右對齊)
+		HSSFCellStyle cs_right = wb.createCellStyle();
+		cs_right.setAlignment(HSSFCellStyle.ALIGN_RIGHT);
+		cs_right.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		cs_right.setBorderTop(HSSFCellStyle.BORDER_THIN);
+		cs_right.setBorderRight(HSSFCellStyle.BORDER_THIN);
+		cs_right.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+		cs_right.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+		map.put("cs_right", cs_right);
 		//表頭樣式
 		HSSFCellStyle cs_head=wb.createCellStyle();
 		HSSFFont font_head=wb.createFont();
@@ -810,6 +830,26 @@ public class GlobalMethod extends HibernateDaoSupport{
 		cs.setBorderBottom(XSSFCellStyle.BORDER_THIN);
 		cs.setBorderLeft(XSSFCellStyle.BORDER_THIN);
 		map.put("cs", cs);
+		
+		// 標準單元格樣式(左對齊)
+		XSSFCellStyle cs_left = wb.createCellStyle();
+		cs_left.setAlignment(XSSFCellStyle.ALIGN_LEFT);
+		cs_left.setVerticalAlignment(XSSFCellStyle.VERTICAL_CENTER);
+		cs_left.setBorderTop(XSSFCellStyle.BORDER_THIN);
+		cs_left.setBorderRight(XSSFCellStyle.BORDER_THIN);
+		cs_left.setBorderBottom(XSSFCellStyle.BORDER_THIN);
+		cs_left.setBorderLeft(XSSFCellStyle.BORDER_THIN);
+		map.put("cs_left", cs_left);
+		
+		// 標準單元格樣式(右對齊)
+		XSSFCellStyle cs_right = wb.createCellStyle();
+		cs_right.setAlignment(XSSFCellStyle.ALIGN_RIGHT);
+		cs_right.setVerticalAlignment(XSSFCellStyle.VERTICAL_CENTER);
+		cs_right.setBorderTop(XSSFCellStyle.BORDER_THIN);
+		cs_right.setBorderRight(XSSFCellStyle.BORDER_THIN);
+		cs_right.setBorderBottom(XSSFCellStyle.BORDER_THIN);
+		cs_right.setBorderLeft(XSSFCellStyle.BORDER_THIN);
+		map.put("cs_right", cs_right);
 		//表頭樣式
 		XSSFCellStyle cs_head=wb.createCellStyle();
 		XSSFFont font_head=wb.createFont();

@@ -22,6 +22,7 @@
        <property name="pHostServer" value="${project.host_server}"/>
        <property name="pHostLoaclB" value="${project.host_local_b}"/>
        <property name="pUrl" value="${project.url}"/>
+       <property name="pEmail" value="${project.email}"/>
     </bean>	
 </beans>
 
