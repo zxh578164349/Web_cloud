@@ -84,6 +84,13 @@
 			}
 		
 	}
+	
+	function print(public_form){
+		var subform=jq("#"+public_form);
+		subform.attr("action","visaflow_print");
+		subform.attr("target","_blank");
+		subform.submit();
+	}
  
 </script>
 </body>

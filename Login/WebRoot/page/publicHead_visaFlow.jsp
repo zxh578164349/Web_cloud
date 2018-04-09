@@ -44,8 +44,10 @@
 			     分部門<input type="radio" name="trMk" value="Y"/>&nbsp;&nbsp;
 			   不分部門<input type="radio" name="trMk" value="N"/>  
 			</td>
-			<td><!-- <input type="image" onclick="submis();" src="images/search002.gif"/> -->
-			<input value="搜索" type="button" class="btn btn-primary" onclick="submis('public_form')" /></td>
+			<td>
+			<input type="button" class="btn btn-primary" value="搜索"  onclick="submis('public_form')" />
+			<input type="button" class="btn btn-primary" value="導出" onclick="print('public_form')"/>
+			</td>
 		</tr>
 	</table>
 </form>	

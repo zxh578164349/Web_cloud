@@ -22,11 +22,11 @@
 <body>
 	<jsp:include page="publicHead_sumydata.jsp" flush="true" />
 	<hr />	
-	<s:if test='#session.loginUser.userread!="1"'>
+	<!-- <s:if test='#session.loginUser.userread!="1"'>
 	<span style="float:right">
 	  <input type="button" onclick="loadUrl('page/sum_yiele_data.jsp')" class="btn btn-link btn-sm" value="添加每月盤點數據"/>
 	</span>
-	</s:if>
+	</s:if> -->
 	<span style="float:right"> <input type="button"
 		onclick="loadUrl('ydata_findPageBean')" 
 		class="btn btn-link btn-sm" value="按日詳細查看"/>

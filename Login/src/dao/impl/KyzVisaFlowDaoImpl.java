@@ -41,10 +41,13 @@ public class KyzVisaFlowDaoImpl extends Basedao implements IKyzVisaFlowDao {
 			map.put("factno", factNo);
 		}
 		if(visaSort!=null&&!visaSort.equals("")){
-			hql.append(" and id.visaSort like:visasort ");
-			map.put("visasort", visaSort+"%");
+			//hql.append(" and id.visaSort like:visasort ");
+			//map.put("visasort", visaSort+"%");
+			hql.append(" and visaSortM=:visasort");
+			map.put("visasort", visaSort);
+			
 		}
-		if(factNo.equals("nothing")&&(visaSort==null||visaSort.equals(""))){
+		if(factNo.equals("nothing")&&(visaSort==null||"".equals(visaSort))&&(trMk==null&&"".equals(trMk))){
 			hql.append(" and id.factNo=:factno");
 			map.put("factno", factNo);
 		}
@@ -76,7 +79,8 @@ public class KyzVisaFlowDaoImpl extends Basedao implements IKyzVisaFlowDao {
 		for(KyzVisaflow flow:list){
 			if(flow.getDepId()!=null){
 				flow.getDepId().getDepName();
-			}			
+			}
+			flow.getWebtype().getTypeName();
 		}
 				
 		PageBean pageBean = new PageBean();
@@ -304,5 +308,34 @@ public class KyzVisaFlowDaoImpl extends Basedao implements IKyzVisaFlowDao {
 			e.printStackTrace();
 			
 		}			
+	}
+
+	public List<KyzVisaflow> findByFnoAndVsortAndTrmk(String factNo,
+			String visaSort, String trMk) {
+		// TODO Auto-generated method stub
+		StringBuffer hql=new StringBuffer();
+		Map<String,Object>map=new HashMap<String,Object>();
+		hql.append(" from KyzVisaflow where 1=1 ");
+		if(factNo==null||"".equals(factNo)){
+			factNo = (String) ActionContext.getContext().getSession().get("factNo");
+		}		
+		if (factNo != null && !factNo.equals("") &&!factNo.equals("nothing")) {
+			hql.append(" and id.factNo =:factno ");
+			map.put("factno", factNo);
+		}
+		if(visaSort!=null&&!visaSort.equals("")){
+			//hql.append(" and id.visaSort like:visasort ");
+			//map.put("visasort", visaSort+"%");
+			hql.append(" and visaSortM=:visasort");
+			map.put("visasort", visaSort);
+			
+		}
+		if(factNo.equals("nothing")&&(visaSort==null||"".equals(visaSort))&&(trMk==null||"".equals(trMk))){
+			hql.append(" and id.factNo=:factno");
+			map.put("factno", factNo);
+		}
+		hql.append(" order by id.factNo,id.visaSort,id.itemNo");
+		List<KyzVisaflow>list=super.getAllWithNoPage(hql.toString(), map);		
+		return list;
 	}
 }

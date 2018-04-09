@@ -164,4 +164,10 @@ public class KyzVisaFlowServicesImpl implements IKyzVisaFlowServices{
 		return visaDao.findVisaSort_dwr4(factNo,visaSort,depId,trMk);
 	}
 
+	public List<KyzVisaflow> findByFnoAndVsortAndTrmk(String factNo,
+			String visaSort, String trMk) {
+		// TODO Auto-generated method stub
+		return visaDao.findByFnoAndVsortAndTrmk(factNo, visaSort, trMk);
+	}
+
 }

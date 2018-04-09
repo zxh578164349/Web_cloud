@@ -59,7 +59,8 @@
 				
 				<td><s:property value="id.factNo" /></td>
 				<td>				  
-				   <s:property value="colTemp"/>[<s:property value="id.visaSort"/>]
+				   <!-- <s:property value="colTemp"/>[<s:property value="id.visaSort"/>] -->
+				   <s:property value="webtype.typeName"/>[<s:property value="webtype.id.typeNo"/>]
 				</td>
 				<td><s:property value="id.purmanNo" /></td>
 				<td><s:property value="id.itemNo"/></td>

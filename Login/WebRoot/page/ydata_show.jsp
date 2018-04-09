@@ -32,12 +32,12 @@
 	</s:if>	
 	<span style="float:right"> <input type="button"
 		onclick="findPageBean('sumwebydata_findPageBean')" 
-		class="btn btn-link btn-sm" value="查看盤點數據"/>
+		class="btn btn-link btn-sm" value="查看每月盤點數據"/>
 	</span> 	
-	<span style="float:right"> <input type="button"
+	<!-- <span style="float:right"> <input type="button"
 		onclick="findPageBean('ydata_findPageBeanForMonth')" 
 		class="btn btn-link btn-sm" value="按月合計查看"/>
-	</span>	
+	</span> -->	
 	<span style="float:right"> <input type="button"
 		onclick="findPageBean('webyadanoinput_findPageBean')"
 		class="btn btn-link btn-sm" value="未按時輸入記錄"/>

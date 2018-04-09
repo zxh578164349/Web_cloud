@@ -52,9 +52,18 @@ public class SumWebYieldDataAction extends ActionSupport implements ServletRespo
 	private ISumWebYieldDataLogServices sumydatelogSer;
 	private javax.servlet.http.HttpServletResponse response;
 	private String ajaxResult;//0提交成功       1提交失敗
+	private int backIndex;//返回標識      0或null:不走返回路徑         1:走返回路徑
 	
 	
 	
+	
+	
+	public int getBackIndex() {
+		return backIndex;
+	}
+	public void setBackIndex(int backIndex) {
+		this.backIndex = backIndex;
+	}
 	public String getAjaxResult() {
 		return ajaxResult;
 	}
@@ -278,11 +287,15 @@ public class SumWebYieldDataAction extends ActionSupport implements ServletRespo
 		return "findPageBean1";
 	}
 	public String findPageBean3(){
+		String result="findPageBean1";
+		if(backIndex==1){
+			result="findPageBean";
+		}
 		factNo=(String)ActionContext.getContext().getSession().get("sumydate_factno");
 		begin_yymm=(String)ActionContext.getContext().getSession().get("sumydate_begin_yymm");
 		end_yymm=(String)ActionContext.getContext().getSession().get("sumydate_end_yymm");		
 		bean=sumydateSer.findPageBean(20,page, factNo, begin_yymm,end_yymm);
-		return "findPageBean1";
+		return result;
 	}
 	public String formatDouble(double s) {
 		DecimalFormat format = new DecimalFormat(",###.#");

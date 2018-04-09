@@ -48,5 +48,7 @@ public interface IKyzVisaFlowServices {
 	 * @date 2017/5/10
 	 */
 	public void add_d(KyzVisaflow f1,KyzVisaflow f2);
+	
+	public List<KyzVisaflow>findByFnoAndVsortAndTrmk(String factNo,String visaSort,String trMk);
 
 }

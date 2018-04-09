@@ -47,5 +47,9 @@
         <many-to-one name="depId" class="entity.WebDepartment" fetch="select">
             <column name="DEPID" precision="12" scale="0" />
         </many-to-one>
+        <many-to-one name="webtype" insert="false" update="false">
+           <column name="FACT_NO"/>
+           <column name="VISA_SORT_M"/>
+        </many-to-one>
     </class>
 </hibernate-mapping>
