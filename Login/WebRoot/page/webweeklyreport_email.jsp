@@ -18,6 +18,7 @@
 <meta http-equiv="expires" content="0">
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="loginpage/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 <link rel="stylesheet" type="text/css" href="loginpage/css/form.css" /> 
 
@@ -28,9 +29,12 @@
 
 <body>
 <div class="container">
-<div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 <h2>業務每週報告表 </h2>
 <form action="webweekly_add" role="form" id="form" method="post">
+<table class="table table-condensed table-bordered">
+<tr>
+<td>
   <div class="form-group">
     <label>業務：<s:property value="uname"/></label><br>
     <label>日期：<s:property value="sdate"/>-<s:property value="edate"/></label>           
@@ -38,7 +42,12 @@
     <input type="hidden" name="obj.SDate" value="<s:property value='sdate'/>">   
     <input type="hidden" name="obj.EDate" value="<s:property value='edate'/>">  
   </div>
-  <div class="form-group">
+</td>
+</tr>
+
+<tr>
+<td>
+   <div class="form-group">
     <label>品牌</label>
     <select class="form-control" id="dwrWebbrank" datatype="*" name="obj.webErpBrankProcess.id" onchange="checkreport()"></select>
   </div>
@@ -46,18 +55,23 @@
   <div id="bodyid">
 		<jsp:include page="table1/webweeklyreport_email1.jsp"/>
   </div>
-  
+</td>
+</tr>
+
+<tr>
+<td>
   <div class="form-group">
     <div class="col-sm-offset-2 col-sm-10">
       <button type="button" class="btn btn-default" id="sub">存檔</button>
       <button type="reset" class="btn btn-default" id="reset">清除</button>
     </div>
   </div>
+</td>
+</tr>
+</table>  
 </form>
 </div>
 </div>
-
-
 
  <script type="text/javascript" src="loginpage/jquery/jquery-1.9.1.min.js"></script>
 <script type="text/javascript" src="loginpage/jquery/layer/layer.min.js"></script>
