@@ -25,17 +25,17 @@ import javax.mail.internet.MimeUtility;
 import com.sun.mail.util.MailSSLSocketFactory;
 
 public class AutoSendEmailAction {
-	private static final String MAIL_USER = "kyuen@yydg.com.cn";
+	private static final String MAIL_USER = "kyzxs@kyuen-dg.com";//kyzxs@kyuen-dg.com    kyuen@yydg.com.cn
 
-	private static final String MAIL_PASSWORD = "yydgmail-002";
+	private static final String MAIL_PASSWORD = "Ky2_mail";//yydgmail-002     Ky2_mail  
 
-	private static final String MAIL_FROM_SMTP = "<kyuen@yydg.com.cn>";
+	private static final String MAIL_FROM_SMTP = "<kyzxs@kyuen-dg.com>";//<kyuen@yydg.com.cn>    <kyzxs@kyuen-dg.com>
 
 	public void sendmail(String[] mailArray, String[] cc, String subject,String content,String affixName,String filepath) {			
 		Properties props = new Properties();				
 		props.setProperty("mail.smtp.auth", "true");
 		props.setProperty("mail.transport.protocol", "smtp");
-		props.setProperty("mail.host", "dgmail.yydg.com.cn");
+		props.setProperty("mail.host", "smtp.mxhichina.com");//dgmail.yydg.com.cn
 		//props.setProperty("mail.host", "172.17.5.84");//因為有時候解釋不了域名,所以直接用地址代替(内网IP)
 		//props.setProperty("mail.host", "125.88.14.11");//因為有時候解釋不了域名,所以直接用地址代替(外网IP)
 		//props.setProperty("mail.host", "61.20.35.47");
@@ -69,7 +69,8 @@ public class AutoSendEmailAction {
 			// 15,6
 			msg.setFrom(new InternetAddress(MimeUtility.encodeText("加久公共信息","utf-8","Q")+ MAIL_FROM_SMTP));					
 			sun.misc.BASE64Encoder enc = new sun.misc.BASE64Encoder();
-			msg.setSubject("=?BIG5?B?" + enc.encode(subject.getBytes()) + "?=");
+			//msg.setSubject("=?BIG5?B?" + enc.encode(subject.getBytes()) + "?=");
+			msg.setSubject(MimeUtility.encodeText(subject));
 			Multipart multipart = new MimeMultipart();
 			BodyPart contentPart = new MimeBodyPart();
 			contentPart.setContent(content, "text/html;charset=utf-8");
@@ -80,7 +81,8 @@ public class AutoSendEmailAction {
 			//DataSource source = new FileDataSource("d://" + yymm + ".xls");
 			DataSource source = new FileDataSource(filepath);
 			messageBodyPart.setDataHandler(new DataHandler(source));
-			messageBodyPart.setFileName("=?BIG5?B?" + enc.encode(affixName.getBytes()) + "?=");					
+			//messageBodyPart.setFileName("=?BIG5?B?" + enc.encode(affixName.getBytes()) + "?=");MimeUtility	
+			messageBodyPart.setFileName(MimeUtility.encodeText(affixName));
 			multipart.addBodyPart(messageBodyPart);
 			msg.setContent(multipart);
 			msg.setSentDate(new Date());//發送時間

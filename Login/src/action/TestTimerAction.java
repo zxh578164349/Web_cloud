@@ -279,6 +279,9 @@ public class TestTimerAction extends QuartzJobBean {
 				String[] cc = {MimeUtility.encodeText("張錫洪")+"<kyinfo.David@yyin.yydg.com.cn>"};*/
 				/*String[] mail={MimeUtility.encodeText("張錫洪")+"<zxh578164349@qq.com>"};				
 				String[] cc = {MimeUtility.encodeText("張錫洪")+"<zxh578164349@qq.com>"};*/
+				/*String[] mail={MimeUtility.encodeText("張錫洪")+"<kyuen@yydg.com.cn>"};				
+				String[] cc = {MimeUtility.encodeText("張錫洪")+"<kyuen@yydg.com.cn>"};*/
+				
 				AutoSendEmailAction send = new AutoSendEmailAction();
 				SimpleDateFormat formatDates = new SimpleDateFormat("yyyy/MM/dd");						
 				DateFormat formast = new SimpleDateFormat("MM");

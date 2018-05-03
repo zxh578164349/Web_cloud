@@ -42,7 +42,7 @@
 			<td>
 			
 			  <!-- 開始日期: --><input type="text" id="yymm" name="yymm" onClick="WdatePicker({minDate:'{%y-1}-%m',maxDate:'#F{$dp.$D(\'yymm2\',{M:-1})||\'%y-%M\'}'})" readonly="readonly" class="Wdate search"/>至
-			  <!-- 結束日期: --><input type="text" id="yymm2" name="yymm2" onClick="WdatePicker({minDate:'#F{$dp.$D(\'yymm\',{M:0})}',maxDate:'%y-%M'})" readonly="readonly" class="Wdate search"/>			
+			  <!-- 結束日期: --><input type="text" id="yymm2" name="yymm2" onClick="WdatePicker({minDate:'#F{$dp.$D(\'yymm\',{M:0})}',maxDate:'%y-{%M+6}'})" readonly="readonly" class="Wdate search"/>			
 			
 			</td>
 			<td>
