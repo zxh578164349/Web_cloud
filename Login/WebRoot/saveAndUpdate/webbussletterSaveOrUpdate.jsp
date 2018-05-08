@@ -35,11 +35,16 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 				    <tr>
 				        <td >所屬單位</td>
 				        <td>
-				        <!-- <input type="text" name="bussletter.unit" datatype="*"  value="<s:property value='bussletter.unit'/>" /> -->
-				        <input type="text" id="dep_temp" disabled/>
+				        <s:if test="bussletter==null">
+				          <input type="text" id="dep_temp" disabled/>
 				        <div id="div_dep" style="display:none">
 				           <select name="bussletter.depId.depId" datatype="*" id="depId" onchange="checkvisaflow()"></select>
 				         </div>
+				        </s:if>				        
+				        <s:else>
+				           <input type="hidden" name="bussletter.depId.depId" value="<s:property value='bussletter.depId.depId'/>" />
+				           <input type="text" value="<s:property value='bussletter.depId.depName'/>" disabled/>
+				        </s:else>
 				        </td>
 				        
 				        <td >姓名</td>
