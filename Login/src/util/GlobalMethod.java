@@ -19,6 +19,7 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.PushbackInputStream;
+import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
@@ -28,6 +29,7 @@ import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
+import java.security.GeneralSecurityException;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.ParseException;
@@ -59,6 +61,7 @@ import java.util.concurrent.TimeoutException;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
+import javax.mail.internet.MimeUtility;
 import javax.script.Bindings;
 import javax.script.Invocable;
 import javax.script.ScriptContext;
@@ -107,6 +110,7 @@ import services.IWebuserEmailAServices;
 import services.IWebuserEmailServices;
 
 import com.opensymphony.xwork2.ActionContext;
+import com.sun.mail.util.MailSSLSocketFactory;
 
 import entity.KyFact;
 import entity.KyVisabillm;
@@ -132,12 +136,13 @@ import entity_temp.VisabillsTemp;
 public class GlobalMethod extends HibernateDaoSupport{
 	//private static final String URL="http://203.85.73.161/Login/";
 	//private static final String URL="http://203.85.73.161/Login";
-	private static final String EMAIL="kyuen@yydg.com.cn";
+	private static final ProjectConfig pc=findProjectConfig();
+	//private static final String EMAIL="kyuen@yydg.com.cn";
 	private static final String SUBJECT="函文審核定時通知_";
 	private static final String SUBJECT2="函文審核通知_";
 	private static final String SUBJECT3="函文退回定時通知_";
 	private static final String SUBJECT4="函文退回通知_";
-	private static final String LIUJUNG="liujung@mail.gj.com.tw";
+	//private static final String LIUJUNG="liujung@mail.gj.com.tw";
 
 	public static void print(List list,String factNo,String yymm,String yymm2,String file,HttpServletResponse response) throws IOException{
 		//List<Webwlo>list=wloService.findByAny(factNo, yymm, yymm2);
@@ -1260,10 +1265,10 @@ public class GlobalMethod extends HibernateDaoSupport{
 	 public static void sendEmailA(ApplicationContext ac,List<KyVisabillm>list_vbm,String sub1,String sub2){		   
 		    IWebuserEmailServices webuseremailSer=(IWebuserEmailServices)ac.getBean("webuseremailSer");
 			IWebuserEmailAServices webuseremailaSer=(IWebuserEmailAServices)ac.getBean("webuseremailaSer");
-			IKyzVisaFlowServices visaSer=(IKyzVisaFlowServices)ac.getBean("visaSer");
+			//IKyzVisaFlowServices visaSer=(IKyzVisaFlowServices)ac.getBean("visaSer");
 			//IKyVisaBillsServices visabillSer=(IKyVisaBillsServices)ac.getBean("visabillSer");
 			IKyVisabillmServices visabillmSer=(IKyVisabillmServices)ac.getBean("visabillmSer");	
-			ProjectConfig pc=(ProjectConfig)ac.getBean("proconfig");
+			//ProjectConfig pc=(ProjectConfig)ac.getBean("proconfig");
 			String content="";			
 			if(list_vbm.size()>0){//start if
 			MailSenderInfo mailInfo = new MailSenderInfo();
@@ -1278,7 +1283,7 @@ public class GlobalMethod extends HibernateDaoSupport{
 					String billNo=list_vbm.get(i).getId().getBillNo();
 					String visaSort=list_vbm.get(i).getId().getVisaSort();
 					String visaMk=list_vbm.get(i).getVisaMk();										
-					if(LIUJUNG.equals(signerNext.toLowerCase())){//劉小姐隻發送一次:liujung@mail.gj.com.tw 20161213
+					if(pc.getPliujung().equals(signerNext.toLowerCase())){//劉小姐隻發送一次:liujung@mail.gj.com.tw 20161213
 						if(list_vbm.get(i).getOneMk()==null){
 							list_vbm.get(i).setOneMk("1");//標識隻發送一次
 							visabillmSer.add(list_vbm.get(i));
@@ -1302,7 +1307,7 @@ public class GlobalMethod extends HibernateDaoSupport{
 						list_email.add(list_emailPwd_a.get(k));
 					}
 					/******************20170112备签人同步**********************/
-					list_email.add(EMAIL);
+					list_email.add(pc.getpEmail());
 					String emailUrl=pc.getpUrl()+"/vbm_findById_email?visaSort="+visaSort+"&billNo="+billNo
 					         +"&factNo="+factNo+"&email="+signerNext;
 					String emailUrl2=pc.getpUrl()+"/vbm_findById_email2?visaSort="+visaSort+"&billNo="+billNo
@@ -1317,7 +1322,7 @@ public class GlobalMethod extends HibernateDaoSupport{
 					    		  "如需查詢以往單據請登錄加久網站:(云端)<a href='"+pc.getpUrl()+"'>"+pc.getpUrl()+"</a>" +		            
 					      		"<br/>進入[函文簽核綜合功能]--[函文審核]中查找對應單號審核"+			    		
 					    		"<hr/>"+
-					      		"<br/>本郵件定時自動發送,請勿回復!如需回復或者問題，請回复到"+EMAIL+"資訊室!<br/>"+
+					      		"<br/>本郵件定時自動發送,請勿回復!如需回復或者問題，請回复到"+pc.getpEmail()+"資訊室!<br/>"+
 					    		"<hr/>";						
 					}
 					if(visaMk.equals("T")){
@@ -1338,7 +1343,7 @@ public class GlobalMethod extends HibernateDaoSupport{
 						    		 "詳情請登錄加久網站:(云端)<a href='"+pc.getpUrl()+"'>"+pc.getpUrl()+"</a>" +		            
 						      		"<br/>進入[函文簽核綜合功能]--[函文審核]中查找對應單號審核"+			    		
 						    		"<hr/>"+
-						      		"<br/>本郵件定時自動發送,請勿回復!如需回復或者問題，請回复到"+EMAIL+"資訊室!<br/>"+
+						      		"<br/>本郵件定時自動發送,請勿回復!如需回復或者問題，請回复到"+pc.getpEmail()+"資訊室!<br/>"+
 						    		"<hr/>";
 					}
 					
@@ -1346,7 +1351,7 @@ public class GlobalMethod extends HibernateDaoSupport{
 					mailInfo.setSubject(subject.toString()); 
 					for(int j=0;j<list_email.size();j++){//start for2
 						  mailInfo.setToAddress(list_email.get(j));
-						  if(list_email.get(j).equals(EMAIL)){						  
+						  if(list_email.get(j).equals(pc.getpEmail())){						  
 							  String content_msg=content+"下一箇簽核:<span style='color:blue'>"+signerNext+"</span>";
 							  mailInfo.setContent(content_msg);					      
 						  }					         			       				    		  			           
@@ -1514,13 +1519,13 @@ public class GlobalMethod extends HibernateDaoSupport{
 	  * @date 2016/7/8
 	  */
 	 public static void sendNewEmail(KyVisabillm vbm,List<String>list_emailPwd){
-		 ProjectConfig pc=findProjectConfig();
+		 //ProjectConfig pc=findProjectConfig();
 		 List<String>list=new ArrayList<String>();
 		 list.add(vbm.getSignerNext());
 		 for(String str:list_emailPwd){
 			 list.add(str);
 		 }
-		 list.add(EMAIL);
+		 list.add(pc.getpEmail());
 		 String emailUrl_in=pc.getpUrl()+"/vbm_findById_email?visaSort="+vbm.getId().getVisaSort()+"&billNo="+vbm.getId().getBillNo()
 		         +"&factNo="+vbm.getId().getFactNo()+"&email="+vbm.getSignerNext();	
 		 String emailUrl_in2=pc.getpUrl()+"/vbm_findById_email2?visaSort="+vbm.getId().getVisaSort()+"&billNo="+vbm.getId().getBillNo()
@@ -1536,7 +1541,7 @@ public class GlobalMethod extends HibernateDaoSupport{
 					"如需查詢以往單據請登陸:(云端)<a href='"+pc.getpUrl()+"'>"+pc.getpUrl()+"</a>" +							
 					"<br/>進入[函文簽核綜合功能]--[函文審核]查找對應單號審核" +									
 					"<hr/>"+
-					"<br/>本郵件自動發送,請勿回復!如需回復或者問題，請回复到"+EMAIL+"資訊室!<br/>"+
+					"<br/>本郵件自動發送,請勿回復!如需回復或者問題，請回复到"+pc.getpEmail()+"資訊室!<br/>"+
 					"<hr/>");
 		      for(String email:list){		    	  
 		    	  mailinfo.setToAddress(email);
@@ -1560,11 +1565,11 @@ public class GlobalMethod extends HibernateDaoSupport{
 	  * @date 2016/12/26
 	  */
 	 public static void sendEmail_minus(String factNo,String billNo,String visaSort,String email){
-		 ProjectConfig pc=findProjectConfig();
+		 //ProjectConfig pc=findProjectConfig();
 		 //****************通知下一位签核人***************/
 		 List<String>list=new ArrayList<String>();
 		 list.add(email);
-		 list.add(EMAIL);
+		 list.add(pc.getpEmail());
 		 SimpleMailSender sms = new SimpleMailSender();
 		 MailSenderInfo mailInfo = new MailSenderInfo();
   		 String emailUrl_in=pc.getpUrl()+"/vbm_findById_email?visaSort="+visaSort+"&billNo="+billNo
@@ -1580,7 +1585,7 @@ public class GlobalMethod extends HibernateDaoSupport{
  	    		"<br/>如需查詢以往單據請登錄加久網站:((云端))<a href='"+pc.getpUrl()+"'>"+pc.getpUrl()+"</a>" +	            
  	      		"<br/>進入[函文簽核綜合功能]--[函文審核]中查找對應單號審核"+	      	    		
  	    		"<hr/>"+	      		
- 	    		"<br/>本郵件自動發送,請勿回復!如需回復或者問題，請回复到"+EMAIL+"資訊室!<br/>" +
+ 	    		"<br/>本郵件自動發送,請勿回復!如需回復或者問題，請回复到"+pc.getpEmail()+"資訊室!<br/>" +
  	    		"<hr/>");
   		 for(String address:list){
   			mailInfo.setToAddress(address);
@@ -2053,6 +2058,34 @@ public class GlobalMethod extends HibernateDaoSupport{
 		return pc;
 	}
 	
+	public static Properties findPropertiesEmail(){
+		Properties props=new Properties();
+		props.setProperty("mail.smtp.auth", "true");
+		props.setProperty("mail.transport.protocol", "smtp");
+		props.setProperty("mail.host", "smtp.mxhichina.com");//dgmail.yydg.com.cn
+		//props.setProperty("mail.host", "172.17.5.84");//因為有時候解釋不了域名,所以直接用地址代替(内网IP)
+		//props.setProperty("mail.host", "125.88.14.11");//因為有時候解釋不了域名,所以直接用地址代替(外网IP)
+		//props.setProperty("mail.host", "61.20.35.47");
+		//props.setProperty("mail.pop.port", "995");
+		props.setProperty("mail.smtp.port", "465");//改smtp端口
+		props.setProperty("mail.smtp.socketFactory.port","465");
+		//props.setProperty("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+		//props.setProperty("mail.smtp.socketFactory.fallback", "false");
+		//props.setProperty("mail.smtp.starttls.enable","true");//加密发送
+		props.setProperty("mail.smtp.ssl.enable", "true");///加密发送
+		//以下设置，邮件加密发送，不需要证书验证
+		MailSSLSocketFactory sf = null;
+		try {
+			sf = new MailSSLSocketFactory();
+		} catch (GeneralSecurityException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}  
+	    sf.setTrustAllHosts(true);
+	    props.put("mail.smtp.ssl.socketFactory", sf);
+	    return props;
+	}
+	
 	
 	/**
 	 * 產量盤點數據計算
@@ -2098,7 +2131,7 @@ public class GlobalMethod extends HibernateDaoSupport{
 	 
 	 public static void main(String[] args) {
 		
-		 Properties p = new Properties();
+		 /*Properties p = new Properties();
 	    	InputStream in = Object. class .getResourceAsStream( "/project_config.properties" );
 	    	try {
 				p.load(in);
@@ -2110,7 +2143,12 @@ public class GlobalMethod extends HibernateDaoSupport{
 	    	
 	    	String abc="abcd";
 	    	System.out.println(abc.substring(0,1));
-	    	System.out.println(abc.substring(0,2));
+	    	System.out.println(abc.substring(0,2));*/
+		 String a="1";
+		 final String b=a;
+		 System.out.println(a.equals(b));
+		 System.out.println(a==b);
+		 
 		
 	  
 		}

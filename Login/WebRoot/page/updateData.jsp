@@ -137,9 +137,8 @@
 					</div>
 
 					<div class="form-group">
-						<div class="col-sm-offset-2 col-sm-10">
-							<div class="checkbox">
-								<label>
+					  <label for="inputPassword3" class="col-sm-2 control-label">只讀或修改</label>							
+							<div class="checkbox">								
 									只讀:
 									<s:if test='#attr.webU.userread=="1"'>
 										<input type="radio" value="1" name="updateU.userread" checked />
@@ -153,10 +152,8 @@
 									</s:if>
 									<s:else>
 										<input type="radio" value="0" name="updateU.userread" />
-									</s:else>
-								</label>
-							</div>
-						</div>
+									</s:else>								
+							</div>						
 					</div>
 
 					<div class="form-group">
@@ -167,6 +164,28 @@
 							<input type="hidden" value="<s:property value='#attr.webU.userType'/>" name="updateU.userType"/>
 						</div>
 					</div>
+					
+					<div class="form-group">
+					  <label for="inputPassword3" class="col-sm-2 control-label">是否要寫業務每週報告</label>											
+							<div class="checkbox">								
+									是:
+									<s:if test='#attr.webU.weeklyreportMk=="Y"'>
+										<input type="radio" value="Y" name="updateU.weeklyreportMk" checked />
+									</s:if>
+									<s:else>
+										<input type="radio" value="Y" name="updateU.weeklyreportMk" />
+									</s:else>
+									&nbsp; 否:
+									<s:if test='#attr.webU.weeklyreportMk=="N"||#attr.webU.weeklyreportMk==null'>
+										<input type="radio" value="N" name="updateU.weeklyreportMk" checked />
+									</s:if>
+									<s:else>
+										<input type="radio" value="N" name="updateU.weeklyreportMk" />
+									</s:else>								
+							</div>
+						
+					</div>
+					
 					<div class="form-group">
 						<div class="col-sm-offset-2 col-sm-10">
 							<input type="submit" value="確認修改" class="btn btn-primary" />&nbsp; <input type="button" class="btn btn-primary" value="退出" onclick="loadUrl('blank.jsp')" />

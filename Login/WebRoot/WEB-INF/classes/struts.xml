@@ -828,8 +828,24 @@
 		   <result name="findById">saveAndUpdate/webweeklyreportSaveOrUpdate.jsp</result>
 		   <result name="delete" type="redirectAction">webweekly_findPageBean3</result>
 		   <result name="email_url">page/webweeklyreport_email.jsp</result>
-		   <result name="findByUidASdate_page">page/table1/webweeklyreport_email1.jsp</result>
-		   
+		   <result name="findByUidASdate_page">page/table1/webweeklyreport_email1.jsp</result>		   
+		</action>
+		
+		<action name="webemailall_*" class="webemailallAction" method="{1}">
+		   <result name="add" type="json">
+		      <param name="root">ajaxResult</param>
+		   </result>
+		   <result name="findPageBean">page/webemailall.jsp</result>
+		   <result name="findPageBean1">page/table1/webemailall1.jsp</result>
+		   <result name="findAllEmailTypes" type="json">
+		      <param name="root">jsons</param>
+		   </result>
+		   <result name="findById">saveAndUpdate/webemailallSaveOrUpdate.jsp</result>
+		   <result name="delete" type="redirectAction">webemailall_findPageBean3</result>
+		   <result name="goDisabled" type="redirectAction">webemailall_findPageBean3</result>
+		   <result name="findByEmailAndEtypeAndEmailOrCc" type="json">
+		     <param name="root">ajaxResult</param>
+		   </result>
 		</action>
 		
 		

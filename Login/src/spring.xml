@@ -214,6 +214,7 @@
 				<value>entity/VWebBrProandest.hbm.xml</value>
 				<value>entity/WebDepartment.hbm.xml</value>
 				<value>entity/WebWeeklyreport.hbm.xml</value>
+				<value>entity/WebEmailType.hbm.xml</value>
 				</list>
 				
 		</property>

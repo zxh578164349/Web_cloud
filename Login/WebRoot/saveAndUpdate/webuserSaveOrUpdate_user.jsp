@@ -63,13 +63,23 @@
 				<td >IP</td>
 				<td ><input type="text" name="webUsers.ip" value=""></td>
 				<td >是否只讀</td>
-				<td ><select name="webUsers.userread" id="userread">
-						<option value="0">否</option>
-						<option value="1">是</option>
+				<td >
+				<select name="webUsers.userread" id="userread">
+				        <option value="0">否</option>
+				        <option value="1">是</option>												
 				</select>
 				 <input type="hidden" name="webUsers.available" value="0" />
 				 <input type="hidden" name="webUsers.userType" value="0"/><%--使用者類型--%>
 				 </td>
+			</tr>
+			<tr>
+			    <td>是否要寫業務每週報告</td>
+			    <td>
+			      <select name="webUsers.weeklyreportMk">
+			            <option value="N">否</option>
+						<option value="Y">是</option>						
+				  </select>
+			    </td>
 			</tr>
 
 		</table>

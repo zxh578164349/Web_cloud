@@ -176,6 +176,7 @@ public class WebWeeklyreportAction extends ActionSupport{
 		ActionContext.getContext().getSession().remove("allrow");	
 		bean=webweeklyreportservices.findPageBean(page, 0, uid, sdate,bid);
 		ActionContext.getContext().getSession().put("sdate", sdate);
+		ActionContext.getContext().getSession().put("bid", bid);
 		return "findPageBean";		
 	}
 	
@@ -186,6 +187,7 @@ public class WebWeeklyreportAction extends ActionSupport{
 	
 	public String findPageBean3(){
 		sdate=(String)ActionContext.getContext().getSession().get("sdate");
+		bid=(Integer)ActionContext.getContext().getSession().get("bid");
 		bean=webweeklyreportservices.findPageBean(page, 0, uid, sdate,bid);
 		String result="findPageBean1";
 		if(backIndex==1){

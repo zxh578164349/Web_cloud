@@ -66,12 +66,15 @@ import entity.KyzVisaflow;
 import entity.WebBussinessletter;
 import entity.WebFormula;
 import entity.Webremittancelist;
+import entity.custom.ProjectConfig;
 import entity_temp.VisabillsTemp;
 
 public class AutoSendKyzAll extends QuartzJobBean{
-	private Map<String, Object> map;
+	private static final ProjectConfig pc=GlobalMethod.findProjectConfig();
+	public static final String PDF_TYPE_AUTO="auto";
+	//public static final String KIP="192.168.199.101";
+	private Map<String, Object> map;	
 	
-
 	public Map<String, Object> getMap() {
 		return map;
 	}
@@ -79,8 +82,7 @@ public class AutoSendKyzAll extends QuartzJobBean{
 	public void setMap(Map<String, Object> map) {
 		this.map = map;
 	}
-	public static final String PDF_TYPE_AUTO="auto";
-	public static final String KIP="192.168.199.101";
+	
 	@Override
 	protected void executeInternal(JobExecutionContext arg0)
 			throws JobExecutionException {
@@ -91,7 +93,7 @@ public class AutoSendKyzAll extends QuartzJobBean{
 					this.init();
 				}else{
 					for(int i=0;i<ips.size();i++){
-						if(ips.get(i).equals(KIP)){
+						if(ips.get(i).equals(pc.getpHostLoaclB())){
 							this.init();
 							break;
 						}else if(i==ips.size()-1){
@@ -115,7 +117,8 @@ public class AutoSendKyzAll extends QuartzJobBean{
 			MailSenderInfo mailInfo=new MailSenderInfo();
 			SimpleMailSender sms=new SimpleMailSender();
 			mailInfo.setValidate(true);			
-			mailInfo.setToAddress("kyuen@yydg.com.cn");//收件人爲本機，檢測Email是否發送成功
+			//mailInfo.setToAddress("kyuen@yydg.com.cn");//收件人爲本機，檢測Email是否發送成功
+			mailInfo.setToAddress(pc.getpEmail());//收件人爲本機，檢測Email是否發送成功
 			mailInfo.setContent("簽核完畢");
 			for(int i=0;i<list_vbm.size();i++){//start for			
 				String factNo=list_vbm.get(i).getId().getFactNo();

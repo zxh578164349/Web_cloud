@@ -84,6 +84,7 @@
 	<bean id="webbrproAction" class="action.WebBrProductAction" scope="prototype"/>
 	<bean id="webDepAction" class="action.WebDepartmentAction" scope="prototype"/>
 	<bean id="webweeklyreportAction" class="action.WebWeeklyreportAction" scope="prototype"/>
+	<bean id="webemailallAction" class="action.WebEmailAllAction" scope="prototype"/>
 </beans> 
 
  

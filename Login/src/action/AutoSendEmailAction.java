@@ -22,20 +22,27 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import javax.mail.internet.MimeUtility;
 
+import util.GlobalMethod;
+
 import com.sun.mail.util.MailSSLSocketFactory;
 
+import entity.custom.ProjectConfig;
+
 public class AutoSendEmailAction {
-	private static final String MAIL_USER = "kyzxs@kyuen-dg.com";//kyzxs@kyuen-dg.com    kyuen@yydg.com.cn
+	//private static final String MAIL_USER = "kyzxs@kyuen-dg.com";//kyzxs@kyuen-dg.com    kyuen@yydg.com.cn
 
-	private static final String MAIL_PASSWORD = "Ky2_mail";//yydgmail-002     Ky2_mail  
+	//private static final String MAIL_PASSWORD = "Ky2_mail";//yydgmail-002     Ky2_mail  
 
-	private static final String MAIL_FROM_SMTP = "<kyzxs@kyuen-dg.com>";//<kyuen@yydg.com.cn>    <kyzxs@kyuen-dg.com>
+	//private static final String MAIL_FROM_SMTP = "<kyzxs@kyuen-dg.com>";//<kyuen@yydg.com.cn>    <kyzxs@kyuen-dg.com>
+	private static final ProjectConfig pc=GlobalMethod.findProjectConfig();
 
-	public void sendmail(String[] mailArray, String[] cc, String subject,String content,String affixName,String filepath) {			
+	public void sendmail(String[] mailArray, String[] cc, String subject,String content,String affixName,String filepath) {	
+		//final ProjectConfig pc=GlobalMethod.findProjectConfig();
 		Properties props = new Properties();				
 		props.setProperty("mail.smtp.auth", "true");
 		props.setProperty("mail.transport.protocol", "smtp");
-		props.setProperty("mail.host", "smtp.mxhichina.com");//dgmail.yydg.com.cn
+		//props.setProperty("mail.host", "smtp.mxhichina.com");//dgmail.yydg.com.cn
+		props.setProperty("mail.host", pc.getpSmtp());
 		//props.setProperty("mail.host", "172.17.5.84");//因為有時候解釋不了域名,所以直接用地址代替(内网IP)
 		//props.setProperty("mail.host", "125.88.14.11");//因為有時候解釋不了域名,所以直接用地址代替(外网IP)
 		//props.setProperty("mail.host", "61.20.35.47");
@@ -59,7 +66,8 @@ public class AutoSendEmailAction {
 		
 		Session session = Session.getInstance(props, new Authenticator() {
 			protected PasswordAuthentication getPasswordAuthentication() {
-				return new PasswordAuthentication(MAIL_USER, MAIL_PASSWORD);
+				//return new PasswordAuthentication(MAIL_USER, MAIL_PASSWORD);
+				return new PasswordAuthentication(pc.getpEmail(), pc.getpEmailPwd());
 			}
 		});
 		session.setDebug(true);
@@ -67,8 +75,9 @@ public class AutoSendEmailAction {
 		Transport transport = null;
 		try {
 			// 15,6
-			msg.setFrom(new InternetAddress(MimeUtility.encodeText("加久公共信息","utf-8","Q")+ MAIL_FROM_SMTP));					
-			sun.misc.BASE64Encoder enc = new sun.misc.BASE64Encoder();
+			//msg.setFrom(new InternetAddress(MimeUtility.encodeText("加久公共信息","utf-8","Q")+ MAIL_FROM_SMTP));		
+			msg.setFrom(new InternetAddress(MimeUtility.encodeText("加久公共信息","utf-8","Q")+pc.getPfromAddress()));	
+			//sun.misc.BASE64Encoder enc = new sun.misc.BASE64Encoder();
 			//msg.setSubject("=?BIG5?B?" + enc.encode(subject.getBytes()) + "?=");
 			msg.setSubject(MimeUtility.encodeText(subject));
 			Multipart multipart = new MimeMultipart();

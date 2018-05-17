@@ -23,6 +23,12 @@
        <property name="pHostLoaclB" value="${project.host_local_b}"/>
        <property name="pUrl" value="${project.url}"/>
        <property name="pEmail" value="${project.email}"/>
+       <property name="pSmtp" value="${project.smtp}"/>
+       <property name="pEmailPwd" value="${project.emailpwd}"/>
+       <property name="pfromAddress" value="${project.fromaddress}"/>
+       <property name="pliujung" value="${project.liujung}"/>
+       <property name="plgx" value="${project.lgx}"/>
+       <property name="purllocal" value="${project.url_local}"/>
     </bean>	
 </beans>
 
