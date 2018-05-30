@@ -1,9 +1,20 @@
 package action;
 
+import java.io.IOException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.struts2.ServletActionContext;
+import org.apache.struts2.interceptor.ServletResponseAware;
+
+import mail.AutoSendWebWeeklyreportItems;
 import net.sf.json.JSONArray;
 
 import services.IWebWeeklyreportServices;
@@ -17,7 +28,7 @@ import entity.WebErpBrankProcess;
 import entity.WebUser;
 import entity.WebWeeklyreport;
 
-public class WebWeeklyreportAction extends ActionSupport{
+public class WebWeeklyreportAction extends ActionSupport implements ServletResponseAware{
 	private IWebWeeklyreportServices webweeklyreportservices;
 	private WebWeeklyreport obj;
 	private String ajaxResult;
@@ -32,7 +43,7 @@ public class WebWeeklyreportAction extends ActionSupport{
 	private int rid;//周報告id
 	private JSONArray jsons;
 	private String uname;//用戶中文名
-	
+	private HttpServletResponse response;
 
 	public String getUname() {
 		return uname;
@@ -232,6 +243,55 @@ public class WebWeeklyreportAction extends ActionSupport{
 		System.out.println("********************uid:"+uid+"\n sdate:"+sdate+"\n edate:"+edate+"**********************");
 		return "email_url";
 	}
+	
+	public void print(){				
+		try {
+			List<WebWeeklyreport>list_obj=webweeklyreportservices.findByEdate(sdate);
+			if(list_obj.size()==0){
+				response.setContentType("text/html;charset=utf-8");
+				response.getWriter().print("<script>alert('暫無數據');history.back()</script>");
+				response.getWriter().close();
+			}else{
+				SimpleDateFormat sdf=new SimpleDateFormat("yyyyMMdd");
+				Calendar cal=Calendar.getInstance();
+				cal.setTime(sdf.parse(sdate));
+				cal.add(Calendar.DAY_OF_MONTH, 6);
+				edate=sdf.format(cal.getTime());
+				Workbook wb=AutoSendWebWeeklyreportItems.excel2007(sdate, edate, list_obj);
+				
+				//response.setContentType("application/vnd.ms-excel");
+				response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+				String fileName="report.xlsx";
+				int msie=ServletActionContext.getRequest().getHeader("USER-AGENT").toLowerCase().indexOf("msie");
+				if(msie>0){
+					fileName=java.net.URLEncoder.encode(fileName,"utf-8");
+				}else{
+					fileName=new String(fileName.getBytes("utf-8"),"iso8859-1");
+				}
+				response.setHeader("Content-disposition","attachment;filename="+fileName);
+				ServletOutputStream os=response.getOutputStream();
+				wb.write(os);
+				os.flush();
+				os.close();
+				
+			}						
+			
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+
+	public void setServletResponse(HttpServletResponse response) {
+		// TODO Auto-generated method stub
+		this.response=response;
+	}
+	
+	
 	
 	
 

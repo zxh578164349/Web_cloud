@@ -79,7 +79,8 @@ public class AutoSendEmailAction {
 			msg.setFrom(new InternetAddress(MimeUtility.encodeText("加久公共信息","utf-8","Q")+pc.getPfromAddress()));	
 			//sun.misc.BASE64Encoder enc = new sun.misc.BASE64Encoder();
 			//msg.setSubject("=?BIG5?B?" + enc.encode(subject.getBytes()) + "?=");
-			msg.setSubject(MimeUtility.encodeText(subject));
+			//msg.setSubject(MimeUtility.encodeText(subject));
+			msg.setSubject(MimeUtility.encodeText(subject,"utf-8","Q"));			
 			Multipart multipart = new MimeMultipart();
 			BodyPart contentPart = new MimeBodyPart();
 			contentPart.setContent(content, "text/html;charset=utf-8");
@@ -90,8 +91,9 @@ public class AutoSendEmailAction {
 			//DataSource source = new FileDataSource("d://" + yymm + ".xls");
 			DataSource source = new FileDataSource(filepath);
 			messageBodyPart.setDataHandler(new DataHandler(source));
-			//messageBodyPart.setFileName("=?BIG5?B?" + enc.encode(affixName.getBytes()) + "?=");MimeUtility	
-			messageBodyPart.setFileName(MimeUtility.encodeText(affixName));
+			//messageBodyPart.setFileName("=?BIG5?B?" + enc.encode(affixName.getBytes()) + "?=");
+			//messageBodyPart.setFileName(MimeUtility.encodeText(affixName));
+			messageBodyPart.setFileName(MimeUtility.encodeText(affixName,"utf-8","Q"));			
 			multipart.addBodyPart(messageBodyPart);
 			msg.setContent(multipart);
 			msg.setSentDate(new Date());//發送時間

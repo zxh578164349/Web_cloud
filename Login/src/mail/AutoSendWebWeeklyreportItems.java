@@ -57,7 +57,7 @@ public class AutoSendWebWeeklyreportItems extends QuartzJobBean{
 				this.init();
 			}else{
 				for(int a=0;a<ips.size();a++){
-					if(ips.get(a).equals(pc.getpUrl())){
+					if(ips.get(a).equals(pc.getpHostLoaclB())){
 						this.init();
 						break;
 					}else if(a==ips.size()-1){
@@ -82,8 +82,11 @@ public class AutoSendWebWeeklyreportItems extends QuartzJobBean{
 			String sdate_last=sdf.format(cal.getTime());
 			cal.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
 			String edate_last=sdf.format(cal.getTime());
-			//Workbook wb=this.excel2003(ac,sdate,edate);
-			Workbook wb=this.excel2007(ac,sdate_last, edate_last);
+			IWebWeeklyreportServices webweeklyreportservices=(IWebWeeklyreportServices)ac.getBean("webweeklyreportservices");						
+			List<WebWeeklyreport>list_obj=webweeklyreportservices.findByEdate(sdate_last);
+			
+			//Workbook wb=excel2003(sdate,edate,list_obj);
+			Workbook wb=excel2007(sdate_last, edate_last,list_obj);
 			//OutputStream os=new FileOutputStream("d:\\"+sdate+"~"+edate+".xlsx");
 			//String filepath=ServletActionContext.getServletContext().getRealPath("TEMPFILES\\"+sdate+"-"+edate+".xlsx");報空指針
 			String classes_path=Thread.currentThread().getContextClassLoader().getResource("").getPath();
@@ -136,10 +139,9 @@ public class AutoSendWebWeeklyreportItems extends QuartzJobBean{
 		
 	}
 	
-	public HSSFWorkbook excel2003(ApplicationContext ac,String sdate,String edate){			
-		IWebWeeklyreportServices webweeklyreportservices=(IWebWeeklyreportServices)ac.getBean("webweeklyreportservices");						
-		List<WebWeeklyreport>list_obj=webweeklyreportservices.findByEdate(sdate);		
-		
+	public static HSSFWorkbook excel2003(String sdate,String edate,List<WebWeeklyreport>list_obj){
+		//IWebWeeklyreportServices webweeklyreportservices=(IWebWeeklyreportServices)ac.getBean("webweeklyreportservices");						
+		//List<WebWeeklyreport>list_obj=webweeklyreportservices.findByEdate(sdate);
 		HSSFWorkbook wb=new HSSFWorkbook();
 		HSSFSheet sheet=wb.createSheet("sheet1");
 		for(int a=0;a<list_obj.size()+3;a++){
@@ -223,9 +225,9 @@ public class AutoSendWebWeeklyreportItems extends QuartzJobBean{
 		return wb;
 	}
 	
-	public XSSFWorkbook excel2007(ApplicationContext ac,String sdate,String edate){		
-		IWebWeeklyreportServices webweeklyreportservices=(IWebWeeklyreportServices)ac.getBean("webweeklyreportservices");						
-		List<WebWeeklyreport>list_obj=webweeklyreportservices.findByEdate(sdate);		
+	public static XSSFWorkbook excel2007(String sdate,String edate,List<WebWeeklyreport>list_obj){		
+		//IWebWeeklyreportServices webweeklyreportservices=(IWebWeeklyreportServices)ac.getBean("webweeklyreportservices");						
+		//List<WebWeeklyreport>list_obj=webweeklyreportservices.findByEdate(sdate);		
 		
 		XSSFWorkbook wb=new XSSFWorkbook();
 		XSSFSheet sheet=wb.createSheet("sheet1");

@@ -116,8 +116,6 @@ public class VWebprofitlossFactEveAction implements ServletResponseAware{
 	
 	public void print_fact() throws IOException{
 		reportType="1";
-		year="2016";
-		factNo="631";
 		HSSFWorkbook wb=new HSSFWorkbook();
 		Map<String,Object>map_data=new HashMap<String,Object>();
 		Map<String,Object>map_cs=GlobalMethod.findStyles(wb);
@@ -221,8 +219,7 @@ public class VWebprofitlossFactEveAction implements ServletResponseAware{
 				}
 			}
 		}
-		//OutputStream os=new FileOutputStream("e:\\webprofiless.xls");		
-		ServletOutputStream os=response.getOutputStream();
+		//OutputStream os=new FileOutputStream("e:\\webprofiless.xls");			
 		response.setContentType("application/vnd.ms-excel");
 		int msie=ServletActionContext.getRequest().getHeader("USER-AGENT").toLowerCase().indexOf("msie");//判斷是否為IE瀏覽器,大於0則為IE瀏覽器
 		String fileName="report_fact.xls";
@@ -232,7 +229,9 @@ public class VWebprofitlossFactEveAction implements ServletResponseAware{
 			fileName=new String(fileName.getBytes("utf-8"),"iso-8859-1");//解決非IE中文名亂碼問題
 		}		
 		response.setHeader("Content-disposition", "attachment;filename="+fileName);
+		ServletOutputStream os=response.getOutputStream();
 		wb.write(os);
+		os.flush();
 		os.close();
 	}
 	
@@ -318,7 +317,7 @@ public class VWebprofitlossFactEveAction implements ServletResponseAware{
 			}
 		}
 		// OutputStream os=new FileOutputStream("e:\\webprofiless.xls");
-		ServletOutputStream os = response.getOutputStream();
+		
 		response.setContentType("application/vnd.ms-excel");
 		int msie = ServletActionContext.getRequest().getHeader("USER-AGENT").toLowerCase().indexOf("msie");// 判斷是否為IE瀏覽器,大於0則為IE瀏覽器
 		String fileName = "report_month.xls";
@@ -327,7 +326,8 @@ public class VWebprofitlossFactEveAction implements ServletResponseAware{
 		} else {
 			fileName = new String(fileName.getBytes("utf-8"), "iso-8859-1");// 解決非IE中文名亂碼問題
 		}
-		response.setHeader("Content-disposition", "attachment;filename="+ fileName);			
+		response.setHeader("Content-disposition", "attachment;filename="+ fileName);
+		ServletOutputStream os = response.getOutputStream();
 		wb.write(os);
 		os.close();
 		
@@ -420,8 +420,7 @@ public class VWebprofitlossFactEveAction implements ServletResponseAware{
 				}
 			}
 		}
-		//OutputStream os=new FileOutputStream("e:\\webprofiless.xls");
-		ServletOutputStream os=response.getOutputStream();
+		//OutputStream os=new FileOutputStream("e:\\webprofiless.xls");		
 		response.setContentType("application/vnd.ms-excel");
 		int msie=ServletActionContext.getRequest().getHeader("USER-AGENT").toLowerCase().indexOf("msie");//判斷是否為IE瀏覽器,大於0則為IE瀏覽器
 		String fileName="report_tw.xls";
@@ -431,6 +430,7 @@ public class VWebprofitlossFactEveAction implements ServletResponseAware{
 			fileName=new String(fileName.getBytes("utf-8"),"iso-8859-1");//解決非IE中文名亂碼問題
 		}		
 		response.setHeader("Content-disposition", "attachment;filename="+fileName);
+		ServletOutputStream os=response.getOutputStream();
 		wb.write(os);
 		os.close();
 		
@@ -645,9 +645,7 @@ public class VWebprofitlossFactEveAction implements ServletResponseAware{
 	 * @author web
 	 * @date 2016/5/6
 	 */
-	public List<String>findHead2() throws ParseException{
-		yymm="201602";
-		yymm2="201605";
+	public List<String>findHead2() throws ParseException{		
 		List<String>list=new ArrayList<String>();
 		list.add("項目");
 		list.add("細項");

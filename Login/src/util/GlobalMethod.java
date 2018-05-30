@@ -2144,10 +2144,16 @@ public class GlobalMethod extends HibernateDaoSupport{
 	    	String abc="abcd";
 	    	System.out.println(abc.substring(0,1));
 	    	System.out.println(abc.substring(0,2));*/
-		 String a="1";
-		 final String b=a;
-		 System.out.println(a.equals(b));
-		 System.out.println(a==b);
+		 Calendar cal=Calendar.getInstance();
+		 try {
+			cal.setTime(new SimpleDateFormat("yyyyMMdd").parse("20180528"));
+			cal.add(Calendar.DAY_OF_WEEK, 6);
+			System.out.println(new SimpleDateFormat("yyyyMMdd").format(cal.getTime()));
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 
 		 
 		
 	  
