@@ -34,6 +34,7 @@ public class WebBussinessletter implements java.io.Serializable {
 	private Integer userId;
 	private String useremail;
 	private WebDepartment depId;
+	private VWebFact factNo2;//關聯工廠名稱(不需要映射列名)
 
 	// Constructors
 
@@ -254,6 +255,14 @@ public class WebBussinessletter implements java.io.Serializable {
 
 	public void setDepId(WebDepartment depId) {
 		this.depId = depId;
+	}
+
+	public VWebFact getFactNo2() {
+		return factNo2;
+	}
+
+	public void setFactNo2(VWebFact factNo2) {
+		this.factNo2 = factNo2;
 	}
 	
 	

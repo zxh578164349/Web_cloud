@@ -109,7 +109,8 @@
     </bean> 
     <bean id="CronTriggerBeanH" class="org.springframework.scheduling.quartz.CronTriggerBean">
        <property name="jobDetail" ref="quantzjobBeanF"></property>
-       <property name="cronExpression" value="0 0 8 ? * MON"></property> 
+       <property name="cronExpression" value="0 0 8 ? * MON"></property>
+       <!-- <property name="cronExpression" value="0 47 13 * * ?"></property> --> 
     </bean>
     
     <bean id="startQuartz" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">

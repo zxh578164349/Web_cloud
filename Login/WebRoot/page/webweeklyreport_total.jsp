@@ -29,7 +29,8 @@
 		<tr>
 			<td>			
 			<span>
-			 <input type="text" name="sdate" class="Wdate" onclick="WdatePicker({disabledDays:[0,2,3,4,5,6],dateFmt:'yyyyMMdd',maxDate:'%y-%M-%d'})" datatype="*"/>
+			 <input type="text" name="sdate" id="sdate" class="Wdate" onclick="WdatePicker({disabledDays:[0,2,3,4,5,6],dateFmt:'yyyyMMdd',maxDate:'#F{$dp.$D(\'sdate2\')||\'%y-%M-%d\'}',minDate:'%y-{%M-1}-%d'})" datatype="*"/>-
+			 <input type="text" name="sdate2" id="sdate2" class="Wdate" onclick="WdatePicker({disabledDays:[0,2,3,4,5,6],dateFmt:'yyyyMMdd',maxDate:'%y-%M-%d',minDate:'#F{$dp.$D(\'sdate\')||\'%y-{%M-1}-%d\'}'})" datatype="*"/>
 			</span>			
 			<input value="導出" type="submit" id="btn" class="btn btn-primary"/>										 		 	
 			</td>

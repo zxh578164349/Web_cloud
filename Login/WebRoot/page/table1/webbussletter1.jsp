@@ -84,7 +84,24 @@
 					      <a href="javascript:findById_form('subform${x.index}','bussletter_findById')" onclick=""><img alt="修改" src="images/icon/edit001.png" title="修改" ></a>						  																									
 					      <a href="javascript:isDelete('2subform${x.index}','bussletter_delete')" ><img alt="刪除" src="images/icon/delete001.png" title="刪除" ></a>
 					   </s:if>
-					   <s:else>					      
+					   <s:else>					   
+					      <a ><img alt="修改" src="images/icon/edit001_1.png" title="修改" ></a>
+					      <s:if test='#session.loginUser.adminMk=="Y"'>				         						  																									
+					         <s:if test='vbm.visaMk=="N"'>
+					           <a href="javascript:isDelete('2subform${x.index}','bussletter_delete')" ><img alt="刪除" src="images/icon/delete001.png" title="刪除" ></a>
+					         </s:if>
+					         <s:else>
+					           <a ><img alt="刪除" src="images/icon/delete001_1.jpg" title="刪除" ></a>
+					         </s:else>					         
+					      </s:if>
+					      <s:else>					          						          
+					          <a ><img alt="刪除" src="images/icon/delete001_1.jpg" title="刪除" ></a>					          				  																														          					          
+					      </s:else>					      				      
+					   </s:else>
+					   
+					   
+					   
+					   <%-- <s:else>					      
 					      <s:if test="#session.loginUser.username=='admin'">
 					          <a href="javascript:findById_form('subform${x.index}','bussletter_findById')" onclick=""><img alt="修改" src="images/icon/edit001.png" title="修改" ></a>	
 					          <a href="javascript:isDelete('2subform${x.index}','bussletter_delete')" ><img alt="刪除" src="images/icon/delete001.png" title="刪除" ></a>
@@ -100,7 +117,7 @@
 					          		           
 					      </s:else>						  																									
 					      
-					   </s:else>										
+					   </s:else> --%>										
 					 </s:if>
 					 
 					  <form action="bussletter_print2" method="post" id="3subform${x.index}" style="float:left" target="_blank">
@@ -118,6 +135,9 @@
 					  <!--<a href="javascript:showDiv('<s:property value='blNo'/>','<s:property value='factNo'/>')" onclick=""><img alt="查看" src="images/icon/view002.png" title="查看" ></a>  -->					  					  
 					 <a href="javascript:document.getElementById('3subform${x.index}').submit()"><img alt="預覽" src="images/icon/view001.png" title="預覽" ></a>
 					 <a href="javascript:document.getElementById('4subform${x.index}').submit()" ><img alt="打印" src="images/icon/print001.png" title="打印" ></a>						 
+				      <s:if test="#session.loginUser.id==1">
+					    <a href="javascript:isDelete('2subform${x.index}','bussletter_delete')" ><img alt="刪除" src="images/icon/delete001.png" title="刪除" ></a>
+					 </s:if>
 				</td>
 			</tr>
 		  

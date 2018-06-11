@@ -2126,6 +2126,7 @@ public class GlobalMethod extends HibernateDaoSupport{
 		ydate.setSumBacknum(backnum);
 		ydate.setSumWorkhours(workhours);
 	}
+	
 	 
 	 
 	 
@@ -2145,17 +2146,29 @@ public class GlobalMethod extends HibernateDaoSupport{
 	    	System.out.println(abc.substring(0,1));
 	    	System.out.println(abc.substring(0,2));*/
 		 Calendar cal=Calendar.getInstance();
-		 try {
-			cal.setTime(new SimpleDateFormat("yyyyMMdd").parse("20180528"));
-			cal.add(Calendar.DAY_OF_WEEK, 6);
-			System.out.println(new SimpleDateFormat("yyyyMMdd").format(cal.getTime()));
+		 String d1="20180507";
+		 String d2="20180604";
+		 SimpleDateFormat sdf=new SimpleDateFormat("yyyyMMdd");
+		 List<String>list=new ArrayList<String>();
+		 try {			 
+			cal.setTime(sdf.parse(d1));						
+			do{
+				list.add(sdf.format(cal.getTime()));
+				cal.add(Calendar.DAY_OF_MONTH, 7);
+				
+			}while((sdf.format(cal.getTime()).compareTo(d2))<=0);
+				
+			
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		 
-		 
-		
+		 List<String> ll=new ArrayList<String>();
+		 ll.add("a");
+		 ll.add("b6");
+		 ll.add("c");
+		 System.out.println(ll);
 	  
 		}
 	 

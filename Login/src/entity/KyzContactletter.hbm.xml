@@ -86,5 +86,6 @@
         <property name="userId" type="java.lang.Integer">
            <column name="FK_WEBUSER" precision="8" scale="0"/>
         </property>
+        <many-to-one name="factNo2" column="FACT_NO" unique="true" insert="false" update="false"/>   
     </class>
 </hibernate-mapping>

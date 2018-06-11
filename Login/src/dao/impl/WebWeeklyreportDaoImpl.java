@@ -133,5 +133,37 @@ public class WebWeeklyreportDaoImpl extends Basedao implements IWebWeeklyreportD
 		}
 		return list;
 	}
+	
+	public List<WebWeeklyreport> findByEdate(String sdate,String sdate2) {
+		// TODO Auto-generated method stub
+		StringBuffer hql=new StringBuffer();
+		Map<String,Object>map=new HashMap<String,Object>();
+		hql.append("from WebWeeklyreport where 1=1 ");
+		if(sdate!=null&&!"".equals(sdate)){
+			hql.append(" and SDate>=:sdate ");
+			map.put("sdate", sdate);
+		}
+		if(sdate2!=null&&!"".equals(sdate2)){
+			hql.append(" and SDate<=:sdate2 ");
+			map.put("sdate2", sdate2);
+		}		
+		List<WebWeeklyreport>list=super.getAllWithNoPage(hql.toString(), map);
+		for(WebWeeklyreport obj:list){
+			obj.getWebUser().getName();
+			obj.getWebErpBrankProcess().getName();
+		}
+		return list;
+		
+		
+		
+		/*String hql="from WebWeeklyreport where SDate=?";
+		String[]objs={sdate};
+		List<WebWeeklyreport>list=super.findAll(hql, objs);
+		for(WebWeeklyreport obj:list){
+			obj.getWebUser().getName();
+			obj.getWebErpBrankProcess().getName();
+		}
+		return list;*/
+	}
 
 }

@@ -46,10 +46,16 @@ public class WebWeeklyreportServicesImpl implements IWebWeeklyreportServices{
 		// TODO Auto-generated method stub
 		return webweeklyreportdao.findOneATwo(uid,bid, sdate, sdate_last);
 	}
-
+	
 	public List<WebWeeklyreport> findByEdate(String sdate) {
 		// TODO Auto-generated method stub
 		return webweeklyreportdao.findByEdate(sdate);
+	}
+
+
+	public List<WebWeeklyreport> findByEdate(String sdate,String sdate2) {
+		// TODO Auto-generated method stub
+		return webweeklyreportdao.findByEdate(sdate,sdate2);
 	}
 
 	

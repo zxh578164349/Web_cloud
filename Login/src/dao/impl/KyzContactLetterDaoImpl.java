@@ -120,6 +120,7 @@ public class KyzContactLetterDaoImpl extends Basedao implements IKyzContactLette
 		query.setString(0, factNo);
 		query.setString(1, billNo);
 		KyzContactletter letter=(KyzContactletter)query.uniqueResult();
+		letter.getFactNo2().getFactSname();
 		return letter;
 	}
 

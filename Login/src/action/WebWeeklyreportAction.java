@@ -5,7 +5,10 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
@@ -44,6 +47,17 @@ public class WebWeeklyreportAction extends ActionSupport implements ServletRespo
 	private JSONArray jsons;
 	private String uname;//用戶中文名
 	private HttpServletResponse response;
+	private String sdate2;
+	
+	
+
+	public String getSdate2() {
+		return sdate2;
+	}
+
+	public void setSdate2(String sdate2) {
+		this.sdate2 = sdate2;
+	}
 
 	public String getUname() {
 		return uname;
@@ -246,18 +260,43 @@ public class WebWeeklyreportAction extends ActionSupport implements ServletRespo
 	
 	public void print(){				
 		try {
-			List<WebWeeklyreport>list_obj=webweeklyreportservices.findByEdate(sdate);
+			List<WebWeeklyreport>list_obj=webweeklyreportservices.findByEdate(sdate,sdate2);
+			List<String>list_date=new ArrayList<String>();
+			Calendar cal_a=Calendar.getInstance();			 
+			SimpleDateFormat sdf=new SimpleDateFormat("yyyyMMdd");
+			cal_a.setTime(sdf.parse(sdate));						
+				do{
+					list_date.add(sdf.format(cal_a.getTime()));
+					cal_a.add(Calendar.DAY_OF_MONTH, 7);
+					
+				}while((sdf.format(cal_a.getTime()).compareTo(sdate2))<=0);			
+			
+				
 			if(list_obj.size()==0){
 				response.setContentType("text/html;charset=utf-8");
 				response.getWriter().print("<script>alert('暫無數據');history.back()</script>");
 				response.getWriter().close();
 			}else{
-				SimpleDateFormat sdf=new SimpleDateFormat("yyyyMMdd");
-				Calendar cal=Calendar.getInstance();
+				Map<String,Object>map=new LinkedHashMap<String,Object>();
+				for(String date:list_date){
+					Calendar cal=Calendar.getInstance();
+					cal.setTime(sdf.parse(date));
+					cal.add(Calendar.DAY_OF_MONTH, 6);
+					edate=sdf.format(cal.getTime());
+					List<WebWeeklyreport>objs=new ArrayList<WebWeeklyreport>();
+					for(WebWeeklyreport obj:list_obj){
+						if(obj.getSDate().equals(date)){
+							objs.add(obj);
+						}
+					}
+					map.put(date+"_"+edate,objs);
+				}
+
+				/*Calendar cal=Calendar.getInstance();
 				cal.setTime(sdf.parse(sdate));
 				cal.add(Calendar.DAY_OF_MONTH, 6);
-				edate=sdf.format(cal.getTime());
-				Workbook wb=AutoSendWebWeeklyreportItems.excel2007(sdate, edate, list_obj);
+				edate=sdf.format(cal.getTime());*/
+				Workbook wb=AutoSendWebWeeklyreportItems.excel2007(map);
 				
 				//response.setContentType("application/vnd.ms-excel");
 				response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
@@ -271,7 +310,7 @@ public class WebWeeklyreportAction extends ActionSupport implements ServletRespo
 				response.setHeader("Content-disposition","attachment;filename="+fileName);
 				ServletOutputStream os=response.getOutputStream();
 				wb.write(os);
-				os.flush();
+				//os.flush();
 				os.close();
 				
 			}						

@@ -83,8 +83,9 @@
 			<div class="col-md-12 column">
 				<h2 id="h2_title">個人資料修改</h2>
 				<form class="form-horizontal" role="form" id="form" action="userupdateUesr" method="post">
-					<input type="hidden" name="updateU.id" value="<s:property value="#attr.webU.id"/>"> <input type="hidden" name="updateU.available"
-						value="<s:property value="#attr.webU.available"/>"> <input type="hidden" name="updateU.adminMk" value="<s:property value='#attr.webU.adminMk'/>" />
+					<input type="hidden" name="updateU.id" value="<s:property value="#attr.webU.id"/>">
+					<input type="hidden" name="updateU.available" value="<s:property value="#attr.webU.available"/>"> 
+					<%-- <input type="hidden" name="updateU.adminMk" value="<s:property value='#attr.webU.adminMk'/>" /> --%>
 					<div class="form-group">
 						<label for="inputEmail3" class="col-sm-2 control-label">工號</label>
 						<div class="col-sm-10">
@@ -181,6 +182,27 @@
 									</s:if>
 									<s:else>
 										<input type="radio" value="N" name="updateU.weeklyreportMk" />
+									</s:else>								
+							</div>
+						
+					</div>
+					
+					<div class="form-group">
+					  <label for="inputPassword3" class="col-sm-2 control-label">高級權限</label>											
+							<div class="checkbox">								
+									開通:
+									<s:if test='#attr.webU.adminMk=="Y"'>
+										<input type="radio" value="Y" name="updateU.adminMk" checked />
+									</s:if>
+									<s:else>
+										<input type="radio" value="Y" name="updateU.adminMk" />
+									</s:else>
+									&nbsp; 不開通:
+									<s:if test='#attr.webU.adminMk=="N"||#attr.webU.adminMk==null'>
+										<input type="radio" value="N" name="updateU.adminMk" checked />
+									</s:if>
+									<s:else>
+										<input type="radio" value="N" name="updateU.adminMk" />
 									</s:else>								
 							</div>
 						

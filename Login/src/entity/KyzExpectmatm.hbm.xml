@@ -114,6 +114,6 @@
            <one-to-many class="entity.KyzExpectmatmLog"/>
         </bag>
         <one-to-one name="vbm" class="entity.KyVisabillm"  property-ref="kyzexp" cascade="all"/> 
-            
+        <many-to-one name="factNo2" column="FACT_NO" unique="true" insert="false" update="false"/>    
     </class>
 </hibernate-mapping>

@@ -89,7 +89,7 @@ table.gridtable td {
 
 			<tr>
 				<td>廠別</td>
-				<td colspan="2"><s:property value='kyzletter.id.factNo' />
+				<td colspan="2"><s:property value='kyzletter.factNo2.factSname' />
 				</td>
 				<td>廠別狀態</td>
 				<td colspan="2"><s:property value='kyzletter.factCode' />

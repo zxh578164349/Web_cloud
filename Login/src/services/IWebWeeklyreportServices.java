@@ -14,6 +14,7 @@ public interface IWebWeeklyreportServices {
 	public void delete(int rid,KyzExpectmatmLog log);
 	public List<WebWeeklyreport> findOneATwo(int uid,int bid,String sdate,String sdate_last);
 	public List<WebWeeklyreport> findByEdate(String sdate); 
+	public List<WebWeeklyreport> findByEdate(String sdate,String sdate2); 
 	
 
 }

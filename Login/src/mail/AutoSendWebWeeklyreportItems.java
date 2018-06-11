@@ -84,9 +84,11 @@ public class AutoSendWebWeeklyreportItems extends QuartzJobBean{
 			String edate_last=sdf.format(cal.getTime());
 			IWebWeeklyreportServices webweeklyreportservices=(IWebWeeklyreportServices)ac.getBean("webweeklyreportservices");						
 			List<WebWeeklyreport>list_obj=webweeklyreportservices.findByEdate(sdate_last);
+			Map<String,Object>map_data=new HashMap<String,Object>();
+			map_data.put(sdate_last+"_"+edate_last,list_obj);
 			
-			//Workbook wb=excel2003(sdate,edate,list_obj);
-			Workbook wb=excel2007(sdate_last, edate_last,list_obj);
+			//Workbook wb=excel2003(map_data);
+			Workbook wb=excel2007(map_data);
 			//OutputStream os=new FileOutputStream("d:\\"+sdate+"~"+edate+".xlsx");
 			//String filepath=ServletActionContext.getServletContext().getRealPath("TEMPFILES\\"+sdate+"-"+edate+".xlsx");報空指針
 			String classes_path=Thread.currentThread().getContextClassLoader().getResource("").getPath();
@@ -139,11 +141,9 @@ public class AutoSendWebWeeklyreportItems extends QuartzJobBean{
 		
 	}
 	
-	public static HSSFWorkbook excel2003(String sdate,String edate,List<WebWeeklyreport>list_obj){
+	public static void excel2003(HSSFSheet sheet,String sdate,String edate,List<WebWeeklyreport>list_obj,Map<String,Object>map_styles){
 		//IWebWeeklyreportServices webweeklyreportservices=(IWebWeeklyreportServices)ac.getBean("webweeklyreportservices");						
-		//List<WebWeeklyreport>list_obj=webweeklyreportservices.findByEdate(sdate);
-		HSSFWorkbook wb=new HSSFWorkbook();
-		HSSFSheet sheet=wb.createSheet("sheet1");
+		//List<WebWeeklyreport>list_obj=webweeklyreportservices.findByEdate(sdate);		
 		for(int a=0;a<list_obj.size()+3;a++){
 			sheet.createRow(a);			
 			for(int b=0;b<5;b++){
@@ -172,12 +172,12 @@ public class AutoSendWebWeeklyreportItems extends QuartzJobBean{
 			list_all.add(l1);
 			
 		}						
-		Map<String,Object>map=GlobalMethod.findStyles(wb);
-		HSSFCellStyle cs_title=(HSSFCellStyle)map.get("cs_title");
-		HSSFCellStyle cs=(HSSFCellStyle)map.get("cs");
-		HSSFCellStyle cs_head=(HSSFCellStyle)map.get("cs_head");
-		HSSFCellStyle cs_left=(HSSFCellStyle)map.get("cs_left");
-		HSSFCellStyle cs_right=(HSSFCellStyle)map.get("cs_right");
+		//Map<String,Object>map=GlobalMethod.findStyles(wb);
+		HSSFCellStyle cs_title=(HSSFCellStyle)map_styles.get("cs_title");
+		HSSFCellStyle cs=(HSSFCellStyle)map_styles.get("cs");
+		HSSFCellStyle cs_head=(HSSFCellStyle)map_styles.get("cs_head");
+		HSSFCellStyle cs_left=(HSSFCellStyle)map_styles.get("cs_left");
+		HSSFCellStyle cs_right=(HSSFCellStyle)map_styles.get("cs_right");
 		cs_left.setWrapText(true);
 		cs_title.setAlignment(HSSFCellStyle.ALIGN_LEFT);		
 		sheet.getRow(0).getCell(0).setCellValue("業務每週報告匯總表");
@@ -221,16 +221,22 @@ public class AutoSendWebWeeklyreportItems extends QuartzJobBean{
 			index_y=index_y+l1.size();
 			
 		}
-		
+	}
+	
+	public static HSSFWorkbook excel2003(Map<String,Object>map_data){
+		HSSFWorkbook wb=new HSSFWorkbook();
+		Map<String,Object>map_styles=GlobalMethod.findStyles(wb);
+		for(String date:map_data.keySet()){
+			String sdate=date.split("_")[0];
+			String edate=date.split("_")[1];
+			List<WebWeeklyreport>list_obj=(List<WebWeeklyreport>)map_data.get(date);
+			HSSFSheet sheet=wb.createSheet(sdate);
+			excel2003(sheet,sdate,edate,list_obj,map_styles);
+		}
 		return wb;
 	}
 	
-	public static XSSFWorkbook excel2007(String sdate,String edate,List<WebWeeklyreport>list_obj){		
-		//IWebWeeklyreportServices webweeklyreportservices=(IWebWeeklyreportServices)ac.getBean("webweeklyreportservices");						
-		//List<WebWeeklyreport>list_obj=webweeklyreportservices.findByEdate(sdate);		
-		
-		XSSFWorkbook wb=new XSSFWorkbook();
-		XSSFSheet sheet=wb.createSheet("sheet1");
+	public static void excel2007(XSSFSheet sheet,String sdate,String edate,List<WebWeeklyreport>list_obj,Map<String,Object>map_styles){
 		for(int a=0;a<list_obj.size()+3;a++){
 			sheet.createRow(a);			
 			for(int b=0;b<5;b++){
@@ -259,12 +265,12 @@ public class AutoSendWebWeeklyreportItems extends QuartzJobBean{
 			list_all.add(l1);
 			
 		}						
-		Map<String,Object>map=GlobalMethod.findStyles2007(wb);
-		XSSFCellStyle cs_title=(XSSFCellStyle)map.get("cs_title");
-		XSSFCellStyle cs=(XSSFCellStyle)map.get("cs");
-		XSSFCellStyle cs_head=(XSSFCellStyle)map.get("cs_head");
-		XSSFCellStyle cs_left=(XSSFCellStyle)map.get("cs_left");
-		XSSFCellStyle cs_right=(XSSFCellStyle)map.get("cs_right");
+		//Map<String,Object>map=GlobalMethod.findStyles2007(wb);
+		XSSFCellStyle cs_title=(XSSFCellStyle)map_styles.get("cs_title");
+		XSSFCellStyle cs=(XSSFCellStyle)map_styles.get("cs");
+		XSSFCellStyle cs_head=(XSSFCellStyle)map_styles.get("cs_head");
+		XSSFCellStyle cs_left=(XSSFCellStyle)map_styles.get("cs_left");
+		XSSFCellStyle cs_right=(XSSFCellStyle)map_styles.get("cs_right");
 		cs_left.setWrapText(true);	
 		cs_title.setAlignment(XSSFCellStyle.ALIGN_LEFT);
 		sheet.getRow(0).getCell(0).setCellValue("業務每週報告匯總表");
@@ -310,6 +316,21 @@ public class AutoSendWebWeeklyreportItems extends QuartzJobBean{
 			
 		}
 		
+	}
+	
+	public static XSSFWorkbook excel2007(Map<String,Object>map_data){		
+		//IWebWeeklyreportServices webweeklyreportservices=(IWebWeeklyreportServices)ac.getBean("webweeklyreportservices");						
+		//List<WebWeeklyreport>list_obj=webweeklyreportservices.findByEdate(sdate);		
+		
+		XSSFWorkbook wb=new XSSFWorkbook();
+		Map<String,Object>map_styles=GlobalMethod.findStyles2007(wb);
+		for(String date:map_data.keySet()){
+			String sdate=date.split("_")[0];
+			String edate=date.split("_")[1];
+			List<WebWeeklyreport>list_obj=(List<WebWeeklyreport>)map_data.get(date);
+			XSSFSheet sheet=wb.createSheet(sdate);
+			excel2007(sheet,sdate,edate,list_obj,map_styles);
+		}		
 		return wb;
 	}
 
