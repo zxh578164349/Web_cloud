@@ -5,10 +5,12 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -74,31 +76,53 @@ public class AutoSendWebWeeklyreportItems extends QuartzJobBean{
 	public void init(){
 		try {	
 			ApplicationContext ac=new ClassPathXmlApplicationContext(new String[]{"spring.xml","spring-dao.xml","spring-services.xml","spring-projectconfig.xml"});
+			IWebWeeklyreportServices webweeklyreportservices=(IWebWeeklyreportServices)ac.getBean("webweeklyreportservices");			
 			SimpleDateFormat sdf=new SimpleDateFormat("yyyyMMdd");
-			Calendar cal=Calendar.getInstance();
-			cal.setFirstDayOfWeek(Calendar.MONDAY);			
-			cal.add(Calendar.DAY_OF_WEEK, -7);//注意：發送上周的報告
-			cal.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+			Calendar cal_a=Calendar.getInstance();
+			cal_a.setFirstDayOfWeek(Calendar.MONDAY);			
+			cal_a.add(Calendar.DAY_OF_WEEK, -7);//注意：發送上周的報告
+			cal_a.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+			/*cal.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
 			String sdate_last=sdf.format(cal.getTime());
 			cal.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
-			String edate_last=sdf.format(cal.getTime());
-			IWebWeeklyreportServices webweeklyreportservices=(IWebWeeklyreportServices)ac.getBean("webweeklyreportservices");						
-			List<WebWeeklyreport>list_obj=webweeklyreportservices.findByEdate(sdate_last);
+			String edate_last=sdf.format(cal.getTime());									
+			List<WebWeeklyreport>list_obj=webweeklyreportservices.findByEdate(sdate_last);						
 			Map<String,Object>map_data=new HashMap<String,Object>();
-			map_data.put(sdate_last+"_"+edate_last,list_obj);
+			map_data.put(sdate_last+"_"+edate_last,list_obj);*/
 			
+			List<String>list_date=new ArrayList<String>();
+			for(int i=0;i<4;i++){
+				list_date.add(sdf.format(cal_a.getTime()));
+				cal_a.add(Calendar.DAY_OF_MONTH, -7);
+			}
+			List<WebWeeklyreport>list_obj=webweeklyreportservices.findByEdate(list_date.get(3),list_date.get(0));
+			Map<String,Object>map=new LinkedHashMap<String,Object>();
+			for(String date:list_date){
+				Calendar cal=Calendar.getInstance();
+				cal.setTime(sdf.parse(date));
+				cal.add(Calendar.DAY_OF_MONTH, 6);
+				String edate=sdf.format(cal.getTime());
+				List<WebWeeklyreport>objs=new ArrayList<WebWeeklyreport>();
+				for(WebWeeklyreport obj:list_obj){
+					if(obj.getSDate().equals(date)){
+						objs.add(obj);
+					}
+				}
+				map.put(date+"_"+edate,objs);
+			}
+											
 			//Workbook wb=excel2003(map_data);
-			Workbook wb=excel2007(map_data);
+			Workbook wb=excel2007(map);
 			//OutputStream os=new FileOutputStream("d:\\"+sdate+"~"+edate+".xlsx");
 			//String filepath=ServletActionContext.getServletContext().getRealPath("TEMPFILES\\"+sdate+"-"+edate+".xlsx");報空指針
 			String classes_path=Thread.currentThread().getContextClassLoader().getResource("").getPath();
-			String filepath=classes_path.replace("/WEB-INF/classes","/TEMPFILES/"+sdate_last+"-"+edate_last+".xlsx");
+			String filepath=classes_path.replace("/WEB-INF/classes","/TEMPFILES/"+list_date.get(3)+"-"+list_date.get(0)+".xlsx");
 			OutputStream os=new FileOutputStream(filepath);
 			wb.write(os);
 			os.close();
 			
 			IWebEmailService eSer =(IWebEmailService)ac.getBean("emailService");
-			List<WebEmailAll> email = eSer.findEmail(2,"0");
+			List<WebEmailAll> email = eSer.findEmail(4,"0");
 			String[] mail = new String[email.size()];
 			for (int i = 0; i < email.size(); i++) {
 				if (email.get(i).getUsername() != null&&!email.get(i).getUsername().equals("")) {						
@@ -109,7 +133,7 @@ public class AutoSendWebWeeklyreportItems extends QuartzJobBean{
 					mail[i] = email.get(i).getEmail();
 				}
 			}		
-			List<WebEmailAll> Cc = eSer.findEmail(2,"1");
+			List<WebEmailAll> Cc = eSer.findEmail(4,"1");
 			String[] cc = new String[Cc.size()];
 			for (int j = 0; j < Cc.size(); j++) {
 				if (Cc.get(j).getUsername() != null&&!Cc.get(j).getUsername().equals("")) {						
@@ -121,7 +145,7 @@ public class AutoSendWebWeeklyreportItems extends QuartzJobBean{
 				}
 			}
 			AutoSendEmailAction send = new AutoSendEmailAction();
-			send.sendmail(mail, cc, "業務每週報告匯總表("+sdate_last+"-"+edate_last+")", "", "業務每週報告匯總表("+sdate_last+"-"+edate_last+").xlsx", filepath);
+			send.sendmail(mail, cc, "業務最近4周報告匯總表("+list_date.get(3)+"-"+list_date.get(0)+")", "", "業務最近4周報告匯總表("+list_date.get(3)+"-"+list_date.get(0)+").xlsx", filepath);
 			File file=new File(filepath);
 			if(file.exists()){
 				if(file.isFile()){
@@ -132,6 +156,9 @@ public class AutoSendWebWeeklyreportItems extends QuartzJobBean{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

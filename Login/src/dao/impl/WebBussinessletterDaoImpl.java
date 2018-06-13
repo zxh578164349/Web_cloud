@@ -89,8 +89,10 @@ public class WebBussinessletterDaoImpl extends Basedao implements IWebBussinessl
 		Query query=getSession().createQuery(hql);
 		query.setString(0, billNo);
 		WebBussinessletter obj=(WebBussinessletter)query.uniqueResult();
-		obj.getDepId().getDepName();
-		obj.getFactNo2().getFactSname();
+		if(obj!=null){
+			obj.getDepId().getDepName();
+			obj.getFactNo2().getFactSname();
+		}		
 		return obj;
 	}
 
