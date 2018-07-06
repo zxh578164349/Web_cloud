@@ -143,4 +143,13 @@ public class WebBussinessletterDaoImpl extends Basedao implements IWebBussinessl
 		}
 	}
 
+	public String findBillNo(String billNo) {
+		// TODO Auto-generated method stub
+		String hql="select blNo from WebBussinessletter where blNo=?";
+		Query query=getSession().createQuery(hql);
+		query.setString(0, billNo);
+		String obj=(String)query.uniqueResult();
+		return obj;
+	}
+
 }

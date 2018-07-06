@@ -304,6 +304,7 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 								+ " "
 								+ kyzletter.getId().getBillNo()
 								+ ")!');window.parent.layer.closeAll()</script>");
+						return null;
 					}								
 			}//end if
 			else{

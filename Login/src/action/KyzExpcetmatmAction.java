@@ -428,6 +428,7 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 				}else{
 					response.getWriter().print(
 							"<script>window.parent.alert('數據庫已存在(" + kyz.getId().getBillNo() + ")!');window.parent.layer.closeAll()</script>");
+					return null;
 				}																							 				
 			}else{
 				//kyz.setVisaTypeM(kyz.getVisaType().substring(0,2));

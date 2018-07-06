@@ -122,7 +122,7 @@ public class AutoSendWebWeeklyreportItems extends QuartzJobBean{
 			os.close();
 			
 			IWebEmailService eSer =(IWebEmailService)ac.getBean("emailService");
-			List<WebEmailAll> email = eSer.findEmail(4,"0");
+			List<WebEmailAll> email = eSer.findEmail(2,"0");
 			String[] mail = new String[email.size()];
 			for (int i = 0; i < email.size(); i++) {
 				if (email.get(i).getUsername() != null&&!email.get(i).getUsername().equals("")) {						
@@ -133,7 +133,7 @@ public class AutoSendWebWeeklyreportItems extends QuartzJobBean{
 					mail[i] = email.get(i).getEmail();
 				}
 			}		
-			List<WebEmailAll> Cc = eSer.findEmail(4,"1");
+			List<WebEmailAll> Cc = eSer.findEmail(2,"1");
 			String[] cc = new String[Cc.size()];
 			for (int j = 0; j < Cc.size(); j++) {
 				if (Cc.get(j).getUsername() != null&&!Cc.get(j).getUsername().equals("")) {						

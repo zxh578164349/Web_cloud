@@ -288,4 +288,11 @@ public class WebBussinessletterServicesImpl implements IWebBussinessletterServic
 		return map_result;
 	}
 
+
+
+	public String findBillNo(String billNo) {
+		// TODO Auto-generated method stub
+		return webbussletterdao.findBillNo(billNo);
+	}
+
 }

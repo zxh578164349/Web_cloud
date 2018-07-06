@@ -204,14 +204,19 @@ public class WebBussinessletterAction extends ActionSupport implements ServletRe
 				bussletter.setVisaSortM(bussletter.getVisaSort().substring(0,2));
 				if(isnull.equals("isNull")){
 				//bussletter.setVisaSortM(bussletter.getVisaSort().substring(0,2));
-				webbussletterSer.add(bussletter);
-				KyVisabillm vbm=visabillmSer.findById(bussletter.getFactNo(),bussletter.getVisaSort(), bussletter.getBlNo());
-				List<String>list_emailPwd=webuseremailSer.findByFactNoAEmailPwd2(vbm.getId().getFactNo(),vbm.getSignerNext());
-				/**
-				 * 發送郵件
-				 */
-				GlobalMethod.sendNewEmail(vbm,list_emailPwd);//發送郵件								
-			    ajaxResult="0";			      
+				billNo=webbussletterSer.findBillNo(bussletter.getBlNo());
+				if(billNo==null||"".equals(billNo)){
+					webbussletterSer.add(bussletter);
+					KyVisabillm vbm=visabillmSer.findById(bussletter.getFactNo(),bussletter.getVisaSort(), bussletter.getBlNo());
+					List<String>list_emailPwd=webuseremailSer.findByFactNoAEmailPwd2(vbm.getId().getFactNo(),vbm.getSignerNext());
+					/**
+					 * 發送郵件
+					 */
+					GlobalMethod.sendNewEmail(vbm,list_emailPwd);//發送郵件								
+				    ajaxResult="0";	
+				}else{
+					ajaxResult="2";//表示函文單號已存在
+				}						      
 				}else{
 					//bussletter.setVisaSortM(bussletter.getVisaSort().substring(0,2));
 					webbussletterSer.add(bussletter);

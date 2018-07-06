@@ -51,6 +51,7 @@ import java.util.Random;
 import java.util.Scanner;
 import java.util.Set;
 import java.util.SortedMap;
+import java.util.UUID;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -2150,27 +2151,26 @@ public class GlobalMethod extends HibernateDaoSupport{
 		 String d2="20180611";
 		 SimpleDateFormat sdf=new SimpleDateFormat("yyyyMMdd");
 		 List<String>list=new ArrayList<String>();
-		 try {			 
-			cal.setTime(sdf.parse(d2));						
-			/*do{
-				list.add(sdf.format(cal.getTime()));
-				cal.add(Calendar.DAY_OF_MONTH, 7);
-				
-			}while((sdf.format(cal.getTime()).compareTo(d2))<=0);*/
-			
-			for(int i=0;i<4;i++){
-				list.add(sdf.format(cal.getTime()));
-				cal.add(Calendar.DAY_OF_MONTH, -7);				
-			}
-				
-			
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		 Date date=new Date();
+		 for(int i=0;i<20;i++){
+			 System.out.println(date.getTime());
+		 }
+		
+		 Date date2=new Date();
+		 for(int i=0;i<20;i++){
+			 System.out.println(date2.getTime());
+		 }
+		 Date date3=new Date(); 
+		 for(int i=0;i<20;i++){
+			 System.out.println(date3.getTime());
+		 }
+		 
+		 
+
+		 
+		 
 		 
 		
-		 System.out.println(list);
 	  
 		}
 	 
