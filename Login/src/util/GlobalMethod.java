@@ -1573,6 +1573,7 @@ public class GlobalMethod extends HibernateDaoSupport{
 		 list.add(pc.getpEmail());
 		 SimpleMailSender sms = new SimpleMailSender();
 		 MailSenderInfo mailInfo = new MailSenderInfo();
+		 mailInfo.setValidate(true);
   		 String emailUrl_in=pc.getpUrl()+"/vbm_findById_email?visaSort="+visaSort+"&billNo="+billNo
 		         +"&factNo="+factNo+"&email="+email;
   		String emailUrl_in2=pc.getpUrl()+"/vbm_findById_email2?visaSort="+visaSort+"&billNo="+billNo
