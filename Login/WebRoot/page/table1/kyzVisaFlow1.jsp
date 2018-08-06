@@ -119,6 +119,7 @@
 						<input type="hidden" value="<s:property value='id.purmanNo'/>" name="id.purmanNo"/>
 						<input type="hidden" value="<s:property value='id.itemNo'/>" name="id.itemNo"/>
 						<input type="hidden" value="<s:property value='trMk'/>" name="trMk"/>
+						<input type="hidden" value="<s:property value='depId.depId'/>" name="depId"/>
 						<s:if test='flowMk=="N"'>
 						   <input type="hidden" value="N" name="flowmk"/>
 						</s:if>

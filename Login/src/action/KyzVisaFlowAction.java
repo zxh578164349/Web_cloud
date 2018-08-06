@@ -466,6 +466,9 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 				}
 			flow.setVisaSortM(id.getVisaSort().substring(0,2));	
 			flow.setTrMk(trMk);
+			if(depId!=null&&!"".equals(depId)){
+				flow.setDepId(new WebDepartment(Integer.parseInt(depId)));
+			}
 			visaSer.add(flow);//(5)添加新對象
 			ajaxResult="0";
 		}catch(Exception e){
@@ -527,7 +530,9 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 				flows.get(i).setFlowMk("N");
 				flows.get(i).setVisaSortM(flows.get(i).getId().getVisaSort().substring(0,2));
 				flows.get(i).setTrMk(trMk);
-				flows.get(i).setDepId(new WebDepartment(Integer.parseInt(depId)));
+				if(depId!=null&&!"".equals(depId)){
+					flows.get(i).setDepId(new WebDepartment(Integer.parseInt(depId)));
+				}			
 				visaSer.add(flows.get(i));
 			}
 			ajaxResult="0";
