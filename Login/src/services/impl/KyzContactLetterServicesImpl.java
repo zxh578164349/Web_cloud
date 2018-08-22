@@ -298,7 +298,7 @@ public class KyzContactLetterServicesImpl implements IKyzContactLetterServices{
 			map.put("file_map", file_map);
 		}
 		
-		String sub_file=GlobalMethod.getSubfile(list_visa.size()-nos);
+		String sub_file=GlobalMethod.getSubfile(list_visa.size()-nos,null);
 		map.put("sub_file",sub_file);
 		map_result.put("map", map);
 		map_result.put("list", list);

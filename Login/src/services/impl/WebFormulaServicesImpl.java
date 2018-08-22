@@ -257,7 +257,7 @@ public class WebFormulaServicesImpl implements IWebFormulaServices{
 			Map<String,Object> visa_map=new HashMap<String,Object>();
 			visa_map.put("list_visa", list_visabillstemp);
 			map.put("visa_map", visa_map);	
-			String sub_file=GlobalMethod.getSubfile(list_visa.size()-nos);
+			String sub_file=GlobalMethod.getSubfile(list_visa.size()-nos,null);
 			map.put("sub_file",sub_file);
 		}				
 		map.put("sub_map", sub_map);

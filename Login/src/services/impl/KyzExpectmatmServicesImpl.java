@@ -385,7 +385,7 @@ public class KyzExpectmatmServicesImpl implements IKyzExpectmatmServices {
 			map.put("file_map", file_map);
 		}
 		
-		String sub_file=GlobalMethod.getSubfile(list_visa.size()-nos);
+		String sub_file=GlobalMethod.getSubfile(list_visa.size()-nos,list.get(0).getFirstPage());
 		map.put("sub_file",sub_file);
 		map_result.put("map", map);
 		map_result.put("list", list);

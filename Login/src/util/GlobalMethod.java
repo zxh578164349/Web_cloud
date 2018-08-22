@@ -1717,6 +1717,7 @@ public class GlobalMethod extends HibernateDaoSupport{
 	 
 	 /**
 	  * 根據函文簽核人數來選擇不同的函文文件模板
+	  * 修改：由於文件模板不要顯示簽核人，所以進行模板選擇    20180808
 	  * @Title: getSubfile
 	  * @Description: TODO
 	  * @param @param num
@@ -1726,17 +1727,23 @@ public class GlobalMethod extends HibernateDaoSupport{
 	  * @author web
 	  * @date 2016/8/5
 	  */
-	 public static String getSubfile(int num){
+	 public static String getSubfile(int num,String firstPage){
+		 //sub_file_noFlow.jasper:不顯示簽核人
 		 String result="sub_file.jasper";
-		 if(num<=3){
-			 result="sub_file_3.jasper";
-		 }
-		 if(num>3&&num<6){
-			 result="sub_file_6.jasper";
-		 }
-		 if(num>=6&&num<=9){
-			 result="sub_file_9.jasper";
-		 }
+		 
+		 if("1".equals(firstPage)){
+			 if(num<=3){
+				 result="sub_file_3.jasper";
+			 }
+			 if(num>3&&num<6){
+				 result="sub_file_6.jasper";
+			 }
+			 if(num>=6&&num<=9){
+				 result="sub_file_9.jasper";
+			 }			 
+		 }else{
+			 result="sub_file_noFlow.jasper";
+		 }		 				 		 
 		 return result;		 
 	 }
 	 
