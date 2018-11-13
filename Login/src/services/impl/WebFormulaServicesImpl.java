@@ -191,7 +191,8 @@ public class WebFormulaServicesImpl implements IWebFormulaServices{
 				Date date=null;
 				
 				String datestr=list_visa.get(i).getDateVisa();
-				try {
+				visabillstemp.setCreateDate(datestr);
+				/*try {
 					if(datestr!=null){
 						date=format.parse(datestr);
 						visabillstemp.setCreateDate(date);
@@ -200,7 +201,7 @@ public class WebFormulaServicesImpl implements IWebFormulaServices{
 				} catch (ParseException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-				}
+				}*/
 				String name=list_visa.get(i).getVisaRank();
 				String visamk=list_visa.get(i).getVisaMk();
 				String memo=list_visa.get(i).getMemo();

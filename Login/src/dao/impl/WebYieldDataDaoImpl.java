@@ -406,6 +406,21 @@ public class WebYieldDataDaoImpl extends Basedao implements IWebYieldDataDao {
 		String[]objs={yymm};
 		return super.findAll(hql, objs);
 	}
+
+	public void addMore(List<WebYieldData> list) {
+		// TODO Auto-generated method stub
+		
+		try{
+			for(WebYieldData obj:list){
+				getSession().merge(obj);				
+			}
+			getSession().flush();
+			getSession().clear();
+		}catch(Exception e){
+			System.out.println("**************************"+e+"**********************");
+		}
+		
+	}
 	
 	
 

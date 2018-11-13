@@ -9,7 +9,7 @@ import entity.KyzVisaflowId;
 
 public interface IKyzVisaFlowServices {
 	public void add(KyzVisaflow flow);
-	public PageBean findPageBean(int pageSize, int page, String factNo,String visaSort,String trMk);
+	public PageBean findPageBean(int pageSize, int page, String factNo,String visaSort,String trMk,String purmanNo,String visaSigner);
 	public KyzVisaflow findById(KyzVisaflowId id);
 	public void delete(KyzVisaflowId id,KyzExpectmatmLog log);
 	public void delete(KyzVisaflowId id);

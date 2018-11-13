@@ -5,6 +5,7 @@ import java.util.List;
 import dao.ISumWebYieldDataDao;
 import entity.KyzExpectmatmLog;
 import entity.SumWebYieldData;
+import entity.SumWebYieldDataView;
 import services.ISumWebYieldDataServices;
 import util.PageBean;
 
@@ -27,9 +28,14 @@ public class SumWebYieldDataServicesImpl implements ISumWebYieldDataServices{
 		return sumydateDao.findPageBean(pageSize, page, factNo, begin_yymm,end_yymm);
 	}
 
-	public SumWebYieldData findById(String factNo, String factCode, String yymm) {
+	public SumWebYieldDataView findById(String factNo, String factCode, String yymm) {
 		// TODO Auto-generated method stub
 		return sumydateDao.findById(factNo, factCode, yymm);
+	}
+	
+	public SumWebYieldData findById2(String factNo, String factCode, String yymm) {
+		// TODO Auto-generated method stub
+		return sumydateDao.findById2(factNo, factCode, yymm);
 	}
 
 	public int findByFactNo(String factNo, String yymm) {
@@ -49,7 +55,7 @@ public class SumWebYieldDataServicesImpl implements ISumWebYieldDataServices{
 		return sumydateDao.findByFactNo(factNo, yymm);
 	}
 
-	public List<SumWebYieldData> findByAny(String factNo, String beginDate,
+	public List<SumWebYieldDataView> findByAny(String factNo, String beginDate,
 			String endDate) {
 		// TODO Auto-generated method stub
 		return sumydateDao.findByAny(factNo, beginDate, endDate);
@@ -60,7 +66,7 @@ public class SumWebYieldDataServicesImpl implements ISumWebYieldDataServices{
 		return sumydateDao.findAll();
 	}
 
-	public List<SumWebYieldData> findByFactNoAndYymm(String factNo,
+	public List<SumWebYieldDataView> findByFactNoAndYymm(String factNo,
 			String begin_yymm, String end_yymm) {
 		// TODO Auto-generated method stub
 		return sumydateDao.findByFactNoAndYymm(factNo, begin_yymm, end_yymm);
@@ -77,7 +83,7 @@ public class SumWebYieldDataServicesImpl implements ISumWebYieldDataServices{
 	 */
 	
 	
-	public List<SumWebYieldData> findObjs(String yymm,String yymm2){
+	public List<SumWebYieldDataView> findObjs(String yymm,String yymm2){
 		// TODO Auto-generated method stub
 		return sumydateDao.findObjs(yymm,yymm2);
 	}

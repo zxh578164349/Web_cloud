@@ -14,7 +14,9 @@
 <form id="public_form" method="post" >
 	<table  id="tb_search">
 		<tr>
-			<td><s:if test="#session.factNo=='tw'">			      
+			<td>
+			<br/>
+			<s:if test="#session.factNo=='tw'">			      
 					<select name="factNo" id="factNo" onchange="getType(this.value)">
 						<option value="nothing">請選擇廠別</option>
 						<s:iterator value="#session.facts" id="temp">
@@ -30,8 +32,10 @@
 						</option>
 					</select>
 				  	
-				</s:else></td>
-			<td>			 
+				</s:else>
+				</td>
+			<td>
+			<br/>			 
 			 <select name="visaSort" id="visaSort" >
 				            <option value="">請選擇類別</option>
 				            <%-- <s:iterator value="#session.listkytype">
@@ -39,6 +43,14 @@
 				            </s:iterator> --%>
 				            
 				         </select>			  	         
+			</td>
+			<td>
+			  姓名<br/>
+			  <input type="text" name="purmanNo" />
+			</td>
+			<td>
+			 Email<br/>
+			 <input type="text" name="visaSigner"/>
 			</td>
 			<td>
 			     分部門<input type="radio" name="trMk" value="Y"/>&nbsp;&nbsp;

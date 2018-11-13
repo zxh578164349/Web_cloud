@@ -105,7 +105,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 			callback:function(data){
 				if(data=="0"){
 					layer.msg("提交成功!",3,1);
-					loadUrl("visaflow_findPageBean");
+					loadUrl("visaflow_findPageBean3");
 					//location.href="visaflow_findPageBean";
 					
 				}

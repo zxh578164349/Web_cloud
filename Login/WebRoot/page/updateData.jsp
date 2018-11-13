@@ -57,10 +57,15 @@
 			ajaxPost : true,
 			callback : function(data) {
 				if (data == "0") {
-					layer.msg("修改成功,請重新登錄!", 3, 1);
-					window.setTimeout(function() {
+				var flag=confirm("修改成功，請重新登錄");
+				if(flag){
+				  location.href = "judge.jsp";
+				}
+				
+					/*layer.msg("修改成功,請重新登錄!", 3, 1);
+					 window.setTimeout(function() {
 						location.href = "judge.jsp"
-					}, 3000);
+					}, 3000); */
 				} else {
 					//alert(data.responseText);
 					layer.msg("修改失敗", 3, 3);

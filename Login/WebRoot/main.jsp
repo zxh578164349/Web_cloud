@@ -72,7 +72,7 @@
 					<s:iterator value="#session.login_menus" status="x" id="menu">
 						<div class="mmenu">						
 							<a href="javascript:showDiv_main('${x.index}')">
-								<span id="a${x.index}" class="glyphicon glyphicon-folder-close mmenu_font">&nbsp;<s:property value="menuname" /> </span>
+								<span id="a${x.index}" class="glyphicon glyphicon-folder-close mmenu_font">&nbsp;${x.index+1}.<s:property value="menuname" /> </span>
 							</a>
 							<div id="submenu${x.index}" style="display:none">
 								<s:iterator value="submenus" status="x" id="submenu">
@@ -80,13 +80,13 @@
 										<span class="glyphicon glyphicon-file"> 
 										    <s:if test='enableMk=="1"'>
 										       <a name="alink_1" class="smenu_font a_disable" title="<s:property value='submenuname'/>">
-												<s:property value="submenuname" />
+												(${x.index+1 })<s:property value="submenuname" />
 											   </a>																						
 											   <input type="hidden" value="<s:property value='address'/>" name="alink_address_1"/> 	
 						                    </s:if>
 										    <s:else>
 										        <a name="alink" class="smenu_font a_disable" title="<s:property value='submenuname'/>">
-												<s:property value="submenuname" />
+												(${x.index+1 })<s:property value="submenuname" />
 											    </a>																						
 											   <input type="hidden" value="<s:property value='address'/>" name="alink_address"/> 	
 										    </s:else>																					

@@ -21,6 +21,7 @@ import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.util.CellRangeAddress;
 
 import entity.SumWebYieldData;
+import entity.SumWebYieldDataView;
 import entity.VSumWebmix1;
 import entity.VWebmachine;
 import entity.WebFact;
@@ -253,7 +254,7 @@ public class ProfitAndLoss_Ireport {
 			List<List<Double>>list1_sumwebyieldate=new ArrayList<List<Double>>();
 			for(int i=0;i<list_month.size();i++){//start for
 				String yymm=list_month.get(i);
-				SumWebYieldData sumydate=sumydateSer.findById(factNo, factCode, yymm);
+				SumWebYieldDataView sumydate=sumydateSer.findById(factNo, factCode, yymm);
 				if(sumydate==null){
 					list1_sumwebyieldate.add(null);
 				}else{

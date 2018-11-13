@@ -176,7 +176,7 @@ public class WebBussinessletterServicesImpl implements IWebBussinessletterServic
 		map.put("pfactno", factNo);
 		map.put("pbillno",billNo);
 		//map.put("title",result);						
-		SimpleDateFormat format=new SimpleDateFormat("yyyyMMdd");
+		SimpleDateFormat format=new SimpleDateFormat("yyyyMMdd_hh:mm");
 		if(vbm==null){
 			vbm=visabillmDao.findById(factNo, sort, billNo);
 		}		
@@ -202,7 +202,8 @@ public class WebBussinessletterServicesImpl implements IWebBussinessletterServic
 			Date date=null;
 			
 			String datestr=list_visa.get(i).getDateVisa();
-			try {
+			visabillstemp.setCreateDate(datestr);
+			/*try {
 				if(datestr!=null){
 					date=format.parse(datestr);
 					visabillstemp.setCreateDate(date);
@@ -211,7 +212,7 @@ public class WebBussinessletterServicesImpl implements IWebBussinessletterServic
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}
+			}*/
 			String name=list_visa.get(i).getVisaRank();
 			String visamk=list_visa.get(i).getVisaMk();
 			String memo=list_visa.get(i).getMemo();

@@ -265,5 +265,18 @@ public class WebEstProductDaoImpl extends Basedao implements IWebEstProductDao {
 		return super.getAllWithNoPage(hql.toString(), map);
 	}
 
+	public void addMore(List<Webestproduct> list) {
+		// TODO Auto-generated method stub
+		try{
+			for(Webestproduct obj:list){
+				getSession().merge(obj);				
+			}
+			getSession().flush();
+			getSession().clear();
+		}catch(Exception e){
+			System.out.println("**************************"+e+"**********************");
+		}
+	}
+
 
 }

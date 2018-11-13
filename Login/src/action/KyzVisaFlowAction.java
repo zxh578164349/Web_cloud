@@ -329,8 +329,10 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 		ActionContext.getContext().getSession().remove("public_factNo");
 		ActionContext.getContext().getSession().remove("public_visaSort");
 		ActionContext.getContext().getSession().remove("public_trMk");
+		ActionContext.getContext().getSession().remove("public_pumanNo");
+		ActionContext.getContext().getSession().remove("public_visaSigner");
 		factNo = (String) ActionContext.getContext().getSession().get("factNo");
-		bean = visaSer.findPageBean(20,page, factNo, visaSort,trMk);		
+		bean = visaSer.findPageBean(20,page, factNo, visaSort,trMk,purmanNo,visaSigner);		
 		//this.getTypeName(bean);//从webtype获取类别名称
 		return "beanList";
 	}
@@ -340,7 +342,9 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 		ActionContext.getContext().getSession().put("public_factNo",factNo);
 		ActionContext.getContext().getSession().put("public_visaSort",visaSort);
 		ActionContext.getContext().getSession().put("public_trMk",trMk);
-		bean=visaSer.findPageBean(20,page,factNo,visaSort,trMk);
+		ActionContext.getContext().getSession().put("public_pumanNo", purmanNo);
+		ActionContext.getContext().getSession().put("public_visaSigner", visaSigner);
+		bean=visaSer.findPageBean(20,page,factNo,visaSort,trMk,purmanNo,visaSigner);
 		//this.getTypeName(bean);
 		return "beanList1";
 	}
@@ -353,7 +357,9 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 		factNo = (String) ActionContext.getContext().getSession().get("public_factNo");				
 		visaSort = (String) ActionContext.getContext().getSession().get("public_visaSort");	
 		trMk=(String)ActionContext.getContext().getSession().get("public_trMk");
-		bean = visaSer.findPageBean(20,page, factNo, visaSort,trMk);
+		purmanNo=(String)ActionContext.getContext().getSession().get("public_pumanNo");
+		visaSigner=(String)ActionContext.getContext().getSession().get("public_visaSigner");
+		bean = visaSer.findPageBean(20,page, factNo, visaSort,trMk,purmanNo,visaSigner);
 		//this.getTypeName(bean);
 		return result;
 	}

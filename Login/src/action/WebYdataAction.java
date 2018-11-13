@@ -1,5 +1,8 @@
 package action;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.InetAddress;
@@ -24,6 +27,7 @@ import services.ISumWebYieldDataServices;
 import services.IWebFactServices;
 import services.IWebYieldDataServices;
 import util.GlobalMethod;
+import util.ImportExcel;
 import util.JasperHelper;
 import util.Page;
 import util.PageBean;
@@ -63,8 +67,47 @@ public class WebYdataAction extends ActionSupport implements
 	private String ajaxResult;//申請函文時返回的ajax結果,   0:提交成功       1:提交失敗
 	private int backIndex;//返回標識      0或null:不走返回路徑         1:走返回路徑
 	
-
+	private File file;
+    private String fileFileName;
+    private String fileContentType;
+    private final static String SEPARATOR = "__";
+    private String workorholiday;
 	
+
+    
+	
+	public String getWorkorholiday() {
+		return workorholiday;
+	}
+
+	public void setWorkorholiday(String workorholiday) {
+		this.workorholiday = workorholiday;
+	}
+
+	public File getFile() {
+		return file;
+	}
+
+	public void setFile(File file) {
+		this.file = file;
+	}
+
+	public String getFileFileName() {
+		return fileFileName;
+	}
+
+	public void setFileFileName(String fileFileName) {
+		this.fileFileName = fileFileName;
+	}
+
+	public String getFileContentType() {
+		return fileContentType;
+	}
+
+	public void setFileContentType(String fileContentType) {
+		this.fileContentType = fileContentType;
+	}
+
 	public int getBackIndex() {
 		return backIndex;
 	}
@@ -745,6 +788,100 @@ public class WebYdataAction extends ActionSupport implements
 		map.put("title", title.toString());
 		JasperHelper.exportmain("excel", map,"webydate.jasper", list,fileName.toString(), "jasper/input/");
 		
+	}
+	
+	public void importFile() throws IOException{
+		response.setContentType("text/html;charset=utf-8");
+		try{
+			DateFormat dfm=new SimpleDateFormat("yyyyMMdd");
+			DateFormat dfm2=new SimpleDateFormat("yyMMddhhmm");
+			String path="d:\\Webestpro_backup\\"+dfm.format(new Date());//Excel文檔存放目錄
+			ajaxResult="0";				
+			//文件上傳
+			if(file!=null){//不為空代表有上傳附檔,不能寫成files.size()>0,否則報空指針
+				//File uploadFile=new File(ServletActionContext.getServletContext().getRealPath("KyzexpFile\\"+kyz.getId().getBillNo()));//附檔上傳到項目
+				File uploadFile_backup=new File(path);//附檔上傳到D盤(為了避免更新項目時丟失附檔,所在上傳到D盤)			
+				if(!uploadFile_backup.exists()){
+					uploadFile_backup.mkdirs();
+				}																						
+						FileInputStream in=new FileInputStream(file);
+						FileOutputStream out_backup=new FileOutputStream(uploadFile_backup+"\\"+fileFileName);//備份
+						byte[]b=new byte[1024];
+						int length=0;
+						while((length=in.read(b))>0){
+							out_backup.write(b,0,length);//備份
+						}																																				
+			}
+			WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");			
+			//file=new File("i:\\test.xlsx");
+			//Map<String,Object>map=ImportExcel.exportListFromFile(file);
+			Map<String,Object>map=ImportExcel.exportListFromFile(new File(path+"\\"+fileFileName));
+			List<String>list_factArea=webFactSer.findfactAreaByFactNo(factNo);
+			if(map.keySet().size()>1){
+				response.getWriter().print("<script>window.parent.layer.msg('文檔中只允許一張表')</script>");				
+			}else{
+				for(String key:map.keySet()){								
+					List<String>list=(List<String>)map.get(key);
+					if(!list.get(0).contains("__序號__項目__單位")){				
+						response.getWriter().print("<script>window.parent.showDiv();window.parent.layer.msg('表格式不符合要求')</script>");
+						//continue;
+						response.getWriter().close();
+						break;
+						
+					}
+					List<String>list_factcode=new ArrayList<String>();
+					String[] array_head =list.get(0).split("__");
+					for(int i=4;i<array_head.length;i++){
+						list_factcode.add(array_head[i].trim());
+					}
+					if(!list_factArea.containsAll(list_factcode)){
+						StringBuilder sb=new StringBuilder();
+						sb.append("(");					
+						for(String factArea:list_factArea){
+							sb.append(factArea+" ");
+						}
+						sb.append(")");
+						response.getWriter().print("<script>window.parent.layer.alert('請核對正確的廠別狀態:"+sb.toString()+"',8)</script>");
+						break;
+					}
+					
+					List<WebYieldData>list_obj=new ArrayList<WebYieldData>();
+					for(int i=4;i<array_head.length;i++){
+						WebYieldData obj=new WebYieldData(new WebYieldDataId(factNo,array_head[i],dfm.parse(yymmdd)));
+						if(list.get(3).split(SEPARATOR)[i]!=null&&list.get(4).split(SEPARATOR)[i]!=null){
+							if(Double.valueOf(list.get(3).split(SEPARATOR)[i])!=0){
+								obj.setAchievingRate(Double.valueOf(list.get(4).split(SEPARATOR)[i])/Double.valueOf(list.get(3).split(SEPARATOR)[i]));
+							}else{
+								obj.setAchievingRate(0.0);
+							}
+						}						
+						obj.setPersonnum(Double.valueOf(list.get(1).split(SEPARATOR)[i]));
+						obj.setOnModulus(Double.valueOf(list.get(2).split(SEPARATOR)[i]));
+						obj.setStandardOutput(Double.valueOf(list.get(3).split(SEPARATOR)[i]));
+						obj.setActualYield(Double.valueOf(list.get(4).split(SEPARATOR)[i]));
+						obj.setActualpairs(Double.valueOf(list.get(5).split(SEPARATOR)[i]));
+						obj.setHostpairs(Double.valueOf(list.get(6).split(SEPARATOR)[i]));
+						obj.setFactpairs(Double.valueOf(list.get(7).split(SEPARATOR)[i]));
+						obj.setSamplepairs(Double.valueOf(list.get(8).split(SEPARATOR)[i]));
+						obj.setOutnum(Double.valueOf(list.get(9).split(SEPARATOR)[i]));
+						obj.setBacknum(Double.valueOf(list.get(10).split(SEPARATOR)[i]));
+						obj.setDaycount(Double.valueOf(list.get(11).split(SEPARATOR)[i]));
+						obj.setWorkhours(Double.valueOf(list.get(12).split(SEPARATOR)[i]));																	
+						obj.setUsername(user.getUsername());
+						obj.setUsernameUd(user.getUsername());
+						obj.setDateCreate(dfm2.format(new Date()));
+						list_obj.add(obj);
+						dataSer.addMore(list_obj);										
+					}												
+				}
+				response.getWriter().print("<script>window.parent.layer.msg('導入成功',3,1)</script>");
+				//response.getWriter().print("<script>alert('導入成功')</script>");
+			}			
+			
+		}catch(Exception e){
+			System.out.println(e);
+			response.getWriter().print("<script>window.parent.layer.msg('導入錯誤',3,3);</script>");
+		}
 	}
 
 }

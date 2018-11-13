@@ -215,6 +215,7 @@
 				<value>entity/WebDepartment.hbm.xml</value>
 				<value>entity/WebWeeklyreport.hbm.xml</value>
 				<value>entity/WebEmailType.hbm.xml</value>
+				<value>entity/SumWebYieldDataView.hbm.xml</value>
 				</list>
 				
 		</property>

@@ -109,11 +109,11 @@ public class CheckAllInputAction {
 		Map<String,Object>map_sumydate=new HashMap<String,Object>();		
 		Map<String,Object>map_weball=new HashMap<String,Object>();	
 		
-		List<SumWebYieldData>list_sumydate=new ArrayList<SumWebYieldData>();		
+		List<SumWebYieldDataView>list_sumydate=new ArrayList<SumWebYieldDataView>();		
 		List<Webestproduct>list_estpro=new ArrayList<Webestproduct>();				
 		List<Weballobj>list_weball=new ArrayList<Weballobj>();
 		
-		List<SumWebYieldData>list_a=sumydateSer.findObjs(beginDate,endDate);
+		List<SumWebYieldDataView>list_a=sumydateSer.findObjs(beginDate,endDate);
 		List<Webestproduct>list_b=estProSer.findByYymm_all(beginDate,endDate);
 		List<Weballobj>list_c=weballobjser.findObj(beginDate,endDate);
 		
@@ -138,15 +138,15 @@ public class CheckAllInputAction {
 		
 		for(WebFact fact:list_fact){
 			for(String month:list_months){
-				list_sumydate.add(new SumWebYieldData(new SumWebYieldDataId(new VWebFact(fact.getId().getFactNo()),fact.getId().getFactArea(),month)));
+				list_sumydate.add(new SumWebYieldDataView(new SumWebYieldDataId(new VWebFact(fact.getId().getFactNo()),fact.getId().getFactArea(),month)));
 				list_estpro.add(new Webestproduct(new WebestproductId(fact.getId().getFactNo(),fact.getId().getFactArea(),myformat(month),"zd")));
 				list_estpro.add(new Webestproduct(new WebestproductId(fact.getId().getFactNo(),fact.getId().getFactArea(),myformat(month),"tz")));
 				list_weball.add(new Weballobj(new WeballobjId(new WebFact(fact.getId()),month)));			
 			}
 			
 			for(int i=0;i<list_sumydate.size();i++){
-				SumWebYieldData ydate=list_sumydate.get(i);
-				for(SumWebYieldData obj:list_a){
+				SumWebYieldDataView ydate=list_sumydate.get(i);
+				for(SumWebYieldDataView obj:list_a){
 					if(ydate.getId().getFactCode().equals(obj.getId().getFactCode())&&ydate.getId().getFactNo().getFactNo().equals(obj.getId().getFactNo().getFactNo())&&ydate.getId().getYymm().equals(obj.getId().getYymm())){
 						list_sumydate.remove(i);
 						list_sumydate.add(i,obj);
@@ -175,7 +175,7 @@ public class CheckAllInputAction {
 			}						
 		}
 		
-		for(SumWebYieldData obj:list_sumydate){
+		for(SumWebYieldDataView obj:list_sumydate){
 			for(WebFact fact:list_fact){
 				if(obj.getId().getFactNo().getFactNo().equals(fact.getId().getFactNo())){					
 					obj.getId().setFactNo(new VWebFact(fact.getFactSname()));
@@ -266,11 +266,11 @@ public class CheckAllInputAction {
 		}
 		return mix2;
 	}
-	public SumWebYieldData getsumydate(String factNo,String factCode,String yymm){
-		SumWebYieldData ydata=sumydateSer.findById(factNo, factCode, yymm);
+	public SumWebYieldDataView getsumydate(String factNo,String factCode,String yymm){
+		SumWebYieldDataView ydata=sumydateSer.findById(factNo, factCode, yymm);
 		if(ydata==null){
 			
-			ydata=new SumWebYieldData(new SumWebYieldDataId(new VWebFact(factNo),factCode,yymm));
+			ydata=new SumWebYieldDataView(new SumWebYieldDataId(new VWebFact(factNo),factCode,yymm));
 		}
 		return ydata;
 	}

@@ -76,6 +76,7 @@ public interface IWebYieldDataServices {
 	
 	public List<VWebydatabyfcode>findByYymm2(String yymm);
 	public List<String>findDisFactcode(String yymm);
+	public void addMore(List<WebYieldData> list);
 			
 	
 

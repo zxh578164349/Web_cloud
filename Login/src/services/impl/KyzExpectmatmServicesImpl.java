@@ -265,7 +265,7 @@ public class KyzExpectmatmServicesImpl implements IKyzExpectmatmServices {
 		/*String type=list.get(0).getVisaType();
 		List<KyzVisaflow> list_visa=visaSer.findByType(type);*/
 		
-		SimpleDateFormat format=new SimpleDateFormat("yyyyMMdd");
+		SimpleDateFormat format=new SimpleDateFormat("yyyyMMdd_hh:mm");
 		if(vbm==null){
 			vbm=visabillmDao.findById(factNo, sort, billNo);//用參數傳遞vbm,減少連接數據庫  20160112
 		}		
@@ -292,7 +292,8 @@ public class KyzExpectmatmServicesImpl implements IKyzExpectmatmServices {
 			Date date=null;
 			
 			String datestr=list_visa.get(i).getDateVisa();
-			try {
+			visabillstemp.setCreateDate(datestr);
+			/*try {
 				if(datestr!=null){
 					date=format.parse(datestr);
 					visabillstemp.setCreateDate(date);
@@ -301,7 +302,7 @@ public class KyzExpectmatmServicesImpl implements IKyzExpectmatmServices {
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}
+			}*/
 			String name=list_visa.get(i).getVisaRank();
 			String visamk=list_visa.get(i).getVisaMk();
 			//String visadate=list_visa.get(i).getDateVisa();

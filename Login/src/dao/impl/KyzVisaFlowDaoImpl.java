@@ -25,7 +25,7 @@ public class KyzVisaFlowDaoImpl extends Basedao implements IKyzVisaFlowDao {
 	}
 
 	public PageBean findFixWithPage(int pageSize, int page, String factNo,
-			String visaSort,String trMk) {
+			String visaSort,String trMk,String purmanNo,String visaSigner) {
 		// TODO Auto-generated method stub
 		int allRow=0;
 		final Map<String, Object> map = new HashMap<String, Object>();
@@ -47,9 +47,19 @@ public class KyzVisaFlowDaoImpl extends Basedao implements IKyzVisaFlowDao {
 			map.put("visasort", visaSort);
 			
 		}
-		if(factNo.equals("nothing")&&(visaSort==null||"".equals(visaSort))&&(trMk==null&&"".equals(trMk))){
+		if(factNo.equals("nothing")&&(visaSort==null||"".equals(visaSort))&&(trMk==null||"".equals(trMk))&&
+				(purmanNo==null||"".equals(purmanNo))&&(visaSigner==null||"".equals(visaSigner))){
 			hql.append(" and id.factNo=:factno");
 			map.put("factno", factNo);
+		}
+		
+		if(purmanNo!=null&&!"".equals(purmanNo)){
+			hql.append(" and id.purmanNo like :purmanNo");
+			map.put("purmanNo", purmanNo+"%");			
+		}
+		if(visaSigner!=null&&!"".equals(visaSigner)){
+			hql.append(" and lower(visaSigner)=:visaSigner");
+			map.put("visaSigner", visaSigner.toLowerCase());
 		}
 		if(trMk!=null&&!"".equals(trMk)){
 			hql.append(" and trMk=:trMk");

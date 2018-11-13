@@ -29,6 +29,7 @@ import entity.SumWebYieldData;
 import entity.SumWebYieldDataId;
 import entity.SumWebYieldDataLog;
 import entity.SumWebYieldDataLogId;
+import entity.SumWebYieldDataView;
 import entity.VWebFact;
 import entity.WebUser;
 import entity.WebYieldData;
@@ -172,8 +173,7 @@ public class SumWebYieldDataAction extends ActionSupport implements ServletRespo
 			id.setFactNo(fact);
 			id.setFactCode(factcode);
 			id.setYymm(yymm);
-			ydate.setId(id);			
-			//objs���n�P�_�A�ҥH�P�_list_ydata.size()(��̪��d�߱��@�ˡA���G�]�O�@�P)
+			ydate.setId(id);						
 			if(list_ydata!=0){
 				/*BigDecimal onModulus=new BigDecimal(objs[0]==null?"0":objs[0].toString().toString());
 				BigDecimal personnum=new BigDecimal(objs[1]==null?"0":objs[1].toString().toString());
@@ -421,7 +421,7 @@ public class SumWebYieldDataAction extends ActionSupport implements ServletRespo
 	}
 	
 	public String findById(){
-		sumydata=sumydateSer.findById(factNo, factCode, yymm);
+		sumydata=sumydateSer.findById2(factNo, factCode, yymm);
 		return "findById";
 	}
 	public void print() throws IOException{				
@@ -431,7 +431,7 @@ public class SumWebYieldDataAction extends ActionSupport implements ServletRespo
 		}else{
 			String yymm=begin_yymm+"-"+end_yymm;			
 			Map<String,Object>map=new HashMap<String,Object>();
-			List<SumWebYieldData>list_sumYdata=sumydateSer.findByFactNoAndYymm(factNo, begin_yymm, end_yymm);		
+			List<SumWebYieldDataView>list_sumYdata=sumydateSer.findByFactNoAndYymm(factNo, begin_yymm, end_yymm);		
 			map.put("factNo", factNo);
 			map.put("yymm", yymm);
 			JasperHelper.exportmain("excel", map,"sum_ydata.jasper",list_sumYdata, factNo+"_"+yymm, "jasper/audit/");

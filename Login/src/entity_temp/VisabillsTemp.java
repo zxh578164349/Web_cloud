@@ -5,7 +5,7 @@ import java.util.Date;
 public class VisabillsTemp {
 	private String memo;
 	private String visaRank;
-	private Date createDate;
+	private String createDate;
 	private String visaNameAndMk;
 	private String visaSigner;
 	private String visaMk;
@@ -23,10 +23,11 @@ public class VisabillsTemp {
 	public void setVisaRank(String visaRank) {
 		this.visaRank = visaRank;
 	}
-	public Date getCreateDate() {
+	
+	public String getCreateDate() {
 		return createDate;
 	}
-	public void setCreateDate(Date createDate) {
+	public void setCreateDate(String createDate) {
 		this.createDate = createDate;
 	}
 	public String getVisaNameAndMk() {

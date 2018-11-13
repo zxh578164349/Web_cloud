@@ -271,6 +271,11 @@ public class WebYieldDataServicesImple implements IWebYieldDataServices {
 		return dataDao.findDisFactcode(yymm);
 	}
 
+	public void addMore(List<WebYieldData> list) {
+		// TODO Auto-generated method stub
+		dataDao.addMore(list);
+	}
+
 
 
 }

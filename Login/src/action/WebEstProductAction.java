@@ -1,5 +1,8 @@
 package action;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
@@ -19,6 +22,7 @@ import org.apache.struts2.interceptor.ServletResponseAware;
 import services.IWebEstProductServices;
 import services.IWebFactServices;
 import util.GlobalMethod;
+import util.ImportExcel;
 import util.JasperHelper;
 import util.PageBean;
 
@@ -48,8 +52,37 @@ public class WebEstProductAction extends ActionSupport implements
 	private String yymm2;
 	private int backIndex;//返回標識      0或null:不走返回路徑         1:走返回路徑
 	
+	private File file;
+    private String fileFileName;
+    private String fileContentType;
+    private final static String SEPARATOR = "__";
 
 	
+    
+	public File getFile() {
+		return file;
+	}
+
+	public void setFile(File file) {
+		this.file = file;
+	}
+
+	public String getFileFileName() {
+		return fileFileName;
+	}
+
+	public void setFileFileName(String fileFileName) {
+		this.fileFileName = fileFileName;
+	}
+
+	public String getFileContentType() {
+		return fileContentType;
+	}
+
+	public void setFileContentType(String fileContentType) {
+		this.fileContentType = fileContentType;
+	}
+
 	public int getBackIndex() {
 		return backIndex;
 	}
@@ -240,34 +273,6 @@ public class WebEstProductAction extends ActionSupport implements
 
 	}
 
-	/*public String findPageBean2_print() {
-		ActionContext.getContext().getApplication().clear();
-		if (factNo != null && !factNo.equals("") && !factNo.equals("tw")) {
-			ActionContext.getContext().getApplication().put("print_estpro_factNo", factNo);					
-
-		} else {
-			factNo = (String) ActionContext.getContext().getSession().get("factNo");					
-		}
-		if (yymm != null && !yymm.equals("")) {
-			ActionContext.getContext().getApplication()
-					.put("print_estpro_yymm", yymm);
-		}
-		bean = estProSer.findPageBean(10, page, factNo, yymm);
-		return "list";
-	}
-
-	public String findPageBean3_print() {
-		factNo = (String) ActionContext.getContext().getApplication()
-				.get("print_estpro_factNo");
-		yymm = (String) ActionContext.getContext().getApplication()
-				.get("print_estpro_yymm");
-		if (factNo == null || factNo.equals("") || factNo.equals("tw")) {
-			factNo = (String) ActionContext.getContext().getSession()
-					.get("factNo");
-		}
-		bean = estProSer.findPageBean(10, page, factNo, yymm);
-		return "list";
-	}*/
 
 	public String findById() {
 		pro = estProSer.findById(id);
@@ -420,6 +425,100 @@ public class WebEstProductAction extends ActionSupport implements
 	public void print2() throws IOException{
 		List<Webestproduct>list=estProSer.findByAny(factNo, yymm, yymm2);
 		GlobalMethod.print(list, factNo, yymm, yymm2, "webestproduct.jasper", response);
+	}
+	
+	public void importFile() throws IOException{
+		/*factNo="631";
+		yymm="201810";*/
+		response.setContentType("text/html;charset=utf-8");
+		try{
+			String path="d:\\Webestpro_backup\\"+new SimpleDateFormat("yyyyMMdd").format(new Date());//Excel文檔存放目錄
+			ajaxResult="0";				
+			//文件上傳
+			if(file!=null){//不為空代表有上傳附檔,不能寫成files.size()>0,否則報空指針
+				//File uploadFile=new File(ServletActionContext.getServletContext().getRealPath("KyzexpFile\\"+kyz.getId().getBillNo()));//附檔上傳到項目
+				File uploadFile_backup=new File(path);//附檔上傳到D盤(為了避免更新項目時丟失附檔,所在上傳到D盤)			
+				if(!uploadFile_backup.exists()){
+					uploadFile_backup.mkdirs();
+				}																						
+						FileInputStream in=new FileInputStream(file);
+						FileOutputStream out_backup=new FileOutputStream(uploadFile_backup+"\\"+fileFileName);//備份
+						byte[]b=new byte[1024];
+						int length=0;
+						while((length=in.read(b))>0){
+							out_backup.write(b,0,length);//備份
+						}																																				
+			}
+			
+			WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");			
+			//file=new File("i:\\test.xlsx");
+			//Map<String,Object>map=ImportExcel.exportListFromFile(file);
+			Map<String,Object>map=ImportExcel.exportListFromFile(new File(path+"\\"+fileFileName));
+			List<String>list_factArea=webFactSer.findfactAreaByFactNo(factNo);					
+			
+			for(String key:map.keySet()){
+				if(key==null||!("zd".equals(key)||"tz".equals(key))){
+					response.getWriter().print("<script>window.parent.layer.msg('文檔必須包含:暫定版與調整版兩張表格，表格名稱限定為 zd 和 tz')</script>");
+					response.getWriter().close();
+					break;
+					
+				}
+				
+				List<String>list=(List<String>)map.get(key);
+				if(!list.get(0).contains("__序號__項目__單位")){				
+					response.getWriter().print("<script>window.parent.showDiv();window.parent.layer.msg('表格式不符合要求')</script>");
+					//continue;
+					response.getWriter().close();
+					break;
+				}
+				List<String>list_factcode=new ArrayList<String>();
+				String[] array_head =list.get(0).split("__");
+				for(int i=4;i<array_head.length;i++){
+					list_factcode.add(array_head[i].trim());
+				}
+				if(!list_factArea.containsAll(list_factcode)){
+					StringBuilder sb=new StringBuilder();
+					sb.append("(");					
+					for(String factArea:list_factArea){
+						sb.append(factArea+" ");
+					}
+					sb.append(")");
+					response.getWriter().print("<script>window.parent.layer.alert('請核對正確的廠別狀態:"+sb.toString()+"',8)</script>");
+					break;
+				}
+				
+				List<Webestproduct>list_obj=new ArrayList<Webestproduct>();
+				DateFormat frm=new SimpleDateFormat("yyyyMM");
+				for(int i=4;i<array_head.length;i++){
+					Webestproduct obj=new Webestproduct(new WebestproductId(factNo,array_head[i],frm.parse(yymm),key));
+					obj.setMachinepower(Double.valueOf(list.get(1).split(SEPARATOR)[i]));//機台戰力(模/月)
+					obj.setEstdays(Double.valueOf(list.get(2).split(SEPARATOR)[i]));//預計生產天數(天)
+					obj.setEsteverymodel(Double.valueOf(list.get(3).split(SEPARATOR)[i]));//預計每日上模數(模)
+					obj.setEsteverypeople(Double.valueOf(list.get(4).split(SEPARATOR)[i]));//預計每日人數(人)
+					obj.setEstmodel(Double.valueOf(list.get(5).split(SEPARATOR)[i]));//預計生產模數(模)
+					obj.setEstnum(Double.valueOf(list.get(6).split(SEPARATOR)[i]));//預計生產雙數(雙)
+					obj.setEstpay(Double.valueOf(list.get(7).split(SEPARATOR)[i]));//預計請款雙數(雙)
+					obj.setEstmoney(Double.valueOf(list.get(8).split(SEPARATOR)[i]));//預計請款金額(USD)
+					obj.setHole(Double.valueOf(list.get(9).split(SEPARATOR)[i]));//有效孔位數(孔)
+					obj.setTotalhole(Double.valueOf(list.get(10).split(SEPARATOR)[i]));//總機孔(孔)
+					obj.setSample(Double.valueOf(list.get(11).split(SEPARATOR)[i]));//工程樣品
+					obj.setAccessories(Double.valueOf(list.get(12).split(SEPARATOR)[i]));//輔料
+					obj.setOther(Double.valueOf(list.get(13).split(SEPARATOR)[i]));//其它
+					
+					obj.setUsername(user.getUsername());
+					obj.setUsernameUd(user.getUsername());
+					list_obj.add(obj);
+					estProSer.addMore(list_obj);										
+				}												
+			}
+			response.getWriter().print("<script>window.parent.layer.msg('導入成功',3,1)</script>");
+			//response.getWriter().print("<script>alert('導入成功')</script>");
+									
+		}catch(Exception e){
+			System.out.println(e);
+			response.getWriter().print("<script>window.parent.layer.msg('導入錯誤',3,3);</script>");
+		}
+		
 	}
 
 }

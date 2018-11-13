@@ -22,9 +22,9 @@ public class KyzVisaFlowServicesImpl implements IKyzVisaFlowServices{
 	}
 
 	public PageBean findPageBean(int pageSize, int page, String factNo,
-			String visaSort,String trMk) {
+			String visaSort,String trMk,String purmanNo,String visaSigner) {
 		// TODO Auto-generated method stub
-		return visaDao.findFixWithPage(pageSize, page, factNo, visaSort,trMk);
+		return visaDao.findFixWithPage(pageSize, page, factNo, visaSort,trMk,purmanNo,visaSigner);
 	}
 
 	public KyzVisaflow findById(KyzVisaflowId id) {

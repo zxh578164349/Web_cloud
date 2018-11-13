@@ -31,6 +31,11 @@
 		<h3>
 		<s:if test='#session.loginUser.userread!="1"'>
 	    <input value="添加" type="button" class="btn btn-info" onclick="loadUrl('saveAndUpdate/Yield_data.jsp')"/>
+	    
+	    <s:if test='#session.loginUser.factno=="657"||#session.loginUser.factno=="tw"'>
+           <input value="導入" type="button" class="btn btn-info"
+		onclick="loadUrl('page/ydata-import.jsp')" />
+        </s:if>      
 	    </s:if>
 		<span id="h2_title">產量資料</span>
 		</h3>
