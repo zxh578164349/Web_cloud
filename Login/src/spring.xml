@@ -216,6 +216,9 @@
 				<value>entity/WebWeeklyreport.hbm.xml</value>
 				<value>entity/WebEmailType.hbm.xml</value>
 				<value>entity/SumWebYieldDataView.hbm.xml</value>
+				<value>entity/WebNewproduct.hbm.xml</value>
+				<value>entity/WebColproductMain.hbm.xml</value>
+				<value>entity/WebColproductItems.hbm.xml</value>
 				</list>
 				
 		</property>

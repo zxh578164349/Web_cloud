@@ -102,6 +102,7 @@
 	<bean id="webbrproSer" class="services.impl.WebBrProductServicesImpl"></bean>
 	<bean id="webdepServices" class="services.impl.WebDepartmentServicesImpl"></bean>
 	<bean id="webweeklyreportservices" class="services.impl.WebWeeklyreportServicesImpl"></bean>
+	<bean id="webnewproSer" class="services.impl.WebNewproductServicesImpl"></bean>
 </beans>
 
 

@@ -848,6 +848,17 @@
 		   </result>
 		</action>
 		
+		<action name="webnewpro_*" class="webnewproAction" method="{1}">
+		  <result name="findPageBean">page/webnewproduct.jsp</result>
+		  <result name="findPageBean1">page/table1/webnewproduct1.jsp</result>
+		  <result name="makeBillNo" type="json">
+		      <param name="root">ajaxResult</param>
+		  </result>
+		  <result name="findByBillNo">saveAndUpdate/webnewproductSaveOrUpdate.jsp</result>
+		  <result name="delete" type="redirectAction">webnewpro_findPageBean3</result>
+		      
+		</action>
+		
 		
 	</package>
 

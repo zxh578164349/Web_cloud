@@ -41,6 +41,7 @@ public class KyVisabillm implements java.io.Serializable {
 	private WebType webtype;//函文大類外鍵
 	private WebUser userId;
 	private String useremail;//創建人email
+	private WebNewproduct webnewpro;
 
 	// Constructors
 
@@ -301,6 +302,16 @@ public class KyVisabillm implements java.io.Serializable {
 	public void setUseremail(String useremail){
 		this.useremail=useremail;
 	}
+
+	public WebNewproduct getWebnewpro() {
+		return webnewpro;
+	}
+
+	public void setWebnewpro(WebNewproduct webnewpro) {
+		this.webnewpro = webnewpro;
+	}
+	
+	
 
 	
 	
