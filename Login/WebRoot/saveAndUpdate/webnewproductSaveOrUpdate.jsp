@@ -132,10 +132,20 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 					    <td class="tdcolor">結果</td>	
 						<td  colspan="10">
 				           <textarea style="width:810px;height:100px" name="obj.PResult"  wrap="off"   tip="申請內容" altercss="gray" class="gray" id="PResult" datatype="*"><s:property value="obj.PResult"/></textarea>				                                           				         				           				           
-				           <input type="hidden" value="<s:property value='obj.filesYn'/>" name="obj.filesYn"/>
-				           <input type="hidden" name="trMk" value="Y"/> 
+				           <input type="hidden" value="<s:property value='obj.filesYn'/>" name="obj.filesYn"/>				           
 				        </td>						
-					</tr>										    				                  			                                         			                                            																
+					</tr>
+					
+					<s:if test="obj==null">
+					  <tr>
+					    <td class="tdcolor">是否分部門</td>
+					    <td colspan="10">
+					                   是<input type="radio" name="trMk" value="Y" checked datatype="*" onclick="checkType()"/>&nbsp;&nbsp;
+			                                        否<input type="radio" name="trMk" value="N" onclick="checkType()"/> 
+					    </td>
+					 </tr>	
+					</s:if>
+															    				                  			                                         			                                            																
 			</tbody>			
 			</table>
 			<s:if test='obj.filesYn=="1"'>	           

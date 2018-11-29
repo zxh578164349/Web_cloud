@@ -192,7 +192,7 @@ public class KyzContactLetterServicesImpl implements IKyzContactLetterServices{
 		map.put("factname",factname);
 		
 				
-		SimpleDateFormat format=new SimpleDateFormat("yyyyMMdd_hh:mm");
+		//SimpleDateFormat format=new SimpleDateFormat("yyyyMMdd_hh:mm");
 		if(vbm==null){
 			vbm=visabillmDao.findById(factNo, sort, billNo);
 		}		
@@ -214,7 +214,7 @@ public class KyzContactLetterServicesImpl implements IKyzContactLetterServices{
 			VisabillsTemp visabillstemp=new VisabillsTemp();
 			String visa_result="";
 			String visamk_temp="";
-			Date date=null;
+			//Date date=null;
 			
 			String datestr=list_visa.get(i).getDateVisa();
 			visabillstemp.setCreateDate(datestr);

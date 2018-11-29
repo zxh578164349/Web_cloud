@@ -9,10 +9,12 @@ import org.hibernate.Query;
 import com.opensymphony.xwork2.ActionContext;
 
 import util.PageBean;
+import util.PageBeanPackaging;
 import dao.Basedao;
 import dao.IWebNewproductDao;
 import entity.KyzExpectmatmLog;
 import entity.WebNewproduct;
+import entity.WebUser;
 
 public class WebNewproductDaoImpl extends Basedao implements IWebNewproductDao{
 
@@ -22,15 +24,16 @@ public class WebNewproductDaoImpl extends Basedao implements IWebNewproductDao{
 		
 	}
 
-	public PageBean findPageBean(int page,int pageSize,String factNo,String billNo,String createDateA,String createDateB) {
+	public PageBean findPageBean(int page,int pageSize,String factNo,String billNo,String createDateA,String createDateB,String PName) {
 		// TODO Auto-generated method stub
 		StringBuffer hql=new StringBuffer();
 		StringBuffer hql2=new StringBuffer();
 		Map<String,Object>map=new HashMap<String,Object>();
+		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
 		hql.append("from WebNewproduct where 1=1 ");
 		hql2.append("select count(billNo) ");
 		if(factNo==null||"".equals(factNo)){
-			factNo = (String) ActionContext.getContext().getSession().get("factNo");			
+			factNo = user.getFactno();			
 		}
 		if(factNo!=null&&!"".equals(factNo)&&!"tw".equals(factNo)){
 			hql.append(" and factNo=:factNo");
@@ -41,12 +44,20 @@ public class WebNewproductDaoImpl extends Basedao implements IWebNewproductDao{
 			map.put("billNo", billNo);
 		}
 		if(createDateA!=null&&!"".equals(createDateA)){
-			hql.append(" and createDate>=:createDateA ");
+			hql.append(" and receiveDate>=:createDateA ");
 			map.put("createDateA", createDateA);
 		}
 		if(createDateB!=null&&!"".equals(createDateB)){
-			hql.append(" and createDate<=:createDateB ");
+			hql.append(" and receiveDate<=:createDateB ");
 			map.put("createDateB", createDateB);
+		}
+		if(PName!=null&&!"".equals(PName)){
+			hql.append(" and PName like :PName");
+			map.put("PName", "%"+PName+"%");
+		}
+		if(!"Y".equals(user.getAdminMk())){
+			hql.append(" and webUserByCreateUserFid.id=:uid ");
+			map.put("uid", user.getId());
 		}
 		hql2.append(hql);
 		
@@ -73,6 +84,9 @@ public class WebNewproductDaoImpl extends Basedao implements IWebNewproductDao{
 		bean.setPageSize(pageSize);
 		bean.setTotalPage(totalPage);
 		return bean;
+		/*PageBeanPackaging pp=new PageBeanPackaging();
+		PageBean pb=pp.pbPackaging(hql, hql2, page, pageSize, map);						
+		return pb;*/
 	}
 	
 	public WebNewproduct findByBillNo(String billNo) {

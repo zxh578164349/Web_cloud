@@ -29,7 +29,7 @@ String sdate=sdf.format(cal.getTime());
 
 
 <body>
-	<br><jsp:include page="publicHead_webweeklyreport.jsp" />
+	<br><jsp:include page="publicHead_webnewproject.jsp" />
 	<hr />
 		
 	<div id="bodyid">
@@ -88,26 +88,7 @@ String sdate=sdf.format(cal.getTime());
 function findById(billNo){	
 	loadUrl("webnewpro_findByBillNo?billNo="+billNo);
 }
-function recovery(subform){
-	jq.ajax({
-		type:"POST",
-		dataType:"json",
-		data:jq("#"+subform).serialize(),
-		url:"webnewpro_recovery",
-		success:function(data){
-			if(data=="0"){
-				//location.href="webnewpro_findPageBean3";
-				layer.msg("回收成功",3,1);
-			}else{
-				layer.msg("回收失敗",3,3);
-			}
-		},
-		error:function(error){
-			alert(error.responseText);
-		}
-	});
-	
-}
+
 
 
 </script>	

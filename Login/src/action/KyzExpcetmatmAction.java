@@ -824,16 +824,8 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 	/**
 	 * 解決url中空格轉換成 +號的問題
 	 */
-	public String toUrl2(String filename){
-		/*String result=null;
-		try {
-			result=new String(filename.getBytes("ISO-8859-1"),"UTF-8");
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return result;*/
-		return filename.replace("+", "%20");
+	public String toUrl2(String filename){		
+		return filename.replace("+", "%20").replace("%20", "+");
 		
 	}
 	

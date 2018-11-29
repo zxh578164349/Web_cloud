@@ -11,38 +11,46 @@ import java.util.List;
 public class WebColproductMain implements java.io.Serializable {
 
 	// Fields
-
-	private Integer mid;
-	private WebUser webUserByUpdateUserFid;
-	private WebUser webUserByCreateUserFid;
+	
 	private String billNo;
+	private WebUser webUserByUpdateUserFid;
+	private WebUser webUserByCreateUserFid;	
 	private String factNo;
 	private String createDate;
 	private String updateDate;
 	private String visaType;
 	private String visaTypeM;
 	private List<WebColproductItems> webColproductItemses = new ArrayList<WebColproductItems>();
+	private KyVisabillm vbm;
+	private String title;
 
 	// Constructors
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
 
 	/** default constructor */
 	public WebColproductMain() {
 	}
 
 	/** minimal constructor */
-	public WebColproductMain(Integer mid) {
-		this.mid = mid;
+	public WebColproductMain(String billNo) {
+		this.billNo = billNo;
 	}
 
 	/** full constructor */
-	public WebColproductMain(Integer mid, WebUser webUserByUpdateUserFid,
+	public WebColproductMain( WebUser webUserByUpdateUserFid,
 			WebUser webUserByCreateUserFid, String billNo, String factNo,
 			String createDate, String updateDate, String visaType,
 			String visaTypeM, List<WebColproductItems> webColproductItemses) {
-		this.mid = mid;
+		this.billNo = billNo;
 		this.webUserByUpdateUserFid = webUserByUpdateUserFid;
 		this.webUserByCreateUserFid = webUserByCreateUserFid;
-		this.billNo = billNo;
 		this.factNo = factNo;
 		this.createDate = createDate;
 		this.updateDate = updateDate;
@@ -52,15 +60,7 @@ public class WebColproductMain implements java.io.Serializable {
 	}
 
 	// Property accessors
-
-	public Integer getMid() {
-		return this.mid;
-	}
-
-	public void setMid(Integer mid) {
-		this.mid = mid;
-	}
-
+	
 	public WebUser getWebUserByUpdateUserFid() {
 		return this.webUserByUpdateUserFid;
 	}
@@ -133,6 +133,16 @@ public class WebColproductMain implements java.io.Serializable {
 			List<WebColproductItems> webColproductItemses) {
 		this.webColproductItemses = webColproductItemses;
 	}
+
+	public KyVisabillm getVbm() {
+		return vbm;
+	}
+
+	public void setVbm(KyVisabillm vbm) {
+		this.vbm = vbm;
+	}
+	
+	
 
 	
 

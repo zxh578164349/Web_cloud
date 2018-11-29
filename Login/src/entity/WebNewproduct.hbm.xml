@@ -49,6 +49,9 @@
         <property name="visaTypeM" type="java.lang.String">
             <column name="VISA_TYPE_M" length="2" />
         </property>
+        <property name="title" type="java.lang.String">
+            <column name="TITLE" length="200" />
+        </property>
         <bag name="list_file" inverse="true" cascade="all">
             <key>              
                <column name="BILLNO"/>            

@@ -11,7 +11,7 @@
             <generator class="assigned" />
         </id>
         <many-to-one name="webColproductMain" class="entity.WebColproductMain" fetch="select">
-            <column name="MID" precision="6" scale="0" />
+            <column name="BILL_NO" length="30" />
         </many-to-one>
         <property name="colDate" type="java.lang.String">
             <column name="COL_DATE" length="15" />
@@ -49,8 +49,8 @@
         <property name="picMan" type="java.lang.Integer">
             <column name="PIC_MAN" precision="8" scale="0" />
         </property>
-        <property name="paymk" type="java.lang.Long">
-            <column name="PAYMK" precision="10" scale="0" />
+        <property name="paymk" type="java.lang.String">
+            <column name="PAYMK" length="2" />
         </property>
         <property name="numbersb" type="java.lang.Integer">
             <column name="NUMBERSB" precision="8" scale="0" />

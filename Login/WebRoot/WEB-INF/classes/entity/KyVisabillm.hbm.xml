@@ -93,8 +93,8 @@
            <column name="VISA_SORT_M"/>
         </many-to-one>
          <many-to-one name="userId" column="FK_WEBUSER" unique="true" insert="false" update="false"/>
-         <many-to-one name="webnewpro" column="BILL_NO" unique="true" insert="false" update="false" />
-         
+         <many-to-one name="webnewpro" column="BILL_NO" unique="true" insert="false" update="false"/>
+         <many-to-one name="webcolpro" column="BILL_NO" unique="true" insert="false" update="false"/>
          
          
     </class>

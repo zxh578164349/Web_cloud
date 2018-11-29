@@ -22,7 +22,7 @@ public class WebColproductItems implements java.io.Serializable {
 	private Integer remainNum;
 	private Integer unhealthNum;
 	private Integer picMan;
-	private Long paymk;
+	private String paymk;
 	private Integer numbersb;
 	private Integer weightb;
 	private String remarks;
@@ -43,7 +43,7 @@ public class WebColproductItems implements java.io.Serializable {
 			String colDate, String importmant, String shape, String CStructure,
 			String orderFactory, String orderMan, String purpose,
 			Integer numbers, Integer weight, Integer remainNum,
-			Integer unhealthNum, Integer picMan, Long paymk, Integer numbersb,
+			Integer unhealthNum, Integer picMan, String paymk, Integer numbersb,
 			Integer weightb, String remarks) {
 		this.iid = iid;
 		this.webColproductMain = webColproductMain;
@@ -179,11 +179,13 @@ public class WebColproductItems implements java.io.Serializable {
 		this.picMan = picMan;
 	}
 
-	public Long getPaymk() {
-		return this.paymk;
+	
+
+	public String getPaymk() {
+		return paymk;
 	}
 
-	public void setPaymk(Long paymk) {
+	public void setPaymk(String paymk) {
 		this.paymk = paymk;
 	}
 

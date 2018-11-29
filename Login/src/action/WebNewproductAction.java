@@ -2,7 +2,10 @@ package action;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -13,6 +16,7 @@ import services.IKyzExpectmatmFileServices;
 import services.IWebNewproductServices;
 import services.IWebuserEmailServices;
 import util.GlobalMethod;
+import util.JasperHelper;
 import util.PageBean;
 
 import com.opensymphony.xwork2.ActionContext;
@@ -22,7 +26,6 @@ import entity.KyVisabillm;
 import entity.KyzExpectmatmLog;
 import entity.WebNewproduct;
 import entity.KyzExpectmatmFile;
-import entity.WebNewproduct;
 import entity.WebUser;
 
 
@@ -48,9 +51,30 @@ public class WebNewproductAction extends ActionSupport implements ServletRespons
 	private String ajaxResult;
 	private String createDate;
 	private String addorupdate;//添加或更新標識    update表示進入更新狀態
+	private String lookordown;
+	private String visaType;
+	private String pname;
 	
 	
 	
+	public String getPname() {
+		return pname;
+	}
+	public void setPname(String pname) {
+		this.pname = pname;
+	}
+	public String getVisaType() {
+		return visaType;
+	}
+	public void setVisaType(String visaType) {
+		this.visaType = visaType;
+	}
+	public String getLookordown() {
+		return lookordown;
+	}
+	public void setLookordown(String lookordown) {
+		this.lookordown = lookordown;
+	}
 	public String getAddorupdate() {
 		return addorupdate;
 	}
@@ -241,7 +265,7 @@ public class WebNewproductAction extends ActionSupport implements ServletRespons
 						kyzexpFile.setUsername(username);
 						kyzexpFile.setFactNo(obj.getFactNo());
 						kyzexpFile.setVisaTypeM(obj.getVisaType().substring(0,2));
-						kyzexpFile.setFileurl("upload_letter");
+						kyzexpFile.setFileurl("upload_webnewpro");
 						kyzexpfileSer.add(kyzexpFile);
 						GlobalMethod.uploadFile(files.get(i),uploadFile_backup+"\\"+filesFileName.get(i));//文件上傳		
 					}
@@ -264,7 +288,8 @@ public class WebNewproductAction extends ActionSupport implements ServletRespons
 		ActionContext.getContext().getSession().put("n_billNo", billNo);
 		ActionContext.getContext().getSession().put("n_createDateA", createDateA);
 		ActionContext.getContext().getSession().put("n_createDateB", createDateB);
-		bean=webnewproSer.findPageBean(page, 0, factNo, billNo, createDateA, createDateB);		
+		ActionContext.getContext().getSession().put("pname", pname);
+		bean=webnewproSer.findPageBean(page, 0, factNo, billNo, createDateA, createDateB,pname);		
 		return "findPageBean";
 	}
 	
@@ -278,7 +303,8 @@ public class WebNewproductAction extends ActionSupport implements ServletRespons
 		billNo=(String)ActionContext.getContext().getSession().get("n_billNo");
 		createDateA=(String)ActionContext.getContext().getSession().get("n_createDateA");
 		createDateB=(String)ActionContext.getContext().getSession().get("n_createDateB");
-		bean=webnewproSer.findPageBean(page, 0, factNo, billNo, createDateA, createDateB);
+		pname=(String)ActionContext.getContext().getSession().get("pname");
+		bean=webnewproSer.findPageBean(page, 0, factNo, billNo, createDateA, createDateB,pname);
 		if(backIndex==1){
 			return "findPageBean";
 		}else{
@@ -327,6 +353,36 @@ public class WebNewproductAction extends ActionSupport implements ServletRespons
 		}
 		return "delete";
 		
+	}
+	
+	public String toUrl(String filename) throws UnsupportedEncodingException{
+		String urlname2=URLDecoder.decode(filename,"utf-8");
+		return urlname2;
+	}
+	public String toUrl2(String filename){
+		return filename.replace("+", "%20").replace("%20", "+");
+	}
+	
+	public void print(String factNo,String billNo,String sort) throws IOException{		
+		Map<String,Object>map_result=webnewproSer.print(factNo, billNo, sort,null);
+		if(map_result!=null&&map_result.size()>0){
+			Map<String,Object>map=(Map<String,Object>)map_result.get("map");
+			List<WebNewproduct>list=(List<WebNewproduct>)map_result.get("list");
+			if(lookordown!=null){
+				if(lookordown.equals("look")){
+					JasperHelper.exportmain("line", map,"web_newproject.jasper", list,billNo, "jasper/audit/");
+				}else{
+					JasperHelper.exportmain("pdf", map,"web_newproject.jasper", list,billNo, "jasper/audit/");
+				}
+			}else{
+				JasperHelper.exportmain("pdf", map,"web_newproject.jasper", list,billNo, "jasper/audit/");
+			}
+		}
+								
+	}
+	
+	public void print2() throws IOException{
+		this.print(factNo, billNo, visaType);
 	}
 		
 }

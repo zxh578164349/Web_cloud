@@ -15,7 +15,7 @@
 	       <div style="color:blue;">附檔:</div><br/>
 	       <div id="fileJson" style="width:850px">
 	      <s:iterator value="#session.list_filesexp">	        
-	           <a href="/<s:property value='fileurl'/>/<s:property value='billno'/>/<s:property value="%{toUrl2(filename)}"/>" target="_blank" title="點擊查看">
+	           <a href="/<s:property value='fileurl'/>/<s:property value='billno'/>/<s:property value='%{toUrl2(filename)}'/>" target="_blank" title="點擊查看">
 	                 <s:property value="%{toUrl(filename)}"/>
 	           </a>           
 	           <a href="javascript:lookJson('${billno}',${id},'<s:property value="%{toUrl(filename)}"/>','${factNo}')">

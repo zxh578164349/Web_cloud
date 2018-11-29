@@ -186,13 +186,16 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 				        </td>
 						
 					</tr>
-					<tr>
+					<s:if test="kyzletter==null">
+					  <tr>
 					    <td class="tdcolor">是否分部門</td>
 					    <td colspan="10">
 					                   是<input type="radio" name="trMk" value="Y" checked datatype="*" onclick="checkType()"/>&nbsp;&nbsp;
 			                                        否<input type="radio" name="trMk" value="N" onclick="checkType()"/> 
 					    </td>
-					 </tr>												
+					 </tr>
+					</s:if>
+																	
 			</tbody>			
 			</table>
 			<s:if test='kyzletter.filesYn=="1"'>
