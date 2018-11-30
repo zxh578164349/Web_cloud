@@ -52,7 +52,7 @@
 				<th>量產數量</th>				
 				<th>需求料的重量</th>
 				<th>備註</th>				
-				<s:if test='#session.loginUser.userread!="1"'>				
+				<s:if test='#session.loginUser.userread!="1"'>			
 				<th>操作</th>
 				</s:if>				
 			</tr>
@@ -66,20 +66,18 @@
 				<td><s:property value="importmant" /></td>
 				<td><s:property value="shape"/></td>
 				<td><s:property value="CStructure"/></td>				
-				<td><s:property value="webColproductMain"/></td>
-				<td><s:property value="userNm" /></td>
-				<td><s:property value="id.billNo" /></td>
-				<td><s:property value=""/></td>
-				<td><s:property value=""/></td>
-				<td><s:property value=""/></td>
-				<td><s:property value=""/></td>
-				<td><s:property value=""/></td>
-				<td><s:property value=""/></td>
-				<td><s:property value=""/></td>
-				<td><s:property value=""/></td>
-				<td><s:property value=""/></td>
-				<td><s:property value=""/></td>
-				<td><s:property value=""/></td>
+				<td><s:property value="webColproductMain.factNo"/></td>
+				<td><s:property value="webColproductMain.webUserByCreateUserFid.id" /></td>
+				<td><s:property value="purpose" /></td>
+				<td><s:property value="numbers"/></td>
+				<td><s:property value="weight"/></td>
+				<td><s:property value="remainNum"/></td>
+				<td><s:property value="unhealthNum"/></td>
+				<td><s:property value="picMan"/></td>
+				<td><s:property value="paymk"/></td>
+				<td><s:property value="numbersb"/></td>
+				<td><s:property value="weightb"/></td>
+				<td><s:property value="remarks"/></td>				
 				<td>
 				  <s:if test="emerWhether==0">
 				    　　 是

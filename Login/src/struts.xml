@@ -855,8 +855,11 @@
 		      <param name="root">ajaxResult</param>
 		  </result>
 		  <result name="findByBillNo">saveAndUpdate/webnewproductSaveOrUpdate.jsp</result>
-		  <result name="delete" type="redirectAction">webnewpro_findPageBean3</result>
-		      
+		  <result name="delete" type="redirectAction">webnewpro_findPageBean3</result>		      
+		</action>
+		
+		<action name="webcolpro_*" class="webcolproAction" method="{1}">
+		  
 		</action>
 		
 		

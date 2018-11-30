@@ -21,13 +21,50 @@ public class WebColproductItems implements java.io.Serializable {
 	private Integer weight;
 	private Integer remainNum;
 	private Integer unhealthNum;
-	private Integer picMan;
+	private String picMan;
 	private String paymk;
 	private Integer numbersb;
 	private Integer weightb;
 	private String remarks;
+	private WebUser cuser;
+	private WebUser upuser;
+	private String createDate;
+	private String updateDate;
+	
 
 	// Constructors
+
+	public WebUser getCuser() {
+		return cuser;
+	}
+
+	public void setCuser(WebUser cuser) {
+		this.cuser = cuser;
+	}
+
+	public WebUser getUpuser() {
+		return upuser;
+	}
+
+	public void setUpuser(WebUser upuser) {
+		this.upuser = upuser;
+	}
+
+	public String getCreateDate() {
+		return createDate;
+	}
+
+	public void setCreateDate(String createDate) {
+		this.createDate = createDate;
+	}
+
+	public String getUpdateDate() {
+		return updateDate;
+	}
+
+	public void setUpdateDate(String updateDate) {
+		this.updateDate = updateDate;
+	}
 
 	/** default constructor */
 	public WebColproductItems() {
@@ -43,7 +80,7 @@ public class WebColproductItems implements java.io.Serializable {
 			String colDate, String importmant, String shape, String CStructure,
 			String orderFactory, String orderMan, String purpose,
 			Integer numbers, Integer weight, Integer remainNum,
-			Integer unhealthNum, Integer picMan, String paymk, Integer numbersb,
+			Integer unhealthNum, String picMan, String paymk, Integer numbersb,
 			Integer weightb, String remarks) {
 		this.iid = iid;
 		this.webColproductMain = webColproductMain;
@@ -170,16 +207,14 @@ public class WebColproductItems implements java.io.Serializable {
 	public void setUnhealthNum(Integer unhealthNum) {
 		this.unhealthNum = unhealthNum;
 	}
-
-	public Integer getPicMan() {
-		return this.picMan;
+	
+	public String getPicMan() {
+		return picMan;
 	}
 
-	public void setPicMan(Integer picMan) {
+	public void setPicMan(String picMan) {
 		this.picMan = picMan;
 	}
-
-	
 
 	public String getPaymk() {
 		return paymk;

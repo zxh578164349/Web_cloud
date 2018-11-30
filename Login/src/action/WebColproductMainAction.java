@@ -10,11 +10,13 @@ import util.PageBean;
 import com.opensymphony.xwork2.ActionSupport;
 
 import entity.WebColproductItems;
+import entity.WebColproductMain;
 
 public class WebColproductMainAction extends ActionSupport implements ServletResponseAware{
 	 private HttpServletResponse response;
 	 private IWebColproductMainServices webcolproServer;
 	 private WebColproductItems item;
+	 private WebColproductMain obj;
 	 private int page;
 	 private PageBean bean;
 	 private String factNo;
@@ -23,7 +25,16 @@ public class WebColproductMainAction extends ActionSupport implements ServletRes
 	 private String dateA;
 	 private String dateB;
 	 
-	 	  
+	 	 
+	 
+	public WebColproductMain getObj() {
+		return obj;
+	}
+
+	public void setObj(WebColproductMain obj) {
+		this.obj = obj;
+	}
+
 	public WebColproductItems getItem() {
 		return item;
 	}
@@ -97,6 +108,8 @@ public class WebColproductMainAction extends ActionSupport implements ServletRes
 		this.response=response;
 		
 	}
+	
+	
 	
 	
 	 
