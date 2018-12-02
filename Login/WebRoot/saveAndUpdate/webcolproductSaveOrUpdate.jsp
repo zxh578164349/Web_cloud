@@ -138,7 +138,13 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 			    <s:iterator value="obj" status="x" id="temp">
 			    <tr class="bluecss">
 			     <td><input type="hidden" name="cbox"/></td>			           			          			          			            			          	     
-			     <td ><input type="text" name="obj.webColproductItemses[${x.index}].importmant" value="<s:property value='importmant'/>" /></td>			    
+			     <td >
+			     <select name="obj.webColproductItemses[${x.index}].importmant">
+			        <option value="H">高</option>
+			        <option value="M">中</option>
+			        <option value="L">低</option>
+			     </select>			     
+			     </td>			    
 			     <td><input type="text" name="obj.webColproductItemses[${x.index}].shape" value="<s:property value='shape'/>" readonly style="color:blue" /></td>			    			     			     
 			     <td ><input type="text" name="obj.webColproductItemses[${x.index}].CStructure" value="<s:property value='CStructure'/>" /></td>			     
 			     <td ><input type="text" name="obj.webColproductItemses[${x.index}].purpose" value="<s:property value='purpose'/>" datatype="my0-8"  id="purpose_${x.index}"/></td>
@@ -281,25 +287,26 @@ var j=0;
              var newTd12=newTr.insertCell();
         	
         newTd00.innerHTML='<input type="hidden" name="cbox"/><input type="image" src="images/del.gif" onclick="this.parentNode.parentNode.parentNode.removeChild(this.parentNode.parentNode)"/>'; 
-        newTd0.innerHTML = '<input type="text" name="obj['+j+'].importmant" value="" />';                       
-        newTd1.innerHTML= '<input type="text" name="obj['+j+'].id.itemNo" value="0'+j+'"  datatype="*" style="color:blue"  readonly/>';
+        newTd0.innerHTML = '<select  name="obj.webColproductItemses['+j+'].importmant" >'+
+        '</select>';                       
+        newTd1.innerHTML= '<input type="text" name="obj.webColproductItemses['+j+'].shape" value="0'+j+'"  datatype="*"/>';
         
         
-        newTd2.innerHTML='<input type="text" name="obj['+j+'].matNo" value="" />';
-        newTd3.innerHTML='<input type="text" name="obj['+j+'].qtyExpect" value="" datatype="my0-8"/><span class="Validform_checktip"></span>';
-        newTd4.innerHTML='<input type="text" name="obj['+j+'].qtyOk" value="" datatype="my0-8"/><span class="Validform_checktip"></span>';
-        newTd5.innerHTML='<input type="text" name="obj['+j+'].personNo"  datatype="n0-8"/><span class="Validform_checktip"></span>';
+        newTd2.innerHTML='<input type="text" name="obj.webColproductItemses['+j+'].matNo" value="" />';
+        newTd3.innerHTML='<input type="text" name="obj.webColproductItemses['+j+'].qtyExpect" value="" datatype="my0-8"/><span class="Validform_checktip"></span>';
+        newTd4.innerHTML='<input type="text" name="obj.webColproductItemses['+j+'].qtyOk" value="" datatype="my0-8"/><span class="Validform_checktip"></span>';
+        newTd5.innerHTML='<input type="text" name="obj.webColproductItemses['+j+'].personNo"  datatype="n0-8"/><span class="Validform_checktip"></span>';
         if(qtyPair==null&&moneyType==null){
-        	newTd6.innerHTML='<input type="text" name="obj['+j+'].qtyPair"  id="qtyPair"/>';    
-            newTd7.innerHTML='<input type="text" name="obj['+j+'].moneyType"  id="moneyType"/>';
+        	newTd6.innerHTML='<input type="text" name="obj.webColproductItemses['+j+'].qtyPair"  id="qtyPair"/>';    
+            newTd7.innerHTML='<input type="text" name="obj.webColproductItemses['+j+'].moneyType"  id="moneyType"/>';
         	
         }else{
-        	newTd6.innerHTML='<input type="text" name="obj['+j+'].qtyPair" value="'+qtyPair.value+'" />';    
-            newTd7.innerHTML='<input type="text" name="obj['+j+'].moneyType" value="'+moneyType.value+'" />';
+        	newTd6.innerHTML='<input type="text" name="obj.webColproductItemses['+j+'].qtyPair" value="'+qtyPair.value+'" />';    
+            newTd7.innerHTML='<input type="text" name="obj.webColproductItemses['+j+'].moneyType" value="'+moneyType.value+'" />';
         }
-        newTd8.innerHTML='<input type="text" name="obj['+j+'].memoMk" value="" />'+
-        '<input type="hidden" name="obj['+j+'].id.kyzExpectmatm.id.factNo" value="'+factno+'"'+'/>'+     
-        '<input type="hidden" name="obj['+j+'].id.kyzExpectmatm.id.billNo" value="'+billno+'"'+'/>';       
+        newTd8.innerHTML='<input type="text" name="obj.webColproductItemses['+j+'].memoMk" value="" />'+
+        '<input type="hidden" name="obj.webColproductItemses['+j+'].id.kyzExpectmatm.id.factNo" value="'+factno+'"'+'/>'+     
+        '<input type="hidden" name="obj.webColproductItemses['+j+'].id.kyzExpectmatm.id.billNo" value="'+billno+'"'+'/>';       
         }
         
 	}
