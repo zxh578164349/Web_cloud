@@ -23,6 +23,8 @@ public class WebColproductMain implements java.io.Serializable {
 	private List<WebColproductItems> webColproductItemses = new ArrayList<WebColproductItems>();
 	private KyVisabillm vbm;
 	private String title;
+	private String colDateMain;//主表日期
+	private String orderManMain;//主表下單人
 
 	// Constructors
 
@@ -141,6 +143,25 @@ public class WebColproductMain implements java.io.Serializable {
 	public void setVbm(KyVisabillm vbm) {
 		this.vbm = vbm;
 	}
+
+	public String getColDateMain() {
+		return colDateMain;
+	}
+
+	public void setColDateMain(String colDateMain) {
+		this.colDateMain = colDateMain;
+	}
+
+	public String getOrderManMain() {
+		return orderManMain;
+	}
+
+	public void setOrderManMain(String orderManMain) {
+		this.orderManMain = orderManMain;
+	}
+	
+	
+	
 	
 	
 

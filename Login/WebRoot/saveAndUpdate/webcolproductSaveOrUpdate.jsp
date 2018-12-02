@@ -29,19 +29,19 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
     <form action="kyz_add"  method="post" id="form"  enctype="multipart/form-data" target="frameFile">
 		<table class="table table-condensed" >		    	
 			<tbody id="tb_list_info2">				   
-				    <s:if test="kyz==null">
+				    <s:if test="obj==null">
 				   	<input type="hidden" name="isnull" value="isNull"/><!--判斷變量 -->										
-					<tr>
+					<tr>					
 						<td class="tdcolor">廠別</td>
 						<s:if test="#session.factNo!='tw'">
 						<td ><input type="text" style="color:blue"
-							name="obj.id.factNo" value="${factNo}" readonly id="dwrFactNo" />							
+							name="obj.factNo" value="${factNo}" readonly id="dwrFactNo" />							
 						</td>
 						</s:if>
 						<s:if test="#session.factNo=='tw'">
 						<td ><select style="color:blue"
-							name="obj.id.factNo" datatype="*" id="dwrFactNo"
-							onchange="getFactArea(this.value),makeBillNo(),getKyType2(this.value)">
+							name="obj.factNo" datatype="*" id="dwrFactNo"
+							onchange="makeBillNo(),getKyType2(this.value)">
 								<option value="">請選擇廠別</option>
 								<s:iterator value="#session.facts" id="temp">
 									<option value="${temp[0]}">${temp[1]
@@ -50,87 +50,113 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 						</select></td>
 						</s:if>		
 						<td class="tdcolor">類別</td>
-						<td></td>						
+						<td>
+						  <select  id="dwr_kytype" onchange="checkType()" datatype="*" style="color:blue">
+				            <option value="">請選擇</option>
+				         </select>
+				         <input type="hidden" id="dwr_email" value="<s:property value='#session.loginUser.email'/>"/>
+				         <input type="hidden" name="obj.visaType" id="hidden_kytype" datatype="*"/>					         
+				         <div id="div_depar" style="display:none"><select id="sel_depar" onchange="checkType2()"></select></div>
+						</td>						
 						<td class="tdcolor">單號</td>
 				        <td >
-				        <input type="text" name="obj.id.billNo" value="自動生成" readonly style="color:blue" id="kyz_billno" datatype="*"/>	
-				        </td>
-				        <td class="tdcolor">日期</td>
-						<td>
-						<input type="text" name="yymmdd" id="kyz_timecreate"  readonly  value="<%=str_date%>" style="color:blue">
-						</td>
-					</tr>																																							    
-				   </s:if>
-				   <s:else>
+				        <input type="text" name="obj.billNo" value="自動生成" readonly style="color:blue" id="obj_billno" datatype="*"/>	
+				        </td>				        
+						</tr>	
+						</s:if>
+						<s:else>
+						<tr>
 				      <td class="tdcolor">廠別</td>				      
 				      <td>
-				      <input type="text" name="obj.id.factNo" value="<s:property value='obj.id.factNo'/>" readonly style="color:blue" id="dwrFactNo"/>
+				      <input type="text" name="obj.factNo" value="<s:property value='obj.factNo'/>" readonly style="color:blue" id="dwrFactNo"/>
 				      <input type="hidden" name="isnull" value="notNull"/><!--判斷變量 -->
 				      </td>
 				     
 				      <td class="tdcolor">類別</td>
-				      <td><input type="text" name="obj.factCode" value="<s:property value='obj.factCode'/>" readonly style="color:blue" id="dwrFactArea"/></td>
+				      <td>
+				      <input type="text" value="<s:property value='obj.visaType'/>" name="obj.visaType" style="color:blue"  readonly/>
+				      </td>
 				     
 				      <td class="tdcolor">單號</td>
 				      <td>
-				      <input type="text" name="obj.id.billNo" value="<s:property value='obj.id.billNo'/>" id="kyz_billno" readonly style="color:blue" />
-				      </td>
-				      <td class="tdcolor">日期</td>
-					  <td><input type="text" name="yymmdd" value="<%=str_date%>" readonly style="color:blue" /></td>
-					  
-					  <input type="hidden" name="obj.username" value="<s:property value='#session.loginUser.username'/>"/>
-					  <input type="hidden" name="obj.userId" value="<s:property value='#session.loginUser.id'/>"/>
-					  <input type="hidden" name="obj.useremail" value="<s:property value='#session.loginUser.email'/>"/>			     				     
+				      <input type="text" name="obj.billNo" value="<s:property value='obj.billNo'/>" id="obj_billno" readonly style="color:blue" />
+				      </td>				     					  					  					  
+					  <input type="text" name="obj.webUserByCreateUserFid.id" value="<s:property value='obj.webUserByCreateUserFid.id'/>"/>
+				      <input type="text" name="obj.webUserByUpdateUserFid.id" value="<s:property value='#session.loginUser.id'/>"/>
+				      <input type="text" name="obj.createDate" value="<s:property value='obj.createDate'/>"/>	
+				      <input type="text" name="obj.updateDate" value="<%=str_date %>"/>	
+					  </tr>			     				     
 				   </s:else>
-				   				    				    										
-					<s:if test="kyz==null">
-					   <tr>
+				   <tr>
+				      <td>標題</td>
+				      <td>
+				        <input type="text" name="obj.title" datatype="*1-100"  value="<s:property value='obj.title'/>" />
+				      </td>				       
+				      <td class="tdcolor">日期</td>
+					  <td><input type="text" name="obj.colDateMain" value="<%=str_date%>" readonly style="color:blue" /></td>
+					  <td>下單人</td>
+					  <td>
+					  <s:if test="obj==null">
+					    <input type="text" name="obj.orderManMain" value="<s:property value='#session.loginUser.name'/>"/>
+					  </s:if>
+					  <s:else>
+					    <input type="text" name="obj.orderManMain" value="<s:property value='obj.orderManMain'/>"/>
+					  </s:else>					 
+					  </td>					  
+				   </tr>
+				   <s:if test="obj==null">
+				     <tr>					   
 					    <td class="tdcolor">是否分部門</td>
 					    <td colspan="10">
 					                   是<input type="radio" name="trMk" value="Y" checked datatype="*" onclick="checkType()"/>&nbsp;&nbsp;
-			                                           否<input type="radio" name="trMk" value="N" onclick="checkType()"/> 
-					    </td>
-					   </tr>
-					</s:if>																		
+			                                           否<input type="radio" name="trMk" value="N" onclick="checkType()"/>
+					    </td>	
+					 </tr>   				   
+					</s:if>	
+				   																																											    				   				   				   				    				    																																
 			</tbody>
 			</table>	
 			<table class="table table-condensed">								 			
 			<tbody id="kyzs_body" >
 			  <tr>
 			     <td class="tdcolor"></td>
-			     <td class="tdcolor">名稱</td>
-			     <td class="tdcolor">項次</td>
-			     <td class="tdcolor">規格</td>
-			     <td class="tdcolor">單價</td>
+			     <td class="tdcolor">重要性</td>
+			     <td class="tdcolor">型體</td>
+			     <td class="tdcolor">結構</td>
+			     <td class="tdcolor">樣品用途</td>
 			     <td class="tdcolor">數量</td>
-			     <td class="tdcolor">使用人數</td>
-			     <td class="tdcolor">單位</td>
-			     <td class="tdcolor">幣種</td>		     
+			     <td class="tdcolor">單重</td>
+			     <td class="tdcolor">留底量</td>
+			     <td class="tdcolor">不良</td>			     
+			     <td class="tdcolor">型體負責人</td>
+			     <td class="tdcolor">可否請款</td>
+			     <td class="tdcolor">量產數量</td>
+			     <td class="tdcolor">需求料的重量</td>			    			     			     		     
 			     <td class="tdcolor">備註</td>
 			 </tr>				
 			  
-			    <s:iterator value="obj.kyzExpectmatses" status="x" id="temp">
+			    <s:iterator value="obj" status="x" id="temp">
 			    <tr class="bluecss">
 			     <td><input type="hidden" name="cbox"/></td>			           			          			          			            			          	     
-			     <td ><input type="text" name="obj.kyzExpectmatses[${x.index}].itemNm" value="<s:property value='itemNm'/>" /></td>			    
-			     <td><input type="text" name="obj.kyzExpectmatses[${x.index}].id.itemNo" value="<s:property value='id.itemNo'/>" readonly style="color:blue" /></td>			    			     			     
-			     <td ><input type="text" name="obj.kyzExpectmatses[${x.index}].matNo" value="<s:property value='matNo'/>" /></td>			     
-			     <td ><input type="text" name="obj.kyzExpectmatses[${x.index}].qtyExpect" value="<s:property value='qtyExpect'/>" datatype="my0-8"  id="qtyExpect_${x.index}"/></td>
-			     <td ><input type="text" name="obj.kyzExpectmatses[${x.index}].qtyOk" value="<s:property value='%{formatDouble(qtyOk)}'/>" datatype="my0-8"  id="qtyOk_${x.index}"/></td>
-			     <td ><input type="text" name="obj.kyzExpectmatses[${x.index}].personNo" value="<s:property value='%{formatDouble(personNo)}'/>" datatype="n0-8"  id="personNo_${x.index}"/></td>
-			     <td ><input type="text" name="obj.kyzExpectmatses[${x.index}].qtyPair" value="<s:property value='qtyPair'/>"   /></td>
-			     <td ><input type="text" name="obj.kyzExpectmatses[${x.index}].moneyType" value="<s:property value='moneyType'/>"  /></td>
+			     <td ><input type="text" name="obj.webColproductItemses[${x.index}].importmant" value="<s:property value='importmant'/>" /></td>			    
+			     <td><input type="text" name="obj.webColproductItemses[${x.index}].shape" value="<s:property value='shape'/>" readonly style="color:blue" /></td>			    			     			     
+			     <td ><input type="text" name="obj.webColproductItemses[${x.index}].CStructure" value="<s:property value='CStructure'/>" /></td>			     
+			     <td ><input type="text" name="obj.webColproductItemses[${x.index}].purpose" value="<s:property value='purpose'/>" datatype="my0-8"  id="purpose_${x.index}"/></td>
+			     <td ><input type="text" name="obj.webColproductItemses[${x.index}].numbers" value="<s:property value='numbers'/>" datatype="my0-8"  id="numbers_${x.index}"/></td>
+			     <td ><input type="text" name="obj.webColproductItemses[${x.index}].weight" value="<s:property value='weight'/>" datatype="n0-8"  id="weight_${x.index}"/></td>
+			     <td ><input type="text" name="obj.webColproductItemses[${x.index}].remainNum" value="<s:property value='remainNum'/>"   /></td>
+			     <td ><input type="text" name="obj.webColproductItemses[${x.index}].unhealthNum" value="<s:property value='unhealthNum'/>"  /></td>
+			    
+			     <td ><input type="text" name="obj.webColproductItemses[${x.index}].picMan" value="<s:property value='picMan'/>" datatype="my0-8"  id="picMan_${x.index}"/></td>
+			     <td ><input type="text" name="obj.webColproductItemses[${x.index}].paymk" value="<s:property value='paymk'/>" datatype="n0-8"  id="paymk_${x.index}"/></td>
+			     <td ><input type="text" name="obj.webColproductItemses[${x.index}].numbersb" value="<s:property value='numbersb'/>"/></td>
+			     <td ><input type="text" name="obj.webColproductItemses[${x.index}].weightb" value="<s:property value='weightb'/>"/></td>
 			      <td >
-			      <input type="text" name="obj.kyzExpectmatses[${x.index}].memoMk" value="<s:property value='memoMk'/>" />			      
-			      <input type="hidden" name="obj.kyzExpectmatses[${x.index}].id.kyzExpectmatm.id.factNo" value="<s:property value='id.kyzExpectmatm.id.factNo'/>" />
-			      <input type="hidden" name="obj.kyzExpectmatses[${x.index}].id.kyzExpectmatm.id.billNo" value="<s:property value='id.kyzExpectmatm.id.billNo'/>" />
-			      <input type="hidden" name="obj.kyzExpectmatses[${x.index}].factCode" value="<s:property value='factCode'/>" />
+			      <input type="text" name="obj.webColproductItemses[${x.index}].remarks" value="<s:property value='remarks'/>" />			      
+			      <input type="hidden" name="obj.webColproductItemses[${x.index}].webColproductMain.billNo" value="<s:property value='webColproductMain.billNo'/>" />		     
 			      </td>			      		      
 			  </tr>
-			    </s:iterator>
-			    <input type="hidden" value="<s:property value='obj.id.factNo'/>" name="factNo"/>
-			    <input type="hidden" value="<s:property value='obj.id.billNo'/>" name="billNo"/>
-			    	         			  			 	  			
+			    </s:iterator>		    			    	         			  			 	  			
 			</tbody>
 			<tfoot><tr>			
 			<td colspan="10">			     			  
@@ -209,11 +235,11 @@ jq(function() {
 	
 function makeBillNo() {        
 		var factno = document.getElementById("dwrFactNo").value;
-		var timecreat = document.getElementById("kyz_timecreate").value;		
+		var timecreat = document.getElementById("obj_timecreate").value;		
 		var cbox_length=document.getElementsByName("cbox").length;
 		if (factno != "" && timecreat != "") {
 			kyzjs.makeBillNo(factno, timecreat, function(x) {
-				dwr.util.setValue("kyz_billno", x);								 			  								
+				dwr.util.setValue("obj_billno", x);								 			  								
 			});
 			document.getElementById("addbtn").disabled="";
 			document.getElementById("addbtn").style.color="black";					 	 		
@@ -224,7 +250,7 @@ function makeBillNo() {
 var j=0;
 	function addRow(){	    
         var factno=document.getElementById("dwrFactNo").value;
-        var billno=document.getElementById("kyz_billno").value;
+        var billno=document.getElementById("obj_billno").value;
         //var factcode=document.getElementById("dwrFactArea").value;
         var qtyPair=document.getElementById("qtyPair");
         var moneyType=document.getElementById("moneyType");
@@ -248,30 +274,32 @@ var j=0;
              var newTd6=newTr.insertCell();
              var newTd7=newTr.insertCell();
              var newTd8=newTr.insertCell();
+             
+             var newTd9=newTr.insertCell();
+             var newTd10=newTr.insertCell();
+             var newTd11=newTr.insertCell();
+             var newTd12=newTr.insertCell();
         	
         newTd00.innerHTML='<input type="hidden" name="cbox"/><input type="image" src="images/del.gif" onclick="this.parentNode.parentNode.parentNode.removeChild(this.parentNode.parentNode)"/>'; 
-        newTd0.innerHTML = '<input type="text" name="obj.kyzExpectmatses['+j+'].itemNm" value="" />'; 
-        if(j<10){
-          newTd1.innerHTML= '<input type="text" name="obj.kyzExpectmatses['+j+'].id.itemNo" value="00'+j+'" datatype="*" style="color:blue"  readonly/>';
-        }else{
-          newTd1.innerHTML= '<input type="text" name="obj.kyzExpectmatses['+j+'].id.itemNo" value="0'+j+'"  datatype="*" style="color:blue"  readonly/>';
-        }
+        newTd0.innerHTML = '<input type="text" name="obj['+j+'].importmant" value="" />';                       
+        newTd1.innerHTML= '<input type="text" name="obj['+j+'].id.itemNo" value="0'+j+'"  datatype="*" style="color:blue"  readonly/>';
         
-        newTd2.innerHTML='<input type="text" name="obj.kyzExpectmatses['+j+'].matNo" value="" />';
-        newTd3.innerHTML='<input type="text" name="obj.kyzExpectmatses['+j+'].qtyExpect" value="" datatype="my0-8"/><span class="Validform_checktip"></span>';
-        newTd4.innerHTML='<input type="text" name="obj.kyzExpectmatses['+j+'].qtyOk" value="" datatype="my0-8"/><span class="Validform_checktip"></span>';
-        newTd5.innerHTML='<input type="text" name="obj.kyzExpectmatses['+j+'].personNo"  datatype="n0-8"/><span class="Validform_checktip"></span>';
+        
+        newTd2.innerHTML='<input type="text" name="obj['+j+'].matNo" value="" />';
+        newTd3.innerHTML='<input type="text" name="obj['+j+'].qtyExpect" value="" datatype="my0-8"/><span class="Validform_checktip"></span>';
+        newTd4.innerHTML='<input type="text" name="obj['+j+'].qtyOk" value="" datatype="my0-8"/><span class="Validform_checktip"></span>';
+        newTd5.innerHTML='<input type="text" name="obj['+j+'].personNo"  datatype="n0-8"/><span class="Validform_checktip"></span>';
         if(qtyPair==null&&moneyType==null){
-        	newTd6.innerHTML='<input type="text" name="obj.kyzExpectmatses['+j+'].qtyPair"  id="qtyPair"/>';    
-            newTd7.innerHTML='<input type="text" name="obj.kyzExpectmatses['+j+'].moneyType"  id="moneyType"/>';
+        	newTd6.innerHTML='<input type="text" name="obj['+j+'].qtyPair"  id="qtyPair"/>';    
+            newTd7.innerHTML='<input type="text" name="obj['+j+'].moneyType"  id="moneyType"/>';
         	
         }else{
-        	newTd6.innerHTML='<input type="text" name="obj.kyzExpectmatses['+j+'].qtyPair" value="'+qtyPair.value+'" />';    
-            newTd7.innerHTML='<input type="text" name="obj.kyzExpectmatses['+j+'].moneyType" value="'+moneyType.value+'" />';
+        	newTd6.innerHTML='<input type="text" name="obj['+j+'].qtyPair" value="'+qtyPair.value+'" />';    
+            newTd7.innerHTML='<input type="text" name="obj['+j+'].moneyType" value="'+moneyType.value+'" />';
         }
-        newTd8.innerHTML='<input type="text" name="obj.kyzExpectmatses['+j+'].memoMk" value="" />'+
-        '<input type="hidden" name="obj.kyzExpectmatses['+j+'].id.kyzExpectmatm.id.factNo" value="'+factno+'"'+'/>'+     
-        '<input type="hidden" name="obj.kyzExpectmatses['+j+'].id.kyzExpectmatm.id.billNo" value="'+billno+'"'+'/>';       
+        newTd8.innerHTML='<input type="text" name="obj['+j+'].memoMk" value="" />'+
+        '<input type="hidden" name="obj['+j+'].id.kyzExpectmatm.id.factNo" value="'+factno+'"'+'/>'+     
+        '<input type="hidden" name="obj['+j+'].id.kyzExpectmatm.id.billNo" value="'+billno+'"'+'/>';       
         }
         
 	}

@@ -34,6 +34,12 @@
         <property name="title" type="java.lang.String">
             <column name="TITLE" length="200" />
         </property>
+        <property name="colDateMain" type="java.lang.String">
+            <column name="COL_DATE_MAIN" length="15" />
+        </property>
+        <property name="orderManMain" type="java.lang.String">
+            <column name="ORDER_MAN_MAIN" length="50" />
+        </property>
         <bag name="webColproductItemses" inverse="true" cascade="all">
             <key>
                 <column name="BILL_NO" length="30" />
