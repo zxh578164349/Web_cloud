@@ -46,4 +46,9 @@ public class WebColproductMainServicesImpl implements IWebColproductMainServices
 		webcolprodao.delete_item(iid, log);
 	}
 
+	public String findByfactNoACreatedate(String factNo, String createDate) {
+		// TODO Auto-generated method stub
+		return webcolprodao.findByfactNoACreatedate(factNo, createDate);
+	}
+
 }

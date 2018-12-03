@@ -109,6 +109,16 @@ public class WebColproductMainDaoImpl extends Basedao implements IWebColproductM
 		super.delete(obj, log);
 		
 	}
+
+	public String findByfactNoACreatedate(String factNo, String createDate) {
+		// TODO Auto-generated method stub
+		String hql="select max(billNo) from WebColproductMain where factNo=? and createDate like ?";
+		Query query=getSession().createQuery(hql);
+		query.setString(0, factNo);
+		query.setString(1, createDate.substring(0, 8)+"%");
+		String str=(String)query.uniqueResult();		
+		return str;
+	}
 	
 	
 

@@ -12,5 +12,6 @@ public interface IWebColproductMainServices {
 	public PageBean findPageBean(int page,int pageSize,String factNo,String billNo,String dateA,String dateB);
 	public WebColproductItems findById(int iid);
 	public void delete_item(int iid,KyzExpectmatmLog log);
+	public String findByfactNoACreatedate(String factNo,String createDate);
 
 }

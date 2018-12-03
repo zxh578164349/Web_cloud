@@ -1,16 +1,24 @@
 package action;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.struts2.interceptor.ServletResponseAware;
 
+import services.IKyVisabillmServices;
 import services.IWebColproductMainServices;
+import services.IWebuserEmailServices;
+import util.GlobalMethod;
 import util.PageBean;
 
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
+import entity.KyVisabillm;
 import entity.WebColproductItems;
 import entity.WebColproductMain;
+import entity.WebNewproduct;
 
 public class WebColproductMainAction extends ActionSupport implements ServletResponseAware{
 	 private HttpServletResponse response;
@@ -24,9 +32,46 @@ public class WebColproductMainAction extends ActionSupport implements ServletRes
 	 private int iid;
 	 private String dateA;
 	 private String dateB;
+	 private String createDate;
+	 private String ajaxResult;
+	 private IKyVisabillmServices visabillmSer;
+	 private IWebuserEmailServices webuseremailSer;
+	 private String isnull;	 
 	 
-	 	 
 	 
+	 
+	public String getIsnull() {
+		return isnull;
+	}
+
+	public void setIsnull(String isnull) {
+		this.isnull = isnull;
+	}
+
+	public void setVisabillmSer(IKyVisabillmServices visabillmSer) {
+		this.visabillmSer = visabillmSer;
+	}
+
+	public void setWebuseremailSer(IWebuserEmailServices webuseremailSer) {
+		this.webuseremailSer = webuseremailSer;
+	}
+
+	public String getAjaxResult() {
+		return ajaxResult;
+	}
+
+	public void setAjaxResult(String ajaxResult) {
+		this.ajaxResult = ajaxResult;
+	}
+
+	public String getCreateDate() {
+		return createDate;
+	}
+
+	public void setCreateDate(String createDate) {
+		this.createDate = createDate;
+	}
+
 	public WebColproductMain getObj() {
 		return obj;
 	}
@@ -108,6 +153,86 @@ public class WebColproductMainAction extends ActionSupport implements ServletRes
 		this.response=response;
 		
 	}
+	
+	public String add(){
+		try{
+			obj.setVisaTypeM(obj.getVisaType().substring(0,2));
+			if(isnull.equals("isNull")){//start if
+				WebColproductMain col=webcolproServer.findByBillNo(obj.getBillNo());
+				if(col==null){					
+					webcolproServer.add(obj);				
+					KyVisabillm vbm=visabillmSer.findById(obj.getFactNo(), obj.getVisaType(), obj.getBillNo());				      
+				    List<String>list_emailPwd=webuseremailSer.findByFactNoAEmailPwd2(vbm.getId().getFactNo(),vbm.getSignerNext());											      
+					GlobalMethod.sendNewEmail(vbm,list_emailPwd);//發送郵件	
+					ajaxResult="0";	//添加成功
+					}else{
+						ajaxResult="2";	//數據已存在
+					}								
+			}//end if
+			else{				
+				webcolproServer.add(obj);
+				ajaxResult="0";	
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+			ajaxResult="1";	//添加失敗
+		}
+		
+		return "add";
+	}
+	
+	
+	
+	public String makeBillNo(){
+		String maxbillno=webcolproServer.findByfactNoACreatedate(factNo, createDate);
+		StringBuffer bn=new StringBuffer();
+		bn.append("NP");
+		bn.append(factNo);
+		bn.append(createDate.substring(2,8));
+		if(maxbillno==null||"".equals(maxbillno)){
+			bn.append("01");
+		}else{
+			int num=Integer.parseInt(maxbillno.substring(maxbillno.length()-2, maxbillno.length()));
+			if(num+1<10){
+				bn.append("0"+(num+1));
+			}else{
+				bn.append(num+1);
+			}
+		}
+		ajaxResult=bn.toString();
+		return "makeBillNo";	
+	}
+	
+	
+	/*public String findPageBean(){
+		ActionContext.getContext().getSession().remove("allRow");
+		ActionContext.getContext().getSession().put("n_factNo", factNo);
+		ActionContext.getContext().getSession().put("n_billNo", billNo);
+		ActionContext.getContext().getSession().put("n_createDateA", createDateA);
+		ActionContext.getContext().getSession().put("n_createDateB", createDateB);
+		ActionContext.getContext().getSession().put("pname", pname);
+		bean=webnewproSer.findPageBean(page, 0, factNo, billNo, createDateA, createDateB,pname);		
+		return "findPageBean";
+	}
+	
+	public String findPageBean2(){		
+		this.findPageBean();
+		return "findPageBean1";
+	}
+	
+	public String findPageBean3(){
+		factNo=(String)ActionContext.getContext().getSession().get("n_factNo");
+		billNo=(String)ActionContext.getContext().getSession().get("n_billNo");
+		createDateA=(String)ActionContext.getContext().getSession().get("n_createDateA");
+		createDateB=(String)ActionContext.getContext().getSession().get("n_createDateB");
+		pname=(String)ActionContext.getContext().getSession().get("pname");
+		bean=webnewproSer.findPageBean(page, 0, factNo, billNo, createDateA, createDateB,pname);
+		if(backIndex==1){
+			return "findPageBean";
+		}else{
+			return "findPageBean1";
+		}		
+	}*/
 	
 	
 	

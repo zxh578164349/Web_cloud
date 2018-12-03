@@ -26,11 +26,20 @@ public class WebNewproduct implements java.io.Serializable {
 	private String visaTypeM;
 	private KyVisabillm vbm;
 	private List<KyzExpectmatmFile>list_file;
+	private String title;
 
 	// Constructors
 
 	public KyVisabillm getVbm() {
 		return vbm;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 	public void setVbm(KyVisabillm vbm) {

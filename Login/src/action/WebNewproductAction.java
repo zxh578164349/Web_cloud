@@ -223,11 +223,9 @@ public class WebNewproductAction extends ActionSupport implements ServletRespons
 			if(files!=null&&files.get(0)!=null){
 				obj.setFilesYn("1");//標示是否帶有附檔
 			}
-			if(isnull.equals("isNull")){//start if
-				String billno=obj.getBillNo();
-				WebNewproduct pro=webnewproSer.findByBillNo(billno);
-				if(pro==null){
-					//obj.setVisaTypeM(obj.getVisaType().substring(0,2));
+			if(isnull.equals("isNull")){//start if				
+				WebNewproduct pro=webnewproSer.findByBillNo(obj.getBillNo());
+				if(pro==null){					
 					webnewproSer.add(obj);				
 					KyVisabillm vbm=visabillmSer.findById(obj.getFactNo(), obj.getVisaType(), obj.getBillNo());				      
 				    List<String>list_emailPwd=webuseremailSer.findByFactNoAEmailPwd2(vbm.getId().getFactNo(),vbm.getSignerNext());											      
@@ -243,8 +241,7 @@ public class WebNewproductAction extends ActionSupport implements ServletRespons
 						return null;
 					}								
 			}//end if
-			else{
-				//obj.setVisaTypeM(obj.getVisaType().substring(0,2));
+			else{				
 				webnewproSer.add(obj);
 			}
 			/*文件上傳*/

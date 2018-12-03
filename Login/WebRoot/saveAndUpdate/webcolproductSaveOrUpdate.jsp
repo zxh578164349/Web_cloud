@@ -26,7 +26,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 <link rel="stylesheet" type="text/css" href="css/form.css" />
 </head>
 <body >  
-    <form action="kyz_add"  method="post" id="form"  enctype="multipart/form-data" target="frameFile">
+    <form action="webcolpro_add"  method="post" id="form"  enctype="multipart/form-data" target="frameFile">
 		<table class="table table-condensed" >		    	
 			<tbody id="tb_list_info2">				   
 				    <s:if test="obj==null">
@@ -154,7 +154,12 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 			     <td ><input type="text" name="obj.webColproductItemses[${x.index}].unhealthNum" value="<s:property value='unhealthNum'/>"  /></td>
 			    
 			     <td ><input type="text" name="obj.webColproductItemses[${x.index}].picMan" value="<s:property value='picMan'/>" datatype="my0-8"  id="picMan_${x.index}"/></td>
-			     <td ><input type="text" name="obj.webColproductItemses[${x.index}].paymk" value="<s:property value='paymk'/>" datatype="n0-8"  id="paymk_${x.index}"/></td>
+			     <td >
+			     <section name="obj.webColproductItemses[${x.index}].paymk">
+			       <option value="Y">是</option>
+			       <option value="N">否</option>
+			     </section>			     
+			     </td>
 			     <td ><input type="text" name="obj.webColproductItemses[${x.index}].numbersb" value="<s:property value='numbersb'/>"/></td>
 			     <td ><input type="text" name="obj.webColproductItemses[${x.index}].weightb" value="<s:property value='weightb'/>"/></td>
 			      <td >
@@ -257,10 +262,7 @@ var j=0;
 	function addRow(){	    
         var factno=document.getElementById("dwrFactNo").value;
         var billno=document.getElementById("obj_billno").value;
-        //var factcode=document.getElementById("dwrFactArea").value;
-        var qtyPair=document.getElementById("qtyPair");
-        var moneyType=document.getElementById("moneyType");
-        
+        //var factcode=document.getElementById("dwrFactArea").value;             
         //设置列内容和属性
         var cboxlist=document.getElementsByName("cbox");
         if(cboxlist.length>29){
@@ -288,33 +290,26 @@ var j=0;
         	
         newTd00.innerHTML='<input type="hidden" name="cbox"/><input type="image" src="images/del.gif" onclick="this.parentNode.parentNode.parentNode.removeChild(this.parentNode.parentNode)"/>'; 
         newTd0.innerHTML = '<select  name="obj.webColproductItemses['+j+'].importmant" >'+
-        '</select>';                       
-        newTd1.innerHTML= '<input type="text" name="obj.webColproductItemses['+j+'].shape" value="0'+j+'"  datatype="*"/>';
-        
-        
-        newTd2.innerHTML='<input type="text" name="obj.webColproductItemses['+j+'].matNo" value="" />';
-        newTd3.innerHTML='<input type="text" name="obj.webColproductItemses['+j+'].qtyExpect" value="" datatype="my0-8"/><span class="Validform_checktip"></span>';
-        newTd4.innerHTML='<input type="text" name="obj.webColproductItemses['+j+'].qtyOk" value="" datatype="my0-8"/><span class="Validform_checktip"></span>';
-        newTd5.innerHTML='<input type="text" name="obj.webColproductItemses['+j+'].personNo"  datatype="n0-8"/><span class="Validform_checktip"></span>';
-        if(qtyPair==null&&moneyType==null){
-        	newTd6.innerHTML='<input type="text" name="obj.webColproductItemses['+j+'].qtyPair"  id="qtyPair"/>';    
-            newTd7.innerHTML='<input type="text" name="obj.webColproductItemses['+j+'].moneyType"  id="moneyType"/>';
-        	
-        }else{
-        	newTd6.innerHTML='<input type="text" name="obj.webColproductItemses['+j+'].qtyPair" value="'+qtyPair.value+'" />';    
-            newTd7.innerHTML='<input type="text" name="obj.webColproductItemses['+j+'].moneyType" value="'+moneyType.value+'" />';
-        }
-        newTd8.innerHTML='<input type="text" name="obj.webColproductItemses['+j+'].memoMk" value="" />'+
-        '<input type="hidden" name="obj.webColproductItemses['+j+'].id.kyzExpectmatm.id.factNo" value="'+factno+'"'+'/>'+     
-        '<input type="hidden" name="obj.webColproductItemses['+j+'].id.kyzExpectmatm.id.billNo" value="'+billno+'"'+'/>';       
+        '<option value="H">高</option><option value="M">中</option><option value="L">低</option></select>';                       
+        newTd1.innerHTML= '<input type="text" name="obj.webColproductItemses['+j+'].shape"  datatype="*"/>';               
+        newTd2.innerHTML='<input type="text" name="obj.webColproductItemses['+j+'].CStructure"  />';
+        newTd3.innerHTML='<input type="text" name="obj.webColproductItemses['+j+'].purpose"  datatype="my0-8"/><span class="Validform_checktip"></span>';
+        newTd4.innerHTML='<input type="text" name="obj.webColproductItemses['+j+'].numbers"  datatype="my0-8"/><span class="Validform_checktip"></span>';
+        newTd5.innerHTML='<input type="text" name="obj.webColproductItemses['+j+'].personNo"  datatype="n0-8"/><span class="Validform_checktip"></span>';      
+        newTd6.innerHTML='<input type="text" name="obj.webColproductItemses['+j+'].weight"/>';    
+        newTd7.innerHTML='<input type="text" name="obj.webColproductItemses['+j+'].remainNum"/>'; 
+        newTd8.innerHTML='<input type="text" name="obj.webColproductItemses['+j+'].unhealthNum"/>';
+        newTd9.innerHTML='<input type="text" name="obj.webColproductItemses['+j+'].picMan"/>';
+        newTd10.innerHTML='<select name="obj.webColproductItemses['+j+'].paymk">'+
+        '<option value="Y">是</option><option value="N">否</option></select>';
+        newTd11.innerHTML='<input type="text" name="obj.webColproductItemses['+j+'].numbersb"/>'; 
+        newTd12.innerHTML='<input type="text" name="obj.webColproductItemses['+j+'].weightb"/>';                           	     
+        newTd12.innerHTML='<input type="text" name="obj.webColproductItemses['+j+'].remarks" />'+          
+        '<input type="hidden" name="obj.webColproductItemses['+j+'].webColproductMain.billNo" value="'+billno+'"'+'/>';       
         }
         
 	}
-	
-		
-	function getFactCode(){
-	    document.getElementById("dwrFactArea").value=document.getElementById("kyzs_factcode").value;
-	}
+				
    function getKyType(){	 	 
 	 var factno=document.getElementById("dwrFactNo").value;
 	 if(factno!=null&&factno!=""){
