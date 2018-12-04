@@ -62,12 +62,16 @@ public class WebColproductMainDaoImpl extends Basedao implements IWebColproductM
 			map.put("billNo", billNo);
 		}
 		if(dateA!=null&&!"".equals(dateA)){
-			hql.append(" and webColproductMain.createDate>=:dateA ");
+			hql.append(" and webColproductMain.colDateMain>=:dateA ");
 			map.put("dateA", dateA);
 		}
 		if(dateB!=null&&!"".equals(dateB)){
-			hql.append(" and webColproductMain.createDate<=:dateB ");
+			hql.append(" and webColproductMain.colDateMain<=:dateB ");
 			map.put("dateB", dateB);
+		}
+		if("Y".equals(user.getAdminMk())){
+			hql.append(" and webColproductMain.webUserByCreateUserFid.id=:uid ");
+			map.put("uid", user.getId());
 		}
 		hql2.append(hql);
 		hql.append(" order by webColproductMain.factNo,webColproductMain.billNo ");
@@ -87,7 +91,14 @@ public class WebColproductMainDaoImpl extends Basedao implements IWebColproductM
 		}
 		int offset=PageBean.countOffset(pageSize, currentPage);
 		List<WebColproductItems>list=super.queryForPage(hql.toString(), offset, pageSize, map);
-		
+		for(WebColproductItems obj:list){
+			obj.getWebColproductMain().getWebUserByCreateUserFid().getName();
+			obj.getWebColproductMain().getBillNo();
+			obj.getWebColproductMain().getFactNo();
+			obj.getWebColproductMain().getColDateMain();
+			obj.getWebColproductMain().getVbm().getLastMk();
+
+		}
 		PageBean bean=new PageBean();
 		bean.setAllRow(allRow);
 		bean.setCurrentPage(currentPage);
@@ -118,6 +129,12 @@ public class WebColproductMainDaoImpl extends Basedao implements IWebColproductM
 		query.setString(1, createDate.substring(0, 8)+"%");
 		String str=(String)query.uniqueResult();		
 		return str;
+	}
+
+	public void addItem(WebColproductItems item) {
+		// TODO Auto-generated method stub
+		super.merge(item);
+		
 	}
 	
 	

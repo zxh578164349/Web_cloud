@@ -51,4 +51,10 @@ public class WebColproductMainServicesImpl implements IWebColproductMainServices
 		return webcolprodao.findByfactNoACreatedate(factNo, createDate);
 	}
 
+	public void addItem(WebColproductItems item) {
+		// TODO Auto-generated method stub
+		webcolprodao.addItem(item);
+		
+	}
+
 }

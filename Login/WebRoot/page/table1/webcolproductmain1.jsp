@@ -29,7 +29,7 @@
 		<h3>
 		<s:if test='#session.loginUser.userread!="1"'>
 	     <input value="添加" type="button" class="btn btn-info"
-		onclick="loadUrl('saveAndUpdate/matterApplicationSaveOrUpdate.jsp')" /></s:if>
+		onclick="loadUrl('saveAndUpdate/webcolproductSaveOrUpdate.jsp')" /></s:if>
 		<span id="h2_title">函文申請</span>
 		</h3>
 		<thead>			
@@ -61,13 +61,13 @@
 		<s:iterator value="bean.list" status="x" id="temp">		  
 		     <tr > 
 				<td>${bean.pageSize*(bean.currentPage-1)+x.index+1}</td>																
-				<td><s:property value="billNo" /></td>
-				<td><s:property value="colDate" /></td>
+				<td><s:property value="webColproductMain.billNo" /></td>
+				<td><s:property value="webColproductMain.colDateMain" /></td>
 				<td><s:property value="importmant" /></td>
 				<td><s:property value="shape"/></td>
 				<td><s:property value="CStructure"/></td>				
 				<td><s:property value="webColproductMain.factNo"/></td>
-				<td><s:property value="webColproductMain.webUserByCreateUserFid.id" /></td>
+				<td><s:property value="webColproductMain.webUserByCreateUserFid.name" /></td>
 				<td><s:property value="purpose" /></td>
 				<td><s:property value="numbers"/></td>
 				<td><s:property value="weight"/></td>
@@ -77,43 +77,30 @@
 				<td><s:property value="paymk"/></td>
 				<td><s:property value="numbersb"/></td>
 				<td><s:property value="weightb"/></td>
-				<td><s:property value="remarks"/></td>				
-				<td>
-				  <s:if test="emerWhether==0">
-				    　　 是
-				  </s:if>
-				  <s:if test="emerWhether==1">
-				    　　 否
-				  </s:if>				  
-				</td>
-				<td>
-				<s:property value="colTemp"/>						
-				</td>							
-				<td><s:property value="username" /></td>
+				<td><s:property value="remarks"/></td>												
 				<td>				
 				<s:if test='#session.loginUser.userread!="1"'>
-					<form action="kyz_findById" method="post" id="subform${x.index}">
-						<input type="hidden" value="<s:property value='id.factNo'/>"
-							name="id.factNo" /> <input type="hidden"
-							value="<s:property value='id.billNo'/>" name="id.billNo" />						
+					<form action="webcolpro_findById" method="post" id="subform${x.index}">
+						<input type="hidden" value="<s:property value='iid'/>"
+							name="iid" /> 					
 					</form> 
-					<form action="kyz_delete" method="post" id="2subform${x.index}"
+					<form action="webcolpro_delete" method="post" id="2subform${x.index}"
 						style="float:left">
 						<input type="hidden" value="<s:property value='id.factNo'/>"
 							name="id.factNo" /> <input type="hidden"
 							value="<s:property value='id.billNo'/>" name="id.billNo" />
 							<input type="hidden" value="<s:property value='visaType'/>" name="visaSort"/>						
 					</form>					
-					   <s:if test="vbm.lastMk==null">
-					     <a href="javascript:findById_form('subform${x.index}','kyz_findById')" onclick=""><img alt="修改" src="images/icon/edit001.png" title="修改" ></a>						  																									
-					     <a href="javascript:void(0)" onclick="isDelete('2subform${x.index}','kyz_delete')"><img alt="刪除" src="images/icon/delete001.png" title="刪除" ></a>
+					   <s:if test="webColproductMain.vbm.lastMk==null">
+					     <a href="javascript:findById_form('subform${x.index}','webcolpro_findById')" onclick=""><img alt="修改" src="images/icon/edit001.png" title="修改" ></a>						  																									
+					     <a href="javascript:void(0)" onclick="isDelete('2subform${x.index}','webcolpro_delete')"><img alt="刪除" src="images/icon/delete001.png" title="刪除" ></a>
 					     <a href="javascript:showDivList('${temp.id.factNo}','${temp.id.billNo}')" ><img alt="函文細項" src="images/icon/list_menu.png" title="函文細項"></a>
 					   </s:if>					   				   
 					   <s:else>					   
 					      <a ><img alt="修改" src="images/icon/edit001_1.png" title="修改" ></a>
 					      <s:if test='#session.loginUser.adminMk=="Y"'>				         						  																									
 					         <s:if test='vbm.visaMk=="N"'>
-					           <a href="javascript:void(0)" onclick="isDelete('2subform${x.index}','kyz_delete')"><img alt="刪除" src="images/icon/delete001.png" title="刪除" ></a>
+					           <a href="javascript:void(0)" onclick="isDelete('2subform${x.index}','webcolpro_delete')"><img alt="刪除" src="images/icon/delete001.png" title="刪除" ></a>
 					         </s:if>
 					         <s:else>
 					           <a ><img alt="刪除" src="images/icon/delete001_1.jpg" title="刪除" ></a>
@@ -127,7 +114,7 @@
 					   </s:else>										
 					 </s:if>
 					 
-					  <form action="kyz_print2" method="post" id="3subform${x.index}" style="float:left" target="_blank">
+					  <form action="webcolpro_print2" method="post" id="3subform${x.index}" style="float:left" target="_blank">
 						<input type="hidden" value="<s:property value='id.factNo'/>"
 							name="factNo" /> <input type="hidden"
 							value="<s:property value='id.billNo'/>" name="billNo" />
@@ -135,7 +122,7 @@
 							<input type="hidden" value="<s:property value='visaType'/>" name="visaSort"/>
 							<input type="hidden" value="look" name="lookordown"/>											
 					  </form>
-					   <form action="kyz_print2" method="post" id="4subform${x.index}" style="float:left" target="_blank">
+					   <form action="webcolpro_print2" method="post" id="4subform${x.index}" style="float:left" target="_blank">
 						<input type="hidden" value="<s:property value='id.factNo'/>"
 							name="factNo" /> <input type="hidden"
 							value="<s:property value='id.billNo'/>" name="billNo" />
@@ -148,7 +135,7 @@
 					 <a href="javascript:document.getElementById('4subform${x.index}').submit()" ><img alt="打印" src="images/icon/print001.png" title="打印" ></a>
 					 
 					 <s:if test="#session.loginUser.id==1">
-					  <a href="javascript:isDelete('2subform${x.index}','kyz_delete')" ><img alt="刪除" src="images/icon/delete001.png" title="刪除" ></a>
+					  <a href="javascript:isDelete('2subform${x.index}','webcolpro_delete')" ><img alt="刪除" src="images/icon/delete001.png" title="刪除" ></a>
 					 </s:if>						 
 				</td>
 			</tr>

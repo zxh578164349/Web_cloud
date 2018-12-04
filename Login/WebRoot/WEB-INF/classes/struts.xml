@@ -859,7 +859,18 @@
 		</action>
 		
 		<action name="webcolpro_*" class="webcolproAction" method="{1}">
-		  
+		   <result name="add" type="json">
+		      <param name="root">ajaxResult</param>
+		   </result>
+		   <result name="findPageBean">page/webcolproductmain.jsp</result>
+		   <result name="findPageBean">page/table1/webcolproductmain1.jsp</result>
+		   <result name="makeBillNo" type="json">
+		      <param name="root">ajaxResult</param>
+		   </result>
+		   <result name="addItem" type="json">
+		      <param name="root">ajaxResult</param>
+		   </result>
+		   <result name="findById">saveAndUpdate/webcolproitemSaveOrUpdate.jsp</result>
 		</action>
 		
 		

@@ -9,9 +9,11 @@
 			+ path + "/";
 %>
 <%
-java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("yyyyMMdd");
+java.text.SimpleDateFormat fmt = new java.text.SimpleDateFormat("yyyyMMdd");
+java.text.SimpleDateFormat fmt2 = new java.text.SimpleDateFormat("yyyyMMdd_hh");
 java.util.Date currentTime = new java.util.Date();//得到当前系统时间
-String str_date = formatter.format(currentTime); //将日期时间格式化
+String str_date = fmt.format(currentTime); //将日期时间格式化
+String str_date_h = fmt2.format(currentTime); //将时间格式化
 %>
 
 <html>
@@ -63,7 +65,9 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 				        <input type="text" name="obj.billNo" value="自動生成" readonly style="color:blue" id="obj_billno" datatype="*"/>	
 				        </td>				        
 						</tr>	
-						</s:if>
+						<input type="text" name="obj.webUserByCreateUserFid.id" value="<s:property value='#session.loginUser.id'/>"/>				        
+				        <input type="text" name="obj.createDate" value="<%=str_date_h %>" id="createDate"/>
+						</s:if>					
 						<s:else>
 						<tr>
 				      <td class="tdcolor">廠別</td>				      
@@ -84,7 +88,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 					  <input type="text" name="obj.webUserByCreateUserFid.id" value="<s:property value='obj.webUserByCreateUserFid.id'/>"/>
 				      <input type="text" name="obj.webUserByUpdateUserFid.id" value="<s:property value='#session.loginUser.id'/>"/>
 				      <input type="text" name="obj.createDate" value="<s:property value='obj.createDate'/>"/>	
-				      <input type="text" name="obj.updateDate" value="<%=str_date %>"/>	
+				      <input type="text" name="obj.updateDate" value="<%=str_date_h %>"/>	
 					  </tr>			     				     
 				   </s:else>
 				   <tr>
@@ -93,14 +97,14 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 				        <input type="text" name="obj.title" datatype="*1-100"  value="<s:property value='obj.title'/>" />
 				      </td>				       
 				      <td class="tdcolor">日期</td>
-					  <td><input type="text" name="obj.colDateMain" value="<%=str_date%>" readonly style="color:blue" /></td>
+					  <td><input type="text" name="obj.colDateMain" value="<%=str_date%>" readonly style="color:blue"/></td>
 					  <td>下單人</td>
 					  <td>
 					  <s:if test="obj==null">
-					    <input type="text" name="obj.orderManMain" value="<s:property value='#session.loginUser.name'/>"/>
+					    <input type="text" name="obj.orderManMain" value="<s:property value='#session.loginUser.name'/>" style="color:blue" readonly/>
 					  </s:if>
 					  <s:else>
-					    <input type="text" name="obj.orderManMain" value="<s:property value='obj.orderManMain'/>"/>
+					    <input type="text" name="obj.orderManMain" value="<s:property value='obj.orderManMain'/>" style="color:blue" readonly/>
 					  </s:else>					 
 					  </td>					  
 				   </tr>
@@ -208,34 +212,9 @@ jq(function() {
 		});
 		demo.tipmsg.w["my0-8"]="只能數字且不超過8位數,可保留四位以內小數";
 		demo.tipmsg.w["my0-12"]="只能數字且不超過12位數,可保留四位以內小數";
-		
-		
-		if(jq("#dwrFactNo").val()=="YMUS"){
-			jq("#memoMk").attr("datatype","*40-2000");
-		}else{
-			jq("#memoMk").attr("datatype","*");
-		}
-		jq(":radio").click(function(){			
-			if(jq(this).val()=="0"){
-				if(jq("#dwrFactNo").val()=="YMUS"){
-					jq("#memoMk").attr("datatype","*40-2000");
-				}else{
-					jq("#memoMk").attr("datatype","*");
-				}
-			}else{
-				jq("#memoMk").removeAttr("datatype");
-			}
-		});				
+									
 	});
-			
-	function getFactArea(mid) {
-		document.getElementById("dwrFactArea").length = 1;
-		webfactjs.findFactCodeByFactNo(mid, function(x) {
-			dwr.util.addOptions("dwrFactArea", x);
-		});
-		
-	}
-	
+					
 	function deleteHtml(id) {
 		id.parentNode.removeChild(id);
 	}
@@ -244,18 +223,27 @@ jq(function() {
 	   alert(document.getElementById("testfile").value);
 	}
 	
-function makeBillNo() {        
-		var factno = document.getElementById("dwrFactNo").value;
-		var timecreat = document.getElementById("obj_timecreate").value;		
-		var cbox_length=document.getElementsByName("cbox").length;
-		if (factno != "" && timecreat != "") {
-			kyzjs.makeBillNo(factno, timecreat, function(x) {
-				dwr.util.setValue("obj_billno", x);								 			  								
-			});
-			document.getElementById("addbtn").disabled="";
-			document.getElementById("addbtn").style.color="black";					 	 		
+function makeBillNo() {     
+		var factNo =document.getElementById("dwrFactNo").value;
+		var createDate = document.getElementById("createDate").value;
+		if(factNo!=""&&createDate!=""){
+		   jq.ajax({
+		   type:"post",
+		   url:"webcolpro_makeBillNo",
+		   data:{factNo:factNo,createDate:createDate},
+		   dataType:"json",
+		   success:function(data){
+		      jq("#obj_billno").val(data);
+		      document.getElementById("addbtn").disabled="";
+			  document.getElementById("addbtn").style.color="black";	
+		   },
+		   error:function(error){
+		      alert("單號生成錯誤");
+		      return false;
+		   }
+		  });
 		}
-		
+											
 	}
 	
 var j=0;
@@ -294,16 +282,15 @@ var j=0;
         newTd1.innerHTML= '<input type="text" name="obj.webColproductItemses['+j+'].shape"  datatype="*"/>';               
         newTd2.innerHTML='<input type="text" name="obj.webColproductItemses['+j+'].CStructure"  />';
         newTd3.innerHTML='<input type="text" name="obj.webColproductItemses['+j+'].purpose"  datatype="my0-8"/><span class="Validform_checktip"></span>';
-        newTd4.innerHTML='<input type="text" name="obj.webColproductItemses['+j+'].numbers"  datatype="my0-8"/><span class="Validform_checktip"></span>';
-        newTd5.innerHTML='<input type="text" name="obj.webColproductItemses['+j+'].personNo"  datatype="n0-8"/><span class="Validform_checktip"></span>';      
-        newTd6.innerHTML='<input type="text" name="obj.webColproductItemses['+j+'].weight"/>';    
-        newTd7.innerHTML='<input type="text" name="obj.webColproductItemses['+j+'].remainNum"/>'; 
-        newTd8.innerHTML='<input type="text" name="obj.webColproductItemses['+j+'].unhealthNum"/>';
-        newTd9.innerHTML='<input type="text" name="obj.webColproductItemses['+j+'].picMan"/>';
-        newTd10.innerHTML='<select name="obj.webColproductItemses['+j+'].paymk">'+
+        newTd4.innerHTML='<input type="text" name="obj.webColproductItemses['+j+'].numbers"  datatype="my0-8"/><span class="Validform_checktip"></span>';           
+        newTd5.innerHTML='<input type="text" name="obj.webColproductItemses['+j+'].weight"/>';    
+        newTd6.innerHTML='<input type="text" name="obj.webColproductItemses['+j+'].remainNum"/>'; 
+        newTd7.innerHTML='<input type="text" name="obj.webColproductItemses['+j+'].unhealthNum"/>';
+        newTd8.innerHTML='<input type="text" name="obj.webColproductItemses['+j+'].picMan"/>';
+        newTd9.innerHTML='<select name="obj.webColproductItemses['+j+'].paymk">'+
         '<option value="Y">是</option><option value="N">否</option></select>';
-        newTd11.innerHTML='<input type="text" name="obj.webColproductItemses['+j+'].numbersb"/>'; 
-        newTd12.innerHTML='<input type="text" name="obj.webColproductItemses['+j+'].weightb"/>';                           	     
+        newTd10.innerHTML='<input type="text" name="obj.webColproductItemses['+j+'].numbersb"/>'; 
+        newTd11.innerHTML='<input type="text" name="obj.webColproductItemses['+j+'].weightb"/>';                           	     
         newTd12.innerHTML='<input type="text" name="obj.webColproductItemses['+j+'].remarks" />'+          
         '<input type="hidden" name="obj.webColproductItemses['+j+'].webColproductMain.billNo" value="'+billno+'"'+'/>';       
         }
@@ -397,7 +384,7 @@ jq(function(){
 	}else{
 		jq("#addbtn").removeAttr("style").removeAttr("disabled");
 	}
-	j=jq("#maxNum").val()
+	j=jq("#maxNum").val();
 	if(isNaN(j)){
 		j=0;
 	}

@@ -60,28 +60,7 @@
 			}
 		});
 	}
-	//你确定要删除吗？
-	/*function isDelete(mid) {
-	    var flag=confirm("確定要刪除嗎?");
 		
-			if (flag == true) {//if			   
-				jq.ajax({
-				  type:"POST",
-				  dataType:"Html", 
-				  url:"kyz_delete",
-				  data:jq('#'+mid).serialize(),
-				  success : function(msg) {
-				  jq("#bodyid").html(msg);
-			      },
-			      error : function(xhr) {
-				     jq("#bodyid").html(xhr.responseText);
-			      }
-				 });
-				//document.getElementById(mid).submit();
-			}//if
-		
-	}*/
-	
 function showDivList(factNo,billNo){	    	
 	    jq.layer({
 	    type: 2,   //0-4的选择,

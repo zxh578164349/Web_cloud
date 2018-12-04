@@ -14,5 +14,6 @@ public interface IWebColproductMainDao {
 	public void delete_item(int iid,KyzExpectmatmLog log);
 	public String findByfactNoACreatedate(String factNo,String createDate);
 	
+	public void addItem(WebColproductItems item);
 
 }

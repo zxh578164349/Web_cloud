@@ -37,9 +37,18 @@ public class WebColproductMainAction extends ActionSupport implements ServletRes
 	 private IKyVisabillmServices visabillmSer;
 	 private IWebuserEmailServices webuseremailSer;
 	 private String isnull;	 
+	 private int backIndex;
 	 
 	 
 	 
+	public int getBackIndex() {
+		return backIndex;
+	}
+
+	public void setBackIndex(int backIndex) {
+		this.backIndex = backIndex;
+	}
+
 	public String getIsnull() {
 		return isnull;
 	}
@@ -186,7 +195,7 @@ public class WebColproductMainAction extends ActionSupport implements ServletRes
 	public String makeBillNo(){
 		String maxbillno=webcolproServer.findByfactNoACreatedate(factNo, createDate);
 		StringBuffer bn=new StringBuffer();
-		bn.append("NP");
+		bn.append("CP");
 		bn.append(factNo);
 		bn.append(createDate.substring(2,8));
 		if(maxbillno==null||"".equals(maxbillno)){
@@ -204,14 +213,13 @@ public class WebColproductMainAction extends ActionSupport implements ServletRes
 	}
 	
 	
-	/*public String findPageBean(){
+	public String findPageBean(){
 		ActionContext.getContext().getSession().remove("allRow");
-		ActionContext.getContext().getSession().put("n_factNo", factNo);
-		ActionContext.getContext().getSession().put("n_billNo", billNo);
-		ActionContext.getContext().getSession().put("n_createDateA", createDateA);
-		ActionContext.getContext().getSession().put("n_createDateB", createDateB);
-		ActionContext.getContext().getSession().put("pname", pname);
-		bean=webnewproSer.findPageBean(page, 0, factNo, billNo, createDateA, createDateB,pname);		
+		ActionContext.getContext().getSession().put("c_factNo", factNo);
+		ActionContext.getContext().getSession().put("c_billNo", billNo);
+		ActionContext.getContext().getSession().put("c_dateA", dateA);
+		ActionContext.getContext().getSession().put("c_dateB", dateB);		
+		bean=webcolproServer.findPageBean(page, 0, factNo, billNo, dateA, dateB);		
 		return "findPageBean";
 	}
 	
@@ -221,18 +229,32 @@ public class WebColproductMainAction extends ActionSupport implements ServletRes
 	}
 	
 	public String findPageBean3(){
-		factNo=(String)ActionContext.getContext().getSession().get("n_factNo");
-		billNo=(String)ActionContext.getContext().getSession().get("n_billNo");
-		createDateA=(String)ActionContext.getContext().getSession().get("n_createDateA");
-		createDateB=(String)ActionContext.getContext().getSession().get("n_createDateB");
-		pname=(String)ActionContext.getContext().getSession().get("pname");
-		bean=webnewproSer.findPageBean(page, 0, factNo, billNo, createDateA, createDateB,pname);
+		factNo=(String)ActionContext.getContext().getSession().get("c_factNo");
+		billNo=(String)ActionContext.getContext().getSession().get("c_billNo");
+		dateA=(String)ActionContext.getContext().getSession().get("c_dateA");
+		dateB=(String)ActionContext.getContext().getSession().get("c_dateB");		
+		bean=webcolproServer.findPageBean(page, 0, factNo, billNo, dateA, dateB);
 		if(backIndex==1){
 			return "findPageBean";
 		}else{
 			return "findPageBean1";
 		}		
-	}*/
+	}
+	
+	public String addItem(){
+		try{
+			webcolproServer.addItem(item);
+			ajaxResult="0";
+		}catch(Exception e){
+			ajaxResult="1";
+		}
+		return "addItem";
+	}
+	
+	public String findById(){
+		item=webcolproServer.findById(iid);
+		return "findById";
+	}
 	
 	
 	
