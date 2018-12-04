@@ -303,7 +303,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 			if(obj=="0"){				
 				jq("#yymmdd").attr("onfocus","WdatePicker({dateFmt:'yyyyMMdd',maxDate:'%y-%M-%d'})");
 			}
-		}		
+		}			
 	</script>
 	<script type='text/javascript' src='dwr/interface/webfactjs.js'></script>	
 </body>

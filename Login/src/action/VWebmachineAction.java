@@ -1150,7 +1150,7 @@ public class VWebmachineAction extends ActionSupport implements ServletResponseA
 				SimpleDateFormat format=new SimpleDateFormat("yyyyMM");
 				VWebmachine machine=vwebmachineser.findById(factNo, factCode, year+month);
 				VWeboutputinv inv=vinvser.findById(factNo, factCode, year+month);
-				SumWebYieldData mix1=sumydateSer.findById(factNo, factCode, year+month);
+				SumWebYieldDataView mix1=sumydateSer.findById(factNo, factCode, year+month);
 				VWebperson person=vpersonser.findById(factNo, factCode, year+month);
 				VWebgw gw=vgwser.findById(factNo, factCode, year+month);
 				VWebside side=vsideser.findById(factNo, factCode, year+month);
@@ -1161,7 +1161,7 @@ public class VWebmachineAction extends ActionSupport implements ServletResponseA
 				//無算式表達式
 				VWebmachineEve machine_eve=machineeveSer.findById(factNo, factCode, year+month);
 				VWeboutputinvEve inv_eve=inveveSer.findById(factNo, factCode, year+month);
-				SumWebYieldData mix1_eve=sumydateSer.findById(factNo, factCode, year+month);
+				SumWebYieldDataView mix1_eve=sumydateSer.findById(factNo, factCode, year+month);
 				VWebpersonEve person_eve=personeveSer.findById(factNo, factCode, year+month);
 				VWebgwEve gw_eve=gweveSer.findById(factNo, factCode, year+month);
 				VWebsideEve side_eve=sideeveSer.findById(factNo, factCode, year+month);
@@ -3656,7 +3656,7 @@ public class VWebmachineAction extends ActionSupport implements ServletResponseA
 						SimpleDateFormat format=new SimpleDateFormat("yyyyMM");
 						VWebmachine machine=vwebmachineser.findById(factNo, factCode, yymm);
 						VWeboutputinv inv=vinvser.findById(factNo, factCode, yymm);
-						SumWebYieldData mix1=sumydateSer.findById(factNo, factCode, yymm);
+						SumWebYieldDataView mix1=sumydateSer.findById(factNo, factCode, yymm);
 						VWebperson person=vpersonser.findById(factNo, factCode, yymm);
 						VWebgw gw=vgwser.findById(factNo, factCode, yymm);
 						VWebside side=vsideser.findById(factNo, factCode, yymm);
@@ -3667,7 +3667,7 @@ public class VWebmachineAction extends ActionSupport implements ServletResponseA
 						//無算式表達式
 						VWebmachineEve machine_eve=machineeveSer.findById(factNo, factCode, yymm);
 						VWeboutputinvEve inv_eve=inveveSer.findById(factNo, factCode, yymm);
-						SumWebYieldData mix1_eve=sumydateSer.findById(factNo, factCode, yymm);
+						SumWebYieldDataView mix1_eve=sumydateSer.findById(factNo, factCode, yymm);
 						VWebpersonEve person_eve=personeveSer.findById(factNo, factCode, yymm);
 						VWebgwEve gw_eve=gweveSer.findById(factNo, factCode, yymm);
 						VWebsideEve side_eve=sideeveSer.findById(factNo, factCode, yymm);
@@ -5327,7 +5327,7 @@ public class VWebmachineAction extends ActionSupport implements ServletResponseA
 					//有版式表达式
 					VWebmachine machine=vwebmachineser.findById(factNo, factCode, yymm);
 					VWeboutputinv inv=vinvser.findById(factNo, factCode, yymm);
-					SumWebYieldData mix1=sumydateSer.findById(factNo, factCode, yymm);
+					SumWebYieldDataView mix1=sumydateSer.findById(factNo, factCode, yymm);
 					VWebperson person=vpersonser.findById(factNo, factCode, yymm);
 					VWebgw gw=vgwser.findById(factNo, factCode, yymm);
 					VWebside side=vsideser.findById(factNo, factCode, yymm);
@@ -5339,7 +5339,7 @@ public class VWebmachineAction extends ActionSupport implements ServletResponseA
 					//無算式表達式
 					VWebmachineEve machine_eve=machineeveSer.findById(factNo, factCode, yymm);
 					VWeboutputinvEve inv_eve=inveveSer.findById(factNo, factCode, yymm);
-					SumWebYieldData mix1_eve=sumydateSer.findById(factNo, factCode, yymm);
+					SumWebYieldDataView mix1_eve=sumydateSer.findById(factNo, factCode, yymm);
 					VWebpersonEve person_eve=personeveSer.findById(factNo, factCode, yymm);
 					VWebgwEve gw_eve=gweveSer.findById(factNo, factCode, yymm);
 					VWebsideEve side_eve=sideeveSer.findById(factNo, factCode, yymm);
@@ -7005,7 +7005,7 @@ public class VWebmachineAction extends ActionSupport implements ServletResponseA
 					//有版式表达式
 					VWebmachine machine=vwebmachineser.findById(factNo, factCode, yymm);
 					VWeboutputinv inv=vinvser.findById(factNo, factCode, yymm);
-					SumWebYieldData mix1=sumydateSer.findById(factNo, factCode, yymm);
+					SumWebYieldDataView mix1=sumydateSer.findById(factNo, factCode, yymm);
 					VWebperson person=vpersonser.findById(factNo, factCode, yymm);
 					VWebgw gw=vgwser.findById(factNo, factCode, yymm);
 					VWebside side=vsideser.findById(factNo, factCode, yymm);
@@ -7017,7 +7017,7 @@ public class VWebmachineAction extends ActionSupport implements ServletResponseA
 					//無算式表達式
 					VWebmachineEve machine_eve=machineeveSer.findById(factNo, factCode, yymm);
 					VWeboutputinvEve inv_eve=inveveSer.findById(factNo, factCode, yymm);
-					SumWebYieldData mix1_eve=sumydateSer.findById(factNo, factCode, yymm);
+					SumWebYieldDataView mix1_eve=sumydateSer.findById(factNo, factCode, yymm);
 					VWebpersonEve person_eve=personeveSer.findById(factNo, factCode, yymm);
 					VWebgwEve gw_eve=gweveSer.findById(factNo, factCode, yymm);
 					VWebsideEve side_eve=sideeveSer.findById(factNo, factCode, yymm);

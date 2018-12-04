@@ -58,6 +58,25 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 			   <input type="text" value="<s:property value='flow.visaRank'/>"  name="flow.visaRank"/>
 			   <input type="hidden" value="<s:property value='flow.flowMk'/>"  name="flow.flowMk"/>
 			   <input type="hidden" value="<s:property value='flow.typeMk'/>"  name="flow.typeMk"/>
+			   <input type="hidden" value="<s:property value='flow.trMk'/>"  name="flow.trMk"/>
+			   <input type="hidden" value="<s:property value='flow.depId.depId'/>" name="depId"/>
+			   </td>			   
+			   </tr>
+			   <tr>
+			     <td>是否可見</td>
+			   <td>
+			     <s:if test='flow.visible=="Y"'>
+			                    是<input type="radio" value="Y" name="flow.visible" checked/>
+			     </s:if>
+			     <s:else>
+			                   是<input type="radio" value="Y" name="flow.visible"/>
+			     </s:else>
+			      <s:if test='flow.visible=="N"'>
+			                    否<input type="radio" value="N" name="flow.visible" checked/>
+			     </s:if>
+			     <s:else>
+			                   否<input type="radio" value="N" name="flow.visible"/>
+			     </s:else>       
 			   </td>
 			   </tr>			          			  			 	  			
 			</tbody>							    
@@ -86,7 +105,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 			callback:function(data){
 				if(data=="0"){
 					layer.msg("提交成功!",3,1);
-					loadUrl("visaflow_findPageBean");
+					loadUrl("visaflow_findPageBean3");
 					//location.href="visaflow_findPageBean";
 					
 				}

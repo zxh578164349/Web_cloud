@@ -99,6 +99,11 @@
 	<bean id="weberppfser" class="services.impl.WebErpProductinFormationServicesImpl"></bean>
 	<bean id="weberpbpser" class="services.impl.WebErpBrankProcessServicesImpl"></bean>
 	<bean id="webformulaser" class="services.impl.WebFormulaServicesImpl"></bean>
+	<bean id="webbrproSer" class="services.impl.WebBrProductServicesImpl"></bean>
+	<bean id="webdepServices" class="services.impl.WebDepartmentServicesImpl"></bean>
+	<bean id="webweeklyreportservices" class="services.impl.WebWeeklyreportServicesImpl"></bean>
+	<bean id="webnewproSer" class="services.impl.WebNewproductServicesImpl"></bean>
+	<bean id="webcolproServer" class="services.impl.WebColproductMainServicesImpl"></bean>
 </beans>
 
 

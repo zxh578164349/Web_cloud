@@ -22,8 +22,59 @@ public class ProjectConfig{
 	private String pHostServer;
 	private String pHostLoaclB;
 	private String pUrl;
+	private String pEmail;
+	private String pSmtp;
+	private String pEmailPwd;
+	private String pfromAddress;
+	private String pliujung;
+	private String plgx;
+	private String purllocal;
 	
 	
+	
+	
+	public String getPurllocal() {
+		return purllocal;
+	}
+	public void setPurllocal(String purllocal) {
+		this.purllocal = purllocal;
+	}
+	public String getPlgx() {
+		return plgx;
+	}
+	public void setPlgx(String plgx) {
+		this.plgx = plgx;
+	}
+	public String getPliujung() {
+		return pliujung;
+	}
+	public void setPliujung(String pliujung) {
+		this.pliujung = pliujung;
+	}
+	public String getPfromAddress() {
+		return pfromAddress;
+	}
+	public void setPfromAddress(String pfromAddress) {
+		this.pfromAddress = pfromAddress;
+	}
+	public String getpEmailPwd() {
+		return pEmailPwd;
+	}
+	public void setpEmailPwd(String pEmailPwd) {
+		this.pEmailPwd = pEmailPwd;
+	}
+	public String getpSmtp() {
+		return pSmtp;
+	}
+	public void setpSmtp(String pSmtp) {
+		this.pSmtp = pSmtp;
+	}
+	public String getpEmail() {
+		return pEmail;
+	}
+	public void setpEmail(String pEmail) {
+		this.pEmail = pEmail;
+	}
 	public String getpUrl(){
 		return pUrl;
 	}

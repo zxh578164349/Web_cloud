@@ -13,6 +13,7 @@ import dao.Basedao;
 import dao.ISumWebYieldDataDao;
 import entity.KyzExpectmatmLog;
 import entity.SumWebYieldData;
+import entity.SumWebYieldDataView;
 
 public class SumWebYieldDataDaoImpl extends Basedao implements ISumWebYieldDataDao{
 
@@ -27,7 +28,7 @@ public class SumWebYieldDataDaoImpl extends Basedao implements ISumWebYieldDataD
 		StringBuffer hql=new StringBuffer();
 		StringBuffer hql2=new StringBuffer();
 		Map<String,Object>map=new HashMap<String,Object>();
-		hql.append("from SumWebYieldData where 1=1");
+		hql.append("from SumWebYieldDataView where 1=1");
 		hql2.append("select count(id.factNo.factNo) ");
 		if(factNo==null||"".equals(factNo)){
 			factNo=(String)ActionContext.getContext().getSession().get("factNo");
@@ -58,7 +59,7 @@ public class SumWebYieldDataDaoImpl extends Basedao implements ISumWebYieldDataD
 		}
 		final int offset = PageBean.countOffset(pageSize, currentPage);
 		final int length = pageSize;
-		List<SumWebYieldData> list = super.queryForPage(hql.toString(), offset, length, map);
+		List<SumWebYieldDataView> list = super.queryForPage(hql.toString(), offset, length, map);
 		/*for(SumWebYieldData data:list){
 			data.getId().getFactNo().getFactSname();
 		}*/
@@ -73,7 +74,18 @@ public class SumWebYieldDataDaoImpl extends Basedao implements ISumWebYieldDataD
 		return pageBean;
 	}
 
-	public SumWebYieldData findById(String factNo, String factCode, String yymm) {
+	public SumWebYieldDataView findById(String factNo, String factCode, String yymm) {
+		// TODO Auto-generated method stub
+		String hql="from SumWebYieldDataView where id.factNo.factNo=? and id.factCode=? and id.yymm=?";
+		Query query=getSession().createQuery(hql);
+		query.setString(0, factNo);
+		query.setString(1, factCode);
+		query.setString(2, yymm);
+		SumWebYieldDataView ydata=(SumWebYieldDataView)query.uniqueResult();
+		return ydata;
+	}
+	
+	public SumWebYieldData findById2(String factNo, String factCode, String yymm) {
 		// TODO Auto-generated method stub
 		String hql="from SumWebYieldData where id.factNo.factNo=? and id.factCode=? and id.yymm=?";
 		Query query=getSession().createQuery(hql);
@@ -96,12 +108,12 @@ public class SumWebYieldDataDaoImpl extends Basedao implements ISumWebYieldDataD
 		super.delete(ydata);
 	}
 
-	public List<SumWebYieldData> findByAny(String factNo, String beginDate,
+	public List<SumWebYieldDataView> findByAny(String factNo, String beginDate,
 			String endDate) {
 		// TODO Auto-generated method stub
 		StringBuffer hql=new StringBuffer();
 		Map<String,Object>map=new HashMap<String,Object>();
-		hql.append("from SumWebYieldData where 1=1");
+		hql.append("from SumWebYieldDataView where 1=1");
 		if(factNo!=null&&!factNo.equals("")&&!factNo.equals("nothing")&&!factNo.equals("tw")){
 			hql.append(" and id.factNo.factNo=:factno");
 			map.put("factno", factNo);
@@ -119,7 +131,7 @@ public class SumWebYieldDataDaoImpl extends Basedao implements ISumWebYieldDataD
 			map.put("factno", factNo);
 		}
 		hql.append(" order by id.factNo.factNo,id.factCode,id.yymm");
-		List<SumWebYieldData>list=super.getAllWithNoPage(hql.toString(), map);
+		List<SumWebYieldDataView>list=super.getAllWithNoPage(hql.toString(), map);
 		return list;
 	}
 
@@ -129,11 +141,11 @@ public class SumWebYieldDataDaoImpl extends Basedao implements ISumWebYieldDataD
 		return super.findAll(hql, null);
 	}
 
-	public List<SumWebYieldData> findByFactNoAndYymm(String factNo, String begin_yymm,String end_yymm) {
+	public List<SumWebYieldDataView> findByFactNoAndYymm(String factNo, String begin_yymm,String end_yymm) {
 		// TODO Auto-generated method stub		
 		StringBuffer hql=new StringBuffer();
 		Map<String,Object>map=new HashMap<String,Object>();
-		hql.append("from SumWebYieldData where 1=1");
+		hql.append("from SumWebYieldDataView where 1=1");
 		if(factNo!=null&&!factNo.equals("")&&!factNo.equals("tw")&&!factNo.equals("nothing")){
 			hql.append(" and id.factNo.factNo=:factno");
 			map.put("factno", factNo);
@@ -151,7 +163,7 @@ public class SumWebYieldDataDaoImpl extends Basedao implements ISumWebYieldDataD
 			map.put("factno", factNo);
 		}
 		/****************************解決Hibernate延遲加載的問題20160219****************************/
-		List<SumWebYieldData>list=super.getAllWithNoPage(hql.toString(), map);
+		List<SumWebYieldDataView>list=super.getAllWithNoPage(hql.toString(), map);
 		for(int i=0;i<list.size();i++){
 			list.get(i).getId().getFactNo().getFactSname();
 		}
@@ -160,7 +172,7 @@ public class SumWebYieldDataDaoImpl extends Basedao implements ISumWebYieldDataD
 
 	public String findUsername(String factNo, String factCode, String yymm) {
 		// TODO Auto-generated method stub
-		String hql="select username from SumWebYieldData where id.factNo.factNo=? and id.factCode=? and id.yymm=?";
+		String hql="select username from SumWebYieldDataView where id.factNo.factNo=? and id.factCode=? and id.yymm=?";
 		Query query=getSession().createQuery(hql);
 		query.setString(0, factNo);
 		query.setString(1, factCode);
@@ -175,11 +187,11 @@ public class SumWebYieldDataDaoImpl extends Basedao implements ISumWebYieldDataD
 	 */
 	
 	
-	public List<SumWebYieldData> findObjs(String yymm,String yymm2){
+	public List<SumWebYieldDataView> findObjs(String yymm,String yymm2){
 		// TODO Auto-generated method stub
 		StringBuffer hql=new StringBuffer();
 		Map<String,Object>map=new HashMap<String,Object>();
-		hql.append("from SumWebYieldData where 1=1 ");
+		hql.append("from SumWebYieldDataView where 1=1 ");
 		if(yymm!=null&&!yymm.equals("")){
 			hql.append(" and id.yymm>=:yymm ");
 			map.put("yymm", yymm);

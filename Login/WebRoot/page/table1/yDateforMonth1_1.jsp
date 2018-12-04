@@ -24,7 +24,12 @@
   <div id="container">
   <div id="content">
 	<table class="table table-striped table-hover table-bordered">
-		<h3>產量資料(盤點統計)</h3>
+		<h3>
+		  <s:if test='#session.loginUser.userread!="1"'>
+	    <input value="添加" type="button" class="btn btn-info" onclick="loadUrl('page/sum_yiele_data.jsp')"/>
+	    </s:if>
+		<span id="h2_title">產量資料(盤點統計)</span>				
+		</h3>
 		<thead>
 			<tr class="tr_show">
 				<th>序號</th>

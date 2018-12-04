@@ -27,9 +27,17 @@ public class WebErpProductinFormationAction{
 	private String selfchar1;
 	private JSONArray jsons;
 	private List<String> selfchar1s;
+	private String itemcategory;
 	
 	
-	
+
+	public String getItemcategory(){
+		return itemcategory;
+	}
+
+	public void setItemcategory(String itemcategory){
+		this.itemcategory=itemcategory;
+	}
 
 	public List<String> getSelfchar1s(){
 		return selfchar1s;
@@ -80,6 +88,18 @@ public class WebErpProductinFormationAction{
 		List<Object[]>list=weberppfser.findNamece(selfchar1s);		
 		jsons=JSONArray.fromObject(list);			
 		return "findNameces";
+	}
+	
+	public String findItemcategory(){
+		List<Object[]>list=weberppfser.findItemcategory();
+		jsons=JSONArray.fromObject(list);
+		return "findItemcategory";
+	}
+	
+	public String findNamece2(){
+		List<Object[]>list=weberppfser.findNamece2(itemcategory);
+		jsons=JSONArray.fromObject(list);
+		return "findNamece2";
 	}
 	
 	

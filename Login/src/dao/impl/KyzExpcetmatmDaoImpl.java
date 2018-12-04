@@ -55,6 +55,7 @@ public class KyzExpcetmatmDaoImpl extends Basedao implements IKyzExpectmatmDao {
 		KyzExpectmatm kyz=(KyzExpectmatm)query.uniqueResult();
 		if(kyz!=null){
 			kyz.getKyzExpectmatses().size();
+			kyz.getFactNo2().getFactSname();
 		}
 		return kyz;
 	}

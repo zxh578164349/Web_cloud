@@ -22,9 +22,9 @@ public class KyzVisaFlowServicesImpl implements IKyzVisaFlowServices{
 	}
 
 	public PageBean findPageBean(int pageSize, int page, String factNo,
-			String visaSort) {
+			String visaSort,String trMk,String purmanNo,String visaSigner) {
 		// TODO Auto-generated method stub
-		return visaDao.findFixWithPage(pageSize, page, factNo, visaSort);
+		return visaDao.findFixWithPage(pageSize, page, factNo, visaSort,trMk,purmanNo,visaSigner);
 	}
 
 	public KyzVisaflow findById(KyzVisaflowId id) {
@@ -60,6 +60,23 @@ public class KyzVisaFlowServicesImpl implements IKyzVisaFlowServices{
 	public String findVisaSort_dwr(String factNo, String visaSort, String email) {
 		// TODO Auto-generated method stub
 		return visaDao.findVisaSort_dwr(factNo, visaSort, email);
+	}
+	
+	public String findVisaSort_dwr2(String factNo, String visaSort, String email,String trMk) {
+		// TODO Auto-generated method stub
+		return visaDao.findVisaSort_dwr(factNo, visaSort, email,trMk);
+	}
+	
+	public List<Object[]> findVisaSort_dwr3(String factNo, String visaSort, String email,String trMk){
+		return visaDao.findVisaSort_dwr2(factNo,visaSort,email,trMk);
+	}
+	
+	public String findVisaSort_dwr3(String factNo,String visaSort,String email,String trMk,String depId){
+		return visaDao.findVisaSort_dwr2(factNo,visaSort,email,trMk,depId);
+	}
+	
+	public List<String> findVisaSort_dwr4(String factNo, String visaSort, String email,String trMk){
+		return visaDao.findVisaSort_dwr3(factNo,visaSort,email,trMk);
 	}
 
 	public List<String> findVisaSort_C(String factNo,String mainSort) {
@@ -134,6 +151,23 @@ public class KyzVisaFlowServicesImpl implements IKyzVisaFlowServices{
 	public void add_d(KyzVisaflow f1,KyzVisaflow f2){
 		// TODO Auto-generated method stub
 		visaDao.add_d(f1,f2);
+	}
+
+	/**
+	 * 日期:2017/12/19
+	 * 描述:
+	 */
+	
+	
+	public List<String> findVisaSort_dwr5(String factNo,String visaSort,String depId,String trMk){
+		// TODO Auto-generated method stub
+		return visaDao.findVisaSort_dwr4(factNo,visaSort,depId,trMk);
+	}
+
+	public List<KyzVisaflow> findByFnoAndVsortAndTrmk(String factNo,
+			String visaSort, String trMk) {
+		// TODO Auto-generated method stub
+		return visaDao.findByFnoAndVsortAndTrmk(factNo, visaSort, trMk);
 	}
 
 }

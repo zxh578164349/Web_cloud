@@ -61,6 +61,9 @@
         <property name="userType" type="java.lang.String">
             <column name="USER_TYPE" length="2"></column>
         </property>
+        <property name="weeklyreportMk" type="java.lang.String">
+            <column name="WEELYREPORTEMAIL_MK" length="2"/>
+        </property>
         <bag name="webJurisdictions" cascade="delete" inverse="true" >
             <key>
                 <column name="USERID" precision="8" scale="0" not-null="true" />

@@ -115,10 +115,14 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 						<s:if test="kyz==null">
 						   <input type="text" name="kyz.userNm" datatype="*"  value="<s:property value='#session.loginUser.name'/>" style="color:blue" readonly/>
 						   <input type="hidden" name="kyz.username" value="<s:property value='#session.loginUser.username'/>"/>
+						   <input type="hidden" name="kyz.userId" value="<s:property value='#session.loginUser.id'/>"/>
+						   <input type="hidden" name="kyz.useremail" value="<s:property value='#session.loginUser.email'/>"/>
 						</s:if>
 						<s:else>
 						   <input type="text" name="kyz.userNm" datatype="*"  value="<s:property value='kyz.userNm'/>" style="color:blue" readonly/>
 						   <input type="hidden" name="kyz.username" value="<s:property value='kyz.username'/>"/>
+						   <input type="hidden" name="kyz.userId" value="<s:property value='kyz.userId'/>"/>
+						    <input type="hidden" name="kyz.useremail" value="<s:property value='kyz.useremail'/>"/>
 						</s:else>
 						</td>
 						
@@ -138,12 +142,13 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 				      <td class="tdcolor">類別</td>
 				      <td >
 				         <s:if test="kyz==null">
-				            <select  id="dwr_kytype" onchange="checkType(this.value)" datatype="*" style="color:blue">
+				            <select  id="dwr_kytype" onchange="checkType()" datatype="*" style="color:blue">
 				            <option value="">請選擇</option>
 				         </select>
 				         <input type="hidden" id="dwr_email" value="<s:property value='#session.loginUser.email'/>"/>
-				         <input type="hidden" name="kyz.visaType" id="hidden_kytype" datatype="*"/>
-				         <input type="hidden" id="dwr_username" value="<s:property value='#session.loginUser.username'/>"/>					         
+				         <input type="hidden" name="kyz.visaType" id="hidden_kytype" datatype="*"/>	
+				         
+				         <div id="div_depar" style="display:none"><select id="sel_depar" onchange="checkType2()"></select></div>			         					         
 				         </s:if>
 				         <s:else>
 				            <input type="text" value="<s:property value='kyz.visaType'/>" name="kyz.visaType" style="color:blue"  readonly/>
@@ -179,7 +184,17 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 				           <input type="hidden" value="<s:property value='maxNum'/>" id="maxNum"/>
 				        </td>
 						
-					</tr>													
+					</tr>
+					<s:if test="kyz==null">
+					   <tr>
+					    <td class="tdcolor">是否分部門</td>
+					    <td colspan="10">
+					                   是<input type="radio" name="trMk" value="Y" checked datatype="*" onclick="checkType()"/>&nbsp;&nbsp;
+			                                        否<input type="radio" name="trMk" value="N" onclick="checkType()"/> 
+					    </td>
+					   </tr>
+					</s:if>
+																		
 			</tbody>
 			</table>	
 			<table class="table table-condensed">								 			
@@ -488,45 +503,9 @@ function getKyType2(factno){
       }               
   }
   
-  function checkType(type){
-     dwrFactNo=document.getElementById("dwrFactNo").value;
-     dwremail=document.getElementById("dwr_email").value.toLowerCase(); //登錄人的email要轉化爲小寫,因爲申請人email已全部轉化爲小寫（20151022）
-     dwr_username=document.getElementById("dwr_username").value;   
-     if(dwrFactNo!=""&&type!=""){
-         kyzvisaflowjs.findByType_Dwr(dwrFactNo,type,function(x){
-            if(x==0){//流程不存在
-               alert("該類型審核流程不存在，請重新選定!");
-               document.getElementById("sub").disabled=true;
-               document.getElementById("sub").style.color="red";
-               document.getElementById("dwr_kytype").style.color="red";
-            }else{       
-                kyzvisaflowjs.findVisaSort_dwr(dwrFactNo,type,dwremail,function(y){
-                  if(y==null){
-                     alert("對不起，你不是該類別函文申請人，請重新選定!");
-                     document.getElementById("sub").disabled=true;
-                     document.getElementById("sub").style.color="red";
-                     document.getElementById("dwr_kytype").style.color="red";                    
-                  }else{
-                     document.getElementById("sub").disabled=false;
-                     document.getElementById("sub").style.color="white";
-                     document.getElementById("dwr_kytype").style.color="black";
-                     document.getElementById("hidden_kytype").value=y;                    
-                  }
-                  
-               }); 
-            }                               
-         });
-     }
-  }
-  function getVisaSort(type){
-     dwrfactno=document.getElementById("dwrFactNo").value;
-     dwremail=document.getElementById("email").value;
-     if(dwrfactno!=""){
-        
-     }
-  }
-function back(){
-	
+  
+ 
+function back(){	
 	loadUrl("kyz_findPageBean3?backIndex=1");
 }
 function gook(){
@@ -538,11 +517,14 @@ function lookPic(url){
 	window.location.href=url;
 }
 
+
+
 </script>
 <script type='text/javascript' src='dwr/interface/kyzjs.js'></script>
 <script type='text/javascript' src='dwr/interface/webfactjs.js'></script>
 <script type='text/javascript' src='dwr/interface/kyzvisaflowjs.js'></script>
 <script type='text/javascript' src='dwr/interface/webtypejs.js'></script>
+<script type='text/javascript' src='jquery/publicJS.js'></script>
 <script type="text/javascript">
 jq(function(){
 	if(jq("#addorupdate").val()!="update"){

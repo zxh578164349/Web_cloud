@@ -25,6 +25,7 @@ public class Webestproduct implements java.io.Serializable {
 	private String username;
 	private String colTemp;//臨時列
 	private String usernameUd;
+	private WebFact fact;
 
 	// Constructors
 
@@ -192,6 +193,14 @@ public class Webestproduct implements java.io.Serializable {
 	public void setUsernameUd(String usernameUd) {
 		this.usernameUd = usernameUd;
 	}
+	public WebFact getFact() {
+		return fact;
+	}
+	public void setFact(WebFact fact) {
+		this.fact = fact;
+	}
+	
+	
 	
 	
 	

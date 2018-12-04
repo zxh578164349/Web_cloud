@@ -191,7 +191,8 @@ public class WebFormulaServicesImpl implements IWebFormulaServices{
 				Date date=null;
 				
 				String datestr=list_visa.get(i).getDateVisa();
-				try {
+				visabillstemp.setCreateDate(datestr);
+				/*try {
 					if(datestr!=null){
 						date=format.parse(datestr);
 						visabillstemp.setCreateDate(date);
@@ -200,7 +201,7 @@ public class WebFormulaServicesImpl implements IWebFormulaServices{
 				} catch (ParseException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-				}
+				}*/
 				String name=list_visa.get(i).getVisaRank();
 				String visamk=list_visa.get(i).getVisaMk();
 				String memo=list_visa.get(i).getMemo();
@@ -232,8 +233,16 @@ public class WebFormulaServicesImpl implements IWebFormulaServices{
 				visabillstemp.setVisaSigner(list_visa.get(i).getVisaSigner());
 				visabillstemp.setVisaMk(list_visa.get(i).getVisaMk());
 				visabillstemp.setVisaName(name);
+				visabillstemp.setVisible(list_visa.get(i).getVisible());
 				list_visabillstemp.add(visabillstemp);
 			}//for
+			/**********************去掉不顯示出來（visible='N'）20171023****************************/
+			for(int a=0;a<list_visabillstemp.size();a++){
+				if("N".equals(list_visabillstemp.get(a).getVisible())){
+					list_visabillstemp.remove(a);
+				}
+			}
+			/**********************去掉不顯示出來（visible='N'）20171023****************************/
 			
 			/*********************簡體轉繁體******************/
 			for(int i=0;i<list_visabillstemp.size();i++){
@@ -249,7 +258,7 @@ public class WebFormulaServicesImpl implements IWebFormulaServices{
 			Map<String,Object> visa_map=new HashMap<String,Object>();
 			visa_map.put("list_visa", list_visabillstemp);
 			map.put("visa_map", visa_map);	
-			String sub_file=GlobalMethod.getSubfile(list_visa.size()-nos);
+			String sub_file=GlobalMethod.getSubfile(list_visa.size()-nos,null);
 			map.put("sub_file",sub_file);
 		}				
 		map.put("sub_map", sub_map);

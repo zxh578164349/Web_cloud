@@ -198,7 +198,13 @@ public class VWebuselessAction extends ActionSupport implements ServletResponseA
 				list_total.add(new BigDecimal(total_obj.getWebA7()));
 				list_total.add(new BigDecimal(total_obj.getWebA8()));
 				list_total.add(total_obj.getWebA9());
-				list_total.add(total_obj.getWebA9().divide(total_obj.getWebA1(),4,BigDecimal.ROUND_HALF_UP));
+				
+				BigDecimal bd=new BigDecimal(0.0);
+				if(total_obj.getWebA1().compareTo(BigDecimal.ZERO)!=0){
+					bd=total_obj.getWebA9().divide(total_obj.getWebA1(),4,BigDecimal.ROUND_HALF_UP);
+				}
+				list_total.add(bd);
+				//list_total.add(total_obj.getWebA9().divide(total_obj.getWebA1(),4,BigDecimal.ROUND_HALF_UP));
 				list_total.add(null);
 				list_total.add(null);
 				list_all_db.add(list_total);
@@ -213,7 +219,13 @@ public class VWebuselessAction extends ActionSupport implements ServletResponseA
 				list_total2.add(new BigDecimal(total_obj2.getWebA7()));
 				list_total2.add(new BigDecimal(total_obj2.getWebA8()));
 				list_total2.add(total_obj2.getWebA9());
-				list_total2.add(total_obj2.getWebA9().divide(total_obj2.getWebA1(),4,BigDecimal.ROUND_HALF_UP));
+				
+				BigDecimal bd2=new BigDecimal(0.0);
+				if(total_obj2.getWebA1().compareTo(BigDecimal.ZERO)!=0){
+					bd2=total_obj2.getWebA9().divide(total_obj2.getWebA1(),4,BigDecimal.ROUND_HALF_UP);
+				}
+				list_total2.add(bd2);
+				//list_total2.add(total_obj2.getWebA9().divide(total_obj2.getWebA1(),4,BigDecimal.ROUND_HALF_UP));
 				list_total2.add(null);
 				list_total2.add(null);
 				list_all_db.add(list_total2);	
@@ -228,7 +240,8 @@ public class VWebuselessAction extends ActionSupport implements ServletResponseA
 				list_total3.add(new BigDecimal(total_obj.getWebA7()-total_obj2.getWebA7()));
 				list_total3.add(new BigDecimal(total_obj.getWebA8()-total_obj2.getWebA8()));
 				list_total3.add(total_obj.getWebA9().subtract(total_obj2.getWebA9()));
-				list_total3.add(total_obj.getWebA9().divide(total_obj.getWebA1(),4,BigDecimal.ROUND_HALF_UP).subtract((total_obj2.getWebA9().divide(total_obj2.getWebA1(),4,BigDecimal.ROUND_HALF_UP))));
+				//list_total3.add(total_obj.getWebA9().divide(total_obj.getWebA1(),4,BigDecimal.ROUND_HALF_UP).subtract((total_obj2.getWebA9().divide(total_obj2.getWebA1(),4,BigDecimal.ROUND_HALF_UP))));
+				list_total3.add(bd.subtract(bd2));
 				list_total3.add(null);
 				list_total3.add(null);
 				list_all_db.add(list_total3);

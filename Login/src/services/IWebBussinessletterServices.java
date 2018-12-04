@@ -36,5 +36,6 @@ public interface IWebBussinessletterServices {
 	 * @date 2016/2/23
 	 */
 	public Map<String,Object> print(String factNo,String billNo,String sort,KyVisabillm vbm);
+	public String findBillNo(String billNo);
 
 }

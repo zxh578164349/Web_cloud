@@ -3,6 +3,7 @@ package util;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -18,6 +19,7 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.PushbackInputStream;
+import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
@@ -27,6 +29,7 @@ import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
+import java.security.GeneralSecurityException;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.ParseException;
@@ -40,12 +43,15 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.Set;
 import java.util.SortedMap;
+import java.util.UUID;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -56,6 +62,7 @@ import java.util.concurrent.TimeoutException;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
+import javax.mail.internet.MimeUtility;
 import javax.script.Bindings;
 import javax.script.Invocable;
 import javax.script.ScriptContext;
@@ -64,10 +71,22 @@ import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 
 import mail.MailSenderInfo;
 import mail.SimpleMailSender;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.poi.hslf.model.Picture;
+import org.apache.poi.hssf.converter.ExcelToHtmlConverter;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFDataFormat;
 import org.apache.poi.hssf.usermodel.HSSFFont;
@@ -82,6 +101,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.springframework.web.context.ContextLoader;
+import org.w3c.dom.Document;
 
 import services.IKyVisaBillsServices;
 import services.IKyVisabillmServices;
@@ -91,11 +111,13 @@ import services.IWebuserEmailAServices;
 import services.IWebuserEmailServices;
 
 import com.opensymphony.xwork2.ActionContext;
+import com.sun.mail.util.MailSSLSocketFactory;
 
 import entity.KyFact;
 import entity.KyVisabillm;
 import entity.KyVisabills;
 import entity.KyzExpectmatmLog;
+import entity.SumWebYieldData;
 import entity.WebFact;
 import entity.WebFactId;
 import entity.WebTabpom;
@@ -110,15 +132,18 @@ import entity.custom.ProjectConfig;
 import entity_temp.VisabillsTemp;
 
 
+
+
 public class GlobalMethod extends HibernateDaoSupport{
 	//private static final String URL="http://203.85.73.161/Login/";
 	//private static final String URL="http://203.85.73.161/Login";
-	private static final String EMAIL="kyuen@yydg.com.cn";
+	private static final ProjectConfig pc=findProjectConfig();
+	//private static final String EMAIL="kyuen@yydg.com.cn";
 	private static final String SUBJECT="函文審核定時通知_";
 	private static final String SUBJECT2="函文審核通知_";
 	private static final String SUBJECT3="函文退回定時通知_";
 	private static final String SUBJECT4="函文退回通知_";
-	private static final String LIUJUNG="liujung@mail.gj.com.tw";
+	//private static final String LIUJUNG="liujung@mail.gj.com.tw";
 
 	public static void print(List list,String factNo,String yymm,String yymm2,String file,HttpServletResponse response) throws IOException{
 		//List<Webwlo>list=wloService.findByAny(factNo, yymm, yymm2);
@@ -508,6 +533,26 @@ public class GlobalMethod extends HibernateDaoSupport{
 		cs.setBorderBottom(HSSFCellStyle.BORDER_THIN);
 		cs.setBorderLeft(HSSFCellStyle.BORDER_THIN);
 		map.put("cs", cs);
+		
+		// 標準單元格樣式(左對齊)
+		HSSFCellStyle cs_left = wb.createCellStyle();
+		cs_left.setAlignment(HSSFCellStyle.ALIGN_LEFT);
+		cs_left.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		cs_left.setBorderTop(HSSFCellStyle.BORDER_THIN);
+		cs_left.setBorderRight(HSSFCellStyle.BORDER_THIN);
+		cs_left.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+		cs_left.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+		map.put("cs_left", cs_left);
+		
+		// 標準單元格樣式(右對齊)
+		HSSFCellStyle cs_right = wb.createCellStyle();
+		cs_right.setAlignment(HSSFCellStyle.ALIGN_RIGHT);
+		cs_right.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		cs_right.setBorderTop(HSSFCellStyle.BORDER_THIN);
+		cs_right.setBorderRight(HSSFCellStyle.BORDER_THIN);
+		cs_right.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+		cs_right.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+		map.put("cs_right", cs_right);
 		//表頭樣式
 		HSSFCellStyle cs_head=wb.createCellStyle();
 		HSSFFont font_head=wb.createFont();
@@ -522,7 +567,39 @@ public class GlobalMethod extends HibernateDaoSupport{
 		cs_head.setBorderLeft(HSSFCellStyle.BORDER_THIN);
 		cs_head.setFillForegroundColor(IndexedColors.YELLOW.getIndex());
 		cs_head.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+		cs_head.setWrapText(true);//自動換行
 		map.put("cs_head", cs_head);
+		
+		HSSFCellStyle cs_head2=wb.createCellStyle();
+		HSSFFont font_head2=wb.createFont();
+		font_head2.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+		font_head2.setFontHeightInPoints((short)12);
+		cs_head2.setFont(font_head2);
+		cs_head2.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		cs_head2.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		cs_head2.setBorderTop(HSSFCellStyle.BORDER_THICK);
+		cs_head2.setBorderRight(HSSFCellStyle.BORDER_THICK);
+		cs_head2.setBorderBottom(HSSFCellStyle.BORDER_THICK);
+		cs_head2.setBorderLeft(HSSFCellStyle.BORDER_THICK);
+		cs_head2.setFillForegroundColor(IndexedColors.BRIGHT_GREEN.getIndex());
+		cs_head2.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+		map.put("cs_head2", cs_head2);
+		
+		HSSFCellStyle cs_head3=wb.createCellStyle();
+		HSSFFont font_head3=wb.createFont();
+		font_head3.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+		font_head3.setFontHeightInPoints((short)12);
+		cs_head3.setFont(font_head);
+		cs_head3.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		cs_head3.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		cs_head3.setBorderTop(HSSFCellStyle.BORDER_THIN);
+		cs_head3.setBorderRight(HSSFCellStyle.BORDER_THIN);
+		cs_head3.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+		cs_head3.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+		cs_head3.setFillForegroundColor(IndexedColors.LIGHT_GREEN.getIndex());
+		cs_head3.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+		cs_head3.setWrapText(true);//自動換行
+		map.put("cs_head3", cs_head3);
 		
 		HSSFCellStyle cs_red_bg=wb.createCellStyle();		
 		cs_red_bg.setAlignment(HSSFCellStyle.ALIGN_CENTER);
@@ -547,20 +624,7 @@ public class GlobalMethod extends HibernateDaoSupport{
 		cs_lblue_bg.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
 		map.put("cs_lblue_bg", cs_lblue_bg);
 		
-		HSSFCellStyle cs_head2=wb.createCellStyle();
-		HSSFFont font_head2=wb.createFont();
-		font_head2.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
-		font_head2.setFontHeightInPoints((short)12);
-		cs_head2.setFont(font_head2);
-		cs_head2.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-		cs_head2.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
-		cs_head2.setBorderTop(HSSFCellStyle.BORDER_THICK);
-		cs_head2.setBorderRight(HSSFCellStyle.BORDER_THICK);
-		cs_head2.setBorderBottom(HSSFCellStyle.BORDER_THICK);
-		cs_head2.setBorderLeft(HSSFCellStyle.BORDER_THICK);
-		cs_head2.setFillForegroundColor(IndexedColors.BRIGHT_GREEN.getIndex());
-		cs_head2.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
-		map.put("cs_head2", cs_head2);
+		
 		
 		
 		
@@ -641,7 +705,8 @@ public class GlobalMethod extends HibernateDaoSupport{
 		map.put("cs_poi1", cs_poi1);
 		
 		HSSFCellStyle cs_poi2=wb.createCellStyle();
-		cs_poi2.setDataFormat(format.getFormat("#,###,0.00"));
+		//cs_poi2.setDataFormat(format.getFormat("#,###,0.00"));
+		cs_poi2.setDataFormat(format.getFormat("#,##0.00"));
 		cs_poi2.setAlignment(HSSFCellStyle.ALIGN_CENTER);
 		cs_poi2.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
 		cs_poi2.setBorderTop(HSSFCellStyle.BORDER_THIN);
@@ -771,6 +836,26 @@ public class GlobalMethod extends HibernateDaoSupport{
 		cs.setBorderBottom(XSSFCellStyle.BORDER_THIN);
 		cs.setBorderLeft(XSSFCellStyle.BORDER_THIN);
 		map.put("cs", cs);
+		
+		// 標準單元格樣式(左對齊)
+		XSSFCellStyle cs_left = wb.createCellStyle();
+		cs_left.setAlignment(XSSFCellStyle.ALIGN_LEFT);
+		cs_left.setVerticalAlignment(XSSFCellStyle.VERTICAL_CENTER);
+		cs_left.setBorderTop(XSSFCellStyle.BORDER_THIN);
+		cs_left.setBorderRight(XSSFCellStyle.BORDER_THIN);
+		cs_left.setBorderBottom(XSSFCellStyle.BORDER_THIN);
+		cs_left.setBorderLeft(XSSFCellStyle.BORDER_THIN);
+		map.put("cs_left", cs_left);
+		
+		// 標準單元格樣式(右對齊)
+		XSSFCellStyle cs_right = wb.createCellStyle();
+		cs_right.setAlignment(XSSFCellStyle.ALIGN_RIGHT);
+		cs_right.setVerticalAlignment(XSSFCellStyle.VERTICAL_CENTER);
+		cs_right.setBorderTop(XSSFCellStyle.BORDER_THIN);
+		cs_right.setBorderRight(XSSFCellStyle.BORDER_THIN);
+		cs_right.setBorderBottom(XSSFCellStyle.BORDER_THIN);
+		cs_right.setBorderLeft(XSSFCellStyle.BORDER_THIN);
+		map.put("cs_right", cs_right);
 		//表頭樣式
 		XSSFCellStyle cs_head=wb.createCellStyle();
 		XSSFFont font_head=wb.createFont();
@@ -1181,10 +1266,10 @@ public class GlobalMethod extends HibernateDaoSupport{
 	 public static void sendEmailA(ApplicationContext ac,List<KyVisabillm>list_vbm,String sub1,String sub2){		   
 		    IWebuserEmailServices webuseremailSer=(IWebuserEmailServices)ac.getBean("webuseremailSer");
 			IWebuserEmailAServices webuseremailaSer=(IWebuserEmailAServices)ac.getBean("webuseremailaSer");
-			IKyzVisaFlowServices visaSer=(IKyzVisaFlowServices)ac.getBean("visaSer");
+			//IKyzVisaFlowServices visaSer=(IKyzVisaFlowServices)ac.getBean("visaSer");
 			//IKyVisaBillsServices visabillSer=(IKyVisaBillsServices)ac.getBean("visabillSer");
 			IKyVisabillmServices visabillmSer=(IKyVisabillmServices)ac.getBean("visabillmSer");	
-			ProjectConfig pc=(ProjectConfig)ac.getBean("proconfig");
+			//ProjectConfig pc=(ProjectConfig)ac.getBean("proconfig");
 			String content="";			
 			if(list_vbm.size()>0){//start if
 			MailSenderInfo mailInfo = new MailSenderInfo();
@@ -1199,7 +1284,7 @@ public class GlobalMethod extends HibernateDaoSupport{
 					String billNo=list_vbm.get(i).getId().getBillNo();
 					String visaSort=list_vbm.get(i).getId().getVisaSort();
 					String visaMk=list_vbm.get(i).getVisaMk();										
-					if(LIUJUNG.equals(signerNext.toLowerCase())){//劉小姐隻發送一次:liujung@mail.gj.com.tw 20161213
+					if(pc.getPliujung().equals(signerNext.toLowerCase())){//劉小姐隻發送一次:liujung@mail.gj.com.tw 20161213
 						if(list_vbm.get(i).getOneMk()==null){
 							list_vbm.get(i).setOneMk("1");//標識隻發送一次
 							visabillmSer.add(list_vbm.get(i));
@@ -1223,7 +1308,7 @@ public class GlobalMethod extends HibernateDaoSupport{
 						list_email.add(list_emailPwd_a.get(k));
 					}
 					/******************20170112备签人同步**********************/
-					list_email.add(EMAIL);
+					list_email.add(pc.getpEmail());
 					String emailUrl=pc.getpUrl()+"/vbm_findById_email?visaSort="+visaSort+"&billNo="+billNo
 					         +"&factNo="+factNo+"&email="+signerNext;
 					String emailUrl2=pc.getpUrl()+"/vbm_findById_email2?visaSort="+visaSort+"&billNo="+billNo
@@ -1238,7 +1323,7 @@ public class GlobalMethod extends HibernateDaoSupport{
 					    		  "如需查詢以往單據請登錄加久網站:(云端)<a href='"+pc.getpUrl()+"'>"+pc.getpUrl()+"</a>" +		            
 					      		"<br/>進入[函文簽核綜合功能]--[函文審核]中查找對應單號審核"+			    		
 					    		"<hr/>"+
-					      		"<br/>本郵件定時自動發送,請勿回復!如需回復或者問題，請回复到"+EMAIL+"資訊室!<br/>"+
+					      		"<br/>本郵件定時自動發送,請勿回復!如需回復或者問題，請回复到"+pc.getpEmail()+"資訊室!<br/>"+
 					    		"<hr/>";						
 					}
 					if(visaMk.equals("T")){
@@ -1259,7 +1344,7 @@ public class GlobalMethod extends HibernateDaoSupport{
 						    		 "詳情請登錄加久網站:(云端)<a href='"+pc.getpUrl()+"'>"+pc.getpUrl()+"</a>" +		            
 						      		"<br/>進入[函文簽核綜合功能]--[函文審核]中查找對應單號審核"+			    		
 						    		"<hr/>"+
-						      		"<br/>本郵件定時自動發送,請勿回復!如需回復或者問題，請回复到"+EMAIL+"資訊室!<br/>"+
+						      		"<br/>本郵件定時自動發送,請勿回復!如需回復或者問題，請回复到"+pc.getpEmail()+"資訊室!<br/>"+
 						    		"<hr/>";
 					}
 					
@@ -1267,16 +1352,20 @@ public class GlobalMethod extends HibernateDaoSupport{
 					mailInfo.setSubject(subject.toString()); 
 					for(int j=0;j<list_email.size();j++){//start for2
 						  mailInfo.setToAddress(list_email.get(j));
-						  if(list_email.get(j).equals(EMAIL)){						  
+						  if(list_email.get(j).equals(pc.getpEmail())){						  
 							  String content_msg=content+"下一箇簽核:<span style='color:blue'>"+signerNext+"</span>";
 							  mailInfo.setContent(content_msg);					      
 						  }					         			       				    		  			           
 					      sms.sendHtmlMail(mailInfo);//发送html格式					      
 					}//end for2	
 					
-					/********************************20170517臺灣加久GJ的函文同步到申請人的，只查看，不簽核*******************************************/
-					String visaSinger=null;
+					
+					/*******************************************(已取消20170705)***********************************************/
+					/********************************20170517臺灣加久GJ的函文同步到申請人的，只查看，不簽核*******************************************/					
 					/***************如果是臺灣加久，備簽人同時也是申請人，那麼根據流程代號找到申請人（也就是備簽人）*******************/
+					
+					
+					/*String visaSinger=null;					
 					if(factNo.equals("GJ")){												
 						if(list_vbm.get(i).getId().getBillNo().substring(0,2).equals("BM")){//出差函文申請人不在流程,要在出差函文中找
 							if(list_vbm.get(i).getWebbussletter().getUserEmail()!=null&&!list_vbm.get(i).getWebbussletter().getUserEmail().equals("")){								
@@ -1333,8 +1422,9 @@ public class GlobalMethod extends HibernateDaoSupport{
 						mailInfo.setContent(content);
 						sms.sendHtmlMail(mailInfo);	
 						
-					}
+					}*/										
 					/********************************20170517臺灣加久GJ的函文同步到申請人的，只查看，不簽核*******************************************/
+					/*******************************************(已取消20170705)***********************************************/					
 					//subject=null;//清空
 					content=null;
 				}//end for1									
@@ -1368,6 +1458,7 @@ public class GlobalMethod extends HibernateDaoSupport{
 			List<String>list_emails=new ArrayList<String>();//所有發送人
 			//list_emails.add(EMAIL);
 			//由於出差函文流程中可能不包括申請人， 所有需要從函文中獲取申請email 20160621
+			
 			if(vbm2.getId().getBillNo().substring(0,2).equals("BM")){
 				if(vbm2.getWebbussletter().getUserEmail()!=null&&!vbm2.getWebbussletter().getUserEmail().equals("")){
 					list_emails.add(vbm2.getWebbussletter().getUserEmail());
@@ -1429,13 +1520,13 @@ public class GlobalMethod extends HibernateDaoSupport{
 	  * @date 2016/7/8
 	  */
 	 public static void sendNewEmail(KyVisabillm vbm,List<String>list_emailPwd){
-		 ProjectConfig pc=findProjectConfig();
+		 //ProjectConfig pc=findProjectConfig();
 		 List<String>list=new ArrayList<String>();
 		 list.add(vbm.getSignerNext());
 		 for(String str:list_emailPwd){
 			 list.add(str);
 		 }
-		 list.add(EMAIL);
+		 list.add(pc.getpEmail());
 		 String emailUrl_in=pc.getpUrl()+"/vbm_findById_email?visaSort="+vbm.getId().getVisaSort()+"&billNo="+vbm.getId().getBillNo()
 		         +"&factNo="+vbm.getId().getFactNo()+"&email="+vbm.getSignerNext();	
 		 String emailUrl_in2=pc.getpUrl()+"/vbm_findById_email2?visaSort="+vbm.getId().getVisaSort()+"&billNo="+vbm.getId().getBillNo()
@@ -1451,7 +1542,7 @@ public class GlobalMethod extends HibernateDaoSupport{
 					"如需查詢以往單據請登陸:(云端)<a href='"+pc.getpUrl()+"'>"+pc.getpUrl()+"</a>" +							
 					"<br/>進入[函文簽核綜合功能]--[函文審核]查找對應單號審核" +									
 					"<hr/>"+
-					"<br/>本郵件自動發送,請勿回復!如需回復或者問題，請回复到"+EMAIL+"資訊室!<br/>"+
+					"<br/>本郵件自動發送,請勿回復!如需回復或者問題，請回复到"+pc.getpEmail()+"資訊室!<br/>"+
 					"<hr/>");
 		      for(String email:list){		    	  
 		    	  mailinfo.setToAddress(email);
@@ -1475,13 +1566,14 @@ public class GlobalMethod extends HibernateDaoSupport{
 	  * @date 2016/12/26
 	  */
 	 public static void sendEmail_minus(String factNo,String billNo,String visaSort,String email){
-		 ProjectConfig pc=findProjectConfig();
+		 //ProjectConfig pc=findProjectConfig();
 		 //****************通知下一位签核人***************/
 		 List<String>list=new ArrayList<String>();
 		 list.add(email);
-		 list.add(EMAIL);
+		 list.add(pc.getpEmail());
 		 SimpleMailSender sms = new SimpleMailSender();
 		 MailSenderInfo mailInfo = new MailSenderInfo();
+		 mailInfo.setValidate(true);
   		 String emailUrl_in=pc.getpUrl()+"/vbm_findById_email?visaSort="+visaSort+"&billNo="+billNo
 		         +"&factNo="+factNo+"&email="+email;
   		String emailUrl_in2=pc.getpUrl()+"/vbm_findById_email2?visaSort="+visaSort+"&billNo="+billNo
@@ -1495,7 +1587,7 @@ public class GlobalMethod extends HibernateDaoSupport{
  	    		"<br/>如需查詢以往單據請登錄加久網站:((云端))<a href='"+pc.getpUrl()+"'>"+pc.getpUrl()+"</a>" +	            
  	      		"<br/>進入[函文簽核綜合功能]--[函文審核]中查找對應單號審核"+	      	    		
  	    		"<hr/>"+	      		
- 	    		"<br/>本郵件自動發送,請勿回復!如需回復或者問題，請回复到"+EMAIL+"資訊室!<br/>" +
+ 	    		"<br/>本郵件自動發送,請勿回復!如需回復或者問題，請回复到"+pc.getpEmail()+"資訊室!<br/>" +
  	    		"<hr/>");
   		 for(String address:list){
   			mailInfo.setToAddress(address);
@@ -1625,6 +1717,7 @@ public class GlobalMethod extends HibernateDaoSupport{
 	 
 	 /**
 	  * 根據函文簽核人數來選擇不同的函文文件模板
+	  * 修改：由於文件模板不要顯示簽核人，所以進行模板選擇    20180808
 	  * @Title: getSubfile
 	  * @Description: TODO
 	  * @param @param num
@@ -1634,17 +1727,23 @@ public class GlobalMethod extends HibernateDaoSupport{
 	  * @author web
 	  * @date 2016/8/5
 	  */
-	 public static String getSubfile(int num){
+	 public static String getSubfile(int num,String firstPage){
+		 //sub_file_noFlow.jasper:不顯示簽核人
 		 String result="sub_file.jasper";
-		 if(num<=3){
-			 result="sub_file_3.jasper";
-		 }
-		 if(num>3&&num<6){
-			 result="sub_file_6.jasper";
-		 }
-		 if(num>=6&&num<=9){
-			 result="sub_file_9.jasper";
-		 }
+		 
+		 if("1".equals(firstPage)){
+			 if(num<=3){
+				 result="sub_file_3.jasper";
+			 }
+			 if(num>3&&num<6){
+				 result="sub_file_6.jasper";
+			 }
+			 if(num>=6&&num<=9){
+				 result="sub_file_9.jasper";
+			 }			 
+		 }else{
+			 result="sub_file_noFlow.jasper";
+		 }		 				 		 
 		 return result;		 
 	 }
 	 
@@ -1667,6 +1766,11 @@ public class GlobalMethod extends HibernateDaoSupport{
 	  * @return
 	  */
 	 public static List<Double> removeSameDouble(List<Double>list){
+		 /*for(int a=0;a<list.size();a++){
+			 if(list.get(a)==null){
+				 list.set(a,0.00);
+			 }
+		 }*/
 		 for(int i=0;i<list.size();i++){
 			 for(int j=list.size()-1;j>i;j--){
 				 if(list.get(j).equals(list.get(i))){
@@ -1899,7 +2003,11 @@ public class GlobalMethod extends HibernateDaoSupport{
 				vbm.setGeneral("("+vbm.getFactNo2().getFactSname()+")"+vbm.getKyzexp().getMemoSmk()+"_"+
 						vbm.getId().getBillNo()+"("+vbm.getId().getFactNo()+")");
 				vbm.getKyzexp().getEmerMk();
-			}			
+			}
+			if(vbm.getId().getBillNo().substring(0, 2).equals("NP")){
+				vbm.setGeneral("("+vbm.getFactNo2().getFactSname()+")"+vbm.getWebnewpro().getPName()+"_"+
+						vbm.getId().getBillNo()+"("+vbm.getId().getFactNo()+")");				
+			}
 			vbm.getWebtype().getTypeName();		
 	}
 	
@@ -1962,32 +2070,120 @@ public class GlobalMethod extends HibernateDaoSupport{
 		ProjectConfig pc=(ProjectConfig)ac.getBean("proconfig");
 		return pc;
 	}
+	
+	public static Properties findPropertiesEmail(){
+		Properties props=new Properties();
+		props.setProperty("mail.smtp.auth", "true");
+		props.setProperty("mail.transport.protocol", "smtp");
+		props.setProperty("mail.host", "smtp.mxhichina.com");//dgmail.yydg.com.cn
+		//props.setProperty("mail.host", "172.17.5.84");//因為有時候解釋不了域名,所以直接用地址代替(内网IP)
+		//props.setProperty("mail.host", "125.88.14.11");//因為有時候解釋不了域名,所以直接用地址代替(外网IP)
+		//props.setProperty("mail.host", "61.20.35.47");
+		//props.setProperty("mail.pop.port", "995");
+		props.setProperty("mail.smtp.port", "465");//改smtp端口
+		props.setProperty("mail.smtp.socketFactory.port","465");
+		//props.setProperty("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+		//props.setProperty("mail.smtp.socketFactory.fallback", "false");
+		//props.setProperty("mail.smtp.starttls.enable","true");//加密发送
+		props.setProperty("mail.smtp.ssl.enable", "true");///加密发送
+		//以下设置，邮件加密发送，不需要证书验证
+		MailSSLSocketFactory sf = null;
+		try {
+			sf = new MailSSLSocketFactory();
+		} catch (GeneralSecurityException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}  
+	    sf.setTrustAllHosts(true);
+	    props.put("mail.smtp.ssl.socketFactory", sf);
+	    return props;
+	}
+	
+	
+	/**
+	 * 產量盤點數據計算
+	 * @Title: add_sumYdata
+	 * @Description: TODO
+	 * @param @param objs
+	 * @param @param list_ydata
+	 * @param @param ydate
+	 * @return void
+	 * @throws
+	 * @author web
+	 * @date 2017/8/8
+	 */
+	public static void add_sumYdata(Object[]objs,long list_ydata,SumWebYieldData ydate){
+		BigDecimal onModulus=new BigDecimal((objs[0]==null?0:objs[0]).toString());
+		BigDecimal personnum=new BigDecimal((objs[1]==null?0:objs[1]).toString());
+		BigDecimal standardOutput=new BigDecimal((objs[2]==null?0:objs[2]).toString());
+		BigDecimal actualYield=new BigDecimal((objs[3]==null?0:objs[3]).toString());
+		BigDecimal daycount=new BigDecimal((objs[4]==null?0:objs[4]).toString());
+		BigDecimal actualpairs=new BigDecimal((objs[5]==null?0:objs[5]).toString());
+		BigDecimal hostpairs=new BigDecimal((objs[6]==null?0:objs[6]).toString());
+		BigDecimal factpairs=new BigDecimal((objs[7]==null?0:objs[7]).toString());
+		BigDecimal samplepairs=new BigDecimal((objs[8]==null?0:objs[8]).toString());
+		BigDecimal outnum=new BigDecimal((objs[9]==null?0:objs[9]).toString());
+		BigDecimal backnum=new BigDecimal((objs[10]==null?0:objs[10]).toString());
+		Double workhours=(Double)(objs[11]==null?0.0:objs[11]);				
+		
+		ydate.setSumEverydemo(onModulus);
+		ydate.setSumEverypeople(personnum);
+		ydate.setSumStandarddemo(standardOutput);
+		ydate.setSumActualdemo(actualYield);
+		ydate.setSumWorkdays(daycount);
+		ydate.setSumActualpairs(actualpairs);
+		ydate.setSumHostpairs(hostpairs);
+		ydate.setSumFactpairs(factpairs);
+		ydate.setSumSamplepairs(samplepairs);
+		ydate.setSumOutnum(outnum);
+		ydate.setSumBacknum(backnum);
+		ydate.setSumWorkhours(workhours);
+	}
+	
 	 
 	 
 	 
 	 public static void main(String[] args) {
-			/*try{
-				int i=0;
-				ServerSocket s=new ServerSocket(7019);
-				while(true){
-					System.out.println("Swapning"+i);
-					Socket incoming=s.accept();
-					Runnable r=new ThreadEcohHandler(incoming);
-					Thread th=new Thread(r);
-					th.start();
-					i++;
-					
-				}								
-			}catch(IOException e){
-				e.printStackTrace();
-			}*/	 
+		
+		 /*Properties p = new Properties();
+	    	InputStream in = Object. class .getResourceAsStream( "/project_config.properties" );
+	    	try {
+				p.load(in);
+				System.out.println(p.getProperty("project.liujung"));
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+	    	
+	    	String abc="abcd";
+	    	System.out.println(abc.substring(0,1));
+	    	System.out.println(abc.substring(0,2));*/
 		 Calendar cal=Calendar.getInstance();
-			cal.add(Calendar.MONTH,-2);
-			String yymm=new SimpleDateFormat("yyyyMMdd").format(cal.getTime());
-			System.out.println(yymm);
+		 String d1="20180507";
+		 String d2="20180611";
+		 SimpleDateFormat sdf=new SimpleDateFormat("yyyyMMdd");
+		 List<String>list=new ArrayList<String>();
+		 Date date=new Date();
+		 for(int i=0;i<20;i++){
+			 System.out.println(date.getTime());
+		 }
 		
+		 Date date2=new Date();
+		 for(int i=0;i<20;i++){
+			 System.out.println(date2.getTime());
+		 }
+		 Date date3=new Date(); 
+		 for(int i=0;i<20;i++){
+			 System.out.println(date3.getTime());
+		 }
+		 
+		 
+
+		 
+		 
+		 
 		
-								 				 		 				
+	  
 		}
 	 
 	 static class ThreadEcohHandler implements Runnable{

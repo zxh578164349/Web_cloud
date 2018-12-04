@@ -49,6 +49,9 @@ public class KyVisabillsDaoImpl extends Basedao implements IKyVisaBillsDao{
 		if(factNo==null||"".equals(factNo)||"nothing".equals(factNo)){
 			factNo=user.getFactno();
 		}
+		/*if(createDate==null||"".equals(createDate)){
+			createDate=this.twoMonths();
+		}*/
 		String adminMk=user.getAdminMk();
 		String email=user.getEmail();		
 		if(email==null||email.equals("")){
@@ -62,7 +65,9 @@ public class KyVisabillsDaoImpl extends Basedao implements IKyVisaBillsDao{
 		hql.append("from KyVisabills where 1=1");
 		hql2.append("select count(id.itemNo) ");
 		if(adminMk==null||adminMk.equals("")||adminMk.equals("N")){//非管理員
-			hql.append(" and lower(visaSigner)=:visaSigner");
+			//hql.append(" and lower(visaSigner)=:visaSigner");
+			hql.append(" and (lower(visaSigner)=:visaSigner or lower(id.kyVisabillm.userId.email)=:visaSigner and id.itemNo='01') ");
+			//hql.append(" and lower(id.kyVisabillm.useremail)=:visaSigner and id.itemNo='01' ");
 			map.put("visaSigner", email.toLowerCase());
 		}else{
 			hql.append(" and id.itemNo='01'");
@@ -92,13 +97,7 @@ public class KyVisabillsDaoImpl extends Basedao implements IKyVisaBillsDao{
 			hql.append(" and id.kyVisabillm.dateCreate<=:createdate2");
 			map.put("createdate2", createDate2);
 		}
-		/*if(factNo.equals("nothing")&&(visaMk==null||visaMk.equals(""))&&(billNo==null||billNo.equals(""))
-				&&(visaSort.equals("nothing")||visaSort==null||visaSort.equals(""))
-				&&(createDate==null||createDate.equals(""))
-				&&(createDate2==null||createDate2.equals(""))){
-			hql.append(" and id.kyVisabillm.id.factNo=:factno");
-			map.put("factno", factNo);
-		}*/	
+		
 		if(title!=null&&!"".equals(title)){
 			if("EM".equals(bigType)){
 				hql.append(" and id.kyVisabillm.kyzexp.memoSmk like:title");
@@ -108,6 +107,7 @@ public class KyVisabillsDaoImpl extends Basedao implements IKyVisaBillsDao{
 			}
 			map.put("title","%"+title+"%");
 		}
+		hql.append(" and flowMk='Y'");
 		hql.append(STR);
 		hql2.append(hql);
 		hql.append(" order by id.kyVisabillm.id.factNo desc,id.kyVisabillm.dateCreate desc,id.kyVisabillm.id.billNo desc");
@@ -125,8 +125,22 @@ public class KyVisabillsDaoImpl extends Basedao implements IKyVisaBillsDao{
 		int offset=PageBean.countOffset(pageSize, currentPage);
 		List<KyVisabills>list=super.queryForPage(hql.toString(), offset, pageSize, map);
 		
+		
+		
+		
 		//解決hibernate延遲問題
 		if(list.size()>0){
+			
+			/**************************去除重覆單號20170905*******************************/
+			for(int a=0;a<list.size()-1;a++){
+				for(int b=list.size()-1;b>a;b--){
+					if(list.get(a).getId().getKyVisabillm().getId().getBillNo().equals(list.get(b).getId().getKyVisabillm().getId().getBillNo())){
+						list.remove(b);
+					}
+				}
+			}
+			/**************************去除重覆單號20170905*******************************/
+			
 			for(int i=0;i<list.size();i++){
 				list.get(i).getId().getKyVisabillm().getKyVisabillses().size();				
 				GlobalMethod.vbmCotentsType(list.get(i).getId().getKyVisabillm());
@@ -146,6 +160,9 @@ public class KyVisabillsDaoImpl extends Basedao implements IKyVisaBillsDao{
 			String createDate, String createDate2,WebUser user,String title,String bigType){
 		if(factNo==null||"".equals(factNo)||"nothing".equals(factNo)){
 			factNo=user.getFactno();
+		}
+		if(createDate==null||"".equals(createDate)){
+			createDate=this.twoMonths();
 		}
 		String adminMk=user.getAdminMk();
 		String email=user.getEmail();		
@@ -283,6 +300,9 @@ public class KyVisabillsDaoImpl extends Basedao implements IKyVisaBillsDao{
 		if(factNo==null||"".equals(factNo)||"nothing".equals(factNo)){
 			factNo=user.getFactno();
 		}
+		if(createDate==null||"".equals(createDate)){
+			createDate=this.twoMonths();
+		}
 		String adminMk=user.getAdminMk();
 		String email=user.getEmail();		
 		if(email==null||email.equals("")){
@@ -315,15 +335,16 @@ public class KyVisabillsDaoImpl extends Basedao implements IKyVisaBillsDao{
 			}else{
 				hql.append(" and id.itemNo=id.kyVisabillm.itemNext and visaMk='N'");
 			}
-			date_temp=" and dateVisa";          //20161028
+			//date_temp=" and dateVisa";          //20161028
 		}else{//管理員
 			if(visaMk!=null&&!visaMk.equals("")){
 				hql.append(" and id.kyVisabillm.visaMk=:visamk");
 				map.put("visamk", visaMk);
 			}
 			hql.append(" and id.itemNo='01'");
-			date_temp=" and id.kyVisabillm.dateCreate";             //20161028
-		}	
+			//date_temp=" and id.kyVisabillm.dateCreate";             //20161028
+		}
+		date_temp=" and id.kyVisabillm.dateCreate";
 		if(factNo!=null&&!factNo.equals("")&&!factNo.equals("tw")){
 			hql.append(" and id.kyVisabillm.id.factNo=:factno");
 			map.put("factno", factNo);
@@ -363,6 +384,7 @@ public class KyVisabillsDaoImpl extends Basedao implements IKyVisaBillsDao{
 			map.put("title","%"+title+"%");
 		}
 		hql.append(STR);
+		hql.append(" and flowMk='Y'");
 		hql2.append(hql);
 		hql.append(" order by id.kyVisabillm.id.factNo desc,id.kyVisabillm.dateCreate desc,id.kyVisabillm.id.billNo desc");
 		
@@ -385,6 +407,7 @@ public class KyVisabillsDaoImpl extends Basedao implements IKyVisaBillsDao{
 			for(int i=0;i<list.size();i++){
 				KyVisabillm billm=list.get(i).getId().getKyVisabillm();
 				billm.getSignerNext();
+				//billm.getUserId().getEmail();
 				GlobalMethod.vbmCotentsType(billm);
 			}
 		}
@@ -401,9 +424,7 @@ public class KyVisabillsDaoImpl extends Basedao implements IKyVisaBillsDao{
 	public int findKyVisaBills_Int(String factNo,String email) {
 		// TODO Auto-generated method stub
 		
-		Calendar cal=Calendar.getInstance();
-		cal.add(Calendar.MONTH,-2);
-		String yymm=new SimpleDateFormat("yyyyMMdd").format(cal.getTime());
+		String yymm=this.twoMonths();
 		StringBuffer hql=new StringBuffer();
 		Map<String,Object>map=new HashMap<String,Object>();
 		hql.append("select count(id.itemNo) from KyVisabills where 1=1");
@@ -461,6 +482,13 @@ public class KyVisabillsDaoImpl extends Basedao implements IKyVisaBillsDao{
 		query.setString(0,billNo);
 		String str=(String)query.uniqueResult();
 		return str;
+	}
+	
+	public String twoMonths(){
+		Calendar cal=Calendar.getInstance();
+		cal.add(Calendar.MONTH,-2);
+		String yymm=new SimpleDateFormat("yyyyMMdd").format(cal.getTime());
+		return yymm;
 	}
 
 }

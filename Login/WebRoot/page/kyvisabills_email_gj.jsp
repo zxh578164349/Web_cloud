@@ -84,7 +84,9 @@
 										</s:if>
 									</s:if>
 									<s:else>
-										<a style="color:#b45b3e">只知會</a>
+									    <s:if test='visible!="N"'>
+	                                      <a style="color:#b45b3e">只知會</a>
+	                                    </s:if> 										
 									</s:else>
 									
 								</p>
@@ -120,7 +122,10 @@
 										</s:if>
 									</s:if>
 									<s:else>
-										<a style="color:#b45b3e">只知會</a>
+									<s:if test='visible!="N"'>
+	                                  <a style="color:#b45b3e">只知會</a>
+	                                </s:if>
+	                                <s:else>/</s:else>										
 									</s:else>									
 								</p>
 							</div>

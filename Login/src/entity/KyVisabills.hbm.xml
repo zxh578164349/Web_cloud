@@ -44,6 +44,9 @@
         <property name="flowMk" type="java.lang.String">
             <column name="FLOW_MK" length="2"/>
         </property>
+        <property name="visible" type="java.lang.String">
+            <column name="VISIBLE" length="2"/>
+        </property>
         <many-to-one name="vusername" class="entity.VWebUserEmail" fetch="select" unique="true" insert="false" update="false">
             <column name="FACT_NO" length="4" />
             <column name="VISA_SIGNER" length="16" />

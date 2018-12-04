@@ -65,6 +65,9 @@
         <property name="emerMk" type="java.lang.String">
             <column name="EMER_MK" length="2"/>
         </property>
+        <property name="useremail" type="java.lang.String">
+            <column name="USEREMAIL" length="50"/>
+        </property>
         <bag name="list_file" inverse="true" cascade="all">
             <key>
                <column name="FACT_NO"/>
@@ -80,5 +83,9 @@
             <one-to-many class="entity.KyzExpectmatmLog"/>
         </bag>
         <one-to-one name="vbm" class="entity.KyVisabillm" property-ref="kyzletter" cascade="all" />
+        <property name="userId" type="java.lang.Integer">
+           <column name="FK_WEBUSER" precision="8" scale="0"/>
+        </property>
+        <many-to-one name="factNo2" column="FACT_NO" unique="true" insert="false" update="false"/>   
     </class>
 </hibernate-mapping>

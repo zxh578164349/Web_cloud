@@ -304,6 +304,7 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 								+ " "
 								+ kyzletter.getId().getBillNo()
 								+ ")!');window.parent.layer.closeAll()</script>");
+						return null;
 					}								
 			}//end if
 			else{
@@ -545,7 +546,7 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 	 * 解決url中空格轉換成 +號的問題
 	 */
 	public String toUrl2(String filename){
-		return filename.replace("+", "%20");
+		return filename.replace("+", "%20").replace("%20", "+");
 	}
 	
 	/**

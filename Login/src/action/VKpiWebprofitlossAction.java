@@ -847,6 +847,12 @@ public class VKpiWebprofitlossAction extends ActionSupport implements ServletRes
 				list_result.add(frm.format(list.get(i)));
 			}else{
 				list_result.add(list.get(i).toString());
+				/*if(list.get(i)==null){
+					list_result.add("NULL");
+				}else{
+					list_result.add(list.get(i).toString());
+				}*/
+				
 			}			
 		}			
 		return list_result;

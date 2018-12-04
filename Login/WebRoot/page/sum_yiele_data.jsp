@@ -73,9 +73,9 @@
 	    } 
 	}
 	
-/* function showlayer(){
-   j("#mydiv").show();
-} */
+function back() {
+			loadUrl("sumwebydata_findPageBean3?backIndex=1");
+		}
 	
 </script>
 <script type='text/javascript' src='dwr/interface/webfactjs.js'></script>
@@ -136,8 +136,8 @@
 		      <br>
 		      <center>
 		         <input type="submit" value="確定" onclick="golook()" id="btnlook" class="btn btn-primary"/>&nbsp;&nbsp;
-		         <input type="reset" value="重置" class="btn btn-primary"/>
-		         
+		         <input type="reset" value="重置" class="btn btn-primary"/>&nbsp;&nbsp;
+		         <input type="button" value="返回" onclick="back()" id="btn_back" class="btn btn-primary" />						         
 		      </center>
 		   </form>
 

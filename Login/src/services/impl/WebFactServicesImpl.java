@@ -249,6 +249,9 @@ public class WebFactServicesImpl implements IWebFactServices {
 	public List<Object[]> findByFactNo_showA_order(String factNo){
 		return webFactDao.findByFactNo_showA_order(factNo);
 	}
+	public List<Object[]> findByFactNo_show_order(String factNo){
+		return webFactDao.findByFactNo_show_order(factNo);
+	}
 	/**
 	 * 日期:2016/10/14
 	 * 描述:有序
@@ -287,6 +290,28 @@ public class WebFactServicesImpl implements IWebFactServices {
 	public List<Object[]> findAllVwebfact(){
 		// TODO Auto-generated method stub
 		return webFactDao.findAllVwebfact();
+	}
+
+	/**
+	 * 日期:2017/7/26
+	 * 描述:
+	 */
+	
+	
+	public List<String> findfactarea(){
+		// TODO Auto-generated method stub
+		return webFactDao.findfactarea();
+	}
+
+	/**
+	 * 日期:2017/7/28
+	 * 描述:
+	 */
+	
+	
+	public List<Object[]> findFnoFcodeShow(){
+		// TODO Auto-generated method stub
+		return webFactDao.findFnoFcodeShow();
 	}
 
 }

@@ -1,17 +1,30 @@
 package action;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sf.json.JSONArray;
+
+import org.apache.poi.hssf.usermodel.HSSFCellStyle;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.ServletResponseAware;
 
 import services.IKyzExpectmatmLogServices;
 import services.IKyzVisaFlowServices;
 import services.IWebTypeServices;
+import util.GlobalMethod;
 import util.PageBean;
 
 import com.opensymphony.xwork2.ActionContext;
@@ -21,6 +34,7 @@ import entity.KyVisabills;
 import entity.KyzExpectmatmLog;
 import entity.KyzVisaflow;
 import entity.KyzVisaflowId;
+import entity.WebDepartment;
 import entity.WebType;
 import entity.WebUser;
 
@@ -42,7 +56,30 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 	private String ajaxResult;//申請函文時返回的ajax結果,   0:提交成功       1:提交失敗
 	private int backIndex;//返回標識      0或null:不走返回路徑         1:走返回路徑
 	private IKyzExpectmatmLogServices kyzExpLogSer;//刪除記錄
+	private String trMk;//是否分部門     Y:是       N:否
+	private JSONArray jsons;
+	private String depId;
 	
+	private Integer depId2;
+	
+	
+	
+	public Integer getDepId2(){
+		return depId2;
+	}
+
+	public void setDepId2(Integer depId2){
+		this.depId2=depId2;
+	}
+
+	public String getTrMk(){
+		return trMk;
+	}
+
+	public void setTrMk(String trMk){
+		this.trMk=trMk;
+	}
+
 	public int getBackIndex() {
 		return backIndex;
 	}
@@ -175,42 +212,84 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 
 	public void setMaxItem(int maxItem) {
 		this.maxItem = maxItem;
-	}	
+	}
 	
+	
+	
+	public JSONArray getJsons(){
+		return jsons;
+	}
+
+	public void setJsons(JSONArray jsons){
+		this.jsons=jsons;
+	}
+	
+	
+
+	public String getDepId(){
+		return depId;
+	}
+
+	public void setDepId(String depId){
+		this.depId=depId;
+	}
+
 	public String add() throws IOException{		
 		String visaSort_main=flows.get(0).getId().getVisaSort().split("__")[0];
 		String visaSort_main2=flows.get(0).getId().getVisaSort().split("__")[1];
 					
 			try{
-				if(visaSort_main2.equals("0")){//【其它類】
-					String visaSort_sub=visaSort_main+"0";						
-					List<String>types_str=visaSer.findVisaSort_C(flows.get(0).getId().getFactNo(),visaSort_main);
-					List<Integer>types_int=new ArrayList<Integer>();
-					if(types_str.size()>0){
-						for(int j=0;j<types_str.size();j++){
-							int temp=Integer.parseInt(types_str.get(j).substring(2));
-							types_int.add(temp);
+				if("0".equals(visaSort_main2)||"TR".equals(visaSort_main2)){//【其它類】【出差類】
+					if("Y".equals(trMk)){
+						/***************************分部門*************************************/
+						String visaSort_sub=visaSort_main+"0";						
+						List<String>types_str=visaSer.findVisaSort_C(flows.get(0).getId().getFactNo(),visaSort_main);
+						List<Integer>types_int=new ArrayList<Integer>();
+						if(types_str.size()>0){
+							for(int j=0;j<types_str.size();j++){
+								int temp=Integer.parseInt(types_str.get(j).substring(2));
+								types_int.add(temp);
+							}
+							int maxNum=types_int.get(types_int.size()-1);//因為集合已按從小到大的順序排列好的，所以最後一個元素最大
+							String str_max=String.valueOf(maxNum);
+							if(str_max.substring(str_max.length()-1,str_max.length()).equals("9")){      											
+								visaSort_sub=visaSort_main+maxNum+"0";
+							}else{					
+								visaSort_sub=visaSort_main+(maxNum+1);
+							}				
 						}
-						int maxNum=types_int.get(types_int.size()-1);//因為集合已按從小到大的順序排列好的，所以最後一個元素最大
-						String str_max=String.valueOf(maxNum);
-						if(str_max.substring(str_max.length()-1,str_max.length()).equals("9")){      											
-							visaSort_sub=visaSort_main+maxNum+"0";
-						}else{					
-							visaSort_sub=visaSort_main+(maxNum+1);
-						}				
+						for(int i=0;i<flows.size();i++){
+							flows.get(i).getId().setVisaSort(visaSort_sub);				
+						    String purmanNo=flows.get(i).getId().getPurmanNo().trim();
+						    String visaSigner=flows.get(i).getVisaSigner().trim();
+						    flows.get(i).getId().setPurmanNo(purmanNo);
+						    flows.get(i).setVisaSigner(visaSigner);
+						    flows.get(i).setFlowMk("Y");
+						    flows.get(i).setVisaSortM(visaSort_main);
+						    flows.get(i).setTypeMk(visaSort_main2);
+						    flows.get(i).setTrMk(trMk);
+						    if(depId!=null&&!"".equals(depId)){						    	
+						    	flows.get(i).setDepId(new WebDepartment(Integer.parseInt(depId)));
+						    }
+							visaSer.add(flows.get(i));
+						}
+						/***************************分部門*************************************/
+						
+						/***************************不分部門*************************************/
+					}else{
+						for(int i=0;i<flows.size();i++){
+							flows.get(i).getId().setVisaSort(visaSort_main+"_AA");
+							flows.get(i).getId().setPurmanNo(flows.get(i).getId().getPurmanNo().trim());
+						    flows.get(i).setVisaSigner(flows.get(i).getVisaSigner().trim());
+							flows.get(i).setFlowMk("Y");
+							flows.get(i).setVisaSortM(visaSort_main);
+							flows.get(i).setTypeMk(visaSort_main2);
+							flows.get(i).setTrMk(trMk);
+							visaSer.add(flows.get(i));
+						}
 					}
-					for(int i=0;i<flows.size();i++){
-						flows.get(i).getId().setVisaSort(visaSort_sub);				
-					    String purmanNo=flows.get(i).getId().getPurmanNo().trim();
-					    String visaSigner=flows.get(i).getVisaSigner().trim();
-					    flows.get(i).getId().setPurmanNo(purmanNo);
-					    flows.get(i).setVisaSigner(visaSigner);
-					    flows.get(i).setFlowMk("Y");
-					    flows.get(i).setVisaSortM(visaSort_main);
-					    flows.get(i).setTypeMk(visaSort_main2);
-						visaSer.add(flows.get(i));
-					}
-				}else{//【出差類】,【配方類】
+					/***************************不分部門*************************************/
+				}else{//【配方類】
 					for(int i=0;i<flows.size();i++){
 						flows.get(i).getId().setVisaSort(visaSort_main);
 						flows.get(i).getId().setPurmanNo(flows.get(i).getId().getPurmanNo().trim());
@@ -218,6 +297,7 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 						flows.get(i).setFlowMk("Y");
 						flows.get(i).setVisaSortM(visaSort_main);
 						flows.get(i).setTypeMk(visaSort_main2);
+						flows.get(i).setTrMk("N");//【出差類】 【 配方類】  都不分部門
 						visaSer.add(flows.get(i));
 					}
 				}								
@@ -231,6 +311,9 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 	public String update(){		
 		try{
 			flow.setVisaSortM(flow.getId().getVisaSort().substring(0,2));
+			if(depId!=null&&!"".equals(depId)){
+				flow.setDepId(new WebDepartment(Integer.parseInt(depId)));
+			}			
 			//visaSer.add(flow);
 			KyzVisaflow f2=(KyzVisaflow)ActionContext.getContext().getSession().get("update_flow");
 			visaSer.add_d(flow,f2);
@@ -243,28 +326,26 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 	}
 	
 	public String findPageBean() {
-		//ActionContext.getContext().getApplication().clear();
 		ActionContext.getContext().getSession().remove("public_factNo");
 		ActionContext.getContext().getSession().remove("public_visaSort");
+		ActionContext.getContext().getSession().remove("public_trMk");
+		ActionContext.getContext().getSession().remove("public_pumanNo");
+		ActionContext.getContext().getSession().remove("public_visaSigner");
 		factNo = (String) ActionContext.getContext().getSession().get("factNo");
-		bean = visaSer.findPageBean(20,page, factNo, visaSort);		
-		this.getTypeName(bean);//从webtype获取类别名称
+		bean = visaSer.findPageBean(20,page, factNo, visaSort,trMk,purmanNo,visaSigner);		
+		//this.getTypeName(bean);//从webtype获取类别名称
 		return "beanList";
 	}
 	
 
-	public String findPageBean2() {
-		//ActionContext.getContext().getApplication().clear();
-		ActionContext.getContext().getSession().remove("public_factNo");
-		ActionContext.getContext().getSession().remove("public_visaSort");
-		if (factNo != null && !factNo.equals("") && !factNo.equals("tw")) {
-			ActionContext.getContext().getSession().put("public_factNo", factNo);					
-		}
-		if (visaSort != null && !visaSort.equals("")) {
-			ActionContext.getContext().getSession().put("public_visaSort", visaSort);
-		}
-		bean = visaSer.findPageBean(20,page, factNo, visaSort);
-		this.getTypeName(bean);
+	public String findPageBean2(){
+		ActionContext.getContext().getSession().put("public_factNo",factNo);
+		ActionContext.getContext().getSession().put("public_visaSort",visaSort);
+		ActionContext.getContext().getSession().put("public_trMk",trMk);
+		ActionContext.getContext().getSession().put("public_pumanNo", purmanNo);
+		ActionContext.getContext().getSession().put("public_visaSigner", visaSigner);
+		bean=visaSer.findPageBean(20,page,factNo,visaSort,trMk,purmanNo,visaSigner);
+		//this.getTypeName(bean);
 		return "beanList1";
 	}
 
@@ -274,12 +355,12 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 			result="beanList";
 		}
 		factNo = (String) ActionContext.getContext().getSession().get("public_factNo");				
-		visaSort = (String) ActionContext.getContext().getSession().get("public_visaSort");				
-		if (factNo == null || factNo.equals("") || factNo.equals("tw")){
-			factNo = (String) ActionContext.getContext().getSession().get("factNo");					
-		}
-		bean = visaSer.findPageBean(20,page, factNo, visaSort);
-		this.getTypeName(bean);
+		visaSort = (String) ActionContext.getContext().getSession().get("public_visaSort");	
+		trMk=(String)ActionContext.getContext().getSession().get("public_trMk");
+		purmanNo=(String)ActionContext.getContext().getSession().get("public_pumanNo");
+		visaSigner=(String)ActionContext.getContext().getSession().get("public_visaSigner");
+		bean = visaSer.findPageBean(20,page, factNo, visaSort,trMk,purmanNo,visaSigner);
+		//this.getTypeName(bean);
 		return result;
 	}
 	
@@ -390,6 +471,10 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 					visaSer.add(list.get(k));
 				}
 			flow.setVisaSortM(id.getVisaSort().substring(0,2));	
+			flow.setTrMk(trMk);
+			if(depId!=null&&!"".equals(depId)){
+				flow.setDepId(new WebDepartment(Integer.parseInt(depId)));
+			}
 			visaSer.add(flow);//(5)添加新對象
 			ajaxResult="0";
 		}catch(Exception e){
@@ -450,6 +535,10 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 				flows.get(i).setVisaRank("知會");
 				flows.get(i).setFlowMk("N");
 				flows.get(i).setVisaSortM(flows.get(i).getId().getVisaSort().substring(0,2));
+				flows.get(i).setTrMk(trMk);
+				if(depId!=null&&!"".equals(depId)){
+					flows.get(i).setDepId(new WebDepartment(Integer.parseInt(depId)));
+				}			
 				visaSer.add(flows.get(i));
 			}
 			ajaxResult="0";
@@ -490,6 +579,149 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 				ajaxResult="1";						
 		}
 		return "findWebbuss";
+	}
+	
+	public String findVisaSort_dwr3(){
+		List<Object[]>list=visaSer.findVisaSort_dwr3(factNo,visaSort,visaSigner,trMk);
+		jsons=JSONArray.fromObject(list);
+		return "findVisaSort_dwr3";
+	}
+	
+	public String findVisaSort_dwr4(){
+		ajaxResult=visaSer.findVisaSort_dwr3(factNo,visaSort,visaSigner,trMk,depId);
+		return "findVisaSort_dwr4";
+	}
+	
+	public String findVisaSort_dwr5(){
+		List<String>list=visaSer.findVisaSort_dwr4(factNo,visaSort,visaSigner,trMk);
+		jsons=JSONArray.fromObject(list);
+		return "findVisaSort_dwr5";
+	}
+	
+	public HSSFWorkbook init2003(List<KyzVisaflow>flows){
+		HSSFWorkbook wb=new HSSFWorkbook();
+		HSSFSheet sheet=wb.createSheet("sheet1");
+				
+		List<String>list_str=new ArrayList<String>();
+		for(KyzVisaflow obj:flows){
+			list_str.add(obj.getId().getVisaSort());
+		}
+		for(int a=0;a<list_str.size();a++){
+			for(int b=list_str.size()-1;b>a;b--){
+				if(list_str.get(a).equals(list_str.get(b))){
+					list_str.remove(b);
+				}
+			}
+		}
+		
+		List<List<KyzVisaflow>>list_all=new ArrayList<List<KyzVisaflow>>();
+		for(String str:list_str){
+			List<KyzVisaflow>list=new ArrayList<KyzVisaflow>();
+			for(KyzVisaflow obj:flows){
+				if(str.equals(obj.getId().getVisaSort())){
+					list.add(obj);
+				}
+			}
+			list_all.add(list);
+		}
+		
+		Map<String,Object>map=GlobalMethod.findStyles(wb);
+		HSSFCellStyle cs=(HSSFCellStyle)map.get("cs");
+		HSSFCellStyle cs_head=(HSSFCellStyle)map.get("cs_head");
+		
+		List<String>list_head=new ArrayList<String>();
+		list_head.add("廠別");
+		list_head.add("類別");
+		list_head.add("姓名");
+		list_head.add("項次");
+		list_head.add("Email");
+		list_head.add("職務");
+		list_head.add("是否審核");
+		list_head.add("是否可見");
+		
+		int index_y=3;					
+		int index_init=0;
+		for(int a=0;a<list_all.size();a++){
+			if(a==0){
+				index_init=index_init+list_all.get(a).size()+3;
+			}else{
+				index_init=index_init+list_all.get(a).size()+1;
+			}			
+			for(int b=0;b<index_init;b++){
+				sheet.createRow(b);
+				for(int c=0;c<list_head.size();c++){
+					if(b==0){
+						if(c==4){
+							sheet.setColumnWidth(c,6800);
+						}else{
+							sheet.setColumnWidth(c, 4000);
+						}						
+					}
+					sheet.getRow(b).createCell(c);
+				}
+			}
+					
+		}						
+		for(int a=0;a<list_head.size();a++){
+			sheet.getRow(1).getCell(a).setCellValue(list_head.get(a));
+			sheet.getRow(1).getCell(a).setCellStyle(cs_head);
+		}
+				
+		for(List<KyzVisaflow>list:list_all){			
+			for(int b=0;b<list.size();b++){
+				sheet.getRow(index_y+b).getCell(0).setCellValue(list.get(b).getId().getFactNo());
+				sheet.getRow(index_y+b).getCell(1).setCellValue(list.get(b).getId().getVisaSort());
+				sheet.getRow(index_y+b).getCell(2).setCellValue(list.get(b).getId().getPurmanNo());
+				sheet.getRow(index_y+b).getCell(3).setCellValue(list.get(b).getId().getItemNo());
+				sheet.getRow(index_y+b).getCell(4).setCellValue(list.get(b).getVisaSigner());
+				sheet.getRow(index_y+b).getCell(5).setCellValue(list.get(b).getVisaRank());
+				sheet.getRow(index_y+b).getCell(6).setCellValue(list.get(b).getFlowMk());
+				sheet.getRow(index_y+b).getCell(7).setCellValue(list.get(b).getVisible());
+				
+				for(int c=0;c<8;c++){
+					sheet.getRow(index_y+b).getCell(c).setCellStyle(cs);
+				}	
+			}			
+			index_y=index_y+list.size()+1;
+		}				
+		return wb;
+	}
+	
+	public void print(){
+		try {
+			flows=visaSer.findByFnoAndVsortAndTrmk(factNo, visaSort, trMk);
+			if(flows!=null&&flows.size()>0){
+				Workbook wb=this.init2003(flows);			
+				ServletOutputStream os=response.getOutputStream();
+				response.setContentType("application/vnd.ms-excel");
+				//response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+				String fileName="report.xls";
+				int msie=ServletActionContext.getRequest().getHeader("USER-AGENT").toLowerCase().indexOf("msie");
+				if(msie>0){
+					fileName=java.net.URLEncoder.encode(fileName,"utf-8");
+				}else{
+					fileName=new String(fileName.getBytes("utf-8"),"iso8859-1");
+				}
+				response.setHeader("Content-disposition","attachment;filename="+fileName);				
+				wb.write(os);
+				os.close();
+			}else{
+				response.setContentType("text/html;charset=utf-8");
+				if("nothing".equals(factNo)){
+					response.getWriter().print("<script>alert('請選擇廠別')</script>");
+				}else{
+					response.getWriter().print("<script>alert('沒有查詢到數據')</script>");
+				}
+				
+			}
+			
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }

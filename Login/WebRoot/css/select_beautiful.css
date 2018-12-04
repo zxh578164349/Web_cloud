@@ -14,6 +14,9 @@ input[type=text],input[type=password],select{
 	border-color: #B6CDDC;
 }
 
+#tb_search td,#tb_search th{
+	padding:0px 5px 0px 0;
+}
 #tb_search input[type=text],#tb_search select{
 	height:35px;
 	height: 35px \9;/*IE*/

@@ -60,5 +60,6 @@ public interface IWebUserService {
 	
 	public List<WebOperationToUser> findoperations(Integer userid);
 	public void delete_operation(List<WebOperationToUser>list);
+	public List<WebUser>findByWeeklyMk();
 	
 }

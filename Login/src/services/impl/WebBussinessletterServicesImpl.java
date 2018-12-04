@@ -143,8 +143,8 @@ public class WebBussinessletterServicesImpl implements IWebBussinessletterServic
 		Map<String,Object>map_result=new HashMap<String,Object>();
 		List<WebBussinessletter>list=new ArrayList<WebBussinessletter>();
 		Map<String,Object>map=new HashMap<String,Object>();
-		String factname=webFactDao.selByid(factNo);
-		String unit="";//承辦單位
+		//String factname=webFactDao.selByid(factNo);
+		//String unit="";//承辦單位
 		WebBussinessletter letter=webbussletterdao.findById(billNo);
 		if(letter==null){
 			return null;
@@ -154,14 +154,19 @@ public class WebBussinessletterServicesImpl implements IWebBussinessletterServic
 			letter.setGAgent(ZHConverter.convert(letter.getGAgent(), ZHConverter.TRADITIONAL));
 			letter.setPlanList(ZHConverter.convert(letter.getPlanList(), ZHConverter.TRADITIONAL));
 			letter.setPosition(ZHConverter.convert(letter.getPosition(), ZHConverter.TRADITIONAL));
-			letter.setUnit(ZHConverter.convert(letter.getUnit(), ZHConverter.TRADITIONAL));
+			if(letter.getUnit()!=null){
+				letter.setUnit(ZHConverter.convert(letter.getUnit(), ZHConverter.TRADITIONAL));
+			}else if(letter.getDepId().getDepName()!=null){
+				letter.setUnit(ZHConverter.convert(letter.getDepId().getDepName(), ZHConverter.TRADITIONAL));
+			}
+			
 			letter.setUsername(ZHConverter.convert(letter.getUsername(), ZHConverter.TRADITIONAL));
 			/*******************簡轉繁體********************/
 			letter.setSumDate((int)GlobalMethod.sumDate(letter.getDateFrom(), letter.getDateEnd())+1);//出差天數
 			list.add(letter);
 		}
 		if(letter.getUnit()!=null&&!letter.getUnit().equals("")){
-			unit="("+letter.getUnit()+")";
+			//unit="("+letter.getUnit()+")";
 		}
 		//String result=factname+unit+"人員出差申請書";
 		//map.put("SUBREPORT_DIR",ServletActionContext.getRequest().getRealPath("/jasper/audit/")+ "/");
@@ -171,7 +176,7 @@ public class WebBussinessletterServicesImpl implements IWebBussinessletterServic
 		map.put("pfactno", factNo);
 		map.put("pbillno",billNo);
 		//map.put("title",result);						
-		SimpleDateFormat format=new SimpleDateFormat("yyyyMMdd");
+		SimpleDateFormat format=new SimpleDateFormat("yyyyMMdd_hh:mm");
 		if(vbm==null){
 			vbm=visabillmDao.findById(factNo, sort, billNo);
 		}		
@@ -197,7 +202,8 @@ public class WebBussinessletterServicesImpl implements IWebBussinessletterServic
 			Date date=null;
 			
 			String datestr=list_visa.get(i).getDateVisa();
-			try {
+			visabillstemp.setCreateDate(datestr);
+			/*try {
 				if(datestr!=null){
 					date=format.parse(datestr);
 					visabillstemp.setCreateDate(date);
@@ -206,7 +212,7 @@ public class WebBussinessletterServicesImpl implements IWebBussinessletterServic
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}
+			}*/
 			String name=list_visa.get(i).getVisaRank();
 			String visamk=list_visa.get(i).getVisaMk();
 			String memo=list_visa.get(i).getMemo();
@@ -243,8 +249,17 @@ public class WebBussinessletterServicesImpl implements IWebBussinessletterServic
 			visabillstemp.setVisaSigner(list_visa.get(i).getVisaSigner());
 			visabillstemp.setVisaMk(list_visa.get(i).getVisaMk());
 			visabillstemp.setVisaName(name);
+			visabillstemp.setVisible(list_visa.get(i).getVisible());
 			list_visabillstemp.add(visabillstemp);
 		}//for
+		
+		/**********************去掉不顯示出來（visible='N'）20171023****************************/
+		for(int a=0;a<list_visabillstemp.size();a++){
+			if("N".equals(list_visabillstemp.get(a).getVisible())){
+				list_visabillstemp.remove(a);
+			}
+		}
+		/**********************去掉不顯示出來（visible='N'）20171023****************************/
 		/*********************簡體轉繁體******************/
 		for(int i=0;i<list_visabillstemp.size();i++){
 			list_visabillstemp.get(i).setMemo(ZHConverter.convert(list_visabillstemp.get(i).getMemo(), ZHConverter.TRADITIONAL));
@@ -272,6 +287,13 @@ public class WebBussinessletterServicesImpl implements IWebBussinessletterServic
 		map_result.put("map", map);
 		map_result.put("list", list);
 		return map_result;
+	}
+
+
+
+	public String findBillNo(String billNo) {
+		// TODO Auto-generated method stub
+		return webbussletterdao.findBillNo(billNo);
 	}
 
 }

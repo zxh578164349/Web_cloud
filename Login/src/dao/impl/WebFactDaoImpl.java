@@ -294,6 +294,13 @@ public class WebFactDaoImpl extends Basedao implements IWebFactDao {
 		String[]objs={factNo};
 		return super.findAll(hql, objs);
 	}
+	public List<Object[]> findByFactNo_show_order(String factNo) {
+		// TODO Auto-generated method stub
+		String hql="select id.factArea,fcodeIndex from WebFact where id.factNo=? and factShow='0' order by fcodeIndex";
+		String[]objs={factNo};
+		return super.findAll(hql, objs);
+	}
+	
 	/**
 	 * 日期:2016/10/14
 	 * 描述:有序
@@ -343,5 +350,31 @@ public class WebFactDaoImpl extends Basedao implements IWebFactDao {
 		String hql="select factNo,factSname,orderNo,erpFactcode from VWebFact order by orderNo";
 		return super.findAll(hql,null);
 	}
+
+	/**
+	 * 日期:2017/7/26
+	 * 描述:
+	 */
+	
+	
+	public List<String> findfactarea(){
+		// TODO Auto-generated method stub
+		String hql="select distinct id.factArea from WebFact where factShow='0'";
+		return super.findAll(hql,null);
+	}
+
+	/**
+	 * 日期:2017/7/28
+	 * 描述:
+	 */
+	
+	
+	public List<Object[]> findFnoFcodeShow(){
+		// TODO Auto-generated method stub
+		String hql="select id.factNo,id.factArea,factSname,orderNo,fcodeIndex from WebFact where factShow='0' order by orderNo,fcodeIndex";		
+		return super.findAll(hql,null);
+	}
+	
+	
 
 }

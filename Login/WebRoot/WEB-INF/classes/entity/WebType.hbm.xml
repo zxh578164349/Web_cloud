@@ -26,6 +26,9 @@
         <property name="delMk" type="java.lang.String">
             <column name="DEL_MK" length="2"/>
         </property>
+        <property name="trMk" type="java.lang.String">
+            <column name="TR_MK" length="2"/>
+        </property>
         <bag name="list_kyzexp" inverse="true" cascade="delete" >
            <key>
               <column name="FACT_NO" length="6" />

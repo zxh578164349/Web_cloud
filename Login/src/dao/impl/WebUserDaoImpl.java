@@ -398,5 +398,12 @@ public class WebUserDaoImpl extends Basedao implements IWebUserDao {
 		
 	}
 
+	public List<WebUser> findByWeeklyMk() {
+		// TODO Auto-generated method stub
+		String hql="from WebUser where weeklyreportMk='Y'";
+		List<WebUser>list=super.findAll(hql, null);
+		return list;
+	}
+
 
 }

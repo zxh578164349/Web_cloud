@@ -65,6 +65,7 @@
 				          </s:if>
 				          <s:else>
 				              <input type="text" name="webtype.id.typeNo" value="<s:property value='webtype.id.typeNo'/>" readonly style="color:blue"/>
+				              <input type="hidden" name="webtype.typeMk" value="<s:property value='webtype.typeMk'/>"/>
 				          </s:else>			             				            								
 				         </td>							
 				</tr>													
@@ -73,23 +74,24 @@
 				          <td class="td_input"><input type="text" name="webtype.typeName"
 					           value="<s:property value='webtype.typeName'/>" id="typeName"  datatype="*1-60" />
 					         <input type="hidden" name="webtype.webtypeMk" value="Y"/>
-					         <input type="hidden" name="webtype.delMk" value="0"/><!-- 默認未刪除 -->
-					         <input type="hidden" name="webtype.typeMk" value="<s:property value='webtype.typeMk'/>"/>					
-				          </td>	
-				                             
-				<!-- <td class="td_show_title">是否可用</td>
-				<td class="td_input">				
-				          可用<input type="radio" name="webtype.webtypeMk"
-					 value="0" checked/>
-					 <s:if test="webtype.webtypeMk==null||webtype.webtypeMk==''">
-					    不可用<input type="radio" name="webtype.webtypeMk"
-					 value="1"/> 
-					 </s:if>
-					 <s:else>
-					    不可用<input type="radio" name="webtype.webtypeMk"
-					 value="1" checked/>
-					 </s:else>					
-				</td>	 -->   
+					         <input type="hidden" name="webtype.delMk" value="0"/><!-- 默認未刪除 -->					         					
+				          </td>
+				          
+				         <!--  <td class="td_show_title">是否分部門</td>
+				          <td class="td_input">
+				           <s:if test='webtype.trMk=="Y"'>
+				                                       是<input type="radio" name="webtype.trMk" value="Y" checked datatype="*"/>				                                      
+				           </s:if>
+				           <s:else>
+				                                       是<input type="radio" name="webtype.trMk" value="Y" datatype="*"/>
+				           </s:else>
+				           <s:if test='webtype.trMk=="N"'>
+				                                       否<input type="radio" name="webtype.trMk" value="N" checked/>
+				           </s:if>
+				           <s:else>
+				                                       否<input type="radio" name="webtype.trMk" value="N"/>
+				           </s:else>                                                     
+				          </td>	 -->				                             				  
 			</tr>											
 		</table>
 		<center>

@@ -265,7 +265,7 @@ public class KyzExpectmatmServicesImpl implements IKyzExpectmatmServices {
 		/*String type=list.get(0).getVisaType();
 		List<KyzVisaflow> list_visa=visaSer.findByType(type);*/
 		
-		SimpleDateFormat format=new SimpleDateFormat("yyyyMMdd");
+		SimpleDateFormat format=new SimpleDateFormat("yyyyMMdd_hh:mm");
 		if(vbm==null){
 			vbm=visabillmDao.findById(factNo, sort, billNo);//用參數傳遞vbm,減少連接數據庫  20160112
 		}		
@@ -292,7 +292,8 @@ public class KyzExpectmatmServicesImpl implements IKyzExpectmatmServices {
 			Date date=null;
 			
 			String datestr=list_visa.get(i).getDateVisa();
-			try {
+			visabillstemp.setCreateDate(datestr);
+			/*try {
 				if(datestr!=null){
 					date=format.parse(datestr);
 					visabillstemp.setCreateDate(date);
@@ -301,7 +302,7 @@ public class KyzExpectmatmServicesImpl implements IKyzExpectmatmServices {
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}
+			}*/
 			String name=list_visa.get(i).getVisaRank();
 			String visamk=list_visa.get(i).getVisaMk();
 			//String visadate=list_visa.get(i).getDateVisa();
@@ -339,8 +340,16 @@ public class KyzExpectmatmServicesImpl implements IKyzExpectmatmServices {
 			visabillstemp.setVisaSigner(list_visa.get(i).getVisaSigner());
 			visabillstemp.setVisaMk(list_visa.get(i).getVisaMk());
 			visabillstemp.setVisaName(name);
+			visabillstemp.setVisible(list_visa.get(i).getVisible());
 			list_visabillstemp.add(visabillstemp);
 		}//for
+		/**********************去掉不顯示出來（visible='N'）20171023****************************/
+		for(int a=0;a<list_visabillstemp.size();a++){
+			if("N".equals(list_visabillstemp.get(a).getVisible())){
+				list_visabillstemp.remove(a);
+			}
+		}
+		/**********************去掉不顯示出來（visible='N'）20171023****************************/
 		
 		/*********************簡體轉繁體******************/
 		for(int i=0;i<list_visabillstemp.size();i++){
@@ -377,7 +386,7 @@ public class KyzExpectmatmServicesImpl implements IKyzExpectmatmServices {
 			map.put("file_map", file_map);
 		}
 		
-		String sub_file=GlobalMethod.getSubfile(list_visa.size()-nos);
+		String sub_file=GlobalMethod.getSubfile(list_visa.size()-nos,list.get(0).getFirstPage());
 		map.put("sub_file",sub_file);
 		map_result.put("map", map);
 		map_result.put("list", list);

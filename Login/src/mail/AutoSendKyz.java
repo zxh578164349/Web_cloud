@@ -8,10 +8,12 @@ import org.springframework.scheduling.quartz.QuartzJobBean;
 import services.IKyVisabillmServices;
 import util.GlobalMethod;
 import entity.KyVisabillm;
+import entity.custom.ProjectConfig;
 
 
 public class AutoSendKyz extends QuartzJobBean{
-	public static final String KIP="192.168.199.101";
+	//public static final String KIP="192.168.199.101";
+	private static final ProjectConfig pc=GlobalMethod.findProjectConfig();
 
 	@Override
 	protected void executeInternal(JobExecutionContext arg0)
@@ -23,7 +25,7 @@ public class AutoSendKyz extends QuartzJobBean{
 				this.init();
 			}else{
 				for(int i=0;i<ips.size();i++){
-					if(ips.get(i).equals(KIP)){
+					if(ips.get(i).equals(pc.getpHostLoaclB())){
 						this.init();
 						break;
 					}else if(i==ips.size()-1){

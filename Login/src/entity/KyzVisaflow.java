@@ -16,6 +16,10 @@ public class KyzVisaflow implements java.io.Serializable {
 	private String visaSortM;//類別大類
 	private String delMk;//刪除標記        0或空 未刪除     1刪除
 	private String typeMk; //區分 出差類(TR)    配方類(PF)     其它類(0)
+	private String trMk;//是否分部門     Y:是   N:否
+	private WebDepartment depId;//用於同一個帳號可以在多個部門妹建立同一類別的流程    (PS分部門的，並且申請人才有的；default表示默認值)
+	private String visible;//是否可見      Y可見     N不可見
+	private WebType webtype;//函文大類外鍵
 
 	// Constructors
 
@@ -102,6 +106,40 @@ public class KyzVisaflow implements java.io.Serializable {
 	public void setTypeMk(String typeMk){
 		this.typeMk=typeMk;
 	}
+
+	public String getTrMk(){
+		return trMk;
+	}
+
+	public void setTrMk(String trMk){
+		this.trMk=trMk;
+	}
+
+	public WebDepartment getDepId(){
+		return depId;
+	}
+
+	public void setDepId(WebDepartment depId){
+		this.depId=depId;
+	}
+
+	public String getVisible(){
+		return visible;
+	}
+
+	public void setVisible(String visible){
+		this.visible=visible;
+	}
+
+	public WebType getWebtype() {
+		return webtype;
+	}
+
+	public void setWebtype(WebType webtype) {
+		this.webtype = webtype;
+	}
+
+	
 	
 	
 

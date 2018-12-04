@@ -45,7 +45,7 @@
 
 			<tr>
 				<td>廠別</td>
-				<td colspan="2"><s:property value='bussletter.factNo' />
+				<td colspan="2"><s:property value='bussletter.factNo2.factSname' />
 				</td>
 				<td>職務</td>
 				<td colspan="2"><s:property value='bussletter.position' />

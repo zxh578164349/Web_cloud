@@ -173,6 +173,7 @@ public class WebEstProductDaoImpl extends Basedao implements IWebEstProductDao {
 			hql.append(" and id.factNo=:factno");
 			map.put("factno", factNo);
 		}
+		//hql.append(" and fact.factShow='0' ");
 		hql.append(" order by id.factNo,id.factCode,id.yymm desc");
 		List<Webestproduct>list=super.getAllWithNoPage(hql.toString(), map);
 		return list;
@@ -262,6 +263,19 @@ public class WebEstProductDaoImpl extends Basedao implements IWebEstProductDao {
 			map.put("yymm2", yymm2);
 		}
 		return super.getAllWithNoPage(hql.toString(), map);
+	}
+
+	public void addMore(List<Webestproduct> list) {
+		// TODO Auto-generated method stub
+		try{
+			for(Webestproduct obj:list){
+				getSession().merge(obj);				
+			}
+			getSession().flush();
+			getSession().clear();
+		}catch(Exception e){
+			System.out.println("**************************"+e+"**********************");
+		}
 	}
 
 

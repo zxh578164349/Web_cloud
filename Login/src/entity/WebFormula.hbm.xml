@@ -61,6 +61,12 @@
         <property name="visaSort" type="java.lang.String">
             <column name="VISA_SORT" length="3"/>
         </property>
+        <property name="userId" type="java.lang.Integer">
+           <column name="FK_WEBUSER" precision="8" scale="0"/>
+        </property> 
+        <property name="useremail" type="java.lang.String">
+            <column name="USEREMAIL" length="50"/>
+        </property>
         <bag name="webFormulaItemses" inverse="true" cascade="all" order-by="SECTION_NO,FK_WEBERPPRO_FOR" >
             <key>
                 <column name="FORMULA_INDEX" length="30" />

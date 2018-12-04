@@ -30,6 +30,7 @@ public class WebUser implements java.io.Serializable {
     private String adminMk;//管理員標識
     private String erpfactno;
     private String userType;//用戶類型
+    private String weeklyreportMk;//是否發送業務每週報告郵件      Y:  是       N:否
 	private List<WebJurisdiction> webJurisdictions = new ArrayList<WebJurisdiction>();
 	private List<WebOperationToUser>webOperationToUsers=new ArrayList<WebOperationToUser>();//操作權限
 
@@ -227,6 +228,16 @@ public class WebUser implements java.io.Serializable {
 		this.webOperationToUsers=webOperationToUsers;
 	}
 
+	public String getWeeklyreportMk() {
+		return weeklyreportMk;
+	}
+
+	public void setWeeklyreportMk(String weeklyreportMk) {
+		this.weeklyreportMk = weeklyreportMk;
+	}
+
+	
+	
 	
 	
 	

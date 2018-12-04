@@ -18,6 +18,7 @@ import services.ISumWebYieldDataLogServices;
 import services.ISumWebYieldDataServices;
 import services.IWebFactServices;
 import services.IWebYieldDataServices;
+import util.GlobalMethod;
 import util.JasperHelper;
 import util.PageBean;
 
@@ -28,6 +29,7 @@ import entity.SumWebYieldData;
 import entity.SumWebYieldDataId;
 import entity.SumWebYieldDataLog;
 import entity.SumWebYieldDataLogId;
+import entity.SumWebYieldDataView;
 import entity.VWebFact;
 import entity.WebUser;
 import entity.WebYieldData;
@@ -51,9 +53,18 @@ public class SumWebYieldDataAction extends ActionSupport implements ServletRespo
 	private ISumWebYieldDataLogServices sumydatelogSer;
 	private javax.servlet.http.HttpServletResponse response;
 	private String ajaxResult;//0提交成功       1提交失敗
+	private int backIndex;//返回標識      0或null:不走返回路徑         1:走返回路徑
 	
 	
 	
+	
+	
+	public int getBackIndex() {
+		return backIndex;
+	}
+	public void setBackIndex(int backIndex) {
+		this.backIndex = backIndex;
+	}
 	public String getAjaxResult() {
 		return ajaxResult;
 	}
@@ -147,15 +158,7 @@ public class SumWebYieldDataAction extends ActionSupport implements ServletRespo
 	public void setSumydatelogSer(ISumWebYieldDataLogServices sumydatelogSer) {
 		this.sumydatelogSer = sumydatelogSer;
 	}
-	/**
-	 * �K�[
-	 * �L �Ѽ�
-	 * (0)onModulus:(everyDemo)���W�Ҽ�;(1)personnum:(everyPeople)���W�ҤH��;(2)standardOutput:(standardDemo)�Э�Ͳ��Ҽ�;
-	 * (3)actualYield:(actualDemo)��ڥͲ��Ҽ�;(4)daycount:(workDay)�W�Z�Ѽ�
-	 * (5)actualpairs:��ڥͲ����;(6)hostpairs:�ȸɥͲ����;(7)factpairs:�t�ɥͲ����;(8)samplepairs:�˫~�Ͳ����
-	 * (9)outnum:�X�f��;(10)backnum:�h�f��
-	 * @return
-	 */
+	
 	public String add(){
 		List list=webFactSer.findFactCodeByFactNo(factNo);
 		
@@ -170,10 +173,9 @@ public class SumWebYieldDataAction extends ActionSupport implements ServletRespo
 			id.setFactNo(fact);
 			id.setFactCode(factcode);
 			id.setYymm(yymm);
-			ydate.setId(id);			
-			//objs���n�P�_�A�ҥH�P�_list_ydata.size()(��̪��d�߱��@�ˡA���G�]�O�@�P)
+			ydate.setId(id);						
 			if(list_ydata!=0){
-				BigDecimal onModulus=new BigDecimal(objs[0]==null?"0":objs[0].toString().toString());
+				/*BigDecimal onModulus=new BigDecimal(objs[0]==null?"0":objs[0].toString().toString());
 				BigDecimal personnum=new BigDecimal(objs[1]==null?"0":objs[1].toString().toString());
 				BigDecimal standardOutput=new BigDecimal(objs[2]==null?"0":objs[2].toString());
 				BigDecimal actualYield=new BigDecimal(objs[3]==null?"0":objs[3].toString());
@@ -185,6 +187,7 @@ public class SumWebYieldDataAction extends ActionSupport implements ServletRespo
 				BigDecimal outnum=new BigDecimal(objs[9]==null?"0":objs[9].toString());
 				BigDecimal backnum=new BigDecimal(objs[10]==null?"0":objs[10].toString());
 				Double workhours=(Double)(objs[11]==null?0.0:objs[11]);
+				
 				ydate.setSumEverydemo(onModulus);
 				ydate.setSumEverypeople(personnum);
 				ydate.setSumStandarddemo(standardOutput);
@@ -196,7 +199,8 @@ public class SumWebYieldDataAction extends ActionSupport implements ServletRespo
 				ydate.setSumSamplepairs(samplepairs);
 				ydate.setSumOutnum(outnum);
 				ydate.setSumBacknum(backnum);
-				ydate.setSumWorkhours(workhours);
+				ydate.setSumWorkhours(workhours);*/
+				GlobalMethod.add_sumYdata(objs,list_ydata,ydate);
 			}			
 			ydate.setStartDate(startDate);
 			ydate.setEndDate(endDate);
@@ -283,11 +287,15 @@ public class SumWebYieldDataAction extends ActionSupport implements ServletRespo
 		return "findPageBean1";
 	}
 	public String findPageBean3(){
+		String result="findPageBean1";
+		if(backIndex==1){
+			result="findPageBean";
+		}
 		factNo=(String)ActionContext.getContext().getSession().get("sumydate_factno");
 		begin_yymm=(String)ActionContext.getContext().getSession().get("sumydate_begin_yymm");
 		end_yymm=(String)ActionContext.getContext().getSession().get("sumydate_end_yymm");		
 		bean=sumydateSer.findPageBean(20,page, factNo, begin_yymm,end_yymm);
-		return "findPageBean1";
+		return result;
 	}
 	public String formatDouble(double s) {
 		DecimalFormat format = new DecimalFormat(",###.#");
@@ -413,7 +421,7 @@ public class SumWebYieldDataAction extends ActionSupport implements ServletRespo
 	}
 	
 	public String findById(){
-		sumydata=sumydateSer.findById(factNo, factCode, yymm);
+		sumydata=sumydateSer.findById2(factNo, factCode, yymm);
 		return "findById";
 	}
 	public void print() throws IOException{				
@@ -423,7 +431,7 @@ public class SumWebYieldDataAction extends ActionSupport implements ServletRespo
 		}else{
 			String yymm=begin_yymm+"-"+end_yymm;			
 			Map<String,Object>map=new HashMap<String,Object>();
-			List<SumWebYieldData>list_sumYdata=sumydateSer.findByFactNoAndYymm(factNo, begin_yymm, end_yymm);		
+			List<SumWebYieldDataView>list_sumYdata=sumydateSer.findByFactNoAndYymm(factNo, begin_yymm, end_yymm);		
 			map.put("factNo", factNo);
 			map.put("yymm", yymm);
 			JasperHelper.exportmain("excel", map,"sum_ydata.jasper",list_sumYdata, factNo+"_"+yymm, "jasper/audit/");

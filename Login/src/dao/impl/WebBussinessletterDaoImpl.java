@@ -61,6 +61,9 @@ public class WebBussinessletterDaoImpl extends Basedao implements IWebBussinessl
 		List<WebBussinessletter>list=super.queryForPage(hql.toString(), offset, pageSize, map);
 		for(WebBussinessletter letter:list){
 			letter.getVbm().getLastMk();
+			if(letter.getUnit()==null&&letter.getDepId().getDepName()!=null){
+				letter.setUnit(letter.getDepId().getDepName());
+			}			
 		}
 		PageBean bean=new PageBean();
 		bean.setAllRow(allrow);
@@ -85,7 +88,14 @@ public class WebBussinessletterDaoImpl extends Basedao implements IWebBussinessl
 		String hql="from WebBussinessletter where blNo=?";
 		Query query=getSession().createQuery(hql);
 		query.setString(0, billNo);
-		return (WebBussinessletter)query.uniqueResult();
+		WebBussinessletter obj=(WebBussinessletter)query.uniqueResult();
+		if(obj!=null){
+			if(obj.getDepId()!=null){
+				obj.getDepId().getDepName();
+			}
+			obj.getFactNo2().getFactSname();
+		}		
+		return obj;
 	}
 
 	public void delete(WebBussinessletter letter,KyzExpectmatmLog delLog) {
@@ -131,6 +141,15 @@ public class WebBussinessletterDaoImpl extends Basedao implements IWebBussinessl
 		}catch(Exception e){
 			System.out.println("dao*******************************"+e+"******************************dao");
 		}
+	}
+
+	public String findBillNo(String billNo) {
+		// TODO Auto-generated method stub
+		String hql="select blNo from WebBussinessletter where blNo=?";
+		Query query=getSession().createQuery(hql);
+		query.setString(0, billNo);
+		String obj=(String)query.uniqueResult();
+		return obj;
 	}
 
 }

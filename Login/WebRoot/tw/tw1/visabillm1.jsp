@@ -115,7 +115,9 @@
 	       </s:if>
 	       </s:if>
 	       <s:else>
-	       <a style="color:#b45b3e"><s:property value="visaRank"/>(只知會)</a>&nbsp;||&nbsp;
+	       <s:if test='visible!="N"'>
+	         <a style="color:#b45b3e"><s:property value="visaRank"/>(只知會)</a>&nbsp;||&nbsp;
+	       </s:if>       
 	       </s:else>	       
 	      </s:iterator>
 		</td>

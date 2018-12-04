@@ -222,10 +222,13 @@
 					layer.msg("提交成功!",3,1);
 					loadUrl("webestpro_findPageBean");
 					//location.href="webestpro_findPageBean";
-				}else{
-					//alert(data.responseText);
+				}
+				if(data=="2"){
+					layer.msg("數據已存在",3,3);
+				}
+				if(data=="1"){
 					layer.msg("提交失敗",3,3);
-				}				
+				}								
 			}
 		});
 		demo.tipmsg.w["*0-9"] = "只能數字且不超過9位數,可保留三位以內小數";

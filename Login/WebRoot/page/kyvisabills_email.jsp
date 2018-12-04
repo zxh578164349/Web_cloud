@@ -86,8 +86,10 @@
 											未通過<br/>(<s:property value="dateVisa"/>)</a>											 
 										</s:if>
 									</s:if>
-									<s:else>
-										<a style="color:#b45b3e">只知會</a>
+									<s:else>									
+									    <s:if test='visible!="N"'>
+	                                        <a style="color:#b45b3e">只知會</a>
+	                                    </s:if>										
 									</s:else>
 									
 								</p>
@@ -125,7 +127,10 @@
 										</s:if>
 									</s:if>
 									<s:else>
-										<a style="color:#b45b3e">只知會</a>
+									    <s:if test='visible!="N"'>
+	                                        <a style="color:#b45b3e">只知會</a>
+	                                    </s:if>	
+	                                    <s:else>/</s:else>										
 									</s:else>									
 								</p>
 							</div>
@@ -271,8 +276,8 @@ $(document).ajaxStop(function(){
 });
 function yesorno(passMk){
 	 var memo_leg=document.getElementById("memo_txt").value;
-	  if(memo_leg.length>150){
-	     alert("備註不可超過150字");
+	  if(memo_leg.length>400){
+	     alert("備註不可超過400字");
 	  }else{
 	     document.getElementById("visa_mk").value=passMk;	    
 	    $.ajax({

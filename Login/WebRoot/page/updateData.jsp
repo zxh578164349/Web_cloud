@@ -57,10 +57,15 @@
 			ajaxPost : true,
 			callback : function(data) {
 				if (data == "0") {
-					layer.msg("修改成功,請重新登錄!", 3, 1);
-					window.setTimeout(function() {
+				var flag=confirm("修改成功，請重新登錄");
+				if(flag){
+				  location.href = "judge.jsp";
+				}
+				
+					/*layer.msg("修改成功,請重新登錄!", 3, 1);
+					 window.setTimeout(function() {
 						location.href = "judge.jsp"
-					}, 3000);
+					}, 3000); */
 				} else {
 					//alert(data.responseText);
 					layer.msg("修改失敗", 3, 3);
@@ -83,8 +88,9 @@
 			<div class="col-md-12 column">
 				<h2 id="h2_title">個人資料修改</h2>
 				<form class="form-horizontal" role="form" id="form" action="userupdateUesr" method="post">
-					<input type="hidden" name="updateU.id" value="<s:property value="#attr.webU.id"/>"> <input type="hidden" name="updateU.available"
-						value="<s:property value="#attr.webU.available"/>"> <input type="hidden" name="updateU.adminMk" value="<s:property value='#attr.webU.adminMk'/>" />
+					<input type="hidden" name="updateU.id" value="<s:property value="#attr.webU.id"/>">
+					<input type="hidden" name="updateU.available" value="<s:property value="#attr.webU.available"/>"> 
+					<%-- <input type="hidden" name="updateU.adminMk" value="<s:property value='#attr.webU.adminMk'/>" /> --%>
 					<div class="form-group">
 						<label for="inputEmail3" class="col-sm-2 control-label">工號</label>
 						<div class="col-sm-10">
@@ -137,9 +143,8 @@
 					</div>
 
 					<div class="form-group">
-						<div class="col-sm-offset-2 col-sm-10">
-							<div class="checkbox">
-								<label>
+					  <label for="inputPassword3" class="col-sm-2 control-label">只讀或修改</label>							
+							<div class="checkbox">								
 									只讀:
 									<s:if test='#attr.webU.userread=="1"'>
 										<input type="radio" value="1" name="updateU.userread" checked />
@@ -153,10 +158,8 @@
 									</s:if>
 									<s:else>
 										<input type="radio" value="0" name="updateU.userread" />
-									</s:else>
-								</label>
-							</div>
-						</div>
+									</s:else>								
+							</div>						
 					</div>
 
 					<div class="form-group">
@@ -167,6 +170,49 @@
 							<input type="hidden" value="<s:property value='#attr.webU.userType'/>" name="updateU.userType"/>
 						</div>
 					</div>
+					
+					<div class="form-group">
+					  <label for="inputPassword3" class="col-sm-2 control-label">是否要寫業務每週報告</label>											
+							<div class="checkbox">								
+									是:
+									<s:if test='#attr.webU.weeklyreportMk=="Y"'>
+										<input type="radio" value="Y" name="updateU.weeklyreportMk" checked />
+									</s:if>
+									<s:else>
+										<input type="radio" value="Y" name="updateU.weeklyreportMk" />
+									</s:else>
+									&nbsp; 否:
+									<s:if test='#attr.webU.weeklyreportMk=="N"||#attr.webU.weeklyreportMk==null'>
+										<input type="radio" value="N" name="updateU.weeklyreportMk" checked />
+									</s:if>
+									<s:else>
+										<input type="radio" value="N" name="updateU.weeklyreportMk" />
+									</s:else>								
+							</div>
+						
+					</div>
+					
+					<div class="form-group">
+					  <label for="inputPassword3" class="col-sm-2 control-label">高級權限</label>											
+							<div class="checkbox">								
+									開通:
+									<s:if test='#attr.webU.adminMk=="Y"'>
+										<input type="radio" value="Y" name="updateU.adminMk" checked />
+									</s:if>
+									<s:else>
+										<input type="radio" value="Y" name="updateU.adminMk" />
+									</s:else>
+									&nbsp; 不開通:
+									<s:if test='#attr.webU.adminMk=="N"||#attr.webU.adminMk==null'>
+										<input type="radio" value="N" name="updateU.adminMk" checked />
+									</s:if>
+									<s:else>
+										<input type="radio" value="N" name="updateU.adminMk" />
+									</s:else>								
+							</div>
+						
+					</div>
+					
 					<div class="form-group">
 						<div class="col-sm-offset-2 col-sm-10">
 							<input type="submit" value="確認修改" class="btn btn-primary" />&nbsp; <input type="button" class="btn btn-primary" value="退出" onclick="loadUrl('blank.jsp')" />

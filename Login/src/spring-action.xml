@@ -81,6 +81,12 @@
 	<bean id="weberpbpAction" class="action.WebErpBrankProcessAction" scope="prototype"/>
 	<bean id="weberppfAction" class="action.WebErpProductinFormationAction" scope="prototype"/>
 	<bean id="webformulaAction" class="action.WebFormulaAction" scope="prototype"/>
+	<bean id="webbrproAction" class="action.WebBrProductAction" scope="prototype"/>
+	<bean id="webDepAction" class="action.WebDepartmentAction" scope="prototype"/>
+	<bean id="webweeklyreportAction" class="action.WebWeeklyreportAction" scope="prototype"/>
+	<bean id="webemailallAction" class="action.WebEmailAllAction" scope="prototype"/>
+	<bean id="webnewproAction" class="action.WebNewproductAction" scope="prototype"/>
+	<bean id="webcolproAction" class="action.WebColproductMainAction" scope="prototype"/>
 </beans> 
 
  

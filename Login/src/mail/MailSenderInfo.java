@@ -3,25 +3,29 @@
  */
 package mail;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.security.GeneralSecurityException;
 import java.util.Properties;
 
+import util.GlobalMethod;
+
 import com.sun.mail.util.MailSSLSocketFactory;
+
+import entity.custom.ProjectConfig;
 
 /**
  * @author 张锡洪
  */
 public class MailSenderInfo {
-	   // 发送邮件的服务器的IP和端口    
-   // private String mailServerHost;    
-    //private String mailServerPort = "25";    
+	private static final ProjectConfig pc=GlobalMethod.findProjectConfig();  
     // 邮件发送者的地址    
-    private String fromAddress="<kyuen@yydg.com.cn>";    
+    private String fromAddress;    
     // 邮件接收者的地址    
     private String toAddress;    
     // 登陆邮件发送服务器的用户名和密码    
-    private String userName="kyuen@yydg.com.cn";    
-    private String password="yydgmail";    
+    private String userName;    
+    private String password;    
     // 是否需要身份验证    
     private boolean validate = false;    
     // 邮件主题    
@@ -35,14 +39,22 @@ public class MailSenderInfo {
       * 获得邮件会话属性   
       */    
     public Properties getProperties(){    
-    	Properties p = new Properties();    
+    	Properties p = new Properties();
+    	/*InputStream in = Object. class .getResourceAsStream( "/project_config.properties" );
+    	try {
+			p.load(in);
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}*/
         //p.put("mail.smtp.host", this.mailServerHost);    
         //p.put("mail.smtp.port", this.mailServerPort);    
         p.put("mail.smtp.auth", validate ? "true" : "false");
         
        // p.setProperty("mail.smtp.auth", "true");
   		p.setProperty("mail.transport.protocol", "smtp");
-  		p.setProperty("mail.host", "dgmail.yydg.com.cn");//云端要用域名
+  		//p.setProperty("mail.host", "dgmail.yydg.com.cn");//云端要用域名  		
+  		p.setProperty("mail.host", pc.getpSmtp());
   		//p.setProperty("mail.host", "172.17.5.84");    //有時候DNS解釋不到域名,所以直接用ip地址代替
   		//p.put("http.proxyHost", "172.17.18.14");
   		//p.put("http.proxyPort", "808");
@@ -88,13 +100,15 @@ public class MailSenderInfo {
       this.attachFileNames = fileNames;    
     }   
     public String getFromAddress() {    
-      return fromAddress;    
+      //return fromAddress; 
+    	return pc.getPfromAddress();
     }    
     public void setFromAddress(String fromAddress) {    
       this.fromAddress = fromAddress;    
     }   
     public String getPassword() {    
-      return password;    
+      //return password;  
+    	return pc.getpEmailPwd();
     }   
     public void setPassword(String password) {    
       this.password = password;    
@@ -106,7 +120,8 @@ public class MailSenderInfo {
       this.toAddress = toAddress;    
     }    
     public String getUserName() {    
-      return userName;    
+      //return userName;    
+    	return pc.getpEmail();
     }   
     public void setUserName(String userName) {    
       this.userName = userName;    
@@ -122,6 +137,9 @@ public class MailSenderInfo {
     }   
     public void setContent(String textContent) {    
       this.content = textContent;    
-    }    
+    } 
+    
+    
+    
 
 }

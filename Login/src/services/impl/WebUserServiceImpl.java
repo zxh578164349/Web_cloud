@@ -186,5 +186,10 @@ public class WebUserServiceImpl implements IWebUserService {
 		webUserDao.delete_operation(list);
 	}
 
+	public List<WebUser> findByWeeklyMk() {
+		// TODO Auto-generated method stub
+		return webUserDao.findByWeeklyMk();
+	}
+
 
 }

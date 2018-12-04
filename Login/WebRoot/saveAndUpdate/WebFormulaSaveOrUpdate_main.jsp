@@ -52,7 +52,9 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 									<input type="hidden" value="${loginUser.username}" name="formula.createName" /> 
 									 <input type="hidden" value="<%=str_date%>" name="formula.createDate" id="createDate" />
 									 <input type="hidden" name="isnull" value="isnull" />
-									 <input type="hidden" name="formula.visaSort" value="PF"/>									
+									 <input type="hidden" name="formula.visaSort" value="PF"/>
+									 <input type="hidden" value="${loginUser.id}" name="formula.userId" />
+									 <input type="hidden" value="${loginUser.email}" name="formula.useremail" /> 									
 									</td>
 								</tr> 
 								
@@ -211,9 +213,11 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 				}
 				if(data=="1"){
 					layer.msg("提交失敗",3,3);
+					jq("#msgtip").text("");
 				}
 				if(data=="3"){
 				    layer.msg("保存附檔失敗",3,3);
+				    jq("#msgtip").text("");
 				}				
 			}
 		});

@@ -72,7 +72,7 @@
 					<s:iterator value="#session.login_menus" status="x" id="menu">
 						<div class="mmenu">						
 							<a href="javascript:showDiv_main('${x.index}')">
-								<span id="a${x.index}" class="glyphicon glyphicon-folder-close mmenu_font">&nbsp;<s:property value="menuname" /> </span>
+								<span id="a${x.index}" class="glyphicon glyphicon-folder-close mmenu_font">&nbsp;${x.index+1}.<s:property value="menuname" /> </span>
 							</a>
 							<div id="submenu${x.index}" style="display:none">
 								<s:iterator value="submenus" status="x" id="submenu">
@@ -80,13 +80,13 @@
 										<span class="glyphicon glyphicon-file"> 
 										    <s:if test='enableMk=="1"'>
 										       <a name="alink_1" class="smenu_font a_disable" title="<s:property value='submenuname'/>">
-												<s:property value="submenuname" />
+												(${x.index+1 })<s:property value="submenuname" />
 											   </a>																						
 											   <input type="hidden" value="<s:property value='address'/>" name="alink_address_1"/> 	
 						                    </s:if>
 										    <s:else>
 										        <a name="alink" class="smenu_font a_disable" title="<s:property value='submenuname'/>">
-												<s:property value="submenuname" />
+												(${x.index+1 })<s:property value="submenuname" />
 											    </a>																						
 											   <input type="hidden" value="<s:property value='address'/>" name="alink_address"/> 	
 										    </s:else>																					
@@ -129,13 +129,14 @@
 		</div>
 	</div>
 
-	<script type='text/javascript' src='dwr/engine.js'></script>
-	<script type='text/javascript' src='dwr/util.js'></script>
+	<script type='text/javascript' src='jquery/engine.js'></script>
+	<script type='text/javascript' src='jquery/util.js'></script>
 	<!-- <script src="http://apps.bdimg.com/libs/jquery/1.9.1/jquery.min.js"></script> -->
 	<!--  <script>window.jQuery|| document.write('<script src="jquery/jquery-1.9.1.min.js"><\/script>');</script>-->
 	<script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script>
-	<script type="text/javascript" src="page/jquerys/layer/layer.min.js"></script>
+	<!--  <script type="text/javascript" src="page/jquerys/layer/layer.min.js"></script>-->	
 	<!-- <script type="text/javascript" src="jquery/layer3/layer.js"></script> -->
+	<script type="text/javascript" src="jquery/layer/layer.min.js"></script>
 	<script type="text/javascript" src="jquery/DatePicker/WdatePicker.js"></script>
 	<script type="text/javascript" src="jquery/Validform_v5.3.2_min.js"></script>
 	<script type="text/javascript" src="jquery/jquery-form.js"></script>
@@ -387,6 +388,11 @@
 
 		function change_h2_title(title) {
 			jq("#h2_title2").text(title);
+		}
+		
+		//添加修改頁面返回到數據頁面20170804
+		function back_main(url) {
+			loadUrl(url);
 		}
 	</script>
 </body>

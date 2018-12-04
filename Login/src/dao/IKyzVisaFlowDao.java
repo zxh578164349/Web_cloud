@@ -9,14 +9,18 @@ import entity.KyzVisaflowId;
 
 public interface IKyzVisaFlowDao {
 	public void add(KyzVisaflow flow);
-	public PageBean findFixWithPage(int pageSize, int page, String factNo,String visaSort);
+	public PageBean findFixWithPage(int pageSize, int page, String factNo,String visaSort,String trMk,String purmanNo,String visaSigner);
 	public KyzVisaflow findById(KyzVisaflowId id);
 	public void delete(KyzVisaflowId id,KyzExpectmatmLog log);
 	public void delete(KyzVisaflowId id);
 	public List<KyzVisaflow> findByFactNo(String factno);
 	public List<KyzVisaflow> findByType(String factNo,String visaSort);
 	public String findVisaSort_dwr(String factNo,String visaSort,String email);
-	
+	public String findVisaSort_dwr(String factNo,String visaSort,String email,String trMk);
+	public List<Object[]> findVisaSort_dwr2(String factNo,String visaSort,String email,String trMk);
+	public String findVisaSort_dwr2(String factNo,String visaSort,String email,String trMk,String depId);
+	public List<String> findVisaSort_dwr3(String factNo, String visaSort, String email,String trMk);
+	public List<String> findVisaSort_dwr4(String factNo, String visaSort, String depId,String trMk);
 	public List<String> findVisaSort_C(String factNo,String maiSort);
 	public List<KyzVisaflow>findByFactNoVisaSort(String factNo,String visaSort);
 	
@@ -45,5 +49,6 @@ public interface IKyzVisaFlowDao {
 	 * @date 2017/5/10
 	 */
 	public void add_d(KyzVisaflow f1,KyzVisaflow f2);
+	public List<KyzVisaflow>findByFnoAndVsortAndTrmk(String factNo,String visaSort,String trMk);
 	
 }

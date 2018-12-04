@@ -49,6 +49,8 @@ public interface IWebEstProductDao {
 	public List<Webestproduct>findByYymm(String yymm);
 	public List<Webestproduct>findByYymm(String yymm,String yymm2);
 	public List<Webestproduct>findByYymm_all(String yymm,String yymm2);
+	
+	public void addMore(List<Webestproduct> list);
 
 
 }

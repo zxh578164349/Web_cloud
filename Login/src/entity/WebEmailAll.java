@@ -16,13 +16,29 @@ public class WebEmailAll implements java.io.Serializable{
 	private String username;
 	private String toMail;//收件人
 	private String toCc;//抄送人
-	private String mkA;//工廠訂單Email
-	private String mkB;//其它email
+	private String emailType;//郵件類型   E0:工廠訂單     E1:業務周報告彙總   E2:每日產量報表      
+	private String emailOrCc;//發送還是抽送     0 發送        1 抽送
+	private String emailMk;//是否發送郵件  Y 發送    N 不發送
+	private WebEmailType emailTypeFk;//郵件類別外鍵   E1:工廠訂單     E2:業務周報告彙總   E3:每日產量報表      
+	private WebUser createUser;
+	private WebUser updateUser;
+	private String createDate;
+	private String updateDate;
 
 	// Constructors
 
+	
+
 	/** default constructor */
 	public WebEmailAll(){
+	}
+
+	public WebEmailType getEmailTypeFk() {
+		return emailTypeFk;
+	}
+
+	public void setEmailTypeFk(WebEmailType emailTypeFk) {
+		this.emailTypeFk = emailTypeFk;
 	}
 
 	/** minimal constructor */
@@ -31,7 +47,7 @@ public class WebEmailAll implements java.io.Serializable{
 	}
 
 	/** full constructor */
-	public WebEmailAll(Integer eid,String factNo,String factCode,String factPart,String email,String username,String toMail,String toCc,String mkA,String mkB){
+	public WebEmailAll(Integer eid,String factNo,String factCode,String factPart,String email,String username,String toMail,String toCc){
 		this.eid=eid;
 		this.factNo=factNo;
 		this.factCode=factCode;
@@ -39,9 +55,7 @@ public class WebEmailAll implements java.io.Serializable{
 		this.email=email;
 		this.username=username;
 		this.toMail=toMail;
-		this.toCc=toCc;
-		this.mkA=mkA;
-		this.mkB=mkB;
+		this.toCc=toCc;		
 	}
 
 	// Property accessors
@@ -109,21 +123,65 @@ public class WebEmailAll implements java.io.Serializable{
 	public void setToCc(String toCc){
 		this.toCc=toCc;
 	}
-
-	public String getMkA(){
-		return this.mkA;
+	
+	public String getEmailType() {
+		return emailType;
 	}
 
-	public void setMkA(String mkA){
-		this.mkA=mkA;
+	public void setEmailType(String emailType) {
+		this.emailType = emailType;
 	}
 
-	public String getMkB(){
-		return this.mkB;
+	public String getEmailOrCc() {
+		return emailOrCc;
 	}
 
-	public void setMkB(String mkB){
-		this.mkB=mkB;
+	public void setEmailOrCc(String emailOrCc) {
+		this.emailOrCc = emailOrCc;
 	}
+
+	public String getEmailMk() {
+		return emailMk;
+	}
+
+	public void setEmailMk(String emailMk) {
+		this.emailMk = emailMk;
+	}
+
+	public WebUser getCreateUser() {
+		return createUser;
+	}
+
+	public void setCreateUser(WebUser createUser) {
+		this.createUser = createUser;
+	}
+
+	public WebUser getUpdateUser() {
+		return updateUser;
+	}
+
+	public void setUpdateUser(WebUser updateUser) {
+		this.updateUser = updateUser;
+	}
+
+	public String getCreateDate() {
+		return createDate;
+	}
+
+	public void setCreateDate(String createDate) {
+		this.createDate = createDate;
+	}
+
+	public String getUpdateDate() {
+		return updateDate;
+	}
+
+	public void setUpdateDate(String updateDate) {
+		this.updateDate = updateDate;
+	}
+	
+	
+	
+	
 
 }

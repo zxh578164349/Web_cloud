@@ -77,7 +77,10 @@
 	       </s:if>
 	       </s:if>
 	       <s:else>
-	       <a style="color:#b45b3e">只知會</a>
+	       <s:if test='visible!="N"'>
+	            <a style="color:#b45b3e">只知會</a>
+	       </s:if>
+	       <s:else>/</s:else>		       
 	       </s:else>
 	       </td>
 	      </s:iterator>
@@ -233,8 +236,8 @@ function tips(memo,index){
 function yesorno(passMk){
 	var memo=layer.getChildFrame("#memo_txt",layer.index).val();
     layer.getChildFrame("#visa_mk",layer.index).val(passMk);
-    if(memo.length>150){
-       alert("備註不可超過150字");
+    if(memo.length>400){
+       alert("備註不可超過400字");
     }else{     
        $.ajax({
        	type:"POST",

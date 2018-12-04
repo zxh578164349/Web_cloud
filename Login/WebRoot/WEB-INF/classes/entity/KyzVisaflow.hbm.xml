@@ -38,5 +38,18 @@
         <property name="typeMk" type="java.lang.String">
             <column name="TYPE_MK" length="2"/>
         </property>
+        <property name="trMk" type="java.lang.String">
+            <column name="TR_MK" length="2"/>
+        </property>   
+        <property name="visible" type="java.lang.String">
+            <column name="VISIBLE" length="2"/>
+        </property>    
+        <many-to-one name="depId" class="entity.WebDepartment" fetch="select">
+            <column name="DEPID" precision="12" scale="0" />
+        </many-to-one>
+        <many-to-one name="webtype" insert="false" update="false">
+           <column name="FACT_NO"/>
+           <column name="VISA_SORT_M"/>
+        </many-to-one>
     </class>
 </hibernate-mapping>

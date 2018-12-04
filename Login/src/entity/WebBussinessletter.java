@@ -31,8 +31,20 @@ public class WebBussinessletter implements java.io.Serializable {
 	private String delMk;//刪除標記     0或空 未刪除     1刪除
 	private String visaSortM;//類別大類
 	private String userEmail;//申請人Email
+	private Integer userId;
+	private String useremail;
+	private WebDepartment depId;
+	private VWebFact factNo2;//關聯工廠名稱(不需要映射列名)
 
 	// Constructors
+
+	public String getUseremail(){
+		return useremail;
+	}
+
+	public void setUseremail(String useremail){
+		this.useremail=useremail;
+	}
 
 	/** default constructor */
 	public WebBussinessletter() {
@@ -227,6 +239,30 @@ public class WebBussinessletter implements java.io.Serializable {
 
 	public void setUserEmail(String userEmail){
 		this.userEmail=userEmail;
+	}
+
+	public Integer getUserId(){
+		return userId;
+	}
+
+	public void setUserId(Integer userId){
+		this.userId=userId;
+	}
+
+	public WebDepartment getDepId() {
+		return depId;
+	}
+
+	public void setDepId(WebDepartment depId) {
+		this.depId = depId;
+	}
+
+	public VWebFact getFactNo2() {
+		return factNo2;
+	}
+
+	public void setFactNo2(VWebFact factNo2) {
+		this.factNo2 = factNo2;
 	}
 	
 	

@@ -80,6 +80,12 @@
 			<result name="findAllVwebfact" type="json">
 			    <param name="root">jsons</param>
 			</result>
+			<result name="findByFactNo_show_order" type="json">
+			    <param name="root">jsons</param>
+			</result>
+			<result name="findfactarea" type="json">
+			    <param name="root">jsons</param>
+			</result>
 		</action>		
 		<action name="print2Ypoi_*" class="preAndDataActionipoi"
 			method="{1}">
@@ -550,6 +556,15 @@
 		    <result name="deleteFirst" type="redirectAction">visaflow_findPageBean3</result>
 		    <result name="findWebbuss" type="json">
 		        <param name="root">ajaxResult</param>
+		    </result>
+		    <result name="findVisaSort_dwr3" type="json">
+		        <param name="root">jsons</param>
+		    </result>
+		    <result name="findVisaSort_dwr4" type="json">
+		        <param name="root">ajaxResult</param>
+		    </result>
+		    <result name="findVisaSort_dwr5" type="json">
+		        <param name="root">jsons</param>
 		    </result>		   
 		</action>
 		<action name="webtabpom_*" class="webtabpomAction" method="{1}">
@@ -687,6 +702,12 @@
 		   <result name="findNameces" type="json">
 		      <param name="root">jsons</param>
 		   </result>
+		   <result name="findItemcategory" type="json">
+		       <param name="root">jsons</param>
+		   </result>
+		   <result name="findNamece2" type="json">
+		       <param name="root">jsons</param>
+		   </result>
 		</action>
 		<action name="weberpbp_*" class="weberpbpAction" method="{1}">
 		   <result name="findObjOp1" type="json">
@@ -723,6 +744,136 @@
 		    <result name="findById_layer">page/webformula_layer/WebFormula_layer.jsp</result>
 		    <result name="findById_layer2">page/webformula_layer/WebFormula_layer2.jsp</result>		    
 		</action>
+		
+		<action name="webbrpro_*" class="webbrproAction" method="{1}">
+		     <result name="findPageBean">page/web_br_product.jsp</result>
+		     <result name="findPageBean1">page/table1/web_br_product1.jsp</result>
+		     <result name="findPageBean_pro">page/web_br_productitem.jsp</result>
+		     <result name="findPageBean_est">page/web_br_estimatingitem.jsp</result>
+		     <result name="findPageBean_est1">page/table1/web_br_estimatingitem1.jsp</result>
+		     <result name="findPageBean_pro1">page/table1/web_br_productitem1.jsp</result>
+		     <result name="findPageBean_proAndest">page/web_br_proAndest.jsp</result>
+		     <result name="findPageBean_proAndest1">page/table1/web_br_proAndest1.jsp</result>
+		     <result name="add" type="json">
+		         <param name="root">ajaxResult</param>
+		     </result>
+		     <result name="delete" type="redirectAction">webbrpro_findPageBean3</result>
+		     <result name="delete_pro" type="redirectAction">webbrpro_findPageBean_item3</result>
+		     <result name="delete_est" type="redirectAction">webbrpro_findPageBean_est3</result>
+		     <result name="delete_pro_json" type="json">
+		          <param name="root">ajaxResult</param>
+		     </result>
+		     <result name="delete_est_json" type="json">
+		          <param name="root">ajaxResult</param>
+		     </result>
+		     <result name="findByFactno" type="json">
+		         <param name="root">jsons</param>
+		     </result>
+		     <result name="add2" type="json">
+		         <param name="root">ajaxResult</param>
+		     </result>
+		     <result name="findByfactNoAndyymmdd" type="json">
+		         <param name="root">ajaxResult</param>
+		     </result>
+		     <result name="add3" type="json">
+		         <param name="root">ajaxResult</param>
+		     </result>
+		     <result name="add2_3" type="json">
+		         <param name="root">ajaxResult</param>
+		     </result>
+		     <result name="findByFactNo2" type="json">
+		         <param name="root">ajaxResult</param>
+		     </result>
+		     <result name="findPro" type="json">
+		          <param name="root">json</param>
+		     </result>
+		     <result name="findEst" type="json">
+		         <param name="root">json</param>
+		     </result>
+		     <result name="updateProAndEst">saveAndUpdate/web_br_proAndEstUpdate.jsp</result>
+		     <result name="findById_Pro">saveAndUpdate/web_br_productitemUpdate.jsp</result>
+		     <result name="findById_Est">saveAndUpdate/web_br_estimatingitemUpdate.jsp</result>
+		     <result name="update_pro" type="json">
+		         <param name="root">ajaxResult</param>
+		     </result>
+		     <result name="update_est" type="json">
+		         <param name="root">ajaxResult</param>
+		     </result>
+		         	     
+		</action>
+		
+		<action name="webdep_*" class="webDepAction" method="{1}">
+		    <result name="findWebDepartmentByFactNo" type="json">
+		       <param name="root">jsons</param>
+		    </result>
+		    <result name="beanList">/page/webdepartment.jsp</result>
+            <result name="beanList1">/page/table1/webdepartment1.jsp</result>
+            <result name="findById">/saveAndUpdate/webDepartmentSaveOrUpdate.jsp</result>
+            <result name="add" type="json">
+               <param name="root">ajaxResult</param>
+            </result>
+		</action>
+		<action name="webweekly_*" class="webweeklyreportAction" method="{1}">
+		   <result name="add" type="json">
+		      <param name="root">ajaxResult</param>
+		   </result>
+		   <result name="findPageBean">page/webweeklyreport.jsp</result>
+		   <result name="findPageBean1">page/table1/webweeklyreport1.jsp</result>
+		   <result name="findByUidASdate" type="json">
+		       <param name="root">ajaxResult</param>
+		   </result>
+		   <result name="findByUidASdate_last" type="json">
+		       <param name="root">ajaxResult</param>
+		   </result>
+		   <result name="findById">saveAndUpdate/webweeklyreportSaveOrUpdate.jsp</result>
+		   <result name="delete" type="redirectAction">webweekly_findPageBean3</result>
+		   <result name="email_url">page/webweeklyreport_email.jsp</result>
+		   <result name="findByUidASdate_page">page/table1/webweeklyreport_email1.jsp</result>		   
+		</action>
+		
+		<action name="webemailall_*" class="webemailallAction" method="{1}">
+		   <result name="add" type="json">
+		      <param name="root">ajaxResult</param>
+		   </result>
+		   <result name="findPageBean">page/webemailall.jsp</result>
+		   <result name="findPageBean1">page/table1/webemailall1.jsp</result>
+		   <result name="findAllEmailTypes" type="json">
+		      <param name="root">jsons</param>
+		   </result>
+		   <result name="findById">saveAndUpdate/webemailallSaveOrUpdate.jsp</result>
+		   <result name="delete" type="redirectAction">webemailall_findPageBean3</result>
+		   <result name="goDisabled" type="redirectAction">webemailall_findPageBean3</result>
+		   <result name="findByEmailAndEtypeAndEmailOrCc" type="json">
+		     <param name="root">ajaxResult</param>
+		   </result>
+		</action>
+		
+		<action name="webnewpro_*" class="webnewproAction" method="{1}">
+		  <result name="findPageBean">page/webnewproduct.jsp</result>
+		  <result name="findPageBean1">page/table1/webnewproduct1.jsp</result>
+		  <result name="makeBillNo" type="json">
+		      <param name="root">ajaxResult</param>
+		  </result>
+		  <result name="findByBillNo">saveAndUpdate/webnewproductSaveOrUpdate.jsp</result>
+		  <result name="delete" type="redirectAction">webnewpro_findPageBean3</result>		      
+		</action>
+		
+		<action name="webcolpro_*" class="webcolproAction" method="{1}">
+		   <result name="add" type="json">
+		      <param name="root">ajaxResult</param>
+		   </result>
+		   <result name="findPageBean">page/webcolproductmain.jsp</result>
+		   <result name="findPageBean">page/table1/webcolproductmain1.jsp</result>
+		   <result name="makeBillNo" type="json">
+		      <param name="root">ajaxResult</param>
+		   </result>
+		   <result name="addItem" type="json">
+		      <param name="root">ajaxResult</param>
+		   </result>
+		   <result name="findById">saveAndUpdate/webcolproitemSaveOrUpdate.jsp</result>
+		</action>
+		
+		
 	</package>
 
      <package name="guest" extends="struts-default,jasperreports-default,json-default" namespace="/guest">

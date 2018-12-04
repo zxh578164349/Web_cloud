@@ -1007,9 +1007,7 @@ public class VWebprofitlossEveAction implements ServletResponseAware{
 	 * @author web
 	 * @date 2016/5/6
 	 */
-	public List<String>findHead2() throws ParseException{
-		yymm="201602";
-		yymm2="201605";
+	public List<String>findHead2() throws ParseException{		
 		List<String>list=new ArrayList<String>();
 		list.add("項目");
 		list.add("細項");

@@ -71,4 +71,28 @@ public class WebErpProductinFormationServicesImpl implements IWebErpProductinFor
 		return weberppfdao.findNamece(selfchar1s);
 	}
 
+
+	/**
+	 * 日期:2017/7/12
+	 * 描述:
+	 */
+	
+	
+	public List<Object[]> findItemcategory(){
+		// TODO Auto-generated method stub
+		return weberppfdao.findItemcategory();
+	}
+
+
+	/**
+	 * 日期:2017/7/12
+	 * 描述:
+	 */
+	
+	
+	public List<Object[]> findNamece2(String itemcategory){
+		// TODO Auto-generated method stub
+		return weberppfdao.findNamece2(itemcategory);
+	}
+
 }

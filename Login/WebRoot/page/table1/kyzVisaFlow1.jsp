@@ -40,6 +40,8 @@
 				<th>Email地址</th>
 				<th>職務</th>
 				<th>是否審核</th>
+				<th>是否可見</th>
+				<th>部門</th>
 				<s:if test='#session.loginUser.userread!="1"'>			
 				<th>操作</th>
 				</s:if>
@@ -57,13 +59,19 @@
 				
 				<td><s:property value="id.factNo" /></td>
 				<td>				  
-				   <s:property value="colTemp"/>
+				   <!-- <s:property value="colTemp"/>[<s:property value="id.visaSort"/>] -->
+				   <s:property value="webtype.typeName"/>[<s:property value="webtype.id.typeNo"/>]
 				</td>
 				<td><s:property value="id.purmanNo" /></td>
 				<td><s:property value="id.itemNo"/></td>
 				<td><s:property value="visaSigner"/></td>				
 				<td><s:property value="visaRank" /></td>
 				<td><s:property value="flowMk" /></td>
+				<td>
+				<s:if test='visible=="N"'>N</s:if>
+				<s:if test='visible=="Y"'>Y</s:if>				
+				</td>
+				<td><s:property value="depId.depName"/></td>
 				<s:if test='#session.loginUser.userread!="1"'>							
 				<td >
 					<form action="visaflow_findById" method="post" id="subform${x.index}">
@@ -110,6 +118,8 @@
 						<input type="hidden" value="<s:property value='id.visaSort'/>" name="id.visaSort" />							
 						<input type="hidden" value="<s:property value='id.purmanNo'/>" name="id.purmanNo"/>
 						<input type="hidden" value="<s:property value='id.itemNo'/>" name="id.itemNo"/>
+						<input type="hidden" value="<s:property value='trMk'/>" name="trMk"/>
+						<input type="hidden" value="<s:property value='depId.depId'/>" name="depId"/>
 						<s:if test='flowMk=="N"'>
 						   <input type="hidden" value="N" name="flowmk"/>
 						</s:if>
@@ -151,15 +161,7 @@
 	
 		
 <script type="text/javascript">   
-	   	function addflow(subform,btn){
-	   		var jq = jQuery.noConflict();
-	   		var loadi;
-	   		jq(document).ajaxStart(function(){
-	   			loadi=layer.load(0);
-	   		});
-	   		jq(document).ajaxStop(function(){
-	   			layer.close(loadi);
-	   		});
+	   	function addflow(subform,btn){	   		
 	   		jq(subform).Validform({
 	   			btnSubmit : btn,
 	   			tiptype : 4,
@@ -169,10 +171,11 @@
 	   			callback:function(data){	   				
 	   					if(data=="0"){
 	   						layer.msg("提交成功!",3,1);
-	   						location.href="visaflow_findPageBean";
+	   						loadUrl_bodyid("visaflow_findPageBean3");
 	   					}
 	   					if(data=="1"){
-	   						alert(data.responseText);
+	   						//alert(data.responseText);
+	   						layer.msg("提交失敗!",3,3);
 	   					}
 	   			}	   			
 	   			});

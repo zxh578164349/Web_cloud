@@ -743,6 +743,7 @@ public class WebUserAction extends ActionSupport implements ServletResponseAware
 		log.setContent(id+"");
 		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
 		log.setUsername(user.getUsername());
+		log.setObj("WebUser");
 		webUserService.delete(id,log);
 		return "delete";
 	}

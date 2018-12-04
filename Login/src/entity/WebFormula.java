@@ -37,6 +37,8 @@ public class WebFormula implements java.io.Serializable{
 	private WebTabpom pom;
 	private KyVisabillm vbm;
 	private String visaSort;
+	private Integer userId;
+	private String useremail;
 
 	// Constructors
 
@@ -256,6 +258,24 @@ public class WebFormula implements java.io.Serializable{
 	public void setVisaSort(String visaSort){
 		this.visaSort=visaSort;
 	}
+
+	public Integer getUserId(){
+		return userId;
+	}
+
+	public void setUserId(Integer userId){
+		this.userId=userId;
+	}
+
+	public String getUseremail(){
+		return useremail;
+	}
+
+	public void setUseremail(String useremail){
+		this.useremail=useremail;
+	}
+	
+	
 	
 	
 

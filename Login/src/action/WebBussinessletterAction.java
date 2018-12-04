@@ -200,18 +200,23 @@ public class WebBussinessletterAction extends ActionSupport implements ServletRe
 		if(timeEnd!=null&&!timeEnd.equals("")){
 			bussletter.setTimeEnd(fmt2.parse(timeEnd));
 		}			
-			try{
+			try{				
 				bussletter.setVisaSortM(bussletter.getVisaSort().substring(0,2));
 				if(isnull.equals("isNull")){
 				//bussletter.setVisaSortM(bussletter.getVisaSort().substring(0,2));
-				webbussletterSer.add(bussletter);
-				KyVisabillm vbm=visabillmSer.findById(bussletter.getFactNo(),bussletter.getVisaSort(), bussletter.getBlNo());
-				List<String>list_emailPwd=webuseremailSer.findByFactNoAEmailPwd2(vbm.getId().getFactNo(),vbm.getSignerNext());
-				/**
-				 * 發送郵件
-				 */
-				GlobalMethod.sendNewEmail(vbm,list_emailPwd);//發送郵件								
-			    ajaxResult="0";			      
+				billNo=webbussletterSer.findBillNo(bussletter.getBlNo());
+				if(billNo==null||"".equals(billNo)){
+					webbussletterSer.add(bussletter);
+					KyVisabillm vbm=visabillmSer.findById(bussletter.getFactNo(),bussletter.getVisaSort(), bussletter.getBlNo());
+					List<String>list_emailPwd=webuseremailSer.findByFactNoAEmailPwd2(vbm.getId().getFactNo(),vbm.getSignerNext());
+					/**
+					 * 發送郵件
+					 */
+					GlobalMethod.sendNewEmail(vbm,list_emailPwd);//發送郵件								
+				    ajaxResult="0";	
+				}else{
+					ajaxResult="2";//表示函文單號已存在
+				}						      
 				}else{
 					//bussletter.setVisaSortM(bussletter.getVisaSort().substring(0,2));
 					webbussletterSer.add(bussletter);
@@ -230,6 +235,7 @@ public class WebBussinessletterAction extends ActionSupport implements ServletRe
 		ActionContext.getContext().getSession().remove("public_factNo");
 		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
 		bean=webbussletterSer.findPageBean(20,page, billNo, factNo,user);
+		
 		return "beanList";	
 	}
 	public String findPageBean2(){

@@ -25,7 +25,7 @@ public class KyzVisaFlowDaoImpl extends Basedao implements IKyzVisaFlowDao {
 	}
 
 	public PageBean findFixWithPage(int pageSize, int page, String factNo,
-			String visaSort) {
+			String visaSort,String trMk,String purmanNo,String visaSigner) {
 		// TODO Auto-generated method stub
 		int allRow=0;
 		final Map<String, Object> map = new HashMap<String, Object>();
@@ -33,17 +33,37 @@ public class KyzVisaFlowDaoImpl extends Basedao implements IKyzVisaFlowDao {
 		StringBuffer hql2=new StringBuffer();
 		hql.append("from KyzVisaflow where 1=1 ");
 		hql2.append("select count(id.factNo) ");
+		if(factNo==null||"".equals(factNo)){
+			factNo = (String) ActionContext.getContext().getSession().get("factNo");
+		}		
 		if (factNo != null && !factNo.equals("") && !factNo.equals("tw")&&!factNo.equals("nothing")) {
 			hql.append(" and id.factNo =:factno ");
 			map.put("factno", factNo);
 		}
 		if(visaSort!=null&&!visaSort.equals("")){
-			hql.append(" and id.visaSort like:visasort ");
-			map.put("visasort", visaSort+"%");
+			//hql.append(" and id.visaSort like:visasort ");
+			//map.put("visasort", visaSort+"%");
+			hql.append(" and visaSortM=:visasort");
+			map.put("visasort", visaSort);
+			
 		}
-		if(factNo.equals("nothing")&&(visaSort==null||visaSort.equals(""))){
+		if(factNo.equals("nothing")&&(visaSort==null||"".equals(visaSort))&&(trMk==null||"".equals(trMk))&&
+				(purmanNo==null||"".equals(purmanNo))&&(visaSigner==null||"".equals(visaSigner))){
 			hql.append(" and id.factNo=:factno");
 			map.put("factno", factNo);
+		}
+		
+		if(purmanNo!=null&&!"".equals(purmanNo)){
+			hql.append(" and id.purmanNo like :purmanNo");
+			map.put("purmanNo", purmanNo+"%");			
+		}
+		if(visaSigner!=null&&!"".equals(visaSigner)){
+			hql.append(" and lower(visaSigner)=:visaSigner");
+			map.put("visaSigner", visaSigner.toLowerCase());
+		}
+		if(trMk!=null&&!"".equals(trMk)){
+			hql.append(" and trMk=:trMk");
+			map.put("trMk",trMk);
 		}
 		//hql.append(" and flowMk='Y'");
 		hql2.append(hql);
@@ -66,6 +86,12 @@ public class KyzVisaFlowDaoImpl extends Basedao implements IKyzVisaFlowDao {
 		final int offset = PageBean.countOffset(pageSize, currentPage);
 		final int length = pageSize;
 		List<KyzVisaflow> list = super.queryForPage(hql.toString(), offset,length, map);
+		for(KyzVisaflow flow:list){
+			if(flow.getDepId()!=null){
+				flow.getDepId().getDepName();
+			}
+			flow.getWebtype().getTypeName();
+		}
 				
 		PageBean pageBean = new PageBean();
 		pageBean.setPageSize(pageSize);
@@ -126,16 +152,56 @@ public class KyzVisaFlowDaoImpl extends Basedao implements IKyzVisaFlowDao {
 		return visasort;
 	}
 	
-    /**
-     * ����k�Ω�K�[�f�֬y�{�ɡA���ܪ���媺�U����"�O��ñ��1"�P"�O��ñ��2"�ɨϥ�
-     * �]�����"�O��ñ��"�����O�����h�Ө㦳�ƧǪ��l���O
-     * �Ҧp"�O��ñ��1"�GC10,C11,C12....... ;"�O��ñ��2":C20,C21,C22....
-     * �ҥH�A�ھڱƧǥͦ��@�ӷs���l���O
-     */
+	public String findVisaSort_dwr(String factNo, String visaSort, String email,String trMk) {
+		// TODO Auto-generated method stub
+		String hql="select id.visaSort from KyzVisaflow where id.factNo=? and id.visaSort like ? and lower(visaSigner)=? and id.itemNo='01' and trMk=? ";
+		Query query=getSession().createQuery(hql);
+		query.setString(0, factNo);
+		query.setString(1, visaSort+"%");
+		query.setString(2, email);
+		query.setString(3,trMk);
+		String visasort=(String)query.uniqueResult();
+		return visasort;
+	}
+	
+	public List<Object[]> findVisaSort_dwr2(String factNo, String visaSort, String email,String trMk) {
+		String hql="select depId.depId,depId.depName from KyzVisaflow where id.factNo=? and id.visaSort like ? and lower(visaSigner)=? and id.itemNo='01' and trMk=?";
+		String[]objs={factNo,visaSort+"%",email,trMk};
+		List<Object[]>list=super.findAll(hql,objs);		
+		return list;
+	}
+	
+	public String findVisaSort_dwr2(String factNo,String visaSort,String email,String trMk,String depId){
+		String hql="select id.visaSort from KyzVisaflow where id.factNo=? and id.visaSort like ? and lower(visaSigner)=? and id.itemNo='01' and trMk=? and to_char(depId.depId)=? ";
+		Query query=getSession().createQuery(hql);
+		query.setString(0, factNo);
+		query.setString(1, visaSort+"%");
+		query.setString(2, email);
+		query.setString(3,trMk);
+		query.setString(4,depId);
+		String visasort=(String)query.uniqueResult();
+		return visasort;
+	}
+	
+	public List<String> findVisaSort_dwr3(String factNo, String visaSort, String email,String trMk) {
+		String hql="select id.visaSort from KyzVisaflow where id.factNo=? and id.visaSort like ? and lower(visaSigner)=? and id.itemNo='01' and trMk=?";
+		String[]objs={factNo,visaSort+"%",email,trMk};
+		List<String>list=super.findAll(hql,objs);		
+		return list;
+	}
+	
+	public List<String> findVisaSort_dwr4(String factNo, String visaSort, String depId,String trMk) {
+		String hql="select id.visaSort from KyzVisaflow where id.factNo=? and id.visaSort like ? and to_char(depId.depId)=? and id.itemNo='01' and trMk=?";
+		String[]objs={factNo,visaSort+"%",depId,trMk};
+		List<String>list=super.findAll(hql,objs);		
+		return list;
+	}
+	
+	
 	public List<String> findVisaSort_C(String factNo,String mainSort) {
 		// TODO Auto-generated method stub
 		//String hql="select distinct id.visaSort from KyzVisaflow where id.factNo=? and id.visaSort like ?  order by id.visaSort";
-		String hql="select distinct id.visaSort from KyzVisaflow where id.factNo=? and id.visaSort like ?  order by length(id.visaSort),id.visaSort";
+		String hql="select distinct id.visaSort from KyzVisaflow where id.factNo=? and id.visaSort like ? and trMk='Y'  order by length(id.visaSort),id.visaSort";
 		String[]objs={factNo,mainSort+"%"};
 		return super.findAll(hql, objs);
 	}
@@ -252,5 +318,34 @@ public class KyzVisaFlowDaoImpl extends Basedao implements IKyzVisaFlowDao {
 			e.printStackTrace();
 			
 		}			
+	}
+
+	public List<KyzVisaflow> findByFnoAndVsortAndTrmk(String factNo,
+			String visaSort, String trMk) {
+		// TODO Auto-generated method stub
+		StringBuffer hql=new StringBuffer();
+		Map<String,Object>map=new HashMap<String,Object>();
+		hql.append(" from KyzVisaflow where 1=1 ");
+		if(factNo==null||"".equals(factNo)){
+			factNo = (String) ActionContext.getContext().getSession().get("factNo");
+		}		
+		if (factNo != null && !factNo.equals("") &&!factNo.equals("nothing")) {
+			hql.append(" and id.factNo =:factno ");
+			map.put("factno", factNo);
+		}
+		if(visaSort!=null&&!visaSort.equals("")){
+			//hql.append(" and id.visaSort like:visasort ");
+			//map.put("visasort", visaSort+"%");
+			hql.append(" and visaSortM=:visasort");
+			map.put("visasort", visaSort);
+			
+		}
+		if(factNo.equals("nothing")&&(visaSort==null||"".equals(visaSort))&&(trMk==null||"".equals(trMk))){
+			hql.append(" and id.factNo=:factno");
+			map.put("factno", factNo);
+		}
+		hql.append(" order by id.factNo,id.visaSort,id.itemNo");
+		List<KyzVisaflow>list=super.getAllWithNoPage(hql.toString(), map);		
+		return list;
 	}
 }

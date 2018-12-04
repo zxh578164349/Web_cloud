@@ -45,6 +45,9 @@ public class KyzExpectmatm implements java.io.Serializable {
 	private KyVisabillm vbm;
 	private List<KyzExpectmatmFile>list_file;
 	private List<KyzExpectmatmLog>list_logs;
+	private Integer userId;
+	private String useremail;
+	private VWebFact factNo2;//關聯工廠名稱(不需要映射列名)
 
 	// Constructors
 
@@ -95,8 +98,18 @@ public class KyzExpectmatm implements java.io.Serializable {
 	
 
 	
+	
+	
 	public String getVisaType() {
 		return visaType;
+	}
+
+	public VWebFact getFactNo2() {
+		return factNo2;
+	}
+
+	public void setFactNo2(VWebFact factNo2) {
+		this.factNo2 = factNo2;
 	}
 
 	public String getKyzsMk() {
@@ -336,6 +349,24 @@ public class KyzExpectmatm implements java.io.Serializable {
 	public void setList_logs(List<KyzExpectmatmLog> list_logs){
 		this.list_logs=list_logs;
 	}
+
+	public Integer getUserId(){
+		return userId;
+	}
+
+	public void setUserId(Integer userId){
+		this.userId=userId;
+	}
+
+	public String getUseremail(){
+		return useremail;
+	}
+
+	public void setUseremail(String useremail){
+		this.useremail=useremail;
+	}
+	
+	
 	
 	
 	

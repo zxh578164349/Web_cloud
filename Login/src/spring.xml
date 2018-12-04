@@ -207,7 +207,20 @@
 				<value>entity/VWebErpProductinFormation.hbm.xml</value>
 				<value>entity/WebUserOperation.hbm.xml</value>
 				<value>entity/WebOperationToUser.hbm.xml</value>
-				<value>entity/VWebUserEmail.hbm.xml</value></list>
+				<value>entity/VWebUserEmail.hbm.xml</value>
+				<value>entity/WebBrProduct.hbm.xml</value>
+				<value>entity/WebBrProductitem.hbm.xml</value>
+				<value>entity/WebBrEstimatingitem.hbm.xml</value>
+				<value>entity/VWebBrProandest.hbm.xml</value>
+				<value>entity/WebDepartment.hbm.xml</value>
+				<value>entity/WebWeeklyreport.hbm.xml</value>
+				<value>entity/WebEmailType.hbm.xml</value>
+				<value>entity/SumWebYieldDataView.hbm.xml</value>
+				<value>entity/WebNewproduct.hbm.xml</value>
+				<value>entity/WebColproductMain.hbm.xml</value>
+				<value>entity/WebColproductItems.hbm.xml</value>
+				</list>
+				
 		</property>
 	</bean>
 		

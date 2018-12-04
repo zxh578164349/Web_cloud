@@ -45,6 +45,16 @@
              <value>mail.AutoSendWebfactorder</value>
         </property>
     </bean>
+    <bean id="quantzjobBeanE" class="org.springframework.scheduling.quartz.JobDetailBean">
+       <property name="jobClass">
+            <value>mail.AutoSendWebWeeklyreport</value>
+       </property>
+    </bean>
+    <bean id="quantzjobBeanF" class="org.springframework.scheduling.quartz.JobDetailBean">
+       <property name="jobClass">
+            <value>mail.AutoSendWebWeeklyreportItems</value>
+       </property>
+    </bean>
 
     <!-- 触发任务条件 -->
    <!--  <bean id="simpletriggerbean" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
@@ -93,6 +103,16 @@
       <property name="cronExpression" value="0 0 9 6 * ?"></property>      
     </bean> 
     
+    <bean id="CronTriggerBeanG" class="org.springframework.scheduling.quartz.CronTriggerBean">
+      <property name="jobDetail" ref="quantzjobBeanE"></property>
+      <property name="cronExpression" value="0 0 9 ? * FRI"></property>      
+    </bean> 
+    <bean id="CronTriggerBeanH" class="org.springframework.scheduling.quartz.CronTriggerBean">
+       <property name="jobDetail" ref="quantzjobBeanF"></property>
+       <property name="cronExpression" value="0 0 8 ? * MON"></property>
+       <!-- <property name="cronExpression" value="0 28 15 * * ?"></property> -->
+    </bean>
+    
     <bean id="startQuartz" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
         <property name="triggers">
             <list>
@@ -102,6 +122,8 @@
                 <ref bean="CronTriggerBeanC"/>  <!-- 12點  簽核完畢知會 -->                 
                 <ref bean="CronTriggerBeanE"/><!-- (第三次) 13點  下一位簽核人	 -->
                 <ref bean="CronTriggerBeanF"/>	<!-- 每月6號 9點 -->
+                <ref bean="CronTriggerBeanG"/><!-- 每周五早上9點 業務周報告-->
+                <ref bean="CronTriggerBeanH"/><!-- 每周一早上8點 業務周報告彙總 -->	
                <!-- <ref bean="CronTriggerBeanD"/>  每月最後一天24點運行 -->		
             </list>           
         </property>        

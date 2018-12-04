@@ -27,6 +27,11 @@ public class VWebFact implements java.io.Serializable {
 	public VWebFact(String factNo) {
 		this.factNo = factNo;
 	}
+	
+	public VWebFact(String factNo,String factSname) {
+		this.factNo = factNo;
+		this.factSname=factSname;
+	}
 
 	/** full constructor */
 	public VWebFact(String factNo, String factSname, String orderNo) {

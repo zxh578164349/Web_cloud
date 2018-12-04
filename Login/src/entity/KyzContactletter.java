@@ -31,8 +31,27 @@ public class KyzContactletter implements java.io.Serializable {
 	private String userAccount;//申請人賬號
 	private String emerMk;//是否緊急      0緊急       1不緊急 
 	private List<KyzExpectmatmLog>list_logs;
+	private Integer userId;
+	private String useremail;
+	private VWebFact factNo2;//關聯工廠名稱(不需要映射列名)
 
 	// Constructors
+
+	public String getUseremail(){
+		return useremail;
+	}
+
+	public void setUseremail(String useremail){
+		this.useremail=useremail;
+	}
+
+	public Integer getUserId(){
+		return userId;
+	}
+
+	public void setUserId(Integer userId){
+		this.userId=userId;
+	}
 
 	/** default constructor */
 	public KyzContactletter() {
@@ -235,6 +254,16 @@ public class KyzContactletter implements java.io.Serializable {
 	public void setList_logs(List<KyzExpectmatmLog> list_logs){
 		this.list_logs=list_logs;
 	}
+
+	public VWebFact getFactNo2() {
+		return factNo2;
+	}
+
+	public void setFactNo2(VWebFact factNo2) {
+		this.factNo2 = factNo2;
+	}
+	
+	
 	
 	
 
