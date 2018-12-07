@@ -214,7 +214,6 @@ public class KyzExpectmatmServicesImpl implements IKyzExpectmatmServices {
 			secNo="("+list.get(0).getSecNo()+")";
 		}
 		String result=factname+secNo+"費用申請單";
-		map = new HashMap<String, Object>();
 		//map.put("SUBREPORT_DIR",ServletActionContext.getRequest().getRealPath("/jasper/audit/")+ "/");
 		//map.put("pic", ServletActionContext.getRequest().getRealPath("/jasper/audit/images/")+ "/");//圖片路徑
 		map.put("SUBREPORT_DIR",ContextLoader.getCurrentWebApplicationContext().getServletContext().getRealPath("/jasper/audit/")+ "/");

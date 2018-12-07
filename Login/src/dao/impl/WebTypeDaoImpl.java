@@ -90,7 +90,7 @@ public class WebTypeDaoImpl extends Basedao implements IWebTypeDao{
 	public List<WebType> findByFactNo3(String factNo) {
 		// TODO Auto-generated method stub
 		/*********************************有過濾函文出差類（TR）20160203**************************************/
-		String hql="from WebType where id.factNo=? and typeMk='0'  and delMk='0'";
+		String hql="from WebType where id.factNo=? and typeMk='0'  and delMk='0' order by id.typeNo";
 		String[]objs={factNo};
 		return super.findAll(hql, objs);
 	}

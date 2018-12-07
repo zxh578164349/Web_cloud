@@ -33,7 +33,7 @@
 		jq.ajax({
 			type : "POST",
 			dataType : "Html",
-			url : "kyz_findPageBean3",
+			url : "webcolpro_findPageBean3",
 			data : "page=" + page,
 			success : function(msg) {
 				jq("#bodyid").html(msg);
@@ -48,7 +48,7 @@
 		jq.ajax({
 			type : "POST",
 			dataType : "Html",
-			url : "kyz_findPageBean2",
+			url : "webcolpro_findPageBean2",
 			//data : "factNo=" + fact.value + "& visaSort=" + visasort.value+"& billNo="+billno.value+"& yymmdd="+yymmdd.value+"& yymmdd2="+yymmdd2.value,
 			data:jq("#public_form").serialize(),
 			success : function(msg) {
@@ -71,8 +71,8 @@ function showDivList(factNo,billNo){
 	    border: [10, 0.3, '#000'],	   
 	    offset:['10px',''],
 	    area:['600px','560px'],
-	    //page:{url:'kyz_findById_layer?billNo='+billNo+'& factNo='+factNo}                   
-	    iframe:{src:'kyz_findById_layer3?factNo='+factNo+'&billNo='+billNo,scrolling:'auto'}		                   
+	    //page:{url:'webcolpro_findById_layer?billNo='+billNo+'& factNo='+factNo}                   
+	    iframe:{src:'webcolpro_findById_layer3?factNo='+factNo+'&billNo='+billNo,scrolling:'auto'}		                   
 	});
 	    }		
 </script>

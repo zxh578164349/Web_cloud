@@ -90,12 +90,9 @@ public class WebNewproductServicesImpl implements IWebNewproductServices{
 		map.put("SUBREPORT_DIR",ContextLoader.getCurrentWebApplicationContext().getServletContext().getRealPath("/jasper/audit/")+ "/");
 		map.put("pic", ContextLoader.getCurrentWebApplicationContext().getServletContext().getRealPath("/jasper/audit/images/")+ "/");//圖片路徑
 		map.put("pfactno", factNo);
-		map.put("pbillno",billNo);
-		//map.put("title",result);
-		//map.put("factname",factname);
+		map.put("pbillno",billNo);		
 								
-		if(vbm==null){
-			//vbm=visabillmDao.findById(factNo, sort, billNo);
+		if(vbm==null){			
 			vbm=obj.getVbm();
 		}		
 		List<KyVisabills>list_visa=vbm.getKyVisabillses();

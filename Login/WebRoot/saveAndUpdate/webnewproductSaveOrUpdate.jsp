@@ -37,7 +37,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 					<s:if test="#session.factNo!='tw'">
 						<td class="tdcolor">廠別</td>
 						<td ><input type="text" style="color:blue"
-							name="obj.factNo" value="${factNo}" readonly id="dwrFactNo" />							
+							name="obj.factNo.factNo" value="${factNo}" readonly id="dwrFactNo" />							
 						</td>												
 						
 						<td class="tdcolor">類別</td>
@@ -53,7 +53,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 				        <s:if test="#session.factNo=='tw'">
 				          <td class="tdcolor">廠別</td>
 						<td ><select style="color:blue"
-							name="obj.factNo" datatype="*" id="dwrFactNo"
+							name="obj.factNo.factNo" datatype="*" id="dwrFactNo"
 							onchange="makeBillNo(),getKyType2(this.value)">
 								<option value="">請選擇廠別</option>
 								<s:iterator value="#session.facts" id="temp">
@@ -76,7 +76,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 				        <td>				       	
 				          		<input type="text" name="obj.billNo" value="自動生成" readonly style="color:blue" id="billno" datatype="*"/>
 				          		<input type="hidden" name="obj.webUserByCreateUserFid.id" value="<s:property value='#session.loginUser.id'/>"/>
-				          		<input type="text" name="obj.createDate" value="<%=str_date%>" id="createDate"/>	        				        				               				        				      
+				          		<input type="hidden" name="obj.createDate" value="<%=str_date%>" id="createDate"/>	        				        				               				        				      
 				      </td>					        				        				        
 					</tr>																																								    
 				   </s:if>
@@ -84,7 +84,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 				   <tr>
 				      <td class="tdcolor">廠別</td>				      
 				      <td>
-				      <input type="text" name="obj.factNo" value="<s:property value='obj.factNo'/>" readonly style="color:blue" id="dwrFactNo"/>
+				      <input type="text" name="obj.factNo.factNo" value="<s:property value='obj.factNo.factNo'/>" readonly style="color:blue" id="dwrFactNo"/>
 				      <input type="hidden" name="isnull" value="notNull"/><!--判斷變量 -->
 				      </td>				     				      				     
 				      <td class="tdcolor">類別</td>
@@ -93,10 +93,10 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 				       <td class="tdcolor">申請單號</td>
 				       <td>				       
 				      <input type="text" name="obj.billNo" value="<s:property value='obj.billNo'/>" readonly style="color:blue" />
-				      <input type="text" name="obj.webUserByCreateUserFid.id" value="<s:property value='obj.webUserByCreateUserFid.id'/>"/>
-				      <input type="text" name="obj.webUserByUpdateUserFid.id" value="<s:property value='#session.loginUser.id'/>"/>
-				      <input type="text" name="obj.createDate" value="<s:property value='obj.createDate'/>"/>	
-				      <input type="text" name="obj.updateDate" value="<%=str_date %>"/>	
+				      <input type="hidden" name="obj.webUserByCreateUserFid.id" value="<s:property value='obj.webUserByCreateUserFid.id'/>"/>
+				      <input type="hidden" name="obj.webUserByUpdateUserFid.id" value="<s:property value='#session.loginUser.id'/>"/>
+				      <input type="hidden" name="obj.createDate" value="<s:property value='obj.createDate'/>"/>	
+				      <input type="hidden" name="obj.updateDate" value="<%=str_date %>"/>	
 				      </td>
 				      </tr>
 				   </s:else>
@@ -117,21 +117,21 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 				    <tr>
 					    <td class="tdcolor">推銷客戶及詳細用途說明</td>	
 						<td  colspan="10">
-				           <textarea style="width:810px;height:240px" name="obj.PExp"  wrap="off"   tip="CC(呈)" altercss="gray" class="gray"><s:property value="obj.PExp"/></textarea>				                                           				         			          
+				           <textarea style="width:810px;height:240px" name="obj.PExp"  wrap="off"   tip="CC(呈)" altercss="gray" class="gray" datatype="*0-2000"><s:property value="obj.PExp"/></textarea>				                                           				         			          
 				        </td>
 						
 					</tr>
 					<tr>
 					    <td class="tdcolor">客人回饋結果</td>	
 						<td  colspan="10">
-				           <textarea style="width:810px;height:100px" name="obj.PResultGuest"  wrap="off"   tip="申請內容" altercss="gray" class="gray" id="PResultGuest" datatype="*"><s:property value="obj.PResultGuest"/></textarea>				                                           				         				           				           				          
+				           <textarea style="width:810px;height:100px" name="obj.PResultGuest"  wrap="off"   tip="申請內容" altercss="gray" class="gray" id="PResultGuest" datatype="*0-2000"><s:property value="obj.PResultGuest"/></textarea>				                                           				         				           				           				          
 				        </td>
 						
 					</tr>
 					<tr>
 					    <td class="tdcolor">結果</td>	
 						<td  colspan="10">
-				           <textarea style="width:810px;height:100px" name="obj.PResult"  wrap="off"   tip="申請內容" altercss="gray" class="gray" id="PResult" datatype="*"><s:property value="obj.PResult"/></textarea>				                                           				         				           				           
+				           <textarea style="width:810px;height:100px" name="obj.PResult"  wrap="off"   tip="申請內容" altercss="gray" class="gray" id="PResult" datatype="*0-2000"><s:property value="obj.PResult"/></textarea>				                                           				         				           				           
 				           <input type="hidden" value="<s:property value='obj.filesYn'/>" name="obj.filesYn"/>				           
 				        </td>						
 					</tr>
@@ -169,16 +169,14 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 			tiptype : 4,
 			showAllError : true,
 			tipSweep : true,
-			datatype : {
-				"*0-6" : /^\d{0,9}(\.[0-9]{1,3})?$/,
+			datatype : {				
 				"my0-8": /^\d{0,8}(\.[0-9]{1,4})?$/
 			},
 			beforeSubmit:function(curform){
-				layer.load("正在處理,請稍等...(系統爲了節省開銷,已取消自動下載函文!)")
+				layer.load("正在處理,請稍等...(系統爲了節省開銷,已取消自動下載函文!)");
 			}
 			
-		});
-		demo.tipmsg.w["*0-6"] = "只能數字且不超過9位數,可保留三位以內小數";
+		});		
 		demo.tipmsg.w["my0-8"]="只能數字且不超過8位數,可保留四位以內小數";				
 		
 	});

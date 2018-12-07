@@ -16,9 +16,9 @@
         <many-to-one name="webUserByCreateUserFid" class="entity.WebUser" fetch="select">
             <column name="CREATE_USER_FID" precision="6" scale="0" />
         </many-to-one>      
-        <property name="factNo" type="java.lang.String">
+       <!--  <property name="factNo" type="java.lang.String">
             <column name="FACT_NO" length="50" />
-        </property>
+        </property> -->
         <property name="createDate" type="java.lang.String">
             <column name="CREATE_DATE" length="15" />
         </property>
@@ -40,7 +40,7 @@
         <property name="orderManMain" type="java.lang.String">
             <column name="ORDER_MAN_MAIN" length="50" />
         </property>
-        <bag name="webColproductItemses" inverse="true" cascade="all">
+        <bag name="webColproductItemses" inverse="true" cascade="all" order-by="IID">
             <key>
                 <column name="BILL_NO" length="30" />
             </key>
@@ -48,5 +48,6 @@
         </bag>
         
         <one-to-one name="vbm" class="entity.KyVisabillm"  property-ref="webcolpro" cascade="all"/> 
+        <many-to-one name="factNo" column="FACT_NO" unique="true"/>  
     </class>
 </hibernate-mapping>

@@ -2005,7 +2005,11 @@ public class GlobalMethod extends HibernateDaoSupport{
 				vbm.getKyzexp().getEmerMk();
 			}
 			if(vbm.getId().getBillNo().substring(0, 2).equals("NP")){
-				vbm.setGeneral("("+vbm.getFactNo2().getFactSname()+")"+vbm.getWebnewpro().getPName()+"_"+
+				vbm.setGeneral("("+vbm.getFactNo2().getFactSname()+")"+"新產品推銷申請表-"+vbm.getWebnewpro().getPName()+"_"+
+						vbm.getId().getBillNo()+"("+vbm.getId().getFactNo()+")");				
+			}
+			if(vbm.getId().getBillNo().substring(0, 2).equals("CP")){
+				vbm.setGeneral("("+vbm.getFactNo2().getFactSname()+")"+"生產領料申請表-"+vbm.getWebcolpro().getTitle()+"_"+
 						vbm.getId().getBillNo()+"("+vbm.getId().getFactNo()+")");				
 			}
 			vbm.getWebtype().getTypeName();		

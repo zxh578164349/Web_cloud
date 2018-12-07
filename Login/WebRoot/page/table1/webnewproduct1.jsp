@@ -47,22 +47,37 @@
 					<td><s:property value="receiveDate"/></td>
 					<td><s:property value="PName"/></td>													
 					<s:if test='#session.loginUser.userread!="1"'>					
-					<td>					   
-						<a href="javascript:findById('${billNo}')"><img alt="修改" src="images/icon/edit001.png" title="修改"></a>&nbsp;
-						<a href="javascript:mydelete('${billNo}')"><img alt="刪除" src="images/icon/delete001.png" title="刪除"></a>	
+					<td>					   																			
+						<s:if test="vbm.lastMk==null">
+					     <a href="javascript:findById('${billNo}')"><img alt="修改" src="images/icon/edit001.png" title="修改"></a>&nbsp;
+						<a href="javascript:mydelete('${billNo}')"><img alt="刪除" src="images/icon/delete001.png" title="刪除"></a>					     
+					   </s:if>					   				   
+					   <s:else>					   
+					      <a ><img alt="修改" src="images/icon/edit001_1.png" title="修改" ></a>
+					      <s:if test='#session.loginUser.adminMk=="Y"'>				         						  																									
+					         <s:if test='vbm.visaMk=="N"'>
+					          <a href="javascript:mydelete('${billNo}')"><img alt="刪除" src="images/icon/delete001.png" title="刪除"></a>
+					         </s:if>
+					         <s:else>
+					           <a ><img alt="刪除" src="images/icon/delete001_1.jpg" title="刪除" ></a>
+					         </s:else>					        
+					      </s:if>
+					      <s:else>					          						          
+					          <a ><img alt="刪除" src="images/icon/delete001_1.jpg" title="刪除" ></a>					          				  																														          					          
+					      </s:else>					      				      
+					   </s:else>
 						
 						
 						<form action="webnewpro_print2" method="post" id="3subform${x.index}" style="float:left" target="_blank">						
 						<input type="hidden" value="<s:property value='billNo'/>" name="billNo" />
-						<input type="hidden" value="<s:property value='visaType'/>" name="visaType" />																	
+						<input type="hidden" value="<s:property value='visaType'/>" name="visaSort" />																	
 						<input type="hidden" value="look" name="lookordown"/>											
 					  </form>
 					   <form action="webnewpro_print2" method="post" id="4subform${x.index}" style="float:left" target="_blank">						
 						<input type="hidden" value="<s:property value='billNo'/>" name="billNo" />
-						<input type="hidden" value="<s:property value='visaType'/>" name="visaType" />													
+						<input type="hidden" value="<s:property value='visaType'/>" name="visaSort" />													
 						<input type="hidden" value="down" name="lookordown"/>											
-					  </form>					  
-					  <!--<a href="javascript:showDiv('<s:property value='blNo'/>','<s:property value='factNo'/>')" onclick=""><img alt="查看" src="images/icon/view002.png" title="查看" ></a>  -->					  					  
+					  </form>					  					 					  					  
 					 <a href="javascript:document.getElementById('3subform${x.index}').submit()"><img alt="預覽" src="images/icon/view001.png" title="預覽" ></a>
 					 <a href="javascript:document.getElementById('4subform${x.index}').submit()" ><img alt="打印" src="images/icon/print001.png" title="打印" ></a>										
 					</td>

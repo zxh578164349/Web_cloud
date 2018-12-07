@@ -13,7 +13,7 @@ public class WebNewproduct implements java.io.Serializable {
 	private WebUser webUserByUpdateUserFid;
 	private WebUser webUserByCreateUserFid;
 	private String billNo;
-	private String factNo;
+	private VWebFact factNo;
 	private String createDate;
 	private String updateDate;
 	private String receiveDate;
@@ -65,7 +65,7 @@ public class WebNewproduct implements java.io.Serializable {
 
 	/** full constructor */
 	public WebNewproduct(WebUser webUserByUpdateUserFid,
-			WebUser webUserByCreateUserFid, String billNo, String factNo,
+			WebUser webUserByCreateUserFid, String billNo, VWebFact factNo,
 			String createDate, String updateDate, String receiveDate,
 			String PName, String PExp, String PResultGuest, String PResult,
 			String filesYn, String visaType, String visaTypeM) {
@@ -111,11 +111,13 @@ public class WebNewproduct implements java.io.Serializable {
 		this.billNo = billNo;
 	}
 
-	public String getFactNo() {
-		return this.factNo;
+	
+
+	public VWebFact getFactNo() {
+		return factNo;
 	}
 
-	public void setFactNo(String factNo) {
+	public void setFactNo(VWebFact factNo) {
 		this.factNo = factNo;
 	}
 

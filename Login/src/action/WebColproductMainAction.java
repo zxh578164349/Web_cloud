@@ -1,6 +1,9 @@
 package action;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -10,12 +13,14 @@ import services.IKyVisabillmServices;
 import services.IWebColproductMainServices;
 import services.IWebuserEmailServices;
 import util.GlobalMethod;
+import util.JasperHelper;
 import util.PageBean;
 
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
 import entity.KyVisabillm;
+import entity.KyzExpectmatmLog;
 import entity.WebColproductItems;
 import entity.WebColproductMain;
 import entity.WebNewproduct;
@@ -30,17 +35,71 @@ public class WebColproductMainAction extends ActionSupport implements ServletRes
 	 private String factNo;
 	 private String billNo;
 	 private int iid;
-	 private String dateA;
-	 private String dateB;
+	 private String yymmdd;
+	 private String yymmdd2;
 	 private String createDate;
 	 private String ajaxResult;
 	 private IKyVisabillmServices visabillmSer;
 	 private IWebuserEmailServices webuseremailSer;
 	 private String isnull;	 
 	 private int backIndex;
+	 private String title;
+	 private String addorupdate;
+	 private String itemNo;
+	 private String visaSort;
+	 private String readMk;
+	 private String lookordown;
 	 
+	 	 	
 	 
-	 
+	public String getLookordown() {
+		return lookordown;
+	}
+
+	public void setLookordown(String lookordown) {
+		this.lookordown = lookordown;
+	}
+
+	public String getItemNo() {
+		return itemNo;
+	}
+
+	public void setItemNo(String itemNo) {
+		this.itemNo = itemNo;
+	}
+
+	public String getVisaSort() {
+		return visaSort;
+	}
+
+	public void setVisaSort(String visaSort) {
+		this.visaSort = visaSort;
+	}
+
+	public String getReadMk() {
+		return readMk;
+	}
+
+	public void setReadMk(String readMk) {
+		this.readMk = readMk;
+	}
+
+	public String getAddorupdate() {
+		return addorupdate;
+	}
+
+	public void setAddorupdate(String addorupdate) {
+		this.addorupdate = addorupdate;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
 	public int getBackIndex() {
 		return backIndex;
 	}
@@ -137,20 +196,22 @@ public class WebColproductMainAction extends ActionSupport implements ServletRes
 		this.iid = iid;
 	}
 
-	public String getDateA() {
-		return dateA;
+	
+
+	public String getYymmdd() {
+		return yymmdd;
 	}
 
-	public void setDateA(String dateA) {
-		this.dateA = dateA;
+	public void setYymmdd(String yymmdd) {
+		this.yymmdd = yymmdd;
 	}
 
-	public String getDateB() {
-		return dateB;
+	public String getYymmdd2() {
+		return yymmdd2;
 	}
 
-	public void setDateB(String dateB) {
-		this.dateB = dateB;
+	public void setYymmdd2(String yymmdd2) {
+		this.yymmdd2 = yymmdd2;
 	}
 
 	public void setWebcolproServer(IWebColproductMainServices webcolproServer) {
@@ -170,7 +231,7 @@ public class WebColproductMainAction extends ActionSupport implements ServletRes
 				WebColproductMain col=webcolproServer.findByBillNo(obj.getBillNo());
 				if(col==null){					
 					webcolproServer.add(obj);				
-					KyVisabillm vbm=visabillmSer.findById(obj.getFactNo(), obj.getVisaType(), obj.getBillNo());				      
+					KyVisabillm vbm=visabillmSer.findById(obj.getFactNo().getFactNo(), obj.getVisaType(), obj.getBillNo());				      
 				    List<String>list_emailPwd=webuseremailSer.findByFactNoAEmailPwd2(vbm.getId().getFactNo(),vbm.getSignerNext());											      
 					GlobalMethod.sendNewEmail(vbm,list_emailPwd);//發送郵件	
 					ajaxResult="0";	//添加成功
@@ -217,9 +278,10 @@ public class WebColproductMainAction extends ActionSupport implements ServletRes
 		ActionContext.getContext().getSession().remove("allRow");
 		ActionContext.getContext().getSession().put("c_factNo", factNo);
 		ActionContext.getContext().getSession().put("c_billNo", billNo);
-		ActionContext.getContext().getSession().put("c_dateA", dateA);
-		ActionContext.getContext().getSession().put("c_dateB", dateB);		
-		bean=webcolproServer.findPageBean(page, 0, factNo, billNo, dateA, dateB);		
+		ActionContext.getContext().getSession().put("c_dateA", yymmdd);
+		ActionContext.getContext().getSession().put("c_dateB", yymmdd2);		
+		ActionContext.getContext().getSession().put("c_title", title);	
+		bean=webcolproServer.findPageBeanMain(page, 0, factNo, billNo, yymmdd, yymmdd2,title);		
 		return "findPageBean";
 	}
 	
@@ -231,9 +293,10 @@ public class WebColproductMainAction extends ActionSupport implements ServletRes
 	public String findPageBean3(){
 		factNo=(String)ActionContext.getContext().getSession().get("c_factNo");
 		billNo=(String)ActionContext.getContext().getSession().get("c_billNo");
-		dateA=(String)ActionContext.getContext().getSession().get("c_dateA");
-		dateB=(String)ActionContext.getContext().getSession().get("c_dateB");		
-		bean=webcolproServer.findPageBean(page, 0, factNo, billNo, dateA, dateB);
+		yymmdd=(String)ActionContext.getContext().getSession().get("c_dateA");
+		yymmdd2=(String)ActionContext.getContext().getSession().get("c_dateB");	
+		title=(String)ActionContext.getContext().getSession().get("c_title");	
+		bean=webcolproServer.findPageBeanMain(page, 0, factNo, billNo, yymmdd, yymmdd2,title);
 		if(backIndex==1){
 			return "findPageBean";
 		}else{
@@ -241,19 +304,46 @@ public class WebColproductMainAction extends ActionSupport implements ServletRes
 		}		
 	}
 	
-	public String addItem(){
-		try{
-			webcolproServer.addItem(item);
-			ajaxResult="0";
-		}catch(Exception e){
-			ajaxResult="1";
-		}
-		return "addItem";
+	public String findByBillNo(){
+		addorupdate="update";
+		obj=webcolproServer.findByBillNo(billNo);
+		return "findByBillNo";
 	}
 	
-	public String findById(){
-		item=webcolproServer.findById(iid);
-		return "findById";
+	public String findByBillNo_layer(){
+		obj=webcolproServer.findByBillNo(billNo);
+		return "findByBillNo_layer";
+	}
+	
+	public String delete(){
+		KyzExpectmatmLog log=new KyzExpectmatmLog();
+		log.setObj("WebColproduct");
+		log.setBillNo(billNo);
+		webcolproServer.delete(billNo, log);		
+		return "delete";
+	}
+	
+	
+	public void print(String factNo,String billNo,String sort) throws IOException{		
+		Map<String,Object>map_result=webcolproServer.print(factNo, billNo, sort,null);
+		if(map_result!=null&&map_result.size()>0){
+			Map<String,Object>map=(Map<String,Object>)map_result.get("map");
+			List<WebNewproduct>list=(List<WebNewproduct>)map_result.get("list");
+			if(lookordown!=null){
+				if(lookordown.equals("look")){
+					JasperHelper.exportmain("line", map,"webcolproduct_main.jasper", list,billNo, "jasper/audit/");
+				}else{
+					JasperHelper.exportmain("pdf", map,"webcolproduct_main.jasper", list,billNo, "jasper/audit/");
+				}
+			}else{
+				JasperHelper.exportmain("pdf", map,"webcolproduct_main.jasper", list,billNo, "jasper/audit/");
+			}
+		}
+								
+	}
+	
+	public void print2() throws IOException{
+		this.print(factNo, billNo, visaSort);
 	}
 	
 	

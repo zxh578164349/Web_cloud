@@ -15,7 +15,7 @@ public class WebColproductMain implements java.io.Serializable {
 	private String billNo;
 	private WebUser webUserByUpdateUserFid;
 	private WebUser webUserByCreateUserFid;	
-	private String factNo;
+	private VWebFact factNo;
 	private String createDate;
 	private String updateDate;
 	private String visaType;
@@ -28,10 +28,11 @@ public class WebColproductMain implements java.io.Serializable {
 
 	// Constructors
 
+	
 	public String getTitle() {
 		return title;
 	}
-
+	
 	public void setTitle(String title) {
 		this.title = title;
 	}
@@ -47,7 +48,7 @@ public class WebColproductMain implements java.io.Serializable {
 
 	/** full constructor */
 	public WebColproductMain( WebUser webUserByUpdateUserFid,
-			WebUser webUserByCreateUserFid, String billNo, String factNo,
+			WebUser webUserByCreateUserFid, String billNo, VWebFact factNo,
 			String createDate, String updateDate, String visaType,
 			String visaTypeM, List<WebColproductItems> webColproductItemses) {
 		this.billNo = billNo;
@@ -87,11 +88,11 @@ public class WebColproductMain implements java.io.Serializable {
 		this.billNo = billNo;
 	}
 
-	public String getFactNo() {
-		return this.factNo;
+	public VWebFact getFactNo() {
+		return factNo;
 	}
 
-	public void setFactNo(String factNo) {
+	public void setFactNo(VWebFact factNo) {
 		this.factNo = factNo;
 	}
 

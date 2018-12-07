@@ -248,6 +248,12 @@ function getSrc(billNo){
 	if(billNo.substring(0,2)=="GJ"){
 		src="webformula_findById_layer2";
 	}
+	if(billNo.substring(0,2)=="NP"){
+		src="webnewpro_findByBillNo_layer";
+	}
+	if(billNo.substring(0,2)=="CP"){
+		src="webcolpro_findByBillNo_layer";
+	}
 	return src;
 }
 function showDiv(billNo,factNo){

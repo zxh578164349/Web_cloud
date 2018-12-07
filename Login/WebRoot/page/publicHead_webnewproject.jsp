@@ -66,7 +66,7 @@
 										<tr>										   
 										   <td>	
 										     <div class="panel panel-primary">									      
-										          <input type="text" name="pname" placeholder="標題" id="p_title" />										          										          
+										          <input type="text" name="pname" placeholder="名稱" id="p_title" />										          										          
 										     </div>     								      
 										   </td>
 										</tr>

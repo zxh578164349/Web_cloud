@@ -54,6 +54,17 @@
 			area_h = '560px';
 			src = 'webformula_findById_layer?billNo=' + billNo + '& readMk=Y';
 		}
+		if (billNo.substring(0, 2) == 'NP') {
+			area_w = '650px';
+			area_h = '560px';
+			src = 'webnewpro_findByBillNo_layer?billNo=' + billNo + '& readMk=Y';
+		}
+		if (billNo.substring(0, 2) == 'CP') {
+			area_w = '650px';
+			area_h = '560px';
+			src = 'webcolpro_findByBillNo_layer?billNo=' + billNo + '& readMk=Y';
+		}
+		
 		jq.layer({
 			type : 2, //0-4的选择,
 			title : '函文內容',
@@ -117,6 +128,20 @@
 			area_w = '650px';
 			area_h = '560px';
 			src = 'webformula_findById_layer?billNo=' + billNo + '& factNo='
+					+ factNo + '& itemNo=' + itemNo + '& visaSort=' + visaSort
+					+ '& readMk=N';
+		}
+		if (billNo.substring(0, 2) == 'NP') {
+			area_w = '650px';
+			area_h = '560px';
+			src = 'webnewpro_findByBillNo_layer?billNo=' + billNo + '& factNo='
+					+ factNo + '& itemNo=' + itemNo + '& visaSort=' + visaSort
+					+ '& readMk=N';
+		}
+		if (billNo.substring(0, 2) == 'CP') {
+			area_w = '650px';
+			area_h = '560px';
+			src = 'webcolpro_findByBillNo_layer?billNo=' + billNo + '& factNo='
 					+ factNo + '& itemNo=' + itemNo + '& visaSort=' + visaSort
 					+ '& readMk=N';
 		}

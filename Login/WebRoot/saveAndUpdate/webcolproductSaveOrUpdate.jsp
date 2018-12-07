@@ -10,7 +10,7 @@
 %>
 <%
 java.text.SimpleDateFormat fmt = new java.text.SimpleDateFormat("yyyyMMdd");
-java.text.SimpleDateFormat fmt2 = new java.text.SimpleDateFormat("yyyyMMdd_hh");
+java.text.SimpleDateFormat fmt2 = new java.text.SimpleDateFormat("yyyyMMdd_hh:mm");
 java.util.Date currentTime = new java.util.Date();//得到当前系统时间
 String str_date = fmt.format(currentTime); //将日期时间格式化
 String str_date_h = fmt2.format(currentTime); //将时间格式化
@@ -37,12 +37,12 @@ String str_date_h = fmt2.format(currentTime); //将时间格式化
 						<td class="tdcolor">廠別</td>
 						<s:if test="#session.factNo!='tw'">
 						<td ><input type="text" style="color:blue"
-							name="obj.factNo" value="${factNo}" readonly id="dwrFactNo" />							
+							name="obj.factNo.factNo" value="${factNo}" readonly id="dwrFactNo" />							
 						</td>
 						</s:if>
 						<s:if test="#session.factNo=='tw'">
 						<td ><select style="color:blue"
-							name="obj.factNo" datatype="*" id="dwrFactNo"
+							name="obj.factNo.factNo" datatype="*" id="dwrFactNo"
 							onchange="makeBillNo(),getKyType2(this.value)">
 								<option value="">請選擇廠別</option>
 								<s:iterator value="#session.facts" id="temp">
@@ -65,14 +65,14 @@ String str_date_h = fmt2.format(currentTime); //将时间格式化
 				        <input type="text" name="obj.billNo" value="自動生成" readonly style="color:blue" id="obj_billno" datatype="*"/>	
 				        </td>				        
 						</tr>	
-						<input type="text" name="obj.webUserByCreateUserFid.id" value="<s:property value='#session.loginUser.id'/>"/>				        
-				        <input type="text" name="obj.createDate" value="<%=str_date_h %>" id="createDate"/>
+						<input type="hidden" name="obj.webUserByCreateUserFid.id" value="<s:property value='#session.loginUser.id'/>"/>				        
+				        <input type="hidden" name="obj.createDate" value="<%=str_date_h %>" id="createDate"/>
 						</s:if>					
 						<s:else>
 						<tr>
 				      <td class="tdcolor">廠別</td>				      
 				      <td>
-				      <input type="text" name="obj.factNo" value="<s:property value='obj.factNo'/>" readonly style="color:blue" id="dwrFactNo"/>
+				      <input type="text" name="obj.factNo.factNo" value="<s:property value='obj.factNo.factNo'/>" readonly style="color:blue" id="dwrFactNo"/>
 				      <input type="hidden" name="isnull" value="notNull"/><!--判斷變量 -->
 				      </td>
 				     
@@ -85,10 +85,11 @@ String str_date_h = fmt2.format(currentTime); //将时间格式化
 				      <td>
 				      <input type="text" name="obj.billNo" value="<s:property value='obj.billNo'/>" id="obj_billno" readonly style="color:blue" />
 				      </td>				     					  					  					  
-					  <input type="text" name="obj.webUserByCreateUserFid.id" value="<s:property value='obj.webUserByCreateUserFid.id'/>"/>
-				      <input type="text" name="obj.webUserByUpdateUserFid.id" value="<s:property value='#session.loginUser.id'/>"/>
-				      <input type="text" name="obj.createDate" value="<s:property value='obj.createDate'/>"/>	
-				      <input type="text" name="obj.updateDate" value="<%=str_date_h %>"/>	
+					  <input type="hidden" name="obj.webUserByCreateUserFid.id" value="<s:property value='obj.webUserByCreateUserFid.id'/>"/>
+				      <input type="hidden" name="obj.webUserByUpdateUserFid.id" value="<s:property value='#session.loginUser.id'/>"/>
+				      <input type="hidden" name="obj.createDate" value="<s:property value='obj.createDate'/>"/>	
+				      <input type="hidden" name="obj.updateDate" value="<%=str_date_h %>"/>
+				      
 					  </tr>			     				     
 				   </s:else>
 				   <tr>
@@ -97,7 +98,14 @@ String str_date_h = fmt2.format(currentTime); //将时间格式化
 				        <input type="text" name="obj.title" datatype="*1-100"  value="<s:property value='obj.title'/>" />
 				      </td>				       
 				      <td class="tdcolor">日期</td>
-					  <td><input type="text" name="obj.colDateMain" value="<%=str_date%>" readonly style="color:blue"/></td>
+					  <td>
+					  <s:if test="obj==null">
+					  <input type="text" name="obj.colDateMain" value="<%=str_date%>" readonly style="color:blue"/>
+					  </s:if>
+					  <s:else>
+					  <input type="text" name="obj.colDateMain" value="<s:property value='obj.colDateMain'/>" readonly style="color:blue"/>
+					  </s:else>
+					  </td>
 					  <td>下單人</td>
 					  <td>
 					  <s:if test="obj==null">
@@ -117,7 +125,7 @@ String str_date_h = fmt2.format(currentTime); //将时间格式化
 					    </td>	
 					 </tr>   				   
 					</s:if>	
-				   																																											    				   				   				   				    				    																																
+				   	<input type="hidden" value="<s:property value='obj.webColproductItemses.size'/>" id="maxNum"/>																																											    				   				   				   				    				    																																
 			</tbody>
 			</table>	
 			<table class="table table-condensed">								 			
@@ -139,35 +147,61 @@ String str_date_h = fmt2.format(currentTime); //将时间格式化
 			     <td class="tdcolor">備註</td>
 			 </tr>				
 			  
-			    <s:iterator value="obj" status="x" id="temp">
+			    <s:iterator value="obj.webColproductItemses" status="x" id="temp">
 			    <tr class="bluecss">
 			     <td><input type="hidden" name="cbox"/></td>			           			          			          			            			          	     
 			     <td >
-			     <select name="obj.webColproductItemses[${x.index}].importmant">
-			        <option value="H">高</option>
-			        <option value="M">中</option>
-			        <option value="L">低</option>
+			     <input type="hidden" value="<s:property value='iid'/>" name="obj.webColproductItemses[${x.index}].iid"/>
+			     <select name="obj.webColproductItemses[${x.index}].importmant">			        			        
+			             <s:if test='importmant=="H"'>
+					     <option value="H" selected>高</option>
+					     </s:if>
+					     <s:else>
+					     <option value="H">高</option>
+					     </s:else>
+					     <s:if test='importmant=="M"'>
+					     <option value="M" selected>中</option>
+					     </s:if>
+					     <s:else>
+					     <option value="M">中</option>
+					     </s:else>
+					     <s:if test='importmant=="L"'>
+					     <option value="L" selected>低</option>
+					     </s:if>
+					     <s:else>
+					     <option value="L">低</option>
+					     </s:else>	
 			     </select>			     
 			     </td>			    
-			     <td><input type="text" name="obj.webColproductItemses[${x.index}].shape" value="<s:property value='shape'/>" readonly style="color:blue" /></td>			    			     			     
-			     <td ><input type="text" name="obj.webColproductItemses[${x.index}].CStructure" value="<s:property value='CStructure'/>" /></td>			     
-			     <td ><input type="text" name="obj.webColproductItemses[${x.index}].purpose" value="<s:property value='purpose'/>" datatype="my0-8"  id="purpose_${x.index}"/></td>
-			     <td ><input type="text" name="obj.webColproductItemses[${x.index}].numbers" value="<s:property value='numbers'/>" datatype="my0-8"  id="numbers_${x.index}"/></td>
-			     <td ><input type="text" name="obj.webColproductItemses[${x.index}].weight" value="<s:property value='weight'/>" datatype="n0-8"  id="weight_${x.index}"/></td>
-			     <td ><input type="text" name="obj.webColproductItemses[${x.index}].remainNum" value="<s:property value='remainNum'/>"   /></td>
-			     <td ><input type="text" name="obj.webColproductItemses[${x.index}].unhealthNum" value="<s:property value='unhealthNum'/>"  /></td>
+			     <td><input type="text" name="obj.webColproductItemses[${x.index}].shape" value="<s:property value='shape'/>" datatype="*0-80" /></td>			    			     			     
+			     <td ><input type="text" name="obj.webColproductItemses[${x.index}].CStructure" value="<s:property value='CStructure'/>" datatype="*0-80"/></td>			     
+			     <td ><input type="text" name="obj.webColproductItemses[${x.index}].purpose" value="<s:property value='purpose'/>" datatype="my0-8"  /></td>
+			     <td ><input type="text" name="obj.webColproductItemses[${x.index}].numbers" value="<s:property value='numbers'/>" datatype="my0-8"  /></td>
+			     <td ><input type="text" name="obj.webColproductItemses[${x.index}].weight" value="<s:property value='weight'/>" datatype="my0-8"  /></td>
+			     <td ><input type="text" name="obj.webColproductItemses[${x.index}].remainNum" value="<s:property value='remainNum'/>"  datatype="my0-8"/></td>
+			     <td ><input type="text" name="obj.webColproductItemses[${x.index}].unhealthNum" value="<s:property value='unhealthNum'/>"  datatype="my0-8"/></td>
 			    
-			     <td ><input type="text" name="obj.webColproductItemses[${x.index}].picMan" value="<s:property value='picMan'/>" datatype="my0-8"  id="picMan_${x.index}"/></td>
+			     <td ><input type="text" name="obj.webColproductItemses[${x.index}].picMan" value="<s:property value='picMan'/>" datatype="*1-25"  id="picMan_${x.index}"/></td>
 			     <td >
-			     <section name="obj.webColproductItemses[${x.index}].paymk">
-			       <option value="Y">是</option>
-			       <option value="N">否</option>
-			     </section>			     
+			     <select name="obj.webColproductItemses[${x.index}].paymk">			       			       
+			       <s:if test='paymk=="Y"'>
+					<option value="Y" selected>是</option>
+					</s:if>
+					<s:else>
+					<option value="Y">是</option>
+					</s:else>
+			        <s:if test='paymk=="N"'>
+					<option value="N" selected>否</option>
+					</s:if>
+					<s:else>
+					<option value="N">否</option>
+					</s:else>
+			     </select>			     
 			     </td>
-			     <td ><input type="text" name="obj.webColproductItemses[${x.index}].numbersb" value="<s:property value='numbersb'/>"/></td>
-			     <td ><input type="text" name="obj.webColproductItemses[${x.index}].weightb" value="<s:property value='weightb'/>"/></td>
+			     <td ><input type="text" name="obj.webColproductItemses[${x.index}].numbersb" value="<s:property value='numbersb'/>" datatype="my0-8"/></td>
+			     <td ><input type="text" name="obj.webColproductItemses[${x.index}].weightb" value="<s:property value='weightb'/>" datatype="my0-8"/></td>
 			      <td >
-			      <input type="text" name="obj.webColproductItemses[${x.index}].remarks" value="<s:property value='remarks'/>" />			      
+			      <input type="text" name="obj.webColproductItemses[${x.index}].remarks" value="<s:property value='remarks'/>" datatype="*0-150"/>			      
 			      <input type="hidden" name="obj.webColproductItemses[${x.index}].webColproductMain.billNo" value="<s:property value='webColproductMain.billNo'/>" />		     
 			      </td>			      		      
 			  </tr>
@@ -203,15 +237,27 @@ jq(function() {
 			showAllError : true,
 			tipSweep : true,
 			datatype : {
-				"my0-8": /^\d{0,8}(\.[0-9]{1,4})?$/,
+				"my0-8": /^\d{0,8}(\.[0-9]{1,2})?$/,
 				"my0-12": /^\d{0,12}(\.[0-9]{1,4})?$/
 			},
-			beforeSubmit:function(curform){
+			/* beforeSubmit:function(curform){
 				loadi=layer.load("正在處理,請稍等...(系統爲了節省開銷,已取消自動下載函文!)");
+			}, */
+			ajaxPost:true,
+			callback:function(data){
+			   if(data=="0"){
+			      layer.msg("提交成功",3,1);
+			      loadUrl("webcolpro_findPageBean3?backIndex=1");
+			   }else if(data=="1"){
+			      //alert(data.responseText);
+			      layer.msg("提交失敗",3,3);
+			   }else{
+			      layer.msg("函文單號已經存在，請重新添加",3,3);
+			   }
 			}									
 		});
-		demo.tipmsg.w["my0-8"]="只能數字且不超過8位數,可保留四位以內小數";
-		demo.tipmsg.w["my0-12"]="只能數字且不超過12位數,可保留四位以內小數";
+		demo.tipmsg.w["my0-8"]="只能數字且不超過8位數,可保留2位以內小數";
+		demo.tipmsg.w["my0-12"]="只能數字且不超過12位數,可保留4位以內小數";
 									
 	});
 					
@@ -249,8 +295,7 @@ function makeBillNo() {
 var j=0;
 	function addRow(){	    
         var factno=document.getElementById("dwrFactNo").value;
-        var billno=document.getElementById("obj_billno").value;
-        //var factcode=document.getElementById("dwrFactArea").value;             
+        var billno=document.getElementById("obj_billno").value;                 
         //设置列内容和属性
         var cboxlist=document.getElementsByName("cbox");
         if(cboxlist.length>29){
@@ -279,19 +324,19 @@ var j=0;
         newTd00.innerHTML='<input type="hidden" name="cbox"/><input type="image" src="images/del.gif" onclick="this.parentNode.parentNode.parentNode.removeChild(this.parentNode.parentNode)"/>'; 
         newTd0.innerHTML = '<select  name="obj.webColproductItemses['+j+'].importmant" >'+
         '<option value="H">高</option><option value="M">中</option><option value="L">低</option></select>';                       
-        newTd1.innerHTML= '<input type="text" name="obj.webColproductItemses['+j+'].shape"  datatype="*"/>';               
-        newTd2.innerHTML='<input type="text" name="obj.webColproductItemses['+j+'].CStructure"  />';
-        newTd3.innerHTML='<input type="text" name="obj.webColproductItemses['+j+'].purpose"  datatype="my0-8"/><span class="Validform_checktip"></span>';
+        newTd1.innerHTML= '<input type="text" name="obj.webColproductItemses['+j+'].shape"  datatype="*0-80"/>';               
+        newTd2.innerHTML='<input type="text" name="obj.webColproductItemses['+j+'].CStructure"  datatype="*0-80"/>';
+        newTd3.innerHTML='<input type="text" name="obj.webColproductItemses['+j+'].purpose"  datatype="*0-100"/><span class="Validform_checktip"></span>';
         newTd4.innerHTML='<input type="text" name="obj.webColproductItemses['+j+'].numbers"  datatype="my0-8"/><span class="Validform_checktip"></span>';           
-        newTd5.innerHTML='<input type="text" name="obj.webColproductItemses['+j+'].weight"/>';    
-        newTd6.innerHTML='<input type="text" name="obj.webColproductItemses['+j+'].remainNum"/>'; 
-        newTd7.innerHTML='<input type="text" name="obj.webColproductItemses['+j+'].unhealthNum"/>';
-        newTd8.innerHTML='<input type="text" name="obj.webColproductItemses['+j+'].picMan"/>';
+        newTd5.innerHTML='<input type="text" name="obj.webColproductItemses['+j+'].weight" datatype="my0-8"/>';    
+        newTd6.innerHTML='<input type="text" name="obj.webColproductItemses['+j+'].remainNum" datatype="my0-8"/>'; 
+        newTd7.innerHTML='<input type="text" name="obj.webColproductItemses['+j+'].unhealthNum" datatype="my0-8"/>';
+        newTd8.innerHTML='<input type="text" name="obj.webColproductItemses['+j+'].picMan" datatype="*0-15"/>';
         newTd9.innerHTML='<select name="obj.webColproductItemses['+j+'].paymk">'+
         '<option value="Y">是</option><option value="N">否</option></select>';
-        newTd10.innerHTML='<input type="text" name="obj.webColproductItemses['+j+'].numbersb"/>'; 
-        newTd11.innerHTML='<input type="text" name="obj.webColproductItemses['+j+'].weightb"/>';                           	     
-        newTd12.innerHTML='<input type="text" name="obj.webColproductItemses['+j+'].remarks" />'+          
+        newTd10.innerHTML='<input type="text" name="obj.webColproductItemses['+j+'].numbersb" datatype="my0-8"/>'; 
+        newTd11.innerHTML='<input type="text" name="obj.webColproductItemses['+j+'].weightb" datatype="my0-8"/>';                           	     
+        newTd12.innerHTML='<input type="text" name="obj.webColproductItemses['+j+'].remarks" datatype="*0-150"/>'+          
         '<input type="hidden" name="obj.webColproductItemses['+j+'].webColproductMain.billNo" value="'+billno+'"'+'/>';       
         }
         
@@ -358,11 +403,11 @@ function getKyType2(factno){
   
  
 function back(){	
-	loadUrl("kyz_findPageBean3?backIndex=1");
+	loadUrl("webcolpro_findPageBean3?backIndex=1");
 }
 function gook(){
 	  layer.msg("操作成功",3,1);
-	  loadUrl("kyz_findPageBean");
+	  loadUrl("webcolpro_findPageBean");
 }
 
 function lookPic(url){
@@ -372,7 +417,6 @@ function lookPic(url){
 
 
 </script>
-<script type='text/javascript' src='dwr/interface/kyzjs.js'></script>
 <script type='text/javascript' src='dwr/interface/webfactjs.js'></script>
 <script type='text/javascript' src='dwr/interface/kyzvisaflowjs.js'></script>
 <script type='text/javascript' src='dwr/interface/webtypejs.js'></script>

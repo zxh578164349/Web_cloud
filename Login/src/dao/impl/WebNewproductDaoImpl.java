@@ -36,7 +36,7 @@ public class WebNewproductDaoImpl extends Basedao implements IWebNewproductDao{
 			factNo = user.getFactno();			
 		}
 		if(factNo!=null&&!"".equals(factNo)&&!"tw".equals(factNo)){
-			hql.append(" and factNo=:factNo");
+			hql.append(" and factNo.factNo=:factNo");
 			map.put("factNo", factNo);
 		}
 		if(billNo!=null&&!"".equals(billNo)){
@@ -76,6 +76,10 @@ public class WebNewproductDaoImpl extends Basedao implements IWebNewproductDao{
 		}
 		int offset=PageBean.countOffset(pageSize, currentPage);
 		List<WebNewproduct>list=super.queryForPage(hql.toString(), offset, pageSize, map);
+		for(WebNewproduct obj:list){
+			obj.getVbm().getLastMk();			
+			//obj.getFactNo().getFactSname();
+		}
 		
 		PageBean bean=new PageBean();
 		bean.setAllRow(allRow);
@@ -95,6 +99,9 @@ public class WebNewproductDaoImpl extends Basedao implements IWebNewproductDao{
 		Query query=getSession().createQuery(hql);
 		query.setString(0, billNo);
 		WebNewproduct obj=(WebNewproduct)query.uniqueResult();
+		if(obj!=null){
+			obj.getFactNo().getFactSname();
+		}
 		return obj;
 	}
 	
@@ -110,7 +117,7 @@ public class WebNewproductDaoImpl extends Basedao implements IWebNewproductDao{
 
 	public String findByfactNoACreatedate(String factNo, String createDate) {
 		// TODO Auto-generated method stub
-		String hql="select max(billNo) from WebNewproduct where factNo=? and createDate like ?";
+		String hql="select max(billNo) from WebNewproduct where factNo.factNo=? and createDate like ?";
 		Query query=getSession().createQuery(hql);
 		query.setString(0, factNo);
 		query.setString(1, createDate.substring(0, 8)+"%");

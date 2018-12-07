@@ -855,7 +855,8 @@
 		      <param name="root">ajaxResult</param>
 		  </result>
 		  <result name="findByBillNo">saveAndUpdate/webnewproductSaveOrUpdate.jsp</result>
-		  <result name="delete" type="redirectAction">webnewpro_findPageBean3</result>		      
+		  <result name="delete" type="redirectAction">webnewpro_findPageBean3</result>	
+		  <result name="findByBillNo_layer">page/showwebnewproduct_layer.jsp</result>	      
 		</action>
 		
 		<action name="webcolpro_*" class="webcolproAction" method="{1}">
@@ -863,14 +864,13 @@
 		      <param name="root">ajaxResult</param>
 		   </result>
 		   <result name="findPageBean">page/webcolproductmain.jsp</result>
-		   <result name="findPageBean">page/table1/webcolproductmain1.jsp</result>
+		   <result name="findPageBean1">page/table1/webcolproductmain1.jsp</result>
 		   <result name="makeBillNo" type="json">
 		      <param name="root">ajaxResult</param>
 		   </result>
-		   <result name="addItem" type="json">
-		      <param name="root">ajaxResult</param>
-		   </result>
-		   <result name="findById">saveAndUpdate/webcolproitemSaveOrUpdate.jsp</result>
+		   <result name="findByBillNo">saveAndUpdate/webcolproductSaveOrUpdate.jsp</result>
+		   <result name="delete" type="redirectAction">webcolpro_findPageBean3</result>
+		   <result name="findByBillNo_layer">page/showwebcolproduct_layer.jsp</result>		   		  		   		   		   
 		</action>
 		
 		

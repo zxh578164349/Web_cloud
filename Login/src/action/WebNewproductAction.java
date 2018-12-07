@@ -51,9 +51,11 @@ public class WebNewproductAction extends ActionSupport implements ServletRespons
 	private String ajaxResult;
 	private String createDate;
 	private String addorupdate;//添加或更新標識    update表示進入更新狀態
-	private String lookordown;
-	private String visaType;
+	private String lookordown;	
 	private String pname;
+	private String itemNo;
+	private String visaSort;
+	private String readMk;
 	
 	
 	
@@ -63,11 +65,24 @@ public class WebNewproductAction extends ActionSupport implements ServletRespons
 	public void setPname(String pname) {
 		this.pname = pname;
 	}
-	public String getVisaType() {
-		return visaType;
+	
+	public String getItemNo() {
+		return itemNo;
 	}
-	public void setVisaType(String visaType) {
-		this.visaType = visaType;
+	public void setItemNo(String itemNo) {
+		this.itemNo = itemNo;
+	}
+	public String getVisaSort() {
+		return visaSort;
+	}
+	public void setVisaSort(String visaSort) {
+		this.visaSort = visaSort;
+	}
+	public String getReadMk() {
+		return readMk;
+	}
+	public void setReadMk(String readMk) {
+		this.readMk = readMk;
 	}
 	public String getLookordown() {
 		return lookordown;
@@ -227,7 +242,7 @@ public class WebNewproductAction extends ActionSupport implements ServletRespons
 				WebNewproduct pro=webnewproSer.findByBillNo(obj.getBillNo());
 				if(pro==null){					
 					webnewproSer.add(obj);				
-					KyVisabillm vbm=visabillmSer.findById(obj.getFactNo(), obj.getVisaType(), obj.getBillNo());				      
+					KyVisabillm vbm=visabillmSer.findById(obj.getFactNo().getFactNo(), obj.getVisaType(), obj.getBillNo());				      
 				    List<String>list_emailPwd=webuseremailSer.findByFactNoAEmailPwd2(vbm.getId().getFactNo(),vbm.getSignerNext());											      
 					GlobalMethod.sendNewEmail(vbm,list_emailPwd);//發送郵件									     
 					}else{
@@ -260,7 +275,7 @@ public class WebNewproductAction extends ActionSupport implements ServletRespons
 						WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
 						String username=user.getName();
 						kyzexpFile.setUsername(username);
-						kyzexpFile.setFactNo(obj.getFactNo());
+						kyzexpFile.setFactNo(obj.getFactNo().getFactNo());
 						kyzexpFile.setVisaTypeM(obj.getVisaType().substring(0,2));
 						kyzexpFile.setFileurl("upload_webnewpro");
 						kyzexpfileSer.add(kyzexpFile);
@@ -335,8 +350,14 @@ public class WebNewproductAction extends ActionSupport implements ServletRespons
 		if("1".equals(obj.getFilesYn())){
 			List<KyzExpectmatmFile> list=kyzexpfileSer.findByBillNo(billNo);					    
 			ActionContext.getContext().getSession().put("list_filesexp", list);
-		}		
+		}	
+		
 		return "findByBillNo";	
+	}
+	
+	public String findByBillNo_layer(){
+		this.findByBillNo();
+		return "findByBillNo_layer";
 	}
 	
 	public String delete(){
@@ -379,7 +400,7 @@ public class WebNewproductAction extends ActionSupport implements ServletRespons
 	}
 	
 	public void print2() throws IOException{
-		this.print(factNo, billNo, visaType);
+		this.print(factNo, billNo, visaSort);
 	}
 		
 }
