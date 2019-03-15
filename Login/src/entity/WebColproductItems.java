@@ -14,28 +14,37 @@ public class WebColproductItems implements java.io.Serializable {
 	private String importmant;
 	private String shape;
 	private String CStructure;
-	private String orderFactory;
-	private String orderMan;
+	private String orderFactoryAndMan;	
 	private String purpose;
-	private Integer numbers;
-	private Integer weight;
-	private Integer remainNum;
-	private Integer unhealthNum;
+	private Double numbers;
+	private Double weight;
+	private Double remainNum;
+	private Double unhealthNum;
 	private String picMan;
 	private String paymk;
-	private Integer numbersb;
-	private Integer weightb;
+	private Double numbersb;//量產數量
+	private Double weightb;
 	private String remarks;
 	private WebUser cuser;
 	private WebUser upuser;
 	private String createDate;
 	private String updateDate;
+	private String numbersbMk;//是否量產
 	
 
 	// Constructors
 
+	
 	public WebUser getCuser() {
 		return cuser;
+	}
+
+	public String getNumbersbMk() {
+		return numbersbMk;
+	}
+
+	public void setNumbersbMk(String numbersbMk) {
+		this.numbersbMk = numbersbMk;
 	}
 
 	public void setCuser(WebUser cuser) {
@@ -78,18 +87,17 @@ public class WebColproductItems implements java.io.Serializable {
 	/** full constructor */
 	public WebColproductItems(Integer iid, WebColproductMain webColproductMain,
 			String colDate, String importmant, String shape, String CStructure,
-			String orderFactory, String orderMan, String purpose,
-			Integer numbers, Integer weight, Integer remainNum,
-			Integer unhealthNum, String picMan, String paymk, Integer numbersb,
-			Integer weightb, String remarks) {
+			String orderFactoryAndMan, String purpose,
+			Double numbers, Double weight, Double remainNum,
+			Double unhealthNum, String picMan, String paymk, Double numbersb,
+			Double weightb, String remarks) {
 		this.iid = iid;
 		this.webColproductMain = webColproductMain;
 		this.colDate = colDate;
 		this.importmant = importmant;
 		this.shape = shape;
 		this.CStructure = CStructure;
-		this.orderFactory = orderFactory;
-		this.orderMan = orderMan;
+		this.orderFactoryAndMan = orderFactoryAndMan;		
 		this.purpose = purpose;
 		this.numbers = numbers;
 		this.weight = weight;
@@ -151,21 +159,13 @@ public class WebColproductItems implements java.io.Serializable {
 	public void setCStructure(String CStructure) {
 		this.CStructure = CStructure;
 	}
-
-	public String getOrderFactory() {
-		return this.orderFactory;
+	
+	public String getOrderFactoryAndMan() {
+		return orderFactoryAndMan;
 	}
 
-	public void setOrderFactory(String orderFactory) {
-		this.orderFactory = orderFactory;
-	}
-
-	public String getOrderMan() {
-		return this.orderMan;
-	}
-
-	public void setOrderMan(String orderMan) {
-		this.orderMan = orderMan;
+	public void setOrderFactoryAndMan(String orderFactoryAndMan) {
+		this.orderFactoryAndMan = orderFactoryAndMan;
 	}
 
 	public String getPurpose() {
@@ -176,35 +176,35 @@ public class WebColproductItems implements java.io.Serializable {
 		this.purpose = purpose;
 	}
 
-	public Integer getNumbers() {
+	public Double getNumbers() {
 		return this.numbers;
 	}
 
-	public void setNumbers(Integer numbers) {
+	public void setNumbers(Double numbers) {
 		this.numbers = numbers;
 	}
 
-	public Integer getWeight() {
+	public Double getWeight() {
 		return this.weight;
 	}
 
-	public void setWeight(Integer weight) {
+	public void setWeight(Double weight) {
 		this.weight = weight;
 	}
 
-	public Integer getRemainNum() {
+	public Double getRemainNum() {
 		return this.remainNum;
 	}
 
-	public void setRemainNum(Integer remainNum) {
+	public void setRemainNum(Double remainNum) {
 		this.remainNum = remainNum;
 	}
 
-	public Integer getUnhealthNum() {
+	public Double getUnhealthNum() {
 		return this.unhealthNum;
 	}
 
-	public void setUnhealthNum(Integer unhealthNum) {
+	public void setUnhealthNum(Double unhealthNum) {
 		this.unhealthNum = unhealthNum;
 	}
 	
@@ -224,19 +224,19 @@ public class WebColproductItems implements java.io.Serializable {
 		this.paymk = paymk;
 	}
 
-	public Integer getNumbersb() {
+	public Double getNumbersb() {
 		return this.numbersb;
 	}
 
-	public void setNumbersb(Integer numbersb) {
+	public void setNumbersb(Double numbersb) {
 		this.numbersb = numbersb;
 	}
 
-	public Integer getWeightb() {
+	public Double getWeightb() {
 		return this.weightb;
 	}
 
-	public void setWeightb(Integer weightb) {
+	public void setWeightb(Double weightb) {
 		this.weightb = weightb;
 	}
 

@@ -106,7 +106,7 @@ String str_date_h = fmt2.format(currentTime); //将时间格式化
 					  <input type="text" name="obj.colDateMain" value="<s:property value='obj.colDateMain'/>" readonly style="color:blue"/>
 					  </s:else>
 					  </td>
-					  <td>下單人</td>
+					  <td>申請人</td>
 					  <td>
 					  <s:if test="obj==null">
 					    <input type="text" name="obj.orderManMain" value="<s:property value='#session.loginUser.name'/>" style="color:blue" readonly/>
@@ -119,7 +119,7 @@ String str_date_h = fmt2.format(currentTime); //将时间格式化
 				   <s:if test="obj==null">
 				     <tr>					   
 					    <td class="tdcolor">是否分部門</td>
-					    <td colspan="10">
+					    <td colspan="11">
 					                   是<input type="radio" name="trMk" value="Y" checked datatype="*" onclick="checkType()"/>&nbsp;&nbsp;
 			                                           否<input type="radio" name="trMk" value="N" onclick="checkType()"/>
 					    </td>	
@@ -135,47 +135,51 @@ String str_date_h = fmt2.format(currentTime); //将时间格式化
 			     <td class="tdcolor">重要性</td>
 			     <td class="tdcolor">型體</td>
 			     <td class="tdcolor">結構</td>
+			     <td class="tdcolor">廠別及下單人</td>
 			     <td class="tdcolor">樣品用途</td>
 			     <td class="tdcolor">數量</td>
-			     <td class="tdcolor">單重</td>
+			     <td class="tdcolor">單重(G)</td>
 			     <td class="tdcolor">留底量</td>
 			     <td class="tdcolor">不良</td>			     
 			     <td class="tdcolor">型體負責人</td>
 			     <td class="tdcolor">可否請款</td>
+			     <td class="tdcolor">是否量產</td>
 			     <td class="tdcolor">量產數量</td>
 			     <td class="tdcolor">需求料的重量</td>			    			     			     		     
 			     <td class="tdcolor">備註</td>
-			 </tr>				
-			  
+			 </tr>
+			 </tbody>				
+			 <tbody>			 		  
 			    <s:iterator value="obj.webColproductItemses" status="x" id="temp">
 			    <tr class="bluecss">
 			     <td><input type="hidden" name="cbox"/></td>			           			          			          			            			          	     
 			     <td >
 			     <input type="hidden" value="<s:property value='iid'/>" name="obj.webColproductItemses[${x.index}].iid"/>
 			     <select name="obj.webColproductItemses[${x.index}].importmant">			        			        
-			             <s:if test='importmant=="H"'>
-					     <option value="H" selected>高</option>
+			             <s:if test='importmant=="A"'>
+					     <option value="A" selected>A</option>
 					     </s:if>
 					     <s:else>
-					     <option value="H">高</option>
+					     <option value="A">A</option>
 					     </s:else>
-					     <s:if test='importmant=="M"'>
-					     <option value="M" selected>中</option>
+					     <s:if test='importmant=="B"'>
+					     <option value="B" selected>B</option>
 					     </s:if>
 					     <s:else>
-					     <option value="M">中</option>
+					     <option value="B">B</option>
 					     </s:else>
-					     <s:if test='importmant=="L"'>
-					     <option value="L" selected>低</option>
+					     <s:if test='importmant=="C"'>
+					     <option value="C" selected>C</option>
 					     </s:if>
 					     <s:else>
-					     <option value="L">低</option>
+					     <option value="C">C</option>
 					     </s:else>	
 			     </select>			     
 			     </td>			    
 			     <td><input type="text" name="obj.webColproductItemses[${x.index}].shape" value="<s:property value='shape'/>" datatype="*0-80" /></td>			    			     			     
-			     <td ><input type="text" name="obj.webColproductItemses[${x.index}].CStructure" value="<s:property value='CStructure'/>" datatype="*0-80"/></td>			     
-			     <td ><input type="text" name="obj.webColproductItemses[${x.index}].purpose" value="<s:property value='purpose'/>" datatype="my0-8"  /></td>
+			     <td ><input type="text" name="obj.webColproductItemses[${x.index}].CStructure" value="<s:property value='CStructure'/>" datatype="*0-80"/></td>
+			     <td ><input type="text" name="obj.webColproductItemses[${x.index}].orderFactoryAndMan" value="<s:property value='orderFactoryAndMan'/>" datatype="*0-80"/></td>			     
+			     <td ><input type="text" name="obj.webColproductItemses[${x.index}].purpose" value="<s:property value='purpose'/>" datatype="*0-80"  /></td>
 			     <td ><input type="text" name="obj.webColproductItemses[${x.index}].numbers" value="<s:property value='numbers'/>" datatype="my0-8"  /></td>
 			     <td ><input type="text" name="obj.webColproductItemses[${x.index}].weight" value="<s:property value='weight'/>" datatype="my0-8"  /></td>
 			     <td ><input type="text" name="obj.webColproductItemses[${x.index}].remainNum" value="<s:property value='remainNum'/>"  datatype="my0-8"/></td>
@@ -198,6 +202,22 @@ String str_date_h = fmt2.format(currentTime); //将时间格式化
 					</s:else>
 			     </select>			     
 			     </td>
+			     <td >
+			     <select name="obj.webColproductItemses[${x.index}].numbersbMk">			       			       
+			       <s:if test='numbersbMk=="Y"'>
+					<option value="Y" selected>是</option>
+					</s:if>
+					<s:else>
+					<option value="Y">是</option>
+					</s:else>
+			        <s:if test='numbersbMk=="N"'>
+					<option value="N" selected>否</option>
+					</s:if>
+					<s:else>
+					<option value="N">否</option>
+					</s:else>
+			     </select>			     
+			     </td>
 			     <td ><input type="text" name="obj.webColproductItemses[${x.index}].numbersb" value="<s:property value='numbersb'/>" datatype="my0-8"/></td>
 			     <td ><input type="text" name="obj.webColproductItemses[${x.index}].weightb" value="<s:property value='weightb'/>" datatype="my0-8"/></td>
 			      <td >
@@ -205,11 +225,14 @@ String str_date_h = fmt2.format(currentTime); //将时间格式化
 			      <input type="hidden" name="obj.webColproductItemses[${x.index}].webColproductMain.billNo" value="<s:property value='webColproductMain.billNo'/>" />		     
 			      </td>			      		      
 			  </tr>
-			    </s:iterator>		    			    	         			  			 	  			
+			  </s:iterator>		    			    	         			  			 	  			
 			</tbody>
+			<tbody id="import_data"></tbody>
 			<tfoot><tr>			
 			<td colspan="10">			     			  
-			     <input type="button" value="添加行" onclick="addRow()" disabled="disabled" id="addbtn" style="color:grey"/>			     
+			     <input type="button" value="添加行" onclick="addRow()" disabled="disabled" id="addbtn" style="color:grey"/>	
+			     
+			          
 			 </td>    			 					    			    		   		
 			</tr>
 			</tfoot>					    
@@ -226,6 +249,9 @@ String str_date_h = fmt2.format(currentTime); //将时间格式化
 			</center>
 		<input type="hidden" name="addorupdate" value="<s:property value='addorupdate'/>" id="addorupdate"/>	<!-- 添加或更新標識     -->				
 	</form>
+	<form action="webcolpro_importFile"  method="post" enctype="multipart/form-data" id="upload_form" target="frameFile">
+			     <input type="file" name="file" id="id_file" style="width:150px"/>	<input value="導入數據" type=button onclick="checkForm()"  class="btn btn-info"/>	
+			     </form>
 	<iframe id="frameFile" name="frameFile" style="display: none;"></iframe>
 	
 <script type="text/javascript">
@@ -320,23 +346,28 @@ var j=0;
              var newTd10=newTr.insertCell();
              var newTd11=newTr.insertCell();
              var newTd12=newTr.insertCell();
+             var newTd13=newTr.insertCell();
+             var newTd14=newTr.insertCell();
         	
         newTd00.innerHTML='<input type="hidden" name="cbox"/><input type="image" src="images/del.gif" onclick="this.parentNode.parentNode.parentNode.removeChild(this.parentNode.parentNode)"/>'; 
         newTd0.innerHTML = '<select  name="obj.webColproductItemses['+j+'].importmant" >'+
-        '<option value="H">高</option><option value="M">中</option><option value="L">低</option></select>';                       
+        '<option value="A">A</option><option value="B">B</option><option value="C">C</option></select>';                       
         newTd1.innerHTML= '<input type="text" name="obj.webColproductItemses['+j+'].shape"  datatype="*0-80"/>';               
         newTd2.innerHTML='<input type="text" name="obj.webColproductItemses['+j+'].CStructure"  datatype="*0-80"/>';
-        newTd3.innerHTML='<input type="text" name="obj.webColproductItemses['+j+'].purpose"  datatype="*0-100"/><span class="Validform_checktip"></span>';
-        newTd4.innerHTML='<input type="text" name="obj.webColproductItemses['+j+'].numbers"  datatype="my0-8"/><span class="Validform_checktip"></span>';           
-        newTd5.innerHTML='<input type="text" name="obj.webColproductItemses['+j+'].weight" datatype="my0-8"/>';    
-        newTd6.innerHTML='<input type="text" name="obj.webColproductItemses['+j+'].remainNum" datatype="my0-8"/>'; 
-        newTd7.innerHTML='<input type="text" name="obj.webColproductItemses['+j+'].unhealthNum" datatype="my0-8"/>';
-        newTd8.innerHTML='<input type="text" name="obj.webColproductItemses['+j+'].picMan" datatype="*0-15"/>';
-        newTd9.innerHTML='<select name="obj.webColproductItemses['+j+'].paymk">'+
+        newTd3.innerHTML='<input type="text" name="obj.webColproductItemses['+j+'].orderFactoryAndMan"  datatype="*0-80"/>';
+        newTd4.innerHTML='<input type="text" name="obj.webColproductItemses['+j+'].purpose"  datatype="*0-100"/><span class="Validform_checktip"></span>';
+        newTd5.innerHTML='<input type="text" name="obj.webColproductItemses['+j+'].numbers"  datatype="my0-8"/><span class="Validform_checktip"></span>';           
+        newTd6.innerHTML='<input type="text" name="obj.webColproductItemses['+j+'].weight" datatype="my0-8"/>';    
+        newTd7.innerHTML='<input type="text" name="obj.webColproductItemses['+j+'].remainNum" datatype="my0-8"/>'; 
+        newTd8.innerHTML='<input type="text" name="obj.webColproductItemses['+j+'].unhealthNum" datatype="my0-8"/>';
+        newTd9.innerHTML='<input type="text" name="obj.webColproductItemses['+j+'].picMan" datatype="*0-15"/>';
+        newTd10.innerHTML='<select name="obj.webColproductItemses['+j+'].paymk">'+
         '<option value="Y">是</option><option value="N">否</option></select>';
-        newTd10.innerHTML='<input type="text" name="obj.webColproductItemses['+j+'].numbersb" datatype="my0-8"/>'; 
-        newTd11.innerHTML='<input type="text" name="obj.webColproductItemses['+j+'].weightb" datatype="my0-8"/>';                           	     
-        newTd12.innerHTML='<input type="text" name="obj.webColproductItemses['+j+'].remarks" datatype="*0-150"/>'+          
+        newTd11.innerHTML='<select name="obj.webColproductItemses['+j+'].numbersbMk">'+
+        '<option value="Y">是</option><option value="N">否</option></select>';
+        newTd12.innerHTML='<input type="text" name="obj.webColproductItemses['+j+'].numbersb" datatype="my0-8"/>'; 
+        newTd13.innerHTML='<input type="text" name="obj.webColproductItemses['+j+'].weightb" datatype="my0-8"/>';                           	     
+        newTd14.innerHTML='<input type="text" name="obj.webColproductItemses['+j+'].remarks" datatype="*0-150"/>'+          
         '<input type="hidden" name="obj.webColproductItemses['+j+'].webColproductMain.billNo" value="'+billno+'"'+'/>';       
         }
         
@@ -414,8 +445,28 @@ function lookPic(url){
 	window.location.href=url;
 }
 
-
-
+function checkForm(){
+		var id_file=jq("#id_file").val();
+		var extendName=id_file.substr(id_file.lastIndexOf(".")).toLowerCase();
+		if(id_file==""){
+			layer.alert("請選擇Excel文檔");
+			return false;
+		}else if(extendName!=".xls"&&extendName!=".xlsx"){
+			layer.alert("僅允許Excel文檔");
+			return false;
+		}else{
+		    layer.load("請稍等...");
+			jq("#upload_form").submit();
+		
+		}				
+	}
+	function loadUrl_importData() {
+			jq("#import_data").load("./page/table1/webcolproductmain1-2.jsp");
+		}
+		
+	function makeWeightB(){
+	  
+	}	
 </script>
 <script type='text/javascript' src='dwr/interface/webfactjs.js'></script>
 <script type='text/javascript' src='dwr/interface/kyzvisaflowjs.js'></script>

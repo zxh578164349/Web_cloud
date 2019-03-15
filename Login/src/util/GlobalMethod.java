@@ -2144,6 +2144,30 @@ public class GlobalMethod extends HibernateDaoSupport{
 		ydate.setSumWorkhours(workhours);
 	}
 	
+	/**
+	 * 判斷文件類型，大小
+	 * @param file
+	 * @throws IOException 
+	 * 20181212
+	 */
+	public static void judgeFile(File file,String fileFileName,HttpServletResponse response,List<String>filetypes) throws IOException{
+		long filesize=file.length();
+		String filetype=fileFileName.substring(fileFileName.lastIndexOf(".")).toLowerCase();
+		if(filesize>2560000){
+			response.setContentType("text/html;charset=utf-8");
+			response.getWriter().print("<script>window.parent.alert('文件不可超過5M!');window.parent.layer.closeAll()</script>");
+			response.getWriter().close();
+		}
+		for(String type:filetypes){
+			if(!filetype.equals(type)){
+				response.setContentType("text/html;charset=utf-8");
+				response.getWriter().print("<script>window.parent.alert('只允許jpg,bmp,jpeg,gif,tif圖片');window.parent.layer.closeAll()</script>");
+				response.getWriter().close();
+				break;
+			}
+		}		
+	}
+	
 	 
 	 
 	 
@@ -2162,7 +2186,7 @@ public class GlobalMethod extends HibernateDaoSupport{
 	    	String abc="abcd";
 	    	System.out.println(abc.substring(0,1));
 	    	System.out.println(abc.substring(0,2));*/
-		 Calendar cal=Calendar.getInstance();
+		/* Calendar cal=Calendar.getInstance();
 		 String d1="20180507";
 		 String d2="20180611";
 		 SimpleDateFormat sdf=new SimpleDateFormat("yyyyMMdd");
@@ -2179,7 +2203,11 @@ public class GlobalMethod extends HibernateDaoSupport{
 		 Date date3=new Date(); 
 		 for(int i=0;i<20;i++){
 			 System.out.println(date3.getTime());
-		 }
+		 }*/
+		 
+		 DecimalFormat fmt=new DecimalFormat();		 
+		 
+		 System.out.println(fmt.format(-0.23));
 		 
 		 
 

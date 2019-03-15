@@ -63,7 +63,7 @@ public class VKpiWebprofitlossAction extends ActionSupport implements ServletRes
 	private String factname;
 	private List<String>list_factcode;
 	private List<String>list_factno;
-	private final static String RISERATE="漲福比率";
+	private final static String RISERATE="漲幅比率";
 	private final static int NUM=31;//print_tw  多少箇項目（29+1）
 	private final static int NUM2=2;//集合移除相同元素后的箇數
 	private final static String STR_LONG="-999999";
@@ -505,7 +505,7 @@ public class VKpiWebprofitlossAction extends ActionSupport implements ServletRes
 				list.add(str);
 			}			
 			result.add(list);
-			if(list_obj.size()>1&&i==list_obj.size()-1&&mk==1){//漲福比率
+			if(list_obj.size()>1&&i==list_obj.size()-1&&mk==1){//漲幅比率
 				List<String>list2=new ArrayList<String>();
 				VKpiWebprofitloss obj1=list_obj.get(list_obj.size()-2);
 				VKpiWebprofitloss obj2=list_obj.get(list_obj.size()-1);
@@ -711,7 +711,11 @@ public class VKpiWebprofitlossAction extends ActionSupport implements ServletRes
 		if(d1.equals(DB1)||d2.equals(DB1)||d3.equals(DB1)){
 			result="無";
 		}else{
-			result=frm.format(GlobalMethod.division(d1-d2, d3));
+			if(d1-d2<0){
+				result=frm.format(-Math.abs(GlobalMethod.division(d1-d2, d3)));//d1-d2<0,取负数，表示负涨幅    Math.abc取絕對值
+			}else{
+				result=frm.format(Math.abs(GlobalMethod.division(d1-d2, d3)));//d1-d2>=0,取正数，表示正涨幅
+			}			
 		}
 		return result;
 	}

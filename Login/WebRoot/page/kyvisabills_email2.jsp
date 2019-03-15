@@ -146,7 +146,7 @@ $(document).ajaxStop(function(){
     		src='webnewpro_findByBillNo_layer?billNo='+billNo+'& readMk=Y';
     	}
     	if(billNo.substring(0,2)=='CP'){
-    		area_w='650px';
+    		area_w='750px';
     		area_h='560px';
     		src='webcolpro_findByBillNo_layer?billNo='+billNo+'& readMk=Y';
     	}
@@ -164,7 +164,7 @@ $(document).ajaxStop(function(){
     //shift:'top',
     offset:['10px',''],
     //area: ['800px', '560px'],
-    area:['650px','560px'],
+    area:[area_w,area_h],
     //page:{url:'kyz_findById_layer?billNo='+billNo+'& factNo='+factNo}  
     maxmin:true,
     iframe:{src:src,scrolling:'auto'}	
@@ -209,7 +209,7 @@ $(document).ajaxStop(function(){
     		src='webnewpro_findByBillNo_layer?billNo='+billNo+'& factNo='+factNo+'& itemNo='+itemNo+'& visaSort='+visaSort+'& readMk=N';
     	}
     	if(billNo.substring(0,2)=='CP'){
-    		area_w='650px';
+    		area_w='750px';
     		area_h='560px';
     		src='webcolpro_findByBillNo_layer?billNo='+billNo+'& factNo='+factNo+'& itemNo='+itemNo+'& visaSort='+visaSort+'& readMk=N';
     	}
@@ -227,7 +227,7 @@ $(document).ajaxStop(function(){
     //fadeIn:300,
     //shift:'top',
     offset:['10px',''],
-    area: ['650px', '560px'],
+    area: [area_w, area_h],
     maxmin:true,
     //page:{url:'kyz_findById_layer?billNo='+billNo+'& factNo='+factNo},
     //iframe:{src:'kyz_findById_layer?billNo='+billNo+'& factNo='+factNo,scrolling:'auto'},

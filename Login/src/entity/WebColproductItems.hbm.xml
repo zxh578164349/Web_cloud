@@ -27,25 +27,22 @@
         <property name="CStructure" type="java.lang.String">
             <column name="C_STRUCTURE" length="100" />
         </property>
-        <property name="orderFactory" type="java.lang.String">
-            <column name="ORDER_FACTORY" length="50" />
-        </property>
-        <property name="orderMan" type="java.lang.String">
-            <column name="ORDER_MAN" length="50" />
-        </property>
+        <property name="orderFactoryAndMan" type="java.lang.String">
+            <column name="ORDER_FACTORYANDMAN" length="100" />
+        </property>     
         <property name="purpose" type="java.lang.String">
             <column name="PURPOSE" length="200" />
         </property>
-        <property name="numbers" type="java.lang.Integer">
+        <property name="numbers" type="java.lang.Double">
             <column name="NUMBERS" precision="8" scale="0" />
         </property>
-        <property name="weight" type="java.lang.Integer">
+        <property name="weight" type="java.lang.Double">
             <column name="WEIGHT" precision="8" scale="0" />
         </property>
-        <property name="remainNum" type="java.lang.Integer">
+        <property name="remainNum" type="java.lang.Double">
             <column name="REMAIN_NUM" precision="8" scale="0" />
         </property>
-        <property name="unhealthNum" type="java.lang.Integer">
+        <property name="unhealthNum" type="java.lang.Double">
             <column name="UNHEALTH_NUM" precision="8" scale="0" />
         </property>
         <property name="picMan" type="java.lang.String">
@@ -54,10 +51,10 @@
         <property name="paymk" type="java.lang.String">
             <column name="PAYMK" length="2" />
         </property>
-        <property name="numbersb" type="java.lang.Integer">
+        <property name="numbersb" type="java.lang.Double">
             <column name="NUMBERSB" precision="8" scale="0" />
         </property>
-        <property name="weightb" type="java.lang.Integer">
+        <property name="weightb" type="java.lang.Double">
             <column name="WEIGHTB" precision="8" scale="0" />
         </property>
         <property name="remarks" type="java.lang.String">
@@ -68,6 +65,9 @@
         </property>
         <property name="updateDate" type="java.lang.String">
             <column name="UPDATE_DATE" length="15" />
+        </property>
+        <property name="numbersbMk" type="java.lang.String">
+            <column name="NUMBERSMK" length="2" />
         </property>
         <many-to-one name="cuser" class="entity.WebUser" fetch="select">
             <column name="CREATEUSER" precision="6" scale="0" />

@@ -1,7 +1,13 @@
 package action;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -13,6 +19,7 @@ import services.IKyVisabillmServices;
 import services.IWebColproductMainServices;
 import services.IWebuserEmailServices;
 import util.GlobalMethod;
+import util.ImportExcel;
 import util.JasperHelper;
 import util.PageBean;
 
@@ -24,6 +31,7 @@ import entity.KyzExpectmatmLog;
 import entity.WebColproductItems;
 import entity.WebColproductMain;
 import entity.WebNewproduct;
+
 
 public class WebColproductMainAction extends ActionSupport implements ServletResponseAware{
 	 private HttpServletResponse response;
@@ -49,9 +57,37 @@ public class WebColproductMainAction extends ActionSupport implements ServletRes
 	 private String visaSort;
 	 private String readMk;
 	 private String lookordown;
+	 private File file;
+	 private String fileFileName;
+	 private String fileContentType;
+	 private final static String SEPARATOR = "__";
 	 
-	 	 	
 	 
+	 
+	public String getFileContentType() {
+		return fileContentType;
+	}
+
+	public void setFileContentType(String fileContentType) {
+		this.fileContentType = fileContentType;
+	}
+
+	public String getFileFileName() {
+		return fileFileName;
+	}
+
+	public void setFileFileName(String fileFileName) {
+		this.fileFileName = fileFileName;
+	}
+
+	public File getFile() {
+		return file;
+	}
+
+	public void setFile(File file) {
+		this.file = file;
+	}
+
 	public String getLookordown() {
 		return lookordown;
 	}
@@ -225,7 +261,14 @@ public class WebColproductMainAction extends ActionSupport implements ServletRes
 	}
 	
 	public String add(){
-		try{
+		try{			
+			List<WebColproductItems>items=(List<WebColproductItems>)ActionContext.getContext().getSession().get("list_items");
+			if(items!=null&&items.size()>0){
+				for(WebColproductItems item:items){
+					item.setWebColproductMain(new WebColproductMain(obj.getBillNo()));
+				}
+				obj.getWebColproductItemses().addAll(items);
+			}			
 			obj.setVisaTypeM(obj.getVisaType().substring(0,2));
 			if(isnull.equals("isNull")){//start if
 				WebColproductMain col=webcolproServer.findByBillNo(obj.getBillNo());
@@ -242,12 +285,12 @@ public class WebColproductMainAction extends ActionSupport implements ServletRes
 			else{				
 				webcolproServer.add(obj);
 				ajaxResult="0";	
-			}
+			}			
 		}catch(Exception e){
 			e.printStackTrace();
 			ajaxResult="1";	//添加失敗
 		}
-		
+		ActionContext.getContext().getSession().remove("list_items");
 		return "add";
 	}
 	
@@ -276,6 +319,7 @@ public class WebColproductMainAction extends ActionSupport implements ServletRes
 	
 	public String findPageBean(){
 		ActionContext.getContext().getSession().remove("allRow");
+		ActionContext.getContext().getSession().remove("list_items");
 		ActionContext.getContext().getSession().put("c_factNo", factNo);
 		ActionContext.getContext().getSession().put("c_billNo", billNo);
 		ActionContext.getContext().getSession().put("c_dateA", yymmdd);
@@ -346,6 +390,109 @@ public class WebColproductMainAction extends ActionSupport implements ServletRes
 		this.print(factNo, billNo, visaSort);
 	}
 	
+	
+	public void importFile() throws IOException{
+		response.setContentType("text/html;charset=utf-8");
+		try{
+			/*List<String>filetypes=new ArrayList<String>();
+			filetypes.add(".xls");
+			filetypes.add(".xlsx");
+			GlobalMethod.judgeFile(file, fileFileName, response, filetypes);//判斷文件類型，大小*/
+			
+			String str="重要性__型體__結構__鞋廠及下單人__樣品用途__數量__單重(G)__留底量__不良__型體負責人__可否請款__是否量產__量產數量__需求料的重量__備註";
+			DateFormat dfm=new SimpleDateFormat("yyyyMMdd");			
+			String path="d:\\Webcolproductitems_backup\\"+dfm.format(new Date());//Excel文檔存放目錄
+			ajaxResult="0";				
+			//文件上傳
+			if(file!=null){//不為空代表有上傳附檔,不能寫成files.size()>0,否則報空指針
+				//File uploadFile=new File(ServletActionContext.getServletContext().getRealPath("KyzexpFile\\"+kyz.getId().getBillNo()));//附檔上傳到項目
+				File uploadFile_backup=new File(path);//附檔上傳到D盤(為了避免更新項目時丟失附檔,所在上傳到D盤)			
+				if(!uploadFile_backup.exists()){
+					uploadFile_backup.mkdirs();
+				}																						
+						FileInputStream in=new FileInputStream(file);
+						FileOutputStream out_backup=new FileOutputStream(uploadFile_backup+"\\"+fileFileName);//備份
+						byte[]b=new byte[1024];
+						int length=0;
+						while((length=in.read(b))>0){
+							out_backup.write(b,0,length);//備份
+						}																																				
+			}						
+			//file=new File("i:\\test.xlsx");
+			//Map<String,Object>map=ImportExcel.exportListFromFile(file);
+			Map<String,Object>map=ImportExcel.exportListFromFile(new File(path+"\\"+fileFileName));
+			List<WebColproductItems>list_items=new ArrayList<WebColproductItems>();			
+			if(map.keySet().size()>1){
+				response.getWriter().print("<script>window.parent.layer.msg('文檔中只允許一張表')</script>");	
+				response.getWriter().close();
+			}else{				
+				for(String key:map.keySet()){								
+					List<String>list=(List<String>)map.get(key);
+					if(!list.get(0).contains(str)){				
+						//response.getWriter().print("<script>window.parent.showDiv();window.parent.layer.msg('表格式不符合要求')</script>");	
+						response.getWriter().print("<script>window.parent.layer.msg('表格式不符合要求')</script>");	
+						response.getWriter().close();
+						break;
+						
+					}
+					String importmant=null;
+					String payMk=null;
+					String numbersbMk=null;
+					for(int h=1;h<list.size();h++){											
+							WebColproductItems item=new WebColproductItems();															
+							importmant=list.get(h).split(SEPARATOR)[1].trim();
+							if(importmant!=null&&("A".equals(importmant)||"B".equals(importmant)||"C".equals(importmant))){
+								item.setImportmant(importmant);
+							}else{
+								response.getWriter().print("<script>window.parent.layer.msg('重要性：A 或 B 或 C',3,3);</script>");
+								response.getWriter().close();
+								break;
+							}														
+							item.setShape(list.get(h).split(SEPARATOR)[2]);
+							item.setCStructure(list.get(h).split(SEPARATOR)[3]);
+							item.setOrderFactoryAndMan(list.get(h).split(SEPARATOR)[4]);
+							item.setPurpose(list.get(h).split(SEPARATOR)[5]);
+							item.setNumbers(Double.valueOf(list.get(h).split(SEPARATOR)[6]));//
+							item.setWeight(Double.valueOf(list.get(h).split(SEPARATOR)[7]));
+							item.setRemainNum(Double.valueOf(list.get(h).split(SEPARATOR)[8]));//
+							item.setUnhealthNum(Double.valueOf(list.get(h).split(SEPARATOR)[9]));//
+							item.setPicMan(list.get(h).split(SEPARATOR)[10]);
+							payMk=list.get(h).split(SEPARATOR)[11].trim();
+							if(payMk!=null&&("Y".equals(payMk)||"N".equals(payMk))){
+								item.setPaymk(payMk);
+							}else{
+								response.getWriter().print("<script>window.parent.layer.msg('可否請款：Y 或  N ',3,3);</script>");
+								response.getWriter().close();
+								break;
+							}
+							numbersbMk=list.get(h).split(SEPARATOR)[12].trim();
+							if(numbersbMk!=null&&("Y".equals(numbersbMk)||"N".equals(numbersbMk))){
+								item.setNumbersbMk(numbersbMk);
+							}else{
+								response.getWriter().print("<script>window.parent.layer.msg('是否量產：Y 或  N ',3,3);</script>");
+								response.getWriter().close();
+								break;
+							}
+							item.setNumbersb(Double.valueOf(list.get(h).split(SEPARATOR)[13]));
+							item.setWeightb(Double.valueOf(list.get(h).split(SEPARATOR)[14]));							
+							item.setRemarks(list.get(h).split(SEPARATOR)[15].equals("0.0")?"":list.get(h).split(SEPARATOR)[15]);							
+							list_items.add(item);																							
+					}																						
+				}	
+				
+				ActionContext.getContext().getSession().put("list_items", list_items);
+				response.getWriter().print("<script>window.parent.layer.msg('導入成功',3,1);window.parent.loadUrl_importData();</script>");			
+				response.getWriter().close();
+				
+			}	
+						
+		}catch(Exception e){
+			System.out.println(e);
+			response.getWriter().print("<script>window.parent.layer.msg('導入錯誤',3,3);</script>");
+			response.getWriter().close();
+		}
+		
+	}
 	
 	
 	

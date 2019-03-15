@@ -60,13 +60,15 @@
 				<td >重要性</td>
 			     <td >型體</td>
 			     <td >結構</td>
+			     <td >鞋廠及下單人</td>
 			     <td >樣品用途</td>
 			     <td >數量</td>
-			     <td >單重</td>
+			     <td >單重(G)</td>
 			     <td >留底量</td>
 			     <td >不良</td>			     
 			     <td >型體負責人</td>
 			     <td >可否請款</td>
+			     <td >是否量產</td>
 			     <td >量產數量</td>
 			     <td >需求料的重量</td>			    			     			     		     
 			     <td >備註</td>
@@ -91,6 +93,8 @@
 					</td>
 					<td><s:property value='CStructure' />
 					</td>
+					<td><s:property value='orderFactoryAndMan' />
+					</td>
 					<td><s:property value='purpose' />
 					</td>
 					<td><s:property value="numbers" />
@@ -111,6 +115,14 @@
 					否
 					</s:if>					
 					</td>
+					<td>
+					<s:if test='numbersbMk=="Y"'>
+					是
+					</s:if>
+					<s:if test='numbersbMk=="N"'>
+					否
+					</s:if>					
+					</td>
 					<td><s:property value='numbersb' />
 					</td>
 					<td><s:property value='weightb' />
@@ -126,7 +138,7 @@
 			         <td>
 			            <s:property value="visaRank"/>:
 			         </td>
-			         <td colspan="13" style="color:blue">
+			         <td colspan="16" style="color:blue">
 			            <b><s:property value="memo"/></b>
 			         </td>
 			      </tr>
@@ -135,8 +147,8 @@
 			<!-- ---------------------顯示所有人的備註信息20151211----------------------------- -->
 			<!------------------------- 修改3   20151027---------------   -->
 			<s:if test='readMk=="N"'>
-			    <tr><td colspan="13"><label style="color:red">簽核備註↓↓↓</label></td></tr>
-				<tr><td colspan="13">									
+			    <tr><td colspan="16"><label style="color:red">簽核備註↓↓↓</label></td></tr>
+				<tr><td colspan="16">									
 					<form id="memo" method="post" action="vbm_add" target="frameFile">
 						<textarea  name="memo" id="memo_txt" style="width:100%;height:120px;overflow:auto"></textarea>						
 						<input type="hidden" name="factNo" value="<s:property value='factNo'/>"/>
