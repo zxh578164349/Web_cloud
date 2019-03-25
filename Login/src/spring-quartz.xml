@@ -76,7 +76,7 @@
    <!-- 触发任务条件 -->
     <bean id="CronTriggerBean" class="org.springframework.scheduling.quartz.CronTriggerBean">  
       <property name="jobDetail" ref="quantzjobBean"></property>  
-      <property name="cronExpression" value="0 0 14 * * ?"></property>  
+      <property name="cronExpression" value="0 0 15 * * ?"></property>  
     </bean>
     <bean id="CronTriggerBeanA" class="org.springframework.scheduling.quartz.CronTriggerBean">
       <property name="jobDetail" ref="quantzjobBeanA"></property>
@@ -116,7 +116,7 @@
     <bean id="startQuartz" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
         <property name="triggers">
             <list>
-                <ref bean="CronTriggerBean"/><!-- 14點 產量資料錶   -->
+                <ref bean="CronTriggerBean"/><!-- 15點 產量資料錶    时间更改为15点       （20190325）-->
                 <ref bean="CronTriggerBeanA"/><!-- (第一次) 10點  下一位簽核人 -->  
                 <ref bean="CronTriggerBeanB"/><!-- (第二次) 16點  下一位簽核人 -->    
                 <ref bean="CronTriggerBeanC"/>  <!-- 12點  簽核完畢知會 -->                 

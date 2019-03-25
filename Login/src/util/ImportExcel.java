@@ -367,7 +367,7 @@ public class ImportExcel {
 					  }
 					  switch(cellValue.getCellType()){
 					  case Cell.CELL_TYPE_STRING:
-						  sb.append(SEPARATOR+cellValue.getStringValue());
+						  sb.append(SEPARATOR+cellValue.getStringValue().trim());
 						  break;
 					  case Cell.CELL_TYPE_NUMERIC:
 						  sb.append(SEPARATOR+cellValue.getNumberValue());

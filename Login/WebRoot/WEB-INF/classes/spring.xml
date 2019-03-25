@@ -99,7 +99,7 @@
 
 			</props>
 		</property>
-		<property name="mappingResources">
+		<!-- <property name="mappingResources">
 			<list>
 				<value>entity/WebSubmenu.hbm.xml</value>
 				<value>entity/WebUser.hbm.xml</value>
@@ -221,7 +221,13 @@
 				<value>entity/WebColproductItems.hbm.xml</value>
 				</list>
 				
-		</property>
+		</property> -->				       
+                          
+    <property name="mappingLocations">  
+        <list>  
+           <value>classpath:/entity/*.hbm.xml</value>  
+        </list>  
+      </property>     
 	</bean>
 		
 	<bean id="baseDao" class="dao.Basedao">

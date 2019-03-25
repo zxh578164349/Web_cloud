@@ -104,5 +104,6 @@
 	<bean id="webweeklyreportdao" class="dao.impl.WebWeeklyreportDaoImpl" parent="baseDao"></bean>
 	<bean id="webnewprodao" class="dao.impl.WebNewproductDaoImpl" parent="baseDao"></bean>
 	<bean id="webcolprodao" class="dao.impl.WebColproductMainDaoImpl" parent="baseDao"></bean>
+	<bean id="webtestregisformdao" class="dao.impl.WebTestmouldregistrationformImplDao" parent="baseDao"></bean>
 </beans>
 
