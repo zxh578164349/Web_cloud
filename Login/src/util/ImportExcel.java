@@ -369,8 +369,8 @@ public class ImportExcel {
 					  case Cell.CELL_TYPE_STRING:
 						  sb.append(SEPARATOR+cellValue.getStringValue().trim());
 						  break;
-					  case Cell.CELL_TYPE_NUMERIC:
-						  sb.append(SEPARATOR+cellValue.getNumberValue());
+					  case Cell.CELL_TYPE_NUMERIC:						  						 
+						  sb.append(SEPARATOR+cellValue.getNumberValue()); 						  					  
 						  break;
 					  case Cell.CELL_TYPE_BLANK:
 						  if(k<firstcol){
@@ -378,6 +378,7 @@ public class ImportExcel {
 						  }else{
 							  sb.append(SEPARATOR+0.0);
 						  }
+						  break;
 					  }					  	  
 				  }//for c
 				
@@ -425,211 +426,8 @@ public class ImportExcel {
 							
 	/*************************************************************導入新的kpi數據*************************************************************************/
 						
-	
-	
-	/***********************************************************測試20160128****************************************************************************/
-	/**
-	 * 由指定的Sheet导出至List
-	 * 
-	 * @param workbook
-	 * @param sheetNum
-	 * @return
-	 * @throws IOException
-	 */
-	private static Map<String,Object> exportListFromExcel2(Workbook workbook) {			
-		
-		Map<String,Object>map=new HashMap<String,Object>();
-		for(int a=0;a<workbook.getNumberOfSheets();a++){//for a
-			Sheet sheet = workbook.getSheetAt(a);
-			
-			// 解析公式结果
-			FormulaEvaluator evaluator = workbook.getCreationHelper()
-					.createFormulaEvaluator();
-
-			List<String> list = new ArrayList<String>();
-
-			//int minRowIx = sheet.getFirstRowNum()+1;
-			int row_head = sheet.getFirstRowNum();
-			int maxRowIx = sheet.getLastRowNum();//（getLastRowNum獲取的行數可能比實際行數少1或不少,視測試情況而定）
-
-			for (int rowIx = row_head; rowIx <= maxRowIx; rowIx++) {
-				Row row = sheet.getRow(rowIx);
-				StringBuilder sb = new StringBuilder();
-				//不允許表頭爲空行null
-				if(row==null){
-					//list.clear();
-					break;
-				}
-				short minColIx = row.getFirstCellNum();
-				int maxColIx = row.getLastCellNum();
-				if(maxColIx-minColIx>18&&(maxRowIx-row_head>2000||maxRowIx-row_head<3)){
-					list.clear();
-					break;
-				}
-				
-				/*if(rowIx==row_head&&
-						(!sheet.getRow(row_head).getCell(minColIx).getStringCellValue().equals("序號")||
-						!sheet.getRow(row_head).getCell(minColIx+1).getStringCellValue().equals("單位")||
-						!sheet.getRow(row_head).getCell(minColIx+2).getStringCellValue().equals("姓名")||
-						!sheet.getRow(row_head).getCell(minColIx+3).getStringCellValue().equals("職務")||
-						!sheet.getRow(row_head).getCell(minColIx+4).getStringCellValue().equals("內線")||
-						!sheet.getRow(row_head).getCell(minColIx+5).getStringCellValue().equals("手機")||
-						!sheet.getRow(row_head).getCell(minColIx+6).getStringCellValue().equals("郵箱")||
-						!sheet.getRow(row_head).getCell(minColIx+7).getStringCellValue().equals("短號"))){
-					list.clear();
-					break;
-				}*/
-				for (short colIx = minColIx; colIx < maxColIx; colIx++) {//注意：減去備註這一列
-					Cell cell = row.getCell(new Integer(colIx));
-					if(cell!=null){
-						cell.setCellType(Cell.CELL_TYPE_STRING);
-						if(cell.getStringCellValue().trim().equals("")||cell.getStringCellValue()==null){
-							cell.setCellValue("空");
-						}
-					}else{
-						cell=row.createCell(colIx);
-						cell.setCellValue("空");
-					}
-					sb.append((cell.getStringCellValue()));										
-				}
-				list.add(sb.toString());
-			}
-			
-			if(list!=null&&list.size()>1){
-				map.put(sheet.getSheetName(), list);
-			}
-			
-		}//end for a				
-		return map;
-	}
-	
-	/**
-	 * 由Excel流的Sheet导出至List
-	 * 
-	 * @param is
-	 * @param extensionName
-	 * @param sheetNum
-	 * @return
-	 * @throws IOException
-	 */
-	public static Map<String,Object> exportListFromExcel2(InputStream is,
-			String extensionName) throws IOException {
-
-		Workbook workbook = null;
-
-		if (extensionName.toLowerCase().equals(XLS)) {
-			workbook = new HSSFWorkbook(is);
-		} else if (extensionName.toLowerCase().equals(XLSX)) {
-			workbook = new XSSFWorkbook(is);
-		}
-        is.close();
-		return exportListFromExcel2(workbook);
-	}
-	/**
-	 * 由Excel文件的Sheet导出至List
-	 * 
-	 * @param file
-	 * @param sheetNum
-	 * @return
-	 */
-	public static Map<String,Object> exportListFromExcel2(File file)
-			throws IOException {
-		return exportListFromExcel2(new FileInputStream(file),
-				FilenameUtils.getExtension(file.getName()));
-	}
-	
-	
-	/**
-	 * 判斷是否空行20181011
-	 * @param row
-	 * @return
-	 */
-	 public static boolean isRowEmpty(Row row){
-	        for (int i = row.getFirstCellNum(); i < row.getLastCellNum(); i++) {
-	            Cell cell = row.getCell(i);
-	            if (cell != null && cell.getCellType() != Cell.CELL_TYPE_BLANK){
-	                return false;
-	            }
-	        }
-	        return true;
-	  }
-
-	
-	
-	/***********************************************************測試20160128****************************************************************************/	
-	
-	 
-	 
-	 /*************************************************************導入預計生產資料數據*************************************************************************/
-		/**
-		 * 導入新的kpi數據
-		 * @Title: impWeballobjExl
-		 * @Description: TODO
-		 * @param @param book
-		 * @param @return
-		 * @return Map<String,Object>
-		 * @throws
-		 * @author web
-		 * @date 2016/3/24
-		 */
-		  public static Map<String,Object> impWebestProExl(Workbook wb){
-			  Map<String ,Object>map=new HashMap<String,Object>();
-			  int sheets=wb.getNumberOfSheets();//獲取所有的sheet
-			  FormulaEvaluator eval=wb.getCreationHelper().createFormulaEvaluator();
-			  for(int i=0;i<sheets;i++){//for a			  
-				  int headrow=wb.getSheetAt(i).getFirstRowNum()+1;//排除標題
-				  int lastrow=wb.getSheetAt(i).getLastRowNum();	
-				  int tt=wb.getSheetAt(i).getPhysicalNumberOfRows();
-				  if(tt==0&&lastrow==0){//判斷表格是否有內容，如果單元格有空格，也會表示有內容
-					  break;
-				  }
-				  			  
-				  int temp=0;
-				  Row row=wb.getSheetAt(i).getRow(headrow);
-				  while(row==null){
-					  temp++;
-					  row=wb.getSheetAt(i).getRow(headrow+temp);
-				  }
-				  int firstcol=row.getFirstCellNum();//排隊序號列
-				  int lastcol=row.getLastCellNum();
-				  List<String>list=new ArrayList<String>();
-				  for(int j=headrow;j<=lastrow;j++){//for b				  
-					  if(wb.getSheetAt(i).getRow(j)==null){
-						  continue;
-					  }
-					  StringBuilder sb=new StringBuilder();
-					  for(int k=firstcol;k<lastcol;k++){//for c					  
-						  Cell cell=wb.getSheetAt(i).getRow(j).getCell(k);
-						  if(cell==null){
-							  cell=wb.getSheetAt(i).getRow(j).createCell(k);//如果新建的單元格沒有給數據類型，則默認爲空類型:Cell.CELL_TYPE_BLANK	
-						  }
-						  CellValue cellValue = eval.evaluate(cell);//如果Cell沒有給類型，cellValue同樣爲null,所以爲null空，默認cellValue=new CellValue("0.0");
-						  if(cellValue==null){
-							  cellValue=new CellValue("0.0");
-						  }
-						  switch(cellValue.getCellType()){
-						  case Cell.CELL_TYPE_STRING:
-							  sb.append(SEPARATOR+cellValue.getStringValue());
-							  break;
-						  case Cell.CELL_TYPE_NUMERIC:
-							  sb.append(SEPARATOR+cellValue.getNumberValue());
-							  break;
-						  case Cell.CELL_TYPE_BLANK:
-							  if(k<firstcol){
-								  sb.append(SEPARATOR+"null");
-							  }else{
-								  sb.append(SEPARATOR+0.0);
-							  }
-						  }					  	  
-					  }//for c
-					
-					  list.add(sb.toString());
-				  }//for b
-				  map.put(wb.getSheetAt(i).getSheetName(), list);
-			  }//for a
-			  return map;
-			  
-		  }
+					 	 
+	 /*************************************************************導入預計生產資料數據*************************************************************************/		
 		  /**
 			 * 由流stream導入workbook
 			 * 
@@ -668,7 +466,149 @@ public class ImportExcel {
 		/*************************************************************導入預計生產資料數據*************************************************************************/
 	 
 	 
-	 
+			
+			
+			 /**********************************導入 (1)每日開發試模登記表   (2)樣品接單進度狀況表   (3)原物料&粗胚進耗存登記表   ***********************/
+			/**
+			 * 導入新的kpi數據
+			 * @Title: impWeballobjExl
+			 * @Description: TODO
+			 * @param @param book
+			 * @param @param entityType判斷導入的是什麼數據表，時行相應的數據串連
+			 * @param @return
+			 * @return Map<String,Object>
+			 * @throws
+			 * @author web
+			 * @date 2019/3/29
+			 */
+			  public static Map<String,Object> impWeballobjExl(Workbook wb,String entityType){
+				  Map<String ,Object>map=new HashMap<String,Object>();
+				  int sheets=wb.getNumberOfSheets();//獲取所有的sheet
+				  FormulaEvaluator eval=wb.getCreationHelper().createFormulaEvaluator();
+				  for(int i=0;i<sheets;i++){//for a			  
+					  int headrow=wb.getSheetAt(i).getFirstRowNum()+1;//排除標題
+					  int lastrow=wb.getSheetAt(i).getLastRowNum();	
+					  int tt=wb.getSheetAt(i).getPhysicalNumberOfRows();
+					  if(tt==0&&lastrow==0){//判斷表格是否有內容，如果單元格有空格，也會表示有內容
+						  break;
+					  }
+					  			  
+					  int temp=0;
+					  Row row=wb.getSheetAt(i).getRow(headrow);
+					  while(row==null||isRowEmpty(row)){//判斷row是否null或者空行
+						  temp++;
+						  row=wb.getSheetAt(i).getRow(headrow+temp);
+					  }
+					  int firstcol=row.getFirstCellNum();//排隊序號列
+					  int lastcol=row.getLastCellNum();
+					  
+					  while(row.getCell(firstcol)==null||row.getCell(firstcol).getCellType()==Cell.CELL_TYPE_BLANK){
+						  firstcol++;
+					  }
+					  while(row.getCell(lastcol)==null||row.getCell(lastcol).getCellType()==Cell.CELL_TYPE_BLANK){
+						  lastcol--;
+					  }
+					 
+					  
+					  List<String>list=new ArrayList<String>();
+					  for(int j=headrow;j<=lastrow;j++){//for b				  
+						  if(wb.getSheetAt(i).getRow(j)==null||isRowEmpty(wb.getSheetAt(i).getRow(j))){////判斷row是否null或者空行
+							  continue;
+						  }
+						  
+						  StringBuilder sb=new StringBuilder();
+						  SimpleDateFormat sdf=new SimpleDateFormat("yyyyMMdd");
+						  for(int k=firstcol;k<=lastcol;k++){//for c					  
+							  Cell cell=wb.getSheetAt(i).getRow(j).getCell(k);
+							  if(cell==null){
+								  cell=wb.getSheetAt(i).getRow(j).createCell(k);//如果新建的單元格沒有給數據類型，則默認爲空類型:Cell.CELL_TYPE_BLANK	
+							  }
+							  CellValue cellValue = eval.evaluate(cell);//如果Cell沒有給類型，cellValue同樣爲null,所以爲null空，默認cellValue=new CellValue("");
+							  if(cellValue==null){
+								  cellValue=new CellValue("");
+							  }
+							  switch(cellValue.getCellType()){
+							  case Cell.CELL_TYPE_STRING:
+								  sb.append(SEPARATOR+cellValue.getStringValue().trim());
+								  break;
+							  case Cell.CELL_TYPE_NUMERIC:
+								  //String ff=cell.getCellStyle().getDataFormatString();
+								  if(org.apache.poi.ss.usermodel.DateUtil.isCellDateFormatted(cell)){
+									  Date date = org.apache.poi.ss.usermodel.DateUtil.getJavaDate(cell.getNumericCellValue());
+									  sb.append(SEPARATOR+sdf.format(date));
+								  }else{
+									  sb.append(SEPARATOR+cellValue.getNumberValue()); 
+								  }						  
+								  break;
+							  case Cell.CELL_TYPE_BLANK:
+								  if(k<firstcol){
+									  sb.append(SEPARATOR+"null");
+								  }else{
+									  sb.append(SEPARATOR+"");
+								  }
+							  }					  	  
+						  }//for c
+						
+						  list.add(sb.toString());
+					  }//for b
+					  map.put(wb.getSheetAt(i).getSheetName(), list);
+				  }//for a
+				  return map;
+				  
+			  }
+			  /**
+				 * 由流stream導入workbook
+				 * 
+				 * @param is
+				 * @param extensionName
+				 * @param sheetNum
+				 * @return
+				 * @throws IOException
+				 */
+				public static Map<String,Object> exportListFromStream(InputStream is,
+						String extensionName,String entityType) throws IOException {
+
+					Workbook workbook = null;
+
+					if (extensionName.toLowerCase().equals(XLS)) {
+						workbook = new HSSFWorkbook(is);
+					} else if (extensionName.toLowerCase().equals(XLSX)) {
+						workbook = new XSSFWorkbook(is);
+					}
+			        is.close();
+					return impWeballobjExl(workbook,entityType);
+				}
+				/**
+				 * 由Excel文件導入到流stream
+				 * 
+				 * @param file
+				 * @param sheetNum
+				 * @return
+				 */
+				public static Map<String,Object> exportListFromFile(File file,String entityType)
+						throws IOException {
+					return exportListFromStream(new FileInputStream(file),
+							FilenameUtils.getExtension(file.getName()),entityType);
+				}
+									
+				/**********************************導入 (1)每日開發試模登記表   (2)樣品接單進度狀況表   (3)原物料&粗胚進耗存登記表   ***********************/
+			
+				/**
+				 * 判斷是否空行20181011
+				 * @param row
+				 * @return
+				 */
+				 public static boolean isRowEmpty(Row row){
+				        for (int i = row.getFirstCellNum(); i < row.getLastCellNum(); i++) {
+				            Cell cell = row.getCell(i);
+				            if (cell != null && cell.getCellType() != Cell.CELL_TYPE_BLANK){
+				                return false;
+				            }
+				        }
+				        return true;
+				  }	
+				
+				
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		

@@ -2176,18 +2176,21 @@ public class GlobalMethod extends HibernateDaoSupport{
 	
 	public static boolean isValidDate(String str) {
 	      boolean convertSuccess=true;
-	   // 指定日期格式为四位年/两位月份/两位日期，注意yyyy/MM/dd区分大小写；
-	       SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
-	       try {
-	   // 设置lenient为false. 否则SimpleDateFormat会比较宽松地验证日期，比如2007/02/29会被接受，并转换成2007/03/01
-	   // 将String类型的日期格式转换为Date类型，转换成功证明输入正确，报异常则输入错误
-	          format.setLenient(false);
-	          format.parse(str);
-	       } catch (ParseException e) {
-	          // e.printStackTrace();
-	   // 如果throw java.text.ParseException或者NullPointerException，就说明格式不对
-	           convertSuccess=false;
-	       } 
+	      if(str!=null&&!"".equals(str)){
+	    	// 指定日期格式为四位年/两位月份/两位日期，注意yyyy/MM/dd区分大小写；
+		       SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
+		       try {
+		   // 设置lenient为false. 否则SimpleDateFormat会比较宽松地验证日期，比如2007/02/29会被接受，并转换成2007/03/01
+		   // 将String类型的日期格式转换为Date类型，转换成功证明输入正确，报异常则输入错误
+		          format.setLenient(false);
+		          format.parse(str);
+		       } catch (ParseException e) {
+		          // e.printStackTrace();
+		   // 如果throw java.text.ParseException或者NullPointerException，就说明格式不对
+		           convertSuccess=false;
+		       } 
+	    	  
+	      }	   
 	       return convertSuccess;
 	}
 	 

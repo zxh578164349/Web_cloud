@@ -88,6 +88,7 @@
 	<bean id="webnewproAction" class="action.WebNewproductAction" scope="prototype"/>
 	<bean id="webcolproAction" class="action.WebColproductMainAction" scope="prototype"/>
 	<bean id="webtestregisformAction" class="action.WebTestmouldregistrationformAction" scope="prototype"/>
+	<bean id="websampleAction" class="action.WebSamplescheduleAction" scope="prototype"/>
 </beans> 
 
  

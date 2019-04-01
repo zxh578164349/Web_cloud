@@ -873,12 +873,13 @@
 		   <result name="findByBillNo_layer">page/showwebcolproduct_layer.jsp</result>		   		  		   		   		   
 		</action>
 		
-		<action name="webtestreform_*" class="webtestregisformAction" method="{1}">
-		   <result name="importFile" type="json">
-		      <param name="root">ajaxResult</param>
-		   </result>
+		<action name="webtestreform_*" class="webtestregisformAction" method="{1}">		  
 		   <result name="findPageBean">page/webtestmould.jsp</result>
 		   <result name="findPageBean1">page/table1/webtestmould1.jsp</result>
+		</action>
+		<action name="websample_*" class="websampleAction" method="{1}">		  
+		   <result name="findPageBean">page/websample.jsp</result>
+		   <result name="findPageBean1">page/table1/websample1.jsp</result>
 		</action>
 		
 		

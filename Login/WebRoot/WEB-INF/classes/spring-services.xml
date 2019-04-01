@@ -105,6 +105,7 @@
 	<bean id="webnewproSer" class="services.impl.WebNewproductServicesImpl"></bean>
 	<bean id="webcolproServer" class="services.impl.WebColproductMainServicesImpl"></bean>
 	<bean id="webtestregisformser" class="services.impl.WebTestmouldregistrationformServicesImpl"></bean>
+	<bean id="websampleser" class="services.impl.WebSamplescheduleServicesImpl"></bean>
 </beans>
 
 

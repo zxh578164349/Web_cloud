@@ -149,8 +149,7 @@ public class WebTestmouldregistrationformAction extends ActionSupport implements
 			WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
 			String strHead="日期__客戶__品牌__季節__型體__部件__量產工廠__型體負責人__試模雙數__不良數__每雙料重";
 			DateFormat dfm=new SimpleDateFormat("yyyyMMdd");			
-			String path="d:\\Webcolproductitems_backup\\"+dfm.format(new Date());//Excel文檔存放目錄
-			ajaxResult="0";				
+			String path="d:\\Webtestmould_backup\\"+dfm.format(new Date());//Excel文檔存放目錄						
 			//文件上傳
 			if(file!=null){//不為空代表有上傳附檔,不能寫成files.size()>0,否則報空指針
 				//File uploadFile=new File(ServletActionContext.getServletContext().getRealPath("KyzexpFile\\"+kyz.getId().getBillNo()));//附檔上傳到項目
@@ -241,10 +240,10 @@ public class WebTestmouldregistrationformAction extends ActionSupport implements
 	}
 	
 	public String findPageBean3(){
-		dateA=(String)ActionContext.getContext().getSession().get("c_factNo");
-		dateB=(String)ActionContext.getContext().getSession().get("c_billNo");
-		customer=(String)ActionContext.getContext().getSession().get("c_dateA");
-		brand=(String)ActionContext.getContext().getSession().get("c_dateB");				
+		dateA=(String)ActionContext.getContext().getSession().get("t_dateA");
+		dateB=(String)ActionContext.getContext().getSession().get("t_dateB");
+		customer=(String)ActionContext.getContext().getSession().get("t_customer");
+		brand=(String)ActionContext.getContext().getSession().get("t_brand");				
 		bean=webtestregisformser.findPageBean(page, 0, dateA, dateB, customer, brand);
 		if(backIndex==1){
 			return "findPageBean";
