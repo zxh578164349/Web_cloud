@@ -30,34 +30,28 @@
 		<!-- <s:if test='#session.loginUser.userread!="1"'>
 	     <input value="添加" type="button" class="btn btn-info"
 		onclick="loadUrl('saveAndUpdate/webcolproductSaveOrUpdate.jsp')" /></s:if> -->
-		<span id="h2_title">樣品接單進度狀況表 </span>
+		<span id="h2_title">原物料&粗胚進耗存登記表</span>
 		</h3>
 		<thead>			
 			<tr class="tr_show">
 				<th>序號</th>
 				<th>類別</th>
-				<th>接單日</th>
-				<th>樣品級數</th>
-				<th>品牌</th>	
-				<th>客戶</th>															
-				<th>索樣人</th>								
-				<th>型體</th>
-				<th>訂單號碼</th>
-				<th>雙數</th>								
-				<th>SIZE</th>				
-				<th>樣品配色/材質</th>								
-				<th>物性</th>							
-				<th>客戶所需交期</th>
-				<th>模具狀況</th>
-				<th>色卡預計</th>
-				<th>色卡狀況(NG/簽回)</th>
-				<th>出料完成日期</th>
-				<th>燒製完成</th>
-				<th>實際完成日期</th>
-				<th>用途(階段)</th>
-				<th>備註-問題點</th>
-				<th>是否可請款.雙數</th>
-				<th>量產預告單</th>	
+				<th>物料名稱</th>
+				<th>物性</th>								
+				<th>單位</th>				
+				<th>期初庫存</th>								
+				<th>第1周進料</th>
+				<th>第1周發料</th>
+				<th>第2周進料</th>
+				<th>第2周發料</th>
+				<th>第3周進料</th>
+				<th>第3周發料</th>
+				<th>第4周進料</th>
+				<th>第4周發料</th>
+				<th>第5周進料</th>
+				<th>第5周發料</th>
+				<th>月底庫存</th>	
+				<th>備註</th>										
 				<s:if test='#session.loginUser.userread!="1"'>			
 				<th>操作</th>
 				</s:if>				
@@ -66,30 +60,24 @@
 		<tbody id="tbody">
 		<s:iterator value="bean.list" status="x" id="temp">		  
 		     <tr > 
-				<td>${bean.pageSize*(bean.currentPage-1)+x.index+1}</td>																
-				<td><s:property value="stype" /></td>
-				<td><s:property value="dateA"/></td>
-				<td><s:property value="samplelevel" /></td>		        
-				<td><s:property value="brand"/></td>
-				<td><s:property value="customer" /></td>	
-				<td><s:property value="customerb" /></td>
-				<td><s:property value="shape"/></td>
-				<td><s:property value="orderno" /></td>		        
-				<td><s:property value="pairs"/></td>
-				<td><s:property value="sizes" /></td>
-				<td><s:property value="samplemaerial" /></td>	
-				<td><s:property value="characteristic"/></td>		
-				<td><s:property value="dateB"/></td>	
-				<td><s:property value="statusA"/></td>	
-				<td><s:property value="statusB"/></td>	
-				<td><s:property value="statusC"/></td>	
-				<td><s:property value="dateC"/></td>	
-				<td><s:property value="dateD"/></td>	
-				<td><s:property value="dateE"/></td>	
-				<td><s:property value="perpose"/></td>	
-				<td><s:property value="questions"/></td>	
-				<td><s:property value="pairsmk"/></td>	
-				<td><s:property value="outputnotice"/></td>																	
+				<td>${bean.pageSize*(bean.currentPage-1)+x.index+1}</td>
+				<td><s:property value="webMaterialregistrationform.mtype" /></td>																
+				<td><s:property value="materielname" /></td>
+				<td><s:property value="characteristic"/></td>
+				<td><s:property value="unit" /></td>		        
+				<td><s:property value="stocka"/></td>
+				<td><s:property value="inumsa" /></td>	
+				<td><s:property value="onumsa" /></td>
+				<td><s:property value="inumsb"/></td>
+				<td><s:property value="onumsb" /></td>
+				<td><s:property value="inumsc"/></td>
+				<td><s:property value="onumsc" /></td>
+				<td><s:property value="inumsd"/></td>
+				<td><s:property value="onumsd" /></td>
+				<td><s:property value="inumse"/></td>
+				<td><s:property value="onumse" /></td>		        
+				<td><s:property value="stockb"/></td>
+				<td><s:property value="remark" /></td>																		
 				<td>				
 				<s:if test='#session.loginUser.userread!="1"'>
 					<form  method="post" id="subform${x.index}">

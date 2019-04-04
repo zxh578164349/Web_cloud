@@ -27,4 +27,14 @@ public class WebTestmouldregistrationformServicesImpl implements IWebTestmouldre
 		webtestregisformdao.addMore(list);
 	}
 
+	public List<String> findBrand() {
+		// TODO Auto-generated method stub		
+		return webtestregisformdao.findBrand();
+	}
+
+	public List<String> findCustomer() {
+		// TODO Auto-generated method stub
+		return webtestregisformdao.findCustomer();
+	}
+
 }

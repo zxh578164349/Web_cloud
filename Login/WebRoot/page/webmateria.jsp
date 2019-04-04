@@ -19,16 +19,16 @@
 </head>
 <body>
 
-	<jsp:include page="publicHead_sampleschedule.jsp"  />
+	<jsp:include page="publicHead_materia.jsp"  />
 	<hr />
 	
-	<form action="websample_impormtData"  method="post" enctype="multipart/form-data" id="upload_form" target="frameFile">
+	<form action="webmateria_impormtData"  method="post" enctype="multipart/form-data" id="upload_form" target="frameFile">
 			     <input type="file" name="file" id="id_file" style="width:150px"/>	<input value="導入數據" type=button onclick="checkForm()"  class="btn btn-info"/>	
 			     </form>
 	<iframe id="frameFile" name="frameFile" style="display: none;"></iframe>	
 			
 	<div id="bodyid">
-		<jsp:include page="table1/websample1.jsp" />
+		<jsp:include page="table1/webmateria1.jsp" />
 	</div>
 
 	
@@ -38,7 +38,7 @@
 		jq.ajax({
 			type : "POST",
 			dataType : "Html",
-			url : "websample_findPageBean3",
+			url : "webmateria_findPageBean3",
 			data : "page=" + page,
 			success : function(msg) {
 				jq("#bodyid").html(msg);
@@ -53,7 +53,7 @@
 		jq.ajax({
 			type : "POST",
 			dataType : "Html",
-			url : "websample_findPageBean2",
+			url : "webmateria_findPageBean2",
 			//data : "factNo=" + fact.value + "& visaSort=" + visasort.value+"& billNo="+billno.value+"& yymmdd="+yymmdd.value+"& yymmdd2="+yymmdd2.value,
 			data:jq("#public_form").serialize(),
 			success : function(msg) {
@@ -76,8 +76,8 @@ function showDivList(factNo,billNo){
 	    border: [10, 0.3, '#000'],	   
 	    offset:['10px',''],
 	    area:['600px','560px'],
-	    //page:{url:'websample_findById_layer?billNo='+billNo+'& factNo='+factNo}                   
-	    iframe:{src:'websample_findById_layer3?factNo='+factNo+'&billNo='+billNo,scrolling:'auto'}		                   
+	    //page:{url:'webtestreform_findById_layer?billNo='+billNo+'& factNo='+factNo}                   
+	    iframe:{src:'webmateria_findById_layer3?factNo='+factNo+'&billNo='+billNo,scrolling:'auto'}		                   
 	});
 	    }
 	    

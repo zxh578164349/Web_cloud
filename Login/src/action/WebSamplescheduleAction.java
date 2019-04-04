@@ -13,6 +13,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
+import net.sf.json.JSONArray;
+
 import org.apache.struts2.interceptor.ServletResponseAware;
 
 import services.IWebSamplescheduleServices;
@@ -45,9 +47,18 @@ public class WebSamplescheduleAction extends ActionSupport implements ServletRes
 	private String fileContentType;
 	private final static String SEPARATOR = "__";
 	private int backIndex;
+	private JSONArray jsons;
 	
 	
 	
+	public JSONArray getJsons() {
+		return jsons;
+	}
+
+	public void setJsons(JSONArray jsons) {
+		this.jsons = jsons;
+	}
+
 	public void setWebsampleser(IWebSamplescheduleServices websampleser) {
 		this.websampleser = websampleser;
 	}
@@ -282,7 +293,7 @@ public class WebSamplescheduleAction extends ActionSupport implements ServletRes
 					websampleser.addMore(list_items);
 					
 				}									
-				response.getWriter().print("<script>window.parent.layer.msg('導入成功',3,1);window.parent.load('webtestreform_findPageBean');</script>");			
+				response.getWriter().print("<script>window.parent.layer.msg('導入成功',3,1);window.parent.loadUrl_bodyid('websample_findPageBean3');</script>");			
 				response.getWriter().close();
 									
 		}catch(Exception e){
@@ -326,9 +337,21 @@ public class WebSamplescheduleAction extends ActionSupport implements ServletRes
 		}		
 	}
 	
-	public void impormtData_one(){
-		
+	
+	
+	public String findBrand(){
+		List<String>list=websampleser.findBrand();
+		jsons=JSONArray.fromObject(list);
+		return "findBrand";
 	}
+	
+	public String findCustomer(){
+		List<String>list=websampleser.findCustomer();
+		jsons=JSONArray.fromObject(list);
+		return "findCustomer";
+	}
+	
+	
 	
 	
 

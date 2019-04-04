@@ -93,6 +93,20 @@ public class WebSamplescheduleDaoImpl extends Basedao implements IWebSamplesched
 		
 		
 	}
+
+	public List<String> findBrand() {
+		// TODO Auto-generated method stub
+		String hql="select distinct brand from WebSampleschedule";
+		List<String>list=super.findAll(hql, null);
+		return list;
+	}
+
+	public List<String> findCustomer() {
+		// TODO Auto-generated method stub
+		String hql="select distinct customer from WebSampleschedule";
+		List<String>list=super.findAll(hql, null);
+		return list;
+	}
 	
 	
 	

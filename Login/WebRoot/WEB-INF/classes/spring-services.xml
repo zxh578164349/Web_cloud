@@ -106,6 +106,7 @@
 	<bean id="webcolproServer" class="services.impl.WebColproductMainServicesImpl"></bean>
 	<bean id="webtestregisformser" class="services.impl.WebTestmouldregistrationformServicesImpl"></bean>
 	<bean id="websampleser" class="services.impl.WebSamplescheduleServicesImpl"></bean>
+	<bean id="webmateriaser" class="services.impl.WebMaterialregistrationformServicesImpl"></bean>
 </beans>
 
 

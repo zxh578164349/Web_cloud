@@ -876,10 +876,30 @@
 		<action name="webtestreform_*" class="webtestregisformAction" method="{1}">		  
 		   <result name="findPageBean">page/webtestmould.jsp</result>
 		   <result name="findPageBean1">page/table1/webtestmould1.jsp</result>
+		    <result name="findBrand" type="json">
+		     <param name="root">jsons</param>
+		   </result>
+		   <result name="findCustomer" type="json">
+		     <param name="root">jsons</param>
+		   </result>
 		</action>
 		<action name="websample_*" class="websampleAction" method="{1}">		  
 		   <result name="findPageBean">page/websample.jsp</result>
 		   <result name="findPageBean1">page/table1/websample1.jsp</result>
+		   <result name="findBrand" type="json">
+		     <param name="root">jsons</param>
+		   </result>
+		   <result name="findCustomer" type="json">
+		     <param name="root">jsons</param>
+		   </result>
+		</action>
+		
+		<action name="webmateria_*" class="webmateriaAction" method="{1}">
+		   <result name="findPageBean">page/webmateria.jsp</result>
+		   <result name="findPageBean1">page/table1/webmateria1.jsp</result>
+		   <result name="findmtype" type="json">
+		      <param name="root">jsons</param>
+		   </result>
 		</action>
 		
 		

@@ -27,9 +27,9 @@
   <div id="content">
 	<table class="table table-striped table-hover table-bordered" >
 		<h3>
-		<s:if test='#session.loginUser.userread!="1"'>
+		<!-- <s:if test='#session.loginUser.userread!="1"'>
 	     <input value="添加" type="button" class="btn btn-info"
-		onclick="loadUrl('saveAndUpdate/webcolproductSaveOrUpdate.jsp')" /></s:if>
+		onclick="loadUrl('saveAndUpdate/webcolproductSaveOrUpdate.jsp')" /></s:if> -->
 		<span id="h2_title">每日開發試模登記表</span>
 		</h3>
 		<thead>			

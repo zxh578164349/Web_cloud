@@ -29,4 +29,14 @@ public class WebSamplescheduleServicesImpl implements IWebSamplescheduleServices
 		websampdao.addMore(list);
 	}
 
+	public List<String> findBrand() {
+		// TODO Auto-generated method stub
+		return websampdao.findBrand();
+	}
+
+	public List<String> findCustomer() {
+		// TODO Auto-generated method stub
+		return websampdao.findCustomer();
+	}
+
 }

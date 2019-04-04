@@ -14,6 +14,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
+import net.sf.json.JSONArray;
+
 import org.apache.struts2.interceptor.ServletResponseAware;
 
 import services.IWebTestmouldregistrationformServices;
@@ -43,8 +45,18 @@ public class WebTestmouldregistrationformAction extends ActionSupport implements
 	private final static String SEPARATOR = "__";
 	private int backIndex;
 	private IWebTestmouldregistrationformServices webtestregisformser;	
+	private JSONArray jsons;
 	
 	
+	
+	public JSONArray getJsons() {
+		return jsons;
+	}
+
+	public void setJsons(JSONArray jsons) {
+		this.jsons = jsons;
+	}
+
 	public int getBackIndex() {
 		return backIndex;
 	}
@@ -212,7 +224,7 @@ public class WebTestmouldregistrationformAction extends ActionSupport implements
 					webtestregisformser.addMore(list_items);
 					
 				}									
-				response.getWriter().print("<script>window.parent.layer.msg('導入成功',3,1);window.parent.load('webtestreform_findPageBean');</script>");			
+				response.getWriter().print("<script>window.parent.layer.msg('導入成功',3,1);window.parent.loadUrl_bodyid('webtestreform_findPageBean3');</script>");			
 				response.getWriter().close();
 				
 			}
@@ -250,6 +262,18 @@ public class WebTestmouldregistrationformAction extends ActionSupport implements
 		}else{
 			return "findPageBean1";
 		}		
+	}
+	
+	public String findBrand(){
+		List<String>list=webtestregisformser.findBrand();
+		jsons=JSONArray.fromObject(list);
+		return "findBrand";
+	}
+	
+	public String findCustomer(){
+		List<String>list=webtestregisformser.findCustomer();
+		jsons=JSONArray.fromObject(list);
+		return "findCustomer";
 	}
 
 }

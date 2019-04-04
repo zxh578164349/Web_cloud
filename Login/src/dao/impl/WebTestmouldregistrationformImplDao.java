@@ -81,4 +81,18 @@ public class WebTestmouldregistrationformImplDao extends Basedao implements IWeb
 		
 	}
 
+	public List<String> findBrand() {
+		// TODO Auto-generated method stub
+		String hql="select distinct brand from WebTestmouldregistrationform";
+		List<String>list=super.findAll(hql, null);
+		return list;
+	}
+
+	public List<String> findCustomer() {
+		// TODO Auto-generated method stub
+		String hql="select distinct customer from WebTestmouldregistrationform";
+		List<String>list=super.findAll(hql, null);
+		return list;
+	}
+
 }
