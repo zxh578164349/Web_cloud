@@ -42,6 +42,7 @@
 				<th>是否審核</th>
 				<th>是否可見</th>
 				<th>部門</th>
+				<th>小類</th>
 				<s:if test='#session.loginUser.userread!="1"'>			
 				<th>操作</th>
 				</s:if>
@@ -60,7 +61,7 @@
 				<td><s:property value="id.factNo" /></td>
 				<td>				  
 				   <!-- <s:property value="colTemp"/>[<s:property value="id.visaSort"/>] -->
-				   <s:property value="webtype.typeName"/>[<s:property value="webtype.id.typeNo"/>]
+				   <s:property value="webtype.typeName"/>[<s:property value="id.visaSort"/>]
 				</td>
 				<td><s:property value="id.purmanNo" /></td>
 				<td><s:property value="id.itemNo"/></td>
@@ -72,6 +73,7 @@
 				<s:if test='visible=="Y"'>Y</s:if>				
 				</td>
 				<td><s:property value="depId.depName"/></td>
+				<td><s:property value="webformtype.fname"/></td>
 				<s:if test='#session.loginUser.userread!="1"'>							
 				<td >
 					<form action="visaflow_findById" method="post" id="subform${x.index}">

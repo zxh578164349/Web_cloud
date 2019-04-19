@@ -23,7 +23,10 @@ public class WebTestmouldregistrationform implements java.io.Serializable {
 	private Double unhealthNums;
 	private Double weights;
 	private String createDate;
-	private String updateDate;
+	private String updateDate;	
+	private WebMonths yymm;
+	
+	
 
 	// Constructors
 
@@ -62,9 +65,19 @@ public class WebTestmouldregistrationform implements java.io.Serializable {
 	}
 
 	// Property accessors
+	
+	
 
 	public Integer getTid() {
 		return this.tid;
+	}
+
+	public WebMonths getYymm() {
+		return yymm;
+	}
+
+	public void setYymm(WebMonths yymm) {
+		this.yymm = yymm;
 	}
 
 	public void setTid(Integer tid) {

@@ -18,6 +18,7 @@ import net.sf.json.JSONArray;
 import org.apache.struts2.interceptor.ServletResponseAware;
 
 import services.IWebMaterialregistrationformServices;
+import services.IWebmonthsServices;
 import util.GlobalMethod;
 import util.ImportExcel;
 import util.PageBean;
@@ -27,12 +28,15 @@ import com.opensymphony.xwork2.ActionSupport;
 
 import entity.WebMaterialregistrationform;
 import entity.WebMaterialregistrationitems;
+import entity.WebMonths;
+import entity.WebMonthsId;
 import entity.WebSampleschedule;
 import entity.WebUser;
 
 public class WebMaterialregistrationformAction extends ActionSupport implements ServletResponseAware{
 	private javax.servlet.http.HttpServletResponse response;
 	private IWebMaterialregistrationformServices webmateriaser;
+	private IWebmonthsServices webmonthsSer;
 	private int page;
 	private PageBean bean;
 	private String sdate;
@@ -45,21 +49,31 @@ public class WebMaterialregistrationformAction extends ActionSupport implements 
 	private final static String SEPARATOR = "__";
 	private int backIndex;
 	private WebMaterialregistrationform obj;
-	private String idateA;
-	private String odateA;
-	private String idateB;
-	private String odateB;
-	private String idateC;
-	private String odateC;
-	private String idateD;
-	private String odateD;
-	private String idateE;
-	private String odateE;
+	private String sdateA;
+	private String edateA;
+	private String sdateB;
+	private String edateB;
+	private String sdateC;
+	private String edateC;
+	private String sdateD;
+	private String edateD;
+	private String sdateE;
+	private String edateE;
 	private String materielname;
 	private JSONArray jsons;
-	
+	private String yymm;
 	
 		
+	
+	public String getYymm() {
+		return yymm;
+	}
+	public void setYymm(String yymm) {
+		this.yymm = yymm;
+	}
+	public void setWebmonthsSer(IWebmonthsServices webmonthsSer) {
+		this.webmonthsSer = webmonthsSer;
+	}
 	public JSONArray getJsons() {
 		return jsons;
 	}
@@ -72,65 +86,67 @@ public class WebMaterialregistrationformAction extends ActionSupport implements 
 	public void setMaterielname(String materielname) {
 		this.materielname = materielname;
 	}
-	public String getIdateA() {
-		return idateA;
+	
+	
+	public String getSdateA() {
+		return sdateA;
 	}
-	public void setIdateA(String idateA) {
-		this.idateA = idateA;
+	public void setSdateA(String sdateA) {
+		this.sdateA = sdateA;
 	}
-	public String getOdateA() {
-		return odateA;
+	public String getSdateB() {
+		return sdateB;
 	}
-	public void setOdateA(String odateA) {
-		this.odateA = odateA;
+	public void setSdateB(String sdateB) {
+		this.sdateB = sdateB;
 	}
-	public String getIdateB() {
-		return idateB;
+	public String getSdateC() {
+		return sdateC;
 	}
-	public void setIdateB(String idateB) {
-		this.idateB = idateB;
+	public void setSdateC(String sdateC) {
+		this.sdateC = sdateC;
 	}
-	public String getOdateB() {
-		return odateB;
+	public String getSdateD() {
+		return sdateD;
 	}
-	public void setOdateB(String odateB) {
-		this.odateB = odateB;
+	public void setSdateD(String sdateD) {
+		this.sdateD = sdateD;
 	}
-	public String getIdateC() {
-		return idateC;
+	public String getSdateE() {
+		return sdateE;
 	}
-	public void setIdateC(String idateC) {
-		this.idateC = idateC;
+	public void setSdateE(String sdateE) {
+		this.sdateE = sdateE;
 	}
-	public String getOdateC() {
-		return odateC;
+	public String getEdateA() {
+		return edateA;
 	}
-	public void setOdateC(String odateC) {
-		this.odateC = odateC;
+	public void setEdateA(String edateA) {
+		this.edateA = edateA;
 	}
-	public String getIdateD() {
-		return idateD;
+	public String getEdateB() {
+		return edateB;
 	}
-	public void setIdateD(String idateD) {
-		this.idateD = idateD;
+	public void setEdateB(String edateB) {
+		this.edateB = edateB;
 	}
-	public String getOdateD() {
-		return odateD;
+	public String getEdateC() {
+		return edateC;
 	}
-	public void setOdateD(String odateD) {
-		this.odateD = odateD;
+	public void setEdateC(String edateC) {
+		this.edateC = edateC;
 	}
-	public String getIdateE() {
-		return idateE;
+	public String getEdateD() {
+		return edateD;
 	}
-	public void setIdateE(String idateE) {
-		this.idateE = idateE;
+	public void setEdateD(String edateD) {
+		this.edateD = edateD;
 	}
-	public String getOdateE() {
-		return odateE;
+	public String getEdateE() {
+		return edateE;
 	}
-	public void setOdateE(String odateE) {
-		this.odateE = odateE;
+	public void setEdateE(String edateE) {
+		this.edateE = edateE;
 	}
 	public WebMaterialregistrationform getObj() {
 		return obj;
@@ -239,6 +255,17 @@ public class WebMaterialregistrationformAction extends ActionSupport implements 
 					WebMaterialregistrationform obj=new WebMaterialregistrationform();
 					List<WebMaterialregistrationitems>list_items=new ArrayList<WebMaterialregistrationitems>();
 					obj.setMtype(key);
+					obj.setSdateA(sdateA);
+					obj.setEdateA(edateA);					
+					obj.setSdateB(sdateB);
+					obj.setEdateB(edateB);
+					obj.setSdateC(sdateC);
+					obj.setEdateC(edateC);
+					obj.setSdateD(sdateD);
+					obj.setEdateD(edateD);
+					obj.setSdateE(sdateE);
+					obj.setEdateE(edateE);
+					
 					List<String>list=(List<String>)map.get(key);
 					if(!list.get(0).contains(strHead)){				
 						//response.getWriter().print("<script>window.parent.showDiv();window.parent.layer.msg('表格式不符合要求')</script>");	
@@ -275,28 +302,30 @@ public class WebMaterialregistrationformAction extends ActionSupport implements 
 							item.setInumsd(Double.valueOf(list.get(h).split(SEPARATOR)[11]));
 							item.setOnumsd(Double.valueOf(list.get(h).split(SEPARATOR)[12]));
 							item.setStockb(Double.valueOf(list.get(h).split(SEPARATOR)[13]));
-							if("0.0".equals(list.get(h).split(SEPARATOR)[14])){
+														
+							if(sdateE!=null&&!"".equals(sdateE)){
+								item.setInumse(Double.valueOf(list.get(h).split(SEPARATOR)[14]));
+							}
+							if(edateE!=null&&!"".equals(edateE)){
+								item.setOnumse(Double.valueOf(list.get(h).split(SEPARATOR)[15]));
+							}
+							if("0.0".equals(list.get(h).split(SEPARATOR)[16])){
 								item.setRemark("");
 							}else{
-								item.setRemark(list.get(h).split(SEPARATOR)[14]);
-							}							
-							if(idateE!=null&&!"".equals(idateE)){
-								item.setInumse(Double.valueOf(list.get(h).split(SEPARATOR)[15]));
+								item.setRemark(list.get(h).split(SEPARATOR)[16]);
 							}
-							if(odateE!=null&&!"".equals(odateE)){
-								item.setOnumse(Double.valueOf(list.get(h).split(SEPARATOR)[16]));
-							}
-							//item.setWebUserByCreateuser(user);
-							//item.setCreateDate(dfm.format(new Date()));
+														
 							list_items.add(item);																							
 					}
 					obj.setWebMaterialregistrationitemses(list_items);
 					obj.setWebUserByCreateuser(user);
 					obj.setCreateDate(dfm.format(new Date()));
 					list_main.add(obj);										
-				}
-				System.out.println(list_main);
-				webmateriaser.addMore(list_main);
+				}				
+				//webmateriaser.addMore(list_main);
+				WebMonths obj=new WebMonths(new WebMonthsId(yymm,"2"));//0 : web_testmouldregistrationform   1 : web_sampleschedule  2 : web_materialregistrationform
+				obj.setWebMaterialregistrationforms(list_main);
+				webmonthsSer.addWebmonths(obj);
 				response.getWriter().print("<script>window.parent.layer.msg('導入成功',3,1);window.parent.loadUrl_bodyid('webmateria_findPageBean3');</script>");			
 				response.getWriter().close();
 									

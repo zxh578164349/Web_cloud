@@ -399,7 +399,8 @@ public class WebColproductMainAction extends ActionSupport implements ServletRes
 			filetypes.add(".xlsx");
 			GlobalMethod.judgeFile(file, fileFileName, response, filetypes);//判斷文件類型，大小*/
 			
-			String str="重要性__型體__結構__鞋廠及下單人__樣品用途__數量__單重(G)__留底量__不良__型體負責人__可否請款__是否量產__量產數量__需求料的重量__備註";
+			//String str="重要性__型體__結構__鞋廠及下單人__樣品用途__數量__單重(G)__留底量__不良__型體負責人__可否請款__是否量產__量產數量__需求料的重量__備註";
+			String str="重要性__型體__結構__鞋廠及下單人__樣品用途__數量__單重(G)__留底量__不良__型體負責人__可否請款__階段__需求料的重量__備註";
 			DateFormat dfm=new SimpleDateFormat("yyyyMMdd");			
 			String path="d:\\Webcolproductitems_backup\\"+dfm.format(new Date());//Excel文檔存放目錄
 			ajaxResult="0";				
@@ -437,7 +438,8 @@ public class WebColproductMainAction extends ActionSupport implements ServletRes
 					}
 					String importmant=null;
 					String payMk=null;
-					String numbersbMk=null;
+					String numbersbMk=null;//是否量產
+					String stage=null;//階段
 					for(int h=1;h<list.size();h++){											
 							WebColproductItems item=new WebColproductItems();															
 							importmant=list.get(h).split(SEPARATOR)[1].trim();
@@ -465,7 +467,9 @@ public class WebColproductMainAction extends ActionSupport implements ServletRes
 								response.getWriter().close();
 								break;
 							}
-							numbersbMk=list.get(h).split(SEPARATOR)[12].trim();
+							
+							//目前只在試模或樣品階段，不確定是否量產
+							/*numbersbMk=list.get(h).split(SEPARATOR)[12].trim();
 							if(numbersbMk!=null&&("Y".equals(numbersbMk)||"N".equals(numbersbMk))){
 								item.setNumbersbMk(numbersbMk);
 							}else{
@@ -473,9 +477,18 @@ public class WebColproductMainAction extends ActionSupport implements ServletRes
 								response.getWriter().close();
 								break;
 							}
-							item.setNumbersb(Double.valueOf(list.get(h).split(SEPARATOR)[13]));
-							item.setWeightb(Double.valueOf(list.get(h).split(SEPARATOR)[14]));							
-							item.setRemarks(list.get(h).split(SEPARATOR)[15].equals("0.0")?"":list.get(h).split(SEPARATOR)[15]);							
+							item.setNumbersb(Double.valueOf(list.get(h).split(SEPARATOR)[13]));*/
+							stage=list.get(h).split(SEPARATOR)[12].trim();
+							if(stage!=null&&("試作".equals(stage)||"樣品".equals(stage))){
+								item.setStage(stage);
+							}else{
+								response.getWriter().print("<script>window.parent.layer.msg('階段：試作 或  樣品 ',3,3);</script>");
+								response.getWriter().close();
+								break;
+							}
+							
+							item.setWeightb(Double.valueOf(list.get(h).split(SEPARATOR)[13]));							
+							item.setRemarks(list.get(h).split(SEPARATOR)[14].equals("0.0")?"":list.get(h).split(SEPARATOR)[14]);							
 							list_items.add(item);																							
 					}																						
 				}	

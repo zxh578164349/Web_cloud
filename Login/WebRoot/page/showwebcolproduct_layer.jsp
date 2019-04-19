@@ -68,8 +68,7 @@
 			     <td >不良</td>			     
 			     <td >型體負責人</td>
 			     <td >可否請款</td>
-			     <td >是否量產</td>
-			     <td >量產數量</td>
+			     <td >階段</td>
 			     <td >需求料的重量</td>			    			     			     		     
 			     <td >備註</td>
 			</tr>
@@ -78,16 +77,8 @@
 
 			<s:iterator value="obj.webColproductItemses" status="x" id="temp">
 				<tr>
-					<td>
-					<s:if test='importmant=="H"'>
-					高
-					</s:if>
-					<s:if test='importmant=="M"'>
-					中
-					</s:if>
-					<s:if test='importmant=="L"'>
-					低
-					</s:if>					
+					<td>					
+					<s:property value='importmant' />				
 					</td>
 					<td><s:property value='shape' />
 					</td>
@@ -114,16 +105,8 @@
 					<s:if test='paymk=="N"'>
 					否
 					</s:if>					
-					</td>
-					<td>
-					<s:if test='numbersbMk=="Y"'>
-					是
-					</s:if>
-					<s:if test='numbersbMk=="N"'>
-					否
-					</s:if>					
-					</td>
-					<td><s:property value='numbersb' />
+					</td>					
+					<td><s:property value='stage' />
 					</td>
 					<td><s:property value='weightb' />
 					</td>

@@ -90,6 +90,7 @@
 	<bean id="webtestregisformAction" class="action.WebTestmouldregistrationformAction" scope="prototype"/>
 	<bean id="websampleAction" class="action.WebSamplescheduleAction" scope="prototype"/>
 	<bean id="webmateriaAction" class="action.WebMaterialregistrationformAction" scope="prototype"/>
+	<bean id="webformtypeAction" class="action.WebFormtypeAction" scope="prototype"/>
 </beans> 
 
  

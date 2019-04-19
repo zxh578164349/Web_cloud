@@ -20,6 +20,7 @@ public class KyzVisaflow implements java.io.Serializable {
 	private WebDepartment depId;//用於同一個帳號可以在多個部門妹建立同一類別的流程    (PS分部門的，並且申請人才有的；default表示默認值)
 	private String visible;//是否可見      Y可見     N不可見
 	private WebType webtype;//函文大類外鍵
+	private WebFormtype webformtype;//函文小類外鍵
 
 	// Constructors
 
@@ -137,6 +138,14 @@ public class KyzVisaflow implements java.io.Serializable {
 
 	public void setWebtype(WebType webtype) {
 		this.webtype = webtype;
+	}
+
+	public WebFormtype getWebformtype() {
+		return webformtype;
+	}
+
+	public void setWebformtype(WebFormtype webformtype) {
+		this.webformtype = webformtype;
 	}
 
 	

@@ -19,6 +19,7 @@ import net.sf.json.JSONArray;
 import org.apache.struts2.interceptor.ServletResponseAware;
 
 import services.IWebTestmouldregistrationformServices;
+import services.IWebmonthsServices;
 import util.GlobalMethod;
 import util.ImportExcel;
 import util.PageBean;
@@ -27,6 +28,8 @@ import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
 import entity.WebColproductItems;
+import entity.WebMonths;
+import entity.WebMonthsId;
 import entity.WebTestmouldregistrationform;
 import entity.WebUser;
 
@@ -45,10 +48,24 @@ public class WebTestmouldregistrationformAction extends ActionSupport implements
 	private final static String SEPARATOR = "__";
 	private int backIndex;
 	private IWebTestmouldregistrationformServices webtestregisformser;	
+	private IWebmonthsServices webmonthsSer;
 	private JSONArray jsons;
+	private String yymm;
 	
 	
 	
+	public void setWebmonthsSer(IWebmonthsServices webmonthsSer) {
+		this.webmonthsSer = webmonthsSer;
+	}
+
+	public String getYymm() {
+		return yymm;
+	}
+
+	public void setYymm(String yymm) {
+		this.yymm = yymm;
+	}
+
 	public JSONArray getJsons() {
 		return jsons;
 	}
@@ -181,12 +198,13 @@ public class WebTestmouldregistrationformAction extends ActionSupport implements
 			//file=new File("i:\\test.xlsx");
 			//Map<String,Object>map=ImportExcel.exportListFromFile(file);
 			Map<String,Object>map=ImportExcel.exportListFromFile(new File(path+"\\"+fileFileName));
-			List<WebTestmouldregistrationform>list_items=new ArrayList<WebTestmouldregistrationform>();			
+						
 			if(map.keySet().size()>1){
 				response.getWriter().print("<script>window.parent.layer.msg('文檔中只允許一張表')</script>");	
 				response.getWriter().close();
-			}else{				
-				for(String key:map.keySet()){								
+			}else{
+				List<WebTestmouldregistrationform>list_items=new ArrayList<WebTestmouldregistrationform>();			
+				for(String key:map.keySet()){						
 					List<String>list=(List<String>)map.get(key);
 					if(!list.get(0).contains(strHead)){				
 						//response.getWriter().print("<script>window.parent.showDiv();window.parent.layer.msg('表格式不符合要求')</script>");	
@@ -196,7 +214,7 @@ public class WebTestmouldregistrationformAction extends ActionSupport implements
 						
 					}
 					String tdate=null;					
-					for(int h=1;h<list.size();h++){											
+					for(int h=1;h<list.size();h++){	
 						WebTestmouldregistrationform item=new WebTestmouldregistrationform();
 						tdate=list.get(h).split(SEPARATOR)[1];
 							if(GlobalMethod.isValidDate(tdate)){
@@ -219,15 +237,15 @@ public class WebTestmouldregistrationformAction extends ActionSupport implements
 							item.setWebUserByCreateuser(user);
 							item.setCreateDate(dfm.format(new Date()));
 							list_items.add(item);																							
-					}
-					
-					webtestregisformser.addMore(list_items);
-					
-				}									
+					}								
+				}
+				//webtestregisformser.addMore(list_items);
+				WebMonths obj=new WebMonths(new WebMonthsId(yymm,"0"));//0 : web_testmouldregistrationform   1 : web_sampleschedule  2 : web_materialregistrationform
+				obj.setWebTestmouldregistrationforms(list_items);
+				webmonthsSer.addWebmonths(obj);
 				response.getWriter().print("<script>window.parent.layer.msg('導入成功',3,1);window.parent.loadUrl_bodyid('webtestreform_findPageBean3');</script>");			
 				response.getWriter().close();
-				
-			}
+			}			
 		}catch(Exception e){
 			System.out.println(e);
 			response.getWriter().print("<script>window.parent.layer.msg('導入錯誤',3,3);</script>");

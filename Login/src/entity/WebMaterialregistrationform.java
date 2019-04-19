@@ -30,6 +30,7 @@ public class WebMaterialregistrationform implements java.io.Serializable {
 	private String sdateE;
 	private String edateE;
 	private List webMaterialregistrationitemses = new ArrayList();
+	private WebMonths yymm;
 
 	// Constructors
 
@@ -70,8 +71,17 @@ public class WebMaterialregistrationform implements java.io.Serializable {
 
 	// Property accessors
 
+	
 	public Integer getMid() {
 		return this.mid;
+	}
+
+	public WebMonths getYymm() {
+		return yymm;
+	}
+
+	public void setYymm(WebMonths yymm) {
+		this.yymm = yymm;
 	}
 
 	public void setMid(Integer mid) {

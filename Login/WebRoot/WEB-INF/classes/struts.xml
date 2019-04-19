@@ -559,13 +559,13 @@
 		    </result>
 		    <result name="findVisaSort_dwr3" type="json">
 		        <param name="root">jsons</param>
-		    </result>
-		    <result name="findVisaSort_dwr4" type="json">
-		        <param name="root">ajaxResult</param>
-		    </result>
+		    </result>		   
 		    <result name="findVisaSort_dwr5" type="json">
 		        <param name="root">jsons</param>
-		    </result>		   
+		    </result>	
+		    <result name="findVisaSort_dwr_depidAndfid" type="json">
+		        <param name="root">ajaxResult</param>
+		    </result>  
 		</action>
 		<action name="webtabpom_*" class="webtabpomAction" method="{1}">
 		    <result name="add" type="json">
@@ -898,6 +898,12 @@
 		   <result name="findPageBean">page/webmateria.jsp</result>
 		   <result name="findPageBean1">page/table1/webmateria1.jsp</result>
 		   <result name="findmtype" type="json">
+		      <param name="root">jsons</param>
+		   </result>
+		</action>
+		
+		<action name="webformtype_*" class="webformtypeAction" method="{1}">
+		   <result name="findWebformByFactnoTypeno" type="json">
 		      <param name="root">jsons</param>
 		   </result>
 		</action>

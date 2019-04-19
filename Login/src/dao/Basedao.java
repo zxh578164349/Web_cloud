@@ -222,7 +222,27 @@ public class Basedao extends HibernateDaoSupport {
 			String result =query.uniqueResult().toString();			
 			return Integer.valueOf(result);
 			
+    }
+	
+	public Object getObj(final String hql, final Map<String, Object> map) {	    		
+		Query query =getSession().createQuery(hql);
+		if (map != null && !map.isEmpty()) {
+			for (String key : map.keySet()) {
+				if(map.get(key).getClass().getName().equals("com.opensymphony.xwork2.util.XWorkList")||
+						map.get(key).getClass().getName().equals("java.util.ArrayList")){
+					query.setParameterList(key, (List<String>)map.get(key));
+				}else{
+					query.setParameter(key, map.get(key));
+				}
+				
+			}
+		}
+		Object result =query.uniqueResult();			
+		return result;
+		
 }
+	
+	
 	public long getRowNums(String hql,Object[]objs){
 		Query query=getSession().createQuery(hql);
 		if(objs!=null){

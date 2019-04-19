@@ -36,6 +36,7 @@ public class WebSampleschedule implements java.io.Serializable {
 	private String outputnotice;
 	private String createDate;
 	private String updateDate;
+	private WebMonths yymm;
 
 	// Constructors
 
@@ -90,8 +91,17 @@ public class WebSampleschedule implements java.io.Serializable {
 
 	// Property accessors
 
+	
 	public Integer getSsid() {
 		return this.ssid;
+	}
+
+	public WebMonths getYymm() {
+		return yymm;
+	}
+
+	public void setYymm(WebMonths yymm) {
+		this.yymm = yymm;
 	}
 
 	public void setSsid(Integer ssid) {

@@ -23,8 +23,21 @@
 	<hr />
 	
 	<form action="webtestreform_impormtData"  method="post" enctype="multipart/form-data" id="upload_form" target="frameFile">
-			     <input type="file" name="file" id="id_file" style="width:150px"/>	<input value="導入數據" type=button onclick="checkForm()"  class="btn btn-info"/>	
-			     </form>
+	           <table class="table-condensed">
+	            <tr>
+	              <td>月份</td>
+	              <td>
+	               <input type="text"  name="yymm" onClick="WdatePicker({dateFmt:'yyyyMM'})" class="Wdate"/>
+	              </td>
+	              <td>
+	                <input type="file" name="file" id="id_file" style="width:150px"/>
+	              </td>
+	              <td>
+	                <input value="導入數據" type=button onclick="checkForm()"  class="btn btn-info"/>
+	              </td>
+	            </tr>
+	           </table>		     		
+	</form>
 	<iframe id="frameFile" name="frameFile" style="display: none;"></iframe>	
 			
 	<div id="bodyid">
@@ -90,11 +103,15 @@ function checkForm(){
 		}else if(extendName!=".xls"&&extendName!=".xlsx"){
 			layer.alert("僅允許Excel文檔");
 			return false;
+		}else if(jq('input[name="yymm"]').val()==""){
+		    layer.alert("請選擇月份");
+			return false;
 		}else{
 		    layer.load("請稍等...");
 			jq("#upload_form").submit();
 		
-		}				
+		}	
+					
 	}	    		
 </script>
 

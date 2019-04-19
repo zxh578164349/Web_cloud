@@ -23,8 +23,47 @@
 	<hr />
 	
 	<form action="webmateria_impormtData"  method="post" enctype="multipart/form-data" id="upload_form" target="frameFile">
-			     <input type="file" name="file" id="id_file" style="width:150px"/>	<input value="導入數據" type=button onclick="checkForm()"  class="btn btn-info"/>	
-			     </form>
+	             <table class="table-condensed">
+	             <tr>	             
+	             <td>
+	                                              月份<input type="text"  name="yymm" onClick="WdatePicker({dateFmt:'yyyyMM'})" class="Wdate"/>
+	              </td>
+	               <td>
+	                  <input type="file" name="file" id="id_file" style="width:150px"/>
+	               </td>
+	               <td><input value="導入數據" type=button onclick="checkForm()"  class="btn btn-info"/>	</td>
+	             </tr>
+	             <tr>
+	               <td>第1周</td>
+	                <td>第2周</td>
+	                 <td>第3周</td>
+	                  <td>第4周</td>
+	                   <td>第5周</td>
+	             </tr>
+	             <tr>
+	               <td>
+	                 <input type="text" id="sdateA" name="sdateA" onClick="WdatePicker({dateFmt:'yyyyMMdd',minDate:'%y-{%M-1}-%d',maxDate:'#F{$dp.$D(\'edateA\')}'})" class="Wdate"/>
+					  <input type="text" id="edateA"  name="edateA" onClick="WdatePicker({dateFmt:'yyyyMMdd',minDate:'#F{$dp.$D(\'sdateA\')}',maxDate:'#F{$dp.$D(\'sdateB\')}'})" class="Wdate"/> 
+	               </td>
+	                <td>
+	                   <input type="text" id="sdateB" name="sdateB" onClick="WdatePicker({dateFmt:'yyyyMMdd',minDate:'#F{$dp.$D(\'edateA\')}',maxDate:'#F{$dp.$D(\'edateB\')}'})" class="Wdate"/>
+					  <input type="text" id="edateB"  name="edateB" onClick="WdatePicker({dateFmt:'yyyyMMdd',minDate:'#F{$dp.$D(\'sdateB\')}',maxDate:'#F{$dp.$D(\'sdateC\')}'})" class="Wdate"/>
+	                </td>
+	                 <td>
+	                    <input type="text" id="sdateC" name="sdateC" onClick="WdatePicker({dateFmt:'yyyyMMdd',minDate:'#F{$dp.$D(\'edateB\')}',maxDate:'#F{$dp.$D(\'edateC\')}'})" class="Wdate"/>
+					  <input type="text" id="edateC"  name="edateC" onClick="WdatePicker({dateFmt:'yyyyMMdd',minDate:'#F{$dp.$D(\'sdateC\')}',maxDate:'#F{$dp.$D(\'sdateD\')}'})" class="Wdate"/>
+	                 </td>
+	                  <td>
+	                    <input type="text" id="sdateD" name="sdateD" onClick="WdatePicker({dateFmt:'yyyyMMdd',minDate:'#F{$dp.$D(\'edateC\')}',maxDate:'#F{$dp.$D(\'edateD\')}'})" class="Wdate"/>
+					  <input type="text" id="edateD"  name="edateD" onClick="WdatePicker({dateFmt:'yyyyMMdd',minDate:'#F{$dp.$D(\'sdateD\')}',maxDate:'#F{$dp.$D(\'sdateE\')}'})" class="Wdate"/>
+	                  </td>
+	                   <td>
+	                     <input type="text" id="sdateE" name="sdateE" onClick="WdatePicker({dateFmt:'yyyyMMdd',minDate:'#F{$dp.$D(\'edateD\')}',maxDate:'#F{$dp.$D(\'edateE\')}'})" class="Wdate"/>
+					  <input type="text" id="edateE"  name="edateE" onClick="WdatePicker({dateFmt:'yyyyMMdd',minDate:'#F{$dp.$D(\'sdateE\')}',maxDate:'%y-%M-{%d+33}'})" class="Wdate"/>
+	                   </td>
+	             </tr>
+	             </table>			    			   			     
+		</form>
 	<iframe id="frameFile" name="frameFile" style="display: none;"></iframe>	
 			
 	<div id="bodyid">
@@ -90,11 +129,23 @@ function checkForm(){
 		}else if(extendName!=".xls"&&extendName!=".xlsx"){
 			layer.alert("僅允許Excel文檔");
 			return false;
+		}else if((jq("#sdateA").val()==""||jq("#edateA").val()=="")||
+		           (jq("#sdateB").val()==""||jq("#edateB").val()=="")||
+		           (jq("#sdateC").val()==""||jq("#edateC").val()=="")||
+		           (jq("#sdateD").val()==""||jq("#edateD").val()=="")){
+		           layer.alert("請填寫每周日期");
+		           return false;
+		   
+		}else if(jq('input[name="yymm"]').val()==""){
+		       layer.alert("請填寫月份");
+		       return false;
 		}else{
 		    layer.load("請稍等...");
 			jq("#upload_form").submit();
 		
-		}				
+		}		
+		
+				
 	}	    		
 </script>
 

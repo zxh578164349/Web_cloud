@@ -45,19 +45,21 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 			 <tr>
 			     <td colspan="11">
 			        <div style="float:left">是否分部門&nbsp;&nbsp;&nbsp;
-			                          是<input type="radio" name="trMk_r" value="Y" datatype="*"  onclick="rplvalue(this.value),loaddepments(),checkSame()"/>&nbsp;&nbsp;
-			                          否<input type="radio" name="trMk_r" value="N" onclick="rplvalue(this.value),loaddepments(),checkSame()"/>
+			                          是<input type="radio" name="trMk_r" value="Y" datatype="*"  onclick="rplvalue(this.value),loaddepments(),loadwebformtypes(),checkSame()"/>&nbsp;&nbsp;
+			                          否<input type="radio" name="trMk_r" value="N" onclick="rplvalue(this.value),loaddepments(),loadwebformtypes(),checkSame()"/>
 			            <input type="hidden" name="trMk"/>
 			         </div> 
-			         <div id="div_dep" style="display:none"><select name="depId" datatype="*" onchange="getAddBtn(),checkSame()"></select></div>                   
+			         <div id="div_dep" style="display:none"><select name="depId" datatype="*" onchange="getAddBtn(),checkSame()"></select></div>&nbsp;&nbsp;&nbsp;
+			         <div id="div_webform" style="display:none;float:left">小類別<select name="fid" datatype="*" onchange="getAddBtn(),checkSame()"></select></div>                   			         			         
 			     </td>
 			  </tr>
+			  
 			    <tr>
 			     <td><input type="checkbox" name="cbox" disabled/></td>
 			     <s:if test="#session.factNo!='tw'">
 			        <td >
 							<select  datatype="*" id="dwrFactNo"
-							onchange="getAddBtn(),loaddepments(),checkSame()">
+							onchange="getAddBtn(),loaddepments(),loadwebformtypes(),checkSame()">
 							    <option value="${factNo}">${factNo}</option>
 							</select>
 							<input type="hidden" name="flows[0].id.factNo" value="${factNo}"/>
@@ -67,7 +69,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 			  <s:else>
 			     <td ><select 
 							 datatype="*" id="dwrFactNo"
-							onchange="getAddBtn(),loaddepments(),checkSame(),getValue('dwrFactNo','dwrFactNo2'),checkWebtype()">
+							onchange="getAddBtn(),loaddepments(),loadwebformtypes(),checkSame(),getValue('dwrFactNo','dwrFactNo2'),checkWebtype()">
 								<option value="">請選擇廠別</option>
 								<s:iterator value="#session.facts" id="temp">
 									<option value="${temp[0]}">${temp[1]
@@ -78,7 +80,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 						<span id="error1"></span></td>
 			  </s:else>   			     
 			     <td>
-			     <select  id="dwr_kytype" onchange="getAddBtn(),loaddepments(),checkSame(),getValue('dwr_kytype','dwr_kytype2')" datatype="*" >
+			     <select  id="dwr_kytype" onchange="getAddBtn(),loaddepments(),loadwebformtypes(),checkSame(),getValue('dwr_kytype','dwr_kytype2')" datatype="*" >
 			     </select>
 			     <input type="hidden" name="flows[0].id.visaSort" id="dwr_kytype2"/>
 			     <span id="error2"></span>
@@ -311,7 +313,7 @@ var j=0;
 					if(data.length>0){
 						item+="<option value=''>請選擇部門</option>";
 						jq.each(data,function(i,obj){
-							item+="<option value='"+obj.depId+"'>"+obj.depName+"</option>"						
+							item+="<option value='"+obj.depId+"'>"+obj.depName+"</option>";						
 						});
 						jq("select[name='depId']").append(item);
 						jq("#div_dep").show();
@@ -326,6 +328,38 @@ var j=0;
 			jq("#div_dep").hide();
 		}		
 		return result;
+	}
+	
+	function loadwebformtypes(){
+	    var trMk=jq("input[name='trMk']").val();		
+		var factno=jq("#dwrFactNo").val();		
+		var visasort=jq("#dwr_kytype").val().split("__")[0];		
+		if(trMk=="Y"&&factno!=""&&visasort!=""){
+			jq.ajax({
+				type:"post",
+				dateType:"json",
+				data:{factNo:factno,typeNo:visasort},
+				url:"webformtype_findWebformByFactnoTypeno",
+				async:false,
+				success:function(data){				
+					jq("select[name='fid']").empty();
+					var item="";
+					if(data.length>0){
+						item+="<option value=''>請選擇小類別</option>";
+						jq.each(data,function(i,obj){
+							item+="<option value="+obj[0]+">"+obj[1]+"</option>";						
+						});
+						jq("select[name='fid']").append(item);
+						jq("#div_webform").show();									
+					}else{
+						jq("#div_webform").hide();						
+					}				
+					
+				}
+			});
+		}else{
+			jq("#div_webform").hide();
+		}				
 	}
 	
 	function checkdepments(){

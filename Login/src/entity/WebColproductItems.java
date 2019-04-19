@@ -30,6 +30,7 @@ public class WebColproductItems implements java.io.Serializable {
 	private String createDate;
 	private String updateDate;
 	private String numbersbMk;//是否量產
+	private String stage;//階段   （試模階段  或  樣品階段）
 	
 
 	// Constructors
@@ -37,6 +38,14 @@ public class WebColproductItems implements java.io.Serializable {
 	
 	public WebUser getCuser() {
 		return cuser;
+	}
+
+	public String getStage() {
+		return stage;
+	}
+
+	public void setStage(String stage) {
+		this.stage = stage;
 	}
 
 	public String getNumbersbMk() {

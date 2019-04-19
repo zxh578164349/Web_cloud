@@ -18,8 +18,8 @@ public interface IKyzVisaFlowServices {
 	public int findByType_Dwr(String factNo,String visaSort);
 	public String findVisaSort_dwr(String factNo, String visaSort, String email);
 	public String findVisaSort_dwr2(String factNo, String visaSort, String email,String trMk);
-	public List<Object[]> findVisaSort_dwr3(String factNo, String visaSort, String email,String trMk);
-	public String findVisaSort_dwr3(String factNo,String visaSort,String email,String trMk,String depId);
+	public List<Object[]> findVisaSort_dwr3(String factNo, String visaSort, String email,String trMk);	
+	public String findVisaSort_dwr_depidAndfid(String factNo,String visaSort,String email,String trMk,String depId,Integer fid);//通用的  20190419
 	public List<String> findVisaSort_dwr4(String factNo, String visaSort, String email,String trMk);
 	public List<String> findVisaSort_dwr5(String factNo, String visaSort, String depId,String trMk);
 	public List<String> findVisaSort_C(String factNo,String mainSort);
@@ -50,5 +50,6 @@ public interface IKyzVisaFlowServices {
 	public void add_d(KyzVisaflow f1,KyzVisaflow f2);
 	
 	public List<KyzVisaflow>findByFnoAndVsortAndTrmk(String factNo,String visaSort,String trMk);
+	public void addMore(List<KyzVisaflow>list);
 
 }

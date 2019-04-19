@@ -18,6 +18,7 @@ import net.sf.json.JSONArray;
 import org.apache.struts2.interceptor.ServletResponseAware;
 
 import services.IWebSamplescheduleServices;
+import services.IWebmonthsServices;
 import util.GlobalMethod;
 import util.ImportExcel;
 import util.PageBean;
@@ -25,6 +26,8 @@ import util.PageBean;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
+import entity.WebMonths;
+import entity.WebMonthsId;
 import entity.WebSampleschedule;
 import entity.WebTestmouldregistrationform;
 import entity.WebUser;
@@ -33,6 +36,7 @@ public class WebSamplescheduleAction extends ActionSupport implements ServletRes
 	
 	private javax.servlet.http.HttpServletResponse response;
 	private IWebSamplescheduleServices websampleser;
+	private IWebmonthsServices webmonthsSer;
 	private int page;
 	private PageBean bean;
 	private String dateA;
@@ -48,9 +52,22 @@ public class WebSamplescheduleAction extends ActionSupport implements ServletRes
 	private final static String SEPARATOR = "__";
 	private int backIndex;
 	private JSONArray jsons;
+	private String yymm;
 	
 	
 	
+	public String getYymm() {
+		return yymm;
+	}
+
+	public void setYymm(String yymm) {
+		this.yymm = yymm;
+	}
+
+	public void setWebmonthsSer(IWebmonthsServices webmonthsSer) {
+		this.webmonthsSer = webmonthsSer;
+	}
+
 	public JSONArray getJsons() {
 		return jsons;
 	}
@@ -200,9 +217,8 @@ public class WebSamplescheduleAction extends ActionSupport implements ServletRes
 			//file=new File("i:\\test.xlsx");
 			//Map<String,Object>map=ImportExcel.exportListFromFile(file);
 			Map<String,Object>map=ImportExcel.exportListFromFile(new File(path+"\\"+fileFileName),"WebSampleschedule");
-																			
-				for(String key:map.keySet()){
-					List<WebSampleschedule>list_items=new ArrayList<WebSampleschedule>();
+			List<WebSampleschedule>list_items=new ArrayList<WebSampleschedule>();															
+				for(String key:map.keySet()){					
 					List<String>list=(List<String>)map.get(key);
 					if(!list.get(0).contains(strHead)){				
 						//response.getWriter().print("<script>window.parent.showDiv();window.parent.layer.msg('表格式不符合要求')</script>");	
@@ -288,11 +304,12 @@ public class WebSamplescheduleAction extends ActionSupport implements ServletRes
 							item.setWebUserByCreateuser(user);
 							item.setCreateDate(dfm.format(new Date()));
 							list_items.add(item);																							
-					}
-					
-					websampleser.addMore(list_items);
-					
-				}									
+					}										
+				}	
+				//websampleser.addMore(list_items);
+				WebMonths obj=new WebMonths(new WebMonthsId(yymm,"1"));//0 : web_testmouldregistrationform   1 : web_sampleschedule  2 : web_materialregistrationform
+				obj.setWebSampleschedules(list_items);
+				webmonthsSer.addWebmonths(obj);
 				response.getWriter().print("<script>window.parent.layer.msg('導入成功',3,1);window.parent.loadUrl_bodyid('websample_findPageBean3');</script>");			
 				response.getWriter().close();
 									

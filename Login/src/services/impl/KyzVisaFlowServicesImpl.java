@@ -69,10 +69,10 @@ public class KyzVisaFlowServicesImpl implements IKyzVisaFlowServices{
 	
 	public List<Object[]> findVisaSort_dwr3(String factNo, String visaSort, String email,String trMk){
 		return visaDao.findVisaSort_dwr2(factNo,visaSort,email,trMk);
-	}
+	}		
 	
-	public String findVisaSort_dwr3(String factNo,String visaSort,String email,String trMk,String depId){
-		return visaDao.findVisaSort_dwr2(factNo,visaSort,email,trMk,depId);
+	public String findVisaSort_dwr_depidAndfid(String factNo,String visaSort,String email,String trMk,String depId,Integer fid){
+		return visaDao.findVisaSort_dwr_depidAndfid(factNo,visaSort,email,trMk,depId,fid);
 	}
 	
 	public List<String> findVisaSort_dwr4(String factNo, String visaSort, String email,String trMk){
@@ -168,6 +168,11 @@ public class KyzVisaFlowServicesImpl implements IKyzVisaFlowServices{
 			String visaSort, String trMk) {
 		// TODO Auto-generated method stub
 		return visaDao.findByFnoAndVsortAndTrmk(factNo, visaSort, trMk);
+	}
+
+	public void addMore(List<KyzVisaflow> list) {
+		// TODO Auto-generated method stub
+		visaDao.addMore(list);
 	}
 
 }

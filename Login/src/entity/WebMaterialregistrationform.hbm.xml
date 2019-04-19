@@ -63,5 +63,9 @@
             </key>
             <one-to-many class="entity.WebMaterialregistrationitems" />
         </bag>
+        <many-to-one name="yymm" class="entity.WebMonths" fetch="select">
+            <column name="YYMM" length="8" />
+            <column name="OBJ_TYPE" length="2" />
+        </many-to-one>
     </class>
 </hibernate-mapping>

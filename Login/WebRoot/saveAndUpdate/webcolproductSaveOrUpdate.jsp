@@ -143,8 +143,7 @@ String str_date_h = fmt2.format(currentTime); //将时间格式化
 			     <td class="tdcolor">不良</td>			     
 			     <td class="tdcolor">型體負責人</td>
 			     <td class="tdcolor">可否請款</td>
-			     <td class="tdcolor">是否量產</td>
-			     <td class="tdcolor">量產數量</td>
+			     <td class="tdcolor">階段</td>			     
 			     <td class="tdcolor">需求料的重量</td>			    			     			     		     
 			     <td class="tdcolor">備註</td>
 			 </tr>
@@ -203,22 +202,21 @@ String str_date_h = fmt2.format(currentTime); //将时间格式化
 			     </select>			     
 			     </td>
 			     <td >
-			     <select name="obj.webColproductItemses[${x.index}].numbersbMk">			       			       
-			       <s:if test='numbersbMk=="Y"'>
-					<option value="Y" selected>是</option>
+			     <select name="obj.webColproductItemses[${x.index}].stage">			       			       
+			       <s:if test='stage=="Y"'>
+					<option value="試作" selected>試作</option>
 					</s:if>
 					<s:else>
-					<option value="Y">是</option>
+					<option value="試作">試作</option>
 					</s:else>
-			        <s:if test='numbersbMk=="N"'>
-					<option value="N" selected>否</option>
+			        <s:if test='stage=="樣品"'>
+					<option value="樣品" selected>樣品</option>
 					</s:if>
 					<s:else>
-					<option value="N">否</option>
+					<option value="樣品">樣品</option>
 					</s:else>
 			     </select>			     
-			     </td>
-			     <td ><input type="text" name="obj.webColproductItemses[${x.index}].numbersb" value="<s:property value='numbersb'/>" datatype="my0-8"/></td>
+			     </td>			     
 			     <td ><input type="text" name="obj.webColproductItemses[${x.index}].weightb" value="<s:property value='weightb'/>" datatype="my0-8"/></td>
 			      <td >
 			      <input type="text" name="obj.webColproductItemses[${x.index}].remarks" value="<s:property value='remarks'/>" datatype="*0-150"/>			      
@@ -346,8 +344,7 @@ var j=0;
              var newTd10=newTr.insertCell();
              var newTd11=newTr.insertCell();
              var newTd12=newTr.insertCell();
-             var newTd13=newTr.insertCell();
-             var newTd14=newTr.insertCell();
+             var newTd13=newTr.insertCell();            
         	
         newTd00.innerHTML='<input type="hidden" name="cbox"/><input type="image" src="images/del.gif" onclick="this.parentNode.parentNode.parentNode.removeChild(this.parentNode.parentNode)"/>'; 
         newTd0.innerHTML = '<select  name="obj.webColproductItemses['+j+'].importmant" >'+
@@ -363,11 +360,10 @@ var j=0;
         newTd9.innerHTML='<input type="text" name="obj.webColproductItemses['+j+'].picMan" datatype="*0-15"/>';
         newTd10.innerHTML='<select name="obj.webColproductItemses['+j+'].paymk">'+
         '<option value="Y">是</option><option value="N">否</option></select>';
-        newTd11.innerHTML='<select name="obj.webColproductItemses['+j+'].numbersbMk">'+
-        '<option value="Y">是</option><option value="N">否</option></select>';
-        newTd12.innerHTML='<input type="text" name="obj.webColproductItemses['+j+'].numbersb" datatype="my0-8"/>'; 
-        newTd13.innerHTML='<input type="text" name="obj.webColproductItemses['+j+'].weightb" datatype="my0-8"/>';                           	     
-        newTd14.innerHTML='<input type="text" name="obj.webColproductItemses['+j+'].remarks" datatype="*0-150"/>'+          
+        newTd11.innerHTML='<select name="obj.webColproductItemses['+j+'].stage">'+
+        '<option value="試作">試作</option><option value="樣品">樣品</option></select>';       
+        newTd12.innerHTML='<input type="text" name="obj.webColproductItemses['+j+'].weightb" datatype="my0-8"/>';                           	     
+        newTd13.innerHTML='<input type="text" name="obj.webColproductItemses['+j+'].remarks" datatype="*0-150"/>'+          
         '<input type="hidden" name="obj.webColproductItemses['+j+'].webColproductMain.billNo" value="'+billno+'"'+'/>';       
         }
         
@@ -462,11 +458,7 @@ function checkForm(){
 	}
 	function loadUrl_importData() {
 			jq("#import_data").load("./page/table1/webcolproductmain1-2.jsp");
-		}
-		
-	function makeWeightB(){
-	  
-	}	
+		}				
 </script>
 <script type='text/javascript' src='dwr/interface/webfactjs.js'></script>
 <script type='text/javascript' src='dwr/interface/kyzvisaflowjs.js'></script>

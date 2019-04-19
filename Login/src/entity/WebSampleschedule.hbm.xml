@@ -93,5 +93,9 @@
         <property name="updateDate" type="java.lang.String">
             <column name="UPDATE_DATE" length="15" />
         </property>
+        <many-to-one name="yymm" class="entity.WebMonths" fetch="select">
+            <column name="YYMM" length="8" />
+            <column name="OBJ_TYPE" length="2" />
+        </many-to-one>
     </class>
 </hibernate-mapping>

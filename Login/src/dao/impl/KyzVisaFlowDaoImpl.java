@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.hibernate.Query;
 import org.hibernate.Transaction;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 import com.opensymphony.xwork2.ActionContext;
 
@@ -90,7 +91,10 @@ public class KyzVisaFlowDaoImpl extends Basedao implements IKyzVisaFlowDao {
 			if(flow.getDepId()!=null){
 				flow.getDepId().getDepName();
 			}
-			flow.getWebtype().getTypeName();
+			if(flow.getWebformtype()!=null){
+				flow.getWebformtype().getFname();
+			}
+			flow.getWebtype().getTypeName();			
 		}
 				
 		PageBean pageBean = new PageBean();
@@ -171,15 +175,39 @@ public class KyzVisaFlowDaoImpl extends Basedao implements IKyzVisaFlowDao {
 		return list;
 	}
 	
-	public String findVisaSort_dwr2(String factNo,String visaSort,String email,String trMk,String depId){
-		String hql="select id.visaSort from KyzVisaflow where id.factNo=? and id.visaSort like ? and lower(visaSigner)=? and id.itemNo='01' and trMk=? and to_char(depId.depId)=? ";
-		Query query=getSession().createQuery(hql);
-		query.setString(0, factNo);
-		query.setString(1, visaSort+"%");
-		query.setString(2, email);
-		query.setString(3,trMk);
-		query.setString(4,depId);
-		String visasort=(String)query.uniqueResult();
+	
+	
+	public String findVisaSort_dwr_depidAndfid(String factNo,String visaSort,String email,String trMk,String depId,Integer fid){
+		//String hql="select id.visaSort from KyzVisaflow where id.factNo=? and id.visaSort like ? and lower(visaSigner)=? and id.itemNo='01' and trMk=? and to_char(depId.depId)=? and webformtype.fid=?";
+		StringBuffer hql=new StringBuffer();
+		Map<String,Object>map=new HashMap<String,Object>();
+		hql.append("select id.visaSort from KyzVisaflow where 1=1 ");
+		if(factNo!=null&&!"".equals(factNo)){
+			hql.append("and id.factNo=:factNo ");
+			map.put("factNo", factNo);
+		}
+		if(visaSort!=null&&!"".equals(visaSort)){
+			hql.append("and id.visaSort like:visaSort ");
+			map.put("visaSort", visaSort+"%");
+		}
+		if(email!=null&&!"".equals(email)){
+			hql.append("and lower(visaSigner)=:email ");
+			map.put("email", email);
+		}
+		if(trMk!=null&&!"".equals(trMk)){
+			hql.append(" and trMk=:trMk ");
+			map.put("trMk", trMk);
+		}
+		if(depId!=null&&!"".equals(depId)){
+			hql.append(" and to_char(depId.depId)=:depId ");
+			map.put("depId", depId);
+		}
+		if(fid!=null&&fid!=0){
+			hql.append(" and webformtype.fid=:fid ");
+			map.put("fid", fid);
+		}
+		hql.append(" and id.itemNo='01' ");		
+		String visasort=(String)super.getObj(hql.toString(), map);
 		return visasort;
 	}
 	
@@ -347,5 +375,21 @@ public class KyzVisaFlowDaoImpl extends Basedao implements IKyzVisaFlowDao {
 		hql.append(" order by id.factNo,id.visaSort,id.itemNo");
 		List<KyzVisaflow>list=super.getAllWithNoPage(hql.toString(), map);		
 		return list;
+	}
+
+	public void addMore(List<KyzVisaflow> list) {
+		// TODO Auto-generated method stub
+		try{
+			for(KyzVisaflow obj:list){
+				super.merge(obj);
+			}
+			getSession().flush();
+			getSession().clear();
+		}catch(Exception e){
+			e.printStackTrace();	
+			//throw new RuntimeException();  
+			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();//數據回滾
+		}
+		
 	}
 }

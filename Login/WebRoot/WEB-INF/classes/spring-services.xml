@@ -107,6 +107,8 @@
 	<bean id="webtestregisformser" class="services.impl.WebTestmouldregistrationformServicesImpl"></bean>
 	<bean id="websampleser" class="services.impl.WebSamplescheduleServicesImpl"></bean>
 	<bean id="webmateriaser" class="services.impl.WebMaterialregistrationformServicesImpl"></bean>
+	<bean id="webmonthsSer" class="services.impl.WebmonthsServicesImpl"></bean>
+	<bean id="webformser" class="services.impl.WebFormtypeServicesImpl"></bean>
 </beans>
 
 

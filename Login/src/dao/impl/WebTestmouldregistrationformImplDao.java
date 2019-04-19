@@ -4,11 +4,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.hibernate.Query;
+
 import com.opensymphony.xwork2.ActionContext;
 
 import util.PageBean;
 import dao.Basedao;
 import dao.IWebTestmouldregistrationformDao;
+import entity.WebMonths;
 import entity.WebTestmouldregistrationform;
 
 public class WebTestmouldregistrationformImplDao extends Basedao implements IWebTestmouldregistrationformDao{
@@ -94,5 +97,6 @@ public class WebTestmouldregistrationformImplDao extends Basedao implements IWeb
 		List<String>list=super.findAll(hql, null);
 		return list;
 	}
+
 
 }

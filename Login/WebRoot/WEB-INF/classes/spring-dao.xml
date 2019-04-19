@@ -107,5 +107,7 @@
 	<bean id="webtestregisformdao" class="dao.impl.WebTestmouldregistrationformImplDao" parent="baseDao"></bean>
 	<bean id="websampdao" class="dao.impl.WebSamplescheduleDaoImpl" parent="baseDao"></bean>
 	<bean id="webmateriadao" class="dao.impl.WebMaterialregistrationformDaoImpl" parent="baseDao"></bean>
+	<bean id="webmonthsdao" class="dao.impl.WebmonthsDaoImpl" parent="baseDao"></bean>
+	<bean id="webformtypedao" class="dao.impl.WebFormtypeDaoImpl" parent="baseDao"></bean>
 </beans>
 

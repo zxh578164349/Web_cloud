@@ -35,6 +35,7 @@ import entity.KyzExpectmatmLog;
 import entity.KyzVisaflow;
 import entity.KyzVisaflowId;
 import entity.WebDepartment;
+import entity.WebFormtype;
 import entity.WebType;
 import entity.WebUser;
 
@@ -59,17 +60,18 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 	private String trMk;//是否分部門     Y:是       N:否
 	private JSONArray jsons;
 	private String depId;
-	
-	private Integer depId2;
-	
+	private Integer fid;
 	
 	
-	public Integer getDepId2(){
-		return depId2;
+	
+	
+
+	public Integer getFid() {
+		return fid;
 	}
 
-	public void setDepId2(Integer depId2){
-		this.depId2=depId2;
+	public void setFid(Integer fid) {
+		this.fid = fid;
 	}
 
 	public String getTrMk(){
@@ -271,8 +273,13 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 						    if(depId!=null&&!"".equals(depId)){						    	
 						    	flows.get(i).setDepId(new WebDepartment(Integer.parseInt(depId)));
 						    }
-							visaSer.add(flows.get(i));
+						    if(fid!=null){
+						    	flows.get(i).setWebformtype(new WebFormtype(fid));
+						    }
+							//visaSer.add(flows.get(i));
+						   
 						}
+						 visaSer.addMore(flows);
 						/***************************分部門*************************************/
 						
 						/***************************不分部門*************************************/
@@ -285,8 +292,10 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 							flows.get(i).setVisaSortM(visaSort_main);
 							flows.get(i).setTypeMk(visaSort_main2);
 							flows.get(i).setTrMk(trMk);
-							visaSer.add(flows.get(i));
+							//visaSer.add(flows.get(i));
+							
 						}
+						visaSer.addMore(flows);
 					}
 					/***************************不分部門*************************************/
 				}else{//【配方類】
@@ -298,8 +307,10 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 						flows.get(i).setVisaSortM(visaSort_main);
 						flows.get(i).setTypeMk(visaSort_main2);
 						flows.get(i).setTrMk("N");//【出差類】 【 配方類】  都不分部門
-						visaSer.add(flows.get(i));
+						//visaSer.add(flows.get(i));
+						
 					}
+					visaSer.addMore(flows);
 				}								
 				ajaxResult="0";
 			}catch(Exception e){
@@ -581,22 +592,25 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 		return "findWebbuss";
 	}
 	
+	
+	//選出部門，注意，它是通部門外鍵depId篩選出所屬的部門，並不是通過廠別篩選出所有的部門
 	public String findVisaSort_dwr3(){
 		List<Object[]>list=visaSer.findVisaSort_dwr3(factNo,visaSort,visaSigner,trMk);
 		jsons=JSONArray.fromObject(list);
 		return "findVisaSort_dwr3";
 	}
-	
-	public String findVisaSort_dwr4(){
-		ajaxResult=visaSer.findVisaSort_dwr3(factNo,visaSort,visaSigner,trMk,depId);
-		return "findVisaSort_dwr4";
-	}
-	
+		
+	//選出流程，當>0時，表示存在多個部門，或者存在多個小類，進入方法findVisaSort_dwr_depidAndfid
 	public String findVisaSort_dwr5(){
 		List<String>list=visaSer.findVisaSort_dwr4(factNo,visaSort,visaSigner,trMk);
 		jsons=JSONArray.fromObject(list);
 		return "findVisaSort_dwr5";
 	}
+	//選出流程，此流程細分到部門  ，或者小類
+	public String findVisaSort_dwr_depidAndfid(){
+		ajaxResult=visaSer.findVisaSort_dwr_depidAndfid(factNo,visaSort,visaSigner,trMk,depId,fid);
+		return "findVisaSort_dwr_depidAndfid";
+	}		
 	
 	public HSSFWorkbook init2003(List<KyzVisaflow>flows){
 		HSSFWorkbook wb=new HSSFWorkbook();

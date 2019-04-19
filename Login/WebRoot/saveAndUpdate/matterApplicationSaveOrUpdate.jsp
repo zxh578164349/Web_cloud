@@ -66,7 +66,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 						<td class="tdcolor">廠別</td>
 						<td ><select style="color:blue"
 							name="kyz.id.factNo" datatype="*" id="dwrFactNo"
-							onchange="getFactArea(this.value),makeBillNo(),getKyType2(this.value)">
+							onchange="getFactArea(this.value),makeBillNo(),getKyType2(this.value);loadwebformtypes()">
 								<option value="">請選擇廠別</option>
 								<s:iterator value="#session.facts" id="temp">
 									<option value="${temp[0]}">${temp[1]
@@ -142,7 +142,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 				      <td class="tdcolor">類別</td>
 				      <td >
 				         <s:if test="kyz==null">
-				            <select  id="dwr_kytype" onchange="checkType()" datatype="*" style="color:blue">
+				            <select  id="dwr_kytype" onchange="loadwebformtypes();checkType()" datatype="*" style="color:blue">
 				            <option value="">請選擇</option>
 				         </select>
 				         <input type="hidden" id="dwr_email" value="<s:property value='#session.loginUser.email'/>"/>
@@ -188,9 +188,13 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 					<s:if test="kyz==null">
 					   <tr>
 					    <td class="tdcolor">是否分部門</td>
-					    <td colspan="10">
+					    <td>
 					                   是<input type="radio" name="trMk" value="Y" checked datatype="*" onclick="checkType()"/>&nbsp;&nbsp;
 			                                        否<input type="radio" name="trMk" value="N" onclick="checkType()"/> 
+					    </td>
+					    <td>小類別</td>
+					    <td colspan="10">
+					      <div id="div_webform" style="display:none"><select name="fid" datatype="*" onchange="checkType2()"></select></div> 
 					    </td>
 					   </tr>
 					</s:if>
