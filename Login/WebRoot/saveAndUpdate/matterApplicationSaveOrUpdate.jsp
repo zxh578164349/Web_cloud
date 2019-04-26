@@ -66,7 +66,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 						<td class="tdcolor">廠別</td>
 						<td ><select style="color:blue"
 							name="kyz.id.factNo" datatype="*" id="dwrFactNo"
-							onchange="getFactArea(this.value),makeBillNo(),getKyType2(this.value);loadwebformtypes()">
+							onchange="getFactArea(this.value);makeBillNo();getKyType2(this.value);checkType()">
 								<option value="">請選擇廠別</option>
 								<s:iterator value="#session.facts" id="temp">
 									<option value="${temp[0]}">${temp[1]
@@ -146,9 +146,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 				            <option value="">請選擇</option>
 				         </select>
 				         <input type="hidden" id="dwr_email" value="<s:property value='#session.loginUser.email'/>"/>
-				         <input type="hidden" name="kyz.visaType" id="hidden_kytype" datatype="*"/>	
-				         
-				         <div id="div_depar" style="display:none"><select id="sel_depar" onchange="checkType2()"></select></div>			         					         
+				        <input type="hidden" name="kyz.visaType" id="hidden_kytype" datatype="*"/>					         			         			         					         
 				         </s:if>
 				         <s:else>
 				            <input type="text" value="<s:property value='kyz.visaType'/>" name="kyz.visaType" style="color:blue"  readonly/>
@@ -192,10 +190,15 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 					                   是<input type="radio" name="trMk" value="Y" checked datatype="*" onclick="checkType()"/>&nbsp;&nbsp;
 			                                        否<input type="radio" name="trMk" value="N" onclick="checkType()"/> 
 					    </td>
-					    <td>小類別</td>
-					    <td colspan="10">
-					      <div id="div_webform" style="display:none"><select name="fid" datatype="*" onchange="checkType2()"></select></div> 
-					    </td>
+					    
+					    <td>
+					    <div id="div_depar2" style="display:none">部門</div>
+					    <div id="div_webform2" style="display:none">小類別</div>
+					    </td>				    
+					    <td colspan="10">				      
+					      <div id="div_depar" style="display:none"><select id="sel_depar" onchange="checkType()" datatype="*"></select></div>
+					      <div id="div_webform" style="display:none"><select name="fid" datatype="*" onchange="checkType()"></select></div> 
+					    </td>					    					    
 					   </tr>
 					</s:if>
 																		
@@ -280,6 +283,7 @@ jq(function() {
 			tiptype : 4,
 			showAllError : true,
 			tipSweep : true,
+			ignoreHidden:true,
 			datatype : {
 				"my0-8": /^\d{0,8}(\.[0-9]{1,4})?$/,
 				"my0-12": /^\d{0,12}(\.[0-9]{1,4})?$/
@@ -309,56 +313,7 @@ jq(function() {
 			}
 		});				
 	});
-		
-	/*function checkForm(index){
-		var memoSmk=jq("#memoSmk").val();//標題 
-		var secNo=jq("#secNo").val();//申請單位
-		var factNo=jq("#dwrFactNo").val();//廠別
-		var visaSort=jq("#dwr_kytype").val();//函文類別
-		var telNo=jq("#telNo").val();
-		var reg_telNo=/^\d*$/;//電話驗證正則表達式
-		if(memoSmk==""){
-			layer.alert("標題不能爲空!");
-			return false;
-		}
-		if(secNo==""){
-			layer.alert("申請單位不能爲空");
-			return false;
-		}
-		if(factNo==""){
-			layer.alert("廠別不能爲空");
-			return false;
-		}
-		if(visaSort==""){
-			layer.alert("類別不能空");
-			return false;
-		}
-		if(!reg_telNo.test(telNo)){
-			layer.alert("電話要填寫數字");
-			return false;
-		}
-		return true;
-	}
-	jq(function(){
-		var options={
-				beforeSubmit:checkForm,  		       		       
-		        //resetForm: true, 
-		        url:"kyz_add",
-		        dataType:'json' ,
-		        success:function(data){
-		        	if(data=="0"){
-		        		layer.msg("函文申請成功!",3,1);
-		        		location.href="kyz_findPageBean";
-		        	}else{
-		        		alert(data.responseText);
-		        	}		        	       	    									
-		         }		         
-		};
-		jq("#form").submit(function(){
-			jq(this).ajaxSubmit(options);
-			return false;
-		})										
-	})*/
+			
 
 	function getFactArea(mid) {
 		document.getElementById("dwrFactArea").length = 1;
@@ -536,10 +491,11 @@ jq(function(){
 	}else{
 		jq("#addbtn").removeAttr("style").removeAttr("disabled");
 	}
-	j=jq("#maxNum").val()
+	j=jq("#maxNum").val();
 	if(isNaN(j)){
 		j=0;
 	}
+	
 });
 </script>	
 </body>

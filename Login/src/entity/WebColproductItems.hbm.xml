@@ -72,6 +72,9 @@
         <property name="stage" type="java.lang.String">
             <column name="STAGE" length="8" />
         </property>
+        <property name="testnums" type="java.lang.Integer">
+            <column name="TESTNUMS" precision="6" scale="0" />
+        </property>
         <many-to-one name="cuser" class="entity.WebUser" fetch="select">
             <column name="CREATEUSER" precision="6" scale="0" />
         </many-to-one> 

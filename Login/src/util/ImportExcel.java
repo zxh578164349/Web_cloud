@@ -546,6 +546,7 @@ public class ImportExcel {
 								  }else{
 									  sb.append(SEPARATOR+"");
 								  }
+								  break;
 							  }					  	  
 						  }//for c
 						

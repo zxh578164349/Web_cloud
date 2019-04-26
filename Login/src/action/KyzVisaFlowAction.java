@@ -1,11 +1,17 @@
 package action;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.text.DateFormat;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -23,8 +29,10 @@ import org.apache.struts2.interceptor.ServletResponseAware;
 
 import services.IKyzExpectmatmLogServices;
 import services.IKyzVisaFlowServices;
+import services.IWebFormtypeServices;
 import services.IWebTypeServices;
 import util.GlobalMethod;
+import util.ImportExcel;
 import util.PageBean;
 
 import com.opensymphony.xwork2.ActionContext;
@@ -36,6 +44,9 @@ import entity.KyzVisaflow;
 import entity.KyzVisaflowId;
 import entity.WebDepartment;
 import entity.WebFormtype;
+import entity.WebMonths;
+import entity.WebMonthsId;
+import entity.WebTestmouldregistrationform;
 import entity.WebType;
 import entity.WebUser;
 
@@ -62,9 +73,41 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 	private String depId;
 	private Integer fid;
 	
+	private File file;
+	private String fileFileName;
+	private String fileContentType;
+	private final static String SEPARATOR = "__";
+	private IWebFormtypeServices webformser;
 	
 	
-	
+
+	public void setWebformser(IWebFormtypeServices webformser) {
+		this.webformser = webformser;
+	}
+
+	public File getFile() {
+		return file;
+	}
+
+	public void setFile(File file) {
+		this.file = file;
+	}
+
+	public String getFileFileName() {
+		return fileFileName;
+	}
+
+	public void setFileFileName(String fileFileName) {
+		this.fileFileName = fileFileName;
+	}
+
+	public String getFileContentType() {
+		return fileContentType;
+	}
+
+	public void setFileContentType(String fileContentType) {
+		this.fileContentType = fileContentType;
+	}
 
 	public Integer getFid() {
 		return fid;
@@ -736,6 +779,139 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	/*
+	 * 導入excel表數據流程
+	 */
+	
+	public void impormtData() throws IOException{
+		response.setContentType("text/html;charset=utf-8");
+		try{
+			
+			
+			
+			
+			
+			WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
+			String strHead="日期__客戶__品牌__季節__型體__部件__量產工廠__型體負責人__試模雙數__不良數__每雙料重";
+			DateFormat dfm=new SimpleDateFormat("yyyyMMdd");			
+			String path="d:\\Kyzvisaflow_backup\\"+dfm.format(new Date());//Excel文檔存放目錄						
+			//文件上傳
+			if(file!=null){//不為空代表有上傳附檔,不能寫成files.size()>0,否則報空指針
+				//File uploadFile=new File(ServletActionContext.getServletContext().getRealPath("KyzexpFile\\"+kyz.getId().getBillNo()));//附檔上傳到項目
+				File uploadFile_backup=new File(path);//附檔上傳到D盤(為了避免更新項目時丟失附檔,所在上傳到D盤)			
+				if(!uploadFile_backup.exists()){
+					uploadFile_backup.mkdirs();
+				}																						
+						FileInputStream in=new FileInputStream(file);
+						FileOutputStream out_backup=new FileOutputStream(uploadFile_backup+"\\"+fileFileName);//備份
+						byte[]b=new byte[1024];
+						int length=0;
+						while((length=in.read(b))>0){
+							out_backup.write(b,0,length);//備份
+						}																																				
+			}
+			
+			//file=new File("i:\\test.xlsx");
+			//Map<String,Object>map=ImportExcel.exportListFromFile(file);
+			Map<String,Object>map=ImportExcel.exportListFromFile(new File(path+"\\"+fileFileName));
+						
+			if(map.keySet().size()>1){
+				response.getWriter().print("<script>window.parent.layer.msg('文檔中只允許一張表')</script>");	
+				response.getWriter().close();
+			}else{
+						
+				for(String key:map.keySet()){						
+					List<String>list=(List<String>)map.get(key);	
+					
+					List<WebFormtype>list_types=webformser.findWebformByFactno("VE");					
+					List<WebFormtype>list_types2=new ArrayList<WebFormtype>(list_types);
+					//list_types2.addAll(list_types);
+					
+					List<String>list_btypes=new ArrayList<String>();
+					for(int a=0;a<list_types.size();a++){
+						for(int b=list_types.size()-1;b>a;b--){
+							if(list_types.get(a).getWebType().getId().getTypeNo().equals(list_types.get(b).getWebType().getId().getTypeNo())){
+								list_types.remove(b);
+							}
+						}
+					}
+					for(WebFormtype obj:list_types){
+						list_btypes.add(obj.getWebType().getId().getTypeNo());
+					}
+					
+					Map<String,Object>map2=new HashMap<String,Object>();
+					for(String str:list_btypes){
+						List<WebFormtype>list1=new ArrayList<WebFormtype>();
+						for(WebFormtype obj:list_types2){
+							if(str.equals(obj.getWebType().getId().getTypeNo())){
+								list1.add(obj);
+							}
+						}
+						map2.put(str, list1);
+					}
+					
+					Map<String,Object>map3=new HashMap<String,Object>();
+					for(String key2:map2.keySet()){						
+						List<WebFormtype>list3=(List<WebFormtype>)map2.get(key2);
+						List<String>list4=new ArrayList<String>();
+						for(WebFormtype obj:list3){
+							for(int h=1;h<list.size();h++){	
+								String j=new DecimalFormat("0").format(Double.valueOf(list.get(h).split(SEPARATOR)[1]));
+								if(obj.getFid().toString().equals(j)){
+									list4.add(list.get(h));
+								}
+							}
+							
+						}
+						map3.put(key2, list4);
+					}
+					
+					
+					
+					List<KyzVisaflow>list_flows=new ArrayList<KyzVisaflow>();
+					for(String key3:map3.keySet()){	
+						List<String>list5=(List<String>)map3.get(key3);
+						for(int a=0;a<list5.size();a++){
+							List<String>list6=new ArrayList<String>();
+							for(String str:list5.get(a).split(SEPARATOR)){
+								if(!str.equals("0.0")&&!str.equals("")){
+									list6.add(str);
+								}
+							}
+							for(int b=1;b<list6.size();b++){
+								String j=new DecimalFormat("0").format(Double.valueOf(list6.get(0)));
+								KyzVisaflow fow=new KyzVisaflow();
+								fow.setId(new KyzVisaflowId("VE", key3+a, list6.get(b), "0"+b));
+								fow.setVisaSigner(list6.get(b));
+								fow.setVisaRank(list6.get(b));
+								fow.setFlowMk("Y");
+								fow.setTrMk("Y");
+								fow.setVisaSortM(key3);
+								fow.setTypeMk("0");
+								fow.setVisible("Y");
+								fow.setWebformtype(new WebFormtype(Integer.parseInt(j)));
+								list_flows.add(fow);
+							}
+							
+						}
+																													
+					}
+					System.out.println(list_flows);
+					visaSer.addMore(list_flows);
+				}
+				
+				//webmonthsSer.addWebmonths(obj);
+				response.getWriter().print("<script>window.parent.layer.msg('導入成功',3,1);window.parent.loadUrl_bodyid('webtestreform_findPageBean3');</script>");			
+				response.getWriter().close();
+			}			
+		}catch(Exception e){
+			System.out.println(e);
+			response.getWriter().print("<script>window.parent.layer.msg('導入錯誤',3,3);</script>");
+			response.getWriter().close();
+		}
+		
 	}
 
 }

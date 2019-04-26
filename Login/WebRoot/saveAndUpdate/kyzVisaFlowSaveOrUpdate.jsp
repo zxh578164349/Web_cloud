@@ -44,13 +44,14 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 			 </tr>
 			 <tr>
 			     <td colspan="11">
-			        <div style="float:left">是否分部門&nbsp;&nbsp;&nbsp;
-			                          是<input type="radio" name="trMk_r" value="Y" datatype="*"  onclick="rplvalue(this.value),loaddepments(),loadwebformtypes(),checkSame()"/>&nbsp;&nbsp;
-			                          否<input type="radio" name="trMk_r" value="N" onclick="rplvalue(this.value),loaddepments(),loadwebformtypes(),checkSame()"/>
+			        <!-- <div style="float:left">是否分部門&nbsp;&nbsp;&nbsp;
+			                          是<input type="radio" name="trMk_r" value="Y" datatype="*"  onclick="rplvalue(this.value),loaddepments(),checkSame()"/>&nbsp;&nbsp;
+			                          否<input type="radio" name="trMk_r" value="N" onclick="rplvalue(this.value),loaddepments(),checkSame()"/>
 			            <input type="hidden" name="trMk"/>
-			         </div> 
-			         <div id="div_dep" style="display:none"><select name="depId" datatype="*" onchange="getAddBtn(),checkSame()"></select></div>&nbsp;&nbsp;&nbsp;
-			         <div id="div_webform" style="display:none;float:left">小類別<select name="fid" datatype="*" onchange="getAddBtn(),checkSame()"></select></div>                   			         			         
+			         </div>  -->
+			         <input type="hidden" name="trMk" value="Y"/>
+			         <div id="div_dep" style="display:none">部門&nbsp;<select name="depId" datatype="*" onchange="checkSame()"></select></div>&nbsp;&nbsp;&nbsp;
+			         <div id="div_webform" style="display:none;float:left">小類別&nbsp;<select name="fid" datatype="*" onchange="checkSame()"></select></div>                   			         			         
 			     </td>
 			  </tr>
 			  
@@ -59,7 +60,8 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 			     <s:if test="#session.factNo!='tw'">
 			        <td >
 							<select  datatype="*" id="dwrFactNo"
-							onchange="getAddBtn(),loaddepments(),loadwebformtypes(),checkSame()">
+							onchange="getAddBtn();loaddepments();loadwebformtypes();checkSame()">
+							    <option value="">請選擇廠別</option>
 							    <option value="${factNo}">${factNo}</option>
 							</select>
 							<input type="hidden" name="flows[0].id.factNo" value="${factNo}"/>
@@ -69,7 +71,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 			  <s:else>
 			     <td ><select 
 							 datatype="*" id="dwrFactNo"
-							onchange="getAddBtn(),loaddepments(),loadwebformtypes(),checkSame(),getValue('dwrFactNo','dwrFactNo2'),checkWebtype()">
+							onchange="checkWebtype();loaddepments();loadwebformtypes();checkSame();getValue('dwrFactNo','dwrFactNo2');getAddBtn()">
 								<option value="">請選擇廠別</option>
 								<s:iterator value="#session.facts" id="temp">
 									<option value="${temp[0]}">${temp[1]
@@ -80,7 +82,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 						<span id="error1"></span></td>
 			  </s:else>   			     
 			     <td>
-			     <select  id="dwr_kytype" onchange="getAddBtn(),loaddepments(),loadwebformtypes(),checkSame(),getValue('dwr_kytype','dwr_kytype2')" datatype="*" >
+			     <select  id="dwr_kytype" onchange="getAddBtn();loaddepments();loadwebformtypes();checkSame();getValue('dwr_kytype','dwr_kytype2')" datatype="*" >
 			     </select>
 			     <input type="hidden" name="flows[0].id.visaSort" id="dwr_kytype2"/>
 			     <span id="error2"></span>
@@ -130,7 +132,6 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 	</div>
 	
 <script type="text/javascript">
-var result=0;
 	jq(function() {
 		var demo = jq("#form").Validform({
 			btnSubmit : "#sub",
@@ -293,12 +294,15 @@ var j=0;
 	function rplvalue(vlu){
 		jq("input[name='trMk']").val(vlu);
 	}
-		
+	
+	
+	var depids=0;
+    var fids=0;	
 	function loaddepments(){		
 		var factno=jq("#dwrFactNo").val();
 		var trMk=jq("input[name='trMk']").val();
 		var visasort2=jq("#dwr_kytype").val().split("__")[1];
-		result=0;
+		depids=0;
 		if(trMk=="Y"&&factno!=""&&visasort2=="TR"){
 			jq.ajax({
 				type:"post",
@@ -311,13 +315,14 @@ var j=0;
 					jq("select[name='depId']").empty();
 					var item="";
 					if(data.length>0){
+					    depids=data.length;
 						item+="<option value=''>請選擇部門</option>";
 						jq.each(data,function(i,obj){
 							item+="<option value='"+obj.depId+"'>"+obj.depName+"</option>";						
 						});
 						jq("select[name='depId']").append(item);
 						jq("#div_dep").show();
-						result=data.length;										
+						depids=data.length;										
 					}else{
 						jq("#div_dep").hide();						
 					}				
@@ -327,7 +332,7 @@ var j=0;
 		}else{
 			jq("#div_dep").hide();
 		}		
-		return result;
+		return depids;
 	}
 	
 	function loadwebformtypes(){
@@ -345,6 +350,7 @@ var j=0;
 					jq("select[name='fid']").empty();
 					var item="";
 					if(data.length>0){
+					    fids=data.length;
 						item+="<option value=''>請選擇小類別</option>";
 						jq.each(data,function(i,obj){
 							item+="<option value="+obj[0]+">"+obj[1]+"</option>";						
@@ -362,17 +368,23 @@ var j=0;
 		}				
 	}
 	
-	function checkdepments(){
-	
+	function checkdepmentsAndFid(){
 	   var factno=jq("#dwrFactNo").val();
 	   var visasort=jq("#dwr_kytype").val().split("__")[0];	   
 	   var depId=jq("select[name='depId']").val();
 	   var trMk=jq("input[name='trMk']").val();
-	      if(factno!=""&&visasort!=""&&depId!=""&&trMk!=""){
-	          kyzvisaflowjs.findVisaSort_dwr5(factno,visasort,depId,trMk,function(x){	          
-                			   if(x!=null&&x.length>0){                          	
-                                  	alert("該部門審核流程已存在!");                           	                                                    
-                                  	lockbtn();                             
+	   var fid=jq("select[name='fid']").val();	
+	      if(factno!=""&&visasort!=""&&trMk!=""){
+	          kyzvisaflowjs.findVisaSort_dwr_depidAndfidB(factno,visasort,trMk,depId,fid,function(x){	          
+                			   if(x!=null&&x.length>0){
+                			        if(depId!=null&&depId!=""){
+                			           alert("該部門審核流程已存在!");
+                			           lockbtn(); 
+                			        } 
+                			        if(fid!=null&&fid!=""){
+                			           alert("該小類流程已存在！");
+                			           lockbtn(); 
+                			        }               			                      			                                 	                                	                           	                                                                                     	                            
                                   }else{                             
                                   	unlockbtn();
                                   }
@@ -395,41 +407,43 @@ var j=0;
             			 }
                });
 	}
+		
 	
      function checkSame(){
        var factno=document.getElementById("dwrFactNo").value;
        var visasort=document.getElementById("dwr_kytype").value.split("__")[0]; 
        var visasort2=document.getElementById("dwr_kytype").value.split("__")[1]; 
-       var visaSigner=document.getElementById("skeys0").value;
-       //var visasort_obj=document.getElementById("dwr_kytype");
-       //var visasort_index=visasort_obj.selectedIndex;
-       //var visasort_text=visasort_obj.options[visasort_index].text;
-       var trMk=jq("input[name='trMk']").val();       
+       var visaSigner=document.getElementById("skeys0").value;     
+       var trMk=jq("input[name='trMk']").val();      
        if(factno!=""&&visasort!=""&&trMk!=""&&trMk!=null){
     	   if(visasort2=="0"){//【其它類】
-    	       jq("#div_dep").hide();
-    		   if(visaSigner!=""){                                   
+    	       jq("#div_dep").hide();    		                                    
                    if(trMk=="Y"){
-                       kyzvisaflowjs.findVisaSort_dwr4(factno,visasort,visaSigner,trMk,function(x){
-                           if(x!=null&&x.length>0){                          	
+                       if(fids==0&&depids==0){
+                        if(visaSigner!=""){
+                          kyzvisaflowjs.findVisaSort_dwr4(factno,visasort,visaSigner,trMk,function(x){
+                           if(x!=null&&x.length>0){                                                    	
                            	alert("該Email("+visaSigner+")的審核流程已存在!");                           	                                                    
                            	lockbtn();                             
                            }else{                             
                            	unlockbtn();
                            }
-                       });                                  	               	                        
+                           });
+                        }                       
+                       }else{
+                          checkdepmentsAndFid();
+                       }                                                                              	               	                        
                    }else{
                 	   jq("#div_dep").hide();
                 	   visasort=visasort+"_AA";
                 	   checkNodepments(factno,visasort);              	  
                    }
-                 }  
+                  
     	   }else{//【出差類】【配方類】   		   
     			   if(visasort2=="TR"){
-    			       if(trMk=="Y"){
-    			         // var result=loaddepments();				     
-    				      if(result>0){              		                 		                  		   
-                		    checkdepments();
+    			       if(trMk=="Y"){    			        			     
+    				      if(depids>0){              		                 		                  		   
+                		    checkdepmentsAndFid();
                 	      }else{
                 		   alert("該廠還沒有建立部門資料,無法創建出差流程");
                 		   lockbtn();               		                 		   
@@ -437,10 +451,7 @@ var j=0;
     			       }else{
     			         alert("該廠出差流程（不分部門）不能建立");
     			         lockbtn(); 
-    			         jq("#div_dep").hide();
-    			         /*jq("#div_dep").hide();
-                	     visasort=visasort+"_AA";
-                	     checkNodepments(factno,visasort);*/
+    			         jq("#div_dep").hide();   			        
     			       }
     				   
     			   }else{
@@ -551,6 +562,7 @@ function checkWebtype(){
 			dataType:"json",
 			url:"webtype_findTypes",
 			data:{factNo:factno.val()},
+			async:false,
 			success:function(data){
 				var item="";
 				if(data.length>0){
@@ -589,8 +601,7 @@ function unlockbtn(){
 
 
 jq(function(){
-	checkWebtype();
-	//result=loaddepments();	
+	checkWebtype();	
 });
 </script>
 

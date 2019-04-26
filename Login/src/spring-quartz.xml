@@ -96,7 +96,7 @@
     </bean>
     <bean id="CronTriggerBeanE" class="org.springframework.scheduling.quartz.CronTriggerBean">
       <property name="jobDetail" ref="quantzjobBeanA"></property>
-      <property name="cronExpression" value="0 0 13 * * ?"></property>      
+      <property name="cronExpression" value="0 30 13 * * ?"></property>      
     </bean>
      <bean id="CronTriggerBeanF" class="org.springframework.scheduling.quartz.CronTriggerBean">
       <property name="jobDetail" ref="quantzjobBeanD"></property>
@@ -120,7 +120,7 @@
                 <ref bean="CronTriggerBeanA"/><!-- (第一次) 10點  下一位簽核人 -->  
                 <ref bean="CronTriggerBeanB"/><!-- (第二次) 16點  下一位簽核人 -->    
                 <ref bean="CronTriggerBeanC"/>  <!-- 12點  簽核完畢知會 -->                 
-                <ref bean="CronTriggerBeanE"/><!-- (第三次) 13點  下一位簽核人	 -->
+                <ref bean="CronTriggerBeanE"/><!-- (第三次) 13點半  下一位簽核人	 -->
                 <ref bean="CronTriggerBeanF"/>	<!-- 每月6號 9點 -->
                 <ref bean="CronTriggerBeanG"/><!-- 每周五早上9點 業務周報告-->
                 <ref bean="CronTriggerBeanH"/><!-- 每周一早上8點 業務周報告彙總 -->	

@@ -175,4 +175,10 @@ public class KyzVisaFlowServicesImpl implements IKyzVisaFlowServices{
 		visaDao.addMore(list);
 	}
 
+	public List<String> findVisaSort_dwr_depidAndfidB(String factNo,
+			String visaSort, String depId, String trMk, Integer fid) {
+		// TODO Auto-generated method stub
+		return visaDao.findVisaSort_dwr_depidAndfidB(factNo, visaSort, depId, trMk, fid);
+	}
+
 }

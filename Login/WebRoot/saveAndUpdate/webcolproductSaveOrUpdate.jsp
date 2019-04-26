@@ -144,7 +144,7 @@ String str_date_h = fmt2.format(currentTime); //将时间格式化
 			     <td class="tdcolor">型體負責人</td>
 			     <td class="tdcolor">可否請款</td>
 			     <td class="tdcolor">階段</td>			     
-			     <td class="tdcolor">需求料的重量</td>			    			     			     		     
+			     <td class="tdcolor">需求料的重量</td>			    	    			     			     		     
 			     <td class="tdcolor">備註</td>
 			 </tr>
 			 </tbody>				
@@ -217,7 +217,7 @@ String str_date_h = fmt2.format(currentTime); //将时间格式化
 					</s:else>
 			     </select>			     
 			     </td>			     
-			     <td ><input type="text" name="obj.webColproductItemses[${x.index}].weightb" value="<s:property value='weightb'/>" datatype="my0-8"/></td>
+			     <td ><input type="text" name="obj.webColproductItemses[${x.index}].weightb" value="<s:property value='weightb'/>" datatype="my0-8"/></td>		      
 			      <td >
 			      <input type="text" name="obj.webColproductItemses[${x.index}].remarks" value="<s:property value='remarks'/>" datatype="*0-150"/>			      
 			      <input type="hidden" name="obj.webColproductItemses[${x.index}].webColproductMain.billNo" value="<s:property value='webColproductMain.billNo'/>" />		     
@@ -362,7 +362,7 @@ var j=0;
         '<option value="Y">是</option><option value="N">否</option></select>';
         newTd11.innerHTML='<select name="obj.webColproductItemses['+j+'].stage">'+
         '<option value="試作">試作</option><option value="樣品">樣品</option></select>';       
-        newTd12.innerHTML='<input type="text" name="obj.webColproductItemses['+j+'].weightb" datatype="my0-8"/>';                           	     
+        newTd12.innerHTML='<input type="text" name="obj.webColproductItemses['+j+'].weightb" datatype="my0-8"/>';                                        	     
         newTd13.innerHTML='<input type="text" name="obj.webColproductItemses['+j+'].remarks" datatype="*0-150"/>'+          
         '<input type="hidden" name="obj.webColproductItemses['+j+'].webColproductMain.billNo" value="'+billno+'"'+'/>';       
         }

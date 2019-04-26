@@ -17,4 +17,12 @@ public class WebFormtypeDaoImpl extends Basedao implements IWebFormtypeDao{
 		return list;
 	}
 
+	public List<WebFormtype> findWebformByFactno(String factNo) {
+		// TODO Auto-generated method stub
+		String hql="from WebFormtype where webType.id.factNo=?";
+		String[]objs={factNo};
+		List<WebFormtype>list=super.findAll(hql, objs);
+		return list;
+	}
+
 }

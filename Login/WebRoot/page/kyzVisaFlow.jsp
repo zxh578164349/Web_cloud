@@ -24,6 +24,21 @@
 
 	<jsp:include page="publicHead_visaFlow.jsp" flush="true" />
 	<hr />
+	
+	<form action="visaflow_impormtData"  method="post" enctype="multipart/form-data" id="upload_form" target="frameFile">
+	           <table class="table-condensed">
+	            <tr>
+	              
+	              <td>
+	                <input type="file" name="file" id="id_file" style="width:150px"/>
+	              </td>
+	              <td>
+	                <input value="導入數據" type=button onclick="checkForm()"  class="btn btn-info"/>
+	              </td>
+	            </tr>
+	           </table>		     		
+	</form>
+	<iframe id="frameFile" name="frameFile" style="display: none;"></iframe>
 			
 	<div id="bodyid">
 		<jsp:include page="table1/kyzVisaFlow1.jsp" />
@@ -90,6 +105,23 @@
 		subform.attr("action","visaflow_print");
 		subform.attr("target","_blank");
 		subform.submit();
+	}
+	
+	function checkForm(){
+		var id_file=jq("#id_file").val();
+		var extendName=id_file.substr(id_file.lastIndexOf(".")).toLowerCase();
+		if(id_file==""){
+			layer.alert("請選擇Excel文檔");
+			return false;
+		}else if(extendName!=".xls"&&extendName!=".xlsx"){
+			layer.alert("僅允許Excel文檔");
+			return false;
+		}else{
+		    layer.load("請稍等...");
+			jq("#upload_form").submit();
+		
+		}	
+					
 	}
  
 </script>

@@ -69,7 +69,7 @@
 			     <td >型體負責人</td>
 			     <td >可否請款</td>
 			     <td >階段</td>
-			     <td >需求料的重量</td>			    			     			     		     
+			     <td >需求料的重量</td>					     	    			     			     		     
 			     <td >備註</td>
 			</tr>
 
@@ -109,7 +109,7 @@
 					<td><s:property value='stage' />
 					</td>
 					<td><s:property value='weightb' />
-					</td>
+					</td>					
 					<td><s:property value='remarks' />
 					</td>					
 				</tr>

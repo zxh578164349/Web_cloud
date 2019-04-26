@@ -31,6 +31,7 @@ public class WebColproductItems implements java.io.Serializable {
 	private String updateDate;
 	private String numbersbMk;//是否量產
 	private String stage;//階段   （試模階段  或  樣品階段）
+	private Integer testnums;//試模次數    （第幾次）
 	
 
 	// Constructors
@@ -256,5 +257,15 @@ public class WebColproductItems implements java.io.Serializable {
 	public void setRemarks(String remarks) {
 		this.remarks = remarks;
 	}
+
+	public Integer getTestnums() {
+		return testnums;
+	}
+
+	public void setTestnums(Integer testnums) {
+		this.testnums = testnums;
+	}
+	
+	
 
 }

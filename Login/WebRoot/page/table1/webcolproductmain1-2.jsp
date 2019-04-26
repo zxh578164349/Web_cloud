@@ -32,7 +32,7 @@
 			     <input type="text"  value="<s:property value='stage'/>" readonly style="color:blue"/>	     
 			     </td>			     
 			     <td ><input type="text"  value="<s:property value='weightb'/>" readonly style="color:blue"/></td>
-			      <td >
+			      <td >			      
 			      <input type="text"  value="<s:property value='remarks'/>" readonly style="color:blue"/>			      			     	     
 			      </td>			      		      
 			  </tr>

@@ -73,13 +73,10 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 						
 						<td class="tdcolor">類別</td>
 				        <td >
-				         <select  id="dwr_kytype" onchange="checkType(this.value)" datatype="*" style="color:blue">
+				         <select  id="dwr_kytype" onchange="loadwebformtypes();checkType()" datatype="*" style="color:blue">
 				            <option value="">請選擇</option>
 				         </select>				         
-				         <input type="hidden" id="dwr_email" value="<s:property value='#session.loginUser.email'/>"/>
-				         <input type="hidden" name="kyzletter.visaType" id="hidden_kytype"/>
-				         
-				         <div id="div_depar" style="display:none"><select id="sel_depar" onchange="checkType2()"></select></div>	
+				         <input type="hidden" id="dwr_email" value="<s:property value='#session.loginUser.email'/>"/>				         				         				         	
 				        </td>
 					</tr>
 				</s:if>
@@ -88,7 +85,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 						<td class="tdcolor">廠別</td>
 						<td ><select style="color:blue"
 							name="kyzletter.id.factNo" datatype="*" id="dwrFactNo"
-							onchange="getFactArea(this.value),makeBillNo(),getKyType2(this.value);loadwebformtypes()">
+							onchange="getFactArea(this.value),makeBillNo(),getKyType2(this.value);checkType()">
 								<option value="">請選擇廠別</option>
 								<s:iterator value="#session.facts" id="temp">
 									<option value="${temp[0]}">${temp[1]
@@ -104,12 +101,10 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 						
 						<td class="tdcolor">類別</td>
 				        <td >
-				         <select  id="dwr_kytype" onchange="checkType(this.value);loadwebformtypes()" datatype="*" style="color:blue">
+				         <select  id="dwr_kytype" onchange="loadwebformtypes();checkType()" datatype="*" style="color:blue">
 				            <option value="">請選擇</option>
 				         </select>
-				         <input type="hidden" id="dwr_email" value="<s:property value='#session.loginUser.email'/>"/>
-				         <input type="hidden" name="kyzletter.visaType" id="hidden_kytype"/>
-				         <div id="div_depar" style="display:none"><select id="sel_depar" onchange="checkType2()"></select></div>	
+				         <input type="hidden" id="dwr_email" value="<s:property value='#session.loginUser.email'/>"/>				         				         
 				        </td>
 					</tr>
 					</s:if>																							    
@@ -192,10 +187,15 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 					    <td >
 					                   是<input type="radio" name="trMk" value="Y" checked datatype="*" onclick="checkType()"/>&nbsp;&nbsp;
 			                                        否<input type="radio" name="trMk" value="N" onclick="checkType()"/> 
-					    </td>
-					    <td>小類別</td>
-					    <td colspan="10">
-					      <div id="div_webform" style="display:none"><select name="fid" datatype="*" onchange="checkType2()"></select></div> 
+					    </td>					    					    
+					    <td>
+					    <div id="div_depar2" style="display:none">部門</div>
+					    <div id="div_webform2" style="display:none">小類別</div>
+					    </td>				    
+					    <td colspan="10">				      
+					      <div id="div_depar" style="display:none"><select id="sel_depar" onchange="checkType()" datatype="*"></select></div>
+					      <div id="div_webform" style="display:none"><select name="fid" datatype="*" onchange="checkType()"></select></div>
+					      <input type="hidden" name="kyzletter.visaType" id="hidden_kytype"/> 
 					    </td>
 					 </tr>
 					</s:if>
@@ -233,6 +233,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 			tiptype : 4,
 			showAllError : true,
 			tipSweep : true,
+			ignoreHidden:true,
 			datatype : {
 				"*0-6" : /^\d{0,9}(\.[0-9]{1,3})?$/,
 				"my0-8": /^\d{0,8}(\.[0-9]{1,4})?$/
@@ -303,40 +304,6 @@ function getKyType2(factno){
     
 	}
 	 
-  /*function checkType(type){
-     dwrFactNo=document.getElementById("dwrFactNo").value;
-     dwremail=document.getElementById("dwr_email").value.toLowerCase(); //登錄人的email要轉化爲小寫,因爲申請人email已全部轉化爲小寫（20151022）;
-     if(dwrFactNo!=""&&type!=""){
-         kyzvisaflowjs.findByType_Dwr(dwrFactNo,type,function(x){
-            if(x==0){//流程不存在
-               alert("該類型審核流程不存在，請重新選定!");
-               document.getElementById("sub").disabled=true;
-               document.getElementById("sub").style.color="red";
-               document.getElementById("dwr_kytype").style.color="red";
-            }else{             
-                kyzvisaflowjs.findVisaSort_dwr(dwrFactNo,type,dwremail,function(y){
-                  if(y==null){
-                     alert("對不起，你不是該類別函文申請人，請重新選定!");
-                     document.getElementById("sub").disabled=true;
-                     document.getElementById("sub").style.color="red";
-                     document.getElementById("dwr_kytype").style.color="red";                    
-                  }else{
-                     document.getElementById("sub").disabled=false;
-                     document.getElementById("sub").style.color="white";
-                     document.getElementById("dwr_kytype").style.color="black";
-                     document.getElementById("hidden_kytype").value=y;                    
-                  }
-                  
-               }); 
-            }                           
-         });
-     }
-  }*/
-  
-  
-  
-  
-  
   
   var i=0;	
   function addFile(){

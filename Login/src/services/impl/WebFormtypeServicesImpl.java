@@ -20,4 +20,9 @@ public class WebFormtypeServicesImpl implements IWebFormtypeServices{
 		return webformtypedao.findWebformByFactnoTypeno(factNo, typeNo);
 	}
 
+	public List<WebFormtype> findWebformByFactno(String factNo) {
+		// TODO Auto-generated method stub
+		return webformtypedao.findWebformByFactno(factNo);
+	}
+
 }

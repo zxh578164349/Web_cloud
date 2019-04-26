@@ -123,6 +123,7 @@
 		    <include method="findVisaSort_dwr5"/>
 		    <include method="findByFactNoVisaSort"/>
 		    <include method="findNums"/>
+		    <include method="findVisaSort_dwr_depidAndfidB"/>
 		</create>
 		<create javascript="kyzscmjs" creator="spring">
 		    <param name="beanName" value="kyzscmSer"/>

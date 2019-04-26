@@ -225,6 +225,35 @@ public class KyzVisaFlowDaoImpl extends Basedao implements IKyzVisaFlowDao {
 		return list;
 	}
 	
+	public List<String> findVisaSort_dwr_depidAndfidB(String factNo, String visaSort,String trMk, String depId,Integer fid) {
+		StringBuffer hql=new StringBuffer();
+		Map<String,Object>map=new HashMap<String,Object>();
+		hql.append("select id.visaSort from KyzVisaflow where 1=1 ");
+		if(factNo!=null&&!"".equals(factNo)){
+			hql.append("and id.factNo=:factNo ");
+			map.put("factNo", factNo);
+		}
+		if(visaSort!=null&&!"".equals(visaSort)){
+			hql.append("and id.visaSort like:visaSort ");
+			map.put("visaSort", visaSort+"%");
+		}		
+		if(trMk!=null&&!"".equals(trMk)){
+			hql.append(" and trMk=:trMk ");
+			map.put("trMk", trMk);
+		}
+		if(depId!=null&&!"".equals(depId)){
+			hql.append(" and to_char(depId.depId)=:depId ");
+			map.put("depId", depId);
+		}
+		if(fid!=null&&fid!=0){
+			hql.append(" and webformtype.fid=:fid ");
+			map.put("fid", fid);
+		}
+		hql.append(" and id.itemNo='01' ");		
+		List<String> list=(List<String>)super.getLists(hql.toString(), map);	
+		return list;
+	}
+	
 	
 	public List<String> findVisaSort_C(String factNo,String mainSort) {
 		// TODO Auto-generated method stub
