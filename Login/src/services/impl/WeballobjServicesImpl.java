@@ -8,6 +8,7 @@ import java.util.List;
 import dao.IWeballobjDao;
 
 import entity.KyzExpectmatmLog;
+import entity.VWeballobjasumwebyield;
 import entity.Weballobj;
 import services.IWeballobjServices;
 import util.PageBean;
@@ -65,6 +66,10 @@ public class WeballobjServicesImpl implements IWeballobjServices{
 	public List<Weballobj> findAllobj(String factNo, String yymm, String yymm2) {
 		// TODO Auto-generated method stub
 		return weballobjdao.findAllobj(factNo, yymm, yymm2);
+	}
+	
+	public List<VWeballobjasumwebyield>findAllobj2(String factNo,String yymm,String yymm2){
+		return weballobjdao.findAllobj2(factNo, yymm, yymm2);
 	}
 
 	/**

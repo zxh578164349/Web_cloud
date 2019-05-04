@@ -52,6 +52,7 @@
 			   <input value="導出Excel(2)" type="button" class="btn btn-primary" onclick="print2('public_form','factNo','yymm','yymm2')"/>
 			   <s:if test='#session.factNo=="tw"'>
 			       <input value="導出全部" type="button" class="btn btn-primary" onclick="print3('public_form','factNo','yymm','yymm2')"/>
+			        <input value="導出全部2" type="button" class="btn btn-primary" onclick="print4('public_form','factNo','yymm','yymm2')"/>
 			   </s:if>
 			   
 		    

@@ -33,7 +33,6 @@ function hidediv(){
 
 //檢測函文流程20170707
 function checkType(){
-	alert(fids);
     var dwrFactNo=document.getElementById("dwrFactNo").value;
     var dwremail=document.getElementById("dwr_email").value.toLowerCase(); //登錄人的email要轉化爲小寫,因爲申請人email已全部轉化爲小寫（20151022）     
     var trMk=jq("input[name='trMk']:checked").val();

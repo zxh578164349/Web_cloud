@@ -8,7 +8,9 @@
     <class name="entity.WebFormtype" table="WEB_FORMTYPE" schema="WEB">
         <id name="fid" type="java.lang.Integer">
             <column name="FID" precision="6" scale="0" />
-            <generator class="assigned" />
+            <generator class="sequence">
+               <param name="sequence">seq_webformtype</param>
+            </generator>
         </id>
         <many-to-one name="webType" class="entity.WebType" fetch="select">
             <column name="FACT_NO" length="20" />

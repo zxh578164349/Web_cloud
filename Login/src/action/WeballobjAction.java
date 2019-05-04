@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
@@ -36,6 +37,8 @@ import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
 import entity.KyzExpectmatmLog;
+import entity.VWeballobjasumwebyield;
+import entity.VWeballobjasumwebyieldId;
 import entity.WebFact;
 import entity.WebFactId;
 import entity.WebUser;
@@ -569,6 +572,73 @@ public class WeballobjAction  extends ActionSupport implements ServletResponseAw
 		}//switch							
 	}
 	
+	public void print_all2() throws ParseException, IOException{
+		factNo="all";
+		HSSFWorkbook wb=new HSSFWorkbook();
+		Map<String,Object>map_cs=findStyles(wb);
+		//List<Object[]>list_facts=(List<Object[]>)ActionContext.getContext().getSession().get("facts");//所有廠別	
+		List<WebFact>list_facts=webFactSer.findFactAble();
+		List<String>list_months=GlobalMethod.findMonths(yymm, yymm2);
+		List<VWeballobjasumwebyield>list_objs=weballobjser.findAllobj2(factNo, yymm, yymm2);		
+		switch(list_objs.size()){//switch		
+		case 0:
+			response.setContentType("text/html;charset=utf-8");
+			response.getWriter().print("<script>window.parent.alert('無數據');</script>");			
+			break;
+		default:
+			Map<String,Object>map=new LinkedHashMap<String,Object>();	
+			
+			for(String month:list_months){
+				List<VWeballobjasumwebyield>list=new ArrayList<VWeballobjasumwebyield>();
+				for(WebFact fact:list_facts){
+					VWeballobjasumwebyield obj=new VWeballobjasumwebyield(
+							new VWeballobjasumwebyieldId(fact.getId().getFactNo(),fact.getId().getFactArea(),month));
+					obj.setFact(fact);
+					
+					list.add(obj);
+				}
+				
+				for(int a=0;a<list.size();a++){
+					VWeballobjasumwebyield obj=list.get(a);
+					for(VWeballobjasumwebyield obj2:list_objs){
+						if(obj.getId().getFactNo().equals(obj2.getId().getFactNo())&&
+							obj.getId().getFactCode().equals(obj2.getId().getFactCode())&&
+							obj.getId().getYymm().equals(obj2.getId().getYymm())
+								){
+							list.set(a, obj2);							
+						}
+					}
+				}
+				map.put(month, list);
+			}
+																																			
+			init_all2(wb,map_cs,factNo,list_months,map);
+												
+			try {
+				/*OutputStream os = new FileOutputStream("E:/" + "websort.xls");
+				wb.write(os);
+				os.close();	*/
+				ServletOutputStream os=response.getOutputStream();
+				response.setContentType("application/vnd.ms-excel");
+				int msie=ServletActionContext.getRequest().getHeader("USER-AGENT").toLowerCase().indexOf("msie");//判斷是否為IE瀏覽器,大於0則為IE瀏覽器
+				String fileName="report"+yymm+"-"+yymm2+".xls";
+				if(msie>0){
+					fileName=java.net.URLEncoder.encode(fileName,"utf-8");//解決IE中文文件不能下載的問題
+				}else{
+					fileName=new String(fileName.getBytes("utf-8"),"iso-8859-1");//解決非IE中文名亂碼問題
+				}		
+				response.setHeader("Content-disposition", "attachment;filename="+fileName);					
+				wb.write(os);
+				os.close();						
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		
+		}//switch							
+	}
+	
+	
 	/**
 	 * 各廠別狀態的月份統計
 	 * @Title: print2
@@ -833,6 +903,74 @@ public class WeballobjAction  extends ActionSupport implements ServletResponseAw
 			}
 			/*********************************合計***************************************/
 		}//for
+	}
+	
+	
+	public void init_all2(HSSFWorkbook wb,Map<String,Object>map_cs,String factNo,List<String>list_months,Map<String,Object>map) throws ParseException{
+		HSSFCellStyle cs=(HSSFCellStyle)map_cs.get("cs");
+		HSSFCellStyle cs_head=(HSSFCellStyle)map_cs.get("cs_head");
+		HSSFCellStyle cs_title=(HSSFCellStyle)map_cs.get("cs_title");
+		HSSFCellStyle cs_poi_all=(HSSFCellStyle)map_cs.get("cs_poi_all");
+		
+		int index1=0;						
+		HSSFSheet sheet=wb.createSheet();
+		sheet.setColumnWidth(0,5500);
+		for(int a=1;a<=map.keySet().size()*4+1;a++){
+			sheet.setColumnWidth(a, 3500);
+		}
+		for(String month:map.keySet()){
+			List<VWeballobjasumwebyield>list=(List<VWeballobjasumwebyield>)map.get(month);
+			if(index1==0){								
+				for(int a=0;a<list.size()+3;a++){
+					sheet.createRow(a+1);
+					for(int b=0;b<map.keySet().size()*4+1;b++){						
+						sheet.getRow(a+1).createCell(b);
+						sheet.getRow(a+1).getCell(b).setCellStyle(cs);
+					}
+				}
+				sheet.getRow(1).getCell(0).setCellValue("月份");
+				sheet.getRow(2).getCell(0).setCellValue("項目");
+				sheet.getRow(3).getCell(0).setCellValue("單位");
+				for(int a=1;a<4;a++){
+					sheet.getRow(a).getCell(0).setCellStyle(cs_head);
+				}
+				for(int a=0;a<list.size();a++){
+					sheet.getRow(4+a).getCell(0).setCellValue(
+							list.get(a).getFact().getFactSname()+"_"+list.get(a).getFact().getId().getFactArea());
+							//list.get(a).getId().getFactNo()+"_"+list.get(a).getId().getFactCode());
+					sheet.getRow(4+a).getCell(0).setCellStyle(cs_head);
+				}
+			}
+			
+			CellRangeAddress cra_month=new CellRangeAddress(1,1,1+4*index1,4+4*index1);
+			sheet.addMergedRegion(cra_month);			
+			sheet.getRow(1).getCell(1+4*index1).setCellValue(month);
+			
+			sheet.getRow(2).getCell(1+4*index1).setCellValue("總原料庫存量");
+			sheet.getRow(2).getCell(2+4*index1).setCellValue("總原料庫存金額");
+			sheet.getRow(2).getCell(3+4*index1).setCellValue("請款雙數");
+			sheet.getRow(2).getCell(4+4*index1).setCellValue("生產雙數");
+			
+			sheet.getRow(3).getCell(1+4*index1).setCellValue("KG");
+			sheet.getRow(3).getCell(2+4*index1).setCellValue("USD");
+			sheet.getRow(3).getCell(3+4*index1).setCellValue("雙");
+			sheet.getRow(3).getCell(4+4*index1).setCellValue("雙");
+			
+			for(int a=0;a<list.size();a++){
+				VWeballobjasumwebyield obj=list.get(a);
+				sheet.getRow(4+a).getCell(1+4*index1).setCellValue(obj.getObjA177()==null?0:obj.getObjA177());
+				sheet.getRow(4+a).getCell(2+4*index1).setCellValue(obj.getObjA178()==null?0:obj.getObjA178());
+				sheet.getRow(4+a).getCell(3+4*index1).setCellValue(obj.getObjA101()==null?0:obj.getObjA101());
+				sheet.getRow(4+a).getCell(4+4*index1).setCellValue(obj.getSumActualpairs()==null?0:obj.getSumActualpairs().doubleValue());
+				
+				for(int b=1;b<=4;b++){
+					sheet.getRow(4+a).getCell(b+4*index1).setCellStyle(cs_poi_all);
+				}								
+			}
+			
+			index1++;						
+		}
+										
 	}
 	
 	

@@ -172,6 +172,18 @@ function print3(public_form,factNo,yymm,yymm2){
 	}
 }
 
+function print4(public_form,factNo,yymm,yymm2){
+	//jq("#"+factNo).val("all");
+	var public_form=jq("#"+public_form);	
+	public_form.attr("action","weballobj_print_all2");
+	public_form.attr("target","_blank");	
+	if(jq("#"+yymm).val()==""||jq("#"+yymm2).val()==""){
+		layer.msg("請選日期",3,3);
+	}else{
+		public_form.submit();
+	}
+}
+
 function showDiv(){
     jq.layer({
     type: 2,   //0-4的选择,

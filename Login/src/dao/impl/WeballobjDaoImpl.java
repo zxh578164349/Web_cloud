@@ -15,6 +15,7 @@ import util.PageBean;
 import dao.Basedao;
 import dao.IWeballobjDao;
 import entity.KyzExpectmatmLog;
+import entity.VWeballobjasumwebyield;
 import entity.Weballobj;
 
 /**   
@@ -133,10 +134,35 @@ public class WeballobjDaoImpl extends Basedao implements IWeballobjDao{
 		hql.append(" order by id.yymm,id.fact.id.factArea");
 		List<Weballobj>list=super.getAllWithNoPage(hql.toString(), map);
 		//解決緩存問題
-		/*for(Weballobj obj:list){
+		for(Weballobj obj:list){
 			obj.getId().getFact().getFactSname();
-		}*/
+		}
 		return list;
+	}
+	
+	public List<VWeballobjasumwebyield>findAllobj2(String factNo,String yymm,String yymm2){
+		StringBuffer hql=new StringBuffer();
+		Map<String,Object>map=new HashMap<String,Object>();
+		hql.append("from VWeballobjasumwebyield where 1=1 ");
+		if(factNo!=null&&!factNo.equals("")&&!factNo.equals("tw")&&!"all".equals(factNo)){
+			hql.append(" and id.factNo=:factNo");
+			map.put("factNo", factNo);
+		}
+		if(yymm!=null&&!yymm.equals("")){
+			hql.append(" and id.yymm>=:yymm");
+			map.put("yymm", yymm);
+		}
+		if(yymm2!=null&&!yymm2.equals("")){
+			hql.append(" and id.yymm<=:yymm2");
+			map.put("yymm2", yymm2);
+		}
+		hql.append(" order by id.yymm,id.factCode");
+		List<VWeballobjasumwebyield>list=super.getAllWithNoPage(hql.toString(), map);
+		for(VWeballobjasumwebyield obj:list){
+			obj.getFact().getFactSname();
+		}
+		return list;
+		
 	}
 
 	/**

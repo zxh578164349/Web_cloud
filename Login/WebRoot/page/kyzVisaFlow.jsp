@@ -24,7 +24,7 @@
 
 	<jsp:include page="publicHead_visaFlow.jsp" flush="true" />
 	<hr />
-	
+	<s:if test='#session.loginUser.adminMk=="Y"'>
 	<form action="visaflow_impormtData"  method="post" enctype="multipart/form-data" id="upload_form" target="frameFile">
 	           <table class="table-condensed">
 	            <tr>
@@ -39,7 +39,7 @@
 	           </table>		     		
 	</form>
 	<iframe id="frameFile" name="frameFile" style="display: none;"></iframe>
-			
+	</s:if>		
 	<div id="bodyid">
 		<jsp:include page="table1/kyzVisaFlow1.jsp" />
 	</div>

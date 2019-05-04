@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import entity.KyzExpectmatmLog;
+import entity.VWeballobjasumwebyield;
 import entity.Weballobj;
 
 import util.PageBean;
@@ -28,6 +29,7 @@ public interface IWeballobjDao {
 	public void addMore(List<Weballobj>list);
 	public PageBean findPageBean(int pageSize,int page,String factNo,String yymm,String yymm2);
 	public List<Weballobj>findAllobj(String factNo,String yymm,String yymm2);
+	public List<VWeballobjasumwebyield>findAllobj2(String factNo,String yymm,String yymm2);
 	public Weballobj findById(String factNo,String factcode,String yymm);
 	public void delete(String factNo,String factCode,String yymm,KyzExpectmatmLog log);
 	public List<Weballobj>findObj(String yymm,String yymm2);
