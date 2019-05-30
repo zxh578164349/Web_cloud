@@ -8,6 +8,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -21,6 +22,7 @@ import services.IWebMaterialregistrationformServices;
 import services.IWebmonthsServices;
 import util.GlobalMethod;
 import util.ImportExcel;
+import util.JasperHelper;
 import util.PageBean;
 
 import com.opensymphony.xwork2.ActionContext;
@@ -370,6 +372,27 @@ public class WebMaterialregistrationformAction extends ActionSupport implements 
 		List<String>list=webmateriaser.findmtype();
 		jsons=JSONArray.fromObject(list);
 		return "findmtype";
+	}
+	
+	public void print(){
+		Map<String,Object>map=new HashMap<String,Object>();		
+		List<WebMaterialregistrationitems>list=webmateriaser.findObjsWithNopage(mtype, sdate, edate,materielname);
+		StringBuffer fileName=new StringBuffer();
+		StringBuffer title=new StringBuffer();
+		fileName.append("report");		
+				
+		if(sdate!=null&&!sdate.equals("")){
+			fileName.append("-"+sdate);
+			title.append(sdate);
+		}
+		if(edate!=null&&!edate.equals("")){
+			fileName.append("-"+edate);
+			title.append("-"+edate);
+		}
+		title.append("原物料&粗胚進耗存登記表");
+		map.put("title", title.toString());
+		JasperHelper.exportmain("excel", map,"webmaterialform.jasper", list,fileName.toString(), "jasper/input/");
+		
 	}
 	
 }

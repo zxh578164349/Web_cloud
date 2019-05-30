@@ -2206,42 +2206,12 @@ public class GlobalMethod extends HibernateDaoSupport{
 	 
 	 
 	 public static void main(String[] args) {
-		
-		 /*Properties p = new Properties();
-	    	InputStream in = Object. class .getResourceAsStream( "/project_config.properties" );
-	    	try {
-				p.load(in);
-				System.out.println(p.getProperty("project.liujung"));
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-	    	
-	    	String abc="abcd";
-	    	System.out.println(abc.substring(0,1));
-	    	System.out.println(abc.substring(0,2));*/
-		/* Calendar cal=Calendar.getInstance();
-		 String d1="20180507";
-		 String d2="20180611";
-		 SimpleDateFormat sdf=new SimpleDateFormat("yyyyMMdd");
-		 List<String>list=new ArrayList<String>();
-		 Date date=new Date();
-		 for(int i=0;i<20;i++){
-			 System.out.println(date.getTime());
-		 }
-		
-		 Date date2=new Date();
-		 for(int i=0;i<20;i++){
-			 System.out.println(date2.getTime());
-		 }
-		 Date date3=new Date(); 
-		 for(int i=0;i<20;i++){
-			 System.out.println(date3.getTime());
-		 }*/
+				 		 
+		 BigDecimal a=new BigDecimal(6.55);	
+		 Double d=6.3;
 		 
-		 DecimalFormat fmt=new DecimalFormat();		 
+		 System.out.println(a.doubleValue()+d.doubleValue());
 		 
-		 System.out.println(fmt.format(-0.23));
 		 
 		 
 

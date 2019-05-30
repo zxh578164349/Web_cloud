@@ -5,6 +5,7 @@ import java.util.List;
 import dao.IWebMaterialregistrationformDao;
 
 import entity.WebMaterialregistrationform;
+import entity.WebMaterialregistrationitems;
 import services.IWebMaterialregistrationformServices;
 import util.PageBean;
 
@@ -32,6 +33,12 @@ public class WebMaterialregistrationformServicesImpl implements IWebMaterialregi
 	public List<String> findmtype() {
 		// TODO Auto-generated method stub
 		return webmateriadao.findmtype();
+	}
+
+	public List<WebMaterialregistrationitems> findObjsWithNopage(String mtype,
+			String dateaA, String dateaB, String materielname) {
+		// TODO Auto-generated method stub
+		return webmateriadao.findObjsWithNopage(mtype, dateaA, dateaB, materielname);
 	}
 
 }

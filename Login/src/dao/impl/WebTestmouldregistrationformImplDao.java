@@ -98,5 +98,34 @@ public class WebTestmouldregistrationformImplDao extends Basedao implements IWeb
 		return list;
 	}
 
+	public List<WebTestmouldregistrationform> findObjsWithNopage(String dateA,
+			String dateB, String customer, String brand) {
+		// TODO Auto-generated method stub
+		StringBuffer hql=new StringBuffer();
+		Map<String,Object>map=new HashMap<String,Object>();
+		
+		//WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");		
+		hql.append("from WebTestmouldregistrationform where 1=1 ");
+		if(dateA!=null&&!"".equals(dateA)){
+			hql.append(" and tdate>=:dateA ");
+			map.put("dateA", dateA);
+		}
+		if(dateB!=null&&!"".equals(dateB)){
+			hql.append(" and tdate<=:dateB ");
+			map.put("dateB", dateB);
+		}
+		if(customer!=null&&!"".equals(customer)){
+			hql.append(" and customer=:customer ");
+			map.put("customer", customer);
+		}
+		if(brand!=null&&!"".equals(brand)){
+			hql.append(" and brand=:brand ");
+			map.put("brand", brand);
+		}
+		hql.append(" order by tdate,customer,brand ");
+		List<WebTestmouldregistrationform>list=super.getAllWithNoPage(hql.toString(), map);
+		return list;
+	}
+
 
 }

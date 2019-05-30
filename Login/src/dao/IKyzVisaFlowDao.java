@@ -18,7 +18,7 @@ public interface IKyzVisaFlowDao {
 	public String findVisaSort_dwr(String factNo,String visaSort,String email);
 	public String findVisaSort_dwr(String factNo,String visaSort,String email,String trMk);
 	public List<Object[]> findVisaSort_dwr2(String factNo,String visaSort,String email,String trMk);	
-	public String findVisaSort_dwr_depidAndfid(String factNo,String visaSort,String email,String trMk,String depId,Integer fid);//通用的  20190419
+	public String findVisaSort_dwr_depidAndfid(String factNo,String visaSort,String trMk,String depId,Integer fid);//通用的  20190419
 	public List<String> findVisaSort_dwr3(String factNo, String visaSort, String email,String trMk);
 	public List<String> findVisaSort_dwr4(String factNo, String visaSort, String depId,String trMk);
 	public List<String> findVisaSort_dwr_depidAndfidB(String factNo, String visaSort, String depId,String trMk,Integer fid);

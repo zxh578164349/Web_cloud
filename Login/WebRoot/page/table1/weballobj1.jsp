@@ -41,7 +41,7 @@
 						<th>日期</th>
 						<th>銷貨總收入</th>
 						<th>請款雙數</th>
-						<th>雙數請款金額</th>
+						<th>請款金額</th>
 						<th>客補請款雙數</th>
 						<th>客補請款金額</th>
 						<th>樣品請款雙數</th>
@@ -142,6 +142,20 @@
 						<th>粗坯用量</th>
 						<th>裁斷回頭料</th>
 						<th>油壓退料</th>
+						<th>上月成倉庫存</th>
+						<th>上月整理庫存</th>
+						<th>上月已出貨未請款</th>
+						<th>上月已請款未出貨</th>
+						<th>正批生產數</th>
+						<th>現場生產樣品</th>
+						<th>樣品組生產樣品</th>
+						<th>其它</th>
+						<th>總產量</th>
+						<th>托外生產數</th>												
+						<th>含鐵報廢</th>
+						<th>正批請款數</th>
+						<th>托外請款數</th>
+						<th>廢品重量</th>
 						<!-- <th>利潤率<font style="font-style:italic" color="red">(new)</font></th>-->
 						<s:if test='#session.loginUser.userread!="1"'>
 							<th>操作</th>
@@ -364,8 +378,35 @@
 							</td>
 							<td><s:property value="objA202" />
 							</td>
-							<!--<td><s:property value="objA203" />
-							</td>-->
+							<td><s:property value="objA203" />
+							</td>
+							<td><s:property value="objA204" />
+							</td>							
+							<td><s:property value="objA205" />
+							</td>
+							<td><s:property value="objA206" />
+							</td>
+							<td><s:property value="objA207" />
+							</td>
+							<td><s:property value="objA208" />
+							</td>
+							<td><s:property value="objA209" />
+							</td>
+							<td><s:property value="objA210" />
+							</td>
+							<td><s:property value="objA211" />
+							</td>
+							<td><s:property value="objA212" />
+							</td>
+							<td><s:property value="objA213" />
+							</td>
+							<td><s:property value="objA214" />
+							</td>
+							<td><s:property value="objA215" />
+							</td>
+							<td><s:property value="objA216" />
+							</td>
+
 							<s:if test='#session.loginUser.userread!="1"'>
 								<td>
 									<%--<form action="weballobj_findWloById" method="post" id="subform${x.index}">										

@@ -2,13 +2,13 @@ package action;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -22,12 +22,12 @@ import services.IWebTestmouldregistrationformServices;
 import services.IWebmonthsServices;
 import util.GlobalMethod;
 import util.ImportExcel;
+import util.JasperHelper;
 import util.PageBean;
 
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
-import entity.WebColproductItems;
 import entity.WebMonths;
 import entity.WebMonthsId;
 import entity.WebTestmouldregistrationform;
@@ -292,6 +292,27 @@ public class WebTestmouldregistrationformAction extends ActionSupport implements
 		List<String>list=webtestregisformser.findCustomer();
 		jsons=JSONArray.fromObject(list);
 		return "findCustomer";
+	}
+	
+	public void print(){
+		Map<String,Object>map=new HashMap<String,Object>();		
+		List<WebTestmouldregistrationform>list=webtestregisformser.findObjsWithNopage(dateA, dateB, customer, brand);
+		StringBuffer fileName=new StringBuffer();
+		StringBuffer title=new StringBuffer();
+		fileName.append("report");		
+				
+		if(dateA!=null&&!dateA.equals("")){
+			fileName.append("-"+dateA);
+			title.append(dateA);
+		}
+		if(dateB!=null&&!dateB.equals("")){
+			fileName.append("-"+dateB);
+			title.append("-"+dateB);
+		}
+		title.append("每日開發型體試模登記表");
+		map.put("title", title.toString());
+		JasperHelper.exportmain("excel", map,"webtestmoudleform.jasper", list,fileName.toString(), "jasper/input/");
+		
 	}
 
 }

@@ -8,6 +8,7 @@ import java.util.List;
 import util.PageBean;
 import entity.KyzExpectmatmLog;
 import entity.VWeballobjasumwebyield;
+import entity.VWeballobjasumwebyield2019;
 import entity.Weballobj;
 
 /**   
@@ -33,5 +34,6 @@ public interface IWeballobjServices {
 	public List<Weballobj>findObj(String yymm,String yymm2);
 	
 	public List<String>findFactCodes(String factNo,String yymm,String yymm2);
+	public List<VWeballobjasumwebyield2019>findObjByFactnoyymm(String factNo,String yymm,String yymm2,String a_type);
 
 }

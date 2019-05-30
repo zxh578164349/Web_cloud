@@ -16,6 +16,8 @@ import dao.Basedao;
 import dao.IWeballobjDao;
 import entity.KyzExpectmatmLog;
 import entity.VWeballobjasumwebyield;
+import entity.VWeballobjasumwebyield2019;
+import entity.WebTestmouldregistrationform;
 import entity.Weballobj;
 
 /**   
@@ -240,6 +242,41 @@ public class WeballobjDaoImpl extends Basedao implements IWeballobjDao{
 			map.put("yymm2",yymm2);
 		}
 		List<String>list=super.getAllWithNoPage(hql.toString(),map);
+		return list;
+	}
+
+	public List<VWeballobjasumwebyield2019> findObjByFactnoyymm(String factNo,
+			String yymm, String yymm2,String a_type) {
+		// TODO Auto-generated method stub
+		StringBuffer hql=new StringBuffer();
+		Map<String,Object>map=new HashMap<String,Object>();
+		
+		//WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");		
+		hql.append("from VWeballobjasumwebyield2019 where 1=1 ");
+		if(factNo==null||"".equals(factNo)){
+			factNo=(String)ActionContext.getContext().getSession().get("factNo");
+		}
+		if(factNo!=null&&!"".equals(factNo)&&!"tw".equals(factNo)){
+			hql.append(" and id.factNo=:factNo");
+			map.put("factNo", factNo);
+		}
+		if(yymm!=null&&!"".equals(yymm)){
+			hql.append(" and id.yymm>=:yymm ");
+			map.put("yymm", yymm);
+		}
+		if(yymm2!=null&&!"".equals(yymm2)){
+			hql.append(" and id.yymm<=:yymm2 ");
+			map.put("yymm2", yymm2);
+		}
+		if(a_type.equals("a")){
+			hql.append(" order by id.factCode, id.yymm, id.factNo ");
+		}else{
+			hql.append(" order by id.yymm,id.factNo,id.factCode ");
+		}		
+		List<VWeballobjasumwebyield2019>list=super.getAllWithNoPage(hql.toString(), map);
+		for(VWeballobjasumwebyield2019 obj:list){
+			obj.getFactNo().getFactSname();
+		}
 		return list;
 	}
 

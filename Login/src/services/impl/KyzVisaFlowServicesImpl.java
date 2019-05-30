@@ -71,8 +71,8 @@ public class KyzVisaFlowServicesImpl implements IKyzVisaFlowServices{
 		return visaDao.findVisaSort_dwr2(factNo,visaSort,email,trMk);
 	}		
 	
-	public String findVisaSort_dwr_depidAndfid(String factNo,String visaSort,String email,String trMk,String depId,Integer fid){
-		return visaDao.findVisaSort_dwr_depidAndfid(factNo,visaSort,email,trMk,depId,fid);
+	public String findVisaSort_dwr_depidAndfid(String factNo,String visaSort,String trMk,String depId,Integer fid){
+		return visaDao.findVisaSort_dwr_depidAndfid(factNo,visaSort,trMk,depId,fid);
 	}
 	
 	public List<String> findVisaSort_dwr4(String factNo, String visaSort, String email,String trMk){

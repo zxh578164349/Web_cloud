@@ -139,5 +139,7 @@ public interface IWebFactServices {
 	public List<Object[]>findFnoFcodeShow();
 	
 	public List<Object[]>findAllVwebfact();
+	
+	public List<WebFact> findFactCodeByFactNo_disable(String factNo);
 
 }

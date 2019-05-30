@@ -9,6 +9,7 @@ import dao.IWeballobjDao;
 
 import entity.KyzExpectmatmLog;
 import entity.VWeballobjasumwebyield;
+import entity.VWeballobjasumwebyield2019;
 import entity.Weballobj;
 import services.IWeballobjServices;
 import util.PageBean;
@@ -114,6 +115,12 @@ public class WeballobjServicesImpl implements IWeballobjServices{
 	public List<String> findFactCodes(String factNo,String yymm,String yymm2){
 		// TODO Auto-generated method stub
 		return weballobjdao.findFactCodes(factNo,yymm,yymm2);
+	}
+
+	public List<VWeballobjasumwebyield2019> findObjByFactnoyymm(String factNo,
+			String yymm, String yymm2,String a_type) {
+		// TODO Auto-generated method stub
+		return weballobjdao.findObjByFactnoyymm(factNo, yymm, yymm2,a_type);
 	}
 
 }

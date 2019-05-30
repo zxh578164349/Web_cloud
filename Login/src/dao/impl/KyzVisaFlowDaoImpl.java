@@ -177,7 +177,7 @@ public class KyzVisaFlowDaoImpl extends Basedao implements IKyzVisaFlowDao {
 	
 	
 	
-	public String findVisaSort_dwr_depidAndfid(String factNo,String visaSort,String email,String trMk,String depId,Integer fid){
+	public String findVisaSort_dwr_depidAndfid(String factNo,String visaSort,String trMk,String depId,Integer fid){
 		//String hql="select id.visaSort from KyzVisaflow where id.factNo=? and id.visaSort like ? and lower(visaSigner)=? and id.itemNo='01' and trMk=? and to_char(depId.depId)=? and webformtype.fid=?";
 		StringBuffer hql=new StringBuffer();
 		Map<String,Object>map=new HashMap<String,Object>();
@@ -189,11 +189,7 @@ public class KyzVisaFlowDaoImpl extends Basedao implements IKyzVisaFlowDao {
 		if(visaSort!=null&&!"".equals(visaSort)){
 			hql.append("and id.visaSort like:visaSort ");
 			map.put("visaSort", visaSort+"%");
-		}
-		if(email!=null&&!"".equals(email)){
-			hql.append("and lower(visaSigner)=:email ");
-			map.put("email", email);
-		}
+		}		
 		if(trMk!=null&&!"".equals(trMk)){
 			hql.append(" and trMk=:trMk ");
 			map.put("trMk", trMk);

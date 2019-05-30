@@ -60,7 +60,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 			     <s:if test="#session.factNo!='tw'">
 			        <td >
 							<select  datatype="*" id="dwrFactNo"
-							onchange="getAddBtn();loaddepments();loadwebformtypes();checkSame()">
+							onchange="checkWebtype();getAddBtn();loaddepments();loadwebformtypes();checkSame()">
 							    <option value="">請選擇廠別</option>
 							    <option value="${factNo}">${factNo}</option>
 							</select>
@@ -601,7 +601,7 @@ function unlockbtn(){
 
 
 jq(function(){
-	checkWebtype();	
+	//checkWebtype();	
 });
 </script>
 

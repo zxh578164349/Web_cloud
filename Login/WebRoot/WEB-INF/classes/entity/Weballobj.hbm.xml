@@ -327,6 +327,45 @@
         <property name="objA203" type="java.lang.Double">
             <column name="OBJ_A203" precision="13" scale="4" />
         </property>
+        <property name="objA204" type="java.lang.Double">
+            <column name="OBJ_A204" precision="13" scale="4" />
+        </property>
+        <property name="objA205" type="java.lang.Double">
+            <column name="OBJ_A205" precision="13" scale="4" />
+        </property>
+        <property name="objA206" type="java.lang.Double">
+            <column name="OBJ_A206" precision="13" scale="4" />
+        </property>
+        <property name="objA207" type="java.lang.Double">
+            <column name="OBJ_A207" precision="13" scale="4" />
+        </property>
+        <property name="objA208" type="java.lang.Double">
+            <column name="OBJ_A208" precision="13" scale="4" />
+        </property>
+        <property name="objA209" type="java.lang.Double">
+            <column name="OBJ_A209" precision="13" scale="4" />
+        </property>
+        <property name="objA210" type="java.lang.Double">
+            <column name="OBJ_A210" precision="13" scale="4" />
+        </property>
+        <property name="objA211" type="java.lang.Double">
+            <column name="OBJ_A211" precision="13" scale="4" />
+        </property>
+        <property name="objA212" type="java.lang.Double">
+            <column name="OBJ_A212" precision="13" scale="4" />
+        </property>
+        <property name="objA213" type="java.lang.Double">
+            <column name="OBJ_A213" precision="13" scale="4" />
+        </property>
+        <property name="objA214" type="java.lang.Double">
+            <column name="OBJ_A214" precision="13" scale="4" />
+        </property>
+        <property name="objA215" type="java.lang.Double">
+            <column name="OBJ_A215" precision="13" scale="4" />
+        </property>  
+        <property name="objA216" type="java.lang.Double">
+            <column name="OBJ_A216" precision="13" scale="4" />
+        </property>           
         <property name="username" type="java.lang.String">
             <column name="USERNAME" length="50"/>
         </property>

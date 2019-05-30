@@ -37,10 +37,14 @@ import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
 import entity.KyzExpectmatmLog;
+import entity.VWebFact;
 import entity.VWeballobjasumwebyield;
+import entity.VWeballobjasumwebyield2019;
+import entity.VWeballobjasumwebyield2019Id;
 import entity.VWeballobjasumwebyieldId;
 import entity.WebFact;
 import entity.WebFactId;
+import entity.WebSampleschedule;
 import entity.WebUser;
 import entity.Weballobj;
 import entity.WeballobjId;
@@ -49,6 +53,7 @@ import services.IWebFactServices;
 import services.IWeballobjServices;
 import util.GlobalMethod;
 import util.ImportExcel;
+import util.JasperHelper;
 import util.PageBean;
 
 /**   
@@ -79,8 +84,18 @@ public class WeballobjAction  extends ActionSupport implements ServletResponseAw
 	private IWeballobjServices weballobjser;
 	private javax.servlet.http.HttpServletResponse response;
 	private IWebFactServices webFactSer;
+	private String a_type;
 
 	
+	
+	public String getA_type() {
+		return a_type;
+	}
+
+	public void setA_type(String a_type) {
+		this.a_type = a_type;
+	}
+
 	public String getFactCode() {
 		return factCode;
 	}
@@ -327,9 +342,22 @@ public class WeballobjAction  extends ActionSupport implements ServletResponseAw
 					obj.setObjA200(Double.valueOf(list.get(101).split(SEPARATOR)[i]));
 					obj.setObjA201(Double.valueOf(list.get(102).split(SEPARATOR)[i]));
 					obj.setObjA202(Double.valueOf(list.get(103).split(SEPARATOR)[i]));
-					/*if(list.size()==105){
+					if(list.size()>104){
 						obj.setObjA203(Double.valueOf(list.get(104).split(SEPARATOR)[i]));
-					}*/																	
+						obj.setObjA204(Double.valueOf(list.get(105).split(SEPARATOR)[i]));
+						obj.setObjA205(Double.valueOf(list.get(106).split(SEPARATOR)[i]));
+						obj.setObjA206(Double.valueOf(list.get(107).split(SEPARATOR)[i]));
+						obj.setObjA207(Double.valueOf(list.get(108).split(SEPARATOR)[i]));
+						obj.setObjA208(Double.valueOf(list.get(109).split(SEPARATOR)[i]));
+						obj.setObjA209(Double.valueOf(list.get(110).split(SEPARATOR)[i]));
+						obj.setObjA210(Double.valueOf(list.get(111).split(SEPARATOR)[i]));
+						obj.setObjA211(Double.valueOf(list.get(112).split(SEPARATOR)[i]));
+						obj.setObjA212(Double.valueOf(list.get(113).split(SEPARATOR)[i]));
+						obj.setObjA213(Double.valueOf(list.get(114).split(SEPARATOR)[i]));
+						obj.setObjA214(Double.valueOf(list.get(115).split(SEPARATOR)[i]));
+						obj.setObjA215(Double.valueOf(list.get(116).split(SEPARATOR)[i]));
+						obj.setObjA216(Double.valueOf(list.get(117).split(SEPARATOR)[i]));						
+					}																	
 					obj.setUsername(user.getUsername());
 					obj.setCreateDate(new SimpleDateFormat("yyyyMMdd").format(new Date()));
 					list_b.add(obj);
@@ -1151,7 +1179,23 @@ public class WeballobjAction  extends ActionSupport implements ServletResponseAw
 		list.add("200__粗坯用量 __KG");
 		list.add("201__裁斷回頭料__KG");
 		list.add("202__油壓退料__KG");
-		//list.add("203__利潤率__--");
+		//20190529
+		list.add("203__上月成倉庫存__雙");
+		list.add("204__上月整理庫存__雙");
+		list.add("205__上月已出貨未請款 __雙");
+		list.add("206__上月已請款未出貨 __雙");
+		list.add("207__正批生產數__雙");
+		list.add("208__現場生產樣品__雙");
+		list.add("209__樣品組生產樣品__雙");
+		list.add("210__其它__雙");
+		list.add("211__總產量__雙");
+		list.add("212__托外生產數__雙");
+		list.add("213__含鐵報廢__雙");
+		list.add("214__正批請款數__雙");
+		list.add("215__托外請款數__雙");
+		list.add("216__廢品重量__KG");
+
+		
 		return list;
 	}
 	
@@ -1260,6 +1304,21 @@ public class WeballobjAction  extends ActionSupport implements ServletResponseAw
 		list.add(obj.getObjA200());
 		list.add(obj.getObjA201());
 		list.add(obj.getObjA202());
+		
+		list.add(obj.getObjA203());
+		list.add(obj.getObjA204());
+		list.add(obj.getObjA205());
+		list.add(obj.getObjA206());
+		list.add(obj.getObjA207());
+		list.add(obj.getObjA208());
+		list.add(obj.getObjA209());
+		list.add(obj.getObjA210());
+		list.add(obj.getObjA211());
+		list.add(obj.getObjA212());
+		list.add(obj.getObjA213());
+		list.add(obj.getObjA214());
+		list.add(obj.getObjA215());
+		list.add(obj.getObjA216());		
 		return list;
 		
 	}
@@ -1293,6 +1352,65 @@ public class WeballobjAction  extends ActionSupport implements ServletResponseAw
 			list_result.add(temp);
 		}																
 		return list_result;
+	}
+	
+	
+	
+	public void printVWeballobjasumwebyield2019() throws ParseException{
+		Map<String,Object>map=new HashMap<String,Object>();		
+		List<VWeballobjasumwebyield2019>list=weballobjser.findObjByFactnoyymm(factNo, yymm, yymm2,a_type);
+		List<String>months=GlobalMethod.findMonths(yymm, yymm2);
+		List<VWeballobjasumwebyield2019>list3=new ArrayList<VWeballobjasumwebyield2019>();
+		
+		StringBuffer fileName=new StringBuffer();
+		StringBuffer title=new StringBuffer();
+		
+		if(a_type.equals("a")){
+			List<WebFact>list2=webFactSer.findFactCodeByFactNo_disable(factNo);
+			for(WebFact fact:list2){
+				for(String month:months){
+					list3.add(new VWeballobjasumwebyield2019(new VWeballobjasumwebyield2019Id(factNo,fact.getId().getFactArea(),month)));
+				}
+			}
+			fileName.append("report");
+		}else{			
+			List<WebFact>list2=webFactSer.findFactAble();			
+			for(String month:months){
+				for(WebFact fact:list2){
+					list3.add(new VWeballobjasumwebyield2019(new VWeballobjasumwebyield2019Id(fact.getId().getFactNo(),fact.getId().getFactArea(),month),fact));
+				}
+			}
+			fileName.append("report_tw");
+		}
+		
+		for(int a=0;a<list3.size();a++){
+			VWeballobjasumwebyield2019 obj=list3.get(a);
+			for(VWeballobjasumwebyield2019 obj2:list){
+				if(obj.getId().getFactCode().equals(obj2.getId().getFactCode())&&
+						obj.getId().getFactNo().equals(obj2.getId().getFactNo())&&
+						obj.getId().getYymm().equals(obj2.getId().getYymm())){
+					list3.set(a, obj2);
+					
+				}
+			}
+		}
+										
+		if(yymm!=null&&!yymm.equals("")){
+			fileName.append("-"+yymm);
+			title.append(yymm);
+		}
+		if(yymm2!=null&&!yymm2.equals("")){
+			fileName.append("-"+yymm2);
+			title.append("-"+yymm2);
+		}
+		title.append("生產与請款差异匯總表");
+		map.put("title", title.toString());
+		if(a_type.equals("a")){
+			JasperHelper.exportmain("excel", map,"vweballobj2019.jasper", list3,fileName.toString(), "jasper/input/");
+		}else{
+			JasperHelper.exportmain("excel", map,"vweballobj2019_tw.jasper", list3,fileName.toString(), "jasper/input/");
+		}
+		
 	}
 	
 	

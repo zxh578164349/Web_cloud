@@ -37,6 +37,12 @@ public class WebTestmouldregistrationformServicesImpl implements IWebTestmouldre
 		// TODO Auto-generated method stub
 		return webtestregisformdao.findCustomer();
 	}
+
+	public List<WebTestmouldregistrationform> findObjsWithNopage(String dateA,
+			String dateB, String customer, String brand) {
+		// TODO Auto-generated method stub
+		return webtestregisformdao.findObjsWithNopage(dateA, dateB, customer, brand);
+	}
 	
 
 }

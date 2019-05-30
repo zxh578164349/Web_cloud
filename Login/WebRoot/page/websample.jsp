@@ -111,7 +111,15 @@ function checkForm(){
 			jq("#upload_form").submit();		
 		}	
 					
-	}	    		
+	}
+	
+function print(public_form){
+	var public_form=jq("#"+public_form);
+	public_form.attr("action","websample_print");
+	public_form.attr("target","_blank");
+	public_form.submit();
+	
+}		    		
 </script>
 
 </body>

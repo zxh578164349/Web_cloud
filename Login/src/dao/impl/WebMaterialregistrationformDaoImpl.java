@@ -94,4 +94,38 @@ public class WebMaterialregistrationformDaoImpl extends Basedao implements IWebM
 		return list;
 	}
 
+	public List<WebMaterialregistrationitems> findObjsWithNopage(String mtype, String dateaA,
+			String dateaB, String materielname) {
+		// TODO Auto-generated method stub
+		StringBuffer hql=new StringBuffer();
+		Map<String,Object>map=new HashMap<String,Object>();
+		
+		//WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");		
+		hql.append("from WebMaterialregistrationitems where 1=1 ");
+		
+		if(mtype!=null&&!"".equals(mtype)){
+			hql.append(" and webMaterialregistrationform.mtype=:mtype ");
+			map.put("mtype", mtype);
+		}
+		if(dateaA!=null&&!"".equals(dateaA)){
+			hql.append(" and webMaterialregistrationform.sdateA>=:sdate ");
+			map.put("sdate", dateaA);
+		}
+		if(dateaB!=null&&!"".equals(dateaB)){
+			hql.append(" and webMaterialregistrationform.sdateA<=:edate ");
+			map.put("edate", dateaB);
+		}
+		if(materielname!=null&&!"".equals(materielname)){
+			hql.append(" and materielname like :materielname ");
+			map.put("materielname", "%"+materielname+"%");
+		}
+		
+		hql.append(" order by webMaterialregistrationform.mtype,webMaterialregistrationform.sdateA,materielname ");
+		List<WebMaterialregistrationitems>list=super.getAllWithNoPage(hql.toString(), map);
+		for(WebMaterialregistrationitems obj:list){
+			obj.getWebMaterialregistrationform().getMtype();
+		}
+		return list;
+	}
+
 }

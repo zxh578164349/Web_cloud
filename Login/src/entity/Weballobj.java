@@ -113,6 +113,21 @@ public class Weballobj implements java.io.Serializable {
 	private Double objA201;
 	private Double objA202;
 	private Double objA203;
+	private Double objA204;
+	private Double objA205;
+	private Double objA206;
+	private Double objA207;
+	private Double objA208;
+	private Double objA209;
+	private Double objA210;
+	private Double objA211;
+	private Double objA212;
+	private Double objA213;
+	private Double objA214;
+	private Double objA215;
+	private Double objA216;
+
+	
 	private String username;
 	private String usernameUd;
 	private String createDate;
@@ -1144,6 +1159,112 @@ public class Weballobj implements java.io.Serializable {
 	public void setStr_temp(String str_temp){
 		this.str_temp=str_temp;
 	}
+
+	public Double getObjA204() {
+		return objA204;
+	}
+
+	public void setObjA204(Double objA204) {
+		this.objA204 = objA204;
+	}
+
+	public Double getObjA205() {
+		return objA205;
+	}
+
+	public void setObjA205(Double objA205) {
+		this.objA205 = objA205;
+	}
+
+	public Double getObjA206() {
+		return objA206;
+	}
+
+	public void setObjA206(Double objA206) {
+		this.objA206 = objA206;
+	}
+
+	public Double getObjA207() {
+		return objA207;
+	}
+
+	public void setObjA207(Double objA207) {
+		this.objA207 = objA207;
+	}
+
+	public Double getObjA208() {
+		return objA208;
+	}
+
+	public void setObjA208(Double objA208) {
+		this.objA208 = objA208;
+	}
+
+	public Double getObjA209() {
+		return objA209;
+	}
+
+	public void setObjA209(Double objA209) {
+		this.objA209 = objA209;
+	}
+
+	public Double getObjA210() {
+		return objA210;
+	}
+
+	public void setObjA210(Double objA210) {
+		this.objA210 = objA210;
+	}
+
+	public Double getObjA211() {
+		return objA211;
+	}
+
+	public void setObjA211(Double objA211) {
+		this.objA211 = objA211;
+	}
+
+	public Double getObjA212() {
+		return objA212;
+	}
+
+	public void setObjA212(Double objA212) {
+		this.objA212 = objA212;
+	}
+
+	public Double getObjA213() {
+		return objA213;
+	}
+
+	public void setObjA213(Double objA213) {
+		this.objA213 = objA213;
+	}
+
+	public Double getObjA214() {
+		return objA214;
+	}
+
+	public void setObjA214(Double objA214) {
+		this.objA214 = objA214;
+	}
+
+	public Double getObjA215() {
+		return objA215;
+	}
+
+	public void setObjA215(Double objA215) {
+		this.objA215 = objA215;
+	}
+
+	public Double getObjA216() {
+		return objA216;
+	}
+
+	public void setObjA216(Double objA216) {
+		this.objA216 = objA216;
+	}
+	
+	
 	
 	
 

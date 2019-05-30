@@ -8,6 +8,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -21,6 +22,7 @@ import services.IWebSamplescheduleServices;
 import services.IWebmonthsServices;
 import util.GlobalMethod;
 import util.ImportExcel;
+import util.JasperHelper;
 import util.PageBean;
 
 import com.opensymphony.xwork2.ActionContext;
@@ -29,7 +31,6 @@ import com.opensymphony.xwork2.ActionSupport;
 import entity.WebMonths;
 import entity.WebMonthsId;
 import entity.WebSampleschedule;
-import entity.WebTestmouldregistrationform;
 import entity.WebUser;
 
 public class WebSamplescheduleAction extends ActionSupport implements ServletResponseAware{
@@ -366,6 +367,27 @@ public class WebSamplescheduleAction extends ActionSupport implements ServletRes
 		List<String>list=websampleser.findCustomer();
 		jsons=JSONArray.fromObject(list);
 		return "findCustomer";
+	}
+	
+	public void print(){
+		Map<String,Object>map=new HashMap<String,Object>();		
+		List<WebSampleschedule>list=websampleser.findObjsWithNopage(stype, dateA, dateB, samplelevel, brand, customer);
+		StringBuffer fileName=new StringBuffer();
+		StringBuffer title=new StringBuffer();
+		fileName.append("report");		
+				
+		if(dateA!=null&&!dateA.equals("")){
+			fileName.append("-"+dateA);
+			title.append(dateA);
+		}
+		if(dateB!=null&&!dateB.equals("")){
+			fileName.append("-"+dateB);
+			title.append("-"+dateB);
+		}
+		title.append("樣品接單進度狀況表");
+		map.put("title", title.toString());
+		JasperHelper.exportmain("excel", map,"websample.jasper", list,fileName.toString(), "jasper/input/");
+		
 	}
 	
 	

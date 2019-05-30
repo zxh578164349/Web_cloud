@@ -20,6 +20,7 @@ public interface IWebFactDao {
 	public List findFactCodeByFactNo(String factNo);
 	public List findFactCodeByFactNo_show(String factNo);
 	public List findFactCodeByFactNo_show_dw(String factNo);
+	public List<WebFact> findFactCodeByFactNo_disable(String factNo);
 
 	public String findByFactNo(String factNo);
 	

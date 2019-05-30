@@ -49,7 +49,7 @@
 								       <option value="C">C</option>
 								     </select>&nbsp;
 								     <input value="搜索" type="button" class="btn btn-primary" onclick="javascript:submis()" />&nbsp;&nbsp;
-										
+									 <input value="導出Excel" type="button" class="btn btn-primary" onclick="print('public_form')"/>	
 									 <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">更多</a>
 								</td>
 								</tr>

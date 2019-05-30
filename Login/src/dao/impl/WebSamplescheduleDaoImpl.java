@@ -107,6 +107,45 @@ public class WebSamplescheduleDaoImpl extends Basedao implements IWebSamplesched
 		List<String>list=super.findAll(hql, null);
 		return list;
 	}
+
+	public List<WebSampleschedule> findObjsWithNopage(String stype, String dateA,
+			String dateB, String samplelevel, String brand, String customer) {
+		// TODO Auto-generated method stub
+		StringBuffer hql=new StringBuffer();
+		Map<String,Object>map=new HashMap<String,Object>();
+		
+		//WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");		
+		hql.append("from WebSampleschedule where 1=1 ");
+		
+		if(stype!=null&&!"".equals(stype)){
+			hql.append(" and SType=:stype ");
+			map.put("stype", stype);
+		}
+		if(dateA!=null&&!"".equals(dateA)){
+			hql.append(" and dateA>=:dateA ");
+			map.put("dateA", dateA);
+		}
+		if(dateB!=null&&!"".equals(dateB)){
+			hql.append(" and dateA<=:dateB ");
+			map.put("dateB", dateB);
+		}
+		if(samplelevel!=null&&!"".equals(samplelevel)){
+			hql.append(" and samplelevel=:samplelevel ");
+			map.put("samplelevel", samplelevel);
+		}
+		if(customer!=null&&!"".equals(customer)){
+			hql.append(" and customer=:customer ");
+			map.put("customer", customer);
+		}
+		if(brand!=null&&!"".equals(brand)){
+			hql.append(" and brand=:brand ");
+			map.put("brand", brand);
+		}
+		
+		hql.append(" order by stype,dateA,customer,brand ");
+		List<WebSampleschedule>list=super.getAllWithNoPage(hql.toString(), map);
+		return list;
+	}
 	
 	
 	

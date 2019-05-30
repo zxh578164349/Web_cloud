@@ -314,4 +314,9 @@ public class WebFactServicesImpl implements IWebFactServices {
 		return webFactDao.findFnoFcodeShow();
 	}
 
+	public List<WebFact> findFactCodeByFactNo_disable(String factNo) {
+		// TODO Auto-generated method stub
+		return webFactDao.findFactCodeByFactNo_disable(factNo);
+	}
+
 }

@@ -50,7 +50,9 @@ function checkType(){
            	if(trMk=="Y"){          		
            		/*********************修改20190424************************/ 
            		if(fids>0){           			
-           			checkType2(dwrFactNo,type,dwremail,trMk,depId,fid);
+           			if(depId!=null&&depId!=""||(fid!=null&&fid!="")){
+           				checkType2(dwrFactNo,type,trMk,depId,fid);
+           			}          			
            		}else{          			
            			checkbyEmail(dwrFactNo,type,dwremail,trMk,depId);
            		}
@@ -96,7 +98,7 @@ function checkbyEmail(dwrFactNo,type,dwremail,trMk,depId){
 					if(depids==0){
 						loaddepments(dwrFactNo, type, dwremail, trMk);
 					}else{
-						checkType2(dwrFactNo,type,dwremail,trMk,depId,null);
+						checkType2(dwrFactNo,type,trMk,depId,null);
 						depids=0;
 					}
 					
@@ -111,7 +113,7 @@ function checkbyEmail(dwrFactNo,type,dwremail,trMk,depId){
 }
 
 //選出流程，此流程細分到部門  ，或者小類
-function checkType2(dwrFactNo,type,dwremail,trMk,depId,fid) {	
+function checkType2(dwrFactNo,type,trMk,depId,fid) {	
 	jq.ajax({
 		type : "post",		
 		url: "visaflow_findVisaSort_dwr_depidAndfid",
@@ -119,7 +121,6 @@ function checkType2(dwrFactNo,type,dwremail,trMk,depId,fid) {
 		data : {
 			factNo : dwrFactNo,
 			visaSort : type,
-			visaSigner : dwremail,
 			trMk : trMk,
 			depId : depId,
 			fid:fid

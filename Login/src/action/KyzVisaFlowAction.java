@@ -367,7 +367,10 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 			flow.setVisaSortM(flow.getId().getVisaSort().substring(0,2));
 			if(depId!=null&&!"".equals(depId)){
 				flow.setDepId(new WebDepartment(Integer.parseInt(depId)));
-			}			
+			}
+			if(fid!=null&&fid!=0){
+				flow.setWebformtype(new WebFormtype(fid));
+			}
 			//visaSer.add(flow);
 			KyzVisaflow f2=(KyzVisaflow)ActionContext.getContext().getSession().get("update_flow");
 			visaSer.add_d(flow,f2);
@@ -651,7 +654,7 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 	}
 	//選出流程，此流程細分到部門  ，或者小類
 	public String findVisaSort_dwr_depidAndfid(){
-		ajaxResult=visaSer.findVisaSort_dwr_depidAndfid(factNo,visaSort,visaSigner,trMk,depId,fid);
+		ajaxResult=visaSer.findVisaSort_dwr_depidAndfid(factNo,visaSort,trMk,depId,fid);
 		return "findVisaSort_dwr_depidAndfid";
 	}		
 	
@@ -781,18 +784,121 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 		}
 	}
 	
+	
+	public void setobj(KyzVisaflow obj,String str){
+		//前段備料	成型	品管	總務	生管	工程	廠務	企劃	夏偉清	廖玉嬌	蔡副協理	劉協理	業務	採購	經管	劉小姐
+		/**
+		 * 单位	姓名	账号
+前段備料	刘光华	guanghua.liu@hff-group.com
+成型	何明珠	mingzhu.he@hff-group.com
+品管	汪文萍	wenping.wang@hff-group.com
+總務	余新江	xinjiang.yu@hff-group.com
+生管	徐泽波	zebo.xu@hff-group.com
+工程	刘光华	guanghua.liu@hff-group.com
+廠務	陈建立	jianli.chen@hff-group.com
+企劃	易玖沅	jiuyuan.yi@hff-group.com
+夏伟清	夏伟清	wq.xia@kyuen-dg.com
+廖玉娇	廖玉娇	bonnie@kyuen-dg.com
+蔡副協理	蔡副协理	jackla521@163.com
+劉協理	刘协理	alan.liu@giachiu.com
+採購	台干	ivy@mail.gj.com.tw
+經管	谢雅芳	avon@mail.gj.com.tw
+劉小姐	台干	liujung@mail.gj.com.tw
+
+		 */
+		if("前段備料".equals(str)){
+			obj.setVisaRank("主管");
+			obj.getId().setPurmanNo("刘光华");
+			obj.setVisaSigner("guanghua.liu@hff-group.com");
+		}
+		if("成型".equals(str)){
+			obj.setVisaRank("主管");
+			obj.getId().setPurmanNo("何明珠");
+			obj.setVisaSigner("mingzhu.he@hff-group.com");
+		}
+		if("品管".equals(str)){
+			obj.setVisaRank("主管");
+			obj.getId().setPurmanNo("汪文萍");
+			obj.setVisaSigner("wenping.wang@hff-group.com");
+		}
+		if("總務".equals(str)){
+			obj.setVisaRank("主管");
+			obj.getId().setPurmanNo("余新江");
+			obj.setVisaSigner("xinjiang.yu@hff-group.com");
+		}
+		if("生管".equals(str)){
+			obj.setVisaRank("主管");
+			obj.getId().setPurmanNo("徐泽波");
+			obj.setVisaSigner("zebo.xu@hff-group.com");
+		}
+		if("工程".equals(str)){
+			obj.setVisaRank("主管");
+			obj.getId().setPurmanNo("刘光华");
+			obj.setVisaSigner("guanghua.liu@hff-group.com");
+		}
+		if("廠務".equals(str)){
+			obj.setVisaRank("主管");
+			obj.getId().setPurmanNo("陈建立");
+			obj.setVisaSigner("jianli.chen@hff-group.com");
+		}
+		if("企劃".equals(str)){
+			obj.setVisaRank("主管");
+			obj.getId().setPurmanNo("易玖沅");
+			obj.setVisaSigner("jiuyuan.yi@hff-group.com");
+		}
+		if("夏偉清".equals(str)){
+			obj.setVisaRank("經理");
+			obj.getId().setPurmanNo("夏偉清");
+			obj.setVisaSigner("wq.xia@kyuen-dg.com");
+		}
+		if("廖玉嬌".equals(str)){
+			obj.setVisaRank("經理");
+			obj.getId().setPurmanNo("廖玉嬌");
+			obj.setVisaSigner("bonnie@kyuen-dg.com");
+		}
+		if("蔡副協理".equals(str)){
+			obj.setVisaRank("副協理");
+			obj.getId().setPurmanNo("蔡副協理");
+			obj.setVisaSigner("jackla521@163.com");
+		}
+		if("劉協理".equals(str)){
+			obj.setVisaRank("協理");
+			obj.getId().setPurmanNo("劉協理");
+			obj.setVisaSigner("alan.liu@giachiu.com");
+		}
+		/*if("業務".equals(str)){
+			obj.setVisaRank("");
+			obj.getId().setPurmanNo("");
+			obj.setVisaSigner("");
+		}*/
+		if("採購".equals(str)){
+			obj.setVisaRank("臺幹");
+			obj.getId().setPurmanNo("採購");
+			obj.setVisaSigner("ivy@mail.gj.com.tw");
+		}
+		if("經管".equals(str)){
+			obj.setVisaRank("臺幹");
+			obj.getId().setPurmanNo("經管");
+			obj.setVisaSigner("avon@mail.gj.com.tw");
+		}
+		if("劉小姐".equals(str)){
+			obj.setVisaRank("臺幹");
+			obj.getId().setPurmanNo("劉小姐");
+			obj.setVisaSigner("liujung@mail.gj.com.tw");
+		}
+		
+	
+		
+		
+	}
+	
 	/*
 	 * 導入excel表數據流程
-	 */
-	
+	 */		
 	public void impormtData() throws IOException{
 		response.setContentType("text/html;charset=utf-8");
 		try{
-			
-			
-			
-			
-			
+															
 			WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
 			String strHead="日期__客戶__品牌__季節__型體__部件__量產工廠__型體負責人__試模雙數__不良數__每雙料重";
 			DateFormat dfm=new SimpleDateFormat("yyyyMMdd");			
@@ -883,9 +989,8 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 							for(int b=1;b<list6.size();b++){
 								String j=new DecimalFormat("0").format(Double.valueOf(list6.get(0)));
 								KyzVisaflow fow=new KyzVisaflow();
-								fow.setId(new KyzVisaflowId("VE", key3+a, list6.get(b), "0"+b));
-								fow.setVisaSigner(list6.get(b));
-								fow.setVisaRank(list6.get(b));
+								fow.setId(new KyzVisaflowId("VE", key3+a, list6.get(b), "0"+b));								
+								this.setobj(fow, list6.get(b));
 								fow.setFlowMk("Y");
 								fow.setTrMk("Y");
 								fow.setVisaSortM(key3);
@@ -898,11 +1003,9 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 						}
 																													
 					}
-					System.out.println(list_flows);
+					//System.out.println(list_flows);
 					visaSer.addMore(list_flows);
-				}
-				
-				//webmonthsSer.addWebmonths(obj);
+				}				
 				response.getWriter().print("<script>window.parent.layer.msg('導入成功',3,1);window.parent.loadUrl_bodyid('webtestreform_findPageBean3');</script>");			
 				response.getWriter().close();
 			}			

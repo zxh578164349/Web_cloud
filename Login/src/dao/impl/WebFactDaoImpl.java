@@ -83,6 +83,8 @@ public class WebFactDaoImpl extends Basedao implements IWebFactDao {
 		String[] objs = { factNo };
 		return super.findAll(hql, objs);
 	}
+	
+	
 
 	public String findByFactNo(String factNo) {
 		// TODO Auto-generated method stub
@@ -375,6 +377,10 @@ public class WebFactDaoImpl extends Basedao implements IWebFactDao {
 		return super.findAll(hql,null);
 	}
 	
-	
+	public List<WebFact> findFactCodeByFactNo_disable(String factNo){
+		String hql = "from WebFact where id.factNo=? and factDisable='0' order by fcodeIndex";//                            555555555555
+		String[] objs = { factNo };
+		return super.findAll(hql, objs);
+	}
 
 }

@@ -39,4 +39,11 @@ public class WebSamplescheduleServicesImpl implements IWebSamplescheduleServices
 		return websampdao.findCustomer();
 	}
 
+	public List<WebSampleschedule> findObjsWithNopage(String stype,
+			String dateA, String dateB, String samplelevel, String brand,
+			String customer) {
+		// TODO Auto-generated method stub
+		return websampdao.findObjsWithNopage(stype, dateA, dateB, samplelevel, brand, customer);
+	}
+
 }
