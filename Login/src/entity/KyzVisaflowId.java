@@ -12,6 +12,7 @@ public class KyzVisaflowId implements java.io.Serializable {
 	private String visaSort;
 	private String purmanNo;
 	private String itemNo;
+	private String factCode;//廠別狀態(目前有華城的流程有分)  2019/06
 
 	// Constructors
 
@@ -21,11 +22,12 @@ public class KyzVisaflowId implements java.io.Serializable {
 
 	/** full constructor */
 	public KyzVisaflowId(String factNo, String visaSort, String purmanNo,
-			String itemNo) {
+			String itemNo,String factCode) {
 		this.factNo = factNo;
 		this.visaSort = visaSort;
 		this.purmanNo = purmanNo;
 		this.itemNo = itemNo;
+		this.factCode=factCode;
 	}
 
 	// Property accessors
@@ -61,6 +63,14 @@ public class KyzVisaflowId implements java.io.Serializable {
 	public void setItemNo(String itemNo) {
 		this.itemNo = itemNo;
 	}
+		
+	public String getFactCode() {
+		return factCode;
+	}
+
+	public void setFactCode(String factCode) {
+		this.factCode = factCode;
+	}
 
 	public boolean equals(Object other) {
 		if ((this == other))
@@ -81,10 +91,15 @@ public class KyzVisaflowId implements java.io.Serializable {
 				&& ((this.getPurmanNo() == castOther.getPurmanNo()) || (this
 						.getPurmanNo() != null
 						&& castOther.getPurmanNo() != null && this
-						.getPurmanNo().equals(castOther.getPurmanNo())))
+						.getPurmanNo().equals(castOther.getPurmanNo())))						
 				&& ((this.getItemNo() == castOther.getItemNo()) || (this
 						.getItemNo() != null && castOther.getItemNo() != null && this
-						.getItemNo().equals(castOther.getItemNo())));
+						.getItemNo().equals(castOther.getItemNo())))
+				&& ((this.getFactCode() == castOther.getFactCode()) || (this
+						.getFactCode() != null
+						&& castOther.getFactCode() != null && this
+						.getFactCode().equals(castOther.getFactCode())));		
+		
 	}
 
 	public int hashCode() {
@@ -97,7 +112,9 @@ public class KyzVisaflowId implements java.io.Serializable {
 		result = 37 * result
 				+ (getPurmanNo() == null ? 0 : this.getPurmanNo().hashCode());
 		result = 37 * result
-				+ (getItemNo() == null ? 0 : this.getItemNo().hashCode());
+				+ (getItemNo() == null ? 0 : this.getItemNo().hashCode());		
+		result = 37 * result
+				+ (getFactCode() == null ? 0 : this.getFactCode().hashCode());
 		return result;
 	}
 

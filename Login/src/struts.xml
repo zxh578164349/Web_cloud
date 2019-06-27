@@ -565,6 +565,9 @@
 		    </result>	
 		    <result name="findVisaSort_dwr_depidAndfid" type="json">
 		        <param name="root">ajaxResult</param>
+		    </result>
+		    <result name="findFactCode" type="json">
+		        <param name="root">jsons</param>
 		    </result>  
 		</action>
 		<action name="webtabpom_*" class="webtabpomAction" method="{1}">

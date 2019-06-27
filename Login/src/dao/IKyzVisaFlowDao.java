@@ -18,10 +18,10 @@ public interface IKyzVisaFlowDao {
 	public String findVisaSort_dwr(String factNo,String visaSort,String email);
 	public String findVisaSort_dwr(String factNo,String visaSort,String email,String trMk);
 	public List<Object[]> findVisaSort_dwr2(String factNo,String visaSort,String email,String trMk);	
-	public String findVisaSort_dwr_depidAndfid(String factNo,String visaSort,String trMk,String depId,Integer fid);//通用的  20190419
+	public String findVisaSort_dwr_depidAndfid(String factNo,String visaSort,String trMk,String depId,Integer fid,String factCode);//通用的  20190419
 	public List<String> findVisaSort_dwr3(String factNo, String visaSort, String email,String trMk);
 	public List<String> findVisaSort_dwr4(String factNo, String visaSort, String depId,String trMk);
-	public List<String> findVisaSort_dwr_depidAndfidB(String factNo, String visaSort, String depId,String trMk,Integer fid);
+	public List<String> findVisaSort_dwr_depidAndfidB(String factNo, String visaSort, String depId,String trMk,Integer fid,String factCode);
 	public List<String> findVisaSort_C(String factNo,String maiSort);
 	public List<KyzVisaflow>findByFactNoVisaSort(String factNo,String visaSort);
 	
@@ -52,6 +52,8 @@ public interface IKyzVisaFlowDao {
 	public void add_d(KyzVisaflow f1,KyzVisaflow f2);
 	public List<KyzVisaflow>findByFnoAndVsortAndTrmk(String factNo,String visaSort,String trMk);
 	public void addMore(List<KyzVisaflow>list);
+	
+	public List<String> findFactCode(String factNo);
 	
 	
 }

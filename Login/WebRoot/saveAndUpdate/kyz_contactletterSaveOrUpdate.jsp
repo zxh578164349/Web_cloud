@@ -64,11 +64,11 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 						
 						<td class="tdcolor">廠別狀態</td>
 						<td><select name="kyzletter.factCode"
-							 id="dwrFactArea"  style="color:blue">
+							 id="dwrFactArea" >
 								<option value="">請選擇廠別狀態</option>
 								<s:iterator value="#session.factAreas_login" id="temp">
 									<option value="${temp}">${temp}</option>
-								</s:iterator>
+								</s:iterator> 
 						</select></td>
 						
 						<td class="tdcolor">類別</td>
@@ -85,7 +85,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 						<td class="tdcolor">廠別</td>
 						<td ><select style="color:blue"
 							name="kyzletter.id.factNo" datatype="*" id="dwrFactNo"
-							onchange="getFactArea(this.value),makeBillNo(),getKyType2(this.value);checkType()">
+							onchange="getFactArea(this.value);makeBillNo(),getKyType2(this.value);checkType();loadwebformtypes()">
 								<option value="">請選擇廠別</option>
 								<s:iterator value="#session.facts" id="temp">
 									<option value="${temp[0]}">${temp[1]
@@ -95,8 +95,8 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 						
 						<td class="tdcolor">廠別狀態</td>
 						<td><select name="kyzletter.factCode"
-							 id="dwrFactArea" >
-								<option value="">請選擇廠別狀態</option>
+							 id="dwrFactArea">
+							 <option value="">請選擇廠別狀態</option>
 						</select></td>
 						
 						<td class="tdcolor">類別</td>
@@ -254,22 +254,10 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 		
 	});
 
-	function getFactArea(mid) {
-		document.getElementById("dwrFactArea").length = 1;
-		webfactjs.findFactCodeByFactNo(mid, function(x) {
-			dwr.util.addOptions("dwrFactArea", x);
-		});
-		
-	}
-	
-
 function makeBillNo() {
         
 		var factno = document.getElementById("dwrFactNo").value;
 		var timecreat = document.getElementById("ymExpect").value;
-		var factcode=document.getElementById("dwrFactArea").value;
-		var billnos = document.getElementById("kyzletter_billno");
-		var cbox_length=document.getElementsByName("cbox").length;
 		if (factno != "" && timecreat != "") {
 			kyzcontactletterjs.makeBillNo(factno, timecreat, function(x) {
 				dwr.util.setValue("kyzletter_billno", x);								  			  								

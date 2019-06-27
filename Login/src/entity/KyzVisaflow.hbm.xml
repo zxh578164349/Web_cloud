@@ -19,6 +19,9 @@
             <key-property name="itemNo" type="java.lang.String">
                 <column name="ITEM_NO" length="2" />
             </key-property>
+            <key-property name="factCode" type="java.lang.String">
+                <column name="FACT_CODE" length="20" />
+            </key-property>
         </composite-id>
         <property name="visaSigner" type="java.lang.String">
             <column name="VISA_SIGNER" length="30" />
@@ -43,7 +46,7 @@
         </property>   
         <property name="visible" type="java.lang.String">
             <column name="VISIBLE" length="2"/>
-        </property>    
+        </property>          
         <many-to-one name="depId" class="entity.WebDepartment" fetch="select">
             <column name="DEPID" precision="12" scale="0" />
         </many-to-one>

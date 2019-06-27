@@ -68,7 +68,7 @@ public class KyzVisaFlowDaoImpl extends Basedao implements IKyzVisaFlowDao {
 		}
 		//hql.append(" and flowMk='Y'");
 		hql2.append(hql);
-		hql.append(" order by id.factNo, id.visaSort,id.itemNo");
+		hql.append(" order by id.factNo,id.factCode, id.visaSort,id.itemNo");
 		int currentPage = PageBean.countCurrentPage(page);
 		
 	    Integer rows=(Integer)ActionContext.getContext().getSession().get("allRow");	    
@@ -177,7 +177,7 @@ public class KyzVisaFlowDaoImpl extends Basedao implements IKyzVisaFlowDao {
 	
 	
 	
-	public String findVisaSort_dwr_depidAndfid(String factNo,String visaSort,String trMk,String depId,Integer fid){
+	public String findVisaSort_dwr_depidAndfid(String factNo,String visaSort,String trMk,String depId,Integer fid,String factCode){
 		//String hql="select id.visaSort from KyzVisaflow where id.factNo=? and id.visaSort like ? and lower(visaSigner)=? and id.itemNo='01' and trMk=? and to_char(depId.depId)=? and webformtype.fid=?";
 		StringBuffer hql=new StringBuffer();
 		Map<String,Object>map=new HashMap<String,Object>();
@@ -202,6 +202,10 @@ public class KyzVisaFlowDaoImpl extends Basedao implements IKyzVisaFlowDao {
 			hql.append(" and webformtype.fid=:fid ");
 			map.put("fid", fid);
 		}
+		if(factCode!=null&&!"".equals(factCode)){
+			hql.append(" and id.factCode=:factCode ");
+			map.put("factCode", factCode);
+		}
 		hql.append(" and id.itemNo='01' ");		
 		String visasort=(String)super.getObj(hql.toString(), map);
 		return visasort;
@@ -221,7 +225,7 @@ public class KyzVisaFlowDaoImpl extends Basedao implements IKyzVisaFlowDao {
 		return list;
 	}
 	
-	public List<String> findVisaSort_dwr_depidAndfidB(String factNo, String visaSort,String trMk, String depId,Integer fid) {
+	public List<String> findVisaSort_dwr_depidAndfidB(String factNo, String visaSort,String trMk, String depId,Integer fid,String factCode) {
 		StringBuffer hql=new StringBuffer();
 		Map<String,Object>map=new HashMap<String,Object>();
 		hql.append("select id.visaSort from KyzVisaflow where 1=1 ");
@@ -244,6 +248,10 @@ public class KyzVisaFlowDaoImpl extends Basedao implements IKyzVisaFlowDao {
 		if(fid!=null&&fid!=0){
 			hql.append(" and webformtype.fid=:fid ");
 			map.put("fid", fid);
+		}
+		if(factCode!=null&&!"".equals(factCode)){
+			hql.append(" and id.factCode=:factCode");
+			map.put("factCode", factCode);
 		}
 		hql.append(" and id.itemNo='01' ");		
 		List<String> list=(List<String>)super.getLists(hql.toString(), map);	
@@ -416,5 +424,13 @@ public class KyzVisaFlowDaoImpl extends Basedao implements IKyzVisaFlowDao {
 			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();//數據回滾
 		}
 		
+	}
+
+	public List<String> findFactCode(String factNo) {
+		// TODO Auto-generated method stub
+		String hql="select distinct id.factCode from KyzVisaflow where id.factNo=?";
+		String[]objs={factNo};
+		List<String>list=super.findAll(hql, objs);				
+		return list;
 	}
 }

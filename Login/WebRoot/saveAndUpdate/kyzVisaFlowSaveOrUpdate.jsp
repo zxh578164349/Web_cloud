@@ -50,8 +50,15 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 			            <input type="hidden" name="trMk"/>
 			         </div>  -->
 			         <input type="hidden" name="trMk" value="Y"/>
-			         <div id="div_dep" style="display:none">部門&nbsp;<select name="depId" datatype="*" onchange="checkSame()"></select></div>&nbsp;&nbsp;&nbsp;
-			         <div id="div_webform" style="display:none;float:left">小類別&nbsp;<select name="fid" datatype="*" onchange="checkSame()"></select></div>                   			         			         
+			         <div id="div_dep" style="display:none">部門&nbsp;<select name="depId" datatype="*" onchange="checkSame()"></select></div>&nbsp;&nbsp;
+			         <div id="div_factcode" style="display:none;float:left">廠別狀態&nbsp;
+			         <select name="factCode" id="factCode" datatype="*" onchange="checkSame()">
+			           <option value="">請選擇廠別狀態</option>
+			         </select>
+			         </div>
+			         <div id="div_webform" style="display:none;float:left">小類別&nbsp;<select name="fid" datatype="*" onchange="checkSame()"></select></div>&nbsp;&nbsp;
+			                             			         			         
+			         
 			     </td>
 			  </tr>
 			  
@@ -60,7 +67,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 			     <s:if test="#session.factNo!='tw'">
 			        <td >
 							<select  datatype="*" id="dwrFactNo"
-							onchange="checkWebtype();getAddBtn();loaddepments();loadwebformtypes();checkSame()">
+							onchange="checkWebtype();getAddBtn();loaddepments();loadwebformtypes();checkSame();getFactArea()">
 							    <option value="">請選擇廠別</option>
 							    <option value="${factNo}">${factNo}</option>
 							</select>
@@ -71,7 +78,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 			  <s:else>
 			     <td ><select 
 							 datatype="*" id="dwrFactNo"
-							onchange="checkWebtype();loaddepments();loadwebformtypes();checkSame();getValue('dwrFactNo','dwrFactNo2');getAddBtn()">
+							onchange="checkWebtype();loaddepments();loadwebformtypes();checkSame();getValue('dwrFactNo','dwrFactNo2');getAddBtn();getFactArea()">
 								<option value="">請選擇廠別</option>
 								<s:iterator value="#session.facts" id="temp">
 									<option value="${temp[0]}">${temp[1]
@@ -374,8 +381,9 @@ var j=0;
 	   var depId=jq("select[name='depId']").val();
 	   var trMk=jq("input[name='trMk']").val();
 	   var fid=jq("select[name='fid']").val();	
+	   var factcode=jq("select[name='factCode']").val();
 	      if(factno!=""&&visasort!=""&&trMk!=""){
-	          kyzvisaflowjs.findVisaSort_dwr_depidAndfidB(factno,visasort,trMk,depId,fid,function(x){	          
+	          kyzvisaflowjs.findVisaSort_dwr_depidAndfidB(factno,visasort,trMk,depId,fid,factcode,function(x){	          
                 			   if(x!=null&&x.length>0){
                 			        if(depId!=null&&depId!=""){
                 			           alert("該部門審核流程已存在!");
@@ -597,6 +605,19 @@ function unlockbtn(){
      document.getElementById("sub").value="確定";
      document.getElementById("sub").style.color="white";
      document.getElementById("addbtn").style.color="white";
+}
+
+function getFactArea() {
+    var factNo=jq("#dwrFactNo").val();
+    if(factNo=="HC"){
+       document.getElementById("factCode").length = 1;
+		webfactjs.findFactCodeByFactNo_show_dw(factNo, function(x) {	
+			dwr.util.addOptions("factCode", x);
+		});	
+		jq("#div_factcode").show();
+    }else{
+        jq("#div_factcode").hide();
+    }			
 }
 
 

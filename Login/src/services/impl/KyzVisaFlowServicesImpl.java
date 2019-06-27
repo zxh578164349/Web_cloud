@@ -71,8 +71,8 @@ public class KyzVisaFlowServicesImpl implements IKyzVisaFlowServices{
 		return visaDao.findVisaSort_dwr2(factNo,visaSort,email,trMk);
 	}		
 	
-	public String findVisaSort_dwr_depidAndfid(String factNo,String visaSort,String trMk,String depId,Integer fid){
-		return visaDao.findVisaSort_dwr_depidAndfid(factNo,visaSort,trMk,depId,fid);
+	public String findVisaSort_dwr_depidAndfid(String factNo,String visaSort,String trMk,String depId,Integer fid,String factCode){
+		return visaDao.findVisaSort_dwr_depidAndfid(factNo,visaSort,trMk,depId,fid,factCode);
 	}
 	
 	public List<String> findVisaSort_dwr4(String factNo, String visaSort, String email,String trMk){
@@ -176,9 +176,14 @@ public class KyzVisaFlowServicesImpl implements IKyzVisaFlowServices{
 	}
 
 	public List<String> findVisaSort_dwr_depidAndfidB(String factNo,
-			String visaSort, String depId, String trMk, Integer fid) {
+			String visaSort, String depId, String trMk, Integer fid,String factCode) {
 		// TODO Auto-generated method stub
-		return visaDao.findVisaSort_dwr_depidAndfidB(factNo, visaSort, depId, trMk, fid);
+		return visaDao.findVisaSort_dwr_depidAndfidB(factNo, visaSort, depId, trMk, fid,factCode);
+	}
+
+	public List<String> findFactCode(String factNo) {
+		// TODO Auto-generated method stub
+		return visaDao.findFactCode(factNo);
 	}
 
 }

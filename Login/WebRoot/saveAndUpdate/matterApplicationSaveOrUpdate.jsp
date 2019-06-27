@@ -50,9 +50,9 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 						
 						<td class="tdcolor">廠別狀態</td>
 						<td><select name="kyz.factCode"
-							 id="dwrFactArea"  style="color:blue">
+							 id="dwrFactArea" >
 								<option value="">請選擇廠別狀態</option>
-								<s:iterator value="#session.factAreas_login" id="temp">
+								 <s:iterator value="#session.factAreas_login" id="temp">
 									<option value="${temp}">${temp}</option>
 								</s:iterator>
 						</select></td>
@@ -66,7 +66,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 						<td class="tdcolor">廠別</td>
 						<td ><select style="color:blue"
 							name="kyz.id.factNo" datatype="*" id="dwrFactNo"
-							onchange="getFactArea(this.value);makeBillNo();getKyType2(this.value);checkType()">
+							onchange="getFactArea(this.value);makeBillNo();getKyType2(this.value);checkType();loadwebformtypes()">
 								<option value="">請選擇廠別</option>
 								<s:iterator value="#session.facts" id="temp">
 									<option value="${temp[0]}">${temp[1]
@@ -75,9 +75,8 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 						</select></td>
 						
 						<td class="tdcolor">廠別狀態</td>
-						<td><select name="kyz.factCode"
-							 id="dwrFactArea" onchange="makeBillNo()">
-								<option value="">請選擇廠別狀態</option>
+						<td><select name="kyz.factCode" id="dwrFactArea">	
+							<option value="">請選擇廠別狀態</option>					 								
 						</select></td>
 						
 						<td class="tdcolor">建立日期</td>
@@ -146,7 +145,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 				            <option value="">請選擇</option>
 				         </select>
 				         <input type="hidden" id="dwr_email" value="<s:property value='#session.loginUser.email'/>"/>
-				        <input type="hidden" name="kyz.visaType" id="hidden_kytype" datatype="*"/>					         			         			         					         
+				        <input type="hidden" name="kyz.visaType" id="hidden_kytype" datatype="*"/>				        					         			         			         					         
 				         </s:if>
 				         <s:else>
 				            <input type="text" value="<s:property value='kyz.visaType'/>" name="kyz.visaType" style="color:blue"  readonly/>
@@ -313,16 +312,7 @@ jq(function() {
 			}
 		});				
 	});
-			
-
-	function getFactArea(mid) {
-		document.getElementById("dwrFactArea").length = 1;
-		webfactjs.findFactCodeByFactNo(mid, function(x) {
-			dwr.util.addOptions("dwrFactArea", x);
-		});
-		
-	}
-	
+					
 	function deleteHtml(id) {
 		id.parentNode.removeChild(id);
 	}
@@ -333,8 +323,7 @@ jq(function() {
 	
 function makeBillNo() {        
 		var factno = document.getElementById("dwrFactNo").value;
-		var timecreat = document.getElementById("kyz_timecreate").value;		
-		var cbox_length=document.getElementsByName("cbox").length;
+		var timecreat = document.getElementById("kyz_timecreate").value;				
 		if (factno != "" && timecreat != "") {
 			kyzjs.makeBillNo(factno, timecreat, function(x) {
 				dwr.util.setValue("kyz_billno", x);								 			  								
@@ -348,8 +337,7 @@ function makeBillNo() {
 var j=0;
 	function addRow(){	    
         var factno=document.getElementById("dwrFactNo").value;
-        var billno=document.getElementById("kyz_billno").value;
-        //var factcode=document.getElementById("dwrFactArea").value;
+        var billno=document.getElementById("kyz_billno").value;        
         var qtyPair=document.getElementById("qtyPair");
         var moneyType=document.getElementById("moneyType");
         
@@ -399,11 +387,7 @@ var j=0;
         }
         
 	}
-	
-		
-	function getFactCode(){
-	    document.getElementById("dwrFactArea").value=document.getElementById("kyzs_factcode").value;
-	}
+				
    function getKyType(){	 	 
 	 var factno=document.getElementById("dwrFactNo").value;
 	 if(factno!=null&&factno!=""){
@@ -487,7 +471,7 @@ function lookPic(url){
 <script type="text/javascript">
 jq(function(){
 	if(jq("#addorupdate").val()!="update"){
-		getKyType();makeBillNo();
+		getKyType();makeBillNo();removeobjs();
 	}else{
 		jq("#addbtn").removeAttr("style").removeAttr("disabled");
 	}

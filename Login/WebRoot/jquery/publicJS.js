@@ -39,7 +39,9 @@ function checkType(){
     var type=jq("#dwr_kytype").val();
     var depId=jq("#sel_depar").val();
 	var fid=jq("select[name='fid']").val();
-					
+	var factCode=jq("#dwrFactArea").val();
+	
+	removeobjs();	
     if(dwrFactNo!=""&&type!=""){
         kyzvisaflowjs.findByType_Dwr(dwrFactNo,type,function(x){
            if(x==0){//流程不存在
@@ -51,7 +53,13 @@ function checkType(){
            		/*********************修改20190424************************/ 
            		if(fids>0){           			
            			if(depId!=null&&depId!=""||(fid!=null&&fid!="")){
-           				checkType2(dwrFactNo,type,trMk,depId,fid);
+           				if(dwrFactNo=="HC"){         					
+           					if(factCode!=null&&factCode!=""){          						
+                   				checkType2(dwrFactNo,type,trMk,depId,fid,factCode);
+           					}          					              				           					
+           				}else{           					
+           					checkType2(dwrFactNo,type,trMk,depId,fid,"null"); 
+           				}          				        				
            			}          			
            		}else{          			
            			checkbyEmail(dwrFactNo,type,dwremail,trMk,depId);
@@ -98,7 +106,7 @@ function checkbyEmail(dwrFactNo,type,dwremail,trMk,depId){
 					if(depids==0){
 						loaddepments(dwrFactNo, type, dwremail, trMk);
 					}else{
-						checkType2(dwrFactNo,type,trMk,depId,null);
+						checkType2(dwrFactNo,type,trMk,depId,null,"null");
 						depids=0;
 					}
 					
@@ -113,7 +121,7 @@ function checkbyEmail(dwrFactNo,type,dwremail,trMk,depId){
 }
 
 //選出流程，此流程細分到部門  ，或者小類
-function checkType2(dwrFactNo,type,trMk,depId,fid) {	
+function checkType2(dwrFactNo,type,trMk,depId,fid,factCode) {	
 	jq.ajax({
 		type : "post",		
 		url: "visaflow_findVisaSort_dwr_depidAndfid",
@@ -123,7 +131,8 @@ function checkType2(dwrFactNo,type,trMk,depId,fid) {
 			visaSort : type,
 			trMk : trMk,
 			depId : depId,
-			fid:fid
+			fid:fid,
+			factCode:factCode
 		},
 		success:function(data){
 			if((depId!=null&&depId!="")||(fid!=null&&fid!="")){
@@ -173,42 +182,7 @@ function loaddepments(dwrFactNo, type, dwremail, trMk) {
 			layer.alert("加載部門數據出錯");
 			lockbtn();
 		}
-	});
-	
-	/*if(trMk=="Y"&&factno!=""&&visasort!=""){
-		jq.ajax({
-			type:"post",
-			dateType:"json",
-			data:{factNo:factno},
-			url:"webdep_findWebDepartmentByFactNo",
-			async:false,
-			success:function(data){			
-				jq("#sel_depar").empty();
-				var item="";
-				if(data.length>0){
-					deps=data.length;
-					item+="<option value=''>請選擇部門</option>";
-					jq.each(data,function(i,obj){
-						item+="<option value='"+obj.depId+"'>"+obj.depName+"</option>";						
-					});
-					jq("#sel_depar").append(item);
-					jq("#div_dep").show();
-					result=data.length;										
-				}else{
-					jq("#div_dep").hide();						
-				}				
-				
-			},
-			error : function(error) {
-				layer.alert("加載部門數據出錯");
-				lockbtn();
-			}
-			
-		});
-	}else{
-		jq("#div_depar").hide();
-	}*/
-	
+	});			
 }
 
 
@@ -216,6 +190,7 @@ function loaddepments(dwrFactNo, type, dwremail, trMk) {
 var fids=0;
 var bigType=0;
 function loadwebformtypes(){ 
+	jq("select[name='fid']").empty();
 	var dwrFactNo=document.getElementById("dwrFactNo").value;        
     var trMk=jq("input[name='trMk']:checked").val();
     var type=jq("#dwr_kytype").val();
@@ -226,8 +201,7 @@ function loadwebformtypes(){
 			data:{factNo:dwrFactNo,typeNo:type},
 			url:"webformtype_findWebformByFactnoTypeno",
 			async:false,
-			success:function(data){				
-				jq("select[name='fid']").empty();
+			success:function(data){							
 				fids=data.length;
 				var item="";
 				if(data.length>0){					
@@ -251,7 +225,62 @@ function loadwebformtypes(){
 		});
     }else{
     	hidediv();
-    }
-		
+    }			
+}
+
+
+function loadfactcode() {
+	var factNo=jq("#dwrFactNo").val();
+	if(factNo!=null&&factNo!=""){
+		jq.ajax({
+			type : "post",
+			dataType : "json",
+			url : "visaflow_findFactCode",
+			data : {
+				factNo : factNo			
+			},
+			success : function(data) {
+				jq("#dwrFactArea").empty();
+				if(data.length>1){
+					layer.alert("該工廠存在多個廠別狀態的流程，請選擇廠別狀態");
+					var item = "<option value=''>請選擇廠別狀態</option>";
+					jq.each(data, function(i, obj) {
+						item += "<option value='" + obj+ "'>" + obj
+								+ "</option>";
+					});
+					jq("#dwrFactArea").append(item);			
+					jq("#dwrFactArea").removeAttr("disabled");
+					jq("#dwrFactArea").css("background-color","");
+				}else{
+					jq("#dwrFactArea").attr("disabled","disabled");
+					jq("#dwrFactArea").css("background-color","#eeeeee");
+				}				
+			},
+			error : function(error) {
+				layer.alert("加載廠別狀態數據出錯");
+				jq("#dwrFactArea").attr("disabled","disabled");
+				jq("#dwrFactArea").css("background-color","#eeeeee");
+				lockbtn();
+			}
+		});
+	}				
+}
+
+function getFactArea(mid) {
+	document.getElementById("dwrFactArea").length = 1;
+	webfactjs.findFactCodeByFactNo(mid, function(x) {
+		dwr.util.addOptions("dwrFactArea", x);
+	});
 	
 }
+
+function removeobjs(){
+	var dwrFactNo=document.getElementById("dwrFactNo").value;
+	if(dwrFactNo=="HC"){
+		jq("#dwrFactArea").attr("datatype","*");
+		jq("#dwrFactArea").attr("onchange","checkType()");
+	}else{
+		jq("#dwrFactArea").removeAttr("datatype onchange");
+	}
+}
+

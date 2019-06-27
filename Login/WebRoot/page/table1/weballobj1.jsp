@@ -24,15 +24,15 @@
 </head>
 
 <body>
-   <div id="container">
-   <div id="content">
-	<table class="table table-striped table-hover table-bordered"  >
-	<h3>
-	<s:if test='#session.loginUser.userread!="1"'>
-	<!--<input type="button" class="btn btn-info" value="添加" onclick="loadUrl('saveAndUpdate/fixedSaveOrUpdate.jsp')"/>-->	
-	</s:if>	
-	<span id="h2_title">基本數據導入</span>
-	</h3>
+	<div id="container">
+		<div id="content">
+			<table class="table table-striped table-hover table-bordered">
+				<h3>
+					<s:if test='#session.loginUser.userread!="1"'>
+						<!--<input type="button" class="btn btn-info" value="添加" onclick="loadUrl('saveAndUpdate/fixedSaveOrUpdate.jsp')"/>-->
+					</s:if>
+					<span id="h2_title">基本數據導入</span>
+				</h3>
 				<thead>
 					<tr class="tr_show">
 						<th>序號</th>
@@ -151,11 +151,12 @@
 						<th>樣品組生產樣品</th>
 						<th>其它</th>
 						<th>總產量</th>
-						<th>托外生產數</th>												
+						<th>托外生產數</th>
 						<th>含鐵報廢</th>
 						<th>正批請款數</th>
 						<th>托外請款數</th>
 						<th>廢品重量</th>
+						<th>平均庫存金額</th>
 						<!-- <th>利潤率<font style="font-style:italic" color="red">(new)</font></th>-->
 						<s:if test='#session.loginUser.userread!="1"'>
 							<th>操作</th>
@@ -166,246 +167,127 @@
 					<s:iterator value="bean.list" status="x" id="temp">
 						<tr>
 							<td>${ bean.pageSize*(bean.currentPage-1)+x.index+1}</td>
-							<td><s:property value="id.fact.factSname" />
-							</td>
-							<td><s:property value="id.fact.id.factArea" />
-							</td>
-							<td><s:property value="id.yymm" />
-							</td>
-							<td><s:property value="objA100" />
-							</td>
-							<td><s:property value="objA101" />
-							</td>
-							<td><s:property value="objA102" />
-							</td>
-							<td><s:property value="objA103" />
-							</td>
-							<td><s:property value="objA104" />
-							</td>
-							<td><s:property value="objA105" />
-							</td>
-							<td><s:property value="objA106" />
-							</td>
-							<td><s:property value="objA107" />
-							</td>
-							<td><s:property value="objA108" />
-							</td>
-							<td><s:property value="objA109" />
-							</td>
-							<td><s:property value="objA110" />
-							</td>
-							<td><s:property value="objA111" />
-							</td>
-							<td><s:property value="objA112" />
-							</td>
-							<td><s:property value="objA113" />
-							</td>
-							<td><s:property value="objA114" />
-							</td>
-							<td><s:property value="objA115" />
-							</td>
-							<td><s:property value="objA116" />
-							</td>
-							<td><s:property value="objA117" />
-							</td>
-							<td><s:property value="objA118" />
-							</td>
-							<td><s:property value="objA119" />
-							</td>
-							<td><s:property value="objA120" />
-							</td>
-							<td><s:property value="objA121" />
-							</td>
-							<td><s:property value="objA122" />
-							</td>
-							<td><s:property value="objA123" />
-							</td>
-							<td><s:property value="objA124" />
-							</td>
-							<td><s:property value="objA125" />
-							</td>
-							<td><s:property value="objA126" />
-							</td>
-							<td><s:property value="objA127" />
-							</td>
-							<td><s:property value="objA128" />
-							</td>
-							<td><s:property value="objA129" />
-							</td>
-							<td><s:property value="objA130" />
-							</td>
-							<td><s:property value="objA131" />
-							</td>
-							<td><s:property value="objA132" />
-							</td>
-							<td><s:property value="objA133" />
-							</td>
-							<td><s:property value="objA134" />
-							</td>
-							<td><s:property value="objA135" />
-							</td>
-							<td><s:property value="objA136" />
-							</td>
-							<td><s:property value="objA137" />
-							</td>
-							<td><s:property value="objA138" />
-							</td>
-							<td><s:property value="objA139" />
-							</td>
-							<td><s:property value="objA140" />
-							</td>
-							<td><s:property value="objA141" />
-							</td>
-							<td><s:property value="objA142" />
-							</td>
-							<td><s:property value="objA143" />
-							</td>
-							<td><s:property value="objA144" />
-							</td>
-							<td><s:property value="objA145" />
-							</td>
-							<td><s:property value="objA146" />
-							</td>
-							<td><s:property value="objA147" />
-							</td>
-							<td><s:property value="objA148" />
-							</td>
-							<td><s:property value="objA149" />
-							</td>
-							<td><s:property value="objA150" />
-							</td>
-							<td><s:property value="objA151" />
-							</td>
-							<td><s:property value="objA152" />
-							</td>
-							<td><s:property value="objA153" />
-							</td>
-							<td><s:property value="objA154" />
-							</td>
-							<td><s:property value="objA155" />
-							</td>
-							<td><s:property value="objA156" />
-							</td>
-							<td><s:property value="objA157" />
-							</td>
-							<td><s:property value="objA158" />
-							</td>
-							<td><s:property value="objA159" />
-							</td>
-							<td><s:property value="objA160" />
-							</td>
-							<td><s:property value="objA161" />
-							</td>
-							<td><s:property value="objA162" />
-							</td>
-							<td><s:property value="objA163" />
-							</td>
-							<td><s:property value="objA164" />
-							</td>
-							<td><s:property value="objA165" />
-							</td>
-							<td><s:property value="objA166" />
-							</td>
-							<td><s:property value="objA167" />
-							</td>
-							<td><s:property value="objA168" />
-							</td>
-							<td><s:property value="objA169" />
-							</td>
-							<td><s:property value="objA170" />
-							</td>
-							<td><s:property value="objA171" />
-							</td>
-							<td><s:property value="objA172" />
-							</td>
-							<td><s:property value="objA173" />
-							</td>
-							<td><s:property value="objA174" />
-							</td>
-							<td><s:property value="objA175" />
-							</td>
-							<td><s:property value="objA176" />
-							</td>
-							<td><s:property value="objA177" />
-							</td>
-							<td><s:property value="objA178" />
-							</td>
-							<td><s:property value="objA179" />
-							</td>
-							<td><s:property value="objA180" />
-							</td>
-							<td><s:property value="objA181" />
-							</td>
-							<td><s:property value="objA182" />
-							</td>
-							<td><s:property value="objA183" />
-							</td>
-							<td><s:property value="objA184" />
-							</td>
-							<td><s:property value="objA185" />
-							</td>
-							<td><s:property value="objA186" />
-							</td>
-							<td><s:property value="objA187" />
-							</td>
-							<td><s:property value="objA188" />
-							</td>
-							<td><s:property value="objA189" />
-							</td>
-							<td><s:property value="objA190" />
-							</td>
-							<td><s:property value="objA191" />
-							</td>
-							<td><s:property value="objA192" />
-							</td>
-							<td><s:property value="objA193" />
-							</td>
-							<td><s:property value="objA194" />
-							</td>
-							<td><s:property value="objA195" />
-							</td>
-							<td><s:property value="objA196" />
-							</td>
-							<td><s:property value="objA197" />
-							</td>
-							<td><s:property value="objA198" />
-							</td>
-							<td><s:property value="objA199" />
-							</td>
-							<td><s:property value="objA200" />
-							</td>
-							<td><s:property value="objA201" />
-							</td>
-							<td><s:property value="objA202" />
-							</td>
-							<td><s:property value="objA203" />
-							</td>
-							<td><s:property value="objA204" />
-							</td>							
-							<td><s:property value="objA205" />
-							</td>
-							<td><s:property value="objA206" />
-							</td>
-							<td><s:property value="objA207" />
-							</td>
-							<td><s:property value="objA208" />
-							</td>
-							<td><s:property value="objA209" />
-							</td>
-							<td><s:property value="objA210" />
-							</td>
-							<td><s:property value="objA211" />
-							</td>
-							<td><s:property value="objA212" />
-							</td>
-							<td><s:property value="objA213" />
-							</td>
-							<td><s:property value="objA214" />
-							</td>
-							<td><s:property value="objA215" />
-							</td>
-							<td><s:property value="objA216" />
-							</td>
+							<td><s:property value="id.fact.factSname" /></td>
+							<td><s:property value="id.fact.id.factArea" /></td>
+							<td><s:property value="id.yymm" /></td>
+							<td><s:property value="objA100" /></td>
+							<td><s:property value="objA101" /></td>
+							<td><s:property value="objA102" /></td>
+							<td><s:property value="objA103" /></td>
+							<td><s:property value="objA104" /></td>
+							<td><s:property value="objA105" /></td>
+							<td><s:property value="objA106" /></td>
+							<td><s:property value="objA107" /></td>
+							<td><s:property value="objA108" /></td>
+							<td><s:property value="objA109" /></td>
+							<td><s:property value="objA110" /></td>
+							<td><s:property value="objA111" /></td>
+							<td><s:property value="objA112" /></td>
+							<td><s:property value="objA113" /></td>
+							<td><s:property value="objA114" /></td>
+							<td><s:property value="objA115" /></td>
+							<td><s:property value="objA116" /></td>
+							<td><s:property value="objA117" /></td>
+							<td><s:property value="objA118" /></td>
+							<td><s:property value="objA119" /></td>
+							<td><s:property value="objA120" /></td>
+							<td><s:property value="objA121" /></td>
+							<td><s:property value="objA122" /></td>
+							<td><s:property value="objA123" /></td>
+							<td><s:property value="objA124" /></td>
+							<td><s:property value="objA125" /></td>
+							<td><s:property value="objA126" /></td>
+							<td><s:property value="objA127" /></td>
+							<td><s:property value="objA128" /></td>
+							<td><s:property value="objA129" /></td>
+							<td><s:property value="objA130" /></td>
+							<td><s:property value="objA131" /></td>
+							<td><s:property value="objA132" /></td>
+							<td><s:property value="objA133" /></td>
+							<td><s:property value="objA134" /></td>
+							<td><s:property value="objA135" /></td>
+							<td><s:property value="objA136" /></td>
+							<td><s:property value="objA137" /></td>
+							<td><s:property value="objA138" /></td>
+							<td><s:property value="objA139" /></td>
+							<td><s:property value="objA140" /></td>
+							<td><s:property value="objA141" /></td>
+							<td><s:property value="objA142" /></td>
+							<td><s:property value="objA143" /></td>
+							<td><s:property value="objA144" /></td>
+							<td><s:property value="objA145" /></td>
+							<td><s:property value="objA146" /></td>
+							<td><s:property value="objA147" /></td>
+							<td><s:property value="objA148" /></td>
+							<td><s:property value="objA149" /></td>
+							<td><s:property value="objA150" /></td>
+							<td><s:property value="objA151" /></td>
+							<td><s:property value="objA152" /></td>
+							<td><s:property value="objA153" /></td>
+							<td><s:property value="objA154" /></td>
+							<td><s:property value="objA155" /></td>
+							<td><s:property value="objA156" /></td>
+							<td><s:property value="objA157" /></td>
+							<td><s:property value="objA158" /></td>
+							<td><s:property value="objA159" /></td>
+							<td><s:property value="objA160" /></td>
+							<td><s:property value="objA161" /></td>
+							<td><s:property value="objA162" /></td>
+							<td><s:property value="objA163" /></td>
+							<td><s:property value="objA164" /></td>
+							<td><s:property value="objA165" /></td>
+							<td><s:property value="objA166" /></td>
+							<td><s:property value="objA167" /></td>
+							<td><s:property value="objA168" /></td>
+							<td><s:property value="objA169" /></td>
+							<td><s:property value="objA170" /></td>
+							<td><s:property value="objA171" /></td>
+							<td><s:property value="objA172" /></td>
+							<td><s:property value="objA173" /></td>
+							<td><s:property value="objA174" /></td>
+							<td><s:property value="objA175" /></td>
+							<td><s:property value="objA176" /></td>
+							<td><s:property value="objA177" /></td>
+							<td><s:property value="objA178" /></td>
+							<td><s:property value="objA179" /></td>
+							<td><s:property value="objA180" /></td>
+							<td><s:property value="objA181" /></td>
+							<td><s:property value="objA182" /></td>
+							<td><s:property value="objA183" /></td>
+							<td><s:property value="objA184" /></td>
+							<td><s:property value="objA185" /></td>
+							<td><s:property value="objA186" /></td>
+							<td><s:property value="objA187" /></td>
+							<td><s:property value="objA188" /></td>
+							<td><s:property value="objA189" /></td>
+							<td><s:property value="objA190" /></td>
+							<td><s:property value="objA191" /></td>
+							<td><s:property value="objA192" /></td>
+							<td><s:property value="objA193" /></td>
+							<td><s:property value="objA194" /></td>
+							<td><s:property value="objA195" /></td>
+							<td><s:property value="objA196" /></td>
+							<td><s:property value="objA197" /></td>
+							<td><s:property value="objA198" /></td>
+							<td><s:property value="objA199" /></td>
+							<td><s:property value="objA200" /></td>
+							<td><s:property value="objA201" /></td>
+							<td><s:property value="objA202" /></td>
+							<td><s:property value="objA203" /></td>
+							<td><s:property value="objA204" /></td>
+							<td><s:property value="objA205" /></td>
+							<td><s:property value="objA206" /></td>
+							<td><s:property value="objA207" /></td>
+							<td><s:property value="objA208" /></td>
+							<td><s:property value="objA209" /></td>
+							<td><s:property value="objA210" /></td>
+							<td><s:property value="objA211" /></td>
+							<td><s:property value="objA212" /></td>
+							<td><s:property value="objA213" /></td>
+							<td><s:property value="objA214" /></td>
+							<td><s:property value="objA215" /></td>
+							<td><s:property value="objA216" /></td>
+							<td><s:property value="objA217" /></td>							
 
 							<s:if test='#session.loginUser.userread!="1"'>
 								<td>
@@ -417,17 +299,14 @@
 									<a href="javascript:findById('subform${x.index}','webwlo_findWloById')">
 									<img alt="修改" src="images/icon/edit001.png" title="修改">										
 								    </a>--%>
-									<form action="weballobj_delete" method="post" id="2subform${x.index}" style="float:left">										
-										<input type="hidden" value="<s:property value='id.fact.id.factNo'/>" name="factNo" />
-										<input type="hidden" value="<s:property value='id.fact.id.factArea'/>" name="factCode" />											
-										<input type="hidden" value="<s:property value='id.yymm'/>" name="yymm" />											
-									</form> 
-									<a href="javascript:isDelete('2subform${x.index}','weballobj_delete')" >
-									<img alt="刪除" src="images/icon/delete001.png" title="刪除">
-								    </a>
-								</td>
+									<form action="weballobj_delete" method="post" id="2subform${x.index}" style="float:left">
+										<input type="hidden" value="<s:property value='id.fact.id.factNo'/>" name="factNo" /> <input
+											type="hidden" value="<s:property value='id.fact.id.factArea'/>" name="factCode" /> <input
+											type="hidden" value="<s:property value='id.yymm'/>" name="yymm" />
+									</form> <a href="javascript:isDelete('2subform${x.index}','weballobj_delete')"> <img alt="刪除"
+										src="images/icon/delete001.png" title="刪除"> </a></td>
 							</s:if>
-							
+
 						</tr>
 
 					</s:iterator>
@@ -435,10 +314,10 @@
 				</tbody>
 
 			</table>
-  </div>	
-</div>
-<jsp:include page="pagenation.jsp" flush="true"/>	
-	
-	
+		</div>
+	</div>
+	<jsp:include page="pagenation.jsp" flush="true" />
+
+
 </body>
 </html>

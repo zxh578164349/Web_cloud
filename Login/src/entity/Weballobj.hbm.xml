@@ -365,7 +365,10 @@
         </property>  
         <property name="objA216" type="java.lang.Double">
             <column name="OBJ_A216" precision="13" scale="4" />
-        </property>           
+        </property> 
+        <property name="objA217" type="java.lang.Double">
+            <column name="OBJ_A217" precision="13" scale="4" />
+        </property>               
         <property name="username" type="java.lang.String">
             <column name="USERNAME" length="50"/>
         </property>

@@ -126,6 +126,7 @@ public class Weballobj implements java.io.Serializable {
 	private Double objA214;
 	private Double objA215;
 	private Double objA216;
+	private Double objA217;
 
 	
 	private String username;
@@ -1263,6 +1264,14 @@ public class Weballobj implements java.io.Serializable {
 	public void setObjA216(Double objA216) {
 		this.objA216 = objA216;
 	}
+
+	public Double getObjA217() {
+		return objA217;
+	}
+
+	public void setObjA217(Double objA217) {
+		this.objA217 = objA217;
+	}	
 	
 	
 	

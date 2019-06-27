@@ -72,6 +72,7 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 	private JSONArray jsons;
 	private String depId;
 	private Integer fid;
+	private String factCode;
 	
 	private File file;
 	private String fileFileName;
@@ -80,6 +81,14 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 	private IWebFormtypeServices webformser;
 	
 	
+
+	public String getFactCode() {
+		return factCode;
+	}
+
+	public void setFactCode(String factCode) {
+		this.factCode = factCode;
+	}
 
 	public void setWebformser(IWebFormtypeServices webformser) {
 		this.webformser = webformser;
@@ -319,6 +328,11 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 						    if(fid!=null){
 						    	flows.get(i).setWebformtype(new WebFormtype(fid));
 						    }
+						    if(factCode!=null&&!"".equals(factCode)){
+						    	flows.get(i).getId().setFactCode(factCode);
+						    }else{
+						    	flows.get(i).getId().setFactCode("null");
+						    }
 							//visaSer.add(flows.get(i));
 						   
 						}
@@ -365,12 +379,12 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 	public String update(){		
 		try{
 			flow.setVisaSortM(flow.getId().getVisaSort().substring(0,2));
-			if(depId!=null&&!"".equals(depId)){
+			/*if(depId!=null&&!"".equals(depId)){
 				flow.setDepId(new WebDepartment(Integer.parseInt(depId)));
 			}
 			if(fid!=null&&fid!=0){
 				flow.setWebformtype(new WebFormtype(fid));
-			}
+			}*/
 			//visaSer.add(flow);
 			KyzVisaflow f2=(KyzVisaflow)ActionContext.getContext().getSession().get("update_flow");
 			visaSer.add_d(flow,f2);
@@ -593,9 +607,9 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 				flows.get(i).setFlowMk("N");
 				flows.get(i).setVisaSortM(flows.get(i).getId().getVisaSort().substring(0,2));
 				flows.get(i).setTrMk(trMk);
-				if(depId!=null&&!"".equals(depId)){
+				/*if(depId!=null&&!"".equals(depId)){
 					flows.get(i).setDepId(new WebDepartment(Integer.parseInt(depId)));
-				}			
+				}*/			
 				visaSer.add(flows.get(i));
 			}
 			ajaxResult="0";
@@ -654,7 +668,7 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 	}
 	//選出流程，此流程細分到部門  ，或者小類
 	public String findVisaSort_dwr_depidAndfid(){
-		ajaxResult=visaSer.findVisaSort_dwr_depidAndfid(factNo,visaSort,trMk,depId,fid);
+		ajaxResult=visaSer.findVisaSort_dwr_depidAndfid(factNo,visaSort,trMk,depId,fid,factCode);
 		return "findVisaSort_dwr_depidAndfid";
 	}		
 	
@@ -786,65 +800,46 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 	
 	
 	public void setobj(KyzVisaflow obj,String str){
-		//前段備料	成型	品管	總務	生管	工程	廠務	企劃	夏偉清	廖玉嬌	蔡副協理	劉協理	業務	採購	經管	劉小姐
-		/**
-		 * 单位	姓名	账号
-前段備料	刘光华	guanghua.liu@hff-group.com
-成型	何明珠	mingzhu.he@hff-group.com
-品管	汪文萍	wenping.wang@hff-group.com
-總務	余新江	xinjiang.yu@hff-group.com
-生管	徐泽波	zebo.xu@hff-group.com
-工程	刘光华	guanghua.liu@hff-group.com
-廠務	陈建立	jianli.chen@hff-group.com
-企劃	易玖沅	jiuyuan.yi@hff-group.com
-夏伟清	夏伟清	wq.xia@kyuen-dg.com
-廖玉娇	廖玉娇	bonnie@kyuen-dg.com
-蔡副協理	蔡副协理	jackla521@163.com
-劉協理	刘协理	alan.liu@giachiu.com
-採購	台干	ivy@mail.gj.com.tw
-經管	谢雅芳	avon@mail.gj.com.tw
-劉小姐	台干	liujung@mail.gj.com.tw
-
-		 */
+		//前段備料	成型	品管	總務	生管	工程	廠務	企劃	夏偉清	廖玉嬌	蔡副協理	劉協理	業務	採購	經管	劉小姐		
 		if("前段備料".equals(str)){
 			obj.setVisaRank("主管");
-			obj.getId().setPurmanNo("刘光华");
-			obj.setVisaSigner("guanghua.liu@hff-group.com");
+			obj.getId().setPurmanNo("盛克明");
+			obj.setVisaSigner("shengkeming@huacheng-vn.com");
 		}
 		if("成型".equals(str)){
 			obj.setVisaRank("主管");
-			obj.getId().setPurmanNo("何明珠");
-			obj.setVisaSigner("mingzhu.he@hff-group.com");
+			obj.getId().setPurmanNo("熊军");
+			obj.setVisaSigner("xiongjun@huacheng-vn.com");
 		}
 		if("品管".equals(str)){
 			obj.setVisaRank("主管");
-			obj.getId().setPurmanNo("汪文萍");
-			obj.setVisaSigner("wenping.wang@hff-group.com");
+			obj.getId().setPurmanNo("曹扬芬");
+			obj.setVisaSigner("caoyangfen@huacheng-vn.com");
 		}
 		if("總務".equals(str)){
 			obj.setVisaRank("主管");
-			obj.getId().setPurmanNo("余新江");
-			obj.setVisaSigner("xinjiang.yu@hff-group.com");
+			obj.getId().setPurmanNo("童成军");
+			obj.setVisaSigner("zwhuacheng@huacheng-vn.com");
 		}
 		if("生管".equals(str)){
 			obj.setVisaRank("主管");
-			obj.getId().setPurmanNo("徐泽波");
-			obj.setVisaSigner("zebo.xu@hff-group.com");
+			obj.getId().setPurmanNo("赵永刚");
+			obj.setVisaSigner("zyg1977@huacheng-vn.com");
 		}
 		if("工程".equals(str)){
 			obj.setVisaRank("主管");
-			obj.getId().setPurmanNo("刘光华");
-			obj.setVisaSigner("guanghua.liu@hff-group.com");
+			obj.getId().setPurmanNo("吴克华");
+			obj.setVisaSigner("wukehua2019@huacheng-vn.com");
 		}
 		if("廠務".equals(str)){
 			obj.setVisaRank("主管");
-			obj.getId().setPurmanNo("陈建立");
-			obj.setVisaSigner("jianli.chen@hff-group.com");
+			obj.getId().setPurmanNo("朱兆清");
+			obj.setVisaSigner("zhaoqing.zhu@huacheng-vn.com");
 		}
 		if("企劃".equals(str)){
 			obj.setVisaRank("主管");
-			obj.getId().setPurmanNo("易玖沅");
-			obj.setVisaSigner("jiuyuan.yi@hff-group.com");
+			obj.getId().setPurmanNo("聂婷");
+			obj.setVisaSigner("qhnieting@huacheng-vn.com");
 		}
 		if("夏偉清".equals(str)){
 			obj.setVisaRank("經理");
@@ -856,11 +851,11 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 			obj.getId().setPurmanNo("廖玉嬌");
 			obj.setVisaSigner("bonnie@kyuen-dg.com");
 		}
-		if("蔡副協理".equals(str)){
+		/*if("蔡副協理".equals(str)){
 			obj.setVisaRank("副協理");
 			obj.getId().setPurmanNo("蔡副協理");
-			obj.setVisaSigner("jackla521@163.com");
-		}
+			obj.setVisaSigner("jacky.tsai@huacheng-vn.com");
+		}*/
 		if("劉協理".equals(str)){
 			obj.setVisaRank("協理");
 			obj.getId().setPurmanNo("劉協理");
@@ -874,12 +869,12 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 		if("採購".equals(str)){
 			obj.setVisaRank("臺幹");
 			obj.getId().setPurmanNo("採購");
-			obj.setVisaSigner("ivy@mail.gj.com.tw");
+			obj.setVisaSigner("eva.hsieh@mail.gj.com.tw");
 		}
 		if("經管".equals(str)){
 			obj.setVisaRank("臺幹");
 			obj.getId().setPurmanNo("經管");
-			obj.setVisaSigner("avon@mail.gj.com.tw");
+			obj.setVisaSigner("cindywang@mail.gj.com.tw");
 		}
 		if("劉小姐".equals(str)){
 			obj.setVisaRank("臺幹");
@@ -931,7 +926,7 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 				for(String key:map.keySet()){						
 					List<String>list=(List<String>)map.get(key);	
 					
-					List<WebFormtype>list_types=webformser.findWebformByFactno("VE");					
+					List<WebFormtype>list_types=webformser.findWebformByFactno("HC");					
 					List<WebFormtype>list_types2=new ArrayList<WebFormtype>(list_types);
 					//list_types2.addAll(list_types);
 					
@@ -989,7 +984,7 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 							for(int b=1;b<list6.size();b++){
 								String j=new DecimalFormat("0").format(Double.valueOf(list6.get(0)));
 								KyzVisaflow fow=new KyzVisaflow();
-								fow.setId(new KyzVisaflowId("VE", key3+a, list6.get(b), "0"+b));								
+								fow.setId(new KyzVisaflowId("HC", key3+a, list6.get(b), "0"+b,"IP"));								
 								this.setobj(fow, list6.get(b));
 								fow.setFlowMk("Y");
 								fow.setTrMk("Y");
@@ -1006,7 +1001,7 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 					//System.out.println(list_flows);
 					visaSer.addMore(list_flows);
 				}				
-				response.getWriter().print("<script>window.parent.layer.msg('導入成功',3,1);window.parent.loadUrl_bodyid('webtestreform_findPageBean3');</script>");			
+				response.getWriter().print("<script>window.parent.layer.msg('導入成功',3,1);</script>");			
 				response.getWriter().close();
 			}			
 		}catch(Exception e){
@@ -1015,6 +1010,16 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 			response.getWriter().close();
 		}
 		
+	}
+	
+	public String findFactCode(){
+		try{
+			List<String>list=visaSer.findFactCode(factNo);
+			jsons=JSONArray.fromObject(list);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return "findFactCode";
 	}
 
 }

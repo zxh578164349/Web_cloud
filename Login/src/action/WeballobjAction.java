@@ -356,7 +356,9 @@ public class WeballobjAction  extends ActionSupport implements ServletResponseAw
 						obj.setObjA213(Double.valueOf(list.get(114).split(SEPARATOR)[i]));
 						obj.setObjA214(Double.valueOf(list.get(115).split(SEPARATOR)[i]));
 						obj.setObjA215(Double.valueOf(list.get(116).split(SEPARATOR)[i]));
-						obj.setObjA216(Double.valueOf(list.get(117).split(SEPARATOR)[i]));						
+						obj.setObjA216(Double.valueOf(list.get(117).split(SEPARATOR)[i]));	
+						obj.setObjA217(Double.valueOf(list.get(118).split(SEPARATOR)[i]));
+						//obj.setObjA218(Double.valueOf(list.get(119).split(SEPARATOR)[i]));
 					}																	
 					obj.setUsername(user.getUsername());
 					obj.setCreateDate(new SimpleDateFormat("yyyyMMdd").format(new Date()));
@@ -1194,6 +1196,9 @@ public class WeballobjAction  extends ActionSupport implements ServletResponseAw
 		list.add("214__正批請款數__雙");
 		list.add("215__托外請款數__雙");
 		list.add("216__廢品重量__KG");
+		//list.add("217__銷貨成本__USD");
+		list.add("217__平均庫存金額__USD");
+		
 
 		
 		return list;
@@ -1318,7 +1323,9 @@ public class WeballobjAction  extends ActionSupport implements ServletResponseAw
 		list.add(obj.getObjA213());
 		list.add(obj.getObjA214());
 		list.add(obj.getObjA215());
-		list.add(obj.getObjA216());		
+		list.add(obj.getObjA216());	
+		list.add(obj.getObjA217());
+		//list.add(obj.getObjA218());
 		return list;
 		
 	}
