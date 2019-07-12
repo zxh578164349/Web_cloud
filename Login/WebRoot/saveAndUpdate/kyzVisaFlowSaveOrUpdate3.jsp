@@ -32,23 +32,15 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 			 	
 			 <s:if test="flows==null">
 			    <tr>
-			     <td><input type="checkbox" id="cboxall" onclick="checkAll()" disabled/></td>
-			     <td>廠別</td>
-			     <td >類別</td>			     
+			     <td><input type="checkbox" id="cboxall" onclick="checkAll()" disabled/></td>			     			     
 			     <td >項次</td>
 			     <td >姓名</td>
-			     <td >Email地址</td>			     
+			     <td >Email地址</td>		     
 			 </tr>
 			 
 			    <tr>
 			     <td><input type="checkbox" name="cbox" disabled/></td>
-			    
-			  
-			     <td >			 			  
-			       <input type="text" name="flows[0].id.factNo" id="dwrFactNo" value="<s:property value='flow.id.factNo'/>" readonly/>			     
-			     <td>
-			       <input type="text" name="flows[0].id.visaSort" id="dwr_kytype" value="<s:property value='flow.id.visaSort'/>" readonly/>			     
-			     </td>
+			    			  			     
 			     <td ><input type="text" name="flows[0].id.itemNo" value="<s:property value='flow.id.itemNo'/>" readonly/></td>
 			     <td >			     			     
 			     <input type="text" name="flows[0].id.purmanNo" value=""  datatype="*"  id="keys0" onkeyup="gog(0)" />
@@ -61,13 +53,20 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 			     <div style="position:relative"  >			     
 			     <div id="emaildwr0" style="z-index:100;position:absolute;background:yellow;top:0px;left:0px;width:180px;display:none" ></div>			     
 			     </div>
+			     		
 			     
+			     	     
 			     <input type="hidden" value="<s:property value='maxItem'/>" id="maxItem"/><!-- 后台传递过来的最大序列号 -->
-			     <input type="hidden" name="flows[0].typeMk" id="typeMk" value="<s:property value='flow.typeMk'/>"/>
-			     <input type="hidden" name="trMk" value="<s:property value='flow.trMk'/>"/>
-			     <input type="hidden" value=<s:property value='flow.depId.depId'/> name="flow.depId.depId"/>
-			     <input type="hidden" value=<s:property value='flow.webformtype.fid'/> name="flow.webformtype.fid"/>
-			     <input type="hidden" value="<s:property value='flow.id.factCode'/>" name="flow.id.factCode"/>	
+			     <input type="hidden" name="flow.id.factNo" value="<s:property value='flow.id.factNo'/>" id="dwrFactNo"/>	
+			     <input type="hidden" name="flow.id.factCode" value="<s:property value='flow.id.factCode'/>" />	
+			     <input type="hidden" name="flow.id.visaSort" value="<s:property value='flow.id.visaSort'/>" />	
+			     <input type="hidden" name="flow.trMk" value="<s:property value='flow.trMk'/>"/>
+			     <input type="hidden" name="flow.typeMk" id="typeMk" value="<s:property value='flow.typeMk'/>"/>			     			     		     			     				 
+				 <input type="hidden" value="<s:property value='flow.visaSortM'/>" name="flow.visaSortM"/>										
+				 <input type="hidden" value="<s:property value='flow.visible'/>" name="flow.visible"/>
+				 <input type="hidden" name="fid" value="<s:property value='flow.webformtype.fid'/>" />	
+			     <input type="hidden" name="depId" value="<s:property value='flow.depId.depId'/>" />
+			     
 			     </td>			    	     			     		      		      
 			  </tr>		
 			 </s:if>		
@@ -112,9 +111,10 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 					loadUrl("visaflow_findPageBean");
 					//location.href="visaflow_findPageBean";
 				}
-				if(data=="1"){
+				if(data=="1"){				
 					alert(data.responseText);
 				}
+				
 			}
 		});
 		demo.tipmsg.w["*0-6"] = "只能數字且不超過9位數,可保留三位以內小數";
@@ -136,13 +136,7 @@ var k2=0;
 	      　　出於兼容性問題,插入單元格最好加上序號insertCell(序號)
 	    */
        
-        if(factno!=""&&typeno!=""){
-          document.getElementById("addbtn").disabled=false;
-          
-        }else{
-          document.getElementById("addbtn").disabled=true;
-         
-        }
+      
         
    
         //设置列内容和属性
@@ -152,20 +146,13 @@ var k2=0;
         }else{
          var newTr = visaflow_body.insertRow(-1);
         //添加列
-        var newTd00=newTr.insertCell(0);
-        var newTd0 = newTr.insertCell(1);
-        var newTd1 = newTr.insertCell(2);
-        var newTd2=newTr.insertCell(3);
-        var newTd3=newTr.insertCell(4);
-        var newTd4=newTr.insertCell(5);
+        var newTd00=newTr.insertCell(0);       
+        var newTd2=newTr.insertCell(1);
+        var newTd3=newTr.insertCell(2);
+        var newTd4=newTr.insertCell(3);     
         
-        var factno=document.getElementById("dwrFactNo").value;
-        var typeno=document.getElementById("dwr_kytype").value;
-        var typeMk=document.getElementById("typeMk").value;
                  
-        newTd00.innerHTML='<input type="checkbox" name="cbox" disabled/>';          
-	    newTd0.innerHTML = '<input type="text" name="flows['+j+'].id.factNo" value="'+factno+'"  readonly style="color:blue"/>';
-	    newTd1.innerHTML='<input type="text" name="flows['+j+'].id.visaSort" value="'+typeno+'" datatype="*"  readonly/>';
+        newTd00.innerHTML='<input type="checkbox" name="cbox" disabled/>';          	    
         if(k2<10){
           newTd2.innerHTML= '<input type="text" name="flows['+j+'].id.itemNo" value="0'+k2+'" datatype="*" style="color:blue"  readonly/>';
         }else{
@@ -174,9 +161,8 @@ var k2=0;
         newTd3.innerHTML='<input type="text" name="flows['+j+'].id.purmanNo" value="" datatype="*" id="keys'+j+'" onkeyup="gog('+j+')" />'+
         '<div style="position:relative"><div id="tishi'+j+'" style="z-index:100;position:absolute;background:yellow;left:0;top:0px;width:180px;display:none"></div></div>';     
         newTd4.innerHTML='<input type="text" name="flows['+j+'].visaSigner" value="" datatype="e" id="skeys'+j+'" onkeyup="getEmail('+j+')" />'+
-        '<div style="position:relative"><div id="emaildwr'+j+'" style="z-index:100;position:absolute;background:yellow;left:0;top:0px;width:180px;display:none"></div></div>'+
-        '<input type="hidden" name="flows['+j+'].typeMk" value="'+typeMk+'"/>';           
-        } 
+        '<div style="position:relative"><div id="emaildwr'+j+'" style="z-index:100;position:absolute;background:yellow;left:0;top:0px;width:180px;display:none"></div></div>';                 
+      } 
                                  
 	}
 	
@@ -196,8 +182,8 @@ var k2=0;
 	   }
 	   //刪除最後一行
 	   if(cboxlist.length==1){
-	      document.getElementById("dwrFactNo").disabled=false;
-	      document.getElementById("dwr_kytype").disabled=false;	      	     	      
+	      //document.getElementById("dwrFactNo").disabled=false;
+	      //document.getElementById("dwr_kytype").disabled=false;	      	     	      
 	   }	  	   	  	   
 	}
 	function checkAll(){

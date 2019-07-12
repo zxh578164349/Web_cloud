@@ -89,11 +89,12 @@
 					  <a href="javascript:findById_form('subform${x.index}','visaflow_findById')"><img alt="修改" src="images/icon/edit001.png" title="修改" ></a>&nbsp;														
 					<form action="visaflow_delete" method="post" id="2subform${x.index}"
 						style="float:left">
-						<input type="hidden" value="<s:property value='id.factNo'/>"
-							name="id.factNo" /> <input type="hidden"
-							value="<s:property value='id.visaSort'/>" name="id.visaSort" />
+						    <input type="hidden" value="<s:property value='id.factNo'/>" name="id.factNo" />
+						    <input type="hidden" value="<s:property value='id.factCode'/>" name="id.factCode" />
+							<input type="hidden" value="<s:property value='id.visaSort'/>" name="id.visaSort" />
 							<input type="hidden" value="<s:property value='id.purmanNo'/>" name="id.purmanNo"/>
-							<input type="hidden" value="<s:property value='id.itemNo'/>" name="id.itemNo"/>						
+							<input type="hidden" value="<s:property value='id.itemNo'/>" name="id.itemNo"/>	
+												
 					</form>
 					<form action="visaflow_findMaxItem" method="post" id="3subform${x.index}"
 						style="float:left">
@@ -118,18 +119,18 @@
 					 
 					 <form action="visaflow_addflow" method="post" id="5subform${x.index}"
 						style="float:left">
-						<input type="hidden" value="<s:property value='id.factNo'/>" name="id.factNo" />
-						<input type="hidden" value="<s:property value='id.visaSort'/>" name="id.visaSort" />							
-						<input type="hidden" value="<s:property value='id.purmanNo'/>" name="id.purmanNo"/>
-						<input type="hidden" value="<s:property value='id.itemNo'/>" name="id.itemNo"/>
-						<input type="hidden" value="<s:property value='trMk'/>" name="trMk"/>
-						<input type="hidden" value="<s:property value='depId.depId'/>" name="depId"/>
-						<s:if test='flowMk=="N"'>
-						   <input type="hidden" value="N" name="flowmk"/>
-						</s:if>
-						<s:else>
-						   <input type="hidden" value="Y" name="flowmk"/>
-						</s:else>							
+						<input type="hidden" value="<s:property value='id.factNo'/>" name="flow.id.factNo" />
+						<input type="hidden" value="<s:property value='id.visaSort'/>" name="flow.id.visaSort" />
+						<input type="hidden" value="<s:property value='id.factCode'/>" name="flow.id.factCode" />							
+						<input type="hidden" value="<s:property value='id.itemNo'/>" name="itemNo"/>
+						<input type="hidden" value="<s:property value='trMk'/>" name="flow.trMk"/>
+						<input type="hidden" value="<s:property value='flowMk'/>" name="flow.flowMk"/>
+						<input type="hidden" value="<s:property value='visaSortM'/>" name="flow.visaSortM"/>
+						<input type="hidden" value="<s:property value='typeMk'/>" name="flow.typeMk"/>
+						<input type="hidden" value=<s:property value='depId.depId'/> name="depId"/>
+						<input type="hidden" value=<s:property value='webformtype.fid'/> name="fid"/>
+						<input type="hidden" value=<s:property value='visible'/> name="flow.visible"/>
+																									
 					  <div id="div_add${x.index}" style="display:none">
 					  <table>
 					  <tr>

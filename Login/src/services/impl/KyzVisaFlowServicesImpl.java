@@ -50,10 +50,14 @@ public class KyzVisaFlowServicesImpl implements IKyzVisaFlowServices{
 		// TODO Auto-generated method stub
 		return visaDao.findByType(factNo,visaSort);
 	}
+	
+	public List<KyzVisaflow> findByTypeAndFactCode(String factNo,String factCode,String visaSort){
+		return visaDao.findByTypeAndFactCode(factNo, factCode, visaSort);
+	}
 
 	public int findByType_Dwr(String factNo, String visaSort) {
 		// TODO Auto-generated method stub
-		int length=this.findByType(factNo, visaSort).size();
+		int length=this.findByType(factNo,visaSort).size();
 		return length;
 	}
 
@@ -184,6 +188,11 @@ public class KyzVisaFlowServicesImpl implements IKyzVisaFlowServices{
 	public List<String> findFactCode(String factNo) {
 		// TODO Auto-generated method stub
 		return visaDao.findFactCode(factNo);
+	}
+
+	public boolean addflow(int item_num, List<KyzVisaflow> list, KyzVisaflow flow) {
+		// TODO Auto-generated method stub
+		return visaDao.addflow(item_num, list, flow);
 	}
 
 }

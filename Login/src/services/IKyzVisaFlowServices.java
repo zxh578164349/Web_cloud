@@ -15,6 +15,7 @@ public interface IKyzVisaFlowServices {
 	public void delete(KyzVisaflowId id);
 	public List<KyzVisaflow> findByFactNo(String factno);
 	public List<KyzVisaflow> findByType(String factNo,String visaSort);
+	public List<KyzVisaflow> findByTypeAndFactCode(String factNo,String factCode,String visaSort);
 	public int findByType_Dwr(String factNo,String visaSort);
 	public String findVisaSort_dwr(String factNo, String visaSort, String email);
 	public String findVisaSort_dwr2(String factNo, String visaSort, String email,String trMk);
@@ -53,5 +54,7 @@ public interface IKyzVisaFlowServices {
 	public List<KyzVisaflow>findByFnoAndVsortAndTrmk(String factNo,String visaSort,String trMk);
 	public void addMore(List<KyzVisaflow>list);
 	public List<String> findFactCode(String factNo);
+	
+	public boolean addflow(int item_num, List<KyzVisaflow> list, KyzVisaflow flow);
 
 }

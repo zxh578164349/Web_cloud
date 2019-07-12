@@ -109,12 +109,13 @@ public class KyzVisaFlowDaoImpl extends Basedao implements IKyzVisaFlowDao {
 
 	public KyzVisaflow findById(KyzVisaflowId id) {
 		// TODO Auto-generated method stub
-		String hql="from KyzVisaflow where id.factNo=? and id.visaSort=? and id.purmanNo=? and id.itemNo=?";
+		String hql="from KyzVisaflow where id.factNo=? and id.factCode=? and id.visaSort=? and id.purmanNo=? and id.itemNo=?";
 		Query query=getSession().createQuery(hql);
 		query.setString(0, id.getFactNo());
-		query.setString(1, id.getVisaSort());
-		query.setString(2, id.getPurmanNo());
-		query.setString(3, id.getItemNo());
+		query.setString(1, id.getFactCode());
+		query.setString(2, id.getVisaSort());
+		query.setString(3, id.getPurmanNo());
+		query.setString(4, id.getItemNo());
 		return (KyzVisaflow)query.uniqueResult();
 	}
 
@@ -142,6 +143,13 @@ public class KyzVisaFlowDaoImpl extends Basedao implements IKyzVisaFlowDao {
 		// TODO Auto-generated method stub
 		String hql="from KyzVisaflow where id.factNo=? and id.visaSort like ?  order by id.factNo, id.visaSort,id.itemNo";
 		String[]objs={factNo,visaSort+"%"};
+		return super.findAll(hql, objs);
+	}
+	
+	public List<KyzVisaflow> findByTypeAndFactCode(String factNo,String factCode,String visaSort) {
+		// TODO Auto-generated method stub
+		String hql="from KyzVisaflow where id.factNo=? and id.factCode=? and id.visaSort= ?  order by id.factNo,id.factCode, id.visaSort,id.itemNo";
+		String[]objs={factNo,factCode,visaSort};
 		return super.findAll(hql, objs);
 	}
 
@@ -432,5 +440,46 @@ public class KyzVisaFlowDaoImpl extends Basedao implements IKyzVisaFlowDao {
 		String[]objs={factNo};
 		List<String>list=super.findAll(hql, objs);				
 		return list;
+	}
+
+	/**
+	 * * 繁體版
+		 * (1)查出某個流程的全部對象
+		 * (2)定義新對象(要添加的對象flow)
+		 * (3)循環1:為了避免在循環添加時出現覆蓋舊對象，刪除和添加要分別循環
+		 * (4)循環2:在第(1)步查詢的全部對象，從點擊的對象開始，循環刪除下一個對象，刪除之後不影響第(1)步的查詢結果
+		 * (5)在第(1)步查詢的全部對象，從點擊的對象開始，循環改變下一個對象的itemNo,然後添加該對象
+		 * (6)添加第(2)步的新對象
+	 */
+	public boolean addflow(int item_num, List<KyzVisaflow> list, KyzVisaflow flow) {
+		// TODO Auto-generated method stub
+		boolean flag=true;
+		try{			
+			//(4)循环刪除點擊對象的下一個對象（舊itemNo）	
+			for(int i=item_num;i<list.size();i++){
+				//super.delete(list.get(i));//報錯：deleted instance passed to merge
+				this.delete(list.get(i).getId());
+			}
+			getSession().flush();
+			//(5)循环添加點擊對象的下一個對象（新itemNo）
+			
+			for(int k=item_num;k<list.size();k++){
+				String item_new2="";
+				int item_temp=Integer.parseInt(list.get(k).getId().getItemNo());
+				if((item_temp+1)<10){
+					item_new2="0"+(item_temp+1);
+				}else{
+					item_new2=(item_temp+1)+"";
+				}
+				list.get(k).getId().setItemNo(item_new2);
+				super.merge(list.get(k));
+			}			
+		    super.merge(flow);//(6)添加新對象
+		}catch(Exception e){
+			flag=false;
+			e.printStackTrace();
+			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();//數據回滾
+		}
+		return flag;
 	}
 }
