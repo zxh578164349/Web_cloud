@@ -33,8 +33,17 @@ public class WebUser implements java.io.Serializable {
     private String weeklyreportMk;//是否發送業務每週報告郵件      Y:  是       N:否
 	private List<WebJurisdiction> webJurisdictions = new ArrayList<WebJurisdiction>();
 	private List<WebOperationToUser>webOperationToUsers=new ArrayList<WebOperationToUser>();//操作權限
+	private List<WebWeeklyreport>weeks=new ArrayList<WebWeeklyreport>();//周報告
 
 	// Constructors
+
+	public List<WebWeeklyreport> getWeeks() {
+		return weeks;
+	}
+
+	public void setWeeks(List<WebWeeklyreport> weeks) {
+		this.weeks = weeks;
+	}
 
 	/** default constructor */
 	public WebUser() {

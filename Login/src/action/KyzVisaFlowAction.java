@@ -596,7 +596,7 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 	}
 	
 	public String findMaxItem(){
-		flow=visaSer.findMaxFlow(factNo, visaSort);
+		flow=visaSer.findMaxFlow(factNo,factCode, visaSort);
 		maxItem=Integer.parseInt(flow.getId().getItemNo())+1;//新的知會人員的序列號爲原有最大序列號+1
 		if(maxItem<10){
 			flow.getId().setItemNo("0"+maxItem);
@@ -647,14 +647,14 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 	 * @return
 	 */
 	public String deleteFirst(){
-		List<KyzVisaflow>list=visaSer.findByFactNoVisaSort(factNo, visaSort);
+		List<KyzVisaflow>list=visaSer.findByFactNoVisaSort(id.getFactNo(),id.getFactCode(), id.getVisaSort());
 		for(int i=0;i<list.size();i++){
 			visaSer.delete2(list.get(i));
 		}
 		KyzExpectmatmLog log=new KyzExpectmatmLog();
-		log.setFactNo(factNo);
+		log.setFactNo(id.getFactNo());
 		log.setObj("KyzVisaflow");
-		log.setContent(visaSort+"_del all kyzvisaflow");
+		log.setContent(id.getVisaSort()+"_del all kyzvisaflow");
 		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
 		log.setUsername(user.getUsername());
 		kyzExpLogSer.add(log);

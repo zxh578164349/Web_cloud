@@ -88,14 +88,14 @@ public class KyzVisaFlowServicesImpl implements IKyzVisaFlowServices{
 		return visaDao.findVisaSort_C(factNo,mainSort);
 	}
 
-	public List<KyzVisaflow> findByFactNoVisaSort(String factNo, String visaSort) {
+	public List<KyzVisaflow> findByFactNoVisaSort(String factNo,String factCode, String visaSort) {
 		// TODO Auto-generated method stub
-		return visaDao.findByFactNoVisaSort(factNo, visaSort);
+		return visaDao.findByFactNoVisaSort(factNo,factCode, visaSort);
 	}
 	
-	public KyzVisaflow findMaxFlow(String factNo, String visaSort) {
+	public KyzVisaflow findMaxFlow(String factNo, String factCode,String visaSort) {
 		// TODO Auto-generated method stub
-		return visaDao.findMaxFlow(factNo, visaSort);
+		return visaDao.findMaxFlow(factNo,factCode, visaSort);
 	}
 
 	public void delete2(KyzVisaflow flow) {

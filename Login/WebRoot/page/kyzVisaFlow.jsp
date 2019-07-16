@@ -80,14 +80,14 @@
 		});
 	}
 		
-	function isDelete_flows(factno,visasort) {
-		var flag=confirm("刪除申請人,就會刪除整個流程,确定要刪除吗?("+visasort+")");
+	function isDelete_flows(form,url) {
+		var flag=confirm("刪除申請人,就會刪除整個流程,确定要刪除吗?");
 			if (flag == true) {								
 				jq.ajax({
 					type : "POST",
-					dataType : "Html",
-					url : "visaflow_deleteFirst",
-					data : "factNo=" + factno + "&visaSort=" + visasort,
+					dataType : "Html",					
+					data : jq("#" + form).serialize(),
+					url : url,					
 					success : function(msg) {
 						jq("#bodyid").html(msg);
 					},

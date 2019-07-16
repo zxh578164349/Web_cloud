@@ -76,5 +76,12 @@
             </key>
             <one-to-many class="entity.WebOperationToUser" />
         </bag>
+        <bag name="weeks" inverse="true" cascade="delete">
+            <key>
+                <column name="USER_ID" precision="6" scale="0" />
+            </key>
+            <one-to-many class="entity.WebWeeklyreport" />
+        </bag>
+        
     </class>
 </hibernate-mapping>

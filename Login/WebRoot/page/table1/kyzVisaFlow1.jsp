@@ -79,11 +79,11 @@
 				<s:if test='#session.loginUser.userread!="1"'>							
 				<td >
 					<form action="visaflow_findById" method="post" id="subform${x.index}">
-						<input type="hidden" value="<s:property value='id.factNo'/>"
-							name="id.factNo" /> <input type="hidden"
-							value="<s:property value='id.visaSort'/>" name="id.visaSort" />
-							<input type="hidden" value="<s:property value='id.purmanNo'/>" name="id.purmanNo"/>
-							<input type="hidden" value="<s:property value='id.itemNo'/>" name="id.itemNo"/>							
+						<input type="hidden" value="<s:property value='id.factNo'/>" name="id.factNo" /> 
+						<input type="hidden" value="<s:property value='id.factCode'/>" name="id.factCode" />
+						<input type="hidden" value="<s:property value='id.visaSort'/>" name="id.visaSort" />
+						<input type="hidden" value="<s:property value='id.purmanNo'/>" name="id.purmanNo"/>
+						<input type="hidden" value="<s:property value='id.itemNo'/>" name="id.itemNo"/>							
 					</form> 					
 					
 					  <a href="javascript:findById_form('subform${x.index}','visaflow_findById')"><img alt="修改" src="images/icon/edit001.png" title="修改" ></a>&nbsp;														
@@ -99,21 +99,24 @@
 					<form action="visaflow_findMaxItem" method="post" id="3subform${x.index}"
 						style="float:left">
 						<input type="hidden" value="<s:property value='id.factNo'/>" name="factNo" /> 
-					    <input type="hidden" value="<s:property value='id.visaSort'/>" name="visaSort" />																				
+						<input type="hidden" value="<s:property value='id.factCode'/>" name="factCode" />
+					    <input type="hidden" value="<s:property value='id.visaSort'/>" name="visaSort" />
+					    																				
 					</form>
 					<form action="visaflow_deleteFirst" method="post" id="4subform${x.index}"
 						style="float:left">
-						<input type="hidden" value="<s:property value='id.factNo'/>"
-							name="id.factNo" /> <input type="hidden" value="<s:property value='id.visaSort'/>" name="id.visaSort" />							
-							<input type="hidden" value="<s:property value='id.purmanNo'/>" name="id.purmanNo"/>
-							<input type="hidden" value="<s:property value='id.itemNo'/>" name="id.itemNo"/>						
+						<input type="hidden" value="<s:property value='id.factNo'/>"name="id.factNo" /> 
+						<input type="hidden" value="<s:property value='id.factCode'/>" name="id.factCode" />
+						<input type="hidden" value="<s:property value='id.visaSort'/>" name="id.visaSort" />							
+						<input type="hidden" value="<s:property value='id.purmanNo'/>" name="id.purmanNo"/>
+						<input type="hidden" value="<s:property value='id.itemNo'/>" name="id.itemNo"/>						
 					</form>
 					
 					 <s:if test='id.itemNo!="01"'>
 					  <a href="javascript:isDelete('2subform${x.index}','visaflow_delete')"><img alt="刪除" src="images/icon/minus002.png" title="刪除" ></a>				 					  
 					 </s:if>
 					 <s:else>
-					   <a href="javascript:void(0)" onclick="isDelete_flows('${temp.id.factNo}','${temp.id.visaSort}')"><img alt="刪除全部" src="images/icon/delete_all.png" title="刪除全部" ></a>
+					   <a href="javascript:void(0)" onclick="isDelete_flows('4subform${x.index}','visaflow_deleteFirst')"><img alt="刪除全部" src="images/icon/delete_all.png" title="刪除全部" ></a>
 					   <a href="javascript:findById_form('3subform${x.index}','visaflow_findMaxItem')"><img alt="添加知會" src="images/icon/add001_2.png" title="添加知會"></a>
 					 </s:else>	
 					 

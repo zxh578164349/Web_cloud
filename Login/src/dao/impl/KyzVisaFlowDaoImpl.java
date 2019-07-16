@@ -274,18 +274,19 @@ public class KyzVisaFlowDaoImpl extends Basedao implements IKyzVisaFlowDao {
 		String[]objs={factNo,mainSort+"%"};
 		return super.findAll(hql, objs);
 	}
-	public List<KyzVisaflow>findByFactNoVisaSort(String factNo,String visaSort){
-		String hql="from KyzVisaflow where id.factNo=? and id.visaSort=? order by id.itemNo";
-		String[]objs={factNo,visaSort};
+	public List<KyzVisaflow>findByFactNoVisaSort(String factNo,String factCode,String visaSort){
+		String hql="from KyzVisaflow where id.factNo=? and id.factCode=? and id.visaSort=? order by id.itemNo";
+		String[]objs={factNo,factCode,visaSort};
 		return super.findAll(hql, objs);
 	}
 	
-	public KyzVisaflow findMaxFlow(String factNo, String visaSort) {
+	public KyzVisaflow findMaxFlow(String factNo,String factCode, String visaSort) {
 		// TODO Auto-generated method stub
-		String hql="from KyzVisaflow where id.itemNo=(select max(id.itemNo) from KyzVisaflow where id.factNo=:factno and id.visaSort=:visasort) and " +
-				"id.factNo=:factno and id.visaSort=:visasort";
+		String hql="from KyzVisaflow where id.itemNo=(select max(id.itemNo) from KyzVisaflow where id.factNo=:factno and id.factCode=:factcode and id.visaSort=:visasort) and " +
+				"id.factNo=:factno and id.factCode=:factcode and id.visaSort=:visasort";
 		Query query=getSession().createQuery(hql);
 		query.setString("factno", factNo);
+		query.setString("factcode", factCode);
 		query.setString("visasort", visaSort);
 		KyzVisaflow flow=(KyzVisaflow)query.uniqueResult();
 		return flow;

@@ -24,9 +24,9 @@ public interface IKyzVisaFlowDao {
 	public List<String> findVisaSort_dwr4(String factNo, String visaSort, String depId,String trMk);
 	public List<String> findVisaSort_dwr_depidAndfidB(String factNo, String visaSort, String depId,String trMk,Integer fid,String factCode);
 	public List<String> findVisaSort_C(String factNo,String maiSort);
-	public List<KyzVisaflow>findByFactNoVisaSort(String factNo,String visaSort);
+	public List<KyzVisaflow>findByFactNoVisaSort(String factNo,String factCode,String visaSort);
 	
-	public KyzVisaflow findMaxFlow(String factNo,String visaSort);
+	public KyzVisaflow findMaxFlow(String factNo,String factCode,String visaSort);
 	
 	public void delete2(KyzVisaflow flow);
 	
