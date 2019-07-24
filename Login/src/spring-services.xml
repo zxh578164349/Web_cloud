@@ -109,6 +109,7 @@
 	<bean id="webmateriaser" class="services.impl.WebMaterialregistrationformServicesImpl"></bean>
 	<bean id="webmonthsSer" class="services.impl.WebmonthsServicesImpl"></bean>
 	<bean id="webformser" class="services.impl.WebFormtypeServicesImpl"></bean>
+	<bean id="weballobjbser" class="services.impl.WeballobjBServicesImpl"></bean>
 </beans>
 
 

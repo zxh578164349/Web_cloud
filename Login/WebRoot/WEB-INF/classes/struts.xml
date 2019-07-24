@@ -910,6 +910,12 @@
 		      <param name="root">jsons</param>
 		   </result>
 		</action>
+		<action name="weballobjb_*" class="weballobjbAction" method="{1}">
+		   <result name="beanList">page/weballobjb.jsp</result>
+		   <result name="beanList1">page/table1/weballobjb1.jsp</result>
+		   <result name="delete" type="redirectAction">weballobjb_findPageBean3</result>		       		   
+		</action>
+		<action name="vkpiwebpronew_*" class="vkpiprofitNewAction" method="{1}"></action>
 		
 		
 	</package>

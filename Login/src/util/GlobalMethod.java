@@ -1093,7 +1093,7 @@ public class GlobalMethod extends HibernateDaoSupport{
 	 */
 	public static Double division(Double d1,Double d2){
 		Double db=0.00;
-		if(d2!=0.00){
+		if(d1!=null&&d2!=null&&d2!=0.00){
 			db=d1/d2;
 		}
 		return db;
@@ -2207,10 +2207,23 @@ public class GlobalMethod extends HibernateDaoSupport{
 	 
 	 public static void main(String[] args) {
 				 		 
-		 BigDecimal a=new BigDecimal(6.55);	
-		 Double d=6.3;
-		 
-		 System.out.println(a.doubleValue()+d.doubleValue());
+		 List<String>list=new ArrayList<String>();
+		 list.add("1蒸汽單耗");
+		 list.add("2色料藥品單耗");
+		 list.add("3__平均日產能__bb");
+		 list.add("4生產與請款差異");
+		 list.add("5__庫存天數__cc");
+		 	
+		 int t=0;
+		 int g=0;
+		 for(int a=0;a<list.size();a++){
+				t++;
+				++g;
+			 
+		 }
+		 System.out.println(t);
+		 System.out.println(g);
+
 		 
 		 
 		 
