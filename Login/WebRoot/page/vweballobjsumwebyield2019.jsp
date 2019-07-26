@@ -25,7 +25,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </head>
   
   <body>   
-	<div class="panel panel-default">
+	<%-- <div class="panel panel-default">
 		<div class="panel-heading">
 			<h3 class="panel-title">工廠報表</h3>
 		</div>
@@ -65,7 +65,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				</table>
 			</form>
 		</div>
-	</div>
+	</div> --%>
+	
+	
 	<br/></br><br/>
 	<s:if test="#session.factNo=='tw'">
 	<div class="panel panel-default">
@@ -73,7 +75,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<h3 class="panel-title">台灣報表</h3>
 		</div>
 		<div class="panel-body">
-			<form action="weballobj_printVWeballobjasumwebyield2019" method="post" id="subform2"
+			<form action="weballobjb_printProDiff" method="post" id="subform2"
 				target="_blank">
 				<table class="tb_search">
 					<tr>

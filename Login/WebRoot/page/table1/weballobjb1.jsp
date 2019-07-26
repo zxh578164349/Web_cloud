@@ -138,7 +138,6 @@
 							<td>
 							<s:property value="%{formatDouble(objA37/(objA36/objA31))}" />
 							</td>
-							<td><s:property value="objA38" /></td>
 							<td><s:property value="objA39" /></td>
 							<td><s:property value="objA41" /></td>
 							<td><s:property value="objA42" /></td>

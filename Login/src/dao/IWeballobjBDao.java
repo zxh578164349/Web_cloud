@@ -27,13 +27,13 @@ public interface IWeballobjBDao {
 	public void addMore(List<WeballobjB>list);
 	public PageBean findPageBean(int pageSize,int page,String factNo,String yymm,String yymm2);
 	public List<WeballobjB>findAllobj(String factNo,String yymm,String yymm2);
-	//public List<VWeballobjasumwebyield>findAllobj2(String factNo,String yymm,String yymm2);
 	public WeballobjB findById(String factNo,String factcode,String yymm);
 	public void delete(String factNo,String factCode,String yymm,KyzExpectmatmLog log);
 	public List<WeballobjB>findObj(String yymm,String yymm2);
 	
 	public List<String>findFactCodes(String factNo,String yymm,String yymm2);	
 	public List<WeballobjB>findWeballobjB(List<String>list_factcode,String yymm);
-	public List<WeballobjB>findobjA43(String yymm);
+	public List<WeballobjB>findobjA41(String yymm);
+	public List<WeballobjB>findProDiff(String factNo,String yymm,String yymm2);
 
 }

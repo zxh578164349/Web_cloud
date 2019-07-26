@@ -115,9 +115,14 @@ public class WeballobjBServicesImpl implements IWeballobjBServices{
 		return weballobjbdao.findWeballobjB(list_factcode, yymm);
 	}
 
-	public List<WeballobjB> findobjA43(String yymm) {
+	public List<WeballobjB> findobjA41(String yymm) {
 		// TODO Auto-generated method stub
-		return weballobjbdao.findobjA43(yymm);
+		return weballobjbdao.findobjA41(yymm);
+	}
+
+	public List<WeballobjB> findProDiff(String factNo, String yymm, String yymm2) {
+		// TODO Auto-generated method stub
+		return weballobjbdao.findProDiff(factNo, yymm, yymm2);
 	}	
 
 }

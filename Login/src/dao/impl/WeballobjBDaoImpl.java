@@ -266,11 +266,42 @@ public class WeballobjBDaoImpl extends Basedao implements IWeballobjBDao{
 		return list;
 	}
 
-	public List<WeballobjB> findobjA43(String yymm) {
+	public List<WeballobjB> findobjA41(String yymm) {
 		// TODO Auto-generated method stub
 		String hql="from WeballobjB where id.yymm like ? order by id.fact.orderNo,id.fact.fcodeIndex,id.yymm";
 		String[]objs={yymm+"%"};
 		List<WeballobjB>list=super.findAll(hql, objs);
+		for(WeballobjB obj:list){
+			obj.getId().getFact().getFactSname();
+		}
+		return list;
+	}
+
+	public List<WeballobjB> findProDiff(String factNo, String yymm, String yymm2) {
+		// TODO Auto-generated method stub
+		StringBuffer hql=new StringBuffer();
+		Map<String,Object>map=new HashMap<String,Object>();
+		
+		//WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");		
+		hql.append("from WeballobjB where 1=1 ");
+		if(factNo==null||"".equals(factNo)){
+			factNo=(String)ActionContext.getContext().getSession().get("factNo");
+		}
+		if(factNo!=null&&!"".equals(factNo)&&!"tw".equals(factNo)){
+			hql.append(" and id.fact.id.factNo=:factNo");
+			map.put("factNo", factNo);
+		}
+		if(yymm!=null&&!"".equals(yymm)){
+			hql.append(" and id.yymm>=:yymm ");
+			map.put("yymm", yymm);
+		}
+		if(yymm2!=null&&!"".equals(yymm2)){
+			hql.append(" and id.yymm<=:yymm2 ");
+			map.put("yymm2", yymm2);
+		}
+		hql.append(" order by id.yymm,id.fact.id.factNo,id.fact.id.factArea ");
+				
+		List<WeballobjB>list=super.getAllWithNoPage(hql.toString(), map);
 		for(WeballobjB obj:list){
 			obj.getId().getFact().getFactSname();
 		}

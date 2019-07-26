@@ -290,9 +290,9 @@ public class WeballobjBAction  extends ActionSupport implements ServletResponseA
 					obj.setObjA35(Double.valueOf(list.get(35).split(SEPARATOR)[i]));
 					obj.setObjA36(Double.valueOf(list.get(36).split(SEPARATOR)[i]));
 					obj.setObjA37(Double.valueOf(list.get(37).split(SEPARATOR)[i]));
-					obj.setObjA38(Double.valueOf(list.get(38).split(SEPARATOR)[i]));
-					obj.setObjA39(Double.valueOf(list.get(39).split(SEPARATOR)[i]));
-					//obj.setObjA40(Double.valueOf(list.get(40).split(SEPARATOR)[i]));40項與4項重覆了
+					//obj.setObjA38(Double.valueOf(list.get(38).split(SEPARATOR)[i]));38項與4項重覆了
+					obj.setObjA39(Double.valueOf(list.get(38).split(SEPARATOR)[i]));
+					obj.setObjA40(Double.valueOf(list.get(39).split(SEPARATOR)[i]));
 					obj.setObjA41(Double.valueOf(list.get(40).split(SEPARATOR)[i]));
 					obj.setObjA42(Double.valueOf(list.get(41).split(SEPARATOR)[i]));
 					obj.setObjA43(Double.valueOf(list.get(42).split(SEPARATOR)[i]));																											
@@ -969,9 +969,9 @@ public class WeballobjBAction  extends ActionSupport implements ServletResponseA
 		list.add(d);
 		list.add(obj.getObjA37());
 		list.add(GlobalMethod.division(obj.getObjA37(),d));//庫存天數
-		list.add(obj.getObjA38());
+		//list.add(obj.getObjA38());
 		list.add(obj.getObjA39());
-		//list.add(obj.getObjA40());
+		list.add(obj.getObjA40());
 		list.add(obj.getObjA41());
 		list.add(obj.getObjA42());
 		list.add(obj.getObjA43());
@@ -1017,25 +1017,19 @@ public class WeballobjBAction  extends ActionSupport implements ServletResponseA
 		return temp;
 	}
 	
-	/**
-	 * 各廠廢品重量匯總表
-	 * @throws ParseException
-	 * @throws IOException 
-	 */
-	public void printwastereport() throws ParseException, IOException{
-		yymm="2018";
-		Map<String,Object>map=new LinkedHashMap<String,Object>();		
-		List<WeballobjB>list_objs=weballobjbser.findobjA43(yymm);
-		List<String>months=GlobalMethod.findMonths(yymm+"01", yymm+"12");
-		List<WebFact>list_facts=webFactSer.findFactAble();
+	
+	public void init(List<WeballobjB>list_objs) throws ParseException, IOException{
 		
+		/***************************************數據處理******************************************************/				
+		//List<WeballobjB>list_objs=weballobjbser.findobjA43(yymm);
+		List<String>months=GlobalMethod.findMonths(yymm+"01", yymm+"12");
+		List<WebFact>list_facts=webFactSer.findFactAble();		
 		List<WeballobjB>list_objs2=new ArrayList<WeballobjB>();
 		for(WebFact obj:list_facts){
 			for(String month:months){
 				list_objs2.add(new WeballobjB(new WeballobjBId(obj,month)));
 			}
-		}
-		
+		}		
 		for(int a=0;a<list_objs2.size();a++){
 			for(WeballobjB obj:list_objs){
 				if(list_objs2.get(a).getId().getFact().getId().getFactNo().equals(obj.getId().getFact().getId().getFactNo())&&
@@ -1045,32 +1039,28 @@ public class WeballobjBAction  extends ActionSupport implements ServletResponseA
 					break;
 				}
 			}
-		}
-		
+		}		
 		List<String>factnos=new ArrayList<String>();
 		for(WeballobjB obj:list_objs2){
-			factnos.add(obj.getId().getFact().getId().getFactNo());
-		}
-		
+			factnos.add(obj.getId().getFact().getId().getFactNo()+"__"+obj.getId().getFact().getFactSname());
+		}		
 		for(int a=0;a<factnos.size();a++){
 			for(int b=factnos.size()-1;b>a;b--){
-				if(factnos.get(a).equals(factnos.get(b))){
+				if(factnos.get(a).split("__")[0].equals(factnos.get(b))){
 					factnos.remove(b);
 				}
 			}
-		}
-		
+		}		
 		Map<String,Object>map_temp=new LinkedHashMap<String,Object>();
 		for(String str:factnos){
 			List<String>l1=new ArrayList<String>();
 			for(WebFact obj:list_facts){
-				if(str.equals(obj.getId().getFactNo())){
+				if(str.split("__")[0].equals(obj.getId().getFactNo())){
 					l1.add(obj.getId().getFactArea());
 				}
 			}
 			map_temp.put(str, l1);
-		}
-		
+		}		
 		Map<String,Object>m1=new LinkedHashMap<String,Object>();//最終要循環的數據
 		for(String key:map_temp.keySet()){
 			List<String>l1=(List<String>)map_temp.get(key);
@@ -1078,21 +1068,14 @@ public class WeballobjBAction  extends ActionSupport implements ServletResponseA
 			for(String str:l1){
 				List<WeballobjB>list_obj=new ArrayList<WeballobjB>();
 				for(WeballobjB obj:list_objs2){
-					if(key.equals(obj.getId().getFact().getId().getFactNo())&&str.equals(obj.getId().getFact().getId().getFactArea())){
+					if(key.split("__")[0].equals(obj.getId().getFact().getId().getFactNo())&&str.equals(obj.getId().getFact().getId().getFactArea())){
 						list_obj.add(obj);
 					}
 				}
-				m2.put(str, list_obj);
-				
-			}
-			
-			
+				m2.put(str, list_obj);				
+			}						
 			m1.put(key, m2);
-		}
-		
-		
-		//System.out.println(m1);
-		
+		}				
 		List<String>list_cols=new ArrayList<String>();
 		list_cols.add("廠別");
 		list_cols.add("廠別狀態");
@@ -1113,7 +1096,8 @@ public class WeballobjBAction  extends ActionSupport implements ServletResponseA
 		list_cols.add("全廠合計");
 		list_cols.add("平均報廢重量/月");
 		list_cols.add("全廠平均合計/月");
-
+		/***************************************數據處理******************************************************/
+		
 		
 		XSSFWorkbook wb=new XSSFWorkbook();
 		XSSFSheet sheet=wb.createSheet(yymm);
@@ -1161,7 +1145,7 @@ public class WeballobjBAction  extends ActionSupport implements ServletResponseA
 			sheet.addMergedRegion(cra3);
 			
 			
-			sheet.getRow(2+y_index).getCell(0).setCellValue(key);
+			sheet.getRow(2+y_index).getCell(0).setCellValue(key.split("__")[1]);
 			
 			for(int a=0;a<m_a.keySet().size();a++){
 				sheet.getRow(2+y_index+a).getCell(0).setCellStyle(cs);
@@ -1180,9 +1164,9 @@ public class WeballobjBAction  extends ActionSupport implements ServletResponseA
 				double j=0;//標記數據的個數
 				for(int a=0;a<l_a.size();a++){
 					sheet.getRow(2+y_index+i).getCell(2+a).setCellStyle(cs_poi1);	
-					if(l_a.get(a).getObjA1()!=null){						
-						sheet.getRow(2+y_index+i).getCell(2+a).setCellValue(l_a.get(a).getObjA1());
-						tt2=tt2+l_a.get(a).getObjA1();
+					if(l_a.get(a).getObjA41()!=null){						
+						sheet.getRow(2+y_index+i).getCell(2+a).setCellValue(l_a.get(a).getObjA41());//41項廢品重量
+						tt2=tt2+l_a.get(a).getObjA41();
 						j++;
 					}					
 				}
@@ -1198,27 +1182,15 @@ public class WeballobjBAction  extends ActionSupport implements ServletResponseA
 				tt1=tt1+tt2;
 				dd1=dd1+GlobalMethod.division(tt2/1000,j);
 				i++;
-				//y_index++;
-			}
-			
-						
+			}									
 			sheet.getRow(2+y_index).getCell(4+months.size()).setCellValue(tt1/1000);//全廠合計
 			sheet.getRow(2+y_index).getCell(6+months.size()).setCellValue(dd1);//全廠平均合計/月
-			y_index=y_index+m_a.keySet().size();
-																											
+			y_index=y_index+m_a.keySet().size();																											
 		}
-		
-		
-		
-		
-		
-		
-		
-		
-
+				
 		ServletOutputStream os=response.getOutputStream();
 		//response.setContentType("application/vnd.ms-excel");
-		response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+		response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");				
 		String fileName="waste_report.xlsx";
 		int msie=ServletActionContext.getRequest().getHeader("USER-AGENT").toLowerCase().indexOf("msie");
 		if(msie>0){
@@ -1228,15 +1200,73 @@ public class WeballobjBAction  extends ActionSupport implements ServletResponseA
 		}
 		response.setHeader("Content-disposition","attachment;filename="+fileName);
 		wb.write(os);
-		os.close();
-		
-		/*StringBuffer fileName=new StringBuffer();
-		StringBuffer title=new StringBuffer();
-		fileName.append("wastereport");														
-		title.append("各廠廢品重量匯總表");
-		map.put("title", title.toString());
-		JasperHelper.exportmain("excel", map,"wastereport.jasper", list_objs,fileName.toString(), "jasper/input/");	*/	
-		
+		os.close();						
+	}
+	
+	/**
+	 * 各廠廢品重量匯總表
+	 * @throws ParseException
+	 * @throws IOException 
+	 */
+	public void printwastereport() throws ParseException, IOException{
+		List<WeballobjB>list_objs=weballobjbser.findobjA41(yymm);
+		if(list_objs==null||list_objs.size()==0){
+			response.setContentType("text/html;charset=utf-8");
+			response.getWriter().print("<script>window.parent.alert('無數據');</script>");
+		}else{
+			init(list_objs);
+		}
+	}
+	
+	
+	/**
+	 * 生產与請款差异匯總表
+	 * @throws ParseException
+	 * @throws IOException 
+	 */
+	public void printProDiff() throws ParseException, IOException{
+		List<WeballobjB>list=weballobjbser.findProDiff(factNo, yymm, yymm2);		
+		if(list==null||list.size()==0){
+			response.setContentType("text/html;charset=utf-8");
+			response.getWriter().print("<script>window.parent.alert('無數據');</script>");
+		}else{
+			Map<String,Object>map=new HashMap<String,Object>();				
+			List<String>months=GlobalMethod.findMonths(yymm, yymm2);
+			List<WeballobjB>list3=new ArrayList<WeballobjB>();		
+			StringBuffer fileName=new StringBuffer();
+			StringBuffer title=new StringBuffer();		
+			List<WebFact>list2=webFactSer.findFactAble();			
+			for(String month:months){
+				for(WebFact fact:list2){
+					list3.add(new WeballobjB(new WeballobjBId(fact,month)));
+				}
+			}
+			fileName.append("prodiffreport");
+					
+			for(int a=0;a<list3.size();a++){
+				WeballobjB obj=list3.get(a);
+				for(WeballobjB obj2:list){
+					if(obj.getId().getFact().getId().getFactArea().equals(obj2.getId().getFact().getId().getFactArea())&&
+							obj.getId().getFact().getId().getFactNo().equals(obj2.getId().getFact().getId().getFactNo())&&
+							obj.getId().getYymm().equals(obj2.getId().getYymm())){
+						list3.set(a, obj2);
+						
+					}
+				}
+			}										
+			if(yymm!=null&&!yymm.equals("")){
+				fileName.append("-"+yymm);
+				title.append(yymm);
+			}
+			if(yymm2!=null&&!yymm2.equals("")){
+				fileName.append("-"+yymm2);
+				title.append("-"+yymm2);
+			}
+			title.append("生產与請款差异匯總表");
+			map.put("title", title.toString());
+			JasperHelper.exportmain("excel", map,"vweballobj2019_tw.jasper", list3,fileName.toString(), "jasper/input/");	
+		}
+					
 	}
 			
 }
