@@ -1052,9 +1052,9 @@ public class GlobalMethod extends HibernateDaoSupport{
 		cs_poi1_bg.setBorderRight(XSSFCellStyle.BORDER_THIN);
 		cs_poi1_bg.setBorderBottom(XSSFCellStyle.BORDER_THIN);
 		cs_poi1_bg.setBorderLeft(XSSFCellStyle.BORDER_THIN);
-		//cs_poi1_bg.setFillForegroundColor(IndexedColors.BRIGHT_GREEN.getIndex());
-		//cs_poi1_bg.setFillPattern(XSSFCellStyle.SOLID_FOREGROUND);
-		cs_poi1_bg.setFont(font_red);
+		cs_poi1_bg.setFillForegroundColor(IndexedColors.BRIGHT_GREEN.getIndex());
+		cs_poi1_bg.setFillPattern(XSSFCellStyle.SOLID_FOREGROUND);
+		//cs_poi1_bg.setFont(font_red);
 		map.put("cs_poi1_bg", cs_poi1_bg);
 		
 		XSSFCellStyle cs_poi2_bg=wb.createCellStyle();

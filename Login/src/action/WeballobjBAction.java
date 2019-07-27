@@ -1075,7 +1075,41 @@ public class WeballobjBAction  extends ActionSupport implements ServletResponseA
 				m2.put(str, list_obj);				
 			}						
 			m1.put(key, m2);
+		}
+		
+		/***************************各廠別狀態數據統計***********************************/
+		List<String>factcodes=new ArrayList<String>();
+		for(WeballobjB obj:list_objs2){
+			factcodes.add(obj.getId().getFact().getId().getFactArea());
+		}
+		//去除重覆factcode
+		for(int a=0;a<factcodes.size();a++){
+			for(int b=factcodes.size()-1;b>a;b--){
+				if(factcodes.get(a).equals(factcodes.get(b))){
+					factcodes.remove(b);
+				}
+			}
+		}
+		
+		Map<String,Object>m3=new LinkedHashMap<String,Object>();
+		for(String factcode:factcodes){
+			List<Double>list=new ArrayList<Double>();
+			for(String month:months){
+				double d=0.0;
+				for(WeballobjB obj:list_objs2){
+					if(factcode.equals(obj.getId().getFact().getId().getFactArea())&&month.equals(obj.getId().getYymm())){
+						if(obj.getObjA41()!=null){
+							d=d+obj.getObjA41();
+						}					   
+					}					
+				}
+				list.add(d);
+			}
+			m3.put(factcode, list);
 		}				
+		/***************************各廠別狀態數據統計***********************************/
+		
+		
 		List<String>list_cols=new ArrayList<String>();
 		list_cols.add("廠別");
 		list_cols.add("廠別狀態");
@@ -1105,9 +1139,10 @@ public class WeballobjBAction  extends ActionSupport implements ServletResponseA
 		XSSFCellStyle cs_title=(XSSFCellStyle)map_style.get("cs_title");
 		XSSFCellStyle cs_head=(XSSFCellStyle)map_style.get("cs_head");
 		XSSFCellStyle cs_poi1=(XSSFCellStyle)map_style.get("cs_poi1");
+		XSSFCellStyle cs_poi1_bg=(XSSFCellStyle)map_style.get("cs_poi1_bg");
 		XSSFCellStyle cs=(XSSFCellStyle)map_style.get("cs");
 		
-		for(int a=0;a<list_facts.size()+5;a++){
+		for(int a=0;a<list_facts.size()+factcodes.size()+5;a++){
 			sheet.createRow(a);
 			for(int b=0;b<list_cols.size()+5;b++){
 				if(b==0){
@@ -1133,7 +1168,7 @@ public class WeballobjBAction  extends ActionSupport implements ServletResponseA
 			sheet.getRow(1).getCell(a).setCellStyle(cs_head);
 		}
 		
-		//數據
+		//數據填充
 		int y_index=0;
 		for(String key:m1.keySet()){
 			Map<String,Object>m_a=(Map<String,Object>)m1.get(key);
@@ -1167,7 +1202,7 @@ public class WeballobjBAction  extends ActionSupport implements ServletResponseA
 					if(l_a.get(a).getObjA41()!=null){						
 						sheet.getRow(2+y_index+i).getCell(2+a).setCellValue(l_a.get(a).getObjA41());//41項廢品重量
 						tt2=tt2+l_a.get(a).getObjA41();
-						j++;
+						j++;//當不為null時，才算入平均數
 					}					
 				}
 				sheet.getRow(2+y_index+i).getCell(2+l_a.size()).setCellValue(tt2);//廠別狀態合計
@@ -1187,6 +1222,78 @@ public class WeballobjBAction  extends ActionSupport implements ServletResponseA
 			sheet.getRow(2+y_index).getCell(6+months.size()).setCellValue(dd1);//全廠平均合計/月
 			y_index=y_index+m_a.keySet().size();																											
 		}
+		
+		//表格最下面一行合計
+		sheet.getRow(2+list_facts.size()).getCell(0).setCellValue("合計");
+		for(int a=0;a<2;a++){
+			sheet.getRow(2+list_facts.size()).getCell(a).setCellStyle(cs_poi1_bg);
+		}
+		for(int a=0;a<months.size()+5;a++){
+			double result=0.0;
+			for(int b=0;b<list_facts.size();b++){
+				double d=sheet.getRow(2+b).getCell(2+a).getNumericCellValue();
+				result=result+d;
+			}
+			sheet.getRow(2+list_facts.size()).getCell(2+a).setCellValue(result);
+			sheet.getRow(2+list_facts.size()).getCell(2+a).setCellStyle(cs_poi1_bg);
+		}
+		
+		/**********************************各廠別狀態合計****************************************/
+		//表頭
+		for(int a=0;a<list_cols.size();a++){
+			if(a>1){
+				sheet.getRow(3+list_facts.size()).getCell(a).setCellValue(list_cols.get(a));
+			}			
+			sheet.getRow(3+list_facts.size()).getCell(a).setCellStyle(cs_head);
+		}
+		
+		int i=0;		
+		for(String key:m3.keySet()){
+			double j=0;
+			sheet.getRow(4+list_facts.size()+i).getCell(0).setCellValue(key);
+			for(int a=0;a<2;a++){
+				sheet.getRow(4+list_facts.size()+i).getCell(a).setCellStyle(cs);
+			}
+			List<Double>list=(List<Double>)m3.get(key);
+			double d=0.0;
+			for(int a=0;a<list.size();a++){
+				sheet.getRow(4+list_facts.size()+i).getCell(2+a).setCellValue(list.get(a));
+				sheet.getRow(4+list_facts.size()+i).getCell(2+a).setCellStyle(cs_poi1);
+				d=d+list.get(a);
+				
+				if(list.get(a)>0.0){
+					j++;//當>0，才算入平均數
+				}
+			}
+			sheet.getRow(4+list_facts.size()+i).getCell(2+list.size()).setCellValue(d);    //廠別狀態合計
+			sheet.getRow(4+list_facts.size()+i).getCell(2+list.size()).setCellStyle(cs_poi1);
+			
+			sheet.getRow(4+list_facts.size()+i).getCell(3+list.size()).setCellValue(d/1000);//廠別狀態合計(噸)
+			sheet.getRow(4+list_facts.size()+i).getCell(3+list.size()).setCellStyle(cs_poi1);
+			
+			sheet.getRow(4+list_facts.size()+i).getCell(4+list.size()).setCellStyle(cs_poi1);//全廠合計  （不用填數據）
+			
+			sheet.getRow(4+list_facts.size()+i).getCell(5+list.size()).setCellValue(GlobalMethod.division(d/1000,j));//平均報廢重量/月
+			sheet.getRow(4+list_facts.size()+i).getCell(5+list.size()).setCellStyle(cs_poi1);
+			
+			sheet.getRow(4+list_facts.size()+i).getCell(6+list.size()).setCellStyle(cs_poi1);//全廠平均合計/月  （不用填數據）
+			i++;
+		}
+		//表格最下面一行合計
+		sheet.getRow(4+list_facts.size()+m3.size()).getCell(0).setCellValue("合計");
+		for(int a=0;a<2;a++){
+			sheet.getRow(4+list_facts.size()+m3.size()).getCell(a).setCellStyle(cs_poi1_bg);
+		}
+		for(int a=0;a<months.size()+5;a++){
+			double result=0.0;
+			for(int b=0;b<m3.size();b++){
+				double d=sheet.getRow(4+list_facts.size()+b).getCell(2+a).getNumericCellValue();
+				result=result+d;
+			}
+			sheet.getRow(4+list_facts.size()+m3.size()).getCell(2+a).setCellValue(result);
+			sheet.getRow(4+list_facts.size()+m3.size()).getCell(2+a).setCellStyle(cs_poi1_bg);
+		}
+		/**********************************各廠別狀態合計****************************************/
 				
 		ServletOutputStream os=response.getOutputStream();
 		//response.setContentType("application/vnd.ms-excel");
