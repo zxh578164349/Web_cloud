@@ -45,6 +45,8 @@ import entity.VWeballobjasumwebyield;
 import entity.VWeballobjasumwebyield2019;
 import entity.VWeballobjasumwebyield2019Id;
 import entity.VWeballobjasumwebyieldId;
+import entity.VWeballobjbStorage;
+import entity.VWeballobjbStorageId;
 import entity.WebFact;
 import entity.WebFactId;
 import entity.WebUser;
@@ -87,6 +89,7 @@ public class WeballobjBAction  extends ActionSupport implements ServletResponseA
 	private javax.servlet.http.HttpServletResponse response;
 	private IWebFactServices webFactSer;
 	private String a_type;
+	private final static String FC = "MD+IP+EVA";
 
 	
 	
@@ -922,7 +925,7 @@ public class WeballobjBAction  extends ActionSupport implements ServletResponseA
 		list.add("40__無形差异__雙");
 		list.add("41__無形差異率__%");
 		list.add("42__廢品重量__KG");
-		list.add("43__銷售成本金額__USD");
+		list.add("43__當月耗用金額__USD");
 		list.add("44__平均庫存金額__USD");				
 		return list;
 	}
@@ -1018,10 +1021,9 @@ public class WeballobjBAction  extends ActionSupport implements ServletResponseA
 	}
 	
 	
-	public void init(List<WeballobjB>list_objs) throws ParseException, IOException{
+	public void init_a(List<WeballobjB>list_objs) throws ParseException, IOException{
 		
-		/***************************************數據處理******************************************************/				
-		//List<WeballobjB>list_objs=weballobjbser.findobjA43(yymm);
+		/***************************************數據處理******************************************************/						
 		List<String>months=GlobalMethod.findMonths(yymm+"01", yymm+"12");
 		List<WebFact>list_facts=webFactSer.findFactAble();		
 		List<WeballobjB>list_objs2=new ArrayList<WeballobjB>();
@@ -1046,7 +1048,7 @@ public class WeballobjBAction  extends ActionSupport implements ServletResponseA
 		}		
 		for(int a=0;a<factnos.size();a++){
 			for(int b=factnos.size()-1;b>a;b--){
-				if(factnos.get(a).split("__")[0].equals(factnos.get(b))){
+				if(factnos.get(a).split("__")[0].equals(factnos.get(b).split("__")[0])){
 					factnos.remove(b);
 				}
 			}
@@ -1321,7 +1323,7 @@ public class WeballobjBAction  extends ActionSupport implements ServletResponseA
 			response.setContentType("text/html;charset=utf-8");
 			response.getWriter().print("<script>window.parent.alert('無數據');</script>");
 		}else{
-			init(list_objs);
+			init_a(list_objs);
 		}
 	}
 	
@@ -1375,5 +1377,262 @@ public class WeballobjBAction  extends ActionSupport implements ServletResponseA
 		}
 					
 	}
+	
+	
+    public void init_b(List<VWeballobjbStorage>list_objs) throws ParseException, IOException{
+		
+		/***************************************數據處理******************************************************/						
+		List<String>months=GlobalMethod.findMonths(yymm+"01", yymm+"12");
+		List<WebFact>list_facts=webFactSer.findFactAble();
+		
+		for(WebFact obj:list_facts){
+			if(obj.getId().getFactArea().equals("MD")||obj.getId().getFactArea().equals("IP")||obj.getId().getFactArea().equals("EVA")){
+				obj.getId().setFactArea(FC);
+			}
+		}
+		
+		for(int a=0;a<list_facts.size();a++){
+			for(int b=list_facts.size()-1;b>a;b--){
+				if(list_facts.get(a).getId().getFactNo().equals(list_facts.get(b).getId().getFactNo())&&
+						list_facts.get(a).getId().getFactArea().equals(list_facts.get(b).getId().getFactArea())){
+					list_facts.remove(b);
+				}
+			}
+		}
+		
+		List<VWeballobjbStorage>list_objs2=new ArrayList<VWeballobjbStorage>();
+		for(WebFact obj:list_facts){			
+			for(String month:months){
+				list_objs2.add(new VWeballobjbStorage(new VWeballobjbStorageId(obj.getId().getFactNo(),obj.getId().getFactArea(),month),
+						new VWebFact(obj.getId().getFactNo(),obj.getFactSname())));
+			}
+		}
+		for(int a=0;a<list_objs2.size();a++){
+			VWeballobjbStorage obj=list_objs2.get(a);
+			for(VWeballobjbStorage obj2:list_objs){
+				if(obj.getId().getFactNo().equals(obj2.getId().getFactNo())&&
+						obj.getId().getFactCode().equals(obj2.getId().getFactCode())&&
+						obj.getId().getYymm().equals(obj2.getId().getYymm())){
+					list_objs2.set(a, obj2);
+					break;
+				}
+			}
+		}
+		
+		
+		List<String>factnos=new ArrayList<String>();
+		for(VWeballobjbStorage obj:list_objs2){
+			factnos.add(obj.getId().getFactNo()+"__"+obj.getFactNo2().getFactSname());
+		}		
+		for(int a=0;a<factnos.size();a++){
+			for(int b=factnos.size()-1;b>a;b--){
+				if(factnos.get(a).split("__")[0].equals(factnos.get(b).split("__")[0])){
+					factnos.remove(b);
+				}
+			}
+		}		
+		Map<String,Object>map_temp=new LinkedHashMap<String,Object>();
+		for(String str:factnos){
+			List<String>l1=new ArrayList<String>();
+			for(WebFact obj:list_facts){
+				if(str.split("__")[0].equals(obj.getId().getFactNo())){
+					l1.add(obj.getId().getFactArea());
+				}
+			}
+			map_temp.put(str, l1);
+		}		
+		Map<String,Object>m1=new LinkedHashMap<String,Object>();//最終要循環的數據
+		for(String key:map_temp.keySet()){
+			List<String>l1=(List<String>)map_temp.get(key);
+			Map<String,Object>m2=new LinkedHashMap<String,Object>();
+			for(String str:l1){
+				List<VWeballobjbStorage>list_obj=new ArrayList<VWeballobjbStorage>();
+				for(VWeballobjbStorage obj:list_objs2){
+					if(key.split("__")[0].equals(obj.getId().getFactNo())&&str.equals(obj.getId().getFactCode())){
+						list_obj.add(obj);
+					}
+				}
+				m2.put(str, list_obj);				
+			}						
+			m1.put(key, m2);
+		}
+		
+		List<String>list_cols=new ArrayList<String>();
+		list_cols.add("廠別");
+		list_cols.add("廠別狀態");
+		list_cols.add("項目");
+		list_cols.add("1月");
+		list_cols.add("2月");
+		list_cols.add("3月");
+		list_cols.add("4月");
+		list_cols.add("5月");
+		list_cols.add("6月");
+		list_cols.add("7月");
+		list_cols.add("8月");
+		list_cols.add("9月");
+		list_cols.add("10月");
+		list_cols.add("11月");
+		list_cols.add("12月");	
+		
+		List<String>list_str=new ArrayList<String>();
+		list_str.add("當月耗用金額");
+		list_str.add("原材料平均庫存金額");
+		/***************************************數據處理******************************************************/	
+		
+		
+		XSSFWorkbook wb=new XSSFWorkbook();
+				
+		for(int x=0;x<4;x++){
+			if(x==1){//表0
+				list_str.remove(0);//移除一項
+				list_cols.remove(2);//移除第二項  “項目”
+			}
+			XSSFSheet sheet=wb.createSheet("分表"+x);
+			Map<String,Object>map_style=GlobalMethod.findStyles2007(wb);
+			XSSFCellStyle cs_title=(XSSFCellStyle)map_style.get("cs_title");
+			XSSFCellStyle cs_head=(XSSFCellStyle)map_style.get("cs_head");
+			XSSFCellStyle cs_poi1=(XSSFCellStyle)map_style.get("cs_poi1");
+			XSSFCellStyle cs_poi2=(XSSFCellStyle)map_style.get("cs_poi2");
+			XSSFCellStyle cs_poi1_bg=(XSSFCellStyle)map_style.get("cs_poi1_bg");
+			XSSFCellStyle cs=(XSSFCellStyle)map_style.get("cs");
+			
+			for(int a=0;a<list_facts.size()*list_str.size()+5;a++){
+				sheet.createRow(a);
+				for(int b=0;b<list_cols.size()+5;b++){
+					if(b==0||b==2){
+						sheet.setColumnWidth(b, 5000);
+					}else{
+						sheet.setColumnWidth(b, 4000);
+					}
+					sheet.getRow(a).createCell(b);
+				}
+			}
+			
+			//標題
+			CellRangeAddress cra_title=new CellRangeAddress(0,0,0,5);
+			sheet.addMergedRegion(cra_title);
+			sheet.getRow(0).getCell(0).setCellValue(yymm+"各廠庫存周轉率");		
+			for(int a=0;a<4;a++){
+				sheet.getRow(0).getCell(a).setCellStyle(cs_title);
+			}
+			
+			//表頭
+			for(int a=0;a<list_cols.size();a++){
+				sheet.getRow(1).getCell(a).setCellValue(list_cols.get(a));
+				sheet.getRow(1).getCell(a).setCellStyle(cs_head);
+			}
+			
+			
+			//數據填充
+			int y_index2=0;
+			for(String key:m1.keySet()){
+				Map<String,Object>m_a=(Map<String,Object>)m1.get(key);
+				CellRangeAddress cra=new CellRangeAddress(2+y_index2,1+(m_a.keySet().size()*list_str.size())+y_index2,0,0);//廠別			
+				sheet.addMergedRegion(cra);									
+				sheet.getRow(2+y_index2).getCell(0).setCellValue(key.split("__")[1]+"-"+key.split("__")[0]);			
+				for(int a=0;a<m_a.keySet().size()*list_str.size();a++){
+					sheet.getRow(2+y_index2+a).getCell(0).setCellStyle(cs);				
+				}
+				
+				for(String factcode:m_a.keySet()){
+					CellRangeAddress cra2=new CellRangeAddress(2+y_index2,1+list_str.size()+y_index2,1,1);//廠別狀態
+					sheet.addMergedRegion(cra2);	
+					sheet.getRow(2+y_index2).getCell(1).setCellValue(factcode);					
+						for(int a=0;a<list_str.size();a++){					
+							sheet.getRow(2+y_index2+a).getCell(1).setCellStyle(cs);
+							if(x==0){//表0
+								sheet.getRow(2+y_index2+a).getCell(2).setCellValue(list_str.get(a));
+								sheet.getRow(2+y_index2+a).getCell(2).setCellStyle(cs);
+							}
+							
+						}
+															
+					List<VWeballobjbStorage>l1=(List<VWeballobjbStorage>)m_a.get(factcode);	
+					for(int a=0;a<l1.size();a++){
+						double obj42=l1.get(a).getObjA42()==null?0.0:l1.get(a).getObjA42();
+						double obj43=l1.get(a).getObjA43()==null?0.0:l1.get(a).getObjA43();	
+						switch (x) {
+						case 0://表0
+							sheet.getRow(2+y_index2).getCell(3+a).setCellValue(obj42);
+							sheet.getRow(3+y_index2).getCell(3+a).setCellValue(obj43);
+							for(int b=0;b<list_str.size();b++){
+								sheet.getRow(2+y_index2+b).getCell(3+a).setCellStyle(cs_poi1);
+							}
+							break;
+						case 1://表1
+							sheet.getRow(2+y_index2).getCell(2+a).setCellValue(GlobalMethod.division(obj42, obj43));
+							for(int b=0;b<list_str.size();b++){
+								sheet.getRow(2+y_index2+b).getCell(2+a).setCellStyle(cs_poi2);
+							}
+							break;
+						case 2://表2
+							sheet.getRow(2+y_index2).getCell(2+a).setCellValue(GlobalMethod.division(obj43, obj42));
+							for(int b=0;b<list_str.size();b++){
+								sheet.getRow(2+y_index2+b).getCell(2+a).setCellStyle(cs_poi1);
+							}
+							break;
+						case 3://表3
+							sheet.getRow(2+y_index2).getCell(2+a).setCellValue(obj43);
+							for(int b=0;b<list_str.size();b++){
+								sheet.getRow(2+y_index2+b).getCell(2+a).setCellStyle(cs_poi1);
+							}
+							
+							//表格最下面一行合計
+							sheet.getRow(2+list_facts.size()).getCell(0).setCellValue("合計");
+							for(int b=0;b<2;b++){
+								sheet.getRow(2+list_facts.size()).getCell(b).setCellStyle(cs_poi1_bg);
+							}							
+								double result=0.0;
+								for(int b=0;b<list_facts.size();b++){
+									double d=sheet.getRow(2+b).getCell(2+a).getNumericCellValue();
+									result=result+d;
+								}
+								sheet.getRow(2+list_facts.size()).getCell(2+a).setCellValue(result);
+								sheet.getRow(2+list_facts.size()).getCell(2+a).setCellStyle(cs_poi1_bg);																					
+							break;						
+						}																								
+					}
+					if(x==0){//表0
+						y_index2=y_index2+2;
+					}else{
+						y_index2++;
+					}
+					
+				}			
+				
+			}
+			
+		}
+		
+				
+		ServletOutputStream os=response.getOutputStream();
+		//response.setContentType("application/vnd.ms-excel");
+		response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");				
+		String fileName="storage_report.xlsx";
+		int msie=ServletActionContext.getRequest().getHeader("USER-AGENT").toLowerCase().indexOf("msie");
+		if(msie>0){
+			fileName=java.net.URLEncoder.encode(fileName,"utf-8");
+		}else{
+			fileName=new String(fileName.getBytes("utf-8"),"iso8859-1");
+		}
+		response.setHeader("Content-disposition","attachment;filename="+fileName);
+		wb.write(os);
+		os.close();	
+		
+		
+    }
+	/**
+	 * 各廠庫存周轉率
+	 */
+	public void printstorage() throws ParseException, IOException{
+		List<VWeballobjbStorage>list_objs=weballobjbser.findStorage(yymm);
+		if(list_objs==null||list_objs.size()==0){
+			response.setContentType("text/html;charset=utf-8");
+			response.getWriter().print("<script>window.parent.alert('無數據');</script>");
+		}else{
+			init_b(list_objs);
+		}
+	}
+	
 			
 }

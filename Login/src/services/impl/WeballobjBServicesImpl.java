@@ -7,6 +7,7 @@ import java.util.List;
 
 import dao.IWeballobjBDao;
 import entity.KyzExpectmatmLog;
+import entity.VWeballobjbStorage;
 import entity.WeballobjB;
 import services.IWeballobjBServices;
 import util.PageBean;
@@ -123,6 +124,11 @@ public class WeballobjBServicesImpl implements IWeballobjBServices{
 	public List<WeballobjB> findProDiff(String factNo, String yymm, String yymm2) {
 		// TODO Auto-generated method stub
 		return weballobjbdao.findProDiff(factNo, yymm, yymm2);
+	}
+
+	public List<VWeballobjbStorage> findStorage(String yymm) {
+		// TODO Auto-generated method stub
+		return weballobjbdao.findStorage(yymm);
 	}	
 
 }

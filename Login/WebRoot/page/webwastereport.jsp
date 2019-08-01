@@ -30,14 +30,40 @@ jq(function(){
 			showAllError : true,
 			ignoreHidden : true,
 			tipSweep : true
-    })
-})
+    });
+    
+    jq("#subform2").Validform({
+			tiptype : 3,
+			showAllError : true,
+			ignoreHidden : true,
+			tipSweep : true
+    });
+    
+    
+});
 </script>
 </head>
 
 <body>
 <br/>
 	<form action="weballobjb_printwastereport" method="post" id="subform" target="_blank">
+		<table id="tb_search">
+			<tr>
+				<td>
+				<span>
+				 <input type="text" name="yymm" onClick="WdatePicker({dateFmt:'yyyy'})"
+					readonly="readonly" class="Wdate" datatype="*" />
+				</span>				
+				 <input type="submit" value="下載"  class="btn btn-primary"/>&nbsp;&nbsp;				 
+				</td>			    
+				
+			</tr>
+		</table>
+	</form>
+	
+	
+	
+	<form action="weballobjb_printstorage" method="post" id="subform2" target="_blank">
 		<table id="tb_search">
 			<tr>
 				<td>

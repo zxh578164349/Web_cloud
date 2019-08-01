@@ -18,6 +18,7 @@ import entity.KyzExpectmatmLog;
 import entity.VKpiWebprofitloss;
 import entity.VWeballobjasumwebyield;
 import entity.VWeballobjasumwebyield2019;
+import entity.VWeballobjbStorage;
 import entity.WeballobjB;
 
 /**   
@@ -305,6 +306,17 @@ public class WeballobjBDaoImpl extends Basedao implements IWeballobjBDao{
 		for(WeballobjB obj:list){
 			obj.getId().getFact().getFactSname();
 		}
+		return list;
+	}
+
+	public List<VWeballobjbStorage> findStorage(String yymm) {
+		// TODO Auto-generated method stub
+		String hql="from VWeballobjbStorage where id.yymm like ? order by id.yymm";
+		String[]objs={yymm+"%"};
+		List<VWeballobjbStorage>list=super.findAll(hql, objs);
+		for(VWeballobjbStorage obj:list){
+			obj.getFactNo2().getFactSname();
+		}		
 		return list;
 	}
 

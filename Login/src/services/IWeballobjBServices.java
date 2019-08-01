@@ -9,6 +9,7 @@ import util.PageBean;
 import entity.KyzExpectmatmLog;
 import entity.VWeballobjasumwebyield;
 import entity.VWeballobjasumwebyield2019;
+import entity.VWeballobjbStorage;
 import entity.WeballobjB;
 
 /**   
@@ -35,5 +36,6 @@ public interface IWeballobjBServices {
 	public List<WeballobjB>findWeballobjB(List<String>list_factcode,String yymm);
 	public List<WeballobjB>findobjA41(String yymm);
 	public List<WeballobjB> findProDiff(String factNo, String yymm, String yymm2);
+	public List<VWeballobjbStorage>findStorage(String yymm);
 
 }

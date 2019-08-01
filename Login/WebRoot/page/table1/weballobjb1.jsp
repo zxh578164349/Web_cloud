@@ -81,7 +81,7 @@
                         <th>無形差异</th>
                         <th>無形差異率</th>
                         <th>廢品重量</th>
-                        <th>銷售成本金額</th>
+                        <th>當月耗用金額</th>
                         <th>平均庫存金額</th>						
 						<s:if test='#session.loginUser.userread!="1"'>
 							<th>操作</th>
@@ -139,6 +139,7 @@
 							<s:property value="%{formatDouble(objA37/(objA36/objA31))}" />
 							</td>
 							<td><s:property value="objA39" /></td>
+							<td><s:property value="objA40" /></td>
 							<td><s:property value="objA41" /></td>
 							<td><s:property value="objA42" /></td>
 							<td><s:property value="objA43" /></td>
