@@ -44,12 +44,12 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 			 </tr>
 			 <tr>
 			     <td colspan="11">
-			        <!-- <div style="float:left">是否分部門&nbsp;&nbsp;&nbsp;
+			        <div style="float:left" id="div_trmk">是否分部門&nbsp;&nbsp;&nbsp;
 			                          是<input type="radio" name="trMk_r" value="Y" datatype="*"  onclick="rplvalue(this.value),loaddepments(),checkSame()"/>&nbsp;&nbsp;
 			                          否<input type="radio" name="trMk_r" value="N" onclick="rplvalue(this.value),loaddepments(),checkSame()"/>
 			            <input type="hidden" name="trMk"/>
-			         </div>  -->
-			         <input type="hidden" name="trMk" value="Y"/>
+			         </div>
+			        <!--  <input type="hidden" name="trMk" value="Y"/> -->
 			         <div id="div_dep" style="display:none">部門&nbsp;<select name="depId" datatype="*" onchange="checkSame()"></select></div>&nbsp;&nbsp;
 			         <div id="div_factcode" style="display:none;float:left">廠別狀態&nbsp;
 			         <select name="factCode" id="factCode" datatype="*" onchange="checkSame()">
@@ -346,7 +346,8 @@ var j=0;
 	    var trMk=jq("input[name='trMk']").val();		
 		var factno=jq("#dwrFactNo").val();		
 		var visasort=jq("#dwr_kytype").val().split("__")[0];		
-		if(trMk=="Y"&&factno!=""&&visasort!=""){
+		/* if(trMk=="Y"&&factno!=""&&visasort!=""){ */
+		if(factno!=""&&visasort!=""){
 			jq.ajax({
 				type:"post",
 				dateType:"json",
@@ -363,9 +364,15 @@ var j=0;
 							item+="<option value="+obj[0]+">"+obj[1]+"</option>";						
 						});
 						jq("select[name='fid']").append(item);
-						jq("#div_webform").show();									
+						jq("#div_webform").show();
+						/******如果存在小類，就讓“是否分部門”失效,並且隱藏*****/
+						jq("input[name='trMk_r']").attr("disabled","disabled");	
+						jq("#div_trmk").hide();	
+						/******如果存在小類，就讓“是否分部門”失效,並且隱藏*****/							
 					}else{
-						jq("#div_webform").hide();						
+						jq("#div_webform").hide();
+						jq("input[name='trMk_r']").removeAttr("disabled");
+						jq("#div_trmk").show();						
 					}				
 					
 				}

@@ -359,6 +359,11 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 							flows.get(i).setVisaSortM(visaSort_main);
 							flows.get(i).setTypeMk(visaSort_main2);
 							flows.get(i).setTrMk(trMk);
+							if(factCode!=null&&!"".equals(factCode)){
+						    	flows.get(i).getId().setFactCode(factCode);
+						    }else{
+						    	flows.get(i).getId().setFactCode("null");
+						    }
 							//visaSer.add(flows.get(i));
 							
 						}
@@ -373,7 +378,12 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 						flows.get(i).setFlowMk("Y");
 						flows.get(i).setVisaSortM(visaSort_main);
 						flows.get(i).setTypeMk(visaSort_main2);
-						flows.get(i).setTrMk("N");//【出差類】 【 配方類】  都不分部門
+						flows.get(i).setTrMk("N");//【出差類】 【 配方類】  都不分部門						
+						if(factCode!=null&&!"".equals(factCode)){
+					    	flows.get(i).getId().setFactCode(factCode);
+					    }else{
+					    	flows.get(i).getId().setFactCode("null");
+					    }
 						//visaSer.add(flows.get(i));
 						
 					}
