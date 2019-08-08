@@ -1483,11 +1483,17 @@ public class WeballobjBAction  extends ActionSupport implements ServletResponseA
 		XSSFWorkbook wb=new XSSFWorkbook();
 				
 		for(int x=0;x<4;x++){
+			XSSFSheet sheet;
 			if(x==1){//表0
 				list_str.remove(0);//移除一項
 				list_cols.remove(2);//移除第二項  “項目”
 			}
-			XSSFSheet sheet=wb.createSheet("分表"+x);
+			if(x==3){
+				sheet=wb.createSheet(yymm+"各廠平均庫存金額");
+			}else{
+				sheet=wb.createSheet("分表"+x);
+			}
+			
 			Map<String,Object>map_style=GlobalMethod.findStyles2007(wb);
 			XSSFCellStyle cs_title=(XSSFCellStyle)map_style.get("cs_title");
 			XSSFCellStyle cs_head=(XSSFCellStyle)map_style.get("cs_head");

@@ -1016,6 +1016,16 @@ public class GlobalMethod extends HibernateDaoSupport{
 		cs_poi4.setBorderBottom(XSSFCellStyle.BORDER_THIN);
 		cs_poi4.setBorderLeft(XSSFCellStyle.BORDER_THIN);
 		map.put("cs_poi4", cs_poi4);
+		
+		XSSFCellStyle cs_poi5=wb.createCellStyle();
+		cs_poi5.setDataFormat(format.getFormat("#,###,0.00000"));
+		cs_poi5.setAlignment(XSSFCellStyle.ALIGN_CENTER);
+		cs_poi5.setVerticalAlignment(XSSFCellStyle.VERTICAL_CENTER);
+		cs_poi5.setBorderTop(XSSFCellStyle.BORDER_THIN);
+		cs_poi5.setBorderRight(XSSFCellStyle.BORDER_THIN);
+		cs_poi5.setBorderBottom(XSSFCellStyle.BORDER_THIN);
+		cs_poi5.setBorderLeft(XSSFCellStyle.BORDER_THIN);
+		map.put("cs_poi5", cs_poi5);
 		//有背景
 		XSSFCellStyle cs_percent_bg=wb.createCellStyle();
 		cs_percent_bg.setDataFormat(format.getFormat("0.00%"));

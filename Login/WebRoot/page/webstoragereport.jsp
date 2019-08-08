@@ -30,14 +30,14 @@ jq(function(){
 			showAllError : true,
 			ignoreHidden : true,
 			tipSweep : true
-    });             
+    });            
 });
 </script>
 </head>
 
 <body>
 <br/>
-	<form action="weballobjb_printwastereport" method="post" id="subform" target="_blank">
+	<form action="weballobjb_printstorage" method="post" id="subform" target="_blank">
 		<table id="tb_search">
 			<tr>
 				<td>

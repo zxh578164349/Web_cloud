@@ -322,7 +322,8 @@ public class VKpiWebprofitlossNewAction extends ActionSupport implements Servlet
 		XSSFCellStyle cs_title=(XSSFCellStyle)map_style.get("cs_title");
 		XSSFCellStyle cs_head=(XSSFCellStyle)map_style.get("cs_head");
 		XSSFCellStyle cs_head2=(XSSFCellStyle)map_style.get("cs_head2");
-		XSSFCellStyle cs=(XSSFCellStyle)map_style.get("cs");
+		XSSFCellStyle cs=(XSSFCellStyle)map_style.get("cs");//
+		XSSFCellStyle cs_poi5=(XSSFCellStyle)map_style.get("cs_poi5");
 		//標題
 		CellRangeAddress cra_title=new CellRangeAddress(0,(short)0,0,(short)5);
 		sheet.addMergedRegion(cra_title);
@@ -670,6 +671,7 @@ public class VKpiWebprofitlossNewAction extends ActionSupport implements Servlet
 			//if(list.get(i).equals(DB1)){
 			if(list.get(i)==null){
 				list.remove(i);
+				i=i-1;
 			}
 		}
 	}
@@ -739,7 +741,7 @@ public class VKpiWebprofitlossNewAction extends ActionSupport implements Servlet
 	/**
 	 * 
 	 * @Title: isPercents
-	 * @Description: 判斷哪些數據用 % 號
+	 * @Description: 判斷哪些數據用 % 號     (控制所有數據的格式)
 	 * @param @param obj
 	 * @param @return
 	 * @return List<String>
@@ -751,7 +753,9 @@ public class VKpiWebprofitlossNewAction extends ActionSupport implements Servlet
 		List<Object>list=new ArrayList<Object>();
 		//List<String>list_items=this.findItems();
 		List<String>list_result=new ArrayList<String>();
-		DecimalFormat frm=new DecimalFormat("0.00%");
+		DecimalFormat frm=new DecimalFormat("0.00%");//%號
+		DecimalFormat frm1=new DecimalFormat("#,###0");//不保留小數
+		DecimalFormat frm5=new DecimalFormat("#,###0.00000");//保留5位小數
 		list.add(obj.getObjA1());
 		list.add(obj.getObjA2());
 		list.add(obj.getObjA3());
@@ -787,9 +791,13 @@ public class VKpiWebprofitlossNewAction extends ActionSupport implements Servlet
 			if(list.get(i)!=null){
 				if(list_items.get(i).split("__")[1].equals("%")){
 					list_result.add(frm.format(list.get(i)));
+				}else if(i==0||i==5||i==6||i==7){
+					list_result.add(frm1.format(list.get(i)));
+				}else if(i==23||i==24||i==25||i==26||i==28){
+					list_result.add(frm5.format(list.get(i)));				
 				}else{
 					list_result.add(list.get(i).toString());							
-				}
+				}				
 			}else{
 				list_result.add("無");
 			}						
