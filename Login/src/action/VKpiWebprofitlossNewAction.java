@@ -445,7 +445,7 @@ public class VKpiWebprofitlossNewAction extends ActionSupport implements Servlet
 		list.add("時迴轉__模/H__0");
 		list.add("加班費__USD__1");
 		list.add("成本率__%__1");
-		list.add("利潤率__%__0");
+		list.add("回頭率__%__0");
 		list.add("總損耗__%__1");
 		list.add("平均邊料重__G/雙__1");
 		list.add("邊料率__%__1");

@@ -31,7 +31,7 @@
 					<s:if test='#session.loginUser.userread!="1"'>
 						<!--<input type="button" class="btn btn-info" value="添加" onclick="loadUrl('saveAndUpdate/fixedSaveOrUpdate.jsp')"/>-->
 					</s:if>
-					<span id="h2_title">基本數據導入</span>
+					<span id="h2_title">重點指標導入</span>
 				</h3>
 				<thead>
 					<tr class="tr_show">
@@ -54,7 +54,8 @@
                         <th>時迴轉</th>
                         <th>加班費</th>
                         <th>成本率</th>
-                        <th>利潤率</th>
+                        <!-- <th>利潤率</th> -->
+                        <th>回頭率</th>
                         <th>總損耗</th>
                         <th>平均邊料重</th>
                         <th>邊料率</th>

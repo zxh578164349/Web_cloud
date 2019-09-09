@@ -676,7 +676,7 @@ public class WeballobjBAction  extends ActionSupport implements ServletResponseA
 				
 				CellRangeAddress cra_title=new CellRangeAddress(0,0,0,4);
 				sheet.addMergedRegion(cra_title);
-				sheet.getRow(0).getCell(0).setCellValue(factNo+"-"+month+"基本數據");
+				sheet.getRow(0).getCell(0).setCellValue(factNo+"-"+month+"重點指標數據");
 				for(int i=0;i<6;i++){
 					sheet.getRow(0).getCell(i).setCellStyle(cs_title);
 				}
@@ -731,7 +731,7 @@ public class WeballobjBAction  extends ActionSupport implements ServletResponseA
 			for(int i=0;i<6;i++){
 				sheet.getRow(0).createCell(i).setCellStyle(cs_title);
 			}
-			sheet.getRow(0).getCell(0).setCellValue(month+"-"+"各工廠基本數據");
+			sheet.getRow(0).getCell(0).setCellValue(month+"-"+"各工廠重點指標數據");
 			/*********************************標題***************************************/
 			
 			int leg_col=list_col.get(0).split("__").length;
@@ -825,7 +825,7 @@ public class WeballobjBAction  extends ActionSupport implements ServletResponseA
 				
 				CellRangeAddress cra_title=new CellRangeAddress(0,0,0,4);
 				sheet.addMergedRegion(cra_title);
-				sheet.getRow(0).getCell(0).setCellValue(factNo+"--"+fcode+"基本數據(統計)");
+				sheet.getRow(0).getCell(0).setCellValue(factNo+"--"+fcode+"重點指標數據(統計)");
 				for(int i=0;i<6;i++){
 					sheet.getRow(0).getCell(i).setCellStyle(cs_title);
 				}
@@ -897,7 +897,7 @@ public class WeballobjBAction  extends ActionSupport implements ServletResponseA
 		list.add("13__時迴轉__模/H");
 		list.add("14__加班費__USD");
 		list.add("15__成本率__%");
-		list.add("16__利潤率__%");
+		list.add("16__回頭率__%");
 		list.add("17__總損耗__%");
 		list.add("18__平均邊料重__G/雙");
 		list.add("19__邊料率__%");
@@ -1383,7 +1383,9 @@ public class WeballobjBAction  extends ActionSupport implements ServletResponseA
 		
 		/***************************************數據處理******************************************************/						
 		List<String>months=GlobalMethod.findMonths(yymm+"01", yymm+"12");
-		List<WebFact>list_facts=webFactSer.findFactAble();
+		List<WebFact>list_facts=webFactSer.findAllFact_showA();
+		//List<WebFact>list_facts=webFactSer.findFactAble();
+		
 		
 		for(WebFact obj:list_facts){
 			if(obj.getId().getFactArea().equals("MD")||obj.getId().getFactArea().equals("IP")||obj.getId().getFactArea().equals("EVA")){
@@ -1614,7 +1616,7 @@ public class WeballobjBAction  extends ActionSupport implements ServletResponseA
 		ServletOutputStream os=response.getOutputStream();
 		//response.setContentType("application/vnd.ms-excel");
 		response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");				
-		String fileName="storage_report.xlsx";
+		String fileName=yymm+"各廠庫存周轉率匯總.xlsx";
 		int msie=ServletActionContext.getRequest().getHeader("USER-AGENT").toLowerCase().indexOf("msie");
 		if(msie>0){
 			fileName=java.net.URLEncoder.encode(fileName,"utf-8");
