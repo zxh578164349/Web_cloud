@@ -319,4 +319,9 @@ public class WebFactServicesImpl implements IWebFactServices {
 		return webFactDao.findFactCodeByFactNo_disable(factNo);
 	}
 
+	public List<WebFact> findAsics(String asicsMk) {
+		// TODO Auto-generated method stub
+		return webFactDao.findAsics(asicsMk);
+	}
+
 }

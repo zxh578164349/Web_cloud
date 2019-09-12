@@ -44,6 +44,9 @@
         <property name="closeDate" type="java.lang.String">
             <column name="CLOSE_DATE" length="10"></column>
         </property>
+        <property name="asicsMk" type="java.lang.String">
+            <column name="ASICS_MK" length="2"></column>
+        </property>
         
        <!--  <many-to-one name="webTabpom" class="entity.WebTabpom" fetch="select">
             <column name="FACT_NO" length="10" />

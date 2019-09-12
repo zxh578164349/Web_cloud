@@ -246,20 +246,19 @@ public class WeballobjBDaoImpl extends Basedao implements IWeballobjBDao{
 		return list;
 	}
 
-	public List<WeballobjB> findWeballobjB(List<String> list_factcode,
-			String yymm) {
+	public List<WeballobjB> findWeballobjB(String yymm) {
 		// TODO Auto-generated method stub
 		StringBuffer hql=new StringBuffer();
 		Map<String,Object>map=new HashMap<String,Object>();
 		hql.append("from WeballobjB where 1=1 ");
-		if(list_factcode!=null&&list_factcode.size()>0){
+		/*if(list_factcode!=null&&list_factcode.size()>0){
 			hql.append(" and id.fact.id.factArea in (:list_factcode) ");
 			map.put("list_factcode",list_factcode);
-		}
+		}*/
 		if(yymm!=null&&!yymm.equals("")){
 			hql.append(" and id.yymm=:yymm ");
 			map.put("yymm",yymm);
-		}
+		}		
 		List<WeballobjB>list=super.getAllWithNoPage(hql.toString(),map);
 		for(WeballobjB obj:list){
 			obj.getId().getFact().getFactSname();

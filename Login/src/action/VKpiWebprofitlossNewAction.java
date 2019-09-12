@@ -62,10 +62,17 @@ public class VKpiWebprofitlossNewAction extends ActionSupport implements Servlet
 	private IWeballobjBServices weballobjbser;
 	private IWebFactServices webFactSer;
 	private javax.servlet.http.HttpServletResponse response;
+	private String asicsMk;//是否ASICS工廠    0是      1否
 	
 	
 	
 	
+	public String getAsicsMk() {
+		return asicsMk;
+	}
+	public void setAsicsMk(String asicsMk) {
+		this.asicsMk = asicsMk;
+	}
 	public void setWeballobjbser(IWeballobjBServices weballobjbser) {
 		this.weballobjbser = weballobjbser;
 	}
@@ -168,6 +175,8 @@ public class VKpiWebprofitlossNewAction extends ActionSupport implements Servlet
 		
 	}
 	
+	
+	
 	public void print_tw() throws IOException{
 		XSSFWorkbook wb=new XSSFWorkbook();
 		XSSFSheet sheet=wb.createSheet("匯總");
@@ -177,9 +186,30 @@ public class VKpiWebprofitlossNewAction extends ActionSupport implements Servlet
 		XSSFCellStyle cs_red_bg=(XSSFCellStyle)map_style.get("cs_red_bg");
 		XSSFCellStyle cs_lblue_bg=(XSSFCellStyle)map_style.get("cs_lblue_bg");
 		XSSFCellStyle cs_itatic=(XSSFCellStyle)map_style.get("cs_itatic");
-		List<WeballobjB>list_source=weballobjbser.findWeballobjB(list_factcode, yymm);
+		List<WeballobjB>list_source=weballobjbser.findWeballobjB(yymm);
 		Map<String,Object>map=new LinkedHashMap<String,Object>();
 		List<String>list_items=this.findItems();
+		
+		/*************************篩選出ASICS工廠   20190911********************************/
+		if("0".equals(asicsMk)){			
+			List<WebFact>facts=webFactSer.findAsics(asicsMk);
+			list_factcode=new ArrayList<String>();
+			list_factno=new ArrayList<String>();
+			for(WebFact fact:facts){
+				list_factcode.add(fact.getId().getFactArea());
+				list_factno.add(fact.getId().getFactArea()+"_"+fact.getId().getFactNo()+"_"+fact.getFactSname());
+			}
+			for(int a=0;a<list_factcode.size();a++){
+				for(int b=list_factcode.size()-1;b>a;b--){
+					if(list_factcode.get(a).equals(list_factcode.get(b))){
+						list_factcode.remove(b);
+					}
+				}
+			}															
+		}
+		/*************************篩選出ASICS工廠   20190911********************************/
+		
+		
 		for(String factcode:list_factcode){
 			List<WeballobjB>list_obj=new LinkedList<WeballobjB>();
 			for(String factno:list_factno){
@@ -242,38 +272,7 @@ public class VKpiWebprofitlossNewAction extends ActionSupport implements Servlet
 			col_index=col_index+length;
 		}
 		/*******************************按factcode 標出第1名與最后1名*************************************/
-		
-		/*List<List<Double>>list_doubles=this.packageToListDouble(map).get(0);
-		List<List<Double>>list_doubles_sort=this.packageToListDouble(map).get(1);
-		List<XSSFCellStyle>list_styles=new ArrayList<XSSFCellStyle>();
-		for(int i=0;i<list_doubles.size();i++){			
-			List<Double>list_double=list_doubles.get(i);
-			List<Double>list_double_sort=list_doubles_sort.get(i);
-			if(i==0){
-				for(int j=0;j<list_double.size()-2;j++){
-					sheet2.getRow(2+i).getCell(3+j).setCellValue(list_double.get(j));
-					sheet2.getRow(2+i).getCell(3+j).setCellStyle(cs_head);
-				}
-			}else{
-				this.isRedOrGreen(i,list_styles,cs_red_bg,cs_lblue_bg);
-				for(int j=0;j<list_double.size()-2;j++){
-					//sheet2.getRow(2+i).getCell(3+j).setCellValue(list_double.get(j));
-					if(list_double_sort.size()>3&&list_double.get(j)<=list_double.get(list_double.size()-2)&&!list_double.get(j).equals(DB1)){
-						//sheet2.getRow(2+i).getCell(3+j).setCellStyle(temp);
-						sheet.getRow(2+i).getCell(3+j).setCellStyle(list_styles.get(0));
-					}else if(list_double_sort.size()>3&&list_double.get(j)>=list_double.get(list_double.size()-1)&&!list_double.get(j).equals(DB1)){
-						//sheet2.getRow(2+i).getCell(3+j).setCellStyle(temp);
-						sheet.getRow(2+i).getCell(3+j).setCellStyle(list_styles.get(1));
-					}else{
-						//sheet2.getRow(2+i).getCell(3+j).setCellStyle(cs);
-						sheet.getRow(2+i).getCell(3+j).setCellStyle(cs);
-					}								
-				}
-			}
-			
-		}*/
-		
-		
+								
 		sheet.createRow(NUM+5).createCell(1).setCellStyle(cs_red_bg);
 		sheet.createRow(NUM+6).createCell(1).setCellStyle(cs_lblue_bg);
 		
@@ -298,7 +297,7 @@ public class VKpiWebprofitlossNewAction extends ActionSupport implements Servlet
 		wb.write(os);
 		os.close();
 	}
-	
+			
 		
 	/**
 	 * 
@@ -330,7 +329,12 @@ public class VKpiWebprofitlossNewAction extends ActionSupport implements Servlet
 		if(factname!=null){
 			sheet.getRow(0).getCell(0).setCellValue("重點指標匯總_"+factname);
 		}else{
-			sheet.getRow(0).getCell(0).setCellValue("各廠重點指標匯總_"+yymm);
+			if("0".equals(asicsMk)){
+				sheet.getRow(0).getCell(0).setCellValue("ASICS工廠重點指標匯總_"+yymm);
+			}else{
+				sheet.getRow(0).getCell(0).setCellValue("各廠重點指標匯總_"+yymm);
+			}
+			
 		}
 		
 		for(int i=0;i<4;i++){
@@ -863,9 +867,29 @@ public class VKpiWebprofitlossNewAction extends ActionSupport implements Servlet
 		HSSFCellStyle cs_red_bg=(HSSFCellStyle)map_style.get("cs_red_bg");
 		HSSFCellStyle cs_lblue_bg=(HSSFCellStyle)map_style.get("cs_lblue_bg");
 		HSSFCellStyle cs_itatic=(HSSFCellStyle)map_style.get("cs_itatic");
-		List<WeballobjB>list_source=weballobjbser.findWeballobjB(list_factcode, yymm);
+		List<WeballobjB>list_source=weballobjbser.findWeballobjB(yymm);
 		Map<String,Object>map=new LinkedHashMap<String,Object>();
 		List<String>list_items=this.findItems();
+		
+		/*************************篩選出ASICS工廠   20190911********************************/
+		if("0".equals(asicsMk)){			
+			List<WebFact>facts=webFactSer.findAsics(asicsMk);
+			list_factcode=new ArrayList<String>();
+			list_factno=new ArrayList<String>();
+			for(WebFact fact:facts){
+				list_factcode.add(fact.getId().getFactArea());
+				list_factno.add(fact.getId().getFactArea()+"_"+fact.getId().getFactNo()+"_"+fact.getFactSname());
+			}
+			for(int a=0;a<list_factcode.size();a++){
+				for(int b=list_factcode.size()-1;b>a;b--){
+					if(list_factcode.get(a).equals(list_factcode.get(b))){
+						list_factcode.remove(b);
+					}
+				}
+			}															
+		}
+		/*************************篩選出ASICS工廠   20190911********************************/
+		
 		for(String factcode:list_factcode){
 			List<WeballobjB>list_obj=new LinkedList<WeballobjB>();
 			for(String factno:list_factno){

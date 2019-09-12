@@ -21,6 +21,7 @@ public class WebFact implements java.io.Serializable {
 	private String factDisable;
 	private String openDate;
 	private String closeDate;
+	private String asicsMk;//是否ASICS工廠    0是      1否
 	
 	// Constructors
 
@@ -134,6 +135,16 @@ public class WebFact implements java.io.Serializable {
 	public void setCloseDate(String closeDate) {
 		this.closeDate = closeDate;
 	}
+
+	public String getAsicsMk() {
+		return asicsMk;
+	}
+
+	public void setAsicsMk(String asicsMk) {
+		this.asicsMk = asicsMk;
+	}
+	
+	
 
 	
 	

@@ -120,6 +120,30 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			</form>
 		</div>
 	</div> 
+	
+	
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title">ASICS工廠</h3>
+		</div>
+		<div class="panel-body">
+			<form action="vkpiwebpronew_print_tw" method="post" id="subform4"
+				target="_blank">
+				<table class="tb_search">
+					<tr>
+						<td>
+						<span>
+						<input type="text" name="yymm" datatype="*" onclick="WdatePicker()" class="Wdate"/>																						
+						<input type="hidden" name="asicsMk" value="0"/>		
+						</span>						
+						<input type="button" id="btn4" class="btn btn-primary" value="確定"/>							
+						</td>
+					</tr>
+				</table>
+								
+			</form>
+		</div>
+	</div> 									
     </s:if>   
    
 <script type="text/javascript">
@@ -127,14 +151,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	   window.parent.layer.alert("出現無數據時,請檢查<br/>【重點指標導入】是否同時具備數據",0); 
    }
    jq(
-      function(){
-        /* jq("#subform1").Validform({
-             btnSubmit : "#btn1",
-             tiptype:3,
-             tipSweep:true,
-             showAllError:true,
-             beforeSubmit:tips
-         });*/
+      function(){       
          jq("#subform2").Validform({
              btnSubmit:"#btn2",
              tiptype:3,
@@ -142,14 +159,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
              showAllError:true,
              beforeSubmit:tips
          });
-          /*jq("#subform3").Validform({
-             btnSubmit:"#btn3",
+          jq("#subform4").Validform({
+             btnSubmit:"#btn4",
              tiptype:3,
              tipSweep:true,
-             showAllError:true
-         })*/
+             showAllError:true,
+             beforeSubmit:tips
+         });
       }  
-   )
+   );
 
 
 /**

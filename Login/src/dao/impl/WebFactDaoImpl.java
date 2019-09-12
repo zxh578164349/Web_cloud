@@ -383,4 +383,11 @@ public class WebFactDaoImpl extends Basedao implements IWebFactDao {
 		return super.findAll(hql, objs);
 	}
 
+	public List<WebFact> findAsics(String asicsMk) {
+		// TODO Auto-generated method stub
+		String hql="from WebFact where asicsMk=?";
+		String[]objs={asicsMk};
+		return super.findAll(hql, objs);
+	}
+
 }

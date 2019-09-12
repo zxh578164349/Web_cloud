@@ -141,5 +141,6 @@ public interface IWebFactServices {
 	public List<Object[]>findAllVwebfact();
 	
 	public List<WebFact> findFactCodeByFactNo_disable(String factNo);
+	public List<WebFact>findAsics(String asicsMk);
 
 }

@@ -110,10 +110,9 @@ public class WeballobjBServicesImpl implements IWeballobjBServices{
 		return weballobjbdao.findFactCodes(factNo,yymm,yymm2);
 	}
 
-	public List<WeballobjB> findWeballobjB(List<String> list_factcode,
-			String yymm) {
+	public List<WeballobjB> findWeballobjB(String yymm) {
 		// TODO Auto-generated method stub
-		return weballobjbdao.findWeballobjB(list_factcode, yymm);
+		return weballobjbdao.findWeballobjB( yymm);
 	}
 
 	public List<WeballobjB> findobjA41(String yymm) {
