@@ -423,8 +423,8 @@ public class WebObjsAAction extends ActionSupport implements ServletResponseAwar
 			
 			
 			
-			HSSFSheet sheet=wb.createSheet(yymm);
-			HSSFSheet sheet2=wb.createSheet("提報事項");
+			HSSFSheet sheet=wb.createSheet(yymm+"工廠訊息");
+			HSSFSheet sheet2=wb.createSheet(yymm+"提報事項");
 			init(sheet,map_cs,map,list_lg,days);
 			init2(sheet2,map_cs,map,days);
 			
@@ -432,7 +432,7 @@ public class WebObjsAAction extends ActionSupport implements ServletResponseAwar
 				ServletOutputStream os=response.getOutputStream();
 				response.setContentType("application/vnd.ms-excel");
 				int msie=ServletActionContext.getRequest().getHeader("USER-AGENT").toLowerCase().indexOf("msie");//判斷是否為IE瀏覽器,大於0則為IE瀏覽器
-				String fileName="report"+yymm+"-"+yymm2+".xls";
+				String fileName=factNo+"_"+yymm+"工廠訊息報表"+".xls";
 				if(msie>0){
 					fileName=java.net.URLEncoder.encode(fileName,"utf-8");//解決IE中文文件不能下載的問題
 				}else{
@@ -462,6 +462,102 @@ public class WebObjsAAction extends ActionSupport implements ServletResponseAwar
 		List<String>list_col=findItems();
 		List<String>list_col2=findItems2();
 			sheet.setColumnWidth(1, 5000);
+			for(int a=0;a<list_col.size()*map.size()+20;a++){
+				sheet.createRow(a);				
+				for(int b=0;b<days+5;b++){
+					sheet.getRow(a).createCell(b);					
+				}
+			}
+			
+			CellRangeAddress cra_title=new CellRangeAddress(0,0,0,4);
+			sheet.addMergedRegion(cra_title);
+			sheet.getRow(0).getCell(0).setCellValue(factNo+"-"+yymm+"工廠訊息");
+			for(int i=0;i<4;i++){
+				sheet.getRow(0).getCell(i).setCellStyle(cs_title);
+			}
+			
+			/*CellRangeAddress cra_date=new CellRangeAddress(2,2,0,1);
+			sheet.addMergedRegion(cra_date);
+			sheet.getRow(2).getCell(0).setCellValue(yymm);
+			for(int i=0;i<2;i++){
+				sheet.getRow(2).getCell(i).setCellStyle(cs_head);
+			}
+			for(int a=0;a<days;a++){
+				sheet.getRow(2).getCell(a+2).setCellValue(a+1+"號");
+				sheet.getRow(2).getCell(a+2).setCellStyle(cs_head);	
+			}*/
+			int temp=2;
+			for(String factcode:map.keySet()){
+				
+				CellRangeAddress cra_date=new CellRangeAddress(temp,temp,0,1);
+				sheet.addMergedRegion(cra_date);
+				sheet.getRow(temp).getCell(0).setCellValue(yymm);
+				for(int i=0;i<2;i++){
+					sheet.getRow(temp).getCell(i).setCellStyle(cs_head);
+				}
+				for(int a=0;a<days;a++){
+					sheet.getRow(temp).getCell(a+2).setCellValue(a+1+"號");
+					sheet.getRow(temp).getCell(a+2).setCellStyle(cs_head);	
+				}
+				
+				CellRangeAddress cra_factcode=new CellRangeAddress(temp+1,temp+list_col.size(),0,0);
+				sheet.addMergedRegion(cra_factcode);
+				sheet.getRow(temp+1).getCell(0).setCellValue(factcode);
+				for(int b=0;b<list_col.size();b++){
+					sheet.getRow(b+temp+1).getCell(0).setCellStyle(cs);
+				}
+				for(int b=0;b<list_col.size();b++){
+					sheet.getRow(b+temp+1).getCell(1).setCellValue(list_col.get(b).split("__")[0]);
+					sheet.getRow(b+temp+1).getCell(1).setCellStyle(cs);										
+				}
+				List<WebObjsA>list=(List<WebObjsA>)map.get(factcode);					
+				for(int a=0;a<list.size();a++){						
+					List<Double>list_db=objToDouble(list.get(a));
+					for(int b=0;b<list_db.size();b++){
+						sheet.getRow(b+temp+1).getCell(a+2).setCellValue(list_db.get(b));
+						sheet.getRow(b+temp+1).getCell(a+2).setCellStyle(cs_poi1);
+					}																
+				}										
+				temp=temp+list_col.size()+1;
+			}	
+			
+			CellRangeAddress cra_date=new CellRangeAddress(temp,temp,0,1);
+			sheet.addMergedRegion(cra_date);
+			sheet.getRow(temp).getCell(0).setCellValue(yymm);
+			for(int i=0;i<2;i++){
+				sheet.getRow(temp).getCell(i).setCellStyle(cs_head);
+			}
+			for(int a=0;a<days;a++){
+				sheet.getRow(temp).getCell(a+2).setCellValue(a+1+"號");
+				sheet.getRow(temp).getCell(a+2).setCellStyle(cs_head);	
+			}
+			
+			CellRangeAddress cra_all=new CellRangeAddress(temp+1,temp+list_col2.size(),0,0);
+			sheet.addMergedRegion(cra_all);
+			sheet.getRow(temp+1).getCell(0).setCellValue("全廠");
+			for(int b=0;b<list_col2.size();b++){
+				sheet.getRow(b+temp+1).getCell(0).setCellStyle(cs);
+			}
+			for(int b=0;b<list_col2.size();b++){
+				sheet.getRow(b+temp+1).getCell(1).setCellValue(list_col2.get(b).split("__")[0]);
+				sheet.getRow(b+temp+1).getCell(1).setCellStyle(cs);										
+			}
+			for(int a=0;a<list_lg.size();a++){						
+				List<Long>list_db=objToLong(list_lg.get(a));
+				for(int b=0;b<list_db.size();b++){
+					sheet.getRow(b+temp+1).getCell(a+2).setCellValue(list_db.get(b));
+					sheet.getRow(b+temp+1).getCell(a+2).setCellStyle(cs);
+				}																
+			}
+	}
+	
+	
+	public void init2(HSSFSheet sheet,Map<String,Object>map_cs,Map<String,Object>map,int days) throws ParseException{				
+		HSSFCellStyle cs=(HSSFCellStyle)map_cs.get("cs");
+		HSSFCellStyle cs_head=(HSSFCellStyle)map_cs.get("cs_head");
+		HSSFCellStyle cs_title=(HSSFCellStyle)map_cs.get("cs_title");	
+		List<String>list_col=findItems3();
+			sheet.setColumnWidth(1, 5000);
 			for(int a=0;a<list_col.size()*map.size()+10;a++){
 				sheet.createRow(a);				
 				for(int b=0;b<days+5;b++){
@@ -476,7 +572,7 @@ public class WebObjsAAction extends ActionSupport implements ServletResponseAwar
 				sheet.getRow(0).getCell(i).setCellStyle(cs_title);
 			}
 			
-			CellRangeAddress cra_date=new CellRangeAddress(2,2,0,1);
+			/*CellRangeAddress cra_date=new CellRangeAddress(2,2,0,1);
 			sheet.addMergedRegion(cra_date);
 			sheet.getRow(2).getCell(0).setCellValue(yymm);
 			for(int i=0;i<2;i++){
@@ -485,103 +581,40 @@ public class WebObjsAAction extends ActionSupport implements ServletResponseAwar
 			for(int a=0;a<days;a++){
 				sheet.getRow(2).getCell(a+2).setCellValue(a+1+"號");
 				sheet.getRow(2).getCell(a+2).setCellStyle(cs_head);	
-			}
-			int temp=3;
+			}*/
+			int temp=2;
 			for(String factcode:map.keySet()){
-				CellRangeAddress cra_factcode=new CellRangeAddress(temp,temp+list_col.size()-1,0,0);
+				
+				CellRangeAddress cra_date=new CellRangeAddress(temp,temp,0,1);
+				sheet.addMergedRegion(cra_date);
+				sheet.getRow(temp).getCell(0).setCellValue(yymm);
+				for(int i=0;i<2;i++){
+					sheet.getRow(temp).getCell(i).setCellStyle(cs_head);
+				}
+				for(int a=0;a<days;a++){
+					sheet.getRow(temp).getCell(a+2).setCellValue(a+1+"號");
+					sheet.getRow(temp).getCell(a+2).setCellStyle(cs_head);	
+				}
+				
+				CellRangeAddress cra_factcode=new CellRangeAddress(temp+1,temp+list_col.size(),0,0);
 				sheet.addMergedRegion(cra_factcode);
-				sheet.getRow(temp).getCell(0).setCellValue(factcode);
+				sheet.getRow(temp+1).getCell(0).setCellValue(factcode);
 				for(int b=0;b<list_col.size();b++){
-					sheet.getRow(b+temp).getCell(0).setCellStyle(cs);
+					sheet.getRow(b+temp+1).getCell(0).setCellStyle(cs);
 				}
 				for(int b=0;b<list_col.size();b++){
-					sheet.getRow(b+temp).getCell(1).setCellValue(list_col.get(b).split("__")[0]);
-					sheet.getRow(b+temp).getCell(1).setCellStyle(cs);										
-				}
-				List<WebObjsA>list=(List<WebObjsA>)map.get(factcode);					
-				for(int a=0;a<list.size();a++){						
-					List<Double>list_db=objToDouble(list.get(a));
-					for(int b=0;b<list_db.size();b++){
-						sheet.getRow(b+temp).getCell(a+2).setCellValue(list_db.get(b));
-						sheet.getRow(b+temp).getCell(a+2).setCellStyle(cs_poi1);
-					}																
-				}										
-				temp=temp+list_col.size();
-			}	
-			
-			
-			
-			CellRangeAddress cra_all=new CellRangeAddress(temp,temp+list_col2.size()-1,0,0);
-			sheet.addMergedRegion(cra_all);
-			sheet.getRow(temp).getCell(0).setCellValue("全廠");
-			for(int b=0;b<list_col2.size();b++){
-				sheet.getRow(b+temp).getCell(0).setCellStyle(cs);
-			}
-			for(int b=0;b<list_col2.size();b++){
-				sheet.getRow(b+temp).getCell(1).setCellValue(list_col2.get(b).split("__")[0]);
-				sheet.getRow(b+temp).getCell(1).setCellStyle(cs);										
-			}
-			for(int a=0;a<list_lg.size();a++){						
-				List<Long>list_db=objToLong(list_lg.get(a));
-				for(int b=0;b<list_db.size();b++){
-					sheet.getRow(b+temp).getCell(a+2).setCellValue(list_db.get(b));
-					sheet.getRow(b+temp).getCell(a+2).setCellStyle(cs);
-				}																
-			}
-	}
-	
-	
-	public void init2(HSSFSheet sheet,Map<String,Object>map_cs,Map<String,Object>map,int days) throws ParseException{				
-		HSSFCellStyle cs=(HSSFCellStyle)map_cs.get("cs");
-		HSSFCellStyle cs_head=(HSSFCellStyle)map_cs.get("cs_head");
-		HSSFCellStyle cs_title=(HSSFCellStyle)map_cs.get("cs_title");	
-		List<String>list_col=findItems3();
-			sheet.setColumnWidth(1, 5000);
-			for(int a=0;a<list_col.size()*map.size()+5;a++){
-				sheet.createRow(a);				
-				for(int b=0;b<days+5;b++){
-					sheet.getRow(a).createCell(b);					
-				}
-			}
-			
-			CellRangeAddress cra_title=new CellRangeAddress(0,0,0,4);
-			sheet.addMergedRegion(cra_title);
-			sheet.getRow(0).getCell(0).setCellValue(factNo+"-"+yymm+"工廠訊息");
-			for(int i=0;i<4;i++){
-				sheet.getRow(0).getCell(i).setCellStyle(cs_title);
-			}
-			
-			CellRangeAddress cra_date=new CellRangeAddress(2,2,0,1);
-			sheet.addMergedRegion(cra_date);
-			sheet.getRow(2).getCell(0).setCellValue(yymm);
-			for(int i=0;i<2;i++){
-				sheet.getRow(2).getCell(i).setCellStyle(cs_head);
-			}
-			for(int a=0;a<days;a++){
-				sheet.getRow(2).getCell(a+2).setCellValue(a+1+"號");
-				sheet.getRow(2).getCell(a+2).setCellStyle(cs_head);	
-			}
-			int temp=3;
-			for(String factcode:map.keySet()){
-				CellRangeAddress cra_factcode=new CellRangeAddress(temp,temp+list_col.size()-1,0,0);
-				sheet.addMergedRegion(cra_factcode);
-				sheet.getRow(temp).getCell(0).setCellValue(factcode);
-				for(int b=0;b<list_col.size();b++){
-					sheet.getRow(b+temp).getCell(0).setCellStyle(cs);
-				}
-				for(int b=0;b<list_col.size();b++){
-					sheet.getRow(b+temp).getCell(1).setCellValue(list_col.get(b).split("__")[0]);
-					sheet.getRow(b+temp).getCell(1).setCellStyle(cs);										
+					sheet.getRow(b+temp+1).getCell(1).setCellValue(list_col.get(b).split("__")[0]);
+					sheet.getRow(b+temp+1).getCell(1).setCellStyle(cs);										
 				}
 				List<WebObjsA>list=(List<WebObjsA>)map.get(factcode);					
 				for(int a=0;a<list.size();a++){						
 					List<String>list_db=objToString(list.get(a));
 					for(int b=0;b<list_db.size();b++){
-						sheet.getRow(b+temp).getCell(a+2).setCellValue(list_db.get(b));
-						sheet.getRow(b+temp).getCell(a+2).setCellStyle(cs);
+						sheet.getRow(b+temp+1).getCell(a+2).setCellValue(list_db.get(b));
+						sheet.getRow(b+temp+1).getCell(a+2).setCellStyle(cs);
 					}																
 				}										
-				temp=temp+list_col.size();
+				temp=temp+list_col.size()+1;
 			}			
 	}
 	
@@ -635,7 +668,7 @@ public class WebObjsAAction extends ActionSupport implements ServletResponseAwar
 		Map<String,Object>map_style=GlobalMethod.findStyles2007(wb);				
 		List<VWebobjA>list_source=webobjaservices.findByVwebobja(yymm);
 		List<VWebobjA2>list_source2=webobjaservices.findByVwebobja2(yymm);
-		List<WebObjsA>list_source3=webobjaservices.findByYymm(factNo, yymm);
+		List<WebObjsA>list_source3=webobjaservices.findObjByMonth(yymm);
 		Map<String,Object>map=new LinkedHashMap<String,Object>();
 						
 		//List<WebFact>facts=webFactSer.findFactAble();//所有有效廠別findAllFact_showA
@@ -647,6 +680,7 @@ public class WebObjsAAction extends ActionSupport implements ServletResponseAwar
 		List<String>factnos=new ArrayList<String>();
 		List<VWebobjA>list_obj=new LinkedList<VWebobjA>();
 		List<VWebobjA2>list_obj2=new LinkedList<VWebobjA2>();
+		List<List<WebObjsA>>list_obj3=new LinkedList<List<WebObjsA>>();
 		for(WebFact fact:facts){
 			factcodes.add(fact.getId().getFactArea());
 			list_obj.add(new VWebobjA(new VWebobjAId(fact,yymm)));
@@ -667,6 +701,7 @@ public class WebObjsAAction extends ActionSupport implements ServletResponseAwar
 				if(list_obj.get(a).getId().getWebFact().getId().getFactArea().equals(obj.getId().getWebFact().getId().getFactArea())&&
 						list_obj.get(a).getId().getWebFact().getId().getFactNo().equals(obj.getId().getWebFact().getId().getFactNo())){
 					list_obj.set(a, obj);
+					break;
 				}
 			}
 		}
@@ -710,17 +745,60 @@ public class WebObjsAAction extends ActionSupport implements ServletResponseAwar
 			}
 		}
 		
-		for(int a=0;a<days;a++){
-			
+		String dd="";
+		for(int a=1;a<=days;a++){
+			if(a<10){
+				dd="0"+a;
+			}else{
+				dd=""+a;
+			}
+			List<WebObjsA>list=new LinkedList<WebObjsA>();		
+			for(WebFact fact:facts){
+				list.add(new WebObjsA(new WebObjsAId(fact,yymm+dd)));
+			}
+			list_obj3.add(list);
+			dd="";
 		}
 		
+		List<Map<String,Object>>lm=new LinkedList<Map<String,Object>>();
+		for(List<WebObjsA>list:list_obj3){			
+			Map<String,Object>m=new LinkedHashMap<String,Object>();
+			for(int a=0;a<list.size();a++){
+				for(WebObjsA obj:list_source3){
+					if(list.get(a).getId().getWebFact().getId().getFactArea().equals(obj.getId().getWebFact().getId().getFactArea())&&
+							list.get(a).getId().getWebFact().getId().getFactNo().equals(obj.getId().getWebFact().getId().getFactNo())&&
+							list.get(a).getId().getYymmdd().equals(obj.getId().getYymmdd())){
+						list.set(a, obj);
+						break;
+					}
+				}
+			}
+			
+			for(String factcode:factcodes){
+				List<WebObjsA>ll=new ArrayList<WebObjsA>();
+				for(WebObjsA obj:list){
+					if(factcode.equals(obj.getId().getWebFact().getId().getFactArea())){
+						ll.add(obj);
+					}
+				}
+				m.put(factcode, ll);				
+			}
+			lm.add(m);
+		}
+		
+		
 																		
-		this.init_more(sheet,map,map_style,list_obj2);							
+		this.init_more(sheet,map,map_style,list_obj2);	
+		for(int a=1;a<=lm.size();a++){
+			XSSFSheet sheet2=wb.createSheet("狀況回報_"+a+"號");
+			Map<String,Object>m=lm.get(a-1);
+			this.init_more2_b(sheet2, m, map_style,yymm);
+		}
 									
 		ServletOutputStream os=response.getOutputStream();
 		//response.setContentType("application/vnd.ms-excel");
 		response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
-		String fileName="report_total.xlsx";
+		String fileName=yymm+"月報表彙總.xlsx";
 		int msie=ServletActionContext.getRequest().getHeader("USER-AGENT").toLowerCase().indexOf("msie");
 		if(msie>0){
 			fileName=java.net.URLEncoder.encode(fileName,"utf-8");
@@ -942,8 +1020,7 @@ public void init_more(XSSFSheet sheet,Map<String,Object>map,Map<String,Object>ma
 	
 	/***************************************日報表彙總************************************************************/
 	public void print_tw2() throws IOException{
-		XSSFWorkbook wb=new XSSFWorkbook();
-		
+		XSSFWorkbook wb=new XSSFWorkbook();		
 		Map<String,Object>map_style=GlobalMethod.findStyles2007(wb);				
 		List<WebObjsA>list_source=webobjaservices.findObjByDay(yymmdd);
 		List<VWebobjA3>list_source2=webobjaservices.findByVwebobja3(yymmdd);
@@ -1018,14 +1095,15 @@ public void init_more(XSSFSheet sheet,Map<String,Object>map,Map<String,Object>ma
 			}
 		}
 		
-																		
-		this.init_more2(wb,map,map_style,list_obj2);
-		init_more2_b(wb,map,map_style);
+		XSSFSheet sheet=wb.createSheet("工廠訊息匯總_"+yymmdd);
+		XSSFSheet sheet2=wb.createSheet("狀況回報_"+yymmdd);
+		this.init_more2(sheet,map,map_style,list_obj2);
+		init_more2_b(sheet2,map,map_style,yymmdd);
 									
 		ServletOutputStream os=response.getOutputStream();
 		//response.setContentType("application/vnd.ms-excel");
 		response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
-		String fileName="report_total.xlsx";
+		String fileName=yymmdd+"日報表彙總.xlsx";
 		int msie=ServletActionContext.getRequest().getHeader("USER-AGENT").toLowerCase().indexOf("msie");
 		if(msie>0){
 			fileName=java.net.URLEncoder.encode(fileName,"utf-8");
@@ -1039,8 +1117,7 @@ public void init_more(XSSFSheet sheet,Map<String,Object>map,Map<String,Object>ma
 	
 	
 	
-public void init_more2(XSSFWorkbook wb,Map<String,Object>map,Map<String,Object>map_style,List<VWebobjA3>list_obj2) throws IOException{			
-	    XSSFSheet sheet=wb.createSheet("工廠訊息匯總_"+yymmdd);
+public void init_more2(XSSFSheet sheet,Map<String,Object>map,Map<String,Object>map_style,List<VWebobjA3>list_obj2) throws IOException{				   
 	    this.init(sheet,map);
 		List<String>list_items=this.findItems();
 		List<String>list_items2=this.findItems2();
@@ -1145,8 +1222,7 @@ public void init_more2(XSSFWorkbook wb,Map<String,Object>map,Map<String,Object>m
 		
 	}
 
-public void init_more2_b(XSSFWorkbook wb,Map<String,Object>map,Map<String,Object>map_style) throws IOException{			
-	XSSFSheet sheet=wb.createSheet("狀況回報_"+yymmdd);
+public void init_more2_b(XSSFSheet sheet,Map<String,Object>map,Map<String,Object>map_style,String data) throws IOException{				
 	this.init(sheet,map);
 	List<String>list_items=this.findItems3();
 	//樣式
@@ -1157,7 +1233,7 @@ public void init_more2_b(XSSFWorkbook wb,Map<String,Object>map,Map<String,Object
 	//標題
 	CellRangeAddress cra_title=new CellRangeAddress(0,(short)0,0,(short)5);
 	sheet.addMergedRegion(cra_title);				
-	sheet.getRow(0).getCell(0).setCellValue("各廠訊息匯總_"+yymmdd);
+	sheet.getRow(0).getCell(0).setCellValue("各廠訊息匯總_"+data);
 	
 	for(int i=0;i<4;i++){
 		sheet.getRow(0).getCell(i).setCellStyle(cs_title);

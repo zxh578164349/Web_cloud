@@ -20,5 +20,6 @@ public interface IWebObjsADao {
 	public List<VWebobjA2> findByVwebobja2(String yymm);
 	public List<VWebobjA3> findByVwebobja3(String yymmdd);
 	public List<WebObjsA> findObjByDay(String yymmdd);
+	public List<WebObjsA> findObjByMonth(String yymm);
 
 }

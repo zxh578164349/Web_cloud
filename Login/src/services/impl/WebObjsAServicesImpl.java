@@ -69,4 +69,9 @@ public class WebObjsAServicesImpl implements IWebObjsAServices{
 		return webobjadao.findByVwebobja3(yymmdd);
 	}
 
+	public List<WebObjsA> findObjByMonth(String yymm) {
+		// TODO Auto-generated method stub
+		return webobjadao.findObjByMonth(yymm);
+	}
+
 }

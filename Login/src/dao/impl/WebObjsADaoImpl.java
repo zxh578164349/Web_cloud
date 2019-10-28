@@ -149,6 +149,17 @@ public class WebObjsADaoImpl extends Basedao implements IWebObjsADao{
 		}
 		return list;
 	}
+
+	public List<WebObjsA> findObjByMonth(String yymm) {
+		// TODO Auto-generated method stub
+		String hql="from WebObjsA where id.yymmdd like ? order by id.webFact.fcodeIndex,id.webFact.orderNo,id.yymmdd";
+		String[]objs={yymm+"%"};
+		List<WebObjsA> list=super.findAll(hql, objs);
+		for(WebObjsA obj:list){
+			obj.getId().getWebFact().getFactSname();
+		}
+		return list;
+	}
 	
 
 }
