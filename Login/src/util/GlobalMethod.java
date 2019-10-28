@@ -2216,23 +2216,20 @@ public class GlobalMethod extends HibernateDaoSupport{
 	 
 	 
 	 public static void main(String[] args) {
-				 		 
+			
 		 List<String>list=new ArrayList<String>();
-		 list.add("1蒸汽單耗");
-		 list.add("2色料藥品單耗");
-		 list.add("3__平均日產能__bb");
-		 list.add("4生產與請款差異");
-		 list.add("5__庫存天數__cc");
-		 	
-		 int t=0;
-		 int g=0;
-		 for(int a=0;a<list.size();a++){
-				t++;
-				++g;
-			 
+		 for(int a=0;a<10;a++){
+			 String c="c";
+			 for(int b=0;b<5;b++){
+				 c=c+b;
+				 list.add(c);
+				 c="c";
+			 }
 		 }
-		 System.out.println(t);
-		 System.out.println(g);
+		 
+		 System.out.println(list);
+		
+
 
 		 
 		 

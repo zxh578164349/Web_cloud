@@ -20,10 +20,10 @@
 
 
 <body>
-	<jsp:include page="publicHead_weballobj_b.jsp" />	
+	<jsp:include page="publicHead_webobj.jsp" />	
 	<hr/>
 	<s:if test='#session.loginUser.userread!="1"'>
-	<form action="weballobjb_addMore"  method="post" enctype="multipart/form-data" id="upload_form" target="frameFile">
+	<form action="webobja_addMore"  method="post" enctype="multipart/form-data" id="upload_form" target="frameFile">
 	  <table id="tb_search">
 	      <td>	 
 	         <input type="file" name="file"  id="id_file" class="btn btn-info"/>	        	       
@@ -49,7 +49,7 @@
 				</s:else>
 	       </td>	       
 	       <td>
-	         <input type="text" id="yymm_in" name="yymm" onClick="WdatePicker({dataFmt:'yyyyMM'})" readonly="readonly" class="Wdate search"/>
+	         <input type="text" id="yymm_in" name="yymm" onClick="WdatePicker({dateFmt:'yyyyMMdd'})" readonly="readonly" class="Wdate search"/>
 	       </td>
 	       <td>
 	       	    &nbsp;<input value="導入Excel" type=button onclick="checkForm()" id="search_forday" class="btn btn-info"/>
@@ -60,7 +60,7 @@
 	<iframe id="frameFile" name="frameFile" style="display: none;"></iframe>
 	<hr/>
 	<div id="bodyid">
-		<jsp:include page="table1/weballobjb1.jsp" />
+		<jsp:include page="table1/webobja1.jsp" />
 	</div>	
 	
 <script>
@@ -93,7 +93,7 @@
 		jq.ajax({
 			type : "POST",
 			dataType : "Html",
-			url : "weballobjb_findPageBean3",
+			url : "webobja_findPageBean3",
 			data : "page=" + page,
 			success : function(msg) {
 				jq("#bodyid").html(msg);
@@ -107,7 +107,7 @@
 		jq.ajax({
 			type : "POST",
 			dataType : "Html",
-			url : "weballobjb_findPageBean2",
+			url : "webobja_findPageBean2",
 			data:jq("#"+public_form).serialize(),
 			success : function(msg) {
 				jq("#bodyid").html(msg);
@@ -118,10 +118,10 @@
 			}
 		});
 	}
-
+	
 function print(public_form,factNo,yymm,yymm2){
 	var public_form=jq("#"+public_form);
-	public_form.attr("action","weballobjb_print");
+	public_form.attr("action","webobja_print");
 	public_form.attr("target","_blank");	
 	if(jq("#"+factNo).val()=="nothing"||jq("#"+yymm).val()==""||jq("#"+yymm2).val()==""){
 		layer.msg("請選擇廠別和日期",3,3);
@@ -131,7 +131,7 @@ function print(public_form,factNo,yymm,yymm2){
 }
 function print2(public_form,factNo,yymm,yymm2){
 	var public_form=jq("#"+public_form);
-	public_form.attr("action","weballobjb_print2");
+	public_form.attr("action","webobja_print2");
 	public_form.attr("target","_blank");	
 	if(jq("#"+factNo).val()=="nothing"||jq("#"+yymm).val()==""||jq("#"+yymm2).val()==""){
 		layer.msg("請選擇廠別和日期",3,3);
@@ -140,13 +140,25 @@ function print2(public_form,factNo,yymm,yymm2){
 	}
 }
 
-function print3(public_form,factNo,yymm,yymm2){
+function print3(public_form,factNo,yymm){
 	//jq("#"+factNo).val("all");
 	var public_form=jq("#"+public_form);	
-	public_form.attr("action","weballobjb_print_all");
+	public_form.attr("action","webobja_print_tw");
 	public_form.attr("target","_blank");	
-	if(jq("#"+yymm).val()==""||jq("#"+yymm2).val()==""){
-		layer.msg("請選日期",3,3);
+	if(jq("#"+yymm).val()==""){
+		layer.msg("請選年月日期",3,3);
+	}else{
+		public_form.submit();
+	}
+}
+
+function print4(public_form,factNo,yymm){
+	//jq("#"+factNo).val("all");
+	var public_form=jq("#"+public_form);	
+	public_form.attr("action","webobja_print_tw2");
+	public_form.attr("target","_blank");	
+	if(jq("#"+yymm).val()==""){
+		layer.msg("請選年月日日期",3,3);
 	}else{
 		public_form.submit();
 	}

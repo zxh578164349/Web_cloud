@@ -118,27 +118,7 @@
 			}
 		});
 	}
-	//你确定要删除吗？
-	function isDelete(form) {
-		 var flag=confirm("確定要刪除嗎?");		
-			if (flag == true) {
-				jq.ajax({
-					type:"POST",
-					dataType:"html",
-					data:jq("#"+form).serialize(),
-					url:"weballobj_delete",
-					success:function(data){
-						jq("#bodyid").html(data);
-					},
-					error:function(data){
-						jq("#bodyid").html(data.responseText);
-					}
-				});
-			}
-		
-	}
-
-
+	
 function print(public_form,factNo,yymm,yymm2){
 	var public_form=jq("#"+public_form);
 	public_form.attr("action","weballobj_print");

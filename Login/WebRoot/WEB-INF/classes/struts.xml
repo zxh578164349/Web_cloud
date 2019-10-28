@@ -917,6 +917,13 @@
 		</action>
 		<action name="vkpiwebpronew_*" class="vkpiprofitNewAction" method="{1}"></action>
 		
+		<action name="webobja_*" class="webobjaAction" method="{1}">
+		   <result name="beanList">page/webobja.jsp</result>
+		   <result name="beanList1">page/table1/webobja1.jsp</result>
+		   <result name="delete" type="redirectAction">webobja_findPageBean3</result>
+		</action>
+				
+		
 		
 	</package>
 

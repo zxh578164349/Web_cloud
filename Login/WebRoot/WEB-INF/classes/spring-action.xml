@@ -93,6 +93,7 @@
 	<bean id="webformtypeAction" class="action.WebFormtypeAction" scope="prototype"/>
 	<bean id="weballobjbAction" class="action.WeballobjBAction" scope="prototype"></bean>
 	<bean id="vkpiprofitNewAction" class="action.VKpiWebprofitlossNewAction" scope="prototype"></bean>
+	<bean id="webobjaAction" class="action.WebObjsAAction" scope="prototype"></bean>
 </beans> 
 
  
