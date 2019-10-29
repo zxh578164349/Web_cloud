@@ -94,6 +94,7 @@
 	<bean id="weballobjbAction" class="action.WeballobjBAction" scope="prototype"></bean>
 	<bean id="vkpiprofitNewAction" class="action.VKpiWebprofitlossNewAction" scope="prototype"></bean>
 	<bean id="webobjaAction" class="action.WebObjsAAction" scope="prototype"></bean>
+	<bean id="autoswaction" class="mail.AutoSendWebobjA" scope="prototype"></bean>
 </beans> 
 
  

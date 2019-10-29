@@ -922,6 +922,12 @@
 		   <result name="beanList1">page/table1/webobja1.jsp</result>
 		   <result name="delete" type="redirectAction">webobja_findPageBean3</result>
 		</action>
+		
+		<action name="autosw_*" class="autoswaction" method="{1}">
+		  <result name="print_manual" type="json">
+		     <param name="root">ajaxResult</param>
+		  </result>
+		</action>
 				
 		
 		

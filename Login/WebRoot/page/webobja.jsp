@@ -124,20 +124,10 @@ function print(public_form,factNo,yymm,yymm2){
 	public_form.attr("action","webobja_print");
 	public_form.attr("target","_blank");	
 	if(jq("#"+factNo).val()=="nothing"||jq("#"+yymm).val()==""||jq("#"+yymm2).val()==""){
-		layer.msg("請選擇廠別和日期",3,3);
+		layer.msg("請選擇廠別和（年月）日期",3,3);
 	}else{
 		public_form.submit();
 	}	
-}
-function print2(public_form,factNo,yymm,yymm2){
-	var public_form=jq("#"+public_form);
-	public_form.attr("action","webobja_print2");
-	public_form.attr("target","_blank");	
-	if(jq("#"+factNo).val()=="nothing"||jq("#"+yymm).val()==""||jq("#"+yymm2).val()==""){
-		layer.msg("請選擇廠別和日期",3,3);
-	}else{
-		public_form.submit();
-	}
 }
 
 function print3(public_form,factNo,yymm){
@@ -146,7 +136,7 @@ function print3(public_form,factNo,yymm){
 	public_form.attr("action","webobja_print_tw");
 	public_form.attr("target","_blank");	
 	if(jq("#"+yymm).val()==""){
-		layer.msg("請選年月日期",3,3);
+		layer.msg("請選（年月）日期",3,3);
 	}else{
 		public_form.submit();
 	}
@@ -158,7 +148,19 @@ function print4(public_form,factNo,yymm){
 	public_form.attr("action","webobja_print_tw2");
 	public_form.attr("target","_blank");	
 	if(jq("#"+yymm).val()==""){
-		layer.msg("請選年月日日期",3,3);
+		layer.msg("請選（年月日）日期",3,3);
+	}else{
+		public_form.submit();
+	}
+}
+
+function print5(public_form,yymm){
+	//jq("#"+factNo).val("all");
+	var public_form=jq("#"+public_form);	
+	public_form.attr("action","autosw_print_manual");
+	public_form.attr("target","_blank");	
+	if(jq("#"+yymm).val()==""){
+		layer.msg("請選（年月）日期",3,3);
 	}else{
 		public_form.submit();
 	}

@@ -49,7 +49,7 @@
                         <th>目前欠數</th>
                         <th>慢單狀況</th>
                         <th>不良雙數</th>
-                        <th>不良率</th>
+                        <th>不良率(%)</th>
                         <th>目前直工人數</th>
                         <th>全廠員工數</th>
                         <th>招工數</th>
@@ -72,17 +72,17 @@
 							<td><s:property value="id.webFact.factSname" /></td>
 							<td><s:property value="id.webFact.id.factArea" /></td>
 							<td><s:property value="id.yymmdd" /></td>
-							<td><s:property value="objA1" /></td>
-							<td><s:property value="objA2" /></td>
-							<td><s:property value="objA3" /></td>
-							<td><s:property value="objA4" /></td>
+							<td><s:property value="%{formatDouble(objA1)}" /></td>
+							<td><s:property value="%{formatDouble(objA2)}" /></td>
+							<td><s:property value="%{formatDouble(objA3)}" /></td>
+							<td><s:property value="%{formatDouble(objA4)}" /></td>
 							<td><s:property value="objA5" /></td>
 							<td><s:property value="objA6" /></td>
 							<td><s:property value="objA7" /></td>
-							<td><s:property value="objA8" /></td>
-							<td><s:property value="objA9" /></td>
+							<td><s:property value="%{formatDouble(objA8)}" /></td>
+							<td><s:property value="%{formatDouble(objA9)}" /></td>
 							<td><s:property value="objA10" /></td>
-							<td><s:property value="objA11" /></td>
+							<td><s:property value="%{formatDouble2(objA11*100)}" /></td>
 							<td><s:property value="objA12" /></td>
 							<td><s:property value="objA13" /></td>
 							<td><s:property value="objA14" /></td>

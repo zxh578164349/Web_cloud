@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -76,11 +77,19 @@ public class WebObjsAAction extends ActionSupport implements ServletResponseAwar
 	private List<String>list_factno;
 	private String factname;
 	private String yymmdd;
+	private int emailMk;
+	
     
     
-    
-    
-    
+        
+	public int getEmailMk() {
+		return emailMk;
+	}
+
+	public void setEmailMk(int emailMk) {
+		this.emailMk = emailMk;
+	}
+
 	public String getYymmdd() {
 		return yymmdd;
 	}
@@ -331,9 +340,9 @@ public class WebObjsAAction extends ActionSupport implements ServletResponseAwar
 			factNo=(String)ActionContext.getContext().getSession().get("factNo");
 		}
 		ActionContext.getContext().getSession().remove("allrow");//dao層
-		ActionContext.getContext().getSession().put("public_factno", factNo);
+		ActionContext.getContext().getSession().put("public_factno", factNo.split("__")[0]);
 		ActionContext.getContext().getSession().put("public_yymm", yymm);	
-		bean=webobjaservices.findPageBean(20,page, factNo, yymm);
+		bean=webobjaservices.findPageBean(20,page, factNo.split("__")[0], yymm);
 		return "beanList1";
 	}
 	public String findPageBean3(){
@@ -357,7 +366,7 @@ public class WebObjsAAction extends ActionSupport implements ServletResponseAwar
 	public void print() throws ParseException, IOException{
 		HSSFWorkbook wb=new HSSFWorkbook();
 		Map<String,Object>map_cs=findStyles(wb);				
-		List<WebObjsA>list_objs=webobjaservices.findByYymm(factNo, yymm);		
+		List<WebObjsA>list_objs=webobjaservices.findByYymm(factNo.split("__")[0], yymm);		
 		switch(list_objs.size()){//switch		
 		case 0:
 			response.setContentType("text/html;charset=utf-8");
@@ -395,7 +404,7 @@ public class WebObjsAAction extends ActionSupport implements ServletResponseAwar
 					}else{
 						temp=yymm+"0"+a;
 					}
-					list.add(new WebObjsA(new WebObjsAId(new WebFact(new WebFactId(factNo,factcode)),temp)));
+					list.add(new WebObjsA(new WebObjsAId(new WebFact(new WebFactId(factNo.split("__")[0],factcode)),temp)));
 					temp="";
 				}
 				
@@ -432,7 +441,7 @@ public class WebObjsAAction extends ActionSupport implements ServletResponseAwar
 				ServletOutputStream os=response.getOutputStream();
 				response.setContentType("application/vnd.ms-excel");
 				int msie=ServletActionContext.getRequest().getHeader("USER-AGENT").toLowerCase().indexOf("msie");//判斷是否為IE瀏覽器,大於0則為IE瀏覽器
-				String fileName=factNo+"_"+yymm+"工廠訊息報表"+".xls";
+				String fileName=factNo.split("__")[0]+"_"+yymm+"工廠訊息報表"+".xls";
 				if(msie>0){
 					fileName=java.net.URLEncoder.encode(fileName,"utf-8");//解決IE中文文件不能下載的問題
 				}else{
@@ -471,7 +480,7 @@ public class WebObjsAAction extends ActionSupport implements ServletResponseAwar
 			
 			CellRangeAddress cra_title=new CellRangeAddress(0,0,0,4);
 			sheet.addMergedRegion(cra_title);
-			sheet.getRow(0).getCell(0).setCellValue(factNo+"-"+yymm+"工廠訊息");
+			sheet.getRow(0).getCell(0).setCellValue(factNo.split("__")[1]+"-"+yymm+"工廠訊息");
 			for(int i=0;i<4;i++){
 				sheet.getRow(0).getCell(i).setCellStyle(cs_title);
 			}
@@ -567,7 +576,7 @@ public class WebObjsAAction extends ActionSupport implements ServletResponseAwar
 			
 			CellRangeAddress cra_title=new CellRangeAddress(0,0,0,4);
 			sheet.addMergedRegion(cra_title);
-			sheet.getRow(0).getCell(0).setCellValue(factNo+"-"+yymm+"工廠訊息");
+			sheet.getRow(0).getCell(0).setCellValue(factNo.split("__")[1]+"-"+yymm+"工廠訊息");
 			for(int i=0;i<4;i++){
 				sheet.getRow(0).getCell(i).setCellStyle(cs_title);
 			}
@@ -794,20 +803,27 @@ public class WebObjsAAction extends ActionSupport implements ServletResponseAwar
 			Map<String,Object>m=lm.get(a-1);
 			this.init_more2_b(sheet2, m, map_style,yymm);
 		}
-									
-		ServletOutputStream os=response.getOutputStream();
-		//response.setContentType("application/vnd.ms-excel");
-		response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
-		String fileName=yymm+"月報表彙總.xlsx";
-		int msie=ServletActionContext.getRequest().getHeader("USER-AGENT").toLowerCase().indexOf("msie");
-		if(msie>0){
-			fileName=java.net.URLEncoder.encode(fileName,"utf-8");
+		if(emailMk==1){//發送郵件報表			
+			//OutputStream os=new FileOutputStream("d:\\"+sdate+".xls");
+			OutputStream os=new FileOutputStream(ServletActionContext.getServletContext().getRealPath("TEMPFILES\\"+yymm+".xlsx"));
+			wb.write(os);
+			os.close();		
 		}else{
-			fileName=new String(fileName.getBytes("utf-8"),"iso8859-1");
-		}
-		response.setHeader("Content-disposition","attachment;filename="+fileName);
-		wb.write(os);
-		os.close();
+			ServletOutputStream os=response.getOutputStream();
+			//response.setContentType("application/vnd.ms-excel");
+			response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+			String fileName=yymm+"月報表彙總.xlsx";
+			int msie=ServletActionContext.getRequest().getHeader("USER-AGENT").toLowerCase().indexOf("msie");
+			if(msie>0){
+				fileName=java.net.URLEncoder.encode(fileName,"utf-8");
+			}else{
+				fileName=new String(fileName.getBytes("utf-8"),"iso8859-1");
+			}
+			response.setHeader("Content-disposition","attachment;filename="+fileName);
+			wb.write(os);
+			os.close();
+		}							
+		
 	}
 	
 	
@@ -1100,19 +1116,28 @@ public void init_more(XSSFSheet sheet,Map<String,Object>map,Map<String,Object>ma
 		this.init_more2(sheet,map,map_style,list_obj2);
 		init_more2_b(sheet2,map,map_style,yymmdd);
 									
-		ServletOutputStream os=response.getOutputStream();
-		//response.setContentType("application/vnd.ms-excel");
-		response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
-		String fileName=yymmdd+"日報表彙總.xlsx";
-		int msie=ServletActionContext.getRequest().getHeader("USER-AGENT").toLowerCase().indexOf("msie");
-		if(msie>0){
-			fileName=java.net.URLEncoder.encode(fileName,"utf-8");
+		if(emailMk==1){//發送郵件報表			
+			//OutputStream os=new FileOutputStream("d:\\"+sdate+".xls");
+			OutputStream os=new FileOutputStream(ServletActionContext.getServletContext().getRealPath("TEMPFILES\\"+yymmdd+".xlsx"));
+			wb.write(os);
+			os.close();
 		}else{
-			fileName=new String(fileName.getBytes("utf-8"),"iso8859-1");
+			ServletOutputStream os=response.getOutputStream();
+			//response.setContentType("application/vnd.ms-excel");
+			response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+			String fileName=yymmdd+"日報表彙總.xlsx";
+			int msie=ServletActionContext.getRequest().getHeader("USER-AGENT").toLowerCase().indexOf("msie");
+			if(msie>0){
+				fileName=java.net.URLEncoder.encode(fileName,"utf-8");
+			}else{
+				fileName=new String(fileName.getBytes("utf-8"),"iso8859-1");
+			}
+			response.setHeader("Content-disposition","attachment;filename="+fileName);
+			wb.write(os);
+			os.close();
 		}
-		response.setHeader("Content-disposition","attachment;filename="+fileName);
-		wb.write(os);
-		os.close();
+		
+		
 	}
 	
 	
@@ -1459,6 +1484,18 @@ public void init_more2_b(XSSFSheet sheet,Map<String,Object>map,Map<String,Object
 		list.add("客人來訪訊息__文字");
 		list.add("其他提報事項__文字");	
 		return list;
+	}
+	
+	public String formatDouble(double s) {
+		DecimalFormat format = new DecimalFormat(",###");
+		String temp = format.format(s);
+		return temp;
+	}
+	
+	public String formatDouble2(double s) {
+		DecimalFormat format = new DecimalFormat(",##0.00");
+		String temp = format.format(s);
+		return temp;
 	}
 
 }
