@@ -32,7 +32,7 @@
 				<s:else>
 				
 					<select name="factNo" id="factNo" class="search">						
-						<option value="<s:property value="#session.factNo"/>">
+						<option value="<s:property value="#session.factNo"/>__<s:property value="#session.factName" />">
 							<s:property value="#session.factName" />(<s:property value="#session.factNo"/>)
 						</option>
 					</select>

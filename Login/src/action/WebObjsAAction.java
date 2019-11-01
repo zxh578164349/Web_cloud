@@ -362,7 +362,7 @@ public class WebObjsAAction extends ActionSupport implements ServletResponseAwar
 		webobjaservices.delete(factNo, factCode, yymm,log);
 		return "delete";
 	}
-	
+	/*************************************************工廠報表***********************************************************/
 	public void print() throws ParseException, IOException{
 		HSSFWorkbook wb=new HSSFWorkbook();
 		Map<String,Object>map_cs=findStyles(wb);				
@@ -429,9 +429,7 @@ public class WebObjsAAction extends ActionSupport implements ServletResponseAwar
 				}
 								
 			}
-			
-			
-			
+		
 			HSSFSheet sheet=wb.createSheet(yymm+"工廠訊息");
 			HSSFSheet sheet2=wb.createSheet(yymm+"提報事項");
 			init(sheet,map_cs,map,list_lg,days);
@@ -457,6 +455,7 @@ public class WebObjsAAction extends ActionSupport implements ServletResponseAwar
 		
 		}//switch							
 	}
+	/*************************************************工廠報表***********************************************************/
 	
 	public Map<String,Object> findStyles(HSSFWorkbook wb){		
 		Map<String,Object>map=GlobalMethod.findStyles(wb);				
@@ -484,17 +483,7 @@ public class WebObjsAAction extends ActionSupport implements ServletResponseAwar
 			for(int i=0;i<4;i++){
 				sheet.getRow(0).getCell(i).setCellStyle(cs_title);
 			}
-			
-			/*CellRangeAddress cra_date=new CellRangeAddress(2,2,0,1);
-			sheet.addMergedRegion(cra_date);
-			sheet.getRow(2).getCell(0).setCellValue(yymm);
-			for(int i=0;i<2;i++){
-				sheet.getRow(2).getCell(i).setCellStyle(cs_head);
-			}
-			for(int a=0;a<days;a++){
-				sheet.getRow(2).getCell(a+2).setCellValue(a+1+"號");
-				sheet.getRow(2).getCell(a+2).setCellStyle(cs_head);	
-			}*/
+						
 			int temp=2;
 			for(String factcode:map.keySet()){
 				
@@ -524,7 +513,7 @@ public class WebObjsAAction extends ActionSupport implements ServletResponseAwar
 					List<Double>list_db=objToDouble(list.get(a));
 					for(int b=0;b<list_db.size();b++){
 						sheet.getRow(b+temp+1).getCell(a+2).setCellValue(list_db.get(b));
-						sheet.getRow(b+temp+1).getCell(a+2).setCellStyle(cs_poi1);
+						sheet.getRow(b+temp+1).getCell(a+2).setCellStyle(this.selectStyle2003(b, map_cs));
 					}																
 				}										
 				temp=temp+list_col.size()+1;
@@ -579,18 +568,7 @@ public class WebObjsAAction extends ActionSupport implements ServletResponseAwar
 			sheet.getRow(0).getCell(0).setCellValue(factNo.split("__")[1]+"-"+yymm+"工廠訊息");
 			for(int i=0;i<4;i++){
 				sheet.getRow(0).getCell(i).setCellStyle(cs_title);
-			}
-			
-			/*CellRangeAddress cra_date=new CellRangeAddress(2,2,0,1);
-			sheet.addMergedRegion(cra_date);
-			sheet.getRow(2).getCell(0).setCellValue(yymm);
-			for(int i=0;i<2;i++){
-				sheet.getRow(2).getCell(i).setCellStyle(cs_head);
-			}
-			for(int a=0;a<days;a++){
-				sheet.getRow(2).getCell(a+2).setCellValue(a+1+"號");
-				sheet.getRow(2).getCell(a+2).setCellStyle(cs_head);	
-			}*/
+			}						
 			int temp=2;
 			for(String factcode:map.keySet()){
 				
@@ -1403,7 +1381,7 @@ public void init_more2_b(XSSFSheet sheet,Map<String,Object>map,Map<String,Object
 		List<String>list_result=new ArrayList<String>();
 		DecimalFormat frm=new DecimalFormat("0.00%");//%號
 		DecimalFormat frm1=new DecimalFormat("#,###0");//不保留小數
-		DecimalFormat frm5=new DecimalFormat("#,###0.00000");//保留5位小數
+		DecimalFormat frm2=new DecimalFormat("#,###0.0");//保留1位小數
 		list.add(obj.getObjA1());
 		list.add(obj.getObjA2());
 		list.add(obj.getObjA3());
@@ -1416,13 +1394,20 @@ public void init_more2_b(XSSFSheet sheet,Map<String,Object>map,Map<String,Object
 		list.add(obj.getObjA10());
 		list.add(obj.getObjA11());		
 
-		for(int i=0;i<list.size();i++){
-			if(list.get(i)!=null){
-				if(list_items.get(i).split("__")[1].equals("%")){
+		for(int a=0;a<list.size();a++){
+			if(list.get(a)!=null){
+				/*if(list_items.get(i).split("__")[1].equals("%")){
 					list_result.add(frm.format(list.get(i)));
 				}else{
 					list_result.add(frm1.format(list.get(i)));							
-				}				
+				}*/	
+				if(a<4||a==7||a==8){
+					list_result.add(frm1.format(list.get(a)));
+				}else if(a==10){
+					list_result.add(frm.format(list.get(a)));
+				}else{
+					list_result.add(frm2.format(list.get(a)));
+				}
 			}else{
 				list_result.add("0");
 			}						
@@ -1497,5 +1482,19 @@ public void init_more2_b(XSSFSheet sheet,Map<String,Object>map,Map<String,Object
 		String temp = format.format(s);
 		return temp;
 	}
+	
+	public HSSFCellStyle selectStyle2003(int a,Map<String,Object>map_style){
+		HSSFCellStyle cs;//  cs_poi
+		
+		if(a<4||a==7||a==8){
+			cs=(HSSFCellStyle)map_style.get("cs_poi");
+		}else if(a==10){
+			cs=(HSSFCellStyle)map_style.get("cs_percent");
+		}else{
+			cs=(HSSFCellStyle)map_style.get("cs_poi1");
+		}		
+		return cs;
+	}
+	
 
 }
