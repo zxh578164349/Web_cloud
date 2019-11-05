@@ -142,8 +142,8 @@ public class AutoSendWebobjA extends QuartzJobBean {
 								"spring-dao.xml", "spring.xml",
 								"spring-services.xml" });				
 				IWebEmailService eSer = (IWebEmailService) ac.getBean("emailService");						
-				//List<WebEmailAll> email = eSer.findEmail(5, "0");
-				List<WebEmailAll> email = eSer.findEmail(4, "0");
+				List<WebEmailAll> email = eSer.findEmail(5, "0");
+				//List<WebEmailAll> email = eSer.findEmail(4, "0");
 				String[] mail = new String[email.size()];
 				for (int i = 0; i < email.size(); i++) {
 					if (email.get(i).getUsername() != null
@@ -155,8 +155,8 @@ public class AutoSendWebobjA extends QuartzJobBean {
 						mail[i] = email.get(i).getEmail();
 					}
 				}
-				//List<WebEmailAll> Cc = eSer.findEmail(5, "1");
-				List<WebEmailAll> Cc = eSer.findEmail(4, "1");
+				List<WebEmailAll> Cc = eSer.findEmail(5, "1");
+				//List<WebEmailAll> Cc = eSer.findEmail(4, "1");
 				String[] cc = new String[Cc.size()];
 				for (int j = 0; j < Cc.size(); j++) {
 					if (Cc.get(j).getUsername() != null
@@ -203,8 +203,8 @@ public class AutoSendWebobjA extends QuartzJobBean {
 	 * @throws ParseException 
 	 */
 	public String print_manual() throws ParseException {
-		SimpleDateFormat tformat=new SimpleDateFormat("yyyyMM");
-		if (yymm == null || yymm.equals("")) {
+		SimpleDateFormat tformat=new SimpleDateFormat("yyyyMMdd");
+		if (yymmdd == null || yymmdd.equals("")) {
 			Calendar calendar=Calendar.getInstance();
 			// 當每月的2號是星期一，也就是1號是星期天，則要減2天，以發送上個月全部產量資料
 			if (calendar.get(Calendar.DAY_OF_MONTH) == 2 && calendar.get(Calendar.DAY_OF_WEEK) == Calendar.MONDAY) {
@@ -212,7 +212,7 @@ public class AutoSendWebobjA extends QuartzJobBean {
 			} else {
 				calendar.add(Calendar.DATE,-1);
 			}
-			yymm=tformat.format(calendar.getTime());
+			yymmdd=tformat.format(calendar.getTime());
 		}
 		try {
 			Date bdate=new Date();
@@ -226,8 +226,8 @@ public class AutoSendWebobjA extends QuartzJobBean {
 				System.err.print("ok");
 			} else {
 				HttpClient client=new HttpClient();
-				//HttpMethod method = new GetMethod(pc.getpUrl()+"/webobja_print_tw2?yymm="+yymm);	
-				HttpMethod method = new GetMethod(pc.getPurllocal()+"/webobja_print_tw?yymm="+yymm+"&emailMk=1");
+				HttpMethod method = new GetMethod(pc.getpUrl()+"/webobja_print_tw2?yymmdd="+yymmdd+"&emailMk=1");	
+				//HttpMethod method = new GetMethod(pc.getPurllocal()+"/webobja_print_tw2?yymmdd="+yymmdd+"&emailMk=1");
 				//HttpMethod method=new GetMethod("http://203.85.73.161/"+pname+"/print2Ypoi_print2Y_hb?sdate=" + yymm + "&edate=" + yymm+ "&emailMk=1&type=Excel2003");// (在不同的機器上注意修改IP和端口)						
 				//HttpMethod method=new GetMethod("http://172.17.18.173:8080/"+pname+"/print2Ypoi_print2Y_hb?sdate="+yymm+"&edate="+yymm+"&emailMk=1&type=Excel2003");
 				// HttpMethod method=new GetMethod("http://localhost:8080/"+pname+"/print2Ypoi_print2Y_hb?sdate="+yymm+"&edate="+yymm+"&emailMk=1&type=Excel2003");
@@ -266,9 +266,9 @@ public class AutoSendWebobjA extends QuartzJobBean {
 				}			 
 
 				String classes_path=Thread.currentThread().getContextClassLoader().getResource("").getPath();			
-				String filepath=classes_path.replace("/WEB-INF/classes","/TEMPFILES/"+yymm+".xlsx");
+				String filepath=classes_path.replace("/WEB-INF/classes","/TEMPFILES/"+yymmdd+".xlsx");
 				AutoSendEmailAction send=new AutoSendEmailAction();
-				String affixName=yymm+"各廠訊息彙總日報表.xls";				
+				String affixName=yymmdd+"各廠訊息彙總日報表.xls";				
 				// 郵件內容				
 				StringBuffer content=new StringBuffer();
 				content.append("本郵件自動發送,請勿回復!如需回复，請回复到"+pc.getpEmail()+"咨訊室或者"+pc.getPlgx()+"譚香林!");					

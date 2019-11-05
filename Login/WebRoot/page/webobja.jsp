@@ -142,25 +142,25 @@ function print3(public_form,factNo,yymm){
 	}
 }
 
-function print4(public_form,factNo,yymm){
+function print4(public_form,factNo,yymmdd){
 	//jq("#"+factNo).val("all");
 	var public_form=jq("#"+public_form);	
 	public_form.attr("action","webobja_print_tw2");
 	public_form.attr("target","_blank");	
-	if(jq("#"+yymm).val()==""){
+	if(jq("#"+yymmdd).val()==""){
 		layer.msg("請選（年月日）日期",3,3);
 	}else{
 		public_form.submit();
 	}
 }
 
-function print5(public_form,yymm){
+function print5(public_form,yymmdd){
 	//jq("#"+factNo).val("all");
 	var public_form=jq("#"+public_form);	
 	public_form.attr("action","autosw_print_manual");
 	public_form.attr("target","_blank");	
-	if(jq("#"+yymm).val()==""){
-		layer.msg("請選（年月）日期",3,3);
+	if(jq("#"+yymmdd).val()==""){
+		layer.msg("請選（年月日）日期",3,3);
 	}else{
 		public_form.submit();
 	}
