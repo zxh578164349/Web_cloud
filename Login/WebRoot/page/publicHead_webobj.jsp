@@ -50,11 +50,11 @@
 			
 			   <input value="搜索" type="button" class="btn btn-primary" onclick="submis('public_form')" />&nbsp;		   
 			   <input value="工廠報表" type="button" class="btn btn-primary" onclick="print('public_form','factNo','yymm','yymm2')"/>&nbsp;
-			   <s:if test='#session.factNo=="tw"'>			       
-			      <!--  <input value="各廠月匯總表" type="button" class="btn btn-primary" onclick="print3('public_form','factNo','yymm')"/>&nbsp; -->
-			       <input value="各廠日匯總表" type="button" class="btn btn-primary" onclick="print4('public_form','factNo','yymmdd')"/>&nbsp;
+			   <s:if test='#session.factNo=="tw"'>			       			      
+			       <input value="各廠日匯總表" type="button" class="btn btn-primary" onclick="print4('public_form','yymmdd')"/>&nbsp;
 			       <s:if test='#session.loginUser.adminMk=="Y"'>
 			       <input value="Email" type="button" class="btn btn-primary" onclick="print5('public_form','yymmdd')"/>&nbsp; 
+			       <input value="各廠月匯總表" type="button" class="btn btn-primary" onclick="print3('public_form','yymm')"/>&nbsp;
 			       </s:if>			       			        	        
 			   </s:if>
 			   <span style="color:red">(可選月份或單一日期)</span>

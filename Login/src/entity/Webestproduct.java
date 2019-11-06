@@ -9,19 +9,19 @@ public class Webestproduct implements java.io.Serializable {
 	// Fields
 
 	private WebestproductId id;
-	private Double hole;//���Ĥզ��(positiveNumber)
-	private Double machinepower;//���x�ԤO(forceAnalysis)
-	private Double estdays;
-	private Double esteverymodel;//�w�p�C��W�Ҽ�(expectedProduction)
-	private Double esteverypeople;
-	private Double estmodel;
-	private Double estnum;
-	private Double estpay;//�w�p�д����(expectedPayment)
-	private Double estmoney;
-	private Double totalhole;//�`����(hole)
-	private Double sample;//�u�{�˫~(sample)
-	private Double accessories;//����(accessories)
-	private Double other;//�䥦(other)
+	private Double hole;//有效孔位數(孔)
+	private Double machinepower;//機台戰力(模/月)
+	private Double estdays;//預計生產天數(天)
+	private Double esteverymodel;//預計每日上模數(模)
+	private Double esteverypeople;//預計每日人數(人)
+	private Double estmodel;//預計生產模數(模)
+	private Double estnum;//預計生產雙數(雙)
+	private Double estpay;//預計請款雙數(雙)
+	private Double estmoney;//預計請款金額(USD)
+	private Double totalhole;//總機孔
+	private Double sample;//工程樣品
+	private Double accessories;//輔料
+	private Double other;//其它
 	private String username;
 	private String colTemp;//臨時列
 	private String usernameUd;

@@ -130,7 +130,7 @@ function print(public_form,factNo,yymm,yymm2){
 	}	
 }
 
-function print3(public_form,factNo,yymm){
+function print3(public_form,yymm){
 	//jq("#"+factNo).val("all");
 	var public_form=jq("#"+public_form);	
 	public_form.attr("action","webobja_print_tw");
@@ -142,7 +142,7 @@ function print3(public_form,factNo,yymm){
 	}
 }
 
-function print4(public_form,factNo,yymmdd){
+function print4(public_form,yymmdd){
 	//jq("#"+factNo).val("all");
 	var public_form=jq("#"+public_form);	
 	public_form.attr("action","webobja_print_tw2");

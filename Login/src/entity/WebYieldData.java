@@ -9,21 +9,21 @@ public class WebYieldData implements java.io.Serializable {
 	// Fields
 
 	private WebYieldDataId id;
-	private Double onModulus;
-	private Double personnum;
-	private Double standardOutput;
-	private Double actualYield;
-	private Double achievingRate;
+	private Double onModulus;//上模數(模)
+	private Double personnum;//人數(人)
+	private Double standardOutput;//標準產量(模)
+	private Double actualYield;//實際產量(模)
+	private Double achievingRate;//達成率(%)
+	private String workorholiday;//工作日/假日
+	private Double daycount;//天數(天)
+	private Double actualpairs;//實際生產雙數(雙)
+	private Double hostpairs;//客補生產雙數(雙)
+	private Double factpairs;//廠補生產雙數(雙)
+	private Double samplepairs;//樣品生產雙數(雙)
+	private Double outnum;//出貨數(雙)
+	private Double backnum;//退貨數(雙)
+	private Double workhours;//上模總工時(小時)
 	private String username;
-	private String workorholiday;
-	private Double daycount;
-	private Double actualpairs;
-	private Double hostpairs;
-	private Double factpairs;
-	private Double samplepairs;
-	private Double outnum;
-	private Double backnum;
-	private Double workhours;
 	private String usernameUd;
 	private String timeoutRecorde;//超時輸入數據記錄   1:超時
 	private String dateCreate;//創建時間（精確到分,年分隻保留后2位 例：1603310200）
