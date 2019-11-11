@@ -74,4 +74,9 @@ public class WebObjsAServicesImpl implements IWebObjsAServices{
 		return webobjadao.findObjByMonth(yymm);
 	}
 
+	public List<String[]> findNoInput(String yymmdd) {
+		// TODO Auto-generated method stub
+		return webobjadao.findNoInput(yymmdd);
+	}
+
 }

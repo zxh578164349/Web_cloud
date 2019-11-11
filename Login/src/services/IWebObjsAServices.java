@@ -21,5 +21,6 @@ public interface IWebObjsAServices {
 	public List<VWebobjA3> findByVwebobja3(String yymmdd);
 	public List<WebObjsA> findObjByDay(String yymmdd);
 	public List<WebObjsA> findObjByMonth(String yymm);
+	public List<String[]> findNoInput(String yymmdd);
 
 }

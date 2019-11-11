@@ -7,6 +7,7 @@ import entity.KyzExpectmatmLog;
 import entity.VWebobjA;
 import entity.VWebobjA2;
 import entity.VWebobjA3;
+import entity.WebFact;
 import entity.WebObjsA;
 
 public interface IWebObjsADao {
@@ -21,5 +22,6 @@ public interface IWebObjsADao {
 	public List<VWebobjA3> findByVwebobja3(String yymmdd);
 	public List<WebObjsA> findObjByDay(String yymmdd);
 	public List<WebObjsA> findObjByMonth(String yymm);
+	public List<String[]> findNoInput(String yymmdd);
 
 }

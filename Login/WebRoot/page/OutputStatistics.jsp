@@ -22,8 +22,9 @@
 </head>
 
 <body onload="changeinput()">	
-	<form action="print2Ypoi_print2Y_hb" method="post" id="form2"
-		target="_blank">		
+     <form action="print2Ypoi_print2Y_hb" method="post" id="form2" target="_blank">
+	<!-- <form action="print2Ypoi2_print2Y_hb" method="post" id="form2" target="_blank"> -->
+		 		
 		<table id="tb" class="table table-bordered table-condensed">
 			
 			<s:if test="#session.factNo=='tw'">

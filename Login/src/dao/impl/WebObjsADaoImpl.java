@@ -15,6 +15,7 @@ import entity.KyzExpectmatmLog;
 import entity.VWebobjA;
 import entity.VWebobjA2;
 import entity.VWebobjA3;
+import entity.WebFact;
 import entity.WebObjsA;
 import entity.WeballobjB;
 
@@ -158,6 +159,16 @@ public class WebObjsADaoImpl extends Basedao implements IWebObjsADao{
 		for(WebObjsA obj:list){
 			obj.getId().getWebFact().getFactSname();
 		}
+		return list;
+	}
+
+	public List<String[]> findNoInput(String yymmdd) {
+		// TODO Auto-generated method stub
+		String hql= "select factSname,id.factArea,id.factNo from WebFact where id.factNo||id.factArea not in "
+				+ "(select id.webFact.id.factNo||id.webFact.id.factArea from WebObjsA  where id.yymmdd= ? )"
+				+ " and factShow='0' order by orderNo,fcodeIndex";
+		String[]objs={yymmdd};
+		List<String[]>list=super.findAll(hql, objs);
 		return list;
 	}
 	

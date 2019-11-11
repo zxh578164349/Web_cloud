@@ -1,4 +1,4 @@
-#Mon Oct 28 08:39:19 CST 2019
+#Mon Nov 11 11:23:12 CST 2019
 eclipse.preferences.version=1
 encoding//WebRoot/500.html=UTF-8
 encoding//WebRoot/css/button_css.css=UTF-8
@@ -18,6 +18,7 @@ encoding//src/action/KyzContactLetterAction.java=UTF-8
 encoding//src/action/KyzExpcetmatmAction.java=UTF-8
 encoding//src/action/KyzVisaFlowAction.java=UTF-8
 encoding//src/action/PreAndDataAction_Poi.java=UTF-8
+encoding//src/action/PreAndDataAction_Poi_new.java=UTF-8
 encoding//src/action/ProfitAndLoss_Ireport.java=UTF-8
 encoding//src/action/TestTimerAction.java=UTF-8
 encoding//src/action/VKpifactAction.java=UTF-8

@@ -95,6 +95,7 @@
 	<bean id="vkpiprofitNewAction" class="action.VKpiWebprofitlossNewAction" scope="prototype"></bean>
 	<bean id="webobjaAction" class="action.WebObjsAAction" scope="prototype"></bean>
 	<bean id="autoswaction" class="mail.AutoSendWebobjA" scope="prototype"></bean>
+	<bean id="preAndDataActionipoi2" class="action.PreAndDataAction_Poi_new" scope="prototype" />
 </beans> 
 
  

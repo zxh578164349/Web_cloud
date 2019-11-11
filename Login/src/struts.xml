@@ -928,7 +928,7 @@
 		     <param name="root">ajaxResult</param>
 		  </result>
 		</action>
-				
+		<action name="print2Ypoi2_*" class="preAndDataActionipoi2" method="{1}"></action>				
 		
 		
 	</package>

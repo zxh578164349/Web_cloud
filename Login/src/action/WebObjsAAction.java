@@ -1056,8 +1056,9 @@ public void init_more(XSSFSheet sheet,Map<String,Object>map,Map<String,Object>ma
 		List<VWebobjA3>list_source2=webobjaservices.findByVwebobja3(yymmdd);
 		Map<String,Object>map=new LinkedHashMap<String,Object>();
 						
-		//List<WebFact>facts=webFactSer.findFactAble();//所有有效廠別findAllFact_showA
-		List<WebFact>facts=webFactSer.findAllFact_showA();
+		//List<WebFact>facts=webFactSer.findFactAble();//所有有效廠別
+		//List<WebFact>facts=webFactSer.findAllFact_showA();//與重點指標報表相同
+		List<WebFact>facts=webFactSer.findAllFact_2();//與產量報表相同
 		List<String>factcodes=new ArrayList<String>();
 		List<String>factnos=new ArrayList<String>();
 		List<WebObjsA>list_obj=new LinkedList<WebObjsA>();

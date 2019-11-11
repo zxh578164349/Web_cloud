@@ -111,5 +111,6 @@
 	<bean id="webformtypedao" class="dao.impl.WebFormtypeDaoImpl" parent="baseDao"></bean>
 	<bean id="weballobjbdao" class="dao.impl.WeballobjBDaoImpl" parent="baseDao"></bean>
 	<bean id="webobjadao" class="dao.impl.WebObjsADaoImpl" parent="baseDao"></bean>
+	<bean id="webobjbdao" class="dao.impl.WebObjsBDaoImpl" parent="baseDao"></bean>
 </beans>
 

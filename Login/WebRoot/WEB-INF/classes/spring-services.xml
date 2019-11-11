@@ -111,6 +111,7 @@
 	<bean id="webformser" class="services.impl.WebFormtypeServicesImpl"></bean>
 	<bean id="weballobjbser" class="services.impl.WeballobjBServicesImpl"></bean>
 	<bean id="webobjaservices" class="services.impl.WebObjsAServicesImpl"></bean>
+	<bean id="webobjbservices" class="services.impl.WebObjsBServicesImpl"></bean>
 </beans>
 
 
