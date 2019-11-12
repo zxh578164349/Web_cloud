@@ -51,6 +51,13 @@ import com.opensymphony.xwork2.ActionSupport;
 
 import entity.*;
 
+
+/**
+ * 2019/11/12
+ * 這個有待被刪除，由PreAndDataAction_Poi_new取代
+ * @author Administrator
+ *
+ */
 public class PreAndDataAction_Poi extends ActionSupport implements
 		ServletResponseAware {
 	private javax.servlet.http.HttpServletResponse response;

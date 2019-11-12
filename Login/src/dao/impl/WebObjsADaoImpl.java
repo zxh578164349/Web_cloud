@@ -103,7 +103,7 @@ public class WebObjsADaoImpl extends Basedao implements IWebObjsADao{
 		// TODO Auto-generated method stub
 		String hql="from WebObjsA where id.webFact.id.factNo=? and id.yymmdd like ? order by id.webFact.fcodeIndex,id.webFact.orderNo,id.yymmdd";
 		String[]objs={factno,yymm+"%"};
-		List list=super.findAll(hql, objs);
+		List<WebObjsA> list=super.findAll(hql, objs);
 		return list;
 	}
 

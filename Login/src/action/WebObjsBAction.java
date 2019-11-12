@@ -33,6 +33,7 @@ import org.apache.struts2.interceptor.ServletResponseAware;
 
 import services.IWebFactServices;
 import services.IWebObjsAServices;
+import services.IWebObjsBServices;
 import util.GlobalMethod;
 import util.ImportExcel;
 import util.PageBean;
@@ -53,13 +54,15 @@ import entity.WebFact;
 import entity.WebFactId;
 import entity.WebObjsA;
 import entity.WebObjsAId;
+import entity.WebObjsB;
+import entity.WebObjsBId;
 import entity.WebUser;
 import entity.WeballobjB;
 import entity.WeballobjBId;
 
-public class WebObjsAAction extends ActionSupport implements ServletResponseAware{
+public class WebObjsBAction extends ActionSupport implements ServletResponseAware{
 	private final static int NUM=31;//print_tw  多少箇項目（29+1）
-	private IWebObjsAServices webobjaservices;
+	private IWebObjsBServices webobjbservices;
 	private File file;
     private String fileFileName;
     private String fileContentType;
@@ -79,10 +82,18 @@ public class WebObjsAAction extends ActionSupport implements ServletResponseAwar
 	private String factname;
 	private String yymmdd;
 	private int emailMk;
-	
+	private String workorholiday;
     
     
-        
+     
+	public String getWorkorholiday() {
+		return workorholiday;
+	}
+
+	public void setWorkorholiday(String workorholiday) {
+		this.workorholiday = workorholiday;
+	}
+
 	public int getEmailMk() {
 		return emailMk;
 	}
@@ -220,15 +231,14 @@ public class WebObjsAAction extends ActionSupport implements ServletResponseAwar
 		this.bean = bean;
 	}
 
-	public void setWebobjaservices(IWebObjsAServices webobjaservices) {
-		this.webobjaservices = webobjaservices;
+	public void setWebobjbservices(IWebObjsBServices webobjbservices) {
+		this.webobjbservices = webobjbservices;
 	}
-	
-	
+
 	public void addMore() throws IOException{
 		response.setContentType("text/html;charset=utf-8");
 		try{
-			String path="d:\\Webobjs_a_backup\\"+new SimpleDateFormat("yyyyMMdd").format(new Date());//Excel文檔存放目錄
+			String path="d:\\Webobjs_b_backup\\"+new SimpleDateFormat("yyyyMMdd").format(new Date());//Excel文檔存放目錄
 			ajaxResult="0";				
 			/*文件上傳*/
 			if(file!=null){//不為空代表有上傳附檔,不能寫成files.size()>0,否則報空指針
@@ -250,7 +260,7 @@ public class WebObjsAAction extends ActionSupport implements ServletResponseAwar
 			Map<String,Object>map=ImportExcel.exportListFromFile(new File(path+"\\"+fileFileName));
 			List<String>list_factArea=webFactSer.findfactAreaByFactNo(factNo);
 			a:for(String key:map.keySet()){//for a
-				List<WebObjsA>list_b=new ArrayList<WebObjsA>();
+				List<WebObjsB>list_b=new ArrayList<WebObjsB>();
 				List<String>list_factcode=new ArrayList<String>();//導入數據所有的factcode
 				List<String>list=(List<String>)map.get(key);
 				if(!list.get(0).contains("__序號__項目__單位")){				
@@ -266,7 +276,7 @@ public class WebObjsAAction extends ActionSupport implements ServletResponseAwar
 					}
 					
 				 }*/
-				if(list.size()>25){
+				if(list.size()>35){
 					response.getWriter().print("<script>window.parent.layer.msg('項目不正確')</script>");
 					break a;
 				}
@@ -288,34 +298,39 @@ public class WebObjsAAction extends ActionSupport implements ServletResponseAwar
 				}
 				for(int i=4;i<array_head.length;i++){//for b
 					WebFact fact=new WebFact(new WebFactId(factNo,array_head[i].trim()));
-					WebObjsA obj=new WebObjsA(new WebObjsAId(fact,yymm));								
-					obj.setObjA1(Double.valueOf(list.get(1).split(SEPARATOR)[i]));
-					obj.setObjA2(Double.valueOf(list.get(2).split(SEPARATOR)[i]));
-					obj.setObjA3(Double.valueOf(list.get(3).split(SEPARATOR)[i]));
-					obj.setObjA4(Double.valueOf(list.get(4).split(SEPARATOR)[i]));
-					obj.setObjA5(Double.valueOf(list.get(5).split(SEPARATOR)[i]));
-					obj.setObjA6(Double.valueOf(list.get(6).split(SEPARATOR)[i]));
-					obj.setObjA7(Double.valueOf(list.get(7).split(SEPARATOR)[i]));
-					obj.setObjA8(Double.valueOf(list.get(8).split(SEPARATOR)[i]));
-					obj.setObjA9(Double.valueOf(list.get(9).split(SEPARATOR)[i]));
-					obj.setObjA10(Double.valueOf(list.get(10).split(SEPARATOR)[i]));
-					obj.setObjA11(Double.valueOf(list.get(11).split(SEPARATOR)[i]));
-					obj.setObjA12(Double.valueOf(list.get(12).split(SEPARATOR)[i]).longValue());
-					obj.setObjA13(Double.valueOf(list.get(13).split(SEPARATOR)[i]).longValue());
-					obj.setObjA14(Double.valueOf(list.get(14).split(SEPARATOR)[i]).longValue());
-					obj.setObjA15(Double.valueOf(list.get(15).split(SEPARATOR)[i]).longValue());
-					obj.setObjA16(Double.valueOf(list.get(16).split(SEPARATOR)[i]).longValue());					
-					obj.setObjA17("0.0".equals(list.get(17).split(SEPARATOR)[i])?"null":list.get(17).split(SEPARATOR)[i]);
-					obj.setObjA18("0.0".equals(list.get(18).split(SEPARATOR)[i])?"null":list.get(18).split(SEPARATOR)[i]);
-					obj.setObjA19("0.0".equals(list.get(19).split(SEPARATOR)[i])?"null":list.get(19).split(SEPARATOR)[i]);
-					obj.setObjA20("0.0".equals(list.get(20).split(SEPARATOR)[i])?"null":list.get(20).split(SEPARATOR)[i]);
-					obj.setObjA21("0.0".equals(list.get(21).split(SEPARATOR)[i])?"null":list.get(21).split(SEPARATOR)[i]);
-					
+					WebObjsB obj=new WebObjsB(new WebObjsBId(fact,yymm));								
+					obj.setOnModulus(Double.valueOf(list.get(1).split(SEPARATOR)[i]));
+					obj.setPersonnum(Double.valueOf(list.get(2).split(SEPARATOR)[i]));
+					obj.setStandardOutput(Double.valueOf(list.get(3).split(SEPARATOR)[i]));
+					obj.setActualYield(Double.valueOf(list.get(4).split(SEPARATOR)[i]));
+					obj.setZpObja(Double.valueOf(list.get(5).split(SEPARATOR)[i]));
+					obj.setHostpairs(Double.valueOf(list.get(6).split(SEPARATOR)[i]));
+					obj.setFactpairs(Double.valueOf(list.get(7).split(SEPARATOR)[i]));
+					obj.setSamplepairs(Double.valueOf(list.get(8).split(SEPARATOR)[i]));
+					obj.setOutnum(Double.valueOf(list.get(9).split(SEPARATOR)[i]));
+					obj.setBacknum(Double.valueOf(list.get(10).split(SEPARATOR)[i]));
+					obj.setWorkhours(Double.valueOf(list.get(11).split(SEPARATOR)[i]));
+					obj.setDaycount(Double.valueOf(list.get(12).split(SEPARATOR)[i]));
+					obj.setObjA1(Double.valueOf(list.get(13).split(SEPARATOR)[i]));
+					obj.setObjA2(Double.valueOf(list.get(14).split(SEPARATOR)[i]));
+					obj.setObjA3(Double.valueOf(list.get(15).split(SEPARATOR)[i]));
+					obj.setObjA4(Double.valueOf(list.get(16).split(SEPARATOR)[i]));	
+					obj.setObjA5(Double.valueOf(list.get(17).split(SEPARATOR)[i]).longValue());
+					obj.setObjA6(Double.valueOf(list.get(18).split(SEPARATOR)[i]).longValue());
+					obj.setObjA7(Double.valueOf(list.get(19).split(SEPARATOR)[i]).longValue());
+					obj.setObjA8(Double.valueOf(list.get(20).split(SEPARATOR)[i]).longValue());
+					obj.setObjA9(Double.valueOf(list.get(21).split(SEPARATOR)[i]).longValue());
+					obj.setObjA10("0.0".equals(list.get(22).split(SEPARATOR)[i])?"null":list.get(22).split(SEPARATOR)[i]);
+					obj.setObjA11("0.0".equals(list.get(23).split(SEPARATOR)[i])?"null":list.get(23).split(SEPARATOR)[i]);
+					obj.setObjA12("0.0".equals(list.get(24).split(SEPARATOR)[i])?"null":list.get(24).split(SEPARATOR)[i]);
+					obj.setObjA13("0.0".equals(list.get(25).split(SEPARATOR)[i])?"null":list.get(25).split(SEPARATOR)[i]);
+					obj.setObjA14("0.0".equals(list.get(26).split(SEPARATOR)[i])?"null":list.get(26).split(SEPARATOR)[i]);	
+					obj.setWorkorholiday(workorholiday);
 					obj.setUsername(user.getUsername());
-					obj.setCreatedate(new SimpleDateFormat("yyyyMMdd").format(new Date()));
+					obj.setDatecreate(new SimpleDateFormat("yyyyMMdd").format(new Date()));
 					list_b.add(obj);
 				}//for b
-				webobjaservices.addMore(list_b);
+				webobjbservices.addMore(list_b);
 				response.getWriter().print("<script>window.parent.layer.msg('導入成功',3,1)</script>");
 			}//for a
 						
@@ -332,7 +347,7 @@ public class WebObjsAAction extends ActionSupport implements ServletResponseAwar
 		ActionContext.getContext().getSession().remove("public_yymm");
 		factNo=(String)ActionContext.getContext().getSession().get("factNo");
 		ActionContext.getContext().getSession().put("public_factno", factNo);
-		bean=webobjaservices.findPageBean(20,page, factNo, yymm);
+		bean=webobjbservices.findPageBean(20,page, factNo, yymm);
 		return "beanList";
 		
 	}
@@ -343,13 +358,13 @@ public class WebObjsAAction extends ActionSupport implements ServletResponseAwar
 		ActionContext.getContext().getSession().remove("allrow");//dao層
 		ActionContext.getContext().getSession().put("public_factno", factNo.split("__")[0]);
 		ActionContext.getContext().getSession().put("public_yymm", yymm);	
-		bean=webobjaservices.findPageBean(20,page, factNo.split("__")[0], yymm);
+		bean=webobjbservices.findPageBean(20,page, factNo.split("__")[0], yymm);
 		return "beanList1";
 	}
 	public String findPageBean3(){
 		factNo=(String)ActionContext.getContext().getSession().get("public_factno");
 		yymm=(String)ActionContext.getContext().getSession().get("public_yymm");
-		bean=webobjaservices.findPageBean(20,page, factNo, yymm);
+		bean=webobjbservices.findPageBean(20,page, factNo, yymm);
 		return "beanList1";
 	}
 	
@@ -358,9 +373,9 @@ public class WebObjsAAction extends ActionSupport implements ServletResponseAwar
 		KyzExpectmatmLog log=new KyzExpectmatmLog();
 		log.setFactNo(factNo);
 		log.setFactCode(factCode);
-		log.setObj("WebObjsA");
-		log.setYymm(yymm);
-		webobjaservices.delete(factNo, factCode, yymm,log);
+		log.setObj("WebObjsB");
+		log.setYymm(yymmdd);
+		webobjbservices.delete(factNo, factCode, yymmdd,log);
 		return "delete";
 	}
 	
@@ -369,7 +384,7 @@ public class WebObjsAAction extends ActionSupport implements ServletResponseAwar
 	public void print() throws ParseException, IOException{
 		HSSFWorkbook wb=new HSSFWorkbook();
 		Map<String,Object>map_cs=findStyles(wb);				
-		List<WebObjsA>list_objs=webobjaservices.findByYymm(factNo.split("__")[0], yymm);		
+		List<WebObjsB>list_objs=webobjbservices.findByYymm(factNo.split("__")[0], yymm);		
 		switch(list_objs.size()){//switch		
 		case 0:
 			response.setContentType("text/html;charset=utf-8");
@@ -381,7 +396,7 @@ public class WebObjsAAction extends ActionSupport implements ServletResponseAwar
 			cal.setTime(new SimpleDateFormat("yyyyMM").parse(yymm));
 			int days=cal.getActualMaximum(Calendar.DAY_OF_MONTH);//選擇月份的天數
 			List<String>list_factcodes=new ArrayList<String>();
-			for(WebObjsA obj:list_objs){
+			for(WebObjsB obj:list_objs){
 				list_factcodes.add(obj.getId().getWebFact().getId().getFactArea());
 			}
 			
@@ -394,26 +409,25 @@ public class WebObjsAAction extends ActionSupport implements ServletResponseAwar
 			}
 			
 			Map<String,Object>map=new LinkedHashMap<String,Object>();
-			Map<String,Object>map2=new LinkedHashMap<String,Object>();
-			List<WebObjsA>list_lg=new ArrayList<WebObjsA>();
+			List<WebObjsB>list_lg=new ArrayList<WebObjsB>();
 			for(int a=0;a<days;a++){
-				list_lg.add(new WebObjsA());
+				list_lg.add(new WebObjsB());
 			}
 			for(String factcode:list_factcodes){
 				String temp="";
-				List<WebObjsA>list=new ArrayList<WebObjsA>();
+				List<WebObjsB>list=new ArrayList<WebObjsB>();
 				for(int a=1;a<=days;a++){				
 					if(a>9){
 						temp=yymm+a;
 					}else{
 						temp=yymm+"0"+a;
 					}
-					list.add(new WebObjsA(new WebObjsAId(new WebFact(new WebFactId(factNo.split("__")[0],factcode)),temp)));
+					list.add(new WebObjsB(new WebObjsBId(new WebFact(new WebFactId(factNo.split("__")[0],factcode)),temp)));
 					temp="";
 				}
 				
 				for(int a=0;a<list.size();a++){
-					for(WebObjsA obj:list_objs){
+					for(WebObjsB obj:list_objs){
 						if(list.get(a).getId().getWebFact().getId().getFactArea().equals(obj.getId().getWebFact().getId().getFactArea())&&
 								list.get(a).getId().getWebFact().getId().getFactNo().equals(obj.getId().getWebFact().getId().getFactNo())&&
 								list.get(a).getId().getYymmdd().equals(obj.getId().getYymmdd())){
@@ -424,36 +438,33 @@ public class WebObjsAAction extends ActionSupport implements ServletResponseAwar
 					}
 				}				
 				map.put(factcode, list);
-				for(int a=0;a<list.size();a++){					
-						list_lg.get(a).setObjA12((list_lg.get(a).getObjA12()==null?0:list_lg.get(a).getObjA12())+(list.get(a).getObjA12()==null?0:list.get(a).getObjA12()));
-						list_lg.get(a).setObjA13((list_lg.get(a).getObjA13()==null?0:list_lg.get(a).getObjA13())+(list.get(a).getObjA13()==null?0:list.get(a).getObjA13()));
-						list_lg.get(a).setObjA14((list_lg.get(a).getObjA14()==null?0:list_lg.get(a).getObjA14())+(list.get(a).getObjA14()==null?0:list.get(a).getObjA14()));
-						list_lg.get(a).setObjA15((list_lg.get(a).getObjA15()==null?0:list_lg.get(a).getObjA15())+(list.get(a).getObjA15()==null?0:list.get(a).getObjA15()));
-						list_lg.get(a).setObjA16((list_lg.get(a).getObjA16()==null?0:list_lg.get(a).getObjA16())+(list.get(a).getObjA16()==null?0:list.get(a).getObjA16()));										
+				for(int a=0;a<list.size();a++){	
+					    list_lg.get(a).setObjA5((list_lg.get(a).getObjA5()==null?0:list_lg.get(a).getObjA5())+(list.get(a).getObjA5()==null?0:list.get(a).getObjA5()));
+						list_lg.get(a).setObjA6((list_lg.get(a).getObjA6()==null?0:list_lg.get(a).getObjA6())+(list.get(a).getObjA6()==null?0:list.get(a).getObjA6()));
+						list_lg.get(a).setObjA7((list_lg.get(a).getObjA7()==null?0:list_lg.get(a).getObjA7())+(list.get(a).getObjA7()==null?0:list.get(a).getObjA7()));
+						list_lg.get(a).setObjA8((list_lg.get(a).getObjA8()==null?0:list_lg.get(a).getObjA8())+(list.get(a).getObjA8()==null?0:list.get(a).getObjA8()));
+						list_lg.get(a).setObjA9((list_lg.get(a).getObjA9()==null?0:list_lg.get(a).getObjA9())+(list.get(a).getObjA9()==null?0:list.get(a).getObjA9()));																
 				}
-				
-				WebObjsA sum_obj=new WebObjsA();
-				for(WebObjsA obj:list){								
-					sum_obj.setObjA1(isMyNull_db(sum_obj.getObjA1())+isMyNull_db(obj.getObjA1()));
-					sum_obj.setObjA2(isMyNull_db(sum_obj.getObjA2())+isMyNull_db(obj.getObjA2()));
-					sum_obj.setObjA3(isMyNull_db(sum_obj.getObjA3())+isMyNull_db(obj.getObjA3()));
-					sum_obj.setObjA4(isMyNull_db(sum_obj.getObjA4())+isMyNull_db(obj.getObjA4()));
-					sum_obj.setObjA5(isMyNull_db(sum_obj.getObjA5())+isMyNull_db(obj.getObjA5()));
-					sum_obj.setObjA6(isMyNull_db(sum_obj.getObjA6())+isMyNull_db(obj.getObjA6()));
-					sum_obj.setObjA7(isMyNull_db(sum_obj.getObjA7())+isMyNull_db(obj.getObjA7()));
-					sum_obj.setObjA8(isMyNull_db(sum_obj.getObjA8())+isMyNull_db(obj.getObjA8()));
-					sum_obj.setObjA9(isMyNull_db(sum_obj.getObjA9())+isMyNull_db(obj.getObjA9()));
-					sum_obj.setObjA10(isMyNull_db(sum_obj.getObjA10())+isMyNull_db(obj.getObjA10()));
-					sum_obj.setObjA11(isMyNull_db(sum_obj.getObjA11())+isMyNull_db(obj.getObjA11()));				
-				}
-				map2.put(factcode, sum_obj);
 								
 			}
-			
+			WebObjsA sum_obj=new WebObjsA();
+			for(WebObjsA obj:list_objs){								
+				sum_obj.setObjA1(isMyNull_db(sum_obj.getObjA1())+isMyNull_db(obj.getObjA1()));
+				sum_obj.setObjA2(isMyNull_db(sum_obj.getObjA2())+isMyNull_db(obj.getObjA2()));
+				sum_obj.setObjA3(isMyNull_db(sum_obj.getObjA3())+isMyNull_db(obj.getObjA3()));
+				sum_obj.setObjA4(isMyNull_db(sum_obj.getObjA4())+isMyNull_db(obj.getObjA4()));
+				sum_obj.setObjA5(isMyNull_db(sum_obj.getObjA5())+isMyNull_db(obj.getObjA5()));
+				sum_obj.setObjA6(isMyNull_db(sum_obj.getObjA6())+isMyNull_db(obj.getObjA6()));
+				sum_obj.setObjA7(isMyNull_db(sum_obj.getObjA7())+isMyNull_db(obj.getObjA7()));
+				sum_obj.setObjA8(isMyNull_db(sum_obj.getObjA8())+isMyNull_db(obj.getObjA8()));
+				sum_obj.setObjA9(isMyNull_db(sum_obj.getObjA9())+isMyNull_db(obj.getObjA9()));
+				sum_obj.setObjA10(isMyNull_db(sum_obj.getObjA10())+isMyNull_db(obj.getObjA10()));
+				sum_obj.setObjA11(isMyNull_db(sum_obj.getObjA11())+isMyNull_db(obj.getObjA11()));				
+			}
 		
 			HSSFSheet sheet=wb.createSheet(yymm+"工廠訊息");
 			HSSFSheet sheet2=wb.createSheet(yymm+"提報事項");
-			init(sheet,map_cs,map,list_lg,days,map2);
+			init(sheet,map_cs,map,list_lg,days,sum_obj);
 			init2(sheet2,map_cs,map,days);
 			
 			try {				
@@ -483,7 +494,7 @@ public class WebObjsAAction extends ActionSupport implements ServletResponseAwar
 		return map;
 	}
 							
-	public void init(HSSFSheet sheet,Map<String,Object>map_cs,Map<String,Object>map,List<WebObjsA>list_lg,int days,Map<String,Object>map2) throws ParseException{				
+	public void init(HSSFSheet sheet,Map<String,Object>map_cs,Map<String,Object>map,List<WebObjsA>list_lg,int days,WebObjsA sum_obj) throws ParseException{				
 		HSSFCellStyle cs=(HSSFCellStyle)map_cs.get("cs");
 		HSSFCellStyle cs_head=(HSSFCellStyle)map_cs.get("cs_head");
 		HSSFCellStyle cs_title=(HSSFCellStyle)map_cs.get("cs_title");		
@@ -542,7 +553,7 @@ public class WebObjsAAction extends ActionSupport implements ServletResponseAwar
 				for(int a=0;a<2;a++){
 					sheet.getRow(temp).getCell(2+days+a).setCellStyle(cs_head);
 				}
-				List<Double>list_sum=objToDouble((WebObjsA)map2.get(factcode));
+				List<Double>list_sum=objToDouble(sum_obj);
 				for(int b=0;b<list_sum.size();b++){
 					sheet.getRow(b+temp+1).getCell(2+days).setCellValue(list_sum.get(b));
 					sheet.getRow(b+temp+1).getCell(3+days).setCellValue(list_sum.get(b)/30);

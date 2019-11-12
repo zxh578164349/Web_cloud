@@ -930,6 +930,11 @@
 		</action>
 		<action name="print2Ypoi2_*" class="preAndDataActionipoi2" method="{1}"></action>				
 		
+		<action name="webobjb_*" class="webobjbAction" method="{1}">
+		   <result name="beanList">page/webobjb.jsp</result>
+		   <result name="beanList1">page/table1/webobjb1.jsp</result>
+		   <result name="delete" type="redirectAction">webobja_findPageBean3</result>
+		</action>
 		
 	</package>
 

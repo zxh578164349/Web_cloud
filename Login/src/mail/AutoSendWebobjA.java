@@ -228,8 +228,8 @@ public class AutoSendWebobjA extends QuartzJobBean {
 				System.err.print("ok");
 			} else {
 				HttpClient client=new HttpClient();
-				//HttpMethod method = new GetMethod(pc.getpUrl()+"/webobja_print_tw2?yymmdd="+yymmdd+"&emailMk=1");	
-				HttpMethod method = new GetMethod(pc.getPurllocal()+"/webobja_print_tw2?yymmdd="+yymmdd+"&emailMk=1");
+				HttpMethod method = new GetMethod(pc.getpUrl()+"/webobja_print_tw2?yymmdd="+yymmdd+"&emailMk=1");	
+				//HttpMethod method = new GetMethod(pc.getPurllocal()+"/webobja_print_tw2?yymmdd="+yymmdd+"&emailMk=1");
 				//HttpMethod method=new GetMethod("http://203.85.73.161/"+pname+"/print2Ypoi_print2Y_hb?sdate=" + yymm + "&edate=" + yymm+ "&emailMk=1&type=Excel2003");// (在不同的機器上注意修改IP和端口)						
 				//HttpMethod method=new GetMethod("http://172.17.18.173:8080/"+pname+"/print2Ypoi_print2Y_hb?sdate="+yymm+"&edate="+yymm+"&emailMk=1&type=Excel2003");
 				// HttpMethod method=new GetMethod("http://localhost:8080/"+pname+"/print2Ypoi_print2Y_hb?sdate="+yymm+"&edate="+yymm+"&emailMk=1&type=Excel2003");
@@ -238,8 +238,8 @@ public class AutoSendWebobjA extends QuartzJobBean {
 				ApplicationContext ac=new ClassPathXmlApplicationContext(new String[]{"spring-action.xml","spring-dao.xml","spring.xml","spring-services.xml"});
 				IWebEmailService eSer=(IWebEmailService)ac.getBean("emailService");
 
-				//List<WebEmailAll> email=eSer.findEmail(5, "0");
-				List<WebEmailAll> email=eSer.findEmail(4, "0");
+				List<WebEmailAll> email=eSer.findEmail(5, "0");
+				//List<WebEmailAll> email=eSer.findEmail(4, "0");
 				String[] mail=new String[email.size()];
 				for (int i=0; i < email.size(); i++) {
 					if (email.get(i).getUsername() != null || !email.get(i).getUsername().equals("")) {
@@ -252,8 +252,8 @@ public class AutoSendWebobjA extends QuartzJobBean {
 						mail[i]=email.get(i).getEmail();
 					}
 				}
-				//List<WebEmailAll> Cc=eSer.findEmail(5, "1");
-				List<WebEmailAll> Cc=eSer.findEmail(4, "1");
+				List<WebEmailAll> Cc=eSer.findEmail(5, "1");
+				//List<WebEmailAll> Cc=eSer.findEmail(4, "1");
 				String[] cc=new String[Cc.size()];
 				for (int j=0; j < Cc.size(); j++) {
 					if (Cc.get(j).getUsername() != null || !Cc.get(j).getUsername().equals("")) {
@@ -276,7 +276,7 @@ public class AutoSendWebobjA extends QuartzJobBean {
 				content.append(this.findNoInput(ac, yymmdd));
 				content.append("本郵件自動發送,請勿回復!如需回复，請回复到"+pc.getpEmail()+"咨訊室或者"+pc.getPlgx()+"譚香林!");					
 				// 發送郵件
-				send.sendmail(mail,cc,yymm+"各廠訊息彙總報表",content.toString(),affixName,filepath);
+				send.sendmail(mail,cc,yymmdd+"各廠訊息彙總報表",content.toString(),affixName,filepath);
 			 
 			   //File file=new File("d://" + yymm + ".xls");	
 				File file=new File(filepath);
@@ -305,14 +305,15 @@ public class AutoSendWebobjA extends QuartzJobBean {
 		IWebObjsAServices webobjaservices=(IWebObjsAServices)ac.getBean("webobjaservices");
 		List<String[]>list=webobjaservices.findNoInput(yymmdd);
 		if(list==null||list.size()==0){
-			result.append("都已輸入數據<br/>");
+			result.append("<span style='color:blue'>都已輸入數據</span><br/>");
 		}else{
-			result.append("<span style='color:blue'>未輸入數據的廠別如下：<span/><br/>");
+			result.append("未輸入數據的廠別如下：<br/><br/>").append("<span style='color:red'>");
 			for(Object[] obj:list){
 				result.append((String)obj[0]).append("(").append((String)obj[1]).append(")<br/>");
 			}
+			result.append("</span>");
 		}
-		result.append("<br/><br/><br/><br/><br/>");
+		result.append("<br/><br/><br/>");
 		return result.toString();
 		
 	}

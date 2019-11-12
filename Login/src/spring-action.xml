@@ -96,6 +96,7 @@
 	<bean id="webobjaAction" class="action.WebObjsAAction" scope="prototype"></bean>
 	<bean id="autoswaction" class="mail.AutoSendWebobjA" scope="prototype"></bean>
 	<bean id="preAndDataActionipoi2" class="action.PreAndDataAction_Poi_new" scope="prototype" />
+	<bean id="webobjbAction" class="action.WebObjsBAction" scope="prototype"></bean>
 </beans> 
 
  
