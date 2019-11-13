@@ -439,11 +439,11 @@ public class WebObjsBAction extends ActionSupport implements ServletResponseAwar
 				}				
 				map.put(factcode, list);
 				for(int a=0;a<list.size();a++){	
-					    list_lg.get(a).setObjA5((list_lg.get(a).getObjA5()==null?0:list_lg.get(a).getObjA5())+(list.get(a).getObjA5()==null?0:list.get(a).getObjA5()));
-						list_lg.get(a).setObjA6((list_lg.get(a).getObjA6()==null?0:list_lg.get(a).getObjA6())+(list.get(a).getObjA6()==null?0:list.get(a).getObjA6()));
-						list_lg.get(a).setObjA7((list_lg.get(a).getObjA7()==null?0:list_lg.get(a).getObjA7())+(list.get(a).getObjA7()==null?0:list.get(a).getObjA7()));
-						list_lg.get(a).setObjA8((list_lg.get(a).getObjA8()==null?0:list_lg.get(a).getObjA8())+(list.get(a).getObjA8()==null?0:list.get(a).getObjA8()));
-						list_lg.get(a).setObjA9((list_lg.get(a).getObjA9()==null?0:list_lg.get(a).getObjA9())+(list.get(a).getObjA9()==null?0:list.get(a).getObjA9()));																
+					    list_lg.get(a).setObjA5(isMyNull_ll(list_lg.get(a).getObjA5())+isMyNull_ll(list.get(a).getObjA5()));
+						list_lg.get(a).setObjA6(isMyNull_ll(list_lg.get(a).getObjA6())+isMyNull_ll(list.get(a).getObjA6()));
+						list_lg.get(a).setObjA7(isMyNull_ll(list_lg.get(a).getObjA7())+isMyNull_ll(list.get(a).getObjA7()));
+						list_lg.get(a).setObjA8(isMyNull_ll(list_lg.get(a).getObjA8())+isMyNull_ll(list.get(a).getObjA8()));
+						list_lg.get(a).setObjA9(isMyNull_ll(list_lg.get(a).getObjA9())+isMyNull_ll(list.get(a).getObjA9()));																
 				}
 								
 			}

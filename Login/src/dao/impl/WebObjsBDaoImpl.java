@@ -16,6 +16,7 @@ import entity.KyzExpectmatmLog;
 import entity.VWebobjA;
 import entity.VWebobjA2;
 import entity.VWebobjA3;
+import entity.VWebobjBObj;
 import entity.VWebobjBYdate;
 import entity.VWebydatabyfcode2;
 import entity.WebObjsB;
@@ -156,6 +157,14 @@ public class WebObjsBDaoImpl extends Basedao implements IWebObjsBDao{
 	public List<String[]> findNoInput(String yymmdd) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	public List<VWebobjBObj> findByYymm2(String factno, String yymm) {
+		// TODO Auto-generated method stub
+		String hql="from VWebobjBObj where id.webFact.id.factNo=? and id.yymmdd like ? order by id.webFact.fcodeIndex,id.webFact.orderNo,id.yymmdd";
+		String[]objs={factno,yymm+"%"};
+		List<VWebobjBObj> list=super.findAll(hql, objs);
+		return list;
 	}
 
 }
