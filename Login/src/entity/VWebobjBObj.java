@@ -1,6 +1,5 @@
 package entity;
 
-import java.math.BigDecimal;
 
 /**
  * VWebobjBObj entity. @author MyEclipse Persistence Tools
@@ -12,30 +11,30 @@ public class VWebobjBObj implements java.io.Serializable {
 
 	private VWebobjBObjId id;
 	private String workorholiday;
-	private String totalhole;
-	private String machinepower;
-	private String hole;
-	private String sample;
-	private String accessories;
-	private String other;
-	private String estmodel;
-	private String estnum;
-	private String estpay;
-	private String onmodulus;
+	private Double totalhole;
+	private Double machinepower;
+	private Double hole;
+	private Double sample;
+	private Double accessories;
+	private Double other;
+	private Double estmodel;
+	private Double estnum;
+	private Double estpay;
+	private Double onmodulus;
 	private Double personnum;
 	private Double standardoutput;
 	private Double actualyield;
-	private BigDecimal objaA;
-	private BigDecimal objaB;
-	private BigDecimal objaC;
+	private Double objaA;
+	private Double objaB;
+	private Double objaC;
 	private Double obja1;
-	private BigDecimal objaD;
+	private Double objaD;
 	private Double obja2;
 	private Double obja3;
 	private Double obja4;
 	private Long obja5;
 	private Long obja6;
-	private BigDecimal objaE;
+	private Long objaE;
 	private Long obja7;
 	private Long obja8;
 	private Long obja9;
@@ -44,6 +43,7 @@ public class VWebobjBObj implements java.io.Serializable {
 	private String obja12;
 	private String obja13;
 	private String obja14;
+	private Double daycount;//上班天數
 
 	// Constructors
 
@@ -58,13 +58,13 @@ public class VWebobjBObj implements java.io.Serializable {
 
 	/** full constructor */
 	public VWebobjBObj(VWebobjBObjId id, String workorholiday,
-			String totalhole, String machinepower, String hole, String sample,
-			String accessories, String other, String estmodel, String estnum,
-			String estpay, String onmodulus, Double personnum,
-			Double standardoutput, Double actualyield, BigDecimal objaA,
-			BigDecimal objaB, BigDecimal objaC, Double obja1, BigDecimal objaD,
+			Double totalhole, Double machinepower, Double hole, Double sample,
+			Double accessories, Double other, Double estmodel, Double estnum,
+			Double estpay, Double onmodulus, Double personnum,
+			Double standardoutput, Double actualyield, Double objaA,
+			Double objaB, Double objaC, Double obja1, Double objaD,
 			Double obja2, Double obja3, Double obja4, Long obja5, Long obja6,
-			BigDecimal objaE, Long obja7, Long obja8, Long obja9,
+			Long objaE, Long obja7, Long obja8, Long obja9,
 			String obja10, String obja11, String obja12, String obja13,
 			String obja14) {
 		this.id = id;
@@ -121,85 +121,7 @@ public class VWebobjBObj implements java.io.Serializable {
 		this.workorholiday = workorholiday;
 	}
 
-	public String getTotalhole() {
-		return this.totalhole;
-	}
-
-	public void setTotalhole(String totalhole) {
-		this.totalhole = totalhole;
-	}
-
-	public String getMachinepower() {
-		return this.machinepower;
-	}
-
-	public void setMachinepower(String machinepower) {
-		this.machinepower = machinepower;
-	}
-
-	public String getHole() {
-		return this.hole;
-	}
-
-	public void setHole(String hole) {
-		this.hole = hole;
-	}
-
-	public String getSample() {
-		return this.sample;
-	}
-
-	public void setSample(String sample) {
-		this.sample = sample;
-	}
-
-	public String getAccessories() {
-		return this.accessories;
-	}
-
-	public void setAccessories(String accessories) {
-		this.accessories = accessories;
-	}
-
-	public String getOther() {
-		return this.other;
-	}
-
-	public void setOther(String other) {
-		this.other = other;
-	}
-
-	public String getEstmodel() {
-		return this.estmodel;
-	}
-
-	public void setEstmodel(String estmodel) {
-		this.estmodel = estmodel;
-	}
-
-	public String getEstnum() {
-		return this.estnum;
-	}
-
-	public void setEstnum(String estnum) {
-		this.estnum = estnum;
-	}
-
-	public String getEstpay() {
-		return this.estpay;
-	}
-
-	public void setEstpay(String estpay) {
-		this.estpay = estpay;
-	}
-
-	public String getOnmodulus() {
-		return this.onmodulus;
-	}
-
-	public void setOnmodulus(String onmodulus) {
-		this.onmodulus = onmodulus;
-	}
+	
 
 	public Double getPersonnum() {
 		return this.personnum;
@@ -225,29 +147,7 @@ public class VWebobjBObj implements java.io.Serializable {
 		this.actualyield = actualyield;
 	}
 
-	public BigDecimal getObjaA() {
-		return this.objaA;
-	}
-
-	public void setObjaA(BigDecimal objaA) {
-		this.objaA = objaA;
-	}
-
-	public BigDecimal getObjaB() {
-		return this.objaB;
-	}
-
-	public void setObjaB(BigDecimal objaB) {
-		this.objaB = objaB;
-	}
-
-	public BigDecimal getObjaC() {
-		return this.objaC;
-	}
-
-	public void setObjaC(BigDecimal objaC) {
-		this.objaC = objaC;
-	}
+	
 
 	public Double getObja1() {
 		return this.obja1;
@@ -257,13 +157,7 @@ public class VWebobjBObj implements java.io.Serializable {
 		this.obja1 = obja1;
 	}
 
-	public BigDecimal getObjaD() {
-		return this.objaD;
-	}
-
-	public void setObjaD(BigDecimal objaD) {
-		this.objaD = objaD;
-	}
+	
 
 	public Double getObja2() {
 		return this.obja2;
@@ -305,13 +199,6 @@ public class VWebobjBObj implements java.io.Serializable {
 		this.obja6 = obja6;
 	}
 
-	public BigDecimal getObjaE() {
-		return this.objaE;
-	}
-
-	public void setObjaE(BigDecimal objaE) {
-		this.objaE = objaE;
-	}
 
 	public Long getObja7() {
 		return this.obja7;
@@ -376,5 +263,137 @@ public class VWebobjBObj implements java.io.Serializable {
 	public void setObja14(String obja14) {
 		this.obja14 = obja14;
 	}
+
+	public Double getTotalhole() {
+		return totalhole;
+	}
+
+	public void setTotalhole(Double totalhole) {
+		this.totalhole = totalhole;
+	}
+
+	public Double getMachinepower() {
+		return machinepower;
+	}
+
+	public void setMachinepower(Double machinepower) {
+		this.machinepower = machinepower;
+	}
+
+	public Double getHole() {
+		return hole;
+	}
+
+	public void setHole(Double hole) {
+		this.hole = hole;
+	}
+
+	public Double getSample() {
+		return sample;
+	}
+
+	public void setSample(Double sample) {
+		this.sample = sample;
+	}
+
+	public Double getAccessories() {
+		return accessories;
+	}
+
+	public void setAccessories(Double accessories) {
+		this.accessories = accessories;
+	}
+
+	public Double getOther() {
+		return other;
+	}
+
+	public void setOther(Double other) {
+		this.other = other;
+	}
+
+	public Double getEstmodel() {
+		return estmodel;
+	}
+
+	public void setEstmodel(Double estmodel) {
+		this.estmodel = estmodel;
+	}
+
+	public Double getEstnum() {
+		return estnum;
+	}
+
+	public void setEstnum(Double estnum) {
+		this.estnum = estnum;
+	}
+
+	public Double getEstpay() {
+		return estpay;
+	}
+
+	public void setEstpay(Double estpay) {
+		this.estpay = estpay;
+	}
+
+	public Double getOnmodulus() {
+		return onmodulus;
+	}
+
+	public void setOnmodulus(Double onmodulus) {
+		this.onmodulus = onmodulus;
+	}
+
+	public Double getObjaA() {
+		return objaA;
+	}
+
+	public void setObjaA(Double objaA) {
+		this.objaA = objaA;
+	}
+
+	public Double getObjaB() {
+		return objaB;
+	}
+
+	public void setObjaB(Double objaB) {
+		this.objaB = objaB;
+	}
+
+	public Double getObjaC() {
+		return objaC;
+	}
+
+	public void setObjaC(Double objaC) {
+		this.objaC = objaC;
+	}
+
+	public Double getObjaD() {
+		return objaD;
+	}
+
+	public void setObjaD(Double objaD) {
+		this.objaD = objaD;
+	}
+
+	public Long getObjaE() {
+		return objaE;
+	}
+
+	public void setObjaE(Long objaE) {
+		this.objaE = objaE;
+	}
+
+	public Double getDaycount() {
+		return daycount;
+	}
+
+	public void setDaycount(Double daycount) {
+		this.daycount = daycount;
+	}
+	
+	
+	
+	
 
 }

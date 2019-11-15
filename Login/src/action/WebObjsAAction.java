@@ -696,7 +696,7 @@ public class WebObjsAAction extends ActionSupport implements ServletResponseAwar
 		List<WebObjsA>list_source3=webobjaservices.findObjByMonth(yymm);
 		Map<String,Object>map=new LinkedHashMap<String,Object>();
 						
-		//List<WebFact>facts=webFactSer.findFactAble();//所有有效廠別findAllFact_showA
+		//List<WebFact>facts=webFactSer.findFactAble();//所有有效廠別
 		List<WebFact>facts=webFactSer.findAllFact_showA();
 		Calendar cal=Calendar.getInstance();
 		cal.setTime(new SimpleDateFormat("yyyyMM").parse(yymm));

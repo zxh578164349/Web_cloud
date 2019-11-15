@@ -8,6 +8,10 @@ import entity.KyzExpectmatmLog;
 import entity.VWebobjA;
 import entity.VWebobjA2;
 import entity.VWebobjA3;
+import entity.VWebobjBObj;
+import entity.VWebobjBObj3;
+import entity.VWebobjBObj4;
+import entity.VWebobjBObj5;
 import entity.VWebobjBYdate;
 import entity.VWebydatabyfcode2;
 import entity.WebObjsB;
@@ -66,34 +70,26 @@ public class WebObjsBServicesImpl implements IWebObjsBServices{
 		return webobjbdao.findByYymm(factno, yymm);
 	}
 
-
-	public List<VWebobjA> findByVwebobja(String yymm) {
+	public List<VWebobjBObj> findByYymm2(String factno, String yymm) {
 		// TODO Auto-generated method stub
-		return null;
+		return webobjbdao.findByYymm2(factno, yymm);
+	}
+			
+	public List<VWebobjBObj3> findByVwebobjb3(String yymmdd) {
+		// TODO Auto-generated method stub
+		return webobjbdao.findByVwebobjb3(yymmdd);
 	}
 
 
-	public List<VWebobjA2> findByVwebobja2(String yymm) {
+	public List<VWebobjBObj> findObjByDay(String yymmdd) {
 		// TODO Auto-generated method stub
-		return null;
+		return webobjbdao.findObjByDay(yymmdd);
 	}
 
 
-	public List<VWebobjA3> findByVwebobja3(String yymmdd) {
+	public List<VWebobjBObj> findObjByMonth(String yymm) {
 		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	public List<WebObjsB> findObjByDay(String yymmdd) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	public List<WebObjsB> findObjByMonth(String yymm) {
-		// TODO Auto-generated method stub
-		return null;
+		return webobjbdao.findObjByMonth(yymm);
 	}
 
 
@@ -101,5 +97,20 @@ public class WebObjsBServicesImpl implements IWebObjsBServices{
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+
+	public List<VWebobjBObj4> findVWebobjBObj4(String yymm) {
+		// TODO Auto-generated method stub
+		return webobjbdao.findVWebobjBObj4(yymm);
+	}
+
+
+	public List<VWebobjBObj5> findVWebobjBObj5(String yymm) {
+		// TODO Auto-generated method stub
+		return webobjbdao.findVWebobjBObj5(yymm);
+	}
+
+
+	
 
 }

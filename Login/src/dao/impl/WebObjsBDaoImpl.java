@@ -16,9 +16,13 @@ import entity.KyzExpectmatmLog;
 import entity.VWebobjA;
 import entity.VWebobjA2;
 import entity.VWebobjA3;
+import entity.VWebobjBObj3;
 import entity.VWebobjBObj;
+import entity.VWebobjBObj4;
+import entity.VWebobjBObj5;
 import entity.VWebobjBYdate;
 import entity.VWebydatabyfcode2;
+import entity.WebObjsA;
 import entity.WebObjsB;
 
 public class WebObjsBDaoImpl extends Basedao implements IWebObjsBDao{
@@ -126,32 +130,39 @@ public class WebObjsBDaoImpl extends Basedao implements IWebObjsBDao{
 		List<WebObjsB> list=super.findAll(hql, objs);
 		return list;
 	}
-	
-	
+		
 
-	public List<VWebobjA> findByVwebobja(String yymm) {
+	public List<VWebobjBObj3> findByVwebobjb3(String yymmdd) {
 		// TODO Auto-generated method stub
-		return null;
+		String hql="from VWebobjBObj3 where id.yymmdd=?";
+		String[]objs={yymmdd};
+		List<VWebobjBObj3>list=super.findAll(hql, objs);
+		for(VWebobjBObj3 obj:list){
+			obj.getId().getFact().getFactSname();
+		}
+		return list;
 	}
 
-	public List<VWebobjA2> findByVwebobja2(String yymm) {
+	public List<VWebobjBObj> findObjByDay(String yymmdd) {
 		// TODO Auto-generated method stub
-		return null;
+		String hql="from VWebobjBObj where id.yymmdd=?";
+		String[]objs={yymmdd};
+		List<VWebobjBObj>list=super.findAll(hql, objs);
+		for(VWebobjBObj obj:list){
+			obj.getId().getWebFact().getFactSname();
+		}
+		return list;
 	}
 
-	public List<VWebobjA3> findByVwebobja3(String yymmdd) {
+	public List<VWebobjBObj> findObjByMonth(String yymm) {
 		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public List<WebObjsB> findObjByDay(String yymmdd) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public List<WebObjsB> findObjByMonth(String yymm) {
-		// TODO Auto-generated method stub
-		return null;
+		String hql="from VWebobjBObj where id.yymmdd like ? order by id.webFact.fcodeIndex,id.webFact.orderNo,id.yymmdd";
+		String[]objs={yymm+"%"};
+		List<VWebobjBObj> list=super.findAll(hql, objs);
+		for(VWebobjBObj obj:list){
+			obj.getId().getWebFact().getFactSname();
+		}
+		return list;
 	}
 
 	public List<String[]> findNoInput(String yymmdd) {
@@ -164,6 +175,28 @@ public class WebObjsBDaoImpl extends Basedao implements IWebObjsBDao{
 		String hql="from VWebobjBObj where id.webFact.id.factNo=? and id.yymmdd like ? order by id.webFact.fcodeIndex,id.webFact.orderNo,id.yymmdd";
 		String[]objs={factno,yymm+"%"};
 		List<VWebobjBObj> list=super.findAll(hql, objs);
+		return list;
+	}
+
+	public List<VWebobjBObj4> findVWebobjBObj4(String yymm) {
+		// TODO Auto-generated method stub
+		String hql="from VWebobjBObj4 where id.yymm=?";
+		String[]objs={yymm};
+		List<VWebobjBObj4>list=super.findAll(hql, objs);
+		for(VWebobjBObj4 obj:list){
+			obj.getId().getWebFact().getFactSname();
+		}
+		return list;
+	}
+
+	public List<VWebobjBObj5> findVWebobjBObj5(String yymm) {
+		// TODO Auto-generated method stub
+		String hql="from VWebobjBObj5 where id.yymm=?";
+		String[]objs={yymm};
+		List<VWebobjBObj5>list=super.findAll(hql, objs);
+		for(VWebobjBObj5 obj:list){
+			obj.getId().getFact().getFactSname();
+		}
 		return list;
 	}
 

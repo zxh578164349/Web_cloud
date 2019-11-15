@@ -50,6 +50,14 @@ import entity.VWebobjA2Id;
 import entity.VWebobjA3;
 import entity.VWebobjA3Id;
 import entity.VWebobjAId;
+import entity.VWebobjBObj3;
+import entity.VWebobjBObj3Id;
+import entity.VWebobjBObj;
+import entity.VWebobjBObj4;
+import entity.VWebobjBObj4Id;
+import entity.VWebobjBObj5;
+import entity.VWebobjBObj5Id;
+import entity.VWebobjBObjId;
 import entity.WebFact;
 import entity.WebFactId;
 import entity.WebObjsA;
@@ -311,6 +319,11 @@ public class WebObjsBAction extends ActionSupport implements ServletResponseAwar
 					obj.setBacknum(Double.valueOf(list.get(10).split(SEPARATOR)[i]));
 					obj.setWorkhours(Double.valueOf(list.get(11).split(SEPARATOR)[i]));
 					obj.setDaycount(Double.valueOf(list.get(12).split(SEPARATOR)[i]));
+					if("0".equals(workorholiday)&&"0.0".equals(list.get(12).split(SEPARATOR)[i])){
+						obj.setDaycount(1.0);
+					}else{
+						obj.setDaycount(Double.valueOf(list.get(12).split(SEPARATOR)[i]));
+					}
 					obj.setObjA1(Double.valueOf(list.get(13).split(SEPARATOR)[i]));
 					obj.setObjA2(Double.valueOf(list.get(14).split(SEPARATOR)[i]));
 					obj.setObjA3(Double.valueOf(list.get(15).split(SEPARATOR)[i]));
@@ -383,8 +396,8 @@ public class WebObjsBAction extends ActionSupport implements ServletResponseAwar
 	/*************************************************工廠報表(一個月每天情況)***********************************************************/
 	public void print() throws ParseException, IOException{
 		HSSFWorkbook wb=new HSSFWorkbook();
-		Map<String,Object>map_cs=findStyles(wb);				
-		List<WebObjsB>list_objs=webobjbservices.findByYymm(factNo.split("__")[0], yymm);		
+		Map<String,Object>map_cs=findStyles2003(wb);				
+		List<VWebobjBObj>list_objs=webobjbservices.findByYymm2(factNo.split("__")[0], yymm);		
 		switch(list_objs.size()){//switch		
 		case 0:
 			response.setContentType("text/html;charset=utf-8");
@@ -396,7 +409,7 @@ public class WebObjsBAction extends ActionSupport implements ServletResponseAwar
 			cal.setTime(new SimpleDateFormat("yyyyMM").parse(yymm));
 			int days=cal.getActualMaximum(Calendar.DAY_OF_MONTH);//選擇月份的天數
 			List<String>list_factcodes=new ArrayList<String>();
-			for(WebObjsB obj:list_objs){
+			for(VWebobjBObj obj:list_objs){
 				list_factcodes.add(obj.getId().getWebFact().getId().getFactArea());
 			}
 			
@@ -409,25 +422,26 @@ public class WebObjsBAction extends ActionSupport implements ServletResponseAwar
 			}
 			
 			Map<String,Object>map=new LinkedHashMap<String,Object>();
-			List<WebObjsB>list_lg=new ArrayList<WebObjsB>();
+			Map<String,Object>map2=new LinkedHashMap<String,Object>();
+			List<VWebobjBObj>list_lg=new ArrayList<VWebobjBObj>();
 			for(int a=0;a<days;a++){
-				list_lg.add(new WebObjsB());
+				list_lg.add(new VWebobjBObj());
 			}
 			for(String factcode:list_factcodes){
 				String temp="";
-				List<WebObjsB>list=new ArrayList<WebObjsB>();
+				List<VWebobjBObj>list=new ArrayList<VWebobjBObj>();
 				for(int a=1;a<=days;a++){				
 					if(a>9){
 						temp=yymm+a;
 					}else{
 						temp=yymm+"0"+a;
 					}
-					list.add(new WebObjsB(new WebObjsBId(new WebFact(new WebFactId(factNo.split("__")[0],factcode)),temp)));
+					list.add(new VWebobjBObj(new VWebobjBObjId(new WebFact(new WebFactId(factNo.split("__")[0],factcode)),temp)));
 					temp="";
 				}
 				
 				for(int a=0;a<list.size();a++){
-					for(WebObjsB obj:list_objs){
+					for(VWebobjBObj obj:list_objs){
 						if(list.get(a).getId().getWebFact().getId().getFactArea().equals(obj.getId().getWebFact().getId().getFactArea())&&
 								list.get(a).getId().getWebFact().getId().getFactNo().equals(obj.getId().getWebFact().getId().getFactNo())&&
 								list.get(a).getId().getYymmdd().equals(obj.getId().getYymmdd())){
@@ -439,32 +453,48 @@ public class WebObjsBAction extends ActionSupport implements ServletResponseAwar
 				}				
 				map.put(factcode, list);
 				for(int a=0;a<list.size();a++){	
-					    list_lg.get(a).setObjA5(isMyNull_ll(list_lg.get(a).getObjA5())+isMyNull_ll(list.get(a).getObjA5()));
-						list_lg.get(a).setObjA6(isMyNull_ll(list_lg.get(a).getObjA6())+isMyNull_ll(list.get(a).getObjA6()));
-						list_lg.get(a).setObjA7(isMyNull_ll(list_lg.get(a).getObjA7())+isMyNull_ll(list.get(a).getObjA7()));
-						list_lg.get(a).setObjA8(isMyNull_ll(list_lg.get(a).getObjA8())+isMyNull_ll(list.get(a).getObjA8()));
-						list_lg.get(a).setObjA9(isMyNull_ll(list_lg.get(a).getObjA9())+isMyNull_ll(list.get(a).getObjA9()));																
+					    list_lg.get(a).setObja5(isMyNull_ll(list_lg.get(a).getObja5())+isMyNull_ll(list.get(a).getObja5()));
+						list_lg.get(a).setObja6(isMyNull_ll(list_lg.get(a).getObja6())+isMyNull_ll(list.get(a).getObja6()));
+						list_lg.get(a).setObjaE(isMyNull_ll(list_lg.get(a).getObjaE())+isMyNull_ll(list.get(a).getObjaE()));
+						list_lg.get(a).setObja7(isMyNull_ll(list_lg.get(a).getObja7())+isMyNull_ll(list.get(a).getObja7()));
+						list_lg.get(a).setObja8(isMyNull_ll(list_lg.get(a).getObja8())+isMyNull_ll(list.get(a).getObja8()));
+						list_lg.get(a).setObja9(isMyNull_ll(list_lg.get(a).getObja9())+isMyNull_ll(list.get(a).getObja9()));																
 				}
+				
+				VWebobjBObj sum_obj=new VWebobjBObj();
+				for(VWebobjBObj obj:list){								
+					sum_obj.setTotalhole(isMyNull_db(sum_obj.getTotalhole())+isMyNull_db(obj.getTotalhole()));
+					sum_obj.setMachinepower(isMyNull_db(sum_obj.getMachinepower())+isMyNull_db(obj.getMachinepower()));
+					sum_obj.setHole(isMyNull_db(sum_obj.getHole())+isMyNull_db(obj.getHole()));
+					sum_obj.setSample(isMyNull_db(sum_obj.getSample())+isMyNull_db(obj.getSample()));
+					sum_obj.setAccessories(isMyNull_db(sum_obj.getAccessories())+isMyNull_db(obj.getAccessories()));
+					sum_obj.setOther(isMyNull_db(sum_obj.getOther())+isMyNull_db(obj.getOther()));
+					sum_obj.setEstmodel(isMyNull_db(sum_obj.getEstmodel())+isMyNull_db(obj.getEstmodel()));
+					sum_obj.setEstnum(isMyNull_db(sum_obj.getEstnum())+isMyNull_db(obj.getEstnum()));
+					sum_obj.setEstpay(isMyNull_db(sum_obj.getEstpay())+isMyNull_db(obj.getEstpay()));
+					sum_obj.setOnmodulus(isMyNull_db(sum_obj.getOnmodulus())+isMyNull_db(obj.getOnmodulus()));
+					sum_obj.setPersonnum(isMyNull_db(sum_obj.getPersonnum())+isMyNull_db(obj.getPersonnum()));	
+					
+					sum_obj.setStandardoutput(isMyNull_db(sum_obj.getStandardoutput())+isMyNull_db(obj.getStandardoutput()));
+					sum_obj.setActualyield(isMyNull_db(sum_obj.getActualyield())+isMyNull_db(obj.getActualyield()));
+					sum_obj.setObja1(isMyNull_db(sum_obj.getObja1())+isMyNull_db(obj.getObja1()));
+					sum_obj.setObja2(isMyNull_db(sum_obj.getObja2())+isMyNull_db(obj.getObja2()));
+					sum_obj.setObja3(isMyNull_db(sum_obj.getObja3())+isMyNull_db(obj.getObja3()));
+					sum_obj.setObja4(isMyNull_db(sum_obj.getObja4())+isMyNull_db(obj.getObja4()));
+					sum_obj.setObjaA(isMyNull_db(sum_obj.getObjaA())+isMyNull_db(obj.getObjaA()));
+					sum_obj.setObjaB(isMyNull_db(sum_obj.getObjaB())+isMyNull_db(obj.getObjaB()));
+					sum_obj.setObjaC(isMyNull_db(sum_obj.getObjaC())+isMyNull_db(obj.getObjaC()));
+					sum_obj.setObjaD(isMyNull_db(sum_obj.getObjaD())+isMyNull_db(obj.getObjaD()));
+				}
+				map2.put(factcode, sum_obj);
+				
 								
 			}
-			WebObjsA sum_obj=new WebObjsA();
-			for(WebObjsA obj:list_objs){								
-				sum_obj.setObjA1(isMyNull_db(sum_obj.getObjA1())+isMyNull_db(obj.getObjA1()));
-				sum_obj.setObjA2(isMyNull_db(sum_obj.getObjA2())+isMyNull_db(obj.getObjA2()));
-				sum_obj.setObjA3(isMyNull_db(sum_obj.getObjA3())+isMyNull_db(obj.getObjA3()));
-				sum_obj.setObjA4(isMyNull_db(sum_obj.getObjA4())+isMyNull_db(obj.getObjA4()));
-				sum_obj.setObjA5(isMyNull_db(sum_obj.getObjA5())+isMyNull_db(obj.getObjA5()));
-				sum_obj.setObjA6(isMyNull_db(sum_obj.getObjA6())+isMyNull_db(obj.getObjA6()));
-				sum_obj.setObjA7(isMyNull_db(sum_obj.getObjA7())+isMyNull_db(obj.getObjA7()));
-				sum_obj.setObjA8(isMyNull_db(sum_obj.getObjA8())+isMyNull_db(obj.getObjA8()));
-				sum_obj.setObjA9(isMyNull_db(sum_obj.getObjA9())+isMyNull_db(obj.getObjA9()));
-				sum_obj.setObjA10(isMyNull_db(sum_obj.getObjA10())+isMyNull_db(obj.getObjA10()));
-				sum_obj.setObjA11(isMyNull_db(sum_obj.getObjA11())+isMyNull_db(obj.getObjA11()));				
-			}
+			
 		
 			HSSFSheet sheet=wb.createSheet(yymm+"工廠訊息");
 			HSSFSheet sheet2=wb.createSheet(yymm+"提報事項");
-			init(sheet,map_cs,map,list_lg,days,sum_obj);
+			init(sheet,map_cs,map,list_lg,days,map2);
 			init2(sheet2,map_cs,map,days);
 			
 			try {				
@@ -489,12 +519,11 @@ public class WebObjsBAction extends ActionSupport implements ServletResponseAwar
 	}
 	
 	
-	public Map<String,Object> findStyles(HSSFWorkbook wb){		
-		Map<String,Object>map=GlobalMethod.findStyles(wb);				
-		return map;
-	}
+	
+	
+	
 							
-	public void init(HSSFSheet sheet,Map<String,Object>map_cs,Map<String,Object>map,List<WebObjsA>list_lg,int days,WebObjsA sum_obj) throws ParseException{				
+	public void init(HSSFSheet sheet,Map<String,Object>map_cs,Map<String,Object>map,List<VWebobjBObj>list_lg,int days,Map<String,Object>map2) throws ParseException{				
 		HSSFCellStyle cs=(HSSFCellStyle)map_cs.get("cs");
 		HSSFCellStyle cs_head=(HSSFCellStyle)map_cs.get("cs_head");
 		HSSFCellStyle cs_title=(HSSFCellStyle)map_cs.get("cs_title");		
@@ -539,7 +568,7 @@ public class WebObjsBAction extends ActionSupport implements ServletResponseAwar
 					sheet.getRow(b+temp+1).getCell(1).setCellValue(list_col.get(b).split("__")[0]);
 					sheet.getRow(b+temp+1).getCell(1).setCellStyle(cs);										
 				}
-				List<WebObjsA>list=(List<WebObjsA>)map.get(factcode);					
+				List<VWebobjBObj>list=(List<VWebobjBObj>)map.get(factcode);					
 				for(int a=0;a<list.size();a++){						
 					List<Double>list_db=objToDouble(list.get(a));
 					for(int b=0;b<list_db.size();b++){
@@ -553,7 +582,7 @@ public class WebObjsBAction extends ActionSupport implements ServletResponseAwar
 				for(int a=0;a<2;a++){
 					sheet.getRow(temp).getCell(2+days+a).setCellStyle(cs_head);
 				}
-				List<Double>list_sum=objToDouble(sum_obj);
+				List<Double>list_sum=objToDouble((VWebobjBObj)map2.get(factcode));
 				for(int b=0;b<list_sum.size();b++){
 					sheet.getRow(b+temp+1).getCell(2+days).setCellValue(list_sum.get(b));
 					sheet.getRow(b+temp+1).getCell(3+days).setCellValue(list_sum.get(b)/30);
@@ -642,7 +671,7 @@ public class WebObjsBAction extends ActionSupport implements ServletResponseAwar
 					sheet.getRow(b+temp+1).getCell(1).setCellValue(list_col.get(b).split("__")[0]);
 					sheet.getRow(b+temp+1).getCell(1).setCellStyle(cs);										
 				}
-				List<WebObjsA>list=(List<WebObjsA>)map.get(factcode);					
+				List<VWebobjBObj>list=(List<VWebobjBObj>)map.get(factcode);					
 				for(int a=0;a<list.size();a++){						
 					List<String>list_db=objToString(list.get(a));
 					for(int b=0;b<list_db.size();b++){
@@ -654,41 +683,99 @@ public class WebObjsBAction extends ActionSupport implements ServletResponseAwar
 			}			
 	}
 	
-	public List<Double> objToDouble(WebObjsA obj){
-		List<Double>list=new ArrayList<Double>();		
-		list.add(isMyNull_db(obj.getObjA1()));
-		list.add(isMyNull_db(obj.getObjA2()));
-		list.add(isMyNull_db(obj.getObjA3()));
-		list.add(isMyNull_db(obj.getObjA4()));
-		list.add(isMyNull_db(obj.getObjA5()));
-		list.add(isMyNull_db(obj.getObjA6()));
-		list.add(isMyNull_db(obj.getObjA7()));
-		list.add(isMyNull_db(obj.getObjA8()));
-		list.add(isMyNull_db(obj.getObjA9()));
-		list.add(isMyNull_db(obj.getObjA10()));
-		list.add(isMyNull_db(obj.getObjA11()));
+	public List<Double> objToDouble(Object obj){
+		List<Double>list=new ArrayList<Double>();
+		if(obj instanceof VWebobjBObj){
+			list.add(isMyNull_db(((VWebobjBObj)obj).getTotalhole()));
+			list.add(isMyNull_db(((VWebobjBObj)obj).getMachinepower()));
+			list.add(isMyNull_db(((VWebobjBObj)obj).getHole()));
+			list.add(isMyNull_db(((VWebobjBObj)obj).getSample()));
+			list.add(isMyNull_db(((VWebobjBObj)obj).getAccessories()));
+			list.add(isMyNull_db(((VWebobjBObj)obj).getOther()));
+			list.add(isMyNull_db(((VWebobjBObj)obj).getEstmodel()));
+			list.add(isMyNull_db(((VWebobjBObj)obj).getEstnum()));
+			list.add(isMyNull_db(((VWebobjBObj)obj).getEstpay()));
+			list.add(isMyNull_db(((VWebobjBObj)obj).getOnmodulus()));
+			list.add(isMyNull_db(((VWebobjBObj)obj).getPersonnum()));		
+			list.add(isMyNull_db(((VWebobjBObj)obj).getStandardoutput()));
+			list.add(isMyNull_db(((VWebobjBObj)obj).getActualyield()));
+			list.add(isMyNull_db(((VWebobjBObj)obj).getObjaA()));
+			list.add(isMyNull_db(((VWebobjBObj)obj).getObjaB()));
+			list.add(isMyNull_db(((VWebobjBObj)obj).getObjaC()));
+			list.add(isMyNull_db(((VWebobjBObj)obj).getObja1()));
+			list.add(isMyNull_db(((VWebobjBObj)obj).getObjaD()));
+			list.add(isMyNull_db(((VWebobjBObj)obj).getObja2()));
+			list.add(isMyNull_db(((VWebobjBObj)obj).getObja3()));
+			list.add(isMyNull_db(((VWebobjBObj)obj).getObja4()));
+		}
+		if(obj instanceof VWebobjBObj4){
+			list.add(isMyNull_db(((VWebobjBObj4)obj).getTotalhole()));
+			list.add(isMyNull_db(((VWebobjBObj4)obj).getMachinepower()));
+			list.add(isMyNull_db(((VWebobjBObj4)obj).getHole()));
+			list.add(isMyNull_db(((VWebobjBObj4)obj).getSample()));
+			list.add(isMyNull_db(((VWebobjBObj4)obj).getAccessories()));
+			list.add(isMyNull_db(((VWebobjBObj4)obj).getOther()));
+			list.add(isMyNull_db(((VWebobjBObj4)obj).getEstmodel()));
+			list.add(isMyNull_db(((VWebobjBObj4)obj).getEstnum()));
+			list.add(isMyNull_db(((VWebobjBObj4)obj).getEstpay()));
+			list.add(isMyNull_db(((VWebobjBObj4)obj).getOnmodulus()));
+			list.add(isMyNull_db(((VWebobjBObj4)obj).getPersonnum()));		
+			list.add(isMyNull_db(((VWebobjBObj4)obj).getStandardoutput()));
+			list.add(isMyNull_db(((VWebobjBObj4)obj).getActualyield()));
+			list.add(isMyNull_db(((VWebobjBObj4)obj).getObjaA()));
+			list.add(isMyNull_db(((VWebobjBObj4)obj).getObjaB()));
+			list.add(isMyNull_db(((VWebobjBObj4)obj).getObjaC()));
+			list.add(isMyNull_db(((VWebobjBObj4)obj).getObja1()));
+			list.add(isMyNull_db(((VWebobjBObj4)obj).getObjaD()));
+			list.add(isMyNull_db(((VWebobjBObj4)obj).getObja2()));
+			list.add(isMyNull_db(((VWebobjBObj4)obj).getObja3()));
+			list.add(isMyNull_db(((VWebobjBObj4)obj).getObja4()));
+		}
+					
 		return list;		
 	}
 	
-	public List<String> objToString(WebObjsA obj){
+	public List<String> objToString(VWebobjBObj obj){
 		List<String>list=new ArrayList<String>();		
-		list.add(isMyNull_str(obj.getObjA17()));
-		list.add(isMyNull_str(obj.getObjA18()));
-		list.add(isMyNull_str(obj.getObjA19()));
-		list.add(isMyNull_str(obj.getObjA20()));
-		list.add(isMyNull_str(obj.getObjA21()));
+		list.add(isMyNull_str(obj.getObja10()));
+		list.add(isMyNull_str(obj.getObja11()));
+		list.add(isMyNull_str(obj.getObja12()));
+		list.add(isMyNull_str(obj.getObja13()));
+		list.add(isMyNull_str(obj.getObja14()));
 		return list;		
 	}
 	
-	public List<Long> objToLong(WebObjsA obj){
-		List<Long>list=new ArrayList<Long>();			
-		list.add(isMyNull_ll(obj.getObjA12()));
-		list.add(isMyNull_ll(obj.getObjA13()));
-		list.add(isMyNull_ll(obj.getObjA14()));
-		list.add(isMyNull_ll(obj.getObjA15()));
-		list.add(isMyNull_ll(obj.getObjA16()));
+	public List<Long> objToLong(Object obj){
+		List<Long>list=new ArrayList<Long>();
+		if(obj instanceof VWebobjBObj){
+			list.add(isMyNull_ll(((VWebobjBObj) obj).getObja5()));
+			list.add(isMyNull_ll(((VWebobjBObj) obj).getObja6()));
+			list.add(isMyNull_ll(((VWebobjBObj) obj).getObjaE()));
+			list.add(isMyNull_ll(((VWebobjBObj) obj).getObja7()));
+			list.add(isMyNull_ll(((VWebobjBObj) obj).getObja8()));
+			list.add(isMyNull_ll(((VWebobjBObj) obj).getObja9()));
+		}
+		if(obj instanceof VWebobjBObj3){
+			list.add(isMyNull_ll(((VWebobjBObj3) obj).getObjA5()));
+			list.add(isMyNull_ll(((VWebobjBObj3) obj).getObjA6()));
+			list.add(isMyNull_ll(((VWebobjBObj3) obj).getObjAe()));
+			list.add(isMyNull_ll(((VWebobjBObj3) obj).getObjA7()));
+			list.add(isMyNull_ll(((VWebobjBObj3) obj).getObjA8()));
+			list.add(isMyNull_ll(((VWebobjBObj3) obj).getObjA9()));
+		}
+		if(obj instanceof VWebobjBObj5){
+			list.add(isMyNull_ll(((VWebobjBObj5) obj).getObja5()));
+			list.add(isMyNull_ll(((VWebobjBObj5) obj).getObja6()));
+			list.add(isMyNull_ll(((VWebobjBObj5) obj).getObjaE()));
+			list.add(isMyNull_ll(((VWebobjBObj5) obj).getObja7()));
+			list.add(isMyNull_ll(((VWebobjBObj5) obj).getObja8()));
+			list.add(isMyNull_ll(((VWebobjBObj5) obj).getObja9()));
+		}
+					
+		
 		return list;		
 	}
+		
 		
 	/*************************************************工廠報表(一個月每天情況)***********************************************************/
 	
@@ -702,24 +789,25 @@ public class WebObjsBAction extends ActionSupport implements ServletResponseAwar
 		XSSFWorkbook wb=new XSSFWorkbook();
 		XSSFSheet sheet=wb.createSheet("工廠訊息匯總_"+yymm);
 		Map<String,Object>map_style=GlobalMethod.findStyles2007(wb);				
-		List<VWebobjA>list_source=webobjaservices.findByVwebobja(yymm);
-		List<VWebobjA2>list_source2=webobjaservices.findByVwebobja2(yymm);
-		List<WebObjsA>list_source3=webobjaservices.findObjByMonth(yymm);
+		List<VWebobjBObj4>list_source=webobjbservices.findVWebobjBObj4(yymm);
+		List<VWebobjBObj5>list_source2=webobjbservices.findVWebobjBObj5(yymm);
+		List<VWebobjBObj>list_source3=webobjbservices.findObjByMonth(yymm);
 		Map<String,Object>map=new LinkedHashMap<String,Object>();
 						
-		//List<WebFact>facts=webFactSer.findFactAble();//所有有效廠別findAllFact_showA
-		List<WebFact>facts=webFactSer.findAllFact_showA();
+		//List<WebFact>facts=webFactSer.findFactAble();//所有有效廠別
+		//List<WebFact>facts=webFactSer.findAllFact_showA();//與重點指標報表相同
+		List<WebFact>facts=webFactSer.findAllFact_2();//與產量報表相同
 		Calendar cal=Calendar.getInstance();
 		cal.setTime(new SimpleDateFormat("yyyyMM").parse(yymm));
 		int days=cal.getActualMaximum(Calendar.DAY_OF_MONTH);//選擇月份的天數
 		List<String>factcodes=new ArrayList<String>();
 		List<String>factnos=new ArrayList<String>();
-		List<VWebobjA>list_obj=new LinkedList<VWebobjA>();
-		List<VWebobjA2>list_obj2=new LinkedList<VWebobjA2>();
-		List<List<WebObjsA>>list_obj3=new LinkedList<List<WebObjsA>>();
+		List<VWebobjBObj4>list_obj=new LinkedList<VWebobjBObj4>();
+		List<VWebobjBObj5>list_obj2=new LinkedList<VWebobjBObj5>();
+		List<List<VWebobjBObj>>list_obj3=new LinkedList<List<VWebobjBObj>>();
 		for(WebFact fact:facts){
 			factcodes.add(fact.getId().getFactArea());
-			list_obj.add(new VWebobjA(new VWebobjAId(fact,yymm)));
+			list_obj.add(new VWebobjBObj4(new VWebobjBObj4Id(fact,yymm)));
 			factnos.add(fact.getId().getFactNo());
 			
 		}
@@ -733,7 +821,7 @@ public class WebObjsBAction extends ActionSupport implements ServletResponseAwar
 		
 		
 		for(int a=0;a<list_obj.size();a++){
-			for(VWebobjA obj:list_source){
+			for(VWebobjBObj4 obj:list_source){
 				if(list_obj.get(a).getId().getWebFact().getId().getFactArea().equals(obj.getId().getWebFact().getId().getFactArea())&&
 						list_obj.get(a).getId().getWebFact().getId().getFactNo().equals(obj.getId().getWebFact().getId().getFactNo())){
 					list_obj.set(a, obj);
@@ -743,8 +831,8 @@ public class WebObjsBAction extends ActionSupport implements ServletResponseAwar
 		}
 		
 		for(String factcode:factcodes){
-			List<VWebobjA>list=new ArrayList<VWebobjA>();
-			for(VWebobjA obj:list_obj){
+			List<VWebobjBObj4>list=new ArrayList<VWebobjBObj4>();
+			for(VWebobjBObj4 obj:list_obj){
 				if(factcode.equals(obj.getId().getWebFact().getId().getFactArea())){
 					list.add(obj);
 				}
@@ -762,10 +850,10 @@ public class WebObjsBAction extends ActionSupport implements ServletResponseAwar
 			}
 		}
 		for(String factno:factnos){
-			list_obj2.add(new VWebobjA2(new VWebobjA2Id(new VWebFact(factno),yymm)));
+			list_obj2.add(new VWebobjBObj5(new VWebobjBObj5Id(new VWebFact(factno),yymm)));
 		}
 		
-		for(VWebobjA2 obj:list_obj2){
+		for(VWebobjBObj5 obj:list_obj2){
 			for(WebFact fact:facts){
 				if(obj.getId().getFact().getFactNo().equals(fact.getId().getFactNo())){
 					obj.getId().getFact().setFactSname(fact.getFactSname());
@@ -774,7 +862,7 @@ public class WebObjsBAction extends ActionSupport implements ServletResponseAwar
 		}
 		
 		for(int a=0;a<list_obj2.size();a++){
-			for(VWebobjA2 obj:list_source2){
+			for(VWebobjBObj5 obj:list_source2){
 				if(list_obj2.get(a).getId().getFact().getFactNo().equals(obj.getId().getFact().getFactNo())){
 					list_obj2.set(a, obj);
 				}
@@ -788,19 +876,19 @@ public class WebObjsBAction extends ActionSupport implements ServletResponseAwar
 			}else{
 				dd=""+a;
 			}
-			List<WebObjsA>list=new LinkedList<WebObjsA>();		
+			List<VWebobjBObj>list=new LinkedList<VWebobjBObj>();		
 			for(WebFact fact:facts){
-				list.add(new WebObjsA(new WebObjsAId(fact,yymm+dd)));
+				list.add(new VWebobjBObj(new VWebobjBObjId(fact,yymm+dd)));
 			}
 			list_obj3.add(list);
 			dd="";
 		}
 		
 		List<Map<String,Object>>lm=new LinkedList<Map<String,Object>>();
-		for(List<WebObjsA>list:list_obj3){			
+		for(List<VWebobjBObj>list:list_obj3){			
 			Map<String,Object>m=new LinkedHashMap<String,Object>();
 			for(int a=0;a<list.size();a++){
-				for(WebObjsA obj:list_source3){
+				for(VWebobjBObj obj:list_source3){
 					if(list.get(a).getId().getWebFact().getId().getFactArea().equals(obj.getId().getWebFact().getId().getFactArea())&&
 							list.get(a).getId().getWebFact().getId().getFactNo().equals(obj.getId().getWebFact().getId().getFactNo())&&
 							list.get(a).getId().getYymmdd().equals(obj.getId().getYymmdd())){
@@ -811,8 +899,8 @@ public class WebObjsBAction extends ActionSupport implements ServletResponseAwar
 			}
 			
 			for(String factcode:factcodes){
-				List<WebObjsA>ll=new ArrayList<WebObjsA>();
-				for(WebObjsA obj:list){
+				List<VWebobjBObj>ll=new ArrayList<VWebobjBObj>();
+				for(VWebobjBObj obj:list){
 					if(factcode.equals(obj.getId().getWebFact().getId().getFactArea())){
 						ll.add(obj);
 					}
@@ -852,7 +940,7 @@ public class WebObjsBAction extends ActionSupport implements ServletResponseAwar
 		
 	}
 	
-public void init_more(XSSFSheet sheet,Map<String,Object>map,Map<String,Object>map_style,List<VWebobjA2>list_obj2) throws IOException{			
+public void init_more(XSSFSheet sheet,Map<String,Object>map,Map<String,Object>map_style,List<VWebobjBObj5>list_obj2) throws IOException{			
 		this.init(sheet,map);
 		List<String>list_items=this.findItems();
 		List<String>list_items2=this.findItems2();
@@ -898,10 +986,10 @@ public void init_more(XSSFSheet sheet,Map<String,Object>map,Map<String,Object>ma
 		int temp=0;
 		int temp1_1=0;
 		for(String factcode:map.keySet()){
-			List<VWebobjA>list_obj=(List<VWebobjA>)map.get(factcode);	
+			List<VWebobjBObj4>list_obj=(List<VWebobjBObj4>)map.get(factcode);	
 			
-			/***********************************MD  EVA  DJ  換行**********************************/
-			if("MD".equals(factcode)||"EVA".equals(factcode)||"DJ".equals(factcode)){
+			/***********************************MD    DJ  換行**********************************/
+			if("MD".equals(factcode)||"DJ".equals(factcode)){
 				temp=0;
 				temp1_1=temp1_1+list_items.size()+2;
 				CellRangeAddress c=new CellRangeAddress(1+temp1_1,1+temp1_1,0,(short)2);
@@ -922,11 +1010,9 @@ public void init_more(XSSFSheet sheet,Map<String,Object>map,Map<String,Object>ma
 					for(int j=0;j<3;j++){
 						sheet.getRow(3+i+temp1_1).getCell(j).setCellStyle(cs);
 					}
-				}
-				
-				
+				}								
 			}
-			/***********************************MD  EVA  DJ  換行**********************************/
+			/***********************************MD    DJ  換行**********************************/
 			
 			int length=list_obj.size();			
 			sheet.getRow(1+temp1_1).getCell(3+temp).setCellValue(factcode);
@@ -934,20 +1020,16 @@ public void init_more(XSSFSheet sheet,Map<String,Object>map,Map<String,Object>ma
 			sheet.addMergedRegion(cra1);
 			for(int i=0;i<length;i++){
 				sheet.getRow(1+temp1_1).getCell(3+temp+i).setCellStyle(cs_head2);
-			}
-			
-			List<List<String>>list_pack=this.packageTostring(list_obj,list_items);			
-			for(int a=0;a<list_pack.size();a++){
-				List<String>list=list_pack.get(a);
-				for(int b=0;b<list.size();b++){
-					sheet.getRow(2+b+temp1_1).getCell(3+a+temp).setCellValue(this.isMyNull_str(list.get(b)));										
-					if(b==0){
-						sheet.getRow(2+b+temp1_1).getCell(3+a+temp).setCellStyle(cs_head);
-					}else{
-						sheet.getRow(2+b+temp1_1).getCell(3+a+temp).setCellStyle(cs);
-					}
+			}									
+			for(int a=0;a<list_obj.size();a++){
+				sheet.getRow(2+temp1_1).getCell(3+a+temp).setCellValue(list_obj.get(a).getId().getWebFact().getFactSname());
+				sheet.getRow(2+temp1_1).getCell(3+a+temp).setCellStyle(cs_head);
+				List<Double>list_db=this.objToDouble(list_obj.get(a));
+				for(int b=0;b<list_db.size();b++){
+					sheet.getRow(3+b+temp1_1).getCell(3+a+temp).setCellValue(list_db.get(b));
+					sheet.getRow(3+b+temp1_1).getCell(3+a+temp).setCellStyle(this.selectStyle2007(b, map_style));
 				}
-			}
+			}						
 			temp=temp+length;
 		}	
 		
@@ -969,96 +1051,17 @@ public void init_more(XSSFSheet sheet,Map<String,Object>map,Map<String,Object>ma
 		
 		for(int a=0;a<list_obj2.size();a++){
 			sheet.getRow(temp2+temp1_1).getCell(3+a).setCellValue(list_obj2.get(a).getId().getFact().getFactSname());
-			sheet.getRow(temp2+1+temp1_1).getCell(3+a).setCellValue(list_obj2.get(a).getObjA12()==null?0:list_obj2.get(a).getObjA12());
-			sheet.getRow(temp2+2+temp1_1).getCell(3+a).setCellValue(list_obj2.get(a).getObjA13()==null?0:list_obj2.get(a).getObjA13());
-			sheet.getRow(temp2+3+temp1_1).getCell(3+a).setCellValue(list_obj2.get(a).getObjA14()==null?0:list_obj2.get(a).getObjA14());
-			sheet.getRow(temp2+4+temp1_1).getCell(3+a).setCellValue(list_obj2.get(a).getObjA15()==null?0:list_obj2.get(a).getObjA15());
-			sheet.getRow(temp2+5+temp1_1).getCell(3+a).setCellValue(list_obj2.get(a).getObjA16()==null?0:list_obj2.get(a).getObjA16());
-			for(int b=0;b<list_items2.size()+1;b++){
-				if(b==0){
-					sheet.getRow(temp2+b+temp1_1).getCell(3+a).setCellStyle(cs_head2);
-				}else{
-					sheet.getRow(temp2+b+temp1_1).getCell(3+a).setCellStyle(cs);
-				}
-				
+			sheet.getRow(temp2+temp1_1).getCell(3+a).setCellStyle(cs_head2);
+			List<Long>ll=this.objToLong(list_obj2.get(a));
+			for(int b=0;b<ll.size();b++){
+				sheet.getRow(1+temp2+temp1_1+b).getCell(3+a).setCellValue(ll.get(b));
+				sheet.getRow(1+temp2+temp1_1+b).getCell(3+a).setCellStyle(this.selectStyle2007(b, map_style));
 			}
+						
 		}
 		
 	}
 			
-	/**
-	 * 
-	 * @Title: packageTostring
-	 * @Description: TODO
-	 * @param @param list_obj
-	 * @param @param mk  1:工廠報表    0:臺灣報表
-	 * @param @return
-	 * @return List<List<String>>
-	 * @throws
-	 * @author web
-	 * @date 2016/9/8
-	 */
-	public List<List<String>> packageTostring(List<VWebobjA>list_obj,List<String>list_items){
-		List<List<String>>result=new ArrayList<List<String>>();
-		for(int i=0;i<list_obj.size();i++){
-			VWebobjA obj=list_obj.get(i);
-			List<String>list=new ArrayList<String>();			
-			if(obj.getId().getWebFact().getFactSname()!=null){
-				list.add(obj.getId().getWebFact().getFactSname());
-			}else{
-				list.add(obj.getId().getWebFact().getId().getFactNo().split("_")[2]);
-			}								
-			List<String>list_str=this.isPercents(obj,list_items);
-			for(String str:list_str){
-				list.add(str);
-			}			
-			result.add(list);								
-		}
-		return result;
-		
-	}
-	
-	/**
-	 * 
-	 * @Title: isPercents
-	 * @Description: 判斷哪些數據用 % 號     (控制所有數據的格式)
-	 * @param @param obj
-	 * @param @return
-	 * @return List<String>
-	 * @throws
-	 * @author web
-	 * @date 2016/9/20
-	 */
-	public List<String> isPercents(VWebobjA obj,List<String> list_items){
-		List<Object>list=new ArrayList<Object>();
-		List<String>list_result=new ArrayList<String>();
-		DecimalFormat frm=new DecimalFormat("0.00%");//%號
-		DecimalFormat frm1=new DecimalFormat("#,##0");//不保留小數		
-		list.add(obj.getObjA1());
-		list.add(obj.getObjA2());
-		list.add(obj.getObjA3());
-		list.add(obj.getObjA4());
-		list.add(obj.getObjA5());
-		list.add(obj.getObjA6());
-		list.add(obj.getObjA7());
-		list.add(obj.getObjA8());
-		list.add(obj.getObjA9());
-		list.add(obj.getObjA10());
-		list.add(obj.getObjA11());		
-
-		for(int i=0;i<list.size();i++){
-			if(list.get(i)!=null){
-				if(list_items.get(i).split("__")[1].equals("%")){
-					list_result.add(frm.format(list.get(i)));
-				}else{
-					list_result.add(frm1.format(list.get(i)));							
-				}				
-			}else{
-				list_result.add("0");
-			}						
-		}			
-		return list_result;
-	}
 	/***************************************各廠月報表彙總************************************************************/
 	
 	
@@ -1067,8 +1070,8 @@ public void init_more(XSSFSheet sheet,Map<String,Object>map,Map<String,Object>ma
 	public void print_tw2() throws IOException{
 		XSSFWorkbook wb=new XSSFWorkbook();		
 		Map<String,Object>map_style=GlobalMethod.findStyles2007(wb);				
-		List<WebObjsA>list_source=webobjaservices.findObjByDay(yymmdd);
-		List<VWebobjA3>list_source2=webobjaservices.findByVwebobja3(yymmdd);
+		List<VWebobjBObj>list_source=webobjbservices.findObjByDay(yymmdd);
+		List<VWebobjBObj3>list_source2=webobjbservices.findByVwebobjb3(yymmdd);
 		Map<String,Object>map=new LinkedHashMap<String,Object>();
 						
 		//List<WebFact>facts=webFactSer.findFactAble();//所有有效廠別
@@ -1076,11 +1079,11 @@ public void init_more(XSSFSheet sheet,Map<String,Object>map,Map<String,Object>ma
 		List<WebFact>facts=webFactSer.findAllFact_2();//與產量報表相同
 		List<String>factcodes=new ArrayList<String>();
 		List<String>factnos=new ArrayList<String>();
-		List<WebObjsA>list_obj=new LinkedList<WebObjsA>();
-		List<VWebobjA3>list_obj2=new LinkedList<VWebobjA3>();
+		List<VWebobjBObj>list_obj=new LinkedList<VWebobjBObj>();
+		List<VWebobjBObj3>list_obj2=new LinkedList<VWebobjBObj3>();
 		for(WebFact fact:facts){
 			factcodes.add(fact.getId().getFactArea());
-			list_obj.add(new WebObjsA(new WebObjsAId(fact,yymmdd)));
+			list_obj.add(new VWebobjBObj(new VWebobjBObjId(fact,yymmdd)));
 			factnos.add(fact.getId().getFactNo());
 			
 		}
@@ -1094,7 +1097,7 @@ public void init_more(XSSFSheet sheet,Map<String,Object>map,Map<String,Object>ma
 		
 		
 		for(int a=0;a<list_obj.size();a++){
-			for(WebObjsA obj:list_source){
+			for(VWebobjBObj obj:list_source){
 				if(list_obj.get(a).getId().getWebFact().getId().getFactArea().equals(obj.getId().getWebFact().getId().getFactArea())&&
 						list_obj.get(a).getId().getWebFact().getId().getFactNo().equals(obj.getId().getWebFact().getId().getFactNo())){
 					list_obj.set(a, obj);
@@ -1103,8 +1106,8 @@ public void init_more(XSSFSheet sheet,Map<String,Object>map,Map<String,Object>ma
 		}
 		
 		for(String factcode:factcodes){
-			List<WebObjsA>list=new ArrayList<WebObjsA>();
-			for(WebObjsA obj:list_obj){
+			List<VWebobjBObj>list=new ArrayList<VWebobjBObj>();
+			for(VWebobjBObj obj:list_obj){
 				if(factcode.equals(obj.getId().getWebFact().getId().getFactArea())){
 					list.add(obj);
 				}
@@ -1122,10 +1125,10 @@ public void init_more(XSSFSheet sheet,Map<String,Object>map,Map<String,Object>ma
 			}
 		}
 		for(String factno:factnos){
-			list_obj2.add(new VWebobjA3(new VWebobjA3Id(new VWebFact(factno),yymm)));
+			list_obj2.add(new VWebobjBObj3(new VWebobjBObj3Id(new VWebFact(factno),yymm)));
 		}
 		
-		for(VWebobjA3 obj:list_obj2){
+		for(VWebobjBObj3 obj:list_obj2){
 			for(WebFact fact:facts){
 				if(obj.getId().getFact().getFactNo().equals(fact.getId().getFactNo())){
 					obj.getId().getFact().setFactSname(fact.getFactSname());
@@ -1134,7 +1137,7 @@ public void init_more(XSSFSheet sheet,Map<String,Object>map,Map<String,Object>ma
 		}
 		
 		for(int a=0;a<list_obj2.size();a++){
-			for(VWebobjA3 obj:list_source2){
+			for(VWebobjBObj3 obj:list_source2){
 				if(list_obj2.get(a).getId().getFact().getFactNo().equals(obj.getId().getFact().getFactNo())){
 					list_obj2.set(a, obj);
 				}
@@ -1172,7 +1175,7 @@ public void init_more(XSSFSheet sheet,Map<String,Object>map,Map<String,Object>ma
 	
 	
 	
-public void init_more2(XSSFSheet sheet,Map<String,Object>map,Map<String,Object>map_style,List<VWebobjA3>list_obj2) throws IOException{				   
+public void init_more2(XSSFSheet sheet,Map<String,Object>map,Map<String,Object>map_style,List<VWebobjBObj3>list_obj2) throws IOException{				   
 	    this.init(sheet,map);
 		List<String>list_items=this.findItems();
 		List<String>list_items2=this.findItems2();
@@ -1218,10 +1221,10 @@ public void init_more2(XSSFSheet sheet,Map<String,Object>map,Map<String,Object>m
 		int temp=0;
 		int temp1_1=0;
 		for(String factcode:map.keySet()){                                             
-			List<WebObjsA>list_obj=(List<WebObjsA>)map.get(factcode);	
+			List<VWebobjBObj>list_obj=(List<VWebobjBObj>)map.get(factcode);	
 			
-			/***********************************MD  EVA  DJ  換行**********************************/
-			if("MD".equals(factcode)||"EVA".equals(factcode)||"DJ".equals(factcode)){
+			/***********************************MD    DJ  換行**********************************/
+			if("MD".equals(factcode)||"DJ".equals(factcode)){
 				temp=0;
 				temp1_1=temp1_1+list_items.size()+2;
 				CellRangeAddress c=new CellRangeAddress(1+temp1_1,1+temp1_1,0,(short)2);
@@ -1246,7 +1249,7 @@ public void init_more2(XSSFSheet sheet,Map<String,Object>map,Map<String,Object>m
 				
 				
 			}
-			/***********************************MD  EVA  DJ  換行**********************************/
+			/***********************************MD    DJ  換行**********************************/
 			
 			int length=list_obj.size();			
 			sheet.getRow(1+temp1_1).getCell(3+temp).setCellValue(factcode);
@@ -1254,20 +1257,19 @@ public void init_more2(XSSFSheet sheet,Map<String,Object>map,Map<String,Object>m
 			sheet.addMergedRegion(cra1);
 			for(int i=0;i<length;i++){
 				sheet.getRow(1+temp1_1).getCell(3+temp+i).setCellStyle(cs_head2);
+			}						
+			
+			for(int a=0;a<list_obj.size();a++){
+				sheet.getRow(2+temp1_1).getCell(3+a+temp).setCellValue(list_obj.get(a).getId().getWebFact().getFactSname());
+				sheet.getRow(2+temp1_1).getCell(3+a+temp).setCellStyle(cs_head);
+				List<Double>list_db=this.objToDouble(list_obj.get(a));
+				for(int b=0;b<list_db.size();b++){
+					sheet.getRow(3+b+temp1_1).getCell(3+a+temp).setCellValue(list_db.get(b));
+					sheet.getRow(3+b+temp1_1).getCell(3+a+temp).setCellStyle(this.selectStyle2007(b, map_style));
+				}
+				
 			}
 			
-			List<List<String>>list_pack=this.packageTostring2(list_obj,list_items);			
-			for(int a=0;a<list_pack.size();a++){
-				List<String>list=list_pack.get(a);
-				for(int b=0;b<list.size();b++){
-					sheet.getRow(2+b+temp1_1).getCell(3+a+temp).setCellValue(this.isMyNull_str(list.get(b)));										
-					if(b==0){
-						sheet.getRow(2+b+temp1_1).getCell(3+a+temp).setCellStyle(cs_head);
-					}else{
-						sheet.getRow(2+b+temp1_1).getCell(3+a+temp).setCellStyle(cs);
-					}
-				}
-			}
 			temp=temp+length;
 		}	
 		
@@ -1290,19 +1292,12 @@ public void init_more2(XSSFSheet sheet,Map<String,Object>map,Map<String,Object>m
 		
 		for(int a=0;a<list_obj2.size();a++){
 			sheet.getRow(temp2+temp1_1).getCell(3+a).setCellValue(list_obj2.get(a).getId().getFact().getFactSname());
-			sheet.getRow(temp2+temp1_1+1).getCell(3+a).setCellValue(list_obj2.get(a).getObjA12()==null?0:list_obj2.get(a).getObjA12());
-			sheet.getRow(temp2+temp1_1+2).getCell(3+a).setCellValue(list_obj2.get(a).getObjA13()==null?0:list_obj2.get(a).getObjA13());
-			sheet.getRow(temp2+temp1_1+3).getCell(3+a).setCellValue(list_obj2.get(a).getObjA14()==null?0:list_obj2.get(a).getObjA14());
-			sheet.getRow(temp2+temp1_1+4).getCell(3+a).setCellValue(list_obj2.get(a).getObjA15()==null?0:list_obj2.get(a).getObjA15());
-			sheet.getRow(temp2+temp1_1+5).getCell(3+a).setCellValue(list_obj2.get(a).getObjA16()==null?0:list_obj2.get(a).getObjA16());
-			for(int b=0;b<list_items2.size()+1;b++){
-				if(b==0){
-					sheet.getRow(temp2+temp1_1+b).getCell(3+a).setCellStyle(cs_head2);
-				}else{
-					sheet.getRow(temp2+temp1_1+b).getCell(3+a).setCellStyle(cs);
-				}
-				
-			}
+			sheet.getRow(temp2+temp1_1).getCell(3+a).setCellStyle(cs_head2);
+			List<Long>list_lg=this.objToLong(list_obj2.get(a));
+			for(int b=0;b<list_lg.size();b++){
+				sheet.getRow(temp2+temp1_1+b+1).getCell(3+a).setCellValue(list_lg.get(b));
+				sheet.getRow(temp2+temp1_1+b+1).getCell(3+a).setCellStyle(cs);
+			}			
 		}
 		
 	}
@@ -1350,10 +1345,10 @@ public void init_more2_b(XSSFSheet sheet,Map<String,Object>map,Map<String,Object
 	int temp=0;
 	int temp1_1=0;
 	for(String factcode:map.keySet()){
-		List<WebObjsA>list_obj=(List<WebObjsA>)map.get(factcode);
+		List<VWebobjBObj>list_obj=(List<VWebobjBObj>)map.get(factcode);
 		
-		/***********************************MD  EVA  DJ  換行**********************************/
-		if("MD".equals(factcode)||"EVA".equals(factcode)||"DJ".equals(factcode)){
+		/***********************************MD    DJ  換行**********************************/
+		if("MD".equals(factcode)||"DJ".equals(factcode)){
 			temp=0;
 			temp1_1=temp1_1+list_items.size()+2;
 			CellRangeAddress c=new CellRangeAddress(1+temp1_1,1+temp1_1,0,(short)1);
@@ -1377,7 +1372,7 @@ public void init_more2_b(XSSFSheet sheet,Map<String,Object>map,Map<String,Object
 			
 			
 		}
-		/***********************************MD  EVA  DJ  換行**********************************/
+		/***********************************MD    DJ  換行**********************************/
 		
 		int length=list_obj.size();			
 		sheet.getRow(1+temp1_1).getCell(2+temp).setCellValue(factcode);
@@ -1385,20 +1380,18 @@ public void init_more2_b(XSSFSheet sheet,Map<String,Object>map,Map<String,Object
 		sheet.addMergedRegion(cra1);
 		for(int i=0;i<length;i++){
 			sheet.getRow(1+temp1_1).getCell(2+temp+i).setCellStyle(cs_head2);
-		}
+		}				
 		
-		List<List<String>>list_pack=this.packageTostring3(list_obj);			
-		for(int a=0;a<list_pack.size();a++){
-			List<String>list=list_pack.get(a);
-			for(int b=0;b<list.size();b++){
-				sheet.getRow(2+b+temp1_1).getCell(2+a+temp).setCellValue(this.isMyNull_str(list.get(b)));										
-				if(b==0){
-					sheet.getRow(2+b+temp1_1).getCell(2+a+temp).setCellStyle(cs_head);
-				}else{
-					sheet.getRow(2+b+temp1_1).getCell(2+a+temp).setCellStyle(cs);
-				}
+		for(int a=0;a<list_obj.size();a++){
+			sheet.getRow(2+temp1_1).getCell(2+a+temp).setCellValue(list_obj.get(a).getId().getWebFact().getFactSname());
+			sheet.getRow(2+temp1_1).getCell(2+a+temp).setCellStyle(cs_head);
+			List<String>list_str=this.objToString(list_obj.get(a));
+			for(int b=0;b<list_str.size();b++){
+				sheet.getRow(3+temp1_1+b).getCell(2+a+temp).setCellValue(list_str.get(b));
+				sheet.getRow(3+temp1_1+b).getCell(2+a+temp).setCellStyle(cs);
 			}
-		}
+		}		
+		
 		temp=temp+length;
 	}					
 }
@@ -1414,7 +1407,7 @@ public void init_more2_b(XSSFSheet sheet,Map<String,Object>map,Map<String,Object
 						row.createCell(j);
 					}
 				}
-				List<VWebobjA>list_obj=(List<VWebobjA>)map.get(factcode);
+				List<VWebobjBObj4>list_obj=(List<VWebobjBObj4>)map.get(factcode);
 				for(int j=0;j<list_obj.size();j++){					
 					row.createCell(index);
 					if(i==0){
@@ -1425,107 +1418,7 @@ public void init_more2_b(XSSFSheet sheet,Map<String,Object>map,Map<String,Object
 				}
 			}			
 		}
-	}
-	
-	/**
-	 * 
-	 * @Title: packageTostring
-	 * @Description: TODO
-	 * @param @param list_obj
-	 * @param @param mk  1:工廠報表    0:臺灣報表
-	 * @param @return
-	 * @return List<List<String>>
-	 * @throws
-	 * @author web
-	 * @date 2016/9/8
-	 */
-	public List<List<String>> packageTostring2(List<WebObjsA>list_obj,List<String>list_items){
-		List<List<String>>result=new ArrayList<List<String>>();
-		for(int i=0;i<list_obj.size();i++){
-			WebObjsA obj=list_obj.get(i);
-			List<String>list=new ArrayList<String>();			
-			if(obj.getId().getWebFact().getFactSname()!=null){
-				list.add(obj.getId().getWebFact().getFactSname());
-			}else{
-				list.add(obj.getId().getWebFact().getId().getFactNo().split("_")[2]);
-			}								
-			List<String>list_str=this.isPercents2(obj,list_items);
-			for(String str:list_str){
-				list.add(str);
-			}			
-			result.add(list);								
-		}
-		return result;
-		
-	}
-	
-	public List<List<String>> packageTostring3(List<WebObjsA>list_obj){
-		List<List<String>>result=new ArrayList<List<String>>();
-		for(int i=0;i<list_obj.size();i++){
-			WebObjsA obj=list_obj.get(i);
-			List<String>list=new ArrayList<String>();			
-			list.add(obj.getId().getWebFact().getFactSname());
-			list.add(obj.getObjA17());
-			list.add(obj.getObjA18());
-			list.add(obj.getObjA19());
-			list.add(obj.getObjA20());
-			list.add(obj.getObjA21());
-			result.add(list);								
-		}
-		return result;
-		
-	}
-	
-	/**
-	 * 
-	 * @Title: isPercents
-	 * @Description: 判斷哪些數據用 % 號     (控制所有數據的格式)
-	 * @param @param obj
-	 * @param @return
-	 * @return List<String>
-	 * @throws
-	 * @author web
-	 * @date 2016/9/20
-	 */
-	public List<String> isPercents2(WebObjsA obj,List<String> list_items){
-		List<Object>list=new ArrayList<Object>();
-		List<String>list_result=new ArrayList<String>();
-		DecimalFormat frm=new DecimalFormat("0.00%");//%號
-		DecimalFormat frm1=new DecimalFormat("#,##0");//不保留小數
-		DecimalFormat frm2=new DecimalFormat("#,##0.0");//保留1位小數
-		list.add(obj.getObjA1());
-		list.add(obj.getObjA2());
-		list.add(obj.getObjA3());
-		list.add(obj.getObjA4());
-		list.add(obj.getObjA5());
-		list.add(obj.getObjA6());
-		list.add(obj.getObjA7());
-		list.add(obj.getObjA8());
-		list.add(obj.getObjA9());
-		list.add(obj.getObjA10());
-		list.add(obj.getObjA11());		
-
-		for(int a=0;a<list.size();a++){
-			if(list.get(a)!=null){
-				/*if(list_items.get(i).split("__")[1].equals("%")){
-					list_result.add(frm.format(list.get(i)));
-				}else{
-					list_result.add(frm1.format(list.get(i)));							
-				}*/	
-				if(a<4||a==7||a==8){
-					list_result.add(frm1.format(list.get(a)));
-				}else if(a==10){
-					list_result.add(frm.format(list.get(a)));
-				}else{
-					list_result.add(frm2.format(list.get(a)));
-				}
-			}else{
-				list_result.add("0");
-			}						
-		}			
-		return list_result;
-	}
-	
+	}		
 	/***************************************各廠日報表彙總************************************************************/
 	
 	
@@ -1543,7 +1436,7 @@ public void init_more2_b(XSSFSheet sheet,Map<String,Object>map,Map<String,Object
 						row.createCell(j);
 					}
 				}
-				List<VWebobjA>list_obj=(List<VWebobjA>)map.get(factcode);
+				List<VWebobjBObj4>list_obj=(List<VWebobjBObj4>)map.get(factcode);
 				for(int j=0;j<list_obj.size();j++){					
 					row.createCell(index);
 					if(i==0){
@@ -1581,27 +1474,38 @@ public void init_more2_b(XSSFSheet sheet,Map<String,Object>map,Map<String,Object
 	
 	public List<String>findItems(){
 		List<String>list=new ArrayList<String>();										
-		list.add("廠內孔位數__孔");
-		list.add("最大戰力員工數__人");
-		list.add("最大生產數__雙");
+		list.add("最大孔位數__孔");
+		list.add("最大生產數(模/月)__模");
 		list.add("有效孔位數__孔");
+		list.add("工程樣品孔位__孔");
+		list.add("補料孔位__孔");
+		list.add("其它孔位__孔");
+		list.add("預計生產模數(模/月)__模");
+		list.add("預計生產雙數(模/月)__模");
+		list.add("預計請款雙數(雙/月)__雙");
 		list.add("上模數__模");
-		list.add("回轉數__回");
-		list.add("生產模數__模");
-		list.add("目前欠數__雙");
-		list.add("慢單狀況__張");
-		list.add("不良雙數__雙");
-		list.add("不良率__%");								
+		list.add("人數(拉模手)__人");
+		list.add("標準產量(模/日)__模");
+		list.add("實際產量(模/日)__模");
+		list.add("實際產量(雙)__雙");
+		list.add("達成率(%)__%");
+		list.add("實際回轉數__回");
+		list.add("成型不良雙數__雙");
+		list.add("成型不良率(%)__%");
+		list.add("慢單狀況(張)__張");
+		list.add("慢單狀況(雙)__雙");
+		list.add("訂單欠數__雙");
 		return list;		
 	}
 	
 	public List<String>findItems2(){
-		List<String>list=new ArrayList<String>();										
-		list.add("目前直工人數__人");
-		list.add("全廠員工數__人");
+		List<String>list=new ArrayList<String>();														
+		list.add("直工人數__人");
+		list.add("間工人數__人");
+		list.add("全廠人數__人");
 		list.add("招工數__人");
 		list.add("離職數__人");
-		list.add("請假數__人");										
+		list.add("請假數__人");
 		return list;		
 	}
 	
@@ -1611,7 +1515,7 @@ public void init_more2_b(XSSFSheet sheet,Map<String,Object>map,Map<String,Object
 		list.add("扣款訊息__文字");
 		list.add("機台狀況/異常__文字");
 		list.add("客人來訪訊息__文字");
-		list.add("其他提報事項__文字");	
+		list.add("其他提報事項__文字");					
 		return list;
 	}
 	
@@ -1632,12 +1536,35 @@ public void init_more2_b(XSSFSheet sheet,Map<String,Object>map,Map<String,Object
 		
 		if(a<4||a==7||a==8){
 			cs=(HSSFCellStyle)map_style.get("cs_poi");
-		}else if(a==10){
+		}else if(a==14||a==17){
 			cs=(HSSFCellStyle)map_style.get("cs_percent");
 		}else{
 			cs=(HSSFCellStyle)map_style.get("cs_poi1");
 		}		
 		return cs;
+	}
+	
+	public XSSFCellStyle selectStyle2007(int a,Map<String,Object>map_style){
+		XSSFCellStyle cs;//  cs_poi
+		
+		if(a<4||a==7||a==8){
+			cs=(XSSFCellStyle)map_style.get("cs_poi");
+		}else if(a==14||a==17){
+			cs=(XSSFCellStyle)map_style.get("cs_percent");
+		}else{
+			cs=(XSSFCellStyle)map_style.get("cs_poi1");
+		}		
+		return cs;
+	}
+	
+	public Map<String,Object> findStyles2003(HSSFWorkbook wb){		
+		Map<String,Object>map=GlobalMethod.findStyles(wb);				
+		return map;
+	}
+	
+	public Map<String,Object> findStyles2007(XSSFWorkbook wb){		
+		Map<String,Object>map=GlobalMethod.findStyles2007(wb);				
+		return map;
 	}
 	
 
