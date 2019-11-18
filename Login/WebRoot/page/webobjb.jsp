@@ -52,7 +52,7 @@
 	         <input type="text" id="yymm_in" name="yymm" onClick="WdatePicker({dateFmt:'yyyyMMdd'})" readonly="readonly" class="Wdate search"/>
 	       </td>
 	       <td >
-	       <select name="workorholiday" id="workholiday" datatype="*">
+	       <select name="workorholiday" id="workholiday" datatype="*" onchange="changeFile()">
 							<option value="">請選擇日期性質</option>
 							<option value="0">工作日</option>
 							<option value="1">假日</option>
@@ -74,7 +74,7 @@
 <script>
 
 	function checkForm(){
-		var id_file=jq("#id_file").val();
+		/* var id_file=jq("#id_file").val();
 		var extendName=id_file.substr(id_file.lastIndexOf(".")).toLowerCase();
 		if(id_file==""){
 			layer.alert("請選擇Excel文檔");
@@ -94,9 +94,47 @@
 		}else{
 			layer.load("請稍等...");
 			jq("#upload_form").submit();
+		} */
+		
+		
+		
+		var id_file=jq("#id_file").val();
+		var extendName=id_file.substr(id_file.lastIndexOf(".")).toLowerCase();
+		if(jq("#workholiday").val()==""){
+		    layer.alert("請選擇日期性質");
+			return false;
+		}else{
+		   if(jq("#workholiday").val()=="0"){
+		      if(id_file==""){
+			   layer.alert("請選擇Excel文檔");
+			   return false;
+		      }else if(extendName!=".xls"&&extendName!=".xlsx"){
+			   layer.alert("僅允許Excel文檔");
+			   return false;
+		      }else if(jq("#factNo_a").val()=="nothing"){
+			   layer.alert("請選擇廠別");
+			   return false;
+		      }else if(jq("#yymm_in").val()==""){
+			   layer.alert("請選擇日期");
+			   return false;
+		      }else{
+		       layer.load("請稍等...");
+			   jq("#upload_form").submit();
+		      }
+		   }else{
+		      if(jq("#factNo_a").val()=="nothing"){
+			   layer.alert("請選擇廠別");
+			   return false;
+		      }else if(jq("#yymm_in").val()==""){
+			   layer.alert("請選擇日期");
+			   return false;
+		      }else{
+		       layer.load("請稍等...");
+			   jq("#upload_form").submit();
+		      }
 		}				
 	}
-		
+}		
 	function pages(page) {	    		
 		jq.ajax({
 			type : "POST",
@@ -191,6 +229,14 @@ function showDiv(){
     area:['570px','450px'],               
     iframe:{src:'page/sample/sample_weballobj.jsp',scrolling:'auto'}	                    
 });
+}
+
+function changeFile(){
+   if(jq("#workholiday").val()=="0"){
+     jq("#id_file").removeClass("disabled");
+   }else{
+     jq("#id_file").addClass("disabled");
+   }
 }
 </script>		
 </body>

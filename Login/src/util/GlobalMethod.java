@@ -625,7 +625,49 @@ public class GlobalMethod extends HibernateDaoSupport{
 		map.put("cs_lblue_bg", cs_lblue_bg);
 		
 		
-		
+		// 紅字體
+				HSSFCellStyle cs_font_red = wb.createCellStyle();
+				HSSFFont font = wb.createFont();
+				/*font.setFontHeightInPoints((short) 10);
+				font.setBoldweight(HSSFFont.BOLDWEIGHT_NORMAL);*/
+				font.setColor(HSSFFont.COLOR_RED);
+				cs_font_red.setFont(font);
+				cs_font_red.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+				cs_font_red.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+				cs_font_red.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+				cs_font_red.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+				cs_font_red.setBorderRight(HSSFCellStyle.BORDER_THIN);
+				cs_font_red.setBorderTop(HSSFCellStyle.BORDER_THIN);
+				map.put("cs_font_red", cs_font_red);
+
+				// 藍字體
+				HSSFCellStyle cs_font_blue = wb.createCellStyle();
+				HSSFFont font_blue = wb.createFont();
+				/*font_blue.setFontHeightInPoints((short) 10);
+				font_blue.setBoldweight(HSSFFont.BOLDWEIGHT_NORMAL);*/
+				font_blue.setColor(IndexedColors.BLUE.getIndex());
+				cs_font_blue.setFont(font_blue);
+				cs_font_blue.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+				cs_font_blue.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);				
+				cs_font_blue.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+				cs_font_blue.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+				cs_font_blue.setBorderRight(HSSFCellStyle.BORDER_THIN);
+				cs_font_blue.setBorderTop(HSSFCellStyle.BORDER_THIN);
+				map.put("cs_font_blue", cs_font_blue);
+
+				// 綠字體
+				HSSFCellStyle cs_font_green = wb.createCellStyle();
+				HSSFFont font_green = wb.createFont();
+				/*font_green.setFontHeightInPoints((short) 10);
+				font_green.setBoldweight(HSSFFont.BOLDWEIGHT_NORMAL);*/
+				font_green.setColor(IndexedColors.GREEN.getIndex());
+				cs_font_green.setFont(font_green);
+				cs_font_green.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+				cs_font_green.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);			
+				cs_font_green.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+				cs_font_green.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+				cs_font_green.setBorderRight(HSSFCellStyle.BORDER_THIN);
+				cs_font_green.setBorderTop(HSSFCellStyle.BORDER_THIN);
 		
 		
 		//紅色加粗字體
@@ -919,6 +961,54 @@ public class GlobalMethod extends HibernateDaoSupport{
 		cs_lblue_bg.setFillForegroundColor(IndexedColors.SKY_BLUE.getIndex());
 		cs_lblue_bg.setFillPattern(XSSFCellStyle.SOLID_FOREGROUND);
 		map.put("cs_lblue_bg", cs_lblue_bg);
+		
+		
+		
+		// 紅字體
+				XSSFCellStyle cs_font_red = wb.createCellStyle();
+				XSSFFont font = wb.createFont();
+				/*font.setFontHeightInPoints((short) 10);
+				font.setBoldweight(HSSFFont.BOLDWEIGHT_NORMAL);*/
+				font.setColor(HSSFFont.COLOR_RED);
+				cs_font_red.setFont(font);
+				cs_font_red.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+				cs_font_red.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+				cs_font_red.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+				cs_font_red.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+				cs_font_red.setBorderRight(HSSFCellStyle.BORDER_THIN);
+				cs_font_red.setBorderTop(HSSFCellStyle.BORDER_THIN);
+				map.put("cs_font_red", cs_font_red);
+
+				// 藍字體
+				XSSFCellStyle cs_font_blue = wb.createCellStyle();
+				XSSFFont font_blue = wb.createFont();
+				/*font_blue.setFontHeightInPoints((short) 10);
+				font_blue.setBoldweight(HSSFFont.BOLDWEIGHT_NORMAL);*/
+				font_blue.setColor(IndexedColors.BLUE.getIndex());
+				cs_font_blue.setFont(font_blue);
+				cs_font_blue.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+				cs_font_blue.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);				
+				cs_font_blue.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+				cs_font_blue.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+				cs_font_blue.setBorderRight(HSSFCellStyle.BORDER_THIN);
+				cs_font_blue.setBorderTop(HSSFCellStyle.BORDER_THIN);
+				map.put("cs_font_blue", cs_font_blue);
+
+				// 綠字體
+				XSSFCellStyle cs_font_green = wb.createCellStyle();
+				XSSFFont font_green = wb.createFont();
+				/*font_green.setFontHeightInPoints((short) 10);
+				font_green.setBoldweight(HSSFFont.BOLDWEIGHT_NORMAL);*/
+				font_green.setColor(IndexedColors.GREEN.getIndex());
+				cs_font_green.setFont(font_green);
+				cs_font_green.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+				cs_font_green.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);			
+				cs_font_green.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+				cs_font_green.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+				cs_font_green.setBorderRight(HSSFCellStyle.BORDER_THIN);
+				cs_font_green.setBorderTop(HSSFCellStyle.BORDER_THIN);
+				map.put("cs_font_green", cs_font_green);
+		
 		
 		
 		//紅色加粗字體
@@ -2217,28 +2307,10 @@ public class GlobalMethod extends HibernateDaoSupport{
 	 
 	 public static void main(String[] args) {
 			
-		 List<String>list=new ArrayList<String>();
-		 for(int a=0;a<10;a++){
-			 String c="c";
-			 for(int b=0;b<5;b++){
-				 c=c+b;
-				 list.add(c);
-				 c="c";
-			 }
-		 }
-		 
-		 System.out.println(list);
-		
-
-
-		 
-		 
-		 
-
-		 
-		 
-		 
-		
+		Long l=0L;
+		Double d=0.0;
+		System.out.println(l==0);
+		System.out.println(d==0);
 	  
 		}
 	 

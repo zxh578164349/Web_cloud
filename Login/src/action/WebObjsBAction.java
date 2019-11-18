@@ -9,47 +9,31 @@ import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
-
-import org.apache.poi.hssf.usermodel.HSSFCellStyle;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.util.CellRangeAddress;
+import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.ServletResponseAware;
-
 import services.IWebFactServices;
-import services.IWebObjsAServices;
 import services.IWebObjsBServices;
 import util.GlobalMethod;
 import util.ImportExcel;
 import util.PageBean;
-
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
-
 import entity.KyzExpectmatmLog;
-import entity.VKpiWebprofitlossItems;
 import entity.VWebFact;
-import entity.VWebobjA;
-import entity.VWebobjA2;
-import entity.VWebobjA2Id;
-import entity.VWebobjA3;
-import entity.VWebobjA3Id;
-import entity.VWebobjAId;
 import entity.VWebobjBObj3;
 import entity.VWebobjBObj3Id;
 import entity.VWebobjBObj;
@@ -60,13 +44,10 @@ import entity.VWebobjBObj5Id;
 import entity.VWebobjBObjId;
 import entity.WebFact;
 import entity.WebFactId;
-import entity.WebObjsA;
-import entity.WebObjsAId;
 import entity.WebObjsB;
 import entity.WebObjsBId;
 import entity.WebUser;
-import entity.WeballobjB;
-import entity.WeballobjBId;
+
 
 public class WebObjsBAction extends ActionSupport implements ServletResponseAware{
 	private final static int NUM=31;//print_tw  多少箇項目（29+1）
@@ -248,10 +229,8 @@ public class WebObjsBAction extends ActionSupport implements ServletResponseAwar
 		try{
 			String path="d:\\Webobjs_b_backup\\"+new SimpleDateFormat("yyyyMMdd").format(new Date());//Excel文檔存放目錄
 			ajaxResult="0";				
-			/*文件上傳*/
-			if(file!=null){//不為空代表有上傳附檔,不能寫成files.size()>0,否則報空指針
-				//File uploadFile=new File(ServletActionContext.getServletContext().getRealPath("KyzexpFile\\"+kyz.getId().getBillNo()));//附檔上傳到項目
-				File uploadFile_backup=new File(path);//附檔上傳到D盤(為了避免更新項目時丟失附檔,所在上傳到D盤)			
+			if(file!=null){		
+				File uploadFile_backup=new File(path);	
 				if(!uploadFile_backup.exists()){
 					uploadFile_backup.mkdirs();
 				}																						
@@ -260,36 +239,25 @@ public class WebObjsBAction extends ActionSupport implements ServletResponseAwar
 						byte[]b=new byte[1024];
 						int length=0;
 						while((length=in.read(b))>0){
-							out_backup.write(b,0,length);//備份
+							out_backup.write(b,0,length);
 						}																																				
 			}
 			WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");			
-			//file=new File("e:\\導入格式2.xls");
 			Map<String,Object>map=ImportExcel.exportListFromFile(new File(path+"\\"+fileFileName));
 			List<String>list_factArea=webFactSer.findfactAreaByFactNo(factNo);
-			a:for(String key:map.keySet()){//for a
+			a:for(String key:map.keySet()){
 				List<WebObjsB>list_b=new ArrayList<WebObjsB>();
-				List<String>list_factcode=new ArrayList<String>();//導入數據所有的factcode
+				List<String>list_factcode=new ArrayList<String>();
 				List<String>list=(List<String>)map.get(key);
 				if(!list.get(0).contains("__序號__項目__單位")){				
 					response.getWriter().print("<script>window.parent.showDiv();window.parent.layer.msg('表格式不符合要求')</script>");
-					//continue;
 					break;
 				}
-				
-				/*for(int a=0;a<list.size();a++){
-					if(list.size()>43||list.get(a).contains("平均日產能")||list.get(a).contains("庫存天數")){						
-						response.getWriter().print("<script>window.parent.layer.msg('項目不正確')</script>");
-						break a;
-					}
-					
-				 }*/
-				if(list.size()>35){
+								
+				if(list.size()<23||list.size()>35){
 					response.getWriter().print("<script>window.parent.layer.msg('項目不正確')</script>");
 					break a;
-				}
-				
-				
+				}		
 				String[] array_head =list.get(0).split("__");
 				for(int i=4;i<array_head.length;i++){
 					list_factcode.add(array_head[i].trim());
@@ -304,7 +272,7 @@ public class WebObjsBAction extends ActionSupport implements ServletResponseAwar
 					response.getWriter().print("<script>window.parent.layer.alert('請核對正確的廠別狀態:"+sb.toString()+"',8)</script>");
 					break;
 				}
-				for(int i=4;i<array_head.length;i++){//for b
+				for(int i=4;i<array_head.length;i++){
 					WebFact fact=new WebFact(new WebFactId(factNo,array_head[i].trim()));
 					WebObjsB obj=new WebObjsB(new WebObjsBId(fact,yymm));								
 					obj.setOnModulus(Double.valueOf(list.get(1).split(SEPARATOR)[i]));
@@ -342,10 +310,10 @@ public class WebObjsBAction extends ActionSupport implements ServletResponseAwar
 					obj.setUsername(user.getUsername());
 					obj.setDatecreate(new SimpleDateFormat("yyyyMMdd").format(new Date()));
 					list_b.add(obj);
-				}//for b
+				}
 				webobjbservices.addMore(list_b);
 				response.getWriter().print("<script>window.parent.layer.msg('導入成功',3,1)</script>");
-			}//for a
+			}
 						
 		}catch(Exception e){
 			System.out.println(e);
@@ -395,9 +363,17 @@ public class WebObjsBAction extends ActionSupport implements ServletResponseAwar
 	
 	/*************************************************工廠報表(一個月每天情況)***********************************************************/
 	public void print() throws ParseException, IOException{
-		HSSFWorkbook wb=new HSSFWorkbook();
-		Map<String,Object>map_cs=findStyles2003(wb);				
-		List<VWebobjBObj>list_objs=webobjbservices.findByYymm2(factNo.split("__")[0], yymm);		
+		XSSFWorkbook wb=new XSSFWorkbook();
+		Map<String,Object>map_cs=findStyles2007(wb);				
+		List<VWebobjBObj>list_objs=webobjbservices.findByYymm2(factNo.split("__")[0], yymm);
+		
+		Double work_days=0.0;//工作日天數
+		for(VWebobjBObj obj:list_objs){
+			if("0".equals(obj.getWorkorholiday())){
+				work_days++;
+			}
+		}
+		
 		switch(list_objs.size()){//switch		
 		case 0:
 			response.setContentType("text/html;charset=utf-8");
@@ -492,9 +468,9 @@ public class WebObjsBAction extends ActionSupport implements ServletResponseAwar
 			}
 			
 		
-			HSSFSheet sheet=wb.createSheet(yymm+"工廠訊息");
-			HSSFSheet sheet2=wb.createSheet(yymm+"提報事項");
-			init(sheet,map_cs,map,list_lg,days,map2);
+			XSSFSheet sheet=wb.createSheet(yymm+"工廠訊息");
+			XSSFSheet sheet2=wb.createSheet(yymm+"提報事項");
+			init(sheet,map_cs,map,list_lg,days,map2,work_days);
 			init2(sheet2,map_cs,map,days);
 			
 			try {				
@@ -523,10 +499,10 @@ public class WebObjsBAction extends ActionSupport implements ServletResponseAwar
 	
 	
 							
-	public void init(HSSFSheet sheet,Map<String,Object>map_cs,Map<String,Object>map,List<VWebobjBObj>list_lg,int days,Map<String,Object>map2) throws ParseException{				
-		HSSFCellStyle cs=(HSSFCellStyle)map_cs.get("cs");
-		HSSFCellStyle cs_head=(HSSFCellStyle)map_cs.get("cs_head");
-		HSSFCellStyle cs_title=(HSSFCellStyle)map_cs.get("cs_title");		
+	public void init(XSSFSheet sheet,Map<String,Object>map_cs,Map<String,Object>map,List<VWebobjBObj>list_lg,int days,Map<String,Object>map2,Double work_days) throws ParseException{				
+		XSSFCellStyle cs=(XSSFCellStyle)map_cs.get("cs");
+		XSSFCellStyle cs_head=(XSSFCellStyle)map_cs.get("cs_head");
+		XSSFCellStyle cs_title=(XSSFCellStyle)map_cs.get("cs_title");		
 		List<String>list_col=findItems();
 		List<String>list_col2=findItems2();
 			sheet.setColumnWidth(1, 5000);
@@ -572,8 +548,9 @@ public class WebObjsBAction extends ActionSupport implements ServletResponseAwar
 				for(int a=0;a<list.size();a++){						
 					List<Double>list_db=objToDouble(list.get(a));
 					for(int b=0;b<list_db.size();b++){
-						sheet.getRow(b+temp+1).getCell(a+2).setCellValue(list_db.get(b));
-						sheet.getRow(b+temp+1).getCell(a+2).setCellStyle(this.selectStyle2003(b, map_cs));
+						//sheet.getRow(b+temp+1).getCell(a+2).setCellValue(list_db.get(b));
+						this.selectValue_db(sheet.getRow(b+temp+1).getCell(a+2), list.get(a).getWorkorholiday(), list_db.get(b));
+						sheet.getRow(b+temp+1).getCell(a+2).setCellStyle(this.selectStyle2007(b, map_cs,0,list.get(a).getWorkorholiday(),list_db.get(b)));
 					}																
 				}
 				
@@ -585,9 +562,8 @@ public class WebObjsBAction extends ActionSupport implements ServletResponseAwar
 				List<Double>list_sum=objToDouble((VWebobjBObj)map2.get(factcode));
 				for(int b=0;b<list_sum.size();b++){
 					sheet.getRow(b+temp+1).getCell(2+days).setCellValue(list_sum.get(b));
-					sheet.getRow(b+temp+1).getCell(3+days).setCellValue(list_sum.get(b)/30);
-					sheet.getRow(b+temp+1).getCell(2+days).setCellStyle(this.selectStyle2003(b, map_cs));
-					sheet.getRow(b+temp+1).getCell(3+days).setCellStyle(this.selectStyle2003(b, map_cs));
+					sheet.getRow(b+temp+1).getCell(2+days).setCellStyle(this.selectStyle2007(b, map_cs,1,null,null));
+					sheet.getRow(b+temp+1).getCell(3+days).setCellStyle(this.selectStyle2007(b, map_cs,1,null,null));
 				}
 				
 				temp=temp+list_col.size()+1;
@@ -628,10 +604,10 @@ public class WebObjsBAction extends ActionSupport implements ServletResponseAwar
 	}
 	
 	
-	public void init2(HSSFSheet sheet,Map<String,Object>map_cs,Map<String,Object>map,int days) throws ParseException{				
-		HSSFCellStyle cs=(HSSFCellStyle)map_cs.get("cs");
-		HSSFCellStyle cs_head=(HSSFCellStyle)map_cs.get("cs_head");
-		HSSFCellStyle cs_title=(HSSFCellStyle)map_cs.get("cs_title");	
+	public void init2(XSSFSheet sheet,Map<String,Object>map_cs,Map<String,Object>map,int days) throws ParseException{				
+		XSSFCellStyle cs=(XSSFCellStyle)map_cs.get("cs");
+		XSSFCellStyle cs_head=(XSSFCellStyle)map_cs.get("cs_head");
+		XSSFCellStyle cs_title=(XSSFCellStyle)map_cs.get("cs_title");	
 		List<String>list_col=findItems3();
 			sheet.setColumnWidth(1, 5000);
 			for(int a=0;a<list_col.size()*map.size()+10;a++){
@@ -673,10 +649,12 @@ public class WebObjsBAction extends ActionSupport implements ServletResponseAwar
 				}
 				List<VWebobjBObj>list=(List<VWebobjBObj>)map.get(factcode);					
 				for(int a=0;a<list.size();a++){						
-					List<String>list_db=objToString(list.get(a));
-					for(int b=0;b<list_db.size();b++){
-						sheet.getRow(b+temp+1).getCell(a+2).setCellValue(list_db.get(b));
-						sheet.getRow(b+temp+1).getCell(a+2).setCellStyle(cs);
+					List<String>list_str=objToString(list.get(a));
+					for(int b=0;b<list_str.size();b++){
+						/*sheet.getRow(b+temp+1).getCell(a+2).setCellValue(list_str.get(b));
+						sheet.getRow(b+temp+1).getCell(a+2).setCellStyle(cs);*/
+						this.selectValue_str(sheet.getRow(b+temp+1).getCell(a+2), list.get(a).getWorkorholiday(), list_str.get(b));
+						sheet.getRow(b+temp+1).getCell(a+2).setCellStyle(this.selectStyle2007(b, map_cs, 0, list.get(a).getWorkorholiday(), list_str.get(b)));
 					}																
 				}										
 				temp=temp+list_col.size()+1;
@@ -1027,7 +1005,7 @@ public void init_more(XSSFSheet sheet,Map<String,Object>map,Map<String,Object>ma
 				List<Double>list_db=this.objToDouble(list_obj.get(a));
 				for(int b=0;b<list_db.size();b++){
 					sheet.getRow(3+b+temp1_1).getCell(3+a+temp).setCellValue(list_db.get(b));
-					sheet.getRow(3+b+temp1_1).getCell(3+a+temp).setCellStyle(this.selectStyle2007(b, map_style));
+					sheet.getRow(3+b+temp1_1).getCell(3+a+temp).setCellStyle(this.selectStyle2007(b, map_style,1,null,null));
 				}
 			}						
 			temp=temp+length;
@@ -1055,7 +1033,7 @@ public void init_more(XSSFSheet sheet,Map<String,Object>map,Map<String,Object>ma
 			List<Long>ll=this.objToLong(list_obj2.get(a));
 			for(int b=0;b<ll.size();b++){
 				sheet.getRow(1+temp2+temp1_1+b).getCell(3+a).setCellValue(ll.get(b));
-				sheet.getRow(1+temp2+temp1_1+b).getCell(3+a).setCellStyle(this.selectStyle2007(b, map_style));
+				sheet.getRow(1+temp2+temp1_1+b).getCell(3+a).setCellStyle(this.selectStyle2007(b, map_style,1,null,null));
 			}
 						
 		}
@@ -1263,9 +1241,9 @@ public void init_more2(XSSFSheet sheet,Map<String,Object>map,Map<String,Object>m
 				sheet.getRow(2+temp1_1).getCell(3+a+temp).setCellValue(list_obj.get(a).getId().getWebFact().getFactSname());
 				sheet.getRow(2+temp1_1).getCell(3+a+temp).setCellStyle(cs_head);
 				List<Double>list_db=this.objToDouble(list_obj.get(a));
-				for(int b=0;b<list_db.size();b++){
-					sheet.getRow(3+b+temp1_1).getCell(3+a+temp).setCellValue(list_db.get(b));
-					sheet.getRow(3+b+temp1_1).getCell(3+a+temp).setCellStyle(this.selectStyle2007(b, map_style));
+				for(int b=0;b<list_db.size();b++){									
+					this.selectValue_db(sheet.getRow(3+b+temp1_1).getCell(3+a+temp), list_obj.get(a).getWorkorholiday(), list_db.get(b));
+					sheet.getRow(3+b+temp1_1).getCell(3+a+temp).setCellStyle(this.selectStyle2007(b, map_style,0,list_obj.get(a).getWorkorholiday(),list_db.get(b)));
 				}
 				
 			}
@@ -1386,9 +1364,11 @@ public void init_more2_b(XSSFSheet sheet,Map<String,Object>map,Map<String,Object
 			sheet.getRow(2+temp1_1).getCell(2+a+temp).setCellValue(list_obj.get(a).getId().getWebFact().getFactSname());
 			sheet.getRow(2+temp1_1).getCell(2+a+temp).setCellStyle(cs_head);
 			List<String>list_str=this.objToString(list_obj.get(a));
-			for(int b=0;b<list_str.size();b++){
-				sheet.getRow(3+temp1_1+b).getCell(2+a+temp).setCellValue(list_str.get(b));
-				sheet.getRow(3+temp1_1+b).getCell(2+a+temp).setCellStyle(cs);
+			for(int b=0;b<list_str.size();b++){				
+				//sheet.getRow(3+temp1_1+b).getCell(2+a+temp).setCellStyle(cs);
+				this.selectValue_str(sheet.getRow(3+temp1_1+b).getCell(2+a+temp), list_obj.get(a).getWorkorholiday(), list_str.get(b));
+				sheet.getRow(3+temp1_1+b).getCell(2+a+temp).setCellStyle(this.selectStyle2007(b, map_style, 0, list_obj.get(a).getWorkorholiday(), list_str.get(b)));
+				
 			}
 		}		
 		
@@ -1530,37 +1510,87 @@ public void init_more2_b(XSSFSheet sheet,Map<String,Object>map,Map<String,Object
 		String temp = format.format(s);
 		return temp;
 	}
-	
-	public HSSFCellStyle selectStyle2003(int a,Map<String,Object>map_style){
-		HSSFCellStyle cs;//  cs_poi
-		
-		if(a<4||a==7||a==8){
-			cs=(HSSFCellStyle)map_style.get("cs_poi");
-		}else if(a==14||a==17){
-			cs=(HSSFCellStyle)map_style.get("cs_percent");
-		}else{
-			cs=(HSSFCellStyle)map_style.get("cs_poi1");
+				
+	/**
+	 * 
+	 * @param a
+	 * @param map_style
+	 * @param type  0 非统计單元格       1統計單元格          (PS：月報表的都採用統計單元格)
+	 * @param workorholiday   "0"工作日        "1"假日         "2"未排產
+	 * @param ele_data
+	 * @return
+	 */
+	public XSSFCellStyle selectStyle2007(int a,Map<String,Object>map_style,int type,String workorholiday,Object ele_data){				
+		XSSFCellStyle cs=(XSSFCellStyle)map_style.get("cs");
+		switch(type){
+		case 0:
+			if("0".equals(workorholiday)){//工作日
+				if(ele_data==null||ele_data.equals(0.0)||"null".equals(ele_data)||"無".equals(ele_data)){//待補
+					cs=(XSSFCellStyle)map_style.get("cs_font_red");
+				}else{
+					if(a<4||a==7||a==8){
+						cs=(XSSFCellStyle)map_style.get("cs_poi");
+					}else if(a==14||a==17){
+						cs=(XSSFCellStyle)map_style.get("cs_percent");
+					}else{
+						cs=(XSSFCellStyle)map_style.get("cs_poi1");
+					}
+				}
+			
+			}
+			if("1".equals(workorholiday)){//假日
+				cs=(XSSFCellStyle)map_style.get("cs_font_blue");
+			}
+			if("2".equals(workorholiday)){//未排产
+				cs=(XSSFCellStyle)map_style.get("cs_font_green");
+			}
+			break;
+			
+		case 1:
+			if(a<4||a==7||a==8){
+				cs=(XSSFCellStyle)map_style.get("cs_poi");
+			}else if(a==14||a==17){
+				cs=(XSSFCellStyle)map_style.get("cs_percent");
+			}else{
+				cs=(XSSFCellStyle)map_style.get("cs_poi1");
+			}
+			break;
 		}		
 		return cs;
 	}
 	
-	public XSSFCellStyle selectStyle2007(int a,Map<String,Object>map_style){
-		XSSFCellStyle cs;//  cs_poi
-		
-		if(a<4||a==7||a==8){
-			cs=(XSSFCellStyle)map_style.get("cs_poi");
-		}else if(a==14||a==17){
-			cs=(XSSFCellStyle)map_style.get("cs_percent");
-		}else{
-			cs=(XSSFCellStyle)map_style.get("cs_poi1");
-		}		
-		return cs;
+	public void selectValue_db(XSSFCell cell,String workorholiday,Double ele_data){
+		if("0".equals(workorholiday)){
+			if(ele_data==null||(Double)ele_data==0){
+				cell.setCellValue("待補");
+			}
+			else{
+				cell.setCellValue(ele_data);
+			}
+		}
+		if("1".equals(workorholiday)){
+			cell.setCellValue("假日");
+		}
+		if("2".equals(workorholiday)){
+			cell.setCellValue("未排產");
+		}
 	}
 	
-	public Map<String,Object> findStyles2003(HSSFWorkbook wb){		
-		Map<String,Object>map=GlobalMethod.findStyles(wb);				
-		return map;
-	}
+	public void selectValue_str(XSSFCell cell,String workorholiday,String ele_data){
+		if("0".equals(workorholiday)){
+			if(ele_data==null||"null".equals(ele_data)||"無".equals(ele_data)){
+				cell.setCellValue("待補");
+			}else{
+				cell.setCellValue(ele_data);
+			}
+		}
+		if("1".equals(workorholiday)){
+			cell.setCellValue("假日");
+		}
+		if("2".equals(workorholiday)){
+			cell.setCellValue("未排產");
+		}
+	}		
 	
 	public Map<String,Object> findStyles2007(XSSFWorkbook wb){		
 		Map<String,Object>map=GlobalMethod.findStyles2007(wb);				
