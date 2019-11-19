@@ -73,31 +73,7 @@
 	
 <script>
 
-	function checkForm(){
-		/* var id_file=jq("#id_file").val();
-		var extendName=id_file.substr(id_file.lastIndexOf(".")).toLowerCase();
-		if(id_file==""){
-			layer.alert("請選擇Excel文檔");
-			return false;
-		}else if(extendName!=".xls"&&extendName!=".xlsx"){
-			layer.alert("僅允許Excel文檔");
-			return false;
-		}else if(jq("#factNo_a").val()=="nothing"){
-			layer.alert("請選擇廠別");
-			return false;
-		}else if(jq("#yymm_in").val()==""){
-			layer.alert("請選擇日期");
-			return false;
-		}else if(jq("#workholiday").val()==""){
-		     layer.alert("請選擇日期性質");
-			 return false;		
-		}else{
-			layer.load("請稍等...");
-			jq("#upload_form").submit();
-		} */
-		
-		
-		
+	function checkForm(){	
 		var id_file=jq("#id_file").val();
 		var extendName=id_file.substr(id_file.lastIndexOf(".")).toLowerCase();
 		if(jq("#workholiday").val()==""){

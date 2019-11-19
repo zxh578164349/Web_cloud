@@ -29,7 +29,7 @@
 			<table class="table table-striped table-hover table-bordered">
 				<h3>
 					<s:if test='#session.loginUser.userread!="1"'>
-						<!--<input type="button" class="btn btn-info" value="添加" onclick="loadUrl('saveAndUpdate/fixedSaveOrUpdate.jsp')"/>-->
+						<input type="button" class="btn btn-info" value="添加" onclick="loadUrl('saveAndUpdate/web_objs_bSaveOrUpdate.jsp')"/>
 					</s:if>
 					<span id="h2_title">工廠訊息每日更新</span>
 				</h3>
@@ -118,19 +118,19 @@
 
 							<s:if test='#session.loginUser.userread!="1"'>
 								<td>
-									<%--<form action="weballobj_findWloById" method="post" id="subform${x.index}">										
-										<input type="hidden" value="<s:property value='id.fact.id.factNo'/>" name="factNo" />
-										<input type="hidden" value="<s:property value='id.fact.id.factCode'/>" name="factCode" />											
-										<input type="hidden" value="<s:property value='id.yymm'/>" name="yymm" />											
+									<form action="" method="post" id="subform${x.index}">										
+										<input type="hidden" value="<s:property value='id.webFact.id.factNo'/>" name="factNo" />
+										<input type="hidden" value="<s:property value='id.webFact.id.factArea'/>" name="factCode" />											
+										<input type="hidden" value="<s:property value='id.yymmdd'/>" name="yymmdd" />											
 									</form> 
-									<a href="javascript:findById('subform${x.index}','webwlo_findWloById')">
+									<a href="javascript:findById_form('subform${x.index}','webobjb_findById')">
 									<img alt="修改" src="images/icon/edit001.png" title="修改">										
-								    </a>--%>
-									<form action="weballobjb_delete" method="post" id="2subform${x.index}" style="float:left">
+								    </a>
+									<form action="" method="post" id="2subform${x.index}" style="float:left">
 										<input type="hidden" value="<s:property value='id.webFact.id.factNo'/>" name="factNo" /> <input
 											type="hidden" value="<s:property value='id.webFact.id.factArea'/>" name="factCode" /> <input
-											type="hidden" value="<s:property value='id.yymmdd'/>" name="yymm" />
-									</form> <a href="javascript:isDelete('2subform${x.index}','webobja_delete')"> <img alt="刪除"
+											type="hidden" value="<s:property value='id.yymmdd'/>" name="yymmdd" />
+									</form> <a href="javascript:isDelete('2subform${x.index}','webobjb_delete')"> <img alt="刪除"
 										src="images/icon/delete001.png" title="刪除"> </a></td>
 							</s:if>
 

@@ -111,6 +111,12 @@ public class WebObjsBServicesImpl implements IWebObjsBServices{
 	}
 
 
+	public void add(WebObjsB obj) {
+		// TODO Auto-generated method stub
+		webobjbdao.add(obj);
+	}
+
+
 	
 
 }

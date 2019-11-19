@@ -934,6 +934,10 @@
 		   <result name="beanList">page/webobjb.jsp</result>
 		   <result name="beanList1">page/table1/webobjb1.jsp</result>
 		   <result name="delete" type="redirectAction">webobja_findPageBean3</result>
+		   <result name="add" type="json">
+		      <param name="root">ajaxResult</param>
+		   </result>
+		   <result name="findById">saveAndUpdate/web_objs_bSaveOrUpdate.jsp</result>
 		</action>
 		
 	</package>

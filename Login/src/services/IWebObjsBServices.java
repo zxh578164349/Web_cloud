@@ -34,6 +34,8 @@ public interface IWebObjsBServices {
 	public List<VWebobjBObj5> findVWebobjBObj5(String yymm);
 	public List<String[]> findNoInput(String yymmdd);
 	
+	public void add(WebObjsB obj);
+	
 	
 
 }

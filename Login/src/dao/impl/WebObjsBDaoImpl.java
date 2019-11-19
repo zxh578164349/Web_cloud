@@ -200,4 +200,10 @@ public class WebObjsBDaoImpl extends Basedao implements IWebObjsBDao{
 		return list;
 	}
 
+	public void add(WebObjsB obj) {
+		// TODO Auto-generated method stub
+		super.merge(obj);
+		
+	}
+
 }

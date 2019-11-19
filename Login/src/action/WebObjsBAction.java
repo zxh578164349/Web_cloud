@@ -72,9 +72,27 @@ public class WebObjsBAction extends ActionSupport implements ServletResponseAwar
 	private String yymmdd;
 	private int emailMk;
 	private String workorholiday;
+	private WebObjsB obj;
+	private String isnull;
     
     
      
+	public String getIsnull() {
+		return isnull;
+	}
+
+	public void setIsnull(String isnull) {
+		this.isnull = isnull;
+	}
+
+	public WebObjsB getObj() {
+		return obj;
+	}
+
+	public void setObj(WebObjsB obj) {
+		this.obj = obj;
+	}
+
 	public String getWorkorholiday() {
 		return workorholiday;
 	}
@@ -224,97 +242,135 @@ public class WebObjsBAction extends ActionSupport implements ServletResponseAwar
 		this.webobjbservices = webobjbservices;
 	}
 
+	
+	
+	public String add(){
+		try{
+			if(isnull!=null&&!"".equals(isnull)){
+				WebObjsB o=webobjbservices.findById(obj.getId().getWebFact().getId().getFactNo(), obj.getId().getWebFact().getId().getFactArea(), obj.getId().getYymmdd());
+				if(o==null){					
+					webobjbservices.add(obj);
+					ajaxResult="0";//保存成功
+				}else{
+					ajaxResult="2";//數據已存在
+				}
+			}else{				
+				webobjbservices.add(obj);
+				ajaxResult="0";
+			}
+		}catch(Exception e){
+			ajaxResult="1";//保存失敗
+			e.printStackTrace();
+		}		
+		return "add";
+	}
+	
 	public void addMore() throws IOException{
 		response.setContentType("text/html;charset=utf-8");
+		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
 		try{
-			String path="d:\\Webobjs_b_backup\\"+new SimpleDateFormat("yyyyMMdd").format(new Date());//Excel文檔存放目錄
-			ajaxResult="0";				
-			if(file!=null){		
-				File uploadFile_backup=new File(path);	
-				if(!uploadFile_backup.exists()){
-					uploadFile_backup.mkdirs();
-				}																						
-						FileInputStream in=new FileInputStream(file);
-						FileOutputStream out_backup=new FileOutputStream(uploadFile_backup+"\\"+fileFileName);//備份
-						byte[]b=new byte[1024];
-						int length=0;
-						while((length=in.read(b))>0){
-							out_backup.write(b,0,length);
-						}																																				
-			}
-			WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");			
-			Map<String,Object>map=ImportExcel.exportListFromFile(new File(path+"\\"+fileFileName));
-			List<String>list_factArea=webFactSer.findfactAreaByFactNo(factNo);
-			a:for(String key:map.keySet()){
-				List<WebObjsB>list_b=new ArrayList<WebObjsB>();
-				List<String>list_factcode=new ArrayList<String>();
-				List<String>list=(List<String>)map.get(key);
-				if(!list.get(0).contains("__序號__項目__單位")){				
-					response.getWriter().print("<script>window.parent.showDiv();window.parent.layer.msg('表格式不符合要求')</script>");
-					break;
+			if("0".equals(workorholiday)){
+				String path="d:\\Webobjs_b_backup\\"+new SimpleDateFormat("yyyyMMdd").format(new Date());//Excel文檔存放目錄
+				ajaxResult="0";				
+				if(file!=null){		
+					File uploadFile_backup=new File(path);	
+					if(!uploadFile_backup.exists()){
+						uploadFile_backup.mkdirs();
+					}																						
+							FileInputStream in=new FileInputStream(file);
+							FileOutputStream out_backup=new FileOutputStream(uploadFile_backup+"\\"+fileFileName);//備份
+							byte[]b=new byte[1024];
+							int length=0;
+							while((length=in.read(b))>0){
+								out_backup.write(b,0,length);
+							}																																				
 				}
-								
-				if(list.size()<23||list.size()>35){
-					response.getWriter().print("<script>window.parent.layer.msg('項目不正確')</script>");
-					break a;
-				}		
-				String[] array_head =list.get(0).split("__");
-				for(int i=4;i<array_head.length;i++){
-					list_factcode.add(array_head[i].trim());
-				}
-				if(!list_factArea.containsAll(list_factcode)){
-					StringBuilder sb=new StringBuilder();
-					sb.append("(");					
-					for(String factArea:list_factArea){
-						sb.append(factArea+" ");
+							
+				Map<String,Object>map=ImportExcel.exportListFromFile(new File(path+"\\"+fileFileName));
+				List<String>list_factArea=webFactSer.findfactAreaByFactNo(factNo);
+				a:for(String key:map.keySet()){
+					List<WebObjsB>list_b=new ArrayList<WebObjsB>();
+					List<String>list_factcode=new ArrayList<String>();
+					List<String>list=(List<String>)map.get(key);
+					if(!list.get(0).contains("__序號__項目__單位")){				
+						response.getWriter().print("<script>window.parent.showDiv();window.parent.layer.msg('表格式不符合要求')</script>");
+						break;
 					}
-					sb.append(")");
-					response.getWriter().print("<script>window.parent.layer.alert('請核對正確的廠別狀態:"+sb.toString()+"',8)</script>");
-					break;
-				}
-				for(int i=4;i<array_head.length;i++){
-					WebFact fact=new WebFact(new WebFactId(factNo,array_head[i].trim()));
-					WebObjsB obj=new WebObjsB(new WebObjsBId(fact,yymm));								
-					obj.setOnModulus(Double.valueOf(list.get(1).split(SEPARATOR)[i]));
-					obj.setPersonnum(Double.valueOf(list.get(2).split(SEPARATOR)[i]));
-					obj.setStandardOutput(Double.valueOf(list.get(3).split(SEPARATOR)[i]));
-					obj.setActualYield(Double.valueOf(list.get(4).split(SEPARATOR)[i]));
-					obj.setZpObja(Double.valueOf(list.get(5).split(SEPARATOR)[i]));
-					obj.setHostpairs(Double.valueOf(list.get(6).split(SEPARATOR)[i]));
-					obj.setFactpairs(Double.valueOf(list.get(7).split(SEPARATOR)[i]));
-					obj.setSamplepairs(Double.valueOf(list.get(8).split(SEPARATOR)[i]));
-					obj.setOutnum(Double.valueOf(list.get(9).split(SEPARATOR)[i]));
-					obj.setBacknum(Double.valueOf(list.get(10).split(SEPARATOR)[i]));
-					obj.setWorkhours(Double.valueOf(list.get(11).split(SEPARATOR)[i]));
-					obj.setDaycount(Double.valueOf(list.get(12).split(SEPARATOR)[i]));
-					if("0".equals(workorholiday)&&"0.0".equals(list.get(12).split(SEPARATOR)[i])){
-						obj.setDaycount(1.0);
-					}else{
+									
+					if(list.size()<23||list.size()>35){
+						response.getWriter().print("<script>window.parent.layer.msg('項目不正確')</script>");
+						break a;
+					}		
+					String[] array_head =list.get(0).split("__");
+					for(int i=4;i<array_head.length;i++){
+						list_factcode.add(array_head[i].trim());
+					}
+					if(!list_factArea.containsAll(list_factcode)){
+						StringBuilder sb=new StringBuilder();
+						sb.append("(");					
+						for(String factArea:list_factArea){
+							sb.append(factArea+" ");
+						}
+						sb.append(")");
+						response.getWriter().print("<script>window.parent.layer.alert('請核對正確的廠別狀態:"+sb.toString()+"',8)</script>");
+						break;
+					}
+					for(int i=4;i<array_head.length;i++){
+						WebFact fact=new WebFact(new WebFactId(factNo,array_head[i].trim()));
+						WebObjsB obj=new WebObjsB(new WebObjsBId(fact,yymm));								
+						obj.setOnModulus(Double.valueOf(list.get(1).split(SEPARATOR)[i]));
+						obj.setPersonnum(Double.valueOf(list.get(2).split(SEPARATOR)[i]));
+						obj.setStandardOutput(Double.valueOf(list.get(3).split(SEPARATOR)[i]));
+						obj.setActualYield(Double.valueOf(list.get(4).split(SEPARATOR)[i]));
+						obj.setZpObja(Double.valueOf(list.get(5).split(SEPARATOR)[i]));
+						obj.setHostpairs(Double.valueOf(list.get(6).split(SEPARATOR)[i]));
+						obj.setFactpairs(Double.valueOf(list.get(7).split(SEPARATOR)[i]));
+						obj.setSamplepairs(Double.valueOf(list.get(8).split(SEPARATOR)[i]));
+						obj.setOutnum(Double.valueOf(list.get(9).split(SEPARATOR)[i]));
+						obj.setBacknum(Double.valueOf(list.get(10).split(SEPARATOR)[i]));
+						obj.setWorkhours(Double.valueOf(list.get(11).split(SEPARATOR)[i]));
 						obj.setDaycount(Double.valueOf(list.get(12).split(SEPARATOR)[i]));
+						if("0".equals(workorholiday)&&"0.0".equals(list.get(12).split(SEPARATOR)[i])){
+							obj.setDaycount(1.0);
+						}else{
+							obj.setDaycount(Double.valueOf(list.get(12).split(SEPARATOR)[i]));
+						}
+						obj.setObjA1(Double.valueOf(list.get(13).split(SEPARATOR)[i]));
+						obj.setObjA2(Double.valueOf(list.get(14).split(SEPARATOR)[i]));
+						obj.setObjA3(Double.valueOf(list.get(15).split(SEPARATOR)[i]));
+						obj.setObjA4(Double.valueOf(list.get(16).split(SEPARATOR)[i]));	
+						obj.setObjA5(Double.valueOf(list.get(17).split(SEPARATOR)[i]).longValue());
+						obj.setObjA6(Double.valueOf(list.get(18).split(SEPARATOR)[i]).longValue());
+						obj.setObjA7(Double.valueOf(list.get(19).split(SEPARATOR)[i]).longValue());
+						obj.setObjA8(Double.valueOf(list.get(20).split(SEPARATOR)[i]).longValue());
+						obj.setObjA9(Double.valueOf(list.get(21).split(SEPARATOR)[i]).longValue());
+						obj.setObjA10("0.0".equals(list.get(22).split(SEPARATOR)[i])?"null":list.get(22).split(SEPARATOR)[i]);
+						obj.setObjA11("0.0".equals(list.get(23).split(SEPARATOR)[i])?"null":list.get(23).split(SEPARATOR)[i]);
+						obj.setObjA12("0.0".equals(list.get(24).split(SEPARATOR)[i])?"null":list.get(24).split(SEPARATOR)[i]);
+						obj.setObjA13("0.0".equals(list.get(25).split(SEPARATOR)[i])?"null":list.get(25).split(SEPARATOR)[i]);
+						obj.setObjA14("0.0".equals(list.get(26).split(SEPARATOR)[i])?"null":list.get(26).split(SEPARATOR)[i]);	
+						obj.setWorkorholiday(workorholiday);
+						obj.setUsername(user.getUsername());
+						obj.setDatecreate(new SimpleDateFormat("yyyyMMdd").format(new Date()));
+						list_b.add(obj);
 					}
-					obj.setObjA1(Double.valueOf(list.get(13).split(SEPARATOR)[i]));
-					obj.setObjA2(Double.valueOf(list.get(14).split(SEPARATOR)[i]));
-					obj.setObjA3(Double.valueOf(list.get(15).split(SEPARATOR)[i]));
-					obj.setObjA4(Double.valueOf(list.get(16).split(SEPARATOR)[i]));	
-					obj.setObjA5(Double.valueOf(list.get(17).split(SEPARATOR)[i]).longValue());
-					obj.setObjA6(Double.valueOf(list.get(18).split(SEPARATOR)[i]).longValue());
-					obj.setObjA7(Double.valueOf(list.get(19).split(SEPARATOR)[i]).longValue());
-					obj.setObjA8(Double.valueOf(list.get(20).split(SEPARATOR)[i]).longValue());
-					obj.setObjA9(Double.valueOf(list.get(21).split(SEPARATOR)[i]).longValue());
-					obj.setObjA10("0.0".equals(list.get(22).split(SEPARATOR)[i])?"null":list.get(22).split(SEPARATOR)[i]);
-					obj.setObjA11("0.0".equals(list.get(23).split(SEPARATOR)[i])?"null":list.get(23).split(SEPARATOR)[i]);
-					obj.setObjA12("0.0".equals(list.get(24).split(SEPARATOR)[i])?"null":list.get(24).split(SEPARATOR)[i]);
-					obj.setObjA13("0.0".equals(list.get(25).split(SEPARATOR)[i])?"null":list.get(25).split(SEPARATOR)[i]);
-					obj.setObjA14("0.0".equals(list.get(26).split(SEPARATOR)[i])?"null":list.get(26).split(SEPARATOR)[i]);	
+					webobjbservices.addMore(list_b);
+					response.getWriter().print("<script>window.parent.layer.msg('導入成功',3,1)</script>");
+			}
+			
+			}else{
+				List<WebObjsB>list=new ArrayList<WebObjsB>();
+				List<String>factcodes=webFactSer.findFactCodeByFactNo_show(factNo);
+				for(String factcode:factcodes){
+					WebObjsB obj=new WebObjsB(new WebObjsBId(new WebFact(new WebFactId(factNo,factcode)),yymm));
 					obj.setWorkorholiday(workorholiday);
 					obj.setUsername(user.getUsername());
 					obj.setDatecreate(new SimpleDateFormat("yyyyMMdd").format(new Date()));
-					list_b.add(obj);
+					list.add(obj);
 				}
-				webobjbservices.addMore(list_b);
+				webobjbservices.addMore(list);
 				response.getWriter().print("<script>window.parent.layer.msg('導入成功',3,1)</script>");
-			}
-						
+			}					
 		}catch(Exception e){
 			System.out.println(e);
 			response.getWriter().print("<script>window.parent.layer.msg('導入錯誤',3,3);</script>");
@@ -358,6 +414,11 @@ public class WebObjsBAction extends ActionSupport implements ServletResponseAwar
 		log.setYymm(yymmdd);
 		webobjbservices.delete(factNo, factCode, yymmdd,log);
 		return "delete";
+	}
+	
+	public String findById(){
+		obj=webobjbservices.findById(factNo, factCode, yymmdd);
+		return "findById";
 	}
 	
 	

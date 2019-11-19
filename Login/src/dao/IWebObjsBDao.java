@@ -40,5 +40,7 @@ public interface IWebObjsBDao {
 	public List<VWebobjBObj4> findVWebobjBObj4(String yymm);
 	public List<VWebobjBObj5> findVWebobjBObj5(String yymm);
 	/*****************************每日訊息報表*********************************/
+	
+	public void add(WebObjsB obj);
 
 }
