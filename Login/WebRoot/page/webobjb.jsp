@@ -25,9 +25,7 @@
 	<s:if test='#session.loginUser.userread!="1"'>
 	<form action="webobjb_addMore"  method="post" enctype="multipart/form-data" id="upload_form" target="frameFile">
 	  <table id="tb_search">
-	      <td>	 
-	         <input type="file" name="file"  id="id_file" class="btn btn-info"/>	        	       
-	       </td>
+	     <tr>
 	       <td>
 	          <s:if test="#session.factNo=='tw'">
 					<select name="factNo" id="factNo_a" class="search" >
@@ -57,11 +55,15 @@
 							<option value="0">工作日</option>
 							<option value="1">假日</option>
 							<option value="2">未排產</option>
-					</select>
-			</td>		 
+			</select>
+			</td>
+			<td>	 
+	         <input type="file" name="file"  id="id_file" class="btn btn-info"/>	        	       
+	       </td>		 
 	       <td>
 	       	    &nbsp;<input value="導入Excel" type=button onclick="checkForm()" id="search_forday" class="btn btn-info"/>
-	       </td>	       
+	     </td>
+	    </tr> 	       
 	  </table>          	
 	</form>
 	</s:if>
@@ -141,49 +143,76 @@
 		});
 	}
 	
-function print(public_form,factNo,yymm,yymm2){
+function print(public_form,factNo,yymm){
+    clearcss();
 	var public_form=jq("#"+public_form);
 	public_form.attr("action","webobjb_print");
 	public_form.attr("target","_blank");	
-	if(jq("#"+factNo).val()=="nothing"||jq("#"+yymm).val()==""||jq("#"+yymm2).val()==""){
-		layer.msg("請選擇廠別和（年月）日期",3,3);
-	}else{
+	if(jq("#"+factNo).val()=="nothing"||jq("#"+factNo).val()==""||jq("#"+yymm).val()==""){
+	    jq("#factNo").css("border-color","red");
+		jq("#yymm").css("border-color","red");
+		layer.msg("請選擇廠別和（年月）日期",3,3);		
+	}else{	
+	    jq("#factNo").css("border-color","");    
+		jq("#yymm").css("border-color","");
 		public_form.submit();
 	}	
 }
 
 function print3(public_form,yymm){
-	//jq("#"+factNo).val("all");
+    clearcss();
 	var public_form=jq("#"+public_form);	
 	public_form.attr("action","webobjb_print_tw");
 	public_form.attr("target","_blank");	
 	if(jq("#"+yymm).val()==""){
+	    jq("#yymm").css("border-color","red");
 		layer.msg("請選（年月）日期",3,3);
 	}else{
+	    jq("#yymm").css("border-color","");
 		public_form.submit();
 	}
 }
 
 function print4(public_form,yymmdd){
-	//jq("#"+factNo).val("all");
+    clearcss();
 	var public_form=jq("#"+public_form);	
 	public_form.attr("action","webobjb_print_tw2");
 	public_form.attr("target","_blank");	
 	if(jq("#"+yymmdd).val()==""){
+	    jq("#yymmdd").css("border-color","red");
 		layer.msg("請選（年月日）日期",3,3);
 	}else{
+	    jq("#yymmdd").css("border-color","");
 		public_form.submit();
 	}
 }
 
 function print5(public_form,yymmdd){
-	//jq("#"+factNo).val("all");
+    clearcss();
 	var public_form=jq("#"+public_form);	
 	public_form.attr("action","autosw_print_manual");
 	public_form.attr("target","_blank");	
 	if(jq("#"+yymmdd).val()==""){
+	    jq("#yymmdd").css("border-color","red");
 		layer.msg("請選（年月日）日期",3,3);
 	}else{
+	    jq("#yymmdd").css("border-color","");
+		public_form.submit();
+	}
+}
+
+function print6(public_form,factNo,year){
+    clearcss();
+	var public_form=jq("#"+public_form);	
+	public_form.attr("action","webobjb_print3");
+	public_form.attr("target","_blank");	
+	if(jq("select[name='factNo']").val()=="nothing"||jq("select[name='factNo']").val()==""||jq("#year").val()==""){
+	    jq("#factNo").css("border-color","red");
+	    jq("#year").css("border-color","red");
+		layer.msg("請選廠別和年份",3,3);
+	}else{
+	    jq("#factNo").css("border-color","");
+	    jq("#year").css("border-color","");
 		public_form.submit();
 	}
 }
@@ -213,6 +242,14 @@ function changeFile(){
    }else{
      jq("#id_file").addClass("disabled");
    }
+}
+
+function clearcss(){
+  jq("#factNo").css("border-color","");
+  jq("#year").css("border-color","");
+  jq("#yymm").css("border-color","");
+  jq("#yymmdd").css("border-color","");
+  
 }
 </script>		
 </body>

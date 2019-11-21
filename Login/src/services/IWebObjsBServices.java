@@ -21,17 +21,20 @@ public interface IWebObjsBServices {
 	
 	
 	public void addMore(List<WebObjsB>list);
-	public PageBean findPageBean(int pageSize,int page,String factNo,String yymm);	
+	public PageBean findPageBean(int pageSize,int page,String factNo,String yymm,String workorholiday);	
 	public WebObjsB findById(String factNo,String factcode,String yymm);
 	public void delete(String factNo,String factCode,String yymm,KyzExpectmatmLog log);
 	public List<WebObjsB> findByYymm(String factno,String yymm);
 	
-	public List<VWebobjBObj> findByYymm2(String factno,String yymm);
-	public List<VWebobjBObj> findObjByDay(String yymmdd);
-	public List<VWebobjBObj3> findByVwebobjb3(String yymmdd);
+	public List<VWebobjBObj> findByYymm2(String factno,String yymm,String workorholiday);
+	public List<VWebobjBObj> findObjByDay(String yymmdd,String workorholiday);
+	public List<VWebobjBObj3> findByVwebobjb3(String yymmdd,String workorholiday);
 	public List<VWebobjBObj> findObjByMonth(String yymm);	
 	public List<VWebobjBObj4> findVWebobjBObj4(String yymm);
+	public List<VWebobjBObj4> findVWebobjBObj4(String factNo, String year);
+	
 	public List<VWebobjBObj5> findVWebobjBObj5(String yymm);
+	
 	public List<String[]> findNoInput(String yymmdd);
 	
 	public void add(WebObjsB obj);

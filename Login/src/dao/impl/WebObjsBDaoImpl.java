@@ -60,7 +60,7 @@ public class WebObjsBDaoImpl extends Basedao implements IWebObjsBDao{
 	}
 
 	public PageBean findPageBean(int pageSize, int page, String factNo,
-			String yymm) {
+			String yymm,String workorholiday) {
 		// TODO Auto-generated method stub
 		Map<String,Object>map=new HashMap<String,Object>();
 		StringBuffer hql=new StringBuffer();
@@ -75,13 +75,17 @@ public class WebObjsBDaoImpl extends Basedao implements IWebObjsBDao{
 			hql.append(" and id.yymmdd like:yymm");
 			map.put("yymm", yymm+"%");
 		}
+		if(workorholiday!=null&&!workorholiday.equals("")){
+			hql.append(" and workorholiday=:workorholiday");
+			map.put("workorholiday", workorholiday);
+		}
 		
-		if(factNo.equals("nothing")&&(yymm==null||yymm.equals(""))){
+		if(factNo.equals("nothing")&&(yymm==null||yymm.equals(""))&&(workorholiday==null||workorholiday.equals(""))){
 			hql.append(" and id.webFact.id.factNo=:factno");
 			map.put("factno", factNo);
 		}
 		hql2.append(hql);
-		hql.append(" order by id.webFact.id.factNo,id.webFact.id.factArea,id.yymmdd ");
+		hql.append(" order by id.webFact.id.factNo,id.webFact.id.factArea,id.yymmdd desc ");
 		int currentPage=PageBean.countCurrentPage(page);		
 		Integer allrow=(Integer)ActionContext.getContext().getSession().get("allrow");
 		if(allrow==null){
@@ -132,22 +136,48 @@ public class WebObjsBDaoImpl extends Basedao implements IWebObjsBDao{
 	}
 		
 
-	public List<VWebobjBObj3> findByVwebobjb3(String yymmdd) {
+	public List<VWebobjBObj3> findByVwebobjb3(String yymmdd,String workorholiday) {
 		// TODO Auto-generated method stub
-		String hql="from VWebobjBObj3 where id.yymmdd=?";
+		/*String hql="from VWebobjBObj3 where id.yymmdd=?";
 		String[]objs={yymmdd};
-		List<VWebobjBObj3>list=super.findAll(hql, objs);
+		List<VWebobjBObj3>list=super.findAll(hql, objs);*/
+		
+		StringBuffer hql=new StringBuffer();
+		Map<String,Object>map=new HashMap<String,Object>();
+		hql.append("from VWebobjBObj3 where 1=1 ");
+		if(yymmdd!=null&&!"".equals(yymmdd)){
+			hql.append(" and id.yymmdd=:yymmdd");
+			map.put("yymmdd", yymmdd);
+		}
+		if(workorholiday!=null&&!"".equals(workorholiday)){
+			hql.append(" and workorholiday=:workorholiday");
+			map.put("workorholiday", workorholiday);
+		}
+		List<VWebobjBObj3>list=super.getAllWithNoPage(hql.toString(), map);
 		for(VWebobjBObj3 obj:list){
 			obj.getId().getFact().getFactSname();
 		}
 		return list;
 	}
 
-	public List<VWebobjBObj> findObjByDay(String yymmdd) {
+	public List<VWebobjBObj> findObjByDay(String yymmdd,String workorholiday) {
 		// TODO Auto-generated method stub
-		String hql="from VWebobjBObj where id.yymmdd=?";
+		/*String hql="from VWebobjBObj where id.yymmdd=?";
 		String[]objs={yymmdd};
-		List<VWebobjBObj>list=super.findAll(hql, objs);
+		List<VWebobjBObj>list=super.findAll(hql, objs);*/
+		
+		StringBuffer hql=new StringBuffer();
+		Map<String,Object>map=new HashMap<String,Object>();
+		hql.append("from VWebobjBObj where 1=1 ");
+		if(yymmdd!=null&&!"".equals(yymmdd)){
+			hql.append(" and id.yymmdd=:yymmdd");
+			map.put("yymmdd", yymmdd);
+		}
+		if(workorholiday!=null&&!"".equals(workorholiday)){
+			hql.append(" and workorholiday=:workorholiday");
+			map.put("workorholiday", workorholiday);
+		}
+		List<VWebobjBObj>list=super.getAllWithNoPage(hql.toString(), map);
 		for(VWebobjBObj obj:list){
 			obj.getId().getWebFact().getFactSname();
 		}
@@ -156,9 +186,9 @@ public class WebObjsBDaoImpl extends Basedao implements IWebObjsBDao{
 
 	public List<VWebobjBObj> findObjByMonth(String yymm) {
 		// TODO Auto-generated method stub
-		String hql="from VWebobjBObj where id.yymmdd like ? order by id.webFact.fcodeIndex,id.webFact.orderNo,id.yymmdd";
+		String hql="from VWebobjBObj where id.yymmdd like ? order by id.webFact.fcodeIndex,id.webFact.orderNo,id.yymmdd ";
 		String[]objs={yymm+"%"};
-		List<VWebobjBObj> list=super.findAll(hql, objs);
+		List<VWebobjBObj> list=super.findAll(hql, objs);		
 		for(VWebobjBObj obj:list){
 			obj.getId().getWebFact().getFactSname();
 		}
@@ -170,11 +200,25 @@ public class WebObjsBDaoImpl extends Basedao implements IWebObjsBDao{
 		return null;
 	}
 
-	public List<VWebobjBObj> findByYymm2(String factno, String yymm) {
+	public List<VWebobjBObj> findByYymm2(String factno, String yymm,String workorholiday) {
 		// TODO Auto-generated method stub
-		String hql="from VWebobjBObj where id.webFact.id.factNo=? and id.yymmdd like ? order by id.webFact.fcodeIndex,id.webFact.orderNo,id.yymmdd";
-		String[]objs={factno,yymm+"%"};
-		List<VWebobjBObj> list=super.findAll(hql, objs);
+		StringBuffer hql=new StringBuffer();
+		Map<String,Object>map=new HashMap<String,Object>();
+		hql.append("from VWebobjBObj where 1=1 ");
+		if(factno!=null&&!"".equals(factno)){
+			hql.append(" and id.webFact.id.factNo=:factno");
+			map.put("factno", factno);
+		}
+		if(yymm!=null&&!"".equals(yymm)){
+			hql.append(" and id.yymmdd like :yymm");
+			map.put("yymm", yymm+"%");
+		}
+		if(workorholiday!=null&&!"".equals(workorholiday)){
+			hql.append(" and workorholiday=:workorholiday");
+			map.put("workorholiday", workorholiday);
+		}
+		hql.append(" order by id.webFact.fcodeIndex,id.webFact.orderNo,id.yymmdd");
+		List<VWebobjBObj> list=super.getAllWithNoPage(hql.toString(), map);
 		return list;
 	}
 
@@ -182,6 +226,17 @@ public class WebObjsBDaoImpl extends Basedao implements IWebObjsBDao{
 		// TODO Auto-generated method stub
 		String hql="from VWebobjBObj4 where id.yymm=?";
 		String[]objs={yymm};
+		List<VWebobjBObj4>list=super.findAll(hql, objs);
+		for(VWebobjBObj4 obj:list){
+			obj.getId().getWebFact().getFactSname();
+		}
+		return list;
+	}
+	
+	public List<VWebobjBObj4> findVWebobjBObj4(String factNo, String year) {
+		// TODO Auto-generated method stub
+		String hql="from VWebobjBObj4 where id.webFact.id.factNo=? and substr(id.yymm,1,4) like ?";
+		String[]objs={factNo,year+"%"};
 		List<VWebobjBObj4>list=super.findAll(hql, objs);
 		for(VWebobjBObj4 obj:list){
 			obj.getId().getWebFact().getFactSname();
@@ -205,5 +260,7 @@ public class WebObjsBDaoImpl extends Basedao implements IWebObjsBDao{
 		super.merge(obj);
 		
 	}
+
+	
 
 }

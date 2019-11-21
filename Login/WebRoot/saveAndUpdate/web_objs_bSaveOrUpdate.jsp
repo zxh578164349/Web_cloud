@@ -36,12 +36,12 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 			<s:if test="obj==null">
 				<s:if test="#session.factNo!='tw'">
 					<tr>
-						<td class="td_show_title">廠別</td>
+						<td >廠別</td>
 						<td class="td_input"><input type="text" style="color:blue" name="obj.id.webFact.id.factNo" value="${factNo}" readonly id="dwr_factno" />
 						<span id="error1"></span>
 						</td>
-						<td class="td_show_title">廠別狀態</td>
-						<td class="td_input"><select name="obj.id.webFact.id.factArea" datatype="*" id="dwrFactArea" onchange="check()">
+						<td >廠別狀態</td>
+						<td class="td_input"><select name="obj.id.webFact.id.factArea" datatype="*" id="dwrFactArea" >
 								<option value="">請選擇廠別狀態</option>
 								<s:iterator value="#session.factAreas_login" id="temp">
 									<option value="${temp}">${temp}</option>
@@ -54,8 +54,8 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 
 				<s:if test="#session.factNo=='tw'">
 					<tr>
-						<td class="td_show_title">廠別</td>
-						<td class="td_input"><select style="color:blue" name="obj.id.webFact.id.factNo" datatype="*" onchange="getFactArea(this.value),check()"
+						<td >廠別</td>
+						<td class="td_input"><select style="color:blue" name="obj.id.webFact.id.factNo" datatype="*" onchange="getFactArea(this.value)"
 							id="dwr_factno">
 								<option value="">請選擇廠別</option>
 								<s:iterator value="#session.facts" id="temp">
@@ -63,8 +63,8 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 								</s:iterator>
 						</select><span id="error1"></span>
 						</td>
-						<td class="td_show_title">廠別狀態</td>
-						<td class="td_input"><select name="obj.id.webFact.id.factArea" datatype="*" id="dwrFactArea" onchange="check()">
+						<td >廠別狀態</td>
+						<td class="td_input"><select name="obj.id.webFact.id.factArea" datatype="*" id="dwrFactArea" >
 								<option value="">請選擇廠別狀態</option>
 
 						</select><span id="error2"></span>
@@ -72,11 +72,11 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 					</tr>
 				</s:if>
 				<tr>
-					<td class="td_show_title">日期</td>
-					<td class="td_input"><input type="text" name="obj.id.yymmdd" onClick="WdatePicker({dateFmt:'yyyyMMdd'})" class="Wdate" datatype="*"
-						id="dwr_yymmdd" onchange="check()" /><span id="error3"></span>
+					<td >日期</td>
+					<td class="td_input">
+					<input type="text" name="obj.id.yymmdd" onClick="WdatePicker({dateFmt:'yyyyMMdd'})" class="Wdate" datatype="*" id="dwr_yymmdd"  /><span id="error3"></span>
 					</td>
-					<td class="td_show_title">工作日/假日</td>
+					<td class="success">工作日/假日</td>
 					<td class="td_input">
 					 <select name="obj.workorholiday" datatype='*' onchange="showRow()">
 					     <option value="">請選擇</option>
@@ -94,21 +94,21 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 
 			<s:if test="obj!=null">
 				<tr>
-					<td class="td_show_title">廠別</td>
+					<td >廠別</td>
 					<td class="td_input"><font color="blue"><input type="text" id="factNo" style="color:blue"
 							value="<s:property value='obj.id.webFact.id.factNo'/>" name="obj.id.webFact.id.factNo" readonly /> </font>
 					</td>
-					<td class="td_show_title">廠別狀態</td>
+					<td >廠別狀態</td>
 					<td class="td_input"><font color="blue"><input type="text" id="billNo" style="color:blue"
 							value="<s:property value='obj.id.webFact.id.factArea'/>" name="obj.id.webFact.id.factArea" readonly /> </font>
 							 <input type="hidden" value="${loginUser.username}" name="obj.usernameUd" /> <!--  修改者--></td>
 				</tr>
 				<tr>
-					<td class="td_show_title">日期</td>
+					<td >日期</td>
 					<td class="td_input">
 					  <input type="text" style="color:blue" id="yymmdd" value="<s:property value='obj.id.yymmdd'/>" name="obj.id.yymmdd" readonly />
 					</td>
-					<td class="td_show_title">工作日/假日</td>
+					<td class="success">工作日/假日</td>
 					<td class="td_input">
 					    <s:if test="obj.workorholiday==0"><font color="blue"><input type="text" value="工作日" readonly/></font></s:if>
 					    <s:if test="obj.workorholiday==1"><font color="blue"><input type="text" value="假日" readonly/></font></s:if>	
@@ -125,121 +125,121 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 
 
 			<tr>
-				<td class="td_show_title">上模數</td>
-				<td class="td_input">
+				<td>上模數</td>
+				<td >
 				<input type="text" class="input_hidden" name="obj.onModulus" datatype="9_1" value="<s:property value='obj.onModulus' />"></td>
-				<td class="td_show_title">人數(拉模手)</td>
+				<td class="success">人數(拉模手)</td>
 				<td class="td_input">
 				<input type="text" class="input_hidden" name="obj.personnum" datatype="9_1" value="<s:property value='obj.personnum' />">
 				</td>
 			</tr>
 			<tr>
-				<td class="td_show_title">標準產量</td>
+				<td class="success">標準產量</td>
 				<td class="td_input">
 				<input type="text" class="input_hidden" name="obj.standardOutput" datatype="9_1" value="<s:property value='obj.standardOutput' />"></td>
-				<td class="td_show_title">實際產量</td>
+				<td class="success">實際產量</td>
 				<td class="td_input">
 				<input type="text" class="input_hidden" name="obj.actualYield" datatype="9_1" value="<s:property value='obj.actualYield' />">
 				</td>
 			</tr>
 			<tr>
-				<td class="td_show_title">正批生產雙數</td>
+				<td class="success">正批生產雙數</td>
 				<td class="td_input"><input type="text" class="input_hidden" name="obj.zpObja" datatype="9_1"
 					value="<s:property value='obj.zpObja'/>"></td>
-				<td class="td_show_title">客補生產雙數</td>
+				<td class="success">客補生產雙數</td>
 				<td class="td_input"><input type="text" class="input_hidden" name="obj.hostpairs" datatype="9_1"
 					value="<s:property value='obj.hostpairs' />"></td>
 
 			</tr>
 			<tr>
-				<td class="td_show_title">廠補生產雙數</td>
+				<td class="success">廠補生產雙數</td>
 				<td class="td_input">
 				<input type="text" class="input_hidden" name="obj.factpairs" datatype="9_1" value="<s:property value='obj.factpairs' />">
 				</td>
-				<td class="td_show_title">樣品生產雙數</td>
+				<td class="success">樣品生產雙數</td>
 				<td class="td_input">
 				<input type="text" class="input_hidden" name="obj.samplepairs" datatype="9_1" value="<s:property value='obj.samplepairs' />"></td>
 
 			</tr>
 			<tr>
-				<td class="td_show_title">出貨數</td>
+				<td class="success">出貨數</td>
 				<td class="td_input"><input type="text" class="input_hidden" name="obj.outnum" datatype="9_1"
 					value="<s:property value='obj.outnum' />"></td>
-				<td class="td_show_title">退貨數</td>
+				<td class="success">退貨數</td>
 				<td class="td_input"><input type="text" class="input_hidden" name="obj.backnum" datatype="9_1"
 					value="<s:property value='obj.backnum' />"></td>
 			</tr>
 
 			<tr>
-				<td class="td_show_title">上模總工時</td>
+				<td class="success">上模總工時</td>
 				<td class="td_input">
 				<input type="text" class="input_hidden" name="obj.workhours" datatype="9_1" value="<s:property value='obj.workhours' />"></td>
-				<td class="td_show_title">天數</td>
+				<td class="success">天數</td>
 				<td class="td_input">
 				<input type="text" class="input_hidden" name="obj.daycount" datatype="9_1" value="<s:property value='obj.daycount' />"></td>
 
 			</tr>
 			<tr>
-				<td class="td_show_title">成型不良雙數</td>
+				<td class="success">成型不良雙數</td>
 				<td class="td_input">
 				<input type="text" class="input_hidden" name="obj.objA1" datatype="9_1" value="<s:property value='obj.objA1' />"></td>
-				<td class="td_show_title">慢單狀況(張)</td>
-				<td class="td_input">
+				<td >慢單狀況(張)</td>
+				<td >
 				<input type="text" class="input_hidden" name="obj.objA2" datatype="9_1" value="<s:property value='obj.objA2' />"></td>
 
 			</tr>
 			<tr>
-				<td class="td_show_title">慢單狀況(雙)</td>
+				<td class="success">慢單狀況(雙)</td>
 				<td class="td_input">
-				<input type="text" class="input_hidden" name="obj.objA3" datatype="9_1" value="<fmt:formatNumber value='${obj.objA3}' pattern='#0.00000'/>"></td>
-				<td class="td_show_title">訂單欠數</td>
-				<td class="td_input">
+				<input type="text" class="input_hidden" name="obj.objA3" datatype="9_1" value="<s:property value='obj.objA3'/>"></td>
+				<td >訂單欠數</td>
+				<td >
 				<input type="text" class="input_hidden" name="obj.objA4" datatype="9_1" value="<s:property value='obj.objA4' />"></td>
 			</tr>
 			<tr>
-				<td class="td_show_title">直工人數</td>
+				<td >直工人數</td>
+				<td >
+				<input type="text" class="input_hidden" name="obj.objA5" datatype="n0-10" value="<s:property value='obj.objA5' />"></td>
+				<td class="success">間工人數</td>
 				<td class="td_input">
-				<input type="text" class="input_hidden" name="obj.objA5" datatype="n1-10" value="<s:property value='obj.objA5' />"></td>
-				<td class="td_show_title">間工人數</td>
-				<td class="td_input">
-				<input type="text" class="input_hidden" name="obj.objA6" datatype="n1-10" value="<s:property value='obj.objA6' />">
+				<input type="text" class="input_hidden" name="obj.objA6" datatype="n0-10" value="<s:property value='obj.objA6' />">
 				</td>
 			</tr>
 			<tr>
-				<td class="td_show_title">招工數</td>
-				<td class="td_input">
-				<input type="text" class="input_hidden" name="obj.objA7" datatype="n1-10" value="<s:property value='obj.objA7' />"></td>
-				<td class="td_show_title">離職數</td>
-				<td class="td_input">
-				<input type="text" class="input_hidden" name="obj.objA8" datatype="n1-10" value="<s:property value='obj.objA8' />"></td>
+				<td >招工數</td>
+				<td >
+				<input type="text" class="input_hidden" name="obj.objA7" datatype="n0-10" value="<s:property value='obj.objA7' />"></td>
+				<td >離職數</td>
+				<td >
+				<input type="text" class="input_hidden" name="obj.objA8" datatype="n0-10" value="<s:property value='obj.objA8' />"></td>
 			</tr>
 			<tr>
-				<td class="td_show_title">請假數</td>
-				<td class="td_input">
-				<input type="text" class="input_hidden" name="obj.objA9" datatype="n1-10" value="<s:property value='obj.objA9' />"></td>
-				<td class="td_show_title">品質問題與客訴 </td>
-				<td class="td_input">
+				<td >請假數</td>
+				<td >
+				<input type="text" class="input_hidden" name="obj.objA9" datatype="n0-10" value="<s:property value='obj.objA9' />"></td>
+				<td >品質問題與客訴 </td>
+				<td >
 				<input type="text" class="input_hidden" name="obj.objA10" datatype="*0-1000" value="<s:property value='obj.objA10' />"></td>
 			</tr>
 			<tr>
-				<td class="td_show_title">扣款訊息</td>
-				<td class="td_input">
+				<td >扣款訊息</td>
+				<td >
 				<input type="text" class="input_hidden" name="obj.objA11" datatype="*0-1000" value="<s:property value='obj.objA11' />"></td>
-				<td class="td_show_title">機台狀況/異常</td>
-				<td class="td_input">
+				<td >機台狀況/異常</td>
+				<td >
 				<input type="text" class="input_hidden" name="obj.objA12" datatype="*0-1000" value="<s:property value='obj.objA12' />">					
-				<input type="hidden" value="<s:property value='#session.loginUser.username'/>" name="obj.username" /></td>
+				</td>
 			</tr>
 
 
 
 			<tr>
-				<td class="td_show_title">客人來訪訊息</td>
-				<td class="td_input">
+				<td >客人來訪訊息</td>
+				<td >
 				<input type="text" class="input_hidden" name="obj.objA13" datatype="*0-1000" value="<s:property value='obj.objA13'/>"			
 				</td>
-				<td class="td_show_title">其他提報事項</td>
-				<td class="td_input">
+				<td >其他提報事項</td>
+				<td >
 				<input type="text" class="input_hidden" name="obj.objA14" datatype="*0-1000" value="<s:property value='obj.objA14'/>">
 				<%-- <input type="text" name="obj.objA14" datatype="*0-1000" value="<fmt:formatNumber value='${obj.objA14 }' pattern='#0.00000'/>"> --%>
 				</td>
@@ -262,7 +262,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 				showAllError : true,
 				tipSweep : true,
 				datatype : {
-					"9_1" : /^-?\d{1,9}(\.[0-9]{1})?$/,
+					"9_1" : /^-?\d{0,9}(\.[0-9]{1})?$/,
 					"9_2" : /^-?\d{1,9}(\.[0-9]{1,2})?$/,
 					"9_4" : /^-?\d{1,9}(\.[0-9]{1,4})?$/,
 					"my9_4" : /^-?\d{1,9}(\.[0-9]{4})$/,
@@ -303,7 +303,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 		}
 		
 		function showRow() {
-			var workholiday = jq("#workholiday");
+			var workholiday = jq("select[name='obj.workorholiday']");
 			var arrays = jq("input[class*='input_hidden']");
 			if (workholiday.val() == 1 || workholiday.val() == 2) {
 				for ( var i = 0; i < arrays.length; i++) {

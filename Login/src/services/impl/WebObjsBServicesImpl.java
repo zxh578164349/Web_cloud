@@ -46,9 +46,9 @@ public class WebObjsBServicesImpl implements IWebObjsBServices{
 
 
 	public PageBean findPageBean(int pageSize, int page, String factNo,
-			String yymm) {
+			String yymm,String workorholiday) {
 		// TODO Auto-generated method stub
-		return webobjbdao.findPageBean(pageSize, page, factNo, yymm);
+		return webobjbdao.findPageBean(pageSize, page, factNo, yymm,workorholiday);
 	}
 
 
@@ -70,20 +70,20 @@ public class WebObjsBServicesImpl implements IWebObjsBServices{
 		return webobjbdao.findByYymm(factno, yymm);
 	}
 
-	public List<VWebobjBObj> findByYymm2(String factno, String yymm) {
+	public List<VWebobjBObj> findByYymm2(String factno, String yymm,String workorholiday) {
 		// TODO Auto-generated method stub
-		return webobjbdao.findByYymm2(factno, yymm);
+		return webobjbdao.findByYymm2(factno, yymm,workorholiday);
 	}
 			
-	public List<VWebobjBObj3> findByVwebobjb3(String yymmdd) {
+	public List<VWebobjBObj3> findByVwebobjb3(String yymmdd,String workorholiday) {
 		// TODO Auto-generated method stub
-		return webobjbdao.findByVwebobjb3(yymmdd);
+		return webobjbdao.findByVwebobjb3(yymmdd,workorholiday);
 	}
 
 
-	public List<VWebobjBObj> findObjByDay(String yymmdd) {
+	public List<VWebobjBObj> findObjByDay(String yymmdd,String workorholiday) {
 		// TODO Auto-generated method stub
-		return webobjbdao.findObjByDay(yymmdd);
+		return webobjbdao.findObjByDay(yymmdd, workorholiday);
 	}
 
 
@@ -104,6 +104,9 @@ public class WebObjsBServicesImpl implements IWebObjsBServices{
 		return webobjbdao.findVWebobjBObj4(yymm);
 	}
 
+	public List<VWebobjBObj4> findVWebobjBObj4(String factNo, String year){
+		return webobjbdao.findVWebobjBObj4(factNo, year);
+	}
 
 	public List<VWebobjBObj5> findVWebobjBObj5(String yymm) {
 		// TODO Auto-generated method stub

@@ -78,5 +78,24 @@
         <property name="obja4" type="java.lang.Double">
             <column name="OBJA4" precision="10" scale="1" />
         </property>
+        
+        <property name="obja5" type="java.lang.Long">
+            <column name="OBJA5" precision="10" scale="0" />
+        </property>
+        <property name="obja6" type="java.lang.Long">
+            <column name="OBJA6" precision="10" scale="0" />
+        </property>
+        <property name="objaE" type="java.lang.Long">
+            <column name="OBJA_E" precision="10" scale="0" />
+        </property>
+        <property name="obja7" type="java.lang.Long">
+            <column name="OBJA7" precision="10" scale="0" />
+        </property>
+        <property name="obja8" type="java.lang.Long">
+            <column name="OBJA8" precision="10" scale="0" />
+        </property>
+        <property name="obja9" type="java.lang.Long">
+            <column name="OBJA9" precision="10" scale="0" />
+        </property>
     </class>
 </hibernate-mapping>

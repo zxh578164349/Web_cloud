@@ -31,6 +31,13 @@ public class VWebobjBObj4 implements java.io.Serializable {
 	private Double obja2;
 	private Double obja3;
 	private Double obja4;
+	
+	private Long obja5;
+	private Long obja6;
+	private Long objaE;
+	private Long obja7;
+	private Long obja8;
+	private Long obja9;
 
 	// Constructors
 
@@ -254,4 +261,53 @@ public class VWebobjBObj4 implements java.io.Serializable {
 		this.obja4 = obja4;
 	}
 
+	public Long getObja5() {
+		return obja5;
+	}
+
+	public void setObja5(Long obja5) {
+		this.obja5 = obja5;
+	}
+
+	public Long getObja6() {
+		return obja6;
+	}
+
+	public void setObja6(Long obja6) {
+		this.obja6 = obja6;
+	}
+
+	public Long getObjaE() {
+		return objaE;
+	}
+
+	public void setObjaE(Long objaE) {
+		this.objaE = objaE;
+	}
+
+	public Long getObja7() {
+		return obja7;
+	}
+
+	public void setObja7(Long obja7) {
+		this.obja7 = obja7;
+	}
+
+	public Long getObja8() {
+		return obja8;
+	}
+
+	public void setObja8(Long obja8) {
+		this.obja8 = obja8;
+	}
+
+	public Long getObja9() {
+		return obja9;
+	}
+
+	public void setObja9(Long obja9) {
+		this.obja9 = obja9;
+	}
+
+	
 }

@@ -15,6 +15,7 @@ public class VWebobjBObj3 implements java.io.Serializable {
 	private Long objA7;
 	private Long objA8;
 	private Long objA9;
+	private String workorholiday;
 
 	// Constructors
 
@@ -97,5 +98,14 @@ public class VWebobjBObj3 implements java.io.Serializable {
 	public void setObjA9(Long objA9) {
 		this.objA9 = objA9;
 	}
+
+	public String getWorkorholiday() {
+		return workorholiday;
+	}
+
+	public void setWorkorholiday(String workorholiday) {
+		this.workorholiday = workorholiday;
+	}
+	
 
 }

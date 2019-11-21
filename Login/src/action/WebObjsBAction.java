@@ -74,9 +74,18 @@ public class WebObjsBAction extends ActionSupport implements ServletResponseAwar
 	private String workorholiday;
 	private WebObjsB obj;
 	private String isnull;
+	private String year;
     
     
      
+	public String getYear() {
+		return year;
+	}
+
+	public void setYear(String year) {
+		this.year = year;
+	}
+
 	public String getIsnull() {
 		return isnull;
 	}
@@ -246,6 +255,9 @@ public class WebObjsBAction extends ActionSupport implements ServletResponseAwar
 	
 	public String add(){
 		try{
+			if("0".equals(obj.getWorkorholiday())&&obj.getDaycount()==0){
+				obj.setDaycount(1.0);
+			}
 			if(isnull!=null&&!"".equals(isnull)){
 				WebObjsB o=webobjbservices.findById(obj.getId().getWebFact().getId().getFactNo(), obj.getId().getWebFact().getId().getFactArea(), obj.getId().getYymmdd());
 				if(o==null){					
@@ -382,9 +394,10 @@ public class WebObjsBAction extends ActionSupport implements ServletResponseAwar
 	public String findPageBean(){
 		ActionContext.getContext().getSession().remove("allrow");//dao層
 		ActionContext.getContext().getSession().remove("public_yymm");
+		ActionContext.getContext().getSession().remove("workorholiday");
 		factNo=(String)ActionContext.getContext().getSession().get("factNo");
 		ActionContext.getContext().getSession().put("public_factno", factNo);
-		bean=webobjbservices.findPageBean(20,page, factNo, yymm);
+		bean=webobjbservices.findPageBean(20,page, factNo, yymm,workorholiday);
 		return "beanList";
 		
 	}
@@ -395,13 +408,15 @@ public class WebObjsBAction extends ActionSupport implements ServletResponseAwar
 		ActionContext.getContext().getSession().remove("allrow");//dao層
 		ActionContext.getContext().getSession().put("public_factno", factNo.split("__")[0]);
 		ActionContext.getContext().getSession().put("public_yymm", yymm);	
-		bean=webobjbservices.findPageBean(20,page, factNo.split("__")[0], yymm);
+		ActionContext.getContext().getSession().put("workorholiday", workorholiday);
+		bean=webobjbservices.findPageBean(20,page, factNo.split("__")[0], yymm,workorholiday);
 		return "beanList1";
 	}
 	public String findPageBean3(){
 		factNo=(String)ActionContext.getContext().getSession().get("public_factno");
 		yymm=(String)ActionContext.getContext().getSession().get("public_yymm");
-		bean=webobjbservices.findPageBean(20,page, factNo, yymm);
+		workorholiday=(String)ActionContext.getContext().getSession().get("workorholiday");
+		bean=webobjbservices.findPageBean(20,page, factNo, yymm,workorholiday);
 		return "beanList1";
 	}
 	
@@ -422,19 +437,276 @@ public class WebObjsBAction extends ActionSupport implements ServletResponseAwar
 	}
 	
 	
+	
+	/*************************************************工廠報表(一年情況)***********************************************************/
+	public void print3() throws ParseException, IOException{
+		XSSFWorkbook wb=new XSSFWorkbook();
+		Map<String,Object>map_cs=findStyles2007(wb);				
+		//List<VWebobjBObj>list_objs=webobjbservices.findByYymm2(factNo.split("__")[0], yymm,workorholiday);
+		List<VWebobjBObj4>list_objs=webobjbservices.findVWebobjBObj4(factNo.split("__")[0], year);
+			
+		switch(list_objs.size()){//switch		
+		case 0:
+			response.setContentType("text/html;charset=utf-8");
+			response.getWriter().print("<script>window.parent.alert('無數據');</script>");			
+			break;
+		default:
+			
+			
+			int months=12;//一年的月份數
+			List<String>list_factcodes=new ArrayList<String>();
+			for(VWebobjBObj4 obj:list_objs){
+				list_factcodes.add(obj.getId().getWebFact().getId().getFactArea());
+			}
+			
+			for(int a=0;a<list_factcodes.size();a++){
+				for(int b=list_factcodes.size()-1;b>a;b--){
+					if(list_factcodes.get(a).equals(list_factcodes.get(b))){
+						list_factcodes.remove(b);
+					}
+				}
+			}
+			
+			Map<String,Object>map=new LinkedHashMap<String,Object>();
+			Map<String,Object>map2=new LinkedHashMap<String,Object>();
+			Map<String,Object>map3=new LinkedHashMap<String,Object>();
+			List<VWebobjBObj4>list_lg=new ArrayList<VWebobjBObj4>();
+			VWebobjBObj4 obj_allfact=new VWebobjBObj4();
+			for(int a=0;a<months;a++){
+				list_lg.add(new VWebobjBObj4());
+			}
+			for(String factcode:list_factcodes){
+				String temp="";
+				List<VWebobjBObj4>list=new ArrayList<VWebobjBObj4>();
+				for(int a=1;a<=months;a++){				
+					if(a>9){
+						temp=year+a;
+					}else{
+						temp=year+"0"+a;
+					}
+					list.add(new VWebobjBObj4(new VWebobjBObj4Id(new WebFact(new WebFactId(factNo.split("__")[0],factcode)),temp)));
+					temp="";
+				}
+				
+				int work_months=0;
+				for(int a=0;a<list.size();a++){
+					for(VWebobjBObj4 obj:list_objs){
+						if(list.get(a).getId().getWebFact().getId().getFactArea().equals(obj.getId().getWebFact().getId().getFactArea())&&
+								list.get(a).getId().getWebFact().getId().getFactNo().equals(obj.getId().getWebFact().getId().getFactNo())&&
+								list.get(a).getId().getYymm().equals(obj.getId().getYymm())){
+							list.set(a, obj);
+							work_months++;
+							break;
+							
+						}
+					}
+				}				
+				map.put(factcode, list);
+				map3.put(factcode, work_months);
+				
+				for(int a=0;a<list.size();a++){	
+					    list_lg.get(a).setObja5(isMyNull_ll(list_lg.get(a).getObja5())+isMyNull_ll(list.get(a).getObja5()));
+						list_lg.get(a).setObja6(isMyNull_ll(list_lg.get(a).getObja6())+isMyNull_ll(list.get(a).getObja6()));
+						list_lg.get(a).setObjaE(isMyNull_ll(list_lg.get(a).getObjaE())+isMyNull_ll(list.get(a).getObjaE()));
+						list_lg.get(a).setObja7(isMyNull_ll(list_lg.get(a).getObja7())+isMyNull_ll(list.get(a).getObja7()));
+						list_lg.get(a).setObja8(isMyNull_ll(list_lg.get(a).getObja8())+isMyNull_ll(list.get(a).getObja8()));
+						list_lg.get(a).setObja9(isMyNull_ll(list_lg.get(a).getObja9())+isMyNull_ll(list.get(a).getObja9()));																
+				}
+				
+				VWebobjBObj4 sum_obj=new VWebobjBObj4();
+				for(VWebobjBObj4 obj:list){								
+					sum_obj.setTotalhole(isMyNull_db(sum_obj.getTotalhole())+isMyNull_db(obj.getTotalhole()));
+					sum_obj.setMachinepower(isMyNull_db(sum_obj.getMachinepower())+isMyNull_db(obj.getMachinepower()));
+					sum_obj.setHole(isMyNull_db(sum_obj.getHole())+isMyNull_db(obj.getHole()));
+					sum_obj.setSample(isMyNull_db(sum_obj.getSample())+isMyNull_db(obj.getSample()));
+					sum_obj.setAccessories(isMyNull_db(sum_obj.getAccessories())+isMyNull_db(obj.getAccessories()));
+					sum_obj.setOther(isMyNull_db(sum_obj.getOther())+isMyNull_db(obj.getOther()));
+					sum_obj.setEstmodel(isMyNull_db(sum_obj.getEstmodel())+isMyNull_db(obj.getEstmodel()));
+					sum_obj.setEstnum(isMyNull_db(sum_obj.getEstnum())+isMyNull_db(obj.getEstnum()));
+					sum_obj.setEstpay(isMyNull_db(sum_obj.getEstpay())+isMyNull_db(obj.getEstpay()));
+					sum_obj.setOnmodulus(isMyNull_db(sum_obj.getOnmodulus())+isMyNull_db(obj.getOnmodulus()));
+					sum_obj.setPersonnum(isMyNull_db(sum_obj.getPersonnum())+isMyNull_db(obj.getPersonnum()));	
+					
+					sum_obj.setStandardoutput(isMyNull_db(sum_obj.getStandardoutput())+isMyNull_db(obj.getStandardoutput()));
+					sum_obj.setActualyield(isMyNull_db(sum_obj.getActualyield())+isMyNull_db(obj.getActualyield()));
+					sum_obj.setObja1(isMyNull_db(sum_obj.getObja1())+isMyNull_db(obj.getObja1()));
+					sum_obj.setObja2(isMyNull_db(sum_obj.getObja2())+isMyNull_db(obj.getObja2()));
+					sum_obj.setObja3(isMyNull_db(sum_obj.getObja3())+isMyNull_db(obj.getObja3()));
+					sum_obj.setObja4(isMyNull_db(sum_obj.getObja4())+isMyNull_db(obj.getObja4()));
+					sum_obj.setObjaA(isMyNull_db(sum_obj.getObjaA())+isMyNull_db(obj.getObjaA()));
+					sum_obj.setObjaB(isMyNull_db(sum_obj.getObjaB())+isMyNull_db(obj.getObjaB()));
+					sum_obj.setObjaC(isMyNull_db(sum_obj.getObjaC())+isMyNull_db(obj.getObjaC()));
+					sum_obj.setObjaD(isMyNull_db(sum_obj.getObjaD())+isMyNull_db(obj.getObjaD()));
+										
+				}
+				map2.put(factcode, sum_obj);												
+			}
+			for(VWebobjBObj4 obj:list_lg){
+				obj.setObja5(isMyNull_ll(obj_allfact.getObja5())+isMyNull_ll(obj.getObja5()));
+				obj.setObja6(isMyNull_ll(obj_allfact.getObja6())+isMyNull_ll(obj.getObja6()));
+				obj.setObjaE(isMyNull_ll(obj_allfact.getObjaE())+isMyNull_ll(obj.getObjaE()));
+				obj.setObja7(isMyNull_ll(obj_allfact.getObja7())+isMyNull_ll(obj.getObja7()));
+				obj.setObja8(isMyNull_ll(obj_allfact.getObja8())+isMyNull_ll(obj.getObja8()));
+				obj.setObja9(isMyNull_ll(obj_allfact.getObja9())+isMyNull_ll(obj.getObja9()));
+			}
+		
+			XSSFSheet sheet=wb.createSheet(year+"工廠訊息");
+			XSSFSheet sheet2=wb.createSheet(year+"提報事項");
+			init3(sheet,map_cs,map,list_lg,months,map2,map3,obj_allfact);
+			//init2(sheet2,map_cs,map,days);
+			
+			try {				
+				ServletOutputStream os=response.getOutputStream();
+				//response.setContentType("application/vnd.ms-excel");
+				response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+				int msie=ServletActionContext.getRequest().getHeader("USER-AGENT").toLowerCase().indexOf("msie");//判斷是否為IE瀏覽器,大於0則為IE瀏覽器
+				String fileName=factNo.split("__")[0]+"_"+year+"工廠訊息報表"+".xlsx";
+				if(msie>0){
+					fileName=java.net.URLEncoder.encode(fileName,"utf-8");//解決IE中文文件不能下載的問題
+				}else{
+					fileName=new String(fileName.getBytes("utf-8"),"iso-8859-1");//解決非IE中文名亂碼問題
+				}		
+				response.setHeader("Content-disposition", "attachment;filename="+fileName);					
+				wb.write(os);
+				os.close();						
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		
+		}//switch							
+	}
+	
+								
+	public void init3(XSSFSheet sheet,Map<String,Object>map_cs,Map<String,Object>map,List<VWebobjBObj4>list_lg,int months,Map<String,Object>map2,Map<String,Object>map3,VWebobjBObj4 obj_allfact) throws ParseException{				
+		XSSFCellStyle cs=(XSSFCellStyle)map_cs.get("cs");
+		XSSFCellStyle cs_head=(XSSFCellStyle)map_cs.get("cs_head");
+		XSSFCellStyle cs_title=(XSSFCellStyle)map_cs.get("cs_title");		
+		List<String>list_col=findItems();
+		List<String>list_col2=findItems2();
+			sheet.setColumnWidth(1, 5000);
+			for(int a=0;a<list_col.size()*map.size()+20;a++){
+				sheet.createRow(a);				
+				for(int b=0;b<months+5;b++){
+					sheet.getRow(a).createCell(b);					
+				}
+			}
+			
+			CellRangeAddress cra_title=new CellRangeAddress(0,0,0,4);
+			sheet.addMergedRegion(cra_title);
+			sheet.getRow(0).getCell(0).setCellValue(factNo.split("__")[1]+"-"+year+"工廠訊息");
+			for(int i=0;i<4;i++){
+				sheet.getRow(0).getCell(i).setCellStyle(cs_title);
+			}
+						
+			int temp=2;
+			for(String factcode:map.keySet()){
+				
+				CellRangeAddress cra_date=new CellRangeAddress(temp,temp,0,1);
+				sheet.addMergedRegion(cra_date);
+				sheet.getRow(temp).getCell(0).setCellValue(year);
+				for(int i=0;i<2;i++){
+					sheet.getRow(temp).getCell(i).setCellStyle(cs_head);
+				}
+				for(int a=0;a<months;a++){
+					sheet.getRow(temp).getCell(a+2).setCellValue(a+1+"月");
+					sheet.getRow(temp).getCell(a+2).setCellStyle(cs_head);	
+				}
+				
+				CellRangeAddress cra_factcode=new CellRangeAddress(temp+1,temp+list_col.size(),0,0);
+				sheet.addMergedRegion(cra_factcode);
+				sheet.getRow(temp+1).getCell(0).setCellValue(factcode);
+				for(int b=0;b<list_col.size();b++){
+					sheet.getRow(b+temp+1).getCell(0).setCellStyle(cs);
+				}
+				for(int b=0;b<list_col.size();b++){
+					sheet.getRow(b+temp+1).getCell(1).setCellValue(list_col.get(b).split("__")[0]);
+					sheet.getRow(b+temp+1).getCell(1).setCellStyle(cs);										
+				}
+				List<VWebobjBObj4>list=(List<VWebobjBObj4>)map.get(factcode);					
+				for(int a=0;a<list.size();a++){						
+					List<Double>list_db=objToDouble(list.get(a));
+					for(int b=0;b<list_db.size();b++){
+						sheet.getRow(b+temp+1).getCell(a+2).setCellValue(list_db.get(b));
+						//this.selectValue_db(sheet.getRow(b+temp+1).getCell(a+2), list.get(a).getWorkorholiday(), list_db.get(b));
+						sheet.getRow(b+temp+1).getCell(a+2).setCellStyle(this.selectStyle2007(b, map_cs,1,null,list_db.get(b)));
+					}																
+				}
+				
+				sheet.getRow(temp).getCell(2+months).setCellValue("總計");
+				sheet.getRow(temp).getCell(3+months).setCellValue("平均");
+				for(int a=0;a<2;a++){
+					sheet.getRow(temp).getCell(2+months+a).setCellStyle(cs_head);
+				}
+				List<Double>list_sum=objToDouble((VWebobjBObj4)map2.get(factcode));
+				int work_months=(Integer)map3.get(factcode);
+				for(int b=0;b<list_sum.size();b++){
+					sheet.getRow(b+temp+1).getCell(2+months).setCellValue(list_sum.get(b));
+					sheet.getRow(b+temp+1).getCell(3+months).setCellValue(list_sum.get(b)/work_months);
+					sheet.getRow(b+temp+1).getCell(2+months).setCellStyle(this.selectStyle2007(b, map_cs,1,null,null));
+					sheet.getRow(b+temp+1).getCell(3+months).setCellStyle(this.selectStyle2007(b, map_cs,1,null,null));
+				}
+				
+				temp=temp+list_col.size()+1;
+			}	
+			
+			
+			
+			
+			
+			CellRangeAddress cra_date=new CellRangeAddress(temp,temp,0,1);
+			sheet.addMergedRegion(cra_date);
+			sheet.getRow(temp).getCell(0).setCellValue(year);
+			for(int i=0;i<2;i++){
+				sheet.getRow(temp).getCell(i).setCellStyle(cs_head);
+			}
+			for(int a=0;a<months;a++){
+				sheet.getRow(temp).getCell(a+2).setCellValue(a+1+"月");
+				sheet.getRow(temp).getCell(a+2).setCellStyle(cs_head);	
+			}
+			
+			CellRangeAddress cra_all=new CellRangeAddress(temp+1,temp+list_col2.size(),0,0);
+			sheet.addMergedRegion(cra_all);
+			sheet.getRow(temp+1).getCell(0).setCellValue("全廠");
+			for(int b=0;b<list_col2.size();b++){
+				sheet.getRow(b+temp+1).getCell(0).setCellStyle(cs);
+			}
+			for(int b=0;b<list_col2.size();b++){
+				sheet.getRow(b+temp+1).getCell(1).setCellValue(list_col2.get(b).split("__")[0]);
+				sheet.getRow(b+temp+1).getCell(1).setCellStyle(cs);										
+			}
+			for(int a=0;a<list_lg.size();a++){						
+				List<Long>list_db=objToLong(list_lg.get(a));
+				for(int b=0;b<list_db.size();b++){
+					sheet.getRow(b+temp+1).getCell(a+2).setCellValue(list_db.get(b));
+					sheet.getRow(b+temp+1).getCell(a+2).setCellStyle(cs);
+				}																
+			}
+			
+			sheet.getRow(temp).getCell(2+months).setCellValue("總計");
+			sheet.getRow(temp).getCell(3+months).setCellValue("平均");
+			for(int a=0;a<2;a++){
+				sheet.getRow(temp).getCell(2+months+a).setCellStyle(cs_head);
+			}
+			List<Long>ll=this.objToLong(obj_allfact);
+			for(int b=0;b<ll.size();b++){
+				sheet.getRow(temp+1+b).getCell(2+months).setCellValue(ll.get(b));
+				sheet.getRow(temp+1+b).getCell(3+months).setCellValue(ll.get(b)/months);
+				sheet.getRow(temp+1+b).getCell(2+months).setCellStyle(this.selectStyle2007(b, map_cs,1,null,null));
+				sheet.getRow(temp+1+b).getCell(3+months).setCellStyle(this.selectStyle2007(b, map_cs,1,null,null));
+			}
+	}
+	/*************************************************工廠報表(一年情況)***********************************************************/
+	
+	
+	
+	
 	/*************************************************工廠報表(一個月每天情況)***********************************************************/
 	public void print() throws ParseException, IOException{
 		XSSFWorkbook wb=new XSSFWorkbook();
 		Map<String,Object>map_cs=findStyles2007(wb);				
-		List<VWebobjBObj>list_objs=webobjbservices.findByYymm2(factNo.split("__")[0], yymm);
-		
-		Double work_days=0.0;//工作日天數
-		for(VWebobjBObj obj:list_objs){
-			if("0".equals(obj.getWorkorholiday())){
-				work_days++;
-			}
-		}
-		
+		List<VWebobjBObj>list_objs=webobjbservices.findByYymm2(factNo.split("__")[0], yymm,workorholiday);
+			
 		switch(list_objs.size()){//switch		
 		case 0:
 			response.setContentType("text/html;charset=utf-8");
@@ -461,6 +733,7 @@ public class WebObjsBAction extends ActionSupport implements ServletResponseAwar
 			Map<String,Object>map=new LinkedHashMap<String,Object>();
 			Map<String,Object>map2=new LinkedHashMap<String,Object>();
 			List<VWebobjBObj>list_lg=new ArrayList<VWebobjBObj>();
+			Map<String,Object>map3=new LinkedHashMap<String,Object>();
 			for(int a=0;a<days;a++){
 				list_lg.add(new VWebobjBObj());
 			}
@@ -489,6 +762,8 @@ public class WebObjsBAction extends ActionSupport implements ServletResponseAwar
 					}
 				}				
 				map.put(factcode, list);
+				
+				
 				for(int a=0;a<list.size();a++){	
 					    list_lg.get(a).setObja5(isMyNull_ll(list_lg.get(a).getObja5())+isMyNull_ll(list.get(a).getObja5()));
 						list_lg.get(a).setObja6(isMyNull_ll(list_lg.get(a).getObja6())+isMyNull_ll(list.get(a).getObja6()));
@@ -499,6 +774,7 @@ public class WebObjsBAction extends ActionSupport implements ServletResponseAwar
 				}
 				
 				VWebobjBObj sum_obj=new VWebobjBObj();
+				Double work_days=0.0;
 				for(VWebobjBObj obj:list){								
 					sum_obj.setTotalhole(isMyNull_db(sum_obj.getTotalhole())+isMyNull_db(obj.getTotalhole()));
 					sum_obj.setMachinepower(isMyNull_db(sum_obj.getMachinepower())+isMyNull_db(obj.getMachinepower()));
@@ -522,8 +798,12 @@ public class WebObjsBAction extends ActionSupport implements ServletResponseAwar
 					sum_obj.setObjaB(isMyNull_db(sum_obj.getObjaB())+isMyNull_db(obj.getObjaB()));
 					sum_obj.setObjaC(isMyNull_db(sum_obj.getObjaC())+isMyNull_db(obj.getObjaC()));
 					sum_obj.setObjaD(isMyNull_db(sum_obj.getObjaD())+isMyNull_db(obj.getObjaD()));
+					if("0".equals(obj.getWorkorholiday())){
+						work_days++;
+					}					
 				}
 				map2.put(factcode, sum_obj);
+				map3.put(factcode, work_days);
 				
 								
 			}
@@ -531,14 +811,15 @@ public class WebObjsBAction extends ActionSupport implements ServletResponseAwar
 		
 			XSSFSheet sheet=wb.createSheet(yymm+"工廠訊息");
 			XSSFSheet sheet2=wb.createSheet(yymm+"提報事項");
-			init(sheet,map_cs,map,list_lg,days,map2,work_days);
+			init(sheet,map_cs,map,list_lg,days,map2,map3);
 			init2(sheet2,map_cs,map,days);
 			
 			try {				
 				ServletOutputStream os=response.getOutputStream();
-				response.setContentType("application/vnd.ms-excel");
+				//response.setContentType("application/vnd.ms-excel");
+				response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
 				int msie=ServletActionContext.getRequest().getHeader("USER-AGENT").toLowerCase().indexOf("msie");//判斷是否為IE瀏覽器,大於0則為IE瀏覽器
-				String fileName=factNo.split("__")[0]+"_"+yymm+"工廠訊息報表"+".xls";
+				String fileName=factNo.split("__")[0]+"_"+yymm+"工廠訊息報表"+".xlsx";
 				if(msie>0){
 					fileName=java.net.URLEncoder.encode(fileName,"utf-8");//解決IE中文文件不能下載的問題
 				}else{
@@ -555,12 +836,8 @@ public class WebObjsBAction extends ActionSupport implements ServletResponseAwar
 		}//switch							
 	}
 	
-	
-	
-	
-	
-							
-	public void init(XSSFSheet sheet,Map<String,Object>map_cs,Map<String,Object>map,List<VWebobjBObj>list_lg,int days,Map<String,Object>map2,Double work_days) throws ParseException{				
+								
+	public void init(XSSFSheet sheet,Map<String,Object>map_cs,Map<String,Object>map,List<VWebobjBObj>list_lg,int days,Map<String,Object>map2,Map<String,Object>map3) throws ParseException{				
 		XSSFCellStyle cs=(XSSFCellStyle)map_cs.get("cs");
 		XSSFCellStyle cs_head=(XSSFCellStyle)map_cs.get("cs_head");
 		XSSFCellStyle cs_title=(XSSFCellStyle)map_cs.get("cs_title");		
@@ -621,8 +898,10 @@ public class WebObjsBAction extends ActionSupport implements ServletResponseAwar
 					sheet.getRow(temp).getCell(2+days+a).setCellStyle(cs_head);
 				}
 				List<Double>list_sum=objToDouble((VWebobjBObj)map2.get(factcode));
+				Double work_days=(Double)map3.get(factcode);
 				for(int b=0;b<list_sum.size();b++){
 					sheet.getRow(b+temp+1).getCell(2+days).setCellValue(list_sum.get(b));
+					sheet.getRow(b+temp+1).getCell(3+days).setCellValue(list_sum.get(b)/work_days);
 					sheet.getRow(b+temp+1).getCell(2+days).setCellStyle(this.selectStyle2007(b, map_cs,1,null,null));
 					sheet.getRow(b+temp+1).getCell(3+days).setCellStyle(this.selectStyle2007(b, map_cs,1,null,null));
 				}
@@ -658,7 +937,7 @@ public class WebObjsBAction extends ActionSupport implements ServletResponseAwar
 			for(int a=0;a<list_lg.size();a++){						
 				List<Long>list_db=objToLong(list_lg.get(a));
 				for(int b=0;b<list_db.size();b++){
-					sheet.getRow(b+temp+1).getCell(a+2).setCellValue(list_db.get(b));
+					sheet.getRow(b+temp+1).getCell(a+2).setCellValue(list_db.get(b));//全廠的數據為  各個factCode相加之和，如果要求平均數  就要除facdtCode數量
 					sheet.getRow(b+temp+1).getCell(a+2).setCellStyle(cs);
 				}																
 			}
@@ -802,6 +1081,15 @@ public class WebObjsBAction extends ActionSupport implements ServletResponseAwar
 			list.add(isMyNull_ll(((VWebobjBObj3) obj).getObjA8()));
 			list.add(isMyNull_ll(((VWebobjBObj3) obj).getObjA9()));
 		}
+		if(obj instanceof VWebobjBObj4){
+			list.add(isMyNull_ll(((VWebobjBObj4) obj).getObja5()));
+			list.add(isMyNull_ll(((VWebobjBObj4) obj).getObja6()));
+			list.add(isMyNull_ll(((VWebobjBObj4) obj).getObjaE()));
+			list.add(isMyNull_ll(((VWebobjBObj4) obj).getObja7()));
+			list.add(isMyNull_ll(((VWebobjBObj4) obj).getObja8()));
+			list.add(isMyNull_ll(((VWebobjBObj4) obj).getObja9()));
+		}
+		
 		if(obj instanceof VWebobjBObj5){
 			list.add(isMyNull_ll(((VWebobjBObj5) obj).getObja5()));
 			list.add(isMyNull_ll(((VWebobjBObj5) obj).getObja6()));
@@ -814,15 +1102,10 @@ public class WebObjsBAction extends ActionSupport implements ServletResponseAwar
 		
 		return list;		
 	}
-		
-		
 	/*************************************************工廠報表(一個月每天情況)***********************************************************/
 	
 	
-	
-	
-	
-	
+				
 	/***************************************各廠月報表彙總************************************************************/
 	public void print_tw() throws IOException, ParseException{
 		XSSFWorkbook wb=new XSSFWorkbook();
@@ -1109,8 +1392,8 @@ public void init_more(XSSFSheet sheet,Map<String,Object>map,Map<String,Object>ma
 	public void print_tw2() throws IOException{
 		XSSFWorkbook wb=new XSSFWorkbook();		
 		Map<String,Object>map_style=GlobalMethod.findStyles2007(wb);				
-		List<VWebobjBObj>list_source=webobjbservices.findObjByDay(yymmdd);
-		List<VWebobjBObj3>list_source2=webobjbservices.findByVwebobjb3(yymmdd);
+		List<VWebobjBObj>list_source=webobjbservices.findObjByDay(yymmdd,workorholiday);
+		List<VWebobjBObj3>list_source2=webobjbservices.findByVwebobjb3(yymmdd,workorholiday);
 		Map<String,Object>map=new LinkedHashMap<String,Object>();
 						
 		//List<WebFact>facts=webFactSer.findFactAble();//所有有效廠別
