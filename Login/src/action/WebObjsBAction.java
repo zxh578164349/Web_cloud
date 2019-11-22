@@ -334,7 +334,7 @@ public class WebObjsBAction extends ActionSupport implements ServletResponseAwar
 					}
 					for(int i=4;i<array_head.length;i++){
 						WebFact fact=new WebFact(new WebFactId(factNo,array_head[i].trim()));
-						WebObjsB obj=new WebObjsB(new WebObjsBId(fact,yymm));								
+						WebObjsB obj=new WebObjsB(new WebObjsBId(fact,yymmdd));								
 						obj.setOnModulus(Double.valueOf(list.get(1).split(SEPARATOR)[i]));
 						obj.setPersonnum(Double.valueOf(list.get(2).split(SEPARATOR)[i]));
 						obj.setStandardOutput(Double.valueOf(list.get(3).split(SEPARATOR)[i]));
@@ -379,14 +379,14 @@ public class WebObjsBAction extends ActionSupport implements ServletResponseAwar
 				List<WebObjsB>list=new ArrayList<WebObjsB>();
 				List<String>factcodes=webFactSer.findFactCodeByFactNo_show(factNo);
 				for(String factcode:factcodes){
-					WebObjsB obj=new WebObjsB(new WebObjsBId(new WebFact(new WebFactId(factNo,factcode)),yymm));
+					WebObjsB obj=new WebObjsB(new WebObjsBId(new WebFact(new WebFactId(factNo,factcode)),yymmdd));
 					obj.setWorkorholiday(workorholiday);
 					obj.setUsername(user.getUsername());
 					obj.setDatecreate(new SimpleDateFormat("yyyyMMdd").format(new Date()));
 					list.add(obj);
 				}
 				webobjbservices.addMore(list);
-				response.getWriter().print("<script>window.parent.layer.msg('導入成功',3,1)</script>");
+				response.getWriter().print("<script>window.parent.layer.msg('添加成功',3,1)</script>");
 			}					
 		}catch(Exception e){
 			System.out.println(e);
@@ -1992,7 +1992,7 @@ public void init_more2_b(XSSFSheet sheet,Map<String,Object>map,Map<String,Object
 					if(a==0){
 						sheet.getRow(2+a).getCell(b).setCellStyle(cs_head);
 					}else{
-						sheet.getRow(2+a).getCell(0).setCellStyle(cs);
+						sheet.getRow(2+a).getCell(b).setCellStyle(cs);
 					}					
 				}												
 			}

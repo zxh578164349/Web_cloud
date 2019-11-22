@@ -26,9 +26,17 @@
 	<form action="webobjb_addMore"  method="post" enctype="multipart/form-data" id="upload_form" target="frameFile">
 	  <table id="tb_search">
 	     <tr>
+	       <td >
+	       <select name="workorholiday" id="workholiday" datatype="*" onchange="changeFile()">
+							<option value="">請選擇日期性質</option>
+							<option value="0">工作日</option>
+							<option value="1">假日</option>
+							<option value="2">未排產</option>
+			</select>
+			</td>
 	       <td>
 	          <s:if test="#session.factNo=='tw'">
-					<select name="factNo" id="factNo_a" class="search" >
+					<select name="factNo" id="factNo_in" class="search" >
 						<option value="nothing">請選擇廠別</option>							
 						<s:iterator value="#session.facts" id="temp">
 							<option value="${temp[0]}">${temp[1]}(${temp[0]})</option>								
@@ -38,7 +46,7 @@
 				</s:if> 
 				<s:else>
 				
-					<select name="factNo" id="factNo_a" class="search">						
+					<select name="factNo" id="factNo_in" class="search">						
 						<option value="<s:property value="#session.factNo"/>">
 							<s:property value="#session.factName" />(<s:property value="#session.factNo"/>)
 						</option>
@@ -47,22 +55,16 @@
 				</s:else>
 	       </td>	       
 	       <td>
-	         <input type="text" id="yymm_in" name="yymm" onClick="WdatePicker({dateFmt:'yyyyMMdd'})" readonly="readonly" class="Wdate search"/>
+	         <input type="text" id="yymm_in" name="yymmdd" onClick="WdatePicker({dateFmt:'yyyyMMdd'})" readonly="readonly" class="Wdate search"/>
 	       </td>
-	       <td >
-	       <select name="workorholiday" id="workholiday" datatype="*" onchange="changeFile()">
-							<option value="">請選擇日期性質</option>
-							<option value="0">工作日</option>
-							<option value="1">假日</option>
-							<option value="2">未排產</option>
-			</select>
-			</td>
+	       
 			<td>	 
 	         <input type="file" name="file"  id="id_file" class="btn btn-info"/>	        	       
 	       </td>		 
 	       <td>
-	       	    &nbsp;<input value="導入Excel" type=button onclick="checkForm()" id="search_forday" class="btn btn-info"/>
-	     </td>
+	       	 <input value="導入Excel" type=button onclick="checkForm()" id="btn-a" class="btn btn-info"/>&nbsp;
+	       	 <input value="導出Excel" type=button onclick="exp_file()" id="btn-b" class="btn btn-info"/>
+	       </td>
 	    </tr> 	       
 	  </table>          	
 	</form>
@@ -75,38 +77,51 @@
 	
 <script>
 
-	function checkForm(){	
+	function checkForm(){
+	    clearcss2();	
 		var id_file=jq("#id_file").val();
 		var extendName=id_file.substr(id_file.lastIndexOf(".")).toLowerCase();
 		if(jq("#workholiday").val()==""){
+		    jq("#workholiday").css("border-color","red");
 		    layer.alert("請選擇日期性質");
 			return false;
 		}else{
 		   if(jq("#workholiday").val()=="0"){
 		      if(id_file==""){
+		       jq("#id_file").css("border-color","red");
 			   layer.alert("請選擇Excel文檔");
 			   return false;
 		      }else if(extendName!=".xls"&&extendName!=".xlsx"){
 			   layer.alert("僅允許Excel文檔");
 			   return false;
-		      }else if(jq("#factNo_a").val()=="nothing"){
+		      }else if(jq("#factNo_in").val()=="nothing"){
+		       jq("#factNo_in").css("border-color","red");
 			   layer.alert("請選擇廠別");
 			   return false;
 		      }else if(jq("#yymm_in").val()==""){
+		       jq("#yymm_in").css("border-color","red");
 			   layer.alert("請選擇日期");
 			   return false;
 		      }else{
+		       jq("#workholiday").css("border-color","");
+		       jq("#id_file").css("border-color","");
+		       jq("#factNo_in").css("border-color","");
+		       jq("#yymm_in").css("border-color","");
 		       layer.load("請稍等...");
 			   jq("#upload_form").submit();
 		      }
 		   }else{
-		      if(jq("#factNo_a").val()=="nothing"){
+		      if(jq("#factNo_in").val()=="nothing"){
+		       jq("#factNo_in").css("border-color","red");
 			   layer.alert("請選擇廠別");
 			   return false;
 		      }else if(jq("#yymm_in").val()==""){
+		       jq("#yymm_in").css("border-color","red");
 			   layer.alert("請選擇日期");
 			   return false;
 		      }else{
+		       jq("#factNo_in").css("border-color","");
+		       jq("#yymm_in").css("border-color","");
 		       layer.load("請稍等...");
 			   jq("#upload_form").submit();
 		      }
@@ -128,7 +143,15 @@
 		});
 	}
 	function submis(public_form) {
-		jq.ajax({
+	    clearcss();
+	    if(jq("#factNo").val()==""||jq("#yymm").val()==""){
+	       jq("#factNo").css("border-color","red");
+		   jq("#yymm").css("border-color","red");
+		   layer.msg("請選擇廠別和（年月）日期",3,3);	
+	    }else{
+	       jq("#factNo").css("border-color","");
+		   jq("#yymm").css("border-color","");
+	       jq.ajax({
 			type : "POST",
 			dataType : "Html",
 			url : "webobjb_findPageBean2",
@@ -141,6 +164,8 @@
 				jq("#bodyid").html(xhr.responseText);
 			}
 		});
+	    }
+		
 	}
 	
 function print(public_form,factNo,yymm){
@@ -238,8 +263,10 @@ function showDiv(){
 
 function changeFile(){
    if(jq("#workholiday").val()=="0"){
+     jq("#btn-a").val("導入Excel");
      jq("#id_file").removeClass("disabled");
    }else{
+     jq("#btn-a").val("添加");
      jq("#id_file").addClass("disabled");
    }
 }
@@ -252,8 +279,30 @@ function clearcss(){
   
 }
 
-function exp_file(){
+function clearcss2(){
+  jq("#workholiday").css("border-color","");
+  jq("#id_file").css("border-color","");
+  jq("#factNo_in").css("border-color","");
+  jq("#yymm_in").css("border-color","");
   
+}
+
+
+function exp_file(){
+    clearcss2();
+    var public_form=jq("#upload_form");	
+	public_form.attr("action","webobjb_exp_file");
+	public_form.attr("target","_blank");	
+	if(jq("#factNo_in").val()=="nothing"||jq("#factNo_in").val()==""||jq("#yymm_in").val()==""){	
+	    jq("#factNo_in").css("border-color","red");
+        jq("#yymm_in").css("border-color","red");    
+		layer.msg("請選廠別和日期",3,3);
+		return false;
+	}else{	
+	    jq("#factNo_in").css("border-color","");
+        jq("#yymm_in").css("border-color","");    
+		public_form.submit();
+	}
 }
 </script>		
 </body>
