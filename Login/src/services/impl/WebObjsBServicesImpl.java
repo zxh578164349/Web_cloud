@@ -120,6 +120,12 @@ public class WebObjsBServicesImpl implements IWebObjsBServices{
 	}
 
 
+	public List<WebObjsB> findWebObjsBByFactNo(String factNo, String yymmdd) {
+		// TODO Auto-generated method stub
+		return webobjbdao.findWebObjsBByFactNo(factNo, yymmdd);
+	}
+
+
 	
 
 }

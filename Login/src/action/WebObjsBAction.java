@@ -17,6 +17,10 @@ import java.util.List;
 import java.util.Map;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
+
+import org.apache.poi.hssf.usermodel.HSSFCellStyle;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
@@ -47,6 +51,7 @@ import entity.WebFactId;
 import entity.WebObjsB;
 import entity.WebObjsBId;
 import entity.WebUser;
+import entity.WeballobjB;
 
 
 public class WebObjsBAction extends ActionSupport implements ServletResponseAware{
@@ -1941,5 +1946,150 @@ public void init_more2_b(XSSFSheet sheet,Map<String,Object>map,Map<String,Object
 		return map;
 	}
 	
+	
+	
+	/*********************************************導出數據格式******************************************************/
+	public void exp_file() throws ParseException, IOException{
+		XSSFWorkbook wb=new XSSFWorkbook();
+		Map<String,Object>map_cs=findStyles2007(wb);
+		List<String>list_col=findLeftCol();
+		List<WebObjsB>list_objs=webobjbservices.findWebObjsBByFactNo(factNo, yymmdd);	
+		
+		XSSFCellStyle cs=(XSSFCellStyle)map_cs.get("cs");
+		XSSFCellStyle cs_head=(XSSFCellStyle)map_cs.get("cs_head");
+		XSSFCellStyle cs_title=(XSSFCellStyle)map_cs.get("cs_title");
+		
+		switch(list_objs.size()){//switch		
+		case 0:
+			response.setContentType("text/html;charset=utf-8");
+			response.getWriter().print("<script>window.parent.alert('無數據');</script>");			
+			break;
+		default:
+			XSSFSheet sheet=wb.createSheet(yymmdd);
+			for(int a=0;a<list_col.size()+5;a++){
+				sheet.createRow(a);
+				if(a==0){
+					sheet.setColumnWidth(1, 5500);
+				}
+				for(int b=0;b<list_objs.size()+5;b++){
+					sheet.getRow(a).createCell(b);
+				}
+			}
+			
+			CellRangeAddress cra_title=new CellRangeAddress(0,0,0,4);
+			sheet.addMergedRegion(cra_title);
+			sheet.getRow(0).getCell(0).setCellValue("工廠訊息每日更新導入數據-"+yymmdd);
+			for(int a=0;a<5;a++){
+				sheet.getRow(0).getCell(a).setCellStyle(cs_title);
+			}
+			
+			for(int a=0;a<list_col.size();a++){
+				sheet.getRow(2+a).getCell(0).setCellValue(list_col.get(a).split("__")[0]);
+				sheet.getRow(2+a).getCell(1).setCellValue(list_col.get(a).split("__")[1]);
+				sheet.getRow(2+a).getCell(2).setCellValue(list_col.get(a).split("__")[2]);
+				
+				for(int b=0;b<3;b++){
+					if(a==0){
+						sheet.getRow(2+a).getCell(b).setCellStyle(cs_head);
+					}else{
+						sheet.getRow(2+a).getCell(0).setCellStyle(cs);
+					}					
+				}												
+			}
+			for(int a=0;a<list_objs.size();a++){
+				sheet.getRow(2).getCell(3+a).setCellValue(list_objs.get(a).getId().getWebFact().getId().getFactArea());
+				sheet.getRow(3).getCell(3+a).setCellValue(isMyNull_db(list_objs.get(a).getOnModulus()));
+				sheet.getRow(4).getCell(3+a).setCellValue(isMyNull_db(list_objs.get(a).getPersonnum()));
+				sheet.getRow(5).getCell(3+a).setCellValue(isMyNull_db(list_objs.get(a).getStandardOutput()));
+				sheet.getRow(6).getCell(3+a).setCellValue(isMyNull_db(list_objs.get(a).getActualYield()));
+				sheet.getRow(7).getCell(3+a).setCellValue(isMyNull_db(list_objs.get(a).getZpObja()));
+				sheet.getRow(8).getCell(3+a).setCellValue(isMyNull_db(list_objs.get(a).getHostpairs()));
+				sheet.getRow(9).getCell(3+a).setCellValue(isMyNull_db(list_objs.get(a).getFactpairs()));
+				sheet.getRow(10).getCell(3+a).setCellValue(isMyNull_db(list_objs.get(a).getSamplepairs()));
+				sheet.getRow(11).getCell(3+a).setCellValue(isMyNull_db(list_objs.get(a).getOutnum()));
+				sheet.getRow(12).getCell(3+a).setCellValue(isMyNull_db(list_objs.get(a).getBacknum()));
+				sheet.getRow(13).getCell(3+a).setCellValue(isMyNull_db(list_objs.get(a).getWorkhours()));
+				sheet.getRow(14).getCell(3+a).setCellValue(isMyNull_db(list_objs.get(a).getDaycount()));
+				sheet.getRow(15).getCell(3+a).setCellValue(isMyNull_db(list_objs.get(a).getObjA1()));
+				sheet.getRow(16).getCell(3+a).setCellValue(isMyNull_db(list_objs.get(a).getObjA2()));
+				sheet.getRow(17).getCell(3+a).setCellValue(isMyNull_db(list_objs.get(a).getObjA3()));
+				sheet.getRow(18).getCell(3+a).setCellValue(isMyNull_db(list_objs.get(a).getObjA4()));
+				sheet.getRow(19).getCell(3+a).setCellValue(isMyNull_ll(list_objs.get(a).getObjA5()));
+				sheet.getRow(20).getCell(3+a).setCellValue(isMyNull_ll(list_objs.get(a).getObjA6()));
+				sheet.getRow(21).getCell(3+a).setCellValue(isMyNull_ll(list_objs.get(a).getObjA7()));
+				sheet.getRow(22).getCell(3+a).setCellValue(isMyNull_ll(list_objs.get(a).getObjA8()));
+				sheet.getRow(23).getCell(3+a).setCellValue(isMyNull_ll(list_objs.get(a).getObjA9()));
+				sheet.getRow(24).getCell(3+a).setCellValue(isMyNull_str(list_objs.get(a).getObjA10()));
+				sheet.getRow(25).getCell(3+a).setCellValue(isMyNull_str(list_objs.get(a).getObjA11()));
+				sheet.getRow(26).getCell(3+a).setCellValue(isMyNull_str(list_objs.get(a).getObjA12()));
+				sheet.getRow(27).getCell(3+a).setCellValue(isMyNull_str(list_objs.get(a).getObjA13()));
+				sheet.getRow(28).getCell(3+a).setCellValue(isMyNull_str(list_objs.get(a).getObjA14()));
+				
+				for(int b=0;b<list_col.size();b++){
+					if(b==0){
+						sheet.getRow(2+b).getCell(3+a).setCellStyle(cs_head);
+					}else{
+						sheet.getRow(2+b).getCell(3+a).setCellStyle(cs);
+					}
+					
+				}
+				
+			}													
+			try {
+				/*OutputStream os = new FileOutputStream("E:/" + "websort.xls");
+				wb.write(os);
+				os.close();	*/
+				ServletOutputStream os=response.getOutputStream();
+				//response.setContentType("application/vnd.ms-excel");
+				response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+				int msie=ServletActionContext.getRequest().getHeader("USER-AGENT").toLowerCase().indexOf("msie");//判斷是否為IE瀏覽器,大於0則為IE瀏覽器
+				String fileName=factNo+"_工廠訊息每日更新導入數據-"+".xlsx";
+				if(msie>0){
+					fileName=java.net.URLEncoder.encode(fileName,"utf-8");//解決IE中文文件不能下載的問題
+				}else{
+					fileName=new String(fileName.getBytes("utf-8"),"iso-8859-1");//解決非IE中文名亂碼問題
+				}		
+				response.setHeader("Content-disposition", "attachment;filename="+fileName);					
+				wb.write(os);
+				os.close();						
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		
+		}//switch							
+	}
+	
 
+	public List<String>findLeftCol(){
+		List<String>list=new ArrayList<String>();
+		list.add("序號__項目__單位");
+		list.add("1__上模數__模");
+		list.add("2__人數(拉模手)__人");
+		list.add("3__標準產量__模");
+		list.add("4__實際產量__模");
+		list.add("5__正批生產雙數__雙");
+		list.add("6__客補生產雙數__雙");
+		list.add("7__廠補生產雙數__雙");
+		list.add("8__樣品生產雙數__雙");
+		list.add("9__出貨數__雙");
+		list.add("10__退貨數__雙");
+		list.add("11__上模總工時__小時");
+		list.add("12__天數__天");
+		list.add("13__成型不良雙數__雙");
+		list.add("14__慢單狀況(張)__張");
+		list.add("15__慢單狀況(雙)__雙");
+		list.add("16__訂單欠數__雙");
+		list.add("17__直工人數__人");
+		list.add("18__間工人數__人");
+		list.add("19__招工數__人");
+		list.add("20__離職數__人");
+		list.add("21__請假數__人");
+		list.add("22__品質問題與客訴 __文字");
+		list.add("23__扣款訊息 __文字");
+		list.add("24__機台狀況/異常 __文字");
+		list.add("25__客人來訪訊息__文字");
+		list.add("26__其他提報事項__文字");
+		return list;		
+	}
 }

@@ -261,6 +261,14 @@ public class WebObjsBDaoImpl extends Basedao implements IWebObjsBDao{
 		
 	}
 
+	public List<WebObjsB> findWebObjsBByFactNo(String factNo, String yymmdd) {
+		// TODO Auto-generated method stub
+		String hql="from WebObjsB where id.webFact.id.factNo=? and id.yymmdd=? order by id.webFact.fcodeIndex";
+		String[]objs={factNo,yymmdd};
+		List<WebObjsB>list=super.findAll(hql, objs);
+		return list;
+	}
+
 	
 
 }

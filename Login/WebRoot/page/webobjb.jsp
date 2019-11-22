@@ -251,6 +251,10 @@ function clearcss(){
   jq("#yymmdd").css("border-color","");
   
 }
+
+function exp_file(){
+  
+}
 </script>		
 </body>
 </html>

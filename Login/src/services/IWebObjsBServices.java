@@ -38,6 +38,7 @@ public interface IWebObjsBServices {
 	public List<String[]> findNoInput(String yymmdd);
 	
 	public void add(WebObjsB obj);
+	public List<WebObjsB> findWebObjsBByFactNo(String factNo,String yymmdd);
 	
 	
 

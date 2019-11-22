@@ -43,5 +43,6 @@ public interface IWebObjsBDao {
 	/*****************************每日訊息報表*********************************/
 	
 	public void add(WebObjsB obj);
+	public List<WebObjsB> findWebObjsBByFactNo(String factNo,String yymmdd);
 
 }
