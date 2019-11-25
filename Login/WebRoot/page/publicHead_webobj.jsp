@@ -61,9 +61,9 @@
 			    <input value="工廠月報表" type="button" class="btn btn-primary" onclick="print6('public_form','factNo','year')"/>&nbsp;
 			   <s:if test='#session.factNo=="tw"'>			       			      
 			       <input value="各廠日匯總表" type="button" class="btn btn-primary" onclick="print4('public_form','yymmdd')"/>&nbsp;
-			       <s:if test='#session.loginUser.adminMk=="Y"'>
-			       <input value="Email" type="button" class="btn btn-primary" onclick="print5('public_form','yymmdd')"/>&nbsp; 
 			       <input value="各廠月匯總表" type="button" class="btn btn-primary" onclick="print3('public_form','yymm')"/>&nbsp;
+			       <s:if test='#session.loginUser.adminMk=="Y"'>
+			       <input value="Email" type="button" class="btn btn-primary" onclick="print5('public_form','yymmdd')"/>&nbsp; 			       
 			       </s:if>			       			        	        
 			   </s:if>
 		      </td>		      

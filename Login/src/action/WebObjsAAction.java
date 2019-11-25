@@ -359,8 +359,8 @@ public class WebObjsAAction extends ActionSupport implements ServletResponseAwar
 		log.setFactNo(factNo);
 		log.setFactCode(factCode);
 		log.setObj("WebObjsA");
-		log.setYymm(yymm);
-		webobjaservices.delete(factNo, factCode, yymm,log);
+		log.setYymm(yymmdd);
+		webobjaservices.delete(factNo, factCode, yymmdd,log);
 		return "delete";
 	}
 	
