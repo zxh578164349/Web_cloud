@@ -9,27 +9,27 @@ public class WebObjsA implements java.io.Serializable {
 	// Fields
 
 	private WebObjsAId id;
-	private Double objA1;
-	private Double objA2;
-	private Double objA3;
-	private Double objA4;
-	private Double objA5;
-	private Double objA6;
-	private Double objA7;
-	private Double objA8;
-	private Double objA9;
-	private Double objA10;
-	private Double objA11;
-	private Long objA12;
-	private Long objA13;
-	private Long objA14;
-	private Long objA15;
-	private Long objA16;
-	private String objA17;
-	private String objA18;
-	private String objA19;
-	private String objA20;
-	private String objA21;
+	private Double objA1;//廠內孔位數
+	private Double objA2;//最大戰力員工數
+	private Double objA3;//最大生產數
+	private Double objA4;//有效孔位數
+	private Double objA5;//上模數
+	private Double objA6;//回轉數
+	private Double objA7;//生產模數
+	private Double objA8;//目前欠數
+	private Double objA9;//慢單狀況
+	private Double objA10;//不良雙數
+	private Double objA11;//不良率(%)
+	private Long objA12;//目前直工人數
+	private Long objA13;//全廠員工數
+	private Long objA14;//招工數
+	private Long objA15;//離職數
+	private Long objA16;//請假數
+	private String objA17;//品質問題與客訴
+	private String objA18;//扣款訊息
+	private String objA19;//機台狀況/異常
+	private String objA20;//客人來訪訊息
+	private String objA21;//其他提報事項
 	private String username;
 	private String usernameUd;
 	private String createdate;

@@ -1877,10 +1877,10 @@ public void init_more2_b(XSSFSheet sheet,Map<String,Object>map,Map<String,Object
 				if(ele_data==null||ele_data.equals(0.0)||"null".equals(ele_data)||"無".equals(ele_data)){//待補
 					cs=(XSSFCellStyle)map_style.get("cs_font_red");
 				}else{
-					if(a<4||a==7||a==8){
+					if(a<14){
 						cs=(XSSFCellStyle)map_style.get("cs_poi");
 					}else if(a==14||a==17){
-						cs=(XSSFCellStyle)map_style.get("cs_percent");
+						cs=(XSSFCellStyle)map_style.get("cs_percent1");
 					}else{
 						cs=(XSSFCellStyle)map_style.get("cs_poi1");
 					}
@@ -1896,10 +1896,10 @@ public void init_more2_b(XSSFSheet sheet,Map<String,Object>map,Map<String,Object
 			break;
 			
 		case 1:
-			if(a<4||a==7||a==8){
+			if(a<14){
 				cs=(XSSFCellStyle)map_style.get("cs_poi");
 			}else if(a==14||a==17){
-				cs=(XSSFCellStyle)map_style.get("cs_percent");
+				cs=(XSSFCellStyle)map_style.get("cs_percent1");
 			}else{
 				cs=(XSSFCellStyle)map_style.get("cs_poi1");
 			}
