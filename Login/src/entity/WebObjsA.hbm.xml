@@ -79,7 +79,9 @@
         <property name="objA21" type="java.lang.String">
             <column name="OBJ_A21" />
         </property>
-        
+        <property name="workorholiday" type="java.lang.String">
+            <column name="WORKORHOLIDAY" length="1" />
+        </property>
         <property name="username" type="java.lang.String">
             <column name="USERNAME" length="50" />
         </property>

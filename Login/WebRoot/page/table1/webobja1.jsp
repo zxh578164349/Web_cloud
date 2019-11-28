@@ -59,7 +59,8 @@
                         <th>扣款訊息</th> 
                         <th>機台狀況/異常</th> 
                         <th>客人來訪訊息</th>                        
-                        <th>其他提報事項</th>                                                                					
+                        <th>其他提報事項</th>  
+                        <th>工作日/假日</th>                                                              					
 						<s:if test='#session.loginUser.userread!="1"'>
 							<th>操作</th>
 						</s:if>
@@ -92,7 +93,18 @@
 							<td><s:property value="objA18" /></td>
 							<td><s:property value="objA19" /></td>
 							<td><s:property value="objA20" /></td>
-							<td><s:property value="objA21" /></td>																				
+							<td><s:property value="objA21" /></td>	
+							<td>
+							<s:if test="workorholiday==1">
+						       <font color="red">假日</font>
+					        </s:if>
+					        <s:if test="workorholiday==2">
+						       <font color="green">未排產</font>
+					        </s:if> 
+					        <s:if test="workorholiday==0">
+				                                               工作日
+				            </s:if>
+							</td>																			
 
 							<s:if test='#session.loginUser.userread!="1"'>
 								<td>

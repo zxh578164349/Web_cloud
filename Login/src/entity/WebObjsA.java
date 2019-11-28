@@ -30,6 +30,7 @@ public class WebObjsA implements java.io.Serializable {
 	private String objA19;//機台狀況/異常
 	private String objA20;//客人來訪訊息
 	private String objA21;//其他提報事項
+	private String workorholiday;//假日/工作日
 	private String username;
 	private String usernameUd;
 	private String createdate;
@@ -286,6 +287,16 @@ public class WebObjsA implements java.io.Serializable {
 	public void setObjA21(String objA21) {
 		this.objA21 = objA21;
 	}
+
+	public String getWorkorholiday() {
+		return workorholiday;
+	}
+
+	public void setWorkorholiday(String workorholiday) {
+		this.workorholiday = workorholiday;
+	}
+	
+	
 	
 
 }

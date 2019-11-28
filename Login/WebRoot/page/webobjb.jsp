@@ -27,7 +27,7 @@
 	  <table id="tb_search">
 	     <tr>
 	       <td >
-	       <select name="workorholiday" id="workholiday" datatype="*" onchange="changeFile()">
+	       <select name="workorholiday" id="workorholiday" datatype="*" onchange="changeFile()">
 							<option value="">請選擇日期性質</option>
 							<option value="0">工作日</option>
 							<option value="1">假日</option>
@@ -81,12 +81,12 @@
 	    clearcss2();	
 		var id_file=jq("#id_file").val();
 		var extendName=id_file.substr(id_file.lastIndexOf(".")).toLowerCase();
-		if(jq("#workholiday").val()==""){
-		    jq("#workholiday").css("border-color","red");
+		if(jq("#workorholiday").val()==""){
+		    jq("#workorholiday").css("border-color","red");
 		    layer.alert("請選擇日期性質");
 			return false;
 		}else{
-		   if(jq("#workholiday").val()=="0"){
+		   if(jq("#workorholiday").val()=="0"){
 		      if(id_file==""){
 		       jq("#id_file").css("border-color","red");
 			   layer.alert("請選擇Excel文檔");
@@ -103,7 +103,7 @@
 			   layer.alert("請選擇日期");
 			   return false;
 		      }else{
-		       jq("#workholiday").css("border-color","");
+		       jq("#workorholiday").css("border-color","");
 		       jq("#id_file").css("border-color","");
 		       jq("#factNo_in").css("border-color","");
 		       jq("#yymm_in").css("border-color","");
@@ -143,7 +143,7 @@
 		});
 	}
 	function submis(public_form) {
-	    clearcss();
+	   /*  clearcss();
 	    if(jq("#factNo").val()==""||jq("#yymm").val()==""){
 	       jq("#factNo").css("border-color","red");
 		   jq("#yymm").css("border-color","red");
@@ -160,11 +160,24 @@
 				jq("#bodyid").html(msg);
 			},
 			error : function(xhr) {
-				//alert(xhr.responseText);
 				jq("#bodyid").html(xhr.responseText);
 			}
 		});
-	    }
+	    } */
+	    
+	       clearcss();
+	       jq.ajax({
+			type : "POST",
+			dataType : "Html",
+			url : "webobjb_findPageBean2",
+			data:jq("#"+public_form).serialize(),
+			success : function(msg) {
+				jq("#bodyid").html(msg);
+			},
+			error : function(xhr) {
+				jq("#bodyid").html(xhr.responseText);
+			}
+		});
 		
 	}
 	
@@ -262,7 +275,7 @@ function showDiv(){
 }
 
 function changeFile(){
-   if(jq("#workholiday").val()=="0"){
+   if(jq("#workorholiday").val()=="0"){
      jq("#btn-a").val("導入Excel");
      jq("#id_file").removeClass("disabled");
    }else{
@@ -280,7 +293,7 @@ function clearcss(){
 }
 
 function clearcss2(){
-  jq("#workholiday").css("border-color","");
+  jq("#workorholiday").css("border-color","");
   jq("#id_file").css("border-color","");
   jq("#factNo_in").css("border-color","");
   jq("#yymm_in").css("border-color","");
