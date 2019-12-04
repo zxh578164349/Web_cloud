@@ -7,6 +7,7 @@ import util.PageBean;
 import entity.KyzExpectmatmLog;
 import entity.VWebobjA;
 import entity.VWebobjA2;
+import entity.VWebobjBAll;
 import entity.VWebobjBObj3;
 import entity.VWebobjBObj;
 import entity.VWebobjBObj4;
@@ -39,6 +40,8 @@ public interface IWebObjsBServices {
 	
 	public void add(WebObjsB obj);
 	public List<WebObjsB> findWebObjsBByFactNo(String factNo,String yymmdd);
+	
+	public List<VWebobjBAll> findVWebobjBAll(String factNo,String year);
 	
 	
 

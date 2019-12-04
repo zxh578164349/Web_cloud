@@ -9,49 +9,49 @@ public class WeballobjB implements java.io.Serializable {
 	// Fields
 
 	private WeballobjBId id;
-	private Double objA1;
-	private Double objA2;
-	private Double objA3;
-	private Double objA4;
-	private Double objA5;
-	private Double objA6;
-	private Double objA7;
-	private Double objA8;
-	private Double objA9;
-	private Double objA10;
-	private Double objA11;
-	private Double objA12;
-	private Double objA13;
-	private Double objA14;
-	private Double objA15;
-	private Double objA16;
-	private Double objA17;
-	private Double objA18;
-	private Double objA19;
-	private Double objA20;
-	private Double objA21;
-	private Double objA22;
-	private Double objA23;
-	private Double objA24;
-	private Double objA25;
-	private Double objA26;
-	private Double objA27;
-	private Double objA28;
-	private Double objA29;
-	private Double objA30;
-	private Double objA31;
-	private Double objA32;
-	private Double objA33;
-	private Double objA34;
-	private Double objA35;
-	private Double objA36;
-	private Double objA37;
-	private Double objA38;
-	private Double objA39;
-	private Double objA40;
-	private Double objA41;
-	private Double objA42;
-	private Double objA43;
+	private Double objA1;//機臺孔位數
+	private Double objA2;//機台利用率
+	private Double objA3;//生產數
+	private Double objA4;//請款雙數
+	private Double objA5;//實際回轉數
+	private Double objA6;//直工
+	private Double objA7;//間工
+	private Double objA8;//全廠總人數
+	private Double objA9;//直間比
+	private Double objA10;//直工人均產能
+	private Double objA11;//全廠人均產能
+	private Double objA12;//時產能
+	private Double objA13;//時迴轉
+	private Double objA14;//加班費
+	private Double objA15;//成本率
+	private Double objA16;//回頭率
+	private Double objA17;//總損耗
+	private Double objA18;//平均邊料重
+	private Double objA19;//邊料率
+	private Double objA20;//不良重量
+	private Double objA21;//不良率
+	private Double objA22;//退貨率
+	private Double objA23;//成倉庫存
+	private Double objA24;//用水單耗
+	private Double objA25;//用電單耗
+	private Double objA26;//蒸汽單耗（USD/模）
+	private Double objA27;//蒸汽單耗  （KG/模）
+	private Double objA28;//色料藥品單耗  （G/雙）
+	private Double objA29;//色料藥品單耗  （USD/雙）
+	private Double objA30;//生產與請款差異
+	private Double objA31;//工作天數
+	private Double objA32;//正批生產雙數
+	private Double objA33;//廠補
+	private Double objA34;//客補
+	private Double objA35;//樣品
+	private Double objA36;//前倉入庫折算后可請款數
+	private Double objA37;//庫存(成品倉、整理課)
+	private Double objA38;//(無用)
+	private Double objA39;//無形差异
+	private Double objA40;//無形差異率
+	private Double objA41;//廢品重量
+	private Double objA42;//當月耗用金額
+	private Double objA43;//平均庫存金額
 	private String username;
 	private String usernameUd;
 	private String createDate;

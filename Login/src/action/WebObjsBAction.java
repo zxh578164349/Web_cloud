@@ -38,6 +38,8 @@ import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import entity.KyzExpectmatmLog;
 import entity.VWebFact;
+import entity.VWebobjBAll;
+import entity.VWebobjBAllId;
 import entity.VWebobjBObj3;
 import entity.VWebobjBObj3Id;
 import entity.VWebobjBObj;
@@ -547,12 +549,12 @@ public class WebObjsBAction extends ActionSupport implements ServletResponseAwar
 				map2.put(factcode, sum_obj);												
 			}
 			for(VWebobjBObj4 obj:list_lg){
-				obj.setObja5(isMyNull_ll(obj_allfact.getObja5())+isMyNull_ll(obj.getObja5()));
-				obj.setObja6(isMyNull_ll(obj_allfact.getObja6())+isMyNull_ll(obj.getObja6()));
-				obj.setObjaE(isMyNull_ll(obj_allfact.getObjaE())+isMyNull_ll(obj.getObjaE()));
-				obj.setObja7(isMyNull_ll(obj_allfact.getObja7())+isMyNull_ll(obj.getObja7()));
-				obj.setObja8(isMyNull_ll(obj_allfact.getObja8())+isMyNull_ll(obj.getObja8()));
-				obj.setObja9(isMyNull_ll(obj_allfact.getObja9())+isMyNull_ll(obj.getObja9()));
+				obj_allfact.setObja5(isMyNull_ll(obj_allfact.getObja5())+isMyNull_ll(obj.getObja5()));
+				obj_allfact.setObja6(isMyNull_ll(obj_allfact.getObja6())+isMyNull_ll(obj.getObja6()));
+				obj_allfact.setObjaE(isMyNull_ll(obj_allfact.getObjaE())+isMyNull_ll(obj.getObjaE()));
+				obj_allfact.setObja7(isMyNull_ll(obj_allfact.getObja7())+isMyNull_ll(obj.getObja7()));
+				obj_allfact.setObja8(isMyNull_ll(obj_allfact.getObja8())+isMyNull_ll(obj.getObja8()));
+				obj_allfact.setObja9(isMyNull_ll(obj_allfact.getObja9())+isMyNull_ll(obj.getObja9()));
 			}
 		
 			XSSFSheet sheet=wb.createSheet(year+"工廠訊息");
@@ -704,6 +706,284 @@ public class WebObjsBAction extends ActionSupport implements ServletResponseAwar
 	/*************************************************工廠報表(一年情況)***********************************************************/
 	
 	
+	/*************************************************工廠報表(一年情況)__改版***********************************************************/
+	public void print3_1() throws ParseException, IOException{
+		XSSFWorkbook wb=new XSSFWorkbook();
+		Map<String,Object>map_cs=findStyles2007(wb);				
+		//List<VWebobjBObj>list_objs=webobjbservices.findByYymm2(factNo.split("__")[0], yymm,workorholiday);
+		List<VWebobjBAll>list_objs=webobjbservices.findVWebobjBAll(factNo.split("__")[0], year);
+			
+		switch(list_objs.size()){//switch		
+		case 0:
+			response.setContentType("text/html;charset=utf-8");
+			response.getWriter().print("<script>window.parent.alert('無數據');</script>");			
+			break;
+		default:
+			
+			
+			int months=12;//一年的月份數
+			List<String>list_factcodes=new ArrayList<String>();
+			for(VWebobjBAll obj:list_objs){
+				list_factcodes.add(obj.getId().getWebFact().getId().getFactArea());
+			}
+			
+			for(int a=0;a<list_factcodes.size();a++){
+				for(int b=list_factcodes.size()-1;b>a;b--){
+					if(list_factcodes.get(a).equals(list_factcodes.get(b))){
+						list_factcodes.remove(b);
+					}
+				}
+			}
+			
+			Map<String,Object>map=new LinkedHashMap<String,Object>();
+			Map<String,Object>map2=new LinkedHashMap<String,Object>();
+			Map<String,Object>map3=new LinkedHashMap<String,Object>();
+			List<VWebobjBAll>list_lg=new ArrayList<VWebobjBAll>();
+			VWebobjBAll obj_allfact=new VWebobjBAll();
+			for(int a=0;a<months;a++){
+				list_lg.add(new VWebobjBAll());
+			}
+			for(String factcode:list_factcodes){
+				String temp="";
+				List<VWebobjBAll>list=new ArrayList<VWebobjBAll>();
+				for(int a=1;a<=months;a++){				
+					if(a>9){
+						temp=year+a;
+					}else{
+						temp=year+"0"+a;
+					}
+					list.add(new VWebobjBAll(new VWebobjBAllId(new WebFact(new WebFactId(factNo.split("__")[0],factcode)),temp)));
+					temp="";
+				}
+				
+				int work_months=0;
+				for(int a=0;a<list.size();a++){
+					for(VWebobjBAll obj:list_objs){
+						if(list.get(a).getId().getWebFact().getId().getFactArea().equals(obj.getId().getWebFact().getId().getFactArea())&&
+								list.get(a).getId().getWebFact().getId().getFactNo().equals(obj.getId().getWebFact().getId().getFactNo())&&
+								list.get(a).getId().getYymm().equals(obj.getId().getYymm())){
+							list.set(a, obj);
+							work_months++;
+							break;
+							
+						}
+					}
+				}				
+				map.put(factcode, list);
+				map3.put(factcode, work_months);
+				
+				for(int a=0;a<list.size();a++){	
+					    list_lg.get(a).setSumObjA7(isMyNull_db(list_lg.get(a).getSumObjA7())+isMyNull_db(list.get(a).getSumObjA7()));
+						list_lg.get(a).setSumObjA8(isMyNull_db(list_lg.get(a).getSumObjA8())+isMyNull_db(list.get(a).getSumObjA8()));
+						list_lg.get(a).setCObjA6(isMyNull_db(list_lg.get(a).getCObjA6())+isMyNull_db(list.get(a).getCObjA6()));
+						list_lg.get(a).setCObjA7(isMyNull_db(list_lg.get(a).getCObjA7())+isMyNull_db(list.get(a).getCObjA7()));
+						list_lg.get(a).setCObjA8(isMyNull_db(list_lg.get(a).getCObjA8())+isMyNull_db(list.get(a).getCObjA8()));																
+				}
+				
+				VWebobjBAll sum_obj=new VWebobjBAll();
+				for(VWebobjBAll obj:list){								
+					sum_obj.setTotalhole(isMyNull_db(sum_obj.getTotalhole())+isMyNull_db(obj.getTotalhole()));
+					sum_obj.setMachinepower(isMyNull_db(sum_obj.getMachinepower())+isMyNull_db(obj.getMachinepower()));
+					sum_obj.setHole(isMyNull_db(sum_obj.getHole())+isMyNull_db(obj.getHole()));
+					sum_obj.setSample(isMyNull_db(sum_obj.getSample())+isMyNull_db(obj.getSample()));
+					sum_obj.setAccessories(isMyNull_db(sum_obj.getAccessories())+isMyNull_db(obj.getAccessories()));
+					sum_obj.setOther(isMyNull_db(sum_obj.getOther())+isMyNull_db(obj.getOther()));
+					sum_obj.setSumRealcashoutpairs(isMyNull_db(sum_obj.getSumRealcashoutpairs())+isMyNull_db(obj.getSumRealcashoutpairs()));
+					sum_obj.setSumRealcashoutmoney(isMyNull_db(sum_obj.getSumRealcashoutmoney())+isMyNull_db(obj.getSumRealcashoutmoney()));
+					sum_obj.setSumActualyield(isMyNull_db(sum_obj.getSumActualyield())+isMyNull_db(obj.getSumActualyield()));
+					sum_obj.setFormulaA(isMyNull_db(sum_obj.getFormulaA())+isMyNull_db(obj.getFormulaA()));
+					sum_obj.setSumZpobja(isMyNull_db(sum_obj.getSumZpobja())+isMyNull_db(obj.getSumZpobja()));	
+					
+					sum_obj.setSumHostpairs(isMyNull_db(sum_obj.getSumHostpairs())+isMyNull_db(obj.getSumHostpairs()));
+					sum_obj.setSumFactpairs(isMyNull_db(sum_obj.getSumFactpairs())+isMyNull_db(obj.getSumFactpairs()));
+					sum_obj.setSumSamplepairs(isMyNull_db(sum_obj.getSumSamplepairs())+isMyNull_db(obj.getSumSamplepairs()));
+					sum_obj.setAvgOnmodulus(isMyNull_db(sum_obj.getAvgOnmodulus())+isMyNull_db(obj.getAvgOnmodulus()));
+					sum_obj.setAvgPersonnum(isMyNull_db(sum_obj.getAvgPersonnum())+isMyNull_db(obj.getAvgPersonnum()));
+					sum_obj.setAvgStandardoutput(isMyNull_db(sum_obj.getAvgStandardoutput())+isMyNull_db(obj.getAvgStandardoutput()));
+					sum_obj.setAvgActualyield(isMyNull_db(sum_obj.getAvgActualyield())+isMyNull_db(obj.getAvgActualyield()));
+					sum_obj.setFormulaB(isMyNull_db(sum_obj.getFormulaB())+isMyNull_db(obj.getFormulaB()));
+					sum_obj.setFormulaC(isMyNull_db(sum_obj.getFormulaC())+isMyNull_db(obj.getFormulaC()));
+					sum_obj.setFormulaD(isMyNull_db(sum_obj.getFormulaD())+isMyNull_db(obj.getFormulaD()));
+					sum_obj.setAvgObjA2(isMyNull_db(sum_obj.getAvgObjA2())+isMyNull_db(obj.getAvgObjA2()));
+					sum_obj.setAvgObjA3(isMyNull_db(sum_obj.getAvgObjA3())+isMyNull_db(obj.getAvgObjA3()));
+					sum_obj.setObjA4(isMyNull_db(sum_obj.getObjA4())+isMyNull_db(obj.getObjA4()));
+				
+					sum_obj.setCObjA2(isMyNull_db(sum_obj.getCObjA2())+isMyNull_db(obj.getCObjA2()));
+					sum_obj.setCObjA10(isMyNull_db(sum_obj.getCObjA10())+isMyNull_db(obj.getCObjA10()));
+					sum_obj.setCObjA11(isMyNull_db(sum_obj.getCObjA11())+isMyNull_db(obj.getCObjA11()));
+					sum_obj.setCObjA14(isMyNull_db(sum_obj.getCObjA14())+isMyNull_db(obj.getCObjA14()));
+					sum_obj.setCObjA15(isMyNull_db(sum_obj.getCObjA15())+isMyNull_db(obj.getCObjA15()));
+					sum_obj.setCObjA16(isMyNull_db(sum_obj.getCObjA16())+isMyNull_db(obj.getCObjA16()));
+					sum_obj.setCObjA17(isMyNull_db(sum_obj.getCObjA17())+isMyNull_db(obj.getCObjA17()));
+					sum_obj.setCObjA18(isMyNull_db(sum_obj.getCObjA18())+isMyNull_db(obj.getCObjA18()));
+					sum_obj.setCObjA19(isMyNull_db(sum_obj.getCObjA19())+isMyNull_db(obj.getCObjA19()));
+					sum_obj.setCObjA21(isMyNull_db(sum_obj.getCObjA21())+isMyNull_db(obj.getCObjA21()));
+					sum_obj.setCObjA22(isMyNull_db(sum_obj.getCObjA22())+isMyNull_db(obj.getCObjA22()));
+					sum_obj.setCObjA24(isMyNull_db(sum_obj.getCObjA24())+isMyNull_db(obj.getCObjA24()));
+					sum_obj.setCObjA25(isMyNull_db(sum_obj.getCObjA25())+isMyNull_db(obj.getCObjA25()));
+					sum_obj.setCObjA26(isMyNull_db(sum_obj.getCObjA26())+isMyNull_db(obj.getCObjA26()));
+					sum_obj.setCObjA27(isMyNull_db(sum_obj.getCObjA27())+isMyNull_db(obj.getCObjA27()));
+					sum_obj.setCObjA28(isMyNull_db(sum_obj.getCObjA28())+isMyNull_db(obj.getCObjA28()));
+										
+				}
+				map2.put(factcode, sum_obj);												
+			}
+			for(VWebobjBObj4 obj:list_lg){
+				obj.setObja5(isMyNull_ll(obj_allfact.getObja5())+isMyNull_ll(obj.getObja5()));
+				obj.setObja6(isMyNull_ll(obj_allfact.getObja6())+isMyNull_ll(obj.getObja6()));
+				obj.setObjaE(isMyNull_ll(obj_allfact.getObjaE())+isMyNull_ll(obj.getObjaE()));
+				obj.setObja7(isMyNull_ll(obj_allfact.getObja7())+isMyNull_ll(obj.getObja7()));
+				obj.setObja8(isMyNull_ll(obj_allfact.getObja8())+isMyNull_ll(obj.getObja8()));
+				obj.setObja9(isMyNull_ll(obj_allfact.getObja9())+isMyNull_ll(obj.getObja9()));
+			}
+		
+			XSSFSheet sheet=wb.createSheet(year+"工廠訊息");
+			XSSFSheet sheet2=wb.createSheet(year+"提報事項");
+			init3_1(sheet,map_cs,map,list_lg,months,map2,map3,obj_allfact);
+			//init2(sheet2,map_cs,map,days);
+			
+			try {				
+				ServletOutputStream os=response.getOutputStream();
+				//response.setContentType("application/vnd.ms-excel");
+				response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+				int msie=ServletActionContext.getRequest().getHeader("USER-AGENT").toLowerCase().indexOf("msie");//判斷是否為IE瀏覽器,大於0則為IE瀏覽器
+				String fileName=factNo.split("__")[0]+"_"+year+"工廠訊息報表"+".xlsx";
+				if(msie>0){
+					fileName=java.net.URLEncoder.encode(fileName,"utf-8");//解決IE中文文件不能下載的問題
+				}else{
+					fileName=new String(fileName.getBytes("utf-8"),"iso-8859-1");//解決非IE中文名亂碼問題
+				}		
+				response.setHeader("Content-disposition", "attachment;filename="+fileName);					
+				wb.write(os);
+				os.close();						
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		
+		}//switch							
+	}
+	
+								
+	public void init3_1(XSSFSheet sheet,Map<String,Object>map_cs,Map<String,Object>map,List<VWebobjBObj4>list_lg,int months,Map<String,Object>map2,Map<String,Object>map3,VWebobjBObj4 obj_allfact) throws ParseException{				
+		XSSFCellStyle cs=(XSSFCellStyle)map_cs.get("cs");
+		XSSFCellStyle cs_head=(XSSFCellStyle)map_cs.get("cs_head");
+		XSSFCellStyle cs_title=(XSSFCellStyle)map_cs.get("cs_title");		
+		List<String>list_col=findItems();
+		List<String>list_col2=findItems2();
+			sheet.setColumnWidth(1, 5000);
+			for(int a=0;a<list_col.size()*map.size()+20;a++){
+				sheet.createRow(a);				
+				for(int b=0;b<months+5;b++){
+					sheet.getRow(a).createCell(b);					
+				}
+			}
+			
+			CellRangeAddress cra_title=new CellRangeAddress(0,0,0,4);
+			sheet.addMergedRegion(cra_title);
+			sheet.getRow(0).getCell(0).setCellValue(factNo.split("__")[1]+"-"+year+"工廠訊息");
+			for(int i=0;i<4;i++){
+				sheet.getRow(0).getCell(i).setCellStyle(cs_title);
+			}
+						
+			int temp=2;
+			for(String factcode:map.keySet()){
+				
+				CellRangeAddress cra_date=new CellRangeAddress(temp,temp,0,1);
+				sheet.addMergedRegion(cra_date);
+				sheet.getRow(temp).getCell(0).setCellValue(year);
+				for(int i=0;i<2;i++){
+					sheet.getRow(temp).getCell(i).setCellStyle(cs_head);
+				}
+				for(int a=0;a<months;a++){
+					sheet.getRow(temp).getCell(a+2).setCellValue(a+1+"月");
+					sheet.getRow(temp).getCell(a+2).setCellStyle(cs_head);	
+				}
+				
+				CellRangeAddress cra_factcode=new CellRangeAddress(temp+1,temp+list_col.size(),0,0);
+				sheet.addMergedRegion(cra_factcode);
+				sheet.getRow(temp+1).getCell(0).setCellValue(factcode);
+				for(int b=0;b<list_col.size();b++){
+					sheet.getRow(b+temp+1).getCell(0).setCellStyle(cs);
+				}
+				for(int b=0;b<list_col.size();b++){
+					sheet.getRow(b+temp+1).getCell(1).setCellValue(list_col.get(b).split("__")[0]);
+					sheet.getRow(b+temp+1).getCell(1).setCellStyle(cs);										
+				}
+				List<VWebobjBObj4>list=(List<VWebobjBObj4>)map.get(factcode);					
+				for(int a=0;a<list.size();a++){						
+					List<Double>list_db=objToDouble(list.get(a));
+					for(int b=0;b<list_db.size();b++){
+						sheet.getRow(b+temp+1).getCell(a+2).setCellValue(list_db.get(b));
+						//this.selectValue_db(sheet.getRow(b+temp+1).getCell(a+2), list.get(a).getWorkorholiday(), list_db.get(b));
+						sheet.getRow(b+temp+1).getCell(a+2).setCellStyle(this.selectStyle2007(b, map_cs,1,null,list_db.get(b)));
+					}																
+				}
+				
+				sheet.getRow(temp).getCell(2+months).setCellValue("總計");
+				sheet.getRow(temp).getCell(3+months).setCellValue("平均");
+				for(int a=0;a<2;a++){
+					sheet.getRow(temp).getCell(2+months+a).setCellStyle(cs_head);
+				}
+				List<Double>list_sum=objToDouble((VWebobjBObj4)map2.get(factcode));
+				int work_months=(Integer)map3.get(factcode);
+				for(int b=0;b<list_sum.size();b++){
+					sheet.getRow(b+temp+1).getCell(2+months).setCellValue(list_sum.get(b));
+					sheet.getRow(b+temp+1).getCell(3+months).setCellValue(list_sum.get(b)/work_months);
+					sheet.getRow(b+temp+1).getCell(2+months).setCellStyle(this.selectStyle2007(b, map_cs,1,null,null));
+					sheet.getRow(b+temp+1).getCell(3+months).setCellStyle(this.selectStyle2007(b, map_cs,1,null,null));
+				}
+				
+				temp=temp+list_col.size()+1;
+			}	
+			
+			
+			
+			
+			
+			CellRangeAddress cra_date=new CellRangeAddress(temp,temp,0,1);
+			sheet.addMergedRegion(cra_date);
+			sheet.getRow(temp).getCell(0).setCellValue(year);
+			for(int i=0;i<2;i++){
+				sheet.getRow(temp).getCell(i).setCellStyle(cs_head);
+			}
+			for(int a=0;a<months;a++){
+				sheet.getRow(temp).getCell(a+2).setCellValue(a+1+"月");
+				sheet.getRow(temp).getCell(a+2).setCellStyle(cs_head);	
+			}
+			
+			CellRangeAddress cra_all=new CellRangeAddress(temp+1,temp+list_col2.size(),0,0);
+			sheet.addMergedRegion(cra_all);
+			sheet.getRow(temp+1).getCell(0).setCellValue("全廠");
+			for(int b=0;b<list_col2.size();b++){
+				sheet.getRow(b+temp+1).getCell(0).setCellStyle(cs);
+			}
+			for(int b=0;b<list_col2.size();b++){
+				sheet.getRow(b+temp+1).getCell(1).setCellValue(list_col2.get(b).split("__")[0]);
+				sheet.getRow(b+temp+1).getCell(1).setCellStyle(cs);										
+			}
+			for(int a=0;a<list_lg.size();a++){						
+				List<Long>list_db=objToLong(list_lg.get(a));
+				for(int b=0;b<list_db.size();b++){
+					sheet.getRow(b+temp+1).getCell(a+2).setCellValue(list_db.get(b));
+					sheet.getRow(b+temp+1).getCell(a+2).setCellStyle(cs);
+				}																
+			}
+			
+			sheet.getRow(temp).getCell(2+months).setCellValue("總計");
+			sheet.getRow(temp).getCell(3+months).setCellValue("平均");
+			for(int a=0;a<2;a++){
+				sheet.getRow(temp).getCell(2+months+a).setCellStyle(cs_head);
+			}
+			List<Long>ll=this.objToLong(obj_allfact);
+			for(int b=0;b<ll.size();b++){
+				sheet.getRow(temp+1+b).getCell(2+months).setCellValue(ll.get(b));
+				sheet.getRow(temp+1+b).getCell(3+months).setCellValue(ll.get(b)/months);
+				sheet.getRow(temp+1+b).getCell(2+months).setCellStyle(this.selectStyle2007(b, map_cs,1,null,null));
+				sheet.getRow(temp+1+b).getCell(3+months).setCellStyle(this.selectStyle2007(b, map_cs,1,null,null));
+			}
+	}
+	/*************************************************工廠報表(一年情況)__改版***********************************************************/
 	
 	
 	/*************************************************工廠報表(一個月每天情況)***********************************************************/

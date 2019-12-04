@@ -8,6 +8,7 @@ import entity.KyzExpectmatmLog;
 import entity.VWebobjA;
 import entity.VWebobjA2;
 import entity.VWebobjA3;
+import entity.VWebobjBAll;
 import entity.VWebobjBObj;
 import entity.VWebobjBObj3;
 import entity.VWebobjBObj4;
@@ -123,6 +124,12 @@ public class WebObjsBServicesImpl implements IWebObjsBServices{
 	public List<WebObjsB> findWebObjsBByFactNo(String factNo, String yymmdd) {
 		// TODO Auto-generated method stub
 		return webobjbdao.findWebObjsBByFactNo(factNo, yymmdd);
+	}
+
+
+	public List<VWebobjBAll> findVWebobjBAll(String factNo, String year) {
+		// TODO Auto-generated method stub
+		return webobjbdao.findVWebobjBAll(factNo, year);
 	}
 
 
