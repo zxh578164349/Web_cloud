@@ -1,77 +1,78 @@
 package entity;
 
 
-
 /**
- * VWebobjBAll entity. @author MyEclipse Persistence Tools
+ * VWebobjBAllYear entity. @author MyEclipse Persistence Tools
  */
 
-public class VWebobjBAll implements java.io.Serializable {
+public class VWebobjBAllYear implements java.io.Serializable {
 
 	// Fields
 
-	private VWebobjBAllId id;
-	private Double totalhole;//最大孔位數
-	private Double machinepower;//最大生產數(模/月)
-	private Double hole;//有效孔位數  
-	private Double sample;//工程樣品孔位
-	private Double accessories;//補料孔位
-	private Double other;//其它孔位
-	private Double sumRealcashoutpairs;//實際請款雙數(雙/月)
-	private Double sumRealcashoutmoney;//實際請款金額(USD)
-	private Double sumActualyield;//實際生產模數(模/月)
-	private Double formulaA;//實際生產雙數(雙/月)
-	private Double sumZpobja;//正批生產雙數(雙)/月
-	private Double sumHostpairs;//客補生產雙數(雙)/月
-	private Double sumFactpairs;//廠補生產雙數(雙)/月
-	private Double sumSamplepairs;//樣品生產雙數(雙)/月
-	private Double avgOnmodulus;//月平均_上模數
-	private Double avgPersonnum;//月平均_人數(拉模手)
-	private Double avgStandardoutput;//月平均_標準產量(模/日)
-	private Double avgActualyield;//月平均_實際產量(模/日)
-	private Double formulaB;//月平均_實際產量(雙)
-	private Double formulaC;//月達成率(%)
-	private Double formulaD;//月實際回轉數
-	private Double avgObjA2;//月平均_慢單狀況(張)
-	private Double avgObjA3;//月平均_慢單狀況(雙)
-	private Double objA4;//當月月底之訂單欠數
-	private Long sumObjA7;//當月總招工數
-	private Long sumObjA8;//當月總離職數
-	private Long CObjA6;//直工人數
-	private Long CObjA7;//間工人數
-	private Long CObjA8;//全廠人數
-	private Double CObjA2;//機台利用率
-	private Double CObjA10;//直工人均產能
-	private Double CObjA11;//全廠人均產能
-	private Double CObjA14;//加班費
-	private Double CObjA15;//成本率
-	private Double CObjA16;//回頭率
-	private Double CObjA17;//總損耗
-	private Double CObjA18;//平均邊料重
-	private Double CObjA19;//邊料率
-	private Double CObjA21;//不良率
-	private Double CObjA22;//退貨率
-	private Double CObjA24;//用水單耗
-	private Double CObjA25;//用電單耗
-	private Double CObjA26;//蒸汽單耗（USD/模）
-	private Double CObjA27;//蒸汽單耗  （KG/模）
-	private Double CObjA28;//色料藥品單耗  （G/雙）
-	private Double CObjA29;//色料藥品單耗  （USD/雙）
+	private VWebobjBAllYearId id;
+	private Double totalhole;
+	private Double machinepower;
+	private Double hole;
+	private Double sample;
+	private Double accessories;
+	private Double other;
+	private Double sumRealcashoutpairs;
+	private Double sumRealcashoutmoney;
+	private Double sumActualyield;
+	private Double formulaA;
+	private Double sumZpobja;
+	private Double sumHostpairs;
+	private Double sumFactpairs;
+	private Double sumSamplepairs;
+	private Double avgOnmodulus;
+	private Double avgPersonnum;
+	private Double avgStandardoutput;
+	private Double avgActualyield;
+	private Double formulaB;
+	private Double formulaC;
+	private Double formulaD;
+	private Double avgObjA2;
+	private Double avgObjA3;
+	private Double objA4;
+	private Double sumObjA7;
+	private Double sumObjA8;
+	private Double CObjA6;
+	private Double CObjA7;
+	private Double CObjA8;
+	private Double CObjA2;
+	private Double CObjA10;
+	private Double CObjA11;
+	private Double CObjA14;
+	private Double CObjA15;
+	private Double CObjA16;
+	private Double CObjA17;
+	private Double CObjA18;
+	private Double CObjA19;
+	private Double CObjA21;
+	private Double CObjA22;
+	private Double CObjA24;
+	private Double CObjA25;
+	private Double CObjA26;
+	private Double CObjA27;
+	private Double CObjA28;
+	private Double CObjA29;
+	private Double months;
 
 	// Constructors
 
 	/** default constructor */
-	public VWebobjBAll() {
+	public VWebobjBAllYear() {
 	}
 
 	/** minimal constructor */
-	public VWebobjBAll(VWebobjBAllId id) {
+	public VWebobjBAllYear(VWebobjBAllYearId id) {
 		this.id = id;
 	}
 
 	/** full constructor */
-	public VWebobjBAll(VWebobjBAllId id, Double totalhole, Double machinepower,
-			Double hole, Double sample, Double accessories, Double other,
+	public VWebobjBAllYear(VWebobjBAllYearId id, Double totalhole,
+			Double machinepower, Double hole, Double sample,
+			Double accessories, Double other,
 			Double sumRealcashoutpairs, Double sumRealcashoutmoney,
 			Double sumActualyield, Double formulaA,
 			Double sumZpobja, Double sumHostpairs,
@@ -80,12 +81,14 @@ public class VWebobjBAll implements java.io.Serializable {
 			Double avgStandardoutput, Double avgActualyield,
 			Double formulaB, Double formulaC, Double formulaD,
 			Double avgObjA2, Double avgObjA3, Double objA4,
-			Long sumObjA7, Long sumObjA8, Long CObjA6,
-			Long CObjA7, Long CObjA8, Double CObjA2, Double CObjA10,
-			Double CObjA11, Double CObjA14, Double CObjA15, Double CObjA16,
-			Double CObjA17, Double CObjA18, Double CObjA19, Double CObjA21,
-			Double CObjA22, Double CObjA24, Double CObjA25, Double CObjA26,
-			Double CObjA27, Double CObjA28, Double CObjA29) {
+			Double sumObjA7, Double sumObjA8, Double CObjA6,
+			Double CObjA7, Double CObjA8, Double CObjA2,
+			Double CObjA10, Double CObjA11, Double CObjA14,
+			Double CObjA15, Double CObjA16, Double CObjA17,
+			Double CObjA18, Double CObjA19, Double CObjA21,
+			Double CObjA22, Double CObjA24, Double CObjA25,
+			Double CObjA26, Double CObjA27, Double CObjA28,
+			Double CObjA29, Double months) {
 		this.id = id;
 		this.totalhole = totalhole;
 		this.machinepower = machinepower;
@@ -133,15 +136,16 @@ public class VWebobjBAll implements java.io.Serializable {
 		this.CObjA27 = CObjA27;
 		this.CObjA28 = CObjA28;
 		this.CObjA29 = CObjA29;
+		this.months = months;
 	}
 
 	// Property accessors
 
-	public VWebobjBAllId getId() {
+	public VWebobjBAllYearId getId() {
 		return this.id;
 	}
 
-	public void setId(VWebobjBAllId id) {
+	public void setId(VWebobjBAllYearId id) {
 		this.id = id;
 	}
 
@@ -337,43 +341,43 @@ public class VWebobjBAll implements java.io.Serializable {
 		this.objA4 = objA4;
 	}
 
-	public Long getSumObjA7() {
+	public Double getSumObjA7() {
 		return this.sumObjA7;
 	}
 
-	public void setSumObjA7(Long sumObjA7) {
+	public void setSumObjA7(Double sumObjA7) {
 		this.sumObjA7 = sumObjA7;
 	}
 
-	public Long getSumObjA8() {
+	public Double getSumObjA8() {
 		return this.sumObjA8;
 	}
 
-	public void setSumObjA8(Long sumObjA8) {
+	public void setSumObjA8(Double sumObjA8) {
 		this.sumObjA8 = sumObjA8;
 	}
 
-	public Long getCObjA6() {
+	public Double getCObjA6() {
 		return this.CObjA6;
 	}
 
-	public void setCObjA6(Long CObjA6) {
+	public void setCObjA6(Double CObjA6) {
 		this.CObjA6 = CObjA6;
 	}
 
-	public Long getCObjA7() {
+	public Double getCObjA7() {
 		return this.CObjA7;
 	}
 
-	public void setCObjA7(Long CObjA7) {
+	public void setCObjA7(Double CObjA7) {
 		this.CObjA7 = CObjA7;
 	}
 
-	public Long getCObjA8() {
+	public Double getCObjA8() {
 		return this.CObjA8;
 	}
 
-	public void setCObjA8(Long CObjA8) {
+	public void setCObjA8(Double CObjA8) {
 		this.CObjA8 = CObjA8;
 	}
 
@@ -511,6 +515,14 @@ public class VWebobjBAll implements java.io.Serializable {
 
 	public void setCObjA29(Double CObjA29) {
 		this.CObjA29 = CObjA29;
+	}
+
+	public Double getMonths() {
+		return this.months;
+	}
+
+	public void setMonths(Double months) {
+		this.months = months;
 	}
 
 }

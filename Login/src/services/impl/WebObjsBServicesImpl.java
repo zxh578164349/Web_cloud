@@ -9,6 +9,9 @@ import entity.VWebobjA;
 import entity.VWebobjA2;
 import entity.VWebobjA3;
 import entity.VWebobjBAll;
+import entity.VWebobjBAllFactno;
+import entity.VWebobjBAllFactnoYear;
+import entity.VWebobjBAllYear;
 import entity.VWebobjBObj;
 import entity.VWebobjBObj3;
 import entity.VWebobjBObj4;
@@ -130,6 +133,26 @@ public class WebObjsBServicesImpl implements IWebObjsBServices{
 	public List<VWebobjBAll> findVWebobjBAll(String factNo, String year) {
 		// TODO Auto-generated method stub
 		return webobjbdao.findVWebobjBAll(factNo, year);
+	}
+
+
+	public List<VWebobjBAllYear> findVWebobjBAllYear(String factNo, String year) {
+		// TODO Auto-generated method stub
+		return webobjbdao.findVWebobjBAllYear(factNo, year);
+	}
+
+
+	public List<VWebobjBAllFactno> findVWebobjBAllFactno(String factNo,
+			String year) {
+		// TODO Auto-generated method stub
+		return webobjbdao.findVWebobjBAllFactno(factNo, year);
+	}
+
+
+	public VWebobjBAllFactnoYear findVWebobjBAllFactnoYear(String factNo,
+			String year) {
+		// TODO Auto-generated method stub
+		return webobjbdao.findVWebobjBAllFactnoYear(factNo, year);
 	}
 
 

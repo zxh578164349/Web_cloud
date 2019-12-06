@@ -242,7 +242,7 @@ function print5(public_form,yymmdd){
 function print6(public_form,factNo,year){
     clearcss();
 	var public_form=jq("#"+public_form);	
-	public_form.attr("action","webobjb_print3");
+	public_form.attr("action","webobjb_print3_1");
 	public_form.attr("target","_blank");	
 	if(jq("select[name='factNo']").val()=="nothing"||jq("select[name='factNo']").val()==""||jq("#year").val()==""){
 	    jq("#factNo").css("border-color","red");

@@ -8,6 +8,9 @@ import entity.KyzExpectmatmLog;
 import entity.VWebobjA;
 import entity.VWebobjA2;
 import entity.VWebobjBAll;
+import entity.VWebobjBAllFactno;
+import entity.VWebobjBAllFactnoYear;
+import entity.VWebobjBAllYear;
 import entity.VWebobjBObj3;
 import entity.VWebobjBObj;
 import entity.VWebobjBObj4;
@@ -42,6 +45,9 @@ public interface IWebObjsBServices {
 	public List<WebObjsB> findWebObjsBByFactNo(String factNo,String yymmdd);
 	
 	public List<VWebobjBAll> findVWebobjBAll(String factNo,String year);
+	public List<VWebobjBAllYear> findVWebobjBAllYear(String factNo,String year);
+	public List<VWebobjBAllFactno> findVWebobjBAllFactno(String factNo,String year);
+	public VWebobjBAllFactnoYear findVWebobjBAllFactnoYear(String factNo,String year);
 	
 	
 

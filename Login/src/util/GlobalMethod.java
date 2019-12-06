@@ -1209,6 +1209,16 @@ public class GlobalMethod extends HibernateDaoSupport{
 		return db;
 	}
 	
+	public static Long division_lg(Long l1,Long l2){
+		Long ll=0l;
+		if(l1!=null&&l2!=null&&l2!=0.00){
+			ll=l1/l2;
+		}
+		return ll;
+	}
+	
+	
+	
 	/**
 	 * 查找本機IP
 	 * @Title: findIp

@@ -17,6 +17,9 @@ import entity.VWebobjA;
 import entity.VWebobjA2;
 import entity.VWebobjA3;
 import entity.VWebobjBAll;
+import entity.VWebobjBAllFactno;
+import entity.VWebobjBAllFactnoYear;
+import entity.VWebobjBAllYear;
 import entity.VWebobjBObj3;
 import entity.VWebobjBObj;
 import entity.VWebobjBObj4;
@@ -279,6 +282,43 @@ public class WebObjsBDaoImpl extends Basedao implements IWebObjsBDao{
 			obj.getId().getWebFact().getFactSname();
 		}
 		return list;
+	}
+
+	public List<VWebobjBAllYear> findVWebobjBAllYear(String factNo, String year) {
+		// TODO Auto-generated method stub
+		String hql="from VWebobjBAllYear where id.webFact.id.factNo=? and id.year=?";
+		String[]objs={factNo,year};
+		List<VWebobjBAllYear>list=super.findAll(hql, objs);
+		for(VWebobjBAllYear obj:list){
+			obj.getId().getWebFact().getFactSname();
+		}
+		return list;
+	}
+
+	public List<VWebobjBAllFactno> findVWebobjBAllFactno(String factNo,
+			String year) {
+		// TODO Auto-generated method stub
+		String hql="from VWebobjBAllFactno where id.fact.factNo=? and id.yymm like ?";
+		String[]objs={factNo,year+"%"};
+		List<VWebobjBAllFactno>list=super.findAll(hql, objs);
+		for(VWebobjBAllFactno obj:list){
+			obj.getId().getFact().getFactSname();
+		}
+		return list;
+	}
+
+	public VWebobjBAllFactnoYear findVWebobjBAllFactnoYear(String factNo,
+			String year) {
+		// TODO Auto-generated method stub
+		String hql="from VWebobjBAllFactnoYear where id.fact.factNo=? and id.year=?";
+		Query query=getSession().createQuery(hql);
+		query.setString(0, factNo);
+		query.setString(1, year);
+		VWebobjBAllFactnoYear obj=(VWebobjBAllFactnoYear)query.uniqueResult();
+		if(obj!=null){
+			obj.getId().getFact().getFactSname();
+		}		
+		return obj;
 	}
 
 	

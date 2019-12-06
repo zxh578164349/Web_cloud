@@ -39,7 +39,11 @@ import com.opensymphony.xwork2.ActionSupport;
 import entity.KyzExpectmatmLog;
 import entity.VWebFact;
 import entity.VWebobjBAll;
+import entity.VWebobjBAllFactno;
+import entity.VWebobjBAllFactnoId;
+import entity.VWebobjBAllFactnoYear;
 import entity.VWebobjBAllId;
+import entity.VWebobjBAllYear;
 import entity.VWebobjBObj3;
 import entity.VWebobjBObj3Id;
 import entity.VWebobjBObj;
@@ -712,6 +716,12 @@ public class WebObjsBAction extends ActionSupport implements ServletResponseAwar
 		Map<String,Object>map_cs=findStyles2007(wb);				
 		//List<VWebobjBObj>list_objs=webobjbservices.findByYymm2(factNo.split("__")[0], yymm,workorholiday);
 		List<VWebobjBAll>list_objs=webobjbservices.findVWebobjBAll(factNo.split("__")[0], year);
+		List<VWebobjBAllYear>list_objs2=webobjbservices.findVWebobjBAllYear(factNo.split("__")[0], year);
+		List<VWebobjBAllFactno>list_objs3=webobjbservices.findVWebobjBAllFactno(factNo.split("__")[0], year);
+		VWebobjBAllFactnoYear objs4=webobjbservices.findVWebobjBAllFactnoYear(factNo.split("__")[0], year);
+		List<VWebobjBAllYear>list_objs2_lyear=webobjbservices.findVWebobjBAllYear(factNo.split("__")[0], Integer.parseInt(year)-1+"");
+		VWebobjBAllFactnoYear objs4_lyear=webobjbservices.findVWebobjBAllFactnoYear(factNo.split("__")[0], Integer.parseInt(year)-1+"");
+		
 			
 		switch(list_objs.size()){//switch		
 		case 0:
@@ -737,12 +747,9 @@ public class WebObjsBAction extends ActionSupport implements ServletResponseAwar
 			
 			Map<String,Object>map=new LinkedHashMap<String,Object>();
 			Map<String,Object>map2=new LinkedHashMap<String,Object>();
-			Map<String,Object>map3=new LinkedHashMap<String,Object>();
-			List<VWebobjBAll>list_lg=new ArrayList<VWebobjBAll>();
-			VWebobjBAll obj_allfact=new VWebobjBAll();
-			for(int a=0;a<months;a++){
-				list_lg.add(new VWebobjBAll());
-			}
+			Map<String,Object>map2_lyear=new LinkedHashMap<String,Object>();
+			List<VWebobjBAllFactno>list_lg=new ArrayList<VWebobjBAllFactno>();						
+									
 			for(String factcode:list_factcodes){
 				String temp="";
 				List<VWebobjBAll>list=new ArrayList<VWebobjBAll>();
@@ -756,90 +763,77 @@ public class WebObjsBAction extends ActionSupport implements ServletResponseAwar
 					temp="";
 				}
 				
-				int work_months=0;
 				for(int a=0;a<list.size();a++){
 					for(VWebobjBAll obj:list_objs){
 						if(list.get(a).getId().getWebFact().getId().getFactArea().equals(obj.getId().getWebFact().getId().getFactArea())&&
 								list.get(a).getId().getWebFact().getId().getFactNo().equals(obj.getId().getWebFact().getId().getFactNo())&&
 								list.get(a).getId().getYymm().equals(obj.getId().getYymm())){
 							list.set(a, obj);
-							work_months++;
 							break;
 							
 						}
 					}
 				}				
 				map.put(factcode, list);
-				map3.put(factcode, work_months);
 				
-				for(int a=0;a<list.size();a++){	
-					    list_lg.get(a).setSumObjA7(isMyNull_db(list_lg.get(a).getSumObjA7())+isMyNull_db(list.get(a).getSumObjA7()));
-						list_lg.get(a).setSumObjA8(isMyNull_db(list_lg.get(a).getSumObjA8())+isMyNull_db(list.get(a).getSumObjA8()));
-						list_lg.get(a).setCObjA6(isMyNull_db(list_lg.get(a).getCObjA6())+isMyNull_db(list.get(a).getCObjA6()));
-						list_lg.get(a).setCObjA7(isMyNull_db(list_lg.get(a).getCObjA7())+isMyNull_db(list.get(a).getCObjA7()));
-						list_lg.get(a).setCObjA8(isMyNull_db(list_lg.get(a).getCObjA8())+isMyNull_db(list.get(a).getCObjA8()));																
+				for(int a=0;a<list_objs2.size();a++){
+					if(factcode.equals(list_objs2.get(a).getId().getWebFact().getId().getFactArea())){
+						map2.put(factcode, list_objs2.get(a));
+						break;
+					}else if(a==list_objs2.size()-1){
+						map2.put(factcode, new VWebobjBAllYear());
+					}
 				}
 				
-				VWebobjBAll sum_obj=new VWebobjBAll();
-				for(VWebobjBAll obj:list){								
-					sum_obj.setTotalhole(isMyNull_db(sum_obj.getTotalhole())+isMyNull_db(obj.getTotalhole()));
-					sum_obj.setMachinepower(isMyNull_db(sum_obj.getMachinepower())+isMyNull_db(obj.getMachinepower()));
-					sum_obj.setHole(isMyNull_db(sum_obj.getHole())+isMyNull_db(obj.getHole()));
-					sum_obj.setSample(isMyNull_db(sum_obj.getSample())+isMyNull_db(obj.getSample()));
-					sum_obj.setAccessories(isMyNull_db(sum_obj.getAccessories())+isMyNull_db(obj.getAccessories()));
-					sum_obj.setOther(isMyNull_db(sum_obj.getOther())+isMyNull_db(obj.getOther()));
-					sum_obj.setSumRealcashoutpairs(isMyNull_db(sum_obj.getSumRealcashoutpairs())+isMyNull_db(obj.getSumRealcashoutpairs()));
-					sum_obj.setSumRealcashoutmoney(isMyNull_db(sum_obj.getSumRealcashoutmoney())+isMyNull_db(obj.getSumRealcashoutmoney()));
-					sum_obj.setSumActualyield(isMyNull_db(sum_obj.getSumActualyield())+isMyNull_db(obj.getSumActualyield()));
-					sum_obj.setFormulaA(isMyNull_db(sum_obj.getFormulaA())+isMyNull_db(obj.getFormulaA()));
-					sum_obj.setSumZpobja(isMyNull_db(sum_obj.getSumZpobja())+isMyNull_db(obj.getSumZpobja()));	
-					
-					sum_obj.setSumHostpairs(isMyNull_db(sum_obj.getSumHostpairs())+isMyNull_db(obj.getSumHostpairs()));
-					sum_obj.setSumFactpairs(isMyNull_db(sum_obj.getSumFactpairs())+isMyNull_db(obj.getSumFactpairs()));
-					sum_obj.setSumSamplepairs(isMyNull_db(sum_obj.getSumSamplepairs())+isMyNull_db(obj.getSumSamplepairs()));
-					sum_obj.setAvgOnmodulus(isMyNull_db(sum_obj.getAvgOnmodulus())+isMyNull_db(obj.getAvgOnmodulus()));
-					sum_obj.setAvgPersonnum(isMyNull_db(sum_obj.getAvgPersonnum())+isMyNull_db(obj.getAvgPersonnum()));
-					sum_obj.setAvgStandardoutput(isMyNull_db(sum_obj.getAvgStandardoutput())+isMyNull_db(obj.getAvgStandardoutput()));
-					sum_obj.setAvgActualyield(isMyNull_db(sum_obj.getAvgActualyield())+isMyNull_db(obj.getAvgActualyield()));
-					sum_obj.setFormulaB(isMyNull_db(sum_obj.getFormulaB())+isMyNull_db(obj.getFormulaB()));
-					sum_obj.setFormulaC(isMyNull_db(sum_obj.getFormulaC())+isMyNull_db(obj.getFormulaC()));
-					sum_obj.setFormulaD(isMyNull_db(sum_obj.getFormulaD())+isMyNull_db(obj.getFormulaD()));
-					sum_obj.setAvgObjA2(isMyNull_db(sum_obj.getAvgObjA2())+isMyNull_db(obj.getAvgObjA2()));
-					sum_obj.setAvgObjA3(isMyNull_db(sum_obj.getAvgObjA3())+isMyNull_db(obj.getAvgObjA3()));
-					sum_obj.setObjA4(isMyNull_db(sum_obj.getObjA4())+isMyNull_db(obj.getObjA4()));
-				
-					sum_obj.setCObjA2(isMyNull_db(sum_obj.getCObjA2())+isMyNull_db(obj.getCObjA2()));
-					sum_obj.setCObjA10(isMyNull_db(sum_obj.getCObjA10())+isMyNull_db(obj.getCObjA10()));
-					sum_obj.setCObjA11(isMyNull_db(sum_obj.getCObjA11())+isMyNull_db(obj.getCObjA11()));
-					sum_obj.setCObjA14(isMyNull_db(sum_obj.getCObjA14())+isMyNull_db(obj.getCObjA14()));
-					sum_obj.setCObjA15(isMyNull_db(sum_obj.getCObjA15())+isMyNull_db(obj.getCObjA15()));
-					sum_obj.setCObjA16(isMyNull_db(sum_obj.getCObjA16())+isMyNull_db(obj.getCObjA16()));
-					sum_obj.setCObjA17(isMyNull_db(sum_obj.getCObjA17())+isMyNull_db(obj.getCObjA17()));
-					sum_obj.setCObjA18(isMyNull_db(sum_obj.getCObjA18())+isMyNull_db(obj.getCObjA18()));
-					sum_obj.setCObjA19(isMyNull_db(sum_obj.getCObjA19())+isMyNull_db(obj.getCObjA19()));
-					sum_obj.setCObjA21(isMyNull_db(sum_obj.getCObjA21())+isMyNull_db(obj.getCObjA21()));
-					sum_obj.setCObjA22(isMyNull_db(sum_obj.getCObjA22())+isMyNull_db(obj.getCObjA22()));
-					sum_obj.setCObjA24(isMyNull_db(sum_obj.getCObjA24())+isMyNull_db(obj.getCObjA24()));
-					sum_obj.setCObjA25(isMyNull_db(sum_obj.getCObjA25())+isMyNull_db(obj.getCObjA25()));
-					sum_obj.setCObjA26(isMyNull_db(sum_obj.getCObjA26())+isMyNull_db(obj.getCObjA26()));
-					sum_obj.setCObjA27(isMyNull_db(sum_obj.getCObjA27())+isMyNull_db(obj.getCObjA27()));
-					sum_obj.setCObjA28(isMyNull_db(sum_obj.getCObjA28())+isMyNull_db(obj.getCObjA28()));
-										
+				if(list_objs2_lyear==null||list_objs2_lyear.size()==0){
+					map2_lyear.put(factcode, new VWebobjBAllYear());
+				}else{
+					for(int a=0;a<list_objs2_lyear.size();a++){
+						if(factcode.equals(list_objs2_lyear.get(a).getId().getWebFact().getId().getFactArea())){
+							map2_lyear.put(factcode, list_objs2_lyear.get(a));
+							break;
+						}else if(a==list_objs2_lyear.size()-1){
+							map2_lyear.put(factcode, new VWebobjBAllYear());
+						}
+					}
 				}
-				map2.put(factcode, sum_obj);												
+				
+				
+				
+				
 			}
-			for(VWebobjBObj4 obj:list_lg){
-				obj.setObja5(isMyNull_ll(obj_allfact.getObja5())+isMyNull_ll(obj.getObja5()));
-				obj.setObja6(isMyNull_ll(obj_allfact.getObja6())+isMyNull_ll(obj.getObja6()));
-				obj.setObjaE(isMyNull_ll(obj_allfact.getObjaE())+isMyNull_ll(obj.getObjaE()));
-				obj.setObja7(isMyNull_ll(obj_allfact.getObja7())+isMyNull_ll(obj.getObja7()));
-				obj.setObja8(isMyNull_ll(obj_allfact.getObja8())+isMyNull_ll(obj.getObja8()));
-				obj.setObja9(isMyNull_ll(obj_allfact.getObja9())+isMyNull_ll(obj.getObja9()));
+			
+			for(int a=1;a<=months;a++){
+				String temp=null;
+				if(a<10){
+					temp=year+"0"+a;
+				}else{
+					temp=year+a;
+				}
+				list_lg.add(new VWebobjBAllFactno(new VWebobjBAllFactnoId(new VWebFact(factNo),temp)));
+				temp=null;
 			}
-		
+			for(int a=0;a<list_lg.size();a++){
+				for(VWebobjBAllFactno obj:list_objs3){
+					if(list_lg.get(a).getId().getYymm().equals(obj.getId().getYymm())){
+						list_lg.set(a, obj);
+						break;
+					}
+				}
+			}
+			
+			if(objs4==null){
+				objs4=new VWebobjBAllFactnoYear();				
+			}
+			if(objs4_lyear==null){
+				objs4_lyear=new VWebobjBAllFactnoYear();
+			}
+			
+			
+											
 			XSSFSheet sheet=wb.createSheet(year+"工廠訊息");
 			XSSFSheet sheet2=wb.createSheet(year+"提報事項");
-			init3_1(sheet,map_cs,map,list_lg,months,map2,map3,obj_allfact);
+			init3_1(sheet,map_cs,map,list_lg,months,map2,map2_lyear,objs4,objs4_lyear);
 			//init2(sheet2,map_cs,map,days);
 			
 			try {				
@@ -865,16 +859,16 @@ public class WebObjsBAction extends ActionSupport implements ServletResponseAwar
 	}
 	
 								
-	public void init3_1(XSSFSheet sheet,Map<String,Object>map_cs,Map<String,Object>map,List<VWebobjBObj4>list_lg,int months,Map<String,Object>map2,Map<String,Object>map3,VWebobjBObj4 obj_allfact) throws ParseException{				
+	public void init3_1(XSSFSheet sheet,Map<String,Object>map_cs,Map<String,Object>map,List<VWebobjBAllFactno>list_lg,int months,Map<String,Object>map2,Map<String,Object>map2_lyear,VWebobjBAllFactnoYear obj4,VWebobjBAllFactnoYear obj4_lyear) throws ParseException{				
 		XSSFCellStyle cs=(XSSFCellStyle)map_cs.get("cs");
 		XSSFCellStyle cs_head=(XSSFCellStyle)map_cs.get("cs_head");
 		XSSFCellStyle cs_title=(XSSFCellStyle)map_cs.get("cs_title");		
-		List<String>list_col=findItems();
-		List<String>list_col2=findItems2();
+		List<String>list_col=findItems_new();
+		List<String>list_col2=findItems2_new();
 			sheet.setColumnWidth(1, 5000);
 			for(int a=0;a<list_col.size()*map.size()+20;a++){
 				sheet.createRow(a);				
-				for(int b=0;b<months+5;b++){
+				for(int b=0;b<months+10;b++){
 					sheet.getRow(a).createCell(b);					
 				}
 			}
@@ -910,30 +904,41 @@ public class WebObjsBAction extends ActionSupport implements ServletResponseAwar
 					sheet.getRow(b+temp+1).getCell(1).setCellValue(list_col.get(b).split("__")[0]);
 					sheet.getRow(b+temp+1).getCell(1).setCellStyle(cs);										
 				}
-				List<VWebobjBObj4>list=(List<VWebobjBObj4>)map.get(factcode);					
+				List<VWebobjBAllYear>list=(List<VWebobjBAllYear>)map.get(factcode);					
 				for(int a=0;a<list.size();a++){						
 					List<Double>list_db=objToDouble(list.get(a));
 					for(int b=0;b<list_db.size();b++){
-						sheet.getRow(b+temp+1).getCell(a+2).setCellValue(list_db.get(b));
-						//this.selectValue_db(sheet.getRow(b+temp+1).getCell(a+2), list.get(a).getWorkorholiday(), list_db.get(b));
+						sheet.getRow(b+temp+1).getCell(a+2).setCellValue(list_db.get(b));						
 						sheet.getRow(b+temp+1).getCell(a+2).setCellStyle(this.selectStyle2007(b, map_cs,1,null,list_db.get(b)));
 					}																
 				}
 				
 				sheet.getRow(temp).getCell(2+months).setCellValue("總計");
 				sheet.getRow(temp).getCell(3+months).setCellValue("平均");
-				for(int a=0;a<2;a++){
+				sheet.getRow(temp).getCell(4+months).setCellValue("去年總計");
+				sheet.getRow(temp).getCell(5+months).setCellValue("去年平均");
+				sheet.getRow(temp).getCell(6+months).setCellValue("合計差異");
+				sheet.getRow(temp).getCell(7+months).setCellValue("平均差異");
+				sheet.getRow(temp).getCell(8+months).setCellValue("合計差異率");
+				sheet.getRow(temp).getCell(9+months).setCellValue("平均差異率");
+				for(int a=0;a<8;a++){
 					sheet.getRow(temp).getCell(2+months+a).setCellStyle(cs_head);
 				}
-				List<Double>list_sum=objToDouble((VWebobjBObj4)map2.get(factcode));
-				int work_months=(Integer)map3.get(factcode);
+				List<Double>list_sum=objToDouble((VWebobjBAllYear)map2.get(factcode));
+				List<Double>list_sum_lyear=objToDouble((VWebobjBAllYear)map2_lyear.get(factcode));
 				for(int b=0;b<list_sum.size();b++){
 					sheet.getRow(b+temp+1).getCell(2+months).setCellValue(list_sum.get(b));
-					sheet.getRow(b+temp+1).getCell(3+months).setCellValue(list_sum.get(b)/work_months);
-					sheet.getRow(b+temp+1).getCell(2+months).setCellStyle(this.selectStyle2007(b, map_cs,1,null,null));
-					sheet.getRow(b+temp+1).getCell(3+months).setCellStyle(this.selectStyle2007(b, map_cs,1,null,null));
-				}
-				
+					sheet.getRow(b+temp+1).getCell(3+months).setCellValue(GlobalMethod.division(list_sum.get(b), ((VWebobjBAllYear)map2.get(factcode)).getMonths()));
+					sheet.getRow(b+temp+1).getCell(4+months).setCellValue(list_sum_lyear.get(b));
+					sheet.getRow(b+temp+1).getCell(5+months).setCellValue(GlobalMethod.division(list_sum_lyear.get(b),((VWebobjBAllYear)map2_lyear.get(factcode)).getMonths()));					
+					
+					sheet.getRow(b+temp+1).getCell(6+months).setCellValue(this.minus_db(list_sum.get(b), list_sum_lyear.get(b)));
+					sheet.getRow(b+temp+1).getCell(6+months).setCellValue(this.minus_db(list_sum.get(b), list_sum_lyear.get(b)));
+					for(int c=0;c<4;c++){
+						sheet.getRow(b+temp+1).getCell(2+months+c).setCellStyle(this.selectStyle2007(b, map_cs,1,null,null));
+					}
+					
+				}				
 				temp=temp+list_col.size()+1;
 			}	
 			
@@ -970,17 +975,28 @@ public class WebObjsBAction extends ActionSupport implements ServletResponseAwar
 				}																
 			}
 			
-			sheet.getRow(temp).getCell(2+months).setCellValue("總計");
-			sheet.getRow(temp).getCell(3+months).setCellValue("平均");
-			for(int a=0;a<2;a++){
+			sheet.getRow(temp).getCell(2+months).setCellValue("今年合計");
+			sheet.getRow(temp).getCell(3+months).setCellValue("今年平均");
+			sheet.getRow(temp).getCell(4+months).setCellValue("去年合計");
+			sheet.getRow(temp).getCell(5+months).setCellValue("去年平均");
+			sheet.getRow(temp).getCell(6+months).setCellValue("合計差異");
+			sheet.getRow(temp).getCell(7+months).setCellValue("平均差異");
+			sheet.getRow(temp).getCell(8+months).setCellValue("合計差異率");
+			sheet.getRow(temp).getCell(9+months).setCellValue("平均差異率");
+			for(int a=0;a<8;a++){
 				sheet.getRow(temp).getCell(2+months+a).setCellStyle(cs_head);
 			}
-			List<Long>ll=this.objToLong(obj_allfact);
+			List<Long>ll=this.objToLong(obj4);
+			List<Long>ll_lyear=this.objToLong(obj4_lyear);
 			for(int b=0;b<ll.size();b++){
 				sheet.getRow(temp+1+b).getCell(2+months).setCellValue(ll.get(b));
-				sheet.getRow(temp+1+b).getCell(3+months).setCellValue(ll.get(b)/months);
-				sheet.getRow(temp+1+b).getCell(2+months).setCellStyle(this.selectStyle2007(b, map_cs,1,null,null));
-				sheet.getRow(temp+1+b).getCell(3+months).setCellStyle(this.selectStyle2007(b, map_cs,1,null,null));
+				sheet.getRow(temp+1+b).getCell(3+months).setCellValue(GlobalMethod.division_lg(ll.get(b),obj4.getMonths()));
+				sheet.getRow(temp+1+b).getCell(4+months).setCellValue(ll_lyear.get(b));
+				sheet.getRow(temp+1+b).getCell(5+months).setCellValue(GlobalMethod.division_lg(ll_lyear.get(b),obj4_lyear.getMonths()));
+				for(int c=0;c<4;c++){
+					sheet.getRow(temp+1+b).getCell(2+months+c).setCellStyle(this.selectStyle2007(b, map_cs,1,null,null));
+				}
+				
 			}
 	}
 	/*************************************************工廠報表(一年情況)__改版***********************************************************/
@@ -1286,107 +1302,7 @@ public class WebObjsBAction extends ActionSupport implements ServletResponseAwar
 			}			
 	}
 	
-	public List<Double> objToDouble(Object obj){
-		List<Double>list=new ArrayList<Double>();
-		if(obj instanceof VWebobjBObj){
-			list.add(isMyNull_db(((VWebobjBObj)obj).getTotalhole()));
-			list.add(isMyNull_db(((VWebobjBObj)obj).getMachinepower()));
-			list.add(isMyNull_db(((VWebobjBObj)obj).getHole()));
-			list.add(isMyNull_db(((VWebobjBObj)obj).getSample()));
-			list.add(isMyNull_db(((VWebobjBObj)obj).getAccessories()));
-			list.add(isMyNull_db(((VWebobjBObj)obj).getOther()));
-			list.add(isMyNull_db(((VWebobjBObj)obj).getEstmodel()));
-			list.add(isMyNull_db(((VWebobjBObj)obj).getEstnum()));
-			list.add(isMyNull_db(((VWebobjBObj)obj).getEstpay()));
-			list.add(isMyNull_db(((VWebobjBObj)obj).getOnmodulus()));
-			list.add(isMyNull_db(((VWebobjBObj)obj).getPersonnum()));		
-			list.add(isMyNull_db(((VWebobjBObj)obj).getStandardoutput()));
-			list.add(isMyNull_db(((VWebobjBObj)obj).getActualyield()));
-			list.add(isMyNull_db(((VWebobjBObj)obj).getObjaA()));
-			list.add(isMyNull_db(((VWebobjBObj)obj).getObjaB()));
-			list.add(isMyNull_db(((VWebobjBObj)obj).getObjaC()));
-			list.add(isMyNull_db(((VWebobjBObj)obj).getObja1()));
-			list.add(isMyNull_db(((VWebobjBObj)obj).getObjaD()));
-			list.add(isMyNull_db(((VWebobjBObj)obj).getObja2()));
-			list.add(isMyNull_db(((VWebobjBObj)obj).getObja3()));
-			list.add(isMyNull_db(((VWebobjBObj)obj).getObja4()));
-		}
-		if(obj instanceof VWebobjBObj4){
-			list.add(isMyNull_db(((VWebobjBObj4)obj).getTotalhole()));
-			list.add(isMyNull_db(((VWebobjBObj4)obj).getMachinepower()));
-			list.add(isMyNull_db(((VWebobjBObj4)obj).getHole()));
-			list.add(isMyNull_db(((VWebobjBObj4)obj).getSample()));
-			list.add(isMyNull_db(((VWebobjBObj4)obj).getAccessories()));
-			list.add(isMyNull_db(((VWebobjBObj4)obj).getOther()));
-			list.add(isMyNull_db(((VWebobjBObj4)obj).getEstmodel()));
-			list.add(isMyNull_db(((VWebobjBObj4)obj).getEstnum()));
-			list.add(isMyNull_db(((VWebobjBObj4)obj).getEstpay()));
-			list.add(isMyNull_db(((VWebobjBObj4)obj).getOnmodulus()));
-			list.add(isMyNull_db(((VWebobjBObj4)obj).getPersonnum()));		
-			list.add(isMyNull_db(((VWebobjBObj4)obj).getStandardoutput()));
-			list.add(isMyNull_db(((VWebobjBObj4)obj).getActualyield()));
-			list.add(isMyNull_db(((VWebobjBObj4)obj).getObjaA()));
-			list.add(isMyNull_db(((VWebobjBObj4)obj).getObjaB()));
-			list.add(isMyNull_db(((VWebobjBObj4)obj).getObjaC()));
-			list.add(isMyNull_db(((VWebobjBObj4)obj).getObja1()));
-			list.add(isMyNull_db(((VWebobjBObj4)obj).getObjaD()));
-			list.add(isMyNull_db(((VWebobjBObj4)obj).getObja2()));
-			list.add(isMyNull_db(((VWebobjBObj4)obj).getObja3()));
-			list.add(isMyNull_db(((VWebobjBObj4)obj).getObja4()));
-		}
-					
-		return list;		
-	}
 	
-	public List<String> objToString(VWebobjBObj obj){
-		List<String>list=new ArrayList<String>();		
-		list.add(isMyNull_str(obj.getObja10()));
-		list.add(isMyNull_str(obj.getObja11()));
-		list.add(isMyNull_str(obj.getObja12()));
-		list.add(isMyNull_str(obj.getObja13()));
-		list.add(isMyNull_str(obj.getObja14()));
-		return list;		
-	}
-	
-	public List<Long> objToLong(Object obj){
-		List<Long>list=new ArrayList<Long>();
-		if(obj instanceof VWebobjBObj){
-			list.add(isMyNull_ll(((VWebobjBObj) obj).getObja5()));
-			list.add(isMyNull_ll(((VWebobjBObj) obj).getObja6()));
-			list.add(isMyNull_ll(((VWebobjBObj) obj).getObjaE()));
-			list.add(isMyNull_ll(((VWebobjBObj) obj).getObja7()));
-			list.add(isMyNull_ll(((VWebobjBObj) obj).getObja8()));
-			list.add(isMyNull_ll(((VWebobjBObj) obj).getObja9()));
-		}
-		if(obj instanceof VWebobjBObj3){
-			list.add(isMyNull_ll(((VWebobjBObj3) obj).getObjA5()));
-			list.add(isMyNull_ll(((VWebobjBObj3) obj).getObjA6()));
-			list.add(isMyNull_ll(((VWebobjBObj3) obj).getObjAe()));
-			list.add(isMyNull_ll(((VWebobjBObj3) obj).getObjA7()));
-			list.add(isMyNull_ll(((VWebobjBObj3) obj).getObjA8()));
-			list.add(isMyNull_ll(((VWebobjBObj3) obj).getObjA9()));
-		}
-		if(obj instanceof VWebobjBObj4){
-			list.add(isMyNull_ll(((VWebobjBObj4) obj).getObja5()));
-			list.add(isMyNull_ll(((VWebobjBObj4) obj).getObja6()));
-			list.add(isMyNull_ll(((VWebobjBObj4) obj).getObjaE()));
-			list.add(isMyNull_ll(((VWebobjBObj4) obj).getObja7()));
-			list.add(isMyNull_ll(((VWebobjBObj4) obj).getObja8()));
-			list.add(isMyNull_ll(((VWebobjBObj4) obj).getObja9()));
-		}
-		
-		if(obj instanceof VWebobjBObj5){
-			list.add(isMyNull_ll(((VWebobjBObj5) obj).getObja5()));
-			list.add(isMyNull_ll(((VWebobjBObj5) obj).getObja6()));
-			list.add(isMyNull_ll(((VWebobjBObj5) obj).getObjaE()));
-			list.add(isMyNull_ll(((VWebobjBObj5) obj).getObja7()));
-			list.add(isMyNull_ll(((VWebobjBObj5) obj).getObja8()));
-			list.add(isMyNull_ll(((VWebobjBObj5) obj).getObja9()));
-		}
-					
-		
-		return list;		
-	}
 	/*************************************************工廠報表(一個月每天情況)***********************************************************/
 	
 	
@@ -2128,6 +2044,63 @@ public void init_more2_b(XSSFSheet sheet,Map<String,Object>map,Map<String,Object
 		return list;
 	}
 	
+	public List<String>findItems_new(){
+		List<String>list=new ArrayList<String>();										
+		list.add("最大孔位數__孔");
+		list.add("最大生產數(模/月)__模");
+		list.add("有效孔位數__孔");
+		list.add("工程樣品孔位__孔");
+		list.add("補料孔位__孔");
+		list.add("其它孔位__孔");
+		list.add("實際請款雙數(雙/月)__雙");
+		list.add("實際請款金額(USD)__USD");
+		list.add("實際生產模數(模/月)__模");
+		list.add("實際生產雙數(雙/月)__雙");
+		list.add("正批生產雙數(雙)/月__雙");
+		list.add("客補生產雙數(雙)/月__雙");
+		list.add("廠補生產雙數(雙)/月__雙");
+		list.add("樣品生產雙數(雙)/月__雙");
+		list.add("月平均_上模數__模");
+		list.add("月平均_人數(拉模手)__人");
+		list.add("月平均_標準產量(模/日)__模");
+		list.add("月平均_實際產量(模/日)__模");
+		list.add("月平均_實際產量(雙)__雙");
+		list.add("月達成率(%)__%");
+		list.add("月實際回轉數__回");
+		list.add("月平均_慢單狀況(張)__張");
+		list.add("月平均_慢單狀況(雙)__雙");
+		list.add("當月月底之訂單欠數__雙");		
+		list.add("機台利用率__%");
+		list.add("直工人均產能__模");
+		list.add("全廠人均產能__模");
+		list.add("加班費__USD");
+		list.add("成本率__%");
+		list.add("回頭率__%");
+		list.add("總損耗__%");
+		list.add("平均邊料重__G/雙");
+		list.add("邊料率__%");
+		list.add("不良率__%");
+		list.add("退貨率__%");
+		list.add("用水單耗__USD/模");
+		list.add("用電單耗__USD/模");
+		list.add("蒸汽單耗__USD/模");
+		list.add("蒸汽單耗__KG/模");
+		list.add("色料藥品單耗__G/雙");
+		list.add("色料藥品單耗__USD/雙");
+
+		return list;		
+	}
+	
+	public List<String>findItems2_new(){
+		List<String>list=new ArrayList<String>();	
+		list.add("招工數__人");
+		list.add("離職數__人");
+		list.add("直工人數__人");
+		list.add("間工人數__人");
+		list.add("全廠人數__人");
+		return list;		
+	}
+	
 	public String formatDouble(double s) {
 		DecimalFormat format = new DecimalFormat(",###");
 		String temp = format.format(s);
@@ -2138,6 +2111,223 @@ public void init_more2_b(XSSFSheet sheet,Map<String,Object>map,Map<String,Object
 		DecimalFormat format = new DecimalFormat(",##0.00");
 		String temp = format.format(s);
 		return temp;
+	}
+	
+	public List<Double> objToDouble(Object obj){
+		List<Double>list=new ArrayList<Double>();
+		if(obj instanceof VWebobjBObj){
+			list.add(isMyNull_db(((VWebobjBObj)obj).getTotalhole()));
+			list.add(isMyNull_db(((VWebobjBObj)obj).getMachinepower()));
+			list.add(isMyNull_db(((VWebobjBObj)obj).getHole()));
+			list.add(isMyNull_db(((VWebobjBObj)obj).getSample()));
+			list.add(isMyNull_db(((VWebobjBObj)obj).getAccessories()));
+			list.add(isMyNull_db(((VWebobjBObj)obj).getOther()));
+			list.add(isMyNull_db(((VWebobjBObj)obj).getEstmodel()));
+			list.add(isMyNull_db(((VWebobjBObj)obj).getEstnum()));
+			list.add(isMyNull_db(((VWebobjBObj)obj).getEstpay()));
+			list.add(isMyNull_db(((VWebobjBObj)obj).getOnmodulus()));
+			list.add(isMyNull_db(((VWebobjBObj)obj).getPersonnum()));		
+			list.add(isMyNull_db(((VWebobjBObj)obj).getStandardoutput()));
+			list.add(isMyNull_db(((VWebobjBObj)obj).getActualyield()));
+			list.add(isMyNull_db(((VWebobjBObj)obj).getObjaA()));
+			list.add(isMyNull_db(((VWebobjBObj)obj).getObjaB()));
+			list.add(isMyNull_db(((VWebobjBObj)obj).getObjaC()));
+			list.add(isMyNull_db(((VWebobjBObj)obj).getObja1()));
+			list.add(isMyNull_db(((VWebobjBObj)obj).getObjaD()));
+			list.add(isMyNull_db(((VWebobjBObj)obj).getObja2()));
+			list.add(isMyNull_db(((VWebobjBObj)obj).getObja3()));
+			list.add(isMyNull_db(((VWebobjBObj)obj).getObja4()));
+		}
+		if(obj instanceof VWebobjBObj4){
+			list.add(isMyNull_db(((VWebobjBObj4)obj).getTotalhole()));
+			list.add(isMyNull_db(((VWebobjBObj4)obj).getMachinepower()));
+			list.add(isMyNull_db(((VWebobjBObj4)obj).getHole()));
+			list.add(isMyNull_db(((VWebobjBObj4)obj).getSample()));
+			list.add(isMyNull_db(((VWebobjBObj4)obj).getAccessories()));
+			list.add(isMyNull_db(((VWebobjBObj4)obj).getOther()));
+			list.add(isMyNull_db(((VWebobjBObj4)obj).getEstmodel()));
+			list.add(isMyNull_db(((VWebobjBObj4)obj).getEstnum()));
+			list.add(isMyNull_db(((VWebobjBObj4)obj).getEstpay()));
+			list.add(isMyNull_db(((VWebobjBObj4)obj).getOnmodulus()));
+			list.add(isMyNull_db(((VWebobjBObj4)obj).getPersonnum()));		
+			list.add(isMyNull_db(((VWebobjBObj4)obj).getStandardoutput()));
+			list.add(isMyNull_db(((VWebobjBObj4)obj).getActualyield()));
+			list.add(isMyNull_db(((VWebobjBObj4)obj).getObjaA()));
+			list.add(isMyNull_db(((VWebobjBObj4)obj).getObjaB()));
+			list.add(isMyNull_db(((VWebobjBObj4)obj).getObjaC()));
+			list.add(isMyNull_db(((VWebobjBObj4)obj).getObja1()));
+			list.add(isMyNull_db(((VWebobjBObj4)obj).getObjaD()));
+			list.add(isMyNull_db(((VWebobjBObj4)obj).getObja2()));
+			list.add(isMyNull_db(((VWebobjBObj4)obj).getObja3()));
+			list.add(isMyNull_db(((VWebobjBObj4)obj).getObja4()));
+		}
+		if(obj instanceof VWebobjBAll){
+			list.add(isMyNull_db(((VWebobjBAll)obj).getTotalhole()));
+			list.add(isMyNull_db(((VWebobjBAll)obj).getMachinepower()));
+			list.add(isMyNull_db(((VWebobjBAll)obj).getHole()));
+			list.add(isMyNull_db(((VWebobjBAll)obj).getSample()));
+			list.add(isMyNull_db(((VWebobjBAll)obj).getAccessories()));
+			list.add(isMyNull_db(((VWebobjBAll)obj).getOther()));
+			list.add(isMyNull_db(((VWebobjBAll)obj).getSumRealcashoutpairs()));
+			list.add(isMyNull_db(((VWebobjBAll)obj).getSumRealcashoutmoney()));
+			list.add(isMyNull_db(((VWebobjBAll)obj).getSumActualyield()));
+			list.add(isMyNull_db(((VWebobjBAll)obj).getFormulaA()));
+			list.add(isMyNull_db(((VWebobjBAll)obj).getSumZpobja()));
+			list.add(isMyNull_db(((VWebobjBAll)obj).getSumHostpairs()));
+			list.add(isMyNull_db(((VWebobjBAll)obj).getSumFactpairs()));
+			list.add(isMyNull_db(((VWebobjBAll)obj).getSumSamplepairs()));
+			list.add(isMyNull_db(((VWebobjBAll)obj).getAvgOnmodulus()));
+			list.add(isMyNull_db(((VWebobjBAll)obj).getAvgPersonnum()));
+			list.add(isMyNull_db(((VWebobjBAll)obj).getAvgStandardoutput()));
+			list.add(isMyNull_db(((VWebobjBAll)obj).getAvgActualyield()));
+			list.add(isMyNull_db(((VWebobjBAll)obj).getFormulaB()));
+			list.add(isMyNull_db(((VWebobjBAll)obj).getFormulaC()));
+			list.add(isMyNull_db(((VWebobjBAll)obj).getFormulaD()));
+			list.add(isMyNull_db(((VWebobjBAll)obj).getAvgObjA2()));
+			list.add(isMyNull_db(((VWebobjBAll)obj).getAvgObjA3()));
+			list.add(isMyNull_db(((VWebobjBAll)obj).getObjA4()));
+			/*list.add(isMyNull_db(((VWebobjBAll)obj).getSumObjA7()));
+			list.add(isMyNull_db(((VWebobjBAll)obj).getSumObjA8()));
+			list.add(isMyNull_db(((VWebobjBAll)obj).getCObjA6()));
+			list.add(isMyNull_db(((VWebobjBAll)obj).getCObjA7()));
+			list.add(isMyNull_db(((VWebobjBAll)obj).getCObjA8()));*/
+			list.add(isMyNull_db(((VWebobjBAll)obj).getCObjA2()));
+			list.add(isMyNull_db(((VWebobjBAll)obj).getCObjA10()));
+			list.add(isMyNull_db(((VWebobjBAll)obj).getCObjA11()));
+			list.add(isMyNull_db(((VWebobjBAll)obj).getCObjA14()));
+			list.add(isMyNull_db(((VWebobjBAll)obj).getCObjA15()));
+			list.add(isMyNull_db(((VWebobjBAll)obj).getCObjA16()));
+			list.add(isMyNull_db(((VWebobjBAll)obj).getCObjA17()));
+			list.add(isMyNull_db(((VWebobjBAll)obj).getCObjA18()));
+			list.add(isMyNull_db(((VWebobjBAll)obj).getCObjA19()));
+			list.add(isMyNull_db(((VWebobjBAll)obj).getCObjA21()));
+			list.add(isMyNull_db(((VWebobjBAll)obj).getCObjA22()));
+			list.add(isMyNull_db(((VWebobjBAll)obj).getCObjA24()));
+			list.add(isMyNull_db(((VWebobjBAll)obj).getCObjA25()));
+			list.add(isMyNull_db(((VWebobjBAll)obj).getCObjA26()));
+			list.add(isMyNull_db(((VWebobjBAll)obj).getCObjA27()));
+			list.add(isMyNull_db(((VWebobjBAll)obj).getCObjA28()));
+			list.add(isMyNull_db(((VWebobjBAll)obj).getCObjA29()));
+		}
+		if(obj instanceof VWebobjBAllYear){
+			list.add(isMyNull_db(((VWebobjBAllYear)obj).getTotalhole()));
+			list.add(isMyNull_db(((VWebobjBAllYear)obj).getMachinepower()));
+			list.add(isMyNull_db(((VWebobjBAllYear)obj).getHole()));
+			list.add(isMyNull_db(((VWebobjBAllYear)obj).getSample()));
+			list.add(isMyNull_db(((VWebobjBAllYear)obj).getAccessories()));
+			list.add(isMyNull_db(((VWebobjBAllYear)obj).getOther()));
+			list.add(isMyNull_db(((VWebobjBAllYear)obj).getSumRealcashoutpairs()));
+			list.add(isMyNull_db(((VWebobjBAllYear)obj).getSumRealcashoutmoney()));
+			list.add(isMyNull_db(((VWebobjBAllYear)obj).getSumActualyield()));
+			list.add(isMyNull_db(((VWebobjBAllYear)obj).getFormulaA()));
+			list.add(isMyNull_db(((VWebobjBAllYear)obj).getSumZpobja()));
+			list.add(isMyNull_db(((VWebobjBAllYear)obj).getSumHostpairs()));
+			list.add(isMyNull_db(((VWebobjBAllYear)obj).getSumFactpairs()));
+			list.add(isMyNull_db(((VWebobjBAllYear)obj).getSumSamplepairs()));
+			list.add(isMyNull_db(((VWebobjBAllYear)obj).getAvgOnmodulus()));
+			list.add(isMyNull_db(((VWebobjBAllYear)obj).getAvgPersonnum()));
+			list.add(isMyNull_db(((VWebobjBAllYear)obj).getAvgStandardoutput()));
+			list.add(isMyNull_db(((VWebobjBAllYear)obj).getAvgActualyield()));
+			list.add(isMyNull_db(((VWebobjBAllYear)obj).getFormulaB()));
+			list.add(isMyNull_db(((VWebobjBAllYear)obj).getFormulaC()));
+			list.add(isMyNull_db(((VWebobjBAllYear)obj).getFormulaD()));
+			list.add(isMyNull_db(((VWebobjBAllYear)obj).getAvgObjA2()));
+			list.add(isMyNull_db(((VWebobjBAllYear)obj).getAvgObjA3()));
+			list.add(isMyNull_db(((VWebobjBAllYear)obj).getObjA4()));
+			/*list.add(isMyNull_db(((VWebobjBAllYear)obj).getSumObjA7()));
+			list.add(isMyNull_db(((VWebobjBAllYear)obj).getSumObjA8()));
+			list.add(isMyNull_db(((VWebobjBAllYear)obj).getCObjA6()));
+			list.add(isMyNull_db(((VWebobjBAllYear)obj).getCObjA7()));
+			list.add(isMyNull_db(((VWebobjBAllYear)obj).getCObjA8()));*/
+			list.add(isMyNull_db(((VWebobjBAllYear)obj).getCObjA2()));
+			list.add(isMyNull_db(((VWebobjBAllYear)obj).getCObjA10()));
+			list.add(isMyNull_db(((VWebobjBAllYear)obj).getCObjA11()));
+			list.add(isMyNull_db(((VWebobjBAllYear)obj).getCObjA14()));
+			list.add(isMyNull_db(((VWebobjBAllYear)obj).getCObjA15()));
+			list.add(isMyNull_db(((VWebobjBAllYear)obj).getCObjA16()));
+			list.add(isMyNull_db(((VWebobjBAllYear)obj).getCObjA17()));
+			list.add(isMyNull_db(((VWebobjBAllYear)obj).getCObjA18()));
+			list.add(isMyNull_db(((VWebobjBAllYear)obj).getCObjA19()));
+			list.add(isMyNull_db(((VWebobjBAllYear)obj).getCObjA21()));
+			list.add(isMyNull_db(((VWebobjBAllYear)obj).getCObjA22()));
+			list.add(isMyNull_db(((VWebobjBAllYear)obj).getCObjA24()));
+			list.add(isMyNull_db(((VWebobjBAllYear)obj).getCObjA25()));
+			list.add(isMyNull_db(((VWebobjBAllYear)obj).getCObjA26()));
+			list.add(isMyNull_db(((VWebobjBAllYear)obj).getCObjA27()));
+			list.add(isMyNull_db(((VWebobjBAllYear)obj).getCObjA28()));
+			list.add(isMyNull_db(((VWebobjBAllYear)obj).getCObjA29()));
+		}
+					
+		return list;		
+	}
+	
+	public List<String> objToString(VWebobjBObj obj){
+		List<String>list=new ArrayList<String>();		
+		list.add(isMyNull_str(obj.getObja10()));
+		list.add(isMyNull_str(obj.getObja11()));
+		list.add(isMyNull_str(obj.getObja12()));
+		list.add(isMyNull_str(obj.getObja13()));
+		list.add(isMyNull_str(obj.getObja14()));
+		return list;		
+	}
+	
+	public List<Long> objToLong(Object obj){
+		List<Long>list=new ArrayList<Long>();
+		if(obj instanceof VWebobjBObj){
+			list.add(isMyNull_ll(((VWebobjBObj) obj).getObja5()));
+			list.add(isMyNull_ll(((VWebobjBObj) obj).getObja6()));
+			list.add(isMyNull_ll(((VWebobjBObj) obj).getObjaE()));
+			list.add(isMyNull_ll(((VWebobjBObj) obj).getObja7()));
+			list.add(isMyNull_ll(((VWebobjBObj) obj).getObja8()));
+			list.add(isMyNull_ll(((VWebobjBObj) obj).getObja9()));
+		}
+		if(obj instanceof VWebobjBObj3){
+			list.add(isMyNull_ll(((VWebobjBObj3) obj).getObjA5()));
+			list.add(isMyNull_ll(((VWebobjBObj3) obj).getObjA6()));
+			list.add(isMyNull_ll(((VWebobjBObj3) obj).getObjAe()));
+			list.add(isMyNull_ll(((VWebobjBObj3) obj).getObjA7()));
+			list.add(isMyNull_ll(((VWebobjBObj3) obj).getObjA8()));
+			list.add(isMyNull_ll(((VWebobjBObj3) obj).getObjA9()));
+		}
+		if(obj instanceof VWebobjBObj4){
+			list.add(isMyNull_ll(((VWebobjBObj4) obj).getObja5()));
+			list.add(isMyNull_ll(((VWebobjBObj4) obj).getObja6()));
+			list.add(isMyNull_ll(((VWebobjBObj4) obj).getObjaE()));
+			list.add(isMyNull_ll(((VWebobjBObj4) obj).getObja7()));
+			list.add(isMyNull_ll(((VWebobjBObj4) obj).getObja8()));
+			list.add(isMyNull_ll(((VWebobjBObj4) obj).getObja9()));
+		}
+		
+		if(obj instanceof VWebobjBObj5){
+			list.add(isMyNull_ll(((VWebobjBObj5) obj).getObja5()));
+			list.add(isMyNull_ll(((VWebobjBObj5) obj).getObja6()));
+			list.add(isMyNull_ll(((VWebobjBObj5) obj).getObjaE()));
+			list.add(isMyNull_ll(((VWebobjBObj5) obj).getObja7()));
+			list.add(isMyNull_ll(((VWebobjBObj5) obj).getObja8()));
+			list.add(isMyNull_ll(((VWebobjBObj5) obj).getObja9()));
+		}
+		if(obj instanceof VWebobjBAll){
+			list.add(isMyNull_ll(((VWebobjBAll)obj).getSumObjA7()));
+			list.add(isMyNull_ll(((VWebobjBAll)obj).getSumObjA8()));
+			list.add(isMyNull_ll(((VWebobjBAll)obj).getCObjA6()));
+			list.add(isMyNull_ll(((VWebobjBAll)obj).getCObjA7()));
+			list.add(isMyNull_ll(((VWebobjBAll)obj).getCObjA8()));
+		}
+		if(obj instanceof VWebobjBAllFactno){
+			list.add(isMyNull_ll(((VWebobjBAllFactno)obj).getSumObjA7()));
+			list.add(isMyNull_ll(((VWebobjBAllFactno)obj).getSumObjA8()));
+			list.add(isMyNull_ll(((VWebobjBAllFactno)obj).getCObjA6()));
+			list.add(isMyNull_ll(((VWebobjBAllFactno)obj).getCObjA7()));
+			list.add(isMyNull_ll(((VWebobjBAllFactno)obj).getCObjA8()));
+		}
+		if(obj instanceof VWebobjBAllFactnoYear){
+			list.add(isMyNull_ll(((VWebobjBAllFactnoYear)obj).getSumObjA7()));
+			list.add(isMyNull_ll(((VWebobjBAllFactnoYear)obj).getSumObjA8()));
+			list.add(isMyNull_ll(((VWebobjBAllFactnoYear)obj).getCObjA6()));
+			list.add(isMyNull_ll(((VWebobjBAllFactnoYear)obj).getCObjA7()));
+			list.add(isMyNull_ll(((VWebobjBAllFactnoYear)obj).getCObjA8()));
+		}
+		return list;		
 	}
 				
 	/**
@@ -2226,7 +2416,21 @@ public void init_more2_b(XSSFSheet sheet,Map<String,Object>map,Map<String,Object
 		return map;
 	}
 	
+	public Double minus_db(Double d1,Double d2){
+		Double d=0.0;
+		if(d1!=null&&d2!=null){
+			d=d1-d2;
+		}
+		return d;
+	}
 	
+	public Long minus_lg(Long l1,Long l2){
+		Long l=0l;
+		if(l1!=null&&l2!=null){
+			l=l1-l2;
+		}
+		return l;
+	}
 	
 	/*********************************************導出數據格式******************************************************/
 	public void exp_file() throws ParseException, IOException{
