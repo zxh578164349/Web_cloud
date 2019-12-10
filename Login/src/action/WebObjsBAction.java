@@ -640,7 +640,7 @@ public class WebObjsBAction extends ActionSupport implements ServletResponseAwar
 					for(int b=0;b<list_db.size();b++){
 						sheet.getRow(b+temp+1).getCell(a+2).setCellValue(list_db.get(b));
 						//this.selectValue_db(sheet.getRow(b+temp+1).getCell(a+2), list.get(a).getWorkorholiday(), list_db.get(b));
-						sheet.getRow(b+temp+1).getCell(a+2).setCellStyle(this.selectStyle2007(b, map_cs,1,null,list_db.get(b)));
+						sheet.getRow(b+temp+1).getCell(a+2).setCellStyle(this.selectStyle2007(b, map_cs,1,null,list_db.get(b),list_col));
 					}																
 				}
 				
@@ -654,8 +654,8 @@ public class WebObjsBAction extends ActionSupport implements ServletResponseAwar
 				for(int b=0;b<list_sum.size();b++){
 					sheet.getRow(b+temp+1).getCell(2+months).setCellValue(list_sum.get(b));
 					sheet.getRow(b+temp+1).getCell(3+months).setCellValue(list_sum.get(b)/work_months);
-					sheet.getRow(b+temp+1).getCell(2+months).setCellStyle(this.selectStyle2007(b, map_cs,1,null,null));
-					sheet.getRow(b+temp+1).getCell(3+months).setCellStyle(this.selectStyle2007(b, map_cs,1,null,null));
+					sheet.getRow(b+temp+1).getCell(2+months).setCellStyle(this.selectStyle2007(b, map_cs,1,null,null,list_col));
+					sheet.getRow(b+temp+1).getCell(3+months).setCellStyle(this.selectStyle2007(b, map_cs,1,null,null,list_col));
 				}
 				
 				temp=temp+list_col.size()+1;
@@ -703,8 +703,8 @@ public class WebObjsBAction extends ActionSupport implements ServletResponseAwar
 			for(int b=0;b<ll.size();b++){
 				sheet.getRow(temp+1+b).getCell(2+months).setCellValue(ll.get(b));
 				sheet.getRow(temp+1+b).getCell(3+months).setCellValue(ll.get(b)/months);
-				sheet.getRow(temp+1+b).getCell(2+months).setCellStyle(this.selectStyle2007(b, map_cs,1,null,null));
-				sheet.getRow(temp+1+b).getCell(3+months).setCellStyle(this.selectStyle2007(b, map_cs,1,null,null));
+				sheet.getRow(temp+1+b).getCell(2+months).setCellStyle(this.selectStyle2007(b, map_cs,1,null,null,list_col2));
+				sheet.getRow(temp+1+b).getCell(3+months).setCellStyle(this.selectStyle2007(b, map_cs,1,null,null,list_col2));
 			}
 	}
 	/*************************************************工廠報表(一年情況)***********************************************************/
@@ -862,10 +862,14 @@ public class WebObjsBAction extends ActionSupport implements ServletResponseAwar
 	public void init3_1(XSSFSheet sheet,Map<String,Object>map_cs,Map<String,Object>map,List<VWebobjBAllFactno>list_lg,int months,Map<String,Object>map2,Map<String,Object>map2_lyear,VWebobjBAllFactnoYear obj4,VWebobjBAllFactnoYear obj4_lyear) throws ParseException{				
 		XSSFCellStyle cs=(XSSFCellStyle)map_cs.get("cs");
 		XSSFCellStyle cs_head=(XSSFCellStyle)map_cs.get("cs_head");
-		XSSFCellStyle cs_title=(XSSFCellStyle)map_cs.get("cs_title");		
+		XSSFCellStyle cs_title=(XSSFCellStyle)map_cs.get("cs_title");
+		XSSFCellStyle cs_percent1=(XSSFCellStyle)map_cs.get("cs_percent1");
 		List<String>list_col=findItems_new();
 		List<String>list_col2=findItems2_new();
 			sheet.setColumnWidth(1, 5000);
+			for(int a=14;a<22;a++){
+				sheet.setColumnWidth(a, 3500);
+			}
 			for(int a=0;a<list_col.size()*map.size()+20;a++){
 				sheet.createRow(a);				
 				for(int b=0;b<months+10;b++){
@@ -909,35 +913,54 @@ public class WebObjsBAction extends ActionSupport implements ServletResponseAwar
 					List<Double>list_db=objToDouble(list.get(a));
 					for(int b=0;b<list_db.size();b++){
 						sheet.getRow(b+temp+1).getCell(a+2).setCellValue(list_db.get(b));						
-						sheet.getRow(b+temp+1).getCell(a+2).setCellStyle(this.selectStyle2007(b, map_cs,1,null,list_db.get(b)));
+						sheet.getRow(b+temp+1).getCell(a+2).setCellStyle(this.selectStyle2007(b, map_cs,1,null,list_db.get(b),list_col));
 					}																
 				}
 				
-				sheet.getRow(temp).getCell(2+months).setCellValue("總計");
-				sheet.getRow(temp).getCell(3+months).setCellValue("平均");
-				sheet.getRow(temp).getCell(4+months).setCellValue("去年總計");
-				sheet.getRow(temp).getCell(5+months).setCellValue("去年平均");
-				sheet.getRow(temp).getCell(6+months).setCellValue("合計差異");
-				sheet.getRow(temp).getCell(7+months).setCellValue("平均差異");
-				sheet.getRow(temp).getCell(8+months).setCellValue("合計差異率");
-				sheet.getRow(temp).getCell(9+months).setCellValue("平均差異率");
+				sheet.getRow(temp).getCell(2+months).setCellValue("今年平均");
+				sheet.getRow(temp).getCell(3+months).setCellValue("去年平均");
+				sheet.getRow(temp).getCell(4+months).setCellValue("平均差異");
+				sheet.getRow(temp).getCell(5+months).setCellValue("平均差異率");
+				
+				sheet.getRow(temp).getCell(6+months).setCellValue("今年總計");
+                sheet.getRow(temp).getCell(7+months).setCellValue("去年總計");
+				sheet.getRow(temp).getCell(8+months).setCellValue("合計差異");				
+				sheet.getRow(temp).getCell(9+months).setCellValue("合計差異率");
+								
 				for(int a=0;a<8;a++){
 					sheet.getRow(temp).getCell(2+months+a).setCellStyle(cs_head);
 				}
 				List<Double>list_sum=objToDouble((VWebobjBAllYear)map2.get(factcode));
 				List<Double>list_sum_lyear=objToDouble((VWebobjBAllYear)map2_lyear.get(factcode));
 				for(int b=0;b<list_sum.size();b++){
-					sheet.getRow(b+temp+1).getCell(2+months).setCellValue(list_sum.get(b));
-					sheet.getRow(b+temp+1).getCell(3+months).setCellValue(GlobalMethod.division(list_sum.get(b), ((VWebobjBAllYear)map2.get(factcode)).getMonths()));
-					sheet.getRow(b+temp+1).getCell(4+months).setCellValue(list_sum_lyear.get(b));
-					sheet.getRow(b+temp+1).getCell(5+months).setCellValue(GlobalMethod.division(list_sum_lyear.get(b),((VWebobjBAllYear)map2_lyear.get(factcode)).getMonths()));					
-					
-					sheet.getRow(b+temp+1).getCell(6+months).setCellValue(this.minus_db(list_sum.get(b), list_sum_lyear.get(b)));
-					sheet.getRow(b+temp+1).getCell(6+months).setCellValue(this.minus_db(list_sum.get(b), list_sum_lyear.get(b)));
-					for(int c=0;c<4;c++){
-						sheet.getRow(b+temp+1).getCell(2+months+c).setCellStyle(this.selectStyle2007(b, map_cs,1,null,null));
+					for(int c=0;c<8;c++){
+						sheet.getRow(b+temp+1).getCell(2+months+c).setCellStyle(this.selectStyle2007(b, map_cs,1,null,null,list_col));
 					}
 					
+					sheet.getRow(b+temp+1).getCell(2+months).setCellValue(GlobalMethod.division(list_sum.get(b), ((VWebobjBAllYear)map2.get(factcode)).getMonths()));
+					sheet.getRow(b+temp+1).getCell(3+months).setCellValue(GlobalMethod.division(list_sum_lyear.get(b),((VWebobjBAllYear)map2_lyear.get(factcode)).getMonths()));					
+					sheet.getRow(b+temp+1).getCell(4+months).setCellValue(
+							sheet.getRow(b+temp+1).getCell(2+months).getNumericCellValue()-	
+							sheet.getRow(b+temp+1).getCell(3+months).getNumericCellValue()
+                    );
+					sheet.getRow(b+temp+1).getCell(5+months).setCellValue(
+							GlobalMethod.division(sheet.getRow(b+temp+1).getCell(4+months).getNumericCellValue(),
+									sheet.getRow(b+temp+1).getCell(3+months).getNumericCellValue())
+                    );
+					sheet.getRow(b+temp+1).getCell(5+months).setCellStyle(cs_percent1);
+					
+					
+					sheet.getRow(b+temp+1).getCell(6+months).setCellValue(list_sum.get(b));
+					sheet.getRow(b+temp+1).getCell(7+months).setCellValue(list_sum_lyear.get(b));
+					sheet.getRow(b+temp+1).getCell(8+months).setCellValue(
+							sheet.getRow(b+temp+1).getCell(6+months).getNumericCellValue()-	
+							sheet.getRow(b+temp+1).getCell(7+months).getNumericCellValue()
+                    );										
+					sheet.getRow(b+temp+1).getCell(9+months).setCellValue(
+							GlobalMethod.division(sheet.getRow(b+temp+1).getCell(8+months).getNumericCellValue(),
+							sheet.getRow(b+temp+1).getCell(7+months).getNumericCellValue())
+                    );
+					sheet.getRow(b+temp+1).getCell(9+months).setCellStyle(cs_percent1);											
 				}				
 				temp=temp+list_col.size()+1;
 			}	
@@ -974,28 +997,54 @@ public class WebObjsBAction extends ActionSupport implements ServletResponseAwar
 					sheet.getRow(b+temp+1).getCell(a+2).setCellStyle(cs);
 				}																
 			}
+									
+			sheet.getRow(temp).getCell(2+months).setCellValue("今年平均");
+			sheet.getRow(temp).getCell(3+months).setCellValue("去年平均");
+			sheet.getRow(temp).getCell(4+months).setCellValue("平均差異");
+			sheet.getRow(temp).getCell(5+months).setCellValue("平均差異率");
 			
-			sheet.getRow(temp).getCell(2+months).setCellValue("今年合計");
-			sheet.getRow(temp).getCell(3+months).setCellValue("今年平均");
-			sheet.getRow(temp).getCell(4+months).setCellValue("去年合計");
-			sheet.getRow(temp).getCell(5+months).setCellValue("去年平均");
-			sheet.getRow(temp).getCell(6+months).setCellValue("合計差異");
-			sheet.getRow(temp).getCell(7+months).setCellValue("平均差異");
-			sheet.getRow(temp).getCell(8+months).setCellValue("合計差異率");
-			sheet.getRow(temp).getCell(9+months).setCellValue("平均差異率");
+			sheet.getRow(temp).getCell(6+months).setCellValue("今年總計");
+            sheet.getRow(temp).getCell(7+months).setCellValue("去年總計");
+			sheet.getRow(temp).getCell(8+months).setCellValue("合計差異");				
+			sheet.getRow(temp).getCell(9+months).setCellValue("合計差異率");
+			
 			for(int a=0;a<8;a++){
 				sheet.getRow(temp).getCell(2+months+a).setCellStyle(cs_head);
 			}
 			List<Long>ll=this.objToLong(obj4);
 			List<Long>ll_lyear=this.objToLong(obj4_lyear);
 			for(int b=0;b<ll.size();b++){
-				sheet.getRow(temp+1+b).getCell(2+months).setCellValue(ll.get(b));
-				sheet.getRow(temp+1+b).getCell(3+months).setCellValue(GlobalMethod.division_lg(ll.get(b),obj4.getMonths()));
-				sheet.getRow(temp+1+b).getCell(4+months).setCellValue(ll_lyear.get(b));
-				sheet.getRow(temp+1+b).getCell(5+months).setCellValue(GlobalMethod.division_lg(ll_lyear.get(b),obj4_lyear.getMonths()));
-				for(int c=0;c<4;c++){
-					sheet.getRow(temp+1+b).getCell(2+months+c).setCellStyle(this.selectStyle2007(b, map_cs,1,null,null));
+				
+				for(int c=0;c<8;c++){
+					sheet.getRow(temp+1+b).getCell(2+months+c).setCellStyle(this.selectStyle2007(b, map_cs,1,null,null,list_col));
 				}
+				sheet.getRow(temp+1+b).getCell(2+months).setCellValue(GlobalMethod.division_lg(ll.get(b),obj4.getMonths()));
+				sheet.getRow(temp+1+b).getCell(3+months).setCellValue(GlobalMethod.division_lg(ll_lyear.get(b),obj4_lyear.getMonths()));
+				sheet.getRow(temp+1+b).getCell(4+months).setCellValue(
+						sheet.getRow(temp+1+b).getCell(2+months).getNumericCellValue()-	
+						sheet.getRow(temp+1+b).getCell(3+months).getNumericCellValue()
+                );
+				sheet.getRow(temp+1+b).getCell(5+months).setCellValue(
+						GlobalMethod.division(sheet.getRow(temp+1+b).getCell(4+months).getNumericCellValue(),
+								sheet.getRow(temp+1+b).getCell(3+months).getNumericCellValue())
+                );
+				sheet.getRow(temp+1+b).getCell(5+months).setCellStyle(cs_percent1);
+			
+				
+				sheet.getRow(temp+1+b).getCell(6+months).setCellValue(ll.get(b));
+				sheet.getRow(temp+1+b).getCell(7+months).setCellValue(ll_lyear.get(b));	
+				sheet.getRow(temp+1+b).getCell(8+months).setCellValue(
+						sheet.getRow(temp+1+b).getCell(6+months).getNumericCellValue()-	
+						sheet.getRow(temp+1+b).getCell(7+months).getNumericCellValue()
+                );				
+				sheet.getRow(temp+1+b).getCell(9+months).setCellValue(
+						GlobalMethod.division(sheet.getRow(temp+1+b).getCell(8+months).getNumericCellValue(),
+						sheet.getRow(temp+1+b).getCell(7+months).getNumericCellValue())
+                );
+				sheet.getRow(temp+1+b).getCell(9+months).setCellStyle(cs_percent1);
+				
+				
+				
 				
 			}
 	}
@@ -1189,7 +1238,7 @@ public class WebObjsBAction extends ActionSupport implements ServletResponseAwar
 					for(int b=0;b<list_db.size();b++){
 						//sheet.getRow(b+temp+1).getCell(a+2).setCellValue(list_db.get(b));
 						this.selectValue_db(sheet.getRow(b+temp+1).getCell(a+2), list.get(a).getWorkorholiday(), list_db.get(b));
-						sheet.getRow(b+temp+1).getCell(a+2).setCellStyle(this.selectStyle2007(b, map_cs,0,list.get(a).getWorkorholiday(),list_db.get(b)));
+						sheet.getRow(b+temp+1).getCell(a+2).setCellStyle(this.selectStyle2007(b, map_cs,0,list.get(a).getWorkorholiday(),list_db.get(b),list_col));
 					}																
 				}
 				
@@ -1203,8 +1252,8 @@ public class WebObjsBAction extends ActionSupport implements ServletResponseAwar
 				for(int b=0;b<list_sum.size();b++){
 					sheet.getRow(b+temp+1).getCell(2+days).setCellValue(list_sum.get(b));
 					sheet.getRow(b+temp+1).getCell(3+days).setCellValue(list_sum.get(b)/work_days);
-					sheet.getRow(b+temp+1).getCell(2+days).setCellStyle(this.selectStyle2007(b, map_cs,1,null,null));
-					sheet.getRow(b+temp+1).getCell(3+days).setCellStyle(this.selectStyle2007(b, map_cs,1,null,null));
+					sheet.getRow(b+temp+1).getCell(2+days).setCellStyle(this.selectStyle2007(b, map_cs,1,null,null,list_col));
+					sheet.getRow(b+temp+1).getCell(3+days).setCellStyle(this.selectStyle2007(b, map_cs,1,null,null,list_col));
 				}
 				
 				temp=temp+list_col.size()+1;
@@ -1295,7 +1344,7 @@ public class WebObjsBAction extends ActionSupport implements ServletResponseAwar
 						/*sheet.getRow(b+temp+1).getCell(a+2).setCellValue(list_str.get(b));
 						sheet.getRow(b+temp+1).getCell(a+2).setCellStyle(cs);*/
 						this.selectValue_str(sheet.getRow(b+temp+1).getCell(a+2), list.get(a).getWorkorholiday(), list_str.get(b));
-						sheet.getRow(b+temp+1).getCell(a+2).setCellStyle(this.selectStyle2007(b, map_cs, 0, list.get(a).getWorkorholiday(), list_str.get(b)));
+						sheet.getRow(b+temp+1).getCell(a+2).setCellStyle(this.selectStyle2007(b, map_cs, 0, list.get(a).getWorkorholiday(), list_str.get(b),list_col));
 					}																
 				}										
 				temp=temp+list_col.size()+1;
@@ -1550,7 +1599,7 @@ public void init_more(XSSFSheet sheet,Map<String,Object>map,Map<String,Object>ma
 				List<Double>list_db=this.objToDouble(list_obj.get(a));
 				for(int b=0;b<list_db.size();b++){
 					sheet.getRow(3+b+temp1_1).getCell(3+a+temp).setCellValue(list_db.get(b));
-					sheet.getRow(3+b+temp1_1).getCell(3+a+temp).setCellStyle(this.selectStyle2007(b, map_style,1,null,null));
+					sheet.getRow(3+b+temp1_1).getCell(3+a+temp).setCellStyle(this.selectStyle2007(b, map_style,1,null,null,list_items));
 				}
 			}						
 			temp=temp+length;
@@ -1578,7 +1627,7 @@ public void init_more(XSSFSheet sheet,Map<String,Object>map,Map<String,Object>ma
 			List<Long>ll=this.objToLong(list_obj2.get(a));
 			for(int b=0;b<ll.size();b++){
 				sheet.getRow(1+temp2+temp1_1+b).getCell(3+a).setCellValue(ll.get(b));
-				sheet.getRow(1+temp2+temp1_1+b).getCell(3+a).setCellStyle(this.selectStyle2007(b, map_style,1,null,null));
+				sheet.getRow(1+temp2+temp1_1+b).getCell(3+a).setCellStyle(this.selectStyle2007(b, map_style,1,null,null,list_items2));
 			}
 						
 		}
@@ -1788,7 +1837,7 @@ public void init_more2(XSSFSheet sheet,Map<String,Object>map,Map<String,Object>m
 				List<Double>list_db=this.objToDouble(list_obj.get(a));
 				for(int b=0;b<list_db.size();b++){									
 					this.selectValue_db(sheet.getRow(3+b+temp1_1).getCell(3+a+temp), list_obj.get(a).getWorkorholiday(), list_db.get(b));
-					sheet.getRow(3+b+temp1_1).getCell(3+a+temp).setCellStyle(this.selectStyle2007(b, map_style,0,list_obj.get(a).getWorkorholiday(),list_db.get(b)));
+					sheet.getRow(3+b+temp1_1).getCell(3+a+temp).setCellStyle(this.selectStyle2007(b, map_style,0,list_obj.get(a).getWorkorholiday(),list_db.get(b),list_items));
 				}
 				
 			}
@@ -1912,7 +1961,7 @@ public void init_more2_b(XSSFSheet sheet,Map<String,Object>map,Map<String,Object
 			for(int b=0;b<list_str.size();b++){				
 				//sheet.getRow(3+temp1_1+b).getCell(2+a+temp).setCellStyle(cs);
 				this.selectValue_str(sheet.getRow(3+temp1_1+b).getCell(2+a+temp), list_obj.get(a).getWorkorholiday(), list_str.get(b));
-				sheet.getRow(3+temp1_1+b).getCell(2+a+temp).setCellStyle(this.selectStyle2007(b, map_style, 0, list_obj.get(a).getWorkorholiday(), list_str.get(b)));
+				sheet.getRow(3+temp1_1+b).getCell(2+a+temp).setCellStyle(this.selectStyle2007(b, map_style, 0, list_obj.get(a).getWorkorholiday(), list_str.get(b),list_items));
 				
 			}
 		}		
@@ -1999,94 +2048,94 @@ public void init_more2_b(XSSFSheet sheet,Map<String,Object>map,Map<String,Object
 	
 	public List<String>findItems(){
 		List<String>list=new ArrayList<String>();										
-		list.add("最大孔位數__孔");
-		list.add("最大生產數(模/月)__模");
-		list.add("有效孔位數__孔");
-		list.add("工程樣品孔位__孔");
-		list.add("補料孔位__孔");
-		list.add("其它孔位__孔");
-		list.add("預計生產模數(模/月)__模");
-		list.add("預計生產雙數(模/月)__模");
-		list.add("預計請款雙數(雙/月)__雙");
-		list.add("上模數__模");
-		list.add("人數(拉模手)__人");
-		list.add("標準產量(模/日)__模");
-		list.add("實際產量(模/日)__模");
-		list.add("實際產量(雙)__雙");
-		list.add("達成率(%)__%");
-		list.add("實際回轉數__回");
-		list.add("成型不良雙數__雙");
-		list.add("成型不良率(%)__%");
-		list.add("慢單狀況(張)__張");
-		list.add("慢單狀況(雙)__雙");
-		list.add("訂單欠數__雙");
+		list.add("最大孔位數__孔__cs_poi");
+		list.add("最大生產數(模/月)__模__cs_poi");
+		list.add("有效孔位數__孔__cs_poi");
+		list.add("工程樣品孔位__孔__cs_poi");
+		list.add("補料孔位__孔__cs_poi");
+		list.add("其它孔位__孔__cs_poi");
+		list.add("預計生產模數(模/月)__模__cs_poi");
+		list.add("預計生產雙數(模/月)__模__cs_poi");
+		list.add("預計請款雙數(雙/月)__雙__cs_poi");
+		list.add("上模數__模__cs_poi");
+		list.add("人數(拉模手)__人__cs_poi");
+		list.add("標準產量(模/日)__模__cs_poi");
+		list.add("實際產量(模/日)__模__cs_poi");
+		list.add("實際產量(雙)__雙__cs_poi");
+		list.add("達成率(%)__%__cs_percent1");
+		list.add("實際回轉數__回__cs_poi");
+		list.add("成型不良雙數__雙__cs_poi");
+		list.add("成型不良率(%)__%__cs_percent1");
+		list.add("慢單狀況(張)__張__cs_poi");
+		list.add("慢單狀況(雙)__雙__cs_poi");
+		list.add("訂單欠數__雙__cs_poi");		
 		return list;		
 	}
 	
 	public List<String>findItems2(){
 		List<String>list=new ArrayList<String>();														
-		list.add("直工人數__人");
-		list.add("間工人數__人");
-		list.add("全廠人數__人");
-		list.add("招工數__人");
-		list.add("離職數__人");
-		list.add("請假數__人");
+		list.add("直工人數__人__cs_poi");
+		list.add("間工人數__人__cs_poi");
+		list.add("全廠人數__人__cs_poi");
+		list.add("招工數__人__cs_poi");
+		list.add("離職數__人__cs_poi");
+		list.add("請假數__人__cs_poi");
 		return list;		
 	}
 	
 	public List<String> findItems3(){
 		List<String>list=new ArrayList<String>();			
-		list.add("品質問題與客訴__文字");
-		list.add("扣款訊息__文字");
-		list.add("機台狀況/異常__文字");
-		list.add("客人來訪訊息__文字");
-		list.add("其他提報事項__文字");					
+		list.add("品質問題與客訴__文字__cs");
+		list.add("扣款訊息__文字__cs");
+		list.add("機台狀況/異常__文字__cs");
+		list.add("客人來訪訊息__文字__cs");
+		list.add("其他提報事項__文字__cs");					
 		return list;
 	}
 	
 	public List<String>findItems_new(){
-		List<String>list=new ArrayList<String>();										
-		list.add("最大孔位數__孔");
-		list.add("最大生產數(模/月)__模");
-		list.add("有效孔位數__孔");
-		list.add("工程樣品孔位__孔");
-		list.add("補料孔位__孔");
-		list.add("其它孔位__孔");
-		list.add("實際請款雙數(雙/月)__雙");
-		list.add("實際請款金額(USD)__USD");
-		list.add("實際生產模數(模/月)__模");
-		list.add("實際生產雙數(雙/月)__雙");
-		list.add("正批生產雙數(雙)/月__雙");
-		list.add("客補生產雙數(雙)/月__雙");
-		list.add("廠補生產雙數(雙)/月__雙");
-		list.add("樣品生產雙數(雙)/月__雙");
-		list.add("月平均_上模數__模");
-		list.add("月平均_人數(拉模手)__人");
-		list.add("月平均_標準產量(模/日)__模");
-		list.add("月平均_實際產量(模/日)__模");
-		list.add("月平均_實際產量(雙)__雙");
-		list.add("月達成率(%)__%");
-		list.add("月實際回轉數__回");
-		list.add("月平均_慢單狀況(張)__張");
-		list.add("月平均_慢單狀況(雙)__雙");
-		list.add("當月月底之訂單欠數__雙");		
-		list.add("機台利用率__%");
-		list.add("直工人均產能__模");
-		list.add("全廠人均產能__模");
-		list.add("加班費__USD");
-		list.add("成本率__%");
-		list.add("回頭率__%");
-		list.add("總損耗__%");
-		list.add("平均邊料重__G/雙");
-		list.add("邊料率__%");
-		list.add("不良率__%");
-		list.add("退貨率__%");
-		list.add("用水單耗__USD/模");
-		list.add("用電單耗__USD/模");
-		list.add("蒸汽單耗__USD/模");
-		list.add("蒸汽單耗__KG/模");
-		list.add("色料藥品單耗__G/雙");
-		list.add("色料藥品單耗__USD/雙");
+		List<String>list=new ArrayList<String>();																
+		list.add("最大孔位數__孔__cs_poi");
+		list.add("最大生產數(模/月)__模__cs_poi");
+		list.add("有效孔位數__孔__cs_poi");
+		list.add("工程樣品孔位__孔__cs_poi");
+		list.add("補料孔位__孔__cs_poi");
+		list.add("其它孔位__孔__cs_poi");
+		list.add("實際請款雙數(雙/月)__雙__cs_poi");
+		list.add("實際請款金額(USD)__USD__cs_poi");
+		list.add("實際生產模數(模/月)__模__cs_poi");
+		list.add("實際生產雙數(雙/月)__雙__cs_poi");
+		list.add("正批生產雙數(雙)/月__雙__cs_poi");
+		list.add("客補生產雙數(雙)/月__雙__cs_poi");
+		list.add("廠補生產雙數(雙)/月__雙__cs_poi");
+		list.add("樣品生產雙數(雙)/月__雙__cs_poi");
+		list.add("月平均_上模數__模__cs_poi");
+		list.add("月平均_人數(拉模手)__人__cs_poi");
+		list.add("月平均_標準產量(模/日)__模__cs_poi");
+		list.add("月平均_實際產量(模/日)__模__cs_poi");
+		list.add("月平均_實際產量(雙)__雙__cs_poi");
+		list.add("月達成率(%)__%__cs_percent1");
+		list.add("月實際回轉數__回__cs_poi");
+		list.add("月平均_慢單狀況(張)__張__cs_poi");
+		list.add("月平均_慢單狀況(雙)__雙__cs_poi");
+		list.add("當月月底之訂單欠數__雙__cs_poi");
+		list.add("機台利用率__%__cs_percent1");
+		list.add("直工人均產能__模__cs_poi");
+		list.add("全廠人均產能__模__cs_poi");
+		list.add("加班費__USD__cs");
+		list.add("成本率__%__cs_percent1");
+		list.add("回頭率__%__cs_percent1");
+		list.add("總損耗__%__cs_percent1");
+		list.add("平均邊料重__G/雙__cs");
+		list.add("邊料率__%__cs_percent1");
+		list.add("不良率__%__cs_percent1");
+		list.add("退貨率__%__cs_percent1");
+		list.add("用水單耗__USD/模__cs");
+		list.add("用電單耗__USD/模__cs");
+		list.add("蒸汽單耗__USD/模__cs");
+		list.add("蒸汽單耗__KG/模__cs");
+		list.add("色料藥品單耗__G/雙__cs");
+		list.add("色料藥品單耗__USD/雙__cs");
 
 		return list;		
 	}
@@ -2339,7 +2388,7 @@ public void init_more2_b(XSSFSheet sheet,Map<String,Object>map,Map<String,Object
 	 * @param ele_data
 	 * @return
 	 */
-	public XSSFCellStyle selectStyle2007(int a,Map<String,Object>map_style,int type,String workorholiday,Object ele_data){				
+	public XSSFCellStyle selectStyle2007(int a,Map<String,Object>map_style,int type,String workorholiday,Object ele_data,List<String> list_col){				
 		XSSFCellStyle cs=(XSSFCellStyle)map_style.get("cs");
 		switch(type){
 		case 0:
@@ -2347,13 +2396,14 @@ public void init_more2_b(XSSFSheet sheet,Map<String,Object>map,Map<String,Object
 				if(ele_data==null||ele_data.equals(0.0)||"null".equals(ele_data)||"無".equals(ele_data)){//待補
 					cs=(XSSFCellStyle)map_style.get("cs_font_red");
 				}else{
-					if(a<14){
+					/*if(a<14){
 						cs=(XSSFCellStyle)map_style.get("cs_poi");
 					}else if(a==14||a==17){
 						cs=(XSSFCellStyle)map_style.get("cs_percent1");
 					}else{
 						cs=(XSSFCellStyle)map_style.get("cs_poi1");
-					}
+					}*/
+					cs=(XSSFCellStyle)map_style.get(list_col.get(a).split("__")[2]);
 				}
 			
 			}
@@ -2366,13 +2416,14 @@ public void init_more2_b(XSSFSheet sheet,Map<String,Object>map,Map<String,Object
 			break;
 			
 		case 1:
-			if(a<14){
+			/*if(a<14){
 				cs=(XSSFCellStyle)map_style.get("cs_poi");
 			}else if(a==14||a==17){
 				cs=(XSSFCellStyle)map_style.get("cs_percent1");
 			}else{
 				cs=(XSSFCellStyle)map_style.get("cs_poi1");
-			}
+			}*/
+			cs=(XSSFCellStyle)map_style.get(list_col.get(a).split("__")[2]);
 			break;
 		}		
 		return cs;

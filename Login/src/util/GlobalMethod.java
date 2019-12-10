@@ -2327,10 +2327,10 @@ public class GlobalMethod extends HibernateDaoSupport{
 	 
 	 public static void main(String[] args) {
 			
-		Long l=0L;
+		Long l=null;
 		Double d=0.0;
-		System.out.println(l==0);
-		System.out.println(d==0);
+		
+		System.out.println(d-l);
 	  
 		}
 	 
