@@ -260,76 +260,78 @@ public class WebObjsAAction extends ActionSupport implements ServletResponseAwar
 				}						
 				//file=new File("e:\\導入格式2.xls");
 				Map<String,Object>map=ImportExcel.exportListFromFile(new File(path+"\\"+fileFileName));
-				List<String>list_factArea=webFactSer.findfactAreaByFactNo(factNo);
-				a:for(String key:map.keySet()){//for a
-					List<WebObjsA>list_b=new ArrayList<WebObjsA>();
-					List<String>list_factcode=new ArrayList<String>();//導入數據所有的factcode
-					List<String>list=(List<String>)map.get(key);
-					if(!list.get(0).contains("__序號__項目__單位")){				
-						response.getWriter().print("<script>window.parent.showDiv();window.parent.layer.msg('表格式不符合要求')</script>");
-						//continue;
-						break;
-					}
-					
-					/*for(int a=0;a<list.size();a++){
-						if(list.size()>43||list.get(a).contains("平均日產能")||list.get(a).contains("庫存天數")){						
+				if(map.size()<=1){
+					List<String>list_factArea=webFactSer.findfactAreaByFactNo(factNo);
+					a:for(String key:map.keySet()){//for a
+						List<WebObjsA>list_b=new ArrayList<WebObjsA>();
+						List<String>list_factcode=new ArrayList<String>();//導入數據所有的factcode
+						List<String>list=(List<String>)map.get(key);
+						if(!list.get(0).contains("__序號__項目__單位")){				
+							response.getWriter().print("<script>window.parent.showDiv();window.parent.layer.msg('表格式不符合要求')</script>");
+							//continue;
+							break;
+						}					
+						/*for(int a=0;a<list.size();a++){
+							if(list.size()>43||list.get(a).contains("平均日產能")||list.get(a).contains("庫存天數")){						
+								response.getWriter().print("<script>window.parent.layer.msg('項目不正確')</script>");
+								break a;
+							}
+							
+						 }*/
+						if(list.size()>25){
 							response.getWriter().print("<script>window.parent.layer.msg('項目不正確')</script>");
 							break a;
 						}
-						
-					 }*/
-					if(list.size()>25){
-						response.getWriter().print("<script>window.parent.layer.msg('項目不正確')</script>");
-						break a;
-					}
-					
-					
-					String[] array_head =list.get(0).split("__");
-					for(int i=4;i<array_head.length;i++){
-						list_factcode.add(array_head[i].trim());
-					}
-					if(!list_factArea.containsAll(list_factcode)){
-						StringBuilder sb=new StringBuilder();
-						sb.append("(");					
-						for(String factArea:list_factArea){
-							sb.append(factArea+" ");
+											
+						String[] array_head =list.get(0).split("__");
+						for(int i=4;i<array_head.length;i++){
+							list_factcode.add(array_head[i].trim());
 						}
-						sb.append(")");
-						response.getWriter().print("<script>window.parent.layer.alert('請核對正確的廠別狀態:"+sb.toString()+"',8)</script>");
-						break;
-					}
-					for(int i=4;i<array_head.length;i++){//for b
-						WebFact fact=new WebFact(new WebFactId(factNo,array_head[i].trim()));
-						WebObjsA obj=new WebObjsA(new WebObjsAId(fact,yymmdd));								
-						obj.setObjA1(Double.valueOf(list.get(1).split(SEPARATOR)[i]));
-						obj.setObjA2(Double.valueOf(list.get(2).split(SEPARATOR)[i]));
-						obj.setObjA3(Double.valueOf(list.get(3).split(SEPARATOR)[i]));
-						obj.setObjA4(Double.valueOf(list.get(4).split(SEPARATOR)[i]));
-						obj.setObjA5(Double.valueOf(list.get(5).split(SEPARATOR)[i]));
-						obj.setObjA6(Double.valueOf(list.get(6).split(SEPARATOR)[i]));
-						obj.setObjA7(Double.valueOf(list.get(7).split(SEPARATOR)[i]));
-						obj.setObjA8(Double.valueOf(list.get(8).split(SEPARATOR)[i]));
-						obj.setObjA9(Double.valueOf(list.get(9).split(SEPARATOR)[i]));
-						obj.setObjA10(Double.valueOf(list.get(10).split(SEPARATOR)[i]));
-						obj.setObjA11(Double.valueOf(list.get(11).split(SEPARATOR)[i]));
-						obj.setObjA12(Double.valueOf(list.get(12).split(SEPARATOR)[i]).longValue());
-						obj.setObjA13(Double.valueOf(list.get(13).split(SEPARATOR)[i]).longValue());
-						obj.setObjA14(Double.valueOf(list.get(14).split(SEPARATOR)[i]).longValue());
-						obj.setObjA15(Double.valueOf(list.get(15).split(SEPARATOR)[i]).longValue());
-						obj.setObjA16(Double.valueOf(list.get(16).split(SEPARATOR)[i]).longValue());					
-						obj.setObjA17("0.0".equals(list.get(17).split(SEPARATOR)[i])?"null":list.get(17).split(SEPARATOR)[i]);
-						obj.setObjA18("0.0".equals(list.get(18).split(SEPARATOR)[i])?"null":list.get(18).split(SEPARATOR)[i]);
-						obj.setObjA19("0.0".equals(list.get(19).split(SEPARATOR)[i])?"null":list.get(19).split(SEPARATOR)[i]);
-						obj.setObjA20("0.0".equals(list.get(20).split(SEPARATOR)[i])?"null":list.get(20).split(SEPARATOR)[i]);
-						obj.setObjA21("0.0".equals(list.get(21).split(SEPARATOR)[i])?"null":list.get(21).split(SEPARATOR)[i]);
-						obj.setWorkorholiday(workorholiday);
-						obj.setUsername(user.getUsername());
-						obj.setCreatedate(new SimpleDateFormat("yyyyMMdd").format(new Date()));
-						list_b.add(obj);
-					}//for b
-					webobjaservices.addMore(list_b);
-					response.getWriter().print("<script>window.parent.layer.msg('導入成功',3,1)</script>");
-				}//for a
+						if(!list_factArea.containsAll(list_factcode)){
+							StringBuilder sb=new StringBuilder();
+							sb.append("(");					
+							for(String factArea:list_factArea){
+								sb.append(factArea+" ");
+							}
+							sb.append(")");
+							response.getWriter().print("<script>window.parent.layer.alert('請核對正確的廠別狀態:"+sb.toString()+"',8)</script>");
+							break;
+						}
+						for(int i=4;i<array_head.length;i++){//for b
+							WebFact fact=new WebFact(new WebFactId(factNo,array_head[i].trim()));
+							WebObjsA obj=new WebObjsA(new WebObjsAId(fact,yymmdd));								
+							obj.setObjA1(Double.valueOf(list.get(1).split(SEPARATOR)[i]));
+							obj.setObjA2(Double.valueOf(list.get(2).split(SEPARATOR)[i]));
+							obj.setObjA3(Double.valueOf(list.get(3).split(SEPARATOR)[i]));
+							obj.setObjA4(Double.valueOf(list.get(4).split(SEPARATOR)[i]));
+							obj.setObjA5(Double.valueOf(list.get(5).split(SEPARATOR)[i]));
+							obj.setObjA6(Double.valueOf(list.get(6).split(SEPARATOR)[i]));
+							obj.setObjA7(Double.valueOf(list.get(7).split(SEPARATOR)[i]));
+							obj.setObjA8(Double.valueOf(list.get(8).split(SEPARATOR)[i]));
+							obj.setObjA9(Double.valueOf(list.get(9).split(SEPARATOR)[i]));
+							obj.setObjA10(Double.valueOf(list.get(10).split(SEPARATOR)[i]));
+							obj.setObjA11(Double.valueOf(list.get(11).split(SEPARATOR)[i]));
+							obj.setObjA12(Double.valueOf(list.get(12).split(SEPARATOR)[i]).longValue());
+							obj.setObjA13(Double.valueOf(list.get(13).split(SEPARATOR)[i]).longValue());
+							obj.setObjA14(Double.valueOf(list.get(14).split(SEPARATOR)[i]).longValue());
+							obj.setObjA15(Double.valueOf(list.get(15).split(SEPARATOR)[i]).longValue());
+							obj.setObjA16(Double.valueOf(list.get(16).split(SEPARATOR)[i]).longValue());					
+							obj.setObjA17("0.0".equals(list.get(17).split(SEPARATOR)[i])?"null":list.get(17).split(SEPARATOR)[i]);
+							obj.setObjA18("0.0".equals(list.get(18).split(SEPARATOR)[i])?"null":list.get(18).split(SEPARATOR)[i]);
+							obj.setObjA19("0.0".equals(list.get(19).split(SEPARATOR)[i])?"null":list.get(19).split(SEPARATOR)[i]);
+							obj.setObjA20("0.0".equals(list.get(20).split(SEPARATOR)[i])?"null":list.get(20).split(SEPARATOR)[i]);
+							obj.setObjA21("0.0".equals(list.get(21).split(SEPARATOR)[i])?"null":list.get(21).split(SEPARATOR)[i]);
+							obj.setWorkorholiday(workorholiday);
+							obj.setUsername(user.getUsername());
+							obj.setCreatedate(new SimpleDateFormat("yyyyMMdd").format(new Date()));
+							list_b.add(obj);
+						}//for b
+						webobjaservices.addMore(list_b);
+						response.getWriter().print("<script>window.parent.layer.msg('導入成功',3,1)</script>");
+					}//for a
+				}else{
+					response.getWriter().print("<script>window.parent.layer.msg('文件包含多張或隱藏表格')</script>");
+				}				
 			}else{
 				List<WebObjsA>list=new ArrayList<WebObjsA>();
 				List<String>factcodes=webFactSer.findFactCodeByFactNo_show(factNo);

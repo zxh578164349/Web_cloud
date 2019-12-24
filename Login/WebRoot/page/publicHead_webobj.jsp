@@ -58,7 +58,7 @@
 		      <td colspan="5">
 		       <input value="搜索" type="button" class="btn btn-primary" onclick="submis('public_form')" />&nbsp;	
 		       <input value="工廠日報表" type="button" class="btn btn-primary" onclick="print('public_form','factNo','yymm')"/>&nbsp;
-			    <input value="工廠月報表" type="button" class="btn btn-primary" onclick="print6('public_form','factNo','year')"/>&nbsp;
+			    <input value="工廠年報表" type="button" class="btn btn-primary" onclick="print6('public_form','factNo','year')"/>&nbsp;
 			   <s:if test='#session.factNo=="tw"'>			       			      
 			       <input value="各廠日匯總表" type="button" class="btn btn-primary" onclick="print4('public_form','yymmdd')"/>&nbsp;
 			       <input value="各廠月匯總表" type="button" class="btn btn-primary" onclick="print3('public_form','yymm')"/>&nbsp;
