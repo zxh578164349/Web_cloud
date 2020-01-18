@@ -92,7 +92,7 @@ function back() {
 		          <td class="td_show_title">始末日期</td>
 		          <td class="td_input">
 		                                 開始:<input type="text" name="startDate" id="sDate" onclick="WdatePicker({maxDate:'#F{$dp.$D(\'eDate\',{M:-1})||\'%y-%M-%d\'}',dateFmt:'yyyyMMdd'})"  class="Wdate" datatype="*"/><br>
-		                                 結束:<input type="text" name="endDate" id="eDate" onclick="WdatePicker({maxDate:'%y-{%M+1}-%d',minDate:'#F{$dp.$D(\'sDate\',{d:20})}',dateFmt:'yyyyMMdd'})" class="Wdate" datatype="*"/>		                              
+		                                 結束:<input type="text" name="endDate" id="eDate" onclick="WdatePicker({maxDate:'%y-{%M+1}-%d',minDate:'#F{$dp.$D(\'sDate\',{d:12})}',dateFmt:'yyyyMMdd'})" class="Wdate" datatype="*"/>		                              
 		             </td>
 		          <td class="td_show_title">年月</td>
 		          <td class="td_input">
