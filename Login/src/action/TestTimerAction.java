@@ -374,8 +374,9 @@ public class TestTimerAction extends QuartzJobBean {
 			if (cal.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
 				System.err.print("ok");
 			} else {
-				HttpClient client=new HttpClient();
-				HttpMethod method=new GetMethod(pc.getpUrl()+"/"+pname+"/print2Ypoi_print2Y_hb?sdate=" + yymm + "&edate=" + yymm+ "&emailMk=1&type=Excel2003");// (在不同的機器上注意修改IP和端口)	
+				HttpClient client=new HttpClient();					
+				HttpMethod method=new GetMethod(pc.getpUrl()+"/print2Ypoi_print2Y_hb?sdate="+yymm+"&edate="+yymm+"&emailMk=1&type=Excel2003");//(在不同的機器上注意修改IP和端口)
+				//HttpMethod method = new GetMethod(pc.getPurllocal()+"/print2Ypoi_print2Y_hb?sdate="+yymm+"&edate="+yymm+"&emailMk=1&type=Excel2003");
 				//HttpMethod method=new GetMethod("http://203.85.73.161/"+pname+"/print2Ypoi_print2Y_hb?sdate=" + yymm + "&edate=" + yymm+ "&emailMk=1&type=Excel2003");// (在不同的機器上注意修改IP和端口)						
 				//HttpMethod method=new GetMethod("http://172.17.18.173:8080/"+pname+"/print2Ypoi_print2Y_hb?sdate="+yymm+"&edate="+yymm+"&emailMk=1&type=Excel2003");
 				// HttpMethod method=new GetMethod("http://localhost:8080/"+pname+"/print2Ypoi_print2Y_hb?sdate="+yymm+"&edate="+yymm+"&emailMk=1&type=Excel2003");
@@ -387,6 +388,7 @@ public class TestTimerAction extends QuartzJobBean {
 
 				//List<WebEmail> email=eSer.getEmail("Y");
 				List<WebEmailAll> email=eSer.findEmail(3, "0");
+				//List<WebEmailAll> email=eSer.findEmail(4, "0");
 				String[] mail=new String[email.size()];
 				for (int i=0; i < email.size(); i++) {
 					if (email.get(i).getUsername() != null || !email.get(i).getUsername().equals("")) {
@@ -401,6 +403,7 @@ public class TestTimerAction extends QuartzJobBean {
 				}
 				//List<WebCc> Cc=eSer.getCC("Y");
 				List<WebEmailAll> Cc=eSer.findEmail(3, "1");
+				//List<WebEmailAll> Cc=eSer.findEmail(4, "1");
 				String[] cc=new String[Cc.size()];
 				for (int j=0; j < Cc.size(); j++) {
 					if (Cc.get(j).getUsername() != null || !Cc.get(j).getUsername().equals("")) {

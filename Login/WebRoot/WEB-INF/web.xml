@@ -25,7 +25,7 @@
     <init-param>
       <param-name>url_b</param-name>
       <param-value>
-          webfact_findAllWebfact,userlogin,loginpage,judge.jsp,vbm_findById_email,print2Ypoi_print2Y_hb,webfactOrder_print_email,login_guest.jsp,judge_guest.jsp,userlogout,webweekly_,weberpbp_findObjOp2,copyright,webobja_print_tw
+          webfact_findAllWebfact,userlogin,loginpage,judge.jsp,vbm_findById_email,print2Ypoi_print2Y_hb,webfactOrder_print_email,login_guest.jsp,judge_guest.jsp,userlogout,webweekly_,weberpbp_findObjOp2,copyright,webobja_print_tw,webobjc_print_tw
        </param-value>
     </init-param>
     <init-param>

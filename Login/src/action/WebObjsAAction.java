@@ -33,6 +33,7 @@ import org.apache.struts2.interceptor.ServletResponseAware;
 
 import services.IWebFactServices;
 import services.IWebObjsAServices;
+import services.IWebObjsCServices;
 import util.GlobalMethod;
 import util.ImportExcel;
 import util.PageBean;
@@ -55,6 +56,8 @@ import entity.WebObjsA;
 import entity.WebObjsAId;
 import entity.WebObjsB;
 import entity.WebObjsBId;
+import entity.WebObjsC;
+import entity.WebObjsCId;
 import entity.WebUser;
 import entity.WeballobjB;
 import entity.WeballobjBId;
@@ -82,10 +85,15 @@ public class WebObjsAAction extends ActionSupport implements ServletResponseAwar
 	private String yymmdd;
 	private int emailMk;
 	private String workorholiday;
+	private IWebObjsCServices webobjcservices;
 	
     
     
         
+	public void setWebobjcservices(IWebObjsCServices webobjcservices) {
+		this.webobjcservices = webobjcservices;
+	}
+
 	public String getWorkorholiday() {
 		return workorholiday;
 	}
@@ -1079,7 +1087,6 @@ public void init_more(XSSFSheet sheet,Map<String,Object>map,Map<String,Object>ma
 	/***************************************各廠月報表彙總************************************************************/
 	
 	
-	
 	/***************************************各廠日報表彙總************************************************************/
 	public void print_tw2() throws IOException{
 		XSSFWorkbook wb=new XSSFWorkbook();		
@@ -1656,6 +1663,11 @@ public void init_more2_b(XSSFSheet sheet,Map<String,Object>map,Map<String,Object
 		}		
 		return cs;
 	}
+	
+	
+	
+	
+	
 	
 
 }

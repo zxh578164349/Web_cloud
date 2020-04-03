@@ -1,4 +1,4 @@
-#Mon Nov 11 11:23:12 CST 2019
+#Wed Apr 01 16:36:01 CST 2020
 eclipse.preferences.version=1
 encoding//WebRoot/500.html=UTF-8
 encoding//WebRoot/css/button_css.css=UTF-8
@@ -36,6 +36,7 @@ encoding//src/entity/WebUser.java=UTF-8
 encoding//src/mail/AutoSendKyz.java=UTF-8
 encoding//src/mail/AutoSendKyzAll.java=UTF-8
 encoding//src/mail/AutoSendWebobjA.java=UTF-8
+encoding//src/mail/AutoSendWebobjC.java=UTF-8
 encoding//src/mail/MailSenderInfo.java=UTF-8
 encoding//src/mail/MyAuthenticator.java=UTF-8
 encoding//src/mail/SimpleMailSender.java=UTF-8

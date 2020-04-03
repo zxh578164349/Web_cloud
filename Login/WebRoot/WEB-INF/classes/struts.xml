@@ -940,6 +940,22 @@
 		   <result name="findById">saveAndUpdate/web_objs_bSaveOrUpdate.jsp</result>
 		</action>
 		
+		<action name="webobjc_*" class="webobjcAction" method="{1}">
+		   <result name="beanList">page/webobjc.jsp</result>
+		   <result name="beanList1">page/table1/webobjc1.jsp</result>
+		   <result name="delete" type="redirectAction">webobjc_findPageBean3</result>
+		   <result name="add" type="json">
+		      <param name="root">ajaxResult</param>
+		   </result>
+		   <result name="findById">saveAndUpdate/webobjscSaveOrUpdate.jsp</result>
+		</action>
+		
+		<action name="autoswc_*" class="autoswactionc" method="{1}">
+		  <result name="print_manual" type="json">
+		     <param name="root">ajaxResult</param>
+		  </result>
+		</action>
+		
 	</package>
 
      <package name="guest" extends="struts-default,jasperreports-default,json-default" namespace="/guest">

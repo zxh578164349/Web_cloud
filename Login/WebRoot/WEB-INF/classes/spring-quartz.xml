@@ -60,6 +60,11 @@
             <value>mail.AutoSendWebobjA</value>
        </property>
     </bean>
+    <bean id="quantzjobBeanH" class="org.springframework.scheduling.quartz.JobDetailBean">
+       <property name="jobClass">
+            <value>mail.AutoSendWebobjC</value>
+       </property>
+    </bean>
 
     <!-- 触发任务条件 -->
    <!--  <bean id="simpletriggerbean" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
@@ -121,6 +126,10 @@
        <property name="jobDetail" ref="quantzjobBeanG"></property>
        <property name="cronExpression" value="0 30 15 * * ?"></property>
     </bean>
+    <bean id="CronTriggerBeanJ" class="org.springframework.scheduling.quartz.CronTriggerBean">
+       <property name="jobDetail" ref="quantzjobBeanH"></property>
+       <property name="cronExpression" value="0 27 14 * * ?"></property>
+    </bean>
     
     <bean id="startQuartz" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
         <property name="triggers">
@@ -134,6 +143,7 @@
                 <ref bean="CronTriggerBeanG"/><!-- 每周五早上9點 業務周報告-->
                 <ref bean="CronTriggerBeanH"/><!-- 每周一早上8點 業務周報告彙總 -->
                 <ref bean="CronTriggerBeanI"/> <!--15:30  工廠訊息日報表 -->
+               <!--<ref bean="CronTriggerBeanJ"/>  時間待定    工廠日報 -->
                <!-- <ref bean="CronTriggerBeanD"/>  每月最後一天24點運行 -->		
             </list>           
         </property>        
