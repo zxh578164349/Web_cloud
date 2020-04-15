@@ -9,11 +9,11 @@ public class VWebydataawebcashout implements java.io.Serializable {
 	// Fields
 
 	private VWebydataawebcashoutId id;
-	private Double onModulus;
-	private Double realpairs;
-	private Double convertmoney;
-	private Double realcashoutpairs;
-	private Double realcashoutmoney;
+	private Double onModulus;//生產檢核
+	private Double realpairs;//交單雙數
+	private Double convertmoney;//折算金額
+	private Double realcashoutpairs;//請款雙數
+	private Double realcashoutmoney;//請款金額
 	private String workorholiday;
 
 	// Constructors

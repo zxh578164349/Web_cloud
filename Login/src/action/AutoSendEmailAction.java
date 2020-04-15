@@ -28,12 +28,7 @@ import com.sun.mail.util.MailSSLSocketFactory;
 
 import entity.custom.ProjectConfig;
 
-public class AutoSendEmailAction {
-	//private static final String MAIL_USER = "kyzxs@kyuen-dg.com";//kyzxs@kyuen-dg.com    kyuen@yydg.com.cn
-
-	//private static final String MAIL_PASSWORD = "Ky2_mail";//yydgmail-002     Ky2_mail  
-
-	//private static final String MAIL_FROM_SMTP = "<kyzxs@kyuen-dg.com>";//<kyuen@yydg.com.cn>    <kyzxs@kyuen-dg.com>
+public class AutoSendEmailAction {	
 	private static final ProjectConfig pc=GlobalMethod.findProjectConfig();
 
 	public void sendmail(String[] mailArray, String[] cc, String subject,String content,String affixName,String filepath) {	
@@ -46,13 +41,17 @@ public class AutoSendEmailAction {
 		//props.setProperty("mail.host", "172.17.5.84");//因為有時候解釋不了域名,所以直接用地址代替(内网IP)
 		//props.setProperty("mail.host", "125.88.14.11");//因為有時候解釋不了域名,所以直接用地址代替(外网IP)
 		//props.setProperty("mail.host", "61.20.35.47");
-		//props.setProperty("mail.pop.port", "995");
-		props.setProperty("mail.smtp.port", "465");//改smtp端口
-		props.setProperty("mail.smtp.socketFactory.port","465");
+		//props.setProperty("mail.pop.port", "995");		
 		//props.setProperty("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
 		//props.setProperty("mail.smtp.socketFactory.fallback", "false");
 		//props.setProperty("mail.smtp.starttls.enable","true");//加密发送
-		props.setProperty("mail.smtp.ssl.enable", "true");///加密发送
+		if("smtp.office365.com".equals(pc.getpSmtp())){			
+			props.setProperty("mail.smtp.starttls.enable","true");//加密发送
+		}else{
+			props.setProperty("mail.smtp.port", "465");//改smtp端口
+			props.setProperty("mail.smtp.socketFactory.port","465");
+			props.setProperty("mail.smtp.ssl.enable", "true");///加密发送						
+		}
 		//以下设置，邮件加密发送，不需要证书验证
 		MailSSLSocketFactory sf = null;
 		try {
@@ -62,7 +61,7 @@ public class AutoSendEmailAction {
 			e1.printStackTrace();
 		}  
 	    sf.setTrustAllHosts(true);
-	    props.put("mail.smtp.ssl.socketFactory", sf);
+	    props.put("mail.smtp.ssl.socketFactory", sf);				
 		
 		Session session = Session.getInstance(props, new Authenticator() {
 			protected PasswordAuthentication getPasswordAuthentication() {

@@ -59,10 +59,15 @@ public class MailSenderInfo {
   		//p.put("http.proxyHost", "172.17.18.14");
   		//p.put("http.proxyPort", "808");
   		//p.setProperty("mail.host", "61.20.35.47");//云端的收发邮件服务器
-  		p.setProperty("mail.smtp.port", "465");//改smtp端口		
-  		p.setProperty("mail.smtp.socketFactory.port", "465");
-  		//p.setProperty("mail.smtp.starttls.enable", "true");//加密发送
-  		p.setProperty("mail.smtp.ssl.enable", "true");///加密发送
+  	//p.setProperty("mail.smtp.starttls.enable", "true");//加密发送
+  		if("smtp.office365.com".equals(pc.getpSmtp())){
+  			p.setProperty("mail.smtp.starttls.enable","true");//加密发送
+  		}else{
+  			p.setProperty("mail.smtp.port", "465");//改smtp端口		
+  	  		p.setProperty("mail.smtp.socketFactory.port", "465"); 		
+  	  		p.setProperty("mail.smtp.ssl.enable", "true");///加密发送
+  		}
+  		
   		//以下设置，邮件加密发送，不需要证书验证
   		MailSSLSocketFactory sf = null;
   		try {
