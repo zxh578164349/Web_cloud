@@ -4,6 +4,13 @@ package entity;
  * Webcashout entity. @author MyEclipse Persistence Tools
  */
 
+/**
+ * 
+* 項目名稱：WebLogin   
+* 類名稱：Webcashout   
+* 類描述：請款資料
+* 創建人：KY2
+ */
 public class Webcashout implements java.io.Serializable {
 
 	// Fields

@@ -4,6 +4,13 @@ package entity;
  * Webestproduct entity. @author MyEclipse Persistence Tools
  */
 
+/**
+ * 
+* 項目名稱：WebLogin   
+* 類名稱：Webestproduct   
+* 類描述：預計生產
+* 創建人：KY2
+ */
 public class Webestproduct implements java.io.Serializable {
 
 	// Fields

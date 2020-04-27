@@ -60,6 +60,13 @@ import entity.WebType;
 import entity.WebUser;
 import entity.WebUserOperation;
 
+/**
+ * 
+* 項目名稱：WebLogin   
+* 類名稱：WebUserAction   
+* 類描述：管理用戶
+* 創建人：KY2
+ */
 public class WebUserAction extends ActionSupport implements ServletResponseAware {
 	private IWebUserService webUserService;
 	private String factError;
@@ -545,32 +552,7 @@ public class WebUserAction extends ActionSupport implements ServletResponseAware
 			return null;
 		}
 	}
-
-	/**
-	 * 查詢所有用戶
-	 */
-
-	public String getuser() {
-		pages.setPage(page);
-		if (pages.getPage() > pages.getPageSize()) {
-			pages.setPage(pages.getPageSize());
-		}
-		if (pages.getPage() == 1 || pages.getPage() < 1) {
-			pages.setPage(1);
-		}
-		String fact = (String) ActionContext.getContext().getSession()
-				.get("factNo");
-		List<WebUser> users = webUserService.getUsers(pages.getPage(),
-				pages.getRows(), conditions, fact);
-		ActionContext.getContext().getSession().put("allUser", users);
-		pages.setCount(webUserService.totlePage(conditions));
-		if (pages.getCount() % pages.getRows() == 0) {
-			pages.setPageSize(pages.getCount() / pages.getRows());
-		} else {
-			pages.setPageSize(pages.getCount() / pages.getRows() + 1);
-		}
-		return "all";
-	}
+	
 
 	/**
 	 * 查看用戶權限
@@ -692,7 +674,11 @@ public class WebUserAction extends ActionSupport implements ServletResponseAware
 		return "findMoreusers2";
 	}
 	
-	/**********************************findPageBean 使用者******************************************/
+	
+	/**
+	 * 分頁查詢
+	 * @return
+	 */
 	public String findPageBean(){
 		ActionContext.getContext().getSession().remove("public_conditions");
 		ActionContext.getContext().getSession().remove("public_factno");
@@ -700,6 +686,11 @@ public class WebUserAction extends ActionSupport implements ServletResponseAware
 		this.findFactName(bean);
 		return "beanList";
 	}
+	
+	/**
+	 * 分頁查詢2
+	 * @return
+	 */
 	public String findPageBean2(){
 		ActionContext.getContext().getSession().remove("public_conditions");
 		ActionContext.getContext().getSession().remove("public_factno");
@@ -714,6 +705,11 @@ public class WebUserAction extends ActionSupport implements ServletResponseAware
 		this.findFactName(bean);
 		return "beanList1";
 	}
+	
+	/**
+	 * 分頁查詢3
+	 * @return
+	 */
 	public String findPageBean3(){
 		String result="beanList1";
 		if(backIndex==1){
@@ -726,7 +722,7 @@ public class WebUserAction extends ActionSupport implements ServletResponseAware
 		this.findFactName(bean);
 		return result;
 	}
-	/**********************************findPageBean 使用者******************************************/
+	
 	
 	public void setServletResponse(HttpServletResponse response) {
 		// TODO Auto-generated method stub
@@ -747,6 +743,12 @@ public class WebUserAction extends ActionSupport implements ServletResponseAware
 		webUserService.delete(id,log);
 		return "delete";
 	}
+	
+	
+	/**
+	 * 添加新用戶
+	 * @return
+	 */
 	public String add(){
 		try{
 			String factno=webUsers.getFactno().split("__")[0];
@@ -988,6 +990,10 @@ public class WebUserAction extends ActionSupport implements ServletResponseAware
 		return "json_login";
 	}
 	
+	/**
+	 * 退出系統
+	 * @return
+	 */
 	public String logout(){
 		ActionContext.getContext().getSession().clear();
 		return "logout";

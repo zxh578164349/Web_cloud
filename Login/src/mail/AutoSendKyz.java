@@ -10,7 +10,13 @@ import util.GlobalMethod;
 import entity.KyVisabillm;
 import entity.custom.ProjectConfig;
 
-
+/**
+ * 
+* 項目名稱：WebLogin   
+* 類名稱：AutoSendKyz   
+* 類描述：函文簽核郵件通知
+* 創建人：KY2
+ */
 public class AutoSendKyz extends QuartzJobBean{
 	//public static final String KIP="192.168.199.101";
 	private static final ProjectConfig pc=GlobalMethod.findProjectConfig();

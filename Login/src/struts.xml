@@ -357,7 +357,6 @@
 			<result name="findById">saveAndUpdate/webpersonnumSaveOrUpdate.jsp
 			</result>
 			<result name="delete" type="redirectAction">webpersonnum_findPageBean3</result>
-			<result name="list">page/table/webpersonnumShow.jsp</result>
 		</action>
         <action name="webProduted_*" class="produtedAction" method="{1}">
 			<result name="showList1">page/table1/webProduted1.jsp</result>
@@ -398,12 +397,9 @@
 			<result name="findById2">saveAndUpdate/Yield_data2.jsp</result>
 			<result name="beanList">page/ydata_show.jsp</result>
 			<result name="beanList1">page/table1/ydata_show1.jsp</result>
-			<result name="delete" type="redirectAction">ydata_findPageBean3</result>
-			<result name="transit">saveAndUpdate/Yield_data.jsp</result>			
-			<result name="list">page/table/ydataShow.jsp</result>
+			<result name="delete" type="redirectAction">ydata_findPageBean3</result>									
 			<result name="beanListForMonth">page/yDateforMonth.jsp</result>
-			<result name="beanListForMonth1">page/table1/yDateforMonth1.jsp</result>
-			<result name="list_formonth">page/table/yDateforMonthShow.jsp</result>
+			<result name="beanListForMonth1">page/table1/yDateforMonth1.jsp</result>			
 			<result name="findNulFact">page/nullData/ydata_null.jsp</result>
 			<result name="go_temp">page/nullData/ydata_null.jsp</result>
 		</action>

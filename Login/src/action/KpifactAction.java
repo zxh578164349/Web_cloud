@@ -18,6 +18,13 @@ import entity.Kpifact;
 import entity.KyzExpectmatmLog;
 import entity.WebUser;
 
+/**
+ * 
+* 項目名稱：WebLogin   
+* 類名稱：KpifactAction   
+* 類描述：KPI年度目標
+* 創建人：KY2
+ */
 public class KpifactAction extends ActionSupport implements ServletResponseAware{
 	private Kpifact kpi;
 	private String factNo;
@@ -95,6 +102,12 @@ public class KpifactAction extends ActionSupport implements ServletResponseAware
 		// TODO Auto-generated method stub
 		this.response=response;
 	}
+	
+	/**
+	 * 添加修改
+	 * @return
+	 * @throws IOException
+	 */
 	public String add() throws IOException{
 		String result=null;
 		try{
@@ -131,6 +144,11 @@ public class KpifactAction extends ActionSupport implements ServletResponseAware
 		kpi=kpiSer.findById(factNo, factCode, yyyy);
 		return "findById_copy";
 	}
+	
+	/**
+	 * 分面查詢
+	 * @return
+	 */
 	public String findPageBean(){
 		//ActionContext.getContext().getApplication().clear();
 		ActionContext.getContext().getSession().remove("public_factno");
@@ -139,6 +157,11 @@ public class KpifactAction extends ActionSupport implements ServletResponseAware
 		bean=kpiSer.findPageBean(20,page, factNo, yyyy);
 		return "findPageBean";		
 	}
+	
+	/**
+	 * 分面查詢2
+	 * @return
+	 */
 	public String findPageBean2(){
 		//ActionContext.getContext().getApplication().clear();
 		ActionContext.getContext().getSession().remove("public_factno");
@@ -148,6 +171,11 @@ public class KpifactAction extends ActionSupport implements ServletResponseAware
 		ActionContext.getContext().getSession().put("public_yyyy", yyyy);
 		return "findPageBean1";
 	}
+	
+	/**
+	 * 分面查詢3
+	 * @return
+	 */
 	public String findPageBean3(){
 		String result="findPageBean1";
 		if(backIndex==1){
@@ -161,6 +189,11 @@ public class KpifactAction extends ActionSupport implements ServletResponseAware
 		bean=kpiSer.findPageBean(20,page, factNo, yyyy);
 		return result;
 	}
+	
+	/**
+	 * 刪除
+	 * @return
+	 */
 	public String delete(){
 		KyzExpectmatmLog log=new KyzExpectmatmLog();		
 		log.setFactNo(factNo);

@@ -3,7 +3,13 @@ package entity;
 /**
  * Kpifact entity. @author MyEclipse Persistence Tools
  */
-
+/**
+ * 
+* 項目名稱：WebLogin   
+* 類名稱：Kpifact   
+* 類描述：KPI年度目標
+* 創建人：KY2
+ */
 public class Kpifact implements java.io.Serializable {
 
 	// Fields

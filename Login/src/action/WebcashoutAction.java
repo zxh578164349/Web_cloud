@@ -39,6 +39,13 @@ import entity.WebFact;
 import entity.WebUser;
 import entity.Webcashout;
 
+/**
+ * 
+* 項目名稱：WebLogin   
+* 類名稱：WebcashoutAction   
+* 類描述：生產與請款達成狀況統計   請款資料
+* 創建人：KY2
+ */
 public class WebcashoutAction extends ActionSupport implements ServletResponseAware{
 	private IWebCashoutServices cashoutSer;
 	private IWebEstProductServices estProSer;
@@ -189,6 +196,11 @@ public class WebcashoutAction extends ActionSupport implements ServletResponseAw
 	}
 
 
+	/**
+	 * 添加修改
+	 * @return
+	 * @throws ParseException
+	 */
 	public String add() throws ParseException{
 		DateFormat fm=new SimpleDateFormat("yyyyMMdd");
 		Date dt=fm.parse(date);
@@ -205,6 +217,11 @@ public class WebcashoutAction extends ActionSupport implements ServletResponseAw
 		}		
 		return result;
 	}
+	
+	/**
+	 * 刪除
+	 * @return
+	 */
 	public String delete(){
 		/*********************刪除記錄**************************/
 		KyzExpectmatmLog log=new KyzExpectmatmLog();
@@ -217,6 +234,11 @@ public class WebcashoutAction extends ActionSupport implements ServletResponseAw
 		cashoutSer.delete(factNo, factCode, yymm,log);
 		return "delete";
 	}
+	
+	/**
+	 * 分頁查詢
+	 * @return
+	 */
 	public String findPageBean(){
 		//ActionContext.getContext().getApplication().clear();
 		ActionContext.getContext().getSession().remove("public_factno");
@@ -225,6 +247,11 @@ public class WebcashoutAction extends ActionSupport implements ServletResponseAw
 		bean=cashoutSer.findPageBean(20,page, factNo, factCode, yymm);
 		return "findPageBean";
 	}
+	
+	/**
+	 * 分頁查詢2
+	 * @return
+	 */
 	public String findPageBean2(){
 		//ActionContext.getContext().getApplication().clear();
 		ActionContext.getContext().getSession().remove("public_factno");
@@ -235,6 +262,11 @@ public class WebcashoutAction extends ActionSupport implements ServletResponseAw
 		//ActionContext.getContext().getApplication().put("public_factCode", factCode);
 		return "findPageBean1";
 	}
+	
+	/**
+	 * 分頁查詢3
+	 * @return
+	 */
 	public String findPageBean3(){
 		String result="findPageBean1";
 		if(backIndex==1){
@@ -256,10 +288,9 @@ public class WebcashoutAction extends ActionSupport implements ServletResponseAw
 	
 	
 	/**
-	 *合併單元格
-	 * CellRangeAddress reg = new CellRangeAddress(y1,(short)y2,x1,(short)x2)
-	 * @throws IOException 
-	 * @throws ParseException 
+	 * 導出【生產與請款達成狀況統計】報表
+	 * @throws IOException
+	 * @throws ParseException
 	 */
 	public void report() throws IOException, ParseException{
 		XSSFWorkbook book=new XSSFWorkbook();
@@ -578,7 +609,7 @@ public class WebcashoutAction extends ActionSupport implements ServletResponseAw
 			}//end for2						
 		}//end for1
 		/*************y軸游標=1,x=width****************/	
-		//(3)�X�p		
+				
 		//if(factNo.equals("all")){
 			Object[]obj_total={"合計",total_A,total_B,total_C};
 			for(int i=0;i<obj_total.length;i++){

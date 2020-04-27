@@ -45,6 +45,13 @@ import entity.WebBussinessletter;
 import entity.WebUser;
 import entity_temp.VisabillsTemp;
 
+/**
+ * 
+* 項目名稱：WebLogin   
+* 類名稱：WebBussinessletterAction   
+* 類描述：人員出差申請書
+* 創建人：KY2
+ */
 public class WebBussinessletterAction extends ActionSupport implements ServletResponseAware{
 	private String billNo;
 	private String factNo;
@@ -188,6 +195,12 @@ public class WebBussinessletterAction extends ActionSupport implements ServletRe
 	public void setWebuseremailSer(IWebuserEmailServices webuseremailSer){
 		this.webuseremailSer=webuseremailSer;
 	}
+	
+	/**
+	 * 添加修改
+	 * @return
+	 * @throws ParseException
+	 */
 	public String add() throws ParseException{				
 		String result="add";
 		DateFormat fmt1=new SimpleDateFormat("yyyyMMdd");
@@ -228,6 +241,11 @@ public class WebBussinessletterAction extends ActionSupport implements ServletRe
 		
 		return result;
 	}
+	
+	/**
+	 * 分頁查詢
+	 * @return
+	 */
 	public String findPageBean(){
 		ActionContext.getContext().getSession().remove("allrow");//首次進入，清除分頁的總條數（dao層中的allrow）
 		factNo=(String)ActionContext.getContext().getSession().get("factNo");
@@ -238,6 +256,11 @@ public class WebBussinessletterAction extends ActionSupport implements ServletRe
 		
 		return "beanList";	
 	}
+	
+	/**
+	 * 分頁查詢2
+	 * @return
+	 */
 	public String findPageBean2(){
 		ActionContext.getContext().getSession().remove("allrow");//首次進入，清除分頁的總條數（dao層中的allrow）
 		if(factNo==null||factNo.equals("")){
@@ -252,6 +275,11 @@ public class WebBussinessletterAction extends ActionSupport implements ServletRe
 		bean=webbussletterSer.findPageBean(20,page, billNo, factNo,user);
 		return "beanList1";
 	}
+	
+	/**
+	 * 分頁查詢3
+	 * @return
+	 */
 	public String findPageBean3(){
 		String result="beanList1";
 		if(backIndex==1){
@@ -266,6 +294,13 @@ public class WebBussinessletterAction extends ActionSupport implements ServletRe
 		bean=webbussletterSer.findPageBean(20,page, billNo, factNo,user);
 		return result;
 	}
+	
+	/**
+	 * 計量兩個日期間的天數
+	 * @param d1
+	 * @param d2
+	 * @return
+	 */
 	public long sumDate(Date d1,Date d2){
 		return GlobalMethod.sumDate(d1, d2)+1;//注意，出差所用的天数为相差天数+1天
 	}
@@ -273,6 +308,11 @@ public class WebBussinessletterAction extends ActionSupport implements ServletRe
 		bussletter=webbussletterSer.findById(billNo);
 		return "findById";
 	}
+	
+	/**
+	 * 刪除
+	 * @return
+	 */
 	public String delete(){
 		try{
 			/*********************刪除記錄**************************/
@@ -289,6 +329,13 @@ public class WebBussinessletterAction extends ActionSupport implements ServletRe
 		return "delete";
 	}
 	
+	/**
+	 * 生成函文
+	 * @param factNo
+	 * @param billNo
+	 * @param visaSort
+	 * @throws IOException
+	 */
 	public void print(String factNo,String billNo,String visaSort) throws IOException{
 		
 		Map<String,Object>map_result=webbussletterSer.print(factNo, billNo, visaSort,null);

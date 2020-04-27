@@ -9,6 +9,13 @@ import com.opensymphony.xwork2.ActionContext;
  * KyzExpectmatmLog entity. @author MyEclipse Persistence Tools
  */
 
+/**
+ * 
+* 項目名稱：WebLogin   
+* 類名稱：KyzExpectmatmLog   
+* 類描述：數據刪記錄
+* 創建人：KY2
+ */
 public class KyzExpectmatmLog implements java.io.Serializable {
 
 	// Fields

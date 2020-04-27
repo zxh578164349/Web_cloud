@@ -24,51 +24,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 </head>
   
-  <body>   
-	<%-- <div class="panel panel-default">
-		<div class="panel-heading">
-			<h3 class="panel-title">工廠報表</h3>
-		</div>
-		<div class="panel-body">
-			<form action="weballobj_printVWeballobjasumwebyield2019" method="post" id="subform1"
-				target="_blank">
-				<table class="tb_search">
-					<tr>
-						<td><span> <input type="text" id="begin" name="yymm"
-								datatype="*"
-								onclick="WdatePicker({minDate:'{%y-1}-%M',maxDate:'#F{$dp.$D(\'end\')}'})" 								
-								class="Wdate"> </span>至 <span> <input type="text"
-								id="end" name="yymm2" datatype="*"
-								onclick="WdatePicker({minDate:'#F{$dp.$D(\'begin\')}',maxDate:'%y-%M'})"
-								class="Wdate"> </span> <span> <s:if
-									test="#session.factNo=='tw'">
-									<select name="factNo" datatype="*">
-										<option value="">請選擇工廠</option>
-										<s:iterator value="#session.facts" id="temp">
-											<option value="${temp[0]}">${temp[1]}(${temp[0]})</option>
-										</s:iterator>
-									</select>
-								</s:if> <s:else>
-									<select name="factNo" datatype="*">
-										<option value="<s:property value="#session.factNo"/>">
-											<s:property value="#session.factName" />
-											(
-											<s:property value="#session.factNo" />
-											)
-										</option>
-									</select>
-								</s:else> </span>
-								<input type="hidden" name="a_type" value="a"/> 
-								<input type="button" id="btn1" class="btn btn-primary" value="確定" />
-							</td>
-					</tr>
-				</table>
-			</form>
-		</div>
-	</div> --%>
-	
-	
-	<br/></br><br/>
+  <body>   			
+	<br/>
 	<s:if test="#session.factNo=='tw'">
 	<div class="panel panel-default">
 		<div class="panel-heading">

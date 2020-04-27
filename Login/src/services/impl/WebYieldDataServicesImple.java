@@ -53,18 +53,7 @@ public class WebYieldDataServicesImple implements IWebYieldDataServices {
 		// TODO Auto-generated method stub
 		return dataDao.findAByFactNo(factNo);
 	}
-
-	public List<WebYieldData> selectYDate(String factNo, String yymm, int page,
-			int rows) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public int totlePage(String factNo, String yymm) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
+	
 	public List<WebYieldData> getAllWithNoPage(String factNo, String yymm) {
 		// TODO Auto-generated method stub
 		return dataDao.getAllWithNoPage(factNo, yymm);

@@ -53,10 +53,11 @@ import entity.*;
 
 
 /**
- * 2019/11/12
- * 這個有待被刪除，由PreAndDataAction_Poi_new取代
- * @author Administrator
- *
+ * 
+* 項目名稱：WebLogin   
+* 類名稱：PreAndDataAction_Poi   
+* 類描述：各廠產量統計
+* 創建人：KY2
  */
 public class PreAndDataAction_Poi extends ActionSupport implements
 		ServletResponseAware {
@@ -174,18 +175,11 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 	public void setEstProSer(IWebEstProductServices estProSer) {
 		this.estProSer = estProSer;
 	}
-
+		
 	/**
-	 * Excel2003
-	 * @Title: print2Y_hb
-	 * @Description: TODO
-	 * @param 
-	 * @return void
-	 * @throws ParseException 
-	 * @throws IOException 
-	 * @throws
-	 * @author web
-	 * @date 2016/6/7
+	 * 導出每日產量報表 
+	 * @throws ParseException
+	 * @throws IOException
 	 */
 	public void print2Y_hb() throws ParseException, IOException{
 		List<WebFact>list_facts=null;
@@ -315,6 +309,20 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 	
 	
 	
+	//---------------------------------------------------------------Excel2003---------------------------------------------------------------------------//
+	/**
+	 * Excel2003格式
+	 * @param list_months
+	 * @param list_facts
+	 * @param map_a
+	 * @param map_b
+	 * @param list_a_str
+	 * @param list_b_str
+	 * @param list_d_str
+	 * @return
+	 * @throws IOException
+	 * @throws ParseException
+	 */
 	public HSSFWorkbook init(List<String>list_months,List<WebFact>list_facts,Map<String,Object>map_a,Map<String,Object>map_b,
 			List<String>list_a_str,List<String>list_b_str,List<String>list_d_str) throws IOException, ParseException{
 		HSSFWorkbook wb=new HSSFWorkbook();
@@ -662,13 +670,25 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 		CellRangeAddress cra=new CellRangeAddress(x+1,x+1,y,4+y);
 		sheet.addMergedRegion(cra);
 		
-	}
+	}	
+	//---------------------------------------------------------------Excel2003---------------------------------------------------------------------------//
 	
 	
 	
-	
-	//---------------------------------------------------------------Excel2007---------------------------------------------------------------------------
-	//---------------------------------------------------------------------------------------------------------------------------------------------------
+	//---------------------------------------------------------------Excel2007---------------------------------------------------------------------------//
+	/**
+	 * Excel2007格式
+	 * @param list_months
+	 * @param list_facts
+	 * @param map_a
+	 * @param map_b
+	 * @param list_a_str
+	 * @param list_b_str
+	 * @param list_d_str
+	 * @return
+	 * @throws IOException
+	 * @throws ParseException
+	 */
 	public XSSFWorkbook init_2007(List<String>list_months,List<WebFact>list_facts,Map<String,Object>map_a,Map<String,Object>map_b,
 			List<String>list_a_str,List<String>list_b_str,List<String>list_d_str) throws IOException, ParseException{
 		XSSFWorkbook wb=new XSSFWorkbook();
@@ -747,11 +767,7 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 			sheet.getRow(a+1+44*index).getCell(0).setCellValue(list_a_str.get(a));
 			sheet.getRow(a+1+44*index).getCell(0).setCellStyle(cs);
 						
-			/*if(list_facts.size()>49){//if sheet2
-				sheet2.getRow(a+1+44*index).getCell(0).setCellValue(list_a_str.get(a));
-				sheet2.getRow(a+1+44*index).getCell(0).setCellStyle(cs);
-			}//if sheet2
-*/		}
+		}
 		/**********************機臺孔位數***********************/
 		CellRangeAddress cra_a=new CellRangeAddress(5+44*index,8+44*index,0,0);
 		sheet.addMergedRegion(cra_a);
@@ -760,49 +776,7 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 		}
 		
 		/**********************機臺孔位數***********************/
-		for(int b=0;b<list_facts.size();b++){//for b
-			/*********************************sheet2**************************************************/
-			/*if(b>49){// if sheet2
-				Webestproduct pro=list_pros.get(b);			
-				for(int i=0;i<4;i++){
-					CellRangeAddress cra=new CellRangeAddress(i+1+44*index,i+1+44*index,1+5*(b-50),5+5*(b-50));
-					sheet2.addMergedRegion(cra);	
-					for(int j=0;j<5;j++){
-						sheet2.getRow(i+1+44*index).getCell(j+1+5*(b-50)).setCellStyle(cs_thousand);
-					}
-				}
-				sheet2.getRow(1+44*index).getCell(1+5*(b-50)).setCellValue(list_facts.get(b).getFactSname()+"_"+list_facts.get(b).getId().getFactArea());
-				sheet2.getRow(2+44*index).getCell(1+5*(b-50)).setCellValue(pro.getMachinepower()==null?0:pro.getMachinepower());
-				sheet2.getRow(3+44*index).getCell(1+5*(b-50)).setCellValue(pro.getEstmodel()==null?0:pro.getEstmodel());
-				sheet2.getRow(4+44*index).getCell(1+5*(b-50)).setCellValue(pro.getEstpay()==null?0:pro.getEstpay());
-				
-				for(int i=0;i<3;i++){
-					CellRangeAddress cra=new CellRangeAddress(5+44*index,8+44*index,i+5*(b-50),i+5*(b-50));
-					sheet2.addMergedRegion(cra);	
-					for(int j=0;j<4;j++){
-						sheet2.getRow(5+j+44*index).getCell(i+5*(b-50)).setCellStyle(cs_thousand_lyellow);
-					}
-				}
-				sheet2.getRow(5+44*index).getCell(1+5*(b-50)).setCellValue("總機孔");
-				sheet2.getRow(5+44*index).getCell(2+5*(b-50)).setCellValue(pro.getTotalhole()==null?0:pro.getTotalhole());
-				for(int i=0;i<list_b_str.size();i++){
-					sheet2.getRow(5+i+44*index).getCell(3+5*(b-50)).setCellValue(list_b_str.get(i));
-					sheet2.getRow(5+i+44*index).getCell(3+5*(b-50)).setCellStyle(cs_thousand_lyellow);
-					CellRangeAddress cra=new CellRangeAddress(5+i+44*index,5+i+44*index,4+5*(b-50),5+5*(b-50));
-					sheet2.addMergedRegion(cra);
-					for(int j=0;j<2;j++){
-						sheet2.getRow(5+i+44*index).getCell(4+j+5*(b-50)).setCellStyle(cs_thousand_lyellow);
-					}
-					sheet2.getRow(5+i+44*index).getCell(4+5*(b-50)).setCellStyle(cs_thousand_lyellow);
-				}
-				sheet2.getRow(5+44*index).getCell(4+5*(b-50)).setCellValue(pro.getHole()==null?0:pro.getHole());
-				sheet2.getRow(6+44*index).getCell(4+5*(b-50)).setCellValue(pro.getSample()==null?0:pro.getSample());
-				sheet2.getRow(7+44*index).getCell(4+5*(b-50)).setCellValue(pro.getAccessories()==null?0:pro.getAccessories());
-				sheet2.getRow(8+44*index).getCell(4+5*(b-50)).setCellValue(pro.getOther()==null?0:pro.getOther());
-				continue;
-			}//if sheet2
-*/			/*********************************sheet2**************************************************/
-			
+		for(int b=0;b<list_facts.size();b++){//for b						
 			Webestproduct pro=list_pros.get(b);			
 			for(int i=0;i<4;i++){
 				CellRangeAddress cra=new CellRangeAddress(i+1+44*index,i+1+44*index,1+5*b,5+5*b);
@@ -849,44 +823,9 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 			sheet.getRow(9+i+44*index).getCell(0).setCellValue(list_c_str.get(i));
 			sheet.getRow(9+i+44*index).getCell(0).setCellStyle(cs);
 			
-			/*if(list_facts.size()>49){//if sheet2
-				sheet2.getRow(9+i+44*index).getCell(0).setCellValue(list_c_str.get(i));
-				sheet2.getRow(9+i+44*index).getCell(0).setCellStyle(cs);
-			}//if sheet2
-*/		}						
+		}						
 		for(int b=0;b<list_facts.size();b++){//for b2
-			WebYieldData ydata=new WebYieldData(0.0,0.0,0.0,0.0,0.0);//合計
-			
-			/*********************************sheet2**************************************************/
-			/*if(b>49){//if sheet2
-				for(int c=0;c<list_d_str.size();c++){
-					sheet2.getRow(9+44*index).getCell(1+c+5*(b-50)).setCellValue(list_d_str.get(c));
-					sheet2.getRow(9+44*index).getCell(1+c+5*(b-50)).setCellStyle(cs);
-				}
-				List<WebYieldData>list_ydata=list_ydatas.get(b);						
-				for(int c=0;c<days.size();c++){
-					if(c>list_ydata.size()-1){
-						for(int i=0;i<5;i++){
-							sheet2.getRow(10+c+44*index).getCell(1+5*(b-50)+i).setCellStyle(cs);//填充超出今天空的部分
-						}
-						continue;
-					}
-					this.fillYdata_2007(map_style,list_ydata.get(c), sheet2, 10+c+44*index, 1+5*(b-50));	//sheet2下表填充數據									
-					*//***********************************************合計******************************************************//*
-					this.getTotal(ydata, list_ydata.get(c).getOnModulus()==null?0:list_ydata.get(c).getOnModulus(),
-							      list_ydata.get(c).getPersonnum()==null?0:list_ydata.get(c).getPersonnum(),
-								  list_ydata.get(c).getStandardOutput()==null?0:list_ydata.get(c).getStandardOutput(), 
-								  list_ydata.get(c).getActualYield()==null?0:list_ydata.get(c).getActualYield(),
-								  list_ydata.get(c).getDaycount()==null?0:list_ydata.get(c).getDaycount());
-					
-					if(c==list_ydata.size()-1){
-						this.fillYdata_total_2007(map_style,list_d_str,ydata, sheet2, 10+days.size()+44*index, 1+5*(b-50));//sheet2下表填充合計						
-					}
-					*//***********************************************合計******************************************************//*
-				}
-				continue;
-			}//if sheet2
-*/			/*********************************sheet2**************************************************/
+			WebYieldData ydata=new WebYieldData(0.0,0.0,0.0,0.0,0.0);//合計						
 			
 			for(int c=0;c<list_d_str.size();c++){
 				sheet.getRow(9+44*index).getCell(1+c+5*b).setCellValue(list_d_str.get(c));
@@ -1182,6 +1121,9 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 				/********************************填充表格********************************************/											
 			}//for a												
 	}
+
+	//---------------------------------------------------------------Excel2007---------------------------------------------------------------------------//
+	
 	
 	public WebYieldData getTotal(WebYieldData ydata,Double onModulus,Double personnum,Double standardOutput,Double actualYield,Double daycount){
 		ydata.setOnModulus(ydata.getOnModulus()+onModulus);
@@ -1191,6 +1133,12 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 		ydata.setDaycount(ydata.getDaycount()+daycount);
 		return ydata;
 	}
+	
+	/**
+	 * 表格樣式Excel2003
+	 * @param wb
+	 * @return
+	 */
 	public Map<String,Object>findStyles(HSSFWorkbook wb){
 		Map<String,Object>map=new HashMap<String,Object>();
 		// 單元格樣式
@@ -1365,6 +1313,12 @@ public class PreAndDataAction_Poi extends ActionSupport implements
 		
 		return map;
 	}		
+	
+	/**
+	 * 表格樣式Excel2007
+	 * @param wb
+	 * @return
+	 */
 	public Map<String,Object>findStyle2(XSSFWorkbook wb){
 		Map<String,Object>map=new HashMap<String,Object>();
 		// 單元格樣式

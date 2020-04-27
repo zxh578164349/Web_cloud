@@ -69,6 +69,13 @@ import entity.Webremittancelist;
 import entity.custom.ProjectConfig;
 import entity_temp.VisabillsTemp;
 
+/**
+ * 
+* 項目名稱：WebLogin   
+* 類名稱：AutoSendKyzAll   
+* 類描述：函文簽核完畢郵件通知
+* 創建人：KY2
+ */
 public class AutoSendKyzAll extends QuartzJobBean{
 	private static final ProjectConfig pc=GlobalMethod.findProjectConfig();
 	public static final String PDF_TYPE_AUTO="auto";
@@ -159,7 +166,7 @@ public class AutoSendKyzAll extends QuartzJobBean{
 	}
 	
 	/**
-	 * 費用函文
+	 * 函文申請
 	 * @param local_factNo
 	 * @param local_billNo
 	 * @param local_visaSort
@@ -350,7 +357,14 @@ public class AutoSendKyzAll extends QuartzJobBean{
 		}
 	}
 	
-	
+	/**
+	 * 函文申請
+	 * @param local_factNo
+	 * @param local_billNo
+	 * @param local_visaSort
+	 * @param vbm
+	 * @param ac
+	 */
 	public void print_KyzExpectmatm(String local_factNo,String local_billNo,String local_visaSort,KyVisabillm vbm,ApplicationContext ac){
 		IKyzExpectmatmServices kyzSer=(IKyzExpectmatmServices)ac.getBean("kyzSer");			
 		Map<String,Object>map_result=kyzSer.print(local_factNo, local_billNo,local_visaSort,vbm);
@@ -361,7 +375,14 @@ public class AutoSendKyzAll extends QuartzJobBean{
 		}
 	}
 	
-	
+	/**
+	 * 內部聯絡函
+	 * @param local_factNo
+	 * @param local_billNo
+	 * @param local_visaSort
+	 * @param vbm
+	 * @param ac
+	 */
 	public void print_KyzContactletter(String local_factNo,String local_billNo,String local_visaSort,KyVisabillm vbm,ApplicationContext ac){
 		IKyzContactLetterServices kyzletterSer=(IKyzContactLetterServices)ac.getBean("kyzletterSer");						
 		Map<String,Object>map_result=kyzletterSer.print(local_factNo, local_billNo, local_visaSort,vbm);
@@ -372,6 +393,14 @@ public class AutoSendKyzAll extends QuartzJobBean{
 		}		
 	}
 	
+	/**
+	 * 人員出差申請書
+	 * @param factNo
+	 * @param billNo
+	 * @param visaSort
+	 * @param vbm
+	 * @param ac
+	 */
 	public void print_webbussletter(String factNo,String billNo,String visaSort,KyVisabillm vbm,ApplicationContext ac){
 		IWebBussinessletterServices webbussletterSer=(IWebBussinessletterServices)ac.getBean("webbussletterSer");										
 				Map<String,Object>map_result=webbussletterSer.print(factNo, billNo, visaSort,vbm);

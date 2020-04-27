@@ -47,19 +47,13 @@ import entity.VKpifactEveNew;
 import entity.VKpifactNew;
 import entity.WebFact;
 
-/**   
- *    
- * 项目名称：Login   
- * 类名称：VkpifactnewAction   
- * 类描述：   
- * 创建人：Administrator   
- * 创建时间：2016/4/13 上午8:57:02   
- * 修改人：Administrator   
- * 修改时间：2016/4/13 上午8:57:02   
- * 修改备注：   
- * @version    
- *    
- **/
+/**
+ * 
+* 項目名稱：WebLogin   
+* 類名稱：VkpifactnewAction   
+* 類描述：KPI工廠與KPI台灣(new)
+* 創建人：KY2
+ */
 public class VkpifactnewAction extends ActionSupport implements ServletResponseAware{
 	private IVKpifactNewServices vkpinewSer;
 	private IVKpifactEveNewServices vkpievenewSer;
@@ -131,15 +125,16 @@ public class VkpifactnewAction extends ActionSupport implements ServletResponseA
 	public void setVkpievenewSer(IVKpifactEveNewServices vkpievenewSer) {
 		this.vkpievenewSer = vkpievenewSer;
 	}
-	/**
-	 * 日期:2016/4/13
-	 * 描述:
-	 */
+	
 	public void setServletResponse(HttpServletResponse response) {
 		// TODO Auto-generated method stub
 		this.response=response;
 	}
 	
+	/**
+	 * 全年報表
+	 * @throws IOException
+	 */
 	public void print_fact() throws IOException{		
 		HSSFWorkbook wb=new HSSFWorkbook();
 		HSSFSheet sheet=wb.createSheet("KPI-工廠");
@@ -493,6 +488,12 @@ public class VkpifactnewAction extends ActionSupport implements ServletResponseA
 		os.close();
 	}
 	
+	
+	/**
+	 * 月份報表
+	 * @throws IOException
+	 * @throws ParseException
+	 */
 	public void print_month() throws IOException, ParseException{		
 		HSSFWorkbook wb=new HSSFWorkbook();
 		HSSFSheet sheet=wb.createSheet("KPI-工廠");		
@@ -710,6 +711,10 @@ public class VkpifactnewAction extends ActionSupport implements ServletResponseA
 	}
 	
 	
+	/**
+	 * KPI-台灣
+	 * @throws IOException
+	 */
 	public void print_tw() throws IOException{
 		//創建模板
 		HSSFWorkbook wb=new HSSFWorkbook();
@@ -1067,6 +1072,11 @@ public class VkpifactnewAction extends ActionSupport implements ServletResponseA
 		
 	}
 	
+	/**
+	 * 表格樣式
+	 * @param wb
+	 * @return
+	 */
 	public Map<String,Object> findStyles(HSSFWorkbook wb){
 		/**
 		 * 報表相關樣式

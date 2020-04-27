@@ -62,6 +62,13 @@ import entity.WebUser;
 import entity.WeballobjB;
 import entity.WeballobjBId;
 
+/**
+ * 
+* 項目名稱：WebLogin   
+* 類名稱：WebObjsAAction   
+* 類描述：工廠訊息每日更新
+* 創建人：KY2
+ */
 public class WebObjsAAction extends ActionSupport implements ServletResponseAware{
 	private final static int NUM=31;//print_tw  多少箇項目（29+1）
 	private IWebObjsAServices webobjaservices;
@@ -243,7 +250,10 @@ public class WebObjsAAction extends ActionSupport implements ServletResponseAwar
 		this.webobjaservices = webobjaservices;
 	}
 	
-	
+	/**
+	 * 導入數據
+	 * @throws IOException
+	 */
 	public void addMore() throws IOException{
 		response.setContentType("text/html;charset=utf-8");
 		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");	
@@ -362,7 +372,10 @@ public class WebObjsAAction extends ActionSupport implements ServletResponseAwar
 	}
 	
 	
-	
+	/**
+	 * 分頁查詢
+	 * @return
+	 */
 	public String findPageBean(){
 		ActionContext.getContext().getSession().remove("allrow");//dao層
 		ActionContext.getContext().getSession().remove("public_yymm");
@@ -372,6 +385,11 @@ public class WebObjsAAction extends ActionSupport implements ServletResponseAwar
 		return "beanList";
 		
 	}
+	
+	/**
+	 * 分頁查詢2
+	 * @return
+	 */
 	public String findPageBean2(){
 		if(factNo==null||factNo.equals("")){
 			factNo=(String)ActionContext.getContext().getSession().get("factNo");
@@ -382,6 +400,11 @@ public class WebObjsAAction extends ActionSupport implements ServletResponseAwar
 		bean=webobjaservices.findPageBean(20,page, factNo.split("__")[0], yymm);
 		return "beanList1";
 	}
+	
+	/**
+	 * 分頁查詢3
+	 * @return
+	 */
 	public String findPageBean3(){
 		factNo=(String)ActionContext.getContext().getSession().get("public_factno");
 		yymm=(String)ActionContext.getContext().getSession().get("public_yymm");
@@ -389,7 +412,10 @@ public class WebObjsAAction extends ActionSupport implements ServletResponseAwar
 		return "beanList1";
 	}
 	
-	
+	/**
+	 * 刪除
+	 * @return
+	 */
 	public String delete(){
 		KyzExpectmatmLog log=new KyzExpectmatmLog();
 		log.setFactNo(factNo);
@@ -401,7 +427,12 @@ public class WebObjsAAction extends ActionSupport implements ServletResponseAwar
 	}
 	
 	
-	/*************************************************工廠報表(一個月每天情況)***********************************************************/
+	/*************************************************工廠報表(一個月每天情況)***********************************************************/	
+	/**
+	 *工廠報表(一個月每天情況) 
+	 * @throws ParseException
+	 * @throws IOException
+	 */
 	public void print() throws ParseException, IOException{
 		HSSFWorkbook wb=new HSSFWorkbook();
 		Map<String,Object>map_cs=findStyles(wb);				
@@ -514,11 +545,26 @@ public class WebObjsAAction extends ActionSupport implements ServletResponseAwar
 	}
 	
 	
+	/**
+	 * 表格樣式
+	 * @param wb
+	 * @return
+	 */
 	public Map<String,Object> findStyles(HSSFWorkbook wb){		
 		Map<String,Object>map=GlobalMethod.findStyles(wb);				
 		return map;
 	}
-							
+	
+	/**
+	 * 表格初始化
+	 * @param sheet
+	 * @param map_cs
+	 * @param map
+	 * @param list_lg
+	 * @param days
+	 * @param map2
+	 * @throws ParseException
+	 */
 	public void init(HSSFSheet sheet,Map<String,Object>map_cs,Map<String,Object>map,List<WebObjsA>list_lg,int days,Map<String,Object>map2) throws ParseException{				
 		HSSFCellStyle cs=(HSSFCellStyle)map_cs.get("cs");
 		HSSFCellStyle cs_head=(HSSFCellStyle)map_cs.get("cs_head");
@@ -723,6 +769,11 @@ public class WebObjsAAction extends ActionSupport implements ServletResponseAwar
 	
 	
 	/***************************************各廠月報表彙總************************************************************/
+	/**
+	 * 各廠月報表彙總
+	 * @throws IOException
+	 * @throws ParseException
+	 */
 	public void print_tw() throws IOException, ParseException{
 		XSSFWorkbook wb=new XSSFWorkbook();
 		XSSFSheet sheet=wb.createSheet("工廠訊息匯總_"+yymm);
@@ -1088,6 +1139,10 @@ public void init_more(XSSFSheet sheet,Map<String,Object>map,Map<String,Object>ma
 	
 	
 	/***************************************各廠日報表彙總************************************************************/
+	/**
+	 * 各廠日報表彙總
+	 * @throws IOException
+	 */
 	public void print_tw2() throws IOException{
 		XSSFWorkbook wb=new XSSFWorkbook();		
 		Map<String,Object>map_style=GlobalMethod.findStyles2007(wb);				
@@ -1454,7 +1509,7 @@ public void init_more2_b(XSSFSheet sheet,Map<String,Object>map,Map<String,Object
 	/**
 	 * 
 	 * @Title: packageTostring
-	 * @Description: TODO
+	 * @Description: 封裝數據便於循環填充表格數據
 	 * @param @param list_obj
 	 * @param @param mk  1:工廠報表    0:臺灣報表
 	 * @param @return
@@ -1639,18 +1694,34 @@ public void init_more2_b(XSSFSheet sheet,Map<String,Object>map,Map<String,Object
 		return list;
 	}
 	
+	/**
+	 * 數據格式整數
+	 * @param s
+	 * @return
+	 */
 	public String formatDouble(double s) {
 		DecimalFormat format = new DecimalFormat(",###");
 		String temp = format.format(s);
 		return temp;
 	}
 	
+	/**
+	 * 數據格式保留兩位小數
+	 * @param s
+	 * @return
+	 */
 	public String formatDouble2(double s) {
 		DecimalFormat format = new DecimalFormat(",##0.00");
 		String temp = format.format(s);
 		return temp;
 	}
 	
+	/**
+	 * 數據格式選擇
+	 * @param a
+	 * @param map_style
+	 * @return
+	 */
 	public HSSFCellStyle selectStyle2003(int a,Map<String,Object>map_style){
 		HSSFCellStyle cs;//  cs_poi
 		

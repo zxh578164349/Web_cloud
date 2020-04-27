@@ -39,14 +39,7 @@ public class MailSenderInfo {
       * 获得邮件会话属性   
       */    
     public Properties getProperties(){    
-    	Properties p = new Properties();
-    	/*InputStream in = Object. class .getResourceAsStream( "/project_config.properties" );
-    	try {
-			p.load(in);
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}*/
+    	Properties p = new Properties();   	
         //p.put("mail.smtp.host", this.mailServerHost);    
         //p.put("mail.smtp.port", this.mailServerPort);    
         p.put("mail.smtp.auth", validate ? "true" : "false");
@@ -80,18 +73,7 @@ public class MailSenderInfo {
   	    p.put("mail.smtp.ssl.socketFactory", sf);
         return p;    
     }    
-/*    public String getMailServerHost() {    
-      return mailServerHost;    
-    }    
-    public void setMailServerHost(String mailServerHost) {    
-      this.mailServerHost = mailServerHost;    
-    }   
-    public String getMailServerPort() {    
-      return mailServerPort;    
-    }   
-    public void setMailServerPort(String mailServerPort) {    
-      this.mailServerPort = mailServerPort;    
-    } */  
+  
     public boolean isValidate() {    
       return validate;    
     }   

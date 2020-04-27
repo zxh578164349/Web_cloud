@@ -15,10 +15,6 @@ public interface IWebUserService {
 	// �ק�Τ�H��
 	public boolean updateUser(WebUser webUser);
 
-	// ���Ҧ��Τ�H��
-	public List<WebUser> getUsers(int page, int rows, String conditions,
-			String factNo);
-
 	// �p��Τᦳ�h�֭�
 	public int totlePage(String conditions);
 

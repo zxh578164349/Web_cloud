@@ -116,8 +116,8 @@ public class KyVisaBillsAction extends ActionSupport{
 		bill.getId().getKyVisabillm().setLastMk(visa_mk);
 		KyVisabillm vbm=bill.getId().getKyVisabillm();*/
 		
-		int num_temp=Integer.parseInt(itemNo);//�ⶵ����Ƭ��Ʀr
-		int num=Integer.parseInt(itemNo)-1;//�Ω��ѧOKyVisabills���X�̪��C�X�ӹ�H
+		int num_temp=Integer.parseInt(itemNo);
+		int num=Integer.parseInt(itemNo)-1;
 		int num_next=num_temp+1;
 		String item_next="0"+num_next;
 		KyVisabillm vbm=visabillmSer.findById(factNo, visaSort, billNo);
@@ -139,54 +139,6 @@ public class KyVisaBillsAction extends ActionSupport{
 		visabills=visabillSer.findVisaBills(visaSort,billNo);
 		return "findVisaBills";
 		
-	}
-	/*public String findPageBean(){
-		ActionContext.getContext().getApplication().clear();
-		factNo=(String)ActionContext.getContext().getSession().get("factNo");
-		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
-		userName=user.getName();
-		bean=visabillSer.findPageBean(20,page, userName, visaMk, factNo, billNo,visaSort,yymmdd,yymmdd2);
-		return "beanList";
-	}
-	public String findPageBean2(){
-		ActionContext.getContext().getApplication().clear();
-		if(factNo!=null&&!factNo.equals("")){
-			ActionContext.getContext().getApplication().put("visabills-factno", factNo);
-		}
-		if(billNo!=null&&!billNo.equals("")){
-			ActionContext.getContext().getApplication().put("visabills-billno", billNo);
-		}
-		if(visaMk!=null&&!visaMk.equals("")){
-			ActionContext.getContext().getApplication().put("visabills-visamk", visaMk);
-		}
-		if(visaSort!=null&&!visaSort.equals("")){
-			ActionContext.getContext().getApplication().put("visabills-visasort", visaSort);
-		}
-		if(yymmdd!=null&&!yymmdd.equals("")){
-			ActionContext.getContext().getApplication().put("visabills-yymmdd", yymmdd);
-		}
-		if(yymmdd2!=null&&!yymmdd2.equals("")){
-			ActionContext.getContext().getApplication().put("visabills-yymmdd2",yymmdd2);
-		}
-		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
-		userName=user.getName();
-		bean=visabillSer.findPageBean(20,page, userName, visaMk, factNo, billNo,visaSort,yymmdd,yymmdd2);
-		return "beanList1";		
-	}
-	public String findPageBean3(){
-		factNo=(String)ActionContext.getContext().getApplication().get("visabills-factno");
-		billNo=(String)ActionContext.getContext().getApplication().get("visabills-billno");
-		visaMk=(String)ActionContext.getContext().getApplication().get("visabills-visamk");
-		visaSort=(String)ActionContext.getContext().getApplication().get("visabills-visasort");
-		yymmdd=(String)ActionContext.getContext().getApplication().get("visabills-yymmdd");
-		yymmdd2=(String)ActionContext.getContext().getApplication().get("visabills-yymmdd2");
-		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
-		userName=user.getName();
-		if(factNo==null||factNo.equals("")){
-			factNo=(String)ActionContext.getContext().getSession().get("factNo");
-		}
-		bean=visabillSer.findPageBean(20,page, userName, visaMk, factNo, billNo,visaSort,yymmdd,yymmdd2);
-		return "beanList1";
-	}*/
+	}	
 
 }

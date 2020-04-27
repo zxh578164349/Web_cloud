@@ -9,37 +9,37 @@ public class KyzPetty implements java.io.Serializable {
 	// Fields
 
 	private KyzPettyId id;
-	private String currencyNo;//作帳幣別
-	private String datePaybill;//支出日期
-	private String itemNo;//流水號
-	private String dateOver;//結帳日期
-	private String deptNo;//歸屬部門
-	private String secNo;//歸屬組別
-	private String expenseMk;//費用性質
-	private String dbcdMk;//借貸注記
-	private String acctNo;//會計科目		 	
-	private String noteMk;//摘要說明
-	private String factExpense;//費用廠別
-	private String deptExpense;//費用部門
-	private String vouMk;//恁証類別
-	private String taxMk;//課稅類別
-	private String dateVou;//恁証日期
-	private String taxmMk;//管稅帳注記
-	private String vouNo;//恁証號碼
-	private String venderCode;//統一編號
-	private Double cashExpense;//支付金額
-	private Double taxExpense;//支付稅額
-	private String manHandle;//經手人
-	private String memoMk1;//備注1
-	private String memoMk2;//備注2
-	private String memoMk3;//備注3
-	private String memoMk4;//備注4
-	private String userNm;//操作者
-	private String timeCreate;//建构日期
-	private String itemYm;//恁証流水號
-	private String noteIn;//內部摘要
-	private String expenseType;//費用類別
-	private String timeZd;//Time Zd
+	private String currencyNo;
+	private String datePaybill;
+	private String itemNo;
+	private String dateOver;
+	private String deptNo;
+	private String secNo;
+	private String expenseMk;
+	private String dbcdMk;
+	private String acctNo;	 	
+	private String noteMk;
+	private String factExpense;
+	private String deptExpense;
+	private String vouMk;
+	private String taxMk;
+	private String dateVou;
+	private String taxmMk;
+	private String vouNo;
+	private String venderCode;
+	private Double cashExpense;
+	private Double taxExpense;
+	private String manHandle;
+	private String memoMk1;
+	private String memoMk2;
+	private String memoMk3;
+	private String memoMk4;
+	private String userNm;
+	private String timeCreate;
+	private String itemYm;
+	private String noteIn;
+	private String expenseType;
+	private String timeZd;
 
 	// Constructors
 

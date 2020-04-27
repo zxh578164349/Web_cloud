@@ -11,6 +11,13 @@ import java.util.Set;
  * KyzExpectmatm entity. @author MyEclipse Persistence Tools
  */
 
+/**
+ * 
+* 項目名稱：WebLogin   
+* 類名稱：KyzExpectmatm   
+* 類描述：函文申請
+* 創建人：KY2
+ */
 public class KyzExpectmatm implements java.io.Serializable {
 
 	// Fields

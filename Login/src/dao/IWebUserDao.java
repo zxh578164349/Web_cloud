@@ -14,10 +14,7 @@ public interface IWebUserDao {
 
 	// �ק�Τ�H��
 	public void updates(WebUser webUser);
-
-	// ���Ҧ��Τ�H��
-	public List<WebUser> getUsers(int page, int rows, String conditions,
-			String fact);
+	
 
 	// �p�ⶰ�X�ƶq
 	public int totlePage(String conditions);

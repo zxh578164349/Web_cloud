@@ -62,62 +62,6 @@ public class WebUserDaoImpl extends Basedao implements IWebUserDao {
 		return false;
 	}
 
-	public List<WebUser> getUsers(int page, int rows, String conditions,
-			String factno) {
-		String hql = null;
-		Query query = null;
-		WebUser user = (WebUser) ActionContext.getContext().getSession()
-				.get("loginUser");
-		if (conditions != null && !conditions.equals("")) {
-			if (user.getName().equals("管理員") && user.getFactno().equals("tw")) {
-				for (int i = conditions.length(); --i >= 0;) {
-					if (Character.isDigit(conditions.charAt(i))
-							|| Character.isLetter(conditions.charAt(i))) {
-						hql = "from WebUser where workno=? ";
-					}
-					if (isChinese(conditions.charAt(i))) {
-						hql = "from WebUser where name =? ";
-					}
-				}
-				query = getSession().createQuery(hql);
-				query.setString(0, conditions);
-				size = query.list().size();
-			} else {
-				for (int i = conditions.length(); --i >= 0;) {
-					if (Character.isDigit(conditions.charAt(i))
-							|| Character.isLetter(conditions.charAt(i))) {
-						hql = "from WebUser where workno=? and username <> ?";
-					}
-					if (isChinese(conditions.charAt(i))) {
-						hql = "from WebUser where name =? and username <> ?";
-					}
-				}
-				query = getSession().createQuery(hql);
-				query.setString(0, conditions);
-				query.setString(1, "admin");
-				size = query.list().size();
-			}
-		} else {
-			if (factno.equals("tw")) {
-				hql = "from WebUser";
-				query = getSession().createQuery(hql);
-				size = query.list().size();
-			} else {
-				hql = "from WebUser where factno=? and username <> ?";
-				query = getSession().createQuery(hql);
-				query.setString(0, factno);
-				query.setString(1, "admin");
-				size = query.list().size();
-			}
-		}
-		query.setFirstResult((page - 1) * rows);
-		query.setMaxResults(rows);
-		conditions = null;
-		List<WebUser> list = query.list();
-		return list;
-
-	}
-
 	public int totlePage(String conditions) {
 		return size;
 	}

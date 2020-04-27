@@ -41,19 +41,13 @@ import services.IVWebuselessServices;
 import services.IWebFactServices;
 import util.GlobalMethod;
 
-/**   
- *    
- * 项目名称：Login   
- * 类名称：VWebuselessAction   
- * 类描述：   
- * 创建人：Administrator   
- * 创建时间：2016/4/13 下午2:57:08   
- * 修改人：Administrator   
- * 修改时间：2016/4/13 下午2:57:08   
- * 修改备注：   
- * @version    
- *    
- **/
+/**
+ * 
+* 項目名稱：WebLogin   
+* 類名稱：VWebuselessAction   
+* 類描述：無價值率
+* 創建人：KY2
+ */
 public class VWebuselessAction extends ActionSupport implements ServletResponseAware{
 	private IVWebuselessServices vwebuselessSer;
 	private IWebFactServices webFactSer;
@@ -104,6 +98,11 @@ public class VWebuselessAction extends ActionSupport implements ServletResponseA
 		this.response=response;
 	}
 	
+	/**
+	 * 導出【無價值率】報表
+	 * @throws ParseException
+	 * @throws IOException
+	 */
 	public void print() throws ParseException, IOException{	
 		HSSFWorkbook wb=new HSSFWorkbook();
 		Map<String,Object>map=findStyles(wb);
@@ -286,7 +285,7 @@ public class VWebuselessAction extends ActionSupport implements ServletResponseA
 	
 	
 	/**
-	 * 所有樣式
+	 * 表格樣式
 	 * @Title: findStyles
 	 * @Description: TODO
 	 * @param @param wb
@@ -512,6 +511,16 @@ public class VWebuselessAction extends ActionSupport implements ServletResponseA
 		}
 		return temp;
 	}
+	
+	/**
+	 * 表格初始化
+	 * @param wb
+	 * @param list_facts
+	 * @param map
+	 * @param yymm
+	 * @param yymm2
+	 * @throws ParseException
+	 */
 	public void init(HSSFWorkbook wb,List<WebFact>list_facts,Map<String,Object>map,String yymm,String yymm2) throws ParseException{
 		//HSSFCellStyle cs=(HSSFCellStyle)map.get("cs");
 		HSSFCellStyle cs_head=(HSSFCellStyle)map.get("cs_head");

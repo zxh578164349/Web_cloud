@@ -56,6 +56,14 @@ import entity.WebFact;
 import entity.WebFactorder;
 import entity.WebUser;
 
+
+/**
+ * 
+* 項目名稱：WebLogin   
+* 類名稱：WebFactOrderAction   
+* 類描述：工廠客戶訂單
+* 創建人：KY2
+ */
 public class WebFactOrderAction extends ActionSupport implements ServletResponseAware{
 	private IWebFactorderServices webfactorderSer;
 	private IWebFactServices webFactSer;
@@ -270,34 +278,17 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 		// TODO Auto-generated method stub
 		this.response=response;
 	}
+	
+	/**
+	 * 導入數據文件
+	 * @return
+	 * @throws IOException
+	 */
 	public String importExcel() throws IOException{
 		String username=((WebUser)ActionContext.getContext().getSession().get("loginUser")).getUsername();
 		String path="d:\\Webfactorder_backup\\"+new SimpleDateFormat("yyyyMMdd").format(new Date());//Excel文檔存放目錄
 		String result="importExcel";
-		ajaxResult="0";
-		/*String path="d:\\北越&鞋塑2015接單匯總-1201.xls";
-		List<String>list_all=ImportExcel.exportListFromExcel(new File(path), 1);
-		webfactorderSer.addLarge(list_all);*/
-		
-		/*文件上傳驗證*/
-		/*if(file!=null){							
-					
-					String filetype=fileFileName.substring(fileFileName.lastIndexOf(".")).toLowerCase();
-					long filesize=file.length();
-					if(filesize>5120000){
-						response.setContentType("text/html;charset=utf-8");
-						response.getWriter().print("<script>alert('文件不可超過5M!');window.opener=null;window.open('','_self');window.close()</script>");
-						return null;
-					}
-					if(!filetype.equals(".xls")&&!filetype.equals(".xlsx")){
-						response.setContentType("text/html;charset=utf-8");
-						//response.getWriter().print("<script>alert('只允許上傳Excel文檔!');window.opener=null;window.open('','_self');window.close()</script>");
-						//return null;
-						ajaxResult="1";//只允許上傳Excel文檔
-						return result;
-						
-					}												
-		}*/
+		ajaxResult="0";		
 		
 		/*文件上傳*/
 		if(file!=null){//不為空代表有上傳附檔,不能寫成files.size()>0,否則報空指針
@@ -374,9 +365,13 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 		
 		return result;
 	}
-	public String findPageBean(){
-		
-		//System.out.println(factNos.getClass().getName());
+	
+	
+	/**
+	 * 分頁查詢
+	 * @return
+	 */
+	public String findPageBean(){		
 		factNo=(String)ActionContext.getContext().getSession().get("factNo");
 		ActionContext.getContext().getSession().remove("allrow");//首次進入，清除分頁的總條數（dao層中的allrow）
 		ActionContext.getContext().getSession().remove("public_factareas");
@@ -396,17 +391,17 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 		return "beanList";
 		
 	}
+	
+	/**
+	 * 分頁查詢2
+	 * @return
+	 */
 	public String findPageBean2(){
 		if(factNo==null||factNo.equals("")){
 			factNo=(String)ActionContext.getContext().getSession().get("factNo");
 		}
 		//System.out.println(factNos.getClass().getName());//com.opensymphony.xwork2.util.XWorkList
-		ActionContext.getContext().getSession().remove("allrow");//條件查詢，清除分頁的總條數（dao層中的allrow）
-		/*ActionContext.getContext().getSession().remove("public_factnames");
-		ActionContext.getContext().getSession().remove("public_brank");
-		ActionContext.getContext().getSession().remove("public_customer");
-		ActionContext.getContext().getSession().remove("public_model");
-		ActionContext.getContext().getSession().remove("public_component");*/
+		ActionContext.getContext().getSession().remove("allrow");//條件查詢，清除分頁的總條數（dao層中的allrow）		
 		ActionContext.getContext().getSession().put("public_factno", factNo);
 		ActionContext.getContext().getSession().put("public_factareas",factAreas);
 		ActionContext.getContext().getSession().put("public_brank",branks);
@@ -422,6 +417,11 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 		}
 		return "beanList1";
 	}
+	
+	/**
+	 * 分頁查詢3
+	 * @return
+	 */
 	public String findPageBean3(){
 		factNo=(String)ActionContext.getContext().getSession().get("public_factno");
 		if(factNo==null||factNo.equals("")){
@@ -537,8 +537,7 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 	
 	
 	/**
-	 * 打印搜索分組統計數據
-	 * 快速準確修改版
+	 * 導出文件
 	 * @throws IOException 
 	 */
 	public void print4() throws IOException{
@@ -558,6 +557,11 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 		wb.write(os);
 		os.close();				
 	}
+	
+	/**
+	 * 導出每月發送工廠訂單郵件的文檔
+	 * @throws IOException
+	 */
 	public void print_email() throws IOException{				
 		HSSFWorkbook wb=this.print();
 		//OutputStream os=new FileOutputStream("d:\\"+yymm+".xls");
@@ -579,21 +583,7 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 		List<Object[]>list2=webfactorderSer.findByGroup(factNos,factAreas, branks, customers, models, components,factNo,yymm,yymm2);
 		List<String>list_date=GlobalMethod.getDateNum(yymm, yymm2);		
 		List<Map<String,Double>>list_all=new ArrayList<Map<String,Double>>();
-		
-		/******************是否郵件通知判斷***********************/
-		/*if(autoEmailMk==1){
-			for(String month:list_date){
-				List<WebFact>list_facts=webfactorderSer.findNoinput(month);
-				list.add(new Object[]{month+"未導入","","","","","",month.substring(0,2)});
-				for(WebFact fact:list_facts){
-					list.add(new Object[]{fact.getFactSname(),fact.getId().getFactArea(),"","","","",month.substring(0,2)});
-				}
-			}
-			
-		}*/
-		/******************是否郵件通知判斷***********************/
-		
-		
+								
 		for(int i=0;i<list.size();i++){//for1
 			for(int x=0;x<6;x++){
 				if(list.get(i)[x]==null){
@@ -801,6 +791,11 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 		factorder=webfactorderSer.findByOrderId(factNo,factArea,yymm,model,customer,brank,component);
 		return "findById";
 	}
+	
+	/**
+	 * 刪除數據
+	 * @return
+	 */
 	public String delete(){
 		KyzExpectmatmLog log=new KyzExpectmatmLog();
 		log.setObj("WebFactorder");
@@ -880,6 +875,11 @@ public class WebFactOrderAction extends ActionSupport implements ServletResponse
 		}		
 	}
 	
+	/**
+	 * 表格樣式
+	 * @param wb
+	 * @return
+	 */
 	public Map<String,Object>findStyle(HSSFWorkbook wb){
 		Map<String,Object>map=new HashMap<String,Object>();
 		HSSFCellStyle cs=wb.createCellStyle();

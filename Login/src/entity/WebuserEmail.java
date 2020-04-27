@@ -4,6 +4,13 @@ package entity;
  * WebuserEmail entity. @author MyEclipse Persistence Tools
  */
 
+/**
+ * 
+* 項目名稱：WebLogin   
+* 類名稱：WebuserEmail   
+* 類描述：函文郵件同步人管理
+* 創建人：KY2
+ */
 public class WebuserEmail implements java.io.Serializable{
 
 	// Fields

@@ -35,6 +35,13 @@ import entity.WebUser;
 import entity.Webestproduct;
 import entity.WebestproductId;
 
+/**
+ * 
+* 項目名稱：WebLogin   
+* 類名稱：WebEstProductAction   
+* 類描述：預計生產     預計生產與請款匯總
+* 創建人：KY2
+ */
 public class WebEstProductAction extends ActionSupport implements
 		ServletResponseAware {
 	private javax.servlet.http.HttpServletResponse response;
@@ -197,6 +204,10 @@ public class WebEstProductAction extends ActionSupport implements
 		return temp;
 	}
 
+	/**
+	 * 添加修改
+	 * @return
+	 */
 	public String add() {
 		DateFormat format = new SimpleDateFormat("yyyyMM");
 		Date date = null;
@@ -223,6 +234,10 @@ public class WebEstProductAction extends ActionSupport implements
 		return "add";
 	}
 
+	/**
+	 * 分頁查詢
+	 * @return
+	 */
 	public String findPageBean() {
 		//ActionContext.getContext().getApplication().clear();
 		ActionContext.getContext().getSession().remove("public_factno");
@@ -235,6 +250,10 @@ public class WebEstProductAction extends ActionSupport implements
 
 	}
 
+	/**
+	 * 分頁查詢2
+	 * @return
+	 */
 	public String findPageBean2() {
 		//ActionContext.getContext().getApplication().clear();
 		ActionContext.getContext().getSession().remove("public_factno");
@@ -255,6 +274,10 @@ public class WebEstProductAction extends ActionSupport implements
 		return "beanList1";
 	}
 
+	/**
+	 * 分頁查詢3
+	 * @return
+	 */
 	public String findPageBean3() {
 		String result="beanList1";
 		if(backIndex==1){
@@ -280,6 +303,10 @@ public class WebEstProductAction extends ActionSupport implements
 
 	}
 
+	/**
+	 * 刪除
+	 * @return
+	 */
 	public String delete() {
 		KyzExpectmatmLog log=new KyzExpectmatmLog();
 		log.setObj("Webestproduct");
@@ -293,6 +320,9 @@ public class WebEstProductAction extends ActionSupport implements
 		return "delete";
 	}
 	
+	/**
+	 * 導出【預計生產與請款匯總】報表
+	 */
 	public void print(){
 		List<Webestproduct>list_zd=new ArrayList<Webestproduct>();
 		List<Webestproduct>list_tz=new ArrayList<Webestproduct>();
@@ -422,11 +452,19 @@ public class WebEstProductAction extends ActionSupport implements
 		}
 	}
 	
+	/**
+	 * 導出【預計生產】數據
+	 * @throws IOException
+	 */
 	public void print2() throws IOException{
 		List<Webestproduct>list=estProSer.findByAny(factNo, yymm, yymm2);
 		GlobalMethod.print(list, factNo, yymm, yymm2, "webestproduct.jasper", response);
 	}
 	
+	/**
+	 * 導出文檔
+	 * @throws IOException
+	 */
 	public void importFile() throws IOException{
 		/*factNo="631";
 		yymm="201810";*/

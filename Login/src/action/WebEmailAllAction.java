@@ -11,6 +11,13 @@ import net.sf.json.JSONArray;
 import services.IWebEmailService;
 import util.PageBean;
 
+/**
+ * 
+* 項目名稱：WebLogin   
+* 類名稱：WebEmailAllAction   
+* 類描述：郵件發送管理
+* 創建人：KY2
+ */
 public class WebEmailAllAction {
 	private IWebEmailService emailService;
 	private JSONArray jsons;
@@ -103,6 +110,10 @@ public class WebEmailAllAction {
 		this.emailService = emailService;
 	}
 	
+	/**
+	 * 添加修改
+	 * @return
+	 */
 	public String add(){
 		try{
 			emailService.add(obj);
@@ -114,6 +125,10 @@ public class WebEmailAllAction {
 		return "add";
 	}
 	
+	/**
+	 * 分頁查詢
+	 * @return
+	 */
 	public String findPageBean(){
 		ActionContext.getContext().getSession().remove("allrow");	
 		bean=emailService.findPageBean(page, 0, eid, email, uname,emailOrcc,emailMk);
@@ -125,11 +140,19 @@ public class WebEmailAllAction {
 		return "findPageBean";		
 	}
 	
+	/**
+	 * 分頁查詢2
+	 * @return
+	 */
 	public String findPageBean2(){		
 		this.findPageBean();
 		return "findPageBean1";
 	}
 	
+	/**
+	 * 分頁查詢3
+	 * @return
+	 */
 	public String findPageBean3(){
 		eid=(Integer)ActionContext.getContext().getSession().get("eid");
 		email=(String)ActionContext.getContext().getSession().get("email");
@@ -156,6 +179,10 @@ public class WebEmailAllAction {
 		return "findById";
 	}
 	
+	/**
+	 * 刪除
+	 * @return
+	 */
 	public String delete(){
 		KyzExpectmatmLog log=new KyzExpectmatmLog();
 		log.setContent("Email:"+email+",ename:"+ename);
@@ -165,6 +192,7 @@ public class WebEmailAllAction {
 		return "delete";
 	}
 	
+	
 	public String goDisabled(){
 		obj=emailService.findById(eid);
 		obj.setEmailMk("N");
@@ -172,6 +200,10 @@ public class WebEmailAllAction {
 		return "goDisabled";		
 	}
 	
+	/**
+	 * 檢測添加數據是否存在
+	 * @return
+	 */
 	public String findByEmailAndEtypeAndEmailOrCc(){
 		obj=emailService.findByEmailAndEtypeAndEmailOrCc(email, eid, emailOrcc);
 		if(obj==null){

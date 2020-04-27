@@ -65,6 +65,13 @@ import entity.WebUser;
 import entity.Webremittancelist;
 import entity_temp.VisabillsTemp;
 
+/**
+ * 
+* 項目名稱：WebLogin   
+* 類名稱：KyVisaBillmAction   
+* 類描述：函文審核    函文审核状况
+* 創建人：KY2
+ */
 public class KyVisaBillmAction extends ActionSupport implements ServletResponseAware{
 	private IKyVisabillmServices visabillmSer;
 	private IKyVisaBillsServices visabillSer;
@@ -302,15 +309,11 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-
 	/********************************函文审核******************************************/
+	/**
+	 * 函文审核-分頁查詢
+	 * @return
+	 */	
 	public String findPageBean(){
 		//ActionContext.getContext().getApplication().clear();
 		ActionContext.getContext().getSession().remove("public_factNo");
@@ -328,6 +331,11 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 		//this.getTypeName(bean);
 		return "beanList";
 	}
+	
+	/**
+	 * 函文审核-分頁查詢2
+	 * @return
+	 */	
 	public String findPageBean2(){
 		//ActionContext.getContext().getApplication().clear();		
 		
@@ -347,6 +355,11 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 		//this.getTypeName(bean);
 		return "beanList1";		
 	}
+	
+	/**
+	 * 函文审核-分頁查詢3
+	 * @return
+	 */	
 	public String findPageBean3(){
 		factNo=(String)ActionContext.getContext().getSession().get("public_factNo");
 		billNo=(String)ActionContext.getContext().getSession().get("public_billNo");
@@ -365,6 +378,10 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 	/********************************函文审核******************************************/
 	
 	/********************************函文审核状况******************************************/
+	/**
+	 * 函文审核状况-分頁查詢
+	 * @return
+	 */	
 	public String findPageBean_1(){
 		//ActionContext.getContext().getApplication().clear();
 		ActionContext.getContext().getSession().remove("public_factNo");
@@ -381,6 +398,11 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 		//this.getKyzTitle(bean);
 		return "beanList_1";
 	}
+	
+	/**
+	 * 函文审核状况-分頁查詢2
+	 * @return
+	 */
 	public String findPageBean2_1(){
 		//ActionContext.getContext().getApplication().clear();
 			ActionContext.getContext().getSession().put("public_factNo", factNo);
@@ -399,6 +421,11 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 		//this.getKyzTitle(bean);
 		return "beanList1_1";
 	}
+	
+	/**
+	 * 函文审核状况-分頁查詢3
+	 * @return
+	 */
 	public String findPageBean3_1(){
 		factNo=(String)ActionContext.getContext().getSession().get("public_factNo");
 		billNo=(String)ActionContext.getContext().getSession().get("public_billNo");
@@ -527,10 +554,7 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 			if(itemNo==null||itemNo.equals("")){
 				itemNo=vbm.getItemNext();
 			}
-			
-			/*for(KyVisabills obj:vbm.getKyVisabillses()){
-				System.out.println(obj.getId().getItemNo()+":"+obj.getVisaSigner());
-			}*/
+						
 			SimpleDateFormat format=new SimpleDateFormat("yyyyMMdd_HH:mm");//大写H表示24小时制      小写h表示12小时制      20170224
 			int num_temp=Integer.parseInt(itemNo);//把項次轉化為數字
 			int num=Integer.parseInt(itemNo)-1;//用於識別KyVisabills集合裡的每幾個對象									
@@ -627,8 +651,8 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 	
 	/**
 	 * 加簽
+	 * @return
 	 */
-	
 	public String addvisabills(){		
 		try{			
 			KyVisabillm vbm=new KyVisabillm();
@@ -955,7 +979,10 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 		}		
 	}
     	
-	//導出函文
+	/**
+	 * 導出函文
+	 * @throws Exception
+	 */
 	public void printList() throws Exception{
 		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
 		List<KyVisabills>list=visabillSer.findtoprint(visaMk,factNo,billNo,visaSort,yymmdd,yymmdd2,user,title,bigType);
@@ -1041,7 +1068,10 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 	}
 	
 	
-	
+	/**
+	 * 導出所類型函文
+	 * @throws IOException
+	 */
 	public void print_all() throws IOException{
 		if(billNo.substring(0, 2).equals("EM")){
 			this.print_kyz();

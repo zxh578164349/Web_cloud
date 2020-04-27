@@ -7,6 +7,13 @@ import java.util.Date;
  * WebBussinessletter entity. @author MyEclipse Persistence Tools
  */
 
+/**
+ * 
+* 項目名稱：WebLogin   
+* 類名稱：WebBussinessletter   
+* 類描述：人員出差申請書
+* 創建人：KY2
+ */
 public class WebBussinessletter implements java.io.Serializable {
 
 	// Fields

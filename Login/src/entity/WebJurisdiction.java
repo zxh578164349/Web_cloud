@@ -9,6 +9,13 @@ import java.util.Set;
  * WebJurisdiction entity. @author MyEclipse Persistence Tools
  */
 
+/**
+ * 
+* 項目名稱：WebLogin   
+* 類名稱：WebJurisdiction   
+* 類描述：權限數據表
+* 創建人：KY2
+ */
 public class WebJurisdiction implements java.io.Serializable {
 
 	// Fields

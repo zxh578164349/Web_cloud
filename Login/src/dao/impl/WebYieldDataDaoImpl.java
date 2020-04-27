@@ -31,57 +31,7 @@ public class WebYieldDataDaoImpl extends Basedao implements IWebYieldDataDao {
 		// TODO Auto-generated method stub
 		super.merge(data);
 	}
-
-	int size = 0;
-
-	public List<WebYieldData> selectYDate(String factNo, String yymm, int page,
-			int rows) {
-		// TODO Auto-generated method stub
-
-		/*
-		 * SimpleDateFormat format = new SimpleDateFormat("yyyyMM"); Date s =
-		 * null; try { if (yymm != null) { s = format.parse(yymm); } } catch
-		 * (ParseException e) { }
-		 */
-		String hql = null;
-		Map<String, Object> map = new HashMap<String, Object>();
-		hql = "from WebYieldData where 1=1 ";
-		if (factNo != null && !factNo.equals("") && !factNo.equals("tw")) {
-			hql += " and id.factNo =:factno ";
-			map.put("factno", factNo);
-		}
-		if (yymm != null && !yymm.equals("")) {
-			hql += " and to_char(id.yymmdd,'yyyymm')=:yymm ";
-			map.put("yymm", yymm);
-		}
-
-		Query query = getSession().createQuery(hql);
-		if (map != null && !map.isEmpty()) {
-			for (String key : map.keySet()) {
-				query.setParameter(key, map.get(key));
-			}
-		}
-		if (size == 0) {
-			List<WebYieldData> sList = query.list();
-			size = sList.size();
-		}
-		if (page == 0 && rows == 0) {
-			query.setFirstResult((1 - 1) * 10);
-			query.setMaxResults(10);
-		} else {
-			query.setFirstResult((page - 1) * rows);
-			query.setMaxResults(rows);
-		}
-		List<WebYieldData> sList = query.list();
-		size = sList.size();
-		return sList;
-	}
-
-	public int totlePage(String factNo, String yymm) {
-		// TODO Auto-generated method stub
-		return size;
-	}
-
+		
 	public WebYieldData findById(WebYieldDataId id) {
 		// TODO Auto-generated method stub
 		String hql = "from WebYieldData where id.factNo=? and id.factCode=? and id.yymmdd=?";

@@ -39,6 +39,14 @@ import util.GlobalMethod;
 import com.opensymphony.xwork2.ActionSupport;
 import entity.*;
 
+
+/**
+ *有待取代PreAndDataAction_Poi（區別：數據來源不一樣）
+* 項目名稱：WebLogin   
+* 類名稱：PreAndDataAction_Poi_new   
+* 類描述：
+* 創建人：KY2
+ */
 public class PreAndDataAction_Poi_new extends ActionSupport implements
 		ServletResponseAware {
 	private javax.servlet.http.HttpServletResponse response;

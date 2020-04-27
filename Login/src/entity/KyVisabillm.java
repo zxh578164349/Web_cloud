@@ -9,6 +9,13 @@ import java.util.Set;
  * KyVisabillm entity. @author MyEclipse Persistence Tools
  */
 
+/**
+ * 
+* 項目名稱：WebLogin   
+* 類名稱：KyVisabillm   
+* 類描述：函文簽核（主表）
+* 創建人：KY2
+ */
 public class KyVisabillm implements java.io.Serializable {
 
 	// Fields

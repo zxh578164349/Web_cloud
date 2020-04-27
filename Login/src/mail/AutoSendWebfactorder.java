@@ -34,19 +34,13 @@ import services.IWebEmailService;
 import services.IWebFactorderServices;
 import util.GlobalMethod;
 
-/**   
- *    
- * 项目名称：Login   
- * 类名称：AutoSendWebfactorder   
- * 类描述：   
- * 创建人：Administrator   
- * 创建时间：2016/6/8 下午1:39:13   
- * 修改人：Administrator   
- * 修改时间：2016/6/8 下午1:39:13   
- * 修改备注：   
- * @version    
- *    
- **/
+/**
+ * 
+* 項目名稱：WebLogin   
+* 類名稱：AutoSendWebfactorder   
+* 類描述：工廠訂單郵件通知
+* 創建人：KY2
+ */
 public class AutoSendWebfactorder extends QuartzJobBean{
 	private static final ProjectConfig pc=GlobalMethod.findProjectConfig();
 

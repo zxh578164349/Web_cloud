@@ -4,6 +4,13 @@ package entity;
  * WebWeeklyreport entity. @author MyEclipse Persistence Tools
  */
 
+/**
+ * 
+* 項目名稱：WebLogin   
+* 類名稱：WebWeeklyreport   
+* 類描述：業務每週報表
+* 創建人：KY2
+ */
 public class WebWeeklyreport implements java.io.Serializable {
 
 	// Fields

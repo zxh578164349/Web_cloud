@@ -43,7 +43,13 @@ import entity.WebFactId;
 import entity.WeballobjB;
 import entity.WeballobjBId;
 
-
+/**
+ * 
+* 項目名稱：WebLogin   
+* 類名稱：VKpiWebprofitlossNewAction   
+* 類描述：重點指標匯總比較(new)
+* 創建人：KY2
+ */
 public class VKpiWebprofitlossNewAction extends ActionSupport implements ServletResponseAware{
 	private String factNo;
 	private String yymm;
@@ -126,6 +132,11 @@ public class VKpiWebprofitlossNewAction extends ActionSupport implements Servlet
 		this.response=response;
 	}
 	
+	/**
+	 * 單個工廠
+	 * @throws ParseException
+	 * @throws IOException
+	 */
 	public void print_month() throws ParseException, IOException{		
 		XSSFWorkbook wb=new XSSFWorkbook();
 		XSSFSheet sheet=wb.createSheet(factNo);
@@ -176,7 +187,10 @@ public class VKpiWebprofitlossNewAction extends ActionSupport implements Servlet
 	}
 	
 	
-	
+	/**
+	 * 多個工廠
+	 * @throws IOException
+	 */
 	public void print_tw() throws IOException{
 		XSSFWorkbook wb=new XSSFWorkbook();
 		XSSFSheet sheet=wb.createSheet("匯總");
@@ -433,37 +447,7 @@ public class VKpiWebprofitlossNewAction extends ActionSupport implements Servlet
 	 * @date 2016/9/13
 	 */
 	public List<String>findItems(){
-		List<String>list=new ArrayList<String>();						
-		/*list.add("機臺孔位數__孔__2");
-		list.add("機台利用率__%__0");
-		list.add("生產數__模__0");
-		list.add("請款雙數__雙__0");
-		list.add("實際回轉數__回__0");
-		list.add("直工__人__1");
-		list.add("間工__人__1");
-		list.add("全廠總人數__人__1");
-		list.add("直間比__:__0");
-		list.add("直工人均產能__模__0");
-		list.add("全廠人均產能__模__0");
-		list.add("時產能__雙__0");
-		list.add("時迴轉__模/H__0");
-		list.add("加班費__USD__1");
-		list.add("成本率__%__1");
-		list.add("回頭率__%__0");
-		list.add("總損耗__%__1");
-		list.add("平均邊料重__G/雙__1");
-		list.add("邊料率__%__1");
-		list.add("不良重量__KG__1");
-		list.add("不良率__%__1");
-		list.add("退貨率__%__1");
-		list.add("成倉庫存__雙__1");
-		list.add("用水單耗__USD/模__1");
-		list.add("用電單耗__USD/模__1");
-		list.add("蒸汽單耗__USD/模__1");
-		list.add("蒸汽單耗__KG/模__1");
-		list.add("色料藥品單耗__G/雙__1");
-		list.add("色料藥品單耗__USD/雙__1");*/
-
+		List<String>list=new ArrayList<String>();								
 		List<VKpiWebprofitlossItems>list_items=vkpiprofitser.findItems();
 		for(VKpiWebprofitlossItems item:list_items){
 			list.add(item.getItemName());
@@ -475,7 +459,7 @@ public class VKpiWebprofitlossNewAction extends ActionSupport implements Servlet
 	/**
 	 * 
 	 * @Title: packageTostring
-	 * @Description: TODO
+	 * @Description: 封裝數據，便於填充報表數據
 	 * @param @param list_obj
 	 * @param @param mk  1:工廠報表    0:臺灣報表
 	 * @param @return
@@ -550,7 +534,11 @@ public class VKpiWebprofitlossNewAction extends ActionSupport implements Servlet
 			
 	
 	
-	
+	/**
+	 * 封裝數據，便於填充報表數據
+	 * @param map
+	 * @return
+	 */
 	public Map<String,Object> packageToListDouble_map(Map<String,Object>map){
 		Map<String,Object>map_result=new LinkedHashMap<String,Object>();
 		
@@ -813,6 +801,11 @@ public class VKpiWebprofitlossNewAction extends ActionSupport implements Servlet
 	
 	/**************************************************2003版本分界線*****************************************************/
 	/**************************************************2003版本分界線*****************************************************/
+	/**
+	 * Excel2003格式
+	 * @throws ParseException
+	 * @throws IOException
+	 */
 	public void print_month_2003() throws ParseException, IOException{		
 		HSSFWorkbook wb=new HSSFWorkbook();
 		HSSFSheet sheet=wb.createSheet(factNo);

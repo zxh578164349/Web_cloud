@@ -14,13 +14,7 @@ public interface IWebYieldDataServices {
 			String factcode, String yymm);
 
 	public void addYdata(WebYieldData data);
-
-	public List<WebYieldData> selectYDate(String factNo, String yymm, int page,
-			int rows);
-
-	// �d�ߥ����ƾڪ��`����
-	public int totlePage(String factNo, String yymm);
-
+	
 	public WebYieldData findById(WebYieldDataId id);
 
 	public PageBean findPageBean(int pageSize, int page, String factNo,

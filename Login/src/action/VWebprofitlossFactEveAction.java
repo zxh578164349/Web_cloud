@@ -29,19 +29,13 @@ import services.IVWebprofitlossFactEveServices;
 import services.IWebFactServices;
 import util.GlobalMethod;
 
-/**   
- *    
- * 项目名称：Login   
- * 类名称：VWebprofitlossFactEveAction   
- * 类描述：   
- * 创建人：Administrator   
- * 创建时间：2016/5/10 下午2:04:14   
- * 修改人：Administrator   
- * 修改时间：2016/5/10 下午2:04:14   
- * 修改备注：   
- * @version    
- *    
- **/
+/**
+ * 
+* 項目名稱：WebLogin   
+* 類名稱：VWebprofitlossFactEveAction   
+* 類描述：全廠損益表(new)
+* 創建人：KY2
+ */
 public class VWebprofitlossFactEveAction implements ServletResponseAware{
 
 	/**
@@ -114,6 +108,10 @@ public class VWebprofitlossFactEveAction implements ServletResponseAware{
 		this.response=response;
 	}
 	
+	/**
+	 * 全年報表
+	 * @throws IOException
+	 */
 	public void print_fact() throws IOException{
 		reportType="1";
 		HSSFWorkbook wb=new HSSFWorkbook();
@@ -235,6 +233,11 @@ public class VWebprofitlossFactEveAction implements ServletResponseAware{
 		os.close();
 	}
 	
+	/**
+	 * 月份報表
+	 * @throws ParseException
+	 * @throws IOException
+	 */
 	public void print_month() throws ParseException, IOException{
 		reportType="2";
 		HSSFWorkbook wb=new HSSFWorkbook();
@@ -333,6 +336,11 @@ public class VWebprofitlossFactEveAction implements ServletResponseAware{
 		
 	}
 	
+	/**
+	 * 全廠損益表-台灣
+	 * @throws ParseException
+	 * @throws IOException
+	 */
 	public void print_tw() throws ParseException, IOException{
 		reportType="3";
 		HSSFWorkbook wb=new HSSFWorkbook();
@@ -833,6 +841,13 @@ public class VWebprofitlossFactEveAction implements ServletResponseAware{
 		list_a.get(a).setSumWorkhours(list_b.get(b).getSumWorkhours().add(list_c.get(c).getSumWorkhours()));
 	}
 	
+	/**
+	 * 數據格式
+	 * @param index
+	 * @param eve
+	 * @param eve2
+	 * @return
+	 */
 	public List<String> findResult(int index, VWebprofitlossFactEve eve,
 			VWebprofitlossFactEve eve2) {// eve2:爲上箇月的數據
 		List<String> list = new ArrayList<String>();

@@ -34,7 +34,7 @@ public class WebWeeklyreportDaoImpl extends Basedao implements IWebWeeklyreportD
 		hql2.append("select count(RId) ");
 		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
 		uid=user.getId();
-		if(uid!=0){
+		if(uid!=1){//1是admin帳戶
 			hql.append(" and webUser.id=:uid");
 			map.put("uid", uid);
 		}

@@ -4,6 +4,13 @@ package entity;
  * WebObjsA entity. @author MyEclipse Persistence Tools
  */
 
+/**
+ * 
+* 項目名稱：WebLogin   
+* 類名稱：WebObjsA   
+* 類描述：工廠訊息每日更新
+* 創建人：KY2
+ */
 public class WebObjsA implements java.io.Serializable {
 
 	// Fields

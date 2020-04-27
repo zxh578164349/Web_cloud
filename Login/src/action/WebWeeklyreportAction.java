@@ -178,6 +178,10 @@ public class WebWeeklyreportAction extends ActionSupport implements ServletRespo
 		this.webweeklyreportservices = webweeklyreportservices;
 	}
 	
+	/**
+	 * 添加修改
+	 * @return
+	 */
 	public String add(){
 		try{
 			SimpleDateFormat sdf=new SimpleDateFormat("yyyyMMdd");
@@ -197,6 +201,10 @@ public class WebWeeklyreportAction extends ActionSupport implements ServletRespo
 	}
 	
 		
+	/**
+	 * 分頁查詢
+	 * @return
+	 */
 	public String findPageBean(){
 		ActionContext.getContext().getSession().remove("allrow");	
 		bean=webweeklyreportservices.findPageBean(page, 0, uid, sdate,bid);
@@ -205,11 +213,19 @@ public class WebWeeklyreportAction extends ActionSupport implements ServletRespo
 		return "findPageBean";		
 	}
 	
+	/**
+	 * 分頁查詢2
+	 * @return
+	 */
 	public String findPageBean2(){		
 		this.findPageBean();
 		return "findPageBean1";
 	}
 	
+	/**
+	 * 分頁查詢3
+	 * @return
+	 */
 	public String findPageBean3(){
 		sdate=(String)ActionContext.getContext().getSession().get("sdate");
 		bid=(Integer)ActionContext.getContext().getSession().get("bid");
@@ -243,6 +259,10 @@ public class WebWeeklyreportAction extends ActionSupport implements ServletRespo
 		return "findById";
 	}
 	
+	/**
+	 * 刪除
+	 * @return
+	 */
 	public String delete(){
 		KyzExpectmatmLog log=new KyzExpectmatmLog();
 		log.setContent("ID:"+rid);
@@ -258,6 +278,9 @@ public class WebWeeklyreportAction extends ActionSupport implements ServletRespo
 		return "email_url";
 	}
 	
+	/**
+	 * 導出報表
+	 */
 	public void print(){				
 		try {
 			List<WebWeeklyreport>list_obj=webweeklyreportservices.findByEdate(sdate,sdate2);

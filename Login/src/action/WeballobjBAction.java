@@ -60,19 +60,13 @@ import util.ImportExcel;
 import util.JasperHelper;
 import util.PageBean;
 
-/**   
- *    
- * 项目名称：Login   
- * 类名称：WeballobjAction   
- * 类描述：   
- * 创建人：Administrator   
- * 创建时间：2016/3/24 下午1:12:52   
- * 修改人：Administrator   
- * 修改时间：2016/3/24 下午1:12:52   
- * 修改备注：   
- * @version    
- *    
- **/
+/**
+ * 
+* 項目名稱：WebLogin   
+* 類名稱：WeballobjBAction   
+* 類描述：生產與請款差異匯總表    各廠廢品重量匯總    重點指標導入
+* 創建人：KY2
+ */
 public class WeballobjBAction  extends ActionSupport implements ServletResponseAware{
 	private File file;
     private String fileFileName;
@@ -194,6 +188,10 @@ public class WeballobjBAction  extends ActionSupport implements ServletResponseA
 		this.webFactSer = webFactSer;
 	}
 
+	/**
+	 * 數據導入
+	 * @throws IOException
+	 */
 	public void addMore() throws IOException{
 		response.setContentType("text/html;charset=utf-8");
 		try{
@@ -314,6 +312,10 @@ public class WeballobjBAction  extends ActionSupport implements ServletResponseA
 		
 	}
 	
+	/**
+	 * 分頁查詢
+	 * @return
+	 */
 	public String findPageBean(){
 		ActionContext.getContext().getSession().remove("allrow");//dao層
 		ActionContext.getContext().getSession().remove("public_yymm");
@@ -324,6 +326,11 @@ public class WeballobjBAction  extends ActionSupport implements ServletResponseA
 		return "beanList";
 		
 	}
+	
+	/**
+	 * 分頁查詢2
+	 * @return
+	 */
 	public String findPageBean2(){
 		if(factNo==null||factNo.equals("")){
 			factNo=(String)ActionContext.getContext().getSession().get("factNo");
@@ -335,6 +342,11 @@ public class WeballobjBAction  extends ActionSupport implements ServletResponseA
 		bean=weballobjbser.findPageBean(20,page, factNo, yymm, yymm2);
 		return "beanList1";
 	}
+	
+	/**
+	 * 分頁查詢3
+	 * @return
+	 */
 	public String findPageBean3(){
 		factNo=(String)ActionContext.getContext().getSession().get("public_factno");
 		yymm=(String)ActionContext.getContext().getSession().get("public_yymm");
@@ -343,6 +355,10 @@ public class WeballobjBAction  extends ActionSupport implements ServletResponseA
 		return "beanList1";
 	}
 	
+	/**
+	 * 刪除
+	 * @return
+	 */
 	public String delete(){
 		KyzExpectmatmLog log=new KyzExpectmatmLog();
 		log.setFactNo(factNo);
@@ -353,6 +369,12 @@ public class WeballobjBAction  extends ActionSupport implements ServletResponseA
 		return "delete";
 	}
 	
+
+	/**
+	 * 導出單個工廠數據
+	 * @throws ParseException
+	 * @throws IOException
+	 */
 	public void print() throws ParseException, IOException{
 		HSSFWorkbook wb=new HSSFWorkbook();
 		Map<String,Object>map_cs=findStyles(wb);
@@ -442,7 +464,11 @@ public class WeballobjBAction  extends ActionSupport implements ServletResponseA
 		}//switch							
 	}
 	
-	
+	/**
+	 * 導出所有工廠數據
+	 * @throws ParseException
+	 * @throws IOException
+	 */
 	public void print_all() throws ParseException, IOException{
 		factNo="all";
 		HSSFWorkbook wb=new HSSFWorkbook();
@@ -858,10 +884,21 @@ public class WeballobjBAction  extends ActionSupport implements ServletResponseA
 	}
 	
 	
+	/**
+	 * 獲取表格新式2003
+	 * @param wb
+	 * @return
+	 */
 	public Map<String,Object> findStyles(HSSFWorkbook wb){		
 		Map<String,Object>map=GlobalMethod.findStyles(wb);				
 		return map;
 	}
+	
+	/**
+	 * 獲取表格新式2007
+	 * @param wb
+	 * @return
+	 */
 	public Map<String,Object>findStyles2007(XSSFWorkbook wb){
 		Map<String,Object>map=GlobalMethod.findStyles2007(wb);
 		return map;
@@ -1329,7 +1366,7 @@ public class WeballobjBAction  extends ActionSupport implements ServletResponseA
 	
 	
 	/**
-	 * 生產与請款差异匯總表
+	 * 生產與請款差異匯總表
 	 * @throws ParseException
 	 * @throws IOException 
 	 */

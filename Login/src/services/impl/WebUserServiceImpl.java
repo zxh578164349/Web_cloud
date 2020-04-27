@@ -33,12 +33,7 @@ public class WebUserServiceImpl implements IWebUserService {
 		} catch (Exception e) {
 			return false;
 		}
-	}
-
-	public List<WebUser> getUsers(int page, int rows, String conditions,
-			String fact) {
-		return webUserDao.getUsers(page, rows, conditions, fact);
-	}
+	}	
 
 	public int totlePage(String conditions) {
 		return webUserDao.totlePage(conditions);

@@ -23,6 +23,13 @@ import entity.WebType;
 import entity.WebUser;
 import entity.WebuserEmailA;
 
+/**
+ * 
+* 項目名稱：WebLogin   
+* 類名稱：WebuserEmailaAction   
+* 類描述：函文郵件同步人管理(分類別)
+* 創建人：KY2
+ */
 public class WebuserEmailaAction extends ActionSupport implements ServletResponseAware, ServletRequestAware{
 	private String factNo;
 	private String email;
@@ -131,6 +138,10 @@ public class WebuserEmailaAction extends ActionSupport implements ServletRespons
 		this.webtypeSer = webtypeSer;
 	}
 
+	/**
+	 * 添加修改
+	 * @return
+	 */
 	public String add(){
 		try{
 			webuseremailaSer.add(emailobj);
@@ -141,6 +152,12 @@ public class WebuserEmailaAction extends ActionSupport implements ServletRespons
 		}		
 		return "add";
 	}
+	
+	/**
+	 * 刪除
+	 * @return
+	 * @throws IOException
+	 */
 	public String delete() throws IOException{
 		KyzExpectmatmLog log=new KyzExpectmatmLog();
 		log.setObj("WebuserEmailA");
@@ -158,6 +175,11 @@ public class WebuserEmailaAction extends ActionSupport implements ServletRespons
 		}
 		
 	}
+	
+	/**
+	 * 分頁查詢
+	 * @return
+	 */
 	public String findPageBean(){
 		ActionContext.getContext().getSession().remove("public_factno");
 		ActionContext.getContext().getSession().remove("public_email");
@@ -167,6 +189,11 @@ public class WebuserEmailaAction extends ActionSupport implements ServletRespons
 		this.getTypeName(bean);
 		return "beanList";
 	}
+	
+	/**
+	 * 分頁查詢2
+	 * @return
+	 */
 	public String findPageBean2(){
 		bean=webuseremailaSer.findPageBean(20,page, factNo, email, visaSort,typeMk);		
 		ActionContext.getContext().getSession().put("public_factno", factNo);
@@ -177,6 +204,10 @@ public class WebuserEmailaAction extends ActionSupport implements ServletRespons
 		return "beanList1";
 	}
 	
+	/**
+	 * 分頁查詢3
+	 * @return
+	 */
 	public String findPageBean3(){
 		String result="beanList1";
 		if(backIndex==1){
@@ -190,6 +221,11 @@ public class WebuserEmailaAction extends ActionSupport implements ServletRespons
 		this.getTypeName(bean);
 		return result;
 	}
+	
+	/**
+	 * 獲取類別名稱
+	 * @param bean
+	 */
 	public void getTypeName(PageBean bean){
 		List<WebuserEmailA>list=bean.getList();
 		List<WebType>list_type=(List<WebType>)ActionContext.getContext().getSession().get("list_webtype");/********20151029登錄時已經記錄**************/

@@ -4,6 +4,13 @@ package entity;
  * WebFactorder entity. @author MyEclipse Persistence Tools
  */
 
+/**
+ * 
+* 項目名稱：WebLogin   
+* 類名稱：WebFactorder   
+* 類描述：工廠訂單
+* 創建人：KY2
+ */
 public class WebFactorder implements java.io.Serializable {
 
 	// Fields

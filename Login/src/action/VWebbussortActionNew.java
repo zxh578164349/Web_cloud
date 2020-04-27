@@ -50,19 +50,13 @@ import services.IWebFactServices;
 import services.IWebVwebbussortItemnServices;
 import util.GlobalMethod;
 
-/**   
- *    
- * 项目名称：Login   
- * 类名称：WebbussortAction   
- * 类描述：   
- * 创建人：Administrator   
- * 创建时间：2016/4/6 上午10:22:35   
- * 修改人：Administrator   
- * 修改时间：2016/4/6 上午10:22:35   
- * 修改备注：   
- * @version    
- *    
- **/
+/**
+ * 
+* 項目名稱：WebLogin   
+* 類名稱：VWebbussortActionNew   
+* 類描述：經營評比
+* 創建人：KY2
+ */
 public class VWebbussortActionNew extends ActionSupport implements ServletResponseAware{
 	private String yymm;
 	private String yymm2;
@@ -113,6 +107,11 @@ public class VWebbussortActionNew extends ActionSupport implements ServletRespon
 	public void setWebbussitemSer(IWebVwebbussortItemnServices webbussitemSer) {
 		this.webbussitemSer = webbussitemSer;
 	}
+	
+	/**
+	 * 經營評比（不分形態）
+	 * @throws ParseException
+	 */
 	public void print() throws ParseException{		
 		HSSFWorkbook wb=new HSSFWorkbook();
 		Map<String,Object>map=this.findStyles(wb);
@@ -388,15 +387,8 @@ public class VWebbussortActionNew extends ActionSupport implements ServletRespon
 	}
 	
 	/**
-	 * 分廠別狀態
-	 * @Title: print_fcode
-	 * @Description: TODO
-	 * @param 
-	 * @return void
-	 * @throws ParseException 
-	 * @throws
-	 * @author web
-	 * @date 2016/4/19
+	 * 經營評比（分形態）
+	 * @throws ParseException
 	 */
 	public void print_fcode() throws ParseException{
 			
@@ -772,157 +764,7 @@ public class VWebbussortActionNew extends ActionSupport implements ServletRespon
 	 * @date 2016/4/6
 	 */
 	public Map<String,Object> findTypes() {
-		Map<String,Object>map = new LinkedHashMap<String,Object>();
-		/*List<String>list_1=new ArrayList<String>();
-		List<String>list_2=new ArrayList<String>();
-		List<String>list_3=new ArrayList<String>();
-		List<String>list_4=new ArrayList<String>();
-		List<String>list_5=new ArrayList<String>();
-		List<String>list_6=new ArrayList<String>();
-		List<String>list_7=new ArrayList<String>();
-		List<String>list_8=new ArrayList<String>();
-		List<String>list_9=new ArrayList<String>();
-		List<String>list_10=new ArrayList<String>();
-		List<String>list_11=new ArrayList<String>();
-		List<String>list_12=new ArrayList<String>();
-		List<String>list_13=new ArrayList<String>();
-		List<String>list_14=new ArrayList<String>();
-		List<String>list_15=new ArrayList<String>();
-		List<String>list_16=new ArrayList<String>();	
-		
-						
-		//產能
-		list_1.add("產能模__模");
-		list_1.add("產能雙__雙");
-		list_1.add("生產天數__天");
-		//水
-		list_2.add("用水量__噸");
-		list_2.add("用水金額__USD");
-		list_2.add("用量單耗__噸/模");
-		list_2.add("費用單耗__USD/模");
-		list_2.add("用量單耗排名__排名原則");
-		//電
-		list_3.add("用電量(度)__度");
-		list_3.add("用電費用__USD");
-		list_3.add("用量單耗__度/模");
-		list_3.add("費用單耗__USD/模");
-		list_3.add("用量單耗排名__排名原則");
-		//蒸汽
-		list_4.add("蒸汽用量__噸");
-		list_4.add("蒸汽費用__USD");
-		list_4.add("用量單耗__噸/模");
-		list_4.add("費用單耗__USD/模");
-		list_4.add("用量單耗排名__排名原則");
-		//總工務費用金額(USD)
-		list_5.add("雜項購置__USD");
-		list_5.add("雜項支出-其他__USD");
-		list_5.add("電腦耗材__USD");
-		list_5.add("文具用品類__USD");
-		list_5.add("修繕類-機器設備__USD");
-		list_5.add("修繕費-其它類__USD");
-		list_5.add("車輛維修費__USD");
-		list_5.add("服裝費__USD");
-		list_5.add("清潔/消毒費__USD");
-		list_5.add("工程整改費__USD");
-		list_5.add("工傷__USD");
-		list_5.add("費用小計__USD");
-		list_5.add("費用小計單耗__USD/模");
-		list_5.add("金額單耗排名__排名原則");
-		//成倉
-		list_6.add("成品庫存__雙");
-		list_6.add("天數__天");
-		list_6.add("天數排名__排名原則");
-		//原物料
-		list_7.add("原料庫存量__KG");
-		list_7.add("原料庫存金額__USD");
-		list_7.add("原料庫存天數__天");
-		list_7.add("天數排名__排名原則");
-		list_7.add("呆滯料庫存__KG");
-		list_7.add("呆滯料庫存金額(USD)__USD");
-		list_7.add("呆滯料庫存量排名__排名原則");
-		//防霜劑
-		list_8.add("防霜劑用量__KG");
-		list_8.add("防霜劑金額__USD");
-		list_8.add("防霜劑用量單耗__KG/模");
-		list_8.add("防霜劑金額單耗__USD/模");
-		list_8.add("用量單耗排名__排名原則");
-		//色料
-		list_9.add("色料用量__KG");
-		list_9.add("色料金額__USD");
-		list_9.add("色料用量單耗__KG/模");
-		list_9.add("色料金額單耗__USD/模");
-		list_9.add("用量單耗排名__排名原則");
-		//促進劑
-		list_10.add("藥品用量__KG");
-		list_10.add("藥品金額__USD");
-		list_10.add("藥品用量單耗__KG/模");
-		list_10.add("藥品金額單耗__USD/模");
-		list_10.add("用量單耗排名__排名原則");
-		//防粘劑
-		list_11.add("防粘劑用量__KG");
-		list_11.add("防粘劑金額__USD");
-		list_11.add("防粘劑用量單耗__KG/模");
-		list_11.add("防粘劑金額單耗__USD/模");
-		list_11.add("用量單耗排名__排名原則");
-		//油漆/處理劑
-		list_12.add("油漆溶劑用量__KG");
-		list_12.add("油漆溶劑金額__USD");
-		list_12.add("油漆溶劑用量單耗__KG/模");
-		list_12.add("油漆溶劑金額單耗__USD/模");
-		list_12.add("用量單耗排名__排名原則");
-		//離型劑
-		list_13.add("離型劑用量__KG");
-		list_13.add("離型劑金額__USD");
-		list_13.add("離型劑用量單耗__KG/模");
-		list_13.add("離型劑金額單耗__USD/模");
-		list_13.add("用量單耗排名__排名原則");
-		//人工費用
-		list_14.add("直接工資__USD");
-		list_14.add("直工工資單耗__USD/模");
-		list_14.add("直工工資單耗排名__排名原則");
-		list_14.add("間接工資__USD");
-		list_14.add("間接工資單耗__USD/模");
-		list_14.add("間接工資單耗排名__排名原則");
-		list_14.add("加班費金額__USD");
-		list_14.add("加班費單耗__USD/模");
-		list_14.add("加班費單耗排名__排名原則");
-		list_14.add("獎金金額__USD");
-		list_14.add("獎金單耗__USD/模");
-		list_14.add("獎金單耗排名__排名原則");
-		list_14.add("其加金額__USD");
-		list_14.add("其加單耗__USD/模");
-		list_14.add("其加單耗排名__排名原則");
-		//其他
-		list_15.add("模具修理費__USD");
-		list_15.add("差旅費__USD");
-		list_15.add("交際費用__USD");
-		list_15.add("包裝費用__USD");
-		list_15.add("其它費用小計__USD");
-		list_15.add("費用小計單耗__USD/模");
-		list_15.add("費用單耗排名__排名原則");
-		//廢品倉
-		list_16.add("廢品倉報廢重量__KG");
-		list_16.add("廢品倉報廢金額__USD");
-		list_16.add("重量單耗__KG/模");
-		list_16.add("重量單耗排名__排名原則");
-		
-		map.put("產能",list_1);
-		map.put("原物料",list_7);
-		map.put("防霜劑",list_8);
-		map.put("色料",list_9);
-		map.put("促進劑",list_10);
-		map.put("防粘劑",list_11);
-		map.put("油漆/處理劑",list_12);
-		map.put("離型劑",list_13);
-		map.put("水",list_2);
-		map.put("電",list_3);
-		map.put("蒸汽",list_4);
-		map.put("總工務費用",list_5);
-		map.put("其他",list_15);
-		map.put("人工費用",list_14);
-		map.put("成倉", list_6);	
-		map.put("廢品倉",list_16);*/
-		
+		Map<String,Object>map = new LinkedHashMap<String,Object>();				
 		List<WebVwebbussortItemn>list=webbussitemSer.findAll();
 		List<WebVwebussortSubitem>list2=webbussitemSer.findAll2();
 		for(WebVwebbussortItemn item:list){
@@ -956,129 +798,14 @@ public class VWebbussortActionNew extends ActionSupport implements ServletRespon
 	 * @author web
 	 * @date 2016/4/11
 	 */
-	public List<WebVwebussortSubitem> findTemps() {
-		/*List<String> list = new ArrayList<String>();			
-		//產能
-		list.add("產能模");
-		list.add("產能雙");
-		list.add("生產天數");
-		//水
-		list.add("用水量");
-		list.add("用水金額");
-		list.add("compare obj");		
-		list.add("費用單耗");
-		list.add("排名");
-		//電
-		list.add("用電量(度)");
-		list.add("用電費用");
-		list.add("compare obj");
-		list.add("費用單耗");
-		list.add("排名");
-		//蒸汽
-		list.add("蒸汽用量");
-		list.add("蒸汽費用");
-		list.add("compare obj");
-		list.add("費用單耗");
-		list.add("排名");
-		//總工務費用
-		list.add("雜項購置");
-		list.add("雜項支出-其他");
-		list.add("電腦耗材");
-		list.add("文具用品類");
-		list.add("修繕類-機器設備");
-		list.add("修繕費-其它類");
-		list.add("車輛維修費");
-		list.add("服裝費");
-		list.add("清潔/消毒費");
-		list.add("工程整改費");
-		list.add("工傷");
-		list.add("費用小計");
-		list.add("compare obj");
-		list.add("排名");
-		//成倉
-		list.add("成品庫存");
-		list.add("compare obj");
-		list.add("排名");
-		//原物料
-		list.add("原料庫存量");
-		list.add("原料庫存金額");
-		list.add("compare obj");
-		list.add("排名");
-		list.add("compare obj");
-		list.add("呆滯料庫存金額(USD)");		
-		list.add("排名");
-		//防霜劑
-		list.add("防霜劑用量");
-		list.add("防霜劑金額");
-		list.add("compare obj");
-		list.add("防霜劑金額單耗");
-		list.add("排名");
-		//色料
-		list.add("色料用量");
-		list.add("色料金額");
-		list.add("compare obj");
-		list.add("色料金額單耗");
-		list.add("排名");
-		//促進劑
-		list.add("藥品用量");
-		list.add("藥品金額");
-		list.add("compare obj");
-		list.add("藥品金額單耗");
-		list.add("排名");
-		//防粘劑
-		list.add("防粘劑用量");
-		list.add("防粘劑金額");
-		list.add("compare obj");
-		list.add("防粘劑金額單耗");
-		list.add("排名");
-		//油漆處理劑
-		list.add("油漆溶劑用量");
-		list.add("油漆溶劑金額");
-		list.add("compare obj");
-		list.add("油漆溶劑金額單耗");
-		list.add("排名");
-		//離型劑
-		list.add("離型劑用量");
-		list.add("離型劑金額");
-		list.add("compare obj");
-		list.add("離型劑金額單耗");
-		list.add("排名");
-		//人工費用
-		list.add("直接工資");
-		list.add("compare obj");
-		list.add("排名");
-		list.add("間接工資");
-		list.add("compare obj");
-		list.add("排名");
-		list.add("加班費金額");
-		list.add("compare obj");
-		list.add("排名");
-		list.add("獎金金額");
-		list.add("compare obj");
-		list.add("排名");
-		list.add("其加金額");
-		list.add("compare obj");
-		list.add("排名");
-		//其它
-		list.add("模具修理費");
-		list.add("差旅費");
-		list.add("交際費用");
-		list.add("包裝費用");
-		list.add("其它費用小計");
-		list.add("compare obj");
-		list.add("排名");
-		//廢品倉
-		list.add("廢品倉報廢重量");
-		list.add("廢品倉報廢金額");
-		list.add("compare obj");
-		list.add("排名");*/
+	public List<WebVwebussortSubitem> findTemps() {		
 		List<WebVwebussortSubitem>list=webbussitemSer.findAll2();
 		return list;
 
 	}
 	
 	/**
-	 * 所有樣式
+	 * 表格樣式
 	 * @Title: findStyles
 	 * @Description: TODO
 	 * @param @param wb

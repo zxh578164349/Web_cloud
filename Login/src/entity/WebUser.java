@@ -9,6 +9,13 @@ import java.util.Set;
  * WebUser entity. @author MyEclipse Persistence Tools
  */
 
+/**
+ * 
+* 項目名稱：WebLogin   
+* 類名稱：WebUser   
+* 類描述：用戶數據表
+* 創建人：KY2
+ */
 public class WebUser implements java.io.Serializable {
 
 	// Fields

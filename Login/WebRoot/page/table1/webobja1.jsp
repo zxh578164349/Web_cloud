@@ -31,7 +31,7 @@
 					<s:if test='#session.loginUser.userread!="1"'>
 						<!--<input type="button" class="btn btn-info" value="添加" onclick="loadUrl('saveAndUpdate/fixedSaveOrUpdate.jsp')"/>-->
 					</s:if>
-					<span id="h2_title">工廠訊息每日更新A</span>
+					<span id="h2_title">工廠訊息每日更新</span>
 				</h3>
 				<thead>
 					<tr class="tr_show">

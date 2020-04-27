@@ -15,19 +15,13 @@ import com.opensymphony.xwork2.ActionSupport;
 
 import entity.WebDepartment;
 
-/**   
- *    
- * 项目名称：WebLogin   
- * 类名称：WebDepartmentAction   
- * 类描述：   
- * 创建人：Administrator   
- * 创建时间：2017/12/15 下午2:57:15   
- * 修改人：Administrator   
- * 修改时间：2017/12/15 下午2:57:15   
- * 修改备注：   
- * @version    
- *    
- **/
+/**
+ * 
+* 項目名稱：WebLogin   
+* 類名稱：WebDepartmentAction   
+* 類描述：部門設置
+* 創建人：KY2
+ */
 public class WebDepartmentAction extends ActionSupport{
 	private String factNo;
 	private JSONArray jsons;
@@ -124,16 +118,30 @@ public class WebDepartmentAction extends ActionSupport{
 		return "findWebDepartmentByFactNo";
 	}
 	
+	/**
+	 * 分頁查詢
+	 * @return
+	 */
 	public String findPageBean(){	
 		ActionContext.getContext().getSession().remove("allrow");
 		bean=webdepServices.findPageBean(page, 0, factNo);
 		ActionContext.getContext().getSession().put("public_factNo", factNo);
 		return "beanList";
 	}
+	
+	/**
+	 * 分頁查詢2
+	 * @return
+	 */
 	public String findPageBean2(){				
 		this.findPageBean();
 		return "beanList1";
 	}
+	
+	/**
+	 * 分頁查詢3
+	 * @return
+	 */
 	public String findPageBean3(){		
 		factNo=(String)ActionContext.getContext().getSession().get("public_factNo");		
 		bean=webdepServices.findPageBean(page, 0, factNo);
@@ -149,6 +157,10 @@ public class WebDepartmentAction extends ActionSupport{
 		return "findById";
 	}
 	
+	/**
+	 * 添加修改
+	 * @return
+	 */
 	public String add(){
 		try{
 			webdepServices.add(dep);

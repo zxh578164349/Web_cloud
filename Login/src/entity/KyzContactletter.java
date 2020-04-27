@@ -6,23 +6,30 @@ import java.util.List;
  * KyzContactletter entity. @author MyEclipse Persistence Tools
  */
 
+/**
+ * 
+* 項目名稱：WebLogin   
+* 類名稱：KyzContactletter   
+* 類描述：內部聯絡函
+* 創建人：KY2
+ */
 public class KyzContactletter implements java.io.Serializable {
 
 	// Fields
 
 	private KyzContactletterId id;
-	private String secNo;//�ӿ���
-	private String chargeNo;//�ӿ�D��
-	private String ymExpect;//�إߤ��
-	private String userNm;//�ӽФH
-	private String toUser;//����
-	private String chargeList;//CC�]�e�^
-	private String title;//���D
-	private String memoMk;//���e
-	private String visaType;//����
-	private String filesYn;//�O�_������
-	private String firstPage;//�O�_��ܲĤ@��
-	private String factCode;//�t�O���A
+	private String secNo;
+	private String chargeNo;
+	private String ymExpect;
+	private String userNm;
+	private String toUser;
+	private String chargeList;
+	private String title;
+	private String memoMk;
+	private String visaType;
+	private String filesYn;
+	private String firstPage;
+	private String factCode;
 	private String colTemp;
 	private String delMk;//刪除標記       0或空 未刪除     1刪除
 	private String visaTypeM;//類別大類

@@ -4,6 +4,13 @@ package entity;
  * KyzExpectmatmFile entity. @author MyEclipse Persistence Tools
  */
 
+/**
+ * 
+* 項目名稱：WebLogin   
+* 類名稱：KyzExpectmatmFile   
+* 類描述：函文附檔文件
+* 創建人：KY2
+ */
 public class KyzExpectmatmFile implements java.io.Serializable {
 
 	// Fields

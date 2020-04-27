@@ -9,6 +9,13 @@ import java.util.Set;
  * WebMenu entity. @author MyEclipse Persistence Tools
  */
 
+/**
+ * 
+* 項目名稱：WebLogin   
+* 類名稱：WebMenu   
+* 類描述：主菜單
+* 創建人：KY2
+ */
 public class WebMenu implements java.io.Serializable {
 
 	// Fields

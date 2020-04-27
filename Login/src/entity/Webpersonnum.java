@@ -4,6 +4,13 @@ package entity;
  * Webpersonnum entity. @author MyEclipse Persistence Tools
  */
 
+/**
+ * 
+* 項目名稱：WebLogin   
+* 類名稱：Webpersonnum   
+* 類描述：人員考勤
+* 創建人：KY2
+ */
 public class Webpersonnum implements java.io.Serializable {
 
 	// Fields

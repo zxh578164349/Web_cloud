@@ -17,6 +17,13 @@ import entity.WebUser;
 import entity.WebWeeklyreport;
 import entity.custom.ProjectConfig;
 
+/**
+ * 
+* 項目名稱：WebLogin   
+* 類名稱：AutoSendWebWeeklyreport   
+* 類描述：業務周報告(發送郵件)
+* 創建人：KY2
+ */
 public class AutoSendWebWeeklyreport extends QuartzJobBean{
 
 	@Override

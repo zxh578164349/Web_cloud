@@ -39,6 +39,13 @@ import entity.KyzExpectmats;
 import entity.WebType;
 import entity.WebUser;
 
+/**
+ * 
+* 項目名稱：WebLogin   
+* 類名稱：KyzExpcetmatmAction   
+* 類描述：函文申請
+* 創建人：KY2
+ */
 public class KyzExpcetmatmAction extends ActionSupport implements ServletResponseAware{
 	private KyzExpectmatm kyz;
 	private IWebFactServices webFactSer;
@@ -385,6 +392,11 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 		this.kyzExpLogSer = kyzExpLogSer;
 	}
 
+	/**
+	 * 添加修改
+	 * @return
+	 * @throws Exception
+	 */
 	public String add() throws Exception  {
 		/*文件上傳驗證*/
 		if(files!=null&&files.get(0)!=null){
@@ -616,14 +628,22 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 		    return b.toString();
 		  }
 
-	
+	/**
+	 * 解決中文亂碼問題
+	 * @param filename
+	 * @return
+	 * @throws UnsupportedEncodingException
+	 */
 	public String toUrl(String filename) throws UnsupportedEncodingException{
 		//String filename2=filename.replace("/u", "%");
 		String urlname2=URLDecoder.decode(filename,"utf-8");
 		return urlname2;
 	}
 	
-	
+	/**
+	 * 分頁查詢
+	 * @return
+	 */
 	public String findPageBean() {
 		//ActionContext.getContext().getApplication().clear();
 		ActionContext.getContext().getSession().remove("public_factno");
@@ -639,6 +659,10 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 		return "beanList";
 	}
 
+	/**
+	 * 分頁查詢2
+	 * @return
+	 */
 	public String findPageBean2() {
 		//ActionContext.getContext().getApplication().clear();				
 			ActionContext.getContext().getSession().put("public_factno", factNo);					
@@ -653,6 +677,10 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 		return "beanList1";
 	}
 
+	/**
+	 * 分頁查詢3
+	 * @return
+	 */
 	public String findPageBean3() {
 		String result="beanList1";
 		if(backIndex==1){
@@ -740,11 +768,22 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 		
 	}
 	
+	/**
+	 * 數據格式整數
+	 * @param s
+	 * @return
+	 */
 	public String formatDouble(double s){
 		DecimalFormat format=new DecimalFormat("#");
 		String temp=format.format(s);
 		return temp;				
 	}
+	
+	/**
+	 * 數據格式一位小數
+	 * @param s
+	 * @return
+	 */
 	public String formatDouble2(double s){
 		DecimalFormat format=new DecimalFormat(",###.#");
 		String temp=format.format(s);
@@ -762,29 +801,11 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 		}		
 		return result;
 	}
-	
-	/*public void getTypeName(PageBean bean){
-		List<KyzExpectmatm>list=bean.getList();
-		for(int i=0;i<list.size();i++){
-			KyzExpectmatm kyz=list.get(i);
-			String factno=kyz.getId().getFactNo();
-			String visaSort=kyz.getVisaType();		
-				char visaSort_char=visaSort.charAt(0);
-				String typename="";
-				if(visaSort_char=='C'){
-					typename=webtypeSer.findTypeNameById(factno, visaSort.substring(0, 2));
-				}else{					
-					//typename=webtypeSer.findTypeNameById(factno, visaSort);
-					typename=webtypeSer.findTypeNameById(factno, visaSort.substring(0, 2));
-				}
-				if(typename!=null&&!typename.equals("")){
-					kyz.setColTemp(typename);	
-				}else{
-					kyz.setColTemp(visaSort);
-				}					
-		}
-	}*/
-	
+		
+	/**
+	 *獲取名稱
+	 * @param bean
+	 */
 	public void getTypeName(PageBean bean){
 		List<KyzExpectmatm>list=bean.getList();
 		List<WebType>list_type=(List<WebType>)ActionContext.getContext().getSession().get("list_webtype");/********20151029登錄時已經記錄**************/
@@ -812,17 +833,11 @@ public class KyzExpcetmatmAction extends ActionSupport implements ServletRespons
 			kyz.setColTemp(typename);
 		}//for1				
 	}
-	
-/*	public JSONArray fileJson(){
-		List<KyzExpectmatmFile> listfiles=kyzexpfileSer.findByBillNo(billNo);
-		*//******************list轉json*************************//*
-		JSONArray jsonList=JSONArray.fromObject(listfiles);
-		*//******************list轉json*************************//*
-		return jsonList;
-	}*/
-	
+		
 	/**
 	 * 解決url中空格轉換成 +號的問題
+	 * @param filename
+	 * @return
 	 */
 	public String toUrl2(String filename){		
 		return filename.replace("+", "%20").replace("%20", "+");

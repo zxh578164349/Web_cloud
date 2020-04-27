@@ -42,6 +42,13 @@ import entity.WebYieldData;
 import entity.WebYieldDataId;
 import entity.WebYieldDataLog;
 
+/**
+ * 
+* 項目名稱：WebLogin   
+* 類名稱：WebYdataAction   
+* 類描述：產量資料
+* 創建人：KY2
+ */
 public class WebYdataAction extends ActionSupport implements
 		ServletResponseAware, ServletRequestAware {
 	private WebYieldData ydata;
@@ -284,6 +291,12 @@ public class WebYdataAction extends ActionSupport implements
 		this.webFactSer = webFactSer;
 	}
 
+	/**
+	 * 添加修改
+	 * @return
+	 * @throws ParseException
+	 * @throws IOException
+	 */
 	public String addData() throws ParseException, IOException {				
 		DateFormat format = new SimpleDateFormat("yyyyMMdd");
 		Date date = null;
@@ -383,70 +396,15 @@ public class WebYdataAction extends ActionSupport implements
 
 	}
 
-	/**
-	 * ���豢�
-	 * 
-	 * @return
-	 */
-	public void list() {
-
-		pages.setPage(page);
-		if (pages.getPage() > pages.getPageSize()) {
-			pages.setPage(pages.getPageSize());
-		}
-		if (pages.getPage() == 1 || pages.getPage() < 1) {
-			pages.setPage(1);
-		}
-		if (factNo != null && !factNo.equals("")) {
-			ActionContext.getContext().getSession().put("factNo", factNo);
-		}
-		String factNos = (String) ActionContext.getContext().getSession()
-				.get("factNo");
-		List<WebYieldData> bList = dataSer.selectYDate(factNos, yymm,
-				pages.getPage(), pages.getRows());
-		ActionContext.getContext().getSession().put("ydataList", bList);
-		pages.setCount(dataSer.totlePage(factNo, yymm));
-		if (pages.getCount() % pages.getRows() == 0) {
-			pages.setPageSize(pages.getCount() / pages.getRows());
-		} else {
-			pages.setPageSize(pages.getCount() / pages.getRows() + 1);
-		}
-	}
-
-	/**
-	 * �憿舐內�豢�
-	 * 
-	 * @return
-	 */
-	public String getList() {
-		list();
-		if (factNo != null && !factNo.equals("") || yz == 1) {
-			return "showList1";
-		} else {
-			return "showList";
-		}
-	}
-
-	/**
-	 * 擐�憿舐內�豢�
-	 */
-	public String getList1() {
-		list();
-		return "list";
-	}
-
 	public String findById() {
-		ydata = dataSer.findById(id);
-		/*if (ydata.getWorkorholiday() == null
-				|| ydata.getWorkorholiday().equals("0")) {
-			return "findById";
-		} else {
-			return "findById2";
-		}*/
+		ydata = dataSer.findById(id);		
 		return "findById";
-
 	}
 
+	/**
+	 * 分頁查詢
+	 * @return
+	 */
 	public String findPageBean() {		
 		System.out.println(request.getRequestURI());
 		ActionContext.getContext().getSession().remove("public_factno");
@@ -459,6 +417,10 @@ public class WebYdataAction extends ActionSupport implements
 
 	}
 
+	/**
+	 * 分頁查詢2
+	 * @return
+	 */
 	public String findPageBean2() {		
 		ActionContext.getContext().getSession().remove("public_factno");
 		ActionContext.getContext().getSession().remove("public_yymm");
@@ -479,6 +441,10 @@ public class WebYdataAction extends ActionSupport implements
 		return "beanList1";
 	}
 
+	/**
+	 * 分頁查詢3
+	 * @return
+	 */
 	public String findPageBean3() {
 		String result="beanList1";
 		if(backIndex==1){
@@ -494,14 +460,13 @@ public class WebYdataAction extends ActionSupport implements
 
 		return result;
 
-	}
+	}	
 
-	public String findPageBean4() {
-		String result = this.findPageBean3();
-		result = "beanList";
-		return result;
-	}
-
+	/**
+	 * 刪除
+	 * @return
+	 * @throws ParseException
+	 */
 	public String delete() throws ParseException {
 		//ydata = dataSer.findById(id);
 		WebYieldDataLog log = new WebYieldDataLog();
@@ -512,66 +477,11 @@ public class WebYdataAction extends ActionSupport implements
 		log.setYymmdd(id.getYymmdd());
 		log.setIsdel("0");
 		log.setLogTime(new Date());
-
-		//String ipAddress = null;	
-		/*ipAddress = request.getHeader("x-forwarded-for");
-		if (ipAddress == null || ipAddress.length() == 0
-				|| "unknown".equalsIgnoreCase(ipAddress)) {
-			ipAddress = request.getHeader("Proxy-Client-IP");
-		}
-		if (ipAddress == null || ipAddress.length() == 0
-				|| "unknown".equalsIgnoreCase(ipAddress)) {
-			ipAddress = this.request.getHeader("WL-Proxy-Client-IP");
-		}
-		if (ipAddress == null || ipAddress.length() == 0
-				|| "unknown".equalsIgnoreCase(ipAddress)) {
-			ipAddress = this.request.getRemoteAddr();
-			if (ipAddress.equals("127.0.0.1")) {
-				InetAddress inet = null;
-				try {
-					inet = InetAddress.getLocalHost();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-				ipAddress = inet.getHostAddress();
-			}
-		}
-		if (ipAddress != null && ipAddress.length() > 15) {
-			if (ipAddress.indexOf(",") > 0) {
-				ipAddress = ipAddress.substring(0, ipAddress.indexOf(","));
-			}
-		}*/
+		
 		String ipAddress=GlobalMethod.findIp();//獲取本機IP
 		log.setIp(ipAddress);
 		dataSer.addYdate_log(log);
-		dataSer.delete(id);
-				
-		/*DateFormat format=new SimpleDateFormat("yyyyMM");
-		yymm=format.format(id.getYymmdd());
-		String yymm_last="";
-		String yymm_next="";
-		Calendar cal=Calendar.getInstance();
-		cal.setTime(format.parse(yymm));
-		cal.add(Calendar.MONTH, -1);
-		yymm_last=format.format(cal.getTime());
-		cal.add(Calendar.MONTH, 2);
-		yymm_next=format.format(cal.getTime());
-		List<String>list_yymm=new ArrayList<String>();
-		list_yymm.add(yymm_last);
-		list_yymm.add(yymm);
-		list_yymm.add(yymm_next);
-		for(int i=0;i<list_yymm.size();i++){
-			List<SumWebYieldData>list_sumYdata=sumydateSer.findByFactNo2(id.getFactNo(), list_yymm.get(i));
-			if(list_sumYdata.size()>0){
-				for(int k=0;k<list_sumYdata.size();k++){
-					SumWebYieldData sumYdata=list_sumYdata.get(k);
-					//sumydateSer.delete(sumYdata);
-					String sumydata_username=sumYdata.getUsername()==null?"none":sumYdata.getUsername();
-					String sumydata_username_ud=sumYdata.getUsernameUd()==null?"none":sumYdata.getUsernameUd();
-					this.add_sumYdata(sumYdata.getId().getFactNo().getFactNo(),sumYdata.getId().getFactCode(), list_yymm.get(i), sumYdata.getStartDate(), sumYdata.getEndDate(),sumydata_username,sumydata_username_ud);
-				}
-			}							
-		}*/	
+		dataSer.delete(id);							
 		
 		//更新盤點數據
 		this.updatesumYdate(id.getFactNo(),new SimpleDateFormat("yyyyMMdd").format(id.getYymmdd()));
@@ -618,27 +528,7 @@ public class WebYdataAction extends ActionSupport implements
 				}
 			}							
 		}
-	}
-	
-
-	public String transit() {// 瘛餃�銝剛�action
-		transit = "transit";
-		return "transit";
-	}
-
-	public String findPageBean2_print() {		
-		ActionContext.getContext().getSession().put("print_ydata_factNo",factNo);
-		ActionContext.getContext().getSession().put("print_ydata_yymm",yymm);
-		bean=dataSer.findPageBean(20,page,factNo,sdate,edate);
-		return "list";
-	}
-
-	public String findPageBean3_print() {
-		factNo = (String) ActionContext.getContext().getSession().get("print_ydata_factNo");
-		yymm = (String) ActionContext.getContext().getSession().get("print_ydata_yymm");		
-		bean = dataSer.findPageBean(20,page, factNo, sdate,edate);
-		return "list";
-	}
+	}		
 
 	public String formatDouble(double s) {
 		DecimalFormat format = new DecimalFormat(",###.#");
@@ -680,21 +570,7 @@ public class WebYdataAction extends ActionSupport implements
 		return "beanListForMonth1";
 
 	}
-
-	public String findPageBean2_print_formonth() {
-		ActionContext.getContext().getSession().put("print_ydata_factNo_formonth",factNo);
-		ActionContext.getContext().getSession().put("print_ydata_yymm_formonth",yymm);
-		bean=dataSer.findAllYDataForMonth(15,page,factNo,yymm);
-		return "list_formonth";
-	}
-
-	public String findPageBean3_print_formonth() {
-		factNo = (String) ActionContext.getContext().getSession().get("print_ydata_factNo_formonth");
-		yymm = (String) ActionContext.getContext().getSession().get("print_ydata_yymm_formonth");		
-		bean = dataSer.findAllYDataForMonth(15, page, factNo, yymm);
-		return "list_formonth";
-	}
-
+	
 	public String findNulFact() {
 		nulllist_data = dataSer.findNullYdata(yymm);
 		return "findNulFact";
@@ -724,32 +600,7 @@ public class WebYdataAction extends ActionSupport implements
 			id.setFactCode(factCode);
 			id.setYymm(yymm);
 			ydate.setId(id);
-			if(list_ydata!=0){
-				/*BigDecimal onModulus=new BigDecimal((objs[0]==null?0:objs[0]).toString());
-				BigDecimal personnum=new BigDecimal((objs[1]==null?0:objs[1]).toString());
-				BigDecimal standardOutput=new BigDecimal((objs[2]==null?0:objs[2]).toString());
-				BigDecimal actualYield=new BigDecimal((objs[3]==null?0:objs[3]).toString());
-				BigDecimal daycount=new BigDecimal((objs[4]==null?0:objs[4]).toString());
-				BigDecimal actualpairs=new BigDecimal((objs[5]==null?0:objs[5]).toString());
-				BigDecimal hostpairs=new BigDecimal((objs[6]==null?0:objs[6]).toString());
-				BigDecimal factpairs=new BigDecimal((objs[7]==null?0:objs[7]).toString());
-				BigDecimal samplepairs=new BigDecimal((objs[8]==null?0:objs[8]).toString());
-				BigDecimal outnum=new BigDecimal((objs[9]==null?0:objs[9]).toString());
-				BigDecimal backnum=new BigDecimal((objs[10]==null?0:objs[10]).toString());
-				Double workhours=(Double)(objs[11]==null?0.0:objs[11]);				
-				
-				ydate.setSumEverydemo(onModulus);
-				ydate.setSumEverypeople(personnum);
-				ydate.setSumStandarddemo(standardOutput);
-				ydate.setSumActualdemo(actualYield);
-				ydate.setSumWorkdays(daycount);
-				ydate.setSumActualpairs(actualpairs);
-				ydate.setSumHostpairs(hostpairs);
-				ydate.setSumFactpairs(factpairs);
-				ydate.setSumSamplepairs(samplepairs);
-				ydate.setSumOutnum(outnum);
-				ydate.setSumBacknum(backnum);
-				ydate.setSumWorkhours(workhours);*/
+			if(list_ydata!=0){				
 				GlobalMethod.add_sumYdata(objs,list_ydata,ydate);
 			}		
 			ydate.setStartDate(startDate);
@@ -765,6 +616,9 @@ public class WebYdataAction extends ActionSupport implements
 		
 	}
 	
+	/**
+	 * 導出數據
+	 */
 	public void print(){
 		Map<String,Object>map=new HashMap<String,Object>();		
 		List<WebYieldData>list=dataSer.findYdate(factNo, sdate, edate);
@@ -790,6 +644,10 @@ public class WebYdataAction extends ActionSupport implements
 		
 	}
 	
+	/**
+	 * 導入數據
+	 * @throws IOException
+	 */
 	public void importFile() throws IOException{
 		response.setContentType("text/html;charset=utf-8");
 		try{

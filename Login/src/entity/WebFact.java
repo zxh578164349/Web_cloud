@@ -7,6 +7,13 @@ import java.util.List;
  * WebFact entity. @author MyEclipse Persistence Tools
  */
 
+/**
+ * 
+* 項目名稱：WebLogin   
+* 類名稱：WebFact   
+* 類描述：工廠數據表
+* 創建人：KY2
+ */
 public class WebFact implements java.io.Serializable {
 
 	// Fields

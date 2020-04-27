@@ -24,6 +24,13 @@ import entity.KyzExpectmatmLog;
 import entity.WebType;
 import entity.WebUser;
 
+/**
+ * 
+* 項目名稱：WebLogin   
+* 類名稱：WebTypeAction   
+* 類描述：簽核類別管理
+* 創建人：KY2
+ */
 public class WebTypeAction extends ActionSupport{
 	private int page;
 	private int pageSize;
@@ -129,6 +136,11 @@ public class WebTypeAction extends ActionSupport{
 	public void setVisabillmSer(IKyVisabillmServices visabillmSer) {
 		this.visabillmSer = visabillmSer;
 	}
+	
+	/**
+	 * 添加修改
+	 * @return
+	 */
 	public String add(){
 		try{
 			//如果頁面上選擇了 "其它類" 以外選項時，則在後臺賦值typeNo     20161116
@@ -150,6 +162,11 @@ public class WebTypeAction extends ActionSupport{
 		}		
 		return "add";
 	}
+	
+	/**
+	 * 分頁查詢
+	 * @return
+	 */
 	public String findPageBean(){
 		//ActionContext.getContext().getApplication().clear();
 		ActionContext.getContext().getSession().remove("public_factNo");
@@ -157,6 +174,11 @@ public class WebTypeAction extends ActionSupport{
 		bean=webtypeSer.findPageBean(page, 25, factNo);
 		return "beanList";
 	}
+	
+	/**
+	 * 分頁查詢2
+	 * @return
+	 */
 	public String findPageBean2(){
 		//ActionContext.getContext().getApplication().clear();
 		ActionContext.getContext().getSession().remove("public_factNo");
@@ -164,6 +186,11 @@ public class WebTypeAction extends ActionSupport{
 		ActionContext.getContext().getSession().put("public_factNo", factNo);
 		return "beanList1";
 	}
+	
+	/**
+	 * 分頁查詢3
+	 * @return
+	 */
 	public String findPageBean3(){
 		String result="beanList1";
 		if(backIndex==1){
@@ -176,6 +203,11 @@ public class WebTypeAction extends ActionSupport{
 		bean=webtypeSer.findPageBean(page, 25, factNo);
 		return result;
 	}
+	
+	/**
+	 * 刪除
+	 * @return
+	 */
 	public String delete(){
 		try{
 			/*********************刪除記錄**************************/
@@ -234,6 +266,10 @@ public class WebTypeAction extends ActionSupport{
 		return "findPF";
 	}
 	
+	/**
+	 * 找出各工廠的函文類型
+	 * @return
+	 */
 	public String findTypes(){
 		List<Object[]>list=webtypeSer.findTypes(factNo);
 		jsons=JSONArray.fromObject(list);

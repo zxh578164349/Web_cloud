@@ -4,6 +4,13 @@ package entity;
  * KyzVisaflow entity. @author MyEclipse Persistence Tools
  */
 
+/**
+ * 
+* 項目名稱：WebLogin   
+* 類名稱：KyzVisaflow   
+* 類描述：簽核流程
+* 創建人：KY2
+ */
 public class KyzVisaflow implements java.io.Serializable {
 
 	// Fields

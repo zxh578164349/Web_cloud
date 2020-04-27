@@ -6,6 +6,13 @@ import java.math.BigDecimal;
  * SumWebYieldData entity. @author MyEclipse Persistence Tools
  */
 
+/**
+ * 
+* 項目名稱：WebLogin   
+* 類名稱：SumWebYieldData   
+* 類描述：盤點資料
+* 創建人：KY2
+ */
 public class SumWebYieldData implements java.io.Serializable {
 
 	// Fields

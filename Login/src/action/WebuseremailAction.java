@@ -13,6 +13,13 @@ import entity.KyzExpectmatmLog;
 import entity.WebUser;
 import entity.WebuserEmail;
 
+/**
+ * 
+* 項目名稱：WebLogin   
+* 類名稱：WebuseremailAction   
+* 類描述：函文郵件同步人管理
+* 創建人：KY2
+ */
 public class WebuseremailAction extends ActionSupport{
 	private IWebuserEmailServices webuseremailSer;
 	private WebuserEmail useremail;
@@ -84,6 +91,10 @@ public class WebuseremailAction extends ActionSupport{
 		this.webuseremailSer = webuseremailSer;
 	}
 	
+	/**
+	 * 添加修改新數據
+	 * @return
+	 */
 	public String add(){
 		try{
 			webuseremailSer.add(useremail);
@@ -98,6 +109,11 @@ public class WebuseremailAction extends ActionSupport{
 		useremail=webuseremailSer.findById(factNo, email, emailpwd,typeMk);
 		return "findById";
 	}
+	
+	/**
+	 * 刪除數據
+	 * @return
+	 */
 	public String delete(){
 		KyzExpectmatmLog log=new KyzExpectmatmLog();
 		log.setObj("WebuserEmail");
@@ -108,6 +124,11 @@ public class WebuseremailAction extends ActionSupport{
 		webuseremailSer.delete(factNo, email, emailpwd,typeMk,log);                               
 		return "delete";
 	}
+	
+	/**
+	 * 分頁查詢
+	 * @return
+	 */
 	public String findPageBean(){		
 		ActionContext.getContext().getSession().remove("public_factno");
 		ActionContext.getContext().getSession().remove("public_email");
@@ -115,6 +136,11 @@ public class WebuseremailAction extends ActionSupport{
 		bean=webuseremailSer.findPageBean(20,page, factNo, email,typeMk);
 		return "beanList";
 	}
+	
+	/**
+	 * 分頁查詢2
+	 * @return
+	 */
 	public String findPageBean2(){
 		bean=webuseremailSer.findPageBean(20,page, factNo, email,typeMk);
 		ActionContext.getContext().getSession().put("public_factno", factNo);
@@ -122,6 +148,11 @@ public class WebuseremailAction extends ActionSupport{
 		ActionContext.getContext().getSession().put("public_typeMk",typeMk);
 		return "beanList1";
 	}
+	
+	/**
+	 * 分頁查詢3
+	 * @return
+	 */
 	public String findPageBean3(){
 		String result="beanList1";
 		if(backIndex==1){

@@ -4,6 +4,13 @@ package entity;
  * WebEmailAll entity. @author MyEclipse Persistence Tools
  */
 
+/**
+ * 
+* 項目名稱：WebLogin   
+* 類名稱：WebEmailAll   
+* 類描述：郵件發送管理
+* 創建人：KY2
+ */
 public class WebEmailAll implements java.io.Serializable{
 
 	// Fields

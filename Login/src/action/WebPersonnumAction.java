@@ -28,6 +28,13 @@ import com.opensymphony.xwork2.ActionSupport;
 
 import entity.*;
 
+/**
+ * 
+* 項目名稱：WebLogin   
+* 類名稱：WebPersonnumAction   
+* 類描述：人員考勤
+* 創建人：KY2
+ */
 public class WebPersonnumAction extends ActionSupport implements
 		ServletResponseAware {
 	private IWebPersonnumServices personNumSer;
@@ -191,6 +198,10 @@ public class WebPersonnumAction extends ActionSupport implements
 		return temp;
 	}
 
+	/**
+	 * 添加修改
+	 * @return
+	 */
 	public String add() {
 		DateFormat format = new SimpleDateFormat("yyyyMMdd");
 		Date date = null;
@@ -233,6 +244,10 @@ public class WebPersonnumAction extends ActionSupport implements
 		return result;
 	}
 
+	/**
+	 * 分頁查詢
+	 * @return
+	 */
 	public String findPageBean() {
 		ActionContext.getContext().getSession().remove("public_factNo");
 		ActionContext.getContext().getSession().remove("public_yymm");
@@ -243,6 +258,10 @@ public class WebPersonnumAction extends ActionSupport implements
 
 	}
 
+	/**
+	 * 分頁查詢2
+	 * @return
+	 */
 	public String findPageBean2() {		
 		ActionContext.getContext().getSession().put("public_factNo",factNo);
 		ActionContext.getContext().getSession().put("public_yymm",yymm);
@@ -252,6 +271,10 @@ public class WebPersonnumAction extends ActionSupport implements
 		return "beanList1";
 	}
 
+	/**
+	 * 分頁查詢3
+	 * @return
+	 */
 	public String findPageBean3() {
 		String result="beanList1";
 		if(backIndex==1){
@@ -264,21 +287,7 @@ public class WebPersonnumAction extends ActionSupport implements
 		bean = personNumSer.findPageBean(20,page, factNo, null,beginDay,endDay);
 		return result;
 
-	}
-
-	public String findPageBean2_print() {
-		ActionContext.getContext().getSession().put("print_personnum_factNo",factNo);
-		ActionContext.getContext().getSession().put("print_personnum_yymm",yymm);
-		bean=personNumSer.findPageBean(10,page,factNo,yymm,null,null);
-		return "list";
-	}
-
-	public String findPageBean3_print() {
-		factNo = (String) ActionContext.getContext().getSession().get("print_personnum_factNo");
-		yymm = (String) ActionContext.getContext().getSession().get("print_personnum_yymm");		
-		bean = personNumSer.findPageBean(10, page, factNo, yymm,null,null);
-		return "list";
-	}
+	}		
 
 	public String findById() {
 		person = personNumSer.findById(id);
@@ -286,6 +295,10 @@ public class WebPersonnumAction extends ActionSupport implements
 
 	}
 
+	/**
+	 * 刪除
+	 * @return
+	 */
 	public String delete() {
 		KyzExpectmatmLog log=new KyzExpectmatmLog();
 		log.setObj("Webpersonnum");
@@ -298,6 +311,9 @@ public class WebPersonnumAction extends ActionSupport implements
 		return "delete";
 	}
 	
+	/**
+	 * 導出數據
+	 */
 	public void print(){
 		List<Webpersonnum>list=new ArrayList<Webpersonnum>();
 		List<Object[]>list_obj=new ArrayList<Object[]>();
@@ -317,30 +333,7 @@ public class WebPersonnumAction extends ActionSupport implements
 				}
 			}
 		}
-		
-		/*List listfactno=webFactSer.findAllFact();
-		for(int x=0;x<listfactno.size();x++){
-			Object[] temp_factnos=(Object[])listfactno.get(x);
-			String temp_factno=(String)temp_factnos[0];
-			List<WebFact>listfactcodes=webFactSer.findFactById(temp_factno);
-			for(int y=0;y<listfactcodes.size();y++){
-				String temp_factcode=listfactcodes.get(y).getId().getFactArea();
-				Webpersonnum person=personNumSer.findById2(temp_factno, temp_factcode,yymmdd);	
-				String factname=webFactSer.selByid(temp_factno);
-				if(person==null){
-					person=new Webpersonnum();
-					WebpersonnumId id=new WebpersonnumId();
-					id.setFactNo(factname+"("+temp_factno+")");//合成廠別代號與名字,用於顯示在報表
-					id.setFactCode(temp_factcode);
-					person.setId(id);
-				}else{
-					person.getId().setFactNo(factname+"("+temp_factno+")");
-				}
-				list.add(person);
-				
-			}			
-		}*/
-				
+								
 		List<Object[]> factcodelist=webFactSer.findFactAreaAbled();//所有廠別狀態
 		List<Object[]>personlist=personNumSer.findByYnmmddAndFactcode( yymmdd);
 		for(int j=0;j<factcodelist.size();j++){
@@ -399,6 +392,10 @@ public class WebPersonnumAction extends ActionSupport implements
 		return "transit";
 	}
 	
+	/**
+	 * 出勤統計報表
+	 * @throws IOException
+	 */
 	public void print_search() throws IOException{
 		List<Webpersonnum>list=personNumSer.print_search(factNo, beginDay, endDay);
 		GlobalMethod.print(list, factNo, beginDay, endDay, "webpersonnum_one.jasper",response);

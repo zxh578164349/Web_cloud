@@ -58,6 +58,13 @@ import entity.WebType;
 import entity.WebUser;
 import entity_temp.VisabillsTemp;
 
+/**
+ * 
+* 項目名稱：WebLogin   
+* 類名稱：KyzContactLetterAction   
+* 類描述：內部聯絡函申請
+* 創建人：KY2
+ */
 public class KyzContactLetterAction extends ActionSupport implements ServletResponseAware{
 	private KyzContactletter kyzletter;
 	private PageBean bean;
@@ -259,6 +266,12 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 	public void setKyzExpLogSer(IKyzExpectmatmLogServices kyzExpLogSer) {
 		this.kyzExpLogSer = kyzExpLogSer;
 	}
+	
+	/**
+	 * 添加修改
+	 * @return
+	 * @throws IOException
+	 */
 	public String add() throws IOException{
 		/*文件上傳驗證*/
 		if(files!=null&&files.get(0)!=null){
@@ -345,6 +358,13 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 		}
 		return null;
 }
+	/**
+	 * 導出函文
+	 * @param factNo
+	 * @param billNo
+	 * @param sort
+	 * @throws IOException
+	 */
 	public void print(String factNo,String billNo,String sort) throws IOException{		
 		Map<String,Object>map_result=kyzletterSer.print(factNo, billNo, sort,null);
 		if(map_result!=null&&map_result.size()>0){
@@ -363,6 +383,10 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 								
 	}
 	
+	/**
+	 * 分頁查詢
+	 * @return
+	 */
 	public String findPageBean() {
 		//ActionContext.getContext().getApplication().clear();
 		ActionContext.getContext().getSession().remove("public_factNo");
@@ -378,6 +402,10 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 		return "beanList";
 	}
 
+	/**
+	 * 分頁查詢2
+	 * @return
+	 */
 	public String findPageBean2() {
 		//ActionContext.getContext().getApplication().clear();		
 		
@@ -394,6 +422,10 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 		return "beanList1";
 	}
 
+	/**
+	 * 分頁查詢3
+	 * @return
+	 */
 	public String findPageBean3() {
 		String result="beanList1";
 		if(backIndex==1){
@@ -464,6 +496,10 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 		return "findById_layer2";
 	}
 	
+	/**
+	 * 刪除
+	 * @return
+	 */
 	public String delete(){
 		try{
 			/*********************刪除記錄**************************/
@@ -491,30 +527,10 @@ public class KyzContactLetterAction extends ActionSupport implements ServletResp
 	}
 	
 	
-	
-	/*public void getTypeName(PageBean bean){
-		List<KyzContactletter>list=bean.getList();
-		for(int i=0;i<list.size();i++){
-			KyzContactletter letter=list.get(i);
-			String factno=letter.getId().getFactNo();
-			String visaSort=letter.getVisaType();
-			char visaSort_char=visaSort.charAt(0);
-			String typename="";
-			if(visaSort_char=='C'){
-				typename=webtypeSer.findTypeNameById(factno, visaSort.substring(0, 2));
-			}else{
-				//typename=webtypeSer.findTypeNameById(factno, visaSort);
-				typename=webtypeSer.findTypeNameById(factno, visaSort.substring(0, 2));
-			}
-			if(typename!=null&&!typename.equals("")){
-				letter.setColTemp(typename);	
-			}else{
-				letter.setColTemp(visaSort);
-			}
-					
-		}
-	}*/
-	
+	/**
+	 * 獲取中文名		
+	 * @param bean
+	 */
 	public void getTypeName(PageBean bean){
 		List<KyzContactletter>list=bean.getList();
 		List<WebType>list_type=(List<WebType>)ActionContext.getContext().getSession().get("list_webtype");/********20151029登錄時已經記錄**************/

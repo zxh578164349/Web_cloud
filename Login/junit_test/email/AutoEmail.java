@@ -22,7 +22,7 @@ import services.IWebEmailService;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration (locations={"classpath:spring.xml", "classpath:spring-dao.xml" ,    "classpath:spring-services.xml"})
 public class AutoEmail {
-	@Resource(name= "emailService") //�`�Jbean�x
+	@Resource(name= "emailService") 
     private IWebEmailService emailService;
 	@Test	
 	public void test() throws UnsupportedEncodingException {

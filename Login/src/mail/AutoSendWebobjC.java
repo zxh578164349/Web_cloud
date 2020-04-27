@@ -44,10 +44,11 @@ import services.IWebydataNoinputServices;
 import util.GlobalMethod;
 
 /**
- * 系统启动时的监听类 初始化系统数据
  * 
- * @author jhoneder
- * 
+* 項目名稱：WebLogin   
+* 類名稱：AutoSendWebobjC   
+* 類描述：工廠日報(郵件發送)
+* 創建人：KY2
  */
 public class AutoSendWebobjC extends QuartzJobBean {
 	private static final ProjectConfig pc=GlobalMethod.findProjectConfig();
