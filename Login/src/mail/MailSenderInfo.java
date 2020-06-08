@@ -55,22 +55,24 @@ public class MailSenderInfo {
   	//p.setProperty("mail.smtp.starttls.enable", "true");//加密发送
   		if("smtp.office365.com".equals(pc.getpSmtp())){
   			p.setProperty("mail.smtp.starttls.enable","true");//加密发送
+  			p.setProperty("mail.smtp.port", "587");//改smtp端口(不改也可以正常发送 默认25端口)
   		}else{
   			p.setProperty("mail.smtp.port", "465");//改smtp端口		
   	  		p.setProperty("mail.smtp.socketFactory.port", "465"); 		
   	  		p.setProperty("mail.smtp.ssl.enable", "true");///加密发送
+  	  		
+  	  	//以下设置，邮件加密发送，不需要证书验证
+  	  		MailSSLSocketFactory sf = null;
+  	  		try {
+  	  			sf = new MailSSLSocketFactory();
+  	  		} catch (GeneralSecurityException e) {
+  	  			// TODO Auto-generated catch block
+  	  			e.printStackTrace();
+  	  		}  
+  	  	    sf.setTrustAllHosts(true);
+  	  	    p.put("mail.smtp.ssl.socketFactory", sf);
   		}
-  		
-  		//以下设置，邮件加密发送，不需要证书验证
-  		MailSSLSocketFactory sf = null;
-  		try {
-  			sf = new MailSSLSocketFactory();
-  		} catch (GeneralSecurityException e) {
-  			// TODO Auto-generated catch block
-  			e.printStackTrace();
-  		}  
-  	    sf.setTrustAllHosts(true);
-  	    p.put("mail.smtp.ssl.socketFactory", sf);
+  		  		
         return p;    
     }    
   

@@ -148,10 +148,11 @@ public class AutoSendKyzAll extends QuartzJobBean{
 						this.addVisabillsAndEmail5(factNo, billNo, visaSort, list_vbm.get(i), ac);
 					}
 					mailInfo.setSubject("發送Email成功"+billNo);
-					sms.sendHtmlMail(mailInfo);
-										
-					list_vbm.get(i).setEmailMk("Y");//表示已發送郵件
-					visabillmSer.add(list_vbm.get(i));
+					if(sms.sendHtmlMail(mailInfo)){
+						list_vbm.get(i).setEmailMk("Y");//表示已發送郵件
+						visabillmSer.add(list_vbm.get(i));
+					}										
+					
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					

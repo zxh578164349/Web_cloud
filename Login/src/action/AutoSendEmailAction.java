@@ -35,7 +35,7 @@ public class AutoSendEmailAction {
 		//final ProjectConfig pc=GlobalMethod.findProjectConfig();
 		Properties props = new Properties();				
 		props.setProperty("mail.smtp.auth", "true");
-		props.setProperty("mail.transport.protocol", "smtp");
+		//props.setProperty("mail.transport.protocol", "smtp");
 		//props.setProperty("mail.host", "smtp.mxhichina.com");//dgmail.yydg.com.cn
 		props.setProperty("mail.host", pc.getpSmtp());
 		//props.setProperty("mail.host", "172.17.5.84");//因為有時候解釋不了域名,所以直接用地址代替(内网IP)
@@ -47,21 +47,23 @@ public class AutoSendEmailAction {
 		//props.setProperty("mail.smtp.starttls.enable","true");//加密发送
 		if("smtp.office365.com".equals(pc.getpSmtp())){			
 			props.setProperty("mail.smtp.starttls.enable","true");//加密发送
+			props.setProperty("mail.smtp.port", "587");//改smtp端口(不改也可以正常发送 默认25端口)
 		}else{
 			props.setProperty("mail.smtp.port", "465");//改smtp端口
 			props.setProperty("mail.smtp.socketFactory.port","465");
-			props.setProperty("mail.smtp.ssl.enable", "true");///加密发送						
+			props.setProperty("mail.smtp.ssl.enable", "true");///加密发送
+			//以下设置，邮件加密发送，不需要证书验证
+			MailSSLSocketFactory sf = null;
+			try {
+				sf = new MailSSLSocketFactory();
+			} catch (GeneralSecurityException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}  
+		    sf.setTrustAllHosts(true);
+		    props.put("mail.smtp.ssl.socketFactory", sf);
 		}
-		//以下设置，邮件加密发送，不需要证书验证
-		MailSSLSocketFactory sf = null;
-		try {
-			sf = new MailSSLSocketFactory();
-		} catch (GeneralSecurityException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}  
-	    sf.setTrustAllHosts(true);
-	    props.put("mail.smtp.ssl.socketFactory", sf);				
+						
 		
 		Session session = Session.getInstance(props, new Authenticator() {
 			protected PasswordAuthentication getPasswordAuthentication() {
