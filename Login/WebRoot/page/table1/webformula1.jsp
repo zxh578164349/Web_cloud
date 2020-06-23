@@ -30,6 +30,9 @@
 	<h3>
 	<s:if test='#session.loginUser.userread!="1"'>
 	<input type="button" class="btn btn-info" value="添加" onclick="loadUrl('saveAndUpdate/WebFormulaSaveOrUpdate.jsp')"/>
+	<s:if test='#session.loginUser.factno=="tw"'>
+    <input value="導入" type="button" class="btn btn-info" onclick="loadUrl('page/webformula-import.jsp')" />		
+    </s:if> 
 	</s:if>	
 	<span id="h2_title">配方系統</span>
 	</h3>

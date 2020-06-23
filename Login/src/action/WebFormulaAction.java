@@ -6,10 +6,14 @@ package action;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -28,8 +32,12 @@ import entity.KyVisabillsId;
 import entity.KyzExpectmatmLog;
 import entity.KyzVisaflow;
 import entity.WebErpBrankProcess;
+import entity.WebFact;
+import entity.WebFactId;
 import entity.WebFormula;
 import entity.WebFormulaItems;
+import entity.WebObjsA;
+import entity.WebObjsAId;
 import entity.WebTabpom;
 import entity.WebUser;
 
@@ -38,6 +46,8 @@ import services.IKyzVisaFlowServices;
 import services.IWebFormulaServices;
 import services.IWebuserEmailServices;
 import util.GlobalMethod;
+import util.ImportExcel;
+import util.ImportExcel_B;
 import util.JasperHelper;
 import util.PageBean;
 
@@ -57,6 +67,7 @@ import util.PageBean;
 public class WebFormulaAction implements ServletResponseAware{
 	private int page;
 	private final static int PAGESIZE=20;
+	private final static String SEPARATOR = "__";
 	private String formulaIndex;
 	private PageBean bean;
 	private WebFormula formula;
@@ -84,9 +95,37 @@ public class WebFormulaAction implements ServletResponseAware{
 	private IKyzVisaFlowServices visaSer;
 	private IKyVisabillmServices visabillmSer;
 	private IWebuserEmailServices webuseremailSer;
+	private File file;
+    private String fileFileName;
+    private String fileContentType;
 	
 	
 	
+    
+	public File getFile() {
+		return file;
+	}
+
+	public void setFile(File file) {
+		this.file = file;
+	}
+
+	public String getFileFileName() {
+		return fileFileName;
+	}
+
+	public void setFileFileName(String fileFileName) {
+		this.fileFileName = fileFileName;
+	}
+
+	public String getFileContentType() {
+		return fileContentType;
+	}
+
+	public void setFileContentType(String fileContentType) {
+		this.fileContentType = fileContentType;
+	}
+
 	public Integer getUserId(){
 		return userId;
 	}
@@ -578,6 +617,82 @@ public class WebFormulaAction implements ServletResponseAware{
 		}else{			
 			response.getWriter().print("<script>alert('無數據');window.close()</script>");
 		}						
+	}
+	
+	
+	
+	
+	
+	
+	/**
+	 * 導入數據
+	 * @throws IOException
+	 */
+	public void importFile() throws IOException{
+		response.setContentType("text/html;charset=utf-8");
+		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");	
+		try{	
+				String path="d:\\WebFormula_backup\\"+new SimpleDateFormat("yyyyMMdd").format(new Date());//Excel文檔存放目錄
+				ajaxResult="0";				
+				/*文件上傳*/
+				if(file!=null){//不為空代表有上傳附檔,不能寫成files.size()>0,否則報空指針
+					//File uploadFile=new File(ServletActionContext.getServletContext().getRealPath("KyzexpFile\\"+kyz.getId().getBillNo()));//附檔上傳到項目
+					File uploadFile_backup=new File(path);//附檔上傳到D盤(為了避免更新項目時丟失附檔,所在上傳到D盤)			
+					if(!uploadFile_backup.exists()){
+						uploadFile_backup.mkdirs();
+					}																						
+							FileInputStream in=new FileInputStream(file);
+							FileOutputStream out_backup=new FileOutputStream(uploadFile_backup+"\\"+fileFileName);//備份
+							byte[]b=new byte[1024];
+							int length=0;
+							while((length=in.read(b))>0){
+								out_backup.write(b,0,length);//備份
+							}																																				
+				}						
+			Map<String, Object> map = ImportExcel_B.exportListFromFile(new File(path + "\\" + fileFileName));
+			
+			String temp=factCode.split("__")[0];
+			WebErpBrankProcess obj=new WebErpBrankProcess(Integer.parseInt(temp));			
+			formula.setFactCode(obj);				
+			String factno=formula.getFactNo().getFactNo();
+			formula.getFactNo().setFactNo(factno.split("__")[0]);	
+			
+			a: for (String key : map.keySet()) {// for a
+				List<String> list = (List<String>) map.get(key);
+				if("Sheet1".equals(key)){
+					formula.setFormulaName(list.get(0).split("__")[1]);//配方名稱
+					formula.setMagnification(Double.valueOf(list.get(1).split("__")[1]));//倍率
+					formula.setBrandBody(list.get(2).split("__")[1]);
+					formula.setSemifinishedProductHardness(list.get(3).split("__")[1]);
+					formula.setColor(list.get(4).split("__")[1]);
+					formula.setProductHardness(list.get(5).split("__")[1]);
+					formula.setIssuedDate(list.get(6).split("__")[1]);
+					formula.setAssignBrand("是".equals(list.get(7).split("__")[1])?"1":"0");
+					
+				}else if("Sheet2".equals(key)){
+					
+				}else{
+					
+				}
+				
+				String[] array_head = list.get(0).split("__");
+				for (int i = 4; i < array_head.length; i++) {
+					
+				}
+
+				for (int i = 4; i < array_head.length; i++) {// for b
+
+				}// for b
+				response.getWriter().print(
+						"<script>window.parent.layer.msg('導入成功',3,1)</script>");
+			}// for a
+					
+			
+											
+		}catch(Exception e){
+			System.out.println(e);
+			response.getWriter().print("<script>window.parent.layer.msg('導入錯誤',3,3);</script>");
+		}
 	}
 	
 	

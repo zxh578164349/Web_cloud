@@ -676,6 +676,7 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 				vbs.setId(id);
 				vbs.setVisaMk("N");
 				vbs.setFlowMk("Y");
+				vbs.setVisible("Y");
 				if(visaRank!=null&&!visaRank.equals("")){
 					vbs.setVisaRank(visaRank.trim());
 				}
@@ -713,6 +714,7 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 				vbs.setId(id);
 				vbs.setVisaMk("N");
 				vbs.setFlowMk("Y");
+				vbs.setVisible("Y");
 				if(visaRank!=null&&!visaRank.equals("")){
 					vbs.setVisaRank(visaRank.trim());
 				}
