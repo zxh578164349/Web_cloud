@@ -249,7 +249,7 @@ public class ImportExcel_B {
 					CellValue cellValue = eval.evaluate(cell);// 如果Cell沒有給類型，cellValue同樣爲null,所以爲null空，默認cellValue=new
 																// CellValue("0.0");
 					if (cellValue == null) {
-						cellValue = new CellValue("0.0");
+						cellValue = new CellValue("0");
 					}
 					switch (cellValue.getCellType()) {
 					case Cell.CELL_TYPE_STRING:

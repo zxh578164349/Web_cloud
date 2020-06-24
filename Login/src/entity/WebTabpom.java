@@ -26,6 +26,7 @@ public class WebTabpom implements java.io.Serializable{
 	private Double wresistingDin;//DIN耐磨
 	private Double ratioA;//止滑係數
 	private Double ratioB;//耐油係數
+	private Double modulus300;//300% Modulus
 	private Double ableBend;//抗彎曲
 	private Double ableYellow;//抗黃變
 	private Double defyPress;//抗高壓
@@ -35,6 +36,7 @@ public class WebTabpom implements java.io.Serializable{
 	private Double elasticity;//彈性
 	private Double compression;//壓縮
 	private Double division;//分裂
+	private Double spitCream;//吐霜
 	private String authentications;//認證
 	private String instruction;//特性說明
 	private String fileMk;//附檔
@@ -63,9 +65,7 @@ public class WebTabpom implements java.io.Serializable{
 	private String elasticityDes;
 	private String compressionDes;
 	private String divisionDes;
-	private Double modulus300;//300% Modulus
-	private String modulus300Des;
-	private Double spitCream;//吐霜
+	private String modulus300Des;	
 	private String spitCreamDes;
 	private List<WebTabpomfile> webTabpomfiles=new ArrayList<WebTabpomfile>();
 
