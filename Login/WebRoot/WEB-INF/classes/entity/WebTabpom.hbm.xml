@@ -167,6 +167,136 @@
         <property name="modifyDate" type="java.lang.String">
             <column name="MODIFY_DATE" length="12"/>
         </property>
+        
+        
+         <property name="hardnessUnit" type="java.lang.String">
+            <column name="HARDNESS_UNIT" length="30" />
+        </property>
+        <property name="forcesUnit" type="java.lang.String">
+            <column name="FORCES_UNIT" length="30" />
+        </property>
+        <property name="extendsUnit" type="java.lang.String">
+            <column name="EXTENDS_UNIT" length="30" />
+        </property>
+        <property name="tearingCUnit" type="java.lang.String">
+            <column name="TEARING_C_UNIT" length="30" />
+        </property>
+        <property name="tearingKUnit" type="java.lang.String">
+            <column name="TEARING_K_UNIT" length="30" />
+        </property>
+         <property name="proportionUnit" type="java.lang.String">
+            <column name="PROPORTION_UNIT" length="30" />
+        </property>
+        <property name="wresistingAkronUnit" type="java.lang.String">
+            <column name="WRESISTING_AKRON_UNIT" length="30" />
+        </property>
+        <property name="wresistingDinUnit" type="java.lang.String">
+            <column name="WRESISTING_DIN_UNIT" length="30" />
+        </property>
+        <property name="ratioAUnit" type="java.lang.String">
+            <column name="RATIO_A_UNIT" length="30" />
+        </property>
+        <property name="ratioBUnit" type="java.lang.String">
+            <column name="RATIO_B_UNIT" length="30" />
+        </property>
+        <property name="ableBendUnit" type="java.lang.String">
+            <column name="ABLE_BEND_UNIT" length="30" />
+        </property>
+        <property name="ableYellowUnit" type="java.lang.String">
+            <column name="ABLE_YELLOW_UNIT" length="30" />
+        </property>
+        <property name="defyPressUnit" type="java.lang.String">
+            <column name="DEFY_PRESS_UNIT" length="30" />
+        </property>
+        <property name="defyEleUnit" type="java.lang.String">
+            <column name="DEFY_ELE_UNIT" length="30" />
+        </property>
+        <property name="ageingUnit" type="java.lang.String">
+            <column name="AGEING_UNIT" length="30" />
+        </property>
+        <property name="contractUnit" type="java.lang.String">
+            <column name="CONTRACT_UNIT" length="30" />
+        </property>
+        <property name="elasticityUnit" type="java.lang.String">
+            <column name="ELASTICITY_UNIT" length="30" />
+        </property>
+        <property name="compressionUnit" type="java.lang.String">
+            <column name="COMPRESSION_UNIT" length="30" />
+        </property>
+        <property name="divisionUnit" type="java.lang.String">
+            <column name="DIVISION_UNIT" length="30" />
+        </property>
+        <property name="modulus300Unit" type="java.lang.String">
+            <column name="MODULUS300_UNIT" length="30" />
+        </property>
+        <property name="spitCreamUnit" type="java.lang.String">
+            <column name="SPIT_CREAM_UNIT" length="30" />
+        </property>
+        
+         <property name="hardnessResult" type="java.lang.String">
+            <column name="HARDNESS_RESULT" length="100" />
+        </property>
+        <property name="forcesResult" type="java.lang.String">
+            <column name="FORCES_RESULT" length="100" />
+        </property>
+        <property name="extendsResult" type="java.lang.String">
+            <column name="EXTENDS_RESULT" length="100" />
+        </property>
+        <property name="tearingCResult" type="java.lang.String">
+            <column name="TEARING_C_RESULT" length="100" />
+        </property>
+        <property name="tearingKResult" type="java.lang.String">
+            <column name="TEARING_K_RESULT" length="100" />
+        </property>
+         <property name="proportionResult" type="java.lang.String">
+            <column name="PROPORTION_RESULT" length="100" />
+        </property>
+        <property name="wresistingAkronResult" type="java.lang.String">
+            <column name="WRESISTING_AKRON_RESULT" length="100" />
+        </property>
+        <property name="wresistingDinResult" type="java.lang.String">
+            <column name="WRESISTING_DIN_RESULT" length="100" />
+        </property>
+        <property name="ratioAResult" type="java.lang.String">
+            <column name="RATIO_A_RESULT" length="100" />
+        </property>
+        <property name="ratioBResult" type="java.lang.String">
+            <column name="RATIO_B_RESULT" length="100" />
+        </property>
+        <property name="ableBendResult" type="java.lang.String">
+            <column name="ABLE_BEND_RESULT" length="100" />
+        </property>
+        <property name="ableYellowResult" type="java.lang.String">
+            <column name="ABLE_YELLOW_RESULT" length="100" />
+        </property>
+        <property name="defyPressResult" type="java.lang.String">
+            <column name="DEFY_PRESS_RESULT" length="100" />
+        </property>
+        <property name="defyEleResult" type="java.lang.String">
+            <column name="DEFY_ELE_RESULT" length="100" />
+        </property>
+        <property name="ageingResult" type="java.lang.String">
+            <column name="AGEING_RESULT" length="100" />
+        </property>
+        <property name="contractResult" type="java.lang.String">
+            <column name="CONTRACT_RESULT" length="100" />
+        </property>
+        <property name="elasticityResult" type="java.lang.String">
+            <column name="ELASTICITY_RESULT" length="100" />
+        </property>
+        <property name="compressionResult" type="java.lang.String">
+            <column name="COMPRESSION_RESULT" length="100" />
+        </property>
+        <property name="divisionResult" type="java.lang.String">
+            <column name="DIVISION_RESULT" length="100" />
+        </property>
+        <property name="modulus300Result" type="java.lang.String">
+            <column name="MODULUS300_RESULT" length="100" />
+        </property>
+        <property name="spitCreamResult" type="java.lang.String">
+            <column name="SPIT_CREAM_RESULT" length="100" />
+        </property>
+        
         <bag name="webTabpomfiles" cascade="all" inverse="true">
             <key>
                 <column name="POMNO" length="14" not-null="true" />

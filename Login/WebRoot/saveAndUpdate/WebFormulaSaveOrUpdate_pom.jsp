@@ -169,16 +169,16 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 	                <tr>
 	                   <td>認證</td>
 	                   <td colspan="2">
-	                       <s:if test='tabpom.authentications=="0"'>
-					   是<input type="radio" name="tabpom.authentications" value="0"
+	                       <s:if test='tabpom.authentications=="1"'>
+					   是<input type="radio" name="tabpom.authentications" value="1"
 								checked="checked" />
 						</s:if> <s:else>
-					   是<input type="radio" name="tabpom.authentications" value="0" />
+					   是<input type="radio" name="tabpom.authentications" value="1" />
 						</s:else> <s:if test='tabpom.authentications=="1"'>
-					   否<input type="radio" name="tabpom.authentications" value="1"
+					   否<input type="radio" name="tabpom.authentications" value="0"
 								checked="checked" />
 						</s:if> <s:else>
-					   否<input type="radio" name="tabpom.authentications" value="1" />
+					   否<input type="radio" name="tabpom.authentications" value="0" />
 						</s:else>
 	                   </td>
 	                </tr>

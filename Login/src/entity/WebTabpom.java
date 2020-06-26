@@ -45,12 +45,13 @@ public class WebTabpom implements java.io.Serializable{
 	private String modifyName;//修改人
 	private String modifyDate;//修改日期
 	private Double hardness2;//±值
+	private Double proportion2;//±值
+	
 	private String hardnessDescription;//測試方式說明
 	private String forcesDescription;
 	private String extendsDescription;
 	private String tearingCDescription;
-	private String tearingKDescription;
-	private Double proportion2;//±值
+	private String tearingKDescription;	
 	private String proportionDescription;
 	private String wresistingAkronDes;
 	private String wresistingDinDes;
@@ -67,6 +68,52 @@ public class WebTabpom implements java.io.Serializable{
 	private String divisionDes;
 	private String modulus300Des;	
 	private String spitCreamDes;
+	
+	private String hardnessUnit;//單位
+	private String forcesUnit;
+	private String extendsUnit;
+	private String tearingCUnit;
+	private String tearingKUnit;	
+	private String proportionUnit;
+	private String wresistingAkronUnit;
+	private String wresistingDinUnit;
+	private String ratioAUnit;
+	private String ratioBUnit;
+	private String ableBendUnit;
+	private String ableYellowUnit;
+	private String defyPressUnit;
+	private String defyEleUnit;
+	private String ageingUnit;
+	private String contractUnit;
+	private String elasticityUnit;
+	private String compressionUnit;
+	private String divisionUnit;
+	private String modulus300Unit;	
+	private String spitCreamUnit;
+	
+	private String hardnessResult;//测试结果
+	private String forcesResult;
+	private String extendsResult;
+	private String tearingCResult;
+	private String tearingKResult;	
+	private String proportionResult;
+	private String wresistingAkronResult;
+	private String wresistingDinResult;
+	private String ratioAResult;
+	private String ratioBResult;
+	private String ableBendResult;
+	private String ableYellowResult;
+	private String defyPressResult;
+	private String defyEleResult;
+	private String ageingResult;
+	private String contractResult;
+	private String elasticityResult;
+	private String compressionResult;
+	private String divisionResult;
+	private String modulus300Result;	
+	private String spitCreamResult;
+	
+	
 	private List<WebTabpomfile> webTabpomfiles=new ArrayList<WebTabpomfile>();
 
 	// Constructors
@@ -590,6 +637,344 @@ public class WebTabpom implements java.io.Serializable{
 	public void setModifyDate(String modifyDate){
 		this.modifyDate=modifyDate;
 	}
+
+	public String getHardnessUnit() {
+		return hardnessUnit;
+	}
+
+	public void setHardnessUnit(String hardnessUnit) {
+		this.hardnessUnit = hardnessUnit;
+	}
+
+	public String getForcesUnit() {
+		return forcesUnit;
+	}
+
+	public void setForcesUnit(String forcesUnit) {
+		this.forcesUnit = forcesUnit;
+	}
+
+	public String getExtendsUnit() {
+		return extendsUnit;
+	}
+
+	public void setExtendsUnit(String extendsUnit) {
+		this.extendsUnit = extendsUnit;
+	}
+
+	public String getTearingCUnit() {
+		return tearingCUnit;
+	}
+
+	public void setTearingCUnit(String tearingCUnit) {
+		this.tearingCUnit = tearingCUnit;
+	}
+
+	public String getTearingKUnit() {
+		return tearingKUnit;
+	}
+
+	public void setTearingKUnit(String tearingKUnit) {
+		this.tearingKUnit = tearingKUnit;
+	}
+
+	public String getProportionUnit() {
+		return proportionUnit;
+	}
+
+	public void setProportionUnit(String proportionUnit) {
+		this.proportionUnit = proportionUnit;
+	}
+
+	public String getWresistingAkronUnit() {
+		return wresistingAkronUnit;
+	}
+
+	public void setWresistingAkronUnit(String wresistingAkronUnit) {
+		this.wresistingAkronUnit = wresistingAkronUnit;
+	}
+
+	public String getWresistingDinUnit() {
+		return wresistingDinUnit;
+	}
+
+	public void setWresistingDinUnit(String wresistingDinUnit) {
+		this.wresistingDinUnit = wresistingDinUnit;
+	}
+
+	public String getRatioAUnit() {
+		return ratioAUnit;
+	}
+
+	public void setRatioAUnit(String ratioAUnit) {
+		this.ratioAUnit = ratioAUnit;
+	}
+
+	public String getRatioBUnit() {
+		return ratioBUnit;
+	}
+
+	public void setRatioBUnit(String ratioBUnit) {
+		this.ratioBUnit = ratioBUnit;
+	}
+
+	public String getAbleBendUnit() {
+		return ableBendUnit;
+	}
+
+	public void setAbleBendUnit(String ableBendUnit) {
+		this.ableBendUnit = ableBendUnit;
+	}
+
+	public String getAbleYellowUnit() {
+		return ableYellowUnit;
+	}
+
+	public void setAbleYellowUnit(String ableYellowUnit) {
+		this.ableYellowUnit = ableYellowUnit;
+	}
+
+	public String getDefyPressUnit() {
+		return defyPressUnit;
+	}
+
+	public void setDefyPressUnit(String defyPressUnit) {
+		this.defyPressUnit = defyPressUnit;
+	}
+
+	public String getDefyEleUnit() {
+		return defyEleUnit;
+	}
+
+	public void setDefyEleUnit(String defyEleUnit) {
+		this.defyEleUnit = defyEleUnit;
+	}
+
+	public String getAgeingUnit() {
+		return ageingUnit;
+	}
+
+	public void setAgeingUnit(String ageingUnit) {
+		this.ageingUnit = ageingUnit;
+	}
+
+	public String getContractUnit() {
+		return contractUnit;
+	}
+
+	public void setContractUnit(String contractUnit) {
+		this.contractUnit = contractUnit;
+	}
+
+	public String getElasticityUnit() {
+		return elasticityUnit;
+	}
+
+	public void setElasticityUnit(String elasticityUnit) {
+		this.elasticityUnit = elasticityUnit;
+	}
+
+	public String getCompressionUnit() {
+		return compressionUnit;
+	}
+
+	public void setCompressionUnit(String compressionUnit) {
+		this.compressionUnit = compressionUnit;
+	}
+
+	public String getDivisionUnit() {
+		return divisionUnit;
+	}
+
+	public void setDivisionUnit(String divisionUnit) {
+		this.divisionUnit = divisionUnit;
+	}
+
+	public String getModulus300Unit() {
+		return modulus300Unit;
+	}
+
+	public void setModulus300Unit(String modulus300Unit) {
+		this.modulus300Unit = modulus300Unit;
+	}
+
+	public String getSpitCreamUnit() {
+		return spitCreamUnit;
+	}
+
+	public void setSpitCreamUnit(String spitCreamUnit) {
+		this.spitCreamUnit = spitCreamUnit;
+	}
+
+	public String getHardnessResult() {
+		return hardnessResult;
+	}
+
+	public void setHardnessResult(String hardnessResult) {
+		this.hardnessResult = hardnessResult;
+	}
+
+	public String getForcesResult() {
+		return forcesResult;
+	}
+
+	public void setForcesResult(String forcesResult) {
+		this.forcesResult = forcesResult;
+	}
+
+	public String getExtendsResult() {
+		return extendsResult;
+	}
+
+	public void setExtendsResult(String extendsResult) {
+		this.extendsResult = extendsResult;
+	}
+
+	public String getTearingCResult() {
+		return tearingCResult;
+	}
+
+	public void setTearingCResult(String tearingCResult) {
+		this.tearingCResult = tearingCResult;
+	}
+
+	public String getTearingKResult() {
+		return tearingKResult;
+	}
+
+	public void setTearingKResult(String tearingKResult) {
+		this.tearingKResult = tearingKResult;
+	}
+
+	public String getProportionResult() {
+		return proportionResult;
+	}
+
+	public void setProportionResult(String proportionResult) {
+		this.proportionResult = proportionResult;
+	}
+
+	public String getWresistingAkronResult() {
+		return wresistingAkronResult;
+	}
+
+	public void setWresistingAkronResult(String wresistingAkronResult) {
+		this.wresistingAkronResult = wresistingAkronResult;
+	}
+
+	public String getWresistingDinResult() {
+		return wresistingDinResult;
+	}
+
+	public void setWresistingDinResult(String wresistingDinResult) {
+		this.wresistingDinResult = wresistingDinResult;
+	}
+
+	public String getRatioAResult() {
+		return ratioAResult;
+	}
+
+	public void setRatioAResult(String ratioAResult) {
+		this.ratioAResult = ratioAResult;
+	}
+
+	public String getRatioBResult() {
+		return ratioBResult;
+	}
+
+	public void setRatioBResult(String ratioBResult) {
+		this.ratioBResult = ratioBResult;
+	}
+
+	public String getAbleBendResult() {
+		return ableBendResult;
+	}
+
+	public void setAbleBendResult(String ableBendResult) {
+		this.ableBendResult = ableBendResult;
+	}
+
+	public String getAbleYellowResult() {
+		return ableYellowResult;
+	}
+
+	public void setAbleYellowResult(String ableYellowResult) {
+		this.ableYellowResult = ableYellowResult;
+	}
+
+	public String getDefyPressResult() {
+		return defyPressResult;
+	}
+
+	public void setDefyPressResult(String defyPressResult) {
+		this.defyPressResult = defyPressResult;
+	}
+
+	public String getDefyEleResult() {
+		return defyEleResult;
+	}
+
+	public void setDefyEleResult(String defyEleResult) {
+		this.defyEleResult = defyEleResult;
+	}
+
+	public String getAgeingResult() {
+		return ageingResult;
+	}
+
+	public void setAgeingResult(String ageingResult) {
+		this.ageingResult = ageingResult;
+	}
+
+	public String getContractResult() {
+		return contractResult;
+	}
+
+	public void setContractResult(String contractResult) {
+		this.contractResult = contractResult;
+	}
+
+	public String getElasticityResult() {
+		return elasticityResult;
+	}
+
+	public void setElasticityResult(String elasticityResult) {
+		this.elasticityResult = elasticityResult;
+	}
+
+	public String getCompressionResult() {
+		return compressionResult;
+	}
+
+	public void setCompressionResult(String compressionResult) {
+		this.compressionResult = compressionResult;
+	}
+
+	public String getDivisionResult() {
+		return divisionResult;
+	}
+
+	public void setDivisionResult(String divisionResult) {
+		this.divisionResult = divisionResult;
+	}
+
+	public String getModulus300Result() {
+		return modulus300Result;
+	}
+
+	public void setModulus300Result(String modulus300Result) {
+		this.modulus300Result = modulus300Result;
+	}
+
+	public String getSpitCreamResult() {
+		return spitCreamResult;
+	}
+
+	public void setSpitCreamResult(String spitCreamResult) {
+		this.spitCreamResult = spitCreamResult;
+	}
+	
+	
 
 	
 
