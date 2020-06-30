@@ -78,7 +78,8 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 			</div> -->
 			<div class="tab-pane fade" id="tab_webtabpom">
 				<div>
-					<jsp:include page="WebFormulaSaveOrUpdate_pom.jsp" />
+					<!-- <jsp:include page="WebFormulaSaveOrUpdate_pom.jsp" /> -->
+					<jsp:include page="WebTabpomSaveOrUpdate.jsp" />
 				</div>
 			</div>
 	  </div>

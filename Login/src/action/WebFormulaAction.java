@@ -101,10 +101,19 @@ public class WebFormulaAction implements ServletResponseAware{
 	private File file;
     private String fileFileName;
     private String fileContentType;
+    private WebTabpom tabpom;
 	
 	
 	
     
+	public WebTabpom getTabpom() {
+		return tabpom;
+	}
+
+	public void setTabpom(WebTabpom tabpom) {
+		this.tabpom = tabpom;
+	}
+
 	public File getFile() {
 		return file;
 	}
@@ -432,7 +441,7 @@ public class WebFormulaAction implements ServletResponseAware{
 						return "add";
 					}
 				}				
-			}						
+			}
 			webformulaser.add(formula);	
 			this.clearSession();//添加成功后,清除session
 			ajaxResult="0";
@@ -501,6 +510,7 @@ public class WebFormulaAction implements ServletResponseAware{
 	public String findById(){
 		this.clearSession();
 		formula=webformulaser.findById(formulaIndex);
+		tabpom=formula.getPom();
 		return "findById";
 	}
 	public String findById_layer(){
@@ -514,8 +524,8 @@ public class WebFormulaAction implements ServletResponseAware{
 	
 	public String sendEmail() throws ParseException{
 		List<KyzVisaflow>list=visaSer.findPF(factNo);
-		jsons=JSONArray.fromObject(list);
-		if(jsons.size()>0){
+		//jsons=JSONArray.fromObject(list);
+		if(list.size()>0){
 			try{
 				String visaType=list.get(0).getId().getVisaSort();
 				KyVisabillm vbm=new KyVisabillm(new KyVisabillmId(factNo,visaType,formulaIndex));
@@ -541,11 +551,15 @@ public class WebFormulaAction implements ServletResponseAware{
 				visabillmSer.add(vbm);
 				List<String>list_emailPwd=webuseremailSer.findByFactNoAEmailPwd2(vbm.getId().getFactNo(),vbm.getSignerNext());
 				GlobalMethod.sendNewEmail(vbm,list_emailPwd);//發送郵件
-				jsons.add(0,"0");
+				//jsons.add(0,"0");
+				ajaxResult="1";
 			}catch(Exception e){
-				jsons.add(0,"1");
+				//jsons.add(0,"1");
+				ajaxResult="2";
 				System.out.println(e);
 			}						
+		}else{
+			ajaxResult="3";
 		}					
 		return "sendEmail";
 	}

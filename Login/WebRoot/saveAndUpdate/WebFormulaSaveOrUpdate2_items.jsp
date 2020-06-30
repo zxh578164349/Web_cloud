@@ -44,25 +44,33 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 				   <s:property value="fk_weberp_pf.namec2"/>
 				   </li>
 				   <li >
-					<input type="text" name="items[${x.index}].phrVal" value="<s:property value='phrVal'/>" datatype="*9-5"/>
+					<input type="text" name="items[${x.index}].phrVal" value="<s:property value='phrVal'/>" datatype="*9-5" onblur="sumVal()"/>
 				   </li>
 				   <li>
-					<input type="text" name="items[${x.index}].weightVal" value="<s:property value='weightVal'/>" datatype="*9-5"/>
+					<input type="text" name="items[${x.index}].weightVal" value="<s:property value='weightVal'/>" datatype="*9-5" onblur="sumVal()"/>
 				   </li>
 				   <li class="col_item3">
 					<input type="text" name="items[${x.index}].remark" value="<s:property value='remark'/>" datatype="*0-200"/>					
-					<input type="hidden" value="<s:property value='itemId'/>" name="items[${x.index}].itemId">
-					<input type="hidden" value="<s:property value='fk_weberp_pf.itemid'/>" name="items[${x.index}].fk_weberp_pf.itemid">
-					<input type="hidden" value="<s:property value='sectionNo'/>" name="items[${x.index}].sectionNo">
-					<input type="hidden" value="<s:property value='webFormula.formulaIndex'/>" name="items[${x.index}].webFormula.formulaIndex">
-					<input type="hidden" value="<s:property value='createName'/>" name="items[${x.index}].createName">
-					<input type="hidden" value="<s:property value='createDate'/>" name="items[${x.index}].createDate">
-					<input type="hidden" value="${loginUser.username}" name="items[${x.index}].modifyName">
-					<input type="hidden" value="<%=str_date%>" name="items[${x.index}].modifyDate">
+					<input type="hidden" value="<s:property value='itemId'/>" name="items[${x.index}].itemId"/>
+					<input type="hidden" value="<s:property value='fk_weberp_pf.itemid'/>" name="items[${x.index}].fk_weberp_pf.itemid"/>
+					<input type="hidden" value="<s:property value='sectionNo'/>" name="items[${x.index}].sectionNo"/>
+					<input type="hidden" value="<s:property value='webFormula.formulaIndex'/>" name="items[${x.index}].webFormula.formulaIndex"/>
+					<input type="hidden" value="<s:property value='createName'/>" name="items[${x.index}].createName"/>
+					<input type="hidden" value="<s:property value='createDate'/>" name="items[${x.index}].createDate"/>
+					<input type="hidden" value="${loginUser.username}" name="items[${x.index}].modifyName"/>
+					<input type="hidden" value="<%=str_date%>" name="items[${x.index}].modifyDate"/>
 					<img src="images/icon/del_file.png" style="border:0" onclick="deleteItem(<s:property value='itemId'/>,jq(this))"/>
 				   </li>	
-				</s:iterator>							
+				</s:iterator>											
 			</ul> 
+			<ul class="list" id="ul_items2">
+			    <li class="columnhead"></li>
+				<li class="columnhead"></li>
+				<li class="col_item4">合計</li>
+				<li class="columnhead" id="sum_phrVal">PHR</li>
+				<li class="columnhead" id="sum_weightVal">重量(KG)</li>
+				<li class="col_item4"></li>
+			</ul>	
 			        <s:if test="formula.webFormulaItemses==null">
 			           <input type="hidden" id="num_size" value="0"/>
 			        </s:if>
@@ -71,7 +79,8 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 			        </s:else>                      
 		</div>		
 		&nbsp;<br><br>
-		<center> 
+		<center>
+		<br><br>
 		     <input type="button"  value="新增配方原料" class="btn btn-primary" onclick="addItem()"/>&nbsp;&nbsp;&nbsp;      
 			 <input type="button" id="sub_items" value="確定" class="btn btn-primary" />&nbsp;&nbsp;&nbsp;			 			 
 			 <input type="button" value="返回"  onclick="javascript:back()" class="btn btn-primary" />
@@ -103,10 +112,15 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 					loadUrl("webformula_findById?formulaIndex="+jq("#formulaIndex").val());
 				}else{
 					layer.msg("提交失敗",3,3);
-				}			
+				}
 			}
 		});
-		demo.tipmsg.w["*9-5"] = "只能數字且不超過9位數,可保留5位以內小數";				
+		demo.tipmsg.w["*9-5"] = "只能數字且不超過9位數,可保留5位以內小數";		
+		sumVal();
+		
+		
+		
+					
 	});
 
 var ii=0;
@@ -122,8 +136,8 @@ function addItem(){
 	item+="<li><select name='items["+num_size+"].sectionNo' datatype='*'>"+options+"</select></li>";
 	item+="<li><select id='items_type"+ii+"' onchange='loadNamece(jq(this))' datatype='*'></select></li>";
 	item+="<li class='col_item3'><select id='fk_weberp_pf"+ii+"' name='items["+num_size+"].fk_weberp_pf.itemid' datatype='*'></select></li>";
-	item+="<li><input type='text' name='items["+num_size+"].phrVal' datatype='*9-5'/></li>";
-	item+="<li><input type='text' name='items["+num_size+"].weightVal' datatype='*9-5'/></li>";
+	item+="<li><input type='text' name='items["+num_size+"].phrVal' datatype='*9-5' onblur='sumVal()'/></li>";
+	item+="<li><input type='text' name='items["+num_size+"].weightVal' datatype='*9-5' onblur='sumVal()'/></li>";
 	item+="<li class='col_item3'><input type='text' name='items["+num_size+"].remark' datatype='*0-200'/>";
 	item+="<input type='hidden' value='"+formulaIndex+"' name='items["+num_size+"].webFormula.formulaIndex' readonly/>";
 	item+="<input type='hidden' name='items["+num_size+"].createName' value='${loginUser.username}' readonly/>";
@@ -177,6 +191,7 @@ function removeOneItem(obj){
 	obj.parent().prev().prev().remove();
 	obj.parent().prev().remove();
 	obj.parent().remove();
+	sumVal();
 	//ii--;
 }
 
@@ -189,6 +204,7 @@ function deleteItem(itemid,obj){
      success:function(data){
        if(data=="0"){
           removeOneItem(obj);
+         
           layer.msg("刪除成功",3,1);
        }else{
           layer.msg("刪除失敗",3,3);
@@ -196,7 +212,20 @@ function deleteItem(itemid,obj){
      }
    });
 }
-
+function sumVal(){
+        var list_phrVal=jq("input[name$='.phrVal']");
+		var list_weightVal=jq("input[name$='.weightVal']");
+		var sum_phrVal=0.0;
+		var sum_weightVal=0.0;		
+		list_phrVal.each(function(){
+		   sum_phrVal+=Number(jq(this).val());
+		});
+		list_weightVal.each(function(){
+		   sum_weightVal+=Number(jq(this).val());
+		});
+		jq("#sum_phrVal").text(sum_phrVal);
+		jq("#sum_weightVal").text(sum_weightVal);
+}
 </script>
 </body>
 </html>

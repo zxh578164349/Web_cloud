@@ -34,7 +34,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 	        <div class="panel-body">	        	            	           
 	            <table class="table table-condensed">	              
 	                 <tr class="active">
-	                    <th>物性編號</th><th>配方索引</th><th>品牌</th>
+	                    <th>物性編號</th><th>配方索引</th><th colspan="3">品牌</th>
 	                 </tr>	                          	                
 	               <tr>
 	                  <td>
@@ -68,7 +68,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 	                  </td>
 	               </tr>
 	                   <tr class="active">
-	                      <th>名稱</th><th>規格</th><th>測試方式說明</th>	
+	                      <th>名稱</th><th>規格</th><th>測試方式說明</th><th>单位</th><th>测试结果</th>
 	                   </tr>	                
 	                <tr>
 	                   <td>硬度</td>
@@ -78,6 +78,12 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 	                   </td>
 	                   <td>
 	                      <input type="text" name="tabpom.hardnessDescription" value="<s:property value='formula.pom.hardnessDescription'/>" datatype="*0-300"/>
+	                   </td>
+	                   <td>
+	                      <input type="text" name="tabpom.hardnessUnit" value="<s:property value='formula.pom.hardnessUnit'/>" datatype="*0-30"/>
+	                   </td>
+	                   <td>
+	                      <input type="text" name="tabpom.hardnessResult" value="<s:property value='formula.pom.hardnessResult'/>" datatype="*0-100"/>
 	                   </td>
 	                </tr>
 	                <tr>
@@ -200,7 +206,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 	                </tr>
 	                <tr>
 	                   <td>特性說明</td>
-	                   <td colspan="2">
+	                   <td colspan="4">
 	                      <textarea style="width:100%;height:100px" name="tabpom.instruction" datatype="*0-300"><s:property value='formula.pom.instruction'/></textarea>					      							                     
 	                      <input type="hidden" name="tabpom.fileMk" value="<s:property value='formula.pom.fileMk'/>"/>
 	                   </td>                 

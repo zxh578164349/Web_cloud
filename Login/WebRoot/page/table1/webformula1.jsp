@@ -162,28 +162,16 @@
 
 
 <script type="text/javascript">
-function addvbm(subform){	
-	/*var pageii = jq.layer({
-		  type: 1,
-		  title: false,
-		  area: ['auto', 'auto'],
-		  border: [0], //去掉默认边框
-		  shade: [0], //去掉遮罩
-		  closeBtn: [0, false], //去掉默认关闭按钮
-		  shift: 'left', //从左动画弹出
-		  page: {
-		    html: div
-		  }
-		});*/
+function addvbm(subform){		
 		jq.ajax({
 		  type:'post',
 		  dataType:'json',
 		  data:jq("#"+subform).serialize(),
 		  url:'webformula_sendEmail',
 		  success:function(data){
-			  if(data.length==0){
+			  if(data=="3"){
 				  layer.msg("還沒有建立配方送簽流程,暫時不能送簽",3,3);	
-			  }else if(data[0]=='1'){				  
+			  }else if(data=="2"){				  
 				  layer.msg("送簽失敗",3,3);  
 			  }else{
 				  layer.msg("送簽成功",3,1);
@@ -191,10 +179,7 @@ function addvbm(subform){
 			  }		     
 		  } 
 		});
-		//自设关闭
-		/*jq('#pagebtn').on('click', function(){
-		  layer.close(pageii);
-		});*/
+		
 }
 
 </script>	

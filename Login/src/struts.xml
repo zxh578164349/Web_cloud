@@ -731,7 +731,7 @@
 		        <param name="root">ajaxResult</param>
 		    </result>
 		    <result name="sendEmail" type="json">
-		        <param name="root">jsons</param>
+		        <param name="root">ajaxResult</param>
 		    </result>
 		    <result name="findById">saveAndUpdate/WebFormulaSaveOrUpdate2.jsp</result>
 		    <result name="addItems" type="json">

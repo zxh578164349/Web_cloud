@@ -73,6 +73,23 @@ public class WebErpProductinFormationDaoImpl extends Basedao implements IWebErpP
 		hql.append("and "+STATE+" order by selfchar1Name, itemid ");
 		return super.getAllWithNoPage(hql.toString(),map);
 	}
+	
+	public List<Object[]> findNamece(List<String> selfchar1s,String namec){
+		// TODO Auto-generated method stub
+		StringBuffer hql=new StringBuffer();
+		Map<String,Object>map=new HashMap<String,Object>();
+		hql.append("select itemid,selfchar1Name,namec1,namec2 from WebErpProductinFormation where 1=1 ");
+		if(selfchar1s!=null&&selfchar1s.size()>0){
+			hql.append(" and selfchar1 in(:selfchar1s) ");
+			map.put("selfchar1s",selfchar1s);
+		}
+		if(namec!=null||!"".equals(namec)){
+			hql.append(" and (namec1 like :namec or namec2 like :namec)");
+			map.put("namec", "%"+namec+"%");
+		}
+		hql.append("and "+STATE+" order by selfchar1Name, itemid ");
+		return super.getAllWithNoPage(hql.toString(),map);
+	}
 
 	/**
 	 * 日期:2017/7/12
