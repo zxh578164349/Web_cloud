@@ -71,9 +71,9 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 	       <td>	          
 	       	   &nbsp;<input value="導入Excel" type=button onclick="checkForm()" id="search_forday" class="btn btn-info"/>
 	       </td>
-	       <input type="text" value="<%=str_date%>" name="formula.createDate" id="createDate" />
-	       <input type="text"  name="formula.formulaIndex"  id="formulaIndex" readonly/>
-	       <input type="text" name="formula.pom.pomNo"  id="pomNo"  readonly />	       
+	       <input type="hidden" value="<%=str_date%>" name="formula.createDate" id="createDate" />
+	       <input type="hidden"  name="formula.formulaIndex"  id="formulaIndex" readonly/>
+	       <input type="hidden" name="formula.pom.pomNo"  id="pomNo"  readonly />	       
 	  </table>          	
 	</form>
 	</s:if>

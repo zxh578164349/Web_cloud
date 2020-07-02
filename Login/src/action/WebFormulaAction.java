@@ -41,6 +41,8 @@ import entity.WebFormulaItems;
 import entity.WebObjsA;
 import entity.WebObjsAId;
 import entity.WebTabpom;
+import entity.WebType;
+import entity.WebTypeId;
 import entity.WebUser;
 import freemarker.template.SimpleDate;
 
@@ -539,6 +541,7 @@ public class WebFormulaAction implements ServletResponseAware{
 				vbm.setItemNext("01");
 				vbm.setDateCreate(date);
 				vbm.setUserId(new WebUser(userId));
+				vbm.setVisaSortM(visaType.substring(0,2));
 				for(KyzVisaflow flow:list){
 					KyVisabills vbs=new KyVisabills(new KyVisabillsId(vbm,flow.getId().getItemNo()));
 					vbs.setVisaSigner(flow.getVisaSigner());
@@ -676,14 +679,15 @@ public class WebFormulaAction implements ServletResponseAware{
 			a: for (String key : map.keySet()) {// for a
 				List<String> list = (List<String>) map.get(key);
 				if("Sheet1".equals(key)){
-					formula.setFormulaName(list.get(0).split("__")[2]);//配方名稱
-					formula.setMagnification(Double.valueOf(list.get(1).split("__")[2]));//倍率
-					formula.setBrandBody(list.get(2).split("__")[2]);
-					formula.setSemifinishedProductHardness(list.get(3).split("__")[2]);
-					formula.setColor(list.get(4).split("__")[2]);
-					formula.setProductHardness(list.get(5).split("__")[2]);
-					formula.setIssuedDate(list.get(6).split("__")[2]);
-					formula.setAssignBrand("是".equals(list.get(7).split("__")[2])?"1":"0");
+					formula.setFormulaNo(list.get(0).split("__")[2]);
+					formula.setFormulaName(list.get(1).split("__")[2]);//配方名稱
+					formula.setMagnification(Double.valueOf(list.get(2).split("__")[2]));//倍率
+					formula.setBrandBody(list.get(3).split("__")[2]);
+					formula.setSemifinishedProductHardness(list.get(4).split("__")[2]);
+					formula.setColor(list.get(5).split("__")[2]);
+					formula.setProductHardness(list.get(6).split("__")[2]);
+					formula.setIssuedDate(list.get(7).split("__")[2]);
+					formula.setAssignBrand("是".equals(list.get(8).split("__")[2])?"1":"0");
 					
 				}else if("Sheet2".equals(key)){
 					List<WebFormulaItems>ll=new ArrayList<WebFormulaItems>();
@@ -693,11 +697,12 @@ public class WebFormulaAction implements ServletResponseAware{
 						item.setFk_weberp_pf(new WebErpProductinFormation(Double.valueOf(list.get(0).split("__")[i]).intValue()));
 						item.setPhrVal(Double.valueOf(list.get(3).split("__")[i]));
 						item.setWeightVal(Double.valueOf(list.get(4).split("__")[i]));
-						item.setRemark(list.get(0).split("__")[i]);
+						item.setRemark(list.get(5).split("__")[i]);
+						item.setSectionNo(1);//導入數據，默認都第一階段
 						item.setWebFormula(formula);
 						ll.add(item);
 					}
-					//formula.setWebFormulaItemses(ll);
+					formula.setWebFormulaItemses(ll);
 				}else{
 					//硬度
 					formula.getPom().setHardnessDescription(list.get(1).split("__")[2]);
@@ -821,6 +826,7 @@ public class WebFormulaAction implements ServletResponseAware{
 			}// for a
 			formula.setCreateName(user.getUsername());
 			formula.setCreateDate(new SimpleDateFormat("yyyyMMdd-hh").format(new Date()));
+			formula.setUserId(user.getId());
 			webformulaser.add(formula);	
 			response.getWriter().print("<script>window.parent.layer.msg('導入成功',3,1)</script>");	
 			

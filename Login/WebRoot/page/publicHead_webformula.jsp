@@ -94,8 +94,8 @@
 			       readonly="readonly" class="Wdate search"/></td>
 			       <td><input type="text" placeholder="吐霜" name="formula.pom.spitCream"/></td>
 			       <td>
-			                         是<input type="radio" value="0" name="formula.pom.authentications"/>
-			                        否<input type="radio" value="1" name="formula.pom.authentications"/>
+			                         是<input type="radio" value="1" name="formula.pom.authentications"/>
+			                        否<input type="radio" value="0" name="formula.pom.authentications"/>
 			       </td>
 			     </tr>
 			     <tr>

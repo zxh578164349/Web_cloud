@@ -90,7 +90,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 	                   <td><input type="text" name="tabpom.forces" value="<s:property value='tabpom.forces'/>"/></td>
 	                   <td><input type="text" name="tabpom.forcesDescription" value="<s:property value='tabpom.forcesDescription'/>"/></td>
 	                   <td><input type="text" name="tabpom.forcesUnit" value="<s:property value='tabpom.forcesUnit'/>" datatype="*0-30"/></td>
-	                   <td><input type="text" name="tabpom.forcesResult" value="<s:property value='tabpom.forcesResutl'/>" datatype="*0-100"/></td>
+	                   <td><input type="text" name="tabpom.forcesResult" value="<s:property value='tabpom.forcesResult'/>" datatype="*0-100"/></td>
 	                </tr>
 	                <tr>
 	                   <td>延伸</td>
@@ -190,7 +190,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 	                   <td><input type="text" name="tabpom.ageing" value="<s:property value='tabpom.ageing'/>"/></td>
 	                   <td><input type="text" name="tabpom.ageingDes" value="<s:property value='tabpom.ageingDes'/>"/></td>
 	                   <td><input type="text" name="tabpom.ageingUnit" value="<s:property value='tabpom.ageingUnit'/>" datatype="*0-30"/></td>
-	                   <td><input type="text" name="tabpom.ageingResult" value="<s:property value='tabpom.ageingDesResult'/>" datatype="*0-100"/></td>
+	                   <td><input type="text" name="tabpom.ageingResult" value="<s:property value='tabpom.ageingResult'/>" datatype="*0-100"/></td>
 	                </tr>
 	                <tr>
 	                   <td>收縮</td>

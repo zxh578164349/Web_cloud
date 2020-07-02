@@ -40,11 +40,19 @@
 				<td><s:property value="fk_weberp_pf.selfchar1Name" />
 				</td>
 				<td ><s:property value="fk_weberp_pf.namec1" />&nbsp;&nbsp;&nbsp;<s:property value="fk_weberp_pf.namec2" /></td>
-				<td><s:property value='phrVal' /></td>
-				<td><s:property value='weightVal' /></td>
+				<td class="phrVal"><s:property value='phrVal' /></td>
+				<td class="weightVal"><s:property value='weightVal' /></td>
 				<td><s:property value='remark' /></td>
 			</tr>	
 			</s:iterator>
+			<tr>
+			  <td colspan="3">合計</td>
+			  <td id="phrVal"></td>
+			  <td id="weightVal"></td>
+			  <td></td>
+			</tr>
 	</table>
 </body>
+
 </html>
+

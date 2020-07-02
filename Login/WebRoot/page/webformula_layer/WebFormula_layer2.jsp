@@ -56,6 +56,26 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 <script src="bootstrap/html5.js"></script>
 <script src="bootstrap/respond.min.js"></script>
 <![endif]-->
-		
+
+
+<script type="text/javascript">
+$(function(){
+  var list_phrval=$(".phrVal");
+  var list_weightval=$(".weightVal");
+  var sum1=0.0;
+  var sum2=0.0;
+  list_phrval.each(function(){
+     sum1+=Number($(this).text());
+  });
+  list_weightval.each(function(){
+     sum2+=Number($(this).text());
+  });
+  $("#phrVal").text(sum1);
+  $("#weightVal").text(sum2);
+  
+  
+  
+});
+</script>			
 </body>
 </html>
