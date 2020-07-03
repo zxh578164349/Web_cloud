@@ -345,7 +345,7 @@
 			jq("#divBills2").hide(300);
 		}
 		function goHere() {
-			loadUrl("vbm_findPageBean");
+			loadUrl("vbm_findPageBean?initMain=1");
 		}
 
 		/*function findKyVisaBills_Int(){

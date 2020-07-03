@@ -48,9 +48,9 @@ public class KyVisaBillsServicesImpl implements IKyVisaBillsServices{
 	}
 	public PageBean findPageBean_tw(int pageSize, int page,
 			String visaMk, String factNo, String billNo, String visaSort,
-			String createDate, String createDate2,WebUser user,String title,String bigType) {
+			String createDate, String createDate2,WebUser user,String title,String bigType,int initMain) {
 		// TODO Auto-generated method stub
-		return visabillDao.findPageBean_tw(pageSize, page, visaMk, factNo, billNo, visaSort, createDate, createDate2,user,title,bigType);
+		return visabillDao.findPageBean_tw(pageSize, page, visaMk, factNo, billNo, visaSort, createDate, createDate2,user,title,bigType,initMain);
 	}
 	public int findKyVisaBills_Int() {
 		// TODO Auto-generated method stub

@@ -110,9 +110,16 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 	private String lookordown;
 	private String title;//標題
 	private String bigType;//大分類 EM:普通函文   CM:內部函文
+	private int initMain;//用於剛登錄成功後，主頁上admin用戶點擊要審的函文鏈接
 	
 	
 	
+	public int getInitMain() {
+		return initMain;
+	}
+	public void setInitMain(int initMain) {
+		this.initMain = initMain;
+	}
 	public String getBigType(){
 		return bigType;
 	}
@@ -325,7 +332,7 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 		ActionContext.getContext().getSession().remove("public_title");
 		ActionContext.getContext().getSession().remove("public_bigType");
 		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");		
-		bean=visabillSer.findPageBean_tw(20,page, visaMk, factNo, billNo,visaSort,yymmdd,yymmdd2,user,title,bigType);
+		bean=visabillSer.findPageBean_tw(20,page, visaMk, factNo, billNo,visaSort,yymmdd,yymmdd2,user,title,bigType,initMain);
 		
 		//this.getKyzTitle(bean);
 		//this.getTypeName(bean);
@@ -350,7 +357,7 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 			ActionContext.getContext().getSession().put("public_bigType",bigType);
 		
 		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");		
-		bean=visabillSer.findPageBean_tw(20,page, visaMk, factNo, billNo,visaSort,yymmdd,yymmdd2,user,title,bigType);		
+		bean=visabillSer.findPageBean_tw(20,page, visaMk, factNo, billNo,visaSort,yymmdd,yymmdd2,user,title,bigType,initMain);		
 		//this.getKyzTitle(bean);
 		//this.getTypeName(bean);
 		return "beanList1";		
@@ -370,7 +377,7 @@ public class KyVisaBillmAction extends ActionSupport implements ServletResponseA
 		title=(String)ActionContext.getContext().getSession().get("public_title");
 		bigType=(String)ActionContext.getContext().getSession().get("public_bigType");
 		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");				
-		bean=visabillSer.findPageBean_tw(20,page, visaMk, factNo, billNo,visaSort,yymmdd,yymmdd2,user,title,bigType);		
+		bean=visabillSer.findPageBean_tw(20,page, visaMk, factNo, billNo,visaSort,yymmdd,yymmdd2,user,title,bigType,initMain);		
 		//this.getKyzTitle(bean);
 		//this.getTypeName(bean);
 		return "beanList1";

@@ -295,7 +295,7 @@ public class KyVisabillsDaoImpl extends Basedao implements IKyVisaBillsDao{
 	 * 描述:
 	 */
 	public PageBean findPageBean_tw(int pageSize, int page,
-			 String visaMk,String factNo,String billNo,String visaSort,String createDate,String createDate2,WebUser user,String title,String bigType) {
+			 String visaMk,String factNo,String billNo,String visaSort,String createDate,String createDate2,WebUser user,String title,String bigType,int initMain) {
 		// TODO Auto-generated method stub
 		if(factNo==null||"".equals(factNo)||"nothing".equals(factNo)){
 			factNo=user.getFactno();
@@ -343,6 +343,11 @@ public class KyVisabillsDaoImpl extends Basedao implements IKyVisaBillsDao{
 			}
 			hql.append(" and id.itemNo='01'");
 			//date_temp=" and id.kyVisabillm.dateCreate";             //20161028
+			
+			if(initMain==1){
+				hql.append(" and lower(visaSigner)=:visaSigner");
+				map.put("visaSigner", email.toLowerCase());		
+			}
 		}
 		date_temp=" and id.kyVisabillm.dateCreate";
 		if(factNo!=null&&!factNo.equals("")&&!factNo.equals("tw")){

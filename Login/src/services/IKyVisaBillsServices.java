@@ -17,7 +17,7 @@ public interface IKyVisaBillsServices {
 	public void delete(String factNo, String visaSort, String billNo,String itemNo);
 	public PageBean findPageBean(int pageSize,int page,String visaMk,String factNo,String billNo,String visaSort,String createDate,String createDate2,WebUser user,String title,String bigType);
 	public List<KyVisabills> findByFNN(String factNo,String userName);
-	public PageBean findPageBean_tw(int pageSize,int page,String visaMk,String factNo,String billNo,String visaSort,String createDate,String createDate2,WebUser user,String title,String bigType);
+	public PageBean findPageBean_tw(int pageSize,int page,String visaMk,String factNo,String billNo,String visaSort,String createDate,String createDate2,WebUser user,String title,String bigType,int initMain);
 	public int findKyVisaBills_Int();
 	
 	public int findBillsWithNo(String visaSort,String billNo);
