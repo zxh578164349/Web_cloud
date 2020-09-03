@@ -49,6 +49,7 @@ public class KyVisabillmDaoImpl extends Basedao implements IKyVisaBillmDao{
 		KyVisabillm vbm=(KyVisabillm)query.uniqueResult();
 		if(vbm!=null){
 			vbm.getKyVisabillses().size();
+			vbm.getUserId().getId();
 			GlobalMethod.vbmCotentsType(vbm);
 		}
 		return vbm;

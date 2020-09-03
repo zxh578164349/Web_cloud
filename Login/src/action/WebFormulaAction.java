@@ -679,146 +679,156 @@ public class WebFormulaAction implements ServletResponseAware{
 			a: for (String key : map.keySet()) {// for a
 				List<String> list = (List<String>) map.get(key);
 				if("Sheet1".equals(key)){
-					formula.setFormulaNo(list.get(0).split("__")[2]);
-					formula.setFormulaName(list.get(1).split("__")[2]);//配方名稱
-					formula.setMagnification(Double.valueOf(list.get(2).split("__")[2]));//倍率
-					formula.setBrandBody(list.get(3).split("__")[2]);
-					formula.setSemifinishedProductHardness(list.get(4).split("__")[2]);
-					formula.setColor(list.get(5).split("__")[2]);
-					formula.setProductHardness(list.get(6).split("__")[2]);
-					formula.setIssuedDate(list.get(7).split("__")[2]);
-					formula.setAssignBrand("是".equals(list.get(8).split("__")[2])?"1":"0");
+					if(list.get(0).split("__").length>2||list.get(1).split("__").length>2){
+						formula.setFormulaNo(list.get(0).split("__")[2]);
+						formula.setFormulaName(list.get(1).split("__")[2]);//配方名稱
+						formula.setMagnification(Double.valueOf(list.get(2).split("__")[2]));//倍率
+						formula.setBrandBody(list.get(3).split("__")[2]);
+						formula.setSemifinishedProductHardness(list.get(4).split("__")[2]);
+						formula.setColor(list.get(5).split("__")[2]);
+						formula.setProductHardness(list.get(6).split("__")[2]);
+						formula.setIssuedDate(list.get(7).split("__")[2]);
+						formula.setAssignBrand("是".equals(list.get(8).split("__")[2])?"1":"0");
+					}					
 					
 				}else if("Sheet2".equals(key)){
-					List<WebFormulaItems>ll=new ArrayList<WebFormulaItems>();
-					String[] array_head = list.get(0).split("__");
-					for (int i = 2; i < array_head.length; i++) {
-						WebFormulaItems item=new WebFormulaItems();
-						item.setFk_weberp_pf(new WebErpProductinFormation(Double.valueOf(list.get(0).split("__")[i]).intValue()));
-						item.setPhrVal(Double.valueOf(list.get(3).split("__")[i]));
-						item.setWeightVal(Double.valueOf(list.get(4).split("__")[i]));
-						item.setRemark(list.get(5).split("__")[i]);
-						item.setSectionNo(1);//導入數據，默認都第一階段
-						item.setWebFormula(formula);
-						ll.add(item);
-					}
-					formula.setWebFormulaItemses(ll);
+					if(list.get(0).split("__").length>2){
+						List<WebFormulaItems>ll=new ArrayList<WebFormulaItems>();
+						String[] array_head = list.get(0).split("__");
+						for (int i = 2; i < array_head.length; i++) {
+							WebFormulaItems item=new WebFormulaItems();
+							item.setFk_weberp_pf(new WebErpProductinFormation(Double.valueOf(list.get(0).split("__")[i]).intValue()));
+							item.setPhrVal(Double.valueOf(list.get(3).split("__")[i]));
+							item.setWeightVal(Double.valueOf(list.get(4).split("__")[i]));
+							item.setRemark(list.get(5).split("__")[i]);
+							item.setSectionNo(1);//導入數據，默認都第一階段
+							item.setWebFormula(formula);
+							ll.add(item);
+						}
+						formula.setWebFormulaItemses(ll);
+					}					
 				}else{
 					//硬度
 					formula.getPom().setHardnessDescription(list.get(1).split("__")[2]);
-					formula.getPom().setHardness(Double.valueOf(list.get(1).split("__")[4]));
 					formula.getPom().setHardnessUnit(list.get(1).split("__")[3]);
+					formula.getPom().setHardness(Double.valueOf(list.get(1).split("__")[4]));					
 					formula.getPom().setHardnessResult(list.get(1).split("__")[5]);
 					
+					//比重
+					formula.getPom().setProportionDescription(list.get(2).split("__")[2]);
+					formula.getPom().setProportionUnit(list.get(2).split("__")[3]);
+					formula.getPom().setProportion(Double.valueOf(list.get(2).split("__")[4]));					
+					formula.getPom().setProportionResult(list.get(2).split("__")[5]);
 					//硬度±值
-					formula.getPom().setHardness2(Double.valueOf(list.get(2).split("__")[2]));
+					//formula.getPom().setHardness2(Double.valueOf(list.get(2).split("__")[2]));
 					//拉力
 					formula.getPom().setForcesDescription(list.get(3).split("__")[2]);
-					formula.getPom().setForces(Double.valueOf(list.get(3).split("__")[4]));
 					formula.getPom().setForcesUnit(list.get(3).split("__")[3]);
+					formula.getPom().setForces(Double.valueOf(list.get(3).split("__")[4]));					
 					formula.getPom().setForcesResult(list.get(3).split("__")[5]);
 					//延伸
 					formula.getPom().setExtendsDescription(list.get(4).split("__")[2]);
-					formula.getPom().setExtend(Double.valueOf(list.get(4).split("__")[4]));
 					formula.getPom().setExtendsUnit(list.get(4).split("__")[3]);
+					formula.getPom().setExtend(Double.valueOf(list.get(4).split("__")[4]));					
 					formula.getPom().setExtendsResult(list.get(4).split("__")[5]);
 					//C型撕裂
 					formula.getPom().setTearingCDescription(list.get(5).split("__")[2]);
-					formula.getPom().setTearingC(Double.valueOf(list.get(5).split("__")[4]));
 					formula.getPom().setTearingCUnit(list.get(5).split("__")[3]);
+					formula.getPom().setTearingC(Double.valueOf(list.get(5).split("__")[4]));					
 					formula.getPom().setTearingCResult(list.get(5).split("__")[5]);
 					//褲型撕裂
 					formula.getPom().setTearingKDescription(list.get(6).split("__")[2]);
-					formula.getPom().setTearingK(Double.valueOf(list.get(6).split("__")[4]));
 					formula.getPom().setTearingKUnit(list.get(6).split("__")[3]);
+					formula.getPom().setTearingK(Double.valueOf(list.get(6).split("__")[4]));					
 					formula.getPom().setTearingKResult(list.get(6).split("__")[5]);
-					//比重
-					formula.getPom().setProportionDescription(list.get(7).split("__")[2]);
-					formula.getPom().setProportion(Double.valueOf(list.get(7).split("__")[4]));
-					formula.getPom().setProportionUnit(list.get(7).split("__")[3]);
-					formula.getPom().setProportionResult(list.get(7).split("__")[5]);
-				    //比重±值
-					formula.getPom().setProportion2(Double.valueOf(list.get(8).split("__")[2]));
-					//AKRON耐磨
-					formula.getPom().setWresistingAkronDes(list.get(9).split("__")[2]);
-					formula.getPom().setWresistingAkron(Double.valueOf(list.get(9).split("__")[4]));
-					formula.getPom().setWresistingAkronUnit(list.get(9).split("__")[3]);
-					formula.getPom().setWresistingAkronResult(list.get(9).split("__")[5]);
-					//DIN耐磨
-					formula.getPom().setWresistingDinDes(list.get(10).split("__")[2]);
-					formula.getPom().setWresistingDin(Double.valueOf(list.get(10).split("__")[4]));
-					formula.getPom().setWresistingDinUnit(list.get(10).split("__")[3]);
-					formula.getPom().setWresistingDinResult(list.get(10).split("__")[5]);
-					//止滑係數
-					formula.getPom().setRatioADes(list.get(11).split("__")[2]);
-					formula.getPom().setRatioA(Double.valueOf(list.get(11).split("__")[4]));
-					formula.getPom().setRatioAUnit(list.get(11).split("__")[3]);
-					formula.getPom().setRatioAResult(list.get(11).split("__")[5]);
-					//耐油係數
-					formula.getPom().setRatioBDes(list.get(12).split("__")[2]);
-					formula.getPom().setRatioB(Double.valueOf(list.get(12).split("__")[4]));
-					formula.getPom().setRatioBUnit(list.get(12).split("__")[3]);
-					formula.getPom().setRatioBResult(list.get(12).split("__")[5]);
-					//300% Modulus
-					formula.getPom().setModulus300Des(list.get(13).split("__")[2]);
-					formula.getPom().setModulus300(Double.valueOf(list.get(13).split("__")[4]));
-					formula.getPom().setModulus300Unit(list.get(13).split("__")[3]);
-					formula.getPom().setModulus300Result(list.get(13).split("__")[5]);
-					//抗彎曲
-					formula.getPom().setAbleBendDes(list.get(14).split("__")[2]);
-					formula.getPom().setAbleBend(Double.valueOf(list.get(14).split("__")[4]));
-					formula.getPom().setAbleBendUnit(list.get(14).split("__")[3]);
-					formula.getPom().setAbleBendResult(list.get(14).split("__")[5]);
-					//抗黃變
-					formula.getPom().setAbleYellowDes(list.get(15).split("__")[2]);
-					formula.getPom().setAbleYellow(Double.valueOf(list.get(15).split("__")[4]));
-					formula.getPom().setAbleYellowUnit(list.get(15).split("__")[3]);
-					formula.getPom().setAbleYellowResult(list.get(15).split("__")[5]);
-					//抗高壓
-					formula.getPom().setDefyPressDes(list.get(16).split("__")[2]);
-					formula.getPom().setDefyPress(Double.valueOf(list.get(16).split("__")[4]));
-					formula.getPom().setDefyPressUnit(list.get(16).split("__")[3]);
-					formula.getPom().setDefyPressResult(list.get(16).split("__")[5]);
-					//抗靜電
-					formula.getPom().setDefyEleDes(list.get(17).split("__")[2]);
-					formula.getPom().setDefyEle(Double.valueOf(list.get(17).split("__")[4]));
-					formula.getPom().setDefyEleUnit(list.get(17).split("__")[3]);
-					formula.getPom().setDefyEleResult(list.get(17).split("__")[5]);
-					//老化水解
-					formula.getPom().setAgeingDes(list.get(18).split("__")[2]);
-					formula.getPom().setAgeing(Double.valueOf(list.get(18).split("__")[4]));
-					formula.getPom().setAgeingUnit(list.get(18).split("__")[3]);
-					formula.getPom().setAgeingResult(list.get(18).split("__")[5]);
-					//收縮
-					formula.getPom().setContractDes(list.get(19).split("__")[2]);
-					formula.getPom().setContract(Double.valueOf(list.get(19).split("__")[4]));
-					formula.getPom().setContractUnit(list.get(19).split("__")[3]);
-					formula.getPom().setContractResult(list.get(19).split("__")[5]);
 					//彈性
-					formula.getPom().setElasticityDes(list.get(20).split("__")[2]);
-					formula.getPom().setElasticity(Double.valueOf(list.get(20).split("__")[4]));
-					formula.getPom().setElasticityUnit(list.get(20).split("__")[3]);
-					formula.getPom().setElasticityResult(list.get(20).split("__")[5]);
+					formula.getPom().setElasticityDes(list.get(7).split("__")[2]);
+					formula.getPom().setElasticityUnit(list.get(7).split("__")[3]);
+					formula.getPom().setElasticity(Double.valueOf(list.get(7).split("__")[4]));					
+					formula.getPom().setElasticityResult(list.get(7).split("__")[5]);
+					//收縮
+					formula.getPom().setContractDes(list.get(8).split("__")[2]);
+					formula.getPom().setContractUnit(list.get(8).split("__")[3]);
+					formula.getPom().setContract(Double.valueOf(list.get(8).split("__")[4]));					
+					formula.getPom().setContractResult(list.get(8).split("__")[5]);
 					//壓縮
-					formula.getPom().setCompressionDes(list.get(21).split("__")[2]);
-					formula.getPom().setCompression(Double.valueOf(list.get(21).split("__")[4]));
-					formula.getPom().setCompressionUnit(list.get(21).split("__")[3]);
-					formula.getPom().setCompressionResult(list.get(21).split("__")[5]);
-					
+					formula.getPom().setCompressionDes(list.get(9).split("__")[2]);
+					formula.getPom().setCompressionUnit(list.get(9).split("__")[3]);
+					formula.getPom().setCompression(Double.valueOf(list.get(9).split("__")[4]));					
+					formula.getPom().setCompressionResult(list.get(9).split("__")[5]);				
 					//分裂
-					formula.getPom().setDivisionDes(list.get(22).split("__")[2]);
-					formula.getPom().setDivision(Double.valueOf(list.get(22).split("__")[4]));
-					formula.getPom().setDivisionUnit(list.get(22).split("__")[3]);
-					formula.getPom().setDivisionResult(list.get(22).split("__")[5]);
+					formula.getPom().setDivisionDes(list.get(10).split("__")[2]);
+					formula.getPom().setDivisionUnit(list.get(10).split("__")[3]);
+					formula.getPom().setDivision(Double.valueOf(list.get(10).split("__")[4]));					
+					formula.getPom().setDivisionResult(list.get(10).split("__")[5]);
+					//DIN耐磨
+					formula.getPom().setWresistingDinDes(list.get(11).split("__")[2]);
+					formula.getPom().setWresistingDinUnit(list.get(11).split("__")[3]);
+					formula.getPom().setWresistingDin(Double.valueOf(list.get(11).split("__")[4]));					
+					formula.getPom().setWresistingDinResult(list.get(11).split("__")[5]);
+					//AKRON耐磨
+					formula.getPom().setWresistingAkronDes(list.get(12).split("__")[2]);
+					formula.getPom().setWresistingAkronUnit(list.get(12).split("__")[3]);
+					formula.getPom().setWresistingAkron(Double.valueOf(list.get(12).split("__")[4]));					
+					formula.getPom().setWresistingAkronResult(list.get(12).split("__")[5]);
+					//止滑係數-dry
+					formula.getPom().setRatioADes(list.get(13).split("__")[2]);
+					formula.getPom().setRatioAUnit(list.get(13).split("__")[3]);
+					formula.getPom().setRatioA(Double.valueOf(list.get(13).split("__")[4]));					
+					formula.getPom().setRatioAResult(list.get(13).split("__")[5]);
+					//止滑係數-wet
+					formula.getPom().setRatioA2Des(list.get(14).split("__")[2]);
+					formula.getPom().setRatioA2Unit(list.get(14).split("__")[3]);
+					formula.getPom().setRatioA2(Double.valueOf(list.get(14).split("__")[4]));					
+					formula.getPom().setRatioA2Result(list.get(14).split("__")[5]);
+					
+				    //比重±值
+					//formula.getPom().setProportion2(Double.valueOf(list.get(8).split("__")[2]));										
+				
+					//耐油係數
+					formula.getPom().setRatioBDes(list.get(15).split("__")[2]);
+					formula.getPom().setRatioBUnit(list.get(15).split("__")[3]);
+					formula.getPom().setRatioB(Double.valueOf(list.get(15).split("__")[4]));					
+					formula.getPom().setRatioBResult(list.get(15).split("__")[5]);
+					//300% Modulus
+					formula.getPom().setModulus300Des(list.get(16).split("__")[2]);
+					formula.getPom().setModulus300Unit(list.get(16).split("__")[3]);
+					formula.getPom().setModulus300(Double.valueOf(list.get(16).split("__")[4]));				
+					formula.getPom().setModulus300Result(list.get(16).split("__")[5]);
+					//抗彎曲
+					formula.getPom().setAbleBendDes(list.get(17).split("__")[2]);
+					formula.getPom().setAbleBendUnit(list.get(17).split("__")[3]);
+					formula.getPom().setAbleBend(Double.valueOf(list.get(17).split("__")[4]));					
+					formula.getPom().setAbleBendResult(list.get(17).split("__")[5]);
+					//抗黃變
+					formula.getPom().setAbleYellowDes(list.get(18).split("__")[2]);
+					formula.getPom().setAbleYellowUnit(list.get(18).split("__")[3]);
+					formula.getPom().setAbleYellow(Double.valueOf(list.get(18).split("__")[4]));					
+					formula.getPom().setAbleYellowResult(list.get(18).split("__")[5]);
+					//抗高壓
+					formula.getPom().setDefyPressDes(list.get(19).split("__")[2]);
+					formula.getPom().setDefyPressUnit(list.get(19).split("__")[3]);
+					formula.getPom().setDefyPress(Double.valueOf(list.get(19).split("__")[4]));					
+					formula.getPom().setDefyPressResult(list.get(19).split("__")[5]);
+					//抗靜電
+					formula.getPom().setDefyEleDes(list.get(20).split("__")[2]);
+					formula.getPom().setDefyEleUnit(list.get(20).split("__")[3]);
+					formula.getPom().setDefyEle(Double.valueOf(list.get(20).split("__")[4]));					
+					formula.getPom().setDefyEleResult(list.get(20).split("__")[5]);
+					//老化水解
+					formula.getPom().setAgeingDes(list.get(21).split("__")[2]);
+					formula.getPom().setAgeingUnit(list.get(21).split("__")[3]);
+					formula.getPom().setAgeing(Double.valueOf(list.get(21).split("__")[4]));					
+					formula.getPom().setAgeingResult(list.get(21).split("__")[5]);														
 					//吐霜
-					formula.getPom().setSpitCreamDes(list.get(23).split("__")[2]);
-					formula.getPom().setSpitCream(Double.valueOf(list.get(23).split("__")[4]));
-					formula.getPom().setSpitCreamUnit(list.get(23).split("__")[3]);
-					formula.getPom().setSpitCreamResult(list.get(23).split("__")[5]);
+					formula.getPom().setSpitCreamDes(list.get(22).split("__")[2]);
+					formula.getPom().setSpitCreamUnit(list.get(22).split("__")[3]);
+					formula.getPom().setSpitCream(Double.valueOf(list.get(22).split("__")[4]));					
+					formula.getPom().setSpitCreamResult(list.get(22).split("__")[5]);
 					//認證
-					formula.getPom().setAuthentications("是".equals(list.get(24).split("__")[2])?"1":"0");
+					formula.getPom().setAuthentications("是".equals(list.get(23).split("__")[2])?"1":"0");
 					//特性說明
-					formula.getPom().setInstruction(list.get(25).split("__")[2]);
+					//formula.getPom().setInstruction(list.get(25).split("__")[2]);
 					formula.getPom().setFormulaId(formula);
 					formula.getPom().setUsername(user.getUsername());
 					formula.getPom().setTabpomDate(new SimpleDateFormat("yyyyMMdd-hh").format(new Date()));

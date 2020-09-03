@@ -1414,7 +1414,8 @@ public class GlobalMethod extends HibernateDaoSupport{
 					String billNo=list_vbm.get(i).getId().getBillNo();
 					String visaSort=list_vbm.get(i).getId().getVisaSort();
 					String visaMk=list_vbm.get(i).getVisaMk();										
-					if(pc.getPliujung().equals(signerNext.toLowerCase())){//劉小姐隻發送一次:liujung@mail.gj.com.tw 20161213
+					if(pc.getPliujung().equals(signerNext.toLowerCase())//劉小姐隻發送一次:liujung@mail.gj.com.tw 20161213
+					   &&list_vbm.get(i).getUserId().getId()!=137){//湖南加伟（JW）赖凯的函文除外,因为没有人帮她传函文给刘小姐，所以她的邮件要每次都要发给刘小姐 20200817
 						if(list_vbm.get(i).getOneMk()==null){
 							list_vbm.get(i).setOneMk("1");//標識隻發送一次
 							visabillmSer.add(list_vbm.get(i));

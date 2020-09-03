@@ -342,7 +342,7 @@ public class WebYdataAction extends ActionSupport implements
 						WebYieldData ydata_last=dataSer.findById(y_id);
 						if(ydata_last==null){						
 							ajaxResult="3";//表示要輸入前天數據												
-							if(betweenDay>21){//如果大於前21天的就不提示輸入						
+							if(betweenDay>1){//如果大於前1天的就不提示輸入		20200903				
 								if(ydata_find!=null){//有可能出現當天數據不為空的，所以也要判斷
 									ajaxResult="2";//表示數據已經存在
 								}else{

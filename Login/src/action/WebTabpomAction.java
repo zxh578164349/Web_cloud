@@ -265,7 +265,8 @@ public class WebTabpomAction extends ActionSupport implements ServletResponseAwa
 			e.printStackTrace();
 			ajaxResult="1";
 			return "add";			
-		}		
+		}	
+		
 		switch(nullmk){
 		case 0:
 			pomNo=tabpomSer.findPomNoById(tabpom.getPomNo());

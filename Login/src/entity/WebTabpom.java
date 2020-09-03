@@ -16,28 +16,29 @@ public class WebTabpom implements java.io.Serializable{
 	private String pomNo;//物性編號
 	private WebErpBrankProcess webBrank;//品牌
 	private WebFormula formulaId;//配方索引（配方系統關聯）
-	private Double hardness;//硬度
-	private Double forces;//拉力
-	private Double extend;//延伸
-	private Double tearingC;//C型撕裂
-	private Double tearingK;//褲型撕裂
-	private Double proportion;//比重
-	private Double wresistingAkron;//AKRON耐磨
-	private Double wresistingDin;//DIN耐磨
-	private Double ratioA;//止滑係數
-	private Double ratioB;//耐油係數
-	private Double modulus300;//300% Modulus
-	private Double ableBend;//抗彎曲
-	private Double ableYellow;//抗黃變
-	private Double defyPress;//抗高壓
-	private Double defyEle;//抗靜電
-	private Double ageing;//老化水解
-	private Double contract;//收縮
-	private Double elasticity;//彈性
-	private Double compression;//壓縮
-	private Double division;//分裂
-	private Double spitCream;//吐霜
-	private String authentications;//認證
+	private Double hardness;//硬度      (1 硬度  Hardness)
+	private Double proportion;//比重    (2 密度/比重 Density/SG)
+	private Double forces;//拉力        (3 抗拉強度 Tensile Strength )
+	private Double extend;//延伸       (4 延伸率 Elongation)
+	private Double tearingC;//C型撕裂   (5 撕裂強度(C型) Tear Strength (Type C))
+	private Double tearingK;//褲型撕裂   (6 撕裂強度(褲型) Tear Strength)
+	private Double elasticity;//彈性    (7 反彈 Rebond/Resilience) 
+	private Double contract;//收縮      (8 熱收縮 Shrinkage)
+	private Double compression;//壓縮  (9 壓縮永久變形率Compression Set)
+	private Double division;//分裂  (10剝離Split Tear)
+	private Double wresistingDin;//DIN耐磨  (11 耐磨DIN Abrasion)
+	private Double wresistingAkron;//AKRON耐磨  (12 AKRON耐磨AKRON Abrasion  )	
+	private Double ratioA;//止滑係數  (13止滑 Slip Test--dry)
+	private Double ratioA2;//止滑係數  (14止滑 Slip Test--wet)
+	private Double ratioB;//耐油係數  (15 耐油係數 Oil Restistance)
+	private Double modulus300;//300% Modulus (16 300% Modulus)
+	private Double ableBend;//抗彎曲 (17 耐彎曲 Flexing Test)
+	private Double ableYellow;//抗黃變 (18 耐黃變 Yellowing Test)
+	private Double defyPress;//抗高壓  (19 抗高壓  High Voltage)
+	private Double defyEle;//抗靜電 (20 抗靜電 ESR)
+	private Double ageing;//老化水解  (21 老化水解 Hydrolysis Test)	
+	private Double spitCream;//吐霜  (22 吐霜 Blooming)
+	private String authentications;//認證   (23 認證  Certification)
 	private String instruction;//特性說明
 	private String fileMk;//附檔
 	private String username;//創建人
@@ -45,7 +46,8 @@ public class WebTabpom implements java.io.Serializable{
 	private String modifyName;//修改人
 	private String modifyDate;//修改日期
 	private Double hardness2;//±值
-	private Double proportion2;//±值
+	private Double proportion2;//±值     
+	
 	
 	private String hardnessDescription;//測試方式說明
 	private String forcesDescription;
@@ -56,6 +58,7 @@ public class WebTabpom implements java.io.Serializable{
 	private String wresistingAkronDes;
 	private String wresistingDinDes;
 	private String ratioADes;
+	private String ratioA2Des;
 	private String ratioBDes;
 	private String ableBendDes;
 	private String ableYellowDes;
@@ -78,6 +81,7 @@ public class WebTabpom implements java.io.Serializable{
 	private String wresistingAkronUnit;
 	private String wresistingDinUnit;
 	private String ratioAUnit;
+	private String ratioA2Unit;
 	private String ratioBUnit;
 	private String ableBendUnit;
 	private String ableYellowUnit;
@@ -100,7 +104,8 @@ public class WebTabpom implements java.io.Serializable{
 	private String wresistingAkronResult;
 	private String wresistingDinResult;
 	private String ratioAResult;
-	private String ratioBResult;
+	private String ratioA2Result;
+	private String ratioBResult;	
 	private String ableBendResult;
 	private String ableYellowResult;
 	private String defyPressResult;
@@ -972,6 +977,38 @@ public class WebTabpom implements java.io.Serializable{
 
 	public void setSpitCreamResult(String spitCreamResult) {
 		this.spitCreamResult = spitCreamResult;
+	}
+
+	public Double getRatioA2() {
+		return ratioA2;
+	}
+
+	public void setRatioA2(Double ratioA2) {
+		this.ratioA2 = ratioA2;
+	}
+
+	public String getRatioA2Des() {
+		return ratioA2Des;
+	}
+
+	public void setRatioA2Des(String ratioA2Des) {
+		this.ratioA2Des = ratioA2Des;
+	}
+
+	public String getRatioA2Unit() {
+		return ratioA2Unit;
+	}
+
+	public void setRatioA2Unit(String ratioA2Unit) {
+		this.ratioA2Unit = ratioA2Unit;
+	}
+
+	public String getRatioA2Result() {
+		return ratioA2Result;
+	}
+
+	public void setRatioA2Result(String ratioA2Result) {
+		this.ratioA2Result = ratioA2Result;
 	}
 	
 	
