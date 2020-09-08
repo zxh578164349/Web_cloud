@@ -32,7 +32,7 @@
 						<td class="td_show_title">廠別</td>											
 						<td class="td_input">
 						<s:if test="#session.factNo!='tw'">						
-						<input type="text" style="color:blue"  value="${factNo}" readonly id="dwr_factno"/>																		
+						<input type="text" style="color:blue"  value="${factNo}" readonly id="dwr_factno" name="emailobj.id.factNo"/>																		
 						</s:if>	
 						<s:if test="#session.factNo=='tw'">	
 						<select style="color:blue"
@@ -107,6 +107,7 @@
 		</center>
 	</form>
 
+<script type='text/javascript' src='dwr/interface/webtypejs.js'></script>
 <script type="text/javascript">
 
 	jq(function() {
@@ -210,7 +211,6 @@
 
 </script>
 <script type='text/javascript' src='dwr/interface/webfactjs.js'></script>
-<script type='text/javascript' src='dwr/interface/webtypejs.js'></script>
 <script type='text/javascript' src='dwr/interface/webuseremailajs.js'></script>
 <script type='text/javascript' src='dwr/interface/webuseremailjs.js'></script>
 </body>
