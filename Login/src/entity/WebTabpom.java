@@ -39,7 +39,7 @@ public class WebTabpom implements java.io.Serializable{
 	private Double ageing;//老化水解  (21 老化水解 Hydrolysis Test)	
 	private Double spitCream;//吐霜  (22 吐霜 Blooming)
 	private String authentications;//認證   (23 認證  Certification)
-	private String instruction;//特性說明
+	private String instruction;//特性說明(備註)
 	private String fileMk;//附檔
 	private String username;//創建人
 	private String tabpomDate;//創建日期
