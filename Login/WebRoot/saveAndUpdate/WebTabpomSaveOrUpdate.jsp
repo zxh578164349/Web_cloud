@@ -445,9 +445,8 @@ var uploadify_config = {
 	};
 	
 	jq(function(){
-		jq("#uploadify_m").uploadify(uploadify_config);
-	
-	
+		jq("#uploadify_m").uploadify(uploadify_config);				
+		
 	var demo = jq("#form_pom").Validform({
 		btnSubmit : "#sub_pom",
 		tiptype : 4,
@@ -496,8 +495,8 @@ var uploadify_config = {
 				});
 				jq("#dwrWebbrank").append(item);
 			}
-		});
-	})
+		});				
+	});
 
 function checkpomNo(){
 	if(jq("#pomNo").val()==""){
@@ -564,6 +563,12 @@ function back(){
 }
 /*禁止空格輸入*/
 goTrim();	
+
+jq("#a_webtabpom").click(function(){
+  if(jq("#formulaIndex").val()!=null&&jq("#formulaIndex").val()!=""){
+		  jq("#formulaIndex2").val(jq("#formulaIndex").val());
+		}
+});
 
 </script>
 </body>

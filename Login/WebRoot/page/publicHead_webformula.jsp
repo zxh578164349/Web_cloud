@@ -52,7 +52,10 @@
 			   <table>
 			     <tr><th>硬度</th><th>拉力</th><th>延伸</th><th>C型撕裂</th></tr>
 			     <tr>
-			     <td><input type="text" placeholder="硬度" name="formula.pom.hardness"/></td>
+			     <td>
+			     <input type="text" placeholder="硬度" name="formula.pom.hardness"/>
+			     </br><input type="text" placeholder="±" name="formula.pom.hardness2"/>
+			     </td>
 			     <td><input type="text" placeholder="拉力" name="formula.pom.forces"/></td>
 			     <td><input type="text" placeholder="延伸" name="formula.pom.extend"/></td>
 			     <td><input type="text" placeholder="C型撕裂" name="formula.pom.tearingC"/></td>
@@ -60,7 +63,10 @@
 			     <tr><th>褲型撕裂</th><th>比重</th><th>AKRON耐磨</th><th>DIN耐磨</th></tr>
 			     <tr>			       
 			       <td><input type="text" placeholder="褲型撕裂" name="formula.pom.tearingK"/></td>
-			       <td><input type="text" placeholder="比重" name="formula.pom.proportion"/></td>
+			       <td>
+			       <input type="text" placeholder="比重" name="formula.pom.proportion"/>
+			       </br><input type="text" placeholder="±" name="formula.pom.proportion2"/>
+			       </td>
 			       <td><input type="text" placeholder="AKRON耐磨" name="formula.pom.wresistingAkron"/></td>
 			       <td><input type="text" placeholder="DIN耐磨" name="formula.pom.wresistingDin"/></td>
 			     </tr>

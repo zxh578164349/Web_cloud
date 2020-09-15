@@ -44,7 +44,9 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 									<th>配方編號</th>
 								</tr>
 								<tr>
-									<td><input type="text" value="<s:property value='formula.factCode.id'/>" name="formula.factCode.id" style="color:blue" readonly />
+									<td>
+									<input type="text" value="<s:property value='formula.factCode.sysno'/>"  style="color:blue" readonly />
+									<input type="hidden" value="<s:property value='formula.factCode.id'/>" name="formula.factCode.id" style="color:blue" readonly />
 									</td>
 									<td><input type="text" name="formula.formulaNo" value="<s:property value='formula.formulaNo' />" datatype="*1-30">
 									</td>

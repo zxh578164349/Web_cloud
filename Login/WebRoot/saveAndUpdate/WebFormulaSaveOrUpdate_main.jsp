@@ -68,8 +68,8 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 									<s:if test="formula==null">
 									  <select name="factCode" datatype="*" id="dwrFactArea" onchange="makeFormulaIndex()"></select>
 									</s:if>
-									<s:else>
-									  <input type="text" value="<s:property value='formula.factCode.id'/>" name="formula.factCode.id" style="color:blue" readonly />
+									<s:else>									 
+									  <input type="text" value="<s:property value='formula.factCode.id'/>" name="formula.factCode.id" style="color:blue" readonly />									  
 									</s:else>
 									</td>
 									<td><input type="text" name="formula.formulaNo" value="<s:property value='formula.formulaNo' />" datatype="*1-30">

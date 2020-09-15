@@ -242,7 +242,15 @@ public class WebFormulaDaoImpl extends Basedao implements IWebFormulaDao{
 		if(formula.getPom().getWebBrank().getId()!=null){
 			hql.append(" and pom.webBrank.id=:webBrank");
 			map.put("webBrank",formula.getPom().getWebBrank().getId());
-		}				
+		}
+		if(formula.getPom().getHardness2()!=null){
+			hql.append(" and pom.hardness2=:hardness2");
+			map.put("hardness2", formula.getPom().getHardness2());
+		}
+		if(formula.getPom().getProportion2()!=null){
+			hql.append(" and pom.proportion2=:proportion2");
+			map.put("proportion2", formula.getPom().getProportion2());
+		}
 		hql2.append(hql);
 		hql.append(" order by formulaIndex ");
 		
