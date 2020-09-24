@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -1679,5 +1680,209 @@ public class WeballobjBAction  extends ActionSupport implements ServletResponseA
 		}
 	}
 	
-			
+	/**
+	 * 盤點報表
+	 * @throws IOException 
+	 */
+	public void printTotalReport() throws IOException{
+		List<WeballobjB>list_source=weballobjbser.findWeballobjB(yymm);
+		List<WebFact>list_facts=webFactSer.findFactAble();//所有廠別    
+		List<String>list_head=new ArrayList<String>();
+		list_head.add("廠別");
+		list_head.add("區域");
+		list_head.add("帳上(KG)");
+		list_head.add("實盤(KG)");
+		list_head.add("差異");
+		list_head.add("%");
+		list_head.add("排名%");
+		
+		List<WeballobjB>list_objs=new LinkedList<WeballobjB>();
+		for(WebFact fact:list_facts){
+			list_objs.add(new WeballobjB(new WeballobjBId(fact,yymm)));
+		}
+		for(int a=0;a<list_objs.size();a++){
+			for(WeballobjB obj:list_source){
+				if(list_objs.get(a).getId().getFact().getId().getFactNo().equals(obj.getId().getFact().getId().getFactNo())&&
+						list_objs.get(a).getId().getFact().getId().getFactArea().equals(obj.getId().getFact().getId().getFactArea())){
+					list_objs.remove(a);
+					list_objs.add(a,obj);
+					break;
+				}
+			}
+		}
+				
+		XSSFWorkbook wb=new XSSFWorkbook();
+		XSSFSheet sheet=wb.createSheet("排名");
+		Map<String,Object>map_style=GlobalMethod.findStyles2007(wb);
+		//XSSFCellStyle cs_title=(XSSFCellStyle)map_style.get("cs_title");
+		XSSFCellStyle cs_head=(XSSFCellStyle)map_style.get("cs_head");
+		XSSFCellStyle cs_poi1=(XSSFCellStyle)map_style.get("cs_poi1");
+		XSSFCellStyle cs_poi2=(XSSFCellStyle)map_style.get("cs_poi2");
+		XSSFCellStyle cs_poi1_bg=(XSSFCellStyle)map_style.get("cs_poi1_bg");
+		XSSFCellStyle cs=(XSSFCellStyle)map_style.get("cs");
+		
+		for(int a=0;a<list_facts.size()+2;a++){
+			sheet.createRow(a);
+			if(a==0){
+				sheet.setColumnWidth(0, 5000);
+			}
+			for(int b=0;b<list_head.size()+2;b++){
+				sheet.getRow(a).createCell(b).setCellStyle(cs);
+			}
+		}
+						
+		for(int a=0;a<list_head.size();a++){
+			sheet.getRow(0).getCell(a).setCellValue(list_head.get(a));
+			sheet.getRow(0).getCell(a).setCellStyle(cs_head);
+		}
+		
+		/*for(int a=0;a<list_facts.size();a++){
+			sheet.getRow(a+1).getCell(0).setCellValue(list_facts.get(a).getFactSname());
+			sheet.getRow(a+1).getCell(0).setCellStyle(cs);
+		}*/
+		
+		
+		for(int a=0;a<list_objs.size();a++){
+			sheet.getRow(a+1).getCell(0).setCellValue(list_objs.get(a).getId().getFact().getFactSname());
+			sheet.getRow(a+1).getCell(1).setCellValue(list_objs.get(a).getId().getFact().getId().getFactArea());
+			sheet.getRow(a+1).getCell(2).setCellValue(list_objs.get(a).getObjA1()==null?0.0:list_objs.get(a).getObjA1());
+			sheet.getRow(a+1).getCell(3).setCellValue(list_objs.get(a).getObjA2()==null?0.0:list_objs.get(a).getObjA2());			
+		}
+		
+		
+
+		ServletOutputStream os=response.getOutputStream();
+		//response.setContentType("application/vnd.ms-excel");
+		response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");				
+		//String fileName=yymm+"盤點彙總報表.xlsx";
+		String fileName="盤點彙總報表.xlsx";
+		int msie=ServletActionContext.getRequest().getHeader("USER-AGENT").toLowerCase().indexOf("msie");
+		if(msie>0){
+			fileName=java.net.URLEncoder.encode(fileName,"utf-8");
+		}else{
+			fileName=new String(fileName.getBytes("utf-8"),"iso8859-1");
+		}
+		response.setHeader("Content-disposition","attachment;filename="+fileName);
+		wb.write(os);
+		os.close();	
+		
+	}
+	
+	/**
+	 * 盤點總表(百分比)
+	 * @throws IOException 
+	 * @throws ParseException 
+	 */
+	public void printTotalReport_a() throws IOException, ParseException{
+		List<WebFact>list_facts=webFactSer.findFactAble();//所有廠別    
+		List<String>list_months=GlobalMethod.findMonths(yymm, yymm2);		
+						
+		XSSFWorkbook wb=new XSSFWorkbook();
+		XSSFSheet sheet=wb.createSheet("盤點總表(百分比)");
+		Map<String,Object>map_style=GlobalMethod.findStyles2007(wb);
+		//XSSFCellStyle cs_title=(XSSFCellStyle)map_style.get("cs_title");
+		XSSFCellStyle cs_head=(XSSFCellStyle)map_style.get("cs_head");
+		XSSFCellStyle cs_poi1=(XSSFCellStyle)map_style.get("cs_poi1");
+		XSSFCellStyle cs_poi2=(XSSFCellStyle)map_style.get("cs_poi2");
+		XSSFCellStyle cs_poi1_bg=(XSSFCellStyle)map_style.get("cs_poi1_bg");
+		XSSFCellStyle cs=(XSSFCellStyle)map_style.get("cs");
+		
+		for(int a=0;a<list_facts.size()+2;a++){
+			sheet.createRow(a);
+			if(a==0){
+				sheet.setColumnWidth(0, 5000);
+			}
+			for(int b=0;b<list_months.size()+2;b++){
+				sheet.getRow(a).createCell(b).setCellStyle(cs);
+			}
+		}
+						
+		for(int a=0;a<list_months.size();a++){
+			sheet.getRow(0).getCell(a).setCellValue(list_months.get(a));
+			sheet.getRow(0).getCell(a).setCellStyle(cs_head);
+		}
+		
+		for(int a=0;a<list_facts.size();a++){
+			sheet.getRow(a+1).getCell(0).setCellValue(list_facts.get(a).getFactSname());
+			sheet.getRow(a+1).getCell(0).setCellStyle(cs);
+		}
+		
+		
+		
+
+		ServletOutputStream os=response.getOutputStream();
+		//response.setContentType("application/vnd.ms-excel");
+		response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");				
+		//String fileName=yymm+"盤點彙總報表.xlsx";
+		String fileName="盤點彙總報表.xlsx";
+		int msie=ServletActionContext.getRequest().getHeader("USER-AGENT").toLowerCase().indexOf("msie");
+		if(msie>0){
+			fileName=java.net.URLEncoder.encode(fileName,"utf-8");
+		}else{
+			fileName=new String(fileName.getBytes("utf-8"),"iso8859-1");
+		}
+		response.setHeader("Content-disposition","attachment;filename="+fileName);
+		wb.write(os);
+		os.close();	
+		
+	}
+	
+	/**
+	 * 盤點差異表(KG)
+	 * @throws IOException 
+	 * @throws ParseException 
+	 */
+	public void printTotalReport_b() throws IOException, ParseException{
+		List<WebFact>list_facts=webFactSer.findFactAble();//所有廠別    
+		List<String>list_months=GlobalMethod.findMonths(yymm, yymm2);
+								
+		XSSFWorkbook wb=new XSSFWorkbook();
+		XSSFSheet sheet=wb.createSheet("盤點差異表(KG)");
+		Map<String,Object>map_style=GlobalMethod.findStyles2007(wb);
+		//XSSFCellStyle cs_title=(XSSFCellStyle)map_style.get("cs_title");
+		XSSFCellStyle cs_head=(XSSFCellStyle)map_style.get("cs_head");
+		XSSFCellStyle cs_poi1=(XSSFCellStyle)map_style.get("cs_poi1");
+		XSSFCellStyle cs_poi2=(XSSFCellStyle)map_style.get("cs_poi2");
+		XSSFCellStyle cs_poi1_bg=(XSSFCellStyle)map_style.get("cs_poi1_bg");
+		XSSFCellStyle cs=(XSSFCellStyle)map_style.get("cs");
+		
+		for(int a=0;a<list_facts.size()+2;a++){
+			sheet.createRow(a);
+			if(a==0){
+				sheet.setColumnWidth(0, 5000);
+			}
+			for(int b=0;b<list_months.size()+2;b++){
+				sheet.getRow(a).createCell(b).setCellStyle(cs);
+			}
+		}
+						
+		for(int a=0;a<list_months.size();a++){
+			sheet.getRow(0).getCell(a).setCellValue(list_months.get(a));
+			sheet.getRow(0).getCell(a).setCellStyle(cs_head);
+		}
+		
+		for(int a=0;a<list_facts.size();a++){
+			sheet.getRow(a+1).getCell(0).setCellValue(list_facts.get(a).getFactSname());
+			sheet.getRow(a+1).getCell(0).setCellStyle(cs);
+		}
+		
+		
+		
+
+		ServletOutputStream os=response.getOutputStream();
+		//response.setContentType("application/vnd.ms-excel");
+		response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");				
+		//String fileName=yymm+"盤點彙總報表.xlsx";
+		String fileName="盤點彙總報表.xlsx";
+		int msie=ServletActionContext.getRequest().getHeader("USER-AGENT").toLowerCase().indexOf("msie");
+		if(msie>0){
+			fileName=java.net.URLEncoder.encode(fileName,"utf-8");
+		}else{
+			fileName=new String(fileName.getBytes("utf-8"),"iso8859-1");
+		}
+		response.setHeader("Content-disposition","attachment;filename="+fileName);
+		wb.write(os);
+		os.close();	
+		
+	}
 }

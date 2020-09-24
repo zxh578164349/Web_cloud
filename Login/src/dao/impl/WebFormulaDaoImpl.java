@@ -268,8 +268,8 @@ public class WebFormulaDaoImpl extends Basedao implements IWebFormulaDao{
 	
 	public List<String> findFormulaIndex(String factNo,String factCode,String createDate){
 		// TODO Auto-generated method stub
-		String hql="select formulaIndex from WebFormula where factNo.factNo=? and factCode.id=? and createDate=? order by formulaIndex desc";
-		Object[]objs={factNo,Integer.parseInt(factCode),createDate};
+		String hql="select formulaIndex from WebFormula where factNo.factNo=? and factCode.id=? and createDate like ? order by formulaIndex desc";
+		Object[]objs={factNo,Integer.parseInt(factCode),createDate+"%"};
 		return super.findAll(hql,objs);
 	}
 

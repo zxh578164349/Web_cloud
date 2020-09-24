@@ -53,6 +53,9 @@
 			   <s:if test='#session.factNo=="tw"'>
 			       <input value="導出全部" type="button" class="btn btn-primary" onclick="print3('public_form','factNo','yymm','yymm2')"/>&nbsp;			        	        
 			   </s:if>
+			   
+			   <input value="tt" type="button" class="btn btn-primary" onclick="print4('public_form','factNo','yymm','yymm2')"/>&nbsp;
+			   
 			  
 			   
 			   

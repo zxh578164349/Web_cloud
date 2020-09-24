@@ -144,6 +144,12 @@
         <property name="objA43" type="java.lang.Double">
             <column name="OBJ_A43" precision="13" scale="1" />
         </property>
+        <property name="objA44" type="java.lang.Double">
+            <column name="OBJ_A44" precision="13" scale="1" />
+        </property>
+        <property name="objA45" type="java.lang.Double">
+            <column name="OBJ_A45" precision="13" scale="1" />
+        </property>
         <property name="username" type="java.lang.String">
             <column name="USERNAME" length="50"/>
         </property>

@@ -130,8 +130,8 @@ public class WebTabpomDaoImpl extends Basedao implements IWebTabpomDao{
 
 	public List<String> findPomNos(String brank,String tabpomDate ) {
 		// TODO Auto-generated method stub
-		String hql="select pomNo from WebTabpom where webBrank.id=? and tabpomDate=? order by pomNo desc";
-		Object[]objs={Integer.parseInt(brank),tabpomDate};
+		String hql="select pomNo from WebTabpom where webBrank.id=? and tabpomDate like ? order by pomNo desc";
+		Object[]objs={Integer.parseInt(brank),tabpomDate+"%"};
 		return super.findAll(hql, objs);
 	}
 

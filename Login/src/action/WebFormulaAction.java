@@ -398,9 +398,10 @@ public class WebFormulaAction implements ServletResponseAware{
 	
 	public String makeFormulaIndex(){
 		//int jj=2/0;
+		String ff=createDate.substring(0, 8);
 		StringBuffer index=new StringBuffer();
 		index.append("GJ"+factNo.split("__")[1]+factCode.split("__")[1]+"-"+createDate.split("-")[0]);
-		List<String>list=webformulaser.findFormulaIndex(factNo.split("__")[0],factCode.split("__")[0],createDate);
+		List<String>list=webformulaser.findFormulaIndex(factNo.split("__")[0],factCode.split("__")[0],createDate.substring(0, 8));
 		if(list.size()>0){
 			String temp=(Integer.parseInt(list.get(0).substring(list.get(0).length()-3))+1)+"";
 			if(temp.length()==1){
@@ -426,7 +427,7 @@ public class WebFormulaAction implements ServletResponseAware{
 				formula.setFactCode(obj);				
 				String factno=formula.getFactNo().getFactNo();
 				formula.getFactNo().setFactNo(factno.split("__")[0]);							
-				WebTabpom tabpom=(WebTabpom)ActionContext.getContext().getSession().get("tabpom");
+				/*WebTabpom tabpom=(WebTabpom)ActionContext.getContext().getSession().get("tabpom");
 				if(tabpom!=null){
 					formula.setPom(tabpom);
 					try{						
@@ -442,7 +443,7 @@ public class WebFormulaAction implements ServletResponseAware{
 						ajaxResult="3";
 						return "add";
 					}
-				}				
+				}*/				
 			}
 			webformulaser.add(formula);	
 			this.clearSession();//添加成功后,清除session

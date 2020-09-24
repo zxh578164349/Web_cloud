@@ -7,7 +7,7 @@
 			+ path + "/";
 %>
 <%
-java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("yyyyMMdd-hh");
+java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("yyyyMMdd-hhmm");
 java.util.Date currentTime = new java.util.Date();//得到当前系统时间
 String str_date = formatter.format(currentTime); //将日期时间格式化
 %>
@@ -111,6 +111,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 									 <input type="hidden" value="<s:property value='formula.visaSort'/>" name="formula.visaSort">
 									 <input type="hidden" value="<s:property value='formula.userId'/>" name="formula.userId" />
 									 <input type="hidden" value="<s:property value='formula.useremail'/>" name="formula.useremail" />
+									 <input type="hidden" value="to_formula" id="to_formula"/>
 									 </td>
 								</tr>
 							</tbody>

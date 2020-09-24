@@ -7,7 +7,7 @@
 			+ path + "/";
 %>
 <%
-java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("yyyyMMdd-hh");
+java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("yyyyMMdd-hhmm");
 java.util.Date currentTime = new java.util.Date();//得到当前系统时间
 String str_date = formatter.format(currentTime); //将日期时间格式化
 %>
@@ -54,7 +54,8 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 									 <input type="hidden" name="isnull" value="isnull" />
 									 <input type="hidden" name="formula.visaSort" value="PF"/>
 									 <input type="hidden" value="${loginUser.id}" name="formula.userId" />
-									 <input type="hidden" value="${loginUser.email}" name="formula.useremail" /> 									
+									 <input type="hidden" value="${loginUser.email}" name="formula.useremail" /> 
+									 <input type="hidden" value="to_formula" id="to_formula"/>									
 									</td>
 								</tr> 
 								
@@ -180,7 +181,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 		
 		<center>
 	        <input type="button" id="sub_main" value="確定" class="btn btn-primary" />&nbsp;&nbsp;&nbsp;			              
-			<input type="button" value="返回"  onclick="javascript:back()" class="btn btn-primary" />	
+			<input type="button" value="返回"  onclick="javascript:back()" class="btn btn-primary" />					
 			<span id="msgtip" style="margin-left:30px;"></span>		            
 		</center>																								     
 	</form>
@@ -209,9 +210,15 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 			},
 			callback:function(data){
 				if(data=="0"){
-					layer.msg("提交成功!",3,1);				
-					loadUrl("webformula_findPageBean");
+					layer.msg("配方主表提交成功，可填寫物性資料",3,1);				
+					//loadUrl("webformula_findPageBean");
 					//loadUrl("webformula_findById?formulaIndex="+jq("#formulaIndex").val());
+					jq("#li_webtabpom").css("display","block");
+					jq("#dwr_factno").attr("disabled","disabled");
+                    jq("#dwrFactArea").attr("disabled","disabled");
+                    //jq("input[name='isnull']").val("isnotnull");
+                    jq("#a_webtabpom").click();
+					
 				}
 				if(data=="1"){
 					layer.msg("提交失敗",3,3);
@@ -290,14 +297,14 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 					jq("#formulaIndex").val(data);
 					jq("#formulaIndex2").val(data);
 					jq("#div_webformalaitem").css("display","block");
-					jq("#li_webtabpom").css("display","block");
+					//jq("#li_webtabpom").css("display","block");
 					checkbtn();
 				},
 				error:function(){
 					layer.msg("生成配方索引失敗",3,3);
 					jq("#div_webformalaitem").css("display","none");
 					jq("#btn_addsec").addClass("disabled");	
-					jq("#li_webtabpom").css("display","none");
+					//jq("#li_webtabpom").css("display","none");
 				}
 			});
 		}		
@@ -484,6 +491,7 @@ function checkallItems(){
 	}
 }
 	
+
 </script>
 </body>
 </html>

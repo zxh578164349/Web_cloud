@@ -258,7 +258,8 @@ public class WeballobjBDaoImpl extends Basedao implements IWeballobjBDao{
 		if(yymm!=null&&!yymm.equals("")){
 			hql.append(" and id.yymm=:yymm ");
 			map.put("yymm",yymm);
-		}		
+		}
+		hql.append(" order by id.fact.orderNo,id.fact.fcodeIndex ");
 		List<WeballobjB>list=super.getAllWithNoPage(hql.toString(),map);
 		for(WeballobjB obj:list){
 			obj.getId().getFact().getFactSname();

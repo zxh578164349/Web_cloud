@@ -459,7 +459,7 @@ public class WebTabpomAction extends ActionSupport implements ServletResponseAwa
 		// TODO Auto-generated method stub
 		StringBuffer pomNo=new StringBuffer();
 		pomNo.append("WX"+brank+"-"+tabpomDate.split("-")[0]);
-		List<String>list=tabpomSer.findPomNos(brank, tabpomDate);
+		List<String>list=tabpomSer.findPomNos(brank, tabpomDate.substring(0, 8));
 		if(list.size()>0){
 			String indexStr=list.get(0).substring(list.get(0).length()-3);
 			Integer temp=Integer.parseInt(indexStr)+1;

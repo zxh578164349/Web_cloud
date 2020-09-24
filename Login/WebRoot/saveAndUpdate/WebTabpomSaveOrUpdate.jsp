@@ -7,7 +7,7 @@
 			+ path + "/";
 %>
 <%
-java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("yyyyMMdd");
+java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("yyyyMMdd-hhmm");
 java.util.Date currentTime = new java.util.Date();//得到当前系统时间
 String str_date = formatter.format(currentTime); //将日期时间格式化
 %>
@@ -459,13 +459,21 @@ var uploadify_config = {
 		ajaxPost:true,
 		callback:function(data){
 			if(data=="0"){				
-				if(jq("hidden[name='nullmk']").val()=="0"){
+				/* if(jq("hidden[name='nullmk']").val()=="0"){
+				  
 				  layer.msg("添加成功，請按【確定】保存",3,0);
 				  jq("#a_webformula").click();				  				  
 				}else{
-				  layer.msg("修改成功!",3,1);
-				  //loadUrl("webformula_findById?formulaIndex="+jq("#formulaIndex").val());
+ 				  layer.msg("修改成功!",3,1);
 				  jq("#a_webformula").click();
+				} */
+				
+				if(jq("#to_formula")==null||jq("#to_formula").val()==null){
+				  layer.msg("添加成功",3,1);
+				  loadUrl("webtabpom_findPageBean3?backIndex=1");
+				}else{
+				  layer.msg("添加成功",3,1);
+				  loadUrl("webformula_findPageBean3?backIndex=1");
 				}				
 			}
 			if(data=="1"){

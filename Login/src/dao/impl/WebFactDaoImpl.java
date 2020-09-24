@@ -38,9 +38,7 @@ public class WebFactDaoImpl extends Basedao implements IWebFactDao {
 		return super.findAll(hql, objs);
 	}
 
-	/**
-	 * �t�O�N�������H�t�W
-	 */
+	
 	public String selByid(String id) {
 		// TODO Auto-generated method stub
 		String hql = "select distinct factSname from WebFact where id.factNo=?";

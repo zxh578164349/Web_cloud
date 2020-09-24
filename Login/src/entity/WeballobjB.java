@@ -51,7 +51,9 @@ public class WeballobjB implements java.io.Serializable {
 	private Double objA40;//無形差異率
 	private Double objA41;//廢品重量
 	private Double objA42;//當月耗用金額
-	private Double objA43;//平均庫存金額
+	private Double objA43;//平均庫存金額 
+	private Double objA44;//月底盤點帳上(KG)
+	private Double objA45;//月底盤點實際(KG)
 	private String username;
 	private String usernameUd;
 	private String createDate;
@@ -503,5 +505,23 @@ public class WeballobjB implements java.io.Serializable {
 	public void setObjA43(Double objA43) {
 		this.objA43 = objA43;
 	}
+
+	public Double getObjA44() {
+		return objA44;
+	}
+
+	public void setObjA44(Double objA44) {
+		this.objA44 = objA44;
+	}
+
+	public Double getObjA45() {
+		return objA45;
+	}
+
+	public void setObjA45(Double objA45) {
+		this.objA45 = objA45;
+	}
+	
+	
 
 }
