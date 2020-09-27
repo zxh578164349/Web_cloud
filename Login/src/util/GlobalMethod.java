@@ -1892,7 +1892,7 @@ public class GlobalMethod extends HibernateDaoSupport{
 	 }
 	 
 	 /**
-	  * 移除相同元素並排序
+	  * 移除相同元素並排序（升序）
 	  * @param list
 	  * @return
 	  */
@@ -1910,6 +1910,28 @@ public class GlobalMethod extends HibernateDaoSupport{
 			 }
 		 }
 		 Collections.sort(list);
+		 return list;
+	 }
+	 
+	 /**
+	  * 移除相同元素並排序(降序)
+	  * @param list
+	  * @return
+	  */
+	 public static List<Double> removeSameDouble2(List<Double>list){
+		 /*for(int a=0;a<list.size();a++){
+			 if(list.get(a)==null){
+				 list.set(a,0.00);
+			 }
+		 }*/
+		 for(int i=0;i<list.size();i++){
+			 for(int j=list.size()-1;j>i;j--){
+				 if(list.get(j).equals(list.get(i))){
+					 list.remove(j);
+				 }
+			 }
+		 }
+		 Collections.sort(list,Collections.reverseOrder());
 		 return list;
 	 }
 	 

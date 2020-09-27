@@ -1720,7 +1720,8 @@ public class WeballobjBAction  extends ActionSupport implements ServletResponseA
 		XSSFCellStyle cs_poi2=(XSSFCellStyle)map_style.get("cs_poi2");
 		XSSFCellStyle cs_poi1_bg=(XSSFCellStyle)map_style.get("cs_poi1_bg");
 		XSSFCellStyle cs=(XSSFCellStyle)map_style.get("cs");
-		
+		XSSFCellStyle cs_font_green=(XSSFCellStyle)map_style.get("cs_font_green");
+		XSSFCellStyle cs_font_red=(XSSFCellStyle)map_style.get("cs_font_red");
 		for(int a=0;a<list_facts.size()+2;a++){
 			sheet.createRow(a);
 			if(a==0){
@@ -1741,13 +1742,111 @@ public class WeballobjBAction  extends ActionSupport implements ServletResponseA
 			sheet.getRow(a+1).getCell(0).setCellStyle(cs);
 		}*/
 		
-		
+		DecimalFormat frm=new DecimalFormat("0.00%");
+		List<Double>list_db=new ArrayList<Double>();
 		for(int a=0;a<list_objs.size();a++){
 			sheet.getRow(a+1).getCell(0).setCellValue(list_objs.get(a).getId().getFact().getFactSname());
 			sheet.getRow(a+1).getCell(1).setCellValue(list_objs.get(a).getId().getFact().getId().getFactArea());
-			sheet.getRow(a+1).getCell(2).setCellValue(list_objs.get(a).getObjA1()==null?0.0:list_objs.get(a).getObjA1());
-			sheet.getRow(a+1).getCell(3).setCellValue(list_objs.get(a).getObjA2()==null?0.0:list_objs.get(a).getObjA2());			
+			if(list_objs.get(a).getObjA3()==null){
+				sheet.getRow(a+1).getCell(2).setCellValue("無數據");
+			}else{
+				sheet.getRow(a+1).getCell(2).setCellValue(list_objs.get(a).getObjA3());
+			}
+			if(list_objs.get(a).getObjA4()==null){
+				sheet.getRow(a+1).getCell(3).setCellValue("無數據");
+			}else{
+				sheet.getRow(a+1).getCell(3).setCellValue(list_objs.get(a).getObjA4());
+			}
+			
+			if(list_objs.get(a).getObjA3()==null||list_objs.get(a).getObjA4()==null){
+				sheet.getRow(a+1).getCell(4).setCellValue("無數據");
+				sheet.getRow(a+1).getCell(5).setCellValue("無數據");
+				list_db.add(0.0);
+			}else{
+				sheet.getRow(a+1).getCell(4).setCellValue(list_objs.get(a).getObjA4()-list_objs.get(a).getObjA3());
+				sheet.getRow(a+1).getCell(5).setCellValue(GlobalMethod.division(list_objs.get(a).getObjA4()-list_objs.get(a).getObjA3(), list_objs.get(a).getObjA4()));
+				list_db.add(GlobalMethod.division(list_objs.get(a).getObjA4()-list_objs.get(a).getObjA3(), list_objs.get(a).getObjA4()));
+			}
 		}
+		
+		
+		List<Double>list_db3=new ArrayList<Double>();
+		
+		list_db3.add(1.1);
+		list_db3.add(1.1);
+		list_db3.add(22.7);
+		list_db3.add(-3.3);
+		list_db3.add(-5.5);
+		//排名
+		
+		List<Double>list_db3_1=new ArrayList<Double>();
+		List<Double>list_db3_2=new ArrayList<Double>();
+		for(Double d:list_db){
+			if(d<0){
+				list_db3_2.add(d);				
+			}else{
+				list_db3_1.add(d);
+			}
+		}
+		
+		List<Double>list_db4_1=new ArrayList<Double>();
+		List<Double>list_db4_2=new ArrayList<Double>();
+		for(Double d:list_db3_1){
+			list_db4_1.add(d);
+		}
+		for(Double d:list_db3_2){
+			list_db4_2.add(d);
+		}
+		List<Double>list_db5_1=GlobalMethod.removeSameDouble2(list_db4_1);
+		List<Double>list_db5_2=GlobalMethod.removeSameDouble(list_db4_2);
+		
+		List<Double[]>list_db2_1=new ArrayList<Double[]>();
+		List<Double[]>list_db2_2=new ArrayList<Double[]>();
+		for(Double d:list_db){
+			
+			for(int a=0;a<list_db5_1.size();a++){
+				if(d.equals(list_db5_1.get(a))){
+					Double[]dd={(double) (a+1),d};
+					list_db2_1.add(dd);
+					break;
+				}
+			}
+			
+			for(int a=0;a<list_db5_2.size();a++){
+				if(d.equals(list_db5_2.get(a))){
+					Double[]dd={(double) (a+1),d};
+					list_db2_2.add(dd);
+					break;
+				}
+			}
+		}
+		
+		for(int a=0;a<3;a++){
+			for(int b=0;b<list_db.size();b++){
+				if(list_db5_1.get(a).equals(list_db.get(b))){
+					sheet.getRow(b+1).getCell(6).setCellValue(a+1);
+					sheet.getRow(b+1).getCell(6).setCellStyle(cs_font_green);
+					
+				}
+				if(list_db5_2.get(a).equals(list_db.get(b))){
+					sheet.getRow(b+1).getCell(6).setCellValue(a+1);
+					sheet.getRow(b+1).getCell(6).setCellStyle(cs_font_red);
+				}
+				
+			}
+		}
+				
+		System.out.println("------------------------------------------------------");
+		System.out.println(list_db);
+		for(int a=0;a<list_db2_1.size();a++){
+			System.out.println(list_db2_1.get(a)[0]);
+		}
+		System.out.println("------------------------------------------------------");
+		for(int a=0;a<list_db2_2.size();a++){
+			System.out.println(list_db2_2.get(a)[0]);
+		}
+		System.out.println("------------------------------------------------------");
+		
 		
 		
 
