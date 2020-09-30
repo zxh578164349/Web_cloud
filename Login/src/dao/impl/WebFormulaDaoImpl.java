@@ -148,6 +148,10 @@ public class WebFormulaDaoImpl extends Basedao implements IWebFormulaDao{
 			hql.append(" and assignBrand=:assignBrand");
 			map.put("assignBrand",formula.getAssignBrand());
 		}
+		if(formula.getFormulaName()!=null&&!"".equals(formula.getFormulaName())){
+			hql.append(" and formulaName like :formulaName ");
+			map.put("formulaName", "%"+formula.getFormulaName()+"%");
+		}
 		/**********************以下爲Double類型*******************************/		
 		 if(formula.getPom().getHardness()!=null){
 				hql.append(" and :hardness between pom.hardness-pom.hardness2 and pom.hardness+pom.hardness2");

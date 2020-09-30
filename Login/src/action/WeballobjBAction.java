@@ -1683,9 +1683,10 @@ public class WeballobjBAction  extends ActionSupport implements ServletResponseA
 	/**
 	 * 盤點報表
 	 * @throws IOException 
+	 * @throws ParseException 
 	 */
-	public void printTotalReport() throws IOException{
-		List<WeballobjB>list_source=weballobjbser.findWeballobjB(yymm);
+	public void printTotalReport() throws IOException, ParseException{
+		List<WeballobjB>list_source=weballobjbser.findWeballobjB(yymm2);
 		List<WebFact>list_facts=webFactSer.findFactAble();//所有廠別    
 		List<String>list_head=new ArrayList<String>();
 		list_head.add("廠別");
@@ -1716,19 +1717,20 @@ public class WeballobjBAction  extends ActionSupport implements ServletResponseA
 		Map<String,Object>map_style=GlobalMethod.findStyles2007(wb);
 		//XSSFCellStyle cs_title=(XSSFCellStyle)map_style.get("cs_title");
 		XSSFCellStyle cs_head=(XSSFCellStyle)map_style.get("cs_head");
-		XSSFCellStyle cs_poi1=(XSSFCellStyle)map_style.get("cs_poi1");
+		XSSFCellStyle cs_poi=(XSSFCellStyle)map_style.get("cs_poi");
 		XSSFCellStyle cs_poi2=(XSSFCellStyle)map_style.get("cs_poi2");
 		XSSFCellStyle cs_poi1_bg=(XSSFCellStyle)map_style.get("cs_poi1_bg");
 		XSSFCellStyle cs=(XSSFCellStyle)map_style.get("cs");
 		XSSFCellStyle cs_font_green=(XSSFCellStyle)map_style.get("cs_font_green");
 		XSSFCellStyle cs_font_red=(XSSFCellStyle)map_style.get("cs_font_red");
+		XSSFCellStyle cs_percent=(XSSFCellStyle)map_style.get("cs_percent");
 		for(int a=0;a<list_facts.size()+2;a++){
 			sheet.createRow(a);
 			if(a==0){
 				sheet.setColumnWidth(0, 5000);
 			}
-			for(int b=0;b<list_head.size()+2;b++){
-				sheet.getRow(a).createCell(b).setCellStyle(cs);
+			for(int b=0;b<list_head.size();b++){
+				sheet.getRow(a).createCell(b).setCellStyle(cs_poi);
 			}
 		}
 						
@@ -1736,17 +1738,14 @@ public class WeballobjBAction  extends ActionSupport implements ServletResponseA
 			sheet.getRow(0).getCell(a).setCellValue(list_head.get(a));
 			sheet.getRow(0).getCell(a).setCellStyle(cs_head);
 		}
+				
+		printFactName(sheet,list_facts);
 		
-		/*for(int a=0;a<list_facts.size();a++){
-			sheet.getRow(a+1).getCell(0).setCellValue(list_facts.get(a).getFactSname());
-			sheet.getRow(a+1).getCell(0).setCellStyle(cs);
-		}*/
-		
-		DecimalFormat frm=new DecimalFormat("0.00%");
+		//DecimalFormat frm=new DecimalFormat("0.00%");
 		List<Double>list_db=new ArrayList<Double>();
-		for(int a=0;a<list_objs.size();a++){
-			sheet.getRow(a+1).getCell(0).setCellValue(list_objs.get(a).getId().getFact().getFactSname());
-			sheet.getRow(a+1).getCell(1).setCellValue(list_objs.get(a).getId().getFact().getId().getFactArea());
+		Double sum1=0.0;
+		Double sum2=0.0;
+		for(int a=0;a<list_objs.size();a++){			
 			if(list_objs.get(a).getObjA3()==null){
 				sheet.getRow(a+1).getCell(2).setCellValue("無數據");
 			}else{
@@ -1765,20 +1764,21 @@ public class WeballobjBAction  extends ActionSupport implements ServletResponseA
 			}else{
 				sheet.getRow(a+1).getCell(4).setCellValue(list_objs.get(a).getObjA4()-list_objs.get(a).getObjA3());
 				sheet.getRow(a+1).getCell(5).setCellValue(GlobalMethod.division(list_objs.get(a).getObjA4()-list_objs.get(a).getObjA3(), list_objs.get(a).getObjA4()));
+				sheet.getRow(a+1).getCell(5).setCellStyle(cs_percent);
 				list_db.add(GlobalMethod.division(list_objs.get(a).getObjA4()-list_objs.get(a).getObjA3(), list_objs.get(a).getObjA4()));
-			}
+			}		
+			//合计
+			sum1=sum1+(list_objs.get(a).getObjA3()==null?0.0:list_objs.get(a).getObjA3());
+			sum2=sum2+(list_objs.get(a).getObjA4()==null?0.0:list_objs.get(a).getObjA4());
 		}
-		
-		
-		List<Double>list_db3=new ArrayList<Double>();
-		
-		list_db3.add(1.1);
-		list_db3.add(1.1);
-		list_db3.add(22.7);
-		list_db3.add(-3.3);
-		list_db3.add(-5.5);
-		//排名
-		
+		sheet.getRow(1+list_objs.size()).getCell(0).setCellValue("合計");
+		sheet.getRow(1+list_objs.size()).getCell(2).setCellValue(sum1);
+		sheet.getRow(1+list_objs.size()).getCell(3).setCellValue(sum2);
+		sheet.getRow(1+list_objs.size()).getCell(4).setCellValue(sum2-sum1);
+		sheet.getRow(1+list_objs.size()).getCell(5).setCellValue(GlobalMethod.division(sum2-sum1, sum2));
+		sheet.getRow(1+list_objs.size()).getCell(5).setCellStyle(cs_percent);
+						
+		//排名		
 		List<Double>list_db3_1=new ArrayList<Double>();
 		List<Double>list_db3_2=new ArrayList<Double>();
 		for(Double d:list_db){
@@ -1797,8 +1797,8 @@ public class WeballobjBAction  extends ActionSupport implements ServletResponseA
 		for(Double d:list_db3_2){
 			list_db4_2.add(d);
 		}
-		List<Double>list_db5_1=GlobalMethod.removeSameDouble2(list_db4_1);
-		List<Double>list_db5_2=GlobalMethod.removeSameDouble(list_db4_2);
+		List<Double>list_db5_1=GlobalMethod.removeSameDouble2(list_db4_1);//正数是降序排名
+		List<Double>list_db5_2=GlobalMethod.removeSameDouble(list_db4_2);//负数是升序排名
 		
 		List<Double[]>list_db2_1=new ArrayList<Double[]>();
 		List<Double[]>list_db2_2=new ArrayList<Double[]>();
@@ -1835,20 +1835,11 @@ public class WeballobjBAction  extends ActionSupport implements ServletResponseA
 				
 			}
 		}
-				
-		System.out.println("------------------------------------------------------");
-		System.out.println(list_db);
-		for(int a=0;a<list_db2_1.size();a++){
-			System.out.println(list_db2_1.get(a)[0]);
-		}
-		System.out.println("------------------------------------------------------");
-		for(int a=0;a<list_db2_2.size();a++){
-			System.out.println(list_db2_2.get(a)[0]);
-		}
-		System.out.println("------------------------------------------------------");
 		
+	
 		
-		
+		this.printTotalReport_a(wb,map_style);
+		this.printTotalReport_b(wb,map_style);
 
 		ServletOutputStream os=response.getOutputStream();
 		//response.setContentType("application/vnd.ms-excel");
@@ -1872,18 +1863,17 @@ public class WeballobjBAction  extends ActionSupport implements ServletResponseA
 	 * @throws IOException 
 	 * @throws ParseException 
 	 */
-	public void printTotalReport_a() throws IOException, ParseException{
+	public void printTotalReport_a(XSSFWorkbook wb,Map<String,Object>map_style) throws IOException, ParseException{
 		List<WebFact>list_facts=webFactSer.findFactAble();//所有廠別    
 		List<String>list_months=GlobalMethod.findMonths(yymm, yymm2);		
-						
-		XSSFWorkbook wb=new XSSFWorkbook();
+		List<WeballobjB>list_source=weballobjbser.findObj(yymm, yymm2);						
 		XSSFSheet sheet=wb.createSheet("盤點總表(百分比)");
-		Map<String,Object>map_style=GlobalMethod.findStyles2007(wb);
 		//XSSFCellStyle cs_title=(XSSFCellStyle)map_style.get("cs_title");
 		XSSFCellStyle cs_head=(XSSFCellStyle)map_style.get("cs_head");
 		XSSFCellStyle cs_poi1=(XSSFCellStyle)map_style.get("cs_poi1");
 		XSSFCellStyle cs_poi2=(XSSFCellStyle)map_style.get("cs_poi2");
 		XSSFCellStyle cs_poi1_bg=(XSSFCellStyle)map_style.get("cs_poi1_bg");
+		XSSFCellStyle cs_percent=(XSSFCellStyle)map_style.get("cs_percent");
 		XSSFCellStyle cs=(XSSFCellStyle)map_style.get("cs");
 		
 		for(int a=0;a<list_facts.size()+2;a++){
@@ -1892,37 +1882,61 @@ public class WeballobjBAction  extends ActionSupport implements ServletResponseA
 				sheet.setColumnWidth(0, 5000);
 			}
 			for(int b=0;b<list_months.size()+2;b++){
-				sheet.getRow(a).createCell(b).setCellStyle(cs);
+				if(a==0){
+					sheet.getRow(a).createCell(b).setCellStyle(cs_head);
+				}else{
+					sheet.getRow(a).createCell(b).setCellStyle(cs);
+				}
+				
 			}
 		}
-						
-		for(int a=0;a<list_months.size();a++){
-			sheet.getRow(0).getCell(a).setCellValue(list_months.get(a));
-			sheet.getRow(0).getCell(a).setCellStyle(cs_head);
+		
+		Map<String,Object>map=new LinkedHashMap<String,Object>();		
+		for(String month:list_months){		
+			List<WeballobjB>list_objs=new LinkedList<WeballobjB>();
+			for(WebFact fact:list_facts){
+				list_objs.add(new WeballobjB(new WeballobjBId(fact,month)));
+			}
+			for(int a=0;a<list_objs.size();a++){
+				for(WeballobjB obj:list_source){
+					if(list_objs.get(a).getId().getFact().getId().getFactNo().equals(obj.getId().getFact().getId().getFactNo())&&
+							list_objs.get(a).getId().getFact().getId().getFactArea().equals(obj.getId().getFact().getId().getFactArea())&&
+							month.equals(obj.getId().getYymm())){
+						list_objs.set(a, obj);
+						break;
+					}
+				}
+			}
+			map.put(month, list_objs);
+			
 		}
-		
-		for(int a=0;a<list_facts.size();a++){
-			sheet.getRow(a+1).getCell(0).setCellValue(list_facts.get(a).getFactSname());
-			sheet.getRow(a+1).getCell(0).setCellStyle(cs);
+				
+		sheet.getRow(0).getCell(0).setCellValue("廠別");
+		sheet.getRow(0).getCell(1).setCellValue("區域");
+		printFactName(sheet,list_facts);
+		sheet.getRow(list_facts.size()+1).getCell(0).setCellValue("合計");
+		int i=2;
+		for(String month:map.keySet()){
+			Double sum1=0.0;
+			Double sum2=0.0;
+			List<WeballobjB>list_objs=(List<WeballobjB>) map.get(month);
+			sheet.getRow(0).getCell(i).setCellValue(month);
+			for(int a=0;a<list_objs.size();a++){
+				if(list_objs.get(a).getObjA3()==null||list_objs.get(a).getObjA4()==null){
+					sheet.getRow(a+1).getCell(i).setCellValue("無數據");
+				}else{
+					sheet.getRow(a+1).getCell(i).setCellValue(
+							GlobalMethod.division(list_objs.get(a).getObjA4()-list_objs.get(a).getObjA3(), list_objs.get(a).getObjA4()));
+				}			
+				sheet.getRow(a+1).getCell(i).setCellStyle(cs_percent);
+				sum1=sum1+(list_objs.get(a).getObjA3()==null?0.0:list_objs.get(a).getObjA3());
+				sum2=sum2+(list_objs.get(a).getObjA4()==null?0.0:list_objs.get(a).getObjA4());
+			}
+			sheet.getRow(1+list_objs.size()).getCell(i).setCellValue(GlobalMethod.division(sum2-sum1,sum2));
+			sheet.getRow(1+list_objs.size()).getCell(i).setCellStyle(cs_percent);
+			i++;						
 		}
-		
-		
-		
-
-		ServletOutputStream os=response.getOutputStream();
-		//response.setContentType("application/vnd.ms-excel");
-		response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");				
-		//String fileName=yymm+"盤點彙總報表.xlsx";
-		String fileName="盤點彙總報表.xlsx";
-		int msie=ServletActionContext.getRequest().getHeader("USER-AGENT").toLowerCase().indexOf("msie");
-		if(msie>0){
-			fileName=java.net.URLEncoder.encode(fileName,"utf-8");
-		}else{
-			fileName=new String(fileName.getBytes("utf-8"),"iso8859-1");
-		}
-		response.setHeader("Content-disposition","attachment;filename="+fileName);
-		wb.write(os);
-		os.close();	
+								
 		
 	}
 	
@@ -1931,57 +1945,128 @@ public class WeballobjBAction  extends ActionSupport implements ServletResponseA
 	 * @throws IOException 
 	 * @throws ParseException 
 	 */
-	public void printTotalReport_b() throws IOException, ParseException{
+	public void printTotalReport_b(XSSFWorkbook wb,Map<String,Object>map_style) throws IOException, ParseException{
 		List<WebFact>list_facts=webFactSer.findFactAble();//所有廠別    
 		List<String>list_months=GlobalMethod.findMonths(yymm, yymm2);
-								
-		XSSFWorkbook wb=new XSSFWorkbook();
+		List<WeballobjB>list_source=weballobjbser.findObj(yymm, yymm2);									
 		XSSFSheet sheet=wb.createSheet("盤點差異表(KG)");
-		Map<String,Object>map_style=GlobalMethod.findStyles2007(wb);
-		//XSSFCellStyle cs_title=(XSSFCellStyle)map_style.get("cs_title");
 		XSSFCellStyle cs_head=(XSSFCellStyle)map_style.get("cs_head");
+		XSSFCellStyle cs_poi=(XSSFCellStyle)map_style.get("cs_poi");
 		XSSFCellStyle cs_poi1=(XSSFCellStyle)map_style.get("cs_poi1");
 		XSSFCellStyle cs_poi2=(XSSFCellStyle)map_style.get("cs_poi2");
 		XSSFCellStyle cs_poi1_bg=(XSSFCellStyle)map_style.get("cs_poi1_bg");
 		XSSFCellStyle cs=(XSSFCellStyle)map_style.get("cs");
-		
-		for(int a=0;a<list_facts.size()+2;a++){
+		XSSFCellStyle cs_percent=(XSSFCellStyle)map_style.get("cs_percent");
+		XSSFCellStyle cs_font_green=(XSSFCellStyle)map_style.get("cs_font_green");
+		XSSFCellStyle cs_font_red=(XSSFCellStyle)map_style.get("cs_font_red");
+		for(int a=0;a<list_facts.size()+1;a++){
 			sheet.createRow(a);
 			if(a==0){
 				sheet.setColumnWidth(0, 5000);
+				sheet.setColumnWidth(2+list_months.size(), 5000);
 			}
-			for(int b=0;b<list_months.size()+2;b++){
-				sheet.getRow(a).createCell(b).setCellStyle(cs);
+			for(int b=0;b<list_months.size()+3;b++){
+				if(a==0){
+					sheet.getRow(a).createCell(b).setCellStyle(cs_head);
+				}else{
+					sheet.getRow(a).createCell(b).setCellStyle(cs);
+				}
+				
 			}
 		}
 						
-		for(int a=0;a<list_months.size();a++){
-			sheet.getRow(0).getCell(a).setCellValue(list_months.get(a));
-			sheet.getRow(0).getCell(a).setCellStyle(cs_head);
+		Map<String,Object>map=new LinkedHashMap<String,Object>();
+		List<List<WeballobjB>>list_ll=new ArrayList<List<WeballobjB>>();
+		for(int i=0;i<list_months.size();i++){		
+			List<WeballobjB>list_objs=new LinkedList<WeballobjB>();
+			for(WebFact fact:list_facts){
+				list_objs.add(new WeballobjB(new WeballobjBId(fact,list_months.get(i))));
+			}
+			for(int a=0;a<list_objs.size();a++){
+				for(WeballobjB obj:list_source){
+					if(list_objs.get(a).getId().getFact().getId().getFactNo().equals(obj.getId().getFact().getId().getFactNo())&&
+							list_objs.get(a).getId().getFact().getId().getFactArea().equals(obj.getId().getFact().getId().getFactArea())&&
+							list_months.get(i).equals(obj.getId().getYymm())){
+						list_objs.set(a, obj);
+						break;
+					}
+				}
+			}
+			map.put(list_months.get(i), list_objs);
+			if(list_months.size()>1&&i>=list_months.size()-2){				
+				list_ll.add(list_objs);
+			}
+		}
+		sheet.getRow(0).getCell(0).setCellValue("廠別");
+		sheet.getRow(0).getCell(1).setCellValue("區域");
+		sheet.getRow(0).getCell(list_months.size()+2).setCellValue("與上月比庫存差異");
+		printFactName(sheet,list_facts);
+		int i=2;
+		for(String month:map.keySet()){			
+			List<WeballobjB>list_objs=(List<WeballobjB>) map.get(month);
+			sheet.getRow(0).getCell(i).setCellValue(month);
+			for(int a=0;a<list_objs.size();a++){
+				if(list_objs.get(a).getObjA3()==null||list_objs.get(a).getObjA4()==null){
+					sheet.getRow(a+1).getCell(i).setCellValue("無數據");
+				}else{
+					sheet.getRow(a+1).getCell(i).setCellValue(list_objs.get(a).getObjA4()-list_objs.get(a).getObjA3());
+				}			
+				sheet.getRow(a+1).getCell(i).setCellStyle(cs_poi);				
+			}			
+			i++;						
 		}
 		
-		for(int a=0;a<list_facts.size();a++){
-			sheet.getRow(a+1).getCell(0).setCellValue(list_facts.get(a).getFactSname());
-			sheet.getRow(a+1).getCell(0).setCellStyle(cs);
+		if(list_ll.size()==2){
+			for(int a=0;a<list_ll.get(0).size();a++){
+				if(list_ll.get(0).get(a).getObjA3()==null||list_ll.get(0).get(a).getObjA4()==null||
+						list_ll.get(1).get(a).getObjA3()==null||list_ll.get(1).get(a).getObjA4()==null){
+					sheet.getRow(1+a).getCell(list_months.size()+2).setCellValue("無數據");
+				}else{
+					if(list_ll.get(1).get(a).getObjA4()-list_ll.get(1).get(a).getObjA3()-
+							(list_ll.get(0).get(a).getObjA4()-list_ll.get(0).get(a).getObjA3())<0){
+						sheet.getRow(1+a).getCell(list_months.size()+2).setCellValue("↓");
+						sheet.getRow(1+a).getCell(list_months.size()+2).setCellStyle(cs_font_red);
+					}else if(list_ll.get(1).get(a).getObjA4()-list_ll.get(1).get(a).getObjA3()-
+							(list_ll.get(0).get(a).getObjA4()-list_ll.get(0).get(a).getObjA3())>0){
+						sheet.getRow(1+a).getCell(list_months.size()+2).setCellValue("↑");
+						sheet.getRow(1+a).getCell(list_months.size()+2).setCellStyle(cs_font_green);
+					}else{
+						sheet.getRow(1+a).getCell(list_months.size()+2).setCellValue("不變");
+					}
+				}
+			}
+		}
+								
+		
+	}
+	
+	public void printFactName(XSSFSheet sheet,List<WebFact>list_fact){
+		List<String>list_factname=new ArrayList<String>();
+		for(WebFact obj:list_fact){
+			list_factname.add(obj.getFactSname());
+		}
+		Map<String,Object>map=new LinkedHashMap<String,Object>();
+		List<String>list_factname2=GlobalMethod.removeSameString(list_factname);
+		for(String factname:list_factname2){
+			List<String>list_factcode=new ArrayList<String>();
+			for(WebFact obj:list_fact){
+				if(factname.equals(obj.getFactSname())){
+					list_factcode.add(obj.getId().getFactArea());
+				}
+			}
+			map.put(factname, list_factcode);
 		}
 		
-		
-		
-
-		ServletOutputStream os=response.getOutputStream();
-		//response.setContentType("application/vnd.ms-excel");
-		response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");				
-		//String fileName=yymm+"盤點彙總報表.xlsx";
-		String fileName="盤點彙總報表.xlsx";
-		int msie=ServletActionContext.getRequest().getHeader("USER-AGENT").toLowerCase().indexOf("msie");
-		if(msie>0){
-			fileName=java.net.URLEncoder.encode(fileName,"utf-8");
-		}else{
-			fileName=new String(fileName.getBytes("utf-8"),"iso8859-1");
+		int index_y=1;
+		for(String factname:map.keySet()){
+			List<String>list=(List<String>) map.get(factname);
+			sheet.getRow(index_y).getCell(0).setCellValue(factname);
+			CellRangeAddress cra=new CellRangeAddress(index_y,index_y+list.size()-1,0,0);
+			sheet.addMergedRegion(cra);
+			for(int a=0;a<list.size();a++){
+				sheet.getRow(a+index_y).getCell(1).setCellValue(list.get(a));
+			}
+			index_y=index_y+list.size();
 		}
-		response.setHeader("Content-disposition","attachment;filename="+fileName);
-		wb.write(os);
-		os.close();	
-		
 	}
 }

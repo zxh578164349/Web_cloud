@@ -54,7 +54,7 @@
 			       <input value="導出全部" type="button" class="btn btn-primary" onclick="print3('public_form','factNo','yymm','yymm2')"/>&nbsp;			        	        
 			   </s:if>
 			   
-			   <input value="tt" type="button" class="btn btn-primary" onclick="print4('public_form','factNo','yymm','yymm2')"/>&nbsp;
+			   <input value="盤點報表" type="button" class="btn btn-primary" onclick="print4('public_form','factNo','yymm','yymm2')"/>&nbsp;
 			   
 			  
 			   

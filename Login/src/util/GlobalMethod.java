@@ -475,7 +475,10 @@ public class GlobalMethod extends HibernateDaoSupport{
 	 */
 	public static List<String> findMonths(String yymm,String yymm2) throws ParseException{
 		List<String>list=new ArrayList<String>();
-		if(yymm2==null||yymm2.equals("")){
+		if(yymm==null||"".equals(yymm)){
+			list.add(yymm2);
+		}
+		else if(yymm2==null||"".equals(yymm2)){
 			list.add(yymm);
 		}else{
 			DateFormat frm=new SimpleDateFormat("yyyyMM");
@@ -1932,6 +1935,22 @@ public class GlobalMethod extends HibernateDaoSupport{
 			 }
 		 }
 		 Collections.sort(list,Collections.reverseOrder());
+		 return list;
+	 }
+	 
+	 /**
+	  * 去除相同字符串
+	  * @param list
+	  * @return
+	  */
+	 public static List<String> removeSameString(List<String>list){
+		 for(int a=0;a<list.size();a++){
+			 for(int b=list.size()-1;b>a;b--){
+				 if(list.get(a).equals(list.get(b))){
+					 list.remove(b);
+				 }
+			 }
+		 }
 		 return list;
 	 }
 	 

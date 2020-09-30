@@ -156,12 +156,11 @@ function print4(public_form,factNo,yymm,yymm2){
 	var public_form=jq("#"+public_form);	
 	public_form.attr("action","weballobjb_printTotalReport");
 	public_form.attr("target","_blank");	
-	/* if(jq("#"+yymm).val()==""||jq("#"+yymm2).val()==""){
+	 if(jq("#"+yymm).val()==""||jq("#"+yymm2).val()==""){
 		layer.msg("請選日期",3,3);
 	}else{
 		public_form.submit();
-	} */
-	public_form.submit();
+	} 
 }
 
 function showDiv(){

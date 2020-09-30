@@ -36,13 +36,26 @@
 			    </s:else>
 			  </td>
 			  <td>
-			     <select name="formula.factCode.id" datatype="*" id="factcode" ></select>
-			     &nbsp;&nbsp;
+			     <select name="formula.factCode.id" datatype="*" id="factcode" ></select>			     
+			  </td>
+			</tr>
+			<tr><th>配方名稱</th><th>品牌</th><th colspan="2">成品硬度</th></tr>
+			<tr>
+			 <td><input type="text" placeholder="配方名稱" name="formula.formulaName"/></td>
+			 <td>
+			  <select name="formula.pom.webBrank.id" id="dwrWebbrank"></select> 
+			 </td>
+			 <td>
+			  <input type="text" placeholder="硬度" name="formula.pom.hardness"/>
+			  </br><input type="text" placeholder="±" name="formula.pom.hardness2"/>
+			 </td>
+			 <td>
+			   &nbsp;&nbsp;
 			     <input value="搜索" type="button" class="btn btn-primary" onclick="submis('public_form')" />
 			     <input value="導出Excel" type="button" class="btn btn-primary" onclick="print('public_form')"/>
 			     &nbsp;
 			     <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">更多</a>
-			  </td>
+			 </td>
 			</tr>													 																															  			  			  			  			  				   	
 			</table>
 			  </div>
@@ -50,11 +63,11 @@
 			  <div id="collapseOne" class="panel-collapse collapse">
 			   <div class="panel-body">	
 			   <table>
-			     <tr><th>硬度</th><th>拉力</th><th>延伸</th><th>C型撕裂</th></tr>
+			     <tr><th>品牌指定</th><th>拉力</th><th>延伸</th><th>C型撕裂</th></tr>
 			     <tr>
 			     <td>
-			     <input type="text" placeholder="硬度" name="formula.pom.hardness"/>
-			     </br><input type="text" placeholder="±" name="formula.pom.hardness2"/>
+			                       指定<input type="radio" value="1" name="formula.assignBrand"/>
+			                        非指定<input type="radio" value="0" name="formula.assignBrand"/> 			     
 			     </td>
 			     <td><input type="text" placeholder="拉力" name="formula.pom.forces"/></td>
 			     <td><input type="text" placeholder="延伸" name="formula.pom.extend"/></td>
@@ -103,20 +116,7 @@
 			                         是<input type="radio" value="1" name="formula.pom.authentications"/>
 			                        否<input type="radio" value="0" name="formula.pom.authentications"/>
 			       </td>
-			     </tr>
-			     <tr>
-			      <th>品牌指定</th><th>品牌</th>			       			       
-			     </tr>
-			     <tr>			       
-			       <td>
-			                         指定<input type="radio" value="1" name="formula.assignBrand"/>
-			                        非指定<input type="radio" value="0" name="formula.assignBrand"/> 
-			       </td>
-			       <td>
-			        <select name="formula.pom.webBrank.id" id="dwrWebbrank">						      					        					        
-					</select>
-			       </td>
-			     </tr>
+			     </tr>			    
 			   </table>			   		   				
 			  </div>
 		      </div>
