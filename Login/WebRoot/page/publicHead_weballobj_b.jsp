@@ -55,12 +55,7 @@
 			   </s:if>
 			   
 			   <input value="盤點報表" type="button" class="btn btn-primary" onclick="print4('public_form','factNo','yymm','yymm2')"/>&nbsp;
-			   
-			  
-			   
-			   
-			   
-		    
+			   			     		    
 		    </td>
 		    </tr>
 		</table>
