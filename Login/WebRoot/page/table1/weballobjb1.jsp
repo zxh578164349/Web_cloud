@@ -83,7 +83,9 @@
                         <th>無形差異率</th>
                         <th>廢品重量</th>
                         <th>當月耗用金額</th>
-                        <th>平均庫存金額</th>						
+                        <th>平均庫存金額</th>
+                        <th>月底盤點帳上(KG)</th>
+                        <th>月底盤點實際(KG)</th>						
 						<s:if test='#session.loginUser.userread!="1"'>
 							<th>操作</th>
 						</s:if>
@@ -144,7 +146,8 @@
 							<td><s:property value="objA41" /></td>
 							<td><s:property value="objA42" /></td>
 							<td><s:property value="objA43" /></td>
-						
+						    <td><s:property value="objA44" /></td>
+						    <td><s:property value="objA45" /></td>
 
 							<s:if test='#session.loginUser.userread!="1"'>
 								<td>
