@@ -297,9 +297,11 @@ public class WeballobjBAction  extends ActionSupport implements ServletResponseA
 					obj.setObjA40(Double.valueOf(list.get(39).split(SEPARATOR)[i]));
 					obj.setObjA41(Double.valueOf(list.get(40).split(SEPARATOR)[i]));
 					obj.setObjA42(Double.valueOf(list.get(41).split(SEPARATOR)[i]));
-					obj.setObjA43(Double.valueOf(list.get(42).split(SEPARATOR)[i]));	
-					obj.setObjA44(Double.valueOf(list.get(43).split(SEPARATOR)[i]));
-					obj.setObjA45(Double.valueOf(list.get(44).split(SEPARATOR)[i]));
+					obj.setObjA43(Double.valueOf(list.get(42).split(SEPARATOR)[i]));
+					if(list.size()>=45){
+						obj.setObjA44(Double.valueOf(list.get(43).split(SEPARATOR)[i]));
+						obj.setObjA45(Double.valueOf(list.get(44).split(SEPARATOR)[i]));
+					}					
 					obj.setUsername(user.getUsername());
 					obj.setCreateDate(new SimpleDateFormat("yyyyMMdd").format(new Date()));
 					list_b.add(obj);
