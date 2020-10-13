@@ -59,8 +59,8 @@
         <property name="defyEle" type="java.lang.Double">
             <column name="DEFY_ELE" precision="10" />
         </property>
-        <property name="ageing" type="java.lang.Double">
-            <column name="AGEING" precision="10" />
+        <property name="ageing" type="java.lang.String">
+            <column name="AGEING" precision="100" />
         </property>
         <property name="contract" type="java.lang.Double">
             <column name="CONTRACT" precision="10" />

@@ -36,7 +36,7 @@ public class WebTabpom implements java.io.Serializable{
 	private Double ableYellow;//抗黃變 (18 耐黃變 Yellowing Test)
 	private Double defyPress;//抗高壓  (19 抗高壓  High Voltage)
 	private Double defyEle;//抗靜電 (20 抗靜電 ESR)
-	private Double ageing;//老化水解  (21 老化水解 Hydrolysis Test)	
+	private String ageing;//老化水解  (21 老化水解 Hydrolysis Test)	   2020/10/12數據類型由原來的Double改成String
 	private Double spitCream;//吐霜  (22 吐霜 Blooming)
 	private String authentications;//認證   (23 認證  Certification)
 	private String instruction;//特性說明(備註)
@@ -138,7 +138,7 @@ public class WebTabpom implements java.io.Serializable{
 	/** full constructor */
 	public WebTabpom(String pomNo,WebErpBrankProcess webBrank,WebFormula formulaId,Double hardness,Double forces,Double extend,Double tearingC,Double tearingK,
 			Double proportion,Double wresistingAkron,Double wresistingDin,Double ratioA,Double ratioB,Double ableBend,Double ableYellow,Double defyPress,
-			Double defyEle,Double ageing,Double contract,Double elasticity,Double compression,Double division,String authentications,String instruction,
+			Double defyEle,String ageing,Double contract,Double elasticity,Double compression,Double division,String authentications,String instruction,
 			String fileMk,String username,String tabpomDate,Double hardness2,String hardnessDescription,String forcesDescription,String extendsDescription,
 			String tearingCDescription,String tearingKDescription,Double proportion2,String proportionDescription,String wresistingAkronDes,
 			String wresistingDinDes,String ratioADes,String ratioBDes,String ableBendDes,String ableYellowDes,String defyPressDes,String defyEleDes,
@@ -339,12 +339,14 @@ public class WebTabpom implements java.io.Serializable{
 		this.defyEle=defyEle;
 	}
 
-	public Double getAgeing(){
-		return this.ageing;
+	
+
+	public String getAgeing() {
+		return ageing;
 	}
 
-	public void setAgeing(Double ageing){
-		this.ageing=ageing;
+	public void setAgeing(String ageing) {
+		this.ageing = ageing;
 	}
 
 	public Double getContract(){

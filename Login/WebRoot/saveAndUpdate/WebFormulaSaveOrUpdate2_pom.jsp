@@ -158,7 +158,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 	                </tr>
 	                <tr>
 	                   <td>老化水解</td>
-	                   <td><input type="text" name="tabpom.ageing" value="<s:property value='formula.pom.ageing'/>" datatype="*8-2"/></td>
+	                   <td><input type="text" name="tabpom.ageing" value="<s:property value='formula.pom.ageing'/>" datatype="*0-100"/></td>
 	                   <td><input type="text" name="tabpom.ageingDes" value="<s:property value='formula.pom.ageingDes'/>" datatype="*0-300"/></td>
 	                </tr>
 	                <tr>

@@ -840,41 +840,47 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 	public void setobj(KyzVisaflow obj,String str){
 											
 	/************************************賽博林二廠***********************************/	
-		if("鄭蘇勇".equals(str)){
+		if("總務".equals(str)){
 			obj.setVisaRank("主管");
-			obj.getId().setPurmanNo("鄭蘇勇");
-			obj.setVisaSigner("lihancyberlink@gmail.com");
+			obj.getId().setPurmanNo("童成軍");
+			obj.setVisaSigner("zwhuacheng@huacheng-vn.com");
 		}
 		
-		if("李漢".equals(str)){
+		if("企劃".equals(str)){
 			obj.setVisaRank("主管");
-			obj.getId().setPurmanNo("李漢");
-			obj.setVisaSigner("suyong19871228@gmail.com");
+			obj.getId().setPurmanNo("胡家鳳");
+			obj.setVisaSigner("qhnieting@huacheng-vn.com");
 		}	
-		if("羅如意".equals(str)){
+		if("付玉生".equals(str)){
 			obj.setVisaRank("主管");
-			obj.getId().setPurmanNo("羅如意");
-			obj.setVisaSigner("luoruyi001@foxmail.com");
+			obj.getId().setPurmanNo("付玉生");
+			obj.setVisaSigner("qhfz201908@huacheng-vn.com");
 		}
-		if("許勇志".equals(str)){
-			obj.setVisaRank("副總");
-			obj.getId().setPurmanNo("許勇志");
-			obj.setVisaSigner("xuyongzhi72@gmail.com");
+		if("廖玉嬌".equals(str)){
+			obj.setVisaRank("經理");
+			obj.getId().setPurmanNo("廖玉嬌");
+			obj.setVisaSigner("bonnie@huacheng-vn.com");
 		}
-		if("游剛".equals(str)){
-			obj.setVisaRank("副總");
-			obj.getId().setPurmanNo("游剛");
-			obj.setVisaSigner("you@361sap.com");
+		if("林俊男".equals(str)){
+			obj.setVisaRank("經理");
+			obj.getId().setPurmanNo("林俊男");
+			obj.setVisaSigner("alec.lin@huacheng-vn.com");
 		}
-		if("杜婉宜".equals(str)){
+		if("劉協理".equals(str)){
+			obj.setVisaRank("協理");
+			obj.getId().setPurmanNo("劉協理");
+			obj.setVisaSigner("alan.liu@giachiu.com");
+		}
+		
+		if("採購".equals(str)){
 			obj.setVisaRank("採購");
-			obj.getId().setPurmanNo("杜婉宜");
-			obj.setVisaSigner("wendy.du@mail.gj.com.tw");
+			obj.getId().setPurmanNo("臺幹");
+			obj.setVisaSigner("eva.hsieh@mail.gj.com.tw");
 		}
-		if("蕭雅玲".equals(str)){
+		if("經管".equals(str)){
 			obj.setVisaRank("經管");
-			obj.getId().setPurmanNo("蕭雅玲");
-			obj.setVisaSigner("rita.hsiao@mail.gj.com.tw");
+			obj.getId().setPurmanNo("臺幹");
+			obj.setVisaSigner("ykl@mail.gj.com.tw");
 		}
 		if("劉小姐".equals(str)){
 			obj.setVisaRank("臺幹");
@@ -895,10 +901,7 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 	 */
 	public void impormtData() throws IOException{
 		response.setContentType("text/html;charset=utf-8");
-		try{
-															
-			WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
-			String strHead="日期__客戶__品牌__季節__型體__部件__量產工廠__型體負責人__試模雙數__不良數__每雙料重";
+		try{																
 			DateFormat dfm=new SimpleDateFormat("yyyyMMdd");			
 			String path="d:\\Kyzvisaflow_backup\\"+dfm.format(new Date());//Excel文檔存放目錄						
 			//文件上傳
@@ -929,7 +932,7 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 				for(String key:map.keySet()){						
 					List<String>list=(List<String>)map.get(key);	
 					
-					List<WebFormtype>list_types=webformser.findWebformByFactno("VB");					
+					List<WebFormtype>list_types=webformser.findWebformByFactno("HC");					
 					List<WebFormtype>list_types2=new ArrayList<WebFormtype>(list_types);
 					//list_types2.addAll(list_types);
 					
@@ -987,7 +990,7 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 							for(int b=1;b<list6.size();b++){
 								String j=new DecimalFormat("0").format(Double.valueOf(list6.get(0)));
 								KyzVisaflow fow=new KyzVisaflow();
-								fow.setId(new KyzVisaflowId("VB", key3+a, list6.get(b), "0"+b,"null"));								
+								fow.setId(new KyzVisaflowId("HC", key3+a, list6.get(b), "0"+b,"行政部門"));								
 								this.setobj(fow, list6.get(b));
 								fow.setFlowMk("Y");
 								fow.setTrMk("Y");

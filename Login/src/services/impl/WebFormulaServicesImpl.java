@@ -168,97 +168,22 @@ public class WebFormulaServicesImpl implements IWebFormulaServices{
 		}*/								
 		Map<String,Object> sub_map=new HashMap<String,Object>();
 		sub_map.put("sub_list", sub_list);								
-		SimpleDateFormat format=new SimpleDateFormat("yyyyMMdd");
 		if(vbm==null){
 			vbm=list.get(0).getVbm();
 		}
-		
-		
-		
+						
 		if(vbm!=null){
 			String sort=vbm.getId().getVisaSort();
 			List<KyVisabills>list_visa=vbm.getKyVisabillses();
 			List<KyzVisaflow>list_visaflow=visaDao.findByType(factNo,sort);		
-			/**
-			 * 最後個不用審核的,就去掉
-			 */
-			int nos=visabillDao.findBillsWithNo(sort, billNo);				
-			List<VisabillsTemp>list_visabillstemp=new ArrayList<VisabillsTemp>();		
-			for(int i=0;i<list_visa.size()-nos;i++){//for
-				VisabillsTemp visabillstemp=new VisabillsTemp();
-				String visa_result="";
-				String visamk_temp="";
-				Date date=null;
-				
-				String datestr=list_visa.get(i).getDateVisa();
-				visabillstemp.setCreateDate(datestr);
-				/*try {
-					if(datestr!=null){
-						date=format.parse(datestr);
-						visabillstemp.setCreateDate(date);
-					}
-					
-				} catch (ParseException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}*/
-				String name=list_visa.get(i).getVisaRank();
-				String visamk=list_visa.get(i).getVisaMk();
-				String memo=list_visa.get(i).getMemo();
-				if(visamk.equals("Y")){
-					visamk_temp="(已審核)";
-				}
-				if(visamk.equals("N")){
-					visamk_temp="(未審核)";
-				}
-				if(visamk.equals("T")){
-					visamk_temp="(未通過)";
-				}			
-				visa_result=name+visamk_temp;
-				visabillstemp.setVisaNameAndMk(visa_result);								
-				//************************解決加簽後而破壞流程順序，使得打印函文時，職位與名字不對應的問題  20161030******************************
-				for(int j=0;j<list_visaflow.size()-nos;j++){
-					if(list_visa.get(i).getVisaSigner().equals(list_visaflow.get(j).getVisaSigner())){
-						visabillstemp.setVisaRank(list_visaflow.get(j).getVisaRank()+":");
-						break;
-					}else if(j==list_visaflow.size()-nos-1){
-						visabillstemp.setVisaRank("(加簽)");
-					}
-				}
-				//************************解決加簽後而破壞流程順序，使得打印函文時，職位與名字不對應的問題  20161030******************************
-				
-				if(memo!=null){
-					visabillstemp.setMemo("(備註:"+memo+")");
-				}
-				visabillstemp.setVisaSigner(list_visa.get(i).getVisaSigner());
-				visabillstemp.setVisaMk(list_visa.get(i).getVisaMk());
-				visabillstemp.setVisaName(name);
-				visabillstemp.setVisible(list_visa.get(i).getVisible());
-				list_visabillstemp.add(visabillstemp);
-			}//for
-			/**********************去掉不顯示出來（visible='N'）20171023****************************/
-			for(int a=0;a<list_visabillstemp.size();a++){
-				if("N".equals(list_visabillstemp.get(a).getVisible())){
-					list_visabillstemp.remove(a);
-				}
-			}
-			/**********************去掉不顯示出來（visible='N'）20171023****************************/
-			
-			/*********************簡體轉繁體******************/
-			for(int i=0;i<list_visabillstemp.size();i++){
-				list_visabillstemp.get(i).setMemo(ZHConverter.convert(list_visabillstemp.get(i).getMemo(), ZHConverter.TRADITIONAL));
-				list_visabillstemp.get(i).setVisaName(ZHConverter.convert(list_visabillstemp.get(i).getVisaName(), ZHConverter.TRADITIONAL));
-				list_visabillstemp.get(i).setVisaNameAndMk(ZHConverter.convert(list_visabillstemp.get(i).getVisaNameAndMk(), ZHConverter.TRADITIONAL));
-				list_visabillstemp.get(i).setVisaRank(ZHConverter.convert(list_visabillstemp.get(i).getVisaRank(), ZHConverter.TRADITIONAL));			
-			}
-			/*********************簡體轉繁體******************/
 			
 			
-			
+			List<VisabillsTemp>list_visabillstemp=GlobalMethod.initVisabillstemp(factNo, list_visa, list_visaflow);//20201013			
+									
 			Map<String,Object> visa_map=new HashMap<String,Object>();
 			visa_map.put("list_visa", list_visabillstemp);
 			map.put("visa_map", visa_map);	
-			String sub_file=GlobalMethod.getSubfile(list_visa.size()-nos,null);
+			String sub_file=GlobalMethod.getSubfile(list_visabillstemp.size(),null);
 			map.put("sub_file",sub_file);
 		}				
 		map.put("sub_map", sub_map);

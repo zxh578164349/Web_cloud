@@ -111,12 +111,14 @@ import services.IWebuserEmailAServices;
 import services.IWebuserEmailServices;
 
 import com.opensymphony.xwork2.ActionContext;
+import com.spreada.utils.chinese.ZHConverter;
 import com.sun.mail.util.MailSSLSocketFactory;
 
 import entity.KyFact;
 import entity.KyVisabillm;
 import entity.KyVisabills;
 import entity.KyzExpectmatmLog;
+import entity.KyzVisaflow;
 import entity.SumWebYieldData;
 import entity.WebFact;
 import entity.WebFactId;
@@ -2367,6 +2369,97 @@ public class GlobalMethod extends HibernateDaoSupport{
 	}
 	 
 	 
+	public static List<VisabillsTemp> initVisabillstemp(String factNo,List<KyVisabills>list_visa,List<KyzVisaflow>list_visaflow){
+		        //排在最後的知會不用審核的,就去掉
+				//int nos=visabillDao.findBillsWithNo(sort, billNo);
+				int nos=0;
+						
+				List<VisabillsTemp>list_visabillstemp=new ArrayList<VisabillsTemp>();		
+				for(int i=0;i<list_visa.size()-nos;i++){//for
+					VisabillsTemp visabillstemp=new VisabillsTemp();
+					String visa_result="";
+					String visamk_temp="";
+					
+					String datestr=list_visa.get(i).getDateVisa();
+					visabillstemp.setCreateDate(datestr);
+					
+					String name=list_visa.get(i).getVisaRank();
+					String visamk=list_visa.get(i).getVisaMk();
+					String memo=list_visa.get(i).getMemo();
+					if(visamk.equals("Y")){
+						visamk_temp="(已審核)";
+					}
+					if(visamk.equals("N")){
+						if("N".equals(list_visa.get(i).getFlowMk())){
+							visamk_temp="(知會)";
+						}else{
+							visamk_temp="(未審核)";
+						}
+					}
+					if(visamk.equals("T")){
+						visamk_temp="(未通過)";
+					}			
+					visa_result=name+visamk_temp;
+					visabillstemp.setVisaNameAndMk(visa_result);
+					
+					
+					//************************解決加簽後而破壞流程順序，使得打印函文時，職位與名字不對應的問題  20161030******************************
+					for(int j=0;j<list_visaflow.size()-nos;j++){
+						if(list_visa.get(i).getVisaSigner().equals(list_visaflow.get(j).getVisaSigner())){
+							visabillstemp.setVisaRank(list_visaflow.get(j).getVisaRank()+":");
+							break;
+						}else if(j==list_visaflow.size()-nos-1){
+							visabillstemp.setVisaRank("(加簽)");
+						}
+					}
+					//************************解決加簽後而破壞流程順序，使得打印函文時，職位與名字不對應的問題  20161030******************************
+					
+					if(memo!=null){
+						visabillstemp.setMemo("(備註:"+memo+")");
+					}
+					visabillstemp.setVisaSigner(list_visa.get(i).getVisaSigner());
+					visabillstemp.setVisaMk(list_visa.get(i).getVisaMk());
+					visabillstemp.setVisaName(name);
+					visabillstemp.setVisible(list_visa.get(i).getVisible());
+					visabillstemp.setFlowMk(list_visa.get(i).getFlowMk());
+					list_visabillstemp.add(visabillstemp);
+				}//for
+								
+						
+				/**********************去掉知會的（flowMk='N'）  (除湖南加偉（JW）外)20201013****************************/
+				/*Iterator<VisabillsTemp> it=list_visabillstemp.iterator();
+				if(!"JW".equals(factNo)){
+				while(it.hasNext()){												
+					if("N".equals(it.next().getFlowMk())){
+						it.remove();
+					}				
+				}
+				}*/
+				/**********************去掉知會的（flowMk='N'） (除湖南加偉（JW）外)20201013****************************/
+				
+				/**********************去掉不顯示出來（visible='N'）20171023****************************/
+				Iterator<VisabillsTemp> it2=list_visabillstemp.iterator();
+				while(it2.hasNext()){
+					VisabillsTemp temp=it2.next();
+					if("N".equals(temp.getFlowMk())){
+						if(!"Y".equals(temp.getVisible())){														
+								it2.remove();							
+						}						
+					}
+				}			
+				/**********************去掉不顯示出來（visible='N'）20171023****************************/
+				/*********************簡體轉繁體******************/
+				for(int i=0;i<list_visabillstemp.size();i++){
+					list_visabillstemp.get(i).setMemo(ZHConverter.convert(list_visabillstemp.get(i).getMemo(), ZHConverter.TRADITIONAL));
+					list_visabillstemp.get(i).setVisaName(ZHConverter.convert(list_visabillstemp.get(i).getVisaName(), ZHConverter.TRADITIONAL));
+					list_visabillstemp.get(i).setVisaNameAndMk(ZHConverter.convert(list_visabillstemp.get(i).getVisaNameAndMk(), ZHConverter.TRADITIONAL));
+					list_visabillstemp.get(i).setVisaRank(ZHConverter.convert(list_visabillstemp.get(i).getVisaRank(), ZHConverter.TRADITIONAL));			
+				}
+				/*********************簡體轉繁體******************/
+				
+				return list_visabillstemp;
+	}
+	
 	 public static void main(String[] args) {
 			
 		Long l=null;

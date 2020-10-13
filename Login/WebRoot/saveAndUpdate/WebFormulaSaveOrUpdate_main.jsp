@@ -102,7 +102,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 									<th>顏色</th>
 								</tr>
 								<tr>
-									<td><input type="text" name="formula.brandBody" value="<s:property value='formula.brandBody' />" datatype="*0-30">
+									<td><input type="text" name="formula.brandBody" value="<s:property value='formula.brandBody' />" datatype="*0-100">
 									</td>
 									<td><input type="text" name="formula.color" value="<s:property value='formula.color' />" datatype="*0-30">
 									</td>

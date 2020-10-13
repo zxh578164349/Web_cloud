@@ -211,7 +211,7 @@ public class WebFormulaDaoImpl extends Basedao implements IWebFormulaDao{
 			hql.append(" and pom.defyEle=:defyEle");
 			map.put("defyEle",formula.getPom().getDefyEle());
 		}
-		if(formula.getPom().getAgeing()!=null){
+		if(formula.getPom().getAgeing()!=null&&!"".equals(formula.getPom().getAgeing())){
 			hql.append(" and pom.ageing=:ageing");
 			map.put("ageing",formula.getPom().getAgeing());
 		}

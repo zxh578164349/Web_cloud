@@ -213,7 +213,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 	                   <td>老化水解 Hydrolysis Test</td>	                   
 	                   <td><input type="text" name="tabpom.ageingDes" value="<s:property value='tabpom.ageingDes'/>" datatype="*0-300"/></td>
 	                   <td><input type="text" name="tabpom.ageingUnit" value="<s:property value='tabpom.ageingUnit'/>" datatype="*0-30"/></td>
-	                   <td><input type="text" name="tabpom.ageing" value="<s:property value='tabpom.ageing'/>" datatype="*8-2"/></td>
+	                   <td><input type="text" name="tabpom.ageing" value="<s:property value='tabpom.ageing'/>" datatype="*0-100"/></td>
 	                   <td><input type="text" name="tabpom.ageingResult" value="<s:property value='tabpom.ageingDesResult'/>" datatype="*0-100"/></td>
 	                </tr>
 	                

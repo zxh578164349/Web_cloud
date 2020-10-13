@@ -11,6 +11,7 @@ public class VisabillsTemp {
 	private String visaMk;
 	private String visaName;
 	private String visible;
+	private String flowMk;
 	public String getMemo() {
 		return memo==null?"":memo;
 	}
@@ -59,6 +60,12 @@ public class VisabillsTemp {
 	}
 	public void setVisible(String visible){
 		this.visible=visible;
+	}
+	public String getFlowMk() {
+		return flowMk;
+	}
+	public void setFlowMk(String flowMk) {
+		this.flowMk = flowMk;
 	}
 	
 	

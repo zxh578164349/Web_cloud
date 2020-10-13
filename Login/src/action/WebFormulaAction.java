@@ -819,7 +819,8 @@ public class WebFormulaAction implements ServletResponseAware{
 					//老化水解
 					formula.getPom().setAgeingDes(list.get(21).split("__")[2]);
 					formula.getPom().setAgeingUnit(list.get(21).split("__")[3]);
-					formula.getPom().setAgeing(Double.valueOf(list.get(21).split("__")[4]));					
+					//formula.getPom().setAgeing(Double.valueOf(list.get(21).split("__")[4]));
+					formula.getPom().setAgeing(list.get(21).split("__")[4]);
 					formula.getPom().setAgeingResult(list.get(21).split("__")[5]);														
 					//吐霜
 					formula.getPom().setSpitCreamDes(list.get(22).split("__")[2]);
