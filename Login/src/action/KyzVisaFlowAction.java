@@ -874,12 +874,12 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 		
 		if("採購".equals(str)){
 			obj.setVisaRank("採購");
-			obj.getId().setPurmanNo("臺幹");
+			obj.getId().setPurmanNo("採購");
 			obj.setVisaSigner("eva.hsieh@mail.gj.com.tw");
 		}
 		if("經管".equals(str)){
 			obj.setVisaRank("經管");
-			obj.getId().setPurmanNo("臺幹");
+			obj.getId().setPurmanNo("經管");
 			obj.setVisaSigner("ykl@mail.gj.com.tw");
 		}
 		if("劉小姐".equals(str)){
