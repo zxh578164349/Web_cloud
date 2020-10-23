@@ -42,6 +42,18 @@ public class WebErpProductinFormationDaoImpl extends Basedao implements IWebErpP
 		String objs[]={selfchar1};
 		return super.findAll(hql,objs);
 	}
+	
+	/**
+	 * 日期:2020/10/23
+	 * 描述:
+	 */
+	
+	
+	public List<Object[]> findNamece(){
+		// TODO Auto-generated method stub
+		String hql="select itemid,selfchar1Name,namec1,namec2 from WebErpProductinFormation where "+STATE+"   order by selfchar1Name,namec1,namec2";
+		return super.findAll(hql,null);
+	}
 
 	/**
 	 * 日期:2016/11/7

@@ -23,6 +23,8 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 <meta http-equiv="expires" content="0">
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
+<!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" /> -->
+<link rel="stylesheet" type="text/css" href="select2/css/select2.min.css">
 </head>
 
 <body>
@@ -117,9 +119,7 @@ String str_date = formatter.format(currentTime); //将日期时间格式化
 		});
 		demo.tipmsg.w["*9-5"] = "只能數字且不超過9位數,可保留5位以內小數";		
 		sumVal();
-		
-		
-		
+					
 					
 	});
 
@@ -129,13 +129,15 @@ function addItem(){
 	var formulaIndex=jq("#formulaIndex").val();
 	var num_size=parseInt(jq("#num_size").val())+ii;
 	var item="";
-	var options="<option value=''>請選擇配方階段</option>";
+	/* var options="<option value=''>請選擇配方階段</option>";
 	for(var j=1;j<3;j++){
 		options+="<option value='"+j+"'>"+j+"</option>";
-	}	
-	item+="<li><select name='items["+num_size+"].sectionNo' datatype='*'>"+options+"</select></li>";
-	item+="<li><select id='items_type"+ii+"' onchange='loadNamece(jq(this))' datatype='*'></select></li>";
-	item+="<li class='col_item3'><select id='fk_weberp_pf"+ii+"' name='items["+num_size+"].fk_weberp_pf.itemid' datatype='*'></select></li>";
+	} */	
+	//item+="<li><select name='items["+num_size+"].sectionNo' datatype='*'>"+options+"</select></li>";
+	item+="<li><input type='text' name='items["+num_size+"].sectionNo' datatype='*' value='1' readonly/></li>";
+	//item+="<li><select id='items_type"+ii+"' onchange='loadNamece(jq(this))' datatype='*'></select></li>";
+	item+="<li><select id='items_type"+ii+"'  disabled='disabled'><option>不用選擇</option></select></li>";
+	item+="<li class='col_item3'><select id='fk_weberp_pf"+ii+"' name='items["+num_size+"].fk_weberp_pf.itemid' datatype='*' class='js-example-basic-single'></select></li>";
 	item+="<li><input type='text' name='items["+num_size+"].phrVal' datatype='*9-5' onblur='sumVal()'/></li>";
 	item+="<li><input type='text' name='items["+num_size+"].weightVal' datatype='*9-5' onblur='sumVal()'/></li>";
 	item+="<li class='col_item3'><input type='text' name='items["+num_size+"].remark' datatype='*0-200'/>";
@@ -144,8 +146,8 @@ function addItem(){
 	item+="<input type='hidden' name='items["+num_size+"].createDate' value='"+createDate+"'/>";
 	item+="<img src='images/icon/del_file.png' style='border:0px' onclick='removeOneItem(jq(this))'/></li>";
 	jq("#ul_items2").append(item);
-	var kk="#items_type"+ii;
-	jq.ajax({
+	/*var kk="#items_type"+ii;
+	 jq.ajax({
 			type:"post",
 			dataType:"json",
 			url:"weberppf_findTypeNo",
@@ -154,17 +156,36 @@ function addItem(){
 				jq.each(data,function(index,obj){
 					item2+="<option value='"+obj.selfchar1+"'>"+obj.selfchar1name+"</option>";					
 				});		
-				jq(kk).append(item2);
-				//jq("#items_type"+ii).append(item2);这样写就变成ii的全局变量，也就是ii自加后结果
+				jq(kk).append(item2);				
 			}
+		}); */
+		var jj="#fk_weberp_pf"+ii;
+		jq.ajax({
+			type:"post",
+			dataType:"json",
+			traditional:true,
+			//data:{'selfchar1':item_typeno.val()},
+			url:"weberppf_findNameces3",
+			success:function(data){
+				var item2="<option value=''>請選擇配方原料</option>";
+				jq.each(data,function(i,obj){
+					item2+="<option value='"+obj[0]+"'>"+obj[2]+"&nbsp;&nbsp;"+obj[3]+"__("+obj[1]+")</option>";					
+				});
+				//item_typeno.parent().next().children().append(item);
+				jq(jj).append(item2);
+				jq('.js-example-basic-single').select2(); 
+			}
+			
 		});
+		
 	ii++;
+		
 }
 
 function loadNamece(item_typeno){
     item_typeno.parent().next().children().empty();	
 	if(item_typeno.val()!=""){
-		jq.ajax({
+		 jq.ajax({
 			type:"post",
 			dataType:"json",
 			traditional:true,
@@ -176,12 +197,17 @@ function loadNamece(item_typeno){
 					item+="<option value='"+obj[0]+"'>"+obj[2]+"&nbsp;&nbsp;"+obj[3]+"__("+obj[1]+")</option>";					
 				});
 				item_typeno.parent().next().children().append(item);
+				jq('.js-example-basic-single').select2(); 
 			}
 			
-		});
+		});				
 	}else{
 		item_typeno.parent().next().children().append("<label style='color:red'>請先選擇配方類別</label>");
-	}	
+	}
+	
+
+	
+
 }
 
 function removeOneItem(obj){

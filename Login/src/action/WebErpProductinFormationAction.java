@@ -105,6 +105,12 @@ public class WebErpProductinFormationAction{
 		return "findNameces";
 	}
 	
+	public String findNameces3(){
+		List<Object[]>list=weberppfser.findNamece();		
+		jsons=JSONArray.fromObject(list);			
+		return "findNameces";
+	}
+	
 	
 	
 	public String findItemcategory(){

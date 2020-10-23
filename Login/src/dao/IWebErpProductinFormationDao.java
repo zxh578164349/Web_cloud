@@ -27,6 +27,7 @@ public interface IWebErpProductinFormationDao{
 	public List<Object[]> findNamece(List<String> selfchar1s,String namec);
 	public List<Object[]>findItemcategory();//所有大類別
 	public List<Object[]>findNamece2(String itemcategory);//根據大類別找到產品名稱
+	public List<Object[]>findNamece();
 
 	
 

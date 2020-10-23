@@ -374,7 +374,7 @@ function loadNamece2(){
 var index=0;
 var item_nums=0;
 function check_addSection(){
-	if(index>1){
+	if(index>=1){
 		layer.msg("達到配方階段上限",3,3);
 	}else{		
 		var list_items_val=jq("input[name='itemids']:checked");
@@ -389,7 +389,7 @@ function addSection(list_items_val){
 	var cvformulaIndex=jq("#formulaIndex").val();
 	//var list_items_val=jq("input[name='itemids']:checked");	
 	index++;
-	jq("#btn_addsec").val("添加配方階段("+(index+1)+")");
+	//jq("#btn_addsec").val("添加配方階段("+(index+1)+")");
 	var section="<li id='tab_section_"+index+"'><a href='#div_section_"+index+"' data-toggle='tab' id='tab_section_a_"+index+"'>配方階段("+index+")</a></li>";	
 	var div_section="<div id='div_section_"+index+"' class='tab-pane fade div_border_blue'></div>";
 	var ul="<ul class='list_item' id='ul_"+index+"'></ul>";

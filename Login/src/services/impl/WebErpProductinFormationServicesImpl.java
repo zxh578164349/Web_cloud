@@ -98,4 +98,10 @@ public class WebErpProductinFormationServicesImpl implements IWebErpProductinFor
 		return weberppfdao.findNamece2(itemcategory);
 	}
 
+
+	public List<Object[]> findNamece() {
+		// TODO Auto-generated method stub
+		return weberppfdao.findNamece();
+	}
+
 }
