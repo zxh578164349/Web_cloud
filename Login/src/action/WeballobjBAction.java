@@ -968,7 +968,9 @@ public class WeballobjBAction  extends ActionSupport implements ServletResponseA
 		list.add("41__無形差異率__%");
 		list.add("42__廢品重量__KG");
 		list.add("43__當月耗用金額__USD");
-		list.add("44__平均庫存金額__USD");				
+		list.add("44__平均庫存金額__USD");
+		list.add("45__月底盤點帳上__KG");
+		list.add("46__月底盤點實際__KG");	
 		return list;
 	}
 	
@@ -1020,6 +1022,8 @@ public class WeballobjBAction  extends ActionSupport implements ServletResponseA
 		list.add(obj.getObjA41());
 		list.add(obj.getObjA42());
 		list.add(obj.getObjA43());
+		list.add(obj.getObjA44());
+		list.add(obj.getObjA45());
 		return list;
 		
 	}
