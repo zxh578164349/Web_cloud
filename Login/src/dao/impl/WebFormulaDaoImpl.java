@@ -102,15 +102,29 @@ public class WebFormulaDaoImpl extends Basedao implements IWebFormulaDao{
 		Map<String,Object>map_result=new HashMap<String,Object>();
 		StringBuffer hql=new StringBuffer();
 		StringBuffer hql2=new StringBuffer();
+		StringBuffer hql3=new StringBuffer();
 		Map<String,Object>map=new HashMap<String,Object>();
-		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");
-		System.out.println(user.getUserType());
-		System.out.println(user.getUsername());
-		hql.append("from WebFormula where 1=1 ");
-		hql2.append("select count(formulaIndex) ");		
+		WebUser user=(WebUser)ActionContext.getContext().getSession().get("loginUser");		
+				
 		if(formula==null){
 			formula=new WebFormula(new VWebFact(),new WebErpBrankProcess(),new WebTabpom(new WebErpBrankProcess()));
 		}
+		
+		if(formula.getWebFormulaItemses().size()>0&&formula.getWebFormulaItemses().get(0).getFk_weberp_pf().getNamec2()!=null
+				&&!"".equals(formula.getWebFormulaItemses().get(0).getFk_weberp_pf().getNamec2())){
+			hql.append("select new WebFormula(w.formulaIndex,w.factNo,w.formulaNo,w.formulaName,w.factCode,w.magnification," +
+					"w.semifinishedProductHardness,w.productHardness,w.brandBody,w.color,w.issuedDate,w.assignBrand" +
+					") from WebFormula  w inner join  w.webFormulaItemses b where 1=1 ");
+			
+			hql2.append("select count(w.formulaIndex) from WebFormula w inner join  w.webFormulaItemses b where 1=1 ");
+			hql3.append(" and b.fk_weberp_pf.namec2 like:namec2 ");
+			map.put("namec2","%"+formula.getWebFormulaItemses().get(0).getFk_weberp_pf().getNamec2()+"%");
+		}else{
+			hql.append("from WebFormula w where 1=1 ");
+			hql2.append("select count(w.formulaIndex) from WebFormula w where 1=1 ");
+		}
+		
+		
 		//隻有使用者用戶才廠別
 		if("0".equals(user.getUserType())){
 			if(formula.getFactNo().getFactNo()==null||formula.getFactNo().getFactNo().equals("")){
@@ -118,145 +132,147 @@ public class WebFormulaDaoImpl extends Basedao implements IWebFormulaDao{
 				formula.getFactNo().setFactNo(factNo);
 			}
 			if(formula.getFactNo().getFactNo()!=null&&!"".equals(formula.getFactNo().getFactNo())&&!formula.getFactNo().getFactNo().equals("tw")){
-				hql.append(" and factNo.factNo=:factNo");
+				hql3.append(" and w.factNo.factNo=:factNo");
 				map.put("factNo",formula.getFactNo().getFactNo());
 			}
 		}		
 		if(formula.getFormulaIndex()!=null&&!"".equals(formula.getFormulaIndex())){
-			hql.append(" and formulaIndex=:formulaIndex");
+			hql3.append(" and w.formulaIndex=:formulaIndex");
 			map.put("formulaIndex",formula.getFormulaIndex());
 		}
 		if(formula.getFormulaNo()!=null&&!"".equals(formula.getFormulaNo())){
-			hql.append(" and formulaNo=:formulaNo");
+			hql3.append(" and w.formulaNo=:formulaNo");
 			map.put("formulaNo",formula.getFormulaNo());
 		}
 		
 		if(formula.getFactCode().getId()!=null){//Integer類型
-			hql.append(" and factCode.id=:id");
+			hql3.append(" and w.factCode.id=:id");
 			map.put("id",formula.getFactCode().getId());
 		}
 		
 		if(issuedDate_a!=null&&!"".equals(issuedDate_a)){
-			hql.append(" and issuedDate>=:issuedDate_a");
+			hql3.append(" and w.issuedDate>=:issuedDate_a");
 			map.put("issuedDate_a",issuedDate_a);
 		}
 		if(issuedDate_b!=null&&!"".equals(issuedDate_b)){
-			hql.append(" and issuedDate<=:issuedDate_b");
+			hql3.append(" and w.issuedDate<=:issuedDate_b");
 			map.put("issuedDate_b",issuedDate_b);
 		}
 		if(formula.getAssignBrand()!=null&&!"".equals(formula.getAssignBrand())){
-			hql.append(" and assignBrand=:assignBrand");
+			hql3.append(" and w.assignBrand=:assignBrand");
 			map.put("assignBrand",formula.getAssignBrand());
 		}
 		if(formula.getFormulaName()!=null&&!"".equals(formula.getFormulaName())){
-			hql.append(" and formulaName like :formulaName ");
+			hql3.append(" and w.formulaName like :formulaName ");
 			map.put("formulaName", "%"+formula.getFormulaName()+"%");
 		}
 		/**********************以下爲Double類型*******************************/		
 		 if(formula.getPom().getHardness()!=null){
-				hql.append(" and :hardness between pom.hardness-pom.hardness2 and pom.hardness+pom.hardness2");
+				hql3.append(" and w.pom.hardness between :hardness-w.pom.hardness2 and :hardness+w.pom.hardness2");
 				map.put("hardness",formula.getPom().getHardness());
 			}
 		
 		if(formula.getPom().getForces()!=null){
-			hql.append(" and pom.forces=:forces");
+			hql3.append(" and w.pom.forces=:forces");
 			map.put("forces",formula.getPom().getForces());
 		}
 		if(formula.getPom().getExtend()!=null){
-			hql.append(" and pom.extend=:extend");
+			hql3.append(" and w.pom.extend=:extend");
 			map.put("extend",formula.getPom().getExtend());
 		}
 		if(formula.getPom().getTearingC()!=null){
-			hql.append(" and pom.tearingC=:tearingC");
+			hql3.append(" and w.pom.tearingC=:tearingC");
 			map.put("tearingC",formula.getPom().getTearingC());
 		}
 		if(formula.getPom().getTearingK()!=null){
-			hql.append(" and pom.tearingK=:tearingK");
+			hql3.append(" and w.pom.tearingK=:tearingK");
 			map.put("tearingK",formula.getPom().getTearingK());
 		}		
 		if(formula.getPom().getProportion()!=null){
-			hql.append(" and pom.proportion between pom.proportion-pom.proportion2 and pom.proportion+pom.proportion2");
+			hql3.append(" and w.pom.proportion between :proportion-w.pom.proportion2 and :proportion+w.pom.proportion2");
 			map.put("proportion",formula.getPom().getProportion());
 		}
 		if(formula.getPom().getWresistingAkron()!=null){
-			hql.append(" and pom.wresistingAkron=:wresistingAkron");
+			hql3.append(" and w.pom.wresistingAkron=:wresistingAkron");
 			map.put("wresistingAkron",formula.getPom().getWresistingAkron());
 		}
 		if(formula.getPom().getWresistingDin()!=null){
-			hql.append(" and pom.wresistingDin=:wresistingDin");
+			hql3.append(" and w.pom.wresistingDin=:wresistingDin");
 			map.put("wresistingDin",formula.getPom().getWresistingDin());
 		}
 		if(formula.getPom().getRatioA()!=null){
-			hql.append(" and pom.ratioA=:ratioA");
+			hql3.append(" and w.pom.ratioA=:ratioA");
 			map.put("ratioA",formula.getPom().getRatioA());
 		}
 		if(formula.getPom().getRatioB()!=null){
-			hql.append(" and pom.ratioB=:ratioB");
+			hql3.append(" and pom.ratioB=:ratioB");
 			map.put("ratioB",formula.getPom().getRatioB());
 		}
 		if(formula.getPom().getAbleBend()!=null){
-			hql.append(" and pom.ableBend=:ableBend");
+			hql3.append(" and w.pom.ableBend=:ableBend");
 			map.put("ableBend",formula.getPom().getAbleBend());
 		}
 		if(formula.getPom().getAbleYellow()!=null){
-			hql.append(" and pom.ableYellow=:ableYellow");
+			hql3.append(" and w.pom.ableYellow=:ableYellow");
 			map.put("ableYellow",formula.getPom().getAbleYellow());
 		}
 		if(formula.getPom().getDefyPress()!=null){
-			hql.append(" and pom.defyPress=:defyPress");
+			hql3.append(" and w.pom.defyPress=:defyPress");
 			map.put("defyPress",formula.getPom().getDefyPress());
 			
 		}
 		if(formula.getPom().getDefyEle()!=null){
-			hql.append(" and pom.defyEle=:defyEle");
+			hql3.append(" and w.pom.defyEle=:defyEle");
 			map.put("defyEle",formula.getPom().getDefyEle());
 		}
 		if(formula.getPom().getAgeing()!=null&&!"".equals(formula.getPom().getAgeing())){
-			hql.append(" and pom.ageing=:ageing");
+			hql3.append(" and w.pom.ageing=:ageing");
 			map.put("ageing",formula.getPom().getAgeing());
 		}
 		if(formula.getPom().getContract()!=null){
-			hql.append(" and pom.contract=:contract");
+			hql3.append(" and w.pom.contract=:contract");
 			map.put("contract",formula.getPom().getContract());
 		}
 		if(formula.getPom().getElasticity()!=null){
-			hql.append(" and pom.elasticity=:elasticity");
+			hql3.append(" and w.pom.elasticity=:elasticity");
 			map.put("elasticity",formula.getPom().getElasticity());
 		}
 		if(formula.getPom().getCompression()!=null){
-			hql.append(" and pom.compression=:compression");
+			hql3.append(" and w.pom.compression=:compression");
 			map.put("compression",formula.getPom().getCompression());
 		}
 		if(formula.getPom().getDivision()!=null){
-			hql.append(" and pom.division=:division");
+			hql3.append(" and w.pom.division=:division");
 			map.put("division",formula.getPom().getDivision());
 		}
 		if(formula.getPom().getModulus300()!=null){
-			hql.append(" and pom.modulus300=:modulus300");
+			hql3.append(" and w.pom.modulus300=:modulus300");
 			map.put("modulus300",formula.getPom().getModulus300());
 		}
 		if(formula.getPom().getSpitCream()!=null){
-			hql.append(" and pom.spitCream=:spitCream");
+			hql3.append(" and w.pom.spitCream=:spitCream");
 			map.put("spitCream",formula.getPom().getSpitCream());
 		}
 		if(formula.getPom().getAuthentications()!=null){
-			hql.append(" and pom.authentications=:authentications");
+			hql3.append(" and w.pom.authentications=:authentications");
 			map.put("authentications",formula.getPom().getAuthentications());
 		}
 		if(formula.getPom().getWebBrank().getId()!=null){
-			hql.append(" and pom.webBrank.id=:webBrank");
+			hql3.append(" and w.pom.webBrank.id=:webBrank");
 			map.put("webBrank",formula.getPom().getWebBrank().getId());
 		}
 		if(formula.getPom().getHardness2()!=null){
-			hql.append(" and pom.hardness2=:hardness2");
+			hql3.append(" and w.pom.hardness2=:hardness2");
 			map.put("hardness2", formula.getPom().getHardness2());
 		}
 		if(formula.getPom().getProportion2()!=null){
-			hql.append(" and pom.proportion2=:proportion2");
+			hql3.append(" and w.pom.proportion2=:proportion2");
 			map.put("proportion2", formula.getPom().getProportion2());
 		}
-		hql2.append(hql);
-		hql.append(" order by formulaIndex ");
+		
+		hql.append(hql3);
+		hql2.append(hql3);
+		hql.append(" order by w.createDate desc, w.formulaIndex ");
 		
 		map_result.put("hql",hql);
 		map_result.put("hql2",hql2);

@@ -50,6 +50,22 @@ public class WebFormula implements java.io.Serializable{
 	public WebFormula(String formulaIndex){
 		this.formulaIndex=formulaIndex;
 	}
+	
+	public WebFormula(String formulaIndex,VWebFact factNo,String formulaNo,String formulaName,WebErpBrankProcess factCode,Double magnification,
+			String semifinishedProductHardness,String productHardness,String brandBody,String color,String issuedDate,String assignBrand){
+		this.formulaIndex=formulaIndex;
+		this.factNo=factNo;
+		this.formulaNo=formulaNo;
+		this.formulaName=formulaName;
+		this.factCode=factCode;
+		this.magnification=magnification;
+		this.semifinishedProductHardness=semifinishedProductHardness;
+		this.productHardness=productHardness;
+		this.brandBody=brandBody;
+		this.color=color;
+		this.issuedDate=issuedDate;
+		this.assignBrand=assignBrand;
+	}
 
 	/** full constructor */
 	public WebFormula(String formulaIndex,VWebFact factNo,String formulaNo,String formulaName,WebErpBrankProcess factCode,Double magnification,

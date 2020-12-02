@@ -116,7 +116,14 @@
 			                         是<input type="radio" value="1" name="formula.pom.authentications"/>
 			                        否<input type="radio" value="0" name="formula.pom.authentications"/>
 			       </td>
-			     </tr>			    
+			     </tr>
+			     <tr>
+			       <td>材料名稱</td>
+			       
+			     </tr>	
+			     <tr>
+			       <td><input type="text" placeholder="材料名稱" name="formula.webFormulaItemses[0].fk_weberp_pf.namec2"/></td>
+			     </tr>		    
 			   </table>			   		   				
 			  </div>
 		      </div>
