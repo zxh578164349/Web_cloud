@@ -40,6 +40,35 @@ public class WebFormula implements java.io.Serializable{
 	private Integer userId;
 	private String useremail;
 
+	
+	/*@Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((formulaIndex== null) ? 0 : formulaIndex.hashCode());
+        return result;
+        
+    }
+
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        WebFormula other = (WebFormula) obj;
+        if (formulaIndex == null) {
+			if (other.formulaIndex != null)
+				return false;
+		} else if (!formulaIndex.equals(other.formulaIndex))
+			return false;        
+        return true;
+    }*/
+	
+	
 	// Constructors
 
 	/** default constructor */
@@ -292,7 +321,8 @@ public class WebFormula implements java.io.Serializable{
 	}
 	
 	
-	
+
+
 	
 
 

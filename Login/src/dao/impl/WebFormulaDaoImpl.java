@@ -3,9 +3,12 @@
  */
 package dao.impl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.hibernate.Query;
 import org.hibernate.Transaction;
@@ -64,6 +67,10 @@ public class WebFormulaDaoImpl extends Basedao implements IWebFormulaDao{
 		}
 		int offset=PageBean.countOffset(pageSize,currentPage);
 		List<WebFormula>list=super.queryForPage(hql.toString(),offset,pageSize,map);
+		
+		/*Set<WebFormula>set=new HashSet<WebFormula>(list);
+		list=new ArrayList<WebFormula>(set);*/
+		
 		for(WebFormula obj:list){
 			obj.getFactCode().getName();
 			obj.getFactNo().getFactSname();
