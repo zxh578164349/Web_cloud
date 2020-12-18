@@ -66,7 +66,16 @@
 						<a href="javascript:loaduser(${id})"><img alt="修改" src="images/icon/edit001.png" title="修改"></a>&nbsp;
 						<a href="javascript:loadUrl('userupdateKy?id=${id}&available=0')"><img alt="可用" src="images/icon/available001.png" title="可用"></a>&nbsp;
 						<a href="javascript:loadUrl('userupdateKy?id=${id}&available=1')"><img alt="禁用" src="images/icon/not_available001.png" title="禁用"></a>&nbsp;
-						<a href="javascript:mydelete(${id})"><img alt="刪除" src="images/icon/delete001.png" title="刪除"></a>						
+						<a href="javascript:mydelete(${id})"><img alt="刪除" src="images/icon/delete001.png" title="刪除"></a>	
+						<s:if test='weeklyreportMk=="Y"'>
+						  <form action="" method="post" id="emailform">
+						    <input type="hidden" name="webUsers.id" value="${id}"/>
+						    <input type="hidden" name="webUsers.username" value="${username}"/>
+						    <input type="hidden" name="webUsers.name" value="${name}"/>
+						    <input type="hidden" name="webUsers.email" value="${email}"/>
+						  </form>
+						  <a href="javascript:sendEmail('emailform')">Email業務報告填寫</a>	
+						</s:if>					
 					</td>
 				</tr>
 			</s:iterator>

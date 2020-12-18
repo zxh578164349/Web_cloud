@@ -89,6 +89,28 @@ function loadjur(id,factNo){
 function loaduser(id){	
 	loadUrl("userinitialUpdate?id="+id);
 }
+
+function sendEmail(subform){
+    var flag=confirm("確定要发送邮件嗎?");
+    if(flag==true){         
+       jq.ajax({
+          type:"POST",
+          dataType:"json",
+          data: jq("#" + subform).serialize(),
+          url:"usersendWeeklyreport",
+          success:function(data){
+              if(data=="1"){
+                layer.msg("刪除成功", 3, 1);
+              }else{
+                layer.msg("刪除失敗", 3, 3);
+              }
+          },
+          error:function(xhr){
+              alert(xhr.reponseText);
+          }
+       });
+    }
+}
 </script>	
 </body>
 </html>

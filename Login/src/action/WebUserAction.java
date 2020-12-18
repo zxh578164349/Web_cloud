@@ -8,6 +8,7 @@ import java.net.UnknownHostException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -19,6 +20,8 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
+import mail.MailSenderInfo;
+import mail.SimpleMailSender;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
@@ -32,6 +35,9 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.ServletResponseAware;
 import org.json.JSONException;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
 import services.IKyFactServices;
 import services.IKyVisaBillsServices;
 import services.IWebFactServices;
@@ -59,6 +65,7 @@ import entity.WebSubmenu2;
 import entity.WebType;
 import entity.WebUser;
 import entity.WebUserOperation;
+import entity.custom.ProjectConfig;
 
 /**
  * 
@@ -1032,6 +1039,49 @@ public class WebUserAction extends ActionSupport implements ServletResponseAware
 			e.printStackTrace();
 		}	
 		return "addoperations";
+	}
+	
+	public String sendWeeklyreport(){
+		try {
+			ajax_result="1";
+			ApplicationContext ac=new ClassPathXmlApplicationContext(new String[]{"spring-projectconfig.xml"});			
+			MailSenderInfo mailInfo = new MailSenderInfo();
+			SimpleMailSender sms = new SimpleMailSender();
+			
+			SimpleDateFormat sdf=new SimpleDateFormat("yyyyMMdd");
+			Calendar cal=Calendar.getInstance();
+			cal.setFirstDayOfWeek(Calendar.MONDAY);
+			cal.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+			String sdate=sdf.format(cal.getTime());
+			cal.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
+			String edate=sdf.format(cal.getTime());
+			cal.add(Calendar.DAY_OF_WEEK, -7);		
+			
+			ProjectConfig pc=(ProjectConfig)ac.getBean("proconfig");
+			String url=null;
+			
+			mailInfo.setValidate(true);//要設為True,否則不能發送外部郵件		
+				StringBuffer content=new StringBuffer();		
+				url=pc.getpUrl()+"/webweekly_email_url?uid="+webUsers.getId()+"&sdate="+sdate+"&edate="+edate+"&uname="+webUsers.getName();
+				content.append(sdate+"-"+edate+"週報告：");
+				content.append("<a href='"+url+"'>");		
+				content.append("點擊進入</a>");
+				mailInfo.setContent(content.toString());
+				mailInfo.setSubject("業務每週報告表"+sdate+"-"+edate);
+				mailInfo.setToAddress(webUsers.getEmail());
+				sms.sendHtmlMail(mailInfo);	
+				
+				content.append("<br/><span style='color:blue'>"+webUsers.getUsername()+"("+webUsers.getName()+")"+"</span>");
+				mailInfo.setContent(content.toString());
+				mailInfo.setToAddress(pc.getpEmail());
+				sms.sendHtmlMail(mailInfo);
+		} catch (Exception e) {
+			// TODO: handle exception
+			ajax_result="2";
+			e.printStackTrace();
+		}
+		
+			return "sendWeeklyreport";
 	}
 	
 }

@@ -35,7 +35,10 @@
 		 <tr class="info">
 		  <td>函文單號</td>
 		  <s:iterator value="vbm.kyVisabillses">
-		   <td><s:property value="visaRank"/></td>
+		    <s:if test='visible!="N"'>
+	            <td><s:property value="visaRank"/></td>
+	        </s:if>
+	        <s:else><td>*</td></s:else>		   
 		  </s:iterator> 
 		 </tr>
 		</thead>
@@ -43,7 +46,7 @@
 		  <td>
 		  <a id="a_show" href="javascript:showDiv('<s:property value='vbm.id.billNo'/>','<s:property value='vbm.id.factNo'/>')">
 		  <s:property value="vbm.id.billNo"/></a>
-		  <s:if test='vbm.visaMk=="Y"||vbm.visaMk=="T"'>
+		  <s:if test='vbm.visaMk=="Y"||vbm.visaMk=="T"'>		    
 		      <input type="hidden" value="Y" id="isDone"/><!--判斷函文是否簽核完畢-->	
 		  </s:if>		 
 		  </td> 
@@ -80,7 +83,7 @@
 	       <s:if test='visible!="N"'>
 	            <a style="color:#b45b3e">只知會</a>
 	       </s:if>
-	       <s:else>/</s:else>		       
+	       <s:else>/</s:else>	       		       
 	       </s:else>
 	       </td>
 	      </s:iterator>

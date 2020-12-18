@@ -47,6 +47,9 @@
 			</result>
 			<result name="addoperations" type="json">
 			    <param name="root">ajax_result</param>
+			</result>
+			<result name="sendWeeklyreport" type="json">
+			    <param name="root">ajax_result</param>
 			</result>			    			
 		</action>
 		<action name="show*" class="showAction" method="{1}">

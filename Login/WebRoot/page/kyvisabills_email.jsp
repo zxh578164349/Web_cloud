@@ -51,9 +51,12 @@
 					<div class="row">
 						<s:iterator value="vbm.kyVisabillses" status="x">
 							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 div-border">
-								<p class="visible-xs visible-sm "
-									style="font-size:2em">
-									<font>(${x.index+1})<s:property value="visaRank"/></font>
+								<p class="visible-xs visible-sm " style="font-size:2em">
+									<s:if test='visible!="N"'>
+	                                   <font>(${x.index+1})<s:property value="visaRank"/></font>     
+	                                </s:if>	
+									
+									
 									<s:if test='flowMk=="Y"'>
 										<s:if test='visaMk=="N"'>
 											<!-- 1.判斷未審和已審狀態 -->
@@ -93,8 +96,10 @@
 									</s:else>
 									
 								</p>
-								<p class="visible-md visible-lg" style="font-size:1em">
-								<font>(${x.index+1})<s:property value="visaRank"/></font>
+								<p class="visible-md visible-lg" style="font-size:1em">								
+								 <s:if test='visible!="N"'>
+	                                   <font>(${x.index+1})<s:property value="visaRank"/></font>     
+	                             </s:if>								
 									<s:if test='flowMk=="Y"'>
 										<s:if test='visaMk=="N"'>
 											<!-- 1.判斷未審和已審狀態 -->
@@ -129,8 +134,7 @@
 									<s:else>
 									    <s:if test='visible!="N"'>
 	                                        <a style="color:#b45b3e">只知會</a>
-	                                    </s:if>	
-	                                    <s:else>/</s:else>										
+	                                    </s:if>		                                    										
 									</s:else>									
 								</p>
 							</div>
