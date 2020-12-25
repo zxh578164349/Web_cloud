@@ -100,9 +100,9 @@ function sendEmail(subform){
           url:"usersendWeeklyreport",
           success:function(data){
               if(data=="1"){
-                layer.msg("刪除成功", 3, 1);
+                layer.msg("发送成功", 3, 1);
               }else{
-                layer.msg("刪除失敗", 3, 3);
+                layer.msg("发送失敗", 3, 3);
               }
           },
           error:function(xhr){

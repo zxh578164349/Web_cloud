@@ -68,13 +68,13 @@
 						<a href="javascript:loadUrl('userupdateKy?id=${id}&available=1')"><img alt="禁用" src="images/icon/not_available001.png" title="禁用"></a>&nbsp;
 						<a href="javascript:mydelete(${id})"><img alt="刪除" src="images/icon/delete001.png" title="刪除"></a>	
 						<s:if test='weeklyreportMk=="Y"'>
-						  <form action="" method="post" id="emailform">
+						  <form action="" method="post" id="emailform${x.index}">
 						    <input type="hidden" name="webUsers.id" value="${id}"/>
 						    <input type="hidden" name="webUsers.username" value="${username}"/>
 						    <input type="hidden" name="webUsers.name" value="${name}"/>
 						    <input type="hidden" name="webUsers.email" value="${email}"/>
 						  </form>
-						  <a href="javascript:sendEmail('emailform')">Email業務報告填寫</a>	
+						  <a href="javascript:sendEmail('emailform${x.index}')">Email業務報告填寫</a>	
 						</s:if>					
 					</td>
 				</tr>
