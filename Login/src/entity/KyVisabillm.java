@@ -25,7 +25,7 @@ public class KyVisabillm implements java.io.Serializable {
 	private String signerNext;//下一位審核人(Email)
 	private String signerLast;//最近審核人(Email)
 	private String lastMk;//最近審核狀態(最近一個審核人決定  :Y:已審核;T:打回)
-	private String visaMk;//審核狀態(最後一個人決定: N:未審核;Y:已審核;T:打回)
+	private String visaMk;//審核狀態(最後一個人決定: N:未審核;Y:已審核;T:打回; W:废弃)20201228
 	private String revisaMk;//重審狀態
 	private String itemNext;//下一個項次
 	private String itemLast;//最近項次
