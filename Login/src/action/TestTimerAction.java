@@ -17,6 +17,7 @@ import javax.servlet.ServletContextListener;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpMethod;
 import org.apache.commons.httpclient.methods.GetMethod;
+import org.apache.struts2.ServletActionContext;
 import org.hibernate.transform.ToListResultTransformer;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
@@ -240,7 +241,8 @@ public class TestTimerAction extends QuartzJobBean {
 				System.err.print("ok");
 			} else {
 				HttpClient client = new HttpClient();
-				HttpMethod method = new GetMethod(pc.getpUrl()+"/print2Ypoi_print2Y_hb?sdate="+yymm+"&edate="+yymm+"&emailMk=1&type=Excel2003");//(在不同的機器上注意修改IP和端口)
+				HttpMethod method = new GetMethod(pc.getpUrl()+"/print2Ypoi_print2Y_hb?sdate="+yymm+"&edate="+yymm+"&emailMk=1&type=Excel2003");//(在不同的機器上注意修改IP和端口)			
+				//HttpMethod method = new GetMethod("http://localhost:8080/WebLogin"+"/print2Ypoi_print2Y_hb?sdate="+yymm+"&edate="+yymm+"&emailMk=1&type=Excel2003");
 				//HttpMethod method = new GetMethod(pc.getPurllocal()+"/print2Ypoi_print2Y_hb?sdate="+yymm+"&edate="+yymm+"&emailMk=1&type=Excel2003");
 				//HttpMethod method = new GetMethod("http://203.85.73.161/"+pname+"/print2Ypoi_print2Y_hb?sdate="+yymm+"&edate="+yymm+"&emailMk=1&type=Excel2003");//(在不同的機器上注意修改IP和端口)
 				//HttpMethod method = new GetMethod("http://172.17.18.173:8080/"+pname+"/print2Ypoi_print2Y_hb?sdate="+yymm+"&edate="+yymm+"&emailMk=1&type=Excel2003");
@@ -322,8 +324,9 @@ public class TestTimerAction extends QuartzJobBean {
 							+"</span><br/>");
 				}
 				//發送郵件
-				String classes_path=Thread.currentThread().getContextClassLoader().getResource("").getPath();			
-				String filepath=classes_path.replace("/WEB-INF/classes","/TEMPFILES/"+yymm+".xls");//附檔的路徑20170222
+				String classes_path=Thread.currentThread().getContextClassLoader().getResource("").getPath();
+				String filepath=classes_path.replace("/WEB-INF/classes","/TEMPFILES/"+yymm+".xls");//附檔的路徑20170222			
+				
 				send.sendmail(
 						mail,
 						cc,

@@ -98,14 +98,19 @@ public class AutoSendEmailAction {
 			multipart.addBodyPart(messageBodyPart);
 			msg.setContent(multipart);
 			msg.setSentDate(new Date());//發送時間
-			int len = mailArray.length;
-			InternetAddress address[] = new InternetAddress[len];
-			for (int i = 0; i < mailArray.length; i++) {
-				/*address[i] = new InternetAddress(
-						MimeUtility.encodeText(mailArray[i]));*/		
-				address[i]=new InternetAddress(mailArray[i]);
+			
+			if(mailArray!=null&&mailArray.length>0){
+				int len = mailArray.length;
+				InternetAddress address[] = new InternetAddress[len];
+				for (int i = 0; i < mailArray.length; i++) {
+					/*address[i] = new InternetAddress(
+							MimeUtility.encodeText(mailArray[i]));*/		
+					address[i]=new InternetAddress(mailArray[i]);					
+				}
+				msg.addRecipients(Message.RecipientType.TO, address);
 			}
-			if (cc != null) {
+			
+			if (cc != null&&cc.length>0) {
 				int ccLen = cc.length;
 				Address[] ccAdresses = new InternetAddress[ccLen];
 				for (int j = 0; j < cc.length; j++) {
@@ -113,7 +118,7 @@ public class AutoSendEmailAction {
 				}
 				msg.setRecipients(Message.RecipientType.CC, ccAdresses);
 			}
-			msg.addRecipients(Message.RecipientType.TO, address);
+			
 			transport.send(msg);
 		} catch (Exception e) {
 			e.printStackTrace();

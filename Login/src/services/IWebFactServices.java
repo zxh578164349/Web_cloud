@@ -7,6 +7,7 @@ import entity.WebFact;
 
 public interface IWebFactServices {
 	public List<WebFact> findAllFact();
+	public List<WebFact> findAllFact_1();
 
 	public List<WebFact> findFactById(String factNo);
 	public List<WebFact> findFactById_showA(String factNo);

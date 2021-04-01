@@ -18,6 +18,12 @@ public class WebFactDaoImpl extends Basedao implements IWebFactDao {
 		String hql = "select distinct id.factNo,factSname,orderNo from WebFact order by orderNo";
 		return super.findAll(hql, null);
 	}
+	
+	public List<WebFact> findAllFact_1() {
+		// TODO Auto-generated method stub
+		String hql = "select distinct id.factNo,factSname,orderNo from WebFact where factShow='0' order by orderNo";
+		return super.findAll(hql, null);
+	}
 
 	public List<WebFact> findFactById(String factNo) {
 		// TODO Auto-generated method stub

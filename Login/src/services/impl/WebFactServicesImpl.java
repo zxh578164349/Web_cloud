@@ -324,4 +324,9 @@ public class WebFactServicesImpl implements IWebFactServices {
 		return webFactDao.findAsics(asicsMk);
 	}
 
+	public List<WebFact> findAllFact_1() {
+		// TODO Auto-generated method stub
+		return webFactDao.findAllFact_1();
+	}
+
 }
