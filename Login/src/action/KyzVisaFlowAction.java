@@ -840,38 +840,18 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 	public void setobj(KyzVisaflow obj,String str){
 											
 	/************************************賽博林二廠***********************************/	
-		if("總務".equals(str)){
-			obj.setVisaRank("總務");
-			obj.getId().setPurmanNo("鄭蘇勇");
-			obj.setVisaSigner("zgw@cyberlink-vn.com");
+		if("胡家鳳".equals(str)){
+			obj.setVisaRank("主管");
+			obj.getId().setPurmanNo("胡家鳳");
+			obj.setVisaSigner("qh@sanyu-vn.com");
 		}
 		
-		if("企劃".equals(str)){
-			obj.setVisaRank("企劃");
-			obj.getId().setPurmanNo("羅如意");
-			obj.setVisaSigner("qh.lry@cyberlink-vn.com");
+		if("夏經理".equals(str)){
+			obj.setVisaRank("經理");
+			obj.getId().setPurmanNo("夏經理");
+			obj.setVisaSigner("wq.xia@qq.com");
 		}	
-		if("許勇志".equals(str)){
-			obj.setVisaRank("副理");
-			obj.getId().setPurmanNo("許勇志");
-			obj.setVisaSigner("cw.xyz@cyberlink-vn.com");
-		}
-		if("游剛".equals(str)){
-			obj.setVisaRank("副總");
-			obj.getId().setPurmanNo("游剛");
-			obj.setVisaSigner("you@361sap.com");
-		}		
 		
-		if("採購".equals(str)){
-			obj.setVisaRank("採購");
-			obj.getId().setPurmanNo("維幀");
-			obj.setVisaSigner("rosita0529@mail.gj.com.tw");
-		}
-		if("經管".equals(str)){
-			obj.setVisaRank("經管");
-			obj.getId().setPurmanNo("玉琪");
-			obj.setVisaSigner("ykl@mail.gj.com.tw");
-		}
 		if("劉小姐".equals(str)){
 			obj.setVisaRank("臺幹");
 			obj.getId().setPurmanNo("劉小姐");
@@ -922,7 +902,7 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 				for(String key:map.keySet()){						
 					List<String>list=(List<String>)map.get(key);	
 					
-					List<WebFormtype>list_types=webformser.findWebformByFactno("VB");					
+					List<WebFormtype>list_types=webformser.findWebformByFactno("VD");					
 					List<WebFormtype>list_types2=new ArrayList<WebFormtype>(list_types);
 					//list_types2.addAll(list_types);
 					
@@ -954,7 +934,7 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 						List<WebFormtype>list3=(List<WebFormtype>)map2.get(key2);
 						List<String>list4=new ArrayList<String>();
 						for(WebFormtype obj:list3){
-							for(int h=1;h<list.size();h++){	
+							for(int h=0;h<list.size();h++){	
 								String j=new DecimalFormat("0").format(Double.valueOf(list.get(h).split(SEPARATOR)[1]));
 								if(obj.getFid().toString().equals(j)){
 									list4.add(list.get(h));
@@ -980,7 +960,7 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 							for(int b=1;b<list6.size();b++){
 								String j=new DecimalFormat("0").format(Double.valueOf(list6.get(0)));
 								KyzVisaflow fow=new KyzVisaflow();
-								fow.setId(new KyzVisaflowId("VB", key3+a, list6.get(b), "0"+b,"null"));								
+								fow.setId(new KyzVisaflowId("VD", key3+a, list6.get(b), "0"+b,"null"));								
 								this.setobj(fow, list6.get(b));
 								fow.setFlowMk("Y");
 								fow.setTrMk("Y");

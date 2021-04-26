@@ -286,8 +286,8 @@ $(document).ajaxStop(function(){
 });
 function yesorno(passMk){
 	 var memo_leg=document.getElementById("memo_txt").value;
-	  if(memo_leg.length>400){
-	     alert("備註不可超過400字");
+	  if(memo_leg.length>1400){
+	     alert("備註不可超過1400字");
 	  }else{
 	     document.getElementById("visa_mk").value=passMk;	    
 	    $.ajax({

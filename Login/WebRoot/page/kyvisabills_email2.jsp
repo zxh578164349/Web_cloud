@@ -259,8 +259,8 @@ function tips(memo,index){
 function yesorno(passMk){
 	var memo=layer.getChildFrame("#memo_txt",layer.index).val();
     layer.getChildFrame("#visa_mk",layer.index).val(passMk);
-    if(memo.length>400){
-       alert("備註不可超過400字");
+    if(memo.length>1400){
+       alert("備註不可超過1400字符");
     }else{     
        $.ajax({
        	type:"POST",
