@@ -839,19 +839,79 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 	
 	public void setobj(KyzVisaflow obj,String str){
 											
-	/************************************賽博林二廠***********************************/	
-		if("胡家鳳".equals(str)){
-			obj.setVisaRank("主管");
-			obj.getId().setPurmanNo("胡家鳳");
+	/************************************華城二廠***********************************/	
+		//大陸
+		if("前段備料".equals(str)){
+			obj.setVisaRank("前段備料");
+			obj.getId().setPurmanNo("前段備料");
+			obj.setVisaSigner("mdbl@sanyu-vn.com");
+		}
+		if("成型".equals(str)){
+			obj.setVisaRank("成型");
+			obj.getId().setPurmanNo("成型");
+			obj.setVisaSigner("mdcx@sanyu-vn.com");
+		}
+		if("品管".equals(str)){
+			obj.setVisaRank("品管");
+			obj.getId().setPurmanNo("品管");
+			obj.setVisaSigner("pg@sanyu-vn.com");
+		}
+		if("總務".equals(str)){
+			obj.setVisaRank("總務");
+			obj.getId().setPurmanNo("總務");
+			obj.setVisaSigner("zw@sanyu-vn.com");
+		}
+		if("生管".equals(str)){
+			obj.setVisaRank("生管");
+			obj.getId().setPurmanNo("生管");
+			obj.setVisaSigner("sg@sanyu-vn.com");
+		}
+		if("工程".equals(str)){
+			obj.setVisaRank("工程");
+			obj.getId().setPurmanNo("工程");
+			obj.setVisaSigner("mdgc@sanyu-vn.com");
+		}
+		if("廠務".equals(str)){
+			obj.setVisaRank("廠務");
+			obj.getId().setPurmanNo("廠務");
+			obj.setVisaSigner("mdcw@sanyu-vn.com");
+		}													    
+		if("企劃".equals(str)){
+			obj.setVisaRank("企劃");
+			obj.getId().setPurmanNo("企劃");
 			obj.setVisaSigner("qh@sanyu-vn.com");
 		}
 		
-		if("夏經理".equals(str)){
+		if("廖玉嬌".equals(str)){
 			obj.setVisaRank("經理");
-			obj.getId().setPurmanNo("夏經理");
-			obj.setVisaSigner("wq.xia@qq.com");
+			obj.getId().setPurmanNo("廖玉嬌");
+			obj.setVisaSigner("bonnie@sanyu-vn.com");
 		}	
 		
+		if("柯燦兵".equals(str)){
+			obj.setVisaRank("經理");
+			obj.getId().setPurmanNo("柯燦兵");
+			obj.setVisaSigner("devin@sanyu-vn.com");
+		}
+		if("劉協理".equals(str)){
+			obj.setVisaRank("協理");
+			obj.getId().setPurmanNo("劉協理");
+			obj.setVisaSigner("alan.liu@giachiu.com");
+		}
+		
+		
+		//臺灣
+		if("採購".equals(str)){
+			obj.setVisaRank("採購");
+			obj.getId().setPurmanNo("陳立宜");
+			obj.setVisaSigner("liei@mail.gj.com.tw");
+		}
+		if("經管".equals(str)){
+			obj.setVisaRank("經管");
+			obj.getId().setPurmanNo("曾明慧");
+			obj.setVisaSigner("coco@mail.gj.com.tw");
+		}
+										
 		if("劉小姐".equals(str)){
 			obj.setVisaRank("臺幹");
 			obj.getId().setPurmanNo("劉小姐");
@@ -902,7 +962,7 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 				for(String key:map.keySet()){						
 					List<String>list=(List<String>)map.get(key);	
 					
-					List<WebFormtype>list_types=webformser.findWebformByFactno("VD");					
+					List<WebFormtype>list_types=webformser.findWebformByFactno("V10");					
 					List<WebFormtype>list_types2=new ArrayList<WebFormtype>(list_types);
 					//list_types2.addAll(list_types);
 					
@@ -960,7 +1020,7 @@ public class KyzVisaFlowAction extends ActionSupport implements ServletResponseA
 							for(int b=1;b<list6.size();b++){
 								String j=new DecimalFormat("0").format(Double.valueOf(list6.get(0)));
 								KyzVisaflow fow=new KyzVisaflow();
-								fow.setId(new KyzVisaflowId("VD", key3+a, list6.get(b), "0"+b,"null"));								
+								fow.setId(new KyzVisaflowId("V10", key3+a, list6.get(b), "0"+b,"行政部門"));								
 								this.setobj(fow, list6.get(b));
 								fow.setFlowMk("Y");
 								fow.setTrMk("Y");

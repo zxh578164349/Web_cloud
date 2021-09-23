@@ -134,14 +134,15 @@
     <bean id="startQuartz" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
         <property name="triggers">
             <list>
-                <ref bean="CronTriggerBean"/><!-- 15點 產量資料錶    时间更改为15点       （20190325）-->
+                
                 <ref bean="CronTriggerBeanA"/><!-- (第一次) 10點  下一位簽核人 -->                     
                 <ref bean="CronTriggerBeanC"/>  <!-- 12點  簽核完畢知會 -->                                
                 <ref bean="CronTriggerBeanF"/>	<!-- 每月6號 9點 -->
-                <ref bean="CronTriggerBeanG"/><!-- 每周五早上9點 業務周報告-->
-                <ref bean="CronTriggerBeanH"/><!-- 每周一早上8點 業務周報告彙總 -->
-                
                
+                
+               <!-- <ref bean="CronTriggerBeanG"/> 每周五早上9點 業務周報告-->
+               <!-- <ref bean="CronTriggerBeanH"/> 每周一早上8點 業務周報告彙總 -->
+               <!-- <ref bean="CronTriggerBean"/>15點 產量資料錶    已停止發送      （20210603）-->
                <!--<ref bean="CronTriggerBeanJ"/>  時間待定    工廠日報 -->
                <!-- <ref bean="CronTriggerBeanD"/>  每月最後一天24點運行 -->	
                <!-- <ref bean="CronTriggerBeanB"/>(第二次) 16點  下一位簽核人   （20210325 邮件太多，暂停下午4点这个）-->              

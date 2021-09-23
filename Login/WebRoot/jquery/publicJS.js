@@ -53,7 +53,7 @@ function checkType(){
            		/*********************修改20190424************************/ 
            		if(fids>0){           			
            			if(depId!=null&&depId!=""||(fid!=null&&fid!="")){
-           				if(dwrFactNo=="HC"){         					
+           				if(dwrFactNo=="HC"||dwrFactNo=="V10"){         					
            					if(factCode!=null&&factCode!=""){          						
                    				checkType2(dwrFactNo,type,trMk,depId,fid,factCode);
            					}          					              				           					
@@ -276,7 +276,7 @@ function getFactArea(mid) {
 
 function removeobjs(){
 	var dwrFactNo=document.getElementById("dwrFactNo").value;
-	if(dwrFactNo=="HC"){
+	if(dwrFactNo=="HC"||dwrFactNo=="V10"){
 		jq("#dwrFactArea").attr("datatype","*");
 		jq("#dwrFactArea").attr("onchange","checkType()");
 	}else{
