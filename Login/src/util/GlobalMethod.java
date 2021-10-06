@@ -1418,17 +1418,22 @@ public class GlobalMethod extends HibernateDaoSupport{
 					String factNo=list_vbm.get(i).getId().getFactNo();
 					String billNo=list_vbm.get(i).getId().getBillNo();
 					String visaSort=list_vbm.get(i).getId().getVisaSort();
-					String visaMk=list_vbm.get(i).getVisaMk();										
-					if(pc.getPliujung().equals(signerNext.toLowerCase())//劉小姐隻發送一次:liujung@mail.gj.com.tw 20161213
+					String visaMk=list_vbm.get(i).getVisaMk();
+					
+					/*********************************************暫時去掉劉小姐只發送一次的限制   20211006**********************************************/
+					/*if(pc.getPliujung().equals(signerNext.toLowerCase())//劉小姐隻發送一次:liujung@mail.gj.com.tw 20161213
 					   &&list_vbm.get(i).getUserId().getId()!=137){//湖南加伟（JW）赖凯的函文除外,因为没有人帮她传函文给刘小姐，所以她的邮件要每次都要发给刘小姐 20200817
 						if(list_vbm.get(i).getOneMk()==null){
 							list_vbm.get(i).setOneMk("1");//標識隻發送一次
-							visabillmSer.add(list_vbm.get(i));
+							visabillmSer.add(list_vbm.get(i));							
 							list_email.add(signerNext);
 						}
 					}else{
 						list_email.add(signerNext);
-					}																									
+					}*/
+					list_email.add(signerNext);
+					/*********************************************暫時去掉劉小姐只發送一次的限制   20211006**********************************************/
+					
 					 /******************20170112备签人同步**********************/
 					//備簽人（無類別）
 					List<String>list_emailPwd=webuseremailSer.findByFactNoAEmailPwd2(factNo, signerNext);
