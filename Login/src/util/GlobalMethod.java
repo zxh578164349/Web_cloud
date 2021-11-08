@@ -30,6 +30,8 @@ import java.net.UnknownHostException;
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
 import java.security.GeneralSecurityException;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.ParseException;
@@ -63,6 +65,9 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 import javax.mail.internet.MimeUtility;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSocket;
+import javax.net.ssl.SSLSocketFactory;
 import javax.script.Bindings;
 import javax.script.Invocable;
 import javax.script.ScriptContext;
@@ -2465,12 +2470,28 @@ public class GlobalMethod extends HibernateDaoSupport{
 				return list_visabillstemp;
 	}
 	
-	 public static void main(String[] args) {
+	 public static void main(String[] args) throws NoSuchAlgorithmException, KeyManagementException, IOException {
 			
-		Long l=null;
-		Double d=0.0;
-		
-		System.out.println(d-l);
+		 SSLContext context = SSLContext.getInstance("TLS");
+			context.init(null, null, null);
+	 
+			SSLSocketFactory factory = (SSLSocketFactory) context.getSocketFactory();
+			SSLSocket socket = (SSLSocket) factory.createSocket();
+	 
+			String[] protocols = socket.getSupportedProtocols();
+	 
+			System.out.println("Supported Protocols: " + protocols.length);
+			for (int i = 0; i < protocols.length; i++) {
+				System.out.println(" " + protocols[i]);
+			}
+	 
+			protocols = socket.getEnabledProtocols();
+	 
+			System.out.println("Enabled Protocols: " + protocols.length);
+			for (int i = 0; i < protocols.length; i++) {
+				System.out.println(" " + protocols[i]);
+			}
+
 	  
 		}
 	 

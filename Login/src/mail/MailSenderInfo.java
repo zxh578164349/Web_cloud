@@ -9,6 +9,7 @@ import java.security.GeneralSecurityException;
 import java.util.Properties;
 
 import util.GlobalMethod;
+import util.TLSSocketConnectionFactory;
 
 import com.sun.mail.util.MailSSLSocketFactory;
 
@@ -44,6 +45,7 @@ public class MailSenderInfo {
         //p.put("mail.smtp.port", this.mailServerPort);    
         p.put("mail.smtp.auth", validate ? "true" : "false");
         
+        p.setProperty("mail.debug", "true");
        // p.setProperty("mail.smtp.auth", "true");
   		p.setProperty("mail.transport.protocol", "smtp");
   		//p.setProperty("mail.host", "dgmail.yydg.com.cn");//云端要用域名  		
@@ -53,25 +55,29 @@ public class MailSenderInfo {
   		//p.put("http.proxyPort", "808");
   		//p.setProperty("mail.host", "61.20.35.47");//云端的收发邮件服务器
   	//p.setProperty("mail.smtp.starttls.enable", "true");//加密发送
-  		if("smtp.office365.com".equals(pc.getpSmtp())){
-  			p.setProperty("mail.smtp.starttls.enable","true");//加密发送
-  			p.setProperty("mail.smtp.port", "587");//改smtp端口(不改也可以正常发送 默认25端口)
+  		if("smtp-mail.outlook.com".equals(pc.getpSmtp())){
+  			p.setProperty("mail.smtp.starttls.enable","true");//加密发送  			
+  			//p.setProperty("mail.smtp.ssl.enable", "true");///加密发送
+  			p.setProperty("mail.smtp.port", "587");//改smtp端口(如果出現‘Could not convert socket to TLS’錯誤，"587" "25"兩個端口來回測試，哪個可以用哪個   20211007)
+  			p.setProperty("mail.smtp.ssl.protocols", "TLSv1.2");
+  			//p.setProperty("mail.smtp.ssl.trust", "smtp.office365.com");
+  			//p.setProperty("mail.smtp.starttls.required ","true"); 
+  			p.setProperty("AllowLegacyTLSClients", "true");
   		}else{
   			p.setProperty("mail.smtp.port", "465");//改smtp端口		
   	  		p.setProperty("mail.smtp.socketFactory.port", "465"); 		
-  	  		p.setProperty("mail.smtp.ssl.enable", "true");///加密发送
-  	  		
-  	  	//以下设置，邮件加密发送，不需要证书验证
-  	  		MailSSLSocketFactory sf = null;
-  	  		try {
-  	  			sf = new MailSSLSocketFactory();
-  	  		} catch (GeneralSecurityException e) {
-  	  			// TODO Auto-generated catch block
-  	  			e.printStackTrace();
-  	  		}  
-  	  	    sf.setTrustAllHosts(true);
-  	  	    p.put("mail.smtp.ssl.socketFactory", sf);
+  	  		p.setProperty("mail.smtp.ssl.enable", "true");///加密发送  	  		  	
   		}
+  	        //以下设置，邮件加密发送，不需要证书验证
+	  		MailSSLSocketFactory sf = null;
+	  		try {
+	  			sf = new MailSSLSocketFactory();
+	  		} catch (GeneralSecurityException e) {
+	  			// TODO Auto-generated catch block
+	  			e.printStackTrace();
+	  		}  
+	  	    sf.setTrustAllHosts(true);
+	  	    p.put("mail.smtp.ssl.socketFactory", sf);
   		  		
         return p;    
     }    

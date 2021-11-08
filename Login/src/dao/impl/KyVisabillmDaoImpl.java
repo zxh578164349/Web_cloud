@@ -18,7 +18,7 @@ import entity.KyzExpectmatmLog;
 
 public class KyVisabillmDaoImpl extends Basedao implements IKyVisaBillmDao{
 
-	private final static String SDATE="20150901";
+	private final static String SDATE="202109";
 	public void add(KyVisabillm vbm) {
 		// TODO Auto-generated method stub
 		super.merge(vbm);
@@ -64,7 +64,7 @@ public class KyVisabillmDaoImpl extends Basedao implements IKyVisaBillmDao{
 
 	public List<KyVisabillm> findByVisaMk(String visaMk) {
 		// TODO Auto-generated method stub		
-		String hql="from KyVisabillm where visaMk<>? and dateCreate>'"+SDATE+"'  and emailMk is null and delMk is null";
+		String hql="from KyVisabillm where visaMk<>? and dateCreate>'"+SDATE+"'  and emailMk is null and delMk is null order by dateCreate desc";
 		String[]objs={visaMk};
 		List<KyVisabillm>list=super.findAll(hql,objs);
 		try{
