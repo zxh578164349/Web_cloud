@@ -46,7 +46,7 @@ import util.GlobalMethod;
 * 項目名稱：WebLogin   
 * 類名稱：VWebuselessAction   
 * 類描述：無價值率
-* 創建人：KY2-1
+* 創建人：KY2-2
  */
 public class VWebuselessAction extends ActionSupport implements ServletResponseAware{
 	private IVWebuselessServices vwebuselessSer;
