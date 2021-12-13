@@ -18,7 +18,7 @@ import entity.KyzExpectmatmLog;
 
 public class KyVisabillmDaoImpl extends Basedao implements IKyVisaBillmDao{
 
-	private final static String SDATE="202109";
+	private final static String SDATE="202108";
 	public void add(KyVisabillm vbm) {
 		// TODO Auto-generated method stub
 		super.merge(vbm);

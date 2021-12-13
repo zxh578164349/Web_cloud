@@ -23,7 +23,8 @@ import entity.KyzExpectmatmLog;
 import entity.WebUser;
 
 public class KyVisabillsDaoImpl extends Basedao implements IKyVisaBillsDao{
-	private final static String STR=" and id.kyVisabillm.dateCreate>'20150701' and id.kyVisabillm.delMk is null ";
+	private final static String STR=" and id.kyVisabillm.dateCreate>'201506' and id.kyVisabillm.delMk is null ";//函文審核狀況
+	private final static String STR2=" and id.kyVisabillm.dateCreate>'202106' and id.kyVisabillm.delMk is null ";//函文審核
 
 	public List<KyVisabills> findVisaBills(String visaSort, String billNo) {
 		// TODO Auto-generated method stub
@@ -300,9 +301,9 @@ public class KyVisabillsDaoImpl extends Basedao implements IKyVisaBillsDao{
 		if(factNo==null||"".equals(factNo)||"nothing".equals(factNo)){
 			factNo=user.getFactno();
 		}
-		if(createDate==null||"".equals(createDate)){
+		/*if(createDate==null||"".equals(createDate)){
 			createDate=this.twoMonths();
-		}
+		}*/
 		String adminMk=user.getAdminMk();
 		String email=user.getEmail();		
 		if(email==null||email.equals("")){
@@ -388,7 +389,7 @@ public class KyVisabillsDaoImpl extends Basedao implements IKyVisaBillsDao{
 			}
 			map.put("title","%"+title+"%");
 		}
-		hql.append(STR);
+		hql.append(STR2);
 		hql.append(" and flowMk='Y'");
 		hql2.append(hql);
 		hql.append(" order by id.kyVisabillm.id.factNo desc,id.kyVisabillm.dateCreate desc,id.kyVisabillm.id.billNo desc");

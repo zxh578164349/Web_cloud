@@ -64,10 +64,10 @@
 				<td><s:property value="userNm" /></td>
 				<td><s:property value="id.billNo" /></td>
 				<td>
-				  <s:if test="emerWhether==0">
+				  <s:if test="emerMk==0">
 				    　　 是
 				  </s:if>
-				  <s:if test="emerWhether==1">
+				  <s:if test="emerMk==1">
 				    　　 否
 				  </s:if>				  
 				</td>
